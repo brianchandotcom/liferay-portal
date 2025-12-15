@@ -136,8 +136,12 @@ public class SegmentsExperienceSelectorDisplayContextTest {
 		Assert.assertTrue(
 			actualSegmentsExperienceJSONObject.getBoolean("active"));
 		Assert.assertEquals(
-			expectedDefaultSegmentsExperience.getSegmentsEntryId(),
-			actualSegmentsExperienceJSONObject.getLong("segmentsEntryId"));
+			expectedDefaultSegmentsExperience.getSegmentsEntryERC(),
+			actualSegmentsExperienceJSONObject.getString("segmentsEntryERC"));
+		Assert.assertEquals(
+			expectedDefaultSegmentsExperience.getSegmentsEntryScopeERC(),
+			actualSegmentsExperienceJSONObject.getString(
+				"segmentsEntryScopeERC"));
 		Assert.assertEquals(
 			SegmentsEntryConstants.getDefaultSegmentsEntryName(
 				LocaleUtil.ENGLISH),
@@ -225,8 +229,10 @@ public class SegmentsExperienceSelectorDisplayContextTest {
 				_group.getGroupId(), _layout.getPlid());
 
 		SegmentsEntry expectedSegmentsEntry =
-			_segmentsEntryLocalService.fetchSegmentsEntry(
-				expectedSegmentsExperience.getSegmentsEntryId());
+			_segmentsEntryLocalService.
+				fetchSegmentsEntryByExternalReferenceCode(
+					expectedSegmentsExperience.getSegmentsEntryERC(),
+					expectedSegmentsExperience.getSegmentsEntryGroupId());
 
 		Assert.assertNotNull(expectedSegmentsEntry);
 
@@ -247,8 +253,12 @@ public class SegmentsExperienceSelectorDisplayContextTest {
 		Assert.assertFalse(
 			actualSegmentsExperienceJSONObject.getBoolean("active"));
 		Assert.assertEquals(
-			expectedSegmentsExperience.getSegmentsEntryId(),
-			actualSegmentsExperienceJSONObject.getLong("segmentsEntryId"));
+			expectedSegmentsExperience.getSegmentsEntryERC(),
+			actualSegmentsExperienceJSONObject.getString("segmentsEntryERC"));
+		Assert.assertEquals(
+			expectedSegmentsExperience.getSegmentsEntryScopeERC(),
+			actualSegmentsExperienceJSONObject.getString(
+				"segmentsEntryScopeERC"));
 		Assert.assertEquals(
 			expectedSegmentsEntry.getName(LocaleUtil.ENGLISH),
 			actualSegmentsExperienceJSONObject.getString("segmentsEntryName"));

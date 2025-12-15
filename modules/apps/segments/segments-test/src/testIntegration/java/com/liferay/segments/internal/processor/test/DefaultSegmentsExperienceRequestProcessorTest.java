@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -64,8 +65,10 @@ public class DefaultSegmentsExperienceRequestProcessorTest {
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.appendSegmentsExperience(
 				TestPropsValues.getUserId(), _group.getGroupId(),
-				segmentsEntry.getSegmentsEntryId(), layout.getPlid(),
-				RandomTestUtil.randomLocaleStringMap(), true,
+				segmentsEntry.getExternalReferenceCode(),
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					segmentsEntry.getGroupId(), _group.getGroupId()),
+				layout.getPlid(), RandomTestUtil.randomLocaleStringMap(), true,
 				new UnicodeProperties(true),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
@@ -108,7 +111,7 @@ public class DefaultSegmentsExperienceRequestProcessorTest {
 		long[] segmentsExperienceIds =
 			_segmentsExperienceRequestProcessor.getSegmentsExperienceIds(
 				new MockHttpServletRequest(), new MockHttpServletResponse(),
-				_group.getGroupId(), layout.getPlid(), new long[0],
+				_group.getGroupId(), layout.getPlid(), new long[] {0},
 				new long[0]);
 
 		Assert.assertEquals(
@@ -128,16 +131,19 @@ public class DefaultSegmentsExperienceRequestProcessorTest {
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.appendSegmentsExperience(
 				TestPropsValues.getUserId(), _group.getGroupId(),
-				segmentsEntry.getSegmentsEntryId(), layout.getPlid(),
-				RandomTestUtil.randomLocaleStringMap(), true,
+				segmentsEntry.getExternalReferenceCode(),
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					segmentsEntry.getGroupId(), _group.getGroupId()),
+				layout.getPlid(), RandomTestUtil.randomLocaleStringMap(), true,
 				new UnicodeProperties(true),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		long[] segmentsExperienceIds =
 			_segmentsExperienceRequestProcessor.getSegmentsExperienceIds(
 				new MockHttpServletRequest(), new MockHttpServletResponse(),
-				_group.getGroupId(), layout.getPlid(), new long[0],
-				new long[] {segmentsEntry.getSegmentsEntryId()});
+				_group.getGroupId(), layout.getPlid(),
+				new long[] {0, segmentsEntry.getSegmentsEntryId()},
+				new long[0]);
 
 		Assert.assertEquals(
 			Arrays.toString(segmentsExperienceIds), 2,

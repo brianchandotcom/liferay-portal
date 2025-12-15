@@ -4,5 +4,6 @@
 	"name_i18n": {
 		"en-US": "Test Segments Experience 2"
 	},
-	"segmentsEntryId": "[$SEGMENTS_ENTRY_ID:TEST-SEGMENTS-ENTRY-2$]"
+	"segmentsEntryERC": "[$SEGMENTS_ENTRY_ERC:TEST-SEGMENTS-ENTRY-2$]",
+	"segmentsEntryScopeERC": "[$SEGMENTS_ENTRY_SCOPE_ERC:TEST-SEGMENTS-ENTRY-2$]"
 }

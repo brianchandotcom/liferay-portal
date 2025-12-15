@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
@@ -58,9 +57,8 @@ public class LayoutModelListenerTest {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		_segmentsExperienceLocalService.addSegmentsExperience(
-			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			SegmentsEntryConstants.ID_DEFAULT, layout.getPlid(),
-			RandomTestUtil.randomLocaleStringMap(), true,
+			null, TestPropsValues.getUserId(), _group.getGroupId(), null, null,
+			layout.getPlid(), RandomTestUtil.randomLocaleStringMap(), true,
 			new UnicodeProperties(true),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 

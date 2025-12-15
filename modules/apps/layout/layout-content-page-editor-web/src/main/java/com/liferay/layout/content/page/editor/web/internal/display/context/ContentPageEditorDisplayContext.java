@@ -110,6 +110,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsValues;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -1247,7 +1248,9 @@ public class ContentPageEditorDisplayContext {
 		return availableLanguages;
 	}
 
-	private Map<String, Object> _getAvailableSegmentsEntries() {
+	private Map<String, Object> _getAvailableSegmentsEntries()
+		throws Exception {
+
 		Map<String, Object> availableSegmentsEntries = new HashMap<>();
 
 		List<SegmentsEntry> segmentsEntries =
@@ -1261,8 +1264,17 @@ public class ContentPageEditorDisplayContext {
 				HashMapBuilder.<String, Object>put(
 					"name", segmentsEntry.getName(themeDisplay.getLocale())
 				).put(
+					"segmentsEntryERC", segmentsEntry.getExternalReferenceCode()
+				).put(
+					"segmentsEntryGroupId",
+					String.valueOf(segmentsEntry.getGroupId())
+				).put(
 					"segmentsEntryId",
 					String.valueOf(segmentsEntry.getSegmentsEntryId())
+				).put(
+					"segmentsEntryScopeERC",
+					ScopeUtil.getItemScopeExternalReferenceCode(
+						segmentsEntry.getGroupId(), getGroupId())
 				).build());
 		}
 
@@ -1273,7 +1285,13 @@ public class ContentPageEditorDisplayContext {
 				SegmentsEntryConstants.getDefaultSegmentsEntryName(
 					themeDisplay.getLocale())
 			).put(
+				"segmentsEntryERC", StringPool.BLANK
+			).put(
+				"segmentsEntryGroupId", getGroupId()
+			).put(
 				"segmentsEntryId", SegmentsEntryConstants.ID_DEFAULT
+			).put(
+				"segmentsEntryScopeERC", StringPool.BLANK
 			).build());
 
 		return availableSegmentsEntries;

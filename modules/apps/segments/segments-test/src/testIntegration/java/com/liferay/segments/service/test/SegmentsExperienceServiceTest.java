@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -97,7 +98,10 @@ public class SegmentsExperienceServiceTest {
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceService.addSegmentsExperience(
-				null, _group.getGroupId(), segmentsEntry.getSegmentsEntryId(),
+				null, _group.getGroupId(),
+				segmentsEntry.getExternalReferenceCode(),
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					segmentsEntry.getGroupId(), _group.getGroupId()),
 				_classPK, RandomTestUtil.randomLocaleStringMap(), true,
 				UnicodePropertiesBuilder.create(
 					true
@@ -136,8 +140,10 @@ public class SegmentsExperienceServiceTest {
 
 			_segmentsExperienceService.addSegmentsExperience(
 				externalReferenceCode, _group.getGroupId(),
-				segmentsEntry.getSegmentsEntryId(), _classPK,
-				RandomTestUtil.randomLocaleStringMap(), true,
+				segmentsEntry.getExternalReferenceCode(),
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					segmentsEntry.getGroupId(), _group.getGroupId()),
+				_classPK, RandomTestUtil.randomLocaleStringMap(), true,
 				new UnicodeProperties(true),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 		}
@@ -157,16 +163,20 @@ public class SegmentsExperienceServiceTest {
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			_group.getGroupId());
 
+		String segmentsEntryScopeERC =
+			ScopeUtil.getItemScopeExternalReferenceCode(
+				segmentsEntry.getGroupId(), _group.getGroupId());
+
 		_segmentsExperienceService.addSegmentsExperience(
 			externalReferenceCode, _group.getGroupId(),
-			segmentsEntry.getSegmentsEntryId(), _classPK,
-			RandomTestUtil.randomLocaleStringMap(), true,
+			segmentsEntry.getExternalReferenceCode(), segmentsEntryScopeERC,
+			_classPK, RandomTestUtil.randomLocaleStringMap(), true,
 			new UnicodeProperties(true),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 		_segmentsExperienceService.addSegmentsExperience(
 			externalReferenceCode, _group.getGroupId(),
-			segmentsEntry.getSegmentsEntryId(), _classPK,
-			RandomTestUtil.randomLocaleStringMap(), true,
+			segmentsEntry.getExternalReferenceCode(), segmentsEntryScopeERC,
+			_classPK, RandomTestUtil.randomLocaleStringMap(), true,
 			new UnicodeProperties(true),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
@@ -229,7 +239,10 @@ public class SegmentsExperienceServiceTest {
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceService.addSegmentsExperience(
-				null, _group.getGroupId(), segmentsEntry.getSegmentsEntryId(),
+				null, _group.getGroupId(),
+				segmentsEntry.getExternalReferenceCode(),
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					segmentsEntry.getGroupId(), _group.getGroupId()),
 				_classPK, RandomTestUtil.randomLocaleStringMap(), true,
 				new UnicodeProperties(true),
 				ServiceContextTestUtil.getServiceContext(
@@ -246,7 +259,9 @@ public class SegmentsExperienceServiceTest {
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceService.appendSegmentsExperience(
-				_group.getGroupId(), segmentsEntry.getSegmentsEntryId(),
+				_group.getGroupId(), segmentsEntry.getExternalReferenceCode(),
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					segmentsEntry.getGroupId(), _group.getGroupId()),
 				_classPK, RandomTestUtil.randomLocaleStringMap(), true,
 				UnicodePropertiesBuilder.create(
 					true
@@ -273,7 +288,9 @@ public class SegmentsExperienceServiceTest {
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceService.appendSegmentsExperience(
-				_group.getGroupId(), segmentsEntry.getSegmentsEntryId(),
+				_group.getGroupId(), segmentsEntry.getExternalReferenceCode(),
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					segmentsEntry.getGroupId(), _group.getGroupId()),
 				_classPK, RandomTestUtil.randomLocaleStringMap(), true,
 				ServiceContextTestUtil.getServiceContext(
 					_group, TestPropsValues.getUserId()));
@@ -292,7 +309,9 @@ public class SegmentsExperienceServiceTest {
 			_group.getGroupId());
 
 		_segmentsExperienceService.addSegmentsExperience(
-			null, _group.getGroupId(), segmentsEntry.getSegmentsEntryId(),
+			null, _group.getGroupId(), segmentsEntry.getExternalReferenceCode(),
+			ScopeUtil.getItemScopeExternalReferenceCode(
+				segmentsEntry.getGroupId(), _group.getGroupId()),
 			_classPK, RandomTestUtil.randomLocaleStringMap(), true,
 			new UnicodeProperties(true),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
@@ -315,8 +334,10 @@ public class SegmentsExperienceServiceTest {
 
 		_segmentsExperienceService.addSegmentsExperience(
 			externalReferenceCode, _group.getGroupId(),
-			segmentsEntry.getSegmentsEntryId(), _classPK,
-			RandomTestUtil.randomLocaleStringMap(), true,
+			segmentsEntry.getExternalReferenceCode(),
+			ScopeUtil.getItemScopeExternalReferenceCode(
+				segmentsEntry.getGroupId(), _group.getGroupId()),
+			_classPK, RandomTestUtil.randomLocaleStringMap(), true,
 			new UnicodeProperties(true),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
@@ -752,7 +773,10 @@ public class SegmentsExperienceServiceTest {
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceService.addSegmentsExperience(
-				null, _group.getGroupId(), segmentsEntry.getSegmentsEntryId(),
+				null, _group.getGroupId(),
+				segmentsEntry.getExternalReferenceCode(),
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					segmentsEntry.getGroupId(), _group.getGroupId()),
 				_classPK, RandomTestUtil.randomLocaleStringMap(), true,
 				new UnicodeProperties(true),
 				ServiceContextTestUtil.getServiceContext(
@@ -761,7 +785,7 @@ public class SegmentsExperienceServiceTest {
 		SegmentsExperience updatedSegmentsExperience =
 			_segmentsExperienceService.updateSegmentsExperience(
 				segmentsExperience.getSegmentsExperienceId(),
-				RandomTestUtil.randomLong(),
+				RandomTestUtil.randomString(), null,
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomBoolean(),
 				UnicodePropertiesBuilder.create(
@@ -787,7 +811,10 @@ public class SegmentsExperienceServiceTest {
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceService.addSegmentsExperience(
-				null, _group.getGroupId(), segmentsEntry.getSegmentsEntryId(),
+				null, _group.getGroupId(),
+				segmentsEntry.getExternalReferenceCode(),
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					segmentsEntry.getGroupId(), _group.getGroupId()),
 				_classPK, RandomTestUtil.randomLocaleStringMap(), true,
 				UnicodePropertiesBuilder.create(
 					true
@@ -800,7 +827,7 @@ public class SegmentsExperienceServiceTest {
 		SegmentsExperience updatedSegmentsExperience =
 			_segmentsExperienceService.updateSegmentsExperience(
 				segmentsExperience.getSegmentsExperienceId(),
-				RandomTestUtil.randomLong(),
+				RandomTestUtil.randomString(), null,
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomBoolean());
 
@@ -826,7 +853,7 @@ public class SegmentsExperienceServiceTest {
 
 			_segmentsExperienceService.updateSegmentsExperience(
 				segmentsExperience.getSegmentsExperienceId(),
-				RandomTestUtil.randomLong(),
+				RandomTestUtil.randomString(), null,
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomBoolean());
 		}
@@ -852,7 +879,7 @@ public class SegmentsExperienceServiceTest {
 
 			_segmentsExperienceService.updateSegmentsExperience(
 				segmentsExperience.getSegmentsExperienceId(),
-				RandomTestUtil.randomLong(),
+				RandomTestUtil.randomString(), null,
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomBoolean());
 		}
@@ -878,7 +905,7 @@ public class SegmentsExperienceServiceTest {
 
 			_segmentsExperienceService.updateSegmentsExperience(
 				segmentsExperience.getSegmentsExperienceId(),
-				RandomTestUtil.randomLong(),
+				RandomTestUtil.randomString(), null,
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomBoolean());
 		}
@@ -892,7 +919,9 @@ public class SegmentsExperienceServiceTest {
 			_group.getGroupId());
 
 		return _segmentsExperienceService.addSegmentsExperience(
-			null, _group.getGroupId(), segmentsEntry.getSegmentsEntryId(),
+			null, _group.getGroupId(), segmentsEntry.getExternalReferenceCode(),
+			ScopeUtil.getItemScopeExternalReferenceCode(
+				segmentsEntry.getGroupId(), _group.getGroupId()),
 			_classPK, RandomTestUtil.randomLocaleStringMap(), true,
 			new UnicodeProperties(true), serviceContext);
 	}

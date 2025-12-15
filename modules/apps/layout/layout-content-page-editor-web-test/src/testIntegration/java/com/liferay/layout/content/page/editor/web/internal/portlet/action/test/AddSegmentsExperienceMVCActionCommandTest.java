@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
@@ -181,17 +182,27 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			_group.getGroupId());
 
+		String segmentsEntryScopeERC =
+			ScopeUtil.getItemScopeExternalReferenceCode(
+				segmentsEntry.getGroupId(), _draftLayout.getGroupId());
+
 		JSONObject responseJSONObject = _addSegmentsExperience(
-			name, segmentsEntry.getSegmentsEntryId());
+			name, segmentsEntry.getExternalReferenceCode(),
+			segmentsEntryScopeERC);
 
 		JSONObject segmentsExperienceJSONObject =
 			responseJSONObject.getJSONObject("segmentsExperience");
 
 		Assert.assertEquals(name, segmentsExperienceJSONObject.get("name"));
 		Assert.assertEquals(
-			segmentsEntry.getSegmentsEntryId(),
-			GetterUtil.getLong(
-				segmentsExperienceJSONObject.get("segmentsEntryId")));
+			segmentsEntry.getExternalReferenceCode(),
+			GetterUtil.getString(
+				segmentsExperienceJSONObject.get("segmentsEntryERC")));
+		Assert.assertTrue(
+			Validator.isNull(
+				GetterUtil.getString(
+					segmentsExperienceJSONObject.get(
+						"segmentsEntryScopeERC"))));
 
 		long segmentsExperienceId = GetterUtil.getLong(
 			segmentsExperienceJSONObject.get("segmentsExperienceId"));
@@ -204,8 +215,13 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 		Assert.assertEquals(
 			name, segmentsExperience.getName(LocaleUtil.getDefault()));
 		Assert.assertEquals(
-			segmentsEntry.getSegmentsEntryId(),
-			segmentsExperience.getSegmentsEntryId());
+			segmentsEntry.getExternalReferenceCode(),
+			segmentsExperience.getSegmentsEntryERC());
+		Assert.assertTrue(
+			Validator.isNull(segmentsExperience.getSegmentsEntryScopeERC()));
+		Assert.assertEquals(
+			segmentsEntry.getGroupId(),
+			segmentsExperience.getSegmentsEntryGroupId());
 		Assert.assertEquals(
 			segmentsExperienceId, segmentsExperience.getSegmentsExperienceId());
 
@@ -234,7 +250,7 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 
 	private long _addSegmentsExperience() throws Exception {
 		JSONObject responseJSONObject = _addSegmentsExperience(
-			RandomTestUtil.randomString(), 0);
+			RandomTestUtil.randomString(), null, null);
 
 		JSONObject segmentsExperienceJSONObject =
 			responseJSONObject.getJSONObject("segmentsExperience");
@@ -243,13 +259,15 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 			segmentsExperienceJSONObject.get("segmentsExperienceId"));
 	}
 
-	private JSONObject _addSegmentsExperience(String name, long segmentsEntryId)
+	private JSONObject _addSegmentsExperience(
+			String name, String segmentsEntryERC, String segmentsEntryScopeERC)
 		throws Exception {
 
 		return ReflectionTestUtil.invoke(
 			_mvcActionCommand, "addSegmentsExperience",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
-			_getMockLiferayPortletActionRequest(name, segmentsEntryId),
+			_getMockLiferayPortletActionRequest(
+				name, segmentsEntryERC, segmentsEntryScopeERC),
 			new MockLiferayPortletActionResponse());
 	}
 
@@ -284,7 +302,7 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 	}
 
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
-			String name, long segmentsEntryId)
+			String name, String segmentsEntryERC, String segmentsEntryScopeERC)
 		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
@@ -296,7 +314,9 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 		mockLiferayPortletActionRequest.addParameter(
 			"plid", String.valueOf(_draftLayout.getPlid()));
 		mockLiferayPortletActionRequest.addParameter(
-			"segmentsEntryId", String.valueOf(segmentsEntryId));
+			"segmentsEntryERC", String.valueOf(segmentsEntryERC));
+		mockLiferayPortletActionRequest.addParameter(
+			"segmentsEntryScopeERC", String.valueOf(segmentsEntryScopeERC));
 		mockLiferayPortletActionRequest.setAttribute(
 			JavaConstants.JAKARTA_PORTLET_CONFIG, null);
 

@@ -881,9 +881,10 @@ public class LayoutsImporterTest {
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.addSegmentsExperience(
-				null, TestPropsValues.getUserId(), _group1.getGroupId(), 0,
-				draftLayout.getPlid(), RandomTestUtil.randomLocaleStringMap(),
-				false, new UnicodeProperties(true), _serviceContext1);
+				null, TestPropsValues.getUserId(), _group1.getGroupId(), null,
+				null, draftLayout.getPlid(),
+				RandomTestUtil.randomLocaleStringMap(), false,
+				new UnicodeProperties(true), _serviceContext1);
 
 		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel =
 			_layoutPageTemplateStructureRelLocalService.

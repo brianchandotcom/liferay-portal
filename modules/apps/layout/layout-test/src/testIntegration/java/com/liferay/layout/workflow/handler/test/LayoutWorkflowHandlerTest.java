@@ -65,7 +65,6 @@ import com.liferay.portal.search.test.util.IndexerFixture;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
@@ -282,8 +281,7 @@ public class LayoutWorkflowHandlerTest {
 
 		SegmentsExperience segmentsExperience1 =
 			SegmentsTestUtil.addSegmentsExperience(
-				_group.getGroupId(), SegmentsEntryConstants.ID_DEFAULT,
-				draftLayout.getPlid());
+				_group.getGroupId(), null, null, draftLayout.getPlid());
 
 		String experience1HeadingText = RandomTestUtil.randomString();
 
@@ -294,8 +292,7 @@ public class LayoutWorkflowHandlerTest {
 
 		SegmentsExperience segmentsExperience2 =
 			SegmentsTestUtil.addSegmentsExperience(
-				_group.getGroupId(), SegmentsEntryConstants.ID_DEFAULT,
-				draftLayout.getPlid());
+				_group.getGroupId(), null, null, draftLayout.getPlid());
 
 		String experience2HeadingText = RandomTestUtil.randomString();
 
@@ -373,8 +370,7 @@ public class LayoutWorkflowHandlerTest {
 
 		SegmentsExperience segmentsExperience1 =
 			SegmentsTestUtil.addSegmentsExperience(
-				_group.getGroupId(), SegmentsEntryConstants.ID_DEFAULT,
-				draftLayout.getPlid());
+				_group.getGroupId(), null, null, draftLayout.getPlid());
 
 		String experience1HeadingText = RandomTestUtil.randomString();
 
@@ -385,8 +381,7 @@ public class LayoutWorkflowHandlerTest {
 
 		SegmentsExperience segmentsExperience2 =
 			SegmentsTestUtil.addSegmentsExperience(
-				_group.getGroupId(), SegmentsEntryConstants.ID_DEFAULT,
-				draftLayout.getPlid());
+				_group.getGroupId(), null, null, draftLayout.getPlid());
 
 		String experience2HeadingText = RandomTestUtil.randomString();
 

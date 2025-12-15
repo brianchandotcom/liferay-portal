@@ -43,7 +43,8 @@ public class UpdateSegmentsExperienceMVCActionCommand
 			"segmentsExperience",
 			_segmentsExperienceService.updateSegmentsExperience(
 				ParamUtil.getLong(actionRequest, "segmentsExperienceId"),
-				ParamUtil.getLong(actionRequest, "segmentsEntryId"),
+				ParamUtil.getString(actionRequest, "segmentsEntryERC"),
+				ParamUtil.getString(actionRequest, "segmentsEntryScopeERC"),
 				Collections.singletonMap(
 					LocaleUtil.getSiteDefault(),
 					ParamUtil.getString(actionRequest, "name")),

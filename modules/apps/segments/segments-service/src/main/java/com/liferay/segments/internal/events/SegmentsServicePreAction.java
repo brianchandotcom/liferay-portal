@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.SegmentsEntryRetriever;
 import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.context.RequestContextMapper;
 import com.liferay.segments.model.SegmentsExperience;
@@ -85,14 +86,20 @@ public class SegmentsServicePreAction extends Action {
 					_segmentsExperienceLocalService.fetchSegmentsExperience(
 						segmentsExperienceId);
 
-				if (segmentsExperience != null) {
-					segmentsExperienceIdsSegmentsEntryIds.add(
-						segmentsExperience.getSegmentsEntryId());
+				if (segmentsExperience == null) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to get segments experience " +
+								segmentsExperienceId);
+					}
+
+					continue;
 				}
-				else if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Unable to get segments experience " +
-							segmentsExperienceId);
+
+				long segmentsEntryId = segmentsExperience.getSegmentsEntryId();
+
+				if (segmentsEntryId != SegmentsEntryConstants.ID_MISSING) {
+					segmentsExperienceIdsSegmentsEntryIds.add(segmentsEntryId);
 				}
 			}
 
@@ -100,7 +107,7 @@ public class SegmentsServicePreAction extends Action {
 				(long[])httpServletRequest.getAttribute(
 					SegmentsWebKeys.SEGMENTS_ENTRY_IDS);
 
-			long[] segmentsEntryIds = null;
+			long[] segmentsEntryIds;
 
 			if (cachedSegmentsEntryIds != null) {
 				segmentsEntryIds = cachedSegmentsEntryIds;

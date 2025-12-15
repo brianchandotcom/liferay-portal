@@ -3753,11 +3753,11 @@ public class BundleSiteInitializerTest {
 		List<SegmentsExperience> publishLayoutSegmentsExperiences =
 			_segmentsExperienceLocalService.getSegmentsExperiences(
 				_group.getGroupId(),
-				new long[] {
-					segmentsEntry1.getSegmentsEntryId(),
-					segmentsEntry2.getSegmentsEntryId()
+				new String[] {
+					segmentsEntry1.getExternalReferenceCode(),
+					segmentsEntry2.getExternalReferenceCode()
 				},
-				layout.getPlid(), true);
+				null, layout.getPlid(), true);
 
 		Assert.assertEquals(
 			publishLayoutSegmentsExperiences.toString(), 2,
@@ -3787,11 +3787,11 @@ public class BundleSiteInitializerTest {
 		List<SegmentsExperience> draftLayoutSegmentsExperiences =
 			_segmentsExperienceLocalService.getSegmentsExperiences(
 				_group.getGroupId(),
-				new long[] {
-					segmentsEntry1.getSegmentsEntryId(),
-					segmentsEntry2.getSegmentsEntryId()
+				new String[] {
+					segmentsEntry1.getExternalReferenceCode(),
+					segmentsEntry2.getExternalReferenceCode()
 				},
-				draftLayout.getPlid(), true);
+				null, draftLayout.getPlid(), true);
 
 		Assert.assertEquals(
 			draftLayoutSegmentsExperiences.toString(), 2,

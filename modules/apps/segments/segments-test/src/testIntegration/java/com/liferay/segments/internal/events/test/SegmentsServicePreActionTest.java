@@ -44,7 +44,6 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.configuration.SegmentsCompanyConfiguration;
 import com.liferay.segments.configuration.SegmentsConfiguration;
 import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
-import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -195,7 +194,7 @@ public class SegmentsServicePreActionTest {
 				SegmentsExperience segmentsExperience =
 					_segmentsExperienceLocalService.addSegmentsExperience(
 						null, TestPropsValues.getUserId(), _group.getGroupId(),
-						SegmentsEntryConstants.ID_DEFAULT, layout.getPlid(),
+						null, null, layout.getPlid(),
 						RandomTestUtil.randomLocaleStringMap(), true,
 						new UnicodeProperties(true),
 						ServiceContextTestUtil.getServiceContext(

@@ -109,8 +109,7 @@ public class ExportTranslationDisplayContext {
 			).put(
 				"segment",
 				_getSegmentsEntryName(
-					segmentsExperience.getSegmentsEntryId(),
-					_themeDisplay.getLocale())
+					segmentsExperience, _themeDisplay.getLocale())
 			).put(
 				"value",
 				String.valueOf(segmentsExperience.getSegmentsExperienceId())
@@ -287,13 +286,18 @@ public class ExportTranslationDisplayContext {
 		return jsonArray;
 	}
 
-	private String _getSegmentsEntryName(long segmentsEntryId, Locale locale) {
-		if (segmentsEntryId == SegmentsEntryConstants.ID_DEFAULT) {
+	private String _getSegmentsEntryName(
+		SegmentsExperience segmentsExperience, Locale locale) {
+
+		if (segmentsExperience.hasDefaultSegmentsEntry()) {
 			return SegmentsEntryConstants.getDefaultSegmentsEntryName(locale);
 		}
 
 		SegmentsEntry segmentsEntry =
-			SegmentsEntryLocalServiceUtil.fetchSegmentsEntry(segmentsEntryId);
+			SegmentsEntryLocalServiceUtil.
+				fetchSegmentsEntryByExternalReferenceCode(
+					segmentsExperience.getSegmentsEntryERC(),
+					segmentsExperience.getSegmentsEntryGroupId());
 
 		return segmentsEntry.getName(locale);
 	}

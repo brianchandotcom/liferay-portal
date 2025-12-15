@@ -11,7 +11,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
-import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsEntryService;
@@ -51,9 +50,7 @@ public class ExperienceDTOConverter
 						segmentsExperience.getNameMap()));
 				setSegments(
 					() -> {
-						if (segmentsExperience.getSegmentsEntryId() ==
-								SegmentsEntryConstants.ID_DEFAULT) {
-
+						if (segmentsExperience.hasDefaultSegmentsEntry()) {
 							return null;
 						}
 
@@ -70,8 +67,15 @@ public class ExperienceDTOConverter
 						}
 
 						SegmentsEntry segmentsEntry =
-							_segmentsEntryService.getSegmentsEntry(
-								segmentsExperience.getSegmentsEntryId());
+							_segmentsEntryService.
+								fetchSegmentsEntryByExternalReferenceCode(
+									segmentsExperience.getSegmentsEntryERC(),
+									segmentsExperience.
+										getSegmentsEntryGroupId());
+
+						if (segmentsEntry == null) {
+							return null;
+						}
 
 						return new Segment[] {
 							dtoConverter.toDTO(segmentsEntry)

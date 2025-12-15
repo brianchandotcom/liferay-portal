@@ -40,7 +40,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
-import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -111,9 +110,8 @@ public class SegmentsExperienceUpgradeProcessTest
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.addSegmentsExperience(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				SegmentsEntryConstants.ID_DEFAULT,
-				SegmentsExperienceConstants.KEY_DEFAULT,
+				null, TestPropsValues.getUserId(), _group.getGroupId(), null,
+				null, SegmentsExperienceConstants.KEY_DEFAULT,
 				RandomTestUtil.randomLong(),
 				RandomTestUtil.randomLocaleStringMap(), 0, true,
 				new UnicodeProperties(true),
@@ -185,7 +183,8 @@ public class SegmentsExperienceUpgradeProcessTest
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
 		return SegmentsTestUtil.addSegmentsExperience(
-			_group.getGroupId(), 0, _draftLayout.getPlid());
+			_group.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT, null,
+			_draftLayout.getPlid());
 	}
 
 	@Override

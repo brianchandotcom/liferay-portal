@@ -143,8 +143,9 @@ public class ExperimentUtil {
 		experiment.setDXPExperienceName(segmentsExperience.getName(locale));
 
 		SegmentsEntry segmentsEntry =
-			segmentsEntryLocalService.fetchSegmentsEntry(
-				segmentsExperience.getSegmentsEntryId());
+			segmentsEntryLocalService.fetchSegmentsEntryByExternalReferenceCode(
+				segmentsExperience.getSegmentsEntryERC(),
+				segmentsExperience.getSegmentsEntryGroupId());
 
 		if (segmentsEntry == null) {
 			experiment.setDXPSegmentId(SegmentsEntryConstants.KEY_DEFAULT);

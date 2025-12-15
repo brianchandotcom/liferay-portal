@@ -47,7 +47,8 @@ public class SegmentsExperienceStagedModelRepository
 		return _segmentsExperienceLocalService.addSegmentsExperience(
 			segmentsExperience.getExternalReferenceCode(),
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			segmentsExperience.getSegmentsEntryId(),
+			segmentsExperience.getSegmentsEntryERC(),
+			segmentsExperience.getSegmentsEntryScopeERC(),
 			segmentsExperience.getSegmentsExperienceKey(),
 			segmentsExperience.getPlid(), segmentsExperience.getNameMap(),
 			segmentsExperience.getPriority(), segmentsExperience.isActive(),

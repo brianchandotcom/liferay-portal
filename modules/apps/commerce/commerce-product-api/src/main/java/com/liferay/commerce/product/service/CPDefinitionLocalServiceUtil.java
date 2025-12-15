@@ -471,6 +471,15 @@ public class CPDefinitionLocalServiceUtil {
 			CPDefinitionId, languageId);
 	}
 
+	public static List<CPDefinition> findByExpirationDate(
+		java.util.Date expirationDate,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<CPDefinition>
+			queryDefinition) {
+
+		return getService().findByExpirationDate(
+			expirationDate, queryDefinition);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -598,15 +607,6 @@ public class CPDefinitionLocalServiceUtil {
 			groupId, status, start, end, orderByComparator);
 	}
 
-	public static List<CPDefinition> getCPDefinitions(
-		long groupId, String productTypeName, String languageId, int status,
-		int start, int end, OrderByComparator<CPDefinition> orderByComparator) {
-
-		return getService().getCPDefinitions(
-			groupId, productTypeName, languageId, status, start, end,
-			orderByComparator);
-	}
-
 	/**
 	 * Returns all the cp definitions matching the UUID and company.
 	 *
@@ -655,13 +655,6 @@ public class CPDefinitionLocalServiceUtil {
 
 	public static int getCPDefinitionsCount(long groupId, int status) {
 		return getService().getCPDefinitionsCount(groupId, status);
-	}
-
-	public static int getCPDefinitionsCount(
-		long groupId, String productTypeName, String languageId, int status) {
-
-		return getService().getCPDefinitionsCount(
-			groupId, productTypeName, languageId, status);
 	}
 
 	public static Map<java.util.Locale, String>

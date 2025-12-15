@@ -8,7 +8,6 @@ package com.liferay.commerce.product.service.base;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLocalization;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
-import com.liferay.commerce.product.service.persistence.CPDefinitionFinder;
 import com.liferay.commerce.product.service.persistence.CPDefinitionLocalizationPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
@@ -933,9 +932,6 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 
 	@Reference
 	protected CPDefinitionPersistence cpDefinitionPersistence;
-
-	@Reference
-	protected CPDefinitionFinder cpDefinitionFinder;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

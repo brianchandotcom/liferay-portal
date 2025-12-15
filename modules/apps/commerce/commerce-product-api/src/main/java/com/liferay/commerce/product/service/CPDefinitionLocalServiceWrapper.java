@@ -511,6 +511,16 @@ public class CPDefinitionLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<CPDefinition> findByExpirationDate(
+		java.util.Date expirationDate,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<CPDefinition>
+			queryDefinition) {
+
+		return _cpDefinitionLocalService.findByExpirationDate(
+			expirationDate, queryDefinition);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -663,18 +673,6 @@ public class CPDefinitionLocalServiceWrapper
 			groupId, status, start, end, orderByComparator);
 	}
 
-	@Override
-	public java.util.List<CPDefinition> getCPDefinitions(
-		long groupId, String productTypeName, String languageId, int status,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
-			orderByComparator) {
-
-		return _cpDefinitionLocalService.getCPDefinitions(
-			groupId, productTypeName, languageId, status, start, end,
-			orderByComparator);
-	}
-
 	/**
 	 * Returns all the cp definitions matching the UUID and company.
 	 *
@@ -731,14 +729,6 @@ public class CPDefinitionLocalServiceWrapper
 	@Override
 	public int getCPDefinitionsCount(long groupId, int status) {
 		return _cpDefinitionLocalService.getCPDefinitionsCount(groupId, status);
-	}
-
-	@Override
-	public int getCPDefinitionsCount(
-		long groupId, String productTypeName, String languageId, int status) {
-
-		return _cpDefinitionLocalService.getCPDefinitionsCount(
-			groupId, productTypeName, languageId, status);
 	}
 
 	@Override

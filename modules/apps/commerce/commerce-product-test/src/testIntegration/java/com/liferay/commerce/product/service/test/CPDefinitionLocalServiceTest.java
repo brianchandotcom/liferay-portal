@@ -32,6 +32,7 @@ import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
@@ -637,6 +638,44 @@ public class CPDefinitionLocalServiceTest {
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED, cpDefinition.getStatus());
+	}
+
+	@Test
+	public void testFindByExpirationDate() throws Exception {
+		long time = System.currentTimeMillis();
+
+		Date pastDate = new Date(time - Time.DAY);
+
+		Date futureDate = new Date(time + Time.DAY);
+
+		CPDefinition cpDefinition1 = CPTestUtil.addCPDefinitionFromCatalog(
+			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME,
+			new Date(time - Time.MONTH), futureDate, false, false,
+			WorkflowConstants.STATUS_APPROVED);
+
+		cpDefinition1.setExpirationDate(pastDate);
+
+		cpDefinition1 = _cpDefinitionLocalService.updateCPDefinition(
+			cpDefinition1);
+
+		CPTestUtil.addCPDefinitionFromCatalog(
+			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME,
+			new Date(time - Time.MONTH), futureDate, false, false,
+			WorkflowConstants.STATUS_APPROVED);
+
+		List<CPDefinition> cpDefinitions =
+			_cpDefinitionLocalService.findByExpirationDate(
+				new Date(time),
+				new QueryDefinition(WorkflowConstants.STATUS_APPROVED));
+
+		Assert.assertEquals(
+			"Expected 1 CPDefinition, but found", 1, cpDefinitions.size());
+
+		CPDefinition cpDefinition2 = cpDefinitions.get(0);
+
+		Assert.assertEquals(
+			cpDefinition1.getCPDefinitionId(),
+			cpDefinition2.getCPDefinitionId());
 	}
 
 	@Test

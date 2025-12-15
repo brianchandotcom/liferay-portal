@@ -1,0 +1,1 @@
+"@liferay/language/": "/o/js/language/", "/o/frontend-js-web/__liferay__/index.js": "/o/frontend-js-web/__liferay__/index.([$HASH$]).js"

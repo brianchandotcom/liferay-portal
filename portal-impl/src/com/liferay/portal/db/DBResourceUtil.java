@@ -101,14 +101,14 @@ public class DBResourceUtil {
 			getNonserviceBuilderPrimaryKeyColumnNames(long companyId)
 		throws PortalException {
 
+		Map<String, String[]> nonserviceBuildPrimaryKeyColumnNames =
+			new HashMap<>();
+
 		ServiceTrackerList<DBResourceProvider> serviceTrackerList =
 			_serviceTrackerListDCLSingleton.getSingleton(
 				() -> ServiceTrackerListFactory.open(
 					SystemBundleUtil.getBundleContext(),
 					DBResourceProvider.class));
-
-		Map<String, String[]> nonserviceBuildPrimaryKeyColumnNames =
-			new HashMap<>();
 
 		for (DBResourceProvider dbResourceProvider : serviceTrackerList) {
 			nonserviceBuildPrimaryKeyColumnNames.putAll(

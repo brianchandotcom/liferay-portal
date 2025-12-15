@@ -58,7 +58,7 @@ async function getSiteHomePageScreenshot(
 
 	const screenshot = await page.screenshot({
 		fullPage: true,
-		mask: [mask],
+		...(mask ? {mask: [mask]} : {}),
 		path: path.join(
 			getTempDir(),
 			`${siteKey}-${staging ? 'staging' : 'live'}.png`
@@ -256,6 +256,7 @@ testWithExportImportAtInstanceLevelFF(
 	async ({
 		apiHelpers,
 		exportImportPage,
+		page,
 		styleBooksPage,
 		uploadServletRequestSystemSettingsPage,
 	}) => {
@@ -265,7 +266,6 @@ testWithExportImportAtInstanceLevelFF(
 		let exportName: string;
 		let exportableItems1: Map<string, number>;
 		let exportableItems2: Map<string, number>;
-		let exportableItems3: Map<string, number>;
 		let objectDefinition1;
 		let objectDefinition2;
 		let objectRelationship;
@@ -341,7 +341,7 @@ testWithExportImportAtInstanceLevelFF(
 								label: {
 									en_US: `objectRelationshipLabel${getRandomInt()}`,
 								},
-								name: `objectRelationshipName${Math.floor(Math.random() * 99)}`,
+								name: `objectRelationshipName${getRandomInt()}`,
 								objectDefinitionExternalReferenceCode1:
 									objectDefinition1.externalReferenceCode,
 								objectDefinitionExternalReferenceCode2:
@@ -442,11 +442,6 @@ testWithExportImportAtInstanceLevelFF(
 			await testWithExportImportAtInstanceLevelFF.step(
 				'Import the site 1 into site 2',
 				async () => {
-					await exportImportPage.goToExport(site2.friendlyUrlPath);
-
-					exportableItems2 =
-						await exportImportPage.getExportableItems();
-
 					await exportImportPage.goToImport(site2.friendlyUrlPath);
 
 					await exportImportPage.import(exportFilePath);
@@ -462,10 +457,10 @@ testWithExportImportAtInstanceLevelFF(
 				async () => {
 					await exportImportPage.goToExport(site2.friendlyUrlPath);
 
-					exportableItems3 =
+					exportableItems2 =
 						await exportImportPage.getExportableItems();
 
-					expect(exportableItems3.size).toEqual(
+					expect(exportableItems2.size).toEqual(
 						exportableItems1.size
 					);
 
@@ -474,49 +469,44 @@ testWithExportImportAtInstanceLevelFF(
 
 							// TODO LPD-64899, LPD-65749
 
-							continue;
-						}
-						else if (name === 'Pages') {
-							expect(exportableItems3.get(name)).toBe(
-								count + exportableItems2.get('Pages')
-							);
+							expect(exportableItems2.get(name)).toBe(count);
 						}
 						else if (name === 'Style Books') {
 
 							// TODO LPD-64905
 
-							expect(
-								exportableItems3.get(name)
-							).toBeGreaterThanOrEqual(count);
+							expect(exportableItems2.get(name)).toBe(count);
 						}
 						else {
-							expect(exportableItems3.get(name)).toBe(count);
+							expect(exportableItems2.get(name)).toBe(count);
 						}
 					}
 				}
 			);
 
-			// TODO LPD-65374
-
-			/*
 			await test.step('Assert the home page screenshots from site 1 and site 2 are equal', async () => {
-
 				const comparator = getComparator('image/png');
 
 				const buffer = comparator(
-					await getSiteHomePageScreenshot(page, site1.name, {staging: false}),
-					await getSiteHomePageScreenshot(page, site2.name, {staging: false})
+					await getSiteHomePageScreenshot(page, site1.name, {
+						staging: false,
+					}),
+					await getSiteHomePageScreenshot(page, site2.name, {
+						staging: false,
+					})
 				);
 
 				if (buffer !== null && buffer.diff !== undefined) {
-					const diffPath = path.join(getTempDir(), `${site1.name}-diff.png`);
+					const diffPath = path.join(
+						getTempDir(),
+						`${site1.name}-diff.png`
+					);
 					await fs.writeFile(diffPath, buffer.diff);
 					throw new Error(
 						`The site 1 and site 2 home pages differ. Check the screenshot diff at "${diffPath}".`
 					);
 				}
 			});
-			*/
 		}
 		finally {
 			await testWithExportImportAtInstanceLevelFF.step(

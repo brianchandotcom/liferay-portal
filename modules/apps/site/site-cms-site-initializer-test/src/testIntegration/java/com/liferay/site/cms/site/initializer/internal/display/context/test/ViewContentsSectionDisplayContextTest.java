@@ -55,7 +55,7 @@ public class ViewContentsSectionDisplayContextTest
 			getFDSActionDropdownItems();
 
 		Assert.assertEquals(
-			fdsActionDropdownItems.toString(), 19,
+			fdsActionDropdownItems.toString(), 16,
 			fdsActionDropdownItems.size());
 
 		assertFDSActionDropdownItem(
@@ -100,22 +100,38 @@ public class ViewContentsSectionDisplayContextTest
 		assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(13), "move", "move", "move", null,
 			"item");
+
+		FDSActionDropdownItem permissionsParentMenuItem =
+			fdsActionDropdownItems.get(14);
+
 		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(14), "password-policies", "permissions",
-			"permissions", "get", "item");
+			permissionsParentMenuItem, "password-policies", "permissions-menu",
+			"permissions", null, "contextual");
+
+		List<FDSActionDropdownItem> permissionsChildMenuItems =
+			(List<FDSActionDropdownItem>)permissionsParentMenuItem.get("items");
+
+		Assert.assertEquals(
+			permissionsChildMenuItems.toString(), 4,
+			permissionsChildMenuItems.size());
+
 		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(15), "password-policies",
+			permissionsChildMenuItems.get(0), "password-policies",
+			"permissions", "permissions", "get", "item");
+		assertFDSActionDropdownItem(
+			permissionsChildMenuItems.get(1), "password-policies",
 			"default-permissions", "default-permissions", null, "item");
 		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(16), "password-policies",
+			permissionsChildMenuItems.get(2), "password-policies",
 			"edit-and-propagate-default-permissions",
 			"edit-and-propagate-default-permissions", null, "item");
 		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(17), "password-policies",
+			permissionsChildMenuItems.get(3), "password-policies",
 			"reset-to-default-permissions", "reset-to-default-permissions",
 			null, "item");
+
 		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(18), "trash", "delete", "delete", null,
+			fdsActionDropdownItems.get(15), "trash", "delete", "delete", null,
 			"item");
 	}
 

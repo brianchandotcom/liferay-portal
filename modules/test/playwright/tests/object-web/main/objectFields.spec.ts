@@ -2271,5 +2271,67 @@ defaultValueTest.describe(
 				}
 			}
 		);
+
+		defaultValueTest(
+			'model builder rightSidebar width only increases if configuration is enabled',
+			{tag: ['@LPD-70980']},
+			async ({
+				apiHelpers,
+				modelBuilderDiagramPage,
+				modelBuilderLeftSidebarPage,
+				modelBuilderObjectDefinitionNodePage,
+				modelBuilderRightSidebarPage,
+				page,
+			}) => {
+				const objectFields = generateObjectFields({
+					objectFieldBusinessTypes: ['Text'],
+				});
+
+				const objectDefinition =
+					await apiHelpers.objectAdmin.postRandomObjectDefinition({
+						objectFields,
+						status: {code: 0},
+					});
+
+				apiHelpers.data.push({
+					id: objectDefinition.id,
+					type: 'objectDefinition',
+				});
+
+				await modelBuilderDiagramPage.goto({
+					objectFolderName: 'Default',
+				});
+
+				await modelBuilderLeftSidebarPage.sidebarItems
+					.filter({hasText: objectDefinition.name})
+					.click();
+
+				await modelBuilderObjectDefinitionNodePage.clickShowAllFieldsButton(
+					objectDefinition.name,
+					modelBuilderDiagramPage.objectDefinitionNodes
+				);
+
+				await modelBuilderDiagramPage.objectDefinitionNodes
+					.filter({hasText: objectDefinition.name})
+					.getByText(objectFields[0].label.en_US, {exact: true})
+					.click();
+
+				const rightSidebar = page.locator(
+					'.lfr__objects-custom-vertical-bar-content > .sidebar[id*="ModelBuilderRightSidebar"]'
+				);
+
+				await expect(rightSidebar).toHaveCSS('width', '320px');
+
+				await modelBuilderRightSidebarPage.advancedTab.click();
+
+				await modelBuilderRightSidebarPage.useDefaultValueToggle.check();
+
+				await expect(rightSidebar).toHaveCSS('width', '500px');
+
+				await modelBuilderRightSidebarPage.useDefaultValueToggle.uncheck();
+
+				await expect(rightSidebar).toHaveCSS('width', '320px');
+			}
+		);
 	}
 );

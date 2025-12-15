@@ -5,6 +5,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
@@ -218,7 +219,8 @@ public class ChangeMasterLayoutMVCActionCommand
 
 		List<StyleBookEntry> styleBookEntries =
 			_styleBookEntryLocalService.getStyleBookEntries(
-				layout.getGroupId(), frontendTokenDefinition.getThemeId());
+				_staging.getLiveGroupId(layout.getGroupId()),
+				frontendTokenDefinition.getThemeId());
 
 		for (StyleBookEntry styleBookEntry : styleBookEntries) {
 			styleBooksJSONArray.put(
@@ -263,6 +265,9 @@ public class ChangeMasterLayoutMVCActionCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private Staging _staging;
 
 	@Reference
 	private StyleBookEntryLocalService _styleBookEntryLocalService;

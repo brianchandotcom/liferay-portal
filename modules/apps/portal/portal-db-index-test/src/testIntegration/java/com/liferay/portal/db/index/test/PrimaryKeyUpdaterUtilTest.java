@@ -115,11 +115,6 @@ public class PrimaryKeyUpdaterUtilTest {
 	@Test
 	public void testUpdateAllPrimaryKeys() throws Exception {
 		_testUpdateAllPrimaryKeys();
-	}
-
-	@Test
-	public void testUpdateAllPrimaryKeysSkippingServiceLayer()
-		throws Exception {
 
 		try (AutoCloseable autoCloseable1 =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(

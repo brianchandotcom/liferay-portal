@@ -37,9 +37,11 @@ public class PortletPreferencesPostUpgradeDataCleanupProcess
 	implements PostUpgradeDataCleanupProcess {
 
 	public PortletPreferencesPostUpgradeDataCleanupProcess(
-		Connection connection, PortletLocalService portletLocalService) {
+		Connection connection, boolean deletePortlets,
+		PortletLocalService portletLocalService) {
 
 		_connection = connection;
+		_deletePortlets = deletePortlets;
 		_portletLocalService = portletLocalService;
 
 		_dbInspector = new DBInspector(connection);
@@ -82,16 +84,21 @@ public class PortletPreferencesPostUpgradeDataCleanupProcess
 						continue;
 					}
 
-					long id_ = resultSet.getLong(1);
+					if (_deletePortlets) {
+						long id_ = resultSet.getLong(1);
 
-					_portletLocalService.deletePortlet(id_);
+						_portletLocalService.deletePortlet(id_);
+					}
 
 					DataCleanupLoggingUtil.logDelete(
-						_log, 1, _dbInspector.normalizeName("Portlet"),
+						_log, 1, !_deletePortlets,
+						_dbInspector.normalizeName("Portlet"),
 						StringBundler.concat(
 							"\"", portletId, "\" is not installed"));
 				}
+			}
 
+			if (_deletePortlets) {
 				UpgradeProcess upgradeProcess = new PortletUpgradeProcess(
 					portletIds);
 
@@ -99,10 +106,12 @@ public class PortletPreferencesPostUpgradeDataCleanupProcess
 			}
 		}
 
-		UpgradeProcess upgradeProcess =
-			new PortletPreferencesDataCleanupPreupgradeProcess();
+		if (_deletePortlets) {
+			UpgradeProcess upgradeProcess =
+				new PortletPreferencesDataCleanupPreupgradeProcess();
 
-		upgradeProcess.upgrade();
+			upgradeProcess.upgrade();
+		}
 
 		if (DBUpgrader.isUpgradeClient() && _log.isInfoEnabled()) {
 			_log.info(
@@ -116,6 +125,7 @@ public class PortletPreferencesPostUpgradeDataCleanupProcess
 
 	private final Connection _connection;
 	private final DBInspector _dbInspector;
+	private final boolean _deletePortlets;
 	private final PortletLocalService _portletLocalService;
 
 	private static class PortletUpgradeProcess

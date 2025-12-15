@@ -25,7 +25,7 @@ public class DataCleanupLoggingUtil {
 	}
 
 	public static void logDelete(
-		Log log, long count, String tableName, String cause) {
+		Log log, long count, boolean readOnly, String tableName, String cause) {
 
 		if ((count < 1) || !log.isInfoEnabled()) {
 			return;
@@ -34,7 +34,14 @@ public class DataCleanupLoggingUtil {
 		log.info(
 			StringBundler.concat(
 				"Table ", tableName, ", ", String.valueOf(count), " row",
-				(count > 1) ? "s " : " ", "deleted because ", cause));
+				(count > 1) ? "s " : " ", readOnly ? "should be " : "",
+				"deleted because ", cause));
+	}
+
+	public static void logDelete(
+		Log log, long count, String tableName, String cause) {
+
+		logDelete(log, count, false, tableName, cause);
 	}
 
 	public static void logDrop(Log log, String tableName, String cause) {

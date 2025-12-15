@@ -60,7 +60,7 @@ public class PostUpgradeDataCleanupVerifyProcess extends VerifyProcess {
 			new ClassNamePostUpgradeDataCleanupProcess(
 				_classNameLocalService, connection),
 			new PortletPreferencesPostUpgradeDataCleanupProcess(
-				connection, _portletLocalService),
+				connection, false, _portletLocalService),
 			new ResourceActionPostUpgradeDataCleanupProcess(
 				connection, _resourceActionLocalService),
 			new ServiceComponentPostUpgradeDataCleanupProcess(

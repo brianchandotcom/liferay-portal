@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterMasterTokenTransitionListener;
 import com.liferay.portal.kernel.cluster.ClusterNode;
+import com.liferay.portal.kernel.cluster.ClusterableInvokerUtil;
 import com.liferay.portal.kernel.log4j.Log4JUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
@@ -237,39 +238,54 @@ public class ClusterGeneralTest implements Serializable {
 			TomcatNode tomcatNode1, TomcatNode tomcatNode2)
 		throws Exception {
 
-		long companyId = tomcatNode1.syncExecute(
-			() -> {
-				Company company = CompanyTestUtil.addCompany();
+		long originalTimeoutNode1 =
+			_setAndGetClusterableAdviceCallMasterTimeout(tomcatNode1, 0L);
 
-				return company.getCompanyId();
-			});
+		long originalTimeoutNode2 =
+			_setAndGetClusterableAdviceCallMasterTimeout(tomcatNode2, 0L);
 
-		Assert.assertNotNull(
-			tomcatNode2.syncExecute(
-				() -> CompanyLocalServiceUtil.fetchCompany(companyId)));
-
-		tomcatNode2.syncExecute(
-			() -> {
-				TestPortalInstanceLifecycleListener.register();
-
-				return null;
-			});
-
-		Assert.assertNull(
-			tomcatNode1.syncExecute(
+		try {
+			long companyId = tomcatNode1.syncExecute(
 				() -> {
-					CompanyLocalServiceUtil.deleteCompany(companyId);
+					Company company = CompanyTestUtil.addCompany();
 
-					return CompanyLocalServiceUtil.fetchCompany(companyId);
-				}));
+					return company.getCompanyId();
+				});
 
-		Assert.assertNull(
+			Assert.assertNotNull(
+				tomcatNode2.syncExecute(
+					() -> CompanyLocalServiceUtil.fetchCompany(companyId)));
+
 			tomcatNode2.syncExecute(
 				() -> {
-					TestPortalInstanceLifecycleListener.await();
+					TestPortalInstanceLifecycleListener.register();
 
-					return CompanyLocalServiceUtil.fetchCompany(companyId);
-				}));
+					return null;
+				});
+
+			Assert.assertNull(
+				tomcatNode1.syncExecute(
+					() -> {
+						CompanyLocalServiceUtil.deleteCompany(companyId);
+
+						return CompanyLocalServiceUtil.fetchCompany(companyId);
+					}));
+
+			Assert.assertNull(
+				tomcatNode2.syncExecute(
+					() -> {
+						TestPortalInstanceLifecycleListener.await();
+
+						return CompanyLocalServiceUtil.fetchCompany(companyId);
+					}));
+		}
+		finally {
+			_setAndGetClusterableAdviceCallMasterTimeout(
+				tomcatNode1, originalTimeoutNode1);
+
+			_setAndGetClusterableAdviceCallMasterTimeout(
+				tomcatNode2, originalTimeoutNode2);
+		}
 	}
 
 	private void _assertNodesVisibleToEachOther(
@@ -392,6 +408,16 @@ public class ClusterGeneralTest implements Serializable {
 		// Assert mutual visibility with the new restart node
 
 		_assertNodesVisibleToEachOther(restartTomcatNode, verifierTomcatNode);
+	}
+
+	private long _setAndGetClusterableAdviceCallMasterTimeout(
+			TomcatNode tomcatNode, long timeout)
+		throws Exception {
+
+		return tomcatNode.syncExecute(
+			() -> ReflectionTestUtil.getAndSetFieldValue(
+				ClusterableInvokerUtil.class,
+				"_CLUSTERABLE_ADVICE_CALL_MASTER_TIMEOUT", timeout));
 	}
 
 	private void _testCanUpdateLogLevelsForAllNodes(

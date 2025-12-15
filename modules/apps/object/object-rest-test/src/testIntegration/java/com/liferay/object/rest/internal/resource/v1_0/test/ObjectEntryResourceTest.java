@@ -16038,8 +16038,15 @@ public class ObjectEntryResourceTest {
 					return null;
 				}
 
-				Scope scope = Scope.of(
-					dlFileEntry.getGroupId(), LocaleUtil.getDefault());
+				Group group = _groupLocalService.getGroup(
+					dlFileEntry.getGroupId());
+
+				Scope.Type type =
+					(group.getType() == GroupConstants.TYPE_DEPOT) ?
+						Scope.Type.ASSET_LIBRARY : Scope.Type.SITE;
+
+				Scope scope = Scope.ofReference(
+					group.getExternalReferenceCode(), type);
 
 				return JSONFactoryUtil.createJSONObject(scope.toString());
 			}

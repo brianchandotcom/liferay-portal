@@ -774,7 +774,7 @@
 				},
 				"unapprovedChangesAllowed": {
 					"default": false,
-					"title": "Allow Unapproved Changes",
+					"title": "Allow Publishing Unapproved Changes",
 					"type": "boolean"
 				}
 			},
@@ -2813,38 +2813,6 @@
 					"default": "",
 					"type": "string"
 				},
-				"helpCenterApiPassword": {
-					"default": "",
-					"type": "string"
-				},
-				"helpCenterApiUserName": {
-					"default": "",
-					"type": "string"
-				},
-				"helpCenterFileRepoId": {
-					"default": "",
-					"type": "string"
-				},
-				"helpCenterFileRepoURL": {
-					"default": "",
-					"type": "string"
-				},
-				"helpCenterGetAccountApiEndpoint": {
-					"default": "",
-					"type": "string"
-				},
-				"helpCenterJsonwsURL": {
-					"default": "",
-					"type": "string"
-				},
-				"helpCenterTicketAttachmentApiEndpoint": {
-					"default": "",
-					"type": "string"
-				},
-				"helpCenterTokenTicketDir": {
-					"default": "",
-					"type": "string"
-				},
 				"helpCenterURL": {
 					"default": "",
 					"type": "string"
@@ -2974,6 +2942,30 @@
 				},
 				"pid": {
 					"const": "com.liferay.osb.patcher.configuration.PatcherConfiguration"
+				},
+				"supportLiferayAccountSearchApiEndpoint": {
+					"default": "",
+					"type": "string"
+				},
+				"supportLiferayApiClientId": {
+					"default": "",
+					"type": "string"
+				},
+				"supportLiferayApiClientSecret": {
+					"default": "",
+					"type": "string"
+				},
+				"supportLiferayLfuURL": {
+					"default": "",
+					"type": "string"
+				},
+				"supportLiferayTicketAttachmentApiEndpoint": {
+					"default": "",
+					"type": "string"
+				},
+				"supportLiferayURL": {
+					"default": "",
+					"type": "string"
 				},
 				"troubleshootingURL": {
 					"default": "",

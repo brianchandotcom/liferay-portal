@@ -767,10 +767,6 @@ paths:
                     schema:
                         type: string
                 -   in: query
-                    name: filter
-                    schema:
-                        type: string
-                -   in: query
                     name: nestedFields
                     schema:
                         type: string
@@ -930,10 +926,6 @@ paths:
                         type: array
                 -   in: query
                     name: fields
-                    schema:
-                        type: string
-                -   in: query
-                    name: filter
                     schema:
                         type: string
                 -   in: query
@@ -1654,10 +1646,6 @@ paths:
                     schema:
                         type: string
                 -   in: query
-                    name: filter
-                    schema:
-                        type: string
-                -   in: query
                     name: nestedFields
                     schema:
                         type: string
@@ -1842,10 +1830,6 @@ paths:
                         type: array
                 -   in: query
                     name: fields
-                    schema:
-                        type: string
-                -   in: query
-                    name: filter
                     schema:
                         type: string
                 -   in: query

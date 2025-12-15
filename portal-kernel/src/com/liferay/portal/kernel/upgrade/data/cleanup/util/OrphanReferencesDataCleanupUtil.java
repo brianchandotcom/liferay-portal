@@ -35,7 +35,7 @@ import java.util.Set;
 public class OrphanReferencesDataCleanupUtil {
 
 	public static void cleanUpTable(
-			Connection connection, String[] customJoinClauses,
+			Connection connection, String[] customJoinClauses, boolean readOnly,
 			String sourceAdditionalWhereClause, String sourceColumnName,
 			String sourceTableName, String[] targetColumnNames,
 			String targetTableName)
@@ -101,7 +101,9 @@ public class OrphanReferencesDataCleanupUtil {
 						sourceTableName, targetColumnNames, targetTableName)));
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
-			preparedStatement2.execute();
+			if (!readOnly) {
+				preparedStatement2.execute();
+			}
 
 			if (!_log.isInfoEnabled()) {
 				return;
@@ -109,7 +111,7 @@ public class OrphanReferencesDataCleanupUtil {
 
 			while (resultSet.next()) {
 				DataCleanupLoggingUtil.logDelete(
-					_log, resultSet.getLong(2), sourceTableName,
+					_log, resultSet.getLong(2), readOnly, sourceTableName,
 					StringBundler.concat(
 						sourceColumnName, StringPool.SPACE,
 						resultSet.getObject(1), " was not found in column",
@@ -123,6 +125,19 @@ public class OrphanReferencesDataCleanupUtil {
 				safeCloseable.close();
 			}
 		}
+	}
+
+	public static void cleanUpTable(
+			Connection connection, String[] customJoinClauses,
+			String sourceAdditionalWhereClause, String sourceColumnName,
+			String sourceTableName, String[] targetColumnNames,
+			String targetTableName)
+		throws Exception {
+
+		cleanUpTable(
+			connection, customJoinClauses, false, sourceAdditionalWhereClause,
+			sourceColumnName, sourceTableName, targetColumnNames,
+			targetTableName);
 	}
 
 	public static List<String> getNormalizedExcludedTableNames(

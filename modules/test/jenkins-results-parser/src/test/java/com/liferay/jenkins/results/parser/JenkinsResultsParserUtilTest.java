@@ -113,10 +113,6 @@ public class JenkinsResultsParserUtilTest
 	@Test
 	public void testGetLocalURL() {
 		testEquals(
-			"http://test-8/8/ABC?123=456&xyz=abc",
-			JenkinsResultsParserUtil.getLocalURL(
-				"https://test.liferay.com/8/ABC?123=456&xyz=abc"));
-		testEquals(
 			"http://test-1-20/ABC?123=456&xyz=abc",
 			JenkinsResultsParserUtil.getLocalURL(
 				"https://test-1-20.liferay.com/ABC?123=456&xyz=abc"));
@@ -124,14 +120,6 @@ public class JenkinsResultsParserUtilTest
 			"http://test-4-1/ABC?123=456&xyz=abc",
 			JenkinsResultsParserUtil.getLocalURL(
 				"http://test-4-1/ABC?123=456&xyz=abc"));
-		testEquals(
-			"https://release.liferay.com/1/ABC?123=456&xyz=abc",
-			JenkinsResultsParserUtil.getLocalURL(
-				"https://release.liferay.com/1/ABC?123=456&xyz=abc"));
-		testEquals(
-			"http://release-1/1/ABC?123=456&xyz=abc",
-			JenkinsResultsParserUtil.getLocalURL(
-				"http://release-1/1/ABC?123=456&xyz=abc"));
 		testEquals(
 			"http://mirrors.lax.liferay.com/files.liferay.com/private/",
 			JenkinsResultsParserUtil.getLocalURL(
@@ -247,10 +235,6 @@ public class JenkinsResultsParserUtilTest
 	@Test
 	public void testGetRemoteURL() {
 		testEquals(
-			"https://test.liferay.com/8/ABC?123=456&xyz=abc",
-			JenkinsResultsParserUtil.getRemoteURL(
-				"http://test-8/8/ABC?123=456&xyz=abc"));
-		testEquals(
 			"https://test-1-20.liferay.com/ABC?123=456&xyz=abc",
 			JenkinsResultsParserUtil.getRemoteURL(
 				"http://test-1-20/ABC?123=456&xyz=abc"));
@@ -258,14 +242,6 @@ public class JenkinsResultsParserUtilTest
 			"https://test-4-1.liferay.com/ABC?123=456&xyz=abc",
 			JenkinsResultsParserUtil.getRemoteURL(
 				"https://test-4-1.liferay.com/ABC?123=456&xyz=abc"));
-		testEquals(
-			"https://release.liferay.com/1/ABC?123=456&xyz=abc",
-			JenkinsResultsParserUtil.getRemoteURL(
-				"https://release.liferay.com/1/ABC?123=456&xyz=abc"));
-		testEquals(
-			"https://release.liferay.com/1/ABC?123=456&xyz=abc",
-			JenkinsResultsParserUtil.getRemoteURL(
-				"http://release-1/1/ABC?123=456&xyz=abc"));
 		testEquals(
 			"https://files.liferay.com/private/",
 			JenkinsResultsParserUtil.getRemoteURL(

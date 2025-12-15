@@ -93,8 +93,7 @@ public abstract class BaseObjectFieldBusinessType
 		).putAll(
 			getObjectFieldSettingsValues(
 				objectFieldSettingLocalService.
-					getObjectFieldObjectFieldSettings(
-						objectField.getObjectFieldId()))
+					getObjectFieldObjectFieldSettings(objectField))
 		).putAll(
 			ObjectFieldBusinessType.super.getProperties(
 				objectField, objectFieldRenderingContext)

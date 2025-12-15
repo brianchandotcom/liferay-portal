@@ -73,7 +73,7 @@ public class ObjectFieldImpl extends ObjectFieldBaseImpl {
 		if (_objectFieldSettings == null) {
 			_objectFieldSettings =
 				ObjectFieldSettingLocalServiceUtil.
-					getObjectFieldObjectFieldSettings(getObjectFieldId());
+					getObjectFieldObjectFieldSettings(this);
 		}
 
 		return _objectFieldSettings;

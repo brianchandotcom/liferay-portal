@@ -432,7 +432,7 @@ public class ObjectFieldLocalServiceImpl
 
 				objectField.setObjectFieldSettings(
 					_objectFieldSettingLocalService.
-						getObjectFieldObjectFieldSettings(objectFieldId));
+						getObjectFieldObjectFieldSettings(objectField));
 
 				if (Validator.isNull(objectField.getRelationshipType())) {
 					return objectField;
@@ -1210,7 +1210,7 @@ public class ObjectFieldLocalServiceImpl
 
 		newObjectField.setObjectFieldSettings(
 			_objectFieldSettingLocalService.getObjectFieldObjectFieldSettings(
-				newObjectField.getObjectFieldId()));
+				newObjectField));
 	}
 
 	private void _alterTableDropColumn(String tableName, String columnName) {

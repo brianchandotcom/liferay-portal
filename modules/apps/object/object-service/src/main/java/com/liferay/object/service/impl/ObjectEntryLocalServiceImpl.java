@@ -3490,8 +3490,7 @@ public class ObjectEntryLocalServiceImpl
 
 			objectField.setObjectFieldSettings(
 				_objectFieldSettingLocalService.
-					getObjectFieldObjectFieldSettings(
-						objectField.getObjectFieldId()));
+					getObjectFieldObjectFieldSettings(objectField));
 
 			Object value = ObjectFieldSettingUtil.getDefaultValue(
 				_ddmExpressionFactory, objectField, (Map)values);
@@ -4897,8 +4896,7 @@ public class ObjectEntryLocalServiceImpl
 
 			List<ObjectFieldSetting> objectFieldSettings =
 				_objectFieldSettingLocalService.
-					getObjectFieldObjectFieldSettings(
-						objectField.getObjectFieldId());
+					getObjectFieldObjectFieldSettings(objectField);
 
 			for (ObjectFieldSetting objectFieldSetting : objectFieldSettings) {
 				if (StringUtil.equals(

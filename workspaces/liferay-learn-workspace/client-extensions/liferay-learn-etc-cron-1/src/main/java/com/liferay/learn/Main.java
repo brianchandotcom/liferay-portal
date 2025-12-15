@@ -575,6 +575,7 @@ public class Main {
 
 		try (CloseableHttpClient closeableHttpClient =
 				httpClientBuilder.build();
+
 			CloseableHttpResponse closeableHttpResponse =
 				closeableHttpClient.execute(httpDelete)) {
 
@@ -867,6 +868,7 @@ public class Main {
 
 		try (CloseableHttpClient closeableHttpClient =
 				httpClientBuilder.build();
+
 			CloseableHttpResponse closeableHttpResponse =
 				closeableHttpClient.execute(httpPost)) {
 
@@ -1546,6 +1548,7 @@ public class Main {
 
 		try (CloseableHttpClient closeableHttpClient =
 				httpClientBuilder.build();
+
 			CloseableHttpResponse closeableHttpResponse =
 				closeableHttpClient.execute(httpPut)) {
 

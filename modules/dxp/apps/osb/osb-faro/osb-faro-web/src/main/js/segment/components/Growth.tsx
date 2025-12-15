@@ -557,7 +557,6 @@ interface ISegmentGrowthWithList {
 	id: string;
 	individualCounts?: {anonymousCount: number; knownCount: number};
 	selectedPoint: number;
-	shouldShowMembershipList?: boolean;
 	timeZoneId: string;
 }
 
@@ -570,7 +569,6 @@ const SegmentGrowthWithList: React.FC<ISegmentGrowthWithList> = ({
 	id,
 	individualCounts,
 	selectedPoint,
-	shouldShowMembershipList = true,
 	timeZoneId
 }) => {
 	const [showMembershipList, setShowMembershipList] = useState(true);
@@ -645,10 +643,9 @@ const SegmentGrowthWithList: React.FC<ISegmentGrowthWithList> = ({
 				/>
 			</div>
 
-			{shouldShowMembershipList && showMembershipList && (
+			{showMembershipList && (
 				<>
 					<SelectedPointInfo />
-
 					<SearchableEntityTable
 						{...paginationParams}
 						columns={getColumns()}

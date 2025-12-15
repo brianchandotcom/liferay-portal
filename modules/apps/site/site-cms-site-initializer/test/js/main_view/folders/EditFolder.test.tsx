@@ -89,7 +89,9 @@ describe('EditFolder', () => {
 		);
 
 		const combobox = screen.getByRole('textbox', {name: /space/i});
-		expect(combobox).toHaveValue(mockFolder.scopeKey);
+		await waitFor(() => {
+			expect(combobox).toHaveValue(mockFolder.scopeKey);
+		});
 		expect(combobox).toHaveAttribute('aria-readonly', 'true');
 	});
 

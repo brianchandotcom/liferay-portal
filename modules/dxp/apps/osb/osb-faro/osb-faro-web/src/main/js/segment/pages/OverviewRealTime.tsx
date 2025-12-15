@@ -1,17 +1,57 @@
+/* eslint-disable sort-keys */
+import * as API from 'shared/api';
 import Button from '@clayui/button';
 import Card from 'shared/components/Card';
+import ClayLink from '@clayui/link';
 import CriteriaCard from 'segment/components/criteria-card';
 import Loading from 'shared/components/Loading';
-import {Text} from '@clayui/core';
+import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React, {useMemo, useState} from 'react';
+import SearchableEntityTable from 'shared/components/SearchableEntityTable';
+import URLConstants from 'shared/util/url-constants';
 import {fetchMembershipChangesAggregations} from 'shared/api/individual-segment';
 import {formatUTCDate} from 'shared/util/date';
+import {membershipChangesColumns} from 'shared/util/table-columns';
 import {ReferencedObjectsProvider} from 'segment/segment-editor/dynamic/context/referencedObjects';
 import {Segment} from 'shared/util/records';
 import {SegmentGrowthChart} from 'segment/components/Growth';
 import {SegmentTypes} from 'shared/util/constants';
+import {Text} from '@clayui/core';
 import {useRequest} from 'shared/hooks/useRequest';
 import {useTimeZone} from 'shared/hooks/useTimeZone';
+
+// type AllMembers = {
+// 	memberName: string;
+// 	email: string;
+// 	accountName?: string;
+// 	firstSeenDate: string;
+// 	lastActive: string;
+// 	profileType: string;
+// };
+
+// type MemberChanges = {
+// 	memberName: string;
+// 	email: string;
+// 	accountName?: string;
+// 	firstSeenDate: string;
+// 	lastActive: string;
+// 	profileType: string;
+// 	membershipChange: {
+// 		modifiedDate: string;
+// 		type: string;
+// 	};
+// };
+
+type Data = {
+	channelId: string;
+	delta: number;
+	groupId: string;
+	id: string;
+	modifiedDate: string;
+	orderIOMap: string;
+	page: number;
+	query: string;
+};
 
 interface IOverviewProps {
 	channelId: string;
@@ -34,7 +74,7 @@ const SelectedPointInfo = ({
 	return (
 		<div>
 			<div className='selected-point-info'>
-				<Text color='secondary' size={3} weight='semi-bold'>
+				<Text color='secondary' size={3}>
 					{selectedPointState.hasSelectedPoint
 						? 'Members on: '
 						: 'Members from: '}
@@ -97,6 +137,90 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 		}
 	}, [data, selectedPointState]);
 
+	const getColumns = () => {
+		const baseColumns = [
+			membershipChangesColumns.individualName,
+			membershipChangesColumns.accountNames,
+			membershipChangesColumns.firstSeen,
+			membershipChangesColumns.lastActive,
+			membershipChangesColumns.profileType
+		];
+
+		const columns = selectedPointState.hasSelectedPoint
+			? [...baseColumns, membershipChangesColumns.membershipChanges]
+			: baseColumns;
+
+		return columns;
+	};
+
+	const getAllMembers = (data: Data) => {
+		const {channelId, delta, groupId, id, orderIOMap, page, query} = data;
+
+		return API.individuals.search({
+			channelId,
+			delta,
+			groupId,
+			individualSegmentId: id,
+			orderIOMap,
+			page,
+			query
+		});
+	};
+
+	const getMemberChanges = async (data: Data) => {
+		const {delta, groupId, id, modifiedDate, orderIOMap, query} = data;
+
+		// return {
+		// 	items: [
+		// 		{
+		// 			id: '1',
+		// 			memberName: 'Alice Johnson',
+		// 			email: 'alice.johnson@example.com',
+		// 			accountName: 'Acme Corp',
+		// 			firstSeenDate: '2024-05-01T10:00:00Z',
+		// 			lastActive: '2024-06-10T15:30:00Z',
+		// 			profileType: 'Known',
+		// 			membershipChange: {
+		// 				modifiedDate: '2024-06-10T15:30:00Z',
+		// 				type: 'ADDED'
+		// 			}
+		// 		},
+		// 		{
+		// 			id: '2',
+		// 			memberName: 'Bob Smith',
+		// 			email: 'bob.smith@example.com',
+		// 			accountName: 'Beta LLC',
+		// 			firstSeenDate: '2024-05-05T09:20:00Z',
+		// 			lastActive: '2024-06-09T12:10:00Z',
+		// 			profileType: 'Anonymous',
+		// 			membershipChange: {
+		// 				modifiedDate: '2024-06-09T12:10:00Z',
+		// 				type: 'REMOVED'
+		// 			}
+		// 		}
+		// 	],
+		// 	total: 2
+		// };
+
+		return API.individualSegment.fetchMembershipChanges({
+			delta,
+			endDate: modifiedDate,
+			groupId,
+			id,
+			orderIOMap,
+			query,
+			startDate: modifiedDate
+		});
+	};
+
+	const fetchMembers = params => {
+		const fetchMembersFn = selectedPointState.hasSelectedPoint
+			? getMemberChanges
+			: getAllMembers;
+
+		return fetchMembersFn(params);
+	};
+
 	return (
 		<div>
 			<ReferencedObjectsProvider segment={segment}>
@@ -153,7 +277,45 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 								selectedPointState={selectedPointState}
 								setSelectedPointState={setSelectedPointState}
 							/>
-							{/* <SearchableEntityTable /> */}
+							<SearchableEntityTable
+								columns={getColumns()}
+								dataSourceFn={fetchMembers}
+								dataSourceParams={{
+									channelId,
+									groupId,
+									id
+								}}
+								noResultsRenderer={() => (
+									<NoResultsDisplay
+										description={
+											<>
+												<span className='mr-1'>
+													{Liferay.Language.get(
+														'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources'
+													)}
+												</span>
+
+												<ClayLink
+													href={
+														URLConstants.SegmentsMembershipDocumentationLink
+													}
+													key='DOCUMENTATION'
+													target='_blank'
+												>
+													{Liferay.Language.get(
+														'learn-more-about-individuals'
+													)}
+												</ClayLink>
+											</>
+										}
+										spacer
+										title={Liferay.Language.get(
+											'there-are-no-members-found-on-the-selected-time-period'
+										)}
+									/>
+								)}
+								rowIdentifier='id'
+							/>
 						</>
 					)}
 				</Card.Body>

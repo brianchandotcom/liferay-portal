@@ -493,9 +493,7 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 	}
 
 	@FeatureFlags(
-		featureFlags = {
-			@FeatureFlag(value = "LPD-35443"), @FeatureFlag(value = "LPD-35914")
-		}
+		featureFlags = {@FeatureFlag("LPD-35443"), @FeatureFlag("LPD-35914")}
 	)
 	@LazyReferencing
 	@Override

@@ -12,6 +12,7 @@ runGradleTest {
 
 		fileTree(dir: project.projectDir, include: '**/*.java').each {
 			file ->
+
 			assert !file.text.contains("javax")
 			assert file.text.contains("jakarta")
 		}

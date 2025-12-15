@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import {ApiHelpers} from '../../../../helpers/ApiHelpers';
 import {clickAndExpectToBeHidden} from '../../../../utils/clickAndExpectToBeHidden';
@@ -28,7 +28,10 @@ export class PicklistBuilderPage {
 		this.saveButton = this.page.getByRole('button', {name: 'Save'});
 	}
 
-	async addOption(name: string) {
+	async addOption(
+		name: string,
+		options: {addAnother: boolean} = {addAnother: false}
+	) {
 		await clickAndExpectToBeVisible({
 			target: this.page.locator('.modal-header').getByText('Add Option'),
 			trigger: this.addButton,
@@ -36,12 +39,26 @@ export class PicklistBuilderPage {
 
 		await this.page.locator('.modal-body').getByLabel('Name').fill(name);
 
-		await clickAndExpectToBeHidden({
-			target: this.page.locator('.modal-header').getByText('Add Option'),
-			trigger: this.page
-				.locator('.modal-footer')
-				.getByText('Save', {exact: true}),
-		});
+		if (options.addAnother) {
+			await expect(async () => {
+				this.page
+					.locator('.modal-footer')
+					.getByText('Save and Add Another')
+					.click({timeout: 1000});
+
+				await expect(
+					this.page.locator('.modal-body').getByLabel('Name')
+				).toHaveValue('Option');
+			}).toPass();
+		}
+		else {
+			await clickAndExpectToBeHidden({
+				target: this.page
+					.locator('.modal-header')
+					.getByText('Add Option'),
+				trigger: this.page.locator('.modal-footer').getByText('Save'),
+			});
+		}
 	}
 
 	async createPicklist() {

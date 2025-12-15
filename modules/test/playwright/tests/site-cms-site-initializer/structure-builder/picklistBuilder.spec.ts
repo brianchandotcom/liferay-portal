@@ -20,8 +20,8 @@ const test = mergeTests(
 );
 
 test(
-	'Check the input errors',
-	{tag: '@LPD-52040'},
+	'Check validation errors and picklist and option submission',
+	{tag: ['@LPD-52040', '@LPD-74374']},
 	async ({page, picklistBuilderPage}) => {
 
 		// Go to the Picklist Builder
@@ -97,5 +97,13 @@ test(
 		const {id: picklistId} = await picklistBuilderPage.savePicklist();
 
 		await picklistBuilderPage.deletePicklist(picklistId);
+
+		// Add option and check name is cleared for the next one
+
+		await picklistBuilderPage.addOption('Option 1', {addAnother: true});
+
+		await expect(
+			page.locator('.modal-body').getByLabel('Name')
+		).toHaveValue('Option');
 	}
 );

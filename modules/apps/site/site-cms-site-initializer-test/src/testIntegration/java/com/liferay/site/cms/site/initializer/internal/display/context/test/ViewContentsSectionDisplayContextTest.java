@@ -55,7 +55,7 @@ public class ViewContentsSectionDisplayContextTest
 			getFDSActionDropdownItems();
 
 		Assert.assertEquals(
-			fdsActionDropdownItems.toString(), 19,
+			fdsActionDropdownItems.toString(), 16,
 			fdsActionDropdownItems.size());
 
 		assertFDSActionDropdownItem(
@@ -100,22 +100,39 @@ public class ViewContentsSectionDisplayContextTest
 		assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(13), "move", "move", "move", null,
 			"item");
+
+		FDSActionDropdownItem permissionsFDSActionDropdownItem =
+			fdsActionDropdownItems.get(14);
+
 		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(14), "password-policies", "permissions",
-			"permissions", "get", "item");
+			permissionsFDSActionDropdownItem, "password-policies",
+			"permissions-menu", "permissions", null, "contextual");
+
+		List<FDSActionDropdownItem> permissionsFDSActionDropdownItems =
+			(List<FDSActionDropdownItem>)permissionsFDSActionDropdownItem.get(
+				"items");
+
+		Assert.assertEquals(
+			permissionsFDSActionDropdownItems.toString(), 4,
+			permissionsFDSActionDropdownItems.size());
+
 		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(15), "password-policies",
+			permissionsFDSActionDropdownItems.get(0), "password-policies",
+			"permissions", "permissions", "get", "item");
+		assertFDSActionDropdownItem(
+			permissionsFDSActionDropdownItems.get(1), "password-policies",
 			"default-permissions", "default-permissions", null, "item");
 		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(16), "password-policies",
+			permissionsFDSActionDropdownItems.get(2), "password-policies",
 			"edit-and-propagate-default-permissions",
 			"edit-and-propagate-default-permissions", null, "item");
 		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(17), "password-policies",
+			permissionsFDSActionDropdownItems.get(3), "password-policies",
 			"reset-to-default-permissions", "reset-to-default-permissions",
 			null, "item");
+
 		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(18), "trash", "delete", "delete", null,
+			fdsActionDropdownItems.get(15), "trash", "delete", "delete", null,
 			"item");
 	}
 

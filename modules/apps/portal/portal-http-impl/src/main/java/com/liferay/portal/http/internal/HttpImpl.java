@@ -389,7 +389,7 @@ public class HttpImpl implements Http {
 			).build());
 	}
 
-	protected void processPostMethod(
+	protected void processEntityParts(
 		RequestBuilder requestBuilder, Map<String, String> headers,
 		List<Http.FilePart> fileParts,
 		List<Http.InputStreamPart> inputStreamParts,
@@ -685,7 +685,9 @@ public class HttpImpl implements Http {
 
 					requestBuilder.setEntity(stringEntity);
 				}
-				else if (method.equals(Http.Method.POST)) {
+				else if (method.equals(Http.Method.POST) ||
+						 method.equals(Http.Method.PUT)) {
+
 					if (!hasRequestHeader(
 							requestBuilder, HttpHeaders.CONTENT_TYPE)) {
 
@@ -699,7 +701,7 @@ public class HttpImpl implements Http {
 							targetHttpHost, connectionConfigBuilder.build());
 					}
 
-					processPostMethod(
+					processEntityParts(
 						requestBuilder, headers, fileParts, inputStreamParts,
 						parts);
 				}

@@ -11,6 +11,11 @@ import getProjectDescription from '../configuration/getProjectDescription.mjs';
 import getProjectEntryPoints from '../configuration/getProjectEntryPoints.mjs';
 import getProjectExports from '../configuration/getProjectExports.mjs';
 import getProjectWebContextPath from '../configuration/getProjectWebContextPath.mjs';
+import {
+	BUILD_MAIN_EXPORTS_PATH,
+	BUILD_SASS_CACHE_PATH,
+} from '../util/constants.mjs';
+import emptyDir from '../util/emptyDir.mjs';
 import writeExportBridges from './amd/writeExportBridges.mjs';
 import writeMainBridge from './amd/writeMainBridge.mjs';
 import writeManifestJson from './amd/writeManifestJson.mjs';
@@ -47,6 +52,16 @@ export default async function main() {
 	]);
 
 	const endConfig = Date.now();
+
+	//
+	// Empty some output dirs so that we don't find leftovers of previous
+	// builds. See https://liferay.atlassian.net/browse/LPD-74323.
+	//
+
+	await Promise.all([
+		emptyDir(BUILD_MAIN_EXPORTS_PATH),
+		emptyDir(BUILD_SASS_CACHE_PATH),
+	]);
 
 	await Promise.all([processCSSFiles(), processSassFiles()]);
 

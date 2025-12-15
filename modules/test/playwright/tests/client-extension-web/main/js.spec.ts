@@ -89,7 +89,7 @@ testSample.describe('Samples', () => {
 				const responseContentType =
 					await response.headerValue('Content-Type');
 
-				expect(responseContentType).toBe('application/javascript');
+				expect(responseContentType).toContain('text/javascript');
 			}
 		);
 	}

@@ -2885,7 +2885,13 @@ public class StructuredContentResourceTest
 									{
 										description =
 											RandomTestUtil.randomString();
+										externalReferenceCode =
+											_dlFileEntry.
+												getExternalReferenceCode();
 										id = _dlFileEntry.getFileEntryId();
+										scopeExternalReferenceCode =
+											testGroup.
+												getExternalReferenceCode();
 									}
 								};
 							}
@@ -3041,7 +3047,11 @@ public class StructuredContentResourceTest
 			{
 				document = new ContentDocument() {
 					{
+						externalReferenceCode =
+							_dlFileEntry.getExternalReferenceCode();
 						id = _dlFileEntry.getFileEntryId();
+						scopeExternalReferenceCode =
+							testGroup.getExternalReferenceCode();
 					}
 				};
 			}

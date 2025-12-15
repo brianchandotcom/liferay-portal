@@ -12,6 +12,7 @@ import com.liferay.headless.digital.sales.room.dto.v1_0.FileEntry;
 import com.liferay.headless.digital.sales.room.dto.v1_0.UserAccountBrief;
 import com.liferay.headless.digital.sales.room.internal.dto.v1_0.converter.DigitalSalesRoomDTOConverterContext;
 import com.liferay.headless.digital.sales.room.resource.v1_0.DigitalSalesRoomResource;
+import com.liferay.headless.digital.sales.room.resource.v1_0.UserAccountBriefResource;
 import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.definition.security.permission.resource.ObjectDefinitionPortletResourcePermissionRegistryUtil;
@@ -22,20 +23,15 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.events.ThemeServicePreAction;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.RoleAssignmentException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -43,12 +39,9 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupService;
-import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -704,8 +697,7 @@ public class DigitalSalesRoomResourceImpl
 	}
 
 	private void _updateNestedResources(
-			DigitalSalesRoom digitalSalesRoom, Group group)
-		throws Exception {
+		DigitalSalesRoom digitalSalesRoom, Group group) {
 
 		UserAccountBrief[] userAccountBriefs =
 			digitalSalesRoom.getUserAccountBriefs();
@@ -716,44 +708,24 @@ public class DigitalSalesRoomResourceImpl
 			return;
 		}
 
+		_userAccountBriefResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		_userAccountBriefResource.setContextCompany(contextCompany);
+		_userAccountBriefResource.setContextUser(contextUser);
+		_userAccountBriefResource.setContextUriInfo(contextUriInfo);
+
 		for (UserAccountBrief userAccountBrief :
 				digitalSalesRoom.getUserAccountBriefs()) {
 
-			if (Validator.isNull(userAccountBrief.getEmailAddress())) {
-				continue;
+			try {
+				_userAccountBriefResource.postDigitalSalesRoomUserAccountBrief(
+					group.getGroupId(), userAccountBrief);
 			}
-
-			User user = _userLocalService.fetchUserByEmailAddress(
-				group.getCompanyId(), userAccountBrief.getEmailAddress());
-
-			if (user == null) {
-				continue;
-			}
-
-			_userLocalService.addGroupUser(
-				group.getGroupId(), user.getUserId());
-
-			if (Validator.isNotNull(userAccountBrief.getRoleKey())) {
-				Role role = _roleLocalService.fetchRole(
-					group.getCompanyId(), userAccountBrief.getRoleKey());
-
-				if (role.getType() != RoleConstants.TYPE_SITE) {
-					throw new RoleAssignmentException(
-						StringBundler.concat(
-							"Role type ",
-							RoleConstants.getTypeLabel(role.getType()),
-							" is not role type ",
-							RoleConstants.getTypeLabel(
-								RoleConstants.TYPE_SITE)));
+			catch (Exception exception) {
+				if (log.isWarnEnabled()) {
+					log.warn(exception);
 				}
-
-				_userGroupRoleLocalService.addUserGroupRoles(
-					user.getUserId(), group.getGroupId(),
-					new long[] {role.getRoleId()});
 			}
-
-			LiveUsers.joinGroup(
-				group.getCompanyId(), group.getGroupId(), user.getUserId());
 		}
 	}
 
@@ -796,18 +768,12 @@ public class DigitalSalesRoomResourceImpl
 	private Portal _portal;
 
 	@Reference
-	private RoleLocalService _roleLocalService;
-
-	@Reference
 	private SiteInitializerRegistry _siteInitializerRegistry;
 
 	@Reference
 	private StyleBookEntryLocalService _styleBookEntryLocalService;
 
 	@Reference
-	private UserGroupRoleLocalService _userGroupRoleLocalService;
-
-	@Reference
-	private UserLocalService _userLocalService;
+	private UserAccountBriefResource _userAccountBriefResource;
 
 }

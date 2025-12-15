@@ -22,10 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserGroupRole;
-import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.File;
@@ -36,7 +33,6 @@ import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 
 import java.io.Serializable;
 
-import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -140,10 +136,10 @@ public class DigitalSalesRoomDTOConverter
 				setSecondaryColor(
 					() -> GetterUtil.getString(values.get("secondaryColor")));
 				setUserAccountBriefs(
-					() -> TransformUtil.transform(
-						_userLocalService.getGroupUserIds(group.getGroupId()),
-						groupUserId -> _toUserAccountBrief(
-							group.getGroupId(), groupUserId),
+					() -> TransformUtil.transformToArray(
+						_userLocalService.getGroupUsers(group.getGroupId()),
+						user -> _toUserAccountBrief(
+							dtoConverterContext, group.getGroupId(), user),
 						UserAccountBrief.class));
 			}
 		};
@@ -195,38 +191,18 @@ public class DigitalSalesRoomDTOConverter
 		}
 	}
 
-	private UserAccountBrief _toUserAccountBrief(long groupId, long userId) {
-		User user = _userLocalService.fetchUser(userId);
+	private UserAccountBrief _toUserAccountBrief(
+			DTOConverterContext dtoConverterContext, long groupId, User user)
+		throws Exception {
 
-		if (user == null) {
-			return null;
-		}
-
-		return new UserAccountBrief() {
-			{
-				setAlternateName(user::getScreenName);
-				setEmailAddress(user::getEmailAddress);
-				setExternalReferenceCode(user::getExternalReferenceCode);
-				setId(user::getUserId);
-				setName(user::getFullName);
-				setRoleKey(
-					() -> {
-						List<UserGroupRole> userGroupRoles =
-							_userGroupRoleLocalService.getUserGroupRoles(
-								user.getUserId(), groupId);
-
-						if (userGroupRoles.isEmpty()) {
-							return null;
-						}
-
-						UserGroupRole userGroupRole = userGroupRoles.get(0);
-
-						Role role = userGroupRole.getRole();
-
-						return role.getName();
-					});
-			}
-		};
+		return _userAccountBriefDTOConverter.toDTO(
+			new UserAccountBriefDTOConverterContext(
+				dtoConverterContext.isAcceptAllLanguages(), null,
+				dtoConverterContext.getDTOConverterRegistry(), groupId,
+				user.getUserId(), dtoConverterContext.getLocale(),
+				dtoConverterContext.getUriInfo(),
+				dtoConverterContext.getUser()),
+			user);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -247,8 +223,10 @@ public class DigitalSalesRoomDTOConverter
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
 
-	@Reference
-	private UserGroupRoleLocalService _userGroupRoleLocalService;
+	@Reference(
+		target = "(component.name=com.liferay.headless.digital.sales.room.internal.dto.v1_0.converter.UserAccountBriefDTOConverter)"
+	)
+	private DTOConverter<User, UserAccountBrief> _userAccountBriefDTOConverter;
 
 	@Reference
 	private UserLocalService _userLocalService;

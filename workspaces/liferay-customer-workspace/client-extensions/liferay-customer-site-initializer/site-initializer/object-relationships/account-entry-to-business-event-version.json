@@ -3,7 +3,7 @@
 	"label": {
 		"en_US": "Account Entry to Business Event Version"
 	},
-	"name": "accountEntryToBusinessEventVersion",
+	"name": "accountEntryToBusinessEventVersions",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",
 	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:BusinessEventVersion$]",
 	"objectDefinitionName2": "BusinessEventVersion",

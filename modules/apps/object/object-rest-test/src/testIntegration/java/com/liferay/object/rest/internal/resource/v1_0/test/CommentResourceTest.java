@@ -299,7 +299,7 @@ public class CommentResourceTest {
 			endpoint, Http.Method.POST);
 	}
 
-	private String _prepareCommentsEndpoint(
+	private String _getEndpoint(
 			long scopeKey, ObjectDefinition objectDefinition)
 		throws Exception {
 
@@ -351,7 +351,7 @@ public class CommentResourceTest {
 			long groupId, ObjectDefinition objectDefinition)
 		throws Exception {
 
-		String endpoint = _prepareCommentsEndpoint(groupId, objectDefinition);
+		String endpoint = _getEndpoint(groupId, objectDefinition);
 		String externalReferenceCode = RandomTestUtil.randomString();
 
 		JSONObject jsonObject1 = _postComment(
@@ -375,7 +375,7 @@ public class CommentResourceTest {
 			long groupId, ObjectDefinition objectDefinition)
 		throws Exception {
 
-		String endpoint = _prepareCommentsEndpoint(groupId, objectDefinition);
+		String endpoint = _getEndpoint(groupId, objectDefinition);
 		String externalReferenceCode = RandomTestUtil.randomString();
 
 		_postComment(
@@ -403,7 +403,7 @@ public class CommentResourceTest {
 			long groupId, ObjectDefinition objectDefinition)
 		throws Exception {
 
-		String endpoint = _prepareCommentsEndpoint(groupId, objectDefinition);
+		String endpoint = _getEndpoint(groupId, objectDefinition);
 
 		JSONObject jsonObject1 = _postComment(
 			endpoint, RandomTestUtil.randomString(),

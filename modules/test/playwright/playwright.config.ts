@@ -113,6 +113,7 @@ import {config as multifactorAuthenticationWebConfig} from './tests/multi-factor
 import {config as nestedPortletsWebConfig} from './tests/nested-portlets-web/main/config';
 import {config as notificationWebConfig} from './tests/notification-web/main/config';
 import {config as notificationsWebConfig} from './tests/notifications-web/main/config';
+import {config as oauthClientAdministrationConfig} from './tests/oauth-client-administration/main/config';
 import {config as objectWebConfig} from './tests/object-web/main/config';
 import {config as openIdLinkConfig} from './tests/openid-link/main/config';
 import {config as osbFaroWebConfig} from './tests/osb-faro-web/main/config';
@@ -311,6 +312,7 @@ export default defineConfig({
 		notificationWebConfig,
 		notificationsWebConfig,
 		objectWebConfig,
+		oauthClientAdministrationConfig,
 		openIdLinkConfig,
 		osbFaroWebConfig,
 		passwordPoliciesAdminWebConfig,

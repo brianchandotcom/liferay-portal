@@ -118,8 +118,7 @@ public class HelpCenterUtil {
 		try (InputStream fileInputStream = Channels.newInputStream(
 				blob.reader())) {
 
-			uploadAttachment(
-				fileInputStream, fileName, fileSize, gcsSessionURL);
+			uploadAttachment(fileInputStream, fileName, gcsSessionURL);
 		}
 		catch (Exception exception) {
 			throw new Exception("Unable to process GCS file", exception);
@@ -262,15 +261,12 @@ public class HelpCenterUtil {
 	}
 
 	protected static void uploadAttachment(
-			InputStream fileInputStream, String fileName, String fileSize,
-			String gcsSessionURL)
+			InputStream fileInputStream, String fileName, String gcsSessionURL)
 		throws Exception {
 
 		Http.Options options = _initOptions(
 			false,
 			HashMapBuilder.put(
-				"Content-Length", fileSize
-			).put(
 				"Content-Type", ContentTypes.APPLICATION_OCTET_STREAM
 			).build(),
 			null);

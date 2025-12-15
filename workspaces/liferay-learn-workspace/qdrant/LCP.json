@@ -1,0 +1,47 @@
+{
+	"cpu": 1,
+	"environments": {
+		"infra": {
+			"deploy": false
+		}
+	},
+	"id": "qdrant",
+	"image": "qdrant/qdrant:v1.15.5",
+	"kind": "Deployment",
+	"livenessProbe": {
+		"failureThreshold": 3,
+		"httpGet": {
+			"path": "/",
+			"port": 6333
+		},
+		"initialDelaySeconds": 600,
+		"periodSeconds": 60,
+		"timeoutSeconds": 60
+	},
+	"memory": 1024,
+	"ports": [
+		{
+			"external": false,
+			"port": 6333
+		},
+		{
+			"external": false,
+			"port": 6334
+		}
+	],
+	"readinessProbe": {
+		"failureThreshold": 2,
+		"httpGet": {
+			"path": "/",
+			"port": 6333
+		},
+		"initialDelaySeconds": 30,
+		"periodSeconds": 60,
+		"timeoutSeconds": 10
+	},
+	"scale": 1,
+	"volumes": {
+		"data": "/qdrant/storage",
+		"homeLiferay": "/home/liferay"
+	}
+}

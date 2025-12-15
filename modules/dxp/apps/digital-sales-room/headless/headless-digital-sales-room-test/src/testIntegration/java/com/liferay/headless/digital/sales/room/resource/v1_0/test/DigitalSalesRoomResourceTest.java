@@ -10,6 +10,7 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
 import com.liferay.batch.engine.unit.BatchEngineUnitReader;
+import com.liferay.digital.sales.room.test.util.DigitalSalesRoomTestUtil;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntryModel;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
@@ -48,22 +49,15 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 
-import java.io.File;
-
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Stefano Motta
@@ -86,38 +80,8 @@ public class DigitalSalesRoomResourceTest
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
 				TestPropsValues.getUserId()));
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					"L_DSR_ROOM", TestPropsValues.getCompanyId());
-
-		if (objectDefinition != null) {
-			return;
-		}
-
-		Bundle testBundle = FrameworkUtil.getBundle(
+		_objectDefinition = DigitalSalesRoomTestUtil.getObjectDefinition(
 			DigitalSalesRoomResourceTest.class);
-
-		BundleContext bundleContext = testBundle.getBundleContext();
-
-		for (Bundle bundle : bundleContext.getBundles()) {
-			if (!Objects.equals(
-					bundle.getSymbolicName(),
-					"com.liferay.digital.sales.room.impl")) {
-
-				continue;
-			}
-
-			_deleteFile(bundle, "01.object.folder");
-			_deleteFile(bundle, "02.object.definition");
-
-			CompletableFuture<Void> completableFuture =
-				_batchEngineUnitProcessor.processBatchEngineUnits(
-					_batchEngineUnitReader.getBatchEngineUnits(bundle));
-
-			completableFuture.join();
-		}
 	}
 
 	@Override
@@ -235,20 +199,16 @@ public class DigitalSalesRoomResourceTest
 	private void _addUserRole(String[] actionIds, long userId)
 		throws Exception {
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					"L_DSR_ROOM", TestPropsValues.getCompanyId());
 		Role role = _roleLocalService.addRole(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(), null, 0,
 			RandomTestUtil.randomString(), null, null,
 			RoleConstants.TYPE_REGULAR, null, new ServiceContext());
 
 		for (String actionId : actionIds) {
-			String name = objectDefinition.getClassName();
+			String name = _objectDefinition.getClassName();
 
 			if (Objects.equals(actionId, ObjectActionKeys.ADD_OBJECT_ENTRY)) {
-				name = objectDefinition.getResourceName();
+				name = _objectDefinition.getResourceName();
 			}
 
 			_resourcePermissionLocalService.addResourcePermission(
@@ -336,16 +296,6 @@ public class DigitalSalesRoomResourceTest
 		Assert.assertEquals(
 			digitalSalesRoom.getSecondaryColor(),
 			jsonObject2.getString("value"));
-	}
-
-	private void _deleteFile(Bundle bundle, String fileName) {
-		File file = bundle.getDataFile(
-			".com.liferay.digital.sales.room.internal.batch." + fileName +
-				".batch.engine.data.json.0.processed");
-
-		if ((file != null) && file.exists()) {
-			file.delete();
-		}
 	}
 
 	private DigitalSalesRoom _randomDigitalSalesRoom(
@@ -825,6 +775,8 @@ public class DigitalSalesRoomResourceTest
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
+
+	private ObjectDefinition _objectDefinition;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

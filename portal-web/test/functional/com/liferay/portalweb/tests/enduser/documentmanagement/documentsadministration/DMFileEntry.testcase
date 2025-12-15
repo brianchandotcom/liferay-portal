@@ -1716,9 +1716,9 @@ definition {
 			mimeType = "application/msword",
 			sourceFileName = "Document_3.doc");
 
-		Navigator.gotoPage(
+		Navigator.gotoSitePage(
 			pageName = "Documents and Media Page",
-			siteName = "site-name");
+			siteName = "Site Name");
 
 		DMDocument.downloadPG(dmDocumentTitle = "Document_3.doc");
 

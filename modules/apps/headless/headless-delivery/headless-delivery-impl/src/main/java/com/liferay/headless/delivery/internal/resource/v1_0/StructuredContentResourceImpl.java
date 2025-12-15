@@ -12,7 +12,6 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.link.model.AssetLink;
 import com.liferay.asset.link.service.AssetLinkLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -68,15 +67,12 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
@@ -1050,38 +1046,6 @@ public class StructuredContentResourceImpl
 		};
 	}
 
-	private String _getFileEntryJSONObject(JSONObject jsonObject, boolean image)
-		throws Exception {
-
-		FileEntry fileEntry = _dlAppService.getFileEntry(
-			jsonObject.getLong("id"));
-
-		jsonObject.put(
-			"extension", fileEntry.getExtension()
-		).put(
-			"fileEntryId", fileEntry.getFileEntryId()
-		).put(
-			"groupId", fileEntry.getGroupId()
-		).put(
-			"size", fileEntry.getSize()
-		);
-
-		if (image) {
-			jsonObject.put(
-				"url", _dlurlHelper.getImagePreviewURL(fileEntry, null));
-		}
-		else {
-			jsonObject.put(
-				"url",
-				_dlurlHelper.getPreviewURL(
-					fileEntry, fileEntry.getFileVersion(), null, ""));
-		}
-
-		jsonObject.put("uuid", fileEntry.getUuid());
-
-		return jsonObject.toString();
-	}
-
 	private List<DDMFormField> _getRootDDMFormFields(
 		DDMStructure ddmStructure) {
 
@@ -1194,28 +1158,6 @@ public class StructuredContentResourceImpl
 			sorts, this::_toStructuredContent);
 	}
 
-	private String _getValue(ContentFieldValue contentFieldValue)
-		throws Exception {
-
-		if (contentFieldValue.getData() != null) {
-			return contentFieldValue.getData();
-		}
-		else if (contentFieldValue.getDocument() != null) {
-			return _getFileEntryJSONObject(
-				_jsonFactory.createJSONObject(
-					String.valueOf(contentFieldValue.getDocument())),
-				false);
-		}
-		else if (contentFieldValue.getImage() != null) {
-			return _getFileEntryJSONObject(
-				_jsonFactory.createJSONObject(
-					String.valueOf(contentFieldValue.getImage())),
-				true);
-		}
-
-		return null;
-	}
-
 	private boolean _isNeverExpire(
 		StructuredContent structuredContent, JournalArticle journalArticle) {
 
@@ -1234,10 +1176,9 @@ public class StructuredContentResourceImpl
 		return neverExpire;
 	}
 
-	private void _populateContentFieldValuesMap(
-			ContentField[] contentFields,
-			Map<String, List<ContentFieldValue>> contentFieldValuesMap)
-		throws Exception {
+	private void _populateContentFieldsMap(
+		ContentField[] contentFields,
+		Map<String, List<ContentField>> contentFieldsMap) {
 
 		if (ArrayUtil.isEmpty(contentFields)) {
 			return;
@@ -1247,18 +1188,16 @@ public class StructuredContentResourceImpl
 			ContentFieldValue contentFieldValue =
 				contentField.getContentFieldValue();
 
-			if ((contentFieldValue != null) &&
-				(_getValue(contentFieldValue) != null)) {
-
-				List<ContentFieldValue> contentFieldValues =
-					contentFieldValuesMap.computeIfAbsent(
+			if (contentFieldValue != null) {
+				List<ContentField> contentFieldsList =
+					contentFieldsMap.computeIfAbsent(
 						contentField.getName(), key -> new ArrayList<>());
 
-				contentFieldValues.add(contentFieldValue);
+				contentFieldsList.add(contentField);
 			}
 
-			_populateContentFieldValuesMap(
-				contentField.getNestedContentFields(), contentFieldValuesMap);
+			_populateContentFieldsMap(
+				contentField.getNestedContentFields(), contentFieldsMap);
 		}
 	}
 
@@ -1316,13 +1255,12 @@ public class StructuredContentResourceImpl
 			return fields;
 		}
 
-		Map<String, List<ContentFieldValue>> contentFieldValuesMap =
-			new HashMap<>();
+		Map<String, List<ContentField>> contentFieldsMap = new HashMap<>();
 
-		_populateContentFieldValuesMap(contentFields, contentFieldValuesMap);
+		_populateContentFieldsMap(contentFields, contentFieldsMap);
 
-		for (Map.Entry<String, List<ContentFieldValue>> entry :
-				contentFieldValuesMap.entrySet()) {
+		for (Map.Entry<String, List<ContentField>> entry :
+				contentFieldsMap.entrySet()) {
 
 			Field field = fields.get(entry.getKey());
 
@@ -1332,12 +1270,22 @@ public class StructuredContentResourceImpl
 
 			List<Serializable> fieldValues = new ArrayList<>();
 
-			for (ContentFieldValue contentFieldValue : entry.getValue()) {
+			for (ContentField contentField : entry.getValue()) {
+				Value value = DDMValueUtil.toDDMValue(
+					contentField,
+					DDMFormFieldUtil.getDDMFormField(
+						_ddmStructureService, ddmStructure,
+						contentField.getName()),
+					_dlAppService, journalArticle.getGroupId(),
+					_journalArticleService, _layoutLocalService,
+					contextAcceptLanguage.getPreferredLocale());
+
 				fieldValues.add(
 					FieldConstants.getSerializable(
 						contextAcceptLanguage.getPreferredLocale(),
 						LocaleUtil.ROOT, field.getDataType(),
-						_getValue(contentFieldValue)));
+						value.getString(
+							contextAcceptLanguage.getPreferredLocale())));
 			}
 
 			if (ListUtil.isNotEmpty(fieldValues)) {
@@ -1663,9 +1611,6 @@ public class StructuredContentResourceImpl
 	private DLAppService _dlAppService;
 
 	@Reference
-	private DLURLHelper _dlurlHelper;
-
-	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
@@ -1709,9 +1654,6 @@ public class StructuredContentResourceImpl
 
 	@Reference(target = "(ddm.form.values.serializer.type=json)")
 	private DDMFormValuesSerializer _jsonDDMFormValuesSerializer;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private LayoutDisplayPageProviderRegistry

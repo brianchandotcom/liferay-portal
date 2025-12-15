@@ -11,6 +11,15 @@
 		},
 		{
 			"accountKey": "ERC-001",
+			"externalReferenceCode": "ERC-001_cloud-native",
+			"hasActivation": true,
+			"menuOrder": 2,
+			"name": "Cloud Native",
+			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-001",
+			"tabOrder": 3
+		},
+		{
+			"accountKey": "ERC-001",
 			"externalReferenceCode": "ERC-001_commerce",
 			"hasActivation": true,
 			"menuOrder": 2,

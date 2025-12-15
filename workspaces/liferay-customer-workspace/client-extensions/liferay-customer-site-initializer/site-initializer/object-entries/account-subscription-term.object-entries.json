@@ -15,6 +15,19 @@
 		},
 		{
 			"accountKey": "ERC-001",
+			"accountSubscriptionERC": "ERC-001_cloud-native_production",
+			"accountSubscriptionGroupERC": "ERC-001_cloud-native",
+			"endDate": "2026-12-31T00:00:00Z",
+			"instanceSize": "1",
+			"provisioned": 1,
+			"quantity": 1,
+			"r_accountEntryToAccountSubscriptionTerm_accountEntryERC": "ERC-001",
+			"startDate": "2023-01-01T00:00:00Z",
+			"subscriptionStatus": "Active",
+			"subscriptionTermStatus": "Active"
+		},
+		{
+			"accountKey": "ERC-001",
 			"accountSubscriptionERC": "ERC-001_commerce_production",
 			"accountSubscriptionGroupERC": "ERC-001_commerce",
 			"endDate": "2026-12-31T00:00:00Z",

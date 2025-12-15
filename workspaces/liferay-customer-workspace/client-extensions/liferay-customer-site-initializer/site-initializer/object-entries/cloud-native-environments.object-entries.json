@@ -1,0 +1,14 @@
+{
+	"object-entries": [
+		{
+			"accountEntryToCloudNativeEnvironmentERC": "ERC-001",
+			"accountKey": "ERC-001",
+			"externalReferenceCode": "ERC-001_cloud-native-environment",
+			"maxClusterNodes": 2,
+			"nonProductionSubscriptionUuid": "testNonProdSubId",
+			"productionSubscriptionUuid": "testProdSubId",
+			"r_accountEntryToCloudNativeEnvironment_accountEntryERC": "ERC-001"
+		}
+	],
+	"objectDefinitionName": "CloudNativeEnvironment"
+}

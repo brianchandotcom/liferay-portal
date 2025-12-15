@@ -213,3 +213,84 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/DigitalSalesRoom"
             tags: ["DigitalSalesRoom"]
+    "/digital-sales-rooms/{digitalSalesRoomId}/user-account-briefs":
+        get:
+            operationId: getDigitalSalesRoomUserAccountBriefsPage
+            parameters:
+                -   in: path
+                    name: digitalSalesRoomId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/UserAccountBrief"
+                                    type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/UserAccountBrief"
+                                    type: array
+            tags: ["UserAccountBrief"]
+        post:
+            operationId: postDigitalSalesRoomUserAccountBrief
+            parameters:
+                -   in: path
+                    name: digitalSalesRoomId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/UserAccountBrief"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/UserAccountBrief"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/UserAccountBrief"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/UserAccountBrief"
+            tags: ["UserAccountBrief"]
+    "/digital-sales-rooms/{digitalSalesRoomId}/user-account-briefs/{userAccountBriefId}":
+        delete:
+            operationId: deleteDigitalSalesRoomUserAccountBrief
+            parameters:
+                -   in: path
+                    name: digitalSalesRoomId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: userAccountBriefId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["UserAccountBrief"]

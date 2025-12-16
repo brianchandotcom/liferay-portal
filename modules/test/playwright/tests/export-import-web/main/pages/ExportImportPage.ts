@@ -130,42 +130,25 @@ export class ExportImportPage {
 		});
 	}
 
-	async export(title: string, itemLabel?: string) {
+	async export(
+		title: string,
+		options?: {
+			itemLabel?: string;
+		}
+	) {
 		await this.newExportButton.click();
 
 		await this.title.fill(title);
 
-		if (itemLabel) {
-			await this.page.getByLabel(itemLabel, {exact: true}).click();
+		if (options?.itemLabel) {
+			await this.page
+				.getByLabel(options.itemLabel, {exact: true})
+				.check();
 		}
 
 		await this.exportButton.click();
-	}
 
-	async exportAll(title: string, itemLabel?: string) {
-		await this.newExportButton.click();
-
-		await this.title.fill(title);
-
-		if (itemLabel) {
-			await this.page.getByLabel(itemLabel, {exact: true}).click();
-		}
-
-		const portletListContainer = this.page.locator(
-			'#_com_liferay_exportimport_web_portlet_ExportPortlet_selectContents .portlet-list'
-		);
-
-		await portletListContainer.waitFor();
-
-		const checkBoxes = portletListContainer.locator(
-			'input[type="checkbox"]'
-		);
-
-		for (const checkbox of await checkBoxes.all()) {
-			await checkbox.check();
-		}
-
-		await this.exportButton.click();
+		await this.taskStatusLabel(title).waitFor();
 	}
 
 	async clickTaskAction(

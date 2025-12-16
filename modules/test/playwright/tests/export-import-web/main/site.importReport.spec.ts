@@ -54,9 +54,7 @@ test('Can see error report and details', async ({
 
 	const exportName = `MyExport-${getRandomString()}`;
 
-	await exportImportPage.export(exportName, 'Tests 1 Items');
-
-	await expect(exportImportPage.taskStatusLabel(exportName)).toBeVisible();
+	await exportImportPage.export(exportName, {itemLabel: 'Tests 1 Items'});
 
 	const exportFilePath =
 		await exportImportPage.downloadExportProcess(exportName);
@@ -138,11 +136,7 @@ test(
 
 			await exportImportPage.goToExport();
 
-			await exportImportPage.export(exportName, 'Tests 1 Items');
-
-			await expect(
-				exportImportPage.taskStatusLabel(exportName)
-			).toBeVisible();
+			await exportImportPage.export(exportName, {itemLabel: 'Tests 1 Items'});
 
 			const exportFilePath =
 				await exportImportPage.downloadExportProcess(exportName);

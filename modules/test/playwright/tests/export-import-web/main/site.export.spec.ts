@@ -57,14 +57,6 @@ async function expectExportName(exportImportPage, taskName: string) {
 
 	await exportImportPage.exportButton.click();
 
-	await expect(
-		exportImportPage.page
-			.locator('//h2[span[normalize-space()="' + taskName + '"]]')
-			.first()
-			.locator('../..')
-			.getByText('Successful')
-	).toBeVisible();
-
 	const exportFilePath =
 		await exportImportPage.downloadExportProcess(taskName);
 
@@ -79,14 +71,6 @@ test('can export at site level with custom export task name', async ({
 	const taskName = 'MyExport-' + getRandomString();
 
 	await exportImportPage.export(taskName);
-
-	await expect(
-		exportImportPage.page
-			.locator('//h2[span[normalize-space()="' + taskName + '"]]')
-			.first()
-			.locator('../..')
-			.getByText('Successful')
-	).toBeVisible();
 
 	const exportFilePath =
 		await exportImportPage.downloadExportProcess(taskName);

@@ -119,12 +119,18 @@
 			Liferay.Util.SessionStorage.TYPES.NECESSARY
 		);
 
-		if (toggleSwitch) {
-			document.getElementById(toggleSwitch).focus();
-			Liferay.Util.SessionStorage.removeItem(
-				'com.liferay.change.tracking.web.toggleSwitch'
-			);
-		}
+		Liferay.once('<portlet:namespace />formReady', () => {
+			var element = document.getElementById(toggleSwitch);
+
+			if (element) {
+				element.focus();
+				element.scrollIntoView({behavior: 'smooth', block: 'center'});
+			}
+		});
+
+		Liferay.Util.SessionStorage.removeItem(
+			'com.liferay.change.tracking.web.toggleSwitch'
+		);
 	};
 
 	function <portlet:namespace />autoSave() {

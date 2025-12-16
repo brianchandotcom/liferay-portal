@@ -4,10 +4,23 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import ClayPopover from '@clayui/popover';
+import ClayPopover, {ALIGN_POSITIONS} from '@clayui/popover';
 import React, {useEffect, useState} from 'react';
 
-const BUTTON_COMPONENTS = new Set([ClayButton, ClayButtonWithIcon, 'button']);
+type Props = {
+	alignPosition?: (typeof ALIGN_POSITIONS)[number];
+	content: string;
+	header?: string;
+	id?: string;
+	showTooltipOnClick?: boolean;
+	trigger: React.ReactElement;
+};
+
+const BUTTON_COMPONENTS: Set<any> = new Set([
+	ClayButton,
+	ClayButtonWithIcon,
+	'button',
+]);
 
 export function PopoverTooltip({
 	alignPosition = 'top',
@@ -16,7 +29,7 @@ export function PopoverTooltip({
 	id,
 	showTooltipOnClick = true,
 	trigger,
-}) {
+}: Props) {
 	const [showPopover, setShowPopover] = useState(false);
 
 	useEffect(() => {
@@ -24,7 +37,7 @@ export function PopoverTooltip({
 			return;
 		}
 
-		const handleKeyDown = (event) => {
+		const handleKeyDown = (event: KeyboardEvent) => {
 			if (event.key === 'Escape') {
 				setShowPopover(false);
 			}
@@ -35,7 +48,7 @@ export function PopoverTooltip({
 		return () => window.removeEventListener('keydown', handleKeyDown);
 	}, [showPopover]);
 
-	const triggerProps = {
+	const triggerProps: any = {
 		'aria-describedby': showPopover ? id : null,
 		'onBlur': () => setShowPopover(false),
 		'onFocus': () => setShowPopover(true),
@@ -44,12 +57,12 @@ export function PopoverTooltip({
 		'type': 'button',
 	};
 
-	const handleClick = (event) => {
+	const handleClick = (event: React.MouseEvent) => {
 		if (showTooltipOnClick) {
 			setShowPopover((show) => !show);
 		}
 
-		trigger.props.onClick?.(event);
+		(trigger as React.ReactElement)?.props?.onClick?.(event);
 	};
 
 	return (
@@ -63,8 +76,8 @@ export function PopoverTooltip({
 			role="tooltip"
 			show={showPopover}
 			trigger={
-				BUTTON_COMPONENTS.has(trigger.type) ? (
-					React.cloneElement(trigger, {
+				BUTTON_COMPONENTS.has((trigger as React.ReactElement).type) ? (
+					React.cloneElement(trigger as React.ReactElement, {
 						...triggerProps,
 						onClick: handleClick,
 					})

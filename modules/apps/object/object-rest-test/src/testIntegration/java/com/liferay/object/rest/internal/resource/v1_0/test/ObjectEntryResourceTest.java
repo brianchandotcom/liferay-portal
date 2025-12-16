@@ -20282,17 +20282,19 @@ public class ObjectEntryResourceTest {
 			boolean withEmbeddedTaxonomyCategory)
 		throws Exception {
 
-		ParentTaxonomyVocabulary parentTaxonomyVocabulary =
-			taxonomyCategory.getParentTaxonomyVocabulary();
-
 		Scope scope = Scope.of(
 			taxonomyCategory.getSiteId(), LocaleUtil.getDefault());
 
 		JSONObject jsonObject = JSONUtil.put(
 			"parentTaxonomyVocabulary",
-			JSONUtil.put(
-				"externalReferenceCode",
-				parentTaxonomyVocabulary.getExternalReferenceCode())
+			() -> {
+				ParentTaxonomyVocabulary parentTaxonomyVocabulary =
+					taxonomyCategory.getParentTaxonomyVocabulary();
+
+				return JSONUtil.put(
+					"externalReferenceCode",
+					parentTaxonomyVocabulary.getExternalReferenceCode());
+			}
 		).put(
 			"scope",
 			JSONUtil.put(

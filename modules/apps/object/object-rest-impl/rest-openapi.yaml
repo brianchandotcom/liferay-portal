@@ -2568,10 +2568,12 @@ paths:
                             schema:
                                 items:
                                     $ref: ../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator
+                                    type: array
                         application/xml:
                             schema:
                                 items:
                                     $ref: ../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator
+                                    type: array
             tags: ["Collaborator"]
         post:
             description:

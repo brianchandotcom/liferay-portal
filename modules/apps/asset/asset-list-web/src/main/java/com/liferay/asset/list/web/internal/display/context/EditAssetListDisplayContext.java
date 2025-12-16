@@ -1392,27 +1392,17 @@ public class EditAssetListDisplayContext {
 						_httpServletRequest, "select-x", classTypeName,
 						false)));
 
-			try {
-				ObjectDefinition objectDefinition =
-					ObjectDefinitionLocalServiceUtil.
-						getObjectDefinitionByClassName(
-							_themeDisplay.getCompanyId(),
-							assetRendererFactory.getClassName());
+			ObjectDefinition objectDefinition =
+				ObjectDefinitionLocalServiceUtil.
+					fetchObjectDefinitionByClassName(
+						_themeDisplay.getCompanyId(),
+						assetRendererFactory.getClassName());
 
-				if ((objectDefinition != null) && objectDefinition.isCMS()) {
-					dropdownItem.setLabel(
-						StringUtil.appendParentheticalSuffix(
-							classTypeName, "CMS"));
-				}
-				else {
-					dropdownItem.setLabel(classTypeName);
-				}
+			if ((objectDefinition != null) && objectDefinition.isCMS()) {
+				dropdownItem.setLabel(
+					StringUtil.appendParentheticalSuffix(classTypeName, "CMS"));
 			}
-			catch (PortalException portalException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(portalException);
-				}
-
+			else {
 				dropdownItem.setLabel(classTypeName);
 			}
 		};

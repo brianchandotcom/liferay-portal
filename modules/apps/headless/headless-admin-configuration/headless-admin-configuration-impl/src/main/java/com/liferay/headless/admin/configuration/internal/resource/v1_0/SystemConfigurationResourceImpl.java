@@ -17,6 +17,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
@@ -35,7 +37,6 @@ import jakarta.ws.rs.ServerErrorException;
 import jakarta.ws.rs.core.Response;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -91,38 +92,11 @@ public class SystemConfigurationResourceImpl
 
 		_validateDefaultCompany();
 
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			ConfigurationFilterStringUtil.getSystemScopedFilterString());
-
-		if (ArrayUtil.isEmpty(configurations)) {
-			return Page.of(Collections.emptyList());
-		}
-
 		List<SystemConfiguration> systemConfigurations = new ArrayList<>();
 
-		for (Configuration configuration : configurations) {
-			SystemConfiguration systemConfiguration = _toSystemConfiguration(
-				configuration);
+		_appendSystemConfigurations(systemConfigurations);
 
-			if (systemConfiguration == null) {
-				continue;
-			}
-
-			systemConfigurations.add(systemConfiguration);
-		}
-
-		for (ConfigurationScreen configurationScreen :
-				_serviceTrackerMap.values()) {
-
-			SystemConfiguration systemConfiguration = _toSystemConfiguration(
-				configurationScreen);
-
-			if (systemConfiguration == null) {
-				continue;
-			}
-
-			systemConfigurations.add(systemConfiguration);
-		}
+		_appendConfigurationScreenSystemConfigurations(systemConfigurations);
 
 		return Page.of(systemConfigurations);
 	}
@@ -207,6 +181,63 @@ public class SystemConfigurationResourceImpl
 	@Deactivate
 	protected void deactivate() {
 		_serviceTrackerMap.close();
+	}
+
+	private void _appendConfigurationScreenSystemConfigurations(
+		List<SystemConfiguration> systemConfigurations) {
+
+		for (ConfigurationScreen configurationScreen :
+				_serviceTrackerMap.values()) {
+
+			try {
+				SystemConfiguration systemConfiguration =
+					_toSystemConfiguration(configurationScreen);
+
+				Map<String, Object> properties =
+					systemConfiguration.getProperties();
+
+				if (properties.isEmpty()) {
+					continue;
+				}
+
+				systemConfigurations.add(systemConfiguration);
+			}
+			catch (UnsupportedOperationException
+						unsupportedOperationException) {
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"Skipping configuration \"",
+							configurationScreen.getKey(),
+							"\" because it does not have export capability"),
+						unsupportedOperationException);
+				}
+			}
+		}
+	}
+
+	private void _appendSystemConfigurations(
+			List<SystemConfiguration> systemConfigurations)
+		throws Exception {
+
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			ConfigurationFilterStringUtil.getSystemScopedFilterString());
+
+		if (ArrayUtil.isEmpty(configurations)) {
+			return;
+		}
+
+		for (Configuration configuration : configurations) {
+			SystemConfiguration systemConfiguration = _toSystemConfiguration(
+				configuration);
+
+			if (systemConfiguration == null) {
+				continue;
+			}
+
+			systemConfigurations.add(systemConfiguration);
+		}
 	}
 
 	private void _checkFeatureFlag() {
@@ -328,6 +359,9 @@ public class SystemConfigurationResourceImpl
 					"manage system configurations");
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SystemConfigurationResourceImpl.class);
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;

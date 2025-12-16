@@ -2,6 +2,7 @@ import '@testing-library/jest-dom';
 import 'jest-extended';
 import * as pedantic from './pedantic';
 import lang from './lang';
+import {TextDecoder, TextEncoder} from 'util';
 
 pedantic.enable();
 
@@ -77,6 +78,9 @@ global.localStorage = (() => {
 global.pendo = {
 	initialize: () => {}
 };
+
+global.TextDecoder = TextDecoder;
+global.TextEncoder = TextEncoder;
 
 require('jest-extended');
 require('jest-canvas-mock');

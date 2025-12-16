@@ -1,3 +1,5 @@
+const {TextEncoder} = require('node:util');
+
 module.exports = {
 	collectCoverage: true,
 	collectCoverageFrom: [
@@ -329,7 +331,8 @@ module.exports = {
 					price: 250
 				},
 				['Liferay SaaS - CSP - Up to 100 Users - Extra User']: {
-					baseSubscriptionPlan: 'Liferay SaaS - CSP - Up to 100 Users',
+					baseSubscriptionPlan:
+						'Liferay SaaS - CSP - Up to 100 Users',
 					individualsLimit: 0,
 					name: 'Liferay SaaS - CSP - Up to 100 Users - Extra User',
 					pageViewsLimit: 5000000,
@@ -343,7 +346,8 @@ module.exports = {
 					price: 250
 				},
 				['Liferay SaaS - CSP - Up to 10K Users - Extra User']: {
-					baseSubscriptionPlan: 'Liferay SaaS - CSP - Up to 10K Users',
+					baseSubscriptionPlan:
+						'Liferay SaaS - CSP - Up to 10K Users',
 					individualsLimit: 0,
 					name: 'Liferay SaaS - CSP - Up to 10K Users - Extra User',
 					pageViewsLimit: 5000000,
@@ -371,7 +375,8 @@ module.exports = {
 					price: 250
 				},
 				['Liferay SaaS - CSP - Up to 20K Users - Extra User']: {
-					baseSubscriptionPlan: 'Liferay SaaS - CSP - Up to 20K Users',
+					baseSubscriptionPlan:
+						'Liferay SaaS - CSP - Up to 20K Users',
 					individualsLimit: 0,
 					name: 'Liferay SaaS - CSP - Up to 20K Users - Extra User',
 					pageViewsLimit: 5000000,
@@ -385,7 +390,8 @@ module.exports = {
 					price: 250
 				},
 				['Liferay SaaS - CSP - Up to 500 Users - Extra User']: {
-					baseSubscriptionPlan: 'Liferay SaaS - CSP - Up to 500 Users',
+					baseSubscriptionPlan:
+						'Liferay SaaS - CSP - Up to 500 Users',
 					individualsLimit: 0,
 					name: 'Liferay SaaS - CSP - Up to 500 Users - Extra User',
 					pageViewsLimit: 5000000,
@@ -586,6 +592,7 @@ module.exports = {
 				ok: 0,
 				over: 2
 			},
+			TextEncoder,
 			timeIntervals: {
 				day: 'day',
 				month: 'month',

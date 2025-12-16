@@ -14,11 +14,11 @@ import com.liferay.asset.kernel.exception.AssetCategoryNameException;
 import com.liferay.asset.kernel.exception.DuplicateCategoryException;
 import com.liferay.asset.kernel.exception.DuplicateCategoryExternalReferenceCodeException;
 import com.liferay.asset.kernel.exception.NoSuchCategoryException;
+import com.liferay.asset.kernel.exception.NoSuchVocabularyException;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
-import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.journal.constants.JournalFolderConstants;
@@ -97,24 +97,25 @@ public class AssetCategoryLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		_group1 = GroupTestUtil.addGroup();
+		_group2 = GroupTestUtil.addGroup();
 
 		_assetVocabulary = _assetVocabularyLocalService.addVocabulary(
-			TestPropsValues.getUserId(), _group.getGroupId(), "Vocabulary",
+			TestPropsValues.getUserId(), _group1.getGroupId(), "Vocabulary",
 			new ServiceContext());
 	}
 
 	@Test
 	public void testAddAssetCategory() throws Exception {
 		GroupTestUtil.updateDisplaySettings(
-			_group.getGroupId(),
+			_group1.getGroupId(),
 			Arrays.asList(LocaleUtil.SPAIN, LocaleUtil.FRANCE),
 			LocaleUtil.SPAIN);
 
 		String expectedAssetCategoryTitle = "Título";
 
 		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			TestPropsValues.getUserId(), _group1.getGroupId(),
 			expectedAssetCategoryTitle, _assetVocabulary.getVocabularyId(),
 			new ServiceContext());
 
@@ -134,19 +135,50 @@ public class AssetCategoryLocalServiceTest {
 			"Expected title map length does not match", 1, titleMap.size());
 	}
 
+	@Test(expected = NoSuchCategoryException.class)
+	public void testAddAssetCategoryInParentCategoryFromDifferentGroup()
+		throws Exception {
+
+		AssetVocabulary assetVocabulary1 = AssetTestUtil.addVocabulary(
+			_group1.getGroupId());
+
+		AssetCategory assetCategory = AssetTestUtil.addCategory(
+			_group1.getGroupId(), assetVocabulary1.getVocabularyId(),
+			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
+
+		AssetVocabulary assetVocabulary2 = AssetTestUtil.addVocabulary(
+			_group2.getGroupId());
+
+		AssetTestUtil.addCategory(
+			_group2.getGroupId(), assetVocabulary2.getVocabularyId(),
+			assetCategory.getCategoryId());
+	}
+
+	@Test(expected = NoSuchVocabularyException.class)
+	public void testAddAssetCategoryInVocabularyFromDifferentGroup()
+		throws Exception {
+
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			_group1.getGroupId());
+
+		AssetTestUtil.addCategory(
+			_group2.getGroupId(), assetVocabulary.getVocabularyId(),
+			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
+	}
+
 	@Test(expected = DuplicateCategoryExternalReferenceCodeException.class)
 	public void testAddAssetCategoryWithExistingExternalReferenceCode()
 		throws Exception {
 
 		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
-			_group.getGroupId());
+			_group1.getGroupId());
 
 		String externalReferenceCode = StringUtil.randomString();
-		Locale locale = _portal.getSiteDefaultLocale(_group.getGroupId());
+		Locale locale = _portal.getSiteDefaultLocale(_group1.getGroupId());
 
-		AssetCategoryLocalServiceUtil.addCategory(
+		_assetCategoryLocalService.addCategory(
 			externalReferenceCode, TestPropsValues.getUserId(),
-			_group.getGroupId(),
+			_group1.getGroupId(),
 			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			HashMapBuilder.put(
 				locale, RandomTestUtil.randomString()
@@ -156,11 +188,11 @@ public class AssetCategoryLocalServiceTest {
 			).build(),
 			assetVocabulary.getVocabularyId(), null,
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId()));
+				_group1.getGroupId(), TestPropsValues.getUserId()));
 
-		AssetCategoryLocalServiceUtil.addCategory(
+		_assetCategoryLocalService.addCategory(
 			externalReferenceCode, TestPropsValues.getUserId(),
-			_group.getGroupId(),
+			_group1.getGroupId(),
 			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			HashMapBuilder.put(
 				locale, RandomTestUtil.randomString()
@@ -170,7 +202,7 @@ public class AssetCategoryLocalServiceTest {
 			).build(),
 			assetVocabulary.getVocabularyId(), null,
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId()));
+				_group1.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	@Test
@@ -178,7 +210,7 @@ public class AssetCategoryLocalServiceTest {
 		throws Exception {
 
 		GroupTestUtil.updateDisplaySettings(
-			_group.getGroupId(),
+			_group1.getGroupId(),
 			Arrays.asList(LocaleUtil.SPAIN, LocaleUtil.FRANCE),
 			LocaleUtil.SPAIN);
 
@@ -188,7 +220,7 @@ public class AssetCategoryLocalServiceTest {
 				_assetVocabulary.getVocabularyId());
 
 		_assetCategoryLocalService.addCategory(
-			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group1.getGroupId(),
 			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			Collections.singletonMap(LocaleUtil.FRANCE, "Qualification"),
 			Collections.singletonMap(LocaleUtil.FRANCE, "La description"),
@@ -200,7 +232,7 @@ public class AssetCategoryLocalServiceTest {
 		throws Exception {
 
 		GroupTestUtil.updateDisplaySettings(
-			_group.getGroupId(),
+			_group1.getGroupId(),
 			Arrays.asList(LocaleUtil.SPAIN, LocaleUtil.FRANCE),
 			LocaleUtil.SPAIN);
 
@@ -213,7 +245,7 @@ public class AssetCategoryLocalServiceTest {
 		).build();
 
 		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
-			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group1.getGroupId(),
 			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, titleMap,
 			HashMapBuilder.put(
 				LocaleUtil.FRANCE, "La description"
@@ -233,14 +265,14 @@ public class AssetCategoryLocalServiceTest {
 	@Test
 	public void testAddCategoryWithExternalReferenceCode() throws Exception {
 		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
-			_group.getGroupId());
+			_group1.getGroupId());
 
 		String externalReferenceCode = StringUtil.randomString();
-		Locale locale = _portal.getSiteDefaultLocale(_group.getGroupId());
+		Locale locale = _portal.getSiteDefaultLocale(_group1.getGroupId());
 
-		AssetCategory assetCategory = AssetCategoryLocalServiceUtil.addCategory(
+		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
 			externalReferenceCode, TestPropsValues.getUserId(),
-			_group.getGroupId(),
+			_group1.getGroupId(),
 			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			HashMapBuilder.put(
 				locale, RandomTestUtil.randomString()
@@ -250,15 +282,14 @@ public class AssetCategoryLocalServiceTest {
 			).build(),
 			assetVocabulary.getVocabularyId(), null,
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId()));
+				_group1.getGroupId(), TestPropsValues.getUserId()));
 
 		Assert.assertEquals(
 			externalReferenceCode, assetCategory.getExternalReferenceCode());
 
 		assetCategory =
-			AssetCategoryLocalServiceUtil.
-				getAssetCategoryByExternalReferenceCode(
-					externalReferenceCode, _group.getGroupId());
+			_assetCategoryLocalService.getAssetCategoryByExternalReferenceCode(
+				externalReferenceCode, _group1.getGroupId());
 
 		Assert.assertEquals(
 			externalReferenceCode, assetCategory.getExternalReferenceCode());
@@ -267,10 +298,10 @@ public class AssetCategoryLocalServiceTest {
 	@Test
 	public void testAddCategoryWithoutExternalReferenceCode() throws Exception {
 		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
-			_group.getGroupId());
+			_group1.getGroupId());
 
 		AssetCategory assetCategory1 = AssetTestUtil.addCategory(
-			_group.getGroupId(), assetVocabulary.getVocabularyId());
+			_group1.getGroupId(), assetVocabulary.getVocabularyId());
 
 		String externalReferenceCode =
 			assetCategory1.getExternalReferenceCode();
@@ -278,9 +309,8 @@ public class AssetCategoryLocalServiceTest {
 		Assert.assertEquals(assetCategory1.getUuid(), externalReferenceCode);
 
 		AssetCategory assetCategory2 =
-			AssetCategoryLocalServiceUtil.
-				getAssetCategoryByExternalReferenceCode(
-					externalReferenceCode, _group.getGroupId());
+			_assetCategoryLocalService.getAssetCategoryByExternalReferenceCode(
+				externalReferenceCode, _group1.getGroupId());
 
 		Assert.assertEquals(assetCategory1, assetCategory2);
 	}
@@ -288,39 +318,39 @@ public class AssetCategoryLocalServiceTest {
 	@Test(expected = AssetCategoryLimitException.class)
 	public void testAssetCategoryLimitExceeded() throws Exception {
 		GroupTestUtil.updateDisplaySettings(
-			_group.getGroupId(),
+			_group1.getGroupId(),
 			Arrays.asList(LocaleUtil.SPAIN, LocaleUtil.FRANCE),
 			LocaleUtil.SPAIN);
 
 		try {
 			_configurationProvider.saveCompanyConfiguration(
 				AssetCategoriesCompanyConfiguration.class,
-				_group.getCompanyId(),
+				_group1.getCompanyId(),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"maximumNumberOfCategoriesPerVocabulary", 3
 				).build());
 
 			_assetCategoryLocalService.addCategory(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				TestPropsValues.getUserId(), _group1.getGroupId(),
 				RandomTestUtil.randomString(),
 				_assetVocabulary.getVocabularyId(), new ServiceContext());
 			_assetCategoryLocalService.addCategory(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				TestPropsValues.getUserId(), _group1.getGroupId(),
 				RandomTestUtil.randomString(),
 				_assetVocabulary.getVocabularyId(), new ServiceContext());
 			_assetCategoryLocalService.addCategory(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				TestPropsValues.getUserId(), _group1.getGroupId(),
 				RandomTestUtil.randomString(),
 				_assetVocabulary.getVocabularyId(), new ServiceContext());
 			_assetCategoryLocalService.addCategory(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				TestPropsValues.getUserId(), _group1.getGroupId(),
 				RandomTestUtil.randomString(),
 				_assetVocabulary.getVocabularyId(), new ServiceContext());
 		}
 		finally {
 			_configurationProvider.deleteCompanyConfiguration(
 				AssetCategoriesCompanyConfiguration.class,
-				_group.getCompanyId());
+				_group1.getCompanyId());
 		}
 	}
 
@@ -332,23 +362,25 @@ public class AssetCategoryLocalServiceTest {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
+				_group1.getGroupId(), TestPropsValues.getUserId());
 
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.addVocabulary(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				TestPropsValues.getUserId(), _group1.getGroupId(),
 				RandomTestUtil.randomString(), titleMap, null, null,
 				serviceContext);
 
 		String assetCategoryName = RandomTestUtil.randomString();
 
 		_assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(), assetCategoryName,
-			assetVocabulary.getVocabularyId(), serviceContext);
+			TestPropsValues.getUserId(), _group1.getGroupId(),
+			assetCategoryName, assetVocabulary.getVocabularyId(),
+			serviceContext);
 
 		_assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(), assetCategoryName,
-			assetVocabulary.getVocabularyId(), serviceContext);
+			TestPropsValues.getUserId(), _group1.getGroupId(),
+			assetCategoryName, assetVocabulary.getVocabularyId(),
+			serviceContext);
 	}
 
 	@Test(expected = AssetCategoryNameException.class)
@@ -359,16 +391,16 @@ public class AssetCategoryLocalServiceTest {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
+				_group1.getGroupId(), TestPropsValues.getUserId());
 
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.addVocabulary(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				TestPropsValues.getUserId(), _group1.getGroupId(),
 				RandomTestUtil.randomString(), titleMap, null, null,
 				serviceContext);
 
 		_assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(), StringPool.BLANK,
+			TestPropsValues.getUserId(), _group1.getGroupId(), StringPool.BLANK,
 			assetVocabulary.getVocabularyId(), serviceContext);
 	}
 
@@ -380,11 +412,11 @@ public class AssetCategoryLocalServiceTest {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
+				_group1.getGroupId(), TestPropsValues.getUserId());
 
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.addVocabulary(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				TestPropsValues.getUserId(), _group1.getGroupId(),
 				RandomTestUtil.randomString(), titleMap, null, null,
 				serviceContext);
 
@@ -394,12 +426,12 @@ public class AssetCategoryLocalServiceTest {
 		String assetCategoryName = RandomTestUtil.randomString(nameMaxLength);
 
 		_assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			TestPropsValues.getUserId(), _group1.getGroupId(),
 			assetCategoryName + RandomTestUtil.randomString(10),
 			assetVocabulary.getVocabularyId(), serviceContext);
 
 		_assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			TestPropsValues.getUserId(), _group1.getGroupId(),
 			assetCategoryName + RandomTestUtil.randomString(10),
 			assetVocabulary.getVocabularyId(), serviceContext);
 	}
@@ -412,11 +444,11 @@ public class AssetCategoryLocalServiceTest {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
+				_group1.getGroupId(), TestPropsValues.getUserId());
 
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.addVocabulary(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				TestPropsValues.getUserId(), _group1.getGroupId(),
 				RandomTestUtil.randomString(), titleMap, null, null,
 				serviceContext);
 
@@ -426,7 +458,7 @@ public class AssetCategoryLocalServiceTest {
 		String assetCategoryName = RandomTestUtil.randomString(nameMaxLength);
 
 		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			TestPropsValues.getUserId(), _group1.getGroupId(),
 			assetCategoryName + RandomTestUtil.randomString(10),
 			assetVocabulary.getVocabularyId(), serviceContext);
 
@@ -437,11 +469,11 @@ public class AssetCategoryLocalServiceTest {
 	public void testCategoryWithLongTitlesAreTrimmed() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
+				_group1.getGroupId(), TestPropsValues.getUserId());
 
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.addVocabulary(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				TestPropsValues.getUserId(), _group1.getGroupId(),
 				RandomTestUtil.randomString(), serviceContext);
 
 		int nameMaxLength = ModelHintsUtil.getMaxLength(
@@ -457,8 +489,8 @@ public class AssetCategoryLocalServiceTest {
 		).build();
 
 		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			titleMap.get(_portal.getSiteDefaultLocale(_group.getGroupId())),
+			TestPropsValues.getUserId(), _group1.getGroupId(),
+			titleMap.get(_portal.getSiteDefaultLocale(_group1.getGroupId())),
 			assetVocabulary.getVocabularyId(), serviceContext);
 
 		_testAssetCategoryLongTitlesAreTrimmed(
@@ -489,16 +521,16 @@ public class AssetCategoryLocalServiceTest {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
+				_group1.getGroupId(), TestPropsValues.getUserId());
 
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.addVocabulary(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				TestPropsValues.getUserId(), _group1.getGroupId(),
 				RandomTestUtil.randomString(), titleMap, null, null,
 				serviceContext);
 
 		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			TestPropsValues.getUserId(), _group1.getGroupId(),
 			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
 			serviceContext);
 
@@ -543,7 +575,7 @@ public class AssetCategoryLocalServiceTest {
 	public void testGetCategories() throws Exception {
 		JournalArticle journalArticle = _addJournalArticleWithAssetCategories(
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId()));
+				_group1.getGroupId(), TestPropsValues.getUserId()));
 
 		List<AssetCategory> assetCategories =
 			_assetCategoryLocalService.getCategories(
@@ -560,7 +592,7 @@ public class AssetCategoryLocalServiceTest {
 	public void testGetCategoriesCount() throws Exception {
 		JournalArticle journalArticle = _addJournalArticleWithAssetCategories(
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId()));
+				_group1.getGroupId(), TestPropsValues.getUserId()));
 
 		Assert.assertEquals(
 			2,
@@ -573,7 +605,7 @@ public class AssetCategoryLocalServiceTest {
 	public void testGetCategoriesCountWithoutPermissions() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
+				_group1.getGroupId(), TestPropsValues.getUserId());
 
 		serviceContext.setAddGroupPermissions(false);
 		serviceContext.setAddGuestPermissions(false);
@@ -604,7 +636,7 @@ public class AssetCategoryLocalServiceTest {
 	public void testGetCategoriesWithoutPermissions() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
+				_group1.getGroupId(), TestPropsValues.getUserId());
 
 		serviceContext.setAddGroupPermissions(false);
 		serviceContext.setAddGuestPermissions(false);
@@ -641,7 +673,7 @@ public class AssetCategoryLocalServiceTest {
 		try {
 			_assetCategoryLocalService.getOrAddEmptyCategory(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_group.getGroupId());
+				_group1.getGroupId());
 
 			Assert.fail();
 		}
@@ -657,7 +689,7 @@ public class AssetCategoryLocalServiceTest {
 			AssetCategory assetCategory =
 				_assetCategoryLocalService.getOrAddEmptyCategory(
 					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-					_group.getGroupId());
+					_group1.getGroupId());
 
 			Assert.assertEquals(
 				WorkflowConstants.STATUS_EMPTY, assetCategory.getStatus());
@@ -668,19 +700,19 @@ public class AssetCategoryLocalServiceTest {
 	public void testSearch() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
+				_group1.getGroupId(), TestPropsValues.getUserId());
 
 		AssetCategory assetCategory1 = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			TestPropsValues.getUserId(), _group1.getGroupId(),
 			RandomTestUtil.randomString(), _assetVocabulary.getVocabularyId(),
 			serviceContext);
 		AssetCategory assetCategory2 = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			TestPropsValues.getUserId(), _group1.getGroupId(),
 			RandomTestUtil.randomString(), _assetVocabulary.getVocabularyId(),
 			serviceContext);
 
 		List<AssetCategory> assetCategories = _assetCategoryLocalService.search(
-			_group.getGroupId(), null, null, QueryUtil.ALL_POS,
+			_group1.getGroupId(), null, null, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
 		Assert.assertNotNull(assetCategories);
@@ -695,10 +727,10 @@ public class AssetCategoryLocalServiceTest {
 	@Test
 	public void testSearchWithAssetCategoryProperty() throws Exception {
 		AssetCategory assetCategory1 = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			TestPropsValues.getUserId(), _group1.getGroupId(),
 			RandomTestUtil.randomString(), _assetVocabulary.getVocabularyId(),
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId()));
+				_group1.getGroupId(), TestPropsValues.getUserId()));
 
 		AssetCategoryProperty assetCategoryProperty1 =
 			_assetCategoryPropertyLocalService.addCategoryProperty(
@@ -721,7 +753,7 @@ public class AssetCategoryLocalServiceTest {
 		};
 
 		List<AssetCategory> assetCategories = _assetCategoryLocalService.search(
-			_group.getGroupId(), null, assetCategoryProperties,
+			_group1.getGroupId(), null, assetCategoryProperties,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertNotNull(assetCategories);
@@ -736,20 +768,20 @@ public class AssetCategoryLocalServiceTest {
 	public void testSearchWithName() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
+				_group1.getGroupId(), TestPropsValues.getUserId());
 
 		AssetCategory assetCategory1 = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			TestPropsValues.getUserId(), _group1.getGroupId(),
 			RandomTestUtil.randomString(), _assetVocabulary.getVocabularyId(),
 			serviceContext);
 
 		_assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			TestPropsValues.getUserId(), _group1.getGroupId(),
 			RandomTestUtil.randomString(), _assetVocabulary.getVocabularyId(),
 			serviceContext);
 
 		List<AssetCategory> assetCategories = _assetCategoryLocalService.search(
-			_group.getGroupId(), assetCategory1.getName(), null,
+			_group1.getGroupId(), assetCategory1.getName(), null,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertNotNull(assetCategories);
@@ -765,10 +797,10 @@ public class AssetCategoryLocalServiceTest {
 		throws Exception {
 
 		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			TestPropsValues.getUserId(), _group1.getGroupId(),
 			RandomTestUtil.randomString(), _assetVocabulary.getVocabularyId(),
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId()));
+				_group1.getGroupId(), TestPropsValues.getUserId()));
 
 		AssetCategoryProperty assetCategoryProperty1 =
 			_assetCategoryPropertyLocalService.addCategoryProperty(
@@ -791,7 +823,7 @@ public class AssetCategoryLocalServiceTest {
 		};
 
 		List<AssetCategory> assetCategories = _assetCategoryLocalService.search(
-			_group.getGroupId(), assetCategory.getName(),
+			_group1.getGroupId(), assetCategory.getName(),
 			assetCategoryProperties, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertNotNull(assetCategories);
@@ -807,10 +839,10 @@ public class AssetCategoryLocalServiceTest {
 		throws Exception {
 
 		AssetCategory assetCategory1 = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			TestPropsValues.getUserId(), _group1.getGroupId(),
 			RandomTestUtil.randomString(), _assetVocabulary.getVocabularyId(),
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId()));
+				_group1.getGroupId(), TestPropsValues.getUserId()));
 
 		_assetCategoryPropertyLocalService.addCategoryProperty(
 			TestPropsValues.getUserId(), assetCategory1.getCategoryId(), "key1",
@@ -818,14 +850,14 @@ public class AssetCategoryLocalServiceTest {
 
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.addVocabulary(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				TestPropsValues.getUserId(), _group1.getGroupId(),
 				RandomTestUtil.randomString(), new ServiceContext());
 
 		AssetCategory assetCategory2 = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			TestPropsValues.getUserId(), _group1.getGroupId(),
 			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId()));
+				_group1.getGroupId(), TestPropsValues.getUserId()));
 
 		_assetCategoryPropertyLocalService.addCategoryProperty(
 			TestPropsValues.getUserId(), assetCategory2.getCategoryId(), "key1",
@@ -838,7 +870,7 @@ public class AssetCategoryLocalServiceTest {
 		};
 
 		List<AssetCategory> assetCategories = _assetCategoryLocalService.search(
-			_group.getGroupId(), null, assetCategoryProperties,
+			_group1.getGroupId(), null, assetCategoryProperties,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertNotNull(assetCategories);
@@ -856,25 +888,27 @@ public class AssetCategoryLocalServiceTest {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
+				_group1.getGroupId(), TestPropsValues.getUserId());
 
 		String assetCategoryName = RandomTestUtil.randomString();
 
 		AssetCategory assetCategory1 = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(), assetCategoryName,
-			_assetVocabulary.getVocabularyId(), serviceContext);
+			TestPropsValues.getUserId(), _group1.getGroupId(),
+			assetCategoryName, _assetVocabulary.getVocabularyId(),
+			serviceContext);
 
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.addVocabulary(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				TestPropsValues.getUserId(), _group1.getGroupId(),
 				RandomTestUtil.randomString(), serviceContext);
 
 		AssetCategory assetCategory2 = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(), assetCategoryName,
-			assetVocabulary.getVocabularyId(), serviceContext);
+			TestPropsValues.getUserId(), _group1.getGroupId(),
+			assetCategoryName, assetVocabulary.getVocabularyId(),
+			serviceContext);
 
 		List<AssetCategory> assetCategories = _assetCategoryLocalService.search(
-			_group.getGroupId(), assetCategoryName, null, QueryUtil.ALL_POS,
+			_group1.getGroupId(), assetCategoryName, null, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
 		Assert.assertNotNull(assetCategories);
@@ -896,7 +930,7 @@ public class AssetCategoryLocalServiceTest {
 			AssetCategory assetCategory =
 				_assetCategoryLocalService.getOrAddEmptyCategory(
 					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-					_group.getGroupId());
+					_group1.getGroupId());
 
 			Assert.assertEquals(
 				WorkflowConstants.STATUS_EMPTY, assetCategory.getStatus());
@@ -928,12 +962,12 @@ public class AssetCategoryLocalServiceTest {
 		throws Exception {
 
 		GroupTestUtil.updateDisplaySettings(
-			_group.getGroupId(),
+			_group1.getGroupId(),
 			Arrays.asList(LocaleUtil.SPAIN, LocaleUtil.FRANCE),
 			LocaleUtil.SPAIN);
 
 		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(), "Título",
+			TestPropsValues.getUserId(), _group1.getGroupId(), "Título",
 			_assetVocabulary.getVocabularyId(), new ServiceContext());
 
 		expectedException.expect(AssetCategoryNameException.class);
@@ -957,14 +991,14 @@ public class AssetCategoryLocalServiceTest {
 		throws Exception {
 
 		GroupTestUtil.updateDisplaySettings(
-			_group.getGroupId(),
+			_group1.getGroupId(),
 			Arrays.asList(LocaleUtil.SPAIN, LocaleUtil.FRANCE),
 			LocaleUtil.SPAIN);
 
 		String expectedAssetCategoryTitle = "Título";
 
 		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			TestPropsValues.getUserId(), _group1.getGroupId(),
 			expectedAssetCategoryTitle, _assetVocabulary.getVocabularyId(),
 			new ServiceContext());
 
@@ -999,22 +1033,24 @@ public class AssetCategoryLocalServiceTest {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
+				_group1.getGroupId(), TestPropsValues.getUserId());
 
 		String assetCategoryName = RandomTestUtil.randomString();
 
 		AssetCategory assetCategory1 = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(), assetCategoryName,
-			_assetVocabulary.getVocabularyId(), serviceContext);
+			TestPropsValues.getUserId(), _group1.getGroupId(),
+			assetCategoryName, _assetVocabulary.getVocabularyId(),
+			serviceContext);
 
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.addVocabulary(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				TestPropsValues.getUserId(), _group1.getGroupId(),
 				RandomTestUtil.randomString(), serviceContext);
 
 		AssetCategory assetCategory2 = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(), assetCategoryName,
-			assetVocabulary.getVocabularyId(), serviceContext);
+			TestPropsValues.getUserId(), _group1.getGroupId(),
+			assetCategoryName, assetVocabulary.getVocabularyId(),
+			serviceContext);
 
 		assetCategory1 = _assetCategoryLocalService.updateCategory(
 			assetCategory1.getExternalReferenceCode(),
@@ -1040,11 +1076,11 @@ public class AssetCategoryLocalServiceTest {
 		throws Exception {
 
 		AssetCategory assetCategory1 = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			TestPropsValues.getUserId(), _group1.getGroupId(),
 			RandomTestUtil.randomString(), _assetVocabulary.getVocabularyId(),
 			serviceContext);
 		AssetCategory assetCategory2 = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			TestPropsValues.getUserId(), _group1.getGroupId(),
 			RandomTestUtil.randomString(), _assetVocabulary.getVocabularyId(),
 			serviceContext);
 
@@ -1054,7 +1090,7 @@ public class AssetCategoryLocalServiceTest {
 			});
 
 		return JournalTestUtil.addArticle(
-			_group.getGroupId(),
+			_group1.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
 	}
 
@@ -1087,7 +1123,10 @@ public class AssetCategoryLocalServiceTest {
 	private ConfigurationProvider _configurationProvider;
 
 	@DeleteAfterTestRun
-	private Group _group;
+	private Group _group1;
+
+	@DeleteAfterTestRun
+	private Group _group2;
 
 	@Inject
 	private ListTypeLocalService _listTypeLocalService;

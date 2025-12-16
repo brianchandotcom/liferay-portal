@@ -24,7 +24,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.util.OpenAPIUtil;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -46,68 +45,66 @@ public class SiteScopeResourceImpl extends BaseSiteScopeResourceImpl {
 			String internalClassNameKey, Boolean export)
 		throws Exception {
 
+		return Page.of(
+			_getSiteScopes(
+				_getEntityScopes(
+					GetterUtil.getBoolean(export), internalClassNameKey)));
+	}
+
+	private List<String> _getEntityScopes(
+			boolean export, String internalClassNameKey)
+		throws Exception {
+
 		if (internalClassNameKey.contains(StringPool.POUND)) {
 			ObjectDefinition objectDefinition =
 				_objectDefinitionLocalService.getObjectDefinition(
 					contextCompany.getCompanyId(),
 					TaskItemUtil.getTaskItemDelegateName(internalClassNameKey));
 
-			return Page.of(
-				_getSiteScopes(
-					Collections.singletonList(objectDefinition.getScope())));
+			return Collections.singletonList(objectDefinition.getScope());
 		}
-
-		List<String> entityScopes = null;
 
 		OpenAPIYAML openAPIYAML = _openAPIYAMLProvider.getOpenAPIYAML(
 			contextCompany.getCompanyId(), internalClassNameKey);
 
-		if (GetterUtil.getBoolean(export)) {
-			entityScopes = OpenAPIUtil.getReadEntityScopes(
-				TaskItemUtil.getSimpleClassName(internalClassNameKey),
-				openAPIYAML);
-		}
-		else {
-			entityScopes = OpenAPIUtil.getCreateEntityScopes(
+		if (export) {
+			return OpenAPIUtil.getReadEntityScopes(
 				TaskItemUtil.getSimpleClassName(internalClassNameKey),
 				openAPIYAML);
 		}
 
-		return Page.of(_getSiteScopes(entityScopes));
+		return OpenAPIUtil.getCreateEntityScopes(
+			TaskItemUtil.getSimpleClassName(internalClassNameKey), openAPIYAML);
 	}
 
 	private List<SiteScope> _getSiteScopes(List<String> entityScopes)
 		throws Exception {
 
-		List<SiteScope> siteScopes = new ArrayList<>();
-
-		if (entityScopes.contains("site")) {
-			List<Group> groups;
-
-			long userId = contextUser.getUserId();
-
-			if (_portal.isOmniadmin(userId)) {
-				groups = _groupService.getGroups(
-					contextCompany.getCompanyId(),
-					GroupConstants.ANY_PARENT_GROUP_ID, true);
-			}
-			else {
-				groups = _groupService.getUserSitesGroups(
-					userId, _CLASS_NAMES, QueryUtil.ALL_POS);
-			}
-
-			for (Group group : groups) {
-				siteScopes.add(
-					new SiteScope() {
-						{
-							setLabel(group::getDescriptiveName);
-							setValue(group::getGroupId);
-						}
-					});
-			}
+		if (!entityScopes.contains("site")) {
+			return Collections.emptyList();
 		}
 
-		return siteScopes;
+		if (_portal.isOmniadmin(contextUser.getUserId())) {
+			return _toSiteScopes(
+				_groupService.getGroups(
+					contextCompany.getCompanyId(),
+					GroupConstants.ANY_PARENT_GROUP_ID, true));
+		}
+
+		return _toSiteScopes(
+			_groupService.getUserSitesGroups(
+				contextUser.getUserId(), _CLASS_NAMES, QueryUtil.ALL_POS));
+	}
+
+	private List<SiteScope> _toSiteScopes(List<Group> groups) {
+		return transform(
+			groups,
+			group -> new SiteScope() {
+				{
+					setLabel(group::getDescriptiveName);
+					setValue(group::getGroupId);
+				}
+			});
 	}
 
 	private static final String[] _CLASS_NAMES = {

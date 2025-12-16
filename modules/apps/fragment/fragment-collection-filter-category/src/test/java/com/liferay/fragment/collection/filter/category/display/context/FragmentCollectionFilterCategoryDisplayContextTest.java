@@ -17,7 +17,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -50,14 +50,14 @@ public class FragmentCollectionFilterCategoryDisplayContextTest {
 	public static void tearDownClass() {
 		_assetCategoryServiceUtilMockedStatic.close();
 		_assetVocabularyServiceUtilMockedStatic.close();
-		_groupServiceUtilMockedStatic.close();
+		_groupLocalServiceUtilMockedStatic.close();
 	}
 
 	@Before
 	public void setUp() {
 		_assetCategoryServiceUtilMockedStatic.reset();
 		_assetVocabularyServiceUtilMockedStatic.reset();
-		_groupServiceUtilMockedStatic.reset();
+		_groupLocalServiceUtilMockedStatic.reset();
 	}
 
 	@Test
@@ -207,7 +207,7 @@ public class FragmentCollectionFilterCategoryDisplayContextTest {
 			);
 
 			Mockito.when(
-				GroupServiceUtil.fetchGroupByExternalReferenceCode(
+				GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
 					scopeExternalReferenceCode, companyId)
 			).thenReturn(
 				group
@@ -299,8 +299,8 @@ public class FragmentCollectionFilterCategoryDisplayContextTest {
 	private static final MockedStatic<AssetVocabularyServiceUtil>
 		_assetVocabularyServiceUtilMockedStatic = Mockito.mockStatic(
 			AssetVocabularyServiceUtil.class);
-	private static final MockedStatic<GroupServiceUtil>
-		_groupServiceUtilMockedStatic = Mockito.mockStatic(
-			GroupServiceUtil.class);
+	private static final MockedStatic<GroupLocalServiceUtil>
+		_groupLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			GroupLocalServiceUtil.class);
 
 }

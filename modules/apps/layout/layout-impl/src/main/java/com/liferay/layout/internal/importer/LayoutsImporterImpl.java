@@ -2341,9 +2341,9 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 										fileEntry.getGroupId());
 
 								if (fileEntryGroup != null) {
-									layout.setFaviconFileEntryScopeERC(
+									faviconFileEntryScopeERC =
 										fileEntryGroup.
-											getExternalReferenceCode());
+											getExternalReferenceCode();
 								}
 								else if (_log.isWarnEnabled()) {
 									_log.warn(
@@ -2355,6 +2355,12 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 											fileEntry.getGroupId()));
 								}
 							}
+							else {
+								faviconFileEntryScopeERC = null;
+							}
+
+							layout.setFaviconFileEntryScopeERC(
+								faviconFileEntryScopeERC);
 						}
 						else if (_log.isWarnEnabled()) {
 							_log.warn(

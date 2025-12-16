@@ -102,7 +102,7 @@ const testWithExportImportAtInstanceLevelFF = mergeTests(
 [
 	{name: 'com.liferay.site.initializer.masterclass'},
 	{
-		mask: (page) => page.locator('.user-personal-bar'),
+		mask: (page: Page) => page.locator('.user-personal-bar'),
 		name: 'com.liferay.site.initializer.welcome',
 	},
 ].forEach(({mask, name}) => {
@@ -243,9 +243,9 @@ testWithExportImportAtInstanceLevelFF(
 		let exportName: string;
 		let exportableItems1: Map<string, number>;
 		let exportableItems2: Map<string, number>;
-		let objectDefinition1;
-		let objectDefinition2;
-		let objectRelationship;
+		let objectDefinition1: ObjectDefinition;
+		let objectDefinition2: ObjectDefinition;
+		let objectRelationship: ObjectRelationship;
 		let originalOverallMaximumUploadRequestSize: string;
 		let site1: Site;
 		let site2: Site;
@@ -311,7 +311,7 @@ testWithExportImportAtInstanceLevelFF(
 					const objectRelationshipAPIClient =
 						await apiHelpers.buildRestClient(ObjectRelationshipAPI);
 
-					objectRelationship =
+					({body: objectRelationship} =
 						await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
 							objectDefinition1.externalReferenceCode,
 							{
@@ -328,7 +328,7 @@ testWithExportImportAtInstanceLevelFF(
 								objectDefinitionName2: objectDefinition2.name,
 								type: 'oneToMany',
 							}
-						);
+						));
 				}
 			);
 

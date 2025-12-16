@@ -58,7 +58,6 @@ public class ObjectEntryValuesUtilTest {
 					objectFieldName, RandomTestUtil.randomString()),
 				objectField, null,
 				Collections.singletonMap(objectFieldName, value)));
-
 		Assert.assertEquals(
 			value,
 			ObjectEntryValuesUtil.getTitleFieldValue(
@@ -89,7 +88,6 @@ public class ObjectEntryValuesUtilTest {
 				HashMapBuilder.<String, Object>put(
 					"userName", value
 				).build()));
-
 		Assert.assertEquals(
 			value,
 			ObjectEntryValuesUtil.getValue(
@@ -132,7 +130,6 @@ public class ObjectEntryValuesUtilTest {
 	@Test
 	public void testGetValueString() {
 		String fieldName = RandomTestUtil.randomString();
-
 		String value = RandomTestUtil.randomString();
 
 		Assert.assertEquals(

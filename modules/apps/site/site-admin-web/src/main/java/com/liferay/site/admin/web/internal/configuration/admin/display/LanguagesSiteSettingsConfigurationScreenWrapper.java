@@ -65,13 +65,13 @@ public class LanguagesSiteSettingsConfigurationScreenWrapper
 
 			return HashMapDictionaryBuilder.<String, Object>put(
 				GroupConstants.TYPE_SETTINGS_KEY_INHERIT_LOCALES,
-				group.getTypeSettingsProperty(
+				() -> group.getTypeSettingsProperty(
 					GroupConstants.TYPE_SETTINGS_KEY_INHERIT_LOCALES)
 			).put(
 				PropsKeys.LOCALES,
-				group.getTypeSettingsProperty(PropsKeys.LOCALES)
+				() -> group.getTypeSettingsProperty(PropsKeys.LOCALES)
 			).put(
-				"languageId", group.getTypeSettingsProperty("languageId")
+				"languageId", () -> group.getTypeSettingsProperty("languageId")
 			).build();
 		}
 

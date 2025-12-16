@@ -29,10 +29,11 @@ public class ClassNameUpgradeProcess extends UpgradeProcess {
 			RawMetadataProcessor.class.getName());
 
 		if (newClassNameId == 0) {
-			_updateClassNameValue(oldClassNameId);
+			_updateValue(oldClassNameId);
 		}
 		else {
 			_updateDDMStructureClassNameId(newClassNameId, oldClassNameId);
+
 			_deleteClassName(oldClassNameId);
 		}
 	}
@@ -63,7 +64,7 @@ public class ClassNameUpgradeProcess extends UpgradeProcess {
 		return 0;
 	}
 
-	private void _updateClassNameValue(long classNameId) throws Exception {
+	private void _updateValue(long classNameId) throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"update ClassName_ set value = ? where classNameId = ? ")) {
 

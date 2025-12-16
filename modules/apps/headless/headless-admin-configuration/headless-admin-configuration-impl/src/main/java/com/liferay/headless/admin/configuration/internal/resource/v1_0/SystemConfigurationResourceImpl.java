@@ -29,9 +29,9 @@ import com.liferay.portal.vulcan.pagination.Page;
 import jakarta.validation.ValidationException;
 
 import jakarta.ws.rs.BadRequestException;
-import jakarta.ws.rs.InternalServerErrorException;
 import jakarta.ws.rs.NotAuthorizedException;
 import jakarta.ws.rs.NotFoundException;
+import jakarta.ws.rs.ServerErrorException;
 import jakarta.ws.rs.core.Response;
 
 import java.util.ArrayList;
@@ -73,45 +73,12 @@ public class SystemConfigurationResourceImpl
 			systemConfigurationExternalReferenceCode);
 
 		if (configurationScreen != null) {
-			SystemConfiguration systemConfiguration = _toSystemConfiguration(
+			return _getConfigurationScreenSystemConfiguration(
 				configurationScreen);
-
-			if (systemConfiguration == null) {
-				throw new InternalServerErrorException(
-					"Export capability is not implemented for system " +
-						"configuration with external reference code " +
-							systemConfigurationExternalReferenceCode);
-			}
-
-			return systemConfiguration;
 		}
 
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			ConfigurationFilterStringUtil.getSystemScopedFilterString(
-				systemConfigurationExternalReferenceCode));
-
-		if (ArrayUtil.isEmpty(configurations)) {
-			throw new NotFoundException(
-				"Unable to find system configuration with external reference " +
-					"code " + systemConfigurationExternalReferenceCode);
-		}
-
-		if (configurations.length > 1) {
-			List<String> pids = new ArrayList<>();
-
-			for (Configuration configuration : configurations) {
-				pids.add(configuration.getPid());
-			}
-
-			throw new BadRequestException(
-				StringBundler.concat(
-					systemConfigurationExternalReferenceCode,
-					" is a factory configuration. Specify one of these PIDs: ",
-					ListUtil.toString(pids, StringPool.BLANK, StringPool.COMMA),
-					"."));
-		}
-
-		return _toSystemConfiguration(configurations[0]);
+		return _getSystemConfiguration(
+			systemConfigurationExternalReferenceCode);
 	}
 
 	@Override
@@ -259,6 +226,66 @@ public class SystemConfigurationResourceImpl
 		}
 	}
 
+	private SystemConfiguration _getConfigurationScreenSystemConfiguration(
+		ConfigurationScreen configurationScreen) {
+
+		try {
+			SystemConfiguration systemConfiguration = _toSystemConfiguration(
+				configurationScreen);
+
+			Map<String, Object> properties =
+				systemConfiguration.getProperties();
+
+			if (properties.isEmpty()) {
+				throw new NotFoundException(
+					StringBundler.concat(
+						"Unable to find entry for system configuration with ",
+						"external reference code \"",
+						configurationScreen.getKey(), "\""));
+			}
+
+			return systemConfiguration;
+		}
+		catch (UnsupportedOperationException unsupportedOperationException) {
+			throw new ServerErrorException(
+				unsupportedOperationException.getMessage(),
+				Response.Status.NOT_IMPLEMENTED);
+		}
+	}
+
+	private SystemConfiguration _getSystemConfiguration(
+			String systemConfigurationExternalReferenceCode)
+		throws Exception {
+
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			ConfigurationFilterStringUtil.getSystemScopedFilterString(
+				systemConfigurationExternalReferenceCode));
+
+		if (ArrayUtil.isEmpty(configurations)) {
+			throw new NotFoundException(
+				"Unable to find entry for system configuration with external " +
+					"reference code " +
+						systemConfigurationExternalReferenceCode);
+		}
+
+		if (configurations.length > 1) {
+			List<String> pids = new ArrayList<>();
+
+			for (Configuration configuration : configurations) {
+				pids.add(configuration.getPid());
+			}
+
+			throw new BadRequestException(
+				StringBundler.concat(
+					systemConfigurationExternalReferenceCode,
+					" is a factory configuration. Specify one of these PIDs: ",
+					ListUtil.toString(pids, StringPool.BLANK, StringPool.COMMA),
+					"."));
+		}
+
+		return _toSystemConfiguration(configurations[0]);
+	}
+
 	private SystemConfiguration _toSystemConfiguration(
 			Configuration configuration)
 		throws Exception {
@@ -280,22 +307,16 @@ public class SystemConfigurationResourceImpl
 	}
 
 	private SystemConfiguration _toSystemConfiguration(
-			ConfigurationScreen configurationScreen)
-		throws Exception {
-
-		Map<String, Object> properties = ConfigurationScreenUtil.getProperties(
-			_configurationExportImportProcessor, configurationScreen,
-			ExtendedObjectClassDefinition.Scope.SYSTEM, null);
-
-		if (properties == null) {
-			return null;
-		}
+		ConfigurationScreen configurationScreen) {
 
 		SystemConfiguration systemConfiguration = new SystemConfiguration();
 
 		systemConfiguration.setExternalReferenceCode(
 			configurationScreen::getKey);
-		systemConfiguration.setProperties(() -> properties);
+		systemConfiguration.setProperties(
+			() -> ConfigurationScreenUtil.getProperties(
+				_configurationExportImportProcessor, configurationScreen,
+				ExtendedObjectClassDefinition.Scope.SYSTEM, null));
 
 		return systemConfiguration;
 	}

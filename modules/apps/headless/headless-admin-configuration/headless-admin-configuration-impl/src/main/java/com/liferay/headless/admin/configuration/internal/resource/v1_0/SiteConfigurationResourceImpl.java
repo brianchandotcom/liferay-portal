@@ -32,9 +32,9 @@ import com.liferay.portal.vulcan.pagination.Page;
 import jakarta.validation.ValidationException;
 
 import jakarta.ws.rs.BadRequestException;
-import jakarta.ws.rs.InternalServerErrorException;
 import jakarta.ws.rs.NotAuthorizedException;
 import jakarta.ws.rs.NotFoundException;
+import jakarta.ws.rs.ServerErrorException;
 import jakarta.ws.rs.core.Response;
 
 import java.util.ArrayList;
@@ -78,47 +78,13 @@ public class SiteConfigurationResourceImpl
 			siteConfigurationExternalReferenceCode);
 
 		if (configurationScreen != null) {
-			SiteConfiguration siteConfiguration = _toSiteConfiguration(
+			return _getConfigurationScreenSiteConfiguration(
 				configurationScreen, group.getGroupId());
-
-			if (siteConfiguration == null) {
-				throw new InternalServerErrorException(
-					"Export capability is not implemented for site " +
-						"configuration with external reference code " +
-							siteConfigurationExternalReferenceCode);
-			}
-
-			return siteConfiguration;
 		}
 
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			ConfigurationFilterStringUtil.getGroupScopedFilterString(
-				String.valueOf(group.getGroupId()),
-				siteConfigurationExternalReferenceCode,
-				siteExternalReferenceCode));
-
-		if (ArrayUtil.isEmpty(configurations)) {
-			throw new NotFoundException(
-				"Unable to find site configuration with external reference " +
-					"code " + siteConfigurationExternalReferenceCode);
-		}
-
-		if (configurations.length > 1) {
-			List<String> pids = new ArrayList<>();
-
-			for (Configuration configuration : configurations) {
-				pids.add(configuration.getPid());
-			}
-
-			throw new BadRequestException(
-				StringBundler.concat(
-					siteConfigurationExternalReferenceCode,
-					" is a factory configuration. Specify one of these PIDs: ",
-					ListUtil.toString(pids, StringPool.BLANK, StringPool.COMMA),
-					"."));
-		}
-
-		return _toSiteConfiguration(configurations[0]);
+		return _getSiteSiteConfiguration(
+			group.getGroupId(), siteConfigurationExternalReferenceCode,
+			siteExternalReferenceCode);
 	}
 
 	@Override
@@ -286,6 +252,66 @@ public class SiteConfigurationResourceImpl
 		}
 	}
 
+	private SiteConfiguration _getConfigurationScreenSiteConfiguration(
+		ConfigurationScreen configurationScreen, long groupId) {
+
+		try {
+			SiteConfiguration siteConfiguration = _toSiteConfiguration(
+				configurationScreen, groupId);
+
+			Map<String, Object> properties = siteConfiguration.getProperties();
+
+			if (properties.isEmpty()) {
+				throw new NotFoundException(
+					StringBundler.concat(
+						"Unable to find entry for site configuration with ",
+						"external reference code \"",
+						configurationScreen.getKey(), "\""));
+			}
+
+			return siteConfiguration;
+		}
+		catch (UnsupportedOperationException unsupportedOperationException) {
+			throw new ServerErrorException(
+				unsupportedOperationException.getMessage(),
+				Response.Status.NOT_IMPLEMENTED);
+		}
+	}
+
+	private SiteConfiguration _getSiteSiteConfiguration(
+			long groupId, String siteConfigurationExternalReferenceCode,
+			String siteExternalReferenceCode)
+		throws Exception {
+
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			ConfigurationFilterStringUtil.getGroupScopedFilterString(
+				String.valueOf(groupId), siteConfigurationExternalReferenceCode,
+				siteExternalReferenceCode));
+
+		if (ArrayUtil.isEmpty(configurations)) {
+			throw new NotFoundException(
+				"Unable to find entry for site configuration with external " +
+					"reference code " + siteConfigurationExternalReferenceCode);
+		}
+
+		if (configurations.length > 1) {
+			List<String> pids = new ArrayList<>();
+
+			for (Configuration configuration : configurations) {
+				pids.add(configuration.getPid());
+			}
+
+			throw new BadRequestException(
+				StringBundler.concat(
+					siteConfigurationExternalReferenceCode,
+					" is a factory configuration. Specify one of these PIDs: ",
+					ListUtil.toString(pids, StringPool.BLANK, StringPool.COMMA),
+					"."));
+		}
+
+		return _toSiteConfiguration(configurations[0]);
+	}
+
 	private SiteConfiguration _toSiteConfiguration(Configuration configuration)
 		throws Exception {
 
@@ -306,21 +332,15 @@ public class SiteConfigurationResourceImpl
 	}
 
 	private SiteConfiguration _toSiteConfiguration(
-			ConfigurationScreen configurationScreen, long groupId)
-		throws Exception {
-
-		Map<String, Object> properties = ConfigurationScreenUtil.getProperties(
-			_configurationExportImportProcessor, configurationScreen,
-			ExtendedObjectClassDefinition.Scope.GROUP, groupId);
-
-		if ((properties == null) || properties.isEmpty()) {
-			return null;
-		}
+		ConfigurationScreen configurationScreen, long groupId) {
 
 		SiteConfiguration siteConfiguration = new SiteConfiguration();
 
 		siteConfiguration.setExternalReferenceCode(configurationScreen::getKey);
-		siteConfiguration.setProperties(() -> properties);
+		siteConfiguration.setProperties(
+			() -> ConfigurationScreenUtil.getProperties(
+				_configurationExportImportProcessor, configurationScreen,
+				ExtendedObjectClassDefinition.Scope.GROUP, groupId));
 
 		return siteConfiguration;
 	}

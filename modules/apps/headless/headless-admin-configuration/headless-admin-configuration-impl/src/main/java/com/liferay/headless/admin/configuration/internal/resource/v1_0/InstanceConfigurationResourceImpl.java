@@ -260,9 +260,10 @@ public class InstanceConfigurationResourceImpl
 
 		if (ArrayUtil.isEmpty(configurations)) {
 			throw new NotFoundException(
-				"Unable to find entry for instance configuration with " +
-					"external reference code " +
-						instanceConfigurationExternalReferenceCode);
+				StringBundler.concat(
+					"Unable to find entry for instance configuration with ",
+					"external reference code \"",
+					instanceConfigurationExternalReferenceCode, "\""));
 		}
 
 		if (configurations.length > 1) {
@@ -331,9 +332,11 @@ public class InstanceConfigurationResourceImpl
 
 			if (configuration == null) {
 				throw new NotFoundException(
-					"Unable to find instance configuration with external " +
-						"reference code " +
-							instanceConfiguration.getExternalReferenceCode());
+					StringBundler.concat(
+						"Unable to find instance configuration with external ",
+						"reference code \"",
+						instanceConfiguration.getExternalReferenceCode(),
+						"\""));
 			}
 
 			return _toInstanceConfiguration(configuration);

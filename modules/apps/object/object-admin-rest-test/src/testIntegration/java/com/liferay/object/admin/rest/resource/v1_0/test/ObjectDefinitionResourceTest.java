@@ -1460,7 +1460,6 @@ public class ObjectDefinitionResourceTest
 
 		randomObjectDefinition.setExternalReferenceCode(
 			"TESTOBJECTDEFINITION2");
-
 		randomObjectDefinition.setObjectFields(
 			new ObjectField[] {
 				new ObjectField() {

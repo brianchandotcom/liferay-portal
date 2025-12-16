@@ -109,6 +109,8 @@ public class RenderPortletActionTest {
 					"jakarta.portlet.version", "3.0"
 				).build());
 
+		RenderPortletAction renderPortletAction = new RenderPortletAction();
+
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest(HttpMethods.GET, StringPool.BLANK) {
 
@@ -162,8 +164,6 @@ public class RenderPortletActionTest {
 		mockHttpServletRequest.setParameter(
 			"p_p_id",
 			LayoutTestUtil.addPortletToLayout(layout, portletId));
-
-		RenderPortletAction renderPortletAction = new RenderPortletAction();
 
 		renderPortletAction.execute(
 			null, mockHttpServletRequest, new MockHttpServletResponse());

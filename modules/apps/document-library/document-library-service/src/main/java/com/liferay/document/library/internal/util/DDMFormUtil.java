@@ -9,13 +9,12 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -28,53 +27,52 @@ public class DDMFormUtil {
 		DDMForm ddmForm = new DDMForm();
 
 		ddmForm.setAvailableLocales(Collections.singleton(locale));
+		ddmForm.setDDMFormFields(
+			TransformUtil.transform(
+				fieldNames,
+				name -> {
+					DDMFormField ddmFormField = new DDMFormField(name, "text");
+
+					ddmFormField.setDataType("string");
+					ddmFormField.setIndexType("text");
+					ddmFormField.setLocalizable(false);
+					ddmFormField.setMultiple(false);
+					ddmFormField.setReadOnly(false);
+					ddmFormField.setRepeatable(false);
+					ddmFormField.setRequired(false);
+					ddmFormField.setShowLabel(true);
+
+					LocalizedValue label = ddmFormField.getLabel();
+
+					label.addString(
+						locale,
+						"metadata.".concat(
+							StringUtil.replaceFirst(
+								name, CharPool.UNDERLINE, CharPool.PERIOD)));
+					label.setDefaultLocale(locale);
+
+					LocalizedValue predefinedValue =
+						ddmFormField.getPredefinedValue();
+
+					predefinedValue.addString(locale, StringPool.BLANK);
+					predefinedValue.setDefaultLocale(locale);
+
+					LocalizedValue style = ddmFormField.getStyle();
+
+					style.setDefaultLocale(locale);
+
+					LocalizedValue tip = ddmFormField.getTip();
+
+					tip.setDefaultLocale(locale);
+
+					DDMFormFieldOptions ddmFormFieldOptions =
+						ddmFormField.getDDMFormFieldOptions();
+
+					ddmFormFieldOptions.setDefaultLocale(locale);
+
+					return ddmFormField;
+				}));
 		ddmForm.setDefaultLocale(locale);
-
-		List<DDMFormField> ddmFormFields = new ArrayList<>();
-
-		for (String name : fieldNames) {
-			DDMFormField ddmFormField = new DDMFormField(name, "text");
-
-			ddmFormField.setDataType("string");
-			ddmFormField.setIndexType("text");
-			ddmFormField.setLocalizable(false);
-			ddmFormField.setMultiple(false);
-			ddmFormField.setReadOnly(false);
-			ddmFormField.setRepeatable(false);
-			ddmFormField.setRequired(false);
-			ddmFormField.setShowLabel(true);
-
-			LocalizedValue label = ddmFormField.getLabel();
-
-			label.addString(
-				locale,
-				"metadata.".concat(
-					StringUtil.replaceFirst(
-						name, CharPool.UNDERLINE, CharPool.PERIOD)));
-			label.setDefaultLocale(locale);
-
-			LocalizedValue predefinedValue = ddmFormField.getPredefinedValue();
-
-			predefinedValue.addString(locale, StringPool.BLANK);
-			predefinedValue.setDefaultLocale(locale);
-
-			LocalizedValue style = ddmFormField.getStyle();
-
-			style.setDefaultLocale(locale);
-
-			LocalizedValue tip = ddmFormField.getTip();
-
-			tip.setDefaultLocale(locale);
-
-			DDMFormFieldOptions ddmFormFieldOptions =
-				ddmFormField.getDDMFormFieldOptions();
-
-			ddmFormFieldOptions.setDefaultLocale(locale);
-
-			ddmFormFields.add(ddmFormField);
-		}
-
-		ddmForm.setDDMFormFields(ddmFormFields);
 
 		return ddmForm;
 	}

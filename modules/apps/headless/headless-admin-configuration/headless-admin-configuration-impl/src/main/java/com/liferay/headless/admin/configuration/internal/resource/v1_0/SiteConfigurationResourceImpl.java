@@ -149,51 +149,15 @@ public class SiteConfigurationResourceImpl
 			siteConfigurationExternalReferenceCode);
 
 		if (configurationScreen != null) {
-			try {
-				ConfigurationScreenUtil.importProperties(
-					_configurationExportImportProcessor, configurationScreen,
-					HashMapDictionaryBuilder.putAll(
-						siteConfiguration.getProperties()
-					).build(),
-					ExtendedObjectClassDefinition.Scope.GROUP, groupId);
-			}
-			catch (Exception exception) {
-				throw new BadRequestException(exception.getMessage());
-			}
-
-			return _toSiteConfiguration(configurationScreen, groupId);
+			return _putConfigurationScreenSiteConfiguration(
+				siteConfiguration, configurationScreen, groupId);
 		}
 
 		siteConfiguration.setExternalReferenceCode(
 			() -> siteConfigurationExternalReferenceCode);
 
-		String filterString =
-			ConfigurationFilterStringUtil.getGroupScopedFilterString(
-				String.valueOf(groupId),
-				siteConfiguration.getExternalReferenceCode(),
-				siteExternalReferenceCode);
-
-		try {
-			Configuration configuration =
-				ConfigurationUtil.addOrUpdateConfiguration(
-					groupId, _configurationAdmin,
-					siteConfiguration.getExternalReferenceCode(), filterString,
-					siteConfiguration.getProperties(),
-					ExtendedObjectClassDefinition.Scope.GROUP,
-					_settingsLocatorHelper);
-
-			if (configuration == null) {
-				throw new NotFoundException(
-					"Unable to find site configuration with external " +
-						"reference code " +
-							siteConfiguration.getExternalReferenceCode());
-			}
-
-			return _toSiteConfiguration(configuration);
-		}
-		catch (ValidationException validationException) {
-			throw new BadRequestException(validationException.getMessage());
-		}
+		return _putSiteConfiguration(
+			groupId, siteConfiguration, siteExternalReferenceCode);
 	}
 
 	@Activate
@@ -344,6 +308,64 @@ public class SiteConfigurationResourceImpl
 		}
 
 		return _toSiteConfiguration(configurations[0]);
+	}
+
+	private SiteConfiguration _putConfigurationScreenSiteConfiguration(
+		SiteConfiguration siteConfiguration,
+		ConfigurationScreen configurationScreen, long groupId) {
+
+		try {
+			ConfigurationScreenUtil.importProperties(
+				_configurationExportImportProcessor, configurationScreen,
+				HashMapDictionaryBuilder.putAll(
+					siteConfiguration.getProperties()
+				).build(),
+				ExtendedObjectClassDefinition.Scope.GROUP, groupId);
+
+			return _toSiteConfiguration(configurationScreen, groupId);
+		}
+		catch (UnsupportedOperationException unsupportedOperationException) {
+			throw new ServerErrorException(
+				unsupportedOperationException.getMessage(),
+				Response.Status.NOT_IMPLEMENTED);
+		}
+		catch (Exception exception) {
+			throw new BadRequestException(exception.getMessage());
+		}
+	}
+
+	private SiteConfiguration _putSiteConfiguration(
+			long groupId, SiteConfiguration siteConfiguration,
+			String siteExternalReferenceCode)
+		throws Exception {
+
+		String filterString =
+			ConfigurationFilterStringUtil.getGroupScopedFilterString(
+				String.valueOf(groupId),
+				siteConfiguration.getExternalReferenceCode(),
+				siteExternalReferenceCode);
+
+		try {
+			Configuration configuration =
+				ConfigurationUtil.addOrUpdateConfiguration(
+					groupId, _configurationAdmin,
+					siteConfiguration.getExternalReferenceCode(), filterString,
+					siteConfiguration.getProperties(),
+					ExtendedObjectClassDefinition.Scope.GROUP,
+					_settingsLocatorHelper);
+
+			if (configuration == null) {
+				throw new NotFoundException(
+					"Unable to find site configuration with external " +
+						"reference code " +
+							siteConfiguration.getExternalReferenceCode());
+			}
+
+			return _toSiteConfiguration(configuration);
+		}
+		catch (ValidationException validationException) {
+			throw new BadRequestException(validationException.getMessage());
+		}
 	}
 
 	private SiteConfiguration _toSiteConfiguration(Configuration configuration)

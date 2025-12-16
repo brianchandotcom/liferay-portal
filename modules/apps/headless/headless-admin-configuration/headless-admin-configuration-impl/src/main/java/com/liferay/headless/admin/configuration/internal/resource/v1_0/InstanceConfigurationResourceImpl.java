@@ -122,54 +122,14 @@ public class InstanceConfigurationResourceImpl
 			instanceConfigurationExternalReferenceCode);
 
 		if (configurationScreen != null) {
-			try {
-				ConfigurationScreenUtil.importProperties(
-					_configurationExportImportProcessor, configurationScreen,
-					HashMapDictionaryBuilder.putAll(
-						instanceConfiguration.getProperties()
-					).build(),
-					ExtendedObjectClassDefinition.Scope.COMPANY,
-					contextCompany.getCompanyId());
-			}
-			catch (Exception exception) {
-				throw new BadRequestException(exception.getMessage());
-			}
-
-			return _toInstanceConfiguration(configurationScreen);
+			return _putConfigurationScreenInstanceConfiguration(
+				configurationScreen, instanceConfiguration);
 		}
 
 		instanceConfiguration.setExternalReferenceCode(
 			() -> instanceConfigurationExternalReferenceCode);
 
-		long companyId = contextCompany.getCompanyId();
-
-		String filterString =
-			ConfigurationFilterStringUtil.getCompanyScopedFilterString(
-				String.valueOf(companyId),
-				instanceConfiguration.getExternalReferenceCode(),
-				contextCompany.getDefaultWebId());
-
-		try {
-			Configuration configuration =
-				ConfigurationUtil.addOrUpdateConfiguration(
-					companyId, _configurationAdmin,
-					instanceConfiguration.getExternalReferenceCode(),
-					filterString, instanceConfiguration.getProperties(),
-					ExtendedObjectClassDefinition.Scope.COMPANY,
-					_settingsLocatorHelper);
-
-			if (configuration == null) {
-				throw new NotFoundException(
-					"Unable to find instance configuration with external " +
-						"reference code " +
-							instanceConfiguration.getExternalReferenceCode());
-			}
-
-			return _toInstanceConfiguration(configuration);
-		}
-		catch (ValidationException validationException) {
-			throw new BadRequestException(validationException.getMessage());
-		}
+		return _putInstanceConfiguration(instanceConfiguration);
 	}
 
 	@Activate
@@ -321,6 +281,66 @@ public class InstanceConfigurationResourceImpl
 		}
 
 		return _toInstanceConfiguration(configurations[0]);
+	}
+
+	private InstanceConfiguration _putConfigurationScreenInstanceConfiguration(
+		ConfigurationScreen configurationScreen,
+		InstanceConfiguration instanceConfiguration) {
+
+		try {
+			ConfigurationScreenUtil.importProperties(
+				_configurationExportImportProcessor, configurationScreen,
+				HashMapDictionaryBuilder.putAll(
+					instanceConfiguration.getProperties()
+				).build(),
+				ExtendedObjectClassDefinition.Scope.COMPANY,
+				contextCompany.getCompanyId());
+
+			return _toInstanceConfiguration(configurationScreen);
+		}
+		catch (UnsupportedOperationException unsupportedOperationException) {
+			throw new ServerErrorException(
+				unsupportedOperationException.getMessage(),
+				Response.Status.NOT_IMPLEMENTED);
+		}
+		catch (Exception exception) {
+			throw new BadRequestException(exception.getMessage());
+		}
+	}
+
+	private InstanceConfiguration _putInstanceConfiguration(
+			InstanceConfiguration instanceConfiguration)
+		throws Exception {
+
+		long companyId = contextCompany.getCompanyId();
+
+		String filterString =
+			ConfigurationFilterStringUtil.getCompanyScopedFilterString(
+				String.valueOf(companyId),
+				instanceConfiguration.getExternalReferenceCode(),
+				contextCompany.getDefaultWebId());
+
+		try {
+			Configuration configuration =
+				ConfigurationUtil.addOrUpdateConfiguration(
+					companyId, _configurationAdmin,
+					instanceConfiguration.getExternalReferenceCode(),
+					filterString, instanceConfiguration.getProperties(),
+					ExtendedObjectClassDefinition.Scope.COMPANY,
+					_settingsLocatorHelper);
+
+			if (configuration == null) {
+				throw new NotFoundException(
+					"Unable to find instance configuration with external " +
+						"reference code " +
+							instanceConfiguration.getExternalReferenceCode());
+			}
+
+			return _toInstanceConfiguration(configuration);
+		}
+		catch (ValidationException validationException) {
+			throw new BadRequestException(validationException.getMessage());
+		}
 	}
 
 	private InstanceConfiguration _toInstanceConfiguration(

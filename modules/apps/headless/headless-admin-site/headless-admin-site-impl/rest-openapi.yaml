@@ -1290,7 +1290,6 @@ components:
                     # @review
                     description:
                         The resolution of the fragment image viewport.
-                    enum: [Auto, Preview, Thumbnail]
                     type: string
             required:
                 -   id

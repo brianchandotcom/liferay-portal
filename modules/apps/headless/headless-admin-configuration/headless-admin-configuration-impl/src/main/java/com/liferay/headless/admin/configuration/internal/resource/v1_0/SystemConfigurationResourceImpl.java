@@ -127,49 +127,14 @@ public class SystemConfigurationResourceImpl
 			systemConfigurationExternalReferenceCode);
 
 		if (configurationScreen != null) {
-			try {
-				ConfigurationScreenUtil.importProperties(
-					_configurationExportImportProcessor, configurationScreen,
-					HashMapDictionaryBuilder.putAll(
-						systemConfiguration.getProperties()
-					).build(),
-					ExtendedObjectClassDefinition.Scope.SYSTEM, null);
-			}
-			catch (Exception exception) {
-				throw new BadRequestException(exception.getMessage());
-			}
-
-			return _toSystemConfiguration(configurationScreen);
+			return _putConfigurationScreenSystemConfiguration(
+				configurationScreen, systemConfiguration);
 		}
 
 		systemConfiguration.setExternalReferenceCode(
 			() -> systemConfigurationExternalReferenceCode);
 
-		String filterString =
-			ConfigurationFilterStringUtil.getSystemScopedFilterString(
-				systemConfiguration.getExternalReferenceCode());
-
-		try {
-			Configuration configuration =
-				ConfigurationUtil.addOrUpdateConfiguration(
-					null, _configurationAdmin,
-					systemConfiguration.getExternalReferenceCode(),
-					filterString, systemConfiguration.getProperties(),
-					ExtendedObjectClassDefinition.Scope.SYSTEM,
-					_settingsLocatorHelper);
-
-			if (configuration == null) {
-				throw new NotFoundException(
-					"Unable to find system configuration with external " +
-						"reference code " +
-							systemConfiguration.getExternalReferenceCode());
-			}
-
-			return _toSystemConfiguration(configuration);
-		}
-		catch (ValidationException validationException) {
-			throw new BadRequestException(validationException.getMessage());
-		}
+		return _putSystemConfiguration(systemConfiguration);
 	}
 
 	@Activate
@@ -315,6 +280,61 @@ public class SystemConfigurationResourceImpl
 		}
 
 		return _toSystemConfiguration(configurations[0]);
+	}
+
+	private SystemConfiguration _putConfigurationScreenSystemConfiguration(
+		ConfigurationScreen configurationScreen,
+		SystemConfiguration systemConfiguration) {
+
+		try {
+			ConfigurationScreenUtil.importProperties(
+				_configurationExportImportProcessor, configurationScreen,
+				HashMapDictionaryBuilder.putAll(
+					systemConfiguration.getProperties()
+				).build(),
+				ExtendedObjectClassDefinition.Scope.SYSTEM, null);
+
+			return _toSystemConfiguration(configurationScreen);
+		}
+		catch (UnsupportedOperationException unsupportedOperationException) {
+			throw new ServerErrorException(
+				unsupportedOperationException.getMessage(),
+				Response.Status.NOT_IMPLEMENTED);
+		}
+		catch (Exception exception) {
+			throw new BadRequestException(exception.getMessage());
+		}
+	}
+
+	private SystemConfiguration _putSystemConfiguration(
+			SystemConfiguration systemConfiguration)
+		throws Exception {
+
+		String filterString =
+			ConfigurationFilterStringUtil.getSystemScopedFilterString(
+				systemConfiguration.getExternalReferenceCode());
+
+		try {
+			Configuration configuration =
+				ConfigurationUtil.addOrUpdateConfiguration(
+					null, _configurationAdmin,
+					systemConfiguration.getExternalReferenceCode(),
+					filterString, systemConfiguration.getProperties(),
+					ExtendedObjectClassDefinition.Scope.SYSTEM,
+					_settingsLocatorHelper);
+
+			if (configuration == null) {
+				throw new NotFoundException(
+					"Unable to find system configuration with external " +
+						"reference code " +
+							systemConfiguration.getExternalReferenceCode());
+			}
+
+			return _toSystemConfiguration(configuration);
+		}
+		catch (ValidationException validationException) {
+			throw new BadRequestException(validationException.getMessage());
+		}
 	}
 
 	private SystemConfiguration _toSystemConfiguration(

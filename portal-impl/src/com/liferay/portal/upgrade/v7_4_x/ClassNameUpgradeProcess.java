@@ -64,18 +64,6 @@ public class ClassNameUpgradeProcess extends UpgradeProcess {
 		return 0;
 	}
 
-	private void _updateValue(long classNameId) throws Exception {
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"update ClassName_ set value = ? where classNameId = ? ")) {
-
-			preparedStatement.setString(
-				1, RawMetadataProcessor.class.getName());
-			preparedStatement.setLong(2, classNameId);
-
-			preparedStatement.executeUpdate();
-		}
-	}
-
 	private void _updateDDMStructureClassNameId(
 			long newClassNameId, long oldClassNameId)
 		throws Exception {
@@ -88,6 +76,18 @@ public class ClassNameUpgradeProcess extends UpgradeProcess {
 			preparedStatement.setLong(2, oldClassNameId);
 
 			preparedStatement.execute();
+		}
+	}
+
+	private void _updateValue(long classNameId) throws Exception {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"update ClassName_ set value = ? where classNameId = ? ")) {
+
+			preparedStatement.setString(
+				1, RawMetadataProcessor.class.getName());
+			preparedStatement.setLong(2, classNameId);
+
+			preparedStatement.executeUpdate();
 		}
 	}
 

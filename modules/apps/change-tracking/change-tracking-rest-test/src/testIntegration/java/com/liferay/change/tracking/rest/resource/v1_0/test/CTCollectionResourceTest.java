@@ -82,25 +82,11 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 		CTCollection ctCollection = ctCollectionResource.postCTCollection(
 			randomCTCollection());
 
-		com.liferay.change.tracking.model.CTCollection
-			serviceBuilderCTCollection =
-				_ctCollectionLocalService.getCTCollection(ctCollection.getId());
+		_assertCTCollectionActions(
+			ctCollection, WorkflowConstants.STATUS_EXPIRED);
 
-		serviceBuilderCTCollection.setStatus(WorkflowConstants.STATUS_EXPIRED);
-
-		_ctCollectionLocalService.updateCTCollection(
-			serviceBuilderCTCollection);
-
-		ctCollection = ctCollectionResource.getCTCollection(
-			ctCollection.getId());
-
-		Map<String, Map<String, String>> actions = ctCollection.getActions();
-
-		Assert.assertEquals(actions.toString(), 3, actions.size());
-
-		Assert.assertTrue(actions.containsKey("delete"));
-		Assert.assertTrue(actions.containsKey("get"));
-		Assert.assertTrue(actions.containsKey("reactivate"));
+		_assertCTCollectionActions(
+			ctCollection, WorkflowConstants.STATUS_INCOMPLETE);
 	}
 
 	@Override
@@ -447,6 +433,44 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 		throws Exception {
 
 		return ctCollectionResource.postCTCollection(randomCTCollection());
+	}
+
+	private void _assertCTCollectionActions(
+			CTCollection ctCollection, int status)
+		throws Exception {
+
+		com.liferay.change.tracking.model.CTCollection
+			serviceBuilderCTCollection =
+				_ctCollectionLocalService.getCTCollection(ctCollection.getId());
+
+		serviceBuilderCTCollection.setStatus(status);
+
+		_ctCollectionLocalService.updateCTCollection(
+			serviceBuilderCTCollection);
+
+		ctCollection = ctCollectionResource.getCTCollection(
+			ctCollection.getId());
+
+		Map<String, Map<String, String>> actions = ctCollection.getActions();
+
+		if (status == WorkflowConstants.STATUS_EXPIRED) {
+			Assert.assertEquals(actions.toString(), 3, actions.size());
+
+			Assert.assertTrue(actions.containsKey("delete"));
+			Assert.assertTrue(actions.containsKey("get"));
+			Assert.assertTrue(actions.containsKey("reactivate"));
+		}
+		else if (status == WorkflowConstants.STATUS_INCOMPLETE) {
+			Assert.assertEquals(actions.toString(), 7, actions.size());
+
+			Assert.assertTrue(actions.containsKey("checkout"));
+			Assert.assertTrue(actions.containsKey("delete"));
+			Assert.assertTrue(actions.containsKey("get"));
+			Assert.assertTrue(actions.containsKey("permissions"));
+			Assert.assertTrue(actions.containsKey("publish"));
+			Assert.assertTrue(actions.containsKey("schedule"));
+			Assert.assertTrue(actions.containsKey("update"));
+		}
 	}
 
 	private void _assertHttpResponseProblem(

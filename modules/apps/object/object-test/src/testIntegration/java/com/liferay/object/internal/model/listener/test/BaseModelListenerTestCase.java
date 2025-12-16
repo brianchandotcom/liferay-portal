@@ -91,7 +91,8 @@ public abstract class BaseModelListenerTestCase {
 					).name(
 						StringUtil.randomId()
 					).build()),
-				Collections.emptyList());
+				Collections.emptyList(),
+				ServiceContextTestUtil.getServiceContext());
 
 		objectDefinition2 =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(

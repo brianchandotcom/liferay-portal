@@ -139,8 +139,8 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 				try {
 					ObjectDefinition dataSetObjectDefinition =
 						_dataSetObjectDefinitionLocalService.
-							fetchObjectDefinition(
-								fragmentEntryLink.getCompanyId(), "DataSet");
+							fetchObjectDefinitionByExternalReferenceCode(
+								"L_DATA_SET", fragmentEntryLink.getCompanyId());
 
 					DefaultObjectEntryManager defaultObjectEntryManager =
 						DefaultObjectEntryManagerProvider.provide(

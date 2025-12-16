@@ -68,8 +68,9 @@ public class FDSAdminDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		_dataSetObjectDefinition =
-			objectDefinitionLocalService.fetchObjectDefinition(
-				_themeDisplay.getCompanyId(), "DataSet");
+			objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					"L_DATA_SET", _themeDisplay.getCompanyId());
 	}
 
 	public JSONArray getCellClientExtensionRenderersJSONArray()

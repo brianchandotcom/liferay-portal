@@ -75,8 +75,9 @@ public class SaveDataSetSortMVCResourceCommand
 			ParamUtil.getString(resourceRequest, "useAsDefaultSorting"));
 
 		ObjectDefinition dataSetObjectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				themeDisplay.getCompanyId(), "DataSet");
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					"L_DATA_SET", themeDisplay.getCompanyId());
 
 		if (useAsDefaultSorting) {
 			Collection<ObjectEntry> dataSetSortObjectEntries =
@@ -113,8 +114,9 @@ public class SaveDataSetSortMVCResourceCommand
 		}
 
 		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				themeDisplay.getCompanyId(), "DataSetSort");
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					"L_DATA_SET_SORT", themeDisplay.getCompanyId());
 
 		Map<String, Serializable> labelI18nMap =
 			(Map<String, Serializable>)_jsonFactory.looseDeserialize(labelI18n);

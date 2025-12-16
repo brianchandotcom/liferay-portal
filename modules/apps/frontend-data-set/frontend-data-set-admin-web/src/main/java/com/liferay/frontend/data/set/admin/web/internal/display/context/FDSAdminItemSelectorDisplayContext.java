@@ -6,7 +6,6 @@
 package com.liferay.frontend.data.set.admin.web.internal.display.context;
 
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -26,14 +25,6 @@ public class FDSAdminItemSelectorDisplayContext {
 	}
 
 	public String getClassName() {
-		ObjectDefinition objectDefinition =
-			ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
-				_themeDisplay.getCompanyId(), "FDSView");
-
-		if (objectDefinition != null) {
-			return objectDefinition.getClassName();
-		}
-
 		return ObjectDefinition.class.getName();
 	}
 

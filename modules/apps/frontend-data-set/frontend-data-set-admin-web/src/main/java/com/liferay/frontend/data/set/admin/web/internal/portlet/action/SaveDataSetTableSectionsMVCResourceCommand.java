@@ -55,8 +55,9 @@ public class SaveDataSetTableSectionsMVCResourceCommand
 			WebKeys.THEME_DISPLAY);
 
 		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				themeDisplay.getCompanyId(), "DataSetTableSection");
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					"L_DATA_SET_TABLE_SECTION", themeDisplay.getCompanyId());
 
 		String dataSetId = ParamUtil.getString(resourceRequest, "dataSetId");
 

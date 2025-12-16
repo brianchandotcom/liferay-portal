@@ -871,8 +871,9 @@ public class CustomFDSSerializer
 	private ObjectDefinition _getObjectDefinition(
 		HttpServletRequest httpServletRequest) {
 
-		return _objectDefinitionLocalService.fetchObjectDefinition(
-			PortalUtil.getCompanyId(httpServletRequest), "DataSet");
+		return _objectDefinitionLocalService.
+			fetchObjectDefinitionByExternalReferenceCode(
+				"L_DATA_SET", PortalUtil.getCompanyId(httpServletRequest));
 	}
 
 	private ObjectEntry _getObjectEntry(

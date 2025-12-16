@@ -276,7 +276,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		_addTaskUpgradeJakarta(project);
 
-		_addTaskFormatSourceUpgrade(project);
+		_addTaskUpgradeCode(project);
 	}
 
 	public boolean isDefaultRepositoryEnabled() {
@@ -1041,7 +1041,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return download;
 	}
 
-	private FormatSourceTask _addTaskFormatSourceUpgrade(Project project) {
+	private FormatSourceTask _addTaskUpgradeCode(Project project) {
 		FormatSourceTask formatSourceTask = GradleUtil.addTask(
 			project, UPGRADE_CODE_TASK_NAME, FormatSourceTask.class);
 

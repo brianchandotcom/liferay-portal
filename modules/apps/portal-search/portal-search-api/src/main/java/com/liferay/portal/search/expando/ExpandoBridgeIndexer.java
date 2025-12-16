@@ -6,7 +6,6 @@
 package com.liferay.portal.search.expando;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
-import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.portal.kernel.search.Document;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -18,9 +17,5 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface ExpandoBridgeIndexer {
 
 	public void addAttributes(Document document, ExpandoBridge expandoBridge);
-
-	public String encodeFieldName(ExpandoColumn expandoColumn);
-
-	public String getNumericSuffix(int columnType);
 
 }

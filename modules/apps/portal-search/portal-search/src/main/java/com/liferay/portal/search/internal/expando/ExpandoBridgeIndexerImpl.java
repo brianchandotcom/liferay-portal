@@ -12,7 +12,6 @@ import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -23,11 +22,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
+import com.liferay.portal.search.expando.ExpandoBridgeUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,59 +55,6 @@ public class ExpandoBridgeIndexerImpl implements ExpandoBridgeIndexer {
 		}
 	}
 
-	@Override
-	public String encodeFieldName(ExpandoColumn expandoColumn) {
-		StringBundler sb = new StringBundler(7);
-
-		sb.append(FIELD_NAMESPACE);
-		sb.append(StringPool.DOUBLE_UNDERLINE);
-
-		if (_getIndexType(expandoColumn) ==
-				ExpandoColumnConstants.INDEX_TYPE_KEYWORD) {
-
-			sb.append("keyword__");
-		}
-
-		sb.append(
-			StringUtil.toLowerCase(ExpandoTableConstants.DEFAULT_TABLE_NAME));
-		sb.append(StringPool.DOUBLE_UNDERLINE);
-		sb.append(expandoColumn.getName());
-		sb.append(getNumericSuffix(expandoColumn.getType()));
-
-		return sb.toString();
-	}
-
-	@Override
-	public String getNumericSuffix(int columnType) {
-		if ((columnType == ExpandoColumnConstants.DOUBLE) ||
-			(columnType == ExpandoColumnConstants.DOUBLE_ARRAY)) {
-
-			return "_double";
-		}
-		else if ((columnType == ExpandoColumnConstants.FLOAT) ||
-				 (columnType == ExpandoColumnConstants.FLOAT_ARRAY)) {
-
-			return "_float";
-		}
-		else if ((columnType == ExpandoColumnConstants.INTEGER) ||
-				 (columnType == ExpandoColumnConstants.INTEGER_ARRAY)) {
-
-			return "_integer";
-		}
-		else if ((columnType == ExpandoColumnConstants.LONG) ||
-				 (columnType == ExpandoColumnConstants.LONG_ARRAY)) {
-
-			return "_long";
-		}
-		else if ((columnType == ExpandoColumnConstants.SHORT) ||
-				 (columnType == ExpandoColumnConstants.SHORT_ARRAY)) {
-
-			return "_short";
-		}
-
-		return StringPool.BLANK;
-	}
-
 	protected void addAttribute(
 			Document document, ExpandoColumn expandoColumn,
 			Map<Long, ExpandoValue> expandoValues)
@@ -128,8 +73,8 @@ public class ExpandoBridgeIndexerImpl implements ExpandoBridgeIndexer {
 			hasValue = false;
 		}
 
-		String fieldName = encodeFieldName(expandoColumn);
-		int indexType = _getIndexType(expandoColumn);
+		String fieldName = ExpandoBridgeUtil.encodeFieldName(expandoColumn);
+		int indexType = ExpandoBridgeUtil.getIndexType(expandoColumn);
 		int type = expandoColumn.getType();
 
 		if (type == ExpandoColumnConstants.BOOLEAN) {
@@ -327,7 +272,7 @@ public class ExpandoBridgeIndexerImpl implements ExpandoBridgeIndexer {
 		List<ExpandoColumn> indexedColumns = new ArrayList<>();
 
 		for (ExpandoColumn expandoColumn : expandoColumns) {
-			int indexType = _getIndexType(expandoColumn);
+			int indexType = ExpandoBridgeUtil.getIndexType(expandoColumn);
 
 			if (indexType != ExpandoColumnConstants.INDEX_TYPE_NONE) {
 				indexedColumns.add(expandoColumn);
@@ -359,16 +304,6 @@ public class ExpandoBridgeIndexerImpl implements ExpandoBridgeIndexer {
 				_log.error("Indexing " + expandoColumn.getName(), exception);
 			}
 		}
-	}
-
-	protected static final String FIELD_NAMESPACE = "expando";
-
-	private int _getIndexType(ExpandoColumn expandoColumn) {
-		UnicodeProperties unicodeProperties =
-			expandoColumn.getTypeSettingsProperties();
-
-		return GetterUtil.getInteger(
-			unicodeProperties.getProperty(ExpandoColumnConstants.INDEX_TYPE));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

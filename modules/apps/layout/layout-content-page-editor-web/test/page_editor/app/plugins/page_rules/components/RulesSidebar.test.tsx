@@ -219,6 +219,29 @@ describe('RulesSidebar', () => {
 		);
 	});
 
+	it('shows advanced rule description', () => {
+		renderComponent({
+			rules: [
+				{
+					actions: [
+						{
+							id: 'action-id',
+							itemId: 'item1',
+							type: 'show',
+						},
+					],
+					id: 'rule-1',
+					name: 'Rule 1',
+					script: 'some script',
+				},
+			],
+		});
+
+		const rule = document.querySelector('li')!;
+
+		expect(rule.textContent).toBe('Rule 1advanced-rule');
+	});
+
 	it('adds aria-label to the user rule with conditions and actions description', () => {
 		renderComponent({
 			rules: [

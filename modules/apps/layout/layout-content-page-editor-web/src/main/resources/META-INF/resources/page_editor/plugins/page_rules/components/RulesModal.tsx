@@ -21,7 +21,8 @@ import {
 import {useDispatch} from '../../../app/contexts/StoreContext';
 import addRule from '../../../app/thunks/addRule';
 import updateRule from '../../../app/thunks/updateRule';
-import {RuleError} from '../../../types/Rule';
+import {isAdvancedRule} from '../../../app/utils/isAdvancedRule';
+import {Condition, RuleError} from '../../../types/Rule';
 import {
 	RuleBuilderActionSection,
 	RuleBuilderConditionSection,
@@ -32,7 +33,8 @@ export default function RulesModal() {
 	const {editingRule, visible} = useRulesModalState();
 	const triggerRuleValidation = useTriggerRuleValidation();
 
-	const {closeRulesModal, updateEditingRule} = useRulesModal();
+	const {closeRulesModal, updateActions, updateConditions, updateName} =
+		useRulesModal();
 
 	const dispatch = useDispatch();
 	const nameId = useId();
@@ -63,7 +65,13 @@ export default function RulesModal() {
 			});
 		}
 
-		[...editingRule.conditions, ...editingRule.actions].forEach((item) => {
+		let conditions: Condition[] = [];
+
+		if (!isAdvancedRule(editingRule)) {
+			conditions = editingRule.conditions!;
+		}
+
+		[...conditions, ...editingRule.actions].forEach((item) => {
 			if (item.error) {
 				errors.push(item.error);
 			}
@@ -83,7 +91,7 @@ export default function RulesModal() {
 			actions: editingRule.actions.map(
 				({error: _error, readOnly: _readOnly, ...action}) => action
 			),
-			conditions: editingRule.conditions.map(
+			conditions: conditions?.map(
 				({error: _error, ...condition}) => condition
 			),
 		};
@@ -169,7 +177,7 @@ export default function RulesModal() {
 								setNameError(false);
 							}
 
-							updateEditingRule({name: event.target.value});
+							updateName(event.target.value);
 						}}
 						ref={nameInputRef}
 						value={editingRule.name}
@@ -188,14 +196,20 @@ export default function RulesModal() {
 						role="group"
 					>
 						<RuleBuilderConditionSection
-							conditionType={editingRule.conditionType}
-							conditions={editingRule.conditions}
-							setConditionType={(conditionType) =>
-								updateEditingRule({conditionType})
+							conditionType={editingRule.conditionType || 'all'}
+							conditions={editingRule.conditions || []}
+							script={editingRule.script}
+							setRuleConditions={({
+								conditionType,
+								conditions,
+								script,
+							}) =>
+								updateConditions({
+									conditionType,
+									conditions,
+									script,
+								})
 							}
-							setConditions={(conditions) => {
-								updateEditingRule({conditions});
-							}}
 						/>
 					</div>
 
@@ -205,9 +219,7 @@ export default function RulesModal() {
 					>
 						<RuleBuilderActionSection
 							actions={editingRule.actions}
-							setActions={(actions) => {
-								updateEditingRule({actions});
-							}}
+							setActions={updateActions}
 						/>
 					</div>
 				</ScreenReaderAnnouncerContextProvider>

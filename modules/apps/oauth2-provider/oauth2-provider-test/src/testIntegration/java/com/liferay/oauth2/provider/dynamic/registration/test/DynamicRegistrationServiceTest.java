@@ -8,6 +8,7 @@ package com.liferay.oauth2.provider.dynamic.registration.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.oauth2.provider.client.test.BaseClientTestCase;
 import com.liferay.oauth2.provider.client.test.BaseTestPreparatorBundleActivator;
+import com.liferay.oauth2.provider.constants.OAuth2ApplicationConstants;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -33,6 +34,8 @@ import jakarta.ws.rs.core.Response;
 
 import java.util.Collections;
 import java.util.List;
+
+import org.apache.cxf.rs.security.oauth2.utils.OAuthConstants;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -67,10 +70,12 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 				TestPropsValues.getCompanyId(),
 				"oauthDynamicRegisterTestApplication");
 
-		formData.add("client_id", oAuth2Application.getClientId());
-		formData.add("client_secret", oAuth2Application.getClientSecret());
+		formData.add(OAuthConstants.CLIENT_ID, oAuth2Application.getClientId());
+		formData.add(
+			OAuthConstants.CLIENT_SECRET, oAuth2Application.getClientSecret());
 
-		formData.add("grant_type", "client_credentials");
+		formData.add(
+			OAuthConstants.GRANT_TYPE, OAuthConstants.CLIENT_CREDENTIALS_GRANT);
 
 		String tokenString = parseTokenString(
 			tokenInvocationBuilder.post(Entity.form(formData)));
@@ -97,10 +102,12 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 
 		formData = new MultivaluedHashMap<>();
 
-		formData.add("client_id", oAuth2Application.getClientId());
-		formData.add("client_secret", oAuth2Application.getClientSecret());
+		formData.add(OAuthConstants.CLIENT_ID, oAuth2Application.getClientId());
+		formData.add(
+			OAuthConstants.CLIENT_SECRET, oAuth2Application.getClientSecret());
 
-		formData.add("grant_type", "client_credentials");
+		formData.add(
+			OAuthConstants.GRANT_TYPE, OAuthConstants.CLIENT_CREDENTIALS_GRANT);
 
 		tokenString = parseTokenString(
 			tokenInvocationBuilder.post(Entity.form(formData)));
@@ -112,7 +119,8 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 		JSONObject jsonObject = JSONUtil.put(
 			"client_name", clientName
 		).put(
-			"grant_types", new String[] {"client_credentials"}
+			"grant_types",
+			new String[] {OAuthConstants.CLIENT_CREDENTIALS_GRANT}
 		).put(
 			"logo_uri", RandomTestUtil.randomString()
 		).put(
@@ -143,9 +151,12 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 		Assert.assertEquals(
 			clientName, responseJSONObject.getString("client_name"));
 
-		String clientId = responseJSONObject.getString("client_id");
+		String clientId = responseJSONObject.getString(
+			OAuthConstants.CLIENT_ID);
 
-		jsonObject.put("response_types", Collections.singletonList("code"));
+		jsonObject.put(
+			"response_types",
+			Collections.singletonList(OAuthConstants.CODE_RESPONSE_TYPE));
 
 		response = registerInvocationBuilder.method(
 			"post", Entity.json(jsonObject.toString()));

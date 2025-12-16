@@ -11,7 +11,6 @@ import com.liferay.fragment.service.FragmentCompositionLocalService;
 import com.liferay.fragment.service.FragmentCompositionService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import jakarta.portlet.ActionRequest;
@@ -46,9 +45,6 @@ public class DeleteFragmentCompositionPreviewMVCActionCommand
 				fragmentCompositionId);
 
 		if (fragmentComposition != null) {
-			PortletFileRepositoryUtil.deletePortletFileEntry(
-				fragmentComposition.getPreviewFileEntryId());
-
 			_fragmentCompositionService.updateFragmentComposition(
 				fragmentCompositionId, 0);
 		}

@@ -644,23 +644,21 @@ public class CPDefinitionLocalServiceTest {
 	public void testFindByExpirationDate() throws Exception {
 		long time = System.currentTimeMillis();
 
-		Date pastDate = new Date(time - Time.DAY);
-
-		Date futureDate = new Date(time + Time.DAY);
+		Date date = new Date(time + Time.DAY);
 
 		CPDefinition cpDefinition1 = CPTestUtil.addCPDefinitionFromCatalog(
 			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME,
-			new Date(time - Time.MONTH), futureDate, false, false,
+			new Date(time - Time.MONTH), date, false, false,
 			WorkflowConstants.STATUS_APPROVED);
 
-		cpDefinition1.setExpirationDate(pastDate);
+		cpDefinition1.setExpirationDate(new Date(time - Time.DAY));
 
 		cpDefinition1 = _cpDefinitionLocalService.updateCPDefinition(
 			cpDefinition1);
 
 		CPTestUtil.addCPDefinitionFromCatalog(
 			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME,
-			new Date(time - Time.MONTH), futureDate, false, false,
+			new Date(time - Time.MONTH), date, false, false,
 			WorkflowConstants.STATUS_APPROVED);
 
 		List<CPDefinition> cpDefinitions =
@@ -668,8 +666,7 @@ public class CPDefinitionLocalServiceTest {
 				new Date(time),
 				new QueryDefinition(WorkflowConstants.STATUS_APPROVED));
 
-		Assert.assertEquals(
-			"Expected 1 CPDefinition, but found", 1, cpDefinitions.size());
+		Assert.assertEquals(1, cpDefinitions.size());
 
 		CPDefinition cpDefinition2 = cpDefinitions.get(0);
 

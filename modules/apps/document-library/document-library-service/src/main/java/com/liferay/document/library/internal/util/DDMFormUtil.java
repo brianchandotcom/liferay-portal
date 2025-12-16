@@ -30,8 +30,9 @@ public class DDMFormUtil {
 		ddmForm.setDDMFormFields(
 			TransformUtil.transform(
 				fieldNames,
-				name -> {
-					DDMFormField ddmFormField = new DDMFormField(name, "text");
+				fieldName -> {
+					DDMFormField ddmFormField = new DDMFormField(
+						fieldName, "text");
 
 					ddmFormField.setDataType("string");
 					ddmFormField.setIndexType("text");
@@ -48,7 +49,8 @@ public class DDMFormUtil {
 						locale,
 						"metadata.".concat(
 							StringUtil.replaceFirst(
-								name, CharPool.UNDERLINE, CharPool.PERIOD)));
+								fieldName, CharPool.UNDERLINE,
+								CharPool.PERIOD)));
 					label.setDefaultLocale(locale);
 
 					LocalizedValue predefinedValue =

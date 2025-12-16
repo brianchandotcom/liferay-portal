@@ -65,7 +65,7 @@ PatcherBuild patcherBuild = patcherCreateBuildsDisplayContext.getPatcherBuild();
 				<aui:input helpMessage="the-support-ticket-must-contain-only-the-jira-service-management-ticket-id" name="supportTicket" type="text">
 					<aui:validator errorMessage="the-jira-service-management-ticket-format-is-invalid" name="custom">
 						function(val) {
-							return val.match('^[A-Za-z]+-[0-9]+$');
+							return val.match('<%= PatcherConstants.JSM_SUPPORT_TICKET_NAME_REGEX %>');
 						}
 					</aui:validator>
 				</aui:input>

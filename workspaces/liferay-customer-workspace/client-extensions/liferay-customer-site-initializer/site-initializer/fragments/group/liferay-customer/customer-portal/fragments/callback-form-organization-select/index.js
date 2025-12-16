@@ -262,6 +262,7 @@ function filterLocalOptions(query) {
 const allowedSLAs = [
 	'Elite',
 	'Enhanced',
+	'Gold Subscription',
 	'Mission Critical',
 	'Premium Subscription',
 	'Platinum Subscription',

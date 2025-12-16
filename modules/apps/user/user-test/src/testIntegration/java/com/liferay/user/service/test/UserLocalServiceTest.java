@@ -92,6 +92,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.DigesterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -103,6 +104,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.comparator.UserLastLoginDateComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowHandler;
+import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.model.impl.UserImpl;
@@ -117,6 +120,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
+
+import java.io.Serializable;
 
 import java.util.Calendar;
 import java.util.Collections;
@@ -1661,6 +1666,55 @@ public class UserLocalServiceTest {
 
 			Assert.assertTrue(encryptedPassword.startsWith("{MD5}"));
 		}
+	}
+
+	@Test
+	public void testUpdateStatusDoesNotLeavePasswordModified()
+		throws PortalException {
+
+		_workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(
+			null, TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, User.class.getName(), 0, 0,
+			"Single Approver", 1);
+
+		User user = _userLocalService.addUserWithWorkflow(
+			0, TestPropsValues.getCompanyId(), true, null, null, false,
+			RandomTestUtil.randomString(),
+			RandomTestUtil.randomString() + "@liferay.com", LocaleUtil.US,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), 0, 0, true, 1, 1, 1970,
+			StringPool.BLANK, UserConstants.TYPE_REGULAR, null, null, null,
+			null, true,
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
+				TestPropsValues.getUserId()));
+
+		Assert.assertEquals(WorkflowConstants.STATUS_PENDING, user.getStatus());
+
+		Assert.assertFalse(user.isPasswordModified());
+
+		WorkflowHandler<User> workflowHandler =
+			WorkflowHandlerRegistryUtil.getWorkflowHandler(
+				User.class.getName());
+
+		user = workflowHandler.updateStatus(
+			WorkflowConstants.STATUS_APPROVED,
+			HashMapBuilder.<String, Serializable>put(
+				WorkflowConstants.CONTEXT_ENTRY_CLASS_PK,
+				String.valueOf(user.getUserId())
+			).put(
+				WorkflowConstants.CONTEXT_USER_ID,
+				String.valueOf(TestPropsValues.getUserId())
+			).put(
+				"serviceContext",
+				ServiceContextTestUtil.getServiceContext(
+					user.getGroupId(), user.getUserId())
+			).build());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, user.getStatus());
+
+		Assert.assertFalse(user.isPasswordModified());
 	}
 
 	@Test

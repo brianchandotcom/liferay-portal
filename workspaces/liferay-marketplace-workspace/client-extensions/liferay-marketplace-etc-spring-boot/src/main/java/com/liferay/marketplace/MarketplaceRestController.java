@@ -477,8 +477,8 @@ public class MarketplaceRestController extends BaseRestController {
 			});
 	}
 
-	@PostMapping("/process-publisher-asset-link/{productId}")
-	public void processPublisherAssetLink(@PathVariable long productId) {
+	@PostMapping("/process-publisher-asset-links/{productId}")
+	public void processPublisherAssetLinks(@PathVariable long productId) {
 		try {
 			Product product = _marketplaceService.getProduct(productId);
 
@@ -511,8 +511,8 @@ public class MarketplaceRestController extends BaseRestController {
 		}
 		catch (Exception exception) {
 			String errorMessage = StringBundler.concat(
-				"Failed to upload publisher asset for product ID %d: %s",
-				productId, exception.getMessage());
+				"Failed to upload publisher asset for product ID ", productId,
+				", message: ", exception.getMessage());
 
 			_log.error(errorMessage, exception);
 		}

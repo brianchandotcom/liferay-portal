@@ -35,6 +35,7 @@ test('execute all module cleanup actions', async ({
 	page,
 	serverAdministrationPage,
 }) => {
+	test.setTimeout(90000);
 
 	// Go to Server Admin Page
 

@@ -85,7 +85,8 @@ public class OrphanReferencesDataCleanupUtilTest {
 				},
 				() -> {
 				},
-				null, "companyId", "VirtualHost", "companyId", "Company");
+				false, null, "companyId", "VirtualHost", "companyId",
+				"Company");
 		}
 	}
 
@@ -110,7 +111,8 @@ public class OrphanReferencesDataCleanupUtilTest {
 					"insert into Audit_AuditEvent (auditEventId, companyId, ",
 					"className) values (", auditEventId, ", ", companyId, ", '",
 					OrphanReferencesDataCleanupUtilTest.class.getName(), "')")),
-			null, "companyId", "Audit_AuditEvent", "companyId", "Company");
+			false, null, "companyId", "Audit_AuditEvent", "companyId",
+			"Company");
 	}
 
 	@Test
@@ -128,7 +130,7 @@ public class OrphanReferencesDataCleanupUtilTest {
 
 				Assert.assertEquals(
 					_getCleanUpTableExpectedMessage(
-						2, _dbInspector.normalizeName("companyId"),
+						2, false, _dbInspector.normalizeName("companyId"),
 						_dbInspector.normalizeName("Portlet"),
 						_dbInspector.normalizeName("companyId"),
 						_dbInspector.normalizeName("Company"), companyId),
@@ -153,7 +155,52 @@ public class OrphanReferencesDataCleanupUtilTest {
 						RandomTestUtil.nextLong(), ", ", companyId, ", '",
 						RandomTestUtil.randomString(), "', [$FALSE$])"));
 			},
-			null, "companyId", "Portlet", "companyId", "Company");
+			false, null, "companyId", "Portlet", "companyId", "Company");
+	}
+
+	@Test
+	public void testCleanUpTableWithoutWhereClauseInReadOnlyMode()
+		throws Exception {
+
+		long companyId = RandomTestUtil.nextLong();
+
+		_testCleanUpTable(
+			logCapture -> {
+				List<LogEntry> logEntries = logCapture.getLogEntries();
+
+				Assert.assertEquals(
+					logEntries.toString(), 1, logEntries.size());
+
+				LogEntry logEntry = logEntries.get(0);
+
+				Assert.assertEquals(
+					_getCleanUpTableExpectedMessage(
+						2, true, _dbInspector.normalizeName("companyId"),
+						_dbInspector.normalizeName("Portlet"),
+						_dbInspector.normalizeName("companyId"),
+						_dbInspector.normalizeName("Company"), companyId),
+					logEntry.getMessage());
+			},
+			() -> _db.runSQL(
+				_connection,
+				"delete from Portlet where companyId = " + companyId),
+			() -> {
+				_db.runSQL(
+					_connection,
+					StringBundler.concat(
+						"insert into Portlet (mvccVersion, id_, companyId, ",
+						"portletId, active_) values (0, ",
+						RandomTestUtil.nextLong(), ", ", companyId, ", '",
+						RandomTestUtil.randomString(), "', [$FALSE$])"));
+				_db.runSQL(
+					_connection,
+					StringBundler.concat(
+						"insert into Portlet (mvccVersion, id_, companyId, ",
+						"portletId, active_) values (0, ",
+						RandomTestUtil.nextLong(), ", ", companyId, ", '",
+						RandomTestUtil.randomString(), "', [$FALSE$])"));
+			},
+			true, null, "companyId", "Portlet", "companyId", "Company");
 	}
 
 	@Test
@@ -173,7 +220,7 @@ public class OrphanReferencesDataCleanupUtilTest {
 
 				Assert.assertEquals(
 					_getCleanUpTableExpectedMessage(
-						2, _dbInspector.normalizeName("ownerId"),
+						2, false, _dbInspector.normalizeName("ownerId"),
 						_dbInspector.normalizeName("PortletPreferences"),
 						_dbInspector.normalizeName("companyId"),
 						_dbInspector.normalizeName("Company"), companyId),
@@ -212,7 +259,7 @@ public class OrphanReferencesDataCleanupUtilTest {
 						ownerType2, ", ", companyId, ", '",
 						RandomTestUtil.randomString(), "')"));
 			},
-			"ownerType = " + ownerType1, "ownerId", "PortletPreferences",
+			false, "ownerType = " + ownerType1, "ownerId", "PortletPreferences",
 			"companyId", "Company");
 	}
 
@@ -235,7 +282,7 @@ public class OrphanReferencesDataCleanupUtilTest {
 
 				Assert.assertEquals(
 					_getCleanUpTableExpectedMessage(
-						1, _dbInspector.normalizeName("companyId"),
+						1, false, _dbInspector.normalizeName("companyId"),
 						_dbInspector.normalizeName("DLFileEntry"),
 						_dbInspector.normalizeName("companyId"),
 						_dbInspector.normalizeName("Company"), companyId),
@@ -259,19 +306,20 @@ public class OrphanReferencesDataCleanupUtilTest {
 						"ctCollectionId, fileEntryId, companyId) values (0, ",
 						"0,", RandomTestUtil.nextLong(), ", ", companyId, ")"));
 			},
-			null, "companyId", "DLFileEntry", "companyId", "Company");
+			false, null, "companyId", "DLFileEntry", "companyId", "Company");
 	}
 
 	private String _getCleanUpTableExpectedMessage(
-			long count, String sourceColumnName, String sourceTableName,
-			String targetColumnName, String targetTableName, long targetValue)
+			long count, boolean readOnly, String sourceColumnName,
+			String sourceTableName, String targetColumnName,
+			String targetTableName, long targetValue)
 		throws Exception {
 
 		return StringBundler.concat(
 			"Table ", _dbInspector.normalizeName(sourceTableName), ", ", count,
-			(count == 1) ? " row " : " rows ", "deleted because ",
-			_dbInspector.normalizeName(sourceColumnName), StringPool.SPACE,
-			targetValue, " was not found in column ",
+			(count == 1) ? " row " : " rows ", readOnly ? "should be " : "",
+			"deleted because ", _dbInspector.normalizeName(sourceColumnName),
+			StringPool.SPACE, targetValue, " was not found in column ",
 			_dbInspector.normalizeName(targetColumnName), " from table ",
 			_dbInspector.normalizeName(targetTableName));
 	}
@@ -280,9 +328,9 @@ public class OrphanReferencesDataCleanupUtilTest {
 			UnsafeConsumer<LogCapture, Exception> assertUnsafeConsumer,
 			UnsafeRunnable<Exception> cleanUpDataUnsafeRunnable,
 			UnsafeRunnable<Exception> initializeDataUnsafeRunnable,
-			String sourceAdditionalWhereClause, String sourceColumnName,
-			String sourceTableName, String targetColumnName,
-			String targetTableName)
+			boolean readOnly, String sourceAdditionalWhereClause,
+			String sourceColumnName, String sourceTableName,
+			String targetColumnName, String targetTableName)
 		throws Exception {
 
 		initializeDataUnsafeRunnable.run();
@@ -292,7 +340,7 @@ public class OrphanReferencesDataCleanupUtilTest {
 				LoggerTestUtil.INFO)) {
 
 			OrphanReferencesDataCleanupUtil.cleanUpTable(
-				_connection, null, sourceAdditionalWhereClause,
+				_connection, null, readOnly, sourceAdditionalWhereClause,
 				_dbInspector.normalizeName(sourceColumnName),
 				_dbInspector.normalizeName(sourceTableName),
 				new String[] {_dbInspector.normalizeName(targetColumnName)},

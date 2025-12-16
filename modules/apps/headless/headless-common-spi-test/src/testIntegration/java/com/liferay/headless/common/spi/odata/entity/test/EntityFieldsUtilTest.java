@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.sort.InvalidSortException;
-import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -88,8 +87,8 @@ public class EntityFieldsUtilTest {
 		for (EntityField entityField :
 				EntityFieldsUtil.getEntityFields(
 					_classNameLocalService.getClassNameId(User.class.getName()),
-					TestPropsValues.getCompanyId(), _expandoBridgeIndexer,
-					_expandoColumnLocalService, _expandoTableLocalService)) {
+					TestPropsValues.getCompanyId(), _expandoColumnLocalService,
+					_expandoTableLocalService)) {
 
 			if (Objects.equals(entityField.getName(), "dateField")) {
 				Assert.assertNotNull(entityField.getSortableName(null));
@@ -132,9 +131,6 @@ public class EntityFieldsUtilTest {
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
-
-	@Inject
-	private ExpandoBridgeIndexer _expandoBridgeIndexer;
 
 	@Inject
 	private ExpandoColumnLocalService _expandoColumnLocalService;

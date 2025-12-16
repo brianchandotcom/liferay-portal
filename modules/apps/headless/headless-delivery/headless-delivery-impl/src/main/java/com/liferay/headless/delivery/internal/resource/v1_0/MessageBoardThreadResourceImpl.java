@@ -61,7 +61,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.view.count.ViewCountManager;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.custom.field.CustomFieldsUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -127,8 +126,8 @@ public class MessageBoardThreadResourceImpl
 			new ArrayList<>(
 				EntityFieldsUtil.getEntityFields(
 					_portal.getClassNameId(MBMessage.class.getName()),
-					contextCompany.getCompanyId(), _expandoBridgeIndexer,
-					_expandoColumnLocalService, _expandoTableLocalService)));
+					contextCompany.getCompanyId(), _expandoColumnLocalService,
+					_expandoTableLocalService)));
 	}
 
 	@Override
@@ -815,9 +814,6 @@ public class MessageBoardThreadResourceImpl
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
-
-	@Reference
-	private ExpandoBridgeIndexer _expandoBridgeIndexer;
 
 	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;

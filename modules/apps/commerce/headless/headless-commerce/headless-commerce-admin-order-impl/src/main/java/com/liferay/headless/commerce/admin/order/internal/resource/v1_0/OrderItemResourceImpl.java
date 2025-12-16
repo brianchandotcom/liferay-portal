@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
 import com.liferay.portal.vulcan.custom.field.CustomFieldsUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -132,8 +131,8 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 		return new OrderItemEntityModel(
 			EntityFieldsUtil.getEntityFields(
 				_portal.getClassNameId(CommerceOrderItem.class.getName()),
-				contextCompany.getCompanyId(), _expandoBridgeIndexer,
-				_expandoColumnLocalService, _expandoTableLocalService));
+				contextCompany.getCompanyId(), _expandoColumnLocalService,
+				_expandoTableLocalService));
 	}
 
 	@Override
@@ -664,9 +663,6 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 
 	@Reference
 	private CPInstanceService _cpInstanceService;
-
-	@Reference
-	private ExpandoBridgeIndexer _expandoBridgeIndexer;
 
 	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;

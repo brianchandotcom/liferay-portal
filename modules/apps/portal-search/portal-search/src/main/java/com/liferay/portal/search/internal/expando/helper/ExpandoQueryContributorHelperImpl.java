@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
+import com.liferay.portal.search.expando.ExpandoBridgeUtil;
 import com.liferay.portal.search.internal.indexer.IndexerProvidedClausesUtil;
 
 import java.util.Collection;
@@ -127,9 +127,9 @@ public class ExpandoQueryContributorHelperImpl
 				expandoBridge.getCompanyId(), expandoBridge.getClassName(),
 				attributeName);
 
-		String fieldName = _expandoBridgeIndexer.encodeFieldName(expandoColumn);
+		String fieldName = ExpandoBridgeUtil.encodeFieldName(expandoColumn);
 
-		String numericSuffix = _expandoBridgeIndexer.getNumericSuffix(
+		String numericSuffix = ExpandoBridgeUtil.getNumericSuffix(
 			expandoColumn.getType());
 
 		if (!numericSuffix.equals(StringPool.BLANK)) {
@@ -160,9 +160,6 @@ public class ExpandoQueryContributorHelperImpl
 
 	@Reference
 	private ExpandoBridgeFactory _expandoBridgeFactory;
-
-	@Reference
-	private ExpandoBridgeIndexer _expandoBridgeIndexer;
 
 	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;

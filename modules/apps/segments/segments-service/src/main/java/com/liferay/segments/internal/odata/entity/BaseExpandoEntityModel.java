@@ -32,7 +32,7 @@ import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.IntegerEntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
-import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
+import com.liferay.portal.search.expando.ExpandoBridgeUtil;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -87,9 +87,6 @@ public abstract class BaseExpandoEntityModel implements EntityModel {
 
 	@Reference
 	protected EntityModelFieldMapper entityModelFieldMapper;
-
-	@Reference
-	protected ExpandoBridgeIndexer expandoBridgeIndexer;
 
 	@Reference
 	protected ExpandoColumnLocalService expandoColumnLocalService;
@@ -151,7 +148,7 @@ public abstract class BaseExpandoEntityModel implements EntityModel {
 		String encodedName =
 			entityModelFieldMapper.getExpandoColumnEntityFieldName(
 				expandoColumn);
-		String encodedIndexedFieldName = expandoBridgeIndexer.encodeFieldName(
+		String encodedIndexedFieldName = ExpandoBridgeUtil.encodeFieldName(
 			expandoColumn);
 
 		if (expandoColumn.getType() == ExpandoColumnConstants.BOOLEAN) {

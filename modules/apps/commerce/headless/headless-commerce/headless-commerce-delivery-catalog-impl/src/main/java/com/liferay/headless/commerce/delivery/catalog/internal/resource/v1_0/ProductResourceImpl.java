@@ -53,7 +53,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -227,8 +226,8 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 		return new ProductEntityModel(
 			EntityFieldsUtil.getEntityFields(
 				_portal.getClassNameId(CPDefinition.class.getName()),
-				contextCompany.getCompanyId(), _expandoBridgeIndexer,
-				_expandoColumnLocalService, _expandoTableLocalService));
+				contextCompany.getCompanyId(), _expandoColumnLocalService,
+				_expandoTableLocalService));
 	}
 
 	private BooleanClause<Query> _getBooleanClause(
@@ -370,9 +369,6 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
-
-	@Reference
-	private ExpandoBridgeIndexer _expandoBridgeIndexer;
 
 	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;

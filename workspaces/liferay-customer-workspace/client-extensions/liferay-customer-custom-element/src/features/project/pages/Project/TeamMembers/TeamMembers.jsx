@@ -17,8 +17,7 @@ import TeamMembersTable from './components/TeamMembersTable/TeamMembersTable';
 
 const targetProducts = [
 	'Analytics Cloud',
-	'Liferay PaaS',
-	'Liferay SaaS'
+	'Liferay Cloud'
 ];
 
 const TeamMembers = () => {
@@ -83,13 +82,9 @@ const TeamMembers = () => {
 				/>
 
 				{featureFlags.includes('LPS-159127') &&
-					accountSubscriptionGroupsNames?.some((groupName) =>
-						targetProducts.includes(groupName)
-					) && (
+					hasActiveProduct && (
 						<IncidentContactCard
-							accountSubscriptionGroupsNames={
-								accountSubscriptionGroupsNames
-							}
+							accountSubscriptionGroupsNames={accountSubscriptionGroupsNames}
 							hasActiveProduct={hasActiveProduct}
 							koroneikiAccount={koroneikiAccount}
 							loading={loading}

@@ -30,22 +30,21 @@ const SubscriptionsOverview = ({koroneikiAccount, loading}) => {
 
 	const translatedSubscriptionGroups = useMemo(() => {
 		const items = accountSubscriptionGroups?.items;
-
-		if (!items || !items.length) {
+	
+		if (!items?.length) {
 			return null;
 		}
-
+	
+		const legacyNames = ['Liferay SaaS', 'Liferay PaaS'];
+	
 		return items.map((group) => {
-			if (
-				group.name === 'Liferay SaaS' ||
-				group.name === 'Liferay PaaS'
-			) {
+			if (legacyNames.includes(group.name)) {
 				return {
 					...group,
 					name: 'Liferay Cloud',
 				};
 			}
-
+	
 			return group;
 		});
 	}, [accountSubscriptionGroups]);

@@ -40,11 +40,37 @@ export default function useAccountSubscriptions(
 		return filters.join(' or ');
 	};
 
+	const getSubscriptionGroupERCFilter = (group) => {
+		if (!group?.externalReferenceCode) {
+			return '';
+		}
+
+		if (group.name === 'Liferay Cloud') {
+			const currentERC = group.externalReferenceCode;
+			const legacySaasERC = currentERC.replace(
+				'_liferay-cloud',
+				'_liferay-saas'
+			);
+
+			return `accountSubscriptionGroupERC in ('${currentERC}', '${legacySaasERC}')`;
+		}
+
+		return `accountSubscriptionGroupERC eq '${group.externalReferenceCode}'`;
+	};
+
 	useEffect(() => {
 		if (accountSubcriptionGroup) {
+			const ercFilter = getSubscriptionGroupERCFilter(
+				accountSubcriptionGroup
+			);
+
+			const statusFilter = getSubscriptionStatusFilter(
+				lastSubscriptionStatus
+			);
+
 			handleGetAccountSubscriptions({
 				variables: {
-					filter: `accountSubscriptionGroupERC eq '${accountSubcriptionGroup.externalReferenceCode}' and (${getSubscriptionStatusFilter(lastSubscriptionStatus)})`,
+					filter: `${ercFilter} and ${statusFilter}`,
 				},
 			});
 		}

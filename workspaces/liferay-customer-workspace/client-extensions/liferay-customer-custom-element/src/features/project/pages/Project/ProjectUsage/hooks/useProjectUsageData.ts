@@ -104,10 +104,15 @@ const useProjectUsageData = () => {
 
 	const [{project}] = useAppContext();
 
+	const SAAS_CLOUD_ERCS = [
+		`${project?.accountKey}_liferay-saas`,
+		`${project?.accountKey}_liferay-cloud`,
+	];
+
+	const ercFilter = `accountSubscriptionGroupERC in ('${SAAS_CLOUD_ERCS.join("', '")}')`;
+
 	const {data: subscriptionsData} = useGetAccountSubscriptions({
-		filter: `name in (${formatedSubscriptions()}) and accountSubscriptionGroupERC eq '${
-			project?.accountKey
-		}_liferay-saas'`,
+		filter: `name in (${formatedSubscriptions()}) and ${ercFilter}`,
 	});
 
 	const displayUsage = useMemo(() => {

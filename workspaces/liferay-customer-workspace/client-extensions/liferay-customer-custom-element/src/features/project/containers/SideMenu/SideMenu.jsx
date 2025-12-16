@@ -73,13 +73,17 @@ const SideMenu = () => {
 	);
 
 	const hasSaasSubscription = useMemo(
-		() =>
-			subscriptionGroups?.some(
-				(subscription) =>
-					subscription.externalReferenceCode ===
-					`${project?.externalReferenceCode}_liferay-saas`
-			),
-		[subscriptionGroups]
+		() => {
+			const allowedERCs = [
+				`${project?.externalReferenceCode}_liferay-saas`,
+				`${project?.externalReferenceCode}_liferay-cloud`
+			];
+	
+			return subscriptionGroups?.some(({externalReferenceCode}) =>
+				allowedERCs.includes(externalReferenceCode)
+			);
+		},
+		[project?.externalReferenceCode, subscriptionGroups]
 	);
 
 	const hasSLASubscription = useMemo(

@@ -69,8 +69,10 @@ const IncidentContactCard = ({
 		setModalMonitoring(false);
 	};
 
-	const isLXCEnvironment = accountSubscriptionGroupsNames?.includes(
-		'Liferay SaaS'
+	const lxcProductNames = ['Liferay SaaS', 'Liferay Cloud'];
+
+	const isLXCEnvironment = accountSubscriptionGroupsNames?.some(name =>
+		lxcProductNames.includes(name)
 	);
 
 	const getHighPriorityContactsByFilterRAYSOURCE = async (filter) => {

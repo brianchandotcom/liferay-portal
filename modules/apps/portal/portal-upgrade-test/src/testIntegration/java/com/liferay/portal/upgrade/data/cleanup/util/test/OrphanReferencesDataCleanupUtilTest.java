@@ -11,6 +11,7 @@ import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -83,6 +84,7 @@ public class OrphanReferencesDataCleanupUtilTest {
 				},
 				() -> {
 				},
+				null,
 				() -> {
 				},
 				false, null, "companyId", "VirtualHost", "companyId",
@@ -105,6 +107,7 @@ public class OrphanReferencesDataCleanupUtilTest {
 				_connection,
 				"delete from Audit_AuditEvent where auditEventId = " +
 					auditEventId),
+			null,
 			() -> _db.runSQL(
 				_connection,
 				StringBundler.concat(
@@ -113,6 +116,79 @@ public class OrphanReferencesDataCleanupUtilTest {
 					OrphanReferencesDataCleanupUtilTest.class.getName(), "')")),
 			false, null, "companyId", "Audit_AuditEvent", "companyId",
 			"Company");
+	}
+
+	@Test
+	public void testCleanUpTableWithJoinClause() throws Exception {
+		String portletId = "com.liferay." + RandomTestUtil.randomString();
+
+		String instancePortletId =
+			portletId + "_INSTANCE_" + RandomTestUtil.randomString();
+		String userPortletId =
+			portletId + "_USER_" + RandomTestUtil.randomString();
+
+		_testCleanUpTable(
+			logCapture -> {
+				List<LogEntry> logEntries = logCapture.getLogEntries();
+
+				Assert.assertEquals(
+					logEntries.toString(), 1, logEntries.size());
+
+				LogEntry logEntry = logEntries.get(0);
+
+				Assert.assertEquals(
+					_getCleanUpTableExpectedMessage(
+						1, false, _dbInspector.normalizeName("portletId"),
+						_dbInspector.normalizeName("PortletPreferences"),
+						_dbInspector.normalizeName("portletId"),
+						_dbInspector.normalizeName("Portlet"), userPortletId),
+					logEntry.getMessage());
+			},
+			() -> {
+				_db.runSQL(
+					_connection,
+					"delete from Portlet where portletId = '" + portletId +
+						"'");
+				_db.runSQL(
+					_connection,
+					"delete from PortletPreferences where portletId = '" +
+						instancePortletId + "'");
+				_db.runSQL(
+					_connection,
+					"delete from PortletPreferences where portletId = '" +
+						userPortletId + "'");
+			},
+			SQLTransformer.transform(
+				StringBundler.concat(
+					"CASE WHEN INSTR([$SOURCE_TABLE_ALIAS$].portletId, ",
+					"'_INSTANCE_') > 0 THEN SUBSTR([$SOURCE_TABLE_ALIAS$].",
+					"portletId, 1, INSTR([$SOURCE_TABLE_ALIAS$].portletId, ",
+					"'_INSTANCE_') - 1) ELSE [$SOURCE_TABLE_ALIAS$].portletId ",
+					"END ")),
+			() -> {
+				_db.runSQL(
+					_connection,
+					StringBundler.concat(
+						"insert into Portlet (mvccVersion, id_, portletId) ",
+						"values (0, ", RandomTestUtil.nextLong(), ", '",
+						portletId, "')"));
+				_db.runSQL(
+					_connection,
+					StringBundler.concat(
+						"insert into PortletPreferences (mvccVersion, ",
+						"ctCollectionId, portletPreferencesId, ownerType, ",
+						"portletId) values (0, 0, ", RandomTestUtil.nextLong(),
+						", 99, '", instancePortletId, "')"));
+				_db.runSQL(
+					_connection,
+					StringBundler.concat(
+						"insert into PortletPreferences (mvccVersion, ",
+						"ctCollectionId, portletPreferencesId, ownerType, ",
+						"portletId) values (0, 0, ", RandomTestUtil.nextLong(),
+						", 99, '", userPortletId, "')"));
+			},
+			false, "ownerType = 99", "portletId", "PortletPreferences",
+			"portletId", "Portlet");
 	}
 
 	@Test
@@ -139,6 +215,7 @@ public class OrphanReferencesDataCleanupUtilTest {
 			() -> _db.runSQL(
 				_connection,
 				"delete from Portlet where companyId = " + companyId),
+			null,
 			() -> {
 				_db.runSQL(
 					_connection,
@@ -184,6 +261,7 @@ public class OrphanReferencesDataCleanupUtilTest {
 			() -> _db.runSQL(
 				_connection,
 				"delete from Portlet where companyId = " + companyId),
+			null,
 			() -> {
 				_db.runSQL(
 					_connection,
@@ -230,6 +308,7 @@ public class OrphanReferencesDataCleanupUtilTest {
 				_connection,
 				"delete from PortletPreferences where companyId = " +
 					companyId),
+			null,
 			() -> {
 				_db.runSQL(
 					_connection,
@@ -295,6 +374,7 @@ public class OrphanReferencesDataCleanupUtilTest {
 					_connection,
 					"delete from DLFileEntry where companyId = " + companyId);
 			},
+			null,
 			() -> {
 				_db.runSQL(
 					StringBundler.concat(
@@ -312,7 +392,7 @@ public class OrphanReferencesDataCleanupUtilTest {
 	private String _getCleanUpTableExpectedMessage(
 			long count, boolean readOnly, String sourceColumnName,
 			String sourceTableName, String targetColumnName,
-			String targetTableName, long targetValue)
+			String targetTableName, Object targetValue)
 		throws Exception {
 
 		return StringBundler.concat(
@@ -327,6 +407,7 @@ public class OrphanReferencesDataCleanupUtilTest {
 	private void _testCleanUpTable(
 			UnsafeConsumer<LogCapture, Exception> assertUnsafeConsumer,
 			UnsafeRunnable<Exception> cleanUpDataUnsafeRunnable,
+			String customJoinClause,
 			UnsafeRunnable<Exception> initializeDataUnsafeRunnable,
 			boolean readOnly, String sourceAdditionalWhereClause,
 			String sourceColumnName, String sourceTableName,
@@ -340,7 +421,10 @@ public class OrphanReferencesDataCleanupUtilTest {
 				LoggerTestUtil.INFO)) {
 
 			OrphanReferencesDataCleanupUtil.cleanUpTable(
-				_connection, null, readOnly, sourceAdditionalWhereClause,
+				_connection,
+				(customJoinClause != null) ? new String[] {customJoinClause} :
+					null,
+				readOnly, sourceAdditionalWhereClause,
 				_dbInspector.normalizeName(sourceColumnName),
 				_dbInspector.normalizeName(sourceTableName),
 				new String[] {_dbInspector.normalizeName(targetColumnName)},

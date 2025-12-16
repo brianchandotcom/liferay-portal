@@ -613,6 +613,33 @@ components:
             description:
                 The definition of a submission result of type page.
             type: object
+        DisplayPageNavigationMenuItemSettings:
+            description:
+                Type-specific settings for "Blogs Entry", "Document", "Knowledge Base Article", "Product", "Web Content"
+                navigation menu item types.
+            properties:
+                className:
+                    description:
+                        The class name of the entity that this navigation menu item is set to.
+                    type: string
+                externalReferenceCode:
+                    description:
+                        The external reference code of the entity that this navigation menu item is set to.
+                    type: string
+                scopeExternalReferenceCode:
+                    description:
+                        The external reference code of the site associated with the entity that this navigation menu
+                        item is set to.
+                    type: string
+                title:
+                    description:
+                        The title or name of the entity that this navigation menu item is set to.
+                    type: string
+                type:
+                    description:
+                        The type of the underlying entity that this navigation menu item is set to.
+                    type: string
+            type: object
         DisplayPageTemplate:
             # @review
             description:
@@ -2362,6 +2389,13 @@ components:
                     format: date-time
                     readOnly: true
                     type: string
+                defaultLanguageId:
+                    example: en_US
+                    type: string
+                displayIcon:
+                    description:
+                        The icon that will be displayed next to this navigation menu item.
+                    type: string
                 externalReferenceCode:
                     description:
                         The navigation menu item's external reference code.
@@ -2384,6 +2418,15 @@ components:
                     description:
                         The localized navigation menu item's names.
                     type: object
+                navigationMenuItemSettings:
+                    description:
+                        The type-specific settings (i.e. typeSettings) for the navigation menu item.
+                    oneOf:
+                        -   $ref: "#/components/schemas/DisplayPageNavigationMenuItemSettings"
+                        -   $ref: "#/components/schemas/PageNavigationMenuItemSettings"
+                        -   $ref: "#/components/schemas/SubmenuNavigationMenuItemSettings"
+                        -   $ref: "#/components/schemas/URLNavigationMenuItemSettings"
+                        -   $ref: "#/components/schemas/VocabularyNavigationMenuItemSettings"
                 navigationMenuItems:
                     # @review
                     description:
@@ -2403,16 +2446,8 @@ components:
                     description:
                         The navigation menu item's type.
                     type: string
-                typeSettings:
-                    additionalProperties:
-                        type: string
-                    description:
-                        The navigation menu item's type settings.
-                    type: object
                 useCustomName:
                     type: boolean
-            required:
-                -   typeSettings
         NavigationMenuValue:
             # @review
             description:
@@ -2663,6 +2698,19 @@ components:
                     description:
                         The segment's external reference code.
                     type: string
+            type: object
+        PageNavigationMenuItemSettings:
+            description:
+                Type-specific settings for a "Page" navigation menu item type.
+            properties:
+                externalReferenceCode:
+                    description:
+                        The external reference code of the entity that this navigation menu item is set to.
+                    type: string
+                privatePage:
+                    description:
+                        Whether the Page is private.
+                    type: boolean
             type: object
         PageRule:
             # @review
@@ -3814,6 +3862,19 @@ components:
             description:
                 A URL image value.
             type: object
+        URLNavigationMenuItemSettings:
+            description:
+                Type-specific settings for a "URL" navigation menu item type.
+            properties:
+                url:
+                    description:
+                        The URL that this navigation menu item will take the user to.
+                    type: string
+                useNewTab:
+                    description:
+                        Whether the target URL will open in a new tab instead of the same tab.
+                    type: boolean
+            type: object
         URLValue:
             # @review
             description:
@@ -3978,6 +4039,37 @@ components:
                 html:
                     type: string
                 title:
+                    type: string
+            type: object
+        VocabularyNavigationMenuItemSettings:
+            description:
+                Type-specific settings for "Category" and "Vocabulary" navigation menu item types.
+            properties:
+                className:
+                    description:
+                        The class name of the entity that this navigation menu item is set to.
+                    type: string
+                externalReferenceCode:
+                    description:
+                        The external reference code of the entity that this navigation menu item is set to.
+                    type: string
+                scopeExternalReferenceCode:
+                    description:
+                        The external reference code of the site associated with the entity that this navigation menu
+                        item is set to.
+                    type: string
+                showAssetVocabularyLevel:
+                    description:
+                        Whether to display the vocabulary's name as the first level with children nested a level deeper.
+                        If false, only vocabulary's children are displayed at the top level.
+                    type: boolean
+                title:
+                    description:
+                        The title or name of the entity that this navigation menu item is set to.
+                    type: string
+                type:
+                    description:
+                        The type of the underlying entity that this navigation menu item is set to.
                     type: string
             type: object
         WidgetInstance:

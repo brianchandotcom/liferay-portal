@@ -126,15 +126,7 @@ testWithExportImportAtInstanceLevelFF(
 
 		const exportName = 'MyExport-' + getRandomString();
 
-		await exportImportPage.export(exportName, 'Tests 1 Items');
-
-		await expect(
-			exportImportPage.page
-				.locator('//h2[span[normalize-space()="' + exportName + '"]]')
-				.first()
-				.locator('../..')
-				.getByText('Successful')
-		).toBeVisible();
+		await exportImportPage.export(exportName, {itemLabel: 'Tests 1 Items'});
 
 		const exportFilePath =
 			await exportImportPage.downloadExportProcess(exportName);
@@ -260,14 +252,6 @@ test(
 
 		await exportImportPage.export(exportName);
 
-		await expect(
-			exportImportPage.page
-				.locator('//h2[span[normalize-space()="' + exportName + '"]]')
-				.first()
-				.locator('../..')
-				.getByText('Successful')
-		).toBeVisible();
-
 		const exportFilePath =
 			await exportImportPage.downloadExportProcess(exportName);
 
@@ -356,14 +340,6 @@ test('Can import a lar file selecting some items to import', async ({
 
 	await exportImportPage.export(exportName);
 
-	await expect(
-		exportImportPage.page
-			.locator('//h2[span[normalize-space()="' + exportName + '"]]')
-			.first()
-			.locator('../..')
-			.getByText('Successful')
-	).toBeVisible();
-
 	const exportFilePath =
 		await exportImportPage.downloadExportProcess(exportName);
 
@@ -391,13 +367,6 @@ test('Can see corresponding elements at site level', async ({
 	const exportName = 'MyExport-' + getRandomString();
 
 	await exportImportPage.export(exportName);
-
-	await expect(
-		exportImportPage.page
-			.getByText(exportName)
-			.locator('../..')
-			.getByText('Successful')
-	).toBeVisible();
 
 	const exportFilePath =
 		await exportImportPage.downloadExportProcess(exportName);
@@ -457,13 +426,6 @@ testWithDeprecationFFDisabled(
 
 		await exportImportPage.export(exportName);
 
-		await expect(
-			exportImportPage.page
-				.getByText(exportName)
-				.locator('../..')
-				.getByText('Successful')
-		).toBeVisible();
-
 		const exportFilePath =
 			await exportImportPage.downloadExportProcess(exportName);
 
@@ -505,11 +467,7 @@ testWithDeprecationFF(
 			'c/tests/scopes/Guest'
 		);
 
-		await exportImportPage.export(exportName, 'Tests 1 Items');
-
-		await expect(
-			page.getByText(exportName).locator('../..').getByText('Successful')
-		).toBeVisible();
+		await exportImportPage.export(exportName, {itemLabel: 'Tests 1 Items'});
 
 		const exportFilePath =
 			await exportImportPage.downloadExportProcess(exportName);
@@ -688,11 +646,7 @@ testWithDeprecationFFDisabled(
 			'c/tests/scopes/Guest'
 		);
 
-		await exportImportPage.export(exportName, 'Tests 1 Items');
-
-		await expect(
-			page.getByText(exportName).locator('../..').getByText('Successful')
-		).toBeVisible();
+		await exportImportPage.export(exportName, {itemLabel: 'Tests 1 Items'});
 
 		const exportFilePath =
 			await exportImportPage.downloadExportProcess(exportName);

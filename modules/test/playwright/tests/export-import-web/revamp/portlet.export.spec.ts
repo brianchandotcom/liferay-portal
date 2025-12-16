@@ -38,6 +38,4 @@ test('Can export using the new navigation buttons', async ({
 	const exportName = `Test export-${getRandomString()}`;
 
 	await exportImportPage.export(exportName);
-
-	await expect(exportImportPage.taskStatusLabel(exportName)).toBeVisible();
 });

@@ -1153,14 +1153,6 @@ test('Cannot import a site scoped lar file', async ({
 
 	await exportImportPage.export(taskName);
 
-	await expect(
-		exportImportPage.page
-			.locator('//h2[span[normalize-space()="' + taskName + '"]]')
-			.first()
-			.locator('../..')
-			.getByText('Successful')
-	).toBeVisible();
-
 	const exportFilePath =
 		await exportImportPage.downloadExportProcess(taskName);
 

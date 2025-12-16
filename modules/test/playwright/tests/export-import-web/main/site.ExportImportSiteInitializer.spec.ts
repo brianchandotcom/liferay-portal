@@ -139,11 +139,7 @@ const testWithExportImportAtInstanceLevelFF = mergeTests(
 
 					exportName = `MyExport-${getRandomString()}`;
 
-					await exportImportPage.exportAll(exportName);
-
-					await exportImportPage
-						.taskSuccessLabel(exportName)
-						.waitFor();
+					await exportImportPage.export(exportName);
 
 					exportFilePath =
 						await exportImportPage.downloadExportProcess(
@@ -386,11 +382,7 @@ testWithExportImportAtInstanceLevelFF(
 
 					exportName = `MyExport-${getRandomString()}`;
 
-					await exportImportPage.exportAll(exportName);
-
-					await expect(
-						exportImportPage.taskSuccessLabel(exportName)
-					).toBeVisible({timeout: 60000});
+					await exportImportPage.export(exportName);
 
 					exportFilePath =
 						await exportImportPage.downloadExportProcess(

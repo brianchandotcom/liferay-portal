@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -125,13 +127,11 @@ public class AssetEntryInfoItemFieldValuesProviderTest {
 
 		themeDisplay.setRealUser(TestPropsValues.getUser());
 
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
+		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
 
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
+		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
-		themeDisplay.setRequest(mockHttpServletRequest);
+		themeDisplay.setRequest(httpServletRequest);
 
 		themeDisplay.setLocale(LocaleUtil.getSiteDefault());
 		themeDisplay.setPortalURL("http://localhost:8080");

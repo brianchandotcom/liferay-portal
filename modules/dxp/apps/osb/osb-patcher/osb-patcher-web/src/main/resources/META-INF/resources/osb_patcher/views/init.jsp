@@ -21,6 +21,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.osb.patcher.configuration.PatcherConfiguration" %><%@
 page import="com.liferay.osb.patcher.constants.PatcherActionKeys" %><%@
 page import="com.liferay.osb.patcher.constants.PatcherBuildConstants" %><%@
+page import="com.liferay.osb.patcher.constants.PatcherConstants" %><%@
 page import="com.liferay.osb.patcher.constants.PatcherFixConstants" %><%@
 page import="com.liferay.osb.patcher.constants.PatcherProductVersionConstants" %><%@
 page import="com.liferay.osb.patcher.constants.WorkflowConstants" %><%@

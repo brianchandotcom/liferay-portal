@@ -19,15 +19,31 @@ import com.liferay.adaptive.media.image.processor.AMImageAttribute;
 import com.liferay.adaptive.media.processor.AMAsyncProcessor;
 import com.liferay.adaptive.media.processor.AMAsyncProcessorLocator;
 import com.liferay.adaptive.media.processor.AMProcessor;
+import com.liferay.document.library.kernel.exception.FileEntryExpiredException;
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionRegistryUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 import java.util.Comparator;
 import java.util.List;
@@ -61,11 +77,13 @@ public class AMImageRequestHandler
 		}
 
 		AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia =
-			_getAdaptiveMedia(interpretedPath.first, interpretedPath.second);
+			_getAdaptiveMedia(
+				interpretedPath.second, interpretedPath.first,
+				httpServletRequest);
 
 		if (adaptiveMedia != null) {
 			_processAMImage(
-				adaptiveMedia, interpretedPath.first, interpretedPath.second);
+				adaptiveMedia, interpretedPath.second, interpretedPath.first);
 		}
 
 		return adaptiveMedia;
@@ -75,6 +93,49 @@ public class AMImageRequestHandler
 	protected void activate() {
 		_pathInterpreter = new PathInterpreter(
 			_amImageConfigurationHelper, _dlAppLocalService);
+	}
+
+	private void _checkFileEntry(
+			FileVersion fileVersion, PermissionChecker permissionChecker)
+		throws Exception {
+
+		ModelResourcePermission<?> fileEntryModelResourcePermission =
+			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+				FileEntry.class.getName());
+
+		FileEntry fileEntry = fileVersion.getFileEntry();
+
+		try {
+			fileEntryModelResourcePermission.check(
+				permissionChecker, fileEntry.getFileEntryId(),
+				ActionKeys.VIEW);
+		}
+		catch (PortalException portalException) {
+			throw portalException;
+		}
+
+		if (!fileVersion.isExpired()) {
+			return;
+		}
+
+		User user = permissionChecker.getUser();
+
+		if (!permissionChecker.isContentReviewer(
+				user.getCompanyId(), fileVersion.getGroupId()) &&
+			!Objects.equals(fileVersion.getUserId(), user.getUserId())) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"The file entry ", fileEntry.getFileEntryId(),
+						" is expired. Only users with content review ",
+						"permission can access it."));
+			}
+
+			throw new FileEntryExpiredException(
+				"The file entry " + fileEntry.getFileEntryId() +
+					" is expired and the user does not have review permission");
+		}
 	}
 
 	private AdaptiveMedia<AMProcessor<FileVersion>> _createRawAdaptiveMedia(
@@ -144,8 +205,8 @@ public class AMImageRequestHandler
 	}
 
 	private AdaptiveMedia<AMProcessor<FileVersion>> _getAdaptiveMedia(
-		FileVersion fileVersion,
-		AMImageAttributeMapping amImageAttributeMapping) {
+		AMImageAttributeMapping amImageAttributeMapping,
+		FileVersion fileVersion, HttpServletRequest httpServletRequest) {
 
 		try {
 			String configurationUuid = amImageAttributeMapping.getValue(
@@ -154,6 +215,9 @@ public class AMImageRequestHandler
 			if (configurationUuid == null) {
 				return null;
 			}
+
+			_checkFileEntry(
+				fileVersion, _getPermissionChecker(httpServletRequest));
 
 			AMImageConfigurationEntry amImageConfigurationEntry =
 				_amImageConfigurationHelper.getAMImageConfigurationEntry(
@@ -181,11 +245,11 @@ public class AMImageRequestHandler
 		Integer configurationWidth) {
 
 		return Comparator.comparingInt(
-			adaptiveMedia -> _getDistance(configurationWidth, adaptiveMedia));
+			adaptiveMedia -> _getDistance(adaptiveMedia, configurationWidth));
 	}
 
 	private Integer _getDistance(
-		int width, AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia) {
+		AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia, int width) {
 
 		Integer imageWidth = adaptiveMedia.getValue(
 			AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH);
@@ -195,6 +259,46 @@ public class AMImageRequestHandler
 		}
 
 		return Math.abs(imageWidth - width);
+	}
+
+	private PermissionChecker _getPermissionChecker(
+			HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		User user = _getUser(httpServletRequest);
+
+		return PermissionThreadLocal.getPermissionChecker(
+			user, !user.isGuestUser());
+	}
+
+	private User _getUser(HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		HttpSession httpSession = httpServletRequest.getSession();
+
+		if (PortalSessionThreadLocal.getHttpSession() == null) {
+			PortalSessionThreadLocal.setHttpSession(httpSession);
+		}
+
+		User user = _portal.getUser(httpServletRequest);
+
+		if (user != null) {
+			return user;
+		}
+
+		String userIdString = (String)httpSession.getAttribute("j_username");
+		String password = (String)httpSession.getAttribute("j_password");
+
+		if ((userIdString != null) && (password != null)) {
+			long userId = GetterUtil.getLong(userIdString);
+
+			return _userLocalService.getUser(userId);
+		}
+
+		Company company = _companyLocalService.getCompany(
+			_portal.getCompanyId(httpServletRequest));
+
+		return company.getGuestUser();
 	}
 
 	private Tuple<FileVersion, AMImageAttributeMapping> _interpretPath(
@@ -249,8 +353,8 @@ public class AMImageRequestHandler
 
 	private void _processAMImage(
 		AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia,
-		FileVersion fileVersion,
-		AMImageAttributeMapping amImageAttributeMapping) {
+		AMImageAttributeMapping amImageAttributeMapping,
+		FileVersion fileVersion) {
 
 		String adaptiveMediaConfigurationUuid = adaptiveMedia.getValue(
 			AMAttribute.getConfigurationUuidAMAttribute());
@@ -294,8 +398,17 @@ public class AMImageRequestHandler
 	private AMImageFinder _amImageFinder;
 
 	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
 	private PathInterpreter _pathInterpreter;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

@@ -26,13 +26,25 @@ export interface Condition {
 	type: 'user' | 'form' | undefined;
 }
 
-export type Rule = {
+export type BasicRule = {
 	actions: Action[];
-	conditionType: ConditionType;
-	conditions: Condition[];
+	conditionType?: ConditionType;
+	conditions?: Condition[];
 	id?: string;
 	name: string;
+	script?: never;
 };
+
+export type AdvancedRule = {
+	actions: Action[];
+	conditionType?: never;
+	conditions?: never;
+	id?: string;
+	name: string;
+	script: string;
+};
+
+export type Rule = BasicRule | AdvancedRule;
 
 export type RuleError = {
 	element: HTMLButtonElement | HTMLInputElement;

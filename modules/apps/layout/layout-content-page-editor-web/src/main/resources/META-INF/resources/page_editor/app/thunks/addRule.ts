@@ -12,9 +12,10 @@ import RulesService from '../services/RulesService';
 
 type Props = {
 	actions: Action[];
-	conditionType: ConditionType;
-	conditions: Condition[];
+	conditionType?: ConditionType;
+	conditions?: Condition[];
 	name: string;
+	script?: string;
 };
 
 export default function addRule({
@@ -22,6 +23,7 @@ export default function addRule({
 	conditionType,
 	conditions,
 	name,
+	script,
 }: Props) {
 	return (
 		dispatch: (
@@ -37,6 +39,7 @@ export default function addRule({
 			conditions,
 			name,
 			onNetworkStatus: dispatch,
+			script,
 			segmentsExperienceId,
 		}).then(({addedRuleId, layoutData}) => {
 			dispatch(addRuleAction({layoutData, ruleId: addedRuleId}));

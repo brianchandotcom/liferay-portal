@@ -9,9 +9,16 @@ import updateRuleAction from '../../actions/updateRule';
 import updateRule from '../../thunks/updateRule';
 
 function undoAction({action}: {action: Rule}) {
-	const {actions, conditionType, conditions, id, name} = action;
+	const {actions, conditionType, conditions, id, name, script} = action;
 
-	return updateRule({actions, conditionType, conditions, name, ruleId: id!});
+	return updateRule({
+		actions,
+		conditionType,
+		conditions,
+		name,
+		ruleId: id!,
+		script,
+	});
 }
 
 function getDerivedStateForUndo({

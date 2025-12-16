@@ -7,6 +7,7 @@ package com.liferay.headless.admin.configuration.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.configuration.client.dto.v1_0.SystemConfiguration;
+import com.liferay.headless.admin.configuration.client.problem.Problem;
 import com.liferay.headless.admin.configuration.test.configuration.TestConfiguration;
 import com.liferay.headless.admin.configuration.test.configuration.TestFactoryConfiguration;
 import com.liferay.headless.admin.configuration.test.util.ConfigurationTestUtil;
@@ -192,9 +193,22 @@ public class SystemConfigurationResourceTest
 	private void _testGetSystemConfigurationFromConfigurationScreen()
 		throws Exception {
 
+		SystemConfiguration systemConfiguration =
+			_randomSystemConfigurationFromConfigurationScreen();
+
+		try {
+			systemConfigurationResource.getSystemConfiguration(
+				systemConfiguration.getExternalReferenceCode());
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
+		}
+
 		SystemConfiguration postSystemConfiguration =
 			systemConfigurationResource.postSystemConfiguration(
-				_randomSystemConfigurationFromConfigurationScreen());
+				systemConfiguration);
 
 		SystemConfiguration getSystemConfiguration =
 			systemConfigurationResource.getSystemConfiguration(

@@ -272,6 +272,12 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 	}
 
 	@Override
+	public int getOAuthClientASLocalMetadatasByCompanyIdCount(long companyId) {
+		return oAuthClientASLocalMetadataPersistence.countByCompanyId(
+			companyId);
+	}
+
+	@Override
 	public List<OAuthClientASLocalMetadata> getUserOAuthClientASLocalMetadata(
 		long userId) {
 

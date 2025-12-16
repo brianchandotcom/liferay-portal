@@ -10,14 +10,23 @@ export const orderItemsTypePolicy = {
 	OrderItem: {
 		fields: {
 			options: {
-				read(options: string | Record<string, any>) {
+				read(options: Array<{value: string}> | string) {
 					let finalOptions: Record<string, unknown> = {};
 
 					if (typeof options === 'string') {
-						finalOptions = JSON.parse(options);
+						options = JSON.parse(options);
 					}
-					else {
-						finalOptions = options;
+
+					if (Array.isArray(options) && options.length) {
+						try {
+							finalOptions = JSON.parse(options[0].value);
+						}
+						catch (error) {
+							console.error(
+								'Failed to parse order item options.',
+								error
+							);
+						}
 					}
 
 					if (!finalOptions.instanceSize) {

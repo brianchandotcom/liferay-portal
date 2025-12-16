@@ -11,11 +11,11 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Map;
 
@@ -55,12 +55,10 @@ public class ConfigurationScreenUtil {
 		throws Exception {
 
 		Dictionary<String, Object> properties =
-			HashMapDictionaryBuilder.<String, Object>putAll(
-				configurationScreen.exportProperties(scopePK)
-			).build();
+			configurationScreen.exportProperties(scopePK);
 
-		if (properties.isEmpty()) {
-			return null;
+		if ((properties == null) || properties.isEmpty()) {
+			return Collections.emptyMap();
 		}
 
 		if (scope.getPropertyKey() != null) {

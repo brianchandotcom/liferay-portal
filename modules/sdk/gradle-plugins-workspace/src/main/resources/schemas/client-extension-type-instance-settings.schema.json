@@ -774,7 +774,7 @@
 				},
 				"unapprovedChangesAllowed": {
 					"default": false,
-					"title": "Allow Unapproved Changes",
+					"title": "Allow Publishing Unapproved Changes",
 					"type": "boolean"
 				}
 			},
@@ -2035,7 +2035,7 @@
 				"disableGetRemoteMethods": {
 					"default": false,
 					"description": "If checked, the methods getRemoteAddr() and getRemoteHost() will be undefined within the Liferay.ThemeDisplay global object. This configuration is primarily implemented to mitigate privacy risks by avoiding the exposure of client IP/host information and to optimize performance by allowing public caching of pages for unauthenticated users. Note that checking this option will make custom code that relies on these methods fail.",
-					"title": "Disable getRemoteAddr() and getRemoteHost() methods",
+					"title": "Disable getRemoteAddr() and getRemoteHost() Methods",
 					"type": "boolean"
 				},
 				"pid": {

@@ -96,16 +96,18 @@ public class S3Store implements Store {
 	public void abortMultipartUploads(Instant startInstant) {
 		ListMultipartUploadsPublisher listMultipartUploadsPublisher =
 			_s3AsyncClient.listMultipartUploadsPaginator(
-				builder -> builder.bucket(_s3StoreConfiguration.bucketName()));
+				listMultipartUploadsRequestBuilder ->
+					listMultipartUploadsRequestBuilder.bucket(
+						_s3StoreConfiguration.bucketName()));
 
 		List<MultipartUpload> multipartUploads = new ArrayList<>();
 
 		try {
 			CompletableFuture<Void> listMultipartUploadsCompletableFuture =
 				listMultipartUploadsPublisher.subscribe(
-					response -> {
+					listMultipartUploadsResponse -> {
 						for (MultipartUpload multipartUpload :
-								response.uploads()) {
+								listMultipartUploadsResponse.uploads()) {
 
 							Instant initiatedInstant =
 								multipartUpload.initiated();
@@ -122,11 +124,13 @@ public class S3Store implements Store {
 				CompletableFuture<AbortMultipartUploadResponse>
 					abortMultipartUploadCompletableFuture =
 						_s3AsyncClient.abortMultipartUpload(
-							builder -> {
-								builder.bucket(
+							abortMultipartUploadRequestBuilder -> {
+								abortMultipartUploadRequestBuilder.bucket(
 									_s3StoreConfiguration.bucketName());
-								builder.key(multipartUpload.key());
-								builder.uploadId(multipartUpload.uploadId());
+								abortMultipartUploadRequestBuilder.key(
+									multipartUpload.key());
+								abortMultipartUploadRequestBuilder.uploadId(
+									multipartUpload.uploadId());
 							});
 
 				abortMultipartUploadCompletableFuture.join();
@@ -154,15 +158,16 @@ public class S3Store implements Store {
 
 			try {
 				FileUpload fileUpload = _s3TransferManager.uploadFile(
-					uploadFileBuilder -> {
-						uploadFileBuilder.putObjectRequest(
-							putObjectBuilder -> {
-								putObjectBuilder.bucket(
+					uploadFileRequestBuilder -> {
+						uploadFileRequestBuilder.putObjectRequest(
+							putObjectRequestBuilder -> {
+								putObjectRequestBuilder.bucket(
 									_s3StoreConfiguration.bucketName());
-								putObjectBuilder.key(key);
-								putObjectBuilder.storageClass(_storageClass);
+								putObjectRequestBuilder.key(key);
+								putObjectRequestBuilder.storageClass(
+									_storageClass);
 							});
-						uploadFileBuilder.source(file);
+						uploadFileRequestBuilder.source(file);
 					});
 
 				CompletableFuture<CompletedFileUpload> completableFuture =
@@ -215,9 +220,10 @@ public class S3Store implements Store {
 
 				CompletableFuture<DeleteObjectsResponse> completableFuture =
 					_s3AsyncClient.deleteObjects(
-						builder -> {
-							builder.bucket(_s3StoreConfiguration.bucketName());
-							builder.delete(
+						deleteObjectsRequestBuilder -> {
+							deleteObjectsRequestBuilder.bucket(
+								_s3StoreConfiguration.bucketName());
+							deleteObjectsRequestBuilder.delete(
 								deleteBuilder -> deleteBuilder.objects(
 									objectIdentifiers));
 						});
@@ -239,9 +245,10 @@ public class S3Store implements Store {
 
 		CompletableFuture<DeleteObjectResponse> completableFuture =
 			_s3AsyncClient.deleteObject(
-				builder -> {
-					builder.bucket(_s3StoreConfiguration.bucketName());
-					builder.key(
+				deleteObjectRequestBuilder -> {
+					deleteObjectRequestBuilder.bucket(
+						_s3StoreConfiguration.bucketName());
+					deleteObjectRequestBuilder.key(
 						S3KeyTransformerUtil.getFileVersionKey(
 							companyId, repositoryId, fileName, versionLabel));
 				});
@@ -270,9 +277,10 @@ public class S3Store implements Store {
 
 		CompletableFuture<ResponseInputStream<GetObjectResponse>>
 			completableFuture = _s3AsyncClient.getObject(
-				builder -> {
-					builder.bucket(_s3StoreConfiguration.bucketName());
-					builder.key(key);
+				getObjectRequestBuilder -> {
+					getObjectRequestBuilder.bucket(
+						_s3StoreConfiguration.bucketName());
+					getObjectRequestBuilder.key(key);
 				},
 				AsyncResponseTransformer.toBlockingInputStream());
 
@@ -337,15 +345,16 @@ public class S3Store implements Store {
 
 		CompletableFuture<HeadObjectResponse> completableFuture =
 			_s3AsyncClient.headObject(
-				builder -> {
-					builder.bucket(_s3StoreConfiguration.bucketName());
-					builder.key(key);
+				headObjectRequestBuilder -> {
+					headObjectRequestBuilder.bucket(
+						_s3StoreConfiguration.bucketName());
+					headObjectRequestBuilder.key(key);
 				});
 
 		try {
-			HeadObjectResponse response = completableFuture.join();
+			HeadObjectResponse headObjectResponse = completableFuture.join();
 
-			return response.contentLength();
+			return headObjectResponse.contentLength();
 		}
 		catch (CompletionException completionException) {
 			Throwable throwable = completionException.getCause();
@@ -402,9 +411,10 @@ public class S3Store implements Store {
 
 			CompletableFuture<HeadObjectResponse> completableFuture =
 				_s3AsyncClient.headObject(
-					builder -> {
-						builder.bucket(_s3StoreConfiguration.bucketName());
-						builder.key(key);
+					headObjectRequestBuilder -> {
+						headObjectRequestBuilder.bucket(
+							_s3StoreConfiguration.bucketName());
+						headObjectRequestBuilder.key(key);
 					});
 
 			completableFuture.join();
@@ -451,12 +461,12 @@ public class S3Store implements Store {
 			awsCredentialsProvider = DefaultCredentialsProvider.create();
 		}
 
-		NettyNioAsyncHttpClient.Builder asyncHttpClientBuilder =
+		NettyNioAsyncHttpClient.Builder nettyNioAsyncHttpClientBuilder =
 			NettyNioAsyncHttpClient.builder();
 
-		asyncHttpClientBuilder.connectionTimeout(
+		nettyNioAsyncHttpClientBuilder.connectionTimeout(
 			Duration.ofMillis(_s3StoreConfiguration.connectionTimeout()));
-		asyncHttpClientBuilder.maxConcurrency(
+		nettyNioAsyncHttpClientBuilder.maxConcurrency(
 			_s3StoreConfiguration.httpClientMaxConnections());
 
 		String proxyHost = _s3StoreConfiguration.proxyHost();
@@ -477,7 +487,7 @@ public class S3Store implements Store {
 					_s3StoreConfiguration.proxyUsername());
 			}
 
-			asyncHttpClientBuilder.proxyConfiguration(
+			nettyNioAsyncHttpClientBuilder.proxyConfiguration(
 				proxyConfigurationBuilder.build());
 		}
 
@@ -487,20 +497,21 @@ public class S3Store implements Store {
 		).forcePathStyle(
 			_s3StoreConfiguration.s3PathStyle()
 		).httpClientBuilder(
-			asyncHttpClientBuilder
+			nettyNioAsyncHttpClientBuilder
 		).multipartEnabled(
 			true
 		).multipartConfiguration(
-			builder -> {
-				builder.minimumPartSizeInBytes(
+			multipartConfigurationBuilder -> {
+				multipartConfigurationBuilder.minimumPartSizeInBytes(
 					(long)_s3StoreConfiguration.minimumUploadPartSize());
-				builder.thresholdInBytes(
+				multipartConfigurationBuilder.thresholdInBytes(
 					(long)_s3StoreConfiguration.multipartUploadThreshold());
 			}
 		).overrideConfiguration(
-			overrideBuilder -> overrideBuilder.retryPolicy(
-				retryBuilder -> retryBuilder.numRetries(
-					_s3StoreConfiguration.httpClientMaxErrorRetry()))
+			clientOverrideConfigurationBuilder ->
+				clientOverrideConfigurationBuilder.retryPolicy(
+					retryBuilder -> retryBuilder.numRetries(
+						_s3StoreConfiguration.httpClientMaxErrorRetry()))
 		);
 
 		if (Validator.isNotNull(_s3StoreConfiguration.s3Endpoint())) {
@@ -578,16 +589,18 @@ public class S3Store implements Store {
 	private List<S3Object> _getS3Objects(String prefix) {
 		ListObjectsV2Publisher listObjectsV2Publisher =
 			_s3AsyncClient.listObjectsV2Paginator(
-				builder -> {
-					builder.bucket(_s3StoreConfiguration.bucketName());
-					builder.prefix(prefix);
+				listObjectsV2RequestBuilder -> {
+					listObjectsV2RequestBuilder.bucket(
+						_s3StoreConfiguration.bucketName());
+					listObjectsV2RequestBuilder.prefix(prefix);
 				});
 
 		List<S3Object> s3Objects = new ArrayList<>();
 
 		CompletableFuture<Void> completableFuture =
 			listObjectsV2Publisher.subscribe(
-				response -> s3Objects.addAll(response.contents()));
+				listObjectsV2Response ->
+					s3Objects.addAll(listObjectsV2Response.contents()));
 
 		try {
 			completableFuture.join();

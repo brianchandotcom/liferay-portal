@@ -101,8 +101,8 @@ export class DataMigrationCenterPage {
 		return readCSVFile(filePath);
 	}
 
-	async assertSampleFileDownload(entitType: string) {
-		await this.selectEntityType(entitType);
+	async assertSampleFileDownload(entityType: string) {
+		await this.selectEntityType(entityType);
 
 		const downloadPromise = this.page.waitForEvent('download');
 		await this.downloadSampleButton.click();

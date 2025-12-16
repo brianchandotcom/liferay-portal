@@ -10,7 +10,7 @@ runGradleTest {
 	doLast {
 		Project project = project(":modules:rest-builder")
 
-		fileTree(dir: project.projectDir, include: '**/*.java').each {
+		fileTree(dir: project.projectDir, include: "**/*.java").each {
 			file ->
 
 			assert file.text.contains("javax")

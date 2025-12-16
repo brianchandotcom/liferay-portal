@@ -12,13 +12,8 @@
 		[#assign koroneikiAccount = (restClient.get("/c/koroneikiaccounts/by-external-reference-code/${erc}"))!{} /]
 		[#assign accountSLA = (koroneikiAccount.slaCurrent)!"" /]
 
-		[#assign hasSLAPermission =
-			accountSLA == "Elite" ||
-			accountSLA == "Enhanced" ||
-			accountSLA == "Mission Critical" ||
-			accountSLA == "Premium Subscription" ||
-			accountSLA == "Platinum Subscription"
-		/]
+		[#assign validSLAs = ["Elite", "Enhanced", "Gold Subscription", "Mission Critical", "Premium Subscription", "Platinum Subscription"] /]
+		[#assign hasSLAPermission = validSLAs?seq_contains(accountSLA) /]
 
 		[#if hasSLAPermission]
 			[#assign hasUserPermission = true /]

@@ -10,14 +10,17 @@ import React, {useMemo, useState} from 'react';
 import SearchableEntityTable from 'shared/components/SearchableEntityTable';
 import URLConstants from 'shared/util/url-constants';
 import {fetchMembershipChangesAggregations} from 'shared/api/individual-segment';
+import {FilterOptionType} from 'shared/types';
 import {formatUTCDate} from 'shared/util/date';
 import {membershipChangesColumns} from 'shared/util/table-columns';
+import {OrderByDirections, SegmentTypes} from 'shared/util/constants';
+import {OrderedMap} from 'immutable';
+import {OrderParams, Segment} from 'shared/util/records';
 import {ReferencedObjectsProvider} from 'segment/segment-editor/dynamic/context/referencedObjects';
-import {Segment} from 'shared/util/records';
 import {SegmentGrowthChart} from 'segment/components/Growth';
-import {SegmentTypes} from 'shared/util/constants';
 import {Text} from '@clayui/core';
 import {useRequest} from 'shared/hooks/useRequest';
+import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
 import {useTimeZone} from 'shared/hooks/useTimeZone';
 
 // type AllMembers = {
@@ -41,6 +44,59 @@ import {useTimeZone} from 'shared/hooks/useTimeZone';
 // 		type: string;
 // 	};
 // };
+
+const DEFAULT_ORDER_BY_OPTIONS = [
+	{
+		label: Liferay.Language.get('name'),
+		value: 'memberName'
+	},
+	{
+		label: Liferay.Language.get('account-name'),
+		value: 'accountName'
+	},
+	{
+		label: Liferay.Language.get('first-seen'),
+		value: 'firstSeenDate'
+	},
+	{
+		label: Liferay.Language.get('last-active'),
+		value: 'lastActive'
+	},
+	{
+		label: Liferay.Language.get('profile-type'),
+		value: 'profileType'
+	}
+];
+
+const MEMBERSHIP_CHANGE_ORDER_BY_OPTION = {
+	label: Liferay.Language.get('membership-change'),
+	value: 'membershipChange'
+};
+
+// label: string;
+// key: string;
+// type?: FilterInputType;
+// values: {label: string; value: string}[];
+
+const FILTER_BY_DEFAULT_OPTIONS: FilterOptionType[] = [
+	{
+		label: Liferay.Language.get('profile-type'),
+		key: 'profileType',
+		values: [
+			{label: Liferay.Language.get('known'), value: 'known'},
+			{label: Liferay.Language.get('anonymous'), value: 'anonymous'}
+		]
+	}
+];
+
+const MEMBERSHIP_CHANGE_FILTER_OPTION: FilterOptionType = {
+	label: Liferay.Language.get('membership-change'),
+	key: 'membershipChange',
+	values: [
+		{label: Liferay.Language.get('added'), value: 'ADDED'},
+		{label: Liferay.Language.get('removed'), value: 'REMOVED'}
+	]
+};
 
 type Data = {
 	channelId: string;
@@ -153,64 +209,99 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 		return columns;
 	};
 
+	const paginationParams = useStatefulPagination(null, {
+		initialDelta: 20,
+		initialOrderIOMap: OrderedMap({
+			['memberName']: new OrderParams({
+				field: 'memberName',
+				sortOrder: OrderByDirections.Descending
+			})
+		}),
+		initialPage: 0
+	});
+
 	const getAllMembers = (data: Data) => {
 		const {channelId, delta, groupId, id, orderIOMap, page, query} = data;
 
-		return API.individuals.search({
-			channelId,
-			delta,
-			groupId,
-			individualSegmentId: id,
-			orderIOMap,
-			page,
-			query
-		});
+		return {
+			items: [
+				{
+					id: '1',
+					memberName: 'Alice Johnson',
+					email: 'alice.johnson@example.com',
+					accountName: 'Acme Corp',
+					firstSeenDate: '2024-05-01T10:00:00Z',
+					lastActive: '2024-06-10T15:30:00Z',
+					profileType: 'Known'
+				},
+				{
+					id: '2',
+					memberName: 'Bob Smith',
+					email: 'bob.smith@example.com',
+					accountName: 'Beta LLC',
+					firstSeenDate: '2024-05-05T09:20:00Z',
+					lastActive: '2024-06-09T12:10:00Z',
+					profileType: 'Anonymous'
+				}
+			],
+			total: 2
+		};
+
+		// return API.individuals.search({
+		// 	channelId,
+		// 	delta,
+		// 	groupId,
+		// 	individualSegmentId: id,
+		// 	orderIOMap,
+		// 	page,
+		// 	query
+		// });
 	};
 
 	const getMemberChanges = async (data: Data) => {
 		const {delta, groupId, id, modifiedDate, orderIOMap, query} = data;
 
-		// return {
-		// 	items: [
-		// 		{
-		// 			id: '1',
-		// 			memberName: 'Alice Johnson',
-		// 			email: 'alice.johnson@example.com',
-		// 			accountName: 'Acme Corp',
-		// 			firstSeenDate: '2024-05-01T10:00:00Z',
-		// 			lastActive: '2024-06-10T15:30:00Z',
-		// 			profileType: 'Known',
-		// 			membershipChange: {
-		// 				modifiedDate: '2024-06-10T15:30:00Z',
-		// 				type: 'ADDED'
-		// 			}
-		// 		},
-		// 		{
-		// 			id: '2',
-		// 			memberName: 'Bob Smith',
-		// 			email: 'bob.smith@example.com',
-		// 			accountName: 'Beta LLC',
-		// 			firstSeenDate: '2024-05-05T09:20:00Z',
-		// 			lastActive: '2024-06-09T12:10:00Z',
-		// 			profileType: 'Anonymous',
-		// 			membershipChange: {
-		// 				modifiedDate: '2024-06-09T12:10:00Z',
-		// 				type: 'REMOVED'
-		// 			}
-		// 		}
-		// 	],
-		// 	total: 2
-		// };
+		return {
+			items: [
+				{
+					id: '1',
+					memberName: 'Alice Johnson',
+					email: 'alice.johnson@example.com',
+					accountName: 'Acme Corp',
+					firstSeenDate: '2024-05-01T10:00:00Z',
+					lastActive: '2024-06-10T15:30:00Z',
+					profileType: 'Known',
+					membershipChange: {
+						modifiedDate: '2024-06-10T15:30:00Z',
+						type: 'ADDED'
+					}
+				},
+				{
+					id: '2',
+					memberName: 'Bob Smith',
+					email: 'bob.smith@example.com',
+					accountName: 'Beta LLC',
+					firstSeenDate: '2024-05-05T09:20:00Z',
+					lastActive: '2024-06-09T12:10:00Z',
+					profileType: 'Anonymous',
+					membershipChange: {
+						modifiedDate: '2024-06-09T12:10:00Z',
+						type: 'REMOVED'
+					}
+				}
+			],
+			total: 2
+		};
 
-		return API.individualSegment.fetchMembershipChanges({
-			delta,
-			endDate: modifiedDate,
-			groupId,
-			id,
-			orderIOMap,
-			query,
-			startDate: modifiedDate
-		});
+		// return API.individualSegment.fetchMembershipChanges({
+		// 	delta,
+		// 	endDate: modifiedDate,
+		// 	groupId,
+		// 	id,
+		// 	orderIOMap,
+		// 	query,
+		// 	startDate: modifiedDate
+		// });
 	};
 
 	const fetchMembers = params => {
@@ -220,6 +311,28 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 
 		return fetchMembersFn(params);
 	};
+
+	const orderByOptions = useMemo(
+		() =>
+			selectedPointState.hasSelectedPoint
+				? [
+						...DEFAULT_ORDER_BY_OPTIONS,
+						MEMBERSHIP_CHANGE_ORDER_BY_OPTION
+				  ]
+				: [...DEFAULT_ORDER_BY_OPTIONS],
+		[selectedPointState.hasSelectedPoint]
+	);
+
+	const filterByOptions = useMemo(
+		() =>
+			selectedPointState.hasSelectedPoint
+				? [
+						...FILTER_BY_DEFAULT_OPTIONS,
+						MEMBERSHIP_CHANGE_FILTER_OPTION
+				  ]
+				: FILTER_BY_DEFAULT_OPTIONS,
+		[selectedPointState.hasSelectedPoint]
+	);
 
 	return (
 		<div>
@@ -278,6 +391,7 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 								setSelectedPointState={setSelectedPointState}
 							/>
 							<SearchableEntityTable
+								{...paginationParams}
 								columns={getColumns()}
 								dataSourceFn={fetchMembers}
 								dataSourceParams={{
@@ -285,6 +399,7 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 									groupId,
 									id
 								}}
+								filterByOptions={[...filterByOptions]}
 								noResultsRenderer={() => (
 									<NoResultsDisplay
 										description={
@@ -314,6 +429,7 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 										)}
 									/>
 								)}
+								orderByOptions={orderByOptions}
 								rowIdentifier='id'
 							/>
 						</>

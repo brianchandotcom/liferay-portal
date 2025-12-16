@@ -209,7 +209,9 @@ export const membershipChangesColumns = {
 	},
 	individualName: {
 		cellRenderer: MemberCell,
-		label: Liferay.Language.get('name'),
+		label: `${Liferay.Language.get('member-name')} | ${Liferay.Language.get(
+			'email'
+		)}`,
 		title: true
 	},
 	lastActive: {

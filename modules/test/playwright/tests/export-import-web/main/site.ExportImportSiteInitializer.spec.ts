@@ -141,9 +141,9 @@ const testWithExportImportAtInstanceLevelFF = mergeTests(
 
 					await exportImportPage.exportAll(exportName);
 
-					await expect(
-						exportImportPage.taskSuccessLabel(exportName)
-					).toBeVisible({timeout: 60000});
+					await exportImportPage
+						.taskSuccessLabel(exportName)
+						.waitFor();
 
 					exportFilePath =
 						await exportImportPage.downloadExportProcess(
@@ -170,9 +170,9 @@ const testWithExportImportAtInstanceLevelFF = mergeTests(
 
 					await exportImportPage.import(exportFilePath);
 
-					await expect(
-						exportImportPage.taskSuccessLabel(exportName)
-					).toBeVisible({timeout: 60000});
+					await exportImportPage
+						.taskSuccessLabel(exportName)
+						.waitFor();
 				}
 			);
 

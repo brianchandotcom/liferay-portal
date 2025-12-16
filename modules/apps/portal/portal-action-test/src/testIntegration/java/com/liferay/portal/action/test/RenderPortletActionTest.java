@@ -109,11 +109,8 @@ public class RenderPortletActionTest {
 					"jakarta.portlet.version", "3.0"
 				).build());
 
-		MockHttpServletRequest mockHttpServletRequest = null;
-
-		try {
-			mockHttpServletRequest = new MockHttpServletRequest(
-				HttpMethods.GET, StringPool.BLANK) {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest(HttpMethods.GET, StringPool.BLANK) {
 
 				@Override
 				public RequestDispatcher getRequestDispatcher(String path) {
@@ -125,58 +122,54 @@ public class RenderPortletActionTest {
 
 			};
 
-			mockHttpServletRequest.setAttribute(
-				WebKeys.CURRENT_URL, "http://localhost:8080");
+		mockHttpServletRequest.setAttribute(
+			WebKeys.CURRENT_URL, "http://localhost:8080");
 
-			Group group = GroupTestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
-			Layout layout = LayoutTestUtil.addTypePortletLayout(
-				group.getGroupId());
+		Layout layout = LayoutTestUtil.addTypePortletLayout(group.getGroupId());
 
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
 
-			String layoutPortletId = LayoutTestUtil.addPortletToLayout(
-				layout, portletId);
+		String layoutPortletId = LayoutTestUtil.addPortletToLayout(
+			layout, portletId);
 
-			mockHttpServletRequest.setParameter("p_p_id", layoutPortletId);
+		mockHttpServletRequest.setParameter("p_p_id", layoutPortletId);
 
-			mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
-			mockHttpServletRequest.setAttribute(
-				WebKeys.RENDER_PORTLET,
-				_portletLocalService.getPortletById(
-					TestPropsValues.getCompanyId(), portletId));
+		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
+		mockHttpServletRequest.setAttribute(
+			WebKeys.RENDER_PORTLET,
+			_portletLocalService.getPortletById(
+				TestPropsValues.getCompanyId(), portletId));
 
-			ThemeDisplay themeDisplay = new ThemeDisplay();
+		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-			themeDisplay.setCompany(
-				_companyLocalService.getCompany(
-					TestPropsValues.getCompanyId()));
-			themeDisplay.setLayout(layout);
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
+		themeDisplay.setLayout(layout);
 
-			LayoutSet layoutSet = group.getPublicLayoutSet();
+		LayoutSet layoutSet = group.getPublicLayoutSet();
 
-			themeDisplay.setLayoutSet(layoutSet);
+		themeDisplay.setLayoutSet(layoutSet);
 
-			themeDisplay.setLayoutTypePortlet(
-				(LayoutTypePortlet)layout.getLayoutType());
-			themeDisplay.setLocale(LocaleUtil.getDefault());
-			themeDisplay.setLookAndFeel(
-				layoutSet.getTheme(), layoutSet.getColorScheme());
-			themeDisplay.setPermissionChecker(
-				PermissionThreadLocal.getPermissionChecker());
+		themeDisplay.setLayoutTypePortlet(
+			(LayoutTypePortlet)layout.getLayoutType());
+		themeDisplay.setLocale(LocaleUtil.getDefault());
+		themeDisplay.setLookAndFeel(
+			layoutSet.getTheme(), layoutSet.getColorScheme());
+		themeDisplay.setPermissionChecker(
+			PermissionThreadLocal.getPermissionChecker());
 
-			mockHttpServletRequest.setAttribute(
-				WebKeys.THEME_DISPLAY, themeDisplay);
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
 
-			RenderPortletAction renderPortletAction = new RenderPortletAction();
+		RenderPortletAction renderPortletAction = new RenderPortletAction();
 
-			renderPortletAction.execute(
-				null, mockHttpServletRequest, new MockHttpServletResponse());
-		}
-		finally {
-			serviceRegistration.unregister();
-		}
+		renderPortletAction.execute(
+			null, mockHttpServletRequest, new MockHttpServletResponse());
+
+		serviceRegistration.unregister();
 
 		OutputData outputData = (OutputData)mockHttpServletRequest.getAttribute(
 			WebKeys.OUTPUT_DATA);

@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.File;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -516,10 +517,12 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 			"layout.instanceable.allowed", Boolean.TRUE);
 
 		Layout layout = _layoutLocalService.addLayout(
-			externalReferenceCode, userId, groupId, false, 0, 0, 0, titleMap,
-			titleMap, null, null, null, LayoutConstants.TYPE_UTILITY,
-			typeSettings, true, true, new HashMap<>(),
-			masterLayoutPageTemplateEntryERC, serviceContext);
+			GetterUtil.getString(
+				serviceContext.getAttribute("layoutExternalReferenceCode"),
+				externalReferenceCode),
+			userId, groupId, false, 0, 0, 0, titleMap, titleMap, null, null,
+			null, LayoutConstants.TYPE_UTILITY, typeSettings, true, true,
+			new HashMap<>(), masterLayoutPageTemplateEntryERC, serviceContext);
 
 		Layout draftLayout = layout.fetchDraftLayout();
 

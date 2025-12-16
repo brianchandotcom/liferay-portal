@@ -67,6 +67,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.File;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -1005,10 +1006,12 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		serviceContext.setAttribute("layout.page.template.entry.type", type);
 
 		Layout layout = _layoutLocalService.addLayout(
-			externalReferenceCode, userId, groupId, privateLayout, 0, 0, 0,
-			titleMap, titleMap, null, null, null, layoutType, typeSettings,
-			true, true, new HashMap<>(), masterLayoutPageTemplateEntryERC,
-			serviceContext);
+			GetterUtil.getString(
+				serviceContext.getAttribute("layoutExternalReferenceCode"),
+				externalReferenceCode),
+			userId, groupId, privateLayout, 0, 0, 0, titleMap, titleMap, null,
+			null, null, layoutType, typeSettings, true, true, new HashMap<>(),
+			masterLayoutPageTemplateEntryERC, serviceContext);
 
 		Layout draftLayout = layout.fetchDraftLayout();
 

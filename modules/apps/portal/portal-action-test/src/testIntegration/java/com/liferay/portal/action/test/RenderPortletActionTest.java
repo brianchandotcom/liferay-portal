@@ -78,7 +78,7 @@ public class RenderPortletActionTest {
 				".css\">";
 		String portletId = RandomTestUtil.randomString();
 
-		ServiceRegistration<Portlet> portletServiceRegistration =
+		ServiceRegistration<Portlet> serviceRegistration =
 			bundleContext.registerService(
 				Portlet.class,
 				new MVCPortlet() {
@@ -175,7 +175,7 @@ public class RenderPortletActionTest {
 				null, mockHttpServletRequest, new MockHttpServletResponse());
 		}
 		finally {
-			portletServiceRegistration.unregister();
+			serviceRegistration.unregister();
 		}
 
 		OutputData outputData = (OutputData)mockHttpServletRequest.getAttribute(

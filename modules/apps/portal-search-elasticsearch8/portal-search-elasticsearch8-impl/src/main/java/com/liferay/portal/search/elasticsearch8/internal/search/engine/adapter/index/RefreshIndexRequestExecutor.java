@@ -5,20 +5,19 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.index;
 
-import com.liferay.portal.kernel.util.ArrayUtil;
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.ShardStatistics;
+import co.elastic.clients.elasticsearch.indices.ElasticsearchIndicesClient;
+import co.elastic.clients.elasticsearch.indices.RefreshRequest;
+import co.elastic.clients.elasticsearch.indices.RefreshResponse;
+
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
-import com.liferay.portal.search.engine.adapter.index.IndexRequestShardFailure;
+import com.liferay.portal.search.elasticsearch8.internal.util.ConversionUtil;
 import com.liferay.portal.search.engine.adapter.index.RefreshIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.RefreshIndexResponse;
 
 import java.io.IOException;
-
-import org.elasticsearch.action.ShardOperationFailedException;
-import org.elasticsearch.action.admin.indices.refresh.RefreshRequest;
-import org.elasticsearch.action.admin.indices.refresh.RefreshResponse;
-import org.elasticsearch.client.IndicesClient;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
 
 /**
  * @author Michael C. Han
@@ -34,34 +33,25 @@ public class RefreshIndexRequestExecutor {
 	public RefreshIndexResponse execute(
 		RefreshIndexRequest refreshIndexRequest) {
 
-		RefreshRequest refreshRequest = createRefreshRequest(
-			refreshIndexRequest);
-
-		RefreshResponse refreshResponse = _getRefreshResponse(
-			refreshRequest, refreshIndexRequest);
-
 		RefreshIndexResponse refreshIndexResponse = new RefreshIndexResponse();
 
-		refreshIndexResponse.setFailedShards(refreshResponse.getFailedShards());
+		RefreshResponse refreshResponse = _getRefreshResponse(
+			refreshIndexRequest, createRefreshRequest(refreshIndexRequest));
+
+		ShardStatistics shardStatistics = refreshResponse.shards();
+
+		ListUtil.isNotEmptyForEach(
+			shardStatistics.failures(),
+			shardFailure -> refreshIndexResponse.addIndexRequestShardFailure(
+				IndexRequestShardFailureTranslatorUtil.translate(
+					shardFailure)));
+
+		refreshIndexResponse.setFailedShards(
+			ConversionUtil.toInt(shardStatistics.failed()));
 		refreshIndexResponse.setSuccessfulShards(
-			refreshResponse.getSuccessfulShards());
-		refreshIndexResponse.setTotalShards(refreshResponse.getTotalShards());
-
-		ShardOperationFailedException[] shardOperationFailedExceptions =
-			refreshResponse.getShardFailures();
-
-		if (ArrayUtil.isNotEmpty(shardOperationFailedExceptions)) {
-			for (ShardOperationFailedException shardOperationFailedException :
-					shardOperationFailedExceptions) {
-
-				IndexRequestShardFailure indexRequestShardFailure =
-					IndexRequestShardFailureTranslatorUtil.translate(
-						shardOperationFailedException);
-
-				refreshIndexResponse.addIndexRequestShardFailure(
-					indexRequestShardFailure);
-			}
-		}
+			ConversionUtil.toInt(shardStatistics.successful()));
+		refreshIndexResponse.setTotalShards(
+			ConversionUtil.toInt(shardStatistics.total()));
 
 		return refreshIndexResponse;
 	}
@@ -69,23 +59,25 @@ public class RefreshIndexRequestExecutor {
 	protected RefreshRequest createRefreshRequest(
 		RefreshIndexRequest refreshIndexRequest) {
 
-		return new RefreshRequest(refreshIndexRequest.getIndexNames());
+		return RefreshRequest.of(
+			refreshRequest -> refreshRequest.index(
+				ListUtil.fromArray(refreshIndexRequest.getIndexNames())));
 	}
 
 	private RefreshResponse _getRefreshResponse(
-		RefreshRequest refreshRequest,
-		RefreshIndexRequest refreshIndexRequest) {
+		RefreshIndexRequest refreshIndexRequest,
+		RefreshRequest refreshRequest) {
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
 				refreshIndexRequest.getConnectionId(),
 				refreshIndexRequest.isPreferLocalCluster());
 
-		IndicesClient indicesClient = restHighLevelClient.indices();
+		ElasticsearchIndicesClient elasticsearchIndicesClient =
+			elasticsearchClient.indices();
 
 		try {
-			return indicesClient.refresh(
-				refreshRequest, RequestOptions.DEFAULT);
+			return elasticsearchIndicesClient.refresh(refreshRequest);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

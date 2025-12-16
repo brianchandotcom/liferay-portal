@@ -6,6 +6,7 @@
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.index;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -54,9 +55,10 @@ public class CreateIndexRequestExecutorTest {
 				"    }\n", "}"));
 
 		CreateIndexRequestExecutor createIndexRequestExecutor =
-			new CreateIndexRequestExecutor(_elasticsearchFixture);
+			new CreateIndexRequestExecutor(
+				_elasticsearchFixture, new JSONFactoryImpl());
 
-		org.elasticsearch.client.indices.CreateIndexRequest
+		co.elastic.clients.elasticsearch.indices.CreateIndexRequest
 			elasticsearchCreateIndexRequest =
 				createIndexRequestExecutor.createCreateIndexRequest(
 					createIndexRequest);

@@ -6,6 +6,7 @@
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.index;
 
 import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.index.IndexRequestExecutor;
@@ -20,6 +21,8 @@ public class IndexRequestExecutorFixture {
 	}
 
 	public void setUp() {
+		JSONFactory jsonFactory = new JSONFactoryImpl();
+
 		_indexRequestExecutor = new ElasticsearchIndexRequestExecutor();
 
 		ReflectionTestUtil.setFieldValue(
@@ -32,7 +35,8 @@ public class IndexRequestExecutorFixture {
 
 		ReflectionTestUtil.setFieldValue(
 			_indexRequestExecutor, "_createIndexRequestExecutor",
-			new CreateIndexRequestExecutor(_elasticsearchClientResolver));
+			new CreateIndexRequestExecutor(
+				_elasticsearchClientResolver, jsonFactory));
 		ReflectionTestUtil.setFieldValue(
 			_indexRequestExecutor, "_deleteIndexRequestExecutor",
 			new DeleteIndexRequestExecutor(_elasticsearchClientResolver));
@@ -42,7 +46,7 @@ public class IndexRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			_indexRequestExecutor, "_getFieldMappingIndexRequestExecutor",
 			new GetFieldMappingIndexRequestExecutor(
-				_elasticsearchClientResolver, new JSONFactoryImpl()));
+				_elasticsearchClientResolver, jsonFactory));
 		ReflectionTestUtil.setFieldValue(
 			_indexRequestExecutor, "_getIndexIndexRequestExecutor",
 			new GetIndexIndexRequestExecutor(_elasticsearchClientResolver));
@@ -58,7 +62,8 @@ public class IndexRequestExecutorFixture {
 			new OpenIndexRequestExecutor(_elasticsearchClientResolver));
 		ReflectionTestUtil.setFieldValue(
 			_indexRequestExecutor, "_putMappingIndexRequestExecutor",
-			new PutMappingIndexRequestExecutor(_elasticsearchClientResolver));
+			new PutMappingIndexRequestExecutor(
+				_elasticsearchClientResolver, jsonFactory));
 		ReflectionTestUtil.setFieldValue(
 			_indexRequestExecutor, "_refreshIndexRequestExecutor",
 			new RefreshIndexRequestExecutor(_elasticsearchClientResolver));

@@ -158,7 +158,7 @@ public class ElasticsearchIndexRequestExecutor implements IndexRequestExecutor {
 		_closeIndexRequestExecutor = new CloseIndexRequestExecutor(
 			_elasticsearchClientResolver);
 		_createIndexRequestExecutor = new CreateIndexRequestExecutor(
-			_elasticsearchClientResolver);
+			_elasticsearchClientResolver, _jsonFactory);
 		_deleteIndexRequestExecutor = new DeleteIndexRequestExecutor(
 			_elasticsearchClientResolver);
 		_flushIndexRequestExecutor = new FlushIndexRequestExecutor(
@@ -175,11 +175,11 @@ public class ElasticsearchIndexRequestExecutor implements IndexRequestExecutor {
 		_openIndexRequestExecutor = new OpenIndexRequestExecutor(
 			_elasticsearchClientResolver);
 		_putMappingIndexRequestExecutor = new PutMappingIndexRequestExecutor(
-			_elasticsearchClientResolver);
+			_elasticsearchClientResolver, _jsonFactory);
 		_refreshIndexRequestExecutor = new RefreshIndexRequestExecutor(
 			_elasticsearchClientResolver);
 		_statsIndexRequestExecutor = new StatsIndexRequestExecutor(
-			_elasticsearchClientResolver, _jsonFactory);
+			_elasticsearchClientResolver);
 		_updateIndexSettingsIndexRequestExecutor =
 			new UpdateIndexSettingsIndexRequestExecutor(
 				_elasticsearchClientResolver);

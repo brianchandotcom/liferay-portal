@@ -5,16 +5,17 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.index;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.indices.ElasticsearchIndicesClient;
+import co.elastic.clients.elasticsearch.indices.ExistsRequest;
+import co.elastic.clients.transport.endpoints.BooleanResponse;
+
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse;
 
 import java.io.IOException;
-
-import org.elasticsearch.action.admin.indices.get.GetIndexRequest;
-import org.elasticsearch.client.IndicesClient;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
 
 /**
  * @author Michael C. Han
@@ -30,36 +31,35 @@ public class IndicesExistsIndexRequestExecutor {
 	public IndicesExistsIndexResponse execute(
 		IndicesExistsIndexRequest indicesExistsIndexRequest) {
 
-		return new IndicesExistsIndexResponse(
-			_indicesExists(
-				createGetIndexRequest(indicesExistsIndexRequest),
-				indicesExistsIndexRequest));
+		BooleanResponse booleanResponse = _indicesExists(
+			createExistsRequest(indicesExistsIndexRequest),
+			indicesExistsIndexRequest);
+
+		return new IndicesExistsIndexResponse(booleanResponse.value());
 	}
 
-	protected GetIndexRequest createGetIndexRequest(
+	protected ExistsRequest createExistsRequest(
 		IndicesExistsIndexRequest indicesExistsIndexRequest) {
 
-		GetIndexRequest getIndexRequest = new GetIndexRequest();
-
-		getIndexRequest.indices(indicesExistsIndexRequest.getIndexNames());
-
-		return getIndexRequest;
+		return ExistsRequest.of(
+			existsRequest -> existsRequest.index(
+				ListUtil.fromArray(indicesExistsIndexRequest.getIndexNames())));
 	}
 
-	private boolean _indicesExists(
-		GetIndexRequest getIndexRequest,
+	private BooleanResponse _indicesExists(
+		ExistsRequest existsRequest,
 		IndicesExistsIndexRequest indicesExistsIndexRequest) {
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
 				indicesExistsIndexRequest.getConnectionId(),
 				indicesExistsIndexRequest.isPreferLocalCluster());
 
-		IndicesClient indicesClient = restHighLevelClient.indices();
+		ElasticsearchIndicesClient elasticsearchIndicesClient =
+			elasticsearchClient.indices();
 
 		try {
-			return indicesClient.exists(
-				getIndexRequest, RequestOptions.DEFAULT);
+			return elasticsearchIndicesClient.exists(existsRequest);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

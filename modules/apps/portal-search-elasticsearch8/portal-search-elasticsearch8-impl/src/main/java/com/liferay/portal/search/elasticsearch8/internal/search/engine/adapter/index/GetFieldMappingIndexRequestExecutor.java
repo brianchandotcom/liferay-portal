@@ -5,9 +5,21 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.index;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.mapping.FieldMapping;
+import co.elastic.clients.elasticsearch._types.mapping.Property;
+import co.elastic.clients.elasticsearch.indices.ElasticsearchIndicesClient;
+import co.elastic.clients.elasticsearch.indices.GetFieldMappingRequest;
+import co.elastic.clients.elasticsearch.indices.GetFieldMappingResponse;
+import co.elastic.clients.elasticsearch.indices.get_field_mapping.TypeFieldMappings;
+
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
+import com.liferay.portal.search.elasticsearch8.internal.util.JsonpUtil;
 import com.liferay.portal.search.engine.adapter.index.GetFieldMappingIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.GetFieldMappingIndexResponse;
 
@@ -15,12 +27,6 @@ import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import org.elasticsearch.client.IndicesClient;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.client.indices.GetFieldMappingsRequest;
-import org.elasticsearch.client.indices.GetFieldMappingsResponse;
 
 /**
  * @author Dylan Rebelak
@@ -38,66 +44,83 @@ public class GetFieldMappingIndexRequestExecutor {
 	public GetFieldMappingIndexResponse execute(
 		GetFieldMappingIndexRequest getFieldMappingIndexRequest) {
 
-		GetFieldMappingsRequest getFieldMappingsRequest =
-			createGetFieldMappingsRequest(getFieldMappingIndexRequest);
+		Map<String, String> fieldMappingsMap = new HashMap<>();
 
-		GetFieldMappingsResponse getFieldMappingsResponse =
+		GetFieldMappingResponse getFieldMappingResponse =
 			_getGetFieldMappingsResponse(
-				getFieldMappingsRequest, getFieldMappingIndexRequest);
+				getFieldMappingIndexRequest,
+				createGetFieldMappingRequest(getFieldMappingIndexRequest));
 
-		Map<String, Map<String, GetFieldMappingsResponse.FieldMappingMetadata>>
-			mappings = getFieldMappingsResponse.mappings();
+		Map<String, TypeFieldMappings> typeFieldMappingsMap =
+			getFieldMappingResponse.result();
 
-		Map<String, String> fieldMappings = new HashMap<>();
+		for (Map.Entry<String, TypeFieldMappings> entry :
+				typeFieldMappingsMap.entrySet()) {
 
-		for (String indexName : getFieldMappingIndexRequest.getIndexNames()) {
-			Map<String, GetFieldMappingsResponse.FieldMappingMetadata> map =
-				mappings.get(indexName);
+			TypeFieldMappings typeFieldMappings = entry.getValue();
 
-			JSONObject jsonObject = _jsonFactory.createJSONObject();
-
-			for (String fieldName : getFieldMappingIndexRequest.getFields()) {
-				GetFieldMappingsResponse.FieldMappingMetadata
-					fieldMappingMetadata = map.get(fieldName);
-
-				Map<String, Object> source = fieldMappingMetadata.sourceAsMap();
-
-				jsonObject.put(fieldName, source);
-			}
-
-			fieldMappings.put(indexName, jsonObject.toString());
+			fieldMappingsMap.put(
+				entry.getKey(),
+				_getFieldMappings(typeFieldMappings.mappings()));
 		}
 
-		return new GetFieldMappingIndexResponse(fieldMappings);
+		return new GetFieldMappingIndexResponse(fieldMappingsMap);
 	}
 
-	protected GetFieldMappingsRequest createGetFieldMappingsRequest(
+	protected GetFieldMappingRequest createGetFieldMappingRequest(
 		GetFieldMappingIndexRequest getFieldMappingIndexRequest) {
 
-		GetFieldMappingsRequest getFieldMappingsRequest =
-			new GetFieldMappingsRequest();
-
-		getFieldMappingsRequest.fields(getFieldMappingIndexRequest.getFields());
-		getFieldMappingsRequest.indices(
-			getFieldMappingIndexRequest.getIndexNames());
-
-		return getFieldMappingsRequest;
+		return GetFieldMappingRequest.of(
+			getFieldMappingRequest -> getFieldMappingRequest.fields(
+				ListUtil.fromArray(getFieldMappingIndexRequest.getFields())
+			).index(
+				ListUtil.fromArray(getFieldMappingIndexRequest.getIndexNames())
+			));
 	}
 
-	private GetFieldMappingsResponse _getGetFieldMappingsResponse(
-		GetFieldMappingsRequest getFieldMappingsRequest,
-		GetFieldMappingIndexRequest getFieldMappingIndexRequest) {
+	private String _getFieldMappings(Map<String, FieldMapping> mappings) {
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(
+		for (Map.Entry<String, FieldMapping> entry1 : mappings.entrySet()) {
+			FieldMapping fieldMapping = entry1.getValue();
+
+			Map<String, Property> properties = fieldMapping.mapping();
+
+			for (Map.Entry<String, Property> entry2 : properties.entrySet()) {
+				Property property = entry2.getValue();
+
+				try {
+					jsonObject.put(
+						entry1.getKey(),
+						JSONUtil.put(
+							entry2.getKey(),
+							_jsonFactory.createJSONObject(
+								JsonpUtil.toString(property))));
+				}
+				catch (JSONException jsonException) {
+					throw new RuntimeException(jsonException);
+				}
+			}
+		}
+
+		return jsonObject.toString();
+	}
+
+	private GetFieldMappingResponse _getGetFieldMappingsResponse(
+		GetFieldMappingIndexRequest getFieldMappingIndexRequest,
+		GetFieldMappingRequest getFieldMappingRequest) {
+
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
 				getFieldMappingIndexRequest.getConnectionId(),
 				getFieldMappingIndexRequest.isPreferLocalCluster());
 
-		IndicesClient indicesClient = restHighLevelClient.indices();
+		ElasticsearchIndicesClient elasticsearchIndicesClient =
+			elasticsearchClient.indices();
 
 		try {
-			return indicesClient.getFieldMapping(
-				getFieldMappingsRequest, RequestOptions.DEFAULT);
+			return elasticsearchIndicesClient.getFieldMapping(
+				getFieldMappingRequest);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

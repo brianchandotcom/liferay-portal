@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.index;
 
+import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.engine.adapter.index.PutMappingIndexRequest;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -46,7 +47,8 @@ public class PutMappingIndexRequestExecutorTest {
 			new PutMappingIndexRequest(new String[] {_INDEX_NAME}, _FIELD_NAME);
 
 		PutMappingIndexRequestExecutor putMappingIndexRequestExecutor =
-			new PutMappingIndexRequestExecutor(_elasticsearchFixture);
+			new PutMappingIndexRequestExecutor(
+				_elasticsearchFixture, new JSONFactoryImpl());
 
 		PutMappingRequest putMappingRequest =
 			putMappingIndexRequestExecutor.createPutMappingRequest(

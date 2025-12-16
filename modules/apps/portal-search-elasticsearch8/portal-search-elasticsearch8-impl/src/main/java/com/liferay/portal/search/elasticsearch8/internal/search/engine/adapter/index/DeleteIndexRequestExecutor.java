@@ -5,17 +5,16 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.index;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.indices.ElasticsearchIndicesClient;
+
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.index.DeleteIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.DeleteIndexResponse;
+import com.liferay.portal.search.engine.adapter.index.IndicesOptions;
 
 import java.io.IOException;
-
-import org.elasticsearch.action.support.IndicesOptions;
-import org.elasticsearch.action.support.master.AcknowledgedResponse;
-import org.elasticsearch.client.IndicesClient;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
 
 /**
  * @author Michael C. Han
@@ -29,47 +28,51 @@ public class DeleteIndexRequestExecutor {
 	}
 
 	public DeleteIndexResponse execute(DeleteIndexRequest deleteIndexRequest) {
-		org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest
-			elasticsearchDeleteIndexRequest = createDeleteIndexRequest(
-				deleteIndexRequest);
+		co.elastic.clients.elasticsearch.indices.DeleteIndexResponse
+			deleteIndexResponse = getDeleteIndexResponse(
+				deleteIndexRequest,
+				createDeleteIndexRequest(deleteIndexRequest));
 
-		AcknowledgedResponse acknowledgedResponse = getAcknowledgedResponse(
-			elasticsearchDeleteIndexRequest, deleteIndexRequest);
-
-		return new DeleteIndexResponse(acknowledgedResponse.isAcknowledged());
+		return new DeleteIndexResponse(deleteIndexResponse.acknowledged());
 	}
 
-	protected org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest
+	protected co.elastic.clients.elasticsearch.indices.DeleteIndexRequest
 		createDeleteIndexRequest(DeleteIndexRequest deleteIndexRequest) {
 
-		org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest
-			elasticsearchDeleteIndexRequest =
-				new org.elasticsearch.action.admin.indices.delete.
-					DeleteIndexRequest(deleteIndexRequest.getIndexNames());
+		co.elastic.clients.elasticsearch.indices.DeleteIndexRequest.Builder
+			builder =
+				new co.elastic.clients.elasticsearch.indices.DeleteIndexRequest.
+					Builder();
 
-		IndicesOptions indicesOptions = IndicesOptionsTranslatorUtil.translate(
-			deleteIndexRequest.getIndicesOptions());
+		IndicesOptions indicesOptions = deleteIndexRequest.getIndicesOptions();
 
-		elasticsearchDeleteIndexRequest.indicesOptions(indicesOptions);
+		if (indicesOptions != null) {
+			builder.allowNoIndices(indicesOptions.isAllowNoIndices());
+			builder.ignoreUnavailable(indicesOptions.isIgnoreUnavailable());
+		}
 
-		return elasticsearchDeleteIndexRequest;
+		builder.index(ListUtil.fromArray(deleteIndexRequest.getIndexNames()));
+
+		return builder.build();
 	}
 
-	protected AcknowledgedResponse getAcknowledgedResponse(
-		org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest
-			elasticsearchDeleteIndexRequest,
-		DeleteIndexRequest deleteIndexRequest) {
+	protected co.elastic.clients.elasticsearch.indices.DeleteIndexResponse
+		getDeleteIndexResponse(
+			DeleteIndexRequest deleteIndexRequest,
+			co.elastic.clients.elasticsearch.indices.DeleteIndexRequest
+				elasticsearchDeleteIndexRequest) {
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
 				deleteIndexRequest.getConnectionId(),
 				deleteIndexRequest.isPreferLocalCluster());
 
-		IndicesClient indicesClient = restHighLevelClient.indices();
+		ElasticsearchIndicesClient elasticsearchIndicesClient =
+			elasticsearchClient.indices();
 
 		try {
-			return indicesClient.delete(
-				elasticsearchDeleteIndexRequest, RequestOptions.DEFAULT);
+			return elasticsearchIndicesClient.delete(
+				elasticsearchDeleteIndexRequest);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

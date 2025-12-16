@@ -5,7 +5,15 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.index;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.indices.ElasticsearchIndicesClient;
+import co.elastic.clients.elasticsearch.indices.GetMappingRequest;
+import co.elastic.clients.elasticsearch.indices.GetMappingResponse;
+import co.elastic.clients.elasticsearch.indices.get_mapping.IndexMappingRecord;
+
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
+import com.liferay.portal.search.elasticsearch8.internal.util.JsonpUtil;
 import com.liferay.portal.search.engine.adapter.index.GetMappingIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.GetMappingIndexResponse;
 
@@ -13,14 +21,6 @@ import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import org.elasticsearch.client.IndicesClient;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.client.indices.GetMappingsRequest;
-import org.elasticsearch.client.indices.GetMappingsResponse;
-import org.elasticsearch.cluster.metadata.MappingMetadata;
-import org.elasticsearch.common.compress.CompressedXContent;
 
 /**
  * @author Dylan Rebelak
@@ -36,51 +36,48 @@ public class GetMappingIndexRequestExecutor {
 	public GetMappingIndexResponse execute(
 		GetMappingIndexRequest getMappingIndexRequest) {
 
-		GetMappingsRequest getMappingsRequest = createGetMappingsRequest(
-			getMappingIndexRequest);
+		GetMappingResponse getMappingResponse = _getGetMappingResponse(
+			getMappingIndexRequest,
+			createGetMappingRequest(getMappingIndexRequest));
 
-		GetMappingsResponse getMappingsResponse = _getGetMappingsResponse(
-			getMappingsRequest, getMappingIndexRequest);
-
-		Map<String, MappingMetadata> mappings = getMappingsResponse.mappings();
+		Map<String, IndexMappingRecord> indexMappingRecords =
+			getMappingResponse.result();
 
 		Map<String, String> indexMappings = new HashMap<>();
 
 		for (String indexName : getMappingIndexRequest.getIndexNames()) {
-			MappingMetadata mappingMetadata = mappings.get(indexName);
+			IndexMappingRecord indexMappingRecord = indexMappingRecords.get(
+				indexName);
 
-			CompressedXContent mappingContent = mappingMetadata.source();
-
-			indexMappings.put(indexName, mappingContent.toString());
+			indexMappings.put(
+				indexName, JsonpUtil.toString(indexMappingRecord.mappings()));
 		}
 
 		return new GetMappingIndexResponse(indexMappings);
 	}
 
-	protected GetMappingsRequest createGetMappingsRequest(
+	protected GetMappingRequest createGetMappingRequest(
 		GetMappingIndexRequest getMappingIndexRequest) {
 
-		GetMappingsRequest getMappingsRequest = new GetMappingsRequest();
-
-		getMappingsRequest.indices(getMappingIndexRequest.getIndexNames());
-
-		return getMappingsRequest;
+		return GetMappingRequest.of(
+			getMappingRequest -> getMappingRequest.index(
+				ListUtil.fromArray(getMappingIndexRequest.getIndexNames())));
 	}
 
-	private GetMappingsResponse _getGetMappingsResponse(
-		GetMappingsRequest getMappingsRequest,
-		GetMappingIndexRequest getMappingIndexRequest) {
+	private GetMappingResponse _getGetMappingResponse(
+		GetMappingIndexRequest getMappingIndexRequest,
+		GetMappingRequest getMappingRequest) {
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
 				getMappingIndexRequest.getConnectionId(),
 				getMappingIndexRequest.isPreferLocalCluster());
 
-		IndicesClient indicesClient = restHighLevelClient.indices();
+		ElasticsearchIndicesClient elasticsearchIndicesClient =
+			elasticsearchClient.indices();
 
 		try {
-			return indicesClient.getMapping(
-				getMappingsRequest, RequestOptions.DEFAULT);
+			return elasticsearchIndicesClient.getMapping(getMappingRequest);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

@@ -5,19 +5,26 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.index;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.indices.ElasticsearchIndicesClient;
+import co.elastic.clients.elasticsearch.indices.IndexSettings;
+import co.elastic.clients.elasticsearch.indices.PutIndicesSettingsRequest;
+import co.elastic.clients.elasticsearch.indices.PutIndicesSettingsResponse;
+import co.elastic.clients.json.JsonpMapper;
+
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.index.IndicesOptions;
 import com.liferay.portal.search.engine.adapter.index.UpdateIndexSettingsIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.UpdateIndexSettingsIndexResponse;
 
-import java.io.IOException;
+import jakarta.json.spi.JsonProvider;
 
-import org.elasticsearch.action.admin.indices.settings.put.UpdateSettingsRequest;
-import org.elasticsearch.action.support.master.AcknowledgedResponse;
-import org.elasticsearch.client.IndicesClient;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.xcontent.XContentType;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author Michael C. Han
@@ -33,50 +40,70 @@ public class UpdateIndexSettingsIndexRequestExecutor {
 	public UpdateIndexSettingsIndexResponse execute(
 		UpdateIndexSettingsIndexRequest updateIndexSettingsIndexRequest) {
 
-		UpdateSettingsRequest updateSettingsRequest =
-			createUpdateSettingsRequest(updateIndexSettingsIndexRequest);
-
-		AcknowledgedResponse acknowledgedResponse = getAcknowledgedResponse(
-			updateSettingsRequest, updateIndexSettingsIndexRequest);
+		PutIndicesSettingsResponse putIndicesSettingsResponse =
+			_getPutIndicesSettingsResponse(
+				createPutIndicesSettingsRequest(
+					updateIndexSettingsIndexRequest),
+				updateIndexSettingsIndexRequest);
 
 		return new UpdateIndexSettingsIndexResponse(
-			acknowledgedResponse.isAcknowledged());
+			putIndicesSettingsResponse.acknowledged());
 	}
 
-	protected UpdateSettingsRequest createUpdateSettingsRequest(
+	protected PutIndicesSettingsRequest createPutIndicesSettingsRequest(
 		UpdateIndexSettingsIndexRequest updateIndexSettingsIndexRequest) {
 
-		UpdateSettingsRequest updateSettingsRequest = new UpdateSettingsRequest(
-			updateIndexSettingsIndexRequest.getIndexNames());
-
-		updateSettingsRequest.settings(
-			updateIndexSettingsIndexRequest.getSettings(), XContentType.JSON);
+		PutIndicesSettingsRequest.Builder builder =
+			new PutIndicesSettingsRequest.Builder();
 
 		IndicesOptions indicesOptions =
 			updateIndexSettingsIndexRequest.getIndicesOptions();
 
 		if (indicesOptions != null) {
-			updateSettingsRequest.indicesOptions(
-				IndicesOptionsTranslatorUtil.translate(indicesOptions));
+			builder.allowNoIndices(indicesOptions.isAllowNoIndices());
+			builder.ignoreUnavailable(indicesOptions.isIgnoreUnavailable());
 		}
 
-		return updateSettingsRequest;
+		builder.index(
+			ListUtil.fromArray(
+				updateIndexSettingsIndexRequest.getIndexNames()));
+
+		JsonpMapper jsonpMapper = _elasticsearchClientResolver.getJsonpMapper(
+			updateIndexSettingsIndexRequest.getConnectionId());
+
+		JsonProvider jsonProvider = jsonpMapper.jsonProvider();
+
+		String settings = updateIndexSettingsIndexRequest.getSettings();
+
+		try (InputStream inputStream = new ByteArrayInputStream(
+				settings.getBytes(StandardCharsets.UTF_8))) {
+
+			builder.settings(
+				IndexSettings._DESERIALIZER.deserialize(
+					jsonProvider.createParser(inputStream), jsonpMapper));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		return builder.build();
 	}
 
-	protected AcknowledgedResponse getAcknowledgedResponse(
-		UpdateSettingsRequest updateSettingsRequest,
+	private PutIndicesSettingsResponse _getPutIndicesSettingsResponse(
+		PutIndicesSettingsRequest putIndicesSettingsRequest,
 		UpdateIndexSettingsIndexRequest updateIndexSettingsIndexRequest) {
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
 				updateIndexSettingsIndexRequest.getConnectionId(),
 				updateIndexSettingsIndexRequest.isPreferLocalCluster());
 
-		IndicesClient indicesClient = restHighLevelClient.indices();
+		ElasticsearchIndicesClient elasticsearchIndicesClient =
+			elasticsearchClient.indices();
 
 		try {
-			return indicesClient.putSettings(
-				updateSettingsRequest, RequestOptions.DEFAULT);
+			return elasticsearchIndicesClient.putSettings(
+				putIndicesSettingsRequest);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

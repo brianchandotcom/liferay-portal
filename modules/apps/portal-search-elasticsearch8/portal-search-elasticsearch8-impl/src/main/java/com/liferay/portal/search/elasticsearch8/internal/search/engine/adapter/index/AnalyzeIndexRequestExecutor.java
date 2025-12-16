@@ -5,7 +5,22 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.index;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.analysis.CharFilter;
+import co.elastic.clients.elasticsearch._types.analysis.TokenFilter;
+import co.elastic.clients.elasticsearch._types.analysis.Tokenizer;
+import co.elastic.clients.elasticsearch.indices.AnalyzeRequest;
+import co.elastic.clients.elasticsearch.indices.AnalyzeResponse;
+import co.elastic.clients.elasticsearch.indices.ElasticsearchIndicesClient;
+import co.elastic.clients.elasticsearch.indices.analyze.AnalyzeDetail;
+import co.elastic.clients.elasticsearch.indices.analyze.AnalyzeToken;
+import co.elastic.clients.elasticsearch.indices.analyze.AnalyzerDetail;
+import co.elastic.clients.elasticsearch.indices.analyze.CharFilterDetail;
+import co.elastic.clients.elasticsearch.indices.analyze.ExplainAnalyzeToken;
+import co.elastic.clients.elasticsearch.indices.analyze.TokenDetail;
+
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
@@ -17,13 +32,6 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.elasticsearch.client.IndicesClient;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.client.indices.AnalyzeRequest;
-import org.elasticsearch.client.indices.AnalyzeResponse;
-import org.elasticsearch.client.indices.DetailAnalyzeResponse;
 
 /**
  * @author Michael C. Han
@@ -39,21 +47,18 @@ public class AnalyzeIndexRequestExecutor {
 	public AnalyzeIndexResponse execute(
 		AnalyzeIndexRequest analyzeIndexRequest) {
 
-		AnalyzeRequest analyzeRequest = createAnalyzeRequest(
-			analyzeIndexRequest);
-
-		AnalyzeResponse analyzeResponse = _getAnalyzeResponse(
-			analyzeRequest, analyzeIndexRequest);
-
 		AnalyzeIndexResponse analyzeIndexResponse = new AnalyzeIndexResponse();
 
+		AnalyzeResponse analyzeResponse = _getAnalyzeResponse(
+			analyzeIndexRequest, createAnalyzeRequest(analyzeIndexRequest));
+
 		if (analyzeResponse.detail() != null) {
-			_processDetailAnalyzeResponse(
-				analyzeIndexResponse, analyzeResponse.detail());
+			_processAnalyzeDetail(
+				analyzeResponse.detail(), analyzeIndexResponse);
 		}
 		else {
 			List<AnalysisIndexResponseToken> analysisIndexResponseTokens =
-				_translateAnalyzeResponseTokens(analyzeResponse.getTokens());
+				_translateAnalyzeTokens(analyzeResponse.tokens());
 
 			analyzeIndexResponse.addAnalysisIndexResponseTokens(
 				analysisIndexResponseTokens);
@@ -65,101 +70,80 @@ public class AnalyzeIndexRequestExecutor {
 	protected AnalyzeRequest createAnalyzeRequest(
 		AnalyzeIndexRequest analyzeIndexRequest) {
 
-		AnalyzeRequest analyzeRequest;
+		AnalyzeRequest.Builder builder = new AnalyzeRequest.Builder();
+
+		builder.attributes(
+			ListUtil.fromArray(analyzeIndexRequest.getAttributesArray()));
+		builder.explain(analyzeIndexRequest.isExplain());
+		builder.index(analyzeIndexRequest.getIndexName());
+		builder.text(ListUtil.fromArray(analyzeIndexRequest.getTexts()));
 
 		if (Validator.isNotNull(analyzeIndexRequest.getAnalyzer())) {
-			analyzeRequest = AnalyzeRequest.withIndexAnalyzer(
-				analyzeIndexRequest.getIndexName(),
-				analyzeIndexRequest.getAnalyzer(),
-				analyzeIndexRequest.getTexts());
+			builder.analyzer(analyzeIndexRequest.getAnalyzer());
 		}
 		else if (Validator.isNotNull(analyzeIndexRequest.getFieldName())) {
-			analyzeRequest = AnalyzeRequest.withField(
-				analyzeIndexRequest.getIndexName(),
-				analyzeIndexRequest.getFieldName(),
-				analyzeIndexRequest.getTexts());
+			builder.field(analyzeIndexRequest.getFieldName());
 		}
 		else if (Validator.isNotNull(analyzeIndexRequest.getNormalizer())) {
-			analyzeRequest = AnalyzeRequest.withNormalizer(
-				analyzeIndexRequest.getIndexName(),
-				analyzeIndexRequest.getNormalizer(),
-				analyzeIndexRequest.getTexts());
+			builder.normalizer(analyzeIndexRequest.getNormalizer());
 		}
 		else {
-			AnalyzeRequest.CustomAnalyzerBuilder customAnalyzerBuilder;
-
 			if (Validator.isNotNull(analyzeIndexRequest.getTokenizer())) {
-				customAnalyzerBuilder = AnalyzeRequest.buildCustomAnalyzer(
-					analyzeIndexRequest.getIndexName(),
-					analyzeIndexRequest.getTokenizer());
-			}
-			else {
-				customAnalyzerBuilder = AnalyzeRequest.buildCustomNormalizer(
-					analyzeIndexRequest.getIndexName());
+				builder.tokenizer(
+					Tokenizer.of(
+						tokenizer -> tokenizer.name(
+							analyzeIndexRequest.getTokenizer())));
 			}
 
-			analyzeRequest = createAnalyzeRequest(
-				customAnalyzerBuilder, analyzeIndexRequest);
+			for (String charFilter : analyzeIndexRequest.getCharFilters()) {
+				builder.charFilter(
+					CharFilter.of(
+						elasticsearchCharFilter -> elasticsearchCharFilter.name(
+							charFilter)));
+			}
+
+			for (String tokenFilter : analyzeIndexRequest.getTokenFilters()) {
+				builder.filter(
+					TokenFilter.of(
+						elasticsearchTokenFilter ->
+							elasticsearchTokenFilter.name(tokenFilter)));
+			}
 		}
 
-		analyzeRequest.attributes(analyzeIndexRequest.getAttributesArray());
-		analyzeRequest.explain(analyzeIndexRequest.isExplain());
-
-		return analyzeRequest;
-	}
-
-	protected AnalyzeRequest createAnalyzeRequest(
-		AnalyzeRequest.CustomAnalyzerBuilder customAnalyzerBuilder,
-		AnalyzeIndexRequest analyzeIndexRequest) {
-
-		for (String charFilter : analyzeIndexRequest.getCharFilters()) {
-			customAnalyzerBuilder.addCharFilter(charFilter);
-		}
-
-		for (String tokenFilter : analyzeIndexRequest.getTokenFilters()) {
-			customAnalyzerBuilder.addTokenFilter(tokenFilter);
-		}
-
-		return customAnalyzerBuilder.build(analyzeIndexRequest.getTexts());
+		return builder.build();
 	}
 
 	private AnalyzeResponse _getAnalyzeResponse(
-		AnalyzeRequest analyzeRequest,
-		AnalyzeIndexRequest analyzeIndexRequest) {
+		AnalyzeIndexRequest analyzeIndexRequest,
+		AnalyzeRequest analyzeRequest) {
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
 				analyzeIndexRequest.getConnectionId(),
 				analyzeIndexRequest.isPreferLocalCluster());
 
-		IndicesClient indicesClient = restHighLevelClient.indices();
+		ElasticsearchIndicesClient elasticsearchIndicesClient =
+			elasticsearchClient.indices();
 
 		try {
-			return indicesClient.analyze(
-				analyzeRequest, RequestOptions.DEFAULT);
+			return elasticsearchIndicesClient.analyze(analyzeRequest);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
 	}
 
-	private void _processDetailAnalyzeResponse(
-		AnalyzeIndexResponse analyzeIndexResponse,
-		DetailAnalyzeResponse detailAnalyzeResponse) {
+	private void _processAnalyzeDetail(
+		AnalyzeDetail analyzeDetail,
+		AnalyzeIndexResponse analyzeIndexResponse) {
 
-		if (detailAnalyzeResponse.analyzer() != null) {
-			DetailAnalyzeResponse.AnalyzeTokenList analyzeTokenList =
-				detailAnalyzeResponse.analyzer();
-
-			String analyzerName = analyzeTokenList.getName();
-
-			List<AnalysisIndexResponseToken> analysisIndexResponseTokens =
-				_translateAnalyzeResponseTokens(
-					ListUtil.fromArray(analyzeTokenList.getTokens()));
+		if (analyzeDetail.analyzer() != null) {
+			AnalyzerDetail analyzerDetail = analyzeDetail.analyzer();
 
 			AnalyzeIndexResponse.DetailsAnalyzer detailsAnalyzer =
 				new AnalyzeIndexResponse.DetailsAnalyzer(
-					analyzerName, analysisIndexResponseTokens);
+					analyzerDetail.name(),
+					_translateExplainAnalyzeTokens(analyzerDetail.tokens()));
 
 			analyzeIndexResponse.setDetailsAnalyzer(detailsAnalyzer);
 		}
@@ -167,14 +151,12 @@ public class AnalyzeIndexRequestExecutor {
 			List<AnalyzeIndexResponse.DetailsCharFilter> detailsCharFilters =
 				new ArrayList<>();
 
-			DetailAnalyzeResponse.CharFilteredText[] charFilteredTexts =
-				detailAnalyzeResponse.charfilters();
+			for (CharFilterDetail charFilterDetail :
+					analyzeDetail.charfilters()) {
 
-			for (DetailAnalyzeResponse.CharFilteredText charFilteredText :
-					charFilteredTexts) {
-
-				String charFilterName = charFilteredText.getName();
-				String[] charFilterTexts = charFilteredText.getTexts();
+				String charFilterName = charFilterDetail.name();
+				String[] charFilterTexts = ArrayUtil.toStringArray(
+					charFilterDetail.filteredText());
 
 				AnalyzeIndexResponse.DetailsCharFilter detailsCharFilter =
 					new AnalyzeIndexResponse.DetailsCharFilter(
@@ -188,64 +170,73 @@ public class AnalyzeIndexRequestExecutor {
 			List<AnalyzeIndexResponse.DetailsTokenFilter> detailsTokenFilters =
 				new ArrayList<>();
 
-			DetailAnalyzeResponse.AnalyzeTokenList[] analyzeTokenLists =
-				detailAnalyzeResponse.tokenfilters();
-
-			for (DetailAnalyzeResponse.AnalyzeTokenList analyzeTokenList :
-					analyzeTokenLists) {
-
-				String tokenFilterName = analyzeTokenList.getName();
-
-				List<AnalysisIndexResponseToken> analysisIndexResponseTokens =
-					_translateAnalyzeResponseTokens(
-						ListUtil.fromArray(analyzeTokenList.getTokens()));
-
+			for (TokenDetail tokenDetail : analyzeDetail.tokenfilters()) {
 				AnalyzeIndexResponse.DetailsTokenFilter detailsTokenFilter =
 					new AnalyzeIndexResponse.DetailsTokenFilter(
-						tokenFilterName, analysisIndexResponseTokens);
+						tokenDetail.name(),
+						_translateExplainAnalyzeTokens(tokenDetail.tokens()));
 
 				detailsTokenFilters.add(detailsTokenFilter);
 			}
 
 			analyzeIndexResponse.setDetailsTokenFilters(detailsTokenFilters);
 
-			DetailAnalyzeResponse.AnalyzeTokenList tokenizerAnalyzeTokenList =
-				detailAnalyzeResponse.tokenizer();
-
-			String tokenizerName = tokenizerAnalyzeTokenList.getName();
-
-			List<AnalysisIndexResponseToken> analysisIndexResponseTokens =
-				_translateAnalyzeResponseTokens(
-					ListUtil.fromArray(tokenizerAnalyzeTokenList.getTokens()));
+			TokenDetail tokenDetail = analyzeDetail.tokenizer();
 
 			AnalyzeIndexResponse.DetailsTokenizer detailsTokenizer =
 				new AnalyzeIndexResponse.DetailsTokenizer(
-					tokenizerName, analysisIndexResponseTokens);
+					tokenDetail.name(),
+					_translateExplainAnalyzeTokens(tokenDetail.tokens()));
 
 			analyzeIndexResponse.setDetailsTokenizer(detailsTokenizer);
 		}
 	}
 
-	private List<AnalysisIndexResponseToken> _translateAnalyzeResponseTokens(
-		List<AnalyzeResponse.AnalyzeToken> analyzeTokens) {
+	private List<AnalysisIndexResponseToken> _translateAnalyzeTokens(
+		List<AnalyzeToken> analyzeTokens) {
 
 		return TransformUtil.transform(
 			analyzeTokens,
 			analyzeToken -> {
 				AnalysisIndexResponseToken analysisIndexResponseToken =
-					new AnalysisIndexResponseToken(analyzeToken.getTerm());
+					new AnalysisIndexResponseToken(analyzeToken.token());
 
-				analysisIndexResponseToken.setAttributes(
-					analyzeToken.getAttributes());
 				analysisIndexResponseToken.setEndOffset(
-					analyzeToken.getEndOffset());
+					Math.toIntExact(analyzeToken.endOffset()));
 				analysisIndexResponseToken.setPosition(
-					analyzeToken.getPosition());
-				analysisIndexResponseToken.setPositionLength(
-					analyzeToken.getPositionLength());
+					Math.toIntExact(analyzeToken.position()));
+
+				if (analyzeToken.positionlength() != null) {
+					analysisIndexResponseToken.setPositionLength(
+						Math.toIntExact(analyzeToken.positionlength()));
+				}
+
 				analysisIndexResponseToken.setStartOffset(
-					analyzeToken.getStartOffset());
-				analysisIndexResponseToken.setType(analyzeToken.getType());
+					Math.toIntExact(analyzeToken.startOffset()));
+				analysisIndexResponseToken.setType(analyzeToken.type());
+
+				return analysisIndexResponseToken;
+			});
+	}
+
+	private List<AnalysisIndexResponseToken> _translateExplainAnalyzeTokens(
+		List<ExplainAnalyzeToken> explainAnalyzeTokens) {
+
+		return TransformUtil.transform(
+			explainAnalyzeTokens,
+			explainAnalyzeToken -> {
+				AnalysisIndexResponseToken analysisIndexResponseToken =
+					new AnalysisIndexResponseToken(explainAnalyzeToken.token());
+
+				analysisIndexResponseToken.setEndOffset(
+					Math.toIntExact(explainAnalyzeToken.endOffset()));
+				analysisIndexResponseToken.setPosition(
+					Math.toIntExact(explainAnalyzeToken.position()));
+				analysisIndexResponseToken.setPositionLength(
+					Math.toIntExact(explainAnalyzeToken.positionlength()));
+				analysisIndexResponseToken.setStartOffset(
+					Math.toIntExact(explainAnalyzeToken.startOffset()));
+				analysisIndexResponseToken.setType(explainAnalyzeToken.type());
 
 				return analysisIndexResponseToken;
 			});

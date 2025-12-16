@@ -5,21 +5,19 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.index;
 
-import com.liferay.portal.kernel.util.ArrayUtil;
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.ShardStatistics;
+import co.elastic.clients.elasticsearch.indices.ElasticsearchIndicesClient;
+import co.elastic.clients.elasticsearch.indices.FlushRequest;
+import co.elastic.clients.elasticsearch.indices.FlushResponse;
+
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
+import com.liferay.portal.search.elasticsearch8.internal.util.ConversionUtil;
 import com.liferay.portal.search.engine.adapter.index.FlushIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.FlushIndexResponse;
-import com.liferay.portal.search.engine.adapter.index.IndexRequestShardFailure;
 
 import java.io.IOException;
-
-import org.elasticsearch.action.ShardOperationFailedException;
-import org.elasticsearch.action.admin.indices.flush.FlushRequest;
-import org.elasticsearch.action.admin.indices.flush.FlushResponse;
-import org.elasticsearch.client.IndicesClient;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.rest.RestStatus;
 
 /**
  * @author Michael C. Han
@@ -33,37 +31,25 @@ public class FlushIndexRequestExecutor {
 	}
 
 	public FlushIndexResponse execute(FlushIndexRequest flushIndexRequest) {
-		FlushRequest flushRequest = createFlushRequest(flushIndexRequest);
-
 		FlushResponse flushResponse = _getFlushResponse(
-			flushRequest, flushIndexRequest);
+			flushIndexRequest, createFlushRequest(flushIndexRequest));
 
 		FlushIndexResponse flushIndexResponse = new FlushIndexResponse();
 
-		flushIndexResponse.setFailedShards(flushResponse.getFailedShards());
+		ShardStatistics shardStatistics = flushResponse.shards();
+
+		ListUtil.isNotEmptyForEach(
+			shardStatistics.failures(),
+			shardFailure -> flushIndexResponse.addIndexRequestShardFailure(
+				IndexRequestShardFailureTranslatorUtil.translate(
+					shardFailure)));
+
+		flushIndexResponse.setFailedShards(
+			ConversionUtil.toInt(shardStatistics.failed()));
 		flushIndexResponse.setSuccessfulShards(
-			flushResponse.getSuccessfulShards());
-		flushIndexResponse.setTotalShards(flushResponse.getTotalShards());
-
-		RestStatus restStatus = flushResponse.getStatus();
-
-		flushIndexResponse.setRestStatus(restStatus.getStatus());
-
-		ShardOperationFailedException[] shardOperationFailedExceptions =
-			flushResponse.getShardFailures();
-
-		if (ArrayUtil.isNotEmpty(shardOperationFailedExceptions)) {
-			for (ShardOperationFailedException shardOperationFailedException :
-					shardOperationFailedExceptions) {
-
-				IndexRequestShardFailure indexRequestShardFailure =
-					IndexRequestShardFailureTranslatorUtil.translate(
-						shardOperationFailedException);
-
-				flushIndexResponse.addIndexRequestShardFailure(
-					indexRequestShardFailure);
-			}
-		}
+			ConversionUtil.toInt(shardStatistics.successful()));
+		flushIndexResponse.setTotalShards(
+			ConversionUtil.toInt(shardStatistics.total()));
 
 		return flushIndexResponse;
 	}
@@ -71,27 +57,29 @@ public class FlushIndexRequestExecutor {
 	protected FlushRequest createFlushRequest(
 		FlushIndexRequest flushIndexRequest) {
 
-		FlushRequest flushRequest = new FlushRequest();
-
-		flushRequest.force(flushIndexRequest.isForce());
-		flushRequest.indices(flushIndexRequest.getIndexNames());
-		flushRequest.waitIfOngoing(flushIndexRequest.isWaitIfOngoing());
-
-		return flushRequest;
+		return FlushRequest.of(
+			flushRequest -> flushRequest.force(
+				flushIndexRequest.isForce()
+			).index(
+				ListUtil.fromArray(flushIndexRequest.getIndexNames())
+			).waitIfOngoing(
+				flushIndexRequest.isWaitIfOngoing()
+			));
 	}
 
 	private FlushResponse _getFlushResponse(
-		FlushRequest flushRequest, FlushIndexRequest flushIndexRequest) {
+		FlushIndexRequest flushIndexRequest, FlushRequest flushRequest) {
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
 				flushIndexRequest.getConnectionId(),
 				flushIndexRequest.isPreferLocalCluster());
 
-		IndicesClient indicesClient = restHighLevelClient.indices();
+		ElasticsearchIndicesClient elasticsearchIndicesClient =
+			elasticsearchClient.indices();
 
 		try {
-			return indicesClient.flush(flushRequest, RequestOptions.DEFAULT);
+			return elasticsearchIndicesClient.flush(flushRequest);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

@@ -5,10 +5,10 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.index;
 
-import com.liferay.portal.search.engine.adapter.index.IndexRequestShardFailure;
+import co.elastic.clients.elasticsearch._types.ErrorCause;
+import co.elastic.clients.elasticsearch._types.ShardFailure;
 
-import org.elasticsearch.action.ShardOperationFailedException;
-import org.elasticsearch.rest.RestStatus;
+import com.liferay.portal.search.engine.adapter.index.IndexRequestShardFailure;
 
 /**
  * @author Michael C. Han
@@ -16,21 +16,18 @@ import org.elasticsearch.rest.RestStatus;
 public class IndexRequestShardFailureTranslatorUtil {
 
 	public static IndexRequestShardFailure translate(
-		ShardOperationFailedException shardOperationFailedException) {
+		ShardFailure shardFailure) {
 
 		IndexRequestShardFailure indexRequestShardFailure =
 			new IndexRequestShardFailure();
 
-		indexRequestShardFailure.setIndex(
-			shardOperationFailedException.index());
-		indexRequestShardFailure.setReason(
-			shardOperationFailedException.reason());
-		indexRequestShardFailure.setShardId(
-			shardOperationFailedException.shardId());
+		indexRequestShardFailure.setIndex(shardFailure.index());
 
-		RestStatus restStatus = shardOperationFailedException.status();
+		ErrorCause errorCause = shardFailure.reason();
 
-		indexRequestShardFailure.setRestStatus(restStatus.getStatus());
+		indexRequestShardFailure.setReason(errorCause.reason());
+
+		indexRequestShardFailure.setShardId(shardFailure.shard());
 
 		return indexRequestShardFailure;
 	}

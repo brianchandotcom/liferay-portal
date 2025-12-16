@@ -71,13 +71,9 @@ public class LiferayGlobalObjectPreAUIDynamicIncludeTest {
 	@After
 	public void tearDown() {
 		_browserSnifferUtilMockedStatic.close();
-
 		_contentSecurityPolicyNonceProviderUtilMockedStatic.close();
-
 		_portalWebResourcesUtilMockedStatic.close();
-
 		_shutdownUtilMockedStatic.close();
-
 		_timeMockedStatic.close();
 	}
 
@@ -219,14 +215,13 @@ public class LiferayGlobalObjectPreAUIDynamicIncludeTest {
 		return featureFlagManager;
 	}
 
-	private MockHttpServletRequest _mockHttpServletRequest() {
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
+	private HttpServletRequest _mockHttpServletRequest() {
+		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
 
-		mockHttpServletRequest.setAttribute(
+		httpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _mockThemeDisplay());
 
-		return mockHttpServletRequest;
+		return httpServletRequest;
 	}
 
 	private Language _mockLanguage() {

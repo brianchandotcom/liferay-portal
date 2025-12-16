@@ -484,7 +484,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	}
 
 	private void _assertFriendlyUrlHistory(
-			Map<Locale, String> friendlyURLsMap,
+			Map<Locale, String> friendlyURLMap,
 			Map<String, String> newFriendlyURLsMap, boolean published,
 			SitePage sitePage)
 		throws Exception {
@@ -505,7 +505,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		Map<String, List<String>> expectedFriendlyURLsMap = new HashMap<>();
 
-		for (Map.Entry<Locale, String> entry : friendlyURLsMap.entrySet()) {
+		for (Map.Entry<Locale, String> entry : friendlyURLMap.entrySet()) {
 			List<String> friendlyURLs = ListUtil.fromArray(entry.getValue());
 			String languageId = LocaleUtil.toBCP47LanguageId(entry.getKey());
 

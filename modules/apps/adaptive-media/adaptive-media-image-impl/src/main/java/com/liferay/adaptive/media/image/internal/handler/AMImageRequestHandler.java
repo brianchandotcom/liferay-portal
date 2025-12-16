@@ -109,7 +109,7 @@ public class AMImageRequestHandler
 		try {
 			fileEntryModelResourcePermission.check(
 				permissionChecker, fileEntry.getFileEntryId(),
-				ActionKeys.VIEW);
+				ActionKeys.DOWNLOAD);
 		}
 		catch (PortalException portalException) {
 			User user = permissionChecker.getUser();

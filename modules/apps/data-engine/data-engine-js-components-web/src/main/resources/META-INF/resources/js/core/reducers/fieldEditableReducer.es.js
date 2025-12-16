@@ -10,6 +10,7 @@ import {
 	getField,
 	localizeField,
 	removeField,
+	updatePagesOnFieldChange,
 } from '../../utils/fieldSupport';
 import {formatRules} from '../../utils/rulesSupport';
 import {
@@ -438,41 +439,31 @@ export default function fieldEditableReducer(state, action, config) {
 				propertyValue,
 			});
 
-			const visitor = new PagesVisitor(pages);
+			const newPages = updatePagesOnFieldChange(pages, {
+				fieldUpdateContext: {
+					defaultLanguageId,
+					editingLanguageId,
+					fieldNameGenerator,
+					generateFieldNameUsingFieldLabel,
+				},
+				focusedField,
+				newFocusedField,
+				propertyName,
+				propertyValue,
+				repeatableHandler: (field) =>
+					updateFieldAffectedByActivatingRepeatable({
+						defaultLanguageId,
+						editingLanguageId,
+						field,
+						fieldNameGenerator,
+						generateFieldNameUsingFieldLabel,
+						repeatableFieldName: newFocusedField.fieldName,
+					}),
+			});
 
 			return {
 				focusedField: newFocusedField,
-				pages: visitor.mapFields(
-					(field) => {
-						if (field.fieldName === focusedField.fieldName) {
-							if (
-								propertyName === 'name' &&
-								field.fieldReference ===
-									focusedField.fieldReference &&
-								newFocusedField.displayErrors
-							) {
-								newFocusedField.fieldName =
-									focusedField.fieldName;
-							}
-
-							return newFocusedField;
-						}
-						if (propertyValue && propertyName === 'repeatable') {
-							return updateFieldAffectedByActivatingRepeatable({
-								defaultLanguageId,
-								editingLanguageId,
-								field,
-								fieldNameGenerator,
-								generateFieldNameUsingFieldLabel,
-								repeatableFieldName: newFocusedField.fieldName,
-							});
-						}
-
-						return field;
-					},
-					false,
-					true
-				),
+				pages: newPages,
 				rules: updateRulesReferences(
 					rules || [],
 					focusedField,

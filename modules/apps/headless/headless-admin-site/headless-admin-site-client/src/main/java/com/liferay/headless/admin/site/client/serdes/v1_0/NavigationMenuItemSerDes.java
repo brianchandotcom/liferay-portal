@@ -141,6 +141,34 @@ public class NavigationMenuItemSerDes {
 			sb.append("\"");
 		}
 
+		if (navigationMenuItem.getDefaultLanguageId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"defaultLanguageId\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(navigationMenuItem.getDefaultLanguageId()));
+
+			sb.append("\"");
+		}
+
+		if (navigationMenuItem.getDisplayIcon() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"displayIcon\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(navigationMenuItem.getDisplayIcon()));
+
+			sb.append("\"");
+		}
+
 		if (navigationMenuItem.getExternalReferenceCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -187,6 +215,26 @@ public class NavigationMenuItemSerDes {
 			sb.append("\"name_i18n\": ");
 
 			sb.append(_toJSON(navigationMenuItem.getName_i18n()));
+		}
+
+		if (navigationMenuItem.getNavigationMenuItemSettings() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"navigationMenuItemSettings\": ");
+
+			if (navigationMenuItem.getNavigationMenuItemSettings() instanceof
+					String) {
+
+				sb.append("\"");
+				sb.append(
+					(String)navigationMenuItem.getNavigationMenuItemSettings());
+				sb.append("\"");
+			}
+			else {
+				sb.append(navigationMenuItem.getNavigationMenuItemSettings());
+			}
 		}
 
 		if (navigationMenuItem.getNavigationMenuItems() != null) {
@@ -237,16 +285,6 @@ public class NavigationMenuItemSerDes {
 			sb.append(_escape(navigationMenuItem.getType()));
 
 			sb.append("\"");
-		}
-
-		if (navigationMenuItem.getTypeSettings() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"typeSettings\": ");
-
-			sb.append(_toJSON(navigationMenuItem.getTypeSettings()));
 		}
 
 		if (navigationMenuItem.getUseCustomName() != null) {
@@ -328,6 +366,24 @@ public class NavigationMenuItemSerDes {
 					navigationMenuItem.getDateModified()));
 		}
 
+		if (navigationMenuItem.getDefaultLanguageId() == null) {
+			map.put("defaultLanguageId", null);
+		}
+		else {
+			map.put(
+				"defaultLanguageId",
+				String.valueOf(navigationMenuItem.getDefaultLanguageId()));
+		}
+
+		if (navigationMenuItem.getDisplayIcon() == null) {
+			map.put("displayIcon", null);
+		}
+		else {
+			map.put(
+				"displayIcon",
+				String.valueOf(navigationMenuItem.getDisplayIcon()));
+		}
+
 		if (navigationMenuItem.getExternalReferenceCode() == null) {
 			map.put("externalReferenceCode", null);
 		}
@@ -359,6 +415,16 @@ public class NavigationMenuItemSerDes {
 				"name_i18n", String.valueOf(navigationMenuItem.getName_i18n()));
 		}
 
+		if (navigationMenuItem.getNavigationMenuItemSettings() == null) {
+			map.put("navigationMenuItemSettings", null);
+		}
+		else {
+			map.put(
+				"navigationMenuItemSettings",
+				String.valueOf(
+					navigationMenuItem.getNavigationMenuItemSettings()));
+		}
+
 		if (navigationMenuItem.getNavigationMenuItems() == null) {
 			map.put("navigationMenuItems", null);
 		}
@@ -382,15 +448,6 @@ public class NavigationMenuItemSerDes {
 		}
 		else {
 			map.put("type", String.valueOf(navigationMenuItem.getType()));
-		}
-
-		if (navigationMenuItem.getTypeSettings() == null) {
-			map.put("typeSettings", null);
-		}
-		else {
-			map.put(
-				"typeSettings",
-				String.valueOf(navigationMenuItem.getTypeSettings()));
 		}
 
 		if (navigationMenuItem.getUseCustomName() == null) {
@@ -435,6 +492,12 @@ public class NavigationMenuItemSerDes {
 			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "defaultLanguageId")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "displayIcon")) {
+				return false;
+			}
 			else if (Objects.equals(
 						jsonParserFieldName, "externalReferenceCode")) {
 
@@ -450,6 +513,11 @@ public class NavigationMenuItemSerDes {
 				return true;
 			}
 			else if (Objects.equals(
+						jsonParserFieldName, "navigationMenuItemSettings")) {
+
+				return false;
+			}
+			else if (Objects.equals(
 						jsonParserFieldName, "navigationMenuItems")) {
 
 				return false;
@@ -461,9 +529,6 @@ public class NavigationMenuItemSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "typeSettings")) {
-				return true;
 			}
 			else if (Objects.equals(jsonParserFieldName, "useCustomName")) {
 				return false;
@@ -521,6 +586,18 @@ public class NavigationMenuItemSerDes {
 						toDate((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "defaultLanguageId")) {
+				if (jsonParserFieldValue != null) {
+					navigationMenuItem.setDefaultLanguageId(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "displayIcon")) {
+				if (jsonParserFieldValue != null) {
+					navigationMenuItem.setDisplayIcon(
+						(String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(
 						jsonParserFieldName, "externalReferenceCode")) {
 
@@ -544,6 +621,14 @@ public class NavigationMenuItemSerDes {
 				if (jsonParserFieldValue != null) {
 					navigationMenuItem.setName_i18n(
 						(Map<String, String>)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "navigationMenuItemSettings")) {
+
+				if (jsonParserFieldValue != null) {
+					navigationMenuItem.setNavigationMenuItemSettings(
+						(Object)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(
@@ -577,12 +662,6 @@ public class NavigationMenuItemSerDes {
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
 					navigationMenuItem.setType((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "typeSettings")) {
-				if (jsonParserFieldValue != null) {
-					navigationMenuItem.setTypeSettings(
-						(Map<String, String>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "useCustomName")) {

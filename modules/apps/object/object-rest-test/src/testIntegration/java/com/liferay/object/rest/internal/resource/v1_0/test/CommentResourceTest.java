@@ -206,64 +206,64 @@ public class CommentResourceTest {
 			_testGroupId, _siteScopedObjectDefinition, _siteObjectEntry);
 	}
 
-	private void _assertComment(
-			String endpoint, String text, String externalReferenceCode,
-			JSONObject jsonObject1, JSONObject jsonObject2)
+	private void _assertCommentsPageWithAggregation(
+			JSONObject creatorJSONObject, String endpoint)
 		throws Exception {
 
-		// Aggregation
-
-		JSONObject jsonObject3 = HTTPTestUtil.invokeToJSONObject(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, endpoint + "?aggregationTerms=creatorId", Http.Method.GET);
 
-		JSONArray jsonArray = jsonObject3.getJSONArray("facets");
+		JSONArray jsonArray = jsonObject.getJSONArray("facets");
 
 		Assert.assertEquals(1, jsonArray.length());
 
-		jsonObject3 = jsonArray.getJSONObject(0);
+		jsonObject = jsonArray.getJSONObject(0);
+
+		Assert.assertEquals("creatorId", jsonObject.getString("facetCriteria"));
+
+		jsonArray = jsonObject.getJSONArray("facetValues");
+
+		jsonObject = jsonArray.getJSONObject(0);
+
+		Assert.assertEquals(2, jsonObject.getInt("numberOfOccurrences"));
 
 		Assert.assertEquals(
-			"creatorId", jsonObject3.getString("facetCriteria"));
+			creatorJSONObject.getInt("id"), jsonObject.getInt("term"));
+	}
 
-		jsonArray = jsonObject3.getJSONArray("facetValues");
+	private void _assertCommentsPageWithSearch(
+			String endpoint, String externalReferenceCode, String keywords)
+		throws Exception {
 
-		jsonObject3 = jsonArray.getJSONObject(0);
-
-		Assert.assertEquals(2, jsonObject3.getInt("numberOfOccurrences"));
-
-		JSONObject jsonObject4 = jsonObject1.getJSONObject("creator");
-
-		Assert.assertEquals(
-			jsonObject4.getInt("id"), jsonObject3.getInt("term"));
-
-		// Search
-
-		jsonObject3 = HTTPTestUtil.invokeToJSONObject(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
-				endpoint, "?search=", URLCodec.encodeURL(text)),
+				endpoint, "?search=", URLCodec.encodeURL(keywords)),
 			Http.Method.GET);
 
-		jsonArray = jsonObject3.getJSONArray("items");
+		JSONArray jsonArray = jsonObject.getJSONArray("items");
 
 		Assert.assertEquals(1, jsonArray.length());
 
-		jsonObject3 = jsonArray.getJSONObject(0);
+		jsonObject = jsonArray.getJSONObject(0);
 
 		Assert.assertEquals(
 			externalReferenceCode,
-			jsonObject3.getString("externalReferenceCode"));
+			jsonObject.getString("externalReferenceCode"));
+	}
 
-		// Sort
+	private void _assertCommentsPageWithSort(
+			String endpoint, JSONObject jsonObject1, JSONObject jsonObject2)
+		throws Exception {
 
-		jsonObject3 = HTTPTestUtil.invokeToJSONObject(
-			null, endpoint + "?sort=dateCreated:desc", Http.Method.GET);
+		JSONObject jsonObject3 = HTTPTestUtil.invokeToJSONObject(
+			null, endpoint + "?sort=dateModified:asc", Http.Method.GET);
 
-		jsonArray = jsonObject3.getJSONArray("items");
+		JSONArray jsonArray = jsonObject3.getJSONArray("items");
 
 		jsonObject3 = jsonArray.getJSONObject(0);
 
-		jsonObject4 = jsonArray.getJSONObject(1);
+		JSONObject jsonObject4 = jsonArray.getJSONObject(1);
 
 		Assert.assertEquals(
 			jsonObject1.getString("externalReferenceCode"),
@@ -272,6 +272,17 @@ public class CommentResourceTest {
 		Assert.assertEquals(
 			jsonObject2.getString("externalReferenceCode"),
 			jsonObject4.getString("externalReferenceCode"));
+	}
+
+	private void _assertSize(String endpoint, int expectedSize)
+		throws Exception {
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null, endpoint, Http.Method.GET);
+
+		JSONArray jsonArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(expectedSize, jsonArray.length());
 	}
 
 	private void _enableComments(ObjectDefinition objectDefinition) {
@@ -381,6 +392,7 @@ public class CommentResourceTest {
 		_enableComments(objectDefinition);
 
 		String endpoint = _getEndpoint(objectDefinition, objectEntry, groupId);
+
 		String externalReferenceCode = RandomTestUtil.randomString();
 
 		_postComment(
@@ -389,6 +401,8 @@ public class CommentResourceTest {
 		endpoint = StringBundler.concat(
 			endpoint, StringPool.SLASH, externalReferenceCode,
 			"/child-comments");
+
+		_assertSize(endpoint, 0);
 
 		JSONObject jsonObject1 = _postComment(
 			endpoint, RandomTestUtil.randomString(),
@@ -400,8 +414,22 @@ public class CommentResourceTest {
 		JSONObject jsonObject2 = _postComment(
 			endpoint, externalReferenceCode, text);
 
-		_assertComment(
-			endpoint, text, externalReferenceCode, jsonObject2, jsonObject1);
+		_assertSize(endpoint, 2);
+
+		jsonObject2 = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"text", text
+			).toString(),
+			StringBundler.concat(
+				_getEndpoint(objectDefinition, objectEntry, groupId),
+				StringPool.SLASH,
+				jsonObject2.getString("externalReferenceCode")),
+			Http.Method.PUT);
+
+		_assertCommentsPageWithAggregation(
+			jsonObject1.getJSONObject("creator"), endpoint);
+		_assertCommentsPageWithSearch(endpoint, externalReferenceCode, text);
+		_assertCommentsPageWithSort(endpoint, jsonObject1, jsonObject2);
 	}
 
 	private void _testGetByExternalReferenceCodeCommentsPage(
@@ -413,6 +441,8 @@ public class CommentResourceTest {
 
 		String endpoint = _getEndpoint(objectDefinition, objectEntry, groupId);
 
+		_assertSize(endpoint, 0);
+
 		JSONObject jsonObject1 = _postComment(
 			endpoint, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString());
@@ -423,8 +453,21 @@ public class CommentResourceTest {
 		JSONObject jsonObject2 = _postComment(
 			endpoint, externalReferenceCode, text);
 
-		_assertComment(
-			endpoint, text, externalReferenceCode, jsonObject2, jsonObject1);
+		_assertSize(endpoint, 2);
+
+		jsonObject2 = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"text", text
+			).toString(),
+			StringBundler.concat(
+				endpoint, StringPool.SLASH,
+				jsonObject2.getString("externalReferenceCode")),
+			Http.Method.PUT);
+
+		_assertCommentsPageWithAggregation(
+			jsonObject1.getJSONObject("creator"), endpoint);
+		_assertCommentsPageWithSearch(endpoint, externalReferenceCode, text);
+		_assertCommentsPageWithSort(endpoint, jsonObject1, jsonObject2);
 	}
 
 	private void _testPostByExternalReferenceCodeComment(

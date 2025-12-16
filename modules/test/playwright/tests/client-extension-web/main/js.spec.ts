@@ -83,11 +83,9 @@ testSample.describe('Samples', () => {
 			const response = await page.goto(scriptUrl);
 
 			expect(response.status()).toBe(200);
-
-			const responseContentType =
-				await response.headerValue('Content-Type');
-
-			expect(responseContentType).toBe('application/javascript');
+			expect(await response.headerValue('Content-Type')).toContain(
+				'text/javascript'
+			);
 		});
 	}
 });

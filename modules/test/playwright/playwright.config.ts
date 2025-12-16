@@ -52,6 +52,7 @@ import {config as commerceWishListWebConfig} from './tests/commerce/commerce-wis
 import {config as configurationAdminWebConfig} from './tests/configuration-admin-web/main/config';
 import {config as contentDashboardWebConfig} from './tests/content-dashboard-web/main/config';
 import {config as cookiesBannerWebConfig} from './tests/cookies-banner-web/main/config';
+import {config as dataCleanupConfig} from './tests/data-cleanup/main/config';
 import {config as depotWebConfig} from './tests/depot-web/main/config';
 import {config as digitalSalesRoomWebConfig} from './tests/digital-sales-room-web/main/config';
 import {config as dispatchWebConfig} from './tests/dispatch-web/main/config';
@@ -322,6 +323,7 @@ export default defineConfig({
 		rolesAdminWebConfig,
 		rolesSelectorWebConfig,
 		rssWebConfig,
+		dataCleanupConfig,
 		samlWebConfig,
 		scimConfiguraitonWebConfig,
 		searchExperiencesWebConfig,

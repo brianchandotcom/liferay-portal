@@ -466,9 +466,11 @@ function getRuleItemIds(actions: ActionType[], conditions: ConditionType[]) {
 		}
 	}
 
-	for (const {field, type} of conditions) {
-		if (field && type === 'form') {
-			ruleItemIds.add(field);
+	if (conditions) {
+		for (const {field, type} of conditions) {
+			if (field && type === 'form') {
+				ruleItemIds.add(field);
+			}
 		}
 	}
 

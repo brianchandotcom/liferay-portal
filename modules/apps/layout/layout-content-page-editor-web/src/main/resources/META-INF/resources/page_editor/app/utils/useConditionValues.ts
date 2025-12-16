@@ -57,23 +57,25 @@ export default function useConditionValues({
 
 	const segments = config.availableSegmentsEntries;
 
-	return conditions.map((_condition, index) => {
-		const condition = getCondition(_condition);
-		const prefix = getPrefix(index, conditionType);
-		const type = getType(_condition, items);
-		const value = getValue(roles, segments, users, _condition);
+	return (
+		conditions?.map((_condition, index) => {
+			const condition = getCondition(_condition);
+			const prefix = getPrefix(index, conditionType);
+			const type = getType(_condition, items);
+			const value = getValue(roles, segments, users, _condition);
 
-		const description = getDescription(condition, prefix, type, value);
+			const description = getDescription(condition, prefix, type, value);
 
-		return {
-			condition,
-			description,
-			id: _condition.id,
-			prefix,
-			type,
-			value,
-		};
-	});
+			return {
+				condition,
+				description,
+				id: _condition.id,
+				prefix,
+				type,
+				value,
+			};
+		}) ?? []
+	);
 }
 
 function getCondition(condition: Condition) {

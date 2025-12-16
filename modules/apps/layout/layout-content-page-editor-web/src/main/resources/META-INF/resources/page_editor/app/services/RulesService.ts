@@ -15,10 +15,11 @@ import serviceFetch from './serviceFetch';
  */
 type AddRuleProps = {
 	actions: Action[];
-	conditionType: ConditionType;
-	conditions: Condition[];
+	conditionType?: ConditionType;
+	conditions?: Condition[];
 	name: string;
 	onNetworkStatus: OnNetworkStatus;
+	script?: string;
 	segmentsExperienceId: string;
 };
 
@@ -28,6 +29,7 @@ function addRule({
 	conditions,
 	name,
 	onNetworkStatus,
+	script,
 	segmentsExperienceId,
 }: AddRuleProps): Promise<{addedRuleId: string; layoutData: LayoutData}> {
 	return draftServiceFetch(
@@ -38,6 +40,7 @@ function addRule({
 				conditionType,
 				conditions: JSON.stringify(conditions),
 				name,
+				script,
 				segmentsExperienceId,
 			},
 		},
@@ -90,11 +93,12 @@ function getUsers(): Promise<Array<{screenName: string; userId: string}>> {
  */
 type UpdateRuleProps = {
 	actions: Action[];
-	conditionType: ConditionType;
-	conditions: Condition[];
+	conditionType?: ConditionType;
+	conditions?: Condition[];
 	name: string;
 	onNetworkStatus: OnNetworkStatus;
 	ruleId: string;
+	script?: string;
 	segmentsExperienceId: string;
 };
 
@@ -105,6 +109,7 @@ function updateRule({
 	name,
 	onNetworkStatus,
 	ruleId,
+	script,
 	segmentsExperienceId,
 }: UpdateRuleProps): Promise<{layoutData: LayoutData}> {
 	return draftServiceFetch(
@@ -116,6 +121,7 @@ function updateRule({
 				conditions: JSON.stringify(conditions),
 				name,
 				ruleId,
+				script,
 				segmentsExperienceId,
 			},
 		},

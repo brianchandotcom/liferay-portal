@@ -21,7 +21,7 @@ import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.odata.normalizer.Normalizer;
 import com.liferay.portal.odata.sort.InvalidSortException;
-import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
+import com.liferay.portal.search.expando.ExpandoBridgeUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -35,7 +35,6 @@ public class EntityFieldsUtil {
 
 	public static List<EntityField> getEntityFields(
 		long classNameId, long companyId,
-		ExpandoBridgeIndexer expandoBridgeIndexer,
 		ExpandoColumnLocalService expandoColumnLocalService,
 		ExpandoTableLocalService expandoTableLocalService) {
 
@@ -48,14 +47,10 @@ public class EntityFieldsUtil {
 
 		return TransformUtil.transform(
 			expandoColumnLocalService.getColumns(expandoTable.getTableId()),
-			expandoColumn -> _getEntityField(
-				expandoBridgeIndexer, expandoColumn));
+			expandoColumn -> _getEntityField(expandoColumn));
 	}
 
-	private static EntityField _getEntityField(
-		ExpandoBridgeIndexer expandoBridgeIndexer,
-		ExpandoColumn expandoColumn) {
-
+	private static EntityField _getEntityField(ExpandoColumn expandoColumn) {
 		UnicodeProperties unicodeProperties =
 			expandoColumn.getTypeSettingsProperties();
 
@@ -71,8 +66,7 @@ public class EntityFieldsUtil {
 		String externalName = Normalizer.normalizeIdentifier(
 			expandoColumn.getName());
 
-		String internalName = expandoBridgeIndexer.encodeFieldName(
-			expandoColumn);
+		String internalName = ExpandoBridgeUtil.encodeFieldName(expandoColumn);
 
 		Function<Locale, String> function = locale -> {
 			throw new InvalidSortException(
@@ -98,8 +92,7 @@ public class EntityFieldsUtil {
 		return new StringEntityField(
 			externalName, function,
 			locale -> {
-				String numericSuffix = expandoBridgeIndexer.getNumericSuffix(
-					type);
+				String numericSuffix = ExpandoBridgeUtil.getNumericSuffix(type);
 
 				if (!numericSuffix.equals(StringPool.BLANK)) {
 					return internalName.concat(".keyword");

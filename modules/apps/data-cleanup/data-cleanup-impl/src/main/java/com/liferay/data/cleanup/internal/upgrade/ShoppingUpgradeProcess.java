@@ -63,6 +63,10 @@ public class ShoppingUpgradeProcess extends BaseUpgradeProcess {
 	}
 
 	private void _deleteFromShoppingItem(String type) throws Exception {
+		if (!hasTable("ShoppingItem")) {
+			return;
+		}
+
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				SQLTransformer.transform(
 					StringBundler.concat(

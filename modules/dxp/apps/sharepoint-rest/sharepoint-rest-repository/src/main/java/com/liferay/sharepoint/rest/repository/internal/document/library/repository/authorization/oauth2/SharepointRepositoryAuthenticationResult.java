@@ -43,17 +43,15 @@ public class SharepointRepositoryAuthenticationResult {
 		}
 
 		try {
-			Map<String, Object> tokenClaims = SignedJWT.parse(
+			Map<String, Object> claims = SignedJWT.parse(
 				_iAuthenticationResult.idToken()
 			).getJWTClaimsSet(
 			).getClaims();
 
-			return (String)tokenClaims.get("nonce");
+			return (String)claims.get("nonce");
 		}
 		catch (ParseException parseException) {
-			_log.error(
-				"Unable to get the nonce value from the token claims",
-				parseException);
+			_log.error("Unable to get nonce", parseException);
 
 			return null;
 		}

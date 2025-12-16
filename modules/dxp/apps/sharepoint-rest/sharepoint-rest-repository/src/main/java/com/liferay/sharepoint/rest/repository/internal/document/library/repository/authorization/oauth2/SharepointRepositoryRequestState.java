@@ -7,6 +7,7 @@ package com.liferay.sharepoint.rest.repository.internal.document.library.reposit
 
 import com.liferay.document.library.repository.authorization.capability.AuthorizationException;
 import com.liferay.document.library.repository.authorization.oauth2.OAuth2AuthorizationException;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -19,6 +20,8 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.Serializable;
+
+import java.util.Objects;
 
 /**
  * @author Adolfo Pérez
@@ -68,22 +71,20 @@ public final class SharepointRepositoryRequestState implements Serializable {
 	}
 
 	public void validateNonce(String nonce) throws AuthorizationException {
-		if (!nonce.equals(_nonce)) {
+		if (!Objects.equals(_nonce, nonce)) {
 			throw new OAuth2AuthorizationException.InvalidNonce(
-				String.format(
-					"The Sharepoint server returned an invalid nonce %s that " +
-						"does not match the expected nonce %s",
-					nonce, _nonce));
+				StringBundler.concat(
+					"The Sharepoint server returned an invalid nonce ", nonce,
+					" that does not match the expected nonce ", _nonce));
 		}
 	}
 
 	public void validateState(String state) throws AuthorizationException {
-		if (!state.equals(_state)) {
+		if (!Objects.equals(_state, state)) {
 			throw new OAuth2AuthorizationException.InvalidState(
-				String.format(
-					"The Sharepoint server returned an invalid state %s that " +
-						"does not match the expected state %s",
-					state, _state));
+				StringBundler.concat(
+					"The Sharepoint server returned an invalid state ", state,
+					" that does not match the expected state ", _state));
 		}
 	}
 

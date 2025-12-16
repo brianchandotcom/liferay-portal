@@ -159,10 +159,9 @@ public class RenderPortletActionTest {
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
-		String layoutPortletId = LayoutTestUtil.addPortletToLayout(
-			layout, portletId);
-
-		mockHttpServletRequest.setParameter("p_p_id", layoutPortletId);
+		mockHttpServletRequest.setParameter(
+			"p_p_id",
+			LayoutTestUtil.addPortletToLayout(layout, portletId));
 
 		RenderPortletAction renderPortletAction = new RenderPortletAction();
 

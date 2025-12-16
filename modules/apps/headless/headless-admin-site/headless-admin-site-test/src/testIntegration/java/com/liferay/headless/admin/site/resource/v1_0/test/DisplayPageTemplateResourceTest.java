@@ -1619,6 +1619,7 @@ public class DisplayPageTemplateResourceTest
 
 		Assert.assertFalse(putDisplayPageTemplate.getMarkedAsDefault());
 
+		putDisplayPageTemplate.setFriendlyUrlHistory(() -> null);
 		putDisplayPageTemplate.setMarkedAsDefault(true);
 
 		PageSpecification[] pageSpecifications =

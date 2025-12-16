@@ -299,7 +299,7 @@ public class LayoutPageTemplateEntryLocalServiceTest {
 			layoutPageTemplateEntryKey,
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryKey());
 
-		_testAddLayoutPageTemplateCollectionWithInvalidLayoutPageTemplateCollectionKey(
+		_testAddLayoutPageTemplateEntryWithInvalidLayoutPageTemplateCollectionKey(
 			LayoutPageTemplateEntryLayoutPageTemplateEntryKeyException.
 				MustNotBeDuplicate.class,
 			layoutPageTemplateEntryKey,
@@ -312,7 +312,7 @@ public class LayoutPageTemplateEntryLocalServiceTest {
 			RandomTestUtil.randomString() + StringPool.AMPERSAND +
 				RandomTestUtil.randomString();
 
-		_testAddLayoutPageTemplateCollectionWithInvalidLayoutPageTemplateCollectionKey(
+		_testAddLayoutPageTemplateEntryWithInvalidLayoutPageTemplateCollectionKey(
 			LayoutPageTemplateEntryLayoutPageTemplateEntryKeyException.
 				MustNotContainInvalidCharacters.class,
 			layoutPageTemplateEntryKey,
@@ -323,7 +323,7 @@ public class LayoutPageTemplateEntryLocalServiceTest {
 
 		layoutPageTemplateEntryKey = RandomTestUtil.randomString(80);
 
-		_testAddLayoutPageTemplateCollectionWithInvalidLayoutPageTemplateCollectionKey(
+		_testAddLayoutPageTemplateEntryWithInvalidLayoutPageTemplateCollectionKey(
 			LayoutPageTemplateEntryLayoutPageTemplateEntryKeyException.
 				MustNotExceedMaximumSize.class,
 			layoutPageTemplateEntryKey,
@@ -690,7 +690,7 @@ public class LayoutPageTemplateEntryLocalServiceTest {
 	}
 
 	private void
-		_testAddLayoutPageTemplateCollectionWithInvalidLayoutPageTemplateCollectionKey(
+	_testAddLayoutPageTemplateEntryWithInvalidLayoutPageTemplateCollectionKey(
 			Class<?> clazz, String layoutPageTemplateEntryKey, String message) {
 
 		try {

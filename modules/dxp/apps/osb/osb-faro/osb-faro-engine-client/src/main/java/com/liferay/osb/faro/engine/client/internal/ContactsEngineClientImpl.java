@@ -2494,6 +2494,22 @@ public class ContactsEngineClientImpl
 	}
 
 	@Override
+	public List<DataSource> getSegmentDataSources(
+		FaroProject faroProject, long channelId, String provideTypeExclude) {
+
+		Map<String, Object> uriVariables = getUriVariables(faroProject);
+
+		uriVariables.put("channelId", channelId);
+		uriVariables.put("provideTypeExclude", provideTypeExclude);
+
+		return get(
+			faroProject, Rels.DATA_SOURCE_CHANNEL_CONNECTED,
+			new ParameterizedTypeReference<>() {
+			},
+			uriVariables);
+	}
+
+	@Override
 	public Results<String> getSessionValues(
 		FaroProject faroProject, String channelId, String fieldName,
 		String filter, String query, int cur, int delta) {

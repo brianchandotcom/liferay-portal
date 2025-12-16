@@ -26,6 +26,7 @@ import com.liferay.info.display.url.provider.InfoEditURLProviderRegistry;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -93,8 +94,9 @@ public class AssetListPortlet extends MVCPortlet {
 			AssetListWebKeys.EDIT_ASSET_LIST_DISPLAY_CONTEXT,
 			new EditAssetListDisplayContext(
 				_assetRendererFactoryClassProvider,
-				_infoSearchClassMapperRegistry, _itemSelector, renderRequest,
-				renderResponse, _segmentsConfigurationProvider,
+				_infoSearchClassMapperRegistry, _itemSelector,
+				_objectDefinitionLocalService, renderRequest, renderResponse,
+				_segmentsConfigurationProvider,
 				_getUnicodeProperties(assetListDisplayContext)));
 		renderRequest.setAttribute(
 			AssetListWebKeys.INFO_COLLECTION_PROVIDER_DISPLAY_CONTEXT,
@@ -178,6 +180,9 @@ public class AssetListPortlet extends MVCPortlet {
 
 	@Reference
 	private ItemSelector _itemSelector;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private Portal _portal;

@@ -1258,12 +1258,6 @@ components:
                     type: array
                 lazyLoading:
                     type: boolean
-                resolution:
-                    # @review
-                    description:
-                        The fragment image's resolution.
-                    enum: [Auto, Preview, Thumbnail]
-                    type: string
             type: object
         FragmentImageValue:
             # @review
@@ -1290,7 +1284,7 @@ components:
                     # @review
                     description:
                         The fragment image viewport's ID.
-                    enum: [LandscapeMobile, PortraitMobile, Tablet]
+                    enum: [Desktop, LandscapeMobile, PortraitMobile, Tablet]
                     type: string
                 resolution:
                     # @review

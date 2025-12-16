@@ -138,17 +138,16 @@ public class UserPermissionTest {
 			PropsUtil.set(
 				PropsKeys.FIELD_EDITABLE_USER_TYPES, StringPool.BLANK);
 
-			_user1 = UserTestUtil.addUser();
 			_organization = OrganizationTestUtil.addOrganization();
+			_user1 = UserTestUtil.addUser();
 
 			_userLocalService.addOrganizationUser(
 				_organization.getOrganizationId(), _user1);
 
-			Role adminRole = _roleLocalService.getRole(
-				TestPropsValues.getCompanyId(), "administrator");
-
 			_roleLocalService.addGroupRole(
-				_organization.getGroupId(), adminRole);
+				_organization.getGroupId(),
+				_roleLocalService.getRole(
+					TestPropsValues.getCompanyId(), "administrator"));
 
 			PermissionChecker userPermissionChecker =
 				PermissionCheckerFactoryUtil.create(_user1);

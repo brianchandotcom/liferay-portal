@@ -138,7 +138,7 @@ public class TaxonomyCategoryBrief implements Serializable {
 	}
 
 	@GraphQLField(description = "The category's parent category.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ParentTaxonomyCategory parentTaxonomyCategory;
 
 	@JsonIgnore
@@ -185,7 +185,7 @@ public class TaxonomyCategoryBrief implements Serializable {
 	}
 
 	@GraphQLField(description = "The parent category's `TaxonomyVocabulary`.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ParentTaxonomyVocabulary parentTaxonomyVocabulary;
 
 	@JsonIgnore

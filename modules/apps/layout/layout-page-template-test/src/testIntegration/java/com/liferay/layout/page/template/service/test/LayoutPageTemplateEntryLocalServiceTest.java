@@ -690,27 +690,6 @@ public class LayoutPageTemplateEntryLocalServiceTest {
 	}
 
 	private void
-	_testAddLayoutPageTemplateEntryWithInvalidLayoutPageTemplateCollectionKey(
-			Class<?> clazz, String layoutPageTemplateEntryKey, String message) {
-
-		try {
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				LayoutPageTemplateConstants.
-					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				layoutPageTemplateEntryKey, 0, 0, RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0, false, 0,
-				0, 0, WorkflowConstants.STATUS_APPROVED, _serviceContext);
-
-			Assert.fail();
-		}
-		catch (PortalException portalException) {
-			Assert.assertEquals(clazz, portalException.getClass());
-			Assert.assertEquals(message, portalException.getMessage());
-		}
-	}
-
-	private void
 			_testAddLayoutPageTemplateEntryLayoutPageTemplateEntryGroupIdException(
 				long groupId, int type)
 		throws PortalException {
@@ -847,6 +826,27 @@ public class LayoutPageTemplateEntryLocalServiceTest {
 			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()),
 			unsafeFunction.apply(
 				layoutPageTemplateEntry.getExternalReferenceCode()));
+	}
+
+	private void
+		_testAddLayoutPageTemplateEntryWithInvalidLayoutPageTemplateCollectionKey(
+			Class<?> clazz, String layoutPageTemplateEntryKey, String message) {
+
+		try {
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				layoutPageTemplateEntryKey, 0, 0, RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0, false, 0,
+				0, 0, WorkflowConstants.STATUS_APPROVED, _serviceContext);
+
+			Assert.fail();
+		}
+		catch (PortalException portalException) {
+			Assert.assertEquals(clazz, portalException.getClass());
+			Assert.assertEquals(message, portalException.getMessage());
+		}
 	}
 
 	private void _testMoveLayoutPageTemplateEntry(

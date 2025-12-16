@@ -17,7 +17,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.io.OutputStreamWriter;
 
 import java.nio.charset.StandardCharsets;
@@ -43,75 +42,18 @@ public class FrontendJsWebDynamicJSImportMapsContributorTest {
 
 	@Test
 	public void testWriteGlobalImports() throws Exception {
-		FrontendJsWebDynamicJSImportMapsContributor
-			frontendJsWebDynamicJSImportMapsContributor =
-				new FrontendJsWebDynamicJSImportMapsContributor();
-
-		_setUpMocks(
-			frontendJsWebDynamicJSImportMapsContributor, StringPool.BLANK);
-
-		ByteArrayOutputStream byteArrayOutputStream =
-			new ByteArrayOutputStream();
-
-		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
-			byteArrayOutputStream, StandardCharsets.UTF_8);
-
-		frontendJsWebDynamicJSImportMapsContributor.writeGlobalImports(
-			new MockHttpServletRequest(), outputStreamWriter);
-
-		outputStreamWriter.close();
-
-		Assert.assertEquals(
-			StringUtil.replace(
-				_read("write_global_imports.tpl"), "[$", "$]",
-				HashMapBuilder.put(
-					"HASH", _HASH
-				).build()),
-			byteArrayOutputStream.toString(StandardCharsets.UTF_8));
+		_testWriteGlobalImports(StringPool.BLANK);
 	}
 
 	@Test
 	public void testWriteGlobalImportsWithPathContext() throws Exception {
+		_testWriteGlobalImports("/dxp");
+	}
+
+	private void _testWriteGlobalImports(String pathContext) throws Exception {
 		FrontendJsWebDynamicJSImportMapsContributor
 			frontendJsWebDynamicJSImportMapsContributor =
 				new FrontendJsWebDynamicJSImportMapsContributor();
-
-		_setUpMocks(frontendJsWebDynamicJSImportMapsContributor, "/dxp");
-
-		ByteArrayOutputStream byteArrayOutputStream =
-			new ByteArrayOutputStream();
-
-		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
-			byteArrayOutputStream, StandardCharsets.UTF_8);
-
-		frontendJsWebDynamicJSImportMapsContributor.writeGlobalImports(
-			new MockHttpServletRequest(), outputStreamWriter);
-
-		outputStreamWriter.close();
-
-		Assert.assertEquals(
-			StringUtil.replace(
-				_read("write_global_imports_with_path_context.tpl"), "[$", "$]",
-				HashMapBuilder.put(
-					"HASH", _HASH
-				).build()),
-			byteArrayOutputStream.toString(StandardCharsets.UTF_8));
-	}
-
-	private String _read(String name) throws Exception {
-		try (InputStream inputStream =
-				FrontendJsWebDynamicJSImportMapsContributorTest.class.
-					getResourceAsStream("dependencies/" + name)) {
-
-			return StringUtil.read(inputStream);
-		}
-	}
-
-	private void _setUpMocks(
-			FrontendJsWebDynamicJSImportMapsContributor
-				frontendJsWebDynamicJSImportMapsContributor,
-			String pathContext)
-		throws Exception {
 
 		// HashedFilesRegistry
 
@@ -159,8 +101,36 @@ public class FrontendJsWebDynamicJSImportMapsContributorTest {
 
 		ReflectionTestUtils.setField(
 			frontendJsWebDynamicJSImportMapsContributor, "_portal", portal);
+
+		// Run test
+
+		ByteArrayOutputStream byteArrayOutputStream =
+			new ByteArrayOutputStream();
+
+		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
+			byteArrayOutputStream, StandardCharsets.UTF_8);
+
+		frontendJsWebDynamicJSImportMapsContributor.writeGlobalImports(
+			new MockHttpServletRequest(), outputStreamWriter);
+
+		outputStreamWriter.close();
+
+		Assert.assertEquals(
+			StringUtil.replace(
+				_TPL_TEST_WRITE_GLOBAL_IMPORTS, "[$", "$]",
+				HashMapBuilder.put(
+					"HASH", _HASH
+				).put(
+					"PATH_CONTEXT", pathContext
+				).build()),
+			byteArrayOutputStream.toString(StandardCharsets.UTF_8));
 	}
 
 	private static final String _HASH = RandomTestUtil.randomString(8);
+
+	private static final String _TPL_TEST_WRITE_GLOBAL_IMPORTS =
+		StringUtil.read(
+			FrontendJsWebDynamicJSImportMapsContributorTest.class,
+			"dependencies/test_write_global_imports.tpl");
 
 }

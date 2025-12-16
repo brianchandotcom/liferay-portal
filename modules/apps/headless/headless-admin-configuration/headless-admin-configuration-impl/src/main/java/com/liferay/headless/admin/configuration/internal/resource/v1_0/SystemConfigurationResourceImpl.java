@@ -259,9 +259,10 @@ public class SystemConfigurationResourceImpl
 
 		if (ArrayUtil.isEmpty(configurations)) {
 			throw new NotFoundException(
-				"Unable to find entry for system configuration with external " +
-					"reference code " +
-						systemConfigurationExternalReferenceCode);
+				StringBundler.concat(
+					"Unable to find entry for system configuration with ",
+					"external reference code \"",
+					systemConfigurationExternalReferenceCode, "\""));
 		}
 
 		if (configurations.length > 1) {
@@ -325,9 +326,10 @@ public class SystemConfigurationResourceImpl
 
 			if (configuration == null) {
 				throw new NotFoundException(
-					"Unable to find system configuration with external " +
-						"reference code " +
-							systemConfiguration.getExternalReferenceCode());
+					StringBundler.concat(
+						"Unable to find system configuration with external ",
+						"reference code \"",
+						systemConfiguration.getExternalReferenceCode(), "\""));
 			}
 
 			return _toSystemConfiguration(configuration);

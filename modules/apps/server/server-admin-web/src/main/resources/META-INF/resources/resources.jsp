@@ -206,7 +206,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 
 				<%
 				for (DataCleanup systemDataCleanup : DataCleanupUtil.getSystemDataCleanups()) {
-					if (ReleaseLocalServiceUtil.fetchRelease(systemDataCleanup.getServletContextName()) == null) {
+					if (systemDataCleanup.isEnabled() && (ReleaseLocalServiceUtil.fetchRelease(systemDataCleanup.getServletContextName()) == null)) {
 						continue;
 					}
 				%>
@@ -308,7 +308,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 
 					<%
 					for (DataCleanup moduleDataCleanup : moduleDataCleanups) {
-						if (ReleaseLocalServiceUtil.fetchRelease(moduleDataCleanup.getServletContextName()) == null) {
+						if (moduleDataCleanup.isEnabled() && (ReleaseLocalServiceUtil.fetchRelease(moduleDataCleanup.getServletContextName()) == null)) {
 							continue;
 						}
 					%>
@@ -321,7 +321,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 							</div>
 
 							<div class="autofit-col">
-								<aui:button cssClass="save-server-button" data-cmd="<%= moduleDataCleanup.getLabel() %>" value="execute" />
+								<aui:button cssClass="save-server-button" data-cmd="<%= moduleDataCleanup.getLabel() %>" disabled="<%= !moduleDataCleanup.isEnabled() %>" value="execute" />
 							</div>
 						</li>
 

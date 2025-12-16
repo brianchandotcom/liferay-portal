@@ -24,7 +24,7 @@ export function sendVoteRequest({
 	type,
 	url,
 }) {
-	if (Liferay.Session.sessionState === 'expired') {
+	if (Liferay.Session?.sessionState === 'expired') {
 		errorToast(`${Liferay.Language.get('you-must-be-signed-in-to-rate')}`);
 
 		return Promise.resolve();

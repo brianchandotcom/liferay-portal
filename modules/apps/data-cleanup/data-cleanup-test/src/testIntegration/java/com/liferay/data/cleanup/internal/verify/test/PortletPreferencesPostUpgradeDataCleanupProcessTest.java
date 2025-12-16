@@ -115,7 +115,7 @@ public class PortletPreferencesPostUpgradeDataCleanupProcessTest
 							portletId, " was not found in column ",
 							dbInspector.normalizeName("portletId"),
 							" from table ",
-							dbInspector.normalizeName("TEMP_TABLE"))));
+							dbInspector.normalizeName(_TEMP_TABLE_NAME))));
 
 				Assert.assertFalse(_existsPortletPreference(portletId));
 			},
@@ -149,7 +149,7 @@ public class PortletPreferencesPostUpgradeDataCleanupProcessTest
 							portletId, " was not found in column ",
 							dbInspector.normalizeName("portletId"),
 							" from table ",
-							dbInspector.normalizeName("TEMP_TABLE"))));
+							dbInspector.normalizeName(_TEMP_TABLE_NAME))));
 
 				Assert.assertTrue(_existsPortletPreference(portletId));
 			},
@@ -486,7 +486,7 @@ public class PortletPreferencesPostUpgradeDataCleanupProcessTest
 							portletId, " was not found in column ",
 							dbInspector.normalizeName("portletId"),
 							" from table ",
-							dbInspector.normalizeName("TEMP_TABLE"))));
+							dbInspector.normalizeName(_TEMP_TABLE_NAME))));
 
 				Assert.assertFalse(_existsPortletPreference(portletId));
 			},
@@ -518,7 +518,7 @@ public class PortletPreferencesPostUpgradeDataCleanupProcessTest
 							portletId, " was not found in column ",
 							dbInspector.normalizeName("portletId"),
 							" from table ",
-							dbInspector.normalizeName("TEMP_TABLE"))));
+							dbInspector.normalizeName(_TEMP_TABLE_NAME))));
 
 				Assert.assertTrue(_existsPortletPreference(portletId));
 			},
@@ -715,7 +715,7 @@ public class PortletPreferencesPostUpgradeDataCleanupProcessTest
 							portletId, " was not found in column ",
 							dbInspector.normalizeName("portletId"),
 							" from table ",
-							dbInspector.normalizeName("TEMP_TABLE"))));
+							dbInspector.normalizeName(_TEMP_TABLE_NAME))));
 
 				Assert.assertFalse(_existsPortletPreference(portletId));
 			},
@@ -749,7 +749,7 @@ public class PortletPreferencesPostUpgradeDataCleanupProcessTest
 							portletId, " was not found in column ",
 							dbInspector.normalizeName("portletId"),
 							" from table ",
-							dbInspector.normalizeName("TEMP_TABLE"))));
+							dbInspector.normalizeName(_TEMP_TABLE_NAME))));
 
 				Assert.assertTrue(_existsPortletPreference(portletId));
 			},
@@ -982,6 +982,8 @@ public class PortletPreferencesPostUpgradeDataCleanupProcessTest
 			}
 		}
 	}
+
+	private static final String _TEMP_TABLE_NAME = "TEMP_TABLE_PORTLET";
 
 	private boolean _deletePortlets = true;
 

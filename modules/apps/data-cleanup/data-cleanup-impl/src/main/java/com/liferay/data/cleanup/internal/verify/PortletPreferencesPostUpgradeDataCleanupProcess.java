@@ -136,14 +136,17 @@ public class PortletPreferencesPostUpgradeDataCleanupProcess
 
 		@Override
 		protected void doUpgrade() throws Exception {
-			if (!hasTable("TEMP_TABLE")) {
-				runSQL("create table TEMP_TABLE (portletId VARCHAR(200))");
+			if (!hasTable(_TEMP_TABLE_NAME)) {
+				runSQL(
+					"create table " + _TEMP_TABLE_NAME +
+						" (portletId VARCHAR(200))");
 			}
 
 			try (PreparedStatement preparedStatement =
 					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 						connection,
-						"insert into TEMP_TABLE (portletId) values (?)")) {
+						"insert into " + _TEMP_TABLE_NAME +
+							" (portletId) values (?)")) {
 
 				for (String portletId : _portletIds) {
 					preparedStatement.setString(1, portletId);
@@ -172,10 +175,12 @@ public class PortletPreferencesPostUpgradeDataCleanupProcess
 					"[$SOURCE_TABLE_ALIAS$].ownerType = " +
 						PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
 					"portletId", "PortletPreferences", "portletId",
-					"TEMP_TABLE"));
+					_TEMP_TABLE_NAME));
 
-			runSQL("DROP_TABLE_IF_EXISTS(TEMP_TABLE)");
+			runSQL("DROP_TABLE_IF_EXISTS(" + _TEMP_TABLE_NAME + ")");
 		}
+
+		private static final String _TEMP_TABLE_NAME = "TEMP_TABLE_PORTLET";
 
 		private final Set<String> _portletIds;
 		private final boolean _readOnly;

@@ -48,7 +48,7 @@ public class RelatedProductResourceImpl extends BaseRelatedProductResourceImpl {
 	public Response deleteRelatedProduct(Long id) throws Exception {
 		_cpDefinitionLinkService.deleteCPDefinitionLink(id);
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
+		Response.ResponseBuilder responseBuilder = Response.noContent();
 
 		return responseBuilder.build();
 	}

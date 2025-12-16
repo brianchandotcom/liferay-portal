@@ -132,11 +132,6 @@ public class RenderPortletActionTest {
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
 
-		String layoutPortletId = LayoutTestUtil.addPortletToLayout(
-			layout, portletId);
-
-		mockHttpServletRequest.setParameter("p_p_id", layoutPortletId);
-
 		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
 		mockHttpServletRequest.setAttribute(
 			WebKeys.RENDER_PORTLET,
@@ -163,6 +158,11 @@ public class RenderPortletActionTest {
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		String layoutPortletId = LayoutTestUtil.addPortletToLayout(
+			layout, portletId);
+
+		mockHttpServletRequest.setParameter("p_p_id", layoutPortletId);
 
 		RenderPortletAction renderPortletAction = new RenderPortletAction();
 

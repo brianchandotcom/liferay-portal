@@ -154,8 +154,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	public static final String DOWNLOAD_BUNDLE_TASK_NAME = "downloadBundle";
 
-	public static final String FORMAT_SOURCE_UPGRADE_TASK_NAME =
-		"formatSourceUpgrade";
+	public static final String UPGRADE_CODE_TASK_NAME =
+		"upgradeCode";
 
 	public static final String INIT_BUNDLE_TASK_NAME = "initBundle";
 
@@ -1043,7 +1043,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	private FormatSourceTask _addTaskFormatSourceUpgrade(Project project) {
 		FormatSourceTask formatSourceTask = GradleUtil.addTask(
-			project, FORMAT_SOURCE_UPGRADE_TASK_NAME, FormatSourceTask.class);
+			project, UPGRADE_CODE_TASK_NAME, FormatSourceTask.class);
 
 		formatSourceTask.onlyIf(_skipIfExecutingParentTaskSpec);
 		formatSourceTask.setCheckCategoryNames("Upgrade");

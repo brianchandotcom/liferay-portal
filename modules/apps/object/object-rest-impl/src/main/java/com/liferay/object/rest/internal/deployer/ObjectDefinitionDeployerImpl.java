@@ -234,8 +234,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		ObjectDefinition objectDefinition, String restContextPath) {
 
 		return new ObjectEntryResourceImpl(
-			_commentManager, _discussionPermission, _dtoConverterRegistry,
-			_entityModelProvider, objectDefinition,
+			_dtoConverterRegistry, _entityModelProvider, objectDefinition,
 			_objectDefinitionsMap.get(restContextPath),
 			_objectDefinitionLocalService, _objectEntryLocalService,
 			_objectEntryManagerRegistry, _objectFieldLocalService,

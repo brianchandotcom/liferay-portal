@@ -184,13 +184,7 @@ const testWithExportImportAtInstanceLevelFF = mergeTests(
 					exportableItems2 =
 						await exportImportPage.getExportableItems();
 
-					expect(exportableItems2.size).toEqual(
-						exportableItems1.size
-					);
-
-					for (const [name, count] of exportableItems1.entries()) {
-						expect(exportableItems2.get(name)).toBe(count);
-					}
+					expect(exportableItems1).toEqual(exportableItems2);
 				}
 			);
 

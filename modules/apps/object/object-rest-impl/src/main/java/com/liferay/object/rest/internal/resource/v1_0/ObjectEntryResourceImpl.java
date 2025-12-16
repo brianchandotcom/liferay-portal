@@ -707,11 +707,14 @@ public class ObjectEntryResourceImpl
 
 		String className = _objectDefinition.getClassName();
 
-		String xliffMimeType = _DEFAULT_XLIFF_MIMETYPE_VERSION;
+		String xliffMimeType = null;
 
 		if (version != null) {
-			xliffMimeType = _versionXLIFFMimeType.getOrDefault(
-				version, _DEFAULT_XLIFF_MIMETYPE_VERSION);
+			xliffMimeType = _xliffMimeTypes.get(version);
+		}
+
+		if (xliffMimeType == null) {
+			xliffMimeType = "application/xliff+xml";
 		}
 
 		File xliffZipFile = _translationManager.getXLIFFZipFile(
@@ -1893,15 +1896,13 @@ public class ObjectEntryResourceImpl
 		return null;
 	}
 
-	private String _getXLIFFMimeType(String acceptHeader) {
-		if (Validator.isBlank(acceptHeader)) {
+	private String _getXLIFFMimeType(String accept) {
+		if (Validator.isBlank(accept)) {
 			return null;
 		}
 
-		for (Map.Entry<String, String> entry :
-				_versionXLIFFMimeType.entrySet()) {
-
-			if (acceptHeader.contains(entry.getValue())) {
+		for (Map.Entry<String, String> entry : _xliffMimeTypes.entrySet()) {
+			if (accept.contains(entry.getValue())) {
 				return entry.getValue();
 			}
 		}
@@ -1975,13 +1976,10 @@ public class ObjectEntryResourceImpl
 		return new ValidationResponse();
 	}
 
-	private static final String _DEFAULT_XLIFF_MIMETYPE_VERSION =
-		"application/xliff+xml";
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryResourceImpl.class);
 
-	private static final Map<String, String> _versionXLIFFMimeType = Map.of(
+	private static final Map<String, String> _xliffMimeTypes = Map.of(
 		"1.2", "application/x-xliff+xml", "2.0", "application/xliff+xml");
 
 	private final CommentManager _commentManager;

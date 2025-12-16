@@ -483,7 +483,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		}
 	}
 
-	private void _assertFriendlyURLHistory(
+	private void _assertFriendlyUrlHistory(
 			Map<Locale, String> friendlyURLsMap,
 			Map<String, String> newFriendlyURLsMap, boolean published,
 			SitePage sitePage)
@@ -555,7 +555,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		Layout layout = _layoutLocalService.getLayoutByExternalReferenceCode(
 			sitePage.getExternalReferenceCode(), testGroup.getGroupId());
 
-		_assertFriendlyURLHistory(
+		_assertFriendlyUrlHistory(
 			layout.getFriendlyURLMap(), Collections.emptyMap(),
 			layout.isPublished(), sitePage);
 
@@ -1366,7 +1366,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		Map<Locale, String> friendlyURLMap = layout.getFriendlyURLMap();
 
-		_assertFriendlyURLHistory(
+		_assertFriendlyUrlHistory(
 			friendlyURLMap, Collections.emptyMap(), layout.isPublished(),
 			sitePageResource.getSiteSitePage(
 				testGroup.getExternalReferenceCode(),
@@ -1396,7 +1396,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				}
 			});
 
-		_assertFriendlyURLHistory(
+		_assertFriendlyUrlHistory(
 			friendlyURLMap, newFriendlyURLsMap, layout.isPublished(),
 			sitePageResource.getSiteSitePage(
 				testGroup.getExternalReferenceCode(),

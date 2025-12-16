@@ -17,6 +17,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
@@ -34,7 +36,6 @@ import jakarta.ws.rs.ServerErrorException;
 import jakarta.ws.rs.core.Response;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -87,40 +88,12 @@ public class InstanceConfigurationResourceImpl
 
 		_checkPermission();
 
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			ConfigurationFilterStringUtil.getCompanyScopedFilterString(
-				String.valueOf(contextCompany.getCompanyId()),
-				contextCompany.getDefaultWebId()));
-
-		if (ArrayUtil.isEmpty(configurations)) {
-			return Page.of(Collections.emptyList());
-		}
-
 		List<InstanceConfiguration> instanceConfigurations = new ArrayList<>();
 
-		for (Configuration configuration : configurations) {
-			InstanceConfiguration instanceConfiguration =
-				_toInstanceConfiguration(configuration);
+		_appendInstanceConfigurations(instanceConfigurations);
 
-			if (instanceConfiguration == null) {
-				continue;
-			}
-
-			instanceConfigurations.add(instanceConfiguration);
-		}
-
-		for (ConfigurationScreen configurationScreen :
-				_serviceTrackerMap.values()) {
-
-			InstanceConfiguration instanceConfiguration =
-				_toInstanceConfiguration(configurationScreen);
-
-			if (instanceConfiguration == null) {
-				continue;
-			}
-
-			instanceConfigurations.add(instanceConfiguration);
-		}
+		_appendConfigurationScreenInstanceConfigurations(
+			instanceConfigurations);
 
 		return Page.of(instanceConfigurations);
 	}
@@ -208,6 +181,65 @@ public class InstanceConfigurationResourceImpl
 	@Deactivate
 	protected void deactivate() {
 		_serviceTrackerMap.close();
+	}
+
+	private void _appendConfigurationScreenInstanceConfigurations(
+		List<InstanceConfiguration> instanceConfigurations) {
+
+		for (ConfigurationScreen configurationScreen :
+				_serviceTrackerMap.values()) {
+
+			try {
+				InstanceConfiguration instanceConfiguration =
+					_toInstanceConfiguration(configurationScreen);
+
+				Map<String, Object> properties =
+					instanceConfiguration.getProperties();
+
+				if (properties.isEmpty()) {
+					continue;
+				}
+
+				instanceConfigurations.add(instanceConfiguration);
+			}
+			catch (UnsupportedOperationException
+						unsupportedOperationException) {
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"Skipping configuration \"",
+							configurationScreen.getKey(),
+							"\" because it does not have export capability"),
+						unsupportedOperationException);
+				}
+			}
+		}
+	}
+
+	private void _appendInstanceConfigurations(
+			List<InstanceConfiguration> instanceConfigurations)
+		throws Exception {
+
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			ConfigurationFilterStringUtil.getCompanyScopedFilterString(
+				String.valueOf(contextCompany.getCompanyId()),
+				contextCompany.getDefaultWebId()));
+
+		if (ArrayUtil.isEmpty(configurations)) {
+			return;
+		}
+
+		for (Configuration configuration : configurations) {
+			InstanceConfiguration instanceConfiguration =
+				_toInstanceConfiguration(configuration);
+
+			if (instanceConfiguration == null) {
+				continue;
+			}
+
+			instanceConfigurations.add(instanceConfiguration);
+		}
 	}
 
 	private void _checkFeatureFlag() {
@@ -329,6 +361,9 @@ public class InstanceConfigurationResourceImpl
 
 		return instanceConfiguration;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		InstanceConfigurationResourceImpl.class);
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;

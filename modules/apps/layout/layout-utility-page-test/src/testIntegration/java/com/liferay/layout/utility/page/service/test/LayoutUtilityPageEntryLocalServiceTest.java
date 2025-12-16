@@ -12,6 +12,8 @@ import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryCo
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
+import com.liferay.petra.function.UnsafeBiFunction;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.DuplicateExternalReferenceCodeException;
@@ -35,6 +37,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -42,8 +45,12 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -82,7 +89,7 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 	}
 
 	@Test
-	@TestInfo("LPD-71983")
+	@TestInfo({"LPD-71983", "LPD-74327"})
 	public void testAddLayoutUtilityPageEntry() throws Exception {
 		String name = String.valueOf(RandomTestUtil.nextInt());
 
@@ -138,6 +145,8 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 				_log.debug(duplicateExternalReferenceCodeException);
 			}
 		}
+
+		_testAddLayoutUtilityPageEntryWithExternalReferenceCode();
 	}
 
 	@Test
@@ -292,6 +301,131 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 		Assert.assertEquals(title, layout.getTitle(locale));
 	}
 
+	private void _assertExternalReferenceCodes(
+			Layout layout,
+			UnsafeBiFunction<String, String, Boolean, Exception>
+				unsafeBiFunction)
+		throws Exception {
+
+		Assert.assertTrue(
+			layout.getExternalReferenceCode(),
+			unsafeBiFunction.apply(
+				layout.getExternalReferenceCode(), "-layout"));
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperience(
+				layout.getPlid());
+
+		Assert.assertTrue(
+			segmentsExperience.getExternalReferenceCode(),
+			unsafeBiFunction.apply(
+				segmentsExperience.getExternalReferenceCode(),
+				"-layout-default"));
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		Assert.assertTrue(
+			draftLayout.getExternalReferenceCode(),
+			unsafeBiFunction.apply(
+				draftLayout.getExternalReferenceCode(), "-layout-draft"));
+
+		segmentsExperience =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperience(
+				draftLayout.getPlid());
+
+		Assert.assertTrue(
+			segmentsExperience.getExternalReferenceCode(),
+			unsafeBiFunction.apply(
+				segmentsExperience.getExternalReferenceCode(),
+				"-layout-draft-default"));
+	}
+
+	private void _testAddLayoutUtilityPageEntryWithExternalReferenceCode()
+		throws Exception {
+
+		_testAddLayoutUtilityPageEntryWithExternalReferenceCode(
+			RandomTestUtil.randomString(),
+			externalReferenceCode ->
+				(curExternalReferenceCode, suffix) -> Objects.equals(
+					curExternalReferenceCode, externalReferenceCode + suffix));
+
+		_testAddLayoutUtilityPageEntryWithExternalReferenceCode(
+			null,
+			externalReferenceCode ->
+				(curExternalReferenceCode, suffix) -> Objects.equals(
+					curExternalReferenceCode, externalReferenceCode + suffix));
+
+		Map<String, String> expectedExternalReferenceCodesMap =
+			HashMapBuilder.put(
+				"-layout", RandomTestUtil.randomString()
+			).put(
+				"-layout-default", RandomTestUtil.randomString()
+			).put(
+				"-layout-draft", RandomTestUtil.randomString()
+			).put(
+				"-layout-draft-default", RandomTestUtil.randomString()
+			).build();
+
+		_serviceContext.setAttribute(
+			"defaultSegmentsExperienceExternalReferenceCode",
+			expectedExternalReferenceCodesMap.get("-layout-default"));
+		_serviceContext.setAttribute(
+			"draftLayoutDefaultSegmentsExperienceExternalReferenceCode",
+			expectedExternalReferenceCodesMap.get("-layout-draft-default"));
+		_serviceContext.setAttribute(
+			"draftLayoutExternalReferenceCode",
+			expectedExternalReferenceCodesMap.get("-layout-draft"));
+		_serviceContext.setAttribute(
+			"layoutExternalReferenceCode",
+			expectedExternalReferenceCodesMap.get("-layout"));
+
+		try {
+			_testAddLayoutUtilityPageEntryWithExternalReferenceCode(
+				RandomTestUtil.randomString(),
+				externalReferenceCode ->
+					(curExternalReferenceCode, suffix) -> Objects.equals(
+						curExternalReferenceCode,
+						expectedExternalReferenceCodesMap.get(suffix)));
+		}
+		finally {
+			_serviceContext.removeAttribute(
+				"defaultSegmentsExperienceExternalReferenceCode");
+			_serviceContext.removeAttribute(
+				"draftLayoutDefaultSegmentsExperienceExternalReferenceCode");
+			_serviceContext.removeAttribute("draftLayoutExternalReferenceCode");
+			_serviceContext.removeAttribute("layoutExternalReferenceCode");
+		}
+	}
+
+	private void _testAddLayoutUtilityPageEntryWithExternalReferenceCode(
+			String externalReferenceCode,
+			UnsafeFunction
+				<String, UnsafeBiFunction<String, String, Boolean, Exception>,
+				 Exception> unsafeFunction)
+		throws Exception {
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
+				externalReferenceCode, TestPropsValues.getUserId(),
+				_group.getGroupId(), 0, 0, true, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), null, _serviceContext);
+
+		if (Validator.isNull(externalReferenceCode)) {
+			Assert.assertNotNull(
+				layoutUtilityPageEntry.getExternalReferenceCode());
+		}
+		else {
+			Assert.assertEquals(
+				externalReferenceCode,
+				layoutUtilityPageEntry.getExternalReferenceCode());
+		}
+
+		_assertExternalReferenceCodes(
+			_layoutLocalService.getLayout(layoutUtilityPageEntry.getPlid()),
+			unsafeFunction.apply(
+				layoutUtilityPageEntry.getExternalReferenceCode()));
+	}
+
 	private void _testGetExternalReferenceCode(
 			String externalReferenceCode, long layoutUtilityPageEntryId)
 		throws Exception {
@@ -333,6 +467,9 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	private ServiceContext _serviceContext;
 

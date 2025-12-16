@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -116,9 +117,9 @@ public class ExportTranslationServlet extends HttpServlet {
 				httpServletRequest, "xliffMimeType");
 
 			File file = _translationManager.getXLIFFZipFile(
-				className, SetUtil.toLongArray(classPKs, classPK -> classPK),
-				xliffMimeType, _portal.getLocale(httpServletRequest),
-				sourceLanguageId, targetLanguageIds);
+				className, ArrayUtil.toLongArray(classPKs), xliffMimeType,
+				_portal.getLocale(httpServletRequest), sourceLanguageId,
+				targetLanguageIds);
 
 			try (InputStream inputStream = new FileInputStream(file)) {
 				ServletResponseUtil.sendFile(

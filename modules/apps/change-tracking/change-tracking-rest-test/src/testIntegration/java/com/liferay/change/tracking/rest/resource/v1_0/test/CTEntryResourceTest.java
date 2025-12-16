@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.Inject;
 
@@ -45,6 +46,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import org.junit.After;
@@ -214,6 +216,38 @@ public class CTEntryResourceTest extends BaseCTEntryResourceTestCase {
 		assertContains(ctEntry1, (List<CTEntry>)page3.getItems());
 		assertContains(ctEntry2, (List<CTEntry>)page3.getItems());
 		assertContains(ctEntry3, (List<CTEntry>)page3.getItems());
+	}
+
+	@Override
+	@Test
+	public void testGetCTEntry() throws Exception {
+		super.testGetCTEntry();
+
+		long ctCollectionId = _getCTCollectionId();
+
+		CTCollection serviceBuilderCTCollection =
+			_ctCollectionLocalService.getCTCollection(ctCollectionId);
+
+		serviceBuilderCTCollection.setStatus(
+			WorkflowConstants.STATUS_INCOMPLETE);
+
+		_ctCollectionLocalService.updateCTCollection(
+			serviceBuilderCTCollection);
+
+		CTEntry ctEntry = _addCTEntry(
+			ctCollectionId, RandomTestUtil.randomString());
+
+		Map<String, Map<String, String>> actions = ctEntry.getActions();
+
+		Assert.assertEquals(actions.toString(), 6, actions.size());
+
+		List<String> actionList = List.of(
+			"checkout", "delete", "get", "move-changes", "update",
+			"view-discard");
+
+		for (String action : actionList) {
+			Assert.assertTrue(actions.containsKey(action));
+		}
 	}
 
 	@Override

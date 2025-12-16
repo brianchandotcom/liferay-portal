@@ -5,10 +5,10 @@
 
 package com.liferay.document.library.internal.util;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourcePermission;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,22 +29,23 @@ public class DLFileEntryTypePermissionUtil {
 		for (ResourcePermission resourcePermission : resourcePermissions) {
 			long actionIds = resourcePermission.getActionIds();
 
-			List<String> resourcePermissionActionIds = new ArrayList<>();
-
-			for (ResourceAction resourceAction : resourceActions) {
-				String actionId = resourceAction.getActionId();
-
-				if (((actionIds & resourceAction.getBitwiseValue()) ==
-						resourceAction.getBitwiseValue()) &&
-					predicate.test(actionId)) {
-
-					resourcePermissionActionIds.add(actionId);
-				}
-			}
-
 			roleIdsToActionIds.put(
 				resourcePermission.getRoleId(),
-				resourcePermissionActionIds.toArray(new String[0]));
+				TransformUtil.transformToArray(
+					resourceActions,
+					resourceAction -> {
+						String actionId = resourceAction.getActionId();
+
+						if (((actionIds & resourceAction.getBitwiseValue()) ==
+								resourceAction.getBitwiseValue()) &&
+							predicate.test(actionId)) {
+
+							return actionId;
+						}
+
+						return null;
+					},
+					String.class));
 		}
 
 		return roleIdsToActionIds;

@@ -598,6 +598,50 @@
 				"x-filterable": {
 				}
 			},
+			"PageComment": {
+				"properties": {
+					"actions": {
+						"additionalProperties": {
+							"additionalProperties": {
+								"type": "string"
+							},
+							"type": "object"
+						},
+						"type": "object"
+					},
+					"facets": {
+						"items": {
+							"$ref": "#/components/schemas/Facet"
+						},
+						"type": "array"
+					},
+					"items": {
+						"items": {
+							"$ref": "#/components/schemas/Comment"
+						},
+						"type": "array"
+					},
+					"lastPage": {
+						"format": "int64",
+						"type": "integer"
+					},
+					"page": {
+						"format": "int64",
+						"type": "integer"
+					},
+					"pageSize": {
+						"format": "int64",
+						"type": "integer"
+					},
+					"totalCount": {
+						"format": "int64",
+						"type": "integer"
+					}
+				},
+				"type": "object",
+				"x-filterable": {
+				}
+			},
 			"PageObject8": {
 				"properties": {
 					"actions": {
@@ -2133,6 +2177,103 @@
 			}
 		},
 		"/scopes/{scopeKey}/by-external-reference-code/{externalReferenceCode}/comments": {
+			"get": {
+				"operationId": "getScopeScopeKeyByExternalReferenceCodeCommentsPage",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "scopeKey",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "aggregationTerms",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "fields",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "nestedFields",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "pageSize",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "restrictFields",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "search",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "sort",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PageComment"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/PageComment"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Comment"
+				]
+			},
 			"post": {
 				"operationId": "postScopeScopeKeyByExternalReferenceCodeComment",
 				"parameters": [
@@ -2185,7 +2326,7 @@
 					}
 				},
 				"tags": [
-					"Object8"
+					"Comment"
 				]
 			}
 		},
@@ -2230,7 +2371,56 @@
 					}
 				},
 				"tags": [
-					"Object8"
+					"Comment"
+				]
+			},
+			"get": {
+				"operationId": "getScopeScopeKeyByExternalReferenceCodeComment",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "scopeKey",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "commentExternalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Comment"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Comment"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Comment"
 				]
 			},
 			"put": {
@@ -2293,13 +2483,118 @@
 					}
 				},
 				"tags": [
-					"Object8"
+					"Comment"
 				]
 			}
 		},
-		"/scopes/{scopeKey}/by-external-reference-code/{externalReferenceCode}/comments/{commentExternalReferenceCode}/reply-comments": {
+		"/scopes/{scopeKey}/by-external-reference-code/{externalReferenceCode}/comments/{commentExternalReferenceCode}/child-comments": {
+			"get": {
+				"operationId": "getScopeScopeKeyByExternalReferenceCodeCommentChildCommentsPage",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "scopeKey",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "commentExternalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "aggregationTerms",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "fields",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "nestedFields",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "pageSize",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "restrictFields",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "search",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "sort",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PageComment"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/PageComment"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Comment"
+				]
+			},
 			"post": {
-				"operationId": "postScopeScopeKeyByExternalReferenceCodeCommentReplyComment",
+				"operationId": "postScopeScopeKeyByExternalReferenceCodeCommentChildComment",
 				"parameters": [
 					{
 						"in": "path",
@@ -2358,7 +2653,7 @@
 					}
 				},
 				"tags": [
-					"Object8"
+					"Comment"
 				]
 			}
 		},

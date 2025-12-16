@@ -12,22 +12,6 @@ import java.util.List;
  */
 public class PortletDataHandlerBoolean extends PortletDataHandlerControl {
 
-	public PortletDataHandlerBoolean(
-		String namespace, List<String> controlChildLabels, String controlName,
-		String controlLabel, String controlTagLabel, boolean defaultState,
-		boolean disabled,
-		PortletDataHandlerControl[] childrenPortletDataHandlerControls,
-		String className, String referrerClassName) {
-
-		super(
-			namespace, controlChildLabels, controlName, controlLabel,
-			controlTagLabel, disabled, className, referrerClassName);
-
-		_defaultState = defaultState;
-		_childrenPortletDataHandlerControls =
-			childrenPortletDataHandlerControls;
-	}
-
 	public PortletDataHandlerBoolean(String namespace, String controlName) {
 		this(namespace, controlName, true);
 	}
@@ -95,6 +79,22 @@ public class PortletDataHandlerBoolean extends PortletDataHandlerControl {
 		super(
 			namespace, controlName, controlLabel, disabled, className,
 			referrerClassName);
+
+		_defaultState = defaultState;
+		_childrenPortletDataHandlerControls =
+			childrenPortletDataHandlerControls;
+	}
+
+	public PortletDataHandlerBoolean(
+		String namespace, String controlName, String controlLabel,
+		List<String> controlSubtitles, String controlTag, boolean defaultState,
+		boolean disabled,
+		PortletDataHandlerControl[] childrenPortletDataHandlerControls,
+		String className, String referrerClassName) {
+
+		super(
+			namespace, controlName, controlLabel, controlSubtitles, controlTag,
+			disabled, className, referrerClassName);
 
 		_defaultState = defaultState;
 		_childrenPortletDataHandlerControls =

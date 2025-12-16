@@ -834,11 +834,11 @@ public class BatchEnginePortletDataHandlerTest {
 		PortletDataHandlerControl exportPortletDataHandlerControl =
 			exportPortletDataHandlerControls[0];
 
-		List<String> controlChildLabels =
-			exportPortletDataHandlerControl.getControlChildLabels();
+		List<String> controlSubtitles =
+			exportPortletDataHandlerControl.getControlSubtitles();
 
 		Assert.assertEquals(
-			controlChildLabels.toString(), 2, controlChildLabels.size());
+			controlSubtitles.toString(), 2, controlSubtitles.size());
 
 		TreeTestUtil.forEachNodeObjectDefinition(
 			tree.iterator(), _objectDefinitionLocalService,
@@ -852,16 +852,15 @@ public class BatchEnginePortletDataHandlerTest {
 
 				Assert.assertTrue(
 					ListUtil.exists(
-						controlChildLabels,
-						controlChildLabel -> StringUtil.equals(
-							controlChildLabel,
+						controlSubtitles,
+						controlSubtitle -> StringUtil.equals(
+							controlSubtitle,
 							modelResourceNamePrefix +
 								nodeObjectDefinition.getResourceName())));
 			});
 
 		Assert.assertEquals(
-			"root-object",
-			exportPortletDataHandlerControl.getControlTagLabel());
+			"root-object", exportPortletDataHandlerControl.getControlTag());
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			_objectDefinitionLocalService,

@@ -80,14 +80,14 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 			}
 		}
 
-		List<String> controlChildLabels = null;
-		String controlTagLabel = null;
+		List<String> controlSubtitles = null;
+		String controlTag = null;
 
 		if (exportPortletDataHandlerControls.length == 1) {
 			PortletDataHandlerControl portletDataHandlerControl = exportPortletDataHandlerControls[0];
 
-			controlChildLabels = portletDataHandlerControl.getControlChildLabels();
-			controlTagLabel = portletDataHandlerControl.getControlTagLabel();
+			controlSubtitles = portletDataHandlerControl.getControlSubtitles();
+			controlTag = portletDataHandlerControl.getControlTag();
 		}
 
 		boolean showPortletDataInput = MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId(), portletDataHandler.isPublishToLiveByDefault()) || MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL);
@@ -96,13 +96,13 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 		<li class="tree-item <%= ((exportModelCount > 0) || showAllPortlets) ? StringPool.BLANK : "deletions" %> <%= !portletDataHandler.isHidden() ? StringPool.BLANK : "hide" %>">
 			<liferay-staging:checkbox
 				checked="<%= showPortletDataInput %>"
-				childLabels="<%= controlChildLabels %>"
 				deletions="<%= modelDeletionCount %>"
 				disabled="<%= disableInputs %>"
 				items="<%= exportModelCount %>"
 				label="<%= portletTitle %>"
 				name="<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId() %>"
-				tagLabel="<%= controlTagLabel %>"
+				subtitles="<%= controlSubtitles %>"
+				tag="<%= controlTag %>"
 			/>
 
 			<%

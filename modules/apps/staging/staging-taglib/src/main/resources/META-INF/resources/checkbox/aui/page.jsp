@@ -16,10 +16,10 @@
 		</label>
 	</div>
 
-	<c:if test="<%= Validator.isNotNull(childLabels) %>">
+	<c:if test="<%= Validator.isNotNull(subtitles) %>">
 		<ul class="lfr-tree list-unstyled">
 			<li>
-				<span class="selected-labels"><%= childLabels %></span>
+				<span class="selected-labels"><%= subtitles %></span>
 			</li>
 		</ul>
 	</c:if>

@@ -48,12 +48,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The language keys of the checkbox's child labels.</description>
-			<name>childLabels</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<description>The number of deletions. It is displayed after the label when it is greater than zero.</description>
 			<name>deletions</name>
 			<required>false</required>
@@ -102,14 +96,20 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The language keys of the checkbox's subtitles.</description>
+			<name>subtitles</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>The language key of the checkbox's suggestion text. It is displayed after the label.</description>
 			<name>suggestion</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The language key of the checkbox's tag label.</description>
-			<name>tagLabel</name>
+			<description>The language key of the checkbox's tag.</description>
+			<name>tag</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

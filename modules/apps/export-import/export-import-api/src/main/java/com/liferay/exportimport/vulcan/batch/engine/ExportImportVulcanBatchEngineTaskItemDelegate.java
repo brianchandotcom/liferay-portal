@@ -23,10 +23,6 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 
 	public interface ExportImportDescriptor {
 
-		public default List<String> getChildLabelLanguageKeys() {
-			return null;
-		}
-
 		public String getLabelLanguageKey();
 
 		public String getModelClassName();
@@ -47,7 +43,11 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 
 		public Scope getScope();
 
-		public default String getTagLabelLanguageKey() {
+		public default List<String> getSubtitleLanguageKeys() {
+			return null;
+		}
+
+		public default String getTagLanguageKey() {
 			return null;
 		}
 

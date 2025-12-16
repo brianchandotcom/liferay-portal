@@ -154,9 +154,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	public static final String DOWNLOAD_BUNDLE_TASK_NAME = "downloadBundle";
 
-	public static final String UPGRADE_CODE_TASK_NAME =
-		"upgradeCode";
-
 	public static final String INIT_BUNDLE_TASK_NAME = "initBundle";
 
 	public static final String LIFERAY_CONFIGS_DIR_NAME = "configs";
@@ -187,6 +184,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		"stopDockerContainer";
 
 	public static final String TAG_DOCKER_IMAGE_TASK_NAME = "tagDockerImage";
+
+	public static final String UPGRADE_CODE_TASK_NAME = "upgradeCode";
 
 	public static final String UPGRADE_JAKARTA_TASK_NAME = "upgradeJakarta";
 
@@ -1041,20 +1040,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return download;
 	}
 
-	private FormatSourceTask _addTaskUpgradeCode(Project project) {
-		FormatSourceTask formatSourceTask = GradleUtil.addTask(
-			project, UPGRADE_CODE_TASK_NAME, FormatSourceTask.class);
-
-		formatSourceTask.onlyIf(_skipIfExecutingParentTaskSpec);
-		formatSourceTask.setCheckCategoryNames("Upgrade");
-		formatSourceTask.setDescription(
-			"Runs source code upgrade for breaking changes in the new " +
-				"Liferay version.");
-		formatSourceTask.setGroup("formatting");
-
-		return formatSourceTask;
-	}
-
 	private InitBundleTask _addTaskInitBundle(
 		Project project, Download downloadBundleTask,
 		final WorkspaceExtension workspaceExtension,
@@ -1520,6 +1505,20 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			});
 
 		return dockerStopContainer;
+	}
+
+	private FormatSourceTask _addTaskUpgradeCode(Project project) {
+		FormatSourceTask formatSourceTask = GradleUtil.addTask(
+			project, UPGRADE_CODE_TASK_NAME, FormatSourceTask.class);
+
+		formatSourceTask.onlyIf(_skipIfExecutingParentTaskSpec);
+		formatSourceTask.setCheckCategoryNames("Upgrade");
+		formatSourceTask.setDescription(
+			"Runs source code upgrade for breaking changes in the new " +
+				"Liferay version.");
+		formatSourceTask.setGroup("formatting");
+
+		return formatSourceTask;
 	}
 
 	private FormatSourceTask _addTaskUpgradeJakarta(Project project) {

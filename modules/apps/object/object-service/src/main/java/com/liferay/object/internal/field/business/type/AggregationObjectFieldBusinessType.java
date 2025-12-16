@@ -207,7 +207,7 @@ public class AggregationObjectFieldBusinessType
 								NAME_OBJECT_RELATIONSHIP_NAME)));
 
 			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinition(
+				_objectDefinitionLocalService.getObjectDefinition(
 					objectRelationship.getObjectDefinitionId2());
 
 			if (!Objects.equals(

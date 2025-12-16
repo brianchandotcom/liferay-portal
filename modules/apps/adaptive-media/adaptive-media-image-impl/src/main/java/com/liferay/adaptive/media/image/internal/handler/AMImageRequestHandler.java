@@ -26,6 +26,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.login.AuthLoginGroupSettingsUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -111,6 +112,22 @@ public class AMImageRequestHandler
 				ActionKeys.VIEW);
 		}
 		catch (PortalException portalException) {
+			User user = permissionChecker.getUser();
+
+			if (user.isGuestUser() &&
+				!AuthLoginGroupSettingsUtil.isPromptEnabled(
+					fileEntry.getGroupId())) {
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Guest access denied, masking as " +
+							"NoSuchFileEntryException",
+						portalException);
+				}
+
+				throw new NoSuchFileEntryException(portalException);
+			}
+
 			throw portalException;
 		}
 
@@ -236,8 +253,15 @@ public class AMImageRequestHandler
 
 			return _createRawAdaptiveMedia(fileVersion);
 		}
-		catch (PortalException portalException) {
-			throw new AMRuntimeException.IOException(portalException);
+		catch (NoSuchFileEntryException noSuchFileEntryException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchFileEntryException);
+			}
+
+			return null;
+		}
+		catch (Exception exception) {
+			throw new AMRuntimeException.IOException(exception);
 		}
 	}
 

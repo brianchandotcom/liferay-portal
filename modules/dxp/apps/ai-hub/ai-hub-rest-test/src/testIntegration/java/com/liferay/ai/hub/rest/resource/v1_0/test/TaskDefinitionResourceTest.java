@@ -75,6 +75,7 @@ public class TaskDefinitionResourceTest
 	public void testGetTaskDefinitionsPageWithPagination() {
 	}
 
+	@Override
 	protected TaskDefinition testGetTaskDefinitionsPage_addTaskDefinition(
 		TaskDefinition taskDefinition) {
 

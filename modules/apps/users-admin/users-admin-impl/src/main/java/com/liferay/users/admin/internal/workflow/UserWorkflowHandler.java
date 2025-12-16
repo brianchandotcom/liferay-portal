@@ -97,6 +97,8 @@ public class UserWorkflowHandler extends BaseWorkflowHandler<User> {
 			_userLocalService.completeUserRegistration(user, serviceContext);
 
 			_updateAuditRequestThreadLocal(workflowContext);
+
+			user = _userLocalService.getUser(userId);
 		}
 
 		return _userLocalService.updateStatus(user, status, serviceContext);

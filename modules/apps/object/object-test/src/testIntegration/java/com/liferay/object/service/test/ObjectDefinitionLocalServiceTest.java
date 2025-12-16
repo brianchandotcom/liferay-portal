@@ -4038,7 +4038,7 @@ public class ObjectDefinitionLocalServiceTest {
 			objectDefinition.getStorageType());
 		Assert.assertEquals(system, objectDefinition.isSystem());
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_DRAFT, objectDefinition.getStatus());
+			WorkflowConstants.STATUS_EMPTY, objectDefinition.getStatus());
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 

@@ -116,6 +116,7 @@ import com.liferay.server.admin.web.internal.scripting.util.ServerScriptingUtil;
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
 import jakarta.portlet.PortletConfig;
+import jakarta.portlet.PortletException;
 import jakarta.portlet.PortletPreferences;
 import jakarta.portlet.PortletSession;
 import jakarta.portlet.WindowState;
@@ -291,6 +292,21 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		sendRedirect(actionRequest, actionResponse, redirect);
+	}
+
+	@Override
+	public boolean processAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortletException {
+
+		try {
+			return super.processAction(actionRequest, actionResponse);
+		}
+		catch (PortletException portletException) {
+			_log.error(portletException);
+
+			throw portletException;
+		}
 	}
 
 	private static void _resetLogLevels(

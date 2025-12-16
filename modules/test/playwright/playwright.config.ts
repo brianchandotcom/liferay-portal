@@ -95,6 +95,7 @@ import {config as layoutLockedLayoutsWebConfig} from './tests/layout-locked-layo
 import {config as layoutPageTemplateAdminWebConfig} from './tests/layout-page-template-admin-web/main/config';
 import {config as layoutSetPrototypeWebConfig} from './tests/layout-set-prototype-web/main/config';
 import {config as lockedItemsWebConfig} from './tests/locked-items-web/main/config';
+import {config as loginWebMainCaptchaEnableConfig} from './tests/login-web/main-captcha-enable/config';
 import {config as loginWebConfig} from './tests/login-web/main/config';
 import {config as loginWebSetupAdminConfig} from './tests/login-web/setup-admin/config';
 import {config as marketplaceAppManagerWebConfig} from './tests/marketplace-app-manager-web/main/config';
@@ -280,6 +281,7 @@ export default defineConfig({
 		layoutSetPrototypeWebConfig,
 		lockedItemsWebConfig,
 		loginWebConfig,
+		loginWebMainCaptchaEnableConfig,
 		loginWebSetupAdminConfig,
 		marketplaceAppManagerWebConfig,
 		marketplaceConfig,

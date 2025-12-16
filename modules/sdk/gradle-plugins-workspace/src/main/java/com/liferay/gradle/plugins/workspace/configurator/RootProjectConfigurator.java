@@ -273,9 +273,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			project, workspaceExtension, providedModulesConfiguration,
 			verifyProductTask);
 
-		_addTaskUpgradeJakarta(project);
-
 		_addTaskUpgradeCode(project);
+
+		_addTaskUpgradeJakarta(project);
 	}
 
 	public boolean isDefaultRepositoryEnabled() {

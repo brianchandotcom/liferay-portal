@@ -1516,7 +1516,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		formatSourceTask.setDescription(
 			"Runs source code upgrade for breaking changes in the new " +
 				"Liferay version.");
-		formatSourceTask.setGroup("formatting");
+		formatSourceTask.setGroup("build");
 
 		return formatSourceTask;
 	}

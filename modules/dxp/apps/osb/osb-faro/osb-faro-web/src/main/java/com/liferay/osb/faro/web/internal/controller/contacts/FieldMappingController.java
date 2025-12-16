@@ -6,10 +6,12 @@
 package com.liferay.osb.faro.web.internal.controller.contacts;
 
 import com.liferay.osb.faro.engine.client.constants.FieldMappingConstants;
+import com.liferay.osb.faro.engine.client.model.DataSource;
 import com.liferay.osb.faro.engine.client.model.Field;
 import com.liferay.osb.faro.engine.client.model.FieldMapping;
 import com.liferay.osb.faro.engine.client.model.FieldMappingMap;
 import com.liferay.osb.faro.engine.client.model.Results;
+import com.liferay.osb.faro.engine.client.model.provider.LiferayProvider;
 import com.liferay.osb.faro.engine.client.util.OrderByField;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.web.internal.controller.BaseFaroController;
@@ -123,6 +125,7 @@ public class FieldMappingController extends BaseFaroController {
 	@SuppressWarnings("unchecked")
 	public FaroResultsDisplay search(
 			@PathParam("groupId") long groupId,
+			@QueryParam("channelId") long channelId,
 			@QueryParam("context") String context,
 			@QueryParam("displayName") String displayName,
 			@QueryParam("ownerType") String ownerType,
@@ -139,6 +142,14 @@ public class FieldMappingController extends BaseFaroController {
 		}
 
 		if (Objects.equals(context, FieldMappingConstants.CONTEXT_ACCOUNT)) {
+			List<DataSource> dataSources = contactsEngineClient.getDataSources(
+				faroProjectLocalService.getFaroProjectByGroupId(groupId),
+				channelId, LiferayProvider.TYPE);
+
+			if (dataSources.isEmpty()) {
+				return new FaroResultsDisplay();
+			}
+
 			List<FieldMapping> fieldMappings = new ArrayList<>();
 
 			for (FieldMappingMap fieldMappingMap :
@@ -191,7 +202,7 @@ public class FieldMappingController extends BaseFaroController {
 		throws Exception {
 
 		return search(
-			groupId, context, displayName, ownerType, query, cur, delta,
+			groupId, 0L, context, displayName, ownerType, query, cur, delta,
 			orderByType);
 	}
 

@@ -60,6 +60,9 @@ public interface Rels {
 
 	public static final String DATA_SOURCE = "data-source";
 
+	public static final String DATA_SOURCE_CHANNEL_CONNECTED =
+		"data-sources-connected";
+
 	public static final String DATA_SOURCE_DISCONNECT =
 		"data-source-disconnect";
 

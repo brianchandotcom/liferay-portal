@@ -196,9 +196,9 @@ public class SiteConfigurationResourceImpl
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringBundler.concat(
-							"Skipping configuration \"",
+							"Skipping configuration ",
 							configurationScreen.getKey(),
-							"\" because it does not have export capability"),
+							" because it does not have export capability"),
 						unsupportedOperationException);
 				}
 			}
@@ -263,8 +263,8 @@ public class SiteConfigurationResourceImpl
 				throw new NotFoundException(
 					StringBundler.concat(
 						"Unable to find entry for site configuration with ",
-						"external reference code \"",
-						configurationScreen.getKey(), "\""));
+						"external reference code: ",
+						configurationScreen.getKey()));
 			}
 
 			return siteConfiguration;
@@ -288,8 +288,10 @@ public class SiteConfigurationResourceImpl
 
 		if (ArrayUtil.isEmpty(configurations)) {
 			throw new NotFoundException(
-				"Unable to find entry for site configuration with external " +
-					"reference code " + siteConfigurationExternalReferenceCode);
+				StringBundler.concat(
+					"Unable to find entry for site configuration with ",
+					"external reference code: ",
+					siteConfigurationExternalReferenceCode));
 		}
 
 		if (configurations.length > 1) {
@@ -356,9 +358,10 @@ public class SiteConfigurationResourceImpl
 
 			if (configuration == null) {
 				throw new NotFoundException(
-					"Unable to find site configuration with external " +
-						"reference code " +
-							siteConfiguration.getExternalReferenceCode());
+					StringBundler.concat(
+						"Unable to find site configuration with external ",
+						"reference code: ",
+						siteConfiguration.getExternalReferenceCode()));
 			}
 
 			return _toSiteConfiguration(configuration);

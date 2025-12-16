@@ -5,6 +5,8 @@
 
 package com.liferay.portal.settings.configuration.admin.display;
 
+import com.liferay.petra.string.StringBundler;
+
 import jakarta.portlet.RenderRequest;
 import jakarta.portlet.RenderResponse;
 
@@ -26,7 +28,10 @@ public interface PortalSettingsConfigurationScreenContributor {
 			Serializable scopePK)
 		throws Exception {
 
-		return null;
+		throw new UnsupportedOperationException(
+			StringBundler.concat(
+				"Export capability is not implemented for configuration \"",
+				getKey(), "\""));
 	}
 
 	public String getCategoryKey();
@@ -60,6 +65,11 @@ public interface PortalSettingsConfigurationScreenContributor {
 	public default void importProperties(
 			Dictionary<String, Object> properties, Serializable scopePK)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			StringBundler.concat(
+				"Import capability is not implemented for configuration \"",
+				getKey(), "\""));
 	}
 
 	public default boolean isDeprecated() {

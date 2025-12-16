@@ -5,6 +5,8 @@
 
 package com.liferay.configuration.admin.display;
 
+import com.liferay.petra.string.StringBundler;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -23,7 +25,10 @@ public interface ConfigurationScreen {
 			Serializable scopePK)
 		throws Exception {
 
-		return null;
+		throw new UnsupportedOperationException(
+			StringBundler.concat(
+				"Export capability is not implemented for configuration \"",
+				getKey(), "\""));
 	}
 
 	public String getCategoryKey();
@@ -37,6 +42,11 @@ public interface ConfigurationScreen {
 	public default void importProperties(
 			Dictionary<String, Object> properties, Serializable scopePK)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			StringBundler.concat(
+				"Import capability is not implemented for configuration \"",
+				getKey(), "\""));
 	}
 
 	public default boolean isDeprecated() {

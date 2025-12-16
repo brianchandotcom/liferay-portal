@@ -23,7 +23,9 @@ public interface ConfigurationScreen {
 			Serializable scopePK)
 		throws Exception {
 
-		return null;
+		throw new UnsupportedOperationException(
+			"Export capability is not implemented for configuration: " +
+				getKey());
 	}
 
 	public String getCategoryKey();
@@ -37,6 +39,10 @@ public interface ConfigurationScreen {
 	public default void importProperties(
 			Dictionary<String, Object> properties, Serializable scopePK)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"Import capability is not implemented for configuration: " +
+				getKey());
 	}
 
 	public default boolean isDeprecated() {

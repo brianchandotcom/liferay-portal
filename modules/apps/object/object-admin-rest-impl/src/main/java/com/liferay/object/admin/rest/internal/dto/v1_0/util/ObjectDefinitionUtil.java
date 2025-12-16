@@ -321,30 +321,39 @@ public class ObjectDefinitionUtil {
 				setParameterRequired(
 					() -> finalRESTContextPath.matches(".*/\\{\\w+}/.*"));
 				setPermissions(
-					() -> NestedFieldsSupplier.supply(
-						"permissions",
-						nestedFieldNames -> {
-							String permissionName =
-								com.liferay.object.model.ObjectDefinition.class.
-									getName();
+					() -> {
+						if (!FeatureFlagManagerUtil.isEnabled(
+								serviceBuilderObjectDefinition.getCompanyId(),
+								"LPD-35914")) {
 
-							permissionService.checkPermission(
-								user.getGroupId(), permissionName,
-								serviceBuilderObjectDefinition.
-									getObjectDefinitionId());
+							return null;
+						}
 
-							Collection<Permission> permissions =
-								PermissionUtil.getPermissions(
+						return NestedFieldsSupplier.supply(
+							"permissions",
+							nestedFieldNames -> {
+								String permissionName =
+									com.liferay.object.model.ObjectDefinition.
+										class.getName();
+
+								permissionService.checkPermission(
+									user.getGroupId(), permissionName,
 									serviceBuilderObjectDefinition.
-										getCompanyId(),
-									resourceActionLocalService.
-										getResourceActions(permissionName),
-									serviceBuilderObjectDefinition.
-										getObjectDefinitionId(),
-									permissionName, null);
+										getObjectDefinitionId());
 
-							return permissions.toArray(new Permission[0]);
-						}));
+								Collection<Permission> permissions =
+									PermissionUtil.getPermissions(
+										serviceBuilderObjectDefinition.
+											getCompanyId(),
+										resourceActionLocalService.
+											getResourceActions(permissionName),
+										serviceBuilderObjectDefinition.
+											getObjectDefinitionId(),
+										permissionName, null);
+
+								return permissions.toArray(new Permission[0]);
+							});
+					});
 				setPluralLabel(
 					() -> LocalizedMapUtil.getLanguageIdMap(
 						serviceBuilderObjectDefinition.getPluralLabelMap()));

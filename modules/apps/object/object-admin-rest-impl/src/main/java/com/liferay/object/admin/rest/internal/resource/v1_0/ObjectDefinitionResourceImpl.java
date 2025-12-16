@@ -1233,7 +1233,10 @@ public class ObjectDefinitionResourceImpl
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		if (objectDefinition.getPermissions() == null) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-35914") ||
+			(objectDefinition.getPermissions() == null)) {
+
 			serviceContext.setModelPermissions(null);
 
 			return serviceContext;

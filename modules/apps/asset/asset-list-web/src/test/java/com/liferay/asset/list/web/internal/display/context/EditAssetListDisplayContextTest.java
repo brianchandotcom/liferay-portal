@@ -17,6 +17,7 @@ import com.liferay.asset.util.AssetRendererFactoryClassProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -359,7 +360,8 @@ public class EditAssetListDisplayContextTest {
 		return new EditAssetListDisplayContext(
 			assetRendererFactoryClassProvider,
 			Mockito.mock(InfoSearchClassMapperRegistry.class),
-			Mockito.mock(ItemSelector.class), _portletRequest,
+			Mockito.mock(ItemSelector.class),
+			Mockito.mock(ObjectDefinitionLocalService.class), _portletRequest,
 			Mockito.mock(PortletResponse.class),
 			Mockito.mock(SegmentsConfigurationProvider.class),
 			unicodeProperties);

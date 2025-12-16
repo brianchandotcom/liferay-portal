@@ -3,8 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ObjectRelationshipAPI} from '@liferay/object-admin-rest-client-js';
-import {Locator, Page, expect, mergeTests} from '@playwright/test';
+import {
+	ObjectDefinition,
+	ObjectRelationship,
+	ObjectRelationshipAPI,
+} from '@liferay/object-admin-rest-client-js';
+import {Page, expect, mergeTests} from '@playwright/test';
 import fs from 'fs/promises';
 import * as path from 'path';
 import {getComparator} from 'playwright-core/lib/utils';
@@ -17,6 +21,7 @@ import {styleBookPageTest} from '../../../fixtures/styleBookPageTest';
 import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
+import {getSiteHomePageScreenshot} from '../../../utils/getSiteHomePageScreenshot';
 import {getTempDir} from '../../../utils/temp';
 import {companyExportImportPageTest} from './fixtures/companyExportImportPagesTest';
 import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
@@ -41,34 +46,6 @@ const testWithExportImportAtInstanceLevelFF = mergeTests(
 		'LPD-45276': {enabled: true},
 	})
 );
-
-async function getSiteHomePageScreenshot(
-	page: Page,
-	siteKey: string,
-	{staging}: {staging: boolean},
-	mask?: Locator
-) {
-	await page.goto(`/web/${siteKey}${staging ? '-staging' : ''}`);
-
-	const url = page.url();
-
-	await page.goto(`${url}?p_l_mode=preview`, {waitUntil: 'load'});
-
-	await page.waitForFunction(() => document.fonts.ready);
-
-	const screenshot = await page.screenshot({
-		fullPage: true,
-		...(mask ? {mask: [mask]} : {}),
-		path: path.join(
-			getTempDir(),
-			`${siteKey}-${staging ? 'staging' : 'live'}.png`
-		),
-	});
-
-	await page.goto(url);
-
-	return screenshot;
-}
 
 [
 	{name: 'com.liferay.site.initializer.masterclass', shouldFail: true},
@@ -375,7 +352,7 @@ testWithExportImportAtInstanceLevelFF(
 					await apiHelpers.objectEntry.postObjectEntry(
 						{
 							textField: getRandomString(),
-							[objectRelationship.body.name]: [
+							[objectRelationship.name]: [
 								{
 									textField: getRandomString(),
 								},

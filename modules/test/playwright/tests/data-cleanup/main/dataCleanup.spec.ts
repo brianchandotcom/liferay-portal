@@ -43,11 +43,7 @@ test('execute all module cleanup actions', async ({
 
 	// Add releases for Module Cleanup Actions
 
-	const SERVLET_CONTEXT_NAMES = [
-		'com.liferay.amazon.rankings.web',
-		'com.liferay.document.library.file.rank.service',
-		'com.liferay.chat.service',
-	];
+	const SERVLET_CONTEXT_NAMES = ['com.liferay.amazon.rankings.web'];
 
 	const addReleasesScript = `
        import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;

@@ -37,15 +37,15 @@ public class ObjectEntryValuesUtilTest {
 
 	@Test
 	public void testGetTitleFieldValue() {
-		String objectFieldName = RandomTestUtil.randomString();
+		String name = RandomTestUtil.randomString();
 
-		ObjectField objectField = _createObjectField(false, objectFieldName);
+		ObjectField objectField = _createObjectField(false, name);
 
 		Assert.assertNull(
 			ObjectEntryValuesUtil.getTitleFieldValue(
 				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 				Collections.singletonMap(
-					objectFieldName, RandomTestUtil.randomString()),
+					name, RandomTestUtil.randomString()),
 				objectField, null, null));
 
 		String value = RandomTestUtil.randomString();
@@ -55,9 +55,9 @@ public class ObjectEntryValuesUtilTest {
 			ObjectEntryValuesUtil.getTitleFieldValue(
 				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 				Collections.singletonMap(
-					objectFieldName, RandomTestUtil.randomString()),
+					name, RandomTestUtil.randomString()),
 				objectField, null,
-				Collections.singletonMap(objectFieldName, value)));
+				Collections.singletonMap(name, value)));
 		Assert.assertEquals(
 			value,
 			ObjectEntryValuesUtil.getTitleFieldValue(
@@ -65,7 +65,7 @@ public class ObjectEntryValuesUtilTest {
 				HashMapBuilder.<String, Object>put(
 					objectField.getDBColumnName(), value
 				).put(
-					objectFieldName, RandomTestUtil.randomString()
+					name, RandomTestUtil.randomString()
 				).build(),
 				objectField, null,
 				HashMapBuilder.<String, Object>put(
@@ -96,20 +96,20 @@ public class ObjectEntryValuesUtilTest {
 					"objectEntryId", value
 				).build()));
 
-		String objectFieldName = RandomTestUtil.randomString();
+		String name = RandomTestUtil.randomString();
 
 		Assert.assertEquals(
 			value,
 			ObjectEntryValuesUtil.getValue(
 				RandomTestUtil.randomString(),
-				_createObjectField(false, objectFieldName),
+				_createObjectField(false, name),
 				HashMapBuilder.<String, Object>put(
-					objectFieldName, value
+					name, value
 				).build()));
 
-		objectFieldName = RandomTestUtil.randomString();
+		name = RandomTestUtil.randomString();
 
-		ObjectField objectField = _createObjectField(true, objectFieldName);
+		ObjectField objectField = _createObjectField(true, name);
 
 		Assert.assertEquals(
 			value,
@@ -123,20 +123,20 @@ public class ObjectEntryValuesUtilTest {
 						"pt_BR", value
 					).build()
 				).put(
-					objectFieldName, RandomTestUtil.randomString()
+					name, RandomTestUtil.randomString()
 				).build()));
 	}
 
 	@Test
 	public void testGetValueString() {
-		String fieldName = RandomTestUtil.randomString();
+		String name = RandomTestUtil.randomString();
 		String value = RandomTestUtil.randomString();
 
 		Assert.assertEquals(
 			value,
 			ObjectEntryValuesUtil.getValueString(
-				_createObjectField(false, fieldName),
-				Collections.singletonMap(fieldName, value)));
+				_createObjectField(false, name),
+				Collections.singletonMap(name, value)));
 	}
 
 	private ObjectField _createObjectField(boolean localized, String name) {

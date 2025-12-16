@@ -577,3 +577,112 @@ export function localizeField(field, defaultLanguageId, editingLanguageId) {
 		value,
 	};
 }
+
+export function updatePagesOnFieldChange(
+	pages,
+	{
+		fieldUpdateContext,
+		focusedField,
+		newFocusedField,
+		propertyName,
+		propertyValue,
+		repeatableHandler,
+	}
+) {
+	const newName = newFocusedField.fieldName;
+	const oldName = focusedField.fieldName;
+
+	const visitor = new PagesVisitor(pages);
+
+	return visitor.mapFields(
+		(field) => {
+			if (field.fieldName === oldName) {
+				return newFocusedField;
+			}
+
+			if (propertyName === 'name' && oldName !== newName) {
+				if (field.type === FIELD_TYPE_FIELDSET && field.rows) {
+					const rowsPages = [
+						{
+							rows:
+								typeof field.rows === 'string'
+									? JSON.parse(field.rows)
+									: field.rows,
+						},
+					];
+
+					const rowsVisitor = new PagesVisitor(rowsPages);
+
+					const updatedPages = rowsVisitor.mapColumns((column) => ({
+						...column,
+						fields: column.fields.map((nestedFieldName) =>
+							nestedFieldName === oldName
+								? newName
+								: nestedFieldName
+						),
+					}));
+
+					field = updateField(
+						fieldUpdateContext,
+						field,
+						'rows',
+						updatedPages[0].rows
+					);
+				}
+
+				if (field.settingsContext?.pages) {
+					const settingsVisitor = new PagesVisitor(
+						field.settingsContext.pages
+					);
+
+					const newSettingsPages = settingsVisitor.mapFields(
+						(setting) => {
+							if (
+								setting.fieldName === 'validation' &&
+								setting.validation
+							) {
+								return {
+									...setting,
+									validation: {
+										...setting.validation,
+										fieldName:
+											setting.validation.fieldName ===
+											oldName
+												? newName
+												: setting.validation.fieldName,
+									},
+								};
+							}
+
+							return setting;
+						},
+						false,
+						true
+					);
+
+					field = updateField(
+						fieldUpdateContext,
+						field,
+						'settingsContext',
+						{
+							...field.settingsContext,
+							pages: newSettingsPages,
+						}
+					);
+				}
+			}
+
+			if (
+				propertyValue &&
+				propertyName === 'repeatable' &&
+				repeatableHandler
+			) {
+				return repeatableHandler(field);
+			}
+
+			return field;
+		},
+		false,
+		true
+	);
+}

@@ -223,14 +223,11 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 		_getLiferayGlobalObjectConfiguration(
 			HttpServletRequest httpServletRequest) {
 
-		LiferayGlobalObjectConfiguration liferayGlobalObjectConfiguration;
-
 		long companyId = _portal.getCompanyId(httpServletRequest);
 
 		try {
-			liferayGlobalObjectConfiguration =
-				_configurationProvider.getCompanyConfiguration(
-					LiferayGlobalObjectConfiguration.class, companyId);
+			return _configurationProvider.getCompanyConfiguration(
+				LiferayGlobalObjectConfiguration.class, companyId);
 		}
 		catch (ConfigurationException configurationException) {
 			if (_log.isWarnEnabled()) {
@@ -239,13 +236,9 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 					configurationException);
 			}
 
-			liferayGlobalObjectConfiguration =
-				ConfigurableUtil.createConfigurable(
-					LiferayGlobalObjectConfiguration.class,
-					Collections.emptyMap());
+			return ConfigurableUtil.createConfigurable(
+				LiferayGlobalObjectConfiguration.class, Collections.emptyMap());
 		}
-
-		return liferayGlobalObjectConfiguration;
 	}
 
 	private void _renderDisabledMethod(String methodName, StringBundler sb) {

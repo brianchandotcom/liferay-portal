@@ -6,6 +6,9 @@
 package com.liferay.data.cleanup;
 
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
+import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author Maríano Álvaro Sáiz
@@ -20,6 +23,12 @@ public abstract class DataCleanup {
 		doCleanup();
 
 		CacheRegistryUtil.clear();
+
+		if (ReleaseLocalServiceUtil.fetchRelease(getServletContextName()) ==
+				null) {
+
+			_isEnabled.set(false);
+		}
 	}
 
 	public abstract String getLabel();
@@ -28,6 +37,12 @@ public abstract class DataCleanup {
 
 	public abstract String getType();
 
+	public boolean isEnabled() {
+		return _isEnabled.get();
+	}
+
 	protected abstract void doCleanup() throws Exception;
+
+	private final AtomicBoolean _isEnabled = new AtomicBoolean(true);
 
 }

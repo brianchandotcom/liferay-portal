@@ -3,15 +3,17 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {useOutletContext} from 'react-router-dom';
 import ClayTable from '@clayui/table';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {useGetCloudNativeEnvironments} from '~/services/liferay/graphql/cloud-native-environments';
+import {getOrRequestToken} from '~/services/liferay/security/auth/getOrRequestToken';
 import ActivationStatus from '~/features/project/containers/ActivationStatus';
 import PopoverIcon from '~/features/project/containers/ActivationStatus/DXPCloud/components/PopoverIcon';
 import {useAppContext} from '~/features/project/context';
-import {PRODUCT_TYPES} from '~/features/project/utils/constants';
+import DeveloperKeysLayouts from '~/features/project/layouts/DeveloperKeysLayout';
+import {LIST_TYPES, PRODUCT_TYPES} from '~/features/project/utils/constants';
 import i18n from '~/utils/I18n';
 
 const CloudNative = () => {
@@ -24,6 +26,18 @@ const CloudNative = () => {
 	useEffect(() => {
 		setHasSideMenu(true);
 	}, [setHasSideMenu]);
+
+	const [oAuthToken, setOAuthToken] = useState();
+
+	useEffect(() => {
+		const fetchToken = async () => {
+			const token = await getOrRequestToken();
+
+			setOAuthToken(token);
+		};
+
+		fetchToken();
+	}, []);
 
 	const {data} = useGetCloudNativeEnvironments({
 		filter: `accountKey eq '${project?.accountKey}'`,
@@ -101,7 +115,27 @@ const CloudNative = () => {
 						</ClayTable>
 					)
 				)}
+
+				{!cloudNativeEnvironments?.length && (
+					<div className="p-3">
+						{i18n.translate("no-cloud-native-environments-were-found")}
+					</div>
+				)}
 			</div>
+
+			<DeveloperKeysLayouts>
+				<DeveloperKeysLayouts.Inputs
+					accountKey={project.accountKey}
+					downloadTextHelper={i18n.translate(
+						'to-activate-a-local-instance-of-liferay-dxp-download-a-developer-key-for-your-liferay-dxp-version'
+					)}
+					dxpVersion={project.dxpVersion}
+					listType={LIST_TYPES.developerKeyDXPVersion}
+					oAuthToken={oAuthToken}
+					productName="DXP"
+					projectName={project.name}
+				/>
+			</DeveloperKeysLayouts>
 		</>
 	);
 };

@@ -370,6 +370,7 @@
 	"no-activation-keys-found-with-this-search-criteria": "この検索条件に一致するライセンス認証キーが見つかりません",
 	"no-attachments-yet": "まだ添付ファイルはありません",
 	"no-business-events-were-found": "ビジネスイベントは検出されませんでした。",
+	"no-cloud-native-environments-were-found": "クラウドネイティブ環境は見つかりませんでした。",
 	"no-further-edits-can-be-made-when-tickets-are-closed-please-open-a-new-support-ticket-if-assistance-is-needed": "チケットがクローズされると、それ以上の編集はできません。サポートが必要な場合は、新しいサポートチケットを開いてください。",
 	"no-history-of-activity-was-found": "アクティビティ履歴は見つかりませんでした。",
 	"no-projects-match-that-name": "その名前に一致するプロジェクトがありません",

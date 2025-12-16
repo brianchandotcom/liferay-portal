@@ -7,6 +7,7 @@ package com.liferay.oauth2.provider.rest.internal.endpoint.dynamic.registration;
 
 import com.liferay.oauth2.provider.rest.internal.endpoint.dynamic.registration.model.LiferayClientRegistration;
 import com.liferay.oauth2.provider.rest.internal.endpoint.dynamic.registration.model.LiferayClientRegistrationResponse;
+import com.liferay.oauth2.provider.rest.internal.endpoint.liferay.LiferayOAuthDataProvider;
 import com.liferay.oauth2.provider.util.OAuth2SecureRandomGenerator;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -28,12 +29,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.cxf.jaxrs.utils.ExceptionUtils;
-import org.apache.cxf.jaxrs.utils.JAXRSUtils;
 import org.apache.cxf.rs.security.oauth2.common.Client;
-import org.apache.cxf.rs.security.oauth2.common.OAuthError;
 import org.apache.cxf.rs.security.oauth2.services.ClientRegistration;
 import org.apache.cxf.rs.security.oauth2.services.DynamicRegistrationService;
+import org.apache.cxf.rs.security.oauth2.utils.OAuthConstants;
 import org.apache.cxf.rs.security.oauth2.utils.OAuthUtils;
 
 /**
@@ -68,6 +67,11 @@ public class LiferayDynamicRegistrationService
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response register(LiferayClientRegistration clientRegistration) {
 		return super.register(clientRegistration);
+	}
+
+	public void setClientProvider(LiferayOAuthDataProvider clientProvider) {
+		_liferayOAuthDataProvider = clientProvider;
+		super.setClientProvider(clientProvider);
 	}
 
 	@Override
@@ -107,10 +111,9 @@ public class LiferayDynamicRegistrationService
 			(allowedGrantTypes.contains("authorization_code") ||
 			 allowedGrantTypes.contains("implicit"))) {
 
-			OAuthError oAuthError = new OAuthError(
-				"invalid_request", "A Redirection URI is required");
-
-			_reportInvalidRequestError(oAuthError);
+			_liferayOAuthDataProvider.throwOAuthError(
+				"A Redirection URI is required", OAuthConstants.INVALID_REQUEST,
+				Response.Status.BAD_REQUEST);
 		}
 
 		List<String> resourceUris = clientRegistration.getResourceUris();
@@ -269,39 +272,22 @@ public class LiferayDynamicRegistrationService
 		if (ListUtil.isEmpty(responseTypes) &&
 			!allowedResponseTypeList.isEmpty()) {
 
-			OAuthError oAuthError = new OAuthError(
-				"invalid_client_metadata",
+			_liferayOAuthDataProvider.throwOAuthError(
 				"A response type '" + allowedResponseTypeList.get(0) +
-					"' is needed to match provided grant types");
-
-			_reportInvalidRequestError(oAuthError);
+					"' is needed to match provided grant types",
+				"invalid_client_metadata", Response.Status.BAD_REQUEST);
 		}
 
 		if (ListUtil.isNotEmpty(responseTypes)) {
 			for (String responseType : responseTypes) {
 				if (!allowedResponseTypeList.contains(responseType)) {
-					OAuthError oAuthError = new OAuthError(
-						"invalid_client_metadata",
+					_liferayOAuthDataProvider.throwOAuthError(
 						"Invalid response type '" + responseType +
-							"' by provided grant types");
-
-					_reportInvalidRequestError(oAuthError);
+							"' by provided grant types",
+						"invalid_client_metadata", Response.Status.BAD_REQUEST);
 				}
 			}
 		}
-	}
-
-	private void _reportInvalidRequestError(OAuthError oAuthError) {
-		Response.ResponseBuilder responseBuilder = JAXRSUtils.toResponseBuilder(
-			400);
-
-		responseBuilder.type(MediaType.APPLICATION_JSON);
-
-		throw ExceptionUtils.toBadRequestException(
-			(Throwable)null,
-			responseBuilder.entity(
-				oAuthError
-			).build());
 	}
 
 	private static final Map<String, String> _responseTypeAllowedByGrantType =
@@ -310,5 +296,7 @@ public class LiferayDynamicRegistrationService
 		).put(
 			"implicit", "token"
 		).build();
+
+	private LiferayOAuthDataProvider _liferayOAuthDataProvider;
 
 }

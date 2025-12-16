@@ -1155,62 +1155,13 @@ public class LayoutCTTest {
 		Assert.assertEquals(
 			CTConstants.CT_CHANGE_TYPE_MODIFICATION, ctEntry2.getChangeType());
 
-		Map<Long, List<ConflictInfo>> conflictInfoMap =
-			_ctCollectionLocalService.checkConflicts(_ctCollection);
-
-		Assert.assertFalse(conflictInfoMap.isEmpty());
-
-		List<ConflictInfo> conflictInfos = conflictInfoMap.get(
-			_classNameLocalService.getClassNameId(Layout.class));
-
-		boolean hasConflict = false;
-
-		for (ConflictInfo conflictInfo : conflictInfos) {
-			if ((conflictInfo.getSourcePrimaryKey() == layout.getPlid()) &&
-				Objects.equals(
-					conflictInfo.getResolutionDescription(
-						conflictInfo.getResourceBundle(LocaleUtil.ENGLISH)),
-					_language.get(
-						LocaleUtil.ENGLISH,
-						"deletion-conflicts-with-modifications-in-another-" +
-							"publication"))) {
-
-				hasConflict = true;
-			}
-		}
-
-		Assert.assertTrue(hasConflict);
+		Assert.assertTrue(_hasDeletionConflict(layout));
 
 		otherCTCollection.setStatus(WorkflowConstants.STATUS_INCOMPLETE);
 
 		_ctCollectionLocalService.updateCTCollection(otherCTCollection);
 
-		Map<Long, List<ConflictInfo>> incompleteConflictInfoMap =
-			_ctCollectionLocalService.checkConflicts(_ctCollection);
-
-		Assert.assertFalse(incompleteConflictInfoMap.isEmpty());
-
-		List<ConflictInfo> incompleteConflictInfos =
-			incompleteConflictInfoMap.get(
-				_classNameLocalService.getClassNameId(Layout.class));
-
-		hasConflict = false;
-
-		for (ConflictInfo conflictInfo : incompleteConflictInfos) {
-			if ((conflictInfo.getSourcePrimaryKey() == layout.getPlid()) &&
-				Objects.equals(
-					conflictInfo.getResolutionDescription(
-						conflictInfo.getResourceBundle(LocaleUtil.ENGLISH)),
-					_language.get(
-						LocaleUtil.ENGLISH,
-						"deletion-conflicts-with-modifications-in-another-" +
-							"publication"))) {
-
-				hasConflict = true;
-			}
-		}
-
-		Assert.assertTrue(hasConflict);
+		Assert.assertTrue(_hasDeletionConflict(layout));
 	}
 
 	@Test
@@ -1412,6 +1363,32 @@ public class LayoutCTTest {
 		finally {
 			CacheRegistryUtil.setActive(active);
 		}
+	}
+
+	private boolean _hasDeletionConflict(Layout layout) throws Exception {
+		Map<Long, List<ConflictInfo>> conflictInfoMap =
+			_ctCollectionLocalService.checkConflicts(_ctCollection);
+
+		Assert.assertFalse(conflictInfoMap.isEmpty());
+
+		List<ConflictInfo> conflictInfos = conflictInfoMap.get(
+			_classNameLocalService.getClassNameId(Layout.class));
+
+		for (ConflictInfo conflictInfo : conflictInfos) {
+			if ((conflictInfo.getSourcePrimaryKey() == layout.getPlid()) &&
+				Objects.equals(
+					conflictInfo.getResolutionDescription(
+						conflictInfo.getResourceBundle(LocaleUtil.ENGLISH)),
+					_language.get(
+						LocaleUtil.ENGLISH,
+						"deletion-conflicts-with-modifications-in-another-" +
+							"publication"))) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private void _lockLayout(Layout layout, User user) throws PortalException {

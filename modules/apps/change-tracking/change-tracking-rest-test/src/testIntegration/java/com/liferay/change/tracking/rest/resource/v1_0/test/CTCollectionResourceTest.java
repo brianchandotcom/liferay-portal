@@ -82,25 +82,15 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 		CTCollection ctCollection = ctCollectionResource.postCTCollection(
 			randomCTCollection());
 
-		com.liferay.change.tracking.model.CTCollection
-			serviceBuilderCTCollection =
-				_ctCollectionLocalService.getCTCollection(ctCollection.getId());
+		_assertCTCollectionActions(
+			List.of("delete", "get", "reactivate"), ctCollection,
+			WorkflowConstants.STATUS_EXPIRED);
 
-		serviceBuilderCTCollection.setStatus(WorkflowConstants.STATUS_EXPIRED);
-
-		_ctCollectionLocalService.updateCTCollection(
-			serviceBuilderCTCollection);
-
-		ctCollection = ctCollectionResource.getCTCollection(
-			ctCollection.getId());
-
-		Map<String, Map<String, String>> actions = ctCollection.getActions();
-
-		Assert.assertEquals(actions.toString(), 3, actions.size());
-
-		Assert.assertTrue(actions.containsKey("delete"));
-		Assert.assertTrue(actions.containsKey("get"));
-		Assert.assertTrue(actions.containsKey("reactivate"));
+		_assertCTCollectionActions(
+			List.of(
+				"checkout", "delete", "get", "permissions", "publish",
+				"schedule", "update"),
+			ctCollection, WorkflowConstants.STATUS_INCOMPLETE);
 	}
 
 	@Override
@@ -447,6 +437,32 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 		throws Exception {
 
 		return ctCollectionResource.postCTCollection(randomCTCollection());
+	}
+
+	private void _assertCTCollectionActions(
+			List<String> actionList, CTCollection ctCollection, int status)
+		throws Exception {
+
+		com.liferay.change.tracking.model.CTCollection
+			serviceBuilderCTCollection =
+				_ctCollectionLocalService.getCTCollection(ctCollection.getId());
+
+		serviceBuilderCTCollection.setStatus(status);
+
+		_ctCollectionLocalService.updateCTCollection(
+			serviceBuilderCTCollection);
+
+		ctCollection = ctCollectionResource.getCTCollection(
+			ctCollection.getId());
+
+		Map<String, Map<String, String>> actions = ctCollection.getActions();
+
+		Assert.assertEquals(
+			actions.toString(), actionList.size(), actions.size());
+
+		for (String action : actionList) {
+			Assert.assertTrue(actions.containsKey(action));
+		}
 	}
 
 	private void _assertHttpResponseProblem(

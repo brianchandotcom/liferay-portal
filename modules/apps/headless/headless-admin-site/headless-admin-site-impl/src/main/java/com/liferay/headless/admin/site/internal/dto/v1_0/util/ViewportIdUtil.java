@@ -17,6 +17,8 @@ public class ViewportIdUtil {
 
 	public static final Map<String, String> externalToInternalValuesMap =
 		HashMapBuilder.put(
+			"Desktop", "desktop"
+		).put(
 			"LandscapeMobile", "landscapeMobile"
 		).put(
 			"PortraitMobile", "portraitMobile"

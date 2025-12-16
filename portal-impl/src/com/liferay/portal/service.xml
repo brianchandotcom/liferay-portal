@@ -640,8 +640,9 @@
 		<column name="faviconFileEntryERC" type="String" />
 		<column name="faviconFileEntryScopeERC" type="String" />
 		<column db-name="masterLPTEERC" name="masterLayoutPageTemplateEntryERC" type="String" />
-		<column name="layoutPrototypeUuid" type="String" />
-		<column name="layoutPrototypeLinkEnabled" type="boolean" />
+		<column db-name="portletLPTEERC" name="portletLayoutPageTemplateEntryERC" type="String" />
+		<column db-name="portletLPTESERC" name="portletLayoutPageTemplateEntryScopeERC" type="String" />
+		<column db-name="portletLPTELE" name="portletLayoutPageTemplateEntryLinkEnabled" type="boolean" />
 		<column name="layoutSetPrototypeLayoutERC" type="String" />
 		<column name="publishDate" type="Date" />
 		<column name="lastPublishDate" type="Date" />
@@ -671,9 +672,6 @@
 		<finder name="IconImageId" return-type="Collection">
 			<finder-column name="iconImageId" />
 		</finder>
-		<finder name="LayoutPrototypeUuid" return-type="Collection" where="system = [$FALSE$]">
-			<finder-column name="layoutPrototypeUuid" />
-		</finder>
 		<finder name="LayoutSetPrototypeLayoutERC" return-type="Collection" where="system = [$FALSE$]">
 			<finder-column name="layoutSetPrototypeLayoutERC" />
 		</finder>
@@ -689,10 +687,6 @@
 			<finder-column name="groupId" />
 			<finder-column name="masterLayoutPageTemplateEntryERC" />
 		</finder>
-		<finder name="C_L" return-type="Collection" where="system = [$FALSE$]">
-			<finder-column name="companyId" />
-			<finder-column name="layoutPrototypeUuid" />
-		</finder>
 		<finder name="P_I" return-type="Collection">
 			<finder-column name="privateLayout" />
 			<finder-column name="iconImageId" />
@@ -700,6 +694,10 @@
 		<finder name="C_C" return-type="Collection">
 			<finder-column name="classNameId" />
 			<finder-column arrayable-operator="OR" name="classPK" />
+		</finder>
+		<finder name="PLPTEERC_PLPTESERC" return-type="Collection" where="system = [$FALSE$]">
+			<finder-column name="portletLayoutPageTemplateEntryERC" />
+			<finder-column name="portletLayoutPageTemplateEntryScopeERC" />
 		</finder>
 		<finder name="G_P_L" return-type="Layout" unique="true">
 			<finder-column name="groupId" />
@@ -735,6 +733,11 @@
 			<finder-column name="groupId" />
 			<finder-column name="privateLayout" />
 			<finder-column arrayable-operator="OR" name="status" />
+		</finder>
+		<finder name="C_PLPTEERC_PLPTESERC" return-type="Collection" where="system = [$FALSE$]">
+			<finder-column name="companyId" />
+			<finder-column name="portletLayoutPageTemplateEntryERC" />
+			<finder-column name="portletLayoutPageTemplateEntryScopeERC" />
 		</finder>
 		<finder name="G_P_P_H" return-type="Collection" where="system = [$FALSE$]">
 			<finder-column name="groupId" />

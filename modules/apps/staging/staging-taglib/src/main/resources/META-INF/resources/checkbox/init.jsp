@@ -9,7 +9,6 @@
 
 <%
 boolean checked = GetterUtil.getBoolean(request.getAttribute("liferay-staging:checkbox:checked"));
-List<String> childLabelKeys = (List<String>)request.getAttribute("liferay-staging:checkbox:childLabels");
 long deletions = GetterUtil.getLong(request.getAttribute("liferay-staging:checkbox:deletions"));
 String descriptionKey = GetterUtil.getString(request.getAttribute("liferay-staging:checkbox:description"));
 boolean disabled = GetterUtil.getBoolean(request.getAttribute("liferay-staging:checkbox:disabled"));
@@ -19,8 +18,9 @@ long items = GetterUtil.getLong(request.getAttribute("liferay-staging:checkbox:i
 String labelKey = GetterUtil.getString(request.getAttribute("liferay-staging:checkbox:label"));
 String name = GetterUtil.getString(request.getAttribute("liferay-staging:checkbox:name"));
 String popoverTextKey = GetterUtil.getString(request.getAttribute("liferay-staging:checkbox:popover"));
+List<String> subtitleKeys = (List<String>)request.getAttribute("liferay-staging:checkbox:subtitles");
 String suggestionKey = GetterUtil.getString(request.getAttribute("liferay-staging:checkbox:suggestion"));
-String tagLabelKey = GetterUtil.getString(request.getAttribute("liferay-staging:checkbox:tagLabel"));
+String tagKey = GetterUtil.getString(request.getAttribute("liferay-staging:checkbox:tag"));
 String warningKey = GetterUtil.getString(request.getAttribute("liferay-staging:checkbox:warning"));
 
 if (Validator.isNull(id)) {
@@ -32,7 +32,6 @@ if (!ignoreRequestValue && Validator.isNotNull(ParamUtil.getString(request, "che
 }
 
 String checkedString = checked ? "checked" : "";
-String childLabels = StringUtil.merge(TransformUtil.transform(childLabelKeys, childLabelKey -> LanguageUtil.get(request, childLabelKey)), StringPool.COMMA_AND_SPACE);
 String description = LanguageUtil.get(request, descriptionKey);
 String disabledString = disabled ? "disabled" : "";
 String domId = liferayPortletResponse.getNamespace() + id;
@@ -40,8 +39,9 @@ String domName = liferayPortletResponse.getNamespace() + name;
 String label = LanguageUtil.get(request, labelKey);
 String popoverName = name + "_popover";
 String popoverText = Validator.isNull(popoverTextKey) ? " " : LanguageUtil.get(request, popoverTextKey);
+String subtitles = StringUtil.merge(TransformUtil.transform(subtitleKeys, subtitleKey -> LanguageUtil.get(request, subtitleKey)), StringPool.COMMA_AND_SPACE);
 String suggestion = LanguageUtil.get(request, suggestionKey);
-String tagLabel = LanguageUtil.get(request, tagLabelKey);
+String tag = LanguageUtil.get(request, tagKey);
 String warning = LanguageUtil.get(request, warningKey);
 
 String separator = Validator.isNotNull(description + suggestion + warning) ? ":" : "";

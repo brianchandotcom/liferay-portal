@@ -11,10 +11,10 @@
 			<%= HtmlUtil.escape(label) %><%= separator %>
 		</strong>
 
-		<c:if test="<%= Validator.isNotNull(tagLabel) %>">
+		<c:if test="<%= Validator.isNotNull(tag) %>">
 			<clay:label
 				displayType="primary"
-				label="<%= HtmlUtil.escape(tagLabel) %>"
+				label="<%= HtmlUtil.escape(tag) %>"
 			/>
 		</c:if>
 

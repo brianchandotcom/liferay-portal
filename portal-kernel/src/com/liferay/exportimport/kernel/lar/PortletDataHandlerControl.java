@@ -25,21 +25,6 @@ public class PortletDataHandlerControl {
 			StringPool.UNDERLINE, namespace, StringPool.UNDERLINE, controlName);
 	}
 
-	public PortletDataHandlerControl(
-		String namespace, List<String> controlChildLabels, String controlName,
-		String controlLabel, String controlTagLabel, boolean disabled,
-		String className, String referrerClassName) {
-
-		_namespace = namespace;
-		_controlChildLabels = controlChildLabels;
-		_controlName = controlName;
-		_controlLabel = controlLabel;
-		_controlTagLabel = controlTagLabel;
-		_disabled = disabled;
-		_className = className;
-		_referrerClassName = referrerClassName;
-	}
-
 	public PortletDataHandlerControl(String namespace, String controlName) {
 		this(namespace, controlName, false);
 	}
@@ -77,16 +62,27 @@ public class PortletDataHandlerControl {
 		_className = className;
 		_referrerClassName = referrerClassName;
 
-		_controlChildLabels = null;
-		_controlTagLabel = null;
+		_controlSubtitles = null;
+		_controlTag = null;
+	}
+
+	public PortletDataHandlerControl(
+		String namespace, String controlName, String controlLabel,
+		List<String> controlSubtitles, String controlTag, boolean disabled,
+		String className, String referrerClassName) {
+
+		_namespace = namespace;
+		_controlName = controlName;
+		_controlLabel = controlLabel;
+		_controlSubtitles = controlSubtitles;
+		_controlTag = controlTag;
+		_disabled = disabled;
+		_className = className;
+		_referrerClassName = referrerClassName;
 	}
 
 	public String getClassName() {
 		return _className;
-	}
-
-	public List<String> getControlChildLabels() {
-		return _controlChildLabels;
 	}
 
 	public String getControlLabel() {
@@ -97,8 +93,12 @@ public class PortletDataHandlerControl {
 		return _controlName;
 	}
 
-	public String getControlTagLabel() {
-		return _controlTagLabel;
+	public List<String> getControlSubtitles() {
+		return _controlSubtitles;
+	}
+
+	public String getControlTag() {
+		return _controlTag;
 	}
 
 	public String getHelpMessage(Locale locale, String action) {
@@ -136,10 +136,10 @@ public class PortletDataHandlerControl {
 	}
 
 	private final String _className;
-	private final List<String> _controlChildLabels;
 	private final String _controlLabel;
 	private final String _controlName;
-	private final String _controlTagLabel;
+	private final List<String> _controlSubtitles;
+	private final String _controlTag;
 	private final boolean _disabled;
 	private String _namespace;
 	private final String _referrerClassName;

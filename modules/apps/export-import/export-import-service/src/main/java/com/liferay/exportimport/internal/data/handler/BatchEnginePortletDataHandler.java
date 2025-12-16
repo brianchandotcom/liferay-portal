@@ -562,10 +562,10 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			exportImportDescriptor = registration.getExportImportDescriptor();
 
 		return new PortletDataHandlerBoolean(
-			getPortletId(), exportImportDescriptor.getChildLabelLanguageKeys(),
-			exportImportDescriptor.getResourceClassName(),
+			getPortletId(), exportImportDescriptor.getResourceClassName(),
 			exportImportDescriptor.getLabelLanguageKey(),
-			exportImportDescriptor.getTagLabelLanguageKey(), true, false, null,
+			exportImportDescriptor.getSubtitleLanguageKeys(),
+			exportImportDescriptor.getTagLanguageKey(), true, false, null,
 			exportImportDescriptor.getResourceClassName(), null);
 	}
 

@@ -12,12 +12,16 @@ import com.liferay.batch.planner.rest.client.http.HttpInvoker;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.io.InputStream;
+
+import java.util.Arrays;
 import java.util.Collections;
 
 import org.junit.Assert;
@@ -53,17 +57,38 @@ public class PlanResourceTest extends BasePlanResourceTestCase {
 					).build()),
 				false);
 
-		HttpInvoker.HttpResponse httpResponse =
+		HttpInvoker.HttpResponse httpResponse1 =
 			planResource.getPlanTemplateHttpResponse(
 				"com.liferay.object.rest.dto.v1_0.ObjectEntry" +
 					URLCodec.encodeURL("#") + objectDefinition.getName());
 
-		Assert.assertEquals(200, httpResponse.getStatusCode());
+		Assert.assertEquals(200, httpResponse1.getStatusCode());
 
 		String[] lines = StringUtil.split(
-			httpResponse.getContent(), System.lineSeparator());
+			httpResponse1.getContent(), System.lineSeparator());
 
 		Assert.assertTrue(StringUtil.contains(lines[0], fieldName));
+
+		HttpInvoker.HttpResponse httpResponse2 =
+			planResource.getPlanTemplateHttpResponse(
+				"com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition");
+
+		Assert.assertEquals(200, httpResponse2.getStatusCode());
+
+		lines = StringUtil.split(
+			httpResponse2.getContent(), System.lineSeparator());
+
+		lines = _sortCSVHeaderAndSingleRow(lines);
+
+		String planTemplateString = StreamUtil.toString(_getInputStream());
+
+		String[] expectedLines = StringUtil.split(
+			planTemplateString, System.lineSeparator());
+
+		Assert.assertEquals(
+			Arrays.toString(lines), expectedLines.length, lines.length);
+		Assert.assertEquals(expectedLines[0], lines[0]);
+		Assert.assertEquals(expectedLines[1], lines[1]);
 	}
 
 	@Override
@@ -167,6 +192,40 @@ public class PlanResourceTest extends BasePlanResourceTestCase {
 
 	private Plan _addPlan(Plan plan) throws Exception {
 		return planResource.postPlan(plan);
+	}
+
+	private InputStream _getInputStream() {
+		return PlanResourceTest.class.getClassLoader(
+		).getResourceAsStream(
+			"com/liferay/batch/planner/rest/resource/v1_0/test/dependencies" +
+				"/object_definition_template.csv"
+		);
+	}
+
+	private String[] _sortCSVHeaderAndSingleRow(String[] csvLines) {
+		String[] headers = StringUtil.split(csvLines[0], ',');
+		String[] dataRow = StringUtil.split(csvLines[1], ',');
+
+		Integer[] order = new Integer[headers.length];
+
+		for (int i = 0; i < headers.length; i++) {
+			order[i] = i;
+		}
+
+		Arrays.sort(order, (i, j) -> headers[i].compareTo(headers[j]));
+
+		String[] sortedHeaders = new String[headers.length];
+		String[] sortedDataRow = new String[headers.length];
+
+		for (int i = 0; i < order.length; i++) {
+			sortedHeaders[i] = headers[order[i]];
+			sortedDataRow[i] = dataRow[order[i]];
+		}
+
+		return new String[] {
+			StringUtil.merge(sortedHeaders, ","),
+			StringUtil.merge(sortedDataRow, ",")
+		};
 	}
 
 	private Plan _plan;

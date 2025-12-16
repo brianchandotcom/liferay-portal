@@ -150,7 +150,13 @@ const TranslateFieldEditor = ({
 	const editorRef = useRef<any>();
 	const internalUpdateRef = useRef(true);
 
-	const onReady = (editor: TEditor) => {
+	const handleOnChange = (data: string) => {
+		setContent(data);
+
+		onChange(data);
+	};
+
+	const handleOnReady = (editor: TEditor) => {
 		const sourceEditingPlugin: SourceEditing =
 			editor.plugins.get('SourceEditing');
 
@@ -181,11 +187,7 @@ const TranslateFieldEditor = ({
 				}
 
 				textarea.addEventListener('input', () => {
-					const data = editor.getData();
-
-					setContent(data);
-
-					onChange(data);
+					handleOnChange(editor.getData());
 				});
 			}
 		});
@@ -230,13 +232,9 @@ const TranslateFieldEditor = ({
 								},
 							}}
 							onChange={(event, editor) => {
-								const data = editor.getData();
-
-								setContent(data);
-
-								onChange(data);
+								handleOnChange(editor.getData());
 							}}
-							onReady={onReady}
+							onReady={handleOnReady}
 						/>
 					) : (
 						<ClassicEditor
@@ -246,9 +244,7 @@ const TranslateFieldEditor = ({
 							}}
 							name={id}
 							onChange={(data: string) => {
-								setContent(data);
-
-								onChange(data);
+								handleOnChange(data);
 
 								internalUpdateRef.current = true;
 							}}

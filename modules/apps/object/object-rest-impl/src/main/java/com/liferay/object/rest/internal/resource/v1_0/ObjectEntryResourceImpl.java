@@ -36,8 +36,6 @@ import com.liferay.object.tree.Tree;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.comment.CommentManager;
-import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -86,8 +84,6 @@ public class ObjectEntryResourceImpl
 			   NestedFieldsContextResource {
 
 	public ObjectEntryResourceImpl(
-		CommentManager commentManager,
-		DiscussionPermission discussionPermission,
 		DTOConverterRegistry dtoConverterRegistry,
 		EntityModelProvider entityModelProvider,
 		ObjectDefinition objectDefinition,
@@ -104,8 +100,6 @@ public class ObjectEntryResourceImpl
 		TranslationManager translationManager,
 		UserLocalService userLocalService) {
 
-		_commentManager = commentManager;
-		_discussionPermission = discussionPermission;
 		_dtoConverterRegistry = dtoConverterRegistry;
 		_entityModelProvider = entityModelProvider;
 		_objectDefinition = objectDefinition;
@@ -1719,8 +1713,6 @@ public class ObjectEntryResourceImpl
 	private static final Map<String, String> _xliffMimeTypes = Map.of(
 		"1.2", "application/x-xliff+xml", "2.0", "application/xliff+xml");
 
-	private final CommentManager _commentManager;
-	private final DiscussionPermission _discussionPermission;
 	private final DTOConverterRegistry _dtoConverterRegistry;
 	private final EntityModelProvider _entityModelProvider;
 

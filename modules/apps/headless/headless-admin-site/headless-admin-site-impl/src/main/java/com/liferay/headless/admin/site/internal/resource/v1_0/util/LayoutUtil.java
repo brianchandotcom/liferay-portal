@@ -9,8 +9,6 @@ import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.service.ClientExtensionEntryRelLocalServiceUtil;
 import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.manager.CETManager;
-import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.headless.admin.site.dto.v1_0.ClientExtension;
@@ -27,6 +25,8 @@ import com.liferay.headless.admin.site.dto.v1_0.WidgetLookAndFeelConfig;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSection;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageWidgetInstance;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.FileEntryUtil;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.ItemScopeUtil;
 import com.liferay.headless.admin.site.internal.util.LogUtil;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
@@ -67,7 +67,6 @@ import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.custom.field.CustomFieldsUtil;
-import com.liferay.portal.vulcan.scope.Scope;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceServiceUtil;
@@ -947,28 +946,16 @@ public class LayoutUtil {
 				faviconFileEntryERC =
 					favIconItemExternalReference.getExternalReferenceCode();
 
-				long groupId = serviceContext.getScopeGroupId();
+				faviconFileEntryScopeERC =
+					ItemScopeUtil.getItemScopeExternalReferenceCode(
+						favIconItemExternalReference.getScope(),
+						serviceContext.getScopeGroupId());
 
-				Scope scope = favIconItemExternalReference.getScope();
-
-				if (scope != null) {
-					faviconFileEntryScopeERC = scope.getExternalReferenceCode();
-
-					groupId = GroupUtil.getGroupId(
-						true, true, serviceContext.getCompanyId(),
-						faviconFileEntryScopeERC);
-				}
-
-				DLFileEntry dlFileEntry =
-					DLFileEntryLocalServiceUtil.
-						fetchFileEntryByExternalReferenceCode(
-							groupId, faviconFileEntryERC);
-
-				if (dlFileEntry == null) {
-					LogUtil.logOptionalReference(
-						DLFileEntry.class.getName(), faviconFileEntryERC, scope,
-						groupId);
-				}
+				FileEntryUtil.fetchFileEntryByExternalReferenceCode(
+					serviceContext.getCompanyId(),
+					favIconItemExternalReference.getExternalReferenceCode(),
+					favIconItemExternalReference.getScope(),
+					serviceContext.getScopeGroupId());
 			}
 		}
 

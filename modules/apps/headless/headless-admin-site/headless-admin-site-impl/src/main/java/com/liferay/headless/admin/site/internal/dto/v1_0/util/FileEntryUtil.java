@@ -26,6 +26,30 @@ import java.util.Objects;
  */
 public class FileEntryUtil {
 
+	public static FileEntry fetchFileEntryByExternalReferenceCode(
+			long companyId, String externalReferenceCode, Scope scope,
+			long scopeGroupId)
+		throws PortalException {
+
+		FileEntry fileEntry = null;
+
+		Long groupId = ItemScopeUtil.getGroupId(companyId, scope, scopeGroupId);
+
+		if (groupId != null) {
+			fileEntry =
+				DLAppLocalServiceUtil.fetchFileEntryByExternalReferenceCode(
+					groupId, externalReferenceCode);
+		}
+
+		if (fileEntry == null) {
+			LogUtil.logOptionalReference(
+				FileEntry.class.getName(), externalReferenceCode, scope,
+				scopeGroupId);
+		}
+
+		return fileEntry;
+	}
+
 	public static ItemExternalReference getFileEntryItemExternalReference(
 			long companyId, JSONObject jsonObject, long scopeGroupId)
 		throws Exception {
@@ -72,7 +96,7 @@ public class FileEntryUtil {
 			long scopeGroupId)
 		throws PortalException {
 
-		FileEntry fileEntry = _fetchFileEntryByExternalReferenceCode(
+		FileEntry fileEntry = fetchFileEntryByExternalReferenceCode(
 			companyId, externalReferenceCode, scope, scopeGroupId);
 
 		if (fileEntry == null) {
@@ -123,30 +147,6 @@ public class FileEntryUtil {
 		}
 
 		return false;
-	}
-
-	private static FileEntry _fetchFileEntryByExternalReferenceCode(
-			long companyId, String externalReferenceCode, Scope scope,
-			long scopeGroupId)
-		throws PortalException {
-
-		FileEntry fileEntry = null;
-
-		Long groupId = ItemScopeUtil.getGroupId(companyId, scope, scopeGroupId);
-
-		if (groupId != null) {
-			fileEntry =
-				DLAppLocalServiceUtil.fetchFileEntryByExternalReferenceCode(
-					groupId, externalReferenceCode);
-		}
-
-		if (fileEntry == null) {
-			LogUtil.logOptionalReference(
-				FileEntry.class.getName(), externalReferenceCode, scope,
-				scopeGroupId);
-		}
-
-		return fileEntry;
 	}
 
 	private static String _getImagePreviewURL(FileEntry fileEntry)

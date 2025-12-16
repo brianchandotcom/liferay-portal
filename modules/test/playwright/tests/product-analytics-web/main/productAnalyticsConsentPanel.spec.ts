@@ -12,8 +12,10 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {productAnalyticsPagesTest} from '../../../fixtures/productAnalyticsPagesTest';
 import {siteSettingsPagesTest} from '../../../fixtures/siteSettingsPagesTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
+import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import {ApiHelpers} from '../../../helpers/ApiHelpers';
 import {AccountSettingsPage} from '../../../pages/users-admin-web/AccountSettingsPage';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import performLogin, {userData} from '../../../utils/performLogin';
 import {
 	OptionalProductAnalyticsCookieTypes,
@@ -40,7 +42,8 @@ export const test = mergeTests(
 	loginTest(),
 	productAnalyticsPagesTest,
 	siteSettingsPagesTest,
-	systemSettingsPageTest
+	systemSettingsPageTest,
+	usersAndOrganizationsPagesTest
 );
 
 test.afterEach(async ({page}) => {
@@ -114,6 +117,31 @@ test(
 		);
 
 		await expect(await dataAndPrivacyTab).toBeVisible();
+	}
+);
+
+test(
+	'Verify back button is showing on the top left of the Data and Privacy screen',
+	{tag: '@LPD-73820'},
+	async ({page, usersAndOrganizationsPage}) => {
+		await usersAndOrganizationsPage.goToUsers();
+
+		await usersAndOrganizationsPage.goToUser('Test Test');
+
+		await usersAndOrganizationsPage.page
+			.locator('.nav-link', {
+				hasText: 'Data And Privacy',
+			})
+			.click();
+
+		await clickAndExpectToBeVisible({
+			target: page.getByText('Edit User Test Test', {
+				exact: true,
+			}),
+			trigger: usersAndOrganizationsPage.page.locator('.nav-link', {
+				hasText: 'Data And Privacy',
+			}),
+		});
 	}
 );
 

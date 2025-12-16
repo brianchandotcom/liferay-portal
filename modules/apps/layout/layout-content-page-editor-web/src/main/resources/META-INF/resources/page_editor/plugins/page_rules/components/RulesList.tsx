@@ -22,6 +22,7 @@ import {useHighlightItems, useKeyboardNavigation} from '../../../app/js-index';
 import selectLayoutDataItemLabel from '../../../app/selectors/selectLayoutDataItemLabel';
 import deleteRule from '../../../app/thunks/deleteRule';
 import updateRule from '../../../app/thunks/updateRule';
+import {isAdvancedRule} from '../../../app/utils/isAdvancedRule';
 import {isLayoutDataItemDeleted} from '../../../app/utils/isLayoutDataItemDeleted';
 import useActionValues, {
 	ActionValues,
@@ -194,11 +195,15 @@ function RuleItem({
 			}))
 	);
 
-	const conditions = useConditionValues({...rule, items});
+	const conditions = useConditionValues({
+		...rule,
+		conditions: rule.conditions || [],
+		items,
+	});
 	const actions = useActionValues({...rule, items});
 
 	const ruleItemIds = useMemo(
-		() => getRuleItemIds(rule.actions, rule.conditions),
+		() => getRuleItemIds(rule.actions, rule.conditions || []),
 		[rule.actions, rule.conditions]
 	);
 
@@ -367,22 +372,30 @@ function RuleItem({
 				className={classNames('mt-3', {'text-muted': isRuleDisabled})}
 				expand
 			>
-				<p
-					aria-hidden="true"
-					className="align-items-center c-gap-2 d-flex flex-wrap"
-				>
-					{conditions.map((condition, index) => (
-						<Condition
-							condition={condition}
-							index={index}
-							key={condition.id}
-						/>
-					))}
+				{isAdvancedRule(rule) ? (
+					<p className="mb-0">
+						<ClayLabel className="m-0" displayType="info">
+							{Liferay.Language.get('advanced-rule')}
+						</ClayLabel>
+					</p>
+				) : (
+					<p
+						aria-hidden="true"
+						className="align-items-center c-gap-2 d-flex flex-wrap"
+					>
+						{conditions.map((condition, index) => (
+							<Condition
+								condition={condition}
+								index={index}
+								key={condition.id}
+							/>
+						))}
 
-					{actions.map((action) => (
-						<Action action={action} key={action.id} />
-					))}
-				</p>
+						{actions.map((action) => (
+							<Action action={action} key={action.id} />
+						))}
+					</p>
+				)}
 			</ClayList.ItemField>
 		</ClayList.Item>
 	);

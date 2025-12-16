@@ -23,6 +23,8 @@ import java.io.InputStream;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Map;
+import java.util.TreeMap;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -78,7 +80,7 @@ public class PlanResourceTest extends BasePlanResourceTestCase {
 		lines = StringUtil.split(
 			httpResponse2.getContent(), System.lineSeparator());
 
-		lines = _sortCSVHeaderAndSingleRow(lines);
+		lines = _sortCSVHeaderAndRows(lines);
 
 		String planTemplateString = StreamUtil.toString(_getInputStream());
 
@@ -202,29 +204,27 @@ public class PlanResourceTest extends BasePlanResourceTestCase {
 		);
 	}
 
-	private String[] _sortCSVHeaderAndSingleRow(String[] csvLines) {
+	private String[] _sortCSVHeaderAndRows(String[] csvLines) {
+		if (csvLines.length < 2) {
+			return csvLines;
+		}
+
 		String[] headers = StringUtil.split(csvLines[0], ',');
 		String[] dataRow = StringUtil.split(csvLines[1], ',');
 
-		Integer[] order = new Integer[headers.length];
-
-		for (int i = 0; i < headers.length; i++) {
-			order[i] = i;
+		if (headers.length != dataRow.length) {
+			return csvLines;
 		}
 
-		Arrays.sort(order, (i, j) -> headers[i].compareTo(headers[j]));
+		Map<String, String> map = new TreeMap<>();
 
-		String[] sortedHeaders = new String[headers.length];
-		String[] sortedDataRow = new String[headers.length];
-
-		for (int i = 0; i < order.length; i++) {
-			sortedHeaders[i] = headers[order[i]];
-			sortedDataRow[i] = dataRow[order[i]];
+		for (int i = 0; i < headers.length; i++) {
+			map.put(headers[i], dataRow[i]);
 		}
 
 		return new String[] {
-			StringUtil.merge(sortedHeaders, ","),
-			StringUtil.merge(sortedDataRow, ",")
+			StringUtil.merge(map.keySet(), ","),
+			StringUtil.merge(map.values(), ",")
 		};
 	}
 

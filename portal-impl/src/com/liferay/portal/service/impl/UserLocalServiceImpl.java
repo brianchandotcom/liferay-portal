@@ -1939,11 +1939,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 				user.setPassword(PasswordEncryptorUtil.encrypt(password));
 				user.setPasswordEncrypted(true);
+				user.setPasswordModified(true);
 				user.setPasswordUnencrypted(password);
 			}
 
 			user.setPasswordModifiedDate(new Date());
-			user.setPasswordModified(true);
 
 			user = userPersistence.update(user);
 

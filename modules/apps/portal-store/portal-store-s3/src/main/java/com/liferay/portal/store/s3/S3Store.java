@@ -101,7 +101,7 @@ public class S3Store implements Store {
 		List<MultipartUpload> multipartUploads = new ArrayList<>();
 
 		try {
-			CompletableFuture<Void> completableFuture =
+			CompletableFuture<Void> listMultipartUploadsCompletableFuture =
 				listMultipartUploadsPublisher.subscribe(
 					response -> {
 						for (MultipartUpload multipartUpload :
@@ -116,23 +116,20 @@ public class S3Store implements Store {
 						}
 					});
 
-			completableFuture.join();
-		}
-		catch (CompletionException completionException) {
-			throw _transform(completionException.getCause());
-		}
+			listMultipartUploadsCompletableFuture.join();
 
-		try {
 			for (MultipartUpload multipartUpload : multipartUploads) {
 				CompletableFuture<AbortMultipartUploadResponse>
-					completableFuture = _s3AsyncClient.abortMultipartUpload(
-						builder -> {
-							builder.bucket(_s3StoreConfiguration.bucketName());
-							builder.key(multipartUpload.key());
-							builder.uploadId(multipartUpload.uploadId());
-						});
+					abortMultipartUploadCompletableFuture =
+						_s3AsyncClient.abortMultipartUpload(
+							builder -> {
+								builder.bucket(
+									_s3StoreConfiguration.bucketName());
+								builder.key(multipartUpload.key());
+								builder.uploadId(multipartUpload.uploadId());
+							});
 
-				completableFuture.join();
+				abortMultipartUploadCompletableFuture.join();
 			}
 		}
 		catch (CompletionException completionException) {

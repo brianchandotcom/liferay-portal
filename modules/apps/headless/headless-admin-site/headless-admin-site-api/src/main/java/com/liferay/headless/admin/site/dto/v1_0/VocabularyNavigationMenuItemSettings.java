@@ -1,0 +1,551 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.headless.admin.site.dto.v1_0;
+
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+import com.liferay.portal.vulcan.util.ObjectMapperUtil;
+
+import jakarta.annotation.Generated;
+
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+import java.io.Serializable;
+
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.function.Supplier;
+
+/**
+ * @author Rubén Pulido
+ * @generated
+ */
+@Generated("")
+@GraphQLName(
+	description = "Type-specific settings for \"Category\" and \"Vocabulary\" navigation menu item types.",
+	value = "VocabularyNavigationMenuItemSettings"
+)
+@JsonFilter("Liferay.Vulcan")
+@XmlRootElement(name = "VocabularyNavigationMenuItemSettings")
+public class VocabularyNavigationMenuItemSettings implements Serializable {
+
+	public static VocabularyNavigationMenuItemSettings toDTO(String json) {
+		return ObjectMapperUtil.readValue(
+			VocabularyNavigationMenuItemSettings.class, json);
+	}
+
+	public static VocabularyNavigationMenuItemSettings unsafeToDTO(
+		String json) {
+
+		return ObjectMapperUtil.unsafeReadValue(
+			VocabularyNavigationMenuItemSettings.class, json);
+	}
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The class name of the entity that this navigation menu item is set to."
+	)
+	public String getClassName() {
+		if (_classNameSupplier != null) {
+			className = _classNameSupplier.get();
+
+			_classNameSupplier = null;
+		}
+
+		return className;
+	}
+
+	public void setClassName(String className) {
+		this.className = className;
+
+		_classNameSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setClassName(
+		UnsafeSupplier<String, Exception> classNameUnsafeSupplier) {
+
+		_classNameSupplier = () -> {
+			try {
+				return classNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "The class name of the entity that this navigation menu item is set to."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String className;
+
+	@JsonIgnore
+	private Supplier<String> _classNameSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The external reference code of the entity that this navigation menu item is set to."
+	)
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCodeSupplier != null) {
+			externalReferenceCode = _externalReferenceCodeSupplier.get();
+
+			_externalReferenceCodeSupplier = null;
+		}
+
+		return externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		this.externalReferenceCode = externalReferenceCode;
+
+		_externalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setExternalReferenceCode(
+		UnsafeSupplier<String, Exception> externalReferenceCodeUnsafeSupplier) {
+
+		_externalReferenceCodeSupplier = () -> {
+			try {
+				return externalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "The external reference code of the entity that this navigation menu item is set to."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String externalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _externalReferenceCodeSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The external reference code of the site associated with the entity that this navigation menu item is set to."
+	)
+	public String getScopeExternalReferenceCode() {
+		if (_scopeExternalReferenceCodeSupplier != null) {
+			scopeExternalReferenceCode =
+				_scopeExternalReferenceCodeSupplier.get();
+
+			_scopeExternalReferenceCodeSupplier = null;
+		}
+
+		return scopeExternalReferenceCode;
+	}
+
+	public void setScopeExternalReferenceCode(
+		String scopeExternalReferenceCode) {
+
+		this.scopeExternalReferenceCode = scopeExternalReferenceCode;
+
+		_scopeExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setScopeExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			scopeExternalReferenceCodeUnsafeSupplier) {
+
+		_scopeExternalReferenceCodeSupplier = () -> {
+			try {
+				return scopeExternalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "The external reference code of the site associated with the entity that this navigation menu item is set to."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String scopeExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _scopeExternalReferenceCodeSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Whether to display the vocabulary's name as the first level with children nested a level deeper. If false, only vocabulary's children are displayed at the top level."
+	)
+	public Boolean getShowAssetVocabularyLevel() {
+		if (_showAssetVocabularyLevelSupplier != null) {
+			showAssetVocabularyLevel = _showAssetVocabularyLevelSupplier.get();
+
+			_showAssetVocabularyLevelSupplier = null;
+		}
+
+		return showAssetVocabularyLevel;
+	}
+
+	public void setShowAssetVocabularyLevel(Boolean showAssetVocabularyLevel) {
+		this.showAssetVocabularyLevel = showAssetVocabularyLevel;
+
+		_showAssetVocabularyLevelSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setShowAssetVocabularyLevel(
+		UnsafeSupplier<Boolean, Exception>
+			showAssetVocabularyLevelUnsafeSupplier) {
+
+		_showAssetVocabularyLevelSupplier = () -> {
+			try {
+				return showAssetVocabularyLevelUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "Whether to display the vocabulary's name as the first level with children nested a level deeper. If false, only vocabulary's children are displayed at the top level."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean showAssetVocabularyLevel;
+
+	@JsonIgnore
+	private Supplier<Boolean> _showAssetVocabularyLevelSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The title or name of the entity that this navigation menu item is set to."
+	)
+	public String getTitle() {
+		if (_titleSupplier != null) {
+			title = _titleSupplier.get();
+
+			_titleSupplier = null;
+		}
+
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+
+		_titleSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setTitle(
+		UnsafeSupplier<String, Exception> titleUnsafeSupplier) {
+
+		_titleSupplier = () -> {
+			try {
+				return titleUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "The title or name of the entity that this navigation menu item is set to."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String title;
+
+	@JsonIgnore
+	private Supplier<String> _titleSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The type of the underlying entity that this navigation menu item is set to."
+	)
+	public String getType() {
+		if (_typeSupplier != null) {
+			type = _typeSupplier.get();
+
+			_typeSupplier = null;
+		}
+
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+
+		_typeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setType(UnsafeSupplier<String, Exception> typeUnsafeSupplier) {
+		_typeSupplier = () -> {
+			try {
+				return typeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "The type of the underlying entity that this navigation menu item is set to."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String type;
+
+	@JsonIgnore
+	private Supplier<String> _typeSupplier;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof VocabularyNavigationMenuItemSettings)) {
+			return false;
+		}
+
+		VocabularyNavigationMenuItemSettings
+			vocabularyNavigationMenuItemSettings =
+				(VocabularyNavigationMenuItemSettings)object;
+
+		return Objects.equals(
+			toString(), vocabularyNavigationMenuItemSettings.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBundler sb = new StringBundler();
+
+		sb.append("{");
+
+		String className = getClassName();
+
+		if (className != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"className\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(className));
+
+			sb.append("\"");
+		}
+
+		String externalReferenceCode = getExternalReferenceCode();
+
+		if (externalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(externalReferenceCode));
+
+			sb.append("\"");
+		}
+
+		String scopeExternalReferenceCode = getScopeExternalReferenceCode();
+
+		if (scopeExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"scopeExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(scopeExternalReferenceCode));
+
+			sb.append("\"");
+		}
+
+		Boolean showAssetVocabularyLevel = getShowAssetVocabularyLevel();
+
+		if (showAssetVocabularyLevel != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"showAssetVocabularyLevel\": ");
+
+			sb.append(showAssetVocabularyLevel);
+		}
+
+		String title = getTitle();
+
+		if (title != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"title\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(title));
+
+			sb.append("\"");
+		}
+
+		String type = getType();
+
+		if (type != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(type));
+
+			sb.append("\"");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.VocabularyNavigationMenuItemSettings",
+		name = "x-class-name"
+	)
+	public String xClassName;
+
+	private static String _escape(Object object) {
+		return StringUtil.replace(
+			String.valueOf(object), _JSON_ESCAPE_STRINGS[0],
+			_JSON_ESCAPE_STRINGS[1]);
+	}
+
+	private static boolean _isArray(Object value) {
+		if (value == null) {
+			return false;
+		}
+
+		Class<?> clazz = value.getClass();
+
+		return clazz.isArray();
+	}
+
+	private static String _toJSON(Map<String, ?> map) {
+		StringBuilder sb = new StringBuilder("{");
+
+		@SuppressWarnings("unchecked")
+		Set set = map.entrySet();
+
+		@SuppressWarnings("unchecked")
+		Iterator<Map.Entry<String, ?>> iterator = set.iterator();
+
+		while (iterator.hasNext()) {
+			Map.Entry<String, ?> entry = iterator.next();
+
+			sb.append("\"");
+			sb.append(_escape(entry.getKey()));
+			sb.append("\": ");
+
+			Object value = entry.getValue();
+
+			if (_isArray(value)) {
+				sb.append("[");
+
+				Object[] valueArray = (Object[])value;
+
+				for (int i = 0; i < valueArray.length; i++) {
+					if (valueArray[i] instanceof Map) {
+						sb.append(_toJSON((Map<String, ?>)valueArray[i]));
+					}
+					else if (valueArray[i] instanceof String) {
+						sb.append("\"");
+						sb.append(valueArray[i]);
+						sb.append("\"");
+					}
+					else {
+						sb.append(valueArray[i]);
+					}
+
+					if ((i + 1) < valueArray.length) {
+						sb.append(", ");
+					}
+				}
+
+				sb.append("]");
+			}
+			else if (value instanceof Map) {
+				sb.append(_toJSON((Map<String, ?>)value));
+			}
+			else if (value instanceof String) {
+				sb.append("\"");
+				sb.append(_escape(value));
+				sb.append("\"");
+			}
+			else {
+				sb.append(value);
+			}
+
+			if (iterator.hasNext()) {
+				sb.append(", ");
+			}
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+	private static final String[][] _JSON_ESCAPE_STRINGS = {
+		{"\\", "\"", "\b", "\f", "\n", "\r", "\t"},
+		{"\\\\", "\\\"", "\\b", "\\f", "\\n", "\\r", "\\t"}
+	};
+
+	private Map<String, Serializable> _extendedProperties;
+
+}

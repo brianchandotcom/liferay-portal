@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.liferay.headless.admin.user.dto.v1_0.Creator;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
@@ -20,7 +21,6 @@ import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 import jakarta.annotation.Generated;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 
@@ -44,10 +44,6 @@ import java.util.function.Supplier;
 @GraphQLName(
 	description = "Represents a navigation menu item.",
 	value = "NavigationMenuItem"
-)
-@io.swagger.v3.oas.annotations.media.Schema(
-	description = "Represents a navigation menu item.",
-	requiredProperties = {"typeSettings"}
 )
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "NavigationMenuItem")
@@ -293,6 +289,92 @@ public class NavigationMenuItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema(example = "en_US")
+	public String getDefaultLanguageId() {
+		if (_defaultLanguageIdSupplier != null) {
+			defaultLanguageId = _defaultLanguageIdSupplier.get();
+
+			_defaultLanguageIdSupplier = null;
+		}
+
+		return defaultLanguageId;
+	}
+
+	public void setDefaultLanguageId(String defaultLanguageId) {
+		this.defaultLanguageId = defaultLanguageId;
+
+		_defaultLanguageIdSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setDefaultLanguageId(
+		UnsafeSupplier<String, Exception> defaultLanguageIdUnsafeSupplier) {
+
+		_defaultLanguageIdSupplier = () -> {
+			try {
+				return defaultLanguageIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String defaultLanguageId;
+
+	@JsonIgnore
+	private Supplier<String> _defaultLanguageIdSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The icon that will be displayed next to this navigation menu item."
+	)
+	public String getDisplayIcon() {
+		if (_displayIconSupplier != null) {
+			displayIcon = _displayIconSupplier.get();
+
+			_displayIconSupplier = null;
+		}
+
+		return displayIcon;
+	}
+
+	public void setDisplayIcon(String displayIcon) {
+		this.displayIcon = displayIcon;
+
+		_displayIconSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setDisplayIcon(
+		UnsafeSupplier<String, Exception> displayIconUnsafeSupplier) {
+
+		_displayIconSupplier = () -> {
+			try {
+				return displayIconUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "The icon that will be displayed next to this navigation menu item."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String displayIcon;
+
+	@JsonIgnore
+	private Supplier<String> _displayIconSupplier;
+
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The navigation menu item's external reference code."
 	)
@@ -466,6 +548,56 @@ public class NavigationMenuItem implements Serializable {
 	private Supplier<Map<String, String>> _name_i18nSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The type-specific settings (i.e. typeSettings) for the navigation menu item."
+	)
+	@Valid
+	public Object getNavigationMenuItemSettings() {
+		if (_navigationMenuItemSettingsSupplier != null) {
+			navigationMenuItemSettings =
+				_navigationMenuItemSettingsSupplier.get();
+
+			_navigationMenuItemSettingsSupplier = null;
+		}
+
+		return navigationMenuItemSettings;
+	}
+
+	public void setNavigationMenuItemSettings(
+		Object navigationMenuItemSettings) {
+
+		this.navigationMenuItemSettings = navigationMenuItemSettings;
+
+		_navigationMenuItemSettingsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setNavigationMenuItemSettings(
+		UnsafeSupplier<Object, Exception>
+			navigationMenuItemSettingsUnsafeSupplier) {
+
+		_navigationMenuItemSettingsSupplier = () -> {
+			try {
+				return navigationMenuItemSettingsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "The type-specific settings (i.e. typeSettings) for the navigation menu item."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Object navigationMenuItemSettings;
+
+	@JsonIgnore
+	private Supplier<Object> _navigationMenuItemSettingsSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The navigation menu items this navigation menu item has."
 	)
 	@Valid
@@ -597,52 +729,6 @@ public class NavigationMenuItem implements Serializable {
 
 	@JsonIgnore
 	private Supplier<String> _typeSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The navigation menu item's type settings."
-	)
-	@Valid
-	public Map<String, String> getTypeSettings() {
-		if (_typeSettingsSupplier != null) {
-			typeSettings = _typeSettingsSupplier.get();
-
-			_typeSettingsSupplier = null;
-		}
-
-		return typeSettings;
-	}
-
-	public void setTypeSettings(Map<String, String> typeSettings) {
-		this.typeSettings = typeSettings;
-
-		_typeSettingsSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setTypeSettings(
-		UnsafeSupplier<Map<String, String>, Exception>
-			typeSettingsUnsafeSupplier) {
-
-		_typeSettingsSupplier = () -> {
-			try {
-				return typeSettingsUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The navigation menu item's type settings.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotNull
-	protected Map<String, String> typeSettings;
-
-	@JsonIgnore
-	private Supplier<Map<String, String>> _typeSettingsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getUseCustomName() {
@@ -808,6 +894,38 @@ public class NavigationMenuItem implements Serializable {
 			sb.append("\"");
 		}
 
+		String defaultLanguageId = getDefaultLanguageId();
+
+		if (defaultLanguageId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"defaultLanguageId\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(defaultLanguageId));
+
+			sb.append("\"");
+		}
+
+		String displayIcon = getDisplayIcon();
+
+		if (displayIcon != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"displayIcon\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(displayIcon));
+
+			sb.append("\"");
+		}
+
 		String externalReferenceCode = getExternalReferenceCode();
 
 		if (externalReferenceCode != null) {
@@ -864,6 +982,30 @@ public class NavigationMenuItem implements Serializable {
 			sb.append(_toJSON(name_i18n));
 		}
 
+		Object navigationMenuItemSettings = getNavigationMenuItemSettings();
+
+		if (navigationMenuItemSettings != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"navigationMenuItemSettings\": ");
+
+			if (navigationMenuItemSettings instanceof Map) {
+				sb.append(
+					JSONFactoryUtil.createJSONObject(
+						(Map<?, ?>)navigationMenuItemSettings));
+			}
+			else if (navigationMenuItemSettings instanceof String) {
+				sb.append("\"");
+				sb.append(_escape((String)navigationMenuItemSettings));
+				sb.append("\"");
+			}
+			else {
+				sb.append(navigationMenuItemSettings);
+			}
+		}
+
 		NavigationMenuItem[] navigationMenuItems = getNavigationMenuItems();
 
 		if (navigationMenuItems != null) {
@@ -912,18 +1054,6 @@ public class NavigationMenuItem implements Serializable {
 			sb.append(_escape(type));
 
 			sb.append("\"");
-		}
-
-		Map<String, String> typeSettings = getTypeSettings();
-
-		if (typeSettings != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"typeSettings\": ");
-
-			sb.append(_toJSON(typeSettings));
 		}
 
 		Boolean useCustomName = getUseCustomName();

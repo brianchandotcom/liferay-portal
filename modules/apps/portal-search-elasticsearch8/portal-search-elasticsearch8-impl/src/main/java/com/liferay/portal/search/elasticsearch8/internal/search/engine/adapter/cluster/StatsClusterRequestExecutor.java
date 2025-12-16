@@ -5,24 +5,23 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.cluster;
 
-import com.liferay.petra.string.StringPool;
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.cluster.ClusterStatsRequest;
+import co.elastic.clients.elasticsearch.cluster.ClusterStatsResponse;
+import co.elastic.clients.elasticsearch.cluster.ElasticsearchClusterClient;
+import co.elastic.clients.elasticsearch.cluster.stats.ClusterFileSystem;
+import co.elastic.clients.elasticsearch.cluster.stats.ClusterNodes;
+
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
-import com.liferay.portal.search.engine.adapter.cluster.ClusterHealthStatus;
+import com.liferay.portal.search.elasticsearch8.internal.util.JsonpUtil;
 import com.liferay.portal.search.engine.adapter.cluster.StatsClusterRequest;
 import com.liferay.portal.search.engine.adapter.cluster.StatsClusterResponse;
 
-import org.apache.http.util.EntityUtils;
+import java.io.IOException;
 
-import org.elasticsearch.client.Request;
-import org.elasticsearch.client.Response;
-import org.elasticsearch.client.RestClient;
-import org.elasticsearch.client.RestHighLevelClient;
+import java.util.Arrays;
 
 /**
  * @author Dylan Rebelak
@@ -30,70 +29,71 @@ import org.elasticsearch.client.RestHighLevelClient;
 public class StatsClusterRequestExecutor {
 
 	public StatsClusterRequestExecutor(
-		ElasticsearchClientResolver elasticsearchClientResolver,
-		JSONFactory jsonFactory) {
+		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		_elasticsearchClientResolver = elasticsearchClientResolver;
-		_jsonFactory = jsonFactory;
 	}
 
 	public StatsClusterResponse execute(
 		StatsClusterRequest statsClusterRequest) {
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(
-				statsClusterRequest.getConnectionId(),
-				statsClusterRequest.isPreferLocalCluster());
-
-		RestClient restClient = restHighLevelClient.getLowLevelClient();
-
-		String nodeIds = StringPool.BLANK;
-
-		if (ArrayUtil.isNotEmpty(statsClusterRequest.getNodeIds())) {
-			nodeIds =
-				"/nodes/" + StringUtil.merge(statsClusterRequest.getNodeIds());
-		}
-
-		String endpoint = "/_cluster/stats" + nodeIds;
-
-		Request request = new Request("GET", endpoint);
-
 		try {
-			Response response = restClient.performRequest(request);
+			ClusterStatsResponse clusterStatsResponse =
+				_getClusterStatsResponse(
+					_createClusterStatsRequest(statsClusterRequest),
+					statsClusterRequest);
 
-			String responseBody = EntityUtils.toString(response.getEntity());
+			ClusterNodes clusterNodes = clusterStatsResponse.nodes();
 
-			JSONObject responseJSONObject = _jsonFactory.createJSONObject(
-				responseBody);
+			ClusterFileSystem clusterFileSystem = clusterNodes.fs();
 
-			JSONObject nodesJSONObject = responseJSONObject.getJSONObject(
-				"nodes");
-
-			JSONObject fsJSONObject = nodesJSONObject.getJSONObject("fs");
-
-			long availableSpace = fsJSONObject.getLong("available_in_bytes");
-			long totalSpace = fsJSONObject.getLong("total_in_bytes");
-
-			String status = GetterUtil.getString(
-				responseJSONObject.get("status"));
-
-			ClusterHealthStatus clusterHealthStatus = null;
-
-			if (!status.equals(StringPool.BLANK)) {
-				clusterHealthStatus =
-					ClusterHealthStatusTranslatorUtil.translate(status);
-			}
+			long availableInBytes = clusterFileSystem.availableInBytes();
+			long totalInBytes = clusterFileSystem.totalInBytes();
 
 			return new StatsClusterResponse(
-				availableSpace, clusterHealthStatus, responseBody,
-				totalSpace - availableSpace);
+				availableInBytes,
+				ClusterHealthStatusTranslatorUtil.translate(
+					clusterStatsResponse.status()),
+				JsonpUtil.toString(clusterStatsResponse),
+				totalInBytes - availableInBytes);
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
 		}
 	}
 
+	private ClusterStatsRequest _createClusterStatsRequest(
+		StatsClusterRequest statsClusterRequest) {
+
+		ClusterStatsRequest.Builder builder = new ClusterStatsRequest.Builder();
+
+		if (ArrayUtil.isNotEmpty(statsClusterRequest.getNodeIds())) {
+			builder.nodeId(Arrays.asList(statsClusterRequest.getNodeIds()));
+		}
+
+		return builder.build();
+	}
+
+	private ClusterStatsResponse _getClusterStatsResponse(
+		ClusterStatsRequest clusterStatsRequest,
+		StatsClusterRequest statsClusterRequest) {
+
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
+				statsClusterRequest.getConnectionId(),
+				statsClusterRequest.isPreferLocalCluster());
+
+		ElasticsearchClusterClient elasticsearchClusterClient =
+			elasticsearchClient.cluster();
+
+		try {
+			return elasticsearchClusterClient.stats(clusterStatsRequest);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
 	private final ElasticsearchClientResolver _elasticsearchClientResolver;
-	private final JSONFactory _jsonFactory;
 
 }

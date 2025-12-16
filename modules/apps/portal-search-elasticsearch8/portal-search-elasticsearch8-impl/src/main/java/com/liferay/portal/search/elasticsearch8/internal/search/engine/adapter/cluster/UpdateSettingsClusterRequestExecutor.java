@@ -5,6 +5,14 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.cluster;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.cluster.ElasticsearchClusterClient;
+import co.elastic.clients.elasticsearch.cluster.PutClusterSettingsRequest;
+import co.elastic.clients.elasticsearch.cluster.PutClusterSettingsResponse;
+import co.elastic.clients.json.JsonData;
+
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.cluster.UpdateSettingsClusterRequest;
 import com.liferay.portal.search.engine.adapter.cluster.UpdateSettingsClusterResponse;
@@ -13,90 +21,76 @@ import java.io.IOException;
 
 import java.util.Map;
 
-import org.elasticsearch.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
-import org.elasticsearch.action.admin.cluster.settings.ClusterUpdateSettingsResponse;
-import org.elasticsearch.client.ClusterClient;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.common.settings.Settings;
-
 /**
  * @author Bryan Engler
  */
 public class UpdateSettingsClusterRequestExecutor {
 
 	public UpdateSettingsClusterRequestExecutor(
+		JSONFactory jsonFactory,
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
+		_jsonFactory = jsonFactory;
 		_elasticsearchClientResolver = elasticsearchClientResolver;
 	}
 
 	public UpdateSettingsClusterResponse execute(
 		UpdateSettingsClusterRequest updateSettingsClusterRequest) {
 
-		ClusterUpdateSettingsRequest clusterUpdateSettingsRequest =
-			_createClusterUpdateSettingsRequest(updateSettingsClusterRequest);
+		PutClusterSettingsResponse putClusterSettingsResponse =
+			_getPutClusterSettingsResponse(
+				_createPutClusterSettingsRequest(updateSettingsClusterRequest),
+				updateSettingsClusterRequest);
 
-		ClusterUpdateSettingsResponse clusterUpdateSettingsResponse =
-			_getClusterUpdateSettingsResponse(
-				clusterUpdateSettingsRequest, updateSettingsClusterRequest);
+		JSONObject persistentSettingsJSONObject = _jsonFactory.createJSONObject(
+			putClusterSettingsResponse.persistent());
 
-		Settings persistentSettings =
-			clusterUpdateSettingsResponse.getPersistentSettings();
-		Settings transientSettings =
-			clusterUpdateSettingsResponse.getTransientSettings();
+		JSONObject transientSettingsJSONObject = _jsonFactory.createJSONObject(
+			putClusterSettingsResponse.transient_());
 
 		return new UpdateSettingsClusterResponse(
-			persistentSettings.toString(), transientSettings.toString());
+			persistentSettingsJSONObject.toString(),
+			transientSettingsJSONObject.toString());
 	}
 
-	private ClusterUpdateSettingsRequest _createClusterUpdateSettingsRequest(
+	private PutClusterSettingsRequest _createPutClusterSettingsRequest(
 		UpdateSettingsClusterRequest updateSettingsClusterRequest) {
 
-		ClusterUpdateSettingsRequest clusterUpdateSettingsRequest =
-			new ClusterUpdateSettingsRequest();
-
-		Settings.Builder persistentSettingsBuilder = Settings.builder();
+		PutClusterSettingsRequest.Builder builder =
+			new PutClusterSettingsRequest.Builder();
 
 		Map<String, String> persistentSettings =
 			updateSettingsClusterRequest.getPersistentSettings();
 
 		for (Map.Entry<String, String> entry : persistentSettings.entrySet()) {
-			persistentSettingsBuilder.put(entry.getKey(), entry.getValue());
+			builder.persistent(entry.getKey(), JsonData.of(entry.getValue()));
 		}
-
-		clusterUpdateSettingsRequest.persistentSettings(
-			persistentSettingsBuilder);
-
-		Settings.Builder transientSettingsBuilder = Settings.builder();
 
 		Map<String, String> transientSettings =
 			updateSettingsClusterRequest.getTransientSettings();
 
 		for (Map.Entry<String, String> entry : transientSettings.entrySet()) {
-			transientSettingsBuilder.put(entry.getKey(), entry.getValue());
+			builder.transient_(entry.getKey(), JsonData.of(entry.getValue()));
 		}
 
-		clusterUpdateSettingsRequest.transientSettings(
-			transientSettingsBuilder);
-
-		return clusterUpdateSettingsRequest;
+		return builder.build();
 	}
 
-	private ClusterUpdateSettingsResponse _getClusterUpdateSettingsResponse(
-		ClusterUpdateSettingsRequest clusterUpdateSettingsRequest,
+	private PutClusterSettingsResponse _getPutClusterSettingsResponse(
+		PutClusterSettingsRequest putClusterSettingsRequest,
 		UpdateSettingsClusterRequest updateSettingsClusterRequest) {
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
 				updateSettingsClusterRequest.getConnectionId(),
 				updateSettingsClusterRequest.isPreferLocalCluster());
 
-		ClusterClient clusterClient = restHighLevelClient.cluster();
+		ElasticsearchClusterClient elasticsearchClusterClient =
+			elasticsearchClient.cluster();
 
 		try {
-			return clusterClient.putSettings(
-				clusterUpdateSettingsRequest, RequestOptions.DEFAULT);
+			return elasticsearchClusterClient.putSettings(
+				putClusterSettingsRequest);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -104,5 +98,6 @@ public class UpdateSettingsClusterRequestExecutor {
 	}
 
 	private final ElasticsearchClientResolver _elasticsearchClientResolver;
+	private final JSONFactory _jsonFactory;
 
 }

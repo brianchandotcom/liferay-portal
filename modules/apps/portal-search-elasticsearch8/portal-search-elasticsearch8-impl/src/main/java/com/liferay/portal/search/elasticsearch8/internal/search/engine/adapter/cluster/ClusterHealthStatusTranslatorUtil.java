@@ -5,6 +5,8 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.cluster;
 
+import co.elastic.clients.elasticsearch._types.HealthStatus;
+
 import com.liferay.portal.search.engine.adapter.cluster.ClusterHealthStatus;
 
 /**
@@ -12,49 +14,40 @@ import com.liferay.portal.search.engine.adapter.cluster.ClusterHealthStatus;
  */
 public class ClusterHealthStatusTranslatorUtil {
 
-	public static org.elasticsearch.cluster.health.ClusterHealthStatus
-		translate(ClusterHealthStatus clusterHealthStatus) {
+	public static HealthStatus translate(
+		ClusterHealthStatus clusterHealthStatus) {
 
 		if (clusterHealthStatus == ClusterHealthStatus.GREEN) {
-			return org.elasticsearch.cluster.health.ClusterHealthStatus.GREEN;
+			return HealthStatus.Green;
 		}
 
 		if (clusterHealthStatus == ClusterHealthStatus.RED) {
-			return org.elasticsearch.cluster.health.ClusterHealthStatus.RED;
+			return HealthStatus.Red;
 		}
 
 		if (clusterHealthStatus == ClusterHealthStatus.YELLOW) {
-			return org.elasticsearch.cluster.health.ClusterHealthStatus.YELLOW;
+			return HealthStatus.Yellow;
 		}
 
 		throw new IllegalArgumentException(
-			"Unknown status: " + clusterHealthStatus);
+			"Unknown cluster health status " + clusterHealthStatus);
 	}
 
-	public static ClusterHealthStatus translate(
-		org.elasticsearch.cluster.health.ClusterHealthStatus
-			clusterHealthStatus) {
-
-		if (clusterHealthStatus ==
-				org.elasticsearch.cluster.health.ClusterHealthStatus.GREEN) {
-
+	public static ClusterHealthStatus translate(HealthStatus healthStatus) {
+		if (healthStatus == HealthStatus.Green) {
 			return ClusterHealthStatus.GREEN;
 		}
 
-		if (clusterHealthStatus ==
-				org.elasticsearch.cluster.health.ClusterHealthStatus.RED) {
-
+		if (healthStatus == HealthStatus.Red) {
 			return ClusterHealthStatus.RED;
 		}
 
-		if (clusterHealthStatus ==
-				org.elasticsearch.cluster.health.ClusterHealthStatus.YELLOW) {
-
+		if (healthStatus == HealthStatus.Yellow) {
 			return ClusterHealthStatus.YELLOW;
 		}
 
 		throw new IllegalArgumentException(
-			"Unknown status: " + clusterHealthStatus);
+			"Unknown health status " + healthStatus);
 	}
 
 	public static ClusterHealthStatus translate(String status) {
@@ -70,7 +63,7 @@ public class ClusterHealthStatusTranslatorUtil {
 			return ClusterHealthStatus.YELLOW;
 		}
 
-		throw new IllegalArgumentException("Unknown status: " + status);
+		throw new IllegalArgumentException("Unknown health status " + status);
 	}
 
 }

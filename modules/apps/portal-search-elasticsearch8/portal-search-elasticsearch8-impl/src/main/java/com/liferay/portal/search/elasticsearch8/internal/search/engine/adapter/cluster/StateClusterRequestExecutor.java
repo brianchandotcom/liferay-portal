@@ -5,19 +5,16 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.cluster;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.cluster.ElasticsearchClusterClient;
+
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
+import com.liferay.portal.search.elasticsearch8.internal.util.JsonpUtil;
 import com.liferay.portal.search.engine.adapter.cluster.StateClusterRequest;
 import com.liferay.portal.search.engine.adapter.cluster.StateClusterResponse;
 
 import java.io.IOException;
-
-import org.apache.http.util.EntityUtils;
-
-import org.elasticsearch.client.Request;
-import org.elasticsearch.client.Response;
-import org.elasticsearch.client.RestClient;
-import org.elasticsearch.client.RestHighLevelClient;
 
 /**
  * @author Dylan Rebelak
@@ -33,23 +30,17 @@ public class StateClusterRequestExecutor {
 	public StateClusterResponse execute(
 		StateClusterRequest stateClusterRequest) {
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
 				stateClusterRequest.getConnectionId(),
 				stateClusterRequest.isPreferLocalCluster());
 
-		RestClient restClient = restHighLevelClient.getLowLevelClient();
-
-		String endpoint = "/_cluster/state";
-
-		Request request = new Request("GET", endpoint);
+		ElasticsearchClusterClient elasticsearchClusterClient =
+			elasticsearchClient.cluster();
 
 		try {
-			Response response = restClient.performRequest(request);
-
-			String responseBody = EntityUtils.toString(response.getEntity());
-
-			return new StateClusterResponse(responseBody);
+			return new StateClusterResponse(
+				JsonpUtil.toString(elasticsearchClusterClient.state()));
 		}
 		catch (IOException ioException) {
 			throw new SystemException(ioException);

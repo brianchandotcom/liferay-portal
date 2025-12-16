@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.cluster;
 
-import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchConnectionFixture;
 import com.liferay.portal.search.engine.adapter.cluster.StatsClusterRequest;
 import com.liferay.portal.search.engine.adapter.cluster.StatsClusterResponse;
@@ -50,8 +49,7 @@ public class StatsClusterRequestExecutorTest {
 			new String[] {_NODE_ID});
 
 		StatsClusterRequestExecutor statsClusterRequestExecutor =
-			new StatsClusterRequestExecutor(
-				_elasticsearchConnectionFixture, new JSONFactoryImpl());
+			new StatsClusterRequestExecutor(_elasticsearchConnectionFixture);
 
 		StatsClusterResponse statsClusterResponse =
 			statsClusterRequestExecutor.execute(statsClusterRequest);

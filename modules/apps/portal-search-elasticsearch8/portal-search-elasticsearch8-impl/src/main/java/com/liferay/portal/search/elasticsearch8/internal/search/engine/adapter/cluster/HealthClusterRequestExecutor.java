@@ -5,20 +5,22 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.cluster;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.Time;
+import co.elastic.clients.elasticsearch._types.TimeUnit;
+import co.elastic.clients.elasticsearch.cluster.ElasticsearchClusterClient;
+import co.elastic.clients.elasticsearch.cluster.HealthRequest;
+import co.elastic.clients.elasticsearch.cluster.HealthResponse;
+
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
+import com.liferay.portal.search.elasticsearch8.internal.util.JsonpUtil;
 import com.liferay.portal.search.engine.adapter.cluster.HealthClusterRequest;
 import com.liferay.portal.search.engine.adapter.cluster.HealthClusterResponse;
 
 import java.io.IOException;
 
-import org.elasticsearch.action.admin.cluster.health.ClusterHealthRequest;
-import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.elasticsearch.client.ClusterClient;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.cluster.health.ClusterHealthStatus;
-import org.elasticsearch.core.TimeValue;
+import java.util.Arrays;
 
 /**
  * @author Dylan Rebelak
@@ -34,60 +36,57 @@ public class HealthClusterRequestExecutor {
 	public HealthClusterResponse execute(
 		HealthClusterRequest healthClusterRequest) {
 
-		ClusterHealthRequest clusterHealthRequest = createClusterHealthRequest(
-			healthClusterRequest);
-
-		ClusterHealthResponse clusterHealthResponse = _getClusterHealthResponse(
-			clusterHealthRequest, healthClusterRequest);
-
-		ClusterHealthStatus clusterHealthStatus =
-			clusterHealthResponse.getStatus();
+		HealthResponse healthResponse = _getHealthResponse(
+			healthClusterRequest, createHealthRequest(healthClusterRequest));
 
 		return new HealthClusterResponse(
-			ClusterHealthStatusTranslatorUtil.translate(clusterHealthStatus),
-			clusterHealthResponse.toString());
+			ClusterHealthStatusTranslatorUtil.translate(
+				healthResponse.status()),
+			JsonpUtil.toString(healthResponse));
 	}
 
-	protected ClusterHealthRequest createClusterHealthRequest(
+	protected HealthRequest createHealthRequest(
 		HealthClusterRequest healthClusterRequest) {
 
-		ClusterHealthRequest clusterHealthRequest = new ClusterHealthRequest();
+		HealthRequest.Builder builder = new HealthRequest.Builder();
 
 		if (ArrayUtil.isNotEmpty(healthClusterRequest.getIndexNames())) {
-			clusterHealthRequest.indices(healthClusterRequest.getIndexNames());
+			builder.index(Arrays.asList(healthClusterRequest.getIndexNames()));
 		}
 
-		long timeout = healthClusterRequest.getTimeout();
+		if (healthClusterRequest.getTimeout() > 0) {
+			Time time = Time.of(
+				openSearchTime -> openSearchTime.time(
+					healthClusterRequest.getTimeout() +
+						TimeUnit.Milliseconds.jsonValue()));
 
-		if (timeout > 0) {
-			clusterHealthRequest.masterNodeTimeout(
-				TimeValue.timeValueMillis(timeout));
-			clusterHealthRequest.timeout(TimeValue.timeValueMillis(timeout));
+			builder.masterTimeout(time);
+			builder.timeout(time);
 		}
 
 		if (healthClusterRequest.getWaitForClusterHealthStatus() != null) {
-			clusterHealthRequest.waitForStatus(
+			builder.waitForStatus(
 				ClusterHealthStatusTranslatorUtil.translate(
 					healthClusterRequest.getWaitForClusterHealthStatus()));
 		}
 
-		return clusterHealthRequest;
+		return builder.build();
 	}
 
-	private ClusterHealthResponse _getClusterHealthResponse(
-		ClusterHealthRequest clusterHealthRequest,
-		HealthClusterRequest healthClusterRequest) {
+	private HealthResponse _getHealthResponse(
+		HealthClusterRequest healthClusterRequest,
+		HealthRequest healthRequest) {
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
 				healthClusterRequest.getConnectionId(),
 				healthClusterRequest.isPreferLocalCluster());
 
-		ClusterClient clusterClient = restHighLevelClient.cluster();
+		ElasticsearchClusterClient elasticsearchClusterClient =
+			elasticsearchClient.cluster();
 
 		try {
-			return clusterClient.health(
-				clusterHealthRequest, RequestOptions.DEFAULT);
+			return elasticsearchClusterClient.health(healthRequest);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

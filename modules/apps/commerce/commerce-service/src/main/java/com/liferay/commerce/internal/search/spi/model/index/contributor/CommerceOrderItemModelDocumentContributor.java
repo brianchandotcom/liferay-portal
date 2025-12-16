@@ -68,8 +68,7 @@ public class CommerceOrderItemModelDocumentContributor
 				}
 			}
 
-			_expandoBridgeIndexer.addAttributes(
-				document, commerceOrderItem.getExpandoBridge());
+			_expandoBridgeIndexer.addAttributes(document, commerceOrderItem);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

@@ -25,8 +25,7 @@ public class ExpandoBridgeDocumentContributor
 	public void contribute(
 		Document document, BaseModel<ExpandoBridge> baseModel) {
 
-		expandoBridgeIndexer.addAttributes(
-			document, baseModel.getExpandoBridge());
+		expandoBridgeIndexer.addAttributes(document, baseModel);
 	}
 
 	@Reference

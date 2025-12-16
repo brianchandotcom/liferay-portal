@@ -5,7 +5,7 @@
 
 package com.liferay.portal.search.expando;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.Document;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -16,6 +16,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ExpandoBridgeIndexer {
 
-	public void addAttributes(Document document, ExpandoBridge expandoBridge);
+	public void addAttributes(Document document, BaseModel<?> baseModel);
 
 }

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -42,13 +43,13 @@ import org.osgi.service.component.annotations.Reference;
 public class ExpandoBridgeIndexerImpl implements ExpandoBridgeIndexer {
 
 	@Override
-	public void addAttributes(Document document, ExpandoBridge expandoBridge) {
-		if (expandoBridge == null) {
+	public void addAttributes(Document document, BaseModel<?> baseModel) {
+		if (baseModel == null) {
 			return;
 		}
 
 		try {
-			doAddAttributes(document, expandoBridge);
+			doAddAttributes(document, baseModel.getExpandoBridge());
 		}
 		catch (SystemException systemException) {
 			_log.error(systemException);

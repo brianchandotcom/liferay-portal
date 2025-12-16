@@ -530,12 +530,10 @@ public class CPDefinitionModelDocumentContributor
 				document.addKeyword(type, linkedProductIds);
 			}
 
-			_expandoBridgeIndexer.addAttributes(
-				document, cpDefinition.getExpandoBridge());
+			_expandoBridgeIndexer.addAttributes(document, cpDefinition);
 
 			for (CPInstance cpInstance : cpDefinition.getCPInstances()) {
-				_expandoBridgeIndexer.addAttributes(
-					document, cpInstance.getExpandoBridge());
+				_expandoBridgeIndexer.addAttributes(document, cpInstance);
 			}
 
 			if (_log.isDebugEnabled()) {

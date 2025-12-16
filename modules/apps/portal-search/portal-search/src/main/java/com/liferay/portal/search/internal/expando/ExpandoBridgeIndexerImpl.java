@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -49,7 +50,7 @@ public class ExpandoBridgeIndexerImpl implements ExpandoBridgeIndexer {
 		}
 
 		try {
-			doAddAttributes(document, baseModel.getExpandoBridge());
+			doAddAttributes(document, baseModel);
 		}
 		catch (SystemException systemException) {
 			_log.error(systemException);
@@ -259,12 +260,16 @@ public class ExpandoBridgeIndexerImpl implements ExpandoBridgeIndexer {
 		}
 	}
 
-	protected void doAddAttributes(
-		Document document, ExpandoBridge expandoBridge) {
+	protected void doAddAttributes(Document document, BaseModel<?> baseModel) {
+		long companyId = 0;
+
+		if (baseModel instanceof ShardedModel shardedModel) {
+			companyId = shardedModel.getCompanyId();
+		}
 
 		List<ExpandoColumn> expandoColumns =
 			_expandoColumnLocalService.getDefaultTableColumns(
-				expandoBridge.getCompanyId(), expandoBridge.getClassName());
+				companyId, baseModel.getModelClassName());
 
 		if (ListUtil.isEmpty(expandoColumns)) {
 			return;
@@ -283,6 +288,8 @@ public class ExpandoBridgeIndexerImpl implements ExpandoBridgeIndexer {
 		if (indexedColumns.isEmpty()) {
 			return;
 		}
+
+		ExpandoBridge expandoBridge = baseModel.getExpandoBridge();
 
 		List<ExpandoValue> expandoValues =
 			_expandoValueLocalService.getRowValues(

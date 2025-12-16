@@ -1048,7 +1048,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		formatSourceTask.onlyIf(_skipIfExecutingParentTaskSpec);
 		formatSourceTask.setCheckCategoryNames("Upgrade");
 		formatSourceTask.setDescription(
-			"Runs Liferay Source Formatter to perform Upgrade SF checks.");
+			"Runs source code upgrade for breaking changes in the new " +
+				"Liferay version.");
 		formatSourceTask.setGroup("formatting");
 
 		return formatSourceTask;

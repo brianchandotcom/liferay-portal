@@ -140,6 +140,48 @@ public class NavigationMenuItem implements Cloneable, Serializable {
 
 	protected Date dateModified;
 
+	public String getDefaultLanguageId() {
+		return defaultLanguageId;
+	}
+
+	public void setDefaultLanguageId(String defaultLanguageId) {
+		this.defaultLanguageId = defaultLanguageId;
+	}
+
+	public void setDefaultLanguageId(
+		UnsafeSupplier<String, Exception> defaultLanguageIdUnsafeSupplier) {
+
+		try {
+			defaultLanguageId = defaultLanguageIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String defaultLanguageId;
+
+	public String getDisplayIcon() {
+		return displayIcon;
+	}
+
+	public void setDisplayIcon(String displayIcon) {
+		this.displayIcon = displayIcon;
+	}
+
+	public void setDisplayIcon(
+		UnsafeSupplier<String, Exception> displayIconUnsafeSupplier) {
+
+		try {
+			displayIcon = displayIconUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String displayIcon;
+
 	public String getExternalReferenceCode() {
 		return externalReferenceCode;
 	}
@@ -221,6 +263,31 @@ public class NavigationMenuItem implements Cloneable, Serializable {
 
 	protected Map<String, String> name_i18n;
 
+	public Object getNavigationMenuItemSettings() {
+		return navigationMenuItemSettings;
+	}
+
+	public void setNavigationMenuItemSettings(
+		Object navigationMenuItemSettings) {
+
+		this.navigationMenuItemSettings = navigationMenuItemSettings;
+	}
+
+	public void setNavigationMenuItemSettings(
+		UnsafeSupplier<Object, Exception>
+			navigationMenuItemSettingsUnsafeSupplier) {
+
+		try {
+			navigationMenuItemSettings =
+				navigationMenuItemSettingsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Object navigationMenuItemSettings;
+
 	public NavigationMenuItem[] getNavigationMenuItems() {
 		return navigationMenuItems;
 	}
@@ -284,28 +351,6 @@ public class NavigationMenuItem implements Cloneable, Serializable {
 	}
 
 	protected String type;
-
-	public Map<String, String> getTypeSettings() {
-		return typeSettings;
-	}
-
-	public void setTypeSettings(Map<String, String> typeSettings) {
-		this.typeSettings = typeSettings;
-	}
-
-	public void setTypeSettings(
-		UnsafeSupplier<Map<String, String>, Exception>
-			typeSettingsUnsafeSupplier) {
-
-		try {
-			typeSettings = typeSettingsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Map<String, String> typeSettings;
 
 	public Boolean getUseCustomName() {
 		return useCustomName;

@@ -5,8 +5,7 @@
 
 package com.liferay.site.cms.site.initializer.test.util;
 
-import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
-import com.liferay.batch.engine.unit.BatchEngineUnitReader;
+import com.liferay.batch.engine.test.util.BatchEngineTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -23,15 +22,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
-
-import java.io.File;
-
-import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Roberto Díaz
@@ -81,36 +71,20 @@ public class CMSTestUtil {
 
 				SiteInitializer siteInitializer =
 					siteInitializerRegistry.getSiteInitializer(
-						"com.liferay.site.initializer.cms");
+						_BUNDLE_SYMBOLIC_NAME);
 
 				siteInitializer.initialize(group.getGroupId());
 
-				BatchEngineUnitProcessor batchEngineUnitProcessor =
-					_batchEngineUnitProcessorSnapshot.get();
-				BatchEngineUnitReader batchEngineUnitReader =
-					_batchEngineUnitReaderSnapshot.get();
-
-				Bundle testBundle = FrameworkUtil.getBundle(clazz);
-
-				BundleContext bundleContext = testBundle.getBundleContext();
-
-				for (Bundle bundle : bundleContext.getBundles()) {
-					if (Objects.equals(
-							bundle.getSymbolicName(),
-							"com.liferay.site.initializer.cms")) {
-
-						_deleteFile(bundle, "00.list.type.definition");
-						_deleteFile(bundle, "01.object.folder");
-						_deleteFile(bundle, "02.object.definition");
-
-						CompletableFuture<Void> completableFuture =
-							batchEngineUnitProcessor.processBatchEngineUnits(
-								batchEngineUnitReader.getBatchEngineUnits(
-									bundle));
-
-						completableFuture.join();
-					}
-				}
+				BatchEngineTestUtil.processBatchEngineUnits(
+					_BUNDLE_SYMBOLIC_NAME, clazz,
+					new String[] {
+						"." + _BUNDLE_SYMBOLIC_NAME +
+							".internal.batch.00.list.type.definition",
+						"." + _BUNDLE_SYMBOLIC_NAME +
+							".internal.batch.01.object.folder",
+						"." + _BUNDLE_SYMBOLIC_NAME +
+							".internal.batch.02.object.definition"
+					});
 			}
 		}
 		finally {
@@ -125,22 +99,9 @@ public class CMSTestUtil {
 		return group;
 	}
 
-	private static void _deleteFile(Bundle bundle, String fileName) {
-		File file = bundle.getDataFile(
-			".com.liferay.site.initializer.cms.internal.batch." + fileName +
-				".batch.engine.data.json.0.processed");
+	private static final String _BUNDLE_SYMBOLIC_NAME =
+		"com.liferay.site.initializer.cms";
 
-		if ((file != null) && file.exists()) {
-			file.delete();
-		}
-	}
-
-	private static final Snapshot<BatchEngineUnitProcessor>
-		_batchEngineUnitProcessorSnapshot = new Snapshot<>(
-			CMSTestUtil.class, BatchEngineUnitProcessor.class);
-	private static final Snapshot<BatchEngineUnitReader>
-		_batchEngineUnitReaderSnapshot = new Snapshot<>(
-			CMSTestUtil.class, BatchEngineUnitReader.class);
 	private static final Snapshot<SiteInitializerRegistry>
 		_siteInitializerRegistrySnapshot = new Snapshot<>(
 			CMSTestUtil.class, SiteInitializerRegistry.class);

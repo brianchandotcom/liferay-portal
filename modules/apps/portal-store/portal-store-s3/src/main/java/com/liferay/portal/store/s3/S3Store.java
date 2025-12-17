@@ -578,18 +578,17 @@ public class S3Store implements Store {
 			throw new NoSuchFileException(companyId, repositoryId, fileName);
 		}
 
-		String headVersionKey = null;
+		String key = null;
 
 		for (S3Object s3Object : s3Objects) {
-			if ((headVersionKey == null) ||
-				(headVersionKey.compareTo(s3Object.key()) < 0)) {
+			if ((key == null) ||
+				(key.compareTo(s3Object.key()) < 0)) {
 
-				headVersionKey = s3Object.key();
+				key = s3Object.key();
 			}
 		}
 
-		return headVersionKey.substring(
-			headVersionKey.lastIndexOf(CharPool.SLASH) + 1);
+		return key.substring(key.lastIndexOf(CharPool.SLASH) + 1);
 	}
 
 	private List<S3Object> _getS3Objects(String prefix) {

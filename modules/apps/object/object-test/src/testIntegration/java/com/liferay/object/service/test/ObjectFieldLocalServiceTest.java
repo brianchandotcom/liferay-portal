@@ -109,6 +109,8 @@ import java.sql.Connection;
 
 import java.text.DateFormat;
 
+import java.time.LocalDate;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -1983,6 +1985,39 @@ public class ObjectFieldLocalServiceTest {
 		_assertObjectEntryDefaultValue(
 			defaultValue, dateObjectField, new HashMap<>());
 
+		_addOrUpdateCustomObjectField(
+			dateObjectField,
+			Arrays.asList(
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_DEFAULT_VALUE
+				).value(
+					"addDays(currentDate, 1)"
+				).build(),
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE
+				).value(
+					ObjectFieldSettingConstants.VALUE_EXPRESSION_BUILDER
+				).build()));
+
+		_assertObjectFieldSettingsValues(
+			dateObjectField.getObjectFieldId(),
+			HashMapBuilder.put(
+				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
+				"addDays(currentDate, 1)"
+			).put(
+				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
+				ObjectFieldSettingConstants.VALUE_EXPRESSION_BUILDER
+			).build());
+
+		LocalDate localDate = LocalDate.now();
+
+		localDate = localDate.plusDays(1);
+
+		_assertObjectEntryDefaultValue(
+			localDate.toString(), dateObjectField, new HashMap<>());
+
 		// Business type date time
 
 		ObjectField dateTimeObjectField = _addCustomObjectField(
@@ -2026,6 +2061,44 @@ public class ObjectFieldLocalServiceTest {
 
 		_assertObjectEntryDefaultValue(
 			defaultValue, dateTimeObjectField, new HashMap<>());
+
+		_addOrUpdateCustomObjectField(
+			dateTimeObjectField,
+			Arrays.asList(
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_DEFAULT_VALUE
+				).value(
+					"addMonths(date, 2)"
+				).build(),
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE
+				).value(
+					ObjectFieldSettingConstants.VALUE_EXPRESSION_BUILDER
+				).build(),
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_TIME_STORAGE
+				).value(
+					ObjectFieldSettingConstants.VALUE_USE_INPUT_AS_ENTERED
+				).build()));
+
+		_assertObjectFieldSettingsValues(
+			dateTimeObjectField.getObjectFieldId(),
+			HashMapBuilder.put(
+				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
+				"addMonths(date, 2)"
+			).put(
+				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
+				ObjectFieldSettingConstants.VALUE_EXPRESSION_BUILDER
+			).build());
+
+		_assertObjectEntryDefaultValue(
+			"2026-02-01", dateTimeObjectField,
+			HashMapBuilder.<String, Serializable>put(
+				"date", "2025-12-01"
+			).build());
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 

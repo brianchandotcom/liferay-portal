@@ -73,11 +73,8 @@ public class RAGService extends BaseService {
 
 	public Map<String, Object> search(String query) throws Exception {
 		if (Validator.isNull(query)) {
-			return HashMapBuilder.<String, Object>put(
-				"references", new ArrayList()
-			).put(
-				"summary", "No content was found for " + query
-			).build();
+			return _buildPayload(
+				new ArrayList(), "No content was found for " + query);
 		}
 
 		List<Document> vectorStoreResult =
@@ -92,11 +89,8 @@ public class RAGService extends BaseService {
 				).build());
 
 		if (vectorStoreResult.isEmpty()) {
-			return HashMapBuilder.<String, Object>put(
-				"references", new ArrayList()
-			).put(
-				"summary", "No content was found for " + query
-			).build();
+			return _buildPayload(
+				new ArrayList(), "No content was found for " + query);
 		}
 
 		List<Long> assetEntryIds = new ArrayList<>();
@@ -117,10 +111,8 @@ public class RAGService extends BaseService {
 			assetEntryIds.add(GetterUtil.getLong(metadata.get("assetEntryId")));
 		}
 
-		return HashMapBuilder.<String, Object>put(
-			"references", references
-		).put(
-			"summary",
+		return _buildPayload(
+			references,
 			_chatClient.prompt(
 			).user(
 				StringUtil.replace(
@@ -130,7 +122,16 @@ public class RAGService extends BaseService {
 					new String[] {"${documents}", "${query}"},
 					new String[] {sb.toString(), query})
 			).call(
-			).content()
+			).content());
+	}
+
+	private Map<String, Object> _buildPayload(
+		List<Map<String, Object>> references, String summary) {
+
+		return HashMapBuilder.<String, Object>put(
+			"references", references
+		).put(
+			"summary", summary
 		).build();
 	}
 

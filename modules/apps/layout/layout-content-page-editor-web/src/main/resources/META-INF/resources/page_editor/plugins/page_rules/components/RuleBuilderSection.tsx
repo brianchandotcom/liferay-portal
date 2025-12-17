@@ -16,6 +16,7 @@ import React, {useContext, useId, useMemo} from 'react';
 import {flushSync} from 'react-dom';
 import {v4 as uuidv4} from 'uuid';
 
+import {config} from '../../../app/config';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {useSelector} from '../../../app/contexts/StoreContext';
 import selectLayoutDataItemLabel from '../../../app/selectors/selectLayoutDataItemLabel';
@@ -499,7 +500,7 @@ export function RuleBuilderConditionSection({
 						onChange={(value: string | undefined) => {
 							setRuleConditions({script: value || ''});
 						}}
-						sidebarElements={[]}
+						sidebarElements={config.codeEditorSidebarPanels}
 						value={script}
 					/>
 				)}

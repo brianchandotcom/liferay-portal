@@ -42,6 +42,7 @@ import com.liferay.layout.content.page.editor.web.internal.configuration.PageEdi
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorActionKeys;
 import com.liferay.layout.content.page.editor.web.internal.manager.FragmentCollectionManager;
 import com.liferay.layout.content.page.editor.web.internal.manager.FragmentEntryLinkManager;
+import com.liferay.layout.content.page.editor.web.internal.util.CodeEditorUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.MappingContentUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.MappingTypesUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.StyleBookEntryUtil;
@@ -288,6 +289,9 @@ public class ContentPageEditorDisplayContext {
 				"changeStyleBookEntryURL",
 				getFragmentEntryActionURL(
 					"/layout_content_page_editor/change_style_book_entry")
+			).put(
+				"codeEditorSidebarPanels",
+				CodeEditorUtil.getSidebarSectionsJSONArray(httpServletRequest)
 			).put(
 				"collectionSelectorURL", _getCollectionSelectorURL()
 			).put(

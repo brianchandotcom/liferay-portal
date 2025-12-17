@@ -55,12 +55,12 @@
 </tr>
 <tr>
 	<td>MOVE_AVAILABLE_TO_CURRENT</td>
-	<td>xpath=(//*[contains(@id,'${key_configuration}')] | //div[*[contains(@class,'${key_configuration}')]])//button[@title='Move selected items from Available to Current.']</td>
+	<td>xpath=(//*[contains(@id,'${key_configuration}')] | //div[*[contains(@class,'${key_configuration}')]])//button[@title='Move selected items from Available to In Use.']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MOVE_CURRENT_TO_AVAILABLE</td>
-	<td>xpath=(//*[contains(@id,'${key_configuration}')] | //div[*[contains(@class,'${key_configuration}')]])//button[@title='Move selected items from Current to Available.']</td>
+	<td>xpath=(//*[contains(@id,'${key_configuration}')] | //div[*[contains(@class,'${key_configuration}')]])//button[@title='Move selected items from In Use to Available.']</td>
 	<td></td>
 </tr>
 <tr>

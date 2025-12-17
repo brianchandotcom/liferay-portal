@@ -18,8 +18,6 @@ import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import jakarta.annotation.Generated;
 
-import jakarta.validation.constraints.NotEmpty;
-
 import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
@@ -38,10 +36,6 @@ import java.util.function.Supplier;
 @GraphQLName(
 	description = "A unique reference to a URL which remains constant across environments.",
 	value = "ThumbnailURLReference"
-)
-@io.swagger.v3.oas.annotations.media.Schema(
-	description = "A unique reference to a URL which remains constant across environments.",
-	requiredProperties = {"url"}
 )
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ThumbnailURLReference")
@@ -131,7 +125,6 @@ public class ThumbnailURLReference implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotEmpty
 	protected String url;
 
 	@JsonIgnore

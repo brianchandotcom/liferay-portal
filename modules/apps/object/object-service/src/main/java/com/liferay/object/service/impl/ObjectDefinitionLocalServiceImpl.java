@@ -133,6 +133,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mass.delete.MassDeleteCacheThreadLocal;
 import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -248,7 +249,8 @@ public class ObjectDefinitionLocalServiceImpl
 			boolean portlet, String scope, String storageType,
 			List<ObjectDefinitionSetting> objectDefinitionSettings,
 			List<ObjectField> objectFields,
-			List<WorkflowDefinitionLink> workflowDefinitionLinks)
+			List<WorkflowDefinitionLink> workflowDefinitionLinks,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		return _addObjectDefinition(
@@ -260,7 +262,7 @@ public class ObjectDefinitionLocalServiceImpl
 			name, panelAppOrder, panelCategoryKey, null, null, pluralLabelMap,
 			portlet, scope, storageType, false, null, 0,
 			WorkflowConstants.STATUS_DRAFT, objectDefinitionSettings,
-			objectFields, workflowDefinitionLinks);
+			objectFields, workflowDefinitionLinks, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -498,7 +500,7 @@ public class ObjectDefinitionLocalServiceImpl
 			pluralLabelMap, portlet, scope,
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, true,
 			titleObjectFieldName, version, status, objectDefinitionSettings,
-			objectFields, workflowDefinitionLinks);
+			objectFields, workflowDefinitionLinks, new ServiceContext());
 	}
 
 	@Override
@@ -1278,7 +1280,8 @@ public class ObjectDefinitionLocalServiceImpl
 			Map<Locale, String> pluralLabelMap, String scope, int status,
 			List<ObjectDefinitionSetting> objectDefinitionSettings,
 			List<ObjectField> objectFields,
-			List<WorkflowDefinitionLink> workflowDefinitionLinks)
+			List<WorkflowDefinitionLink> workflowDefinitionLinks,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
@@ -1300,7 +1303,7 @@ public class ObjectDefinitionLocalServiceImpl
 			enableObjectEntryVersioning, friendlyURLSeparator, labelMap, name,
 			panelAppOrder, panelCategoryKey, portlet, null, null,
 			pluralLabelMap, scope, status, objectDefinitionSettings,
-			objectFields, workflowDefinitionLinks);
+			objectFields, workflowDefinitionLinks, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -1486,7 +1489,8 @@ public class ObjectDefinitionLocalServiceImpl
 			int version, int status,
 			List<ObjectDefinitionSetting> objectDefinitionSettings,
 			List<ObjectField> objectFields,
-			List<WorkflowDefinitionLink> workflowDefinitionLinks)
+			List<WorkflowDefinitionLink> workflowDefinitionLinks,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -1676,6 +1680,12 @@ public class ObjectDefinitionLocalServiceImpl
 
 		_addOrUpdateWorkflowDefinitionLinks(
 			objectDefinition, workflowDefinitionLinks);
+
+		ObjectDefinitionResourcePermissionUtil.updateResourcePermissions(
+			objectDefinition.getCompanyId(),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			ObjectDefinition.class.getName(),
+			objectDefinition.getObjectDefinitionId(), serviceContext);
 
 		if (objectDefinition.isUnmodifiableSystemObject()) {
 			_createTable(
@@ -2576,7 +2586,8 @@ public class ObjectDefinitionLocalServiceImpl
 			Map<Locale, String> pluralLabelMap, String scope, int status,
 			List<ObjectDefinitionSetting> objectDefinitionSettings,
 			List<ObjectField> objectFields,
-			List<WorkflowDefinitionLink> workflowDefinitionLinks)
+			List<WorkflowDefinitionLink> workflowDefinitionLinks,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		if (!objectDefinition.isApproved()) {
@@ -2726,6 +2737,12 @@ public class ObjectDefinitionLocalServiceImpl
 
 		_addOrUpdateWorkflowDefinitionLinks(
 			objectDefinition, workflowDefinitionLinks);
+
+		ObjectDefinitionResourcePermissionUtil.updateResourcePermissions(
+			objectDefinition.getCompanyId(),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			ObjectDefinition.class.getName(),
+			objectDefinition.getObjectDefinitionId(), serviceContext);
 
 		if (objectDefinition.isApproved()) {
 			if (!active && oldActive) {

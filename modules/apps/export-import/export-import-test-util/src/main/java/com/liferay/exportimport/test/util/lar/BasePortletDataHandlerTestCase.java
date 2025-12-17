@@ -429,7 +429,7 @@ public abstract class BasePortletDataHandlerTestCase {
 			new PortletDataHandlerBoolean(namespace, name);
 
 		parameterMap.put(
-			portletDataHandlerBoolean.getNamespacedControlName(),
+			portletDataHandlerBoolean.getNamespacedName(),
 			new String[] {String.valueOf(value)});
 	}
 
@@ -690,11 +690,11 @@ public abstract class BasePortletDataHandlerTestCase {
 					portletDataHandlerControls) {
 
 				if (Objects.equals(
-						expectedPortletDataHandlerControl.getControlName(),
-						portletDataHandlerControl.getControlName()) &&
+						expectedPortletDataHandlerControl.getName(),
+						portletDataHandlerControl.getName()) &&
 					Objects.equals(
-						expectedPortletDataHandlerControl.getControlLabel(),
-						portletDataHandlerControl.getControlLabel()) &&
+						expectedPortletDataHandlerControl.getLabel(),
+						portletDataHandlerControl.getLabel()) &&
 					(expectedPortletDataHandlerControl.isDisabled() ==
 						portletDataHandlerControl.isDisabled())) {
 

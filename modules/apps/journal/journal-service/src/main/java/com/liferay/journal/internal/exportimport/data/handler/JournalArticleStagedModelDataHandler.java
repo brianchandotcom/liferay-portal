@@ -362,11 +362,10 @@ public class JournalArticleStagedModelDataHandler
 		Map<String, String[]> parameterMap =
 			portletDataContext.getParameterMap();
 
-		String versionHistoryControlName =
-			PortletDataHandlerControl.getNamespacedControlName(
-				"journal", "version-history");
+		String namespacedName = PortletDataHandlerControl.getNamespacedName(
+			"journal", "version-history");
 
-		if ((parameterMap.get(versionHistoryControlName) != null) &&
+		if ((parameterMap.get(namespacedName) != null) &&
 			!portletDataContext.getBooleanParameter(
 				"journal", "version-history")) {
 

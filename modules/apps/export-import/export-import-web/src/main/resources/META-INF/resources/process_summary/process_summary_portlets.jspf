@@ -85,14 +85,14 @@
 				}
 
 				String className = portletDataHandlerControl.getClassName();
-				String controlLabel = LanguageUtil.get(request, resourceBundle, portletDataHandlerControl.getControlLabel());
+				String label = LanguageUtil.get(request, resourceBundle, portletDataHandlerControl.getLabel());
 
 				if (modelAdditionCounters.containsKey(className)) {
 					LongWrapper modelAdditionCounter = modelAdditionCounters.get(className);
 
 					Long value = modelAdditionCounter.getValue();
 
-					currentAdditions.put(controlLabel, value);
+					currentAdditions.put(label, value);
 
 					totalAdditions += value;
 				}
@@ -106,7 +106,7 @@
 
 					Long value = modelDeletionCounter.getValue();
 
-					currentDeletions.put(controlLabel, value);
+					currentDeletions.put(label, value);
 
 					totalDeletions += value;
 				}

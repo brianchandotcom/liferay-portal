@@ -18,64 +18,59 @@ import java.util.Locale;
  */
 public class PortletDataHandlerControl {
 
-	public static String getNamespacedControlName(
-		String namespace, String controlName) {
-
+	public static String getNamespacedName(String namespace, String name) {
 		return StringBundler.concat(
-			StringPool.UNDERLINE, namespace, StringPool.UNDERLINE, controlName);
+			StringPool.UNDERLINE, namespace, StringPool.UNDERLINE, name);
 	}
 
-	public PortletDataHandlerControl(String namespace, String controlName) {
-		this(namespace, controlName, false);
-	}
-
-	public PortletDataHandlerControl(
-		String namespace, String controlName, boolean disabled) {
-
-		this(namespace, controlName, disabled, null);
+	public PortletDataHandlerControl(String namespace, String name) {
+		this(namespace, name, false);
 	}
 
 	public PortletDataHandlerControl(
-		String namespace, String controlName, boolean disabled,
-		String className) {
+		String namespace, String name, boolean disabled) {
 
-		this(namespace, controlName, disabled, className, null);
+		this(namespace, name, disabled, null);
 	}
 
 	public PortletDataHandlerControl(
-		String namespace, String controlName, boolean disabled,
+		String namespace, String name, boolean disabled, String className) {
+
+		this(namespace, name, disabled, className, null);
+	}
+
+	public PortletDataHandlerControl(
+		String namespace, String name, boolean disabled, String className,
+		String referrerClassName) {
+
+		this(namespace, name, name, disabled, className, referrerClassName);
+	}
+
+	public PortletDataHandlerControl(
+		String namespace, String name, String label, boolean disabled,
 		String className, String referrerClassName) {
 
-		this(
-			namespace, controlName, controlName, disabled, className,
-			referrerClassName);
-	}
-
-	public PortletDataHandlerControl(
-		String namespace, String controlName, String controlLabel,
-		boolean disabled, String className, String referrerClassName) {
-
 		_namespace = namespace;
-		_controlName = controlName;
-		_controlLabel = controlLabel;
+		_name = name;
+		_label = label;
 		_disabled = disabled;
 		_className = className;
 		_referrerClassName = referrerClassName;
 
-		_controlSubtitles = null;
-		_controlTag = null;
+		_subtitles = null;
+		_tag = null;
 	}
 
 	public PortletDataHandlerControl(
-		String namespace, String controlName, String controlLabel,
-		List<String> controlSubtitles, String controlTag, boolean disabled,
-		String className, String referrerClassName) {
+		String namespace, String name, String label, List<String> subtitles,
+		String tag, boolean disabled, String className,
+		String referrerClassName) {
 
 		_namespace = namespace;
-		_controlName = controlName;
-		_controlLabel = controlLabel;
-		_controlSubtitles = controlSubtitles;
-		_controlTag = controlTag;
+		_name = name;
+		_label = label;
+		_subtitles = subtitles;
+		_tag = tag;
 		_disabled = disabled;
 		_className = className;
 		_referrerClassName = referrerClassName;
@@ -85,46 +80,46 @@ public class PortletDataHandlerControl {
 		return _className;
 	}
 
-	public String getControlLabel() {
-		return _controlLabel;
-	}
-
-	public String getControlName() {
-		return _controlName;
-	}
-
-	public List<String> getControlSubtitles() {
-		return _controlSubtitles;
-	}
-
-	public String getControlTag() {
-		return _controlTag;
-	}
-
 	public String getHelpMessage(Locale locale, String action) {
 		String helpMessage = LanguageUtil.get(
-			locale, StringBundler.concat(action, "-", _controlLabel, "-help"),
+			locale, StringBundler.concat(action, "-", _label, "-help"),
 			StringPool.BLANK);
 
 		if (Validator.isNull(helpMessage)) {
 			helpMessage = LanguageUtil.get(
-				locale, "export-import-publish-" + _controlLabel + "-help",
+				locale, "export-import-publish-" + _label + "-help",
 				StringPool.BLANK);
 		}
 
 		return helpMessage;
 	}
 
+	public String getLabel() {
+		return _label;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
 	public String getNamespace() {
 		return _namespace;
 	}
 
-	public String getNamespacedControlName() {
-		return getNamespacedControlName(_namespace, getControlName());
+	public String getNamespacedName() {
+		return getNamespacedName(_namespace, getName());
 	}
 
 	public String getReferrerClassName() {
 		return _referrerClassName;
+	}
+
+	public List<String> getSubtitles() {
+		return _subtitles;
+	}
+
+	public String getTag() {
+		return _tag;
 	}
 
 	public boolean isDisabled() {
@@ -136,12 +131,12 @@ public class PortletDataHandlerControl {
 	}
 
 	private final String _className;
-	private final String _controlLabel;
-	private final String _controlName;
-	private final List<String> _controlSubtitles;
-	private final String _controlTag;
 	private final boolean _disabled;
+	private final String _label;
+	private final String _name;
 	private String _namespace;
 	private final String _referrerClassName;
+	private final List<String> _subtitles;
+	private final String _tag;
 
 }

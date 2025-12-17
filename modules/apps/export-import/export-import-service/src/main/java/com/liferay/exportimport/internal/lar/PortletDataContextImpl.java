@@ -669,8 +669,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		if (!useDefaultValue) {
 			return MapUtil.getBoolean(
 				getParameterMap(),
-				PortletDataHandlerControl.getNamespacedControlName(
-					namespace, name));
+				PortletDataHandlerControl.getNamespacedName(namespace, name));
 		}
 
 		boolean defaultValue = MapUtil.getBoolean(
@@ -679,7 +678,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		return MapUtil.getBoolean(
 			getParameterMap(),
-			PortletDataHandlerControl.getNamespacedControlName(namespace, name),
+			PortletDataHandlerControl.getNamespacedName(namespace, name),
 			defaultValue);
 	}
 

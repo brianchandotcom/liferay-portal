@@ -144,7 +144,7 @@ public class AssetTagStagedModelDataHandler
 			portletDataContext.getParameterMap();
 
 		boolean hasMergeParameter = parameterMap.containsKey(
-			PortletDataHandlerControl.getNamespacedControlName(
+			PortletDataHandlerControl.getNamespacedName(
 				AssetTagsPortletDataHandler.NAMESPACE, "merge-tags-by-name"));
 
 		if (portletDataContext.getBooleanParameter(

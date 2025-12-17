@@ -80,14 +80,14 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 			}
 		}
 
-		List<String> controlSubtitles = null;
-		String controlTag = null;
+		List<String> subtitles = null;
+		String tag = null;
 
 		if (exportPortletDataHandlerControls.length == 1) {
 			PortletDataHandlerControl portletDataHandlerControl = exportPortletDataHandlerControls[0];
 
-			controlSubtitles = portletDataHandlerControl.getControlSubtitles();
-			controlTag = portletDataHandlerControl.getControlTag();
+			subtitles = portletDataHandlerControl.getSubtitles();
+			tag = portletDataHandlerControl.getTag();
 		}
 
 		boolean showPortletDataInput = MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId(), portletDataHandler.isPublishToLiveByDefault()) || MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL);
@@ -101,8 +101,8 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 				items="<%= exportModelCount %>"
 				label="<%= portletTitle %>"
 				name="<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId() %>"
-				subtitles="<%= controlSubtitles %>"
-				tag="<%= controlTag %>"
+				subtitles="<%= subtitles %>"
+				tag="<%= tag %>"
 			/>
 
 			<%
@@ -192,11 +192,11 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 
 								<%
 								for (PortletDataHandlerControl portletDataHandlerControl : exportMetadataPortletDataHandlerControls) {
-									if (displayedControls.contains(portletDataHandlerControl.getControlName())) {
+									if (displayedControls.contains(portletDataHandlerControl.getName())) {
 										continue;
 									}
 
-									displayedControls.add(portletDataHandlerControl.getControlName());
+									displayedControls.add(portletDataHandlerControl.getName());
 
 									PortletDataHandlerBoolean portletDataHandlerBoolean = (PortletDataHandlerBoolean)portletDataHandlerControl;
 								%>

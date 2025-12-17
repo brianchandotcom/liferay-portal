@@ -53,14 +53,13 @@ public class RenderControlsDisplayContext {
 			Map<String, String[]> parameterMap)
 		throws ConfigurationException {
 
-		String controlName = control.getControlName();
+		String name = control.getName();
 
-		if (controlName.equals(_DOCUMENT_LIBRARY_PREVIEWS_AND_THUMBNAILS)) {
+		if (name.equals(_DOCUMENT_LIBRARY_PREVIEWS_AND_THUMBNAILS)) {
 			return includeThumbnailsAndPreviewsDuringStaging();
 		}
 
-		if (MapUtil.getBoolean(
-				parameterMap, controlName, control.getDefaultState()) ||
+		if (MapUtil.getBoolean(parameterMap, name, control.getDefaultState()) ||
 			MapUtil.getBoolean(
 				parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL)) {
 

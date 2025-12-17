@@ -289,11 +289,11 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 					portletDataHandlerControls) {
 
 				if (Objects.equals(
-						expectedPortletDataHandlerControl.getControlName(),
-						portletDataHandlerControl.getControlName()) &&
+						expectedPortletDataHandlerControl.getName(),
+						portletDataHandlerControl.getName()) &&
 					Objects.equals(
-						expectedPortletDataHandlerControl.getControlLabel(),
-						portletDataHandlerControl.getControlLabel()) &&
+						expectedPortletDataHandlerControl.getLabel(),
+						portletDataHandlerControl.getLabel()) &&
 					(expectedPortletDataHandlerControl.isDisabled() ==
 						portletDataHandlerControl.isDisabled())) {
 

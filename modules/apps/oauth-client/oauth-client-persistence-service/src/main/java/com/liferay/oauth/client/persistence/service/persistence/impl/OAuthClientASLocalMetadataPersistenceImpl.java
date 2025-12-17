@@ -36,11 +36,13 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -86,6 +88,207 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathFetchByOAuthClientASLocalMetadataId;
+
+	/**
+	 * Returns the o auth client as local metadata where oAuthClientASLocalMetadataId = &#63; or throws a <code>NoSuchOAuthClientASLocalMetadataException</code> if it could not be found.
+	 *
+	 * @param oAuthClientASLocalMetadataId the o auth client as local metadata ID
+	 * @return the matching o auth client as local metadata
+	 * @throws NoSuchOAuthClientASLocalMetadataException if a matching o auth client as local metadata could not be found
+	 */
+	@Override
+	public OAuthClientASLocalMetadata findByOAuthClientASLocalMetadataId(
+			long oAuthClientASLocalMetadataId)
+		throws NoSuchOAuthClientASLocalMetadataException {
+
+		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
+			fetchByOAuthClientASLocalMetadataId(oAuthClientASLocalMetadataId);
+
+		if (oAuthClientASLocalMetadata == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("oAuthClientASLocalMetadataId=");
+			sb.append(oAuthClientASLocalMetadataId);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchOAuthClientASLocalMetadataException(sb.toString());
+		}
+
+		return oAuthClientASLocalMetadata;
+	}
+
+	/**
+	 * Returns the o auth client as local metadata where oAuthClientASLocalMetadataId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param oAuthClientASLocalMetadataId the o auth client as local metadata ID
+	 * @return the matching o auth client as local metadata, or <code>null</code> if a matching o auth client as local metadata could not be found
+	 */
+	@Override
+	public OAuthClientASLocalMetadata fetchByOAuthClientASLocalMetadataId(
+		long oAuthClientASLocalMetadataId) {
+
+		return fetchByOAuthClientASLocalMetadataId(
+			oAuthClientASLocalMetadataId, true);
+	}
+
+	/**
+	 * Returns the o auth client as local metadata where oAuthClientASLocalMetadataId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param oAuthClientASLocalMetadataId the o auth client as local metadata ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching o auth client as local metadata, or <code>null</code> if a matching o auth client as local metadata could not be found
+	 */
+	@Override
+	public OAuthClientASLocalMetadata fetchByOAuthClientASLocalMetadataId(
+		long oAuthClientASLocalMetadataId, boolean useFinderCache) {
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {oAuthClientASLocalMetadataId};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByOAuthClientASLocalMetadataId, finderArgs,
+				this);
+		}
+
+		if (result instanceof OAuthClientASLocalMetadata) {
+			OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
+				(OAuthClientASLocalMetadata)result;
+
+			if (oAuthClientASLocalMetadataId !=
+					oAuthClientASLocalMetadata.
+						getOAuthClientASLocalMetadataId()) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_SELECT_OAUTHCLIENTASLOCALMETADATA_WHERE);
+
+			sb.append(
+				_FINDER_COLUMN_OAUTHCLIENTASLOCALMETADATAID_OAUTHCLIENTASLOCALMETADATAID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(oAuthClientASLocalMetadataId);
+
+				List<OAuthClientASLocalMetadata> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByOAuthClientASLocalMetadataId,
+							finderArgs, list);
+					}
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									oAuthClientASLocalMetadataId
+								};
+							}
+
+							_log.warn(
+								"OAuthClientASLocalMetadataPersistenceImpl.fetchByOAuthClientASLocalMetadataId(long, boolean) with parameters (" +
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
+						list.get(0);
+
+					result = oAuthClientASLocalMetadata;
+
+					cacheResult(oAuthClientASLocalMetadata);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (OAuthClientASLocalMetadata)result;
+		}
+	}
+
+	/**
+	 * Removes the o auth client as local metadata where oAuthClientASLocalMetadataId = &#63; from the database.
+	 *
+	 * @param oAuthClientASLocalMetadataId the o auth client as local metadata ID
+	 * @return the o auth client as local metadata that was removed
+	 */
+	@Override
+	public OAuthClientASLocalMetadata removeByOAuthClientASLocalMetadataId(
+			long oAuthClientASLocalMetadataId)
+		throws NoSuchOAuthClientASLocalMetadataException {
+
+		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
+			findByOAuthClientASLocalMetadataId(oAuthClientASLocalMetadataId);
+
+		return remove(oAuthClientASLocalMetadata);
+	}
+
+	/**
+	 * Returns the number of o auth client as local metadatas where oAuthClientASLocalMetadataId = &#63;.
+	 *
+	 * @param oAuthClientASLocalMetadataId the o auth client as local metadata ID
+	 * @return the number of matching o auth client as local metadatas
+	 */
+	@Override
+	public int countByOAuthClientASLocalMetadataId(
+		long oAuthClientASLocalMetadataId) {
+
+		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
+			fetchByOAuthClientASLocalMetadataId(oAuthClientASLocalMetadataId);
+
+		if (oAuthClientASLocalMetadata == null) {
+			return 0;
+		}
+
+		return 1;
+	}
+
+	private static final String
+		_FINDER_COLUMN_OAUTHCLIENTASLOCALMETADATAID_OAUTHCLIENTASLOCALMETADATAID_2 =
+			"oAuthClientASLocalMetadata.oAuthClientASLocalMetadataId = ?";
+
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
 	private FinderPath _finderPathCountByCompanyId;
@@ -2121,6 +2324,1413 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 		_FINDER_COLUMN_LOCALWELLKNOWNURI_LOCALWELLKNOWNURI_3 =
 			"(oAuthClientASLocalMetadata.localWellKnownURI IS NULL OR oAuthClientASLocalMetadata.localWellKnownURI = '')";
 
+	private FinderPath _finderPathFetchByC_I;
+
+	/**
+	 * Returns the o auth client as local metadata where companyId = &#63; and issuer = &#63; or throws a <code>NoSuchOAuthClientASLocalMetadataException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param issuer the issuer
+	 * @return the matching o auth client as local metadata
+	 * @throws NoSuchOAuthClientASLocalMetadataException if a matching o auth client as local metadata could not be found
+	 */
+	@Override
+	public OAuthClientASLocalMetadata findByC_I(long companyId, String issuer)
+		throws NoSuchOAuthClientASLocalMetadataException {
+
+		OAuthClientASLocalMetadata oAuthClientASLocalMetadata = fetchByC_I(
+			companyId, issuer);
+
+		if (oAuthClientASLocalMetadata == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("companyId=");
+			sb.append(companyId);
+
+			sb.append(", issuer=");
+			sb.append(issuer);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchOAuthClientASLocalMetadataException(sb.toString());
+		}
+
+		return oAuthClientASLocalMetadata;
+	}
+
+	/**
+	 * Returns the o auth client as local metadata where companyId = &#63; and issuer = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param issuer the issuer
+	 * @return the matching o auth client as local metadata, or <code>null</code> if a matching o auth client as local metadata could not be found
+	 */
+	@Override
+	public OAuthClientASLocalMetadata fetchByC_I(
+		long companyId, String issuer) {
+
+		return fetchByC_I(companyId, issuer, true);
+	}
+
+	/**
+	 * Returns the o auth client as local metadata where companyId = &#63; and issuer = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param issuer the issuer
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching o auth client as local metadata, or <code>null</code> if a matching o auth client as local metadata could not be found
+	 */
+	@Override
+	public OAuthClientASLocalMetadata fetchByC_I(
+		long companyId, String issuer, boolean useFinderCache) {
+
+		issuer = Objects.toString(issuer, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {companyId, issuer};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByC_I, finderArgs, this);
+		}
+
+		if (result instanceof OAuthClientASLocalMetadata) {
+			OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
+				(OAuthClientASLocalMetadata)result;
+
+			if ((companyId != oAuthClientASLocalMetadata.getCompanyId()) ||
+				!Objects.equals(
+					issuer, oAuthClientASLocalMetadata.getIssuer())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_SELECT_OAUTHCLIENTASLOCALMETADATA_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_I_COMPANYID_2);
+
+			boolean bindIssuer = false;
+
+			if (issuer.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_I_ISSUER_3);
+			}
+			else {
+				bindIssuer = true;
+
+				sb.append(_FINDER_COLUMN_C_I_ISSUER_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindIssuer) {
+					queryPos.add(issuer);
+				}
+
+				List<OAuthClientASLocalMetadata> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByC_I, finderArgs, list);
+					}
+				}
+				else {
+					OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
+						list.get(0);
+
+					result = oAuthClientASLocalMetadata;
+
+					cacheResult(oAuthClientASLocalMetadata);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (OAuthClientASLocalMetadata)result;
+		}
+	}
+
+	/**
+	 * Removes the o auth client as local metadata where companyId = &#63; and issuer = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param issuer the issuer
+	 * @return the o auth client as local metadata that was removed
+	 */
+	@Override
+	public OAuthClientASLocalMetadata removeByC_I(long companyId, String issuer)
+		throws NoSuchOAuthClientASLocalMetadataException {
+
+		OAuthClientASLocalMetadata oAuthClientASLocalMetadata = findByC_I(
+			companyId, issuer);
+
+		return remove(oAuthClientASLocalMetadata);
+	}
+
+	/**
+	 * Returns the number of o auth client as local metadatas where companyId = &#63; and issuer = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param issuer the issuer
+	 * @return the number of matching o auth client as local metadatas
+	 */
+	@Override
+	public int countByC_I(long companyId, String issuer) {
+		OAuthClientASLocalMetadata oAuthClientASLocalMetadata = fetchByC_I(
+			companyId, issuer);
+
+		if (oAuthClientASLocalMetadata == null) {
+			return 0;
+		}
+
+		return 1;
+	}
+
+	private static final String _FINDER_COLUMN_C_I_COMPANYID_2 =
+		"oAuthClientASLocalMetadata.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_I_ISSUER_2 =
+		"oAuthClientASLocalMetadata.issuer = ?";
+
+	private static final String _FINDER_COLUMN_C_I_ISSUER_3 =
+		"(oAuthClientASLocalMetadata.issuer IS NULL OR oAuthClientASLocalMetadata.issuer = '')";
+
+	private FinderPath _finderPathWithPaginationFindByC_L;
+	private FinderPath _finderPathWithoutPaginationFindByC_L;
+	private FinderPath _finderPathCountByC_L;
+
+	/**
+	 * Returns all the o auth client as local metadatas where companyId = &#63; and localWellKnownEnabled = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param localWellKnownEnabled the local well known enabled
+	 * @return the matching o auth client as local metadatas
+	 */
+	@Override
+	public List<OAuthClientASLocalMetadata> findByC_L(
+		long companyId, boolean localWellKnownEnabled) {
+
+		return findByC_L(
+			companyId, localWellKnownEnabled, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the o auth client as local metadatas where companyId = &#63; and localWellKnownEnabled = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OAuthClientASLocalMetadataModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param localWellKnownEnabled the local well known enabled
+	 * @param start the lower bound of the range of o auth client as local metadatas
+	 * @param end the upper bound of the range of o auth client as local metadatas (not inclusive)
+	 * @return the range of matching o auth client as local metadatas
+	 */
+	@Override
+	public List<OAuthClientASLocalMetadata> findByC_L(
+		long companyId, boolean localWellKnownEnabled, int start, int end) {
+
+		return findByC_L(companyId, localWellKnownEnabled, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the o auth client as local metadatas where companyId = &#63; and localWellKnownEnabled = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OAuthClientASLocalMetadataModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param localWellKnownEnabled the local well known enabled
+	 * @param start the lower bound of the range of o auth client as local metadatas
+	 * @param end the upper bound of the range of o auth client as local metadatas (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching o auth client as local metadatas
+	 */
+	@Override
+	public List<OAuthClientASLocalMetadata> findByC_L(
+		long companyId, boolean localWellKnownEnabled, int start, int end,
+		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator) {
+
+		return findByC_L(
+			companyId, localWellKnownEnabled, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the o auth client as local metadatas where companyId = &#63; and localWellKnownEnabled = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OAuthClientASLocalMetadataModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param localWellKnownEnabled the local well known enabled
+	 * @param start the lower bound of the range of o auth client as local metadatas
+	 * @param end the upper bound of the range of o auth client as local metadatas (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching o auth client as local metadatas
+	 */
+	@Override
+	public List<OAuthClientASLocalMetadata> findByC_L(
+		long companyId, boolean localWellKnownEnabled, int start, int end,
+		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_L;
+				finderArgs = new Object[] {companyId, localWellKnownEnabled};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByC_L;
+			finderArgs = new Object[] {
+				companyId, localWellKnownEnabled, start, end, orderByComparator
+			};
+		}
+
+		List<OAuthClientASLocalMetadata> list = null;
+
+		if (useFinderCache) {
+			list = (List<OAuthClientASLocalMetadata>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (OAuthClientASLocalMetadata oAuthClientASLocalMetadata :
+						list) {
+
+					if ((companyId !=
+							oAuthClientASLocalMetadata.getCompanyId()) ||
+						(localWellKnownEnabled !=
+							oAuthClientASLocalMetadata.
+								isLocalWellKnownEnabled())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(4);
+			}
+
+			sb.append(_SQL_SELECT_OAUTHCLIENTASLOCALMETADATA_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_L_COMPANYID_2);
+
+			sb.append(_FINDER_COLUMN_C_L_LOCALWELLKNOWNENABLED_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(OAuthClientASLocalMetadataModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				queryPos.add(localWellKnownEnabled);
+
+				list = (List<OAuthClientASLocalMetadata>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first o auth client as local metadata in the ordered set where companyId = &#63; and localWellKnownEnabled = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param localWellKnownEnabled the local well known enabled
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching o auth client as local metadata
+	 * @throws NoSuchOAuthClientASLocalMetadataException if a matching o auth client as local metadata could not be found
+	 */
+	@Override
+	public OAuthClientASLocalMetadata findByC_L_First(
+			long companyId, boolean localWellKnownEnabled,
+			OrderByComparator<OAuthClientASLocalMetadata> orderByComparator)
+		throws NoSuchOAuthClientASLocalMetadataException {
+
+		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
+			fetchByC_L_First(
+				companyId, localWellKnownEnabled, orderByComparator);
+
+		if (oAuthClientASLocalMetadata != null) {
+			return oAuthClientASLocalMetadata;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("companyId=");
+		sb.append(companyId);
+
+		sb.append(", localWellKnownEnabled=");
+		sb.append(localWellKnownEnabled);
+
+		sb.append("}");
+
+		throw new NoSuchOAuthClientASLocalMetadataException(sb.toString());
+	}
+
+	/**
+	 * Returns the first o auth client as local metadata in the ordered set where companyId = &#63; and localWellKnownEnabled = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param localWellKnownEnabled the local well known enabled
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching o auth client as local metadata, or <code>null</code> if a matching o auth client as local metadata could not be found
+	 */
+	@Override
+	public OAuthClientASLocalMetadata fetchByC_L_First(
+		long companyId, boolean localWellKnownEnabled,
+		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator) {
+
+		List<OAuthClientASLocalMetadata> list = findByC_L(
+			companyId, localWellKnownEnabled, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last o auth client as local metadata in the ordered set where companyId = &#63; and localWellKnownEnabled = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param localWellKnownEnabled the local well known enabled
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching o auth client as local metadata
+	 * @throws NoSuchOAuthClientASLocalMetadataException if a matching o auth client as local metadata could not be found
+	 */
+	@Override
+	public OAuthClientASLocalMetadata findByC_L_Last(
+			long companyId, boolean localWellKnownEnabled,
+			OrderByComparator<OAuthClientASLocalMetadata> orderByComparator)
+		throws NoSuchOAuthClientASLocalMetadataException {
+
+		OAuthClientASLocalMetadata oAuthClientASLocalMetadata = fetchByC_L_Last(
+			companyId, localWellKnownEnabled, orderByComparator);
+
+		if (oAuthClientASLocalMetadata != null) {
+			return oAuthClientASLocalMetadata;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("companyId=");
+		sb.append(companyId);
+
+		sb.append(", localWellKnownEnabled=");
+		sb.append(localWellKnownEnabled);
+
+		sb.append("}");
+
+		throw new NoSuchOAuthClientASLocalMetadataException(sb.toString());
+	}
+
+	/**
+	 * Returns the last o auth client as local metadata in the ordered set where companyId = &#63; and localWellKnownEnabled = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param localWellKnownEnabled the local well known enabled
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching o auth client as local metadata, or <code>null</code> if a matching o auth client as local metadata could not be found
+	 */
+	@Override
+	public OAuthClientASLocalMetadata fetchByC_L_Last(
+		long companyId, boolean localWellKnownEnabled,
+		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator) {
+
+		int count = countByC_L(companyId, localWellKnownEnabled);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<OAuthClientASLocalMetadata> list = findByC_L(
+			companyId, localWellKnownEnabled, count - 1, count,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the o auth client as local metadatas before and after the current o auth client as local metadata in the ordered set where companyId = &#63; and localWellKnownEnabled = &#63;.
+	 *
+	 * @param oAuthClientASLocalMetadataId the primary key of the current o auth client as local metadata
+	 * @param companyId the company ID
+	 * @param localWellKnownEnabled the local well known enabled
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next o auth client as local metadata
+	 * @throws NoSuchOAuthClientASLocalMetadataException if a o auth client as local metadata with the primary key could not be found
+	 */
+	@Override
+	public OAuthClientASLocalMetadata[] findByC_L_PrevAndNext(
+			long oAuthClientASLocalMetadataId, long companyId,
+			boolean localWellKnownEnabled,
+			OrderByComparator<OAuthClientASLocalMetadata> orderByComparator)
+		throws NoSuchOAuthClientASLocalMetadataException {
+
+		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
+			findByPrimaryKey(oAuthClientASLocalMetadataId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			OAuthClientASLocalMetadata[] array =
+				new OAuthClientASLocalMetadataImpl[3];
+
+			array[0] = getByC_L_PrevAndNext(
+				session, oAuthClientASLocalMetadata, companyId,
+				localWellKnownEnabled, orderByComparator, true);
+
+			array[1] = oAuthClientASLocalMetadata;
+
+			array[2] = getByC_L_PrevAndNext(
+				session, oAuthClientASLocalMetadata, companyId,
+				localWellKnownEnabled, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected OAuthClientASLocalMetadata getByC_L_PrevAndNext(
+		Session session, OAuthClientASLocalMetadata oAuthClientASLocalMetadata,
+		long companyId, boolean localWellKnownEnabled,
+		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(4);
+		}
+
+		sb.append(_SQL_SELECT_OAUTHCLIENTASLOCALMETADATA_WHERE);
+
+		sb.append(_FINDER_COLUMN_C_L_COMPANYID_2);
+
+		sb.append(_FINDER_COLUMN_C_L_LOCALWELLKNOWNENABLED_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(OAuthClientASLocalMetadataModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(companyId);
+
+		queryPos.add(localWellKnownEnabled);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						oAuthClientASLocalMetadata)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<OAuthClientASLocalMetadata> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the o auth client as local metadatas that the user has permission to view where companyId = &#63; and localWellKnownEnabled = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param localWellKnownEnabled the local well known enabled
+	 * @return the matching o auth client as local metadatas that the user has permission to view
+	 */
+	@Override
+	public List<OAuthClientASLocalMetadata> filterFindByC_L(
+		long companyId, boolean localWellKnownEnabled) {
+
+		return filterFindByC_L(
+			companyId, localWellKnownEnabled, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the o auth client as local metadatas that the user has permission to view where companyId = &#63; and localWellKnownEnabled = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OAuthClientASLocalMetadataModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param localWellKnownEnabled the local well known enabled
+	 * @param start the lower bound of the range of o auth client as local metadatas
+	 * @param end the upper bound of the range of o auth client as local metadatas (not inclusive)
+	 * @return the range of matching o auth client as local metadatas that the user has permission to view
+	 */
+	@Override
+	public List<OAuthClientASLocalMetadata> filterFindByC_L(
+		long companyId, boolean localWellKnownEnabled, int start, int end) {
+
+		return filterFindByC_L(
+			companyId, localWellKnownEnabled, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the o auth client as local metadatas that the user has permissions to view where companyId = &#63; and localWellKnownEnabled = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OAuthClientASLocalMetadataModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param localWellKnownEnabled the local well known enabled
+	 * @param start the lower bound of the range of o auth client as local metadatas
+	 * @param end the upper bound of the range of o auth client as local metadatas (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching o auth client as local metadatas that the user has permission to view
+	 */
+	@Override
+	public List<OAuthClientASLocalMetadata> filterFindByC_L(
+		long companyId, boolean localWellKnownEnabled, int start, int end,
+		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator) {
+
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return findByC_L(
+				companyId, localWellKnownEnabled, start, end,
+				orderByComparator);
+		}
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			isPermissionsInMemoryFilterEnabled()) {
+
+			return InlineSQLHelperUtil.filter(
+				findByC_L(
+					companyId, localWellKnownEnabled, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, orderByComparator));
+		}
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				4 + (orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			sb = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_OAUTHCLIENTASLOCALMETADATA_WHERE);
+		}
+		else {
+			sb.append(
+				_FILTER_SQL_SELECT_OAUTHCLIENTASLOCALMETADATA_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		sb.append(_FINDER_COLUMN_C_L_COMPANYID_2);
+
+		sb.append(_FINDER_COLUMN_C_L_LOCALWELLKNOWNENABLED_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			sb.append(
+				_FILTER_SQL_SELECT_OAUTHCLIENTASLOCALMETADATA_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				sb.append(
+					OAuthClientASLocalMetadataModelImpl.
+						ORDER_BY_SQL_INLINE_DISTINCT);
+			}
+			else {
+				sb.append(OAuthClientASLocalMetadataModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), OAuthClientASLocalMetadata.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				sqlQuery.addEntity(
+					_FILTER_ENTITY_ALIAS, OAuthClientASLocalMetadataImpl.class);
+			}
+			else {
+				sqlQuery.addEntity(
+					_FILTER_ENTITY_TABLE, OAuthClientASLocalMetadataImpl.class);
+			}
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(companyId);
+
+			queryPos.add(localWellKnownEnabled);
+
+			return (List<OAuthClientASLocalMetadata>)QueryUtil.list(
+				sqlQuery, getDialect(), start, end);
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the o auth client as local metadatas before and after the current o auth client as local metadata in the ordered set of o auth client as local metadatas that the user has permission to view where companyId = &#63; and localWellKnownEnabled = &#63;.
+	 *
+	 * @param oAuthClientASLocalMetadataId the primary key of the current o auth client as local metadata
+	 * @param companyId the company ID
+	 * @param localWellKnownEnabled the local well known enabled
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next o auth client as local metadata
+	 * @throws NoSuchOAuthClientASLocalMetadataException if a o auth client as local metadata with the primary key could not be found
+	 */
+	@Override
+	public OAuthClientASLocalMetadata[] filterFindByC_L_PrevAndNext(
+			long oAuthClientASLocalMetadataId, long companyId,
+			boolean localWellKnownEnabled,
+			OrderByComparator<OAuthClientASLocalMetadata> orderByComparator)
+		throws NoSuchOAuthClientASLocalMetadataException {
+
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return findByC_L_PrevAndNext(
+				oAuthClientASLocalMetadataId, companyId, localWellKnownEnabled,
+				orderByComparator);
+		}
+
+		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
+			findByPrimaryKey(oAuthClientASLocalMetadataId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			OAuthClientASLocalMetadata[] array =
+				new OAuthClientASLocalMetadataImpl[3];
+
+			array[0] = filterGetByC_L_PrevAndNext(
+				session, oAuthClientASLocalMetadata, companyId,
+				localWellKnownEnabled, orderByComparator, true);
+
+			array[1] = oAuthClientASLocalMetadata;
+
+			array[2] = filterGetByC_L_PrevAndNext(
+				session, oAuthClientASLocalMetadata, companyId,
+				localWellKnownEnabled, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected OAuthClientASLocalMetadata filterGetByC_L_PrevAndNext(
+		Session session, OAuthClientASLocalMetadata oAuthClientASLocalMetadata,
+		long companyId, boolean localWellKnownEnabled,
+		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_OAUTHCLIENTASLOCALMETADATA_WHERE);
+		}
+		else {
+			sb.append(
+				_FILTER_SQL_SELECT_OAUTHCLIENTASLOCALMETADATA_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		sb.append(_FINDER_COLUMN_C_L_COMPANYID_2);
+
+		sb.append(_FINDER_COLUMN_C_L_LOCALWELLKNOWNENABLED_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			sb.append(
+				_FILTER_SQL_SELECT_OAUTHCLIENTASLOCALMETADATA_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
+							true));
+				}
+				else {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
+							true));
+				}
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
+				}
+				else {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
+				}
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				sb.append(
+					OAuthClientASLocalMetadataModelImpl.
+						ORDER_BY_SQL_INLINE_DISTINCT);
+			}
+			else {
+				sb.append(OAuthClientASLocalMetadataModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), OAuthClientASLocalMetadata.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+		sqlQuery.setFirstResult(0);
+		sqlQuery.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sqlQuery.addEntity(
+				_FILTER_ENTITY_ALIAS, OAuthClientASLocalMetadataImpl.class);
+		}
+		else {
+			sqlQuery.addEntity(
+				_FILTER_ENTITY_TABLE, OAuthClientASLocalMetadataImpl.class);
+		}
+
+		QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+		queryPos.add(companyId);
+
+		queryPos.add(localWellKnownEnabled);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						oAuthClientASLocalMetadata)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<OAuthClientASLocalMetadata> list = sqlQuery.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the o auth client as local metadatas where companyId = &#63; and localWellKnownEnabled = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param localWellKnownEnabled the local well known enabled
+	 */
+	@Override
+	public void removeByC_L(long companyId, boolean localWellKnownEnabled) {
+		for (OAuthClientASLocalMetadata oAuthClientASLocalMetadata :
+				findByC_L(
+					companyId, localWellKnownEnabled, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			remove(oAuthClientASLocalMetadata);
+		}
+	}
+
+	/**
+	 * Returns the number of o auth client as local metadatas where companyId = &#63; and localWellKnownEnabled = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param localWellKnownEnabled the local well known enabled
+	 * @return the number of matching o auth client as local metadatas
+	 */
+	@Override
+	public int countByC_L(long companyId, boolean localWellKnownEnabled) {
+		FinderPath finderPath = _finderPathCountByC_L;
+
+		Object[] finderArgs = new Object[] {companyId, localWellKnownEnabled};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_OAUTHCLIENTASLOCALMETADATA_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_L_COMPANYID_2);
+
+			sb.append(_FINDER_COLUMN_C_L_LOCALWELLKNOWNENABLED_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				queryPos.add(localWellKnownEnabled);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of o auth client as local metadatas that the user has permission to view where companyId = &#63; and localWellKnownEnabled = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param localWellKnownEnabled the local well known enabled
+	 * @return the number of matching o auth client as local metadatas that the user has permission to view
+	 */
+	@Override
+	public int filterCountByC_L(long companyId, boolean localWellKnownEnabled) {
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return countByC_L(companyId, localWellKnownEnabled);
+		}
+
+		if (isPermissionsInMemoryFilterEnabled()) {
+			List<OAuthClientASLocalMetadata> oAuthClientASLocalMetadatas =
+				findByC_L(companyId, localWellKnownEnabled);
+
+			oAuthClientASLocalMetadatas = InlineSQLHelperUtil.filter(
+				oAuthClientASLocalMetadatas);
+
+			return oAuthClientASLocalMetadatas.size();
+		}
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(_FILTER_SQL_COUNT_OAUTHCLIENTASLOCALMETADATA_WHERE);
+
+		sb.append(_FINDER_COLUMN_C_L_COMPANYID_2);
+
+		sb.append(_FINDER_COLUMN_C_L_LOCALWELLKNOWNENABLED_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), OAuthClientASLocalMetadata.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			sqlQuery.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(companyId);
+
+			queryPos.add(localWellKnownEnabled);
+
+			Long count = (Long)sqlQuery.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_C_L_COMPANYID_2 =
+		"oAuthClientASLocalMetadata.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_L_LOCALWELLKNOWNENABLED_2 =
+		"oAuthClientASLocalMetadata.localWellKnownEnabled = ?";
+
+	private FinderPath _finderPathFetchByC_O;
+
+	/**
+	 * Returns the o auth client as local metadata where companyId = &#63; and oAuthASLocalWellKnownURI = &#63; or throws a <code>NoSuchOAuthClientASLocalMetadataException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param oAuthASLocalWellKnownURI the o auth as local well known uri
+	 * @return the matching o auth client as local metadata
+	 * @throws NoSuchOAuthClientASLocalMetadataException if a matching o auth client as local metadata could not be found
+	 */
+	@Override
+	public OAuthClientASLocalMetadata findByC_O(
+			long companyId, String oAuthASLocalWellKnownURI)
+		throws NoSuchOAuthClientASLocalMetadataException {
+
+		OAuthClientASLocalMetadata oAuthClientASLocalMetadata = fetchByC_O(
+			companyId, oAuthASLocalWellKnownURI);
+
+		if (oAuthClientASLocalMetadata == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("companyId=");
+			sb.append(companyId);
+
+			sb.append(", oAuthASLocalWellKnownURI=");
+			sb.append(oAuthASLocalWellKnownURI);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchOAuthClientASLocalMetadataException(sb.toString());
+		}
+
+		return oAuthClientASLocalMetadata;
+	}
+
+	/**
+	 * Returns the o auth client as local metadata where companyId = &#63; and oAuthASLocalWellKnownURI = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param oAuthASLocalWellKnownURI the o auth as local well known uri
+	 * @return the matching o auth client as local metadata, or <code>null</code> if a matching o auth client as local metadata could not be found
+	 */
+	@Override
+	public OAuthClientASLocalMetadata fetchByC_O(
+		long companyId, String oAuthASLocalWellKnownURI) {
+
+		return fetchByC_O(companyId, oAuthASLocalWellKnownURI, true);
+	}
+
+	/**
+	 * Returns the o auth client as local metadata where companyId = &#63; and oAuthASLocalWellKnownURI = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param oAuthASLocalWellKnownURI the o auth as local well known uri
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching o auth client as local metadata, or <code>null</code> if a matching o auth client as local metadata could not be found
+	 */
+	@Override
+	public OAuthClientASLocalMetadata fetchByC_O(
+		long companyId, String oAuthASLocalWellKnownURI,
+		boolean useFinderCache) {
+
+		oAuthASLocalWellKnownURI = Objects.toString(
+			oAuthASLocalWellKnownURI, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {companyId, oAuthASLocalWellKnownURI};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByC_O, finderArgs, this);
+		}
+
+		if (result instanceof OAuthClientASLocalMetadata) {
+			OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
+				(OAuthClientASLocalMetadata)result;
+
+			if ((companyId != oAuthClientASLocalMetadata.getCompanyId()) ||
+				!Objects.equals(
+					oAuthASLocalWellKnownURI,
+					oAuthClientASLocalMetadata.getOAuthASLocalWellKnownURI())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_SELECT_OAUTHCLIENTASLOCALMETADATA_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_O_COMPANYID_2);
+
+			boolean bindOAuthASLocalWellKnownURI = false;
+
+			if (oAuthASLocalWellKnownURI.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_O_OAUTHASLOCALWELLKNOWNURI_3);
+			}
+			else {
+				bindOAuthASLocalWellKnownURI = true;
+
+				sb.append(_FINDER_COLUMN_C_O_OAUTHASLOCALWELLKNOWNURI_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindOAuthASLocalWellKnownURI) {
+					queryPos.add(oAuthASLocalWellKnownURI);
+				}
+
+				List<OAuthClientASLocalMetadata> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByC_O, finderArgs, list);
+					}
+				}
+				else {
+					OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
+						list.get(0);
+
+					result = oAuthClientASLocalMetadata;
+
+					cacheResult(oAuthClientASLocalMetadata);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (OAuthClientASLocalMetadata)result;
+		}
+	}
+
+	/**
+	 * Removes the o auth client as local metadata where companyId = &#63; and oAuthASLocalWellKnownURI = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param oAuthASLocalWellKnownURI the o auth as local well known uri
+	 * @return the o auth client as local metadata that was removed
+	 */
+	@Override
+	public OAuthClientASLocalMetadata removeByC_O(
+			long companyId, String oAuthASLocalWellKnownURI)
+		throws NoSuchOAuthClientASLocalMetadataException {
+
+		OAuthClientASLocalMetadata oAuthClientASLocalMetadata = findByC_O(
+			companyId, oAuthASLocalWellKnownURI);
+
+		return remove(oAuthClientASLocalMetadata);
+	}
+
+	/**
+	 * Returns the number of o auth client as local metadatas where companyId = &#63; and oAuthASLocalWellKnownURI = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param oAuthASLocalWellKnownURI the o auth as local well known uri
+	 * @return the number of matching o auth client as local metadatas
+	 */
+	@Override
+	public int countByC_O(long companyId, String oAuthASLocalWellKnownURI) {
+		OAuthClientASLocalMetadata oAuthClientASLocalMetadata = fetchByC_O(
+			companyId, oAuthASLocalWellKnownURI);
+
+		if (oAuthClientASLocalMetadata == null) {
+			return 0;
+		}
+
+		return 1;
+	}
+
+	private static final String _FINDER_COLUMN_C_O_COMPANYID_2 =
+		"oAuthClientASLocalMetadata.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_O_OAUTHASLOCALWELLKNOWNURI_2 =
+		"oAuthClientASLocalMetadata.oAuthASLocalWellKnownURI = ?";
+
+	private static final String _FINDER_COLUMN_C_O_OAUTHASLOCALWELLKNOWNURI_3 =
+		"(oAuthClientASLocalMetadata.oAuthASLocalWellKnownURI IS NULL OR oAuthClientASLocalMetadata.oAuthASLocalWellKnownURI = '')";
+
 	public OAuthClientASLocalMetadataPersistenceImpl() {
 		setModelClass(OAuthClientASLocalMetadata.class);
 
@@ -2145,8 +3755,31 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 			oAuthClientASLocalMetadata);
 
 		finderCache.putResult(
+			_finderPathFetchByOAuthClientASLocalMetadataId,
+			new Object[] {
+				oAuthClientASLocalMetadata.getOAuthClientASLocalMetadataId()
+			},
+			oAuthClientASLocalMetadata);
+
+		finderCache.putResult(
 			_finderPathFetchByLocalWellKnownURI,
 			new Object[] {oAuthClientASLocalMetadata.getLocalWellKnownURI()},
+			oAuthClientASLocalMetadata);
+
+		finderCache.putResult(
+			_finderPathFetchByC_I,
+			new Object[] {
+				oAuthClientASLocalMetadata.getCompanyId(),
+				oAuthClientASLocalMetadata.getIssuer()
+			},
+			oAuthClientASLocalMetadata);
+
+		finderCache.putResult(
+			_finderPathFetchByC_O,
+			new Object[] {
+				oAuthClientASLocalMetadata.getCompanyId(),
+				oAuthClientASLocalMetadata.getOAuthASLocalWellKnownURI()
+			},
 			oAuthClientASLocalMetadata);
 	}
 
@@ -2238,12 +3871,37 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 			oAuthClientASLocalMetadataModelImpl) {
 
 		Object[] args = new Object[] {
+			oAuthClientASLocalMetadataModelImpl.
+				getOAuthClientASLocalMetadataId()
+		};
+
+		finderCache.putResult(
+			_finderPathFetchByOAuthClientASLocalMetadataId, args,
+			oAuthClientASLocalMetadataModelImpl);
+
+		args = new Object[] {
 			oAuthClientASLocalMetadataModelImpl.getLocalWellKnownURI()
 		};
 
 		finderCache.putResult(
 			_finderPathFetchByLocalWellKnownURI, args,
 			oAuthClientASLocalMetadataModelImpl);
+
+		args = new Object[] {
+			oAuthClientASLocalMetadataModelImpl.getCompanyId(),
+			oAuthClientASLocalMetadataModelImpl.getIssuer()
+		};
+
+		finderCache.putResult(
+			_finderPathFetchByC_I, args, oAuthClientASLocalMetadataModelImpl);
+
+		args = new Object[] {
+			oAuthClientASLocalMetadataModelImpl.getCompanyId(),
+			oAuthClientASLocalMetadataModelImpl.getOAuthASLocalWellKnownURI()
+		};
+
+		finderCache.putResult(
+			_finderPathFetchByC_O, args, oAuthClientASLocalMetadataModelImpl);
 	}
 
 	/**
@@ -2729,6 +4387,11 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
+		_finderPathFetchByOAuthClientASLocalMetadataId = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByOAuthClientASLocalMetadataId",
+			new String[] {Long.class.getName()},
+			new String[] {"oAuthClientASLocalMetadataId"}, true);
+
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -2768,6 +4431,35 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByLocalWellKnownURI",
 			new String[] {String.class.getName()},
 			new String[] {"localWellKnownURI"}, true);
+
+		_finderPathFetchByC_I = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_I",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "issuer"}, true);
+
+		_finderPathWithPaginationFindByC_L = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_L",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"companyId", "localWellKnownEnabled"}, true);
+
+		_finderPathWithoutPaginationFindByC_L = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_L",
+			new String[] {Long.class.getName(), Boolean.class.getName()},
+			new String[] {"companyId", "localWellKnownEnabled"}, true);
+
+		_finderPathCountByC_L = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_L",
+			new String[] {Long.class.getName(), Boolean.class.getName()},
+			new String[] {"companyId", "localWellKnownEnabled"}, false);
+
+		_finderPathFetchByC_O = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_O",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "oAuthASLocalWellKnownURI"}, true);
 
 		OAuthClientASLocalMetadataUtil.setPersistence(this);
 	}

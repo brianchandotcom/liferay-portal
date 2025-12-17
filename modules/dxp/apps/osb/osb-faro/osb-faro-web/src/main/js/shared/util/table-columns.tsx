@@ -209,10 +209,11 @@ export const membershipChangesColumns = {
 	},
 	individualName: {
 		cellRenderer: MemberCell,
+		className: 'table-cell-expand',
 		label: `${Liferay.Language.get('member-name')} | ${Liferay.Language.get(
 			'email'
 		)}`,
-		title: true
+		sortable: true
 	},
 	lastActive: {
 		cellRenderer: ({className, data: {lastActive}}) => (

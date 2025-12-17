@@ -55,8 +55,9 @@ public class DeleteCustomDataSetMVCResourceCommand
 			WebKeys.THEME_DISPLAY);
 
 		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				themeDisplay.getCompanyId(), "DataSetSnapshot");
+			objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					"L_DATA_SET_SNAPSHOT", themeDisplay.getCompanyId());
 
 		long fdsId = ParamUtil.getLong(resourceRequest, "id");
 

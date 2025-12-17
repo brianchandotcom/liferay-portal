@@ -66,30 +66,6 @@ export default function MultiPanelSidebar({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isMounted]);
 
-	useEffect(() => {
-		const productMenu = Liferay.SideNavigation.instance(
-			document.querySelector('.product-menu-toggle')
-		);
-
-		if (productMenu) {
-
-			// Close product menu whenever sidebarOpen becomes true
-
-			if (open) {
-				productMenu.hide();
-			}
-
-			// Add listener on product menu to turn sidebarOpen false if opened
-
-			const sideNavigationListener = productMenu.on(
-				'openStart.lexicon.sidenav',
-				() => onChange({sidebarOpen: false})
-			);
-
-			return () => sideNavigationListener.removeListener();
-		}
-	}, [onChange, open]);
-
 	const getMessage = (label) => {
 		return Liferay.Language.get('panel') + label;
 	};

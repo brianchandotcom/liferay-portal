@@ -710,6 +710,7 @@
 				}
 			},
 			"ParentTaxonomyCategory": {
+				"description": "The category's parent category.",
 				"properties": {
 					"externalReferenceCode": {
 						"description": "The parent taxonomy category's external reference code.",
@@ -729,6 +730,7 @@
 				}
 			},
 			"ParentTaxonomyVocabulary": {
+				"description": "The parent category's `TaxonomyVocabulary`.",
 				"properties": {
 					"externalReferenceCode": {
 						"description": "The parent category's `TaxonomyVocabulary` external reference code.",

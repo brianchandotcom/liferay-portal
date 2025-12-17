@@ -37,7 +37,7 @@ public class OAuthClientASLocalMetadataLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.oauth.client.persistence.service.impl.OAuthClientASLocalMetadataLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
-			long userId, String authorizationEndpoint, Boolean enabled,
+			long userId, String authorizationEndpoint, boolean enabled,
 			String issuerString, String jwksUri, String[] supportedGrantTypes,
 			String[] supportedScopes, String[] supportedSubjectTypes,
 			String tokenEndpointString, String userinfoEndpoint)
@@ -237,24 +237,6 @@ public class OAuthClientASLocalMetadataLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static OAuthClientASLocalMetadata
-			fetchByOAuthClientASLocalMetadataId(
-				long oAuthClientASLocalMetadataId)
-		throws PortalException {
-
-		return getService().fetchByOAuthClientASLocalMetadataId(
-			oAuthClientASLocalMetadataId);
-	}
-
-	public static OAuthClientASLocalMetadata
-			fetchIssuerByCompanyAuthClientASLocalMetadata(
-				long companyId, String issuer)
-		throws PortalException {
-
-		return getService().fetchIssuerByCompanyAuthClientASLocalMetadata(
-			companyId, issuer);
-	}
-
 	public static OAuthClientASLocalMetadata fetchOAuthClientASLocalMetadata(
 		long oAuthClientASLocalMetadataId) {
 
@@ -263,18 +245,23 @@ public class OAuthClientASLocalMetadataLocalServiceUtil {
 	}
 
 	public static OAuthClientASLocalMetadata fetchOAuthClientASLocalMetadata(
+		long companyId, boolean enabled,
+		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator) {
+
+		return getService().fetchOAuthClientASLocalMetadata(
+			companyId, enabled, orderByComparator);
+	}
+
+	public static OAuthClientASLocalMetadata fetchOAuthClientASLocalMetadata(
+		long companyId, String issuer) {
+
+		return getService().fetchOAuthClientASLocalMetadata(companyId, issuer);
+	}
+
+	public static OAuthClientASLocalMetadata fetchOAuthClientASLocalMetadata(
 		String localWellKnownURI) {
 
 		return getService().fetchOAuthClientASLocalMetadata(localWellKnownURI);
-	}
-
-	public static OAuthClientASLocalMetadata
-		fetchOAuthClientASLocalMetadataByCompanyEnabled(
-			long companyId, boolean enabled,
-			OrderByComparator<OAuthClientASLocalMetadata> orderByComparator) {
-
-		return getService().fetchOAuthClientASLocalMetadataByCompanyEnabled(
-			companyId, enabled, orderByComparator);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
@@ -343,13 +330,6 @@ public class OAuthClientASLocalMetadataLocalServiceUtil {
 		return getService().getOAuthClientASLocalMetadatas(start, end);
 	}
 
-	public static int getOAuthClientASLocalMetadatasByCompanyIdCount(
-		long companyId) {
-
-		return getService().getOAuthClientASLocalMetadatasByCompanyIdCount(
-			companyId);
-	}
-
 	/**
 	 * Returns the number of o auth client as local metadatas.
 	 *
@@ -357,6 +337,10 @@ public class OAuthClientASLocalMetadataLocalServiceUtil {
 	 */
 	public static int getOAuthClientASLocalMetadatasCount() {
 		return getService().getOAuthClientASLocalMetadatasCount();
+	}
+
+	public static int getOAuthClientASLocalMetadatasCount(long companyId) {
+		return getService().getOAuthClientASLocalMetadatasCount(companyId);
 	}
 
 	/**
@@ -392,7 +376,7 @@ public class OAuthClientASLocalMetadataLocalServiceUtil {
 
 	public static OAuthClientASLocalMetadata updateOAuthClientASLocalMetadata(
 			long oAuthClientASLocalMetadataId, String authorizationEndpoint,
-			Boolean enabled, String issuerString, String jwksUri,
+			boolean enabled, String issuerString, String jwksUri,
 			String[] supportedGrantTypes, String[] supportedScopes,
 			String[] supportedSubjectTypes, String tokenEndpointString,
 			String userinfoEndpoint)

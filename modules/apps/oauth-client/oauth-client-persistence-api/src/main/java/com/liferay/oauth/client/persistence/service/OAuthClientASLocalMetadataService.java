@@ -44,7 +44,7 @@ public interface OAuthClientASLocalMetadataService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.oauth.client.persistence.service.impl.OAuthClientASLocalMetadataServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the o auth client as local metadata remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link OAuthClientASLocalMetadataServiceUtil} if injection and service tracking are not available.
 	 */
 	public OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
-			long userId, String authorizationEndpoint, Boolean enabled,
+			long userId, String authorizationEndpoint, boolean enabled,
 			String issuerString, String jwksUri, String[] supportedGrantTypes,
 			String[] supportedScopes, String[] supportedSubjectTypes,
 			String tokenEndpointString, String userinfoEndpoint)
@@ -63,12 +63,12 @@ public interface OAuthClientASLocalMetadataService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OAuthClientASLocalMetadata fetchByOAuthClientASLocalMetadataId(
+	public OAuthClientASLocalMetadata fetchOAuthClientASLocalMetadata(
 			long oAuthClientASLocalMetadataId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OAuthClientASLocalMetadata fetchIssuerOAuthClientASLocalMetadata(
+	public OAuthClientASLocalMetadata fetchOAuthClientASLocalMetadata(
 			long companyId, String issuer)
 		throws PortalException;
 
@@ -82,20 +82,19 @@ public interface OAuthClientASLocalMetadataService extends BaseService {
 			long companyId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OAuthClientASLocalMetadata getIssuerAuthClientASLocalMetadata(
+	public OAuthClientASLocalMetadata getOAuthClientASLocalMetadata(
+			long companyId, boolean enabled,
+			OrderByComparator<OAuthClientASLocalMetadata> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OAuthClientASLocalMetadata getOAuthClientASLocalMetadata(
 			long companyId, String issuer)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuthClientASLocalMetadata getOAuthClientASLocalMetadata(
 			String localWellKnownURI)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OAuthClientASLocalMetadata
-			getOAuthClientASLocalMetadataByCompanyEnabled(
-				long companyId, boolean enabled,
-				OrderByComparator<OAuthClientASLocalMetadata> orderByComparator)
 		throws PortalException;
 
 	/**
@@ -115,7 +114,7 @@ public interface OAuthClientASLocalMetadataService extends BaseService {
 
 	public OAuthClientASLocalMetadata updateOAuthClientASLocalMetadata(
 			long oAuthClientASLocalMetadataId, String authorizationEndpoint,
-			Boolean enabled, String issuerString, String jwksUri,
+			boolean enabled, String issuerString, String jwksUri,
 			String[] supportedGrantTypes, String[] supportedScopes,
 			String[] supportedSubjectTypes, String tokenEndpointString,
 			String userinfoEndpoint)

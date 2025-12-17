@@ -31,7 +31,7 @@ public class OAuthClientASLocalMetadataServiceWrapper
 	@Override
 	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
 			addOAuthClientASLocalMetadata(
-				long userId, String authorizationEndpoint, Boolean enabled,
+				long userId, String authorizationEndpoint, boolean enabled,
 				String issuerString, String jwksUri,
 				String[] supportedGrantTypes, String[] supportedScopes,
 				String[] supportedSubjectTypes, String tokenEndpointString,
@@ -74,21 +74,20 @@ public class OAuthClientASLocalMetadataServiceWrapper
 
 	@Override
 	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
-			fetchByOAuthClientASLocalMetadataId(
-				long oAuthClientASLocalMetadataId)
+			fetchOAuthClientASLocalMetadata(long oAuthClientASLocalMetadataId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _oAuthClientASLocalMetadataService.
-			fetchByOAuthClientASLocalMetadataId(oAuthClientASLocalMetadataId);
+			fetchOAuthClientASLocalMetadata(oAuthClientASLocalMetadataId);
 	}
 
 	@Override
 	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
-			fetchIssuerOAuthClientASLocalMetadata(long companyId, String issuer)
+			fetchOAuthClientASLocalMetadata(long companyId, String issuer)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _oAuthClientASLocalMetadataService.
-			fetchIssuerOAuthClientASLocalMetadata(companyId, issuer);
+			fetchOAuthClientASLocalMetadata(companyId, issuer);
 	}
 
 	@Override
@@ -112,11 +111,24 @@ public class OAuthClientASLocalMetadataServiceWrapper
 
 	@Override
 	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
-			getIssuerAuthClientASLocalMetadata(long companyId, String issuer)
+			getOAuthClientASLocalMetadata(
+				long companyId, boolean enabled,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.oauth.client.persistence.model.
+						OAuthClientASLocalMetadata> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _oAuthClientASLocalMetadataService.
-			getIssuerAuthClientASLocalMetadata(companyId, issuer);
+		return _oAuthClientASLocalMetadataService.getOAuthClientASLocalMetadata(
+			companyId, enabled, orderByComparator);
+	}
+
+	@Override
+	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
+			getOAuthClientASLocalMetadata(long companyId, String issuer)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _oAuthClientASLocalMetadataService.getOAuthClientASLocalMetadata(
+			companyId, issuer);
 	}
 
 	@Override
@@ -126,20 +138,6 @@ public class OAuthClientASLocalMetadataServiceWrapper
 
 		return _oAuthClientASLocalMetadataService.getOAuthClientASLocalMetadata(
 			localWellKnownURI);
-	}
-
-	@Override
-	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
-			getOAuthClientASLocalMetadataByCompanyEnabled(
-				long companyId, boolean enabled,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.oauth.client.persistence.model.
-						OAuthClientASLocalMetadata> orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _oAuthClientASLocalMetadataService.
-			getOAuthClientASLocalMetadataByCompanyEnabled(
-				companyId, enabled, orderByComparator);
 	}
 
 	/**
@@ -174,7 +172,7 @@ public class OAuthClientASLocalMetadataServiceWrapper
 	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
 			updateOAuthClientASLocalMetadata(
 				long oAuthClientASLocalMetadataId, String authorizationEndpoint,
-				Boolean enabled, String issuerString, String jwksUri,
+				boolean enabled, String issuerString, String jwksUri,
 				String[] supportedGrantTypes, String[] supportedScopes,
 				String[] supportedSubjectTypes, String tokenEndpointString,
 				String userinfoEndpoint)

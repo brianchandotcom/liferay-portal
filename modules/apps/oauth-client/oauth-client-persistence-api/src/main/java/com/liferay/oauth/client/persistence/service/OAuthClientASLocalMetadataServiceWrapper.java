@@ -31,6 +31,22 @@ public class OAuthClientASLocalMetadataServiceWrapper
 	@Override
 	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
 			addOAuthClientASLocalMetadata(
+				long userId, String authorizationEndpoint, Boolean enabled,
+				String issuerString, String jwksUri,
+				String[] supportedGrantTypes, String[] supportedScopes,
+				String[] supportedSubjectTypes, String tokenEndpointString,
+				String userinfoEndpoint)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _oAuthClientASLocalMetadataService.addOAuthClientASLocalMetadata(
+			userId, authorizationEndpoint, enabled, issuerString, jwksUri,
+			supportedGrantTypes, supportedScopes, supportedSubjectTypes,
+			tokenEndpointString, userinfoEndpoint);
+	}
+
+	@Override
+	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
+			addOAuthClientASLocalMetadata(
 				long userId, String metadataJSON, String wellKnownURISuffix)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -57,6 +73,25 @@ public class OAuthClientASLocalMetadataServiceWrapper
 	}
 
 	@Override
+	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
+			fetchByOAuthClientASLocalMetadataId(
+				long oAuthClientASLocalMetadataId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _oAuthClientASLocalMetadataService.
+			fetchByOAuthClientASLocalMetadataId(oAuthClientASLocalMetadataId);
+	}
+
+	@Override
+	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
+			fetchIssuerOAuthClientASLocalMetadata(long companyId, String issuer)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _oAuthClientASLocalMetadataService.
+			fetchIssuerOAuthClientASLocalMetadata(companyId, issuer);
+	}
+
+	@Override
 	public java.util.List
 		<com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata>
 			getCompanyOAuthClientASLocalMetadata(long companyId) {
@@ -77,11 +112,34 @@ public class OAuthClientASLocalMetadataServiceWrapper
 
 	@Override
 	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
+			getIssuerAuthClientASLocalMetadata(long companyId, String issuer)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _oAuthClientASLocalMetadataService.
+			getIssuerAuthClientASLocalMetadata(companyId, issuer);
+	}
+
+	@Override
+	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
 			getOAuthClientASLocalMetadata(String localWellKnownURI)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _oAuthClientASLocalMetadataService.getOAuthClientASLocalMetadata(
 			localWellKnownURI);
+	}
+
+	@Override
+	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
+			getOAuthClientASLocalMetadataByCompanyEnabled(
+				long companyId, boolean enabled,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.oauth.client.persistence.model.
+						OAuthClientASLocalMetadata> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _oAuthClientASLocalMetadataService.
+			getOAuthClientASLocalMetadataByCompanyEnabled(
+				companyId, enabled, orderByComparator);
 	}
 
 	/**
@@ -110,6 +168,23 @@ public class OAuthClientASLocalMetadataServiceWrapper
 
 		return _oAuthClientASLocalMetadataService.
 			getUserOAuthClientASLocalMetadata(userId, start, end);
+	}
+
+	@Override
+	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
+			updateOAuthClientASLocalMetadata(
+				long oAuthClientASLocalMetadataId, String authorizationEndpoint,
+				Boolean enabled, String issuerString, String jwksUri,
+				String[] supportedGrantTypes, String[] supportedScopes,
+				String[] supportedSubjectTypes, String tokenEndpointString,
+				String userinfoEndpoint)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _oAuthClientASLocalMetadataService.
+			updateOAuthClientASLocalMetadata(
+				oAuthClientASLocalMetadataId, authorizationEndpoint, enabled,
+				issuerString, jwksUri, supportedGrantTypes, supportedScopes,
+				supportedSubjectTypes, tokenEndpointString, userinfoEndpoint);
 	}
 
 	@Override

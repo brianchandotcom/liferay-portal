@@ -63,10 +63,8 @@ public class OAuthAuthorizationServerInfoMapperJSONUpgradeProcessTest {
 
 		String issuerString = RandomTestUtil.randomString();
 
-		Issuer issuer = new Issuer(issuerString);
-
 		OIDCProviderMetadata oidcProviderMetadata = new OIDCProviderMetadata(
-			issuer, List.of(SubjectType.PUBLIC),
+			new Issuer(issuerString), List.of(SubjectType.PUBLIC),
 			new URI(RandomTestUtil.randomString()));
 
 		oAuthClientASLocalMetadata2.setMetadataJSON(

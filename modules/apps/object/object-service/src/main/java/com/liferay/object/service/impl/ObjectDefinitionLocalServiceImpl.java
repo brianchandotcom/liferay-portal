@@ -2825,6 +2825,12 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setPKObjectFieldName(pkObjectFieldName);
 		objectDefinition.setScope(scope);
 
+		if ((objectDefinition.getStatus() == WorkflowConstants.STATUS_EMPTY) &&
+			(status == WorkflowConstants.STATUS_DRAFT)) {
+
+			objectDefinition.setStatus(status);
+		}
+
 		objectDefinition = _update(objectDefinition);
 
 		for (ObjectField objectField :

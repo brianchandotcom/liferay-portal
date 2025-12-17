@@ -136,7 +136,9 @@ test(
 
 			await exportImportPage.goToExport();
 
-			await exportImportPage.export(exportName, {itemLabel: 'Tests 1 Items'});
+			await exportImportPage.export(exportName, {
+				itemLabel: 'Tests 1 Items',
+			});
 
 			const exportFilePath =
 				await exportImportPage.downloadExportProcess(exportName);

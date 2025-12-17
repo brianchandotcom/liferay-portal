@@ -588,3 +588,119 @@ test('LPD-62112 Cannot Preview Pending Version of Page in a Publication', async 
 
 	await expect(newHeading).toBeVisible();
 });
+
+test.describe('Publications with incomplete status tests', () => {
+	const journalName = getRandomString();
+
+	test.beforeEach(
+		async ({
+			apiHelpers,
+			ctCollection,
+			journalEditArticlePage,
+			workflowPage,
+		}) => {
+			await apiHelpers.headlessChangeTracking.checkoutCTCollection(0);
+
+			await workflowPage.goto();
+			await workflowPage.changeWorkflow(
+				'Web Content Article',
+				'Single Approver'
+			);
+
+			await apiHelpers.headlessChangeTracking.checkoutCTCollection(
+				ctCollection.body.id
+			);
+
+			await journalEditArticlePage.goto();
+			await journalEditArticlePage.submitArticleForWorkflow(journalName);
+		}
+	);
+
+	test.afterEach(async ({apiHelpers, page, workflowPage}) => {
+		await apiHelpers.headlessChangeTracking.checkoutCTCollection(0);
+
+		await workflowPage.goto();
+
+		const row = await page
+			.getByRole('row')
+			.filter({hasText: 'Web Content Article'});
+
+		const workflowEnabled = await row
+			.getByTitle('Workflow Definition')
+			.filter({hasText: 'Single Approver'});
+
+		if (await workflowEnabled.isVisible()) {
+			await workflowPage.changeWorkflow(
+				'Web Content Article',
+				'No Workflow',
+				{
+					disable: true,
+				}
+			);
+		}
+	});
+
+	test('LPD-73271 Can view CTEntry actions in review changes page', async ({
+		changeTrackingPage,
+		ctCollection,
+		page,
+	}) => {
+		await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
+
+		await expect(
+			page.locator('.publication-name', {hasText: 'Pending Approval'})
+		).toBeVisible();
+
+		const firstDropdown = page
+			.locator('.cell-item-actions .dropdown svg.lexicon-icon-ellipsis-v')
+			.first();
+
+		await clickAndExpectToBeVisible({
+			autoClick: false,
+			target: page.getByRole('menuitem', {name: 'Discard'}),
+			trigger: firstDropdown,
+		});
+
+		await clickAndExpectToBeVisible({
+			autoClick: false,
+			target: page.getByRole('menuitem', {name: 'Move Changes'}),
+			trigger: firstDropdown,
+		});
+	});
+
+	test('LPD-73271 Can view CTEntry actions in review change page', async ({
+		changeTrackingPage,
+		ctCollection,
+		page,
+	}) => {
+		await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
+
+		await expect(
+			page.locator('.publication-name', {hasText: 'Pending Approval'})
+		).toBeVisible();
+
+		await changeTrackingPage.reviewChange(journalName);
+
+		const moreActionsButton = page.getByLabel('more-actions');
+
+		await clickAndExpectToBeVisible({
+			autoClick: false,
+			target: page.getByRole('menuitem', {
+				name: `Edit in ${ctCollection.body.name}`,
+			}),
+			trigger: moreActionsButton,
+		});
+
+		await clickAndExpectToBeVisible({
+			autoClick: false,
+			target: page.getByRole('menuitem', {name: 'Discard'}),
+			trigger: moreActionsButton,
+		});
+
+		await clickAndExpectToBeVisible({
+			autoClick: false,
+			target: page.getByRole('menuitem', {name: 'Move Changes'}),
+			trigger: moreActionsButton,
+		});
+	});
+});

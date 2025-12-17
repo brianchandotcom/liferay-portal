@@ -126,6 +126,11 @@ public class SegmentsServiceUpgradeStepRegistrator
 				}
 
 			});
+
+		registry.register(
+			"3.3.0", "4.0.0",
+			new com.liferay.segments.internal.upgrade.v4_0_0.
+				SegmentsExperienceUpgradeProcess());
 	}
 
 	@Reference

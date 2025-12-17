@@ -216,10 +216,10 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			_cleanUpAddToPagePermissions(actionRequest);
 		}
 		else if (cmd.equals("cleanUpAllModuleData")) {
-			_executeCleanups(DataCleanupUtil.getModuleDataCleanups());
+			_executeDataCleanups(DataCleanupUtil.getModuleDataCleanups());
 		}
 		else if (cmd.equals("cleanUpAllSystemData")) {
-			_executeCleanups(DataCleanupUtil.getSystemDataCleanups());
+			_executeDataCleanups(DataCleanupUtil.getSystemDataCleanups());
 		}
 		else if (cmd.equals("cleanUpLayoutRevisionPortletPreferences")) {
 			_cleanUpLayoutRevisionPortletPreferences();
@@ -295,8 +295,8 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			_verifyMembershipPolicies();
 		}
 		else {
-			_executeCleanup(cmd, DataCleanupUtil.getModuleDataCleanups());
-			_executeCleanup(cmd, DataCleanupUtil.getSystemDataCleanups());
+			_executeDataCleanup(cmd, DataCleanupUtil.getModuleDataCleanups());
+			_executeDataCleanup(cmd, DataCleanupUtil.getSystemDataCleanups());
 		}
 
 		sendRedirect(actionRequest, actionResponse, redirect);
@@ -623,7 +623,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			});
 	}
 
-	private void _executeCleanup(String cmd, List<DataCleanup> dataCleanups)
+	private void _executeDataCleanup(String cmd, List<DataCleanup> dataCleanups)
 		throws Exception {
 
 		for (DataCleanup dataCleanup : dataCleanups) {
@@ -633,7 +633,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private void _executeCleanups(List<DataCleanup> dataCleanups) {
+	private void _executeDataCleanups(List<DataCleanup> dataCleanups) {
 		ThrowableCollector throwableCollector = new ThrowableCollector();
 
 		for (DataCleanup dataCleanup : dataCleanups) {

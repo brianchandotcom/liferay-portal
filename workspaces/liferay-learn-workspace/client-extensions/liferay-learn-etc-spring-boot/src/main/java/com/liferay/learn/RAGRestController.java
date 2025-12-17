@@ -44,20 +44,6 @@ public class RAGRestController extends BaseRestController {
 		).build();
 	}
 
-	@GetMapping("/search")
-	public ResponseEntity<Object> getSearch(@RequestParam String query) {
-		try {
-			return new ResponseEntity<>(
-				_ragService.search(query), HttpStatus.OK);
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-
-			return ResponseEntity.internalServerError(
-			).build();
-		}
-	}
-
 	@PutMapping("document")
 	public ResponseEntity putDocument(
 		@AuthenticationPrincipal Jwt jwt, @RequestBody String json) {
@@ -74,6 +60,20 @@ public class RAGRestController extends BaseRestController {
 
 		return ResponseEntity.noContent(
 		).build();
+	}
+
+	@GetMapping("/search")
+	public ResponseEntity<Object> search(@RequestParam String query) {
+		try {
+			return new ResponseEntity<>(
+				_ragService.search(query), HttpStatus.OK);
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+
+			return ResponseEntity.internalServerError(
+			).build();
+		}
 	}
 
 	private static final Log _log = LogFactory.getLog(RAGRestController.class);

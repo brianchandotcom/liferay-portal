@@ -23,6 +23,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
@@ -132,8 +133,9 @@ public class SharepointRepositoryTokenBroker {
 		Set<IAccount> iAccounts = confidentialClientApplication.getAccounts(
 		).get();
 
-		return iAccounts.iterator(
-		).next();
+		Iterator<IAccount> iterator = iAccounts.iterator();
+
+		return iterator.next();
 	}
 
 	private final SharepointRepositoryConfiguration

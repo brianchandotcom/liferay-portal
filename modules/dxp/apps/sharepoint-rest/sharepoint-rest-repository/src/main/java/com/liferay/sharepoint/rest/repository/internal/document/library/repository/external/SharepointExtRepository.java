@@ -815,16 +815,16 @@ public class SharepointExtRepository implements ExtRepository {
 		throws PortalException {
 
 		if (httpResponse.getStatus() >= 300) {
-			String errorMessage = StringBundler.concat(
+			String message = StringBundler.concat(
 				"Unable to post to ", url, ": ", httpResponse.getStatus(),
 				StringPool.SPACE, httpResponse.getStatusText(),
 				StringPool.NEW_LINE, httpResponse.getBody());
 
 			if (httpResponse.getStatus() == 400) {
-				throw new PortalException(errorMessage);
+				throw new PortalException(message);
 			}
 
-			throw new PrincipalException(errorMessage);
+			throw new PrincipalException(message);
 		}
 	}
 

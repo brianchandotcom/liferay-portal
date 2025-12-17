@@ -31,7 +31,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -66,11 +65,15 @@ public abstract class BaseTaskResourceTestCase {
 			TestPropsValues.getUserId());
 
 		siteObjectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
-			Collections.singletonList(
+			Arrays.asList(
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING,
-					OBJECT_FIELD_NAME_TEXT_1)),
+					OBJECT_FIELD_NAME_TEXT_1),
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING,
+					OBJECT_FIELD_NAME_TEXT_2)),
 			ObjectDefinitionConstants.SCOPE_SITE, TestPropsValues.getUserId());
 
 		testGroup = GroupTestUtil.addGroup();

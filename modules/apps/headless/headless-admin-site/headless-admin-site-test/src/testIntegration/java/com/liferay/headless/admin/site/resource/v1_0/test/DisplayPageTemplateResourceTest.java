@@ -348,14 +348,11 @@ public class DisplayPageTemplateResourceTest
 
 		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
 
-		String thumbnailURL = RandomTestUtil.randomString();
-
 		expectedDisplayPageTemplate.setThumbnailURLReference(
 			new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
 						fileEntry.getExternalReferenceCode());
-					setUrl(thumbnailURL);
 				}
 			});
 
@@ -1082,14 +1079,11 @@ public class DisplayPageTemplateResourceTest
 
 		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
 
-		String thumbnailURL = RandomTestUtil.randomString();
-
 		randomDisplayPageTemplate.setThumbnailURLReference(
 			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
 						fileEntry.getExternalReferenceCode());
-					setUrl(thumbnailURL);
 				}
 			});
 
@@ -1632,14 +1626,11 @@ public class DisplayPageTemplateResourceTest
 
 		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
 
-		String thumbnailURL = RandomTestUtil.randomString();
-
 		displayPageTemplate.setThumbnailURLReference(
 			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
 						fileEntry.getExternalReferenceCode());
-					setUrl(thumbnailURL);
 				}
 			});
 
@@ -1962,14 +1953,11 @@ public class DisplayPageTemplateResourceTest
 
 		FileEntry fileEntry1 = _addPortletFileEntry(repository.getDlFolderId());
 
-		String thumbnailURL = RandomTestUtil.randomString();
-
 		displayPageTemplate.setThumbnailURLReference(
 			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
 						fileEntry1.getExternalReferenceCode());
-					setUrl(thumbnailURL);
 				}
 			});
 
@@ -1990,7 +1978,6 @@ public class DisplayPageTemplateResourceTest
 				{
 					setExternalReferenceCode(
 						fileEntry2.getExternalReferenceCode());
-					setUrl(thumbnailURL);
 				}
 			});
 

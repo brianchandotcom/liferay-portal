@@ -73,6 +73,22 @@ public class ScopeTest {
 	}
 
 	@Test
+	public void testScopeOfTypeNull() {
+		_assertScope(Scope.of(_group, null), null);
+	}
+
+	@Test
+	public void testScopeOfTypeSite() {
+		Mockito.when(
+			_group.isSite()
+		).thenReturn(
+			true
+		);
+
+		_assertScope(Scope.of(_group, null), Scope.Type.SITE);
+	}
+
+	@Test
 	public void testScopeOfTypeSiteCompany() {
 		Mockito.when(
 			_group.isSite()
@@ -82,22 +98,6 @@ public class ScopeTest {
 
 		Mockito.when(
 			_group.isCompany()
-		).thenReturn(
-			true
-		);
-
-		_assertScope(Scope.of(_group, null), Scope.Type.SITE);
-	}
-
-	@Test
-	public void testScopeOfTypeNull() {
-		_assertScope(Scope.of(_group, null), null);
-	}
-
-	@Test
-	public void testScopeOfTypeSite() {
-		Mockito.when(
-			_group.isSite()
 		).thenReturn(
 			true
 		);

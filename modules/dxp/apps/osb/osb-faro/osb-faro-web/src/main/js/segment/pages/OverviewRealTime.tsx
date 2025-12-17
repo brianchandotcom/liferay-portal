@@ -1,12 +1,11 @@
-/* eslint-disable sort-keys */
-import * as API from 'shared/api';
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import Button from '@clayui/button';
 import Card from 'shared/components/Card';
 import ClayLink from '@clayui/link';
 import CriteriaCard from 'segment/components/criteria-card';
 import Loading from 'shared/components/Loading';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
-import React, {useMemo, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import SearchableEntityTable from 'shared/components/SearchableEntityTable';
 import URLConstants from 'shared/util/url-constants';
 import {fetchMembershipChangesAggregations} from 'shared/api/individual-segment';
@@ -22,28 +21,6 @@ import {Text} from '@clayui/core';
 import {useRequest} from 'shared/hooks/useRequest';
 import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
 import {useTimeZone} from 'shared/hooks/useTimeZone';
-
-// type AllMembers = {
-// 	memberName: string;
-// 	email: string;
-// 	accountName?: string;
-// 	firstSeenDate: string;
-// 	lastActive: string;
-// 	profileType: string;
-// };
-
-// type MemberChanges = {
-// 	memberName: string;
-// 	email: string;
-// 	accountName?: string;
-// 	firstSeenDate: string;
-// 	lastActive: string;
-// 	profileType: string;
-// 	membershipChange: {
-// 		modifiedDate: string;
-// 		type: string;
-// 	};
-// };
 
 const DEFAULT_ORDER_BY_OPTIONS = [
 	{
@@ -73,15 +50,10 @@ const MEMBERSHIP_CHANGE_ORDER_BY_OPTION = {
 	value: 'membershipChange'
 };
 
-// label: string;
-// key: string;
-// type?: FilterInputType;
-// values: {label: string; value: string}[];
-
 const FILTER_BY_DEFAULT_OPTIONS: FilterOptionType[] = [
 	{
-		label: Liferay.Language.get('profile-type'),
 		key: 'profileType',
+		label: Liferay.Language.get('profile-type'),
 		values: [
 			{label: Liferay.Language.get('known'), value: 'known'},
 			{label: Liferay.Language.get('anonymous'), value: 'anonymous'}
@@ -90,8 +62,8 @@ const FILTER_BY_DEFAULT_OPTIONS: FilterOptionType[] = [
 ];
 
 const MEMBERSHIP_CHANGE_FILTER_OPTION: FilterOptionType = {
-	label: Liferay.Language.get('membership-change'),
 	key: 'membershipChange',
+	label: Liferay.Language.get('membership-change'),
 	values: [
 		{label: Liferay.Language.get('added'), value: 'ADDED'},
 		{label: Liferay.Language.get('removed'), value: 'REMOVED'}
@@ -127,14 +99,15 @@ const SelectedPointInfo = ({
 		});
 	};
 
+	const membersLanguageKey = selectedPointState.hasSelectedPoint
+		? Liferay.Language.get('members-on')
+		: Liferay.Language.get('members-from');
+
 	return (
 		<div>
 			<div className='selected-point-info'>
 				<Text color='secondary' size={3}>
-					{selectedPointState.hasSelectedPoint
-						? 'Members on: '
-						: 'Members from: '}
-					{dateRange}
+					{membersLanguageKey} {dateRange}
 					{selectedPointState.hasSelectedPoint ? (
 						<Button
 							className='ml-3'
@@ -142,7 +115,7 @@ const SelectedPointInfo = ({
 							onClick={handleClearDateSelection}
 						>
 							<Text color='primary' size={3} weight='semi-bold'>
-								{'Clear Date Selection'}
+								{Liferay.Language.get('clear-date-selection')}
 							</Text>
 						</Button>
 					) : null}
@@ -191,6 +164,8 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 				'MMM DD, YYYY'
 			)}`;
 		}
+
+		return null;
 	}, [data, selectedPointState]);
 
 	const getColumns = () => {
@@ -220,97 +195,71 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 		initialPage: 0
 	});
 
-	const getAllMembers = (data: Data) => {
-		const {channelId, delta, groupId, id, orderIOMap, page, query} = data;
+	const getAllMembers = async (data: Data) => ({
+		// Mocked response while waiting for the correct endpoint
+		items: [
+			{
+				accountName: 'Acme Corp',
+				email: 'alice.johnson@example.com',
+				firstSeenDate: '2024-05-01T10:00:00Z',
+				id: '1',
+				lastActive: '2024-06-10T15:30:00Z',
+				memberName: 'Alice Johnson',
+				profileType: 'Known'
+			},
+			{
+				accountName: 'Beta LLC',
+				email: 'bob.smith@example.com',
+				firstSeenDate: '2024-05-05T09:20:00Z',
+				id: '2',
+				lastActive: '2024-06-09T12:10:00Z',
+				memberName: 'Bob Smith',
+				profileType: 'Anonymous'
+			}
+		],
+		total: 2
+	});
 
-		return {
-			items: [
-				{
-					id: '1',
-					memberName: 'Alice Johnson',
-					email: 'alice.johnson@example.com',
-					accountName: 'Acme Corp',
-					firstSeenDate: '2024-05-01T10:00:00Z',
-					lastActive: '2024-06-10T15:30:00Z',
-					profileType: 'Known'
+	const getMemberChanges = async (_data: Data) => ({
+		// Mocked response while waiting for the correct endpoint
+		items: [
+			{
+				accountName: 'Acme Corp',
+				email: 'alice.johnson@example.com',
+				firstSeenDate: '2024-05-01T10:00:00Z',
+				id: '1',
+				lastActive: '2024-06-10T15:30:00Z',
+				memberName: 'Alice Johnson',
+				membershipChange: {
+					modifiedDate: '2024-06-10T15:30:00Z',
+					type: 'ADDED'
 				},
-				{
-					id: '2',
-					memberName: 'Bob Smith',
-					email: 'bob.smith@example.com',
-					accountName: 'Beta LLC',
-					firstSeenDate: '2024-05-05T09:20:00Z',
-					lastActive: '2024-06-09T12:10:00Z',
-					profileType: 'Anonymous'
-				}
-			],
-			total: 2
-		};
-
-		// return API.individuals.search({
-		// 	channelId,
-		// 	delta,
-		// 	groupId,
-		// 	individualSegmentId: id,
-		// 	orderIOMap,
-		// 	page,
-		// 	query
-		// });
-	};
-
-	const getMemberChanges = async (data: Data) => {
-		const {delta, groupId, id, modifiedDate, orderIOMap, query} = data;
-
-		return {
-			items: [
-				{
-					id: '1',
-					memberName: 'Alice Johnson',
-					email: 'alice.johnson@example.com',
-					accountName: 'Acme Corp',
-					firstSeenDate: '2024-05-01T10:00:00Z',
-					lastActive: '2024-06-10T15:30:00Z',
-					profileType: 'Known',
-					membershipChange: {
-						modifiedDate: '2024-06-10T15:30:00Z',
-						type: 'ADDED'
-					}
+				profileType: 'Known'
+			},
+			{
+				accountName: 'Beta LLC',
+				email: 'bob.smith@example.com',
+				firstSeenDate: '2024-05-05T09:20:00Z',
+				id: '2',
+				lastActive: '2024-06-09T12:10:00Z',
+				memberName: 'Bob Smith',
+				membershipChange: {
+					modifiedDate: '2024-06-09T12:10:00Z',
+					type: 'REMOVED'
 				},
-				{
-					id: '2',
-					memberName: 'Bob Smith',
-					email: 'bob.smith@example.com',
-					accountName: 'Beta LLC',
-					firstSeenDate: '2024-05-05T09:20:00Z',
-					lastActive: '2024-06-09T12:10:00Z',
-					profileType: 'Anonymous',
-					membershipChange: {
-						modifiedDate: '2024-06-09T12:10:00Z',
-						type: 'REMOVED'
-					}
-				}
-			],
-			total: 2
-		};
+				profileType: 'Anonymous'
+			}
+		],
+		total: 2
+	});
 
-		// return API.individualSegment.fetchMembershipChanges({
-		// 	delta,
-		// 	endDate: modifiedDate,
-		// 	groupId,
-		// 	id,
-		// 	orderIOMap,
-		// 	query,
-		// 	startDate: modifiedDate
-		// });
-	};
-
-	const fetchMembers = params => {
-		const fetchMembersFn = selectedPointState.hasSelectedPoint
-			? getMemberChanges
-			: getAllMembers;
-
-		return fetchMembersFn(params);
-	};
+	const fetchMembers = useCallback(
+		(params: Data) =>
+			selectedPointState.hasSelectedPoint
+				? getMemberChanges(params)
+				: getAllMembers(params),
+		[selectedPointState.hasSelectedPoint]
+	);
 
 	const orderByOptions = useMemo(
 		() =>
@@ -352,7 +301,7 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 					</Card.Title>
 				</Card.Header>
 
-				<Card.Body className='segment-growth-root' noPadding>
+				<Card.Body className='segment-growth-root'>
 					{loading ? (
 						<Loading />
 					) : (
@@ -400,6 +349,11 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 									id
 								}}
 								filterByOptions={[...filterByOptions]}
+								key={
+									selectedPointState.hasSelectedPoint
+										? 'changes-view'
+										: 'all-members-view'
+								}
 								noResultsRenderer={() => (
 									<NoResultsDisplay
 										description={

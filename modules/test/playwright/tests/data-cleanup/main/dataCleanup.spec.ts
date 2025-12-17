@@ -43,8 +43,6 @@ test('execute all module cleanup actions', async ({
 
 	// Add releases for Module Cleanup Actions
 
-	const SERVLET_CONTEXT_NAMES = ['com.liferay.amazon.rankings.web'];
-
 	const addReleasesScript = `
        import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
        import com.liferay.portal.kernel.model.Release;
@@ -175,4 +173,22 @@ async function executeCleanupActions(page, panelName: string) {
 
 		await expect(successMessage).toBeVisible();
 	}
+
+	if (panelName === 'Module Cleanup Actions') {
+		const disabledButtons = cleanupPanel.getByRole('button', {
+			name: 'Execute',
+		});
+
+		await expect(disabledButtons).toHaveCount(SERVLET_CONTEXT_NAMES.length);
+
+		for (const disabledButton of await disabledButtons.all()) {
+			await expect(disabledButton).toBeDisabled();
+		}
+	}
 }
+
+const SERVLET_CONTEXT_NAMES = [
+	'com.liferay.amazon.rankings.web',
+	'com.liferay.chat.service',
+	'com.liferay.document.library.file.rank.service',
+];

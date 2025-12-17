@@ -83,8 +83,7 @@ public class LayoutLocalServiceUtil {
 	 * @param system whether the layout is of system type
 	 * @param friendlyURLMap the layout's locales and localized friendly URLs.
 	 To see how the URL is normalized when accessed, see {@link
-	 FriendlyURLNormalizerUtil#normalize(
-	 String)}.
+	 FriendlyURLNormalizerUtil#normalize(String)}.
 	 * @param masterLayoutPageTemplateEntryERC the external reference code of
 	 the master layout page template entry
 	 * @param serviceContext the service context to be applied. Must set the
@@ -155,8 +154,7 @@ public class LayoutLocalServiceUtil {
 	 * @param system whether the layout is of system type
 	 * @param friendlyURLMap the layout's locales and localized friendly URLs.
 	 To see how the URL is normalized when accessed, see {@link
-	 FriendlyURLNormalizerUtil#normalize(
-	 String)}.
+	 FriendlyURLNormalizerUtil#normalize(String)}.
 	 * @param serviceContext the service context to be applied. Must set the
 	 UUID for the layout. Can set the creation date, modification
 	 date, and expando bridge attributes for the layout. For layouts
@@ -222,8 +220,7 @@ public class LayoutLocalServiceUtil {
 	 * @param hidden whether the layout is hidden
 	 * @param friendlyURLMap the layout's locales and localized friendly URLs.
 	 To see how the URL is normalized when accessed, see {@link
-	 FriendlyURLNormalizerUtil#normalize(
-	 String)}.
+	 FriendlyURLNormalizerUtil#normalize(String)}.
 	 * @param serviceContext the service context to be applied. Must set the
 	 UUID for the layout. Can set the creation date, modification
 	 date, and expando bridge attributes for the layout. For layouts
@@ -298,8 +295,7 @@ public class LayoutLocalServiceUtil {
 	 <code>portal-ext.properties</code> by specifying new values for
 	 the corresponding properties defined in {@link PropsValues}. To
 	 see how the URL is normalized when accessed, see {@link
-	 FriendlyURLNormalizerUtil#normalize(
-	 String)}.
+	 FriendlyURLNormalizerUtil#normalize(String)}.
 	 * @param serviceContext the service context to be applied. Must set the
 	 UUID for the layout. Can set the creation date and modification
 	 date for the layout. For layouts that belong to a layout set
@@ -359,8 +355,7 @@ public class LayoutLocalServiceUtil {
 	 <code>portal-ext.properties</code> by specifying new values for
 	 the corresponding properties defined in {@link PropsValues}. To
 	 see how the URL is normalized when accessed, see {@link
-	 FriendlyURLNormalizerUtil#normalize(
-	 String)}.
+	 FriendlyURLNormalizerUtil#normalize(String)}.
 	 * @param serviceContext the service context to be applied. Must set the
 	 UUID for the layout. Can set the creation date and modification
 	 date for the layout. For layouts that belong to a layout set
@@ -1730,14 +1725,15 @@ public class LayoutLocalServiceUtil {
 	 * @param hidden whether the layout is hidden
 	 * @param friendlyURLMap the layout's locales and localized friendly URLs.
 	 To see how the URL is normalized when accessed, see {@link
-	 FriendlyURLNormalizerUtil#normalize(
-	 String)}.
+	 FriendlyURLNormalizerUtil#normalize(String)}.
 	 * @param hasIconImage whether the icon image will be updated
 	 * @param iconBytes the byte array of the layout's new icon image
 	 * @param styleBookEntryERC the external reference code of the style book
 	 entry
-	 * @param faviconFileEntryERC the file entry ERC of the layout's new favicon
-	 * @param faviconFileEntryScopeERC the file entry Scope ERC of the layout's new favicon
+	 * @param faviconFileEntryERC the file entry external reference code of the
+	 layout's new favicon
+	 * @param faviconFileEntryScopeERC the file entry scope external reference
+	 code of the layout's new favicon
 	 * @param masterLayoutPageTemplateEntryERC the external reference code of
 	 the master layout page template entry
 	 * @param serviceContext the service context to be applied. Can set the

@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.model.LayoutStagingHandler;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
@@ -81,6 +82,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.servlet.DirectServletRegistryUtil;
@@ -636,9 +638,16 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 		for (DataCleanup dataCleanup : dataCleanups) {
 			try {
-				dataCleanup.cleanup();
+				Release release = _releaseLocalService.fetchRelease(
+					dataCleanup.getServletContextName());
+
+				if (release != null) {
+					dataCleanup.cleanup();
+				}
 			}
 			catch (Exception exception) {
+				_log.error(exception);
+
 				throwableCollector.collect(exception);
 			}
 		}
@@ -952,6 +961,9 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private PrefsProps _prefsProps;
+
+	@Reference
+	private ReleaseLocalService _releaseLocalService;
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

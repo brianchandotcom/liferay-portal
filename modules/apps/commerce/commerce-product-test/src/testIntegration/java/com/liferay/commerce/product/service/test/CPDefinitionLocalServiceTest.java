@@ -666,7 +666,7 @@ public class CPDefinitionLocalServiceTest {
 				new Date(time),
 				new QueryDefinition(WorkflowConstants.STATUS_APPROVED));
 
-		Assert.assertEquals(1, cpDefinitions.size());
+		Assert.assertEquals(cpDefinitions.toString(), 1, cpDefinitions.size());
 
 		CPDefinition cpDefinition2 = cpDefinitions.get(0);
 

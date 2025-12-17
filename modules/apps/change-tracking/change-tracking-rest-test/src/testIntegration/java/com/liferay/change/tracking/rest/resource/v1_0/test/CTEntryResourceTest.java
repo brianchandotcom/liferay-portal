@@ -41,11 +41,13 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.Inject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -64,6 +66,16 @@ public class CTEntryResourceTest extends BaseCTEntryResourceTestCase {
 
 		_journalArticleClassNameId = _classNameLocalService.getClassNameId(
 			JournalArticle.class);
+	}
+
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		for (CTCollection ctCollection : _ctCollections) {
+			_ctCollectionLocalService.deleteCTCollection(ctCollection);
+		}
+
+		super.tearDown();
 	}
 
 	@Override
@@ -564,6 +576,8 @@ public class CTEntryResourceTest extends BaseCTEntryResourceTestCase {
 			null, testCompany.getCompanyId(), testCompany.getUserId(), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
+		_ctCollections.add(ctCollection);
+
 		return ctCollection.getCtCollectionId();
 	}
 
@@ -603,6 +617,8 @@ public class CTEntryResourceTest extends BaseCTEntryResourceTestCase {
 
 	@Inject
 	private CTCollectionLocalService _ctCollectionLocalService;
+
+	private final List<CTCollection> _ctCollections = new ArrayList<>();
 
 	@Inject
 	private CTEntryLocalService _ctEntryLocalService;

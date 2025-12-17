@@ -51,7 +51,7 @@ public class LayoutUtilityPageEntryLayoutFriendlyURLUpgradeProcess
 		}
 	}
 
-	private boolean _existLayoutFriendlyURL(
+	private boolean _hasLayoutFriendlyURL(
 			long groupId, long plid, boolean privateLayout, String friendlyURL)
 		throws Exception {
 
@@ -81,15 +81,15 @@ public class LayoutUtilityPageEntryLayoutFriendlyURLUpgradeProcess
 			String friendlyURL = StringBundler.concat(
 				baseFriendlyURL, StringPool.DASH, 1);
 
-			boolean existLayoutFriendlyURL = _existLayoutFriendlyURL(
+			boolean hasLayoutFriendlyURL = _hasLayoutFriendlyURL(
 				layout.getGroupId(), layout.getPlid(), layout.isPrivateLayout(),
 				friendlyURL);
 
-			for (int i = 2; existLayoutFriendlyURL; i++) {
+			for (int i = 2; hasLayoutFriendlyURL; i++) {
 				friendlyURL = StringBundler.concat(
 					baseFriendlyURL, StringPool.DASH, i);
 
-				existLayoutFriendlyURL = _existLayoutFriendlyURL(
+				hasLayoutFriendlyURL = _hasLayoutFriendlyURL(
 					layout.getGroupId(), layout.getPlid(),
 					layout.isPrivateLayout(), friendlyURL);
 			}

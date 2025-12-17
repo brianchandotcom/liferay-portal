@@ -117,11 +117,9 @@ public class LayoutUtilityPageEntryLayoutFriendlyURLUpgradeProcessTest {
 		_assertFriendlyURL(
 			StringBundler.concat(StringPool.SLASH, name2, StringPool.DASH, 1),
 			layout.getPlid());
-
 		_assertFriendlyURL(
 			StringBundler.concat(StringPool.SLASH, name1, StringPool.DASH, 1),
 			layoutUtilityPageEntry1.getPlid());
-
 		_assertFriendlyURL(
 			StringBundler.concat(StringPool.SLASH, name2, StringPool.DASH, 2),
 			layoutUtilityPageEntry2.getPlid());

@@ -564,6 +564,14 @@ public abstract class BaseMockContactsEngineClientImpl
 	}
 
 	@Override
+	public List<DataSource> getDataSources(
+		FaroProject faroProject, long channelId, String provideTypeExclude) {
+
+		return contactsEngineClient.getDataSources(
+			faroProject, channelId, provideTypeExclude);
+	}
+
+	@Override
 	public Results<DataSource> getDataSources(
 		FaroProject faroProject, String faroEntityId, String query, String name,
 		String providerType, List<String> states, int cur, int delta,

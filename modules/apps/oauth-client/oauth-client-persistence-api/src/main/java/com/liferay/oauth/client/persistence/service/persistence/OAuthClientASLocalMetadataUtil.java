@@ -117,6 +117,79 @@ public class OAuthClientASLocalMetadataUtil {
 	}
 
 	/**
+	 * Returns the o auth client as local metadata where oAuthClientASLocalMetadataId = &#63; or throws a <code>NoSuchOAuthClientASLocalMetadataException</code> if it could not be found.
+	 *
+	 * @param oAuthClientASLocalMetadataId the o auth client as local metadata ID
+	 * @return the matching o auth client as local metadata
+	 * @throws NoSuchOAuthClientASLocalMetadataException if a matching o auth client as local metadata could not be found
+	 */
+	public static OAuthClientASLocalMetadata findByOAuthClientASLocalMetadataId(
+			long oAuthClientASLocalMetadataId)
+		throws com.liferay.oauth.client.persistence.exception.
+			NoSuchOAuthClientASLocalMetadataException {
+
+		return getPersistence().findByOAuthClientASLocalMetadataId(
+			oAuthClientASLocalMetadataId);
+	}
+
+	/**
+	 * Returns the o auth client as local metadata where oAuthClientASLocalMetadataId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param oAuthClientASLocalMetadataId the o auth client as local metadata ID
+	 * @return the matching o auth client as local metadata, or <code>null</code> if a matching o auth client as local metadata could not be found
+	 */
+	public static OAuthClientASLocalMetadata
+		fetchByOAuthClientASLocalMetadataId(long oAuthClientASLocalMetadataId) {
+
+		return getPersistence().fetchByOAuthClientASLocalMetadataId(
+			oAuthClientASLocalMetadataId);
+	}
+
+	/**
+	 * Returns the o auth client as local metadata where oAuthClientASLocalMetadataId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param oAuthClientASLocalMetadataId the o auth client as local metadata ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching o auth client as local metadata, or <code>null</code> if a matching o auth client as local metadata could not be found
+	 */
+	public static OAuthClientASLocalMetadata
+		fetchByOAuthClientASLocalMetadataId(
+			long oAuthClientASLocalMetadataId, boolean useFinderCache) {
+
+		return getPersistence().fetchByOAuthClientASLocalMetadataId(
+			oAuthClientASLocalMetadataId, useFinderCache);
+	}
+
+	/**
+	 * Removes the o auth client as local metadata where oAuthClientASLocalMetadataId = &#63; from the database.
+	 *
+	 * @param oAuthClientASLocalMetadataId the o auth client as local metadata ID
+	 * @return the o auth client as local metadata that was removed
+	 */
+	public static OAuthClientASLocalMetadata
+			removeByOAuthClientASLocalMetadataId(
+				long oAuthClientASLocalMetadataId)
+		throws com.liferay.oauth.client.persistence.exception.
+			NoSuchOAuthClientASLocalMetadataException {
+
+		return getPersistence().removeByOAuthClientASLocalMetadataId(
+			oAuthClientASLocalMetadataId);
+	}
+
+	/**
+	 * Returns the number of o auth client as local metadatas where oAuthClientASLocalMetadataId = &#63;.
+	 *
+	 * @param oAuthClientASLocalMetadataId the o auth client as local metadata ID
+	 * @return the number of matching o auth client as local metadatas
+	 */
+	public static int countByOAuthClientASLocalMetadataId(
+		long oAuthClientASLocalMetadataId) {
+
+		return getPersistence().countByOAuthClientASLocalMetadataId(
+			oAuthClientASLocalMetadataId);
+	}
+
+	/**
 	 * Returns all the o auth client as local metadatas where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -690,6 +763,438 @@ public class OAuthClientASLocalMetadataUtil {
 	 */
 	public static int countByLocalWellKnownURI(String localWellKnownURI) {
 		return getPersistence().countByLocalWellKnownURI(localWellKnownURI);
+	}
+
+	/**
+	 * Returns the o auth client as local metadata where companyId = &#63; and issuer = &#63; or throws a <code>NoSuchOAuthClientASLocalMetadataException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param issuer the issuer
+	 * @return the matching o auth client as local metadata
+	 * @throws NoSuchOAuthClientASLocalMetadataException if a matching o auth client as local metadata could not be found
+	 */
+	public static OAuthClientASLocalMetadata findByC_I(
+			long companyId, String issuer)
+		throws com.liferay.oauth.client.persistence.exception.
+			NoSuchOAuthClientASLocalMetadataException {
+
+		return getPersistence().findByC_I(companyId, issuer);
+	}
+
+	/**
+	 * Returns the o auth client as local metadata where companyId = &#63; and issuer = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param issuer the issuer
+	 * @return the matching o auth client as local metadata, or <code>null</code> if a matching o auth client as local metadata could not be found
+	 */
+	public static OAuthClientASLocalMetadata fetchByC_I(
+		long companyId, String issuer) {
+
+		return getPersistence().fetchByC_I(companyId, issuer);
+	}
+
+	/**
+	 * Returns the o auth client as local metadata where companyId = &#63; and issuer = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param issuer the issuer
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching o auth client as local metadata, or <code>null</code> if a matching o auth client as local metadata could not be found
+	 */
+	public static OAuthClientASLocalMetadata fetchByC_I(
+		long companyId, String issuer, boolean useFinderCache) {
+
+		return getPersistence().fetchByC_I(companyId, issuer, useFinderCache);
+	}
+
+	/**
+	 * Removes the o auth client as local metadata where companyId = &#63; and issuer = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param issuer the issuer
+	 * @return the o auth client as local metadata that was removed
+	 */
+	public static OAuthClientASLocalMetadata removeByC_I(
+			long companyId, String issuer)
+		throws com.liferay.oauth.client.persistence.exception.
+			NoSuchOAuthClientASLocalMetadataException {
+
+		return getPersistence().removeByC_I(companyId, issuer);
+	}
+
+	/**
+	 * Returns the number of o auth client as local metadatas where companyId = &#63; and issuer = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param issuer the issuer
+	 * @return the number of matching o auth client as local metadatas
+	 */
+	public static int countByC_I(long companyId, String issuer) {
+		return getPersistence().countByC_I(companyId, issuer);
+	}
+
+	/**
+	 * Returns all the o auth client as local metadatas where companyId = &#63; and localWellKnownEnabled = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param localWellKnownEnabled the local well known enabled
+	 * @return the matching o auth client as local metadatas
+	 */
+	public static List<OAuthClientASLocalMetadata> findByC_L(
+		long companyId, boolean localWellKnownEnabled) {
+
+		return getPersistence().findByC_L(companyId, localWellKnownEnabled);
+	}
+
+	/**
+	 * Returns a range of all the o auth client as local metadatas where companyId = &#63; and localWellKnownEnabled = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OAuthClientASLocalMetadataModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param localWellKnownEnabled the local well known enabled
+	 * @param start the lower bound of the range of o auth client as local metadatas
+	 * @param end the upper bound of the range of o auth client as local metadatas (not inclusive)
+	 * @return the range of matching o auth client as local metadatas
+	 */
+	public static List<OAuthClientASLocalMetadata> findByC_L(
+		long companyId, boolean localWellKnownEnabled, int start, int end) {
+
+		return getPersistence().findByC_L(
+			companyId, localWellKnownEnabled, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the o auth client as local metadatas where companyId = &#63; and localWellKnownEnabled = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OAuthClientASLocalMetadataModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param localWellKnownEnabled the local well known enabled
+	 * @param start the lower bound of the range of o auth client as local metadatas
+	 * @param end the upper bound of the range of o auth client as local metadatas (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching o auth client as local metadatas
+	 */
+	public static List<OAuthClientASLocalMetadata> findByC_L(
+		long companyId, boolean localWellKnownEnabled, int start, int end,
+		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator) {
+
+		return getPersistence().findByC_L(
+			companyId, localWellKnownEnabled, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the o auth client as local metadatas where companyId = &#63; and localWellKnownEnabled = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OAuthClientASLocalMetadataModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param localWellKnownEnabled the local well known enabled
+	 * @param start the lower bound of the range of o auth client as local metadatas
+	 * @param end the upper bound of the range of o auth client as local metadatas (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching o auth client as local metadatas
+	 */
+	public static List<OAuthClientASLocalMetadata> findByC_L(
+		long companyId, boolean localWellKnownEnabled, int start, int end,
+		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByC_L(
+			companyId, localWellKnownEnabled, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first o auth client as local metadata in the ordered set where companyId = &#63; and localWellKnownEnabled = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param localWellKnownEnabled the local well known enabled
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching o auth client as local metadata
+	 * @throws NoSuchOAuthClientASLocalMetadataException if a matching o auth client as local metadata could not be found
+	 */
+	public static OAuthClientASLocalMetadata findByC_L_First(
+			long companyId, boolean localWellKnownEnabled,
+			OrderByComparator<OAuthClientASLocalMetadata> orderByComparator)
+		throws com.liferay.oauth.client.persistence.exception.
+			NoSuchOAuthClientASLocalMetadataException {
+
+		return getPersistence().findByC_L_First(
+			companyId, localWellKnownEnabled, orderByComparator);
+	}
+
+	/**
+	 * Returns the first o auth client as local metadata in the ordered set where companyId = &#63; and localWellKnownEnabled = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param localWellKnownEnabled the local well known enabled
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching o auth client as local metadata, or <code>null</code> if a matching o auth client as local metadata could not be found
+	 */
+	public static OAuthClientASLocalMetadata fetchByC_L_First(
+		long companyId, boolean localWellKnownEnabled,
+		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator) {
+
+		return getPersistence().fetchByC_L_First(
+			companyId, localWellKnownEnabled, orderByComparator);
+	}
+
+	/**
+	 * Returns the last o auth client as local metadata in the ordered set where companyId = &#63; and localWellKnownEnabled = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param localWellKnownEnabled the local well known enabled
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching o auth client as local metadata
+	 * @throws NoSuchOAuthClientASLocalMetadataException if a matching o auth client as local metadata could not be found
+	 */
+	public static OAuthClientASLocalMetadata findByC_L_Last(
+			long companyId, boolean localWellKnownEnabled,
+			OrderByComparator<OAuthClientASLocalMetadata> orderByComparator)
+		throws com.liferay.oauth.client.persistence.exception.
+			NoSuchOAuthClientASLocalMetadataException {
+
+		return getPersistence().findByC_L_Last(
+			companyId, localWellKnownEnabled, orderByComparator);
+	}
+
+	/**
+	 * Returns the last o auth client as local metadata in the ordered set where companyId = &#63; and localWellKnownEnabled = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param localWellKnownEnabled the local well known enabled
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching o auth client as local metadata, or <code>null</code> if a matching o auth client as local metadata could not be found
+	 */
+	public static OAuthClientASLocalMetadata fetchByC_L_Last(
+		long companyId, boolean localWellKnownEnabled,
+		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator) {
+
+		return getPersistence().fetchByC_L_Last(
+			companyId, localWellKnownEnabled, orderByComparator);
+	}
+
+	/**
+	 * Returns the o auth client as local metadatas before and after the current o auth client as local metadata in the ordered set where companyId = &#63; and localWellKnownEnabled = &#63;.
+	 *
+	 * @param oAuthClientASLocalMetadataId the primary key of the current o auth client as local metadata
+	 * @param companyId the company ID
+	 * @param localWellKnownEnabled the local well known enabled
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next o auth client as local metadata
+	 * @throws NoSuchOAuthClientASLocalMetadataException if a o auth client as local metadata with the primary key could not be found
+	 */
+	public static OAuthClientASLocalMetadata[] findByC_L_PrevAndNext(
+			long oAuthClientASLocalMetadataId, long companyId,
+			boolean localWellKnownEnabled,
+			OrderByComparator<OAuthClientASLocalMetadata> orderByComparator)
+		throws com.liferay.oauth.client.persistence.exception.
+			NoSuchOAuthClientASLocalMetadataException {
+
+		return getPersistence().findByC_L_PrevAndNext(
+			oAuthClientASLocalMetadataId, companyId, localWellKnownEnabled,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns all the o auth client as local metadatas that the user has permission to view where companyId = &#63; and localWellKnownEnabled = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param localWellKnownEnabled the local well known enabled
+	 * @return the matching o auth client as local metadatas that the user has permission to view
+	 */
+	public static List<OAuthClientASLocalMetadata> filterFindByC_L(
+		long companyId, boolean localWellKnownEnabled) {
+
+		return getPersistence().filterFindByC_L(
+			companyId, localWellKnownEnabled);
+	}
+
+	/**
+	 * Returns a range of all the o auth client as local metadatas that the user has permission to view where companyId = &#63; and localWellKnownEnabled = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OAuthClientASLocalMetadataModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param localWellKnownEnabled the local well known enabled
+	 * @param start the lower bound of the range of o auth client as local metadatas
+	 * @param end the upper bound of the range of o auth client as local metadatas (not inclusive)
+	 * @return the range of matching o auth client as local metadatas that the user has permission to view
+	 */
+	public static List<OAuthClientASLocalMetadata> filterFindByC_L(
+		long companyId, boolean localWellKnownEnabled, int start, int end) {
+
+		return getPersistence().filterFindByC_L(
+			companyId, localWellKnownEnabled, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the o auth client as local metadatas that the user has permissions to view where companyId = &#63; and localWellKnownEnabled = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OAuthClientASLocalMetadataModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param localWellKnownEnabled the local well known enabled
+	 * @param start the lower bound of the range of o auth client as local metadatas
+	 * @param end the upper bound of the range of o auth client as local metadatas (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching o auth client as local metadatas that the user has permission to view
+	 */
+	public static List<OAuthClientASLocalMetadata> filterFindByC_L(
+		long companyId, boolean localWellKnownEnabled, int start, int end,
+		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator) {
+
+		return getPersistence().filterFindByC_L(
+			companyId, localWellKnownEnabled, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the o auth client as local metadatas before and after the current o auth client as local metadata in the ordered set of o auth client as local metadatas that the user has permission to view where companyId = &#63; and localWellKnownEnabled = &#63;.
+	 *
+	 * @param oAuthClientASLocalMetadataId the primary key of the current o auth client as local metadata
+	 * @param companyId the company ID
+	 * @param localWellKnownEnabled the local well known enabled
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next o auth client as local metadata
+	 * @throws NoSuchOAuthClientASLocalMetadataException if a o auth client as local metadata with the primary key could not be found
+	 */
+	public static OAuthClientASLocalMetadata[] filterFindByC_L_PrevAndNext(
+			long oAuthClientASLocalMetadataId, long companyId,
+			boolean localWellKnownEnabled,
+			OrderByComparator<OAuthClientASLocalMetadata> orderByComparator)
+		throws com.liferay.oauth.client.persistence.exception.
+			NoSuchOAuthClientASLocalMetadataException {
+
+		return getPersistence().filterFindByC_L_PrevAndNext(
+			oAuthClientASLocalMetadataId, companyId, localWellKnownEnabled,
+			orderByComparator);
+	}
+
+	/**
+	 * Removes all the o auth client as local metadatas where companyId = &#63; and localWellKnownEnabled = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param localWellKnownEnabled the local well known enabled
+	 */
+	public static void removeByC_L(
+		long companyId, boolean localWellKnownEnabled) {
+
+		getPersistence().removeByC_L(companyId, localWellKnownEnabled);
+	}
+
+	/**
+	 * Returns the number of o auth client as local metadatas where companyId = &#63; and localWellKnownEnabled = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param localWellKnownEnabled the local well known enabled
+	 * @return the number of matching o auth client as local metadatas
+	 */
+	public static int countByC_L(
+		long companyId, boolean localWellKnownEnabled) {
+
+		return getPersistence().countByC_L(companyId, localWellKnownEnabled);
+	}
+
+	/**
+	 * Returns the number of o auth client as local metadatas that the user has permission to view where companyId = &#63; and localWellKnownEnabled = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param localWellKnownEnabled the local well known enabled
+	 * @return the number of matching o auth client as local metadatas that the user has permission to view
+	 */
+	public static int filterCountByC_L(
+		long companyId, boolean localWellKnownEnabled) {
+
+		return getPersistence().filterCountByC_L(
+			companyId, localWellKnownEnabled);
+	}
+
+	/**
+	 * Returns the o auth client as local metadata where companyId = &#63; and oAuthASLocalWellKnownURI = &#63; or throws a <code>NoSuchOAuthClientASLocalMetadataException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param oAuthASLocalWellKnownURI the o auth as local well known uri
+	 * @return the matching o auth client as local metadata
+	 * @throws NoSuchOAuthClientASLocalMetadataException if a matching o auth client as local metadata could not be found
+	 */
+	public static OAuthClientASLocalMetadata findByC_O(
+			long companyId, String oAuthASLocalWellKnownURI)
+		throws com.liferay.oauth.client.persistence.exception.
+			NoSuchOAuthClientASLocalMetadataException {
+
+		return getPersistence().findByC_O(companyId, oAuthASLocalWellKnownURI);
+	}
+
+	/**
+	 * Returns the o auth client as local metadata where companyId = &#63; and oAuthASLocalWellKnownURI = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param oAuthASLocalWellKnownURI the o auth as local well known uri
+	 * @return the matching o auth client as local metadata, or <code>null</code> if a matching o auth client as local metadata could not be found
+	 */
+	public static OAuthClientASLocalMetadata fetchByC_O(
+		long companyId, String oAuthASLocalWellKnownURI) {
+
+		return getPersistence().fetchByC_O(companyId, oAuthASLocalWellKnownURI);
+	}
+
+	/**
+	 * Returns the o auth client as local metadata where companyId = &#63; and oAuthASLocalWellKnownURI = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param oAuthASLocalWellKnownURI the o auth as local well known uri
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching o auth client as local metadata, or <code>null</code> if a matching o auth client as local metadata could not be found
+	 */
+	public static OAuthClientASLocalMetadata fetchByC_O(
+		long companyId, String oAuthASLocalWellKnownURI,
+		boolean useFinderCache) {
+
+		return getPersistence().fetchByC_O(
+			companyId, oAuthASLocalWellKnownURI, useFinderCache);
+	}
+
+	/**
+	 * Removes the o auth client as local metadata where companyId = &#63; and oAuthASLocalWellKnownURI = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param oAuthASLocalWellKnownURI the o auth as local well known uri
+	 * @return the o auth client as local metadata that was removed
+	 */
+	public static OAuthClientASLocalMetadata removeByC_O(
+			long companyId, String oAuthASLocalWellKnownURI)
+		throws com.liferay.oauth.client.persistence.exception.
+			NoSuchOAuthClientASLocalMetadataException {
+
+		return getPersistence().removeByC_O(
+			companyId, oAuthASLocalWellKnownURI);
+	}
+
+	/**
+	 * Returns the number of o auth client as local metadatas where companyId = &#63; and oAuthASLocalWellKnownURI = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param oAuthASLocalWellKnownURI the o auth as local well known uri
+	 * @return the number of matching o auth client as local metadatas
+	 */
+	public static int countByC_O(
+		long companyId, String oAuthASLocalWellKnownURI) {
+
+		return getPersistence().countByC_O(companyId, oAuthASLocalWellKnownURI);
 	}
 
 	/**

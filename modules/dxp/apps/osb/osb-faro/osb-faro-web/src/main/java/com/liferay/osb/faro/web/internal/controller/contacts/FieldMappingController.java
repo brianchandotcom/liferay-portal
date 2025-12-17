@@ -138,7 +138,7 @@ public class FieldMappingController extends BaseFaroController {
 				new OrderByField("displayName", orderByType, true));
 		}
 
-		if (Objects.equals(context, "account")) {
+		if (Objects.equals(context, FieldMappingConstants.CONTEXT_ACCOUNT)) {
 			List<FieldMapping> fieldMappings = new ArrayList<>();
 
 			for (FieldMappingMap fieldMappingMap :

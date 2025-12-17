@@ -19,6 +19,8 @@ import java.util.Map;
  */
 public class FieldMappingConstants {
 
+	public static final String CONTEXT_ACCOUNT = "account";
+
 	public static final String CONTEXT_CUSTOM = "custom";
 
 	public static final String CONTEXT_DEMOGRAPHICS = "demographics";

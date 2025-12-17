@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
@@ -82,7 +83,8 @@ public class ObjectEntryItemSelectorViewDescriptorTest {
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING, "text", "text",
-					false)));
+					false)),
+			ObjectDefinitionConstants.SCOPE_SITE);
 	}
 
 	@FeatureFlag("LPD-17564")
@@ -111,6 +113,8 @@ public class ObjectEntryItemSelectorViewDescriptorTest {
 
 		ObjectEntry objectEntry = (ObjectEntry)objectEntries.get(0);
 
+		Assert.assertEquals(
+			TestPropsValues.getGroupId(), objectEntry.getGroupId());
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED, objectEntry.getStatus());
 	}

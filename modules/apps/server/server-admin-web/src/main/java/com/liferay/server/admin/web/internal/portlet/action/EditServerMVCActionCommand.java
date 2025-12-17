@@ -62,6 +62,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.module.framework.ThrowableCollector;
 import com.liferay.portal.kernel.portlet.LiferayActionResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -211,6 +212,12 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		}
 		else if (cmd.equals("cleanUpAddToPagePermissions")) {
 			_cleanUpAddToPagePermissions(actionRequest);
+		}
+		else if (cmd.equals("cleanUpAllModuleData")) {
+			_executeCleanups(DataCleanupUtil.getModuleDataCleanups());
+		}
+		else if (cmd.equals("cleanUpAllSystemData")) {
+			_executeCleanups(DataCleanupUtil.getSystemDataCleanups());
 		}
 		else if (cmd.equals("cleanUpLayoutRevisionPortletPreferences")) {
 			_cleanUpLayoutRevisionPortletPreferences();
@@ -622,6 +629,21 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 				dataCleanup.cleanup();
 			}
 		}
+	}
+
+	private void _executeCleanups(List<DataCleanup> dataCleanups) {
+		ThrowableCollector throwableCollector = new ThrowableCollector();
+
+		for (DataCleanup dataCleanup : dataCleanups) {
+			try {
+				dataCleanup.cleanup();
+			}
+			catch (Exception exception) {
+				throwableCollector.collect(exception);
+			}
+		}
+
+		throwableCollector.rethrow();
 	}
 
 	private void _gc() throws Exception {

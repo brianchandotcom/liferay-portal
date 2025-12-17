@@ -17,12 +17,14 @@ import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.frontend.token.definition.FrontendTokenMapping;
 import com.liferay.frontend.token.definition.FrontendTokenSet;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
@@ -80,11 +82,11 @@ public class FrontendTokenDefinitionRegistryTest {
 
 		_layoutSet.setThemeId(_THEME_ID_TEST_LAYOUT_SET);
 
-		User user = UserTestUtil.addUser();
+		_user = UserTestUtil.addUser();
 
 		_clientExtensionEntry =
 			_clientExtensionEntryLocalService.addClientExtensionEntry(
-				_THEME_ID_CLIENT_EXTENSION_ENTRY, user.getUserId(),
+				_THEME_ID_CLIENT_EXTENSION_ENTRY, _user.getUserId(),
 				StringPool.BLANK,
 				HashMapBuilder.put(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()
@@ -96,7 +98,7 @@ public class FrontendTokenDefinitionRegistryTest {
 
 		_clientExtensionEntryRel =
 			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-				user.getUserId(), _layoutSet.getGroupId(),
+				_user.getUserId(), _layoutSet.getGroupId(),
 				_portal.getClassNameId(LayoutSet.class),
 				_layoutSet.getLayoutSetId(),
 				_clientExtensionEntry.getExternalReferenceCode(),
@@ -115,7 +117,7 @@ public class FrontendTokenDefinitionRegistryTest {
 	}
 
 	@Test
-	public void testGetFrontendTokenDefinition() {
+	public void testGetFrontendTokenDefinition() throws Exception {
 		_assertFrontendTokenDefinition(
 			_THEME_ID_CLIENT_EXTENSION_ENTRY,
 			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
@@ -127,6 +129,39 @@ public class FrontendTokenDefinitionRegistryTest {
 			_THEME_ID_TEST_LAYOUT_SET,
 			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
 				_layoutSet));
+
+		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRel(
+			_clientExtensionEntryRel.getClientExtensionEntryRelId());
+
+		_layoutSet.setThemeId(_THEME_ID_CLASSIC);
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		layout.setClassName(null);
+		layout.setClassNameId(0);
+		layout.setLayoutSet(_layoutSet);
+
+		FrontendTokenDefinition frontendTokenDefinition =
+			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(layout);
+
+		Assert.assertEquals(
+			_THEME_ID_CLASSIC, frontendTokenDefinition.getThemeId());
+
+		_clientExtensionEntryRel =
+			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
+				_user.getUserId(), layout.getGroupId(),
+				_portal.getClassNameId(Layout.class), layout.getPlid(),
+				_clientExtensionEntry.getExternalReferenceCode(),
+				_clientExtensionEntry.getType(), StringPool.BLANK,
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
+
+		frontendTokenDefinition =
+			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(layout);
+
+		Assert.assertEquals(
+			_THEME_ID_CLIENT_EXTENSION_ENTRY,
+			frontendTokenDefinition.getThemeId());
 	}
 
 	@Test
@@ -214,6 +249,8 @@ public class FrontendTokenDefinitionRegistryTest {
 			frontendTokenDefinition.getThemeId());
 	}
 
+	private static final String _THEME_ID_CLASSIC = "classic_WAR_classictheme";
+
 	private static final String _THEME_ID_CLIENT_EXTENSION_ENTRY =
 		RandomTestUtil.randomString();
 
@@ -244,5 +281,7 @@ public class FrontendTokenDefinitionRegistryTest {
 
 	@Inject
 	private Portal _portal;
+
+	private User _user;
 
 }

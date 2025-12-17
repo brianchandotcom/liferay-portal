@@ -77,7 +77,7 @@ public class HelpCenterUtil {
 			HashMapBuilder.put(
 				"Content-Type", ContentTypes.APPLICATION_JSON
 			).put(
-				"Origin", patcherConfiguration.supportLiferayLfuURL()
+				"Origin", patcherConfiguration.supportLiferayLFUURL()
 			).build(),
 			patcherConfiguration);
 
@@ -96,10 +96,10 @@ public class HelpCenterUtil {
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 		options.setLocation(
 			StringBundler.concat(
-				patcherConfiguration.supportLiferayLfuURL(),
+				patcherConfiguration.supportLiferayLFUURL(),
 				StringPool.FORWARD_SLASH,
 				patcherConfiguration.
-					supportLiferayTicketAttachmentApiEndpoint()));
+					supportLiferayTicketAttachmentAPIEndpoint()));
 		options.setPost(true);
 
 		String responseString = _sendRequest(options);
@@ -149,7 +149,7 @@ public class HelpCenterUtil {
 			StringBundler.concat(
 				patcherConfiguration.supportLiferayURL(),
 				StringPool.FORWARD_SLASH,
-				patcherConfiguration.supportLiferayAccountSearchApiEndpoint(),
+				patcherConfiguration.supportLiferayAccountSearchAPIEndpoint(),
 				accountEntryCode));
 		options.setPost(false);
 
@@ -202,7 +202,7 @@ public class HelpCenterUtil {
 		options.setLocation(
 			String.format(
 				"%s/ticket-attachments/%d/complete-upload",
-				patcherConfiguration.supportLiferayLfuURL(),
+				patcherConfiguration.supportLiferayLFUURL(),
 				ticketAttachmentId));
 		options.setPost(true);
 
@@ -225,10 +225,10 @@ public class HelpCenterUtil {
 			patcherConfiguration);
 
 		options.addPart(
-			"client_id", patcherConfiguration.supportLiferayApiClientId());
+			"client_id", patcherConfiguration.supportLiferayAPIClientId());
 		options.addPart(
 			"client_secret",
-			patcherConfiguration.supportLiferayApiClientSecret());
+			patcherConfiguration.supportLiferayAPIClientSecret());
 		options.addPart("grant_type", "client_credentials");
 		options.setLocation(
 			patcherConfiguration.supportLiferayURL() + "/o/oauth2/token");

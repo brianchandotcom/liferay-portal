@@ -121,19 +121,19 @@ public interface PatcherConfiguration {
 	public boolean patcherTestsEnabled();
 
 	@Meta.AD(deflt = "", required = false)
-	public String supportLiferayAccountSearchApiEndpoint();
+	public String supportLiferayAccountSearchAPIEndpoint();
 
 	@Meta.AD(deflt = "", required = false)
-	public String supportLiferayApiClientId();
+	public String supportLiferayAPIClientId();
 
 	@Meta.AD(deflt = "", required = false)
-	public String supportLiferayApiClientSecret();
+	public String supportLiferayAPIClientSecret();
 
 	@Meta.AD(deflt = "", required = false)
-	public String supportLiferayLfuURL();
+	public String supportLiferayLFUURL();
 
 	@Meta.AD(deflt = "", required = false)
-	public String supportLiferayTicketAttachmentApiEndpoint();
+	public String supportLiferayTicketAttachmentAPIEndpoint();
 
 	@Meta.AD(deflt = "", required = false)
 	public String supportLiferayURL();

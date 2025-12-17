@@ -11,20 +11,23 @@ import {getTempDir} from './temp';
 export async function getSiteHomePageScreenshot(
 	page: Page,
 	siteKey: string,
-	{staging}: {staging: boolean},
-	mask?: Locator
+	{
+		mask,
+		staging = false,
+	}: {
+		mask?: Locator;
+		staging?: boolean;
+	} = {}
 ) {
-	await page.goto(`/web/${siteKey}${staging ? '-staging' : ''}`);
-
-	const url = page.url();
+	const url = `/web/${siteKey}${staging ? '-staging' : ''}`;
 
 	await page.goto(`${url}?p_l_mode=preview`, {waitUntil: 'load'});
 
-	await page.waitForFunction(() => document.fonts.ready);
+	await page.evaluate(() => document.fonts.ready);
 
 	const screenshot = await page.screenshot({
 		fullPage: true,
-		...(mask ? {mask: [mask]} : {}),
+		mask: mask ? [mask] : undefined,
 		path: path.join(
 			getTempDir(),
 			`${siteKey}-${staging ? 'staging' : 'live'}.png`

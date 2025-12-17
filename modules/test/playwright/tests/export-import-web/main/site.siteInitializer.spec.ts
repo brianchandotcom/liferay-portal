@@ -75,18 +75,14 @@ const testWithExportImportAtInstanceLevelFF = mergeTests(
 		const comparator = getComparator('image/png');
 
 		const buffer = comparator(
-			await getSiteHomePageScreenshot(
-				page,
-				site.name,
-				{staging: false},
-				page.getByTestId('notificationsCount')
-			),
-			await getSiteHomePageScreenshot(
-				page,
-				site.name,
-				{staging: true},
-				page.getByTestId('notificationsCount')
-			)
+			await getSiteHomePageScreenshot(page, site.name, {
+				mask: page.getByTestId('notificationsCount'),
+				staging: false,
+			}),
+			await getSiteHomePageScreenshot(page, site.name, {
+				mask: page.getByTestId('notificationsCount'),
+				staging: true,
+			})
 		);
 
 		if (buffer !== null && buffer.diff !== undefined) {
@@ -188,18 +184,12 @@ const testWithExportImportAtInstanceLevelFF = mergeTests(
 				const comparator = getComparator('image/png');
 
 				const buffer = comparator(
-					await getSiteHomePageScreenshot(
-						page,
-						site1.name,
-						{staging: false},
-						mask?.(page)
-					),
-					await getSiteHomePageScreenshot(
-						page,
-						site2.name,
-						{staging: false},
-						mask?.(page)
-					)
+					await getSiteHomePageScreenshot(page, site1.name, {
+						mask: mask?.(page),
+					}),
+					await getSiteHomePageScreenshot(page, site2.name, {
+						mask: mask?.(page),
+					})
 				);
 
 				if (buffer !== null && buffer.diff !== undefined) {
@@ -451,12 +441,8 @@ testWithExportImportAtInstanceLevelFF(
 				const comparator = getComparator('image/png');
 
 				const buffer = comparator(
-					await getSiteHomePageScreenshot(page, site1.name, {
-						staging: false,
-					}),
-					await getSiteHomePageScreenshot(page, site2.name, {
-						staging: false,
-					})
+					await getSiteHomePageScreenshot(page, site1.name),
+					await getSiteHomePageScreenshot(page, site2.name)
 				);
 
 				if (buffer !== null && buffer.diff !== undefined) {

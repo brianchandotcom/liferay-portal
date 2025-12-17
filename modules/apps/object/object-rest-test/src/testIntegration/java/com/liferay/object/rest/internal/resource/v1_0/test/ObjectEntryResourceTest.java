@@ -5672,18 +5672,22 @@ public class ObjectEntryResourceTest {
 	public void testGetNestedFieldDetailsInRelationshipsWithoutPermission()
 		throws Exception {
 
-		// Many to many relationship, custom and custom objects
+		// Many to many relationship, custom and system object definitions
 
 		_objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition1, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
+		_userAccountJSONObject = UserAccountTestUtil.addUserAccountJSONObject(
+			_systemObjectDefinitionManager, Collections.emptyMap());
 
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
+			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
+			_userSystemObjectDefinition, _objectDefinition1,
+			_userAccountJSONObject.getLong("id"), _objectEntry1.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		_resourcePermissionLocalService.setResourcePermissions(
-			TestPropsValues.getCompanyId(), _objectDefinition1.getClassName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(_objectEntry1.getPrimaryKey()), role.getRoleId(),
-			new String[] {ActionKeys.VIEW});
+		_testGetNestedFieldDetailsInRelationshipsWithoutPermission();
+
+		// Many to many relationship, custom object definitions
 
 		_objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition2, _OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2);
@@ -5694,53 +5698,9 @@ public class ObjectEntryResourceTest {
 			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		String password = RandomTestUtil.randomString();
+		_testGetNestedFieldDetailsInRelationshipsWithoutPermission();
 
-		User user = _addUser(RandomTestUtil.randomString(), password);
-
-		_userLocalService.addRoleUser(role.getRoleId(), user.getUserId());
-
-		_testGetNestedFieldDetailsInRelationshipsWithoutPermission(
-			password, user);
-
-		// Many to many relationship, system and custom objects
-
-		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
-			_systemObjectDefinitionManager.getJaxRsApplicationDescriptor();
-
-		_userAccountJSONObject = UserAccountTestUtil.addUserAccountJSONObject(
-			_systemObjectDefinitionManager,
-			HashMapBuilder.<String, Serializable>put(
-				_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)
-			).build());
-		_userAccountJSONObject = HTTPTestUtil.invokeToJSONObject(
-			null,
-			StringBundler.concat(
-				jaxRsApplicationDescriptor.getRESTContextPath(), "/",
-				_userAccountJSONObject.get("id")),
-			Http.Method.GET);
-
-		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
-			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
-			_userSystemObjectDefinition, _objectDefinition1,
-			_userAccountJSONObject.getLong("id"), _objectEntry1.getPrimaryKey(),
-			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
-
-		_testGetNestedFieldDetailsInRelationshipsWithoutPermission(
-			password, user);
-
-		// One to many relationship, custom and custom objects
-
-		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
-			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
-			_objectDefinition1, _objectDefinition2,
-			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
-			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
-		_testGetNestedFieldDetailsInRelationshipsWithoutPermission(
-			password, user);
-
-		// One to many relationship, system and custom objects
+		// One to many relationship, custom and system object definitions
 
 		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
 			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
@@ -5748,8 +5708,17 @@ public class ObjectEntryResourceTest {
 			_objectEntry1.getPrimaryKey(), _userAccountJSONObject.getLong("id"),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		_testGetNestedFieldDetailsInRelationshipsWithoutPermission(
-			password, user);
+		_testGetNestedFieldDetailsInRelationshipsWithoutPermission();
+
+		// One to many relationship, custom object definitions
+
+		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
+			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
+			_objectDefinition1, _objectDefinition2,
+			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_testGetNestedFieldDetailsInRelationshipsWithoutPermission();
 	}
 
 	@Test
@@ -16760,9 +16729,22 @@ public class ObjectEntryResourceTest {
 			type);
 	}
 
-	private void _testGetNestedFieldDetailsInRelationshipsWithoutPermission(
-			String password, User user)
+	private void _testGetNestedFieldDetailsInRelationshipsWithoutPermission()
 		throws Exception {
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(), _objectDefinition1.getClassName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(_objectEntry1.getPrimaryKey()), role.getRoleId(),
+			new String[] {ActionKeys.VIEW});
+
+		String password = RandomTestUtil.randomString();
+
+		User user = _addUser(RandomTestUtil.randomString(), password);
+
+		_userLocalService.addRoleUser(role.getRoleId(), user.getUserId());
 
 		HTTPTestUtil.customize(
 		).withCredentials(

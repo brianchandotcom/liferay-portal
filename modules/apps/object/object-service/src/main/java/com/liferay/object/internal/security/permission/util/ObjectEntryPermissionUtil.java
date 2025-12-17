@@ -13,10 +13,9 @@ import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 
 /**
  * @author Carolina Barbosa
@@ -24,18 +23,20 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 public class ObjectEntryPermissionUtil {
 
 	public static Predicate getPermissionWherePredicate(
-			DynamicObjectDefinitionTable dynamicObjectDefinitionTable,
-			long groupId, InlineSQLHelper inlineSQLHelper)
-		throws PrincipalException {
+		DynamicObjectDefinitionTable dynamicObjectDefinitionTable, long groupId,
+		InlineSQLHelper inlineSQLHelper) {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (permissionChecker == null) {
+			return null;
+		}
 
 		ObjectDefinition objectDefinition =
 			dynamicObjectDefinitionTable.getObjectDefinition();
 
-		PermissionChecker permissionChecker =
-			GuestOrUserUtil.getPermissionChecker();
-
-		if ((permissionChecker == null) ||
-			!inlineSQLHelper.isEnabled(
+		if (!inlineSQLHelper.isEnabled(
 				objectDefinition.getCompanyId(), groupId)) {
 
 			return null;

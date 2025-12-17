@@ -1074,41 +1074,58 @@ public interface LayoutModel
 		String masterLayoutPageTemplateEntryERC);
 
 	/**
-	 * Returns the layout prototype uuid of this layout.
+	 * Returns the portlet layout page template entry erc of this layout.
 	 *
-	 * @return the layout prototype uuid of this layout
+	 * @return the portlet layout page template entry erc of this layout
 	 */
 	@AutoEscape
-	public String getLayoutPrototypeUuid();
+	public String getPortletLayoutPageTemplateEntryERC();
 
 	/**
-	 * Sets the layout prototype uuid of this layout.
+	 * Sets the portlet layout page template entry erc of this layout.
 	 *
-	 * @param layoutPrototypeUuid the layout prototype uuid of this layout
+	 * @param portletLayoutPageTemplateEntryERC the portlet layout page template entry erc of this layout
 	 */
-	public void setLayoutPrototypeUuid(String layoutPrototypeUuid);
+	public void setPortletLayoutPageTemplateEntryERC(
+		String portletLayoutPageTemplateEntryERC);
 
 	/**
-	 * Returns the layout prototype link enabled of this layout.
+	 * Returns the portlet layout page template entry scope erc of this layout.
 	 *
-	 * @return the layout prototype link enabled of this layout
+	 * @return the portlet layout page template entry scope erc of this layout
 	 */
-	public boolean getLayoutPrototypeLinkEnabled();
+	@AutoEscape
+	public String getPortletLayoutPageTemplateEntryScopeERC();
 
 	/**
-	 * Returns <code>true</code> if this layout is layout prototype link enabled.
+	 * Sets the portlet layout page template entry scope erc of this layout.
 	 *
-	 * @return <code>true</code> if this layout is layout prototype link enabled; <code>false</code> otherwise
+	 * @param portletLayoutPageTemplateEntryScopeERC the portlet layout page template entry scope erc of this layout
 	 */
-	public boolean isLayoutPrototypeLinkEnabled();
+	public void setPortletLayoutPageTemplateEntryScopeERC(
+		String portletLayoutPageTemplateEntryScopeERC);
 
 	/**
-	 * Sets whether this layout is layout prototype link enabled.
+	 * Returns the portlet layout page template entry link enabled of this layout.
 	 *
-	 * @param layoutPrototypeLinkEnabled the layout prototype link enabled of this layout
+	 * @return the portlet layout page template entry link enabled of this layout
 	 */
-	public void setLayoutPrototypeLinkEnabled(
-		boolean layoutPrototypeLinkEnabled);
+	public boolean getPortletLayoutPageTemplateEntryLinkEnabled();
+
+	/**
+	 * Returns <code>true</code> if this layout is portlet layout page template entry link enabled.
+	 *
+	 * @return <code>true</code> if this layout is portlet layout page template entry link enabled; <code>false</code> otherwise
+	 */
+	public boolean isPortletLayoutPageTemplateEntryLinkEnabled();
+
+	/**
+	 * Sets whether this layout is portlet layout page template entry link enabled.
+	 *
+	 * @param portletLayoutPageTemplateEntryLinkEnabled the portlet layout page template entry link enabled of this layout
+	 */
+	public void setPortletLayoutPageTemplateEntryLinkEnabled(
+		boolean portletLayoutPageTemplateEntryLinkEnabled);
 
 	/**
 	 * Returns the layout set prototype layout erc of this layout.

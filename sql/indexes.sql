@@ -206,7 +206,7 @@ create index IX_3B69160F on Groups_UserGroups (userGroupId);
 create index IX_6A925A4D on Image (size_);
 
 create index IX_B8E1E6E5 on Layout (classNameId, classPK);
-create index IX_881EABCB on Layout (companyId, layoutPrototypeUuid[$COLUMN_LENGTH:75$]);
+create index IX_C7FBC998 on Layout (companyId);
 create unique index IX_E81EADC5 on Layout (groupId, ctCollectionId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_29D5F515 on Layout (groupId, masterLPTEERC[$COLUMN_LENGTH:75$]);
 create unique index IX_502B1A93 on Layout (groupId, privateLayout, ctCollectionId, friendlyURL[$COLUMN_LENGTH:255$]);
@@ -221,9 +221,9 @@ create index IX_25452BFD on Layout (groupId, privateLayout, system_);
 create index IX_1A1B61D2 on Layout (groupId, privateLayout, type_[$COLUMN_LENGTH:75$]);
 create index IX_6EDC627B on Layout (groupId, type_[$COLUMN_LENGTH:75$]);
 create index IX_23922F7D on Layout (iconImageId);
-create index IX_B529BFD3 on Layout (layoutPrototypeUuid[$COLUMN_LENGTH:75$]);
 create index IX_3752C6E2 on Layout (layoutSetPrototypeLayoutERC[$COLUMN_LENGTH:75$]);
 create index IX_1D4DCAA5 on Layout (parentPlid);
+create index IX_E3914157 on Layout (portletLPTEERC[$COLUMN_LENGTH:75$], portletLPTESERC[$COLUMN_LENGTH:75$]);
 create index IX_3BC009C0 on Layout (privateLayout, iconImageId);
 create index IX_D0822724 on Layout (uuid_[$COLUMN_LENGTH:75$]);
 

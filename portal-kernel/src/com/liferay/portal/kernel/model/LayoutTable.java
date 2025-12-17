@@ -102,13 +102,16 @@ public class LayoutTable extends BaseTable<LayoutTable> {
 	public final Column<LayoutTable, String> masterLayoutPageTemplateEntryERC =
 		createColumn(
 			"masterLPTEERC", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<LayoutTable, String> layoutPrototypeUuid = createColumn(
-		"layoutPrototypeUuid", String.class, Types.VARCHAR,
-		Column.FLAG_DEFAULT);
-	public final Column<LayoutTable, Boolean> layoutPrototypeLinkEnabled =
+	public final Column<LayoutTable, String> portletLayoutPageTemplateEntryERC =
 		createColumn(
-			"layoutPrototypeLinkEnabled", Boolean.class, Types.BOOLEAN,
+			"portletLPTEERC", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<LayoutTable, String>
+		portletLayoutPageTemplateEntryScopeERC = createColumn(
+			"portletLPTESERC", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
+	public final Column<LayoutTable, Boolean>
+		portletLayoutPageTemplateEntryLinkEnabled = createColumn(
+			"portletLPTELE", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<LayoutTable, String> layoutSetPrototypeLayoutERC =
 		createColumn(
 			"layoutSetPrototypeLayoutERC", String.class, Types.VARCHAR,

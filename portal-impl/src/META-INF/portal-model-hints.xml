@@ -813,8 +813,9 @@
 		<field name="faviconFileEntryERC" type="String" />
 		<field name="faviconFileEntryScopeERC" type="String" />
 		<field name="masterLayoutPageTemplateEntryERC" type="String" />
-		<field name="layoutPrototypeUuid" type="String" />
-		<field name="layoutPrototypeLinkEnabled" type="boolean" />
+		<field name="portletLayoutPageTemplateEntryERC" type="String" />
+		<field name="portletLayoutPageTemplateEntryScopeERC" type="String" />
+		<field name="portletLayoutPageTemplateEntryLinkEnabled" type="boolean" />
 		<field name="layoutSetPrototypeLayoutERC" type="String" />
 		<field name="publishDate" type="Date" />
 		<field name="lastPublishDate" type="Date" />

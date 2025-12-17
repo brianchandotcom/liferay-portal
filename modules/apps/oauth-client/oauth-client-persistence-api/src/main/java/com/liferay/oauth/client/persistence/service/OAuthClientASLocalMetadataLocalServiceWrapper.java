@@ -34,7 +34,7 @@ public class OAuthClientASLocalMetadataLocalServiceWrapper
 	@Override
 	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
 			addOAuthClientASLocalMetadata(
-				long userId, String authorizationEndpoint, Boolean enabled,
+				long userId, String authorizationEndpoint, boolean enabled,
 				String issuerString, String jwksUri,
 				String[] supportedGrantTypes, String[] supportedScopes,
 				String[] supportedSubjectTypes, String tokenEndpointString,
@@ -275,26 +275,6 @@ public class OAuthClientASLocalMetadataLocalServiceWrapper
 
 	@Override
 	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
-			fetchByOAuthClientASLocalMetadataId(
-				long oAuthClientASLocalMetadataId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _oAuthClientASLocalMetadataLocalService.
-			fetchByOAuthClientASLocalMetadataId(oAuthClientASLocalMetadataId);
-	}
-
-	@Override
-	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
-			fetchIssuerByCompanyAuthClientASLocalMetadata(
-				long companyId, String issuer)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _oAuthClientASLocalMetadataLocalService.
-			fetchIssuerByCompanyAuthClientASLocalMetadata(companyId, issuer);
-	}
-
-	@Override
-	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
 		fetchOAuthClientASLocalMetadata(long oAuthClientASLocalMetadataId) {
 
 		return _oAuthClientASLocalMetadataLocalService.
@@ -303,23 +283,31 @@ public class OAuthClientASLocalMetadataLocalServiceWrapper
 
 	@Override
 	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
-		fetchOAuthClientASLocalMetadata(String localWellKnownURI) {
-
-		return _oAuthClientASLocalMetadataLocalService.
-			fetchOAuthClientASLocalMetadata(localWellKnownURI);
-	}
-
-	@Override
-	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
-		fetchOAuthClientASLocalMetadataByCompanyEnabled(
+		fetchOAuthClientASLocalMetadata(
 			long companyId, boolean enabled,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.oauth.client.persistence.model.
 					OAuthClientASLocalMetadata> orderByComparator) {
 
 		return _oAuthClientASLocalMetadataLocalService.
-			fetchOAuthClientASLocalMetadataByCompanyEnabled(
+			fetchOAuthClientASLocalMetadata(
 				companyId, enabled, orderByComparator);
+	}
+
+	@Override
+	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
+		fetchOAuthClientASLocalMetadata(long companyId, String issuer) {
+
+		return _oAuthClientASLocalMetadataLocalService.
+			fetchOAuthClientASLocalMetadata(companyId, issuer);
+	}
+
+	@Override
+	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
+		fetchOAuthClientASLocalMetadata(String localWellKnownURI) {
+
+		return _oAuthClientASLocalMetadataLocalService.
+			fetchOAuthClientASLocalMetadata(localWellKnownURI);
 	}
 
 	@Override
@@ -402,12 +390,6 @@ public class OAuthClientASLocalMetadataLocalServiceWrapper
 			getOAuthClientASLocalMetadatas(start, end);
 	}
 
-	@Override
-	public int getOAuthClientASLocalMetadatasByCompanyIdCount(long companyId) {
-		return _oAuthClientASLocalMetadataLocalService.
-			getOAuthClientASLocalMetadatasByCompanyIdCount(companyId);
-	}
-
 	/**
 	 * Returns the number of o auth client as local metadatas.
 	 *
@@ -417,6 +399,12 @@ public class OAuthClientASLocalMetadataLocalServiceWrapper
 	public int getOAuthClientASLocalMetadatasCount() {
 		return _oAuthClientASLocalMetadataLocalService.
 			getOAuthClientASLocalMetadatasCount();
+	}
+
+	@Override
+	public int getOAuthClientASLocalMetadatasCount(long companyId) {
+		return _oAuthClientASLocalMetadataLocalService.
+			getOAuthClientASLocalMetadatasCount(companyId);
 	}
 
 	/**
@@ -464,7 +452,7 @@ public class OAuthClientASLocalMetadataLocalServiceWrapper
 	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
 			updateOAuthClientASLocalMetadata(
 				long oAuthClientASLocalMetadataId, String authorizationEndpoint,
-				Boolean enabled, String issuerString, String jwksUri,
+				boolean enabled, String issuerString, String jwksUri,
 				String[] supportedGrantTypes, String[] supportedScopes,
 				String[] supportedSubjectTypes, String tokenEndpointString,
 				String userinfoEndpoint)

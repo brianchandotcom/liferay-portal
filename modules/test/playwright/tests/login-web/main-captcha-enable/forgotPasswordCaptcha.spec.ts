@@ -17,13 +17,13 @@ test('LPD-32888 Check captcha verification text is cleared after a wrong captcha
 	await page.getByLabel('Email Address').fill('test@liferay.com');
 	await page
 		.locator(
-			'[id="_com_liferay_login_web_portlet_LoginPortlet_captchaText"]'
+			'[id="_com_liferay_login_web_portlet_ForgotPasswordPortlet_captchaText"]'
 		)
 		.fill('abcd');
 	await page.getByRole('button', {name: 'Send new password'}).click();
 	await expect(
 		page.locator(
-			'[id="_com_liferay_login_web_portlet_LoginPortlet_captchaText"]'
+			'[id="_com_liferay_login_web_portlet_ForgotPasswordPortlet_captchaText"]'
 		)
 	).toBeEmpty();
 });

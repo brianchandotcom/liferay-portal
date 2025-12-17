@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {captchaConfigPageTest} from '../../../fixtures/captchaConfigPageTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {formsPagesTest} from '../../../fixtures/formsPagesTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
@@ -25,6 +26,9 @@ import {getObjectERC} from '../../setup/page-management-site/main/utils/getObjec
 const test = mergeTests(
 	apiHelpersTest,
 	captchaConfigPageTest,
+	featureFlagsTest({
+		'LPS-178052': {enabled: true},
+	}),
 	formsPagesTest,
 	isolatedSiteTest,
 	loginTest(),

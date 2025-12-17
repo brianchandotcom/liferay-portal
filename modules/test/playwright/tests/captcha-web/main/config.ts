@@ -6,6 +6,7 @@
 import {devices} from '@playwright/test';
 
 export const config = {
+	dependencies: ['page-management-site.main'],
 	name: 'captcha-web.main',
 	testDir: 'tests/captcha-web/main',
 	use: {

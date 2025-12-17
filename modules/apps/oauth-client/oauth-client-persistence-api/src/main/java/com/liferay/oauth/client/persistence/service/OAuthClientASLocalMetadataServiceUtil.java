@@ -8,6 +8,7 @@ package com.liferay.oauth.client.persistence.service;
 import com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
@@ -31,6 +32,19 @@ public class OAuthClientASLocalMetadataServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.oauth.client.persistence.service.impl.OAuthClientASLocalMetadataServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
+			long userId, String authorizationEndpoint, Boolean enabled,
+			String issuerString, String jwksUri, String[] supportedGrantTypes,
+			String[] supportedScopes, String[] supportedSubjectTypes,
+			String tokenEndpointString, String userinfoEndpoint)
+		throws PortalException {
+
+		return getService().addOAuthClientASLocalMetadata(
+			userId, authorizationEndpoint, enabled, issuerString, jwksUri,
+			supportedGrantTypes, supportedScopes, supportedSubjectTypes,
+			tokenEndpointString, userinfoEndpoint);
+	}
+
+	public static OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
 			long userId, String metadataJSON, String wellKnownURISuffix)
 		throws PortalException {
 
@@ -53,6 +67,23 @@ public class OAuthClientASLocalMetadataServiceUtil {
 		return getService().deleteOAuthClientASLocalMetadata(localWellKnownURI);
 	}
 
+	public static OAuthClientASLocalMetadata
+			fetchByOAuthClientASLocalMetadataId(
+				long oAuthClientASLocalMetadataId)
+		throws PortalException {
+
+		return getService().fetchByOAuthClientASLocalMetadataId(
+			oAuthClientASLocalMetadataId);
+	}
+
+	public static OAuthClientASLocalMetadata
+			fetchIssuerOAuthClientASLocalMetadata(long companyId, String issuer)
+		throws PortalException {
+
+		return getService().fetchIssuerOAuthClientASLocalMetadata(
+			companyId, issuer);
+	}
+
 	public static List<OAuthClientASLocalMetadata>
 		getCompanyOAuthClientASLocalMetadata(long companyId) {
 
@@ -67,11 +98,29 @@ public class OAuthClientASLocalMetadataServiceUtil {
 			companyId, start, end);
 	}
 
+	public static OAuthClientASLocalMetadata getIssuerAuthClientASLocalMetadata(
+			long companyId, String issuer)
+		throws PortalException {
+
+		return getService().getIssuerAuthClientASLocalMetadata(
+			companyId, issuer);
+	}
+
 	public static OAuthClientASLocalMetadata getOAuthClientASLocalMetadata(
 			String localWellKnownURI)
 		throws PortalException {
 
 		return getService().getOAuthClientASLocalMetadata(localWellKnownURI);
+	}
+
+	public static OAuthClientASLocalMetadata
+			getOAuthClientASLocalMetadataByCompanyEnabled(
+				long companyId, boolean enabled,
+				OrderByComparator<OAuthClientASLocalMetadata> orderByComparator)
+		throws PortalException {
+
+		return getService().getOAuthClientASLocalMetadataByCompanyEnabled(
+			companyId, enabled, orderByComparator);
 	}
 
 	/**
@@ -94,6 +143,20 @@ public class OAuthClientASLocalMetadataServiceUtil {
 
 		return getService().getUserOAuthClientASLocalMetadata(
 			userId, start, end);
+	}
+
+	public static OAuthClientASLocalMetadata updateOAuthClientASLocalMetadata(
+			long oAuthClientASLocalMetadataId, String authorizationEndpoint,
+			Boolean enabled, String issuerString, String jwksUri,
+			String[] supportedGrantTypes, String[] supportedScopes,
+			String[] supportedSubjectTypes, String tokenEndpointString,
+			String userinfoEndpoint)
+		throws PortalException {
+
+		return getService().updateOAuthClientASLocalMetadata(
+			oAuthClientASLocalMetadataId, authorizationEndpoint, enabled,
+			issuerString, jwksUri, supportedGrantTypes, supportedScopes,
+			supportedSubjectTypes, tokenEndpointString, userinfoEndpoint);
 	}
 
 	public static OAuthClientASLocalMetadata updateOAuthClientASLocalMetadata(

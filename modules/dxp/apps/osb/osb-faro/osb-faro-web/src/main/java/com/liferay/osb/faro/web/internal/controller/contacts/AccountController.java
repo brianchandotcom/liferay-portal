@@ -177,18 +177,18 @@ public class AccountController extends BaseFaroController {
 			@QueryParam("delta") int delta)
 		throws Exception {
 
-		for (FieldMappingMap fieldMapping :
+		for (FieldMappingMap fieldMappingMap :
 				FieldMappingConstants.getAccountFieldMappingMaps()) {
 
-			if (fieldMappingFieldName.equals(mapping.getName())) {
+			if (fieldMappingFieldName.equals(fieldMappingMap.getName())) {
 				FieldMapping fieldMapping = new FieldMapping();
 
 				fieldMapping.setDisplayName(
 					FieldMappingConstants.getAccountFieldMappingLanguageKey(
-						mapping.getName()));
+						fieldMappingMap.getName()));
 				fieldMapping.setDisplayType("input-field");
-				fieldMapping.setFieldName(mapping.getName());
-				fieldMapping.setFieldType(mapping.getType());
+				fieldMapping.setFieldName(fieldMappingMap.getName());
+				fieldMapping.setFieldType(fieldMappingMap.getType());
 				fieldMapping.setOwnerType(
 					FieldMappingConstants.OWNER_TYPE_ACCOUNT);
 

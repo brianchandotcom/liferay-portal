@@ -22,7 +22,7 @@ test(
 		});
 
 		await apiExplorer.goto();
-		await operationBlock.getByRole('button').click();
+		await operationBlock.getByRole('button').first().click();
 
 		await test.step('Opens the help popover', async () => {
 			await filterRow.getByRole('button').click();

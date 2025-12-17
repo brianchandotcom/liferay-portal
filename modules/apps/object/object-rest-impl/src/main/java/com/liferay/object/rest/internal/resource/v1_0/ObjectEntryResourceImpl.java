@@ -36,6 +36,7 @@ import com.liferay.object.tree.Tree;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -130,20 +131,55 @@ public class ObjectEntryResourceImpl
 		if (objectScopeProvider.isGroupAware()) {
 			UnsafeFunction<ObjectEntry, ObjectEntry, Exception>
 				objectEntryUnsafeFunction = null;
+			String scopeKey = _getScopeKey(parameters);
 
 			String createStrategy = (String)parameters.getOrDefault(
 				"createStrategy", "INSERT");
 
 			if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
 				objectEntryUnsafeFunction = objectEntry -> postScopeScopeKey(
-					_getScopeKey(parameters), objectEntry);
+					scopeKey, objectEntry);
 			}
 
 			if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
-				objectEntryUnsafeFunction =
-					objectEntry -> putScopeScopeKeyByExternalReferenceCode(
-						_getScopeKey(parameters),
-						objectEntry.getExternalReferenceCode(), objectEntry);
+				String updateStrategy = (String)parameters.getOrDefault(
+					"updateStrategy", "UPDATE");
+
+				if (StringUtil.equalsIgnoreCase(
+						updateStrategy, "PARTIAL_UPDATE")) {
+
+					objectEntryUnsafeFunction = objectEntry -> {
+						ObjectEntry getObjectEntry = null;
+						ObjectEntry persistedObjectEntry = null;
+
+						try {
+							getObjectEntry =
+								getScopeScopeKeyByExternalReferenceCode(
+									scopeKey,
+									objectEntry.getExternalReferenceCode());
+
+							persistedObjectEntry = patchObjectEntry(
+								getObjectEntry.getId(), objectEntry);
+						}
+						catch (NoSuchModelException noSuchModelException) {
+							if (_log.isDebugEnabled()) {
+								_log.debug(noSuchModelException);
+							}
+
+							persistedObjectEntry = postScopeScopeKey(
+								scopeKey, objectEntry);
+						}
+
+						return persistedObjectEntry;
+					};
+				}
+
+				if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+					objectEntryUnsafeFunction =
+						objectEntry -> putScopeScopeKeyByExternalReferenceCode(
+							scopeKey, objectEntry.getExternalReferenceCode(),
+							objectEntry);
+				}
 			}
 
 			if (objectEntryUnsafeFunction == null) {

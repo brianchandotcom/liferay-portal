@@ -50,29 +50,30 @@ public interface SegmentsExperienceService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.segments.service.impl.SegmentsExperienceServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the segments experience remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link SegmentsExperienceServiceUtil} if injection and service tracking are not available.
 	 */
 	public SegmentsExperience addSegmentsExperience(
-			String externalReferenceCode, long groupId, long segmentsEntryId,
-			long plid, Map<Locale, String> nameMap, boolean active,
+			String externalReferenceCode, long groupId, String segmentsEntryERC,
+			String segmentsEntryScopeERC, long plid,
+			Map<Locale, String> nameMap, boolean active,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
 		throws PortalException;
 
 	public SegmentsExperience addSegmentsExperience(
-			String externalReferenceCode, long groupId, long segmentsEntryId,
-			String segmentsExperienceKey, long plid,
-			Map<Locale, String> nameMap, int priority, boolean active,
-			UnicodeProperties typeSettingsUnicodeProperties,
+			String externalReferenceCode, long groupId, String segmentsEntryERC,
+			String segmentsEntryScopeERC, String segmentsExperienceKey,
+			long plid, Map<Locale, String> nameMap, int priority,
+			boolean active, UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
 		throws PortalException;
 
 	public SegmentsExperience appendSegmentsExperience(
-			long groupId, long segmentsEntryId, long plid,
-			Map<Locale, String> nameMap, boolean active,
+			long groupId, String segmentsEntryERC, String segmentsEntryScopeERC,
+			long plid, Map<Locale, String> nameMap, boolean active,
 			ServiceContext serviceContext)
 		throws PortalException;
 
 	public SegmentsExperience appendSegmentsExperience(
-			long groupId, long segmentsEntryId, long plid,
-			Map<Locale, String> nameMap, boolean active,
+			long groupId, String segmentsEntryERC, String segmentsEntryScopeERC,
+			long plid, Map<Locale, String> nameMap, boolean active,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
 		throws PortalException;
@@ -133,14 +134,15 @@ public interface SegmentsExperienceService extends BaseService {
 		throws PortalException;
 
 	public SegmentsExperience updateSegmentsExperience(
-			long segmentsExperienceId, long segmentsEntryId,
-			Map<Locale, String> nameMap, boolean active)
+			long segmentsExperienceId, String segmentsEntryERC,
+			String segmentsEntryScopeERC, Map<Locale, String> nameMap,
+			boolean active)
 		throws PortalException;
 
 	public SegmentsExperience updateSegmentsExperience(
-			long segmentsExperienceId, long segmentsEntryId,
-			Map<Locale, String> nameMap, boolean active,
-			UnicodeProperties typeSettingsUnicodeProperties)
+			long segmentsExperienceId, String segmentsEntryERC,
+			String segmentsEntryScopeERC, Map<Locale, String> nameMap,
+			boolean active, UnicodeProperties typeSettingsUnicodeProperties)
 		throws PortalException;
 
 	public SegmentsExperience updateSegmentsExperiencePriority(

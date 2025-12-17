@@ -120,6 +120,15 @@ public class SegmentsEntryServiceWrapper
 	}
 
 	@Override
+	public SegmentsEntry getSegmentsEntryByExternalReferenceCode(
+			String segmentsEntryERC, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _segmentsEntryService.getSegmentsEntryByExternalReferenceCode(
+			segmentsEntryERC, groupId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<SegmentsEntry>
 			searchSegmentsEntries(
 				long companyId, long groupId, String keywords, int start,

@@ -97,6 +97,11 @@ public interface SegmentsEntryService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SegmentsEntry getSegmentsEntryByExternalReferenceCode(
+			String segmentsEntryERC, long groupId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<SegmentsEntry> searchSegmentsEntries(
 			long companyId, long groupId, String keywords, int start, int end,
 			Sort sort)

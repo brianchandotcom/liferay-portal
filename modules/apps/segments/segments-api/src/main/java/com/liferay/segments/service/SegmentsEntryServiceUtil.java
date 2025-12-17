@@ -109,6 +109,14 @@ public class SegmentsEntryServiceUtil {
 		return getService().getSegmentsEntry(segmentsEntryId);
 	}
 
+	public static SegmentsEntry getSegmentsEntryByExternalReferenceCode(
+			String segmentsEntryERC, long groupId)
+		throws PortalException {
+
+		return getService().getSegmentsEntryByExternalReferenceCode(
+			segmentsEntryERC, groupId);
+	}
+
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<SegmentsEntry> searchSegmentsEntries(
 				long companyId, long groupId, String keywords, int start,

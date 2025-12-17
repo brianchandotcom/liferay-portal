@@ -87,35 +87,39 @@ public interface SegmentsExperienceLocalService
 
 	public SegmentsExperience addSegmentsExperience(
 			String externalReferenceCode, long userId, long groupId,
-			long segmentsEntryId, long plid, Map<Locale, String> nameMap,
-			boolean active, UnicodeProperties typeSettingsUnicodeProperties,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	public SegmentsExperience addSegmentsExperience(
-			String externalReferenceCode, long userId, long groupId,
-			long segmentsEntryId, long plid, Map<Locale, String> nameMap,
-			int priority, boolean active,
+			String segmentsEntryERC, String segmentsEntryScopeERC, long plid,
+			Map<Locale, String> nameMap, boolean active,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
 		throws PortalException;
 
 	public SegmentsExperience addSegmentsExperience(
 			String externalReferenceCode, long userId, long groupId,
-			long segmentsEntryId, String segmentsExperienceKey, long plid,
+			String segmentsEntryERC, String segmentsEntryScopeERC, long plid,
+			Map<Locale, String> nameMap, int priority, boolean active,
+			UnicodeProperties typeSettingsUnicodeProperties,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public SegmentsExperience addSegmentsExperience(
+			String externalReferenceCode, long userId, long groupId,
+			String segmentsEntryERC, String segmentsEntryScopeERC,
+			String segmentsExperienceKey, long plid,
 			Map<Locale, String> nameMap, int priority, boolean active,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
 		throws PortalException;
 
 	public SegmentsExperience appendSegmentsExperience(
-			long userId, long groupId, long segmentsEntryId, long plid,
+			long userId, long groupId, String segmentsEntryERC,
+			String segmentsEntryScopeERC, long plid,
 			Map<Locale, String> nameMap, boolean active,
 			ServiceContext serviceContext)
 		throws PortalException;
 
 	public SegmentsExperience appendSegmentsExperience(
-			long userId, long groupId, long segmentsEntryId, long plid,
+			long userId, long groupId, String segmentsEntryERC,
+			String segmentsEntryScopeERC, long plid,
 			Map<Locale, String> nameMap, boolean active,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
@@ -144,7 +148,8 @@ public interface SegmentsExperienceLocalService
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public void deleteSegmentsEntrySegmentsExperiences(long segmentsEntryId)
+	public void deleteSegmentsEntrySegmentsExperiences(
+			String segmentsEntryERC, String segmentsEntryScopeERC)
 		throws PortalException;
 
 	/**
@@ -384,12 +389,13 @@ public interface SegmentsExperienceLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SegmentsExperience> getSegmentsExperiences(
-		long groupId, long[] segmentsEntryIds, long plid, boolean active);
+		long groupId, String[] segmentsEntryERCs, String segmentsEntryScopeERC,
+		long plid, boolean active);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SegmentsExperience> getSegmentsExperiences(
-		long groupId, long[] segmentsEntryIds, long plid, boolean active,
-		int start, int end,
+		long groupId, String[] segmentsEntryERCs, String segmentsEntryScopeERC,
+		long plid, boolean active, int start, int end,
 		OrderByComparator<SegmentsExperience> orderByComparator);
 
 	/**
@@ -434,14 +440,15 @@ public interface SegmentsExperienceLocalService
 		long groupId, long plid, boolean active);
 
 	public SegmentsExperience updateSegmentsExperience(
-			long segmentsExperienceId, long segmentsEntryId,
-			Map<Locale, String> nameMap, boolean active)
+			long segmentsExperienceId, String segmentsEntryERC,
+			String segmentsEntryScopeERC, Map<Locale, String> nameMap,
+			boolean active)
 		throws PortalException;
 
 	public SegmentsExperience updateSegmentsExperience(
-			long segmentsExperienceId, long segmentsEntryId,
-			Map<Locale, String> nameMap, boolean active,
-			UnicodeProperties typeSettingsUnicodeProperties)
+			long segmentsExperienceId, String segmentsEntryERC,
+			String segmentsEntryScopeERC, Map<Locale, String> nameMap,
+			boolean active, UnicodeProperties typeSettingsUnicodeProperties)
 		throws PortalException;
 
 	/**

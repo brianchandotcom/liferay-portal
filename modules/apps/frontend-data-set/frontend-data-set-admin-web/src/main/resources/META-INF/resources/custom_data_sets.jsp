@@ -12,6 +12,8 @@
 		module="{CustomDataSets} from frontend-data-set-admin-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
+				"deleteCustomDataSetURL", fdsAdminDisplayContext.getDeleteCustomDataSetURL()
+			).put(
 				"editDataSetURL", fdsAdminDisplayContext.getEditDataSetURL()
 			).put(
 				"hasAddDataSetObjectEntryPermission", fdsAdminDisplayContext.hasAddDataSetObjectEntryPermission()

@@ -571,6 +571,7 @@ const NewDataSetModalContent = ({
 };
 
 const CustomDataSets = ({
+	deleteCustomDataSetURL,
 	editDataSetURL,
 	hasAddDataSetObjectEntryPermission,
 	namespace,
@@ -579,6 +580,7 @@ const CustomDataSets = ({
 	restApplications,
 	systemDataSets,
 }: {
+	deleteCustomDataSetURL: string;
 	editDataSetURL: string;
 	hasAddDataSetObjectEntryPermission: boolean;
 	namespace: string;
@@ -641,9 +643,18 @@ const CustomDataSets = ({
 					onClick: ({processClose}: {processClose: Function}) => {
 						processClose();
 
-						fetch(itemData.actions.delete.href, {
-							headers: DEFAULT_FETCH_HEADERS,
-							method: itemData.actions.delete.method,
+						const formData = new FormData();
+
+						formData.append(
+							`${namespace}externalReferenceCode`,
+							itemData.externalReferenceCode
+						);
+
+						formData.append(`${namespace}id`, itemData.id);
+
+						fetch(deleteCustomDataSetURL, {
+							body: formData,
+							method: 'POST',
 						})
 							.then(() => {
 								openDefaultSuccessToast();

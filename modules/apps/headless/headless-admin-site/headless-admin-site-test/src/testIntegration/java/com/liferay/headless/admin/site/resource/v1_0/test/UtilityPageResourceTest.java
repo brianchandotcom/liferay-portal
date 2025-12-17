@@ -309,7 +309,6 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 				{
 					setExternalReferenceCode(
 						fileEntry.getExternalReferenceCode());
-					setUrl(RandomTestUtil.randomString());
 				}
 			};
 
@@ -751,7 +750,6 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 				{
 					setExternalReferenceCode(
 						fileEntry.getExternalReferenceCode());
-					setUrl(RandomTestUtil.randomString());
 				}
 			});
 
@@ -930,7 +928,6 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 				{
 					setExternalReferenceCode(
 						fileEntry.getExternalReferenceCode());
-					setUrl(RandomTestUtil.randomString());
 				}
 			});
 
@@ -955,7 +952,6 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 				{
 					setExternalReferenceCode(
 						newFileEntry.getExternalReferenceCode());
-					setUrl(RandomTestUtil.randomString());
 				}
 			});
 
@@ -1177,14 +1173,11 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		FileEntry fileEntry1 = _addPortletFileEntry(repository.getDlFolderId());
 
-		String thumbnailURL = RandomTestUtil.randomString();
-
 		utilityPage.setThumbnailURLReference(
 			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
 						fileEntry1.getExternalReferenceCode());
-					setUrl(thumbnailURL);
 				}
 			});
 
@@ -1203,7 +1196,6 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 				{
 					setExternalReferenceCode(
 						fileEntry2.getExternalReferenceCode());
-					setUrl(thumbnailURL);
 				}
 			});
 

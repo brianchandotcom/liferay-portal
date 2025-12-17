@@ -1173,14 +1173,11 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
 
-		String thumbnailURL = RandomTestUtil.randomString();
-
 		randomPageTemplate.setThumbnailURLReference(
 			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
 						fileEntry.getExternalReferenceCode());
-					setUrl(thumbnailURL);
 				}
 			});
 
@@ -1501,14 +1498,11 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
 
-		String thumbnailURL = RandomTestUtil.randomString();
-
 		pageTemplate.setThumbnailURLReference(
 			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
 						fileEntry.getExternalReferenceCode());
-					setUrl(thumbnailURL);
 				}
 			});
 
@@ -1760,14 +1754,11 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
 
-		String thumbnailURL = RandomTestUtil.randomString();
-
 		pageTemplate.setThumbnailURLReference(
 			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
 						fileEntry.getExternalReferenceCode());
-					setUrl(thumbnailURL);
 				}
 			});
 
@@ -2011,14 +2002,11 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		FileEntry fileEntry1 = _addPortletFileEntry(repository.getDlFolderId());
 
-		String thumbnailURL = RandomTestUtil.randomString();
-
 		pageTemplate.setThumbnailURLReference(
 			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
 						fileEntry1.getExternalReferenceCode());
-					setUrl(thumbnailURL);
 				}
 			});
 
@@ -2037,7 +2025,6 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				{
 					setExternalReferenceCode(
 						fileEntry2.getExternalReferenceCode());
-					setUrl(thumbnailURL);
 				}
 			});
 

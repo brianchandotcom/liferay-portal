@@ -244,14 +244,14 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 														<%
 														PortletDataHandlerControl[] importPortletDataHandlerControls = portletDataHandler.getImportPortletDataHandlerControls();
 
-														String controlSubtitles = null;
-														String controlTag = null;
+														String subtitles = null;
+														String tag = null;
 
 														if (importPortletDataHandlerControls.length == 1) {
 															PortletDataHandlerControl portletDataHandlerControl = importPortletDataHandlerControls[0];
 
-															controlSubtitles = StringUtil.merge(TransformUtil.transform(portletDataHandlerControl.getControlSubtitles(), controlSubtitle -> LanguageUtil.get(request, controlSubtitle)), StringPool.COMMA_AND_SPACE);
-															controlTag = portletDataHandlerControl.getControlTag();
+															subtitles = StringUtil.merge(TransformUtil.transform(portletDataHandlerControl.getSubtitles(), subtitle -> LanguageUtil.get(request, subtitle)), StringPool.COMMA_AND_SPACE);
+															tag = portletDataHandlerControl.getTag();
 														}
 
 														PortletDataHandlerControl[] importMetadataPortletDataHandlerControls = portletDataHandler.getImportMetadataPortletDataHandlerControls();
@@ -260,10 +260,10 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 														<liferay-util:buffer
 															var="badgeHTML"
 														>
-															<c:if test="<%= Validator.isNotNull(controlTag) %>">
+															<c:if test="<%= Validator.isNotNull(tag) %>">
 																<clay:label
 																	displayType="primary"
-																	label="<%= HtmlUtil.escape(LanguageUtil.get(request, controlTag)) %>"
+																	label="<%= HtmlUtil.escape(LanguageUtil.get(request, tag)) %>"
 																/>
 															</c:if>
 
@@ -278,10 +278,10 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 														<div class="input-checkbox">
 															<aui:input checked="<%= true %>" label="<%= portletTitle + badgeHTML %>" name="<%= rootControlId %>" type="checkbox" />
 
-															<c:if test="<%= Validator.isNotNull(controlSubtitles) %>">
+															<c:if test="<%= Validator.isNotNull(subtitles) %>">
 																<ul class="lfr-tree list-unstyled">
 																	<li>
-																		<span class="selected-labels"><%= controlSubtitles %></span>
+																		<span class="selected-labels"><%= subtitles %></span>
 																	</li>
 																</ul>
 															</c:if>
@@ -341,8 +341,8 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 																				<%
 																				for (PortletDataHandlerControl portletDataHandlerControl : importMetadataPortletDataHandlerControls) {
-																					if (!displayedControls.contains(portletDataHandlerControl.getControlName())) {
-																						displayedControls.add(portletDataHandlerControl.getControlName());
+																					if (!displayedControls.contains(portletDataHandlerControl.getName())) {
+																						displayedControls.add(portletDataHandlerControl.getName());
 																					}
 																					else {
 																						continue;

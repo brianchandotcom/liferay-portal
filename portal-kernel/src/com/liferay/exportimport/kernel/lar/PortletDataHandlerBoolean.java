@@ -12,73 +12,67 @@ import java.util.List;
  */
 public class PortletDataHandlerBoolean extends PortletDataHandlerControl {
 
-	public PortletDataHandlerBoolean(String namespace, String controlName) {
-		this(namespace, controlName, true);
+	public PortletDataHandlerBoolean(String namespace, String name) {
+		this(namespace, name, true);
 	}
 
 	public PortletDataHandlerBoolean(
-		String namespace, String controlName, boolean defaultState) {
+		String namespace, String name, boolean defaultState) {
 
-		this(namespace, controlName, defaultState, false);
+		this(namespace, name, defaultState, false);
 	}
 
 	public PortletDataHandlerBoolean(
-		String namespace, String controlName, boolean defaultState,
-		boolean disabled) {
+		String namespace, String name, boolean defaultState, boolean disabled) {
 
-		this(namespace, controlName, defaultState, disabled, null);
+		this(namespace, name, defaultState, disabled, null);
 	}
 
 	public PortletDataHandlerBoolean(
-		String namespace, String controlName, boolean defaultState,
-		boolean disabled,
+		String namespace, String name, boolean defaultState, boolean disabled,
 		PortletDataHandlerControl[] childrenPortletDataHandlerControls) {
 
 		this(
-			namespace, controlName, defaultState, disabled,
+			namespace, name, defaultState, disabled,
 			childrenPortletDataHandlerControls, null);
 	}
 
 	public PortletDataHandlerBoolean(
-		String namespace, String controlName, boolean defaultState,
-		boolean disabled,
+		String namespace, String name, boolean defaultState, boolean disabled,
 		PortletDataHandlerControl[] childrenPortletDataHandlerControls,
 		String className) {
 
 		this(
-			namespace, controlName, defaultState, disabled,
+			namespace, name, defaultState, disabled,
 			childrenPortletDataHandlerControls, className, null);
 	}
 
 	public PortletDataHandlerBoolean(
-		String namespace, String controlName, boolean defaultState,
-		boolean disabled,
+		String namespace, String name, boolean defaultState, boolean disabled,
 		PortletDataHandlerControl[] childrenPortletDataHandlerControls,
 		String className, String referrerClassName) {
 
 		this(
-			namespace, controlName, controlName, defaultState, disabled,
+			namespace, name, name, defaultState, disabled,
 			childrenPortletDataHandlerControls, className, referrerClassName);
 	}
 
 	public PortletDataHandlerBoolean(
-		String namespace, String controlName, boolean defaultState,
+		String namespace, String name, boolean defaultState,
 		PortletDataHandlerControl[] childrenPortletDataHandlerControls) {
 
 		this(
-			namespace, controlName, defaultState, false,
+			namespace, name, defaultState, false,
 			childrenPortletDataHandlerControls);
 	}
 
 	public PortletDataHandlerBoolean(
-		String namespace, String controlName, String controlLabel,
-		boolean defaultState, boolean disabled,
+		String namespace, String name, String label, boolean defaultState,
+		boolean disabled,
 		PortletDataHandlerControl[] childrenPortletDataHandlerControls,
 		String className, String referrerClassName) {
 
-		super(
-			namespace, controlName, controlLabel, disabled, className,
-			referrerClassName);
+		super(namespace, name, label, disabled, className, referrerClassName);
 
 		_defaultState = defaultState;
 		_childrenPortletDataHandlerControls =
@@ -86,15 +80,14 @@ public class PortletDataHandlerBoolean extends PortletDataHandlerControl {
 	}
 
 	public PortletDataHandlerBoolean(
-		String namespace, String controlName, String controlLabel,
-		List<String> controlSubtitles, String controlTag, boolean defaultState,
-		boolean disabled,
+		String namespace, String name, String label, List<String> subtitles,
+		String tag, boolean defaultState, boolean disabled,
 		PortletDataHandlerControl[] childrenPortletDataHandlerControls,
 		String className, String referrerClassName) {
 
 		super(
-			namespace, controlName, controlLabel, controlSubtitles, controlTag,
-			disabled, className, referrerClassName);
+			namespace, name, label, subtitles, tag, disabled, className,
+			referrerClassName);
 
 		_defaultState = defaultState;
 		_childrenPortletDataHandlerControls =

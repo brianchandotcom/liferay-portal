@@ -133,7 +133,7 @@ public abstract class BaseExportImportTestCase {
 			new PortletDataHandlerBoolean(namespace, name);
 
 		addParameter(
-			parameterMap, portletDataHandlerBoolean.getNamespacedControlName(),
+			parameterMap, portletDataHandlerBoolean.getNamespacedName(),
 			String.valueOf(value));
 	}
 

@@ -706,7 +706,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			portletDataContext.getParameterMap();
 
 		String[] referencedContentBehaviorArray = parameterMap.get(
-			PortletDataHandlerControl.getNamespacedControlName(
+			PortletDataHandlerControl.getNamespacedName(
 				portletDataHandler.getNamespace(),
 				"referenced-content-behavior"));
 

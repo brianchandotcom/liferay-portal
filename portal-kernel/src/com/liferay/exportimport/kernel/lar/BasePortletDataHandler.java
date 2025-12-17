@@ -616,7 +616,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		boolean checkedControl = GetterUtil.getBoolean(
 			portletDataContext.getBooleanParameter(
 				portletDataHandlerControl.getNamespace(),
-				portletDataHandlerControl.getControlName(), false));
+				portletDataHandlerControl.getName(), false));
 
 		if (!checkedControl) {
 			ManifestSummary manifestSummary =

@@ -1613,7 +1613,7 @@ public class DisplayPageTemplateResourceTest
 			putDisplayPageTemplate.getPageSpecifications();
 
 		pageSpecifications[0].setStatus(PageSpecification.Status.APPROVED);
-		pageSpecifications[1].setStatus(PageSpecification.Status.DRAFT);
+		pageSpecifications[1].setStatus(PageSpecification.Status.APPROVED);
 
 		putDisplayPageTemplate =
 			displayPageTemplateResource.putSiteDisplayPageTemplate(

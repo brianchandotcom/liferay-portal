@@ -9,10 +9,6 @@ import React from 'react';
 
 import {IBulkActionTaskType} from '../../../common/types/BulkActionTask';
 
-export const URL_BULK_ACTION_TASK = '/o/bulk/v1.0/bulk-action';
-export const URL_DOWNLOAD_BULK_ACTION_TASK =
-	'/o/cms/download-folder?nestedFields=embedded';
-
 export const BULK_ACTION_CATEGORIES = 'TaxonomyCategoryBulkAction';
 export const BULK_ACTION_DEFAULT_PERMISSIONS = 'DefaultPermissionBulkAction';
 export const BULK_ACTION_DELETE = 'DeleteBulkAction';
@@ -23,9 +19,6 @@ export const BULK_ACTION_RESET_PERMISSIONS = 'ResetPermissionBulkAction';
 export const BULK_ACTION_TAGS = 'KeywordBulkAction';
 
 export const INTERVAL_TASK_POLLING_MS = 5000;
-
-export const URL_TASKS_REPORT_DETAIL = `${Liferay.ThemeDisplay.getPortalURL()}/web/cms/e/bulk-action-task/`;
-export const URL_TASKS_REPORT = `${Liferay.ThemeDisplay.getPortalURL()}/web/cms/bulk-action-task-report`;
 
 export const LABELS_BULK_ACTIONS: {[key in keyof IBulkActionTaskType]: string} =
 	{
@@ -49,6 +42,9 @@ export const STATUS_COMPLETED = 'completed';
 export const STATUS_FAILED = 'failed';
 export const STATUS_INITIAL = 'initial';
 export const STATUS_STARTED = 'started';
+
+export const TASK_REPORT_FDS_ID =
+	'com.liferay.site.cms.site.initializer-bulkActionTaskReportSection';
 
 export const TASK_STATUS_PROPS: Record<
 	string,
@@ -88,3 +84,9 @@ export const TASK_STATUS_PROPS: Record<
 		label: Liferay.Language.get('processing'),
 	},
 };
+
+export const URL_BULK_ACTION_TASK = '/o/bulk/v1.0/bulk-action';
+export const URL_DOWNLOAD_BULK_ACTION_TASK =
+	'/o/cms/download-folder?nestedFields=embedded';
+export const URL_TASKS_REPORT = `${Liferay.ThemeDisplay.getPortalURL()}/web/cms/bulk-action-task-report`;
+export const URL_TASKS_REPORT_DETAIL = `${Liferay.ThemeDisplay.getPortalURL()}/web/cms/e/bulk-action-task/`;

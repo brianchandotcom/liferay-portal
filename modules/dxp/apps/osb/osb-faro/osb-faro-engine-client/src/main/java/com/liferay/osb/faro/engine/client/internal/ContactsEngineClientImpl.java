@@ -554,6 +554,62 @@ public class ContactsEngineClientImpl
 	}
 
 	@Override
+	public Results<Object> getAccountFieldValues(
+		FaroProject faroProject, Long channelId, String fieldMappingFieldName,
+		String query, int cur, int delta) {
+
+		Map<String, Object> uriVariables = getUriVariables(
+			faroProject, cur, delta, null);
+
+		for (FieldMappingMap fieldMappingMap :
+				FieldMappingConstants.getAccountFieldMappingMaps()) {
+
+			if (fieldMappingFieldName.equals(fieldMappingMap.getName())) {
+				FieldMapping fieldMapping = new FieldMapping();
+
+				fieldMapping.setContext(FieldMappingConstants.CONTEXT_ACCOUNT);
+				fieldMapping.setFieldName(fieldMappingMap.getName());
+
+				uriVariables.put("apply", getGroupBy(fieldMapping));
+
+				uriVariables.put("channelId", channelId);
+				uriVariables.put("query", query);
+
+				PagedModel<?, IndividualTransformation> pagedModel = get(
+					faroProject, Rels.ACCOUNTS,
+					new ParameterizedTypeReference
+						<EntityModelPagedModel<IndividualTransformation>>() {
+					},
+					uriVariables);
+
+				Results<IndividualTransformation> results =
+					pagedModel.getResults();
+
+				List<IndividualTransformation> individualTransformations =
+					results.getItems();
+
+				return new Results<>(
+					TransformUtil.transform(
+						individualTransformations,
+						individualTransformation -> {
+							Map<String, Object> terms =
+								individualTransformation.getTerms();
+
+							List<Object> objects = new ArrayList<>(
+								terms.values());
+
+							objects.get(0);
+
+							return objects.get(0);
+						}),
+					results.getTotal());
+			}
+		}
+
+		return null;
+	}
+
+	@Override
 	public Results<IndividualSegment> getAccountIndividualSegments(
 		FaroProject faroProject, String accountId, String channelId,
 		String query, String status, int cur, int delta,
@@ -1659,13 +1715,7 @@ public class ContactsEngineClientImpl
 
 		if (StringUtil.equals(
 				fieldMapping.getOwnerType(),
-				FieldMappingConstants.OWNER_TYPE_ACCOUNT)) {
-
-			type = Rels.ACCOUNTS;
-		}
-		else if (StringUtil.equals(
-					fieldMapping.getOwnerType(),
-					FieldMappingConstants.OWNER_TYPE_INDIVIDUAL)) {
+				FieldMappingConstants.OWNER_TYPE_INDIVIDUAL)) {
 
 			type = Rels.INDIVIDUALS;
 		}

@@ -166,14 +166,11 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
 
-		String thumbnailURL = RandomTestUtil.randomString();
-
 		randomMasterPage.setThumbnailURLReference(
 			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
 						fileEntry.getExternalReferenceCode());
-					setUrl(thumbnailURL);
 				}
 			});
 
@@ -856,14 +853,11 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
 
-		String thumbnailURL = RandomTestUtil.randomString();
-
 		masterPage.setThumbnailURLReference(
 			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
 						fileEntry.getExternalReferenceCode());
-					setUrl(thumbnailURL);
 				}
 			});
 
@@ -886,7 +880,6 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 				{
 					setExternalReferenceCode(
 						newFileEntry.getExternalReferenceCode());
-					setUrl(RandomTestUtil.randomString());
 				}
 			});
 
@@ -1078,14 +1071,11 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
 
-		String thumbnailURL = RandomTestUtil.randomString();
-
 		masterPage.setThumbnailURLReference(
 			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
 						fileEntry.getExternalReferenceCode());
-					setUrl(thumbnailURL);
 				}
 			});
 
@@ -1285,14 +1275,11 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		FileEntry fileEntry1 = _addPortletFileEntry(repository.getDlFolderId());
 
-		String thumbnailURL = RandomTestUtil.randomString();
-
 		masterPage.setThumbnailURLReference(
 			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
 						fileEntry1.getExternalReferenceCode());
-					setUrl(thumbnailURL);
 				}
 			});
 
@@ -1311,7 +1298,6 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 				{
 					setExternalReferenceCode(
 						fileEntry2.getExternalReferenceCode());
-					setUrl(thumbnailURL);
 				}
 			});
 

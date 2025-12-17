@@ -294,7 +294,9 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Types;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -6141,6 +6143,18 @@ public class ObjectEntryLocalServiceImpl
 
 				preparedStatement.setTimestamp(index, timestamp);
 			}
+			else if (value instanceof LocalDate) {
+				LocalDate localDate = (LocalDate)value;
+
+				Date date = Date.from(
+					localDate.atStartOfDay(
+						ZoneId.systemDefault()
+					).toInstant());
+
+				timestamp = new Timestamp(date.getTime());
+
+				preparedStatement.setTimestamp(index, timestamp);
+			}
 			else if (value instanceof LocalDateTime) {
 				LocalDateTime localDateTime = (LocalDateTime)value;
 
@@ -6153,7 +6167,8 @@ public class ObjectEntryLocalServiceImpl
 			}
 			else {
 				Date date = DateUtil.parseDate(
-					"yyyy-MM-dd", valueString, LocaleUtil.getSiteDefault());
+					ObjectFieldUtil.getDateTimePattern(valueString),
+					valueString, LocaleUtil.getSiteDefault());
 
 				timestamp = new Timestamp(date.getTime());
 

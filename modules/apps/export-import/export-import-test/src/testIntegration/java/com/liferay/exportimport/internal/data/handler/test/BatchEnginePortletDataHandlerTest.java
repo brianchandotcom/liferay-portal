@@ -9,8 +9,10 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
@@ -31,6 +33,8 @@ import com.liferay.exportimport.report.constants.ExportImportReportEntryConstant
 import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
+import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
@@ -76,6 +80,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -610,6 +615,90 @@ public class BatchEnginePortletDataHandlerTest {
 	}
 
 	@Test
+	@TestInfo("LPD-72635")
+	public void testExportImportSiteObjectEntriesWithRichTextAndURLs()
+		throws Exception {
+
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
+		Group globalGroup = company.getGroup();
+
+		FileEntry globalGroupFileEntry = _addImageFileEntry(
+			globalGroup.getGroupId());
+
+		Group otherGroup = GroupTestUtil.addGroup();
+
+		FileEntry otherGroupFileEntry = _addImageFileEntry(
+			otherGroup.getGroupId());
+
+		Group sourceGroup = GroupTestUtil.addGroup();
+
+		FileEntry sourceGroupFileEntry = _addImageFileEntry(
+			sourceGroup.getGroupId());
+
+		ObjectDefinition objectDefinition = _addObjectDefinition(
+			ObjectDefinitionConstants.SCOPE_SITE);
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			sourceGroupFileEntry.getGroupId(), objectDefinition,
+			(Map)HashMapBuilder.put(
+				_OBJECT_FIELD_NAME_RICH_TEXT,
+				_sanitize(
+					StringBundler.concat(
+						_getImgTag(_getPreviewURL(globalGroupFileEntry)),
+						_getImgTag(_getPreviewURL(otherGroupFileEntry)),
+						_getImgTag(_getPreviewURL(sourceGroupFileEntry))),
+					sourceGroup, objectDefinition)
+			).build());
+
+		File larFile = _exportLayouts(
+			false, sourceGroup.getGroupId(), false, new long[0],
+			objectDefinition);
+
+		_objectEntryLocalService.deleteObjectEntry(
+			objectEntry.getObjectEntryId());
+
+		Group targetGroup = GroupTestUtil.addGroup();
+
+		_importLayouts(
+			false, false, larFile, targetGroup.getGroupId(), objectDefinition);
+
+		List<ObjectEntry> objectEntriesList =
+			_objectEntryLocalService.getObjectEntries(
+				targetGroup.getGroupId(),
+				objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			objectEntriesList.toString(), 1, objectEntriesList.size());
+
+		ObjectEntry importedObjectEntry = objectEntriesList.get(0);
+
+		String importedRichTextValue = MapUtil.getString(
+			importedObjectEntry.getValues(), _OBJECT_FIELD_NAME_RICH_TEXT);
+
+		Assert.assertTrue(
+			importedRichTextValue.contains(
+				_sanitize(
+					_getImgTag(_getPreviewURL(globalGroupFileEntry)),
+					targetGroup, objectDefinition)));
+
+		Assert.assertTrue(
+			importedRichTextValue.contains(
+				_sanitize(
+					_getImgTag(_getPreviewURL(otherGroupFileEntry)),
+					targetGroup, objectDefinition)));
+
+		Assert.assertTrue(
+			importedRichTextValue.contains(
+				_sanitize(
+					_getImgTag(
+						_getPreviewURL(sourceGroupFileEntry, targetGroup)),
+					targetGroup, objectDefinition)));
+	}
+
+	@Test
 	@TestInfo("LPD-58645")
 	public void testExportImportWithDifferentScopedObjectEntries()
 		throws Exception {
@@ -967,6 +1056,15 @@ public class BatchEnginePortletDataHandlerTest {
 			fileEntry.getFileEntryId());
 	}
 
+	private FileEntry _addImageFileEntry(long groupId) throws Exception {
+		return _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), groupId,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), ContentTypes.IMAGE_JPEG,
+			FileUtil.getBytes(getClass(), "dependencies/image.jpg"), null, null,
+			null, ServiceContextTestUtil.getServiceContext());
+	}
+
 	private ListTypeDefinition _addListTypeDefinition() throws Exception {
 		return _listTypeDefinitionLocalService.addListTypeDefinition(
 			null, TestPropsValues.getUserId(),
@@ -1093,6 +1191,11 @@ public class BatchEnginePortletDataHandlerTest {
 						).build()),
 					false),
 				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT,
+					ObjectFieldConstants.DB_TYPE_CLOB, false, false, null,
+					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_RICH_TEXT,
+					false),
+				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
 					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_TEXT,
@@ -1123,6 +1226,18 @@ public class BatchEnginePortletDataHandlerTest {
 
 	private ObjectEntry _addObjectEntry(
 			long groupId, ObjectDefinition objectDefinition,
+			Map<String, Serializable> values)
+		throws Exception {
+
+		return _objectEntryLocalService.addObjectEntry(
+			groupId, TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null, values, ServiceContextTestUtil.getServiceContext());
+	}
+
+	private ObjectEntry _addObjectEntry(
+			long groupId, ObjectDefinition objectDefinition,
 			Serializable objectFieldValue)
 		throws Exception {
 
@@ -1139,12 +1254,9 @@ public class BatchEnginePortletDataHandlerTest {
 		FileEntry tempFileEntry2 = _addTempFileEntry(
 			objectDefinition, _OBJECT_FIELD_VALUE_ATTACHMENT_USER_COMPUTER);
 
-		return _objectEntryLocalService.addObjectEntry(
-			groupId, TestPropsValues.getUserId(),
-			objectDefinition.getObjectDefinitionId(),
-			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-			null,
-			HashMapBuilder.<String, Serializable>put(
+		return _addObjectEntry(
+			groupId, objectDefinition,
+			(Map)HashMapBuilder.<String, Serializable>put(
 				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA,
 				dlFileEntry.getFileEntryId()
 			).put(
@@ -1155,8 +1267,7 @@ public class BatchEnginePortletDataHandlerTest {
 				tempFileEntry2.getFileEntryId()
 			).put(
 				_OBJECT_FIELD_NAME_TEXT, objectFieldValue
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
+			).build());
 	}
 
 	private ObjectField[] _addObjectFields(
@@ -1523,6 +1634,19 @@ public class BatchEnginePortletDataHandlerTest {
 		}
 	}
 
+	private String _getFriendlyURL(FileEntry fileEntry) throws Exception {
+		FriendlyURLEntry friendlyURLEntry =
+			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+				_portal.getClassNameId(FileEntry.class),
+				fileEntry.getFileEntryId());
+
+		return friendlyURLEntry.getUrlTitle();
+	}
+
+	private String _getImgTag(String previewURL) {
+		return String.format("<p><img alt=\"\" src=\"%s\" /></p>", previewURL);
+	}
+
 	private LogCapture _getLogCapture(boolean expectError) {
 		LogCapture logCapture = null;
 
@@ -1562,6 +1686,18 @@ public class BatchEnginePortletDataHandlerTest {
 		}
 
 		return group.getGroupKey();
+	}
+
+	private String _getPreviewURL(FileEntry fileEntry) throws Exception {
+		return _dlURLHelper.getPreviewURL(
+			fileEntry, fileEntry.getFileVersion(), null, null, false, false);
+	}
+
+	private String _getPreviewURL(FileEntry fileEntry, Group group)
+		throws Exception {
+
+		return _dlURLHelper.getPreviewURL(
+			_getFriendlyURL(fileEntry), group.getFriendlyURL());
 	}
 
 	private ExportImportConfiguration _importLayouts(
@@ -1654,6 +1790,16 @@ public class BatchEnginePortletDataHandlerTest {
 			bundleContext.registerService(clazz, service, properties);
 
 		return serviceRegistration::unregister;
+	}
+
+	private String _sanitize(
+			String content, Group group, ObjectDefinition objectDefinition)
+		throws Exception {
+
+		return SanitizerUtil.sanitize(
+			objectDefinition.getCompanyId(), group.getGroupId(),
+			TestPropsValues.getUserId(), objectDefinition.getClassName(), 0L,
+			ContentTypes.TEXT_HTML, content);
 	}
 
 	private void _testExportImportObjectEntriesToSameGroup(
@@ -1962,17 +2108,20 @@ public class BatchEnginePortletDataHandlerTest {
 	}
 
 	private static final String _OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA =
-		"x" + RandomTestUtil.randomString();
+		"xAttachment1" + RandomTestUtil.randomString();
 
 	private static final String
 		_OBJECT_FIELD_NAME_ATTACHMENT_SHOW_FILES_IN_DOCS_AND_MEDIA =
-			"x" + RandomTestUtil.randomString();
+			"xAttachment2" + RandomTestUtil.randomString();
 
 	private static final String _OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER =
-		"x" + RandomTestUtil.randomString();
+		"xAttachment3" + RandomTestUtil.randomString();
+
+	private static final String _OBJECT_FIELD_NAME_RICH_TEXT =
+		"xRichText" + RandomTestUtil.randomString();
 
 	private static final String _OBJECT_FIELD_NAME_TEXT =
-		"x" + RandomTestUtil.randomString();
+		"xText" + RandomTestUtil.randomString();
 
 	private static final String _OBJECT_FIELD_VALUE_ATTACHMENT_DOCS_AND_MEDIA =
 		RandomTestUtil.randomString();
@@ -2001,6 +2150,9 @@ public class BatchEnginePortletDataHandlerTest {
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Inject
+	private DLURLHelper _dlURLHelper;
+
+	@Inject
 	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
 
@@ -2010,6 +2162,9 @@ public class BatchEnginePortletDataHandlerTest {
 	@Inject
 	private ExportImportReportEntryLocalService
 		_exportImportReportEntryLocalService;
+
+	@Inject
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

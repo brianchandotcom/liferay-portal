@@ -1609,11 +1609,11 @@ public class DisplayPageTemplateResourceTest
 
 		putDisplayPageTemplate.setMarkedAsDefault(true);
 
-		PageSpecification[] pageSpecifications =
-			putDisplayPageTemplate.getPageSpecifications();
+		for (PageSpecification pageSpecification :
+				putDisplayPageTemplate.getPageSpecifications()) {
 
-		pageSpecifications[0].setStatus(PageSpecification.Status.APPROVED);
-		pageSpecifications[1].setStatus(PageSpecification.Status.APPROVED);
+			pageSpecification.setStatus(PageSpecification.Status.APPROVED);
+		}
 
 		putDisplayPageTemplate =
 			displayPageTemplateResource.putSiteDisplayPageTemplate(

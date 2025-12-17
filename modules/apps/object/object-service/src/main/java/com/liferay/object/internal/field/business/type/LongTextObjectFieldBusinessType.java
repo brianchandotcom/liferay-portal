@@ -23,7 +23,6 @@ import com.liferay.portal.vulcan.extension.PropertyDefinition;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -126,14 +125,6 @@ public class LongTextObjectFieldBusinessType
 
 		super.validateObjectFieldSettingsDefaultValue(
 			objectField, objectFieldSettingsValuesMap);
-
-		if (Objects.equals(
-				objectFieldSettingsValuesMap.get(
-					ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE),
-				ObjectFieldSettingConstants.VALUE_EXPRESSION_BUILDER)) {
-
-			return;
-		}
 
 		String defaultValue = objectFieldSettingsValuesMap.get(
 			ObjectFieldSettingConstants.NAME_DEFAULT_VALUE);

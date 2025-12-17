@@ -97,6 +97,23 @@ public class DateObjectFieldBusinessType extends BaseObjectFieldBusinessType {
 		return PropertyDefinition.PropertyType.DATE_TIME;
 	}
 
+	@Override
+	public boolean isAllowedObjectFieldSettingValue(
+		String objectFieldSettingName, String objectFieldSettingValue) {
+
+		if (super.isAllowedObjectFieldSettingValue(
+				objectFieldSettingName, objectFieldSettingValue) ||
+			(objectFieldSettingName.equals(
+				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE) &&
+			 objectFieldSettingValue.equals(
+				 ObjectFieldSettingConstants.VALUE_EXPRESSION_BUILDER))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private String _getValue(String value) {
 		if (Validator.isNull(value)) {
 			return StringPool.BLANK;

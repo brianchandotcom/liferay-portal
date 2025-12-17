@@ -166,6 +166,23 @@ public class PicklistObjectFieldBusinessType
 	}
 
 	@Override
+	public boolean isAllowedObjectFieldSettingValue(
+		String objectFieldSettingName, String objectFieldSettingValue) {
+
+		if (super.isAllowedObjectFieldSettingValue(
+				objectFieldSettingName, objectFieldSettingValue) ||
+			(objectFieldSettingName.equals(
+				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE) &&
+			 objectFieldSettingValue.equals(
+				 ObjectFieldSettingConstants.VALUE_EXPRESSION_BUILDER))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public void predefineObjectFieldSettings(
 			ObjectField newObjectField, ObjectField oldObjectField,
 			List<ObjectFieldSetting> objectFieldSettings)

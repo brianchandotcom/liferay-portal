@@ -203,6 +203,23 @@ public class DateTimeObjectFieldBusinessType
 			_userLocalService.getUser(userId), String.valueOf(value));
 	}
 
+	@Override
+	public boolean isAllowedObjectFieldSettingValue(
+		String objectFieldSettingName, String objectFieldSettingValue) {
+
+		if (super.isAllowedObjectFieldSettingValue(
+				objectFieldSettingName, objectFieldSettingValue) ||
+			(objectFieldSettingName.equals(
+				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE) &&
+			 objectFieldSettingValue.equals(
+				 ObjectFieldSettingConstants.VALUE_EXPRESSION_BUILDER))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _containsTimeZoneId(String pattern) {
 		if (pattern.contains("X") || pattern.contains("Z") ||
 			pattern.contains("z")) {

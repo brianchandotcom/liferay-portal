@@ -35,6 +35,11 @@ public class OAuthClientPersistenceServiceUpgradeStepRegistrator
 			"1.2.0", "1.3.0",
 			UpgradeProcessFactory.addColumns(
 				"OAuthClientEntry", "customClaimsJSON TEXT null"));
+
+		registry.register(
+			"1.3.0", "1.4.0",
+			new com.liferay.oauth.client.persistence.internal.upgrade.v1_4_0.
+				OAuthAuthorizationServerInfoMapperJSONUpgradeProcess());
 	}
 
 }

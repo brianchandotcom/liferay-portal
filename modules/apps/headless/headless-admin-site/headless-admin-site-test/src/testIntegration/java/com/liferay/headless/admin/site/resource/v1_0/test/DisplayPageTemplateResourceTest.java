@@ -496,26 +496,7 @@ public class DisplayPageTemplateResourceTest
 
 	@Override
 	protected DisplayPageTemplate randomDisplayPageTemplate() throws Exception {
-		DisplayPageTemplate displayPageTemplate =
-			super.randomDisplayPageTemplate();
-
-		displayPageTemplate.setContentTypeReference(
-			_getRandomClassSubtypeReference());
-		displayPageTemplate.setDisplayPageTemplateSettings(
-			_randomDisplayPageTemplateSettings());
-		displayPageTemplate.setFriendlyUrlPath_i18n(
-			() -> HashMapBuilder.put(
-				LocaleUtil.toBCP47LanguageId(LocaleUtil.SPAIN),
-				StringPool.FORWARD_SLASH +
-					StringUtil.toLowerCase(RandomTestUtil.randomString())
-			).put(
-				LocaleUtil.toBCP47LanguageId(LocaleUtil.US),
-				StringPool.FORWARD_SLASH +
-					StringUtil.toLowerCase(RandomTestUtil.randomString())
-			).build());
-		displayPageTemplate.setMarkedAsDefault(Boolean.FALSE);
-
-		return displayPageTemplate;
+		return _randomDisplayPageTemplate(Boolean.FALSE);
 	}
 
 	@Override
@@ -858,9 +839,8 @@ public class DisplayPageTemplateResourceTest
 				PageSpecification.Status publishedLayoutStatus)
 		throws Exception {
 
-		DisplayPageTemplate displayPageTemplate = randomDisplayPageTemplate();
-
-		displayPageTemplate.setMarkedAsDefault(markedAsDefault);
+		DisplayPageTemplate displayPageTemplate = _randomDisplayPageTemplate(
+			markedAsDefault);
 
 		ContentPageSpecification draftContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
@@ -881,6 +861,32 @@ public class DisplayPageTemplateResourceTest
 
 		return displayPageTemplateResource.postSiteDisplayPageTemplate(
 			testGroup.getExternalReferenceCode(), displayPageTemplate);
+	}
+
+	private DisplayPageTemplate _randomDisplayPageTemplate(
+			Boolean markedAsDefault)
+		throws Exception {
+
+		DisplayPageTemplate displayPageTemplate =
+			super.randomDisplayPageTemplate();
+
+		displayPageTemplate.setContentTypeReference(
+			() -> _getRandomClassSubtypeReference());
+		displayPageTemplate.setDisplayPageTemplateSettings(
+			() -> _randomDisplayPageTemplateSettings());
+		displayPageTemplate.setFriendlyUrlPath_i18n(
+			() -> HashMapBuilder.put(
+				LocaleUtil.toBCP47LanguageId(LocaleUtil.SPAIN),
+				StringPool.FORWARD_SLASH +
+					StringUtil.toLowerCase(RandomTestUtil.randomString())
+			).put(
+				LocaleUtil.toBCP47LanguageId(LocaleUtil.US),
+				StringPool.FORWARD_SLASH +
+					StringUtil.toLowerCase(RandomTestUtil.randomString())
+			).build());
+		displayPageTemplate.setMarkedAsDefault(() -> markedAsDefault);
+
+		return displayPageTemplate;
 	}
 
 	private DisplayPageTemplateSettings _randomDisplayPageTemplateSettings() {
@@ -1241,9 +1247,7 @@ public class DisplayPageTemplateResourceTest
 
 		Assert.assertFalse(postDisplayPageTemplate.getMarkedAsDefault());
 
-		displayPageTemplate = randomDisplayPageTemplate();
-
-		displayPageTemplate.setMarkedAsDefault(() -> null);
+		displayPageTemplate = _randomDisplayPageTemplate(null);
 
 		postDisplayPageTemplate =
 			displayPageTemplateResource.postSiteDisplayPageTemplate(
@@ -1263,9 +1267,7 @@ public class DisplayPageTemplateResourceTest
 			"The default display page template must be published first.",
 			() -> {
 				DisplayPageTemplate randomDisplayPageTemplate =
-					randomDisplayPageTemplate();
-
-				randomDisplayPageTemplate.setMarkedAsDefault(Boolean.TRUE);
+					_randomDisplayPageTemplate(Boolean.TRUE);
 
 				displayPageTemplateResource.postSiteDisplayPageTemplate(
 					testGroup.getExternalReferenceCode(),

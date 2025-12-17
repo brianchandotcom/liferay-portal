@@ -621,13 +621,13 @@ public class S3Store implements Store {
 			return new SystemException(throwable.getMessage(), throwable);
 		}
 
+		StringBundler sb = new StringBundler(10);
+
 		AwsServiceException awsServiceException =
 			(AwsServiceException)throwable;
 
 		AwsErrorDetails awsErrorDetails =
 			awsServiceException.awsErrorDetails();
-
-		StringBundler sb = new StringBundler(10);
 
 		String errorCode = awsErrorDetails.errorCode();
 

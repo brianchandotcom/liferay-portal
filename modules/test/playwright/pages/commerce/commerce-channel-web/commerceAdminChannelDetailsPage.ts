@@ -461,7 +461,11 @@ export class CommerceAdminChannelDetailsPage {
 		await (await this.closeSidePanelFrame(false, tableName)).click();
 	}
 
-	async addFlatRateShippingOption(name: string, amount?: string) {
+	async addFlatRateShippingOption(
+		name: string,
+		amount?: string,
+		description?: string
+	) {
 		const tableName = 'Shipping Methods';
 		await (
 			await this.generalCommerceAdminChannelTableLink('Flat Rate')
@@ -474,6 +478,11 @@ export class CommerceAdminChannelDetailsPage {
 		await (await this.sidePanelNestedFrame(tableName))
 			.getByLabel('Name')
 			.fill(name);
+		if (description) {
+			await (await this.sidePanelNestedFrame(tableName))
+				.getByLabel('Description')
+				.fill(description);
+		}
 		if (amount) {
 			await (await this.sidePanelNestedFrame(tableName))
 				.getByLabel('Amount')

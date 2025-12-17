@@ -24,141 +24,149 @@ export const test = mergeTests(
 	pageViewModePagesTest
 );
 
-test('LPP-55641 Variable Shipping Rate is calculated based only on shippable products', async ({
-	apiHelpers,
-	checkoutPage,
-	commerceAdminChannelDetailsPage,
-	commerceAdminChannelsPage,
-	page,
-	site,
-	widgetPagePage,
-}) => {
-	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
-		groupId: site.id,
-		title: getRandomString(),
-	});
-
-	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		siteGroupId: site.id,
-	});
-
-	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
-		name: getRandomString(),
-	});
-
-	const product1 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-		catalogId: catalog.id,
-		name: {en_US: 'Product1'},
-		shippingConfiguration: {
-			freeShipping: false,
-			shippable: true,
-		},
-	});
-
-	const product1Skus = await apiHelpers.headlessCommerceAdminCatalog
-		.getProduct(product1.productId)
-		.then((product) => {
-			return product.skus;
+test(
+	'Variable Shipping Rate is calculated based only on shippable products',
+	{tag: ['@LPP-55641']},
+	async ({
+		apiHelpers,
+		checkoutPage,
+		commerceAdminChannelDetailsPage,
+		commerceAdminChannelsPage,
+		page,
+		site,
+		widgetPagePage,
+	}) => {
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: getRandomString(),
 		});
 
-	const sku1 = product1Skus[0];
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
 
-	const basePriceListId =
-		await apiHelpers.headlessCommerceAdminPricing.getBasePriceListId(
-			catalog.id
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+				name: getRandomString(),
+			});
+
+		const product1 =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				name: {en_US: 'Product1'},
+				shippingConfiguration: {
+					freeShipping: false,
+					shippable: true,
+				},
+			});
+
+		const product1Skus = await apiHelpers.headlessCommerceAdminCatalog
+			.getProduct(product1.productId)
+			.then((product) => {
+				return product.skus;
+			});
+
+		const sku1 = product1Skus[0];
+
+		const basePriceListId =
+			await apiHelpers.headlessCommerceAdminPricing.getBasePriceListId(
+				catalog.id
+			);
+
+		await apiHelpers.headlessCommerceAdminPricing.postPriceEntry({
+			price: 15,
+			priceListId: basePriceListId.items[0].id,
+			skuId: sku1.id,
+		});
+
+		const product2 =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				name: {en_US: 'Product2'},
+				shippingConfiguration: {
+					shippable: false,
+				},
+			});
+
+		const product2Skus = await apiHelpers.headlessCommerceAdminCatalog
+			.getProduct(product2.productId)
+			.then((product) => {
+				return product.skus;
+			});
+
+		const sku2 = product2Skus[0];
+
+		await apiHelpers.headlessCommerceAdminPricing.postPriceEntry({
+			price: 50,
+			priceListId: basePriceListId.items[0].id,
+			skuId: sku2.id,
+		});
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'business',
+		});
+
+		await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+			account.id,
+			['test@liferay.com']
 		);
 
-	await apiHelpers.headlessCommerceAdminPricing.postPriceEntry({
-		price: 15,
-		priceListId: basePriceListId.items[0].id,
-		skuId: sku1.id,
-	});
+		await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				cartItems: [
+					{
+						options: '[]',
+						quantity: 1,
+						replacedSkuId: 0,
+						skuId: sku1.id,
+					},
+					{
+						options: '[]',
+						quantity: 1,
+						replacedSkuId: 0,
+						skuId: sku2.id,
+					},
+				],
+			},
+			channel.id
+		);
 
-	const product2 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-		catalogId: catalog.id,
-		name: {en_US: 'Product2'},
-		shippingConfiguration: {
-			shippable: false,
-		},
-	});
+		await commerceAdminChannelsPage.changeCommerceChannelSiteType(
+			channel.name,
+			'B2B'
+		);
 
-	const product2Skus = await apiHelpers.headlessCommerceAdminCatalog
-		.getProduct(product2.productId)
-		.then((product) => {
-			return product.skus;
-		});
+		await commerceAdminChannelDetailsPage.activateChannelConfiguration(
+			'Variable Rate',
+			'Shipping Methods'
+		);
+		await commerceAdminChannelDetailsPage.addVariableRateShippingOption(
+			'variable rate'
+		);
+		await commerceAdminChannelDetailsPage.addVariableRateShippingOptionSetting(
+			'variable rate',
+			'10'
+		);
 
-	const sku2 = product2Skus[0];
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-	await apiHelpers.headlessCommerceAdminPricing.postPriceEntry({
-		price: 50,
-		priceListId: basePriceListId.items[0].id,
-		skuId: sku2.id,
-	});
+		await widgetPagePage.addPortlet('Checkout');
 
-	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: getRandomString(),
-		type: 'business',
-	});
+		await checkoutPage.addressInput.fill('123 Main St');
+		await checkoutPage.cityInput.fill('Miami');
+		await checkoutPage.countryInput.selectOption({label: 'United States'});
+		await checkoutPage.nameInput.fill('John Doe');
+		await checkoutPage.phoneNumberInput.fill('1234567890');
+		await checkoutPage.regionInput.selectOption({label: 'Florida'});
+		await checkoutPage.zipInput.fill('33101');
 
-	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
-		account.id,
-		['test@liferay.com']
-	);
-
-	await apiHelpers.headlessCommerceDeliveryCart.postCart(
-		{
-			accountId: account.id,
-			cartItems: [
-				{
-					options: '[]',
-					quantity: 1,
-					replacedSkuId: 0,
-					skuId: sku1.id,
-				},
-				{
-					options: '[]',
-					quantity: 1,
-					replacedSkuId: 0,
-					skuId: sku2.id,
-				},
-			],
-		},
-		channel.id
-	);
-
-	await commerceAdminChannelsPage.changeCommerceChannelSiteType(
-		channel.name,
-		'B2B'
-	);
-
-	await commerceAdminChannelDetailsPage.activateChannelConfiguration(
-		'Variable Rate',
-		'Shipping Methods'
-	);
-	await commerceAdminChannelDetailsPage.addVariableRateShippingOption(
-		'variable rate'
-	);
-	await commerceAdminChannelDetailsPage.addVariableRateShippingOptionSetting(
-		'variable rate',
-		'10'
-	);
-
-	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
-
-	await widgetPagePage.addPortlet('Checkout');
-
-	await checkoutPage.addressInput.fill('123 Main St');
-	await checkoutPage.cityInput.fill('Miami');
-	await checkoutPage.countryInput.selectOption({label: 'United States'});
-	await checkoutPage.nameInput.fill('John Doe');
-	await checkoutPage.phoneNumberInput.fill('1234567890');
-	await checkoutPage.regionInput.selectOption({label: 'Florida'});
-	await checkoutPage.zipInput.fill('33101');
-
-	await checkoutPage.continueButton.click();
-	await expect(checkoutPage.shippingCost).toContainText('$ 1.50');
-});
+		await checkoutPage.continueButton.click();
+		await expect(checkoutPage.shippingCost).toContainText('$ 1.50');
+	}
+);
 
 test(
 	'Shipment tracking URL for an order can be updated and viewed',
@@ -385,6 +393,64 @@ test(
 
 		await expect(
 			await page.getByText('www.variableratecarriersite.com/')
+		).toBeVisible();
+	}
+);
+
+test(
+	'Certain special characters are double escaped in Commerce Channel shipping option descriptions',
+	{tag: ['@LPP-62173', '@LPD-74663']},
+	async ({
+		apiHelpers,
+		commerceAdminChannelDetailsPage,
+		commerceAdminChannelsPage,
+		page,
+		site,
+	}) => {
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		await commerceAdminChannelsPage.changeCommerceChannelSiteType(
+			channel.name,
+			'B2B'
+		);
+
+		await waitForAlert(page);
+
+		await (
+			await commerceAdminChannelDetailsPage.generalCommerceAdminChannelTableLink(
+				'Flat Rate'
+			)
+		).click();
+		await commerceAdminChannelDetailsPage.activateChannelConfiguration(
+			'Flat Rate',
+			'Shipping Methods'
+		);
+		await commerceAdminChannelDetailsPage.addFlatRateShippingOption(
+			getRandomString(),
+			'10',
+			'Shipping takes 3–5 days'
+		);
+
+		await (
+			await commerceAdminChannelDetailsPage.generalCommerceAdminChannelTableLink(
+				'Flat Rate'
+			)
+		).click();
+		await (
+			await commerceAdminChannelDetailsPage.shippingOptionsTab(
+				'Shipping Methods'
+			)
+		).click();
+
+		await expect(
+			(
+				await commerceAdminChannelDetailsPage.sidePanelFrame(
+					'Shipping Methods'
+				)
+			).getByRole('cell', {name: 'Shipping takes 3–5 days'})
 		).toBeVisible();
 	}
 );

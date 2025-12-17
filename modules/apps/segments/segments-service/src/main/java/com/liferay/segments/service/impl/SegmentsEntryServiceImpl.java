@@ -143,6 +143,22 @@ public class SegmentsEntryServiceImpl extends SegmentsEntryServiceBaseImpl {
 	}
 
 	@Override
+	public SegmentsEntry getSegmentsEntryByExternalReferenceCode(
+			String segmentsEntryERC, long groupId)
+		throws PortalException {
+
+		SegmentsEntry segmentsEntry =
+			segmentsEntryLocalService.getSegmentsEntryByExternalReferenceCode(
+				segmentsEntryERC, groupId);
+
+		_segmentsEntryResourcePermission.check(
+			getPermissionChecker(), segmentsEntry.getSegmentsEntryId(),
+			ActionKeys.VIEW);
+
+		return segmentsEntry;
+	}
+
+	@Override
 	public BaseModelSearchResult<SegmentsEntry> searchSegmentsEntries(
 			long companyId, long groupId, String keywords, int start, int end,
 			Sort sort)

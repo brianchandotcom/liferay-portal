@@ -43,7 +43,61 @@ public class SegmentsExperienceServiceImpl
 
 	@Override
 	public SegmentsExperience addSegmentsExperience(
-			String externalReferenceCode, long groupId, long segmentsEntryId,
+			String externalReferenceCode, long groupId, String segmentsEntryERC,
+			String segmentsEntryScopeERC, long plid,
+			Map<Locale, String> nameMap, boolean active,
+			UnicodeProperties typeSettingsUnicodeProperties,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		if (!_hasUpdateLayoutPermission(plid)) {
+			_portletResourcePermission.check(
+				getPermissionChecker(), serviceContext.getScopeGroupId(),
+				SegmentsActionKeys.MANAGE_SEGMENTS_ENTRIES);
+		}
+
+		return segmentsExperienceLocalService.addSegmentsExperience(
+			externalReferenceCode, getUserId(), groupId, segmentsEntryERC,
+			segmentsEntryScopeERC, plid, nameMap, active,
+			typeSettingsUnicodeProperties, serviceContext);
+	}
+
+	@Override
+	public SegmentsExperience addSegmentsExperience(
+			String externalReferenceCode, long groupId, String segmentsEntryERC,
+			String segmentsEntryScopeERC, String segmentsExperienceKey,
+			long plid, Map<Locale, String> nameMap, int priority,
+			boolean active, UnicodeProperties typeSettingsUnicodeProperties,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		if (!_hasUpdateLayoutPermission(plid)) {
+			_portletResourcePermission.check(
+				getPermissionChecker(), serviceContext.getScopeGroupId(),
+				SegmentsActionKeys.MANAGE_SEGMENTS_ENTRIES);
+		}
+
+		return segmentsExperienceLocalService.addSegmentsExperience(
+			externalReferenceCode, getUserId(), groupId, segmentsEntryERC,
+			segmentsEntryScopeERC, segmentsExperienceKey, plid, nameMap,
+			priority, active, typeSettingsUnicodeProperties, serviceContext);
+	}
+
+	@Override
+	public SegmentsExperience appendSegmentsExperience(
+			long groupId, String segmentsEntryERC, String segmentsEntryScopeERC,
+			long plid, Map<Locale, String> nameMap, boolean active,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return appendSegmentsExperience(
+			groupId, segmentsEntryERC, segmentsEntryScopeERC, plid, nameMap,
+			active, new UnicodeProperties(true), serviceContext);
+	}
+
+	@Override
+	public SegmentsExperience appendSegmentsExperience(
+			long groupId, String segmentsEntryERC, String segmentsEntryScopeERC,
 			long plid, Map<Locale, String> nameMap, boolean active,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
@@ -55,61 +109,9 @@ public class SegmentsExperienceServiceImpl
 				SegmentsActionKeys.MANAGE_SEGMENTS_ENTRIES);
 		}
 
-		return segmentsExperienceLocalService.addSegmentsExperience(
-			externalReferenceCode, getUserId(), groupId, segmentsEntryId, plid,
-			nameMap, active, typeSettingsUnicodeProperties, serviceContext);
-	}
-
-	@Override
-	public SegmentsExperience addSegmentsExperience(
-			String externalReferenceCode, long groupId, long segmentsEntryId,
-			String segmentsExperienceKey, long plid,
-			Map<Locale, String> nameMap, int priority, boolean active,
-			UnicodeProperties typeSettingsUnicodeProperties,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		if (!_hasUpdateLayoutPermission(plid)) {
-			_portletResourcePermission.check(
-				getPermissionChecker(), serviceContext.getScopeGroupId(),
-				SegmentsActionKeys.MANAGE_SEGMENTS_ENTRIES);
-		}
-
-		return segmentsExperienceLocalService.addSegmentsExperience(
-			externalReferenceCode, getUserId(), groupId, segmentsEntryId,
-			segmentsExperienceKey, plid, nameMap, priority, active,
-			typeSettingsUnicodeProperties, serviceContext);
-	}
-
-	@Override
-	public SegmentsExperience appendSegmentsExperience(
-			long groupId, long segmentsEntryId, long plid,
-			Map<Locale, String> nameMap, boolean active,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return appendSegmentsExperience(
-			groupId, segmentsEntryId, plid, nameMap, active,
-			new UnicodeProperties(true), serviceContext);
-	}
-
-	@Override
-	public SegmentsExperience appendSegmentsExperience(
-			long groupId, long segmentsEntryId, long plid,
-			Map<Locale, String> nameMap, boolean active,
-			UnicodeProperties typeSettingsUnicodeProperties,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		if (!_hasUpdateLayoutPermission(plid)) {
-			_portletResourcePermission.check(
-				getPermissionChecker(), serviceContext.getScopeGroupId(),
-				SegmentsActionKeys.MANAGE_SEGMENTS_ENTRIES);
-		}
-
 		return segmentsExperienceLocalService.appendSegmentsExperience(
-			getUserId(), groupId, segmentsEntryId, plid, nameMap, active,
-			typeSettingsUnicodeProperties, serviceContext);
+			getUserId(), groupId, segmentsEntryERC, segmentsEntryScopeERC, plid,
+			nameMap, active, typeSettingsUnicodeProperties, serviceContext);
 	}
 
 	@Override
@@ -269,23 +271,25 @@ public class SegmentsExperienceServiceImpl
 
 	@Override
 	public SegmentsExperience updateSegmentsExperience(
-			long segmentsExperienceId, long segmentsEntryId,
-			Map<Locale, String> nameMap, boolean active)
+			long segmentsExperienceId, String segmentsEntryERC,
+			String segmentsEntryScopeERC, Map<Locale, String> nameMap,
+			boolean active)
 		throws PortalException {
 
 		SegmentsExperience segmentsExperience = getSegmentsExperience(
 			segmentsExperienceId);
 
 		return updateSegmentsExperience(
-			segmentsExperienceId, segmentsEntryId, nameMap, active,
+			segmentsExperienceId, segmentsEntryERC, segmentsEntryScopeERC,
+			nameMap, active,
 			segmentsExperience.getTypeSettingsUnicodeProperties());
 	}
 
 	@Override
 	public SegmentsExperience updateSegmentsExperience(
-			long segmentsExperienceId, long segmentsEntryId,
-			Map<Locale, String> nameMap, boolean active,
-			UnicodeProperties typeSettingsUnicodeProperties)
+			long segmentsExperienceId, String segmentsEntryERC,
+			String segmentsEntryScopeERC, Map<Locale, String> nameMap,
+			boolean active, UnicodeProperties typeSettingsUnicodeProperties)
 		throws PortalException {
 
 		_segmentsExperienceResourcePermission.check(
@@ -295,8 +299,8 @@ public class SegmentsExperienceServiceImpl
 			ActionKeys.UPDATE);
 
 		return segmentsExperienceLocalService.updateSegmentsExperience(
-			segmentsExperienceId, segmentsEntryId, nameMap, active,
-			typeSettingsUnicodeProperties);
+			segmentsExperienceId, segmentsEntryERC, segmentsEntryScopeERC,
+			nameMap, active, typeSettingsUnicodeProperties);
 	}
 
 	@Override

@@ -463,7 +463,7 @@ public class DisplayPageTemplateResourceTest
 	@Test
 	public void testPutSiteDisplayPageTemplate() throws Exception {
 		_testPutSiteDisplayPageTemplateContentTypeReference();
-		_testPutSiteDisplayPageTemplateMarkAsDefault();
+		_testPutSiteDisplayPageTemplateMarkedAsDefault();
 		_testPutSiteDisplayPageTemplateSettings();
 		_testPutSiteDisplayPageTemplateThumbnail();
 
@@ -1581,7 +1581,7 @@ public class DisplayPageTemplateResourceTest
 			putDisplayPageTemplate.getContentTypeReference());
 	}
 
-	private void _testPutSiteDisplayPageTemplateMarkAsDefault()
+	private void _testPutSiteDisplayPageTemplateMarkedAsDefault()
 		throws Exception {
 
 		DisplayPageTemplateResource displayPageTemplateResource =

@@ -1,5 +1,4 @@
 @component-name = "portal-content-management"
-@ignore = "true"
 definition {
 
 	property custom.properties = "dl.actions.visible=true";
@@ -10,14 +9,10 @@ definition {
 	property test.run.environment = "EE";
 	property testray.main.component.name = "External Document Repositories";
 
-	var authorizationGrantEndpoint = PropsUtil.get("sharepoint.oauth.authorization.grant.endpoint");
-	var authorizationTokenEndpoint = PropsUtil.get("sharepoint.oauth.authorization.token.endpoint");
 	var clientId = PropsUtil.get("sharepoint.oauth.client.id");
 	var clientSecret = PropsUtil.get("sharepoint.oauth.client.secret");
 	var configurationName = PropsUtil.get("sharepoint.oauth.configuration.name");
-	var configurationResource = PropsUtil.get("sharepoint.oauth.configuration.resource");
 	var configurationScope = PropsUtil.get("sharepoint.oauth.configuration.scope");
-	var siteDomain = PropsUtil.get("sharepoint.oauth.site.domain");
 	var tenantId = PropsUtil.get("sharepoint.oauth.tenant.id");
 	var userName = PropsUtil.get("sharepoint.oauth.user.name");
 	var userPassword = PropsUtil.get("sharepoint.oauth.user.password");
@@ -40,16 +35,6 @@ definition {
 			value1 = ${configurationName});
 
 		Type(
-			key_text = "authorizationGrantEndpoint",
-			locator1 = "TextArea#ANY",
-			value1 = ${authorizationGrantEndpoint});
-
-		Type(
-			key_text = "authorizationTokenEndpoint",
-			locator1 = "TextArea#ANY",
-			value1 = ${authorizationTokenEndpoint});
-
-		Type(
 			key_text = "clientId",
 			locator1 = "TextArea#ANY",
 			value1 = ${clientId});
@@ -68,16 +53,6 @@ definition {
 			key_text = "tenantId",
 			locator1 = "TextArea#ANY",
 			value1 = ${tenantId});
-
-		Type(
-			key_text = "siteDomain",
-			locator1 = "TextArea#ANY",
-			value1 = ${siteDomain});
-
-		Type(
-			key_text = "resource",
-			locator1 = "TextArea#ANY",
-			value1 = ${configurationResource});
 
 		PortletEntry.save();
 

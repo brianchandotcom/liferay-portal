@@ -422,7 +422,8 @@ public class DisplayPageTemplateResourceTest
 		throws Exception {
 
 		DisplayPageTemplateResource displayPageTemplateResource =
-			_getDisplayPageTemplateResource();
+			_getDisplayPageTemplateResource(
+				"friendlyUrlHistory,pageSpecifications");
 
 		DisplayPageTemplate displayPageTemplate =
 			displayPageTemplateResource.postSiteDisplayPageTemplate(
@@ -780,7 +781,8 @@ public class DisplayPageTemplateResourceTest
 		return null;
 	}
 
-	private DisplayPageTemplateResource _getDisplayPageTemplateResource()
+	private DisplayPageTemplateResource _getDisplayPageTemplateResource(
+			String nestedFields)
 		throws Exception {
 
 		User user = UserTestUtil.getAdminUser(testCompany.getCompanyId());
@@ -793,7 +795,7 @@ public class DisplayPageTemplateResourceTest
 		).locale(
 			LocaleUtil.getDefault()
 		).parameters(
-			"nestedFields", "friendlyUrlHistory,pageSpecifications"
+			"nestedFields", nestedFields
 		).build();
 	}
 
@@ -1020,7 +1022,8 @@ public class DisplayPageTemplateResourceTest
 		Assert.assertFalse(_isPublished(layout));
 
 		DisplayPageTemplateResource displayPageTemplateResource =
-			_getDisplayPageTemplateResource();
+			_getDisplayPageTemplateResource(
+				"friendlyUrlHistory,pageSpecifications");
 
 		page = displayPageTemplateResource.getSiteDisplayPageTemplatesPage(
 			testGroup.getExternalReferenceCode(), null, null, null, null, null);
@@ -1052,7 +1055,8 @@ public class DisplayPageTemplateResourceTest
 		throws Exception {
 
 		DisplayPageTemplateResource displayPageTemplateResource =
-			_getDisplayPageTemplateResource();
+			_getDisplayPageTemplateResource(
+				"friendlyUrlHistory,pageSpecifications");
 
 		_assertNestedFields(
 			displayPageTemplateResource.getSiteDisplayPageTemplate(
@@ -1147,7 +1151,8 @@ public class DisplayPageTemplateResourceTest
 			});
 
 		DisplayPageTemplateResource displayPageTemplateResource =
-			_getDisplayPageTemplateResource();
+			_getDisplayPageTemplateResource(
+				"friendlyUrlHistory,pageSpecifications");
 
 		DisplayPageTemplate postDisplayPageTemplate =
 			displayPageTemplateResource.postSiteDisplayPageTemplate(
@@ -1291,7 +1296,8 @@ public class DisplayPageTemplateResourceTest
 			});
 
 		DisplayPageTemplateResource displayPageTemplateResource =
-			_getDisplayPageTemplateResource();
+			_getDisplayPageTemplateResource(
+				"friendlyUrlHistory,pageSpecifications");
 
 		_assertPageSpecifications(
 			displayPageTemplateResource.postSiteDisplayPageTemplate(
@@ -1303,7 +1309,8 @@ public class DisplayPageTemplateResourceTest
 		throws Exception {
 
 		DisplayPageTemplateResource displayPageTemplateResource =
-			_getDisplayPageTemplateResource();
+			_getDisplayPageTemplateResource(
+				"friendlyUrlHistory,pageSpecifications");
 
 		DisplayPageTemplate displayPageTemplate =
 			displayPageTemplateResource.postSiteDisplayPageTemplate(
@@ -1353,7 +1360,8 @@ public class DisplayPageTemplateResourceTest
 			});
 
 		DisplayPageTemplateResource displayPageTemplateResource =
-			_getDisplayPageTemplateResource();
+			_getDisplayPageTemplateResource(
+				"friendlyUrlHistory,pageSpecifications");
 
 		try (LogCapture logCapture1 = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.client.extension.type.internal.manager." +
@@ -1577,7 +1585,8 @@ public class DisplayPageTemplateResourceTest
 		throws Exception {
 
 		DisplayPageTemplateResource displayPageTemplateResource =
-			_getDisplayPageTemplateResource();
+			_getDisplayPageTemplateResource(
+				"friendlyUrlHistory,pageSpecifications");
 
 		DisplayPageTemplate displayPageTemplate = randomDisplayPageTemplate();
 
@@ -1780,7 +1789,8 @@ public class DisplayPageTemplateResourceTest
 			});
 
 		DisplayPageTemplateResource displayPageTemplateResource =
-			_getDisplayPageTemplateResource();
+			_getDisplayPageTemplateResource(
+				"friendlyUrlHistory,pageSpecifications");
 
 		_assertPageSpecifications(
 			displayPageTemplateResource.putSiteDisplayPageTemplate(

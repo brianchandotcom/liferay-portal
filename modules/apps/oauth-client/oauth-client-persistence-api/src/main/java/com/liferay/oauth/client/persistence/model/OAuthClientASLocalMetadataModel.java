@@ -180,6 +180,42 @@ public interface OAuthClientASLocalMetadataModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the issuer of this o auth client as local metadata.
+	 *
+	 * @return the issuer of this o auth client as local metadata
+	 */
+	@AutoEscape
+	public String getIssuer();
+
+	/**
+	 * Sets the issuer of this o auth client as local metadata.
+	 *
+	 * @param issuer the issuer of this o auth client as local metadata
+	 */
+	public void setIssuer(String issuer);
+
+	/**
+	 * Returns the local well known enabled of this o auth client as local metadata.
+	 *
+	 * @return the local well known enabled of this o auth client as local metadata
+	 */
+	public boolean getLocalWellKnownEnabled();
+
+	/**
+	 * Returns <code>true</code> if this o auth client as local metadata is local well known enabled.
+	 *
+	 * @return <code>true</code> if this o auth client as local metadata is local well known enabled; <code>false</code> otherwise
+	 */
+	public boolean isLocalWellKnownEnabled();
+
+	/**
+	 * Sets whether this o auth client as local metadata is local well known enabled.
+	 *
+	 * @param localWellKnownEnabled the local well known enabled of this o auth client as local metadata
+	 */
+	public void setLocalWellKnownEnabled(boolean localWellKnownEnabled);
+
+	/**
 	 * Returns the local well known uri of this o auth client as local metadata.
 	 *
 	 * @return the local well known uri of this o auth client as local metadata
@@ -208,6 +244,36 @@ public interface OAuthClientASLocalMetadataModel
 	 * @param metadataJSON the metadata json of this o auth client as local metadata
 	 */
 	public void setMetadataJSON(String metadataJSON);
+
+	/**
+	 * Returns the o auth as local well known uri of this o auth client as local metadata.
+	 *
+	 * @return the o auth as local well known uri of this o auth client as local metadata
+	 */
+	@AutoEscape
+	public String getOAuthASLocalWellKnownURI();
+
+	/**
+	 * Sets the o auth as local well known uri of this o auth client as local metadata.
+	 *
+	 * @param oAuthASLocalWellKnownURI the o auth as local well known uri of this o auth client as local metadata
+	 */
+	public void setOAuthASLocalWellKnownURI(String oAuthASLocalWellKnownURI);
+
+	/**
+	 * Returns the o auth as metadata json of this o auth client as local metadata.
+	 *
+	 * @return the o auth as metadata json of this o auth client as local metadata
+	 */
+	@AutoEscape
+	public String getOAuthASMetadataJSON();
+
+	/**
+	 * Sets the o auth as metadata json of this o auth client as local metadata.
+	 *
+	 * @param oAuthASMetadataJSON the o auth as metadata json of this o auth client as local metadata
+	 */
+	public void setOAuthASMetadataJSON(String oAuthASMetadataJSON);
 
 	@Override
 	public OAuthClientASLocalMetadata cloneWithOriginalValues();

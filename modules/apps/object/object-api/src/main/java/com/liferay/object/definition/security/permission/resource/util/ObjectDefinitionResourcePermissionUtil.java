@@ -17,16 +17,28 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.ResourceAction;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourcePermission;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.service.PermissionServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -90,6 +102,51 @@ public class ObjectDefinitionResourcePermissionUtil {
 		resourceActions.removeModelResources(document);
 
 		resourceActions.removePortletResources(document);
+	}
+
+	public static void updateResourcePermissions(
+			long companyId, long groupId, String permissionName, long primKey,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		ModelPermissions modelPermissions =
+			serviceContext.getModelPermissions();
+
+		if (modelPermissions == null) {
+			return;
+		}
+
+		PermissionServiceUtil.checkPermission(groupId, permissionName, primKey);
+
+		Collection<String> roleNames = modelPermissions.getRoleNames();
+
+		for (ResourcePermission resourcePermission :
+				ResourcePermissionLocalServiceUtil.getResourcePermissions(
+					companyId, permissionName,
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(primKey))) {
+
+			Role role = RoleLocalServiceUtil.fetchRole(
+				resourcePermission.getRoleId());
+
+			if ((role == null) || roleNames.contains(role.getName())) {
+				continue;
+			}
+
+			for (ResourceAction resourceAction :
+					ResourceActionLocalServiceUtil.getResourceActions(
+						permissionName)) {
+
+				ResourcePermissionLocalServiceUtil.removeResourcePermission(
+					companyId, permissionName,
+					ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(primKey),
+					role.getRoleId(), resourceAction.getActionId());
+			}
+		}
+
+		ResourcePermissionLocalServiceUtil.updateResourcePermissions(
+			companyId, groupId, permissionName, String.valueOf(primKey),
+			modelPermissions);
 	}
 
 	private static String _getObjectActionPermissionKeys(

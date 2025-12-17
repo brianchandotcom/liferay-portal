@@ -50,6 +50,7 @@ import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectFieldValidationConstants;
 import com.liferay.object.constants.ObjectFilterConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.definition.security.permission.resource.util.ObjectDefinitionResourcePermissionUtil;
 import com.liferay.object.definition.setting.util.ObjectDefinitionSettingUtil;
 import com.liferay.object.definition.util.ObjectDefinitionThreadLocal;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
@@ -186,10 +187,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.OrganizationTable;
-import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.ResourcePermission;
-import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
@@ -214,9 +212,7 @@ import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.PermissionService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -224,7 +220,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
-import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
@@ -526,8 +521,10 @@ public class ObjectEntryLocalServiceImpl
 			_startWorkflowInstance(userId, objectEntry, serviceContext, false);
 		}
 
-		_updateResourcePermissions(
-			objectDefinition, objectEntry, serviceContext);
+		ObjectDefinitionResourcePermissionUtil.updateResourcePermissions(
+			objectDefinition.getCompanyId(), objectEntry.getGroupId(),
+			objectDefinition.getClassName(), objectEntry.getObjectEntryId(),
+			serviceContext);
 
 		_deleteTempFileEntries(dlFileEntriesMap);
 
@@ -6675,8 +6672,10 @@ public class ObjectEntryLocalServiceImpl
 
 		_startWorkflowInstance(userId, objectEntry, serviceContext, true);
 
-		_updateResourcePermissions(
-			objectDefinition, objectEntry, serviceContext);
+		ObjectDefinitionResourcePermissionUtil.updateResourcePermissions(
+			objectDefinition.getCompanyId(), objectEntry.getGroupId(),
+			objectDefinition.getClassName(), objectEntry.getObjectEntryId(),
+			serviceContext);
 
 		if (!objectDefinition.isEnableObjectEntryVersioning()) {
 			_deleteFileEntries(
@@ -6707,57 +6706,6 @@ public class ObjectEntryLocalServiceImpl
 			user);
 
 		return objectEntry;
-	}
-
-	private void _updateResourcePermissions(
-			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		ModelPermissions modelPermissions =
-			serviceContext.getModelPermissions();
-
-		if (modelPermissions == null) {
-			return;
-		}
-
-		_permissionService.checkPermission(
-			objectEntry.getGroupId(), objectDefinition.getClassName(),
-			String.valueOf(objectEntry.getObjectEntryId()));
-
-		Collection<String> roleNames = modelPermissions.getRoleNames();
-
-		for (ResourcePermission resourcePermission :
-				_resourcePermissionLocalService.getResourcePermissions(
-					objectDefinition.getCompanyId(),
-					objectDefinition.getClassName(),
-					ResourceConstants.SCOPE_INDIVIDUAL,
-					String.valueOf(objectEntry.getObjectEntryId()))) {
-
-			Role role = _roleLocalService.fetchRole(
-				resourcePermission.getRoleId());
-
-			if ((role == null) || roleNames.contains(role.getName())) {
-				continue;
-			}
-
-			for (ResourceAction resourceAction :
-					_resourceActionLocalService.getResourceActions(
-						objectDefinition.getClassName())) {
-
-				_resourcePermissionLocalService.removeResourcePermission(
-					objectDefinition.getCompanyId(),
-					objectDefinition.getClassName(),
-					ResourceConstants.SCOPE_INDIVIDUAL,
-					String.valueOf(objectEntry.getObjectEntryId()),
-					role.getRoleId(), resourceAction.getActionId());
-			}
-		}
-
-		_resourcePermissionLocalService.updateResourcePermissions(
-			objectEntry.getCompanyId(), objectEntry.getGroupId(),
-			objectDefinition.getClassName(),
-			String.valueOf(objectEntry.getObjectEntryId()), modelPermissions);
 	}
 
 	private void _updateRootDescendantNodeObjectEntryStatus(
@@ -7950,13 +7898,7 @@ public class ObjectEntryLocalServiceImpl
 	private ObjectValidationRuleLocalService _objectValidationRuleLocalService;
 
 	@Reference
-	private PermissionService _permissionService;
-
-	@Reference
 	private Portal _portal;
-
-	@Reference
-	private ResourceActionLocalService _resourceActionLocalService;
 
 	@Reference
 	private ResourceActions _resourceActions;

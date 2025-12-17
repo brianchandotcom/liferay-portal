@@ -12,6 +12,10 @@ public class SiteNavigationMenuItemTypeConstants {
 
 	public static final String ASSET_VOCABULARY = "asset_vocabulary";
 
+	public static final String DISPLAY_PAGE_CLASS_NAME =
+		"com.liferay.site.navigation.menu.item.display.page.internal.type." +
+			"DisplayPageTypeSiteNavigationMenuItemType";
+
 	public static final String LAYOUT = "layout";
 
 	public static final String NODE = "node";

@@ -1,0 +1,151 @@
+[#assign disabled = input.attributes.disabled?? && input.attributes.disabled]
+
+<div class="multiselector-dropdown">
+	<div class="form-group [#if input.errorMessage?has_content]has-error[/#if] mb-0">
+		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" id="${fragmentElementId}-label">
+			${htmlUtil.escape(input.label)}
+
+			<span class="[#if !input.readOnly]d-none[/#if]" id="${fragmentElementId}-read-only-label">
+				(${languageUtil.get(locale, "read-only")})
+			</span>
+
+			[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
+		</label>
+
+		<div class="d-flex">
+			<div class="form-control form-control-tag-group input-group">
+				[#assign options=(input.attributes.options)![]]
+				[#assign loading=(options?size == 0)]
+
+				[#if loading]
+					<div class="flex-grow-0 input-group-item" id="${fragmentElementId}-loading-indicator">
+						<div>
+							<span class="loading-animation loading-animation-sm m-0" />
+						</div>
+					</div>
+				[/#if]
+
+				<div class="input-group-item">
+					<div class="input-group">
+						<div aria-hidden="true" class="d-contents input-group-item input-group-item-shrink input-group-prepend" id="${fragmentElementId}-label-container" role="grid">
+							[#assign values=((input.value!"")?has_content)?then((input.value?split(",")), [])]
+
+							[#list values as value]
+								[#list options as option]
+									[#if option.value == value]
+									<span class="label label-secondary" role="row" tabindex="-1">
+										<span class="label-item label-item-expand" role="gridcell" tabindex="0">
+												${htmlUtil.escape(option.label)}
+											</span>
+
+											[#if !input.readOnly]
+												<span class="label-item label-item-after" role="gridcell">
+													<button aria-label="${languageUtil.get(locale, "remove-item")}" class="close" tabindex="-1" type="button">
+														<svg class="lexicon-icon lexicon-icon-times-small" role="presentation">
+															<use xlink:href="${siteSpritemap}#times-small" />
+														</svg>
+													</button>
+												</span>
+											[/#if]
+										</span>
+									[/#if]
+								[/#list]
+							[/#list]
+						</div>
+
+						[#if !input.readOnly]
+							<div class="input-group-item input-group-prepend">
+								<input [#if disabled]disabled[/#if] [#if input.required]required[/#if] aria-controls="${fragmentElementId}-listbox" aria-describedby="${fragmentElementId}-help-text" aria-expanded="false" aria-labelledby="${fragmentElementId}-label [#if input.errorMessage?has_content]${fragmentElementId}-error-message[/#if]" class="form-control-inset" id="${fragmentElementId}-input" role="combobox" type="text" />
+							</div>
+						[/#if]
+					</div>
+				</div>
+
+				[#if !input.readOnly]
+					<div class="input-group-item input-group-item-shrink">
+						<button [#if !values?has_content]aria-hidden="true"[/#if] [#if loading]disabled[/#if] aria-label="${languageUtil.get(locale, "clear-all")}" class="component-action btn btn-monospaced btn-outline-borderless btn-outline-secondary lfr-portal-tooltip [#if !values?has_content]d-none[/#if]" id="${fragmentElementId}-clear-button" title="${languageUtil.get(locale, "clear-all")}" type="button">
+							<svg class="lexicon-icon lexicon-icon-times-circle" role="presentation">
+								<use xlink:href="${siteSpritemap}#times-circle" />
+							</svg>
+						</button>
+					</div>
+				[/#if]
+			</div>
+
+			[#if !input.localizable && input.attributes.unlocalizedFieldsMessage??]
+				<div aria-label="${input.attributes.unlocalizedFieldsMessage}" class="d-none lfr-portal-tooltip mt-1 pt-2" data-title="${input.attributes.unlocalizedFieldsMessage}" id="${fragmentElementId}-unlocalized-info" tabindex="0">
+					[@clay["icon"] className="ml-2 mt-0 text-secondary" symbol="question-circle-full" /]
+				</div>
+			[/#if]
+		</div>
+
+		[#if !input.readOnly]
+			<div id="${fragmentElementId}-hidden-input-container" />
+
+			<div class="d-none dropdown-menu dropdown-menu-select dropdown-menu-indicator-start multiselector-dropdown__dropdown-menu" id="${fragmentElementId}-dropdown" role="presentation">
+				<p class="d-none mb-0 px-3 py-2 text-muted" id="${fragmentElementId}-no-results-message">
+					${languageUtil.get(locale, "no-results-were-found")}
+				</p>
+
+				<p class="d-none mb-0 px-3 py-2 text-muted" id="${fragmentElementId}-loading-message">
+					${languageUtil.get(locale, "loading")}
+				</p>
+
+			<ul aria-labelledby="${fragmentElementId}-label" class="list-unstyled" id="${fragmentElementId}-option-list" role="listbox" />
+			</div>
+		[/#if]
+
+		[#if input.errorMessage?has_content]
+			<p class="font-weight-semi-bold mt-1 text-danger" id="${fragmentElementId}-error-message">
+				<svg class="lexicon-icon lexicon-icon-info-circle" focusable="false" role="presentation">
+					<use xlink:href="${siteSpritemap}#info-circle" />
+				</svg>
+
+				<span>
+					${input.errorMessage}
+				</span>
+			</p>
+		[/#if]
+
+		[#if input.showHelpText && input.helpText?has_content]
+			<p class="mb-0 mt-1 text-secondary" id="${fragmentElementId}-help-text">
+				${input.helpText}
+			</p>
+		[/#if]
+	</div>
+</div>
+
+<template class="label-template">
+	<span class="label label-secondary" role="row" tabindex="-1">
+		<span class="label-item label-item-expand" role="gridcell" tabindex="-1" />
+
+		<span class="label-item label-item-after" role="gridcell">
+			<button aria-label="${languageUtil.get(locale, "remove-item")}" class="close" tabindex="0" type="button">
+				<svg class="lexicon-icon lexicon-icon-times-small" role="presentation">
+					<use xlink:href="${siteSpritemap}#times-small" />
+				</svg>
+			</button>
+		</span>
+	</span>
+</template>
+
+<template class="option-template">
+	<li role="presentation">
+		<button class="dropdown-item" role="option" tabindex="-1" type="button">
+			<span class="option-label" />
+		</button>
+	</li>
+</template>
+
+<template class="selected-option-template">
+	<li role="presentation">
+		<button class="active dropdown-item" role="option" tabindex="-1" type="button">
+			<span class="dropdown-item-indicator-start">
+				<svg class="lexicon-icon lexicon-icon-check-small" role="presentation">
+					<use xlink:href="${siteSpritemap}#check-small" />
+				</svg>
+			</span>
+			<span class="option-label" />
+		</button>
+	</li>
+</template>

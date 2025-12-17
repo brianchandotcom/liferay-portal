@@ -1,0 +1,13 @@
+{
+	"cacheable": false,
+	"fragmentEntryKey": "multiselector-dropdown",
+	"icon": "select-from-list",
+	"name": "multiselector-dropdown",
+	"type": "input",
+	"typeOptions": {
+		"fieldTypes": [
+			"relationship",
+			"multiselect"
+		]
+	}
+}

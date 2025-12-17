@@ -82,7 +82,7 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 
 						_messageBus.sendMessage(
 							JournalDestinationNames.
-								UPDATE_DDM_STRUCTURE_JOURNAL_ARTICLES,
+								DDM_STRUCTURE_JOURNAL_ARTICLES_UPDATE,
 							message);
 
 						return null;

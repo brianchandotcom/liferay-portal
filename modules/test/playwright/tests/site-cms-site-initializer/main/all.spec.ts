@@ -26,6 +26,7 @@ const test = mergeTests(
 	cmsPagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
+		'LPD-11235': {enabled: true},
 		'LPD-17564': {enabled: true},
 	}),
 	loginTest(),
@@ -889,7 +890,7 @@ test(
 
 test(
 	'Bulk Actions Monitor component',
-	{tag: '@LPD-57835'},
+	{tag: ['@LPD-57835', '@LPD-74095', '@LPD-74096']},
 	async ({apiHelpers, assetsPage, page}) => {
 		const basicWebContent = 'cms/basic-web-contents';
 		const bulkActionTasks = 'cms/bulk-action-tasks';
@@ -929,8 +930,7 @@ test(
 
 				await waitForAlert(
 					page,
-					'Info:Delete action started for 1 asset.' +
-						' Check the Task Report for details.',
+					'Info:Delete action started for 1 asset.',
 					{
 						autoClose: true,
 						type: 'info',
@@ -958,34 +958,17 @@ test(
 					'a few seconds ago'
 				);
 				await expect(assetsPage.taskStatusDropdownList).toContainText(
-					'Processing'
+					'Completed'
 				);
 
-				await assetsPage
-					.taskStatusDropdownItemButton('Assets Deletion')
-					.click();
-
-				await expect(assetsPage.taskStatusButton('View')).toBeVisible();
 				await expect(assetsPage.viewAllTasksLink).toBeVisible();
 			});
 
-			await test.step('Check that View button and View All Task redirect to the exact page', async () => {
+			await test.step('Go to View All Task redirect to the Task Report page and check that Result column show the correct results', async () => {
 				tasks =
 					await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
 						bulkActionTasks
 					);
-
-				await assetsPage.taskStatusButton('View').click();
-
-				await expect(page.getByText('Report Summary')).toBeVisible();
-				await expect(
-					page.locator('#main-content').getByText(tasks.items[0].id)
-				).toBeVisible();
-
-				await assetsPage.gotoAll();
-				await assetsPage.processingTasksButton.click();
-
-				await expect(assetsPage.viewAllTasksLink).toBeVisible();
 
 				await assetsPage.viewAllTasksLink.click();
 
@@ -996,22 +979,117 @@ test(
 					})
 				).toBeVisible();
 				await expect(
+					page.getByRole('cell', {
+						exact: true,
+						name: tasks.items[0].id,
+					})
+				).toBeVisible();
+				await expect(
+					page.getByRole('cell', {
+						exact: true,
+						name: 'All Successful',
+					})
+				).toBeVisible();
+				await expect(
 					page
-						.getByRole('cell', {name: tasks.items[0].id})
-						.locator('div')
+						.getByRole('cell', {
+							exact: true,
+							name: 'All Successful',
+						})
+						.locator('.lexicon-icon-check-circle-full')
+				).toBeVisible();
+
+				await apiHelpers.objectEntry.patchObjectEntry(
+					{
+						executionStatus: {
+							key: 'failed',
+							name: 'Failed',
+						},
+						numberOfFailedItems: 3,
+						numberOfSuccessfulItems: 3,
+					},
+					bulkActionTasks,
+					tasks.items[0].id
+				);
+
+				await page.reload();
+
+				await expect(
+					page.getByRole('cell', {
+						exact: true,
+						name: '3 Successful 3 Failed',
+					})
+				).toBeVisible();
+				await expect(
+					page
+						.getByRole('cell', {
+							exact: true,
+							name: '3 Successful 3 Failed',
+						})
+						.locator('.lexicon-icon-check-circle-full')
+				).toBeVisible();
+				await expect(
+					page
+						.getByRole('cell', {
+							exact: true,
+							name: '3 Successful 3 Failed',
+						})
+						.locator('.lexicon-icon-times-circle-full')
+				).toBeVisible();
+
+				await apiHelpers.objectEntry.patchObjectEntry(
+					{
+						executionStatus: {
+							key: 'started',
+							name: 'Started',
+						},
+					},
+					bulkActionTasks,
+					tasks.items[0].id
+				);
+
+				await page.reload();
+
+				await expect(
+					page.getByRole('cell', {exact: true, name: 'Processing'})
+				).toBeVisible();
+				await expect(
+					page
+						.getByRole('cell', {exact: true, name: 'Processing'})
+						.locator('.lexicon-icon-time')
+				).toBeVisible();
+
+				await apiHelpers.objectEntry.patchObjectEntry(
+					{
+						executionStatus: {
+							key: 'failed',
+							name: 'Failed',
+						},
+						numberOfFailedItems: 3,
+						numberOfSuccessfulItems: 0,
+					},
+					bulkActionTasks,
+					tasks.items[0].id
+				);
+
+				await expect(
+					page.getByRole('cell', {exact: true, name: 'All Failed'})
+				).toBeVisible();
+				await expect(
+					page
+						.getByRole('cell', {exact: true, name: 'All Failed'})
+						.locator('.lexicon-icon-times-circle-full')
 				).toBeVisible();
 
 				await assetsPage.gotoAll();
 			});
 
-			// This test step will be removed once the API flow will be completed
-
-			await test.step('Update the task status to Completed', async () => {
+			await test.step('Update the task status to Started', async () => {
 				await apiHelpers.objectEntry.patchObjectEntry(
 					{
 						executionStatus: {
-							key: 'completed',
-							name: 'Completed',
+							key: 'started',
+							name: 'Started',
 						},
 					},
 					bulkActionTasks,
@@ -1032,12 +1110,16 @@ test(
 				await assetsPage.taskStatusFormsButton.click();
 
 				await expect(assetsPage.taskStatusDropdownList).toContainText(
-					'Completed'
+					'Processing'
 				);
 			});
 
-			await test.step('Delete the assets using the selectAll', async () => {
-				await page.reload();
+			await test.step('Select 2 assets and delete them using the Bulk Action', async () => {
+				await expect(
+					assetsPage
+						.getItem(filesNames[0])
+						.locator('input[title="Select Item"]')
+				).not.toBeVisible();
 
 				await assetsPage
 					.getItem(filesNames[1])
@@ -1047,30 +1129,27 @@ test(
 					.getItem(filesNames[2])
 					.locator('input[title="Select Item"]')
 					.check();
-				await assetsPage.dataSetFragmentPage.selectAllLink.click();
 				await assetsPage.execBulkItemAction('Delete');
-
-				await expect(assetsPage.modal.title).toContainText(
-					'Delete All Entries'
-				);
-
-				await assetsPage.modalDeleteButton.click();
 
 				await waitForAlert(
 					page,
-					'Info:Delete action started for all assets.' +
-						' Check the Task Report for details.',
+					'Info:Delete action started for 2 assets.',
 					{
 						autoClose: true,
 						type: 'info',
 					}
 				);
-			});
 
-			await test.step('Check that the processingTask button Appear, click on it and check that there are 2 task', async () => {
 				await expect(assetsPage.processingTasksButton).toBeVisible();
 
 				await assetsPage.processingTasksButton.click();
+
+				await expect(assetsPage.taskStatusDropdownList).toContainText(
+					'2 Items'
+				);
+				await expect(assetsPage.taskStatusDropdownList).toContainText(
+					'a few seconds ago'
+				);
 
 				await expect(
 					assetsPage
@@ -1084,30 +1163,12 @@ test(
 				).toBeVisible();
 			});
 
-			await test.step('Check details of the selectAll asset deletion', async () => {
-				await assetsPage.processingTasksButton.click();
-
-				await expect(assetsPage.taskStatusDropdownList).toContainText(
-					'2 Items'
-				);
-				await expect(assetsPage.taskStatusDropdownList).toContainText(
-					'a few seconds ago'
-				);
-				await expect(assetsPage.taskStatusDropdownList).toContainText(
-					'Processing'
-				);
-
-				await assetsPage.processingTasksButton.click();
-			});
-
-			// This test step will be removed once the API flow will be completed
-
 			await test.step('Update the status of the task to Failed', async () => {
 				const processingTasks =
 					await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
 						bulkActionTasks,
 						new URLSearchParams({
-							filter: `executionStatus eq 'initial'`,
+							filter: `executionStatus eq 'started'`,
 						})
 					);
 

@@ -397,15 +397,10 @@ public class DisplayPageTemplateResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		String contentTypeReferenceClassName = className.getClassName();
-
-		if (contentTypeReferenceClassName == null) {
-			throw new UnsupportedOperationException();
-		}
-
 		long classTypeId = _getClassTypeId(contentTypeReference, groupId);
 
-		if (!contentTypeReferenceClassName.equals(
+		if (!Objects.equals(
+				className.getClassName(),
 				layoutPageTemplateEntry.getClassName()) ||
 			(classTypeId != layoutPageTemplateEntry.getClassTypeId())) {
 

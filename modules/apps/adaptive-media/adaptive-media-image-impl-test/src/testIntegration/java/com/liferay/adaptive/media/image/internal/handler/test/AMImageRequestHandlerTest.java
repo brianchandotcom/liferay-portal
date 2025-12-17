@@ -22,18 +22,25 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -69,6 +76,9 @@ public class AMImageRequestHandlerTest {
 				).put(
 					"max-width", String.valueOf(RandomTestUtil.randomInt())
 				).build());
+
+		_permissionChecker = PermissionCheckerFactoryUtil.create(
+			TestPropsValues.getUser());
 	}
 
 	@After
@@ -80,7 +90,7 @@ public class AMImageRequestHandlerTest {
 	}
 
 	@Test
-	public void testAccessImageWithoutViewPermission() throws Exception {
+	public void testHandleRequest() throws Exception {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			SystemBundleUtil.getBundleContext(),
 			(Class<AMRequestHandler<?>>)(Class<?>)AMRequestHandler.class,
@@ -95,7 +105,19 @@ public class AMImageRequestHandlerTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		FileEntry fileEntry = _addFileEntryWithoutViewPermission();
+		mockHttpServletRequest.setAttribute(
+			WebKeys.USER,
+			UserLocalServiceUtil.getGuestUser(_group.getCompanyId()));
+
+		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
+			FileUtil.getBytes(
+				AMImageRequestHandlerTest.class, "dependencies/image.jpg"),
+			null, null, null,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		mockHttpServletRequest.setPathInfo(
 			StringBundler.concat(
@@ -104,25 +126,44 @@ public class AMImageRequestHandlerTest {
 
 		Assert.assertNotNull(
 			amRequestHandler.handleRequest(mockHttpServletRequest));
+
+		_removeResourcePermission(ActionKeys.VIEW, fileEntry.getFileEntryId());
+
+		mockHttpServletRequest.setPathInfo(
+			StringBundler.concat(
+				"/image/", fileEntry.getFileEntryId(), "/", _UUID, "/",
+				fileEntry.getFileName()));
+
+		Assert.assertNotNull(
+			amRequestHandler.handleRequest(mockHttpServletRequest));
+
+		_removeResourcePermission(
+			ActionKeys.DOWNLOAD, fileEntry.getFileEntryId());
+
+		mockHttpServletRequest.setPathInfo(
+			StringBundler.concat(
+				"/image/", fileEntry.getFileEntryId(), "/", _UUID, "/",
+				fileEntry.getFileName()));
+
+		Assert.assertNull(
+			amRequestHandler.handleRequest(mockHttpServletRequest));
 	}
 
-	private FileEntry _addFileEntryWithoutViewPermission() throws Exception {
-		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
-			null, null, null, null, new ServiceContext());
+	private void _removeResourcePermission(String actionId, long fileEntryId)
+		throws Exception {
 
 		Role guestRole = _roleLocalService.getRole(
 			_group.getCompanyId(), RoleConstants.GUEST);
 
 		_resourcePermissionLocalService.removeResourcePermission(
 			_group.getCompanyId(), DLFileEntry.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(fileEntry.getFileEntryId()), guestRole.getRoleId(),
-			ActionKeys.VIEW);
+			ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(fileEntryId),
+			guestRole.getRoleId(), actionId);
 
-		return fileEntry;
+		Map<Object, Object> permissionChecksMap =
+			_permissionChecker.getPermissionChecksMap();
+
+		permissionChecksMap.clear();
 	}
 
 	private static final String _UUID = RandomTestUtil.randomString();
@@ -137,6 +178,8 @@ public class AMImageRequestHandlerTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private PermissionChecker _permissionChecker;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

@@ -409,7 +409,7 @@ public class Main {
 							_getPermissions(
 								fileName, importedStructuredContent.getId()));
 
-					_putDocument(importedStructuredContent);
+					_putRAGDocument(importedStructuredContent);
 
 					updatedStructuredContentCount++;
 				}
@@ -476,7 +476,7 @@ public class Main {
 									getStructuredContentFolderId(),
 								structuredContent);
 
-					_putDocument(importedStructuredContent);
+					_putRAGDocument(importedStructuredContent);
 
 					addedStructuredContentCount++;
 				}
@@ -1503,7 +1503,7 @@ public class Main {
 		}
 	}
 
-	private void _putDocument(StructuredContent structuredContent)
+	private void _putRAGDocument(StructuredContent structuredContent)
 		throws Exception {
 
 		ContentField contentField = structuredContent.getContentFields()[0];
@@ -1555,8 +1555,8 @@ public class Main {
 
 			if (statusLine.getStatusCode() != HttpStatus.SC_NO_CONTENT) {
 				System.out.println(
-					"Unable to update AI search content for " +
-						structuredContent.getFriendlyUrlPath());
+					"Unable to update RAG document " +
+						structuredContent.getId());
 			}
 		}
 		catch (Exception exception) {

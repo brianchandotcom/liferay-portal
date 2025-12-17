@@ -11,11 +11,17 @@ import Report from '../../../src/main/resources/META-INF/resources/js/pages/Repo
 
 let mockResource;
 
-jest.mock('@clayui/data-provider', () => ({
-	useResource: jest.fn().mockImplementation(() => ({
-		resource: mockResource,
-	})),
-}));
+jest.mock('@clayui/data-provider', () => {
+	const originalModule = jest.requireActual('@clayui/data-provider');
+
+	return {
+		__esModule: true,
+		...originalModule,
+		useResource: jest.fn().mockImplementation(() => ({
+			resource: mockResource,
+		})),
+	};
+});
 
 describe('Report', () => {
 	const originalLiferayUtil = window.Liferay.Util;

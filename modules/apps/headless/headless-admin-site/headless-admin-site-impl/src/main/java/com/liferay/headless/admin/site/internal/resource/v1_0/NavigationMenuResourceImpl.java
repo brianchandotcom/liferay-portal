@@ -369,12 +369,11 @@ public class NavigationMenuResourceImpl
 		UnicodeProperties unicodeProperties = _getUnicodeProperties(
 			siteNavigationMenuItem);
 
-		String layoutUuid = unicodeProperties.get("layoutUuid");
-		boolean privateLayout = GetterUtil.getBoolean(
-			unicodeProperties.get("privateLayout"));
+		String externalReferenceCode = unicodeProperties.get(
+			"externalReferenceCode");
 
-		return _layoutLocalService.fetchLayoutByUuidAndGroupId(
-			layoutUuid, siteNavigationMenuItem.getGroupId(), privateLayout);
+		return _layoutLocalService.fetchLayoutByExternalReferenceCode(
+			externalReferenceCode, siteNavigationMenuItem.getGroupId());
 	}
 
 	private Locale _getLocaleFromProperty(Map.Entry<String, String> property) {

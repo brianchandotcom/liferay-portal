@@ -591,7 +591,7 @@ public class NavigationMenuResourceTest
 			return hashMapBuilder.put(
 				"groupId", GetterUtil.getString(layout.getGroupId())
 			).put(
-				"layoutUuid", layout.getUuid()
+				"externalReferenceCode", layout.getExternalReferenceCode()
 			).put(
 				"privateLayout", GetterUtil.getString(layout.isPrivateLayout())
 			).put(

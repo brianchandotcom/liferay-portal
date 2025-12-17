@@ -26,6 +26,9 @@ import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -128,6 +131,15 @@ public class BaseConfigurationFactoryTest {
 	}
 
 	@Test
+	public void testExcessiveLogging() throws Exception {
+		_testExcessiveLogging(
+			OAuth2ProviderApplicationHeadlessServerConfiguration.class.
+				getName());
+		_testExcessiveLogging(
+			OAuth2ProviderApplicationUserAgentConfiguration.class.getName());
+	}
+
+	@Test
 	public void testGetFactoryConfiguration() throws Exception {
 		long companyId = TestPropsValues.getCompanyId();
 
@@ -210,6 +222,26 @@ public class BaseConfigurationFactoryTest {
 		}
 
 		return oAuth2Application;
+	}
+
+	private void _testExcessiveLogging(String className) throws Exception {
+		long companyId = TestPropsValues.getCompanyId();
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				className, LoggerTestUtil.INFO)) {
+
+			_createFactoryConfiguration(
+				className,
+				HashMapDictionaryBuilder.<String, Object>put(
+					"_portalK8sConfigMapModifier.cardinality.minimum", 0
+				).put(
+					"baseURL", "http://foo.me"
+				).put(
+					"companyId", companyId
+				).build());
+
+			Assert.assertTrue(ListUtil.isEmpty(logCapture.getLogEntries()));
+		}
 	}
 
 	private void _testGetFactoryConfiguration(

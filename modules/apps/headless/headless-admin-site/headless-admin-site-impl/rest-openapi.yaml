@@ -3881,8 +3881,6 @@ components:
                     type: string
                 url:
                     type: string
-            required:
-                -   url
             type: object
         URLActionExecutionResult:
             # @review
@@ -3951,18 +3949,6 @@ components:
                 Whether the target URL will open in a new tab instead of the same tab.
               type: boolean
           type: object
-        ThumbnailURLReference:
-            # @review
-            description:
-                A unique reference to a URL which remains constant across environments.
-            properties:
-                externalReferenceCode:
-                    type: string
-                url:
-                    type: string
-            required:
-                -   url
-            type: object
         URLValue:
             # @review
             description:

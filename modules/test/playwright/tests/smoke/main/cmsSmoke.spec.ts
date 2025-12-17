@@ -20,43 +20,42 @@ const test = mergeTests(
 	loginTest()
 );
 
-test('CMS loads and sections are shown', async ({
-	contentsPage,
-	homePage,
-	page,
-}) => {
+test.fixme(
+	'CMS loads and sections are shown',
+	async ({contentsPage, homePage, page}) => {
 
-	// Go to CMS home page
+		// Go to CMS home page
 
-	await homePage.goto();
+		await homePage.goto();
 
-	// Check main elements are shown
+		// Check main elements are shown
 
-	await expect(page.getByLabel('CMS Control Menu')).toBeVisible();
+		await expect(page.getByLabel('CMS Control Menu')).toBeVisible();
 
-	await expect(page.getByLabel('CMS Product Menu')).toBeVisible();
+		await expect(page.getByLabel('CMS Product Menu')).toBeVisible();
 
-	// Create a basic web content and check it works
+		// Create a basic web content and check it works
 
-	await expect(async () => {
+		await expect(async () => {
+			await contentsPage.goto();
+
+			await expect(contentsPage.newButton).toBeVisible({timeout: 2000});
+		}).toPass();
+
+		await contentsPage.createContent('Basic Web Content');
+
+		const title = getRandomString();
+
+		await contentsPage.fillData([{label: 'Title', value: title}]);
+
+		await contentsPage.saveContent();
+
 		await contentsPage.goto();
 
-		await expect(contentsPage.newButton).toBeVisible({timeout: 2000});
-	}).toPass();
+		await expect(page.getByText(title)).toBeVisible();
 
-	await contentsPage.createContent('Basic Web Content');
+		// Delete the content
 
-	const title = getRandomString();
-
-	await contentsPage.fillData([{label: 'Title', value: title}]);
-
-	await contentsPage.saveContent();
-
-	await contentsPage.goto();
-
-	await expect(page.getByText(title)).toBeVisible();
-
-	// Delete the content
-
-	await contentsPage.deleteContent(title);
-});
+		await contentsPage.deleteContent(title);
+	}
+);

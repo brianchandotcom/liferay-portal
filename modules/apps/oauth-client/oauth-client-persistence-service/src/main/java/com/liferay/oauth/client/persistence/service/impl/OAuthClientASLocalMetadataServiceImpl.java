@@ -106,7 +106,7 @@ public class OAuthClientASLocalMetadataServiceImpl
 	}
 
 	@Override
-	public OAuthClientASLocalMetadata fetchByOAuthClientASLocalMetadataId(
+	public OAuthClientASLocalMetadata fetchOAuthClientASLocalMetadata(
 			long oAuthClientASLocalMetadataId)
 		throws PortalException {
 
@@ -125,7 +125,7 @@ public class OAuthClientASLocalMetadataServiceImpl
 	}
 
 	@Override
-	public OAuthClientASLocalMetadata fetchIssuerOAuthClientASLocalMetadata(
+	public OAuthClientASLocalMetadata fetchOAuthClientASLocalMetadata(
 			long companyId, String issuer)
 		throws PortalException {
 
@@ -161,7 +161,24 @@ public class OAuthClientASLocalMetadataServiceImpl
 	}
 
 	@Override
-	public OAuthClientASLocalMetadata getIssuerAuthClientASLocalMetadata(
+	public OAuthClientASLocalMetadata getOAuthClientASLocalMetadata(
+			long companyId, boolean enabled,
+			OrderByComparator<OAuthClientASLocalMetadata> orderByComparator)
+		throws PortalException {
+
+		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
+			oAuthClientASLocalMetadataPersistence.fetchByC_L_First(
+				companyId, enabled, orderByComparator);
+
+		_oAuthClientASLocalMetadataModelResourcePermission.check(
+			getPermissionChecker(), oAuthClientASLocalMetadata,
+			ActionKeys.VIEW);
+
+		return oAuthClientASLocalMetadata;
+	}
+
+	@Override
+	public OAuthClientASLocalMetadata getOAuthClientASLocalMetadata(
 			long companyId, String issuer)
 		throws PortalException {
 
@@ -185,24 +202,6 @@ public class OAuthClientASLocalMetadataServiceImpl
 		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
 			oAuthClientASLocalMetadataLocalService.
 				getOAuthClientASLocalMetadata(localWellKnownURI);
-
-		_oAuthClientASLocalMetadataModelResourcePermission.check(
-			getPermissionChecker(), oAuthClientASLocalMetadata,
-			ActionKeys.VIEW);
-
-		return oAuthClientASLocalMetadata;
-	}
-
-	@Override
-	public OAuthClientASLocalMetadata
-			getOAuthClientASLocalMetadataByCompanyEnabled(
-				long companyId, boolean enabled,
-				OrderByComparator<OAuthClientASLocalMetadata> orderByComparator)
-		throws PortalException {
-
-		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
-			oAuthClientASLocalMetadataPersistence.fetchByC_L_First(
-				companyId, enabled, orderByComparator);
 
 		_oAuthClientASLocalMetadataModelResourcePermission.check(
 			getPermissionChecker(), oAuthClientASLocalMetadata,

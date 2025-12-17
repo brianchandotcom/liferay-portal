@@ -109,6 +109,17 @@ public class DLReferencesExportImportContentProcessor
 				externalReferenceCode = fileEntry.getExternalReferenceCode();
 				uuid = fileEntry.getUuid();
 			}
+			else if (Validator.isBlank(
+						dlReference.getParameter("friendlyURL"))) {
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"The file entry does not exist and the friendlyURL " +
+							"parameter has not been parsed");
+				}
+
+				continue;
+			}
 			else if (_log.isDebugEnabled()) {
 				_log.debug(
 					"The file entry with friendly URL " +

@@ -241,7 +241,8 @@ public class ClusterGeneralTest implements Serializable {
 		try (AutoCloseable autoCloseable1 =
 				_disableClusterableAdviceCallMasterTimeout(mutatorTomcatNode);
 			AutoCloseable autoCloseable2 =
-				_disableClusterableAdviceCallMasterTimeout(observerTomcatNode)) {
+				_disableClusterableAdviceCallMasterTimeout(
+					observerTomcatNode)) {
 
 			long companyId = mutatorTomcatNode.syncExecute(
 				() -> {
@@ -256,7 +257,7 @@ public class ClusterGeneralTest implements Serializable {
 
 			observerTomcatNode.syncExecute(
 				() -> {
-					TestPortalInstanceLifecycleListener.register();
+					TestPortalInstanceLifecycleListener.register(companyId);
 
 					return null;
 				});
@@ -636,12 +637,12 @@ public class ClusterGeneralTest implements Serializable {
 			serviceRegistration.unregister();
 		}
 
-		public static void register() {
+		public static void register(long companyId) {
 			BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 			TestPortalInstanceLifecycleListener
 				testPortalInstanceLifecycleListener =
-					new TestPortalInstanceLifecycleListener();
+					new TestPortalInstanceLifecycleListener(companyId);
 
 			testPortalInstanceLifecycleListener._serviceRegistration =
 				bundleContext.registerService(
@@ -664,9 +665,16 @@ public class ClusterGeneralTest implements Serializable {
 		public void portalInstanceUnregistered(Company company)
 			throws Exception {
 
-			_countDownLatch.countDown();
+			if (_companyId == company.getCompanyId()) {
+				_countDownLatch.countDown();
+			}
 		}
 
+		private TestPortalInstanceLifecycleListener(long companyId) {
+			_companyId = companyId;
+		}
+
+		private final long _companyId;
 		private final CountDownLatch _countDownLatch = new CountDownLatch(1);
 		private ServiceRegistration<?> _serviceRegistration;
 

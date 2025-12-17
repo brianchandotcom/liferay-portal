@@ -68,8 +68,10 @@ public class FrontendTokenDefinitionRegistryImpl
 
 	@Override
 	public FrontendTokenDefinition getFrontendTokenDefinition(Layout layout) {
+		long classNameId = _portal.getClassNameId(Layout.class);
+
 		String cetExternalReferenceCode = _getCETExternalReferenceCode(
-			layout.getClassNameId(), layout.getPlid());
+			classNameId, layout.getPlid());
 
 		if (cetExternalReferenceCode != null) {
 			return _getThemeCSSCETFrontendTokenDefinition(
@@ -78,8 +80,7 @@ public class FrontendTokenDefinitionRegistryImpl
 
 		if (layout.getMasterLayoutPlid() > 0) {
 			cetExternalReferenceCode = _getCETExternalReferenceCode(
-				_portal.getClassNameId(Layout.class),
-				layout.getMasterLayoutPlid());
+				classNameId, layout.getMasterLayoutPlid());
 
 			if (cetExternalReferenceCode != null) {
 				return _getThemeCSSCETFrontendTokenDefinition(

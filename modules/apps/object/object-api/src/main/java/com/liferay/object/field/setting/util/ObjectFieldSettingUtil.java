@@ -18,10 +18,16 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.text.DateFormat;
+
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,7 +80,21 @@ public class ObjectFieldSettingUtil {
 						defaultValueObjectFieldSetting.getValue()
 					).build());
 
-			ddmExpression.setVariables(values);
+			ddmExpression.setVariables(
+				HashMapBuilder.<String, Object>put(
+					"currentDate",
+					() -> {
+						DateFormat dateFormat =
+							DateFormatFactoryUtil.getSimpleDateFormat(
+								"yyyy-MM-dd HH:mm");
+
+						return dateFormat.format(new Date());
+					}
+				).put(
+					"currentUserId", PrincipalThreadLocal.getUserId()
+				).putAll(
+					values
+				).build());
 
 			return ddmExpression.evaluate();
 		}

@@ -16,12 +16,18 @@ const DEFAULT_PROPS = {
 	inputName: '',
 	portletURL: '',
 };
-jest.mock('@clayui/data-provider', () => ({
-	useResource: jest.fn().mockImplementation(() => ({
-		refetch: jest.fn(),
-		resource: [],
-	})),
-}));
+jest.mock('@clayui/data-provider', () => {
+	const originalModule = jest.requireActual('@clayui/data-provider');
+
+	return {
+		__esModule: true,
+		...originalModule,
+		useResource: jest.fn().mockImplementation(() => ({
+			refetch: jest.fn(),
+			resource: [],
+		})),
+	};
+});
 
 describe('AssetVocabularyCategoriesSelector', () => {
 	it('refetch is not called in the first component render', () => {

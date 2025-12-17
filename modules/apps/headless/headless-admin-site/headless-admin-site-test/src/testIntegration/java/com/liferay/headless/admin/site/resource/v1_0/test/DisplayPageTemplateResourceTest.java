@@ -1585,8 +1585,7 @@ public class DisplayPageTemplateResourceTest
 		throws Exception {
 
 		DisplayPageTemplateResource displayPageTemplateResource =
-			_getDisplayPageTemplateResource(
-				"friendlyUrlHistory,pageSpecifications");
+			_getDisplayPageTemplateResource("pageSpecifications");
 
 		DisplayPageTemplate displayPageTemplate = randomDisplayPageTemplate();
 
@@ -1608,7 +1607,6 @@ public class DisplayPageTemplateResourceTest
 
 		Assert.assertFalse(putDisplayPageTemplate.getMarkedAsDefault());
 
-		putDisplayPageTemplate.setFriendlyUrlHistory(() -> null);
 		putDisplayPageTemplate.setMarkedAsDefault(true);
 
 		PageSpecification[] pageSpecifications =

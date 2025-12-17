@@ -70,10 +70,7 @@ test('can export at site level with custom export task name', async ({
 
 	const taskName = 'MyExport-' + getRandomString();
 
-	await exportImportPage.export(taskName);
-
-	const exportFilePath =
-		await exportImportPage.downloadExportProcess(taskName);
+	const exportFilePath = await exportImportPage.export({taskName});
 
 	expect(exportFilePath).toMatch(new RegExp(`^${getTempDir()}MyExport-`));
 });

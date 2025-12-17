@@ -124,12 +124,9 @@ testWithExportImportAtInstanceLevelFF(
 
 		await exportImportPage.goToExport();
 
-		const exportName = 'MyExport-' + getRandomString();
-
-		await exportImportPage.export(exportName, {itemLabel: 'Tests 1 Items'});
-
-		const exportFilePath =
-			await exportImportPage.downloadExportProcess(exportName);
+		const exportFilePath = await exportImportPage.export({
+			itemLabels: ['Tests 1 Items'],
+		});
 
 		const content = await readFileFromZip('C_Test.json', exportFilePath);
 
@@ -183,9 +180,12 @@ testWithExportImportAtInstanceLevelFF(
 
 		const homePage = new HomePage(page);
 
-		const exportFilePath = await companyExportImportPage.export([
-			'Tests 1 Items',
-		]);
+		await companyExportImportPage.applicationsMenuPage.goToExport();
+
+		const exportFilePath =
+			await companyExportImportPage.exportImportPage.export({
+				itemLabels: ['Tests 1 Items'],
+			});
 
 		await homePage.goto();
 
@@ -248,12 +248,7 @@ test(
 
 		await exportImportPage.goToExport();
 
-		const exportName = 'MyExport-' + getRandomString();
-
-		await exportImportPage.export(exportName);
-
-		const exportFilePath =
-			await exportImportPage.downloadExportProcess(exportName);
+		const exportFilePath = await exportImportPage.export();
 
 		await exportImportPage.goToImport();
 
@@ -336,12 +331,7 @@ test('Can import a lar file selecting some items to import', async ({
 }) => {
 	await exportImportPage.goToExport();
 
-	const exportName = 'MyExport-' + getRandomString();
-
-	await exportImportPage.export(exportName);
-
-	const exportFilePath =
-		await exportImportPage.downloadExportProcess(exportName);
+	const exportFilePath = await exportImportPage.export();
 
 	await exportImportPage.goToImport();
 
@@ -364,12 +354,7 @@ test('Can see corresponding elements at site level', async ({
 
 	await exportImportPage.goToExport();
 
-	const exportName = 'MyExport-' + getRandomString();
-
-	await exportImportPage.export(exportName);
-
-	const exportFilePath =
-		await exportImportPage.downloadExportProcess(exportName);
+	const exportFilePath = await exportImportPage.export();
 
 	await exportImportPage.goToImport();
 
@@ -422,12 +407,7 @@ testWithDeprecationFFDisabled(
 
 		await exportImportPage.goToExport();
 
-		const exportName = 'MyExport-' + getRandomString();
-
-		await exportImportPage.export(exportName);
-
-		const exportFilePath =
-			await exportImportPage.downloadExportProcess(exportName);
+		const exportFilePath = await exportImportPage.export();
 
 		await exportImportPage.goToImportOptions(exportFilePath);
 
@@ -467,10 +447,10 @@ testWithDeprecationFF(
 			'c/tests/scopes/Guest'
 		);
 
-		await exportImportPage.export(exportName, {itemLabel: 'Tests 1 Items'});
-
-		const exportFilePath =
-			await exportImportPage.downloadExportProcess(exportName);
+		const exportFilePath = await exportImportPage.export({
+			itemLabels: ['Tests 1 Items'],
+			taskName: exportName,
+		});
 
 		await exportImportPage.goToImport();
 
@@ -639,17 +619,14 @@ testWithDeprecationFFDisabled(
 
 		await exportImportPage.goToExport();
 
-		const exportName = 'MyExport-' + getRandomString();
-
 		await apiHelpers.objectEntry.postObjectEntry(
 			{externalReferenceCode: '', name: 'test'},
 			'c/tests/scopes/Guest'
 		);
 
-		await exportImportPage.export(exportName, {itemLabel: 'Tests 1 Items'});
-
-		const exportFilePath =
-			await exportImportPage.downloadExportProcess(exportName);
+		const exportFilePath = await exportImportPage.export({
+			itemLabels: ['Tests 1 Items'],
+		});
 
 		await exportImportPage.goToImport();
 

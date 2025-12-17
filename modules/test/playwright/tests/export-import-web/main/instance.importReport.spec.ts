@@ -46,10 +46,12 @@ test('Can see error report and details', async ({
 		'c/tests'
 	);
 
-	const exportFilePath = await companyExportImportPage.export(
-		['Tests 1 Items'],
-		false
-	);
+	await companyExportImportPage.applicationsMenuPage.goToExport();
+
+	const exportFilePath =
+		await companyExportImportPage.exportImportPage.export({
+			itemLabels: ['Tests 1 Items'],
+		});
 
 	const objectFieldAPIClient =
 		await apiHelpers.buildRestClient(ObjectFieldAPI);

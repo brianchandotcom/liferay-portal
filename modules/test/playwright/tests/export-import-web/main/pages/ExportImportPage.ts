@@ -9,8 +9,10 @@ import path from 'path';
 import {ProductMenuPage} from '../../../../pages/product-navigation-control-menu-web/ProductMenuPage';
 import {clickAndExpectToBeHidden} from '../../../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+import getRandomString from '../../../../utils/getRandomString';
 import {PORTLET_URLS} from '../../../../utils/portletUrls';
 import {getTempDir} from '../../../../utils/temp';
+import {DateOptions} from '../types/dateOptions';
 
 export type taskStatus = 'success' | 'completedWithErrors';
 
@@ -38,6 +40,13 @@ export class ExportImportPage {
 	readonly page: Page;
 	readonly pagesCheckbox: Locator;
 	readonly productMenuPage: ProductMenuPage;
+	readonly rangeDateRangeEndDate: Locator;
+	readonly rangeDateRangeEndTime: Locator;
+	readonly rangeDateRangeRadioButton: Locator;
+	readonly rangeDateRangeStartDate: Locator;
+	readonly rangeDateRangeStartTime: Locator;
+	readonly rangeLast: Locator;
+	readonly rangeLastRadioButton: Locator;
 	readonly taskActionsMenu: (taskName: string) => Locator;
 	readonly taskRow: (taskName: string) => Locator;
 	readonly taskStatusLabel: (
@@ -96,6 +105,25 @@ export class ExportImportPage {
 			'[id="_com_liferay_exportimport_web_portlet_ImportPortlet_contentLink_com_liferay_layout_admin_web_portlet_GroupPagesPortlet"]'
 		);
 		this.productMenuPage = new ProductMenuPage(page);
+		this.rangeDateRangeEndDate = page.locator(
+			'[id="_com_liferay_exportimport_web_portlet_CompanyExportPortlet_endDate"]'
+		);
+		this.rangeDateRangeEndTime = page.locator(
+			'[id="_com_liferay_exportimport_web_portlet_CompanyExportPortlet_endTime"]'
+		);
+		this.rangeDateRangeRadioButton = page.getByRole('radio', {
+			name: 'Date Range',
+		});
+		this.rangeDateRangeStartDate = page.locator(
+			'[id="_com_liferay_exportimport_web_portlet_CompanyExportPortlet_startDate"]'
+		);
+		this.rangeDateRangeStartTime = page.locator(
+			'[id="_com_liferay_exportimport_web_portlet_CompanyExportPortlet_startTime"]'
+		);
+		this.rangeLast = page.locator(
+			'[id="_com_liferay_exportimport_web_portlet_CompanyExportPortlet_last"]'
+		);
+		this.rangeLastRadioButton = page.getByRole('radio', {name: 'Last'});
 		this.taskActionsMenu = (taskName) =>
 			this.taskRow(taskName).getByRole('button');
 		this.taskRow = (taskName) =>
@@ -130,25 +158,62 @@ export class ExportImportPage {
 		});
 	}
 
-	async export(
-		title: string,
-		options?: {
-			itemLabel?: string;
-		}
-	) {
+	async export({
+		taskName = `MyExport-${getRandomString()}`,
+		dateOptions,
+		includePermissions = false,
+		itemLabels,
+		taskName = `Export-${getRandomString()}`,
+	}: {
+		taskName?: string;
+		dateOptions?: DateOptions;
+		includePermissions?: boolean;
+		itemLabels?: string[];
+	} = {}): Promise<string> {
 		await this.newExportButton.click();
 
-		await this.title.fill(title);
+		await this.title.fill(taskName);
 
-		if (options?.itemLabel) {
-			await this.page
-				.getByLabel(options.itemLabel, {exact: true})
-				.check();
+		if (itemLabels) {
+			for (const itemLabel of itemLabels) {
+				await this.page.getByLabel(itemLabel, {exact: true}).check();
+			}
+		}
+
+		if (includePermissions) {
+			await this.exportPermissionsButton.click();
+		}
+
+		if (dateOptions?.endDate || dateOptions?.startDate) {
+			await this.rangeDateRangeRadioButton.check();
+
+			if (dateOptions.endDate) {
+				await this.rangeDateRangeEndDate.fill(dateOptions.endDate);
+			}
+
+			if (dateOptions.endTime) {
+				await this.rangeDateRangeEndTime.fill(dateOptions.endTime);
+			}
+
+			if (dateOptions.startDate) {
+				await this.rangeDateRangeStartDate.fill(dateOptions.startDate);
+			}
+
+			if (dateOptions.startTime) {
+				await this.rangeDateRangeStartTime.fill(dateOptions.startTime);
+			}
+		}
+		else if (dateOptions?.rangeLast) {
+			await this.rangeLastRadioButton.check();
+
+			await this.rangeLast.selectOption(dateOptions.rangeLast);
 		}
 
 		await this.exportButton.click();
 
-		await this.taskStatusLabel(title).waitFor();
+		await this.taskStatusLabel(taskName).waitFor();
+
+		return await this.downloadExportProcess(taskName);
 	}
 
 	async clickTaskAction(

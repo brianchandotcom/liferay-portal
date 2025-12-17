@@ -29,7 +29,7 @@ export interface IBulkActionFDSDataItemTransformed {
 	name: string;
 }
 
-export interface IBulkactionSelectionScope {
+export interface IBulkActionSelectionScope {
 	selectAll: boolean;
 }
 
@@ -76,6 +76,7 @@ export interface IBulkActionTaskStarterDTO<
 	T extends keyof IBulkActionTaskType,
 > {
 	apiURL?: string;
+	dataSetId?: string;
 	keyValues?: IBulkActionTaskType[T];
 	onCreateError?:
 		| ((response: RequestResult<IBulkActionTaskPage>) => void)
@@ -116,6 +117,6 @@ export interface IBulkActionTaskType {
 
 export type TBulkActionTaskDTO = {
 	bulkActionItems: IBulkActionFDSDataItemTransformed[] | [];
-	selectionScope: IBulkactionSelectionScope | null;
+	selectionScope: IBulkActionSelectionScope | null;
 	type: keyof IBulkActionTaskType;
 } & IBulkActionTaskType[keyof IBulkActionTaskType];

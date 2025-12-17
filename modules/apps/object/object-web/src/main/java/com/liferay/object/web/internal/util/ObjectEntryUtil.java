@@ -160,6 +160,8 @@ public class ObjectEntryUtil {
 			objectEntry.getExternalReferenceCode());
 		serviceBuilderObjectEntry.setObjectEntryId(
 			GetterUtil.getLong(objectEntry.getId()));
+		serviceBuilderObjectEntry.setGroupId(
+			GetterUtil.getLong(objectEntry.getScopeId()));
 		serviceBuilderObjectEntry.setObjectDefinitionId(
 			objectDefinition.getObjectDefinitionId());
 		serviceBuilderObjectEntry.setDefaultLanguageId(

@@ -194,8 +194,7 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 
 	@Override
 	public OAuthClientASLocalMetadata fetchOAuthClientASLocalMetadata(
-			long oAuthClientASLocalMetadataId)
-		throws PortalException {
+		long oAuthClientASLocalMetadataId) {
 
 		return oAuthClientASLocalMetadataPersistence.
 			fetchByOAuthClientASLocalMetadataId(oAuthClientASLocalMetadataId);
@@ -212,8 +211,7 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 
 	@Override
 	public OAuthClientASLocalMetadata fetchOAuthClientASLocalMetadata(
-			long companyId, String issuer)
-		throws PortalException {
+		long companyId, String issuer) {
 
 		return oAuthClientASLocalMetadataPersistence.fetchByC_I(
 			companyId, issuer);

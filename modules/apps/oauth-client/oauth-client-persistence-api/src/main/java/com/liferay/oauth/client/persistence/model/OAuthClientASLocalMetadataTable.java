@@ -47,6 +47,13 @@ public class OAuthClientASLocalMetadataTable
 	public final Column<OAuthClientASLocalMetadataTable, Date> modifiedDate =
 		createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<OAuthClientASLocalMetadataTable, String> issuer =
+		createColumn(
+			"issuer", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<OAuthClientASLocalMetadataTable, Boolean>
+		localWellKnownEnabled = createColumn(
+			"localWellKnownEnabled", Boolean.class, Types.BOOLEAN,
+			Column.FLAG_DEFAULT);
 	public final Column<OAuthClientASLocalMetadataTable, String>
 		localWellKnownURI = createColumn(
 			"localWellKnownURI", String.class, Types.VARCHAR,
@@ -54,6 +61,13 @@ public class OAuthClientASLocalMetadataTable
 	public final Column<OAuthClientASLocalMetadataTable, Clob> metadataJSON =
 		createColumn(
 			"metadataJSON", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
+	public final Column<OAuthClientASLocalMetadataTable, String>
+		oAuthASLocalWellKnownURI = createColumn(
+			"oAuthASLocalWellKnownURI", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
+	public final Column<OAuthClientASLocalMetadataTable, Clob>
+		oAuthASMetadataJSON = createColumn(
+			"oAuthASMetadataJSON", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 
 	private OAuthClientASLocalMetadataTable() {
 		super(

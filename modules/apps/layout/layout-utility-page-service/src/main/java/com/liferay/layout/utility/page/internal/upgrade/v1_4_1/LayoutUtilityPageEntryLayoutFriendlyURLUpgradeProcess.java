@@ -72,22 +72,27 @@ public class LayoutUtilityPageEntryLayoutFriendlyURLUpgradeProcess
 
 	private void _updateLayoutFriendlyURL(String name, long plid) {
 		try {
+			Layout layout = _layoutLocalService.getLayout(plid);
+
 			String baseFriendlyURL =
 				StringPool.SLASH +
 					FriendlyURLNormalizerUtil.normalizeWithEncoding(name);
-			String friendlyURL = null;
-			int i = 1;
-			Layout layout = _layoutLocalService.getLayout(plid);
 
-			do {
+			String friendlyURL = StringBundler.concat(
+				baseFriendlyURL, StringPool.DASH, 1);
+
+			boolean existLayoutFriendlyURL = _existLayoutFriendlyURL(
+				layout.getGroupId(), layout.getPlid(), layout.isPrivateLayout(),
+				friendlyURL);
+
+			for (int i = 2; existLayoutFriendlyURL; i++) {
 				friendlyURL = StringBundler.concat(
 					baseFriendlyURL, StringPool.DASH, i);
 
-				i++;
+				existLayoutFriendlyURL = _existLayoutFriendlyURL(
+					layout.getGroupId(), layout.getPlid(),
+					layout.isPrivateLayout(), friendlyURL);
 			}
-			while (_existLayoutFriendlyURL(
-						layout.getGroupId(), layout.getPlid(),
-						layout.isPrivateLayout(), friendlyURL));
 
 			_layoutLocalService.updateFriendlyURL(
 				layout.getUserId(), layout.getPlid(), friendlyURL,

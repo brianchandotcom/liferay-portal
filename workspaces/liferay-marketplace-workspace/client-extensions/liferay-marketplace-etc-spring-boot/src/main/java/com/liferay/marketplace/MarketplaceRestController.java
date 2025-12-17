@@ -492,8 +492,8 @@ public class MarketplaceRestController extends BaseRestController {
 			});
 	}
 
-	@PostMapping("/process-publisher-asset-link/{productId}")
-	public void processPublisherAssetLink(@PathVariable long productId) {
+	@PostMapping("/process-publisher-asset-links/{productId}")
+	public void processPublisherAssetLinks(@PathVariable long productId) {
 		try {
 			Product product = _marketplaceService.getProduct(productId);
 
@@ -512,7 +512,7 @@ public class MarketplaceRestController extends BaseRestController {
 			if (publisherAssetLinks.isEmpty()) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"No publisher asset URLs found for productId " +
+						"No publisher asset link found for product " +
 							productId);
 				}
 
@@ -525,11 +525,10 @@ public class MarketplaceRestController extends BaseRestController {
 			}
 		}
 		catch (Exception exception) {
-			String errorMessage = StringBundler.concat(
-				"Failed to upload publisher asset for product ID %d: %s",
-				productId, exception.getMessage());
-
-			_log.error(errorMessage, exception);
+			_log.error(
+				"Unable to upload publisher asset link for product " +
+					productId,
+				exception);
 		}
 	}
 

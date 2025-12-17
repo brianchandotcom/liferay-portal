@@ -34,4 +34,24 @@ public class DataDefinitionTestUtil {
 			groupId, contentType, dataDefinition);
 	}
 
+	public static DataDefinition updateDataDefinition(
+			long dataDefinitionId,
+			DataDefinitionResource.Factory dataDefinitionResourceFactory,
+			String json, User user)
+		throws Exception {
+
+		DataDefinition dataDefinition = DataDefinition.toDTO(json);
+
+		DataDefinitionResource.Builder dataDefinitionResourcedBuilder =
+			dataDefinitionResourceFactory.create();
+
+		DataDefinitionResource dataDefinitionResource =
+			dataDefinitionResourcedBuilder.user(
+				user
+			).build();
+
+		return dataDefinitionResource.putDataDefinition(
+			dataDefinitionId, dataDefinition);
+	}
+
 }

@@ -68,6 +68,8 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchImageException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -122,6 +124,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -2287,6 +2290,101 @@ public class JournalArticleLocalServiceTest {
 		}
 	}
 
+	@Test
+	public void testUpdateArticleStructure() throws Exception {
+		DataDefinition dataDefinition =
+			DataDefinitionTestUtil.addDataDefinition(
+				"journal", _dataDefinitionResourceFactory, _group.getGroupId(),
+				_readFileToString("ddm_form.json"), TestPropsValues.getUser());
+
+		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), ContentTypes.IMAGE_JPEG,
+			FileUtil.getBytes(getClass(), "dependencies/image.jpg"), null, null,
+			null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			_portal.getSiteGroupId(_group.getGroupId()),
+			_portal.getClassNameId(JournalArticle.class.getName()),
+			dataDefinition.getDataDefinitionKey(), true);
+
+		JournalArticle journalArticle = _journalArticleLocalService.addArticle(
+			null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
+			PortalUtil.getClassNameId(JournalArticle.class), StringPool.BLANK,
+			true, 0,
+			HashMapBuilder.put(
+				LocaleUtil.US, "title"
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.US, "description"
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.US, "friendly-url"
+			).build(),
+			StringUtil.replace(
+				_readFileToString(
+					"journal_article_content_with_different_locales.xml"),
+				"[$DOCUMENT_JSON$]", _toJSON(fileEntry)),
+			ddmStructure.getStructureId(), null, null, 1, 1, 1965, 0, 0, 0, 0,
+			0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false, 0, 0, null, null,
+			null, null,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
+
+		String content = journalArticle.getContent();
+
+		Assert.assertTrue(content.contains("Image07275736"));
+
+		DataDefinitionTestUtil.updateDataDefinition(
+			ddmStructure.getStructureId(), _dataDefinitionResourceFactory,
+			_readFileToString("ddm_form_no_image.json"),
+			TestPropsValues.getUser());
+
+		journalArticle = _journalArticleLocalService.getArticle(
+			journalArticle.getId());
+
+		content = journalArticle.getContent();
+
+		Assert.assertFalse(content.contains("Image07275736"));
+		Assert.assertTrue(content.contains("Date50556571"));
+
+		String pid = null;
+
+		try {
+			pid = ConfigurationTestUtil.createFactoryConfiguration(
+				"com.liferay.journal.configuration." +
+					"JournalServiceConfiguration.scoped",
+				StringPool.QUESTION,
+				HashMapDictionaryBuilder.<String, Object>put(
+					"companyId", TestPropsValues.getCompanyId()
+				).put(
+					"updateStructureArticlesAsynchronously", true
+				).build());
+
+			DataDefinitionTestUtil.updateDataDefinition(
+				ddmStructure.getStructureId(), _dataDefinitionResourceFactory,
+				_readFileToString("ddm_form_no_date.json"),
+				TestPropsValues.getUser());
+
+			journalArticle = _journalArticleLocalService.getArticle(
+				journalArticle.getId());
+
+			content = journalArticle.getContent();
+
+			Assert.assertFalse(content.contains("Date50556571"));
+		}
+		finally {
+			if (pid != null) {
+				ConfigurationTestUtil.deleteFactoryConfiguration(
+					pid,
+					"com.liferay.journal.configuration." +
+						"JournalServiceConfiguration.scoped");
+			}
+		}
+	}
+
 	@Test(expected = AssetCategoryException.class)
 	public void testUpdateArticleWithAssetCategoriesFromNonmultiValuedAssetVocabulary()
 		throws Exception {
@@ -2827,6 +2925,9 @@ public class JournalArticleLocalServiceTest {
 			}
 		}
 	}
+
+	@Inject
+	private static ConfigurationProvider _configurationProvider;
 
 	@Inject(
 		filter = "model.class.name=com.liferay.journal.model.JournalArticle"

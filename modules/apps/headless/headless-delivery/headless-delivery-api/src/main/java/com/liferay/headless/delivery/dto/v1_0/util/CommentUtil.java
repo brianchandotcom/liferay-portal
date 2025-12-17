@@ -66,7 +66,7 @@ public class CommentUtil {
 		String className, long classPK, CommentManager commentManager,
 		Comment[] comments, long groupId, long userId) {
 
-		Map<String, Long> toIdMap = new HashMap<>();
+		Map<String, Long> parentCommentIdMap = new HashMap<>();
 
 		return TransformUtil.transformToList(
 			comments,
@@ -77,7 +77,7 @@ public class CommentUtil {
 					comment.getParentCommentExternalReferenceCode();
 
 				if (Validator.isNotNull(parentCommentExternalReferenceCode)) {
-					parentCommentId = toIdMap.computeIfAbsent(
+					parentCommentId = parentCommentIdMap.computeIfAbsent(
 						parentCommentExternalReferenceCode,
 						externalReferenceCode -> {
 							com.liferay.portal.kernel.comment.Comment

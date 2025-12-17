@@ -67,8 +67,11 @@ public class OAuthClientASLocalMetadataModelImpl
 		{"oAuthClientASLocalMetadataId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"localWellKnownURI", Types.VARCHAR},
-		{"metadataJSON", Types.CLOB}
+		{"modifiedDate", Types.TIMESTAMP}, {"issuer", Types.VARCHAR},
+		{"localWellKnownEnabled", Types.BOOLEAN},
+		{"localWellKnownURI", Types.VARCHAR}, {"metadataJSON", Types.CLOB},
+		{"oAuthASLocalWellKnownURI", Types.VARCHAR},
+		{"oAuthASMetadataJSON", Types.CLOB}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -82,12 +85,16 @@ public class OAuthClientASLocalMetadataModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("issuer", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("localWellKnownEnabled", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("localWellKnownURI", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("metadataJSON", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("oAuthASLocalWellKnownURI", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("oAuthASMetadataJSON", Types.CLOB);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OAuthClientASLocalMetadata (mvccVersion LONG default 0 not null,oAuthClientASLocalMetadataId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,localWellKnownURI VARCHAR(256) null,metadataJSON TEXT null)";
+		"create table OAuthClientASLocalMetadata (mvccVersion LONG default 0 not null,oAuthClientASLocalMetadataId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,issuer VARCHAR(75) null,localWellKnownEnabled BOOLEAN,localWellKnownURI VARCHAR(256) null,metadataJSON TEXT null,oAuthASLocalWellKnownURI VARCHAR(256) null,oAuthASMetadataJSON TEXT null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table OAuthClientASLocalMetadata";
@@ -117,20 +124,37 @@ public class OAuthClientASLocalMetadataModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long LOCALWELLKNOWNURI_COLUMN_BITMASK = 2L;
+	public static final long ISSUER_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long USERID_COLUMN_BITMASK = 4L;
+	public static final long LOCALWELLKNOWNENABLED_COLUMN_BITMASK = 4L;
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *		#getColumnBitmask(String)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long OAUTHCLIENTASLOCALMETADATAID_COLUMN_BITMASK = 8L;
+	public static final long LOCALWELLKNOWNURI_COLUMN_BITMASK = 8L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long OAUTHASLOCALWELLKNOWNURI_COLUMN_BITMASK = 16L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long OAUTHCLIENTASLOCALMETADATAID_COLUMN_BITMASK = 32L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long USERID_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -262,10 +286,21 @@ public class OAuthClientASLocalMetadataModelImpl
 			attributeGetterFunctions.put(
 				"modifiedDate", OAuthClientASLocalMetadata::getModifiedDate);
 			attributeGetterFunctions.put(
+				"issuer", OAuthClientASLocalMetadata::getIssuer);
+			attributeGetterFunctions.put(
+				"localWellKnownEnabled",
+				OAuthClientASLocalMetadata::getLocalWellKnownEnabled);
+			attributeGetterFunctions.put(
 				"localWellKnownURI",
 				OAuthClientASLocalMetadata::getLocalWellKnownURI);
 			attributeGetterFunctions.put(
 				"metadataJSON", OAuthClientASLocalMetadata::getMetadataJSON);
+			attributeGetterFunctions.put(
+				"oAuthASLocalWellKnownURI",
+				OAuthClientASLocalMetadata::getOAuthASLocalWellKnownURI);
+			attributeGetterFunctions.put(
+				"oAuthASMetadataJSON",
+				OAuthClientASLocalMetadata::getOAuthASMetadataJSON);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
 				attributeGetterFunctions);
@@ -315,6 +350,14 @@ public class OAuthClientASLocalMetadataModelImpl
 				(BiConsumer<OAuthClientASLocalMetadata, Date>)
 					OAuthClientASLocalMetadata::setModifiedDate);
 			attributeSetterBiConsumers.put(
+				"issuer",
+				(BiConsumer<OAuthClientASLocalMetadata, String>)
+					OAuthClientASLocalMetadata::setIssuer);
+			attributeSetterBiConsumers.put(
+				"localWellKnownEnabled",
+				(BiConsumer<OAuthClientASLocalMetadata, Boolean>)
+					OAuthClientASLocalMetadata::setLocalWellKnownEnabled);
+			attributeSetterBiConsumers.put(
 				"localWellKnownURI",
 				(BiConsumer<OAuthClientASLocalMetadata, String>)
 					OAuthClientASLocalMetadata::setLocalWellKnownURI);
@@ -322,6 +365,14 @@ public class OAuthClientASLocalMetadataModelImpl
 				"metadataJSON",
 				(BiConsumer<OAuthClientASLocalMetadata, String>)
 					OAuthClientASLocalMetadata::setMetadataJSON);
+			attributeSetterBiConsumers.put(
+				"oAuthASLocalWellKnownURI",
+				(BiConsumer<OAuthClientASLocalMetadata, String>)
+					OAuthClientASLocalMetadata::setOAuthASLocalWellKnownURI);
+			attributeSetterBiConsumers.put(
+				"oAuthASMetadataJSON",
+				(BiConsumer<OAuthClientASLocalMetadata, String>)
+					OAuthClientASLocalMetadata::setOAuthASMetadataJSON);
 
 			_attributeSetterBiConsumers = Collections.unmodifiableMap(
 				(Map)attributeSetterBiConsumers);
@@ -359,6 +410,16 @@ public class OAuthClientASLocalMetadataModelImpl
 		}
 
 		_oAuthClientASLocalMetadataId = oAuthClientASLocalMetadataId;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalOAuthClientASLocalMetadataId() {
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("oAuthClientASLocalMetadataId"));
 	}
 
 	@JSON
@@ -484,6 +545,66 @@ public class OAuthClientASLocalMetadataModelImpl
 
 	@JSON
 	@Override
+	public String getIssuer() {
+		if (_issuer == null) {
+			return "";
+		}
+		else {
+			return _issuer;
+		}
+	}
+
+	@Override
+	public void setIssuer(String issuer) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_issuer = issuer;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalIssuer() {
+		return getColumnOriginalValue("issuer");
+	}
+
+	@JSON
+	@Override
+	public boolean getLocalWellKnownEnabled() {
+		return _localWellKnownEnabled;
+	}
+
+	@JSON
+	@Override
+	public boolean isLocalWellKnownEnabled() {
+		return _localWellKnownEnabled;
+	}
+
+	@Override
+	public void setLocalWellKnownEnabled(boolean localWellKnownEnabled) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_localWellKnownEnabled = localWellKnownEnabled;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public boolean getOriginalLocalWellKnownEnabled() {
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("localWellKnownEnabled"));
+	}
+
+	@JSON
+	@Override
 	public String getLocalWellKnownURI() {
 		if (_localWellKnownURI == null) {
 			return "";
@@ -529,6 +650,55 @@ public class OAuthClientASLocalMetadataModelImpl
 		}
 
 		_metadataJSON = metadataJSON;
+	}
+
+	@JSON
+	@Override
+	public String getOAuthASLocalWellKnownURI() {
+		if (_oAuthASLocalWellKnownURI == null) {
+			return "";
+		}
+		else {
+			return _oAuthASLocalWellKnownURI;
+		}
+	}
+
+	@Override
+	public void setOAuthASLocalWellKnownURI(String oAuthASLocalWellKnownURI) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_oAuthASLocalWellKnownURI = oAuthASLocalWellKnownURI;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalOAuthASLocalWellKnownURI() {
+		return getColumnOriginalValue("oAuthASLocalWellKnownURI");
+	}
+
+	@JSON
+	@Override
+	public String getOAuthASMetadataJSON() {
+		if (_oAuthASMetadataJSON == null) {
+			return "";
+		}
+		else {
+			return _oAuthASMetadataJSON;
+		}
+	}
+
+	@Override
+	public void setOAuthASMetadataJSON(String oAuthASMetadataJSON) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_oAuthASMetadataJSON = oAuthASMetadataJSON;
 	}
 
 	public long getColumnBitmask() {
@@ -597,9 +767,16 @@ public class OAuthClientASLocalMetadataModelImpl
 		oAuthClientASLocalMetadataImpl.setUserName(getUserName());
 		oAuthClientASLocalMetadataImpl.setCreateDate(getCreateDate());
 		oAuthClientASLocalMetadataImpl.setModifiedDate(getModifiedDate());
+		oAuthClientASLocalMetadataImpl.setIssuer(getIssuer());
+		oAuthClientASLocalMetadataImpl.setLocalWellKnownEnabled(
+			isLocalWellKnownEnabled());
 		oAuthClientASLocalMetadataImpl.setLocalWellKnownURI(
 			getLocalWellKnownURI());
 		oAuthClientASLocalMetadataImpl.setMetadataJSON(getMetadataJSON());
+		oAuthClientASLocalMetadataImpl.setOAuthASLocalWellKnownURI(
+			getOAuthASLocalWellKnownURI());
+		oAuthClientASLocalMetadataImpl.setOAuthASMetadataJSON(
+			getOAuthASMetadataJSON());
 
 		oAuthClientASLocalMetadataImpl.resetOriginalValues();
 
@@ -625,10 +802,18 @@ public class OAuthClientASLocalMetadataModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		oAuthClientASLocalMetadataImpl.setModifiedDate(
 			this.<Date>getColumnOriginalValue("modifiedDate"));
+		oAuthClientASLocalMetadataImpl.setIssuer(
+			this.<String>getColumnOriginalValue("issuer"));
+		oAuthClientASLocalMetadataImpl.setLocalWellKnownEnabled(
+			this.<Boolean>getColumnOriginalValue("localWellKnownEnabled"));
 		oAuthClientASLocalMetadataImpl.setLocalWellKnownURI(
 			this.<String>getColumnOriginalValue("localWellKnownURI"));
 		oAuthClientASLocalMetadataImpl.setMetadataJSON(
 			this.<String>getColumnOriginalValue("metadataJSON"));
+		oAuthClientASLocalMetadataImpl.setOAuthASLocalWellKnownURI(
+			this.<String>getColumnOriginalValue("oAuthASLocalWellKnownURI"));
+		oAuthClientASLocalMetadataImpl.setOAuthASMetadataJSON(
+			this.<String>getColumnOriginalValue("oAuthASMetadataJSON"));
 
 		return oAuthClientASLocalMetadataImpl;
 	}
@@ -748,6 +933,17 @@ public class OAuthClientASLocalMetadataModelImpl
 			oAuthClientASLocalMetadataCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		oAuthClientASLocalMetadataCacheModel.issuer = getIssuer();
+
+		String issuer = oAuthClientASLocalMetadataCacheModel.issuer;
+
+		if ((issuer != null) && (issuer.length() == 0)) {
+			oAuthClientASLocalMetadataCacheModel.issuer = null;
+		}
+
+		oAuthClientASLocalMetadataCacheModel.localWellKnownEnabled =
+			isLocalWellKnownEnabled();
+
 		oAuthClientASLocalMetadataCacheModel.localWellKnownURI =
 			getLocalWellKnownURI();
 
@@ -764,6 +960,31 @@ public class OAuthClientASLocalMetadataModelImpl
 
 		if ((metadataJSON != null) && (metadataJSON.length() == 0)) {
 			oAuthClientASLocalMetadataCacheModel.metadataJSON = null;
+		}
+
+		oAuthClientASLocalMetadataCacheModel.oAuthASLocalWellKnownURI =
+			getOAuthASLocalWellKnownURI();
+
+		String oAuthASLocalWellKnownURI =
+			oAuthClientASLocalMetadataCacheModel.oAuthASLocalWellKnownURI;
+
+		if ((oAuthASLocalWellKnownURI != null) &&
+			(oAuthASLocalWellKnownURI.length() == 0)) {
+
+			oAuthClientASLocalMetadataCacheModel.oAuthASLocalWellKnownURI =
+				null;
+		}
+
+		oAuthClientASLocalMetadataCacheModel.oAuthASMetadataJSON =
+			getOAuthASMetadataJSON();
+
+		String oAuthASMetadataJSON =
+			oAuthClientASLocalMetadataCacheModel.oAuthASMetadataJSON;
+
+		if ((oAuthASMetadataJSON != null) &&
+			(oAuthASMetadataJSON.length() == 0)) {
+
+			oAuthClientASLocalMetadataCacheModel.oAuthASMetadataJSON = null;
 		}
 
 		return oAuthClientASLocalMetadataCacheModel;
@@ -837,8 +1058,12 @@ public class OAuthClientASLocalMetadataModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private String _issuer;
+	private boolean _localWellKnownEnabled;
 	private String _localWellKnownURI;
 	private String _metadataJSON;
+	private String _oAuthASLocalWellKnownURI;
+	private String _oAuthASMetadataJSON;
 
 	public <T> T getColumnValue(String columnName) {
 		Function<OAuthClientASLocalMetadata, Object> function =
@@ -876,8 +1101,14 @@ public class OAuthClientASLocalMetadataModelImpl
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("issuer", _issuer);
+		_columnOriginalValues.put(
+			"localWellKnownEnabled", _localWellKnownEnabled);
 		_columnOriginalValues.put("localWellKnownURI", _localWellKnownURI);
 		_columnOriginalValues.put("metadataJSON", _metadataJSON);
+		_columnOriginalValues.put(
+			"oAuthASLocalWellKnownURI", _oAuthASLocalWellKnownURI);
+		_columnOriginalValues.put("oAuthASMetadataJSON", _oAuthASMetadataJSON);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;
@@ -905,9 +1136,17 @@ public class OAuthClientASLocalMetadataModelImpl
 
 		columnBitmasks.put("modifiedDate", 64L);
 
-		columnBitmasks.put("localWellKnownURI", 128L);
+		columnBitmasks.put("issuer", 128L);
 
-		columnBitmasks.put("metadataJSON", 256L);
+		columnBitmasks.put("localWellKnownEnabled", 256L);
+
+		columnBitmasks.put("localWellKnownURI", 512L);
+
+		columnBitmasks.put("metadataJSON", 1024L);
+
+		columnBitmasks.put("oAuthASLocalWellKnownURI", 2048L);
+
+		columnBitmasks.put("oAuthASMetadataJSON", 4096L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

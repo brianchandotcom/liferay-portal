@@ -9,9 +9,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesRegistry;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -50,13 +48,7 @@ public class FrontendJsWebDynamicJSImportMapsContributorTest {
 		_testWriteGlobalImports("/dxp");
 	}
 
-	private void _testWriteGlobalImports(String pathContext) throws Exception {
-		FrontendJsWebDynamicJSImportMapsContributor
-			frontendJsWebDynamicJSImportMapsContributor =
-				new FrontendJsWebDynamicJSImportMapsContributor();
-
-		// HashedFilesRegistry
-
+	private HashedFilesRegistry _mockHashedFileRegistry(String pathContext) {
 		HashedFilesRegistry hashedFilesRegistry = Mockito.mock(
 			HashedFilesRegistry.class);
 
@@ -79,12 +71,10 @@ public class FrontendJsWebDynamicJSImportMapsContributorTest {
 			Mockito.any()
 		);
 
-		ReflectionTestUtils.setField(
-			frontendJsWebDynamicJSImportMapsContributor, "_hashedFilesRegistry",
-			hashedFilesRegistry);
+		return hashedFilesRegistry;
+	}
 
-		// Portal
-
+	private Portal _mockPortal(String pathContext) throws Exception {
 		Portal portal = Mockito.mock(Portal.class);
 
 		Mockito.when(
@@ -99,10 +89,20 @@ public class FrontendJsWebDynamicJSImportMapsContributorTest {
 			pathContext
 		);
 
-		ReflectionTestUtils.setField(
-			frontendJsWebDynamicJSImportMapsContributor, "_portal", portal);
+		return portal;
+	}
 
-		// Run test
+	private void _testWriteGlobalImports(String pathContext) throws Exception {
+		FrontendJsWebDynamicJSImportMapsContributor
+			frontendJsWebDynamicJSImportMapsContributor =
+				new FrontendJsWebDynamicJSImportMapsContributor();
+
+		ReflectionTestUtils.setField(
+			frontendJsWebDynamicJSImportMapsContributor, "_hashedFilesRegistry",
+			_mockHashedFileRegistry(pathContext));
+		ReflectionTestUtils.setField(
+			frontendJsWebDynamicJSImportMapsContributor, "_portal",
+			_mockPortal(pathContext));
 
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
@@ -116,21 +116,14 @@ public class FrontendJsWebDynamicJSImportMapsContributorTest {
 		outputStreamWriter.close();
 
 		Assert.assertEquals(
-			StringUtil.replace(
-				_TPL_TEST_WRITE_GLOBAL_IMPORTS, "[$", "$]",
-				HashMapBuilder.put(
-					"HASH", _HASH
-				).put(
-					"PATH_CONTEXT", pathContext
-				).build()),
+			StringBundler.concat(
+				"\"@liferay/language/\": \"", pathContext,
+				"/o/js/language/\", \"", pathContext,
+				"/o/frontend-js-web/__liferay__/index.js\": \"", pathContext,
+				"/o/frontend-js-web/__liferay__/index.(", _HASH, ").js\""),
 			byteArrayOutputStream.toString(StandardCharsets.UTF_8));
 	}
 
 	private static final String _HASH = RandomTestUtil.randomString(8);
-
-	private static final String _TPL_TEST_WRITE_GLOBAL_IMPORTS =
-		StringUtil.read(
-			FrontendJsWebDynamicJSImportMapsContributorTest.class,
-			"dependencies/test_write_global_imports.tpl");
 
 }

@@ -1,1 +1,0 @@
-"@liferay/language/": "[$PATH_CONTEXT$]/o/js/language/", "[$PATH_CONTEXT$]/o/frontend-js-web/__liferay__/index.js": "[$PATH_CONTEXT$]/o/frontend-js-web/__liferay__/index.([$HASH$]).js"

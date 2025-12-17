@@ -60,7 +60,6 @@ import java.util.concurrent.TimeoutException;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -273,7 +272,6 @@ public class DocumentConversionImpl implements DocumentConversion {
 	}
 
 	@Activate
-	@Modified
 	protected void activate(Map<String, Object> properties) {
 		_executorService = _portalExecutorManager.getPortalExecutor(
 			DocumentConversionImpl.class.getName());

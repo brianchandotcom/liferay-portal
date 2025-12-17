@@ -310,7 +310,7 @@ public class ObjectFieldUtil {
 			return isReadOnly(
 				ddmExpressionFactory, objectField,
 				ObjectFieldSettingUtil.getDefaultValues(
-					objectField.getObjectDefinitionId()));
+					ddmExpressionFactory, objectField.getObjectDefinitionId()));
 		}
 
 		return isReadOnly(
@@ -391,7 +391,7 @@ public class ObjectFieldUtil {
 				existingValues.put(
 					objectField.getName(),
 					ObjectFieldSettingUtil.getDefaultValue(
-						null, objectField, null));
+						ddmExpressionFactory, objectField, values));
 			}
 
 			if (objectField.isLocalized()) {

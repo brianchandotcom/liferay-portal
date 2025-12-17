@@ -108,7 +108,7 @@ public class ObjectFieldSettingUtil {
 	}
 
 	public static Map<String, Object> getDefaultValues(
-		long objectDefinitionId) {
+		DDMExpressionFactory ddmExpressionFactory, long objectDefinitionId) {
 
 		Map<String, Object> defaultValues = new HashMap<>();
 
@@ -118,7 +118,7 @@ public class ObjectFieldSettingUtil {
 
 			defaultValues.put(
 				objectField.getName(),
-				getDefaultValue(null, objectField, null));
+				getDefaultValue(ddmExpressionFactory, objectField, null));
 		}
 
 		return defaultValues;

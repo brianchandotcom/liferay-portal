@@ -236,6 +236,177 @@
 			},
 			"system": true,
 			"titleObjectFieldName": "title"
+		},
+		{
+			"accountEntryRestricted": false,
+			"className": "com.liferay.object.model.ObjectDefinition#D1T2",
+			"enableCategorization": false,
+			"enableComments": false,
+			"enableFormContainer": false,
+			"enableFriendlyURLCustomization": false,
+			"enableIndexSearch": false,
+			"enableLocalization": true,
+			"enableObjectEntryDraft": false,
+			"enableObjectEntryHistory": false,
+			"enableObjectEntrySchedule": false,
+			"enableObjectEntrySubscription": false,
+			"enableObjectEntryVersioning": false,
+			"externalReferenceCode": "L_DSR_TEMPLATE",
+			"label": {
+				"en_US": "Template"
+			},
+			"modifiable": false,
+			"name": "DSRTemplate",
+			"objectActions": [
+			],
+			"objectFields": [
+				{
+					"DBType": "Long",
+					"businessType": "Attachment",
+					"defaultValue": "null",
+					"externalReferenceCode": "BANNER",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Banner"
+					},
+					"name": "banner",
+					"objectFieldSettings": [
+						{
+							"name": "acceptedFileExtensions",
+							"value": "*"
+						},
+						{
+							"name": "maximumFileSize",
+							"value": 100
+						},
+						{
+							"name": "fileSource",
+							"value": "userComputer"
+						},
+						{
+							"name": "showFilesInDocumentsAndMedia",
+							"value": false
+						}
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Long",
+					"unique": false
+				},
+				{
+					"DBType": "Long",
+					"businessType": "Attachment",
+					"defaultValue": "null",
+					"externalReferenceCode": "CLIENT_LOGO",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Client Logo"
+					},
+					"name": "clientLogo",
+					"objectFieldSettings": [
+						{
+							"name": "acceptedFileExtensions",
+							"value": "*"
+						},
+						{
+							"name": "maximumFileSize",
+							"value": 100
+						},
+						{
+							"name": "fileSource",
+							"value": "userComputer"
+						},
+						{
+							"name": "showFilesInDocumentsAndMedia",
+							"value": false
+						}
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Long",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "CLIENT_NAME",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Client Name"
+					},
+					"name": "clientName",
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "PRIMARY_COLOR",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Primary Color"
+					},
+					"name": "primaryColor",
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "SECONDARY_COLOR",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Secondary Color"
+					},
+					"name": "secondaryColor",
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String",
+					"unique": false
+				}
+			],
+			"objectFolderExternalReferenceCode": "L_DSR_STRUCTURES",
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "Templates"
+			},
+			"portlet": false,
+			"scope": "site",
+			"status": {
+				"code": 0
+			},
+			"system": true,
+			"titleObjectFieldName": "title"
 		}
 	]
 }

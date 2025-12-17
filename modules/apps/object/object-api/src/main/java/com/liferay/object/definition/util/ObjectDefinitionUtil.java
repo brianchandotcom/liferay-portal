@@ -173,6 +173,8 @@ public class ObjectDefinitionUtil {
 		).put(
 			"DSRRoom", "/digital-sales-room/rooms"
 		).put(
+			"DSRTemplate", "/digital-sales-room/templates"
+		).put(
 			"FDSAction", "/data-set-manager/actions"
 		).put(
 			"FDSCardsSection", "/data-set-manager/cards-sections"

@@ -145,8 +145,8 @@ public class ClassNamePostUpgradeDataCleanupProcess
 						"\" is not defined in any deployed module and is not ",
 						"in use"));
 			}
-			else if (_log.isInfoEnabled()) {
-				_log.info(
+			else if (_log.isWarnEnabled()) {
+				_log.warn(
 					StringBundler.concat(
 						"Class name ", value,
 						" is not defined in any deployed module but is ",

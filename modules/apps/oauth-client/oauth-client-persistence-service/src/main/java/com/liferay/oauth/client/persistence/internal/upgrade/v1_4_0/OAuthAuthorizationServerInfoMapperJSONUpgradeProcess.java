@@ -10,8 +10,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
-
 import com.liferay.portal.kernel.util.Validator;
+
 import com.nimbusds.openid.connect.sdk.op.OIDCProviderMetadata;
 
 import java.sql.PreparedStatement;
@@ -36,45 +36,45 @@ public class OAuthAuthorizationServerInfoMapperJSONUpgradeProcess
 
 				String metadataJSON = resultSet.getString("metadataJSON");
 
-				if (Validator.isNotNull(metadataJSON)) {
-					OIDCProviderMetadata oidcProviderMetadata =
-						OIDCProviderMetadata.parse(metadataJSON);
-
-
-
-					if ((oidcProviderMetadata == null) ||
-						(oidcProviderMetadata.getIssuer() == null)) {
-
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to update value for issuer for the " +
-								"oAuthClientASLocalMetadataId " +
-								oAuthClientASLocalMetadataId);
-						}
-					}
-					else {
-						String issuer = oidcProviderMetadata.getIssuer(
-						).toString();
-
-						try (PreparedStatement preparedStatement2 =
-								 connection.prepareStatement(
-									 "update OAuthClientASLocalMetadata set " +
-									 "issuer = ? WHERE " +
-									 "oAuthClientASLocalMetadataId = ?")) {
-
-							preparedStatement2.setString(1, issuer);
-							preparedStatement2.setLong(
-								2, oAuthClientASLocalMetadataId);
-
-							preparedStatement2.execute();
-						}
-					}
-				} else {
+				if (Validator.isNull(metadataJSON)) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to update value for issuer for the " +
-							"oAuthClientASLocalMetadataId " +
-							oAuthClientASLocalMetadataId);
+								"oAuthClientASLocalMetadataId " +
+									oAuthClientASLocalMetadataId);
+					}
+
+					continue;
+				}
+
+				OIDCProviderMetadata oidcProviderMetadata =
+					OIDCProviderMetadata.parse(metadataJSON);
+
+				if ((oidcProviderMetadata == null) ||
+					(oidcProviderMetadata.getIssuer() == null)) {
+
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to update value for issuer for the " +
+								"oAuthClientASLocalMetadataId " +
+									oAuthClientASLocalMetadataId);
+					}
+				}
+				else {
+					String issuer = oidcProviderMetadata.getIssuer(
+					).toString();
+
+					try (PreparedStatement preparedStatement2 =
+							connection.prepareStatement(
+								"update OAuthClientASLocalMetadata set " +
+									"issuer = ? WHERE " +
+										"oAuthClientASLocalMetadataId = ?")) {
+
+						preparedStatement2.setString(1, issuer);
+						preparedStatement2.setLong(
+							2, oAuthClientASLocalMetadataId);
+
+						preparedStatement2.execute();
 					}
 				}
 			}

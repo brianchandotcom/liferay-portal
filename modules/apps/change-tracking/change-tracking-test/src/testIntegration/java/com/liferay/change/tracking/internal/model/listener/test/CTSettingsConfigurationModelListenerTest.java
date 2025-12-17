@@ -107,7 +107,6 @@ public class CTSettingsConfigurationModelListenerTest {
 			Assert.assertFalse(
 				_ctCollectionModelResourcePermission.contains(
 					permissionChecker, ctCollection1, CTActionKeys.PUBLISH));
-
 			Assert.assertFalse(
 				_ctCollectionModelResourcePermission.contains(
 					permissionChecker, ctCollection2, CTActionKeys.PUBLISH));

@@ -71,6 +71,12 @@ public class GetObjectFieldInfoMVCResourceCommand
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
 			JSONUtil.put(
+				"defaultValueSidebarElements",
+				() -> ObjectCodeEditorUtil.getCodeEditorElements(
+					true, true, false, locale,
+					objectField.getObjectDefinitionId(),
+					objectField1 -> !objectField1.isSystem())
+			).put(
 				"objectFieldBusinessTypes",
 				ObjectFieldBusinessTypeUtil.getObjectFieldBusinessTypeMaps(
 					locale,
@@ -111,7 +117,7 @@ public class GetObjectFieldInfoMVCResourceCommand
 							equals(ddmExpressionFunction),
 					ddmExpressionOperator -> true, true, false, locale,
 					objectDefinition.getObjectDefinitionId(),
-					objectField1 -> !objectField1.compareBusinessType(
+					objectField2 -> !objectField2.compareBusinessType(
 						ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION))
 			).put(
 				"sidebarElements",
@@ -127,15 +133,15 @@ public class GetObjectFieldInfoMVCResourceCommand
 									ddmExpressionOperator),
 							false, true, locale,
 							objectField.getObjectDefinitionId(),
-							objectField2 ->
+							objectField3 ->
 								_filterableObjectFieldBusinessTypes.contains(
-									objectField2.getBusinessType()));
+									objectField3.getBusinessType()));
 					}
 
 					return ObjectCodeEditorUtil.getCodeEditorElements(
 						true, false, false, locale,
 						objectField.getObjectDefinitionId(),
-						objectField3 -> !objectField3.isSystem());
+						objectField4 -> !objectField4.isSystem());
 				}
 			));
 	}

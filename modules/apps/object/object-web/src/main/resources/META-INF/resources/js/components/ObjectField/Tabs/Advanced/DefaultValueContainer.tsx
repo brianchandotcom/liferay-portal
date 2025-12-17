@@ -38,12 +38,12 @@ interface DefaultValueContainerProps {
 	ckEditor5Config?: object;
 	creationLanguageId: Liferay.Language.Locale;
 	decimalSeparator: string;
+	defaultValueSidebarElements: SidebarCategory[];
 	errors: ObjectFieldErrors;
 	learnResources: ILearnResourceContext;
 	modelBuilder?: boolean;
 	onSubmit?: (values?: Partial<ObjectField>) => void;
 	setValues: (value: Partial<ObjectField>) => void;
-	sidebarElements: SidebarCategory[];
 	values: Partial<ObjectField>;
 }
 
@@ -87,12 +87,12 @@ export function DefaultValueContainer({
 	ckEditor5Config,
 	creationLanguageId,
 	decimalSeparator,
+	defaultValueSidebarElements,
 	errors,
 	learnResources,
 	modelBuilder = false,
 	onSubmit,
 	setValues,
-	sidebarElements,
 	values,
 }: DefaultValueContainerProps) {
 	const {defaultValue, defaultValueType} =
@@ -291,7 +291,8 @@ export function DefaultValueContainer({
 							parentWindow.Liferay.fire(
 								'openExpressionBuilderModal',
 								{
-									eventSidebarElements: sidebarElements,
+									eventSidebarElements:
+										defaultValueSidebarElements,
 									onSave: (script: string) => {
 										setValues({
 											objectFieldSettings:

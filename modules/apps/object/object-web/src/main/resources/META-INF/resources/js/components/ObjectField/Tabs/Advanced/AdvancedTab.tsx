@@ -17,6 +17,7 @@ interface AdvancedTabProps {
 	containerWrapper: ElementType;
 	creationLanguageId: Liferay.Language.Locale;
 	decimalSeparator: string;
+	defaultValueSidebarElements: SidebarCategory[];
 	errors: ObjectFieldErrors;
 	isDefaultStorageType: boolean;
 	isRootDescendantNode: boolean;
@@ -25,7 +26,6 @@ interface AdvancedTabProps {
 	onSubmit?: () => void;
 	readOnlySidebarElements: SidebarCategory[];
 	setValues: (value: Partial<ObjectField>) => void;
-	sidebarElements: SidebarCategory[];
 	values: Partial<ObjectField>;
 }
 
@@ -34,6 +34,7 @@ export function AdvancedTab({
 	containerWrapper: ContainerWrapper,
 	creationLanguageId,
 	decimalSeparator,
+	defaultValueSidebarElements,
 	errors,
 	isDefaultStorageType,
 	isRootDescendantNode,
@@ -42,7 +43,6 @@ export function AdvancedTab({
 	onSubmit,
 	readOnlySidebarElements,
 	setValues,
-	sidebarElements,
 	values,
 }: AdvancedTabProps) {
 	const disabledReadyOnly =
@@ -96,12 +96,14 @@ export function AdvancedTab({
 						ckEditor5Config={ckEditor5Config}
 						creationLanguageId={creationLanguageId}
 						decimalSeparator={decimalSeparator}
+						defaultValueSidebarElements={
+							defaultValueSidebarElements
+						}
 						errors={errors}
 						learnResources={learnResources}
 						modelBuilder={modelBuilder}
 						onSubmit={onSubmit}
 						setValues={setValues}
-						sidebarElements={sidebarElements}
 						values={values}
 					/>
 				</ContainerWrapper>

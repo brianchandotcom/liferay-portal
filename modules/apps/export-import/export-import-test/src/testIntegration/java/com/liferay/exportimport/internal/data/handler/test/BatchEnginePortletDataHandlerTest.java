@@ -8,6 +8,9 @@ package com.liferay.exportimport.internal.data.handler.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
+import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
@@ -351,6 +354,11 @@ public class BatchEnginePortletDataHandlerTest {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
+		DepotEntry depotEntry = _addDepotEntry();
+
+		FileEntry depotEntryFileEntry = _addImageFileEntry(
+			depotEntry.getGroupId());
+
 		Group globalGroup = company.getGroup();
 
 		FileEntry globalGroupFileEntry = _addImageFileEntry(
@@ -368,6 +376,7 @@ public class BatchEnginePortletDataHandlerTest {
 			company.getCompanyId());
 
 		String[] imgTags = {
+			_getImgTag(_getPreviewURL(depotEntryFileEntry)),
 			_getImgTag(_getPreviewURL(globalGroupFileEntry)),
 			_getImgTag(_getPreviewURL(group1FileEntry)),
 			_getImgTag(_getPreviewURL(group2FileEntry))
@@ -379,6 +388,8 @@ public class BatchEnginePortletDataHandlerTest {
 			imgTags, imgTags, ObjectDefinitionConstants.SCOPE_COMPANY,
 			companyGroup, companyGroup);
 
+		_dlAppLocalService.deleteFileEntry(
+			depotEntryFileEntry.getFileEntryId());
 		_dlAppLocalService.deleteFileEntry(
 			globalGroupFileEntry.getFileEntryId());
 		_dlAppLocalService.deleteFileEntry(group1FileEntry.getFileEntryId());
@@ -670,6 +681,11 @@ public class BatchEnginePortletDataHandlerTest {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
+		DepotEntry depotEntry = _addDepotEntry();
+
+		FileEntry depotEntryFileEntry = _addImageFileEntry(
+			depotEntry.getGroupId());
+
 		Group globalGroup = company.getGroup();
 
 		FileEntry globalGroupFileEntry = _addImageFileEntry(
@@ -688,13 +704,14 @@ public class BatchEnginePortletDataHandlerTest {
 		Group targetGroup = GroupTestUtil.addGroup();
 
 		String[] currentImgTags = {
+			_getImgTag(_getPreviewURL(depotEntryFileEntry)),
 			_getImgTag(_getPreviewURL(globalGroupFileEntry)),
 			_getImgTag(_getPreviewURL(otherGroupFileEntry)),
 			_getImgTag(_getPreviewURL(sourceGroupFileEntry))
 		};
 
 		String[] expectedImgTags = {
-			currentImgTags[0], currentImgTags[1],
+			currentImgTags[0], currentImgTags[1], currentImgTags[1],
 			_getImgTag(_getPreviewURL(sourceGroupFileEntry, targetGroup))
 		};
 
@@ -705,6 +722,8 @@ public class BatchEnginePortletDataHandlerTest {
 			currentImgTags, expectedImgTags,
 			ObjectDefinitionConstants.SCOPE_SITE, sourceGroup, targetGroup);
 
+		_dlAppLocalService.deleteFileEntry(
+			depotEntryFileEntry.getFileEntryId());
 		_dlAppLocalService.deleteFileEntry(
 			globalGroupFileEntry.getFileEntryId());
 		_dlAppLocalService.deleteFileEntry(
@@ -1068,6 +1087,18 @@ public class BatchEnginePortletDataHandlerTest {
 
 		protected long id;
 
+	}
+
+	private DepotEntry _addDepotEntry() throws Exception {
+		return _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			DepotConstants.TYPE_ASSET_LIBRARY,
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	private DLFileEntry _addDLFileEntry(String content, long groupId)
@@ -2247,6 +2278,9 @@ public class BatchEnginePortletDataHandlerTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;

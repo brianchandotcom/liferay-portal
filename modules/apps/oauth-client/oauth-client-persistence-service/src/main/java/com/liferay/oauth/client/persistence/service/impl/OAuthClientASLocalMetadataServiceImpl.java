@@ -111,8 +111,9 @@ public class OAuthClientASLocalMetadataServiceImpl
 		throws PortalException {
 
 		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
-			oAuthClientASLocalMetadataLocalService.
-				fetchOAuthClientASLocalMetadata(oAuthClientASLocalMetadataId);
+			oAuthClientASLocalMetadataPersistence.
+				fetchByOAuthClientASLocalMetadataId(
+					oAuthClientASLocalMetadataId);
 
 		if (oAuthClientASLocalMetadata != null) {
 			_oAuthClientASLocalMetadataModelResourcePermission.check(
@@ -129,8 +130,7 @@ public class OAuthClientASLocalMetadataServiceImpl
 		throws PortalException {
 
 		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
-			oAuthClientASLocalMetadataLocalService.
-				fetchOAuthClientASLocalMetadata(companyId, issuer);
+			oAuthClientASLocalMetadataPersistence.fetchByC_I(companyId, issuer);
 
 		if (oAuthClientASLocalMetadata != null) {
 			_oAuthClientASLocalMetadataModelResourcePermission.check(
@@ -165,7 +165,7 @@ public class OAuthClientASLocalMetadataServiceImpl
 		throws PortalException {
 
 		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
-			oAuthClientASLocalMetadataPersistence.fetchByC_L_First(
+			oAuthClientASLocalMetadataPersistence.findByC_L_First(
 				companyId, enabled, orderByComparator);
 
 		_oAuthClientASLocalMetadataModelResourcePermission.check(
@@ -181,8 +181,7 @@ public class OAuthClientASLocalMetadataServiceImpl
 		throws PortalException {
 
 		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
-			oAuthClientASLocalMetadataLocalService.
-				fetchOAuthClientASLocalMetadata(companyId, issuer);
+			oAuthClientASLocalMetadataPersistence.findByC_I(companyId, issuer);
 
 		_oAuthClientASLocalMetadataModelResourcePermission.check(
 			getPermissionChecker(), oAuthClientASLocalMetadata,
@@ -197,8 +196,8 @@ public class OAuthClientASLocalMetadataServiceImpl
 		throws PortalException {
 
 		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
-			oAuthClientASLocalMetadataLocalService.
-				getOAuthClientASLocalMetadata(localWellKnownURI);
+			oAuthClientASLocalMetadataPersistence.findByLocalWellKnownURI(
+				localWellKnownURI);
 
 		_oAuthClientASLocalMetadataModelResourcePermission.check(
 			getPermissionChecker(), oAuthClientASLocalMetadata,
@@ -233,8 +232,9 @@ public class OAuthClientASLocalMetadataServiceImpl
 
 		_oAuthClientASLocalMetadataModelResourcePermission.check(
 			getPermissionChecker(),
-			oAuthClientASLocalMetadataLocalService.
-				getOAuthClientASLocalMetadata(oAuthClientASLocalMetadataId),
+			oAuthClientASLocalMetadataPersistence.
+				findByOAuthClientASLocalMetadataId(
+					oAuthClientASLocalMetadataId),
 			ActionKeys.UPDATE);
 
 		return oAuthClientASLocalMetadataLocalService.
@@ -252,8 +252,8 @@ public class OAuthClientASLocalMetadataServiceImpl
 
 		_oAuthClientASLocalMetadataModelResourcePermission.check(
 			getPermissionChecker(),
-			oAuthClientASLocalMetadataLocalService.
-				getOAuthClientASLocalMetadata(oAuthClientASLocalMetadataId),
+			oAuthClientASLocalMetadataPersistence.findByPrimaryKey(
+				oAuthClientASLocalMetadataId),
 			ActionKeys.UPDATE);
 
 		return oAuthClientASLocalMetadataLocalService.

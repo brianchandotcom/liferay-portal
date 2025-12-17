@@ -126,7 +126,7 @@ public class RAGService extends BaseService {
 				StringUtil.replace(
 					StringUtil.read(
 						RAGService.class.getResourceAsStream(
-							"/instructions.md")),
+							"/prompt.md")),
 					new String[] {"${documents}", "${query}"},
 					new String[] {sb.toString(), query})
 			).call(

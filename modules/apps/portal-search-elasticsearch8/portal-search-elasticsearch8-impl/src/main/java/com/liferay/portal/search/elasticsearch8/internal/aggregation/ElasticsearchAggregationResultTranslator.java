@@ -49,7 +49,6 @@ import co.elastic.clients.elasticsearch._types.aggregations.StringTermsBucket;
 import co.elastic.clients.elasticsearch._types.aggregations.SumAggregate;
 import co.elastic.clients.elasticsearch._types.aggregations.TDigestPercentileRanksAggregate;
 import co.elastic.clients.elasticsearch._types.aggregations.TDigestPercentilesAggregate;
-import co.elastic.clients.elasticsearch._types.aggregations.TopHitsAggregate;
 import co.elastic.clients.elasticsearch._types.aggregations.ValueCountAggregate;
 import co.elastic.clients.elasticsearch._types.aggregations.WeightedAvgAggregate;
 
@@ -703,7 +702,7 @@ public class ElasticsearchAggregationResultTranslator
 			StringTermsAggregate stringTermsAggregate = _aggregate.sterms();
 
 			return _translateStringTermBuckets(
-				termsAggregation, stringTermsAggregate.buckets(),
+				stringTermsAggregate.buckets(),
 				_aggregationResults.terms(
 					termsAggregation.getName(),
 					stringTermsAggregate.docCountErrorUpperBound(),
@@ -727,11 +726,9 @@ public class ElasticsearchAggregationResultTranslator
 	public TopHitsAggregationResult visit(
 		TopHitsAggregation topHitsAggregation) {
 
-		TopHitsAggregate topHitsAggregate = _aggregate.topHits();
-
 		return _aggregationResults.topHits(
 			topHitsAggregation.getName(),
-			_hitsMetadataTranslator.translate(topHitsAggregate.hits()));
+			_hitsMetadataTranslator.translate(null));
 	}
 
 	@Override
@@ -800,7 +797,7 @@ public class ElasticsearchAggregationResultTranslator
 				buckets.array(),
 				longTermsBucket -> {
 					Bucket bucket = bucketAggregationResult.addBucket(
-						longTermsBucket.key(), longTermsBucket.docCount());
+						null, longTermsBucket.docCount());
 
 					_addBucketChildAggregationResults(
 						aggregation, longTermsBucket.aggregations(), bucket);
@@ -811,7 +808,7 @@ public class ElasticsearchAggregationResultTranslator
 				buckets.keyed(),
 				(key, longTermsBucket) -> {
 					Bucket bucket = bucketAggregationResult.addBucket(
-						longTermsBucket.key(), longTermsBucket.docCount());
+						null, longTermsBucket.docCount());
 
 					_addBucketChildAggregationResults(
 						aggregation, longTermsBucket.aggregations(), bucket);
@@ -852,29 +849,18 @@ public class ElasticsearchAggregationResultTranslator
 	}
 
 	private <T extends BucketAggregationResult> T _translateStringTermBuckets(
-		Aggregation aggregation, Buckets<StringTermsBucket> buckets,
-		T bucketAggregationResult) {
+		Buckets<StringTermsBucket> buckets, T bucketAggregationResult) {
 
 		if (buckets.isArray()) {
 			ListUtil.isNotEmptyForEach(
 				buckets.array(),
 				stringTermsBucket -> {
-					Bucket bucket = bucketAggregationResult.addBucket(
-						stringTermsBucket.key(), stringTermsBucket.docCount());
-
-					_addBucketChildAggregationResults(
-						aggregation, stringTermsBucket.aggregations(), bucket);
 				});
 		}
 		else {
 			MapUtil.isNotEmptyForEach(
 				buckets.keyed(),
 				(key, stringTermsBucket) -> {
-					Bucket bucket = bucketAggregationResult.addBucket(
-						stringTermsBucket.key(), stringTermsBucket.docCount());
-
-					_addBucketChildAggregationResults(
-						aggregation, stringTermsBucket.aggregations(), bucket);
 				});
 		}
 

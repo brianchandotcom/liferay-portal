@@ -14,11 +14,9 @@ import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationResultTranslator;
 import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.elasticsearch8.internal.SearchHitDocumentTranslator;
-import com.liferay.portal.search.elasticsearch8.internal.aggregation.AggregationResultTranslatorFactory;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.ElasticsearchAggregationResultTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.ElasticsearchAggregationResultsTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.ElasticsearchPipelineAggregationResultTranslator;
-import com.liferay.portal.search.elasticsearch8.internal.aggregation.PipelineAggregationResultTranslatorFactory;
 import com.liferay.portal.search.elasticsearch8.internal.hits.HitsMetadataTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.search.response.SearchResponseTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.stats.StatsTranslator;
@@ -52,9 +50,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = SearchSearchResponseAssembler.class)
 public class SearchSearchResponseAssemblerImpl
-	implements AggregationResultTranslatorFactory,
-			   PipelineAggregationResultTranslatorFactory,
-			   SearchSearchResponseAssembler {
+	implements SearchSearchResponseAssembler {
 
 	@Override
 	public void assemble(
@@ -78,27 +74,25 @@ public class SearchSearchResponseAssemblerImpl
 			searchSearchResponse, searchResponse, searchSearchRequest);
 	}
 
-	@Override
 	public AggregationResultTranslator createAggregationResultTranslator(
 		org.elasticsearch.search.aggregations.Aggregation
 			elasticsearchAggregation) {
 
 		return new ElasticsearchAggregationResultTranslator(
-			elasticsearchAggregation, _aggregationResults, _geoBuilders,
+			null, _aggregationResults, _geoBuilders,
 			new HitsMetadataTranslator(
 				_searchHitBuilderFactory, _searchHitsBuilderFactory,
 				_documentBuilderFactory, _highlightFieldBuilderFactory,
 				_geoBuilders));
 	}
 
-	@Override
 	public PipelineAggregationResultTranslator
 		createPipelineAggregationResultTranslator(
 			org.elasticsearch.search.aggregations.Aggregation
 				elasticsearchAggregation) {
 
 		return new ElasticsearchPipelineAggregationResultTranslator(
-			elasticsearchAggregation, _aggregationResults);
+			null, _aggregationResults);
 	}
 
 	@Activate
@@ -141,12 +135,11 @@ public class SearchSearchResponseAssemblerImpl
 		ElasticsearchAggregationResultsTranslator
 			elasticsearchAggregationResultsTranslator =
 				new ElasticsearchAggregationResultsTranslator(
-					aggregationsMap::get, this, pipelineAggregationsMap::get,
-					this);
+					aggregationsMap::get, null, pipelineAggregationsMap::get,
+					null);
 
 		List<AggregationResult> aggregationResults =
-			elasticsearchAggregationResultsTranslator.translate(
-				elasticsearchAggregations);
+			elasticsearchAggregationResultsTranslator.translate(null);
 
 		for (AggregationResult aggregationResult : aggregationResults) {
 			searchSearchResponse.addAggregationResult(aggregationResult);

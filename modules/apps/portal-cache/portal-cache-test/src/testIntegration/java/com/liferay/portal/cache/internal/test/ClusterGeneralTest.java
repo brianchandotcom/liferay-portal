@@ -238,13 +238,11 @@ public class ClusterGeneralTest implements Serializable {
 			TomcatNode tomcatNode1, TomcatNode tomcatNode2)
 		throws Exception {
 
-		long originalTimeoutNode1 =
-			_setAndGetClusterableAdviceCallMasterTimeout(tomcatNode1, 0L);
+		try (AutoCloseable autoCloseable1 =
+				_disableClusterableAdviceCallMasterTimeout(tomcatNode1);
+			AutoCloseable autoCloseable2 =
+				_disableClusterableAdviceCallMasterTimeout(tomcatNode2)) {
 
-		long originalTimeoutNode2 =
-			_setAndGetClusterableAdviceCallMasterTimeout(tomcatNode2, 0L);
-
-		try {
 			long companyId = tomcatNode1.syncExecute(
 				() -> {
 					Company company = CompanyTestUtil.addCompany();
@@ -278,13 +276,6 @@ public class ClusterGeneralTest implements Serializable {
 
 						return CompanyLocalServiceUtil.fetchCompany(companyId);
 					}));
-		}
-		finally {
-			_setAndGetClusterableAdviceCallMasterTimeout(
-				tomcatNode1, originalTimeoutNode1);
-
-			_setAndGetClusterableAdviceCallMasterTimeout(
-				tomcatNode2, originalTimeoutNode2);
 		}
 	}
 
@@ -327,6 +318,21 @@ public class ClusterGeneralTest implements Serializable {
 
 					return clusterNodes.contains(clusterNode1);
 				}));
+	}
+
+	private AutoCloseable _disableClusterableAdviceCallMasterTimeout(
+			TomcatNode tomcatNode)
+		throws Exception {
+
+		long originaTimeout = tomcatNode.syncExecute(
+			() -> ReflectionTestUtil.getAndSetFieldValue(
+				ClusterableInvokerUtil.class,
+				"_CLUSTERABLE_ADVICE_CALL_MASTER_TIMEOUT", 0L));
+
+		return () -> tomcatNode.syncExecute(
+			() -> ReflectionTestUtil.getAndSetFieldValue(
+				ClusterableInvokerUtil.class,
+				"_CLUSTERABLE_ADVICE_CALL_MASTER_TIMEOUT", originaTimeout));
 	}
 
 	private MVCActionCommand _getEditServerMVCActionCommand()
@@ -408,16 +414,6 @@ public class ClusterGeneralTest implements Serializable {
 		// Assert mutual visibility with the new restart node
 
 		_assertNodesVisibleToEachOther(restartTomcatNode, verifierTomcatNode);
-	}
-
-	private long _setAndGetClusterableAdviceCallMasterTimeout(
-			TomcatNode tomcatNode, long timeout)
-		throws Exception {
-
-		return tomcatNode.syncExecute(
-			() -> ReflectionTestUtil.getAndSetFieldValue(
-				ClusterableInvokerUtil.class,
-				"_CLUSTERABLE_ADVICE_CALL_MASTER_TIMEOUT", timeout));
 	}
 
 	private void _testCanUpdateLogLevelsForAllNodes(

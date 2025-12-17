@@ -189,10 +189,12 @@ export class ExportImportPage {
 		expectedUploadErrorMessage,
 		filePath,
 		taskStatus = 'success',
+		timeout,
 	}: {
 		expectedUploadErrorMessage?: string;
 		filePath: string;
 		taskStatus?: 'success' | 'completedWithErrors';
+		timeout?: number;
 	}) {
 		await this.newImportButton.click();
 
@@ -252,7 +254,9 @@ export class ExportImportPage {
 		await this.importButton.click();
 
 		const fileName = path.basename(filePath);
-		await expect(this.taskStatusLabel(fileName, taskStatus)).toBeVisible();
+		await expect(this.taskStatusLabel(fileName, taskStatus)).toBeVisible({
+			timeout,
+		});
 	}
 
 	async getExportableItems() {

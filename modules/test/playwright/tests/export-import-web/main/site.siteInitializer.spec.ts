@@ -160,11 +160,7 @@ const testWithExportImportAtInstanceLevelFF = mergeTests(
 				async () => {
 					await exportImportPage.goToImport(site2.friendlyUrlPath);
 
-					await exportImportPage.import(exportFilePath);
-
-					await exportImportPage
-						.taskSuccessLabel(exportName)
-						.waitFor();
+					await exportImportPage.import({filePath: exportFilePath});
 				}
 			);
 
@@ -397,11 +393,10 @@ testWithExportImportAtInstanceLevelFF(
 				async () => {
 					await exportImportPage.goToImport(site2.friendlyUrlPath);
 
-					await exportImportPage.import(exportFilePath);
-
-					await expect(
-						exportImportPage.taskSuccessLabel(exportName)
-					).toBeVisible({timeout: 60000});
+					await exportImportPage.import({
+						filePath: exportFilePath,
+						timeout: 60000,
+					});
 				}
 			);
 

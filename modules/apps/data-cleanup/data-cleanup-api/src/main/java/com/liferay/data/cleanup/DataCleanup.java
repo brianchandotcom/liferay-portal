@@ -27,7 +27,7 @@ public abstract class DataCleanup {
 		if (ReleaseLocalServiceUtil.fetchRelease(getServletContextName()) ==
 				null) {
 
-			_isEnabled.set(false);
+			_enabled.set(false);
 		}
 	}
 
@@ -38,11 +38,11 @@ public abstract class DataCleanup {
 	public abstract String getType();
 
 	public boolean isEnabled() {
-		return _isEnabled.get();
+		return _enabled.get();
 	}
 
 	protected abstract void doCleanup() throws Exception;
 
-	private final AtomicBoolean _isEnabled = new AtomicBoolean(true);
+	private final AtomicBoolean _enabled = new AtomicBoolean(true);
 
 }

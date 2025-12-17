@@ -219,7 +219,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 						</div>
 
 						<div class="autofit-col">
-							<aui:button cssClass="save-server-button" data-cmd="<%= systemDataCleanup.getLabel() %>" value="execute" />
+							<aui:button cssClass="save-server-button" data-cmd="<%= systemDataCleanup.getLabel() %>" disabled="<%= !systemDataCleanup.isEnabled() %>" value="execute" />
 						</div>
 					</li>
 

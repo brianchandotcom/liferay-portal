@@ -73,9 +73,15 @@ public class LayoutWrapper
 		attributes.put(
 			"masterLayoutPageTemplateEntryERC",
 			getMasterLayoutPageTemplateEntryERC());
-		attributes.put("layoutPrototypeUuid", getLayoutPrototypeUuid());
 		attributes.put(
-			"layoutPrototypeLinkEnabled", isLayoutPrototypeLinkEnabled());
+			"portletLayoutPageTemplateEntryERC",
+			getPortletLayoutPageTemplateEntryERC());
+		attributes.put(
+			"portletLayoutPageTemplateEntryScopeERC",
+			getPortletLayoutPageTemplateEntryScopeERC());
+		attributes.put(
+			"portletLayoutPageTemplateEntryLinkEnabled",
+			isPortletLayoutPageTemplateEntryLinkEnabled());
 		attributes.put(
 			"layoutSetPrototypeLayoutERC", getLayoutSetPrototypeLayoutERC());
 		attributes.put("publishDate", getPublishDate());
@@ -311,18 +317,29 @@ public class LayoutWrapper
 				masterLayoutPageTemplateEntryERC);
 		}
 
-		String layoutPrototypeUuid = (String)attributes.get(
-			"layoutPrototypeUuid");
+		String portletLayoutPageTemplateEntryERC = (String)attributes.get(
+			"portletLayoutPageTemplateEntryERC");
 
-		if (layoutPrototypeUuid != null) {
-			setLayoutPrototypeUuid(layoutPrototypeUuid);
+		if (portletLayoutPageTemplateEntryERC != null) {
+			setPortletLayoutPageTemplateEntryERC(
+				portletLayoutPageTemplateEntryERC);
 		}
 
-		Boolean layoutPrototypeLinkEnabled = (Boolean)attributes.get(
-			"layoutPrototypeLinkEnabled");
+		String portletLayoutPageTemplateEntryScopeERC = (String)attributes.get(
+			"portletLayoutPageTemplateEntryScopeERC");
 
-		if (layoutPrototypeLinkEnabled != null) {
-			setLayoutPrototypeLinkEnabled(layoutPrototypeLinkEnabled);
+		if (portletLayoutPageTemplateEntryScopeERC != null) {
+			setPortletLayoutPageTemplateEntryScopeERC(
+				portletLayoutPageTemplateEntryScopeERC);
+		}
+
+		Boolean portletLayoutPageTemplateEntryLinkEnabled =
+			(Boolean)attributes.get(
+				"portletLayoutPageTemplateEntryLinkEnabled");
+
+		if (portletLayoutPageTemplateEntryLinkEnabled != null) {
+			setPortletLayoutPageTemplateEntryLinkEnabled(
+				portletLayoutPageTemplateEntryLinkEnabled);
 		}
 
 		String layoutSetPrototypeLayoutERC = (String)attributes.get(
@@ -946,26 +963,6 @@ public class LayoutWrapper
 	}
 
 	/**
-	 * Returns the layout prototype link enabled of this layout.
-	 *
-	 * @return the layout prototype link enabled of this layout
-	 */
-	@Override
-	public boolean getLayoutPrototypeLinkEnabled() {
-		return model.getLayoutPrototypeLinkEnabled();
-	}
-
-	/**
-	 * Returns the layout prototype uuid of this layout.
-	 *
-	 * @return the layout prototype uuid of this layout
-	 */
-	@Override
-	public String getLayoutPrototypeUuid() {
-		return model.getLayoutPrototypeUuid();
-	}
-
-	/**
 	 * Returns the current layout's {@link LayoutSet}.
 	 *
 	 * @return the current layout's layout set
@@ -1150,6 +1147,36 @@ public class LayoutWrapper
 	@Override
 	public long getPlid() {
 		return model.getPlid();
+	}
+
+	/**
+	 * Returns the portlet layout page template entry erc of this layout.
+	 *
+	 * @return the portlet layout page template entry erc of this layout
+	 */
+	@Override
+	public String getPortletLayoutPageTemplateEntryERC() {
+		return model.getPortletLayoutPageTemplateEntryERC();
+	}
+
+	/**
+	 * Returns the portlet layout page template entry link enabled of this layout.
+	 *
+	 * @return the portlet layout page template entry link enabled of this layout
+	 */
+	@Override
+	public boolean getPortletLayoutPageTemplateEntryLinkEnabled() {
+		return model.getPortletLayoutPageTemplateEntryLinkEnabled();
+	}
+
+	/**
+	 * Returns the portlet layout page template entry scope erc of this layout.
+	 *
+	 * @return the portlet layout page template entry scope erc of this layout
+	 */
+	@Override
+	public String getPortletLayoutPageTemplateEntryScopeERC() {
+		return model.getPortletLayoutPageTemplateEntryScopeERC();
 	}
 
 	/**
@@ -1782,16 +1809,6 @@ public class LayoutWrapper
 		return model.isLayoutPrototypeLinkActive();
 	}
 
-	/**
-	 * Returns <code>true</code> if this layout is layout prototype link enabled.
-	 *
-	 * @return <code>true</code> if this layout is layout prototype link enabled; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isLayoutPrototypeLinkEnabled() {
-		return model.isLayoutPrototypeLinkEnabled();
-	}
-
 	@Override
 	public boolean isLayoutSortable() {
 		return model.isLayoutSortable();
@@ -1815,6 +1832,16 @@ public class LayoutWrapper
 	@Override
 	public boolean isPortletEmbedded(String portletId, long groupId) {
 		return model.isPortletEmbedded(portletId, groupId);
+	}
+
+	/**
+	 * Returns <code>true</code> if this layout is portlet layout page template entry link enabled.
+	 *
+	 * @return <code>true</code> if this layout is portlet layout page template entry link enabled; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isPortletLayoutPageTemplateEntryLinkEnabled() {
+		return model.isPortletLayoutPageTemplateEntryLinkEnabled();
 	}
 
 	/**
@@ -2279,28 +2306,6 @@ public class LayoutWrapper
 		model.setLayoutId(layoutId);
 	}
 
-	/**
-	 * Sets whether this layout is layout prototype link enabled.
-	 *
-	 * @param layoutPrototypeLinkEnabled the layout prototype link enabled of this layout
-	 */
-	@Override
-	public void setLayoutPrototypeLinkEnabled(
-		boolean layoutPrototypeLinkEnabled) {
-
-		model.setLayoutPrototypeLinkEnabled(layoutPrototypeLinkEnabled);
-	}
-
-	/**
-	 * Sets the layout prototype uuid of this layout.
-	 *
-	 * @param layoutPrototypeUuid the layout prototype uuid of this layout
-	 */
-	@Override
-	public void setLayoutPrototypeUuid(String layoutPrototypeUuid) {
-		model.setLayoutPrototypeUuid(layoutPrototypeUuid);
-	}
-
 	@Override
 	public void setLayoutSet(LayoutSet layoutSet) {
 		model.setLayoutSet(layoutSet);
@@ -2442,6 +2447,45 @@ public class LayoutWrapper
 	@Override
 	public void setPlid(long plid) {
 		model.setPlid(plid);
+	}
+
+	/**
+	 * Sets the portlet layout page template entry erc of this layout.
+	 *
+	 * @param portletLayoutPageTemplateEntryERC the portlet layout page template entry erc of this layout
+	 */
+	@Override
+	public void setPortletLayoutPageTemplateEntryERC(
+		String portletLayoutPageTemplateEntryERC) {
+
+		model.setPortletLayoutPageTemplateEntryERC(
+			portletLayoutPageTemplateEntryERC);
+	}
+
+	/**
+	 * Sets whether this layout is portlet layout page template entry link enabled.
+	 *
+	 * @param portletLayoutPageTemplateEntryLinkEnabled the portlet layout page template entry link enabled of this layout
+	 */
+	@Override
+	public void setPortletLayoutPageTemplateEntryLinkEnabled(
+		boolean portletLayoutPageTemplateEntryLinkEnabled) {
+
+		model.setPortletLayoutPageTemplateEntryLinkEnabled(
+			portletLayoutPageTemplateEntryLinkEnabled);
+	}
+
+	/**
+	 * Sets the portlet layout page template entry scope erc of this layout.
+	 *
+	 * @param portletLayoutPageTemplateEntryScopeERC the portlet layout page template entry scope erc of this layout
+	 */
+	@Override
+	public void setPortletLayoutPageTemplateEntryScopeERC(
+		String portletLayoutPageTemplateEntryScopeERC) {
+
+		model.setPortletLayoutPageTemplateEntryScopeERC(
+			portletLayoutPageTemplateEntryScopeERC);
 	}
 
 	/**

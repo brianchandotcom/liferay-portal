@@ -26,6 +26,8 @@ import com.liferay.headless.admin.site.client.custom.field.CustomField;
 import com.liferay.headless.admin.site.client.custom.field.CustomValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.NavigationMenu;
 import com.liferay.headless.admin.site.client.dto.v1_0.NavigationMenuItem;
+import com.liferay.headless.admin.site.client.dto.v1_0.PageNavigationMenuItemSettings;
+import com.liferay.headless.admin.site.client.dto.v1_0.URLNavigationMenuItemSettings;
 import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.pagination.Pagination;
 import com.liferay.headless.admin.site.client.permission.Permission;
@@ -36,6 +38,7 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -546,6 +549,17 @@ public class NavigationMenuResourceTest
 			CustomField.class);
 	}
 
+	private Object _getNavigationMenuItemSettings(Layout layout)
+		throws PortalException {
+
+		return new PageNavigationMenuItemSettings() {
+			{
+				setExternalReferenceCode(layout.getExternalReferenceCode());
+				setPrivatePage(GetterUtil.getBoolean(layout.isPrivateLayout()));
+			}
+		};
+	}
+
 	private ServiceContext _getServiceContext(boolean expandoBridgeAttributes)
 		throws Exception {
 
@@ -563,40 +577,6 @@ public class NavigationMenuResourceTest
 		}
 
 		return serviceContext;
-	}
-
-	private Map<String, String> _getTypeSettings(
-		Layout layout, Map<String, String> nameI18nMap, String type,
-		String useCustomName) {
-
-		HashMapBuilder.HashMapWrapper<String, String> hashMapBuilder =
-			HashMapBuilder.put(
-				"defaultLanguageId",
-				LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
-
-		for (Map.Entry<String, String> entry : nameI18nMap.entrySet()) {
-			hashMapBuilder.put(
-				"name_" + LocaleUtil.fromLanguageId(entry.getKey()),
-				nameI18nMap.get(entry.getKey()));
-		}
-
-		if (type.equals("layout")) {
-			return hashMapBuilder.put(
-				"groupId", GetterUtil.getString(layout.getGroupId())
-			).put(
-				"layoutUuid", layout.getUuid()
-			).put(
-				"privateLayout", GetterUtil.getString(layout.isPrivateLayout())
-			).put(
-				"title", layout.getTitle()
-			).put(
-				"useCustomName", useCustomName
-			).build();
-		}
-
-		return hashMapBuilder.put(
-			"useCustomName", useCustomName
-		).build();
 	}
 
 	private NavigationMenu _randomNavigationMenu(
@@ -635,6 +615,9 @@ public class NavigationMenuResourceTest
 		return new NavigationMenuItem[] {
 			new NavigationMenuItem() {
 				{
+					availableLanguages = new String[] {
+						LocaleUtil.toW3cLanguageId("en_US")
+					};
 					customFields = new CustomField[] {
 						new CustomField() {
 							{
@@ -659,10 +642,14 @@ public class NavigationMenuResourceTest
 							}
 						}
 					};
+					defaultLanguageId = "en_US";
 					name = RandomTestUtil.randomString();
 					navigationMenuItems = new NavigationMenuItem[] {
 						new NavigationMenuItem() {
 							{
+								availableLanguages = new String[] {
+									LocaleUtil.toW3cLanguageId("en_US")
+								};
 								customFields = new CustomField[] {
 									new CustomField() {
 										{
@@ -691,82 +678,87 @@ public class NavigationMenuResourceTest
 										}
 									}
 								};
+								defaultLanguageId = "en_US";
 								name = RandomTestUtil.randomString();
 								navigationMenuItems = new NavigationMenuItem[0];
+								navigationMenuItemSettings =
+									new URLNavigationMenuItemSettings() {
+										{
+											url = "https://www.google.com";
+											useNewTab = false;
+										}
+									};
 								type = "url";
-								typeSettings = HashMapBuilder.put(
-									"name_en_US", name
-								).put(
-									"url", "https://www.google.com"
-								).put(
-									"useNewTab", "false"
-								).build();
 							}
 						}
 					};
 					type = "node";
-					typeSettings = HashMapBuilder.put(
-						"defaultLanguageId", "en_US"
-					).put(
-						"name_en_US", name
-					).build();
 				}
 			}
 		};
 	}
 
 	private NavigationMenuItem[] _randomNavigationMenuItems(
-		Layout layout1, Layout layout2, Map<String, String> nameI18nMap1,
-		Map<String, String> nameI18nMap2) {
+			Layout layout1, Layout layout2, Map<String, String> nameI18nMap1,
+			Map<String, String> nameI18nMap2)
+		throws PortalException {
 
 		return new NavigationMenuItem[] {
 			new NavigationMenuItem() {
 				{
+					defaultLanguageId = LocaleUtil.toLanguageId(
+						LocaleUtil.getDefault());
 					externalReferenceCode = RandomTestUtil.randomString();
 					name_i18n = nameI18nMap1;
 					type = "node";
-					typeSettings = _getTypeSettings(
-						layout1, nameI18nMap1, "node", "false");
 					useCustomName = false;
 				}
 			},
 			new NavigationMenuItem() {
 				{
+					defaultLanguageId = LocaleUtil.toLanguageId(
+						LocaleUtil.getDefault());
 					externalReferenceCode = RandomTestUtil.randomString();
 					name_i18n = nameI18nMap1;
+					navigationMenuItemSettings = _getNavigationMenuItemSettings(
+						layout1);
 					type = "layout";
-					typeSettings = _getTypeSettings(
-						layout1, nameI18nMap1, "layout", "true");
 					useCustomName = true;
 				}
 			},
 			new NavigationMenuItem() {
 				{
+					defaultLanguageId = LocaleUtil.toLanguageId(
+						LocaleUtil.getDefault());
 					externalReferenceCode = RandomTestUtil.randomString();
 					name_i18n = nameI18nMap2;
+					navigationMenuItemSettings = _getNavigationMenuItemSettings(
+						layout1);
 					type = "layout";
-					typeSettings = _getTypeSettings(
-						layout1, nameI18nMap2, "layout", "true");
 					useCustomName = true;
 				}
 			},
 			new NavigationMenuItem() {
 				{
+					defaultLanguageId = LocaleUtil.toLanguageId(
+						LocaleUtil.getDefault());
 					externalReferenceCode = RandomTestUtil.randomString();
 					name_i18n = nameI18nMap1;
+					navigationMenuItemSettings = _getNavigationMenuItemSettings(
+						layout1);
 					type = "layout";
-					typeSettings = _getTypeSettings(
-						layout1, nameI18nMap1, "layout", "false");
 					useCustomName = false;
 				}
 			},
 			new NavigationMenuItem() {
 				{
+					defaultLanguageId = LocaleUtil.toLanguageId(
+						LocaleUtil.getDefault());
 					externalReferenceCode = RandomTestUtil.randomString();
 					name_i18n = nameI18nMap1;
+					navigationMenuItemSettings = _getNavigationMenuItemSettings(
+						layout2);
 					type = "layout";
-					typeSettings = _getTypeSettings(
-						layout2, nameI18nMap1, "layout", "false");
 					useCustomName = false;
 				}
 			}

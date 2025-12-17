@@ -44,8 +44,13 @@ public class OAuthClientASLocalMetadataWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("issuer", getIssuer());
+		attributes.put("localWellKnownEnabled", isLocalWellKnownEnabled());
 		attributes.put("localWellKnownURI", getLocalWellKnownURI());
 		attributes.put("metadataJSON", getMetadataJSON());
+		attributes.put(
+			"oAuthASLocalWellKnownURI", getOAuthASLocalWellKnownURI());
+		attributes.put("oAuthASMetadataJSON", getOAuthASMetadataJSON());
 
 		return attributes;
 	}
@@ -95,6 +100,19 @@ public class OAuthClientASLocalMetadataWrapper
 			setModifiedDate(modifiedDate);
 		}
 
+		String issuer = (String)attributes.get("issuer");
+
+		if (issuer != null) {
+			setIssuer(issuer);
+		}
+
+		Boolean localWellKnownEnabled = (Boolean)attributes.get(
+			"localWellKnownEnabled");
+
+		if (localWellKnownEnabled != null) {
+			setLocalWellKnownEnabled(localWellKnownEnabled);
+		}
+
 		String localWellKnownURI = (String)attributes.get("localWellKnownURI");
 
 		if (localWellKnownURI != null) {
@@ -105,6 +123,20 @@ public class OAuthClientASLocalMetadataWrapper
 
 		if (metadataJSON != null) {
 			setMetadataJSON(metadataJSON);
+		}
+
+		String oAuthASLocalWellKnownURI = (String)attributes.get(
+			"oAuthASLocalWellKnownURI");
+
+		if (oAuthASLocalWellKnownURI != null) {
+			setOAuthASLocalWellKnownURI(oAuthASLocalWellKnownURI);
+		}
+
+		String oAuthASMetadataJSON = (String)attributes.get(
+			"oAuthASMetadataJSON");
+
+		if (oAuthASMetadataJSON != null) {
+			setOAuthASMetadataJSON(oAuthASMetadataJSON);
 		}
 	}
 
@@ -131,6 +163,26 @@ public class OAuthClientASLocalMetadataWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the issuer of this o auth client as local metadata.
+	 *
+	 * @return the issuer of this o auth client as local metadata
+	 */
+	@Override
+	public String getIssuer() {
+		return model.getIssuer();
+	}
+
+	/**
+	 * Returns the local well known enabled of this o auth client as local metadata.
+	 *
+	 * @return the local well known enabled of this o auth client as local metadata
+	 */
+	@Override
+	public boolean getLocalWellKnownEnabled() {
+		return model.getLocalWellKnownEnabled();
 	}
 
 	/**
@@ -171,6 +223,26 @@ public class OAuthClientASLocalMetadataWrapper
 	@Override
 	public long getMvccVersion() {
 		return model.getMvccVersion();
+	}
+
+	/**
+	 * Returns the o auth as local well known uri of this o auth client as local metadata.
+	 *
+	 * @return the o auth as local well known uri of this o auth client as local metadata
+	 */
+	@Override
+	public String getOAuthASLocalWellKnownURI() {
+		return model.getOAuthASLocalWellKnownURI();
+	}
+
+	/**
+	 * Returns the o auth as metadata json of this o auth client as local metadata.
+	 *
+	 * @return the o auth as metadata json of this o auth client as local metadata
+	 */
+	@Override
+	public String getOAuthASMetadataJSON() {
+		return model.getOAuthASMetadataJSON();
 	}
 
 	/**
@@ -223,6 +295,16 @@ public class OAuthClientASLocalMetadataWrapper
 		return model.getUserUuid();
 	}
 
+	/**
+	 * Returns <code>true</code> if this o auth client as local metadata is local well known enabled.
+	 *
+	 * @return <code>true</code> if this o auth client as local metadata is local well known enabled; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isLocalWellKnownEnabled() {
+		return model.isLocalWellKnownEnabled();
+	}
+
 	@Override
 	public void persist() {
 		model.persist();
@@ -246,6 +328,26 @@ public class OAuthClientASLocalMetadataWrapper
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
+	}
+
+	/**
+	 * Sets the issuer of this o auth client as local metadata.
+	 *
+	 * @param issuer the issuer of this o auth client as local metadata
+	 */
+	@Override
+	public void setIssuer(String issuer) {
+		model.setIssuer(issuer);
+	}
+
+	/**
+	 * Sets whether this o auth client as local metadata is local well known enabled.
+	 *
+	 * @param localWellKnownEnabled the local well known enabled of this o auth client as local metadata
+	 */
+	@Override
+	public void setLocalWellKnownEnabled(boolean localWellKnownEnabled) {
+		model.setLocalWellKnownEnabled(localWellKnownEnabled);
 	}
 
 	/**
@@ -286,6 +388,26 @@ public class OAuthClientASLocalMetadataWrapper
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		model.setMvccVersion(mvccVersion);
+	}
+
+	/**
+	 * Sets the o auth as local well known uri of this o auth client as local metadata.
+	 *
+	 * @param oAuthASLocalWellKnownURI the o auth as local well known uri of this o auth client as local metadata
+	 */
+	@Override
+	public void setOAuthASLocalWellKnownURI(String oAuthASLocalWellKnownURI) {
+		model.setOAuthASLocalWellKnownURI(oAuthASLocalWellKnownURI);
+	}
+
+	/**
+	 * Sets the o auth as metadata json of this o auth client as local metadata.
+	 *
+	 * @param oAuthASMetadataJSON the o auth as metadata json of this o auth client as local metadata
+	 */
+	@Override
+	public void setOAuthASMetadataJSON(String oAuthASMetadataJSON) {
+		model.setOAuthASMetadataJSON(oAuthASMetadataJSON);
 	}
 
 	/**

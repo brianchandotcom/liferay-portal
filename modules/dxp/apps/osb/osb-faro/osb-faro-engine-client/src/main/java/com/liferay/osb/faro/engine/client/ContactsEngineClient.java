@@ -273,6 +273,9 @@ public interface ContactsEngineClient {
 	public Results<DataSource> getDataSources(
 		FaroProject faroProject, List<String> channelIds);
 
+	public List<DataSource> getDataSources(
+		FaroProject faroProject, long channelId, String provideTypeExclude);
+
 	public Results<DataSource> getDataSources(
 		FaroProject faroProject, String faroEntityId, String query, String name,
 		String providerType, List<String> states, int cur, int delta,
@@ -450,9 +453,6 @@ public interface ContactsEngineClient {
 
 	public long getSalesforceUsersCount(
 		String dataSourceId, FaroProject faroProject);
-
-	public List<DataSource> getSegmentDataSources(
-		FaroProject faroProject, long channelId, String provideTypeExclude);
 
 	public Results<String> getSessionValues(
 		FaroProject faroProject, String channelId, String fieldName,

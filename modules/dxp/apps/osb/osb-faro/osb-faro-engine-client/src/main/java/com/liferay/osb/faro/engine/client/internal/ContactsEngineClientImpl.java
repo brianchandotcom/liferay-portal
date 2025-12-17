@@ -1324,6 +1324,22 @@ public class ContactsEngineClientImpl
 	}
 
 	@Override
+	public List<DataSource> getDataSources(
+		FaroProject faroProject, long channelId, String provideTypeExclude) {
+
+		Map<String, Object> uriVariables = getUriVariables(faroProject);
+
+		uriVariables.put("channelId", channelId);
+		uriVariables.put("provideTypeExclude", provideTypeExclude);
+
+		return get(
+			faroProject, Rels.DATA_SOURCE_CHANNEL_CONNECTED,
+			new ParameterizedTypeReference<>() {
+			},
+			uriVariables);
+	}
+
+	@Override
 	public Results<DataSource> getDataSources(
 		FaroProject faroProject, String faroEntityId, String query, String name,
 		String providerType, List<String> states, int cur, int delta,
@@ -2491,22 +2507,6 @@ public class ContactsEngineClientImpl
 		}
 
 		return responseEntity.getBody();
-	}
-
-	@Override
-	public List<DataSource> getSegmentDataSources(
-		FaroProject faroProject, long channelId, String provideTypeExclude) {
-
-		Map<String, Object> uriVariables = getUriVariables(faroProject);
-
-		uriVariables.put("channelId", channelId);
-		uriVariables.put("provideTypeExclude", provideTypeExclude);
-
-		return get(
-			faroProject, Rels.DATA_SOURCE_CHANNEL_CONNECTED,
-			new ParameterizedTypeReference<>() {
-			},
-			uriVariables);
 	}
 
 	@Override

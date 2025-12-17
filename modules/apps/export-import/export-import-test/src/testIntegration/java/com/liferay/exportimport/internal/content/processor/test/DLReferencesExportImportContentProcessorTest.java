@@ -188,6 +188,44 @@ public class DLReferencesExportImportContentProcessorTest {
 	}
 
 	@Test
+	public void testExportDLReferencesInvalidReference() throws Exception {
+		_portletDataContextExport.setZipWriter(new TestReaderWriter());
+
+		_fileEntry = DLAppLocalServiceUtil.updateFileEntry(
+			TestPropsValues.getUserId(), _fileEntry.getFileEntryId(),
+			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			_fileEntry.getTitle(), _fileEntry.getTitle(), StringPool.BLANK,
+			StringPool.BLANK, DLVersionNumberIncrease.AUTOMATIC,
+			TestDataConstants.TEST_BYTE_ARRAY, null, null, null,
+			ServiceContextTestUtil.getServiceContext(
+				_sourceGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		String content = ExportImportContentProcessorTestUtil.replaceParameters(
+			_externalGroup, null, _fileEntry, "invalid_dl_references.txt",
+			_sourceGroup, null, _targetGroup, null);
+
+		List<String> urls = ExportImportContentProcessorTestUtil.getURLs(
+			content);
+
+		content =
+			_dlReferencesExportImportContentProcessor.
+				replaceExportContentReferences(
+					content, _portletDataContextExport);
+
+		for (String url : urls) {
+			Assert.assertTrue(
+				url + " must be unchanged in: " + content,
+				content.contains(url));
+		}
+
+		TestReaderWriter testReaderWriter =
+			(TestReaderWriter)_portletDataContextExport.getZipWriter();
+
+		_assertEmpty(testReaderWriter.getBinaryEntries());
+		_assertEmpty(testReaderWriter.getEntries());
+	}
+
+	@Test
 	public void testImportDLReferences1() throws Exception {
 		_testImportDLReferences(false);
 	}

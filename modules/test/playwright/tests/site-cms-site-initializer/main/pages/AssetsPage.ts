@@ -70,7 +70,7 @@ export class AssetsPage {
 			return page.getByRole('button', {exact: true, name: buttonName});
 		};
 		this.taskStatusDropdownItemButton = (taskName: string) => {
-			return page.getByRole('button', {name: taskName});
+			return page.getByText(taskName);
 		};
 		this.taskStatusDropdownList = page.locator('ul.task-status');
 		this.taskStatusFormsButton = page

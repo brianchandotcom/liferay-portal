@@ -115,6 +115,19 @@ public class FDSAdminDisplayContext {
 		).buildString();
 	}
 
+	public String getDeleteCustomDataSetURL() {
+		ResourceURL resourceURL =
+			(ResourceURL)PortalUtil.getControlPanelPortletURL(
+				_renderRequest, _themeDisplay.getScopeGroup(),
+				FDSAdminPortletKeys.FDS_ADMIN, 0, 0,
+				RenderRequest.RESOURCE_PHASE);
+
+		resourceURL.setResourceID(
+			"/frontend_data_set_admin/delete_custom_data_set");
+
+		return resourceURL.toString();
+	}
+
 	public String getEditDataSetURL() {
 		return PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(

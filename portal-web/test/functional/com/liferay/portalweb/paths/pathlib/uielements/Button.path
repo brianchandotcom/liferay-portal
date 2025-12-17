@@ -582,12 +582,12 @@
 </tr>
 <tr>
 	<td>MOVE_AVAILABLE_TO_CURRENT</td>
-	<td>//button[@aria-label='Move selected items from Available to Current.']</td>
+	<td>//button[@aria-label='Move selected items from Available to In Use.']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MOVE_CURRENT_TO_AVAILABLE</td>
-	<td>//button[@aria-label='Move selected items from Current to Available.']</td>
+	<td>//button[@aria-label='Move selected items from In Use to Available.']</td>
 	<td></td>
 </tr>
 <tr>

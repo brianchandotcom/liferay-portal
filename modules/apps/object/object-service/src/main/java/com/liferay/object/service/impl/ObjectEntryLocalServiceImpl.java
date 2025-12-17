@@ -39,6 +39,7 @@ import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.list.type.service.ListTypeEntryService;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.action.util.ObjectActionThreadLocal;
+import com.liferay.object.comment.ObjectEntryComment;
 import com.liferay.object.configuration.ObjectConfiguration;
 import com.liferay.object.configuration.ObjectEntryScheduleConfiguration;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
@@ -160,7 +161,6 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.dao.jdbc.postgresql.PostgreSQLJDBCUtil;
-import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -2573,10 +2573,13 @@ public class ObjectEntryLocalServiceImpl
 			ObjectEntry objectEntry, ServiceContext serviceContext)
 		throws PortalException {
 
-		List<Comment> comments = (List<Comment>)serviceContext.getAttribute(
-			"comments");
+		List<ObjectEntryComment> objectEntryComments =
+			(List<ObjectEntryComment>)serviceContext.getAttribute(
+				"objectEntryComments");
 
-		if (!objectDefinition.isEnableComments() || (comments == null)) {
+		if (!objectDefinition.isEnableComments() ||
+			(objectEntryComments == null)) {
+
 			return;
 		}
 
@@ -2591,20 +2594,22 @@ public class ObjectEntryLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		for (Comment comment : comments) {
-			if (comment.getParentCommentId() == 0) {
+		for (ObjectEntryComment objectEntryComment : objectEntryComments) {
+			if (objectEntryComment.getParentCommentId() == 0) {
 				_commentManager.addComment(
-					comment.getExternalReferenceCode(), userId, groupId,
-					objectDefinition.getClassName(),
+					objectEntryComment.getExternalReferenceCode(), userId,
+					groupId, objectDefinition.getClassName(),
 					objectEntry.getObjectEntryId(), user.getFullName(), null,
-					comment.getBody(), _createServiceContextFunction());
+					objectEntryComment.getText(),
+					_createServiceContextFunction());
 			}
 			else {
 				_commentManager.addComment(
-					comment.getExternalReferenceCode(), userId,
+					objectEntryComment.getExternalReferenceCode(), userId,
 					objectDefinition.getClassName(),
 					objectEntry.getObjectEntryId(), user.getFullName(),
-					comment.getParentCommentId(), null, comment.getBody(),
+					objectEntryComment.getParentCommentId(), null,
+					objectEntryComment.getText(),
 					_createServiceContextFunction());
 			}
 		}

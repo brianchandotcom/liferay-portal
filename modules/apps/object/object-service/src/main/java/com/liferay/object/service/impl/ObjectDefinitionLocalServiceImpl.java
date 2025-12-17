@@ -9,6 +9,7 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.exportimport.kernel.empty.model.EmptyModelManager;
 import com.liferay.fragment.cache.FragmentEntryLinkCache;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.friendly.url.separator.util.FriendlyURLSeparatorUtil;
@@ -296,7 +297,7 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setStorageType(
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT);
 		objectDefinition.setSystem(system);
-		objectDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
+		objectDefinition.setStatus(WorkflowConstants.STATUS_EMPTY);
 
 		if (objectDefinition.isUnmodifiableSystemObject() || !modifiable) {
 			throw new ObjectDefinitionModifiableException.MustBeModifiable();
@@ -1015,6 +1016,23 @@ public class ObjectDefinitionLocalServiceImpl
 
 		return objectDefinitionPersistence.countByObjectFolderId(
 			objectFolderId);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	public ObjectDefinition getOrAddEmptyObjectDefinition(
+			String externalReferenceCode, long companyId, long userId,
+			long objectFolderId, boolean modifiable, String scope,
+			boolean system)
+		throws PortalException {
+
+		return _emptyModelManager.getOrAddEmptyModel(
+			ObjectDefinition.class, companyId,
+			() -> objectDefinitionLocalService.addObjectDefinition(
+				externalReferenceCode, userId, objectFolderId, modifiable,
+				scope, system),
+			externalReferenceCode,
+			this::fetchObjectDefinitionByExternalReferenceCode,
+			this::getObjectDefinitionByExternalReferenceCode);
 	}
 
 	@Override
@@ -3738,6 +3756,9 @@ public class ObjectDefinitionLocalServiceImpl
 	@Reference
 	private DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
+
+	@Reference
+	private EmptyModelManager _emptyModelManager;
 
 	@Reference
 	private FragmentEntryLinkCache _fragmentEntryLinkCache;

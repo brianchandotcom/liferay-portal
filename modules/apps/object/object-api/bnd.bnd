@@ -6,6 +6,7 @@ Export-Package:\
 	com.liferay.object.action.executor,\
 	com.liferay.object.action.trigger,\
 	com.liferay.object.action.util,\
+	com.liferay.object.comment,\
 	com.liferay.object.configuration,\
 	com.liferay.object.constants,\
 	com.liferay.object.definition.groovy.script.use,\

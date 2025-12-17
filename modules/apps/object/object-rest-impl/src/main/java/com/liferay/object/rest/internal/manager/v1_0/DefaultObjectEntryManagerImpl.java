@@ -12,8 +12,8 @@ import com.liferay.depot.model.DepotEntryModel;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.exportimport.attachment.ExportImportAttachmentManager;
-import com.liferay.headless.delivery.dto.v1_0.util.CommentUtil;
 import com.liferay.object.action.engine.ObjectActionEngine;
+import com.liferay.object.comment.ObjectEntryComment;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
@@ -2047,18 +2047,15 @@ public class DefaultObjectEntryManagerImpl
 			String scopeKey)
 		throws Exception {
 
-		List<Comment> comments = null;
+		List<ObjectEntryComment> objectEntryComments = null;
 
 		if ((objectEntry.getComments() != null) &&
 			FeatureFlagManagerUtil.isEnabled(
 				objectDefinition.getCompanyId(), "LPD-69419")) {
 
-			comments = CommentUtil.toComments(
-				objectDefinition.getClassName(),
-				GetterUtil.getLong(objectEntry.getId()), _commentManager,
-				objectEntry.getComments(),
-				getGroupId(objectDefinition, scopeKey, true),
-				dtoConverterContext.getUserId());
+			objectEntryComments = _toObjectEntryComments(
+				_commentManager, objectEntry.getComments(),
+				getGroupId(objectDefinition, scopeKey, true));
 		}
 
 		ModelPermissions modelPermissions = null;
@@ -2072,10 +2069,10 @@ public class DefaultObjectEntryManagerImpl
 		}
 
 		return ServiceContextUtil.createServiceContext(
-			comments, objectDefinition.getCompanyId(),
+			objectDefinition.getCompanyId(),
 			getGroupId(objectDefinition, scopeKey),
 			dtoConverterContext.getLocale(), modelPermissions, objectEntry,
-			dtoConverterContext.getUserId());
+			objectEntryComments, dtoConverterContext.getUserId());
 	}
 
 	private byte[] _decode(String fileBase64) {
@@ -3600,6 +3597,36 @@ public class DefaultObjectEntryManagerImpl
 				dtoConverterContext.getUriInfo(),
 				dtoConverterContext.getUser()),
 			serviceBuilderObjectEntry);
+	}
+
+	private List<ObjectEntryComment> _toObjectEntryComments(
+		CommentManager commentManager,
+		com.liferay.headless.delivery.dto.v1_0.Comment[] comments,
+		long groupId) {
+
+		return TransformUtil.transformToList(
+			comments,
+			comment -> {
+				long parentCommentId = 0;
+
+				if (Validator.isNotNull(
+						comment.getParentCommentExternalReferenceCode())) {
+
+					Comment serviceBuilderComment = commentManager.fetchComment(
+						groupId,
+						comment.getParentCommentExternalReferenceCode());
+
+					if (serviceBuilderComment != null) {
+						parentCommentId =
+							serviceBuilderComment.getParentCommentId();
+					}
+				}
+
+				return new ObjectEntryComment(
+					comment.getExternalReferenceCode(),
+					comment.getParentCommentExternalReferenceCode(),
+					parentCommentId, comment.getText());
+			});
 	}
 
 	private Map<String, Serializable> _toObjectValues(

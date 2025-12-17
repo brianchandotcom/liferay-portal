@@ -1,8 +1,8 @@
 {
 	"dependencies": {
 		"@clayui/badge": "3.144.1",
-		"@clayui/button": "3.144.1",
-		"@clayui/drop-down": "3.155.0",
+		"@clayui/button": "3.156.0",
+		"@clayui/drop-down": "3.156.0",
 		"react": "18.2.0"
 	},
 	"main": "js/index.ts",

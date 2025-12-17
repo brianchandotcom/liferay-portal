@@ -1,10 +1,10 @@
 {
 	"dependencies": {
 		"@clayui/alert": "3.148.0",
-		"@clayui/button": "3.144.1",
-		"@clayui/form": "3.151.0",
+		"@clayui/button": "3.156.0",
+		"@clayui/form": "3.156.0",
 		"@clayui/icon": "3.144.1",
-		"@clayui/modal": "3.151.0",
+		"@clayui/modal": "3.156.0",
 		"@liferay/frontend-icons-web": "*",
 		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",

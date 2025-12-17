@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/button": "3.144.1",
+		"@clayui/button": "3.156.0",
 		"@clayui/icon": "3.144.1",
 		"@liferay/document-library-preview-css": "*",
 		"@liferay/frontend-js-react-web": "*",

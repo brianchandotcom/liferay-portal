@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 
@@ -159,6 +158,20 @@ public interface ObjectFieldBusinessType {
 		return StringPool.BLANK;
 	}
 
+	public default boolean isAllowedObjectFieldSettingValue(
+		String objectFieldSettingName, String objectFieldSettingValue) {
+
+		if (objectFieldSettingName.equals(
+				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE) &&
+			objectFieldSettingValue.equals(
+				ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public default boolean isLocalizationSupported(ObjectField objectField) {
 		return !objectField.isMetadata();
 	}
@@ -233,12 +246,9 @@ public interface ObjectFieldBusinessType {
 			return;
 		}
 
-		if (!(StringUtil.equals(
-				defaultValueType,
-				ObjectFieldSettingConstants.VALUE_EXPRESSION_BUILDER) ||
-			  StringUtil.equals(
-				  defaultValueType,
-				  ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE))) {
+		if (!isAllowedObjectFieldSettingValue(
+				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
+				defaultValueType)) {
 
 			throw new ObjectFieldSettingValueException.InvalidValue(
 				objectField.getName(),

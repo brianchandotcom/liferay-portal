@@ -4,7 +4,6 @@
  */
 
 import {Page, expect} from '@playwright/test';
-import path from 'path';
 
 import {PagesAdminPage} from '../../../../pages/layout-admin-web/PagesAdminPage';
 import {PageEditorPage} from '../../../../pages/layout-content-page-editor-web/PageEditorPage';
@@ -15,26 +14,9 @@ import {reloadUntilNotVisible} from '../../../../utils/reloadUntilNotVisible';
 import {reloadUntilVisible} from '../../../../utils/reloadUntilVisible';
 
 export class ThemeHelper {
-	private readonly testThemeName = 'test-theme-7-4';
-	private readonly testThemeAppName = 'test-theme';
-	private readonly testThemeAppPath = path.join(
-		__dirname,
-		'..',
-		'..',
-		'..',
-		'..',
-		'..',
-		'..',
-		'..',
-		'portal-web',
-		'test',
-		'functional',
-		'com',
-		'liferay',
-		'portalweb',
-		'dependencies',
-		'test-theme.war'
-	);
+	private readonly classicThemeName = 'Classic';
+	private readonly dialectThemeName = 'Dialect';
+	private readonly dialectAppName = 'dialect-theme';
 
 	constructor(
 		private readonly appManagerPage: AppManagerPage,
@@ -45,20 +27,9 @@ export class ThemeHelper {
 		private readonly site: Site
 	) {}
 
-	async installTestTheme() {
+	async uninstallDialectTheme(testPageName?: string) {
 		await doAndGoBack(this.page, async () => {
-			await this.bundleBlacklistPage.updateBundleBlacklist('');
-
-			await this.appManagerPage.uploadAppFromLocalDirectory(
-				this.testThemeAppName,
-				path.resolve(this.testThemeAppPath)
-			);
-		});
-	}
-
-	async uninstallTestTheme(testPageName?: string) {
-		await doAndGoBack(this.page, async () => {
-			await this.appManagerPage.uninstallApp(this.testThemeAppName);
+			await this.appManagerPage.uninstallApp(this.dialectAppName);
 
 			if (testPageName !== undefined) {
 				await this.pagesAdminPage.goto(this.site.friendlyUrlPath);
@@ -67,12 +38,12 @@ export class ThemeHelper {
 					testPageName
 				);
 
-				await this.expectThemeToBeDeactivated(this.testThemeName);
+				await this.expectThemeToBeDeactivated(this.dialectThemeName);
 			}
 		});
 	}
 
-	async reinstallTestTheme(testPageName?: string) {
+	async reinstallDialectTheme(testPageName?: string) {
 		await doAndGoBack(this.page, async () => {
 			await this.bundleBlacklistPage.updateBundleBlacklist('');
 
@@ -83,45 +54,41 @@ export class ThemeHelper {
 					testPageName
 				);
 
-				await this.expectThemeToBeActivated(this.testThemeName);
+				await this.expectThemeToBeActivated(this.dialectThemeName);
 			}
 		});
 	}
 
-	async deactivateTestTheme(testPageName: string) {
+	async deactivateDialectTheme(testPageName: string) {
 		await doAndGoBack(this.page, async () => {
-			await this.appManagerPage.deactivateApp(this.testThemeAppName);
+			await this.appManagerPage.deactivateApp(this.dialectAppName);
 
 			await this.pagesAdminPage.goto(this.site.friendlyUrlPath);
 
 			await this.pagesAdminPage.goToDesignTabConfiguration(testPageName);
 
-			await this.expectThemeToBeDeactivated(this.testThemeName);
+			await this.expectThemeToBeDeactivated(this.dialectThemeName);
 		});
 	}
 
-	async activateTestTheme(testPageName: string) {
+	async activateDialectTheme(testPageName: string) {
 		await doAndGoBack(this.page, async () => {
-			await this.appManagerPage.activateApp(this.testThemeAppName);
+			await this.appManagerPage.activateApp(this.dialectAppName);
 
 			await this.pagesAdminPage.goto(this.site.friendlyUrlPath);
 
 			await this.pagesAdminPage.goToDesignTabConfiguration(testPageName);
 
-			await this.expectThemeToBeActivated(this.testThemeName);
+			await this.expectThemeToBeActivated(this.dialectThemeName);
 		});
 	}
 
 	async changePageThemeToDialect(pageName: string) {
-		await this.changePageTheme(pageName, 'Dialect');
+		await this.changePageTheme(pageName, this.dialectThemeName);
 	}
 
 	async changePageThemeToClassic(pageName: string) {
-		await this.changePageTheme(pageName, 'Classic');
-	}
-
-	async changePageThemeToTestTheme(pageName: string) {
-		await this.changePageTheme(pageName, this.testThemeName);
+		await this.changePageTheme(pageName, this.classicThemeName);
 	}
 
 	async changePageTheme(pageName: string, themeName: string) {
@@ -175,11 +142,11 @@ export class ThemeHelper {
 	}
 
 	async expectCurrentThemeToBeClassic(pageName: string) {
-		await this.expectCurrentThemeToBe(pageName, 'Classic');
+		await this.expectCurrentThemeToBe(pageName, this.classicThemeName);
 	}
 
-	async expectCurrentThemeToBeTestTheme(pageName: string) {
-		await this.expectCurrentThemeToBe(pageName, this.testThemeName);
+	async expectCurrentThemeToBeDialect(pageName: string) {
+		await this.expectCurrentThemeToBe(pageName, this.dialectThemeName);
 	}
 
 	async expectCurrentThemeToBe(pageName: string, themeName: string) {

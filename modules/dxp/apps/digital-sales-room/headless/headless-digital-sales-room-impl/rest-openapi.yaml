@@ -61,6 +61,47 @@ components:
                     items:
                         $ref: "#/components/schemas/UserAccountBrief"
                     type: array
+        DigitalSalesRoomTemplate:
+            properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
+                banner:
+                    $ref: "#/components/schemas/FileEntry"
+                clientLogo:
+                    $ref: "#/components/schemas/FileEntry"
+                clientName:
+                    type: string
+                createDate:
+                    format: date
+                    readOnly: true
+                    type: string
+                description:
+                    type: string
+                externalReferenceCode:
+                    readOnly: true
+                    type: string
+                friendlyUrlPath:
+                    readOnly: true
+                    type: string
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                modifiedDate:
+                    format: date
+                    readOnly: true
+                    type: string
+                name:
+                    type: string
+                primaryColor:
+                    type: string
+                secondaryColor:
+                    type: string
         FileEntry:
             properties:
                 fileBase64:
@@ -101,6 +142,91 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
+    "/digital-sales-room-templates":
+        get:
+            operationId: getDigitalSalesRoomTemplatesPage
+            parameters:
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DigitalSalesRoomTemplate"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DigitalSalesRoomTemplate"
+                                type: array
+            tags: ["DigitalSalesRoomTemplate"]
+        post:
+            operationId: postDigitalSalesRoomTemplate
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DigitalSalesRoomTemplate"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DigitalSalesRoomTemplate"
+            responses:
+                201:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DigitalSalesRoomTemplate"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DigitalSalesRoomTemplate"
+            tags: ["DigitalSalesRoomTemplate"]
+    "/digital-sales-room-templates/{digitalSalesRoomTemplateId}":
+        delete:
+            operationId: deleteDigitalSalesRoomTemplate
+            parameters:
+                -   in: path
+                    name: digitalSalesRoomTemplateId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["DigitalSalesRoomTemplate"]
+        get:
+            operationId: getDigitalSalesRoomTemplate
+            parameters:
+                -   in: path
+                    name: digitalSalesRoomTemplateId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DigitalSalesRoomTemplate"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DigitalSalesRoomTemplate"
+            tags: ["DigitalSalesRoomTemplate"]
     "/digital-sales-rooms":
         get:
             operationId: getDigitalSalesRoomsPage
@@ -213,6 +339,26 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/DigitalSalesRoom"
             tags: ["DigitalSalesRoom"]
+    "/digital-sales-rooms/{digitalSalesRoomId}/digital-sales-room-template":
+        post:
+            operationId: postDigitalSalesRoomDigitalSalesRoomTemplate
+            parameters:
+                -   in: path
+                    name: digitalSalesRoomId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DigitalSalesRoomTemplate"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DigitalSalesRoomTemplate"
+            tags: ["DigitalSalesRoomTemplate"]
     "/digital-sales-rooms/{digitalSalesRoomId}/user-account-briefs":
         get:
             operationId: getDigitalSalesRoomUserAccountBriefsPage

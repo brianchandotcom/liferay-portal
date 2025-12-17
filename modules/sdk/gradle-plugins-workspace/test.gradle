@@ -18,7 +18,7 @@ task downloadHotFixZip(type: Download)
 String bundleUrl = "https://releases-cdn.liferay.com/portal/7.1.2-ga3/liferay-ce-portal-tomcat-7.1.2-ga3-20190107144105508.tar.gz"
 File gradleTestDependenciesDir = new File(buildDir, "gradle-test-dependencies")
 String gradleVersion = "8.5"
-String hotFixZipUrl = "https://releases-cdn.liferay.com/dxp/hotfix/7.2.10/hotfix/liferay-hotfix-1072-7210.zip"
+String hotFixZipUrl = "https://storage.googleapis.com/liferay-devtools/gradle-plugins-workspace/liferay-dxp-2024.q4.4-hotfix-10.zip"
 
 if (System.properties["http.proxyHost"] == "squid.lax.liferay.com") {
 	bundleUrl = "http://mirrors.liferay.com/releases.liferay.com/portal/7.1.2-ga3/liferay-ce-portal-tomcat-7.1.2-ga3-20190107144105508.tar.gz"
@@ -131,7 +131,7 @@ downloadBundle {
 }
 
 downloadHotFixZip {
-	dest new File(buildDir, "liferay-hotfix-1072-7210.zip")
+	dest new File(buildDir, "liferay-dxp-2024.q4.4-hotfix-10.zip")
 	onlyIfModified true
 	src hotFixZipUrl
 }

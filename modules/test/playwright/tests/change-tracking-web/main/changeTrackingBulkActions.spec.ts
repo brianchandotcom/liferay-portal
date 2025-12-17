@@ -10,17 +10,21 @@ import path from 'path';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 import {waitForAlert} from '../../../utils/waitForAlert';
+import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	changeTrackingPagesTest,
 	featureFlagsTest({
 		'LPD-20183': {enabled: true},
-	})
+	}),
+	journalPagesTest,
+	workflowPagesTest
 );
 
 let file;
@@ -181,4 +185,107 @@ test('LPD-46060 Can move ctEntries in bulk', async ({
 	await apiHelpers.headlessChangeTracking.deleteCTCollection(
 		ctCollection2.body.id
 	);
+});
+
+test.describe('Bulk actions in publications with incomplete status tests', () => {
+	const journalTitle = getRandomString();
+
+	test.beforeEach(
+		async ({
+			apiHelpers,
+			ctCollection,
+			journalEditArticlePage,
+			workflowPage,
+		}) => {
+			await apiHelpers.headlessChangeTracking.checkoutCTCollection(0);
+
+			await workflowPage.goto();
+			await workflowPage.changeWorkflow(
+				'Web Content Article',
+				'Single Approver'
+			);
+
+			await apiHelpers.headlessChangeTracking.checkoutCTCollection(
+				ctCollection.body.id
+			);
+
+			await journalEditArticlePage.goto();
+			await journalEditArticlePage.submitArticleForWorkflow(journalTitle);
+		}
+	);
+
+	test.afterEach(async ({apiHelpers, page, workflowPage}) => {
+		await apiHelpers.headlessChangeTracking.checkoutCTCollection(0);
+
+		await workflowPage.goto();
+
+		const row = await page
+			.getByRole('row')
+			.filter({hasText: 'Web Content Article'});
+
+		const workflowEnabled = await row
+			.getByTitle('Workflow Definition')
+			.filter({hasText: 'Single Approver'});
+
+		if (await workflowEnabled.isVisible()) {
+			await workflowPage.changeWorkflow(
+				'Web Content Article',
+				'No Workflow',
+				{
+					disable: true,
+				}
+			);
+		}
+	});
+
+	test('LPD-73271 Can view CTEntry bulk actions in review changes page', async ({
+		changeTrackingPage,
+		ctCollection,
+		page,
+	}) => {
+		await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
+
+		await expect(
+			page.locator('.publication-name', {hasText: 'Pending Approval'})
+		).toBeVisible();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByTitle('Select Items'),
+			trigger:
+				changeTrackingPage.frontendDataSetEntries.getByText(
+					journalTitle
+				),
+		});
+
+		await expect(
+			page.getByRole('button', {name: 'Discard Changes'})
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('button', {name: 'Move Changes'})
+		).toBeVisible();
+
+		const allSelected = await page.getByText('All Selected');
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page
+				.locator('[data-testid="visualization-mode-table"]')
+				.getByLabel('Actions'),
+			trigger: allSelected,
+		});
+
+		await clickAndExpectToBeVisible({
+			autoClick: false,
+			target: page.getByRole('menuitem', {name: 'Discard Changes'}),
+			trigger: allSelected,
+		});
+
+		await clickAndExpectToBeVisible({
+			autoClick: false,
+			target: page.getByRole('menuitem', {name: 'Move Changes'}),
+			trigger: allSelected,
+		});
+	});
 });

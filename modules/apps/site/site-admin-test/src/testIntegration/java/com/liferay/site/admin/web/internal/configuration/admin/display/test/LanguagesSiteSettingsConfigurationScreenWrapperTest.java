@@ -93,12 +93,12 @@ public class LanguagesSiteSettingsConfigurationScreenWrapperTest {
 		catch (Exception exception) {
 			Assert.assertTrue(exception instanceof LocaleException);
 
+			Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
+
 			LocaleException localeException = (LocaleException)exception;
 
 			Set<Locale> sourceAvailableLocales =
 				(Set<Locale>)localeException.getSourceAvailableLocales();
-
-			Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
 
 			ArrayUtil.equalsIgnoreCase(
 				ArrayUtil.toStringArray(availableLocales.toArray()),

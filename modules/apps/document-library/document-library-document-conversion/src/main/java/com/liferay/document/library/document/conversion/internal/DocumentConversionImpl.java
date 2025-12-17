@@ -278,20 +278,6 @@ public class DocumentConversionImpl implements DocumentConversion {
 		_executorService = _portalExecutorManager.getPortalExecutor(
 			DocumentConversionImpl.class.getName());
 
-		OpenOfficeConnection openOfficeConnection;
-
-		synchronized (this) {
-			openOfficeConnection = _openOfficeConnection;
-			_openOfficeConnection = null;
-			_documentConverter = null;
-		}
-
-		if ((openOfficeConnection != null) &&
-			openOfficeConnection.isConnected()) {
-
-			openOfficeConnection.disconnect();
-		}
-
 		_openOfficeConfiguration = ConfigurableUtil.createConfigurable(
 			OpenOfficeConfiguration.class, properties);
 	}
@@ -446,10 +432,10 @@ public class DocumentConversionImpl implements DocumentConversion {
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
-	private volatile DocumentConverter _documentConverter;
+	private DocumentConverter _documentConverter;
 	private volatile ExecutorService _executorService;
 	private volatile OpenOfficeConfiguration _openOfficeConfiguration;
-	private volatile OpenOfficeConnection _openOfficeConnection;
+	private OpenOfficeConnection _openOfficeConnection;
 
 	@Reference
 	private PortalExecutorManager _portalExecutorManager;

@@ -195,7 +195,6 @@ public class PreupgradeVerifyDatabaseCharacterSetTest
 			ObjectDefinitionTestUtil.publishObjectDefinition(
 				Collections.singletonList(objectField),
 				ObjectDefinitionConstants.SCOPE_COMPANY, user.getUserId());
-
 		ObjectDefinition objectDefinition2 =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
 				Collections.singletonList(objectField),

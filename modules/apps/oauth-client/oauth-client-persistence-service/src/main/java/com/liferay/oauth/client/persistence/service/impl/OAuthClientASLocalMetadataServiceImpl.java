@@ -112,8 +112,7 @@ public class OAuthClientASLocalMetadataServiceImpl
 
 		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
 			oAuthClientASLocalMetadataLocalService.
-				fetchByOAuthClientASLocalMetadataId(
-					oAuthClientASLocalMetadataId);
+				fetchOAuthClientASLocalMetadata(oAuthClientASLocalMetadataId);
 
 		if (oAuthClientASLocalMetadata != null) {
 			_oAuthClientASLocalMetadataModelResourcePermission.check(
@@ -131,8 +130,7 @@ public class OAuthClientASLocalMetadataServiceImpl
 
 		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
 			oAuthClientASLocalMetadataLocalService.
-				fetchIssuerByCompanyAuthClientASLocalMetadata(
-					companyId, issuer);
+				fetchOAuthClientASLocalMetadata(companyId, issuer);
 
 		if (oAuthClientASLocalMetadata != null) {
 			_oAuthClientASLocalMetadataModelResourcePermission.check(
@@ -184,8 +182,7 @@ public class OAuthClientASLocalMetadataServiceImpl
 
 		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
 			oAuthClientASLocalMetadataLocalService.
-				fetchIssuerByCompanyAuthClientASLocalMetadata(
-					companyId, issuer);
+				fetchOAuthClientASLocalMetadata(companyId, issuer);
 
 		_oAuthClientASLocalMetadataModelResourcePermission.check(
 			getPermissionChecker(), oAuthClientASLocalMetadata,

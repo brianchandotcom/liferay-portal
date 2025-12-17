@@ -94,16 +94,16 @@ import software.amazon.awssdk.transfer.s3.model.FileUpload;
 public class S3Store implements Store {
 
 	public void abortMultipartUploads(Instant startInstant) {
-		ListMultipartUploadsPublisher listMultipartUploadsPublisher =
-			_s3AsyncClient.listMultipartUploadsPaginator(
-				listMultipartUploadsRequestBuilder ->
-					listMultipartUploadsRequestBuilder.bucket(
-						_s3StoreConfiguration.bucketName()));
-
-		List<MultipartUpload> multipartUploads = new ArrayList<>();
-
 		try {
-			CompletableFuture<Void> listMultipartUploadsCompletableFuture =
+			List<MultipartUpload> multipartUploads = new ArrayList<>();
+
+			ListMultipartUploadsPublisher listMultipartUploadsPublisher =
+				_s3AsyncClient.listMultipartUploadsPaginator(
+					listMultipartUploadsRequestBuilder ->
+						listMultipartUploadsRequestBuilder.bucket(
+							_s3StoreConfiguration.bucketName()));
+
+			CompletableFuture<Void> completableFuture1 =
 				listMultipartUploadsPublisher.subscribe(
 					listMultipartUploadsResponse -> {
 						for (MultipartUpload multipartUpload :
@@ -118,22 +118,21 @@ public class S3Store implements Store {
 						}
 					});
 
-			listMultipartUploadsCompletableFuture.join();
+			completableFuture1.join();
 
 			for (MultipartUpload multipartUpload : multipartUploads) {
 				CompletableFuture<AbortMultipartUploadResponse>
-					abortMultipartUploadCompletableFuture =
-						_s3AsyncClient.abortMultipartUpload(
-							abortMultipartUploadRequestBuilder ->
-								abortMultipartUploadRequestBuilder.bucket(
-									_s3StoreConfiguration.bucketName()
-								).key(
-									multipartUpload.key()
-								).uploadId(
-									multipartUpload.uploadId()
-								));
+					completableFuture2 = _s3AsyncClient.abortMultipartUpload(
+						abortMultipartUploadRequestBuilder ->
+							abortMultipartUploadRequestBuilder.bucket(
+								_s3StoreConfiguration.bucketName()
+							).key(
+								multipartUpload.key()
+							).uploadId(
+								multipartUpload.uploadId()
+							));
 
-				abortMultipartUploadCompletableFuture.join();
+				completableFuture2.join();
 			}
 		}
 		catch (CompletionException completionException) {
@@ -146,11 +145,11 @@ public class S3Store implements Store {
 		long companyId, long repositoryId, String fileName, String versionLabel,
 		InputStream inputStream) {
 
-		if (hasFile(companyId, repositoryId, fileName, versionLabel)) {
-			deleteFile(companyId, repositoryId, fileName, versionLabel);
-		}
-
 		try {
+			if (hasFile(companyId, repositoryId, fileName, versionLabel)) {
+				deleteFile(companyId, repositoryId, fileName, versionLabel);
+			}
+
 			File file = FileUtil.createTempFile(inputStream);
 
 			String key = S3KeyTransformerUtil.getFileVersionKey(
@@ -198,15 +197,16 @@ public class S3Store implements Store {
 	public void deleteDirectory(
 		long companyId, long repositoryId, String dirName) {
 
-		List<ObjectIdentifier> objectIdentifiers = new ArrayList<>(_DELETE_MAX);
-
-		List<S3Object> s3Objects = _getS3Objects(
-			S3KeyTransformerUtil.getDirectoryKey(
-				companyId, repositoryId, dirName));
-
-		Iterator<S3Object> iterator = s3Objects.iterator();
-
 		try {
+			List<ObjectIdentifier> objectIdentifiers = new ArrayList<>(
+				_DELETE_MAX);
+
+			List<S3Object> s3Objects = _getS3Objects(
+				S3KeyTransformerUtil.getDirectoryKey(
+					companyId, repositoryId, dirName));
+
+			Iterator<S3Object> iterator = s3Objects.iterator();
+
 			while (iterator.hasNext()) {
 				for (int i = 0; i < _DELETE_MAX; i++) {
 					if (iterator.hasNext()) {
@@ -245,16 +245,17 @@ public class S3Store implements Store {
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {
 
-		CompletableFuture<DeleteObjectResponse> completableFuture =
-			_s3AsyncClient.deleteObject(
-				deleteObjectRequestBuilder -> deleteObjectRequestBuilder.bucket(
-					_s3StoreConfiguration.bucketName()
-				).key(
-					S3KeyTransformerUtil.getFileVersionKey(
-						companyId, repositoryId, fileName, versionLabel)
-				));
-
 		try {
+			CompletableFuture<DeleteObjectResponse> completableFuture =
+				_s3AsyncClient.deleteObject(
+					deleteObjectRequestBuilder ->
+						deleteObjectRequestBuilder.bucket(
+							_s3StoreConfiguration.bucketName()
+						).key(
+							S3KeyTransformerUtil.getFileVersionKey(
+								companyId, repositoryId, fileName, versionLabel)
+						));
+
 			completableFuture.join();
 		}
 		catch (CompletionException completionException) {
@@ -273,19 +274,19 @@ public class S3Store implements Store {
 				companyId, repositoryId, fileName);
 		}
 
-		String key = S3KeyTransformerUtil.getFileVersionKey(
-			companyId, repositoryId, fileName, versionLabel);
-
-		CompletableFuture<ResponseInputStream<GetObjectResponse>>
-			completableFuture = _s3AsyncClient.getObject(
-				getObjectRequestBuilder -> getObjectRequestBuilder.bucket(
-					_s3StoreConfiguration.bucketName()
-				).key(
-					key
-				),
-				AsyncResponseTransformer.toBlockingInputStream());
-
 		try {
+			String key = S3KeyTransformerUtil.getFileVersionKey(
+				companyId, repositoryId, fileName, versionLabel);
+
+			CompletableFuture<ResponseInputStream<GetObjectResponse>>
+				completableFuture = _s3AsyncClient.getObject(
+					getObjectRequestBuilder -> getObjectRequestBuilder.bucket(
+						_s3StoreConfiguration.bucketName()
+					).key(
+						key
+					),
+					AsyncResponseTransformer.toBlockingInputStream());
+
 			return new UnsyncFilterInputStream(completableFuture.join());
 		}
 		catch (CompletionException completionException) {
@@ -336,23 +337,23 @@ public class S3Store implements Store {
 			String versionLabel)
 		throws PortalException {
 
-		if (Validator.isNull(versionLabel)) {
-			versionLabel = _getHeadVersionLabel(
-				companyId, repositoryId, fileName);
-		}
-
-		String key = S3KeyTransformerUtil.getFileVersionKey(
-			companyId, repositoryId, fileName, versionLabel);
-
-		CompletableFuture<HeadObjectResponse> completableFuture =
-			_s3AsyncClient.headObject(
-				headObjectRequestBuilder -> headObjectRequestBuilder.bucket(
-					_s3StoreConfiguration.bucketName()
-				).key(
-					key
-				));
-
 		try {
+			if (Validator.isNull(versionLabel)) {
+				versionLabel = _getHeadVersionLabel(
+					companyId, repositoryId, fileName);
+			}
+
+			String key = S3KeyTransformerUtil.getFileVersionKey(
+				companyId, repositoryId, fileName, versionLabel);
+
+			CompletableFuture<HeadObjectResponse> completableFuture =
+				_s3AsyncClient.headObject(
+					headObjectRequestBuilder -> headObjectRequestBuilder.bucket(
+						_s3StoreConfiguration.bucketName()
+					).key(
+						key
+					));
+
 			HeadObjectResponse headObjectResponse = completableFuture.join();
 
 			return headObjectResponse.contentLength();

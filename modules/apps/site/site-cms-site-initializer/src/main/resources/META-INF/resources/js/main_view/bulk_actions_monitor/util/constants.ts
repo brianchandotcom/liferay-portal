@@ -27,6 +27,9 @@ export const INTERVAL_TASK_POLLING_MS = 5000;
 export const URL_TASKS_REPORT_DETAIL = `${Liferay.ThemeDisplay.getPortalURL()}/web/cms/e/bulk-action-task/`;
 export const URL_TASKS_REPORT = `${Liferay.ThemeDisplay.getPortalURL()}/web/cms/bulk-action-task-report`;
 
+export const TASK_REPORT_FDS_ID =
+	'com.liferay.site.cms.site.initializer-bulkActionTaskReportSection';
+
 export const LABELS_BULK_ACTIONS: {[key in keyof IBulkActionTaskType]: string} =
 	{
 		[BULK_ACTION_CATEGORIES]: Liferay.Language.get('assets-categorization'),

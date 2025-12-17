@@ -125,16 +125,16 @@ public class LanguagesSiteSettingsConfigurationScreenWrapper
 					inheritLocales);
 			}
 
-			String languageId = String.valueOf(properties.get("languageId"));
-
-			if (Validator.isNotNull(languageId)) {
-				typeSettingsUnicodeProperties.put("languageId", languageId);
-			}
-
 			String locales = String.valueOf(properties.get(PropsKeys.LOCALES));
 
 			if (Validator.isNotNull(locales)) {
 				typeSettingsUnicodeProperties.put(PropsKeys.LOCALES, locales);
+			}
+
+			String languageId = String.valueOf(properties.get("languageId"));
+
+			if (Validator.isNotNull(languageId)) {
+				typeSettingsUnicodeProperties.put("languageId", languageId);
 			}
 
 			_groupLocalService.updateGroup(

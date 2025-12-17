@@ -47,6 +47,10 @@ public class DDMFacetTemplateVersionUpgradeProcess extends UpgradeProcess {
 					" and templateId in (select templateId from DDMTemplate ",
 					"where resourceClassNameId = ", resourceClassNameId, ")"));
 		}
+
+		runSQL(
+			"delete from DDMTemplateVersion where templateId not in (select " +
+				"templateId from DDMTemplate)");
 	}
 
 	private final ClassNameLocalService _classNameLocalService;

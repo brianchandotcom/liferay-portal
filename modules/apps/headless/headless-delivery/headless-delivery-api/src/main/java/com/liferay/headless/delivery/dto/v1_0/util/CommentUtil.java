@@ -13,9 +13,6 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.DuplicateCommentException;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -66,17 +63,8 @@ public class CommentUtil {
 	}
 
 	public static List<com.liferay.portal.kernel.comment.Comment> toComments(
-			String className, long classPK, CommentManager commentManager,
-			Comment[] comments, long companyId, long groupId, long userId)
-		throws PortalException {
-
-		if (groupId == 0) {
-			Company company = CompanyLocalServiceUtil.getCompany(companyId);
-
-			groupId = company.getGroupId();
-		}
-
-		long finalGroupId = groupId;
+		String className, long classPK, CommentManager commentManager,
+		Comment[] comments, long groupId, long userId) {
 
 		Map<String, Long> toIdMap = new HashMap<>();
 
@@ -94,7 +82,7 @@ public class CommentUtil {
 						externalReferenceCode -> {
 							com.liferay.portal.kernel.comment.Comment
 								parentComment = commentManager.fetchComment(
-									finalGroupId, externalReferenceCode);
+									groupId, externalReferenceCode);
 
 							if (parentComment == null) {
 								return 0L;
@@ -105,9 +93,9 @@ public class CommentUtil {
 				}
 
 				return commentManager.createComment(
-					0L, comment.getExternalReferenceCode(), userId,
-					finalGroupId, className, classPK, parentCommentId,
-					StringPool.BLANK, comment.getText());
+					0, comment.getExternalReferenceCode(), userId, groupId,
+					className, classPK, parentCommentId, StringPool.BLANK,
+					comment.getText());
 			});
 	}
 

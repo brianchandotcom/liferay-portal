@@ -2056,8 +2056,8 @@ public class DefaultObjectEntryManagerImpl
 			comments = CommentUtil.toComments(
 				objectDefinition.getClassName(),
 				GetterUtil.getLong(objectEntry.getId()), _commentManager,
-				objectEntry.getComments(), objectDefinition.getCompanyId(),
-				getGroupId(objectDefinition, scopeKey),
+				objectEntry.getComments(),
+				getGroupId(objectDefinition, scopeKey, true),
 				dtoConverterContext.getUserId());
 		}
 

@@ -193,7 +193,7 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 	}
 
 	@Override
-	public OAuthClientASLocalMetadata fetchByOAuthClientASLocalMetadataId(
+	public OAuthClientASLocalMetadata fetchOAuthClientASLocalMetadata(
 			long oAuthClientASLocalMetadataId)
 		throws PortalException {
 
@@ -202,9 +202,17 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 	}
 
 	@Override
-	public OAuthClientASLocalMetadata
-			fetchIssuerByCompanyAuthClientASLocalMetadata(
-				long companyId, String issuer)
+	public OAuthClientASLocalMetadata fetchOAuthClientASLocalMetadata(
+		long companyId, boolean enabled,
+		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator) {
+
+		return oAuthClientASLocalMetadataPersistence.fetchByC_L_First(
+			companyId, enabled, orderByComparator);
+	}
+
+	@Override
+	public OAuthClientASLocalMetadata fetchOAuthClientASLocalMetadata(
+			long companyId, String issuer)
 		throws PortalException {
 
 		return oAuthClientASLocalMetadataPersistence.fetchByC_I(
@@ -217,16 +225,6 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 
 		return oAuthClientASLocalMetadataPersistence.fetchByLocalWellKnownURI(
 			localWellKnownURI);
-	}
-
-	@Override
-	public OAuthClientASLocalMetadata
-		fetchOAuthClientASLocalMetadataByCompanyEnabled(
-			long companyId, boolean enabled,
-			OrderByComparator<OAuthClientASLocalMetadata> orderByComparator) {
-
-		return oAuthClientASLocalMetadataPersistence.fetchByC_L_First(
-			companyId, enabled, orderByComparator);
 	}
 
 	@Override
@@ -255,7 +253,7 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 	}
 
 	@Override
-	public int getOAuthClientASLocalMetadatasByCompanyIdCount(long companyId) {
+	public int getOAuthClientASLocalMetadatasCount(long companyId) {
 		return oAuthClientASLocalMetadataPersistence.countByCompanyId(
 			companyId);
 	}

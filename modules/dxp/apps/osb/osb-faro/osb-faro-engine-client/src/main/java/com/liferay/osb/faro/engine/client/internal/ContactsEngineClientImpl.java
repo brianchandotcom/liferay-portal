@@ -567,8 +567,8 @@ public class ContactsEngineClientImpl
 			if (fieldMappingFieldName.equals(fieldMappingMap.getName())) {
 				FieldMapping fieldMapping = new FieldMapping();
 
-				fieldMapping.setFieldName(fieldMappingMap.getName());
 				fieldMapping.setContext(FieldMappingConstants.CONTEXT_ACCOUNT);
+				fieldMapping.setFieldName(fieldMappingMap.getName());
 
 				uriVariables.put("apply", getGroupBy(fieldMapping));
 

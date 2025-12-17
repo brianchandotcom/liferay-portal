@@ -587,7 +587,7 @@ public class Main {
 			}
 		}
 		catch (Exception exception) {
-			System.out.println(exception.getMessage());
+			_error(exception.getMessage());
 		}
 	}
 
@@ -1560,7 +1560,7 @@ public class Main {
 			}
 		}
 		catch (Exception exception) {
-			System.out.println(exception.getMessage());
+			_error(exception.getMessage());
 		}
 	}
 

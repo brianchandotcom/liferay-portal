@@ -343,6 +343,54 @@ public class BatchEnginePortletDataHandlerTest {
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 	}
 
+	@Test
+	@TestInfo("LPD-72635")
+	public void testExportImportCompanyObjectEntriesWithRichTextAndURLs()
+		throws Exception {
+
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
+		Group globalGroup = company.getGroup();
+
+		FileEntry globalGroupFileEntry = _addImageFileEntry(
+			globalGroup.getGroupId());
+
+		Group group1 = GroupTestUtil.addGroup();
+
+		FileEntry group1FileEntry = _addImageFileEntry(group1.getGroupId());
+
+		Group group2 = GroupTestUtil.addGroup();
+
+		FileEntry group2FileEntry = _addImageFileEntry(group2.getGroupId());
+
+		Group companyGroup = _stagingGroupHelper.fetchCompanyGroup(
+			company.getCompanyId());
+
+		String[] imgTags = {
+			_getImgTag(_getPreviewURL(globalGroupFileEntry)),
+			_getImgTag(_getPreviewURL(group1FileEntry)),
+			_getImgTag(_getPreviewURL(group2FileEntry))
+		};
+
+		// File Entries in different groups: None of the URLs are recalculated
+
+		_testExportImportObjectEntriesWithRichTextAndURLs(
+			imgTags, imgTags, ObjectDefinitionConstants.SCOPE_COMPANY,
+			companyGroup, companyGroup);
+
+		_dlAppLocalService.deleteFileEntry(
+			globalGroupFileEntry.getFileEntryId());
+		_dlAppLocalService.deleteFileEntry(group1FileEntry.getFileEntryId());
+		_dlAppLocalService.deleteFileEntry(group2FileEntry.getFileEntryId());
+
+		// File Entries not existing: The URLs are not recalculated
+
+		_testExportImportObjectEntriesWithRichTextAndURLs(
+			imgTags, imgTags, ObjectDefinitionConstants.SCOPE_COMPANY,
+			companyGroup, companyGroup);
+	}
+
 	@FeatureFlag("LPD-35443")
 	@Test
 	@TestInfo("LPD-64365")
@@ -637,65 +685,39 @@ public class BatchEnginePortletDataHandlerTest {
 		FileEntry sourceGroupFileEntry = _addImageFileEntry(
 			sourceGroup.getGroupId());
 
-		ObjectDefinition objectDefinition = _addObjectDefinition(
-			ObjectDefinitionConstants.SCOPE_SITE);
-
-		ObjectEntry objectEntry = _addObjectEntry(
-			sourceGroupFileEntry.getGroupId(), objectDefinition,
-			(Map)HashMapBuilder.put(
-				_OBJECT_FIELD_NAME_RICH_TEXT,
-				_sanitize(
-					StringBundler.concat(
-						_getImgTag(_getPreviewURL(globalGroupFileEntry)),
-						_getImgTag(_getPreviewURL(otherGroupFileEntry)),
-						_getImgTag(_getPreviewURL(sourceGroupFileEntry))),
-					sourceGroup, objectDefinition)
-			).build());
-
-		File larFile = _exportLayouts(
-			false, sourceGroup.getGroupId(), false, new long[0],
-			objectDefinition);
-
-		_objectEntryLocalService.deleteObjectEntry(
-			objectEntry.getObjectEntryId());
-
 		Group targetGroup = GroupTestUtil.addGroup();
 
-		_importLayouts(
-			false, false, larFile, targetGroup.getGroupId(), objectDefinition);
+		String[] currentImgTags = {
+			_getImgTag(_getPreviewURL(globalGroupFileEntry)),
+			_getImgTag(_getPreviewURL(otherGroupFileEntry)),
+			_getImgTag(_getPreviewURL(sourceGroupFileEntry))
+		};
 
-		List<ObjectEntry> objectEntriesList =
-			_objectEntryLocalService.getObjectEntries(
-				targetGroup.getGroupId(),
-				objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+		String[] expectedImgTags = {
+			currentImgTags[0], currentImgTags[1],
+			_getImgTag(_getPreviewURL(sourceGroupFileEntry, targetGroup))
+		};
 
-		Assert.assertEquals(
-			objectEntriesList.toString(), 1, objectEntriesList.size());
+		// File Entry from the exported group: The URL of the File Entry
+		// from the exported and imported group is the only recalculated
 
-		ObjectEntry importedObjectEntry = objectEntriesList.get(0);
+		_testExportImportObjectEntriesWithRichTextAndURLs(
+			currentImgTags, expectedImgTags,
+			ObjectDefinitionConstants.SCOPE_SITE, sourceGroup, targetGroup);
 
-		String importedRichTextValue = MapUtil.getString(
-			importedObjectEntry.getValues(), _OBJECT_FIELD_NAME_RICH_TEXT);
+		_dlAppLocalService.deleteFileEntry(
+			globalGroupFileEntry.getFileEntryId());
+		_dlAppLocalService.deleteFileEntry(
+			otherGroupFileEntry.getFileEntryId());
+		_dlAppLocalService.deleteFileEntry(
+			sourceGroupFileEntry.getFileEntryId());
 
-		Assert.assertTrue(
-			importedRichTextValue.contains(
-				_sanitize(
-					_getImgTag(_getPreviewURL(globalGroupFileEntry)),
-					targetGroup, objectDefinition)));
+		// File Entries not existing: The URL of the File Entry from the
+		// exported and imported group is recalculated
 
-		Assert.assertTrue(
-			importedRichTextValue.contains(
-				_sanitize(
-					_getImgTag(_getPreviewURL(otherGroupFileEntry)),
-					targetGroup, objectDefinition)));
-
-		Assert.assertTrue(
-			importedRichTextValue.contains(
-				_sanitize(
-					_getImgTag(
-						_getPreviewURL(sourceGroupFileEntry, targetGroup)),
-					targetGroup, objectDefinition)));
+		_testExportImportObjectEntriesWithRichTextAndURLs(
+			currentImgTags, expectedImgTags,
+			ObjectDefinitionConstants.SCOPE_SITE, sourceGroup, targetGroup);
 	}
 
 	@Test
@@ -2060,6 +2082,54 @@ public class BatchEnginePortletDataHandlerTest {
 			false, group, scope, type);
 		_testExportImportObjectEntriesWithRelatedObjectEntries(
 			true, group, scope, type);
+	}
+
+	private void _testExportImportObjectEntriesWithRichTextAndURLs(
+			String[] currentImgTags, String[] expectedImgTags, String scope,
+			Group sourceGroup, Group targetGroup)
+		throws Exception {
+
+		ObjectDefinition objectDefinition = _addObjectDefinition(scope);
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			_getObjectEntryGroupId(sourceGroup.getGroupId(), scope),
+			objectDefinition,
+			(Map)HashMapBuilder.put(
+				_OBJECT_FIELD_NAME_RICH_TEXT,
+				_sanitize(
+					StringUtil.merge(currentImgTags, StringPool.BLANK),
+					sourceGroup, objectDefinition)
+			).build());
+
+		File larFile = _exportLayouts(
+			false, sourceGroup.getGroupId(), false, new long[0],
+			objectDefinition);
+
+		_objectEntryLocalService.deleteObjectEntry(
+			objectEntry.getObjectEntryId());
+
+		_importLayouts(
+			false, false, larFile, targetGroup.getGroupId(), objectDefinition);
+
+		List<ObjectEntry> objectEntriesList =
+			_objectEntryLocalService.getObjectEntries(
+				_getObjectEntryGroupId(targetGroup.getGroupId(), scope),
+				objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			objectEntriesList.toString(), 1, objectEntriesList.size());
+
+		ObjectEntry importedObjectEntry = objectEntriesList.get(0);
+
+		String importedRichTextValue = MapUtil.getString(
+			importedObjectEntry.getValues(), _OBJECT_FIELD_NAME_RICH_TEXT);
+
+		for (String expectedImgTag : expectedImgTags) {
+			Assert.assertTrue(
+				importedRichTextValue.contains(
+					_sanitize(expectedImgTag, targetGroup, objectDefinition)));
+		}
 	}
 
 	private void _testGetExportModelCount(

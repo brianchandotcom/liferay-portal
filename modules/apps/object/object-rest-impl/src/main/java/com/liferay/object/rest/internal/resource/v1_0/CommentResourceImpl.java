@@ -127,7 +127,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		throws Exception {
 
 		return _getByExternalReferenceCodeComment(
-			null, externalReferenceCode, commentExternalReferenceCode);
+			commentExternalReferenceCode, externalReferenceCode, null);
 	}
 
 	@Override
@@ -138,8 +138,8 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		throws Exception {
 
 		return _getByExternalReferenceCodeCommentChildCommentsPage(
-			null, externalReferenceCode, commentExternalReferenceCode, search,
-			aggregation, pagination, sorts);
+			aggregation, commentExternalReferenceCode, externalReferenceCode,
+			pagination, null, search, sorts);
 	}
 
 	@Override
@@ -149,7 +149,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		throws Exception {
 
 		return _getByExternalReferenceCodeCommentsPage(
-			null, externalReferenceCode, search, aggregation, pagination,
+			aggregation, externalReferenceCode, pagination, null, search,
 			sorts);
 	}
 
@@ -165,7 +165,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		throws Exception {
 
 		return _getByExternalReferenceCodeComment(
-			scopeKey, externalReferenceCode, commentExternalReferenceCode);
+			commentExternalReferenceCode, externalReferenceCode, scopeKey);
 	}
 
 	@Override
@@ -177,8 +177,8 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		throws Exception {
 
 		return _getByExternalReferenceCodeCommentChildCommentsPage(
-			scopeKey, externalReferenceCode, commentExternalReferenceCode,
-			search, aggregation, pagination, sorts);
+			aggregation, commentExternalReferenceCode, externalReferenceCode,
+			pagination, scopeKey, search, sorts);
 	}
 
 	@Override
@@ -188,7 +188,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		throws Exception {
 
 		return _getByExternalReferenceCodeCommentsPage(
-			scopeKey, externalReferenceCode, search, aggregation, pagination,
+			aggregation, externalReferenceCode, pagination, scopeKey, search,
 			sorts);
 	}
 
@@ -208,7 +208,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 
 		return _addComment(
 			comment.getExternalReferenceCode(),
-			_getNonzeroGroupId(objectEntry.getId()), null, objectEntry.getId(),
+			_getNonzeroGroupId(objectEntry.getId()), objectEntry.getId(), null,
 			comment.getText());
 	}
 
@@ -239,9 +239,8 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 
 		return _addComment(
 			comment.getExternalReferenceCode(),
-			serviceBuilderComment.getGroupId(),
-			serviceBuilderComment.getCommentId(), objectEntry.getId(),
-			comment.getText());
+			serviceBuilderComment.getGroupId(), objectEntry.getId(),
+			serviceBuilderComment.getCommentId(), comment.getText());
 	}
 
 	@Override
@@ -260,8 +259,8 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			externalReferenceCode, scopeKey);
 
 		return _addComment(
-			comment.getExternalReferenceCode(), objectEntry.getScopeId(), null,
-			objectEntry.getId(), comment.getText());
+			comment.getExternalReferenceCode(), objectEntry.getScopeId(),
+			objectEntry.getId(), null, comment.getText());
 	}
 
 	@Override
@@ -291,9 +290,8 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 
 		return _addComment(
 			comment.getExternalReferenceCode(),
-			serviceBuilderComment.getGroupId(),
-			serviceBuilderComment.getCommentId(), objectEntry.getId(),
-			comment.getText());
+			serviceBuilderComment.getGroupId(), objectEntry.getId(),
+			serviceBuilderComment.getCommentId(), comment.getText());
 	}
 
 	@Override
@@ -323,7 +321,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		}
 
 		return _addComment(
-			commentExternalReferenceCode, groupId, null, objectEntry.getId(),
+			commentExternalReferenceCode, groupId, objectEntry.getId(), null,
 			comment.getText());
 	}
 
@@ -353,8 +351,8 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		}
 
 		return _addComment(
-			commentExternalReferenceCode, objectEntry.getScopeId(), null,
-			objectEntry.getId(), comment.getText());
+			commentExternalReferenceCode, objectEntry.getScopeId(),
+			objectEntry.getId(), null, comment.getText());
 	}
 
 	private Map<String, String> _addAction(
@@ -372,8 +370,8 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 	}
 
 	private Comment _addComment(
-			String externalReferenceCode, long groupId, Long parentCommentId,
-			long objectEntryId, String text)
+			String externalReferenceCode, long groupId, long objectEntryId,
+			Long parentCommentId, String text)
 		throws Exception {
 
 		_discussionPermission.checkAddPermission(
@@ -439,8 +437,8 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 	}
 
 	private Comment _getByExternalReferenceCodeComment(
-			String scopeKey, String externalReferenceCode,
-			String commentExternalReferenceCode)
+			String commentExternalReferenceCode, String externalReferenceCode,
+			String scopeKey)
 		throws Exception {
 
 		if (!_objectDefinition.isEnableComments() ||
@@ -467,9 +465,9 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 	}
 
 	private Page<Comment> _getByExternalReferenceCodeCommentChildCommentsPage(
-			String scopeKey, String externalReferenceCode,
-			String commentExternalReferenceCode, String search,
-			Aggregation aggregation, Pagination pagination, Sort[] sorts)
+			Aggregation aggregation, String commentExternalReferenceCode,
+			String externalReferenceCode, Pagination pagination,
+			String scopeKey, String search, Sort[] sorts)
 		throws Exception {
 
 		if (!_objectDefinition.isEnableComments() ||
@@ -523,8 +521,8 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 	}
 
 	private Page<Comment> _getByExternalReferenceCodeCommentsPage(
-			String scopeKey, String externalReferenceCode, String search,
-			Aggregation aggregation, Pagination pagination, Sort[] sorts)
+			Aggregation aggregation, String externalReferenceCode,
+			Pagination pagination, String scopeKey, String search, Sort[] sorts)
 		throws Exception {
 
 		if (!_objectDefinition.isEnableComments() ||

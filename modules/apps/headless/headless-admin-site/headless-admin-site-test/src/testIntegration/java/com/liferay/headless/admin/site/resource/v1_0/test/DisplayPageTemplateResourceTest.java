@@ -832,37 +832,6 @@ public class DisplayPageTemplateResourceTest
 			draftLayout.getTypeSettingsProperty("published"));
 	}
 
-	private DisplayPageTemplate
-			_postSiteDisplayPageTemplateWithPageSpecifications(
-				PageSpecification.Status draftLayoutStatus,
-				Boolean markedAsDefault,
-				PageSpecification.Status publishedLayoutStatus)
-		throws Exception {
-
-		DisplayPageTemplate displayPageTemplate = _randomDisplayPageTemplate(
-			markedAsDefault);
-
-		ContentPageSpecification draftContentPageSpecification =
-			PageSpecificationsTestUtil.getContentPageSpecification(
-				null, testGroup.getGroupId(), draftLayoutStatus);
-
-		ContentPageSpecification publishedContentPageSpecification =
-			PageSpecificationsTestUtil.getContentPageSpecification(
-				draftContentPageSpecification.getExternalReferenceCode(),
-				testGroup.getGroupId(), publishedLayoutStatus);
-
-		displayPageTemplate.setPageSpecifications(
-			() -> new PageSpecification[] {
-				publishedContentPageSpecification, draftContentPageSpecification
-			});
-
-		DisplayPageTemplateResource displayPageTemplateResource =
-			_getDisplayPageTemplateResource();
-
-		return displayPageTemplateResource.postSiteDisplayPageTemplate(
-			testGroup.getExternalReferenceCode(), displayPageTemplate);
-	}
-
 	private DisplayPageTemplate _randomDisplayPageTemplate(
 			Boolean markedAsDefault)
 		throws Exception {
@@ -1239,40 +1208,49 @@ public class DisplayPageTemplateResourceTest
 	private void _testPostSiteDisplayPageTemplateWithMarkedAsDefault()
 		throws Exception {
 
-		DisplayPageTemplate displayPageTemplate = randomDisplayPageTemplate();
-
 		DisplayPageTemplate postDisplayPageTemplate =
 			displayPageTemplateResource.postSiteDisplayPageTemplate(
-				testGroup.getExternalReferenceCode(), displayPageTemplate);
+				testGroup.getExternalReferenceCode(),
+				randomDisplayPageTemplate());
 
 		Assert.assertFalse(postDisplayPageTemplate.getMarkedAsDefault());
 
-		displayPageTemplate = _randomDisplayPageTemplate(null);
+		postDisplayPageTemplate =
+			displayPageTemplateResource.postSiteDisplayPageTemplate(
+				testGroup.getExternalReferenceCode(),
+				_randomDisplayPageTemplate(null));
+
+		Assert.assertFalse(postDisplayPageTemplate.getMarkedAsDefault());
+
+		DisplayPageTemplate displayPageTemplate = _randomDisplayPageTemplate(
+			Boolean.TRUE);
+
+		String draftContentPageSpecificationExternalReferenceCode =
+			RandomTestUtil.randomString();
+
+		displayPageTemplate.setPageSpecifications(
+			() -> new PageSpecification[] {
+				PageSpecificationsTestUtil.getContentPageSpecification(
+					draftContentPageSpecificationExternalReferenceCode,
+					testGroup.getGroupId(), PageSpecification.Status.APPROVED),
+				PageSpecificationsTestUtil.getContentPageSpecification(
+					draftContentPageSpecificationExternalReferenceCode, null,
+					null, null, testGroup.getGroupId(),
+					PageSpecification.Status.DRAFT)
+			});
 
 		postDisplayPageTemplate =
 			displayPageTemplateResource.postSiteDisplayPageTemplate(
 				testGroup.getExternalReferenceCode(), displayPageTemplate);
-
-		Assert.assertFalse(postDisplayPageTemplate.getMarkedAsDefault());
-
-		postDisplayPageTemplate =
-			_postSiteDisplayPageTemplateWithPageSpecifications(
-				PageSpecification.Status.DRAFT, true,
-				PageSpecification.Status.APPROVED);
 
 		Assert.assertTrue(postDisplayPageTemplate.getMarkedAsDefault());
 
 		_assertProblemException(
 			"CONFLICT",
 			"The default display page template must be published first.",
-			() -> {
-				DisplayPageTemplate randomDisplayPageTemplate =
-					_randomDisplayPageTemplate(Boolean.TRUE);
-
-				displayPageTemplateResource.postSiteDisplayPageTemplate(
-					testGroup.getExternalReferenceCode(),
-					randomDisplayPageTemplate);
-			});
+			() -> displayPageTemplateResource.postSiteDisplayPageTemplate(
+				testGroup.getExternalReferenceCode(),
+				_randomDisplayPageTemplate(Boolean.TRUE)));
 	}
 
 	private void _testPostSiteDisplayPageTemplateWithPageSpecifications()

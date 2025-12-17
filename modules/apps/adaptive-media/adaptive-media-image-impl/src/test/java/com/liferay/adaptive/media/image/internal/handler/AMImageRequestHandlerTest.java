@@ -24,13 +24,22 @@ import com.liferay.adaptive.media.processor.AMAsyncProcessor;
 import com.liferay.adaptive.media.processor.AMAsyncProcessorLocator;
 import com.liferay.adaptive.media.processor.AMProcessor;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionRegistryUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.InputStream;
 
@@ -41,13 +50,18 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
+
+import org.springframework.mock.web.MockHttpSession;
 
 /**
  * @author Adolfo Pérez
@@ -60,6 +74,33 @@ public class AMImageRequestHandlerTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@BeforeClass
+	public static void setUpClass() {
+		_modelResourcePermission = Mockito.mock(ModelResourcePermission.class);
+
+		_modelResourcePermissionRegistryUtilMockedStatic.when(
+			() ->
+				ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+					FileEntry.class.getName())
+		).thenReturn(
+			_modelResourcePermission
+		);
+
+		_permissionChecker = Mockito.mock(PermissionChecker.class);
+
+		_permissionThreadLocalMockedStatic.when(
+			PermissionThreadLocal::getPermissionChecker
+		).thenReturn(
+			_permissionChecker
+		);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_modelResourcePermissionRegistryUtilMockedStatic.close();
+		_permissionThreadLocalMockedStatic.close();
+	}
+
 	@Before
 	public void setUp() throws PortalException {
 		Mockito.doReturn(
@@ -68,6 +109,26 @@ public class AMImageRequestHandlerTest {
 			_amAsyncProcessorLocator
 		).locateForClass(
 			FileVersion.class
+		);
+
+		Mockito.when(
+			_portal.getUser(Mockito.any(HttpServletRequest.class))
+		).thenReturn(
+			_user
+		);
+
+		Mockito.when(
+			_user.isGuestUser()
+		).thenReturn(
+			false
+		);
+
+		Mockito.doNothing(
+		).when(
+			_modelResourcePermission
+		).check(
+			Mockito.eq(_permissionChecker), Mockito.any(Long.class),
+			Mockito.eq(ActionKeys.DOWNLOAD)
 		);
 
 		ReflectionTestUtil.setFieldValue(
@@ -80,8 +141,13 @@ public class AMImageRequestHandlerTest {
 			_amImageRequestHandler, "_amImageFinder", _amImageFinder);
 		ReflectionTestUtil.setFieldValue(
 			_amImageRequestHandler, "_pathInterpreter", _pathInterpreter);
+		ReflectionTestUtil.setFieldValue(
+			_amImageRequestHandler, "_portal", _portal);
 
 		_fileVersion = _getFileVersion();
+
+		_modelResourcePermissionRegistryUtilMockedStatic.clearInvocations();
+		_permissionThreadLocalMockedStatic.clearInvocations();
 	}
 
 	@Test(expected = AMRuntimeException.class)
@@ -389,6 +455,14 @@ public class AMImageRequestHandlerTest {
 				).build())
 		);
 
+		HttpSession httpSession = new MockHttpSession();
+
+		Mockito.when(
+			httpServletRequest.getSession()
+		).thenReturn(
+			httpSession
+		);
+
 		return httpServletRequest;
 	}
 
@@ -408,9 +482,23 @@ public class AMImageRequestHandlerTest {
 		);
 
 		Mockito.when(
+			fileVersion.isExpired()
+		).thenReturn(
+			false
+		);
+
+		Mockito.when(
 			fileVersion.getMimeType()
 		).thenReturn(
 			"image/jpg"
+		);
+
+		FileEntry fileEntry = Mockito.mock(FileEntry.class);
+
+		Mockito.when(
+			fileVersion.getFileEntry()
+		).thenReturn(
+			fileEntry
 		);
 
 		Mockito.when(
@@ -525,6 +613,15 @@ public class AMImageRequestHandlerTest {
 		);
 	}
 
+	private static ModelResourcePermission<FileEntry> _modelResourcePermission;
+	private static final MockedStatic<ModelResourcePermissionRegistryUtil>
+		_modelResourcePermissionRegistryUtilMockedStatic = Mockito.mockStatic(
+			ModelResourcePermissionRegistryUtil.class);
+	private static PermissionChecker _permissionChecker;
+	private static final MockedStatic<PermissionThreadLocal>
+		_permissionThreadLocalMockedStatic = Mockito.mockStatic(
+			PermissionThreadLocal.class);
+
 	private final AMAsyncProcessor<FileVersion, ?> _amAsyncProcessor =
 		Mockito.mock(AMAsyncProcessor.class);
 	private final AMAsyncProcessorLocator _amAsyncProcessorLocator =
@@ -538,5 +635,7 @@ public class AMImageRequestHandlerTest {
 	private FileVersion _fileVersion;
 	private final PathInterpreter _pathInterpreter = Mockito.mock(
 		PathInterpreter.class);
+	private final Portal _portal = Mockito.mock(Portal.class);
+	private final User _user = Mockito.mock(User.class);
 
 }

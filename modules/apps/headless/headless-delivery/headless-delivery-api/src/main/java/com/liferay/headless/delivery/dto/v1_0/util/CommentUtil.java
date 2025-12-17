@@ -72,12 +72,13 @@ public class CommentUtil {
 				if (Validator.isNotNull(
 						comment.getParentCommentExternalReferenceCode())) {
 
-					com.liferay.portal.kernel.comment.Comment parentComment =
-						commentManager.fetchComment(
+					com.liferay.portal.kernel.comment.Comment
+						serviceBuilderComment = commentManager.fetchComment(
 							groupId,
 							comment.getParentCommentExternalReferenceCode());
 
-					parentCommentId = parentComment.getParentCommentId();
+					parentCommentId =
+						serviceBuilderComment.getParentCommentId();
 				}
 
 				return commentManager.createComment(

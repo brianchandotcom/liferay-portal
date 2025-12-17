@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -71,12 +70,9 @@ public class CommerceShippingFixedOptionFDSDataProvider
 				CommerceShippingFixedOptionPriorityComparator.getInstance(
 					sort.isReverse())),
 			commerceShippingFixedOption -> new ShippingFixedOption(
-				HtmlUtil.escape(
-					commerceShippingFixedOption.getDescription(
-						themeDisplay.getLocale())),
-				HtmlUtil.escape(
-					commerceShippingFixedOption.getName(
-						themeDisplay.getLocale())),
+				commerceShippingFixedOption.getDescription(
+					themeDisplay.getLocale()),
+				commerceShippingFixedOption.getName(themeDisplay.getLocale()),
 				commerceShippingFixedOption.getPriority(),
 				commerceShippingFixedOption.
 					getCommerceShippingFixedOptionId()));

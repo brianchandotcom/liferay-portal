@@ -81,10 +81,12 @@ test('can export custom object entries at instance level with date filter', asyn
 		'c/tests'
 	);
 
-	const exportFilePath1 = await companyExportImportPage.export(
-		['Tests 1 Items'],
-		false
-	);
+	await companyExportImportPage.applicationsMenuPage.goToExport();
+
+	const exportFilePath1 =
+		await companyExportImportPage.exportImportPage.export({
+			itemLabels: ['Tests 1 Items'],
+		});
 
 	const content1 = await readFileFromZip('C_Test.json', exportFilePath1);
 
@@ -100,16 +102,18 @@ test('can export custom object entries at instance level with date filter', asyn
 
 	startDate.setDate(startDate.getDate() - 2);
 
-	const exportFilePath2 = await companyExportImportPage.export(
-		['Tests 1 Items'],
-		false,
-		{
-			endDate: toDateRangeDate(endDate),
-			endTime: toDateRangeTime(endDate),
-			startDate: toDateRangeDate(startDate),
-			startTime: toDateRangeTime(startDate),
-		}
-	);
+	await companyExportImportPage.applicationsMenuPage.goToExport();
+
+	const exportFilePath2 =
+		await companyExportImportPage.exportImportPage.export({
+			itemLabels: ['Tests 1 Items'],
+			dateOptions: {
+				endDate: toDateRangeDate(endDate),
+				endTime: toDateRangeTime(endDate),
+				startDate: toDateRangeDate(startDate),
+				startTime: toDateRangeTime(startDate),
+			},
+		});
 
 	const content2 = await readFileFromZip('C_Test.json', exportFilePath2);
 
@@ -117,13 +121,13 @@ test('can export custom object entries at instance level with date filter', asyn
 
 	expect(json2.length).toBe(0);
 
-	const exportFilePath3 = await companyExportImportPage.export(
-		['Tests 1 Items'],
-		false,
-		{
-			rangeLast: '12 Hours',
-		}
-	);
+	await companyExportImportPage.applicationsMenuPage.goToExport();
+
+	const exportFilePath3 =
+		await companyExportImportPage.exportImportPage.export({
+			itemLabels: ['Tests 1 Items'],
+			dateOptions: {rangeLast: '12 Hours'},
+		});
 
 	const content3 = await readFileFromZip('C_Test.json', exportFilePath3);
 
@@ -151,9 +155,12 @@ test('can export new default and custom task name', async ({
 		'c/tests'
 	);
 
-	const defaultExportFilePath = await companyExportImportPage.export([
-		'Tests 1 Items',
-	]);
+	await companyExportImportPage.applicationsMenuPage.goToExport();
+
+	const defaultExportFilePath =
+		await companyExportImportPage.exportImportPage.export({
+			itemLabels: ['Tests 1 Items'],
+		});
 
 	expect(defaultExportFilePath).toMatch(
 		new RegExp(`^${getTempDir()}Export-`)
@@ -161,12 +168,13 @@ test('can export new default and custom task name', async ({
 
 	const taskName = 'CustomTaskName';
 
-	const customExportFilePath = await companyExportImportPage.export(
-		['Tests 1 Items'],
-		false,
-		undefined,
-		taskName
-	);
+	await companyExportImportPage.applicationsMenuPage.goToExport();
+
+	const customExportFilePath =
+		await companyExportImportPage.exportImportPage.export({
+			taskName,
+			itemLabels: ['Tests 1 Items'],
+		});
 
 	expect(customExportFilePath).toMatch(
 		new RegExp(`^${getTempDir()}${taskName}-`)
@@ -192,10 +200,13 @@ test('can export custom object entries at instance level with permissions', asyn
 		'c/tests'
 	);
 
-	const exportFilePath = await companyExportImportPage.export(
-		['Tests 1 Items'],
-		true
-	);
+	await companyExportImportPage.applicationsMenuPage.goToExport();
+
+	const exportFilePath =
+		await companyExportImportPage.exportImportPage.export({
+			includePermissions: true,
+			itemLabels: ['Tests 1 Items'],
+		});
 
 	const content = await readFileFromZip('C_Test.json', exportFilePath);
 
@@ -249,7 +260,7 @@ test(
 		await uiElementsPage.clickNewButton();
 
 		const deletionsLabelText =
-			await companyExportImportPage.deletionsLabel.textContent();
+			await companyExportImportPage.exportImportPage.deletionsLabel.textContent();
 
 		expect(deletionsLabelText?.replace(/\s+/g, ' ').trim()).toBe(
 			'Export Individual Deletions: If this is checked, the delete operations performed will be exported in the LAR file.'

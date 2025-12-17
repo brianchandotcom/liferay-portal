@@ -106,7 +106,6 @@ const testWithExportImportAtInstanceLevelFF = mergeTests(
 		`Can export and import a site created with the ${name} site initializer`,
 		async ({apiHelpers, exportImportPage, page}) => {
 			let exportFilePath: string;
-			let exportName: string;
 			let exportableItems1: Map<string, number>;
 			let exportableItems2: Map<string, number>;
 			let site1: Site;
@@ -133,14 +132,7 @@ const testWithExportImportAtInstanceLevelFF = mergeTests(
 					exportableItems1 =
 						await exportImportPage.getExportableItems();
 
-					exportName = `MyExport-${getRandomString()}`;
-
-					await exportImportPage.export(exportName);
-
-					exportFilePath =
-						await exportImportPage.downloadExportProcess(
-							exportName
-						);
+					exportFilePath = await exportImportPage.export();
 				}
 			);
 
@@ -216,7 +208,6 @@ testWithExportImportAtInstanceLevelFF(
 		testWithExportImportAtInstanceLevelFF.setTimeout(300000);
 
 		let exportFilePath: string;
-		let exportName: string;
 		let exportableItems1: Map<string, number>;
 		let exportableItems2: Map<string, number>;
 		let objectDefinition1: ObjectDefinition;
@@ -366,14 +357,7 @@ testWithExportImportAtInstanceLevelFF(
 
 					expect(exportableItems1.has('Style Books')).toBe(true);
 
-					exportName = `MyExport-${getRandomString()}`;
-
-					await exportImportPage.export(exportName);
-
-					exportFilePath =
-						await exportImportPage.downloadExportProcess(
-							exportName
-						);
+					exportFilePath = await exportImportPage.export();
 				}
 			);
 

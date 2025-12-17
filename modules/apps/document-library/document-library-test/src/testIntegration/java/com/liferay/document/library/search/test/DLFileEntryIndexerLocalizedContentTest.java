@@ -10,6 +10,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.test.util.search.FileEntryBlueprint;
 import com.liferay.document.library.test.util.search.FileEntrySearchFixture;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -176,17 +177,17 @@ public class DLFileEntryIndexerLocalizedContentTest {
 	protected IndexerRegistry indexerRegistry;
 
 	private List<String> _getFieldValues(String prefix, Document document) {
-		List<String> filteredFields = new ArrayList<>();
-
 		Map<String, Field> fields = document.getFields();
 
-		for (String field : fields.keySet()) {
-			if (field.contains(prefix)) {
-				filteredFields.add(field);
-			}
-		}
+		return TransformUtil.transform(
+			fields.keySet(),
+			field -> {
+				if (field.contains(prefix)) {
+					return field;
+				}
 
-		return filteredFields;
+				return null;
+			});
 	}
 
 	private SearchContext _getSearchContext(

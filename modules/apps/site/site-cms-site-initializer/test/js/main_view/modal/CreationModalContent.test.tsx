@@ -45,9 +45,15 @@ jest.mock('frontend-js-web', () => ({
 	navigate: (url: string) => mockNavigate(url),
 }));
 
-jest.mock('@clayui/data-provider', () => ({
-	useResource: jest.fn(),
-}));
+jest.mock('@clayui/data-provider', () => {
+	const originalModule = jest.requireActual('@clayui/data-provider');
+
+	return {
+		__esModule: true,
+		...originalModule,
+		useResource: jest.fn(),
+	};
+});
 
 const mockUseResource = useResource as jest.Mock;
 

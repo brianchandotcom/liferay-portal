@@ -19,9 +19,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import jakarta.ws.rs.ClientErrorException;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Javier Gamarra
@@ -66,30 +64,20 @@ public class CommentUtil {
 		String className, long classPK, CommentManager commentManager,
 		Comment[] comments, long groupId, long userId) {
 
-		Map<String, Long> parentCommentIdMap = new HashMap<>();
-
 		return TransformUtil.transformToList(
 			comments,
 			comment -> {
 				long parentCommentId = 0;
 
-				String parentCommentExternalReferenceCode =
-					comment.getParentCommentExternalReferenceCode();
+				if (Validator.isNotNull(
+						comment.getParentCommentExternalReferenceCode())) {
 
-				if (Validator.isNotNull(parentCommentExternalReferenceCode)) {
-					parentCommentId = parentCommentIdMap.computeIfAbsent(
-						parentCommentExternalReferenceCode,
-						externalReferenceCode -> {
-							com.liferay.portal.kernel.comment.Comment
-								parentComment = commentManager.fetchComment(
-									groupId, externalReferenceCode);
+					com.liferay.portal.kernel.comment.Comment parentComment =
+						commentManager.fetchComment(
+							groupId,
+							comment.getParentCommentExternalReferenceCode());
 
-							if (parentComment == null) {
-								return 0L;
-							}
-
-							return parentComment.getCommentId();
-						});
+					parentCommentId = parentComment.getParentCommentId();
 				}
 
 				return commentManager.createComment(

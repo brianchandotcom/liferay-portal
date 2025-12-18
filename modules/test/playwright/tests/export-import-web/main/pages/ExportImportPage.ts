@@ -12,7 +12,14 @@ import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVis
 import getRandomString from '../../../../utils/getRandomString';
 import {PORTLET_URLS} from '../../../../utils/portletUrls';
 import {getTempDir} from '../../../../utils/temp';
-import {DateOptions} from '../types/dateOptions';
+
+type DateFilter = {
+	endDate?: string;
+	endTime?: string;
+	rangeLast?: string;
+	startDate?: string;
+	startTime?: string;
+};
 
 export type taskStatus = 'success' | 'completedWithErrors';
 
@@ -183,26 +190,25 @@ export class ExportImportPage {
 	}
 
 	async export({
-		taskName = `MyExport-${getRandomString()}`,
-		dateOptions,
+		dateFilter,
 		includePermissions = false,
-		itemLabels,
+		portletLabels,
 		taskName = `Export-${getRandomString()}`,
 	}: {
-		taskName?: string;
-		dateOptions?: DateOptions;
+		dateFilter?: DateFilter;
 		includePermissions?: boolean;
-		itemLabels?: string[];
+		portletLabels?: string[];
+		taskName?: string;
 	} = {}): Promise<string> {
 		await this.newExportButton.click();
 
 		await this.title.fill(taskName);
 
-		if (itemLabels) {
+		if (portletLabels) {
 			await this.uncheckPortlets();
 
-			for (const itemLabel of itemLabels) {
-				await this.page.getByLabel(itemLabel, {exact: true}).check();
+			for (const portletLabel of portletLabels) {
+				await this.page.getByLabel(portletLabel, {exact: true}).check();
 			}
 		}
 
@@ -210,29 +216,29 @@ export class ExportImportPage {
 			await this.exportPermissionsButton.check();
 		}
 
-		if (dateOptions?.endDate || dateOptions?.startDate) {
+		if (dateFilter?.endDate || dateFilter?.startDate) {
 			await this.rangeDateRangeRadioButton.check();
 
-			if (dateOptions.endDate) {
-				await this.rangeDateRangeEndDate.fill(dateOptions.endDate);
+			if (dateFilter.endDate) {
+				await this.rangeDateRangeEndDate.fill(dateFilter.endDate);
 			}
 
-			if (dateOptions.endTime) {
-				await this.rangeDateRangeEndTime.fill(dateOptions.endTime);
+			if (dateFilter.endTime) {
+				await this.rangeDateRangeEndTime.fill(dateFilter.endTime);
 			}
 
-			if (dateOptions.startDate) {
-				await this.rangeDateRangeStartDate.fill(dateOptions.startDate);
+			if (dateFilter.startDate) {
+				await this.rangeDateRangeStartDate.fill(dateFilter.startDate);
 			}
 
-			if (dateOptions.startTime) {
-				await this.rangeDateRangeStartTime.fill(dateOptions.startTime);
+			if (dateFilter.startTime) {
+				await this.rangeDateRangeStartTime.fill(dateFilter.startTime);
 			}
 		}
-		else if (dateOptions?.rangeLast) {
+		else if (dateFilter?.rangeLast) {
 			await this.rangeLastRadioButton.check();
 
-			await this.rangeLast.selectOption(dateOptions.rangeLast);
+			await this.rangeLast.selectOption(dateFilter.rangeLast);
 		}
 
 		await this.exportButton.click();

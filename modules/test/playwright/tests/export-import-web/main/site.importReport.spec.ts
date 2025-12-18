@@ -55,7 +55,7 @@ test('Can see error report and details', async ({
 	const taskName = `MyExport-${getRandomString()}`;
 
 	const exportFilePath = await exportImportPage.export({
-		itemLabels: ['Tests 1 Items'],
+		portletLabels: ['Tests 1 Items'],
 		taskName,
 	});
 
@@ -137,7 +137,7 @@ test(
 			await exportImportPage.goToExport();
 
 			const exportFilePath = await exportImportPage.export({
-				itemLabels: ['Tests 1 Items'],
+				portletLabels: ['Tests 1 Items'],
 				taskName,
 			});
 

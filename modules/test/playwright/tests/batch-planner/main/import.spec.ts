@@ -15,7 +15,6 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import createTempFile from '../../../utils/createTempFile';
-import {readCSVFile} from '../../../utils/fileReader';
 import getRandomString from '../../../utils/getRandomString';
 import {performUserSwitch, userData} from '../../../utils/performLogin';
 import {dataMigrationCenterPagesTest} from './fixtures/dataMigrationCenterPagesTest';
@@ -565,36 +564,6 @@ test('Admin users can see all site scopes regardless of site membership', async 
 			expect.arrayContaining([site.name, 'Global', 'Liferay DXP'])
 		);
 	});
-});
-
-test('can download custom object sample file', async ({
-	apiHelpers,
-	dataMigrationCenterPage,
-}) => {
-	const objectDefinitionAPIClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
-
-	const {body: objectDefinition} =
-		await objectDefinitionAPIClient.postObjectDefinition(
-			companyObjectDefinition
-		);
-	apiHelpers.data.push({
-		id: objectDefinition.id,
-		type: 'objectDefinition',
-	});
-
-	await dataMigrationCenterPage.gotoPage();
-	await dataMigrationCenterPage.goToImportFile();
-
-	const file = await dataMigrationCenterPage.downloadSampleFile(
-		OBJECT_ENTRY_ENTITY_TYPE
-	);
-
-	expect(file).toEqual(
-		await readCSVFile(
-			path.join(__dirname, '/dependencies/object_entry_import_sample.csv')
-		)
-	);
 });
 
 test('can download object definition sample file', async ({

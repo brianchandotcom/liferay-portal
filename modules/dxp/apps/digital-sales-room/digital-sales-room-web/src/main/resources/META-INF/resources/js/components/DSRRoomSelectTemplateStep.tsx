@@ -36,7 +36,8 @@ function DSRRoomSelectTemplateStep({
 	setHandleStepSubmit,
 	step = 1,
 }: TDSRRoomDetailsStepProps) {
-	const {dataContext, setDataContext} = useContext<TDSRContext>(DSRContext);
+	const {dataContext, loading, setDataContext, setLoading} =
+		useContext<TDSRContext>(DSRContext);
 	const [currentTemplate, setCurrentTemplate] =
 		useState<TDSRTemplateDTO | null>(null);
 	const [templates, setTemplates] = useState<Array<TDSRTemplateDTO>>([]);
@@ -90,6 +91,10 @@ function DSRRoomSelectTemplateStep({
 	);
 
 	useEffect(() => {
+		if (setLoading) {
+			setLoading(true);
+		}
+
 		DigitalSalesRoomService.getDigitalSalesRoomTemplates()
 			.then((data) => {
 				setTemplates(data.items);
@@ -99,8 +104,13 @@ function DSRRoomSelectTemplateStep({
 					message: (error as Error).message,
 					type: 'danger',
 				});
+			})
+			.finally(() => {
+				if (setLoading) {
+					setLoading(false);
+				}
 			});
-	}, []);
+	}, [setLoading]);
 
 	useEffect(() => {
 		if (dataContext.templateId && templates?.length) {
@@ -179,7 +189,9 @@ function DSRRoomSelectTemplateStep({
 										data-qa-id={`template_${template.id}`}
 										key={`template_${template.id}`}
 										onClick={() => {
-											handleChange(template);
+											if (!loading) {
+												handleChange(template);
+											}
 										}}
 									>
 										<div

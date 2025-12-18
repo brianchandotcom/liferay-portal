@@ -47,10 +47,12 @@ function DSRRoomDetailsStep({
 	showHeader = true,
 	step = 1,
 }: TDSRRoomDetailsStepProps) {
-	const {dataContext, setDataContext} = useContext<TDSRContext>(DSRContext);
+	const {dataContext, loading, setDataContext} =
+		useContext<TDSRContext>(DSRContext);
 	const clientLogoInputFileRef = useRef(null);
 	const {getInputProps, getRootProps, isDragActive} = useDropzone({
 		accept: ['image/*'],
+		disabled: loading,
 		multiple: false,
 		onDropAccepted: async (acceptedFiles) => {
 			if (acceptedFiles && acceptedFiles.length) {
@@ -292,6 +294,7 @@ function DSRRoomDetailsStep({
 						aria-hidden="true"
 						className="d-none"
 						data-qa-id="clientLogoInput"
+						disabled={loading}
 						id="dsr-client-logo"
 						onChange={handleClientLogoChange}
 						ref={clientLogoInputFileRef}
@@ -313,6 +316,7 @@ function DSRRoomDetailsStep({
 						<ClayButton
 							className="ml-2"
 							data-qa-id="clientLogoButton"
+							disabled={loading}
 							displayType="primary"
 							onClick={handleClientLogoFileChooser}
 							size="sm"
@@ -324,6 +328,7 @@ function DSRRoomDetailsStep({
 							<ClayButton
 								className="ml-3"
 								data-qa-id="clientLogoDeleteButton"
+								disabled={loading}
 								displayType="secondary"
 								onClick={handleClientLogoDelete}
 								size="sm"
@@ -356,6 +361,7 @@ function DSRRoomDetailsStep({
 					<ClayInput
 						aria-label={Liferay.Language.get('client-name')}
 						data-qa-id="clientNameInput"
+						disabled={loading}
 						id="dsr-client-name"
 						name="clientName"
 						onChange={handleFieldChange}
@@ -386,6 +392,7 @@ function DSRRoomDetailsStep({
 					<ClayInput
 						aria-label={Liferay.Language.get('room-name')}
 						data-qa-id="roomNameInput"
+						disabled={loading}
 						id="dsr-room-name"
 						name="roomName"
 						onChange={handleFieldChange}
@@ -415,6 +422,7 @@ function DSRRoomDetailsStep({
 					<div
 						{...getRootProps({
 							className: classNames('dropzone', {
+								'dropzone-disabled': loading,
 								'dropzone-drag-active': isDragActive,
 							}),
 						})}
@@ -435,6 +443,7 @@ function DSRRoomDetailsStep({
 									<ClayButton
 										className="ml-2"
 										data-qa-id="dsr-banner-button"
+										disabled={loading}
 										displayType="primary"
 										size="sm"
 									>
@@ -444,6 +453,7 @@ function DSRRoomDetailsStep({
 									<ClayButton
 										className="ml-3"
 										data-qa-id="dsr-banner-delete-button"
+										disabled={loading}
 										displayType="secondary"
 										onClick={handleBannerDelete}
 										size="sm"
@@ -498,6 +508,7 @@ function DSRRoomDetailsStep({
 
 					<ClayColorPicker
 						data-qa-id="primaryColorInput"
+						disabled={loading}
 						name="dsr-primary-color"
 						onChange={handlePrimaryColorChange}
 						showHex={true}
@@ -521,6 +532,7 @@ function DSRRoomDetailsStep({
 
 					<ClayColorPicker
 						data-qa-id="secondaryColorInput"
+						disabled={loading}
 						name="dsr-secondary-color"
 						onChange={handleSecondaryColorChange}
 						showHex={true}
@@ -546,6 +558,7 @@ function DSRRoomDetailsStep({
 					<ClayInput
 						aria-label={Liferay.Language.get('friendly-url')}
 						data-qa-id="friendlyURLInput"
+						disabled={loading}
 						id="dsr-friendly-url"
 						name="friendlyURL"
 						onChange={handleFieldChange}

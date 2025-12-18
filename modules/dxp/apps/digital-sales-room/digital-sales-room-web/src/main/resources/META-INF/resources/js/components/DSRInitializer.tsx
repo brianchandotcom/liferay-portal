@@ -55,7 +55,9 @@ const STEPS_DEFINITION = [
 
 export const DSRContext = React.createContext<TDSRContext>({
 	dataContext: DEFAULT_DATA_CONTEXT,
+	loading: false,
 	setDataContext: () => {},
+	setLoading: () => {},
 });
 
 export function getColor(color: string) {
@@ -226,7 +228,9 @@ function DSRInitializer({closeModal, numberOfSteps = 3}: TDSRInitializerProps) {
 	);
 
 	return (
-		<DSRContext.Provider value={{dataContext, setDataContext}}>
+		<DSRContext.Provider
+			value={{dataContext, loading, setDataContext, setLoading}}
+		>
 			<ClayModal.Header
 				closeButtonAriaLabel={Liferay.Language.get('close')}
 			>

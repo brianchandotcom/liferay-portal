@@ -214,7 +214,7 @@ function DSRRoomSettingsInitializer({
 	}, [digitalSalesRoomId]);
 
 	return (
-		<DSRContext.Provider value={{dataContext, setDataContext}}>
+		<DSRContext.Provider value={{dataContext, loading, setDataContext}}>
 			<div className="p-3">
 				<div>
 					<StepLoader

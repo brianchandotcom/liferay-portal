@@ -62,7 +62,8 @@ function DSRRoomSettingsStep({
 	showHeader = true,
 	step = 2,
 }: TDSRRoomDetailsStepProps) {
-	const {dataContext, setDataContext} = useContext<TDSRContext>(DSRContext);
+	const {dataContext, loading, setDataContext} =
+		useContext<TDSRContext>(DSRContext);
 
 	const [accountName, setAccountName] = useState(dataContext.accountName);
 	const [accounts, setAccounts] = useState<Array<TAccount>>([]);
@@ -256,6 +257,7 @@ function DSRRoomSettingsStep({
 						className="mb-3"
 						data-qa-id="selectChannelInput"
 						defaultValue={String(dataContext.channelId || '')}
+						disabled={loading}
 						filterKey="name"
 						id="channelId"
 						items={channels}
@@ -318,6 +320,7 @@ function DSRRoomSettingsStep({
 						className="mb-3"
 						data-qa-id="selectAccountInput"
 						defaultValue={String(dataContext.accountId || '')}
+						disabled={loading}
 						filterKey="name"
 						id="accountId"
 						items={accounts}

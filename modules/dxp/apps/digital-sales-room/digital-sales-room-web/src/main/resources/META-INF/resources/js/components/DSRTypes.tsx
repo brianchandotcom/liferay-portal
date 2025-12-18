@@ -47,7 +47,9 @@ export type TDSRDataContext = {
 
 export type TDSRContext = {
 	dataContext: TDSRDataContext;
+	loading: boolean;
 	setDataContext: React.Dispatch<React.SetStateAction<TDSRDataContext>>;
+	setLoading?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export type TDSRRoomDetailsStepProps = {

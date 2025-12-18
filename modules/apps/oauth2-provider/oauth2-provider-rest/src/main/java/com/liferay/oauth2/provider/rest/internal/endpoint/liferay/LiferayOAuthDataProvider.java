@@ -332,7 +332,11 @@ public class LiferayOAuthDataProvider
 			return _populateAccessToken(oAuth2Authorization);
 		}
 		catch (PortalException portalException) {
-			_log.error("Unable to populate access token", portalException);
+			_log.error(
+				"Unable to populate access token for Liferay OAuth2 " +
+					"application " +
+						oAuth2Authorization.getOAuth2ApplicationId(),
+				portalException);
 
 			throw new OAuthServiceException(portalException);
 		}
@@ -751,19 +755,17 @@ public class LiferayOAuthDataProvider
 				user.getScreenName() + "_dynamic_registered",
 				_getAllowedGrantTypes(client.getAllowedGrantTypes()),
 				client.getTokenEndpointAuthMethod(), user.getUserId(),
-				client.getClientId(), 0, client.getClientSecret(), null,
-				null, client.getApplicationWebUri(), 0, jwks,
+				client.getClientId(), 0, client.getClientSecret(), null, null,
+				client.getApplicationWebUri(), 0, jwks,
 				client.getApplicationName(), properties.get("tos_uri"),
-				client.getRedirectUris(), false,
-				client.getRegisteredScopes(), false, new ServiceContext());
+				client.getRedirectUris(), false, client.getRegisteredScopes(),
+				false, new ServiceContext());
 		}
 		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Error registering dynamically OAuth 2 Application " +
-						"with client ID: " + client.getClientId(),
-					portalException);
-			}
+			_log.error(
+				"Error registering dynamically OAuth 2 Application with " +
+					"client ID: " + client.getClientId(),
+				portalException);
 
 			throw new WebApplicationException(portalException);
 		}
@@ -1161,7 +1163,7 @@ public class LiferayOAuthDataProvider
 
 		if (!StringUtil.startsWith(jwksURI, "https://")) {
 			throwOAuthError(
-				"jwks_uri must use the https scheme",
+				"jwksURI field must use the https scheme",
 				OAuthConstants.INVALID_REQUEST, Response.Status.BAD_REQUEST);
 
 			return null;
@@ -1190,13 +1192,13 @@ public class LiferayOAuthDataProvider
 			).toString();
 		}
 		catch (IOException | SystemException exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
+			_log.error(
+				"Unable to retrieve JWKS information from " + jwksURI,
+				exception);
 
 			throwOAuthError(
-				"jwks_uri is unreachable", OAuthConstants.INVALID_REQUEST,
-				Response.Status.BAD_REQUEST);
+				"Unable to retrieve JWKS information from " + jwksURI,
+				OAuthConstants.INVALID_REQUEST, Response.Status.BAD_REQUEST);
 		}
 
 		return null;
@@ -1636,7 +1638,8 @@ public class LiferayOAuthDataProvider
 					scopeAliasesList));
 		}
 		catch (PortalException portalException) {
-			_log.error("Unable to find authorization " + oAuth2Authorization);
+			_log.error(
+				"Unable to grant scope for token " + oAuth2Authorization);
 
 			throw new OAuthServiceException(
 				"Unable to grant scope for token", portalException);

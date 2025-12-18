@@ -75,6 +75,12 @@ module "eks" {
 	}
 	endpoint_private_access=true
 	endpoint_public_access=true
+	iam_role_additional_policies = {
+		AmazonEKSBlockStoragePolicy  = "arn:${var.arn_partition}:iam::aws:policy/AmazonEKSBlockStoragePolicy"
+		AmazonEKSComputePolicy       = "arn:${var.arn_partition}:iam::aws:policy/AmazonEKSComputePolicy"
+		AmazonEKSLoadBalancingPolicy = "arn:${var.arn_partition}:iam::aws:policy/AmazonEKSLoadBalancingPolicy"
+		AmazonEKSNetworkingPolicy    = "arn:${var.arn_partition}:iam::aws:policy/AmazonEKSNetworkingPolicy"
+	}
 	kubernetes_version=data.aws_eks_cluster_versions.available.cluster_versions[0].cluster_version
 	name="${var.deployment_name}-eks"
 	node_security_group_id=aws_security_group.nodes.id

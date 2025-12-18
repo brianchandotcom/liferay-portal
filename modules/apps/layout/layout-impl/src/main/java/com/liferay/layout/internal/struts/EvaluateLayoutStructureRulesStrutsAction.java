@@ -7,8 +7,11 @@ package com.liferay.layout.internal.struts;
 
 import com.liferay.layout.helper.structure.LayoutStructureRulesHelper;
 import com.liferay.layout.provider.LayoutStructureProvider;
+import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureRule;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -21,6 +24,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.SegmentsEntryRetriever;
 import com.liferay.segments.context.RequestContextMapper;
@@ -30,6 +34,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -76,8 +81,8 @@ public class EvaluateLayoutStructureRulesStrutsAction implements StrutsAction {
 		JSONArray jsonArray =
 			_layoutStructureRulesHelper.processLayoutStructureRules(
 				themeDisplay.getScopeGroupId(),
-				_getFieldValuesMap(httpServletRequest), layoutStructureRules,
-				themeDisplay.getPermissionChecker(),
+				_getFieldValuesMap(httpServletRequest, layoutStructure),
+				layoutStructureRules, themeDisplay.getPermissionChecker(),
 				_segmentsEntryRetriever.getSegmentsEntryIds(
 					themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 					_requestContextMapper.map(httpServletRequest),
@@ -89,13 +94,33 @@ public class EvaluateLayoutStructureRulesStrutsAction implements StrutsAction {
 	}
 
 	private Map<String, Object> _getFieldValuesMap(
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest,
+		LayoutStructure layoutStructure) {
 
 		try {
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				ParamUtil.getString(httpServletRequest, "fieldValues"));
 
-			return jsonObject.toMap();
+			Map<String, Object> fieldValues = jsonObject.toMap();
+
+			Map<String, Object> map = new HashMap<>(fieldValues);
+
+			for (Map.Entry<String, Object> entry : fieldValues.entrySet()) {
+				LayoutStructureItem layoutStructureItem =
+					layoutStructure.getLayoutStructureItem(entry.getKey());
+
+				if (layoutStructureItem instanceof
+						FragmentStyledLayoutStructureItem) {
+
+					String formattedItemId = StringUtil.replace(
+						layoutStructureItem.getItemId(), CharPool.DASH,
+						CharPool.UNDERLINE);
+
+					map.put(_INPUT_PREFIX + formattedItemId, entry.getValue());
+				}
+			}
+
+			return map;
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
@@ -105,6 +130,8 @@ public class EvaluateLayoutStructureRulesStrutsAction implements StrutsAction {
 
 		return Collections.emptyMap();
 	}
+
+	private static final String _INPUT_PREFIX = "input__";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EvaluateLayoutStructureRulesStrutsAction.class);

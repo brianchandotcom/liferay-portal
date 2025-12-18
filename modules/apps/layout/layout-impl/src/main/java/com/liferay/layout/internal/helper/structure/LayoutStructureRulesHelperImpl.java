@@ -6,12 +6,14 @@
 package com.liferay.layout.internal.helper.structure;
 
 import com.liferay.layout.helper.structure.LayoutStructureRulesHelper;
+import com.liferay.layout.internal.util.AdvancedLayoutStructureRuleEvaluator;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureRule;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -163,6 +165,15 @@ public class LayoutStructureRulesHelperImpl
 		LayoutStructureRule layoutStructureRule,
 		LayoutStructureRulesContext layoutStructureRulesContext) {
 
+		if (layoutStructureRule.isAdvancedRule()) {
+			return _advancedLayoutStructureRuleEvaluator.evaluateScript(
+				layoutStructureRulesContext.getGroupId(),
+				layoutStructureRulesContext.getRoleIds(),
+				layoutStructureRule.getScript(), fieldValuesMap,
+				layoutStructureRulesContext.getSegmentsEntryIds(),
+				layoutStructureRulesContext.getUser());
+		}
+
 		JSONArray conditionsJSONArray =
 			layoutStructureRule.getConditionsJSONArray();
 
@@ -263,18 +274,27 @@ public class LayoutStructureRulesHelperImpl
 	private List<String> _getItemIds(LayoutStructureRule layoutStructureRule) {
 		List<String> itemIds = new ArrayList<>();
 
-		JSONArray conditionsJSONArray =
-			layoutStructureRule.getConditionsJSONArray();
+		if (layoutStructureRule.isAdvancedRule()) {
+			itemIds.addAll(
+				_advancedLayoutStructureRuleEvaluator.getItemIds(
+					layoutStructureRule));
+		}
+		else {
+			JSONArray conditionsJSONArray =
+				layoutStructureRule.getConditionsJSONArray();
 
-		for (int i = 0; i < conditionsJSONArray.length(); i++) {
-			JSONObject conditionJSONObject = conditionsJSONArray.getJSONObject(
-				i);
+			for (int i = 0; i < conditionsJSONArray.length(); i++) {
+				JSONObject conditionJSONObject =
+					conditionsJSONArray.getJSONObject(i);
 
-			if (Objects.equals(conditionJSONObject.getString("type"), "user")) {
-				continue;
+				if (Objects.equals(
+						conditionJSONObject.getString("type"), "user")) {
+
+					continue;
+				}
+
+				itemIds.add(conditionJSONObject.getString("field"));
 			}
-
-			itemIds.add(conditionJSONObject.getString("field"));
 		}
 
 		return itemIds;
@@ -344,6 +364,10 @@ public class LayoutStructureRulesHelperImpl
 	}
 
 	@Reference
+	private AdvancedLayoutStructureRuleEvaluator
+		_advancedLayoutStructureRuleEvaluator;
+
+	@Reference
 	private JSONFactory _jsonFactory;
 
 	private enum Action {
@@ -381,6 +405,10 @@ public class LayoutStructureRulesHelperImpl
 
 		public long[] getSegmentsEntryIds() {
 			return _segmentsEntryIds;
+		}
+
+		public User getUser() {
+			return _permissionChecker.getUser();
 		}
 
 		public long getUserId() {

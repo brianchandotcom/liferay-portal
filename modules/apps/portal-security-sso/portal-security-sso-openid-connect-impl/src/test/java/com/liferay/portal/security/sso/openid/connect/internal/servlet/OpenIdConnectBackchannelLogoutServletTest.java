@@ -70,6 +70,7 @@ public class OpenIdConnectBackchannelLogoutServletTest {
 		ReflectionTestUtils.setField(
 			_openIdConnectBackchannelLogoutServlet, "_openIdConnect",
 			openIdConnect);
+
 		ReflectionTestUtils.setField(
 			_openIdConnectBackchannelLogoutServlet,
 			"_openIdConnectSessionLocalService",

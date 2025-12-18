@@ -104,13 +104,21 @@ const testWithDeprecationFF = mergeTests(
 testWithExportImportAtInstanceLevelFF(
 	'Can export and import custom object entries at site level',
 	async ({apiHelpers, exportImportPage}) => {
-		const objectActionAPIClient =
-			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+		const objectFolder =
+			await apiHelpers.objectAdmin.postRandomObjectFolder();
 
-		const {body: objectDefinition} =
-			await objectActionAPIClient.postObjectDefinition(
-				objectDefitionRequestData({scope: 'site'})
-			);
+		apiHelpers.data.push({
+			id: objectFolder.id,
+			type: 'objectFolder',
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode:
+					objectFolder.externalReferenceCode,
+				scope: 'site',
+				status: {code: 0},
+			});
 
 		apiHelpers.data.push({
 			id: objectDefinition.id,
@@ -118,8 +126,8 @@ testWithExportImportAtInstanceLevelFF(
 		});
 
 		const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
-			{externalReferenceCode: '', name: 'test'},
-			'c/tests/scopes/Guest'
+			{externalReferenceCode: '', textField: 'test'},
+			getRESTContextPath(objectDefinition.name) + '/scopes/Guest'
 		);
 
 		await exportImportPage.goToExport();
@@ -128,7 +136,10 @@ testWithExportImportAtInstanceLevelFF(
 			portletLabels: ['Tests 1 Items'],
 		});
 
-		const content = await readFileFromZip('C_Test.json', exportFilePath);
+		const content = await readFileFromZip(
+			'C_' + objectDefinition.name + '.json',
+			exportFilePath
+		);
 
 		const json = JSON.parse(content);
 
@@ -136,7 +147,7 @@ testWithExportImportAtInstanceLevelFF(
 
 		expect(
 			await apiHelpers.delete(
-				`${apiHelpers.baseUrl}c/tests/${objectEntry.id}`
+				`${apiHelpers.baseUrl}${getRESTContextPath(objectDefinition.name)}/${objectEntry.id}`
 			)
 		).toBeOK();
 
@@ -146,12 +157,14 @@ testWithExportImportAtInstanceLevelFF(
 
 		expect(
 			await apiHelpers.get(
-				`${apiHelpers.baseUrl}c/tests/scopes/Guest/by-external-reference-code/${objectEntry.externalReferenceCode}`
+				`${apiHelpers.baseUrl}` +
+					getRESTContextPath(objectDefinition.name) +
+					`/scopes/Guest/by-external-reference-code/${objectEntry.externalReferenceCode}`
 			)
 		).toEqual(
 			expect.objectContaining({
 				externalReferenceCode: objectEntry.externalReferenceCode,
-				name: objectEntry.name,
+				textField: objectEntry.textField,
 			})
 		);
 	}

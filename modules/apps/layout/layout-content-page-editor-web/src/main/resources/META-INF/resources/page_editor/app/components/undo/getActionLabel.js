@@ -19,6 +19,7 @@ import {
 	MOVE_STEPPER,
 	PASTE_ITEM,
 	REMOVE_FORM_STEP,
+	SWAP_FRAGMENT,
 	SWITCH_VIEWPORT_SIZE,
 	TOGGLE_FRAGMENT_HIGHLIGHTED,
 	TOGGLE_WIDGET_HIGHLIGHTED,
@@ -94,6 +95,8 @@ export default function getActionLabel(
 							availableSegmentsExperiences
 						)
 					);
+		case SWAP_FRAGMENT:
+			return Liferay.Language.get('swap-fragment');
 		case SWITCH_VIEWPORT_SIZE:
 			return type === UNDO_TYPES.undo
 				? sub(

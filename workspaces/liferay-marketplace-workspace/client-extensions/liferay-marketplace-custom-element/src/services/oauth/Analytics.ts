@@ -6,12 +6,6 @@
 import {MarketplaceSpringBootOAuth2} from './OAuth2Client';
 
 class AnalyticsOAuth2 extends MarketplaceSpringBootOAuth2 {
-	async getPages(
-		searchParams: URLSearchParams = new URLSearchParams()
-	): Promise<AnalyticsViews> {
-		return this.get<AnalyticsViews>(`/pages?${searchParams.toString()}`);
-	}
-
 	async getPlan(accountId: string) {
 		return this.get<{
 			productKey?: string;

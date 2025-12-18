@@ -9,7 +9,8 @@ create table ListTypeDefinition (
 	createDate DATE null,
 	modifiedDate DATE null,
 	name STRING null,
-	system_ BOOLEAN
+	system_ BOOLEAN,
+	status INTEGER
 );
 
 create table ListTypeEntry (

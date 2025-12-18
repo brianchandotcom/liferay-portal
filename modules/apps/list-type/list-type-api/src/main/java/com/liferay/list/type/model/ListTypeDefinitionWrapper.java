@@ -45,6 +45,7 @@ public class ListTypeDefinitionWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("system", isSystem());
+		attributes.put("status", getStatus());
 
 		return attributes;
 	}
@@ -117,6 +118,12 @@ public class ListTypeDefinitionWrapper
 
 		if (system != null) {
 			setSystem(system);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
 		}
 	}
 
@@ -279,6 +286,16 @@ public class ListTypeDefinitionWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the status of this list type definition.
+	 *
+	 * @return the status of this list type definition
+	 */
+	@Override
+	public int getStatus() {
+		return model.getStatus();
 	}
 
 	/**
@@ -492,6 +509,16 @@ public class ListTypeDefinitionWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the status of this list type definition.
+	 *
+	 * @param status the status of this list type definition
+	 */
+	@Override
+	public void setStatus(int status) {
+		model.setStatus(status);
 	}
 
 	/**

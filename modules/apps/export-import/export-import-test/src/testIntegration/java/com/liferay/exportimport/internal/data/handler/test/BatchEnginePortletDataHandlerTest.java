@@ -114,6 +114,7 @@ import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -388,10 +389,12 @@ public class BatchEnginePortletDataHandlerTest {
 		// File Entries in different groups: None of the URLs are recalculated
 
 		_testExportImportObjectEntriesWithRichTextAndURLs(
-			null, imgTags, imgTags, ObjectDefinitionConstants.SCOPE_COMPANY,
-			companyGroup, companyGroup);
+			null, imgTags, null, imgTags,
+			ObjectDefinitionConstants.SCOPE_COMPANY, companyGroup,
+			companyGroup);
 
-		// File Entries not existing: The URLs are not recalculated
+		// File Entries existing before exporting but deleted before importing:
+		// The URLs are not recalculated
 
 		_testExportImportObjectEntriesWithRichTextAndURLs(
 			() -> {
@@ -404,8 +407,15 @@ public class BatchEnginePortletDataHandlerTest {
 				_dlAppLocalService.deleteFileEntry(
 					group2FileEntry.getFileEntryId());
 			},
-			imgTags, imgTags, ObjectDefinitionConstants.SCOPE_COMPANY,
-			companyGroup, companyGroup);
+			imgTags,
+			new ObjectValuePair[] {
+				_getExternalReferenceCodeGroupId(depotEntryFileEntry),
+				_getExternalReferenceCodeGroupId(globalGroupFileEntry),
+				_getExternalReferenceCodeGroupId(group1FileEntry),
+				_getExternalReferenceCodeGroupId(group2FileEntry)
+			},
+			imgTags, ObjectDefinitionConstants.SCOPE_COMPANY, companyGroup,
+			companyGroup);
 	}
 
 	@Test
@@ -455,12 +465,18 @@ public class BatchEnginePortletDataHandlerTest {
 		// from the exported and imported depot group is the only recalculated
 
 		_testExportImportObjectEntriesWithRichTextAndURLs(
-			null, currentImgTags, expectedImgTags,
-			ObjectDefinitionConstants.SCOPE_DEPOT, sourceDepotEntry.getGroup(),
-			targetDepotEntry.getGroup());
+			null, currentImgTags,
+			new ObjectValuePair[] {
+				new ObjectValuePair<>(
+					sourceDepotEntryFileEntry.getExternalReferenceCode(),
+					targetDepotEntry.getGroupId())
+			},
+			expectedImgTags, ObjectDefinitionConstants.SCOPE_DEPOT,
+			sourceDepotEntry.getGroup(), targetDepotEntry.getGroup());
 
-		// File Entries not existing: The URL of the File Entry from the
-		// exported and imported depot group is recalculated
+		// File Entries existing before exporting but deleted before importing:
+		// The URL of the File Entry from the exported and imported depot group
+		// is recalculated, the rest are not
 
 		_testExportImportObjectEntriesWithRichTextAndURLs(
 			() -> {
@@ -473,9 +489,17 @@ public class BatchEnginePortletDataHandlerTest {
 				_dlAppLocalService.deleteFileEntry(
 					sourceDepotEntryFileEntry.getFileEntryId());
 			},
-			currentImgTags, expectedImgTags,
-			ObjectDefinitionConstants.SCOPE_DEPOT, sourceDepotEntry.getGroup(),
-			targetDepotEntry.getGroup());
+			currentImgTags,
+			new ObjectValuePair[] {
+				_getExternalReferenceCodeGroupId(globalGroupFileEntry),
+				_getExternalReferenceCodeGroupId(groupFileEntry),
+				_getExternalReferenceCodeGroupId(otherDepotEntryFileEntry),
+				new ObjectValuePair<>(
+					sourceDepotEntryFileEntry.getExternalReferenceCode(),
+					targetDepotEntry.getGroupId())
+			},
+			expectedImgTags, ObjectDefinitionConstants.SCOPE_DEPOT,
+			sourceDepotEntry.getGroup(), targetDepotEntry.getGroup());
 	}
 
 	@FeatureFlag("LPD-35443")
@@ -795,11 +819,18 @@ public class BatchEnginePortletDataHandlerTest {
 		// from the exported and imported group is the only recalculated
 
 		_testExportImportObjectEntriesWithRichTextAndURLs(
-			null, currentImgTags, expectedImgTags,
-			ObjectDefinitionConstants.SCOPE_SITE, sourceGroup, targetGroup);
+			null, currentImgTags,
+			new ObjectValuePair[] {
+				new ObjectValuePair<>(
+					sourceGroupFileEntry.getExternalReferenceCode(),
+					targetGroup.getGroupId())
+			},
+			expectedImgTags, ObjectDefinitionConstants.SCOPE_SITE, sourceGroup,
+			targetGroup);
 
-		// File Entries not existing: The URL of the File Entry from the
-		// exported and imported group is recalculated
+		// File Entries existing before exporting but deleted before importing:
+		// The URL of the File Entry from the exported and imported site is
+		// recalculated, the rest are not
 
 		_testExportImportObjectEntriesWithRichTextAndURLs(
 			() -> {
@@ -812,8 +843,17 @@ public class BatchEnginePortletDataHandlerTest {
 				_dlAppLocalService.deleteFileEntry(
 					sourceGroupFileEntry.getFileEntryId());
 			},
-			currentImgTags, expectedImgTags,
-			ObjectDefinitionConstants.SCOPE_SITE, sourceGroup, targetGroup);
+			currentImgTags,
+			new ObjectValuePair[] {
+				_getExternalReferenceCodeGroupId(depotEntryFileEntry),
+				_getExternalReferenceCodeGroupId(globalGroupFileEntry),
+				_getExternalReferenceCodeGroupId(otherGroupFileEntry),
+				new ObjectValuePair<>(
+					sourceGroupFileEntry.getExternalReferenceCode(),
+					targetGroup.getGroupId())
+			},
+			expectedImgTags, ObjectDefinitionConstants.SCOPE_SITE, sourceGroup,
+			targetGroup);
 	}
 
 	@Test
@@ -1448,6 +1488,27 @@ public class BatchEnginePortletDataHandlerTest {
 			ContentTypes.TEXT_PLAIN);
 	}
 
+	private void _assertExportImportReportEntry(
+		long expectedClassNameId, long expectedClassPK,
+		String expectedExternalReferenceCode, long expectedGroupId,
+		String expectedModelNameLanguageKey, int expectedType,
+		ExportImportReportEntry exportImportReportEntry) {
+
+		Assert.assertEquals(
+			expectedExternalReferenceCode,
+			exportImportReportEntry.getClassExternalReferenceCode());
+		Assert.assertEquals(
+			expectedClassNameId, exportImportReportEntry.getClassNameId());
+		Assert.assertEquals(
+			expectedClassPK, exportImportReportEntry.getClassPK());
+		Assert.assertEquals(
+			expectedGroupId, exportImportReportEntry.getGroupId());
+		Assert.assertEquals(
+			expectedModelNameLanguageKey,
+			exportImportReportEntry.getModelNameLanguageKey());
+		Assert.assertEquals(expectedType, exportImportReportEntry.getType());
+	}
+
 	private void _assertListTypeDefinition(
 			ListTypeDefinition listTypeDefinition, int listTypeEntriesCount,
 			ListTypeEntry... listTypeEntries)
@@ -1736,6 +1797,13 @@ public class BatchEnginePortletDataHandlerTest {
 		return parameterMap;
 	}
 
+	private ObjectValuePair<String, Long> _getExternalReferenceCodeGroupId(
+		FileEntry fileEntry) {
+
+		return new ObjectValuePair<>(
+			fileEntry.getExternalReferenceCode(), fileEntry.getGroupId());
+	}
+
 	private String[] _getExternalReferenceCodes(ObjectEntry... objectEntries) {
 		String[] externalReferenceCodes = new String[objectEntries.length];
 
@@ -2000,22 +2068,13 @@ public class BatchEnginePortletDataHandlerTest {
 		ExportImportReportEntry exportImportReportEntry =
 			exportImportReportEntries.get(0);
 
-		Assert.assertEquals(
-			originalExternalReferenceCode,
-			exportImportReportEntry.getClassExternalReferenceCode());
-		Assert.assertEquals(
+		_assertExportImportReportEntry(
 			_portal.getClassNameId(objectDefinition.getClassName()),
-			exportImportReportEntry.getClassNameId());
-		Assert.assertEquals(
-			objectEntry.getPrimaryKey(), exportImportReportEntry.getClassPK());
-		Assert.assertEquals(
-			objectEntry.getGroupId(), exportImportReportEntry.getGroupId());
-		Assert.assertEquals(
+			objectEntry.getPrimaryKey(), originalExternalReferenceCode,
+			objectEntry.getGroupId(),
 			"model.resource." + objectDefinition.getResourceName(),
-			exportImportReportEntry.getModelNameLanguageKey());
-		Assert.assertEquals(
 			ExportImportReportEntryConstants.TYPE_ERROR,
-			exportImportReportEntry.getType());
+			exportImportReportEntry);
 	}
 
 	private void _testExportImportObjectEntriesWithRelatedObjectEntries(
@@ -2189,8 +2248,10 @@ public class BatchEnginePortletDataHandlerTest {
 
 	private void _testExportImportObjectEntriesWithRichTextAndURLs(
 			UnsafeRunnable<Exception> afterExportUnsafeRunnable,
-			String[] currentImgTags, String[] expectedImgTags, String scope,
-			Group sourceGroup, Group targetGroup)
+			String[] currentImgTags,
+			ObjectValuePair<String, Long>[] expectedReportEntryERCGroupIds,
+			String[] expectedImgTags, String scope, Group sourceGroup,
+			Group targetGroup)
 		throws Exception {
 
 		ObjectDefinition objectDefinition = _addObjectDefinition(scope);
@@ -2216,7 +2277,7 @@ public class BatchEnginePortletDataHandlerTest {
 		_objectEntryLocalService.deleteObjectEntry(
 			objectEntry.getObjectEntryId());
 
-		_importLayouts(
+		ExportImportConfiguration exportImportConfiguration = _importLayouts(
 			false, false, larFile, targetGroup.getGroupId(), objectDefinition);
 
 		List<ObjectEntry> objectEntriesList =
@@ -2237,6 +2298,31 @@ public class BatchEnginePortletDataHandlerTest {
 			Assert.assertTrue(
 				importedRichTextValue.contains(
 					_sanitize(expectedImgTag, targetGroup, objectDefinition)));
+		}
+
+		List<ExportImportReportEntry> exportImportReportEntries =
+			_exportImportReportEntryLocalService.getExportImportReportEntries(
+				TestPropsValues.getCompanyId(),
+				exportImportConfiguration.getExportImportConfigurationId());
+
+		if (expectedReportEntryERCGroupIds == null) {
+			Assert.assertTrue(exportImportReportEntries.isEmpty());
+		}
+		else {
+			long classNameId = _classNameLocalService.getClassNameId(
+				FileEntry.class);
+
+			for (int i = 0; i < exportImportReportEntries.size(); i++) {
+				ObjectValuePair<String, Long> externalReferenceCodeGroupId =
+					expectedReportEntryERCGroupIds[i];
+
+				_assertExportImportReportEntry(
+					classNameId, 0L, externalReferenceCodeGroupId.getKey(),
+					externalReferenceCodeGroupId.getValue(),
+					FileEntry.class.getName(),
+					ExportImportReportEntryConstants.TYPE_EMPTY,
+					exportImportReportEntries.get(i));
+			}
 		}
 	}
 

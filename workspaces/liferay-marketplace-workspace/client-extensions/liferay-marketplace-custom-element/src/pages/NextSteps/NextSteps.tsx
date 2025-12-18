@@ -6,6 +6,7 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import {Fragment} from 'react';
 import useSWR from 'swr';
 
 import checkCircleIcon from '../../assets/icons/check_circle_icon.svg';
@@ -15,6 +16,7 @@ import {AccountAndAppCard} from '../../components/Card/AccountAndAppCard';
 import {Header} from '../../components/Header/Header';
 import {PageRenderer} from '../../components/Page';
 import {OrderTypes, PaymentStatus} from '../../enums/Order';
+import {ProductTypeVocabulary, SolutionTypes} from '../../enums/Product';
 import withProviders from '../../hoc/withProviders';
 import useGetProductByOrderId from '../../hooks/useGetProductByOrderId';
 import i18n from '../../i18n';
@@ -22,11 +24,9 @@ import {Liferay} from '../../liferay/liferay';
 import HeadlessAdminUser from '../../services/rest/HeadlessAdminUser';
 import {getSiteURL} from '../../utils/site';
 import {getAccountImage} from '../../utils/util';
+import ProductPurchaseNextSteps from '../ProductPurchase/pages/NextSteps';
 
 import './NextSteps.scss';
-
-import {Fragment} from 'react/jsx-runtime';
-
 type NextStepsBodyProps = ReturnType<typeof useGetProductByOrderId>['data'];
 
 export function NextStepsBody(props: NextStepsBodyProps) {
@@ -170,7 +170,7 @@ export function NextStepsBody(props: NextStepsBodyProps) {
 	};
 
 	return (
-		<Fragment>
+		<>
 			<div className="next-step-page-cards">
 				<AccountAndAppCard
 					category="Application"
@@ -239,7 +239,7 @@ export function NextStepsBody(props: NextStepsBodyProps) {
 					</a>
 				</div>
 			)}
-		</Fragment>
+		</>
 	);
 }
 
@@ -251,6 +251,20 @@ export function NextSteps() {
 
 	if (isLoading) {
 		return <ClayLoadingIndicator />;
+	}
+
+	if (
+		[OrderTypes.ADDONS, OrderTypes.SOLUTIONS7].includes(
+			data?.placedOrder.orderTypeExternalReferenceCode as OrderTypes
+		)
+	) {
+		return (
+			<ProductPurchaseNextSteps
+				product={data?.product as DeliveryProduct}
+				productTypeCategory={ProductTypeVocabulary.SOLUTION}
+				solutionTypeSpecificationValue={SolutionTypes.ANALYTICS}
+			/>
+		);
 	}
 
 	return (
@@ -266,4 +280,4 @@ export function NextSteps() {
 	);
 }
 
-export default withProviders(NextSteps);
+export default withProviders(NextSteps, {withHashRouter: true});

@@ -39,6 +39,7 @@ export class ExportImportPage {
 	readonly newImportButton: Locator;
 	readonly page: Page;
 	readonly pagesCheckbox: Locator;
+	readonly portletListContainer: Locator;
 	readonly productMenuPage: ProductMenuPage;
 	readonly rangeDateRangeEndDate: Locator;
 	readonly rangeDateRangeEndTime: Locator;
@@ -101,9 +102,18 @@ export class ExportImportPage {
 		this.newExportButton = page.getByRole('link', {name: 'Custom Export'});
 		this.newImportButton = page.getByRole('link', {name: 'Import'});
 		this.page = page;
-		this.pagesCheckbox = this.page.locator(
+		this.pagesCheckbox = page.locator(
 			'[id="_com_liferay_exportimport_web_portlet_ImportPortlet_contentLink_com_liferay_layout_admin_web_portlet_GroupPagesPortlet"]'
 		);
+		this.portletListContainer = page
+			.locator(
+				'#_com_liferay_exportimport_web_portlet_ExportPortlet_selectContents .portlet-list'
+			)
+			.or(
+				page.locator(
+					'#_com_liferay_exportimport_web_portlet_CompanyExportPortlet_selectContents .portlet-list'
+				)
+			);
 		this.productMenuPage = new ProductMenuPage(page);
 		this.rangeDateRangeEndDate = page.locator(
 			'[id="_com_liferay_exportimport_web_portlet_CompanyExportPortlet_endDate"]'
@@ -127,7 +137,7 @@ export class ExportImportPage {
 		this.taskActionsMenu = (taskName) =>
 			this.taskRow(taskName).getByRole('button');
 		this.taskRow = (taskName) =>
-			this.page.locator('[data-qa-id="row"]', {
+			page.locator('[data-qa-id="row"]', {
 				hasText: taskName,
 			});
 		this.taskStatusLabel = (taskName, taskStatus = 'success') => {
@@ -158,6 +168,20 @@ export class ExportImportPage {
 		});
 	}
 
+	async uncheckPortlets() {
+		const portletListContainer = await this.portletListContainer;
+
+		await portletListContainer.waitFor({state: 'attached'});
+
+		const checkBoxes = portletListContainer.locator(
+			'input[type="checkbox"]:visible'
+		);
+
+		for (const checkbox of await checkBoxes.all()) {
+			await checkbox.uncheck();
+		}
+	}
+
 	async export({
 		taskName = `MyExport-${getRandomString()}`,
 		dateOptions,
@@ -175,6 +199,8 @@ export class ExportImportPage {
 		await this.title.fill(taskName);
 
 		if (itemLabels) {
+			await this.uncheckPortlets();
+
 			for (const itemLabel of itemLabels) {
 				await this.page.getByLabel(itemLabel, {exact: true}).check();
 			}
@@ -327,9 +353,7 @@ export class ExportImportPage {
 	async getExportableItems() {
 		await this.newExportButton.click();
 
-		const portletListContainer = this.page.locator(
-			'#_com_liferay_exportimport_web_portlet_ExportPortlet_selectContents .portlet-list'
-		);
+		const portletListContainer = await this.portletListContainer;
 
 		await portletListContainer.waitFor({state: 'attached'});
 

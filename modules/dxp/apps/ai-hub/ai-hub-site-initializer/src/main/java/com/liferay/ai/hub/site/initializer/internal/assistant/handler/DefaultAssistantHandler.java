@@ -19,17 +19,25 @@ public class DefaultAssistantHandler implements AssistantHandler {
 
 	@Override
 	public void handle(AssistantHandlerContext assistantHandlerContext) {
-		DefaultAssistant defaultAssistant = AiServices.builder(
-			DefaultAssistant.class
+		AiServices<DefaultAssistant> aiServices = AiServices.builder(
+			DefaultAssistant.class);
+
+		if (assistantHandlerContext.getContentRetriever() != null) {
+			aiServices.contentRetriever(
+				assistantHandlerContext.getContentRetriever());
+		}
+
+		aiServices.streamingChatModel(
+			assistantHandlerContext.getVertexAiGeminiStreamingChatModel()
 		).systemMessageProvider(
 			assistantHandlerContext.getSystemMessageProvider()
-		).streamingChatModel(
-			assistantHandlerContext.getVertexAiGeminiStreamingChatModel()
-		).tools(
-			assistantHandlerContext.getTools()
 		).toolProvider(
 			assistantHandlerContext.getToolProvider()
+		).tools(
+			assistantHandlerContext.getTools()
 		).build();
+
+		DefaultAssistant defaultAssistant = aiServices.build();
 
 		defaultAssistant.assist(
 			assistantHandlerContext.getInvocationParameters(),

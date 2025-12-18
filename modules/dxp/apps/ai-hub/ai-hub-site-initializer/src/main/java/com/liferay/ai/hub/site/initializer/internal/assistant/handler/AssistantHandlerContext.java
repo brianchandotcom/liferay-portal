@@ -8,6 +8,7 @@ package com.liferay.ai.hub.site.initializer.internal.assistant.handler;
 import dev.langchain4j.invocation.InvocationParameters;
 import dev.langchain4j.model.chat.response.ChatResponse;
 import dev.langchain4j.model.vertexai.gemini.VertexAiGeminiStreamingChatModel;
+import dev.langchain4j.rag.content.retriever.ContentRetriever;
 import dev.langchain4j.service.tool.ToolProvider;
 
 import java.util.function.Consumer;
@@ -23,6 +24,7 @@ public class AssistantHandlerContext {
 	}
 
 	public AssistantHandlerContext(AssistantHandlerContext.Builder builder) {
+		_contentRetriever = builder._contentRetriever;
 		_invocationParameters = builder._invocationParameters;
 		_memoryId = builder._memoryId;
 		_onCompleteResponse = builder._onCompleteResponse;
@@ -33,6 +35,10 @@ public class AssistantHandlerContext {
 		_userMessage = builder._userMessage;
 		_vertexAiGeminiStreamingChatModel =
 			builder._vertexAiGeminiStreamingChatModel;
+	}
+
+	public ContentRetriever getContentRetriever() {
+		return _contentRetriever;
 	}
 
 	public InvocationParameters getInvocationParameters() {
@@ -77,6 +83,12 @@ public class AssistantHandlerContext {
 
 		public AssistantHandlerContext build() {
 			return new AssistantHandlerContext(this);
+		}
+
+		public Builder contextRetriever(ContentRetriever contentRetriever) {
+			_contentRetriever = contentRetriever;
+
+			return this;
 		}
 
 		public Builder invocationParameters(
@@ -144,6 +156,7 @@ public class AssistantHandlerContext {
 			return this;
 		}
 
+		private ContentRetriever _contentRetriever;
 		private InvocationParameters _invocationParameters;
 		private String _memoryId;
 		private Consumer<ChatResponse> _onCompleteResponse;
@@ -157,6 +170,7 @@ public class AssistantHandlerContext {
 
 	}
 
+	private final ContentRetriever _contentRetriever;
 	private final InvocationParameters _invocationParameters;
 	private final String _memoryId;
 	private final Consumer<ChatResponse> _onCompleteResponse;

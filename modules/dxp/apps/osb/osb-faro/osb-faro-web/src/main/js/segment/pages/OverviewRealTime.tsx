@@ -1,11 +1,11 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+import * as API from 'shared/api';
 import Button from '@clayui/button';
 import Card from 'shared/components/Card';
 import ClayLink from '@clayui/link';
 import CriteriaCard from 'segment/components/criteria-card';
 import Loading from 'shared/components/Loading';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import SearchableEntityTable from 'shared/components/SearchableEntityTable';
 import URLConstants from 'shared/util/url-constants';
 import {fetchMembershipChangesAggregations} from 'shared/api/individual-segment';
@@ -75,7 +75,7 @@ type Data = {
 	delta: number;
 	groupId: string;
 	id: string;
-	modifiedDate: string;
+	selectedDate: string;
 	orderIOMap: string;
 	page: number;
 	query: string;
@@ -195,71 +195,18 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 		initialPage: 0
 	});
 
-	const getAllMembers = async (data: Data) => ({
-		// Mocked response while waiting for the correct endpoint
-		items: [
-			{
-				accountName: 'Acme Corp',
-				email: 'alice.johnson@example.com',
-				firstSeenDate: '2024-05-01T10:00:00Z',
-				id: '1',
-				lastActive: '2024-06-10T15:30:00Z',
-				memberName: 'Alice Johnson',
-				profileType: 'Known'
-			},
-			{
-				accountName: 'Beta LLC',
-				email: 'bob.smith@example.com',
-				firstSeenDate: '2024-05-05T09:20:00Z',
-				id: '2',
-				lastActive: '2024-06-09T12:10:00Z',
-				memberName: 'Bob Smith',
-				profileType: 'Anonymous'
-			}
-		],
-		total: 2
-	});
+	const fetchMembers = async (data: Data) => {
+		const {delta, groupId, id, orderIOMap, query, selectedDate} = data;
 
-	const getMemberChanges = async (_data: Data) => ({
-		// Mocked response while waiting for the correct endpoint
-		items: [
-			{
-				accountName: 'Acme Corp',
-				email: 'alice.johnson@example.com',
-				firstSeenDate: '2024-05-01T10:00:00Z',
-				id: '1',
-				lastActive: '2024-06-10T15:30:00Z',
-				memberName: 'Alice Johnson',
-				membershipChange: {
-					modifiedDate: '2024-06-10T15:30:00Z',
-					type: 'ADDED'
-				},
-				profileType: 'Known'
-			},
-			{
-				accountName: 'Beta LLC',
-				email: 'bob.smith@example.com',
-				firstSeenDate: '2024-05-05T09:20:00Z',
-				id: '2',
-				lastActive: '2024-06-09T12:10:00Z',
-				memberName: 'Bob Smith',
-				membershipChange: {
-					modifiedDate: '2024-06-09T12:10:00Z',
-					type: 'REMOVED'
-				},
-				profileType: 'Anonymous'
-			}
-		],
-		total: 2
-	});
-
-	const fetchMembers = useCallback(
-		(params: Data) =>
-			selectedPointState.hasSelectedPoint
-				? getMemberChanges(params)
-				: getAllMembers(params),
-		[selectedPointState.hasSelectedPoint]
-	);
+		return API.individualSegment.fetchRealTimeMembershipChanges({
+			date: selectedDate,
+			delta,
+			groupId,
+			orderIOMap,
+			query,
+			segmentId: id
+		});
+	};
 
 	const orderByOptions = useMemo(
 		() =>
@@ -281,6 +228,14 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 				  ]
 				: FILTER_BY_DEFAULT_OPTIONS,
 		[selectedPointState.hasSelectedPoint]
+	);
+
+	const selectedDate = useMemo(
+		() =>
+			selectedPointState.hasSelectedPoint && data
+				? data[selectedPointState.selectedPoint].intervalInitDate
+				: undefined,
+		[data, selectedPointState]
 	);
 
 	return (
@@ -346,7 +301,8 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 								dataSourceParams={{
 									channelId,
 									groupId,
-									id
+									id,
+									selectedDate
 								}}
 								filterByOptions={[...filterByOptions]}
 								key={

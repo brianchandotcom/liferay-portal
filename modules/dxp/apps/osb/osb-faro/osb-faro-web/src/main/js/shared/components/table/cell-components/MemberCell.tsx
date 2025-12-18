@@ -6,34 +6,26 @@ import {Text} from '@clayui/core';
 interface IMemberCellProps {
 	className?: string;
 	data: {
-		memberName: string;
-		email: string;
-		accountName?: string;
-		firstSeenDate: string;
-		lastActive: string;
-		profileType: string;
-		membershipChange: {
-			modifiedDate: string;
-			type: string;
-		};
+		name: string;
+		emailAddress: string;
 	};
 }
 
 const MemberCell: React.FC<IMemberCellProps> = ({className, data}) => {
-	const {email, memberName = '-'} = data;
+	const {emailAddress, name = '-'} = data;
 
-	const anonymous = isBlank(email);
+	const anonymous = isBlank(emailAddress);
 
 	return (
 		<td className={getCN('name-cell-root', className)}>
 			<div className='text-dark'>
 				<Text size={3} weight='semi-bold'>
-					{memberName}
+					{name}
 				</Text>
 			</div>
 			{!anonymous && (
 				<Text color='secondary' size={3}>
-					{email}
+					{emailAddress}
 				</Text>
 			)}
 		</td>

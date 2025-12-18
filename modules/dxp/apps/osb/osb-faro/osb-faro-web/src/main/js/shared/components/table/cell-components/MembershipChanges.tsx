@@ -3,18 +3,21 @@ import Label from '@clayui/label';
 import React from 'react';
 import {formatUTCDate} from 'shared/util/date';
 
+enum MembershipChange {
+	ADDED = 'ADDED',
+	REMOVED = 'REMOVED'
+}
+
 interface IMembershipChanges {
 	className?: string;
 	data: {
-		membershipChange: {
-			modifiedDate: string;
-			type?: 'ADDED' | 'REMOVED';
-		};
+		createDateTime: string;
+		type?: MembershipChange;
 	};
 }
 
 const MEMBERSHIP_CHANGE_MAP: Record<
-	'ADDED' | 'REMOVED',
+	MembershipChange,
 	{label: string; displayType: 'success' | 'danger'}
 > = {
 	ADDED: {
@@ -29,20 +32,16 @@ const MEMBERSHIP_CHANGE_MAP: Record<
 
 const MembershipChanges: React.FC<IMembershipChanges> = ({
 	className,
-	data: {membershipChange}
-}) => {
-	const {modifiedDate, type} = membershipChange;
-
-	return (
-		<td className={getCN('name-cell-root', className)}>
-			<div>{formatUTCDate(modifiedDate)}</div>
-			{type && (
-				<Label displayType={MEMBERSHIP_CHANGE_MAP[type].displayType}>
-					{MEMBERSHIP_CHANGE_MAP[type].label}
-				</Label>
-			)}
-		</td>
-	);
-};
+	data: {createDateTime, type}
+}) => (
+	<td className={getCN('name-cell-root', className)}>
+		<div>{formatUTCDate(createDateTime)}</div>
+		{type && (
+			<Label displayType={MEMBERSHIP_CHANGE_MAP[type].displayType}>
+				{MEMBERSHIP_CHANGE_MAP[type].label}
+			</Label>
+		)}
+	</td>
+);
 
 export default MembershipChanges;

@@ -7,6 +7,7 @@ import Label from 'shared/components/Label';
 import MemberCell from 'shared/components/table/cell-components/MemberCell';
 import MembershipChanges from 'shared/components/table/cell-components/MembershipChanges';
 import moment from 'moment';
+import ProfileType from 'shared/components/table/cell-components/ProfileTypes';
 import React from 'react';
 import SegmentSticker from 'segment/components/SegmentSticker';
 import TextTruncate from 'shared/components/TextTruncate';
@@ -197,10 +198,10 @@ export const membershipChangesColumns = {
 		sortable: true
 	},
 	firstSeen: {
-		cellRenderer: ({className, data: {firstSeenDate}}) => (
+		cellRenderer: ({className, data: {firstSeenTime}}) => (
 			<td className={getCN('name-cell-root', className)}>
 				<div className='text-truncate'>
-					{formatUTCDate(firstSeenDate) || '-'}
+					{formatUTCDate(firstSeenTime) || '-'}
 				</div>
 			</td>
 		),
@@ -216,10 +217,10 @@ export const membershipChangesColumns = {
 		sortable: true
 	},
 	lastActive: {
-		cellRenderer: ({className, data: {lastActive}}) => (
+		cellRenderer: ({className, data: {lastActivityTime}}) => (
 			<td className={getCN('name-cell-root', className)}>
 				<div className='text-truncate'>
-					{formatUTCDate(lastActive) || '-'}
+					{formatUTCDate(lastActivityTime) || '-'}
 				</div>
 			</td>
 		),
@@ -233,11 +234,7 @@ export const membershipChangesColumns = {
 		sortable: true
 	},
 	profileType: {
-		cellRenderer: ({className, data: {profileType}}) => (
-			<td className={getCN('text-capitalize', className)}>
-				{profileType}
-			</td>
-		),
+		cellRenderer: ProfileType,
 		label: Liferay.Language.get('profile-type'),
 		sortable: true
 	}

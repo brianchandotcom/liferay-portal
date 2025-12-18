@@ -205,6 +205,7 @@
 						<xs:element minOccurs="0" name="input-variables" type="xs:string" />
 						<xs:element minOccurs="0" name="output-variables" type="xs:string" />
 						<xs:element name="prompt" type="xs:string" />
+						<xs:element minOccurs="0" name="rag" type="xs:string" />
 						<xs:element minOccurs="0" name="tools" type="xs:string" />
 						<xs:element minOccurs="0" ref="transitions" />
 						<xs:element name="user-message" type="xs:string" />
@@ -288,6 +289,7 @@
 						<xs:element minOccurs="0" name="input-variables" type="xs:string" />
 						<xs:element minOccurs="0" name="output-variables" type="xs:string" />
 						<xs:element name="prompt" type="xs:string" />
+						<xs:element minOccurs="0" name="rag" type="xs:string" />
 						<xs:element minOccurs="0" name="tools" type="xs:string" />
 						<xs:element minOccurs="0" ref="transitions" />
 						<xs:element name="user-message" type="xs:string" />

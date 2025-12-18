@@ -2,6 +2,10 @@ locals {
 	oidc_provider_arn="arn:${var.arn_partition}:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${module.eks.oidc_provider}"
 }
 module "eks" {
+	compute_config = {
+		enabled = true
+		node_pools = ["general-purpose"]
+	}
 	addons={
 		amazon-cloudwatch-observability={
 			most_recent=true

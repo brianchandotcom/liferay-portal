@@ -7,18 +7,13 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-ViewDigitalSalesRoomListDisplayContext viewDigitalSalesRoomListDisplayContext = (ViewDigitalSalesRoomListDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-%>
-
-<div class="portlet-digital-sales-room-management">
-	<frontend-data-set:headless-display
-		apiURL="<%= viewDigitalSalesRoomListDisplayContext.getAPIURL() %>"
-		creationMenu="<%= viewDigitalSalesRoomListDisplayContext.getCreationMenu() %>"
-		fdsActionDropdownItems="<%= viewDigitalSalesRoomListDisplayContext.getFDSActionDropdownItems() %>"
-		formName="fm"
-		id="<%= DigitalSalesRoomFDSNames.ROOMS %>"
-		propsTransformer="{DSRListFDSPropsTransformer} from digital-sales-room-web"
-		style="fluid"
+<div class="dsr-page">
+	<liferay-frontend:screen-navigation
+		containerCssClass="col-lg-8"
+		containerWrapperCssClass="dsr-container-wrapper"
+		key="<%= DigitalSalesRoomScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_DIGITAL_SALES_ROOM %>"
+		menubarCssClass="menubar menubar-transparent menubar-vertical-expand-lg"
+		navCssClass="col-lg-3"
+		portletURL="<%= currentURLObj %>"
 	/>
 </div>

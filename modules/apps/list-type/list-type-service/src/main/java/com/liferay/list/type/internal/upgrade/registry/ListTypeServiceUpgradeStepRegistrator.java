@@ -86,6 +86,13 @@ public class ListTypeServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.addColumns("ListTypeEntry", "status INTEGER"),
 			UpgradeProcessFactory.runSQL(
 				"update ListTypeEntry set status = 0"));
+
+		registry.register(
+			"1.5.0", "1.6.0",
+			UpgradeProcessFactory.addColumns(
+				"ListTypeDefinition", "status INTEGER"),
+			UpgradeProcessFactory.runSQL(
+				"update ListTypeDefinition set status = 0"));
 	}
 
 	@Reference

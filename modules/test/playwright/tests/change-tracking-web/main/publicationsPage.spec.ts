@@ -918,8 +918,10 @@ test(
 
 		await changeTrackingPage.reviewChange(layoutTitle);
 
-		await expect(page.getByText('Heading Example')).toBeVisible();
-		await expect(page.getByText('Edited Text')).toBeVisible();
+		const view = page.frameLocator('iframe');
+
+		await expect(view.nth(0).getByText('Heading Example')).toBeVisible();
+		await expect(view.nth(1).getByText('Edited Text')).toBeVisible();
 
 		await apiHelpers.jsonWebServicesLayout.deleteLayout(layout.plid);
 	}

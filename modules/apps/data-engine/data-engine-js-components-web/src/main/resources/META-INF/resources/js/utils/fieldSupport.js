@@ -629,47 +629,6 @@ export function updatePagesOnFieldChange(
 						updatedPages[0].rows
 					);
 				}
-
-				if (field.settingsContext?.pages) {
-					const settingsVisitor = new PagesVisitor(
-						field.settingsContext.pages
-					);
-
-					const newSettingsPages = settingsVisitor.mapFields(
-						(setting) => {
-							if (
-								setting.fieldName === 'validation' &&
-								setting.validation
-							) {
-								return {
-									...setting,
-									validation: {
-										...setting.validation,
-										fieldName:
-											setting.validation.fieldName ===
-											oldName
-												? newName
-												: setting.validation.fieldName,
-									},
-								};
-							}
-
-							return setting;
-						},
-						false,
-						true
-					);
-
-					field = updateField(
-						fieldUpdateContext,
-						field,
-						'settingsContext',
-						{
-							...field.settingsContext,
-							pages: newSettingsPages,
-						}
-					);
-				}
 			}
 
 			if (

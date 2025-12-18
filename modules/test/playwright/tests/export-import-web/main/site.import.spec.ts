@@ -127,7 +127,7 @@ testWithExportImportAtInstanceLevelFF(
 
 		const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
 			{externalReferenceCode: '', textField: 'test'},
-			getRESTContextPath(objectDefinition.name) + '/scopes/Guest'
+			`${getRESTContextPath(objectDefinition.name)}/scopes/Guest`
 		);
 
 		await exportImportPage.goToExport();
@@ -137,7 +137,7 @@ testWithExportImportAtInstanceLevelFF(
 		});
 
 		const content = await readFileFromZip(
-			'C_' + objectDefinition.name + '.json',
+			`C_${objectDefinition.name}.json`,
 			exportFilePath
 		);
 
@@ -157,9 +157,7 @@ testWithExportImportAtInstanceLevelFF(
 
 		expect(
 			await apiHelpers.get(
-				`${apiHelpers.baseUrl}` +
-					getRESTContextPath(objectDefinition.name) +
-					`/scopes/Guest/by-external-reference-code/${objectEntry.externalReferenceCode}`
+				`${apiHelpers.baseUrl}${getRESTContextPath(objectDefinition.name)}/scopes/Guest/by-external-reference-code/${objectEntry.externalReferenceCode}`
 			)
 		).toEqual(
 			expect.objectContaining({

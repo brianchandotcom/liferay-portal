@@ -5,8 +5,23 @@
 
 package com.liferay.layout.seo.model.impl;
 
+import com.liferay.portal.kernel.util.ScopeUtil;
+
 /**
  * @author Brian Wing Shun Chan
  */
 public class LayoutSEOEntryImpl extends LayoutSEOEntryBaseImpl {
+
+	@Override
+	public long getOpenGraphImageFileEntryGroupId() {
+		Long groupId = ScopeUtil.getItemGroupId(
+			getCompanyId(), getOpenGraphImageFileEntryScopeERC(), getGroupId());
+
+		if (groupId == null) {
+			return 0;
+		}
+
+		return groupId;
+	}
+
 }

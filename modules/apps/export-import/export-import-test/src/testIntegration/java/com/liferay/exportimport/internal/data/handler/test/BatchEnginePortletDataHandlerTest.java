@@ -70,6 +70,7 @@ import com.liferay.object.test.util.TreeTestUtil;
 import com.liferay.object.tree.Tree;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -387,19 +388,22 @@ public class BatchEnginePortletDataHandlerTest {
 		// File Entries in different groups: None of the URLs are recalculated
 
 		_testExportImportObjectEntriesWithRichTextAndURLs(
-			imgTags, imgTags, ObjectDefinitionConstants.SCOPE_COMPANY,
+			null, imgTags, imgTags, ObjectDefinitionConstants.SCOPE_COMPANY,
 			companyGroup, companyGroup);
-
-		_dlAppLocalService.deleteFileEntry(
-			depotEntryFileEntry.getFileEntryId());
-		_dlAppLocalService.deleteFileEntry(
-			globalGroupFileEntry.getFileEntryId());
-		_dlAppLocalService.deleteFileEntry(group1FileEntry.getFileEntryId());
-		_dlAppLocalService.deleteFileEntry(group2FileEntry.getFileEntryId());
 
 		// File Entries not existing: The URLs are not recalculated
 
 		_testExportImportObjectEntriesWithRichTextAndURLs(
+			() -> {
+				_dlAppLocalService.deleteFileEntry(
+					depotEntryFileEntry.getFileEntryId());
+				_dlAppLocalService.deleteFileEntry(
+					globalGroupFileEntry.getFileEntryId());
+				_dlAppLocalService.deleteFileEntry(
+					group1FileEntry.getFileEntryId());
+				_dlAppLocalService.deleteFileEntry(
+					group2FileEntry.getFileEntryId());
+			},
 			imgTags, imgTags, ObjectDefinitionConstants.SCOPE_COMPANY,
 			companyGroup, companyGroup);
 	}
@@ -451,22 +455,24 @@ public class BatchEnginePortletDataHandlerTest {
 		// from the exported and imported depot group is the only recalculated
 
 		_testExportImportObjectEntriesWithRichTextAndURLs(
-			currentImgTags, expectedImgTags,
+			null, currentImgTags, expectedImgTags,
 			ObjectDefinitionConstants.SCOPE_DEPOT, sourceDepotEntry.getGroup(),
 			targetDepotEntry.getGroup());
-
-		_dlAppLocalService.deleteFileEntry(
-			globalGroupFileEntry.getFileEntryId());
-		_dlAppLocalService.deleteFileEntry(groupFileEntry.getFileEntryId());
-		_dlAppLocalService.deleteFileEntry(
-			otherDepotEntryFileEntry.getFileEntryId());
-		_dlAppLocalService.deleteFileEntry(
-			sourceDepotEntryFileEntry.getFileEntryId());
 
 		// File Entries not existing: The URL of the File Entry from the
 		// exported and imported depot group is recalculated
 
 		_testExportImportObjectEntriesWithRichTextAndURLs(
+			() -> {
+				_dlAppLocalService.deleteFileEntry(
+					globalGroupFileEntry.getFileEntryId());
+				_dlAppLocalService.deleteFileEntry(
+					groupFileEntry.getFileEntryId());
+				_dlAppLocalService.deleteFileEntry(
+					otherDepotEntryFileEntry.getFileEntryId());
+				_dlAppLocalService.deleteFileEntry(
+					sourceDepotEntryFileEntry.getFileEntryId());
+			},
 			currentImgTags, expectedImgTags,
 			ObjectDefinitionConstants.SCOPE_DEPOT, sourceDepotEntry.getGroup(),
 			targetDepotEntry.getGroup());
@@ -789,22 +795,23 @@ public class BatchEnginePortletDataHandlerTest {
 		// from the exported and imported group is the only recalculated
 
 		_testExportImportObjectEntriesWithRichTextAndURLs(
-			currentImgTags, expectedImgTags,
+			null, currentImgTags, expectedImgTags,
 			ObjectDefinitionConstants.SCOPE_SITE, sourceGroup, targetGroup);
-
-		_dlAppLocalService.deleteFileEntry(
-			depotEntryFileEntry.getFileEntryId());
-		_dlAppLocalService.deleteFileEntry(
-			globalGroupFileEntry.getFileEntryId());
-		_dlAppLocalService.deleteFileEntry(
-			otherGroupFileEntry.getFileEntryId());
-		_dlAppLocalService.deleteFileEntry(
-			sourceGroupFileEntry.getFileEntryId());
 
 		// File Entries not existing: The URL of the File Entry from the
 		// exported and imported group is recalculated
 
 		_testExportImportObjectEntriesWithRichTextAndURLs(
+			() -> {
+				_dlAppLocalService.deleteFileEntry(
+					depotEntryFileEntry.getFileEntryId());
+				_dlAppLocalService.deleteFileEntry(
+					globalGroupFileEntry.getFileEntryId());
+				_dlAppLocalService.deleteFileEntry(
+					otherGroupFileEntry.getFileEntryId());
+				_dlAppLocalService.deleteFileEntry(
+					sourceGroupFileEntry.getFileEntryId());
+			},
 			currentImgTags, expectedImgTags,
 			ObjectDefinitionConstants.SCOPE_SITE, sourceGroup, targetGroup);
 	}
@@ -2181,6 +2188,7 @@ public class BatchEnginePortletDataHandlerTest {
 	}
 
 	private void _testExportImportObjectEntriesWithRichTextAndURLs(
+			UnsafeRunnable<Exception> afterExportUnsafeRunnable,
 			String[] currentImgTags, String[] expectedImgTags, String scope,
 			Group sourceGroup, Group targetGroup)
 		throws Exception {
@@ -2200,6 +2208,10 @@ public class BatchEnginePortletDataHandlerTest {
 		File larFile = _exportLayouts(
 			false, sourceGroup.getGroupId(), false, new long[0],
 			objectDefinition);
+
+		if (afterExportUnsafeRunnable != null) {
+			afterExportUnsafeRunnable.run();
+		}
 
 		_objectEntryLocalService.deleteObjectEntry(
 			objectEntry.getObjectEntryId());

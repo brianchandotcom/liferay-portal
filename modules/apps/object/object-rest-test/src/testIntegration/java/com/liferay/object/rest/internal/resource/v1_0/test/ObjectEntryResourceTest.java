@@ -20286,6 +20286,20 @@ public class ObjectEntryResourceTest {
 			taxonomyCategory.getSiteId(), LocaleUtil.getDefault());
 
 		JSONObject jsonObject = JSONUtil.put(
+			"parentTaxonomyCategory",
+			() -> {
+				ParentTaxonomyCategory parentTaxonomyCategory =
+					taxonomyCategory.getParentTaxonomyCategory();
+
+				if (parentTaxonomyCategory == null) {
+					return null;
+				}
+
+				return JSONUtil.put(
+					"externalReferenceCode",
+					parentTaxonomyCategory.getExternalReferenceCode());
+			}
+		).put(
 			"parentTaxonomyVocabulary",
 			() -> {
 				ParentTaxonomyVocabulary parentTaxonomyVocabulary =
@@ -20310,17 +20324,6 @@ public class ObjectEntryResourceTest {
 		).put(
 			"taxonomyCategoryName", taxonomyCategory.getName()
 		);
-
-		ParentTaxonomyCategory parentTaxonomyCategory =
-			taxonomyCategory.getParentTaxonomyCategory();
-
-		if (parentTaxonomyCategory != null) {
-			jsonObject.put(
-				"parentTaxonomyCategory",
-				JSONUtil.put(
-					"externalReferenceCode",
-					parentTaxonomyCategory.getExternalReferenceCode()));
-		}
 
 		if (!withEmbeddedTaxonomyCategory) {
 			return jsonObject;

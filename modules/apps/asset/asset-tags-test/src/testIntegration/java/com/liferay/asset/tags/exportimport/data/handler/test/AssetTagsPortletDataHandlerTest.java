@@ -7,8 +7,14 @@ package com.liferay.asset.tags.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.model.AssetTagGroupRel;
+import com.liferay.asset.kernel.service.AssetTagGroupRelLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.tags.constants.AssetTagsAdminPortletKeys;
+import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.lar.DataLevel;
@@ -16,10 +22,17 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
+import com.liferay.exportimport.kernel.service.StagingLocalServiceUtil;
+import com.liferay.exportimport.kernel.staging.constants.StagingConstants;
 import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
 import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.exportimport.test.util.lar.BasePortletDataHandlerTestCase;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.service.GroupServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.FeatureFlagTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -27,6 +40,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -146,6 +160,68 @@ public class AssetTagsPortletDataHandlerTest
 			TestPropsValues.getCompanyId(), false, "LPD-35914");
 	}
 
+	@FeatureFlags(
+		featureFlags = {
+			@FeatureFlag(value = "LPD-17564"), @FeatureFlag(value = "LPD-34594")
+		}
+	)
+	@Test
+	public void testExportImportCMSAssetTag() throws Exception {
+		FeatureFlagTestUtil.invokeFeatureFlagListeners(
+			TestPropsValues.getCompanyId(), true, "LPD-17564");
+
+		Group originalStagingGroup = stagingGroup;
+
+		try {
+			Group cmsGroup = GroupServiceUtil.getGroup(
+				TestPropsValues.getCompanyId(), GroupConstants.CMS);
+
+			stagingGroup = cmsGroup;
+
+			AssetTag assetTag = _addTag();
+
+			DepotEntry depotEntry = _addStagedDepotEntry();
+
+			Group depotGroup = depotEntry.getGroup();
+
+			_assetTagGroupRelLocalService.setAssetTagGroupRels(
+				assetTag.getTagId(), new long[] {depotGroup.getGroupId()});
+
+			File larFile = _exportLayout();
+
+			_assetTagLocalService.deleteTag(assetTag);
+
+			ExportImportConfiguration exportImportConfiguration =
+				_setUpExportImportConfiguration();
+
+			_exportImportLocalService.importLayouts(
+				exportImportConfiguration, larFile);
+
+			AssetTag importedTag =
+				_assetTagLocalService.fetchAssetTagByExternalReferenceCode(
+					assetTag.getExternalReferenceCode(), cmsGroup.getGroupId());
+
+			Assert.assertNotNull(importedTag);
+
+			List<AssetTagGroupRel> assetTagGroupRelList =
+				_assetTagGroupRelLocalService.getAssetTagGroupRelsByTagId(
+					importedTag.getTagId());
+
+			Assert.assertTrue(
+				ListUtil.exists(
+					assetTagGroupRelList,
+					assetTagGroupRel ->
+						assetTagGroupRel.getGroupId() ==
+							depotGroup.getGroupId()));
+		}
+		finally {
+			stagingGroup = originalStagingGroup;
+		}
+
+		FeatureFlagTestUtil.invokeFeatureFlagListeners(
+			TestPropsValues.getCompanyId(), false, "LPD-17564");
+	}
+
 	@Override
 	protected void addStagedModels() throws Exception {
 	}
@@ -175,11 +251,48 @@ public class AssetTagsPortletDataHandlerTest
 		return true;
 	}
 
+	private DepotEntry _addStagedDepotEntry() throws Exception {
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			DepotConstants.TYPE_ASSET_LIBRARY,
+			ServiceContextTestUtil.getServiceContext());
+
+		return _enableLocalStaging(depotEntry);
+	}
+
 	private AssetTag _addTag() throws Exception {
 		return _assetTagLocalService.addTag(
 			"", TestPropsValues.getUserId(), stagingGroup.getGroupId(),
 			RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext());
+	}
+
+	private DepotEntry _enableLocalStaging(DepotEntry depotEntry)
+		throws Exception {
+
+		Group stagingGroup = _enableLocalStaging(depotEntry.getGroup());
+
+		return DepotEntryLocalServiceUtil.fetchGroupDepotEntry(
+			stagingGroup.getGroupId());
+	}
+
+	private Group _enableLocalStaging(Group group) throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		_setStagingAttributes(serviceContext);
+
+		serviceContext.setAttribute("staging", Boolean.TRUE);
+
+		StagingLocalServiceUtil.enableLocalStaging(
+			TestPropsValues.getUserId(), group, false, false, serviceContext);
+
+		return group.getStagingGroup();
 	}
 
 	private File _exportLayout() throws Exception {
@@ -200,6 +313,25 @@ public class AssetTagsPortletDataHandlerTest
 									AssetTagsAdminPortletKeys.ASSET_TAGS_ADMIN,
 								new String[] {Boolean.TRUE.toString()}
 							).build())));
+	}
+
+	private void _setStagingAttribute(
+		ServiceContext serviceContext, String key) {
+
+		serviceContext.setAttribute(
+			StagingConstants.STAGED_PREFIX + key + StringPool.DOUBLE_DASH,
+			String.valueOf((Object)true));
+	}
+
+	private void _setStagingAttributes(ServiceContext serviceContext) {
+		_setStagingAttribute(
+			serviceContext, PortletDataHandlerKeys.DATA_STRATEGY_MIRROR);
+		_setStagingAttribute(
+			serviceContext, PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL);
+		_setStagingAttribute(
+			serviceContext, PortletDataHandlerKeys.PORTLET_DATA_ALL);
+		_setStagingAttribute(
+			serviceContext, PortletDataHandlerKeys.PORTLET_SETUP_ALL);
 	}
 
 	private ExportImportConfiguration _setUpExportImportConfiguration()
@@ -224,7 +356,13 @@ public class AssetTagsPortletDataHandlerTest
 	}
 
 	@Inject
+	private AssetTagGroupRelLocalService _assetTagGroupRelLocalService;
+
+	@Inject
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Inject
+	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Inject
 	private ExportImportConfigurationLocalService

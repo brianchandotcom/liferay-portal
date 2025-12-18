@@ -2897,6 +2897,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 		<attribute name="database.type" />
 		<attribute default="${database.@{database.type}.version}" name="database.version" />
 		<attribute default="" name="gcs.store.enabled" />
+		<attribute default="" name="ibm.store.enabled" />
 		<attribute default="" name="refreshdependencies" />
 		<attribute default="true" name="setup.testable.tomcat" />
 		<attribute default="" name="subrepository.name" />
@@ -2933,6 +2934,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 								<param name="database.partition.export.and.import" value="@{database.partition.export.and.import}" />
 								<param name="database.type" value="@{database.type}" />
 								<param name="gcs.store.enabled" value="@{gcs.store.enabled}" />
+								<param name="ibm.store.enabled" value="@{ibm.store.enabled}" />
 							</antcall>
 
 							<antcall inheritAll="false" target="prepare-system-ext-properties" />
@@ -8863,6 +8865,38 @@ information. Make sure to commit in all format-javadoc results.
 
 	<target name="modules-integration-hypersonic20-jdk21_zulu">
 		<run-modules-integration-test database.type="hypersonic" />
+	</target>
+
+	<target name="modules-integration-ibm-s3-postgresql163">
+		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
+
+		<tstamp>
+			<format pattern="yyyyMMddkkmmssSSS" property="s3.bucket.id" />
+		</tstamp>
+
+		<ant antfile="build-test-s3-store.xml" target="configure-ibm-aws-cli" />
+
+		<ant antfile="build-test-s3-store.xml" target="create-s3-bucket">
+			<property name="ibm.store.enabled" value="true" />
+		</ant>
+
+		<prepare-ibm-s3-configuration />
+
+		<trycatch>
+			<try>
+				<run-modules-integration-test
+					database.type="postgresql"
+					database.version="16.3"
+					ibm.store.enabled="true"
+				/>
+			</try>
+
+			<finally>
+				<ant antfile="build-test-s3-store.xml" target="delete-s3-bucket">
+					<property name="ibm.store.enabled" value="true" />
+				</ant>
+			</finally>
+		</trycatch>
 	</target>
 
 	<target name="modules-integration-mariadb">

@@ -359,9 +359,10 @@ test.describe('ensure picklist translation', () => {
 
 			await viewObjectDefinitionsPage.goto();
 
-		await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
-			objectDefinition.label['en_US']
-		);
+			await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
+				objectDefinition.label['en_US'],
+				'Buscar'
+			);
 
 			await page.getByRole('link', {name: 'Campos'}).click();
 

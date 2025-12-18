@@ -169,6 +169,49 @@ public class ClusterGeneralTest implements Serializable {
 	}
 
 	@Test
+	public void testEnableAndDisableFeatureFlagOnSlaveNode() throws Exception {
+		String key = "LPS-170670";
+
+		Assert.assertTrue(
+			_tomcatNode2.syncExecute(
+				() -> {
+					_setEnabledForFeatureFlags(
+						PortalUtil.getDefaultCompanyId(), key, true);
+
+					return FeatureFlagManagerUtil.isEnabled(
+						PortalUtil.getDefaultCompanyId(), key);
+				}));
+
+		Assert.assertTrue(
+			_tomcatNode1.syncExecute(
+				() -> {
+					_clearCacheForFeatureFlags();
+
+					return FeatureFlagManagerUtil.isEnabled(
+						PortalUtil.getDefaultCompanyId(), key);
+				}));
+
+		Assert.assertFalse(
+			_tomcatNode2.syncExecute(
+				() -> {
+					_setEnabledForFeatureFlags(
+						PortalUtil.getDefaultCompanyId(), key, false);
+
+					return FeatureFlagManagerUtil.isEnabled(
+						PortalUtil.getDefaultCompanyId(), key);
+				}));
+
+		Assert.assertFalse(
+			_tomcatNode1.syncExecute(
+				() -> {
+					_clearCacheForFeatureFlags();
+
+					return FeatureFlagManagerUtil.isEnabled(
+						PortalUtil.getDefaultCompanyId(), key);
+				}));
+	}
+
+	@Test
 	public void testShutdownAndStartupNodes() throws Exception {
 
 		// Assert node 1 and node 2 can see each other

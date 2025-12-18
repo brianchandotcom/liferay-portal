@@ -174,6 +174,38 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	@Override
+	public Portlet getDataSiteLevelPortlet(
+		String className, long companyId, boolean excludeDataAlwaysStaged) {
+
+		for (Portlet portlet : _portletLocalService.getPortlets(companyId)) {
+			if (!portlet.isActive()) {
+				continue;
+			}
+
+			PortletDataHandler portletDataHandler =
+				portlet.getPortletDataHandlerInstance();
+
+			if ((portletDataHandler == null) ||
+				!ArrayUtil.contains(
+					portletDataHandler.getClassNames(), className)) {
+
+				continue;
+			}
+
+			if (!portletDataHandler.isDataSiteLevel() ||
+				(excludeDataAlwaysStaged &&
+				 portletDataHandler.isDataAlwaysStaged())) {
+
+				return null;
+			}
+
+			return portlet;
+		}
+
+		return null;
+	}
+
+	@Override
 	public List<Portlet> getDataSiteLevelPortlets(long companyId)
 		throws Exception {
 

@@ -81,7 +81,8 @@ public class LayoutSEOEntryModelImpl
 		{"openGraphDescription", Types.VARCHAR},
 		{"openGraphDescriptionEnabled", Types.BOOLEAN},
 		{"openGraphImageAlt", Types.VARCHAR},
-		{"openGraphImageFileEntryId", Types.BIGINT},
+		{"openGraphImageFileEntryERC", Types.VARCHAR},
+		{"openGraphImageFileEntrySERC", Types.VARCHAR},
 		{"openGraphTitle", Types.VARCHAR},
 		{"openGraphTitleEnabled", Types.BOOLEAN},
 		{"lastPublishDate", Types.TIMESTAMP}
@@ -108,14 +109,15 @@ public class LayoutSEOEntryModelImpl
 		TABLE_COLUMNS_MAP.put("openGraphDescription", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("openGraphDescriptionEnabled", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("openGraphImageAlt", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("openGraphImageFileEntryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("openGraphImageFileEntryERC", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("openGraphImageFileEntrySERC", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("openGraphTitle", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("openGraphTitleEnabled", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutSEOEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,layoutSEOEntryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,layoutId LONG,canonicalURL STRING null,canonicalURLEnabled BOOLEAN,openGraphDescription STRING null,openGraphDescriptionEnabled BOOLEAN,openGraphImageAlt STRING null,openGraphImageFileEntryId LONG,openGraphTitle STRING null,openGraphTitleEnabled BOOLEAN,lastPublishDate DATE null,primary key (layoutSEOEntryId, ctCollectionId))";
+		"create table LayoutSEOEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,layoutSEOEntryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,layoutId LONG,canonicalURL STRING null,canonicalURLEnabled BOOLEAN,openGraphDescription STRING null,openGraphDescriptionEnabled BOOLEAN,openGraphImageAlt STRING null,openGraphImageFileEntryERC VARCHAR(75) null,openGraphImageFileEntrySERC VARCHAR(75) null,openGraphTitle STRING null,openGraphTitleEnabled BOOLEAN,lastPublishDate DATE null,primary key (layoutSEOEntryId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table LayoutSEOEntry";
 
@@ -312,8 +314,11 @@ public class LayoutSEOEntryModelImpl
 			attributeGetterFunctions.put(
 				"openGraphImageAlt", LayoutSEOEntry::getOpenGraphImageAlt);
 			attributeGetterFunctions.put(
-				"openGraphImageFileEntryId",
-				LayoutSEOEntry::getOpenGraphImageFileEntryId);
+				"openGraphImageFileEntryERC",
+				LayoutSEOEntry::getOpenGraphImageFileEntryERC);
+			attributeGetterFunctions.put(
+				"openGraphImageFileEntryScopeERC",
+				LayoutSEOEntry::getOpenGraphImageFileEntryScopeERC);
 			attributeGetterFunctions.put(
 				"openGraphTitle", LayoutSEOEntry::getOpenGraphTitle);
 			attributeGetterFunctions.put(
@@ -402,9 +407,13 @@ public class LayoutSEOEntryModelImpl
 				(BiConsumer<LayoutSEOEntry, String>)
 					LayoutSEOEntry::setOpenGraphImageAlt);
 			attributeSetterBiConsumers.put(
-				"openGraphImageFileEntryId",
-				(BiConsumer<LayoutSEOEntry, Long>)
-					LayoutSEOEntry::setOpenGraphImageFileEntryId);
+				"openGraphImageFileEntryERC",
+				(BiConsumer<LayoutSEOEntry, String>)
+					LayoutSEOEntry::setOpenGraphImageFileEntryERC);
+			attributeSetterBiConsumers.put(
+				"openGraphImageFileEntryScopeERC",
+				(BiConsumer<LayoutSEOEntry, String>)
+					LayoutSEOEntry::setOpenGraphImageFileEntryScopeERC);
 			attributeSetterBiConsumers.put(
 				"openGraphTitle",
 				(BiConsumer<LayoutSEOEntry, String>)
@@ -1088,17 +1097,46 @@ public class LayoutSEOEntryModelImpl
 
 	@JSON
 	@Override
-	public long getOpenGraphImageFileEntryId() {
-		return _openGraphImageFileEntryId;
+	public String getOpenGraphImageFileEntryERC() {
+		if (_openGraphImageFileEntryERC == null) {
+			return "";
+		}
+		else {
+			return _openGraphImageFileEntryERC;
+		}
 	}
 
 	@Override
-	public void setOpenGraphImageFileEntryId(long openGraphImageFileEntryId) {
+	public void setOpenGraphImageFileEntryERC(
+		String openGraphImageFileEntryERC) {
+
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_openGraphImageFileEntryId = openGraphImageFileEntryId;
+		_openGraphImageFileEntryERC = openGraphImageFileEntryERC;
+	}
+
+	@JSON
+	@Override
+	public String getOpenGraphImageFileEntryScopeERC() {
+		if (_openGraphImageFileEntryScopeERC == null) {
+			return "";
+		}
+		else {
+			return _openGraphImageFileEntryScopeERC;
+		}
+	}
+
+	@Override
+	public void setOpenGraphImageFileEntryScopeERC(
+		String openGraphImageFileEntryScopeERC) {
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_openGraphImageFileEntryScopeERC = openGraphImageFileEntryScopeERC;
 	}
 
 	@JSON
@@ -1471,8 +1509,10 @@ public class LayoutSEOEntryModelImpl
 		layoutSEOEntryImpl.setOpenGraphDescriptionEnabled(
 			isOpenGraphDescriptionEnabled());
 		layoutSEOEntryImpl.setOpenGraphImageAlt(getOpenGraphImageAlt());
-		layoutSEOEntryImpl.setOpenGraphImageFileEntryId(
-			getOpenGraphImageFileEntryId());
+		layoutSEOEntryImpl.setOpenGraphImageFileEntryERC(
+			getOpenGraphImageFileEntryERC());
+		layoutSEOEntryImpl.setOpenGraphImageFileEntryScopeERC(
+			getOpenGraphImageFileEntryScopeERC());
 		layoutSEOEntryImpl.setOpenGraphTitle(getOpenGraphTitle());
 		layoutSEOEntryImpl.setOpenGraphTitleEnabled(isOpenGraphTitleEnabled());
 		layoutSEOEntryImpl.setLastPublishDate(getLastPublishDate());
@@ -1521,8 +1561,10 @@ public class LayoutSEOEntryModelImpl
 				"openGraphDescriptionEnabled"));
 		layoutSEOEntryImpl.setOpenGraphImageAlt(
 			this.<String>getColumnOriginalValue("openGraphImageAlt"));
-		layoutSEOEntryImpl.setOpenGraphImageFileEntryId(
-			this.<Long>getColumnOriginalValue("openGraphImageFileEntryId"));
+		layoutSEOEntryImpl.setOpenGraphImageFileEntryERC(
+			this.<String>getColumnOriginalValue("openGraphImageFileEntryERC"));
+		layoutSEOEntryImpl.setOpenGraphImageFileEntryScopeERC(
+			this.<String>getColumnOriginalValue("openGraphImageFileEntrySERC"));
 		layoutSEOEntryImpl.setOpenGraphTitle(
 			this.<String>getColumnOriginalValue("openGraphTitle"));
 		layoutSEOEntryImpl.setOpenGraphTitleEnabled(
@@ -1690,8 +1732,29 @@ public class LayoutSEOEntryModelImpl
 			layoutSEOEntryCacheModel.openGraphImageAlt = null;
 		}
 
-		layoutSEOEntryCacheModel.openGraphImageFileEntryId =
-			getOpenGraphImageFileEntryId();
+		layoutSEOEntryCacheModel.openGraphImageFileEntryERC =
+			getOpenGraphImageFileEntryERC();
+
+		String openGraphImageFileEntryERC =
+			layoutSEOEntryCacheModel.openGraphImageFileEntryERC;
+
+		if ((openGraphImageFileEntryERC != null) &&
+			(openGraphImageFileEntryERC.length() == 0)) {
+
+			layoutSEOEntryCacheModel.openGraphImageFileEntryERC = null;
+		}
+
+		layoutSEOEntryCacheModel.openGraphImageFileEntryScopeERC =
+			getOpenGraphImageFileEntryScopeERC();
+
+		String openGraphImageFileEntryScopeERC =
+			layoutSEOEntryCacheModel.openGraphImageFileEntryScopeERC;
+
+		if ((openGraphImageFileEntryScopeERC != null) &&
+			(openGraphImageFileEntryScopeERC.length() == 0)) {
+
+			layoutSEOEntryCacheModel.openGraphImageFileEntryScopeERC = null;
+		}
 
 		layoutSEOEntryCacheModel.openGraphTitle = getOpenGraphTitle();
 
@@ -1796,7 +1859,8 @@ public class LayoutSEOEntryModelImpl
 	private boolean _openGraphDescriptionEnabled;
 	private String _openGraphImageAlt;
 	private String _openGraphImageAltCurrentLanguageId;
-	private long _openGraphImageFileEntryId;
+	private String _openGraphImageFileEntryERC;
+	private String _openGraphImageFileEntryScopeERC;
 	private String _openGraphTitle;
 	private String _openGraphTitleCurrentLanguageId;
 	private boolean _openGraphTitleEnabled;
@@ -1852,7 +1916,9 @@ public class LayoutSEOEntryModelImpl
 			"openGraphDescriptionEnabled", _openGraphDescriptionEnabled);
 		_columnOriginalValues.put("openGraphImageAlt", _openGraphImageAlt);
 		_columnOriginalValues.put(
-			"openGraphImageFileEntryId", _openGraphImageFileEntryId);
+			"openGraphImageFileEntryERC", _openGraphImageFileEntryERC);
+		_columnOriginalValues.put(
+			"openGraphImageFileEntrySERC", _openGraphImageFileEntryScopeERC);
 		_columnOriginalValues.put("openGraphTitle", _openGraphTitle);
 		_columnOriginalValues.put(
 			"openGraphTitleEnabled", _openGraphTitleEnabled);
@@ -1865,6 +1931,8 @@ public class LayoutSEOEntryModelImpl
 		Map<String, String> attributeNames = new HashMap<>();
 
 		attributeNames.put("uuid_", "uuid");
+		attributeNames.put(
+			"openGraphImageFileEntrySERC", "openGraphImageFileEntryScopeERC");
 
 		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
@@ -1914,13 +1982,15 @@ public class LayoutSEOEntryModelImpl
 
 		columnBitmasks.put("openGraphImageAlt", 65536L);
 
-		columnBitmasks.put("openGraphImageFileEntryId", 131072L);
+		columnBitmasks.put("openGraphImageFileEntryERC", 131072L);
 
-		columnBitmasks.put("openGraphTitle", 262144L);
+		columnBitmasks.put("openGraphImageFileEntrySERC", 262144L);
 
-		columnBitmasks.put("openGraphTitleEnabled", 524288L);
+		columnBitmasks.put("openGraphTitle", 524288L);
 
-		columnBitmasks.put("lastPublishDate", 1048576L);
+		columnBitmasks.put("openGraphTitleEnabled", 1048576L);
+
+		columnBitmasks.put("lastPublishDate", 2097152L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

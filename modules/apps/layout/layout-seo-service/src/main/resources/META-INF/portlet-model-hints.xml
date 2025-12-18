@@ -24,7 +24,8 @@
 		</field>
 		<field name="openGraphDescriptionEnabled" type="boolean" />
 		<field localized="true" name="openGraphImageAlt" type="String" />
-		<field name="openGraphImageFileEntryId" type="long" />
+		<field name="openGraphImageFileEntryERC" type="String" />
+		<field name="openGraphImageFileEntryScopeERC" type="String" />
 		<field localized="true" name="openGraphTitle" type="String" />
 		<field name="openGraphTitleEnabled" type="boolean" />
 		<field name="lastPublishDate" type="Date" />

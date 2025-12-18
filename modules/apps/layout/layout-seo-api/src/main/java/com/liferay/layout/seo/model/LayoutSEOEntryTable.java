@@ -70,9 +70,13 @@ public class LayoutSEOEntryTable extends BaseTable<LayoutSEOEntryTable> {
 		createColumn(
 			"openGraphImageAlt", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
-	public final Column<LayoutSEOEntryTable, Long> openGraphImageFileEntryId =
-		createColumn(
-			"openGraphImageFileEntryId", Long.class, Types.BIGINT,
+	public final Column<LayoutSEOEntryTable, String>
+		openGraphImageFileEntryERC = createColumn(
+			"openGraphImageFileEntryERC", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
+	public final Column<LayoutSEOEntryTable, String>
+		openGraphImageFileEntryScopeERC = createColumn(
+			"openGraphImageFileEntrySERC", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
 	public final Column<LayoutSEOEntryTable, String> openGraphTitle =
 		createColumn(

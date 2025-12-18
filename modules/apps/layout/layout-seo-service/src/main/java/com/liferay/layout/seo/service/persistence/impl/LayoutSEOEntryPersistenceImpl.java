@@ -1653,6 +1653,8 @@ public class LayoutSEOEntryPersistenceImpl
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
+		dbColumnNames.put(
+			"openGraphImageFileEntryScopeERC", "openGraphImageFileEntrySERC");
 
 		setDBColumnNames(dbColumnNames);
 
@@ -2494,7 +2496,8 @@ public class LayoutSEOEntryPersistenceImpl
 		ctMergeColumnNames.add("openGraphDescription");
 		ctMergeColumnNames.add("openGraphDescriptionEnabled");
 		ctMergeColumnNames.add("openGraphImageAlt");
-		ctMergeColumnNames.add("openGraphImageFileEntryId");
+		ctMergeColumnNames.add("openGraphImageFileEntryERC");
+		ctMergeColumnNames.add("openGraphImageFileEntrySERC");
 		ctMergeColumnNames.add("openGraphTitle");
 		ctMergeColumnNames.add("openGraphTitleEnabled");
 		ctMergeColumnNames.add("lastPublishDate");
@@ -2655,7 +2658,7 @@ public class LayoutSEOEntryPersistenceImpl
 		LayoutSEOEntryPersistenceImpl.class);
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
-		new String[] {"uuid"});
+		new String[] {"uuid", "openGraphImageFileEntryScopeERC"});
 
 	@Override
 	protected FinderCache getFinderCache() {

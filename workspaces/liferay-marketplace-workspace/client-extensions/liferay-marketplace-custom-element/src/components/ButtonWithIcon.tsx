@@ -5,27 +5,27 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import classNames from 'classnames';
-import React, {ForwardedRef, ReactNode} from 'react';
+import React, {ComponentProps, ForwardedRef, ReactNode} from 'react';
 
 type ButtonWithIconProps = {
 	children?: ReactNode;
-	className?: string;
-	iconWithMargin?: boolean;
+	iconProps?: ComponentProps<typeof ClayIcon>;
 	symbol: string;
 } & React.ComponentProps<typeof ClayButton>;
 
 const ButtonWithIcon = React.forwardRef<HTMLButtonElement, ButtonWithIconProps>(
 	(
-		{children, className, iconWithMargin = true, symbol = 'plus', ...props},
+		{children, iconProps, symbol = 'plus', ...props},
 		ref: ForwardedRef<HTMLButtonElement>
 	) => {
 		return (
-			<ClayButton className={className} ref={ref} {...props}>
+			<ClayButton {...props} ref={ref}>
 				<ClayIcon
-					className={classNames({'mr-2': iconWithMargin})}
+					{...iconProps}
+					className="mr-2"
 					symbol={symbol}
 				/>
+
 				{children}
 			</ClayButton>
 		);

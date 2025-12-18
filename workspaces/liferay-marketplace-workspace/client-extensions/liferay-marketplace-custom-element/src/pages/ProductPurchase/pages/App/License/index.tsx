@@ -94,7 +94,7 @@ const License = () => {
 				{licenseOptions.map(({icon, type, ...licenseOption}, index) => (
 					<CardButton
 						{...licenseOption}
-						fullSizeCard={true}
+						fullSize={true}
 						icon={
 							<span className="license-icon">
 								<ClayIcon symbol={icon} />

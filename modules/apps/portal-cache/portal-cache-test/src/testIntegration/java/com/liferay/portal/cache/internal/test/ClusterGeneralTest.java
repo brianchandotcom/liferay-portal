@@ -127,88 +127,12 @@ public class ClusterGeneralTest implements Serializable {
 
 	@Test
 	public void testEnableAndDisableFeatureFlagOnMasterNode() throws Exception {
-		String key = "LPS-170670";
-
-		Assert.assertTrue(
-			_tomcatNode1.syncExecute(
-				() -> {
-					_setEnabledForFeatureFlags(
-						PortalUtil.getDefaultCompanyId(), key, true);
-
-					return FeatureFlagManagerUtil.isEnabled(
-						PortalUtil.getDefaultCompanyId(), key);
-				}));
-
-		Assert.assertTrue(
-			_tomcatNode2.syncExecute(
-				() -> {
-					_clearCacheForFeatureFlags();
-
-					return FeatureFlagManagerUtil.isEnabled(
-						PortalUtil.getDefaultCompanyId(), key);
-				}));
-
-		Assert.assertFalse(
-			_tomcatNode1.syncExecute(
-				() -> {
-					_setEnabledForFeatureFlags(
-						PortalUtil.getDefaultCompanyId(), key, false);
-
-					return FeatureFlagManagerUtil.isEnabled(
-						PortalUtil.getDefaultCompanyId(), key);
-				}));
-
-		Assert.assertFalse(
-			_tomcatNode2.syncExecute(
-				() -> {
-					_clearCacheForFeatureFlags();
-
-					return FeatureFlagManagerUtil.isEnabled(
-						PortalUtil.getDefaultCompanyId(), key);
-				}));
+		_testEnableAndDisableFeatureFlag(_tomcatNode1, _tomcatNode2);
 	}
 
 	@Test
 	public void testEnableAndDisableFeatureFlagOnSlaveNode() throws Exception {
-		String key = "LPS-170670";
-
-		Assert.assertTrue(
-			_tomcatNode2.syncExecute(
-				() -> {
-					_setEnabledForFeatureFlags(
-						PortalUtil.getDefaultCompanyId(), key, true);
-
-					return FeatureFlagManagerUtil.isEnabled(
-						PortalUtil.getDefaultCompanyId(), key);
-				}));
-
-		Assert.assertTrue(
-			_tomcatNode1.syncExecute(
-				() -> {
-					_clearCacheForFeatureFlags();
-
-					return FeatureFlagManagerUtil.isEnabled(
-						PortalUtil.getDefaultCompanyId(), key);
-				}));
-
-		Assert.assertFalse(
-			_tomcatNode2.syncExecute(
-				() -> {
-					_setEnabledForFeatureFlags(
-						PortalUtil.getDefaultCompanyId(), key, false);
-
-					return FeatureFlagManagerUtil.isEnabled(
-						PortalUtil.getDefaultCompanyId(), key);
-				}));
-
-		Assert.assertFalse(
-			_tomcatNode1.syncExecute(
-				() -> {
-					_clearCacheForFeatureFlags();
-
-					return FeatureFlagManagerUtil.isEnabled(
-						PortalUtil.getDefaultCompanyId(), key);
-				}));
+		_testEnableAndDisableFeatureFlag(_tomcatNode2, _tomcatNode1);
 	}
 
 	@Test
@@ -668,6 +592,51 @@ public class ClusterGeneralTest implements Serializable {
 				_tomcatNode2.syncExecute(
 					ClusterGeneralTest::_getLocalClusterNodeId));
 		}
+	}
+
+	private void _testEnableAndDisableFeatureFlag(
+			TomcatNode mutatorTomcatNode, TomcatNode observerTomcatNode)
+		throws Exception {
+
+		String key = "LPS-170670";
+
+		Assert.assertTrue(
+			mutatorTomcatNode.syncExecute(
+				() -> {
+					_setEnabledForFeatureFlags(
+						PortalUtil.getDefaultCompanyId(), key, true);
+
+					return FeatureFlagManagerUtil.isEnabled(
+						PortalUtil.getDefaultCompanyId(), key);
+				}));
+
+		Assert.assertTrue(
+			observerTomcatNode.syncExecute(
+				() -> {
+					_clearCacheForFeatureFlags();
+
+					return FeatureFlagManagerUtil.isEnabled(
+						PortalUtil.getDefaultCompanyId(), key);
+				}));
+
+		Assert.assertFalse(
+			mutatorTomcatNode.syncExecute(
+				() -> {
+					_setEnabledForFeatureFlags(
+						PortalUtil.getDefaultCompanyId(), key, false);
+
+					return FeatureFlagManagerUtil.isEnabled(
+						PortalUtil.getDefaultCompanyId(), key);
+				}));
+
+		Assert.assertFalse(
+			observerTomcatNode.syncExecute(
+				() -> {
+					_clearCacheForFeatureFlags();
+
+					return FeatureFlagManagerUtil.isEnabled(
+						PortalUtil.getDefaultCompanyId(), key);
+				}));
 	}
 
 	private static transient TomcatNode _tomcatNode1;

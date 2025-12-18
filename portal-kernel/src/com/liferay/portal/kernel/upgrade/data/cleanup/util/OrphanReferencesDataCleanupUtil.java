@@ -78,31 +78,33 @@ public class OrphanReferencesDataCleanupUtil {
 			}
 		}
 
+		String whereClause = getWhereClause(
+			connection, customJoinClauses, sourceAdditionalWhereClause,
+			sourceColumnName, sourceTableName, targetColumnNames,
+			targetTableName);
+
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
 					"select ", _SOURCE_TABLE_ALIAS, StringPool.PERIOD,
 					sourceColumnName, ", count(1) from ", sourceTableName,
-					StringPool.SPACE, _SOURCE_TABLE_ALIAS,
-					getWhereClause(
-						connection, customJoinClauses,
-						sourceAdditionalWhereClause, sourceColumnName,
-						sourceTableName, targetColumnNames, targetTableName),
+					StringPool.SPACE, _SOURCE_TABLE_ALIAS, whereClause,
 					" group by ", _SOURCE_TABLE_ALIAS, StringPool.PERIOD,
 					sourceColumnName));
-			PreparedStatement preparedStatement2 = connection.prepareStatement(
-				StringBundler.concat(
-					"delete ",
-					aliasNeeded ? (_SOURCE_TABLE_ALIAS + StringPool.SPACE) : "",
-					"from ", sourceTableName, StringPool.SPACE,
-					_SOURCE_TABLE_ALIAS,
-					getWhereClause(
-						connection, customJoinClauses,
-						sourceAdditionalWhereClause, sourceColumnName,
-						sourceTableName, targetColumnNames, targetTableName)));
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			if (!readOnly) {
-				preparedStatement2.execute();
+				try (PreparedStatement preparedStatement2 =
+						connection.prepareStatement(
+							StringBundler.concat(
+								"delete ",
+								aliasNeeded ?
+									(_SOURCE_TABLE_ALIAS + StringPool.SPACE) :
+										"",
+								"from ", sourceTableName, StringPool.SPACE,
+								_SOURCE_TABLE_ALIAS, whereClause))) {
+
+					preparedStatement2.execute();
+				}
 			}
 
 			if (!_log.isInfoEnabled()) {

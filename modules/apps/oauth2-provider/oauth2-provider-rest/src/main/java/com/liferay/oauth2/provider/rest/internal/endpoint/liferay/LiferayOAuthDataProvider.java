@@ -1155,12 +1155,12 @@ public class LiferayOAuthDataProvider
 		serverAccessToken.setTokenType(accessToken.getTokenType());
 	}
 
-	private String _extractJwksFromJwksUri(String jwksUri) throws Exception {
-		if (Validator.isBlank(jwksUri)) {
+	private String _extractJwksFromJwksUri(String jwksURI) throws Exception {
+		if (Validator.isBlank(jwksURI)) {
 			return null;
 		}
 
-		if (!StringUtil.startsWith(jwksUri, "https://")) {
+		if (!StringUtil.startsWith(jwksURI, "https://")) {
 			throwOAuthError(
 				"jwks_uri must use the https scheme",
 				OAuthConstants.INVALID_REQUEST, Response.Status.BAD_REQUEST);
@@ -1170,7 +1170,7 @@ public class LiferayOAuthDataProvider
 
 		Http.Options options = new Http.Options();
 
-		options.setLocation(jwksUri);
+		options.setLocation(jwksURI);
 
 		try {
 			String responseJSON = _http.URLtoString(options);
@@ -1183,7 +1183,7 @@ public class LiferayOAuthDataProvider
 				}
 
 				throw new SystemException(
-					"Unable to retrieve JWKS information from " + jwksUri);
+					"Unable to retrieve JWKS information from " + jwksURI);
 			}
 
 			return _jsonFactory.createJSONObject(

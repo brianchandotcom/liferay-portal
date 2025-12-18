@@ -722,57 +722,56 @@ public class LiferayOAuthDataProvider
 			_oAuth2ApplicationLocalService.fetchOAuth2Application(
 				companyId, client.getClientId());
 
-		if (oAuth2Application == null) {
-			try {
-				SecurityContext securityContext =
-					messageContext.getSecurityContext();
-
-				Principal userPrincipal = securityContext.getUserPrincipal();
-
-				User user = _userLocalService.fetchUser(
-					GetterUtil.getLong(userPrincipal.getName()));
-
-				Map<String, String> properties = client.getProperties();
-
-				String jwks = properties.get("jwks");
-
-				if (jwks == null) {
-					jwks = _extractJwksFromJwksUri(properties.get("jwks_uri"));
-				}
-
-				_oAuth2ApplicationLocalService.addOAuth2Application(
-					companyId, user.getUserId(),
-					user.getScreenName() + "_dynamic_registered",
-					_getAllowedGrantTypes(client.getAllowedGrantTypes()),
-					client.getTokenEndpointAuthMethod(), user.getUserId(),
-					client.getClientId(), 0, client.getClientSecret(), null,
-					null, client.getApplicationWebUri(), 0, jwks,
-					client.getApplicationName(), properties.get("tos_uri"),
-					client.getRedirectUris(), false,
-					client.getRegisteredScopes(), false, new ServiceContext());
-			}
-			catch (PortalException portalException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Error registering dynamically OAuth 2 Application " +
-							"with client ID: " + client.getClientId(),
-						portalException);
-				}
-
-				throw new WebApplicationException(portalException);
-			}
-			catch (WebApplicationException webApplicationException) {
-				throw webApplicationException;
-			}
-			catch (Exception exception) {
-				throw new ServerErrorException(500, exception);
-			}
-		}
-		else {
+		if (oAuth2Application != null) {
 			throwOAuthError(
 				"OAuth 2 Application with client ID: " + client.getClientId() +
 					" already exists.",
 				OAuthConstants.INVALID_CLIENT, Response.Status.CONFLICT);
+		}
+
+		try {
+			SecurityContext securityContext =
+				messageContext.getSecurityContext();
+
+			Principal userPrincipal = securityContext.getUserPrincipal();
+
+			User user = _userLocalService.fetchUser(
+				GetterUtil.getLong(userPrincipal.getName()));
+
+			Map<String, String> properties = client.getProperties();
+
+			String jwks = properties.get("jwks");
+
+			if (jwks == null) {
+				jwks = _extractJwksFromJwksUri(properties.get("jwks_uri"));
+			}
+
+			_oAuth2ApplicationLocalService.addOAuth2Application(
+				companyId, user.getUserId(),
+				user.getScreenName() + "_dynamic_registered",
+				_getAllowedGrantTypes(client.getAllowedGrantTypes()),
+				client.getTokenEndpointAuthMethod(), user.getUserId(),
+				client.getClientId(), 0, client.getClientSecret(), null,
+				null, client.getApplicationWebUri(), 0, jwks,
+				client.getApplicationName(), properties.get("tos_uri"),
+				client.getRedirectUris(), false,
+				client.getRegisteredScopes(), false, new ServiceContext());
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Error registering dynamically OAuth 2 Application " +
+						"with client ID: " + client.getClientId(),
+					portalException);
+			}
+
+			throw new WebApplicationException(portalException);
+		}
+		catch (WebApplicationException webApplicationException) {
+			throw webApplicationException;
+		}
+		catch (Exception exception) {
+			throw new ServerErrorException(500, exception);
 		}
 	}
 

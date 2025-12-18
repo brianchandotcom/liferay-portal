@@ -1092,6 +1092,32 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 	}
 
 	@Test
+	public void testSerializeSnapshotsEnabled() throws Exception {
+		_registerServices(
+			_registerSystemFDSEntry(
+				SystemFDSEntryFactory.create(
+					FDS_NAMES[0]
+				).withSnapshotsEnabled(
+					false
+				)),
+			_registerSystemFDSEntry(
+				SystemFDSEntryFactory.create(
+					FDS_NAMES[1]
+				).withSnapshotsEnabled(
+					true
+				)));
+
+		Assert.assertFalse(
+			systemFDSSerializer.serializeSnapshotsEnabled(
+				FDS_NAMES[0], httpServletRequest));
+		Assert.assertTrue(
+			systemFDSSerializer.serializeSnapshotsEnabled(
+				FDS_NAMES[1], httpServletRequest));
+
+		_unregisterServices();
+	}
+
+	@Test
 	public void testSerializeSortItems() throws Exception {
 
 		// Different sorts
@@ -1833,6 +1859,11 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 					}
 
 					@Override
+					public boolean getSnapshotsEnabled() {
+						return _snapshotsEnabled;
+					}
+
+					@Override
 					public String getTitle() {
 						return "";
 					}
@@ -1875,12 +1906,21 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 			return this;
 		}
 
+		public SystemFDSEntryWrapper withSnapshotsEnabled(
+			boolean snapshotsEnabled) {
+
+			_snapshotsEnabled = snapshotsEnabled;
+
+			return this;
+		}
+
 		private String _additionalURLParameters;
 		private int _defaultItemsPerPage = -1;
 		private final String _fdsName;
 		private boolean _hideManagementBarInEmptyState;
 		private int[] _listOfItemsPerPage;
 		private String _propsTransformer;
+		private boolean _snapshotsEnabled;
 
 	}
 

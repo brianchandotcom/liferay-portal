@@ -149,16 +149,13 @@ public class ObjectEntryResourceImpl
 						updateStrategy, "PARTIAL_UPDATE")) {
 
 					objectEntryUnsafeFunction = objectEntry -> {
-						ObjectEntry getObjectEntry = null;
-						ObjectEntry persistedObjectEntry = null;
-
 						try {
-							getObjectEntry =
+							ObjectEntry getObjectEntry =
 								getScopeScopeKeyByExternalReferenceCode(
 									scopeKey,
 									objectEntry.getExternalReferenceCode());
 
-							persistedObjectEntry = patchObjectEntry(
+							return patchObjectEntry(
 								getObjectEntry.getId(), objectEntry);
 						}
 						catch (NoSuchModelException noSuchModelException) {
@@ -166,15 +163,13 @@ public class ObjectEntryResourceImpl
 								_log.debug(noSuchModelException);
 							}
 
-							persistedObjectEntry = postScopeScopeKey(
-								scopeKey, objectEntry);
+							return postScopeScopeKey(scopeKey, objectEntry);
 						}
-
-						return persistedObjectEntry;
 					};
 				}
+				else if (StringUtil.equalsIgnoreCase(
+							updateStrategy, "UPDATE")) {
 
-				if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 					objectEntryUnsafeFunction =
 						objectEntry -> putScopeScopeKeyByExternalReferenceCode(
 							scopeKey, objectEntry.getExternalReferenceCode(),

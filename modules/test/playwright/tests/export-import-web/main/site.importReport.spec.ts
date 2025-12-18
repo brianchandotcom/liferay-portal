@@ -55,8 +55,8 @@ test('Can see error report and details', async ({
 	const taskName = `MyExport-${getRandomString()}`;
 
 	const exportFilePath = await exportImportPage.export({
-		taskName,
 		itemLabels: ['Tests 1 Items'],
+		taskName,
 	});
 
 	const objectFieldAPIClient =
@@ -137,8 +137,8 @@ test(
 			await exportImportPage.goToExport();
 
 			const exportFilePath = await exportImportPage.export({
-				taskName,
 				itemLabels: ['Tests 1 Items'],
+				taskName,
 			});
 
 			// Add a mandatory field to Object Definition to generate report issues on import

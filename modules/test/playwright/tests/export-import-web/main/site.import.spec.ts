@@ -590,12 +590,9 @@ testWithDeprecationFF(
 			await exportImportPage.deleteApplicationDataCheckbox.check();
 			await exportImportPage.importButton.click();
 			await exportImportPage.importModalButton.click();
-			await expect(
-				page
-					.getByText(exportName)
-					.locator('../../..')
-					.getByText('Successful')
-			).toBeVisible();
+			await exportImportPage
+				.taskStatusLabel(exportName, 'success')
+				.waitFor();
 		});
 	}
 );

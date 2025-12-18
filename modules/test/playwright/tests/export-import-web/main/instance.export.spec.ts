@@ -106,13 +106,13 @@ test('can export custom object entries at instance level with date filter', asyn
 
 	const exportFilePath2 =
 		await companyExportImportPage.exportImportPage.export({
-			itemLabels: ['Tests 1 Items'],
 			dateOptions: {
 				endDate: toDateRangeDate(endDate),
 				endTime: toDateRangeTime(endDate),
 				startDate: toDateRangeDate(startDate),
 				startTime: toDateRangeTime(startDate),
 			},
+			itemLabels: ['Tests 1 Items'],
 		});
 
 	const content2 = await readFileFromZip('C_Test.json', exportFilePath2);
@@ -125,8 +125,8 @@ test('can export custom object entries at instance level with date filter', asyn
 
 	const exportFilePath3 =
 		await companyExportImportPage.exportImportPage.export({
-			itemLabels: ['Tests 1 Items'],
 			dateOptions: {rangeLast: '12 Hours'},
+			itemLabels: ['Tests 1 Items'],
 		});
 
 	const content3 = await readFileFromZip('C_Test.json', exportFilePath3);
@@ -172,8 +172,8 @@ test('can export new default and custom task name', async ({
 
 	const customExportFilePath =
 		await companyExportImportPage.exportImportPage.export({
-			taskName,
 			itemLabels: ['Tests 1 Items'],
+			taskName,
 		});
 
 	expect(customExportFilePath).toMatch(

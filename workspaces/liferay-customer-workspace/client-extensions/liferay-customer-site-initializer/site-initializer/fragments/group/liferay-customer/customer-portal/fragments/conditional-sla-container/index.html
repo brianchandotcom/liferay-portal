@@ -8,11 +8,13 @@
 
 [#if accountBriefs?has_content]
 	[#list accountBriefs as account]
-		[#assign erc = (account.externalReferenceCode)!"" /]
-		[#assign koroneikiAccount = (restClient.get("/c/koroneikiaccounts/by-external-reference-code/${erc}"))!{} /]
+		[#assign externalReferenceCode = (account.externalReferenceCode)!"" /]
+		[#assign validSLAs = ["Elite", "Enhanced", "Gold Subscription", "Mission Critical", "Premium Subscription", "Platinum Subscription"] /]
+
+		[#assign koroneikiAccount = (restClient.get("/c/koroneikiaccounts/by-external-reference-code/${externalReferenceCode}"))!{} /]
+
 		[#assign accountSLA = (koroneikiAccount.slaCurrent)!"" /]
 
-		[#assign validSLAs = ["Elite", "Enhanced", "Gold Subscription", "Mission Critical", "Premium Subscription", "Platinum Subscription"] /]
 		[#assign hasSLAPermission = validSLAs?seq_contains(accountSLA) /]
 
 		[#if hasSLAPermission]

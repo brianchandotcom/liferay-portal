@@ -148,8 +148,8 @@ public class DDMIndexerImpl implements DDMIndexer {
 						else if (value != null) {
 							fieldArray.addField(
 								createField(
-									ddmFormField, field, indexType, locale,
-									name, value));
+									ddmFormField, indexType, locale, name,
+									value));
 						}
 					}
 				}
@@ -171,8 +171,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 					else if (value != null) {
 						fieldArray.addField(
 							createField(
-								ddmFormField, field, indexType, null, name,
-								value));
+								ddmFormField, indexType, null, name, value));
 					}
 				}
 			}
@@ -419,8 +418,8 @@ public class DDMIndexerImpl implements DDMIndexer {
 	}
 
 	protected com.liferay.portal.kernel.search.Field createField(
-			DDMFormField ddmFormField, Field ddmStructureField,
-			String indexType, Locale locale, String name, Serializable value)
+			DDMFormField ddmFormField, String indexType, Locale locale,
+			String name, Serializable value)
 		throws PortalException {
 
 		com.liferay.portal.kernel.search.Field ddmField =

@@ -530,6 +530,7 @@ test('LPD-39412 Assert publication timeline history is enabled for templates', a
 
 	const timelineActionsButton = page.locator('.publication-timeline button');
 
+	await timelineActionsButton.waitFor();
 	await expect(timelineActionsButton).toBeVisible();
 
 	await journalEditTemplatePage.goto(site.friendlyUrlPath);

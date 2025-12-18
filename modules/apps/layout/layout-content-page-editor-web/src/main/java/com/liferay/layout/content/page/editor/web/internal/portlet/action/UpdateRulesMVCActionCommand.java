@@ -71,7 +71,7 @@ public class UpdateRulesMVCActionCommand
 						layoutStructureRule.setConditionType(
 							ruleJSONObject.getString("conditionType"));
 						layoutStructureRule.setScript(
-							ruleJSONObject.getString("script"));
+							ruleJSONObject.getString("script", null));
 					}
 				}));
 	}

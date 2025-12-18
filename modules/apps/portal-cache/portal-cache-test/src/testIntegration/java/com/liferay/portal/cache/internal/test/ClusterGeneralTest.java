@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.process.local.LocalProcessLauncher;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.instance.lifecycle.EveryNodeEveryStartup;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
@@ -16,6 +17,7 @@ import com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterMasterTokenTransitionListener;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterableInvokerUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log4j.Log4JUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
@@ -24,6 +26,7 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.TomcatClusterTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.test.cluster.tomcat.TomcatCluster;
@@ -120,6 +123,49 @@ public class ClusterGeneralTest implements Serializable {
 			true,
 			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL + "=udp.xml",
 			"cluster.link.channel.properties.transport.0=udp.xml");
+	}
+
+	@Test
+	public void testEnableAndDisableFeatureFlagOnMasterNode() throws Exception {
+		String key = "LPS-170670";
+
+		Assert.assertTrue(
+			_tomcatNode1.syncExecute(
+				() -> {
+					_setEnabledForFeatureFlags(
+						PortalUtil.getDefaultCompanyId(), key, true);
+
+					return FeatureFlagManagerUtil.isEnabled(
+						PortalUtil.getDefaultCompanyId(), key);
+				}));
+
+		Assert.assertTrue(
+			_tomcatNode2.syncExecute(
+				() -> {
+					_clearCacheForFeatureFlags();
+
+					return FeatureFlagManagerUtil.isEnabled(
+						PortalUtil.getDefaultCompanyId(), key);
+				}));
+
+		Assert.assertFalse(
+			_tomcatNode1.syncExecute(
+				() -> {
+					_setEnabledForFeatureFlags(
+						PortalUtil.getDefaultCompanyId(), key, false);
+
+					return FeatureFlagManagerUtil.isEnabled(
+						PortalUtil.getDefaultCompanyId(), key);
+				}));
+
+		Assert.assertFalse(
+			_tomcatNode2.syncExecute(
+				() -> {
+					_clearCacheForFeatureFlags();
+
+					return FeatureFlagManagerUtil.isEnabled(
+						PortalUtil.getDefaultCompanyId(), key);
+				}));
 	}
 
 	@Test
@@ -272,6 +318,20 @@ public class ClusterGeneralTest implements Serializable {
 				}));
 	}
 
+	private void _clearCacheForFeatureFlags() throws Exception {
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		ServiceReference<?>[] serviceReferences =
+			bundleContext.getServiceReferences(
+				AopService.class.getName(),
+				"(component.name=com.liferay.feature.flag.web.internal." +
+					"feature.flag.FeatureFlagsBagProviderImpl)");
+
+		ReflectionTestUtil.invoke(
+			bundleContext.getService(serviceReferences[0]), "clearCache",
+			new Class<?>[0]);
+	}
+
 	private AutoCloseable _disableClusterableAdviceCallMasterTimeout(
 			TomcatNode tomcatNode)
 		throws Exception {
@@ -366,6 +426,24 @@ public class ClusterGeneralTest implements Serializable {
 		// Assert mutual visibility with the new restart node
 
 		_assertNodesVisibleToEachOther(restartTomcatNode, verifierTomcatNode);
+	}
+
+	private void _setEnabledForFeatureFlags(
+			long companyId, String key, boolean enabled)
+		throws Exception {
+
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		ServiceReference<?>[] serviceReferences =
+			bundleContext.getServiceReferences(
+				AopService.class.getName(),
+				"(component.name=com.liferay.feature.flag.web.internal." +
+					"feature.flag.FeatureFlagsBagProviderImpl)");
+
+		ReflectionTestUtil.invoke(
+			bundleContext.getService(serviceReferences[0]), "setEnabled",
+			new Class<?>[] {long.class, String.class, boolean.class}, companyId,
+			key, enabled);
 	}
 
 	private void _testCanCreateVirtualInstanceWithClustering(

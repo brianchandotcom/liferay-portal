@@ -12,7 +12,7 @@ import './CardButton.scss';
 const CardButton = ({
 	description,
 	disabled,
-	fullSizeCard = false,
+	fullSize = false,
 	icon = '',
 	iconRight,
 	onClick,
@@ -21,7 +21,7 @@ const CardButton = ({
 }: {
 	description: string;
 	disabled?: boolean;
-	fullSizeCard?: boolean;
+	fullSize?: boolean;
 	icon?: ReactNode;
 	iconRight?: boolean;
 	onClick: (event: MouseEvent) => void;
@@ -33,7 +33,7 @@ const CardButton = ({
 		className={classNames('card-button d-flex', {
 			'card-button--disabled': disabled,
 			'card-button--selected': selected,
-			'w-100': fullSizeCard,
+			'w-100': fullSize,
 		})}
 		onClick={(event) => {
 			if (disabled) {

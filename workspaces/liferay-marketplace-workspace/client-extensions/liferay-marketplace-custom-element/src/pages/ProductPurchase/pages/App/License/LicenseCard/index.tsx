@@ -76,7 +76,7 @@ const LicenseCard: React.FC<LicenseCardProps> = ({sku}) => {
 						className="align-items-center d-flex justify-content-center license__card__buttons p-2"
 						disabled={cartItemsCount === MIN_ITEM}
 						displayType="primary"
-						iconWithMargin={false}
+						iconProps={{className: ""}}
 						onClick={() =>
 							productPurchaseCart.removeFromCart(sku.id)
 						}
@@ -92,7 +92,7 @@ const LicenseCard: React.FC<LicenseCardProps> = ({sku}) => {
 						className="align-items-center d-flex justify-content-center license__card__buttons p-2"
 						disabled={cartItemsCount === MAX_ITEM}
 						displayType="primary"
-						iconWithMargin={false}
+						iconProps={{className: ""}
 						onClick={() =>
 							productPurchaseCart.addCart(
 								Number(product.id),

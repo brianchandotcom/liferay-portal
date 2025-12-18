@@ -7,16 +7,22 @@ package com.liferay.translation.manager.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
+import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.translation.manager.Translation;
 import com.liferay.translation.manager.TranslationManager;
 import com.liferay.translation.test.util.TranslationTestUtil;
 
@@ -24,6 +30,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -36,6 +46,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Alicia García
+ * @author Roberto Díaz
  */
 @RunWith(Arquillian.class)
 public class TranslationManagerTest {
@@ -81,6 +92,120 @@ public class TranslationManagerTest {
 
 		_testGetXLIFFFile("test-journal-article-v12.xlf", _MIMETYPE_XLIFF_1_2);
 		_testGetXLIFFFile("test-journal-article.xlf", _MIMETYPE_XLIFF_2_0);
+	}
+
+	@Test
+	public void testProcessXLIFFTranslation() throws Exception {
+		File xliff12File = _translationManager.getXLIFFFile(
+			JournalArticle.class.getName(),
+			_journalArticle.getResourcePrimKey(), _MIMETYPE_XLIFF_1_2,
+			LocaleUtil.US, LocaleUtil.toLanguageId(LocaleUtil.US),
+			_TARGET_LANGUAGE_IDS[0]);
+
+		List<Map<String, String>> failureMessages = new LinkedList<>();
+		List<String> successMessages = new ArrayList<>();
+
+		_translationManager.processXLIFFTranslation(
+			_group.getGroupId(), JournalArticle.class.getName(),
+			_journalArticle.getResourcePrimKey(),
+			new Translation(
+				() -> _MIMETYPE_XLIFF_1_2, xliff12File.getName(),
+				() -> new FileInputStream(xliff12File)),
+			successMessages, failureMessages, LocaleUtil.US,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_assertProcessXLIFFTranslationSucess(failureMessages, successMessages);
+
+		failureMessages.clear();
+		successMessages.clear();
+
+		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		_translationManager.processXLIFFTranslation(
+			_group.getGroupId(), JournalArticle.class.getName(),
+			journalArticle2.getResourcePrimKey(),
+			new Translation(
+				() -> _MIMETYPE_XLIFF_1_2, xliff12File.getName(),
+				() -> new FileInputStream(xliff12File)),
+			successMessages, failureMessages, LocaleUtil.US,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_assertProcessXLIFFTranslationFailure(
+			failureMessages, successMessages, false);
+
+		failureMessages.clear();
+		successMessages.clear();
+
+		File xliffZipFile = _translationManager.getXLIFFZipFile(
+			JournalArticle.class.getName(),
+			new long[] {_journalArticle.getResourcePrimKey()},
+			_MIMETYPE_XLIFF_1_2, LocaleUtil.US,
+			LocaleUtil.toLanguageId(LocaleUtil.US), _TARGET_LANGUAGE_IDS);
+
+		_translationManager.processXLIFFTranslation(
+			_group.getGroupId(), JournalArticle.class.getName(),
+			_journalArticle.getResourcePrimKey(),
+			new Translation(
+				() -> ContentTypes.APPLICATION_ZIP, xliffZipFile.getName(),
+				() -> new FileInputStream(xliffZipFile)),
+			successMessages, failureMessages, LocaleUtil.US,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_assertProcessXLIFFTranslationSucess(failureMessages, successMessages);
+
+		failureMessages.clear();
+		successMessages.clear();
+
+		_translationManager.processXLIFFTranslation(
+			_group.getGroupId(), JournalArticle.class.getName(),
+			journalArticle2.getResourcePrimKey(),
+			new Translation(
+				() -> ContentTypes.APPLICATION_ZIP, xliffZipFile.getName(),
+				() -> new FileInputStream(xliffZipFile)),
+			successMessages, failureMessages, LocaleUtil.US,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_assertProcessXLIFFTranslationFailure(
+			failureMessages, successMessages, true);
+	}
+
+	private void _assertProcessXLIFFTranslationFailure(
+		List<Map<String, String>> failureMessages, List<String> successMessages,
+		boolean container) {
+
+		Assert.assertEquals(
+			failureMessages.toString(), 1, failureMessages.size());
+
+		for (Map<String, String> failureMessage : failureMessages) {
+			if (container) {
+				Assert.assertEquals(
+					"Test Article-en_US.zip", failureMessage.get("container"));
+			}
+			else {
+				Assert.assertTrue(
+					Validator.isNull(failureMessage.get("container")));
+			}
+
+			Assert.assertEquals(
+				_getXLIFFFileName(), failureMessage.get("fileName"));
+			Assert.assertEquals(
+				"The translation file does not correspond to this web content.",
+				failureMessage.get("errorMessage"));
+		}
+
+		Assert.assertTrue(successMessages.isEmpty());
+	}
+
+	private void _assertProcessXLIFFTranslationSucess(
+		List<Map<String, String>> failureMessages,
+		List<String> successMessages) {
+
+		Assert.assertTrue(failureMessages.isEmpty());
+		Assert.assertEquals(
+			successMessages.toString(), 1, successMessages.size());
+		Assert.assertEquals(_getXLIFFFileName(), successMessages.get(0));
 	}
 
 	private void _assertXLIFFFile(String expected, InputStream inputStream)

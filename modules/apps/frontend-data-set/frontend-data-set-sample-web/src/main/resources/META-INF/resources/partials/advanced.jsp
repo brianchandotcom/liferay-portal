@@ -26,6 +26,5 @@ FDSSampleDisplayContext fdsSampleDisplayContext = (FDSSampleDisplayContext)reque
 	selectedItemsKey="id"
 	selectionType="multiple"
 	showSelectAll="<%= true %>"
-	snapshotsEnabled="<%= true %>"
 	style="fluid"
 />

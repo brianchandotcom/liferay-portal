@@ -20,6 +20,7 @@ import {useSelector} from '../../../app/contexts/StoreContext';
 import selectLayoutDataItemLabel from '../../../app/selectors/selectLayoutDataItemLabel';
 import {isAllowedInRules} from '../../../app/utils/isAllowedInRules';
 import {isLayoutDataItemDeleted} from '../../../app/utils/isLayoutDataItemDeleted';
+import {translateConditionsToScript} from '../../../app/utils/translateConditionsToScript';
 import {PopoverTooltip} from '../../../common/components/PopoverTooltip';
 import {Action, Condition} from '../../../types/Rule';
 import ActionComponent from './Action';
@@ -359,7 +360,12 @@ export function RuleBuilderConditionSection({
 								setRuleConditions(
 									isNullOrUndefined(script)
 										? {
-												script: '',
+												script: conditions?.length
+													? translateConditionsToScript(
+															conditions,
+															conditionType
+														)
+													: '',
 											}
 										: {
 												script: undefined,

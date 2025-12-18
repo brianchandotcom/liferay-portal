@@ -190,6 +190,8 @@ public class ExportImportHelperUtilTest {
 				List.of(companyId1, RandomTestUtil.randomLong(), companyId2),
 				null, RandomTestUtil.randomString())) {
 
+			Thread.sleep(1000);
+
 			Portlet portlet = ExportImportHelperUtil.getDataSiteLevelPortlet(
 				className, companyId1, false);
 

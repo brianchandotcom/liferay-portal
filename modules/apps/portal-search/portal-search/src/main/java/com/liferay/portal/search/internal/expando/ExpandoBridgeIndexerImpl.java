@@ -418,17 +418,17 @@ public class ExpandoBridgeIndexerImpl implements ExpandoBridgeIndexer {
 				return expandoColumns;
 			}
 
-			List<ExpandoColumn> indexedColumns = new ArrayList<>();
+			List<ExpandoColumn> indexedExpandoColumns = new ArrayList<>();
 
 			for (ExpandoColumn expandoColumn : expandoColumns) {
 				int indexType = ExpandoBridgeUtil.getIndexType(expandoColumn);
 
 				if (indexType != ExpandoColumnConstants.INDEX_TYPE_NONE) {
-					indexedColumns.add(expandoColumn);
+					indexedExpandoColumns.add(expandoColumn);
 				}
 			}
 
-			return indexedColumns;
+			return indexedExpandoColumns;
 		}
 
 		Map<String, List<ExpandoColumn>> expandoColumnsMap =

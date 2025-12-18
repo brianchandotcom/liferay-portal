@@ -1610,28 +1610,6 @@ public class ObjectEntryResourceImpl
 			objectDefinition.getResourceName());
 	}
 
-	private long _getNonzeroGroupId(long objectEntryId) throws Exception {
-		com.liferay.object.model.ObjectEntry objectEntry =
-			_objectEntryLocalService.getObjectEntry(objectEntryId);
-
-		return objectEntry.getNonzeroGroupId();
-	}
-
-	private ObjectEntry _getObjectEntry(
-			String objectEntryExternalReferenceCode, String scopeKey)
-		throws Exception {
-
-		DefaultObjectEntryManager defaultObjectEntryManager =
-			DefaultObjectEntryManagerProvider.provide(
-				_objectEntryManagerRegistry.getObjectEntryManager(
-					_objectDefinition.getCompanyId(),
-					_objectDefinition.getStorageType()));
-
-		return defaultObjectEntryManager.getObjectEntry(
-			contextCompany.getCompanyId(), _getDTOConverterContext(null),
-			objectEntryExternalReferenceCode, _objectDefinition, scopeKey);
-	}
-
 	private String _getScopeKey(Map<String, Serializable> parameters) {
 		if (parameters.containsKey("scopeKey")) {
 			return String.valueOf(parameters.get("scopeKey"));

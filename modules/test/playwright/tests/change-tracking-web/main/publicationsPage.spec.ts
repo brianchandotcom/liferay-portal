@@ -1118,6 +1118,19 @@ testWithPrivatePages(
 			ctCollection.body.name
 		);
 
+		// Review published changes
+
+		await changeTrackingPage.goToReviewChangesHistory(
+			ctCollection.body.name
+		);
+
+		await changeTrackingPage.viewChanges({
+			changed: 'Added',
+			site: site.name,
+			title: fragmentEntryName,
+			type: 'Fragment Entry Link',
+		});
+
 		// View fragment in private page
 
 		await page.goto(`/group${site.friendlyUrlPath}`);

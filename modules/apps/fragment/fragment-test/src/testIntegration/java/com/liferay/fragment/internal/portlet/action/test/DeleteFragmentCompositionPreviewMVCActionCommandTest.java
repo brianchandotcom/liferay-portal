@@ -123,9 +123,7 @@ public class DeleteFragmentCompositionPreviewMVCActionCommandTest {
 
 	@Test
 	@TestInfo("LPD-73558")
-	public void testDoProcessActionWithoutPermissions()
-		throws Exception {
-
+	public void testDoProcessActionWithoutPermissions() throws Exception {
 		User user = UserTestUtil.addGroupUser(_group, RoleConstants.POWER_USER);
 
 		FragmentCollection fragmentCollection =

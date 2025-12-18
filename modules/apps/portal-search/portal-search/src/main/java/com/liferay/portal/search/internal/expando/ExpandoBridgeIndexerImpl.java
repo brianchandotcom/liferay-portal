@@ -312,101 +312,105 @@ public class ExpandoBridgeIndexerImpl implements ExpandoBridgeIndexer {
 
 		Map<Long, Map<String, List<ExpandoColumn>>> expandoColumnsMaps =
 			ReindexCacheThreadLocal.getGlobalReindexCache(
-			() -> -1, ExpandoBridgeIndexerImpl.class.getName(),
-			count -> {
-				List<ExpandoColumn> expandoColumns = new ArrayList<>();
+				() -> -1, ExpandoBridgeIndexerImpl.class.getName(),
+				count -> {
+					List<ExpandoColumn> expandoColumns = new ArrayList<>();
 
-				for (ExpandoColumn expandoColumn :
-						_expandoColumnLocalService.
-							<List<ExpandoColumn>>dslQuery(
+					for (ExpandoColumn expandoColumn :
+							_expandoColumnLocalService.
+								<List<ExpandoColumn>>dslQuery(
+									DSLQueryFactoryUtil.select(
+										ExpandoColumnTable.INSTANCE
+									).from(
+										ExpandoColumnTable.INSTANCE
+									).where(
+										ExpandoColumnTable.INSTANCE.
+											typeSettings.isNotNull(
+											).and(
+												ExpandoColumnTable.INSTANCE.
+													typeSettings.notLike("")
+											)
+									),
+									false)) {
+
+						int indexType = ExpandoBridgeUtil.getIndexType(
+							expandoColumn);
+
+						if (indexType !=
+								ExpandoColumnConstants.INDEX_TYPE_NONE) {
+
+							expandoColumns.add(expandoColumn);
+						}
+					}
+
+					if (expandoColumns.isEmpty()) {
+						return Collections.emptyMap();
+					}
+
+					Map<Long, Object[]> tableInfos = new HashMap<>();
+
+					for (Object[] values :
+							_expandoTableLocalService.<List<Object[]>>dslQuery(
 								DSLQueryFactoryUtil.select(
-									ExpandoColumnTable.INSTANCE
+									ExpandoTableTable.INSTANCE.tableId,
+									ExpandoTableTable.INSTANCE.companyId,
+									ExpandoTableTable.INSTANCE.classNameId
 								).from(
-									ExpandoColumnTable.INSTANCE
+									ExpandoTableTable.INSTANCE
 								).where(
-									ExpandoColumnTable.INSTANCE.typeSettings.
-										isNotNull(
-										).and(
-											ExpandoColumnTable.INSTANCE.
-												typeSettings.notLike("")
-										)
+									ExpandoTableTable.INSTANCE.name.eq(
+										ExpandoTableConstants.
+											DEFAULT_TABLE_NAME)
 								),
 								false)) {
 
-					int indexType = ExpandoBridgeUtil.getIndexType(
-						expandoColumn);
-
-					if (indexType != ExpandoColumnConstants.INDEX_TYPE_NONE) {
-						expandoColumns.add(expandoColumn);
-					}
-				}
-
-				if (expandoColumns.isEmpty()) {
-					return Collections.emptyMap();
-				}
-
-				Map<Long, Object[]> tableInfos = new HashMap<>();
-
-				for (Object[] values :
-						_expandoTableLocalService.<List<Object[]>>dslQuery(
-							DSLQueryFactoryUtil.select(
-								ExpandoTableTable.INSTANCE.tableId,
-								ExpandoTableTable.INSTANCE.companyId,
-								ExpandoTableTable.INSTANCE.classNameId
-							).from(
-								ExpandoTableTable.INSTANCE
-							).where(
-								ExpandoTableTable.INSTANCE.name.eq(
-									ExpandoTableConstants.DEFAULT_TABLE_NAME)
-							),
-							false)) {
-
-					tableInfos.put((Long)values[0], values);
-				}
-
-				Map<Long, Map<String, List<ExpandoColumn>>>
-					localExpandoColumnsMaps = new HashMap<>();
-
-				Map<Long, String> classNames = new HashMap<>();
-
-				for (ExpandoColumn expandoColumn : expandoColumns) {
-					Object[] tableInfo = tableInfos.get(
-						expandoColumn.getTableId());
-
-					if (tableInfo == null) {
-						continue;
+						tableInfos.put((Long)values[0], values);
 					}
 
-					String localClassName = classNames.computeIfAbsent(
-						(Long)tableInfo[2],
-						classNameId -> {
-							ClassName classNameObject =
-								_classNameLocalService.fetchByClassNameId(
-									companyId);
+					Map<Long, Map<String, List<ExpandoColumn>>>
+						localExpandoColumnsMaps = new HashMap<>();
 
-							if (classNameObject == null) {
-								return null;
-							}
+					Map<Long, String> classNames = new HashMap<>();
 
-							return classNameObject.getClassName();
-						});
+					for (ExpandoColumn expandoColumn : expandoColumns) {
+						Object[] tableInfo = tableInfos.get(
+							expandoColumn.getTableId());
 
-					if (localClassName == null) {
-						continue;
+						if (tableInfo == null) {
+							continue;
+						}
+
+						String localClassName = classNames.computeIfAbsent(
+							(Long)tableInfo[2],
+							classNameId -> {
+								ClassName classNameObject =
+									_classNameLocalService.fetchByClassNameId(
+										companyId);
+
+								if (classNameObject == null) {
+									return null;
+								}
+
+								return classNameObject.getClassName();
+							});
+
+						if (localClassName == null) {
+							continue;
+						}
+
+						Map<String, List<ExpandoColumn>>
+							localExpandoColumnsMap =
+								localExpandoColumnsMaps.computeIfAbsent(
+									(Long)tableInfo[1], key -> new HashMap<>());
+
+						List<ExpandoColumn> localExpandoColumns =
+							localExpandoColumnsMap.computeIfAbsent(
+								localClassName, key -> new ArrayList<>());
+
+						localExpandoColumns.add(expandoColumn);
 					}
 
-					Map<String, List<ExpandoColumn>> localExpandoColumnsMap =
-						localExpandoColumnsMaps.computeIfAbsent(
-							(Long)tableInfo[1], key -> new HashMap<>());
-
-					List<ExpandoColumn> localExpandoColumns =
-						localExpandoColumnsMap.computeIfAbsent(
-							localClassName, key -> new ArrayList<>());
-
-					localExpandoColumns.add(expandoColumn);
-				}
-
-				return localExpandoColumnsMaps;
+					return localExpandoColumnsMaps;
 				});
 
 		if (expandoColumnsMaps == null) {

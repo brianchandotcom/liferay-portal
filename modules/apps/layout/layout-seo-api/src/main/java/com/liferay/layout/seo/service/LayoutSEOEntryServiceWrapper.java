@@ -61,7 +61,9 @@ public class LayoutSEOEntryServiceWrapper
 			boolean openGraphDescriptionEnabled,
 			java.util.Map<java.util.Locale, String> openGraphDescriptionMap,
 			java.util.Map<java.util.Locale, String> openGraphImageAltMap,
-			long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
+			String openGraphImageFileEntryERC,
+			String openGraphImageFileEntryScopeERC,
+			boolean openGraphTitleEnabled,
 			java.util.Map<java.util.Locale, String> openGraphTitleMap,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -70,8 +72,8 @@ public class LayoutSEOEntryServiceWrapper
 			groupId, privateLayout, layoutId, canonicalURLEnabled,
 			canonicalURLMap, openGraphDescriptionEnabled,
 			openGraphDescriptionMap, openGraphImageAltMap,
-			openGraphImageFileEntryId, openGraphTitleEnabled, openGraphTitleMap,
-			serviceContext);
+			openGraphImageFileEntryERC, openGraphImageFileEntryScopeERC,
+			openGraphTitleEnabled, openGraphTitleMap, serviceContext);
 	}
 
 	@Override
@@ -80,7 +82,9 @@ public class LayoutSEOEntryServiceWrapper
 			boolean openGraphDescriptionEnabled,
 			java.util.Map<java.util.Locale, String> openGraphDescriptionMap,
 			java.util.Map<java.util.Locale, String> openGraphImageAltMap,
-			long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
+			String openGraphImageFileEntryERC,
+			String openGraphImageFileEntryScopeERC,
+			boolean openGraphTitleEnabled,
 			java.util.Map<java.util.Locale, String> openGraphTitleMap,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -88,8 +92,8 @@ public class LayoutSEOEntryServiceWrapper
 		return _layoutSEOEntryService.updateLayoutSEOEntry(
 			groupId, privateLayout, layoutId, openGraphDescriptionEnabled,
 			openGraphDescriptionMap, openGraphImageAltMap,
-			openGraphImageFileEntryId, openGraphTitleEnabled, openGraphTitleMap,
-			serviceContext);
+			openGraphImageFileEntryERC, openGraphImageFileEntryScopeERC,
+			openGraphTitleEnabled, openGraphTitleMap, serviceContext);
 	}
 
 	@Override

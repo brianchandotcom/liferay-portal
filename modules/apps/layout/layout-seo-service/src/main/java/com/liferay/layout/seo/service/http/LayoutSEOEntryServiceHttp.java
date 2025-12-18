@@ -98,7 +98,9 @@ public class LayoutSEOEntryServiceHttp {
 				boolean openGraphDescriptionEnabled,
 				java.util.Map<java.util.Locale, String> openGraphDescriptionMap,
 				java.util.Map<java.util.Locale, String> openGraphImageAltMap,
-				long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
+				String openGraphImageFileEntryERC,
+				String openGraphImageFileEntryScopeERC,
+				boolean openGraphTitleEnabled,
 				java.util.Map<java.util.Locale, String> openGraphTitleMap,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -112,8 +114,9 @@ public class LayoutSEOEntryServiceHttp {
 				methodKey, groupId, privateLayout, layoutId,
 				canonicalURLEnabled, canonicalURLMap,
 				openGraphDescriptionEnabled, openGraphDescriptionMap,
-				openGraphImageAltMap, openGraphImageFileEntryId,
-				openGraphTitleEnabled, openGraphTitleMap, serviceContext);
+				openGraphImageAltMap, openGraphImageFileEntryERC,
+				openGraphImageFileEntryScopeERC, openGraphTitleEnabled,
+				openGraphTitleMap, serviceContext);
 
 			Object returnObj = null;
 
@@ -150,7 +153,9 @@ public class LayoutSEOEntryServiceHttp {
 				boolean openGraphDescriptionEnabled,
 				java.util.Map<java.util.Locale, String> openGraphDescriptionMap,
 				java.util.Map<java.util.Locale, String> openGraphImageAltMap,
-				long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
+				String openGraphImageFileEntryERC,
+				String openGraphImageFileEntryScopeERC,
+				boolean openGraphTitleEnabled,
 				java.util.Map<java.util.Locale, String> openGraphTitleMap,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -163,8 +168,9 @@ public class LayoutSEOEntryServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, layoutId,
 				openGraphDescriptionEnabled, openGraphDescriptionMap,
-				openGraphImageAltMap, openGraphImageFileEntryId,
-				openGraphTitleEnabled, openGraphTitleMap, serviceContext);
+				openGraphImageAltMap, openGraphImageFileEntryERC,
+				openGraphImageFileEntryScopeERC, openGraphTitleEnabled,
+				openGraphTitleMap, serviceContext);
 
 			Object returnObj = null;
 
@@ -252,14 +258,15 @@ public class LayoutSEOEntryServiceHttp {
 		new Class[] {
 			long.class, boolean.class, long.class, boolean.class,
 			java.util.Map.class, boolean.class, java.util.Map.class,
-			java.util.Map.class, long.class, boolean.class, java.util.Map.class,
+			java.util.Map.class, String.class, String.class, boolean.class,
+			java.util.Map.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateLayoutSEOEntryParameterTypes2 =
 		new Class[] {
 			long.class, boolean.class, long.class, boolean.class,
-			java.util.Map.class, java.util.Map.class, long.class, boolean.class,
-			java.util.Map.class,
+			java.util.Map.class, java.util.Map.class, String.class,
+			String.class, boolean.class, java.util.Map.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateLayoutSEOEntryParameterTypes3 =

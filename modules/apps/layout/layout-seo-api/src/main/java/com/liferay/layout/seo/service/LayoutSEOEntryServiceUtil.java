@@ -62,7 +62,9 @@ public class LayoutSEOEntryServiceUtil {
 			boolean openGraphDescriptionEnabled,
 			Map<java.util.Locale, String> openGraphDescriptionMap,
 			Map<java.util.Locale, String> openGraphImageAltMap,
-			long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
+			String openGraphImageFileEntryERC,
+			String openGraphImageFileEntryScopeERC,
+			boolean openGraphTitleEnabled,
 			Map<java.util.Locale, String> openGraphTitleMap,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
@@ -71,8 +73,8 @@ public class LayoutSEOEntryServiceUtil {
 			groupId, privateLayout, layoutId, canonicalURLEnabled,
 			canonicalURLMap, openGraphDescriptionEnabled,
 			openGraphDescriptionMap, openGraphImageAltMap,
-			openGraphImageFileEntryId, openGraphTitleEnabled, openGraphTitleMap,
-			serviceContext);
+			openGraphImageFileEntryERC, openGraphImageFileEntryScopeERC,
+			openGraphTitleEnabled, openGraphTitleMap, serviceContext);
 	}
 
 	public static LayoutSEOEntry updateLayoutSEOEntry(
@@ -80,7 +82,9 @@ public class LayoutSEOEntryServiceUtil {
 			boolean openGraphDescriptionEnabled,
 			Map<java.util.Locale, String> openGraphDescriptionMap,
 			Map<java.util.Locale, String> openGraphImageAltMap,
-			long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
+			String openGraphImageFileEntryERC,
+			String openGraphImageFileEntryScopeERC,
+			boolean openGraphTitleEnabled,
 			Map<java.util.Locale, String> openGraphTitleMap,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
@@ -88,8 +92,8 @@ public class LayoutSEOEntryServiceUtil {
 		return getService().updateLayoutSEOEntry(
 			groupId, privateLayout, layoutId, openGraphDescriptionEnabled,
 			openGraphDescriptionMap, openGraphImageAltMap,
-			openGraphImageFileEntryId, openGraphTitleEnabled, openGraphTitleMap,
-			serviceContext);
+			openGraphImageFileEntryERC, openGraphImageFileEntryScopeERC,
+			openGraphTitleEnabled, openGraphTitleMap, serviceContext);
 	}
 
 	public static LayoutSEOEntry updateLayoutSEOEntry(

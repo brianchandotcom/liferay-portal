@@ -181,7 +181,7 @@ export class ExportImportPage {
 		}
 
 		if (includePermissions) {
-			await this.exportPermissionsButton.click();
+			await this.exportPermissionsButton.check();
 		}
 
 		if (dateOptions?.endDate || dateOptions?.startDate) {

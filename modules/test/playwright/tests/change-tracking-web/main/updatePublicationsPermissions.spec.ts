@@ -183,7 +183,11 @@ test.describe('Enable customizable Permissions for Publication Owners and Roles'
 
 		await changeTrackingPage.goto();
 
-		await page.getByRole('button', {name: 'Actions'}).click();
+		const row = page.locator('.fds tbody tr').filter({
+			has: page.getByText(ctCollection.body.name),
+		});
+
+		await row.getByRole('button', {name: 'Actions'}).click();
 
 		await expect(page.getByRole('menuitem', {name: 'Edit'})).toBeHidden();
 

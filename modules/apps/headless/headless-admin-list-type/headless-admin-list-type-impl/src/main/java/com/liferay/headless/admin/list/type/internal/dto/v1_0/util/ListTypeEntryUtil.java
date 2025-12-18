@@ -6,12 +6,17 @@
 package com.liferay.headless.admin.list.type.internal.dto.v1_0.util;
 
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeEntry;
+import com.liferay.headless.admin.list.type.dto.v1_0.Status;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.rest.dto.v1_0.util.CreatorUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import jakarta.ws.rs.core.UriInfo;
@@ -67,6 +72,32 @@ public class ListTypeEntryUtil {
 				setName_i18n(
 					() -> LocalizedMapUtil.getI18nMap(
 						serviceBuilderListTypeEntry.getNameMap()));
+				setStatus(
+					() -> {
+						if (!FeatureFlagManagerUtil.isEnabled(
+								serviceBuilderListTypeEntry.getCompanyId(),
+								"LPD-35914")) {
+
+							return null;
+						}
+
+						return new Status() {
+							{
+								setCode(serviceBuilderListTypeEntry::getStatus);
+								setLabel(
+									() -> WorkflowConstants.getStatusLabel(
+										serviceBuilderListTypeEntry.
+											getStatus()));
+								setLabel_i18n(
+									() -> LanguageUtil.get(
+										LanguageResources.getResourceBundle(
+											locale),
+										WorkflowConstants.getStatusLabel(
+											serviceBuilderListTypeEntry.
+												getStatus())));
+							}
+						};
+					});
 				setSystem(serviceBuilderListTypeEntry::getSystem);
 				setType(serviceBuilderListTypeEntry::getType);
 			}

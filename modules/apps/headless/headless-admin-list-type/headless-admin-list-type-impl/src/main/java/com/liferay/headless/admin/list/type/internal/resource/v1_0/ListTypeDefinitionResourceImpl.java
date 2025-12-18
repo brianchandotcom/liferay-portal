@@ -8,6 +8,7 @@ package com.liferay.headless.admin.list.type.internal.resource.v1_0;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition;
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeEntry;
+import com.liferay.headless.admin.list.type.dto.v1_0.Status;
 import com.liferay.headless.admin.list.type.internal.dto.v1_0.util.ListTypeEntryUtil;
 import com.liferay.headless.admin.list.type.internal.odata.entity.v1_0.ListTypeDefinitionEntityModel;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeDefinitionResource;
@@ -20,6 +21,8 @@ import com.liferay.object.rest.dto.v1_0.util.CreatorUtil;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -34,6 +37,8 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
@@ -378,6 +383,34 @@ public class ListTypeDefinitionResourceImpl
 
 							return permissions.toArray(new Permission[0]);
 						}));
+				setStatus(
+					() -> {
+						if (!FeatureFlagManagerUtil.isEnabled(
+								serviceBuilderListTypeDefinition.getCompanyId(),
+								"LPD-35914")) {
+
+							return null;
+						}
+
+						return new Status() {
+							{
+								setCode(
+									serviceBuilderListTypeDefinition::
+										getStatus);
+								setLabel(
+									() -> WorkflowConstants.getStatusLabel(
+										serviceBuilderListTypeDefinition.
+											getStatus()));
+								setLabel_i18n(
+									() -> LanguageUtil.get(
+										LanguageResources.getResourceBundle(
+											locale),
+										WorkflowConstants.getStatusLabel(
+											serviceBuilderListTypeDefinition.
+												getStatus())));
+							}
+						};
+					});
 				setSystem(serviceBuilderListTypeDefinition::isSystem);
 			}
 		};

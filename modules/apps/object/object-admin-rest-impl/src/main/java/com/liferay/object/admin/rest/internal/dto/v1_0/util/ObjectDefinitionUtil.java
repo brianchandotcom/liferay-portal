@@ -200,7 +200,10 @@ public class ObjectDefinitionUtil {
 					serviceBuilderObjectDefinition::isEnableObjectEntryHistory);
 				setEnableObjectEntrySchedule(
 					() -> {
-						if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+						if (!FeatureFlagManagerUtil.isEnabled(
+								serviceBuilderObjectDefinition.getCompanyId(),
+								"LPD-17564")) {
+
 							return null;
 						}
 
@@ -221,7 +224,10 @@ public class ObjectDefinitionUtil {
 					});
 				setEnableObjectEntryVersioning(
 					() -> {
-						if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+						if (!FeatureFlagManagerUtil.isEnabled(
+								serviceBuilderObjectDefinition.getCompanyId(),
+								"LPD-17564")) {
+
 							return null;
 						}
 
@@ -390,7 +396,10 @@ public class ObjectDefinitionUtil {
 					});
 				setStorageType(
 					() -> {
-						if (!FeatureFlagManagerUtil.isEnabled("LPS-135430")) {
+						if (!FeatureFlagManagerUtil.isEnabled(
+								serviceBuilderObjectDefinition.getCompanyId(),
+								"LPS-135430")) {
+
 							return null;
 						}
 
@@ -413,7 +422,10 @@ public class ObjectDefinitionUtil {
 					});
 				setWorkflowDefinitionLinks(
 					() -> {
-						if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+						if (!FeatureFlagManagerUtil.isEnabled(
+								serviceBuilderObjectDefinition.getCompanyId(),
+								"LPD-17564")) {
+
 							return null;
 						}
 

@@ -7,7 +7,10 @@ package com.liferay.friendly.url.service.impl;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.batch.engine.thread.local.BatchEngineThreadLocal;
+import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
 import com.liferay.friendly.url.exception.FriendlyURLCategoryException;
 import com.liferay.friendly.url.exception.FriendlyURLLengthException;
@@ -26,6 +29,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -36,6 +41,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -140,7 +147,10 @@ public class FriendlyURLEntryLocalServiceImpl
 		friendlyURLEntry.setClassNameId(classNameId);
 		friendlyURLEntry.setClassPK(classPK);
 
-		if (!ExportImportThreadLocal.isImportInProcess()) {
+		if ((BatchEngineThreadLocal.isBatchImportInProcess() &&
+			 _isBatchPortletDataHandler(classNameId, group.getCompanyId())) ||
+			!ExportImportThreadLocal.isImportInProcess()) {
+
 			friendlyURLEntryMapping.setFriendlyURLEntryId(friendlyURLEntryId);
 
 			_friendlyURLEntryMappingPersistence.update(friendlyURLEntryMapping);
@@ -757,6 +767,27 @@ public class FriendlyURLEntryLocalServiceImpl
 		return false;
 	}
 
+	private boolean _isBatchPortletDataHandler(
+		long classNameId, long companyId) {
+
+		String className = _portal.fetchClassName(classNameId);
+
+		String[] classNames = StringUtil.split(
+			className, ResourceActionsUtil.getCompositeModelNameSeparator());
+
+		Portlet portlet = _exportImportHelper.getDataSiteLevelPortlet(
+			classNames[0], companyId, true);
+
+		if (portlet == null) {
+			return false;
+		}
+
+		PortletDataHandler portletDataHandlerInstance =
+			portlet.getPortletDataHandlerInstance();
+
+		return portletDataHandlerInstance.isBatch();
+	}
+
 	private Map<String, String> _merge(
 		Map<String, String> masterMap, Map<String, String> copyMap) {
 
@@ -906,6 +937,9 @@ public class FriendlyURLEntryLocalServiceImpl
 	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
+	private ExportImportHelper _exportImportHelper;
+
+	@Reference
 	private FriendlyURLEntryMappingPersistence
 		_friendlyURLEntryMappingPersistence;
 
@@ -917,5 +951,8 @@ public class FriendlyURLEntryLocalServiceImpl
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -2176,6 +2176,11 @@
 					"title": "Terms of Use Web Content Article ID",
 					"type": "string"
 				},
+				"updateStructureArticlesAsynchronously": {
+					"default": false,
+					"title": "Update Structure Articles Asynchronously",
+					"type": "boolean"
+				},
 				"versionHistoryByDefaultEnabled": {
 					"default": true,
 					"description": "Set this to false if only the latest approved version of web content articles should be published by default.",

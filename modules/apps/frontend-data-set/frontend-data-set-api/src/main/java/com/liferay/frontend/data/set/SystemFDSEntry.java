@@ -46,6 +46,10 @@ public interface SystemFDSEntry {
 
 	public String getRESTSchema();
 
+	public default boolean getSnapshotsEnabled() {
+		return false;
+	}
+
 	public default String getSymbol() {
 		return "dynamic-data-list";
 	}

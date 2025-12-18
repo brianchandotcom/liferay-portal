@@ -124,7 +124,8 @@ public class FDSRendererImpl implements FDSRenderer {
 				snapshotsEnabled = false;
 			}
 			else {
-				snapshotsEnabled = (boolean)props.get("snapshotsEnabled");
+				snapshotsEnabled = fdsSerializer.serializeSnapshotsEnabled(
+					fdsName, httpServletRequest);
 			}
 
 			props.putAll(

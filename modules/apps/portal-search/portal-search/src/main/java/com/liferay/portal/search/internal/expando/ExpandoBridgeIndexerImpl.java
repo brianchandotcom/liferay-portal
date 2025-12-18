@@ -312,10 +312,6 @@ public class ExpandoBridgeIndexerImpl implements ExpandoBridgeIndexer {
 
 		Map<Long, Map<String, List<ExpandoColumn>>> expandoColumnsMaps =
 			ReindexCacheThreadLocal.getGlobalReindexCache(
-
-			// Skip size check because there are only a limited number of
-			// ExpandoTable
-
 			() -> -1, ExpandoBridgeIndexerImpl.class.getName(),
 			count -> {
 				List<ExpandoColumn> expandoColumns = new ArrayList<>();

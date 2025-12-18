@@ -239,10 +239,6 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 	public boolean isHidden(long repositoryId) throws PortalException {
 		Set<Long> hiddenRepositoryIds =
 			ReindexCacheThreadLocal.getGlobalReindexCache(
-
-				// Skip size check because there are only a limited number of
-				// hidden repositories
-
 				() -> -1, RepositoryLocalServiceImpl.class.getName(),
 				count ->
 

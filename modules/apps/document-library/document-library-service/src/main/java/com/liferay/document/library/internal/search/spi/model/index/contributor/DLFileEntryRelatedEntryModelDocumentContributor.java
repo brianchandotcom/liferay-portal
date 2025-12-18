@@ -67,10 +67,6 @@ public class DLFileEntryRelatedEntryModelDocumentContributor
 	private long[] _getMBMessageValues(long dlFolderId) {
 		Map<Long, long[]> mbMessageValuesMap =
 			ReindexCacheThreadLocal.getGlobalReindexCache(
-
-				// Skip size check because there are only a limited usage of
-				// using DLFolder name to reference MBMessage messageId
-
 				() -> -1,
 				DLFileEntryRelatedEntryModelDocumentContributor.class.getName(),
 				count -> {

@@ -62,10 +62,6 @@ public class ObjectFieldModelDocumentContributor
 	private boolean _isUnique(long objectFieldId) {
 		Set<Long> uniqueObjectFieldIds =
 			ReindexCacheThreadLocal.getGlobalReindexCache(
-
-				// Skip size check because there are only a limited number of
-				// unique object field settings
-
 				() -> -1,
 				ObjectFieldModelDocumentContributor.class.getName(),
 				count -> new HashSet<>(

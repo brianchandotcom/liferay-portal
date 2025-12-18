@@ -164,7 +164,7 @@ const GalleryView = ({
 					symbol="angle-left"
 				/>
 
-				<div className="align-items-center c-gap-3 d-flex fds-gallery-view__thumbnails flex-grow-1 justify-content-center">
+				<div className="c-gap-3 d-flex fds-gallery-view__thumbnails flex-grow-1">
 					{visibleItems.map((item, index) => {
 						const actualIndex = visibleStartIndex + index;
 						const classes = classNames(

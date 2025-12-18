@@ -126,12 +126,8 @@ public class ClusterGeneralTest implements Serializable {
 	}
 
 	@Test
-	public void testEnableAndDisableFeatureFlagOnMasterNode() throws Exception {
+	public void testEnableAndDisableFeatureFlag() throws Exception {
 		_testEnableAndDisableFeatureFlag(_tomcatNode1, _tomcatNode2);
-	}
-
-	@Test
-	public void testEnableAndDisableFeatureFlagOnSlaveNode() throws Exception {
 		_testEnableAndDisableFeatureFlag(_tomcatNode2, _tomcatNode1);
 	}
 

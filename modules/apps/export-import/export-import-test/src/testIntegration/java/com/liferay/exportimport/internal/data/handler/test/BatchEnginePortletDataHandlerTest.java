@@ -416,6 +416,34 @@ public class BatchEnginePortletDataHandlerTest {
 			},
 			imgTags, ObjectDefinitionConstants.SCOPE_COMPANY, companyGroup,
 			companyGroup);
+
+		// File Entries not existing before exporting: The URLs are not
+		// recalculated
+
+		_testExportImportObjectEntriesWithRichTextAndURLs(
+			() -> {
+				Assert.assertNull(
+					_dlAppLocalService.fetchFileEntry(
+						depotEntryFileEntry.getFileEntryId()));
+				Assert.assertNull(
+					_dlAppLocalService.fetchFileEntry(
+						globalGroupFileEntry.getFileEntryId()));
+				Assert.assertNull(
+					_dlAppLocalService.fetchFileEntry(
+						group1FileEntry.getFileEntryId()));
+				Assert.assertNull(
+					_dlAppLocalService.fetchFileEntry(
+						group2FileEntry.getFileEntryId()));
+			},
+			imgTags,
+			new ObjectValuePair[] {
+				new ObjectValuePair("", depotEntryFileEntry.getGroupId()),
+				new ObjectValuePair("", globalGroupFileEntry.getGroupId()),
+				new ObjectValuePair("", group1FileEntry.getGroupId()),
+				new ObjectValuePair("", group2FileEntry.getGroupId())
+			},
+			imgTags, ObjectDefinitionConstants.SCOPE_COMPANY, companyGroup,
+			companyGroup);
 	}
 
 	@Test
@@ -497,6 +525,36 @@ public class BatchEnginePortletDataHandlerTest {
 				new ObjectValuePair<>(
 					sourceDepotEntryFileEntry.getExternalReferenceCode(),
 					targetDepotEntry.getGroupId())
+			},
+			expectedImgTags, ObjectDefinitionConstants.SCOPE_DEPOT,
+			sourceDepotEntry.getGroup(), targetDepotEntry.getGroup());
+
+		// File Entries not existing before exporting: The URL of the File Entry
+		// from the exported and imported depot group is recalculated, the rest
+		// are not
+
+		_testExportImportObjectEntriesWithRichTextAndURLs(
+			() -> {
+				Assert.assertNull(
+					_dlAppLocalService.fetchFileEntry(
+						globalGroupFileEntry.getFileEntryId()));
+				Assert.assertNull(
+					_dlAppLocalService.fetchFileEntry(
+						groupFileEntry.getFileEntryId()));
+				Assert.assertNull(
+					_dlAppLocalService.fetchFileEntry(
+						otherDepotEntryFileEntry.getFileEntryId()));
+				Assert.assertNull(
+					_dlAppLocalService.fetchFileEntry(
+						sourceDepotEntryFileEntry.getFileEntryId()));
+			},
+			currentImgTags,
+			new ObjectValuePair[] {
+				new ObjectValuePair<>("", globalGroupFileEntry.getGroupId()),
+				new ObjectValuePair<>("", groupFileEntry.getGroupId()),
+				new ObjectValuePair<>(
+					"", otherDepotEntryFileEntry.getGroupId()),
+				new ObjectValuePair<>("", targetDepotEntry.getGroupId())
 			},
 			expectedImgTags, ObjectDefinitionConstants.SCOPE_DEPOT,
 			sourceDepotEntry.getGroup(), targetDepotEntry.getGroup());
@@ -851,6 +909,34 @@ public class BatchEnginePortletDataHandlerTest {
 				new ObjectValuePair<>(
 					sourceGroupFileEntry.getExternalReferenceCode(),
 					targetGroup.getGroupId())
+			},
+			expectedImgTags, ObjectDefinitionConstants.SCOPE_SITE, sourceGroup,
+			targetGroup);
+
+		// File Entries not existing before exporting: The URL of the File Entry
+		// from the exported and imported site is recalculated, the rest are not
+
+		_testExportImportObjectEntriesWithRichTextAndURLs(
+			() -> {
+				Assert.assertNull(
+					_dlAppLocalService.fetchFileEntry(
+						depotEntryFileEntry.getFileEntryId()));
+				Assert.assertNull(
+					_dlAppLocalService.fetchFileEntry(
+						globalGroupFileEntry.getFileEntryId()));
+				Assert.assertNull(
+					_dlAppLocalService.fetchFileEntry(
+						otherGroupFileEntry.getFileEntryId()));
+				Assert.assertNull(
+					_dlAppLocalService.fetchFileEntry(
+						sourceGroupFileEntry.getFileEntryId()));
+			},
+			currentImgTags,
+			new ObjectValuePair[] {
+				new ObjectValuePair<>("", depotEntryFileEntry.getGroupId()),
+				new ObjectValuePair<>("", globalGroupFileEntry.getGroupId()),
+				new ObjectValuePair<>("", otherGroupFileEntry.getGroupId()),
+				new ObjectValuePair<>("", targetGroup.getGroupId())
 			},
 			expectedImgTags, ObjectDefinitionConstants.SCOPE_SITE, sourceGroup,
 			targetGroup);

@@ -11,12 +11,10 @@ import {
 	ScreenReaderAnnouncerContext,
 	isNullOrUndefined,
 } from '@liferay/layout-js-components-web';
-import {CodeEditor} from '@liferay/object-js-components-web';
 import React, {useContext, useId, useMemo} from 'react';
 import {flushSync} from 'react-dom';
 import {v4 as uuidv4} from 'uuid';
 
-import {config} from '../../../app/config';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {useSelector} from '../../../app/contexts/StoreContext';
 import selectLayoutDataItemLabel from '../../../app/selectors/selectLayoutDataItemLabel';
@@ -25,6 +23,7 @@ import {isLayoutDataItemDeleted} from '../../../app/utils/isLayoutDataItemDelete
 import {PopoverTooltip} from '../../../common/components/PopoverTooltip';
 import {Action, Condition} from '../../../types/Rule';
 import ActionComponent from './Action';
+import AdvancedRuleEditor from './AdvancedRuleEditor';
 import ConditionComponent from './Condition';
 
 const TriggerLabel = React.forwardRef<HTMLButtonElement, any>(
@@ -495,12 +494,10 @@ export function RuleBuilderConditionSection({
 						</ClayButton>
 					</>
 				) : (
-					<CodeEditor
-						error=""
+					<AdvancedRuleEditor
 						onChange={(value: string | undefined) => {
 							setRuleConditions({script: value || ''});
 						}}
-						sidebarElements={config.codeEditorSidebarPanels}
 						value={script}
 					/>
 				)}

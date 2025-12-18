@@ -62,7 +62,15 @@ public class PortletPreferencesPostUpgradeDataCleanupProcess
 			return;
 		}
 
-		if (!DBUpgrader.isUpgradeClient()) {
+		if (DBUpgrader.isUpgradeClient()) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Orphan Portlet table entries and portletId references " +
+						"in PortletPreferences table are not checked when " +
+							"executing the Database Upgrade Tool");
+			}
+		}
+		else {
 			Set<String> portletIds = new HashSet<>();
 
 			for (Portlet portlet : PortletLocalServiceUtil.getPortlets()) {
@@ -109,12 +117,6 @@ public class PortletPreferencesPostUpgradeDataCleanupProcess
 				new PortletPreferencesDataCleanupPreupgradeProcess();
 
 			upgradeProcess.upgrade();
-		}
-
-		if (DBUpgrader.isUpgradeClient() && _log.isInfoEnabled()) {
-			_log.info(
-				"PortletPreferencesPostUpgradeDataCleanupProcess has not " +
-					"been fully executed");
 		}
 	}
 

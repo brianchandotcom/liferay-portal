@@ -589,18 +589,18 @@ export function updatePagesOnFieldChange(
 		repeatableHandler,
 	}
 ) {
-	const newName = newFocusedField.fieldName;
-	const oldName = focusedField.fieldName;
-
 	const visitor = new PagesVisitor(pages);
 
 	return visitor.mapFields(
 		(field) => {
-			if (field.fieldName === oldName) {
+			if (field.fieldName === focusedField.fieldName) {
 				return newFocusedField;
 			}
 
-			if (propertyName === 'name' && oldName !== newName) {
+			if (
+				propertyName === 'name' &&
+				focusedField.fieldName !== newFocusedField.fieldName
+			) {
 				if (field.type === FIELD_TYPE_FIELDSET && field.rows) {
 					const rowsPages = [
 						{
@@ -613,14 +613,24 @@ export function updatePagesOnFieldChange(
 
 					const rowsVisitor = new PagesVisitor(rowsPages);
 
+					let updateColumn = false;
+
 					const updatedPages = rowsVisitor.mapColumns((column) => ({
 						...column,
-						fields: column.fields.map((nestedFieldName) =>
-							nestedFieldName === oldName
-								? newName
-								: nestedFieldName
-						),
+						fields: column.fields.map((nestedFieldName) => {
+							if (nestedFieldName === focusedField.fieldName) {
+								updateColumn = true;
+
+								return newFocusedField.fieldName;
+							}
+
+							return nestedFieldName;
+						}),
 					}));
+
+					if (!updateColumn) {
+						return field;
+					}
 
 					field = updateField(
 						fieldUpdateContext,

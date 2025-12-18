@@ -8,6 +8,7 @@ package com.liferay.exportimport.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -20,6 +21,8 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.test.util.TestUserIdStrategy;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -31,6 +34,7 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.repository.capabilities.ThumbnailCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -40,6 +44,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
@@ -51,8 +56,11 @@ import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import jakarta.portlet.GenericPortlet;
+
 import java.io.InputStream;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,6 +72,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Zsolt Berentey
@@ -105,6 +118,98 @@ public class ExportImportHelperUtilTest {
 			}
 
 			previousRank = actualRank;
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-74703")
+	public void testDataSiteLevelPortlet() throws Exception {
+		Bundle bundle = FrameworkUtil.getBundle(
+			ExportImportHelperUtilTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		long companyId1 = RandomTestUtil.randomLong();
+		long companyId2 = RandomTestUtil.randomLong();
+
+		String className = RandomTestUtil.randomString();
+
+		BasePortletDataHandler portletDataHandler1 = new TestPortletDataHandler(
+			new String[] {className}, true, DataLevel.SITE);
+		BasePortletDataHandler portletDataHandler2 = new TestPortletDataHandler(
+			new String[] {className}, false, DataLevel.SITE);
+
+		String portletId1 = RandomTestUtil.randomString();
+		String portletId2 = RandomTestUtil.randomString();
+
+		try (SafeCloseable safeCloseable1 = _registerWithSafeCloseable(
+				bundleContext, List.of(companyId1), portletDataHandler1,
+				portletId1);
+			SafeCloseable safeCloseable2 = _registerWithSafeCloseable(
+				bundleContext, List.of(companyId1),
+				new TestPortletDataHandler(
+					new String[] {RandomTestUtil.randomString()}, true,
+					DataLevel.SITE),
+				RandomTestUtil.randomString());
+			SafeCloseable safeCloseable3 = _registerWithSafeCloseable(
+				bundleContext, List.of(companyId2, RandomTestUtil.randomLong()),
+				portletDataHandler2, portletId2);
+			SafeCloseable safeCloseable4 = _registerWithSafeCloseable(
+				bundleContext, List.of(companyId2, RandomTestUtil.randomLong()),
+				new TestPortletDataHandler(
+					new String[] {className}, true, DataLevel.SITE),
+				RandomTestUtil.randomString());
+			SafeCloseable safeCloseable5 = _registerWithSafeCloseable(
+				bundleContext, List.of(companyId2, RandomTestUtil.randomLong()),
+				new TestPortletDataHandler(
+					new String[] {className}, false, DataLevel.SITE),
+				RandomTestUtil.randomString());
+			SafeCloseable safeCloseable6 = _registerWithSafeCloseable(
+				bundleContext, List.of(companyId2, RandomTestUtil.randomLong()),
+				new TestPortletDataHandler(
+					new String[] {className}, true, DataLevel.SITE),
+				RandomTestUtil.randomString());
+			SafeCloseable safeCloseable7 = _registerWithSafeCloseable(
+				bundleContext, List.of(companyId2, RandomTestUtil.randomLong()),
+				new TestPortletDataHandler(null, false, DataLevel.SITE),
+				RandomTestUtil.randomString());
+			SafeCloseable safeCloseable8 = _registerWithSafeCloseable(
+				bundleContext, List.of(companyId2),
+				new TestPortletDataHandler(
+					new String[] {className}, false,
+					DataLevel.PORTLET_INSTANCE),
+				RandomTestUtil.randomString());
+			SafeCloseable safeCloseable9 = _registerWithSafeCloseable(
+				bundleContext, List.of(companyId2),
+				new TestPortletDataHandler(
+					new String[] {RandomTestUtil.randomString()}, false,
+					DataLevel.SITE),
+				RandomTestUtil.randomString());
+			SafeCloseable safeCloseable10 = _registerWithSafeCloseable(
+				bundleContext,
+				List.of(companyId1, RandomTestUtil.randomLong(), companyId2),
+				null, RandomTestUtil.randomString())) {
+
+			Portlet portlet = ExportImportHelperUtil.getDataSiteLevelPortlet(
+				className, companyId1, false);
+
+			Assert.assertEquals(portletId1, portlet.getRootPortletId());
+			Assert.assertEquals(
+				portletDataHandler1, portlet.getPortletDataHandlerInstance());
+
+			portlet = ExportImportHelperUtil.getDataSiteLevelPortlet(
+				className, companyId2, true);
+
+			Assert.assertEquals(portletId2, portlet.getRootPortletId());
+			Assert.assertEquals(
+				portletDataHandler2, portlet.getPortletDataHandlerInstance());
+
+			Assert.assertNull(
+				ExportImportHelperUtil.getDataSiteLevelPortlet(
+					RandomTestUtil.randomString(), companyId1, false));
+			Assert.assertNull(
+				ExportImportHelperUtil.getDataSiteLevelPortlet(
+					RandomTestUtil.randomString(), companyId2, true));
 		}
 	}
 
@@ -970,6 +1075,43 @@ public class ExportImportHelperUtilTest {
 			portletUserPreferences, actualPortletUserPreferences);
 	}
 
+	private SafeCloseable _registerWithSafeCloseable(
+		BundleContext bundleContext, List<Long> companyIds,
+		PortletDataHandler portletDataHandler, String portletId) {
+
+		List<ServiceRegistration<?>> serviceRegistrations = new ArrayList<>();
+
+		serviceRegistrations.add(
+			bundleContext.registerService(
+				jakarta.portlet.Portlet.class,
+				new GenericPortlet() {
+				},
+				HashMapDictionaryBuilder.<String, Object>put(
+					"jakarta.portlet.name", portletId
+				).build()));
+
+		if (portletDataHandler != null) {
+			serviceRegistrations.add(
+				bundleContext.registerService(
+					PortletDataHandler.class, portletDataHandler,
+					HashMapDictionaryBuilder.<String, Object>put(
+						"companyId",
+						() -> TransformUtil.transform(
+							companyIds, String::valueOf)
+					).put(
+						"jakarta.portlet.name", portletId
+					).build()));
+		}
+
+		return () -> {
+			for (ServiceRegistration<?> serviceRegistration :
+					serviceRegistrations) {
+
+				serviceRegistration.unregister();
+			}
+		};
+	}
+
 	@DeleteAfterTestRun
 	private Group _liveGroup;
 
@@ -981,6 +1123,27 @@ public class ExportImportHelperUtilTest {
 
 	@Inject
 	private ZipWriterFactory _zipWriterFactory;
+
+	private static class TestPortletDataHandler extends BasePortletDataHandler {
+
+		@Override
+		public String[] getClassNames() {
+			return _classNames;
+		}
+
+		private TestPortletDataHandler(
+			String[] classNames, boolean dataAlwaysStaged,
+			DataLevel dataLevel) {
+
+			_classNames = classNames;
+
+			setDataAlwaysStaged(dataAlwaysStaged);
+			setDataLevel(dataLevel);
+		}
+
+		private final String[] _classNames;
+
+	}
 
 	private class ExportImportTestParameterMapBuilder {
 

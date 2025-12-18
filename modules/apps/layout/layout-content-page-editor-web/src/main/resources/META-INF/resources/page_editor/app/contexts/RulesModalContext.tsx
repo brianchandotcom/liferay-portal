@@ -16,6 +16,7 @@ import React, {
 import {v4 as uuidv4} from 'uuid';
 
 import {AdvancedRule, BasicRule, Rule} from '../../types/Rule';
+import {useSelectItem} from '../js-index';
 import selectPageRules from '../selectors/selectPageRules';
 import {useSelector} from './StoreContext';
 
@@ -71,6 +72,8 @@ function useRulesModal() {
 
 	const rules = useSelector(selectPageRules);
 
+	const selectItem = useSelectItem();
+
 	const openRulesModal = useCallback(
 		({
 			rule,
@@ -105,8 +108,10 @@ function useRulesModal() {
 			}
 
 			setVisible(true);
+
+			selectItem(null);
 		},
-		[setEditingRule, setTrigger, setVisible]
+		[setEditingRule, setTrigger, setVisible, selectItem]
 	);
 
 	const closeRulesModal = useCallback(() => {

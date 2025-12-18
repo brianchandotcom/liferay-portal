@@ -599,7 +599,7 @@ definition {
 			PagesAdmin.enablePrivatePages();
 		}
 
-		task ("Add a public page and change it's theme to Minium") {
+		task ("Add a public page and change it's theme to Dialect") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Public Page");
@@ -608,25 +608,15 @@ definition {
 
 			PagesAdmin.changeSiteCurrentTheme(
 				privacy = "Public Pages",
-				themeName = "Minium");
-		}
-
-		task ("Add a private page and change it's theme to Speedwell") {
-			JSONLayout.addPrivateLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Private Page");
-
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
-
-			PagesAdmin.changeSiteCurrentTheme(
-				privacy = "Private Pages",
-				themeName = "Speedwell");
+				themeName = "Dialect");
 		}
 
 		task ("Add a style book") {
 			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
 
-			StyleBooksAdmin.addStyleBooks(styleBookName = "Test Style Book Name");
+			StyleBooksAdmin.addStyleBooks(
+				styleBookName = "Test Style Book Name",
+				themeName = "Dialect Theme");
 		}
 
 		task ("Add a custom master page") {
@@ -635,7 +625,7 @@ definition {
 				masterPageTemplateEntryName = "Custom Masters Page Template");
 		}
 
-		task ("Change master page's theme to Minium") {
+		task ("Change master page's theme to Dialect") {
 			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
@@ -646,7 +636,7 @@ definition {
 
 			Theme.configureLookAndFeelSpecificLook();
 
-			Theme.changeCurrentTheme(themeName = "Minium");
+			Theme.changeCurrentTheme(themeName = "Dialect");
 
 			PortletEntry.save();
 

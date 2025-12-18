@@ -7,10 +7,12 @@ package com.liferay.change.tracking.web.internal.display.context;
 
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -185,16 +187,22 @@ public class DisplayContextUtil {
 
 		JSONObject userInfoJSONObject = JSONFactoryUtil.createJSONObject();
 
-		List<User> users = userLocalService.dslQuery(
-			DSLQueryFactoryUtil.selectDistinct(
-				UserTable.INSTANCE
-			).from(
-				UserTable.INSTANCE
-			).innerJoinON(
-				innerJoinTable, innerJoinPredicate
-			).where(
-				wherePredicate
-			));
+		List<User> users;
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
+
+			users = userLocalService.dslQuery(
+				DSLQueryFactoryUtil.selectDistinct(
+					UserTable.INSTANCE
+				).from(
+					UserTable.INSTANCE
+				).innerJoinON(
+					innerJoinTable, innerJoinPredicate
+				).where(
+					wherePredicate
+				));
+		}
 
 		for (User user : users) {
 			String portraitURL = StringPool.BLANK;

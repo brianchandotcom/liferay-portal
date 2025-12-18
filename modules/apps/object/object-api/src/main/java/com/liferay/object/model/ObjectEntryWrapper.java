@@ -358,6 +358,11 @@ public class ObjectEntryWrapper
 		return model.getNonzeroGroupId();
 	}
 
+	@Override
+	public ObjectDefinition getObjectDefinition() {
+		return model.getObjectDefinition();
+	}
+
 	/**
 	 * Returns the object definition ID of this object entry.
 	 *
@@ -794,6 +799,11 @@ public class ObjectEntryWrapper
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		model.setMvccVersion(mvccVersion);
+	}
+
+	@Override
+	public void setObjectDefinition(ObjectDefinition objectDefinition) {
+		model.setObjectDefinition(objectDefinition);
 	}
 
 	/**

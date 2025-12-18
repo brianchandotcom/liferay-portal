@@ -194,7 +194,7 @@ const Solution = () => {
 		{analyticsProject: {groupId: ''}}
 	);
 
-	const analyticsGroupId = orderMetadata.analyticsProject.groupId;
+	const analyticsGroupId = orderMetadata.analyticsProject?.groupId;
 
 	const getOrderDetails = () => {
 		if (

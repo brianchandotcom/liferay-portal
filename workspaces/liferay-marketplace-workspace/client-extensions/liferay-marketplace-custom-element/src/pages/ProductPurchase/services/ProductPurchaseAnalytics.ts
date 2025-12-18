@@ -37,18 +37,19 @@ export default class ProductPurchaseAnalytics extends ProductPurchase {
 			cartItems,
 			customFields: {
 				...baseCart?.customFields,
-				[OrderCustomFields.TRIAL_SETTINGS]: JSON.stringify({
+				[OrderCustomFields.ORDER_METADATA]: JSON.stringify({
 					analyticsForm: {
 						corpProjectName: this.form?.workspaceName,
 						corpProjectUuid: this.account.externalReferenceCode,
 						emailAddressDomains: this.form?.allowedEmailDomains,
 						friendlyURL: this.form?.friendlyWorkspaceURL
 							? `/${sanitizeStringForURL(this.form?.friendlyWorkspaceURL)}`
-							: 'TBD',
+							: '',
 						incidentReportEmailAddresses:
 							this.form?.incidentReportContacts,
 						name: this.form?.workspaceName,
 						ownerEmailAddress: this.form?.workspaceOwnerEmail,
+						serverLocation: this.form?.dataCenterLocation,
 					},
 					productKey,
 					productName,
@@ -59,14 +60,18 @@ export default class ProductPurchaseAnalytics extends ProductPurchase {
 	}
 
 	public async getNextStepsLink(cart: Cart) {
-		const callback = `${window.location.origin}${getSiteURL()}/next-steps?orderId=${cart.id}`;
+		if (this.account.type === 'business') {
+			const callback = `${window.location.origin}${getSiteURL()}/next-steps?orderId=${cart.id}`;
 
-		const url = await HeadlessCommerceDeliveryCart.getPaymentMethodURL(
-			cart.id,
-			callback
-		);
+			const url = await HeadlessCommerceDeliveryCart.getPaymentMethodURL(
+				cart.id,
+				callback
+			);
 
-		return url || callback;
+			return url || callback;
+		}
+
+		return super.getNextStepsLink(cart);
 	}
 
 	public async createOrder() {

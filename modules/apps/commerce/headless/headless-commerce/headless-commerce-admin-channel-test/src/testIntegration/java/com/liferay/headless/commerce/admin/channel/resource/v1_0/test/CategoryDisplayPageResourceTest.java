@@ -49,13 +49,14 @@ public class CategoryDisplayPageResourceTest
 
 		_user = UserTestUtil.addUser(testCompany);
 
-		_assetVocabulary = AssetTestUtil.addVocabulary(_user.getGroupId());
-
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
 			testGroup.getCompanyId());
 
 		_commerceChannel = CommerceTestUtil.addCommerceChannel(
 			testGroup.getGroupId(), _commerceCurrency.getCode());
+
+		_assetVocabulary = AssetTestUtil.addVocabulary(
+			_commerceChannel.getSiteGroupId());
 	}
 
 	@Override

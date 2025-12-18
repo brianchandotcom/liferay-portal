@@ -97,10 +97,8 @@ public class ClusterGeneralTest implements Serializable {
 
 	@Test
 	public void testCanCreateVirtualInstanceWithClustering() throws Exception {
-		_testCanCreateVirtualInstanceWithClustering(
-			_tomcatNode1, _tomcatNode2);
-		_testCanCreateVirtualInstanceWithClustering(
-			_tomcatNode2, _tomcatNode1);
+		_testCanCreateVirtualInstanceWithClustering(_tomcatNode1, _tomcatNode2);
+		_testCanCreateVirtualInstanceWithClustering(_tomcatNode2, _tomcatNode1);
 	}
 
 	@Test
@@ -231,52 +229,6 @@ public class ClusterGeneralTest implements Serializable {
 				throw new IOException(exception);
 			}
 		};
-	}
-
-	private void _testCanCreateVirtualInstanceWithClustering(
-			TomcatNode mutatorTomcatNode, TomcatNode observerTomcatNode)
-		throws Exception {
-
-		try (AutoCloseable autoCloseable1 =
-				_disableClusterableAdviceCallMasterTimeout(mutatorTomcatNode);
-			AutoCloseable autoCloseable2 =
-				_disableClusterableAdviceCallMasterTimeout(
-					observerTomcatNode)) {
-
-			long companyId = mutatorTomcatNode.syncExecute(
-				() -> {
-					Company company = CompanyTestUtil.addCompany();
-
-					return company.getCompanyId();
-				});
-
-			Assert.assertNotNull(
-				observerTomcatNode.syncExecute(
-					() -> CompanyLocalServiceUtil.fetchCompany(companyId)));
-
-			observerTomcatNode.syncExecute(
-				() -> {
-					TestPortalInstanceLifecycleListener.register(companyId);
-
-					return null;
-				});
-
-			Assert.assertNull(
-				mutatorTomcatNode.syncExecute(
-					() -> {
-						CompanyLocalServiceUtil.deleteCompany(companyId);
-
-						return CompanyLocalServiceUtil.fetchCompany(companyId);
-					}));
-
-			Assert.assertNull(
-				observerTomcatNode.syncExecute(
-					() -> {
-						TestPortalInstanceLifecycleListener.await();
-
-						return CompanyLocalServiceUtil.fetchCompany(companyId);
-					}));
-		}
 	}
 
 	private void _assertNodesVisibleToEachOther(
@@ -414,6 +366,51 @@ public class ClusterGeneralTest implements Serializable {
 		// Assert mutual visibility with the new restart node
 
 		_assertNodesVisibleToEachOther(restartTomcatNode, verifierTomcatNode);
+	}
+
+	private void _testCanCreateVirtualInstanceWithClustering(
+			TomcatNode mutatorTomcatNode, TomcatNode observerTomcatNode)
+		throws Exception {
+
+		try (AutoCloseable autoCloseable1 =
+				_disableClusterableAdviceCallMasterTimeout(mutatorTomcatNode);
+			AutoCloseable autoCloseable2 =
+				_disableClusterableAdviceCallMasterTimeout(
+					observerTomcatNode)) {
+
+			long companyId = mutatorTomcatNode.syncExecute(
+				() -> {
+					Company company = CompanyTestUtil.addCompany();
+
+					return company.getCompanyId();
+				});
+
+			Assert.assertNotNull(
+				observerTomcatNode.syncExecute(
+					() -> CompanyLocalServiceUtil.fetchCompany(companyId)));
+
+			observerTomcatNode.syncExecute(
+				() -> {
+					TestPortalInstanceLifecycleListener.register(companyId);
+
+					return null;
+				});
+
+			Assert.assertNull(
+				mutatorTomcatNode.syncExecute(
+					() -> {
+						CompanyLocalServiceUtil.deleteCompany(companyId);
+
+						return CompanyLocalServiceUtil.fetchCompany(companyId);
+					}));
+			Assert.assertNull(
+				observerTomcatNode.syncExecute(
+					() -> {
+						TestPortalInstanceLifecycleListener.await();
+
+						return CompanyLocalServiceUtil.fetchCompany(companyId);
+					}));
+		}
 	}
 
 	private void _testCanUpdateLogLevelsForAllNodes(

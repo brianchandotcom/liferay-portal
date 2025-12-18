@@ -78,8 +78,6 @@ definition {
 
 		PortletEntry.save();
 
-		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
-
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		AssertClick(
@@ -306,7 +304,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
 
@@ -347,7 +345,7 @@ definition {
 
 		PortletEntry.save();
 
-		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application 2");
 
@@ -436,13 +434,13 @@ definition {
 			dmDocumentTitle = "Document_1.odt",
 			dmFolderName = "Home");
 
-		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.odt");
 
 		DMDocument.viewCP(dmDocumentTitle = "Document_1.odt");
 
-		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
 
@@ -484,7 +482,7 @@ definition {
 			dmDocumentFile = "Document_4.txt",
 			dmDocumentTitle = "Document_4.txt");
 
-		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		Search.searchCP(searchTerm = "Document_4.txt");
 
@@ -667,7 +665,7 @@ definition {
 			dmDocumentFile = "Document_3.odt",
 			dmDocumentTitle = "Document_3.odt");
 
-		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		Search.searchCP(searchTerm = "Document_3.odt");
 

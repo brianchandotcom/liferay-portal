@@ -76,8 +76,6 @@ definition {
 
 		PortletEntry.save();
 
-		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
-
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		AssertClick(

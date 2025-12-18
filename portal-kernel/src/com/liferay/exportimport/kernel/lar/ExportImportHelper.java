@@ -45,6 +45,9 @@ public interface ExportImportHelper {
 			long companyId, boolean excludeDataAlwaysStaged)
 		throws Exception;
 
+	public Portlet getDataSiteLevelPortlet(
+		String className, long companyId, boolean excludeDataAlwaysStaged);
+
 	public List<Portlet> getDataSiteLevelPortlets(long companyId)
 		throws Exception;
 

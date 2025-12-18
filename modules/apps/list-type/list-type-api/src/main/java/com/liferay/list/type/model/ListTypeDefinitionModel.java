@@ -337,6 +337,20 @@ public interface ListTypeDefinitionModel
 	 */
 	public void setSystem(boolean system);
 
+	/**
+	 * Returns the status of this list type definition.
+	 *
+	 * @return the status of this list type definition
+	 */
+	public int getStatus();
+
+	/**
+	 * Sets the status of this list type definition.
+	 *
+	 * @param status the status of this list type definition
+	 */
+	public void setStatus(int status);
+
 	@Override
 	public String[] getAvailableLanguageIds();
 

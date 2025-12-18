@@ -49,15 +49,6 @@ public class ListTypeDefinitionLocalServiceWrapper
 
 	@Override
 	public com.liferay.list.type.model.ListTypeDefinition addListTypeDefinition(
-			String externalReferenceCode, long userId, boolean system)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _listTypeDefinitionLocalService.addListTypeDefinition(
-			externalReferenceCode, userId, system);
-	}
-
-	@Override
-	public com.liferay.list.type.model.ListTypeDefinition addListTypeDefinition(
 			String externalReferenceCode, long userId,
 			java.util.Map<java.util.Locale, String> nameMap, boolean system,
 			java.util.List<com.liferay.list.type.model.ListTypeEntry>
@@ -382,6 +373,17 @@ public class ListTypeDefinitionLocalServiceWrapper
 	@Override
 	public int getListTypeDefinitionsCount() {
 		return _listTypeDefinitionLocalService.getListTypeDefinitionsCount();
+	}
+
+	@Override
+	public com.liferay.list.type.model.ListTypeDefinition
+			getOrAddEmptyListTypeDefinition(
+				String externalReferenceCode, long companyId, long userId,
+				boolean system)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _listTypeDefinitionLocalService.getOrAddEmptyListTypeDefinition(
+			externalReferenceCode, companyId, userId, system);
 	}
 
 	/**

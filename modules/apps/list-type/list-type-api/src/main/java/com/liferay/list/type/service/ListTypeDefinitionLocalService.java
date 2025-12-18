@@ -77,11 +77,6 @@ public interface ListTypeDefinitionLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public ListTypeDefinition addListTypeDefinition(
-			String externalReferenceCode, long userId, boolean system)
-		throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public ListTypeDefinition addListTypeDefinition(
 			String externalReferenceCode, long userId,
 			Map<Locale, String> nameMap, boolean system,
 			List<ListTypeEntry> listTypeEntries, ServiceContext serviceContext)
@@ -294,6 +289,13 @@ public interface ListTypeDefinitionLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getListTypeDefinitionsCount();
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ListTypeDefinition getOrAddEmptyListTypeDefinition(
+			String externalReferenceCode, long companyId, long userId,
+			boolean system)
+		throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.

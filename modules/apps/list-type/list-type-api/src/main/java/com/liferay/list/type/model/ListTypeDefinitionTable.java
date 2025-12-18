@@ -55,6 +55,8 @@ public class ListTypeDefinitionTable
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ListTypeDefinitionTable, Boolean> system = createColumn(
 		"system_", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
+	public final Column<ListTypeDefinitionTable, Integer> status = createColumn(
+		"status", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 
 	private ListTypeDefinitionTable() {
 		super("ListTypeDefinition", ListTypeDefinitionTable::new);

@@ -77,7 +77,8 @@ public class ListTypeDefinitionModelImpl
 		{"listTypeDefinitionId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"name", Types.VARCHAR}, {"system_", Types.BOOLEAN}
+		{"name", Types.VARCHAR}, {"system_", Types.BOOLEAN},
+		{"status", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -95,10 +96,11 @@ public class ListTypeDefinitionModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("system_", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ListTypeDefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,listTypeDefinitionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,system_ BOOLEAN)";
+		"create table ListTypeDefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,listTypeDefinitionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,system_ BOOLEAN,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table ListTypeDefinition";
 
@@ -280,6 +282,8 @@ public class ListTypeDefinitionModelImpl
 			attributeGetterFunctions.put("name", ListTypeDefinition::getName);
 			attributeGetterFunctions.put(
 				"system", ListTypeDefinition::getSystem);
+			attributeGetterFunctions.put(
+				"status", ListTypeDefinition::getStatus);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
 				attributeGetterFunctions);
@@ -342,6 +346,10 @@ public class ListTypeDefinitionModelImpl
 				"system",
 				(BiConsumer<ListTypeDefinition, Boolean>)
 					ListTypeDefinition::setSystem);
+			attributeSetterBiConsumers.put(
+				"status",
+				(BiConsumer<ListTypeDefinition, Integer>)
+					ListTypeDefinition::setStatus);
 
 			_attributeSetterBiConsumers = Collections.unmodifiableMap(
 				(Map)attributeSetterBiConsumers);
@@ -686,6 +694,21 @@ public class ListTypeDefinitionModelImpl
 		_system = system;
 	}
 
+	@JSON
+	@Override
+	public int getStatus() {
+		return _status;
+	}
+
+	@Override
+	public void setStatus(int status) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_status = status;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
@@ -829,6 +852,7 @@ public class ListTypeDefinitionModelImpl
 		listTypeDefinitionImpl.setModifiedDate(getModifiedDate());
 		listTypeDefinitionImpl.setName(getName());
 		listTypeDefinitionImpl.setSystem(isSystem());
+		listTypeDefinitionImpl.setStatus(getStatus());
 
 		listTypeDefinitionImpl.resetOriginalValues();
 
@@ -862,6 +886,8 @@ public class ListTypeDefinitionModelImpl
 			this.<String>getColumnOriginalValue("name"));
 		listTypeDefinitionImpl.setSystem(
 			this.<Boolean>getColumnOriginalValue("system_"));
+		listTypeDefinitionImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
 
 		return listTypeDefinitionImpl;
 	}
@@ -1005,6 +1031,8 @@ public class ListTypeDefinitionModelImpl
 
 		listTypeDefinitionCacheModel.system = isSystem();
 
+		listTypeDefinitionCacheModel.status = getStatus();
+
 		return listTypeDefinitionCacheModel;
 	}
 
@@ -1080,6 +1108,7 @@ public class ListTypeDefinitionModelImpl
 	private String _name;
 	private String _nameCurrentLanguageId;
 	private boolean _system;
+	private int _status;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1124,6 +1153,7 @@ public class ListTypeDefinitionModelImpl
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("system_", _system);
+		_columnOriginalValues.put("status", _status);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1169,6 +1199,8 @@ public class ListTypeDefinitionModelImpl
 		columnBitmasks.put("name", 512L);
 
 		columnBitmasks.put("system_", 1024L);
+
+		columnBitmasks.put("status", 2048L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

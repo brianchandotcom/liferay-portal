@@ -138,6 +138,8 @@ public class ListTypeDefinitionPersistenceTest {
 
 		newListTypeDefinition.setSystem(RandomTestUtil.randomBoolean());
 
+		newListTypeDefinition.setStatus(RandomTestUtil.nextInt());
+
 		_listTypeDefinitions.add(_persistence.update(newListTypeDefinition));
 
 		ListTypeDefinition existingListTypeDefinition =
@@ -178,6 +180,9 @@ public class ListTypeDefinitionPersistenceTest {
 		Assert.assertEquals(
 			existingListTypeDefinition.isSystem(),
 			newListTypeDefinition.isSystem());
+		Assert.assertEquals(
+			existingListTypeDefinition.getStatus(),
+			newListTypeDefinition.getStatus());
 	}
 
 	@Test(
@@ -266,7 +271,8 @@ public class ListTypeDefinitionPersistenceTest {
 			"ListTypeDefinition", "mvccVersion", true, "uuid", true,
 			"externalReferenceCode", true, "listTypeDefinitionId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "name", true, "system", true);
+			true, "modifiedDate", true, "name", true, "system", true, "status",
+			true);
 	}
 
 	@Test
@@ -582,6 +588,8 @@ public class ListTypeDefinitionPersistenceTest {
 		listTypeDefinition.setName(RandomTestUtil.randomString());
 
 		listTypeDefinition.setSystem(RandomTestUtil.randomBoolean());
+
+		listTypeDefinition.setStatus(RandomTestUtil.nextInt());
 
 		_listTypeDefinitions.add(_persistence.update(listTypeDefinition));
 

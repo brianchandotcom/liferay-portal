@@ -17,10 +17,12 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectFilterLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -77,10 +79,15 @@ public class ObjectFieldUtil {
 			return listTypeDefinition.getListTypeDefinitionId();
 		}
 
-		listTypeDefinition =
-			listTypeDefinitionLocalService.addListTypeDefinition(
-				objectField.getListTypeDefinitionExternalReferenceCode(),
-				userId, GetterUtil.getBoolean(objectField.getSystem()));
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			listTypeDefinition =
+				listTypeDefinitionLocalService.getOrAddEmptyListTypeDefinition(
+					objectField.getListTypeDefinitionExternalReferenceCode(),
+					companyId, userId,
+					GetterUtil.getBoolean(objectField.getSystem()));
+		}
 
 		Map<String, ListTypeEntry> listTypeEntries = new HashMap<>();
 

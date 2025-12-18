@@ -41,7 +41,9 @@ const ProductPurchaseNextSteps: React.FC<ProductPurchaseNextStepsProps> = ({
 }) => {
 	const {search} = useLocation();
 
-	const urlSearchParams = new URLSearchParams(search);
+	const urlSearchParams = new URLSearchParams(
+		search || window.location.search
+	);
 
 	const openDashboard = () =>
 		Liferay.Util.navigate(

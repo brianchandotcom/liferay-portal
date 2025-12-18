@@ -71,6 +71,7 @@ import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -1381,7 +1382,9 @@ public class ObjectEntryDTOConverter
 		return NestedFieldsSupplier.supply(
 			"comments",
 			nestedFieldNames -> {
-				if (!objectDefinition.isEnableComments() ||
+				if (!FeatureFlagManagerUtil.isEnabled(
+						objectDefinition.getCompanyId(), "LPD-69419") ||
+					!objectDefinition.isEnableComments() ||
 					!_discussionPermission.hasViewPermission(
 						PermissionThreadLocal.getPermissionChecker(),
 						objectDefinition.getCompanyId(),
@@ -1396,7 +1399,7 @@ public class ObjectEntryDTOConverter
 					_commentManager.getComments(
 						objectDefinition.getClassName(),
 						objectEntry.getObjectEntryId(),
-						WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+						WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 						QueryUtil.ALL_POS),
 					comment -> CommentUtil.toComment(
 						comment, _commentManager, PortalUtil.getPortal()),

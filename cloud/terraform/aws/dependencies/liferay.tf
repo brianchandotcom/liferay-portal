@@ -193,6 +193,27 @@ resource "kubernetes_secret" "managed_service_details" {
 	}
 	type="Opaque"
 }
+resource "kubernetes_storage_class" "gp3_storage_class" {
+	allowed_topologies {
+		match_label_expressions {
+			key="eks.amazonaws.com/compute-type"
+			values=[
+				"auto"
+			]
+		}
+	}
+	metadata {
+		annotations={
+			"storageclass.kubernetes.io/is-default-class"="true"
+		}
+		name="gp3"
+	}
+	parameters={
+		type="gp3"
+	}
+	storage_provisioner="ebs.csi.eks.amazonaws.com"
+	volume_binding_mode="Immediate"
+}
 resource "null_resource" "opensearch_service_role" {
 	provisioner "local-exec" {
 		command=<<-EOT

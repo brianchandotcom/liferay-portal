@@ -85,7 +85,7 @@ test('can export custom object entries at instance level with date filter', asyn
 
 	const exportFilePath1 =
 		await companyExportImportPage.exportImportPage.export({
-			itemLabels: ['Tests 1 Items'],
+			portletLabels: ['Tests 1 Items'],
 		});
 
 	const content1 = await readFileFromZip('C_Test.json', exportFilePath1);
@@ -106,13 +106,13 @@ test('can export custom object entries at instance level with date filter', asyn
 
 	const exportFilePath2 =
 		await companyExportImportPage.exportImportPage.export({
-			dateOptions: {
+			dateFilter: {
 				endDate: toDateRangeDate(endDate),
 				endTime: toDateRangeTime(endDate),
 				startDate: toDateRangeDate(startDate),
 				startTime: toDateRangeTime(startDate),
 			},
-			itemLabels: ['Tests 1 Items'],
+			portletLabels: ['Tests 1 Items'],
 		});
 
 	const content2 = await readFileFromZip('C_Test.json', exportFilePath2);
@@ -125,8 +125,8 @@ test('can export custom object entries at instance level with date filter', asyn
 
 	const exportFilePath3 =
 		await companyExportImportPage.exportImportPage.export({
-			dateOptions: {rangeLast: '12 Hours'},
-			itemLabels: ['Tests 1 Items'],
+			dateFilter: {rangeLast: '12 Hours'},
+			portletLabels: ['Tests 1 Items'],
 		});
 
 	const content3 = await readFileFromZip('C_Test.json', exportFilePath3);
@@ -159,7 +159,7 @@ test('can export new default and custom task name', async ({
 
 	const defaultExportFilePath =
 		await companyExportImportPage.exportImportPage.export({
-			itemLabels: ['Tests 1 Items'],
+			portletLabels: ['Tests 1 Items'],
 		});
 
 	expect(defaultExportFilePath).toMatch(
@@ -172,7 +172,7 @@ test('can export new default and custom task name', async ({
 
 	const customExportFilePath =
 		await companyExportImportPage.exportImportPage.export({
-			itemLabels: ['Tests 1 Items'],
+			portletLabels: ['Tests 1 Items'],
 			taskName,
 		});
 
@@ -205,7 +205,7 @@ test('can export custom object entries at instance level with permissions', asyn
 	const exportFilePath =
 		await companyExportImportPage.exportImportPage.export({
 			includePermissions: true,
-			itemLabels: ['Tests 1 Items'],
+			portletLabels: ['Tests 1 Items'],
 		});
 
 	const content = await readFileFromZip('C_Test.json', exportFilePath);

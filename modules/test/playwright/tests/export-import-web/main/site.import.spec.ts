@@ -125,7 +125,7 @@ testWithExportImportAtInstanceLevelFF(
 		await exportImportPage.goToExport();
 
 		const exportFilePath = await exportImportPage.export({
-			itemLabels: ['Tests 1 Items'],
+			portletLabels: ['Tests 1 Items'],
 		});
 
 		const content = await readFileFromZip('C_Test.json', exportFilePath);
@@ -184,7 +184,7 @@ testWithExportImportAtInstanceLevelFF(
 
 		const exportFilePath =
 			await companyExportImportPage.exportImportPage.export({
-				itemLabels: ['Tests 1 Items'],
+				portletLabels: ['Tests 1 Items'],
 			});
 
 		await homePage.goto();
@@ -448,7 +448,7 @@ testWithDeprecationFF(
 		);
 
 		const exportFilePath = await exportImportPage.export({
-			itemLabels: ['Tests 1 Items'],
+			portletLabels: ['Tests 1 Items'],
 			taskName: exportName,
 		});
 
@@ -622,7 +622,7 @@ testWithDeprecationFFDisabled(
 		);
 
 		const exportFilePath = await exportImportPage.export({
-			itemLabels: ['Tests 1 Items'],
+			portletLabels: ['Tests 1 Items'],
 		});
 
 		await exportImportPage.goToImport();

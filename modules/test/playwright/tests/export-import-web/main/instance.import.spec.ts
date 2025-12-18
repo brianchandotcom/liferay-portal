@@ -80,7 +80,7 @@ test('Can export and import custom object entries at instance level', async ({
 
 	const exportFilePath =
 		await companyExportImportPage.exportImportPage.export({
-			itemLabels: ['Tests 1 Items'],
+			portletLabels: ['Tests 1 Items'],
 		});
 
 	const content = await readFileFromZip('C_Test.json', exportFilePath);
@@ -176,7 +176,7 @@ test('Can import account restricted entry when account does and does not exist i
 
 	const exportFilePath =
 		await companyExportImportPage.exportImportPage.export({
-			itemLabels: [`${objectDefinition.name} 1 Items`],
+			portletLabels: [`${objectDefinition.name} 1 Items`],
 		});
 
 	await test.step('assert entry is imported with account relationship properties when it exists', async () => {
@@ -295,13 +295,13 @@ test('Can import custom and system objects entries at instance level using date 
 
 		const functionalCookieEntriesExportFilePath =
 			await companyExportImportPage.exportImportPage.export({
-				dateOptions: {
+				dateFilter: {
 					endDate: toDateRangeDate(endDate),
 					endTime: toDateRangeTime(endDate),
 					startDate: toDateRangeDate(startDate),
 					startTime: toDateRangeTime(startDate),
 				},
-				itemLabels: [
+				portletLabels: [
 					`Functional Cookie Entries ${cookiesObjectEntriesTotalCount} Items`,
 					'Tests 1 Items',
 				],
@@ -344,8 +344,8 @@ test('Can import custom and system objects entries at instance level using date 
 
 		const allEntriesExportFilePath =
 			await companyExportImportPage.exportImportPage.export({
-				dateOptions: {rangeLast: '12 Hours'},
-				itemLabels: [
+				dateFilter: {rangeLast: '12 Hours'},
+				portletLabels: [
 					`Functional Cookie Entries ${cookiesObjectEntriesTotalCount} Items`,
 					'Tests 1 Items',
 				],
@@ -413,7 +413,7 @@ test('Can import custom object entries at instance level with or without permiss
 	const exportFilePath =
 		await companyExportImportPage.exportImportPage.export({
 			includePermissions: true,
-			itemLabels: ['Tests 1 Items'],
+			portletLabels: ['Tests 1 Items'],
 		});
 
 	// Import with permissions
@@ -515,7 +515,7 @@ test(
 
 		const exportFilePath =
 			await companyExportImportPage.exportImportPage.export({
-				itemLabels: [`${objectDefinition.name} 1 Items`],
+				portletLabels: [`${objectDefinition.name} 1 Items`],
 			});
 
 		const applicationName = `c/${objectDefinition.name.toLowerCase()}s`;
@@ -578,7 +578,7 @@ test(
 
 		const exportFilePath =
 			await companyExportImportPage.exportImportPage.export({
-				itemLabels: [`${objectDefinition.name} 1 Items`],
+				portletLabels: [`${objectDefinition.name} 1 Items`],
 			});
 
 		const applicationName = `c/${objectDefinition.name.toLowerCase()}s`;
@@ -637,7 +637,7 @@ test(
 
 		const exportFilePath =
 			await companyExportImportPage.exportImportPage.export({
-				itemLabels: [`${objectDefinition.name} 1 Items`],
+				portletLabels: [`${objectDefinition.name} 1 Items`],
 			});
 
 		const applicationName = `c/${objectDefinition.name.toLowerCase()}s`;
@@ -718,7 +718,7 @@ test(
 		const exportFilePath =
 			await companyExportImportPage.exportImportPage.export({
 				includePermissions: true,
-				itemLabels: [`Tests 1 Items`],
+				portletLabels: [`Tests 1 Items`],
 			});
 
 		await apiHelpers.delete(
@@ -872,7 +872,7 @@ test('Can import many to many entries', async ({
 
 	const exportFilePath1 =
 		await companyExportImportPage.exportImportPage.export({
-			itemLabels: [`${objectDefinition1.name} 3 Items`],
+			portletLabels: [`${objectDefinition1.name} 3 Items`],
 		});
 
 	await test.step("relate objectDefinition1ObjectEntry3 to objectDefinition2ObjectEntry1 and assert it's persistence", async () => {
@@ -902,7 +902,7 @@ test('Can import many to many entries', async ({
 
 	const exportFilePath2 =
 		await companyExportImportPage.exportImportPage.export({
-			itemLabels: [`${objectDefinition1.name} 3 Items`],
+			portletLabels: [`${objectDefinition1.name} 3 Items`],
 		});
 
 	await test.step("import object entry where objectDefinition1ObjectEntry3 was still unrelated and assert it's persistence", async () => {
@@ -979,7 +979,7 @@ test('Can only import custom object entries when their definitions are already i
 
 	const exportFilePath =
 		await companyExportImportPage.exportImportPage.export({
-			itemLabels: ['Tests 1 Items'],
+			portletLabels: ['Tests 1 Items'],
 		});
 
 	await objectActionAPIClient.deleteObjectDefinition(objectDefinition.id);
@@ -1037,7 +1037,7 @@ test('Can see corresponding elements at instance level', async ({
 
 	const exportFilePath =
 		await companyExportImportPage.exportImportPage.export({
-			itemLabels: ['Tests 1 Items'],
+			portletLabels: ['Tests 1 Items'],
 		});
 
 	await companyExportImportPage.page.goto('/');

@@ -50,7 +50,7 @@ test('Can see error report and details', async ({
 
 	const exportFilePath =
 		await companyExportImportPage.exportImportPage.export({
-			itemLabels: ['Tests 1 Items'],
+			portletLabels: ['Tests 1 Items'],
 		});
 
 	const objectFieldAPIClient =

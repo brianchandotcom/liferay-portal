@@ -34,6 +34,7 @@ export {default as AssetTypeInfoPanelContent} from './main_view/info_panel/Asset
 export {default as AllSpacesFDSPropsTransformer} from './main_view/props_transformer/AllSpacesFDSPropsTransformer';
 export {default as AssetsFDSPropsTransformer} from './main_view/props_transformer/AssetsFDSPropsTransformer';
 export {default as AssetsFilesDropFDSPropsTransformer} from './main_view/props_transformer/AssetsFilesDropFDSPropsTransformer';
+export {default as BulkActionTaskReportFDSPropsTransformer} from './main_view/props_transformer/BulkActionTaskReportFDSPropsTransformer';
 export {default as BulkActionTaskReportItemsFDSPropsTransformer} from './main_view/props_transformer/BulkActionTaskReportItemsFDSPropsTransformer';
 export {default as CategoryFDSPropsTransformer} from './main_view/props_transformer/CategoryFDSPropsTransformer';
 export {default as CategoryUsagesFDSPropsTransformer} from './main_view/props_transformer/CategoryUsagesFDSPropsTransformer';

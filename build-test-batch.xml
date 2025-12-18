@@ -2890,6 +2890,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 	<macrodef name="run-modules-integration-test">
 		<attribute default="tomcat" name="app.server.type" />
 		<attribute default="" name="aws.store.enabled" />
+		<attribute default="" name="azure.store.enabled" />
 		<attribute default="" name="database.partition.copy" />
 		<attribute default="" name="database.partition.enabled" />
 		<attribute default="" name="database.partition.export.and.import" />
@@ -2925,6 +2926,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 							<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="prepare-portal-ext-properties">
 								<param name="aws.store.enabled" value="@{aws.store.enabled}" />
+								<param name="azure.store.enabled" value="@{azure.store.enabled}" />
 								<param name="database.partition.copy" value="@{database.partition.copy}" />
 								<param name="database.partition.enabled" value="@{database.partition.enabled}" />
 								<param name="database.partition.export.and.import" value="@{database.partition.export.and.import}" />
@@ -8644,6 +8646,33 @@ information. Make sure to commit in all format-javadoc results.
 			<finally>
 				<ant antfile="build-test-s3-store.xml" target="delete-s3-bucket">
 					<property name="aws.store.enabled" value="true" />
+				</ant>
+			</finally>
+		</trycatch>
+	</target>
+
+	<target name="modules-integration-azure-postgresql163">
+		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
+
+		<tstamp>
+			<format pattern="yyyyMMddkkmmssSSS" property="azure.container.id" />
+		</tstamp>
+
+		<ant antfile="build-test-azure.xml" target="create-azure-container" />
+
+		<prepare-azure-store-configuration />
+
+		<trycatch>
+			<try>
+				<run-modules-integration-test
+					azure.store.enabled="true"
+					database.type="postgresql"
+					database.version="16.3"
+				/>
+			</try>
+			<finally>
+				<ant antfile="build-test-azure.xml" target="delete-azure-container">
+					<property name="azure.store.enabled" value="true" />
 				</ant>
 			</finally>
 		</trycatch>

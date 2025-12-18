@@ -156,6 +156,16 @@ test(
 			true
 		);
 
+		await exportImportStagingSystemSettingsPage.page.reload({
+			waitUntil: 'networkidle',
+		});
+
+		await expect(
+			exportImportStagingSystemSettingsPage.page.getByLabel(
+				'Show Advanced Staging'
+			)
+		).toBeChecked();
+
 		try {
 			await enableLocalStaging(apiHelpers, page, site);
 

@@ -8,9 +8,9 @@ import {ProductType} from '../enums/Product';
 
 const productTypeERC = {
 	[ProductType.CLIENT_EXTENSION]: OrderTypes.CLIENT_EXTENSION,
-	[ProductType.CLOUD]: OrderTypes.CLOUDAPP,
+	[ProductType.CLOUD]: OrderTypes.CLOUD_APP,
 	[ProductType.COMPOSITE_APP]: OrderTypes.COMPOSITE_APP,
-	[ProductType.DXP]: OrderTypes.DXPAPP,
+	[ProductType.DXP]: OrderTypes.DXP_APP,
 	[ProductType.LOW_CODE_CONFIGURATION]: OrderTypes.LOW_CODE_CONFIGURATION,
 	[ProductType.OTHER]: OrderTypes.OTHER,
 	[ProductType.SSA_SAAS]: OrderTypes.SSA_SAAS,

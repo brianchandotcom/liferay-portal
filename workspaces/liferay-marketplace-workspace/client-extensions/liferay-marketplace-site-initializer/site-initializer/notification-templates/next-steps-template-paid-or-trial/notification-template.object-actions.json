@@ -1,7 +1,7 @@
 [
 	{
 		"active": true,
-		"conditionExpression": "paymentStatus == 0 AND total != 0 AND orderTypeExternalReferenceCode == \"DXPAPP\"",
+		"conditionExpression": "paymentStatus == 0 AND total != 0 AND orderTypeExternalReferenceCode == \"DXP_APP\"",
 		"externalReferenceCode": "MKT-DXP-PAID-OR-TRIAL-EMAIL",
 		"label": {
 			"en_US": "DXP Paid or Trial Email Template"

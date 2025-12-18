@@ -31,9 +31,9 @@ const Apps = () => {
 		channelId: Number(Liferay.CommerceContext.commerceChannelId),
 		orderTypeExternalReferenceCodes: [
 			OrderTypes.CLIENT_EXTENSION,
-			OrderTypes.CLOUDAPP,
+			OrderTypes.CLOUD_APP,
 			OrderTypes.COMPOSITE_APP,
-			OrderTypes.DXPAPP,
+			OrderTypes.DXP_APP,
 			OrderTypes.LOW_CODE_CONFIGURATION,
 			OrderTypes.OTHER,
 		],

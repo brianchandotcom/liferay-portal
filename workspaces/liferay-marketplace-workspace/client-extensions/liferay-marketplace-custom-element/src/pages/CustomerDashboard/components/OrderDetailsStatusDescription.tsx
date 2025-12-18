@@ -16,11 +16,11 @@ type OrderDetailsStatusDescriptionProps = {
 };
 
 const getOrderDetailsType = (orderTypeExternalReferenceCode: string) => {
-	if (orderTypeExternalReferenceCode === OrderTypes.DXPAPP) {
+	if (orderTypeExternalReferenceCode === OrderTypes.DXP_APP) {
 		return 'DXP APP';
 	}
 
-	if (orderTypeExternalReferenceCode === OrderTypes.CLOUDAPP) {
+	if (orderTypeExternalReferenceCode === OrderTypes.CLOUD_APP) {
 		return 'CLOUD APP';
 	}
 };

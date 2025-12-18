@@ -25,7 +25,7 @@ import DownloadTable from './DownloadTable';
 type OutletContext = ReturnType<typeof useGetProductByOrderId>;
 
 const downloadAlerts = {
-	[OrderTypes.CLOUDAPP]: {
+	[OrderTypes.CLOUD_APP]: {
 		link: LearnLinks.DEPLOYING_CLIENT_EXTENSIONS_LIFERAY_PAAS,
 		message:
 			'In case of your platform is Liferay PaaS or Liferay Self-Hosted and want to manually install this application, follow the recommendations in the following document',

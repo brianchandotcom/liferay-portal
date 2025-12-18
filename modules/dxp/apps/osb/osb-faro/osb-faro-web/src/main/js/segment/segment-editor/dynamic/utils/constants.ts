@@ -12,6 +12,11 @@ export const MAX_DAYS = 30;
 export const isKnown = 'is-known';
 export const isUnknown = 'is-unknown';
 
+export enum ProfileTypes {
+	ANONYMOUS = 'ANONYMOUS',
+	KNOWN = 'KNOWN'
+}
+
 /**
  * Constants for date formatting
  */

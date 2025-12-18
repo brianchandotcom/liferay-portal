@@ -146,6 +146,29 @@ export function fetchMembershipChanges({
 	});
 }
 
+export function fetchRealTimeMembershipChanges({
+	date,
+	delta,
+	groupId,
+	orderIOMap,
+	query,
+	segmentId
+}) {
+	const orderParams = orderIOMap.first();
+	const orderByFields = buildOrderByFields(orderParams, INDIVIDUALS);
+
+	return sendRequest({
+		data: {
+			date,
+			delta,
+			orderByFields,
+			query
+		},
+		method: 'GET',
+		path: `contacts/${groupId}/individual_real_time_segment/${segmentId}/memberships`
+	});
+}
+
 export function fetchMembershipChangesAggregations({
 	channelId = '',
 	groupId,

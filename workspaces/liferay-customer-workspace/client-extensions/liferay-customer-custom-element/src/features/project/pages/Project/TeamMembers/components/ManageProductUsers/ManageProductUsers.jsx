@@ -20,16 +20,15 @@ const getManagedContactURL = (URLField, groupName) => {
 
 	try {
 		const jsonURLs = JSON.parse(URLField);
-		
+
 		if (groupName === 'DXP Cloud') {
 			return jsonURLs.liferayPaas || jsonURLs.dxpCloud || '';
 		}
-        
+
         if (groupName === 'Liferay Cloud' || groupName === 'Liferay Experience Cloud') {
-			
 			return (
                 jsonURLs.liferaySaas ||
-                jsonURLs.liferayPaas || 
+                jsonURLs.liferayPaas ||
                 jsonURLs.liferayExperienceCloud ||
                 ''
             );

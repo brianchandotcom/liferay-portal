@@ -69,7 +69,7 @@ const IncidentContactCard = ({
 		setModalMonitoring(false);
 	};
 
-	const lxcProductNames = ['Liferay SaaS', 'Liferay Cloud'];
+	const lxcProductNames = ['Liferay Cloud', 'Liferay SaaS'];
 
 	const isLXCEnvironment = accountSubscriptionGroupsNames?.some(name =>
 		lxcProductNames.includes(name)

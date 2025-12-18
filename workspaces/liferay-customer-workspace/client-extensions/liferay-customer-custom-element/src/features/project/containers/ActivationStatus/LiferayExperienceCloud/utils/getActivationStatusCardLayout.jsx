@@ -30,7 +30,6 @@ export default function getActivationStatusCardLayout(
 	onInProgressClick,
 	userAccount
 ) {
-
 	const SAAS_CLOUD_ERCS = [
 		`${project?.accountKey}_liferay-saas`,
         `${project?.accountKey}_liferay-cloud`

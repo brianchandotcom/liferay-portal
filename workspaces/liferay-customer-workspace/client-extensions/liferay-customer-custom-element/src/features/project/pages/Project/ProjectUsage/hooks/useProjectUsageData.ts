@@ -105,8 +105,8 @@ const useProjectUsageData = () => {
 	const [{project}] = useAppContext();
 
 	const SAAS_CLOUD_ERCS = [
-		`${project?.accountKey}_liferay-saas`,
 		`${project?.accountKey}_liferay-cloud`,
+		`${project?.accountKey}_liferay-saas`,
 	];
 
 	const ercFilter = `accountSubscriptionGroupERC in ('${SAAS_CLOUD_ERCS.join("', '")}')`;

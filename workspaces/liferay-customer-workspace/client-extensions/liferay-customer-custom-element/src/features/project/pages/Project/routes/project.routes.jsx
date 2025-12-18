@@ -52,7 +52,7 @@ const ProjectRoutes = () => {
 
 	if (koroneikiAccount) {
 		const userId = Liferay.ThemeDisplay.getUserId();
-		
+
 		const cookieKey = `CP_LAST_VIEWED_PROJECT_${userId}`;
 		const cookieValue = encodeURIComponent(koroneikiAccount.accountKey);
 		const expires = new Date();
@@ -82,10 +82,10 @@ const ProjectRoutes = () => {
 	const hasSaasSubscription = useMemo(
 		() => {
 			const allowedERCs = [
-				`${project?.externalReferenceCode}_liferay-saas`,
-				`${project?.externalReferenceCode}_liferay-cloud`
+				`${project?.externalReferenceCode}_liferay-cloud`,
+				`${project?.externalReferenceCode}_liferay-saas`
 			];
-	
+
 			return subscriptionGroups?.some(({externalReferenceCode}) =>
 				allowedERCs.includes(externalReferenceCode)
 			);
@@ -320,7 +320,7 @@ const ProjectRoutes = () => {
 					)}
 
 					<Route element={<TeamMembers />} path="team-members" />
-					
+
 					{hasSLASubscription && (
 						<Route path="business-events">
 							<Route element={<BusinessEvents />} index />

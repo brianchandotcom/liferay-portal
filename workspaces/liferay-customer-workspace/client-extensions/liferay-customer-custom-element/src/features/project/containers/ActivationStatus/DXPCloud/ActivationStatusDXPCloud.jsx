@@ -33,7 +33,7 @@ import ModalDXPCActivationStatus from '../../ModalDXPCActivationStatus';
 import AlreadySubmittedModal from '../AlreadySubmittedModal';
 import ActivationStatusLayout from '../Layout';
 import PopoverIcon from './components/PopoverIcon';
-import ActivationCardLink from '../ActivationCardLink'; 
+import ActivationCardLink from '../ActivationCardLink';
 
 const submittedModalTexts = {
 	paragraph: i18n.translate(
@@ -227,7 +227,6 @@ const ActivationStatusDXPCloud = ({
 
 	useEffect(() => {
 		const fetchCommerceOrderItems = async () => {
-
 			const PAAS_CLOUD_ERCS = [
 				`${project.accountKey}_liferay-paas`,
                 `${project.accountKey}_liferay-cloud`

@@ -497,8 +497,7 @@ public class CustomFDSSerializer
 		Map<String, Object> properties = getDataSetObjectEntryProperties(
 			fdsName, httpServletRequest);
 
-		return GetterUtil.getBoolean(
-			properties.get("snapshotsEnabled"));
+		return GetterUtil.getBoolean(properties.get("snapshotsEnabled"));
 	}
 
 	@Override

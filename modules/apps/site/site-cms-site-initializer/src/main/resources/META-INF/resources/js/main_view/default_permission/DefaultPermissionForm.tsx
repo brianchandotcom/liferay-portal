@@ -202,7 +202,7 @@ export default function DefaultPermissionForm({
 																				'regular-role'
 																			)
 																		: Liferay.Language.get(
-																				'site-role'
+																				'space-role'
 																			)
 																}
 															>

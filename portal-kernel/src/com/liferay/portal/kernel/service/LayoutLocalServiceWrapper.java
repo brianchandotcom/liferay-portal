@@ -1308,19 +1308,25 @@ public class LayoutLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<Layout> getLayoutsByLayoutPrototypeUuid(
-		String layoutPrototypeUuid) {
+	public java.util.List<Layout> getLayoutsByPortletLayoutPageTemplateEntryERC(
+		String portletLayoutPageTemplateEntryERC,
+		String portletLayoutPageTemplateEntryScopeERC) {
 
-		return _layoutLocalService.getLayoutsByLayoutPrototypeUuid(
-			layoutPrototypeUuid);
+		return _layoutLocalService.
+			getLayoutsByPortletLayoutPageTemplateEntryERC(
+				portletLayoutPageTemplateEntryERC,
+				portletLayoutPageTemplateEntryScopeERC);
 	}
 
 	@Override
-	public int getLayoutsByLayoutPrototypeUuidCount(
-		String layoutPrototypeUuid) {
+	public int getLayoutsByPortletLayoutPageTemplateEntryERCCount(
+		String portletLayoutPageTemplateEntryERC,
+		String portletLayoutPageTemplateEntryScopeERC) {
 
-		return _layoutLocalService.getLayoutsByLayoutPrototypeUuidCount(
-			layoutPrototypeUuid);
+		return _layoutLocalService.
+			getLayoutsByPortletLayoutPageTemplateEntryERCCount(
+				portletLayoutPageTemplateEntryERC,
+				portletLayoutPageTemplateEntryScopeERC);
 	}
 
 	/**

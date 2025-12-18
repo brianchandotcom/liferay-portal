@@ -1043,11 +1043,14 @@ public interface LayoutLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Layout> getLayoutsByLayoutPrototypeUuid(
-		String layoutPrototypeUuid);
+	public List<Layout> getLayoutsByPortletLayoutPageTemplateEntryERC(
+		String portletLayoutPageTemplateEntryERC,
+		String portletLayoutPageTemplateEntryScopeERC);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getLayoutsByLayoutPrototypeUuidCount(String layoutPrototypeUuid);
+	public int getLayoutsByPortletLayoutPageTemplateEntryERCCount(
+		String portletLayoutPageTemplateEntryERC,
+		String portletLayoutPageTemplateEntryScopeERC);
 
 	/**
 	 * Returns all the layouts matching the UUID and company.

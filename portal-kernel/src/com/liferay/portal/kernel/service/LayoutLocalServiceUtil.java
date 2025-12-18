@@ -1213,18 +1213,22 @@ public class LayoutLocalServiceUtil {
 			groupId, keywords, types, statuses, start, end, orderByComparator);
 	}
 
-	public static List<Layout> getLayoutsByLayoutPrototypeUuid(
-		String layoutPrototypeUuid) {
+	public static List<Layout> getLayoutsByPortletLayoutPageTemplateEntryERC(
+		String portletLayoutPageTemplateEntryERC,
+		String portletLayoutPageTemplateEntryScopeERC) {
 
-		return getService().getLayoutsByLayoutPrototypeUuid(
-			layoutPrototypeUuid);
+		return getService().getLayoutsByPortletLayoutPageTemplateEntryERC(
+			portletLayoutPageTemplateEntryERC,
+			portletLayoutPageTemplateEntryScopeERC);
 	}
 
-	public static int getLayoutsByLayoutPrototypeUuidCount(
-		String layoutPrototypeUuid) {
+	public static int getLayoutsByPortletLayoutPageTemplateEntryERCCount(
+		String portletLayoutPageTemplateEntryERC,
+		String portletLayoutPageTemplateEntryScopeERC) {
 
-		return getService().getLayoutsByLayoutPrototypeUuidCount(
-			layoutPrototypeUuid);
+		return getService().getLayoutsByPortletLayoutPageTemplateEntryERCCount(
+			portletLayoutPageTemplateEntryERC,
+			portletLayoutPageTemplateEntryScopeERC);
 	}
 
 	/**

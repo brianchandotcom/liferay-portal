@@ -57,7 +57,9 @@ public class LayoutSEOEntryServiceImpl extends LayoutSEOEntryServiceBaseImpl {
 			boolean openGraphDescriptionEnabled,
 			Map<Locale, String> openGraphDescriptionMap,
 			Map<Locale, String> openGraphImageAltMap,
-			long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
+			String openGraphImageFileEntryERC,
+			String openGraphImageFileEntryScopeERC,
+			boolean openGraphTitleEnabled,
 			Map<Locale, String> openGraphTitleMap,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -70,8 +72,8 @@ public class LayoutSEOEntryServiceImpl extends LayoutSEOEntryServiceBaseImpl {
 			getUserId(), groupId, privateLayout, layoutId, canonicalURLEnabled,
 			canonicalURLMap, openGraphDescriptionEnabled,
 			openGraphDescriptionMap, openGraphImageAltMap,
-			openGraphImageFileEntryId, openGraphTitleEnabled, openGraphTitleMap,
-			serviceContext);
+			openGraphImageFileEntryERC, openGraphImageFileEntryScopeERC,
+			openGraphTitleEnabled, openGraphTitleMap, serviceContext);
 	}
 
 	@Override
@@ -80,7 +82,9 @@ public class LayoutSEOEntryServiceImpl extends LayoutSEOEntryServiceBaseImpl {
 			boolean openGraphDescriptionEnabled,
 			Map<Locale, String> openGraphDescriptionMap,
 			Map<Locale, String> openGraphImageAltMap,
-			long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
+			String openGraphImageFileEntryERC,
+			String openGraphImageFileEntryScopeERC,
+			boolean openGraphTitleEnabled,
 			Map<Locale, String> openGraphTitleMap,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -92,8 +96,9 @@ public class LayoutSEOEntryServiceImpl extends LayoutSEOEntryServiceBaseImpl {
 		return layoutSEOEntryLocalService.updateLayoutSEOEntry(
 			getUserId(), groupId, privateLayout, layoutId,
 			openGraphDescriptionEnabled, openGraphDescriptionMap,
-			openGraphImageAltMap, openGraphImageFileEntryId,
-			openGraphTitleEnabled, openGraphTitleMap, serviceContext);
+			openGraphImageAltMap, openGraphImageFileEntryERC,
+			openGraphImageFileEntryScopeERC, openGraphTitleEnabled,
+			openGraphTitleMap, serviceContext);
 	}
 
 	@Override

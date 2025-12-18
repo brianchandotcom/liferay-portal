@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,7 +59,8 @@ public class LayoutSEOEntryLocalServiceImpl
 				sourceLayoutSEOEntry.isOpenGraphDescriptionEnabled(),
 				sourceLayoutSEOEntry.getOpenGraphDescriptionMap(),
 				sourceLayoutSEOEntry.getOpenGraphImageAltMap(),
-				sourceLayoutSEOEntry.getOpenGraphImageFileEntryId(),
+				sourceLayoutSEOEntry.getOpenGraphImageFileEntryERC(),
+				sourceLayoutSEOEntry.getOpenGraphImageFileEntryScopeERC(),
 				sourceLayoutSEOEntry.isOpenGraphTitleEnabled(),
 				sourceLayoutSEOEntry.getOpenGraphTitleMap(), serviceContext);
 		}
@@ -70,7 +72,8 @@ public class LayoutSEOEntryLocalServiceImpl
 				sourceLayoutSEOEntry.isOpenGraphDescriptionEnabled(),
 				sourceLayoutSEOEntry.getOpenGraphDescriptionMap(),
 				sourceLayoutSEOEntry.getOpenGraphImageAltMap(),
-				sourceLayoutSEOEntry.getOpenGraphImageFileEntryId(),
+				sourceLayoutSEOEntry.getOpenGraphImageFileEntryERC(),
+				sourceLayoutSEOEntry.getOpenGraphImageFileEntryScopeERC(),
 				sourceLayoutSEOEntry.isOpenGraphTitleEnabled(),
 				sourceLayoutSEOEntry.getOpenGraphTitleMap(), serviceContext);
 		}
@@ -157,8 +160,8 @@ public class LayoutSEOEntryLocalServiceImpl
 			return _addLayoutSEOEntry(
 				userId, groupId, privateLayout, layoutId, false,
 				Collections.emptyMap(), layoutSEOEntryCustomMetaTagProperties,
-				false, Collections.emptyMap(), Collections.emptyMap(), 0, false,
-				Collections.emptyMap(), serviceContext);
+				false, Collections.emptyMap(), Collections.emptyMap(), null,
+				null, false, Collections.emptyMap(), serviceContext);
 		}
 
 		_addLayoutSEOEntryCustomMetaTag(
@@ -178,7 +181,9 @@ public class LayoutSEOEntryLocalServiceImpl
 			boolean openGraphDescriptionEnabled,
 			Map<Locale, String> openGraphDescriptionMap,
 			Map<Locale, String> openGraphImageAltMap,
-			long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
+			String openGraphImageFileEntryERC,
+			String openGraphImageFileEntryScopeERC,
+			boolean openGraphTitleEnabled,
 			Map<Locale, String> openGraphTitleMap,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -191,8 +196,8 @@ public class LayoutSEOEntryLocalServiceImpl
 				userId, groupId, privateLayout, layoutId, canonicalURLEnabled,
 				canonicalURLMap, new ArrayList<>(), openGraphDescriptionEnabled,
 				openGraphDescriptionMap, openGraphImageAltMap,
-				openGraphImageFileEntryId, openGraphTitleEnabled,
-				openGraphTitleMap, serviceContext);
+				openGraphImageFileEntryERC, openGraphImageFileEntryScopeERC,
+				openGraphTitleEnabled, openGraphTitleMap, serviceContext);
 		}
 
 		layoutSEOEntry.setModifiedDate(DateUtil.newDate());
@@ -202,14 +207,17 @@ public class LayoutSEOEntryLocalServiceImpl
 		layoutSEOEntry.setOpenGraphDescriptionEnabled(
 			openGraphDescriptionEnabled);
 
-		if (openGraphImageFileEntryId != 0) {
+		if (Validator.isNotNull(openGraphImageFileEntryERC)) {
 			layoutSEOEntry.setOpenGraphImageAltMap(openGraphImageAltMap);
 		}
 		else {
 			layoutSEOEntry.setOpenGraphImageAltMap(Collections.emptyMap());
 		}
 
-		layoutSEOEntry.setOpenGraphImageFileEntryId(openGraphImageFileEntryId);
+		layoutSEOEntry.setOpenGraphImageFileEntryERC(
+			openGraphImageFileEntryERC);
+		layoutSEOEntry.setOpenGraphImageFileEntryScopeERC(
+			openGraphImageFileEntryScopeERC);
 		layoutSEOEntry.setOpenGraphTitleMap(openGraphTitleMap);
 		layoutSEOEntry.setOpenGraphTitleEnabled(openGraphTitleEnabled);
 
@@ -222,7 +230,9 @@ public class LayoutSEOEntryLocalServiceImpl
 			boolean openGraphDescriptionEnabled,
 			Map<Locale, String> openGraphDescriptionMap,
 			Map<Locale, String> openGraphImageAltMap,
-			long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
+			String openGraphImageFileEntryERC,
+			String openGraphImageFileEntryScopeERC,
+			boolean openGraphTitleEnabled,
 			Map<Locale, String> openGraphTitleMap,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -235,8 +245,9 @@ public class LayoutSEOEntryLocalServiceImpl
 				userId, groupId, privateLayout, layoutId, false,
 				Collections.emptyMap(), new ArrayList<>(),
 				openGraphDescriptionEnabled, openGraphDescriptionMap,
-				openGraphImageAltMap, openGraphImageFileEntryId,
-				openGraphTitleEnabled, openGraphTitleMap, serviceContext);
+				openGraphImageAltMap, openGraphImageFileEntryERC,
+				openGraphImageFileEntryScopeERC, openGraphTitleEnabled,
+				openGraphTitleMap, serviceContext);
 		}
 
 		layoutSEOEntry.setModifiedDate(DateUtil.newDate());
@@ -245,14 +256,17 @@ public class LayoutSEOEntryLocalServiceImpl
 		layoutSEOEntry.setOpenGraphDescriptionEnabled(
 			openGraphDescriptionEnabled);
 
-		if (openGraphImageFileEntryId != 0) {
+		if (Validator.isNotNull(openGraphImageFileEntryERC)) {
 			layoutSEOEntry.setOpenGraphImageAltMap(openGraphImageAltMap);
 		}
 		else {
 			layoutSEOEntry.setOpenGraphImageAltMap(Collections.emptyMap());
 		}
 
-		layoutSEOEntry.setOpenGraphImageFileEntryId(openGraphImageFileEntryId);
+		layoutSEOEntry.setOpenGraphImageFileEntryERC(
+			openGraphImageFileEntryERC);
+		layoutSEOEntry.setOpenGraphImageFileEntryScopeERC(
+			openGraphImageFileEntryScopeERC);
 		layoutSEOEntry.setOpenGraphTitleMap(openGraphTitleMap);
 		layoutSEOEntry.setOpenGraphTitleEnabled(openGraphTitleEnabled);
 
@@ -273,8 +287,8 @@ public class LayoutSEOEntryLocalServiceImpl
 			return _addLayoutSEOEntry(
 				userId, groupId, privateLayout, layoutId, canonicalURLEnabled,
 				canonicalURLMap, new ArrayList<>(), false,
-				Collections.emptyMap(), Collections.emptyMap(), 0, false,
-				Collections.emptyMap(), serviceContext);
+				Collections.emptyMap(), Collections.emptyMap(), null, null,
+				false, Collections.emptyMap(), serviceContext);
 		}
 
 		layoutSEOEntry.setModifiedDate(DateUtil.newDate());
@@ -292,7 +306,9 @@ public class LayoutSEOEntryLocalServiceImpl
 			boolean openGraphDescriptionEnabled,
 			Map<Locale, String> openGraphDescriptionMap,
 			Map<Locale, String> openGraphImageAltMap,
-			long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
+			String openGraphImageFileEntryERC,
+			String openGraphImageFileEntryScopeERC,
+			boolean openGraphTitleEnabled,
 			Map<Locale, String> openGraphTitleMap,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -322,11 +338,14 @@ public class LayoutSEOEntryLocalServiceImpl
 		layoutSEOEntry.setOpenGraphDescriptionEnabled(
 			openGraphDescriptionEnabled);
 
-		if (openGraphImageFileEntryId != 0) {
+		if (Validator.isNotNull(openGraphImageFileEntryERC)) {
 			layoutSEOEntry.setOpenGraphImageAltMap(openGraphImageAltMap);
 		}
 
-		layoutSEOEntry.setOpenGraphImageFileEntryId(openGraphImageFileEntryId);
+		layoutSEOEntry.setOpenGraphImageFileEntryERC(
+			openGraphImageFileEntryERC);
+		layoutSEOEntry.setOpenGraphImageFileEntryScopeERC(
+			openGraphImageFileEntryScopeERC);
 		layoutSEOEntry.setOpenGraphTitleMap(openGraphTitleMap);
 		layoutSEOEntry.setOpenGraphTitleEnabled(openGraphTitleEnabled);
 

@@ -163,7 +163,10 @@ export class LanguageOverridePage {
 		languageId?: string;
 	}) {
 		if (await this.page.getByText('Import Translations').isHidden()) {
-			await this.page.getByLabel('Options').click();
+			await this.page
+				.getByTestId('headerOptions')
+				.getByLabel('Options')
+				.click();
 
 			await this.page
 				.getByRole('menuitem', {name: 'Import Translations'})

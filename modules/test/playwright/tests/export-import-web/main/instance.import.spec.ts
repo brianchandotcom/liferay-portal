@@ -295,16 +295,16 @@ test('Can import custom and system objects entries at instance level using date 
 
 		const functionalCookieEntriesExportFilePath =
 			await companyExportImportPage.exportImportPage.export({
-				itemLabels: [
-					`Functional Cookie Entries ${cookiesObjectEntriesTotalCount} Items`,
-					'Tests 1 Items',
-				],
 				dateOptions: {
 					endDate: toDateRangeDate(endDate),
 					endTime: toDateRangeTime(endDate),
 					startDate: toDateRangeDate(startDate),
 					startTime: toDateRangeTime(startDate),
 				},
+				itemLabels: [
+					`Functional Cookie Entries ${cookiesObjectEntriesTotalCount} Items`,
+					'Tests 1 Items',
+				],
 			});
 
 		await apiHelpers.delete(
@@ -344,11 +344,11 @@ test('Can import custom and system objects entries at instance level using date 
 
 		const allEntriesExportFilePath =
 			await companyExportImportPage.exportImportPage.export({
+				dateOptions: {rangeLast: '12 Hours'},
 				itemLabels: [
 					`Functional Cookie Entries ${cookiesObjectEntriesTotalCount} Items`,
 					'Tests 1 Items',
 				],
-				dateOptions: {rangeLast: '12 Hours'},
 			});
 
 		await apiHelpers.delete(

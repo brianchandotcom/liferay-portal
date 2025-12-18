@@ -63,6 +63,8 @@ public class AddRuleMVCActionCommand
 							ParamUtil.getString(actionRequest, "conditions")));
 					layoutStructureRule.setConditionType(
 						ParamUtil.getString(actionRequest, "conditionType"));
+					layoutStructureRule.setScript(
+						ParamUtil.getString(actionRequest, "script", null));
 
 					jsonObject.put("addedRuleId", layoutStructureRule.getId());
 				}));

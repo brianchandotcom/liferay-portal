@@ -576,6 +576,11 @@ public class LayoutSEOEntryWrapper
 		return model.getOpenGraphImageFileEntryERC();
 	}
 
+	@Override
+	public long getOpenGraphImageFileEntryGroupId() {
+		return model.getOpenGraphImageFileEntryGroupId();
+	}
+
 	/**
 	 * Returns the open graph image file entry scope erc of this layout seo entry.
 	 *

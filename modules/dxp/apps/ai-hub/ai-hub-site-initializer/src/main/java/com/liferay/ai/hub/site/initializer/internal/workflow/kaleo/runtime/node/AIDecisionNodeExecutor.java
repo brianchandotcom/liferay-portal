@@ -8,6 +8,7 @@ package com.liferay.ai.hub.site.initializer.internal.workflow.kaleo.runtime.node
 import com.liferay.ai.hub.site.initializer.internal.assistant.handler.AssistantHandlerContext;
 import com.liferay.ai.hub.site.initializer.internal.assistant.handler.AssistantHandlerUtil;
 import com.liferay.ai.hub.site.initializer.internal.mcp.tool.provider.MCPToolProviderUtil;
+import com.liferay.ai.hub.site.initializer.internal.workflow.kaleo.runtime.node.util.ContentRetrieverUtil;
 import com.liferay.ai.hub.site.initializer.internal.workflow.kaleo.runtime.node.util.InputVariablesUtil;
 import com.liferay.ai.hub.site.initializer.internal.workflow.kaleo.runtime.node.util.ToolsUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
@@ -133,6 +134,9 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 
 		AssistantHandlerUtil.handle(
 			AssistantHandlerContext.builder(
+			).contextRetriever(
+				ContentRetrieverUtil.createContentRetriever(
+					kaleoNodeSettingValues)
 			).invocationParameters(
 				InvocationParameters.from(
 					Map.of(

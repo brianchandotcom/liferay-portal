@@ -14,6 +14,7 @@ import Navbar, {NavbarProps} from '../../../../../components/Navbar';
 import {PageRenderer} from '../../../../../components/Page';
 import {MarketplaceDeliveryProduct} from '../../../../../entity/MarketplaceDeliveryProduct';
 import {OrderTypes, OrderWorkflowStatusCode} from '../../../../../enums/Order';
+import {ProductSupportSpecificationKey} from '../../../../../enums/Product';
 import useGetProductByOrderId from '../../../../../hooks/useGetProductByOrderId';
 import i18n from '../../../../../i18n';
 import {getProductPriceModel} from '../../../../../utils/productUtils';
@@ -21,7 +22,6 @@ import OrderDetailsHeader from '../../../components/OrderDetailsHeader';
 import AppDropdownActions from './AppDropdownActions/AppDropdownActions';
 
 import './App.scss';
-import {ProductSupportSpecificationKey} from '../../../../../enums/Product';
 
 type ProductAndOrderPayload = NonNullable<
 	ReturnType<typeof useGetProductByOrderId>['data']
@@ -126,7 +126,7 @@ const AppOutlet = () => (
 			);
 
 			const orderCompleted =
-				placedOrder.workflowStatusInfo.code ===
+				placedOrder.orderStatusInfo.code ===
 				OrderWorkflowStatusCode.COMPLETED;
 
 			const isCompletedOrderWithVirtualItems =
@@ -173,8 +173,8 @@ const AppOutlet = () => (
 						isPaidApp &&
 						orderCompleted &&
 						[
-							OrderTypes.DXP_APP,
 							OrderTypes.CLIENT_EXTENSION,
+							OrderTypes.DXP_APP,
 						].includes(
 							placedOrder.orderTypeExternalReferenceCode as OrderTypes
 						),

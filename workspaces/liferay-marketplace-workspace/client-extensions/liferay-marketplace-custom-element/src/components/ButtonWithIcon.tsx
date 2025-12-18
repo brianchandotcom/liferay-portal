@@ -9,7 +9,7 @@ import React, {ComponentProps, ForwardedRef, ReactNode} from 'react';
 
 type ButtonWithIconProps = {
 	children?: ReactNode;
-	iconProps?: ComponentProps<typeof ClayIcon>;
+	iconProps?: Omit<ComponentProps<typeof ClayIcon>, 'symbol'>;
 	symbol: string;
 } & React.ComponentProps<typeof ClayButton>;
 
@@ -20,11 +20,7 @@ const ButtonWithIcon = React.forwardRef<HTMLButtonElement, ButtonWithIconProps>(
 	) => {
 		return (
 			<ClayButton {...props} ref={ref}>
-				<ClayIcon
-					{...iconProps}
-					className="mr-2"
-					symbol={symbol}
-				/>
+				<ClayIcon className="mr-2" symbol={symbol} {...iconProps} />
 
 				{children}
 			</ClayButton>

@@ -20,6 +20,7 @@ import performLogin, {
 import {getTempDir} from '../../../utils/temp';
 import {readFileFromZip} from '../../../utils/zip';
 import {companyExportImportPageTest} from './fixtures/companyExportImportPagesTest';
+import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 import {toDateRangeDate, toDateRangeTime} from './utils/dateRangeUtil';
 import {objectDefitionRequestData} from './utils/objectDefitionRequestData';
 
@@ -27,6 +28,7 @@ export const test = mergeTests(
 	applicationsMenuPageTest,
 	companyExportImportPageTest,
 	dataApiHelpersTest,
+	exportImportPagesTest,
 	featureFlagsTest({
 		'LPD-35914': {enabled: true},
 	}),
@@ -64,7 +66,8 @@ test('cannot export site scoped custom object entries at instance level', async 
 
 test('can export custom object entries at instance level with date filter', async ({
 	apiHelpers,
-	companyExportImportPage,
+	applicationsMenuPage,
+	exportImportPage,
 }) => {
 	const objectActionAPIClient =
 		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
@@ -81,12 +84,11 @@ test('can export custom object entries at instance level with date filter', asyn
 		'c/tests'
 	);
 
-	await companyExportImportPage.applicationsMenuPage.goToExport();
+	await applicationsMenuPage.goToExport();
 
-	const exportFilePath1 =
-		await companyExportImportPage.exportImportPage.export({
-			portletLabels: ['Tests 1 Items'],
-		});
+	const exportFilePath1 = await exportImportPage.export({
+		portletLabels: ['Tests 1 Items'],
+	});
 
 	const content1 = await readFileFromZip('C_Test.json', exportFilePath1);
 
@@ -102,18 +104,17 @@ test('can export custom object entries at instance level with date filter', asyn
 
 	startDate.setDate(startDate.getDate() - 2);
 
-	await companyExportImportPage.applicationsMenuPage.goToExport();
+	await applicationsMenuPage.goToExport();
 
-	const exportFilePath2 =
-		await companyExportImportPage.exportImportPage.export({
-			dateFilter: {
-				endDate: toDateRangeDate(endDate),
-				endTime: toDateRangeTime(endDate),
-				startDate: toDateRangeDate(startDate),
-				startTime: toDateRangeTime(startDate),
-			},
-			portletLabels: ['Tests 1 Items'],
-		});
+	const exportFilePath2 = await exportImportPage.export({
+		dateFilter: {
+			endDate: toDateRangeDate(endDate),
+			endTime: toDateRangeTime(endDate),
+			startDate: toDateRangeDate(startDate),
+			startTime: toDateRangeTime(startDate),
+		},
+		portletLabels: ['Tests 1 Items'],
+	});
 
 	const content2 = await readFileFromZip('C_Test.json', exportFilePath2);
 
@@ -121,13 +122,12 @@ test('can export custom object entries at instance level with date filter', asyn
 
 	expect(json2.length).toBe(0);
 
-	await companyExportImportPage.applicationsMenuPage.goToExport();
+	await applicationsMenuPage.goToExport();
 
-	const exportFilePath3 =
-		await companyExportImportPage.exportImportPage.export({
-			dateFilter: {rangeLast: '12 Hours'},
-			portletLabels: ['Tests 1 Items'],
-		});
+	const exportFilePath3 = await exportImportPage.export({
+		dateFilter: {rangeLast: '12 Hours'},
+		portletLabels: ['Tests 1 Items'],
+	});
 
 	const content3 = await readFileFromZip('C_Test.json', exportFilePath3);
 
@@ -138,7 +138,8 @@ test('can export custom object entries at instance level with date filter', asyn
 
 test('can export new default and custom task name', async ({
 	apiHelpers,
-	companyExportImportPage,
+	applicationsMenuPage,
+	exportImportPage,
 }) => {
 	const objectActionAPIClient =
 		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
@@ -155,12 +156,11 @@ test('can export new default and custom task name', async ({
 		'c/tests'
 	);
 
-	await companyExportImportPage.applicationsMenuPage.goToExport();
+	await applicationsMenuPage.goToExport();
 
-	const defaultExportFilePath =
-		await companyExportImportPage.exportImportPage.export({
-			portletLabels: ['Tests 1 Items'],
-		});
+	const defaultExportFilePath = await exportImportPage.export({
+		portletLabels: ['Tests 1 Items'],
+	});
 
 	expect(defaultExportFilePath).toMatch(
 		new RegExp(`^${getTempDir()}Export-`)
@@ -168,13 +168,12 @@ test('can export new default and custom task name', async ({
 
 	const taskName = 'CustomTaskName';
 
-	await companyExportImportPage.applicationsMenuPage.goToExport();
+	await applicationsMenuPage.goToExport();
 
-	const customExportFilePath =
-		await companyExportImportPage.exportImportPage.export({
-			portletLabels: ['Tests 1 Items'],
-			taskName,
-		});
+	const customExportFilePath = await exportImportPage.export({
+		portletLabels: ['Tests 1 Items'],
+		taskName,
+	});
 
 	expect(customExportFilePath).toMatch(
 		new RegExp(`^${getTempDir()}${taskName}-`)
@@ -183,7 +182,8 @@ test('can export new default and custom task name', async ({
 
 test('can export custom object entries at instance level with permissions', async ({
 	apiHelpers,
-	companyExportImportPage,
+	applicationsMenuPage,
+	exportImportPage,
 }) => {
 	const objectActionAPIClient =
 		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
@@ -200,13 +200,12 @@ test('can export custom object entries at instance level with permissions', asyn
 		'c/tests'
 	);
 
-	await companyExportImportPage.applicationsMenuPage.goToExport();
+	await applicationsMenuPage.goToExport();
 
-	const exportFilePath =
-		await companyExportImportPage.exportImportPage.export({
-			includePermissions: true,
-			portletLabels: ['Tests 1 Items'],
-		});
+	const exportFilePath = await exportImportPage.export({
+		includePermissions: true,
+		portletLabels: ['Tests 1 Items'],
+	});
 
 	const content = await readFileFromZip('C_Test.json', exportFilePath);
 
@@ -218,6 +217,7 @@ test('can export custom object entries at instance level with permissions', asyn
 
 test('can see corresponding elements at instance level', async ({
 	apiHelpers,
+	applicationsMenuPage,
 	companyExportImportPage,
 	uiElementsPage,
 }) => {
@@ -231,7 +231,7 @@ test('can see corresponding elements at instance level', async ({
 
 	await apiHelpers.objectEntry.postObjectEntry({name: 'test'}, 'c/tests');
 
-	await companyExportImportPage.applicationsMenuPage.goToExport();
+	await applicationsMenuPage.goToExport();
 	await uiElementsPage.clickNewButton();
 	await expect(
 		companyExportImportPage.page.getByText('Comments, Ratings')
@@ -255,12 +255,12 @@ test('can see corresponding elements at instance level', async ({
 test(
 	'can see the Deletions label at the instance level',
 	{tag: ['@LPD-37317']},
-	async ({companyExportImportPage, uiElementsPage}) => {
-		await companyExportImportPage.applicationsMenuPage.goToExport();
+	async ({applicationsMenuPage, exportImportPage, uiElementsPage}) => {
+		await applicationsMenuPage.goToExport();
 		await uiElementsPage.clickNewButton();
 
 		const deletionsLabelText =
-			await companyExportImportPage.exportImportPage.deletionsLabel.textContent();
+			await exportImportPage.deletionsLabel.textContent();
 
 		expect(deletionsLabelText?.replace(/\s+/g, ' ').trim()).toBe(
 			'Export Individual Deletions: If this is checked, the delete operations performed will be exported in the LAR file.'
@@ -271,7 +271,7 @@ test(
 test('Can/not view Export menu item in Application menu depending on permissions', async ({
 	apiHelpers,
 	applicationsMenuPage,
-	companyExportImportPage,
+	exportImportPage,
 	page,
 }) => {
 	const companyId = await page.evaluate(() => {
@@ -348,9 +348,7 @@ test('Can/not view Export menu item in Application menu depending on permissions
 
 	await applicationsMenuPage.goToExport();
 
-	await expect(
-		companyExportImportPage.exportImportPage.newExportButton
-	).toBeVisible();
+	await expect(exportImportPage.newExportButton).toBeVisible();
 
 	await performLogout(page);
 
@@ -362,7 +360,5 @@ test('Can/not view Export menu item in Application menu depending on permissions
 
 	await page.goto(exportUrl);
 
-	await expect(
-		companyExportImportPage.exportImportPage.newExportButton
-	).toBeHidden();
+	await expect(exportImportPage.newExportButton).toBeHidden();
 });

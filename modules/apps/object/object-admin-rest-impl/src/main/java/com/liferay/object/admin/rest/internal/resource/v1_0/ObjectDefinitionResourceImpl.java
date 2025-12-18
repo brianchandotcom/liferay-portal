@@ -280,6 +280,8 @@ public class ObjectDefinitionResourceImpl
 				searchContext.addVulcanAggregation(aggregation);
 				searchContext.setAttribute(Field.NAME, search);
 				searchContext.setCompanyId(contextCompany.getCompanyId());
+				searchContext.setLocale(
+					contextAcceptLanguage.getPreferredLocale());
 			},
 			sorts,
 			document -> _toObjectDefinition(

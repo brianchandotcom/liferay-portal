@@ -130,6 +130,8 @@ public class ObjectRelationshipResourceImpl
 				searchContext.setAttribute(
 					"objectDefinitionId", objectDefinitionId);
 				searchContext.setCompanyId(contextCompany.getCompanyId());
+				searchContext.setLocale(
+					contextAcceptLanguage.getPreferredLocale());
 			},
 			sorts,
 			document -> _toObjectRelationship(

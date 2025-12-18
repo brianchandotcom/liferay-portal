@@ -514,6 +514,48 @@ public class ListTypeDefinition implements Serializable {
 		_permissionsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	@Valid
+	public Status getStatus() {
+		if (_statusSupplier != null) {
+			status = _statusSupplier.get();
+
+			_statusSupplier = null;
+		}
+
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+
+		_statusSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setStatus(
+		UnsafeSupplier<Status, Exception> statusUnsafeSupplier) {
+
+		_statusSupplier = () -> {
+			try {
+				return statusUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Status status;
+
+	@JsonIgnore
+	private Supplier<Status> _statusSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getSystem() {
 		if (_systemSupplier != null) {
 			system = _systemSupplier.get();
@@ -755,6 +797,18 @@ public class ListTypeDefinition implements Serializable {
 			}
 
 			sb.append("]");
+		}
+
+		Status status = getStatus();
+
+		if (status != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"status\": ");
+
+			sb.append(String.valueOf(status));
 		}
 
 		Boolean system = getSystem();

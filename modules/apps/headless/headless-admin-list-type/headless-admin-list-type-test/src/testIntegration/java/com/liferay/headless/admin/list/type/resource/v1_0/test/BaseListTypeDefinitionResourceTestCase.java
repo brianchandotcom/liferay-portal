@@ -1834,6 +1834,14 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("status", additionalAssertFieldName)) {
+				if (listTypeDefinition.getStatus() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("system", additionalAssertFieldName)) {
 				if (listTypeDefinition.getSystem() == null) {
 					valid = false;
@@ -2085,6 +2093,17 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 				if (!Objects.deepEquals(
 						listTypeDefinition1.getPermissions(),
 						listTypeDefinition2.getPermissions())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("status", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						listTypeDefinition1.getStatus(),
+						listTypeDefinition2.getStatus())) {
 
 					return false;
 				}
@@ -2433,6 +2452,11 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 		}
 
 		if (entityFieldName.equals("permissions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("status")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

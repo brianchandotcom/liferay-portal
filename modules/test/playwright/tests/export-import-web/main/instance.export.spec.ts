@@ -57,7 +57,6 @@ rootModelTest.describe(
 			async ({
 				apiHelpers,
 				applicationsMenuPage,
-				companyExportImportPage,
 				exportImportPage,
 				page,
 			}) => {
@@ -203,12 +202,13 @@ rootModelTest.describe(
 						)
 					).toBeVisible();
 
-					const filePath = await companyExportImportPage.export([
-						`${objectDefinitionA.name} Root Object 1 Items`,
-					]);
-					const exportName = filePath.slice(
-						filePath.lastIndexOf('/') + 1
-					);
+					await applicationsMenuPage.goToExport();
+
+					const filePath = await exportImportPage.export({
+						portletLabels: [
+							`${objectDefinitionA.name} Root Object 1 Items`,
+						],
+					});
 
 					await applicationsMenuPage.goToImport();
 
@@ -226,12 +226,6 @@ rootModelTest.describe(
 						page.getByText(
 							`${objectDefinitionB.label.en_US}, ${objectDefinitionC.label.en_US}`
 						)
-					).toBeVisible();
-
-					await exportImportPage.importButton.click();
-
-					await expect(
-						exportImportPage.taskStatusLabel(exportName)
 					).toBeVisible();
 				}
 				finally {

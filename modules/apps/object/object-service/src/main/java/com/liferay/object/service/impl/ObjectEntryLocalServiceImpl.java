@@ -5143,9 +5143,8 @@ public class ObjectEntryLocalServiceImpl
 
 				columnName = columnName.substring(0, columnName.length() - 1);
 
-				ObjectField objectField =
-					_objectFieldLocalService.fetchObjectField(
-						objectDefinitionId, columnName);
+				ObjectField objectField = _objectFieldPersistence.fetchByODI_N(
+					objectDefinitionId, columnName);
 
 				if ((object != null) && (objectField != null) &&
 					objectField.compareBusinessType(

@@ -47,4 +47,6 @@ public interface LayoutSEOEntry extends LayoutSEOEntryModel, PersistedModel {
 
 		};
 
+	public long getOpenGraphImageFileEntryGroupId();
+
 }

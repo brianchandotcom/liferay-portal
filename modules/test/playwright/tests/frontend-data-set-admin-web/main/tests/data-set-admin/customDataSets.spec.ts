@@ -729,3 +729,53 @@ test(
 		});
 	}
 );
+
+test(
+	'Custom Views are deleted after deleting Data Set',
+	{tag: ['@LPD-72423']},
+	async ({customDataSetsPage, dataSetManagerApiHelpers, page}) => {
+		const dataSetERC = getRandomString();
+		const dataSetLabel = getRandomString();
+		const creatorId = await page.evaluate(() => {
+			return parseInt(Liferay.ThemeDisplay.getUserId(),10);
+		});
+
+		await test.step('Create data set', async () => {
+			await dataSetManagerApiHelpers.createDataSet({
+				defaultVisualizationMode: 'table',
+				erc: dataSetERC,
+				label: dataSetLabel,
+				restEndpoint: '/',
+				restSchema: 'DataSet',
+			});
+		});
+
+		await test.step('Create a User View', async () => {
+			await dataSetManagerApiHelpers.createDataSetSnapshot({
+				dataSetERC: dataSetERC,
+				snapshotName: 'Custom View 1',
+			});
+
+			const snapshots = await dataSetManagerApiHelpers.getDataSetSnapshots({
+				dataSetERC: dataSetERC,
+				creatorId: creatorId
+			});
+
+			expect(snapshots.items.length).toBe(1);
+		});
+
+		await test.step('Delete Data Set', async () => {
+			await customDataSetsPage.goto();
+			await customDataSetsPage.deleteDataSet(dataSetLabel);
+		});
+
+		await test.step('Check that User View has been deleted', async () => {
+			const snapshots = await dataSetManagerApiHelpers.getDataSetSnapshots({
+				dataSetERC: dataSetERC,
+				creatorId: creatorId
+			});
+
+			expect(snapshots.items.length).toBe(0);
+		});
+	}
+)

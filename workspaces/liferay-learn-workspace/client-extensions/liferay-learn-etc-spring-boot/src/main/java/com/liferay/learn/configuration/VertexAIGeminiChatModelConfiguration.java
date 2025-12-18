@@ -18,14 +18,14 @@ import org.springframework.context.annotation.Configuration;
  * @author Nilton Vieira
  */
 @Configuration
-public class VertexAiGeminiChatModelConfiguration {
+public class VertexAIGeminiChatModelConfiguration {
 
 	@Bean
 	public ChatClient chatClient() {
 		VertexAiGeminiChatOptions vertexAiGeminiChatOptions =
 			VertexAiGeminiChatOptions.builder(
 			).model(
-				_vertexAiGeminiChatOptionsModel
+				_vertexAIGeminiChatOptionsModel
 			).temperature(
 				0.4
 			).build();
@@ -33,7 +33,7 @@ public class VertexAiGeminiChatModelConfiguration {
 		return ChatClient.create(
 			VertexAiGeminiChatModel.builder(
 			).vertexAI(
-				new VertexAI(_vertexAiGeminiProjectId, _vertexAiGeminiLocation)
+				new VertexAI(_vertexAIGeminiProjectId, _vertexAIGeminiLocation)
 			).defaultOptions(
 				vertexAiGeminiChatOptions
 			).toolCallingManager(
@@ -42,12 +42,12 @@ public class VertexAiGeminiChatModelConfiguration {
 	}
 
 	@Value("${spring.ai.vertex.ai.gemini.chat.options.model}")
-	private String _vertexAiGeminiChatOptionsModel;
+	private String _vertexAIGeminiChatOptionsModel;
 
 	@Value("${spring.ai.vertex.ai.gemini.location}")
-	private String _vertexAiGeminiLocation;
+	private String _vertexAIGeminiLocation;
 
 	@Value("${spring.ai.vertex.ai.gemini.project-id}")
-	private String _vertexAiGeminiProjectId;
+	private String _vertexAIGeminiProjectId;
 
 }

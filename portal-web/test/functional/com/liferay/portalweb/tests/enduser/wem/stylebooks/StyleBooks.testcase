@@ -73,7 +73,7 @@ definition {
 			Navigator.gotoNavTab(navTab = "Style Book");
 
 			AssertElementPresent(
-				key_card = "Styles from Theme",
+				key_card = "Styles from Classic Theme",
 				locator1 = "Card#CARD_SELECTED");
 
 			StyleBooks.selectStyleBookViaPageDesignOptions(styleBookName = "Test Style Book Name");
@@ -215,7 +215,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "PagesAdmin#STYLE_BOOK_NAME",
-				value1 = "Styles from Theme");
+				value1 = "Styles from Classic Theme");
 
 			Click(
 				ariaLabel = "Change Style Book",
@@ -291,11 +291,11 @@ definition {
 				ariaLabel = "Change Style Book",
 				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
-			StyleBooks.selectStyleBook(styleBookName = "Styles from Theme");
+			StyleBooks.selectStyleBook(styleBookName = "Styles from Classic Theme");
 
 			AssertTextEquals(
 				locator1 = "PagesAdmin#STYLE_BOOK_NAME",
-				value1 = "Styles from Theme");
+				value1 = "Styles from Classic Theme");
 
 			Button.clickSave();
 
@@ -410,7 +410,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "PagesAdmin#STYLE_BOOK_NAME",
-				value1 = "Styles from Theme");
+				value1 = "Styles from Classic Theme");
 
 			Click(
 				ariaLabel = "Change Style Book",
@@ -454,11 +454,11 @@ definition {
 				ariaLabel = "Change Style Book",
 				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
-			StyleBooks.selectStyleBook(styleBookName = "Styles from Theme");
+			StyleBooks.selectStyleBook(styleBookName = "Styles from Classic Theme");
 
 			AssertTextEquals(
 				locator1 = "PagesAdmin#STYLE_BOOK_NAME",
-				value1 = "Styles from Theme");
+				value1 = "Styles from Classic Theme");
 
 			Button.clickSave();
 
@@ -577,15 +577,15 @@ definition {
 			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
 		}
 
-		task ("View the Styles from Theme is marked as default") {
+		task ("View the Styles from Classic Theme is marked as default") {
 			LexiconCard.viewCardSticker(
-				card = "Styles from Theme",
+				card = "Styles from Classic Theme",
 				icon = "check-circle");
 		}
 
 		task ("Mark the new style book as default") {
 			StyleBooksAdmin.markStyleBookAsDefault(
-				confirmMessage = "Do you want to replace Styles from Theme for Test Style Book Name as the default style book?",
+				confirmMessage = "Do you want to replace Styles from Classic Theme for Test Style Book Name as the default style book?",
 				styleBookName = "Test Style Book Name");
 		}
 	}
@@ -689,8 +689,8 @@ definition {
 			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
 		}
 
-		task ("View the Styles from Theme is shown") {
-			StyleBooksAdmin.viewStyleBooksPresent(styleBookName = "Styles from Theme");
+		task ("View the Styles from Classic Theme is shown") {
+			StyleBooksAdmin.viewStyleBooksPresent(styleBookName = "Styles from Classic Theme");
 		}
 
 		task ("View cannot edit or delete the Styles form Theme") {

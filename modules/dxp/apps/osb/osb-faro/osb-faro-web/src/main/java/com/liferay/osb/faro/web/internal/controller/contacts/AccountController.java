@@ -6,11 +6,8 @@
 package com.liferay.osb.faro.web.internal.controller.contacts;
 
 import com.liferay.osb.faro.contacts.model.constants.JSONConstants;
-import com.liferay.osb.faro.engine.client.constants.FieldMappingConstants;
 import com.liferay.osb.faro.engine.client.model.Account;
 import com.liferay.osb.faro.engine.client.model.Field;
-import com.liferay.osb.faro.engine.client.model.FieldMapping;
-import com.liferay.osb.faro.engine.client.model.FieldMappingMap;
 import com.liferay.osb.faro.engine.client.model.Results;
 import com.liferay.osb.faro.engine.client.util.OrderByField;
 import com.liferay.osb.faro.web.internal.constants.FaroConstants;
@@ -176,26 +173,6 @@ public class AccountController extends BaseFaroController {
 			@QueryParam("query") String query, @QueryParam("cur") int cur,
 			@QueryParam("delta") int delta)
 		throws Exception {
-
-		for (FieldMappingMap fieldMappingMap :
-				FieldMappingConstants.getAccountFieldMappingMaps()) {
-
-			if (fieldMappingFieldName.equals(fieldMappingMap.getName())) {
-				FieldMapping fieldMapping = new FieldMapping();
-
-				fieldMapping.setDisplayName(
-					FieldMappingConstants.getAccountFieldMappingLanguageKey(
-						fieldMappingMap.getName()));
-				fieldMapping.setDisplayType("input-field");
-				fieldMapping.setFieldName(fieldMappingMap.getName());
-				fieldMapping.setFieldType(fieldMappingMap.getType());
-				fieldMapping.setOwnerType(
-					FieldMappingConstants.OWNER_TYPE_ACCOUNT);
-
-				return new FaroResultsDisplay(
-					new Results<>(Collections.singletonList(fieldMapping), 1));
-			}
-		}
 
 		return new FaroResultsDisplay(
 			contactsEngineClient.getAccountFieldValues(

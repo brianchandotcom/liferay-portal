@@ -52,8 +52,11 @@ public class PortletPreferencesPostUpgradeDataCleanupProcessTest
 				Assert.assertTrue(
 					messages.toString(),
 					messages.contains(
-						"PortletPreferencesPostUpgradeDataCleanupProcess has " +
-							"not been fully executed"));
+						StringBundler.concat(
+							"Orphan Portlet table entries and portletId ",
+							"references in PortletPreferences table are not ",
+							"checked when executing the Database Upgrade ",
+							"Tool")));
 			},
 			() -> {
 				if (originalUpgradeClient.get() != null) {

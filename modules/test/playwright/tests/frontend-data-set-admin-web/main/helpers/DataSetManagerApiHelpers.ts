@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { url } from 'inspector';
 import {ApiHelpers} from '../../../../helpers/ApiHelpers';
 import {liferayConfig} from '../../../../liferay.config';
 import {
@@ -395,33 +394,33 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 	}
 
 	async createDataSetSnapshot({
-        dataSetERC,
-        snapshotName,
-    }: {
-        dataSetERC: string;
-        snapshotName: string;
-    }) {
-		const url = '/o/data-set-admin/snapshots';
-
-        const data = {
-			fdsName: dataSetERC,
-            label: snapshotName
-        };
-
-        return this.post(url, {data});
-    }
-
-    async getDataSetSnapshots({
 		dataSetERC,
-		creatorId,
+		snapshotName,
 	}: {
 		dataSetERC: string;
+		snapshotName: string;
+	}) {
+		const url = '/o/data-set-admin/snapshots';
+
+		const data = {
+			fdsName: dataSetERC,
+			label: snapshotName,
+		};
+
+		return this.post(url, {data});
+	}
+
+	async getDataSetSnapshots({
+		creatorId,
+		dataSetERC,
+	}: {
 		creatorId?: number;
+		dataSetERC: string;
 	}) {
 		const url = `/o/data-set-admin/snapshots/?filter=fdsName eq '${dataSetERC}' and creatorId eq ${creatorId}`;
-		
+
 		return this.get(url);
-    }
+	}
 
 	async updateDataSet({
 		additionalAPIURLParameters,

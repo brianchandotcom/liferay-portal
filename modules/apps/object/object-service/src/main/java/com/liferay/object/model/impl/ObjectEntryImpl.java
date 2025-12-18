@@ -96,9 +96,7 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 
 	@Override
 	public String getModelClassName() {
-		ObjectDefinition objectDefinition =
-			ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
-				getObjectDefinitionId());
+		ObjectDefinition objectDefinition = getObjectDefinition();
 
 		if (objectDefinition == null) {
 			return StringPool.BLANK;
@@ -126,6 +124,17 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 	}
 
 	@Override
+	public ObjectDefinition getObjectDefinition() {
+		if (_objectDefinition == null) {
+			_objectDefinition =
+				ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
+					getObjectDefinitionId());
+		}
+
+		return _objectDefinition;
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
 			PortalUtil.getClassNameId(getModelClassName()));
@@ -133,9 +142,7 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 
 	@Override
 	public Map<Locale, String> getTitleMap() throws PortalException {
-		ObjectDefinition objectDefinition =
-			ObjectDefinitionLocalServiceUtil.getObjectDefinition(
-				getObjectDefinitionId());
+		ObjectDefinition objectDefinition = getObjectDefinition();
 
 		if ((objectDefinition == null) ||
 			(objectDefinition.getTitleObjectFieldId() == 0)) {
@@ -189,9 +196,7 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 	public String getTitleValue(String languageId, boolean useDefault)
 		throws PortalException {
 
-		ObjectDefinition objectDefinition =
-			ObjectDefinitionLocalServiceUtil.getObjectDefinition(
-				getObjectDefinitionId());
+		ObjectDefinition objectDefinition = getObjectDefinition();
 
 		if ((objectDefinition != null) &&
 			(objectDefinition.getTitleObjectFieldId() > 0)) {
@@ -302,6 +307,11 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 	}
 
 	@Override
+	public void setObjectDefinition(ObjectDefinition objectDefinition) {
+		_objectDefinition = objectDefinition;
+	}
+
+	@Override
 	public void setTransientValues(Map<String, Serializable> values) {
 		_transientValues = values;
 	}
@@ -315,6 +325,7 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 		ObjectEntryImpl.class);
 
 	private Map<String, Serializable> _indexedValues;
+	private ObjectDefinition _objectDefinition;
 	private Map<String, Serializable> _transientValues;
 	private Map<String, Serializable> _values;
 

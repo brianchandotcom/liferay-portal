@@ -17,8 +17,9 @@ export class ModelBuilderLeftSidebarPage {
 		this.collapseOtherFoldersButton = page.getByRole('button', {
 			name: 'Other Folders',
 		});
-		this.createNewObjectDefinitionButton =
-			page.getByText('Create New Object');
+		this.createNewObjectDefinitionButton = page
+			.getByText('Create New Object')
+			.first();
 		this.goToFolderButton = page.getByRole('button', {
 			exact: true,
 			name: 'Go to Folder',

@@ -2,10 +2,6 @@ locals {
 	oidc_provider_arn="arn:${var.arn_partition}:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${module.eks.oidc_provider}"
 }
 module "eks" {
-	compute_config = {
-		enabled = true
-		node_pools = ["general-purpose"]
-	}
 	addons={
 		amazon-cloudwatch-observability={
 			most_recent=true
@@ -31,6 +27,12 @@ module "eks" {
 		}
 	}
 	cloudwatch_log_group_retention_in_days=90
+	compute_config={
+		enabled=true
+		node_pools=[
+			"general-purpose"
+		]
+	}
 	create_cloudwatch_log_group=true
 	create_kms_key=false
 	enable_cluster_creator_admin_permissions=true
@@ -40,11 +42,11 @@ module "eks" {
 	}
 	endpoint_private_access=true
 	endpoint_public_access=true
-	iam_role_additional_policies = {
-		AmazonEKSBlockStoragePolicy  = "arn:${var.arn_partition}:iam::aws:policy/AmazonEKSBlockStoragePolicy"
-		AmazonEKSComputePolicy       = "arn:${var.arn_partition}:iam::aws:policy/AmazonEKSComputePolicy"
-		AmazonEKSLoadBalancingPolicy = "arn:${var.arn_partition}:iam::aws:policy/AmazonEKSLoadBalancingPolicy"
-		AmazonEKSNetworkingPolicy    = "arn:${var.arn_partition}:iam::aws:policy/AmazonEKSNetworkingPolicy"
+	iam_role_additional_policies={
+		AmazonEKSBlockStoragePolicy="arn:${var.arn_partition}:iam::aws:policy/AmazonEKSBlockStoragePolicy"
+		AmazonEKSComputePolicy="arn:${var.arn_partition}:iam::aws:policy/AmazonEKSComputePolicy"
+		AmazonEKSLoadBalancingPolicy="arn:${var.arn_partition}:iam::aws:policy/AmazonEKSLoadBalancingPolicy"
+		AmazonEKSNetworkingPolicy="arn:${var.arn_partition}:iam::aws:policy/AmazonEKSNetworkingPolicy"
 	}
 	kubernetes_version=data.aws_eks_cluster_versions.available.cluster_versions[0].cluster_version
 	name="${var.deployment_name}-eks"

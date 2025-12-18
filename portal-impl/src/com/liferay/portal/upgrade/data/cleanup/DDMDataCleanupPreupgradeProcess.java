@@ -147,6 +147,9 @@ public class DDMDataCleanupPreupgradeProcess
 				new String[] {"templateId"}, "DDMTemplate"),
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
 				null, "templateId", "DDMTemplateLink", "templateId",
+				"DDMTemplate"),
+			new TableOrphanReferencesDataCleanupPreupgradeProcess(
+				null, "templateId", "DDMTemplateVersion", "templateId",
 				"DDMTemplate"));
 	}
 

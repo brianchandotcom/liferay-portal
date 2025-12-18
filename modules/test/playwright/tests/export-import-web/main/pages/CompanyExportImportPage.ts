@@ -8,7 +8,7 @@ import path from 'path';
 
 import {ApplicationsMenuPage} from '../../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
 import {openFieldset} from '../../../../utils/openFieldset';
-import {ExportImportPage} from './ExportImportPage';
+import {ExportImportPage, taskStatus} from './ExportImportPage';
 
 export class CompanyExportImportPage {
 	readonly page: Page;
@@ -41,7 +41,7 @@ export class CompanyExportImportPage {
 		expectedUploadErrorMessage?: string;
 		filePath: string;
 		includePermissions?: boolean;
-		taskStatus?: 'success' | 'completedWithErrors';
+		taskStatus?: taskStatus;
 		useCurrentUser?: boolean;
 	}): Promise<void> {
 		await this.applicationsMenuPage.goToImport();

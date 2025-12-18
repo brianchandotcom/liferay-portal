@@ -290,7 +290,7 @@ export class ExportImportPage {
 	}: {
 		expectedUploadErrorMessage?: string;
 		filePath: string;
-		taskStatus?: 'success' | 'completedWithErrors';
+		taskStatus?: taskStatus;
 		timeout?: number;
 	}) {
 		await this.newImportButton.click();

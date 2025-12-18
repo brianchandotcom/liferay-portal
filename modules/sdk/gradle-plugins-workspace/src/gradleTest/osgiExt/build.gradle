@@ -7,11 +7,8 @@ apply plugin: "com.liferay.osgi.ext.plugin"
 task runGradleTest
 
 dependencies {
-	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
-	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "85.0.0"
-	compileOnly group: "javax.portlet", name: "portlet-api", version: "3.0.1"
-	compileOnly group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
-	originalModule group: "com.liferay", name: "com.liferay.login.web", version: "1.0.0"
+	compileOnly group: "com.liferay.portal", name: "release.dxp.api", version: "2024.q2.0"
+	originalModule group: "com.liferay", name: "com.liferay.login.web", version: "6.0.54"
 }
 
 repositories {
@@ -24,7 +21,7 @@ runGradleTest {
 	dependsOn jar
 
 	doLast {
-		assert jar.archivePath.name == "com.liferay.login.web-1.0.0.ext.jar"
+		assert jar.archivePath.name == "com.liferay.login.web-6.0.54.ext.jar"
 
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()
 
@@ -57,7 +54,7 @@ runGradleTest {
 			Attributes attributes = jarFile.manifest.mainAttributes
 
 			assert attributes.getValue("Bundle-SymbolicName") == "com.liferay.login.web"
-			assert attributes.getValue("Bundle-Version") == "1.0.0.ext"
+			assert attributes.getValue("Bundle-Version") == "6.0.54.ext"
 		}
 	}
 }

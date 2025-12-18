@@ -8,10 +8,10 @@ import {Locator, Page} from '@playwright/test';
 import {DataTablePage} from '../account-admin-web/DataTablePage';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
-export class DigitalSalesRoomsPage {
+export class DigitalSalesRoomTemplatesPage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;
-	readonly digitalSalesRoomsTable: DataTablePage;
-	readonly newDigitalSalesRoomButton: Locator;
+	readonly digitalSalesRoomTemplatesTable: DataTablePage;
+	readonly newDigitalSalesRoomTemplateButton: Locator;
 	readonly noResultsFoundMessage: Locator;
 	readonly page: Page;
 	readonly roomLink: Locator;
@@ -19,14 +19,14 @@ export class DigitalSalesRoomsPage {
 
 	constructor(page: Page) {
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
-		this.digitalSalesRoomsTable = new DataTablePage(
+		this.digitalSalesRoomTemplatesTable = new DataTablePage(
 			page,
 			page.locator(
 				'#portlet_com_liferay_digital_sales_room_web_internal_portlet_DigitalSalesRoomManagementPortlet'
 			)
 		);
-		this.newDigitalSalesRoomButton = page.getByText(
-			'New Digital Sales Room'
+		this.newDigitalSalesRoomTemplateButton = page.getByText(
+			'New Digital Sales Room Template'
 		);
 		this.noResultsFoundMessage = page.getByText('No Results Found');
 		this.page = page;
@@ -39,5 +39,7 @@ export class DigitalSalesRoomsPage {
 
 	async goto() {
 		await this.applicationsMenuPage.goToDigitalSalesRooms();
+
+		await this.templateLink.click();
 	}
 }

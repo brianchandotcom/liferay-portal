@@ -19,4 +19,10 @@ export class HeadlessDigitalSalesRoomApiHelper {
 			`${this.apiHelpers.baseUrl}${this.basePath}/digital-sales-rooms`
 		);
 	}
+
+	async getDigitalSalesRoomTemplates() {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/digital-sales-room-templates`
+		);
+	}
 }

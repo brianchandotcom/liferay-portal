@@ -5,13 +5,18 @@
 
 import {test} from '@playwright/test';
 
+import {DigitalSalesRoomTemplatesPage} from '../pages/digital-sales-room-web/DigitalSalesRoomTemplatesPage';
 import {DigitalSalesRoomsPage} from '../pages/digital-sales-room-web/DigitalSalesRoomsPage';
 import {EditDigitalSalesRoomPage} from '../pages/digital-sales-room-web/EditDigitalSalesRoomPage';
 
 const digitalSalesRoomPagesTest = test.extend<{
+	digitalSalesRoomTemplatesPage: DigitalSalesRoomTemplatesPage;
 	digitalSalesRoomsPage: DigitalSalesRoomsPage;
 	editDigitalSalesRoomPage: EditDigitalSalesRoomPage;
 }>({
+	digitalSalesRoomTemplatesPage: async ({page}, use) => {
+		await use(new DigitalSalesRoomTemplatesPage(page));
+	},
 	digitalSalesRoomsPage: async ({page}, use) => {
 		await use(new DigitalSalesRoomsPage(page));
 	},

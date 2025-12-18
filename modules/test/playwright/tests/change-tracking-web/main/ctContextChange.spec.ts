@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 
@@ -159,11 +160,11 @@ test('LPD-29693, LPD-29294 Assert silence context change popover behavior', asyn
 		name: 'Notifications',
 	});
 
-	await notificationsOption.click();
-
-	await expect(
-		page.getByRole('heading', {name: 'Notifications'})
-	).toBeVisible();
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: page.getByRole('heading', {name: 'Notifications'}),
+		trigger: notificationsOption,
+	});
 
 	await page.getByRole('button', {name: 'Cancel'}).click();
 

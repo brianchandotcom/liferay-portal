@@ -11,7 +11,6 @@ import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest';
 import {documentLibraryPagesTest} from '../../../fixtures/documentLibraryPages.fixtures';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
-import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 import {getTempDir} from '../../../utils/temp';
@@ -105,7 +104,13 @@ test('LPS-117642 NoSuchTagException throws when adding a web content with tag wi
 	await journalPage.selectTag(tagName);
 	await page.waitForTimeout(1000);
 
-	const articleTitle = 'My Test ' + getRandomInt() + ' Web Content';
-	await journalPage.fillArticleData(articleTitle, getRandomString());
+	const articleTitle = getRandomString();
+
+	await journalEditArticlePage.fillTitle(articleTitle);
 	await journalEditArticlePage.publishArticle();
+
+	await waitForAlert(
+		page,
+		`Success:${articleTitle} was created successfully.`
+	);
 });

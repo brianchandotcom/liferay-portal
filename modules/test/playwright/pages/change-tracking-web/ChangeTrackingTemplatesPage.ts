@@ -5,6 +5,7 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import {ChangeTrackingPage} from './ChangeTrackingPage';
 
@@ -87,9 +88,11 @@ export class ChangeTrackingTemplatesPage {
 	async goto() {
 		await this.changeTrackingPage.goto();
 
-		await this.page.getByLabel('Options').click();
-
-		await this.page.getByRole('menuitem', {name: 'Templates'}).click();
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: 'Templates'}),
+			trigger: this.page.getByLabel('Options'),
+		});
 
 		await expect(
 			this.page.getByText('Publication Templates')

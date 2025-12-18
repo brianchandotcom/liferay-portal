@@ -255,9 +255,13 @@ test('LPD-25853 Move Change is added in the timeline dropdown actions', async ({
 
 	await moveButton.click();
 
-	await page.getByText('Move Changes').waitFor();
+	const moveChangesHeader = page
+		.getByTestId('headerTitle')
+		.filter({hasText: 'Move Changes'});
 
-	await expect(page.getByText('Move Changes')).toBeVisible();
+	await moveChangesHeader.waitFor();
+
+	await expect(moveChangesHeader).toBeVisible();
 });
 
 test('LPD-25853 Timeline actions are not visible to user without permissions', async ({

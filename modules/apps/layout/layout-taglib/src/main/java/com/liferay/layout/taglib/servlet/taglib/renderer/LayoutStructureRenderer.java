@@ -1647,6 +1647,8 @@ public class LayoutStructureRenderer {
 						}
 
 						dataAttributes.put(
+							"field-name", infoField.getUniqueId());
+						dataAttributes.put(
 							"field-type", infoFieldType.getName());
 
 						if (infoField.isLocalizable()) {

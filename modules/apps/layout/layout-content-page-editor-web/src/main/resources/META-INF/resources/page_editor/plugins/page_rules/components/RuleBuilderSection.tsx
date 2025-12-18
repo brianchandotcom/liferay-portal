@@ -338,7 +338,7 @@ export function RuleBuilderConditionSection({
 					<div className="align-items-center d-flex">
 						<PopoverTooltip
 							content={Liferay.Language.get(
-								'advanced-expressions-cannot-be-translated-into-basic-builder'
+								'the-basic-builder-does-not-support-advanced-expressions'
 							)}
 							id={tooltipId}
 							trigger={

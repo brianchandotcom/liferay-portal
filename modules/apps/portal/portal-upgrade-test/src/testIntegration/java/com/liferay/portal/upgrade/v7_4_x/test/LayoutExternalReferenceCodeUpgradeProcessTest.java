@@ -42,8 +42,8 @@ public class LayoutExternalReferenceCodeUpgradeProcessTest
 		serviceContext.setUuid(_UUID);
 
 		Layout layout = _layoutLocalService.addLayout(
-			null, TestPropsValues.getUserId(), group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			group.getGroupId(), false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
 			LayoutConstants.TYPE_CONTENT, false, false, null, serviceContext);
 
@@ -52,8 +52,8 @@ public class LayoutExternalReferenceCodeUpgradeProcessTest
 		serviceContext.setUuid(_UUID);
 
 		Layout privateLayout = _layoutLocalService.addLayout(
-			null, TestPropsValues.getUserId(), group.getGroupId(), true,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			group.getGroupId(), true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
 			LayoutConstants.TYPE_CONTENT, false, false, null, serviceContext);
 

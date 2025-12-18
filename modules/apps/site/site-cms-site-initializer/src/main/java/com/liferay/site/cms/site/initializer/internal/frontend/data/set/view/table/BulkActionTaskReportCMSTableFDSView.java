@@ -54,7 +54,9 @@ public class BulkActionTaskReportCMSTableFDSView extends BaseCMSTableFDSView {
 			"numberOfItems", "number-of-items",
 			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
 		).add(
-			"executionStatus", "execution-status"
+			"executionStatus", "result",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"result")
 		).build();
 	}
 

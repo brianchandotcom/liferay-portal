@@ -125,6 +125,7 @@ test('Can see error report and details', async ({
 
 test('Report entries actions are not visible for a successful import', async ({
 	apiHelpers,
+	applicationsMenuPage,
 	companyExportImportPage,
 	exportImportPage,
 }) => {
@@ -143,10 +144,11 @@ test('Report entries actions are not visible for a successful import', async ({
 		'c/tests'
 	);
 
-	const exportFilePath = await companyExportImportPage.export(
-		['Tests 1 Items'],
-		false
-	);
+	await applicationsMenuPage.goToExport();
+
+	const exportFilePath = await exportImportPage.export({
+		portletLabels: ['Tests 1 Items'],
+	});
 
 	await companyExportImportPage.import({
 		filePath: exportFilePath,

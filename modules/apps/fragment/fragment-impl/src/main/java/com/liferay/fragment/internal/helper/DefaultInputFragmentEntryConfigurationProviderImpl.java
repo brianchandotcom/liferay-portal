@@ -144,7 +144,7 @@ public class DefaultInputFragmentEntryConfigurationProviderImpl
 			JSONUtil.put("key", "INPUTS-textarea")
 		).put(
 			MultiselectInfoFieldType.INSTANCE.getName(),
-			JSONUtil.put("key", "INPUTS-multiselect-list")
+			JSONUtil.put("key", "INPUTS-multiselector-dropdown")
 		).put(
 			NumberInfoFieldType.INSTANCE.getName(),
 			JSONUtil.put("key", "INPUTS-numeric-input")

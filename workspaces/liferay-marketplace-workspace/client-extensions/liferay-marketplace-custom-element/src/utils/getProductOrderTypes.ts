@@ -3,19 +3,20 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {OrderTypes} from '../enums/Order';
 import {ProductType} from '../enums/Product';
 
 const productTypeERC = {
-	[ProductType.CLIENT_EXTENSION]: 'CLIENT_EXTENSION',
-	[ProductType.CLOUD]: 'CLOUDAPP',
-	[ProductType.COMPOSITE_APP]: 'COMPOSITE_APP',
-	[ProductType.DXP]: 'DXPAPP',
-	[ProductType.LOW_CODE_CONFIGURATION]: 'LOW_CODE_CONFIGURATION',
-	[ProductType.OTHER]: 'OTHER',
-	[ProductType.SSA_SAAS]: 'SSA_SAAS',
+	[ProductType.CLIENT_EXTENSION]: OrderTypes.CLIENT_EXTENSION,
+	[ProductType.CLOUD]: OrderTypes.CLOUDAPP,
+	[ProductType.COMPOSITE_APP]: OrderTypes.COMPOSITE_APP,
+	[ProductType.DXP]: OrderTypes.DXPAPP,
+	[ProductType.LOW_CODE_CONFIGURATION]: OrderTypes.LOW_CODE_CONFIGURATION,
+	[ProductType.OTHER]: OrderTypes.OTHER,
+	[ProductType.SSA_SAAS]: OrderTypes.SSA_SAAS,
 } as const;
 
-export function getProductOrderTypes(productSpecificationValue: any) {
+export function getProductOrderTypes(productSpecificationValue: string) {
 	const productSpecification = productSpecificationValue.toLowerCase();
 
 	return {

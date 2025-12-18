@@ -14,9 +14,11 @@ import com.liferay.layout.page.template.kernel.provider.util.LayoutPageTemplateE
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
+import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.defaultpermissions.util.PortalDefaultPermissionsUtil;
@@ -79,6 +81,7 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ImageLocalService;
@@ -357,15 +360,22 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setMasterLayoutPageTemplateEntryERC(
 			masterLayoutPageTemplateEntryERC);
 
-		String layoutPrototypeUuid = ParamUtil.getString(
-			serviceContext, "layoutPrototypeUuid");
-		boolean layoutPrototypeLinkEnabled = ParamUtil.getBoolean(
-			serviceContext, "layoutPrototypeLinkEnabled",
-			PropsValues.LAYOUT_PROTOTYPE_LINK_ENABLED_DEFAULT);
+		String portletLayoutPageTemplateEntryERC = ParamUtil.getString(
+			serviceContext, "portletLayoutPageTemplateEntryERC");
+		String portletLayoutPageTemplateEntryScopeERC = ParamUtil.getString(
+			serviceContext, "portletLayoutPageTemplateEntryScopeERC");
+		boolean portletLayoutPageTemplateEntryLinkEnabled =
+			ParamUtil.getBoolean(
+				serviceContext, "portletLayoutPageTemplateEntryLinkEnabled",
+				PropsValues.LAYOUT_PROTOTYPE_LINK_ENABLED_DEFAULT);
 
-		if (Validator.isNotNull(layoutPrototypeUuid)) {
-			layout.setLayoutPrototypeUuid(layoutPrototypeUuid);
-			layout.setLayoutPrototypeLinkEnabled(layoutPrototypeLinkEnabled);
+		if (Validator.isNotNull(portletLayoutPageTemplateEntryERC)) {
+			layout.setPortletLayoutPageTemplateEntryERC(
+				portletLayoutPageTemplateEntryERC);
+			layout.setPortletLayoutPageTemplateEntryScopeERC(
+				portletLayoutPageTemplateEntryScopeERC);
+			layout.setPortletLayoutPageTemplateEntryLinkEnabled(
+				portletLayoutPageTemplateEntryLinkEnabled);
 		}
 
 		String layoutSetPrototypeLayoutERC = ParamUtil.getString(
@@ -408,11 +418,13 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		// Layout prototype
 
-		if (Validator.isNotNull(layoutPrototypeUuid) &&
-			!layoutPrototypeLinkEnabled) {
+		if (Validator.isNotNull(portletLayoutPageTemplateEntryERC) &&
+			!portletLayoutPageTemplateEntryLinkEnabled) {
 
 			_applyLayoutPrototype(
-				layoutPrototypeUuid, layout, layoutPrototypeLinkEnabled);
+				portletLayoutPageTemplateEntryERC,
+				portletLayoutPageTemplateEntryScopeERC, layout,
+				portletLayoutPageTemplateEntryLinkEnabled);
 		}
 
 		// Resources
@@ -2053,18 +2065,25 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	@Override
-	public List<Layout> getLayoutsByLayoutPrototypeUuid(
-		String layoutPrototypeUuid) {
+	public List<Layout> getLayoutsByPortletLayoutPageTemplateEntryERC(
+		String portletLayoutPageTemplateEntryERC,
+		String portletLayoutPageTemplateEntryScopeERC) {
 
-		return layoutPersistence.findByLayoutPrototypeUuid(layoutPrototypeUuid);
+		return dslQuery(
+			_getLayoutsByPortletLayoutPageTemplateEntryERCGroupByStep(
+				portletLayoutPageTemplateEntryERC,
+				portletLayoutPageTemplateEntryScopeERC));
 	}
 
 	@Override
-	public int getLayoutsByLayoutPrototypeUuidCount(
-		String layoutPrototypeUuid) {
+	public int getLayoutsByPortletLayoutPageTemplateEntryERCCount(
+		String portletLayoutPageTemplateEntryERC,
+		String portletLayoutPageTemplateEntryScopeERC) {
 
-		return layoutPersistence.countByLayoutPrototypeUuid(
-			layoutPrototypeUuid);
+		return dslQueryCount(
+			_getLayoutsByPortletLayoutPageTemplateEntryERCGroupByStep(
+				portletLayoutPageTemplateEntryERC,
+				portletLayoutPageTemplateEntryScopeERC));
 	}
 
 	@Override
@@ -3079,26 +3098,38 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		layout.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 
-		String layoutPrototypeUuid = ParamUtil.getString(
-			serviceContext, "layoutPrototypeUuid");
+		String portletLayoutPageTemplateEntryERC = ParamUtil.getString(
+			serviceContext, "portletLayoutPageTemplateEntryERC");
 
-		if (Validator.isNotNull(layoutPrototypeUuid)) {
-			layout.setLayoutPrototypeUuid(layoutPrototypeUuid);
+		if (Validator.isNotNull(portletLayoutPageTemplateEntryERC)) {
+			layout.setPortletLayoutPageTemplateEntryERC(
+				portletLayoutPageTemplateEntryERC);
 
 			boolean applyLayoutPrototype = ParamUtil.getBoolean(
 				serviceContext, "applyLayoutPrototype");
 
-			boolean layoutPrototypeLinkEnabled = ParamUtil.getBoolean(
-				serviceContext, "layoutPrototypeLinkEnabled");
+			String portletLayoutPageTemplateEntryScopeERC = ParamUtil.getString(
+				serviceContext, "portletLayoutPageTemplateEntryScopeERC");
 
-			layout.setLayoutPrototypeLinkEnabled(layoutPrototypeLinkEnabled);
+			layout.setPortletLayoutPageTemplateEntryScopeERC(
+				portletLayoutPageTemplateEntryScopeERC);
+
+			boolean portletLayoutPageTemplateEntryLinkEnabled =
+				ParamUtil.getBoolean(
+					serviceContext,
+					"portletLayoutPageTemplateEntryLinkEnabled");
+
+			layout.setPortletLayoutPageTemplateEntryLinkEnabled(
+				portletLayoutPageTemplateEntryLinkEnabled);
 
 			if (applyLayoutPrototype) {
 				serviceContext.setAttribute(
 					"applyLayoutPrototype", Boolean.FALSE);
 
 				_applyLayoutPrototype(
-					layoutPrototypeUuid, layout, layoutPrototypeLinkEnabled);
+					portletLayoutPageTemplateEntryERC,
+					portletLayoutPageTemplateEntryScopeERC, layout,
+					portletLayoutPageTemplateEntryLinkEnabled);
 
 				layout = layoutPersistence.findByG_P_L(
 					groupId, privateLayout, layoutId);
@@ -3772,8 +3803,9 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		if (Objects.equals(type, LayoutConstants.TYPE_CONTENT) ||
 			Objects.equals(type, LayoutConstants.TYPE_UTILITY)) {
 
-			layout.setLayoutPrototypeUuid(StringPool.BLANK);
-			layout.setLayoutPrototypeLinkEnabled(false);
+			layout.setPortletLayoutPageTemplateEntryERC(StringPool.BLANK);
+			layout.setPortletLayoutPageTemplateEntryScopeERC(StringPool.BLANK);
+			layout.setPortletLayoutPageTemplateEntryLinkEnabled(false);
 		}
 
 		return layoutLocalService.updateLayout(layout);
@@ -3984,19 +4016,39 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	private void _applyLayoutPrototype(
-			String layoutPrototypeUuid, Layout layout,
-			boolean layoutPrototypeLinkEnabled)
+			String portletLayoutPageTemplateEntryERC,
+			String portletLayoutPageTemplateEntryScopeERC, Layout layout,
+			boolean portletLayoutPageTemplateEntryLinkEnabled)
 		throws PortalException {
 
+		long groupId = layout.getGroupId();
+
+		if (Validator.isNotNull(portletLayoutPageTemplateEntryScopeERC)) {
+			Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
+				portletLayoutPageTemplateEntryScopeERC, layout.getCompanyId());
+
+			if (group == null) {
+				return;
+			}
+
+			groupId = group.getGroupId();
+		}
+
 		LayoutPrototype layoutPrototype =
-			_layoutPrototypeLocalService.getLayoutPrototypeByUuidAndCompanyId(
-				layoutPrototypeUuid, layout.getCompanyId());
+			LayoutPageTemplateEntryLayoutProviderUtil.
+				getLayoutPageTemplateEntryLayoutPrototype(
+					groupId, portletLayoutPageTemplateEntryERC);
+
+		if (layoutPrototype == null) {
+			return;
+		}
 
 		try {
 			Sites sites = _sitesSnapshot.get();
 
 			sites.applyLayoutPrototype(
-				layoutPrototype, layout, layoutPrototypeLinkEnabled);
+				layoutPrototype, layout,
+				portletLayoutPageTemplateEntryLinkEnabled);
 		}
 		catch (PortalException portalException) {
 			throw portalException;
@@ -4240,6 +4292,42 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		);
 	}
 
+	private GroupByStep
+		_getLayoutsByPortletLayoutPageTemplateEntryERCGroupByStep(
+			String portletLayoutPageTemplateEntryERC,
+			String portletLayoutPageTemplateEntryScopeERC) {
+
+		JoinStep joinStep = DSLQueryFactoryUtil.select(
+			LayoutTable.INSTANCE
+		).from(
+			LayoutTable.INSTANCE
+		);
+
+		Predicate predicate =
+			LayoutTable.INSTANCE.portletLayoutPageTemplateEntryERC.eq(
+				portletLayoutPageTemplateEntryERC);
+
+		if (Validator.isNotNull(portletLayoutPageTemplateEntryScopeERC)) {
+			Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
+				portletLayoutPageTemplateEntryScopeERC,
+				CompanyThreadLocal.getCompanyId());
+
+			if (group == null) {
+				return joinStep.where(predicate);
+			}
+
+			predicate = predicate.or(
+				LayoutTable.INSTANCE.groupId.eq(
+					group.getGroupId()
+				).and(
+					LayoutTable.INSTANCE.portletLayoutPageTemplateEntryScopeERC.
+						isNull()
+				));
+		}
+
+		return joinStep.where(predicate);
+	}
+
 	private long _getParentPlid(
 		long groupId, boolean privateLayout, long parentLayoutId) {
 
@@ -4414,7 +4502,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			return false;
 		}
 
-		if (Validator.isNull(layout.getLayoutPrototypeUuid()) &&
+		if (Validator.isNull(layout.getPortletLayoutPageTemplateEntryERC()) &&
 			Validator.isNull(layout.getLayoutSetPrototypeLayoutERC())) {
 
 			return false;

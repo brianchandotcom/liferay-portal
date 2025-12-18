@@ -1,8 +1,16 @@
 definition {
 
 	@summary = "Default summary"
-	macro addStyleBooks(styleBookName = null) {
+	macro addStyleBooks(styleBookName = null, themeName = null) {
 		LexiconEntry.gotoAdd();
+
+		if (isSet(themeName)) {
+			Click(
+				key_portletName = ${portletName},
+				locator1 = "StyleBook#BASE_THEME_DROPDOWN");
+
+			MenuItem.click(menuItem = ${themeName});
+		}
 
 		PortletEntry.inputName(name = ${styleBookName});
 

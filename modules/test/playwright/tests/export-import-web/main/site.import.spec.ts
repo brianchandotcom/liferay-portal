@@ -159,7 +159,7 @@ testWithExportImportAtInstanceLevelFF(
 
 testWithExportImportAtInstanceLevelFF(
 	'Cannot import an instance scoped lar file',
-	async ({apiHelpers, companyExportImportPage, exportImportPage, page}) => {
+	async ({apiHelpers, applicationsMenuPage, exportImportPage, page}) => {
 		const objectActionAPIClient =
 			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
@@ -180,12 +180,11 @@ testWithExportImportAtInstanceLevelFF(
 
 		const homePage = new HomePage(page);
 
-		await companyExportImportPage.applicationsMenuPage.goToExport();
+		await applicationsMenuPage.goToExport();
 
-		const exportFilePath =
-			await companyExportImportPage.exportImportPage.export({
-				portletLabels: ['Tests 1 Items'],
-			});
+		const exportFilePath = await exportImportPage.export({
+			portletLabels: ['Tests 1 Items'],
+		});
 
 		await homePage.goto();
 

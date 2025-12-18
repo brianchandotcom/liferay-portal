@@ -9,6 +9,7 @@ import {
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
+import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
@@ -17,6 +18,7 @@ import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 import {objectDefitionRequestData} from './utils/objectDefitionRequestData';
 
 export const test = mergeTests(
+	applicationsMenuPageTest,
 	dataApiHelpersTest,
 	exportImportPagesTest,
 	companyExportImportPageTest,
@@ -28,6 +30,7 @@ export const test = mergeTests(
 
 test('Can see error report and details', async ({
 	apiHelpers,
+	applicationsMenuPage,
 	companyExportImportPage,
 	exportImportPage,
 }) => {
@@ -46,12 +49,11 @@ test('Can see error report and details', async ({
 		'c/tests'
 	);
 
-	await companyExportImportPage.applicationsMenuPage.goToExport();
+	await applicationsMenuPage.goToExport();
 
-	const exportFilePath =
-		await companyExportImportPage.exportImportPage.export({
-			portletLabels: ['Tests 1 Items'],
-		});
+	const exportFilePath = await exportImportPage.export({
+		portletLabels: ['Tests 1 Items'],
+	});
 
 	const objectFieldAPIClient =
 		await apiHelpers.buildRestClient(ObjectFieldAPI);

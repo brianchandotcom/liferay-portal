@@ -11,6 +11,7 @@ import com.liferay.jenkins.results.parser.job.property.JobPropertyFactory;
 import com.liferay.jenkins.results.parser.test.batch.TestBatch;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalAxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalBatchTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalSegmentTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.SegmentTestClassGroup;
@@ -787,6 +788,18 @@ public abstract class BaseJob implements Job {
 				propertiesMap.put(
 					segmentTestClassGroup.getSegmentName(), segmentProperties);
 			}
+		}
+
+		for (AxisTestClassGroup axisTestClassGroup : getAxisTestClassGroups()) {
+			Properties axisProperties = new Properties();
+
+			axisProperties.setProperty(
+				"test.batch.os.architecture",
+				axisTestClassGroup.getOSArchitecture());
+			axisProperties.setProperty(
+				"test.batch.slave.label", axisTestClassGroup.getSlaveLabel());
+
+			propertiesMap.put(axisTestClassGroup.getAxisName(), axisProperties);
 		}
 
 		StringBuilder sb = new StringBuilder();

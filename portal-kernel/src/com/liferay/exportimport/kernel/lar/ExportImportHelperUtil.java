@@ -66,6 +66,16 @@ public class ExportImportHelperUtil {
 			companyId, excludeDataAlwaysStaged);
 	}
 
+	public static Portlet getDataSiteLevelPortlet(
+		String className, long companyId, boolean excludeDataAlwaysStaged) {
+
+		ExportImportHelper exportImportHelper =
+			_exportImportHelperSnapshot.get();
+
+		return exportImportHelper.getDataSiteLevelPortlet(
+			className, companyId, excludeDataAlwaysStaged);
+	}
+
 	public static List<Portlet> getDataSiteLevelPortlets(long companyId)
 		throws Exception {
 

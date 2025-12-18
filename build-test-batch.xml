@@ -2906,6 +2906,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 		<attribute default="" name="database.partition.export.and.import" />
 		<attribute name="database.type" />
 		<attribute default="${database.@{database.type}.version}" name="database.version" />
+		<attribute default="" name="gcs.store.enabled" />
 		<attribute default="" name="refreshdependencies" />
 		<attribute default="true" name="setup.testable.tomcat" />
 		<attribute default="" name="subrepository.name" />
@@ -2941,6 +2942,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 								<param name="database.partition.enabled" value="@{database.partition.enabled}" />
 								<param name="database.partition.export.and.import" value="@{database.partition.export.and.import}" />
 								<param name="database.type" value="@{database.type}" />
+								<param name="gcs.store.enabled" value="@{gcs.store.enabled}" />
 							</antcall>
 
 							<antcall inheritAll="false" target="prepare-system-ext-properties" />
@@ -8901,6 +8903,34 @@ information. Make sure to commit in all format-javadoc results.
 
 	<target name="modules-integration-db2115">
 		<run-modules-integration-test database.type="db2" database.version="11.5.7" />
+	</target>
+
+	<target name="modules-integration-gcs-postgresql163">
+		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
+		<tstamp>
+			<format pattern="yyyyMMddkkmmssSSS" property="gcs.bucket.id" />
+		</tstamp>
+
+		<ant antfile="build-test-gcs-store.xml" target="configure-gcs-cli" />
+
+		<ant antfile="build-test-gcs-store.xml" target="create-gcs-bucket" />
+
+		<prepare-gcs-store-configuration />
+
+		<trycatch>
+			<try>
+				<run-modules-integration-test
+					database.type="postgresql"
+					database.version="16.3"
+					gcs.store.enabled="true"
+				/>
+			</try>
+			<finally>
+				<ant antfile="build-test-gcs-store.xml" target="delete-gcs-bucket">
+					<property name="gcs.store.enabled" value="true" />
+				</ant>
+			</finally>
+		</trycatch>
 	</target>
 
 	<target name="modules-integration-hypersonic">

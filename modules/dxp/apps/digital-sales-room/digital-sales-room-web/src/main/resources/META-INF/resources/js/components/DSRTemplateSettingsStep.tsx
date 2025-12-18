@@ -21,7 +21,8 @@ function DSRTemplateSettingsStep({
 	setHandleStepSubmit,
 	showHeader = true,
 }: TDSRRoomDetailsStepProps) {
-	const {dataContext, setDataContext} = useContext<TDSRContext>(DSRContext);
+	const {dataContext, loading, setDataContext} =
+		useContext<TDSRContext>(DSRContext);
 
 	const fieldValid = useCallback(
 		(name: string, value: null | string | undefined): boolean => {
@@ -138,6 +139,7 @@ function DSRTemplateSettingsStep({
 					<ClayInput
 						aria-label={Liferay.Language.get('name')}
 						data-qa-id="roomNameInput"
+						disabled={loading}
 						id="dsr-room-name"
 						name="roomName"
 						onChange={handleFieldChange}
@@ -166,6 +168,7 @@ function DSRTemplateSettingsStep({
 						aria-label={Liferay.Language.get('description')}
 						component="textarea"
 						data-qa-id="descriptionInput"
+						disabled={loading}
 						id="dsr-description"
 						name="description"
 						onChange={handleFieldChange}

@@ -40,7 +40,8 @@ function DSRShareRoomStep({
 	setHandleStepSubmit,
 	step = 3,
 }: TDSRRoomDetailsStepProps) {
-	const {dataContext, setDataContext} = useContext<TDSRContext>(DSRContext);
+	const {dataContext, loading, setDataContext} =
+		useContext<TDSRContext>(DSRContext);
 
 	const [emailAddresses, setEmailAddresses] = useState<
 		Array<{label: string; value: string}>
@@ -130,6 +131,7 @@ function DSRShareRoomStep({
 						allowDuplicateValues={false}
 						autoFocus={true}
 						data-qa-id="emailAddressesInput"
+						disabled={loading}
 						inputName="dsr-users-email-addresses"
 						items={emailAddresses}
 						onItemsChange={(emails: Array<any>) => {
@@ -146,6 +148,7 @@ function DSRShareRoomStep({
 							<Button
 								className="dsr-site-role-trigger-button"
 								data-qa-id="roleKeyButton"
+								disabled={loading}
 								displayType="secondary"
 								size="xs"
 							>

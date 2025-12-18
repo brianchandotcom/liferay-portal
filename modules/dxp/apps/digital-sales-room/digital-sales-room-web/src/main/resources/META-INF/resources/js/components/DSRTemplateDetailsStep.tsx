@@ -29,10 +29,12 @@ function DSRTemplateDetailsStep({
 	setHandleStepSubmit,
 	showHeader = true,
 }: TDSRRoomDetailsStepProps) {
-	const {dataContext, setDataContext} = useContext<TDSRContext>(DSRContext);
+	const {dataContext, loading, setDataContext} =
+		useContext<TDSRContext>(DSRContext);
 	const clientLogoInputFileRef = useRef(null);
 	const {getInputProps, getRootProps, isDragActive} = useDropzone({
 		accept: ['image/*'],
+		disabled: loading,
 		multiple: false,
 		onDropAccepted: async (acceptedFiles) => {
 			if (acceptedFiles && acceptedFiles.length) {
@@ -230,6 +232,7 @@ function DSRTemplateDetailsStep({
 						aria-hidden="true"
 						className="d-none"
 						data-qa-id="clientLogoInput"
+						disabled={loading}
 						id="dsr-client-logo"
 						onChange={handleClientLogoChange}
 						ref={clientLogoInputFileRef}
@@ -251,6 +254,7 @@ function DSRTemplateDetailsStep({
 						<ClayButton
 							className="ml-2"
 							data-qa-id="clientLogoButton"
+							disabled={loading}
 							displayType="primary"
 							onClick={handleClientLogoFileChooser}
 							size="sm"
@@ -262,6 +266,7 @@ function DSRTemplateDetailsStep({
 							<ClayButton
 								className="ml-3"
 								data-qa-id="clientLogoDeleteButton"
+								disabled={loading}
 								displayType="secondary"
 								onClick={handleClientLogoDelete}
 								size="sm"
@@ -292,6 +297,7 @@ function DSRTemplateDetailsStep({
 					<div
 						{...getRootProps({
 							className: classNames('dropzone', {
+								'dropzone-disabled': loading,
 								'dropzone-drag-active': isDragActive,
 							}),
 						})}
@@ -312,6 +318,7 @@ function DSRTemplateDetailsStep({
 									<ClayButton
 										className="ml-2"
 										data-qa-id="dsr-banner-button"
+										disabled={loading}
 										displayType="primary"
 										size="sm"
 									>
@@ -321,6 +328,7 @@ function DSRTemplateDetailsStep({
 									<ClayButton
 										className="ml-3"
 										data-qa-id="dsr-banner-delete-button"
+										disabled={loading}
 										displayType="secondary"
 										onClick={handleBannerDelete}
 										size="sm"
@@ -375,6 +383,7 @@ function DSRTemplateDetailsStep({
 
 					<ClayColorPicker
 						data-qa-id="primaryColorInput"
+						disabled={loading}
 						name="dsr-primary-color"
 						onChange={handlePrimaryColorChange}
 						showHex={true}
@@ -398,6 +407,7 @@ function DSRTemplateDetailsStep({
 
 					<ClayColorPicker
 						data-qa-id="secondaryColorInput"
+						disabled={loading}
 						name="dsr-secondary-color"
 						onChange={handleSecondaryColorChange}
 						showHex={true}

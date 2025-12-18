@@ -31,6 +31,7 @@ const DEFAULT_DATA_CONTEXT: TDSRDataContext = {
 
 export const DSRContext = React.createContext<TDSRContext>({
 	dataContext: DEFAULT_DATA_CONTEXT,
+	loading: false,
 	setDataContext: () => {},
 });
 
@@ -163,7 +164,7 @@ function DSRTemplateInitializer({
 	);
 
 	return (
-		<DSRContext.Provider value={{dataContext, setDataContext}}>
+		<DSRContext.Provider value={{dataContext, loading, setDataContext}}>
 			<ClayModal.Header
 				closeButtonAriaLabel={Liferay.Language.get('close')}
 			>

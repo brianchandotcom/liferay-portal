@@ -286,11 +286,14 @@ public class ObjectDBResourceProvider implements DBResourceProvider {
 			for (ObjectDefinition objectDefinition :
 					objectDefinitions.values()) {
 
-				tablesPrimaryKeyColumnNames.put(
-					objectDefinition.getDBTableName(),
-					new String[] {
-						objectDefinition.getPKObjectFieldDBColumnName()
-					});
+				if (!objectDefinition.isUnmodifiableSystemObject()) {
+					tablesPrimaryKeyColumnNames.put(
+						objectDefinition.getDBTableName(),
+						new String[] {
+							objectDefinition.getPKObjectFieldDBColumnName()
+						});
+				}
+
 				tablesPrimaryKeyColumnNames.put(
 					objectDefinition.getExtensionDBTableName(),
 					new String[] {

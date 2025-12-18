@@ -303,6 +303,7 @@ export default {
 	'get-started': 'Get Started',
 	'github-username': 'Github Username',
 	'go-back-to-marketplace': 'Go Back to Marketplace',
+	'go-to-analytics-cloud': 'Go to Analytics Cloud',
 	'go-to-app-provisioning': 'Go to App Provisioning',
 	'go-to-cloud-console': 'Go to Cloud Console',
 	'go-to-dashboard': 'Go to Dashboard',

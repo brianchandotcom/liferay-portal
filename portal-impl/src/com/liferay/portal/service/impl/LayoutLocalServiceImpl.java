@@ -14,11 +14,9 @@ import com.liferay.layout.page.template.kernel.provider.util.LayoutPageTemplateE
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
-import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
-import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.defaultpermissions.util.PortalDefaultPermissionsUtil;
@@ -81,7 +79,6 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ImageLocalService;
@@ -2066,28 +2063,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		}
 
 		return layouts;
-	}
-
-	@Override
-	public List<Layout> getLayoutsByPortletLayoutPageTemplateEntryERC(
-		String portletLayoutPageTemplateEntryERC,
-		String portletLayoutPageTemplateEntryScopeERC) {
-
-		return dslQuery(
-			_getLayoutsByPortletLayoutPageTemplateEntryERCGroupByStep(
-				portletLayoutPageTemplateEntryERC,
-				portletLayoutPageTemplateEntryScopeERC));
-	}
-
-	@Override
-	public int getLayoutsByPortletLayoutPageTemplateEntryERCCount(
-		String portletLayoutPageTemplateEntryERC,
-		String portletLayoutPageTemplateEntryScopeERC) {
-
-		return dslQueryCount(
-			_getLayoutsByPortletLayoutPageTemplateEntryERCGroupByStep(
-				portletLayoutPageTemplateEntryERC,
-				portletLayoutPageTemplateEntryScopeERC));
 	}
 
 	@Override
@@ -4295,42 +4270,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 					_classNameLocalService.getClassNameId(Layout.class))
 			)
 		);
-	}
-
-	private GroupByStep
-		_getLayoutsByPortletLayoutPageTemplateEntryERCGroupByStep(
-			String portletLayoutPageTemplateEntryERC,
-			String portletLayoutPageTemplateEntryScopeERC) {
-
-		JoinStep joinStep = DSLQueryFactoryUtil.select(
-			LayoutTable.INSTANCE
-		).from(
-			LayoutTable.INSTANCE
-		);
-
-		Predicate predicate =
-			LayoutTable.INSTANCE.portletLayoutPageTemplateEntryERC.eq(
-				portletLayoutPageTemplateEntryERC);
-
-		if (Validator.isNotNull(portletLayoutPageTemplateEntryScopeERC)) {
-			Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
-				portletLayoutPageTemplateEntryScopeERC,
-				CompanyThreadLocal.getCompanyId());
-
-			if (group == null) {
-				return joinStep.where(predicate);
-			}
-
-			predicate = predicate.or(
-				LayoutTable.INSTANCE.groupId.eq(
-					group.getGroupId()
-				).and(
-					LayoutTable.INSTANCE.portletLayoutPageTemplateEntryScopeERC.
-						isNull()
-				));
-		}
-
-		return joinStep.where(predicate);
 	}
 
 	private long _getParentPlid(

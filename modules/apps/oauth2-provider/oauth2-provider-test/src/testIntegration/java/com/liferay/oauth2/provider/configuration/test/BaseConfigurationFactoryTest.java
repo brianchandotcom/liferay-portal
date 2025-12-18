@@ -230,7 +230,7 @@ public class BaseConfigurationFactoryTest {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				className, LoggerTestUtil.INFO)) {
 
-			_createFactoryConfiguration(
+			Configuration configuration = _createFactoryConfiguration(
 				className,
 				HashMapDictionaryBuilder.<String, Object>put(
 					"_portalK8sConfigMapModifier.cardinality.minimum", 0
@@ -241,6 +241,8 @@ public class BaseConfigurationFactoryTest {
 				).build());
 
 			Assert.assertTrue(ListUtil.isEmpty(logCapture.getLogEntries()));
+
+			ConfigurationTestUtil.deleteConfiguration(configuration);
 		}
 	}
 

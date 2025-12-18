@@ -207,7 +207,7 @@ public class AssetPublisherServiceTest {
 
 	protected void addAssetCategories(long vocabularyId) throws Exception {
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		for (String assetCategoryName : _ASSET_CATEGORY_NAMES) {
 			AssetCategory assetCategory =

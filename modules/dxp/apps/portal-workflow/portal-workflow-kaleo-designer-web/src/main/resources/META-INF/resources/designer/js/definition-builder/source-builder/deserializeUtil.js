@@ -115,8 +115,6 @@ DeserializeUtil.prototype = {
 				}
 
 				if (type === 'llm' || type === 'ai-decision') {
-					data.prompt = node.prompt || '';
-
 					data.inputVariables = (() => {
 						try {
 							return JSON.parse(node['input-variables']);
@@ -129,6 +127,17 @@ DeserializeUtil.prototype = {
 					data.outputVariables = (() => {
 						try {
 							return JSON.parse(node['output-variables']);
+						}
+						catch (error) {
+							return [];
+						}
+					})();
+
+					data.prompt = node.prompt || '';
+
+					data.rag = (() => {
+						try {
+							return JSON.parse(node.rag);
 						}
 						catch (error) {
 							return [];

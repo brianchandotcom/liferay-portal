@@ -712,6 +712,9 @@ function serializeDefinition(xmlNamespace, metadata, nodes, transitions) {
 			);
 			buffer.push(XMLUtil.create('prompt', cdata(prompt ? prompt : '')));
 			buffer.push(
+				XMLUtil.create('rag', cdata(jsonStringify(item.data.rag)))
+			);
+			buffer.push(
 				XMLUtil.create('tools', cdata(jsonStringify(item.data.tools)))
 			);
 		}

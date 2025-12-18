@@ -45,12 +45,6 @@ export function getShortName(name: string): string {
 	return name;
 }
 
-/**
- * Equivalent of:
- * "/c/" + TextFormatter.formatPlural(StringUtil.toLowerCase(getShortName()))
- */
 export function getRESTContextPath(name: string): string {
-	const shortName = getShortName(name).toLowerCase();
-
-	return `/c/${formatPlural(shortName)}`;
+	return `/c/${formatPlural(getShortName(name).toLowerCase())}`;
 }

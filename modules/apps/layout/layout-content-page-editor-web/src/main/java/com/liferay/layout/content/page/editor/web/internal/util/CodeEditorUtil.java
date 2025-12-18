@@ -260,7 +260,7 @@ public class CodeEditorUtil {
 					"role-ids"),
 				_createSidebarElement(
 					httpServletRequest, "segmentsEntryIds", StringPool.BLANK,
-					"segments-entry-ids"))
+					"segment-entries-ids"))
 		).put(
 			"label", LanguageUtil.get(httpServletRequest, "general-variables")
 		);

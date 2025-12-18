@@ -8,7 +8,10 @@ import React, {useEffect, useMemo, useState} from 'react';
 
 import {config} from '../../../app/config';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
-import {ObjectFields} from '../../../app/contexts/ObjectDataContext';
+import {
+	ObjectField,
+	ObjectFields,
+} from '../../../app/contexts/ObjectDataContext';
 import {useSelector} from '../../../app/contexts/StoreContext';
 import selectFormConfiguration from '../../../app/selectors/selectFormConfiguration';
 import selectLayoutDataItemLabel from '../../../app/selectors/selectLayoutDataItemLabel';
@@ -139,7 +142,7 @@ async function getFormFieldsSections(state: State) {
 		);
 
 		if (!classNameId) {
-			return [];
+			continue;
 		}
 
 		const selectedType = config.formTypes.find(
@@ -147,7 +150,7 @@ async function getFormFieldsSections(state: State) {
 		);
 
 		if (!selectedType) {
-			return [];
+			continue;
 		}
 
 		const cacheKey = getCacheKey([
@@ -168,7 +171,7 @@ async function getFormFieldsSections(state: State) {
 		const formFields = (await promise) as ObjectFields;
 
 		const items = formFields
-			.flatMap((field) => ('fields' in field ? field.fields : []))
+			.flatMap((field) => ('fields' in field ? field.fields : [field]))
 			.filter(
 				(field) =>
 					'key' in field &&
@@ -176,9 +179,10 @@ async function getFormFieldsSections(state: State) {
 						(inputField: any) => inputField.fieldId === field.key
 					)
 			)
-			.map((field: any) => {
+			.map((field) => {
 				const inputField = selectedInputsData.find(
-					(inputField) => inputField.fieldId === field.key
+					(inputField) =>
+						inputField.fieldId === (field as ObjectField).key
 				)!;
 
 				return {

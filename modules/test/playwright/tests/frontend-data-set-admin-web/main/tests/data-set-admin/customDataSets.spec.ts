@@ -737,7 +737,7 @@ test(
 		const dataSetERC = getRandomString();
 		const dataSetLabel = getRandomString();
 		const creatorId = await page.evaluate(() => {
-			return parseInt(Liferay.ThemeDisplay.getUserId(),10);
+			return parseInt(Liferay.ThemeDisplay.getUserId(), 10);
 		});
 
 		await test.step('Create data set', async () => {
@@ -752,14 +752,15 @@ test(
 
 		await test.step('Create a User View', async () => {
 			await dataSetManagerApiHelpers.createDataSetSnapshot({
-				dataSetERC: dataSetERC,
+				dataSetERC,
 				snapshotName: 'Custom View 1',
 			});
 
-			const snapshots = await dataSetManagerApiHelpers.getDataSetSnapshots({
-				dataSetERC: dataSetERC,
-				creatorId: creatorId
-			});
+			const snapshots =
+				await dataSetManagerApiHelpers.getDataSetSnapshots({
+					creatorId,
+					dataSetERC,
+				});
 
 			expect(snapshots.items.length).toBe(1);
 		});
@@ -770,12 +771,13 @@ test(
 		});
 
 		await test.step('Check that User View has been deleted', async () => {
-			const snapshots = await dataSetManagerApiHelpers.getDataSetSnapshots({
-				dataSetERC: dataSetERC,
-				creatorId: creatorId
-			});
+			const snapshots =
+				await dataSetManagerApiHelpers.getDataSetSnapshots({
+					creatorId,
+					dataSetERC,
+				});
 
 			expect(snapshots.items.length).toBe(0);
 		});
 	}
-)
+);

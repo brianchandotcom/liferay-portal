@@ -8,6 +8,7 @@ import {Locator, expect, mergeTests} from '@playwright/test';
 import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
+import getRandomString from '../../../../../utils/getRandomString';
 import {waitForAlert} from '../../../../../utils/waitForAlert';
 import {fdsSamplePageTest} from '../../../../frontend-data-set-web/main/fixtures/fdsSamplePageTest';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
@@ -16,7 +17,6 @@ import {filtersPageTest} from './fixtures/filtersPageTest';
 import {sortingPageTest} from './fixtures/sortingPageTest';
 import {systemDataSetsPageTest} from './fixtures/systemDataSetsPageTest';
 import {visualizationModesPageTest} from './fixtures/visualizationModesPageTest';
-import getRandomString from '../../../../../utils/getRandomString';
 
 export const test = mergeTests(
 	actionsPageTest,
@@ -630,12 +630,7 @@ test(
 test(
 	'Deleting a System Data Set does not remove custom views',
 	{tag: '@LPD-72423'},
-	async ({
-		fdsSamplePage,
-		page,
-		site,
-		systemDataSetsPage,
-	}) => {
+	async ({fdsSamplePage, page, site, systemDataSetsPage}) => {
 		let pageUrl: string;
 
 		const userView1Name = getRandomString();
@@ -654,7 +649,7 @@ test(
 					'aria-controls'
 				);
 
-			let actionsDropdown = page.locator(`#${actionsDropdownId}`);
+			const actionsDropdown = page.locator(`#${actionsDropdownId}`);
 
 			await actionsDropdown
 				.filter({has: page.getByRole('menu')})
@@ -697,7 +692,6 @@ test(
 			await waitForAlert(systemDataSetsPage.page);
 		});
 
-
 		await test.step('Delete the imported system data set', async () => {
 			const fdsRows = systemDataSetsPage.pageContainer.locator('.fds tr');
 
@@ -731,7 +725,7 @@ test(
 					'aria-controls'
 				);
 
-			let userViewsDropdown = page.locator(`#${userViewsDropdownId}`);
+			const userViewsDropdown = page.locator(`#${userViewsDropdownId}`);
 
 			await userViewsDropdown.waitFor();
 

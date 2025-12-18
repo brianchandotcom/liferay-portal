@@ -42,7 +42,6 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.exception.LayoutPrototypeException;
 import com.liferay.portal.kernel.exception.LocaleException;
-import com.liferay.portal.kernel.exception.NoSuchLayoutPrototypeException;
 import com.liferay.portal.kernel.exception.NoSuchLayoutSetPrototypeException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -792,7 +791,7 @@ public class LayoutImportController implements ImportController {
 
 		portletDataContext.setManifestSummary(manifestSummary);
 
-		// Layout and layout set prototype
+		// Layout set prototype
 
 		Element rootElement = portletDataContext.getImportDataRootElement();
 
@@ -805,57 +804,8 @@ public class LayoutImportController implements ImportController {
 
 		portletDataContext.setType(larType);
 
-		if (group.isLayoutPrototype() && larType.equals("layout-prototype")) {
-			parameterMap.put(
-				PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS,
-				new String[] {Boolean.FALSE.toString()});
-
-			String layoutPrototypeUuid = GetterUtil.getString(
-				headerElement.attributeValue("type-uuid"));
-
-			LayoutPrototype existingLayoutPrototype = null;
-
-			if (Validator.isNotNull(layoutPrototypeUuid)) {
-				try {
-					existingLayoutPrototype =
-						_layoutPrototypeLocalService.
-							getLayoutPrototypeByUuidAndCompanyId(
-								layoutPrototypeUuid, companyId);
-				}
-				catch (NoSuchLayoutPrototypeException
-							noSuchLayoutPrototypeException) {
-
-					// LPS-52675
-
-					if (_log.isDebugEnabled()) {
-						_log.debug(noSuchLayoutPrototypeException);
-					}
-				}
-			}
-
-			if (existingLayoutPrototype == null) {
-				LayoutPrototype layoutPrototype =
-					_layoutPrototypeLocalService.getLayoutPrototype(
-						group.getClassPK());
-
-				List<Layout> layouts =
-					_layoutLocalService.getLayoutsByLayoutPrototypeUuid(
-						layoutPrototype.getUuid());
-
-				layoutPrototype.setUuid(layoutPrototypeUuid);
-
-				_layoutPrototypeLocalService.updateLayoutPrototype(
-					layoutPrototype);
-
-				for (Layout layout : layouts) {
-					layout.setLayoutPrototypeUuid(layoutPrototypeUuid);
-
-					_layoutLocalService.updateLayout(layout);
-				}
-			}
-		}
-		else if (group.isLayoutSetPrototype() &&
-				 larType.equals("layout-set-prototype")) {
+		if (group.isLayoutSetPrototype() &&
+			larType.equals("layout-set-prototype")) {
 
 			parameterMap.put(
 				PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS,

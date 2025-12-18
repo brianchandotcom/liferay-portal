@@ -22,24 +22,33 @@ public class ChatAssistantHandler implements AssistantHandler {
 
 	@Override
 	public void handle(AssistantHandlerContext assistantHandlerContext) {
-		ChatAssistant chatAssistant = AiServices.builder(
+		AiServices<ChatAssistant> aiServices = AiServices.builder(
 			ChatAssistant.class
 		).chatMemoryProvider(
 			id -> MessageWindowChatMemory.builder(
 			).chatMemoryStore(
 				_inMemoryChatMemoryStore
-			).maxMessages(
-				30
 			).id(
 				id
+			).maxMessages(
+				30
 			).build()
+		);
+
+		if (assistantHandlerContext.getContentRetriever() != null) {
+			aiServices.contentRetriever(
+				assistantHandlerContext.getContentRetriever());
+		}
+
+		aiServices.streamingChatModel(
+			assistantHandlerContext.getVertexAiGeminiStreamingChatModel()
 		).systemMessageProvider(
 			assistantHandlerContext.getSystemMessageProvider()
-		).streamingChatModel(
-			assistantHandlerContext.getVertexAiGeminiStreamingChatModel()
 		).toolProvider(
 			assistantHandlerContext.getToolProvider()
 		).build();
+
+		ChatAssistant chatAssistant = aiServices.build();
 
 		chatAssistant.chat(
 			assistantHandlerContext.getMemoryId(),

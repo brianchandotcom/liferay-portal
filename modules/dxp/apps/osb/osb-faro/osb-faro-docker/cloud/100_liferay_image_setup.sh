@@ -5,11 +5,12 @@ cp -R /home/liferay/modules/* ${LIFERAY_HOME}/osgi/modules
 cp -R /home/liferay/resources/context.xml $LIFERAY_HOME/tomcat/conf
 cp -R /home/liferay/resources/log_layout.json ${LIFERAY_HOME}/tomcat/webapps/ROOT/WEB-INF/classes/META-INF
 cp -R /home/liferay/resources/log4j ${LIFERAY_HOME}/osgi/log4j
-cp -R /home/liferay/resources/logging.properties $LIFERAY_HOME/tomcat/conf
 cp -R /home/liferay/resources/portal-log4j-ext.xml ${LIFERAY_HOME}/tomcat/webapps/ROOT/WEB-INF/classes/META-INF
 cp -R /home/liferay/resources/rewrite.config ${LIFERAY_HOME}/tomcat/webapps/ROOT/WEB-INF
-cp -R /home/liferay/resources/setenv.sh $LIFERAY_HOME/tomcat/bin
 cp -R /home/liferay/resources/system-ext.properties ${LIFERAY_HOME}/tomcat/webapps/ROOT/WEB-INF/classes
+
+echo >> $LIFERAY_HOME/tomcat/conf/logging.properties && cat /home/liferay/resources/logging.properties >> $LIFERAY_HOME/tomcat/conf/logging.properties
+echo >> $LIFERAY_HOME/tomcat/bin/setenv.sh && cat /home/liferay/resources/setenv.sh >> $LIFERAY_HOME/tomcat/bin/setenv.sh
 
 rm ${LIFERAY_HOME}/deploy/trial-dxp-license-*.xml
 

@@ -7,6 +7,7 @@ package com.liferay.change.tracking.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.constants.CTConstants;
+import com.liferay.change.tracking.internal.test.util.CTCollectionTestUtil;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
@@ -126,7 +127,9 @@ public class CTEntryLocalServiceTest {
 			CTConstants.CT_COLLECTION_ID_PRODUCTION, ctEntry1,
 			journalFolder.getFolderId(), folderName1);
 
-		CTCollection ctCollection2 = _createCTCollection();
+		CTCollection ctCollection2 =
+			CTCollectionTestUtil.createCTCollectionWithIncompleteStatus(
+				TestPropsValues.getUser());
 
 		CTEntry ctEntry2 = null;
 

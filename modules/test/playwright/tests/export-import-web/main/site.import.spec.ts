@@ -26,6 +26,7 @@ import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganiza
 import {wikiPagesTest} from '../../../fixtures/wikiPagesTest';
 import {HomePage} from '../../../pages/portal-web/HomePage';
 import getRandomString from '../../../utils/getRandomString';
+import {normalizeRestPath} from '../../../utils/normalizeRestPath';
 import {openFieldset} from '../../../utils/openFieldset';
 import {readFileFromZip} from '../../../utils/zip';
 import {companyExportImportPageTest} from './fixtures/companyExportImportPagesTest';
@@ -127,13 +128,13 @@ testWithExportImportAtInstanceLevelFF(
 
 		const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
 			{externalReferenceCode: '', textField: 'test'},
-			`${getRESTContextPath(objectDefinition.name)}/scopes/Guest`
+			`${normalizeRestPath(objectDefinition.restContextPath)}/scopes/Guest`
 		);
 
 		await exportImportPage.goToExport();
 
 		const exportFilePath = await exportImportPage.export({
-			portletLabels: ['Tests 1 Items'],
+			portletLabels: [`${objectDefinition.name} 1 Items`],
 		});
 
 		const content = await readFileFromZip(
@@ -144,10 +145,9 @@ testWithExportImportAtInstanceLevelFF(
 		const json = JSON.parse(content);
 
 		expect(json.length).toBe(1);
-
 		expect(
 			await apiHelpers.delete(
-				`${apiHelpers.baseUrl}${getRESTContextPath(objectDefinition.name)}/${objectEntry.id}`
+				`${apiHelpers.baseUrl}${normalizeRestPath(objectDefinition.restContextPath)}/${objectEntry.id}`
 			)
 		).toBeOK();
 
@@ -157,7 +157,7 @@ testWithExportImportAtInstanceLevelFF(
 
 		expect(
 			await apiHelpers.get(
-				`${apiHelpers.baseUrl}${getRESTContextPath(objectDefinition.name)}/scopes/Guest/by-external-reference-code/${objectEntry.externalReferenceCode}`
+				`${apiHelpers.baseUrl}${normalizeRestPath(objectDefinition.restContextPath)}/scopes/Guest/by-external-reference-code/${objectEntry.externalReferenceCode}`
 			)
 		).toEqual(
 			expect.objectContaining({

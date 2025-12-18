@@ -20,7 +20,7 @@ export default class MarketplaceDeliveryOrder {
 		return [
 			OrderTypes.CLIENT_EXTENSION,
 			OrderTypes.COMPOSITE_APP,
-			OrderTypes.DXPAPP,
+			OrderTypes.DXP_APP,
 			OrderTypes.LOW_CODE_CONFIGURATION,
 			OrderTypes.OTHER,
 		].includes(this.order.orderTypeExternalReferenceCode as OrderTypes);
@@ -32,7 +32,7 @@ export default class MarketplaceDeliveryOrder {
 
 	get dxpProvisioningEnabled() {
 		return (
-			this.order.orderTypeExternalReferenceCode === OrderTypes.DXPAPP &&
+			this.order.orderTypeExternalReferenceCode === OrderTypes.DXP_APP &&
 			!this.isFreeApp
 		);
 	}

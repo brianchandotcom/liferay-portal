@@ -60,7 +60,7 @@ const Licenses = () => {
 	const product = outletContext?.product;
 
 	const keyType =
-		placedOrder?.orderTypeExternalReferenceCode === OrderTypes.DXPAPP
+		placedOrder?.orderTypeExternalReferenceCode === OrderTypes.DXP_APP
 			? 'On-Premise'
 			: 'Cloud';
 

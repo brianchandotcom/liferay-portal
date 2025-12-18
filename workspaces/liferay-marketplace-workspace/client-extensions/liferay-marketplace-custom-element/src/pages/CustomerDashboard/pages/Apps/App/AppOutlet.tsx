@@ -161,7 +161,7 @@ const AppOutlet = () => (
 					path: 'cloud-provisioning',
 					visible: [
 						OrderTypes.CLIENT_EXTENSION,
-						OrderTypes.CLOUDAPP,
+						OrderTypes.CLOUD_APP,
 					].includes(
 						placedOrder.orderTypeExternalReferenceCode as OrderTypes
 					),
@@ -173,7 +173,7 @@ const AppOutlet = () => (
 						isPaidApp &&
 						orderCompleted &&
 						[
-							OrderTypes.DXPAPP,
+							OrderTypes.DXP_APP,
 							OrderTypes.CLIENT_EXTENSION,
 						].includes(
 							placedOrder.orderTypeExternalReferenceCode as OrderTypes

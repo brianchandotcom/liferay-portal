@@ -45,7 +45,7 @@ export function NextStepsBody(props: NextStepsBodyProps) {
 	const paymentStatus = placedOrder?.paymentStatus;
 
 	const isCloudApp =
-		placedOrder?.orderTypeExternalReferenceCode === OrderTypes.CLOUDAPP;
+		placedOrder?.orderTypeExternalReferenceCode === OrderTypes.CLOUD_APP;
 
 	const continueButtonKey =
 		paymentStatus === PaymentStatus.PAID

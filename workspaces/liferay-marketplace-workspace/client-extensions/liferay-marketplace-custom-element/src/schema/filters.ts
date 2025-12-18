@@ -256,7 +256,7 @@ const filterSchema = {
 					},
 					{
 						label: i18n.translate('cloud-app'),
-						value: OrderTypes.CLOUDAPP,
+						value: OrderTypes.CLOUD_APP,
 					},
 					{
 						label: i18n.translate('composite-app'),
@@ -264,7 +264,7 @@ const filterSchema = {
 					},
 					{
 						label: i18n.translate('dxp-app'),
-						value: OrderTypes.DXPAPP,
+						value: OrderTypes.DXP_APP,
 					},
 					{
 						label: i18n.translate('low-code-configuration'),

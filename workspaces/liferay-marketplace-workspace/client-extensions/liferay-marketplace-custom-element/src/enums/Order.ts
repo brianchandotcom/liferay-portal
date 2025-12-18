@@ -29,9 +29,9 @@ export enum OrderStatus {
 export enum OrderTypes {
 	ADDONS = 'ADDONS',
 	CLIENT_EXTENSION = 'CLIENT_EXTENSION',
-	CLOUDAPP = 'CLOUD_APP',
+	CLOUD_APP = 'CLOUD_APP',
 	COMPOSITE_APP = 'COMPOSITE_APP',
-	DXPAPP = 'DXP_APP',
+	DXP_APP = 'DXP_APP',
 	LOW_CODE_CONFIGURATION = 'LOW_CODE_CONFIGURATION',
 	OTHER = 'OTHER',
 	SOLUTIONS7 = 'SOLUTIONS7',
@@ -59,9 +59,9 @@ export enum PaymentStatus {
 export const orderTypeLabel = {
 	[OrderTypes.ADDONS]: 'Add-Ons',
 	[OrderTypes.CLIENT_EXTENSION]: 'Client Extension',
-	[OrderTypes.CLOUDAPP]: 'Cloud',
+	[OrderTypes.CLOUD_APP]: 'Cloud',
 	[OrderTypes.COMPOSITE_APP]: 'Composite App',
-	[OrderTypes.DXPAPP]: 'DXP',
+	[OrderTypes.DXP_APP]: 'DXP',
 	[OrderTypes.LOW_CODE_CONFIGURATION]: 'Low-Code Configuration',
 	[OrderTypes.OTHER]: 'Other',
 	[OrderTypes.SSA_SAAS]: 'SSA SaaS',

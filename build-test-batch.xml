@@ -8617,39 +8617,7 @@ information. Make sure to commit in all format-javadoc results.
 		</run-batch-test>
 	</target>
 
-	<target name="modules-integration-aws-s3-mysql84">
-		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
-
-		<tstamp>
-			<format pattern="yyyyMMddkkmmssSSS" property="s3.bucket.id" />
-		</tstamp>
-
-		<ant antfile="build-test-s3-store.xml" target="configure-aws-cli" />
-
-		<prepare-aws-s3-configuration />
-
-		<ant antfile="build-test-s3-store.xml" target="create-s3-bucket">
-			<property name="aws.store.enabled" value="true" />
-		</ant>
-
-		<trycatch>
-			<try>
-				<run-modules-integration-test
-					aws.store.enabled="true"
-					database.type="mysql"
-					database.version="8.4"
-				/>
-			</try>
-
-			<finally>
-				<ant antfile="build-test-s3-store.xml" target="delete-s3-bucket">
-					<property name="aws.store.enabled" value="true" />
-				</ant>
-			</finally>
-		</trycatch>
-	</target>
-
-	<target name="modules-integration-aws-s3-postgresql155">
+	<target name="modules-integration-aws-s3-postgresql163">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
 		<tstamp>
@@ -8669,7 +8637,7 @@ information. Make sure to commit in all format-javadoc results.
 				<run-modules-integration-test
 					aws.store.enabled="true"
 					database.type="postgresql"
-					database.version="15.5"
+					database.version="16.3"
 				/>
 			</try>
 

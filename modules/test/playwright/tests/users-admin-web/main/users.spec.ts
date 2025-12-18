@@ -448,8 +448,11 @@ test(
 
 		await expect(editUserPage.membershipsNoUserGroupsMessage).toBeVisible();
 
-		await editUserPage.selectUserGroupsButton.click();
-		await editUserPage.selectUserGroupTable.changeView('table');
+		await expect(async () => {
+			await editUserPage.selectUserGroupsButton.click();
+			await editUserPage.selectUserGroupTable.changeView('table');
+		}).toPass();
+
 		await editUserPage.selectUserGroupTable.cell(userGroup.name).click();
 
 		await expect(

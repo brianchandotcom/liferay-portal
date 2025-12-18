@@ -1022,13 +1022,11 @@ test(
 
 		await siteMembershipsPage.goto(site.friendlyUrlPath);
 		await siteMembershipsPage.userGroupsLink.click();
-		await siteMembershipsPage.newUserGroupButton.click();
 
-		await expect(
-			siteMembershipsPage.assignUserGroupIFrameTitle
-		).toBeVisible();
-
-		await siteMembershipsPage.assignUserGroupTable.changeView('Table');
+		await expect(async () => {
+			await siteMembershipsPage.newUserGroupButton.click();
+			await siteMembershipsPage.assignUserGroupTable.changeView('Table');
+		}).toPass();
 
 		await expect(
 			siteMembershipsPage.assignUserGroupTable.cell(userGroup.name)
@@ -1797,8 +1795,8 @@ test(
 
 		await assetCategoriesAdminPage.goto('/global');
 		await assetCategoriesAdminPage.gotoVocabulary(vocabularyName);
-		await vocabulariesEditPage.goto(vocabularyName);
 
+		await vocabulariesEditPage.goto(vocabularyName);
 		await vocabulariesEditPage.toggleRequired();
 
 		await usersAndOrganizationsPage.goToUsers();
@@ -1816,11 +1814,11 @@ test(
 
 		await expect(editUserPage.membershipsNoUserGroupsMessage).toBeVisible();
 
-		await editUserPage.selectUserGroupsButton.click();
+		await expect(async () => {
+			await editUserPage.selectUserGroupsButton.click();
+			await editUserPage.selectUserGroupTable.changeView('table');
+		}).toPass();
 
-		await page.waitForLoadState('domcontentloaded');
-
-		await editUserPage.selectUserGroupTable.changeView('table');
 		await editUserPage.selectUserGroupTable.cell(userGroup.name).click();
 
 		await expect(

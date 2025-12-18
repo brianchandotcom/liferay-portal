@@ -1963,9 +1963,12 @@ testAdmin(
 		);
 		await userAssociatedDataBlogPage.publishButton.click();
 
-		await productMenuPage.goToMessageBoards();
+		await expect(async () => {
+			await productMenuPage.goToMessageBoards();
 
-		await userAssociatedDataMessageBoardPage.newButton.click();
+			await userAssociatedDataMessageBoardPage.newButton.click();
+		}).toPass();
+
 		await userAssociatedDataMessageBoardPage.threadMenuItem.click();
 		await userAssociatedDataEditMessageBoardThreadPage.subjectInput.fill(
 			getRandomString()

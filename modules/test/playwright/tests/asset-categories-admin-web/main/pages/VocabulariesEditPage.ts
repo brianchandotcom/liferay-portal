@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import {waitForAlert} from '../../../../utils/waitForAlert';
@@ -126,11 +126,13 @@ export class VocabulariesEditPage {
 	}
 
 	async toggleRequired() {
-		if (await this.page.getByLabel('Asset Types').isHidden()) {
-			await this.expandPanel('Associated Asset Types');
-		}
+		await expect(async () => {
+			if (await this.page.getByLabel('Asset Types').isHidden()) {
+				await this.expandPanel('Associated Asset Types');
+			}
 
-		await this.requiredToggle.click();
+			await this.requiredToggle.click({timeout: 1000});
+		}).toPass();
 		await this.saveButton.click();
 
 		await waitForAlert(this.page);

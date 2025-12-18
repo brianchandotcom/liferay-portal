@@ -280,8 +280,11 @@ test(
 
 		await expect(userAssociatedDataJournalPage.optionsButton).toBeEnabled();
 
-		await userAssociatedDataJournalPage.optionsButton.click();
-		await userAssociatedDataSiteStagingPage.stagingMenuItem.click();
+		await expect(async () => {
+			await userAssociatedDataJournalPage.optionsButton.click();
+			await userAssociatedDataSiteStagingPage.stagingMenuItem.click();
+		}).toPass();
+
 		await userAssociatedDataSiteStagingPage.stagingFramePublishToLiveButton.click();
 
 		await expect(

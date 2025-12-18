@@ -134,8 +134,10 @@ test(
 			roleType: 'regular',
 		});
 
-		await rolesPage.goto();
-		await rolesPage.assignRoleToUserGroup(role.name, userGroup.name);
+		await expect(async () => {
+			await rolesPage.goto();
+			await rolesPage.assignRoleToUserGroup(role.name, userGroup.name);
+		}).toPass();
 
 		await performLogout(page);
 		await performLoginViaApi({
@@ -614,8 +616,13 @@ test(
 		await siteMembershipsPage.goto(site.friendlyUrlPath);
 
 		await siteMembershipsPage.userGroupsLink.click();
-		await siteMembershipsPage.newUserGroupButton.click();
-		await siteMembershipsPage.assignUserGroupTable.changeView('Table');
+
+		await expect(async () => {
+			await siteMembershipsPage.newUserGroupButton.click();
+
+			await siteMembershipsPage.assignUserGroupTable.changeView('Table');
+		}).toPass();
+
 		await (
 			await siteMembershipsPage.assignUserGroupTable.rowCheckbox(
 				userGroup.name

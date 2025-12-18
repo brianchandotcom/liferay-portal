@@ -859,7 +859,11 @@ test(
 		try {
 			await accountsPage.goto();
 
-			await accountsPage.accountsTable.newButton.click();
+			await expect(async () => {
+				await accountsPage.accountsTable.newButton.click();
+
+				await expect(editAccountPage.changeImageButton).toBeVisible();
+			}).toPass();
 
 			await editAccountPage.createAccount(apiHelpers, {
 				domains,
@@ -951,8 +955,13 @@ test(
 			});
 
 			await editAccountPage.usersLink.click();
-			await accountUsersPage.usersTable.newButton.click();
-			await accountUsersPage.assignUserMenuItem.click();
+
+			await expect(async () => {
+				await accountUsersPage.usersTable.newButton.click();
+				await accountUsersPage.assignUserMenuItem.click({
+					timeout: 1000,
+				});
+			}).toPass();
 
 			const randomString = getRandomString();
 
@@ -2483,14 +2492,16 @@ test(
 			accountUsersPage.usersTable.cell(account.name)
 		).toHaveCount(0);
 
-		await accountUsersPage.usersTable.newButton.click();
+		await expect(async () => {
+			await accountUsersPage.usersTable.newButton.click();
 
-		await expect(
-			accountUsersAccountSelectorPage.accountsTable.searchInput
-		).toBeEditable();
-		await expect(
-			accountUsersAccountSelectorPage.accountsTable.cell(account.name)
-		).toBeVisible();
+			await expect(
+				accountUsersAccountSelectorPage.accountsTable.searchInput
+			).toBeEditable();
+			await expect(
+				accountUsersAccountSelectorPage.accountsTable.cell(account.name)
+			).toBeVisible();
+		}).toPass();
 
 		await accountUsersAccountSelectorPage
 			.chooseButton(account.name)

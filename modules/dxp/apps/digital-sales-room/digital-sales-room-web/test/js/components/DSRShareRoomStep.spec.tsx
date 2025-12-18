@@ -45,13 +45,15 @@ let {result: useStateHookResult} = renderHook(() =>
 );
 
 const component = ({
+	loading = false,
 	numberOfSteps = 1,
 	setHandleStepSubmit,
-}: TDSRRoomDetailsStepProps) => {
+}: TDSRRoomDetailsStepProps & {loading?: boolean}) => {
 	return (
 		<DSRContext.Provider
 			value={{
 				dataContext: useStateHookResult.current[0],
+				loading,
 				setDataContext: useStateHookResult.current[1],
 			}}
 		>
@@ -64,10 +66,17 @@ const component = ({
 };
 
 const renderComponent = ({
+	loading = false,
 	numberOfSteps = 1,
 	setHandleStepSubmit,
-}: TDSRRoomDetailsStepProps) => {
-	return render(component({numberOfSteps, setHandleStepSubmit}));
+}: TDSRRoomDetailsStepProps & {loading?: boolean}) => {
+	return render(
+		component({
+			loading,
+			numberOfSteps,
+			setHandleStepSubmit,
+		})
+	);
 };
 
 describe('DSRShareRoomStep', () => {
@@ -260,5 +269,16 @@ describe('DSRShareRoomStep', () => {
 			screen.getByRole('gridcell', {name: 'test1@liferay.com'})
 		).toBeInTheDocument();
 		expect(screen.getByTestId('roleKeyButton')).toHaveTextContent('edit');
+	});
+
+	it('disables fields and buttons when loading is true', async () => {
+		renderComponent({
+			loading: true,
+			numberOfSteps: 1,
+			setHandleStepSubmit: () => {},
+		});
+
+		expect(screen.getByTestId('emailAddressesInput')).toBeDisabled();
+		expect(screen.getByTestId('roleKeyButton')).toBeDisabled();
 	});
 });

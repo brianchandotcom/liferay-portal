@@ -39,7 +39,7 @@ export function getTranslationInput({
 	namespace: string;
 	type?: 'file' | 'hidden';
 }): HTMLInputElement | null {
-	const id = `${namespace}${inputId}_${languageId}`;
+	const id = `${namespace || ''}${inputId}_${languageId}`;
 
 	let translationInput = document.getElementById(id) as HTMLInputElement;
 

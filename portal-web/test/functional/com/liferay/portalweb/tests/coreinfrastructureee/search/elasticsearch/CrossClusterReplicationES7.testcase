@@ -424,19 +424,15 @@ definition {
 
 		CrossClusterReplication.setupCrossClusterReplication();
 
-		Workflow.openWorkflowListView();
+		Navigator.openURL();
 
-		Workflow.duplicateSingleApproverWorkflow(workflowName = "Copy of Single Approver");
-
-		Workflow.openWorkflowListView();
-
-		Navigator.gotoNavItem(navItem = "Configuration");
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Workflow");
 
 		Workflow.configureWorkflow(
-			workflowDefinition = "Copy of Single Approver",
+			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Blogs Entry");
-
-		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -452,23 +448,15 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
-		// Workaround for LPS-180801
-
-		var workflowTask = Workflow._matchTaskCase(
-			workflowAssetTitle = "Blogs Entry Title",
-			workflowDefinitionTask = "approve",
-			workflowTask = "review");
-
 		Workflow.assignToMeTaskByActions(
 			workflowAssetTitle = "Blogs Entry Title",
 			workflowAssetType = "Blogs Entry",
-			workflowTask = ${workflowTask});
+			workflowTask = "Review");
 
 		Workflow.approveTaskByActions(
 			workflowAssetTitle = "Blogs Entry Title",
 			workflowAssetType = "Blogs Entry",
-			workflowDefinitionTask = ${workflowDefinitionTask},
-			workflowTask = ${workflowTask});
+			workflowTask = "Review");
 
 		SearchAdministration.executeReindex();
 

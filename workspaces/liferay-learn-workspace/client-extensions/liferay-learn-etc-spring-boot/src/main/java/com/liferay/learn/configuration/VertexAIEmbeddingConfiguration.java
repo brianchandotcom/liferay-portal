@@ -22,7 +22,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Nilton Vieira
  */
 @Configuration
-public class VertexAiEmbeddingConfiguration {
+public class VertexAIEmbeddingConfiguration {
 
 	@Bean
 	public VertexAiEmbeddingConnectionDetails
@@ -38,7 +38,7 @@ public class VertexAiEmbeddingConfiguration {
 				));
 
 		return new VertexAiEmbeddingConnectionDetails(
-			_vertexAiEmbeddingProjectId, _vertexAiEmbeddingLocation, "google",
+			_vertexAIEmbeddingProjectId, _vertexAIEmbeddingLocation, "google",
 			PredictionServiceSettings.newBuilder(
 			).setCredentialsProvider(
 				fixedCredentialsProvider
@@ -49,9 +49,9 @@ public class VertexAiEmbeddingConfiguration {
 	private String _googleCredentials;
 
 	@Value("${spring.ai.vertex.ai.embedding.location}")
-	private String _vertexAiEmbeddingLocation;
+	private String _vertexAIEmbeddingLocation;
 
 	@Value("${spring.ai.vertex.ai.embedding.project-id}")
-	private String _vertexAiEmbeddingProjectId;
+	private String _vertexAIEmbeddingProjectId;
 
 }

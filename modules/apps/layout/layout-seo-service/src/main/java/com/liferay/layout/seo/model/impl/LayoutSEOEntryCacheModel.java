@@ -68,7 +68,7 @@ public class LayoutSEOEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -104,8 +104,10 @@ public class LayoutSEOEntryCacheModel
 		sb.append(openGraphDescriptionEnabled);
 		sb.append(", openGraphImageAlt=");
 		sb.append(openGraphImageAlt);
-		sb.append(", openGraphImageFileEntryId=");
-		sb.append(openGraphImageFileEntryId);
+		sb.append(", openGraphImageFileEntryERC=");
+		sb.append(openGraphImageFileEntryERC);
+		sb.append(", openGraphImageFileEntryScopeERC=");
+		sb.append(openGraphImageFileEntryScopeERC);
 		sb.append(", openGraphTitle=");
 		sb.append(openGraphTitle);
 		sb.append(", openGraphTitleEnabled=");
@@ -186,8 +188,21 @@ public class LayoutSEOEntryCacheModel
 			layoutSEOEntryImpl.setOpenGraphImageAlt(openGraphImageAlt);
 		}
 
-		layoutSEOEntryImpl.setOpenGraphImageFileEntryId(
-			openGraphImageFileEntryId);
+		if (openGraphImageFileEntryERC == null) {
+			layoutSEOEntryImpl.setOpenGraphImageFileEntryERC("");
+		}
+		else {
+			layoutSEOEntryImpl.setOpenGraphImageFileEntryERC(
+				openGraphImageFileEntryERC);
+		}
+
+		if (openGraphImageFileEntryScopeERC == null) {
+			layoutSEOEntryImpl.setOpenGraphImageFileEntryScopeERC("");
+		}
+		else {
+			layoutSEOEntryImpl.setOpenGraphImageFileEntryScopeERC(
+				openGraphImageFileEntryScopeERC);
+		}
 
 		if (openGraphTitle == null) {
 			layoutSEOEntryImpl.setOpenGraphTitle("");
@@ -238,8 +253,8 @@ public class LayoutSEOEntryCacheModel
 
 		openGraphDescriptionEnabled = objectInput.readBoolean();
 		openGraphImageAlt = objectInput.readUTF();
-
-		openGraphImageFileEntryId = objectInput.readLong();
+		openGraphImageFileEntryERC = objectInput.readUTF();
+		openGraphImageFileEntryScopeERC = objectInput.readUTF();
 		openGraphTitle = objectInput.readUTF();
 
 		openGraphTitleEnabled = objectInput.readBoolean();
@@ -306,7 +321,19 @@ public class LayoutSEOEntryCacheModel
 			objectOutput.writeUTF(openGraphImageAlt);
 		}
 
-		objectOutput.writeLong(openGraphImageFileEntryId);
+		if (openGraphImageFileEntryERC == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(openGraphImageFileEntryERC);
+		}
+
+		if (openGraphImageFileEntryScopeERC == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(openGraphImageFileEntryScopeERC);
+		}
 
 		if (openGraphTitle == null) {
 			objectOutput.writeUTF("");
@@ -336,7 +363,8 @@ public class LayoutSEOEntryCacheModel
 	public String openGraphDescription;
 	public boolean openGraphDescriptionEnabled;
 	public String openGraphImageAlt;
-	public long openGraphImageFileEntryId;
+	public String openGraphImageFileEntryERC;
+	public String openGraphImageFileEntryScopeERC;
 	public String openGraphTitle;
 	public boolean openGraphTitleEnabled;
 	public long lastPublishDate;

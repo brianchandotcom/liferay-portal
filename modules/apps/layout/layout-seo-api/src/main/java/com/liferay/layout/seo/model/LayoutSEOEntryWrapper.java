@@ -55,7 +55,10 @@ public class LayoutSEOEntryWrapper
 			"openGraphDescriptionEnabled", isOpenGraphDescriptionEnabled());
 		attributes.put("openGraphImageAlt", getOpenGraphImageAlt());
 		attributes.put(
-			"openGraphImageFileEntryId", getOpenGraphImageFileEntryId());
+			"openGraphImageFileEntryERC", getOpenGraphImageFileEntryERC());
+		attributes.put(
+			"openGraphImageFileEntryScopeERC",
+			getOpenGraphImageFileEntryScopeERC());
 		attributes.put("openGraphTitle", getOpenGraphTitle());
 		attributes.put("openGraphTitleEnabled", isOpenGraphTitleEnabled());
 		attributes.put("lastPublishDate", getLastPublishDate());
@@ -170,11 +173,18 @@ public class LayoutSEOEntryWrapper
 			setOpenGraphImageAlt(openGraphImageAlt);
 		}
 
-		Long openGraphImageFileEntryId = (Long)attributes.get(
-			"openGraphImageFileEntryId");
+		String openGraphImageFileEntryERC = (String)attributes.get(
+			"openGraphImageFileEntryERC");
 
-		if (openGraphImageFileEntryId != null) {
-			setOpenGraphImageFileEntryId(openGraphImageFileEntryId);
+		if (openGraphImageFileEntryERC != null) {
+			setOpenGraphImageFileEntryERC(openGraphImageFileEntryERC);
+		}
+
+		String openGraphImageFileEntryScopeERC = (String)attributes.get(
+			"openGraphImageFileEntryScopeERC");
+
+		if (openGraphImageFileEntryScopeERC != null) {
+			setOpenGraphImageFileEntryScopeERC(openGraphImageFileEntryScopeERC);
 		}
 
 		String openGraphTitle = (String)attributes.get("openGraphTitle");
@@ -557,13 +567,23 @@ public class LayoutSEOEntryWrapper
 	}
 
 	/**
-	 * Returns the open graph image file entry ID of this layout seo entry.
+	 * Returns the open graph image file entry erc of this layout seo entry.
 	 *
-	 * @return the open graph image file entry ID of this layout seo entry
+	 * @return the open graph image file entry erc of this layout seo entry
 	 */
 	@Override
-	public long getOpenGraphImageFileEntryId() {
-		return model.getOpenGraphImageFileEntryId();
+	public String getOpenGraphImageFileEntryERC() {
+		return model.getOpenGraphImageFileEntryERC();
+	}
+
+	/**
+	 * Returns the open graph image file entry scope erc of this layout seo entry.
+	 *
+	 * @return the open graph image file entry scope erc of this layout seo entry
+	 */
+	@Override
+	public String getOpenGraphImageFileEntryScopeERC() {
+		return model.getOpenGraphImageFileEntryScopeERC();
 	}
 
 	/**
@@ -1094,13 +1114,28 @@ public class LayoutSEOEntryWrapper
 	}
 
 	/**
-	 * Sets the open graph image file entry ID of this layout seo entry.
+	 * Sets the open graph image file entry erc of this layout seo entry.
 	 *
-	 * @param openGraphImageFileEntryId the open graph image file entry ID of this layout seo entry
+	 * @param openGraphImageFileEntryERC the open graph image file entry erc of this layout seo entry
 	 */
 	@Override
-	public void setOpenGraphImageFileEntryId(long openGraphImageFileEntryId) {
-		model.setOpenGraphImageFileEntryId(openGraphImageFileEntryId);
+	public void setOpenGraphImageFileEntryERC(
+		String openGraphImageFileEntryERC) {
+
+		model.setOpenGraphImageFileEntryERC(openGraphImageFileEntryERC);
+	}
+
+	/**
+	 * Sets the open graph image file entry scope erc of this layout seo entry.
+	 *
+	 * @param openGraphImageFileEntryScopeERC the open graph image file entry scope erc of this layout seo entry
+	 */
+	@Override
+	public void setOpenGraphImageFileEntryScopeERC(
+		String openGraphImageFileEntryScopeERC) {
+
+		model.setOpenGraphImageFileEntryScopeERC(
+			openGraphImageFileEntryScopeERC);
 	}
 
 	/**

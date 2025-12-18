@@ -81,9 +81,12 @@ export class ViewObjectDefinitionsPage {
 		await this.page.getByRole('button', {name: 'Save'}).click();
 	}
 
-	async clickEditObjectDefinitionLink(objectDefinitionLabel: string) {
+	async clickEditObjectDefinitionLink(
+		objectDefinitionLabel: string,
+		placeholder?: string
+	) {
 		await this.page
-			.getByPlaceholder('Search')
+			.getByPlaceholder(placeholder ?? 'Search')
 			.fill(objectDefinitionLabel.replace(/ /g, ''));
 
 		await this.page.keyboard.press('Enter');

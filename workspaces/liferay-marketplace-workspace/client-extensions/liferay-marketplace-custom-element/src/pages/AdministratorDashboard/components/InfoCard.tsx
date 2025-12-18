@@ -9,9 +9,9 @@ import {ReactElement} from 'react';
 
 type InfoCardProps = {
 	className?: string;
-	expanded?: boolean;
 	growth?: number;
 	growthContext?: string;
+	limited?: boolean;
 	symbol: string;
 	title: string | ReactElement;
 	value?: string | number;
@@ -19,9 +19,9 @@ type InfoCardProps = {
 
 const InfoCard: React.FC<InfoCardProps> = ({
 	className,
-	expanded = false,
 	growth = 0,
 	growthContext,
+	limited = false,
 	symbol,
 	title,
 	value,
@@ -30,7 +30,7 @@ const InfoCard: React.FC<InfoCardProps> = ({
 		className={classNames(
 			'border d-flex flex-column info-card justify-content-between p-4',
 			{
-				'info-card-expanded': expanded,
+				limited,
 			},
 			className
 		)}

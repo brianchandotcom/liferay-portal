@@ -25,10 +25,9 @@ export default function Apps() {
 
 	return (
 		<>
-			<div className="d-flex flex-wrap mb-3">
+			<div className="d-flex flex-wrap info-container mb-3">
 				<InfoCard
 					className="mr-3"
-					expanded
 					growth={percentage(
 						products,
 						inReviewLastWeek - inReviewBeforeLastWeek
@@ -40,7 +39,6 @@ export default function Apps() {
 				/>
 
 				<InfoCard
-					expanded
 					growth={percentage(
 						products,
 						approvedLastWeek - approvedBeforeLastWeek

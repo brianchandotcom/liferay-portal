@@ -1,17 +1,16 @@
-.info {
-	&-container {
-		box-sizing: border-box;
-		gap: 16px;
-	}
+.info-container {
+	box-sizing: border-box;
+	gap: 16px;
 
-	&-card {
+	.info-card {
 		border-radius: 10px;
 		flex: 1 0 0;
 		max-width: none;
 		transition: all ease-in-out 0.3s;
 
-		&-expanded {
-			max-width: unset;
+		&.limited {
+			flex: 1 0 auto;
+			max-width: 274px;
 		}
 	}
 }

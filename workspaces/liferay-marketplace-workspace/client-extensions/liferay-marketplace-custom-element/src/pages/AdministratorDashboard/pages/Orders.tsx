@@ -16,7 +16,6 @@ import {ManagementToolbarProps} from '../../../components/ListView/components/Ma
 import Page from '../../../components/Page';
 import {
 	OrderCustomFields,
-	OrderTypes,
 	orderTypeLabel,
 	orderWorkflowDisplayType,
 	paymentWorkflowDisplayType,
@@ -154,7 +153,7 @@ export function AdministratorOrdersListView({
 							<span>
 								{
 									orderTypeLabel[
-										orderTypeExternalReferenceCode as keyof typeof OrderTypes
+										orderTypeExternalReferenceCode as keyof typeof orderTypeLabel
 									]
 								}
 							</span>
@@ -288,7 +287,6 @@ export default function Orders() {
 					{infoCard.map((card, index) => (
 						<InfoCard
 							{...card}
-							expanded
 							key={index}
 							symbol="shopping-cart"
 							title={card.title}

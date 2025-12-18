@@ -373,6 +373,7 @@ XMLDefinition.prototype = {
 					locator: 'prompt',
 				},
 				'output-variables',
+				'rag',
 				'script',
 				{
 					key: 'scriptLanguage',

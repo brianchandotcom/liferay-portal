@@ -27,19 +27,9 @@ definition {
 
 	@summary = "Default summary"
 	macro viewNoUnrelatedPreviews() {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
+		ServerAdministration.openServerAdmin();
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Upgrades",
-			configurationName = "Data Removal",
-			configurationScope = "System Scope");
-
-		FormFields.enableCheckbox(fieldName = "Remove DL Preview Change Tracking Store Content Data");
-
-		SystemSettings.saveConfiguration();
+		ServerAdministration.executeServerResourcesActions(actionsDescription = "Remove DL Preview Change Tracking Store Content Data");
 
 		PublicationsNavigator.openPublicationsAdmin();
 

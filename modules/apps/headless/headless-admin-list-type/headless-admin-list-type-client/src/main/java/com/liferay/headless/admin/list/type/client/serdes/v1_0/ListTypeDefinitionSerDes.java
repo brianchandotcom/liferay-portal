@@ -212,6 +212,16 @@ public class ListTypeDefinitionSerDes {
 			sb.append("]");
 		}
 
+		if (listTypeDefinition.getStatus() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"status\": ");
+
+			sb.append(String.valueOf(listTypeDefinition.getStatus()));
+		}
+
 		if (listTypeDefinition.getSystem() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -338,6 +348,13 @@ public class ListTypeDefinitionSerDes {
 				String.valueOf(listTypeDefinition.getPermissions()));
 		}
 
+		if (listTypeDefinition.getStatus() == null) {
+			map.put("status", null);
+		}
+		else {
+			map.put("status", String.valueOf(listTypeDefinition.getStatus()));
+		}
+
 		if (listTypeDefinition.getSystem() == null) {
 			map.put("system", null);
 		}
@@ -396,6 +413,9 @@ public class ListTypeDefinitionSerDes {
 				return true;
 			}
 			else if (Objects.equals(jsonParserFieldName, "permissions")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "status")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "system")) {
@@ -499,6 +519,12 @@ public class ListTypeDefinitionSerDes {
 					}
 
 					listTypeDefinition.setPermissions(permissionsArray);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "status")) {
+				if (jsonParserFieldValue != null) {
+					listTypeDefinition.setStatus(
+						StatusSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "system")) {

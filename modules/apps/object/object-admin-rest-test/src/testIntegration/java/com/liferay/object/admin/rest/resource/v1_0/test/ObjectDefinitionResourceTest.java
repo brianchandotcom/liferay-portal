@@ -1669,6 +1669,51 @@ public class ObjectDefinitionResourceTest
 	}
 
 	@Override
+	protected boolean equals(
+		ObjectDefinition objectDefinition1,
+		ObjectDefinition objectDefinition2) {
+
+		if (objectDefinition1 == objectDefinition2) {
+			return true;
+		}
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(additionalAssertFieldName, "name")) {
+				if (!Objects.deepEquals(
+						objectDefinition1.getName(),
+						objectDefinition2.getName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(additionalAssertFieldName, "status")) {
+				Status objectDefinition1Status = objectDefinition1.getStatus();
+				Status objectDefinition2Status = objectDefinition2.getStatus();
+
+				if (!Objects.deepEquals(
+						objectDefinition1Status.getCode(),
+						objectDefinition2Status.getCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		return true;
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"name", "status"};
 	}

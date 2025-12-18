@@ -45,6 +45,10 @@ export {useHoveringOrigin} from './contexts/ControlsContext';
 
 // @ts-ignore
 
+export {useSelectItem} from './contexts/ControlsContext';
+
+// @ts-ignore
+
 export {default as getAlloyEditorProcessor} from './processors/getAlloyEditorProcessor';
 
 // @ts-ignore

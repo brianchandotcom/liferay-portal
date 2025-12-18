@@ -697,9 +697,6 @@ public class PortalUpgradeProcessRegistryImpl
 				"Layout", "masterLPTEERC VARCHAR(75) null"));
 
 		upgradeVersionTreeMap.put(
-			new Version(36, 0, 1), new ClassNameUpgradeProcess());
-
-		upgradeVersionTreeMap.put(
 			new Version(37, 0, 0),
 			UpgradeProcessFactory.addColumns(
 				"Layout", "faviconFileEntryERC VARCHAR(75) null",

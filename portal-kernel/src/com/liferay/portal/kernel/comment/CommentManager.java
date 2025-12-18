@@ -50,11 +50,6 @@ public interface CommentManager {
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException;
 
-	public Comment createComment(
-		long commentId, String externalReferenceCode, long userId, long groupId,
-		String className, long classPK, long parentCommentId, String subject,
-		String body);
-
 	public void deleteComment(long commentId) throws PortalException;
 
 	public void deleteDiscussion(String className, long classPK)

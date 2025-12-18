@@ -368,6 +368,13 @@ export function RuleBuilderConditionSection({
 													: '',
 											}
 										: {
+												conditionType: 'all',
+												conditions: [
+													{
+														id: uuidv4(),
+														type: undefined,
+													},
+												],
 												script: undefined,
 											}
 								);

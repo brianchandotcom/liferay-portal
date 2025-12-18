@@ -33,29 +33,6 @@ export const test = mergeTests(
 	siteSettingsPagesTest
 );
 
-let siteLanguage = 'en';
-let userLanguage = 'en_US';
-
-test.afterEach(async ({accountSettingsPage, page}) => {
-	if (siteLanguage !== 'en') {
-		await page.goto('en');
-
-		siteLanguage = 'en';
-	}
-
-	if (userLanguage !== 'en_US') {
-		await page.goto('en');
-
-		await page.locator('button[data-qa-id="userPersonalMenu"]').click();
-
-		await page.getByRole('menuitem', {name: 'Account Settings'}).click();
-
-		await accountSettingsPage.selectAccountLanguage({languageId: 'en_US'});
-
-		userLanguage = 'en_US';
-	}
-});
-
 test.describe('manage picklists inside the picklists portlet', () => {
 	test('can create a picklist', async ({
 		apiHelpers,
@@ -248,67 +225,84 @@ test.describe('manage picklists inside the picklists portlet', () => {
 
 test.describe('ensure picklist translation', () => {
 	test('verify if title of clear all button on multiselect picklist field is translated', async ({
+		accountSettingsPage,
 		apiHelpers,
 		formFieldsPage,
 		page,
 		viewObjectEntriesPage,
 	}) => {
-		const {listTypeDefinition, listTypeEntries} =
-			await postListTypeDefinitionListTypeEntries({
-				apiHelpers,
-				listTypeEntriesLength: 4,
-				locale: 'pt_BR',
+		try {
+			const {listTypeDefinition, listTypeEntries} =
+				await postListTypeDefinitionListTypeEntries({
+					apiHelpers,
+					listTypeEntriesLength: 4,
+					locale: 'pt_BR',
+				});
+
+			const objectFields = generateObjectFields({
+				listTypeDefinitionExternalReferenceCode:
+					listTypeDefinition.externalReferenceCode,
+				objectFieldBusinessTypes: ['MultiselectPicklist'],
 			});
 
-		const objectFields = generateObjectFields({
-			listTypeDefinitionExternalReferenceCode:
-				listTypeDefinition.externalReferenceCode,
-			objectFieldBusinessTypes: ['MultiselectPicklist'],
-		});
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
-		const objectDefinitionAPIClient =
-			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+			const {body: objectDefinition} =
+				await objectDefinitionAPIClient.postObjectDefinition({
+					active: true,
+					enableLocalization: true,
+					label: {
+						en_US: 'ObjectDefinitionLabel' + getRandomInt(),
+					},
+					name: 'ObjectDefinitionName' + getRandomInt(),
+					objectFields,
+					pluralLabel: {
+						en_US: 'ObjectDefinitionLabel' + getRandomInt(),
+					},
+					portlet: true,
+					scope: 'company',
+					status: {
+						code: 0,
+					},
+				});
 
-		const {body: objectDefinition} =
-			await objectDefinitionAPIClient.postObjectDefinition({
-				active: true,
-				enableLocalization: true,
-				label: {
-					en_US: 'ObjectDefinitionLabel' + getRandomInt(),
-				},
-				name: 'ObjectDefinitionName' + getRandomInt(),
-				objectFields,
-				pluralLabel: {
-					en_US: 'ObjectDefinitionLabel' + getRandomInt(),
-				},
-				portlet: true,
-				scope: 'company',
-				status: {
-					code: 0,
-				},
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
 			});
 
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
+			await accountSettingsPage.goToAccountSettings();
 
-		await viewObjectEntriesPage.goto(objectDefinition.className, 'pt');
+			await accountSettingsPage.selectAccountLanguage({
+				languageId: 'pt_BR',
+			});
 
-		await page
-			.getByLabel('Adicionar ' + objectDefinition.label['en_US'])
-			.first()
-			.click();
+			await viewObjectEntriesPage.goto(objectDefinition.className, 'pt');
 
-		await viewObjectEntriesPage.editObjectEntryForm.waitFor({
-			state: 'visible',
-		});
+			await page
+				.getByLabel('Adicionar ' + objectDefinition.label['en_US'])
+				.first()
+				.click();
 
-		const [{name_i18n: listTypeEntry_i18n}] = listTypeEntries;
+			await viewObjectEntriesPage.editObjectEntryForm.waitFor({
+				state: 'visible',
+			});
 
-		await formFieldsPage.addSelectItem(listTypeEntry_i18n['pt-BR']);
+			const [{name_i18n: listTypeEntry_i18n}] = listTypeEntries;
 
-		await expect(page.getByTitle('Limpar Todos')).toBeVisible();
+			await formFieldsPage.addSelectItem(listTypeEntry_i18n['pt-BR']);
+
+			await expect(page.getByTitle('Limpar Todos')).toBeVisible();
+		}
+		finally {
+			await accountSettingsPage.selectAccountLanguage({
+				languageId: 'en_US',
+				navigate: true,
+			});
+
+			await waitForAlert(page);
+		}
 	});
 
 	test('verify if translated picklist will be displayed on object admin', async ({
@@ -318,80 +312,89 @@ test.describe('ensure picklist translation', () => {
 		page,
 		viewObjectDefinitionsPage,
 	}) => {
+		try {
 
-		// Create a picklist
+			// Create a picklist
 
-		const listTypeDefinition: ListTypeDefinition =
-			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+			const listTypeDefinition: ListTypeDefinition =
+				await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
 
-		apiHelpers.data.push({
-			id: listTypeDefinition.id,
-			type: 'listTypeDefinition',
-		});
-
-		const listTypeDefinitionName: string = listTypeDefinition.name;
-
-		// Translate picklist
-
-		await listTypeDefinitionPage.goto();
-
-		await listTypeDefinitionPage.translatePicklist(
-			listTypeDefinitionName,
-			'pt_BR'
-		);
-
-		// Create custom object with the picklist
-
-		const objectDefinition: ObjectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				status: {code: 0},
+			apiHelpers.data.push({
+				id: listTypeDefinition.id,
+				type: 'listTypeDefinition',
 			});
 
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
+			const listTypeDefinitionName: string = listTypeDefinition.name;
 
-		await page.goto('/');
+			// Translate picklist
 
-		await page.locator('button[data-qa-id="userPersonalMenu"]').click();
+			await listTypeDefinitionPage.goto();
 
-		await page.getByRole('menuitem', {name: 'Account Settings'}).click();
+			await listTypeDefinitionPage.translatePicklist(
+				listTypeDefinitionName,
+				'pt_BR'
+			);
 
-		await accountSettingsPage.selectAccountLanguage({languageId: 'pt_BR'});
+			// Create custom object with the picklist
 
-		userLanguage = 'pt_BR';
+			const objectDefinition: ObjectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
 
-		await page.waitForLoadState('networkidle');
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
 
-		await viewObjectDefinitionsPage.goto();
+			await page.goto('/');
+
+			await accountSettingsPage.goToAccountSettings();
+
+			await accountSettingsPage.selectAccountLanguage({
+				languageId: 'pt_BR',
+			});
+
+			await page.waitForLoadState('networkidle');
+
+			await viewObjectDefinitionsPage.goto();
 
 		await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
 			objectDefinition.label['en_US']
 		);
 
-		await page.getByRole('link', {name: 'Campos'}).click();
+			await page.getByRole('link', {name: 'Campos'}).click();
 
-		await page
-			.getByRole('button', {name: 'Adicionar campo de objeto'})
-			.click();
+			await page
+				.getByRole('button', {name: 'Adicionar campo de objeto'})
+				.click();
 
-		await page.getByText('Selecione uma opção').click();
+			await page.getByText('Selecione uma opção').click();
 
-		await page
-			.getByRole('option', {exact: true, name: 'Lista de seleção'})
-			.click();
+			await page
+				.getByRole('option', {exact: true, name: 'Lista de seleção'})
+				.click();
 
-		await page.getByLabel('Lista de seleção').click();
+			await page.getByLabel('Lista de seleção').click();
 
-		await expect(
-			page.getByRole('option', {
-				name: listTypeDefinitionName + ' translated',
-			})
-		).toBeVisible();
+			await expect(
+				page.getByRole('option', {
+					name: listTypeDefinitionName + ' translated',
+				})
+			).toBeVisible();
+		}
+		finally {
+			await accountSettingsPage.selectAccountLanguage({
+				languageId: 'en_US',
+				navigate: true,
+			});
+
+			await waitForAlert(page);
+		}
 	});
 
 	test('verify if translated picklist item will be displayed on forms', async ({
+		accountSettingsPage,
 		apiHelpers,
 		editObjectDetailsPage,
 		formBuilderPage,
@@ -402,115 +405,128 @@ test.describe('ensure picklist translation', () => {
 		page,
 		viewObjectDefinitionsPage,
 	}) => {
+		try {
 
-		// Create a picklist
+			// Create a picklist
 
-		const listTypeDefinition: ListTypeDefinition =
-			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+			const listTypeDefinition: ListTypeDefinition =
+				await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
 
-		apiHelpers.data.push({
-			id: listTypeDefinition.id,
-			type: 'listTypeDefinition',
-		});
-
-		const listTypeDefinitionName: string = listTypeDefinition.name;
-
-		// Create a picklist item
-
-		const listTypeEntryName: string = 'picklistItem' + getRandomInt();
-
-		await apiHelpers.listTypeAdmin.postListTypeEntry({
-			key: listTypeEntryName,
-			listTypeDefinitionExternalReferenceCode:
-				listTypeDefinition.externalReferenceCode,
-			name_i18n: {en_US: listTypeEntryName},
-		});
-
-		// Translate picklist item
-
-		await listTypeDefinitionPage.goto();
-
-		await listTypeDefinitionPage.translatePicklistItem(
-			listTypeDefinitionName,
-			listTypeEntryName,
-			'pt_BR'
-		);
-
-		await expect(listTypeDefinitionPage.basicInfoHeading).toBeVisible();
-
-		// Create custom object with the picklist
-
-		const objectDefinition: ObjectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				status: {code: 0},
+			apiHelpers.data.push({
+				id: listTypeDefinition.id,
+				type: 'listTypeDefinition',
 			});
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
 
-		await viewObjectDefinitionsPage.goto();
+			const listTypeDefinitionName: string = listTypeDefinition.name;
 
-		await objectFieldsPage.goto(objectDefinition.label['en_US']);
+			// Create a picklist item
 
-		const fieldLabel = 'picklistField' + getRandomInt();
+			const listTypeEntryName: string = 'picklistItem' + getRandomInt();
 
-		await objectFieldsPage.addObjectField({
-			listTypeDefinitionName: listTypeDefinition.name,
-			objectFieldBusinessType: 'Picklist',
-			objectFieldLabel: fieldLabel,
-		});
+			await apiHelpers.listTypeAdmin.postListTypeEntry({
+				key: listTypeEntryName,
+				listTypeDefinitionExternalReferenceCode:
+					listTypeDefinition.externalReferenceCode,
+				name_i18n: {en_US: listTypeEntryName},
+			});
 
-		await editObjectDetailsPage.goToDetailsTab();
+			// Translate picklist item
 
-		await editObjectDetailsPage.saveObjectDefinition();
+			await listTypeDefinitionPage.goto();
 
-		await page.goto('/');
+			await listTypeDefinitionPage.translatePicklistItem(
+				listTypeDefinitionName,
+				listTypeEntryName,
+				'pt_BR'
+			);
 
-		await formBuilderPage.goToNew();
+			await expect(listTypeDefinitionPage.basicInfoHeading).toBeVisible();
 
-		await expect(formBuilderPage.newFormHeading).toBeVisible();
+			// Create custom object with the picklist
 
-		await formBuilderPage.fillFormTitle('Form' + getRandomInt());
+			const objectDefinition: ObjectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
 
-		await formBuilderPage.formSettingsButton.click();
+			await viewObjectDefinitionsPage.goto();
 
-		await formSettingsModalPage.selectStorageType('Object');
+			await objectFieldsPage.goto(objectDefinition.label['en_US']);
 
-		await formSettingsModalPage.selectObject(
-			objectDefinition.label['en_US']
-		);
+			const fieldLabel = 'picklistField' + getRandomInt();
 
-		await formSettingsModalPage.clickDoneButton();
+			await objectFieldsPage.addObjectField({
+				listTypeDefinitionName: listTypeDefinition.name,
+				objectFieldBusinessType: 'Picklist',
+				objectFieldLabel: fieldLabel,
+			});
 
-		await formBuilderSidePanelPage.addFieldByDoubleClick(
-			'Select from List'
-		);
+			await editObjectDetailsPage.goToDetailsTab();
 
-		await formBuilderSidePanelPage.clickAdvancedTab();
+			await editObjectDetailsPage.saveObjectDefinition();
 
-		await formBuilderSidePanelPage.selectObjectField(fieldLabel);
+			await page.goto('/');
 
-		await expect(formBuilderSidePanelPage.objectFieldSelect).toBeVisible();
+			await formBuilderPage.goToNew();
 
-		// Preview form
+			await expect(formBuilderPage.newFormHeading).toBeVisible();
 
-		await apiHelpers.dynamicDataMapping.waitForDDMEvaluate(page);
+			await formBuilderPage.fillFormTitle('Form' + getRandomInt());
 
-		const newTabPage = await formBuilderPage.openPreviewForm();
+			await formBuilderPage.formSettingsButton.click();
 
-		await page.goto('pt');
+			await formSettingsModalPage.selectStorageType('Object');
 
-		await newTabPage.reload();
+			await formSettingsModalPage.selectObject(
+				objectDefinition.label['en_US']
+			);
 
-		siteLanguage = 'pt';
+			await formSettingsModalPage.clickDoneButton();
 
-		await newTabPage.getByLabel('Select from List').click();
+			await formBuilderSidePanelPage.addFieldByDoubleClick(
+				'Select from List'
+			);
 
-		await expect(
-			newTabPage.getByRole('option', {
-				name: listTypeEntryName + ' translated',
-			})
-		).toBeVisible();
+			await formBuilderSidePanelPage.clickAdvancedTab();
+
+			await formBuilderSidePanelPage.selectObjectField(fieldLabel);
+
+			await expect(
+				formBuilderSidePanelPage.objectFieldSelect
+			).toBeVisible();
+
+			// Preview form
+
+			await apiHelpers.dynamicDataMapping.waitForDDMEvaluate(page);
+
+			const newTabPage = await formBuilderPage.openPreviewForm();
+
+			await accountSettingsPage.selectAccountLanguage({
+				languageId: 'pt_BR',
+				navigate: true,
+			});
+
+			await newTabPage.reload();
+
+			await newTabPage.getByLabel('Select from List').click();
+
+			await expect(
+				newTabPage.getByRole('option', {
+					name: listTypeEntryName + ' translated',
+				})
+			).toBeVisible();
+		}
+		finally {
+			await accountSettingsPage.selectAccountLanguage({
+				languageId: 'en_US',
+				navigate: true,
+			});
+
+			await waitForAlert(page);
+		}
 	});
 });

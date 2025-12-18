@@ -46,14 +46,16 @@ let {result: useStateHookResult} = renderHook(() =>
 );
 
 const component = ({
+	loading = false,
 	numberOfSteps = 1,
 	setHandleStepSubmit,
 	showHeader = true,
-}: TDSRRoomDetailsStepProps) => {
+}: TDSRRoomDetailsStepProps & {loading?: boolean}) => {
 	return (
 		<DSRContext.Provider
 			value={{
 				dataContext: useStateHookResult.current[0],
+				loading,
 				setDataContext: useStateHookResult.current[1],
 			}}
 		>
@@ -67,11 +69,18 @@ const component = ({
 };
 
 const renderComponent = ({
+	loading = false,
 	numberOfSteps = 1,
 	setHandleStepSubmit,
 	showHeader = true,
-}: TDSRRoomDetailsStepProps) => {
-	return render(component({numberOfSteps, setHandleStepSubmit, showHeader}));
+}: TDSRRoomDetailsStepProps & {loading?: boolean}) => {
+	return render(
+		component({
+			loading,
+			numberOfSteps,
+			setHandleStepSubmit,
+		})
+	);
 };
 
 describe('DSRRoomSettingsStep', () => {
@@ -314,5 +323,16 @@ describe('DSRRoomSettingsStep', () => {
 			expect(state.channelId).toBe(201);
 			expect(state.channelName).toBe('channel2');
 		});
+	});
+
+	it('disables form fields when loading is true', async () => {
+		renderComponent({
+			loading: true,
+			numberOfSteps: 1,
+			setHandleStepSubmit: () => {},
+		});
+
+		expect(screen.getByTestId('selectAccountInput')).toBeDisabled();
+		expect(screen.getByTestId('selectChannelInput')).toBeDisabled();
 	});
 });

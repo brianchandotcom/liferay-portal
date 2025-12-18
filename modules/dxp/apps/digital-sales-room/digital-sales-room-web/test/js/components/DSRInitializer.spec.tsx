@@ -88,7 +88,16 @@ describe('DSRInitializer', () => {
 			screen.getByRole('button', {name: 'next'}).click();
 		});
 
-		expect(screen.queryByTestId('roomNameInput')).not.toBeInTheDocument();
+		await waitFor(
+			() =>
+				expect(
+					screen.queryByTestId('roomNameInput')
+				).not.toBeInTheDocument(),
+			{
+				timeout: 1000,
+			}
+		);
+
 		expect(
 			screen.queryByRole('button', {name: 'back'})
 		).toBeInTheDocument();
@@ -518,6 +527,16 @@ describe('DSRInitializer', () => {
 		});
 
 		expect(screen.queryByTestId('clientNameInput')).not.toBeInTheDocument();
+
+		await waitFor(
+			() =>
+				expect(
+					screen.getByRole('button', {name: 'next'})
+				).not.toBeDisabled(),
+			{
+				timeout: 1000,
+			}
+		);
 
 		await waitFor(() => {
 			screen.getByTestId(`templateName_${101}`).click();

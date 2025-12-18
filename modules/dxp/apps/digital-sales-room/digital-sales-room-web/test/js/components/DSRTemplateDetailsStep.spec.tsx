@@ -29,14 +29,16 @@ let {result: useStateHookResult} = renderHook(() =>
 );
 
 const component = ({
+	loading = false,
 	numberOfSteps = 1,
 	setHandleStepSubmit,
 	showHeader = true,
-}: TDSRRoomDetailsStepProps) => {
+}: TDSRRoomDetailsStepProps & {loading?: boolean}) => {
 	return (
 		<DSRContext.Provider
 			value={{
 				dataContext: useStateHookResult.current[0],
+				loading,
 				setDataContext: useStateHookResult.current[1],
 			}}
 		>
@@ -50,11 +52,14 @@ const component = ({
 };
 
 const renderComponent = ({
+	loading = false,
 	numberOfSteps = 1,
 	setHandleStepSubmit,
 	showHeader = true,
-}: TDSRRoomDetailsStepProps) => {
-	return render(component({numberOfSteps, setHandleStepSubmit, showHeader}));
+}: TDSRRoomDetailsStepProps & {loading?: boolean}) => {
+	return render(
+		component({loading, numberOfSteps, setHandleStepSubmit, showHeader})
+	);
 };
 
 describe('DSRTemplateDetailsStep', () => {
@@ -122,5 +127,18 @@ describe('DSRTemplateDetailsStep', () => {
 		expect(state.secondaryColor).not.toBe('');
 		expect(state.errors.primaryColor).toBe('');
 		expect(state.errors.secondaryColor).toBe('');
+	});
+
+	it('disables fields and buttons when loading is true', async () => {
+		renderComponent({
+			loading: true,
+			numberOfSteps: 1,
+			setHandleStepSubmit: () => {},
+		});
+
+		expect(screen.getByTestId('clientLogoButton')).toBeDisabled();
+		expect(screen.getByTestId('clientLogoInput')).toBeDisabled();
+		expect(screen.getByTestId('primaryColorInput')).toBeDisabled();
+		expect(screen.getByTestId('secondaryColorInput')).toBeDisabled();
 	});
 });

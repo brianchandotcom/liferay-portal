@@ -46,13 +46,15 @@ let {result: useStateHookResult} = renderHook(() =>
 );
 
 const component = ({
+	loading = false,
 	numberOfSteps = 1,
 	setHandleStepSubmit,
-}: TDSRRoomDetailsStepProps) => {
+}: TDSRRoomDetailsStepProps & {loading?: boolean}) => {
 	return (
 		<DSRContext.Provider
 			value={{
 				dataContext: useStateHookResult.current[0],
+				loading,
 				setDataContext: useStateHookResult.current[1],
 			}}
 		>

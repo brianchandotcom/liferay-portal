@@ -131,6 +131,7 @@ public abstract class BaseDB implements DB {
 			}
 
 			runSQL(
+				connection,
 				_applyMaxStringIndexLengthLimitation(
 					indexMetadata.getCreateSQL(columnSizes)));
 		}
@@ -153,7 +154,7 @@ public abstract class BaseDB implements DB {
 
 		return () -> {
 			try {
-				runSQL(indexMetadata.getDropSQL());
+				runSQL(connection, indexMetadata.getDropSQL());
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
@@ -315,7 +316,7 @@ public abstract class BaseDB implements DB {
 		sb.append(columnNamesMap.get(primaryKeyColumnNames[0]));
 		sb.append(" IS NULL");
 
-		runSQL(sb.toString());
+		runSQL(connection, sb.toString());
 	}
 
 	@Override
@@ -367,6 +368,7 @@ public abstract class BaseDB implements DB {
 
 			if (dbInspector.hasIndex(tableName, indexName)) {
 				runSQL(
+					connection,
 					StringBundler.concat(
 						"drop index ", indexName, " on ", tableName));
 			}
@@ -667,6 +669,7 @@ public abstract class BaseDB implements DB {
 			tableName, databaseMetaData);
 
 		runSQL(
+			connection,
 			StringBundler.concat(
 				"alter table ", normalizedTableName, " drop primary key"));
 	}
@@ -1128,7 +1131,7 @@ public abstract class BaseDB implements DB {
 
 		sb.append(")");
 
-		runSQL(sb.toString());
+		runSQL(connection, sb.toString());
 	}
 
 	protected String[] buildColumnNameTokens(String line) {

@@ -152,7 +152,7 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 			droppedIndexMetadatas = TransformUtil.transform(
 				indexMetadatas,
 				indexMetadata -> {
-					db.runSQL(indexMetadata.getDropSQL());
+					db.runSQL(connection, indexMetadata.getDropSQL());
 
 					return indexMetadata;
 				});

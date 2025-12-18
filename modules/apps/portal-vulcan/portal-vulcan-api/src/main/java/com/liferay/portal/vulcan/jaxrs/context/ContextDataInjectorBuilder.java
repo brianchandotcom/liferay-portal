@@ -25,9 +25,12 @@ import jakarta.ws.rs.core.UriInfo;
 
 import java.util.function.Function;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Carlos Correa
  */
+@ProviderType
 public interface ContextDataInjectorBuilder {
 
 	public ContextDataInjectorBuilder acceptLanguage(

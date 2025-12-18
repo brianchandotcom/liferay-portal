@@ -5,9 +5,12 @@
 
 package com.liferay.portal.vulcan.jaxrs.context;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Carlos Correa
  */
+@ProviderType
 public interface ContextDataInjector {
 
 	public Object getValue(Class<?> contextClass);

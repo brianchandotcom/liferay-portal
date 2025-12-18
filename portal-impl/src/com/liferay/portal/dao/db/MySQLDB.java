@@ -92,7 +92,7 @@ public class MySQLDB extends BaseDB {
 			String[] columnNames = indexMetadata.getColumnNames();
 
 			if (columnNames.length > 1) {
-				runSQL(indexMetadata.getDropSQL());
+				runSQL(connection, indexMetadata.getDropSQL());
 			}
 		}
 

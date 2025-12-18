@@ -232,6 +232,7 @@ public class SQLServerDB extends BaseDB {
 				normalizedTableName, primaryKeyConstraintName)) {
 
 			runSQL(
+				connection,
 				StringBundler.concat(
 					"alter table ", normalizedTableName, " drop constraint ",
 					primaryKeyConstraintName));

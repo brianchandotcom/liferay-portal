@@ -82,6 +82,7 @@ public class OracleDB extends BaseDB {
 				connection, tableName, tempColumnName, newColumnType);
 
 			runSQL(
+				connection,
 				StringBundler.concat(
 					"update ", tableName, " set ", tempColumnName, " = ",
 					columnName));

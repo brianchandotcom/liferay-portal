@@ -31,12 +31,33 @@ export default function ScopeSelector({
 		selectScopeURL,
 	}: {namespace: string; selectScopeURL: string} = useContext(ThemeContext);
 
+	const getScopeItemTypeLabel = (type: string) => {
+		if (type === '1') {
+			return Liferay.Language.get('space');
+		}
+
+		if (type === '0') {
+			return Liferay.Language.get('asset-library');
+		}
+
+		return Liferay.Language.get('site');
+	};
+
 	const filteredScope = useMemo(() => {
 		if (!sort) {
 			return scope;
 		}
 
 		return scope.slice().sort((a, b) => {
+			let aValue = a[sort.column as keyof IScope];
+			let bValue = b[sort.column as keyof IScope];
+
+			// If sorting by type, compare the labels instead of the raw IDs
+
+			if (sort.column === 'type') {
+				aValue = getScopeItemTypeLabel(a.type);
+				bValue = getScopeItemTypeLabel(b.type);
+			}
 
 			// Sort using Intl.Collator JS object to handle string and
 			// numeric comparison, keeping in mind of current locale.
@@ -44,10 +65,7 @@ export default function ScopeSelector({
 			let comparisonResult = new Intl.Collator(
 				Liferay.ThemeDisplay.getBCP47LanguageId(),
 				{numeric: true}
-			).compare(
-				a[sort.column as keyof IScope],
-				b[sort.column as keyof IScope]
-			);
+			).compare(aValue, bValue);
 
 			// If the sorting direction is descending, invert the value
 
@@ -90,12 +108,7 @@ export default function ScopeSelector({
 							selectedItem.groupexternalreferencecode,
 						name: selectedItem.groupdescriptivename,
 						status: STATUS.ACTIVE,
-						type:
-							selectedItem.groupdepotentrytype === '1'
-								? Liferay.Language.get('space')
-								: selectedItem.groupdepotentrytype === '0'
-									? Liferay.Language.get('asset-library')
-									: Liferay.Language.get('site'),
+						type: selectedItem.groupdepotentrytype,
 					},
 				]);
 			},
@@ -184,7 +197,9 @@ export default function ScopeSelector({
 								<Row key={index}>
 									<Cell>{scopeItem.name}</Cell>
 
-									<Cell>{scopeItem.type}</Cell>
+									<Cell>
+										{getScopeItemTypeLabel(scopeItem.type)}
+									</Cell>
 
 									<Cell>
 										{scopeItem.status === STATUS.ACTIVE ? (

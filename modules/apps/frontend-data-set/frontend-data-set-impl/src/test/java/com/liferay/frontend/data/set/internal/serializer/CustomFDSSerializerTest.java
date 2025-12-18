@@ -833,6 +833,26 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 	}
 
 	@Test
+	public void testSerializeSnapshotsEnabled() throws Exception {
+		_mockSerializeSnapshotsEnabled(FDS_NAMES[0], false);
+		_mockSerializeSnapshotsEnabled(FDS_NAMES[1], true);
+
+		Assert.assertNotEquals(
+			_customFDSSerializer.serializeSnapshotsEnabled(
+				FDS_NAMES[0], httpServletRequest),
+			_customFDSSerializer.serializeSnapshotsEnabled(
+				FDS_NAMES[1], httpServletRequest));
+		Assert.assertFalse(
+			_customFDSSerializer.serializeSnapshotsEnabled(
+				FDS_NAMES[0], httpServletRequest));
+		Assert.assertTrue(
+			_customFDSSerializer.serializeSnapshotsEnabled(
+				FDS_NAMES[1], httpServletRequest));
+
+		_resetFDSSerializer();
+	}
+
+	@Test
 	public void testSerializeSorts() throws Exception {
 
 		// Different sorts
@@ -1488,6 +1508,24 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		Mockito.when(
 			_customFDSSerializer.serializePagination(
+				fdsName, httpServletRequest)
+		).thenCallRealMethod();
+	}
+
+	private void _mockSerializeSnapshotsEnabled(
+		String fdsName, boolean snapshotsEnabled) {
+
+		Mockito.when(
+			_customFDSSerializer.getDataSetObjectEntryProperties(
+				fdsName, httpServletRequest)
+		).thenReturn(
+			HashMapBuilder.<String, Object>put(
+				"snapshotsEnabled", snapshotsEnabled
+			).build()
+		);
+
+		Mockito.when(
+			_customFDSSerializer.serializeSnapshotsEnabled(
 				fdsName, httpServletRequest)
 		).thenCallRealMethod();
 	}

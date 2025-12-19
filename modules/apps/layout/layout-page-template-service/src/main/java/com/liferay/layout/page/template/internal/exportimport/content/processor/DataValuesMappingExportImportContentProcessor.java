@@ -5,8 +5,6 @@
 
 package com.liferay.layout.page.template.internal.exportimport.content.processor;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -14,7 +12,6 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.exception.ExportImportContentProcessorException;
-import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
@@ -22,7 +19,6 @@ import com.liferay.fragment.entry.processor.helper.LayoutReferenceResolver;
 import com.liferay.fragment.util.exportimport.content.processor.ExportImportContentProcessorUtil;
 import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.info.staging.InfoStagingClassMapperRegistry;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
@@ -33,16 +29,18 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.staging.StagingGroupHelper;
-import com.liferay.staging.StagingGroupHelperUtil;
 
 import java.util.Map;
 import java.util.Objects;
@@ -105,31 +103,34 @@ public class DataValuesMappingExportImportContentProcessor
 		JSONObject itemJSONObject, PortletDataContext portletDataContext,
 		StagedModel stagedModel) {
 
-		if (!itemJSONObject.has("config")) {
+		JSONObject collectionJSONObject = _getCollectionJSONObject(
+			itemJSONObject);
+
+		if (collectionJSONObject == null) {
 			return;
 		}
 
-		JSONObject configJSONObject = itemJSONObject.getJSONObject("config");
-
-		if (!configJSONObject.has("collection")) {
-			return;
-		}
-
-		JSONObject collectionJSONObject = configJSONObject.getJSONObject(
-			"collection");
-
-		String type = collectionJSONObject.getString("type");
-
-		if (!Objects.equals(
-				type, InfoListItemSelectorReturnType.class.getName())) {
-
-			return;
-		}
+		AssetListEntry assetListEntry = null;
 
 		long classPK = collectionJSONObject.getLong("classPK");
 
-		AssetListEntry assetListEntry =
-			_assetListEntryLocalService.fetchAssetListEntry(classPK);
+		String externalReferenceCode = collectionJSONObject.getString(
+			"externalReferenceCode");
+
+		if (classPK > 0) {
+			assetListEntry = _assetListEntryLocalService.fetchAssetListEntry(
+				classPK);
+		}
+		else if (Validator.isNotNull(externalReferenceCode)) {
+			assetListEntry =
+				_assetListEntryLocalService.
+					fetchAssetListEntryByExternalReferenceCode(
+						externalReferenceCode,
+						_getGroupId(
+							collectionJSONObject.getString(
+								"scopeExternalReferenceCode"),
+							portletDataContext.getScopeGroupId()));
+		}
 
 		if (assetListEntry != null) {
 			try {
@@ -425,6 +426,55 @@ public class DataValuesMappingExportImportContentProcessor
 			_infoItemServiceRegistry, portletDataContext, stagedModel);
 	}
 
+	private JSONObject _getCollectionJSONObject(JSONObject itemJSONObject) {
+		if (!itemJSONObject.has("config")) {
+			return null;
+		}
+
+		JSONObject configJSONObject = itemJSONObject.getJSONObject("config");
+
+		if (!configJSONObject.has("collection")) {
+			return null;
+		}
+
+		JSONObject collectionJSONObject = configJSONObject.getJSONObject(
+			"collection");
+
+		String type = collectionJSONObject.getString("type");
+
+		if (!Objects.equals(
+				type, InfoListItemSelectorReturnType.class.getName())) {
+
+			return null;
+		}
+
+		return collectionJSONObject;
+	}
+
+	private long _getGroupId(
+		String scopeExternalReferenceCode, long scopeGroupId) {
+
+		if (Validator.isNull(scopeExternalReferenceCode)) {
+			return scopeGroupId;
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext == null) {
+			return scopeGroupId;
+		}
+
+		Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
+			scopeExternalReferenceCode, serviceContext.getCompanyId());
+
+		if (group == null) {
+			return scopeGroupId;
+		}
+
+		return group.getGroupId();
+	}
+
 	private JSONObject _getSuccessMessageJSONObject(JSONObject itemJSONObject) {
 		if (!itemJSONObject.has("config")) {
 			return null;
@@ -443,28 +493,18 @@ public class DataValuesMappingExportImportContentProcessor
 		JSONObject itemJSONObject, PortletDataContext portletDataContext,
 		StagedModel stagedModel) {
 
-		if (!itemJSONObject.has("config")) {
-			return;
-		}
+		JSONObject collectionJSONObject = _getCollectionJSONObject(
+			itemJSONObject);
 
-		JSONObject configJSONObject = itemJSONObject.getJSONObject("config");
-
-		if (!configJSONObject.has("collection")) {
-			return;
-		}
-
-		JSONObject collectionJSONObject = configJSONObject.getJSONObject(
-			"collection");
-
-		String type = collectionJSONObject.getString("type");
-
-		if (!Objects.equals(
-				type, InfoListItemSelectorReturnType.class.getName())) {
-
+		if (collectionJSONObject == null) {
 			return;
 		}
 
 		long classPK = collectionJSONObject.getLong("classPK");
+
+		if (classPK == 0) {
+			return;
+		}
 
 		Map<Long, Long> assetListEntryNewPrimaryKeys =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -775,10 +815,10 @@ public class DataValuesMappingExportImportContentProcessor
 	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
+	private GroupLocalService _groupLocalService;
 
 	@Reference
-	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private InfoStagingClassMapperRegistry _infoStagingClassMapperRegistry;

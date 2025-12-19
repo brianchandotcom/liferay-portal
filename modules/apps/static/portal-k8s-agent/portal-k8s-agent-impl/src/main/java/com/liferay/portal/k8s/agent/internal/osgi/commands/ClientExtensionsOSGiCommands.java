@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.PropsValues;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.List;
@@ -50,7 +51,9 @@ public class ClientExtensionsOSGiCommands implements OSGiCommands {
 		Configuration[] configurations = _getConfigurations(filterStrings);
 
 		if (ArrayUtil.isEmpty(configurations)) {
-			System.out.println("No configurations found.");
+			System.out.println(
+				"Could not find configuration for filters " +
+					Arrays.toString(filterStrings));
 
 			return;
 		}
@@ -62,7 +65,7 @@ public class ClientExtensionsOSGiCommands implements OSGiCommands {
 		Configuration configuration = _getConfiguration(pid);
 
 		if (configuration == null) {
-			System.out.println("No configuration found.");
+			System.out.println("Could not find configuration for PID " + pid);
 
 			return;
 		}
@@ -71,14 +74,14 @@ public class ClientExtensionsOSGiCommands implements OSGiCommands {
 			configuration);
 
 		System.out.println(
-			"Reloaded configuration for " + reloadedConfiguration.getPid());
+			"Reloaded configuration for PID " + reloadedConfiguration.getPid());
 	}
 
 	public void show(String pid) throws InvalidSyntaxException, IOException {
 		Configuration configuration = _getConfiguration(pid);
 
 		if (configuration == null) {
-			System.out.println("No configuration found.");
+			System.out.println("Could not find configuration for PID " + pid);
 
 			return;
 		}

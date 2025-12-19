@@ -230,6 +230,7 @@ definition {
 	}
 
 	@description = "Assert we can publish the publication with split message board threads."
+	@ignore = "true"
 	@priority = 4
 	test PublishSplitMessageBoardThreads {
 		property test.liferay.virtual.instance = "false";

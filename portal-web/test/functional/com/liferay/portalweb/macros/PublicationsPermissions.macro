@@ -144,14 +144,9 @@ definition {
 
 		AssertElementPresent(locator1 = "Publications#REVIEW_CHANGES_BUTTON");
 
-		if ((IsElementPresent(locator1 = "Publications#REVIEW_CHANGES_BUTTON")) && (IsVisible(locator1 = "Publications#REVIEW_CHANGES_BUTTON"))) {
-			Click(locator1 = "Publications#REVIEW_CHANGES_BUTTON");
-		}
-		else {
-			Click(
-				key_publicationName = ${publicationName},
-				locator1 = "Publications#PUBLICATION_NAME_VIEW");
-		}
+		Click(
+			key_publicationName = ${publicationName},
+			locator1 = "Publications#PUBLICATION_NAME_VIEW");
 
 		PublicationsChanges.assertPublicationsCommentsCRUDPermissions();
 	}

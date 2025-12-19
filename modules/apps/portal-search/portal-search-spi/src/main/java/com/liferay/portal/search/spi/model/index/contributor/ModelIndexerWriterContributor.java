@@ -33,4 +33,8 @@ public interface ModelIndexerWriterContributor<T extends BaseModel<?>> {
 	public default void modelIndexed(T baseModel) {
 	}
 
+	public default boolean shouldRun(long companyId) {
+		return true;
+	}
+
 }

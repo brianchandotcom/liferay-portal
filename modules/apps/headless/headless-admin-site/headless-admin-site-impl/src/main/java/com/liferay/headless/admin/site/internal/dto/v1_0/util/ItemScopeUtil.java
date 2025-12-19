@@ -18,29 +18,12 @@ import com.liferay.portal.vulcan.scope.Scope;
  */
 public class ItemScopeUtil {
 
-	public static Long getGroupId(
+	public static Long getItemGroupId(
 		long companyId, Scope scope, long scopeGroupId) {
 
 		if ((scope == null) ||
 			Validator.isNull(scope.getExternalReferenceCode())) {
 
-			return scopeGroupId;
-		}
-
-		Group group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
-			scope.getExternalReferenceCode(), companyId);
-
-		if (group == null) {
-			return null;
-		}
-
-		return group.getGroupId();
-	}
-
-	public static Long getItemGroupId(
-		long companyId, Scope scope, long scopeGroupId) {
-
-		if ((scope == null) || (scope.getExternalReferenceCode() == null)) {
 			return scopeGroupId;
 		}
 

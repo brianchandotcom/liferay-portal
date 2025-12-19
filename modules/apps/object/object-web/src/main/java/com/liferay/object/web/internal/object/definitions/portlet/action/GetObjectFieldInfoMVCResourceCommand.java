@@ -15,11 +15,13 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.object.definitions.display.context.util.ObjectCodeEditorUtil;
+import com.liferay.object.web.internal.object.definitions.display.context.util.ObjectCodeEditorUtil.DDMExpressionFunction;
 import com.liferay.object.web.internal.util.ObjectFieldBusinessTypeUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -31,7 +33,9 @@ import jakarta.portlet.ResourceRequest;
 import jakarta.portlet.ResourceResponse;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -72,10 +76,43 @@ public class GetObjectFieldInfoMVCResourceCommand
 			resourceRequest, resourceResponse,
 			JSONUtil.put(
 				"defaultValueSidebarElements",
-				() -> ObjectCodeEditorUtil.getCodeEditorElements(
-					true, true, false, locale,
-					objectField.getObjectDefinitionId(),
-					objectField1 -> !objectField1.isSystem())
+				() -> {
+					if (objectField.compareBusinessType(
+							ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+
+						return ObjectCodeEditorUtil.getCodeEditorElements(
+							true, false, false, locale,
+							objectField.getObjectDefinitionId(),
+							objectField1 -> !objectField1.isSystem());
+					}
+
+					List<DDMExpressionFunction>
+						defaultValueDDMExpressionFunctions =
+							_defaultValueDDMExpressionFunctionsMap.get(
+								objectField.getBusinessType());
+
+					if (ListUtil.isEmpty(defaultValueDDMExpressionFunctions)) {
+						return null;
+					}
+
+					return ObjectCodeEditorUtil.getCodeEditorElements(
+						defaultValueDDMExpressionFunctions::contains,
+						ddmExpressionOperator -> false,
+						generalVariable -> {
+							if (objectField.compareBusinessType(
+									ObjectFieldConstants.BUSINESS_TYPE_DATE) ||
+								objectField.compareBusinessType(
+									ObjectFieldConstants.
+										BUSINESS_TYPE_DATE_TIME)) {
+
+								return generalVariable.equals("currentDate");
+							}
+
+							return true;
+						},
+						false, locale, objectDefinition.getObjectDefinitionId(),
+						objectField2 -> false);
+				}
 			).put(
 				"objectFieldBusinessTypes",
 				ObjectFieldBusinessTypeUtil.getObjectFieldBusinessTypeMaps(
@@ -113,11 +150,11 @@ public class GetObjectFieldInfoMVCResourceCommand
 				"readOnlySidebarElements",
 				ObjectCodeEditorUtil.getCodeEditorElements(
 					ddmExpressionFunction ->
-						!ObjectCodeEditorUtil.DDMExpressionFunction.OLD_VALUE.
-							equals(ddmExpressionFunction),
-					ddmExpressionOperator -> true, true, false, locale,
-					objectDefinition.getObjectDefinitionId(),
-					objectField2 -> !objectField2.compareBusinessType(
+						!DDMExpressionFunction.OLD_VALUE.equals(
+							ddmExpressionFunction),
+					ddmExpressionOperator -> true, generalVariables -> true,
+					false, locale, objectDefinition.getObjectDefinitionId(),
+					objectField3 -> !objectField3.compareBusinessType(
 						ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION))
 			).put(
 				"sidebarElements",
@@ -131,21 +168,60 @@ public class GetObjectFieldInfoMVCResourceCommand
 							ddmExpressionOperator ->
 								_filterableDDMExpressionOperators.contains(
 									ddmExpressionOperator),
-							false, true, locale,
+							generalVariables -> false, true, locale,
 							objectField.getObjectDefinitionId(),
-							objectField3 ->
+							objectField4 ->
 								_filterableObjectFieldBusinessTypes.contains(
-									objectField3.getBusinessType()));
+									objectField4.getBusinessType()));
 					}
 
 					return ObjectCodeEditorUtil.getCodeEditorElements(
 						true, false, false, locale,
 						objectField.getObjectDefinitionId(),
-						objectField4 -> !objectField4.isSystem());
+						objectField5 -> !objectField5.isSystem());
 				}
 			));
 	}
 
+	private static final Map<String, List<DDMExpressionFunction>>
+		_defaultValueDDMExpressionFunctionsMap =
+			HashMapBuilder.<String, List<DDMExpressionFunction>>put(
+				ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
+				ListUtil.fromArray(
+					DDMExpressionFunction.COMPARE_DATES,
+					DDMExpressionFunction.CONDITION,
+					DDMExpressionFunction.CONTAINS,
+					DDMExpressionFunction.DOES_NOT_CONTAIN,
+					DDMExpressionFunction.FUTURE_DATES,
+					DDMExpressionFunction.IS_A_URL,
+					DDMExpressionFunction.IS_AN_EMAIL,
+					DDMExpressionFunction.IS_DECIMAL,
+					DDMExpressionFunction.IS_EMPTY,
+					DDMExpressionFunction.IS_EQUAL_TO,
+					DDMExpressionFunction.IS_GREATER_THAN,
+					DDMExpressionFunction.IS_GREATER_THAN_OR_EQUAL_TO,
+					DDMExpressionFunction.IS_INTEGER,
+					DDMExpressionFunction.IS_LESS_THAN,
+					DDMExpressionFunction.IS_LESS_THAN_OR_EQUAL_TO,
+					DDMExpressionFunction.IS_NOT_EQUAL_TO,
+					DDMExpressionFunction.MATCH,
+					DDMExpressionFunction.PAST_DATES,
+					DDMExpressionFunction.RANGE)
+			).put(
+				ObjectFieldConstants.BUSINESS_TYPE_DATE,
+				ListUtil.fromArray(
+					DDMExpressionFunction.ADD_DAYS,
+					DDMExpressionFunction.ADD_MONTHS,
+					DDMExpressionFunction.ADD_YEARS,
+					DDMExpressionFunction.OLD_VALUE)
+			).put(
+				ObjectFieldConstants.BUSINESS_TYPE_DATE_TIME,
+				ListUtil.fromArray(
+					DDMExpressionFunction.ADD_DAYS,
+					DDMExpressionFunction.ADD_MONTHS,
+					DDMExpressionFunction.ADD_YEARS,
+					DDMExpressionFunction.OLD_VALUE)
+			).build();
 	private static final Set<ObjectCodeEditorUtil.DDMExpressionOperator>
 		_filterableDDMExpressionOperators = Collections.unmodifiableSet(
 			SetUtil.fromArray(

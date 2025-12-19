@@ -25,6 +25,7 @@ export type taskStatus = 'success' | 'completedWithErrors';
 
 export class ExportImportPage {
 	readonly cancelButton: Locator;
+	readonly clearMenuItem: Locator;
 	readonly continueButton: Locator;
 	readonly copyAsNewRadioButton: Locator;
 	readonly deleteApplicationDataAlert: Locator;
@@ -34,6 +35,7 @@ export class ExportImportPage {
 	readonly downloadButton: Locator;
 	readonly exportButton: Locator;
 	readonly exportPermissionsButton: Locator;
+	readonly exportReportEntriesMenuItem: Locator;
 	readonly exportReportEntriesModal: Locator;
 	readonly exportReportEntriesModalDownloadButton: Locator;
 	readonly exportReportEntriesModalProgressbar: Locator;
@@ -65,10 +67,12 @@ export class ExportImportPage {
 	readonly updateDataAlert: Locator;
 	readonly updateDataMirrorWarningLabel: Locator;
 	readonly useCurrentUserAsAuthorCheckbox: Locator;
+	readonly viewReportEntriesMenuItem: Locator;
 	readonly warningHeader: Locator;
 
 	constructor(page: Page) {
 		this.cancelButton = page.getByRole('button', {name: 'Cancel'});
+		this.clearMenuItem = page.getByRole('link', {name: 'Clear'});
 		this.continueButton = page.getByRole('button', {name: 'Continue'});
 		this.copyAsNewRadioButton = page.getByLabel('Copy as new');
 		this.deleteApplicationDataAlert = page.locator('[role="alert"]', {
@@ -87,6 +91,9 @@ export class ExportImportPage {
 			.locator('label');
 		this.downloadButton = page.getByRole('button', {name: 'Download'});
 		this.exportButton = page.getByRole('button', {name: 'Export'});
+		this.exportReportEntriesMenuItem = page.getByRole('menuitem', {
+			name: 'Export Report Entries',
+		});
 		this.exportPermissionsButton = page.getByLabel('Export Permissions');
 		this.exportReportEntriesModal = page.getByRole('dialog', {
 			name: 'Export Report Entries',
@@ -170,6 +177,9 @@ export class ExportImportPage {
 		this.useCurrentUserAsAuthorCheckbox = page.getByLabel(
 			'Use the Current User as Author: Assign the current user as the author of all'
 		);
+		this.viewReportEntriesMenuItem = page.getByRole('menuitem', {
+			name: 'View Report Entries',
+		});
 		this.warningHeader = page.getByRole('heading', {
 			name: 'Important Info About Your Import',
 		});

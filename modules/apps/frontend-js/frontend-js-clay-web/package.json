@@ -1,7 +1,4 @@
 {
-	"devDependencies": {
-		"jest-axe": "^10.0.0"
-	},
 	"main": "js/index.ts",
 	"name": "@liferay/frontend-js-clay-web",
 	"private": true,

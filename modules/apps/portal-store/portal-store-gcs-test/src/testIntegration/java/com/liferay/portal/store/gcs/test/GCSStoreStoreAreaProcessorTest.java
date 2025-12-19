@@ -12,7 +12,6 @@ import com.liferay.document.library.kernel.store.StoreAreaProcessor;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -22,7 +21,6 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -44,9 +42,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.service.cm.Configuration;
-import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
  * @author Adolfo Pérez
@@ -75,43 +70,11 @@ public class GCSStoreStoreAreaProcessorTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_company = CompanyTestUtil.addCompany();
-
-		_configuration = _configurationAdmin.getConfiguration(
-			"com.liferay.portal.store.gcs.configuration.GCSStoreConfiguration",
-			StringPool.QUESTION);
-
-		ConfigurationTestUtil.saveConfiguration(
-			_configuration,
-			HashMapDictionaryBuilder.<String, Object>put(
-				"aes256Key", ""
-			).put(
-				"bucketName", "test"
-			).put(
-				"initialRetryDelay", "400"
-			).put(
-				"initialRPCTimeout", "120000"
-			).put(
-				"maxRetryAttempts", "5"
-			).put(
-				"maxRetryDelay", "10000"
-			).put(
-				"maxRPCTimeout", "600000"
-			).put(
-				"retryDelayMultiplier", "1.5"
-			).put(
-				"retryJitter", "false"
-			).put(
-				"rpcTimeoutMultiplier", "1.0"
-			).put(
-				"serviceAccountKey", ""
-			).build());
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		_companyLocalService.deleteCompany(_company);
-
-		ConfigurationTestUtil.deleteConfiguration(_configuration);
 	}
 
 	@Before
@@ -381,11 +344,6 @@ public class GCSStoreStoreAreaProcessorTest {
 
 	@Inject
 	private static CompanyLocalService _companyLocalService;
-
-	private static Configuration _configuration;
-
-	@Inject
-	private static ConfigurationAdmin _configurationAdmin;
 
 	@DeleteAfterTestRun
 	private Group _group;

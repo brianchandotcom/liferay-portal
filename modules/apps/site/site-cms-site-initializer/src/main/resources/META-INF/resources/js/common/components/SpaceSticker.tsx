@@ -39,7 +39,7 @@ export default function SpaceSticker({
 	'className' | 'displayType' | 'id' | 'size'
 >) {
 	const gap = size === 'lg' ? 'c-gap-3' : 'c-gap-2';
-	const wrapperClasses = cx('align-items-center d-flex', gap);
+	const wrapperClasses = cx('align-items-center d-flex text-nowrap', gap);
 
 	return (
 		<div className={wrapperClasses}>

@@ -134,6 +134,9 @@ public interface Rels {
 	public static final String INDIVIDUAL_SEGMENT_MEMBERSHIPS =
 		"individual-segment-memberships";
 
+	public static final String INDIVIDUAL_SEGMENT_REAL_TIME_MEMBERSHIPS =
+		"individual-segment-real-time-memberships";
+
 	public static final String INDIVIDUAL_SEGMENTS = "individual-segments";
 
 	public static final String INDIVIDUAL_TRANSFORMATION =

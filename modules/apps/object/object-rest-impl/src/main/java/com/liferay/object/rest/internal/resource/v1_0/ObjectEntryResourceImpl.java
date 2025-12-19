@@ -577,6 +577,11 @@ public class ObjectEntryResourceImpl
 				return "root-object";
 			}
 
+			@Override
+			public boolean isStagingSupported() {
+				return false;
+			}
+
 		};
 	}
 

@@ -240,21 +240,20 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		Set<Long> hiddenRepositoryIds =
 			ReindexCacheThreadLocal.getGlobalReindexCache(
 				() -> -1, RepositoryLocalServiceImpl.class.getName(),
-				count ->
-
-					new HashSet<>(
-						repositoryPersistence.dslQuery(DSLQueryFactoryUtil.select(
-						RepositoryTable.INSTANCE.repositoryId
-					).from(
-						RepositoryTable.INSTANCE
-					).innerJoinON(
-						DLFolderTable.INSTANCE,
-						RepositoryTable.INSTANCE.dlFolderId.eq(
-							DLFolderTable.INSTANCE.folderId)
-					).where(
-						DLFolderTable.INSTANCE.hidden.eq(Boolean.TRUE)
-					), false))
-				);
+				count -> new HashSet<>(
+					repositoryPersistence.dslQuery(
+						DSLQueryFactoryUtil.select(
+							RepositoryTable.INSTANCE.repositoryId
+						).from(
+							RepositoryTable.INSTANCE
+						).innerJoinON(
+							DLFolderTable.INSTANCE,
+							RepositoryTable.INSTANCE.dlFolderId.eq(
+								DLFolderTable.INSTANCE.folderId)
+						).where(
+							DLFolderTable.INSTANCE.hidden.eq(Boolean.TRUE)
+						),
+						false)));
 
 		if (hiddenRepositoryIds == null) {
 			Repository repository = repositoryPersistence.findByPrimaryKey(

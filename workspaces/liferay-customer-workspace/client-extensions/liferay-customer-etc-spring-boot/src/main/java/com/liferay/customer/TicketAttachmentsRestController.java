@@ -208,7 +208,22 @@ public class TicketAttachmentsRestController extends BaseRestController {
 
 			String ticketId = jsonObject.getString("ticketId");
 
-			String accountKey = getAccountKey(ticketId);
+			JiraSupportIssue jiraSupportIssue =
+				_jiraService.getJiraSupportIssue(ticketId);
+
+			if (jiraSupportIssue == null) {
+				return new ResponseEntity<>(
+					"INVALID_TICKET_NUMBER", HttpStatus.NOT_FOUND);
+			}
+
+			if (jiraSupportIssue.isClosed()) {
+				return new ResponseEntity<>(
+					"TICKET_IS_CLOSED", HttpStatus.BAD_REQUEST);
+			}
+
+			String accountKey = getAccountKey(
+				jiraSupportIssue.getOrganizationId(),
+				jiraSupportIssue.getWorkspaceId());
 
 			TicketAttachment ticketAttachment =
 				_ticketAttachmentService.fetchTicketAttachment(
@@ -266,18 +281,6 @@ public class TicketAttachmentsRestController extends BaseRestController {
 
 			return new ResponseEntity<>(
 				"FORBIDDEN_ACCESS", HttpStatus.FORBIDDEN);
-		}
-		catch (JiraIssueClosedException jiraIssueClosedException) {
-			_log.error(jiraIssueClosedException, jiraIssueClosedException);
-
-			return new ResponseEntity<>(
-				"TICKET_IS_CLOSED", HttpStatus.BAD_REQUEST);
-		}
-		catch (JiraIssueNotFoundException jiraIssueNotFoundException) {
-			_log.error(jiraIssueNotFoundException, jiraIssueNotFoundException);
-
-			return new ResponseEntity<>(
-				"INVALID_TICKET_NUMBER", HttpStatus.NOT_FOUND);
 		}
 		catch (JiraOrganizationNotFoundException
 					jiraOrganizationNotFoundException) {

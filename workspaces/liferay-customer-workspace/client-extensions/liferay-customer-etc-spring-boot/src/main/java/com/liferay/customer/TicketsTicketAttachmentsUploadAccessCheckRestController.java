@@ -9,6 +9,8 @@ import com.liferay.customer.constants.RoleConstants;
 import com.liferay.customer.exception.JiraIssueClosedException;
 import com.liferay.customer.exception.JiraIssueNotFoundException;
 import com.liferay.customer.exception.JiraOrganizationNotFoundException;
+import com.liferay.customer.model.JiraSupportIssue;
+import com.liferay.customer.service.JiraService;
 import com.liferay.headless.admin.user.client.dto.v1_0.Account;
 import com.liferay.headless.admin.user.client.dto.v1_0.AccountBrief;
 import com.liferay.headless.admin.user.client.dto.v1_0.OrganizationBrief;
@@ -51,19 +53,15 @@ public class TicketsTicketAttachmentsUploadAccessCheckRestController
 					"FORBIDDEN_ACCESS", HttpStatus.FORBIDDEN);
 			}
 
+			JiraSupportIssue jiraSupportIssue =
+				_jiraService.getJiraSupportIssue(ticketId);
+
+			if (jiraSupportIssue == null) {
+				return new ResponseEntity<>(
+					"INVALID_TICKET_NUMBER", HttpStatus.NOT_FOUND);
+			}
+
 			return new ResponseEntity<>("", HttpStatus.OK);
-		}
-		catch (JiraIssueClosedException jiraIssueClosedException) {
-			_log.error(jiraIssueClosedException, jiraIssueClosedException);
-
-			return new ResponseEntity<>(
-				"TICKET_IS_CLOSED", HttpStatus.BAD_REQUEST);
-		}
-		catch (JiraIssueNotFoundException jiraIssueNotFoundException) {
-			_log.error(jiraIssueNotFoundException, jiraIssueNotFoundException);
-
-			return new ResponseEntity<>(
-				"INVALID_TICKET_NUMBER", HttpStatus.NOT_FOUND);
 		}
 		catch (JiraOrganizationNotFoundException
 					jiraOrganizationNotFoundException) {
@@ -158,5 +156,8 @@ public class TicketsTicketAttachmentsUploadAccessCheckRestController
 
 	private static final Log _log = LogFactory.getLog(
 		TicketsTicketAttachmentsUploadAccessCheckRestController.class);
+
+	@Autowired
+	private JiraService _jiraService;
 
 }

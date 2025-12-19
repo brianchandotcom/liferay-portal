@@ -5,7 +5,6 @@
 
 package com.liferay.customer;
 
-import com.liferay.customer.exception.JiraIssueClosedException;
 import com.liferay.customer.exception.JiraIssueNotFoundException;
 import com.liferay.customer.exception.JiraOrganizationNotFoundException;
 import com.liferay.customer.model.JiraSupportIssue;
@@ -26,14 +25,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class BaseRestController
 	extends com.liferay.client.extension.util.spring.boot3.BaseRestController {
 
-	protected String getAccountKey(String jiraIssueKey) throws Exception {
-		try {
-			return _getAccountKey(jiraIssueKey);
-		}
-		catch (JiraIssueClosedException jiraIssueClosedException) {
-			_log.error(jiraIssueClosedException, jiraIssueClosedException);
+	protected String getAccountKey(String organizationId, String workspaceId)
+		throws Exception {
 
-			throw jiraIssueClosedException;
+		try {
+			return _getAccountKey(organizationId, workspaceId);
 		}
 		catch (JiraIssueNotFoundException jiraIssueNotFoundException) {
 			_log.error(jiraIssueNotFoundException, jiraIssueNotFoundException);
@@ -47,20 +43,8 @@ public class BaseRestController
 		}
 	}
 
-	private String _getAccountKey(String jiraIssueKey) throws Exception {
-		JiraSupportIssue jiraSupportIssue = _jiraService.getJiraSupportIssue(
-			jiraIssueKey);
-
-		if (jiraSupportIssue == null) {
-			throw new JiraIssueNotFoundException();
-		}
-
-		if (jiraSupportIssue.isClosed()) {
-			throw new JiraIssueClosedException();
-		}
-
-		String organizationId = jiraSupportIssue.getOrganizationId();
-		String workspaceId = jiraSupportIssue.getWorkspaceId();
+	private String _getAccountKey(String organizationId, String workspaceId)
+		throws Exception {
 
 		if (Validator.isNull(organizationId) || Validator.isNull(workspaceId)) {
 			throw new JiraOrganizationNotFoundException();

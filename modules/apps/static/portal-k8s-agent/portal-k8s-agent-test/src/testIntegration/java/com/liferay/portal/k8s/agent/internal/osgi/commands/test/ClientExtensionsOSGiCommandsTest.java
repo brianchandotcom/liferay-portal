@@ -88,7 +88,7 @@ public class ClientExtensionsOSGiCommandsTest {
 				).put(
 					"dxp.lxc.liferay.com.virtualInstanceId", "default"
 				).put(
-					"name", _CONFIGURATION_NAME_1
+					"name", "Liferay Sample CX 1"
 				).put(
 					"projectName", "liferay-sample-cx-1"
 				).put(
@@ -108,7 +108,7 @@ public class ClientExtensionsOSGiCommandsTest {
 				).put(
 					"dxp.lxc.liferay.com.virtualInstanceId", "default"
 				).put(
-					"name", _CONFIGURATION_NAME_2
+					"name", "Liferay Sample CX 2"
 				).put(
 					"projectName", "liferay-sample-cx-2"
 				).put(
@@ -129,7 +129,7 @@ public class ClientExtensionsOSGiCommandsTest {
 				).put(
 					"dxp.lxc.liferay.com.virtualInstanceId", _companyWebId
 				).put(
-					"name", _CONFIGURATION_NAME_3
+					"name", "Liferay Sample CX 3"
 				).put(
 					"projectName", "liferay-sample-cx-3"
 				).put(
@@ -169,34 +169,34 @@ public class ClientExtensionsOSGiCommandsTest {
 		_testGetConfigurations(
 			List.of(),
 			List.of(
-				_CONFIGURATION_NAME_1, _CONFIGURATION_NAME_2,
-				_CONFIGURATION_NAME_3));
+				"Liferay Sample CX 1", "Liferay Sample CX 2",
+				"Liferay Sample CX 3"));
 		_testGetConfigurations(
-			List.of("deploymentType=bundle"), List.of(_CONFIGURATION_NAME_1));
+			List.of("deploymentType=bundle"), List.of("Liferay Sample CX 1"));
 		_testGetConfigurations(
 			List.of("deploymentType=agent"),
-			List.of(_CONFIGURATION_NAME_2, _CONFIGURATION_NAME_3));
+			List.of("Liferay Sample CX 2", "Liferay Sample CX 3"));
 		_testGetConfigurations(
 			List.of("webId=default"),
-			List.of(_CONFIGURATION_NAME_1, _CONFIGURATION_NAME_2));
+			List.of("Liferay Sample CX 1", "Liferay Sample CX 2"));
 		_testGetConfigurations(
 			List.of("webId=liferay.com"),
-			List.of(_CONFIGURATION_NAME_1, _CONFIGURATION_NAME_2));
+			List.of("Liferay Sample CX 1", "Liferay Sample CX 2"));
 		_testGetConfigurations(
-			List.of("webId=" + _companyWebId), List.of(_CONFIGURATION_NAME_3));
+			List.of("webId=" + _companyWebId), List.of("Liferay Sample CX 3"));
 		_testGetConfigurations(
 			List.of("type=customElement"),
-			List.of(_CONFIGURATION_NAME_1, _CONFIGURATION_NAME_2));
+			List.of("Liferay Sample CX 1", "Liferay Sample CX 2"));
 		_testGetConfigurations(
-			List.of("type=instanceSettings"), List.of(_CONFIGURATION_NAME_3));
+			List.of("type=instanceSettings"), List.of("Liferay Sample CX 3"));
 		_testGetConfigurations(
 			List.of("deploymentType=bundle", "type=customElement"),
-			List.of(_CONFIGURATION_NAME_1));
+			List.of("Liferay Sample CX 1"));
 		_testGetConfigurations(
 			List.of(
 				"deploymentType=agent", "webId=" + _companyWebId,
 				"type=instanceSettings"),
-			List.of(_CONFIGURATION_NAME_3));
+			List.of("Liferay Sample CX 3"));
 
 		_testGetConfigurations(List.of("name=Non Existing Name"), List.of());
 		_testGetConfigurations(
@@ -233,8 +233,8 @@ public class ClientExtensionsOSGiCommandsTest {
 		String dataRow = lines[2];
 
 		String expectedDataPattern = StringBundler.concat(
-			"\\| ", _configurationPids.get(0), "\\s*\\| ",
-			_CONFIGURATION_NAME_1, "\\s*\\| customElement \\s*\\| ",
+			"\\| ", _configurationPids.get(0),
+			"\\s*\\| Liferay Sample CX 1\\s*\\| customElement \\s*\\| ",
 			"default\\s*\\|");
 
 		System.setOut(printStream);
@@ -414,12 +414,6 @@ public class ClientExtensionsOSGiCommandsTest {
 
 		Assert.assertTrue(output.contains(expectedOutput));
 	}
-
-	private static final String _CONFIGURATION_NAME_1 = "Liferay Sample CX 1";
-
-	private static final String _CONFIGURATION_NAME_2 = "Liferay Sample CX 2";
-
-	private static final String _CONFIGURATION_NAME_3 = "Liferay Sample CX 3";
 
 	private static BundleContext _bundleContext;
 	private static String _companyWebId;

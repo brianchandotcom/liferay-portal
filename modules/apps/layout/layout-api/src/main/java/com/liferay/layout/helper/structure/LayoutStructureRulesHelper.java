@@ -5,12 +5,14 @@
 
 package com.liferay.layout.helper.structure;
 
+import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureRule;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -20,7 +22,8 @@ import java.util.Set;
 public interface LayoutStructureRulesHelper {
 
 	public LayoutStructureRulesResult processLayoutStructureRules(
-		long groupId, LayoutStructure layoutStructure,
+		long groupId, InfoItemFieldValues infoItemFieldValues,
+		LayoutStructure layoutStructure, Locale locale,
 		PermissionChecker permissionChecker, long[] segmentsEntryIds);
 
 	public JSONArray processLayoutStructureRules(

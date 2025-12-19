@@ -21,6 +21,7 @@ import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -337,14 +338,15 @@ public class LayoutPageTemplateStructureRelExportImportTest
 	}
 
 	@Test
-	@TestInfo("LPD-67912")
+	@TestInfo({"LPD-67912", "LPD-72839"})
 	public void testFormContainerSuccessMessageWithMappedLayout()
 		throws Exception {
 
-		Layout layout1 = LayoutTestUtil.addTypeContentLayout(group);
+		layout = LayoutTestUtil.addTypeContentLayout(group);
+
 		Layout layout2 = LayoutTestUtil.addTypeContentLayout(group);
 
-		ContentLayoutTestUtil.addItemToLayout(
+		JSONObject jsonObject = ContentLayoutTestUtil.addItemToLayout(
 			JSONUtil.put(
 				"classNameId", "0"
 			).put(
@@ -363,46 +365,130 @@ public class LayoutPageTemplateStructureRelExportImportTest
 						"privateLayout", layout2.isPrivateLayout()
 					))
 			).toString(),
-			LayoutDataItemTypeConstants.TYPE_FORM, layout1,
+			LayoutDataItemTypeConstants.TYPE_FORM, layout,
 			_layoutStructureProvider,
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout1.getPlid()));
+				layout.getPlid()));
+
+		String itemId = jsonObject.getString("addedItemId");
 
 		exportImportLayouts(
-			new long[] {layout2.getLayoutId(), layout1.getLayoutId()},
-			getImportParameterMap());
+			new long[] {layout.getLayoutId()}, getImportParameterMap());
 
 		Layout importedLayout1 = _layoutLocalService.getLayoutByUuidAndGroupId(
-			layout1.getUuid(), importedGroup.getGroupId(), false);
-
-		LayoutStructure importedLayoutStructure =
-			_layoutStructureProvider.getLayoutStructure(
-				importedLayout1.getPlid(),
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(
-						importedLayout1.getPlid()));
-
-		List<FormStyledLayoutStructureItem> formStyledLayoutStructureItems =
-			importedLayoutStructure.getFormStyledLayoutStructureItems();
-
-		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
-			formStyledLayoutStructureItems.get(0);
-
-		JSONObject successMessageJSONObject =
-			formStyledLayoutStructureItem.getSuccessMessageJSONObject();
-
-		JSONObject layoutJSONObject = successMessageJSONObject.getJSONObject(
-			"layout");
-
-		Assert.assertEquals(
-			importedGroup.getGroupId(), layoutJSONObject.getLong("groupId"));
+			layout.getUuid(), importedGroup.getGroupId(), false);
 
 		Layout importedLayout2 = _layoutLocalService.getLayoutByUuidAndGroupId(
 			layout2.getUuid(), importedGroup.getGroupId(), false);
 
-		Assert.assertEquals(
-			importedLayout2.getLayoutId(),
-			layoutJSONObject.getLong("layoutId"));
+		_assertFormContainerSuccessMessage(
+			null, importedGroup.getGroupId(), importedLayout2.getLayoutId(),
+			_getLayoutStructureItem(itemId, importedLayout1.getPlid()), null);
+
+		Group guestGroup = _groupLocalService.getGroup(
+			TestPropsValues.getGroupId());
+
+		Layout layout3 = LayoutTestUtil.addTypeContentLayout(guestGroup);
+
+		_updateLayoutStructureItem(
+			jsonObject1 -> {
+				JSONObject successMessageJSONObject = jsonObject1.getJSONObject(
+					"successMessage");
+
+				successMessageJSONObject.put(
+					"layout",
+					_createLayoutJSONObject(
+						null, guestGroup.getGroupId(), layout3.getLayoutId(),
+						layout3.getUuid(), layout3.isPrivateLayout(), null));
+
+				return jsonObject1;
+			},
+			itemId, layout);
+
+		exportImportLayouts(
+			new long[] {layout.getLayoutId()}, getImportParameterMap());
+
+		importedLayout1 = _layoutLocalService.getLayoutByUuidAndGroupId(
+			layout.getUuid(), importedGroup.getGroupId(), false);
+
+		_assertFormContainerSuccessMessage(
+			null, guestGroup.getGroupId(), layout3.getLayoutId(),
+			_getLayoutStructureItem(itemId, importedLayout1.getPlid()), null);
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		_updateLayoutStructureItem(
+			jsonObject1 -> {
+				JSONObject successMessageJSONObject = jsonObject1.getJSONObject(
+					"successMessage");
+
+				successMessageJSONObject.put(
+					"layout",
+					_createLayoutJSONObject(
+						externalReferenceCode, 0, 0, null, null, null));
+
+				return jsonObject1;
+			},
+			itemId, layout);
+
+		exportImportLayouts(
+			new long[] {layout.getLayoutId()}, getImportParameterMap());
+
+		_assertFormContainerSuccessMessage(
+			externalReferenceCode, 0, 0,
+			_getLayoutStructureItem(itemId, importedLayout1.getPlid()), null);
+
+		Layout layout4 = LayoutTestUtil.addTypeContentLayout(group);
+
+		_updateLayoutStructureItem(
+			jsonObject1 -> {
+				JSONObject successMessageJSONObject = jsonObject1.getJSONObject(
+					"successMessage");
+
+				successMessageJSONObject.put(
+					"layout",
+					_createLayoutJSONObject(
+						layout4.getExternalReferenceCode(), 0, 0, null, null,
+						null));
+
+				return jsonObject1;
+			},
+			itemId, layout);
+
+		exportImportLayouts(
+			new long[] {layout.getLayoutId()}, getImportParameterMap());
+
+		importedLayout2 = _layoutLocalService.getLayoutByUuidAndGroupId(
+			layout4.getUuid(), importedGroup.getGroupId(), false);
+
+		_assertFormContainerSuccessMessage(
+			importedLayout2.getExternalReferenceCode(), 0, 0,
+			_getLayoutStructureItem(itemId, importedLayout1.getPlid()), null);
+
+		Layout layout5 = LayoutTestUtil.addTypeContentLayout(guestGroup);
+
+		_updateLayoutStructureItem(
+			jsonObject1 -> {
+				JSONObject successMessageJSONObject = jsonObject1.getJSONObject(
+					"successMessage");
+
+				successMessageJSONObject.put(
+					"layout",
+					_createLayoutJSONObject(
+						layout5.getExternalReferenceCode(), 0, 0, null, null,
+						guestGroup.getExternalReferenceCode()));
+
+				return jsonObject1;
+			},
+			itemId, layout);
+
+		exportImportLayouts(
+			new long[] {layout.getLayoutId()}, getImportParameterMap());
+
+		_assertFormContainerSuccessMessage(
+			layout5.getExternalReferenceCode(), 0, 0,
+			_getLayoutStructureItem(itemId, importedLayout1.getPlid()),
+			guestGroup.getExternalReferenceCode());
 	}
 
 	@Test
@@ -521,6 +607,41 @@ public class LayoutPageTemplateStructureRelExportImportTest
 			scopeExternalReferenceCode);
 	}
 
+	private void _assertFormContainerSuccessMessage(
+		String externalReferenceCode, long groupId, long layoutId,
+		LayoutStructureItem layoutStructureItem,
+		String scopeExternalReferenceCode) {
+
+		JSONObject itemConfigJSONObject =
+			layoutStructureItem.getItemConfigJSONObject();
+
+		JSONObject successMessageJSONObject =
+			itemConfigJSONObject.getJSONObject("successMessage");
+
+		JSONObject layoutJSONObject = successMessageJSONObject.getJSONObject(
+			"layout");
+
+		if (groupId > 0) {
+			Assert.assertEquals(groupId, layoutJSONObject.getLong("groupId"));
+		}
+
+		if (Validator.isNotNull(externalReferenceCode)) {
+			Assert.assertEquals(
+				externalReferenceCode,
+				layoutJSONObject.getString("externalReferenceCode"));
+		}
+
+		if (layoutId > 0) {
+			Assert.assertEquals(layoutId, layoutJSONObject.getLong("layoutId"));
+		}
+
+		if (Validator.isNotNull(scopeExternalReferenceCode)) {
+			Assert.assertEquals(
+				scopeExternalReferenceCode,
+				layoutJSONObject.getString("scopeExternalReferenceCode"));
+		}
+	}
+
 	private void _assertMappedField(
 		long classPK, String externalReferenceCode, JSONObject jsonObject,
 		String scopeExternalReferenceCode) {
@@ -572,6 +693,39 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 		if (Validator.isNotNull(externalReferenceCode)) {
 			jsonObject.put("externalReferenceCode", externalReferenceCode);
+		}
+
+		if (Validator.isNotNull(scopeExternalReferenceCode)) {
+			jsonObject.put(
+				"scopeExternalReferenceCode", scopeExternalReferenceCode);
+		}
+
+		return jsonObject;
+	}
+
+	private JSONObject _createLayoutJSONObject(
+		String externalReferenceCode, long groupId, long layoutId,
+		String layoutUuid, Boolean privateLayout,
+		String scopeExternalReferenceCode) {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		if (Validator.isNotNull(externalReferenceCode)) {
+			jsonObject.put("externalReferenceCode", externalReferenceCode);
+		}
+
+		if ((groupId > 0) && (layoutId > 0) &&
+			Validator.isNotNull(layoutUuid) && (privateLayout != null)) {
+
+			jsonObject.put(
+				"groupId", groupId
+			).put(
+				"layoutId", layoutId
+			).put(
+				"layoutUuid", layoutUuid
+			).put(
+				"privateLayout", privateLayout
+			);
 		}
 
 		if (Validator.isNotNull(scopeExternalReferenceCode)) {

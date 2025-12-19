@@ -281,14 +281,16 @@ public class LayoutsSEODisplayContext {
 		LayoutSEOEntry layoutSEOEntry = getSelLayoutSEOEntry();
 
 		if ((layoutSEOEntry == null) ||
-			(layoutSEOEntry.getOpenGraphImageFileEntryId() == 0)) {
+			Validator.isNull(layoutSEOEntry.getOpenGraphImageFileEntryERC())) {
 
 			return StringPool.BLANK;
 		}
 
 		try {
-			FileEntry fileEntry = _dlAppService.getFileEntry(
-				layoutSEOEntry.getOpenGraphImageFileEntryId());
+			FileEntry fileEntry =
+				_dlAppService.getFileEntryByExternalReferenceCode(
+					layoutSEOEntry.getOpenGraphImageFileEntryERC(),
+					layoutSEOEntry.getOpenGraphImageFileEntryGroupId());
 
 			if (fileEntry.isInTrash()) {
 				return StringPool.BLANK;
@@ -307,14 +309,16 @@ public class LayoutsSEODisplayContext {
 		LayoutSEOEntry layoutSEOEntry = getSelLayoutSEOEntry();
 
 		if ((layoutSEOEntry == null) ||
-			(layoutSEOEntry.getOpenGraphImageFileEntryId() == 0)) {
+			Validator.isNull(layoutSEOEntry.getOpenGraphImageFileEntryERC())) {
 
 			return StringPool.BLANK;
 		}
 
 		try {
-			FileEntry fileEntry = _dlAppService.getFileEntry(
-				layoutSEOEntry.getOpenGraphImageFileEntryId());
+			FileEntry fileEntry =
+				_dlAppService.getFileEntryByExternalReferenceCode(
+					layoutSEOEntry.getOpenGraphImageFileEntryERC(),
+					layoutSEOEntry.getOpenGraphImageFileEntryGroupId());
 
 			if (fileEntry.isInTrash()) {
 				return StringPool.BLANK;

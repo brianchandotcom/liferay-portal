@@ -12,6 +12,7 @@ import com.liferay.headless.admin.site.internal.dto.v1_0.util.ItemScopeUtil;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Locale;
@@ -29,7 +30,7 @@ public class OpenGraphSettingsUtil {
 		if ((layoutSEOEntry == null) ||
 			(MapUtil.isEmpty(layoutSEOEntry.getOpenGraphDescriptionMap()) &&
 			 MapUtil.isEmpty(layoutSEOEntry.getOpenGraphImageAltMap()) &&
-			 (layoutSEOEntry.getOpenGraphImageFileEntryId() == 0) &&
+			 Validator.isNull(layoutSEOEntry.getOpenGraphImageFileEntryERC()) &&
 			 MapUtil.isEmpty(layoutSEOEntry.getOpenGraphTitleMap()))) {
 
 			return null;
@@ -50,15 +51,18 @@ public class OpenGraphSettingsUtil {
 					});
 				setImage(
 					() -> {
-						long openGraphImageFileEntryId =
-							layoutSEOEntry.getOpenGraphImageFileEntryId();
+						String openGraphImageFileEntryERC =
+							layoutSEOEntry.getOpenGraphImageFileEntryERC();
 
-						if (openGraphImageFileEntryId == 0) {
+						if (Validator.isNull(openGraphImageFileEntryERC)) {
 							return null;
 						}
 
-						FileEntry fileEntry = dlAppService.getFileEntry(
-							openGraphImageFileEntryId);
+						FileEntry fileEntry =
+							dlAppService.getFileEntryByExternalReferenceCode(
+								openGraphImageFileEntryERC,
+								layoutSEOEntry.
+									getOpenGraphImageFileEntryGroupId());
 
 						return new ItemExternalReference() {
 							{

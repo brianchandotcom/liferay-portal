@@ -19,6 +19,7 @@ import com.liferay.layout.seo.model.LayoutSEOSite;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
 import com.liferay.layout.seo.template.LayoutSEOTemplateProcessor;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -96,26 +97,22 @@ public class OpenGraphImageProvider {
 		LayoutSEOEntry layoutSEOEntry, ThemeDisplay themeDisplay) {
 
 		try {
-			long openGraphImageFileEntryId = _getOpenGraphImageFileEntryId(
+			FileEntry openGraphImageFileEntry = _getOpenGraphImageFileEntry(
 				layout, layoutSEOEntry);
 
-			if (openGraphImageFileEntryId == 0) {
-				return null;
-			}
+			if ((openGraphImageFileEntry == null) ||
+				openGraphImageFileEntry.isInTrash()) {
 
-			FileEntry fileEntry = _dlAppLocalService.getFileEntry(
-				openGraphImageFileEntryId);
-
-			if ((fileEntry == null) || fileEntry.isInTrash()) {
 				return null;
 			}
 
 			Iterable<KeyValuePair> fileEntryMetadataOpenGraphTagKeyValuePairs =
 				_fileEntryMetadataOpenGraphTagsProvider.
-					getFileEntryMetadataOpenGraphTagKeyValuePairs(fileEntry);
+					getFileEntryMetadataOpenGraphTagKeyValuePairs(
+						openGraphImageFileEntry);
 
 			String imagePreviewURL = _dlurlHelper.getImagePreviewURL(
-				fileEntry, themeDisplay);
+				openGraphImageFileEntry, themeDisplay);
 
 			return new OpenGraphImage() {
 
@@ -133,7 +130,7 @@ public class OpenGraphImageProvider {
 
 				@Override
 				public String getMimeType() {
-					return fileEntry.getMimeType();
+					return openGraphImageFileEntry.getMimeType();
 				}
 
 				@Override
@@ -164,7 +161,8 @@ public class OpenGraphImageProvider {
 		}
 
 		if ((layoutSEOEntry != null) &&
-			(layoutSEOEntry.getOpenGraphImageFileEntryId() > 0)) {
+			Validator.isNotNull(
+				layoutSEOEntry.getOpenGraphImageFileEntryERC())) {
 
 			return layoutSEOEntry.getOpenGraphImageAlt(locale);
 		}
@@ -296,13 +294,17 @@ public class OpenGraphImageProvider {
 		return null;
 	}
 
-	private long _getOpenGraphImageFileEntryId(
-		Layout layout, LayoutSEOEntry layoutSEOEntry) {
+	private FileEntry _getOpenGraphImageFileEntry(
+			Layout layout, LayoutSEOEntry layoutSEOEntry)
+		throws PortalException {
 
 		if ((layoutSEOEntry != null) &&
-			(layoutSEOEntry.getOpenGraphImageFileEntryId() > 0)) {
+			Validator.isNotNull(
+				layoutSEOEntry.getOpenGraphImageFileEntryERC())) {
 
-			return layoutSEOEntry.getOpenGraphImageFileEntryId();
+			return _dlAppLocalService.getFileEntryByExternalReferenceCode(
+				layoutSEOEntry.getOpenGraphImageFileEntryERC(),
+				layoutSEOEntry.getOpenGraphImageFileEntryGroupId());
 		}
 
 		LayoutSEOSite layoutSEOSite =
@@ -312,10 +314,11 @@ public class OpenGraphImageProvider {
 		if ((layoutSEOSite == null) ||
 			(layoutSEOSite.getOpenGraphImageFileEntryId() == 0)) {
 
-			return 0;
+			return null;
 		}
 
-		return layoutSEOSite.getOpenGraphImageFileEntryId();
+		return _dlAppLocalService.getFileEntry(
+			layoutSEOSite.getOpenGraphImageFileEntryId());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

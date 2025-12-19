@@ -70,8 +70,10 @@ public class EditOpenGraphMVCActionCommand extends BaseMVCActionCommand {
 		Map<Locale, String> openGraphImageAltMap =
 			_localization.getLocalizationMap(
 				actionRequest, "openGraphImageAlt");
-		long openGraphImageFileEntryId = ParamUtil.getLong(
-			actionRequest, "openGraphImageFileEntryId");
+		String openGraphImageFileEntryERC = ParamUtil.getString(
+			actionRequest, "openGraphImageFileEntryERC");
+		String openGraphImageFileEntryScopeERC = ParamUtil.getString(
+			actionRequest, "openGraphImageFileEntryScopeERC");
 		boolean openGraphTitleEnabled = ParamUtil.getBoolean(
 			actionRequest, "openGraphTitleEnabled");
 		Map<Locale, String> openGraphTitleMap =
@@ -80,8 +82,8 @@ public class EditOpenGraphMVCActionCommand extends BaseMVCActionCommand {
 		_layoutSEOEntryService.updateLayoutSEOEntry(
 			groupId, privateLayout, layoutId, openGraphDescriptionEnabled,
 			openGraphDescriptionMap, openGraphImageAltMap,
-			openGraphImageFileEntryId, openGraphTitleEnabled, openGraphTitleMap,
-			serviceContext);
+			openGraphImageFileEntryERC, openGraphImageFileEntryScopeERC,
+			openGraphTitleEnabled, openGraphTitleMap, serviceContext);
 
 		UnicodeProperties formTypeSettingsUnicodeProperties =
 			PropertiesParamUtil.getProperties(

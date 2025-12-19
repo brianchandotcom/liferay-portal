@@ -7,7 +7,8 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
-import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
@@ -39,7 +40,6 @@ import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Team;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -77,6 +76,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -561,21 +561,6 @@ public class SitePageResourceImpl
 		).build();
 	}
 
-	private long _getFileEntryId(long contentDocumentId) {
-		try {
-			FileEntry fileEntry = _dlAppService.getFileEntry(contentDocumentId);
-
-			return fileEntry.getFileEntryId();
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException);
-			}
-		}
-
-		return 0;
-	}
-
 	private Layout _getLayout(long groupId, String friendlyUrlPath)
 		throws Exception {
 
@@ -942,7 +927,8 @@ public class SitePageResourceImpl
 		boolean openGraphDescriptionEnabled = false;
 		Map<Locale, String> openGraphDescriptionMap = new HashMap<>();
 		Map<Locale, String> openGraphImageAltMap = new HashMap<>();
-		long openGraphImageFileEntryId = 0;
+		String openGraphImageFileEntryERC = null;
+		String openGraphImageFileEntryScopeERC = null;
 		boolean openGraphTitleEnabled = false;
 		Map<Locale, String> openGraphTitleMap = new HashMap<>();
 
@@ -967,8 +953,40 @@ public class SitePageResourceImpl
 			ContentDocument contentDocument = openGraphSettings.getImage();
 
 			if (contentDocument != null) {
-				openGraphImageFileEntryId = _getFileEntryId(
-					contentDocument.getId());
+				openGraphImageFileEntryERC =
+					contentDocument.getExternalReferenceCode();
+
+				openGraphImageFileEntryScopeERC =
+					contentDocument.getScopeExternalReferenceCode();
+
+				Long targetGroupId = ScopeUtil.getItemGroupId(
+					contextCompany.getCompanyId(),
+					openGraphImageFileEntryScopeERC, groupId);
+
+				if (targetGroupId == null) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to resolve scope group for open graph " +
+								"image with scope external reference code " +
+									openGraphImageFileEntryScopeERC);
+					}
+				}
+				else {
+					DLFileEntry dlFileEntry =
+						_dlFileEntryLocalService.
+							fetchFileEntryByExternalReferenceCode(
+								targetGroupId, openGraphImageFileEntryERC);
+
+					if ((dlFileEntry == null) && _log.isWarnEnabled()) {
+						_log.warn(
+							StringBundler.concat(
+								"Unable to resolve open graph image file ",
+								"entry with external reference code ",
+								openGraphImageFileEntryERC,
+								" and scope external reference code ",
+								openGraphImageFileEntryScopeERC));
+					}
+				}
 			}
 
 			openGraphTitleMap = LocalizedMapUtil.getLocalizedMap(
@@ -988,8 +1006,9 @@ public class SitePageResourceImpl
 		_layoutSEOEntryService.updateLayoutSEOEntry(
 			groupId, false, layoutId, canonicalURLEnabled, canonicalURLMap,
 			openGraphDescriptionEnabled, openGraphDescriptionMap,
-			openGraphImageAltMap, openGraphImageFileEntryId,
-			openGraphTitleEnabled, openGraphTitleMap, serviceContext);
+			openGraphImageAltMap, openGraphImageFileEntryERC,
+			openGraphImageFileEntryScopeERC, openGraphTitleEnabled,
+			openGraphTitleMap, serviceContext);
 
 		CustomMetaTag[] customMetaTags = pageSettings.getCustomMetaTags();
 
@@ -1019,7 +1038,7 @@ public class SitePageResourceImpl
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference
-	private DLAppService _dlAppService;
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;

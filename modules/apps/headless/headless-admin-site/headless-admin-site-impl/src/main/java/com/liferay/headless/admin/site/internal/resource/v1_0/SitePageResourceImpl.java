@@ -6,8 +6,6 @@
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
 import com.liferay.client.extension.type.manager.CETManager;
-import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.service.DLFileEntryService;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
@@ -23,6 +21,8 @@ import com.liferay.headless.admin.site.dto.v1_0.SitePage;
 import com.liferay.headless.admin.site.dto.v1_0.SitePageNavigationSettings;
 import com.liferay.headless.admin.site.dto.v1_0.SitemapSettings;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSettings;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.FileEntryUtil;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.ItemScopeUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.SitePageTypeUtil;
 import com.liferay.headless.admin.site.internal.odata.entity.v1_0.SitePageEntityModel;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
@@ -552,33 +552,6 @@ public class SitePageResourceImpl
 		return layout;
 	}
 
-	private long _getFileEntryId(
-			ItemExternalReference itemExternalReference,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		long groupId = serviceContext.getScopeGroupId();
-
-		com.liferay.portal.vulcan.scope.Scope scope =
-			itemExternalReference.getScope();
-
-		if (scope != null) {
-			groupId = GroupUtil.getGroupId(
-				true, true, serviceContext.getCompanyId(),
-				scope.getExternalReferenceCode());
-		}
-
-		DLFileEntry dlFileEntry =
-			_dlFileEntryService.fetchFileEntryByExternalReferenceCode(
-				groupId, itemExternalReference.getExternalReferenceCode());
-
-		if (dlFileEntry == null) {
-			throw new UnsupportedOperationException();
-		}
-
-		return dlFileEntry.getFileEntryId();
-	}
-
 	private long _getParentLayoutId(
 			long defaultParentLayoutId, long groupId,
 			String parentSitePageExternalReferenceCode,
@@ -870,7 +843,8 @@ public class SitePageResourceImpl
 		boolean openGraphDescriptionEnabled = false;
 		Map<Locale, String> openGraphDescriptionMap = new HashMap<>();
 		Map<Locale, String> openGraphImageAltMap = new HashMap<>();
-		long openGraphImageFileEntryId = 0;
+		String openGraphImageFileEntryERC = null;
+		String openGraphImageFileEntryScopeERC = null;
 		boolean openGraphTitleEnabled = false;
 		Map<Locale, String> openGraphTitleMap = new HashMap<>();
 
@@ -894,8 +868,18 @@ public class SitePageResourceImpl
 				openGraphSettings.getImage();
 
 			if (itemExternalReference != null) {
-				openGraphImageFileEntryId = _getFileEntryId(
-					itemExternalReference, serviceContext);
+				openGraphImageFileEntryERC =
+					itemExternalReference.getExternalReferenceCode();
+
+				openGraphImageFileEntryScopeERC =
+					ItemScopeUtil.getItemScopeExternalReferenceCode(
+						itemExternalReference.getScope(),
+						serviceContext.getScopeGroupId());
+
+				FileEntryUtil.fetchFileEntryByExternalReferenceCode(
+					serviceContext.getCompanyId(), openGraphImageFileEntryERC,
+					itemExternalReference.getScope(),
+					serviceContext.getScopeGroupId());
 			}
 
 			openGraphTitleMap = LocalizedMapUtil.getLocalizedMap(
@@ -909,8 +893,9 @@ public class SitePageResourceImpl
 		_layoutSEOEntryService.updateLayoutSEOEntry(
 			groupId, false, layoutId, canonicalURLEnabled, canonicalURLMap,
 			openGraphDescriptionEnabled, openGraphDescriptionMap,
-			openGraphImageAltMap, openGraphImageFileEntryId,
-			openGraphTitleEnabled, openGraphTitleMap, serviceContext);
+			openGraphImageAltMap, openGraphImageFileEntryERC,
+			openGraphImageFileEntryScopeERC, openGraphTitleEnabled,
+			openGraphTitleMap, serviceContext);
 
 		CustomMetaTag[] customMetaTags = new CustomMetaTag[0];
 
@@ -1012,9 +997,6 @@ public class SitePageResourceImpl
 
 	@Reference
 	private CETManager _cetManager;
-
-	@Reference
-	private DLFileEntryService _dlFileEntryService;
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;

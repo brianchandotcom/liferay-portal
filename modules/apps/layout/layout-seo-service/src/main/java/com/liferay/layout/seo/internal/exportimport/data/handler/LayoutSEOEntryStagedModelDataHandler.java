@@ -15,6 +15,7 @@ import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.model.LayoutSEOEntryCustomMetaTag;
 import com.liferay.layout.seo.model.LayoutSEOEntryCustomMetaTagProperty;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -78,7 +79,8 @@ public class LayoutSEOEntryStagedModelDataHandler
 		throws Exception {
 
 		FileEntry openGraphImageFileEntry = _fetchFileEntry(
-			layoutSEOEntry.getOpenGraphImageFileEntryId());
+			layoutSEOEntry.getOpenGraphImageFileEntryERC(),
+			layoutSEOEntry.getOpenGraphImageFileEntryGroupId());
 
 		if (openGraphImageFileEntry != null) {
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
@@ -127,13 +129,6 @@ public class LayoutSEOEntryStagedModelDataHandler
 			LayoutSEOEntry layoutSEOEntry)
 		throws Exception {
 
-		Map<Long, Long> fileEntryIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				FileEntry.class);
-
-		long openGraphImageFileEntryId = MapUtil.getLong(
-			fileEntryIds, layoutSEOEntry.getOpenGraphImageFileEntryId(), 0);
-
 		LayoutSEOEntry existingLayoutSEOEntry =
 			fetchStagedModelByUuidAndGroupId(
 				layoutSEOEntry.getUuid(), layoutSEOEntry.getGroupId());
@@ -160,7 +155,8 @@ public class LayoutSEOEntryStagedModelDataHandler
 					layoutSEOEntry.isOpenGraphDescriptionEnabled(),
 					layoutSEOEntry.getOpenGraphDescriptionMap(),
 					layoutSEOEntry.getOpenGraphImageAltMap(),
-					openGraphImageFileEntryId,
+					layoutSEOEntry.getOpenGraphImageFileEntryERC(),
+					layoutSEOEntry.getOpenGraphImageFileEntryScopeERC(),
 					layoutSEOEntry.isOpenGraphTitleEnabled(),
 					layoutSEOEntry.getOpenGraphTitleMap(), serviceContext);
 		}
@@ -176,7 +172,8 @@ public class LayoutSEOEntryStagedModelDataHandler
 					layoutSEOEntry.isOpenGraphDescriptionEnabled(),
 					layoutSEOEntry.getOpenGraphDescriptionMap(),
 					layoutSEOEntry.getOpenGraphImageAltMap(),
-					openGraphImageFileEntryId,
+					layoutSEOEntry.getOpenGraphImageFileEntryERC(),
+					layoutSEOEntry.getOpenGraphImageFileEntryScopeERC(),
 					layoutSEOEntry.isOpenGraphTitleEnabled(),
 					layoutSEOEntry.getOpenGraphTitleMap(), serviceContext);
 		}
@@ -191,18 +188,24 @@ public class LayoutSEOEntryStagedModelDataHandler
 			serviceContext);
 	}
 
-	private FileEntry _fetchFileEntry(long fileEntryId) {
-		if (fileEntryId <= 0) {
+	private FileEntry _fetchFileEntry(
+		String fileEntryERC, long fileEntryGroupId) {
+
+		if (Validator.isNull(fileEntryERC)) {
 			return null;
 		}
 
 		try {
-			return _dlAppLocalService.getFileEntry(fileEntryId);
+			return _dlAppLocalService.getFileEntryByExternalReferenceCode(
+				fileEntryERC, fileEntryGroupId);
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to get file entry " + fileEntryId, portalException);
+					StringBundler.concat(
+						"Unable to get file entry with external reference ",
+						"code ", fileEntryERC, " and group ", fileEntryGroupId),
+					portalException);
 			}
 
 			return null;

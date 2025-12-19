@@ -11,6 +11,7 @@ import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInf
 import com.liferay.document.library.kernel.model.DLFileEntryTable;
 import com.liferay.layout.seo.model.LayoutSEOEntryTable;
 import com.liferay.layout.seo.service.persistence.LayoutSEOEntryPersistence;
+import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.model.LayoutTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
@@ -29,9 +30,41 @@ public class LayoutSEOEntryTableReferenceDefinition
 		ChildTableReferenceInfoBuilder<LayoutSEOEntryTable>
 			childTableReferenceInfoBuilder) {
 
-		childTableReferenceInfoBuilder.singleColumnReference(
-			LayoutSEOEntryTable.INSTANCE.openGraphImageFileEntryId,
-			DLFileEntryTable.INSTANCE.fileEntryId);
+		childTableReferenceInfoBuilder.referenceInnerJoin(
+			fromStep -> fromStep.from(
+				DLFileEntryTable.INSTANCE
+			).innerJoinON(
+				LayoutSEOEntryTable.INSTANCE,
+				LayoutSEOEntryTable.INSTANCE.openGraphImageFileEntryERC.eq(
+					DLFileEntryTable.INSTANCE.externalReferenceCode
+				).and(
+					LayoutSEOEntryTable.INSTANCE.
+						openGraphImageFileEntryScopeERC.eq((String)null)
+				).and(
+					LayoutSEOEntryTable.INSTANCE.groupId.eq(
+						DLFileEntryTable.INSTANCE.groupId)
+				)
+			)
+		).referenceInnerJoin(
+			fromStep -> fromStep.from(
+				DLFileEntryTable.INSTANCE
+			).innerJoinON(
+				LayoutSEOEntryTable.INSTANCE,
+				LayoutSEOEntryTable.INSTANCE.openGraphImageFileEntryERC.eq(
+					DLFileEntryTable.INSTANCE.externalReferenceCode)
+			).innerJoinON(
+				GroupTable.INSTANCE,
+				LayoutSEOEntryTable.INSTANCE.openGraphImageFileEntryScopeERC.eq(
+					GroupTable.INSTANCE.externalReferenceCode
+				).and(
+					LayoutSEOEntryTable.INSTANCE.companyId.eq(
+						GroupTable.INSTANCE.companyId)
+				).and(
+					GroupTable.INSTANCE.groupId.eq(
+						DLFileEntryTable.INSTANCE.groupId)
+				)
+			)
+		);
 	}
 
 	@Override

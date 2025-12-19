@@ -82,8 +82,8 @@ public class EditOpenGraphMVCActionCommandTest {
 				HashMapBuilder.put(
 					LocaleUtil.getSiteDefault(), RandomTestUtil.randomString()
 				).build(),
-				false, Collections.emptyMap(), Collections.emptyMap(), 0, false,
-				Collections.emptyMap(),
+				false, Collections.emptyMap(), Collections.emptyMap(), null,
+				null, false, Collections.emptyMap(),
 				ServiceContextTestUtil.getServiceContext(
 					_group, TestPropsValues.getUserId()));
 
@@ -105,7 +105,8 @@ public class EditOpenGraphMVCActionCommandTest {
 			LocaleUtil.getSiteDefault());
 		String description = RandomTestUtil.randomString();
 		String imageAlt = RandomTestUtil.randomString();
-		long fileEntryId = RandomTestUtil.randomLong();
+		String fileEntryERC = RandomTestUtil.randomString();
+		String fileEntryScopeERC = RandomTestUtil.randomString();
 		String title = RandomTestUtil.randomString();
 
 		ReflectionTestUtil.invoke(
@@ -119,7 +120,9 @@ public class EditOpenGraphMVCActionCommandTest {
 				).put(
 					"openGraphImageAlt_" + languageId, imageAlt
 				).put(
-					"openGraphImageFileEntryId", String.valueOf(fileEntryId)
+					"openGraphImageFileEntryERC", fileEntryERC
+				).put(
+					"openGraphImageFileEntryScopeERC", fileEntryScopeERC
 				).put(
 					"openGraphTitle_" + languageId, title
 				).put(
@@ -147,7 +150,10 @@ public class EditOpenGraphMVCActionCommandTest {
 		Assert.assertEquals(
 			imageAlt, curLayoutSEOEntry.getOpenGraphImageAlt(languageId));
 		Assert.assertEquals(
-			fileEntryId, curLayoutSEOEntry.getOpenGraphImageFileEntryId());
+			fileEntryERC, curLayoutSEOEntry.getOpenGraphImageFileEntryERC());
+		Assert.assertEquals(
+			fileEntryScopeERC,
+			curLayoutSEOEntry.getOpenGraphImageFileEntryScopeERC());
 	}
 
 	private void _assertCustomMetaTags(

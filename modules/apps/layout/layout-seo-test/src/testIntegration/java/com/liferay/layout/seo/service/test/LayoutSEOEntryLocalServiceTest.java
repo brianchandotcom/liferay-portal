@@ -14,15 +14,15 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -50,16 +50,19 @@ public class LayoutSEOEntryLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		_group = _groupLocalService.getGroup(TestPropsValues.getGroupId());
 		_layout = _layoutLocalService.getLayout(TestPropsValues.getPlid());
 	}
 
 	@Test
 	public void testAddLayoutSEOEntry() throws PortalException {
+		String canonicalURL =
+			"http://" + RandomTestUtil.randomString() + ".com";
+
 		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(), false,
 			_layout.getLayoutId(), false,
-			Collections.singletonMap(LocaleUtil.US, "http://example.com"),
+			Collections.singletonMap(LocaleUtil.US, canonicalURL),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		LayoutSEOEntry layoutSEOEntry =
@@ -67,14 +70,17 @@ public class LayoutSEOEntryLocalServiceTest {
 				_group.getGroupId(), false, _layout.getLayoutId());
 
 		Assert.assertEquals(
-			"http://example.com",
-			layoutSEOEntry.getCanonicalURL(LocaleUtil.US));
+			canonicalURL, layoutSEOEntry.getCanonicalURL(LocaleUtil.US));
 		Assert.assertFalse(layoutSEOEntry.isCanonicalURLEnabled());
 		Assert.assertEquals(
 			StringPool.BLANK,
 			layoutSEOEntry.getOpenGraphDescription(LocaleUtil.US));
 		Assert.assertFalse(layoutSEOEntry.isOpenGraphDescriptionEnabled());
-		Assert.assertEquals(0, layoutSEOEntry.getOpenGraphImageFileEntryId());
+		Assert.assertTrue(
+			Validator.isNull(layoutSEOEntry.getOpenGraphImageFileEntryERC()));
+		Assert.assertTrue(
+			Validator.isNull(
+				layoutSEOEntry.getOpenGraphImageFileEntryScopeERC()));
 		Assert.assertEquals(
 			StringPool.BLANK, layoutSEOEntry.getOpenGraphTitle(LocaleUtil.US));
 		Assert.assertFalse(layoutSEOEntry.isOpenGraphTitleEnabled());
@@ -89,13 +95,22 @@ public class LayoutSEOEntryLocalServiceTest {
 
 	@Test
 	public void testAddLayoutSEOEntryWithAllFields() throws PortalException {
+		String canonicalURL =
+			"http://" + RandomTestUtil.randomString() + ".com";
+		String openGraphDescription = RandomTestUtil.randomString();
+		String openGraphImageAlt = RandomTestUtil.randomString();
+		String openGraphTitle = RandomTestUtil.randomString();
+		String openGraphImageFileEntryERC = RandomTestUtil.randomString();
+		String openGraphImageFileEntryScopeERC = RandomTestUtil.randomString();
+
 		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(), false,
 			_layout.getLayoutId(), false,
-			Collections.singletonMap(LocaleUtil.US, "http://example.com"), true,
-			Collections.singletonMap(LocaleUtil.US, "description"),
-			Collections.singletonMap(LocaleUtil.US, "image alt"), 12345, true,
-			Collections.singletonMap(LocaleUtil.US, "title"),
+			Collections.singletonMap(LocaleUtil.US, canonicalURL), true,
+			Collections.singletonMap(LocaleUtil.US, openGraphDescription),
+			Collections.singletonMap(LocaleUtil.US, openGraphImageAlt),
+			openGraphImageFileEntryERC, openGraphImageFileEntryScopeERC, true,
+			Collections.singletonMap(LocaleUtil.US, openGraphTitle),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		LayoutSEOEntry layoutSEOEntry =
@@ -103,17 +118,20 @@ public class LayoutSEOEntryLocalServiceTest {
 				_group.getGroupId(), false, _layout.getLayoutId());
 
 		Assert.assertEquals(
-			"http://example.com",
-			layoutSEOEntry.getCanonicalURL(LocaleUtil.US));
+			canonicalURL, layoutSEOEntry.getCanonicalURL(LocaleUtil.US));
 		Assert.assertFalse(layoutSEOEntry.isCanonicalURLEnabled());
 		Assert.assertEquals(
-			12345, layoutSEOEntry.getOpenGraphImageFileEntryId());
+			openGraphImageFileEntryERC,
+			layoutSEOEntry.getOpenGraphImageFileEntryERC());
 		Assert.assertEquals(
-			"description",
+			openGraphImageFileEntryScopeERC,
+			layoutSEOEntry.getOpenGraphImageFileEntryScopeERC());
+		Assert.assertEquals(
+			openGraphDescription,
 			layoutSEOEntry.getOpenGraphDescription(LocaleUtil.US));
 		Assert.assertTrue(layoutSEOEntry.isOpenGraphDescriptionEnabled());
 		Assert.assertEquals(
-			"title", layoutSEOEntry.getOpenGraphTitle(LocaleUtil.US));
+			openGraphTitle, layoutSEOEntry.getOpenGraphTitle(LocaleUtil.US));
 		Assert.assertTrue(layoutSEOEntry.isOpenGraphTitleEnabled());
 
 		List<LayoutSEOEntryCustomMetaTag> layoutSEOEntryCustomMetaTags =
@@ -170,10 +188,13 @@ public class LayoutSEOEntryLocalServiceTest {
 				LocaleUtil.US, RandomTestUtil.randomString()),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
+		String canonicalURL =
+			"http://" + RandomTestUtil.randomString() + ".com";
+
 		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(), false,
 			_layout.getLayoutId(), true,
-			Collections.singletonMap(LocaleUtil.US, "http://example.com"),
+			Collections.singletonMap(LocaleUtil.US, canonicalURL),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		LayoutSEOEntry layoutSEOEntry =
@@ -181,14 +202,17 @@ public class LayoutSEOEntryLocalServiceTest {
 				_group.getGroupId(), false, _layout.getLayoutId());
 
 		Assert.assertEquals(
-			"http://example.com",
-			layoutSEOEntry.getCanonicalURL(LocaleUtil.US));
+			canonicalURL, layoutSEOEntry.getCanonicalURL(LocaleUtil.US));
 		Assert.assertTrue(layoutSEOEntry.isCanonicalURLEnabled());
 		Assert.assertEquals(
 			StringPool.BLANK,
 			layoutSEOEntry.getOpenGraphDescription(LocaleUtil.US));
 		Assert.assertFalse(layoutSEOEntry.isOpenGraphDescriptionEnabled());
-		Assert.assertEquals(0, layoutSEOEntry.getOpenGraphImageFileEntryId());
+		Assert.assertTrue(
+			Validator.isNull(layoutSEOEntry.getOpenGraphImageFileEntryERC()));
+		Assert.assertTrue(
+			Validator.isNull(
+				layoutSEOEntry.getOpenGraphImageFileEntryScopeERC()));
 		Assert.assertEquals(
 			StringPool.BLANK, layoutSEOEntry.getOpenGraphTitle(LocaleUtil.US));
 		Assert.assertFalse(layoutSEOEntry.isOpenGraphTitleEnabled());
@@ -210,13 +234,22 @@ public class LayoutSEOEntryLocalServiceTest {
 				LocaleUtil.US, RandomTestUtil.randomString()),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
+		String canonicalURL =
+			"http://" + RandomTestUtil.randomString() + ".com";
+		String openGraphDescription = RandomTestUtil.randomString();
+		String openGraphImageAlt = RandomTestUtil.randomString();
+		String openGraphTitle = RandomTestUtil.randomString();
+		String openGraphImageFileEntryERC = RandomTestUtil.randomString();
+		String openGraphImageFileEntryScopeERC = RandomTestUtil.randomString();
+
 		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(), false,
 			_layout.getLayoutId(), true,
-			Collections.singletonMap(LocaleUtil.US, "http://example.com"), true,
-			Collections.singletonMap(LocaleUtil.US, "description"),
-			Collections.singletonMap(LocaleUtil.US, "image alt"), 12345, true,
-			Collections.singletonMap(LocaleUtil.US, "title"),
+			Collections.singletonMap(LocaleUtil.US, canonicalURL), true,
+			Collections.singletonMap(LocaleUtil.US, openGraphDescription),
+			Collections.singletonMap(LocaleUtil.US, openGraphImageAlt),
+			openGraphImageFileEntryERC, openGraphImageFileEntryScopeERC, true,
+			Collections.singletonMap(LocaleUtil.US, openGraphTitle),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		LayoutSEOEntry layoutSEOEntry =
@@ -224,17 +257,20 @@ public class LayoutSEOEntryLocalServiceTest {
 				_group.getGroupId(), false, _layout.getLayoutId());
 
 		Assert.assertEquals(
-			"http://example.com",
-			layoutSEOEntry.getCanonicalURL(LocaleUtil.US));
+			canonicalURL, layoutSEOEntry.getCanonicalURL(LocaleUtil.US));
 		Assert.assertTrue(layoutSEOEntry.isCanonicalURLEnabled());
 		Assert.assertEquals(
-			"description",
+			openGraphDescription,
 			layoutSEOEntry.getOpenGraphDescription(LocaleUtil.US));
 		Assert.assertTrue(layoutSEOEntry.isOpenGraphDescriptionEnabled());
 		Assert.assertEquals(
-			12345, layoutSEOEntry.getOpenGraphImageFileEntryId());
+			openGraphImageFileEntryERC,
+			layoutSEOEntry.getOpenGraphImageFileEntryERC());
 		Assert.assertEquals(
-			"title", layoutSEOEntry.getOpenGraphTitle(LocaleUtil.US));
+			openGraphImageFileEntryScopeERC,
+			layoutSEOEntry.getOpenGraphImageFileEntryScopeERC());
+		Assert.assertEquals(
+			openGraphTitle, layoutSEOEntry.getOpenGraphTitle(LocaleUtil.US));
 		Assert.assertTrue(layoutSEOEntry.isOpenGraphTitleEnabled());
 
 		List<LayoutSEOEntryCustomMetaTag> layoutSEOEntryCustomMetaTags =
@@ -245,8 +281,10 @@ public class LayoutSEOEntryLocalServiceTest {
 		Assert.assertTrue(layoutSEOEntryCustomMetaTags.isEmpty());
 	}
 
-	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	private Layout _layout;
 

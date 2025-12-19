@@ -33,6 +33,7 @@ import com.liferay.osb.faro.engine.client.model.IndividualSegment;
 import com.liferay.osb.faro.engine.client.model.IndividualSegmentMembership;
 import com.liferay.osb.faro.engine.client.model.IndividualSegmentMembershipChange;
 import com.liferay.osb.faro.engine.client.model.IndividualSegmentMembershipChangeAggregation;
+import com.liferay.osb.faro.engine.client.model.IndividualSegmentRealTimeMembership;
 import com.liferay.osb.faro.engine.client.model.IndividualTransformation;
 import com.liferay.osb.faro.engine.client.model.Interest;
 import com.liferay.osb.faro.engine.client.model.PageVisited;
@@ -409,6 +410,11 @@ public interface ContactsEngineClient {
 	public Results<IndividualSegmentMembership> getIndividualSegmentMemberships(
 		FaroProject faroProject, String individualSegmentId, int cur, int delta,
 		List<OrderByField> orderByFields);
+
+	public Results<IndividualSegmentRealTimeMembership>
+		getIndividualSegmentRealTimeMemberships(
+			FaroProject faroProject, String filter, String individualSegmentId,
+			int cur, int delta, List<OrderByField> orderByFields);
 
 	public Results<IndividualSegment> getIndividualSegments(
 		FaroProject faroProject, String channelId, String dataSourceId,

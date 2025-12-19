@@ -127,7 +127,7 @@ testWithExportImportAtInstanceLevelFF(
 		});
 
 		const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
-			{externalReferenceCode: '', textField: 'test'},
+			{externalReferenceCode: '', textField: objectDefinition.name},
 			`${normalizeRestPath(objectDefinition.restContextPath)}/scopes/Guest`
 		);
 

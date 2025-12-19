@@ -3,8 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Page, expect, mergeTests} from '@playwright/test';
-import path from 'path';
+import {FrameLocator, Page, expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {formsPagesTest} from '../../../fixtures/formsPagesTest';
@@ -310,50 +309,76 @@ test.describe('Manage fields through Form Builder page', () => {
 	test('Assert edition of a rich text field predefined value that contains a rule', async ({
 		formBuilderPage,
 		formBuilderSidePanelPage,
-		formsPage,
 		page,
+		rulesBuilderPage,
 	}) => {
-		await formsPage.goTo();
+		let richTextPredefinedValueIframe: FrameLocator;
 
-		await formsPage.importForm(
-			path.join(
-				__dirname,
-				'dependencies',
-				'form-with-rich-text.portlet.lar'
-			)
-		);
+		await test.step('create a new form with a richText field and set a predefined value for it', async () => {
+			await formBuilderPage.goToNew();
 
-		await formsPage.openForm('Form with rich text field');
+			await formBuilderSidePanelPage.addFieldByDoubleClick('Rich Text');
 
-		await expect(
-			page.getByRole('textbox', {name: 'Rich Text'})
-		).toBeVisible();
+			await formBuilderPage.openFieldSettings('Rich Text');
 
-		await formBuilderPage.openFieldSettings('Rich Text');
+			await formBuilderSidePanelPage.advancedTab.click();
 
-		await formBuilderSidePanelPage.advancedTab.click();
+			richTextPredefinedValueIframe = page
+				.getByRole('textbox', {name: 'Predefined Value'})
+				.frameLocator('iframe');
 
-		const richTextPredefinedValueIframe = page
-			.getByRole('textbox', {name: 'Predefined Value'})
-			.frameLocator('iframe');
+			await richTextPredefinedValueIframe.getByRole('paragraph').click();
 
-		await richTextPredefinedValueIframe
-			.getByText("Rich's text predefined value")
-			.click();
+			await page.keyboard.type('Rich text predefined value');
+		});
 
-		await page.keyboard.press('Control+A');
+		await test.step('create a rule involving richText field', async () => {
+			await rulesBuilderPage.rulesTab.click();
 
-		await page.keyboard.press('Backspace');
+			await rulesBuilderPage.addElementsButton.click();
 
-		await page.keyboard.type(
-			'Typing a new predefined value for the rich text field.'
-		);
+			await rulesBuilderPage.selectConditionLeftFormField('Rich Text');
 
-		await expect(
-			richTextPredefinedValueIframe.getByText(
+			await rulesBuilderPage.selectConditionOperator('Is Empty');
+
+			await rulesBuilderPage.selectAction('Require');
+
+			await page.getByTitle('Choose an Option').click();
+
+			await page.getByRole('option', {name: 'Rich Text'}).click();
+
+			await rulesBuilderPage.saveButton.click();
+		});
+
+		await test.step('edit previous predefined value after adding the rule', async () => {
+			await formBuilderPage.formTab.click();
+
+			await expect(
+				page.getByRole('textbox', {name: 'Rich Text'})
+			).toBeVisible();
+
+			await formBuilderPage.openFieldSettings('Rich Text');
+
+			await formBuilderSidePanelPage.advancedTab.click();
+
+			await richTextPredefinedValueIframe
+				.getByText('Rich text predefined value')
+				.click();
+
+			await page.keyboard.press('Control+A');
+
+			await page.keyboard.press('Backspace');
+
+			await page.keyboard.type(
 				'Typing a new predefined value for the rich text field.'
-			)
-		).toBeVisible();
+			);
+
+			await expect(
+				richTextPredefinedValueIframe.getByText(
+					'Typing a new predefined value for the rich text field.'
+				)
+			).toBeVisible();
+		});
 	});
 
 	test('Assert that a date field can be previewed', async ({

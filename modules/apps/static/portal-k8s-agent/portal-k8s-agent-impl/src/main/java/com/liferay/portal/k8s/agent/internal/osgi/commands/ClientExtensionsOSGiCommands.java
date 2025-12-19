@@ -44,18 +44,18 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class ClientExtensionsOSGiCommands implements OSGiCommands {
 
-	public void list(String... filters)
+	public void list(String... filterStrings)
 		throws InvalidSyntaxException, IOException, PortalException {
 
-		Configuration[] cxConfigurations = _getConfigurations(filters);
+		Configuration[] configurations = _getConfigurations(filterStrings);
 
-		if (ArrayUtil.isEmpty(cxConfigurations)) {
+		if (ArrayUtil.isEmpty(configurations)) {
 			System.out.println("No configurations found.");
 
 			return;
 		}
 
-		_printConfigurations(cxConfigurations);
+		_printConfigurations(configurations);
 	}
 
 	public void reload(String... args)
@@ -75,19 +75,19 @@ public class ClientExtensionsOSGiCommands implements OSGiCommands {
 
 		String pid = args[0];
 
-		Configuration cxConfiguration = _getConfiguration(pid);
+		Configuration configuration = _getConfiguration(pid);
 
-		if (cxConfiguration == null) {
+		if (configuration == null) {
 			System.out.println("No configuration found.");
 
 			return;
 		}
 
-		Configuration reloadedCxConfiguration = _reloadConfiguration(
-			cxConfiguration);
+		Configuration reloadedConfiguration = _reloadConfiguration(
+			configuration);
 
 		System.out.println(
-			"Reloaded configuration for " + reloadedCxConfiguration.getPid());
+			"Reloaded configuration for " + reloadedConfiguration.getPid());
 	}
 
 	public void show(String... args)
@@ -160,46 +160,48 @@ public class ClientExtensionsOSGiCommands implements OSGiCommands {
 	private Configuration _getConfiguration(String pid)
 		throws InvalidSyntaxException, IOException {
 
-		Configuration[] cxConfigurations = _getConfigurations(
+		Configuration[] configuration = _getConfigurations(
 			"service.pid=" + pid);
 
-		if (ArrayUtil.isEmpty(cxConfigurations)) {
+		if (ArrayUtil.isEmpty(configuration)) {
 			return null;
 		}
 
-		return cxConfigurations[0];
+		return configuration[0];
 	}
 
-	private Configuration[] _getConfigurations(String... filters)
+	private Configuration[] _getConfigurations(String... filterStrings)
 		throws InvalidSyntaxException, IOException {
 
-		String deploymentFilter = "(|(.cx.config.key=*)(.k8s.config.key=*))";
+		String deploymentFilterString =
+			"(|(.cx.config.key=*)(.k8s.config.key=*))";
 
-		if (filters.length <= 0) {
-			return _configurationAdmin.listConfigurations(deploymentFilter);
+		if (filterStrings.length == 0) {
+			return _configurationAdmin.listConfigurations(
+				deploymentFilterString);
 		}
 
-		StringBundler otherFiltersSB = new StringBundler();
+		StringBundler sb = new StringBundler();
 
-		for (String filter : filters) {
-			String[] splitFilter = filter.split("=", 2);
+		for (String filterString : filterStrings) {
+			String[] parts = filterString.split("=", 2);
 
-			if (splitFilter.length != 2) {
-				System.out.println("Invalid filter: " + filter);
+			if (parts.length != 2) {
+				System.out.println("Invalid filter: " + filterString);
 
 				return null;
 			}
 
-			String key = splitFilter[0];
-			String value = splitFilter[1];
+			String key = parts[0];
+			String value = parts[1];
 
 			if (key.equals("deploymentType")) {
 				if (value.equals("agent")) {
-					deploymentFilter = "(.k8s.config.key=*)";
+					deploymentFilterString = "(.k8s.config.key=*)";
 				}
 
 				if (value.equals("bundle")) {
-					deploymentFilter = "(.cx.config.key=*)";
+					deploymentFilterString = "(.cx.config.key=*)";
 				}
 
 				continue;
@@ -213,30 +215,30 @@ public class ClientExtensionsOSGiCommands implements OSGiCommands {
 				}
 			}
 
-			otherFiltersSB.append(String.format("(%s=%s)", key, value));
+			sb.append(String.format("(%s=%s)", key, value));
 		}
 
 		return _configurationAdmin.listConfigurations(
-			String.format("(&%s%s)", deploymentFilter, otherFiltersSB));
+			String.format("(&%s%s)", deploymentFilterString, sb));
 	}
 
 	private String _getConfigurationTableRow(
-		Configuration configuration, String format) {
+		Configuration configuration, String formatString) {
 
 		Dictionary<String, Object> properties = configuration.getProperties();
 
 		return String.format(
-			format, configuration.getPid(), properties.get("name"),
+			formatString, configuration.getPid(), properties.get("name"),
 			properties.get("type"),
 			properties.get("dxp.lxc.liferay.com.virtualInstanceId"));
 	}
 
-	private String _printConfiguration(Configuration cxConfiguration) {
+	private String _printConfiguration(Configuration configuration) {
 		return String.format(
 			"\nPID: %s\nFactoryPID: %s\n Bundle location: %s\n%s",
-			cxConfiguration.getPid(), cxConfiguration.getFactoryPid(),
-			cxConfiguration.getBundleLocation(),
-			_formatProperties(cxConfiguration.getProperties()));
+			configuration.getPid(), configuration.getFactoryPid(),
+			configuration.getBundleLocation(),
+			_formatProperties(configuration.getProperties()));
 	}
 
 	private void _printConfigurations(Configuration[] configurations) {
@@ -245,11 +247,11 @@ public class ClientExtensionsOSGiCommands implements OSGiCommands {
 		int typeWidth = 20;
 		int webIdWidth = 15;
 
-		String format = StringBundler.concat(
+		String formatString = StringBundler.concat(
 			"| %-", idWidth, "s | %-", nameWidth, "s | %-", typeWidth, "s | %-",
 			webIdWidth, "s |%n");
 
-		System.out.printf(format, "pid", "name", "type", "webId");
+		System.out.printf(formatString, "pid", "name", "type", "webId");
 
 		int totalWidth =
 			idWidth + nameWidth + typeWidth + webIdWidth + (4 * 3) + 2;
@@ -258,7 +260,7 @@ public class ClientExtensionsOSGiCommands implements OSGiCommands {
 
 		for (Configuration configuration : configurations) {
 			System.out.println(
-				_getConfigurationTableRow(configuration, format));
+				_getConfigurationTableRow(configuration, formatString));
 		}
 	}
 
@@ -276,13 +278,13 @@ public class ClientExtensionsOSGiCommands implements OSGiCommands {
 				InMemoryOnlyConfigurationThreadLocal.
 					setInMemoryOnlyWithSafeCloseable(true)) {
 
-			Configuration reloadedCxConfiguration =
+			Configuration reloadedConfiguration =
 				ConfigurationUtil.getConfiguration(
 					_configurationAdmin, originalPid);
 
-			reloadedCxConfiguration.update(originalProperties);
+			reloadedConfiguration.update(originalProperties);
 
-			return reloadedCxConfiguration;
+			return reloadedConfiguration;
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);

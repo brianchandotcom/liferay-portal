@@ -155,9 +155,15 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 
 	@Override
 	public String getRootObjectDefinitionExternalReferenceCode() {
+		long rootObjectDefinitionId = getRootObjectDefinitionId();
+
+		if (rootObjectDefinitionId == 0) {
+			return null;
+		}
+
 		ObjectDefinition rootObjectDefinition =
 			ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
-				getRootObjectDefinitionId());
+				rootObjectDefinitionId);
 
 		if (rootObjectDefinition == null) {
 			return null;

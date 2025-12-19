@@ -213,6 +213,7 @@ public abstract class BasePriceListResourceTestCase {
 		PriceList priceList = randomPriceList();
 
 		priceList.setAuthor(regex);
+		priceList.setCatalogExternalReferenceCode(regex);
 		priceList.setCatalogName(regex);
 		priceList.setCurrencyCode(regex);
 		priceList.setCurrencyExternalReferenceCode(regex);
@@ -226,6 +227,7 @@ public abstract class BasePriceListResourceTestCase {
 		priceList = PriceListSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, priceList.getAuthor());
+		Assert.assertEquals(regex, priceList.getCatalogExternalReferenceCode());
 		Assert.assertEquals(regex, priceList.getCatalogName());
 		Assert.assertEquals(regex, priceList.getCurrencyCode());
 		Assert.assertEquals(
@@ -1796,6 +1798,17 @@ public abstract class BasePriceListResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"catalogExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (priceList.getCatalogExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("catalogId", additionalAssertFieldName)) {
 				if (priceList.getCatalogId() == null) {
 					valid = false;
@@ -2165,6 +2178,20 @@ public abstract class BasePriceListResourceTestCase {
 				if (!Objects.deepEquals(
 						priceList1.getCatalogBasePriceList(),
 						priceList2.getCatalogBasePriceList())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"catalogExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						priceList1.getCatalogExternalReferenceCode(),
+						priceList2.getCatalogExternalReferenceCode())) {
 
 					return false;
 				}
@@ -2628,6 +2655,52 @@ public abstract class BasePriceListResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("catalogExternalReferenceCode")) {
+			Object object = priceList.getCatalogExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("catalogId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -3079,6 +3152,8 @@ public abstract class BasePriceListResourceTestCase {
 				active = RandomTestUtil.randomBoolean();
 				author = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				catalogBasePriceList = RandomTestUtil.randomBoolean();
+				catalogExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				catalogId = RandomTestUtil.randomLong();
 				catalogName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

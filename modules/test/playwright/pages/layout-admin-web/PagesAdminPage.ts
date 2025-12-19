@@ -27,6 +27,7 @@ export class PagesAdminPage {
 	private readonly pageTitleBox: Locator;
 	private readonly searchButton: Locator;
 	private readonly searchInput: Locator;
+	private readonly themeSelectorTitle: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
@@ -58,6 +59,9 @@ export class PagesAdminPage {
 		);
 		this.searchButton = this.page.getByLabel('Search for', {exact: true});
 		this.searchInput = this.page.getByPlaceholder('Search for');
+		this.themeSelectorTitle = this.page.getByRole('heading', {
+			name: 'Available Themes',
+		});
 	}
 
 	getPageMenuItem(pageName: string): Locator {
@@ -248,14 +252,6 @@ export class PagesAdminPage {
 	async changeTheme(themeName: string) {
 		await this.openThemeSelector();
 
-		await this.selectTheme(themeName);
-
-		await this.configurationSaveButton.waitFor();
-
-		await this.saveConfiguration();
-	}
-
-	async selectTheme(themeName: string) {
 		await expect(async () => {
 			const themeCard = this.getThemeCard(themeName);
 
@@ -266,8 +262,12 @@ export class PagesAdminPage {
 				trigger: themeCard,
 			});
 
-			await themeCard.waitFor({state: 'detached'});
+			await expect(this.themeSelectorTitle).toBeHidden();
 		}).toPass();
+
+		await this.configurationSaveButton.waitFor();
+
+		await this.saveConfiguration();
 	}
 
 	getThemeCard(themeName: string) {
@@ -290,9 +290,7 @@ export class PagesAdminPage {
 
 			await changeThemeButton.click();
 
-			await this.page
-				.getByRole('heading', {name: 'Available Themes'})
-				.waitFor({state: 'visible'});
+			await expect(this.themeSelectorTitle).toBeVisible();
 		}).toPass();
 	}
 

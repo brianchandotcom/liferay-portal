@@ -8,7 +8,6 @@ import {expect, mergeTests} from '@playwright/test';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {dataRemoteApiHelpersTest} from '../../../fixtures/dataRemoteApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
-import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
@@ -22,6 +21,7 @@ import getRandomString from '../../../utils/getRandomString';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 import {reloadUntilVisible} from '../../../utils/reloadUntilVisible';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
+import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 import getDataStructureDefinition from '../../journal-web/main/utils/getDataStructureDefinition';
 import {pagesPagesTest} from '../../layout-admin-web/main/fixtures/pagesPagesTest';
 import {remoteStagingPagesTest} from './fixtures/remoteStagingPagesTest';
@@ -60,13 +60,12 @@ test(
 		remotePage,
 		remoteStagingPage,
 		webContentDisplayPage,
-		widgetPagePage
+		widgetPagePage,
 	}) => {
 		test.slow();
 
 		const layouts: Array<Layout> = [];
 		let remoteSite: Site;
-		let remoteUrl: string;
 		let site: Site;
 
 			await test.step('Setup remote staging and pages', async () => {
@@ -82,17 +81,14 @@ test(
 
 				remoteApiHelpers.data.push({id: remoteSite.id, type: 'site'});
 
-				remoteUrl = remoteApiHelpers.baseUrl.substring(
-					0,
-					remoteApiHelpers.baseUrl.length - 3
-				);
-
 				await apiHelpers.jsonWebServicesStaging.enableRemoteStaging({
 					groupId: site.id,
 					remoteGroupId: remoteSite.id,
 					remotePort,
 				});
+			});
 
+			await test.step('Create a hierarchy of pages on the local site', async () => {
 				for (const i of [1, 2, 3]) {
 					let layout =
 						await apiHelpers.jsonWebServicesLayout.addLayout({
@@ -127,8 +123,7 @@ test(
 				}
 			});
 
-			const pageNumbers = [1, 11, 111, 12, 2, 21, 22, 3, 31, 32];
-			await test.step('Setup pages with web content display', async () => {
+			await test.step('Add two Web Content Display portlets to each page of the local site', async () => {
 				for (const layout of layouts) {
 					await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
@@ -136,8 +131,10 @@ test(
 					await widgetPagePage.addPortlet('Web Content Display');
 				}
 			});
+
 			const webContentTitle = getRandomString();
-			await test.step('Create structures, templates and web contents', async () => {
+			const pageNumbers = [1, 11, 111, 12, 2, 21, 22, 3, 31, 32];
+			await test.step('Create data structures, templates, and web content articles on the local site', async () => {
 				const fields: Array<any> = [];
 
 				for (const num of pageNumbers) {
@@ -261,7 +258,7 @@ test(
 			});
 
 			let i = 0;
-			await test.step('Add web content to pages', async () => {
+			await test.step('Add web content articles to the display portlets on each page of the local site', async () => {
 				for (const layout of layouts) {
 					await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
@@ -269,52 +266,62 @@ test(
 						await page.reload();
 						await webContentDisplayPage.addWebContentWithDisplay({
 							customLocator: await page
-								.locator('#wrapper, [id^="portlet-topper-toolbar_com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_"]:visible')
+								.locator(
+									'#wrapper, [id^="portlet-topper-toolbar_com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_"]:visible'
+								)
 								.nth(1),
 							pageType: 'content',
 							waitAfterAddingWebcontent: true,
 							webContentName: webContentTitle,
 						});
 
-						await expect( 
-							page
-								.getByText(webContentTitle, {exact: true})).toBeVisible({timeout: 1500});
-						}).toPass({
-							intervals: [1_000, 2_000],
-							timeout: 120_000
+						await expect(
+							page.getByText(webContentTitle, {exact: true})
+						).toBeVisible({timeout: 1500});
+					}).toPass({
+						intervals: [1_000, 2_000],
+						timeout: 120_000,
+					});
+
+					await expect(async () => {
+						await page.reload();
+						await webContentDisplayPage.addWebContentWithDisplay({
+							customLocator: await page
+								.locator(
+									'#wrapper, [id^="portlet-topper-toolbar_com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_"]:visible'
+								)
+								.nth(2),
+							pageType: 'content',
+							waitAfterAddingWebcontent: true,
+							webContentName: `Title-${pageNumbers[i]}`,
 						});
-				
-						await expect(async () => {
-							await page.reload();
-							await webContentDisplayPage.addWebContentWithDisplay({
-								customLocator: await page
-									.locator('#wrapper, [id^="portlet-topper-toolbar_com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_"]:visible')
-									.nth(2),
-								pageType: 'content',
-								waitAfterAddingWebcontent: true,
-								webContentName: `Title-${pageNumbers[i]}`,
-							});
 
-
-							await expect(page
+						await expect(
+							page
 								.getByText(`Title-${pageNumbers[i]}`, {
 									exact: true,
 								})
-								.first()).toBeVisible({timeout: 1500});
-						}).toPass({
-							intervals: [1_000, 2_000],
-							timeout: 120_000
-						});
+								.first()
+						).toBeVisible({timeout: 1500});
+					}).toPass({
+						intervals: [1_000, 2_000],
+						timeout: 120_000,
+					});
 					i++;
 				}
 			});
 
-			await test.step('Publish to live and verify on remote site', async () => {
+			await test.step('Publish to live and verify content and links on the remote site', async () => {
 				await remoteStagingPage.publishToLive({
 					layoutFriendlyURL: layouts[0].friendlyURL,
 					siteFriendlyUrl: site.friendlyUrlPath,
 				});
-			
+
+				const remoteUrl = remoteApiHelpers.baseUrl.substring(
+					0,
+					remoteApiHelpers.baseUrl.length - 3
+				);
+
 				await remotePage.goto(
 					`${remoteUrl}/web${remoteSite.friendlyUrlPath}${layouts[0].friendlyURL}`
 				);

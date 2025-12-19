@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.configuration.IndexWriterHelperConfiguration;
@@ -37,6 +38,7 @@ import com.liferay.portal.search.model.uid.UIDFactory;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
@@ -413,7 +415,8 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		taskContextMap.put(
 			BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true);
 		taskContextMap.put(
-			ReindexBackgroundTaskConstants.COMPANY_IDS, companyIds);
+			ReindexBackgroundTaskConstants.COMPANY_IDS,
+			new ArrayList<>(ListUtil.fromArray(companyIds)));
 
 		try {
 			return _backgroundTaskManager.addBackgroundTask(
@@ -446,7 +449,8 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		taskContextMap.put(
 			ReindexBackgroundTaskConstants.CLASS_NAME, className);
 		taskContextMap.put(
-			ReindexBackgroundTaskConstants.COMPANY_IDS, companyIds);
+			ReindexBackgroundTaskConstants.COMPANY_IDS,
+			new ArrayList<>(ListUtil.fromArray(companyIds)));
 
 		try {
 			return _backgroundTaskManager.addBackgroundTask(

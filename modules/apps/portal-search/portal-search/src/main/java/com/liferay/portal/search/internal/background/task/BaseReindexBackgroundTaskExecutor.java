@@ -10,11 +10,13 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
 import com.liferay.portal.kernel.search.background.task.ReindexBackgroundTaskConstants;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.internal.background.task.display.ReindexBackgroundTaskDisplay;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,12 +39,12 @@ public abstract class BaseReindexBackgroundTaskExecutor
 
 		String className = (String)taskContextMap.get(
 			ReindexBackgroundTaskConstants.CLASS_NAME);
-		long[] companyIds = GetterUtil.getLongValues(
-			taskContextMap.get(ReindexBackgroundTaskConstants.COMPANY_IDS));
+		List<Long> companyIds = (ArrayList<Long>)taskContextMap.get(
+			ReindexBackgroundTaskConstants.COMPANY_IDS);
 		String executionMode = (String)taskContextMap.get(
 			ReindexBackgroundTaskConstants.EXECUTION_MODE);
 
-		reindex(className, companyIds, executionMode);
+		reindex(className, ArrayUtil.toLongArray(companyIds), executionMode);
 
 		return BackgroundTaskResult.SUCCESS;
 	}

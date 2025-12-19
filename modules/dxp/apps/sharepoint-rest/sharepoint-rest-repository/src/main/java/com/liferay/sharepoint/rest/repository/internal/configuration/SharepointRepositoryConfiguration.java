@@ -27,12 +27,6 @@ public interface SharepointRepositoryConfiguration {
 	@Meta.AD(name = "name", required = false)
 	public String name();
 
-	@Meta.AD(name = "authorization-grant-endpoint", required = false)
-	public String authorizationGrantEndpoint();
-
-	@Meta.AD(name = "authorization-token-endpoint", required = false)
-	public String authorizationTokenEndpoint();
-
 	@Meta.AD(name = "client-id", required = false)
 	public String clientId();
 
@@ -44,11 +38,5 @@ public interface SharepointRepositoryConfiguration {
 
 	@Meta.AD(name = "tenant-id", required = false)
 	public String tenantId();
-
-	@Meta.AD(name = "site-domain", required = false)
-	public String siteDomain();
-
-	@Meta.AD(name = "resource", required = false)
-	public String resource();
 
 }

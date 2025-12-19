@@ -795,6 +795,9 @@ components:
                 catalogBasePriceList:
                     example: true
                     type: boolean
+                catalogExternalReferenceCode:
+                    example: AAB-34098-789-N
+                    type: string
                 catalogId:
                     example: 23130
                     format: int64

@@ -224,8 +224,15 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 		throws Exception {
 
 		CommerceCatalog commerceCatalog =
-			_commerceCatalogService.getCommerceCatalog(
+			_commerceCatalogService.fetchCommerceCatalogByExternalReferenceCode(
+				GetterUtil.getString(
+					priceList.getCatalogExternalReferenceCode()),
+				contextCompany.getCompanyId());
+
+		if (commerceCatalog == null) {
+			commerceCatalog = _commerceCatalogService.getCommerceCatalog(
 				priceList.getCatalogId());
+		}
 
 		CommerceCurrency commerceCurrency =
 			CommerceCurrencyUtil.getCommerceCurrency(

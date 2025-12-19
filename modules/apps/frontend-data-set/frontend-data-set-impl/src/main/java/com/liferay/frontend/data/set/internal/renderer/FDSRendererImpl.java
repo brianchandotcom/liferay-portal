@@ -118,9 +118,7 @@ public class FDSRendererImpl implements FDSRenderer {
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			if (Validator.isNull(props.get("snapshotsEnabled")) ||
-				!themeDisplay.isSignedIn()) {
-
+			if (!themeDisplay.isSignedIn()) {
 				snapshotsEnabled = false;
 			}
 			else {

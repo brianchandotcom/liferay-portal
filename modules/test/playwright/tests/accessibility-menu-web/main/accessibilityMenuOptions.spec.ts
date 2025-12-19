@@ -43,30 +43,30 @@ test.afterEach(async ({instanceSettingsPage, page}) => {
 	await instanceSettingsPage.resetInstanceSetting();
 });
 
+const OPTIONS = [
+	{
+		expectedClass: /c-prefers-link-underline/,
+		label: 'Underlined Links',
+	},
+	{
+		expectedClass: /c-prefers-letter-spacing-1/,
+		label: 'Increased Text Spacing',
+	},
+	{
+		expectedClass: /c-prefers-expanded-text/,
+		label: 'Expanded Text',
+	},
+	{
+		expectedClass: /c-prefers-reduced-motion/,
+		label: 'Reduced Motion',
+	},
+];
+
 test(
 	'Accessibility menu options can be controlled via the accessibility menu',
 	{tag: '@LPD-74263'},
 	async ({accessibilityMenuPage, page}) => {
-		const options = [
-			{
-				expectedClass: /c-prefers-link-underline/,
-				label: 'Underlined Links',
-			},
-			{
-				expectedClass: /c-prefers-letter-spacing-1/,
-				label: 'Increased Text Spacing',
-			},
-			{
-				expectedClass: /c-prefers-expanded-text/,
-				label: 'Expanded Text',
-			},
-			{
-				expectedClass: /c-prefers-reduced-motion/,
-				label: 'Reduced Motion',
-			},
-		];
-
-		for (const {expectedClass, label} of options) {
+		for (const {expectedClass, label} of OPTIONS) {
 			await test.step(`The "${label}" option can be configured via the accessibility menu`, async () => {
 				const body = page.locator('body');
 				const toggle = page.getByLabel(label);
@@ -80,6 +80,46 @@ test(
 				await accessibilityMenuPage.toggle(toggle, false);
 
 				await expect(body).not.toHaveClass(expectedClass);
+			});
+		}
+	}
+);
+
+test(
+	'Accessibility menu options can be controlled via the keyboard',
+	{tag: '@LPD-74263'},
+	async ({accessibilityMenuPage, page}) => {
+		await test.step('Focus the close button', async () => {
+			await page.keyboard.press('Tab');
+
+			await expect(accessibilityMenuPage.closeButton).toBeFocused();
+		});
+
+		for (const {expectedClass, label} of OPTIONS) {
+			const toggle = page.getByLabel(label);
+
+			await test.step(`Focus ${label} using the keyboard`, async () => {
+				await page.keyboard.press('Tab');
+
+				await expect(toggle).toBeFocused();
+			});
+
+			const body = page.locator('body');
+
+			await test.step(`Toggle ${label} using the keyboard and verify it is still focused`, async () => {
+				await page.keyboard.press('Enter');
+
+				await expect(body).toHaveClass(expectedClass);
+				await expect(toggle).toBeChecked();
+				await expect(toggle).toBeFocused();
+			});
+
+			await test.step(`Toggle ${label} again using the keyboard and verify it is still focused`, async () => {
+				await page.keyboard.press('Enter');
+
+				await expect(body).not.toHaveClass(expectedClass);
+				await expect(toggle).not.toBeChecked();
+				await expect(toggle).toBeFocused();
 			});
 		}
 	}

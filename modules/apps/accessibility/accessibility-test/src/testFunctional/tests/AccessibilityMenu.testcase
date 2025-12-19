@@ -82,61 +82,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-178192. Verifies accessibility menu modal toggle switches are keyboard accessible."
-	@priority = 3
-	test ConfigurationCanBeToggledWithKeyboard {
-		task ("Given Accessibility Menu") {
-			AccessibilityMenu.openAccessibilityMenu();
-		}
-
-		task ("And show underline configuration is at ON state") {
-			Check.checkNotVisible(
-				key_toggleSwitchLabel = "Underlined Links",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-
-			AssertChecked.assertCheckedNotVisible(
-				key_toggleSwitchLabel = "Underlined Links",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-		}
-
-		task ("When focus on a configuration toggle with keyboard") {
-			KeyPress(
-				key_modalTitle = "Accessibility Menu",
-				locator1 = "Button#CLOSE_MODAL",
-				value1 = "\TAB");
-
-			AssertElementFocused(
-				checkboxName = "Underlined Links",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-		}
-
-		task ("And toggle a configuration with 'Enter' key") {
-			KeyPress(
-				checkboxName = "Underlined Links",
-				locator1 = "Checkbox#ANY_CHECKBOX",
-				value1 = "\ENTER");
-		}
-
-		task ("Then configuration is toggled to OFF state") {
-			AssertNotChecked.assertNotCheckedNotVisible(
-				key_toggleSwitchLabel = "Underlined Links",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-		}
-
-		task ("And When toggle configuration with 'Enter' key") {
-			KeyPress(
-				checkboxName = "Underlined Links",
-				locator1 = "Checkbox#ANY_CHECKBOX",
-				value1 = "\ENTER");
-		}
-
-		task ("Then configuration is toggled to ON state") {
-			AssertChecked.assertCheckedNotVisible(
-				key_toggleSwitchLabel = "Underlined Links",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-		}
-	}
-
 	@description = "LPS-178192. Verifies that the guest preferences extend and persist to other users."
 	@priority = 4
 	test FirstTimeSignInConfigUsesLocalStorageIfConfigNotChangedWhileSignedIn {
@@ -204,29 +149,6 @@ definition {
 			AssertChecked.assertCheckedNotVisible(
 				key_toggleSwitchLabel = "Underlined Links",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-		}
-	}
-
-	@description = "LPS-178192. Verifies focus remains on current configuration toggle after toggling."
-	@priority = 3
-	test FocusWillRemainOnCurrentToggleSetting {
-		property portal.acceptance = "false";
-
-		task ("Given Accessibility Menu") {
-			AccessibilityMenu.openAccessibilityMenu();
-		}
-
-		task ("When toggle a configuration with 'Enter' key") {
-			KeyPress(
-				key_toggleSwitchLabel = "Underlined Links",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH",
-				value1 = "\ENTER");
-		}
-
-		task ("Then focus stays on the current configuration toggle") {
-			AssertElementFocused(
-				checkboxName = "Underlined Links",
-				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 	}
 

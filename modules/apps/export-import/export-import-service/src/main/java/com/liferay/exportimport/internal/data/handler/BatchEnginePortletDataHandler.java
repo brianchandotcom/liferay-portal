@@ -15,6 +15,7 @@ import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineExportTaskLocalService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskService;
+import com.liferay.exportimport.internal.lar.PortletDataContextImpl;
 import com.liferay.exportimport.internal.lar.PortletDataContextThreadLocal;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.DataLevel;
@@ -33,7 +34,9 @@ import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -139,6 +142,39 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 	@Override
 	public boolean isBatch() {
+		return true;
+	}
+
+	@Override
+	public boolean isConfigurationEnabled() {
+		long companyId = CompanyThreadLocal.getCompanyId();
+
+		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-41367")) {
+			return false;
+		}
+
+		PortletDataContext portletDataContext = new PortletDataContextImpl(
+			null, false);
+
+		portletDataContext.setCompanyId(companyId);
+
+		List<Registration> activeRegistrations = _getActiveRegistrations(
+			portletDataContext);
+
+		if (activeRegistrations.isEmpty()) {
+			return false;
+		}
+
+		for (Registration registration : activeRegistrations) {
+			ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
+				exportImportDescriptor =
+					registration.getExportImportDescriptor();
+
+			if (!exportImportDescriptor.isStagingSupported()) {
+				return false;
+			}
+		}
+
 		return true;
 	}
 

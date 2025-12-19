@@ -44,8 +44,6 @@ describe('LengthField', () => {
 		// Caused by: https://github.com/jsdom/jsdom/issues/2499
 
 		await userEvent.click(screen.getByLabelText('select-a-unit'));
-
-		document.activeElement.blur = () => {};
 	}
 
 	it('renders LengthField', () => {

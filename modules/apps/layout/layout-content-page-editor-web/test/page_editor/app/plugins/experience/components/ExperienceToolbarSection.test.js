@@ -333,14 +333,6 @@ describe('ExperienceToolbarSection', () => {
 
 		const lockIcon = icons[2];
 
-		// Hackily work around:
-		//
-		//      "TypeError: Cannot read property '_defaultView' of undefined"
-		//
-		// Caused by: https://github.com/jsdom/jsdom/issues/2499
-
-		document.activeElement.blur = () => {};
-
 		await userEvent.click(lockIcon);
 
 		getByText('experience-locked');

@@ -226,6 +226,12 @@ long usedMemory = totalMemory - runtime.freeMemory();
 						<div class="autofit-col autofit-col-expand">
 							<p class="list-group-title text-truncate">
 								<liferay-ui:message key="<%= systemDataCleanup.getLabel() %>" />
+
+								<span aria-label="<%= LanguageUtil.get(request, systemDataCleanup.getDescription()) %>" class="lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, systemDataCleanup.getDescription()) %>">
+									<clay:icon
+										symbol="question-circle-full"
+									/>
+								</span>
 							</p>
 						</div>
 
@@ -339,6 +345,12 @@ long usedMemory = totalMemory - runtime.freeMemory();
 							<div class="autofit-col autofit-col-expand">
 								<p class="list-group-title text-truncate">
 									<liferay-ui:message key="<%= moduleDataCleanup.getLabel() %>" />
+
+									<span aria-label="<%= LanguageUtil.get(request, moduleDataCleanup.getDescription()) %>" class="lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, moduleDataCleanup.getDescription()) %>">
+										<clay:icon
+											symbol="question-circle-full"
+										/>
+									</span>
 								</p>
 							</div>
 

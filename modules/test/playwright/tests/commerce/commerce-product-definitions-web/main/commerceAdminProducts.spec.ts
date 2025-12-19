@@ -369,7 +369,12 @@ test(
 test(
 	'Creating product with pending status in headless triggers workflow notification',
 	{tag: ['@LPD-73496']},
-	async ({apiHelpers, page, userPersonalBarPage}) => {
+	async ({
+		apiHelpers,
+		commerceAdminProductPage,
+		page,
+		userPersonalBarPage,
+	}) => {
 		await userPersonalBarPage.goToProcessBuilderConfigurationTab();
 		await userPersonalBarPage.enableSingleApproverWorkflowProduct();
 
@@ -377,13 +382,18 @@ test(
 			const catalog =
 				await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
 
-			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-				catalogId: catalog.id,
-				productStatus: 1,
-			});
+			const product =
+				await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+					catalogId: catalog.id,
+					productStatus: 1,
+				});
 
-			await page.goto('/');
+			await commerceAdminProductPage.gotoProduct(
+				product.name['en_US'],
+				false
+			);
 
+			await expect(page.getByText('Assigned to:')).toBeVisible();
 			await expect(userPersonalBarPage.notificationBadge).toBeVisible();
 		}
 		finally {

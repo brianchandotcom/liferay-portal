@@ -10,6 +10,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.test.util.lar.BaseExportImportTestCase;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureServiceUtil;
 import com.liferay.layout.provider.LayoutStructureProvider;
@@ -47,6 +48,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 import org.junit.Assert;
@@ -467,6 +469,22 @@ public class LayoutPageTemplateStructureRelExportImportTest
 			layout2.getGroupId(), layoutJSONObject.getLong("groupId"));
 		Assert.assertEquals(
 			layout2.getLayoutId(), layoutJSONObject.getLong("layoutId"));
+	}
+
+	@Override
+	protected Map<String, String[]> getImportParameterMap() throws Exception {
+		Map<String, String[]> importParameterMap =
+			super.getImportParameterMap();
+
+		importParameterMap.put(
+			PortletDataHandlerKeys.PORTLET_DATA,
+			new String[] {Boolean.FALSE.toString()});
+
+		importParameterMap.put(
+			PortletDataHandlerKeys.PORTLET_DATA_ALL,
+			new String[] {Boolean.FALSE.toString()});
+
+		return importParameterMap;
 	}
 
 	private FileEntry _addFileEntry(Group group) throws Exception {

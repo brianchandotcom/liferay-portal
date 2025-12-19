@@ -5,6 +5,7 @@ import SegmentGrowthWithList from 'segment/components/Growth';
 import {connect} from 'react-redux';
 import {mapGrowthHistory} from 'shared/hoc/mappers/segment';
 import {PropTypes} from 'prop-types';
+import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
 import {Segment} from 'shared/util/records';
 import {SegmentTypes} from 'shared/util/constants';
 import {withRequest} from 'shared/hoc';
@@ -89,7 +90,10 @@ export default class Membership extends React.Component {
 		} = this.props;
 
 		return (
-			<Card className='segment-membership-root'>
+			<Card
+				className='segment-membership-root'
+				reportContainer={ReportContainer.SegmentMembershipCard}
+			>
 				<Card.Header className='align-items-center d-flex justify-content-between'>
 					<Card.Title>
 						{Liferay.Language.get('segment-membership-trend')}

@@ -14,6 +14,7 @@ type Args = {
 	changeTextDirection: boolean;
 	customLocaleChangeHandler: boolean;
 	defaultLanguageId: Liferay.Language.Locale;
+	hasMultipleValues?: boolean;
 	initialValues?: Record<string, any>;
 	inputElement?: HTMLInputElement;
 	inputName: string;
@@ -41,6 +42,7 @@ export function registerLocalizedInput({
 	changeTextDirection = true,
 	customLocaleChangeHandler = false,
 	defaultLanguageId,
+	hasMultipleValues = false,
 	initialValues,
 	inputElement,
 	inputName,
@@ -51,11 +53,58 @@ export function registerLocalizedInput({
 	onMarkAsTranslated,
 	onResetTranslation,
 }: Args) {
+	const setTranslationInputsValue = (
+		languageId: string,
+		value: string | string[] | null
+	) => {
+		if (hasMultipleValues) {
 
-	// Create hidden inputs for initial values if any
+			// Remove all inputs for current language
 
-	if (initialValues) {
-		Object.entries(initialValues).forEach(([languageId, value]) => {
+			const inputs = localizationInputsContainer.querySelectorAll(
+				`[data-language-id="${languageId}"]`
+			);
+
+			for (const input of inputs) {
+				input.remove();
+			}
+
+			// Add empty input if no values
+
+			const values = Array.isArray(value)
+				? value
+				: value
+					? value.split(',')
+					: null;
+
+			if (values === null || !values.length) {
+				getTranslationInput({
+					inputId: inputElement?.id || inputName,
+					inputName,
+					languageId,
+					localizationInputsContainer,
+					namespace,
+				});
+			}
+
+			// Add inputs with new values
+
+			else {
+				for (const [index, val] of values.entries()) {
+					const input = getTranslationInput({
+						inputId: inputElement?.id || inputName,
+						inputName,
+						languageId,
+						localizationInputsContainer,
+						namespace: `${namespace || ''}-${index}`,
+						override: false,
+					});
+
+					setInputValue({input, value: val});
+				}
+			}
+		}
+		else {
 			const input = getTranslationInput({
 				inputId: inputElement?.id || inputName,
 				inputName,
@@ -64,7 +113,15 @@ export function registerLocalizedInput({
 				namespace,
 			});
 
-			input.value = Liferay.Util.unescapeHTML(value);
+			setInputValue({input, value: value as string});
+		}
+	};
+
+	// Create hidden inputs for initial values if any
+
+	if (initialValues) {
+		Object.entries(initialValues).forEach(([languageId, value]) => {
+			setTranslationInputsValue(languageId, value);
 		});
 	}
 
@@ -91,6 +148,12 @@ export function registerLocalizedInput({
 			formId?: string;
 			languageId: Liferay.Language.Locale;
 		}) => {
+
+			// Auto translation won't work for inputs with multiple values
+
+			if (hasMultipleValues) {
+				return;
+			}
 
 			// Return if event is sent from a different form
 
@@ -318,14 +381,6 @@ export function registerLocalizedInput({
 				namespace,
 			});
 
-			const translationInput = getTranslationInput({
-				inputId: inputElement?.id || inputName,
-				inputName,
-				languageId,
-				localizationInputsContainer,
-				namespace,
-			});
-
 			// Call custom value change handler if passed
 
 			if (onResetTranslation) {
@@ -340,10 +395,7 @@ export function registerLocalizedInput({
 					value: defaultLanguageInput.value,
 				});
 
-				setInputValue({
-					input: translationInput,
-					value: null,
-				});
+				setTranslationInputsValue(languageId, null);
 			}
 
 			Liferay.fire(EVENT_TRANSLATION_STATUS, {
@@ -357,15 +409,7 @@ export function registerLocalizedInput({
 	return {
 		onChange: (value = null) => {
 			if (value !== null) {
-				const translationInput = getTranslationInput({
-					inputId: inputElement?.id || inputName,
-					inputName,
-					languageId: currentLanguageId,
-					localizationInputsContainer,
-					namespace,
-				});
-
-				translationInput.value = value;
+				setTranslationInputsValue(currentLanguageId, value);
 			}
 
 			Liferay.fire(EVENT_TRANSLATION_STATUS, {
@@ -380,7 +424,7 @@ function setInputValue({
 	value,
 }: {
 	input?: HTMLInputElement;
-	value: string | null;
+	value: string | boolean | null;
 }) {
 	if (!input) {
 		return;
@@ -390,7 +434,7 @@ function setInputValue({
 		input.checked = value === 'true';
 	}
 	else if (value !== null) {
-		input.value = value;
+		input.value = Liferay.Util.unescapeHTML(String(value));
 	}
 	else {
 		input.removeAttribute('value');

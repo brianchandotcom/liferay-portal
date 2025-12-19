@@ -43,6 +43,7 @@ import com.liferay.osb.faro.engine.client.model.IndividualSegment;
 import com.liferay.osb.faro.engine.client.model.IndividualSegmentMembership;
 import com.liferay.osb.faro.engine.client.model.IndividualSegmentMembershipChange;
 import com.liferay.osb.faro.engine.client.model.IndividualSegmentMembershipChangeAggregation;
+import com.liferay.osb.faro.engine.client.model.IndividualSegmentRealTimeMembership;
 import com.liferay.osb.faro.engine.client.model.IndividualTransformation;
 import com.liferay.osb.faro.engine.client.model.Interest;
 import com.liferay.osb.faro.engine.client.model.PageVisited;
@@ -2222,6 +2223,28 @@ public class ContactsEngineClientImpl
 			faroProject, Rels.INDIVIDUAL_SEGMENT_MEMBERSHIPS,
 			new ParameterizedTypeReference
 				<EntityModelPagedModel<IndividualSegmentMembership>>() {
+			},
+			uriVariables);
+
+		return pagedModel.getResults();
+	}
+
+	@Override
+	public Results<IndividualSegmentRealTimeMembership>
+		getIndividualSegmentRealTimeMemberships(
+			FaroProject faroProject, String filter, String individualSegmentId,
+			int cur, int delta, List<OrderByField> orderByFields) {
+
+		Map<String, Object> uriVariables = getUriVariables(
+			faroProject, cur, delta, orderByFields);
+
+		uriVariables.put("filter", filter);
+		uriVariables.put("id", individualSegmentId);
+
+		PagedModel<?, IndividualSegmentRealTimeMembership> pagedModel = get(
+			faroProject, Rels.INDIVIDUAL_SEGMENT_REAL_TIME_MEMBERSHIPS,
+			new ParameterizedTypeReference
+				<EntityModelPagedModel<IndividualSegmentRealTimeMembership>>() {
 			},
 			uriVariables);
 

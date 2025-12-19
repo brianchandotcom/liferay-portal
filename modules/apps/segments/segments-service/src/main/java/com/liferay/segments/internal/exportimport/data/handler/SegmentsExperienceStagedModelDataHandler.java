@@ -12,7 +12,10 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -169,8 +172,28 @@ public class SegmentsExperienceStagedModelDataHandler
 		if ((existingSegmentsExperience == null) ||
 			!portletDataContext.isDataStrategyMirror()) {
 
-			importedSegmentsExperience = _stagedModelRepository.addStagedModel(
-				portletDataContext, importedSegmentsExperience);
+			existingSegmentsExperience =
+				_segmentsExperienceLocalService.
+					fetchSegmentsExperienceByExternalReferenceCode(
+						segmentsExperience.getExternalReferenceCode(),
+						portletDataContext.getScopeGroupId());
+
+			if (existingSegmentsExperience == null) {
+				importedSegmentsExperience =
+					_stagedModelRepository.addStagedModel(
+						portletDataContext, importedSegmentsExperience);
+			}
+			else {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"Unable to import segments experience with ",
+							"external reference code ",
+							segmentsExperience.getExternalReferenceCode()));
+				}
+
+				return;
+			}
 		}
 		else {
 			importedSegmentsExperience.setMvccVersion(
@@ -195,6 +218,9 @@ public class SegmentsExperienceStagedModelDataHandler
 
 		return _stagedModelRepository;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SegmentsExperienceStagedModelDataHandler.class);
 
 	@Reference
 	private GroupLocalService _groupLocalService;

@@ -18,10 +18,6 @@ import React, {
 
 import '../../css/ckeditor4/main.scss';
 
-await import(
-	`@liferay/language/${Liferay.ThemeDisplay.getLanguageId()}/frontend-editor-ckeditor-web/all.js`
-);
-
 const BASEPATH = '/o/frontend-editor-ckeditor-web/ckeditor/';
 const CONTEXT_URL = Liferay.ThemeDisplay.getPathContext();
 const CURRENT_PATH = CONTEXT_URL ? CONTEXT_URL + BASEPATH : BASEPATH;

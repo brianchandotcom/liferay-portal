@@ -9,16 +9,21 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.process.local.LocalProcessLauncher;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
-import com.liferay.portal.instance.lifecycle.EveryNodeEveryStartup;
-import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheListener;
+import com.liferay.portal.kernel.cache.PortalCacheManager;
+import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
+import com.liferay.portal.kernel.cache.PortalCacheManagerProvider;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterMasterTokenTransitionListener;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterableInvokerUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log4j.Log4JUtil;
+import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -30,6 +35,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.model.impl.CompanyImpl;
 import com.liferay.portal.test.cluster.tomcat.TomcatCluster;
 import com.liferay.portal.test.cluster.tomcat.TomcatNode;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -418,7 +424,7 @@ public class ClusterGeneralTest implements Serializable {
 
 			observerTomcatNode.syncExecute(
 				() -> {
-					TestPortalInstanceLifecycleListener.register(companyId);
+					TestPortalCacheListener.register(companyId);
 
 					return null;
 				});
@@ -433,7 +439,7 @@ public class ClusterGeneralTest implements Serializable {
 			Assert.assertNull(
 				observerTomcatNode.syncExecute(
 					() -> {
-						TestPortalInstanceLifecycleListener.await();
+						TestPortalCacheListener.await();
 
 						return CompanyLocalServiceUtil.fetchCompany(companyId);
 					}));
@@ -759,69 +765,100 @@ public class ClusterGeneralTest implements Serializable {
 
 	}
 
-	private static class TestPortalInstanceLifecycleListener
-		implements EveryNodeEveryStartup, PortalInstanceLifecycleListener {
+	private static class TestPortalCacheListener
+		implements PortalCacheListener<Long, CacheModel<?>> {
 
 		public static void await() throws Exception {
 			Map<String, Object> attributes =
 				LocalProcessLauncher.ProcessContext.getAttributes();
 
-			TestPortalInstanceLifecycleListener
-				testPortalInstanceLifecycleListener =
-					(TestPortalInstanceLifecycleListener)attributes.remove(
-						TestPortalInstanceLifecycleListener.class.getName());
+			AutoCloseable autoCloseable = (AutoCloseable)attributes.remove(
+				TestPortalCacheListener.class.getName());
 
-			CountDownLatch countDownLatch =
-				testPortalInstanceLifecycleListener._countDownLatch;
-
-			countDownLatch.await();
-
-			ServiceRegistration<?> serviceRegistration =
-				testPortalInstanceLifecycleListener._serviceRegistration;
-
-			serviceRegistration.unregister();
+			autoCloseable.close();
 		}
 
 		public static void register(long companyId) {
-			BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+			PortalCacheManager<? extends Serializable, ?> portalCacheManager =
+				PortalCacheManagerProvider.getPortalCacheManager(
+					PortalCacheManagerNames.MULTI_VM);
 
-			TestPortalInstanceLifecycleListener
-				testPortalInstanceLifecycleListener =
-					new TestPortalInstanceLifecycleListener(companyId);
+			PortalCache<Long, CacheModel<?>> portalCache =
+				(PortalCache<Long, CacheModel<?>>)
+					portalCacheManager.fetchPortalCache(
+						EntityCache.class.getName() + "." +
+							CompanyImpl.class.getName());
 
-			testPortalInstanceLifecycleListener._serviceRegistration =
-				bundleContext.registerService(
-					PortalInstanceLifecycleListener.class,
-					testPortalInstanceLifecycleListener, null);
+			TestPortalCacheListener testPortalCacheListener =
+				new TestPortalCacheListener(companyId);
+
+			portalCache.registerPortalCacheListener(testPortalCacheListener);
+
+			CountDownLatch countDownLatch =
+				testPortalCacheListener._countDownLatch;
 
 			Map<String, Object> attributes =
 				LocalProcessLauncher.ProcessContext.getAttributes();
 
 			attributes.put(
-				TestPortalInstanceLifecycleListener.class.getName(),
-				testPortalInstanceLifecycleListener);
+				TestPortalCacheListener.class.getName(),
+				(AutoCloseable)() -> {
+					countDownLatch.await();
+
+					portalCache.unregisterPortalCacheListener(
+						testPortalCacheListener);
+				});
 		}
 
 		@Override
-		public void portalInstanceRegistered(Company company) throws Exception {
+		public void dispose() {
 		}
 
 		@Override
-		public void portalInstanceUnregistered(Company company)
-			throws Exception {
+		public void notifyEntryEvicted(
+			PortalCache<Long, CacheModel<?>> portalCache, Long key,
+			CacheModel<?> value, int timeToLive) {
+		}
 
-			if (_companyId == company.getCompanyId()) {
+		@Override
+		public void notifyEntryExpired(
+			PortalCache<Long, CacheModel<?>> portalCache, Long key,
+			CacheModel<?> value, int timeToLive) {
+		}
+
+		@Override
+		public void notifyEntryPut(
+			PortalCache<Long, CacheModel<?>> portalCache, Long key,
+			CacheModel<?> value, int timeToLive) {
+		}
+
+		@Override
+		public void notifyEntryRemoved(
+			PortalCache<Long, CacheModel<?>> portalCache, Long key,
+			CacheModel<?> value, int timeToLive) {
+
+			if (key == _companyId) {
 				_countDownLatch.countDown();
 			}
 		}
 
-		private TestPortalInstanceLifecycleListener(long companyId) {
+		@Override
+		public void notifyEntryUpdated(
+			PortalCache<Long, CacheModel<?>> portalCache, Long key,
+			CacheModel<?> value, int timeToLive) {
+		}
+
+		@Override
+		public void notifyRemoveAll(
+			PortalCache<Long, CacheModel<?>> portalCache) {
+		}
+
+		private TestPortalCacheListener(long companyId) {
 			_companyId = companyId;
 		}
 
 		private final long _companyId;
 		private final CountDownLatch _countDownLatch = new CountDownLatch(1);
-		private ServiceRegistration<?> _serviceRegistration;
 
 	}
 

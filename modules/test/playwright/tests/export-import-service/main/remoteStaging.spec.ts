@@ -30,7 +30,7 @@ import {safeTeardown} from './utils/safeTeardown';
 const remotePort = '9080';
 const remotePage = remotePageTest(remotePort);
 
-export const test = mergeTests(
+const test = mergeTests(
 	dataApiHelpersTest,
 	dataRemoteApiHelpersTest(remotePage, remotePort),
 	loginTest(),
@@ -64,13 +64,11 @@ test(
 	}) => {
 		test.slow();
 
-		let featureFlagEnabled;
 		const layouts: Array<Layout> = [];
 		let remoteSite: Site;
 		let remoteUrl: string;
-		let site: Site;	
+		let site: Site;
 
-		try {
 			await test.step('Setup remote staging and pages', async () => {
 				site = await apiHelpers.headlessSite.createSite({
 					name: `site-${getRandomString()}`,
@@ -88,19 +86,6 @@ test(
 					0,
 					remoteApiHelpers.baseUrl.length - 3
 				);
-
-				featureFlagEnabled =
-					await remoteApiHelpers.featureFlag.isFeatureFlagEnabled(
-						'LPD-35914'
-					);
-
-				if (!featureFlagEnabled.featureFlag.enabled) {
-					await remoteApiHelpers.featureFlag.updateFeatureFlag(
-						'LPD-35914',
-						true,
-						true
-					);
-				}
 
 				await apiHelpers.jsonWebServicesStaging.enableRemoteStaging({
 					groupId: site.id,
@@ -351,19 +336,6 @@ test(
 					);
 				}
 			});
-		}
-		finally {
-			await test.step('Teardown: Disabling feature flag on global site', async () => {
-				if (!featureFlagEnabled.featureFlag.enabled) {
-					await remoteApiHelpers.featureFlag.updateFeatureFlag(
-						'LPD-35914',
-						false,
-						remoteUrl,
-						true
-					);
-				}
-			});
-		}
 	}
 );
 

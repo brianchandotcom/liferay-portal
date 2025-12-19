@@ -219,26 +219,31 @@ export function DefaultValueContainer({
 						{Liferay.Language.get('input-as-value')}
 					</ClayButton>
 
-					<ClayButton
-						className={classNames({
-							active:
-								defaultValueTypeSelection ===
-								'expressionBuilder',
-						})}
-						displayType="secondary"
-						onClick={() => {
-							setDefaultValueTypeSelection('expressionBuilder');
-							setValues({
-								objectFieldSettings: getUpdatedDefaultValueType(
-									values,
+					{defaultValueSidebarElements && (
+						<ClayButton
+							className={classNames({
+								active:
+									defaultValueTypeSelection ===
+									'expressionBuilder',
+							})}
+							displayType="secondary"
+							onClick={() => {
+								setDefaultValueTypeSelection(
 									'expressionBuilder'
-								),
-							});
-						}}
-						size="sm"
-					>
-						{Liferay.Language.get('expression-builder')}
-					</ClayButton>
+								);
+								setValues({
+									objectFieldSettings:
+										getUpdatedDefaultValueType(
+											values,
+											'expressionBuilder'
+										),
+								});
+							}}
+							size="sm"
+						>
+							{Liferay.Language.get('expression-builder')}
+						</ClayButton>
+					)}
 				</ClayButton.Group>
 			)}
 

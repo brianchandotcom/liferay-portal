@@ -39,6 +39,11 @@ public class DataCleanupUtilTest {
 			new DataCleanup() {
 
 				@Override
+				public String getDescription() {
+					return null;
+				}
+
+				@Override
 				public String getLabel() {
 					return null;
 				}
@@ -73,6 +78,11 @@ public class DataCleanupUtilTest {
 			new DataCleanup() {
 
 				@Override
+				public String getDescription() {
+					return null;
+				}
+
+				@Override
 				public String getLabel() {
 					return null;
 				}
@@ -98,6 +108,11 @@ public class DataCleanupUtilTest {
 		String type, Supplier<List<DataCleanup>> dataCleanupsSupplier) {
 
 		DataCleanup dataCleanup = new DataCleanup() {
+
+			@Override
+			public String getDescription() {
+				return null;
+			}
 
 			@Override
 			public String getLabel() {

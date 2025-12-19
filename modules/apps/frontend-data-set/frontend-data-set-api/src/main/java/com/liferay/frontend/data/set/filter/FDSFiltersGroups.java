@@ -21,7 +21,7 @@ public interface FDSFiltersGroups {
 		return FDSEntryItemImportPolicy.ITEM_PROXY;
 	}
 
-	public LinkedHashMap<String, List<FDSFilter>> getFiltersGroups(
+	public LinkedHashMap<String, List<FDSFilter>> getFDSFiltersGroupItems(
 		HttpServletRequest httpServletRequest);
 
 }

@@ -46,6 +46,14 @@ import org.osgi.service.component.annotations.Reference;
 public class ObjectDBResourceProvider implements DBResourceProvider {
 
 	@Override
+	public List<String> getTableNames(long companyId) throws PortalException {
+		Map<String, String[]> tablesPrimaryKeyColumnNames =
+			getTablesPrimaryKeyColumnNames(companyId);
+
+		return new ArrayList<>(tablesPrimaryKeyColumnNames.keySet());
+	}
+
+	@Override
 	public Map<String, String[]> getTablesPrimaryKeyColumnNames(long companyId)
 		throws PortalException {
 

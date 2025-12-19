@@ -13,6 +13,7 @@ import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTe
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {companyExportImportPageTest} from './fixtures/companyExportImportPagesTest';
 import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 import {objectDefitionRequestData} from './utils/objectDefitionRequestData';
@@ -79,7 +80,12 @@ test('Can see error report and details', async ({
 		exportFilePath.lastIndexOf('/') + 1
 	);
 
-	await exportImportPage.taskActionsMenu(exportName).click();
+	await clickAndExpectToBeVisible({
+		target: exportImportPage.page.getByRole('link', {
+			name: 'Clear',
+		}),
+		trigger: exportImportPage.taskActionsMenu(exportName),
+	});
 
 	await expect(
 		exportImportPage.page.getByRole('menuitem', {
@@ -158,7 +164,12 @@ test('Report entries actions are not visible for a successful import', async ({
 		exportFilePath.lastIndexOf('/') + 1
 	);
 
-	await exportImportPage.taskActionsMenu(exportName).click();
+	await clickAndExpectToBeVisible({
+		target: exportImportPage.page.getByRole('link', {
+			name: 'Clear',
+		}),
+		trigger: exportImportPage.taskActionsMenu(exportName),
+	});
 
 	await expect(
 		exportImportPage.page.getByRole('menuitem', {

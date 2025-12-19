@@ -130,6 +130,8 @@ public class ImportSystemDataSetMVCResourceCommand
 				"restEndpoint", systemFDSEntry.getRESTEndpoint()
 			).put(
 				"restSchema", systemFDSEntry.getRESTSchema()
+			).put(
+				"snapshotsEnabled", systemFDSEntry.getSnapshotsEnabled()
 			).build(),
 			new ServiceContext());
 

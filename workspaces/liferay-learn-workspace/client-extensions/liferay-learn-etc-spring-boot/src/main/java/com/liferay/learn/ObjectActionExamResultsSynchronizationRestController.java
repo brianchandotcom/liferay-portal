@@ -135,7 +135,7 @@ public class ObjectActionExamResultsSynchronizationRestController
 				DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm:ssX")
 			)
 		).put(
-			"email",
+			"emailAddress",
 			jsonObject.getJSONObject(
 				"simpleRegistration"
 			).getJSONObject(

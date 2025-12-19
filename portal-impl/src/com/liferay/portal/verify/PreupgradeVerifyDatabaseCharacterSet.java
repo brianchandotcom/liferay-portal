@@ -52,8 +52,6 @@ public class PreupgradeVerifyDatabaseCharacterSet
 		tableNames.addAll(DBResourceUtil.getModuleTableNames(connection));
 		tableNames.addAll(DBResourceUtil.getPortalTableNames(connection));
 
-		DBInspector dbInspector = new DBInspector(connection);
-
 		CompanyLocalServiceUtil.forEachCompanyId(
 			companyId -> {
 				try {
@@ -84,6 +82,8 @@ public class PreupgradeVerifyDatabaseCharacterSet
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				sql)) {
+
+			DBInspector dbInspector = new DBInspector(connection);
 
 			ResultSet resultSet = preparedStatement.executeQuery();
 

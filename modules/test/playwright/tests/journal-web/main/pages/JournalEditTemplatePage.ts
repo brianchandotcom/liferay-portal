@@ -5,9 +5,8 @@
 
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
-import {JournalTemplatesPage} from './JournalTemplatesPage';
 import {waitForAlert} from '../../../../utils/waitForAlert';
-
+import {JournalTemplatesPage} from './JournalTemplatesPage';
 
 export class JournalEditTemplatePage {
 	readonly page: Page;
@@ -47,7 +46,9 @@ export class JournalEditTemplatePage {
 	}
 
 	async selectTemplateToEdit(title: string) {
-		await this.page.getByRole('link', {name: title}).waitFor({state: 'visible'});
+		await this.page
+			.getByRole('link', {name: title})
+			.waitFor({state: 'visible'});
 		await this.page.getByRole('link', {name: title}).click();
 	}
 

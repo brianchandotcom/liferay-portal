@@ -118,6 +118,25 @@ public class DBResourceUtil {
 		return nonserviceBuildPrimaryKeyColumnNames;
 	}
 
+	public static List<String> getNonserviceBuilderTableNames(long companyId)
+		throws PortalException {
+
+		List<String> nonserviceBuildTableNames = new ArrayList<>();
+
+		ServiceTrackerList<DBResourceProvider> serviceTrackerList =
+			_serviceTrackerListDCLSingleton.getSingleton(
+				() -> ServiceTrackerListFactory.open(
+					SystemBundleUtil.getBundleContext(),
+					DBResourceProvider.class));
+
+		for (DBResourceProvider dbResourceProvider : serviceTrackerList) {
+			nonserviceBuildTableNames.addAll(
+				dbResourceProvider.getTableNames(companyId));
+		}
+
+		return nonserviceBuildTableNames;
+	}
+
 	public static String getPortalIndexesSQL() {
 		return StringUtil.read(
 			DBResourceUtil.class,

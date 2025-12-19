@@ -686,14 +686,23 @@ public class ObjectFieldLocalServiceTest {
 			() -> _addCustomObjectDefinitionWithTextObjectField(
 				null, null, uniqueValues));
 
-		AssertUtils.assertFailure(
-			ObjectFieldSettingValueException.InvalidValue.class,
-			"The value expressionBuilder of setting \"defaultValueType\" is " +
-				"invalid for object field \"picklist\"",
-			() -> _addCustomObjectDefinitionWithPicklistObjectField(
-				_listTypeEntryKey,
-				ObjectFieldSettingConstants.VALUE_EXPRESSION_BUILDER, true,
-				true));
+		_assertFailureObjectFieldSettingInvalidDefaultValueType(
+			ObjectFieldConstants.BUSINESS_TYPE_DECIMAL);
+		_assertFailureObjectFieldSettingInvalidDefaultValueType(
+			ObjectFieldConstants.BUSINESS_TYPE_INTEGER);
+		_assertFailureObjectFieldSettingInvalidDefaultValueType(
+			ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER);
+		_assertFailureObjectFieldSettingInvalidDefaultValueType(
+			ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT);
+		_assertFailureObjectFieldSettingInvalidDefaultValueType(
+			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST);
+		_assertFailureObjectFieldSettingInvalidDefaultValueType(
+			ObjectFieldConstants.BUSINESS_TYPE_PRECISION_DECIMAL);
+		_assertFailureObjectFieldSettingInvalidDefaultValueType(
+			ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT);
+		_assertFailureObjectFieldSettingInvalidDefaultValueType(
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT);
+
 		AssertUtils.assertFailure(
 			ObjectFieldSettingValueException.InvalidValue.class,
 			"The value LPS@ of setting \"prefix\" is invalid for object " +
@@ -1945,6 +1954,53 @@ public class ObjectFieldLocalServiceTest {
 						"-private"
 					).build())));
 
+		// Business type boolean
+
+		ObjectField booleanObjectField = _addCustomObjectField(
+			new BooleanObjectFieldBuilder(
+			).labelMap(
+				RandomTestUtil.randomLocaleStringMap()
+			).name(
+				"boolean"
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).objectFieldSettings(
+				Arrays.asList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_DEFAULT_VALUE
+					).value(
+						"isEmailAddress(text)"
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE
+					).value(
+						ObjectFieldSettingConstants.VALUE_EXPRESSION_BUILDER
+					).build())
+			).build());
+
+		_assertObjectFieldSettingsValues(
+			booleanObjectField.getObjectFieldId(),
+			HashMapBuilder.put(
+				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
+				"isEmailAddress(text)"
+			).put(
+				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
+				ObjectFieldSettingConstants.VALUE_EXPRESSION_BUILDER
+			).build());
+
+		_assertObjectEntryDefaultValue(
+			Boolean.FALSE.toString(), booleanObjectField,
+			HashMapBuilder.<String, Serializable>put(
+				"text", RandomTestUtil.randomString()
+			).build());
+		_assertObjectEntryDefaultValue(
+			Boolean.TRUE.toString(), booleanObjectField,
+			HashMapBuilder.<String, Serializable>put(
+				"text", "john@liferay.com"
+			).build());
+
 		// Business type date
 
 		String defaultValue = _format(new Date());
@@ -2759,6 +2815,51 @@ public class ObjectFieldLocalServiceTest {
 				objectField.getDBTableName(), objectField.getDBColumnName()));
 	}
 
+	private void _assertFailureObjectFieldSettingInvalidDefaultValueType(
+			String businessType)
+		throws Exception {
+
+		if (businessType.equals(ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+			AssertUtils.assertFailure(
+				ObjectFieldSettingValueException.InvalidValue.class,
+				"The value expressionBuilder of setting \"defaultValueType\" " +
+					"is invalid for object field \"picklist\"",
+				() -> _addCustomObjectDefinitionWithPicklistObjectField(
+					_listTypeEntryKey,
+					ObjectFieldSettingConstants.VALUE_EXPRESSION_BUILDER, true,
+					true));
+
+			return;
+		}
+
+		AssertUtils.assertFailure(
+			ObjectFieldSettingValueException.InvalidValue.class,
+			StringBundler.concat(
+				"The value expressionBuilder of setting \"defaultValueType\" ",
+				"is invalid for object field \"",
+				StringUtil.toLowerCase(businessType), "\""),
+			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				Collections.singletonList(
+					new ObjectFieldBuilder(
+					).businessType(
+						businessType
+					).labelMap(
+						RandomTestUtil.randomLocaleStringMap()
+					).name(
+						StringUtil.toLowerCase(businessType)
+					).objectFieldSettings(
+						Collections.singletonList(
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.
+									NAME_DEFAULT_VALUE_TYPE
+							).value(
+								ObjectFieldSettingConstants.
+									VALUE_EXPRESSION_BUILDER
+							).build())
+					).build())));
+	}
+
 	private void _assertObjectEntryDefaultValue(
 			String expectedDefaultValue, ObjectField objectField,
 			Map<String, Serializable> values)
@@ -2773,13 +2874,15 @@ public class ObjectFieldLocalServiceTest {
 
 		Object value = values.get(objectField.getName());
 
-		if (value instanceof Date) {
-			Assert.assertEquals(expectedDefaultValue, _format((Date)value));
-
-			return;
+		if (value instanceof Boolean) {
+			Assert.assertEquals(expectedDefaultValue, value.toString());
 		}
-
-		Assert.assertEquals(expectedDefaultValue, value);
+		else if (value instanceof Date) {
+			Assert.assertEquals(expectedDefaultValue, _format((Date)value));
+		}
+		else {
+			Assert.assertEquals(expectedDefaultValue, value);
+		}
 	}
 
 	private void _assertObjectFieldSettingsValues(

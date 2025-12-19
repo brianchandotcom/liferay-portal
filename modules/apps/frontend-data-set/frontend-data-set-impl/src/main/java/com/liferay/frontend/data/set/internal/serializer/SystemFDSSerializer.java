@@ -188,34 +188,33 @@ public class SystemFDSSerializer
 			return jsonArray;
 		}
 
-		LinkedHashMap<String, List<FDSFilter>> filtersGroups =
-			fdsFiltersGroups.getFiltersGroups(httpServletRequest);
+		LinkedHashMap<String, List<FDSFilter>> fdsFiltersMap =
+			fdsFiltersGroups.getFDSFiltersMap(httpServletRequest);
 
-		for (Map.Entry<String, List<FDSFilter>> filtersGroupsEntry :
-				filtersGroups.entrySet()) {
+		for (Map.Entry<String, List<FDSFilter>> entry :
+				fdsFiltersMap.entrySet()) {
 
 			jsonArray.put(
 				JSONUtil.put(
 					"filters",
 					() -> {
-						JSONArray filtersJSONArray = JSONUtil.putAll();
+						JSONArray fdsFiltersJSONArray = JSONUtil.putAll();
 
-						List<FDSFilter> fdsFilters =
-							filtersGroupsEntry.getValue();
+						List<FDSFilter> fdsFilters = entry.getValue();
 
 						if (ListUtil.isNotEmpty(fdsFilters)) {
-							for (FDSFilter filter : fdsFilters) {
-								if (filter != null) {
-									filtersJSONArray.put(
-										String.valueOf(filter.getId()));
+							for (FDSFilter fdsFilter : fdsFilters) {
+								if (fdsFilter != null) {
+									fdsFiltersJSONArray.put(
+										String.valueOf(fdsFilter.getId()));
 								}
 							}
 						}
 
-						return filtersJSONArray;
+						return fdsFiltersJSONArray;
 					}
 				).put(
-					"label", filtersGroupsEntry.getKey()
+					"label", entry.getKey()
 				));
 		}
 

@@ -15388,11 +15388,11 @@ public class ObjectEntryResourceTest {
 	}
 
 	private TaxonomyCategory _addTaxonomyCategory(
-			long groupId, long taxonomyVocabularyId)
+			long groupId, long vocabularyId)
 		throws Exception {
 
 		return _taxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
-			taxonomyVocabularyId,
+			vocabularyId,
 			new TaxonomyCategory() {
 				{
 					dateCreated = RandomTestUtil.nextDate();
@@ -15407,7 +15407,7 @@ public class ObjectEntryResourceTest {
 					numberOfTaxonomyCategories = RandomTestUtil.randomInt();
 					siteId = groupId;
 					taxonomyCategoryUsageCount = RandomTestUtil.randomInt();
-					taxonomyVocabularyId = RandomTestUtil.randomLong();
+					taxonomyVocabularyId = vocabularyId;
 				}
 			});
 	}

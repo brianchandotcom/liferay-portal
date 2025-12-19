@@ -32,7 +32,6 @@ ViewRecycleBinSectionDisplayContext viewRecycleBinSectionDisplayContext = (ViewR
 			selectedItemsKey="embedded.id"
 			selectionType="multiple"
 			showSelectAll="<%= true %>"
-			style="fluid"
 		/>
 	</div>
 </div>

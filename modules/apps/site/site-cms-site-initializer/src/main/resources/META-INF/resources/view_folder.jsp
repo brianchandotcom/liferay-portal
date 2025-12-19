@@ -33,6 +33,5 @@ ViewFolderSectionDisplayContext viewFolderSectionDisplayContext = (ViewFolderSec
 		selectedItemsKey="embedded.id"
 		selectionType="multiple"
 		showSelectAll="<%= true %>"
-		style="fluid"
 	/>
 </div>

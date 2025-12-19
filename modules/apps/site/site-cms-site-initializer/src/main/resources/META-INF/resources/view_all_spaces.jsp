@@ -33,7 +33,6 @@ ViewAllSpacesDisplayContext viewAllSpacesDisplayContext = (ViewAllSpacesDisplayC
 			propsTransformer="{AllSpacesFDSPropsTransformer} from site-cms-site-initializer"
 			selectedItemsKey="id"
 			selectionType="multiple"
-			style="fluid"
 		/>
 	</div>
 </div>

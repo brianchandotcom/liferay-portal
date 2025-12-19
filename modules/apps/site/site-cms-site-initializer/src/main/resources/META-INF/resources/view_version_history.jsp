@@ -31,6 +31,5 @@ ViewVersionHistoryDisplayContext viewVersionHistoryDisplayContext = (ViewVersion
 		selectedItemsKey="systemProperties.version.number"
 		selectionType="multiple"
 		showSelectAll="<%= true %>"
-		style="fluid"
 	/>
 </div>

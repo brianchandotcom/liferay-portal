@@ -30,7 +30,6 @@ ViewStructureUsagesDisplayContext viewStructureUsagesDisplayContext = (ViewStruc
 			propsTransformer="{StructureUsagesFDSPropsTransformer} from site-cms-site-initializer"
 			selectedItemsKey="id"
 			selectionType="multiple"
-			style="fluid"
 		/>
 	</div>
 </div>

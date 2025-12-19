@@ -98,10 +98,21 @@ components:
                     type: string
                 name:
                     type: string
+                ownerId:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                ownerName:
+                    readOnly: true
+                    type: string
                 primaryColor:
                     type: string
                 secondaryColor:
                     type: string
+                usages:
+                    format: int64
+                    readOnly: true
+                    type: integer
         FileEntry:
             properties:
                 fileBase64:

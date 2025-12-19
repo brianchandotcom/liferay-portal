@@ -299,7 +299,7 @@ public class ClientExtensionsOSGiCommandsTest {
 	private String _captureStout(UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
-		PrintStream originalPrintStream = System.out;
+		PrintStream systemOutPrintStream = System.out;
 
 		try {
 			ByteArrayOutputStream byteArrayOutputStream =
@@ -312,7 +312,7 @@ public class ClientExtensionsOSGiCommandsTest {
 			return byteArrayOutputStream.toString();
 		}
 		finally {
-			System.setOut(originalPrintStream);
+			System.setOut(systemOutPrintStream);
 		}
 	}
 
@@ -322,10 +322,10 @@ public class ClientExtensionsOSGiCommandsTest {
 			pid);
 	}
 
-	private Configuration[] _getConfigurations(String[] filter) {
+	private Configuration[] _getConfigurations(String[] filterStrings) {
 		return ReflectionTestUtil.invoke(
 			_osgiCommands, "_getConfigurations",
-			new Class<?>[] {String[].class}, (Object)filter);
+			new Class<?>[] {String[].class}, (Object)filterStrings);
 	}
 
 	private void _list(String... filters) throws Exception {
@@ -359,15 +359,15 @@ public class ClientExtensionsOSGiCommandsTest {
 	}
 
 	private void _testGetConfigurations(
-		List<String> filters, List<String> expectedConfigurationNames) {
+		List<String> filtersList, List<String> expectedConfigurationNames) {
 
-		String[] filtersArray = filters.toArray(new String[0]);
+		String[] filterStrings = filtersList.toArray(new String[0]);
 
 		Set<String> expectedConfigurationNamesSet = new HashSet<>(
 			expectedConfigurationNames);
 
 		Configuration[] configurations = _getConfigurations(
-			ArrayUtil.append(filtersArray, "test.only=true"));
+			ArrayUtil.append(filterStrings, "test.only=true"));
 
 		Set<String> namesFound = new HashSet<>();
 

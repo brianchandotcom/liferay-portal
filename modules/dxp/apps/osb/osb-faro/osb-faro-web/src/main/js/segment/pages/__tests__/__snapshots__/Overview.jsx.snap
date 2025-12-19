@@ -362,6 +362,7 @@ exports[`SegmentOverview should render 1`] = `
       </div>
       <div
         class="panel card-root"
+        id="container.report.segmentCriteriaCard"
       >
         <button
           aria-controls="clay-id-1"

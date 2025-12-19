@@ -20,8 +20,9 @@ import java.util.Set;
 public interface LayoutStructureRulesHelper {
 
 	public LayoutStructureRulesResult processLayoutStructureRules(
-		long groupId, LayoutStructure layoutStructure,
-		PermissionChecker permissionChecker, long[] segmentsEntryIds);
+		long groupId, Map<String, Object> infoItemFieldValuesMap,
+		LayoutStructure layoutStructure, PermissionChecker permissionChecker,
+		long[] segmentsEntryIds);
 
 	public JSONArray processLayoutStructureRules(
 		long groupId, Map<String, Object> fieldValuesMap,

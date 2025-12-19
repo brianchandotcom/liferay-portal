@@ -196,6 +196,6 @@ public class HTTPTestUtil {
 	private static String _credentials =
 		"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD;
 	private static boolean _modulePath = true;
-	private static final int _timeout = 120_000;
+	private static int _timeout = 120000;
 
 }

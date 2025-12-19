@@ -68,7 +68,7 @@ definition {
 	@summary = "Default summary"
 	macro markStyleBookAsDefault(confirmMessage = null, styleBookName = null) {
 		StyleBooksAdmin.gotoStyleBookEllipsisItem(
-			item = "Mark as Default",
+			item = "Mark as Default for Classic Theme",
 			styleBookName = ${styleBookName});
 
 		AssertConfirm(value1 = ${confirmMessage});

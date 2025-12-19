@@ -1185,24 +1185,14 @@ public class UserManagerImpl implements UserManager {
 				"User was provisioned by another SCIM client");
 		}
 
-		String emailAddress = portalUser.getEmailAddress();
-		String screenName = scimUser.getScreenName();
-
-		if (Objects.equals(
-				scimClientOAuth2ApplicationConfiguration.matcherField(),
-				"userName")) {
-
-			emailAddress = scimUser.getEmailAddresses()[0];
-			screenName = portalUser.getScreenName();
-		}
-
 		Contact contact = portalUser.getContact();
 
 		portalUser = _userService.updateUser(
 			portalUser.getUserId(), scimUser.getPassword(), StringPool.BLANK,
 			StringPool.BLANK, false, portalUser.getReminderQueryQuestion(),
-			portalUser.getReminderQueryAnswer(), screenName, emailAddress,
-			false, null, portalUser.getLanguageId(), scimUser.getTimeZoneId(),
+			portalUser.getReminderQueryAnswer(), scimUser.getScreenName(),
+			scimUser.getEmailAddresses()[0], false, null,
+			portalUser.getLanguageId(), scimUser.getTimeZoneId(),
 			portalUser.getGreeting(), portalUser.getComments(),
 			scimUser.getFirstName(), scimUser.getMiddleName(),
 			scimUser.getLastName(), scimUser.getPrefix(), scimUser.getSuffix(),

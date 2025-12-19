@@ -181,7 +181,7 @@ public class HTTPTestUtil {
 
 		options.setMethod(httpMethod);
 
-		options.setTimeout(_timeout);
+		options.setTimeout(_TIMEOUT);
 
 		if (body != null) {
 			options.setBody(
@@ -192,10 +192,11 @@ public class HTTPTestUtil {
 		return options;
 	}
 
+	private static final int _TIMEOUT = 120_000;
+
 	private static String _baseURL = "http://localhost:8080";
 	private static String _credentials =
 		"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD;
 	private static boolean _modulePath = true;
-	private static int _timeout = 120000;
 
 }

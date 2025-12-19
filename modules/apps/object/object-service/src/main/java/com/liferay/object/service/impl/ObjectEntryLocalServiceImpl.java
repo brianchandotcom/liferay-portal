@@ -161,6 +161,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.dao.jdbc.postgresql.PostgreSQLJDBCUtil;
+import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -2578,7 +2579,7 @@ public class ObjectEntryLocalServiceImpl
 				"objectEntryComments");
 
 		if (!objectDefinition.isEnableComments() ||
-			(objectEntryComments == null)) {
+			ListUtil.isEmpty(objectEntryComments)) {
 
 			return;
 		}
@@ -2595,7 +2596,22 @@ public class ObjectEntryLocalServiceImpl
 		User user = _userLocalService.getUser(userId);
 
 		for (ObjectEntryComment objectEntryComment : objectEntryComments) {
-			if (objectEntryComment.getParentCommentId() == 0) {
+			long parentCommentId = 0;
+
+			if (Validator.isNotNull(
+					objectEntryComment.
+						getParentCommentExternalReferenceCode())) {
+
+				Comment comment = _commentManager.fetchComment(
+					groupId,
+					objectEntryComment.getParentCommentExternalReferenceCode());
+
+				if (comment != null) {
+					parentCommentId = comment.getCommentId();
+				}
+			}
+
+			if (parentCommentId == 0) {
 				_commentManager.addComment(
 					objectEntryComment.getExternalReferenceCode(), userId,
 					groupId, objectDefinition.getClassName(),
@@ -2608,8 +2624,7 @@ public class ObjectEntryLocalServiceImpl
 					objectEntryComment.getExternalReferenceCode(), userId,
 					objectDefinition.getClassName(),
 					objectEntry.getObjectEntryId(), user.getFullName(),
-					objectEntryComment.getParentCommentId(), null,
-					objectEntryComment.getText(),
+					parentCommentId, null, objectEntryComment.getText(),
 					_createServiceContextFunction());
 			}
 		}

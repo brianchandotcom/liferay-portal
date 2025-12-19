@@ -79,8 +79,6 @@ import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.comment.Comment;
-import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -2047,17 +2045,6 @@ public class DefaultObjectEntryManagerImpl
 			String scopeKey)
 		throws Exception {
 
-		List<ObjectEntryComment> objectEntryComments = null;
-
-		if ((objectEntry.getComments() != null) &&
-			FeatureFlagManagerUtil.isEnabled(
-				objectDefinition.getCompanyId(), "LPD-69419")) {
-
-			objectEntryComments = _toObjectEntryComments(
-				_commentManager, objectEntry.getComments(),
-				getGroupId(objectDefinition, scopeKey, true));
-		}
-
 		ModelPermissions modelPermissions = null;
 
 		if (objectEntry.getPermissions() != null) {
@@ -2066,6 +2053,20 @@ public class DefaultObjectEntryManagerImpl
 				GetterUtil.getLong(objectEntry.getId()),
 				objectDefinition.getClassName(), _resourceActionLocalService,
 				_resourcePermissionLocalService, _roleLocalService);
+		}
+
+		List<ObjectEntryComment> objectEntryComments = null;
+
+		if ((objectEntry.getComments() != null) &&
+			FeatureFlagManagerUtil.isEnabled(
+				objectDefinition.getCompanyId(), "LPD-69419")) {
+
+			objectEntryComments = TransformUtil.transformToList(
+				objectEntry.getComments(),
+				comment -> new ObjectEntryComment(
+					comment.getExternalReferenceCode(),
+					comment.getParentCommentExternalReferenceCode(),
+					comment.getText()));
 		}
 
 		return ServiceContextUtil.createServiceContext(
@@ -3599,36 +3600,6 @@ public class DefaultObjectEntryManagerImpl
 			serviceBuilderObjectEntry);
 	}
 
-	private List<ObjectEntryComment> _toObjectEntryComments(
-		CommentManager commentManager,
-		com.liferay.headless.delivery.dto.v1_0.Comment[] comments,
-		long groupId) {
-
-		return TransformUtil.transformToList(
-			comments,
-			comment -> {
-				long parentCommentId = 0;
-
-				if (Validator.isNotNull(
-						comment.getParentCommentExternalReferenceCode())) {
-
-					Comment serviceBuilderComment = commentManager.fetchComment(
-						groupId,
-						comment.getParentCommentExternalReferenceCode());
-
-					if (serviceBuilderComment != null) {
-						parentCommentId =
-							serviceBuilderComment.getParentCommentId();
-					}
-				}
-
-				return new ObjectEntryComment(
-					comment.getExternalReferenceCode(),
-					comment.getParentCommentExternalReferenceCode(),
-					parentCommentId, comment.getText());
-			});
-	}
-
 	private Map<String, Serializable> _toObjectValues(
 			long allowedRelationshipObjectFieldId, Locale locale,
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
@@ -3922,9 +3893,6 @@ public class DefaultObjectEntryManagerImpl
 
 	@Reference
 	private AttachmentManager _attachmentManager;
-
-	@Reference
-	private CommentManager _commentManager;
 
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;

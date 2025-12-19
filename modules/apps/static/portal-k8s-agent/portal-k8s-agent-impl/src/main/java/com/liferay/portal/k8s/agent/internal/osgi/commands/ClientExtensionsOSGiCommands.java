@@ -58,23 +58,7 @@ public class ClientExtensionsOSGiCommands implements OSGiCommands {
 		_printConfigurations(configurations);
 	}
 
-	public void reload(String... args)
-		throws InvalidSyntaxException, IOException {
-
-		if (ArrayUtil.isEmpty(args)) {
-			System.out.println("No PID provided.");
-
-			return;
-		}
-
-		if (args.length > 1) {
-			System.out.println("Too many arguments.");
-
-			return;
-		}
-
-		String pid = args[0];
-
+	public void reload(String pid) throws InvalidSyntaxException, IOException {
 		Configuration configuration = _getConfiguration(pid);
 
 		if (configuration == null) {
@@ -90,23 +74,7 @@ public class ClientExtensionsOSGiCommands implements OSGiCommands {
 			"Reloaded configuration for " + reloadedConfiguration.getPid());
 	}
 
-	public void show(String... args)
-		throws InvalidSyntaxException, IOException {
-
-		if (ArrayUtil.isEmpty(args)) {
-			System.out.println("No PID provided.");
-
-			return;
-		}
-
-		if (args.length > 1) {
-			System.out.println("Too many arguments.");
-
-			return;
-		}
-
-		String pid = args[0];
-
+	public void show(String pid) throws InvalidSyntaxException, IOException {
 		Configuration configuration = _getConfiguration(pid);
 
 		if (configuration == null) {

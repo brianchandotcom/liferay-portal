@@ -27,15 +27,17 @@ public class ObjectEntryModelIndexerWriterContributor
 	public ObjectEntryModelIndexerWriterContributor(
 		DynamicQueryBatchIndexingActionableFactory
 			dynamicQueryBatchIndexingActionableFactory,
-		long objectDefinitionId,
+		ObjectDefinition objectDefinition,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService) {
 
 		_dynamicQueryBatchIndexingActionableFactory =
 			dynamicQueryBatchIndexingActionableFactory;
-		_objectDefinitionId = objectDefinitionId;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
+
+		_companyId = objectDefinition.getCompanyId();
+		_objectDefinitionId = objectDefinition.getObjectDefinitionId();
 	}
 
 	@Override
@@ -82,6 +84,16 @@ public class ObjectEntryModelIndexerWriterContributor
 		return IndexerWriterMode.UPDATE;
 	}
 
+	@Override
+	public boolean shouldRun(long companyId) {
+		if (_companyId == companyId) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private final long _companyId;
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 	private final Long _objectDefinitionId;

@@ -67,21 +67,22 @@ public class ObjectCodeEditorUtil {
 		ObjectFieldLocalService objectFieldLocalService =
 			_objectFieldLocalServiceSnapshot.get();
 
-		codeEditorElements.add(
-			_createCodeEditorElement(
-				TransformUtil.transform(
-					ListUtil.filter(
-						objectFieldLocalService.getObjectFields(
-							objectDefinitionId),
-						objectFieldPredicate),
-					objectField -> HashMapBuilder.put(
-						"content", objectField.getName()
-					).put(
-						"helpText", StringPool.BLANK
-					).put(
-						"label", objectField.getLabel(locale)
-					).build()),
-				"fields", locale));
+		List<Map<String, String>> objectFieldsItems = TransformUtil.transform(
+			ListUtil.filter(
+				objectFieldLocalService.getObjectFields(objectDefinitionId),
+				objectFieldPredicate),
+			objectField -> HashMapBuilder.put(
+				"content", objectField.getName()
+			).put(
+				"helpText", StringPool.BLANK
+			).put(
+				"label", objectField.getLabel(locale)
+			).build());
+
+		if (ListUtil.isNotEmpty(objectFieldsItems)) {
+			codeEditorElements.add(
+				_createCodeEditorElement(objectFieldsItems, "fields", locale));
+		}
 
 		List<Map<String, String>> generalVariablesItems = new ArrayList<>();
 

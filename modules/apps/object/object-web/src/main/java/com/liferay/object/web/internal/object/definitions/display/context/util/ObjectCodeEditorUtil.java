@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -46,17 +45,10 @@ public class ObjectCodeEditorUtil {
 			Predicate<ObjectField> objectFieldPredicate)
 		throws PortalException {
 
-		if (includeDDMExpressionBuilderElements) {
-			return getCodeEditorElements(
-				ddmExpressionFunctionPredicate -> true,
-				ddmExpressionOperatorPredicate -> true, includeGeneralVariables,
-				includeRelatedObjectFields, locale, objectDefinitionId,
-				objectFieldPredicate);
-		}
-
 		return getCodeEditorElements(
-			ddmExpressionFunctionPredicate -> false,
-			ddmExpressionOperatorPredicate -> false, includeGeneralVariables,
+			ddmExpressionFunction -> includeDDMExpressionBuilderElements,
+			ddmExpressionOperator -> includeDDMExpressionBuilderElements,
+			generalVariables -> includeGeneralVariables,
 			includeRelatedObjectFields, locale, objectDefinitionId,
 			objectFieldPredicate);
 	}
@@ -64,8 +56,9 @@ public class ObjectCodeEditorUtil {
 	public static List<Map<String, Object>> getCodeEditorElements(
 			Predicate<DDMExpressionFunction> ddmExpressionFunctionPredicate,
 			Predicate<DDMExpressionOperator> ddmExpressionOperatorPredicate,
-			boolean includeGeneralVariables, boolean includeRelatedObjectFields,
-			Locale locale, long objectDefinitionId,
+			Predicate<String> generalVariablesPredicate,
+			boolean includeRelatedObjectFields, Locale locale,
+			long objectDefinitionId,
 			Predicate<ObjectField> objectFieldPredicate)
 		throws PortalException {
 
@@ -90,25 +83,34 @@ public class ObjectCodeEditorUtil {
 					).build()),
 				"fields", locale));
 
-		if (includeGeneralVariables) {
+		List<Map<String, String>> generalVariablesItems = new ArrayList<>();
+
+		if (generalVariablesPredicate.test("currentDate")) {
+			generalVariablesItems.add(
+				HashMapBuilder.put(
+					"content", "currentDate"
+				).put(
+					"helpText", StringPool.BLANK
+				).put(
+					"label", LanguageUtil.get(locale, "current-date")
+				).build());
+		}
+
+		if (generalVariablesPredicate.test("currentUserId")) {
+			generalVariablesItems.add(
+				HashMapBuilder.put(
+					"content", "currentUserId"
+				).put(
+					"helpText", StringPool.BLANK
+				).put(
+					"label", LanguageUtil.get(locale, "current-user")
+				).build());
+		}
+
+		if (ListUtil.isNotEmpty(generalVariablesItems)) {
 			codeEditorElements.add(
 				_createCodeEditorElement(
-					Arrays.asList(
-						HashMapBuilder.put(
-							"content", "currentDate"
-						).put(
-							"helpText", StringPool.BLANK
-						).put(
-							"label", LanguageUtil.get(locale, "current-date")
-						).build(),
-						HashMapBuilder.put(
-							"content", "currentUserId"
-						).put(
-							"helpText", StringPool.BLANK
-						).put(
-							"label", LanguageUtil.get(locale, "current-user")
-						).build()),
-					"general-variables", locale));
+					generalVariablesItems, "general-variables", locale));
 		}
 
 		List<Map<String, String>> ddmExpressionOperators =

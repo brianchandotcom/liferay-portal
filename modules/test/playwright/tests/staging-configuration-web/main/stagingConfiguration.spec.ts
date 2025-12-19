@@ -177,17 +177,22 @@ test(
 			await page.goto(
 				`/web${stagingSite.friendlyUrlPath}${layout.friendlyURL}`
 			);
-			await reloadUntilVisible({
-				myLocator: portletPublishToLivePage.publishToLiveButton,
-				page,
-			});
-			await portletPublishToLivePage.publishToLiveButton.click();
 
-			await expect(
-				portletPublishToLivePage.publishToLiveIframe.getByRole('link', {
-					name: 'Switch to Simple Publish Process',
-				})
-			).toBeVisible();
+			await expect(async () => {
+				await page.reload();
+				await portletPublishToLivePage.publishToLiveButton.waitFor();
+				await portletPublishToLivePage.publishToLiveButton.click();
+				await portletPublishToLivePage.publishToLiveIframeButton.waitFor();
+
+				await expect(
+					portletPublishToLivePage.publishToLiveIframe.getByRole(
+						'link',
+						{
+							name: 'Switch to Simple Publish Process',
+						}
+					)
+				).toBeVisible({timeout: 3_000});
+			}).toPass({intervals: [1_000], timeout: 30_000});
 		}
 		finally {
 			await exportImportStagingSystemSettingsPage.goto();

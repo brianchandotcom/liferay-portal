@@ -10,6 +10,7 @@ import com.liferay.osb.faro.engine.client.model.IndividualSegment;
 import com.liferay.osb.faro.engine.client.model.IndividualSegmentMembership;
 import com.liferay.osb.faro.engine.client.model.IndividualSegmentMembershipChange;
 import com.liferay.osb.faro.engine.client.model.IndividualSegmentMembershipChangeAggregation;
+import com.liferay.osb.faro.engine.client.model.IndividualSegmentRealTimeMembership;
 import com.liferay.osb.faro.engine.client.model.Results;
 import com.liferay.osb.faro.engine.client.util.OrderByField;
 import com.liferay.osb.faro.model.FaroProject;
@@ -222,6 +223,26 @@ public class IndividualSegmentController extends BaseFaroController {
 			contactsEngineClient.getIndividualSegmentMemberships(
 				faroProjectLocalService.getFaroProjectByGroupId(groupId), id,
 				cur, delta, orderByFieldsFaroParam.getValue());
+
+		return new FaroResultsDisplay(results);
+	}
+
+	@GET
+	@Path("/{id}/real-time-memberships")
+	@RolesAllowed(RoleConstants.SITE_MEMBER)
+	@SuppressWarnings("unchecked")
+	public FaroResultsDisplay getRealTimeMemberships(
+			@PathParam("groupId") long groupId, @PathParam("id") String id,
+			@QueryParam("filter") String filter, @QueryParam("cur") int cur,
+			@QueryParam("delta") int delta,
+			@DefaultValue(StringPool.BLANK) @QueryParam("orderByFields")
+				FaroParam<List<OrderByField>> orderByFieldsFaroParam)
+		throws Exception {
+
+		Results<IndividualSegmentRealTimeMembership> results =
+			contactsEngineClient.getIndividualSegmentRealTimeMemberships(
+				faroProjectLocalService.getFaroProjectByGroupId(groupId), filter,
+				id, cur, delta, orderByFieldsFaroParam.getValue());
 
 		return new FaroResultsDisplay(results);
 	}

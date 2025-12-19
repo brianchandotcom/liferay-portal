@@ -33,7 +33,8 @@ public class FileEntryUtil {
 
 		FileEntry fileEntry = null;
 
-		Long groupId = ItemScopeUtil.getGroupId(companyId, scope, scopeGroupId);
+		Long groupId = ItemScopeUtil.getItemGroupId(
+			companyId, scope, scopeGroupId);
 
 		if (groupId != null) {
 			fileEntry =

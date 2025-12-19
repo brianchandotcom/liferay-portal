@@ -25,7 +25,8 @@ public class LayoutUtil {
 
 		Layout layout = null;
 
-		Long groupId = ItemScopeUtil.getGroupId(companyId, scope, scopeGroupId);
+		Long groupId = ItemScopeUtil.getItemGroupId(
+			companyId, scope, scopeGroupId);
 
 		if (groupId != null) {
 			layout = LayoutLocalServiceUtil.fetchLayoutByExternalReferenceCode(

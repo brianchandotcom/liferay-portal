@@ -379,7 +379,7 @@ public class FormContainerLayoutStructureItemImporter
 			"scopeExternalReferenceCode", scopeExternalReferenceCode
 		);
 
-		Long groupId = ItemScopeUtil.getGroupId(
+		Long groupId = ItemScopeUtil.getItemGroupId(
 			companyId, itemExternalReference.getScope(), scopeGroupId);
 
 		if (groupId == null) {
@@ -439,7 +439,7 @@ public class FormContainerLayoutStructureItemImporter
 			scopeExternalReferenceCode
 		);
 
-		Long groupId = ItemScopeUtil.getGroupId(
+		Long groupId = ItemScopeUtil.getItemGroupId(
 			companyId, itemExternalReference.getScope(), scopeGroupId);
 
 		if (groupId == null) {

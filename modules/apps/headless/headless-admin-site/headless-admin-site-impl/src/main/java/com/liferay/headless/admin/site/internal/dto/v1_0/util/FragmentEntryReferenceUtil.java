@@ -49,7 +49,7 @@ public class FragmentEntryReferenceUtil {
 
 			FragmentEntry fragmentEntry = null;
 
-			Long groupId = ItemScopeUtil.getGroupId(
+			Long groupId = ItemScopeUtil.getItemGroupId(
 				companyId, fragmentItemExternalReference.getScope(),
 				scopeGroupId);
 

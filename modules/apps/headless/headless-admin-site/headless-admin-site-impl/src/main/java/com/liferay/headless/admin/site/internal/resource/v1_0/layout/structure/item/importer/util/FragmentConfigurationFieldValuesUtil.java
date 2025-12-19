@@ -356,7 +356,7 @@ public class FragmentConfigurationFieldValuesUtil {
 			return null;
 		}
 
-		Long groupId = ItemScopeUtil.getGroupId(
+		Long groupId = ItemScopeUtil.getItemGroupId(
 			layoutStructureItemImporterContext.getCompanyId(),
 			itemExternalReference.getScope(),
 			layoutStructureItemImporterContext.getGroupId());

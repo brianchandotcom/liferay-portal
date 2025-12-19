@@ -253,6 +253,6 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 		return _vocabularySettingsHelper;
 	}
 
-	private AssetVocabularySettingsHelper _vocabularySettingsHelper;
+	private transient AssetVocabularySettingsHelper _vocabularySettingsHelper;
 
 }

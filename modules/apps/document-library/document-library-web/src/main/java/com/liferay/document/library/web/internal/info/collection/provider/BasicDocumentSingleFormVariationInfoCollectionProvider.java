@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
@@ -50,7 +49,6 @@ import com.liferay.portlet.asset.util.comparator.AssetTagNameComparator;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -222,17 +220,16 @@ public class BasicDocumentSingleFormVariationInfoCollectionProvider
 
 			Hits hits = indexer.search(searchContext);
 
-			List<FileEntry> fileEntries = new ArrayList<>();
-
-			for (Document document : hits.getDocs()) {
-				long classPK = GetterUtil.getLong(
-					document.get(Field.ENTRY_CLASS_PK));
-
-				fileEntries.add(_dlAppLocalService.getFileEntry(classPK));
-			}
-
 			return InfoPage.of(
-				fileEntries, collectionQuery.getPagination(), hits.getLength());
+				TransformUtil.transformToList(
+					hits.getDocs(),
+					document -> {
+						long classPK = GetterUtil.getLong(
+							document.get(Field.ENTRY_CLASS_PK));
+
+						return _dlAppLocalService.getFileEntry(classPK);
+					}),
+				collectionQuery.getPagination(), hits.getLength());
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {

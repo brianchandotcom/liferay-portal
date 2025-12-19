@@ -402,11 +402,12 @@
 											],
 											"fragmentLink": {
 												"href": {
-													"value_i18n": {
-														"en_US": "https://customer.liferay.com/en/dxp-release-notes",
-														"es_ES": "https://customer.liferay.com/en/dxp-release-notes",
-														"ja_JP": "https://customer.liferay.com/en/dxp-release-notes",
-														"pt_BR": "https://customer.liferay.com/en/dxp-release-notes"
+													"mapping": {
+														"fieldKey": "AssetCategory_displayPageURL",
+														"itemReference": {
+															"className": "com.liferay.asset.kernel.model.AssetCategory",
+															"classPK": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/article-categories/release-notes/liferay-analytics-cloud.json$]"
+														}
 													}
 												}
 											},
@@ -447,7 +448,7 @@
 																"fragmentImage": {
 																	"url": {
 																		"value_i18n": {
-																			"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/assets/version_comparison_tool.svg$]"
+																			"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/assets/navigation-menu/analytics_icon.svg$]"
 																		}
 																	}
 																},
@@ -483,10 +484,10 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "Version Comparison Tool",
-																		"es_ES": "Herramienta de comparación de versiones",
-																		"ja_JP": "バージョン比較ツール",
-																		"pt_BR": "Ferramenta de Comparação de Versões"
+																		"en_US": "Liferay Analytics Cloud",
+																		"es_ES": "Liferay Analytics Cloud",
+																		"ja_JP": "Liferay Analytics Cloud",
+																		"pt_BR": "Liferay Analytics Cloud"
 																	}
 																}
 															}
@@ -519,10 +520,10 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "Reference detailed changes between two Liferay DXP versions",
-																		"es_ES": "Consulta los cambios pormenorizados entre dos versiones de Liferay DXP",
-																		"ja_JP": "Liferay DXPの2つのバージョン間の詳細な変更点を参照してください。",
-																		"pt_BR": "Consulte as mudanças detalhadas entre duas versões do Liferay DXP"
+																		"en_US": "Reference the latest changes for Liferay Analytics Cloud platform and services",
+																		"es_ES": "Revisa los últimos cambios de la plataforma y los servicios de Liferay Analytics Cloud",
+																		"ja_JP": "Liferay Analytics Cloudプラットフォームおよびサービスの最新の変更点の確認はこちら",
+																		"pt_BR": "Revise as últimas alterações da plataforma e dos serviços do Liferay Analytics Cloud"
 																	}
 																}
 															}
@@ -541,6 +542,179 @@
 							}
 						],
 						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"fragmentStyle": {
+						"maxWidth": "var(--container-max-xl)",
+						"paddingBottom": "3",
+						"paddingLeft": "3",
+						"paddingRight": "3"
+					},
+					"indexed": true,
+					"layout": {
+						"paddingBottom": 1,
+						"paddingLeft": 1,
+						"paddingRight": 1,
+						"widthType": "Fixed"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"indexed": true,
+							"layout": {
+								"align": "Center",
+								"contentDisplay": "FlexColumn",
+								"justify": "Center"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"cssClasses": [
+										"card-flat",
+										"card"
+									],
+									"fragmentLink": {
+										"href": {
+											"value_i18n": {
+												"en_US": "https://customer.liferay.com/en/dxp-release-notes",
+												"es_ES": "https://customer.liferay.com/en/dxp-release-notes",
+												"ja_JP": "https://customer.liferay.com/en/dxp-release-notes",
+												"pt_BR": "https://customer.liferay.com/en/dxp-release-notes"
+											}
+										}
+									},
+									"fragmentStyle": {
+										"backgroundColor": "colorBrandPrimaryLighten5",
+										"borderRadius": "borderRadiusLg",
+										"height": "205px",
+										"paddingBottom": "4",
+										"paddingLeft": "4",
+										"paddingRight": "4",
+										"paddingTop": "4",
+										"textAlign": "center",
+										"width": "500px"
+									},
+									"indexed": true,
+									"layout": {
+										"align": "Center",
+										"contentDisplay": "FlexColumn",
+										"justify": "Center",
+										"paddingBottom": 2,
+										"paddingLeft": 2,
+										"paddingRight": 2,
+										"paddingTop": 2
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-image"
+											},
+											"fragmentConfig": {
+												"imageSize": "w-100"
+											},
+											"fragmentFields": [
+												{
+													"id": "image-square",
+													"value": {
+														"fragmentImage": {
+															"url": {
+																"value_i18n": {
+																	"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/assets/version_comparison_tool.svg$]"
+																}
+															}
+														},
+														"fragmentLink": {
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"height": "48px",
+												"width": "48px"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "cp-text",
+												"siteKey": "Customer Portal"
+											},
+											"fragmentConfig": {
+												"textType": "h5",
+												"truncateText": false
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "Version Comparison Tool",
+																"es_ES": "Herramienta de comparación de versiones",
+																"ja_JP": "バージョン比較ツール",
+																"pt_BR": "Ferramenta de Comparação de Versões"
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"marginBottom": "2",
+												"marginTop": "2"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "cp-text",
+												"siteKey": "Customer Portal"
+											},
+											"fragmentConfig": {
+												"textType": "text-paragraph",
+												"truncateText": false
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "Reference detailed changes between two Liferay DXP versions",
+																"es_ES": "Consulta los cambios pormenorizados entre dos versiones de Liferay DXP",
+																"ja_JP": "Liferay DXPの2つのバージョン間の詳細な変更点を参照してください。",
+																"pt_BR": "Consulte as mudanças detalhadas entre duas versões do Liferay DXP"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Section"
 					}
 				],
 				"type": "Section"

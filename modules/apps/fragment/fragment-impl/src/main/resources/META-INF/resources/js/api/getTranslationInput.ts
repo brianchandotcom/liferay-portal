@@ -9,6 +9,7 @@ export function getTranslationInput(options: {
 	languageId: string;
 	localizationInputsContainer: HTMLElement;
 	namespace: string;
+	override?: boolean;
 	type?: 'file' | 'hidden';
 }): HTMLInputElement;
 
@@ -19,6 +20,7 @@ export function getTranslationInput(options: {
 	languageId: string;
 	localizationInputsContainer: HTMLElement;
 	namespace: string;
+	override?: boolean;
 	type?: 'file' | 'hidden';
 }): HTMLInputElement | null;
 
@@ -29,6 +31,7 @@ export function getTranslationInput({
 	languageId,
 	localizationInputsContainer,
 	namespace,
+	override = true,
 	type = 'hidden',
 }: {
 	createIfMissing?: boolean;
@@ -37,11 +40,14 @@ export function getTranslationInput({
 	languageId: string;
 	localizationInputsContainer: HTMLElement;
 	namespace: string;
+	override?: boolean;
 	type?: 'file' | 'hidden';
 }): HTMLInputElement | null {
 	const id = `${namespace || ''}${inputId}_${languageId}`;
 
-	let translationInput = document.getElementById(id) as HTMLInputElement;
+	let translationInput = override
+		? (document.getElementById(id) as HTMLInputElement)
+		: null;
 
 	// Return null if it does not exist and createIfMissing is false
 

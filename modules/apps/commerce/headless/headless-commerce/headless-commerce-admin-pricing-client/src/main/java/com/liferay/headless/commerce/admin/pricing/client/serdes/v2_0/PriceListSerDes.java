@@ -101,6 +101,20 @@ public class PriceListSerDes {
 			sb.append(priceList.getCatalogBasePriceList());
 		}
 
+		if (priceList.getCatalogExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"catalogExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(priceList.getCatalogExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (priceList.getCatalogId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -515,6 +529,15 @@ public class PriceListSerDes {
 				String.valueOf(priceList.getCatalogBasePriceList()));
 		}
 
+		if (priceList.getCatalogExternalReferenceCode() == null) {
+			map.put("catalogExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"catalogExternalReferenceCode",
+				String.valueOf(priceList.getCatalogExternalReferenceCode()));
+		}
+
 		if (priceList.getCatalogId() == null) {
 			map.put("catalogId", null);
 		}
@@ -750,6 +773,11 @@ public class PriceListSerDes {
 
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "catalogExternalReferenceCode")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "catalogId")) {
 				return false;
 			}
@@ -868,6 +896,14 @@ public class PriceListSerDes {
 				if (jsonParserFieldValue != null) {
 					priceList.setCatalogBasePriceList(
 						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "catalogExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					priceList.setCatalogExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "catalogId")) {

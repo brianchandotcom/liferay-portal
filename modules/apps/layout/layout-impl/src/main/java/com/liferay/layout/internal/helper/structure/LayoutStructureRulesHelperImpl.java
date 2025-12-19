@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -40,8 +39,9 @@ public class LayoutStructureRulesHelperImpl
 
 	@Override
 	public LayoutStructureRulesResult processLayoutStructureRules(
-		long groupId, LayoutStructure layoutStructure,
-		PermissionChecker permissionChecker, long[] segmentsEntryIds) {
+		long groupId, Map<String, Object> infoItemFieldValuesMap,
+		LayoutStructure layoutStructure, PermissionChecker permissionChecker,
+		long[] segmentsEntryIds) {
 
 		Map<String, List<String>> itemIdsMap = new HashMap<>();
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
@@ -59,7 +59,7 @@ public class LayoutStructureRulesHelperImpl
 				_processActions(
 					layoutStructureRule.getActionsJSONArray(), jsonArray,
 					!_evaluateLayoutStructureRule(
-						Collections.emptyMap(), layoutStructureRule,
+						infoItemFieldValuesMap, layoutStructureRule,
 						layoutStructureRulesContext));
 
 				continue;

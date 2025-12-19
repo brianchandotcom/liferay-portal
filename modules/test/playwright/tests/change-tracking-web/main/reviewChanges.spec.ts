@@ -703,4 +703,71 @@ test.describe('Publications with incomplete status tests', () => {
 			trigger: moreActionsButton,
 		});
 	});
+
+	test('LPD-73282 Assert can move changes to publications with incomplete status', async ({
+		apiHelpers,
+		changeTrackingPage,
+		ctCollection,
+		journalEditArticlePage,
+		page,
+	}) => {
+		const ctCollection2 =
+			await apiHelpers.headlessChangeTracking.createCTCollection(
+				getRandomString()
+			);
+
+		await apiHelpers.headlessChangeTracking.checkoutCTCollection(
+			ctCollection2.body.id
+		);
+
+		const journalArticleTitle = getRandomString();
+
+		await journalEditArticlePage.goto();
+
+		await journalEditArticlePage.fillTitle(journalArticleTitle);
+
+		await journalEditArticlePage.publishArticle();
+
+		await waitForAlert(
+			page,
+			`Success:${journalArticleTitle} was created successfully.`
+		);
+
+		changeTrackingPage.goToReviewChanges(ctCollection2.body.name);
+
+		const firstDropdown = page
+			.locator('.cell-item-actions .dropdown svg.lexicon-icon-ellipsis-v')
+			.first();
+		await firstDropdown.waitFor();
+		await firstDropdown.click();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Move Changes'}),
+			trigger: firstDropdown,
+		});
+
+		await expect(
+			page.getByRole('heading', {name: 'Moved Changes'})
+		).toBeVisible();
+
+		const publicationSelector = page.locator(
+			'#_com_liferay_change_tracking_web_portlet_PublicationsPortlet_toPublication'
+		);
+
+		await expect(publicationSelector).toBeVisible();
+
+		const publicationsOptions = await page.locator(
+			'#_com_liferay_change_tracking_web_portlet_PublicationsPortlet_toPublication > option'
+		);
+
+		await expect(publicationsOptions).toHaveText([
+			'None',
+			ctCollection.body.name,
+		]);
+
+		await apiHelpers.headlessChangeTracking.deleteCTCollection(
+			ctCollection2.body.id
+		);
+	});
 });

@@ -4,6 +4,7 @@
  */
 
 import {CodeEditor} from '@liferay/object-js-components-web';
+import {sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
 import {config} from '../../../app/config';
@@ -16,6 +17,7 @@ import {useSelector} from '../../../app/contexts/StoreContext';
 import selectFormConfiguration from '../../../app/selectors/selectFormConfiguration';
 import selectLayoutDataItemLabel from '../../../app/selectors/selectLayoutDataItemLabel';
 import FormService from '../../../app/services/FormService';
+import InfoItemService from '../../../app/services/InfoItemService';
 import RulesService from '../../../app/services/RulesService';
 import {CACHE_KEYS, getCacheItem, getCacheKey} from '../../../app/utils/cache';
 import {isLayoutDataItemDeleted} from '../../../app/utils/isLayoutDataItemDeleted';
@@ -117,6 +119,35 @@ function getUsersSection(
 async function getFormFieldsSections(state: State) {
 	const sections = [];
 
+	if (config.selectedMappingTypes) {
+		const {subtype, type} = config.selectedMappingTypes;
+
+		const fields =
+			(await InfoItemService.getAvailableStructureMappingFields({
+				classNameId: type.id,
+				classTypeId: subtype.id,
+			})) as ObjectFields;
+
+		const items = fields
+			.flatMap((field) => ('fields' in field ? field.fields : [field]))
+			.map((field) => {
+				return {
+					content: (field as ObjectField).key,
+					label: field.label,
+				};
+			});
+
+		sections.push({
+			items,
+			label: sub(
+				Liferay.Language.get('x-default'),
+				config.selectedMappingTypes.subtype
+					? config.selectedMappingTypes.subtype.label
+					: config.selectedMappingTypes.type.label
+			),
+		});
+	}
+
 	const formItems = Object.values(state.layoutData.items).filter(
 		(item) =>
 			item.type === LAYOUT_DATA_ITEM_TYPES.form &&
@@ -177,7 +208,8 @@ async function getFormFieldsSections(state: State) {
 					'key' in field &&
 					selectedInputsData.some(
 						(inputField: any) => inputField.fieldId === field.key
-					)
+					) &&
+					field.type !== 'upload'
 			)
 			.map((field) => {
 				const inputField = selectedInputsData.find(

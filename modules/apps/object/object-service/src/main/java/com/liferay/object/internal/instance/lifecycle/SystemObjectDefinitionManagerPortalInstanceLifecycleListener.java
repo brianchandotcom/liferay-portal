@@ -24,6 +24,7 @@ import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.notification.handler.NotificationHandler;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
 import com.liferay.object.configuration.ObjectConfiguration;
+import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.info.field.converter.ObjectFieldInfoFieldConverter;
 import com.liferay.object.internal.item.selector.SystemObjectEntryItemSelectorView;
 import com.liferay.object.internal.notification.handler.ObjectDefinitionNotificationHandler;
@@ -72,14 +73,21 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Release;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.extension.ExtensionProviderRegistry;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
 import java.util.Map;
@@ -216,8 +224,26 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 					systemObjectDefinitionManager.getVersion())) {
 
 				ObjectFolder objectFolder =
-					_objectFolderLocalService.getOrAddDefaultObjectFolder(
+					_objectFolderLocalService.fetchDefaultObjectFolder(
 						companyId);
+
+				if (objectFolder == null) {
+					objectFolder = _objectFolderLocalService.addObjectFolder(
+						ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_DEFAULT,
+						_userLocalService.getGuestUserId(companyId),
+						LocalizedMapUtil.getLocalizedMap(
+							ObjectFolderConstants.NAME_DEFAULT),
+						ObjectFolderConstants.NAME_DEFAULT);
+
+					Role guestRole = _roleLocalService.getRole(
+						companyId, RoleConstants.GUEST);
+
+					_resourcePermissionLocalService.setResourcePermissions(
+						companyId, ObjectFolder.class.getName(),
+						ResourceConstants.SCOPE_INDIVIDUAL,
+						String.valueOf(objectFolder.getObjectFolderId()),
+						guestRole.getRoleId(), new String[] {ActionKeys.VIEW});
+				}
 
 				objectDefinition =
 					_objectDefinitionLocalService.
@@ -492,7 +518,13 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 	private Release _release;
 
 	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
 	private RESTContextPathResolverRegistry _restContextPathResolverRegistry;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 	private ServiceTrackerList<SystemObjectDefinitionManager>
 		_serviceTrackerList;

@@ -6,11 +6,15 @@
 package com.liferay.layout.page.template.internal.exportimport.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
+import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.test.util.lar.BaseExportImportTestCase;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureServiceUtil;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
@@ -27,6 +31,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -37,6 +42,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -65,6 +71,133 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Test
+	@TestInfo("LPD-72839")
+	public void testCollectionDisplay() throws Exception {
+		layout = LayoutTestUtil.addTypeContentLayout(group);
+
+		long segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
+		AssetListEntry assetListEntry1 = _addAssetList(group, serviceContext);
+
+		String itemId = ContentLayoutTestUtil.addCollectionDisplayToLayout(
+			_createCollectionJSONObject(
+				assetListEntry1.getAssetListEntryId(), null, null),
+			layout, _layoutStructureProvider, null, null, 0,
+			segmentsExperienceId);
+
+		exportImportLayouts(
+			new long[] {layout.getLayoutId()}, getImportParameterMap());
+
+		AssetListEntry importedAssetListEntry =
+			_assetListEntryLocalService.getAssetListEntryByUuidAndGroupId(
+				assetListEntry1.getUuid(), importedGroup.getGroupId());
+
+		importedLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
+			layout.getUuid(), importedGroup.getGroupId(), false);
+
+		_assertCollectionConfig(
+			importedAssetListEntry.getAssetListEntryId(), null,
+			_getLayoutStructureItem(itemId, importedLayout.getPlid()), null);
+
+		Group guestGroup = _groupLocalService.getGroup(
+			TestPropsValues.getGroupId());
+
+		AssetListEntry assetListEntry2 = _addAssetList(
+			guestGroup, serviceContext);
+
+		_updateLayoutStructureItem(
+			jsonObject -> {
+				jsonObject.put(
+					"collection",
+					_createCollectionJSONObject(
+						assetListEntry2.getAssetListEntryId(), null, null));
+
+				return jsonObject;
+			},
+			itemId, layout);
+
+		exportImportLayouts(
+			new long[] {layout.getLayoutId()}, getImportParameterMap());
+
+		_assertCollectionConfig(
+			assetListEntry2.getAssetListEntryId(), null,
+			_getLayoutStructureItem(itemId, importedLayout.getPlid()), null);
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		_updateLayoutStructureItem(
+			jsonObject -> {
+				jsonObject.put(
+					"collection",
+					_createCollectionJSONObject(
+						0, externalReferenceCode, null));
+
+				return jsonObject;
+			},
+			itemId, layout);
+
+		exportImportLayouts(
+			new long[] {layout.getLayoutId()}, getImportParameterMap());
+
+		_assertCollectionConfig(
+			0, externalReferenceCode,
+			_getLayoutStructureItem(itemId, importedLayout.getPlid()), null);
+
+		AssetListEntry assetListEntry3 = _addAssetList(group, serviceContext);
+
+		_updateLayoutStructureItem(
+			jsonObject -> {
+				jsonObject.put(
+					"collection",
+					_createCollectionJSONObject(
+						0, assetListEntry3.getExternalReferenceCode(), null));
+
+				return jsonObject;
+			},
+			itemId, layout);
+
+		exportImportLayouts(
+			new long[] {layout.getLayoutId()}, getImportParameterMap());
+
+		importedAssetListEntry =
+			_assetListEntryLocalService.getAssetListEntryByUuidAndGroupId(
+				assetListEntry3.getUuid(), importedGroup.getGroupId());
+
+		_assertCollectionConfig(
+			0, importedAssetListEntry.getExternalReferenceCode(),
+			_getLayoutStructureItem(itemId, importedLayout.getPlid()), null);
+
+		AssetListEntry assetListEntry4 = _addAssetList(
+			guestGroup, serviceContext);
+
+		_updateLayoutStructureItem(
+			jsonObject -> {
+				jsonObject.put(
+					"collection",
+					_createCollectionJSONObject(
+						0, assetListEntry4.getExternalReferenceCode(),
+						guestGroup.getExternalReferenceCode()));
+
+				return jsonObject;
+			},
+			itemId, layout);
+
+		exportImportLayouts(
+			new long[] {layout.getLayoutId()}, getImportParameterMap());
+
+		_assertCollectionConfig(
+			0, assetListEntry4.getExternalReferenceCode(),
+			_getLayoutStructureItem(itemId, importedLayout.getPlid()),
+			guestGroup.getExternalReferenceCode());
+	}
 
 	@Test
 	@TestInfo("LPD-72839")
@@ -396,6 +529,23 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		return importParameterMap;
 	}
 
+	private AssetListEntry _addAssetList(
+			Group group, ServiceContext serviceContext)
+		throws Exception {
+
+		return _assetListEntryLocalService.addAssetListEntry(
+			null, TestPropsValues.getUserId(), group.getGroupId(),
+			RandomTestUtil.randomString(),
+			AssetListEntryTypeConstants.TYPE_DYNAMIC,
+			UnicodePropertiesBuilder.create(
+				true
+			).put(
+				"anyAssetType",
+				String.valueOf(_portal.getClassNameId(JournalArticle.class))
+			).buildString(),
+			serviceContext);
+	}
+
 	private FileEntry _addFileEntry(Group group) throws Exception {
 		return _dlAppLocalService.addFileEntry(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
@@ -403,6 +553,22 @@ public class LayoutPageTemplateStructureRelExportImportTest
 			RandomTestUtil.randomString() + ".png", ContentTypes.IMAGE_PNG,
 			_read("dependencies/sample.png"), null, null, null,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+	}
+
+	private void _assertCollectionConfig(
+		long classPK, String externalReferenceCode,
+		LayoutStructureItem layoutStructureItem,
+		String scopeExternalReferenceCode) {
+
+		JSONObject itemConfigJSONObject =
+			layoutStructureItem.getItemConfigJSONObject();
+
+		JSONObject collectionJSONObject = itemConfigJSONObject.getJSONObject(
+			"collection");
+
+		_assertMappedField(
+			classPK, externalReferenceCode, collectionJSONObject,
+			scopeExternalReferenceCode);
 	}
 
 	private void _assertContainerConfig(
@@ -481,7 +647,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 		if (Validator.isNotNull(scopeExternalReferenceCode)) {
 			Assert.assertEquals(
-				jsonObject.getString("scopeExternalReferenceCode"),
+				scopeExternalReferenceCode,
 				jsonObject.getString("scopeExternalReferenceCode"));
 		}
 	}
@@ -509,6 +675,31 @@ public class LayoutPageTemplateStructureRelExportImportTest
 			"type",
 			"com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType"
 		);
+
+		if (classPK > 0) {
+			jsonObject.put("classPK", classPK);
+		}
+
+		if (Validator.isNotNull(externalReferenceCode)) {
+			jsonObject.put("externalReferenceCode", externalReferenceCode);
+		}
+
+		if (Validator.isNotNull(scopeExternalReferenceCode)) {
+			jsonObject.put(
+				"scopeExternalReferenceCode", scopeExternalReferenceCode);
+		}
+
+		return jsonObject;
+	}
+
+	private JSONObject _createCollectionJSONObject(
+		long classPK, String externalReferenceCode,
+		String scopeExternalReferenceCode) {
+
+		JSONObject jsonObject = JSONUtil.put(
+			"type",
+			"com.liferay.item.selector.criteria." +
+				"InfoListItemSelectorReturnType");
 
 		if (classPK > 0) {
 			jsonObject.put("classPK", classPK);
@@ -620,6 +811,9 @@ public class LayoutPageTemplateStructureRelExportImportTest
 			ServiceContextThreadLocal.popServiceContext();
 		}
 	}
+
+	@Inject
+	private AssetListEntryLocalService _assetListEntryLocalService;
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;

@@ -209,16 +209,7 @@ public class ClientExtensionsOSGiCommandsTest {
 
 	@Test
 	public void testList() throws Exception {
-		PrintStream printStream = System.out;
-
-		ByteArrayOutputStream byteArrayOutputStream =
-			new ByteArrayOutputStream();
-
-		System.setOut(new PrintStream(byteArrayOutputStream));
-
-		_list("deploymentType=bundle");
-
-		String output = byteArrayOutputStream.toString();
+		String output = _captureStout(() -> _list("deploymentType=bundle"));
 
 		String[] lines = output.split(System.lineSeparator());
 
@@ -236,8 +227,6 @@ public class ClientExtensionsOSGiCommandsTest {
 			"\\| ", _configurationPids.get(0),
 			"\\s*\\| Liferay Sample CX 1\\s*\\| customElement \\s*\\| ",
 			"default\\s*\\|");
-
-		System.setOut(printStream);
 
 		Assert.assertTrue(
 			"Row did not match pattern: \n" + dataRow,

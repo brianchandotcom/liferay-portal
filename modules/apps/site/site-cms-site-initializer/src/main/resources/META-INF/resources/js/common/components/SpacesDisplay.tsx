@@ -46,7 +46,7 @@ export default function SpacesDisplay(props: SpaceDisplayProps) {
 				<ClayTooltipProvider>
 					<span>
 						<Badge
-							className="badge-pill cursor-pointer"
+							className="badge-pill"
 							data-tooltip-align="bottom"
 							displayType="secondary"
 							label={`+${otherSpaces.length}`}

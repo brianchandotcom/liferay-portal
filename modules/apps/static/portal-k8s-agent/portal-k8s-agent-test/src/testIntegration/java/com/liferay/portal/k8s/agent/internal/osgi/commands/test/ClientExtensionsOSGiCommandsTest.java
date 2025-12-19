@@ -158,8 +158,8 @@ public class ClientExtensionsOSGiCommandsTest {
 	}
 
 	@Test
-	public void testGetConfigurationInvalidPid() {
-		String pid = "non-existing-pid";
+	public void testGetConfigurationNonexistentPid() {
+		String pid = "non-existent-pid";
 
 		Assert.assertNull(_getConfiguration(pid));
 	}
@@ -198,9 +198,9 @@ public class ClientExtensionsOSGiCommandsTest {
 				"type=instanceSettings"),
 			List.of("Liferay Sample CX 3"));
 
-		_testGetConfigurations(List.of("name=Non Existing Name"), List.of());
+		_testGetConfigurations(List.of("name=Non Existent Name"), List.of());
 		_testGetConfigurations(
-			List.of("deploymentType=prod", "name=Non Existing Name"),
+			List.of("deploymentType=prod", "name=Non Existent Name"),
 			List.of());
 		_testGetConfigurations(List.of("nonExistentFilter=foo"), List.of());
 		_testGetConfigurations(List.of("foo"), List.of());
@@ -229,7 +229,7 @@ public class ClientExtensionsOSGiCommandsTest {
 			"default\\s*\\|");
 
 		Assert.assertTrue(
-			"Row did not match pattern: \n" + dataRow,
+			"Row does not match pattern: \n" + dataRow,
 			dataRow.matches(expectedDataPattern));
 	}
 

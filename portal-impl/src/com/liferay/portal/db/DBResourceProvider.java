@@ -7,12 +7,15 @@ package com.liferay.portal.db;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.List;
 import java.util.Map;
 
 /**
  * @author Mariano Álvaro Sáiz
  */
 public interface DBResourceProvider {
+
+	public List<String> getTableNames(long companyId) throws PortalException;
 
 	public Map<String, String[]> getTablesPrimaryKeyColumnNames(long companyId)
 		throws PortalException;

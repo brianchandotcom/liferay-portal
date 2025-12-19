@@ -10,6 +10,7 @@ import {waitForAlert} from '../../utils/waitForAlert';
 export class AccessibilityMenuPage {
 	readonly closeButton: Locator;
 	readonly enableAccessibilityMenuCheckbox: Locator;
+	readonly menuTitle: Locator;
 	readonly openAccessibilityMenuButton: Locator;
 	readonly page: Page;
 	readonly saveButton: Locator;
@@ -22,6 +23,9 @@ export class AccessibilityMenuPage {
 		this.enableAccessibilityMenuCheckbox = page.getByRole('checkbox', {
 			name: 'Enable Accessibility Menu',
 		});
+		this.menuTitle = page
+			.locator('.modal')
+			.getByLabel('Accessibility Menu');
 		this.openAccessibilityMenuButton = page.getByRole('button', {
 			name: 'Open Accessibility Menu',
 		});
@@ -59,26 +63,34 @@ export class AccessibilityMenuPage {
 	async openAccessibilityMenu() {
 		await this.page.waitForLoadState();
 
+		await this.page.focus('body');
+
 		await this.page.keyboard.press('Tab');
 
 		await this.page.keyboard.press('Tab');
 
 		await this.page.keyboard.press('Enter');
 
-		await expect(
-			this.page.locator('.modal').getByLabel('Accessibility Menu')
-		).toBeVisible();
+		await expect(this.menuTitle).toBeVisible();
+	}
+
+	async closeAccessibilityMenu() {
+		await this.closeButton.click();
+
+		await expect(this.menuTitle).toBeHidden();
 	}
 
 	async toggleUnderlinedLinks(check: boolean) {
+		await this.toggle(this.underlinedLinksToggle, check);
+
+		await this.closeAccessibilityMenu();
+	}
+
+	async toggle(locator: Locator, check: boolean) {
 		await expect(async () => {
-			await this.underlinedLinksToggle.setChecked(check);
+			await locator.setChecked(check);
 
-			await expect(this.underlinedLinksToggle).toBeChecked({
-				checked: check,
-			});
+			await expect(locator).toBeChecked({checked: check});
 		}).toPass();
-
-		await this.closeButton.click();
 	}
 }

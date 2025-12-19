@@ -9,7 +9,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.process.local.LocalProcessLauncher;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
-import com.liferay.portal.aop.AopService;
 import com.liferay.portal.instance.lifecycle.EveryNodeEveryStartup;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
@@ -17,6 +16,7 @@ import com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterMasterTokenTransitionListener;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterableInvokerUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log4j.Log4JUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.TomcatClusterTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -281,20 +282,6 @@ public class ClusterGeneralTest implements Serializable {
 				}));
 	}
 
-	private void _clearCacheForFeatureFlags() throws Exception {
-		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
-
-		ServiceReference<?>[] serviceReferences =
-			bundleContext.getServiceReferences(
-				AopService.class.getName(),
-				"(component.name=com.liferay.feature.flag.web.internal." +
-					"feature.flag.FeatureFlagsBagProviderImpl)");
-
-		ReflectionTestUtil.invoke(
-			bundleContext.getService(serviceReferences[0]), "clearCache",
-			new Class<?>[0]);
-	}
-
 	private AutoCloseable _disableClusterableAdviceCallMasterTimeout(
 			TomcatNode tomcatNode)
 		throws Exception {
@@ -395,18 +382,17 @@ public class ClusterGeneralTest implements Serializable {
 			long companyId, String key, boolean enabled)
 		throws Exception {
 
-		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+		SystemBundleUtil.callService(
+			"com.liferay.feature.flag.web.internal.feature.flag." +
+				"FeatureFlagsBagProvider",
+			featureFlagsBagProvider -> {
+				ReflectionTestUtil.invoke(
+					featureFlagsBagProvider, "setEnabled",
+					new Class<?>[] {long.class, String.class, boolean.class},
+					companyId, key, enabled);
 
-		ServiceReference<?>[] serviceReferences =
-			bundleContext.getServiceReferences(
-				AopService.class.getName(),
-				"(component.name=com.liferay.feature.flag.web.internal." +
-					"feature.flag.FeatureFlagsBagProviderImpl)");
-
-		ReflectionTestUtil.invoke(
-			bundleContext.getService(serviceReferences[0]), "setEnabled",
-			new Class<?>[] {long.class, String.class, boolean.class}, companyId,
-			key, enabled);
+				return null;
+			});
 	}
 
 	private void _testCanCreateVirtualInstanceWithClustering(
@@ -596,6 +582,14 @@ public class ClusterGeneralTest implements Serializable {
 
 		String key = "LPS-170670";
 
+		observerTomcatNode.syncExecute(
+			() -> {
+				TestFeatureFlagListener.register(
+					PortalUtil.getDefaultCompanyId(), key);
+
+				return null;
+			});
+
 		Assert.assertTrue(
 			mutatorTomcatNode.syncExecute(
 				() -> {
@@ -609,11 +603,19 @@ public class ClusterGeneralTest implements Serializable {
 		Assert.assertTrue(
 			observerTomcatNode.syncExecute(
 				() -> {
-					_clearCacheForFeatureFlags();
+					TestFeatureFlagListener.await();
 
 					return FeatureFlagManagerUtil.isEnabled(
 						PortalUtil.getDefaultCompanyId(), key);
 				}));
+
+		observerTomcatNode.syncExecute(
+			() -> {
+				TestFeatureFlagListener.register(
+					PortalUtil.getDefaultCompanyId(), key);
+
+				return null;
+			});
 
 		Assert.assertFalse(
 			mutatorTomcatNode.syncExecute(
@@ -628,7 +630,7 @@ public class ClusterGeneralTest implements Serializable {
 		Assert.assertFalse(
 			observerTomcatNode.syncExecute(
 				() -> {
-					_clearCacheForFeatureFlags();
+					TestFeatureFlagListener.await();
 
 					return FeatureFlagManagerUtil.isEnabled(
 						PortalUtil.getDefaultCompanyId(), key);
@@ -692,6 +694,67 @@ public class ClusterGeneralTest implements Serializable {
 		}
 
 		private final CountDownLatch _countDownLatch = new CountDownLatch(1);
+		private ServiceRegistration<?> _serviceRegistration;
+
+	}
+
+	private static class TestFeatureFlagListener
+		implements FeatureFlagListener {
+
+		public static void await() throws Exception {
+			Map<String, Object> attributes =
+				LocalProcessLauncher.ProcessContext.getAttributes();
+
+			TestFeatureFlagListener testFeatureFlagListener =
+				(TestFeatureFlagListener)attributes.remove(
+					TestFeatureFlagListener.class.getName());
+
+			CountDownLatch countDownLatch =
+				testFeatureFlagListener._countDownLatch;
+
+			countDownLatch.await();
+
+			ServiceRegistration<?> serviceRegistration =
+				testFeatureFlagListener._serviceRegistration;
+
+			serviceRegistration.unregister();
+		}
+
+		public static void register(long companyId, String featureFlagKey) {
+			BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+			TestFeatureFlagListener testFeatureFlagListener =
+				new TestFeatureFlagListener(companyId);
+
+			testFeatureFlagListener._serviceRegistration =
+				bundleContext.registerService(
+					FeatureFlagListener.class, testFeatureFlagListener,
+					MapUtil.singletonDictionary(
+						"feature.flag.key", featureFlagKey));
+
+			Map<String, Object> attributes =
+				LocalProcessLauncher.ProcessContext.getAttributes();
+
+			attributes.put(
+				TestFeatureFlagListener.class.getName(),
+				testFeatureFlagListener);
+		}
+
+		@Override
+		public void onValue(
+			long companyId, String featureFlagKey, boolean enabled) {
+
+			if (companyId == _companyId) {
+				_countDownLatch.countDown();
+			}
+		}
+
+		private TestFeatureFlagListener(long companyId) {
+			_companyId = companyId;
+		}
+
+		private final long _companyId;
+		private final CountDownLatch _countDownLatch = new CountDownLatch(2);
 		private ServiceRegistration<?> _serviceRegistration;
 
 	}

@@ -180,6 +180,10 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 
 		CompanyLocalServiceUtil.forEachCompanyId(
 			companyId -> {
+				if (!_modelIndexerWriterContributor.shouldRun(companyId)) {
+					return;
+				}
+
 				for (long ctCollectionId : _getCTCollectionIds(companyId)) {
 					try (SafeCloseable safeCloseable1 =
 							CTSQLModeThreadLocal.setCTSQLModeWithSafeCloseable(

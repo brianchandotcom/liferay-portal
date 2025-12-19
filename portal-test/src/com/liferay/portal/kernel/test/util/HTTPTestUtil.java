@@ -181,6 +181,8 @@ public class HTTPTestUtil {
 
 		options.setMethod(httpMethod);
 
+		options.setTimeout(_timeout);
+
 		if (body != null) {
 			options.setBody(
 				body, ContentTypes.APPLICATION_JSON,
@@ -194,5 +196,6 @@ public class HTTPTestUtil {
 	private static String _credentials =
 		"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD;
 	private static boolean _modulePath = true;
+	private static final int _timeout = 120_000;
 
 }

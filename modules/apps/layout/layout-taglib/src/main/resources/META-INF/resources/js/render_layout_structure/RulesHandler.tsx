@@ -57,37 +57,55 @@ export default function RulesHandler({
 						return;
 					}
 
-					const fragmentId = getLayoutStructureItemId(input);
-
-					if (!fragmentId || !ruleIdsByItemId[fragmentId]) {
-						return;
-					}
-
-					const itemIds = ruleIdsByItemId[fragmentId].flatMap(
-						(ruleId) => itemIdsByRuleId[ruleId]
-					);
-
-					const fieldValues: Record<string, any> = {};
-
-					for (const itemId of itemIds) {
-						fieldValues[itemId] = getInputValue(itemId);
-					}
-
-					getRulesResult(
+					evaluateRules({
 						evaluateRulesURL,
-						fieldValues,
-						ruleIdsByItemId[fragmentId],
-						(
-							rulesResult: {
-								action: 'show' | 'hide' | 'enable' | 'disable';
-								itemId: string;
-							}[]
-						) => {
-							applyRulesResult(rulesResult);
-						}
-					);
+						input,
+						itemIdsByRuleId,
+						ruleIdsByItemId,
+					});
 				}
 			)
+		);
+
+		form.querySelectorAll('[data-field-type="select"]').forEach(
+			(item: any) => {
+				if (item.dataset.fieldName) {
+					const input = item.querySelector(
+						`input[name="${item.dataset.fieldName}"]`
+					) as HTMLInputElement;
+
+					if (input) {
+						const proto = Object.getPrototypeOf(input);
+						const descriptor = Object.getOwnPropertyDescriptor(
+							proto,
+							'value'
+						);
+
+						if (!descriptor) {
+							return;
+						}
+
+						Object.defineProperty(input, 'value', {
+							get() {
+								return descriptor.get!.call(this);
+							},
+							set(newValue) {
+								const oldValue = descriptor.get!.call(this);
+								descriptor.set!.call(this, newValue);
+
+								if (newValue !== oldValue) {
+									evaluateRules({
+										evaluateRulesURL,
+										input,
+										itemIdsByRuleId,
+										ruleIdsByItemId,
+									});
+								}
+							},
+						});
+					}
+				}
+			}
 		);
 	}
 
@@ -98,6 +116,48 @@ export default function RulesHandler({
 			}
 		},
 	};
+}
+
+function evaluateRules({
+	evaluateRulesURL,
+	input,
+	itemIdsByRuleId,
+	ruleIdsByItemId,
+}: {
+	evaluateRulesURL: string;
+	input: HTMLInputElement;
+	itemIdsByRuleId: Record<string, string[]>;
+	ruleIdsByItemId: Record<string, string[]>;
+}) {
+	const fragmentId = getLayoutStructureItemId(input);
+
+	if (!fragmentId || !ruleIdsByItemId[fragmentId]) {
+		return;
+	}
+
+	const itemIds = ruleIdsByItemId[fragmentId].flatMap(
+		(ruleId) => itemIdsByRuleId[ruleId]
+	);
+
+	const fieldValues: Record<string, any> = {};
+
+	for (const itemId of itemIds) {
+		fieldValues[itemId] = getInputValue(itemId);
+	}
+
+	getRulesResult(
+		evaluateRulesURL,
+		fieldValues,
+		ruleIdsByItemId[fragmentId],
+		(
+			rulesResult: {
+				action: 'show' | 'hide' | 'enable' | 'disable';
+				itemId: string;
+			}[]
+		) => {
+			applyRulesResult(rulesResult);
+		}
+	);
 }
 
 function applyRulesResult(

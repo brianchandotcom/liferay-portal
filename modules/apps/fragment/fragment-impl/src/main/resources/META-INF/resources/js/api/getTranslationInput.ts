@@ -62,6 +62,8 @@ export function getTranslationInput({
 		translationInput.type = type;
 		translationInput.id = id;
 		translationInput.name = `${inputName}_${languageId}`;
+		translationInput.dataset.languageId = languageId;
+
 		localizationInputsContainer.appendChild(translationInput);
 
 		if (translationInput.type !== 'hidden') {

@@ -31,12 +31,8 @@ export class ThemeHelper {
 		await doAndGoBack(this.page, async () => {
 			await this.appManagerPage.uninstallApp(this.dialectAppName);
 
-			if (testPageName !== undefined) {
-				await this.pagesAdminPage.goto(this.site.friendlyUrlPath);
-
-				await this.pagesAdminPage.goToDesignTabConfiguration(
-					testPageName
-				);
+			if (testPageName) {
+				await this.goToDesignTabConfiguration(testPageName);
 
 				await this.expectThemeToBeDeactivated(this.dialectThemeName);
 			}
@@ -47,12 +43,8 @@ export class ThemeHelper {
 		await doAndGoBack(this.page, async () => {
 			await this.bundleBlacklistPage.updateBundleBlacklist('');
 
-			if (testPageName !== undefined) {
-				await this.pagesAdminPage.goto(this.site.friendlyUrlPath);
-
-				await this.pagesAdminPage.goToDesignTabConfiguration(
-					testPageName
-				);
+			if (testPageName) {
+				await this.goToDesignTabConfiguration(testPageName);
 
 				await this.expectThemeToBeActivated(this.dialectThemeName);
 			}
@@ -63,9 +55,7 @@ export class ThemeHelper {
 		await doAndGoBack(this.page, async () => {
 			await this.appManagerPage.deactivateApp(this.dialectAppName);
 
-			await this.pagesAdminPage.goto(this.site.friendlyUrlPath);
-
-			await this.pagesAdminPage.goToDesignTabConfiguration(testPageName);
+			await this.goToDesignTabConfiguration(testPageName);
 
 			await this.expectThemeToBeDeactivated(this.dialectThemeName);
 		});
@@ -75,9 +65,7 @@ export class ThemeHelper {
 		await doAndGoBack(this.page, async () => {
 			await this.appManagerPage.activateApp(this.dialectAppName);
 
-			await this.pagesAdminPage.goto(this.site.friendlyUrlPath);
-
-			await this.pagesAdminPage.goToDesignTabConfiguration(testPageName);
+			await this.goToDesignTabConfiguration(testPageName);
 
 			await this.expectThemeToBeActivated(this.dialectThemeName);
 		});
@@ -93,14 +81,16 @@ export class ThemeHelper {
 
 	async changePageTheme(pageName: string, themeName: string) {
 		await doAndGoBack(this.page, async () => {
-			await this.pagesAdminPage.goto(this.site.friendlyUrlPath);
-
-			await this.pagesAdminPage.goToDesignTabConfiguration(pageName);
+			await this.goToDesignTabConfiguration(pageName);
 
 			await this.pagesAdminPage.changeTheme(themeName);
-
-			await this.pagesAdminPage.goto(this.site.friendlyUrlPath);
 		});
+	}
+
+	async goToDesignTabConfiguration(pageName: string) {
+		await this.pagesAdminPage.goto(this.site.friendlyUrlPath);
+
+		await this.pagesAdminPage.goToDesignTabConfiguration(pageName);
 	}
 
 	async publishPage(pageName: string) {
@@ -151,9 +141,7 @@ export class ThemeHelper {
 
 	async expectCurrentThemeToBe(pageName: string, themeName: string) {
 		await doAndGoBack(this.page, async () => {
-			await this.pagesAdminPage.goto(this.site.friendlyUrlPath);
-
-			await this.pagesAdminPage.goToDesignTabConfiguration(pageName);
+			await this.goToDesignTabConfiguration(pageName);
 
 			const currentThemeIndicator = this.page
 				.locator(

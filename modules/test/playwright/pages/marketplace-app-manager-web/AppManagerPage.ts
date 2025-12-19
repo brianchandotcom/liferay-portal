@@ -134,8 +134,6 @@ export class AppManagerPage {
 		expectedStatus?: string
 	) {
 		await expect(async () => {
-			await expect(this.searchInput).toBeEnabled();
-
 			await this.searchInput.fill(appName);
 
 			await this.searchInput.press('Enter');
@@ -144,7 +142,7 @@ export class AppManagerPage {
 				timeout: 2000,
 			});
 
-			if (expectedStatus !== undefined) {
+			if (expectedStatus) {
 				await expect(this.appRow(appName)).toContainText(
 					expectedStatus
 				);

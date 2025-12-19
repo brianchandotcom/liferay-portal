@@ -183,11 +183,15 @@ public class ClientExtensionsOSGiCommands implements OSGiCommands {
 				}
 			}
 
-			sb.append(String.format("(%s=%s)", key, value));
+			sb.append("(");
+			sb.append(key);
+			sb.append("=");
+			sb.append(value);
+			sb.append(")");
 		}
 
 		return _configurationAdmin.listConfigurations(
-			String.format("(&%s%s)", deploymentFilterString, sb));
+			StringBundler.concat("(&", deploymentFilterString, sb, ")"));
 	}
 
 	private String _getConfigurationTableRow(
@@ -202,10 +206,10 @@ public class ClientExtensionsOSGiCommands implements OSGiCommands {
 	}
 
 	private String _printConfiguration(Configuration configuration) {
-		return String.format(
-			"\nPID: %s\nFactoryPID: %s\n Bundle location: %s\n%s",
-			configuration.getPid(), configuration.getFactoryPid(),
-			configuration.getBundleLocation(),
+		return StringBundler.concat(
+			"\nPID: ", configuration.getPid(), "\nFactoryPID: ",
+			configuration.getFactoryPid(), "\nBundle location: ",
+			configuration.getBundleLocation(), "\n",
 			_formatProperties(configuration.getProperties()));
 	}
 

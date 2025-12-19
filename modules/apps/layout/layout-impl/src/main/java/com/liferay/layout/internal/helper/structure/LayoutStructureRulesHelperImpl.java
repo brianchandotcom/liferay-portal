@@ -5,25 +5,42 @@
 
 package com.liferay.layout.internal.helper.structure;
 
+import com.liferay.info.field.InfoField;
+import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.field.type.DateInfoFieldType;
+import com.liferay.info.field.type.DateTimeInfoFieldType;
+import com.liferay.info.field.type.PicklistMultiselectInfoFieldType;
+import com.liferay.info.field.type.PicklistSelectInfoFieldType;
+import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.type.KeyLocalizedLabelPair;
 import com.liferay.layout.helper.structure.LayoutStructureRulesHelper;
 import com.liferay.layout.internal.util.AdvancedLayoutStructureRuleEvaluator;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureRule;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
+import java.text.DateFormat;
+
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -40,7 +57,8 @@ public class LayoutStructureRulesHelperImpl
 
 	@Override
 	public LayoutStructureRulesResult processLayoutStructureRules(
-		long groupId, LayoutStructure layoutStructure,
+		long groupId, InfoItemFieldValues infoItemFieldValues,
+		LayoutStructure layoutStructure, Locale locale,
 		PermissionChecker permissionChecker, long[] segmentsEntryIds) {
 
 		Map<String, List<String>> itemIdsMap = new HashMap<>();
@@ -49,6 +67,9 @@ public class LayoutStructureRulesHelperImpl
 		LayoutStructureRulesContext layoutStructureRulesContext =
 			new LayoutStructureRulesContext(
 				groupId, permissionChecker, segmentsEntryIds);
+
+		Map<String, Object> infoItemFieldValuesMap = _parseInfoItemFieldValues(
+			infoItemFieldValues, locale);
 
 		for (LayoutStructureRule layoutStructureRule :
 				layoutStructure.getLayoutStructureRules()) {
@@ -59,7 +80,7 @@ public class LayoutStructureRulesHelperImpl
 				_processActions(
 					layoutStructureRule.getActionsJSONArray(), jsonArray,
 					!_evaluateLayoutStructureRule(
-						Collections.emptyMap(), layoutStructureRule,
+						infoItemFieldValuesMap, layoutStructureRule,
 						layoutStructureRulesContext));
 
 				continue;
@@ -342,6 +363,103 @@ public class LayoutStructureRulesHelperImpl
 		return false;
 	}
 
+	private Map<String, Object> _parseInfoItemFieldValues(
+		InfoItemFieldValues infoItemFieldValues, Locale locale) {
+
+		Map<String, Object> map = new HashMap<>();
+
+		if (infoItemFieldValues == null) {
+			return map;
+		}
+
+		for (InfoFieldValue<Object> infoFieldValue :
+				infoItemFieldValues.getInfoFieldValues()) {
+
+			InfoField infoField = infoFieldValue.getInfoField();
+
+			Object value = infoFieldValue.getValue(locale);
+
+			if (infoField.getInfoFieldType() == DateInfoFieldType.INSTANCE) {
+				try {
+					DateFormat dateFormat =
+						DateFormatFactoryUtil.getSimpleDateFormat(
+							"yyyy-MM-dd", locale);
+
+					value = dateFormat.format(value);
+				}
+				catch (Exception exception) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Unable to parse date from " + value, exception);
+					}
+				}
+			}
+			else if (infoField.getInfoFieldType() ==
+						DateTimeInfoFieldType.INSTANCE) {
+
+				try {
+					DateTimeFormatter dateTimeFormatter =
+						DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+					value = dateTimeFormatter.format((TemporalAccessor)value);
+				}
+				catch (Exception exception) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Unable to parse date from " + value, exception);
+					}
+				}
+			}
+			else if (infoField.getInfoFieldType() ==
+						PicklistMultiselectInfoFieldType.INSTANCE) {
+
+				if (!(value instanceof List)) {
+					value = StringPool.BLANK;
+				}
+
+				List<KeyLocalizedLabelPair> keyLocalizedLabelPairs =
+					(List<KeyLocalizedLabelPair>)value;
+
+				if (ListUtil.isEmpty(keyLocalizedLabelPairs)) {
+					value = StringPool.BLANK;
+				}
+
+				try {
+					value = JSONUtil.toJSONArray(
+						keyLocalizedLabelPairs, KeyLocalizedLabelPair::getKey);
+				}
+				catch (Exception exception) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(exception);
+					}
+				}
+			}
+			else if (infoField.getInfoFieldType() ==
+						PicklistSelectInfoFieldType.INSTANCE) {
+
+				if (!(value instanceof List)) {
+					value = StringPool.BLANK;
+				}
+
+				List<KeyLocalizedLabelPair> keyLocalizedLabelPairs =
+					(List<KeyLocalizedLabelPair>)value;
+
+				if (ListUtil.isEmpty(keyLocalizedLabelPairs)) {
+					value = StringPool.BLANK;
+				}
+
+				KeyLocalizedLabelPair keyLocalizedLabelPair =
+					keyLocalizedLabelPairs.get(0);
+
+				value = keyLocalizedLabelPair.getKey();
+			}
+
+			map.put(infoField.getUniqueId(), String.valueOf(value));
+		}
+
+		return map;
+	}
+
 	private void _processActions(
 		JSONArray actionsJSONArray, JSONArray jsonArray, boolean negated) {
 
@@ -362,6 +480,9 @@ public class LayoutStructureRulesHelperImpl
 				));
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutStructureRulesHelperImpl.class);
 
 	@Reference
 	private AdvancedLayoutStructureRuleEvaluator

@@ -38,11 +38,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"osgi.command.function=list", "osgi.command.function=reload",
-		"osgi.command.function=show", "osgi.command.scope=cxconfig"
+		"osgi.command.function=show", "osgi.command.scope=clientextensions"
 	},
 	service = OSGiCommands.class
 )
-public class CXConfigOSGiCommands implements OSGiCommands {
+public class ClientExtensionsOSGiCommands implements OSGiCommands {
 
 	public void list(String... filters)
 		throws InvalidSyntaxException, IOException, PortalException {

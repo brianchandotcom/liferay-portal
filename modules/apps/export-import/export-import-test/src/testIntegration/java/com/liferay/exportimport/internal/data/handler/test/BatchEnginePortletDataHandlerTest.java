@@ -2411,6 +2411,11 @@ public class BatchEnginePortletDataHandlerTest {
 			Assert.assertTrue(exportImportReportEntries.isEmpty());
 		}
 		else {
+			Assert.assertEquals(
+				exportImportReportEntries.toString(),
+				expectedReportEntryERCGroupIds.length,
+				exportImportReportEntries.size());
+
 			long classNameId = _classNameLocalService.getClassNameId(
 				FileEntry.class);
 

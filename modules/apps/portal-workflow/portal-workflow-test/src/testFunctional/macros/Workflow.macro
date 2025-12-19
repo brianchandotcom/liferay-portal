@@ -314,6 +314,10 @@ definition {
 
 		Workflow.confirmWorkflowAction();
 
+		if (IsElementNotPresent(key_tab = "Assigned to Me", locator1 = "NavTab#TAB_LINK")) {
+			Refresh();
+		}
+
 		Workflow.viewTaskAssignedToMe(
 			ddlDataDefinitionName = ${ddlDataDefinitionName},
 			multipleTasks = ${multipleTasks},

@@ -4,6 +4,7 @@ exports[`Membership should render 1`] = `
 <div>
   <div
     class="card card-root segment-membership-root"
+    id="container.report.segmentMembershipCard"
   >
     <div
       class="card-header align-items-center d-flex justify-content-between"

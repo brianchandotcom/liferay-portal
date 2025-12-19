@@ -107,7 +107,7 @@
 			for (Portlet curPortlet : dataSiteLevelPortlets) {
 				PortletDataHandler portletDataHandler = curPortlet.getPortletDataHandlerInstance();
 
-				if ((!FeatureFlagManagerUtil.isEnabled("LPD-41367") && portletDataHandler.isBatch()) || !portletDataHandler.isConfigurationEnabled() || !portletDataHandler.isEnabled(company.getCompanyId()) || !GroupCapabilityUtil.isSupportsPortlet(liveGroup, curPortlet)) {
+				if (!portletDataHandler.isConfigurationEnabled() || !portletDataHandler.isEnabled(company.getCompanyId()) || !GroupCapabilityUtil.isSupportsPortlet(liveGroup, curPortlet)) {
 					continue;
 				}
 

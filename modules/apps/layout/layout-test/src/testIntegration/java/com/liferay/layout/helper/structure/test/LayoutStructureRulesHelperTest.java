@@ -36,6 +36,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -102,7 +103,8 @@ public class LayoutStructureRulesHelperTest {
 		LayoutStructureRulesHelper.LayoutStructureRulesResult
 			layoutStructureRulesResult =
 				_layoutStructureRulesHelper.processLayoutStructureRules(
-					_group.getGroupId(), layoutStructure, permissionChecker,
+					_group.getGroupId(), Collections.emptyMap(),
+					layoutStructure, permissionChecker,
 					new long[] {SegmentsEntryConstants.ID_DEFAULT});
 
 		Set<String> displayedItemIds =
@@ -156,7 +158,8 @@ public class LayoutStructureRulesHelperTest {
 		LayoutStructureRulesHelper.LayoutStructureRulesResult
 			layoutStructureRulesResult =
 				_layoutStructureRulesHelper.processLayoutStructureRules(
-					_group.getGroupId(), layoutStructure, permissionChecker,
+					_group.getGroupId(), Collections.emptyMap(),
+					layoutStructure, permissionChecker,
 					new long[] {SegmentsEntryConstants.ID_DEFAULT});
 
 		Set<String> displayedItemIds =
@@ -200,8 +203,8 @@ public class LayoutStructureRulesHelperTest {
 		LayoutStructureRulesHelper.LayoutStructureRulesResult
 			layoutStructureRulesResult =
 				_layoutStructureRulesHelper.processLayoutStructureRules(
-					_group.getGroupId(), layoutStructure, permissionChecker,
-					new long[0]);
+					_group.getGroupId(), Collections.emptyMap(),
+					layoutStructure, permissionChecker, new long[0]);
 
 		Set<String> displayedItemIds =
 			layoutStructureRulesResult.getDisplayedItemIds();
@@ -370,7 +373,8 @@ public class LayoutStructureRulesHelperTest {
 		LayoutStructureRulesHelper.LayoutStructureRulesResult
 			layoutStructureRulesResult =
 				_layoutStructureRulesHelper.processLayoutStructureRules(
-					_group.getGroupId(), layoutStructure, permissionChecker,
+					_group.getGroupId(), Collections.emptyMap(),
+					layoutStructure, permissionChecker,
 					new long[] {SegmentsEntryConstants.ID_DEFAULT});
 
 		Set<String> displayedItemIds =

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -38,6 +39,7 @@ import jakarta.portlet.PortletSession;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -222,7 +224,8 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 			).put(
 				ReindexBackgroundTaskConstants.CLASS_NAME, className
 			).put(
-				ReindexBackgroundTaskConstants.COMPANY_IDS, companyIds
+				ReindexBackgroundTaskConstants.COMPANY_IDS,
+				new ArrayList<>(ListUtil.fromArray(companyIds))
 			).put(
 				ReindexBackgroundTaskConstants.EXECUTION_MODE, executionMode
 			).build(),

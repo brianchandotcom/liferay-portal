@@ -4,5 +4,5 @@
  */
 
 export function normalizeRestPath(restContextPath: string): string {
-	return restContextPath.replace('/o', '').toLowerCase();
+	return restContextPath.replace(/^\/o\//, '').toLowerCase();
 }

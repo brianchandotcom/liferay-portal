@@ -16,6 +16,7 @@ import com.liferay.document.library.web.internal.display.context.helper.DLPortle
 import com.liferay.document.library.web.internal.display.context.helper.DLRequestHelper;
 import com.liferay.document.library.web.internal.security.permission.resource.DLPermission;
 import com.liferay.document.library.web.internal.util.DLFolderUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -41,7 +42,6 @@ import jakarta.portlet.PortletRequest;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -55,23 +55,20 @@ public class ActionUtil {
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		List<FileEntry> fileEntries = new ArrayList<>();
-
-		long[] fileEntryIds = ParamUtil.getLongValues(
-			httpServletRequest, "rowIdsFileEntry");
-
-		for (long fileEntryId : fileEntryIds) {
-			try {
-				fileEntries.add(DLAppServiceUtil.getFileEntry(fileEntryId));
-			}
-			catch (NoSuchFileEntryException noSuchFileEntryException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchFileEntryException);
+		return TransformUtil.transformToList(
+			ParamUtil.getLongValues(httpServletRequest, "rowIdsFileEntry"),
+			fileEntryId -> {
+				try {
+					return DLAppServiceUtil.getFileEntry(fileEntryId);
 				}
-			}
-		}
+				catch (NoSuchFileEntryException noSuchFileEntryException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(noSuchFileEntryException);
+					}
+				}
 
-		return fileEntries;
+				return null;
+			});
 	}
 
 	public static List<FileEntry> getFileEntries(PortletRequest portletRequest)
@@ -132,24 +129,22 @@ public class ActionUtil {
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		List<FileShortcut> fileShortcuts = new ArrayList<>();
-
-		long[] fileShortcutIds = ParamUtil.getLongValues(
-			httpServletRequest, "rowIdsDLFileShortcut");
-
-		for (long fileShortcutId : fileShortcutIds) {
-			try {
-				fileShortcuts.add(
-					DLAppServiceUtil.getFileShortcut(fileShortcutId));
-			}
-			catch (NoSuchFileShortcutException noSuchFileShortcutException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchFileShortcutException);
+		return TransformUtil.transformToList(
+			ParamUtil.getLongValues(httpServletRequest, "rowIdsDLFileShortcut"),
+			fileShortcutId -> {
+				try {
+					return DLAppServiceUtil.getFileShortcut(fileShortcutId);
 				}
-			}
-		}
+				catch (NoSuchFileShortcutException
+							noSuchFileShortcutException) {
 
-		return fileShortcuts;
+					if (_log.isDebugEnabled()) {
+						_log.debug(noSuchFileShortcutException);
+					}
+				}
+
+				return null;
+			});
 	}
 
 	public static List<FileShortcut> getFileShortcuts(
@@ -267,23 +262,20 @@ public class ActionUtil {
 	public static List<Folder> getFolders(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		List<Folder> folders = new ArrayList<>();
-
-		long[] folderIds = ParamUtil.getLongValues(
-			httpServletRequest, "rowIdsFolder");
-
-		for (long folderId : folderIds) {
-			try {
-				folders.add(DLAppServiceUtil.getFolder(folderId));
-			}
-			catch (NoSuchFolderException noSuchFolderException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchFolderException);
+		return TransformUtil.transformToList(
+			ParamUtil.getLongValues(httpServletRequest, "rowIdsFolder"),
+			folderId -> {
+				try {
+					return DLAppServiceUtil.getFolder(folderId);
 				}
-			}
-		}
+				catch (NoSuchFolderException noSuchFolderException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(noSuchFolderException);
+					}
+				}
 
-		return folders;
+				return null;
+			});
 	}
 
 	public static List<Folder> getFolders(PortletRequest portletRequest)

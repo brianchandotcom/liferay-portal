@@ -153,7 +153,7 @@ const GalleryView = ({
 				</div>
 			</div>
 
-			<div className="align-items-center c-gap-3 d-flex fds-gallery-view__navigation justify-content-center mt-4">
+			<div className="align-items-center c-gap-3 d-flex fds-gallery-view__navigation justify-content-center mt-4 px-4">
 				<ClayButtonWithIcon
 					aria-label={Liferay.Language.get('previous')}
 					className="flex-shrink-0"

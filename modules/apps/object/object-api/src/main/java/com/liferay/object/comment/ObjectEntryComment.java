@@ -14,12 +14,11 @@ public class ObjectEntryComment implements Serializable {
 
 	public ObjectEntryComment(
 		String externalReferenceCode, String parentCommentExternalReferenceCode,
-		long parentCommentId, String text) {
+		String text) {
 
 		_externalReferenceCode = externalReferenceCode;
 		_parentCommentExternalReferenceCode =
 			parentCommentExternalReferenceCode;
-		_parentCommentId = parentCommentId;
 		_text = text;
 	}
 
@@ -31,17 +30,12 @@ public class ObjectEntryComment implements Serializable {
 		return _parentCommentExternalReferenceCode;
 	}
 
-	public long getParentCommentId() {
-		return _parentCommentId;
-	}
-
 	public String getText() {
 		return _text;
 	}
 
 	private final String _externalReferenceCode;
 	private final String _parentCommentExternalReferenceCode;
-	private final long _parentCommentId;
 	private final String _text;
 
 }

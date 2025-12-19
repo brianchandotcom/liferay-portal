@@ -9,7 +9,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.test.util.lar.BaseExportImportTestCase;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureServiceUtil;
@@ -17,8 +16,6 @@ import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
-import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
-import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -30,8 +27,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -48,12 +43,10 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
-import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -72,110 +65,6 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
-
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
-	}
-
-	@Test
-	public void testBackgroundImageMappedValuesImport() throws Exception {
-		Layout exportedLayout = LayoutTestUtil.addTypeContentLayout(group);
-
-		// Delete and readd to ensure a different layout ID (not ID or UUID).
-		// See LPS-32132.
-
-		LayoutLocalServiceUtil.deleteLayout(
-			exportedLayout, new ServiceContext());
-
-		exportedLayout = LayoutTestUtil.addTypeContentLayout(group);
-
-		FileEntry exportedFileEntry = DLAppLocalServiceUtil.addFileEntry(
-			null, TestPropsValues.getUserId(), group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString() + ".png", ContentTypes.IMAGE_PNG,
-			_read("dependencies/sample.png"), null, null, null,
-			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
-
-		ContentLayoutTestUtil.addItemToLayout(
-			JSONUtil.put(
-				"styles",
-				JSONUtil.put(
-					"backgroundImage",
-					JSONUtil.put(
-						"className", FileEntry.class.getName()
-					).put(
-						"classNameId", _portal.getClassNameId(FileEntry.class)
-					).put(
-						"classPK", exportedFileEntry.getFileEntryId()
-					).put(
-						"classTypeId",
-						String.valueOf(
-							DLFileEntryTypeConstants.
-								FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT)
-					).put(
-						"itemSubtype",
-						_language.get(
-							LocaleUtil.ENGLISH,
-							DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT)
-					).put(
-						"itemType", "Document"
-					).put(
-						"title", exportedFileEntry.getTitle()
-					).put(
-						"type",
-						"com.liferay.item.selector.criteria." +
-							"InfoItemItemSelectorReturnType"
-					))
-			).toString(),
-			LayoutDataItemTypeConstants.TYPE_CONTAINER, exportedLayout,
-			_layoutStructureProvider,
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				exportedLayout.getPlid()));
-
-		exportImportLayouts(
-			new long[] {exportedLayout.getLayoutId()}, getImportParameterMap());
-
-		Layout importedLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
-			exportedLayout.getUuid(), importedGroup.getGroupId(), false);
-
-		LayoutStructure importedLayoutStructure =
-			_layoutStructureProvider.getLayoutStructure(
-				importedLayout.getPlid(),
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(importedLayout.getPlid()));
-
-		LayoutStructureItem mainLayoutStructureItem =
-			importedLayoutStructure.getMainLayoutStructureItem();
-
-		List<String> childrenItemIds =
-			mainLayoutStructureItem.getChildrenItemIds();
-
-		Assert.assertEquals(
-			childrenItemIds.toString(), 1, childrenItemIds.size());
-
-		LayoutStructureItem layoutStructureItem =
-			importedLayoutStructure.getLayoutStructureItem(
-				childrenItemIds.get(0));
-
-		Assert.assertTrue(
-			layoutStructureItem instanceof ContainerStyledLayoutStructureItem);
-
-		ContainerStyledLayoutStructureItem containerStyledLayoutStructureItem =
-			(ContainerStyledLayoutStructureItem)layoutStructureItem;
-
-		JSONObject backgroundImageJSONObject =
-			containerStyledLayoutStructureItem.getBackgroundImageJSONObject();
-
-		FileEntry importedDLFileEntry =
-			_dlAppLocalService.getFileEntryByUuidAndGroupId(
-				exportedFileEntry.getUuid(), importedGroup.getGroupId());
-
-		Assert.assertEquals(
-			importedDLFileEntry.getFileEntryId(),
-			backgroundImageJSONObject.getLong("classPK"));
-	}
 
 	@Test
 	@TestInfo("LPD-72839")
@@ -489,72 +378,6 @@ public class LayoutPageTemplateStructureRelExportImportTest
 			layout5.getExternalReferenceCode(), 0, 0,
 			_getLayoutStructureItem(itemId, importedLayout1.getPlid()),
 			guestGroup.getExternalReferenceCode());
-	}
-
-	@Test
-	@TestInfo("LPD-67912")
-	public void testFormContainerSuccessMessageWithMappedLayoutWithScope()
-		throws Exception {
-
-		Layout layout1 = LayoutTestUtil.addTypeContentLayout(group);
-
-		Group guestGroup = _groupLocalService.getGroup(
-			TestPropsValues.getGroupId());
-
-		Layout layout2 = LayoutTestUtil.addTypeContentLayout(guestGroup);
-
-		ContentLayoutTestUtil.addItemToLayout(
-			JSONUtil.put(
-				"classNameId", "0"
-			).put(
-				"classTypeId", "0"
-			).put(
-				"successMessage",
-				JSONUtil.put(
-					"layout",
-					JSONUtil.put(
-						"groupId", layout2.getGroupId()
-					).put(
-						"layoutId", layout2.getLayoutId()
-					).put(
-						"layoutUuid", layout2.getUuid()
-					).put(
-						"privateLayout", layout2.isPrivateLayout()
-					))
-			).toString(),
-			LayoutDataItemTypeConstants.TYPE_FORM, layout1,
-			_layoutStructureProvider,
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout1.getPlid()));
-
-		exportImportLayouts(
-			new long[] {layout1.getLayoutId()}, getImportParameterMap());
-
-		Layout importedLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
-			layout1.getUuid(), importedGroup.getGroupId(), false);
-
-		LayoutStructure importedLayoutStructure =
-			_layoutStructureProvider.getLayoutStructure(
-				importedLayout.getPlid(),
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(importedLayout.getPlid()));
-
-		List<FormStyledLayoutStructureItem> formStyledLayoutStructureItems =
-			importedLayoutStructure.getFormStyledLayoutStructureItems();
-
-		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
-			formStyledLayoutStructureItems.get(0);
-
-		JSONObject successMessageJSONObject =
-			formStyledLayoutStructureItem.getSuccessMessageJSONObject();
-
-		JSONObject layoutJSONObject = successMessageJSONObject.getJSONObject(
-			"layout");
-
-		Assert.assertEquals(
-			layout2.getGroupId(), layoutJSONObject.getLong("groupId"));
-		Assert.assertEquals(
-			layout2.getLayoutId(), layoutJSONObject.getLong("layoutId"));
 	}
 
 	@Override

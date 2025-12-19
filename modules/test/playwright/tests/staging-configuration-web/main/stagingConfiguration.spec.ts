@@ -151,6 +151,13 @@ test(
 			title: getRandomString(),
 		});
 
+		await enableLocalStaging(apiHelpers, page, site);
+
+		const stagingSite =
+			await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath(
+				`${site.friendlyUrlPath}-staging`
+			);
+
 		await exportImportStagingSystemSettingsPage.goto();
 		await exportImportStagingSystemSettingsPage.checkShowAdvancedStagingConfiguration(
 			true
@@ -167,13 +174,6 @@ test(
 		).toBeChecked();
 
 		try {
-			await enableLocalStaging(apiHelpers, page, site);
-
-			const stagingSite =
-				await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath(
-					`${site.friendlyUrlPath}-staging`
-				);
-
 			await page.goto(
 				`/web${stagingSite.friendlyUrlPath}${layout.friendlyURL}`
 			);

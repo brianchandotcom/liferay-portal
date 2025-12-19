@@ -197,6 +197,30 @@ public class DigitalSalesRoomTemplateSerDes {
 			sb.append("\"");
 		}
 
+		if (digitalSalesRoomTemplate.getOwnerId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"ownerId\": ");
+
+			sb.append(digitalSalesRoomTemplate.getOwnerId());
+		}
+
+		if (digitalSalesRoomTemplate.getOwnerName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"ownerName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(digitalSalesRoomTemplate.getOwnerName()));
+
+			sb.append("\"");
+		}
+
 		if (digitalSalesRoomTemplate.getPrimaryColor() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -223,6 +247,16 @@ public class DigitalSalesRoomTemplateSerDes {
 			sb.append(_escape(digitalSalesRoomTemplate.getSecondaryColor()));
 
 			sb.append("\"");
+		}
+
+		if (digitalSalesRoomTemplate.getUsages() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"usages\": ");
+
+			sb.append(digitalSalesRoomTemplate.getUsages());
 		}
 
 		sb.append("}");
@@ -346,6 +380,24 @@ public class DigitalSalesRoomTemplateSerDes {
 			map.put("name", String.valueOf(digitalSalesRoomTemplate.getName()));
 		}
 
+		if (digitalSalesRoomTemplate.getOwnerId() == null) {
+			map.put("ownerId", null);
+		}
+		else {
+			map.put(
+				"ownerId",
+				String.valueOf(digitalSalesRoomTemplate.getOwnerId()));
+		}
+
+		if (digitalSalesRoomTemplate.getOwnerName() == null) {
+			map.put("ownerName", null);
+		}
+		else {
+			map.put(
+				"ownerName",
+				String.valueOf(digitalSalesRoomTemplate.getOwnerName()));
+		}
+
 		if (digitalSalesRoomTemplate.getPrimaryColor() == null) {
 			map.put("primaryColor", null);
 		}
@@ -362,6 +414,14 @@ public class DigitalSalesRoomTemplateSerDes {
 			map.put(
 				"secondaryColor",
 				String.valueOf(digitalSalesRoomTemplate.getSecondaryColor()));
+		}
+
+		if (digitalSalesRoomTemplate.getUsages() == null) {
+			map.put("usages", null);
+		}
+		else {
+			map.put(
+				"usages", String.valueOf(digitalSalesRoomTemplate.getUsages()));
 		}
 
 		return map;
@@ -417,10 +477,19 @@ public class DigitalSalesRoomTemplateSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "ownerId")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "ownerName")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "primaryColor")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "secondaryColor")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "usages")) {
 				return false;
 			}
 
@@ -500,6 +569,18 @@ public class DigitalSalesRoomTemplateSerDes {
 						(String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "ownerId")) {
+				if (jsonParserFieldValue != null) {
+					digitalSalesRoomTemplate.setOwnerId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "ownerName")) {
+				if (jsonParserFieldValue != null) {
+					digitalSalesRoomTemplate.setOwnerName(
+						(String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "primaryColor")) {
 				if (jsonParserFieldValue != null) {
 					digitalSalesRoomTemplate.setPrimaryColor(
@@ -510,6 +591,12 @@ public class DigitalSalesRoomTemplateSerDes {
 				if (jsonParserFieldValue != null) {
 					digitalSalesRoomTemplate.setSecondaryColor(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "usages")) {
+				if (jsonParserFieldValue != null) {
+					digitalSalesRoomTemplate.setUsages(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 		}

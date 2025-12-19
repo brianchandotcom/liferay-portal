@@ -255,6 +255,48 @@ public class DigitalSalesRoomTemplate implements Cloneable, Serializable {
 
 	protected String name;
 
+	public Long getOwnerId() {
+		return ownerId;
+	}
+
+	public void setOwnerId(Long ownerId) {
+		this.ownerId = ownerId;
+	}
+
+	public void setOwnerId(
+		UnsafeSupplier<Long, Exception> ownerIdUnsafeSupplier) {
+
+		try {
+			ownerId = ownerIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long ownerId;
+
+	public String getOwnerName() {
+		return ownerName;
+	}
+
+	public void setOwnerName(String ownerName) {
+		this.ownerName = ownerName;
+	}
+
+	public void setOwnerName(
+		UnsafeSupplier<String, Exception> ownerNameUnsafeSupplier) {
+
+		try {
+			ownerName = ownerNameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String ownerName;
+
 	public String getPrimaryColor() {
 		return primaryColor;
 	}
@@ -296,6 +338,27 @@ public class DigitalSalesRoomTemplate implements Cloneable, Serializable {
 	}
 
 	protected String secondaryColor;
+
+	public Long getUsages() {
+		return usages;
+	}
+
+	public void setUsages(Long usages) {
+		this.usages = usages;
+	}
+
+	public void setUsages(
+		UnsafeSupplier<Long, Exception> usagesUnsafeSupplier) {
+
+		try {
+			usages = usagesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long usages;
 
 	@Override
 	public DigitalSalesRoomTemplate clone() throws CloneNotSupportedException {

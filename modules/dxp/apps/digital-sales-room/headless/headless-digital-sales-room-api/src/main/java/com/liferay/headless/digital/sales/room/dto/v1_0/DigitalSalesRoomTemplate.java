@@ -505,6 +505,88 @@ public class DigitalSalesRoomTemplate implements Serializable {
 	private Supplier<String> _nameSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public Long getOwnerId() {
+		if (_ownerIdSupplier != null) {
+			ownerId = _ownerIdSupplier.get();
+
+			_ownerIdSupplier = null;
+		}
+
+		return ownerId;
+	}
+
+	public void setOwnerId(Long ownerId) {
+		this.ownerId = ownerId;
+
+		_ownerIdSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setOwnerId(
+		UnsafeSupplier<Long, Exception> ownerIdUnsafeSupplier) {
+
+		_ownerIdSupplier = () -> {
+			try {
+				return ownerIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long ownerId;
+
+	@JsonIgnore
+	private Supplier<Long> _ownerIdSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	public String getOwnerName() {
+		if (_ownerNameSupplier != null) {
+			ownerName = _ownerNameSupplier.get();
+
+			_ownerNameSupplier = null;
+		}
+
+		return ownerName;
+	}
+
+	public void setOwnerName(String ownerName) {
+		this.ownerName = ownerName;
+
+		_ownerNameSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setOwnerName(
+		UnsafeSupplier<String, Exception> ownerNameUnsafeSupplier) {
+
+		_ownerNameSupplier = () -> {
+			try {
+				return ownerNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String ownerName;
+
+	@JsonIgnore
+	private Supplier<String> _ownerNameSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getPrimaryColor() {
 		if (_primaryColorSupplier != null) {
 			primaryColor = _primaryColorSupplier.get();
@@ -585,6 +667,47 @@ public class DigitalSalesRoomTemplate implements Serializable {
 
 	@JsonIgnore
 	private Supplier<String> _secondaryColorSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	public Long getUsages() {
+		if (_usagesSupplier != null) {
+			usages = _usagesSupplier.get();
+
+			_usagesSupplier = null;
+		}
+
+		return usages;
+	}
+
+	public void setUsages(Long usages) {
+		this.usages = usages;
+
+		_usagesSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setUsages(
+		UnsafeSupplier<Long, Exception> usagesUnsafeSupplier) {
+
+		_usagesSupplier = () -> {
+			try {
+				return usagesUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long usages;
+
+	@JsonIgnore
+	private Supplier<Long> _usagesSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -777,6 +900,34 @@ public class DigitalSalesRoomTemplate implements Serializable {
 			sb.append("\"");
 		}
 
+		Long ownerId = getOwnerId();
+
+		if (ownerId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"ownerId\": ");
+
+			sb.append(ownerId);
+		}
+
+		String ownerName = getOwnerName();
+
+		if (ownerName != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"ownerName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(ownerName));
+
+			sb.append("\"");
+		}
+
 		String primaryColor = getPrimaryColor();
 
 		if (primaryColor != null) {
@@ -807,6 +958,18 @@ public class DigitalSalesRoomTemplate implements Serializable {
 			sb.append(_escape(secondaryColor));
 
 			sb.append("\"");
+		}
+
+		Long usages = getUsages();
+
+		if (usages != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"usages\": ");
+
+			sb.append(usages);
 		}
 
 		sb.append("}");

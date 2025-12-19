@@ -207,6 +207,7 @@ public abstract class BaseDigitalSalesRoomTemplateResourceTestCase {
 		digitalSalesRoomTemplate.setExternalReferenceCode(regex);
 		digitalSalesRoomTemplate.setFriendlyUrlPath(regex);
 		digitalSalesRoomTemplate.setName(regex);
+		digitalSalesRoomTemplate.setOwnerName(regex);
 		digitalSalesRoomTemplate.setPrimaryColor(regex);
 		digitalSalesRoomTemplate.setSecondaryColor(regex);
 
@@ -224,6 +225,7 @@ public abstract class BaseDigitalSalesRoomTemplateResourceTestCase {
 		Assert.assertEquals(
 			regex, digitalSalesRoomTemplate.getFriendlyUrlPath());
 		Assert.assertEquals(regex, digitalSalesRoomTemplate.getName());
+		Assert.assertEquals(regex, digitalSalesRoomTemplate.getOwnerName());
 		Assert.assertEquals(regex, digitalSalesRoomTemplate.getPrimaryColor());
 		Assert.assertEquals(
 			regex, digitalSalesRoomTemplate.getSecondaryColor());
@@ -873,6 +875,22 @@ public abstract class BaseDigitalSalesRoomTemplateResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("ownerId", additionalAssertFieldName)) {
+				if (digitalSalesRoomTemplate.getOwnerId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("ownerName", additionalAssertFieldName)) {
+				if (digitalSalesRoomTemplate.getOwnerName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("primaryColor", additionalAssertFieldName)) {
 				if (digitalSalesRoomTemplate.getPrimaryColor() == null) {
 					valid = false;
@@ -883,6 +901,14 @@ public abstract class BaseDigitalSalesRoomTemplateResourceTestCase {
 
 			if (Objects.equals("secondaryColor", additionalAssertFieldName)) {
 				if (digitalSalesRoomTemplate.getSecondaryColor() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("usages", additionalAssertFieldName)) {
+				if (digitalSalesRoomTemplate.getUsages() == null) {
 					valid = false;
 				}
 
@@ -1137,6 +1163,28 @@ public abstract class BaseDigitalSalesRoomTemplateResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("ownerId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						digitalSalesRoomTemplate1.getOwnerId(),
+						digitalSalesRoomTemplate2.getOwnerId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("ownerName", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						digitalSalesRoomTemplate1.getOwnerName(),
+						digitalSalesRoomTemplate2.getOwnerName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("primaryColor", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						digitalSalesRoomTemplate1.getPrimaryColor(),
@@ -1152,6 +1200,17 @@ public abstract class BaseDigitalSalesRoomTemplateResourceTestCase {
 				if (!Objects.deepEquals(
 						digitalSalesRoomTemplate1.getSecondaryColor(),
 						digitalSalesRoomTemplate2.getSecondaryColor())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("usages", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						digitalSalesRoomTemplate1.getUsages(),
+						digitalSalesRoomTemplate2.getUsages())) {
 
 					return false;
 				}
@@ -1579,6 +1638,57 @@ public abstract class BaseDigitalSalesRoomTemplateResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("ownerId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("ownerName")) {
+			Object object = digitalSalesRoomTemplate.getOwnerName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("primaryColor")) {
 			Object object = digitalSalesRoomTemplate.getPrimaryColor();
 
@@ -1671,6 +1781,11 @@ public abstract class BaseDigitalSalesRoomTemplateResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("usages")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -1730,10 +1845,14 @@ public abstract class BaseDigitalSalesRoomTemplateResourceTestCase {
 				id = RandomTestUtil.randomLong();
 				modifiedDate = RandomTestUtil.nextDate();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				ownerId = RandomTestUtil.randomLong();
+				ownerName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				primaryColor = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				secondaryColor = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				usages = RandomTestUtil.randomLong();
 			}
 		};
 	}

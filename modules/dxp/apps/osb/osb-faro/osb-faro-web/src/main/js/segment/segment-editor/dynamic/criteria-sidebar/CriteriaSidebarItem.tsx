@@ -77,7 +77,6 @@ const beginDrag = ({
 		valid = {customInput: false, dateFilter: true};
 	} else if (
 		[
-			PropertyTypes.AccountDate,
 			PropertyTypes.AccountNumber,
 			PropertyTypes.AccountText,
 			PropertyTypes.Duration,

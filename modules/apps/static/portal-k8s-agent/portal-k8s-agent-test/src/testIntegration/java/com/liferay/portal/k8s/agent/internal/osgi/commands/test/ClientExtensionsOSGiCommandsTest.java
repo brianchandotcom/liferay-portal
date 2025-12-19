@@ -238,14 +238,14 @@ public class ClientExtensionsOSGiCommandsTest {
 		String basePid = CETConfiguration.class.getName();
 
 		_testReload(
-			List.of(basePid + "~liferay-sample-cx-1/liferay.com"),
+			basePid + "~liferay-sample-cx-1/liferay.com",
 			StringBundler.concat(
-				"Reloaded configuration for ", basePid,
+				"Reloaded configuration for PID ", basePid,
 				"~liferay-sample-cx-1/liferay.com"));
 
-		_testReload(List.of("non-existing-pid"), "No configuration found.");
-		_testReload(List.of("pid-1", "pid-2"), "Too many arguments.");
-		_testReload(List.of(), "No PID provided.");
+		_testReload(
+			"non-existent-pid",
+			"Could not find configuration for PID non-existent-pid");
 	}
 
 	@Test
@@ -288,13 +288,12 @@ public class ClientExtensionsOSGiCommandsTest {
 	@Test
 	public void testShow() throws Exception {
 		_testShow(
-			List.of(
-				CETConfiguration.class.getName() +
-					"~liferay-sample-cx-1/liferay.com"),
+			CETConfiguration.class.getName() +
+				"~liferay-sample-cx-1/liferay.com",
 			"projectName: liferay-sample-cx-1");
-		_testShow(List.of("non-existing-pid"), "No configuration found.");
-		_testShow(List.of("pid-1", "pid-2"), "Too many arguments.");
-		_testShow(List.of(), "No PID provided.");
+		_testShow(
+			"non-existent-pid",
+			"Could not find configuration for PID non-existent-pid");
 	}
 
 	private String _captureStout(UnsafeRunnable<Exception> unsafeRunnable)
@@ -337,12 +336,12 @@ public class ClientExtensionsOSGiCommandsTest {
 		method.invoke(_osgiCommands, (Object)filters);
 	}
 
-	private void _reload(String... args) throws Exception {
+	private void _reload(String pid) throws Exception {
 		Class<?> clazz = _osgiCommands.getClass();
 
-		Method method = clazz.getMethod("reload", String[].class);
+		Method method = clazz.getMethod("reload", String.class);
 
-		method.invoke(_osgiCommands, (Object)args);
+		method.invoke(_osgiCommands, pid);
 	}
 
 	private void _reloadConfiguration(Configuration configuration) {
@@ -351,12 +350,12 @@ public class ClientExtensionsOSGiCommandsTest {
 			new Class<?>[] {Configuration.class}, configuration);
 	}
 
-	private void _show(String... args) throws Exception {
+	private void _show(String pid) throws Exception {
 		Class<?> clazz = _osgiCommands.getClass();
 
-		Method method = clazz.getMethod("show", String[].class);
+		Method method = clazz.getMethod("show", String.class);
 
-		method.invoke(_osgiCommands, (Object)args);
+		method.invoke(_osgiCommands, pid);
 	}
 
 	private void _testGetConfigurations(
@@ -384,22 +383,16 @@ public class ClientExtensionsOSGiCommandsTest {
 		Assert.assertEquals(expectedConfigurationNamesSet, namesFound);
 	}
 
-	private void _testReload(List<String> inputParams, String expectedOutput)
+	private void _testReload(String pid, String expectedOutput)
 		throws Exception {
 
-		String[] inputParamsArray = inputParams.toArray(new String[0]);
-
-		String output = _captureStout(() -> _reload(inputParamsArray));
+		String output = _captureStout(() -> _reload(pid));
 
 		Assert.assertTrue(output.contains(expectedOutput));
 	}
 
-	private void _testShow(List<String> inputParams, String expectedOutput)
-		throws Exception {
-
-		String[] inputParamsArray = inputParams.toArray(new String[0]);
-
-		String output = _captureStout(() -> _show(inputParamsArray));
+	private void _testShow(String pid, String expectedOutput) throws Exception {
+		String output = _captureStout(() -> _show(pid));
 
 		Assert.assertTrue(output.contains(expectedOutput));
 	}

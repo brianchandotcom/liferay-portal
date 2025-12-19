@@ -129,6 +129,16 @@ public class DLReferencesExportImportContentProcessor
 
 			Group group = dlReference.getGroup();
 
+			if (group == null) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to get group for DL reference " +
+							dlReference.getReference());
+				}
+
+				continue;
+			}
+
 			DocumentLibraryReference documentLibraryReference =
 				new DocumentLibraryReference(
 					externalReferenceCode,

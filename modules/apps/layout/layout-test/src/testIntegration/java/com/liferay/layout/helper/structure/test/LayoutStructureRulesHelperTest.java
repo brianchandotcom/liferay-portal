@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -102,7 +103,8 @@ public class LayoutStructureRulesHelperTest {
 		LayoutStructureRulesHelper.LayoutStructureRulesResult
 			layoutStructureRulesResult =
 				_layoutStructureRulesHelper.processLayoutStructureRules(
-					_group.getGroupId(), layoutStructure, permissionChecker,
+					_group.getGroupId(), null, layoutStructure,
+					LocaleUtil.getDefault(), permissionChecker,
 					new long[] {SegmentsEntryConstants.ID_DEFAULT});
 
 		Set<String> displayedItemIds =
@@ -156,7 +158,8 @@ public class LayoutStructureRulesHelperTest {
 		LayoutStructureRulesHelper.LayoutStructureRulesResult
 			layoutStructureRulesResult =
 				_layoutStructureRulesHelper.processLayoutStructureRules(
-					_group.getGroupId(), layoutStructure, permissionChecker,
+					_group.getGroupId(), null, layoutStructure,
+					LocaleUtil.getDefault(), permissionChecker,
 					new long[] {SegmentsEntryConstants.ID_DEFAULT});
 
 		Set<String> displayedItemIds =
@@ -200,8 +203,8 @@ public class LayoutStructureRulesHelperTest {
 		LayoutStructureRulesHelper.LayoutStructureRulesResult
 			layoutStructureRulesResult =
 				_layoutStructureRulesHelper.processLayoutStructureRules(
-					_group.getGroupId(), layoutStructure, permissionChecker,
-					new long[0]);
+					_group.getGroupId(), null, layoutStructure,
+					LocaleUtil.getDefault(), permissionChecker, new long[0]);
 
 		Set<String> displayedItemIds =
 			layoutStructureRulesResult.getDisplayedItemIds();
@@ -370,7 +373,8 @@ public class LayoutStructureRulesHelperTest {
 		LayoutStructureRulesHelper.LayoutStructureRulesResult
 			layoutStructureRulesResult =
 				_layoutStructureRulesHelper.processLayoutStructureRules(
-					_group.getGroupId(), layoutStructure, permissionChecker,
+					_group.getGroupId(), null, layoutStructure,
+					LocaleUtil.getDefault(), permissionChecker,
 					new long[] {SegmentsEntryConstants.ID_DEFAULT});
 
 		Set<String> displayedItemIds =

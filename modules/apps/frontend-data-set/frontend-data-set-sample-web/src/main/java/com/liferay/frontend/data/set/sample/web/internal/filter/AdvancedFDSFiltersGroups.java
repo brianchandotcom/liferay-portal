@@ -31,29 +31,29 @@ import org.osgi.service.component.annotations.Reference;
 	property = "frontend.data.set.name=" + FDSSampleFDSNames.ADVANCED,
 	service = FDSFiltersGroups.class
 )
-public class AdvancedFiltersGroups implements FDSFiltersGroups {
+public class AdvancedFDSFiltersGroups implements FDSFiltersGroups {
 
 	@Override
-	public LinkedHashMap<String, List<FDSFilter>> getFiltersGroups(
+	public LinkedHashMap<String, List<FDSFilter>> getFDSFiltersGroupItems(
 		HttpServletRequest httpServletRequest) {
 
-		Map<String, FDSFilter> filtersMap = new HashMap<>();
+		Map<String, FDSFilter> fdsFilterMap = new HashMap<>();
 
 		for (FDSFilter filter :
 				_fdsFilterRegistry.getFDSFilters(FDSSampleFDSNames.ADVANCED)) {
 
-			filtersMap.put(filter.getId(), filter);
+			fdsFilterMap.put(filter.getId(), filter);
 		}
 
 		return LinkedHashMapBuilder.<String, List<FDSFilter>>put(
 			"Group 1",
-			Arrays.asList(filtersMap.get("date"), filtersMap.get("color"))
+			Arrays.asList(fdsFilterMap.get("date"), fdsFilterMap.get("color"))
 		).put(
 			"Group 2",
-			Arrays.asList(filtersMap.get("invalid"), filtersMap.get("size"))
+			Arrays.asList(fdsFilterMap.get("invalid"), fdsFilterMap.get("size"))
 		).put(
 			"Group 3",
-			Arrays.asList(filtersMap.get("status"), filtersMap.get("title"))
+			Arrays.asList(fdsFilterMap.get("status"), fdsFilterMap.get("title"))
 		).put(
 			"Empty Group", new ArrayList<FDSFilter>()
 		).put(

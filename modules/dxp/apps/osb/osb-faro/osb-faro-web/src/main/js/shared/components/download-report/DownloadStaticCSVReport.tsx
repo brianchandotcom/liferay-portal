@@ -13,13 +13,15 @@ import {useDispatch} from 'react-redux';
 import {useParams} from 'react-router-dom';
 
 interface IDownloadStaticCSVReport {
+	children?: any;
 	disabled: boolean;
+	segmentId?: string;
 	type: CSVType;
 	typeLang: string;
-	segmentId?: string;
 }
 
 export const DownloadStaticCSVReport: React.FC<IDownloadStaticCSVReport> = ({
+	children,
 	disabled,
 	segmentId,
 	type,
@@ -32,10 +34,17 @@ export const DownloadStaticCSVReport: React.FC<IDownloadStaticCSVReport> = ({
 
 	return (
 		<>
-			<DownloadReportButton
-				disabled={disabled}
-				onClick={() => onOpenChange(true)}
-			/>
+			{children ? (
+				React.cloneElement(children, {
+					disabled,
+					onClick: () => onOpenChange(true)
+				})
+			) : (
+				<DownloadReportButton
+					disabled={disabled}
+					onClick={() => onOpenChange(true)}
+				/>
+			)}
 
 			{open && (
 				<Modal
@@ -72,6 +81,7 @@ export const DownloadStaticCSVReport: React.FC<IDownloadStaticCSVReport> = ({
 							const count = await API.csv.fetchCount({
 								channelId,
 								groupId,
+								segmentId,
 								type: CSVType.Individual
 							});
 

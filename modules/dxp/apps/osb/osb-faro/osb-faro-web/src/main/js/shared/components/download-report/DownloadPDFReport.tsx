@@ -108,7 +108,7 @@ export const CONTAINERS: {[key in ReportContainer]: TReportContainer} = {
 	},
 	[ReportContainer.SegmentCriteriaCard]: {
 		label: Liferay.Language.get('segment-criteria'),
-		layout: 2
+		layout: 1
 	},
 	[ReportContainer.SegmentMembershipCard]: {
 		label: Liferay.Language.get('segment-membership'),
@@ -175,6 +175,7 @@ export type TransformedContainer = TReportContainer & {
 };
 
 export interface IDownloadReport {
+	children?: any;
 	dateRangeDescription?: string;
 	disabled: boolean;
 	infoMessage?: string;
@@ -230,6 +231,7 @@ const getContainers = async (
 };
 
 const DownloadPDFReport: React.FC<IDownloadReport> = ({
+	children,
 	dateRangeDescription,
 	disabled,
 	infoMessage = Liferay.Language.get(
@@ -260,11 +262,19 @@ const DownloadPDFReport: React.FC<IDownloadReport> = ({
 
 	return (
 		<div className='download-report'>
-			<DownloadReportButton
-				disabled={disabled}
-				loading={loading}
-				onClick={() => onOpenChange(true)}
-			/>
+			{children ? (
+				React.cloneElement(children, {
+					disabled,
+					loading,
+					onClick: () => onOpenChange(true)
+				})
+			) : (
+				<DownloadReportButton
+					disabled={disabled}
+					loading={loading}
+					onClick={() => onOpenChange(true)}
+				/>
+			)}
 
 			{open && (
 				<DownloadReportModal

@@ -23,6 +23,7 @@ import RouteNotFound from 'shared/components/RouteNotFound';
 import {AlertTypes} from 'shared/components/Alert';
 import {ChannelContext} from 'shared/context/channel';
 import {CSVType} from 'shared/components/download-report/utils';
+import {DownloadReportDropdown} from 'shared/components/download-report/DownloadReportDropdown';
 import {DownloadStaticCSVReport} from 'shared/components/download-report/DownloadStaticCSVReport';
 import {formatUTCDate} from 'shared/util/date';
 import {getMatchedRoute, Routes, SEGMENTS, toRoute} from 'shared/util/router';
@@ -268,6 +269,12 @@ export const SegmentProfileRoutes = () => {
 			{!isBatch && (
 				<BasePage.SubHeader>
 					<div className='d-flex justify-content-end w-100'>
+						<DownloadReportDropdown
+							className='button-root'
+							segmentId={segment.id}
+							title={segmentDetails.name}
+						/>
+
 						<ClayButton
 							borderless
 							button
@@ -276,6 +283,7 @@ export const SegmentProfileRoutes = () => {
 							displayType='secondary'
 							key={Liferay.Language.get('refresh-data')}
 							onClick={refetch}
+							size='sm'
 						>
 							{loading ? (
 								<Loading align='false' className='mr-2 mt-n1' />
@@ -284,6 +292,7 @@ export const SegmentProfileRoutes = () => {
 							)}
 							{Liferay.Language.get('refresh-data')}
 						</ClayButton>
+
 						<ClayLink
 							borderless
 							button
@@ -294,6 +303,7 @@ export const SegmentProfileRoutes = () => {
 								groupId,
 								id
 							})}
+							small
 						>
 							<ClayIcon className='mr-2' symbol='pencil' />
 							{Liferay.Language.get('edit-segment')}

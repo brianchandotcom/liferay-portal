@@ -1,7 +1,8 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import Loading, {Align} from 'shared/components/Loading';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
+import {useMutationObserver} from './utils';
 
 interface IDownloadReportButton {
 	disabled: boolean;
@@ -14,26 +15,7 @@ export const DownloadReportButton: React.FC<IDownloadReportButton> = ({
 	loading = false,
 	onClick
 }) => {
-	const [loadingCount, setLoadingCount] = useState(0);
-
-	useEffect(() => {
-		const observer = new MutationObserver(() => {
-			const loadingElement = document.querySelectorAll(
-				'.page-container .loading-animation'
-			);
-
-			setLoadingCount(loadingElement.length);
-		});
-
-		observer.observe(document.body, {
-			attributes: true,
-			characterData: true,
-			childList: true,
-			subtree: true
-		});
-
-		return () => observer.disconnect();
-	}, []);
+	const {loadingCount} = useMutationObserver();
 
 	return (
 		<ClayButton

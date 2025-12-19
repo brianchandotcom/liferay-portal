@@ -436,7 +436,7 @@ test(
 		await test.step('Move the folder to Recycle Bin', async () => {
 			await contentsPage.goto();
 
-			await contentsPage.deleteContent(folderName, recycleBinEnabled);
+			await contentsPage.deleteFolder(folderName);
 		});
 
 		await test.step('Assert navigation within Recycle Bin', async () => {

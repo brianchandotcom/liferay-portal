@@ -808,7 +808,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		FDSFiltersGroups fdsFiltersGroups = new FDSFiltersGroups() {
 
 			@Override
-			public LinkedHashMap<String, List<FDSFilter>> getFiltersGroups(
+			public LinkedHashMap<String, List<FDSFilter>> getFDSFiltersMap(
 				HttpServletRequest httpServletRequest) {
 
 				return LinkedHashMapBuilder.<String, List<FDSFilter>>put(
@@ -845,7 +845,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 					@Override
 					public LinkedHashMap<String, List<FDSFilter>>
-						getFiltersGroups(
+						getFDSFiltersMap(
 							HttpServletRequest httpServletRequest) {
 
 						return LinkedHashMapBuilder.

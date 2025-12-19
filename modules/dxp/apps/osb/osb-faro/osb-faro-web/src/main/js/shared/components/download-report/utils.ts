@@ -5,6 +5,7 @@ import {DEFAULT_RANGE_SELECTORS} from 'shared/hooks/useQueryRangeSelectors';
 import {INDIVIDUALS} from 'shared/util/router';
 import {RangeKeyTimeRanges} from 'shared/util/constants';
 import {RangeSelectors} from 'shared/types';
+import {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 
 export function formatDate(date: string | Date) {
@@ -84,5 +85,30 @@ export function useDownloadCSV({
 		return url;
 	};
 }
+
+export const useMutationObserver = () => {
+	const [loadingCount, setLoadingCount] = useState(0);
+
+	useEffect(() => {
+		const observer = new MutationObserver(() => {
+			const loadingElement = document.querySelectorAll(
+				'.page-container .loading-animation'
+			);
+
+			setLoadingCount(loadingElement.length);
+		});
+
+		observer.observe(document.body, {
+			attributes: true,
+			characterData: true,
+			childList: true,
+			subtree: true
+		});
+
+		return () => observer.disconnect();
+	}, []);
+
+	return {loadingCount};
+};
 
 export const MAX_CSV_ENTRIES = 10000;

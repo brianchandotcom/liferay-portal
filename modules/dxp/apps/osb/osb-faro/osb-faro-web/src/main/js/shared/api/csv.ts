@@ -14,6 +14,7 @@ export const fetchCount = ({
 	fromDate?: string;
 	groupId: string;
 	individualId?: string;
+	segmentId?: string;
 	rangeKey?: string;
 	toDate?: string;
 	type: CSVType;

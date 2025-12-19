@@ -282,17 +282,11 @@ public class BatchEngineExportTaskExecutorImpl
 				for (ExportTaskPostAction exportTaskPostAction :
 						_exportTaskPostActions) {
 
-					items.forEach(
-						item -> {
-							try {
-								exportTaskPostAction.run(
-									finalBatchEngineExportTask,
-									batchEngineTaskItemDelegate, item);
-							}
-							catch (Exception exception) {
-								throw new RuntimeException(exception);
-							}
-						});
+					for (Object item : items) {
+						exportTaskPostAction.run(
+							finalBatchEngineExportTask,
+							batchEngineTaskItemDelegate, item);
+					}
 				}
 
 				batchEngineExportTaskItemWriter.write(items);

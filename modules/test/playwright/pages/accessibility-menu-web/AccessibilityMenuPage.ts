@@ -42,6 +42,16 @@ export class AccessibilityMenuPage {
 		}
 	}
 
+	async disableAccessibilityMenu() {
+		if (await this.enableAccessibilityMenuCheckbox.isChecked()) {
+			await this.enableAccessibilityMenuCheckbox.uncheck();
+
+			await this.saveButton.click();
+
+			await waitForAlert(this.page);
+		}
+	}
+
 	async isAccessibilityMenuAttached() {
 		return (await this.openAccessibilityMenuButton.count()) === 1;
 	}

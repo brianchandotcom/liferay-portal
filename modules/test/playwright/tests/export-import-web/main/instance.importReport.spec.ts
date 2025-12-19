@@ -3,10 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {
-	ObjectDefinitionAPI,
-	ObjectFieldAPI,
-} from '@liferay/object-admin-rest-client-js';
+import {ObjectFieldAPI} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
@@ -14,9 +11,9 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import {normalizeRestPath} from '../../../utils/normalizeRestPath';
 import {companyExportImportPageTest} from './fixtures/companyExportImportPagesTest';
 import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
-import {objectDefitionRequestData} from './utils/objectDefitionRequestData';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
@@ -35,25 +32,22 @@ test('Can see error report and details', async ({
 	companyExportImportPage,
 	exportImportPage,
 }) => {
-	const objectDefinitionAPIClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
-
-	const {body: objectDefinition} =
-		await objectDefinitionAPIClient.postObjectDefinition(
-			objectDefitionRequestData()
-		);
+	const objectDefinition =
+		await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			status: {code: 0},
+		});
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
 	const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
-		{externalReferenceCode: '', name: 'test'},
-		'c/tests'
+		{externalReferenceCode: '', name: objectDefinition.name},
+		normalizeRestPath(`${objectDefinition.restContextPath}`)
 	);
 
 	await applicationsMenuPage.goToExport();
 
 	const exportFilePath = await exportImportPage.export({
-		portletLabels: ['Tests 1 Items'],
+		portletLabels: [`${objectDefinition.name} 1 Items`],
 	});
 
 	const objectFieldAPIClient =
@@ -124,25 +118,22 @@ test('Report entries actions are not visible for a successful import', async ({
 	companyExportImportPage,
 	exportImportPage,
 }) => {
-	const objectDefinitionAPIClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
-
-	const {body: objectDefinition} =
-		await objectDefinitionAPIClient.postObjectDefinition(
-			objectDefitionRequestData()
-		);
+	const objectDefinition =
+		await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			status: {code: 0},
+		});
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
 	await apiHelpers.objectEntry.postObjectEntry(
-		{externalReferenceCode: '', name: 'test'},
-		'c/tests'
+		{externalReferenceCode: '', name: objectDefinition.name},
+		normalizeRestPath(`${objectDefinition.restContextPath}`)
 	);
 
 	await applicationsMenuPage.goToExport();
 
 	const exportFilePath = await exportImportPage.export({
-		portletLabels: ['Tests 1 Items'],
+		portletLabels: [`${objectDefinition.name} 1 Items`],
 	});
 
 	await companyExportImportPage.import({

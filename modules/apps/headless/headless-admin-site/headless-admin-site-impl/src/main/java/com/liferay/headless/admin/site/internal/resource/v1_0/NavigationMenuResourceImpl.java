@@ -370,18 +370,6 @@ public class NavigationMenuResourceImpl
 		}
 	}
 
-	private Layout _getLayout(SiteNavigationMenuItem siteNavigationMenuItem) {
-		UnicodeProperties unicodeProperties = _getUnicodeProperties(
-			siteNavigationMenuItem);
-
-		String layoutUuid = unicodeProperties.get("layoutUuid");
-		boolean privateLayout = GetterUtil.getBoolean(
-			unicodeProperties.get("privateLayout"));
-
-		return _layoutLocalService.fetchLayoutByUuidAndGroupId(
-			layoutUuid, siteNavigationMenuItem.getGroupId(), privateLayout);
-	}
-
 	private Locale _getLocaleFromProperty(Map.Entry<String, String> property) {
 		return LocaleUtil.fromLanguageId(
 			StringUtil.removeSubstring(property.getKey(), "name_"));
@@ -971,10 +959,12 @@ public class NavigationMenuResourceImpl
 		SiteNavigationMenuItem siteNavigationMenuItem,
 		Map<Long, List<SiteNavigationMenuItem>> siteNavigationMenuItemsMap) {
 
-		Layout layout = _getLayout(siteNavigationMenuItem);
-
 		UnicodeProperties unicodeProperties = _getUnicodeProperties(
 			siteNavigationMenuItem);
+
+		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
+			unicodeProperties.getProperty("externalReferenceCode"),
+			siteNavigationMenuItem.getGroupId());
 
 		String navigationMenuItemType = _toType(
 			siteNavigationMenuItem.getType());

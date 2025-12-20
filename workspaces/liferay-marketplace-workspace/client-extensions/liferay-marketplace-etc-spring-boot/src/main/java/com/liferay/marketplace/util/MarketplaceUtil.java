@@ -8,7 +8,6 @@ package com.liferay.marketplace.util;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.SkuOption;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.headless.commerce.admin.order.client.pagination.Page;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Map;
 import java.util.Objects;
@@ -110,11 +109,13 @@ public class MarketplaceUtil {
 
 	public static String getSkuOptionValue(String key, SkuOption[] skuOptions) {
 		for (SkuOption skuOption : skuOptions) {
-			if (!Objects.equals(key, skuOption.getKey())) {
+			String skuOptionKey = skuOption.getKey();
+
+			if (!skuOptionKey.contains(key)) {
 				continue;
 			}
 
-			return StringUtil.upperCaseFirstLetter(skuOption.getValue());
+			return skuOption.getValue();
 		}
 
 		return null;
@@ -126,7 +127,9 @@ public class MarketplaceUtil {
 		for (int i = 0; i < optionsJSONArray.length(); i++) {
 			JSONObject jsonObject = optionsJSONArray.getJSONObject(i);
 
-			if (!Objects.equals(key, jsonObject.getString("key"))) {
+			String skuOptionKey = jsonObject.getString("key");
+
+			if (!skuOptionKey.contains(key)) {
 				continue;
 			}
 

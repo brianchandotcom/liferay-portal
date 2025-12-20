@@ -668,7 +668,7 @@ public class MarketplaceCommandLineRunner
 		_forEachOrder(
 			StringBundler.concat(
 				"orderStatus/any(x:(x eq ", _ORDER_STATUS_COMPLETED,
-				")) and orderTypeExternalReferenceCode eq 'DXPAPP'"),
+				")) and orderTypeExternalReferenceCode eq 'DXP_APP'"),
 			order -> {
 				String currencyCode = order.getCurrencyCode();
 

@@ -298,6 +298,13 @@ public class MarketplaceRestController extends BaseRestController {
 				order.getId(), Pagination.of(1, 10)
 			);
 
+		Map<String, String> productSpecificationsMap =
+			_marketplaceService.getProductSpecificationsMap(
+				_marketplaceService.getSku(
+					orderItemPage.fetchFirstItem(
+					).getSkuId()
+				).getProductId());
+
 		String orderTypeExternalReferenceCode =
 			order.getOrderTypeExternalReferenceCode();
 
@@ -309,14 +316,8 @@ public class MarketplaceRestController extends BaseRestController {
 				MarketplaceConstants.ORDER_STATUS_COMPLETED);
 		}
 
-		if (Objects.equals(
-				orderTypeExternalReferenceCode, "CLIENT_EXTENSION") ||
-			Objects.equals(orderTypeExternalReferenceCode, "CLOUDAPP")) {
-
-			_setUpCloudProductPurchase(order, orderItemPage);
-		}
-
-		if (Objects.equals(orderTypeExternalReferenceCode, "COMPOSITE_APP") ||
+		if (Objects.equals(orderTypeExternalReferenceCode, "CLOUD_APP") ||
+			Objects.equals(orderTypeExternalReferenceCode, "COMPOSITE_APP") ||
 			Objects.equals(
 				orderTypeExternalReferenceCode, "LOW_CODE_CONFIGURATION") ||
 			Objects.equals(orderTypeExternalReferenceCode, "OTHER")) {
@@ -327,9 +328,23 @@ public class MarketplaceRestController extends BaseRestController {
 		}
 
 		if (Objects.equals(
-				order.getOrderTypeExternalReferenceCode(), "DXPAPP")) {
+				orderTypeExternalReferenceCode, "CLIENT_EXTENSION") ||
+			Objects.equals(
+				order.getOrderTypeExternalReferenceCode(), "DXP_APP")) {
 
-			_setUpDxpProductPurchase(jwt, order, orderItemPage);
+			if (Objects.equals(
+					productSpecificationsMap.get("price-model"), "Free")) {
+
+				_marketplaceService.updateOrder(
+					null, order.getId(),
+					MarketplaceConstants.ORDER_STATUS_COMPLETED);
+
+				return;
+			}
+
+			_setUpProductEntitlements(
+				jwt, productSpecificationsMap.get("license-type"), order,
+				orderItemPage);
 		}
 	}
 
@@ -690,59 +705,24 @@ public class MarketplaceRestController extends BaseRestController {
 			_koroneikiService.postAccountAccountKeyProductPurchase(
 				order.getAccountExternalReferenceCode(), jwt, "Subscription",
 				MarketplaceUtil.getSkuOptionValue(
-					"analytics-license-usage-type", orderItem.getOptions()),
+					"license-usage-type", orderItem.getOptions()),
 				orderItem);
 		}
 	}
 
-	private void _setUpCloudProductPurchase(
-			Order order, Page<OrderItem> orderItemPage)
+	private void _setUpProductEntitlements(
+			Jwt jwt, String licenseType, Order order,
+			Page<OrderItem> orderItemPage)
 		throws Exception {
 
-		Map<String, String> customFields =
-			(Map<String, String>)order.getCustomFields();
+		String accountExternalReferenceCode =
+			order.getAccountExternalReferenceCode();
 
-		customFields.put(
-			"cloud-provisioning",
-			MarketplaceUtil.createCloudProvisioningJSONArray(
-				orderItemPage
-			).toString());
+		if (!accountExternalReferenceCode.startsWith("KOR-")) {
+			AccountResource accountResource =
+				_marketplaceService.getAccountResource();
 
-		_marketplaceService.updateOrder(
-			customFields, order.getId(),
-			MarketplaceConstants.ORDER_STATUS_COMPLETED);
-	}
-
-	private void _setUpDxpProductPurchase(
-			Jwt jwt, Order order, Page<OrderItem> orderItemPage)
-		throws Exception {
-
-		Map<String, String> productSpecificationsMap =
-			_marketplaceService.getProductSpecificationsMap(
-				_marketplaceService.getSku(
-					orderItemPage.fetchFirstItem(
-					).getSkuId()
-				).getProductId());
-
-		if (Objects.equals(
-				productSpecificationsMap.get("price-model"), "Free")) {
-
-			_marketplaceService.updateOrder(
-				null, order.getId(),
-				MarketplaceConstants.ORDER_STATUS_COMPLETED);
-
-			return;
-		}
-
-		AccountResource accountResource =
-			_marketplaceService.getAccountResource();
-
-		Account account = accountResource.getAccount(order.getAccountId());
-
-		if (!account.getExternalReferenceCode(
-			).startsWith(
-				"KOR-"
-			)) {
+			Account account = accountResource.getAccount(order.getAccountId());
 
 			account.setExternalReferenceCode(
 				() -> _koroneikiService.postKoroneikiAccount(
@@ -755,10 +735,9 @@ public class MarketplaceRestController extends BaseRestController {
 		try {
 			for (OrderItem orderItem : orderItemPage.getItems()) {
 				_koroneikiService.postAccountAccountKeyProductPurchase(
-					account.getExternalReferenceCode(), jwt,
-					productSpecificationsMap.get("license-type"),
+					accountExternalReferenceCode, jwt, licenseType,
 					MarketplaceUtil.getSkuOptionValue(
-						"dxp-license-usage-type", orderItem.getOptions()),
+						"license-usage-type", orderItem.getOptions()),
 					orderItem);
 			}
 

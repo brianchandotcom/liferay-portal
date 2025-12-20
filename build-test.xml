@@ -3183,11 +3183,24 @@ aes256Key=&quot;&quot;</echo>
 	<macrodef name="prepare-ibm-s3-configuration">
 		<sequential>
 			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config">
-bucketName=&quot;lfr-qa-poshi-test-${s3.bucket.id}&quot;
 accessKey=&quot;${ibm.s3.access.key.id}&quot;
-secretKey=&quot;${ibm.s3.secret.access.key}&quot;
+bucketName=&quot;lfr-qa-poshi-test-${s3.bucket.id}&quot;
+connectionTimeout=&quot;10000&quot;
+corePoolSize=&quot;7&quot;
+httpClientMaxConnections=&quot;50&quot;
+httpClientMaxErrorRetry=&quot;5&quot;
+maxPoolSize=&quot;20&quot;
+minimumUploadPartSize=&quot;5242880&quot;
+multipartUploadThreshold=&quot;10485760&quot;
+proxyAuthType=&quot;none&quot;
+proxyHost=&quot;&quot;
+proxyPassword=&quot;&quot;
+proxyPort=&quot;12345&quot;
+proxyUsername=&quot;&quot;
+s3Region=&quot;us-east&quot;
 s3Endpoint=&quot;https://s3.us-east.cloud-object-storage.appdomain.cloud&quot;
-s3Region=&quot;us-east&quot;</echo>
+s3StorageClass=&quot;STANDARD&quot;
+secretKey=&quot;${ibm.s3.secret.access.key}&quot;</echo>
 		</sequential>
 	</macrodef>
 

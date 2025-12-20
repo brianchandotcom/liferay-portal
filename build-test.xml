@@ -2741,24 +2741,24 @@ war.path=${app.server.portal.dir}/</echo>
 	<macrodef name="prepare-aws-s3-configuration">
 		<sequential>
 			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config">
-proxyAuthType=&quot;none&quot;
-httpClientMaxConnections=&quot;50&quot;
-secretKey=&quot;${aws.s3.secret.access.key}&quot;
-httpClientMaxErrorRetry=&quot;5&quot;
 accessKey=&quot;${aws.s3.access.key.id}&quot;
-connectionTimeout=&quot;10000&quot;
-multipartUploadThreshold=&quot;10485760&quot;
 bucketName=&quot;lfr-qa-poshi-test-${s3.bucket.id}&quot;
-minimumUploadPartSize=&quot;5242880&quot;
-proxyPassword=&quot;&quot;
-maxPoolSize=&quot;20&quot;
-proxyUsername=&quot;&quot;
-proxyPort=&quot;12345&quot;
-s3Region=&quot;us-west-1&quot;
-proxyHost=&quot;&quot;
+connectionTimeout=&quot;10000&quot;
 corePoolSize=&quot;7&quot;
+httpClientMaxConnections=&quot;50&quot;
+httpClientMaxErrorRetry=&quot;5&quot;
+maxPoolSize=&quot;20&quot;
+minimumUploadPartSize=&quot;5242880&quot;
+multipartUploadThreshold=&quot;10485760&quot;
+proxyAuthType=&quot;none&quot;
+proxyHost=&quot;&quot;
+proxyPassword=&quot;&quot;
+proxyPort=&quot;12345&quot;
+proxyUsername=&quot;&quot;
+s3Region=&quot;us-west-1&quot;
+s3Endpoint=&quot;https://s3.us-west-1.amazonaws.com&quot;
 s3StorageClass=&quot;STANDARD&quot;
-s3Endpoint=&quot;https://s3.us-west-1.amazonaws.com&quot;</echo>
+secretKey=&quot;${aws.s3.secret.access.key}&quot;</echo>
 		</sequential>
 	</macrodef>
 

@@ -113,12 +113,14 @@ public class KoroneikiService {
 		).build();
 	}
 
-	public Boolean hasEntitlement(
-		Account koroneikiAccount, String entitlementName) {
+	public boolean hasEntitlement(
+		Account koroneikiAccount, String[] entitlementNames) {
 
 		for (Entitlement entitlement : koroneikiAccount.getEntitlements()) {
-			if (Objects.equals(entitlement.getName(), entitlementName)) {
-				return true;
+			for (String entitlementName : entitlementNames) {
+				if (Objects.equals(entitlementName, entitlement.getName())) {
+					return true;
+				}
 			}
 		}
 

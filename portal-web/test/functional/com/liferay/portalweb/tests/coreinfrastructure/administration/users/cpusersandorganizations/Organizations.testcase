@@ -113,6 +113,8 @@ definition {
 
 	@priority = 4
 	test AddOrganizationSitePublicPage {
+		property browser.chrome.version = "139.0";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		JSONOrganization.addOrganization(organizationName = "Organization Name");
@@ -1467,6 +1469,7 @@ definition {
 
 	@priority = 4
 	test ViewContentInCustomOrganizationTypeSite {
+		property browser.chrome.version = "139.0";
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

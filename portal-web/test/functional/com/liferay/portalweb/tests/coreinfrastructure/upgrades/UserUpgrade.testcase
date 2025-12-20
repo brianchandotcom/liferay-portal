@@ -149,6 +149,7 @@ definition {
 
 	@priority = 5
 	test ViewAndEditUserAfterUpgrade625 {
+		property browser.chrome.version = "139.0";
 		property data.archive.type = "data-archive-user";
 		property database.types = "mysql";
 		property portal.version = "6.2.5";
@@ -162,6 +163,7 @@ definition {
 
 	@priority = 5
 	test ViewAndEditUserAfterUpgrade704 {
+		property browser.chrome.version = "139.0";
 		property data.archive.type = "data-archive-user";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.0.4";
@@ -175,6 +177,7 @@ definition {
 
 	@priority = 5
 	test ViewAndEditUserAfterUpgrade713 {
+		property browser.chrome.version = "139.0";
 		property data.archive.type = "data-archive-user";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.1.3";
@@ -188,6 +191,7 @@ definition {
 
 	@priority = 5
 	test ViewAndEditUserAfterUpgrade720 {
+		property browser.chrome.version = "139.0";
 		property data.archive.type = "data-archive-user";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.2.0";
@@ -201,6 +205,7 @@ definition {
 
 	@priority = 5
 	test ViewAndEditUserAfterUpgrade721 {
+		property browser.chrome.version = "139.0";
 		property data.archive.type = "data-archive-user";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.2.1";
@@ -214,6 +219,7 @@ definition {
 
 	@priority = 5
 	test ViewAndEditUserAfterUpgrade730 {
+		property browser.chrome.version = "139.0";
 		property data.archive.type = "data-archive-user";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.3.0";
@@ -227,6 +233,7 @@ definition {
 
 	@priority = 5
 	test ViewAndEditUserAfterUpgrade740 {
+		property browser.chrome.version = "139.0";
 		property data.archive.type = "data-archive-user";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.4.0";
@@ -240,6 +247,7 @@ definition {
 
 	@priority = 5
 	test ViewAndEditUserAfterUpgrade7110 {
+		property browser.chrome.version = "139.0";
 		property data.archive.type = "data-archive-user";
 		property portal.version = "7.1.10";
 
@@ -252,6 +260,7 @@ definition {
 
 	@priority = 5
 	test ViewAndEditUserAfterUpgrade7210 {
+		property browser.chrome.version = "139.0";
 		property data.archive.type = "data-archive-user";
 		property portal.version = "7.2.10";
 
@@ -264,6 +273,7 @@ definition {
 
 	@priority = 5
 	test ViewAndEditUserAfterUpgrade7413 {
+		property browser.chrome.version = "139.0";
 		property data.archive.type = "data-archive-user";
 		property portal.version = "7.4.13";
 
@@ -276,6 +286,7 @@ definition {
 
 	@priority = 5
 	test ViewAndEditUserAfterUpgrade70106 {
+		property browser.chrome.version = "139.0";
 		property data.archive.type = "data-archive-user";
 		property portal.version = "7.0.10.6";
 
@@ -288,6 +299,7 @@ definition {
 
 	@priority = 5
 	test ViewAndEditUserAfterUpgrade72101 {
+		property browser.chrome.version = "139.0";
 		property data.archive.type = "data-archive-user";
 		property portal.version = "7.2.10.1";
 
@@ -300,6 +312,7 @@ definition {
 
 	@priority = 5
 	test ViewAndEditUserAfterUpgrade621015 {
+		property browser.chrome.version = "139.0";
 		property data.archive.type = "data-archive-user";
 		property database.types = "db2,mysql,oracle";
 		property portal.version = "6.2.10.15";
@@ -313,6 +326,7 @@ definition {
 
 	@priority = 5
 	test ViewAndEditUserAfterUpgrade621021 {
+		property browser.chrome.version = "139.0";
 		property data.archive.type = "data-archive-user";
 		property database.types = "db2,mysql,oracle,postgresql";
 		property portal.version = "6.2.10.21";

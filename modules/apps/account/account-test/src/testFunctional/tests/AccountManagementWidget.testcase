@@ -301,6 +301,8 @@ definition {
 	@description = "This test asserts the correct search results when searching via Account Management widget"
 	@priority = 4
 	test CanSearchForAccount {
+		property browser.chrome.version = "139.0";
+
 		task ("Given business accounts exist") {
 			for (var accountName : list "Acme Inc,Liferay,South Bay Auto Parts") {
 				JSONAccountEntry.addAccountEntry(

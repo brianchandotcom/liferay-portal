@@ -106,7 +106,7 @@ public class CommentResourceTest {
 		// Company scope
 
 		_testDeleteByExternalReferenceCodeComment(
-			0L, _objectDefinition, _objectEntry);
+			0, _objectDefinition, _objectEntry);
 
 		// Site scope
 
@@ -121,7 +121,7 @@ public class CommentResourceTest {
 		// Company scope
 
 		_testGetByExternalReferenceCodeComment(
-			0L, _objectDefinition, _objectEntry);
+			0, _objectDefinition, _objectEntry);
 
 		// Site scope
 
@@ -137,7 +137,7 @@ public class CommentResourceTest {
 		// Company scope
 
 		_testGetByExternalReferenceCodeCommentChildCommentsPage(
-			0L, _objectDefinition, _objectEntry);
+			0, _objectDefinition, _objectEntry);
 
 		// Site scope
 
@@ -152,7 +152,7 @@ public class CommentResourceTest {
 		// Company scope
 
 		_testGetByExternalReferenceCodeCommentsPage(
-			0L, _objectDefinition, _objectEntry);
+			0, _objectDefinition, _objectEntry);
 
 		// Site scope
 
@@ -167,7 +167,7 @@ public class CommentResourceTest {
 		// Company scope
 
 		_testPostByExternalReferenceCodeComment(
-			0L, _objectDefinition, _objectEntry);
+			0, _objectDefinition, _objectEntry);
 
 		// Site scope
 
@@ -183,7 +183,7 @@ public class CommentResourceTest {
 		// Company scope
 
 		_testPostByExternalReferenceCodeCommentReplyComment(
-			0L, _objectDefinition, _objectEntry);
+			0, _objectDefinition, _objectEntry);
 
 		// Site scope
 
@@ -198,7 +198,7 @@ public class CommentResourceTest {
 		// Company scope
 
 		_testPutByExternalReferenceCodeComment(
-			0L, _objectDefinition, _objectEntry);
+			0, _objectDefinition, _objectEntry);
 
 		// Site scope
 

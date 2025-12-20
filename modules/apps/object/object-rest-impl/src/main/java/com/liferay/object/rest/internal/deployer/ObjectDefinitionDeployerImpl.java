@@ -319,12 +319,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				excludedOperationIds,
 				BaseCollaboratorResourceImpl.class.getMethods(),
 				objectScopeProvider);
-
 			_processMethods(
 				excludedOperationIds,
 				BaseCommentResourceImpl.class.getMethods(),
 				objectScopeProvider);
-
 			_processMethods(
 				excludedOperationIds,
 				BaseObjectEntryResourceImpl.class.getMethods(),
@@ -515,10 +513,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 		ServiceRegistration<CommentResource>
 			commentResourceServiceRegistration =
-				_commentResourceServiceRegistrationsMap.get(restContextPath);
+				_commentResourceServiceRegistrations.get(restContextPath);
 
 		if (commentResourceServiceRegistration == null) {
-			_commentResourceServiceRegistrationsMap.put(
+			_commentResourceServiceRegistrations.put(
 				restContextPath,
 				_bundleContext.registerService(
 					CommentResource.class,
@@ -1157,7 +1155,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private final Map<String, Dictionary<String, Object>>
 		_commentResourcePropertiesMap = new HashMap<>();
 	private final Map<String, ServiceRegistration<CommentResource>>
-		_commentResourceServiceRegistrationsMap = new HashMap<>();
+		_commentResourceServiceRegistrations = new HashMap<>();
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

@@ -2896,7 +2896,7 @@ public class JenkinsResultsParserUtil {
 
 		if (isCloudCINode() && remoteURLAuthorityMatcher4.find()) {
 			String localURLAuthority = combine(
-				"http://", remoteURLAuthorityMatcher4.group(1), "/");
+				"http://", remoteURLAuthorityMatcher2.group(1), "/");
 			String remoteURLAuthority = remoteURLAuthorityMatcher2.group(0);
 
 			localURL = localURL.replaceAll(
@@ -3498,13 +3498,13 @@ public class JenkinsResultsParserUtil {
 			remoteURL);
 		Matcher localURLAuthorityMatcher3 = _localURLAuthorityPattern3.matcher(
 			remoteURL);
-		Matcher localURLAuthorityMatcher4 = _localURLAuthorityPattern4.matcher(
+		Matcher localURLAuthroityMatcher4 = _localURLAuthorityPattern4.matcher(
 			remoteURL);
 
-		if (isCloudCINode() && localURLAuthorityMatcher4.find()) {
-			String localURLAuthority = localURLAuthorityMatcher4.group(0);
+		if (isCloudCINode() && localURLAuthroityMatcher4.find()) {
+			String localURLAuthority = localURLAuthroityMatcher4.group(0);
 			String remoteURLAuthority = combine(
-				"https://", localURLAuthorityMatcher4.group(1), "-aws",
+				"https://", localURLAuthroityMatcher4.group(1), "-aws",
 				".liferay.com/");
 
 			remoteURL = remoteURL.replaceAll(

@@ -2885,6 +2885,8 @@ public class JenkinsResultsParserUtil {
 			localURLQueryString = remoteURL.substring(x);
 		}
 
+		Matcher remoteURLAuthorityMatcher1 =
+			_remoteURLAuthorityPattern1.matcher(localURL);
 		Matcher remoteURLAuthorityMatcher2 =
 			_remoteURLAuthorityPattern2.matcher(localURL);
 		Matcher remoteURLAuthorityMatcher3 =
@@ -2896,6 +2898,16 @@ public class JenkinsResultsParserUtil {
 			String localURLAuthority = combine(
 				"http://", remoteURLAuthorityMatcher4.group(1), "/");
 			String remoteURLAuthority = remoteURLAuthorityMatcher2.group(0);
+
+			localURL = localURL.replaceAll(
+				remoteURLAuthority, localURLAuthority);
+		}
+		else if (remoteURLAuthorityMatcher1.find()) {
+			String localURLAuthority = combine(
+				"http://", remoteURLAuthorityMatcher1.group(1), "-",
+				remoteURLAuthorityMatcher1.group(2), "/",
+				remoteURLAuthorityMatcher1.group(2), "/");
+			String remoteURLAuthority = remoteURLAuthorityMatcher1.group(0);
 
 			localURL = localURL.replaceAll(
 				remoteURLAuthority, localURLAuthority);
@@ -3480,6 +3492,8 @@ public class JenkinsResultsParserUtil {
 			remoteURLQueryString = localURL.substring(x);
 		}
 
+		Matcher localURLAuthorityMatcher1 = _localURLAuthorityPattern1.matcher(
+			remoteURL);
 		Matcher localURLAuthorityMatcher2 = _localURLAuthorityPattern2.matcher(
 			remoteURL);
 		Matcher localURLAuthorityMatcher3 = _localURLAuthorityPattern3.matcher(
@@ -3492,6 +3506,15 @@ public class JenkinsResultsParserUtil {
 			String remoteURLAuthority = combine(
 				"https://", localURLAuthorityMatcher4.group(1), "-aws",
 				".liferay.com/");
+
+			remoteURL = remoteURL.replaceAll(
+				localURLAuthority, remoteURLAuthority);
+		}
+		else if (localURLAuthorityMatcher1.find()) {
+			String localURLAuthority = localURLAuthorityMatcher1.group(0);
+			String remoteURLAuthority = combine(
+				"https://", localURLAuthorityMatcher1.group(2), ".liferay.com/",
+				localURLAuthorityMatcher1.group(3), "/");
 
 			remoteURL = remoteURL.replaceAll(
 				localURLAuthority, remoteURLAuthority);
@@ -7301,6 +7324,8 @@ public class JenkinsResultsParserUtil {
 				"(?<buildNumber>\\d+)/+jenkins-report\\.html");
 	private static final Pattern _jenkinsSlavesPropertyNamePattern =
 		Pattern.compile("master.slaves\\((.+)\\)");
+	private static final Pattern _localURLAuthorityPattern1 = Pattern.compile(
+		"http://((release|test)-[0-9]+)/([0-9]+)/");
 	private static final Pattern _localURLAuthorityPattern2 = Pattern.compile(
 		"http://(test-[0-9]+-[0-9]+)/");
 	private static final Pattern _localURLAuthorityPattern3 = Pattern.compile(
@@ -7313,6 +7338,8 @@ public class JenkinsResultsParserUtil {
 	private static final Pattern _poshiFileNamePattern = Pattern.compile(
 		".*\\.(function|macro|path|prose|testcase)");
 	private static final Set<String> _redactTokens = new HashSet<>();
+	private static final Pattern _remoteURLAuthorityPattern1 = Pattern.compile(
+		"https://(test).liferay.com/([0-9]+)/");
 	private static final Pattern _remoteURLAuthorityPattern2 = Pattern.compile(
 		"https://(test-[0-9]+-[0-9]+).liferay.com/");
 	private static final Pattern _remoteURLAuthorityPattern3 = Pattern.compile(

@@ -37,12 +37,20 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 			for (long classNameId : editAssetListDisplayContext.getAvailableClassNameIds()) {
 				ClassName className = ClassNameLocalServiceUtil.getClassName(classNameId);
 
+				String itemTypeLabel = ResourceActionsUtil.getModelResource(locale, className.getValue());
+
+				ObjectDefinition objectDefinition = ObjectDefinitionLocalServiceUtil.fetchObjectDefinitionByClassName(company.getCompanyId(), className.getValue());
+
+				if ((objectDefinition != null) && objectDefinition.isCMS()) {
+					itemTypeLabel = StringUtil.appendParentheticalSuffix(itemTypeLabel, "CMS");
+				}
+
 				if (Arrays.binarySearch(classNameIds, classNameId) < 0) {
-					typesLeftList.add(new KeyValuePair(String.valueOf(classNameId), ResourceActionsUtil.getModelResource(locale, className.getValue())));
+					typesLeftList.add(new KeyValuePair(String.valueOf(classNameId), itemTypeLabel));
 				}
 			%>
 
-				<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, className.getValue()) %>" selected="<%= (classNameIds.length == 1) && (classNameId == classNameIds[0]) %>" value="<%= classNameId %>" />
+				<aui:option label="<%= itemTypeLabel %>" selected="<%= (classNameIds.length == 1) && (classNameId == classNameIds[0]) %>" value="<%= classNameId %>" />
 
 			<%
 			}
@@ -66,7 +74,17 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 	List<KeyValuePair> typesRightList = new ArrayList<KeyValuePair>();
 
 	for (long classNameId : editAssetListDisplayContext.getClassNameIds()) {
-		typesRightList.add(new KeyValuePair(String.valueOf(classNameId), ResourceActionsUtil.getModelResource(locale, PortalUtil.getClassName(classNameId))));
+		ClassName className = ClassNameLocalServiceUtil.getClassName(classNameId);
+
+		String itemTypeLabel = ResourceActionsUtil.getModelResource(locale, className.getValue());
+
+		ObjectDefinition objectDefinition = ObjectDefinitionLocalServiceUtil.fetchObjectDefinitionByClassName(company.getCompanyId(), className.getValue());
+
+		if ((objectDefinition != null) && objectDefinition.isCMS()) {
+			itemTypeLabel = StringUtil.appendParentheticalSuffix(itemTypeLabel, "CMS");
+		}
+
+		typesRightList.add(new KeyValuePair(String.valueOf(classNameId), itemTypeLabel));
 	}
 	%>
 

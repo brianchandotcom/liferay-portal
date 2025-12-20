@@ -111,7 +111,7 @@ public class MarketplaceUtil {
 		for (SkuOption skuOption : skuOptions) {
 			String skuOptionKey = skuOption.getKey();
 
-			if (!skuOptionKey.contains(key)) {
+			if ((skuOptionKey == null) || !skuOptionKey.contains(key)) {
 				continue;
 			}
 
@@ -127,7 +127,7 @@ public class MarketplaceUtil {
 		for (int i = 0; i < optionsJSONArray.length(); i++) {
 			JSONObject jsonObject = optionsJSONArray.getJSONObject(i);
 
-			String skuOptionKey = jsonObject.getString("key");
+			String skuOptionKey = jsonObject.optString("key");
 
 			if (!skuOptionKey.contains(key)) {
 				continue;

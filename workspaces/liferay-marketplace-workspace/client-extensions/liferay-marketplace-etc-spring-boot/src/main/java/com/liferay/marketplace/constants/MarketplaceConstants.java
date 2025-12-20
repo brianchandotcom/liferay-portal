@@ -12,6 +12,14 @@ import java.util.Objects;
  */
 public class MarketplaceConstants {
 
+	public static final String[] KORONEIKI_AC_ENTITLEMENTS = {
+		"Liferay Analytics Cloud"
+	};
+
+	public static final String[] KORONEIKI_DXP_ENTITLEMENTS = {
+		"DXP", "Liferay SaaS", "Liferay Self-Hosted", "Liferay PaaS"
+	};
+
 	public static final String ORDER_PAYMENT_METHOD_MONEY_ORDER = "money-order";
 
 	public static final String ORDER_PAYMENT_METHOD_MONEY_ORDER_LABEL =

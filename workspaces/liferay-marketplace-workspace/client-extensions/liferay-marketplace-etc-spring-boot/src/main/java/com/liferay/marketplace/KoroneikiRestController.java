@@ -28,6 +28,7 @@ import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ContactResourc
 import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProductPurchaseViewResource;
 import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProductResource;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
@@ -148,7 +149,7 @@ public class KoroneikiRestController extends BaseRestController {
 			}
 
 			String name = MarketplaceUtil.getSkuOptionValue(
-				"dxp-license-usage-type", orderItem.getOptions());
+				"license-usage-type", orderItem.getOptions());
 
 			if (name == null) {
 				name = orderItem.getSkuExternalReferenceCode();
@@ -222,10 +223,10 @@ public class KoroneikiRestController extends BaseRestController {
 					product.getProductId(), Pagination.of(1, 10)
 				).getItems()) {
 
-			String dxpLicenseUsageType = MarketplaceUtil.getSkuOptionValue(
-				"dxp-license-usage-type", sku.getSkuOptions());
+			String licenseUsageType = MarketplaceUtil.getSkuOptionValue(
+				"license-usage-type", sku.getSkuOptions());
 
-			if ((dxpLicenseUsageType == null) ||
+			if ((licenseUsageType == null) ||
 				sku.getExternalReferenceCode(
 				).startsWith(
 					"KOR-"
@@ -247,7 +248,9 @@ public class KoroneikiRestController extends BaseRestController {
 				"en_US"
 			);
 
-			String name = productName + " - " + dxpLicenseUsageType;
+			String name =
+				productName + " - " +
+					StringUtil.upperCaseFirstLetter(licenseUsageType);
 
 			Page<com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Product>
 				page = productResource.getProductsPage(

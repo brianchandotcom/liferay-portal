@@ -670,7 +670,7 @@ public class MarketplaceRestController extends BaseRestController {
 		if (_koroneikiService.hasEntitlement(
 				_koroneikiService.getKoroneikiAccount(
 					order.getAccountExternalReferenceCode()),
-				"Liferay Analytics Cloud")) {
+				MarketplaceConstants.KORONEIKI_AC_ENTITLEMENTS)) {
 
 			_koroneikiService.linkProductPurchaseToOpportunity(
 				jwt, String.valueOf(order.getId()),

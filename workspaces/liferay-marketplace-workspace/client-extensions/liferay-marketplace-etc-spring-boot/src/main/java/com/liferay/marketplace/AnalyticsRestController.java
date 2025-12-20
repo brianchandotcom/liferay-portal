@@ -126,12 +126,12 @@ public class AnalyticsRestController extends BaseRestController {
 			if (productPurchase.getPerpetual() ||
 				((endDate != null) && endDate.after(new Date()))) {
 
+				Product product = productPurchase.getProduct();
+
 				ProductConsumption[] productConsumptions =
 					productPurchase.getProductConsumptions();
 
 				if (productConsumptions.length == 0) {
-					Product product = productPurchase.getProduct();
-
 					return ResponseEntity.ok(
 						new JSONObject(
 						).put(

@@ -21,20 +21,19 @@ import './SideMenu.css';
 const ACTIVATION_PATH = 'activation';
 
 const expandGroupForSideMenu = (group) => {
-    if (group.name === 'Liferay Cloud' && group.activationProductName) {
-        
-        const productNames = group.activationProductName.split(',')
-            .map(name => name.trim())
-            .filter(name => name.length > 0);
+	if (group.name === 'Liferay Cloud' && group.activationProductName) {
+		const productNames = group.activationProductName.split(',')
+			.map(name => name.trim())
+			.filter(name => name.length > 0);
 
-        return productNames.map((productName) => ({
-            ...group,
-            name: productName,
-            displayName: productName
-        }));
-    }
-    
-    return [group];
+		return productNames.map((productName) => ({
+			...group,
+			name: productName,
+			displayName: productName
+		}));
+	}
+	
+	return [group];
 };
 
 const SideMenu = () => {
@@ -113,11 +112,11 @@ const SideMenu = () => {
 			const expandedGroups = activationSubscriptionGroups?.flatMap(expandGroupForSideMenu);
 
 			return expandedGroups?.sort(
-                (a, b) => {
-                    const aDisplayName = a.displayName || a.activationProductName || a.name;
-                    const bDisplayName = b.displayName || b.activationProductName || b.name;
+				(a, b) => {
+					const aDisplayName = a.displayName || a.activationProductName || a.name;
+					const bDisplayName = b.displayName || b.activationProductName || b.name;
 
-                    return aDisplayName.localeCompare(bDisplayName);
+					return aDisplayName.localeCompare(bDisplayName);
 				}
 			).map(
 				({ displayName, activationProductName, name}, index) => {

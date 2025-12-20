@@ -13,7 +13,21 @@ const ProductOutlet = ({product}) => {
 	const [{project, subscriptionGroups}] = useAppContext();
 
 	const hasProduct = useMemo(
-		() => !!subscriptionGroups?.find(({activationProductName, name}) => activationProductName === product || name === product),
+		() => !!subscriptionGroups?.find(({activationProductName, name}) => {
+			if (name === product) {
+				return true;
+			}
+
+			const activationProductNames = activationProductName.split(',')
+				.map(name => name.trim())
+				.filter(name => name.length > 0);
+
+			if (activationProductNames?.includes(product)) {
+				return true;
+			}
+
+			return false;
+		}),
 		[product, subscriptionGroups]
 	);
 

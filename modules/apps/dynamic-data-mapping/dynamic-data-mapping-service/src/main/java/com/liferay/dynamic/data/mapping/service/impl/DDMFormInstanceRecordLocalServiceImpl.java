@@ -44,6 +44,7 @@ import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDMFormUtil;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
 import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -58,7 +59,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
@@ -89,7 +89,6 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -805,37 +804,36 @@ public class DDMFormInstanceRecordLocalServiceImpl
 	private List<DDMFormInstanceRecord> _getFormInstanceRecords(Hits hits)
 		throws PortalException {
 
-		List<DDMFormInstanceRecord> ddmFormInstanceRecords = new ArrayList<>();
+		return TransformUtil.transform(
+			hits.toList(),
+			document -> {
+				long formInstanceRecordId = GetterUtil.getLong(
+					document.get(Field.ENTRY_CLASS_PK));
 
-		for (Document document : hits.toList()) {
-			long formInstanceRecordId = GetterUtil.getLong(
-				document.get(Field.ENTRY_CLASS_PK));
-
-			try {
-				ddmFormInstanceRecords.add(
-					getFormInstanceRecord(formInstanceRecordId));
-			}
-			catch (NoSuchFormInstanceRecordException
-						noSuchFormInstanceRecordException) {
-
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"DDM form instance record index is stale and " +
-							"contains record " + formInstanceRecordId,
-						noSuchFormInstanceRecordException);
+				try {
+					return getFormInstanceRecord(formInstanceRecordId);
 				}
+				catch (NoSuchFormInstanceRecordException
+							noSuchFormInstanceRecordException) {
 
-				long companyId = GetterUtil.getLong(
-					document.get(Field.COMPANY_ID));
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"DDM form instance record index is stale and " +
+								"contains record " + formInstanceRecordId,
+							noSuchFormInstanceRecordException);
+					}
 
-				Indexer<DDMFormInstanceRecord> indexer =
-					_getDDMFormInstanceRecordIndexer();
+					long companyId = GetterUtil.getLong(
+						document.get(Field.COMPANY_ID));
 
-				indexer.delete(companyId, document.getUID());
-			}
-		}
+					Indexer<DDMFormInstanceRecord> indexer =
+						_getDDMFormInstanceRecordIndexer();
 
-		return ddmFormInstanceRecords;
+					indexer.delete(companyId, document.getUID());
+
+					return null;
+				}
+			});
 	}
 
 	private String _getNextVersion(

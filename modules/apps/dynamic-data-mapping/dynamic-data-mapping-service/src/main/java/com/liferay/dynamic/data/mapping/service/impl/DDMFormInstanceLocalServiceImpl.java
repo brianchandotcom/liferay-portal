@@ -33,6 +33,7 @@ import com.liferay.dynamic.data.mapping.util.DDMFormInstanceFactory;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.service.MailService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -56,7 +57,6 @@ import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 
 import jakarta.mail.internet.InternetAddress;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -386,13 +386,11 @@ public class DDMFormInstanceLocalServiceImpl
 			new InternetAddress(user.getEmailAddress(), user.getFullName()),
 			subject, message, false);
 
-		List<InternetAddress> internetAddresses = new ArrayList<>();
-
-		for (String toEmailAddress : toEmailAddresses) {
-			internetAddresses.add(new InternetAddress(toEmailAddress));
-		}
-
-		mailMessage.setTo(internetAddresses.toArray(new InternetAddress[0]));
+		mailMessage.setTo(
+			TransformUtil.transform(
+				toEmailAddresses,
+				toEmailAddress -> new InternetAddress(toEmailAddress),
+				InternetAddress.class));
 
 		_mailService.sendEmail(mailMessage);
 	}

@@ -25,6 +25,7 @@ import com.liferay.dynamic.data.mapping.service.persistence.DDMStructurePersiste
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormFieldUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
@@ -529,18 +530,11 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 				Set<String> keySet = jsonObject.keySet();
 
 				if (!keySet.isEmpty()) {
-					List<DDMFieldAttributeInfo> ddmFieldAttributeInfos =
-						new ArrayList<>(keySet.size());
-
-					for (String key : jsonObject.keySet()) {
-						ddmFieldAttributeInfos.add(
-							new DDMFieldAttributeInfo(
-								key,
-								jsonSerializer.serialize(jsonObject.get(key)),
-								ddmFieldInfo, languageId));
-					}
-
-					return ddmFieldAttributeInfos;
+					return TransformUtil.transform(
+						jsonObject.keySet(),
+						key -> new DDMFieldAttributeInfo(
+							key, jsonSerializer.serialize(jsonObject.get(key)),
+							ddmFieldInfo, languageId));
 				}
 			}
 			catch (JSONException jsonException) {

@@ -28,6 +28,7 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.base.DDMTemplateLocalServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateLinkPersistence;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateVersionPersistence;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -389,19 +390,15 @@ public class DDMTemplateLocalServiceImpl
 			long targetClassPK, String type, ServiceContext serviceContext)
 		throws PortalException {
 
-		List<DDMTemplate> targetTemplates = new ArrayList<>();
-
 		List<DDMTemplate> sourceTemplates = ddmTemplatePersistence.findByC_C_T(
 			classNameId, sourceClassPK, type);
 
-		for (DDMTemplate sourceTemplate : sourceTemplates) {
-			DDMTemplate targetTemplate = _copyTemplate(
+		List<DDMTemplate> targetTemplates = TransformUtil.transform(
+			sourceTemplates,
+			sourceTemplate -> _copyTemplate(
 				userId, sourceTemplate, targetClassPK,
 				sourceTemplate.getNameMap(), sourceTemplate.getDescriptionMap(),
-				serviceContext);
-
-			targetTemplates.add(targetTemplate);
-		}
+				serviceContext));
 
 		Indexer<DDMTemplate> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			DDMTemplate.class);

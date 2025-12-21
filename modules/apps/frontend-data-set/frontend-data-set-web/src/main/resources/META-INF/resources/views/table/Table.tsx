@@ -17,7 +17,7 @@ import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {FDSTableCellHTMLElementBuilderArgs} from '@liferay/js-api/data-set';
 import classNames from 'classnames';
 import {ClientExtension} from 'frontend-js-components-web';
-import {getObjectValueFromPath, throttle} from 'frontend-js-web';
+import {getObjectValueFromPath, sub, throttle} from 'frontend-js-web';
 import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
 
 import FrontendDataSetContext, {
@@ -156,6 +156,7 @@ const Head = ({
 };
 
 const Row = ({
+	accessibleName,
 	active,
 	columns,
 	item,
@@ -166,6 +167,7 @@ const Row = ({
 	selectionType,
 	...otherProps
 }: {
+	accessibleName: string;
 	active: boolean;
 	columns: Array<Field>;
 	item: any;
@@ -235,6 +237,10 @@ const Row = ({
 							>
 								{!item.editable && (
 									<SelectionComponent
+										aria-label={sub(
+											Liferay.Language.get('select-x'),
+											accessibleName
+										)}
 										checked={active}
 										onChange={() =>
 											onItemSelectionChange(item)
@@ -338,6 +344,7 @@ const Body = ({
 	items,
 	itemsActions,
 	onItemSelectionChange,
+	schema,
 	selectionType,
 }: {
 	fields: Array<Field>;
@@ -349,6 +356,7 @@ const Body = ({
 	items: Array<any>;
 	itemsActions: Array<IItemsActions>;
 	onItemSelectionChange: Function;
+	schema: ITableSchema;
 	selectionType?: 'single' | 'multiple';
 }) => {
 	const {
@@ -357,6 +365,8 @@ const Body = ({
 		selectedItemsKey,
 		selectedItemsValue,
 	} = useContext(FrontendDataSetContext);
+
+	const {accessibleNameField} = schema;
 
 	const columns: Array<Field> = [
 		...(selectable ? [{fieldName: 'select'}] : []),
@@ -374,6 +384,14 @@ const Body = ({
 				{(item: any) => {
 					return (
 						<Row
+							accessibleName={
+								accessibleNameField
+									? getLocalizedValue(
+											item,
+											item[accessibleNameField]
+										)
+									: item[fields[0].fieldName]
+							}
 							active={
 								allItemsSelectedActive ||
 								!!selectedItemsValue?.find(
@@ -883,6 +901,7 @@ const Table = ({
 					items={items}
 					itemsActions={itemsActions}
 					onItemSelectionChange={onItemSelectionChange}
+					schema={schema}
 					selectionType={selectionType}
 				/>
 			</ClayTable>

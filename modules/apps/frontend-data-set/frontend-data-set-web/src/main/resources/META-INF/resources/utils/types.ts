@@ -204,6 +204,7 @@ export interface IField {
 	truncate?: boolean;
 }
 export interface ITableSchema {
+	accessibleNameField?: string;
 	fields: Array<IField>;
 }
 

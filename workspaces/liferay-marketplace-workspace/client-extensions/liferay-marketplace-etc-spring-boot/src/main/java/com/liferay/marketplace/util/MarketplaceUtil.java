@@ -95,7 +95,8 @@ public class MarketplaceUtil {
 		Properties properties = new Properties();
 
 		properties.setProperty("license-version", "1.0.0");
-		properties.setProperty("product-id", String.valueOf(product.getId()));
+		properties.setProperty(
+			"product-id", String.valueOf(product.getProductId()));
 		properties.setProperty(
 			"product-name", _getDefaultLocale(product.getName()));
 		properties.setProperty("product-version-id", "1");

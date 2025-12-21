@@ -16,11 +16,11 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldValue
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -236,17 +236,11 @@ public class DDMFormEvaluatorExpressionFieldAccessor
 	}
 
 	private Object _getFieldValues(String fieldName) {
-		List<Object> list = new ArrayList<>();
-
-		Set<DDMFormEvaluatorFieldContextKey> ddmFormEvaluatorFieldContextKeys =
+		List<Object> list = TransformUtil.transform(
 			_ddmFormEvaluatorFormValuesHelper.getDDMFormFieldContextKeys(
-				fieldName);
-
-		for (DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey :
-				ddmFormEvaluatorFieldContextKeys) {
-
-			list.add(getFieldValue(ddmFormEvaluatorFieldContextKey));
-		}
+				fieldName),
+			ddmFormEvaluatorFieldContextKey -> getFieldValue(
+				ddmFormEvaluatorFieldContextKey));
 
 		DDMFormFieldValueAccessor<?> ddmFormFieldValueAccessor =
 			_getDDMFormFieldValueAccessor(fieldName);

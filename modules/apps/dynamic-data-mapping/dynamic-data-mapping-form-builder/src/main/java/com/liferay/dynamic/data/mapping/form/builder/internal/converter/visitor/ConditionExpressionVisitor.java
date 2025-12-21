@@ -19,11 +19,11 @@ import com.liferay.dynamic.data.mapping.expression.model.OrExpression;
 import com.liferay.dynamic.data.mapping.expression.model.StringLiteral;
 import com.liferay.dynamic.data.mapping.expression.model.Term;
 import com.liferay.dynamic.data.mapping.spi.converter.model.SPIDDMFormRuleCondition;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -122,32 +122,30 @@ public class ConditionExpressionVisitor extends ExpressionVisitor<Object> {
 				"field", operand.getValue());
 		}
 
-		List<SPIDDMFormRuleCondition.Operand> operands = new ArrayList<>();
+		List<SPIDDMFormRuleCondition.Operand> operands =
+			TransformUtil.transform(
+				parameterExpressions,
+				parameterExpression -> {
+					if (parameterExpression instanceof FunctionCallExpression) {
+						FunctionCallExpression parameterFunctionCallExpression =
+							(FunctionCallExpression)parameterExpression;
 
-		for (Expression parameterExpression : parameterExpressions) {
-			if (parameterExpression instanceof FunctionCallExpression) {
-				FunctionCallExpression parameterFunctionCallExpression =
-					(FunctionCallExpression)parameterExpression;
+						if (StringUtil.equals(
+								parameterFunctionCallExpression.
+									getFunctionName(),
+								"getOptionLabel")) {
 
-				if (StringUtil.equals(
-						parameterFunctionCallExpression.getFunctionName(),
-						"getOptionLabel")) {
+							return doVisit(parameterExpression);
+						}
+					}
 
-					operands.add(doVisit(parameterExpression));
+					if (functionCallExpression.hasNestedFunctions()) {
+						return new SPIDDMFormRuleCondition.Operand(
+							"condition", parameterExpression.toString());
+					}
 
-					continue;
-				}
-			}
-
-			if (functionCallExpression.hasNestedFunctions()) {
-				operands.add(
-					new SPIDDMFormRuleCondition.Operand(
-						"condition", parameterExpression.toString()));
-			}
-			else {
-				operands.add(doVisit(parameterExpression));
-			}
-		}
+					return doVisit(parameterExpression);
+				});
 
 		_spiDDMFormRuleConditions.push(
 			_createDDMFormRuleCondition(functionName, operands));

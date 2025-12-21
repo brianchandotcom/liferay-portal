@@ -535,20 +535,18 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 	}
 
 	private List<DDMFormField> _getNontransientFormFields(DDMForm ddmForm) {
-		List<DDMFormField> ddmFormFields = new ArrayList<>();
-
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(true);
 
-		for (DDMFormField ddmFormField : ddmFormFieldsMap.values()) {
-			if (ddmFormField.isTransient()) {
-				continue;
-			}
+		return TransformUtil.transform(
+			ddmFormFieldsMap.values(),
+			ddmFormField -> {
+				if (ddmFormField.isTransient()) {
+					return null;
+				}
 
-			ddmFormFields.add(ddmFormField);
-		}
-
-		return ddmFormFields;
+				return ddmFormField;
+			});
 	}
 
 	private List<String> _getOptionsRenderedFormFieldValues(

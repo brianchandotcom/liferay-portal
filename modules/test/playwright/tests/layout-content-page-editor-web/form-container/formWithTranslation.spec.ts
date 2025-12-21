@@ -785,6 +785,18 @@ test(
 			addLocalizationSelect: true,
 		});
 
+		// Swap to Multiselector Checkbox fragment
+
+		const fragmentId = await pageEditorPage.getFragmentId(
+			'Multiselector Dropdown'
+		);
+
+		await pageEditorPage.swapFragment({
+			folder: 'Form Components',
+			fragmentId,
+			fragmentName: 'Multiselector Checkbox',
+		});
+
 		await pageEditorPage.publishPage();
 
 		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
@@ -1835,6 +1847,18 @@ test(
 
 		await pageEditorPage.mapFormFragment(formId, 'Plant', 'all', {
 			addLocalizationSelect: true,
+		});
+
+		// Swap to Multiselector Checkbox fragment
+
+		const fragmentId = await pageEditorPage.getFragmentId(
+			'Multiselector Dropdown'
+		);
+
+		await pageEditorPage.swapFragment({
+			folder: 'Form Components',
+			fragmentId,
+			fragmentName: 'Multiselector Checkbox',
 		});
 
 		await pageEditorPage.publishPage();

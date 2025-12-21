@@ -413,7 +413,21 @@ test(
 
 		await expect(page.getByText('Lemon Dimensions')).toBeVisible();
 
-		const inputId = await pageEditorPage.getFragmentId('Multiselect');
+		// Swap to Multiselector Checkbox fragment
+
+		const fragmentId = await pageEditorPage.getFragmentId(
+			'Multiselector Dropdown'
+		);
+
+		await pageEditorPage.swapFragment({
+			folder: 'Form Components',
+			fragmentId,
+			fragmentName: 'Multiselector Checkbox',
+		});
+
+		const inputId = await pageEditorPage.getFragmentId(
+			'Multiselector Checkbox'
+		);
 
 		await pageEditorPage.changeFragmentConfiguration({
 			fieldLabel: 'Show Help Text',

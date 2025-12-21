@@ -425,6 +425,18 @@ test(
 			addLocalizationSelect: true,
 		});
 
+		// Swap to Multiselector Checkbox fragment
+
+		const fragmentId = await pageEditorPage.getFragmentId(
+			'Multiselector Dropdown'
+		);
+
+		await pageEditorPage.swapFragment({
+			folder: 'Form Components',
+			fragmentId,
+			fragmentName: 'Multiselector Checkbox',
+		});
+
 		await pageEditorPage.publishPage();
 
 		// Go to view mode

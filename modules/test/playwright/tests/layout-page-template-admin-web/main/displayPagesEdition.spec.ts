@@ -1603,6 +1603,18 @@ test.describe('Object Display page', () => {
 				'Film (Default)'
 			);
 
+			// Swap to Multiselector Checkbox fragment
+
+			const fragmentId = await pageEditorPage.getFragmentId(
+				'Multiselector Dropdown'
+			);
+
+			await pageEditorPage.swapFragment({
+				folder: 'Form Components',
+				fragmentId,
+				fragmentName: 'Multiselector Checkbox',
+			});
+
 			await displayPageTemplatesPage.publishTemplate();
 
 			// Create an Object Entry

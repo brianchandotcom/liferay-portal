@@ -18,6 +18,7 @@ import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.fragment.entry.processor.helper.LayoutReferenceResolver;
 import com.liferay.fragment.util.exportimport.content.processor.ExportImportContentProcessorUtil;
 import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceRegistry;
@@ -345,30 +346,9 @@ public class DataValuesMappingExportImportContentProcessor
 		JSONObject layoutJSONObject = successMessageJSONObject.getJSONObject(
 			"layout");
 
-		Layout layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
-			layoutJSONObject.getString("layoutUuid"),
-			layoutJSONObject.getLong("groupId"),
-			layoutJSONObject.getBoolean("privateLayout"));
-
-		if (layout == null) {
-			return;
-		}
-
-		if (exportReferencedContent &&
-			(layout.getGroupId() == portletDataContext.getScopeGroupId())) {
-
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, stagedModel, layout,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
-		}
-		else {
-			Element entityElement = portletDataContext.getExportDataElement(
-				stagedModel);
-
-			portletDataContext.addReferenceElement(
-				stagedModel, entityElement, layout,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
-		}
+		_exportLayoutContentReference(
+			exportReferencedContent, layoutJSONObject, portletDataContext,
+			stagedModel);
 	}
 
 	private void _exportLayoutContentReference(
@@ -377,14 +357,13 @@ public class DataValuesMappingExportImportContentProcessor
 			StagedModel referrerStagedModel)
 		throws Exception {
 
-		if (layoutJSONObject.length() == 0) {
+		if (JSONUtil.isEmpty(layoutJSONObject)) {
 			return;
 		}
 
-		Layout layout = _layoutLocalService.fetchLayout(
-			layoutJSONObject.getLong("groupId"),
-			layoutJSONObject.getBoolean("privateLayout"),
-			layoutJSONObject.getLong("layoutId"));
+		Layout layout = _layoutReferenceResolver.resolve(
+			portletDataContext.getCompanyId(), layoutJSONObject,
+			portletDataContext.getScopeGroupId());
 
 		if (layout == null) {
 			return;
@@ -809,6 +788,9 @@ public class DataValuesMappingExportImportContentProcessor
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutReferenceResolver _layoutReferenceResolver;
 
 	@Reference
 	private Portal _portal;

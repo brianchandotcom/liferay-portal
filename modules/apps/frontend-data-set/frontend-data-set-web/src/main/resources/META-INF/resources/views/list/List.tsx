@@ -10,7 +10,7 @@ import ClayList from '@clayui/list';
 import ClaySticker from '@clayui/sticker';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
-import {getObjectValueFromPath} from 'frontend-js-web';
+import {getObjectValueFromPath, sub} from 'frontend-js-web';
 import React, {forwardRef, useContext} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
@@ -98,6 +98,8 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 			path: selectedItemsKey,
 		});
 
+		const accessibleName = title || description || '';
+
 		return (
 			<ClayList.Item
 				className={classNames(className, {
@@ -110,6 +112,10 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 				{selectable && (
 					<ClayList.ItemField className="justify-content-center selection-control">
 						<SelectionInput
+							aria-label={sub(
+								Liferay.Language.get('select-x'),
+								getLocalizedValue(item, accessibleName)?.value
+							)}
 							checked={
 								selectedItemsValue
 									? selectedItemsValue

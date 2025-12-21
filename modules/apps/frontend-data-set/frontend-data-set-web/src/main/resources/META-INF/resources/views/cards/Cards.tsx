@@ -5,7 +5,7 @@
 
 import {ClayCardWithInfo} from '@clayui/card';
 import classNames from 'classnames';
-import {getObjectValueFromPath} from 'frontend-js-web';
+import {getObjectValueFromPath, sub} from 'frontend-js-web';
 import React, {forwardRef, useContext, useRef} from 'react';
 
 import FrontendDataSetContext, {
@@ -61,6 +61,9 @@ const Card = forwardRef<HTMLDivElement, any>(
 			toggleItemInlineEdit,
 		}: IFrontendDataSetContext = useContext(FrontendDataSetContext);
 
+		const {description, image, labels, link, sticker, symbol, title} =
+			schema;
+
 		const [viewsContext] = useContext(ViewsContext);
 
 		const activeView: IView = viewsContext.activeView;
@@ -89,11 +92,11 @@ const Card = forwardRef<HTMLDivElement, any>(
 			displayType: DisplayType;
 			value: string;
 		}> => {
-			if (!schema.labels) {
+			if (!labels) {
 				return [];
 			}
 
-			return schema.labels.flatMap((label: ICardLabelSchema) => {
+			return labels.flatMap((label: ICardLabelSchema) => {
 				const {displayTypeKey, displayTypeValues} = label;
 				let {displayType} = label;
 
@@ -172,15 +175,21 @@ const Card = forwardRef<HTMLDivElement, any>(
 			return processedActions;
 		};
 
+		const accessibleName = title || description || '';
+
 		const props = {
 			actions: formattedActions && getDropdownActions(formattedActions),
-			description: getLocalizedValue(item, schema.description)?.value,
-			href: (schema.link && item[schema.link]) || null,
-			imgProps:
-				schema.image &&
-				imagePropsTransformer(
-					getLocalizedValue(item, schema.image)?.value
+			checkboxProps: {
+				'aria-label': sub(
+					Liferay.Language.get('select-x'),
+					getLocalizedValue(item, accessibleName)?.value
 				),
+			},
+			description: getLocalizedValue(item, description)?.value,
+			href: (link && item[link]) || null,
+			imgProps:
+				image &&
+				imagePropsTransformer(getLocalizedValue(item, image)?.value),
 			labels: getLabels(item),
 			onClick: (event: React.MouseEvent) => {
 				const target = event.nativeEvent.target as Element;
@@ -207,6 +216,12 @@ const Card = forwardRef<HTMLDivElement, any>(
 						onItemSelectionChange?.(item);
 					}
 				: undefined,
+			radioProps: {
+				'aria-label': sub(
+					Liferay.Language.get('select-x'),
+					getLocalizedValue(item, accessibleName)?.value
+				),
+			},
 			selectableType: selectionType === 'single' ? 'radio' : 'checkbox',
 			selected:
 				selectable &&
@@ -219,9 +234,9 @@ const Card = forwardRef<HTMLDivElement, any>(
 								path: selectedItemsKey,
 							})
 				),
-			stickerProps: (schema.sticker && item[schema.sticker]) || null,
-			symbol: schema.symbol && item[schema.symbol],
-			title: getLocalizedValue(item, schema.title)?.value || '',
+			stickerProps: (sticker && item[sticker]) || null,
+			symbol: symbol && item[symbol],
+			title: getLocalizedValue(item, title)?.value || '',
 		};
 
 		return (

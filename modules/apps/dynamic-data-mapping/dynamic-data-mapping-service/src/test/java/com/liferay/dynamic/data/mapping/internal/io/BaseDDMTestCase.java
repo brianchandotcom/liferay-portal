@@ -7,6 +7,7 @@ package com.liferay.dynamic.data.mapping.internal.io;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -21,7 +22,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -54,15 +54,10 @@ public abstract class BaseDDMTestCase {
 	protected List<DDMFormLayoutColumn> createDDMFormLayoutColumns(
 		String... fieldNames) {
 
-		List<DDMFormLayoutColumn> ddmFormLayoutColumns = new ArrayList<>();
-
 		int size = 12 / fieldNames.length;
 
-		for (String fieldName : fieldNames) {
-			ddmFormLayoutColumns.add(new DDMFormLayoutColumn(size, fieldName));
-		}
-
-		return ddmFormLayoutColumns;
+		return TransformUtil.transformToList(
+			fieldNames, fieldName -> new DDMFormLayoutColumn(size, fieldName));
 	}
 
 	protected DDMFormLayoutRow createDDMFormLayoutRow(

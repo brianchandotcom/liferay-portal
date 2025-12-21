@@ -6,12 +6,11 @@
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.function;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.math.BigDecimal;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 /**
  * @author Leonardo Barros
@@ -27,13 +26,9 @@ public class MinFunction
 			return BigDecimal.ZERO;
 		}
 
-		List<BigDecimal> list = new ArrayList<>();
-
-		for (Object value : values) {
-			list.add(new BigDecimal(value.toString()));
-		}
-
-		return Collections.min(list);
+		return Collections.min(
+			TransformUtil.transformToList(
+				values, value -> new BigDecimal(value.toString())));
 	}
 
 	@Override

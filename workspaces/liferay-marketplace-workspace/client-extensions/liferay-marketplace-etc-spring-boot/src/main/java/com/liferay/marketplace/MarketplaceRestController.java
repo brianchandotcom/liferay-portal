@@ -494,6 +494,11 @@ public class MarketplaceRestController extends BaseRestController {
 
 	@PostMapping("/process-publisher-asset-links/{productId}")
 	public void processPublisherAssetLinks(@PathVariable long productId) {
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"POST process publisher asset links for product " + productId);
+		}
+
 		try {
 			Product product = _marketplaceService.getProduct(productId);
 
@@ -512,7 +517,7 @@ public class MarketplaceRestController extends BaseRestController {
 			if (publisherAssetLinks.isEmpty()) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"No publisher asset link found for product " +
+						"No publisher asset links to process product " +
 							productId);
 				}
 
@@ -526,7 +531,7 @@ public class MarketplaceRestController extends BaseRestController {
 		}
 		catch (Exception exception) {
 			_log.error(
-				"Unable to upload publisher asset link for product " +
+				"Unable to process publisher asset links for product " +
 					productId,
 				exception);
 		}

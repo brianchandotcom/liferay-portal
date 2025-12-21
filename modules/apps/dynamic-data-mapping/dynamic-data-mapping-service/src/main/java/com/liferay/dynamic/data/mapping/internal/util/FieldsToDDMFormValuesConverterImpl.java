@@ -27,7 +27,6 @@ import java.io.Serializable;
 
 import java.text.DecimalFormat;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -191,20 +190,19 @@ public class FieldsToDDMFormValuesConverterImpl
 		throws PortalException {
 
 		try {
-			List<String> fieldsDisplayValues = new ArrayList<>();
+			return TransformUtil.transform(
+				splitFieldsDisplayValue(ddmFieldsDisplayField),
+				value -> {
+					String fieldName = StringUtil.extractFirst(
+						value, DDMImpl.INSTANCE_SEPARATOR);
 
-			String[] values = splitFieldsDisplayValue(ddmFieldsDisplayField);
+					if (!ddmFormFieldsMap.containsKey(fieldName)) {
+						return null;
+					}
 
-			for (String value : values) {
-				String fieldName = StringUtil.extractFirst(
-					value, DDMImpl.INSTANCE_SEPARATOR);
-
-				if (ddmFormFieldsMap.containsKey(fieldName)) {
-					fieldsDisplayValues.add(fieldName);
-				}
-			}
-
-			return fieldsDisplayValues.toArray(new String[0]);
+					return fieldName;
+				},
+				String.class);
 		}
 		catch (Exception exception) {
 			throw new PortalException(exception);

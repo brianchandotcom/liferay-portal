@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDMFieldsCounter;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.petra.string.CharPool;
@@ -59,7 +60,6 @@ import java.io.Writer;
 
 import java.net.URL;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -530,16 +530,10 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 	}
 
 	private String[] _getFieldsDisplayValues(String fieldDisplayValue) {
-		List<String> fieldsDisplayValues = new ArrayList<>();
-
-		for (String value : StringUtil.split(fieldDisplayValue)) {
-			String fieldName = StringUtil.extractFirst(
-				value, DDMImpl.INSTANCE_SEPARATOR);
-
-			fieldsDisplayValues.add(fieldName);
-		}
-
-		return fieldsDisplayValues.toArray(new String[0]);
+		return TransformUtil.transform(
+			StringUtil.split(fieldDisplayValue),
+			value -> StringUtil.extractFirst(value, DDMImpl.INSTANCE_SEPARATOR),
+			String.class);
 	}
 
 	private Map<String, Object> _getFreeMarkerContext(

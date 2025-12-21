@@ -9,6 +9,7 @@ import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.storage.BaseFieldRenderer;
 import com.liferay.dynamic.data.mapping.storage.Field;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.json.JSONException;
@@ -23,8 +24,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -42,19 +41,19 @@ public class DocumentLibraryFieldRenderer extends BaseFieldRenderer {
 
 	@Override
 	protected String doRender(Field field, Locale locale) throws Exception {
-		List<String> values = new ArrayList<>();
+		return StringUtil.merge(
+			TransformUtil.transform(
+				field.getValues(locale),
+				value -> {
+					String valueString = String.valueOf(value);
 
-		for (Serializable value : field.getValues(locale)) {
-			String valueString = String.valueOf(value);
+					if (Validator.isNull(valueString)) {
+						return null;
+					}
 
-			if (Validator.isNull(valueString)) {
-				continue;
-			}
-
-			values.add(handleJSON(valueString, locale));
-		}
-
-		return StringUtil.merge(values, StringPool.COMMA_AND_SPACE);
+					return handleJSON(valueString, locale);
+				}),
+			StringPool.COMMA_AND_SPACE);
 	}
 
 	@Override

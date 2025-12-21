@@ -8,9 +8,9 @@ package com.liferay.dynamic.data.mapping.internal;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureLink;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureLinkManager;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -50,34 +50,19 @@ public class DDMStructureLinkManagerImpl implements DDMStructureLinkManager {
 
 	@Override
 	public List<DDMStructureLink> getStructureLinks(long structureId) {
-		List<DDMStructureLink> ddmStructureLinks = new ArrayList<>();
-
-		for (com.liferay.dynamic.data.mapping.model.DDMStructureLink
-				ddmStructureLink :
-					_ddmStructureLinkLocalService.getStructureLinks(
-						structureId)) {
-
-			ddmStructureLinks.add(new DDMStructureLinkImpl(ddmStructureLink));
-		}
-
-		return ddmStructureLinks;
+		return TransformUtil.transform(
+			_ddmStructureLinkLocalService.getStructureLinks(structureId),
+			ddmStructureLink -> new DDMStructureLinkImpl(ddmStructureLink));
 	}
 
 	@Override
 	public List<DDMStructureLink> getStructureLinks(
 		long classNameId, long classPK) {
 
-		List<DDMStructureLink> ddmStructureLinks = new ArrayList<>();
-
-		for (com.liferay.dynamic.data.mapping.model.DDMStructureLink
-				ddmStructureLink :
-					_ddmStructureLinkLocalService.getStructureLinks(
-						classNameId, classPK)) {
-
-			ddmStructureLinks.add(new DDMStructureLinkImpl(ddmStructureLink));
-		}
-
-		return ddmStructureLinks;
+		return TransformUtil.transform(
+			_ddmStructureLinkLocalService.getStructureLinks(
+				classNameId, classPK),
+			ddmStructureLink -> new DDMStructureLinkImpl(ddmStructureLink));
 	}
 
 	@Reference

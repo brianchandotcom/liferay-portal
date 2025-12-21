@@ -7,6 +7,7 @@ package com.liferay.dynamic.data.mapping.internal.storage;
 
 import com.liferay.dynamic.data.mapping.storage.BaseFieldRenderer;
 import com.liferay.dynamic.data.mapping.storage.Field;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -17,8 +18,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -33,17 +32,17 @@ public class DateFieldRenderer extends BaseFieldRenderer {
 
 	@Override
 	protected String doRender(Field field, Locale locale) throws Exception {
-		List<String> values = new ArrayList<>();
+		return StringUtil.merge(
+			TransformUtil.transform(
+				field.getValues(locale),
+				value -> {
+					if (Validator.isNull(value)) {
+						return null;
+					}
 
-		for (Serializable value : field.getValues(locale)) {
-			if (Validator.isNull(value)) {
-				continue;
-			}
-
-			values.add(_format(value, locale));
-		}
-
-		return StringUtil.merge(values, StringPool.COMMA_AND_SPACE);
+					return _format(value, locale);
+				}),
+			StringPool.COMMA_AND_SPACE);
 	}
 
 	@Override

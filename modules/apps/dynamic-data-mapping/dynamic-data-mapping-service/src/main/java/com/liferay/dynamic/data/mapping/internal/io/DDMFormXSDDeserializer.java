@@ -12,6 +12,7 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.kernel.xml.XPath;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -166,13 +166,9 @@ public class DDMFormXSDDeserializer implements DDMFormDeserializer {
 	}
 
 	protected List<DDMFormField> getDDMFormFields(Element rootElement) {
-		List<DDMFormField> ddmFormFields = new ArrayList<>();
-
-		for (Element dynamicElement : rootElement.elements("dynamic-element")) {
-			ddmFormFields.add(getDDMFormField(dynamicElement));
-		}
-
-		return ddmFormFields;
+		return TransformUtil.transform(
+			rootElement.elements("dynamic-element"),
+			dynamicElement -> getDDMFormField(dynamicElement));
 	}
 
 	protected Locale getDefaultLocale(Element rootElement) {

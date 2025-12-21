@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -323,15 +322,11 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 	private void _normalizeDDMFormRuleActions(
 		Map<String, DDMFormField> ddmFormFieldsMap, DDMFormRule ddmFormRule) {
 
-		List<String> normalizedDDMFormRuleActions = new ArrayList<>();
-
-		for (String ddmFormRuleAction : ddmFormRule.getActions()) {
-			normalizedDDMFormRuleActions.add(
-				_getNormalizedDDMFormRuleExpression(
-					ddmFormFieldsMap, ddmFormRuleAction));
-		}
-
-		ddmFormRule.setActions(normalizedDDMFormRuleActions);
+		ddmFormRule.setActions(
+			TransformUtil.transform(
+				ddmFormRule.getActions(),
+				ddmFormRuleAction -> _getNormalizedDDMFormRuleExpression(
+					ddmFormFieldsMap, ddmFormRuleAction)));
 	}
 
 	private void _normalizeDDMFormRules(DDMForm ddmForm) throws Exception {

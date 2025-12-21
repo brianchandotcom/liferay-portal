@@ -366,24 +366,23 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 				Set<String> keySet = jsonObject.keySet();
 
 				if (!keySet.isEmpty()) {
-					List<DDMFieldAttributeInfo> ddmFieldAttributeInfos =
-						new ArrayList<>(keySet.size());
+					return TransformUtil.transform(
+						jsonObject.keySet(),
+						key -> {
+							DDMFieldAttributeInfo ddmFieldAttributeInfo =
+								new DDMFieldAttributeInfo(
+									key,
+									jsonSerializer.serialize(
+										jsonObject.get(key)),
+									languageId);
 
-					for (String key : jsonObject.keySet()) {
-						DDMFieldAttributeInfo ddmFieldAttributeInfo =
-							new DDMFieldAttributeInfo(
-								key,
-								jsonSerializer.serialize(jsonObject.get(key)),
-								languageId);
+							_insertDDMFieldAttribute(
+								companyId, contentId, ddmFieldAttributeInfo,
+								fieldId,
+								insertDDMFieldAttributePreparedStatement);
 
-						_insertDDMFieldAttribute(
-							companyId, contentId, ddmFieldAttributeInfo,
-							fieldId, insertDDMFieldAttributePreparedStatement);
-
-						ddmFieldAttributeInfos.add(ddmFieldAttributeInfo);
-					}
-
-					return ddmFieldAttributeInfos;
+							return ddmFieldAttributeInfo;
+						});
 				}
 			}
 			catch (JSONException jsonException) {

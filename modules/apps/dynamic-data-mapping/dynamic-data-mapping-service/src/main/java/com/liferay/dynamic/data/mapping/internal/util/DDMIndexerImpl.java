@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.storage.constants.FieldConstants;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesConverterUtil;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -782,14 +783,9 @@ public class DDMIndexerImpl implements DDMIndexer {
 				truncatedValuesString = truncatedValues.toArray(new String[0]);
 			}
 			else if (type.equals(DDMFormFieldTypeConstants.TEXT)) {
-				List<String> truncatedValues = new ArrayList<>(
-					valuesString.length);
-
-				for (String valueString : valuesString) {
-					truncatedValues.add(_truncate(valueString));
-				}
-
-				truncatedValuesString = truncatedValues.toArray(new String[0]);
+				truncatedValuesString = TransformUtil.transform(
+					valuesString, valueString -> _truncate(valueString),
+					String.class);
 			}
 
 			if (indexType.equals("keyword")) {
@@ -1073,8 +1069,6 @@ public class DDMIndexerImpl implements DDMIndexer {
 	}
 
 	private Date[] _getDateValues(String type, String[] values) {
-		List<Date> dateValues = new ArrayList<>(values.length);
-
 		String pattern = "yyyy-MM-dd";
 
 		if (type.equals(DDMFormFieldTypeConstants.DATE_TIME)) {
@@ -1084,22 +1078,25 @@ public class DDMIndexerImpl implements DDMIndexer {
 		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 			pattern);
 
-		for (String value : values) {
-			if (Validator.isNull(value)) {
-				continue;
-			}
-
-			try {
-				dateValues.add(dateFormat.parse(value));
-			}
-			catch (ParseException parseException) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(parseException);
+		return TransformUtil.transform(
+			values,
+			value -> {
+				if (Validator.isNull(value)) {
+					return null;
 				}
-			}
-		}
 
-		return dateValues.toArray(new Date[0]);
+				try {
+					return dateFormat.parse(value);
+				}
+				catch (ParseException parseException) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(parseException);
+					}
+
+					return null;
+				}
+			},
+			Date.class);
 	}
 
 	private String _getFieldName(String name) {

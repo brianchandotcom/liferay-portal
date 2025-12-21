@@ -28,7 +28,6 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -122,18 +121,18 @@ public class NumericDDMFormFieldTypeReportProcessor
 				ddmFormInstanceRecord.getFormInstance();
 
 			List<DDMFormInstanceRecord> ddmFormInstanceRecords =
-				new ArrayList<>();
+				TransformUtil.transform(
+					ddmFormInstance.getFormInstanceRecords(),
+					currentDDMFormInstanceRecord -> {
+						if (formInstanceRecordId ==
+								currentDDMFormInstanceRecord.
+									getFormInstanceRecordId()) {
 
-			for (DDMFormInstanceRecord currentDDMFormInstanceRecord :
-					ddmFormInstance.getFormInstanceRecords()) {
+							return null;
+						}
 
-				if (formInstanceRecordId !=
-						currentDDMFormInstanceRecord.
-							getFormInstanceRecordId()) {
-
-					ddmFormInstanceRecords.add(currentDDMFormInstanceRecord);
-				}
-			}
+						return currentDDMFormInstanceRecord;
+					});
 
 			if (ddmFormInstanceRecords.isEmpty()) {
 				jsonObject.remove("summary");

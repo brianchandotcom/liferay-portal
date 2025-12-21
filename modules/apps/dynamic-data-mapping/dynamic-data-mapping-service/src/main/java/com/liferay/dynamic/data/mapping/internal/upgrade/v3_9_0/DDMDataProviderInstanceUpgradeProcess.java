@@ -17,6 +17,7 @@ import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesDeserializeUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesSerializeUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -135,33 +135,30 @@ public class DDMDataProviderInstanceUpgradeProcess extends UpgradeProcess {
 				ddmFormField.getNestedDDMFormFieldsMap();
 
 			for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
-				List<DDMFormFieldValue> newNestedDDMFormFieldValues =
-					new ArrayList<>();
-
-				for (DDMFormFieldValue nestedDDMFormFieldValue :
-						ddmFormFieldValue.getNestedDDMFormFieldValues()) {
-
-					String nestedDDMFormFieldValueName =
-						nestedDDMFormFieldValue.getName();
-
-					DDMFormField nestedDDMFormField =
-						nestedDDMFormFieldsMap.get(nestedDDMFormFieldValueName);
-
-					if (nestedDDMFormField == null) {
-						continue;
-					}
-
-					if (nestedDDMFormFieldValueName.equals(
-							"outputParameterPath")) {
-
-						_updateNestedDDMFormFieldValue(nestedDDMFormFieldValue);
-					}
-
-					newNestedDDMFormFieldValues.add(nestedDDMFormFieldValue);
-				}
-
 				ddmFormFieldValue.setNestedDDMFormFields(
-					newNestedDDMFormFieldValues);
+					TransformUtil.transform(
+						ddmFormFieldValue.getNestedDDMFormFieldValues(),
+						nestedDDMFormFieldValue -> {
+							String nestedDDMFormFieldValueName =
+								nestedDDMFormFieldValue.getName();
+
+							DDMFormField nestedDDMFormField =
+								nestedDDMFormFieldsMap.get(
+									nestedDDMFormFieldValueName);
+
+							if (nestedDDMFormField == null) {
+								return null;
+							}
+
+							if (nestedDDMFormFieldValueName.equals(
+									"outputParameterPath")) {
+
+								_updateNestedDDMFormFieldValue(
+									nestedDDMFormFieldValue);
+							}
+
+							return nestedDDMFormFieldValue;
+						}));
 			}
 		}
 

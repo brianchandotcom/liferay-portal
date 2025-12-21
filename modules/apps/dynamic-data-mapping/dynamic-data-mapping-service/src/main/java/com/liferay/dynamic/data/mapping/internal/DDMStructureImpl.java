@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -92,15 +91,9 @@ public class DDMStructureImpl implements DDMStructure {
 
 	@Override
 	public List<DDMFormField> getDDMFormFields(boolean includeTransientFields) {
-		List<DDMFormField> ddmFormFields = new ArrayList<>();
-
-		for (com.liferay.dynamic.data.mapping.model.DDMFormField ddmFormField :
-				_ddmStructure.getDDMFormFields(includeTransientFields)) {
-
-			ddmFormFields.add(DDMBeanTranslatorUtil.translate(ddmFormField));
-		}
-
-		return ddmFormFields;
+		return TransformUtil.transform(
+			_ddmStructure.getDDMFormFields(includeTransientFields),
+			ddmFormField -> DDMBeanTranslatorUtil.translate(ddmFormField));
 	}
 
 	@Override

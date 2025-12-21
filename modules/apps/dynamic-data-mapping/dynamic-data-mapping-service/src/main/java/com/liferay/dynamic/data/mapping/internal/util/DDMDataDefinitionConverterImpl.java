@@ -33,6 +33,7 @@ import com.liferay.dynamic.data.mapping.util.DDMDataDefinitionConverter;
 import com.liferay.dynamic.data.mapping.util.DDMFormDeserializeUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormLayoutDeserializeUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormSerializeUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -44,7 +45,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -124,19 +124,20 @@ public class DDMDataDefinitionConverterImpl
 		for (DDMFormLayoutPage ddmFormLayoutPage :
 				ddmFormLayout.getDDMFormLayoutPages()) {
 
-			List<DDMFormLayoutRow> ddmFormLayoutRows = new ArrayList<>();
+			ddmFormLayoutPage.setDDMFormLayoutRows(
+				TransformUtil.transform(
+					ddmForm.getDDMFormFields(),
+					ddmFormField -> {
+						DDMFormLayoutRow ddmFormLayoutRow =
+							new DDMFormLayoutRow();
 
-			for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
-				DDMFormLayoutRow ddmFormLayoutRow = new DDMFormLayoutRow();
+						ddmFormLayoutRow.addDDMFormLayoutColumn(
+							new DDMFormLayoutColumn(
+								DDMFormLayoutColumn.FULL,
+								ddmFormField.getName()));
 
-				ddmFormLayoutRow.addDDMFormLayoutColumn(
-					new DDMFormLayoutColumn(
-						DDMFormLayoutColumn.FULL, ddmFormField.getName()));
-
-				ddmFormLayoutRows.add(ddmFormLayoutRow);
-			}
-
-			ddmFormLayoutPage.setDDMFormLayoutRows(ddmFormLayoutRows);
+						return ddmFormLayoutRow;
+					}));
 
 			LocalizedValue localizedValue = _upgradeLocalizedValue(
 				ddmFormLayout.getAvailableLocales(),
@@ -606,19 +607,16 @@ public class DDMDataDefinitionConverterImpl
 		Set<Locale> availableLocales, List<DDMFormField> ddmFormFields,
 		Locale defaultLocale, DDMFormField parentFieldSetDDMFormField) {
 
-		List<DDMFormField> nestedDDMFormFields = new ArrayList<>();
+		List<DDMFormField> nestedDDMFormFields = TransformUtil.transform(
+			ddmFormFields,
+			ddmFormField -> {
+				if (ListUtil.isEmpty(ddmFormField.getNestedDDMFormFields())) {
+					return ddmFormField;
+				}
 
-		for (DDMFormField ddmFormField : ddmFormFields) {
-			if (ListUtil.isEmpty(ddmFormField.getNestedDDMFormFields())) {
-				nestedDDMFormFields.add(ddmFormField);
-
-				continue;
-			}
-
-			nestedDDMFormFields.add(
-				_getFieldSetDDMFormField(
-					availableLocales, ddmFormField, defaultLocale));
-		}
+				return _getFieldSetDDMFormField(
+					availableLocales, ddmFormField, defaultLocale);
+			});
 
 		if (nestedDDMFormFields.size() == 1) {
 			DDMFormField nestedDDMFormField = nestedDDMFormFields.get(0);

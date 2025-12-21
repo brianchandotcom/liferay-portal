@@ -9,6 +9,7 @@ import com.liferay.document.library.kernel.store.Store;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.store.s3.configuration.S3StoreConfiguration;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -17,6 +18,7 @@ import io.netty.handler.codec.http.HttpRequest;
 import java.net.InetSocketAddress;
 
 import java.util.Collections;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.junit.After;
@@ -30,6 +32,7 @@ import org.littleshoot.proxy.HttpFilters;
 import org.littleshoot.proxy.HttpFiltersSourceAdapter;
 import org.littleshoot.proxy.HttpProxyServer;
 import org.littleshoot.proxy.HttpProxyServerBootstrap;
+import org.littleshoot.proxy.ProxyAuthenticator;
 import org.littleshoot.proxy.impl.DefaultHttpProxyServer;
 
 import org.mockito.MockedStatic;
@@ -112,11 +115,29 @@ public class S3StoreUnitTest {
 
 	@Test
 	public void testProxy() throws Exception {
-		_mockProxy();
-		_testProxy(true);
+		_mockProxy(null, null);
+		_testProxy(true, null, null);
 	}
 
-	private void _mockProxy() {
+	@Test
+	public void testProxyAuthentication() throws Exception {
+		String proxyUserName = RandomTestUtil.randomString();
+		String proxyPassword = RandomTestUtil.randomString();
+
+		_mockProxy(proxyUserName, proxyPassword);
+		_testProxy(true, proxyUserName, proxyPassword);
+	}
+
+	@Test
+	public void testProxyAuthenticationFailed() throws Exception {
+		String proxyUserName = RandomTestUtil.randomString();
+		String proxyPassword = RandomTestUtil.randomString();
+
+		_mockProxy(proxyUserName, proxyPassword);
+		_testProxy(false, proxyUserName, proxyPassword + "1");
+	}
+
+	private void _mockProxy(String proxyUserName, String proxyPassword) {
 		Mockito.when(
 			_s3StoreConfiguration.proxyHost()
 		).thenReturn(
@@ -128,9 +149,40 @@ public class S3StoreUnitTest {
 		).thenReturn(
 			_INET_SOCKET_ADDRESS.getPort()
 		);
+
+		if (Validator.isNotNull(proxyUserName)) {
+			Mockito.when(
+				_s3StoreConfiguration.proxyAuthType()
+			).thenReturn(
+				"username-password"
+			);
+
+			Mockito.when(
+				_s3StoreConfiguration.proxyPassword()
+			).thenReturn(
+				proxyPassword
+			);
+
+			Mockito.when(
+				_s3StoreConfiguration.proxyUsername()
+			).thenReturn(
+				proxyUserName
+			);
+		}
+		else {
+			Mockito.when(
+				_s3StoreConfiguration.proxyAuthType()
+			).thenReturn(
+				"none"
+			);
+		}
 	}
 
-	private void _testProxy(boolean expectedProxyHit) throws Exception {
+	private void _testProxy(
+			boolean expectedProxyHit, String proxyUserName,
+			String proxyPassword)
+		throws Exception {
+
 		AtomicBoolean proxyHit = new AtomicBoolean(false);
 
 		HttpProxyServerBootstrap httpProxyServerBootstrap =
@@ -149,6 +201,31 @@ public class S3StoreUnitTest {
 
 			});
 
+		if (Validator.isNotNull(proxyUserName)) {
+			httpProxyServerBootstrap.withProxyAuthenticator(
+				new ProxyAuthenticator() {
+
+					@Override
+					public boolean authenticate(
+						String userName, String password) {
+
+						if (Objects.equals(userName, proxyUserName) &&
+							Objects.equals(password, proxyPassword)) {
+
+							return true;
+						}
+
+						return false;
+					}
+
+					@Override
+					public String getRealm() {
+						return null;
+					}
+
+				});
+		}
+
 		HttpProxyServer httpProxyServer = httpProxyServerBootstrap.start();
 
 		try {
@@ -166,7 +243,9 @@ public class S3StoreUnitTest {
 			catch (SystemException systemException) {
 				String message = systemException.getMessage();
 
-				Assert.assertTrue(message.contains("Status Code: 403"));
+				Assert.assertTrue(
+					message.contains("Could not connect to proxy") ||
+					message.contains("Status Code: 403"));
 
 				Assert.assertEquals(expectedProxyHit, proxyHit.get());
 			}

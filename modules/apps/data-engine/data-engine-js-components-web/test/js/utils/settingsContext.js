@@ -155,10 +155,10 @@ describe('utils/settingsContext', () => {
 					'New Label'
 				);
 
-				expect(updatedField.fieldName).toEqual('NewLabel');
+				expect(updatedField.fieldName).toEqual('New Label');
 				expect(
 					getFieldValue(updatedField.settingsContext.pages, 'name')
-				).toEqual('NewLabel');
+				).toEqual('New Label');
 			});
 
 			it('does not automatically update the field name if it was not auto generated from its label', () => {

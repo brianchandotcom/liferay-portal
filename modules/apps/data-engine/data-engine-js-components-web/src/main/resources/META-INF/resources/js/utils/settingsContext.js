@@ -5,7 +5,6 @@
 
 import {updateFieldValidationProperty} from '../core/utils/fields';
 import {generateInstanceId, getDefaultFieldName} from './fieldSupport';
-import {normalizeFieldName} from './fields.es';
 import {PagesVisitor} from './visitors.es';
 
 export function getSettingsContextProperty(
@@ -137,21 +136,15 @@ export function updateFieldName(
 	isInvalidValue = false
 ) {
 	const {fieldName} = focusedField;
-	const normalizedFieldName = normalizeFieldName(value);
 
-	let newFieldName;
-
-	if (normalizedFieldName === '') {
-		newFieldName = fieldNameGenerator(
+	if (value === '') {
+		value = fieldNameGenerator(
 			getDefaultFieldName(false, {name: focusedField.type}),
 			fieldName
 		);
 	}
-	else {
-		newFieldName = normalizedFieldName;
-	}
 
-	if (newFieldName) {
+	if (value) {
 		let {settingsContext} = focusedField;
 
 		settingsContext = {
@@ -160,7 +153,7 @@ export function updateFieldName(
 				settingsContext.pages,
 				fieldName,
 				'fieldName',
-				newFieldName
+				value
 			),
 		};
 
@@ -174,14 +167,14 @@ export function updateFieldName(
 		focusedField = {
 			...focusedField,
 			displayErrors: isInvalidValue,
-			fieldName: newFieldName,
-			name: newFieldName,
+			fieldName: value,
+			name: value,
 			settingsContext: updateSettingsContextProperty(
 				defaultLanguageId,
 				editingLanguageId,
 				settingsContextWithErrors,
 				'name',
-				newFieldName
+				value
 			),
 		};
 	}

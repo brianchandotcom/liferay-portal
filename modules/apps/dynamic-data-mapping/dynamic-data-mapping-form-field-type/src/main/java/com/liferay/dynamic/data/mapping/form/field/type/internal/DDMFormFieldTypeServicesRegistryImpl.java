@@ -18,12 +18,12 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizer
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -97,8 +97,6 @@ public class DDMFormFieldTypeServicesRegistryImpl
 
 	@Override
 	public List<DDMFormFieldType> getDDMFormFieldTypes() {
-		List<DDMFormFieldType> ddmFormFieldTypes = new ArrayList<>();
-
 		List<ServiceWrapper<DDMFormFieldType>> ddmFormFieldTypeServiceWrappers =
 			ListUtil.fromCollection(
 				_ddmFormFieldTypeServiceTrackerMap.values());
@@ -107,39 +105,32 @@ public class DDMFormFieldTypeServicesRegistryImpl
 			ddmFormFieldTypeServiceWrappers,
 			_ddmFormFieldTypeServiceWrapperDisplayOrderComparator);
 
-		for (ServiceWrapper<DDMFormFieldType> ddmFormFieldTypeServiceWrapper :
-				ddmFormFieldTypeServiceWrappers) {
-
-			ddmFormFieldTypes.add(ddmFormFieldTypeServiceWrapper.getService());
-		}
-
-		return Collections.unmodifiableList(ddmFormFieldTypes);
+		return Collections.unmodifiableList(
+			TransformUtil.transform(
+				ddmFormFieldTypeServiceWrappers,
+				ddmFormFieldTypeServiceWrapper ->
+					ddmFormFieldTypeServiceWrapper.getService()));
 	}
 
 	@Override
 	public List<DDMFormFieldType> getDDMFormFieldTypesByDataDomain(
 		String dataDomain) {
 
-		List<DDMFormFieldType> ddmFormFieldTypes = new ArrayList<>();
+		return Collections.unmodifiableList(
+			TransformUtil.transform(
+				ListUtil.fromCollection(
+					_ddmFormFieldTypeServiceTrackerMap.values()),
+				ddmFormFieldTypeServiceWrapper -> {
+					String fieldDataDomain = MapUtil.getString(
+						ddmFormFieldTypeServiceWrapper.getProperties(),
+						"ddm.form.field.type.data.domain");
 
-		List<ServiceWrapper<DDMFormFieldType>> ddmFormFieldTypeServiceWrappers =
-			ListUtil.fromCollection(
-				_ddmFormFieldTypeServiceTrackerMap.values());
+					if (!Objects.equals(fieldDataDomain, dataDomain)) {
+						return null;
+					}
 
-		for (ServiceWrapper<DDMFormFieldType> ddmFormFieldTypeServiceWrapper :
-				ddmFormFieldTypeServiceWrappers) {
-
-			String fieldDataDomain = MapUtil.getString(
-				ddmFormFieldTypeServiceWrapper.getProperties(),
-				"ddm.form.field.type.data.domain");
-
-			if (Objects.equals(fieldDataDomain, dataDomain)) {
-				ddmFormFieldTypes.add(
-					ddmFormFieldTypeServiceWrapper.getService());
-			}
-		}
-
-		return Collections.unmodifiableList(ddmFormFieldTypes);
+					return ddmFormFieldTypeServiceWrapper.getService();
+				}));
 	}
 
 	@Override

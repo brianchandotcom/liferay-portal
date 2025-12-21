@@ -10,6 +10,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTy
 import com.liferay.dynamic.data.mapping.form.field.type.internal.util.NumericInputMaskDDMFormFieldTypeUtil;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -57,20 +57,15 @@ public class NumericInputMaskDDMFormFieldTemplateContextContributor
 	}
 
 	private List<Object> _createOptions(Map<String, Object> map) {
-		List<Object> options = new ArrayList<>();
-
-		for (Map.Entry<String, Object> entry : map.entrySet()) {
-			options.add(
-				HashMapBuilder.put(
-					"label", entry.getValue()
-				).put(
-					"reference", entry.getKey()
-				).put(
-					"value", entry.getKey()
-				).build());
-		}
-
-		return options;
+		return TransformUtil.transform(
+			map.entrySet(),
+			entry -> HashMapBuilder.put(
+				"label", entry.getValue()
+			).put(
+				"reference", entry.getKey()
+			).put(
+				"value", entry.getKey()
+			).build());
 	}
 
 	private Map<String, Object> _getDecimalSymbols() {

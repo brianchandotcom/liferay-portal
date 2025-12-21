@@ -112,26 +112,31 @@ public class S3StoreUnitTest {
 
 	@Test
 	public void testProxy() throws Exception {
-		InetSocketAddress inetSocketAddress = new InetSocketAddress(4250);
+		_mockProxy();
+		_testProxy(true);
+	}
 
+	private void _mockProxy() {
 		Mockito.when(
 			_s3StoreConfiguration.proxyHost()
 		).thenReturn(
-			inetSocketAddress.getHostString()
+			_INET_SOCKET_ADDRESS.getHostString()
 		);
 
 		Mockito.when(
 			_s3StoreConfiguration.proxyPort()
 		).thenReturn(
-			inetSocketAddress.getPort()
+			_INET_SOCKET_ADDRESS.getPort()
 		);
+	}
 
+	private void _testProxy(boolean expectedProxyHit) throws Exception {
 		AtomicBoolean proxyHit = new AtomicBoolean(false);
 
 		HttpProxyServerBootstrap httpProxyServerBootstrap =
 			DefaultHttpProxyServer.bootstrap();
 
-		httpProxyServerBootstrap.withAddress(inetSocketAddress);
+		httpProxyServerBootstrap.withAddress(_INET_SOCKET_ADDRESS);
 		httpProxyServerBootstrap.withFiltersSource(
 			new HttpFiltersSourceAdapter() {
 
@@ -163,7 +168,7 @@ public class S3StoreUnitTest {
 
 				Assert.assertTrue(message.contains("Status Code: 403"));
 
-				Assert.assertTrue(proxyHit.get());
+				Assert.assertEquals(expectedProxyHit, proxyHit.get());
 			}
 			finally {
 				s3Store.deactivate();
@@ -173,6 +178,9 @@ public class S3StoreUnitTest {
 			httpProxyServer.stop();
 		}
 	}
+
+	private static final InetSocketAddress _INET_SOCKET_ADDRESS =
+		new InetSocketAddress("localhost", 4250);
 
 	private final MockedStatic<ConfigurableUtil> _configurableUtilMockedStatic =
 		Mockito.mockStatic(ConfigurableUtil.class);

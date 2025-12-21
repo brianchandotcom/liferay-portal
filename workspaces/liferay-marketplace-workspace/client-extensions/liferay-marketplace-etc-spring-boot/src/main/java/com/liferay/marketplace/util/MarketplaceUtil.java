@@ -282,7 +282,7 @@ public class MarketplaceUtil {
 
 			entry.getValue(
 			).store(
-				byteArrayOutputStream, "Added automatically by Marketplace"
+				byteArrayOutputStream, "Automatically added by Marketplace"
 			);
 
 			zipOutputStream.write(byteArrayOutputStream.toByteArray());

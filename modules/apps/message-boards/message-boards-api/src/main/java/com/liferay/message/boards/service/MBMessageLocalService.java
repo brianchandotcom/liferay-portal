@@ -580,6 +580,13 @@ public interface MBMessageLocalService
 	public List<MBMessage> getMessages(
 		String className, long classPK, int status);
 
+	@Indexable(type = IndexableType.REINDEX)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBMessage getOrAddEmptyDiscussionMessage(
+			String externalReferenceCode, long userId, long groupId,
+			String className, long classPK)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

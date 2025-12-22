@@ -147,7 +147,7 @@ const AnalyticsWorkspaceDetails: React.FC<AnalyticsWorkspaceDetailsProps> = ({
 						},
 						{
 							title: i18n.translate('incident-report-contacts'),
-							value: project?.incidentReportEmailAddresses.map(
+							value: project?.incidentReportEmailAddresses?.map(
 								(emailAddress) => (
 									<div key={emailAddress}>{emailAddress}</div>
 								)
@@ -156,7 +156,7 @@ const AnalyticsWorkspaceDetails: React.FC<AnalyticsWorkspaceDetailsProps> = ({
 
 						{
 							title: i18n.translate('subscription-type'),
-							value: project?.faroSubscription.name,
+							value: project?.faroSubscription?.name,
 						},
 					]}
 				/>

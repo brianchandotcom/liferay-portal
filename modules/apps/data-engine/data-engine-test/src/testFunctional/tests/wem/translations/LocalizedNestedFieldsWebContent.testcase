@@ -236,20 +236,6 @@ definition {
 
 		PortletEntry.publish();
 
-		AssertClick(
-			buttonName = "Publish With Permissions",
-			locator1 = "WCEditWebContent#PUBLISH_WITH_PERMISSIONS_BUTTON",
-			value1 = "Publish With Permissions");
-
-		WaitForElementPresent(
-			locator1 = "Modal#SELECT_WITH_LABEL",
-			selectLabel = "Viewable by");
-
-		AssertClick(
-			buttonName = "Publish",
-			locator1 = "Modal#PRIMARY_BUTTON",
-			value1 = "Publish");
-
 		WebContent.viewWithStructureCP(
 			webContentMultipleSelection = "Option 1 - edited",
 			webContentMultipleSelectionFieldLabel = "Multiple Selection - edited",
@@ -304,11 +290,6 @@ definition {
 			webContentMultipleSelectionFieldLabel = "Multiple Selection - pt-BR edited");
 
 		PortletEntry.publish();
-
-		AssertClick(
-			buttonName = "Publish",
-			locator1 = "WCEditWebContent#PUBLISH_BUTTON",
-			value1 = "Publish");
 
 		WebContent.viewWithStructureCP(
 			webContentMultipleSelection = "Option 3 - edited",
@@ -1066,20 +1047,6 @@ definition {
 			webContentRichTextFieldLabel = "Second Rich Text");
 
 		PortletEntry.publish();
-
-		AssertClick(
-			buttonName = "Publish With Permissions",
-			locator1 = "WCEditWebContent#PUBLISH_WITH_PERMISSIONS_BUTTON",
-			value1 = "Publish With Permissions");
-
-		WaitForElementPresent(
-			locator1 = "Modal#SELECT_WITH_LABEL",
-			selectLabel = "Viewable by");
-
-		AssertClick(
-			buttonName = "Publish",
-			locator1 = "Modal#PRIMARY_BUTTON",
-			value1 = "Publish");
 
 		WebContent.viewWithStructureCP(
 			webContentRichText = "This is the first Rich Text field",

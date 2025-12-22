@@ -25,7 +25,7 @@ export const test = mergeTests(
 	searchPageTest
 );
 
-test.describe('Custom filter configuration works as expected on content pages', () => {
+test.describe('Configuration on Content Pages', () => {
 	test('Custom filter configuration does not leak between experiences @LPD-35585', async ({
 		apiHelpers,
 		page,

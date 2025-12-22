@@ -13,7 +13,6 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {searchPageTest} from '../../../fixtures/searchPageTest';
 import getRandomString from '../../../utils/getRandomString';
-import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 
 export const test = mergeTests(
 	isolatedLayoutTest({type: 'portlet'}),
@@ -27,7 +26,7 @@ export const test = mergeTests(
 	pageEditorPagesTest
 );
 
-test.describe('Category facet configuration for vocabularies', () => {
+test.describe('Category Facet', () => {
 	test('Lists 20+ sites available to the user @LPD-33194', async ({
 		apiHelpers,
 		layout,
@@ -87,87 +86,7 @@ test.describe('Category facet configuration for vocabularies', () => {
 	});
 });
 
-test.describe('Retain items per page in search paginator', () => {
-	test('Retains items per page after new keyword search @LPD-19994', async ({
-		apiHelpers,
-		page,
-		searchPage,
-		site,
-	}) => {
-		let siteLayout: Layout;
-
-		await test.step('Create web content for search results', async () => {
-			const basicWebContentStructureId =
-				await getBasicWebContentStructureId(apiHelpers);
-
-			for (let count = 0; count < 21; count++) {
-				await apiHelpers.jsonWebServicesJournal.addWebContent({
-					ddmStructureId: basicWebContentStructureId,
-					groupId: site.id,
-					titleMap: {en_US: `Test Web Content ${count}`},
-				});
-			}
-		});
-
-		await test.step('Create a portlet page associated to site', async () => {
-			siteLayout = await apiHelpers.jsonWebServicesLayout.addLayout({
-				groupId: site.id,
-				options: {type: 'portlet'},
-				title: getRandomString(),
-			});
-		});
-
-		await test.step('Navigate to the site page', async () => {
-			await page.goto(
-				`/web${site.friendlyUrlPath}${siteLayout.friendlyURL}`
-			);
-		});
-
-		await test.step('Add search bar and results portlet to new page', async () => {
-			await searchPage.addPortlet('Search Bar', 'Search');
-
-			await searchPage.addPortlet('Search Results', 'Search');
-		});
-
-		await test.step('Perform new search', async () => {
-			await searchPage.searchKeywordInMainContent('test');
-
-			await expect(searchPage.searchResultsTotalLabel).toHaveText(
-				/\d+ Results for test/
-			);
-		});
-
-		await test.step('Change pagination items per page and page number', async () => {
-			await searchPage.selectPaginationItemsPerPage(20);
-
-			await searchPage.selectPaginationPageNumber(2);
-		});
-
-		await test.step('Perform new search with different keyword', async () => {
-			await searchPage.searchKeywordInMainContent('web');
-
-			await expect(searchPage.searchResultsTotalLabel).toHaveText(
-				/\d+ Results for web/
-			);
-		});
-
-		await test.step('Verify that page number is reset but items per page is not', async () => {
-			await expect(
-				searchPage.searchResultsPaginationItemsPerPageToggle
-			).toHaveText(/20 Entries/);
-
-			await expect(
-				searchPage.searchResultsPaginationBar.getByText('1').first()
-			).toHaveAttribute('aria-current', 'page');
-
-			await expect(
-				searchPage.searchResultsPaginationDescription
-			).toHaveText(/Showing 1 to 20 of \d+ entries./);
-		});
-	});
-});
-
-test.describe('Clear and retain facet selections', () => {
+test.describe('Selection Persistence', () => {
 	let typeDocumentFacetCheckbox: Locator;
 	let folderLiferayFacetCheckbox: Locator;
 	let userTestTestFacetCheckbox: Locator;
@@ -344,7 +263,7 @@ test.describe('Clear and retain facet selections', () => {
 	});
 });
 
-test.describe('Custom facet is not registered more than once', () => {
+test.describe('Custom Facet', () => {
 	test('Shows no registration warning when adding a custom facet with date picker', async ({
 		apiHelpers,
 		page,

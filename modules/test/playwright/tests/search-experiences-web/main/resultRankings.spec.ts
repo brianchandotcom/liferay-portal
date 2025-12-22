@@ -22,7 +22,7 @@ export const test = mergeTests(
 	searchPageTest
 );
 
-test.describe('Result rankings can be added and reordered', () => {
+test.describe('Reordering', () => {
 	test('Add result and reorder rankings', async ({
 		apiHelpers,
 		editResultRankingPage,

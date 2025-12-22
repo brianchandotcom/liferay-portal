@@ -89,7 +89,7 @@ public class ClientRegistrationMessageBodyWriter
 		}
 		catch (IOException ioException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Error writing response: ", ioException);
+				_log.debug(ioException);
 			}
 
 			throw new WebApplicationException(

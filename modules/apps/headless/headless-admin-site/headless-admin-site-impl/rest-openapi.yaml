@@ -2396,6 +2396,22 @@ components:
                     enum: [SpecificFrame, NewTab]
                     type: string
             type: object
+        NestedWidgetSection:
+            # @review
+            description:
+                A section within a Nested Applications widget instance.
+            properties:
+                id:
+                    description:
+                        The nested widget section's id.
+                    type: string
+                widgetPageWidgetInstances:
+                    # @review
+                    description:
+                        A list of the widget instances within this nested widget section.
+                    items:
+                        $ref: "#/components/schemas/WidgetPageWidgetInstance"
+                    type: array
         NoneActionExecutionResult:
             # @review
             description:
@@ -4204,7 +4220,7 @@ components:
                         A list of the widget instances within this page section.
                     items:
                         $ref: "#/components/schemas/WidgetPageWidgetInstance"
-                    type: array                    
+                    type: array
         WidgetPageSettings:
             allOf:
                 -   $ref: "#/components/schemas/PageSettings"
@@ -4322,6 +4338,14 @@ components:
                             description:
                                 The external reference code of the widget instance.
                             type: string
+                        nestedWidgetSections:
+                            # @review
+                            description:
+                                The sections of a nested widget. Only available if this widget instance is a nested
+                                applications widget instance.
+                            items:
+                                $ref: "#/components/schemas/NestedWidgetSection"
+                            type: array
                         parentSectionId:
                             description:
                                 The section's ID of the widget page or the nested application widget instance this

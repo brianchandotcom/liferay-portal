@@ -21,14 +21,8 @@ public class ItemScopeUtil {
 	public static Long getItemGroupId(
 		long companyId, Scope scope, long scopeGroupId) {
 
-		String externalReferenceCode = null;
-
-		if (scope != null) {
-			externalReferenceCode = scope.getExternalReferenceCode();
-		}
-
 		return ScopeUtil.getItemGroupId(
-			companyId, externalReferenceCode, scopeGroupId);
+			companyId, _getScopeExternalReferenceCode(scope), scopeGroupId);
 	}
 
 	public static Scope getItemScope(long itemScopeGroupId, long scopeGroupId)
@@ -76,14 +70,16 @@ public class ItemScopeUtil {
 			Scope itemScope, long scopeGroupId)
 		throws PortalException {
 
-		String externalReferenceCode = null;
+		return ScopeUtil.getItemScopeExternalReferenceCode(
+			_getScopeExternalReferenceCode(itemScope), scopeGroupId);
+	}
 
-		if (itemScope != null) {
-			externalReferenceCode = itemScope.getExternalReferenceCode();
+	private static String _getScopeExternalReferenceCode(Scope scope) {
+		if (scope == null) {
+			return null;
 		}
 
-		return ScopeUtil.getItemScopeExternalReferenceCode(
-			externalReferenceCode, scopeGroupId);
+		return scope.getExternalReferenceCode();
 	}
 
 }

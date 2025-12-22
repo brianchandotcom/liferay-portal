@@ -8,7 +8,7 @@ import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayMultiSelect from '@clayui/multi-select';
 import {sub} from 'frontend-js-web';
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import SpaceSticker from '../../../common/components/SpaceSticker';
 import SpaceService from '../../../common/services/SpaceService';
@@ -17,6 +17,7 @@ import {LogoColor} from '../../../common/types/Space';
 type Space = {
 	displayType?: LogoColor;
 	label: string;
+	scopeKey: string;
 	value: any;
 };
 
@@ -47,6 +48,7 @@ export default function CategorizationSpaces({
 			const spaces = response.map((item) => ({
 				displayType: item.settings?.logoColor,
 				label: item.name,
+				scopeKey: item.assetLibraryKey,
 				value: item.id,
 			}));
 
@@ -115,16 +117,9 @@ export default function CategorizationSpaces({
 		setSpaceInputError,
 	]);
 
-	const _handleChangeAllSpaces = (event: ChangeEvent<HTMLInputElement>) => {
+	const _handleChangeAllSpaces = () => {
 		setSelectedItems([]);
-
-		if (!event.target.checked) {
-			setSelectedSpaces([]);
-		}
-		else {
-			setSelectedSpaces([-1]);
-		}
-
+		setSelectedSpaces([]);
 		setCheckbox((checkbox) => !checkbox);
 	};
 
@@ -133,7 +128,7 @@ export default function CategorizationSpaces({
 			availableSpaces.filter((item) => items.includes(item))
 		);
 
-		setSelectedSpaces(items.map((item) => item.value));
+		setSelectedSpaces(items.map((item) => item.scopeKey));
 	};
 
 	return (

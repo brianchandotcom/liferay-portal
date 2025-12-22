@@ -9,4 +9,5 @@ type AssetLibraryType = {
 	name_i18n?: {
 		[key: string]: string;
 	};
+	scopeKey: string;
 };

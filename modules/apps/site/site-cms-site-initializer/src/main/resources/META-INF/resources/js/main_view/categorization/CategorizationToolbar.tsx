@@ -6,17 +6,23 @@
 import '../../../css/categorization/Categorization.scss';
 
 import ClayButton from '@clayui/button';
+import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayNavigationBar from '@clayui/navigation-bar';
 import {navigate} from 'frontend-js-web';
-import React from 'react';
+import React, {ComponentProps} from 'react';
 
-import Breadcrumb from '../../common/components/Breadcrumb';
+import Breadcrumb, {
+	ActionDropdownItemProps,
+} from '../../common/components/Breadcrumb';
 
 export default function CategorizationToolbar({
+	actionItems,
 	activeTab,
 	tagsURL,
 	vocabulariesURL,
 }: {
+	actionItems?: ComponentProps<typeof ClayDropDownWithItems>['items'] &
+		ActionDropdownItemProps;
 	activeTab: string;
 	tagsURL: string;
 	vocabulariesURL: string;
@@ -24,6 +30,7 @@ export default function CategorizationToolbar({
 	return (
 		<div>
 			<Breadcrumb
+				actionItems={actionItems}
 				breadcrumbItems={[
 					{
 						active: true,

@@ -121,12 +121,12 @@ export default function EditGeneralInfo({
 		}));
 	};
 
-	const onChangeSelectedSpaces = (newSelectedSpaces: number[]) => {
+	const onChangeSelectedSpaces = (newSelectedSpaces: string[]) => {
 		onChangeVocabulary(() => ({
 			...vocabulary,
 			assetLibraries: newSelectedSpaces.length
-				? newSelectedSpaces.map((number) => ({
-						id: number,
+				? newSelectedSpaces.map((string) => ({
+						scopeKey: string,
 					}))
 				: [],
 		}));

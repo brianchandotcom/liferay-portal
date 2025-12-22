@@ -35,14 +35,14 @@ export default function EditTagsModalContent({
 	tagName: string;
 }) {
 	const [nameInputError, setNameInputError] = useState<string>('');
-	const [selectedSpaces, setSelectedSpaces] = useState<number[]>(
-		assetLibraries.map((item: {id: number}) => item.id)
+	const [selectedSpaces, setSelectedSpaces] = useState<string[]>(
+		assetLibraries.map((item: {scopeKey: string}) => item.scopeKey)
 	);
 	const [spaceChange, setSpaceChange] = useState(false);
 	const [spaceInputError, setSpaceInputError] = useState('');
 
-	const assetLibraryIds = selectedSpaces.map((number) => ({
-		id: number,
+	const assetLibraryIds = selectedSpaces.map((string) => ({
+		scopeKey: string,
 	}));
 
 	const updateTag = (values: any) => {

@@ -17,6 +17,7 @@ const mockNavigate = jest.fn();
 
 const SPACES: Space[] = [
 	{
+		assetLibraryKey: 'assetLibraryKey-1',
 		creatorUserId: '234',
 		description: '',
 		externalReferenceCode: 'space-1-erc',
@@ -28,6 +29,7 @@ const SPACES: Space[] = [
 		siteId: 123,
 	},
 	{
+		assetLibraryKey: 'assetLibraryKey-2',
 		creatorUserId: '234',
 		description: '',
 		externalReferenceCode: 'space-2-erc',

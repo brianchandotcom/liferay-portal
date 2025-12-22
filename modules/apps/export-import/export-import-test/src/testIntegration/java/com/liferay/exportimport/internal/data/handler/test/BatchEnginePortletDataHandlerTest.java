@@ -374,6 +374,9 @@ public class BatchEnginePortletDataHandlerTest {
 		Group companyGroup = _stagingGroupHelper.fetchCompanyGroup(
 			company.getCompanyId());
 
+		ObjectDefinition objectDefinition = _addObjectDefinition(
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
 		// File Entry from a depot: URL not recalculated and no report entry
 		// created
 
@@ -381,13 +384,16 @@ public class BatchEnginePortletDataHandlerTest {
 
 		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
 			null, null, false, false,
-			_addImageFileEntry(depotEntry.getGroupId()), false, companyGroup);
+			_addImageFileEntry(depotEntry.getGroupId()), false,
+			objectDefinition, companyGroup);
 		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
 			null, null, false, true,
-			_addImageFileEntry(depotEntry.getGroupId()), false, companyGroup);
+			_addImageFileEntry(depotEntry.getGroupId()), false,
+			objectDefinition, companyGroup);
 		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
 			null, null, false, true,
-			_addImageFileEntry(depotEntry.getGroupId()), true, companyGroup);
+			_addImageFileEntry(depotEntry.getGroupId()), true, objectDefinition,
+			companyGroup);
 
 		// File Entry from a depot, deleted before exporting: URL not
 		// recalculated and report entry created (without ERC)
@@ -397,7 +403,7 @@ public class BatchEnginePortletDataHandlerTest {
 			(fileEntry, targetGroup) -> new ObjectValuePair<>(
 				"", fileEntry.getGroupId()),
 			false, false, _addImageFileEntry(depotEntry.getGroupId()), false,
-			companyGroup);
+			objectDefinition, companyGroup);
 
 		// File Entry from a depot, deleted before importing: URL not
 		// recalculated and report entry created
@@ -405,15 +411,15 @@ public class BatchEnginePortletDataHandlerTest {
 		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
 			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
 			false, _addImageFileEntry(depotEntry.getGroupId()), false,
-			companyGroup);
+			objectDefinition, companyGroup);
 		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
 			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
 			true, _addImageFileEntry(depotEntry.getGroupId()), false,
-			companyGroup);
+			objectDefinition, companyGroup);
 		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
 			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
 			true, _addImageFileEntry(depotEntry.getGroupId()), true,
-			companyGroup);
+			objectDefinition, companyGroup);
 
 		// File Entry from a site: URL not recalculated and no report entry
 		// created
@@ -422,13 +428,13 @@ public class BatchEnginePortletDataHandlerTest {
 
 		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
 			null, null, false, false, _addImageFileEntry(group.getGroupId()),
-			false, companyGroup);
+			false, objectDefinition, companyGroup);
 		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
 			null, null, false, true, _addImageFileEntry(group.getGroupId()),
-			false, companyGroup);
+			false, objectDefinition, companyGroup);
 		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
 			null, null, false, true, _addImageFileEntry(group.getGroupId()),
-			true, companyGroup);
+			true, objectDefinition, companyGroup);
 
 		// File Entry from a site, deleted before exporting: URL not
 		// recalculated and report entry created (without ERC)
@@ -438,20 +444,23 @@ public class BatchEnginePortletDataHandlerTest {
 			(fileEntry, targetGroup) -> new ObjectValuePair<>(
 				"", fileEntry.getGroupId()),
 			false, false, _addImageFileEntry(group.getGroupId()), false,
-			companyGroup);
+			objectDefinition, companyGroup);
 
 		// File Entry from a site, deleted before importing: URL not
 		// recalculated and report entry created
 
 		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
 			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
-			false, _addImageFileEntry(group.getGroupId()), false, companyGroup);
+			false, _addImageFileEntry(group.getGroupId()), false,
+			objectDefinition, companyGroup);
 		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
 			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
-			true, _addImageFileEntry(group.getGroupId()), false, companyGroup);
+			true, _addImageFileEntry(group.getGroupId()), false,
+			objectDefinition, companyGroup);
 		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
 			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
-			true, _addImageFileEntry(group.getGroupId()), true, companyGroup);
+			true, _addImageFileEntry(group.getGroupId()), true,
+			objectDefinition, companyGroup);
 
 		// File Entry from the global site: URL not recalculated and no report
 		// entry created
@@ -460,13 +469,16 @@ public class BatchEnginePortletDataHandlerTest {
 
 		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
 			null, null, false, false,
-			_addImageFileEntry(globalGroup.getGroupId()), false, companyGroup);
+			_addImageFileEntry(globalGroup.getGroupId()), false,
+			objectDefinition, companyGroup);
 		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
 			null, null, false, true,
-			_addImageFileEntry(globalGroup.getGroupId()), false, companyGroup);
+			_addImageFileEntry(globalGroup.getGroupId()), false,
+			objectDefinition, companyGroup);
 		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
 			null, null, false, true,
-			_addImageFileEntry(globalGroup.getGroupId()), true, companyGroup);
+			_addImageFileEntry(globalGroup.getGroupId()), true,
+			objectDefinition, companyGroup);
 
 		// File Entry from the global site, deleted before exporting: URL not
 		// recalculated and report entry created (without ERC)
@@ -476,7 +488,7 @@ public class BatchEnginePortletDataHandlerTest {
 			(fileEntry, targetGroup) -> new ObjectValuePair<>(
 				"", fileEntry.getGroupId()),
 			false, false, _addImageFileEntry(globalGroup.getGroupId()), false,
-			companyGroup);
+			objectDefinition, companyGroup);
 
 		// File Entry from the global site, deleted before importing: URL not
 		// recalculated and report entry created
@@ -484,15 +496,15 @@ public class BatchEnginePortletDataHandlerTest {
 		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
 			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
 			false, _addImageFileEntry(globalGroup.getGroupId()), false,
-			companyGroup);
+			objectDefinition, companyGroup);
 		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
 			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
 			true, _addImageFileEntry(globalGroup.getGroupId()), false,
-			companyGroup);
+			objectDefinition, companyGroup);
 		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
 			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
 			true, _addImageFileEntry(globalGroup.getGroupId()), true,
-			companyGroup);
+			objectDefinition, companyGroup);
 	}
 
 	@Test
@@ -505,6 +517,9 @@ public class BatchEnginePortletDataHandlerTest {
 
 		Group globalGroup = company.getGroup();
 
+		ObjectDefinition objectDefinition = _addObjectDefinition(
+			ObjectDefinitionConstants.SCOPE_DEPOT);
+
 		DepotEntry sourceDepotEntry = _addDepotEntry();
 
 		// File Entry from a different depot: URL not recalculated and no report
@@ -515,15 +530,15 @@ public class BatchEnginePortletDataHandlerTest {
 		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
 			null, null, false, false,
 			_addImageFileEntry(differentDepotEntry.getGroupId()), false,
-			sourceDepotEntry.getGroup());
+			objectDefinition, sourceDepotEntry.getGroup());
 		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
 			null, null, false, true,
 			_addImageFileEntry(differentDepotEntry.getGroupId()), false,
-			sourceDepotEntry.getGroup());
+			objectDefinition, sourceDepotEntry.getGroup());
 		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
 			null, null, false, true,
 			_addImageFileEntry(differentDepotEntry.getGroupId()), true,
-			sourceDepotEntry.getGroup());
+			objectDefinition, sourceDepotEntry.getGroup());
 
 		// File Entry from a different depot, deleted before exporting: URL not
 		// recalculated and report entry created (without ERC)
@@ -533,7 +548,7 @@ public class BatchEnginePortletDataHandlerTest {
 			(fileEntry, targetGroup) -> new ObjectValuePair<>(
 				"", fileEntry.getGroupId()),
 			false, false, _addImageFileEntry(differentDepotEntry.getGroupId()),
-			false, sourceDepotEntry.getGroup());
+			false, objectDefinition, sourceDepotEntry.getGroup());
 
 		// File Entry from a different depot, deleted before importing: URL not
 		// recalculated and report entry created
@@ -541,15 +556,15 @@ public class BatchEnginePortletDataHandlerTest {
 		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
 			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
 			false, _addImageFileEntry(differentDepotEntry.getGroupId()), false,
-			sourceDepotEntry.getGroup());
+			objectDefinition, sourceDepotEntry.getGroup());
 		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
 			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
 			true, _addImageFileEntry(differentDepotEntry.getGroupId()), false,
-			sourceDepotEntry.getGroup());
+			objectDefinition, sourceDepotEntry.getGroup());
 		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
 			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
 			true, _addImageFileEntry(differentDepotEntry.getGroupId()), true,
-			sourceDepotEntry.getGroup());
+			objectDefinition, sourceDepotEntry.getGroup());
 
 		// File Entry from a site: URL not recalculated and no report
 		// entry created
@@ -558,13 +573,13 @@ public class BatchEnginePortletDataHandlerTest {
 
 		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
 			null, null, false, false, _addImageFileEntry(group.getGroupId()),
-			false, sourceDepotEntry.getGroup());
+			false, objectDefinition, sourceDepotEntry.getGroup());
 		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
 			null, null, false, true, _addImageFileEntry(group.getGroupId()),
-			false, sourceDepotEntry.getGroup());
+			false, objectDefinition, sourceDepotEntry.getGroup());
 		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
 			null, null, false, true, _addImageFileEntry(group.getGroupId()),
-			true, sourceDepotEntry.getGroup());
+			true, objectDefinition, sourceDepotEntry.getGroup());
 
 		// File Entry from a site, deleted before exporting: URL not
 		// recalculated and report entry created (without ERC)
@@ -574,7 +589,7 @@ public class BatchEnginePortletDataHandlerTest {
 			(fileEntry, targetGroup) -> new ObjectValuePair<>(
 				"", fileEntry.getGroupId()),
 			false, false, _addImageFileEntry(group.getGroupId()), false,
-			sourceDepotEntry.getGroup());
+			objectDefinition, sourceDepotEntry.getGroup());
 
 		// File Entry from a site, deleted before importing: URL not
 		// recalculated and report entry created
@@ -582,15 +597,15 @@ public class BatchEnginePortletDataHandlerTest {
 		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
 			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
 			false, _addImageFileEntry(group.getGroupId()), false,
-			sourceDepotEntry.getGroup());
+			objectDefinition, sourceDepotEntry.getGroup());
 		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
 			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
 			true, _addImageFileEntry(group.getGroupId()), false,
-			sourceDepotEntry.getGroup());
+			objectDefinition, sourceDepotEntry.getGroup());
 		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
 			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
 			true, _addImageFileEntry(group.getGroupId()), true,
-			sourceDepotEntry.getGroup());
+			objectDefinition, sourceDepotEntry.getGroup());
 
 		// File Entry from the depot that is being exported: URL recalculated
 		// and report entry created only if the content is not imported
@@ -600,17 +615,17 @@ public class BatchEnginePortletDataHandlerTest {
 			(fileEntry, targetGroup) -> new ObjectValuePair<>(
 				fileEntry.getExternalReferenceCode(), targetGroup.getGroupId()),
 			true, false, _addImageFileEntry(sourceDepotEntry.getGroupId()),
-			false, sourceDepotEntry.getGroup());
+			false, objectDefinition, sourceDepotEntry.getGroup());
 		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
 			null,
 			(fileEntry, targetGroup) -> new ObjectValuePair<>(
 				fileEntry.getExternalReferenceCode(), targetGroup.getGroupId()),
 			true, true, _addImageFileEntry(sourceDepotEntry.getGroupId()),
-			false, sourceDepotEntry.getGroup());
+			false, objectDefinition, sourceDepotEntry.getGroup());
 		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
 			null, null, true, true,
 			_addImageFileEntry(sourceDepotEntry.getGroupId()), true,
-			sourceDepotEntry.getGroup());
+			objectDefinition, sourceDepotEntry.getGroup());
 
 		// File Entry from the depot that is being exported, deleted before
 		// exporting: URL recalculated and report entry created
@@ -620,7 +635,7 @@ public class BatchEnginePortletDataHandlerTest {
 			(fileEntry, targetGroup) -> new ObjectValuePair<>(
 				"", targetGroup.getGroupId()),
 			true, false, _addImageFileEntry(sourceDepotEntry.getGroupId()),
-			false, sourceDepotEntry.getGroup());
+			false, objectDefinition, sourceDepotEntry.getGroup());
 
 		// File Entry from the depot that is being exported, deleted before
 		// importing: URL recalculated and report entry created only if the
@@ -631,17 +646,17 @@ public class BatchEnginePortletDataHandlerTest {
 			(fileEntry, targetGroup) -> new ObjectValuePair<>(
 				fileEntry.getExternalReferenceCode(), targetGroup.getGroupId()),
 			true, false, _addImageFileEntry(sourceDepotEntry.getGroupId()),
-			false, sourceDepotEntry.getGroup());
+			false, objectDefinition, sourceDepotEntry.getGroup());
 		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
 			DeleteFileEntry.BEFORE_IMPORT,
 			(fileEntry, targetGroup) -> new ObjectValuePair<>(
 				fileEntry.getExternalReferenceCode(), targetGroup.getGroupId()),
 			true, true, _addImageFileEntry(sourceDepotEntry.getGroupId()),
-			false, sourceDepotEntry.getGroup());
+			false, objectDefinition, sourceDepotEntry.getGroup());
 		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
 			DeleteFileEntry.BEFORE_IMPORT, null, true, true,
 			_addImageFileEntry(sourceDepotEntry.getGroupId()), true,
-			sourceDepotEntry.getGroup());
+			objectDefinition, sourceDepotEntry.getGroup());
 
 		// File Entry from the global site: URL not recalculated and no report
 		// entry created
@@ -649,15 +664,15 @@ public class BatchEnginePortletDataHandlerTest {
 		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
 			null, null, false, false,
 			_addImageFileEntry(globalGroup.getGroupId()), false,
-			sourceDepotEntry.getGroup());
+			objectDefinition, sourceDepotEntry.getGroup());
 		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
 			null, null, false, true,
 			_addImageFileEntry(globalGroup.getGroupId()), false,
-			sourceDepotEntry.getGroup());
+			objectDefinition, sourceDepotEntry.getGroup());
 		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
 			null, null, false, true,
 			_addImageFileEntry(globalGroup.getGroupId()), true,
-			sourceDepotEntry.getGroup());
+			objectDefinition, sourceDepotEntry.getGroup());
 
 		// File Entry from the global site, deleted before exporting: URL not
 		// recalculated and report entry created (without ERC)
@@ -667,7 +682,7 @@ public class BatchEnginePortletDataHandlerTest {
 			(fileEntry, targetGroup) -> new ObjectValuePair<>(
 				"", fileEntry.getGroupId()),
 			false, false, _addImageFileEntry(globalGroup.getGroupId()), false,
-			sourceDepotEntry.getGroup());
+			objectDefinition, sourceDepotEntry.getGroup());
 
 		// File Entry from the global site, deleted before importing: URL not
 		// recalculated and report entry created
@@ -675,15 +690,15 @@ public class BatchEnginePortletDataHandlerTest {
 		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
 			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
 			false, _addImageFileEntry(globalGroup.getGroupId()), false,
-			sourceDepotEntry.getGroup());
+			objectDefinition, sourceDepotEntry.getGroup());
 		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
 			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
 			true, _addImageFileEntry(globalGroup.getGroupId()), false,
-			sourceDepotEntry.getGroup());
+			objectDefinition, sourceDepotEntry.getGroup());
 		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
 			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
 			true, _addImageFileEntry(globalGroup.getGroupId()), true,
-			sourceDepotEntry.getGroup());
+			objectDefinition, sourceDepotEntry.getGroup());
 	}
 
 	@FeatureFlag("LPD-35443")
@@ -1038,6 +1053,9 @@ public class BatchEnginePortletDataHandlerTest {
 
 		DepotEntry depotEntry = _addDepotEntry();
 
+		ObjectDefinition objectDefinition = _addObjectDefinition(
+			ObjectDefinitionConstants.SCOPE_SITE);
+
 		Group sourceGroup = GroupTestUtil.addGroup();
 
 		// File Entry from a depot: URL not recalculated and no report entry
@@ -1045,13 +1063,16 @@ public class BatchEnginePortletDataHandlerTest {
 
 		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
 			null, null, false, false,
-			_addImageFileEntry(depotEntry.getGroupId()), false, sourceGroup);
+			_addImageFileEntry(depotEntry.getGroupId()), false,
+			objectDefinition, sourceGroup);
 		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
 			null, null, false, true,
-			_addImageFileEntry(depotEntry.getGroupId()), false, sourceGroup);
+			_addImageFileEntry(depotEntry.getGroupId()), false,
+			objectDefinition, sourceGroup);
 		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
 			null, null, false, true,
-			_addImageFileEntry(depotEntry.getGroupId()), true, sourceGroup);
+			_addImageFileEntry(depotEntry.getGroupId()), true, objectDefinition,
+			sourceGroup);
 
 		// File Entry from a depot, deleted before exporting: URL not
 		// recalculated and report entry created (without ERC)
@@ -1061,7 +1082,7 @@ public class BatchEnginePortletDataHandlerTest {
 			(fileEntry, targetGroup) -> new ObjectValuePair<>(
 				"", fileEntry.getGroupId()),
 			false, false, _addImageFileEntry(depotEntry.getGroupId()), false,
-			sourceGroup);
+			objectDefinition, sourceGroup);
 
 		// File Entry from a depot, deleted before importing: URL not
 		// recalculated and report entry created
@@ -1069,15 +1090,15 @@ public class BatchEnginePortletDataHandlerTest {
 		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
 			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
 			false, _addImageFileEntry(depotEntry.getGroupId()), false,
-			sourceGroup);
+			objectDefinition, sourceGroup);
 		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
 			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
 			true, _addImageFileEntry(depotEntry.getGroupId()), false,
-			sourceGroup);
+			objectDefinition, sourceGroup);
 		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
 			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
 			true, _addImageFileEntry(depotEntry.getGroupId()), true,
-			sourceGroup);
+			objectDefinition, sourceGroup);
 
 		// File Entry from a different site: URL not recalculated and no report
 		// entry created
@@ -1086,13 +1107,16 @@ public class BatchEnginePortletDataHandlerTest {
 
 		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
 			null, null, false, false,
-			_addImageFileEntry(otherGroup.getGroupId()), false, sourceGroup);
+			_addImageFileEntry(otherGroup.getGroupId()), false,
+			objectDefinition, sourceGroup);
 		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
 			null, null, false, true,
-			_addImageFileEntry(otherGroup.getGroupId()), false, sourceGroup);
+			_addImageFileEntry(otherGroup.getGroupId()), false,
+			objectDefinition, sourceGroup);
 		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
 			null, null, false, true,
-			_addImageFileEntry(otherGroup.getGroupId()), true, sourceGroup);
+			_addImageFileEntry(otherGroup.getGroupId()), true, objectDefinition,
+			sourceGroup);
 
 		// File Entry from a different site, deleted before exporting: URL not
 		// recalculated and report entry created (without ERC)
@@ -1102,7 +1126,7 @@ public class BatchEnginePortletDataHandlerTest {
 			(fileEntry, targetGroup) -> new ObjectValuePair<>(
 				"", fileEntry.getGroupId()),
 			false, false, _addImageFileEntry(otherGroup.getGroupId()), false,
-			sourceGroup);
+			objectDefinition, sourceGroup);
 
 		// File Entry from a different site, deleted before importing: URL not
 		// recalculated and report entry created
@@ -1110,15 +1134,15 @@ public class BatchEnginePortletDataHandlerTest {
 		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
 			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
 			false, _addImageFileEntry(otherGroup.getGroupId()), false,
-			sourceGroup);
+			objectDefinition, sourceGroup);
 		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
 			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
 			true, _addImageFileEntry(otherGroup.getGroupId()), false,
-			sourceGroup);
+			objectDefinition, sourceGroup);
 		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
 			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
 			true, _addImageFileEntry(otherGroup.getGroupId()), true,
-			sourceGroup);
+			objectDefinition, sourceGroup);
 
 		// File Entry from the global site: URL not recalculated and no report
 		// entry created
@@ -1127,13 +1151,16 @@ public class BatchEnginePortletDataHandlerTest {
 
 		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
 			null, null, false, false,
-			_addImageFileEntry(globalGroup.getGroupId()), false, sourceGroup);
+			_addImageFileEntry(globalGroup.getGroupId()), false,
+			objectDefinition, sourceGroup);
 		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
 			null, null, false, true,
-			_addImageFileEntry(globalGroup.getGroupId()), false, sourceGroup);
+			_addImageFileEntry(globalGroup.getGroupId()), false,
+			objectDefinition, sourceGroup);
 		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
 			null, null, false, true,
-			_addImageFileEntry(globalGroup.getGroupId()), true, sourceGroup);
+			_addImageFileEntry(globalGroup.getGroupId()), true,
+			objectDefinition, sourceGroup);
 
 		// File Entry from the global site, deleted before exporting: URL not
 		// recalculated and report entry created (without ERC)
@@ -1143,7 +1170,7 @@ public class BatchEnginePortletDataHandlerTest {
 			(fileEntry, targetGroup) -> new ObjectValuePair<>(
 				"", fileEntry.getGroupId()),
 			false, false, _addImageFileEntry(globalGroup.getGroupId()), false,
-			sourceGroup);
+			objectDefinition, sourceGroup);
 
 		// File Entry from the global site, deleted before importing: URL not
 		// recalculated and report entry created
@@ -1151,15 +1178,15 @@ public class BatchEnginePortletDataHandlerTest {
 		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
 			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
 			false, _addImageFileEntry(globalGroup.getGroupId()), false,
-			sourceGroup);
+			objectDefinition, sourceGroup);
 		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
 			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
 			true, _addImageFileEntry(globalGroup.getGroupId()), false,
-			sourceGroup);
+			objectDefinition, sourceGroup);
 		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
 			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
 			true, _addImageFileEntry(globalGroup.getGroupId()), true,
-			sourceGroup);
+			objectDefinition, sourceGroup);
 
 		// File Entry from the site that is being exported: URL recalculated
 		// and report entry created only if the content is not imported
@@ -1169,16 +1196,17 @@ public class BatchEnginePortletDataHandlerTest {
 			(fileEntry, targetGroup) -> new ObjectValuePair<>(
 				fileEntry.getExternalReferenceCode(), targetGroup.getGroupId()),
 			true, false, _addImageFileEntry(sourceGroup.getGroupId()), false,
-			sourceGroup);
+			objectDefinition, sourceGroup);
 		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
 			null,
 			(fileEntry, targetGroup) -> new ObjectValuePair<>(
 				fileEntry.getExternalReferenceCode(), targetGroup.getGroupId()),
 			true, true, _addImageFileEntry(sourceGroup.getGroupId()), false,
-			sourceGroup);
+			objectDefinition, sourceGroup);
 		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
 			null, null, true, true,
-			_addImageFileEntry(sourceGroup.getGroupId()), true, sourceGroup);
+			_addImageFileEntry(sourceGroup.getGroupId()), true,
+			objectDefinition, sourceGroup);
 
 		// File Entry from the site that is being exported, deleted before
 		// exporting: URL recalculated and report entry created
@@ -1188,7 +1216,7 @@ public class BatchEnginePortletDataHandlerTest {
 			(fileEntry, targetGroup) -> new ObjectValuePair<>(
 				"", targetGroup.getGroupId()),
 			true, false, _addImageFileEntry(sourceGroup.getGroupId()), false,
-			sourceGroup);
+			objectDefinition, sourceGroup);
 
 		// File Entry from the site that is being exported, deleted before
 		// importing: URL recalculated and report entry created only if the
@@ -1199,16 +1227,17 @@ public class BatchEnginePortletDataHandlerTest {
 			(fileEntry, targetGroup) -> new ObjectValuePair<>(
 				fileEntry.getExternalReferenceCode(), targetGroup.getGroupId()),
 			true, false, _addImageFileEntry(sourceGroup.getGroupId()), false,
-			sourceGroup);
+			objectDefinition, sourceGroup);
 		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
 			DeleteFileEntry.BEFORE_IMPORT,
 			(fileEntry, targetGroup) -> new ObjectValuePair<>(
 				fileEntry.getExternalReferenceCode(), targetGroup.getGroupId()),
 			true, true, _addImageFileEntry(sourceGroup.getGroupId()), false,
-			sourceGroup);
+			objectDefinition, sourceGroup);
 		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
 			DeleteFileEntry.BEFORE_IMPORT, null, true, true,
-			_addImageFileEntry(sourceGroup.getGroupId()), true, sourceGroup);
+			_addImageFileEntry(sourceGroup.getGroupId()), true,
+			objectDefinition, sourceGroup);
 	}
 
 	@Test
@@ -2381,15 +2410,15 @@ public class BatchEnginePortletDataHandlerTest {
 			BiFunction<FileEntry, Group, ObjectValuePair<String, Long>>
 				expectedReportEntryGroupIdExternalReferenceCodeBiFunction,
 			boolean expectedRecalculateURL, boolean exportFileEntries,
-			FileEntry fileEntry, boolean importFileEntries, Group sourceGroup)
+			FileEntry fileEntry, boolean importFileEntries,
+			ObjectDefinition objectDefinition, Group sourceGroup)
 		throws Exception {
 
 		_testExportImportObjectEntriesWithRichTextAndURLs(
 			deleteFileEntry,
 			expectedReportEntryGroupIdExternalReferenceCodeBiFunction,
 			expectedRecalculateURL, exportFileEntries, fileEntry,
-			importFileEntries, ObjectDefinitionConstants.SCOPE_COMPANY,
-			sourceGroup, sourceGroup);
+			importFileEntries, objectDefinition, sourceGroup, sourceGroup);
 	}
 
 	private void _testExportImportDepotObjectEntriesWithRichTextAndURLs(
@@ -2397,7 +2426,8 @@ public class BatchEnginePortletDataHandlerTest {
 			BiFunction<FileEntry, Group, ObjectValuePair<String, Long>>
 				expectedReportEntryGroupIdExternalReferenceCodeBiFunction,
 			boolean expectedRecalculateURL, boolean exportFileEntries,
-			FileEntry fileEntry, boolean importFileEntries, Group sourceGroup)
+			FileEntry fileEntry, boolean importFileEntries,
+			ObjectDefinition objectDefinition, Group sourceGroup)
 		throws Exception {
 
 		DepotEntry targetDepotEntry = _addDepotEntry();
@@ -2406,8 +2436,8 @@ public class BatchEnginePortletDataHandlerTest {
 			deleteFileEntry,
 			expectedReportEntryGroupIdExternalReferenceCodeBiFunction,
 			expectedRecalculateURL, exportFileEntries, fileEntry,
-			importFileEntries, ObjectDefinitionConstants.SCOPE_DEPOT,
-			sourceGroup, targetDepotEntry.getGroup());
+			importFileEntries, objectDefinition, sourceGroup,
+			targetDepotEntry.getGroup());
 	}
 
 	private void _testExportImportObjectEntriesToSameGroup(
@@ -2701,16 +2731,16 @@ public class BatchEnginePortletDataHandlerTest {
 			BiFunction<FileEntry, Group, ObjectValuePair<String, Long>>
 				expectedReportEntryGroupIdExternalReferenceCodeBiFunction,
 			boolean expectedRecalculateURL, boolean exportFileEntries,
-			FileEntry fileEntry, boolean importFileEntries, String scope,
-			Group sourceGroup, Group targetGroup)
+			FileEntry fileEntry, boolean importFileEntries,
+			ObjectDefinition objectDefinition, Group sourceGroup,
+			Group targetGroup)
 		throws Exception {
 
 		String imgTag = _getImgTag(_getPreviewURL(fileEntry));
 
-		ObjectDefinition objectDefinition = _addObjectDefinition(scope);
-
 		ObjectEntry objectEntry = _addObjectEntry(
-			_getObjectEntryGroupId(sourceGroup.getGroupId(), scope),
+			_getObjectEntryGroupId(
+				sourceGroup.getGroupId(), objectDefinition.getScope()),
 			objectDefinition,
 			(Map)HashMapBuilder.put(
 				_OBJECT_FIELD_NAME_RICH_TEXT,
@@ -2755,7 +2785,8 @@ public class BatchEnginePortletDataHandlerTest {
 
 		List<ObjectEntry> objectEntriesList =
 			_objectEntryLocalService.getObjectEntries(
-				_getObjectEntryGroupId(targetGroup.getGroupId(), scope),
+				_getObjectEntryGroupId(
+					targetGroup.getGroupId(), objectDefinition.getScope()),
 				objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
@@ -2807,6 +2838,8 @@ public class BatchEnginePortletDataHandlerTest {
 				ExportImportReportEntryConstants.TYPE_EMPTY,
 				exportImportReportEntries.get(0));
 		}
+
+		_deleteObjectEntries(importedObjectEntry);
 	}
 
 	private void _testExportImportSiteObjectEntriesWithRichTextAndURLs(
@@ -2814,15 +2847,16 @@ public class BatchEnginePortletDataHandlerTest {
 			BiFunction<FileEntry, Group, ObjectValuePair<String, Long>>
 				expectedReportEntryGroupIdExternalReferenceCodeBiFunction,
 			boolean expectedRecalculateURL, boolean exportFileEntries,
-			FileEntry fileEntry, boolean importFileEntries, Group sourceGroup)
+			FileEntry fileEntry, boolean importFileEntries,
+			ObjectDefinition objectDefinition, Group sourceGroup)
 		throws Exception {
 
 		_testExportImportObjectEntriesWithRichTextAndURLs(
 			deleteFileEntry,
 			expectedReportEntryGroupIdExternalReferenceCodeBiFunction,
 			expectedRecalculateURL, exportFileEntries, fileEntry,
-			importFileEntries, ObjectDefinitionConstants.SCOPE_SITE,
-			sourceGroup, GroupTestUtil.addGroup());
+			importFileEntries, objectDefinition, sourceGroup,
+			GroupTestUtil.addGroup());
 	}
 
 	private void _testGetExportModelCount(

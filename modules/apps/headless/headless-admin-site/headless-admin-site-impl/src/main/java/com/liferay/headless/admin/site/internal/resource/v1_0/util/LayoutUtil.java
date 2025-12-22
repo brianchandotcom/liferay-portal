@@ -73,6 +73,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.custom.field.CustomFieldsUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.segments.service.SegmentsExperienceServiceUtil;
@@ -1167,20 +1168,34 @@ public class LayoutUtil {
 
 			List<String> externalReferenceCodes = new ArrayList<>();
 
+			int minPriority = Integer.MIN_VALUE;
+
+			int priority;
+
 			for (PageExperience pageExperience : pageExperiences) {
 				SegmentsExperience segmentsExperience =
 					segmentsExperiencesMap.get(
 						pageExperience.getExternalReferenceCode());
 
+				if (!Objects.equals(
+						pageExperience.getKey(),
+						SegmentsExperienceConstants.KEY_DEFAULT)) {
+
+					priority = minPriority++;
+				}
+				else {
+					priority = 0;
+				}
+
 				if (segmentsExperience == null) {
 					SegmentsExperienceUtil.addSegmentsExperience(
 						fragmentEntryProcessorRegistry, infoItemServiceRegistry,
-						layout, pageExperience, serviceContext);
+						layout, pageExperience, priority, serviceContext);
 				}
 				else {
 					SegmentsExperienceUtil.updateSegmentsExperience(
 						fragmentEntryProcessorRegistry, infoItemServiceRegistry,
-						layout, pageExperience, segmentsExperience,
+						layout, pageExperience, priority, segmentsExperience,
 						serviceContext);
 				}
 

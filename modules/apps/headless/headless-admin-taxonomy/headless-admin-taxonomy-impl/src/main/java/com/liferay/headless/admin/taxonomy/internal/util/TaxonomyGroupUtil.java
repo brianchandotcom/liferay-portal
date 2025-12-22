@@ -5,8 +5,6 @@
 
 package com.liferay.headless.admin.taxonomy.internal.util;
 
-import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.AssetLibrary;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -20,10 +18,20 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 public class TaxonomyGroupUtil {
 
 	public static long[] getAssetLibraryGroupIds(
-		AssetLibrary[] assetLibraries) {
+		AssetLibrary[] assetLibraries, long companyId) {
 
 		return TransformUtil.transformToLongArray(
-			assetLibraries, TaxonomyGroupUtil::_getGroupId);
+			assetLibraries,
+			assetLibrary -> {
+				Group group = GroupLocalServiceUtil.fetchGroup(
+					companyId, assetLibrary.getScopeKey());
+
+				if (group != null) {
+					return group.getGroupId();
+				}
+
+				return null;
+			});
 	}
 
 	public static long getCMSGroupId(long companyId) throws PortalException {
@@ -31,27 +39,6 @@ public class TaxonomyGroupUtil {
 			companyId, GroupConstants.CMS);
 
 		return group.getGroupId();
-	}
-
-	private static long _getGroupId(AssetLibrary assetLibrary)
-		throws Exception {
-
-		long classPK = assetLibrary.getId();
-
-		if (classPK == GroupConstants.ANY_PARENT_GROUP_ID) {
-			return classPK;
-		}
-
-		Group group = GroupLocalServiceUtil.fetchGroup(classPK);
-
-		if (group != null) {
-			return group.getGroupId();
-		}
-
-		DepotEntry depotEntry = DepotEntryLocalServiceUtil.getDepotEntry(
-			classPK);
-
-		return depotEntry.getGroupId();
 	}
 
 }

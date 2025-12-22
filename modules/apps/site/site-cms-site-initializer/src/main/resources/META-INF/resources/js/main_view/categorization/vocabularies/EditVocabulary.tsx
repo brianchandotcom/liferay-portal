@@ -63,12 +63,7 @@ export default function EditVocabulary({
 	const [spaceInputError, setSpaceInputError] = useState('');
 	const [title, setTitle] = useState<string>('');
 	const [vocabulary, setVocabulary] = useState<IVocabulary>({
-		assetLibraries: [
-			{
-				id: -1,
-				name: 'All Spaces',
-			},
-		],
+		assetLibraries: [],
 		assetTypes: [
 			{
 				required: false,

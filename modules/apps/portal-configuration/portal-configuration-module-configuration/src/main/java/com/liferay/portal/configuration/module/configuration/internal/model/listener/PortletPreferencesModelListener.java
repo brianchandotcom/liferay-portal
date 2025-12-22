@@ -6,6 +6,7 @@
 package com.liferay.portal.configuration.module.configuration.internal.model.listener;
 
 import com.liferay.asset.kernel.util.NotifiedAssetEntryThreadLocal;
+import com.liferay.layout.util.UpdateLayoutModifiedDateThreadLocal;
 import com.liferay.portal.configuration.module.configuration.internal.ConfigurationOverrideInstance;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.log.Log;
@@ -104,6 +105,10 @@ public class PortletPreferencesModelListener
 	}
 
 	private void _updateLayout(PortletPreferences portletPreferences) {
+		if (!UpdateLayoutModifiedDateThreadLocal.isUpdateLayoutModifiedDate()) {
+			return;
+		}
+
 		try {
 			if ((portletPreferences.getOwnerType() ==
 					PortletKeys.PREFS_OWNER_TYPE_GROUP) &&

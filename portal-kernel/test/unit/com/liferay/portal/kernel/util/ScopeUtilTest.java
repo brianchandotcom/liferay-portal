@@ -58,12 +58,12 @@ public class ScopeUtilTest {
 	public void testGetItemScopeExternalReferenceCodeWithERC()
 		throws Exception {
 
-		Group localGroup = _getGroup(_LOCAL_SCOPE_ERC, _LOCAL_SCOPE_GROUP_ID);
+		Group group = _getGroup(_LOCAL_SCOPE_ERC, _LOCAL_SCOPE_GROUP_ID);
 
 		Mockito.when(
 			GroupLocalServiceUtil.getGroup(_LOCAL_SCOPE_GROUP_ID)
 		).thenReturn(
-			localGroup
+			group
 		);
 
 		String[] inputs = {null, _LOCAL_SCOPE_ERC, _REMOTE_SCOPE_ERC};

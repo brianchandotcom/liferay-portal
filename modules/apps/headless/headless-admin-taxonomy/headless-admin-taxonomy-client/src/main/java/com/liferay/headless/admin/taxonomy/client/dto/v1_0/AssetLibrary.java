@@ -86,6 +86,27 @@ public class AssetLibrary implements Cloneable, Serializable {
 
 	protected Map<String, String> name_i18n;
 
+	public String getScopeKey() {
+		return scopeKey;
+	}
+
+	public void setScopeKey(String scopeKey) {
+		this.scopeKey = scopeKey;
+	}
+
+	public void setScopeKey(
+		UnsafeSupplier<String, Exception> scopeKeyUnsafeSupplier) {
+
+		try {
+			scopeKey = scopeKeyUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String scopeKey;
+
 	@Override
 	public AssetLibrary clone() throws CloneNotSupportedException {
 		return (AssetLibrary)super.clone();

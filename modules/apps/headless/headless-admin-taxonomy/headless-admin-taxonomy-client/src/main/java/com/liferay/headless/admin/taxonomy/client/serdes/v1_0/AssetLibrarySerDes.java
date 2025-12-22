@@ -80,6 +80,20 @@ public class AssetLibrarySerDes {
 			sb.append(_toJSON(assetLibrary.getName_i18n()));
 		}
 
+		if (assetLibrary.getScopeKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"scopeKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(assetLibrary.getScopeKey()));
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -120,6 +134,13 @@ public class AssetLibrarySerDes {
 			map.put("name_i18n", String.valueOf(assetLibrary.getName_i18n()));
 		}
 
+		if (assetLibrary.getScopeKey() == null) {
+			map.put("scopeKey", null);
+		}
+		else {
+			map.put("scopeKey", String.valueOf(assetLibrary.getScopeKey()));
+		}
+
 		return map;
 	}
 
@@ -147,6 +168,9 @@ public class AssetLibrarySerDes {
 			else if (Objects.equals(jsonParserFieldName, "name_i18n")) {
 				return true;
 			}
+			else if (Objects.equals(jsonParserFieldName, "scopeKey")) {
+				return false;
+			}
 
 			return false;
 		}
@@ -171,6 +195,11 @@ public class AssetLibrarySerDes {
 				if (jsonParserFieldValue != null) {
 					assetLibrary.setName_i18n(
 						(Map<String, String>)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "scopeKey")) {
+				if (jsonParserFieldValue != null) {
+					assetLibrary.setScopeKey((String)jsonParserFieldValue);
 				}
 			}
 		}

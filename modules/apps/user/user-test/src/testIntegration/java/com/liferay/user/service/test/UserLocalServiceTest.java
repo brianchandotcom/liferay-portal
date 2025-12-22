@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ContactBirthdayException;
 import com.liferay.portal.kernel.exception.NoSuchTicketException;
 import com.liferay.portal.kernel.exception.PasswordExpiredException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RequiredRoleException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.UserLockoutException;
@@ -1669,9 +1668,7 @@ public class UserLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateStatusDoesNotLeavePasswordModified()
-		throws PortalException {
-
+	public void testUpdateStatus() throws Exception {
 		_workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(
 			null, TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, User.class.getName(), 0, 0,
@@ -1943,7 +1940,7 @@ public class UserLocalServiceTest {
 	}
 
 	private void _assertUserHasPasswordPolicy(boolean ldapUser, User user)
-		throws PortalException {
+		throws Exception {
 
 		Assert.assertEquals(ldapUser ? 1 : -1, user.getLdapServerId());
 		Assert.assertTrue(user.isPasswordReset());
@@ -2263,7 +2260,7 @@ public class UserLocalServiceTest {
 
 	private SafeCloseable _updateDefaultPasswordPolicyWithSafeCloseable(
 			Consumer<PasswordPolicy> consumer)
-		throws PortalException {
+		throws Exception {
 
 		PasswordPolicy passwordPolicy =
 			_passwordPolicyLocalService.getDefaultPasswordPolicy(
@@ -2307,7 +2304,7 @@ public class UserLocalServiceTest {
 
 	private SafeCloseable _updateSecurityWithSafeCloseable(
 			long companyId, boolean strangersVerify)
-		throws PortalException {
+		throws Exception {
 
 		Company company = _companyLocalService.getCompany(companyId);
 

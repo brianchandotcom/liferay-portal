@@ -131,15 +131,6 @@ public class BaseConfigurationFactoryTest {
 	}
 
 	@Test
-	public void testExcessiveLogging() throws Exception {
-		_testExcessiveLogging(
-			OAuth2ProviderApplicationHeadlessServerConfiguration.class.
-				getName());
-		_testExcessiveLogging(
-			OAuth2ProviderApplicationUserAgentConfiguration.class.getName());
-	}
-
-	@Test
 	public void testGetFactoryConfiguration() throws Exception {
 		long companyId = TestPropsValues.getCompanyId();
 
@@ -224,49 +215,33 @@ public class BaseConfigurationFactoryTest {
 		return oAuth2Application;
 	}
 
-	private void _testExcessiveLogging(String className) throws Exception {
-		long companyId = TestPropsValues.getCompanyId();
-
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				className, LoggerTestUtil.INFO)) {
-
-			Configuration configuration = _createFactoryConfiguration(
-				className,
-				HashMapDictionaryBuilder.<String, Object>put(
-					"_portalK8sConfigMapModifier.cardinality.minimum", 0
-				).put(
-					"baseURL", "http://foo.me"
-				).put(
-					"companyId", companyId
-				).build());
-
-			Assert.assertTrue(ListUtil.isEmpty(logCapture.getLogEntries()));
-
-			ConfigurationTestUtil.deleteConfiguration(configuration);
-		}
-	}
-
 	private void _testGetFactoryConfiguration(
 			String className, long companyId,
 			Dictionary<String, Object> properties, User user)
 		throws Exception {
 
-		Configuration configuration = _createFactoryConfiguration(
-			className, properties);
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				className, LoggerTestUtil.INFO)) {
 
-		try {
-			OAuth2Application oAuth2Application = _fetchOAuthApplication(
-				companyId);
+			Configuration configuration = _createFactoryConfiguration(
+				className, properties);
 
-			Assert.assertNotNull(oAuth2Application);
-			Assert.assertEquals(
-				user.getUserId(),
-				oAuth2Application.getClientCredentialUserId());
-			Assert.assertEquals(
-				_EXTERNAL_REFERENCE_CODE, oAuth2Application.getName());
-		}
-		finally {
-			ConfigurationTestUtil.deleteConfiguration(configuration);
+			Assert.assertTrue(ListUtil.isEmpty(logCapture.getLogEntries()));
+
+			try {
+				OAuth2Application oAuth2Application = _fetchOAuthApplication(
+					companyId);
+
+				Assert.assertNotNull(oAuth2Application);
+				Assert.assertEquals(
+					user.getUserId(),
+					oAuth2Application.getClientCredentialUserId());
+				Assert.assertEquals(
+					_EXTERNAL_REFERENCE_CODE, oAuth2Application.getName());
+			}
+			finally {
+				ConfigurationTestUtil.deleteConfiguration(configuration);
+			}
 		}
 
 		Thread.sleep(200);

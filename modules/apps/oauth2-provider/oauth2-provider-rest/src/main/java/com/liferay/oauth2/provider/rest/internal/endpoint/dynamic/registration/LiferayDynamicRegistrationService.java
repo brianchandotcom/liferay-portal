@@ -7,7 +7,7 @@ package com.liferay.oauth2.provider.rest.internal.endpoint.dynamic.registration;
 
 import com.liferay.oauth2.provider.rest.internal.endpoint.dynamic.registration.model.LiferayClientRegistration;
 import com.liferay.oauth2.provider.rest.internal.endpoint.dynamic.registration.model.LiferayClientRegistrationResponse;
-import com.liferay.oauth2.provider.rest.internal.endpoint.liferay.LiferayOAuthDataProvider;
+import com.liferay.oauth2.provider.rest.internal.endpoint.util.OAuth2ErrorUtil;
 import com.liferay.oauth2.provider.util.OAuth2SecureRandomGenerator;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -69,11 +69,6 @@ public class LiferayDynamicRegistrationService
 		return super.register(clientRegistration);
 	}
 
-	public void setClientProvider(LiferayOAuthDataProvider clientProvider) {
-		_liferayOAuthDataProvider = clientProvider;
-		super.setClientProvider(clientProvider);
-	}
-
 	@Override
 	protected void checkRegistrationAccessToken(
 		Client client, String accessToken) {
@@ -111,7 +106,7 @@ public class LiferayDynamicRegistrationService
 			(allowedGrantTypes.contains("authorization_code") ||
 			 allowedGrantTypes.contains("implicit"))) {
 
-			_liferayOAuthDataProvider.reportInvalidRequestError(
+			OAuth2ErrorUtil.reportInvalidRequestError(
 				"A Redirection URI is required", OAuthConstants.INVALID_REQUEST,
 				Response.Status.BAD_REQUEST);
 		}
@@ -272,7 +267,7 @@ public class LiferayDynamicRegistrationService
 		if (ListUtil.isEmpty(responseTypes) &&
 			!allowedResponseTypeList.isEmpty()) {
 
-			_liferayOAuthDataProvider.reportInvalidRequestError(
+			OAuth2ErrorUtil.reportInvalidRequestError(
 				"A response type '" + allowedResponseTypeList.get(0) +
 					"' is needed to match provided grant types",
 				"invalid_client_metadata", Response.Status.BAD_REQUEST);
@@ -281,7 +276,7 @@ public class LiferayDynamicRegistrationService
 		if (ListUtil.isNotEmpty(responseTypes)) {
 			for (String responseType : responseTypes) {
 				if (!allowedResponseTypeList.contains(responseType)) {
-					_liferayOAuthDataProvider.reportInvalidRequestError(
+					OAuth2ErrorUtil.reportInvalidRequestError(
 						"Invalid response type '" + responseType +
 							"' by provided grant types",
 						"invalid_client_metadata", Response.Status.BAD_REQUEST);
@@ -296,7 +291,5 @@ public class LiferayDynamicRegistrationService
 		).put(
 			"implicit", "token"
 		).build();
-
-	private LiferayOAuthDataProvider _liferayOAuthDataProvider;
 
 }

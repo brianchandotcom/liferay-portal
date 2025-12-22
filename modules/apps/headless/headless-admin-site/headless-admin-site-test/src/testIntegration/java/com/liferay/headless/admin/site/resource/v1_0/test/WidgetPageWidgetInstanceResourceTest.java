@@ -7,6 +7,7 @@ package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
+import com.liferay.headless.admin.site.client.dto.v1_0.BasicWidgetPageWidgetInstance;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageWidgetInstance;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.layout.test.util.LayoutTestUtil;
@@ -196,7 +197,7 @@ public class WidgetPageWidgetInstanceResourceTest
 		throws Exception {
 
 		WidgetPageWidgetInstance widgetPageWidgetInstance =
-			new WidgetPageWidgetInstance();
+			new BasicWidgetPageWidgetInstance();
 
 		String portletName = AssetPublisherPortletKeys.ASSET_PUBLISHER;
 
@@ -206,6 +207,8 @@ public class WidgetPageWidgetInstanceResourceTest
 
 		widgetPageWidgetInstance.setParentSectionId("column-1");
 		widgetPageWidgetInstance.setPosition(_position++);
+		widgetPageWidgetInstance.setType(
+			WidgetPageWidgetInstance.Type.BASIC_WIDGET_PAGE_WIDGET_INSTANCE);
 		widgetPageWidgetInstance.setWidgetInstanceId(
 			PortletIdCodec.decodeInstanceId(portletId));
 		widgetPageWidgetInstance.setWidgetName(portletName);

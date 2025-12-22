@@ -13,6 +13,7 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.expando.kernel.service.ExpandoTableLocalServiceUtil;
 import com.liferay.headless.admin.site.client.custom.field.CustomField;
 import com.liferay.headless.admin.site.client.custom.field.CustomValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.BasicWidgetPageWidgetInstance;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.GeneralConfig;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
@@ -936,7 +937,7 @@ public class PageSpecificationsTestUtil {
 
 		for (int i = 0; i < RandomTestUtil.randomInt(0, 3); i++) {
 			WidgetPageWidgetInstance widgetPageWidgetInstance =
-				new WidgetPageWidgetInstance();
+				new BasicWidgetPageWidgetInstance();
 
 			String widgetName = AssetPublisherPortletKeys.ASSET_PUBLISHER;
 
@@ -951,6 +952,9 @@ public class PageSpecificationsTestUtil {
 
 			widgetPageWidgetInstance.setParentSectionId(column);
 			widgetPageWidgetInstance.setPosition(i);
+			widgetPageWidgetInstance.setType(
+				WidgetPageWidgetInstance.Type.
+					BASIC_WIDGET_PAGE_WIDGET_INSTANCE);
 			widgetPageWidgetInstance.setWidgetConfig(() -> _getWidgetConfig());
 			widgetPageWidgetInstance.setWidgetInstanceId(widgetInstanceId);
 			widgetPageWidgetInstance.setWidgetLookAndFeelConfig(

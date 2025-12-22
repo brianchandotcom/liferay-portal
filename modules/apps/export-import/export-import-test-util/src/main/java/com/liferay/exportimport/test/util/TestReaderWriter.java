@@ -5,11 +5,13 @@
 
 package com.liferay.exportimport.test.util;
 
+import com.liferay.petra.io.DummyOutputStream;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipWriter;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
@@ -29,6 +31,13 @@ public class TestReaderWriter implements ZipReader, ZipWriter {
 
 	@Override
 	public void addEntry(String name, InputStream inputStream) {
+		try {
+			inputStream.transferTo(new DummyOutputStream());
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
 		_binaryEntries.add(name);
 	}
 

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.log.LogCapture;
@@ -33,11 +34,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
+import java.text.Format;
 
 import java.util.Date;
 import java.util.List;
@@ -186,14 +183,14 @@ public class GetContentDashboardItemsXlsMVCResourceCommandTest {
 			mockLiferayResourceResponse.getPortletOutputStream();
 	}
 
-	private String _toString(Date date) {
-		Instant instant = date.toInstant();
+	private String _toString(Date date) throws Exception {
+		ThemeDisplay themeDisplay = ContentDashboardTestUtil.getThemeDisplay(
+			_group);
 
-		ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
+		Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(
+			themeDisplay.getLocale(), themeDisplay.getTimeZone());
 
-		LocalDateTime localDateTime = zonedDateTime.toLocalDateTime();
-
-		return localDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+		return dateTimeFormat.format(date);
 	}
 
 	@DeleteAfterTestRun

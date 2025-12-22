@@ -66,12 +66,14 @@ import jakarta.ws.rs.core.MultivaluedHashMap;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.UriInfo;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -248,6 +250,17 @@ public class LiferayMethodDataFetchingProcessor {
 						binaryFiles, __ -> ObjectMapperHolder._objectMapper,
 						values);
 				}
+			}
+
+			Class<?> parameterType = parameter.getType();
+
+			if ((argument instanceof ArrayList<?> listArgument) &&
+				parameterType.isArray()) {
+
+				Object array = Array.newInstance(
+					parameterType.getComponentType(), listArgument.size());
+
+				argument = listArgument.toArray((Object[])array);
 			}
 
 			Class<? extends Parameter> parameterClass = parameter.getClass();

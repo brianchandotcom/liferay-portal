@@ -169,7 +169,7 @@ describe('CommerceMetricCard Classifications', () => {
 
 		const trendElement = container.querySelector('.analytics-trend');
 		expect(window.getComputedStyle(trendElement).color).toEqual(
-			'rgb(174, 176, 187)'
+			'rgb(107, 108, 126)'
 		);
 		expect(
 			trendElement.querySelector('.lexicon-icon-caret-top-l')

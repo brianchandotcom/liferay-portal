@@ -76,7 +76,7 @@ exports[`DocumentsAndMediaMetricCard should render 1`] = `
                 </span>
                 <div
                   class="analytics-trend"
-                  style="color: rgb(174, 176, 187);"
+                  style="color: rgb(107, 108, 126);"
                 >
                   <span
                     class="analytics-trend-percent mb-0"
@@ -117,7 +117,7 @@ exports[`DocumentsAndMediaMetricCard should render 1`] = `
                 </span>
                 <div
                   class="analytics-trend"
-                  style="color: rgb(174, 176, 187);"
+                  style="color: rgb(107, 108, 126);"
                 >
                   <span
                     class="analytics-trend-percent mb-0"
@@ -158,7 +158,7 @@ exports[`DocumentsAndMediaMetricCard should render 1`] = `
                 </span>
                 <div
                   class="analytics-trend"
-                  style="color: rgb(174, 176, 187);"
+                  style="color: rgb(107, 108, 126);"
                 >
                   <span
                     class="analytics-trend-percent mb-0"
@@ -201,7 +201,7 @@ exports[`DocumentsAndMediaMetricCard should render 1`] = `
                 </span>
                 <div
                   class="analytics-trend"
-                  style="color: rgb(174, 176, 187);"
+                  style="color: rgb(107, 108, 126);"
                 >
                   <span
                     class="analytics-trend-percent mb-0"

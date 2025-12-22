@@ -250,7 +250,9 @@ export class WebContentDisplayPage {
 		await this.uiElementsPage.closeClickable.click();
 
 		await this.page
-			.locator('header')
+			.locator(
+				'[id^="portlet_com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_"] header'
+			)
 			.filter({hasText: 'Web Content Display'})
 			.waitFor({state: 'visible'});
 	}

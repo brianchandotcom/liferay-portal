@@ -1215,6 +1215,16 @@ public class LayoutUtil {
 						originalSegmentsExperience);
 				}
 			}
+
+			for (PageExperience pageExperience : pageExperiences) {
+				SegmentsExperience actualSegmentsExperience =
+					actualSegmentsExperiencesMap.get(
+						pageExperience.getExternalReferenceCode());
+
+				SegmentsExperienceServiceUtil.updateSegmentsExperiencePriority(
+					actualSegmentsExperience.getSegmentsExperienceId(),
+					GetterUtil.getInteger(pageExperience.getPriority()));
+			}
 		}
 	}
 

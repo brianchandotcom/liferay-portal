@@ -21,6 +21,7 @@ import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageWidgetInstance;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ItemScopeUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
+import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -45,7 +47,9 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.segments.service.SegmentsExperienceService;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -323,8 +327,18 @@ public class PageSpecificationDTOConverter
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
 
+		List<String> nestedColumnIds = StringUtil.split(
+			layout.getTypeSettingsProperty(
+				LayoutTypePortletConstants.NESTED_COLUMN_IDS));
+
+		List<String> columns = new ArrayList<>();
+
+		ListUtil.filter(
+			layoutTypePortlet.getColumns(), columns,
+			column -> !nestedColumnIds.contains(column));
+
 		return TransformUtil.transformToArray(
-			layoutTypePortlet.getColumns(),
+			columns,
 			column -> new WidgetPageSection() {
 				{
 					setCustomizable(

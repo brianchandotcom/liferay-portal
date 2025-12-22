@@ -313,13 +313,14 @@ public class KeywordResourceImpl
 			keyword.getExternalReferenceCode(), keywordId, keyword.getName(),
 			null);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-17564") &&
+		if (FeatureFlagManagerUtil.isEnabled(
+				assetTag.getCompanyId(), "LPD-17564") &&
 			ArrayUtil.isNotEmpty(keyword.getAssetLibraries())) {
 
 			_assetTagGroupRelLocalService.setAssetTagGroupRels(
 				assetTag.getTagId(),
 				TaxonomyGroupUtil.getAssetLibraryGroupIds(
-					keyword.getAssetLibraries()));
+					keyword.getAssetLibraries(), assetTag.getCompanyId()));
 		}
 
 		return _toKeyword(assetTag);
@@ -329,7 +330,11 @@ public class KeywordResourceImpl
 	public void putKeywordMerge(Long toKeywordId, Long[] fromKeywordIds)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		AssetTag assetTag = _assetTagService.getTag(toKeywordId);
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				assetTag.getCompanyId(), "LPD-17564")) {
+
 			throw new UnsupportedOperationException();
 		}
 
@@ -337,7 +342,7 @@ public class KeywordResourceImpl
 			_assetTagService.mergeTags(fromKeywordId, toKeywordId);
 		}
 
-		AssetTag assetTag = _assetTagService.getTag(toKeywordId);
+		assetTag = _assetTagService.getTag(toKeywordId);
 
 		_assetTagGroupRelLocalService.setAssetTagGroupRels(
 			assetTag.getTagId(),
@@ -488,13 +493,15 @@ public class KeywordResourceImpl
 
 		Group group = _groupLocalService.getGroup(siteId);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-17564") && group.isCMS() &&
+		if (FeatureFlagManagerUtil.isEnabled(
+				group.getCompanyId(), "LPD-17564") &&
+			group.isCMS() &&
 			ArrayUtil.isNotEmpty(keyword.getAssetLibraries())) {
 
 			_assetTagGroupRelLocalService.setAssetTagGroupRels(
 				assetTag.getTagId(),
 				TaxonomyGroupUtil.getAssetLibraryGroupIds(
-					keyword.getAssetLibraries()));
+					keyword.getAssetLibraries(), group.getCompanyId()));
 		}
 
 		return _toKeyword(assetTag);

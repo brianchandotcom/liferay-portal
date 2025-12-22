@@ -67,82 +67,12 @@ export const testFlagsEnabled = mergeTests(
 );
 
 test(
-	'Verify there is advanced staging configuration checkbox with description in System Setting,the configuration checkbox can be enabled',
-	{tag: ['@LPS-189238']},
-	async ({
-		apiHelpers,
-		exportImportStagingSystemSettingsPage,
-		page,
-		portletPublishToLivePage,
-	}) => {
-		const site = await apiHelpers.headlessSite.createSite({
-			name: getRandomString(),
-		});
-
-		apiHelpers.data.push({id: site.id, type: 'site'});
-
-		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
-			groupId: site.id,
-			options: {type: 'content'},
-			title: getRandomString(),
-		});
-
-		await enableLocalStaging(apiHelpers, page, site);
-
-		const stagingSite =
-			await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath(
-				`${site.friendlyUrlPath}-staging`
-			);
-
-		await exportImportStagingSystemSettingsPage.goto();
-		await exportImportStagingSystemSettingsPage.checkShowAdvancedStagingConfiguration(
-			true
-		);
-
-		await exportImportStagingSystemSettingsPage.page.reload({
-			waitUntil: 'networkidle',
-		});
-
-		await expect(
-			exportImportStagingSystemSettingsPage.page.getByLabel(
-				'Show Advanced Staging'
-			)
-		).toBeChecked();
-
-		try {
-			await page.goto(
-				`/web${stagingSite.friendlyUrlPath}${layout.friendlyURL}`
-			);
-
-			await expect(async () => {
-				await page.reload();
-				await portletPublishToLivePage.publishToLiveButton.waitFor();
-				await portletPublishToLivePage.publishToLiveButton.click();
-				await portletPublishToLivePage.publishToLiveIframeButton.waitFor();
-
-				await expect(
-					portletPublishToLivePage.publishToLiveIframe.getByRole(
-						'link',
-						{
-							name: 'Switch to Simple Publish Process',
-						}
-					)
-				).toBeVisible({timeout: 3_000});
-			}).toPass({intervals: [1_000], timeout: 30_000});
-		}
-		finally {
-			await exportImportStagingSystemSettingsPage.goto();
-			await exportImportStagingSystemSettingsPage.resetDefaultValues();
-		}
-	}
-);
-
-test(
 	'Verify there is advanced staging configuration checkbox with description in Instance Setting,the configuration checkbox can be enabled',
 	{tag: ['@LPS-189238']},
 	async ({
 		apiHelpers,
 		exportImportStagingInstanceSettingsPage,
+		exportImportStagingSystemSettingsPage,
 		page,
 		portletPublishToLivePage,
 	}) => {
@@ -190,8 +120,64 @@ test(
 			).toBeVisible();
 		}
 		finally {
-			await exportImportStagingInstanceSettingsPage.goto();
-			await exportImportStagingInstanceSettingsPage.resetDefaultValues();
+			await exportImportStagingSystemSettingsPage.goto();
+			await exportImportStagingSystemSettingsPage.resetDefaultValues();
+		}
+	}
+);
+
+test(
+	'Verify there is advanced staging configuration checkbox with description in System Setting,the configuration checkbox can be enabled',
+	{tag: ['@LPS-189238']},
+	async ({
+		apiHelpers,
+		exportImportStagingSystemSettingsPage,
+		page,
+		portletPublishToLivePage,
+	}) => {
+		const site = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			options: {type: 'content'},
+			title: getRandomString(),
+		});
+
+		await exportImportStagingSystemSettingsPage.goto();
+		await exportImportStagingSystemSettingsPage.checkShowAdvancedStagingConfiguration(
+			true
+		);
+
+		try {
+			await enableLocalStaging(apiHelpers, page, site);
+
+			const stagingSite =
+				await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath(
+					`${site.friendlyUrlPath}-staging`
+				);
+
+			await page.goto(
+				`/web${stagingSite.friendlyUrlPath}${layout.friendlyURL}`
+			);
+			await reloadUntilVisible({
+				myLocator: portletPublishToLivePage.publishToLiveButton,
+				page,
+			});
+			await portletPublishToLivePage.publishToLiveButton.click();
+
+			await expect(
+				portletPublishToLivePage.publishToLiveIframe.getByRole('link', {
+					name: 'Switch to Simple Publish Process',
+				})
+			).toBeVisible();
+		}
+		finally {
+			await exportImportStagingSystemSettingsPage.goto();
+			await exportImportStagingSystemSettingsPage.resetDefaultValues();
 		}
 	}
 );

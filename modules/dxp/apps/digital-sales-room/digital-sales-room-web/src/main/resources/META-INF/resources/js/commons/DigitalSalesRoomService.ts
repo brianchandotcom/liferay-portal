@@ -238,8 +238,13 @@ async function deleteDigitalSalesRoom(groupId: number) {
 	return await ApiHelper.delete(`${PATH}/${groupId}`);
 }
 
+async function deleteDigitalSalesRoomTemplate(groupId: number) {
+	return await ApiHelper.delete(`${TEMPLATE_PATH}/${groupId}`);
+}
+
 export default {
 	deleteDigitalSalesRoom,
+	deleteDigitalSalesRoomTemplate,
 	getAccounts,
 	getChannels,
 	postDigitalSalesRoom,

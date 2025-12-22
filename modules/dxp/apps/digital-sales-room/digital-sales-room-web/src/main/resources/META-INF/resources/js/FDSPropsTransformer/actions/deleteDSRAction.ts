@@ -5,19 +5,38 @@
 
 import DigitalSalesRoomService from '../../commons/DigitalSalesRoomService';
 
+type DSRModel = 'room' | 'room-template';
+
+const deleteServiceByModel: Record<
+	DSRModel,
+	(groupId: number) => Promise<any>
+> = {
+	'room': DigitalSalesRoomService.deleteDigitalSalesRoom,
+	'room-template': DigitalSalesRoomService.deleteDigitalSalesRoomTemplate,
+};
+
 export default function deleteDSRAction({
 	groupId,
 	loadData,
+	model = 'room',
 	title,
 }: {
 	groupId: number;
 	loadData: () => void;
+	model?: DSRModel;
 	title: string;
 }) {
 	Liferay.Util.openModal({
-		bodyHTML: `<p>${Liferay.Language.get(
-			'delete-digital-sales-room-confirmation-body'
-		)}</p>`,
+		bodyHTML: `<p>
+			${
+				model === 'room-template'
+					? Liferay.Language.get(
+							'delete-digital-sales-room-template-confirmation-body'
+						)
+					: Liferay.Language.get(
+							'delete-digital-sales-room-confirmation-body'
+						)
+			}</p>`,
 		buttons: [
 			{
 				displayType: 'secondary',
@@ -30,9 +49,7 @@ export default function deleteDSRAction({
 				onClick: async ({processClose}: {processClose: () => void}) => {
 					try {
 						const response =
-							await DigitalSalesRoomService.deleteDigitalSalesRoom(
-								groupId
-							);
+							await deleteServiceByModel[model](groupId);
 
 						if (response.error) {
 							throw new Error(response.error);

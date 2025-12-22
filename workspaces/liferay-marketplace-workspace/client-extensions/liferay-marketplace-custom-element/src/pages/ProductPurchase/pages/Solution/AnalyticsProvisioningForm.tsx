@@ -31,6 +31,18 @@ type MultiSelectValue = {
 	value: string;
 };
 
+function ContactSalesLink() {
+	return (
+		<a
+			href="https://www.liferay.com/contact-sales"
+			rel="noopener noreferrer"
+			target="_blank"
+		>
+			Sales Department
+		</a>
+	);
+}
+
 function CustomerPortalLink() {
 	return (
 		<a
@@ -43,16 +55,58 @@ function CustomerPortalLink() {
 	);
 }
 
+const paragraphProps = {
+	align: 'left',
+};
+
 const emptyStateMessages = {
 	UNABLE_TO_PROVISION: {
 		description: (
 			<>
-				It was not possible to provision your Analytics Cloud workspace
-				for this account. Go to the <CustomerPortalLink /> to contact
-				your account manager or the Sales team for assistance.
+				<p {...paragraphProps} className="px-5">
+					Analytics Cloud requires an active Liferay Enterprise
+					subscription and we could find any associated with your
+					account.
+				</p>
+
+				<p>
+					To resolve this, please follow the steps below that apply to
+					your situation:
+				</p>
+
+				<ul {...paragraphProps}>
+					<li>
+						If your company has an active DXP subscription, please
+						contact your Account Administrator and ask them to add
+						your user to the company account.
+					</li>
+
+					<li>
+						If you do not yet have an active enterprise
+						subscription, please contact our <ContactSalesLink /> to
+						get started.
+					</li>
+
+					<li>
+						If neither of the above situations applies to you, or
+						you are experiencing a technical issue not covered here,
+						please contact our <CustomerPortalLink /> for
+						assistance.
+					</li>
+				</ul>
 			</>
 		),
-		title: 'Unable to provision your workspace',
+		title: 'We could not find an Enterprise Subscription related to your User',
+	},
+	UPGRADE_PLAN: {
+		description: (
+			<>
+				We are sorry, but we are unable to automatically upgrade your
+				account to the Business Tier. To complete your upgrade, please
+				contact our <ContactSalesLink />
+			</>
+		),
+		title: 'Automatic Upgrade Unavailable',
 	},
 	WORKSPACE_ALREADY_EXISTS: {
 		description: (
@@ -102,6 +156,7 @@ const AnalyticsProvisioning = () => {
 					);
 				}
 			},
+			shouldRetryOnError: false,
 		}
 	);
 
@@ -150,20 +205,32 @@ const AnalyticsProvisioning = () => {
 		await handlePurchase(productPurchase);
 	};
 
+	const emptyState = useMemo(() => {
+		const errorInfo = error.info;
+
+		if (!error || !errorInfo?.error) {
+			return null;
+		}
+
+		if (errorInfo.productName.includes('Basic')) {
+			return emptyStateMessages.UPGRADE_PLAN;
+		}
+
+		return error
+			? emptyStateMessages[
+					errorInfo?.error as keyof typeof emptyStateMessages
+				] || emptyStateMessages.UNABLE_TO_PROVISION
+			: null;
+	}, [error]);
+
 	if (isLoading || !accountKey) {
 		return <Loading />;
 	}
 
-	const emptyState = error
-		? emptyStateMessages[
-				error.info?.error as keyof typeof emptyStateMessages
-			] || emptyStateMessages.UNABLE_TO_PROVISION
-		: null;
-
 	if (emptyState) {
 		return (
 			<div
-				className="align-items-center d-flex flex-column justify-content-center px-4 text-center"
+				className="align-items-center d-flex flex-column justify-content-center px-2 text-center"
 				id="analytics-form-empty-state"
 			>
 				<div className="analytics-form-alert">

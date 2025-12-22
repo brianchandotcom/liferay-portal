@@ -20,7 +20,8 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class WidgetPageWidgetInstance implements Cloneable, Serializable {
+public abstract class WidgetPageWidgetInstance
+	implements Cloneable, Serializable {
 
 	public static WidgetPageWidgetInstance toDTO(String json) {
 		return WidgetPageWidgetInstanceSerDes.toDTO(json);
@@ -46,30 +47,6 @@ public class WidgetPageWidgetInstance implements Cloneable, Serializable {
 	}
 
 	protected String externalReferenceCode;
-
-	public NestedWidgetSection[] getNestedWidgetSections() {
-		return nestedWidgetSections;
-	}
-
-	public void setNestedWidgetSections(
-		NestedWidgetSection[] nestedWidgetSections) {
-
-		this.nestedWidgetSections = nestedWidgetSections;
-	}
-
-	public void setNestedWidgetSections(
-		UnsafeSupplier<NestedWidgetSection[], Exception>
-			nestedWidgetSectionsUnsafeSupplier) {
-
-		try {
-			nestedWidgetSections = nestedWidgetSectionsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected NestedWidgetSection[] nestedWidgetSections;
 
 	public String getParentSectionId() {
 		return parentSectionId;
@@ -138,6 +115,33 @@ public class WidgetPageWidgetInstance implements Cloneable, Serializable {
 	}
 
 	protected Integer position;
+
+	public Type getType() {
+		return type;
+	}
+
+	public String getTypeAsString() {
+		if (type == null) {
+			return null;
+		}
+
+		return type.toString();
+	}
+
+	public void setType(Type type) {
+		this.type = type;
+	}
+
+	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
+		try {
+			type = typeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Type type;
 
 	public Map<String, Object> getWidgetConfig() {
 		return widgetConfig;
@@ -280,6 +284,41 @@ public class WidgetPageWidgetInstance implements Cloneable, Serializable {
 
 	public String toString() {
 		return WidgetPageWidgetInstanceSerDes.toJSON(this);
+	}
+
+	public static enum Type {
+
+		BASIC_WIDGET_PAGE_WIDGET_INSTANCE("BasicWidgetPageWidgetInstance"),
+		NESTED_APPLICATIONS_WIDGET_PAGE_WIDGET_INSTANCE(
+			"NestedApplicationsWidgetPageWidgetInstance");
+
+		public static Type create(String value) {
+			for (Type type : values()) {
+				if (Objects.equals(type.getValue(), value) ||
+					Objects.equals(type.name(), value)) {
+
+					return type;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Type(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
 	}
 
 }

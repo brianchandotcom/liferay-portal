@@ -5,9 +5,14 @@
 
 package com.liferay.headless.admin.site.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -41,8 +46,24 @@ import java.util.function.Supplier;
 	value = "WidgetPageWidgetInstance"
 )
 @JsonFilter("Liferay.Vulcan")
+@JsonSubTypes(
+	{
+		@JsonSubTypes.Type(
+			name = "BasicWidgetPageWidgetInstance",
+			value = BasicWidgetPageWidgetInstance.class
+		),
+		@JsonSubTypes.Type(
+			name = "NestedApplicationsWidgetPageWidgetInstance",
+			value = NestedApplicationsWidgetPageWidgetInstance.class
+		)
+	}
+)
+@JsonTypeInfo(
+	include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "type",
+	use = JsonTypeInfo.Id.NAME, visible = true
+)
 @XmlRootElement(name = "WidgetPageWidgetInstance")
-public class WidgetPageWidgetInstance implements Serializable {
+public abstract class WidgetPageWidgetInstance implements Serializable {
 
 	public static WidgetPageWidgetInstance toDTO(String json) {
 		return ObjectMapperUtil.readValue(WidgetPageWidgetInstance.class, json);
@@ -97,55 +118,6 @@ public class WidgetPageWidgetInstance implements Serializable {
 
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The sections of a nested widget. Only available if this widget instance is a nested applications widget instance."
-	)
-	@Valid
-	public NestedWidgetSection[] getNestedWidgetSections() {
-		if (_nestedWidgetSectionsSupplier != null) {
-			nestedWidgetSections = _nestedWidgetSectionsSupplier.get();
-
-			_nestedWidgetSectionsSupplier = null;
-		}
-
-		return nestedWidgetSections;
-	}
-
-	public void setNestedWidgetSections(
-		NestedWidgetSection[] nestedWidgetSections) {
-
-		this.nestedWidgetSections = nestedWidgetSections;
-
-		_nestedWidgetSectionsSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setNestedWidgetSections(
-		UnsafeSupplier<NestedWidgetSection[], Exception>
-			nestedWidgetSectionsUnsafeSupplier) {
-
-		_nestedWidgetSectionsSupplier = () -> {
-			try {
-				return nestedWidgetSectionsUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(
-		description = "The sections of a nested widget. Only available if this widget instance is a nested applications widget instance."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected NestedWidgetSection[] nestedWidgetSections;
-
-	@JsonIgnore
-	private Supplier<NestedWidgetSection[]> _nestedWidgetSectionsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The section's ID of the widget page or the nested application widget instance this widget belongs to."
@@ -288,6 +260,58 @@ public class WidgetPageWidgetInstance implements Serializable {
 
 	@JsonIgnore
 	private Supplier<Integer> _positionSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	@JsonGetter("type")
+	@Valid
+	public Type getType() {
+		if (_typeSupplier != null) {
+			type = _typeSupplier.get();
+
+			_typeSupplier = null;
+		}
+
+		return type;
+	}
+
+	@JsonIgnore
+	public String getTypeAsString() {
+		Type type = getType();
+
+		if (type == null) {
+			return null;
+		}
+
+		return type.toString();
+	}
+
+	public void setType(Type type) {
+		this.type = type;
+
+		_typeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
+		_typeSupplier = () -> {
+			try {
+				return typeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Type type;
+
+	@JsonIgnore
+	private Supplier<Type> _typeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The configuration keys and values of the widget instance."
@@ -560,28 +584,6 @@ public class WidgetPageWidgetInstance implements Serializable {
 			sb.append("\"");
 		}
 
-		NestedWidgetSection[] nestedWidgetSections = getNestedWidgetSections();
-
-		if (nestedWidgetSections != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"nestedWidgetSections\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < nestedWidgetSections.length; i++) {
-				sb.append(String.valueOf(nestedWidgetSections[i]));
-
-				if ((i + 1) < nestedWidgetSections.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
 		String parentSectionId = getParentSectionId();
 
 		if (parentSectionId != null) {
@@ -625,6 +627,20 @@ public class WidgetPageWidgetInstance implements Serializable {
 			sb.append("\"position\": ");
 
 			sb.append(position);
+		}
+
+		Type type = getType();
+
+		if (type != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+			sb.append(type);
+			sb.append("\"");
 		}
 
 		Map<String, Object> widgetConfig = getWidgetConfig();
@@ -717,6 +733,46 @@ public class WidgetPageWidgetInstance implements Serializable {
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("Type")
+	public static enum Type {
+
+		BASIC_WIDGET_PAGE_WIDGET_INSTANCE("BasicWidgetPageWidgetInstance"),
+		NESTED_APPLICATIONS_WIDGET_PAGE_WIDGET_INSTANCE(
+			"NestedApplicationsWidgetPageWidgetInstance");
+
+		@JsonCreator
+		public static Type create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (Type type : values()) {
+				if (Objects.equals(type.getValue(), value)) {
+					return type;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Type(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

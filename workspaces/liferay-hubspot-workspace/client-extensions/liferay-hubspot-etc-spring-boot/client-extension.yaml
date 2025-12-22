@@ -1,0 +1,24 @@
+assemble:
+    -   fromTask: bootJar
+liferay-hubspot-post-company:
+    name: Liferay Hubspot Post Company
+    oAuth2ApplicationExternalReferenceCode: liferay-hubspot-spring-boot-oaua
+    resourcePath: /company
+    type: objectAction
+liferay-hubspot-post-contact:
+    name: Liferay Hubspot Post Contact
+    oAuth2ApplicationExternalReferenceCode: liferay-hubspot-spring-boot-oaua
+    resourcePath: /contact
+    type: objectAction
+liferay-hubspot-post-lead:
+    name: Liferay Hubspot Post Lead
+    oAuth2ApplicationExternalReferenceCode: liferay-hubspot-spring-boot-oaua
+    resourcePath: /lead
+    type: objectAction
+liferay-hubspot-spring-boot-oaua:
+    .serviceAddress: localhost:58081
+    .serviceScheme: http
+    name: Liferay Hubspot Spring Boot OAuth Application User Agent
+    scopes:
+        -   Liferay.Headless.Admin.User.everything
+    type: oAuthApplicationUserAgent

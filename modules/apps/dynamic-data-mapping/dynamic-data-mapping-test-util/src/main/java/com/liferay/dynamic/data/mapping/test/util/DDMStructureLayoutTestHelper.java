@@ -10,11 +10,11 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalServiceUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,16 +39,12 @@ public class DDMStructureLayoutTestHelper {
 	public List<DDMFormLayoutColumn> createDDMFormLayoutColumns(
 		String... ddmFormFieldNames) {
 
-		List<DDMFormLayoutColumn> ddmFormLayoutColumns = new ArrayList<>();
-
 		int size = 12 / ddmFormFieldNames.length;
 
-		for (String ddmFormFieldName : ddmFormFieldNames) {
-			ddmFormLayoutColumns.add(
-				new DDMFormLayoutColumn(size, ddmFormFieldName));
-		}
-
-		return ddmFormLayoutColumns;
+		return TransformUtil.transformToList(
+			ddmFormFieldNames,
+			ddmFormFieldName -> new DDMFormLayoutColumn(
+				size, ddmFormFieldName));
 	}
 
 	public DDMFormLayoutRow createDDMFormLayoutRow(

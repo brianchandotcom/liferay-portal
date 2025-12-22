@@ -11,6 +11,8 @@ export const DEFAULT_DATE_FORMAT = 'YYYY-MM-DD';
 
 export const CUSTOM_DATE_FORMAT = 'MMM DD, YYYY';
 
+export const ISO_8601_DATE_FORMAT = 'YYYY-MM-DDTHH:mm:ss.SSS[Z]';
+
 export const DATE_MASK = [
 	/\d/,
 	/\d/,

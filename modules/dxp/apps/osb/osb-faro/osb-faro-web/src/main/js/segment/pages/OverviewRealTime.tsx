@@ -8,9 +8,13 @@ import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React, {useMemo, useState} from 'react';
 import SearchableEntityTable from 'shared/components/SearchableEntityTable';
 import URLConstants from 'shared/util/url-constants';
+import {
+	CUSTOM_DATE_FORMAT,
+	formatUTCDate,
+	ISO_8601_DATE_FORMAT
+} from 'shared/util/date';
 import {fetchMembershipChangesAggregations} from 'shared/api/individual-segment';
 import {FilterOptionType} from 'shared/types';
-import {formatUTCDate} from 'shared/util/date';
 import {membershipChangesColumns} from 'shared/util/table-columns';
 import {OrderByDirections, SegmentTypes} from 'shared/util/constants';
 import {OrderedMap} from 'immutable';
@@ -33,11 +37,11 @@ const DEFAULT_ORDER_BY_OPTIONS = [
 	},
 	{
 		label: Liferay.Language.get('first-seen'),
-		value: 'firstSeenDate'
+		value: 'firstSeenTime'
 	},
 	{
 		label: Liferay.Language.get('last-active'),
-		value: 'lastActive'
+		value: 'lastActivityTime'
 	},
 	{
 		label: Liferay.Language.get('profile-type'),
@@ -62,12 +66,38 @@ const FILTER_BY_DEFAULT_OPTIONS: FilterOptionType[] = [
 ];
 
 const MEMBERSHIP_CHANGE_FILTER_OPTION: FilterOptionType = {
-	key: 'membershipChange',
+	key: 'type',
 	label: Liferay.Language.get('membership-change'),
 	values: [
 		{label: Liferay.Language.get('added'), value: 'ADDED'},
 		{label: Liferay.Language.get('removed'), value: 'REMOVED'}
 	]
+};
+
+const getAllMembers = (data: Data) => {
+	const {delta, groupId, id, orderIOMap, page, query} = data;
+
+	return API.individualSegment.fetchRealTimeMembership({
+		delta,
+		groupId,
+		orderIOMap,
+		page,
+		query,
+		segmentId: id
+	});
+};
+
+const getMembershipChanges = (data: Data) => {
+	const {delta, groupId, id, orderIOMap, query, selectedDate} = data;
+
+	return API.individualSegment.fetchRealTimeMembershipChanges({
+		date: selectedDate,
+		delta,
+		groupId,
+		orderIOMap,
+		query,
+		segmentId: id
+	});
 };
 
 type Data = {
@@ -130,6 +160,14 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 	groupId,
 	segment
 }) => {
+	const fetchMembers = params => {
+		const fetchMembersFn = selectedPointState.hasSelectedPoint
+			? getMembershipChanges
+			: getAllMembers;
+
+		return fetchMembersFn(params);
+	};
+
 	const {criteriaString, id, includeAnonymousUsers} = segment;
 
 	const {timeZoneId} = useTimeZone();
@@ -152,16 +190,16 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 			if (selectedPointState.hasSelectedPoint) {
 				return `${formatUTCDate(
 					data[selectedPointState.selectedPoint].intervalInitDate,
-					'MMM DD, YYYY'
+					CUSTOM_DATE_FORMAT
 				)}`;
 			}
 
 			return `${formatUTCDate(
 				data[0].intervalInitDate,
-				'MMM DD, YYYY'
+				CUSTOM_DATE_FORMAT
 			)} - ${formatUTCDate(
 				data[data.length - 1].intervalInitDate,
-				'MMM DD, YYYY'
+				CUSTOM_DATE_FORMAT
 			)}`;
 		}
 
@@ -187,26 +225,13 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 	const paginationParams = useStatefulPagination(null, {
 		initialDelta: 20,
 		initialOrderIOMap: OrderedMap({
-			['memberName']: new OrderParams({
-				field: 'memberName',
+			['name']: new OrderParams({
+				field: 'name',
 				sortOrder: OrderByDirections.Descending
 			})
 		}),
 		initialPage: 0
 	});
-
-	const fetchMembers = async (data: Data) => {
-		const {delta, groupId, id, orderIOMap, query, selectedDate} = data;
-
-		return API.individualSegment.fetchRealTimeMembershipChanges({
-			date: selectedDate,
-			delta,
-			groupId,
-			orderIOMap,
-			query,
-			segmentId: id
-		});
-	};
 
 	const orderByOptions = useMemo(
 		() =>
@@ -233,7 +258,10 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 	const selectedDate = useMemo(
 		() =>
 			selectedPointState.hasSelectedPoint && data
-				? data[selectedPointState.selectedPoint].intervalInitDate
+				? formatUTCDate(
+						data[selectedPointState.selectedPoint].intervalInitDate,
+						ISO_8601_DATE_FORMAT
+				  )
 				: undefined,
 		[data, selectedPointState]
 	);
@@ -264,7 +292,7 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 							<div className='segment-growth-chart-container'>
 								<SegmentGrowthChart
 									alwaysShowSelectedTooltip
-									data={data.map(item => ({
+									data={(data || []).map(item => ({
 										added: item.addedIndividualsCount,
 										anonymousCount:
 											item.anonymousIndividualsCount,

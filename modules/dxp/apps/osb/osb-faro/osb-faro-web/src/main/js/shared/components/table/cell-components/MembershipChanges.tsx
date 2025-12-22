@@ -5,7 +5,8 @@ import {formatUTCDate} from 'shared/util/date';
 
 enum MembershipChange {
 	ADDED = 'ADDED',
-	REMOVED = 'REMOVED'
+	REMOVED = 'REMOVED',
+	STAYED = 'STAYED'
 }
 
 interface IMembershipChanges {
@@ -27,8 +28,14 @@ const MEMBERSHIP_CHANGE_MAP: Record<
 	REMOVED: {
 		displayType: 'danger',
 		label: Liferay.Language.get('removed')
+	},
+	STAYED: {
+		displayType: undefined,
+		label: Liferay.Language.get('stayed')
 	}
 };
+
+const MAP_LABEL_TYPE = [MembershipChange.ADDED, MembershipChange.REMOVED];
 
 const MembershipChanges: React.FC<IMembershipChanges> = ({
 	className,
@@ -36,7 +43,7 @@ const MembershipChanges: React.FC<IMembershipChanges> = ({
 }) => (
 	<td className={getCN('name-cell-root', className)}>
 		<div>{formatUTCDate(createDateTime)}</div>
-		{type && (
+		{MAP_LABEL_TYPE.includes(type) && (
 			<Label displayType={MEMBERSHIP_CHANGE_MAP[type].displayType}>
 				{MEMBERSHIP_CHANGE_MAP[type].label}
 			</Label>

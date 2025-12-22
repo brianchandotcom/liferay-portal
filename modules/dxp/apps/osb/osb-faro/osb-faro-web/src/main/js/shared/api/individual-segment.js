@@ -1,6 +1,10 @@
 import Constants, {TimeIntervals} from 'shared/util/constants';
 import sendRequest from 'shared/util/request';
-import {buildOrderByFields, NAME} from 'shared/util/pagination';
+import {
+	buildOrderByFields,
+	createOrderByField,
+	NAME
+} from 'shared/util/pagination';
 import {INDIVIDUALS, SEGMENTS} from 'shared/util/router';
 
 const {
@@ -146,6 +150,32 @@ export function fetchMembershipChanges({
 	});
 }
 
+export function fetchRealTimeMembership({
+	delta,
+	groupId,
+	orderIOMap,
+	page,
+	query,
+	segmentId
+}) {
+	const orderParams = orderIOMap.first();
+	const orderByFields = createOrderByField(
+		orderParams.field,
+		orderParams.sortOrder
+	);
+
+	return sendRequest({
+		data: {
+			delta,
+			orderByFields,
+			page,
+			query
+		},
+		method: 'GET',
+		path: `contacts/${groupId}/individual_segment/${segmentId}/real-time-memberships`
+	});
+}
+
 export function fetchRealTimeMembershipChanges({
 	date,
 	delta,
@@ -155,17 +185,20 @@ export function fetchRealTimeMembershipChanges({
 	segmentId
 }) {
 	const orderParams = orderIOMap.first();
-	const orderByFields = buildOrderByFields(orderParams, INDIVIDUALS);
+	const orderByFields = createOrderByField(
+		orderParams.field,
+		orderParams.sortOrder
+	);
 
 	return sendRequest({
 		data: {
-			date,
+			day: date,
 			delta,
 			orderByFields,
 			query
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/individual_real_time_segment/${segmentId}/memberships`
+		path: `contacts/${groupId}/individual_segment/${segmentId}/real_time_memberships`
 	});
 }
 

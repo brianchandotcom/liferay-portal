@@ -25,7 +25,7 @@ export const test = mergeTests(
 	searchPageTest
 );
 
-test.describe('Search Bar with user input', () => {
+test.describe('Alerts and Search Inputs', () => {
 	test('Alert does not display on search page @LPD-39110', async ({page}) => {
 		await test.step('Check that an alert with message does not appear', async () => {
 			page.on('dialog', async (dialog) => {
@@ -51,7 +51,7 @@ test.describe('Search Bar with user input', () => {
 	});
 });
 
-test.describe('Search Bar directs to correct page', () => {
+test.describe('Redirect URL', () => {
 	test('Disregards manually input currentURL @LPD-68675', async ({
 		layout,
 		page,

@@ -32,7 +32,7 @@ export const test = mergeTests(
 	searchExperiencesPagesTest
 );
 
-test.describe('Blueprint table fields can toggle visibility', () => {
+test.describe('Table View', () => {
 	const tableFieldsList = [
 		'Description',
 		'ID',
@@ -122,7 +122,7 @@ test.describe('Blueprint table fields can toggle visibility', () => {
 	});
 });
 
-test.describe('Created blueprint has accurate clause contributors', () => {
+test.describe('Manual Creation', () => {
 	let sxpBlueprintId: string;
 
 	test.beforeEach(
@@ -168,7 +168,7 @@ test.describe('Created blueprint has accurate clause contributors', () => {
 	});
 });
 
-test.describe('Saved blueprint maintains accurate clause contributors', () => {
+test.describe('Data Persistence - Clause Contributors', () => {
 	let sxpBlueprint: SXPBlueprint;
 
 	test.beforeEach(async ({apiHelpers, sxpBlueprintsAndElementsViewPage}) => {
@@ -371,7 +371,7 @@ test.describe('Saved blueprint maintains accurate clause contributors', () => {
 	});
 });
 
-test.describe('Searching in preview with clause contributors is accurate', () => {
+test.describe('Search Preview - Clause Contributors', () => {
 	let sxpBlueprint: SXPBlueprint;
 
 	test.beforeEach(async ({apiHelpers, sxpBlueprintsAndElementsViewPage}) => {
@@ -511,7 +511,7 @@ test.describe('Searching in preview with clause contributors is accurate', () =>
 	});
 });
 
-test.describe('Blueprint can be registered as a collection provider', () => {
+test.describe('Collection Provider', () => {
 	test('Setup a blueprint with web content subtype as a collection provider', async ({
 		apiHelpers,
 		editSXPBlueprintPage,

@@ -37,16 +37,9 @@ public class ScopeUtilTest {
 			group
 		);
 
-		String invalidERC = RandomTestUtil.randomString();
-
-		Mockito.when(
-			GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
-				invalidERC, _COMPANY_ID)
-		).thenReturn(
-			null
-		);
-
-		String[] inputs = {null, "", "null", _REMOTE_SCOPE_ERC, invalidERC};
+		String[] inputs = {
+			null, "", "null", _REMOTE_SCOPE_ERC, RandomTestUtil.randomString()
+		};
 
 		Long[] expectedOutputs = {
 			_LOCAL_SCOPE_GROUP_ID, _LOCAL_SCOPE_GROUP_ID, _LOCAL_SCOPE_GROUP_ID,

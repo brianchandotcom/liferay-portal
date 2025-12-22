@@ -28,29 +28,31 @@ public class ScopeUtilTest {
 
 	@Test
 	public void testGetItemGroupId() {
-		Group group = _getGroup(_REMOTE_SCOPE_ERC, _REMOTE_SCOPE_GROUP_ID);
+		Group group = _getGroup(
+			RandomTestUtil.randomString(), RandomTestUtil.randomLong());
 
 		Mockito.when(
 			GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
-				_REMOTE_SCOPE_ERC, _COMPANY_ID)
+				group.getExternalReferenceCode(), _COMPANY_ID)
 		).thenReturn(
 			group
 		);
 
 		String[] inputs = {
-			null, "", "null", _REMOTE_SCOPE_ERC, RandomTestUtil.randomString()
+			null, "", "null", group.getExternalReferenceCode(),
+			RandomTestUtil.randomString()
 		};
 
+		long scopeGroupId = RandomTestUtil.randomLong();
+
 		Long[] expectedOutputs = {
-			_LOCAL_SCOPE_GROUP_ID, _LOCAL_SCOPE_GROUP_ID, _LOCAL_SCOPE_GROUP_ID,
-			_REMOTE_SCOPE_GROUP_ID, null
+			scopeGroupId, scopeGroupId, scopeGroupId, group.getGroupId(), null
 		};
 
 		for (int i = 0; i < inputs.length; i++) {
 			Assert.assertEquals(
 				expectedOutputs[i],
-				ScopeUtil.getItemGroupId(
-					_COMPANY_ID, inputs[i], _LOCAL_SCOPE_GROUP_ID));
+				ScopeUtil.getItemGroupId(_COMPANY_ID, inputs[i], scopeGroupId));
 		}
 	}
 
@@ -58,23 +60,27 @@ public class ScopeUtilTest {
 	public void testGetItemScopeExternalReferenceCodeWithERC()
 		throws Exception {
 
-		Group group = _getGroup(_LOCAL_SCOPE_ERC, _LOCAL_SCOPE_GROUP_ID);
+		Group group = _getGroup(
+			RandomTestUtil.randomString(), RandomTestUtil.randomLong());
 
 		Mockito.when(
-			GroupLocalServiceUtil.getGroup(_LOCAL_SCOPE_GROUP_ID)
+			GroupLocalServiceUtil.getGroup(group.getGroupId())
 		).thenReturn(
 			group
 		);
 
-		String[] inputs = {null, _LOCAL_SCOPE_ERC, _REMOTE_SCOPE_ERC};
+		String scopeExternalReferenceCode = RandomTestUtil.randomString();
 
-		String[] expectedOutputs = {null, null, _REMOTE_SCOPE_ERC};
+		String[] inputs = {
+			null, group.getExternalReferenceCode(), scopeExternalReferenceCode
+		};
+		String[] expectedOutputs = {null, null, scopeExternalReferenceCode};
 
 		for (int i = 0; i < inputs.length; i++) {
 			Assert.assertEquals(
 				expectedOutputs[i],
 				ScopeUtil.getItemScopeExternalReferenceCode(
-					inputs[i], _LOCAL_SCOPE_GROUP_ID));
+					inputs[i], group.getGroupId()));
 		}
 	}
 
@@ -97,18 +103,6 @@ public class ScopeUtilTest {
 	}
 
 	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
-
-	private static final String _LOCAL_SCOPE_ERC =
-		RandomTestUtil.randomString();
-
-	private static final long _LOCAL_SCOPE_GROUP_ID =
-		RandomTestUtil.randomLong();
-
-	private static final String _REMOTE_SCOPE_ERC =
-		RandomTestUtil.randomString();
-
-	private static final long _REMOTE_SCOPE_GROUP_ID =
-		RandomTestUtil.randomLong();
 
 	private static final MockedStatic<GroupLocalServiceUtil>
 		_groupLocalServiceUtilMockedStatic = Mockito.mockStatic(

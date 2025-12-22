@@ -161,13 +161,22 @@ public class FaroSubscriptionDisplay {
 			return;
 		}
 
-		if (_startDate == null) {
-			_startDate = _getStartDate(faroProject);
-		}
+		if (_isBasicSubscription(faroProject)) {
+			_startDate = new Date(faroProject.getCreateTime());
 
-		if (_lastAnniversaryDate == null) {
-			_lastAnniversaryDate = _getLastAnniversaryDate(
-				_isBasicSubscription(faroProject), _startDate);
+			_lastAnniversaryDate = new Date(
+				_startDate.getTime() / Time.DAY * Time.DAY);
+		}
+		else {
+			if (_startDate == null) {
+				_startDate = new Date(
+					faroProject.getSubscriptionModifiedTime());
+			}
+
+			if (_lastAnniversaryDate == null) {
+				_lastAnniversaryDate = _getLastAnniversaryDate(
+					false, _startDate);
+			}
 		}
 
 		FaroProjectUsageTable faroProjectUsageTable =
@@ -322,14 +331,6 @@ public class FaroSubscriptionDisplay {
 		}
 
 		return new Date(lastAnniversaryDate.getTime() / Time.DAY * Time.DAY);
-	}
-
-	private Date _getStartDate(FaroProject faroProject) throws Exception {
-		if (_isBasicSubscription(faroProject)) {
-			return new Date(faroProject.getCreateTime());
-		}
-
-		return new Date(faroProject.getSubscriptionModifiedTime());
 	}
 
 	private boolean _isAfter(

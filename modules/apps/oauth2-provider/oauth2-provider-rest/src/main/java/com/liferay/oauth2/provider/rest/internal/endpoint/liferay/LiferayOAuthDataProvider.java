@@ -689,6 +689,22 @@ public class LiferayOAuthDataProvider
 			removeServerAuthorizationCodeGrant(code);
 	}
 
+	public void reportInvalidRequestError(
+			String description, String error, Response.Status status)
+		throws WebApplicationException {
+
+		Response.ResponseBuilder responseBuilder = JAXRSUtils.toResponseBuilder(
+			status.getStatusCode());
+
+		responseBuilder.type(MediaType.APPLICATION_JSON);
+
+		throw ExceptionUtils.toWebApplicationException(
+			(Throwable)null,
+			responseBuilder.entity(
+				new OAuthError(error, description)
+			).build());
+	}
+
 	public OAuth2Application resolveOAuth2Application(Client client) {
 		Map<String, String> properties = client.getProperties();
 
@@ -727,7 +743,7 @@ public class LiferayOAuthDataProvider
 				companyId, client.getClientId());
 
 		if (oAuth2Application != null) {
-			throwOAuthError(
+			reportInvalidRequestError(
 				"OAuth 2 Application with client ID: " + client.getClientId() +
 					" already exists.",
 				OAuthConstants.INVALID_CLIENT, Response.Status.CONFLICT);
@@ -775,22 +791,6 @@ public class LiferayOAuthDataProvider
 		catch (Exception exception) {
 			throw new ServerErrorException(500, exception);
 		}
-	}
-
-	public void throwOAuthError(
-			String description, String error, Response.Status status)
-		throws WebApplicationException {
-
-		Response.ResponseBuilder responseBuilder = JAXRSUtils.toResponseBuilder(
-			status.getStatusCode());
-
-		responseBuilder.type(MediaType.APPLICATION_JSON);
-
-		throw ExceptionUtils.toWebApplicationException(
-			(Throwable)null,
-			responseBuilder.entity(
-				new OAuthError(error, description)
-			).build());
 	}
 
 	public void updateRememberDeviceContent(
@@ -1162,7 +1162,7 @@ public class LiferayOAuthDataProvider
 		}
 
 		if (!StringUtil.startsWith(jwksURI, "https://")) {
-			throwOAuthError(
+			reportInvalidRequestError(
 				"jwksURI field must use the https scheme",
 				OAuthConstants.INVALID_REQUEST, Response.Status.BAD_REQUEST);
 
@@ -1196,7 +1196,7 @@ public class LiferayOAuthDataProvider
 				"Unable to retrieve JWKS information from " + jwksURI,
 				exception);
 
-			throwOAuthError(
+			reportInvalidRequestError(
 				"Unable to retrieve JWKS information from " + jwksURI,
 				OAuthConstants.INVALID_REQUEST, Response.Status.BAD_REQUEST);
 		}

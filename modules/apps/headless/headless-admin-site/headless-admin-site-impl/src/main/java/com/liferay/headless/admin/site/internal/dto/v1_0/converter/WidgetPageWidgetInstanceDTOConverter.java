@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
 import com.liferay.headless.admin.site.dto.v1_0.GeneralConfig;
+import com.liferay.headless.admin.site.dto.v1_0.NestedWidgetSection;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetLookAndFeelConfig;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageWidgetInstance;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPermission;
@@ -22,7 +23,9 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -34,6 +37,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -72,6 +77,9 @@ public class WidgetPageWidgetInstanceDTOConverter
 		return new WidgetPageWidgetInstance() {
 			{
 				setExternalReferenceCode(() -> portletId);
+				setNestedWidgetSections(
+					() -> _getNestedWidgetSections(
+						dtoConverterContext, portletId, layout));
 				setParentSectionId(
 					() -> LayoutUtil.getParentSectionId(layout, portletId));
 				setPosition(() -> LayoutUtil.getPosition(layout, portletId));
@@ -160,6 +168,39 @@ public class WidgetPageWidgetInstanceDTOConverter
 		return LocalizedMapUtil.getI18nMap(map);
 	}
 
+	private NestedWidgetSection[] _getNestedWidgetSections(
+		DTOConverterContext dtoConverterContext, String portletId,
+		Layout layout) {
+
+		if (!portletId.contains(PortletKeys.NESTED_PORTLETS)) {
+			return null;
+		}
+
+		Set<String> portletNestedColumnIds = new TreeSet<>();
+
+		UnicodeProperties unicodeProperties =
+			layout.getTypeSettingsProperties();
+
+		for (String key : unicodeProperties.keySet()) {
+			if (key.startsWith("_" + portletId)) {
+				portletNestedColumnIds.add(key);
+			}
+		}
+
+		return TransformUtil.transformToArray(
+			portletNestedColumnIds,
+			portletNestedColumnId -> new NestedWidgetSection() {
+				{
+					setId(() -> portletNestedColumnId);
+					setWidgetPageWidgetInstances(
+						() -> _getWidgetPageWidgetInstances(
+							portletNestedColumnId, dtoConverterContext,
+							layout));
+				}
+			},
+			NestedWidgetSection.class);
+	}
+
 	private WidgetLookAndFeelConfig _getWidgetLookAndFeelConfig(
 		Layout layout, String portletId) {
 
@@ -205,6 +246,20 @@ public class WidgetPageWidgetInstanceDTOConverter
 					});
 			}
 		};
+	}
+
+	private WidgetPageWidgetInstance[] _getWidgetPageWidgetInstances(
+		String column, DTOConverterContext dtoConverterContext, Layout layout) {
+
+		return TransformUtil.transformToArray(
+			com.liferay.petra.string.StringUtil.split(
+				layout.getTypeSettingsProperty(column)),
+			portletId -> {
+				dtoConverterContext.setAttribute("portletId", portletId);
+
+				return toDTO(dtoConverterContext, layout);
+			},
+			WidgetPageWidgetInstance.class);
 	}
 
 	private static final Collection<String> _excludePreferencesNames =

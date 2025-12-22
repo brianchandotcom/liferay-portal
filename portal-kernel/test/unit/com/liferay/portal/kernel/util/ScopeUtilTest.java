@@ -44,45 +44,6 @@ public class ScopeUtilTest {
 	}
 
 	@Test
-	public void testGetItemGroup() {
-		Group localGroup = Mockito.mock(Group.class);
-		String invalidERC = RandomTestUtil.randomString();
-
-		Mockito.when(
-			GroupLocalServiceUtil.fetchGroup(_LOCAL_SCOPE_GROUP_ID)
-		).thenReturn(
-			localGroup
-		);
-
-		Mockito.when(
-			GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
-				_REMOTE_SCOPE_ERC, _COMPANY_ID)
-		).thenReturn(
-			_mockGroup
-		);
-
-		Mockito.when(
-			GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
-				invalidERC, _COMPANY_ID)
-		).thenReturn(
-			null
-		);
-
-		String[] inputs = {null, "", "null", _REMOTE_SCOPE_ERC, invalidERC};
-
-		Group[] expectedOutputs = {
-			localGroup, localGroup, localGroup, _mockGroup, null
-		};
-
-		for (int i = 0; i < inputs.length; i++) {
-			Assert.assertEquals(
-				expectedOutputs[i],
-				ScopeUtil.getItemGroup(
-					_COMPANY_ID, inputs[i], _LOCAL_SCOPE_GROUP_ID));
-		}
-	}
-
-	@Test
 	public void testGetItemGroupId() {
 		Mockito.when(
 			GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(

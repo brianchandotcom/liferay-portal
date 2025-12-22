@@ -58,9 +58,7 @@ public class ScopeUtilTest {
 	}
 
 	@Test
-	public void testGetItemScopeExternalReferenceCodeWithERC()
-		throws Exception {
-
+	public void testGetItemScopeExternalReferenceCode() throws Exception {
 		Group group = _getGroup(
 			RandomTestUtil.randomString(), RandomTestUtil.randomLong());
 

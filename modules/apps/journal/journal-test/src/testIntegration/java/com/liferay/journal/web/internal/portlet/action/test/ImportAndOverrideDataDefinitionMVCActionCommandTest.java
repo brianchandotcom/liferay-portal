@@ -11,7 +11,11 @@ import com.liferay.data.engine.rest.dto.v2_0.DataDefinitionField;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
 import com.liferay.data.engine.rest.test.util.DataDefinitionTestUtil;
 import com.liferay.dynamic.data.mapping.model.DDMField;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
@@ -50,8 +54,46 @@ public class ImportAndOverrideDataDefinitionMVCActionCommandTest
 
 	@Test
 	public void testProcessAction() throws Exception {
+		_testProcessActionWithAddedTextField();
 		_testProcessActionWithRepeatableTextField();
 		_testProcessActionWithValidFields();
+	}
+
+	private void _assertDDMFormFieldReferences(
+			String[] expectedDDMFormFieldReference, long ddmStructureId)
+		throws Exception {
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			ddmStructureId);
+
+		List<DDMFormField> ddmFormFields = ddmStructure.getDDMFormFields(false);
+
+		Assert.assertEquals(
+			ddmFormFields.toString(), expectedDDMFormFieldReference.length,
+			ddmFormFields.size());
+
+		for (int i = 0; i < expectedDDMFormFieldReference.length; i++) {
+			DDMFormField formField = ddmFormFields.get(i);
+
+			Assert.assertEquals(
+				expectedDDMFormFieldReference[i],
+				formField.getFieldReference());
+		}
+	}
+
+	private void _assertJournalArticleContent(long resourcePrimKey)
+		throws Exception {
+
+		JournalArticle journalArticle =
+			_journalArticleLocalService.getLatestArticle(resourcePrimKey);
+
+		DDMFormValues ddmFormValues = journalArticle.getDDMFormValues();
+
+		ddmFormValues.getDDMFormFieldValuesMap(true);
+
+		String journalArticleContent = journalArticle.getContent();
+
+		Assert.assertTrue(journalArticleContent.contains("DDD"));
 	}
 
 	private void _processAction(
@@ -96,6 +138,38 @@ public class ImportAndOverrideDataDefinitionMVCActionCommandTest
 	private String _read(String fileName) throws Exception {
 		return new String(
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
+	}
+
+	private void _testProcessActionWithAddedTextField() throws Exception {
+		DataDefinition dataDefinition =
+			DataDefinitionTestUtil.addDataDefinition(
+				"journal", dataDefinitionResourceFactory, group.getGroupId(),
+				_read("data_definition_with_text_field.json"),
+				TestPropsValues.getUser());
+
+		JournalArticle journalArticle =
+			JournalTestUtil.addArticleWithXMLContent(
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0,
+				_read("journal_article_content_with_text_field.xml"),
+				dataDefinition.getDataDefinitionKey(), null, LocaleUtil.US,
+				null,
+				ServiceContextTestUtil.getServiceContext(
+					group.getCompanyId(), group.getGroupId(),
+					TestPropsValues.getUserId()));
+
+		_assertDDMFormFieldReferences(
+			new String[] {"Text1"}, journalArticle.getDDMStructureId());
+		_assertJournalArticleContent(journalArticle.getResourcePrimKey());
+
+		_processAction(
+			dataDefinition.getId(), "data_definition_with_two_text_fields.json",
+			false, "Simple");
+
+		_assertDDMFormFieldReferences(
+			new String[] {"Text1", "Text2"},
+			journalArticle.getDDMStructureId());
+		_assertJournalArticleContent(journalArticle.getResourcePrimKey());
 	}
 
 	private void _testProcessActionWithRepeatableTextField() throws Exception {
@@ -184,6 +258,9 @@ public class ImportAndOverrideDataDefinitionMVCActionCommandTest
 
 	@Inject
 	private DDMFieldLocalService _ddmFieldLocalService;
+
+	@Inject
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Inject
 	private JournalArticleLocalService _journalArticleLocalService;

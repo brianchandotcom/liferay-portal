@@ -5999,7 +5999,7 @@ public class ObjectEntryResourceTest {
 
 		// Company scope
 
-		_testGetObjectEntriesPageWithComments(0L, _objectDefinition1);
+		_testGetObjectEntriesPageWithComments(0, _objectDefinition1);
 
 		// Site scope
 
@@ -15806,6 +15806,12 @@ public class ObjectEntryResourceTest {
 		}
 
 		return jsonArray;
+	}
+
+	private void _enableComments(ObjectDefinition objectDefinition) {
+		objectDefinition.setEnableComments(true);
+
+		_objectDefinitionLocalService.updateObjectDefinition(objectDefinition);
 	}
 
 	private String _escape(String string) {

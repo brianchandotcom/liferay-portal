@@ -48,6 +48,49 @@ public class ObjectDefinitionBrief implements Serializable {
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The object definition class name ID."
+	)
+	public Long getClassNameId() {
+		if (_classNameIdSupplier != null) {
+			classNameId = _classNameIdSupplier.get();
+
+			_classNameIdSupplier = null;
+		}
+
+		return classNameId;
+	}
+
+	public void setClassNameId(Long classNameId) {
+		this.classNameId = classNameId;
+
+		_classNameIdSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setClassNameId(
+		UnsafeSupplier<Long, Exception> classNameIdUnsafeSupplier) {
+
+		_classNameIdSupplier = () -> {
+			try {
+				return classNameIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The object definition class name ID.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long classNameId;
+
+	@JsonIgnore
+	private Supplier<Long> _classNameIdSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The object definition's external reference code."
 	)
 	public String getExternalReferenceCode() {
@@ -210,6 +253,18 @@ public class ObjectDefinitionBrief implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		Long classNameId = getClassNameId();
+
+		if (classNameId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"classNameId\": ");
+
+			sb.append(classNameId);
+		}
 
 		String externalReferenceCode = getExternalReferenceCode();
 

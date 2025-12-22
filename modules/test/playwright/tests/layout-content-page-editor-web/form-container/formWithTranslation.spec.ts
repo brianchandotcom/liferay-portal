@@ -522,6 +522,11 @@ test(
 		const listTypeDefinition =
 			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
 
+		apiHelpers.data.push({
+			id: listTypeDefinition.id,
+			type: 'listTypeDefinition',
+		});
+
 		const options = ['Spain', 'Italy', 'Germany', 'Brasil'];
 
 		for (const option of options) {
@@ -701,7 +706,7 @@ test(
 );
 
 test(
-	'Can translate multiselect form field',
+	'Can translate multiselect form field with Multiselector Checkbox fragment',
 	{tag: '@LPD-48344'},
 	async ({apiHelpers, page, pageEditorPage, site}) => {
 
@@ -709,6 +714,11 @@ test(
 
 		const listTypeDefinition =
 			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+
+		apiHelpers.data.push({
+			id: listTypeDefinition.id,
+			type: 'listTypeDefinition',
+		});
 
 		for (const option of ['Spain', 'Italy', 'Germany']) {
 			await apiHelpers.listTypeAdmin.postListTypeEntry({
@@ -841,6 +851,182 @@ test(
 		).toBeVisible();
 
 		// Check the object entry
+
+		const {items} =
+			await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+				'c/plants'
+			);
+
+		expect(items[0].growthAreas_i18n).toStrictEqual({
+			en_US: [
+				{key: 'spain', name: 'Spain'},
+				{key: 'italy', name: 'Italy'},
+			],
+			es_ES: [
+				{key: 'spain', name: 'Spain'},
+				{key: 'italy', name: 'Italy'},
+				{key: 'germany', name: 'Germany'},
+			],
+		});
+	}
+);
+
+test(
+	'Can translate multiselect form field with Multiselector Dropdown fragment',
+	{tag: '@LPD-73126'},
+	async ({
+		apiHelpers,
+		localizationSelectPage,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+
+		// Create object definition
+
+		const listTypeDefinition =
+			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+
+		apiHelpers.data.push({
+			id: listTypeDefinition.id,
+			type: 'listTypeDefinition',
+		});
+
+		for (const option of ['Spain', 'Italy', 'Germany']) {
+			await apiHelpers.listTypeAdmin.postListTypeEntry({
+				key: option,
+				listTypeDefinitionExternalReferenceCode:
+					listTypeDefinition.externalReferenceCode,
+				name_i18n: {en_US: option},
+			});
+		}
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		const {body: objectDefinition} =
+			await objectDefinitionAPIClient.postObjectDefinition({
+				active: true,
+				enableLocalization: true,
+				externalReferenceCode: 'plantERC',
+				label: {
+					en_US: 'Plant',
+				},
+				name: 'Plant',
+				objectFields: [
+					{
+						DBType: 'String',
+						businessType: 'MultiselectPicklist',
+						indexed: true,
+						indexedAsKeyword: false,
+						label: {
+							en_US: 'Growth Areas',
+						},
+						listTypeDefinitionExternalReferenceCode:
+							listTypeDefinition.externalReferenceCode,
+						listTypeDefinitionId: listTypeDefinition.id,
+						localized: true,
+						name: 'growthAreas',
+						required: false,
+					},
+				],
+				pluralLabel: {
+					en_US: 'Plants',
+				},
+				portlet: true,
+				scope: 'company',
+				status: {
+					code: 0,
+				},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		// Create a page with a Form fragment
+
+		const formId = getRandomString();
+
+		const formDefinition = getFormContainerDefinition({
+			id: formId,
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([formDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Map the form to the Plant object
+
+		await pageEditorPage.mapFormFragment(formId, 'Plant', 'all', {
+			addLocalizationSelect: true,
+		});
+
+		// Publish and go to edit mode
+
+		await pageEditorPage.publishPage();
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+		// Select some options in default language
+
+		const input = page
+			.locator('.multiselector-dropdown')
+			.getByRole('combobox');
+
+		await clickAndExpectToBeVisible({
+			target: page.getByRole('option', {name: 'Spain'}),
+			trigger: input,
+		});
+
+		await clickAndExpectToBeVisible({
+			target: page.locator('.label').getByText('Spain'),
+			trigger: page.getByRole('option', {name: 'Spain'}),
+		});
+
+		await clickAndExpectToBeVisible({
+			target: page.getByRole('option', {name: 'Italy'}),
+			trigger: input,
+		});
+
+		await clickAndExpectToBeVisible({
+			target: page.locator('.label').getByText('Italy'),
+			trigger: page.getByRole('option', {name: 'Italy'}),
+		});
+
+		// Switch to spanish and select also another option
+
+		await localizationSelectPage.switchLanguage('es-ES');
+
+		await clickAndExpectToBeVisible({
+			target: page.getByRole('option', {name: 'Germany'}),
+			trigger: input,
+		});
+
+		await clickAndExpectToBeVisible({
+			target: page.locator('.label').getByText('Germany'),
+			trigger: page.getByRole('option', {name: 'Germany'}),
+		});
+
+		// Check translation status
+
+		expect(await localizationSelectPage.getLanguageStatus('es-ES')).toBe(
+			'translated'
+		);
+
+		// Save the form and check the object entry
+
+		await clickAndExpectToBeVisible({
+			target: page.getByText(
+				'Thank you. Your information was successfully received.'
+			),
+			trigger: page.getByRole('button', {name: 'Submit'}),
+		});
 
 		const {items} =
 			await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
@@ -1625,6 +1811,11 @@ test(
 		const listTypeDefinition =
 			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
 
+		apiHelpers.data.push({
+			id: listTypeDefinition.id,
+			type: 'listTypeDefinition',
+		});
+
 		for (const option of ['Spain', 'Italy']) {
 			await apiHelpers.listTypeAdmin.postListTypeEntry({
 				key: option,
@@ -2407,6 +2598,11 @@ test(
 
 		const listTypeDefinition =
 			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+
+		apiHelpers.data.push({
+			id: listTypeDefinition.id,
+			type: 'listTypeDefinition',
+		});
 
 		for (const option of ['Spain', 'Italy']) {
 			await apiHelpers.listTypeAdmin.postListTypeEntry({

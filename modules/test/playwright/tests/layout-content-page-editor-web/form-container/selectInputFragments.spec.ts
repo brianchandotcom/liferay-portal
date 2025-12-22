@@ -18,6 +18,8 @@ import {masterPagesPagesTest} from '../../../fixtures/masterPagesPagesTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../../fixtures/pageManagementSiteTest';
+import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import {getObjectERC} from '../../setup/page-management-site/main/utils/getObjectERC';
 import getFormContainerDefinition from '../main/utils/getFormContainerDefinition';
@@ -607,3 +609,129 @@ test.describe('Dropdown behavior with several object entries', () => {
 		}
 	);
 });
+
+test(
+	'Multiselector Dropdown fragment can be used for select fields',
+	{tag: '@LPD-72613'},
+	async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+		// Create a page with a Form fragment
+
+		const formId = getRandomString();
+
+		const formDefinition = getFormContainerDefinition({
+			id: formId,
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([formDefinition]),
+			siteId: pageManagementSite.id,
+			title: getRandomString(),
+		});
+
+		// Go to edit mode
+
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+		// Map the form to object and select fields
+
+		await pageEditorPage.mapFormFragment(formId, 'Lemon Basket', [
+			'Lemon Dimensions',
+		]);
+
+		// Publish and go to view mode
+
+		await pageEditorPage.publishPage();
+
+		await page.goto(
+			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
+
+		// Click input and verify dropdown opens with all options
+
+		const input = page
+			.locator('.multiselector-dropdown')
+			.getByRole('combobox');
+
+		await clickAndExpectToBeVisible({
+			target: page.getByRole('option', {name: 'Small'}),
+			trigger: input,
+		});
+
+		await expect(page.getByRole('option', {name: 'Medium'})).toBeVisible();
+		await expect(page.getByRole('option', {name: 'Large'})).toBeVisible();
+
+		// Select Small option and verify label is added
+
+		await clickAndExpectToBeVisible({
+			target: page.locator('.label').getByText('Small'),
+			trigger: page.getByRole('option', {name: 'Small'}),
+		});
+
+		// Select Medium option and verify label is added
+
+		await clickAndExpectToBeVisible({
+			target: page.getByRole('option', {name: 'Medium'}),
+			trigger: input,
+		});
+
+		await clickAndExpectToBeVisible({
+			target: page.locator('.label').getByText('Medium'),
+			trigger: page.getByRole('option', {name: 'Medium'}),
+		});
+
+		// Click Clear button and verify all labels are removed
+
+		await clickAndExpectToBeHidden({
+			target: page.locator('.label').getByText('Small'),
+			trigger: page.getByRole('button', {name: 'Clear All'}),
+		});
+
+		await expect(
+			page.locator('.label').getByText('Medium')
+		).not.toBeVisible();
+
+		// Type "Lar" and verify only Large option is shown with marked text
+
+		await expect(async () => {
+			await input.fill('Lar', {timeout: 1000});
+
+			await expect(page.getByRole('option', {name: 'Large'})).toBeVisible(
+				{timeout: 1000}
+			);
+
+			await expect(
+				page.getByRole('option', {name: 'Small'})
+			).not.toBeVisible({timeout: 1000});
+
+			await expect(
+				page.getByRole('option', {name: 'Medium'})
+			).not.toBeVisible({timeout: 1000});
+
+			await expect(page.locator('.option-label strong.mark')).toHaveText(
+				'Lar',
+				{timeout: 1000}
+			);
+		}).toPass();
+
+		// Navigate with arrow down and select with Enter
+
+		await expect(async () => {
+			await input.focus();
+
+			await page.keyboard.press('ArrowDown');
+
+			await expect(page.getByRole('option', {name: 'Large'})).toBeFocused(
+				{timeout: 1000}
+			);
+
+			await page.keyboard.press('Enter');
+
+			await expect(page.locator('.label').getByText('Large')).toBeVisible(
+				{timeout: 1000}
+			);
+
+			await expect(input).toHaveValue('', {timeout: 1000});
+		}).toPass();
+	}
+);

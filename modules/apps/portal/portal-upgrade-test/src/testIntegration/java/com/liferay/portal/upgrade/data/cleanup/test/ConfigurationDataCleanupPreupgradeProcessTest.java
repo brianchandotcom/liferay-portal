@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -101,6 +102,22 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 		}
 		finally {
 			runSQL("delete from Company where companyId = " + companyId);
+		}
+	}
+
+	@Test
+	public void testUpgradeWithoutOrphanConfigurations()
+		throws DataCleanupPreupgradeException {
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				ConfigurationDataCleanupPreupgradeProcess.class.getName(),
+				LoggerTestUtil.ERROR)) {
+
+			upgrade();
+
+			List<String> messages = logCapture.getMessages();
+
+			Assert.assertEquals(messages.toString(), 0, messages.size());
 		}
 	}
 

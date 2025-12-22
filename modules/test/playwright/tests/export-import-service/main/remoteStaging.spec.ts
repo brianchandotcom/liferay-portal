@@ -16,6 +16,7 @@ import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {remotePageTest} from '../../../fixtures/remotePageTest';
 import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
 import {webContentDisplayPageTest} from '../../../fixtures/webContentDisplayPageTest';
+import {createLayoutHierarchy} from '../../../utils/createLayoutHierarchy';
 import getGlobalSiteId from '../../../utils/getGlobalSiteId';
 import getRandomString from '../../../utils/getRandomString';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
@@ -64,7 +65,7 @@ test(
 	}) => {
 		test.slow();
 
-		const layouts: Array<Layout> = [];
+		let layouts: Array<Layout> = [];
 		let remoteSite: Site;
 		let site: Site;
 
@@ -89,38 +90,30 @@ test(
 			});
 
 			await test.step('Create a hierarchy of pages on the local site', async () => {
-				for (const i of [1, 2, 3]) {
-					let layout =
-						await apiHelpers.jsonWebServicesLayout.addLayout({
-							groupId: site.id,
-							title: `Page ${i}`,
-						});
-
-					layouts.push(layout);
-
-					for (const j of [1, 2]) {
-						layout =
-							await apiHelpers.jsonWebServicesLayout.addLayout({
-								groupId: site.id,
-								parentLayoutId: layout.layoutId,
-								title: `Page ${i}${j}`,
-							});
-
-						layouts.push(layout);
-
-						if (i === 1 && j === 1) {
-							layout =
-								await apiHelpers.jsonWebServicesLayout.addLayout(
-									{
-										groupId: site.id,
-										parentLayoutId: layout.layoutId,
-										title: 'Page 111',
-									}
-								);
-							layouts.push(layout);
-						}
-					}
-				}
+				layouts = await createLayoutHierarchy({
+					apiHelpers,
+					pageNodes: [
+						{
+							children: [
+								{
+									children: [{title: 'Page 111'}],
+									title: 'Page 11',
+								},
+								{title: 'Page 12'},
+							],
+							title: 'Page 1',
+						},
+						{
+							children: [{title: 'Page 21'}, {title: 'Page 22'}],
+							title: 'Page 2',
+						},
+						{
+							children: [{title: 'Page 31'}, {title: 'Page 32'}],
+							title: 'Page 3',
+						},
+					],
+					siteId: site.id,
+				});
 			});
 
 			await test.step('Add two Web Content Display portlets to each page of the local site', async () => {
@@ -134,13 +127,15 @@ test(
 
 			const webContentTitle = getRandomString();
 			const pageNumbers = [1, 11, 111, 12, 2, 21, 22, 3, 31, 32];
-			await test.step('Create data structures, templates, and web content articles on the local site', async () => {
-				const fields: Array<any> = [];
 
-				for (const num of pageNumbers) {
-					fields.push({name: `Openpage${num}`, repeatable: false});
-					fields.push({name: `URL${num}`, repeatable: false});
-				}
+			let structure: any;
+			let templateKey: string;
+
+			await test.step('Create a data structure and template for page links', async () => {
+				const fields: Array<any> = pageNumbers.flatMap((num) => [
+					{name: `Openpage${num}`, repeatable: false},
+					{name: `URL${num}`, repeatable: false},
+				]);
 
 				const structureName = getRandomString();
 				const dataDefinition = getDataStructureDefinition({
@@ -148,25 +143,11 @@ test(
 					fields,
 					name: structureName,
 				});
-				const structure = await apiHelpers.dataEngine.createStructure(
+				structure = await apiHelpers.dataEngine.createStructure(
 					site.id,
 					dataDefinition
 				);
 
-				let i = 0;
-				const contentFields: Array<any> = [];
-				for (const layout of layouts) {
-					contentFields.push({
-						name: `Openpage${pageNumbers[i]}`,
-						value: layout.nameCurrentValue,
-					});
-					contentFields.push({
-						name: `URL${pageNumbers[i]}`,
-						value:
-							`/web${site.friendlyUrlPath}` + layout.friendlyURL,
-					});
-					i++;
-				}
 				const templateName = 'template1';
 
 				const templateScript = pageNumbers
@@ -186,8 +167,25 @@ test(
 					templateName
 				);
 
-				const templateKey =
-					await journalEditTemplatePage.getDDMTemplateKey();
+				templateKey = await journalEditTemplatePage.getDDMTemplateKey();
+			});
+
+			await test.step('Create a web content article with page links', async () => {
+				const contentFields: Array<{name: string; value: string}> =
+					layouts.flatMap((layout, index) => {
+						const pageNum = pageNumbers[index];
+
+						return [
+							{
+								name: `Openpage${pageNum}`,
+								value: layout.nameCurrentValue,
+							},
+							{
+								name: `URL${pageNum}`,
+								value: `/web${site.friendlyUrlPath}${layout.friendlyURL}`,
+							},
+						];
+					});
 
 				await apiHelpers.jsonWebServicesJournal.addWebContent({
 					contentFields,
@@ -196,7 +194,12 @@ test(
 					groupId: site.id,
 					titleMap: {en_US: webContentTitle},
 				});
+			});
 
+			let structure2: any;
+			let templateKey2: string;
+
+			await test.step('Create a data structure and template for individual page content', async () => {
 				const structureName2 = getRandomString();
 				const dataDefinition2 = getDataStructureDefinition({
 					defaultLanguageId: 'en_US',
@@ -207,7 +210,7 @@ test(
 					name: structureName2,
 				});
 
-				const structure2 = await apiHelpers.dataEngine.createStructure(
+				structure2 = await apiHelpers.dataEngine.createStructure(
 					site.id,
 					dataDefinition2
 				);
@@ -228,9 +231,11 @@ test(
 					templateName2
 				);
 
-				const templateKey2 =
+				templateKey2 =
 					await journalEditTemplatePage.getDDMTemplateKey();
+			});
 
+			await test.step('Create individual web content articles for each page', async () => {
 				await webContentDisplayPage.gotoWebContentAdmin(site.name);
 
 				for (const num of pageNumbers) {

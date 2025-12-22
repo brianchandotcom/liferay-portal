@@ -5,7 +5,9 @@
 
 package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
+import com.liferay.headless.admin.site.dto.v1_0.BasicWidgetPageWidgetInstance;
 import com.liferay.headless.admin.site.dto.v1_0.GeneralConfig;
+import com.liferay.headless.admin.site.dto.v1_0.NestedApplicationsWidgetPageWidgetInstance;
 import com.liferay.headless.admin.site.dto.v1_0.NestedWidgetSection;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetLookAndFeelConfig;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageWidgetInstance;
@@ -74,72 +76,95 @@ public class WidgetPageWidgetInstanceDTOConverter
 			return null;
 		}
 
-		return new WidgetPageWidgetInstance() {
-			{
-				setExternalReferenceCode(() -> portletId);
-				setNestedWidgetSections(
-					() -> _getNestedWidgetSections(
-						dtoConverterContext, portletId, layout));
-				setParentSectionId(
-					() -> LayoutUtil.getParentSectionId(layout, portletId));
-				setPosition(() -> LayoutUtil.getPosition(layout, portletId));
-				setWidgetConfig(
-					() -> {
-						Map<String, Object> portletConfigurationMap =
-							_portletPreferencesPortletConfigurationExporter.
-								getPortletConfiguration(
-									layout.getPlid(), portletId);
+		WidgetPageWidgetInstance widgetPageWidgetInstance = null;
 
-						Map<String, Object> widgetConfig = new HashMap<>();
+		if (portletId.contains(PortletKeys.NESTED_PORTLETS)) {
+			NestedApplicationsWidgetPageWidgetInstance
+				nestedApplicationsWidgetPageWidgetInstance =
+					new NestedApplicationsWidgetPageWidgetInstance();
 
-						for (Map.Entry<String, Object> entry :
-								portletConfigurationMap.entrySet()) {
+			nestedApplicationsWidgetPageWidgetInstance.setNestedWidgetSections(
+				() -> _getNestedWidgetSections(
+					dtoConverterContext, portletId, layout));
 
-							String key = entry.getKey();
+			widgetPageWidgetInstance =
+				nestedApplicationsWidgetPageWidgetInstance;
 
-							if (_excludePreferencesNames.contains(key) ||
-								key.startsWith("portletSetupTitle_")) {
+			widgetPageWidgetInstance.setType(
+				() ->
+					WidgetPageWidgetInstance.Type.
+						NESTED_APPLICATIONS_WIDGET_PAGE_WIDGET_INSTANCE);
+		}
+		else {
+			widgetPageWidgetInstance = new BasicWidgetPageWidgetInstance();
 
-								continue;
-							}
+			widgetPageWidgetInstance.setType(
+				() ->
+					WidgetPageWidgetInstance.Type.
+						BASIC_WIDGET_PAGE_WIDGET_INSTANCE);
+		}
 
-							widgetConfig.put(key, entry.getValue());
+		widgetPageWidgetInstance.setExternalReferenceCode(() -> portletId);
+		widgetPageWidgetInstance.setParentSectionId(
+			() -> LayoutUtil.getParentSectionId(layout, portletId));
+		widgetPageWidgetInstance.setPosition(
+			() -> LayoutUtil.getPosition(layout, portletId));
+		widgetPageWidgetInstance.setWidgetConfig(
+			() -> {
+				Map<String, Object> portletConfigurationMap =
+					_portletPreferencesPortletConfigurationExporter.
+						getPortletConfiguration(layout.getPlid(), portletId);
+
+				Map<String, Object> widgetConfig = new HashMap<>();
+
+				for (Map.Entry<String, Object> entry :
+						portletConfigurationMap.entrySet()) {
+
+					String key = entry.getKey();
+
+					if (_excludePreferencesNames.contains(key) ||
+						key.startsWith("portletSetupTitle_")) {
+
+						continue;
+					}
+
+					widgetConfig.put(key, entry.getValue());
+				}
+
+				if (MapUtil.isEmpty(widgetConfig)) {
+					return null;
+				}
+
+				return widgetConfig;
+			});
+		widgetPageWidgetInstance.setWidgetInstanceId(
+			() -> PortletIdCodec.decodeInstanceId(portletId));
+		widgetPageWidgetInstance.setWidgetLookAndFeelConfig(
+			() -> _getWidgetLookAndFeelConfig(layout, portletId));
+		widgetPageWidgetInstance.setWidgetName(
+			() -> PortletIdCodec.decodePortletName(portletId));
+		widgetPageWidgetInstance.setWidgetPermissions(
+			() -> {
+				Map<String, String[]> permissionsMap =
+					_portletPermissionsExporter.getPortletPermissions(
+						layout.getPlid(), portletId);
+
+				if (MapUtil.isEmpty(permissionsMap)) {
+					return null;
+				}
+
+				return TransformUtil.transformToArray(
+					permissionsMap.entrySet(),
+					entry -> new WidgetPermission() {
+						{
+							setActionIds(entry::getValue);
+							setRoleName(entry::getKey);
 						}
+					},
+					WidgetPermission.class);
+			});
 
-						if (MapUtil.isEmpty(widgetConfig)) {
-							return null;
-						}
-
-						return widgetConfig;
-					});
-				setWidgetInstanceId(
-					() -> PortletIdCodec.decodeInstanceId(portletId));
-				setWidgetLookAndFeelConfig(
-					() -> _getWidgetLookAndFeelConfig(layout, portletId));
-				setWidgetName(
-					() -> PortletIdCodec.decodePortletName(portletId));
-				setWidgetPermissions(
-					() -> {
-						Map<String, String[]> permissionsMap =
-							_portletPermissionsExporter.getPortletPermissions(
-								layout.getPlid(), portletId);
-
-						if (MapUtil.isEmpty(permissionsMap)) {
-							return null;
-						}
-
-						return TransformUtil.transformToArray(
-							permissionsMap.entrySet(),
-							entry -> new WidgetPermission() {
-								{
-									setActionIds(entry::getValue);
-									setRoleName(entry::getKey);
-								}
-							},
-							WidgetPermission.class);
-					});
-			}
-		};
+		return widgetPageWidgetInstance;
 	}
 
 	@Override

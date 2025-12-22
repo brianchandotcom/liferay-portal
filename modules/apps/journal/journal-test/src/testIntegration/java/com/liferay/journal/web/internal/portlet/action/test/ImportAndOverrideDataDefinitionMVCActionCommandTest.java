@@ -50,80 +50,8 @@ public class ImportAndOverrideDataDefinitionMVCActionCommandTest
 
 	@Test
 	public void testProcessAction() throws Exception {
-		DataDefinition dataDefinition =
-			DataDefinitionTestUtil.addDataDefinition(
-				"journal", dataDefinitionResourceFactory, group.getGroupId(),
-				_read("data_definition_with_text_field.json"),
-				TestPropsValues.getUser());
-
-		_processAction(
-			dataDefinition.getId(), "data_definition_with_text_field.json",
-			false, "Imported Structure");
-
-		dataDefinition = getImportedDataDefinition();
-
-		DataDefinitionField[] dataDefinitionFields =
-			dataDefinition.getDataDefinitionFields();
-
-		String previousTextFieldName = "Text1";
-
-		Assert.assertTrue(
-			StringUtil.startsWith(
-				dataDefinitionFields[0].getName(), previousTextFieldName));
-
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				_CLASS_NAME, LoggerTestUtil.OFF)) {
-
-			_processAction(
-				dataDefinition.getId(),
-				"data_definition_with_valid_fields.json", true,
-				"Imported Structure");
-		}
-
-		DataLayout previousDataLayout = dataDefinition.getDefaultDataLayout();
-
-		dataDefinition = getImportedDataDefinition();
-
-		Assert.assertEquals(
-			dataDefinition.getDefaultDataLayout(), previousDataLayout);
-
-		dataDefinition = DataDefinitionTestUtil.addDataDefinition(
-			"journal", dataDefinitionResourceFactory, group.getGroupId(),
-			_read("data_definition_with_repeatable_text_field.json"),
-			TestPropsValues.getUser());
-
-		JournalArticle journalArticle1 =
-			JournalTestUtil.addArticleWithXMLContent(
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0,
-				_read("journal_article_content.xml"),
-				dataDefinition.getDataDefinitionKey(), null, LocaleUtil.SPAIN,
-				null,
-				ServiceContextTestUtil.getServiceContext(
-					group.getCompanyId(), group.getGroupId(),
-					TestPropsValues.getUserId()));
-
-		List<DDMField> ddmFields = _ddmFieldLocalService.getDDMFields(
-			journalArticle1.getId(), "CopyOfCajaDeTexto9fap");
-
-		Assert.assertEquals(ddmFields.toString(), 2, ddmFields.size());
-
-		_processAction(
-			dataDefinition.getId(),
-			"data_definition_with_repeatable_text_field.json", false, "Simple");
-
-		JournalArticle journalArticle2 = _journalArticleLocalService.getArticle(
-			journalArticle1.getId());
-
-		ddmFields = _ddmFieldLocalService.getDDMFields(
-			journalArticle1.getId(), "CopyOfCajaDeTexto9fap");
-
-		Assert.assertEquals(ddmFields.toString(), 2, ddmFields.size());
-
-		String journalArticleContent = journalArticle2.getContent();
-
-		Assert.assertTrue(journalArticleContent.contains("CCC1"));
-		Assert.assertTrue(journalArticleContent.contains("CCC2"));
+		_testProcessActionWithRepeatableTextField();
+		_testProcessActionWithValidFields();
 	}
 
 	private void _processAction(
@@ -168,6 +96,86 @@ public class ImportAndOverrideDataDefinitionMVCActionCommandTest
 	private String _read(String fileName) throws Exception {
 		return new String(
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
+	}
+
+	private void _testProcessActionWithRepeatableTextField() throws Exception {
+		DataDefinition dataDefinition =
+			DataDefinitionTestUtil.addDataDefinition(
+				"journal", dataDefinitionResourceFactory, group.getGroupId(),
+				_read("data_definition_with_repeatable_text_field.json"),
+				TestPropsValues.getUser());
+
+		JournalArticle journalArticle1 =
+			JournalTestUtil.addArticleWithXMLContent(
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0,
+				_read("journal_article_content.xml"),
+				dataDefinition.getDataDefinitionKey(), null, LocaleUtil.SPAIN,
+				null,
+				ServiceContextTestUtil.getServiceContext(
+					group.getCompanyId(), group.getGroupId(),
+					TestPropsValues.getUserId()));
+
+		List<DDMField> ddmFields = _ddmFieldLocalService.getDDMFields(
+			journalArticle1.getId(), "CopyOfCajaDeTexto9fap");
+
+		Assert.assertEquals(ddmFields.toString(), 2, ddmFields.size());
+
+		_processAction(
+			dataDefinition.getId(),
+			"data_definition_with_repeatable_text_field.json", false, "Simple");
+
+		JournalArticle journalArticle2 = _journalArticleLocalService.getArticle(
+			journalArticle1.getId());
+
+		ddmFields = _ddmFieldLocalService.getDDMFields(
+			journalArticle1.getId(), "CopyOfCajaDeTexto9fap");
+
+		Assert.assertEquals(ddmFields.toString(), 2, ddmFields.size());
+
+		String journalArticleContent = journalArticle2.getContent();
+
+		Assert.assertTrue(journalArticleContent.contains("CCC1"));
+		Assert.assertTrue(journalArticleContent.contains("CCC2"));
+	}
+
+	private void _testProcessActionWithValidFields() throws Exception {
+		DataDefinition dataDefinition =
+			DataDefinitionTestUtil.addDataDefinition(
+				"journal", dataDefinitionResourceFactory, group.getGroupId(),
+				_read("data_definition_with_text_field.json"),
+				TestPropsValues.getUser());
+
+		_processAction(
+			dataDefinition.getId(), "data_definition_with_text_field.json",
+			false, "Imported Structure");
+
+		dataDefinition = getImportedDataDefinition();
+
+		DataDefinitionField[] dataDefinitionFields =
+			dataDefinition.getDataDefinitionFields();
+
+		String previousTextFieldName = "Text1";
+
+		Assert.assertTrue(
+			StringUtil.startsWith(
+				dataDefinitionFields[0].getName(), previousTextFieldName));
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME, LoggerTestUtil.OFF)) {
+
+			_processAction(
+				dataDefinition.getId(),
+				"data_definition_with_valid_fields.json", true,
+				"Imported Structure");
+		}
+
+		DataLayout previousDataLayout = dataDefinition.getDefaultDataLayout();
+
+		dataDefinition = getImportedDataDefinition();
+
+		Assert.assertEquals(
+			dataDefinition.getDefaultDataLayout(), previousDataLayout);
 	}
 
 	private static final String _CLASS_NAME =

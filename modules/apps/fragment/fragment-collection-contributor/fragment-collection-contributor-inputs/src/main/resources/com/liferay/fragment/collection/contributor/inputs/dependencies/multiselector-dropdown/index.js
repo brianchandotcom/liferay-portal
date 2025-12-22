@@ -60,7 +60,7 @@ async function main() {
 
 	let filter = '';
 
-	let loading = false;
+	let loading = true;
 
 	// Util to render hidden inputs with selected values
 
@@ -445,6 +445,10 @@ async function main() {
 	}
 
 	function refreshUI() {
+		if (loading) {
+			return;
+		}
+
 		renderLabels();
 		renderOptions();
 
@@ -575,10 +579,6 @@ async function main() {
 		closeDropdown();
 	}
 
-	// Perform initial render
-
-	refreshUI();
-
 	// Add listeners
 
 	inputElement.addEventListener('click', openDropdown);
@@ -608,14 +608,13 @@ async function main() {
 		initialOptions = await getRelationshipOptions();
 
 		options = initialOptions;
-
-		disableLoading();
-
-		refreshUI();
 	}
-	else {
-		disableLoading();
-	}
+
+	// Disable loading and perform initial render
+
+	disableLoading();
+
+	refreshUI();
 }
 
 // Just disable the input if we are in edit mode

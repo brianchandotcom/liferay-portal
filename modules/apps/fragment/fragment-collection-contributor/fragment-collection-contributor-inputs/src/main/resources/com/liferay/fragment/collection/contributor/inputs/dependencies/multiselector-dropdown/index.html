@@ -14,43 +14,56 @@
 
 		<div class="d-flex">
 			<div class="form-control form-control-tag-group input-group">
-				[#assign options=(input.attributes.options)![]]
-				[#assign loading=(options?size == 0)]
-
-				[#if loading]
-					<div class="flex-grow-0 input-group-item" id="${fragmentElementId}-loading-indicator">
-						<div>
-							<span class="loading-animation loading-animation-sm m-0" />
-						</div>
-					</div>
-				[/#if]
-
 				<div class="input-group-item">
 					<div class="input-group">
 						<div aria-hidden="true" class="d-contents input-group-item input-group-item-shrink input-group-prepend" id="${fragmentElementId}-label-container" role="grid">
 							[#assign values=((input.value!"")?has_content)?then((input.value?split(",")), [])]
+							[#assign options=(input.attributes.options)![]]
+							[#assign loading=(options?size == 0)]
 
-							[#list values as value]
-								[#list options as option]
-									[#if option.value == value]
+							[#if loading]
+								[#assign labels=((input.attributes.selectedOptionLabel!"")?has_content)?then((input.attributes.selectedOptionLabel?split(",")), [])]
+
+								[#list labels as label]
 									<span class="label label-secondary" role="row" tabindex="-1">
-										<span class="label-item label-item-expand" role="gridcell" tabindex="0">
-												${htmlUtil.escape(option.label)}
-											</span>
-
-											[#if !input.readOnly]
-												<span class="label-item label-item-after" role="gridcell">
-													<button aria-label="${languageUtil.get(locale, "remove-item")}" class="close" tabindex="-1" type="button">
-														<svg class="lexicon-icon lexicon-icon-times-small" role="presentation">
-															<use xlink:href="${siteSpritemap}#times-small" />
-														</svg>
-													</button>
-												</span>
-											[/#if]
+										<span class="label-item label-item-expand" role="gridcell">
+											${htmlUtil.escape(label)}
 										</span>
-									[/#if]
+
+										[#if !input.readOnly]
+											<span class="label-item label-item-after" role="gridcell">
+												<button aria-label="${languageUtil.get(locale, "remove-item")}" class="close" disabled type="button">
+													<svg class="lexicon-icon lexicon-icon-times-small" role="presentation">
+														<use xlink:href="${siteSpritemap}#times-small" />
+													</svg>
+												</button>
+											</span>
+										[/#if]
+									</span>
 								[/#list]
-							[/#list]
+							[#else]
+								[#list values as value]
+									[#list options as option]
+										[#if option.value == value]
+											<span class="label label-secondary" role="row" tabindex="-1">
+												<span class="label-item label-item-expand" role="gridcell" tabindex="0">
+													${htmlUtil.escape(option.label)}
+												</span>
+
+												[#if !input.readOnly]
+													<span class="label-item label-item-after" role="gridcell">
+														<button aria-label="${languageUtil.get(locale, "remove-item")}" class="close" tabindex="-1" type="button">
+															<svg class="lexicon-icon lexicon-icon-times-small" role="presentation">
+																<use xlink:href="${siteSpritemap}#times-small" />
+															</svg>
+														</button>
+													</span>
+												[/#if]
+											</span>
+										[/#if]
+									[/#list]
+								[/#list]
+							[/#if]
 						</div>
 
 						[#if !input.readOnly]
@@ -63,7 +76,11 @@
 
 				[#if !input.readOnly]
 					<div class="input-group-item input-group-item-shrink">
-						<button [#if !values?has_content]aria-hidden="true"[/#if] [#if loading]disabled[/#if] aria-label="${languageUtil.get(locale, "clear-all")}" class="component-action btn btn-monospaced btn-outline-borderless btn-outline-secondary lfr-portal-tooltip [#if !values?has_content]d-none[/#if]" id="${fragmentElementId}-clear-button" title="${languageUtil.get(locale, "clear-all")}" type="button">
+						<div class="[#if !loading]d-none[/#if]" id="${fragmentElementId}-loading-indicator">
+							<span class="loading-animation loading-animation-sm m-0" />
+						</div>
+
+						<button [#if !values?has_content || loading]aria-hidden="true"[/#if] aria-label="${languageUtil.get(locale, "clear-all")}" class="component-action btn btn-monospaced btn-outline-borderless btn-outline-secondary lfr-portal-tooltip [#if !values?has_content || loading]d-none[/#if]" id="${fragmentElementId}-clear-button" title="${languageUtil.get(locale, "clear-all")}" type="button">
 							<svg class="lexicon-icon lexicon-icon-times-circle" role="presentation">
 								<use xlink:href="${siteSpritemap}#times-circle" />
 							</svg>

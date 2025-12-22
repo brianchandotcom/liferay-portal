@@ -99,6 +99,55 @@ public class WidgetPageWidgetInstance implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The sections of a nested widget. Only available if this widget instance is a nested applications widget instance."
+	)
+	@Valid
+	public NestedWidgetSection[] getNestedWidgetSections() {
+		if (_nestedWidgetSectionsSupplier != null) {
+			nestedWidgetSections = _nestedWidgetSectionsSupplier.get();
+
+			_nestedWidgetSectionsSupplier = null;
+		}
+
+		return nestedWidgetSections;
+	}
+
+	public void setNestedWidgetSections(
+		NestedWidgetSection[] nestedWidgetSections) {
+
+		this.nestedWidgetSections = nestedWidgetSections;
+
+		_nestedWidgetSectionsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setNestedWidgetSections(
+		UnsafeSupplier<NestedWidgetSection[], Exception>
+			nestedWidgetSectionsUnsafeSupplier) {
+
+		_nestedWidgetSectionsSupplier = () -> {
+			try {
+				return nestedWidgetSectionsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "The sections of a nested widget. Only available if this widget instance is a nested applications widget instance."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected NestedWidgetSection[] nestedWidgetSections;
+
+	@JsonIgnore
+	private Supplier<NestedWidgetSection[]> _nestedWidgetSectionsSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The section's ID of the widget page or the nested application widget instance this widget belongs to."
 	)
 	public String getParentSectionId() {
@@ -509,6 +558,28 @@ public class WidgetPageWidgetInstance implements Serializable {
 			sb.append(_escape(externalReferenceCode));
 
 			sb.append("\"");
+		}
+
+		NestedWidgetSection[] nestedWidgetSections = getNestedWidgetSections();
+
+		if (nestedWidgetSections != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"nestedWidgetSections\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < nestedWidgetSections.length; i++) {
+				sb.append(String.valueOf(nestedWidgetSections[i]));
+
+				if ((i + 1) < nestedWidgetSections.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		String parentSectionId = getParentSectionId();

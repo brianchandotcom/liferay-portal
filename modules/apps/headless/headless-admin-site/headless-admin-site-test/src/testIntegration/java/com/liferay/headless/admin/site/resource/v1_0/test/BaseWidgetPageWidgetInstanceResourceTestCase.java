@@ -666,6 +666,18 @@ public abstract class BaseWidgetPageWidgetInstanceResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"nestedWidgetSections", additionalAssertFieldName)) {
+
+				if (widgetPageWidgetInstance.getNestedWidgetSections() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("parentSectionId", additionalAssertFieldName)) {
 				if (widgetPageWidgetInstance.getParentSectionId() == null) {
 					valid = false;
@@ -871,6 +883,19 @@ public abstract class BaseWidgetPageWidgetInstanceResourceTestCase {
 				if (!Objects.deepEquals(
 						widgetPageWidgetInstance1.getExternalReferenceCode(),
 						widgetPageWidgetInstance2.getExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"nestedWidgetSections", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						widgetPageWidgetInstance1.getNestedWidgetSections(),
+						widgetPageWidgetInstance2.getNestedWidgetSections())) {
 
 					return false;
 				}
@@ -1130,6 +1155,11 @@ public abstract class BaseWidgetPageWidgetInstanceResourceTestCase {
 			}
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("nestedWidgetSections")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("parentSectionId")) {

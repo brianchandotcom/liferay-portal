@@ -139,7 +139,29 @@ export class ProductMenuPage {
 			})
 			.evaluate((element) => element.getAttribute('href'));
 
-		await this.page.goto(pagesLink);
+		const waitForPagesReady = async () => {
+			await this.page.waitForSelector('form[id*="GroupPagesPortlet"]', {
+				state: 'visible',
+				timeout: 2000,
+			});
+		};
+
+		for (let attempt = 1; attempt <= 3; attempt++) {
+			await this.page.goto(pagesLink, {
+				waitUntil: 'domcontentloaded',
+			});
+
+			try {
+				await waitForPagesReady();
+
+				return;
+			}
+			catch (error) {
+				if (attempt === 5) {
+					throw error;
+				}
+			}
+		}
 	}
 
 	async goToPublishingExport() {

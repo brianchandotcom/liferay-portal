@@ -130,7 +130,8 @@ describe('getMetricsData', () => {
 			{
 				content: {
 					details: {
-						color: '#AEB0BB',
+						asymmetricComparison: undefined,
+						color: '#6B6C7E',
 						icon: 'caret-top-l',
 						label: '10%'
 					},
@@ -166,6 +167,7 @@ describe('getMetricsData', () => {
 			},
 			{
 				content: {
+					asymmetricComparison: undefined,
 					details: {
 						color: '#DA1414',
 						icon: 'caret-bottom-l',

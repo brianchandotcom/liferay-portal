@@ -1351,7 +1351,8 @@ public class TaxonomyCategoryResourceTest
 			testDepotEntry.getDepotEntryId());
 		_testPostTaxonomyCategoryBatchFullLazyReferences(
 			createStrategy, testDepotEntry.getGroupId(), "assetLibraryId",
-			testDepotEntry.getDepotEntryId());	}
+			testDepotEntry.getDepotEntryId());
+	}
 
 	private void _testPostSiteTaxonomyCategoryBatch(String createStrategy)
 		throws Exception {

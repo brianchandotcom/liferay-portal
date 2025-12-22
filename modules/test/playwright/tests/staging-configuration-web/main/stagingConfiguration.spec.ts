@@ -132,9 +132,7 @@ test(
 		}
 		finally {
 			await exportImportStagingSystemSettingsPage.goto();
-			await exportImportStagingSystemSettingsPage.checkShowAdvancedStagingConfiguration(
-				false
-			);
+			await exportImportStagingSystemSettingsPage.resetDefaultValues();
 		}
 	}
 );
@@ -193,12 +191,7 @@ test(
 		}
 		finally {
 			await exportImportStagingInstanceSettingsPage.goto();
-			await exportImportStagingInstanceSettingsPage.checkConfigurationOption(
-				{
-					checked: false,
-					label: 'Show Advanced Staging Configuration by Default',
-				}
-			);
+			await exportImportStagingInstanceSettingsPage.resetDefaultValues();
 		}
 	}
 );

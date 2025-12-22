@@ -11,6 +11,7 @@ import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
@@ -70,7 +71,6 @@ import com.liferay.object.test.util.TreeTestUtil;
 import com.liferay.object.tree.Tree;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeFunction;
-import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -161,6 +161,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -370,91 +371,127 @@ public class BatchEnginePortletDataHandlerTest {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		DepotEntry depotEntry = _addDepotEntry();
-
-		FileEntry depotEntryFileEntry = _addImageFileEntry(
-			depotEntry.getGroupId());
-
-		Group globalGroup = company.getGroup();
-
-		FileEntry globalGroupFileEntry = _addImageFileEntry(
-			globalGroup.getGroupId());
-
-		Group group1 = GroupTestUtil.addGroup();
-
-		FileEntry group1FileEntry = _addImageFileEntry(group1.getGroupId());
-
-		Group group2 = GroupTestUtil.addGroup();
-
-		FileEntry group2FileEntry = _addImageFileEntry(group2.getGroupId());
-
 		Group companyGroup = _stagingGroupHelper.fetchCompanyGroup(
 			company.getCompanyId());
 
-		String[] imgTags = {
-			_getImgTag(_getPreviewURL(depotEntryFileEntry)),
-			_getImgTag(_getPreviewURL(globalGroupFileEntry)),
-			_getImgTag(_getPreviewURL(group1FileEntry)),
-			_getImgTag(_getPreviewURL(group2FileEntry))
-		};
+		// File Entry from a depot: URL not recalculated and no report entry
+		// created
 
-		// File Entries in different groups: None of the URLs are recalculated
+		DepotEntry depotEntry = _addDepotEntry();
 
-		_testExportImportObjectEntriesWithRichTextAndURLs(
-			null, imgTags, null, imgTags,
-			ObjectDefinitionConstants.SCOPE_COMPANY, companyGroup,
+		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
+			null, null, false, false,
+			_addImageFileEntry(depotEntry.getGroupId()), false, companyGroup);
+		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
+			null, null, false, true,
+			_addImageFileEntry(depotEntry.getGroupId()), false, companyGroup);
+		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
+			null, null, false, true,
+			_addImageFileEntry(depotEntry.getGroupId()), true, companyGroup);
+
+		// File Entry from a depot, deleted before exporting: URL not
+		// recalculated and report entry created (without ERC)
+
+		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_EXPORT,
+			(fileEntry, targetGroup) -> new ObjectValuePair<>(
+				"", fileEntry.getGroupId()),
+			false, false, _addImageFileEntry(depotEntry.getGroupId()), false,
 			companyGroup);
 
-		// File Entries existing before exporting but deleted before importing:
-		// The URLs are not recalculated
+		// File Entry from a depot, deleted before importing: URL not
+		// recalculated and report entry created
 
-		_testExportImportObjectEntriesWithRichTextAndURLs(
-			() -> {
-				_dlAppLocalService.deleteFileEntry(
-					depotEntryFileEntry.getFileEntryId());
-				_dlAppLocalService.deleteFileEntry(
-					globalGroupFileEntry.getFileEntryId());
-				_dlAppLocalService.deleteFileEntry(
-					group1FileEntry.getFileEntryId());
-				_dlAppLocalService.deleteFileEntry(
-					group2FileEntry.getFileEntryId());
-			},
-			imgTags,
-			new ObjectValuePair[] {
-				_getExternalReferenceCodeGroupId(depotEntryFileEntry),
-				_getExternalReferenceCodeGroupId(globalGroupFileEntry),
-				_getExternalReferenceCodeGroupId(group1FileEntry),
-				_getExternalReferenceCodeGroupId(group2FileEntry)
-			},
-			imgTags, ObjectDefinitionConstants.SCOPE_COMPANY, companyGroup,
+		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
+			false, _addImageFileEntry(depotEntry.getGroupId()), false,
+			companyGroup);
+		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
+			true, _addImageFileEntry(depotEntry.getGroupId()), false,
+			companyGroup);
+		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
+			true, _addImageFileEntry(depotEntry.getGroupId()), true,
 			companyGroup);
 
-		// File Entries not existing before exporting: The URLs are not
-		// recalculated
+		// File Entry from a site: URL not recalculated and no report entry
+		// created
 
-		_testExportImportObjectEntriesWithRichTextAndURLs(
-			() -> {
-				Assert.assertNull(
-					_dlAppLocalService.fetchFileEntry(
-						depotEntryFileEntry.getFileEntryId()));
-				Assert.assertNull(
-					_dlAppLocalService.fetchFileEntry(
-						globalGroupFileEntry.getFileEntryId()));
-				Assert.assertNull(
-					_dlAppLocalService.fetchFileEntry(
-						group1FileEntry.getFileEntryId()));
-				Assert.assertNull(
-					_dlAppLocalService.fetchFileEntry(
-						group2FileEntry.getFileEntryId()));
-			},
-			imgTags,
-			new ObjectValuePair[] {
-				new ObjectValuePair("", depotEntryFileEntry.getGroupId()),
-				new ObjectValuePair("", globalGroupFileEntry.getGroupId()),
-				new ObjectValuePair("", group1FileEntry.getGroupId()),
-				new ObjectValuePair("", group2FileEntry.getGroupId())
-			},
-			imgTags, ObjectDefinitionConstants.SCOPE_COMPANY, companyGroup,
+		Group group = GroupTestUtil.addGroup();
+
+		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
+			null, null, false, false, _addImageFileEntry(group.getGroupId()),
+			false, companyGroup);
+		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
+			null, null, false, true, _addImageFileEntry(group.getGroupId()),
+			false, companyGroup);
+		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
+			null, null, false, true, _addImageFileEntry(group.getGroupId()),
+			true, companyGroup);
+
+		// File Entry from a site, deleted before exporting: URL not
+		// recalculated and report entry created (without ERC)
+
+		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_EXPORT,
+			(fileEntry, targetGroup) -> new ObjectValuePair<>(
+				"", fileEntry.getGroupId()),
+			false, false, _addImageFileEntry(group.getGroupId()), false,
+			companyGroup);
+
+		// File Entry from a site, deleted before importing: URL not
+		// recalculated and report entry created
+
+		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
+			false, _addImageFileEntry(group.getGroupId()), false, companyGroup);
+		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
+			true, _addImageFileEntry(group.getGroupId()), false, companyGroup);
+		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
+			true, _addImageFileEntry(group.getGroupId()), true, companyGroup);
+
+		// File Entry from the global site: URL not recalculated and no report
+		// entry created
+
+		Group globalGroup = company.getGroup();
+
+		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
+			null, null, false, false,
+			_addImageFileEntry(globalGroup.getGroupId()), false, companyGroup);
+		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
+			null, null, false, true,
+			_addImageFileEntry(globalGroup.getGroupId()), false, companyGroup);
+		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
+			null, null, false, true,
+			_addImageFileEntry(globalGroup.getGroupId()), true, companyGroup);
+
+		// File Entry from the global site, deleted before exporting: URL not
+		// recalculated and report entry created (without ERC)
+
+		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_EXPORT,
+			(fileEntry, targetGroup) -> new ObjectValuePair<>(
+				"", fileEntry.getGroupId()),
+			false, false, _addImageFileEntry(globalGroup.getGroupId()), false,
+			companyGroup);
+
+		// File Entry from the global site, deleted before importing: URL not
+		// recalculated and report entry created
+
+		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
+			false, _addImageFileEntry(globalGroup.getGroupId()), false,
+			companyGroup);
+		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
+			true, _addImageFileEntry(globalGroup.getGroupId()), false,
+			companyGroup);
+		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
+			true, _addImageFileEntry(globalGroup.getGroupId()), true,
 			companyGroup);
 	}
 
@@ -468,108 +505,185 @@ public class BatchEnginePortletDataHandlerTest {
 
 		Group globalGroup = company.getGroup();
 
-		FileEntry globalGroupFileEntry = _addImageFileEntry(
-			globalGroup.getGroupId());
+		DepotEntry sourceDepotEntry = _addDepotEntry();
+
+		// File Entry from a different depot: URL not recalculated and no report
+		// entry created
+
+		DepotEntry differentDepotEntry = _addDepotEntry();
+
+		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
+			null, null, false, false,
+			_addImageFileEntry(differentDepotEntry.getGroupId()), false,
+			sourceDepotEntry.getGroup());
+		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
+			null, null, false, true,
+			_addImageFileEntry(differentDepotEntry.getGroupId()), false,
+			sourceDepotEntry.getGroup());
+		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
+			null, null, false, true,
+			_addImageFileEntry(differentDepotEntry.getGroupId()), true,
+			sourceDepotEntry.getGroup());
+
+		// File Entry from a different depot, deleted before exporting: URL not
+		// recalculated and report entry created (without ERC)
+
+		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_EXPORT,
+			(fileEntry, targetGroup) -> new ObjectValuePair<>(
+				"", fileEntry.getGroupId()),
+			false, false, _addImageFileEntry(differentDepotEntry.getGroupId()),
+			false, sourceDepotEntry.getGroup());
+
+		// File Entry from a different depot, deleted before importing: URL not
+		// recalculated and report entry created
+
+		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
+			false, _addImageFileEntry(differentDepotEntry.getGroupId()), false,
+			sourceDepotEntry.getGroup());
+		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
+			true, _addImageFileEntry(differentDepotEntry.getGroupId()), false,
+			sourceDepotEntry.getGroup());
+		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
+			true, _addImageFileEntry(differentDepotEntry.getGroupId()), true,
+			sourceDepotEntry.getGroup());
+
+		// File Entry from a site: URL not recalculated and no report
+		// entry created
 
 		Group group = GroupTestUtil.addGroup();
 
-		FileEntry groupFileEntry = _addImageFileEntry(group.getGroupId());
+		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
+			null, null, false, false, _addImageFileEntry(group.getGroupId()),
+			false, sourceDepotEntry.getGroup());
+		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
+			null, null, false, true, _addImageFileEntry(group.getGroupId()),
+			false, sourceDepotEntry.getGroup());
+		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
+			null, null, false, true, _addImageFileEntry(group.getGroupId()),
+			true, sourceDepotEntry.getGroup());
 
-		DepotEntry otherDepotEntry = _addDepotEntry();
+		// File Entry from a site, deleted before exporting: URL not
+		// recalculated and report entry created (without ERC)
 
-		FileEntry otherDepotEntryFileEntry = _addImageFileEntry(
-			otherDepotEntry.getGroupId());
+		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_EXPORT,
+			(fileEntry, targetGroup) -> new ObjectValuePair<>(
+				"", fileEntry.getGroupId()),
+			false, false, _addImageFileEntry(group.getGroupId()), false,
+			sourceDepotEntry.getGroup());
 
-		DepotEntry sourceDepotEntry = _addDepotEntry();
+		// File Entry from a site, deleted before importing: URL not
+		// recalculated and report entry created
 
-		FileEntry sourceDepotEntryFileEntry = _addImageFileEntry(
-			sourceDepotEntry.getGroupId());
+		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
+			false, _addImageFileEntry(group.getGroupId()), false,
+			sourceDepotEntry.getGroup());
+		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
+			true, _addImageFileEntry(group.getGroupId()), false,
+			sourceDepotEntry.getGroup());
+		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
+			true, _addImageFileEntry(group.getGroupId()), true,
+			sourceDepotEntry.getGroup());
 
-		DepotEntry targetDepotEntry = _addDepotEntry();
+		// File Entry from the depot that is being exported: URL recalculated
+		// and report entry created only if the content is not imported
 
-		String[] currentImgTags = {
-			_getImgTag(_getPreviewURL(globalGroupFileEntry)),
-			_getImgTag(_getPreviewURL(groupFileEntry)),
-			_getImgTag(_getPreviewURL(otherDepotEntryFileEntry)),
-			_getImgTag(_getPreviewURL(sourceDepotEntryFileEntry))
-		};
+		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
+			null,
+			(fileEntry, targetGroup) -> new ObjectValuePair<>(
+				fileEntry.getExternalReferenceCode(), targetGroup.getGroupId()),
+			true, false, _addImageFileEntry(sourceDepotEntry.getGroupId()),
+			false, sourceDepotEntry.getGroup());
+		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
+			null,
+			(fileEntry, targetGroup) -> new ObjectValuePair<>(
+				fileEntry.getExternalReferenceCode(), targetGroup.getGroupId()),
+			true, true, _addImageFileEntry(sourceDepotEntry.getGroupId()),
+			false, sourceDepotEntry.getGroup());
+		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
+			null, null, true, true,
+			_addImageFileEntry(sourceDepotEntry.getGroupId()), true,
+			sourceDepotEntry.getGroup());
 
-		String[] expectedImgTags = {
-			currentImgTags[0], currentImgTags[1], currentImgTags[1],
-			_getImgTag(
-				_getPreviewURL(
-					sourceDepotEntryFileEntry, targetDepotEntry.getGroup()))
-		};
+		// File Entry from the depot that is being exported, deleted before
+		// exporting: URL recalculated and report entry created
 
-		// File Entry from the exported depot group: The URL of the File Entry
-		// from the exported and imported depot group is the only recalculated
+		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_EXPORT,
+			(fileEntry, targetGroup) -> new ObjectValuePair<>(
+				"", targetGroup.getGroupId()),
+			true, false, _addImageFileEntry(sourceDepotEntry.getGroupId()),
+			false, sourceDepotEntry.getGroup());
 
-		_testExportImportObjectEntriesWithRichTextAndURLs(
-			null, currentImgTags,
-			new ObjectValuePair[] {
-				new ObjectValuePair<>(
-					sourceDepotEntryFileEntry.getExternalReferenceCode(),
-					targetDepotEntry.getGroupId())
-			},
-			expectedImgTags, ObjectDefinitionConstants.SCOPE_DEPOT,
-			sourceDepotEntry.getGroup(), targetDepotEntry.getGroup());
+		// File Entry from the depot that is being exported, deleted before
+		// importing: URL recalculated and report entry created only if the
+		// content is not imported
 
-		// File Entries existing before exporting but deleted before importing:
-		// The URL of the File Entry from the exported and imported depot group
-		// is recalculated, the rest are not
+		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_IMPORT,
+			(fileEntry, targetGroup) -> new ObjectValuePair<>(
+				fileEntry.getExternalReferenceCode(), targetGroup.getGroupId()),
+			true, false, _addImageFileEntry(sourceDepotEntry.getGroupId()),
+			false, sourceDepotEntry.getGroup());
+		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_IMPORT,
+			(fileEntry, targetGroup) -> new ObjectValuePair<>(
+				fileEntry.getExternalReferenceCode(), targetGroup.getGroupId()),
+			true, true, _addImageFileEntry(sourceDepotEntry.getGroupId()),
+			false, sourceDepotEntry.getGroup());
+		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_IMPORT, null, true, true,
+			_addImageFileEntry(sourceDepotEntry.getGroupId()), true,
+			sourceDepotEntry.getGroup());
 
-		_testExportImportObjectEntriesWithRichTextAndURLs(
-			() -> {
-				_dlAppLocalService.deleteFileEntry(
-					globalGroupFileEntry.getFileEntryId());
-				_dlAppLocalService.deleteFileEntry(
-					groupFileEntry.getFileEntryId());
-				_dlAppLocalService.deleteFileEntry(
-					otherDepotEntryFileEntry.getFileEntryId());
-				_dlAppLocalService.deleteFileEntry(
-					sourceDepotEntryFileEntry.getFileEntryId());
-			},
-			currentImgTags,
-			new ObjectValuePair[] {
-				_getExternalReferenceCodeGroupId(globalGroupFileEntry),
-				_getExternalReferenceCodeGroupId(groupFileEntry),
-				_getExternalReferenceCodeGroupId(otherDepotEntryFileEntry),
-				new ObjectValuePair<>(
-					sourceDepotEntryFileEntry.getExternalReferenceCode(),
-					targetDepotEntry.getGroupId())
-			},
-			expectedImgTags, ObjectDefinitionConstants.SCOPE_DEPOT,
-			sourceDepotEntry.getGroup(), targetDepotEntry.getGroup());
+		// File Entry from the global site: URL not recalculated and no report
+		// entry created
 
-		// File Entries not existing before exporting: The URL of the File Entry
-		// from the exported and imported depot group is recalculated, the rest
-		// are not
+		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
+			null, null, false, false,
+			_addImageFileEntry(globalGroup.getGroupId()), false,
+			sourceDepotEntry.getGroup());
+		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
+			null, null, false, true,
+			_addImageFileEntry(globalGroup.getGroupId()), false,
+			sourceDepotEntry.getGroup());
+		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
+			null, null, false, true,
+			_addImageFileEntry(globalGroup.getGroupId()), true,
+			sourceDepotEntry.getGroup());
 
-		_testExportImportObjectEntriesWithRichTextAndURLs(
-			() -> {
-				Assert.assertNull(
-					_dlAppLocalService.fetchFileEntry(
-						globalGroupFileEntry.getFileEntryId()));
-				Assert.assertNull(
-					_dlAppLocalService.fetchFileEntry(
-						groupFileEntry.getFileEntryId()));
-				Assert.assertNull(
-					_dlAppLocalService.fetchFileEntry(
-						otherDepotEntryFileEntry.getFileEntryId()));
-				Assert.assertNull(
-					_dlAppLocalService.fetchFileEntry(
-						sourceDepotEntryFileEntry.getFileEntryId()));
-			},
-			currentImgTags,
-			new ObjectValuePair[] {
-				new ObjectValuePair<>("", globalGroupFileEntry.getGroupId()),
-				new ObjectValuePair<>("", groupFileEntry.getGroupId()),
-				new ObjectValuePair<>(
-					"", otherDepotEntryFileEntry.getGroupId()),
-				new ObjectValuePair<>("", targetDepotEntry.getGroupId())
-			},
-			expectedImgTags, ObjectDefinitionConstants.SCOPE_DEPOT,
-			sourceDepotEntry.getGroup(), targetDepotEntry.getGroup());
+		// File Entry from the global site, deleted before exporting: URL not
+		// recalculated and report entry created (without ERC)
+
+		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_EXPORT,
+			(fileEntry, targetGroup) -> new ObjectValuePair<>(
+				"", fileEntry.getGroupId()),
+			false, false, _addImageFileEntry(globalGroup.getGroupId()), false,
+			sourceDepotEntry.getGroup());
+
+		// File Entry from the global site, deleted before importing: URL not
+		// recalculated and report entry created
+
+		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
+			false, _addImageFileEntry(globalGroup.getGroupId()), false,
+			sourceDepotEntry.getGroup());
+		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
+			true, _addImageFileEntry(globalGroup.getGroupId()), false,
+			sourceDepotEntry.getGroup());
+		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
+			true, _addImageFileEntry(globalGroup.getGroupId()), true,
+			sourceDepotEntry.getGroup());
 	}
 
 	@FeatureFlag("LPD-35443")
@@ -924,105 +1038,177 @@ public class BatchEnginePortletDataHandlerTest {
 
 		DepotEntry depotEntry = _addDepotEntry();
 
-		FileEntry depotEntryFileEntry = _addImageFileEntry(
-			depotEntry.getGroupId());
+		Group sourceGroup = GroupTestUtil.addGroup();
 
-		Group globalGroup = company.getGroup();
+		// File Entry from a depot: URL not recalculated and no report entry
+		// created
 
-		FileEntry globalGroupFileEntry = _addImageFileEntry(
-			globalGroup.getGroupId());
+		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
+			null, null, false, false,
+			_addImageFileEntry(depotEntry.getGroupId()), false, sourceGroup);
+		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
+			null, null, false, true,
+			_addImageFileEntry(depotEntry.getGroupId()), false, sourceGroup);
+		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
+			null, null, false, true,
+			_addImageFileEntry(depotEntry.getGroupId()), true, sourceGroup);
+
+		// File Entry from a depot, deleted before exporting: URL not
+		// recalculated and report entry created (without ERC)
+
+		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_EXPORT,
+			(fileEntry, targetGroup) -> new ObjectValuePair<>(
+				"", fileEntry.getGroupId()),
+			false, false, _addImageFileEntry(depotEntry.getGroupId()), false,
+			sourceGroup);
+
+		// File Entry from a depot, deleted before importing: URL not
+		// recalculated and report entry created
+
+		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
+			false, _addImageFileEntry(depotEntry.getGroupId()), false,
+			sourceGroup);
+		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
+			true, _addImageFileEntry(depotEntry.getGroupId()), false,
+			sourceGroup);
+		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
+			true, _addImageFileEntry(depotEntry.getGroupId()), true,
+			sourceGroup);
+
+		// File Entry from a different site: URL not recalculated and no report
+		// entry created
 
 		Group otherGroup = GroupTestUtil.addGroup();
 
-		FileEntry otherGroupFileEntry = _addImageFileEntry(
-			otherGroup.getGroupId());
+		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
+			null, null, false, false,
+			_addImageFileEntry(otherGroup.getGroupId()), false, sourceGroup);
+		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
+			null, null, false, true,
+			_addImageFileEntry(otherGroup.getGroupId()), false, sourceGroup);
+		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
+			null, null, false, true,
+			_addImageFileEntry(otherGroup.getGroupId()), true, sourceGroup);
 
-		Group sourceGroup = GroupTestUtil.addGroup();
+		// File Entry from a different site, deleted before exporting: URL not
+		// recalculated and report entry created (without ERC)
 
-		FileEntry sourceGroupFileEntry = _addImageFileEntry(
-			sourceGroup.getGroupId());
+		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_EXPORT,
+			(fileEntry, targetGroup) -> new ObjectValuePair<>(
+				"", fileEntry.getGroupId()),
+			false, false, _addImageFileEntry(otherGroup.getGroupId()), false,
+			sourceGroup);
 
-		Group targetGroup = GroupTestUtil.addGroup();
+		// File Entry from a different site, deleted before importing: URL not
+		// recalculated and report entry created
 
-		String[] currentImgTags = {
-			_getImgTag(_getPreviewURL(depotEntryFileEntry)),
-			_getImgTag(_getPreviewURL(globalGroupFileEntry)),
-			_getImgTag(_getPreviewURL(otherGroupFileEntry)),
-			_getImgTag(_getPreviewURL(sourceGroupFileEntry))
-		};
+		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
+			false, _addImageFileEntry(otherGroup.getGroupId()), false,
+			sourceGroup);
+		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
+			true, _addImageFileEntry(otherGroup.getGroupId()), false,
+			sourceGroup);
+		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
+			true, _addImageFileEntry(otherGroup.getGroupId()), true,
+			sourceGroup);
 
-		String[] expectedImgTags = {
-			currentImgTags[0], currentImgTags[1], currentImgTags[1],
-			_getImgTag(_getPreviewURL(sourceGroupFileEntry, targetGroup))
-		};
+		// File Entry from the global site: URL not recalculated and no report
+		// entry created
 
-		// File Entry from the exported group: The URL of the File Entry
-		// from the exported and imported group is the only recalculated
+		Group globalGroup = company.getGroup();
 
-		_testExportImportObjectEntriesWithRichTextAndURLs(
-			null, currentImgTags,
-			new ObjectValuePair[] {
-				new ObjectValuePair<>(
-					sourceGroupFileEntry.getExternalReferenceCode(),
-					targetGroup.getGroupId())
-			},
-			expectedImgTags, ObjectDefinitionConstants.SCOPE_SITE, sourceGroup,
-			targetGroup);
+		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
+			null, null, false, false,
+			_addImageFileEntry(globalGroup.getGroupId()), false, sourceGroup);
+		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
+			null, null, false, true,
+			_addImageFileEntry(globalGroup.getGroupId()), false, sourceGroup);
+		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
+			null, null, false, true,
+			_addImageFileEntry(globalGroup.getGroupId()), true, sourceGroup);
 
-		// File Entries existing before exporting but deleted before importing:
-		// The URL of the File Entry from the exported and imported site is
-		// recalculated, the rest are not
+		// File Entry from the global site, deleted before exporting: URL not
+		// recalculated and report entry created (without ERC)
 
-		_testExportImportObjectEntriesWithRichTextAndURLs(
-			() -> {
-				_dlAppLocalService.deleteFileEntry(
-					depotEntryFileEntry.getFileEntryId());
-				_dlAppLocalService.deleteFileEntry(
-					globalGroupFileEntry.getFileEntryId());
-				_dlAppLocalService.deleteFileEntry(
-					otherGroupFileEntry.getFileEntryId());
-				_dlAppLocalService.deleteFileEntry(
-					sourceGroupFileEntry.getFileEntryId());
-			},
-			currentImgTags,
-			new ObjectValuePair[] {
-				_getExternalReferenceCodeGroupId(depotEntryFileEntry),
-				_getExternalReferenceCodeGroupId(globalGroupFileEntry),
-				_getExternalReferenceCodeGroupId(otherGroupFileEntry),
-				new ObjectValuePair<>(
-					sourceGroupFileEntry.getExternalReferenceCode(),
-					targetGroup.getGroupId())
-			},
-			expectedImgTags, ObjectDefinitionConstants.SCOPE_SITE, sourceGroup,
-			targetGroup);
+		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_EXPORT,
+			(fileEntry, targetGroup) -> new ObjectValuePair<>(
+				"", fileEntry.getGroupId()),
+			false, false, _addImageFileEntry(globalGroup.getGroupId()), false,
+			sourceGroup);
 
-		// File Entries not existing before exporting: The URL of the File Entry
-		// from the exported and imported site is recalculated, the rest are not
+		// File Entry from the global site, deleted before importing: URL not
+		// recalculated and report entry created
 
-		_testExportImportObjectEntriesWithRichTextAndURLs(
-			() -> {
-				Assert.assertNull(
-					_dlAppLocalService.fetchFileEntry(
-						depotEntryFileEntry.getFileEntryId()));
-				Assert.assertNull(
-					_dlAppLocalService.fetchFileEntry(
-						globalGroupFileEntry.getFileEntryId()));
-				Assert.assertNull(
-					_dlAppLocalService.fetchFileEntry(
-						otherGroupFileEntry.getFileEntryId()));
-				Assert.assertNull(
-					_dlAppLocalService.fetchFileEntry(
-						sourceGroupFileEntry.getFileEntryId()));
-			},
-			currentImgTags,
-			new ObjectValuePair[] {
-				new ObjectValuePair<>("", depotEntryFileEntry.getGroupId()),
-				new ObjectValuePair<>("", globalGroupFileEntry.getGroupId()),
-				new ObjectValuePair<>("", otherGroupFileEntry.getGroupId()),
-				new ObjectValuePair<>("", targetGroup.getGroupId())
-			},
-			expectedImgTags, ObjectDefinitionConstants.SCOPE_SITE, sourceGroup,
-			targetGroup);
+		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
+			false, _addImageFileEntry(globalGroup.getGroupId()), false,
+			sourceGroup);
+		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
+			true, _addImageFileEntry(globalGroup.getGroupId()), false,
+			sourceGroup);
+		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
+			true, _addImageFileEntry(globalGroup.getGroupId()), true,
+			sourceGroup);
+
+		// File Entry from the site that is being exported: URL recalculated
+		// and report entry created only if the content is not imported
+
+		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
+			null,
+			(fileEntry, targetGroup) -> new ObjectValuePair<>(
+				fileEntry.getExternalReferenceCode(), targetGroup.getGroupId()),
+			true, false, _addImageFileEntry(sourceGroup.getGroupId()), false,
+			sourceGroup);
+		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
+			null,
+			(fileEntry, targetGroup) -> new ObjectValuePair<>(
+				fileEntry.getExternalReferenceCode(), targetGroup.getGroupId()),
+			true, true, _addImageFileEntry(sourceGroup.getGroupId()), false,
+			sourceGroup);
+		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
+			null, null, true, true,
+			_addImageFileEntry(sourceGroup.getGroupId()), true, sourceGroup);
+
+		// File Entry from the site that is being exported, deleted before
+		// exporting: URL recalculated and report entry created
+
+		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_EXPORT,
+			(fileEntry, targetGroup) -> new ObjectValuePair<>(
+				"", targetGroup.getGroupId()),
+			true, false, _addImageFileEntry(sourceGroup.getGroupId()), false,
+			sourceGroup);
+
+		// File Entry from the site that is being exported, deleted before
+		// importing: URL recalculated and report entry created only if the
+		// content is not imported
+
+		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_IMPORT,
+			(fileEntry, targetGroup) -> new ObjectValuePair<>(
+				fileEntry.getExternalReferenceCode(), targetGroup.getGroupId()),
+			true, false, _addImageFileEntry(sourceGroup.getGroupId()), false,
+			sourceGroup);
+		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_IMPORT,
+			(fileEntry, targetGroup) -> new ObjectValuePair<>(
+				fileEntry.getExternalReferenceCode(), targetGroup.getGroupId()),
+			true, true, _addImageFileEntry(sourceGroup.getGroupId()), false,
+			sourceGroup);
+		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_IMPORT, null, true, true,
+			_addImageFileEntry(sourceGroup.getGroupId()), true, sourceGroup);
 	}
 
 	@Test
@@ -1933,7 +2119,8 @@ public class BatchEnginePortletDataHandlerTest {
 	}
 
 	private Map<String, String[]> _getExportImportParameterMap(
-		boolean deletions, boolean includeLayoutSetLayoutsPortlet,
+		boolean deletions, boolean includeDocumentLibrary,
+		boolean includeLayoutSetLayoutsPortlet,
 		boolean includeListTypeDefinitions,
 		List<ObjectDefinition> objectDefinitions) {
 
@@ -1957,6 +2144,16 @@ public class BatchEnginePortletDataHandlerTest {
 			new String[] {Boolean.TRUE.toString()}
 		).put(
 			PortletDataHandlerKeys.PORTLET_DATA + "_" +
+				DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
+			() -> {
+				if (includeDocumentLibrary) {
+					return new String[] {Boolean.TRUE.toString()};
+				}
+
+				return null;
+			}
+		).put(
+			PortletDataHandlerKeys.PORTLET_DATA + "_" +
 				ObjectPortletKeys.LIST_TYPE_DEFINITIONS,
 			() -> {
 				if (includeListTypeDefinitions) {
@@ -1971,7 +2168,7 @@ public class BatchEnginePortletDataHandlerTest {
 			new String[] {Boolean.TRUE.toString()}
 		).put(
 			PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT,
-			new String[] {Boolean.FALSE.toString()}
+			new String[] {Boolean.TRUE.toString()}
 		).put(
 			PortletDataHandlerKeys.PORTLET_SETUP_ALL,
 			new String[] {Boolean.TRUE.toString()}
@@ -1995,13 +2192,6 @@ public class BatchEnginePortletDataHandlerTest {
 		}
 
 		return parameterMap;
-	}
-
-	private ObjectValuePair<String, Long> _getExternalReferenceCodeGroupId(
-		FileEntry fileEntry) {
-
-		return new ObjectValuePair<>(
-			fileEntry.getExternalReferenceCode(), fileEntry.getGroupId());
 	}
 
 	private String[] _getExternalReferenceCodes(ObjectEntry... objectEntries) {
@@ -2102,11 +2292,11 @@ public class BatchEnginePortletDataHandlerTest {
 			fileEntry, fileEntry.getFileVersion(), null, null, false, false);
 	}
 
-	private String _getPreviewURL(FileEntry fileEntry, Group group)
+	private String _getPreviewURL(String fileEntryFriendlyURL, Group group)
 		throws Exception {
 
 		return _dlURLHelper.getPreviewURL(
-			_getFriendlyURL(fileEntry), group.getFriendlyURL());
+			fileEntryFriendlyURL, group.getFriendlyURL());
 	}
 
 	private SafeCloseable _register(
@@ -2168,6 +2358,40 @@ public class BatchEnginePortletDataHandlerTest {
 			objectDefinition.getCompanyId(), group.getGroupId(),
 			TestPropsValues.getUserId(), objectDefinition.getClassName(), 0L,
 			ContentTypes.TEXT_HTML, content);
+	}
+
+	private void _testExportImportCompanyObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry deleteFileEntry,
+			BiFunction<FileEntry, Group, ObjectValuePair<String, Long>>
+				expectedReportEntryGroupIdExternalReferenceCodeBiFunction,
+			boolean expectedRecalculateURL, boolean exportFileEntries,
+			FileEntry fileEntry, boolean importFileEntries, Group sourceGroup)
+		throws Exception {
+
+		_testExportImportObjectEntriesWithRichTextAndURLs(
+			deleteFileEntry,
+			expectedReportEntryGroupIdExternalReferenceCodeBiFunction,
+			expectedRecalculateURL, exportFileEntries, fileEntry,
+			importFileEntries, ObjectDefinitionConstants.SCOPE_COMPANY,
+			sourceGroup, sourceGroup);
+	}
+
+	private void _testExportImportDepotObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry deleteFileEntry,
+			BiFunction<FileEntry, Group, ObjectValuePair<String, Long>>
+				expectedReportEntryGroupIdExternalReferenceCodeBiFunction,
+			boolean expectedRecalculateURL, boolean exportFileEntries,
+			FileEntry fileEntry, boolean importFileEntries, Group sourceGroup)
+		throws Exception {
+
+		DepotEntry targetDepotEntry = _addDepotEntry();
+
+		_testExportImportObjectEntriesWithRichTextAndURLs(
+			deleteFileEntry,
+			expectedReportEntryGroupIdExternalReferenceCodeBiFunction,
+			expectedRecalculateURL, exportFileEntries, fileEntry,
+			importFileEntries, ObjectDefinitionConstants.SCOPE_DEPOT,
+			sourceGroup, targetDepotEntry.getGroup());
 	}
 
 	private void _testExportImportObjectEntriesToSameGroup(
@@ -2457,12 +2681,15 @@ public class BatchEnginePortletDataHandlerTest {
 	}
 
 	private void _testExportImportObjectEntriesWithRichTextAndURLs(
-			UnsafeRunnable<Exception> afterExportUnsafeRunnable,
-			String[] currentImgTags,
-			ObjectValuePair<String, Long>[] expectedReportEntryERCGroupIds,
-			String[] expectedImgTags, String scope, Group sourceGroup,
-			Group targetGroup)
+			DeleteFileEntry deleteFileEntry,
+			BiFunction<FileEntry, Group, ObjectValuePair<String, Long>>
+				expectedReportEntryGroupIdExternalReferenceCodeBiFunction,
+			boolean expectedRecalculateURL, boolean exportFileEntries,
+			FileEntry fileEntry, boolean importFileEntries, String scope,
+			Group sourceGroup, Group targetGroup)
 		throws Exception {
+
+		String imgTag = _getImgTag(_getPreviewURL(fileEntry));
 
 		ObjectDefinition objectDefinition = _addObjectDefinition(scope);
 
@@ -2471,20 +2698,28 @@ public class BatchEnginePortletDataHandlerTest {
 			objectDefinition,
 			(Map)HashMapBuilder.put(
 				_OBJECT_FIELD_NAME_RICH_TEXT,
-				_sanitize(
-					StringUtil.merge(currentImgTags, StringPool.BLANK),
-					sourceGroup, objectDefinition)
+				_sanitize(imgTag, sourceGroup, objectDefinition)
 			).build());
+
+		// Keep it before removing the file entry
+
+		String fileEntryFriendlyURL = _getFriendlyURL(fileEntry);
+
+		if (deleteFileEntry == DeleteFileEntry.BEFORE_EXPORT) {
+			_dlAppLocalService.deleteFileEntry(fileEntry.getFileEntryId());
+		}
 
 		File larFile = new ExportImportExecutor(
 		).withGroupId(
 			sourceGroup.getGroupId()
+		).withIncludeDocumentLibrary(
+			exportFileEntries
 		).withObjectDefinition(
 			objectDefinition
 		).executeExport();
 
-		if (afterExportUnsafeRunnable != null) {
-			afterExportUnsafeRunnable.run();
+		if (deleteFileEntry == DeleteFileEntry.BEFORE_IMPORT) {
+			_dlAppLocalService.deleteFileEntry(fileEntry.getFileEntryId());
 		}
 
 		_objectEntryLocalService.deleteObjectEntry(
@@ -2494,6 +2729,8 @@ public class BatchEnginePortletDataHandlerTest {
 			new ExportImportExecutor(
 			).withGroupId(
 				targetGroup.getGroupId()
+			).withIncludeDocumentLibrary(
+				importFileEntries
 			).withLARFile(
 				larFile
 			).withObjectDefinition(
@@ -2514,41 +2751,62 @@ public class BatchEnginePortletDataHandlerTest {
 		String importedRichTextValue = MapUtil.getString(
 			importedObjectEntry.getValues(), _OBJECT_FIELD_NAME_RICH_TEXT);
 
-		for (String expectedImgTag : expectedImgTags) {
-			Assert.assertTrue(
-				importedRichTextValue.contains(
-					_sanitize(expectedImgTag, targetGroup, objectDefinition)));
+		String expectedImgTag = null;
+
+		if (expectedRecalculateURL) {
+			expectedImgTag = _getImgTag(
+				_getPreviewURL(fileEntryFriendlyURL, targetGroup));
 		}
+		else {
+			expectedImgTag = imgTag;
+		}
+
+		Assert.assertTrue(
+			importedRichTextValue.contains(
+				_sanitize(expectedImgTag, targetGroup, objectDefinition)));
 
 		List<ExportImportReportEntry> exportImportReportEntries =
 			_exportImportReportEntryLocalService.getExportImportReportEntries(
 				TestPropsValues.getCompanyId(),
 				exportImportConfiguration.getExportImportConfigurationId());
 
-		if (expectedReportEntryERCGroupIds == null) {
+		if (expectedReportEntryGroupIdExternalReferenceCodeBiFunction == null) {
 			Assert.assertTrue(exportImportReportEntries.isEmpty());
 		}
 		else {
 			Assert.assertEquals(
-				exportImportReportEntries.toString(),
-				expectedReportEntryERCGroupIds.length,
+				exportImportReportEntries.toString(), 1,
 				exportImportReportEntries.size());
 
 			long classNameId = _classNameLocalService.getClassNameId(
 				FileEntry.class);
 
-			for (int i = 0; i < exportImportReportEntries.size(); i++) {
-				ObjectValuePair<String, Long> externalReferenceCodeGroupId =
-					expectedReportEntryERCGroupIds[i];
+			ObjectValuePair<String, Long> objectValuePair =
+				expectedReportEntryGroupIdExternalReferenceCodeBiFunction.apply(
+					fileEntry, targetGroup);
 
-				_assertExportImportReportEntry(
-					classNameId, 0L, externalReferenceCodeGroupId.getKey(),
-					externalReferenceCodeGroupId.getValue(),
-					FileEntry.class.getName(),
-					ExportImportReportEntryConstants.TYPE_EMPTY,
-					exportImportReportEntries.get(i));
-			}
+			_assertExportImportReportEntry(
+				classNameId, 0L, objectValuePair.getKey(),
+				objectValuePair.getValue(), FileEntry.class.getName(),
+				ExportImportReportEntryConstants.TYPE_EMPTY,
+				exportImportReportEntries.get(0));
 		}
+	}
+
+	private void _testExportImportSiteObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry deleteFileEntry,
+			BiFunction<FileEntry, Group, ObjectValuePair<String, Long>>
+				expectedReportEntryGroupIdExternalReferenceCodeBiFunction,
+			boolean expectedRecalculateURL, boolean exportFileEntries,
+			FileEntry fileEntry, boolean importFileEntries, Group sourceGroup)
+		throws Exception {
+
+		_testExportImportObjectEntriesWithRichTextAndURLs(
+			deleteFileEntry,
+			expectedReportEntryGroupIdExternalReferenceCodeBiFunction,
+			expectedRecalculateURL, exportFileEntries, fileEntry,
+			importFileEntries, ObjectDefinitionConstants.SCOPE_SITE,
+			sourceGroup, GroupTestUtil.addGroup());
 	}
 
 	private void _testGetExportModelCount(
@@ -2637,6 +2895,13 @@ public class BatchEnginePortletDataHandlerTest {
 
 	private static final String _OBJECT_FIELD_VALUE_ATTACHMENT_USER_COMPUTER =
 		RandomTestUtil.randomString();
+
+	private static final BiFunction
+		<FileEntry, Group, ObjectValuePair<String, Long>>
+			_defaultReportEntryBiFunction =
+				(fileEntry, targetGroup) -> new ObjectValuePair<>(
+					fileEntry.getExternalReferenceCode(),
+					fileEntry.getGroupId());
 
 	@Inject
 	private BatchEngineImportTaskLocalService
@@ -2868,6 +3133,12 @@ public class BatchEnginePortletDataHandlerTest {
 
 	}
 
+	private enum DeleteFileEntry {
+
+		BEFORE_EXPORT, BEFORE_IMPORT
+
+	}
+
 	private class ExportImportExecutor {
 
 		public File executeExport() throws Exception {
@@ -2882,7 +3153,8 @@ public class BatchEnginePortletDataHandlerTest {
 								_privateLayouts,
 								ArrayUtil.toLongArray(_layoutIds),
 								_getExportImportParameterMap(
-									_deletions, _includeLayoutSetLayouts,
+									_deletions, _includeDocumentLibrary,
+									_includeLayoutSetLayouts,
 									_includeListTypeDefinitions,
 									_objectDefinitions))));
 		}
@@ -2900,7 +3172,8 @@ public class BatchEnginePortletDataHandlerTest {
 									TestPropsValues.getUser(), _groupId,
 									_privateLayouts, null,
 									_getExportImportParameterMap(
-										_deletions, _includeLayoutSetLayouts,
+										_deletions, _includeDocumentLibrary,
+										_includeLayoutSetLayouts,
 										_includeListTypeDefinitions,
 										_objectDefinitions)));
 
@@ -2930,6 +3203,14 @@ public class BatchEnginePortletDataHandlerTest {
 
 		public ExportImportExecutor withGroupId(long groupId) {
 			_groupId = groupId;
+
+			return this;
+		}
+
+		public ExportImportExecutor withIncludeDocumentLibrary(
+			boolean includeDocumentLibrary) {
+
+			_includeDocumentLibrary = includeDocumentLibrary;
 
 			return this;
 		}
@@ -2975,6 +3256,7 @@ public class BatchEnginePortletDataHandlerTest {
 		private boolean _deletions;
 		private boolean _expectError;
 		private long _groupId;
+		private boolean _includeDocumentLibrary;
 		private boolean _includeLayoutSetLayouts;
 		private boolean _includeListTypeDefinitions;
 		private File _larFile;

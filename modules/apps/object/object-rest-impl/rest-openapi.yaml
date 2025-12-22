@@ -120,6 +120,12 @@ components:
                     type: object
         ObjectDefinitionBrief:
             properties:
+                classNameId:
+                    description:
+                        The object definition class name ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
                 externalReferenceCode:
                     description:
                         The object definition's external reference code.

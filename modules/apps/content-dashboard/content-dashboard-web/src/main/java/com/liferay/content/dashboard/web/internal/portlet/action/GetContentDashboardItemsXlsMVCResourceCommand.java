@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -48,11 +49,9 @@ import jakarta.portlet.ResourceResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import java.time.Instant;
+import java.text.Format;
+
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.Date;
@@ -104,14 +103,13 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Locale locale = themeDisplay.getLocale();
-
 		WorkbookBuilder workbookBuilder = new WorkbookBuilder(
-			locale, _language.get(locale, "content-dashboard-data"));
+			themeDisplay.getLocale(),
+			_language.get(themeDisplay.getLocale(), "content-dashboard-data"));
 
 		_addWorkbookHeaders(workbookBuilder);
 
-		_addWorkbookRows(locale, resourceRequest, workbookBuilder);
+		_addWorkbookRows(themeDisplay, resourceRequest, workbookBuilder);
 
 		LocalDate localDate = LocalDate.now();
 
@@ -124,8 +122,10 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 	}
 
 	private void _addWorkbookCell(
-		ContentDashboardItem<?> contentDashboardItem, Locale locale,
+		ContentDashboardItem<?> contentDashboardItem, ThemeDisplay themeDisplay,
 		WorkbookBuilder workbookBuilder) {
+
+		Locale locale = themeDisplay.getLocale();
 
 		workbookBuilder.cell(
 			String.valueOf(contentDashboardItem.getId())
@@ -175,13 +175,13 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 				contentDashboardItem.getAssetTags(), AssetTag.NAME_ACCESSOR,
 				StringPool.COMMA_AND_SPACE)
 		).cell(
-			_toString(contentDashboardItem.getModifiedDate())
+			_toString(contentDashboardItem.getModifiedDate(), themeDisplay)
 		).cell(
 			() -> {
 				Date reviewDate = contentDashboardItem.getReviewDate();
 
 				if (reviewDate != null) {
-					return _toString(reviewDate);
+					return _toString(reviewDate, themeDisplay);
 				}
 
 				return StringPool.DASH;
@@ -193,16 +193,18 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 		List<ContentDashboardItem.SpecificInformation<?>> specificInformations =
 			contentDashboardItem.getSpecificInformationList(locale);
 
-		workbookBuilder.cell(_toString(specificInformations, "extension"));
-
-		workbookBuilder.cell(_toString(specificInformations, "file-name"));
+		workbookBuilder.cell(
+			_toString(specificInformations, "extension", themeDisplay));
 
 		workbookBuilder.cell(
-			_toString(specificInformations, "size")
+			_toString(specificInformations, "file-name", themeDisplay));
+
+		workbookBuilder.cell(
+			_toString(specificInformations, "size", themeDisplay)
 		).cell(
-			_toString(specificInformations, "display-date")
+			_toString(specificInformations, "display-date", themeDisplay)
 		).cell(
-			_toString(contentDashboardItem.getCreateDate())
+			_toString(contentDashboardItem.getCreateDate(), themeDisplay)
 		);
 
 		workbookBuilder.cell(
@@ -252,7 +254,7 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 	}
 
 	private void _addWorkbookRows(
-		Locale locale, ResourceRequest resourceRequest,
+		ThemeDisplay themeDisplay, ResourceRequest resourceRequest,
 		WorkbookBuilder workbookBuilder) {
 
 		int searchQueryResultWindowLimit =
@@ -278,7 +280,7 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 					workbookBuilder.row();
 
 					_addWorkbookCell(
-						contentDashboardItem, locale, workbookBuilder);
+						contentDashboardItem, themeDisplay, workbookBuilder);
 				}
 			}
 
@@ -332,19 +334,16 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 		}
 	}
 
-	private String _toString(Date date) {
-		Instant instant = date.toInstant();
+	private String _toString(Date date, ThemeDisplay themeDisplay) {
+		Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(
+			themeDisplay.getLocale(), themeDisplay.getTimeZone());
 
-		ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
-
-		LocalDateTime localDateTime = zonedDateTime.toLocalDateTime();
-
-		return localDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+		return dateTimeFormat.format(date);
 	}
 
 	private String _toString(
 		List<ContentDashboardItem.SpecificInformation<?>> specificInformations,
-		String fieldName) {
+		String fieldName, ThemeDisplay themeDisplay) {
 
 		if (specificInformations == null) {
 			return StringPool.BLANK;
@@ -354,16 +353,16 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 				specificInformations) {
 
 			if (Objects.equals(specificInformation.getKey(), fieldName)) {
-				return _toString(specificInformation.getValue());
+				return _toString(specificInformation.getValue(), themeDisplay);
 			}
 		}
 
 		return StringPool.BLANK;
 	}
 
-	private String _toString(Object value) {
+	private String _toString(Object value, ThemeDisplay themeDisplay) {
 		if (value instanceof Date) {
-			return _toString((Date)value);
+			return _toString((Date)value, themeDisplay);
 		}
 
 		if (value == null) {

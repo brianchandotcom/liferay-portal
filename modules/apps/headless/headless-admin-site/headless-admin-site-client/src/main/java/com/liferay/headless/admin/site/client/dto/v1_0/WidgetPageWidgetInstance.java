@@ -47,6 +47,30 @@ public class WidgetPageWidgetInstance implements Cloneable, Serializable {
 
 	protected String externalReferenceCode;
 
+	public NestedWidgetSection[] getNestedWidgetSections() {
+		return nestedWidgetSections;
+	}
+
+	public void setNestedWidgetSections(
+		NestedWidgetSection[] nestedWidgetSections) {
+
+		this.nestedWidgetSections = nestedWidgetSections;
+	}
+
+	public void setNestedWidgetSections(
+		UnsafeSupplier<NestedWidgetSection[], Exception>
+			nestedWidgetSectionsUnsafeSupplier) {
+
+		try {
+			nestedWidgetSections = nestedWidgetSectionsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected NestedWidgetSection[] nestedWidgetSections;
+
 	public String getParentSectionId() {
 		return parentSectionId;
 	}

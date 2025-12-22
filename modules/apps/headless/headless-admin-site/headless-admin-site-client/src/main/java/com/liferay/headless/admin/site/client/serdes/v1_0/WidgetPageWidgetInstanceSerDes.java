@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
+import com.liferay.headless.admin.site.client.dto.v1_0.NestedWidgetSection;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageWidgetInstance;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPermission;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
@@ -62,6 +63,34 @@ public class WidgetPageWidgetInstanceSerDes {
 				_escape(widgetPageWidgetInstance.getExternalReferenceCode()));
 
 			sb.append("\"");
+		}
+
+		if (widgetPageWidgetInstance.getNestedWidgetSections() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"nestedWidgetSections\": ");
+
+			sb.append("[");
+
+			for (int i = 0;
+				 i < widgetPageWidgetInstance.getNestedWidgetSections().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(
+						widgetPageWidgetInstance.getNestedWidgetSections()[i]));
+
+				if ((i + 1) <
+						widgetPageWidgetInstance.
+							getNestedWidgetSections().length) {
+
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (widgetPageWidgetInstance.getParentSectionId() != null) {
@@ -216,6 +245,16 @@ public class WidgetPageWidgetInstanceSerDes {
 					widgetPageWidgetInstance.getExternalReferenceCode()));
 		}
 
+		if (widgetPageWidgetInstance.getNestedWidgetSections() == null) {
+			map.put("nestedWidgetSections", null);
+		}
+		else {
+			map.put(
+				"nestedWidgetSections",
+				String.valueOf(
+					widgetPageWidgetInstance.getNestedWidgetSections()));
+		}
+
 		if (widgetPageWidgetInstance.getParentSectionId() == null) {
 			map.put("parentSectionId", null);
 		}
@@ -315,6 +354,11 @@ public class WidgetPageWidgetInstanceSerDes {
 			if (Objects.equals(jsonParserFieldName, "externalReferenceCode")) {
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "nestedWidgetSections")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "parentSectionId")) {
 				return false;
 			}
@@ -357,6 +401,26 @@ public class WidgetPageWidgetInstanceSerDes {
 				if (jsonParserFieldValue != null) {
 					widgetPageWidgetInstance.setExternalReferenceCode(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "nestedWidgetSections")) {
+
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					NestedWidgetSection[] nestedWidgetSectionsArray =
+						new NestedWidgetSection[jsonParserFieldValues.length];
+
+					for (int i = 0; i < nestedWidgetSectionsArray.length; i++) {
+						nestedWidgetSectionsArray[i] =
+							NestedWidgetSectionSerDes.toDTO(
+								(String)jsonParserFieldValues[i]);
+					}
+
+					widgetPageWidgetInstance.setNestedWidgetSections(
+						nestedWidgetSectionsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "parentSectionId")) {

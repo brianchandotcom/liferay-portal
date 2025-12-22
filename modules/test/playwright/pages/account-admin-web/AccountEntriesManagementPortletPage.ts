@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import {CommerceLayoutsPage} from '../commerce/commerce-order-content-web/commerceLayoutsPage';
 import {searchTableRowByValue} from '../users-admin-web/UsersAndOrganizationsPage';
@@ -106,9 +106,19 @@ export class AccountEntriesManagementPortletPage {
 		await this.searchInput.press('Enter');
 		await this.page.waitForTimeout(500);
 
-		await (await this.accountEntriesTableRowActions(accountName)).click();
+		const selectedCheck =
+			await this.accountEntriesTableRowSelectedCheck(accountName);
 
-		await this.selectAccountButton.click();
-		await this.page.waitForResponse((resp) => resp.status() === 200);
+		if (!(await selectedCheck.isVisible())) {
+			await expect(async () => {
+				await (
+					await this.accountEntriesTableRowActions(accountName)
+				).click();
+
+				await this.selectAccountButton.click({timeout: 1000});
+			}).toPass();
+
+			await this.page.waitForResponse((resp) => resp.status() === 200);
+		}
 	}
 }

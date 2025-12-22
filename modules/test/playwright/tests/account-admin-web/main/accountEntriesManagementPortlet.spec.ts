@@ -29,82 +29,94 @@ export const test = mergeTests(
 	usersAndOrganizationsPagesTest
 );
 
-test('LPD-28846 user can change selected accounts', async ({
-	accountEntriesManagementPortletPage,
-	apiHelpers,
-	commerceAdminChannelsPage,
-	page,
-}) => {
-	test.setTimeout(120000);
+test(
+	'User can change selected accounts',
+	{tag: ['@LPD-28846']},
+	async ({
+		accountEntriesManagementPortletPage,
+		apiHelpers,
+		commerceAdminChannelsPage,
+		page,
+	}) => {
+		test.setTimeout(120000);
 
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
-	});
+		const site = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
 
-	apiHelpers.data.push({id: site.id, type: 'site'});
+		apiHelpers.data.push({id: site.id, type: 'site'});
 
-	const layout = await apiHelpers.headlessDelivery.createSitePage({
-		pageDefinition: getPageDefinition([
-			getWidgetDefinition({
-				id: getRandomString(),
-				widgetName:
-					'com_liferay_account_admin_web_internal_portlet_AccountEntriesManagementPortlet',
-			}),
-		]),
-		siteId: site.id,
-		title: getRandomString(),
-	});
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_account_admin_web_internal_portlet_AccountEntriesManagementPortlet',
+				}),
+			]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
 
-	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		siteGroupId: site.id,
-	});
-	await commerceAdminChannelsPage.changeCommerceChannelSiteType(
-		channel.name,
-		'B2B'
-	);
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+		await commerceAdminChannelsPage.changeCommerceChannelSiteType(
+			channel.name,
+			'B2B'
+		);
 
-	const companyId = await page.evaluate(() => {
-		return Liferay.ThemeDisplay.getCompanyId();
-	});
+		const companyId = await page.evaluate(() => {
+			return Liferay.ThemeDisplay.getCompanyId();
+		});
 
-	const account1 = await apiHelpers.headlessAdminUser.postAccount({
-		name: 'account' + getRandomInt(),
-		type: 'business',
-	});
-	await apiHelpers.headlessAdminUser.postAccount({
-		name: 'account' + getRandomInt(),
-		type: 'business',
-	});
+		const account1 = await apiHelpers.headlessAdminUser.postAccount({
+			name: 'account' + getRandomInt(),
+			type: 'business',
+		});
+		await apiHelpers.headlessAdminUser.postAccount({
+			name: 'account' + getRandomInt(),
+			type: 'business',
+		});
 
-	const user = await apiHelpers.headlessAdminUser.postUserAccount();
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
 
-	const role = await apiHelpers.headlessAdminUser.postRole({
-		name: 'role' + getRandomInt(),
-		rolePermissions: [
-			{
-				actionIds: ['VIEW'],
-				primaryKey: companyId,
-				resourceName: 'com.liferay.account.model.AccountEntry',
-				scope: 1,
-			},
-		],
-	});
+		const role = await apiHelpers.headlessAdminUser.postRole({
+			name: 'role' + getRandomInt(),
+			rolePermissions: [
+				{
+					actionIds: ['VIEW'],
+					primaryKey: companyId,
+					resourceName: 'com.liferay.account.model.AccountEntry',
+					scope: 1,
+				},
+			],
+		});
 
-	await apiHelpers.headlessAdminUser.assignUserToRole(
-		role.externalReferenceCode,
-		user.id
-	);
+		await apiHelpers.headlessAdminUser.assignUserToRole(
+			role.externalReferenceCode,
+			user.id
+		);
 
-	await page.goto(
-		`/web/${site.name}/${layout.friendlyUrlPath}?doAsUserId=${user.id}`
-	);
-	await accountEntriesManagementPortletPage.selectAccount(account1.name);
+		await expect(async () => {
+			await page.goto(
+				`/web/${site.name}/${layout.friendlyUrlPath}?doAsUserId=${user.id}`
+			);
 
-	await page.reload();
+			await expect(
+				accountEntriesManagementPortletPage.searchInput
+			).toBeEnabled({timeout: 2000});
+		}).toPass();
 
-	await expect(
-		await accountEntriesManagementPortletPage.accountEntriesTableRowSelectedCheck(
-			account1.name
-		)
-	).toBeVisible();
-});
+		await accountEntriesManagementPortletPage.selectAccount(account1.name);
+
+		await page.reload();
+
+		await expect(
+			await accountEntriesManagementPortletPage.accountEntriesTableRowSelectedCheck(
+				account1.name
+			)
+		).toBeVisible();
+	}
+);

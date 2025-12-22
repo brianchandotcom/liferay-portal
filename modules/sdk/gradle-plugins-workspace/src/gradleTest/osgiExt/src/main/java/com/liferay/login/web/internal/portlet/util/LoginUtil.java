@@ -29,10 +29,10 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsUtil;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
@@ -188,13 +188,11 @@ public class LoginUtil {
 			HttpServletRequest httpServletRequest, long plid)
 		throws PortletModeException, WindowStateException {
 
-		String portletName = LoginPortletKeys.LOGIN;
-
 		PortletConfig portletConfig =
 			(PortletConfig)httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_CONFIG);
 
-		portletName = portletConfig.getPortletName();
+		String portletName = portletConfig.getPortletName();
 
 		if (!portletName.equals(LoginPortletKeys.CREATE_ACCOUNT) &&
 			!portletName.equals(LoginPortletKeys.LOGIN) &&

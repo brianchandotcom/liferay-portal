@@ -75,8 +75,8 @@ public class ListTypeDefinitionLocalServiceImpl
 		_validateName(nameMap, LocaleUtil.getSiteDefault());
 
 		ListTypeDefinition listTypeDefinition = _addListTypeDefinition(
-			externalReferenceCode, userId, nameMap,
-			WorkflowConstants.STATUS_APPROVED, system);
+			externalReferenceCode, userId, nameMap, system,
+			WorkflowConstants.STATUS_APPROVED);
 
 		_addOrUpdateListTypeEntries(
 			userId, listTypeDefinition.getListTypeDefinitionId(),
@@ -143,7 +143,7 @@ public class ListTypeDefinitionLocalServiceImpl
 				externalReferenceCode, userId,
 				Collections.singletonMap(
 					LocaleUtil.getDefault(), externalReferenceCode),
-				WorkflowConstants.STATUS_EMPTY, system),
+				system, WorkflowConstants.STATUS_EMPTY),
 			externalReferenceCode,
 			this::fetchListTypeDefinitionByExternalReferenceCode,
 			this::getListTypeDefinitionByExternalReferenceCode);
@@ -201,7 +201,7 @@ public class ListTypeDefinitionLocalServiceImpl
 
 	private ListTypeDefinition _addListTypeDefinition(
 			String externalReferenceCode, long userId,
-			Map<Locale, String> nameMap, int status, boolean system)
+			Map<Locale, String> nameMap, boolean system, int status)
 		throws PortalException {
 
 		ListTypeDefinition listTypeDefinition =

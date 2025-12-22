@@ -8,9 +8,11 @@ import {Locator, Page} from '@playwright/test';
 import {SystemSettingsPage} from '../../../../pages/configuration-admin-web/SystemSettingsPage';
 
 export class ExportImportStagingSystemSettingsPage {
+	readonly actionsButton: Locator;
 	readonly page: Page;
-	readonly systemSettingsPage: SystemSettingsPage;
+	readonly resetDefaultValuesOption: Locator;
 	readonly showAdvancedConfigurationByDefault: Locator;
+	readonly systemSettingsPage: SystemSettingsPage;
 
 	constructor(page: Page) {
 		this.page = page;
@@ -19,6 +21,15 @@ export class ExportImportStagingSystemSettingsPage {
 			this.systemSettingsPage.page.getByLabel(
 				'Show Advanced Staging Configuration by Default'
 			);
+		this.actionsButton = this.systemSettingsPage.page
+			.locator(
+				'[id="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_fm"]'
+			)
+			.getByRole('button')
+			.first();
+		this.resetDefaultValuesOption = this.page.getByRole('menuitem', {
+			name: 'Reset Default Values',
+		});
 	}
 
 	async goto() {
@@ -34,5 +45,10 @@ export class ExportImportStagingSystemSettingsPage {
 			checked
 		);
 		await this.systemSettingsPage.saveAndWaitForAlert();
+	}
+
+	async resetDefaultValues() {
+		await this.actionsButton.click();
+		await this.resetDefaultValuesOption.click();
 	}
 }

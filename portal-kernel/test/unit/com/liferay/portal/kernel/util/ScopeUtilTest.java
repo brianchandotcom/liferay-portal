@@ -71,9 +71,12 @@ public class ScopeUtilTest {
 		String scopeExternalReferenceCode = RandomTestUtil.randomString();
 
 		String[] inputs = {
-			null, group.getExternalReferenceCode(), scopeExternalReferenceCode
+			null, StringPool.BLANK, "null", group.getExternalReferenceCode(),
+			scopeExternalReferenceCode
 		};
-		String[] expectedOutputs = {null, null, scopeExternalReferenceCode};
+		String[] expectedOutputs = {
+			null, null, null, null, scopeExternalReferenceCode
+		};
 
 		for (int i = 0; i < inputs.length; i++) {
 			Assert.assertEquals(

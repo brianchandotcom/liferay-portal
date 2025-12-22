@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -54,11 +55,7 @@ import com.liferay.users.admin.item.selector.UserItemSelectorCriterion;
 import jakarta.portlet.ActionURL;
 import jakarta.portlet.ResourceURL;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
+import java.text.Format;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -546,13 +543,14 @@ public class ContentDashboardAdminDisplayContext {
 	}
 
 	public String toString(Date date) {
-		Instant instant = date.toInstant();
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
+		Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(
+			themeDisplay.getLocale(), themeDisplay.getTimeZone());
 
-		LocalDateTime localDateTime = zonedDateTime.toLocalDateTime();
-
-		return localDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+		return dateTimeFormat.format(date);
 	}
 
 	private Map<String, Object> _getContext() {

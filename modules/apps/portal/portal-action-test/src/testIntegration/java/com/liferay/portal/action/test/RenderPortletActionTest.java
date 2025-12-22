@@ -110,79 +110,84 @@ public class RenderPortletActionTest {
 					"jakarta.portlet.version", "3.0"
 				).build());
 
-		RenderPortletAction renderPortletAction = new RenderPortletAction();
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest(HttpMethods.GET, StringPool.BLANK) {
-
-				@Override
-				public RequestDispatcher getRequestDispatcher(String path) {
-					ServletContext servletContext = ServletContextPool.get(
-						StringPool.BLANK);
-
-					return servletContext.getRequestDispatcher(path);
-				}
-
-			};
-
-		mockHttpServletRequest.setAttribute(
-			WebKeys.CURRENT_URL, "http://localhost:8080");
-
-		Group group = GroupTestUtil.addGroup();
-
-		Layout layout = LayoutTestUtil.addTypePortletLayout(group.getGroupId());
-
-		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
-
-		mockHttpServletRequest.setAttribute(
-			WebKeys.RENDER_PORTLET,
-			_portletLocalService.getPortletById(
-				TestPropsValues.getCompanyId(), portletId));
-
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setCompany(
-			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
-		themeDisplay.setLayout(layout);
-
-		LayoutSet layoutSet = group.getPublicLayoutSet();
-
-		themeDisplay.setLayoutSet(layoutSet);
-
-		themeDisplay.setLayoutTypePortlet(
-			(LayoutTypePortlet)layout.getLayoutType());
-		themeDisplay.setLocale(LocaleUtil.getDefault());
-		themeDisplay.setLookAndFeel(
-			layoutSet.getTheme(), layoutSet.getColorScheme());
-
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
+		try {
+			RenderPortletAction renderPortletAction = new RenderPortletAction();
 
-		themeDisplay.setPermissionChecker(
-			PermissionThreadLocal.getPermissionChecker());
+			MockHttpServletRequest mockHttpServletRequest =
+				new MockHttpServletRequest(HttpMethods.GET, StringPool.BLANK) {
 
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
+					@Override
+					public RequestDispatcher getRequestDispatcher(String path) {
+						ServletContext servletContext = ServletContextPool.get(
+							StringPool.BLANK);
 
-		mockHttpServletRequest.setParameter(
-			"p_p_id", LayoutTestUtil.addPortletToLayout(layout, portletId));
+						return servletContext.getRequestDispatcher(path);
+					}
 
-		renderPortletAction.execute(
-			null, mockHttpServletRequest, new MockHttpServletResponse());
+				};
 
-		PermissionThreadLocal.setPermissionChecker(permissionChecker);
+			mockHttpServletRequest.setAttribute(
+				WebKeys.CURRENT_URL, "http://localhost:8080");
 
-		serviceRegistration.unregister();
+			Group group = GroupTestUtil.addGroup();
 
-		OutputData outputData = (OutputData)mockHttpServletRequest.getAttribute(
-			WebKeys.OUTPUT_DATA);
+			Layout layout = LayoutTestUtil.addTypePortletLayout(
+				group.getGroupId());
 
-		Assert.assertEquals(
-			StringPool.NEW_LINE + header,
-			String.valueOf(outputData.getMergedDataSB(WebKeys.PAGE_TOP)));
+			mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
+
+			mockHttpServletRequest.setAttribute(
+				WebKeys.RENDER_PORTLET,
+				_portletLocalService.getPortletById(
+					TestPropsValues.getCompanyId(), portletId));
+
+			ThemeDisplay themeDisplay = new ThemeDisplay();
+
+			themeDisplay.setCompany(
+				_companyLocalService.getCompany(
+					TestPropsValues.getCompanyId()));
+			themeDisplay.setLayout(layout);
+
+			LayoutSet layoutSet = group.getPublicLayoutSet();
+
+			themeDisplay.setLayoutSet(layoutSet);
+
+			themeDisplay.setLayoutTypePortlet(
+				(LayoutTypePortlet)layout.getLayoutType());
+			themeDisplay.setLocale(LocaleUtil.getDefault());
+			themeDisplay.setLookAndFeel(
+				layoutSet.getTheme(), layoutSet.getColorScheme());
+
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
+
+			themeDisplay.setPermissionChecker(
+				PermissionThreadLocal.getPermissionChecker());
+
+			mockHttpServletRequest.setAttribute(
+				WebKeys.THEME_DISPLAY, themeDisplay);
+
+			mockHttpServletRequest.setParameter(
+				"p_p_id", LayoutTestUtil.addPortletToLayout(layout, portletId));
+
+			renderPortletAction.execute(
+				null, mockHttpServletRequest, new MockHttpServletResponse());
+
+			OutputData outputData =
+				(OutputData)mockHttpServletRequest.getAttribute(
+					WebKeys.OUTPUT_DATA);
+
+			Assert.assertEquals(
+				StringPool.NEW_LINE + header,
+				String.valueOf(outputData.getMergedDataSB(WebKeys.PAGE_TOP)));
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+			serviceRegistration.unregister();
+		}
 	}
 
 	@Inject

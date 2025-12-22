@@ -44,7 +44,7 @@ public class ClientRegistrationMessageBodyReader
 
 	@Override
 	public boolean isReadable(
-		Class<?> clazz, Type genericType, Annotation[] annotations,
+		Class<?> clazz, Type type, Annotation[] annotations,
 		MediaType mediaType) {
 
 		return LiferayClientRegistration.class.isAssignableFrom(clazz);
@@ -52,7 +52,7 @@ public class ClientRegistrationMessageBodyReader
 
 	@Override
 	public LiferayClientRegistration readFrom(
-			Class<LiferayClientRegistration> clazz, Type genericType,
+			Class<LiferayClientRegistration> clazz, Type type,
 			Annotation[] annotations, MediaType mediaType,
 			MultivaluedMap<String, String> multivaluedMap,
 			InputStream inputStream)

@@ -1,474 +1,638 @@
 {
-  "configuration": {
-    "className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
-    "parameters": {
-      "containsHeaders": "true",
-      "createStrategy": "UPSERT",
-      "importStrategy": "ON_ERROR_FAIL",
-      "updateStrategy": "UPDATE"
-    },
-    "taskItemDelegateName": "DEFAULT"
-  },
-  "items": [
-    {
-      "enableComments": false,
-      "objectRelationships": [],
-      "objectFolderExternalReferenceCode": "C2K8_HUBSPOT",
-      "enableCategorization": true,
-      "accountEntryRestrictedObjectFieldName": "",
-      "className": "com.liferay.object.model.ObjectDefinition#A1V5",
-      "objectActions": [
-        {
-          "conditionExpression": "",
-          "objectActionExecutorKey": "function#liferay-hubspot-post-lead",
-          "errorMessage": {},
-          "active": true,
-          "description": "",
-          "label": {"en_US": "On create lead"},
-          "externalReferenceCode": "C2K8_ON_CREATE_LEAD",
-          "system": false,
-          "objectActionTriggerKey": "onAfterAdd",
-          "name": "onCreateLead",
-          "parameters": {},
-          "status": {"label_i18n": "Success", "code": 1, "label": "success"}
-        }
-      ],
-      "enableLocalization": false,
-      "accountEntryRestricted": false,
-      "externalReferenceCode": "C2K8_LEAD",
-      "objectFields": [
-        {
-          "indexed": true,
-          "localized": false,
-          "objectFieldSettings": [{"name": "showCounter", "value": false}],
-          "readOnly": "false",
-          "DBType": "String",
-          "label": {"en_US": "First Name"},
-          "type": "String",
-          "required": false,
-          "externalReferenceCode": "9907622c-cfc6-b05a-31f1-34751513be7a",
-          "indexedAsKeyword": false,
-          "system": false,
-          "indexedLanguageId": "en_US",
-          "unique": false,
-          "name": "firstName",
-          "state": false,
-          "businessType": "Text",
-          "readOnlyConditionExpression": ""
-        },
-        {
-          "indexed": true,
-          "localized": false,
-          "objectFieldSettings": [{"name": "showCounter", "value": false}],
-          "readOnly": "false",
-          "DBType": "String",
-          "label": {"en_US": "Last Name"},
-          "type": "String",
-          "required": false,
-          "externalReferenceCode": "b9336ff1-c782-d77c-df58-c9c0ddfa2d49",
-          "indexedAsKeyword": false,
-          "system": false,
-          "indexedLanguageId": "en_US",
-          "unique": false,
-          "name": "lastName",
-          "state": false,
-          "businessType": "Text",
-          "readOnlyConditionExpression": ""
-        },
-        {
-          "indexed": true,
-          "localized": false,
-          "objectFieldSettings": [{"name": "showCounter", "value": false}],
-          "readOnly": "false",
-          "DBType": "String",
-          "label": {"en_US": "Company Name"},
-          "type": "String",
-          "required": false,
-          "externalReferenceCode": "fd7c7f2d-d91b-3ccf-9292-192f9f45791e",
-          "indexedAsKeyword": false,
-          "system": false,
-          "indexedLanguageId": "en_US",
-          "unique": false,
-          "name": "companyName",
-          "state": false,
-          "businessType": "Text",
-          "readOnlyConditionExpression": ""
-        },
-        {
-          "indexed": true,
-          "localized": false,
-          "objectFieldSettings": [{"name": "showCounter", "value": false}],
-          "readOnly": "false",
-          "DBType": "String",
-          "label": {"en_US": "Website URL"},
-          "type": "String",
-          "required": false,
-          "externalReferenceCode": "5ec78cb8-2e01-c466-9685-0c134586ca04",
-          "indexedAsKeyword": false,
-          "system": false,
-          "indexedLanguageId": "en_US",
-          "unique": false,
-          "name": "websiteURL",
-          "state": false,
-          "businessType": "Text",
-          "readOnlyConditionExpression": ""
-        },
-        {
-          "indexed": true,
-          "localized": false,
-          "objectFieldSettings": [],
-          "readOnly": "false",
-          "DBType": "Long",
-          "label": {"en_US": "Number of Employees"},
-          "type": "Long",
-          "required": false,
-          "externalReferenceCode": "7eadd2ed-f78a-2c9b-c692-66ca65699b6b",
-          "indexedAsKeyword": false,
-          "system": false,
-          "indexedLanguageId": "",
-          "unique": false,
-          "name": "numberOfEmployees",
-          "state": false,
-          "businessType": "LongInteger",
-          "readOnlyConditionExpression": ""
-        },
-        {
-          "indexed": true,
-          "localized": false,
-          "objectFieldSettings": [{"name": "showCounter", "value": false}],
-          "readOnly": "false",
-          "DBType": "String",
-          "label": {"en_US": "Phone"},
-          "type": "String",
-          "required": false,
-          "externalReferenceCode": "3d945200-7901-4635-2308-82ed501e252e",
-          "indexedAsKeyword": false,
-          "system": false,
-          "indexedLanguageId": "en_US",
-          "unique": false,
-          "name": "phone",
-          "state": false,
-          "businessType": "Text",
-          "readOnlyConditionExpression": ""
-        },
-        {
-          "indexed": true,
-          "localized": false,
-          "objectFieldSettings": [{"name": "showCounter", "value": false}],
-          "readOnly": "false",
-          "DBType": "String",
-          "label": {"en_US": "Email"},
-          "type": "String",
-          "required": false,
-          "externalReferenceCode": "c1bb94bb-9231-c936-6f97-f2a59bd28315",
-          "indexedAsKeyword": false,
-          "system": false,
-          "indexedLanguageId": "en_US",
-          "unique": false,
-          "name": "email",
-          "state": false,
-          "businessType": "Text",
-          "readOnlyConditionExpression": ""
-        }
-      ],
-      "restContextPath": "/o/c/c2k8leads",
-      "scope": "company",
-      "portlet": true,
-      "modifiable": true,
-      "parameterRequired": false,
-      "enableObjectEntryHistory": false,
-      "titleObjectFieldName": "id",
-      "objectValidationRules": [],
-      "active": true,
-      "defaultLanguageId": "en_US",
-      "enableIndexSearch": true,
-      "label": {"en_US": "C2K8 Lead"},
-      "panelCategoryKey": "control_panel.object",
-      "pluralLabel": {"en_US": "C2K8 Leads"},
-      "system": false,
-      "objectDefinitionSettings": [],
-      "enableObjectEntryDraft": false,
-      "name": "C2K8Lead",
-      "actions": {
-        "permissions": {},
-        "get": {},
-        "update": {},
-        "delete": {},
-        "exportObjectDefinition": {}
-      },
-      "status": {"label_i18n": "Approved", "code": 0, "label": "approved"}
-    },
-    {
-      "enableComments": false,
-      "objectRelationships": [ {
-        "deletionType": "disassociate",
-        "externalReferenceCode": "C2K8_CONTACT_TO_C2K8_LEADS",
-        "label": {
-          "en_US": "C2K8 Contact to C2K8 Leads"
-        },
-        "name": "c2k8ContactToC2K8Leads",
-        "objectDefinitionExternalReferenceCode1": "C2K8_CONTACT",
-        "objectDefinitionExternalReferenceCode2": "C2K8_LEAD",
-        "type": "oneToMany"
-      }],
-      "objectFolderExternalReferenceCode": "C2K8_HUBSPOT",
-      "enableCategorization": true,
-      "accountEntryRestrictedObjectFieldName": "",
-      "className": "com.liferay.object.model.ObjectDefinition#A1V5",
-      "objectActions": [
-        {
-          "conditionExpression": "",
-          "objectActionExecutorKey": "function#liferay-hubspot-post-contact",
-          "errorMessage": {},
-          "active": true,
-          "description": "",
-          "label": {"en_US": "On create contact"},
-          "externalReferenceCode": "C2K8_ON_CREATE_CONTACT",
-          "system": false,
-          "objectActionTriggerKey": "onAfterAdd",
-          "name": "onCreateContact",
-          "parameters": {},
-          "status": {"label_i18n": "Success", "code": 1, "label": "success"}
-        }
-      ],
-      "enableLocalization": false,
-      "accountEntryRestricted": false,
-      "externalReferenceCode": "C2K8_CONTACT",
-      "objectFields": [
-        {
-          "indexed": true,
-          "localized": false,
-          "objectFieldSettings": [{"name": "showCounter", "value": false}],
-          "readOnly": "false",
-          "DBType": "String",
-          "label": {"en_US": "First Name"},
-          "type": "String",
-          "required": false,
-          "externalReferenceCode": "9907622c-cfc6-b05a-31f1-34751513be7b",
-          "indexedAsKeyword": false,
-          "system": false,
-          "indexedLanguageId": "en_US",
-          "unique": false,
-          "name": "firstName",
-          "state": false,
-          "businessType": "Text",
-          "readOnlyConditionExpression": ""
-        },
-        {
-          "indexed": true,
-          "localized": false,
-          "objectFieldSettings": [{"name": "showCounter", "value": false}],
-          "readOnly": "false",
-          "DBType": "String",
-          "label": {"en_US": "Last Name"},
-          "type": "String",
-          "required": false,
-          "externalReferenceCode": "b9336ff1-c782-d77c-df58-c9c0ddfa2d49",
-          "indexedAsKeyword": false,
-          "system": false,
-          "indexedLanguageId": "en_US",
-          "unique": false,
-          "name": "lastName",
-          "state": false,
-          "businessType": "Text",
-          "readOnlyConditionExpression": ""
-        },
-        {
-          "indexed": true,
-          "localized": false,
-          "objectFieldSettings": [{"name": "showCounter", "value": false}],
-          "readOnly": "false",
-          "DBType": "String",
-          "label": {"en_US": "Phone"},
-          "type": "String",
-          "required": false,
-          "externalReferenceCode": "3d945200-7901-4635-2308-82ed501e252e",
-          "indexedAsKeyword": false,
-          "system": false,
-          "indexedLanguageId": "en_US",
-          "unique": false,
-          "name": "phone",
-          "state": false,
-          "businessType": "Text",
-          "readOnlyConditionExpression": ""
-        },
-        {
-          "indexed": true,
-          "localized": false,
-          "objectFieldSettings": [{"name": "showCounter", "value": false}],
-          "readOnly": "false",
-          "DBType": "String",
-          "label": {"en_US": "Email"},
-          "type": "String",
-          "required": false,
-          "externalReferenceCode": "c1bb94bb-9231-c936-6f97-f2a59bd28315",
-          "indexedAsKeyword": false,
-          "system": false,
-          "indexedLanguageId": "en_US",
-          "unique": false,
-          "name": "email",
-          "state": false,
-          "businessType": "Text",
-          "readOnlyConditionExpression": ""
-        }
-      ],
-      "restContextPath": "/o/c/c2k8contacts",
-      "scope": "company",
-      "portlet": true,
-      "modifiable": true,
-      "parameterRequired": false,
-      "enableObjectEntryHistory": false,
-      "titleObjectFieldName": "id",
-      "objectValidationRules": [],
-      "active": true,
-      "defaultLanguageId": "en_US",
-      "enableIndexSearch": true,
-      "label": {"en_US": "C2K8 Contact"},
-      "panelCategoryKey": "control_panel.object",
-      "pluralLabel": {"en_US": "C2K8 Contacts"},
-      "system": false,
-      "objectDefinitionSettings": [],
-      "enableObjectEntryDraft": false,
-      "name": "C2K8Contact",
-      "actions": {
-        "permissions": {},
-        "get": {},
-        "update": {},
-        "delete": {},
-        "exportObjectDefinition": {}
-      },
-      "status": {"label_i18n": "Approved", "code": 0, "label": "approved"}
-    },
-    {
-      "enableComments": false,
-      "objectRelationships": [],
-      "objectFolderExternalReferenceCode": "C2K8_HUBSPOT",
-      "enableCategorization": true,
-      "accountEntryRestrictedObjectFieldName": "",
-      "className": "com.liferay.object.model.ObjectDefinition#A1V5",
-      "objectActions": [
-        {
-          "conditionExpression": "",
-          "objectActionExecutorKey": "function#liferay-hubspot-post-company",
-          "errorMessage": {},
-          "active": true,
-          "description": "",
-          "label": {"en_US": "On create company"},
-          "externalReferenceCode": "C2K8_ON_CREATE_COMPANY",
-          "system": false,
-          "objectActionTriggerKey": "onAfterAdd",
-          "name": "onCreateCompany",
-          "parameters": {},
-          "status": {"label_i18n": "Success", "code": 1, "label": "success"}
-        }
-      ],
-      "enableLocalization": false,
-      "accountEntryRestricted": false,
-      "externalReferenceCode": "C2K8_COMPANY",
-      "objectFields": [
-        {
-          "indexed": true,
-          "localized": false,
-          "objectFieldSettings": [{"name": "showCounter", "value": false}],
-          "readOnly": "false",
-          "DBType": "String",
-          "label": {"en_US": "Company Name"},
-          "type": "String",
-          "required": false,
-          "externalReferenceCode": "fd7c7f2d-d91b-3ccf-9292-192f9f45791e",
-          "indexedAsKeyword": false,
-          "system": false,
-          "indexedLanguageId": "en_US",
-          "unique": false,
-          "name": "companyName",
-          "state": false,
-          "businessType": "Text",
-          "readOnlyConditionExpression": ""
-        },
-        {
-          "indexed": true,
-          "localized": false,
-          "objectFieldSettings": [{"name": "showCounter", "value": false}],
-          "readOnly": "false",
-          "DBType": "String",
-          "label": {"en_US": "Website URL"},
-          "type": "String",
-          "required": false,
-          "externalReferenceCode": "5ec78cb8-2e01-c466-9685-0c134586ca04",
-          "indexedAsKeyword": false,
-          "system": false,
-          "indexedLanguageId": "en_US",
-          "unique": false,
-          "name": "websiteURL",
-          "state": false,
-          "businessType": "Text",
-          "readOnlyConditionExpression": ""
-        },
-        {
-          "indexed": true,
-          "localized": false,
-          "objectFieldSettings": [],
-          "readOnly": "false",
-          "DBType": "Long",
-          "label": {"en_US": "Number of Employees"},
-          "type": "Long",
-          "required": false,
-          "externalReferenceCode": "7eadd2ed-f78a-2c9b-c692-66ca65699b6b",
-          "indexedAsKeyword": false,
-          "system": false,
-          "indexedLanguageId": "",
-          "unique": false,
-          "name": "numberOfEmployees",
-          "state": false,
-          "businessType": "LongInteger",
-          "readOnlyConditionExpression": ""
-        },
-        {
-          "indexed": true,
-          "localized": false,
-          "objectFieldSettings": [{"name": "showCounter", "value": false}],
-          "readOnly": "false",
-          "DBType": "String",
-          "label": {"en_US": "Phone"},
-          "type": "String",
-          "required": false,
-          "externalReferenceCode": "3d945200-7901-4635-2308-82ed501e252e",
-          "indexedAsKeyword": false,
-          "system": false,
-          "indexedLanguageId": "en_US",
-          "unique": false,
-          "name": "phone",
-          "state": false,
-          "businessType": "Text",
-          "readOnlyConditionExpression": ""
-        }
-      ],
-      "restContextPath": "/o/c/c2k8companies",
-      "scope": "company",
-      "portlet": true,
-      "modifiable": true,
-      "parameterRequired": false,
-      "enableObjectEntryHistory": false,
-      "titleObjectFieldName": "id",
-      "objectValidationRules": [],
-      "active": true,
-      "defaultLanguageId": "en_US",
-      "enableIndexSearch": true,
-      "label": {"en_US": "C2K8 Company"},
-      "panelCategoryKey": "control_panel.object",
-      "pluralLabel": {"en_US": "C2K8 Companies"},
-      "system": false,
-      "objectDefinitionSettings": [],
-      "enableObjectEntryDraft": false,
-      "name": "C2K8Company",
-      "actions": {
-        "permissions": {},
-        "get": {},
-        "update": {},
-        "delete": {},
-        "exportObjectDefinition": {}
-      },
-      "status": {"label_i18n": "Approved", "code": 0, "label": "approved"}
-    }
-  ]
+	"configuration": {
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"importStrategy": "ON_ERROR_FAIL",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "DEFAULT"
+	},
+	"items": [
+		{
+			"accountEntryRestricted": false,
+			"accountEntryRestrictedObjectFieldName": "",
+			"actions": {
+				"delete": {
+				},
+				"exportObjectDefinition": {
+				},
+				"get": {
+				},
+				"permissions": {
+				},
+				"update": {
+				}
+			},
+			"active": true,
+			"enableCategorization": true,
+			"enableComments": false,
+			"enableIndexSearch": true,
+			"enableLocalization": false,
+			"enableObjectEntryDraft": false,
+			"enableObjectEntryHistory": false,
+			"externalReferenceCode": "C2K8_LEAD",
+			"label": {
+				"en_US": "C2K8 Lead"
+			},
+			"modifiable": true,
+			"name": "C2K8Lead",
+			"objectActions": [
+				{
+					"active": true,
+					"conditionExpression": "",
+					"description": "",
+					"errorMessage": {
+					},
+					"externalReferenceCode": "C2K8_ON_CREATE_LEAD",
+					"label": {
+						"en_US": "On create lead"
+					},
+					"name": "onCreateLead",
+					"objectActionExecutorKey": "function#liferay-hubspot-post-lead",
+					"objectActionTriggerKey": "onAfterAdd",
+					"parameters": {
+					},
+					"status": {
+						"code": 1,
+						"label": "success",
+						"label_i18n": "Success"
+					},
+					"system": false
+				}
+			],
+			"objectDefinitionSettings": [
+			],
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "9907622c-cfc6-b05a-31f1-34751513be7a",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "First Name"
+					},
+					"localized": false,
+					"name": "firstName",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": false
+						}
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "b9336ff1-c782-d77c-df58-c9c0ddfa2d49",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Last Name"
+					},
+					"localized": false,
+					"name": "lastName",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": false
+						}
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "fd7c7f2d-d91b-3ccf-9292-192f9f45791e",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Company Name"
+					},
+					"localized": false,
+					"name": "companyName",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": false
+						}
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "5ec78cb8-2e01-c466-9685-0c134586ca04",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Website URL"
+					},
+					"localized": false,
+					"name": "websiteURL",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": false
+						}
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"externalReferenceCode": "7eadd2ed-f78a-2c9b-c692-66ca65699b6b",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Number of Employees"
+					},
+					"localized": false,
+					"name": "numberOfEmployees",
+					"objectFieldSettings": [
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Long",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "3d945200-7901-4635-2308-82ed501e252e",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Phone"
+					},
+					"localized": false,
+					"name": "phone",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": false
+						}
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "c1bb94bb-9231-c936-6f97-f2a59bd28315",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Email"
+					},
+					"localized": false,
+					"name": "email",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": false
+						}
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String",
+					"unique": false
+				}
+			],
+			"objectFolderExternalReferenceCode": "C2K8_HUBSPOT",
+			"objectRelationships": [
+			],
+			"objectValidationRules": [
+			],
+			"panelCategoryKey": "control_panel.object",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "C2K8 Leads"
+			},
+			"portlet": true,
+			"restContextPath": "/o/c/c2k8leads",
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			},
+			"system": false,
+			"titleObjectFieldName": "id"
+		},
+		{
+			"accountEntryRestricted": false,
+			"accountEntryRestrictedObjectFieldName": "",
+			"actions": {
+				"delete": {
+				},
+				"exportObjectDefinition": {
+				},
+				"get": {
+				},
+				"permissions": {
+				},
+				"update": {
+				}
+			},
+			"active": true,
+			"enableCategorization": true,
+			"enableComments": false,
+			"enableIndexSearch": true,
+			"enableLocalization": false,
+			"enableObjectEntryDraft": false,
+			"enableObjectEntryHistory": false,
+			"externalReferenceCode": "C2K8_CONTACT",
+			"label": {
+				"en_US": "C2K8 Contact"
+			},
+			"modifiable": true,
+			"name": "C2K8Contact",
+			"objectActions": [
+				{
+					"active": true,
+					"conditionExpression": "",
+					"description": "",
+					"errorMessage": {
+					},
+					"externalReferenceCode": "C2K8_ON_CREATE_CONTACT",
+					"label": {
+						"en_US": "On create contact"
+					},
+					"name": "onCreateContact",
+					"objectActionExecutorKey": "function#liferay-hubspot-post-contact",
+					"objectActionTriggerKey": "onAfterAdd",
+					"parameters": {
+					},
+					"status": {
+						"code": 1,
+						"label": "success",
+						"label_i18n": "Success"
+					},
+					"system": false
+				}
+			],
+			"objectDefinitionSettings": [
+			],
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "9907622c-cfc6-b05a-31f1-34751513be7b",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "First Name"
+					},
+					"localized": false,
+					"name": "firstName",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": false
+						}
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "b9336ff1-c782-d77c-df58-c9c0ddfa2d49",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Last Name"
+					},
+					"localized": false,
+					"name": "lastName",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": false
+						}
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "3d945200-7901-4635-2308-82ed501e252e",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Phone"
+					},
+					"localized": false,
+					"name": "phone",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": false
+						}
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "c1bb94bb-9231-c936-6f97-f2a59bd28315",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Email"
+					},
+					"localized": false,
+					"name": "email",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": false
+						}
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String",
+					"unique": false
+				}
+			],
+			"objectFolderExternalReferenceCode": "C2K8_HUBSPOT",
+			"objectRelationships": [
+				{
+					"deletionType": "disassociate",
+					"externalReferenceCode": "C2K8_CONTACT_TO_C2K8_LEADS",
+					"label": {
+						"en_US": "C2K8 Contact to C2K8 Leads"
+					},
+					"name": "c2k8ContactToC2K8Leads",
+					"objectDefinitionExternalReferenceCode1": "C2K8_CONTACT",
+					"objectDefinitionExternalReferenceCode2": "C2K8_LEAD",
+					"type": "oneToMany"
+				}
+			],
+			"objectValidationRules": [
+			],
+			"panelCategoryKey": "control_panel.object",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "C2K8 Contacts"
+			},
+			"portlet": true,
+			"restContextPath": "/o/c/c2k8contacts",
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			},
+			"system": false,
+			"titleObjectFieldName": "id"
+		},
+		{
+			"accountEntryRestricted": false,
+			"accountEntryRestrictedObjectFieldName": "",
+			"actions": {
+				"delete": {
+				},
+				"exportObjectDefinition": {
+				},
+				"get": {
+				},
+				"permissions": {
+				},
+				"update": {
+				}
+			},
+			"active": true,
+			"enableCategorization": true,
+			"enableComments": false,
+			"enableIndexSearch": true,
+			"enableLocalization": false,
+			"enableObjectEntryDraft": false,
+			"enableObjectEntryHistory": false,
+			"externalReferenceCode": "C2K8_COMPANY",
+			"label": {
+				"en_US": "C2K8 Company"
+			},
+			"modifiable": true,
+			"name": "C2K8Company",
+			"objectActions": [
+				{
+					"active": true,
+					"conditionExpression": "",
+					"description": "",
+					"errorMessage": {
+					},
+					"externalReferenceCode": "C2K8_ON_CREATE_COMPANY",
+					"label": {
+						"en_US": "On create company"
+					},
+					"name": "onCreateCompany",
+					"objectActionExecutorKey": "function#liferay-hubspot-post-company",
+					"objectActionTriggerKey": "onAfterAdd",
+					"parameters": {
+					},
+					"status": {
+						"code": 1,
+						"label": "success",
+						"label_i18n": "Success"
+					},
+					"system": false
+				}
+			],
+			"objectDefinitionSettings": [
+			],
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "fd7c7f2d-d91b-3ccf-9292-192f9f45791e",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Company Name"
+					},
+					"localized": false,
+					"name": "companyName",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": false
+						}
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "5ec78cb8-2e01-c466-9685-0c134586ca04",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Website URL"
+					},
+					"localized": false,
+					"name": "websiteURL",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": false
+						}
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"externalReferenceCode": "7eadd2ed-f78a-2c9b-c692-66ca65699b6b",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Number of Employees"
+					},
+					"localized": false,
+					"name": "numberOfEmployees",
+					"objectFieldSettings": [
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Long",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "3d945200-7901-4635-2308-82ed501e252e",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Phone"
+					},
+					"localized": false,
+					"name": "phone",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": false
+						}
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String",
+					"unique": false
+				}
+			],
+			"objectFolderExternalReferenceCode": "C2K8_HUBSPOT",
+			"objectRelationships": [
+			],
+			"objectValidationRules": [
+			],
+			"panelCategoryKey": "control_panel.object",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "C2K8 Companies"
+			},
+			"portlet": true,
+			"restContextPath": "/o/c/c2k8companies",
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			},
+			"system": false,
+			"titleObjectFieldName": "id"
+		}
+	]
 }

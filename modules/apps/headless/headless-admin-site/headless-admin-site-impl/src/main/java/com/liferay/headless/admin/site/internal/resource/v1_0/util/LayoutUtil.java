@@ -1111,7 +1111,7 @@ public class LayoutUtil {
 
 		List<String> columns = layoutTypePortlet.getColumns();
 
-		if (widgetPageSections.length != columns.size()) {
+		if (widgetPageSections.length != layoutTypePortlet.getNumOfColumns()) {
 			throw new UnsupportedOperationException();
 		}
 

@@ -238,10 +238,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_objectDefinitionsMap.get(restContextPath),
 			_objectDefinitionLocalService, _objectEntryLocalService,
 			_objectEntryManagerRegistry, _objectFieldLocalService,
-			_objectRelationshipLocalService, _objectRelationshipService,
-			_objectScopeProviderRegistry,
-			_systemObjectDefinitionManagerRegistry, _translationManager,
-			_userLocalService);
+			_objectRelationshipLocalService, _objectScopeProviderRegistry,
+			_translationManager, _userLocalService);
 	}
 
 	private List<ServiceRegistration<?>> _deploy(

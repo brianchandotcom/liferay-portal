@@ -157,6 +157,7 @@ async function getFormFieldsSections(state: State) {
 			})) as ObjectFields;
 
 		const items = fields
+			.filter((field) => field.label === type.label)
 			.flatMap((field) => ('fields' in field ? field.fields : [field]))
 			.map((field) => {
 				return {

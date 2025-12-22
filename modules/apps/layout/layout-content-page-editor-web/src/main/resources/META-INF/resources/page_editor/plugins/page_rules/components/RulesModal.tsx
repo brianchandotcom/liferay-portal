@@ -16,9 +16,12 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
 	useRulesModal,
 	useRulesModalState,
+	useScriptError,
+	useScriptInputRef,
 	useTriggerRuleValidation,
 } from '../../../app/contexts/RulesModalContext';
 import {useDispatch} from '../../../app/contexts/StoreContext';
+import RulesService from '../../../app/services/RulesService';
 import addRule from '../../../app/thunks/addRule';
 import updateRule from '../../../app/thunks/updateRule';
 import {isAdvancedRule} from '../../../app/utils/isAdvancedRule';
@@ -42,15 +45,18 @@ export default function RulesModal() {
 
 	const [nameError, setNameError] = useState(false);
 	const [ruleErrors, setRuleErrors] = useState<RuleError[]>([]);
+	const {setScriptError} = useScriptError();
+	const scriptInputRef = useScriptInputRef();
 
 	const {observer, onClose} = useModal({
 		onClose: () => {
 			setRuleErrors([]);
+			setScriptError(null);
 			closeRulesModal();
 		},
 	});
 
-	const onSave = useCallback(() => {
+	const onSave = useCallback(async () => {
 		const errors: RuleError[] = [];
 
 		if (!editingRule.name) {
@@ -67,7 +73,40 @@ export default function RulesModal() {
 
 		let conditions: Condition[] = [];
 
-		if (!isAdvancedRule(editingRule)) {
+		// Validate advanced rule script first
+
+		if (isAdvancedRule(editingRule) && editingRule.script) {
+			try {
+				const result = await RulesService.validateScript(
+					editingRule.script
+				);
+
+				if (!result.valid) {
+					const message = Liferay.Language.get('syntax-error');
+
+					setScriptError(message);
+
+					if (scriptInputRef.current) {
+						errors.push({
+							element: scriptInputRef.current,
+							message,
+						});
+					}
+				}
+				else {
+					setScriptError(null);
+				}
+			}
+			catch {
+				openToast({
+					message: Liferay.Language.get(
+						'an-unexpected-error-occurred'
+					),
+					type: 'danger',
+				});
+			}
+		}
+		else {
 			conditions = editingRule.conditions!;
 		}
 
@@ -123,7 +162,14 @@ export default function RulesModal() {
 		}
 
 		onClose();
-	}, [dispatch, editingRule, onClose, triggerRuleValidation]);
+	}, [
+		dispatch,
+		editingRule,
+		onClose,
+		triggerRuleValidation,
+		scriptInputRef,
+		setScriptError,
+	]);
 
 	const title = editingRule.id
 		? Liferay.Language.get('edit-rule')

@@ -245,6 +245,7 @@ export interface Config {
 	updateRulesURL: string;
 	updateSegmentsExperiencePriorityURL: string;
 	updateSegmentsExperienceURL: string;
+	validateExpressionURL: string;
 	videoItemSelectorURL: string;
 	workflowEnabled: boolean;
 }

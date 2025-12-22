@@ -291,7 +291,7 @@ test(
 	{
 		tag: '@LPS-102208',
 	},
-	async ({apiHelpers, masterPagesPage, page, site}) => {
+	async ({apiHelpers, masterPagesPage, page, pagesAdminPage, site}) => {
 
 		// Add master page template
 
@@ -309,14 +309,7 @@ test(
 
 		await masterPagesPage.goto(site.friendlyUrlPath);
 
-		await clickAndExpectToBeVisible({
-			autoClick: false,
-			target: page.getByRole('menuitem', {name: 'Make a Copy'}),
-			trigger: page
-				.locator('.card-page-item')
-				.filter({hasText: masterName})
-				.getByLabel('More actions'),
-		});
+		await pagesAdminPage.clickNewButtonAndWaitForBlankTemplate();
 
 		await hoverAndExpectToBeVisible({
 			autoClick: true,

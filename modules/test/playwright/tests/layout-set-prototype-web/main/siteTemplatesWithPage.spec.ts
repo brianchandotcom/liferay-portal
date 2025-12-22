@@ -13,7 +13,6 @@ import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
 import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {sitesPageTest} from '../../../fixtures/sitesPageTest';
 import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import {reloadUntilVisible} from '../../../utils/reloadUntilVisible';
 import createSiteTemplate from './utils/createSiteTemplate';
@@ -65,13 +64,7 @@ test(
 		const pageName: string = 'Page-' + getRandomString();
 
 		await productMenuPage.goToPages();
-		const blankTemplateCard = page
-			.locator('.card-page-item')
-			.filter({hasText: 'Blank'});
-		await clickAndExpectToBeVisible({
-			target: blankTemplateCard,
-			trigger: pagesAdminPage.newButton,
-		});
+		await pagesAdminPage.clickNewButtonAndWaitForBlankTemplate();
 		await pagesAdminPage.addPage({
 			name: pageName,
 		});
@@ -226,13 +219,7 @@ test(
 		}).toPass();
 
 		const pageName = 'Test Page-' + getRandomString();
-		const blankTemplateCard = page
-			.locator('.card-page-item')
-			.filter({hasText: 'Blank'});
-		await clickAndExpectToBeVisible({
-			target: blankTemplateCard,
-			trigger: pagesAdminPage.newButton,
-		});
+		await pagesAdminPage.clickNewButtonAndWaitForBlankTemplate();
 		await pagesAdminPage.addPage({
 			name: pageName,
 		});

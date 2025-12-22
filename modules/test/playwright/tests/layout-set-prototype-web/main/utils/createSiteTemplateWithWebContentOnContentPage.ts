@@ -12,7 +12,6 @@ import {PagesAdminPage} from '../../../../pages/layout-admin-web/PagesAdminPage'
 import {PageEditorPage} from '../../../../pages/layout-content-page-editor-web/PageEditorPage';
 import {ProductMenuPage} from '../../../../pages/product-navigation-control-menu-web/ProductMenuPage';
 import {UIElementsPage} from '../../../../pages/uielements/UIElementsPage';
-import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import createSiteTemplate from './createSiteTemplate';
 
 export default async function createSiteTemplateWithWebContentOnContentPage({
@@ -48,13 +47,7 @@ export default async function createSiteTemplateWithWebContentOnContentPage({
 	});
 
 	await productMenuPage.goToPages();
-	const blankTemplateCard = page
-		.locator('.card-page-item')
-		.filter({hasText: 'Blank'});
-	await clickAndExpectToBeVisible({
-		target: blankTemplateCard,
-		trigger: pagesAdminPage.newButton,
-	});
+	await pagesAdminPage.clickNewButtonAndWaitForBlankTemplate();
 	await pagesAdminPage.addPage({
 		name: templateName,
 	});

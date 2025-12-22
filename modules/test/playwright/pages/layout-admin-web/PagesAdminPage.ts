@@ -295,6 +295,16 @@ export class PagesAdminPage {
 		});
 	}
 
+	async clickNewButtonAndWaitForBlankTemplate() {
+		const blankTemplateCard = this.page
+			.locator('.card-page-item')
+			.filter({hasText: 'Blank'});
+		await clickAndExpectToBeVisible({
+			target: blankTemplateCard,
+			trigger: this.newButton,
+		});
+	}
+
 	async clearThemeFaviconClientExtension({
 		layoutTitle,
 		siteUrl,

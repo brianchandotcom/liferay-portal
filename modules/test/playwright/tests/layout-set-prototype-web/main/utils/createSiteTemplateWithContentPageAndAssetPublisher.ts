@@ -39,13 +39,7 @@ export default async function createSiteTemplateWithContentPageAndAssetPublisher
 
 	await productMenuPage.goToPages();
 
-	const blankTemplateCard = page
-		.locator('.card-page-item')
-		.filter({hasText: 'Blank'});
-	await clickAndExpectToBeVisible({
-		target: blankTemplateCard,
-		trigger: pagesAdminPage.newButton,
-	});
+	await pagesAdminPage.clickNewButtonAndWaitForBlankTemplate();
 
 	await pagesAdminPage.addPage({
 		name: templateName,

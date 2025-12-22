@@ -21,6 +21,7 @@ import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
 import {webContentDisplayPageTest} from '../../../fixtures/webContentDisplayPageTest';
 import {LayoutSetPrototype} from '../../../helpers/json-web-services/JSONWebServicesLayoutSetPrototypeApiHelper';
 import {liferayConfig} from '../../../liferay.config';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getGlobalSiteId from '../../../utils/getGlobalSiteId';
 import getRandomString from '../../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
@@ -149,7 +150,13 @@ testWithPrivatePages(
 		await productMenuPage.openProductMenuIfClosed();
 
 		await productMenuPage.goToPages();
-		await pagesAdminPage.newButton.click();
+		const blankTemplateCard = page
+			.locator('.card-page-item')
+			.filter({hasText: 'Blank'});
+		await clickAndExpectToBeVisible({
+			target: blankTemplateCard,
+			trigger: pagesAdminPage.newButton,
+		});
 
 		const secondPageNameOnSiteTemplate = getRandomString();
 		await pagesAdminPage.addPage({

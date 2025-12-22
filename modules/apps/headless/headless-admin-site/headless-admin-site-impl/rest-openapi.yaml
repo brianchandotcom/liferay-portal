@@ -87,6 +87,13 @@ components:
                 justify:
                     enum: [Center, End, None, SpaceAround, SpaceBetween, Start]
                     type: string
+        BasicWidgetPageWidgetInstance:
+            allOf:
+                -   $ref: "#/components/schemas/WidgetPageWidgetInstance"
+            # @review
+            description:
+                A basic (non nested applications) widget instance in a widget page.
+            type: object
         CategoryFragmentConfigurationFieldValue:
             allOf:
                 -   $ref: "#/components/schemas/FragmentConfigurationFieldValue"
@@ -2435,6 +2442,21 @@ components:
                     enum: [SpecificFrame, NewTab]
                     type: string
             type: object
+        NestedApplicationsWidgetPageWidgetInstance:
+            allOf:
+                -   $ref: "#/components/schemas/WidgetPageWidgetInstance"
+                -   properties:
+                        nestedWidgetSections:
+                            # @review
+                            description:
+                                The sections of a nested applications widget instance.
+                            items:
+                                $ref: "#/components/schemas/NestedWidgetSection"
+                            type: array
+            # @review
+            description:
+                A nested applications widget instance in a widget page.
+            type: object
         NestedWidgetSection:
             # @review
             description:
@@ -4475,14 +4497,6 @@ components:
                             description:
                                 The external reference code of the widget instance.
                             type: string
-                        nestedWidgetSections:
-                            # @review
-                            description:
-                                The sections of a nested widget. Only available if this widget instance is a nested
-                                applications widget instance.
-                            items:
-                                $ref: "#/components/schemas/NestedWidgetSection"
-                            type: array
                         parentSectionId:
                             description:
                                 The section's ID of the widget page or the nested application widget instance this
@@ -4500,6 +4514,11 @@ components:
                                 the widget instance will be added at the last valid position.
                             minimum: 0
                             type: integer
+                        type:
+                            enum:
+                                -   BasicWidgetPageWidgetInstance
+                                -   NestedApplicationsWidgetPageWidgetInstance
+                            type: string
                         widgetLookAndFeelConfig:
                             $ref: "#/components/schemas/WidgetLookAndFeelConfig"
                             # @review
@@ -4508,6 +4527,11 @@ components:
             # @review
             description:
                 A widget instance in a widget page.
+            discriminator:
+                mapping:
+                    BasicWidgetPageWidgetInstance: "#/components/schemas/BasicWidgetPageWidgetInstance"
+                    NestedApplicationsWidgetPageWidgetInstance: "#/components/schemas/NestedApplicationsWidgetPageWidgetInstance"
+                propertyName: type
             type: object
 info:
     description:

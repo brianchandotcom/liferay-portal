@@ -109,7 +109,7 @@ public class ImportAndOverrideDataDefinitionMVCActionCommandTest
 			JournalTestUtil.addArticleWithXMLContent(
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0,
-				_read("journal_article_content.xml"),
+				_read("journal_article_content_with_repeatable_content.xml"),
 				dataDefinition.getDataDefinitionKey(), null, LocaleUtil.SPAIN,
 				null,
 				ServiceContextTestUtil.getServiceContext(

@@ -33,6 +33,19 @@ public class ScopeUtil {
 	}
 
 	public static String getItemScopeExternalReferenceCode(
+			long itemScopeGroupId, long scopeGroupId)
+		throws PortalException {
+
+		if ((itemScopeGroupId == 0) || (scopeGroupId == itemScopeGroupId)) {
+			return null;
+		}
+
+		Group group = GroupLocalServiceUtil.getGroup(itemScopeGroupId);
+
+		return group.getExternalReferenceCode();
+	}
+
+	public static String getItemScopeExternalReferenceCode(
 			String itemScopeExternalReferenceCode, long scopeGroupId)
 		throws PortalException {
 

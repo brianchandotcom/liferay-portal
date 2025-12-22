@@ -6,6 +6,10 @@
 package com.liferay.asset.categories.internal.search.spi.model.index.contributor;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyGroupRel;
+import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -13,6 +17,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.Portal;
@@ -20,6 +25,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.localization.SearchLocalizationHelper;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
+import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -80,6 +86,11 @@ public class AssetCategoryModelDocumentContributor
 		_searchLocalizationHelper.addLocalizedField(
 			document, Field.TITLE, siteDefaultLocale,
 			assetCategory.getTitleMap());
+
+		document.addKeyword(
+			"classNameIds", _getClassNameIds(assetCategory.getVocabularyId()));
+		document.addKeyword(
+			"groupIds", _getGroupIds(assetCategory.getVocabularyId()));
 
 		document.addLocalizedKeyword(
 			"localized_title",
@@ -152,6 +163,36 @@ public class AssetCategoryModelDocumentContributor
 				titlesArray);
 		}
 	}
+
+	private long[] _getClassNameIds(long vocabularyId) {
+		try {
+			AssetVocabulary assetVocabulary =
+				_assetVocabularyLocalService.getVocabulary(vocabularyId);
+
+			AssetVocabularySettingsHelper assetVocabularySettingsHelper =
+				new AssetVocabularySettingsHelper(
+					assetVocabulary.getSettings());
+
+			return assetVocabularySettingsHelper.getClassNameIds();
+		}
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
+		}
+	}
+
+	private long[] _getGroupIds(long vocabularyId) {
+		return ListUtil.toLongArray(
+			_assetVocabularyGroupRelLocalService.
+				getAssetVocabularyGroupRelsByVocabularyId(vocabularyId),
+			AssetVocabularyGroupRel::getGroupId);
+	}
+
+	@Reference
+	private AssetVocabularyGroupRelLocalService
+		_assetVocabularyGroupRelLocalService;
+
+	@Reference
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Reference
 	private Localization _localization;

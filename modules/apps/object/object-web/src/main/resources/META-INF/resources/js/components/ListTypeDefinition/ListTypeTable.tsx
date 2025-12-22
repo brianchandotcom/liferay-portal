@@ -151,7 +151,6 @@ export function getDataSetProps(
 		customDataRenderers: {
 			itemNameRenderer,
 		},
-		customViewsEnabled: false,
 		formName: 'fm',
 		id: 'com_liferay_object_web_internal_list_type_portlet_portlet_ListTypeDefinitionsPortlet-listTypeDefinitionItems',
 		itemsActions: [

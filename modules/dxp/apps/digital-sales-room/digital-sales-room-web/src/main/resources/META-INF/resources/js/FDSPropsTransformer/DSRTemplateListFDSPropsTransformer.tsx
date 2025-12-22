@@ -9,6 +9,7 @@ import {IInternalRenderer} from '@liferay/frontend-data-set-web';
 import {openModal} from 'frontend-js-components-web';
 
 import DSRTemplateInitializer from '../components/DSRTemplateInitializer';
+import deleteDSRAction from './actions/deleteDSRAction';
 import DSRRoomNameRenderer from './cell_renderers/DSRRoomNameRenderer';
 
 export default function propsTransformer({
@@ -65,5 +66,37 @@ export default function propsTransformer({
 			],
 		},
 		itemsActions,
+		onActionDropdownItemClick: ({
+			action,
+			event,
+			itemData,
+			loadData,
+		}: {
+			action: {
+				data: {
+					id: string;
+					permissionKey: string | null;
+				};
+			};
+			event: Event;
+			itemData: {
+				id: number;
+				name: string;
+			};
+			loadData: () => {};
+		}) => {
+			if (action?.data?.id === 'delete') {
+				event?.preventDefault();
+
+				deleteDSRAction({
+					groupId: itemData.id,
+					loadData,
+					model: 'room-template',
+					title: Liferay.Language.get(
+						'delete-digital-sales-room-template-confirmation-title'
+					),
+				});
+			}
+		},
 	};
 }

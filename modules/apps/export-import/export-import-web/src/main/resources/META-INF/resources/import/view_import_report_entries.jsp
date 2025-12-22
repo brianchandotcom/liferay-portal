@@ -31,7 +31,7 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 					navigationItem -> {
 						navigationItem.setActive(true);
 						navigationItem.setHref(currentURL);
-						navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "errors-report"));
+						navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "report-entries"));
 					});
 			}
 		}

@@ -39,7 +39,7 @@ public class ImportErrorsTableFDSView extends BaseTableFDSView {
 		).add(
 			"classExternalReferenceCode", "external-reference-code"
 		).add(
-			"type", "error"
+			"type", "type"
 		).add(
 			"errorMessage", "description"
 		).add(

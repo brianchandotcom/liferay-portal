@@ -91,7 +91,7 @@ test('Can see error report and details', async ({
 		})
 	).toBeVisible();
 
-	await exportImportPage.goToImportErrorDetails(
+	await exportImportPage.goToImportReportEntryDetails(
 		objectEntry.externalReferenceCode
 	);
 

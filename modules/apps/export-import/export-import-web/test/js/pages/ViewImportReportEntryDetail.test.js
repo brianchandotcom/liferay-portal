@@ -80,9 +80,9 @@ describe('ViewImportReportEntryDetail', () => {
 			})
 		);
 
-		expect(await screen.findByText('error-id')).toBeInTheDocument();
 		expect(await screen.findByText('error-message')).toBeInTheDocument();
 		expect(await screen.findByText('entity-id')).toBeInTheDocument();
+		expect(await screen.findByText('id')).toBeInTheDocument();
 
 		fireEvent.click(getByRole('button', {name: 'view-stack-trace'}));
 

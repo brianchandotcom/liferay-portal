@@ -141,26 +141,26 @@ export function ViewImportReportEntryDetail({
 
 						<ClayLayout.SheetSection className="mb-2">
 							<span className="sheet-subtitle text-secondary">
-								{Liferay.Language.get('error-details')}
+								{Liferay.Language.get('report-entry-details')}
 							</span>
 
 							<ClayLayout.Row>
 								<DetailViewDefinitionCol
+									body={modelName}
+									md={4}
+									title={Liferay.Language.get('entity-type')}
+								/>
+
+								<DetailViewDefinitionCol
 									body={id}
 									md={4}
-									title={Liferay.Language.get('error-id')}
+									title={Liferay.Language.get('id')}
 								/>
 
 								<DetailViewDefinitionCol
 									body={type.label}
 									md={4}
-									title={Liferay.Language.get('error-type')}
-								/>
-
-								<DetailViewDefinitionCol
-									body={modelName}
-									md={4}
-									title={Liferay.Language.get('entity-type')}
+									title={Liferay.Language.get('type')}
 								/>
 							</ClayLayout.Row>
 
@@ -208,17 +208,17 @@ export function ViewImportReportEntryDetail({
 
 							<ClayLayout.Row>
 								<DetailViewDefinitionCol
-									body={classPK}
-									md={6}
-									title={Liferay.Language.get('entity-id')}
-								/>
-
-								<DetailViewDefinitionCol
 									body={classExternalReferenceCode}
 									md={6}
 									title={Liferay.Language.get(
 										'external-reference-code'
 									)}
+								/>
+
+								<DetailViewDefinitionCol
+									body={classPK}
+									md={6}
+									title={Liferay.Language.get('id')}
 								/>
 							</ClayLayout.Row>
 

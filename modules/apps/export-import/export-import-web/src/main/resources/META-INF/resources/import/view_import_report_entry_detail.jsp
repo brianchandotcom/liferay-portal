@@ -13,7 +13,7 @@ String backURL = String.valueOf(renderResponse.createRenderURL());
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", backURL));
 portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
-renderResponse.setTitle(LanguageUtil.get(request, "error-details"));
+renderResponse.setTitle(LanguageUtil.get(request, "report-entry-details"));
 %>
 
 <div>
@@ -23,7 +23,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "error-details"));
 		module="{ViewImportReportEntryDetail} from exportimport-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
-				"apiURL", importReportEntriesDisplayContext.getReportEntryAPIURL(ParamUtil.getString(request, "errorId"))
+				"apiURL", importReportEntriesDisplayContext.getReportEntryAPIURL(ParamUtil.getString(request, "reportEntryId"))
 			).put(
 				"backURL", portletDisplay.getURLBack()
 			).build()

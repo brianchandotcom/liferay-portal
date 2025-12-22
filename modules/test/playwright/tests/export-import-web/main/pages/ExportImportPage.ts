@@ -460,13 +460,15 @@ export class ExportImportPage {
 		this.page.getByText('File Summary');
 	}
 
-	async goToImportErrorDetails(externalReferenceCode: string) {
+	async goToImportReportEntryDetails(externalReferenceCode: string) {
 		await this.page
 			.getByRole('row', {name: externalReferenceCode})
 			.getByLabel('view')
 			.click();
 
-		expect(this.page.getByText('Error Details').first()).toBeVisible();
+		expect(
+			this.page.getByText('Report Entry Details').first()
+		).toBeVisible();
 	}
 
 	async openExportReportEntriesModal(exportName) {

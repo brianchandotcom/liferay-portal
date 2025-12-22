@@ -52,13 +52,13 @@ public class ImportReportEntriesDisplayContext {
 		).setBackURL(
 			ParamUtil.getString(_httpServletRequest, "redirect")
 		).setParameter(
-			"errorId", "{id}"
+			"reportEntryId", "{id}"
 		).buildString();
 	}
 
-	public String getReportEntryAPIURL(String errorId) {
+	public String getReportEntryAPIURL(String reportEntryId) {
 		return StringBundler.concat(
-			"/o/export-import/v1.0/report-entry/", errorId,
+			"/o/export-import/v1.0/report-entry/", reportEntryId,
 			"?nestedFields=errorStacktrace,scope.label");
 	}
 

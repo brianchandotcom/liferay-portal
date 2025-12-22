@@ -80,7 +80,6 @@ import com.liferay.segments.service.SegmentsExperienceServiceUtil;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -1153,28 +1152,28 @@ public class LayoutUtil {
 				throw new UnsupportedOperationException();
 			}
 
-			List<SegmentsExperience> segmentsExperiences =
-				SegmentsExperienceServiceUtil.getSegmentsExperiences(
-					layout.getGroupId(), layout.getPlid(), true);
-
-			Map<String, SegmentsExperience> segmentsExperiencesMap =
+			Map<String, SegmentsExperience> originalSegmentsExperiencesMap =
 				new HashMap<>();
 
-			for (SegmentsExperience segmentsExperience : segmentsExperiences) {
-				segmentsExperiencesMap.put(
+			for (SegmentsExperience segmentsExperience :
+					SegmentsExperienceServiceUtil.getSegmentsExperiences(
+						layout.getGroupId(), layout.getPlid(), true)) {
+
+				originalSegmentsExperiencesMap.put(
 					segmentsExperience.getExternalReferenceCode(),
 					segmentsExperience);
 			}
 
-			List<String> externalReferenceCodes = new ArrayList<>();
+			Map<String, SegmentsExperience> actualSegmentsExperiencesMap =
+				new HashMap<>();
 
 			int minPriority = Integer.MIN_VALUE;
 
 			int priority;
 
 			for (PageExperience pageExperience : pageExperiences) {
-				SegmentsExperience segmentsExperience =
-					segmentsExperiencesMap.get(
+				SegmentsExperience oldSegmentsExperience =
+					originalSegmentsExperiencesMap.get(
 						pageExperience.getExternalReferenceCode());
 
 				if (!Objects.equals(
@@ -1187,28 +1186,33 @@ public class LayoutUtil {
 					priority = 0;
 				}
 
-				if (segmentsExperience == null) {
-					SegmentsExperienceUtil.addSegmentsExperience(
-						fragmentEntryProcessorRegistry, infoItemServiceRegistry,
-						layout, pageExperience, priority, serviceContext);
+				if (oldSegmentsExperience == null) {
+					actualSegmentsExperiencesMap.put(
+						pageExperience.getExternalReferenceCode(),
+						SegmentsExperienceUtil.addSegmentsExperience(
+							fragmentEntryProcessorRegistry,
+							infoItemServiceRegistry, layout, pageExperience,
+							priority, serviceContext));
 				}
 				else {
-					SegmentsExperienceUtil.updateSegmentsExperience(
-						fragmentEntryProcessorRegistry, infoItemServiceRegistry,
-						layout, pageExperience, priority, segmentsExperience,
-						serviceContext);
+					actualSegmentsExperiencesMap.put(
+						pageExperience.getExternalReferenceCode(),
+						SegmentsExperienceUtil.updateSegmentsExperience(
+							fragmentEntryProcessorRegistry,
+							infoItemServiceRegistry, layout, pageExperience,
+							priority, oldSegmentsExperience, serviceContext));
 				}
-
-				externalReferenceCodes.add(
-					pageExperience.getExternalReferenceCode());
 			}
 
-			for (SegmentsExperience segmentsExperience : segmentsExperiences) {
-				if (!externalReferenceCodes.contains(
-						segmentsExperience.getExternalReferenceCode())) {
+			for (SegmentsExperience originalSegmentsExperience :
+					originalSegmentsExperiencesMap.values()) {
+
+				if (!actualSegmentsExperiencesMap.containsKey(
+						originalSegmentsExperience.
+							getExternalReferenceCode())) {
 
 					SegmentsExperienceLocalServiceUtil.deleteSegmentsExperience(
-						segmentsExperience);
+						originalSegmentsExperience);
 				}
 			}
 		}

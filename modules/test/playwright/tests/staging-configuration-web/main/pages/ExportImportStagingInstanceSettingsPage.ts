@@ -6,6 +6,7 @@
 import {Locator, Page} from '@playwright/test';
 
 import {InstanceSettingsPage} from '../../../../pages/configuration-admin-web/InstanceSettingsPage';
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 
 export class ExportImportStagingInstanceSettingsPage {
 	readonly actionsButton: Locator;
@@ -48,7 +49,10 @@ export class ExportImportStagingInstanceSettingsPage {
 	}
 
 	async resetDefaultValues() {
-		await this.actionsButton.click();
-		await this.resetDefaultValuesOption.click();
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.resetDefaultValuesOption,
+			trigger: this.actionsButton,
+		});
 	}
 }

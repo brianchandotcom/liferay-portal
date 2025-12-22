@@ -131,9 +131,6 @@ public class RenderPortletActionTest {
 
 		Layout layout = LayoutTestUtil.addTypePortletLayout(group.getGroupId());
 
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
-
 		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
 
 		mockHttpServletRequest.setAttribute(
@@ -156,6 +153,10 @@ public class RenderPortletActionTest {
 		themeDisplay.setLocale(LocaleUtil.getDefault());
 		themeDisplay.setLookAndFeel(
 			layoutSet.getTheme(), layoutSet.getColorScheme());
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
+
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
 

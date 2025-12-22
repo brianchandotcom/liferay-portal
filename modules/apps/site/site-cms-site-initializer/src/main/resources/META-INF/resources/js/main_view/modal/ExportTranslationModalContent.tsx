@@ -158,21 +158,27 @@ export default function ExportTranslationModalContent({
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		return fetch(`/o/headless-object/v1.0/${itemId}/translations`, {
-			body: JSON.stringify({
-				sourceLanguageId,
-				targetLanguageIds: selectedTargetLanguageIds.join(','),
-				version: availableExportFileFormats
-					.find((format) => format.mimeType === exportMimeType)
-					?.displayName.split(' ')[1],
-			}),
-			headers: {
-				'Accept': 'application/zip',
-				'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
-				'Content-Type': 'application/json',
-			},
-			method: 'POST',
-		}).then(async (response) => {
+		const version = availableExportFileFormats
+			.find((format) => format.mimeType === exportMimeType)
+			?.displayName.split(' ')[1] as string;
+
+		const params = new URLSearchParams({
+			sourceLanguageId,
+			targetLanguageIds: selectedTargetLanguageIds.join(','),
+			version,
+		});
+
+		return fetch(
+			`/o/cms/basic-web-contents/${itemId}/translations?${params}`,
+			{
+				headers: {
+					'Accept': 'application/zip',
+					'Accept-Language':
+						Liferay.ThemeDisplay.getBCP47LanguageId(),
+					'Content-Type': 'application/json',
+				},
+			}
+		).then(async (response) => {
 			if (!response.ok) {
 				displayErrorToast();
 			}

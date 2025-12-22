@@ -8,11 +8,15 @@ package com.liferay.journal.web.internal.portlet.action.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinitionField;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
@@ -67,8 +71,17 @@ public class ImportDataDefinitionMVCActionCommandTest
 
 		String previousTextFieldName = "Text1";
 
-		Assert.assertNotEquals(
+		Assert.assertEquals(
 			previousTextFieldName, dataDefinitionFields[0].getName());
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			dataDefinition.getId());
+
+		DDMFormField ddmFormField = ddmStructure.getDDMFormField(
+			dataDefinitionFields[0].getName());
+
+		Assert.assertEquals(
+			previousTextFieldName, ddmFormField.getFieldReference());
 	}
 
 	@Test
@@ -259,7 +272,13 @@ public class ImportDataDefinitionMVCActionCommandTest
 				"importDataDefinitionErrorMessage"));
 	}
 
+	@Inject
+	private DDMStructureLocalService _ddmStructureLocalService;
+
 	@Inject(filter = "mvc.command.name=/journal/import_data_definition")
 	private MVCActionCommand _mvcActionCommand;
+
+	@Inject
+	private Portal _portal;
 
 }

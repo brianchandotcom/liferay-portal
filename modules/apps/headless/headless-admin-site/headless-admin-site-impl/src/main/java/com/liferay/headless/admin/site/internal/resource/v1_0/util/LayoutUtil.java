@@ -1152,6 +1152,8 @@ public class LayoutUtil {
 				throw new UnsupportedOperationException();
 			}
 
+			SegmentsExperienceUtil.validateSegmentsExperienceLayout(layout);
+
 			Map<String, SegmentsExperience> originalSegmentsExperiencesMap =
 				new HashMap<>();
 

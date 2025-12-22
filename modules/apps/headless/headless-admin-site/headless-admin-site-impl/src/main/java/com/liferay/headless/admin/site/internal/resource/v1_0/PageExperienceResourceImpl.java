@@ -229,6 +229,8 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 				LayoutServiceContextHelperUtil.getServiceContextAutoCloseable(
 					layout, contextUser)) {
 
+			SegmentsExperienceUtil.validateSegmentsExperienceLayout(layout);
+
 			return _toPageExperience(
 				SegmentsExperienceUtil.addSegmentsExperience(
 					_fragmentEntryProcessorRegistry, _infoItemServiceRegistry,

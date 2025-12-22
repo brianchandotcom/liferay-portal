@@ -43,18 +43,6 @@ public class SegmentsExperienceUtil {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) {
-			throw new UnsupportedOperationException();
-		}
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			LayoutPageTemplateEntryLocalServiceUtil.
-				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
-
-		if (layoutPageTemplateEntry != null) {
-			throw new UnsupportedOperationException();
-		}
-
 		SegmentsExperience segmentsExperience =
 			SegmentsExperienceServiceUtil.addSegmentsExperience(
 				pageExperience.getExternalReferenceCode(), layout.getGroupId(),
@@ -160,6 +148,20 @@ public class SegmentsExperienceUtil {
 		return updateSegmentsExperience(
 			fragmentEntryProcessorRegistry, infoItemServiceRegistry, layout,
 			pageExperience, priority, segmentsExperience, serviceContext);
+	}
+
+	public static void validateSegmentsExperienceLayout(Layout layout) {
+		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) {
+			throw new UnsupportedOperationException();
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateEntryLocalServiceUtil.
+				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
+
+		if (layoutPageTemplateEntry != null) {
+			throw new UnsupportedOperationException();
+		}
 	}
 
 	private static String _getData(

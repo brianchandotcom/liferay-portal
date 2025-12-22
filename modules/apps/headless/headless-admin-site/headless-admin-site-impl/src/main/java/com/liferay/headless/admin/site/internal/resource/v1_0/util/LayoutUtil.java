@@ -38,7 +38,9 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.layout.util.LayoutServiceContextHelperUtil;
+import com.liferay.layout.util.UpdateLayoutModifiedDateThreadLocal;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -1191,24 +1193,29 @@ public class LayoutUtil {
 		boolean layoutCustomizable = GetterUtil.getBoolean(
 			unicodeProperties.get(LayoutConstants.CUSTOMIZABLE_LAYOUT));
 
-		for (WidgetPageSection widgetPageSection : widgetPageSections) {
-			boolean customizable = GetterUtil.getBoolean(
-				unicodeProperties.get(
-					CustomizedPages.namespaceColumnId(
-						widgetPageSection.getId())));
+		try (SafeCloseable safeCloseable =
+				UpdateLayoutModifiedDateThreadLocal.
+					setUpdateLayoutModifiedDateWithSafeCloseable(false)) {
 
-			if (!columns.contains(widgetPageSection.getId()) ||
-				(!layoutCustomizable && customizable)) {
+			for (WidgetPageSection widgetPageSection : widgetPageSections) {
+				boolean customizable = GetterUtil.getBoolean(
+					unicodeProperties.get(
+						CustomizedPages.namespaceColumnId(
+							widgetPageSection.getId())));
 
-				throw new UnsupportedOperationException();
-			}
+				if (!columns.contains(widgetPageSection.getId()) ||
+					(!layoutCustomizable && customizable)) {
 
-			for (WidgetPageWidgetInstance widgetPageWidgetInstance :
-					widgetPageSection.getWidgetPageWidgetInstances()) {
+					throw new UnsupportedOperationException();
+				}
 
-				_processWidgetPageWidgetInstance(
-					layout, layoutTypePortlet, portletIds, serviceContext,
-					widgetPageWidgetInstance);
+				for (WidgetPageWidgetInstance widgetPageWidgetInstance :
+						widgetPageSection.getWidgetPageWidgetInstances()) {
+
+					_processWidgetPageWidgetInstance(
+						layout, layoutTypePortlet, portletIds, serviceContext,
+						widgetPageWidgetInstance);
+				}
 			}
 		}
 

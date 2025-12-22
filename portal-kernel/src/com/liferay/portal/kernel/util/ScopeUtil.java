@@ -14,18 +14,6 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
  */
 public class ScopeUtil {
 
-	public static Group getItemGroup(
-		long companyId, String itemScopeExternalReferenceCode,
-		long scopeGroupId) {
-
-		if (Validator.isNull(itemScopeExternalReferenceCode)) {
-			return GroupLocalServiceUtil.fetchGroup(scopeGroupId);
-		}
-
-		return GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
-			itemScopeExternalReferenceCode, companyId);
-	}
-
 	public static Long getItemGroupId(
 		long companyId, String itemScopeExternalReferenceCode,
 		long scopeGroupId) {

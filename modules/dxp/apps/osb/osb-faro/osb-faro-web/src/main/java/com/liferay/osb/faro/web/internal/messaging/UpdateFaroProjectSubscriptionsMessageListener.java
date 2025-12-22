@@ -165,14 +165,6 @@ public class UpdateFaroProjectSubscriptionsMessageListener
 			FaroSubscriptionDisplay faroSubscriptionDisplay =
 				new FaroSubscriptionDisplay(osbAccountEntry);
 
-			if (Objects.equals(
-					faroSubscriptionDisplay.getLastAnniversaryDate(), date)) {
-
-				_contactsEngineClient.updateBQProject(
-					faroProject,
-					faroSubscriptionDisplay.getLastAnniversaryDate());
-			}
-
 			try {
 				if (Objects.equals(
 						faroProject.getState(),
@@ -185,6 +177,15 @@ public class UpdateFaroProjectSubscriptionsMessageListener
 
 				faroSubscriptionDisplay.setCounts(
 					faroProject, _faroProjectUsageLocalService);
+
+				if (Objects.equals(
+						faroSubscriptionDisplay.getLastAnniversaryDate(),
+						date)) {
+
+					_contactsEngineClient.updateBQProject(
+						faroProject,
+						faroSubscriptionDisplay.getLastAnniversaryDate());
+				}
 
 				_faroProjectLocalService.updateSubscription(
 					faroProject.getFaroProjectId(),

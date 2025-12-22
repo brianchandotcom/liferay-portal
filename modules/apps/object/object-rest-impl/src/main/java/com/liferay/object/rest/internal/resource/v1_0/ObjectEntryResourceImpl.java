@@ -28,8 +28,6 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
-import com.liferay.object.service.ObjectRelationshipService;
-import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.object.tree.Edge;
 import com.liferay.object.tree.Node;
 import com.liferay.object.tree.ObjectDefinitionTreeFactory;
@@ -37,7 +35,6 @@ import com.liferay.object.tree.Tree;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.events.ThemeServicePreAction;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
@@ -112,10 +109,7 @@ public class ObjectEntryResourceImpl
 		ObjectEntryManagerRegistry objectEntryManagerRegistry,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
-		ObjectRelationshipService objectRelationshipService,
 		ObjectScopeProviderRegistry objectScopeProviderRegistry,
-		SystemObjectDefinitionManagerRegistry
-			systemObjectDefinitionManagerRegistry,
 		TranslationManager translationManager,
 		UserLocalService userLocalService) {
 
@@ -128,10 +122,7 @@ public class ObjectEntryResourceImpl
 		_objectEntryManagerRegistry = objectEntryManagerRegistry;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
-		_objectRelationshipService = objectRelationshipService;
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;
-		_systemObjectDefinitionManagerRegistry =
-			systemObjectDefinitionManagerRegistry;
 		_translationManager = translationManager;
 		_userLocalService = userLocalService;
 	}
@@ -1756,10 +1747,7 @@ public class ObjectEntryResourceImpl
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;
-	private final ObjectRelationshipService _objectRelationshipService;
 	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;
-	private final SystemObjectDefinitionManagerRegistry
-		_systemObjectDefinitionManagerRegistry;
 	private final TranslationManager _translationManager;
 	private final UserLocalService _userLocalService;
 

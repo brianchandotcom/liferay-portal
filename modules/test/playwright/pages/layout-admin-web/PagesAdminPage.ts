@@ -19,6 +19,7 @@ export class PagesAdminPage {
 	readonly defineCustomThemeRadio: Locator;
 	readonly newButton: Locator;
 	readonly newTemplatePageButton: Locator;
+	readonly addPageModal: Locator;
 
 	private readonly configurationSaveButton: Locator;
 	private readonly javaScriptClientExtensionsTab: Locator;
@@ -33,6 +34,7 @@ export class PagesAdminPage {
 		const addPageIFrame = page.frameLocator(
 			'iframe[id="addLayoutDialog_iframe_"]'
 		);
+		this.addPageModal = page.locator('[id^="addLayoutDialog"]');
 		this.addButton = addPageIFrame.getByRole('button', {name: 'Add'});
 		this.configurationSaveButton = page.getByRole('button', {
 			exact: true,
@@ -151,10 +153,12 @@ export class PagesAdminPage {
 		name: string;
 		template?: string;
 	}) {
-		await this.page
-			.locator('.card-page-item')
-			.filter({hasText: template})
-			.click();
+		await clickAndExpectToBeVisible({
+			target: this.addPageModal,
+			trigger: this.page
+				.locator('.card-page-item')
+				.filter({hasText: template}),
+		});
 
 		await this.pageTitleBox.waitFor();
 

@@ -67,70 +67,6 @@ export const testFlagsEnabled = mergeTests(
 );
 
 test(
-	'Verify there is advanced staging configuration checkbox with description in Instance Setting,the configuration checkbox can be enabled',
-	{tag: ['@LPS-189238']},
-	async ({
-		apiHelpers,
-		exportImportStagingInstanceSettingsPage,
-		page,
-		portletPublishToLivePage,
-	}) => {
-		const site = await apiHelpers.headlessSite.createSite({
-			name: getRandomString(),
-		});
-
-		apiHelpers.data.push({id: site.id, type: 'site'});
-
-		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
-			groupId: site.id,
-			options: {type: 'content'},
-			title: getRandomString(),
-		});
-
-		await exportImportStagingInstanceSettingsPage.goto();
-		await exportImportStagingInstanceSettingsPage.checkConfigurationOption({
-			checked: true,
-			label: 'Show Advanced Staging Configuration by Default',
-		});
-
-		try {
-			await exportImportStagingInstanceSettingsPage.instanceSettingsPage.saveAndWaitForAlert();
-
-			await enableLocalStaging(apiHelpers, page, site);
-
-			const stagingSite =
-				await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath(
-					`${site.friendlyUrlPath}-staging`
-				);
-
-			await page.goto(
-				`/web${stagingSite.friendlyUrlPath}${layout.friendlyURL}`
-			);
-			await reloadUntilVisible({
-				myLocator: portletPublishToLivePage.publishToLiveButton,
-				page,
-			});
-			await portletPublishToLivePage.publishToLiveButton.click();
-
-			await expect(
-				portletPublishToLivePage.publishToLiveIframe.getByRole('link', {
-					name: 'Switch to Simple Publish Process',
-				})
-			).toBeVisible();
-		}
-		finally {
-			await exportImportStagingInstanceSettingsPage.goto();
-			await exportImportStagingInstanceSettingsPage.checkConfigurationOption(
-				{
-					checked: false,
-					label: 'Show Advanced Staging Configuration by Default',
-				}
-			);
-		}
-	}
-);
-
-test(
 	'Verify there is advanced staging configuration checkbox with description in System Setting,the configuration checkbox can be enabled',
 	{tag: ['@LPS-189238']},
 	async ({
@@ -198,6 +134,70 @@ test(
 			await exportImportStagingSystemSettingsPage.goto();
 			await exportImportStagingSystemSettingsPage.checkShowAdvancedStagingConfiguration(
 				false
+			);
+		}
+	}
+);
+
+test(
+	'Verify there is advanced staging configuration checkbox with description in Instance Setting,the configuration checkbox can be enabled',
+	{tag: ['@LPS-189238']},
+	async ({
+		apiHelpers,
+		exportImportStagingInstanceSettingsPage,
+		page,
+		portletPublishToLivePage,
+	}) => {
+		const site = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			options: {type: 'content'},
+			title: getRandomString(),
+		});
+
+		await exportImportStagingInstanceSettingsPage.goto();
+		await exportImportStagingInstanceSettingsPage.checkConfigurationOption({
+			checked: true,
+			label: 'Show Advanced Staging Configuration by Default',
+		});
+
+		try {
+			await exportImportStagingInstanceSettingsPage.instanceSettingsPage.saveAndWaitForAlert();
+
+			await enableLocalStaging(apiHelpers, page, site);
+
+			const stagingSite =
+				await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath(
+					`${site.friendlyUrlPath}-staging`
+				);
+
+			await page.goto(
+				`/web${stagingSite.friendlyUrlPath}${layout.friendlyURL}`
+			);
+			await reloadUntilVisible({
+				myLocator: portletPublishToLivePage.publishToLiveButton,
+				page,
+			});
+			await portletPublishToLivePage.publishToLiveButton.click();
+
+			await expect(
+				portletPublishToLivePage.publishToLiveIframe.getByRole('link', {
+					name: 'Switch to Simple Publish Process',
+				})
+			).toBeVisible();
+		}
+		finally {
+			await exportImportStagingInstanceSettingsPage.goto();
+			await exportImportStagingInstanceSettingsPage.checkConfigurationOption(
+				{
+					checked: false,
+					label: 'Show Advanced Staging Configuration by Default',
+				}
 			);
 		}
 	}

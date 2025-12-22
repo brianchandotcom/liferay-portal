@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -60,6 +61,7 @@ import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.UniqueUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.subscription.service.SubscriptionLocalService;
 import com.liferay.trash.exception.RestoreEntryException;
 import com.liferay.trash.exception.TrashEntryException;
@@ -230,6 +232,11 @@ public class ObjectEntryFolderLocalServiceImpl
 
 		_assetEntryLocalService.deleteEntry(
 			ObjectEntryFolder.class.getName(),
+			objectEntryFolder.getObjectEntryFolderId());
+
+		_sharingEntryLocalService.deleteSharingEntries(
+			_classNameLocalService.getClassNameId(
+				ObjectEntryFolder.class.getName()),
 			objectEntryFolder.getObjectEntryFolderId());
 
 		if (FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
@@ -1055,6 +1062,9 @@ public class ObjectEntryFolderLocalServiceImpl
 	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private EmptyModelManager _emptyModelManager;
 
 	@Reference
@@ -1071,6 +1081,9 @@ public class ObjectEntryFolderLocalServiceImpl
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private SharingEntryLocalService _sharingEntryLocalService;
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;

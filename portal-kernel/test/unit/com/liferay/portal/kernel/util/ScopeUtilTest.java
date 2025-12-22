@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -39,7 +40,7 @@ public class ScopeUtilTest {
 		);
 
 		String[] inputs = {
-			null, "", "null", group.getExternalReferenceCode(),
+			null, StringPool.BLANK, "null", group.getExternalReferenceCode(),
 			RandomTestUtil.randomString()
 		};
 

@@ -47,6 +47,8 @@ definition {
 
 	@priority = 4
 	test AssertSearchInsightsExplain {
+		property browser.chrome.version = "139.0";
+
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
 			groupName = "Guest",

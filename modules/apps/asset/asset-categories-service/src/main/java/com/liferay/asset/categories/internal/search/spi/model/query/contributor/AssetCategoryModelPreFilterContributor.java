@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.MissingFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
@@ -31,6 +32,49 @@ public class AssetCategoryModelPreFilterContributor
 	public void contribute(
 		BooleanFilter booleanFilter, ModelSearchSettings modelSearchSettings,
 		SearchContext searchContext) {
+
+		long[] classNameIds = (long[])searchContext.getAttribute(
+			"classNameIds");
+
+		if (ArrayUtil.isNotEmpty(classNameIds)) {
+			BooleanFilter classNameIdsBooleanFilter = new BooleanFilter();
+
+			for (long classNameId : classNameIds) {
+				TermsFilter classNameIdsTermsFilter = new TermsFilter(
+					"classNameIds");
+
+				classNameIdsTermsFilter.addValues(String.valueOf(classNameId));
+
+				classNameIdsBooleanFilter.add(
+					classNameIdsTermsFilter, BooleanClauseOccur.SHOULD);
+			}
+
+			classNameIdsBooleanFilter.add(
+				new MissingFilter("classNameIds"), BooleanClauseOccur.SHOULD);
+
+			booleanFilter.add(
+				classNameIdsBooleanFilter, BooleanClauseOccur.MUST);
+		}
+
+		long[] groupIds = (long[])searchContext.getAttribute("groupIds");
+
+		if (ArrayUtil.isNotEmpty(groupIds)) {
+			BooleanFilter groupIdsBooleanFilter = new BooleanFilter();
+
+			for (long groupId : groupIds) {
+				TermsFilter termsFilter = new TermsFilter("groupIds");
+
+				termsFilter.addValues(String.valueOf(groupId));
+
+				groupIdsBooleanFilter.add(
+					termsFilter, BooleanClauseOccur.SHOULD);
+			}
+
+			if (groupIdsBooleanFilter.hasClauses()) {
+				booleanFilter.add(
+					groupIdsBooleanFilter, BooleanClauseOccur.MUST);
+			}
+		}
 
 		long[] parentCategoryIds = (long[])searchContext.getAttribute(
 			Field.ASSET_PARENT_CATEGORY_IDS);

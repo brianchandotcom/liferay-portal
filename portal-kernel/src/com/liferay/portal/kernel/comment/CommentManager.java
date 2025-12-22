@@ -110,6 +110,11 @@ public interface CommentManager {
 
 	public DiscussionStagingHandler getDiscussionStagingHandler();
 
+	public Comment getOrAddEmptyComment(
+			String externalReferenceCode, long userId, long groupId,
+			String className, long classPK)
+		throws PortalException;
+
 	/**
 	 * Returns a range of all the model's root comments matching the class name,
 	 * class primary key, and status. This count includes only direct comments

@@ -4,6 +4,7 @@
  */
 
 import {CodeEditor} from '@liferay/object-js-components-web';
+import {useId} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
@@ -13,6 +14,11 @@ import {
 	ObjectField,
 	ObjectFields,
 } from '../../../app/contexts/ObjectDataContext';
+import {
+	useRuleValidation,
+	useScriptError,
+	useScriptInputRef,
+} from '../../../app/contexts/RulesModalContext';
 import {useSelector} from '../../../app/contexts/StoreContext';
 import selectFormConfiguration from '../../../app/selectors/selectFormConfiguration';
 import selectLayoutDataItemLabel from '../../../app/selectors/selectLayoutDataItemLabel';
@@ -32,7 +38,15 @@ type Props = {
 };
 
 export default function AdvancedRuleEditor({onChange, value}: Props) {
+	const id = useId();
+
 	const state = useSelector((state: State) => state);
+
+	const [error, setError] = useState<string>('');
+	const {scriptError} = useScriptError();
+	const scriptInputRef = useScriptInputRef();
+
+	const editorRef = React.useRef<CodeMirror.Editor>(null);
 
 	const [codeEditorSidebarPanels, setCodeEditorSidebarPanels] = useState(
 		() => config.codeEditorSidebarPanels
@@ -77,13 +91,27 @@ export default function AdvancedRuleEditor({onChange, value}: Props) {
 		});
 	}, [state, segmentEntriesSection, rolesSection, usersSection]);
 
+	useRuleValidation(() => {
+		setError(scriptError || '');
+	});
+
 	return (
-		<CodeEditor
-			error=""
-			onChange={onChange}
-			sidebarElements={codeEditorSidebarPanels}
-			value={value}
-		/>
+		<div
+			id={id}
+			onFocus={() => {
+				editorRef.current?.focus();
+			}}
+			ref={scriptInputRef}
+			tabIndex={-1}
+		>
+			<CodeEditor
+				error={error}
+				onChange={onChange}
+				ref={editorRef}
+				sidebarElements={codeEditorSidebarPanels}
+				value={value}
+			/>
+		</div>
 	);
 }
 

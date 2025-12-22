@@ -22,7 +22,10 @@ import {useSelector} from './StoreContext';
 
 const RulesModalContext = React.createContext<{
 	editingRule: Rule;
+	scriptError: string | null;
+	scriptInputRef: React.MutableRefObject<HTMLInputElement | null>;
 	setEditingRule: Dispatch<SetStateAction<Rule>>;
+	setScriptError: Dispatch<SetStateAction<string | null>>;
 	setShouldValidate: Dispatch<SetStateAction<boolean>>;
 	setTrigger: Dispatch<SetStateAction<HTMLButtonElement | null>>;
 	setVisible: Dispatch<SetStateAction<boolean>>;
@@ -31,7 +34,10 @@ const RulesModalContext = React.createContext<{
 	visible: boolean;
 }>({
 	editingRule: getDefaultRule([]),
+	scriptError: null,
+	scriptInputRef: {current: null},
 	setEditingRule: () => {},
+	setScriptError: () => {},
 	setShouldValidate: () => false,
 	setTrigger: () => {},
 	setVisible: () => {},
@@ -47,12 +53,17 @@ function RulesModalContextProvider({children}: {children: ReactNode}) {
 	const [visible, setVisible] = useState<boolean>(false);
 	const [editingRule, setEditingRule] = useState<Rule>(getDefaultRule(rules));
 	const [trigger, setTrigger] = useState<HTMLButtonElement | null>(null);
+	const [scriptError, setScriptError] = useState<string | null>(null);
+	const scriptInputRef = React.useRef<HTMLInputElement | null>(null);
 
 	return (
 		<RulesModalContext.Provider
 			value={{
 				editingRule,
+				scriptError,
+				scriptInputRef,
 				setEditingRule,
+				setScriptError,
 				setShouldValidate,
 				setTrigger,
 				setVisible,
@@ -230,6 +241,18 @@ function useTriggerRuleValidation() {
 	return () => setShouldValidate(true);
 }
 
+function useScriptError() {
+	const {scriptError, setScriptError} = useContext(RulesModalContext);
+
+	return {scriptError, setScriptError};
+}
+
+function useScriptInputRef() {
+	const {scriptInputRef} = useContext(RulesModalContext);
+
+	return scriptInputRef;
+}
+
 function getDefaultRule(rules: Rule[]): Rule {
 	const nameIsUsed = (rules: Rule[], name: string) =>
 		rules.some((rule) => rule.name === name);
@@ -259,4 +282,6 @@ export {
 	useRulesModalState,
 	useRuleValidation,
 	useTriggerRuleValidation,
+	useScriptError,
+	useScriptInputRef,
 };

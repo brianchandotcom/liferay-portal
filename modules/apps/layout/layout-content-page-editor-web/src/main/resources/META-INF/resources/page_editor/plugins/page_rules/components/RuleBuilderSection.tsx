@@ -507,12 +507,14 @@ export function RuleBuilderConditionSection({
 						</ClayButton>
 					</>
 				) : (
-					<AdvancedRuleEditor
-						onChange={(value: string | undefined) => {
-							setRuleConditions({script: value || ''});
-						}}
-						value={script}
-					/>
+					<div>
+						<AdvancedRuleEditor
+							onChange={(value: string | undefined) => {
+								setRuleConditions({script: value || ''});
+							}}
+							value={script}
+						/>
+					</div>
 				)}
 			</ClayPanel.Body>
 		</ClayPanel>

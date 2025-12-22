@@ -89,6 +89,16 @@ function getUsers(): Promise<Array<{screenName: string; userId: string}>> {
 }
 
 /**
+ * Validate advanced rule script
+ */
+function validateScript(script: string): Promise<{valid: boolean}> {
+	return serviceFetch(config.validateExpressionURL, {
+		body: {expression: script},
+		method: 'POST',
+	});
+}
+
+/**
  * Update a rule with new name, actions and conditions
  */
 type UpdateRuleProps = {
@@ -159,4 +169,5 @@ export default {
 	getUsers,
 	updateRule,
 	updateRules,
+	validateScript,
 };

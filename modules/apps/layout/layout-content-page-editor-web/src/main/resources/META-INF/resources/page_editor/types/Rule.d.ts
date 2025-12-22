@@ -47,6 +47,6 @@ export type AdvancedRule = {
 export type Rule = BasicRule | AdvancedRule;
 
 export type RuleError = {
-	element: HTMLButtonElement | HTMLInputElement;
+	element: HTMLButtonElement | HTMLInputElement | HTMLElement;
 	message: string;
 };

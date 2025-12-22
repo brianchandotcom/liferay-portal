@@ -5,6 +5,7 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
+import {captureScreenshot} from '../../utils/captureScreenshot';
 import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {collapseSection} from '../../utils/collapseSection';
@@ -1982,5 +1983,54 @@ export class PageEditorPage {
 					.frameLocator('.page-editor__global-context-iframe')
 					.locator(`.lfr-layout-structure-item-topper-${fragmentId}`)
 					.first();
+	}
+
+	async captureScreenshot({
+		layoutName,
+		layoutOptions = {editMode: false},
+		mask = [],
+		name,
+		siteUrl,
+	}: {
+		layoutName: string;
+		layoutOptions?: {editMode?: boolean};
+		mask?: Locator[];
+		name: string;
+		siteUrl?: Site['friendlyUrlPath'];
+	}) {
+		const PAGE_EDITOR_SIDEBAR_WIDTH = 322;
+
+		let banner: Locator = this.page.locator('#banner .navbar-top');
+		const controlMenu: Locator = this.page.locator('.control-menu');
+
+		const {editMode} = layoutOptions;
+
+		await this.page.goto(
+			`/web${siteUrl || '/guest'}/${layoutName}?${editMode ? 'p_l_mode=edit' : ''}`
+		);
+
+		if (editMode) {
+			await this.page.waitForFunction((sidebarWidth) => {
+				const wrapper = document.querySelector('.page-editor__wrapper');
+
+				if (!wrapper) {
+					return false;
+				}
+
+				const paddingLeft = parseFloat(
+					getComputedStyle(wrapper).paddingLeft
+				);
+
+				return paddingLeft >= sidebarWidth;
+			}, PAGE_EDITOR_SIDEBAR_WIDTH);
+
+			banner = this.page.locator('#banner.page-editor__disabled-area');
+		}
+
+		return captureScreenshot({
+			mask: [...mask, banner, controlMenu],
+			name,
+			page: this.page,
+		});
 	}
 }

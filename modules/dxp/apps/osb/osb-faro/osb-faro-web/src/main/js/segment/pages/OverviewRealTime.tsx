@@ -4,6 +4,7 @@ import Card from 'shared/components/Card';
 import ClayLink from '@clayui/link';
 import CriteriaCard from 'segment/components/criteria-card';
 import Loading from 'shared/components/Loading';
+import MembershipMetrics from '../components/MembershipMetrics';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React, {useMemo, useState} from 'react';
 import SearchableEntityTable from 'shared/components/SearchableEntityTable';
@@ -263,6 +264,8 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 					timeZoneId={timeZoneId}
 				/>
 			</ReferencedObjectsProvider>
+
+			<MembershipMetrics />
 
 			<Card
 				className='segment-membership-root'

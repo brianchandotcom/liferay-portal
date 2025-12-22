@@ -81,6 +81,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PermissionService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -1402,6 +1403,9 @@ public class ObjectEntryDTOConverter
 
 		return new ObjectDefinitionBrief() {
 			{
+				setClassNameId(
+					() -> _classNameLocalService.getClassNameId(
+						objectDefinition.getClassName()));
 				setExternalReferenceCode(
 					objectDefinition::getExternalReferenceCode);
 				setLabel(() -> objectDefinition.getLabel(locale));
@@ -1662,6 +1666,9 @@ public class ObjectEntryDTOConverter
 
 	@Reference
 	private AuditEventLocalService _auditEventLocalService;
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

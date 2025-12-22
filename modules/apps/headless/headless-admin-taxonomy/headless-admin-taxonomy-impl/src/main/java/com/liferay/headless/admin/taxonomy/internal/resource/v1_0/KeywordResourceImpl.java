@@ -282,22 +282,8 @@ public class KeywordResourceImpl
 	public Keyword postSiteKeyword(Long siteId, Keyword keyword)
 		throws Exception {
 
-		AssetTag assetTag = _assetTagService.addTag(
-			keyword.getExternalReferenceCode(), siteId, keyword.getName(),
-			new ServiceContext());
-
-		Group group = _groupLocalService.getGroup(siteId);
-
-		if (FeatureFlagManagerUtil.isEnabled("LPD-17564") && group.isCMS() &&
-			ArrayUtil.isNotEmpty(keyword.getAssetLibraries())) {
-
-			_assetTagGroupRelLocalService.setAssetTagGroupRels(
-				assetTag.getTagId(),
-				TaxonomyGroupUtil.getAssetLibraryGroupIds(
-					keyword.getAssetLibraries()));
-		}
-
-		return _toKeyword(assetTag);
+		return _postSiteKeyword(
+			keyword.getExternalReferenceCode(), siteId, keyword);
 	}
 
 	@Override
@@ -316,10 +302,7 @@ public class KeywordResourceImpl
 					keyword.getName(), null));
 		}
 
-		return _toKeyword(
-			_assetTagService.addTag(
-				externalReferenceCode, assetLibraryId, keyword.getName(),
-				new ServiceContext()));
+		return _postSiteKeyword(externalReferenceCode, assetLibraryId, keyword);
 	}
 
 	@Override
@@ -390,10 +373,7 @@ public class KeywordResourceImpl
 					keyword.getName(), null));
 		}
 
-		return _toKeyword(
-			_assetTagService.addTag(
-				externalReferenceCode, siteId, keyword.getName(),
-				new ServiceContext()));
+		return _postSiteKeyword(externalReferenceCode, siteId, keyword);
 	}
 
 	@Override
@@ -496,6 +476,28 @@ public class KeywordResourceImpl
 		}
 
 		return _assetTagLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	private Keyword _postSiteKeyword(
+			String externalReferenceCode, Long siteId, Keyword keyword)
+		throws Exception {
+
+		AssetTag assetTag = _assetTagService.addTag(
+			externalReferenceCode, siteId, keyword.getName(),
+			new ServiceContext());
+
+		Group group = _groupLocalService.getGroup(siteId);
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-17564") && group.isCMS() &&
+			ArrayUtil.isNotEmpty(keyword.getAssetLibraries())) {
+
+			_assetTagGroupRelLocalService.setAssetTagGroupRels(
+				assetTag.getTagId(),
+				TaxonomyGroupUtil.getAssetLibraryGroupIds(
+					keyword.getAssetLibraries()));
+		}
+
+		return _toKeyword(assetTag);
 	}
 
 	private AssetTag _toAssetTag(Object[] assetTags) {

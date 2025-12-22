@@ -157,7 +157,7 @@ export class ProductMenuPage {
 				return;
 			}
 			catch (error) {
-if (attempt === 3) {
+				if (attempt === 3) {
 					throw error;
 				}
 			}

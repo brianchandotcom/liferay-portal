@@ -14,13 +14,14 @@
 
 		<div class="d-flex">
 			<div class="form-control form-control-tag-group input-group">
+				[#assign options=(input.attributes.options)![]]
+				[#assign values=((input.value!"")?has_content)?then((input.value?split(",")), [])]
+				[#assign loading=(options?size == 0)]
+
 				<div class="input-group-item">
 					<div class="input-group">
 						<div aria-hidden="true" class="d-contents input-group-item input-group-item-shrink input-group-prepend" id="${fragmentElementId}-label-container" role="grid">
-							[#assign options=(input.attributes.options)![]]
-							[#assign values=((input.value!"")?has_content)?then((input.value?split(",")), [])]
-
-							[#if (options?size == 0)]
+							[#if loading]
 								[#assign labels=((input.attributes.selectedOptionLabel!"")?has_content)?then((input.attributes.selectedOptionLabel?split(",")), [])]
 
 								[#list labels as label]

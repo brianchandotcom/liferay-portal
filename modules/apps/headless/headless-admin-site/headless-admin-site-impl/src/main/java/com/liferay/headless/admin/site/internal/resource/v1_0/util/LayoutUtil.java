@@ -11,6 +11,7 @@ import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
+import com.liferay.headless.admin.site.dto.v1_0.BasicWidgetPageWidgetInstance;
 import com.liferay.headless.admin.site.dto.v1_0.ClientExtension;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.FavIcon;
@@ -18,6 +19,7 @@ import com.liferay.headless.admin.site.dto.v1_0.FavIconClientExtension;
 import com.liferay.headless.admin.site.dto.v1_0.FavIconItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.GeneralConfig;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
+import com.liferay.headless.admin.site.dto.v1_0.NestedApplicationsWidgetPageWidgetInstance;
 import com.liferay.headless.admin.site.dto.v1_0.NestedWidgetSection;
 import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
@@ -831,8 +833,18 @@ public class LayoutUtil {
 
 		portletIds.remove(portletId);
 
+		if (widgetPageWidgetInstance instanceof BasicWidgetPageWidgetInstance) {
+			return;
+		}
+
+		NestedApplicationsWidgetPageWidgetInstance
+			nestedApplicationsWidgetPageWidgetInstance =
+				(NestedApplicationsWidgetPageWidgetInstance)
+					widgetPageWidgetInstance;
+
 		NestedWidgetSection[] nestedWidgetSections =
-			widgetPageWidgetInstance.getNestedWidgetSections();
+			nestedApplicationsWidgetPageWidgetInstance.
+				getNestedWidgetSections();
 
 		if (nestedWidgetSections == null) {
 			return;

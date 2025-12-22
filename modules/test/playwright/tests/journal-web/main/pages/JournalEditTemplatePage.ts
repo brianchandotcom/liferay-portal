@@ -82,10 +82,10 @@ export class JournalEditTemplatePage {
 			.click();
 
 		await this.selectorWindow
-			.getByRole('cell', {name: title})
-			.waitFor({state: 'visible'});
-		await this.selectorWindow.getByRole('cell', {name: title}).hover();
-		await this.selectorWindow.getByRole('cell', {name: title}).click();
+			.getByText(title, {
+				exact: true,
+			})
+			.click();
 	}
 
 	async saveTemplate() {

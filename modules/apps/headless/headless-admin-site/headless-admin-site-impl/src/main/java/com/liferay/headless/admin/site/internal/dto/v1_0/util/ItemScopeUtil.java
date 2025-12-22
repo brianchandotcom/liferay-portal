@@ -54,8 +54,8 @@ public class ItemScopeUtil {
 			return null;
 		}
 
-		Group group = ScopeUtil.getItemGroup(
-			companyId, itemGroupExternalReferenceCode, scopeGroupId);
+		Group group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+			itemGroupExternalReferenceCode, companyId);
 
 		if (group == null) {
 			return Scope.ofReference(

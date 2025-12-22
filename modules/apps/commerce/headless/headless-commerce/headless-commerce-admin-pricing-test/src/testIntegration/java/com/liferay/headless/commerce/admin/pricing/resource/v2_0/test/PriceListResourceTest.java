@@ -173,7 +173,8 @@ public class PriceListResourceTest extends BasePriceListResourceTestCase {
 				active = Boolean.TRUE;
 				author = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				catalogBasePriceList = Boolean.FALSE;
-				catalogExternalReferenceCode = _commerceCatalog.getExternalReferenceCode();
+				catalogExternalReferenceCode =
+					_commerceCatalog.getExternalReferenceCode();
 				catalogId = _commerceCatalog.getCommerceCatalogId();
 				catalogName = _commerceCatalog.getName();
 				createDate = RandomTestUtil.nextDate();

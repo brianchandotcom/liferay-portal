@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.admin.site.client.dto.v1_0.BasicWidgetPageWidgetInstance;
+import com.liferay.headless.admin.site.client.dto.v1_0.NestedApplicationsWidgetPageWidgetInstance;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageWidgetInstance;
 import com.liferay.headless.admin.site.client.http.HttpInvoker;
 import com.liferay.headless.admin.site.client.pagination.Page;
@@ -58,6 +60,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -480,6 +483,57 @@ public abstract class BaseWidgetPageWidgetInstanceResourceTestCase {
 		assertEquals(
 			randomWidgetPageWidgetInstance, postWidgetPageWidgetInstance);
 		assertValid(postWidgetPageWidgetInstance);
+
+		BasicWidgetPageWidgetInstance basicWidgetPageWidgetInstance =
+			new BasicWidgetPageWidgetInstance() {
+				{
+					externalReferenceCode = StringUtil.toLowerCase(
+						RandomTestUtil.randomString());
+					parentSectionId = StringUtil.toLowerCase(
+						RandomTestUtil.randomString());
+					parentWidgetInstanceExternalReferenceCode =
+						StringUtil.toLowerCase(RandomTestUtil.randomString());
+					position = RandomTestUtil.randomInt();
+					widgetInstanceId = StringUtil.toLowerCase(
+						RandomTestUtil.randomString());
+					widgetName = StringUtil.toLowerCase(
+						RandomTestUtil.randomString());
+
+					type = Type.create("BasicWidgetPageWidgetInstance");
+				}
+			};
+
+		assertEquals(
+			basicWidgetPageWidgetInstance,
+			testPostSiteSitePageWidgetInstance_addWidgetPageWidgetInstance(
+				basicWidgetPageWidgetInstance));
+
+		NestedApplicationsWidgetPageWidgetInstance
+			nestedApplicationsWidgetPageWidgetInstance =
+				new NestedApplicationsWidgetPageWidgetInstance() {
+					{
+						externalReferenceCode = StringUtil.toLowerCase(
+							RandomTestUtil.randomString());
+						parentSectionId = StringUtil.toLowerCase(
+							RandomTestUtil.randomString());
+						parentWidgetInstanceExternalReferenceCode =
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString());
+						position = RandomTestUtil.randomInt();
+						widgetInstanceId = StringUtil.toLowerCase(
+							RandomTestUtil.randomString());
+						widgetName = StringUtil.toLowerCase(
+							RandomTestUtil.randomString());
+
+						type = Type.create(
+							"NestedApplicationsWidgetPageWidgetInstance");
+					}
+				};
+
+		assertEquals(
+			nestedApplicationsWidgetPageWidgetInstance,
+			testPostSiteSitePageWidgetInstance_addWidgetPageWidgetInstance(
+				nestedApplicationsWidgetPageWidgetInstance));
 	}
 
 	protected WidgetPageWidgetInstance
@@ -666,18 +720,6 @@ public abstract class BaseWidgetPageWidgetInstanceResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals(
-					"nestedWidgetSections", additionalAssertFieldName)) {
-
-				if (widgetPageWidgetInstance.getNestedWidgetSections() ==
-						null) {
-
-					valid = false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("parentSectionId", additionalAssertFieldName)) {
 				if (widgetPageWidgetInstance.getParentSectionId() == null) {
 					valid = false;
@@ -702,6 +744,14 @@ public abstract class BaseWidgetPageWidgetInstanceResourceTestCase {
 
 			if (Objects.equals("position", additionalAssertFieldName)) {
 				if (widgetPageWidgetInstance.getPosition() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("type", additionalAssertFieldName)) {
+				if (widgetPageWidgetInstance.getType() == null) {
 					valid = false;
 				}
 
@@ -748,6 +798,25 @@ public abstract class BaseWidgetPageWidgetInstanceResourceTestCase {
 					"widgetPermissions", additionalAssertFieldName)) {
 
 				if (widgetPageWidgetInstance.getWidgetPermissions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"nestedWidgetSections", additionalAssertFieldName)) {
+
+				if (!(widgetPageWidgetInstance instanceof
+						NestedApplicationsWidgetPageWidgetInstance)) {
+
+					continue;
+				}
+
+				if (((NestedApplicationsWidgetPageWidgetInstance)
+						widgetPageWidgetInstance).getNestedWidgetSections() ==
+							null) {
+
 					valid = false;
 				}
 
@@ -890,19 +959,6 @@ public abstract class BaseWidgetPageWidgetInstanceResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals(
-					"nestedWidgetSections", additionalAssertFieldName)) {
-
-				if (!Objects.deepEquals(
-						widgetPageWidgetInstance1.getNestedWidgetSections(),
-						widgetPageWidgetInstance2.getNestedWidgetSections())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("parentSectionId", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						widgetPageWidgetInstance1.getParentSectionId(),
@@ -934,6 +990,17 @@ public abstract class BaseWidgetPageWidgetInstanceResourceTestCase {
 				if (!Objects.deepEquals(
 						widgetPageWidgetInstance1.getPosition(),
 						widgetPageWidgetInstance2.getPosition())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("type", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						widgetPageWidgetInstance1.getType(),
+						widgetPageWidgetInstance2.getType())) {
 
 					return false;
 				}
@@ -994,6 +1061,31 @@ public abstract class BaseWidgetPageWidgetInstanceResourceTestCase {
 				if (!Objects.deepEquals(
 						widgetPageWidgetInstance1.getWidgetPermissions(),
 						widgetPageWidgetInstance2.getWidgetPermissions())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"nestedWidgetSections", additionalAssertFieldName)) {
+
+				if (!(widgetPageWidgetInstance1 instanceof
+						NestedApplicationsWidgetPageWidgetInstance) ||
+					!(widgetPageWidgetInstance2 instanceof
+						NestedApplicationsWidgetPageWidgetInstance)) {
+
+					continue;
+				}
+
+				if (!Objects.deepEquals(
+						((NestedApplicationsWidgetPageWidgetInstance)
+							widgetPageWidgetInstance1).
+								getNestedWidgetSections(),
+						((NestedApplicationsWidgetPageWidgetInstance)
+							widgetPageWidgetInstance2).
+								getNestedWidgetSections())) {
 
 					return false;
 				}
@@ -1157,11 +1249,6 @@ public abstract class BaseWidgetPageWidgetInstanceResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("nestedWidgetSections")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("parentSectionId")) {
 			Object object = widgetPageWidgetInstance.getParentSectionId();
 
@@ -1262,6 +1349,11 @@ public abstract class BaseWidgetPageWidgetInstanceResourceTestCase {
 			sb.append(String.valueOf(widgetPageWidgetInstance.getPosition()));
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("type")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("widgetConfig")) {
@@ -1416,21 +1508,61 @@ public abstract class BaseWidgetPageWidgetInstanceResourceTestCase {
 	protected WidgetPageWidgetInstance randomWidgetPageWidgetInstance()
 		throws Exception {
 
-		return new WidgetPageWidgetInstance() {
-			{
-				externalReferenceCode = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				parentSectionId = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				parentWidgetInstanceExternalReferenceCode =
-					StringUtil.toLowerCase(RandomTestUtil.randomString());
-				position = RandomTestUtil.randomInt();
-				widgetInstanceId = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				widgetName = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-			}
-		};
+		List<Supplier<WidgetPageWidgetInstance>> suppliers = Arrays.asList(
+			() -> {
+				BasicWidgetPageWidgetInstance widgetPageWidgetInstance =
+					new BasicWidgetPageWidgetInstance();
+
+				widgetPageWidgetInstance.setExternalReferenceCode(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+				widgetPageWidgetInstance.setParentSectionId(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+				widgetPageWidgetInstance.
+					setParentWidgetInstanceExternalReferenceCode(
+						StringUtil.toLowerCase(RandomTestUtil.randomString()));
+				widgetPageWidgetInstance.setPosition(
+					RandomTestUtil.randomInt());
+				widgetPageWidgetInstance.setWidgetInstanceId(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+				widgetPageWidgetInstance.setWidgetName(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+
+				widgetPageWidgetInstance.setType(
+					WidgetPageWidgetInstance.Type.create(
+						"BasicWidgetPageWidgetInstance"));
+
+				return widgetPageWidgetInstance;
+			},
+			() -> {
+				NestedApplicationsWidgetPageWidgetInstance
+					widgetPageWidgetInstance =
+						new NestedApplicationsWidgetPageWidgetInstance();
+
+				widgetPageWidgetInstance.setExternalReferenceCode(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+				widgetPageWidgetInstance.setParentSectionId(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+				widgetPageWidgetInstance.
+					setParentWidgetInstanceExternalReferenceCode(
+						StringUtil.toLowerCase(RandomTestUtil.randomString()));
+				widgetPageWidgetInstance.setPosition(
+					RandomTestUtil.randomInt());
+				widgetPageWidgetInstance.setWidgetInstanceId(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+				widgetPageWidgetInstance.setWidgetName(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+
+				widgetPageWidgetInstance.setType(
+					WidgetPageWidgetInstance.Type.create(
+						"NestedApplicationsWidgetPageWidgetInstance"));
+
+				return widgetPageWidgetInstance;
+			});
+
+		Supplier<WidgetPageWidgetInstance> supplier = suppliers.get(
+			RandomTestUtil.randomInt(0, suppliers.size() - 1));
+
+		return supplier.get();
 	}
 
 	protected WidgetPageWidgetInstance

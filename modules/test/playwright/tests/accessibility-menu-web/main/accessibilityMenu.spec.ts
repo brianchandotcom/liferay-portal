@@ -10,6 +10,7 @@ import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
+import {doAndGoBack} from '../../../utils/doAndGoBack';
 import performLoginViaApi, {performLogout} from '../../../utils/performLogin';
 import {featureFlagPagesTest} from '../../feature-flag-web/main/fixtures/featureFlagPagesTest';
 
@@ -22,19 +23,67 @@ const test = mergeTests(
 	usersAndOrganizationsPagesTest
 );
 
-test('Verify that the default value is displayed when the user has never changed the accessibility setting, regardless of the login status', async ({
-	accessibilityMenuPage,
-	apiHelpers,
-	instanceSettingsPage,
-	page,
-}) => {
+test.beforeEach(async ({accessibilityMenuPage, instanceSettingsPage, page}) => {
+	await doAndGoBack(page, async () => {
+		await instanceSettingsPage.goToInstanceSetting(
+			'Accessibility',
+			'Accessibility Menu'
+		);
+
+		await accessibilityMenuPage.enableAccessibilityMenu();
+	});
+});
+
+test.afterEach(async ({instanceSettingsPage}) => {
 	await instanceSettingsPage.goToInstanceSetting(
 		'Accessibility',
 		'Accessibility Menu'
 	);
 
-	await accessibilityMenuPage.enableAccessibilityMenu();
+	await instanceSettingsPage.resetInstanceSetting();
+});
 
+test(
+	'Accessibility menu is accessible using the keyboard',
+	{tag: '@LPD-74263'},
+	async ({accessibilityMenuPage, page}) => {
+		const {closeButton, menuTitle, openAccessibilityMenuButton} =
+			accessibilityMenuPage;
+
+		await test.step('Open menu with keyboard', async () => {
+			await expect(menuTitle).toBeHidden();
+			await expect(openAccessibilityMenuButton).not.toBeFocused();
+
+			await page.keyboard.press('Tab');
+			await page.keyboard.press('Tab');
+
+			await expect(openAccessibilityMenuButton).toBeFocused();
+			await expect(openAccessibilityMenuButton).toBeVisible();
+
+			await page.keyboard.press('Enter');
+
+			await expect(menuTitle).toBeVisible();
+		});
+
+		await test.step('Close menu with keyboard', async () => {
+			await expect(closeButton).toBeVisible();
+
+			await page.keyboard.press('Tab');
+
+			await expect(closeButton).toBeFocused();
+
+			await page.keyboard.press('Enter');
+
+			await expect(menuTitle).toBeHidden();
+		});
+	}
+);
+
+test('Verify that the default value is displayed when the user has never changed the accessibility setting, regardless of the login status', async ({
+	accessibilityMenuPage,
+	apiHelpers,
+	page,
+}) => {
 	const userAccount = await apiHelpers.headlessAdminUser.postUserAccount();
 
 	try {

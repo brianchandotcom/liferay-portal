@@ -261,59 +261,5 @@ definition {
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
 	}
-
-	@description = "LPS-178192. Verifies accessibility menu quick link is keyboard focusable."
-	@priority = 5
-	test LinkIsKeyboardFocusable {
-		property portal.acceptance = "true";
-
-		task ("When press tab key from 'Skip to Content' link") {
-			AccessibilityMenu.goToAccessibilityMenuQuickLink();
-		}
-
-		task ("Then Accessibility Menu link is focusable") {
-			AssertElementFocused(
-				key_link = "Open Accessibility Menu",
-				locator1 = "AccessibilityMenu#QUICK_LINK");
-		}
-	}
-
-	@description = "LPS-178192. Verifies accessibility menu modal can be accessed by keyboard."
-	@priority = 5
-	test ModalIsKeyboardAccessible {
-		property portal.acceptance = "true";
-
-		task ("When Accessibility Menu is focused with keyboard") {
-			AccessibilityMenu.goToAccessibilityMenuQuickLink();
-		}
-
-		task ("And access Accessibility Menu link with 'Enter' key") {
-			KeyPress(
-				key_link = "Accessibility Menu",
-				locator1 = "AccessibilityMenu#QUICK_LINK",
-				value1 = "\ENTER");
-		}
-
-		task ("Then Accessibility Menu modal is present") {
-			AssertElementPresent(
-				key_modal_title = "Accessibility Menu",
-				locator1 = "AccessibilityMenu#MODAL_TITLE");
-		}
-
-		task ("And can navigate to a switch toggle with keyboard") {
-			KeyPress(
-				locator1 = "//body",
-				value1 = "\TAB");
-
-			KeyPress(
-				key_modalTitle = "Accessibility Menu",
-				locator1 = "Button#CLOSE_MODAL",
-				value1 = "\TAB");
-
-			AssertElementFocused(
-				checkboxName = "Underlined Links",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-		}
-	}
 	
 }

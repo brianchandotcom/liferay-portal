@@ -33,6 +33,14 @@ const clearButton = document.getElementById(
 	`${fragmentElementId}-clear-button`
 );
 
+// Util to remove loading elements
+
+function removeLoadingElements() {
+	loadingIndicator.remove();
+
+	loadingMessage.remove();
+}
+
 // Main logic
 
 async function main() {
@@ -421,9 +429,7 @@ async function main() {
 	function disableLoading() {
 		loading = false;
 
-		loadingIndicator.remove();
-
-		loadingMessage.classList.add('d-none');
+		removeLoadingElements();
 
 		clearButton.removeAttribute('disabled');
 	}
@@ -607,12 +613,17 @@ async function main() {
 
 		refreshUI();
 	}
+	else {
+		disableLoading();
+	}
 }
 
 // Just disable the input if we are in edit mode
 
 if (layoutMode === 'edit') {
 	inputElement.setAttribute('disabled', true);
+
+	removeLoadingElements();
 }
 
 // Otherwise, execute main logic

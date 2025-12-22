@@ -6,6 +6,7 @@ components:
                     description:
                         The asset library's site ID.
                     format: int64
+                    readOnly: true
                     type: integer
                 name:
                     description:
@@ -19,6 +20,10 @@ components:
                         The localized asset library's name.
                     readOnly: true
                     type: object
+                scopeKey:
+                    description:
+                        The asset library's scope key.
+                    type: string
             type: object
         AssetType:
             description:

@@ -85,6 +85,15 @@ public class KeywordDTOConverter implements DTOConverter<AssetTag, Keyword> {
 													isAcceptAllLanguages(),
 												depotEntryGroup.getNameMap());
 										});
+									setScopeKey(
+										() -> {
+											if (depotEntryGroup == null) {
+												return null;
+											}
+
+											return depotEntryGroup.
+												getGroupKey();
+										});
 								}
 							};
 						},

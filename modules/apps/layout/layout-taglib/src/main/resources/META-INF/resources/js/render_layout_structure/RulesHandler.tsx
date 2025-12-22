@@ -4,6 +4,7 @@
  */
 
 import {debounce, delegate, fetch} from 'frontend-js-web';
+import moment from 'moment';
 
 const getRulesResult = debounce(
 	(
@@ -239,6 +240,10 @@ function getInputValue(fragmentId: string) {
 
 	if (input.type === 'checkbox') {
 		return String(input.checked);
+	}
+
+	if (input.type === 'datetime-local') {
+		return moment(input.value).format('YYYY-MM-DD HH:mm:ss');
 	}
 
 	return input.value;

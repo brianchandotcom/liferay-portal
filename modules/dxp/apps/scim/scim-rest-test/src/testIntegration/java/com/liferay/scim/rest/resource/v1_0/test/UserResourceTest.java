@@ -253,7 +253,9 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 		_testPatchV2User(
 			"active", "false", user -> Assert.assertFalse(user.getActive()));
 
-		String emailAddress = RandomTestUtil.randomString() + "@liferay.com";
+		String emailAddress =
+			StringUtil.toLowerCase(RandomTestUtil.randomString()) +
+				"@liferay.com";
 
 		_testPatchV2User(
 			"emails[type eq \"work\" and primary eq \"true\"].value",
@@ -262,7 +264,7 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 				JSONObject jsonObject = _jsonFactory.createJSONObject(
 					String.valueOf(user.getEmails()[0]));
 
-				Assert.assertNotEquals(
+				Assert.assertEquals(
 					emailAddress, jsonObject.getString("value"));
 			});
 

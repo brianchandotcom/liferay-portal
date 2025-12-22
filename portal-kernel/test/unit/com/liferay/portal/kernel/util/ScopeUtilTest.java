@@ -11,10 +11,8 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
@@ -28,28 +26,15 @@ public class ScopeUtilTest {
 		_groupLocalServiceUtilMockedStatic.close();
 	}
 
-	@Before
-	public void setUp() {
-		Mockito.when(
-			_mockGroup.getGroupId()
-		).thenReturn(
-			_REMOTE_SCOPE_GROUP_ID
-		);
-
-		Mockito.when(
-			_mockGroup.getExternalReferenceCode()
-		).thenReturn(
-			_REMOTE_SCOPE_ERC
-		);
-	}
-
 	@Test
 	public void testGetItemGroupId() {
+		Group group = _getGroup(_REMOTE_SCOPE_ERC, _REMOTE_SCOPE_GROUP_ID);
+
 		Mockito.when(
 			GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
 				_REMOTE_SCOPE_ERC, _COMPANY_ID)
 		).thenReturn(
-			_mockGroup
+			group
 		);
 
 		String invalidERC = RandomTestUtil.randomString();
@@ -80,13 +65,7 @@ public class ScopeUtilTest {
 	public void testGetItemScopeExternalReferenceCodeWithERC()
 		throws Exception {
 
-		Group localGroup = Mockito.mock(Group.class);
-
-		Mockito.when(
-			localGroup.getExternalReferenceCode()
-		).thenReturn(
-			_LOCAL_SCOPE_ERC
-		);
+		Group localGroup = _getGroup(_LOCAL_SCOPE_ERC, _LOCAL_SCOPE_GROUP_ID);
 
 		Mockito.when(
 			GroupLocalServiceUtil.getGroup(_LOCAL_SCOPE_GROUP_ID)
@@ -106,6 +85,24 @@ public class ScopeUtilTest {
 		}
 	}
 
+	private Group _getGroup(String externalReferenceCode, long groupId) {
+		Group group = Mockito.mock(Group.class);
+
+		Mockito.when(
+			group.getExternalReferenceCode()
+		).thenReturn(
+			externalReferenceCode
+		);
+
+		Mockito.when(
+			group.getGroupId()
+		).thenReturn(
+			groupId
+		);
+
+		return group;
+	}
+
 	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
 
 	private static final String _LOCAL_SCOPE_ERC =
@@ -123,8 +120,5 @@ public class ScopeUtilTest {
 	private static final MockedStatic<GroupLocalServiceUtil>
 		_groupLocalServiceUtilMockedStatic = Mockito.mockStatic(
 			GroupLocalServiceUtil.class);
-
-	@Mock
-	private Group _mockGroup = Mockito.mock(Group.class);
 
 }

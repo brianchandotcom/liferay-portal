@@ -1024,7 +1024,7 @@ public class TaxonomyVocabularyResourceImpl
 	}
 
 	private AssetVocabulary _updateVocabulary(
-			AssetVocabulary assetVocabulary, Long companyId,
+			AssetVocabulary assetVocabulary, long companyId,
 			TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 
@@ -1042,8 +1042,7 @@ public class TaxonomyVocabularyResourceImpl
 			false, LocaleUtil.getSiteDefault(), "Taxonomy vocabulary", titleMap,
 			new HashSet<>(descriptionMap.keySet()));
 
-		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-17564") &&
-			ArrayUtil.isNotEmpty(taxonomyVocabulary.getAssetLibraries())) {
+		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-17564")) {
 			_assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
 				assetVocabulary.getVocabularyId(),
 				_getAssetLibraryGroupIds(companyId, taxonomyVocabulary));

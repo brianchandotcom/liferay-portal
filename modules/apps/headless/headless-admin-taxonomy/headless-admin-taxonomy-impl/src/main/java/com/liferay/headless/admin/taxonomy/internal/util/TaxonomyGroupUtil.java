@@ -6,11 +6,14 @@
 package com.liferay.headless.admin.taxonomy.internal.util;
 
 import com.liferay.headless.admin.taxonomy.dto.v1_0.AssetLibrary;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Adolfo Pérez
@@ -20,18 +23,32 @@ public class TaxonomyGroupUtil {
 	public static long[] getAssetLibraryGroupIds(
 		AssetLibrary[] assetLibraries, long companyId) {
 
-		return TransformUtil.transformToLongArray(
-			assetLibraries,
-			assetLibrary -> {
-				Group group = GroupLocalServiceUtil.fetchGroup(
-					companyId, assetLibrary.getScopeKey());
+		if (ArrayUtil.isEmpty(assetLibraries)) {
+			return _GROUP_ID_ALL;
+		}
 
-				if (group != null) {
-					return group.getGroupId();
-				}
+		List<Long> groupIds = new ArrayList<>();
 
-				return null;
-			});
+		for (AssetLibrary assetLibrary : assetLibraries) {
+			if ((assetLibrary == null) ||
+				(assetLibrary.getScopeKey() == null)) {
+
+				continue;
+			}
+
+			Group group = GroupLocalServiceUtil.fetchGroup(
+				companyId, assetLibrary.getScopeKey());
+
+			if (group != null) {
+				groupIds.add(group.getGroupId());
+			}
+		}
+
+		if (groupIds.isEmpty()) {
+			return _GROUP_ID_ALL;
+		}
+
+		return ArrayUtil.toLongArray(groupIds);
 	}
 
 	public static long getCMSGroupId(long companyId) throws PortalException {
@@ -40,5 +57,7 @@ public class TaxonomyGroupUtil {
 
 		return group.getGroupId();
 	}
+
+	private static final long[] _GROUP_ID_ALL = {-1L};
 
 }

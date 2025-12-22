@@ -1,13 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
 import com.liferay.headless.admin.site.client.dto.v1_0.BasicWidgetPageWidgetInstance;
-import com.liferay.headless.admin.site.client.dto.v1_0.NestedApplicationsWidgetPageWidgetInstance;
-import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageWidgetInstance;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPermission;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
@@ -24,90 +22,234 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class WidgetPageWidgetInstanceSerDes {
+public class BasicWidgetPageWidgetInstanceSerDes {
 
-	public static WidgetPageWidgetInstance toDTO(String json) {
-		WidgetPageWidgetInstanceJSONParser widgetPageWidgetInstanceJSONParser =
-			new WidgetPageWidgetInstanceJSONParser();
+	public static BasicWidgetPageWidgetInstance toDTO(String json) {
+		BasicWidgetPageWidgetInstanceJSONParser
+			basicWidgetPageWidgetInstanceJSONParser =
+				new BasicWidgetPageWidgetInstanceJSONParser();
 
-		return widgetPageWidgetInstanceJSONParser.parseToDTO(json);
+		return basicWidgetPageWidgetInstanceJSONParser.parseToDTO(json);
 	}
 
-	public static WidgetPageWidgetInstance[] toDTOs(String json) {
-		WidgetPageWidgetInstanceJSONParser widgetPageWidgetInstanceJSONParser =
-			new WidgetPageWidgetInstanceJSONParser();
+	public static BasicWidgetPageWidgetInstance[] toDTOs(String json) {
+		BasicWidgetPageWidgetInstanceJSONParser
+			basicWidgetPageWidgetInstanceJSONParser =
+				new BasicWidgetPageWidgetInstanceJSONParser();
 
-		return widgetPageWidgetInstanceJSONParser.parseToDTOs(json);
+		return basicWidgetPageWidgetInstanceJSONParser.parseToDTOs(json);
 	}
 
 	public static String toJSON(
-		WidgetPageWidgetInstance widgetPageWidgetInstance) {
+		BasicWidgetPageWidgetInstance basicWidgetPageWidgetInstance) {
 
-		if (widgetPageWidgetInstance == null) {
+		if (basicWidgetPageWidgetInstance == null) {
 			return "null";
 		}
 
-		WidgetPageWidgetInstance.Type type = widgetPageWidgetInstance.getType();
+		StringBuilder sb = new StringBuilder();
 
-		if (type != null) {
-			String typeString = type.toString();
+		sb.append("{");
 
-			if (typeString.equals("BasicWidgetPageWidgetInstance")) {
-				return BasicWidgetPageWidgetInstanceSerDes.toJSON(
-					(BasicWidgetPageWidgetInstance)widgetPageWidgetInstance);
+		if (basicWidgetPageWidgetInstance.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
 			}
 
-			if (typeString.equals(
-					"NestedApplicationsWidgetPageWidgetInstance")) {
+			sb.append("\"externalReferenceCode\": ");
 
-				return NestedApplicationsWidgetPageWidgetInstanceSerDes.toJSON(
-					(NestedApplicationsWidgetPageWidgetInstance)
-						widgetPageWidgetInstance);
+			sb.append("\"");
+
+			sb.append(
+				_escape(
+					basicWidgetPageWidgetInstance.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
+		if (basicWidgetPageWidgetInstance.getParentSectionId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
 			}
 
-			throw new IllegalArgumentException("Unknown type " + typeString);
+			sb.append("\"parentSectionId\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(basicWidgetPageWidgetInstance.getParentSectionId()));
+
+			sb.append("\"");
 		}
-		else {
-			throw new IllegalArgumentException("Missing type parameter");
+
+		if (basicWidgetPageWidgetInstance.
+				getParentWidgetInstanceExternalReferenceCode() != null) {
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"parentWidgetInstanceExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(
+					basicWidgetPageWidgetInstance.
+						getParentWidgetInstanceExternalReferenceCode()));
+
+			sb.append("\"");
 		}
+
+		if (basicWidgetPageWidgetInstance.getPosition() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"position\": ");
+
+			sb.append(basicWidgetPageWidgetInstance.getPosition());
+		}
+
+		if (basicWidgetPageWidgetInstance.getType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+			sb.append(basicWidgetPageWidgetInstance.getType());
+			sb.append("\"");
+		}
+
+		if (basicWidgetPageWidgetInstance.getWidgetConfig() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"widgetConfig\": ");
+
+			sb.append(_toJSON(basicWidgetPageWidgetInstance.getWidgetConfig()));
+		}
+
+		if (basicWidgetPageWidgetInstance.getWidgetInstanceId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"widgetInstanceId\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(basicWidgetPageWidgetInstance.getWidgetInstanceId()));
+
+			sb.append("\"");
+		}
+
+		if (basicWidgetPageWidgetInstance.getWidgetLookAndFeelConfig() !=
+				null) {
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"widgetLookAndFeelConfig\": ");
+
+			sb.append(
+				String.valueOf(
+					basicWidgetPageWidgetInstance.
+						getWidgetLookAndFeelConfig()));
+		}
+
+		if (basicWidgetPageWidgetInstance.getWidgetName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"widgetName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(basicWidgetPageWidgetInstance.getWidgetName()));
+
+			sb.append("\"");
+		}
+
+		if (basicWidgetPageWidgetInstance.getWidgetPermissions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"widgetPermissions\": ");
+
+			sb.append("[");
+
+			for (int i = 0;
+				 i <
+					 basicWidgetPageWidgetInstance.
+						 getWidgetPermissions().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(
+						basicWidgetPageWidgetInstance.getWidgetPermissions()
+							[i]));
+
+				if ((i + 1) < basicWidgetPageWidgetInstance.
+						getWidgetPermissions().length) {
+
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		WidgetPageWidgetInstanceJSONParser widgetPageWidgetInstanceJSONParser =
-			new WidgetPageWidgetInstanceJSONParser();
+		BasicWidgetPageWidgetInstanceJSONParser
+			basicWidgetPageWidgetInstanceJSONParser =
+				new BasicWidgetPageWidgetInstanceJSONParser();
 
-		return widgetPageWidgetInstanceJSONParser.parseToMap(json);
+		return basicWidgetPageWidgetInstanceJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		WidgetPageWidgetInstance widgetPageWidgetInstance) {
+		BasicWidgetPageWidgetInstance basicWidgetPageWidgetInstance) {
 
-		if (widgetPageWidgetInstance == null) {
+		if (basicWidgetPageWidgetInstance == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (widgetPageWidgetInstance.getExternalReferenceCode() == null) {
+		if (basicWidgetPageWidgetInstance.getExternalReferenceCode() == null) {
 			map.put("externalReferenceCode", null);
 		}
 		else {
 			map.put(
 				"externalReferenceCode",
 				String.valueOf(
-					widgetPageWidgetInstance.getExternalReferenceCode()));
+					basicWidgetPageWidgetInstance.getExternalReferenceCode()));
 		}
 
-		if (widgetPageWidgetInstance.getParentSectionId() == null) {
+		if (basicWidgetPageWidgetInstance.getParentSectionId() == null) {
 			map.put("parentSectionId", null);
 		}
 		else {
 			map.put(
 				"parentSectionId",
-				String.valueOf(widgetPageWidgetInstance.getParentSectionId()));
+				String.valueOf(
+					basicWidgetPageWidgetInstance.getParentSectionId()));
 		}
 
-		if (widgetPageWidgetInstance.
+		if (basicWidgetPageWidgetInstance.
 				getParentWidgetInstanceExternalReferenceCode() == null) {
 
 			map.put("parentWidgetInstanceExternalReferenceCode", null);
@@ -116,87 +258,94 @@ public class WidgetPageWidgetInstanceSerDes {
 			map.put(
 				"parentWidgetInstanceExternalReferenceCode",
 				String.valueOf(
-					widgetPageWidgetInstance.
+					basicWidgetPageWidgetInstance.
 						getParentWidgetInstanceExternalReferenceCode()));
 		}
 
-		if (widgetPageWidgetInstance.getPosition() == null) {
+		if (basicWidgetPageWidgetInstance.getPosition() == null) {
 			map.put("position", null);
 		}
 		else {
 			map.put(
 				"position",
-				String.valueOf(widgetPageWidgetInstance.getPosition()));
+				String.valueOf(basicWidgetPageWidgetInstance.getPosition()));
 		}
 
-		if (widgetPageWidgetInstance.getType() == null) {
+		if (basicWidgetPageWidgetInstance.getType() == null) {
 			map.put("type", null);
 		}
 		else {
-			map.put("type", String.valueOf(widgetPageWidgetInstance.getType()));
+			map.put(
+				"type",
+				String.valueOf(basicWidgetPageWidgetInstance.getType()));
 		}
 
-		if (widgetPageWidgetInstance.getWidgetConfig() == null) {
+		if (basicWidgetPageWidgetInstance.getWidgetConfig() == null) {
 			map.put("widgetConfig", null);
 		}
 		else {
 			map.put(
 				"widgetConfig",
-				String.valueOf(widgetPageWidgetInstance.getWidgetConfig()));
+				String.valueOf(
+					basicWidgetPageWidgetInstance.getWidgetConfig()));
 		}
 
-		if (widgetPageWidgetInstance.getWidgetInstanceId() == null) {
+		if (basicWidgetPageWidgetInstance.getWidgetInstanceId() == null) {
 			map.put("widgetInstanceId", null);
 		}
 		else {
 			map.put(
 				"widgetInstanceId",
-				String.valueOf(widgetPageWidgetInstance.getWidgetInstanceId()));
+				String.valueOf(
+					basicWidgetPageWidgetInstance.getWidgetInstanceId()));
 		}
 
-		if (widgetPageWidgetInstance.getWidgetLookAndFeelConfig() == null) {
+		if (basicWidgetPageWidgetInstance.getWidgetLookAndFeelConfig() ==
+				null) {
+
 			map.put("widgetLookAndFeelConfig", null);
 		}
 		else {
 			map.put(
 				"widgetLookAndFeelConfig",
 				String.valueOf(
-					widgetPageWidgetInstance.getWidgetLookAndFeelConfig()));
+					basicWidgetPageWidgetInstance.
+						getWidgetLookAndFeelConfig()));
 		}
 
-		if (widgetPageWidgetInstance.getWidgetName() == null) {
+		if (basicWidgetPageWidgetInstance.getWidgetName() == null) {
 			map.put("widgetName", null);
 		}
 		else {
 			map.put(
 				"widgetName",
-				String.valueOf(widgetPageWidgetInstance.getWidgetName()));
+				String.valueOf(basicWidgetPageWidgetInstance.getWidgetName()));
 		}
 
-		if (widgetPageWidgetInstance.getWidgetPermissions() == null) {
+		if (basicWidgetPageWidgetInstance.getWidgetPermissions() == null) {
 			map.put("widgetPermissions", null);
 		}
 		else {
 			map.put(
 				"widgetPermissions",
 				String.valueOf(
-					widgetPageWidgetInstance.getWidgetPermissions()));
+					basicWidgetPageWidgetInstance.getWidgetPermissions()));
 		}
 
 		return map;
 	}
 
-	public static class WidgetPageWidgetInstanceJSONParser
-		extends BaseJSONParser<WidgetPageWidgetInstance> {
+	public static class BasicWidgetPageWidgetInstanceJSONParser
+		extends BaseJSONParser<BasicWidgetPageWidgetInstance> {
 
 		@Override
-		protected WidgetPageWidgetInstance createDTO() {
-			return null;
+		protected BasicWidgetPageWidgetInstance createDTO() {
+			return new BasicWidgetPageWidgetInstance();
 		}
 
 		@Override
-		protected WidgetPageWidgetInstance[] createDTOArray(int size) {
-			return new WidgetPageWidgetInstance[size];
+		protected BasicWidgetPageWidgetInstance[] createDTOArray(int size) {
+			return new BasicWidgetPageWidgetInstance[size];
 		}
 
 		@Override
@@ -241,47 +390,19 @@ public class WidgetPageWidgetInstanceSerDes {
 		}
 
 		@Override
-		public WidgetPageWidgetInstance parseToDTO(String json) {
-			Map<String, Object> jsonMap = parseToMap(json);
-
-			Object type = jsonMap.get("type");
-
-			if (type != null) {
-				String typeString = type.toString();
-
-				if (typeString.equals("BasicWidgetPageWidgetInstance")) {
-					return BasicWidgetPageWidgetInstance.toDTO(json);
-				}
-
-				if (typeString.equals(
-						"NestedApplicationsWidgetPageWidgetInstance")) {
-
-					return NestedApplicationsWidgetPageWidgetInstance.toDTO(
-						json);
-				}
-
-				throw new IllegalArgumentException(
-					"Unknown type " + typeString);
-			}
-			else {
-				throw new IllegalArgumentException("Missing type parameter");
-			}
-		}
-
-		@Override
 		protected void setField(
-			WidgetPageWidgetInstance widgetPageWidgetInstance,
+			BasicWidgetPageWidgetInstance basicWidgetPageWidgetInstance,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "externalReferenceCode")) {
 				if (jsonParserFieldValue != null) {
-					widgetPageWidgetInstance.setExternalReferenceCode(
+					basicWidgetPageWidgetInstance.setExternalReferenceCode(
 						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "parentSectionId")) {
 				if (jsonParserFieldValue != null) {
-					widgetPageWidgetInstance.setParentSectionId(
+					basicWidgetPageWidgetInstance.setParentSectionId(
 						(String)jsonParserFieldValue);
 				}
 			}
@@ -290,33 +411,33 @@ public class WidgetPageWidgetInstanceSerDes {
 						"parentWidgetInstanceExternalReferenceCode")) {
 
 				if (jsonParserFieldValue != null) {
-					widgetPageWidgetInstance.
+					basicWidgetPageWidgetInstance.
 						setParentWidgetInstanceExternalReferenceCode(
 							(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "position")) {
 				if (jsonParserFieldValue != null) {
-					widgetPageWidgetInstance.setPosition(
+					basicWidgetPageWidgetInstance.setPosition(
 						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
-					widgetPageWidgetInstance.setType(
-						WidgetPageWidgetInstance.Type.create(
+					basicWidgetPageWidgetInstance.setType(
+						BasicWidgetPageWidgetInstance.Type.create(
 							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "widgetConfig")) {
 				if (jsonParserFieldValue != null) {
-					widgetPageWidgetInstance.setWidgetConfig(
+					basicWidgetPageWidgetInstance.setWidgetConfig(
 						(Map<String, Object>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "widgetInstanceId")) {
 				if (jsonParserFieldValue != null) {
-					widgetPageWidgetInstance.setWidgetInstanceId(
+					basicWidgetPageWidgetInstance.setWidgetInstanceId(
 						(String)jsonParserFieldValue);
 				}
 			}
@@ -324,14 +445,14 @@ public class WidgetPageWidgetInstanceSerDes {
 						jsonParserFieldName, "widgetLookAndFeelConfig")) {
 
 				if (jsonParserFieldValue != null) {
-					widgetPageWidgetInstance.setWidgetLookAndFeelConfig(
+					basicWidgetPageWidgetInstance.setWidgetLookAndFeelConfig(
 						WidgetLookAndFeelConfigSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "widgetName")) {
 				if (jsonParserFieldValue != null) {
-					widgetPageWidgetInstance.setWidgetName(
+					basicWidgetPageWidgetInstance.setWidgetName(
 						(String)jsonParserFieldValue);
 				}
 			}
@@ -349,7 +470,7 @@ public class WidgetPageWidgetInstanceSerDes {
 								(String)jsonParserFieldValues[i]);
 					}
 
-					widgetPageWidgetInstance.setWidgetPermissions(
+					basicWidgetPageWidgetInstance.setWidgetPermissions(
 						widgetPermissionsArray);
 				}
 			}

@@ -78,13 +78,24 @@ public class ScopeUtilTest {
 			group
 		);
 
+		long scopeGroupId = RandomTestUtil.randomLong();
+
 		String scopeExternalReferenceCode = RandomTestUtil.randomString();
 
+		Assert.assertEquals(
+			group.getExternalReferenceCode(),
+			ScopeUtil.getItemScopeExternalReferenceCode(
+				group.getGroupId(), scopeGroupId));
 		Assert.assertEquals(
 			scopeExternalReferenceCode,
 			ScopeUtil.getItemScopeExternalReferenceCode(
 				scopeExternalReferenceCode, group.getGroupId()));
 
+		Assert.assertNull(
+			ScopeUtil.getItemScopeExternalReferenceCode(
+				scopeGroupId, scopeGroupId));
+		Assert.assertNull(
+			ScopeUtil.getItemScopeExternalReferenceCode(0, scopeGroupId));
 		Assert.assertNull(
 			ScopeUtil.getItemScopeExternalReferenceCode(
 				"null", group.getGroupId()));

@@ -46,6 +46,10 @@ public class IndividualSegmentRealTimeMembership {
 		return _profileType;
 	}
 
+	public String getType() {
+		return _type;
+	}
+
 	public void setAccountId(String accountId) {
 		_accountId = accountId;
 	}
@@ -82,6 +86,10 @@ public class IndividualSegmentRealTimeMembership {
 		_profileType = profileType;
 	}
 
+	public void setType(String type) {
+		_type = type;
+	}
+
 	private String _accountId;
 	private String _accountName;
 	private String _emailAddress;
@@ -91,5 +99,6 @@ public class IndividualSegmentRealTimeMembership {
 	private long _lastActivityTime;
 	private String _name;
 	private String _profileType;
+	private String _type;
 
 }

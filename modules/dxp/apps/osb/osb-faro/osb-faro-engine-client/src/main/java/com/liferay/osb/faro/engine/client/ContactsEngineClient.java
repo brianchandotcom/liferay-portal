@@ -39,6 +39,7 @@ import com.liferay.osb.faro.engine.client.model.Interest;
 import com.liferay.osb.faro.engine.client.model.PageVisited;
 import com.liferay.osb.faro.engine.client.model.ProjectUsageMetric;
 import com.liferay.osb.faro.engine.client.model.Provider;
+import com.liferay.osb.faro.engine.client.model.RealTimeMembershipMetric;
 import com.liferay.osb.faro.engine.client.model.Results;
 import com.liferay.osb.faro.engine.client.model.provider.LiferayProvider;
 import com.liferay.osb.faro.engine.client.util.FilterBuilder;
@@ -450,6 +451,9 @@ public interface ContactsEngineClient {
 
 	public Results<ProjectUsageMetric> getProjectUsageMetrics(
 		FaroProject faroProject, Date sinceDate);
+
+	public RealTimeMembershipMetric getRealTimeMembershipMetric(
+		FaroProject faroProject, String individualSegmentId);
 
 	public long getReportsExportCSVCount(
 			FaroProject faroProject, String path,

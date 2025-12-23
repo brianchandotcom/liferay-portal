@@ -40,6 +40,7 @@ import com.liferay.osb.faro.engine.client.model.IndividualTransformation;
 import com.liferay.osb.faro.engine.client.model.Interest;
 import com.liferay.osb.faro.engine.client.model.PageVisited;
 import com.liferay.osb.faro.engine.client.model.Provider;
+import com.liferay.osb.faro.engine.client.model.RealTimeMembershipMetric;
 import com.liferay.osb.faro.engine.client.model.Results;
 import com.liferay.osb.faro.engine.client.model.provider.LiferayProvider;
 import com.liferay.osb.faro.engine.client.util.FilterBuilder;
@@ -925,6 +926,14 @@ public abstract class BaseMockContactsEngineClientImpl
 	@Override
 	public PageVisited getPageVisited(FaroProject faroProject, String id) {
 		return contactsEngineClient.getPageVisited(faroProject, id);
+	}
+
+	@Override
+	public RealTimeMembershipMetric getRealTimeMembershipMetric(
+		FaroProject faroProject, String individualSegmentId) {
+
+		return contactsEngineClient.getRealTimeMembershipMetric(
+			faroProject, individualSegmentId);
 	}
 
 	@Override

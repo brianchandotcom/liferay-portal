@@ -799,7 +799,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!org.apache.cxf.core.jar</file-name>
-				<version>3.6.8.JAKARTA-LIFERAY-PATCHED-1</version>
+				<version>3.6.9.JAKARTA-LIFERAY-PATCHED-1</version>
 				<project-name>Apache CXF Core Jakarta</project-name>
 				<project-url>http://cxf.apache.org</project-url>
 				<licenses>
@@ -811,7 +811,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!org.apache.cxf.rt.bindings.soap.jar</file-name>
-				<version>3.6.8.JAKARTA-LIFERAY-PATCHED-1</version>
+				<version>3.6.9.JAKARTA-LIFERAY-PATCHED-1</version>
 				<project-name>Apache CXF Runtime SOAP Binding Jakarta</project-name>
 				<project-url>http://cxf.apache.org</project-url>
 				<licenses>
@@ -823,7 +823,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!org.apache.cxf.rt.bindings.xml.jar</file-name>
-				<version>3.6.8.JAKARTA-LIFERAY-PATCHED-1</version>
+				<version>3.6.9.JAKARTA-LIFERAY-PATCHED-1</version>
 				<project-name>Apache CXF Runtime XML Binding Jakarta</project-name>
 				<project-url>http://cxf.apache.org</project-url>
 				<licenses>
@@ -835,7 +835,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!org.apache.cxf.rt.databinding.jaxb.jar</file-name>
-				<version>3.6.8.JAKARTA-LIFERAY-PATCHED-1</version>
+				<version>3.6.9.JAKARTA-LIFERAY-PATCHED-1</version>
 				<project-name>Apache CXF Runtime JAXB DataBinding Jakarta</project-name>
 				<project-url>http://cxf.apache.org</project-url>
 				<licenses>
@@ -847,7 +847,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!org.apache.cxf.rt.frontend.jaxws.jar</file-name>
-				<version>3.6.8.JAKARTA-LIFERAY-PATCHED-1</version>
+				<version>3.6.9.JAKARTA-LIFERAY-PATCHED-1</version>
 				<project-name>Apache CXF Runtime JAX-WS Frontend Jakarta</project-name>
 				<project-url>http://cxf.apache.org</project-url>
 				<licenses>
@@ -859,7 +859,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!org.apache.cxf.rt.frontend.simple.jar</file-name>
-				<version>3.6.8.JAKARTA-LIFERAY-PATCHED-1</version>
+				<version>3.6.9.JAKARTA-LIFERAY-PATCHED-1</version>
 				<project-name>Apache CXF Runtime Simple Frontend Jakarta</project-name>
 				<project-url>http://cxf.apache.org</project-url>
 				<licenses>
@@ -871,7 +871,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!org.apache.cxf.rt.transports.http.jar</file-name>
-				<version>3.6.8.JAKARTA-LIFERAY-PATCHED-1</version>
+				<version>3.6.9.JAKARTA-LIFERAY-PATCHED-1</version>
 				<project-name>Apache CXF Runtime HTTP Transport Jakarta</project-name>
 				<project-url>http://cxf.apache.org</project-url>
 				<licenses>
@@ -883,7 +883,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!org.apache.cxf.rt.ws.addr.jar</file-name>
-				<version>3.6.8.JAKARTA-LIFERAY-PATCHED-1</version>
+				<version>3.6.9.JAKARTA-LIFERAY-PATCHED-1</version>
 				<project-name>Apache CXF Runtime WS Addressing Jakarta</project-name>
 				<project-url>http://cxf.apache.org</project-url>
 				<licenses>
@@ -895,7 +895,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!org.apache.cxf.rt.ws.policy.jar</file-name>
-				<version>3.6.8.JAKARTA-LIFERAY-PATCHED-1</version>
+				<version>3.6.9.JAKARTA-LIFERAY-PATCHED-1</version>
 				<project-name>Apache CXF Runtime WS Policy Jakarta</project-name>
 				<project-url>http://cxf.apache.org</project-url>
 				<licenses>
@@ -907,7 +907,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!org.apache.cxf.rt.wsdl.jar</file-name>
-				<version>3.6.8.JAKARTA-LIFERAY-PATCHED-1</version>
+				<version>3.6.9.JAKARTA-LIFERAY-PATCHED-1</version>
 				<project-name>Apache CXF Runtime Core for WSDL Jakarta</project-name>
 				<project-url>http://cxf.apache.org</project-url>
 				<licenses>
@@ -1878,6 +1878,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.portal.k8s.agent.impl.jar!kotlin-stdlib.jar</file-name>
+				<version>1.8.0</version>
+				<project-name>Kotlin Stdlib</project-name>
+				<project-url>https://kotlinlang.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.portal.k8s.agent.impl.jar!kubernetes-client.jar</file-name>
 				<version>5.12.2</version>
 				<project-name>Fabric8 :: Kubernetes :: Java Client</project-name>
@@ -2273,7 +2285,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.remote.rest.extender.jar!org.apache.cxf.rt.rs.extension.providers.jar</file-name>
-				<version>3.6.8.JAKARTA-LIFERAY-PATCHED-1</version>
+				<version>3.6.9.JAKARTA-LIFERAY-PATCHED-1</version>
 				<project-name>Apache CXF JAX-RS Extensions: Providers Jakarta</project-name>
 				<project-url>http://cxf.apache.org</project-url>
 				<licenses>
@@ -2285,7 +2297,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.remote.rest.extender.jar!org.apache.cxf.rt.rs.json.basic.jar</file-name>
-				<version>3.6.8.JAKARTA-LIFERAY-PATCHED-1</version>
+				<version>3.6.9.JAKARTA-LIFERAY-PATCHED-1</version>
 				<project-name>Apache CXF JAX-RS Extensions: JSON Basic Jakarta</project-name>
 				<project-url>http://cxf.apache.org</project-url>
 				<licenses>
@@ -3211,9 +3223,20 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.store.s3.jar!aws-java-sdk-core.jar</file-name>
-				<version>1.12.719</version>
-				<project-name>AWS SDK for Java - Core</project-name>
+				<file-name>com.liferay.portal.store.s3.jar!annotations.jar</file-name>
+				<version>2.39.6</version>
+				<project-name>AWS Java SDK :: Annotations</project-name>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.store.s3.jar!arns.jar</file-name>
+				<version>2.39.6</version>
+				<project-name>AWS Java SDK :: Arns</project-name>
 				<project-url>https://aws.amazon.com/sdkforjava</project-url>
 				<licenses>
 					<license>
@@ -3223,9 +3246,9 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.store.s3.jar!aws-java-sdk-kms.jar</file-name>
-				<version>1.12.719</version>
-				<project-name>AWS Java SDK for AWS KMS</project-name>
+				<file-name>com.liferay.portal.store.s3.jar!auth.jar</file-name>
+				<version>2.39.6</version>
+				<project-name>AWS Java SDK :: Auth</project-name>
 				<project-url>https://aws.amazon.com/sdkforjava</project-url>
 				<licenses>
 					<license>
@@ -3235,9 +3258,9 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.store.s3.jar!aws-java-sdk-s3.jar</file-name>
-				<version>1.12.719</version>
-				<project-name>AWS Java SDK for Amazon S3</project-name>
+				<file-name>com.liferay.portal.store.s3.jar!aws-core.jar</file-name>
+				<version>2.39.6</version>
+				<project-name>AWS Java SDK :: AWS Core</project-name>
 				<project-url>https://aws.amazon.com/sdkforjava</project-url>
 				<licenses>
 					<license>
@@ -3247,10 +3270,116 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.store.s3.jar!aws-java-sdk-sts.jar</file-name>
-				<version>1.12.719</version>
-				<project-name>AWS Java SDK for AWS STS</project-name>
+				<file-name>com.liferay.portal.store.s3.jar!aws-query-protocol.jar</file-name>
+				<version>2.39.6</version>
+				<project-name>AWS Java SDK :: Core :: Protocols :: AWS Query Protocol</project-name>
 				<project-url>https://aws.amazon.com/sdkforjava</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.store.s3.jar!aws-xml-protocol.jar</file-name>
+				<version>2.39.6</version>
+				<project-name>AWS Java SDK :: Core :: Protocols :: AWS Xml Protocol</project-name>
+				<project-url>https://aws.amazon.com/sdkforjava</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.store.s3.jar!checksums-spi.jar</file-name>
+				<version>2.39.6</version>
+				<project-name>AWS Java SDK :: Checksums SPI</project-name>
+				<project-url>https://aws.amazon.com/sdkforjava</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.store.s3.jar!checksums.jar</file-name>
+				<version>2.39.6</version>
+				<project-name>AWS Java SDK :: Checksums</project-name>
+				<project-url>https://aws.amazon.com/sdkforjava</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.store.s3.jar!endpoints-spi.jar</file-name>
+				<version>2.39.6</version>
+				<project-name>AWS Java SDK :: Endpoints SPI</project-name>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.store.s3.jar!eventstream.jar</file-name>
+				<version>1.0.1</version>
+				<project-name>AWS Event Stream</project-name>
+				<project-url>https://github.com/awslabs/aws-eventstream-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.store.s3.jar!http-auth-aws.jar</file-name>
+				<version>2.39.6</version>
+				<project-name>AWS Java SDK :: HTTP Auth AWS</project-name>
+				<project-url>https://aws.amazon.com/sdkforjava</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.store.s3.jar!http-auth-spi.jar</file-name>
+				<version>2.39.6</version>
+				<project-name>AWS Java SDK :: HTTP Auth SPI</project-name>
+				<project-url>https://aws.amazon.com/sdkforjava</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.store.s3.jar!http-auth.jar</file-name>
+				<version>2.39.6</version>
+				<project-name>AWS Java SDK :: HTTP Auth</project-name>
+				<project-url>https://aws.amazon.com/sdkforjava</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.store.s3.jar!http-client-spi.jar</file-name>
+				<version>2.39.6</version>
+				<project-name>AWS Java SDK :: HTTP Client Interface</project-name>
 				<licenses>
 					<license>
 						<license-name>Apache License, Version 2.0</license-name>
@@ -3295,6 +3424,52 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.portal.store.s3.jar!identity-spi.jar</file-name>
+				<version>2.39.6</version>
+				<project-name>AWS Java SDK :: Identity SPI</project-name>
+				<project-url>https://aws.amazon.com/sdkforjava</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.store.s3.jar!json-utils.jar</file-name>
+				<version>2.39.6</version>
+				<project-name>AWS Java SDK :: Core :: Protocols :: Json Utils</project-name>
+				<project-url>https://aws.amazon.com/sdkforjava</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.store.s3.jar!metrics-spi.jar</file-name>
+				<version>2.39.6</version>
+				<project-name>AWS Java SDK :: Metrics SPI</project-name>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.store.s3.jar!netty-nio-client.jar</file-name>
+				<version>2.39.6</version>
+				<project-name>AWS Java SDK :: HTTP Clients :: Netty Non-Blocking I/O</project-name>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.portal.store.s3.jar!org.apache.commons.logging.jar</file-name>
 				<version>1.2.LIFERAY-PATCHED-2</version>
 				<project-name>Apache Commons Logging</project-name>
@@ -3303,6 +3478,134 @@
 					<license>
 						<license-name>LGPL 2.1</license-name>
 						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.store.s3.jar!profiles.jar</file-name>
+				<version>2.39.6</version>
+				<project-name>AWS Java SDK :: Profiles</project-name>
+				<project-url>https://aws.amazon.com/sdkforjava</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.store.s3.jar!protocol-core.jar</file-name>
+				<version>2.39.6</version>
+				<project-name>AWS Java SDK :: Core :: Protocols :: Protocol Core</project-name>
+				<project-url>https://aws.amazon.com/sdkforjava</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.store.s3.jar!regions.jar</file-name>
+				<version>2.39.6</version>
+				<project-name>AWS Java SDK :: Regions</project-name>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.store.s3.jar!retries-spi.jar</file-name>
+				<version>2.39.6</version>
+				<project-name>AWS Java SDK :: Retries API</project-name>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.store.s3.jar!retries.jar</file-name>
+				<version>2.39.6</version>
+				<project-name>AWS Java SDK :: Retries</project-name>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.store.s3.jar!s3-transfer-manager.jar</file-name>
+				<version>2.39.6</version>
+				<project-name>AWS Java SDK :: S3 :: Transfer Manager</project-name>
+				<project-url>https://aws.amazon.com/sdkforjava</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.store.s3.jar!s3.jar</file-name>
+				<version>2.39.6</version>
+				<project-name>AWS Java SDK :: Services :: Amazon S3</project-name>
+				<project-url>https://aws.amazon.com/sdkforjava</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.store.s3.jar!sdk-core.jar</file-name>
+				<version>2.39.6</version>
+				<project-name>AWS Java SDK :: SDK Core</project-name>
+				<project-url>https://aws.amazon.com/sdkforjava</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.store.s3.jar!sts.jar</file-name>
+				<version>2.39.6</version>
+				<project-name>AWS Java SDK :: Services :: AWS STS</project-name>
+				<project-url>https://aws.amazon.com/sdkforjava</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.store.s3.jar!third-party-jackson-core.jar</file-name>
+				<version>2.39.6</version>
+				<project-name>AWS Java SDK :: Third Party :: Jackson-core</project-name>
+				<project-url>https://aws.amazon.com/sdkforjava</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.store.s3.jar!utils.jar</file-name>
+				<version>2.39.6</version>
+				<project-name>AWS Java SDK :: Utilities</project-name>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -4349,7 +4652,8 @@
 				<project-url>http://asm.ow2.org</project-url>
 				<licenses>
 					<license>
-						<license-name>BSD-3-Clause;link=https://asm.ow2.io/LICENSE.txt</license-name>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -4360,7 +4664,8 @@
 				<project-url>http://asm.ow2.org</project-url>
 				<licenses>
 					<license>
-						<license-name>BSD-3-Clause;link=https://asm.ow2.io/LICENSE.txt</license-name>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -4371,7 +4676,8 @@
 				<project-url>http://asm.ow2.org</project-url>
 				<licenses>
 					<license>
-						<license-name>BSD-3-Clause;link=https://asm.ow2.io/LICENSE.txt</license-name>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -4382,7 +4688,8 @@
 				<project-url>http://asm.ow2.org</project-url>
 				<licenses>
 					<license>
-						<license-name>BSD-3-Clause;link=https://asm.ow2.io/LICENSE.txt</license-name>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>

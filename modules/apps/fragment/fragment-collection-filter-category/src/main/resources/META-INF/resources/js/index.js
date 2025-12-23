@@ -90,8 +90,8 @@ export function SelectCategory({
 			]
 		: filteredCategories.map((category) => ({
 				checked: selectedCategoryIds.includes(category.id),
-				label: category.label,
 				onChange: (selected) => onSelectedClick(selected, category.id),
+				title: category.label,
 				type: 'checkbox',
 			}));
 

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProce
 import com.liferay.portal.kernel.upgrade.data.cleanup.TableOrphanReferencesDataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.util.DataCleanupLoggingUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.upgrade.data.cleanup.PortletPreferencesDataCleanupPreupgradeProcess;
 
 import java.sql.Connection;
@@ -62,58 +61,47 @@ public class PortletPreferencesPostUpgradeDataCleanupProcess
 			return;
 		}
 
-		if (DBUpgrader.isUpgradeClient()) {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Orphan Portlet table entries and portletId references " +
-						"in PortletPreferences table are not checked when " +
-							"executing the Database Upgrade Tool");
-			}
+		Set<String> portletIds = new HashSet<>();
+
+		for (Portlet portlet : PortletLocalServiceUtil.getPortlets()) {
+			portletIds.add(portlet.getPortletId());
 		}
-		else {
-			Set<String> portletIds = new HashSet<>();
 
-			for (Portlet portlet : PortletLocalServiceUtil.getPortlets()) {
-				portletIds.add(portlet.getPortletId());
-			}
+		try (PreparedStatement preparedStatement = _connection.prepareStatement(
+				"select id_, portletId from Portlet");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
 
-			try (PreparedStatement preparedStatement =
-					_connection.prepareStatement(
-						"select id_, portletId from Portlet");
-				ResultSet resultSet = preparedStatement.executeQuery()) {
+			while (resultSet.next()) {
+				String portletId = resultSet.getString(2);
 
-				while (resultSet.next()) {
-					String portletId = resultSet.getString(2);
+				if ((!portletId.startsWith("com.liferay.") &&
+					 !portletId.startsWith("com_liferay_")) ||
+					portletIds.contains(portletId)) {
 
-					if ((!portletId.startsWith("com.liferay.") &&
-						 !portletId.startsWith("com_liferay_")) ||
-						portletIds.contains(portletId)) {
-
-						continue;
-					}
-
-					if (_deletePortlets) {
-						long id_ = resultSet.getLong(1);
-
-						_portletLocalService.deletePortlet(id_);
-					}
-
-					DataCleanupLoggingUtil.logDelete(
-						_log, 1, !_deletePortlets,
-						_dbInspector.normalizeName("Portlet"),
-						StringBundler.concat(
-							"\"", portletId, "\" is not installed"));
+					continue;
 				}
+
+				if (_deletePortlets) {
+					long id_ = resultSet.getLong(1);
+
+					_portletLocalService.deletePortlet(id_);
+				}
+
+				DataCleanupLoggingUtil.logDelete(
+					_log, 1, !_deletePortlets,
+					_dbInspector.normalizeName("Portlet"),
+					StringBundler.concat(
+						"\"", portletId, "\" is not installed"));
 			}
-
-			UpgradeProcess upgradeProcess = new PortletUpgradeProcess(
-				portletIds, !_deletePortlets);
-
-			upgradeProcess.upgrade();
 		}
+
+		UpgradeProcess upgradeProcess = new PortletUpgradeProcess(
+			portletIds, !_deletePortlets);
+
+		upgradeProcess.upgrade();
 
 		if (_deletePortlets) {
-			UpgradeProcess upgradeProcess =
+			upgradeProcess =
 				new PortletPreferencesDataCleanupPreupgradeProcess();
 
 			upgradeProcess.upgrade();

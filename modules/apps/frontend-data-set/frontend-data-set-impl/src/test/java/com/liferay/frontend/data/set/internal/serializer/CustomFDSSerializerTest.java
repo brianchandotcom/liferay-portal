@@ -837,11 +837,6 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		_mockSerializeSnapshotsEnabled(FDS_NAMES[0], false);
 		_mockSerializeSnapshotsEnabled(FDS_NAMES[1], true);
 
-		Assert.assertNotEquals(
-			_customFDSSerializer.serializeSnapshotsEnabled(
-				FDS_NAMES[0], httpServletRequest),
-			_customFDSSerializer.serializeSnapshotsEnabled(
-				FDS_NAMES[1], httpServletRequest));
 		Assert.assertFalse(
 			_customFDSSerializer.serializeSnapshotsEnabled(
 				FDS_NAMES[0], httpServletRequest));

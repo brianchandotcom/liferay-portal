@@ -181,6 +181,10 @@ public class HTTPTestUtil {
 		}
 
 		options.setMethod(httpMethod);
+
+		// Added because modules/apps/object/**/ExportTaskResourceTest.java was
+		// slow to create companies. See LPD-73606.
+
 		options.setTimeout((int)Time.MINUTE * 2);
 
 		if (body != null) {

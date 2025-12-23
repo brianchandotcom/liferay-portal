@@ -48,100 +48,100 @@ dependencies {
 		exclude group: "javax.validation", module: "validation-api"
 	}
 #if (${framework.equals("portletmvc4spring")})
-	implementation (group: "org.springframework", name: "spring-aop") {
+	implementation(group: "org.springframework", name: "spring-aop") {
 		version {
 			strictly springVersion
 		}
 	}
-	implementation (group: "org.springframework", name: "spring-beans") {
+	implementation(group: "org.springframework", name: "spring-beans") {
 		version {
 			strictly springVersion
 		}
 	}
-	implementation (group: "org.springframework", name: "spring-context") {
+	implementation(group: "org.springframework", name: "spring-context") {
 		version {
 			strictly springVersion
 		}
 	}
-	implementation (group: "org.springframework", name: "spring-core") {
+	implementation(group: "org.springframework", name: "spring-core") {
 		version {
 			strictly springVersion
 		}
 	}
-	implementation (group: "org.springframework", name: "spring-expression") {
+	implementation(group: "org.springframework", name: "spring-expression") {
 		version {
 			strictly springVersion
 		}
 	}
-	implementation (group: "org.springframework", name: "spring-jcl") {
+	implementation(group: "org.springframework", name: "spring-jcl") {
 		version {
 			strictly springVersion
 		}
 	}
-	implementation (group: "org.springframework", name: "spring-web") {
+	implementation(group: "org.springframework", name: "spring-web") {
 		version {
 			strictly springVersion
 		}
 	}
-	implementation (group: "org.springframework", name: "spring-webmvc") {
+	implementation(group: "org.springframework", name: "spring-webmvc") {
 		version {
 			strictly springVersion
 		}
 	}
 #elseif (${framework.equals("springportletmvc")})
-	implementation (group: "org.springframework", name: "spring-aop") {
+	implementation(group: "org.springframework", name: "spring-aop") {
 		version {
 			strictly springVersion
 		}
 	}
-	implementation (group: "org.springframework", name: "spring-beans") {
+	implementation(group: "org.springframework", name: "spring-beans") {
 		version {
 			strictly springVersion
 		}
 	}
-	implementation (group: "org.springframework", name: "spring-context") {
+	implementation(group: "org.springframework", name: "spring-context") {
 		version {
 			strictly springVersion
 		}
 	}
-	implementation (group: "org.springframework", name: "spring-core") {
+	implementation(group: "org.springframework", name: "spring-core") {
 		version {
 			strictly springVersion
 		}
 	}
-	implementation (group: "org.springframework", name: "spring-expression") {
+	implementation(group: "org.springframework", name: "spring-expression") {
 		version {
 			strictly springVersion
 		}
 	}
-	implementation (group: "org.springframework", name: "spring-web") {
+	implementation(group: "org.springframework", name: "spring-web") {
 		version {
 			strictly springVersion
 		}
 	}
-	implementation (group: "org.springframework", name: "spring-webmvc") {
+	implementation(group: "org.springframework", name: "spring-webmvc") {
 		version {
 			strictly springVersion
 		}
 	}
-	implementation (group: "org.springframework", name: "spring-webmvc-portlet") {
+	implementation(group: "org.springframework", name: "spring-webmvc-portlet") {
 		version {
 			strictly springVersion
 		}
 	}
 #end
 #if (${framework.equals("portletmvc4spring")})
-	implementation (group: "org.springframework.security", name: "spring-security-config") {
+	implementation(group: "org.springframework.security", name: "spring-security-config") {
 		version {
 			strictly springSecurityVersion
 		}
 	}
-	implementation (group: "org.springframework.security", name: "spring-security-core") {
+	implementation(group: "org.springframework.security", name: "spring-security-core") {
 		version {
 			strictly springSecurityVersion
 		}
 	}
-	implementation (group: "org.springframework.security", name: "spring-security-web") {
+	implementation(group: "org.springframework.security", name: "spring-security-web") {
 		version {
 			strictly springSecurityVersion
 		}
@@ -164,7 +164,7 @@ dependencies {
 #end
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
 #if (${liferayVersion.startsWith("7.0")} || ${framework.equals("springportletmvc")})
-	compileOnly (group: "javax.portlet", name: "portlet-api") {
+	compileOnly(group: "javax.portlet", name: "portlet-api") {
 		version {
 			strictly "2.0"
 		}

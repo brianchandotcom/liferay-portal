@@ -37,6 +37,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import java.util.List;
 import java.util.Objects;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -58,6 +59,14 @@ public abstract class BaseDataDefinitionMVCActionCommandTestCase {
 	@Before
 	public void setUp() throws Exception {
 		group = GroupTestUtil.addGroup();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		if (_originalPortal != null) {
+			ReflectionTestUtil.setFieldValue(
+				getMVCActionCommand(), "_portal", _originalPortal);
+		}
 	}
 
 	protected MockLiferayPortletActionRequest
@@ -113,7 +122,7 @@ public abstract class BaseDataDefinitionMVCActionCommandTestCase {
 	protected void setUpUploadPortletRequest(
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest) {
 
-		ReflectionTestUtil.setFieldValue(
+		_originalPortal = (Portal)ReflectionTestUtil.getAndSetFieldValue(
 			getMVCActionCommand(), "_portal",
 			ProxyUtil.newProxyInstance(
 				BaseDataDefinitionMVCActionCommandTestCase.class.
@@ -209,5 +218,7 @@ public abstract class BaseDataDefinitionMVCActionCommandTestCase {
 
 	@Inject
 	private File _file;
+
+	private Portal _originalPortal;
 
 }

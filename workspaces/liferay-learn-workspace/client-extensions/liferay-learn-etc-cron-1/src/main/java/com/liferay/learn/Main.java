@@ -443,6 +443,7 @@ public class Main {
 								structuredContent.getFriendlyUrlPath());
 
 						_deleteRAGDocument(structuredContent.getId());
+
 						_structuredContentResource.deleteStructuredContent(
 							siteStructuredContent.getId());
 					}
@@ -486,6 +487,7 @@ public class Main {
 						structuredContent.getFriendlyUrlPath())) {
 
 					_deleteRAGDocument(importedStructuredContent.getId());
+
 					_structuredContentResource.deleteStructuredContent(
 						importedStructuredContent.getId());
 
@@ -511,6 +513,7 @@ public class Main {
 						structuredContent.getFriendlyUrlPath());
 
 				_deleteRAGDocument(existingStructuredContentId);
+
 				_structuredContentResource.deleteStructuredContent(
 					existingStructuredContentId);
 			}

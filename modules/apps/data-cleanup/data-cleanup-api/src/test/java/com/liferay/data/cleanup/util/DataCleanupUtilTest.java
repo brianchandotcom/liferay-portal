@@ -39,7 +39,7 @@ public class DataCleanupUtilTest {
 			new DataCleanup() {
 
 				@Override
-				public String getDescription() {
+				public String getHelpLabel() {
 					return null;
 				}
 
@@ -78,7 +78,7 @@ public class DataCleanupUtilTest {
 			new DataCleanup() {
 
 				@Override
-				public String getDescription() {
+				public String getHelpLabel() {
 					return null;
 				}
 
@@ -110,7 +110,7 @@ public class DataCleanupUtilTest {
 		DataCleanup dataCleanup = new DataCleanup() {
 
 			@Override
-			public String getDescription() {
+			public String getHelpLabel() {
 				return null;
 			}
 

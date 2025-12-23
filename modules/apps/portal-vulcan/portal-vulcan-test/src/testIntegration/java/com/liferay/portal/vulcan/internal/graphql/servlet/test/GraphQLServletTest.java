@@ -93,7 +93,7 @@ public class GraphQLServletTest {
 	public void testArrayQueryParameter() throws Exception {
 		int[] types = {RandomTestUtil.randomInt(), RandomTestUtil.randomInt()};
 
-		JSONObject jsonObject = JSONUtil.getValueAsJSONObject(
+		JSONArray typesJSONArray = JSONUtil.getValueAsJSONObject(
 			_invoke(
 				new GraphQLField(
 					"testDTO1Page",
@@ -102,9 +102,10 @@ public class GraphQLServletTest {
 					).build(),
 					new GraphQLField("types")),
 				"query"),
-			"JSONObject/data", "JSONObject/testDTO1Page");
-
-		JSONArray typesJSONArray = jsonObject.getJSONArray("types");
+			"JSONObject/data", "JSONObject/testDTO1Page"
+		).getJSONArray(
+			"types"
+		);
 
 		Assert.assertEquals(2, typesJSONArray.length());
 		Assert.assertEquals(types[0], typesJSONArray.getInt(0));

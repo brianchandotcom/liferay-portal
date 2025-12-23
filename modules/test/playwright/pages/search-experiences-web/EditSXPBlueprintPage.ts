@@ -6,6 +6,7 @@
 import {Locator, Page, expect} from '@playwright/test';
 
 import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
+import {hoverAndExpectToBeVisible} from '../../utils/hoverAndExpectToBeVisible';
 
 export class EditSXPBlueprintPage {
 	readonly addSXPElementSidebar: Locator;
@@ -120,7 +121,7 @@ export class EditSXPBlueprintPage {
 
 	async assertPreviewSidebarSearchResult(
 		title: string,
-		fields?: {label: string; value: string}[],
+		fields: {label: string; value: string}[],
 		expandFields: boolean = false
 	) {
 		const previewSidebarResultListItem = this.page
@@ -148,10 +149,29 @@ export class EditSXPBlueprintPage {
 		}
 	}
 
+	// Preview Sidebar
+
 	async openPreviewSidebar() {
 		if ((await this.page.locator('.preview-sidebar.open').count()) < 1) {
 			await this.previewSidebarButton.click();
 		}
+	}
+
+	async addPreviewAttributes(attributes: {key: string; value: string}[]) {
+		await this.page.getByLabel('Search Context Attributes').click();
+
+		for (let i = 0; i < attributes.length; i++) {
+			await this.page.getByLabel('Add Field').click();
+
+			await this.page
+				.locator(`.modal-dialog #key-${i}`)
+				.fill(attributes[i].key);
+			await this.page
+				.locator(`.modal-dialog #value-${i}`)
+				.fill(attributes[i].value);
+		}
+
+		await this.page.getByRole('button', {name: 'Done'}).click();
 	}
 
 	async searchInPreviewSidebar(keyword: string) {
@@ -162,6 +182,41 @@ export class EditSXPBlueprintPage {
 		await searchInput.press('Enter');
 
 		await expect(this.previewSidebar).toHaveText(/Result/);
+	}
+
+	// Query Elements
+
+	async addQueryElement(elementName: string) {
+		if (!this.addSXPElementSidebar.isVisible()) {
+			await this.page.getByLabel('Add Query Element').click();
+		}
+
+		await this.addSXPElementSidebar
+			.getByPlaceholder('Search')
+			.fill(elementName);
+
+		await hoverAndExpectToBeVisible({
+			autoClick: true,
+			target: this.addSXPElementSidebar
+				.locator('li')
+				.filter({
+					hasText: elementName,
+				})
+				.nth(0)
+				.getByLabel('Add'),
+			trigger: this.addSXPElementSidebar
+				.locator('li')
+				.filter({
+					hasText: elementName,
+				})
+				.nth(0),
+		});
+
+		await expect(
+			this.querySXPElements.getByText(elementName, {
+				exact: true,
+			})
+		).toBeVisible();
 	}
 
 	// Query Settings - Clause Contributor Functions

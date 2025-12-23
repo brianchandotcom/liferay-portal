@@ -69,8 +69,7 @@ public class AnalyticsRestController extends BaseRestController {
 					MarketplaceConstants.KORONEIKI_DXP_ENTITLEMENTS)) {
 
 				throw new Exception(
-					"Liferay DXP entitlements not found for account " +
-						accountKey);
+					"DXP entitlements not found for account " + accountKey);
 			}
 		}
 		catch (Exception exception) {

@@ -13,6 +13,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -206,6 +207,8 @@ public class TestrayRoutine {
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
+
+		Collections.sort(testrayBuilds);
 
 		return testrayBuilds;
 	}

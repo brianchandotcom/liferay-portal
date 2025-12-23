@@ -5,6 +5,7 @@
 
 package com.liferay.ai.hub.site.initializer.internal.web.search;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -47,7 +48,62 @@ public class LiferayWebSearchEngine implements WebSearchEngine {
 
 	@Override
 	public WebSearchResults search(WebSearchRequest webSearchRequest) {
-		JSONObject jsonObject = _search(webSearchRequest);
+		try {
+			return _search(webSearchRequest);
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+
+			return ReflectionUtil.throwException(exception);
+		}
+	}
+
+	private String _getAuthorization() throws Exception {
+
+		// TODO replace basic auth with token based authentication
+
+		Base64.Encoder encoder = Base64.getEncoder();
+
+		String userNameAndPassword =
+			"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD;
+
+		return "Basic " +
+			new String(
+				encoder.encode(userNameAndPassword.getBytes("UTF-8")), "UTF-8");
+	}
+
+	private WebSearchResults _search(WebSearchRequest webSearchRequest)
+		throws Exception {
+
+		Http.Options options = new Http.Options();
+
+		options.addHeader(HttpHeaders.AUTHORIZATION, _getAuthorization());
+		options.addHeader(
+			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
+
+		// TODO replace http://localhost:8080 with origin's base URL
+
+		String location = "http://localhost:8080/o/search/v1.0/search";
+
+		if (!Validator.isBlank(_blueprintExternalReferenceCode)) {
+			location = HttpComponentsUtil.addParameter(
+				location, "blueprintExternalReferenceCode",
+				_blueprintExternalReferenceCode);
+		}
+
+		location = HttpComponentsUtil.addParameter(
+			location, "page", webSearchRequest.startPage());
+		location = HttpComponentsUtil.addParameter(
+			location, "pageSize", webSearchRequest.maxResults());
+		location = HttpComponentsUtil.addParameter(
+			location, "search", webSearchRequest.searchTerms());
+
+		options.setLocation(location);
+
+		options.setMethod(Http.Method.GET);
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			HttpUtil.URLtoString(options));
 
 		JSONArray jsonArray = jsonObject.getJSONArray("items");
 
@@ -63,65 +119,6 @@ public class LiferayWebSearchEngine implements WebSearchEngine {
 		return WebSearchResults.from(
 			WebSearchInformationResult.from(jsonObject.getLong("totalCount")),
 			webSearchOrganicResults);
-	}
-
-	private String _getAuthorization() {
-		try {
-
-			// TODO replace basic auth with token based authentication
-
-			Base64.Encoder encoder = Base64.getEncoder();
-
-			String userNameAndPassword =
-				"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD;
-
-			return "Basic " +
-				new String(
-					encoder.encode(userNameAndPassword.getBytes("UTF-8")),
-					"UTF-8");
-		}
-		catch (UnsupportedEncodingException unsupportedEncodingException) {
-			throw new RuntimeException(unsupportedEncodingException);
-		}
-	}
-
-	private JSONObject _search(WebSearchRequest webSearchRequest) {
-		try {
-			Http.Options options = new Http.Options();
-
-			options.addHeader(HttpHeaders.AUTHORIZATION, _getAuthorization());
-			options.addHeader(
-				HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
-
-			// TODO replace http://localhost:8080 with origin's base URL
-
-			String location = "http://localhost:8080/o/search/v1.0/search";
-
-			if (!Validator.isBlank(_blueprintExternalReferenceCode)) {
-				location = HttpComponentsUtil.addParameter(
-					location, "blueprintExternalReferenceCode",
-					_blueprintExternalReferenceCode);
-			}
-
-			location = HttpComponentsUtil.addParameter(
-				location, "page", webSearchRequest.startPage());
-			location = HttpComponentsUtil.addParameter(
-				location, "pageSize", webSearchRequest.maxResults());
-			location = HttpComponentsUtil.addParameter(
-				location, "search", webSearchRequest.searchTerms());
-
-			options.setLocation(location);
-
-			options.setMethod(Http.Method.GET);
-
-			return JSONFactoryUtil.createJSONObject(
-				HttpUtil.URLtoString(options));
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
-
-		return null;
 	}
 
 	private WebSearchOrganicResult _toWebSearchOrganicResult(

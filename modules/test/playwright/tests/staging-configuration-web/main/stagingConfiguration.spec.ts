@@ -72,7 +72,6 @@ test(
 	async ({
 		apiHelpers,
 		exportImportStagingInstanceSettingsPage,
-		exportImportStagingSystemSettingsPage,
 		page,
 		portletPublishToLivePage,
 	}) => {
@@ -120,8 +119,8 @@ test(
 			).toBeVisible();
 		}
 		finally {
-			await exportImportStagingSystemSettingsPage.goto();
-			await exportImportStagingSystemSettingsPage.resetDefaultValues();
+			await exportImportStagingInstanceSettingsPage.goto();
+			await exportImportStagingInstanceSettingsPage.resetDefaultValues();
 		}
 	}
 );

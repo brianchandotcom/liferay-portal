@@ -236,11 +236,11 @@ public class DigitalSalesRoomTemplateResourceImpl
 				getObjectDefinitionByExternalReferenceCode(
 					"L_DSR_ROOM", contextCompany.getCompanyId());
 
-		String externalReferenceCode = targetGroup.getExternalReferenceCode();
-
 		ObjectEntry sourceObjectEntry = _objectEntryLocalService.getObjectEntry(
 			sourceGroup.getExternalReferenceCode(), sourceGroup.getGroupId(),
 			dsrRoomObjectDefinition.getObjectDefinitionId());
+
+		String externalReferenceCode = targetGroup.getExternalReferenceCode();
 
 		com.liferay.object.rest.dto.v1_0.ObjectEntry targetObjectEntry =
 			objectEntryManager.addObjectEntry(

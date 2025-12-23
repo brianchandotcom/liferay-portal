@@ -225,6 +225,11 @@ public class SitePageResourceImpl
 				return true;
 			}
 
+			@Override
+			public boolean isStagingSupported() {
+				return true;
+			}
+
 		};
 	}
 

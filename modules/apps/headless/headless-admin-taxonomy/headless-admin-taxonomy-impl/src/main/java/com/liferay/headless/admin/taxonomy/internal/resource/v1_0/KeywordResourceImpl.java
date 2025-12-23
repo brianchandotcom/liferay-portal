@@ -183,6 +183,11 @@ public class KeywordResourceImpl
 				return Scope.SITE;
 			}
 
+			@Override
+			public boolean isStagingSupported() {
+				return true;
+			}
+
 		};
 	}
 

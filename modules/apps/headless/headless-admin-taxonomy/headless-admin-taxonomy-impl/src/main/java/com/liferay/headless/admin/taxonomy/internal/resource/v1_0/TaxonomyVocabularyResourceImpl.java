@@ -171,6 +171,11 @@ public class TaxonomyVocabularyResourceImpl
 				return ExportImportVulcanBatchEngineTaskItemDelegate.Scope.SITE;
 			}
 
+			@Override
+			public boolean isStagingSupported() {
+				return true;
+			}
+
 		};
 	}
 

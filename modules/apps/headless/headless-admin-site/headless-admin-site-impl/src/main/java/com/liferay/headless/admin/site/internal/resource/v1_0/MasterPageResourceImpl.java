@@ -129,6 +129,11 @@ public class MasterPageResourceImpl
 				return FeatureFlagManagerUtil.isEnabled("LPD-35443");
 			}
 
+			@Override
+			public boolean isStagingSupported() {
+				return true;
+			}
+
 		};
 	}
 

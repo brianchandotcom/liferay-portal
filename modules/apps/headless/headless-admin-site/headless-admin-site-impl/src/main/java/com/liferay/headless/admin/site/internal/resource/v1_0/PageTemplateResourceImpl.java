@@ -149,6 +149,11 @@ public class PageTemplateResourceImpl
 				return FeatureFlagManagerUtil.isEnabled("LPD-35443");
 			}
 
+			@Override
+			public boolean isStagingSupported() {
+				return true;
+			}
+
 		};
 	}
 

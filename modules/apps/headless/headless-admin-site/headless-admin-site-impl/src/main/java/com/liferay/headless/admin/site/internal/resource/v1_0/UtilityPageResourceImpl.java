@@ -130,6 +130,11 @@ public class UtilityPageResourceImpl
 				return FeatureFlagManagerUtil.isEnabled("LPD-35443");
 			}
 
+			@Override
+			public boolean isStagingSupported() {
+				return true;
+			}
+
 		};
 	}
 

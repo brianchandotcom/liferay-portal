@@ -164,6 +164,11 @@ public class TaxonomyCategoryResourceImpl
 				return Scope.SITE;
 			}
 
+			@Override
+			public boolean isStagingSupported() {
+				return true;
+			}
+
 		};
 	}
 

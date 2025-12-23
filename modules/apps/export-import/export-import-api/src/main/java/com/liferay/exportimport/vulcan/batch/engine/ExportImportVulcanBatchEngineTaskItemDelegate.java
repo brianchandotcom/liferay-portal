@@ -66,10 +66,6 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 		}
 
 		public default boolean isStagingSupported() {
-			if ((getScope() == Scope.SITE) || (getScope() == Scope.DEPOT)) {
-				return true;
-			}
-
 			return false;
 		}
 

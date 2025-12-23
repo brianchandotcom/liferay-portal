@@ -31,7 +31,7 @@ public abstract class DataCleanup {
 		}
 	}
 
-	public abstract String getDescription();
+	public abstract String getHelpLabel();
 
 	public abstract String getLabel();
 

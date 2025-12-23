@@ -227,7 +227,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 							<p class="list-group-title text-truncate">
 								<liferay-ui:message key="<%= systemDataCleanup.getLabel() %>" />
 
-								<span aria-label="<%= LanguageUtil.get(request, systemDataCleanup.getDescription()) %>" class="lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, systemDataCleanup.getDescription()) %>">
+								<span aria-label="<%= LanguageUtil.get(request, systemDataCleanup.getHelpLabel()) %>" class="lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, systemDataCleanup.getHelpLabel()) %>">
 									<clay:icon
 										symbol="question-circle-full"
 									/>
@@ -346,7 +346,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 								<p class="list-group-title text-truncate">
 									<liferay-ui:message key="<%= moduleDataCleanup.getLabel() %>" />
 
-									<span aria-label="<%= LanguageUtil.get(request, moduleDataCleanup.getDescription()) %>" class="lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, moduleDataCleanup.getDescription()) %>">
+									<span aria-label="<%= LanguageUtil.get(request, moduleDataCleanup.getHelpLabel()) %>" class="lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, moduleDataCleanup.getHelpLabel()) %>">
 										<clay:icon
 											symbol="question-circle-full"
 										/>

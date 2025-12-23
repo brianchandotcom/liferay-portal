@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.jenkins.results.parser.test.clazz.task;
+package com.liferay.jenkins.results.parser.test.task;
 
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 
@@ -17,7 +17,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class BaseTestClassTask implements TestClassTask {
+public class BaseTestTask implements TestTask {
 
 	@Override
 	public void addTestClasses(TestClass testClass) {
@@ -53,7 +53,7 @@ public class BaseTestClassTask implements TestClassTask {
 		jsonObject.put(
 			"average_duration", getAverageDuration()
 		).put(
-			"task_name", getTaskName()
+			"name", getName()
 		);
 
 		JSONArray testClassesJSONArray = new JSONArray();
@@ -68,8 +68,8 @@ public class BaseTestClassTask implements TestClassTask {
 	}
 
 	@Override
-	public String getTaskName() {
-		return _taskName;
+	public String getName() {
+		return _name;
 	}
 
 	@Override
@@ -79,18 +79,18 @@ public class BaseTestClassTask implements TestClassTask {
 
 	@Override
 	public int hashCode() {
-		String testTaskName = getTaskName();
+		String name = getName();
 
-		return testTaskName.hashCode();
+		return name.hashCode();
 	}
 
-	protected BaseTestClassTask(String taskName, long averageDuration) {
-		_taskName = taskName;
+	protected BaseTestTask(String name, long averageDuration) {
+		_name = name;
 		_averageDuration = averageDuration;
 	}
 
 	private final long _averageDuration;
-	private final String _taskName;
+	private final String _name;
 	private final List<TestClass> _testClasses = new ArrayList<>();
 
 }

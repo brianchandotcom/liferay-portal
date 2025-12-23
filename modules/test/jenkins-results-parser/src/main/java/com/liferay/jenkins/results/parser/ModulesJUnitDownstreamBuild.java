@@ -7,7 +7,7 @@ package com.liferay.jenkins.results.parser;
 
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.ModulesJUnitAxisTestClassGroup;
-import com.liferay.jenkins.results.parser.test.clazz.task.TestClassTask;
+import com.liferay.jenkins.results.parser.test.task.TestTask;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -35,10 +35,10 @@ public class ModulesJUnitDownstreamBuild extends JUnitDownstreamBuild {
 
 		JSONArray testTasksJSONArray = new JSONArray();
 
-		for (TestClassTask testClassTask :
-				modulesJUnitAxisTestClassGroup.getTestClassTasks()) {
+		for (TestTask testTask :
+				modulesJUnitAxisTestClassGroup.getTestTasks()) {
 
-			String testTaskName = testClassTask.getTaskName();
+			String testTaskName = testTask.getName();
 
 			StopWatchRecord stopWatchRecord = stopWatchRecordsGroup.get(
 				"test.execution.duration" + testTaskName.replaceAll(":", "."));

@@ -79,26 +79,25 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		super.setUp();
 
 		layout = LayoutTestUtil.addTypeContentLayout(group);
+
+		_segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid());
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			group.getGroupId(), TestPropsValues.getUserId());
 	}
 
 	@Test
 	@TestInfo("LPD-72839")
 	public void testCollectionDisplay() throws Exception {
-		long segmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid());
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), TestPropsValues.getUserId());
-
-		AssetListEntry assetListEntry1 = _addAssetList(group, serviceContext);
+		AssetListEntry assetListEntry1 = _addAssetList(group);
 
 		String itemId = ContentLayoutTestUtil.addCollectionDisplayToLayout(
 			_createCollectionJSONObject(
 				assetListEntry1.getAssetListEntryId(), null, null),
 			layout, _layoutStructureProvider, null, null, 0,
-			segmentsExperienceId);
+			_segmentsExperienceId);
 
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
@@ -117,8 +116,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		Group guestGroup = _groupLocalService.getGroup(
 			TestPropsValues.getGroupId());
 
-		AssetListEntry assetListEntry2 = _addAssetList(
-			guestGroup, serviceContext);
+		AssetListEntry assetListEntry2 = _addAssetList(guestGroup);
 
 		_updateLayoutStructureItem(
 			jsonObject -> {
@@ -158,7 +156,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 			0, externalReferenceCode,
 			_getLayoutStructureItem(itemId, importedLayout.getPlid()), null);
 
-		AssetListEntry assetListEntry3 = _addAssetList(group, serviceContext);
+		AssetListEntry assetListEntry3 = _addAssetList(group);
 
 		_updateLayoutStructureItem(
 			jsonObject -> {
@@ -182,8 +180,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 			0, importedAssetListEntry.getExternalReferenceCode(),
 			_getLayoutStructureItem(itemId, importedLayout.getPlid()), null);
 
-		AssetListEntry assetListEntry4 = _addAssetList(
-			guestGroup, serviceContext);
+		AssetListEntry assetListEntry4 = _addAssetList(guestGroup);
 
 		_updateLayoutStructureItem(
 			jsonObject -> {
@@ -209,7 +206,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 	@Test
 	@TestInfo("LPD-72839")
 	public void testContainer() throws Exception {
-		FileEntry fileEntry1 = _addFileEntry(group);
+		FileEntry fileEntry1 = _addFileEntry(_serviceContext);
 
 		JSONObject jsonObject = ContentLayoutTestUtil.addItemToLayout(
 			JSONUtil.put(
@@ -272,7 +269,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 			0, externalReferenceCode,
 			_getLayoutStructureItem(itemId, importedLayout.getPlid()), null);
 
-		FileEntry fileEntry2 = _addFileEntry(group);
+		FileEntry fileEntry2 = _addFileEntry(_serviceContext);
 
 		_updateLayoutStructureItem(
 			jsonObject1 -> {
@@ -306,7 +303,8 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		Group guestGroup = _groupLocalService.getGroup(
 			TestPropsValues.getGroupId());
 
-		FileEntry fileEntry3 = _addFileEntry(guestGroup);
+		FileEntry fileEntry3 = _addFileEntry(
+			ServiceContextTestUtil.getServiceContext(guestGroup.getGroupId()));
 
 		_updateLayoutStructureItem(
 			jsonObject1 -> {
@@ -555,10 +553,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		return importParameterMap;
 	}
 
-	private AssetListEntry _addAssetList(
-			Group group, ServiceContext serviceContext)
-		throws Exception {
-
+	private AssetListEntry _addAssetList(Group group) throws Exception {
 		return _assetListEntryLocalService.addAssetListEntry(
 			null, TestPropsValues.getUserId(), group.getGroupId(),
 			RandomTestUtil.randomString(),
@@ -569,16 +564,18 @@ public class LayoutPageTemplateStructureRelExportImportTest
 				"anyAssetType",
 				String.valueOf(_portal.getClassNameId(JournalArticle.class))
 			).buildString(),
-			serviceContext);
+			_serviceContext);
 	}
 
-	private FileEntry _addFileEntry(Group group) throws Exception {
+	private FileEntry _addFileEntry(ServiceContext serviceContext)
+		throws Exception {
+
 		return _dlAppLocalService.addFileEntry(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			serviceContext.getScopeGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".png", ContentTypes.IMAGE_PNG,
-			_read("dependencies/sample.png"), null, null, null,
-			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+			_read("dependencies/sample.png"), null, null, null, serviceContext);
 	}
 
 	private void _assertCollectionConfig(
@@ -837,16 +834,11 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		throws Exception {
 
 		try {
-			ServiceContextThreadLocal.pushServiceContext(
-				ServiceContextTestUtil.getServiceContext(layout.getGroupId()));
-
-			long segmentsExperienceId =
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(layout.getPlid());
+			ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 
 			LayoutStructure layoutStructure =
 				_layoutStructureProvider.getLayoutStructure(
-					layout.getPlid(), segmentsExperienceId);
+					layout.getPlid(), _segmentsExperienceId);
 
 			LayoutStructureItem layoutStructureItem =
 				layoutStructure.getLayoutStructureItem(itemId);
@@ -856,8 +848,8 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 			LayoutPageTemplateStructureServiceUtil.
 				updateLayoutPageTemplateStructureData(
-					layout.getGroupId(), layout.getPlid(), segmentsExperienceId,
-					layoutStructure.toString());
+					layout.getGroupId(), layout.getPlid(),
+					_segmentsExperienceId, layoutStructure.toString());
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -885,7 +877,11 @@ public class LayoutPageTemplateStructureRelExportImportTest
 	@Inject
 	private Portal _portal;
 
+	private long _segmentsExperienceId;
+
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	private ServiceContext _serviceContext;
 
 }

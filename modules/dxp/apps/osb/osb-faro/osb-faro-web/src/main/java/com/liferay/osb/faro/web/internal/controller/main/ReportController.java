@@ -151,13 +151,14 @@ public class ReportController extends BaseFaroController {
 			@QueryParam("individualId") String individualId,
 			@QueryParam("query") String query,
 			@QueryParam("rangeKey") String rangeKey,
+			@QueryParam("segmentId") String segmentId,
 			@QueryParam("toDate") String toDateString,
 			@PathParam("type") String type)
 		throws Exception {
 
 		Object result = _buildQueryParameters(
 			assetId, assetType, channelId, fromDateString, individualId, null,
-			query, rangeKey, null, toDateString, type);
+			query, rangeKey, segmentId, toDateString, type);
 
 		if (!(result instanceof Map<?, ?>)) {
 			return result;

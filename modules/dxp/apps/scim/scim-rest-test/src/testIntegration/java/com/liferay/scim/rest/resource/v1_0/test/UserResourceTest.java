@@ -112,7 +112,7 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 			204, userResource.deleteV2UserHttpResponse(user.getId()));
 
 		assertHttpResponseStatusCode(
-			404, userResource.getV2UserByIdHttpResponse(user.getId()));
+			200, userResource.getV2UserByIdHttpResponse(user.getId()));
 
 		com.liferay.portal.kernel.model.User portalUser =
 			_userLocalService.getUserByExternalReferenceCode(

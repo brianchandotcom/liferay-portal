@@ -24,17 +24,16 @@ public class ContentRetrieverUtil {
 	public static ContentRetriever createContentRetriever(
 		Map<String, String> kaleoNodeSettingValues) {
 
-		if (kaleoNodeSettingValues.get("retrievalAugmentor") == null) {
+		if (kaleoNodeSettingValues.get("rag") == null) {
 			return null;
 		}
 
 		try {
-			JSONObject retrievalAugmentorJSONObject =
-				JSONFactoryUtil.createJSONObject(
-					kaleoNodeSettingValues.get("retrievalAugmentor"));
+			JSONObject ragJSONObject = JSONFactoryUtil.createJSONObject(
+				kaleoNodeSettingValues.get("rag"));
 
-			JSONObject contentRetrieverJSONObject =
-				retrievalAugmentorJSONObject.getJSONObject("contentRetriever");
+			JSONObject contentRetrieverJSONObject = ragJSONObject.getJSONObject(
+				"contentRetriever");
 
 			if (Objects.equals(
 					contentRetrieverJSONObject.getString("key"), "liferay")) {

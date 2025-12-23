@@ -270,7 +270,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		String rag = aiDecisionElement.elementTextTrim("rag");
 
 		if (rag != null) {
-			settings.add(new Setting("retrievalAugmentor", rag));
+			settings.add(new Setting("rag", rag));
 		}
 
 		String tools = aiDecisionElement.elementTextTrim("tools");
@@ -543,7 +543,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		String rag = llmElement.elementTextTrim("rag");
 
 		if (rag != null) {
-			settings.add(new Setting("retrievalAugmentor", rag));
+			settings.add(new Setting("rag", rag));
 		}
 
 		String tools = llmElement.elementTextTrim("tools");

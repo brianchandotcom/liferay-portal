@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -78,14 +79,19 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 					StringPool.PERIOD, sourceColumnName, ", ",
 					OrphanReferencesDataCleanupUtil.getSourceTableAlias(),
 					".companyId"));
-			PreparedStatement preparedStatement2 = connection.prepareStatement(
-				StringBundler.concat(
-					"delete from ", sourceTableName, " where ",
-					sourceColumnName, " = ? and companyId = ?"));
-			PreparedStatement preparedStatement3 = connection.prepareStatement(
-				StringBundler.concat(
-					"update ", sourceTableName, " set ", sourceColumnName,
-					" = ? where ", sourceColumnName, " = ? and companyId = ?"));
+			PreparedStatement preparedStatement2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					StringBundler.concat(
+						"delete from ", sourceTableName, " where ",
+						sourceColumnName, " = ? and companyId = ?"));
+			PreparedStatement preparedStatement3 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					StringBundler.concat(
+						"update ", sourceTableName, " set ", sourceColumnName,
+						" = ? where ", sourceColumnName,
+						" = ? and companyId = ?"));
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			boolean partOfUniqueIndex = _isPartOfUniqueIndex(
@@ -100,7 +106,7 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 					preparedStatement2.setLong(1, userId);
 					preparedStatement2.setLong(2, companyId);
 
-					preparedStatement2.executeUpdate();
+					preparedStatement2.addBatch();
 
 					DataCleanupLoggingUtil.logDelete(
 						_log, count, sourceTableName,
@@ -132,7 +138,7 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 				preparedStatement3.setLong(2, userId);
 				preparedStatement3.setLong(3, companyId);
 
-				preparedStatement3.executeUpdate();
+				preparedStatement3.addBatch();
 
 				DataCleanupLoggingUtil.logUpdate(
 					_log, count, sourceTableName, sourceColumnName, newUserId,
@@ -143,6 +149,10 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 						String.join(", ", targetColumnNames), " from table ",
 						targetTableName));
 			}
+
+			preparedStatement2.executeBatch();
+
+			preparedStatement3.executeBatch();
 		}
 		finally {
 			for (SafeCloseable safeCloseable : safeCloseables) {

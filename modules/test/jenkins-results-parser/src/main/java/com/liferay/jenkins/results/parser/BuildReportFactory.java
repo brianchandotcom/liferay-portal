@@ -41,6 +41,10 @@ public class BuildReportFactory {
 	public static DownstreamBuildReport newDownstreamBuildReport(
 		DownstreamBuild downstreamBuild) {
 
+		if (downstreamBuild instanceof ModulesJUnitDownstreamBuild) {
+			return new ModulesJUnitDownstreamBuildReport(downstreamBuild);
+		}
+
 		return new DefaultDownstreamBuildReport(downstreamBuild);
 	}
 
@@ -50,6 +54,13 @@ public class BuildReportFactory {
 
 		if (!buildReportJSONObject.has("buildURL")) {
 			return null;
+		}
+
+		if (batchName.startsWith("modules-integration") ||
+			batchName.startsWith("modules-unit")) {
+
+			return new ModulesJUnitDownstreamBuildReport(
+				batchName, buildReportJSONObject, topLevelBuildReport);
 		}
 
 		return new DefaultDownstreamBuildReport(

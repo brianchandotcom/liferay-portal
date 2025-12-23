@@ -166,6 +166,21 @@ public class WidgetPageWidgetInstanceResourceTest
 
 	@Override
 	@Test
+	public void testPostSiteSitePageWidgetInstance() throws Exception {
+		WidgetPageWidgetInstance randomWidgetPageWidgetInstance =
+			randomWidgetPageWidgetInstance();
+
+		WidgetPageWidgetInstance postWidgetPageWidgetInstance =
+			testPostSiteSitePageWidgetInstance_addWidgetPageWidgetInstance(
+				randomWidgetPageWidgetInstance);
+
+		assertEquals(
+			randomWidgetPageWidgetInstance, postWidgetPageWidgetInstance);
+		assertValid(postWidgetPageWidgetInstance);
+	}
+
+	@Override
+	@Test
 	public void testPutSiteSitePageWidgetInstance() throws Exception {
 		WidgetPageWidgetInstance widgetPageWidgetInstance =
 			randomWidgetPageWidgetInstance();

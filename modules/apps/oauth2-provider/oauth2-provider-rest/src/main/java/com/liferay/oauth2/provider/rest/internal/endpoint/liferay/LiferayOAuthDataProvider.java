@@ -760,7 +760,7 @@ public class LiferayOAuthDataProvider
 		}
 		catch (PortalException portalException) {
 			_log.error(
-				"Error registering dynamically OAuth 2 Application with " +
+				"Unable to dynamically register OAuth 2 Application with " +
 					"client ID: " + client.getClientId(),
 				portalException);
 

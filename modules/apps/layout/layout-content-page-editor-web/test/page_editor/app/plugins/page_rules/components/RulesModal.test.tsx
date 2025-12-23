@@ -12,6 +12,7 @@ import '@testing-library/jest-dom';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
 import {RulesModalContext} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/RulesModalContext';
 import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
+import {State} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/reducers';
 import addRule from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/addRule';
 import {
 	CACHE_KEYS,
@@ -20,6 +21,7 @@ import {
 	setCacheItem,
 } from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/cache';
 import RulesModal from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/page_rules/components/RulesModal';
+import {Rule} from '../../../../../../src/main/resources/META-INF/resources/page_editor/types/Rule';
 
 jest.mock(
 	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch',
@@ -42,28 +44,42 @@ jest.mock(
 );
 
 jest.mock('frontend-js-components-web', () => ({
-	...jest.requireActual('frontend-js-components-web'),
+	...jest.requireActual<typeof import('frontend-js-components-web')>(
+		'frontend-js-components-web'
+	),
 	openToast: jest.fn(),
 }));
 
-const DEFAULT_RULE = {
+const DEFAULT_RULE: Rule = {
 	actions: [{id: 'action-1', type: undefined}],
 	conditionType: 'all',
 	conditions: [{id: 'condition-1', type: undefined}],
+	id: '',
 	name: 'Rule',
 };
 
-function MockRulesContextProvider({children, editingRule: initialEditingRule}) {
+function MockRulesContextProvider({
+	children,
+	editingRule: initialEditingRule,
+}: {
+	children: React.ReactNode;
+	editingRule: Rule;
+}) {
 	const [editingRule, setEditingRule] = React.useState(initialEditingRule);
 	const [visible, setVisible] = React.useState(true);
-	const [trigger, setTrigger] = React.useState(null);
+	const [trigger, setTrigger] = React.useState<HTMLButtonElement | null>(
+		null
+	);
 	const [shouldValidate, setShouldValidate] = React.useState(false);
 
 	return (
 		<RulesModalContext.Provider
 			value={{
 				editingRule,
+				scriptError: '',
+				scriptInputRef: {current: null},
 				setEditingRule,
+				setScriptError: jest.fn(),
 				setShouldValidate,
 				setTrigger,
 				setVisible,
@@ -77,31 +93,39 @@ function MockRulesContextProvider({children, editingRule: initialEditingRule}) {
 	);
 }
 
-const renderComponent = ({rules = [], editingRule = DEFAULT_RULE} = {}) => {
+const renderComponent = ({
+	rules = [],
+	editingRule = DEFAULT_RULE,
+}: {
+	editingRule?: Rule;
+	rules?: Array<any>;
+} = {}) => {
 	jest.useFakeTimers();
 
 	render(
 		<StoreAPIContextProvider
 			dispatch={() => Promise.resolve()}
-			getState={() => ({
-				fragmentEntryLinks: [],
-				layoutData: {
-					deletedItems: [],
-					items: {
-						item1: {
-							config: {
-								name: 'containercillo',
+			getState={() =>
+				({
+					fragmentEntryLinks: {},
+					layoutData: {
+						deletedItems: [],
+						items: {
+							item1: {
+								config: {
+									name: 'containercillo',
+								},
+								itemId: 'item1',
+								type: LAYOUT_DATA_ITEM_TYPES.container,
 							},
-							itemId: 'item1',
-							type: LAYOUT_DATA_ITEM_TYPES.container,
 						},
+						pageRules: rules,
 					},
-					pageRules: rules,
-				},
-			})}
+				}) as unknown as State
+			}
 		>
 			<MockRulesContextProvider editingRule={editingRule}>
-				<RulesModal onCloseModal={() => {}} />
+				<RulesModal />
 			</MockRulesContextProvider>
 		</StoreAPIContextProvider>
 	);
@@ -113,7 +137,7 @@ const renderComponent = ({rules = [], editingRule = DEFAULT_RULE} = {}) => {
 	jest.useRealTimers();
 };
 
-const selectPickerOption = async (pickerLabel, optionValue) => {
+const selectPickerOption = async (pickerLabel: string, optionValue: string) => {
 	const picker = await screen.findByLabelText(pickerLabel);
 
 	await userEvent.click(picker);
@@ -311,7 +335,7 @@ describe('RulesSidebar', () => {
 	});
 
 	it('shows all errors in the error summary with links', async () => {
-		const getLink = (name) => screen.queryByRole('link', {name});
+		const getLink = (name: string) => screen.queryByRole('link', {name});
 
 		renderComponent();
 
@@ -322,7 +346,7 @@ describe('RulesSidebar', () => {
 		await expect(firstConditionPicker).toBeInTheDocument();
 		await expect(getLink('select-action')).toBeInTheDocument();
 
-		await userEvent.click(firstConditionPicker);
+		await userEvent.click(firstConditionPicker as HTMLElement);
 
 		await expect(
 			screen.getByRole('combobox', {

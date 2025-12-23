@@ -23,7 +23,7 @@ export interface Condition {
 		type: 'equal' | 'not-equal';
 		value?: string;
 	};
-	type: 'user' | 'form' | undefined;
+	type: 'user' | 'form' | 'field' | undefined;
 }
 
 export type BasicRule = {

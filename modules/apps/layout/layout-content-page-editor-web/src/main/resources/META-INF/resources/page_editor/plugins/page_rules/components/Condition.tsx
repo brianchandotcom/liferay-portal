@@ -3,11 +3,18 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ClayInput} from '@clayui/form';
 import {ScreenReaderAnnouncerContext} from '@liferay/layout-js-components-web';
 import {sub} from 'frontend-js-web';
-import React, {ComponentProps, FC, useContext, useRef} from 'react';
+import React, {ComponentProps, FC, useContext, useMemo, useRef} from 'react';
 
+import {LAYOUT_TYPES} from '../../../app/config/constants/layoutTypes';
 import {config} from '../../../app/config/index';
+import {
+	ObjectField,
+	ObjectFields,
+} from '../../../app/contexts/ObjectDataContext';
+import InfoItemService from '../../../app/services/InfoItemService';
 import RulesService from '../../../app/services/RulesService';
 import {CACHE_KEYS} from '../../../app/utils/cache';
 import useCache from '../../../app/utils/useCache';
@@ -26,6 +33,7 @@ interface ConditionProps {
 }
 
 export const TYPE_VALUES = {
+	field: 'field',
 	formFragment: 'form',
 	user: 'user',
 } as const;
@@ -125,6 +133,20 @@ export default function Condition({
 		}
 	};
 
+	const conditionTypeItems =
+		config.layoutType === LAYOUT_TYPES.display
+			? [
+					...CONDITION_TYPE_ITEMS,
+					{
+						label: sub(
+							Liferay.Language.get('x-field'),
+							config.selectedMappingTypes?.type.label
+						),
+						value: TYPE_VALUES.field,
+					},
+				]
+			: CONDITION_TYPE_ITEMS;
+
 	return (
 		<RuleBuilderItem
 			aria-label={
@@ -145,7 +167,7 @@ export default function Condition({
 				aria-label={Liferay.Language.get(
 					'select-item-for-the-condition'
 				)}
-				items={CONDITION_TYPE_ITEMS}
+				items={conditionTypeItems}
 				onErrorChange={onErrorChange}
 				onSelectionChange={(type) =>
 					onConditionChange({...condition, type})
@@ -154,8 +176,8 @@ export default function Condition({
 				triggerRef={selectRef}
 			/>
 
-			{condition.type === TYPE_VALUES.user ? (
-				<UserTypeSelectors
+			{condition.type === TYPE_VALUES.field ? (
+				<FieldFragmentTypeSelectors
 					condition={condition}
 					onConditionChange={onConditionChange}
 					onErrorChange={onErrorChange}
@@ -167,6 +189,15 @@ export default function Condition({
 				<FormFragmentTypeSelectors
 					condition={condition}
 					inputFragmentItems={inputFragmentItems}
+					onConditionChange={onConditionChange}
+					onErrorChange={onErrorChange}
+					sendMessage={sendMessage}
+				/>
+			) : null}
+
+			{condition.type === TYPE_VALUES.user ? (
+				<UserTypeSelectors
+					condition={condition}
 					onConditionChange={onConditionChange}
 					onErrorChange={onErrorChange}
 					sendMessage={sendMessage}
@@ -280,6 +311,133 @@ function FormFragmentTypeSelectors({
 						);
 					}}
 					selectedKey={condition.options?.value}
+				/>
+			) : null}
+		</>
+	);
+}
+
+function FieldFragmentTypeSelectors({
+	condition,
+	onConditionChange,
+	onErrorChange,
+	sendMessage,
+}: {
+	condition: ConditionType;
+	onConditionChange: (condition: ConditionType) => void;
+	onErrorChange: (error: RuleError | null) => void;
+	sendMessage: (message: string) => void;
+}) {
+	const {subtype, type} = config.selectedMappingTypes!;
+
+	const mappingFields = useCache({
+		fetcher: () =>
+			InfoItemService.getAvailableStructureMappingFields({
+				classNameId: type.id,
+				classTypeId: subtype ? subtype.id : '',
+			}),
+		key: subtype
+			? [CACHE_KEYS.mappingFields, type.id, subtype.id]
+			: [CACHE_KEYS.mappingFields, type.id],
+	});
+
+	const items = useMemo(
+		() => filterAndConvertMappingFields(mappingFields),
+		[mappingFields]
+	);
+
+	if (!mappingFields) {
+		return null;
+	}
+
+	const selectedKey = items.some((item) => item.value === condition.field)
+		? condition.field
+		: undefined;
+
+	return (
+		<>
+			<RuleSelect
+				aria-label={sub(
+					Liferay.Language.get('select-x-for-the-condition'),
+					Liferay.Language.get('fragment')
+				)}
+				items={items}
+				onErrorChange={onErrorChange}
+				onSelectionChange={(selectedFragment) => {
+					onConditionChange({
+						...condition,
+						field: selectedFragment,
+						options: undefined,
+					});
+				}}
+				selectedKey={selectedKey}
+			/>
+
+			{condition.field ? (
+				<RuleSelect
+					aria-label={sub(
+						Liferay.Language.get('select-x'),
+						Liferay.Language.get('type')
+					)}
+					items={FORM_FRAGMENT_CONDITION_ITEMS}
+					onErrorChange={onErrorChange}
+					onSelectionChange={(type) => {
+						onConditionChange({
+							...condition,
+							options: {
+								type,
+							},
+						});
+					}}
+					selectedKey={condition.options?.type}
+				/>
+			) : null}
+
+			{condition.options?.type ? (
+				<RuleSelect
+					aria-label={sub(
+						Liferay.Language.get('select-x'),
+						Liferay.Language.get('type')
+					)}
+					items={[
+						{
+							label: Liferay.Language.get('value'),
+							value: 'value',
+						},
+					]}
+					onErrorChange={onErrorChange}
+					onSelectionChange={() => {}}
+					selectedKey="value"
+				/>
+			) : null}
+
+			{condition.options?.type ? (
+				<ClayInput
+					aria-label={Liferay.Language.get('value')}
+					className="w-auto"
+					onBlur={() => {
+						sendMessage(
+							Liferay.Language.get('condition-completed')
+						);
+					}}
+					onChange={(event) => {
+						onConditionChange({
+							...condition,
+							options: {
+								...condition.options!,
+								value: event.target.value,
+							},
+						});
+					}}
+					onKeyDown={(event) => {
+						if (event.key === 'Enter') {
+							sendMessage(
+								Liferay.Language.get('condition-completed')
+							);
+						}
+					}}
+					sizing="sm"
+					value={condition.options?.value}
 				/>
 			) : null}
 		</>
@@ -500,4 +658,29 @@ export function convertOptionsToConditionValue(
 	}
 
 	return undefined;
+}
+
+export function filterAndConvertMappingFields(
+	mappingFields: ObjectFields | null
+): {label: string; value: string}[] {
+	if (!config.selectedMappingTypes?.type) {
+		return [];
+	}
+
+	return mappingFields
+		? mappingFields
+				.filter(
+					(field) =>
+						field.label === config.selectedMappingTypes?.type.label
+				)
+				.flatMap((field) =>
+					'fields' in field ? field.fields : [field]
+				)
+				.map((field) => {
+					return {
+						label: field.label,
+						value: (field as ObjectField).key,
+					};
+				})
+		: [];
 }

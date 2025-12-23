@@ -64,11 +64,11 @@ public class MarketplaceUtil {
 	}
 
 	public static JSONArray createCloudProvisioningJSONArray(
-		Page<OrderItem> orderItemPage) {
+		Page<OrderItem> orderItemsPage) {
 
 		JSONArray jsonArray = new JSONArray();
 
-		for (OrderItem orderItem : orderItemPage.getItems()) {
+		for (OrderItem orderItem : orderItemsPage.getItems()) {
 			jsonArray.put(
 				new JSONObject(
 				).put(

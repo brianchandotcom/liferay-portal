@@ -17,8 +17,8 @@ import org.json.JSONObject;
 public class ModulesJUnitDownstreamBuildReport
 	extends BaseDownstreamBuildReport {
 
-	public List<TestClassTaskReport> getTestClassTaskReports() {
-		List<TestClassTaskReport> testClassTaskReports = new ArrayList<>();
+	public List<TestTaskReport> getTestTaskReports() {
+		List<TestTaskReport> testTaskReports = new ArrayList<>();
 
 		JSONObject buildReportJSONObject = getBuildReportJSONObject();
 
@@ -26,16 +26,16 @@ public class ModulesJUnitDownstreamBuildReport
 			"testTasks");
 
 		if (testTasksJSONArray == null) {
-			return testClassTaskReports;
+			return testTaskReports;
 		}
 
 		for (int i = 0; i < testTasksJSONArray.length(); i++) {
-			testClassTaskReports.add(
-				TestClassTaskReportFactory.newTestClassTaskReport(
+			testTaskReports.add(
+				TestTaskReportFactory.newTestTaskReport(
 					testTasksJSONArray.getJSONObject(i)));
 		}
 
-		return testClassTaskReports;
+		return testTaskReports;
 	}
 
 	protected ModulesJUnitDownstreamBuildReport(

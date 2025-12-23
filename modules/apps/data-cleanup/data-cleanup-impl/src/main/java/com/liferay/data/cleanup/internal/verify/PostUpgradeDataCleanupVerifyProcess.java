@@ -8,7 +8,6 @@ package com.liferay.data.cleanup.internal.verify;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ServiceComponentLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -59,8 +58,6 @@ public class PostUpgradeDataCleanupVerifyProcess extends VerifyProcess {
 		return ListUtil.fromArray(
 			new ClassNamePostUpgradeDataCleanupProcess(
 				_classNameLocalService, connection),
-			new PortletPreferencesPostUpgradeDataCleanupProcess(
-				connection, false, _portletLocalService),
 			new ResourceActionPostUpgradeDataCleanupProcess(
 				connection, _resourceActionLocalService),
 			new ServiceComponentPostUpgradeDataCleanupProcess(
@@ -72,9 +69,6 @@ public class PostUpgradeDataCleanupVerifyProcess extends VerifyProcess {
 
 	@Reference(target = ModuleServiceLifecycle.PORTLETS_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;
-
-	@Reference
-	private PortletLocalService _portletLocalService;
 
 	@Reference
 	private ResourceActionLocalService _resourceActionLocalService;

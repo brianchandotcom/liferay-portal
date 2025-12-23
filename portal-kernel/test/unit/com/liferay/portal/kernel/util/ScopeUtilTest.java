@@ -39,22 +39,25 @@ public class ScopeUtilTest {
 			group
 		);
 
-		String[] inputs = {
-			null, StringPool.BLANK, "null", group.getExternalReferenceCode(),
-			RandomTestUtil.randomString()
-		};
+		Long scopeGroupId = RandomTestUtil.randomLong();
 
-		long scopeGroupId = RandomTestUtil.randomLong();
-
-		Long[] expectedOutputs = {
-			scopeGroupId, scopeGroupId, scopeGroupId, group.getGroupId(), null
-		};
-
-		for (int i = 0; i < inputs.length; i++) {
-			Assert.assertEquals(
-				expectedOutputs[i],
-				ScopeUtil.getItemGroupId(_COMPANY_ID, inputs[i], scopeGroupId));
-		}
+		Assert.assertEquals(
+			scopeGroupId,
+			ScopeUtil.getItemGroupId(_COMPANY_ID, null, scopeGroupId));
+		Assert.assertEquals(
+			scopeGroupId,
+			ScopeUtil.getItemGroupId(
+				_COMPANY_ID, StringPool.BLANK, scopeGroupId));
+		Assert.assertEquals(
+			scopeGroupId,
+			ScopeUtil.getItemGroupId(_COMPANY_ID, "null", scopeGroupId));
+		Assert.assertEquals(
+			Long.valueOf(group.getGroupId()),
+			ScopeUtil.getItemGroupId(
+				_COMPANY_ID, group.getExternalReferenceCode(), scopeGroupId));
+		Assert.assertNull(
+			ScopeUtil.getItemGroupId(
+				_COMPANY_ID, RandomTestUtil.randomString(), scopeGroupId));
 	}
 
 	@Test
@@ -70,20 +73,22 @@ public class ScopeUtilTest {
 
 		String scopeExternalReferenceCode = RandomTestUtil.randomString();
 
-		String[] inputs = {
-			null, StringPool.BLANK, "null", group.getExternalReferenceCode(),
-			scopeExternalReferenceCode
-		};
-		String[] expectedOutputs = {
-			null, null, null, null, scopeExternalReferenceCode
-		};
-
-		for (int i = 0; i < inputs.length; i++) {
-			Assert.assertEquals(
-				expectedOutputs[i],
-				ScopeUtil.getItemScopeExternalReferenceCode(
-					inputs[i], group.getGroupId()));
-		}
+		Assert.assertNull(
+			ScopeUtil.getItemScopeExternalReferenceCode(
+				null, group.getGroupId()));
+		Assert.assertNull(
+			ScopeUtil.getItemScopeExternalReferenceCode(
+				StringPool.BLANK, group.getGroupId()));
+		Assert.assertNull(
+			ScopeUtil.getItemScopeExternalReferenceCode(
+				"null", group.getGroupId()));
+		Assert.assertNull(
+			ScopeUtil.getItemScopeExternalReferenceCode(
+				group.getExternalReferenceCode(), group.getGroupId()));
+		Assert.assertEquals(
+			scopeExternalReferenceCode,
+			ScopeUtil.getItemScopeExternalReferenceCode(
+				scopeExternalReferenceCode, group.getGroupId()));
 	}
 
 	private Group _getGroup(String externalReferenceCode, long groupId) {

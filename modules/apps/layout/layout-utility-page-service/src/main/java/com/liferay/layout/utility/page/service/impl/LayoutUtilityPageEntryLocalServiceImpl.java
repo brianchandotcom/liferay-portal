@@ -399,13 +399,14 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 				layoutUtilityPageEntryId);
 
 		layoutUtilityPageEntry.setModifiedDate(new Date());
-		layoutUtilityPageEntry.setPreviewFileEntryId(previewFileEntryId);
-
-		layoutUtilityPageEntry =  layoutUtilityPageEntryPersistence.update(
-			layoutUtilityPageEntry);
 
 		long previousPreviewFileEntryId =
 			layoutUtilityPageEntry.getPreviewFileEntryId();
+
+		layoutUtilityPageEntry.setPreviewFileEntryId(previewFileEntryId);
+
+		layoutUtilityPageEntry = layoutUtilityPageEntryPersistence.update(
+			layoutUtilityPageEntry);
 
 		if ((previewFileEntryId == 0) && (previousPreviewFileEntryId > 0)) {
 			_portletFileRepository.deletePortletFileEntry(

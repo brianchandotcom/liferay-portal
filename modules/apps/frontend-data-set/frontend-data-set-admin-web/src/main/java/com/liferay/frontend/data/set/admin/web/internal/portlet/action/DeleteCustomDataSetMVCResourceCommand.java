@@ -76,8 +76,8 @@ public class DeleteCustomDataSetMVCResourceCommand
 				false, null, null, null, null,
 				LocaleUtil.getMostRelevantLocale(), null, null),
 			StringBundler.concat(
-				"(creatorId eq '", PortalUtil.getUserId(resourceRequest),
-				"' and fdsName eq ", fdsName, ")"),
+				"(creatorId eq ", PortalUtil.getUserId(resourceRequest),
+				" and fdsName eq '", fdsName, "')"),
 			null, null, null);
 
 		Collection<ObjectEntry> objectEntries = page.getItems();

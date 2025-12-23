@@ -197,17 +197,6 @@ public class ClientExtensionsOSGiCommands implements OSGiCommands {
 			StringBundler.concat("(&", deploymentFilterString, sb, ")"));
 	}
 
-	private String _getConfigurationTableRow(
-		Configuration configuration, String formatString) {
-
-		Dictionary<String, Object> properties = configuration.getProperties();
-
-		return String.format(
-			formatString, configuration.getPid(), properties.get("name"),
-			properties.get("type"),
-			properties.get("dxp.lxc.liferay.com.virtualInstanceId"));
-	}
-
 	private String _printConfiguration(Configuration configuration) {
 		return StringBundler.concat(
 			"\nPID: ", configuration.getPid(), "\nFactoryPID: ",
@@ -234,16 +223,20 @@ public class ClientExtensionsOSGiCommands implements OSGiCommands {
 		System.out.println("-".repeat(totalWidth));
 
 		for (Configuration configuration : configurations) {
-			System.out.println(
-				_getConfigurationTableRow(configuration, formatString));
+			Dictionary<String, Object> properties =
+				configuration.getProperties();
+
+			System.out.printf(
+				formatString, configuration.getPid(), properties.get("name"),
+				properties.get("type"),
+				properties.get("dxp.lxc.liferay.com.virtualInstanceId"));
 		}
 	}
 
 	private Configuration _reloadConfiguration(Configuration configuration)
 		throws IOException {
 
-		Dictionary<String, Object> properties =
-			configuration.getProperties();
+		Dictionary<String, Object> properties = configuration.getProperties();
 
 		String pid = configuration.getPid();
 
@@ -254,8 +247,7 @@ public class ClientExtensionsOSGiCommands implements OSGiCommands {
 					setInMemoryOnlyWithSafeCloseable(true)) {
 
 			Configuration reloadedConfiguration =
-				ConfigurationUtil.getConfiguration(
-					_configurationAdmin, pid);
+				ConfigurationUtil.getConfiguration(_configurationAdmin, pid);
 
 			reloadedConfiguration.update(properties);
 

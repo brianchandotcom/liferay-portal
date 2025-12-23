@@ -53,6 +53,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -72,11 +73,17 @@ public class LayoutPageTemplateStructureRelExportImportTest
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		layout = LayoutTestUtil.addTypeContentLayout(group);
+	}
+
 	@Test
 	@TestInfo("LPD-72839")
 	public void testCollectionDisplay() throws Exception {
-		layout = LayoutTestUtil.addTypeContentLayout(group);
-
 		long segmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				layout.getPlid());
@@ -202,8 +209,6 @@ public class LayoutPageTemplateStructureRelExportImportTest
 	@Test
 	@TestInfo("LPD-72839")
 	public void testContainer() throws Exception {
-		layout = LayoutTestUtil.addTypeContentLayout(group);
-
 		FileEntry fileEntry1 = _addFileEntry(group);
 
 		JSONObject jsonObject = ContentLayoutTestUtil.addItemToLayout(
@@ -386,8 +391,6 @@ public class LayoutPageTemplateStructureRelExportImportTest
 	@TestInfo({"LPD-67912", "LPD-72839"})
 	public void testFormContainerSuccessMessageWithMappedLayout()
 		throws Exception {
-
-		layout = LayoutTestUtil.addTypeContentLayout(group);
 
 		Layout layout2 = LayoutTestUtil.addTypeContentLayout(group);
 

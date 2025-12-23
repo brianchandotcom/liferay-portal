@@ -34,8 +34,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -127,6 +125,7 @@ public class DataValuesMappingExportImportContentProcessor
 					fetchAssetListEntryByExternalReferenceCode(
 						externalReferenceCode,
 						_getGroupId(
+							portletDataContext.getCompanyId(),
 							collectionJSONObject.getString(
 								"scopeExternalReferenceCode"),
 							portletDataContext.getScopeGroupId()));
@@ -452,21 +451,14 @@ public class DataValuesMappingExportImportContentProcessor
 	}
 
 	private long _getGroupId(
-		String scopeExternalReferenceCode, long scopeGroupId) {
+		long companyId, String scopeExternalReferenceCode, long scopeGroupId) {
 
 		if (Validator.isNull(scopeExternalReferenceCode)) {
 			return scopeGroupId;
 		}
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if (serviceContext == null) {
-			return scopeGroupId;
-		}
-
 		Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
-			scopeExternalReferenceCode, serviceContext.getCompanyId());
+			scopeExternalReferenceCode, companyId);
 
 		if (group == null) {
 			return scopeGroupId;

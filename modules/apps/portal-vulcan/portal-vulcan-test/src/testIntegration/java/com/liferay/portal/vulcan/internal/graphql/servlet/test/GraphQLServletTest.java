@@ -812,22 +812,18 @@ public class GraphQLServletTest {
 			return sb.toString();
 		}
 
-		private String _serializeValue(Object value) {
+		private Object _serializeValue(Object value) {
 			if (value == null) {
-				return "null";
+				return null;
 			}
 
-			if (value instanceof String) {
-				return "\"" + value + "\"";
-			}
+			Class<?> clazz = value.getClass();
 
-			if (value.getClass(
-				).isArray()) {
-
+			if (clazz.isArray()) {
 				return _serializeArray(value);
 			}
 
-			return value.toString();
+			return value;
 		}
 
 		private final List<GraphQLField> _graphQLFields;

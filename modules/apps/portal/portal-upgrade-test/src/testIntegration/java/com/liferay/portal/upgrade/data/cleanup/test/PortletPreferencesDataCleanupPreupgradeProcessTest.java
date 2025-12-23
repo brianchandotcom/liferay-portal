@@ -119,7 +119,6 @@ public class PortletPreferencesDataCleanupPreupgradeProcessTest
 						layoutRevisionId, " was not found in column ",
 						dbInspector.normalizeName("plid"), " from table ",
 						dbInspector.normalizeName("Layout"))));
-
 			Assert.assertFalse(
 				messages.toString(),
 				messages.contains(
@@ -133,7 +132,6 @@ public class PortletPreferencesDataCleanupPreupgradeProcessTest
 						dbInspector.normalizeName("portletPreferencesId"),
 						" from table ",
 						dbInspector.normalizeName("PortletPreferences"))));
-
 			Assert.assertTrue(
 				messages.toString(),
 				messages.contains(
@@ -145,7 +143,6 @@ public class PortletPreferencesDataCleanupPreupgradeProcessTest
 						plid1, " was not found in column ",
 						dbInspector.normalizeName("plid"), " from table ",
 						dbInspector.normalizeName("Layout"))));
-
 			Assert.assertTrue(
 				messages.toString(),
 				messages.contains(

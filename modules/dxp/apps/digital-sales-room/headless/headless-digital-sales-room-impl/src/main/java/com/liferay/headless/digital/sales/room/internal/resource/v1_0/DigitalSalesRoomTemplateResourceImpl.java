@@ -235,7 +235,8 @@ public class DigitalSalesRoomTemplateResourceImpl
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
 					"L_DSR_ROOM", contextCompany.getCompanyId());
-		Group finalTargetGroup = targetGroup;
+
+		String externalReferenceCode = targetGroup.getExternalReferenceCode();
 
 		ObjectEntry sourceObjectEntry = _objectEntryLocalService.getObjectEntry(
 			sourceGroup.getExternalReferenceCode(), sourceGroup.getGroupId(),
@@ -253,8 +254,7 @@ public class DigitalSalesRoomTemplateResourceImpl
 
 								values.put(
 									"externalReferenceCode",
-									finalTargetGroup.
-										getExternalReferenceCode());
+									externalReferenceCode);
 
 								return Collections.unmodifiableMap(values);
 							});

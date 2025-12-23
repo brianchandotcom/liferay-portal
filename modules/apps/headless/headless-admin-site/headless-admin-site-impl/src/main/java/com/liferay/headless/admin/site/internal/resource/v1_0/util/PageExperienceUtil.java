@@ -16,23 +16,31 @@ import java.util.Objects;
  */
 public class PageExperienceUtil {
 
-	public static PageExperience getDefaultPageExperience(
+	public static void validatePageExperiences(
 		PageExperience[] pageExperiences) {
 
 		if (ArrayUtil.isEmpty(pageExperiences)) {
-			return null;
+			throw new UnsupportedOperationException();
 		}
+
+		PageExperience defaultPageExperience = null;
 
 		for (PageExperience pageExperience : pageExperiences) {
 			if (Objects.equals(
 					pageExperience.getKey(),
 					SegmentsExperienceConstants.KEY_DEFAULT)) {
 
-				return pageExperience;
+				defaultPageExperience = pageExperience;
+
+				break;
 			}
 		}
 
-		return null;
+		if ((defaultPageExperience == null) ||
+			(defaultPageExperience.getSegmentItemExternalReference() != null)) {
+
+			throw new UnsupportedOperationException();
+		}
 	}
 
 }

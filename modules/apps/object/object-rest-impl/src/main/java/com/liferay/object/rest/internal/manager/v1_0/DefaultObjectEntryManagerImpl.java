@@ -343,24 +343,6 @@ public class DefaultObjectEntryManagerImpl
 	@Override
 	public ObjectEntry copyObjectEntryByVersion(
 			DTOConverterContext dtoConverterContext,
-			ObjectDefinition objectDefinition, long objectEntryId, int version)
-		throws Exception {
-
-		if (!objectDefinition.isEnableObjectEntryVersioning()) {
-			throw new UnsupportedOperationException();
-		}
-
-		ObjectEntry objectEntry = _getObjectEntryByVersion(
-			dtoConverterContext, objectEntryId, version);
-
-		return _copyVersionedObjectEntry(
-			dtoConverterContext, objectDefinition, objectEntry,
-			_objectEntryService.getObjectEntry(objectEntryId));
-	}
-
-	@Override
-	public ObjectEntry copyObjectEntryByVersion(
-			DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,
 			String scopeKey, int version)
 		throws Exception {
@@ -369,15 +351,47 @@ public class DefaultObjectEntryManagerImpl
 			throw new UnsupportedOperationException();
 		}
 
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryService.getObjectEntry(
+				externalReferenceCode, getGroupId(objectDefinition, scopeKey),
+				objectDefinition.getObjectDefinitionId());
+
+		_checkObjectEntryStatus(serviceBuilderObjectEntry);
+
 		ObjectEntry objectEntry = _getObjectEntryByVersion(
 			dtoConverterContext, externalReferenceCode, objectDefinition,
 			scopeKey, version);
 
-		return _copyVersionedObjectEntry(
+		objectEntry.setExpirationDate(() -> null);
+		objectEntry.setExternalReferenceCode(() -> null);
+		objectEntry.setId(() -> null);
+
+		_removeReadOnlyProperties(objectDefinition, objectEntry);
+
+		ServiceContext serviceContext = _createServiceContext(
 			dtoConverterContext, objectDefinition, objectEntry,
-			_objectEntryService.getObjectEntry(
-				externalReferenceCode, getGroupId(objectDefinition, scopeKey),
-				objectDefinition.getObjectDefinitionId()));
+			objectEntry.getScopeKey());
+
+		if (objectDefinition.isEnableObjectEntryDraft()) {
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+		}
+
+		Map<String, Serializable> values = _toObjectValues(
+			0L, dtoConverterContext.getLocale(), objectDefinition, objectEntry,
+			objectEntry.getScopeKey(), serviceContext);
+
+		ObjectField titleObjectField =
+			_objectFieldLocalService.fetchObjectField(
+				objectDefinition.getTitleObjectFieldId());
+
+		_replaceValues(
+			objectDefinition, objectEntry.getScopeKey(), titleObjectField,
+			values);
+
+		return _addObjectEntry(
+			dtoConverterContext, objectDefinition, objectEntry,
+			objectEntry.getScopeKey(), serviceContext, values);
 	}
 
 	@Override
@@ -404,27 +418,6 @@ public class DefaultObjectEntryManagerImpl
 			_objectEntryService.getObjectEntry(objectEntryId);
 
 		_deleteObjectEntry(objectDefinition, serviceBuilderObjectEntry);
-	}
-
-	@Override
-	public void deleteObjectEntryByVersion(
-			ObjectDefinition objectDefinition, long objectEntryId, int version)
-		throws Exception {
-
-		if (!objectDefinition.isEnableObjectEntryVersioning()) {
-			throw new UnsupportedOperationException();
-		}
-
-		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
-			_objectEntryService.getObjectEntry(objectEntryId);
-
-		_checkHeadObjectEntry(serviceBuilderObjectEntry);
-		_checkObjectEntryObjectDefinitionId(
-			objectDefinition, serviceBuilderObjectEntry);
-		_checkObjectEntryStatus(serviceBuilderObjectEntry);
-
-		_objectEntryVersionService.deleteObjectEntryVersion(
-			objectEntryId, version);
 	}
 
 	@Override
@@ -580,27 +573,45 @@ public class DefaultObjectEntryManagerImpl
 	@Override
 	public ObjectEntry expireObjectEntryByVersion(
 			DTOConverterContext dtoConverterContext,
-			ObjectDefinition objectDefinition, long objectEntryId, int version)
-		throws Exception {
-
-		return _expireObjectEntryVersion(
-			dtoConverterContext, objectDefinition,
-			_objectEntryService.getObjectEntry(objectEntryId), version);
-	}
-
-	@Override
-	public ObjectEntry expireObjectEntryByVersion(
-			DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,
 			String scopeKey, int version)
 		throws Exception {
 
-		return _expireObjectEntryVersion(
-			dtoConverterContext, objectDefinition,
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryService.getObjectEntry(
 				externalReferenceCode, getGroupId(objectDefinition, scopeKey),
-				objectDefinition.getObjectDefinitionId()),
+				objectDefinition.getObjectDefinitionId());
+
+		_checkHeadObjectEntry(serviceBuilderObjectEntry);
+		_checkObjectEntryObjectDefinitionId(
+			objectDefinition, serviceBuilderObjectEntry);
+		_checkObjectEntryStatus(serviceBuilderObjectEntry);
+
+		if (serviceBuilderObjectEntry.getVersion() == version) {
+			_objectEntryService.expireObjectEntry(
+				serviceBuilderObjectEntry.getObjectEntryId(),
+				ServiceContextUtil.createServiceContext(
+					serviceBuilderObjectEntry.getObjectEntryId()));
+		}
+
+		_objectEntryVersionService.expireObjectEntryVersion(
+			serviceBuilderObjectEntry,
+			ServiceContextUtil.createServiceContext(
+				serviceBuilderObjectEntry.getObjectEntryId()),
 			version);
+
+		ObjectEntryVersion objectEntryVersion =
+			_objectEntryVersionService.getObjectEntryVersion(
+				serviceBuilderObjectEntry.getObjectEntryId(), version);
+
+		dtoConverterContext.setAttribute(
+			"objectEntryVersion", objectEntryVersion);
+
+		return _objectEntryDTOConverter.toDTO(
+			_getObjectEntryVersionDTOConverterContext(
+				dtoConverterContext, objectEntryVersion,
+				serviceBuilderObjectEntry),
+			serviceBuilderObjectEntry);
 	}
 
 	@Override
@@ -921,29 +932,6 @@ public class DefaultObjectEntryManagerImpl
 
 	@Override
 	public ObjectEntry getObjectEntryByVersion(
-			DTOConverterContext dtoConverterContext, Long objectEntryId,
-			int version)
-		throws Exception {
-
-		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
-			_objectEntryService.getObjectEntry(objectEntryId);
-
-		ObjectEntryVersion objectEntryVersion =
-			_objectEntryVersionService.getObjectEntryVersion(
-				objectEntryId, version);
-
-		dtoConverterContext.setAttribute(
-			"objectEntryVersion", objectEntryVersion);
-
-		return _objectEntryDTOConverter.toDTO(
-			_getObjectEntryVersionDTOConverterContext(
-				dtoConverterContext, objectEntryVersion,
-				serviceBuilderObjectEntry),
-			serviceBuilderObjectEntry);
-	}
-
-	@Override
-	public ObjectEntry getObjectEntryByVersion(
 			DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,
 			String scopeKey, int version)
@@ -953,8 +941,21 @@ public class DefaultObjectEntryManagerImpl
 			objectDefinition.getCompanyId(), dtoConverterContext,
 			externalReferenceCode, objectDefinition, scopeKey);
 
-		return getObjectEntryByVersion(
-			dtoConverterContext, objectEntry.getId(), version);
+		ObjectEntryVersion objectEntryVersion =
+			_objectEntryVersionService.getObjectEntryVersion(
+				objectEntry.getId(), version);
+
+		dtoConverterContext.setAttribute(
+			"objectEntryVersion", objectEntryVersion);
+
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryService.getObjectEntry(objectEntry.getId());
+
+		return _objectEntryDTOConverter.toDTO(
+			_getObjectEntryVersionDTOConverterContext(
+				dtoConverterContext, objectEntryVersion,
+				serviceBuilderObjectEntry),
+			serviceBuilderObjectEntry);
 	}
 
 	@Override
@@ -1133,35 +1134,6 @@ public class DefaultObjectEntryManagerImpl
 	@Override
 	public Page<ObjectEntry> getVersionedObjectEntries(
 			DTOConverterContext dtoConverterContext,
-			ObjectDefinition objectDefinition, long objectEntryId,
-			Pagination pagination, Sort[] sorts)
-		throws Exception {
-
-		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
-			objectEntryLocalService.getObjectEntry(objectEntryId);
-
-		_checkHeadObjectEntry(serviceBuilderObjectEntry);
-		_checkObjectEntryObjectDefinitionId(
-			objectDefinition, serviceBuilderObjectEntry);
-
-		return Page.of(
-			TransformUtil.transform(
-				_objectEntryVersionService.getObjectEntryVersions(
-					objectEntryId, _getStartPosition(pagination),
-					_getEndPosition(pagination), _getOrderByComparator(sorts)),
-				objectEntryVersion -> _objectEntryDTOConverter.toDTO(
-					_getObjectEntryVersionDTOConverterContext(
-						dtoConverterContext, objectEntryVersion,
-						serviceBuilderObjectEntry),
-					serviceBuilderObjectEntry)),
-			pagination,
-			_objectEntryVersionService.getObjectEntryVersionsCount(
-				objectEntryId));
-	}
-
-	@Override
-	public Page<ObjectEntry> getVersionedObjectEntries(
-			DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,
 			String scopeKey, Pagination pagination, Sort[] sorts)
 		throws Exception {
@@ -1171,9 +1143,24 @@ public class DefaultObjectEntryManagerImpl
 				externalReferenceCode, getGroupId(objectDefinition, scopeKey),
 				objectDefinition.getObjectDefinitionId());
 
-		return getVersionedObjectEntries(
-			dtoConverterContext, objectDefinition,
-			serviceBuilderObjectEntry.getObjectEntryId(), pagination, sorts);
+		_checkHeadObjectEntry(serviceBuilderObjectEntry);
+		_checkObjectEntryObjectDefinitionId(
+			objectDefinition, serviceBuilderObjectEntry);
+
+		return Page.of(
+			TransformUtil.transform(
+				_objectEntryVersionService.getObjectEntryVersions(
+					serviceBuilderObjectEntry.getObjectEntryId(),
+					_getStartPosition(pagination), _getEndPosition(pagination),
+					_getOrderByComparator(sorts)),
+				objectEntryVersion -> _objectEntryDTOConverter.toDTO(
+					_getObjectEntryVersionDTOConverterContext(
+						dtoConverterContext, objectEntryVersion,
+						serviceBuilderObjectEntry),
+					serviceBuilderObjectEntry)),
+			pagination,
+			_objectEntryVersionService.getObjectEntryVersionsCount(
+				serviceBuilderObjectEntry.getObjectEntryId()));
 	}
 
 	@Override
@@ -1309,29 +1296,23 @@ public class DefaultObjectEntryManagerImpl
 	@Override
 	public ObjectEntry restoreObjectEntryByVersion(
 			DTOConverterContext dtoConverterContext,
-			ObjectDefinition objectDefinition, long objectEntryId, int version)
-		throws Exception {
-
-		return _restoreVersionedObjectEntry(
-			dtoConverterContext, objectDefinition,
-			_getObjectEntryByVersion(
-				dtoConverterContext, objectEntryId, version),
-			version);
-	}
-
-	@Override
-	public ObjectEntry restoreObjectEntryByVersion(
-			DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,
 			String scopeKey, int version)
 		throws Exception {
 
-		return _restoreVersionedObjectEntry(
-			dtoConverterContext, objectDefinition,
-			_getObjectEntryByVersion(
-				dtoConverterContext, externalReferenceCode, objectDefinition,
-				scopeKey, version),
-			version);
+		ObjectEntry objectEntry = _getObjectEntryByVersion(
+			dtoConverterContext, externalReferenceCode, objectDefinition,
+			scopeKey, version);
+
+		_removeReadOnlyProperties(objectDefinition, objectEntry);
+
+		return updateObjectEntry(
+			_getObjectEntryVersionDTOConverterContext(
+				dtoConverterContext,
+				_objectEntryVersionService.getObjectEntryVersion(
+					objectEntry.getId(), version),
+				_objectEntryService.getObjectEntry(objectEntry.getId())),
+			objectDefinition, objectEntry.getId(), objectEntry);
 	}
 
 	@Override
@@ -2000,45 +1981,6 @@ public class DefaultObjectEntryManagerImpl
 		}
 	}
 
-	private ObjectEntry _copyVersionedObjectEntry(
-			DTOConverterContext dtoConverterContext,
-			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
-			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry)
-		throws Exception {
-
-		_checkObjectEntryStatus(serviceBuilderObjectEntry);
-
-		objectEntry.setExpirationDate(() -> null);
-		objectEntry.setExternalReferenceCode(() -> null);
-		objectEntry.setId(() -> null);
-
-		_removeReadOnlyProperties(objectDefinition, objectEntry);
-
-		String scopeKey = objectEntry.getScopeKey();
-
-		ServiceContext serviceContext = _createServiceContext(
-			dtoConverterContext, objectDefinition, objectEntry, scopeKey);
-
-		if (objectDefinition.isEnableObjectEntryDraft()) {
-			serviceContext.setWorkflowAction(
-				WorkflowConstants.ACTION_SAVE_DRAFT);
-		}
-
-		Map<String, Serializable> values = _toObjectValues(
-			0L, dtoConverterContext.getLocale(), objectDefinition, objectEntry,
-			scopeKey, serviceContext);
-
-		ObjectField titleObjectField =
-			_objectFieldLocalService.fetchObjectField(
-				objectDefinition.getTitleObjectFieldId());
-
-		_replaceValues(objectDefinition, scopeKey, titleObjectField, values);
-
-		return _addObjectEntry(
-			dtoConverterContext, objectDefinition, objectEntry,
-			objectEntry.getScopeKey(), serviceContext, values);
-	}
-
 	private ServiceContext _createServiceContext(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
@@ -2241,45 +2183,6 @@ public class DefaultObjectEntryManagerImpl
 			dtoConverterContext.getUserId());
 	}
 
-	private ObjectEntry _expireObjectEntryVersion(
-			DTOConverterContext dtoConverterContext,
-			ObjectDefinition objectDefinition,
-			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry,
-			int version)
-		throws Exception {
-
-		_checkHeadObjectEntry(serviceBuilderObjectEntry);
-		_checkObjectEntryObjectDefinitionId(
-			objectDefinition, serviceBuilderObjectEntry);
-		_checkObjectEntryStatus(serviceBuilderObjectEntry);
-
-		if (serviceBuilderObjectEntry.getVersion() == version) {
-			_objectEntryService.expireObjectEntry(
-				serviceBuilderObjectEntry.getObjectEntryId(),
-				ServiceContextUtil.createServiceContext(
-					serviceBuilderObjectEntry.getObjectEntryId()));
-		}
-
-		_objectEntryVersionService.expireObjectEntryVersion(
-			serviceBuilderObjectEntry,
-			ServiceContextUtil.createServiceContext(
-				serviceBuilderObjectEntry.getObjectEntryId()),
-			version);
-
-		ObjectEntryVersion objectEntryVersion =
-			_objectEntryVersionService.getObjectEntryVersion(
-				serviceBuilderObjectEntry.getObjectEntryId(), version);
-
-		dtoConverterContext.setAttribute(
-			"objectEntryVersion", objectEntryVersion);
-
-		return _objectEntryDTOConverter.toDTO(
-			_getObjectEntryVersionDTOConverterContext(
-				dtoConverterContext, objectEntryVersion,
-				serviceBuilderObjectEntry),
-			serviceBuilderObjectEntry);
-	}
-
 	private String _getDateString(Date date) {
 		if (date == null) {
 			return StringPool.BLANK;
@@ -2449,23 +2352,6 @@ public class DefaultObjectEntryManagerImpl
 	}
 
 	private ObjectEntry _getObjectEntryByVersion(
-			DTOConverterContext dtoConverterContext, Long objectEntryId,
-			int version)
-		throws Exception {
-
-		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
-			_objectEntryService.getObjectEntry(objectEntryId);
-
-		return _objectEntryDTOConverter.toDTO(
-			_getObjectEntryVersionDTOConverterContext(
-				dtoConverterContext,
-				_objectEntryVersionService.getObjectEntryVersion(
-					objectEntryId, version),
-				serviceBuilderObjectEntry),
-			serviceBuilderObjectEntry);
-	}
-
-	private ObjectEntry _getObjectEntryByVersion(
 			DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,
 			String scopeKey, int version)
@@ -2475,8 +2361,16 @@ public class DefaultObjectEntryManagerImpl
 			objectDefinition.getCompanyId(), dtoConverterContext,
 			externalReferenceCode, objectDefinition, scopeKey);
 
-		return _getObjectEntryByVersion(
-			dtoConverterContext, objectEntry.getId(), version);
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryService.getObjectEntry(objectEntry.getId());
+
+		return _objectEntryDTOConverter.toDTO(
+			_getObjectEntryVersionDTOConverterContext(
+				dtoConverterContext,
+				_objectEntryVersionService.getObjectEntryVersion(
+					objectEntry.getId(), version),
+				serviceBuilderObjectEntry),
+			serviceBuilderObjectEntry);
 	}
 
 	private long _getObjectEntryFolderId(
@@ -3286,23 +3180,6 @@ public class DefaultObjectEntryManagerImpl
 				objectField.getName(),
 				_getNewValue(groupId, objectDefinition, objectField, value));
 		}
-	}
-
-	private ObjectEntry _restoreVersionedObjectEntry(
-			DTOConverterContext dtoConverterContext,
-			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
-			int version)
-		throws Exception {
-
-		_removeReadOnlyProperties(objectDefinition, objectEntry);
-
-		return updateObjectEntry(
-			_getObjectEntryVersionDTOConverterContext(
-				dtoConverterContext,
-				_objectEntryVersionService.getObjectEntryVersion(
-					objectEntry.getId(), version),
-				_objectEntryService.getObjectEntry(objectEntry.getId())),
-			objectDefinition, objectEntry.getId(), objectEntry);
 	}
 
 	private Date _toDate(Locale locale, String valueString) {

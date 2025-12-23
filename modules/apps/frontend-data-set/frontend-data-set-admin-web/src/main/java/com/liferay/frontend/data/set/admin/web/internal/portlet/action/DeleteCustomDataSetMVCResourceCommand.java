@@ -58,16 +58,14 @@ public class DeleteCustomDataSetMVCResourceCommand
 				fetchObjectDefinitionByExternalReferenceCode(
 					"L_DATA_SET_SNAPSHOT", themeDisplay.getCompanyId());
 
-		long objectEntryId = ParamUtil.getLong(resourceRequest, "id");
-
-		String fdsName = ParamUtil.getString(
-			resourceRequest, "externalReferenceCode");
-
 		ObjectEntryManager objectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
 				_objectEntryManagerRegistry.getObjectEntryManager(
 					objectDefinition.getCompanyId(),
 					objectDefinition.getStorageType()));
+
+		String fdsName = ParamUtil.getString(
+			resourceRequest, "externalReferenceCode");
 
 		Page<ObjectEntry> page = objectEntryManager.getObjectEntries(
 			PortalUtil.getCompanyId(resourceRequest), objectDefinition, null,
@@ -85,6 +83,8 @@ public class DeleteCustomDataSetMVCResourceCommand
 		for (ObjectEntry objectEntry : objectEntries) {
 			_objectEntryService.deleteObjectEntry(objectEntry.getId());
 		}
+
+		long objectEntryId = ParamUtil.getLong(resourceRequest, "id");
 
 		_objectEntryService.deleteObjectEntry(objectEntryId);
 	}

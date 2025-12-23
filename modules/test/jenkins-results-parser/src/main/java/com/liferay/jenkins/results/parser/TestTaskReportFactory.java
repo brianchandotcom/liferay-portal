@@ -12,8 +12,10 @@ import org.json.JSONObject;
  */
 public class TestTaskReportFactory {
 
-	public static TestTaskReport newTestTaskReport(JSONObject jsonObject) {
-		return new DefaultTestTaskReport(jsonObject);
+	public static TestTaskReport newTestTaskReport(
+		DownstreamBuildReport downstreamBuildReport, JSONObject jsonObject) {
+
+		return new DefaultTestTaskReport(downstreamBuildReport, jsonObject);
 	}
 
 }

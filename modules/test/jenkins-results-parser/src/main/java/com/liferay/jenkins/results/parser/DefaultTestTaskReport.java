@@ -12,8 +12,10 @@ import org.json.JSONObject;
  */
 public class DefaultTestTaskReport extends BaseTestTaskReport {
 
-	protected DefaultTestTaskReport(JSONObject jsonObject) {
-		super(jsonObject);
+	protected DefaultTestTaskReport(
+		DownstreamBuildReport downstreamBuildReport, JSONObject jsonObject) {
+
+		super(downstreamBuildReport, jsonObject);
 	}
 
 }

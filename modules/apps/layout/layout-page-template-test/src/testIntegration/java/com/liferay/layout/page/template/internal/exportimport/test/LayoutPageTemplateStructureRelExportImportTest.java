@@ -101,7 +101,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 	@Test
 	@TestInfo("LPD-72839")
 	public void testCollectionDisplay() throws Exception {
-		AssetListEntry assetListEntry1 = _addAssetList(group);
+		AssetListEntry assetListEntry1 = _addAssetListEntry(group);
 
 		String itemId = ContentLayoutTestUtil.addCollectionDisplayToLayout(
 			_getCollectionJSONObject(
@@ -126,7 +126,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		Group guestGroup = _groupLocalService.getGroup(
 			TestPropsValues.getGroupId());
 
-		AssetListEntry assetListEntry2 = _addAssetList(guestGroup);
+		AssetListEntry assetListEntry2 = _addAssetListEntry(guestGroup);
 
 		_updateLayoutStructureItem(
 			itemId,
@@ -157,7 +157,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 			0, externalReferenceCode,
 			_getLayoutStructureItem(itemId, importedLayout.getPlid()), null);
 
-		AssetListEntry assetListEntry3 = _addAssetList(group);
+		AssetListEntry assetListEntry3 = _addAssetListEntry(group);
 
 		_updateLayoutStructureItem(
 			itemId,
@@ -177,7 +177,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 			0, importedAssetListEntry.getExternalReferenceCode(),
 			_getLayoutStructureItem(itemId, importedLayout.getPlid()), null);
 
-		AssetListEntry assetListEntry4 = _addAssetList(guestGroup);
+		AssetListEntry assetListEntry4 = _addAssetListEntry(guestGroup);
 
 		_updateLayoutStructureItem(
 			itemId,
@@ -385,9 +385,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 	@Test
 	@TestInfo({"LPD-67912", "LPD-72839"})
-	public void testFormContainerSuccessMessageWithMappedLayout()
-		throws Exception {
-
+	public void testFormContainer() throws Exception {
 		Layout mappedLayout1 = LayoutTestUtil.addTypeContentLayout(group);
 
 		JSONObject jsonObject = ContentLayoutTestUtil.addItemToLayout(
@@ -554,7 +552,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		return importParameterMap;
 	}
 
-	private AssetListEntry _addAssetList(Group group) throws Exception {
+	private AssetListEntry _addAssetListEntry(Group group) throws Exception {
 		return _assetListEntryLocalService.addAssetListEntry(
 			null, TestPropsValues.getUserId(), group.getGroupId(),
 			RandomTestUtil.randomString(),

@@ -252,14 +252,14 @@ public class LiferayMethodDataFetchingProcessor {
 				}
 			}
 
-			Class<?> parameterType = parameter.getType();
+			Class<?> parameterClass = parameter.getType();
 
 			if ((argument instanceof ArrayList<?> listArgument) &&
-				parameterType.isArray()) {
+				parameterClass.isArray()) {
 
 				argument = listArgument.toArray(
 					(Object[])Array.newInstance(
-						parameterType.getComponentType(), 0));
+						parameterClass.getComponentType(), 0));
 			}
 			else if (argument instanceof Map) {
 				ObjectMapper objectMapper = ObjectMapperHolder._objectMapper;

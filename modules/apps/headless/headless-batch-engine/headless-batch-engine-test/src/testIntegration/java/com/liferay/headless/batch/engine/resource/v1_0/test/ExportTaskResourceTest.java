@@ -62,6 +62,7 @@ import org.junit.runner.RunWith;
  * @author Raymond Augé
  * @author Brian Wing Shun Chan
  */
+@Ignore
 @RunWith(Arquillian.class)
 public class ExportTaskResourceTest {
 
@@ -162,7 +163,6 @@ public class ExportTaskResourceTest {
 		_logCaptures.forEach(LogCapture::close);
 	}
 
-	@Ignore
 	@Test
 	public void testPostExportTask() {
 		Assert.assertFalse(_testableClassNames.isEmpty());

@@ -75,21 +75,8 @@ public class CPDefinitionSystemObjectDefinitionManager
 			long primaryKey, String actionId)
 		throws PortalException {
 
-		CPDefinition cpDefinition = _cpDefinitionLocalService.fetchCPDefinition(
-			primaryKey);
-
-		if (cpDefinition == null) {
-			cpDefinition =
-				_cpDefinitionLocalService.getCPDefinitionByCProductId(
-					primaryKey);
-		}
-
-		CommerceCatalog commerceCatalog =
-			_commerceCatalogLocalService.fetchCommerceCatalogByGroupId(
-				cpDefinition.getGroupId());
-
 		_commerceCatalogModelResourcePermission.check(
-			permissionChecker, commerceCatalog, actionId);
+			permissionChecker, _getCommerceCatalog(primaryKey), actionId);
 	}
 
 	@Override
@@ -327,6 +314,16 @@ public class CPDefinitionSystemObjectDefinitionManager
 	}
 
 	@Override
+	public boolean hasModelResourcePermission(
+			long objectDefinitionId, PermissionChecker permissionChecker,
+			long primaryKey, String actionId)
+		throws PortalException {
+
+		return _commerceCatalogModelResourcePermission.contains(
+			permissionChecker, _getCommerceCatalog(primaryKey), actionId);
+	}
+
+	@Override
 	public boolean isEnableLocalization() {
 		return true;
 	}
@@ -361,6 +358,22 @@ public class CPDefinitionSystemObjectDefinitionManager
 		).user(
 			user
 		).build();
+	}
+
+	private CommerceCatalog _getCommerceCatalog(long primaryKey)
+		throws PortalException {
+
+		CPDefinition cpDefinition = _cpDefinitionLocalService.fetchCPDefinition(
+			primaryKey);
+
+		if (cpDefinition == null) {
+			cpDefinition =
+				_cpDefinitionLocalService.getCPDefinitionByCProductId(
+					primaryKey);
+		}
+
+		return _commerceCatalogLocalService.fetchCommerceCatalogByGroupId(
+			cpDefinition.getGroupId());
 	}
 
 	private Product _toProduct(Map<String, Object> values) {

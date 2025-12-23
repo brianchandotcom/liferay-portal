@@ -11,7 +11,6 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.exportimport.configuration.ExportImportServiceConfiguration;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
-import com.liferay.exportimport.content.processor.constants.ExportImportContentProcessorConstants;
 import com.liferay.exportimport.kernel.exception.ExportImportContentProcessorException;
 import com.liferay.exportimport.kernel.exception.ExportImportContentValidationException;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
@@ -54,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Carlos Correa
  */
 @Component(
-	property = ExportImportContentProcessorConstants.CONTENT_PROCESSOR_TYPE + "=" + ExportImportContentProcessorConstants.DOCUMENT_LIBRARY_REFERENCES,
+	property = "content.processor.type=DLReferences",
 	service = ExportImportContentProcessor.class
 )
 public class DLReferencesExportImportContentProcessor

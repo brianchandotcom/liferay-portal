@@ -107,7 +107,7 @@
 			for (Portlet curPortlet : dataSiteLevelPortlets) {
 				PortletDataHandler portletDataHandler = curPortlet.getPortletDataHandlerInstance();
 
-				if (!portletDataHandler.isConfigurationEnabled() || !portletDataHandler.isEnabled(company.getCompanyId()) || !GroupCapabilityUtil.isSupportsPortlet(liveGroup, curPortlet)) {
+				if (!portletDataHandler.isConfigurationEnabled() || !portletDataHandler.isEnabled(company.getCompanyId()) || portletDataHandler.isHidden() || !GroupCapabilityUtil.isSupportsPortlet(liveGroup, curPortlet)) {
 					continue;
 				}
 

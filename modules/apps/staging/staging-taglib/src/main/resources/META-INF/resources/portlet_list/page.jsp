@@ -253,11 +253,13 @@ html = html.trim();
 	>
 		<liferay-ui:message key="for-each-of-the-selected-content-types,-export-their" />
 
-		<span aria-label="<%= LanguageUtil.get(request, "comments-associated-to-object-entries-are-currently-excluded-from-the-export") %>" class="lfr-portal-tooltip ml-1" title="<%= LanguageUtil.get(request, "comments-associated-to-object-entries-are-currently-excluded-from-the-export") %>">
-			<clay:icon
-				symbol="question-circle-full"
-			/>
-		</span>
+		<c:if test='<%= !FeatureFlagManagerUtil.isEnabled(company.getCompanyId(), "LPD-69419") %>'>
+			<span aria-label="<%= LanguageUtil.get(request, "comments-associated-to-object-entries-are-currently-excluded-from-the-export") %>" class="lfr-portal-tooltip ml-1" title="<%= LanguageUtil.get(request, "comments-associated-to-object-entries-are-currently-excluded-from-the-export") %>">
+				<clay:icon
+					symbol="question-circle-full"
+				/>
+			</span>
+		</c:if>
 	</liferay-util:buffer>
 
 	<aui:fieldset cssClass="content-options" label="<%= selectedContentOptionsLabel %>">

@@ -25,6 +25,7 @@ const InfoPanelToggleButton = ({symbol}: {symbol: string}) => {
 		<ClayButtonWithIcon
 			aria-controls={infoPanelId}
 			aria-label={tooltipText}
+			aria-pressed={infoPanelOpen}
 			className={classnames('nav-link nav-link-monospaced', {
 				active: infoPanelOpen,
 			})}

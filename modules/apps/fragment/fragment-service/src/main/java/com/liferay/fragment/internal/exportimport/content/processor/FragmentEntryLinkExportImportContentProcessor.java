@@ -6,7 +6,6 @@
 package com.liferay.fragment.internal.exportimport.content.processor;
 
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
-import com.liferay.exportimport.content.processor.constants.ExportImportContentProcessorConstants;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -134,10 +133,7 @@ public class FragmentEntryLinkExportImportContentProcessor
 				bundleContext,
 				(Class<ExportImportContentProcessor<JSONObject>>)
 					(Class<?>)ExportImportContentProcessor.class,
-				"(" +
-					ExportImportContentProcessorConstants.
-						CONTENT_PROCESSOR_TYPE +
-							"=FragmentEntryLinkEditableValues)");
+				"(content.processor.type=FragmentEntryLinkEditableValues)");
 	}
 
 	private static final String[] _FRAGMENT_ENTRY_PROCESSOR_KEYS = {
@@ -147,9 +143,7 @@ public class FragmentEntryLinkExportImportContentProcessor
 		FragmentEntryProcessorConstants.KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
 	};
 
-	@Reference(
-		target = "(" + ExportImportContentProcessorConstants.CONTENT_PROCESSOR_TYPE + "=" + ExportImportContentProcessorConstants.DOCUMENT_LIBRARY_REFERENCES + ")"
-	)
+	@Reference(target = "(content.processor.type=DLReferences)")
 	private ExportImportContentProcessor<String>
 		_dlReferencesExportImportContentProcessor;
 
@@ -159,9 +153,7 @@ public class FragmentEntryLinkExportImportContentProcessor
 	@Reference
 	private JSONFactory _jsonFactory;
 
-	@Reference(
-		target = "(" + ExportImportContentProcessorConstants.CONTENT_PROCESSOR_TYPE + "=LayoutReferences)"
-	)
+	@Reference(target = "(content.processor.type=LayoutReferences)")
 	private ExportImportContentProcessor<String>
 		_layoutReferencesExportImportContentProcessor;
 

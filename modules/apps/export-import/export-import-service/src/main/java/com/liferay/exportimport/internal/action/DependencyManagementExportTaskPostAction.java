@@ -10,7 +10,6 @@ import com.liferay.batch.engine.action.ExportTaskPostAction;
 import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessorRegistryUtil;
-import com.liferay.exportimport.content.processor.constants.ExportImportContentProcessorConstants;
 import com.liferay.exportimport.internal.lar.ExportImportDescriptorThreadLocal;
 import com.liferay.exportimport.internal.lar.PortletDataContextThreadLocal;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
@@ -142,10 +141,8 @@ public class DependencyManagementExportTaskPostAction
 						StringBundler.concat(
 							"Unable to get the ",
 							ExportImportContentProcessor.class.getSimpleName(),
-							" for \"",
-							ExportImportContentProcessorConstants.
-								CONTENT_PROCESSOR_TYPE,
-							"\"=\"", entry.getKey(), "\""));
+							" for \"content.processor.type=", entry.getKey(),
+							"\""));
 				}
 
 				continue;

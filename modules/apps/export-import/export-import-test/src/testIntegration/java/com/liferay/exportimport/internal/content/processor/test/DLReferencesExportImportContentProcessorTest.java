@@ -11,7 +11,6 @@ import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppHelperLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
-import com.liferay.exportimport.content.processor.constants.ExportImportContentProcessorConstants;
 import com.liferay.exportimport.internal.content.processor.test.util.ExportImportContentProcessorTestUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
@@ -339,9 +338,7 @@ public class DLReferencesExportImportContentProcessorTest {
 		Assert.assertFalse(content, content.contains("[$dl-reference="));
 	}
 
-	@Inject(
-		filter = ExportImportContentProcessorConstants.CONTENT_PROCESSOR_TYPE + "=" + ExportImportContentProcessorConstants.DOCUMENT_LIBRARY_REFERENCES
-	)
+	@Inject(filter = "content.processor.type=DLReferences")
 	private ExportImportContentProcessor<String>
 		_dlReferencesExportImportContentProcessor;
 

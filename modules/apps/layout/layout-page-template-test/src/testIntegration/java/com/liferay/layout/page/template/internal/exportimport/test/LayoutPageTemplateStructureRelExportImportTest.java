@@ -52,6 +52,7 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -86,6 +87,16 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			group.getGroupId(), TestPropsValues.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
+	}
+
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		super.tearDown();
+
+		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Test
@@ -833,27 +844,20 @@ public class LayoutPageTemplateStructureRelExportImportTest
 			Function<JSONObject, JSONObject> function, String itemId)
 		throws Exception {
 
-		try {
-			ServiceContextThreadLocal.pushServiceContext(_serviceContext);
+		LayoutStructure layoutStructure =
+			_layoutStructureProvider.getLayoutStructure(
+				layout.getPlid(), _segmentsExperienceId);
 
-			LayoutStructure layoutStructure =
-				_layoutStructureProvider.getLayoutStructure(
-					layout.getPlid(), _segmentsExperienceId);
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.getLayoutStructureItem(itemId);
 
-			LayoutStructureItem layoutStructureItem =
-				layoutStructure.getLayoutStructureItem(itemId);
+		layoutStructureItem.updateItemConfig(
+			function.apply(layoutStructureItem.getItemConfigJSONObject()));
 
-			layoutStructureItem.updateItemConfig(
-				function.apply(layoutStructureItem.getItemConfigJSONObject()));
-
-			LayoutPageTemplateStructureServiceUtil.
-				updateLayoutPageTemplateStructureData(
-					layout.getGroupId(), layout.getPlid(),
-					_segmentsExperienceId, layoutStructure.toString());
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
-		}
+		LayoutPageTemplateStructureServiceUtil.
+			updateLayoutPageTemplateStructureData(
+				layout.getGroupId(), layout.getPlid(), _segmentsExperienceId,
+				layoutStructure.toString());
 	}
 
 	@Inject

@@ -92,6 +92,19 @@ public abstract class BaseSystemObjectDefinitionManager
 	}
 
 	@Override
+	public boolean hasModelResourcePermission(
+			long objectDefinitionId, PermissionChecker permissionChecker,
+			long primaryKey, String actionId)
+		throws PortalException {
+
+		ModelResourcePermission<ObjectEntry> modelResourcePermission =
+			objectEntryService.getModelResourcePermission(objectDefinitionId);
+
+		return modelResourcePermission.contains(
+			permissionChecker, primaryKey, actionId);
+	}
+
+	@Override
 	public long upsertBaseModel(
 			String externalReferenceCode, long companyId, User user,
 			Map<String, Object> values)

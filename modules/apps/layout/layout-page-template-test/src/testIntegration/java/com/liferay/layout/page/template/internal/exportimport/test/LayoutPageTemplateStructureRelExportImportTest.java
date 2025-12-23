@@ -242,16 +242,14 @@ public class LayoutPageTemplateStructureRelExportImportTest
 			itemConfigJSONObject -> {
 				itemConfigJSONObject.put(
 					"link",
-					_getMappedLinkJSONObject(
-						0, externalReferenceCode, null));
+					_getMappedLinkJSONObject(0, externalReferenceCode, null));
 
 				JSONObject stylesJSONObject =
 					itemConfigJSONObject.getJSONObject("styles");
 
 				stylesJSONObject.put(
 					"backgroundImage",
-					_getFileEntryJSONObject(
-						0, externalReferenceCode, null));
+					_getFileEntryJSONObject(0, externalReferenceCode, null));
 
 				return itemConfigJSONObject;
 			});
@@ -695,6 +693,31 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		}
 	}
 
+	private JSONObject _getCollectionJSONObject(
+		long classPK, String externalReferenceCode,
+		String scopeExternalReferenceCode) {
+
+		JSONObject jsonObject = JSONUtil.put(
+			"type",
+			"com.liferay.item.selector.criteria." +
+				"InfoListItemSelectorReturnType");
+
+		if (classPK > 0) {
+			jsonObject.put("classPK", classPK);
+		}
+
+		if (Validator.isNotNull(externalReferenceCode)) {
+			jsonObject.put("externalReferenceCode", externalReferenceCode);
+		}
+
+		if (Validator.isNotNull(scopeExternalReferenceCode)) {
+			jsonObject.put(
+				"scopeExternalReferenceCode", scopeExternalReferenceCode);
+		}
+
+		return jsonObject;
+	}
+
 	private JSONObject _getFileEntryJSONObject(
 		long classPK, String externalReferenceCode,
 		String scopeExternalReferenceCode) {
@@ -718,31 +741,6 @@ public class LayoutPageTemplateStructureRelExportImportTest
 			"type",
 			"com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType"
 		);
-
-		if (classPK > 0) {
-			jsonObject.put("classPK", classPK);
-		}
-
-		if (Validator.isNotNull(externalReferenceCode)) {
-			jsonObject.put("externalReferenceCode", externalReferenceCode);
-		}
-
-		if (Validator.isNotNull(scopeExternalReferenceCode)) {
-			jsonObject.put(
-				"scopeExternalReferenceCode", scopeExternalReferenceCode);
-		}
-
-		return jsonObject;
-	}
-
-	private JSONObject _getCollectionJSONObject(
-		long classPK, String externalReferenceCode,
-		String scopeExternalReferenceCode) {
-
-		JSONObject jsonObject = JSONUtil.put(
-			"type",
-			"com.liferay.item.selector.criteria." +
-				"InfoListItemSelectorReturnType");
 
 		if (classPK > 0) {
 			jsonObject.put("classPK", classPK);
@@ -793,16 +791,6 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		return jsonObject;
 	}
 
-	private JSONObject _getMappedLinkJSONObject(
-		long classPK, String externalReferenceCode,
-		String scopeExternalReferenceCode) {
-
-		JSONObject jsonObject = _getFileEntryJSONObject(
-			classPK, externalReferenceCode, scopeExternalReferenceCode);
-
-		return jsonObject.put("fieldId", "FileEntry_title");
-	}
-
 	private LayoutStructureItem _getLayoutStructureItem(
 		String itemId, long plid) {
 
@@ -815,6 +803,16 @@ public class LayoutPageTemplateStructureRelExportImportTest
 				plid, segmentsExperienceId);
 
 		return layoutStructure.getLayoutStructureItem(itemId);
+	}
+
+	private JSONObject _getMappedLinkJSONObject(
+		long classPK, String externalReferenceCode,
+		String scopeExternalReferenceCode) {
+
+		JSONObject jsonObject = _getFileEntryJSONObject(
+			classPK, externalReferenceCode, scopeExternalReferenceCode);
+
+		return jsonObject.put("fieldId", "FileEntry_title");
 	}
 
 	private byte[] _read(String fileName) throws Exception {

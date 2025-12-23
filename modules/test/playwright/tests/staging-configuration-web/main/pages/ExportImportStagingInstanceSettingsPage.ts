@@ -46,7 +46,7 @@ export class ExportImportStagingInstanceSettingsPage {
 		label: string;
 	}) {
 		await this.instanceSettingsPage.checkOption(label, checked);
-		await this.instanceSettingsPage.saveButton.click();
+		await this.instanceSettingsPage.saveAndWaitForAlert();
 	}
 
 	async resetDefaultValues() {

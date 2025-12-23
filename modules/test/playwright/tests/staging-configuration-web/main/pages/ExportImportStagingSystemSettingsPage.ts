@@ -46,7 +46,7 @@ export class ExportImportStagingSystemSettingsPage {
 		label: string;
 	}) {
 		await this.systemSettingsPage.checkOption(label, checked);
-		await this.systemSettingsPage.saveButton.click();
+		await this.systemSettingsPage.saveAndWaitForAlert();
 	}
 
 	async resetDefaultValues() {

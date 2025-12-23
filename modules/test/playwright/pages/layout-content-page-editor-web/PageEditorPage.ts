@@ -155,10 +155,12 @@ export class PageEditorPage {
 		actions,
 		conditions,
 		name,
+		saveRule = true,
 	}: {
 		actions: {label: string; option: string}[][];
 		conditions: {label: string; option: string}[][];
 		name: string;
+		saveRule?: boolean;
 	}) {
 		const addActionOrCondition = async ({index, label, option}) => {
 			const trigger = this.page.getByLabel(label).nth(index);
@@ -209,12 +211,16 @@ export class PageEditorPage {
 			}
 		}
 
-		await modal.getByRole('button', {exact: true, name: 'Save'}).click();
+		if (saveRule) {
+			await modal
+				.getByRole('button', {exact: true, name: 'Save'})
+				.click();
 
-		await waitForAlert(
-			this.page,
-			'Success:The rule was created successfully.'
-		);
+			await waitForAlert(
+				this.page,
+				'Success:The rule was created successfully.'
+			);
+		}
 	}
 
 	async addRandomRuleAction() {

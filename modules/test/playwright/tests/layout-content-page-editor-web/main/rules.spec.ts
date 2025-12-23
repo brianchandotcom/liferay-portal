@@ -943,3 +943,226 @@ test(
 		await expect(rule.nth(2)).toContainText('Orange Rule');
 	}
 );
+
+test(
+	'Apply an advanced page rule checking the role of the user',
+	{
+		tag: ['@LPD-23884'],
+	},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+
+		// Create content page with a heading and a button fragment and go to edit mode
+
+		const buttonDefinition = getFragmentDefinition({
+			id: getRandomString(),
+			key: 'BASIC_COMPONENT-button',
+		});
+
+		const headingDefinition = getFragmentDefinition({
+			id: getRandomString(),
+			key: 'BASIC_COMPONENT-heading',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				buttonDefinition,
+				headingDefinition,
+			]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Create new rule to hide button for Guest Users
+
+		const condition = [
+			{label: 'Select Item for the Condition', option: 'User'},
+			{label: 'Select Condition', option: 'Has the Role Of'},
+			{label: 'Select Role', option: 'User'},
+		];
+
+		const action = [
+			{label: 'Select Action', option: 'Hide'},
+			{label: 'Select Fragment for the Action', option: 'Button'},
+		];
+
+		await pageEditorPage.addRule({
+			actions: [action],
+			conditions: [condition],
+			name: getRandomString(),
+			saveRule: false,
+		});
+
+		// Convert the rule to advanced
+
+		const rulesModal = page.locator('.modal-dialog');
+
+		await rulesModal.getByRole('button', {name: 'Advanced'}).click();
+
+		await expect(page.getByText('contains(roleIds,')).toBeVisible();
+
+		// Save the rule
+
+		await rulesModal
+			.getByRole('button', {exact: true, name: 'Save'})
+			.click();
+
+		await waitForAlert(page, 'Success:The rule was created successfully.');
+
+		// Publish the page
+
+		await pageEditorPage.publishPage();
+
+		// Assert rule works
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+		await expect(page.getByText('Heading Example')).toBeVisible();
+
+		await expect(page.getByText('Go Somewhere')).not.toBeVisible();
+	}
+);
+
+test(
+	'Apply an advanced page rule checking a form input',
+	{
+		tag: '@LPD-23884',
+	},
+	async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+		// Create a page
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		const {className: objectDefinitionClassName} = (
+			await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
+				getObjectERC('All Fields')
+			)
+		).body;
+
+		const checkboxId = getRandomString();
+
+		const checkboxDefinition = getFragmentDefinition({
+			fragmentConfig: {
+				inputFieldId: 'ObjectField_boolean',
+			},
+			id: checkboxId,
+			key: 'INPUTS-checkbox',
+		});
+
+		const submitFragmentDefinition = getFragmentDefinition({
+			id: getRandomString(),
+			key: 'INPUTS-submit-button',
+		});
+
+		const headingFragmentDefinition = getFragmentDefinition({
+			id: getRandomString(),
+			key: 'BASIC_COMPONENT-heading',
+		});
+
+		const formDefinition = getFormContainerDefinition({
+			id: getRandomString(),
+			objectDefinitionClassName,
+			pageElements: [checkboxDefinition, submitFragmentDefinition],
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				formDefinition,
+				headingFragmentDefinition,
+			]),
+			siteId: pageManagementSite.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+		// Create new rule with a condition when the checkbox is checked, and actions
+		// to disable the submit button and hide the header
+
+		const firstAction = [
+			{label: 'Select Action', option: 'Disable'},
+			{
+				label: 'Select Fragment for the Action',
+				option: 'Form Button',
+			},
+		];
+
+		const secondAction = [
+			{label: 'Select Action', option: 'Hide'},
+			{label: 'Select Fragment for the Action', option: 'Heading'},
+		];
+
+		const condition = [
+			{
+				label: 'Select Item for the Condition',
+				option: 'Form Fragment',
+			},
+			{
+				label: 'Select Fragment for the Condition',
+				option: 'Checkbox',
+			},
+			{label: 'Select Type', option: 'Is Equal To'},
+			{label: 'Select Value', option: 'True'},
+		];
+
+		await pageEditorPage.addRule({
+			actions: [firstAction, secondAction],
+			conditions: [condition],
+			name: getRandomString(),
+			saveRule: false,
+		});
+
+		// Convert the rule to advanced
+
+		const rulesModal = page.locator('.modal-dialog');
+
+		await rulesModal.getByRole('button', {name: 'Advanced'}).click();
+
+		await expect(page.getByText('input__')).toBeVisible();
+
+		// Save the rule
+
+		await rulesModal
+			.getByRole('button', {exact: true, name: 'Save'})
+			.click();
+
+		await waitForAlert(page, 'Success:The rule was created successfully.');
+
+		// Publish the page
+
+		await pageEditorPage.publishPage();
+
+		// Assert rule works
+
+		await page.goto(
+			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
+
+		// Wait for rules to be loaded
+
+		await page.waitForTimeout(1000);
+
+		// Check the checkbox and assert the submit button is disabled and the heading is hidden
+
+		await page.getByLabel('Boolean (Read Only)', {exact: true}).check();
+
+		await expect(page.getByRole('button', {name: 'Submit'})).toBeDisabled();
+
+		await expect(
+			page.getByText('Heading Example', {exact: true})
+		).not.toBeVisible();
+
+		// Uncheck the checkbox and assert the submit button is enabled and the heading is visible
+
+		await page.getByLabel('Boolean (Read Only)', {exact: true}).uncheck();
+
+		await expect(page.getByRole('button', {name: 'Submit'})).toBeEnabled();
+
+		await expect(
+			page.getByText('Heading Example', {exact: true})
+		).toBeVisible();
+	}
+);

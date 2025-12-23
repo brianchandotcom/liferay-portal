@@ -345,20 +345,18 @@ public class OrphanReferencesDataCleanupUtil {
 		sb.append(targetTableName);
 		sb.append(" where (");
 
-		int index = 0;
-
-		for (String targetColumnName : targetColumnNames) {
+		for (int i = 0; i < targetColumnNames.length; i++) {
 			sb.append(targetTableName);
 			sb.append(StringPool.PERIOD);
-			sb.append(targetColumnName);
+			sb.append(targetColumnNames[i]);
 			sb.append(" = ");
 
 			if ((customJoinClauses != null) &&
-				(customJoinClauses[index] != null)) {
+				(customJoinClauses[i] != null)) {
 
 				sb.append(
 					StringUtil.replace(
-						customJoinClauses[index], "[$TARGET_TABLE_ALIAS$]",
+						customJoinClauses[i], "[$TARGET_TABLE_ALIAS$]",
 						targetTableName));
 			}
 			else {
@@ -368,8 +366,6 @@ public class OrphanReferencesDataCleanupUtil {
 			}
 
 			sb.append(" or ");
-
-			index++;
 		}
 
 		sb.setIndex(sb.index() - 1);

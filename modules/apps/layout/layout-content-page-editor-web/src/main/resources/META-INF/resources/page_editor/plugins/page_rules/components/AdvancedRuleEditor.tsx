@@ -31,6 +31,7 @@ import useCache from '../../../app/utils/useCache';
 import {visitSelectedInputLayoutDataItems} from '../../../app/utils/visitSelectedInputLayoutDataItems';
 import {State} from '../../../types/State';
 import {FragmentLayoutDataItem} from '../../../types/layout_data/FragmentLayoutDataItem';
+import {filterAndConvertMappingFields} from './Condition';
 
 type Props = {
 	onChange: (value: string | undefined) => void;
@@ -150,24 +151,19 @@ async function getFormFieldsSections(state: State) {
 	if (config.selectedMappingTypes) {
 		const {subtype, type} = config.selectedMappingTypes;
 
-		const fields =
+		const mappingFields =
 			(await InfoItemService.getAvailableStructureMappingFields({
 				classNameId: type.id,
-				classTypeId: subtype.id,
+				classTypeId: subtype ? subtype.id : '',
 			})) as ObjectFields;
 
-		const items = fields
-			.filter((field) => field.label === type.label)
-			.flatMap((field) => ('fields' in field ? field.fields : [field]))
-			.map((field) => {
+		sections.push({
+			items: filterAndConvertMappingFields(mappingFields).map((field) => {
 				return {
-					content: (field as ObjectField).key,
+					content: field.value,
 					label: field.label,
 				};
-			});
-
-		sections.push({
-			items,
+			}),
 			label: sub(
 				Liferay.Language.get('x-default'),
 				config.selectedMappingTypes.subtype

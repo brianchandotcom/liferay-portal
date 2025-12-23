@@ -8,7 +8,7 @@ export default function getMappingFieldsKey(item) {
 	// Display page structures
 
 	if (item.type?.id) {
-		return `${item.type.id}-${item.subtype.id || 0}`;
+		return `${item.type.id}-${item.subtype?.id || 0}`;
 	}
 
 	// Collection Providers

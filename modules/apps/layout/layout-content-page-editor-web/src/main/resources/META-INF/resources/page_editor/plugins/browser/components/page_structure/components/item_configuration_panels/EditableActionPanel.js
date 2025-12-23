@@ -230,7 +230,7 @@ function InteractionSelector({
 		const {selectedMappingTypes} = config;
 		mappingIds = {
 			classNameId: selectedMappingTypes.type.id,
-			classTypeId: selectedMappingTypes.subtype.id,
+			classTypeId: selectedMappingTypes.subtype?.id,
 		};
 	}
 	else {

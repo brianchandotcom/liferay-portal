@@ -41,8 +41,10 @@ export default function resolveEditableValue(
 
 	return ImageService.getFileEntry({
 		fileEntryId: localizedEditableValue.fileEntryId,
-	}).then(({fileEntryURL}) => ({
-		...localizedEditableValue,
-		url: fileEntryURL,
-	})).catch(() => localizedEditableValue);
+	})
+		.then(({fileEntryURL}) => ({
+			...localizedEditableValue,
+			url: fileEntryURL,
+		}))
+		.catch(() => localizedEditableValue);
 }

@@ -42,7 +42,6 @@ import java.util.function.Supplier;
 import org.apache.http.HttpHost;
 
 import org.elasticsearch.client.RestClient;
-import org.elasticsearch.client.RestHighLevelClient;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -303,23 +302,6 @@ public class ElasticsearchConnectionManager
 	@Override
 	public int getPriority() {
 		return 2;
-	}
-
-	@Override
-	public RestHighLevelClient getRestHighLevelClient() {
-		return null;
-	}
-
-	@Override
-	public RestHighLevelClient getRestHighLevelClient(String connectionId) {
-		return null;
-	}
-
-	@Override
-	public RestHighLevelClient getRestHighLevelClient(
-		String connectionId, boolean preferLocalCluster) {
-
-		return null;
 	}
 
 	public boolean isCrossClusterReplicationEnabled() {

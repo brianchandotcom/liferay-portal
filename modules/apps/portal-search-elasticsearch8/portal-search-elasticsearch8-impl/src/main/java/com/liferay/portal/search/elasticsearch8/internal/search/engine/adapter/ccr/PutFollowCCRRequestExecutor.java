@@ -5,18 +5,16 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.ccr;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.ccr.ElasticsearchCcrClient;
+import co.elastic.clients.elasticsearch.ccr.FollowRequest;
+import co.elastic.clients.elasticsearch.ccr.FollowResponse;
+
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.ccr.PutFollowCCRRequest;
 import com.liferay.portal.search.engine.adapter.ccr.PutFollowCCRResponse;
 
 import java.io.IOException;
-
-import org.elasticsearch.action.support.ActiveShardCount;
-import org.elasticsearch.client.CcrClient;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.client.ccr.PutFollowRequest;
-import org.elasticsearch.client.ccr.PutFollowResponse;
 
 /**
  * @author Bryan Engler
@@ -32,49 +30,45 @@ public class PutFollowCCRRequestExecutor {
 	public PutFollowCCRResponse execute(
 		PutFollowCCRRequest putFollowCCRRequest) {
 
-		PutFollowRequest putFollowRequest = _createPutFollowRequest(
-			putFollowCCRRequest);
-
-		PutFollowResponse putFollowResponse = _getPutFollowResponse(
-			putFollowRequest, putFollowCCRRequest);
+		FollowResponse followResponse = _getFollowResponse(
+			_createFollowRequest(putFollowCCRRequest), putFollowCCRRequest);
 
 		return new PutFollowCCRResponse(
-			putFollowResponse.isFollowIndexCreated(),
-			putFollowResponse.isIndexFollowingStarted());
+			followResponse.followIndexCreated(),
+			followResponse.indexFollowingStarted());
 	}
 
-	private PutFollowRequest _createPutFollowRequest(
+	private FollowRequest _createFollowRequest(
 		PutFollowCCRRequest putFollowCCRRequest) {
 
+		FollowRequest.Builder builder = new FollowRequest.Builder();
+
+		builder.remoteCluster(putFollowCCRRequest.getRemoteClusterAlias());
+		builder.leaderIndex(putFollowCCRRequest.getLeaderIndexName());
+		builder.index(putFollowCCRRequest.getFollowerIndexName());
+
 		if (putFollowCCRRequest.getWaitForActiveShards() != 0) {
-			return new PutFollowRequest(
-				putFollowCCRRequest.getRemoteClusterAlias(),
-				putFollowCCRRequest.getLeaderIndexName(),
-				putFollowCCRRequest.getFollowerIndexName(),
-				ActiveShardCount.from(
+			builder.waitForActiveShards(
+				waitForActiveShards -> waitForActiveShards.count(
 					putFollowCCRRequest.getWaitForActiveShards()));
 		}
 
-		return new PutFollowRequest(
-			putFollowCCRRequest.getRemoteClusterAlias(),
-			putFollowCCRRequest.getLeaderIndexName(),
-			putFollowCCRRequest.getFollowerIndexName());
+		return builder.build();
 	}
 
-	private PutFollowResponse _getPutFollowResponse(
-		PutFollowRequest putFollowRequest,
-		PutFollowCCRRequest putFollowCCRRequest) {
+	private FollowResponse _getFollowResponse(
+		FollowRequest followRequest, PutFollowCCRRequest putFollowCCRRequest) {
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
 				putFollowCCRRequest.getConnectionId(),
 				putFollowCCRRequest.isPreferLocalCluster());
 
-		CcrClient ccrClient = restHighLevelClient.ccr();
+		ElasticsearchCcrClient elasticsearchCcrClient =
+			elasticsearchClient.ccr();
 
 		try {
-			return ccrClient.putFollow(
-				putFollowRequest, RequestOptions.DEFAULT);
+			return elasticsearchCcrClient.follow(followRequest);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

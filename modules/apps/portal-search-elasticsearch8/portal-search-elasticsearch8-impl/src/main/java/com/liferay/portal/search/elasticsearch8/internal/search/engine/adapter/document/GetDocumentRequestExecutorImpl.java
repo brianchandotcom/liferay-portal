@@ -5,20 +5,20 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.document;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.core.GetRequest;
+import co.elastic.clients.elasticsearch.core.GetResponse;
+import co.elastic.clients.json.JsonData;
+
 import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
-import com.liferay.portal.search.elasticsearch8.internal.document.DocumentFieldsTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.document.FieldsTranslator;
 import com.liferay.portal.search.engine.adapter.document.GetDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.GetDocumentResponse;
 import com.liferay.portal.search.geolocation.GeoBuilders;
 
 import java.io.IOException;
-
-import org.elasticsearch.action.get.GetRequest;
-import org.elasticsearch.action.get.GetResponse;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,46 +32,43 @@ public class GetDocumentRequestExecutorImpl
 
 	@Override
 	public GetDocumentResponse execute(GetDocumentRequest getDocumentRequest) {
-		GetRequest getRequest =
-			_elasticsearchBulkableDocumentRequestTranslator.translate(
-				getDocumentRequest);
-
-		GetResponse getResponse = _getGetResponse(
-			getRequest, getDocumentRequest);
+		GetResponse<JsonData> getResponse = _getGetResponse(
+			getDocumentRequest,
+			_elasticsearchDocumentRequestTranslator.translate(
+				getDocumentRequest));
 
 		GetDocumentResponse getDocumentResponse = new GetDocumentResponse(
-			getResponse.isExists());
+			getResponse.found());
 
-		if (!getResponse.isExists()) {
+		if (!getResponse.found()) {
 			return getDocumentResponse;
 		}
 
-		getDocumentResponse.setSource(getResponse.getSourceAsString());
-		getDocumentResponse.setVersion(getResponse.getVersion());
-
-		DocumentFieldsTranslator documentFieldsTranslator =
-			new DocumentFieldsTranslator(_geoBuilders);
-
 		DocumentBuilder documentBuilder = _documentBuilderFactory.builder();
 
-		documentFieldsTranslator.translate(
-			documentBuilder, getResponse.getSourceAsMap());
+		JsonData jsonData = getResponse.source();
+
+		FieldsTranslator fieldsTranslator = new FieldsTranslator(_geoBuilders);
+
+		fieldsTranslator.translateSource(documentBuilder, jsonData);
 
 		getDocumentResponse.setDocument(documentBuilder.build());
+		getDocumentResponse.setSource(jsonData.toString());
+		getDocumentResponse.setVersion(getResponse.version());
 
 		return getDocumentResponse;
 	}
 
-	private GetResponse _getGetResponse(
-		GetRequest getRequest, GetDocumentRequest getDocumentRequest) {
+	private GetResponse<JsonData> _getGetResponse(
+		GetDocumentRequest getDocumentRequest, GetRequest getRequest) {
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
 				getDocumentRequest.getConnectionId(),
 				getDocumentRequest.isPreferLocalCluster());
 
 		try {
-			return restHighLevelClient.get(getRequest, RequestOptions.DEFAULT);
+			return elasticsearchClient.get(getRequest, JsonData.class);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -81,12 +78,12 @@ public class GetDocumentRequestExecutorImpl
 	@Reference
 	private DocumentBuilderFactory _documentBuilderFactory;
 
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
-	private ElasticsearchBulkableDocumentRequestTranslator
-		_elasticsearchBulkableDocumentRequestTranslator;
-
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
+
+	@Reference(target = "(search.engine.impl=Elasticsearch)")
+	private ElasticsearchDocumentRequestTranslator
+		_elasticsearchDocumentRequestTranslator;
 
 	@Reference
 	private GeoBuilders _geoBuilders;

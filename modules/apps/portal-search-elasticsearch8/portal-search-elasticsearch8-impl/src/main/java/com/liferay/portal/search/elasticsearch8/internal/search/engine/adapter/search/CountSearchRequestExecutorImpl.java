@@ -5,6 +5,14 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.search;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.core.SearchRequest;
+import co.elastic.clients.elasticsearch.core.SearchResponse;
+import co.elastic.clients.elasticsearch.core.search.HitsMetadata;
+import co.elastic.clients.elasticsearch.core.search.TotalHits;
+import co.elastic.clients.elasticsearch.core.search.TrackHits;
+import co.elastic.clients.json.JsonData;
+
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -14,15 +22,6 @@ import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
 
 import java.io.IOException;
-
-import org.apache.lucene.search.TotalHits;
-
-import org.elasticsearch.action.search.SearchRequest;
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.search.SearchHits;
-import org.elasticsearch.search.builder.SearchSourceBuilder;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -36,21 +35,16 @@ public class CountSearchRequestExecutorImpl
 
 	@Override
 	public CountSearchResponse execute(CountSearchRequest countSearchRequest) {
-		SearchRequest searchRequest = new SearchRequest(
-			countSearchRequest.getIndexNames());
+		SearchRequest.Builder builder = new SearchRequest.Builder();
 
-		if (countSearchRequest.isRequestCache()) {
-			searchRequest.requestCache(countSearchRequest.isRequestCache());
-		}
+		_commonSearchRequestBuilderAssembler.assemble(
+			countSearchRequest, builder);
 
-		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-
-		_commonSearchSourceBuilderAssembler.assemble(
-			searchSourceBuilder, countSearchRequest, searchRequest);
-
-		searchSourceBuilder.size(0);
-		searchSourceBuilder.trackScores(false);
-		searchSourceBuilder.trackTotalHits(true);
+		builder.requestCache(countSearchRequest.isRequestCache());
+		builder.size(0);
+		builder.trackScores(false);
+		builder.trackTotalHits(
+			TrackHits.of(trackHits -> trackHits.enabled(true)));
 
 		String indexNames = ArrayUtil.toString(
 			countSearchRequest.getIndexNames(), "");
@@ -63,7 +57,7 @@ public class CountSearchRequestExecutorImpl
 		}
 
 		String searchRequestString = DebugStringsUtil.getSearchRequestString(
-			searchSourceBuilder);
+			builder);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -72,20 +66,22 @@ public class CountSearchRequestExecutorImpl
 					searchRequestString));
 		}
 
-		SearchResponse searchResponse = getSearchResponse(
-			searchRequest, countSearchRequest);
-
-		SearchHits searchHits = searchResponse.getHits();
-
 		CountSearchResponse countSearchResponse = new CountSearchResponse();
 
-		TotalHits totalHits = searchHits.getTotalHits();
+		SearchRequest searchRequest = builder.build();
 
-		countSearchResponse.setCount(totalHits.value);
+		SearchResponse<JsonData> searchResponse = getSearchResponse(
+			countSearchRequest, searchRequest);
+
+		HitsMetadata<JsonData> hitsMetadata = searchResponse.hits();
+
+		TotalHits totalHits = hitsMetadata.total();
+
+		countSearchResponse.setCount(totalHits.value());
 
 		_commonSearchResponseAssembler.assemble(
-			countSearchRequest, countSearchResponse, searchRequestString,
-			searchResponse);
+			countSearchRequest, countSearchResponse, searchResponse,
+			searchRequestString);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -97,17 +93,16 @@ public class CountSearchRequestExecutorImpl
 		return countSearchResponse;
 	}
 
-	protected SearchResponse getSearchResponse(
-		SearchRequest searchRequest, CountSearchRequest countSearchRequest) {
+	protected SearchResponse<JsonData> getSearchResponse(
+		CountSearchRequest countSearchRequest, SearchRequest searchRequest) {
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
 				countSearchRequest.getConnectionId(),
 				countSearchRequest.isPreferLocalCluster());
 
 		try {
-			return restHighLevelClient.search(
-				searchRequest, RequestOptions.DEFAULT);
+			return elasticsearchClient.search(searchRequest, JsonData.class);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -118,11 +113,11 @@ public class CountSearchRequestExecutorImpl
 		CountSearchRequestExecutorImpl.class);
 
 	@Reference
-	private CommonSearchResponseAssembler _commonSearchResponseAssembler;
+	private CommonSearchRequestBuilderAssembler
+		_commonSearchRequestBuilderAssembler;
 
 	@Reference
-	private CommonSearchSourceBuilderAssembler
-		_commonSearchSourceBuilderAssembler;
+	private CommonSearchResponseAssembler _commonSearchResponseAssembler;
 
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;

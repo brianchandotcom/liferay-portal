@@ -53,7 +53,7 @@ public class OpenIndexRequestExecutor {
 
 		if (openIndexRequest.getTimeout() > 0) {
 			Time time = Time.of(
-				openSearchTime -> openSearchTime.time(
+				elasticsearchTime -> elasticsearchTime.time(
 					openIndexRequest.getTimeout() +
 						TimeUnit.Milliseconds.jsonValue()));
 

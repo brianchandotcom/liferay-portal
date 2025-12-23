@@ -5,21 +5,23 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.facet;
 
+import co.elastic.clients.elasticsearch._types.aggregations.Buckets;
+import co.elastic.clients.elasticsearch._types.aggregations.RangeBucket;
+
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 
 import java.util.List;
-
-import org.elasticsearch.search.aggregations.bucket.range.Range;
 
 /**
  * @author André de Oliveira
  */
 public class RangeFacetCollector implements FacetCollector {
 
-	public RangeFacetCollector(Range range) {
-		_fieldName = range.getName();
-		_termCollectorHolder = getTermCollectorHolder(range);
+	public RangeFacetCollector(Buckets<RangeBucket> buckets, String fieldName) {
+		_fieldName = fieldName;
+
+		_termCollectorHolder = getTermCollectorHolder(buckets);
 	}
 
 	@Override
@@ -37,15 +39,17 @@ public class RangeFacetCollector implements FacetCollector {
 		return _termCollectorHolder.getTermCollectors();
 	}
 
-	protected TermCollectorHolder getTermCollectorHolder(Range range) {
-		List<? extends Range.Bucket> buckets = range.getBuckets();
+	protected TermCollectorHolder getTermCollectorHolder(
+		Buckets<RangeBucket> buckets) {
+
+		List<RangeBucket> rangeBuckets = buckets.array();
 
 		TermCollectorHolder termCollectorHolder = new TermCollectorHolder(
-			buckets.size());
+			rangeBuckets.size());
 
-		for (Range.Bucket bucket : buckets) {
+		for (RangeBucket rangeBucket : rangeBuckets) {
 			termCollectorHolder.add(
-				bucket.getKeyAsString(), (int)bucket.getDocCount());
+				rangeBucket.key(), (int)rangeBucket.docCount());
 		}
 
 		return termCollectorHolder;

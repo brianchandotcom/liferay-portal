@@ -11,6 +11,7 @@ import co.elastic.clients.elasticsearch._types.mapping.Property;
 import co.elastic.clients.elasticsearch.indices.ElasticsearchIndicesClient;
 import co.elastic.clients.elasticsearch.indices.PutMappingRequest;
 import co.elastic.clients.elasticsearch.indices.PutMappingResponse;
+import co.elastic.clients.util.NamedValue;
 
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -42,7 +43,7 @@ public class PutMappingIndexRequestExecutor {
 	public PutMappingIndexResponse execute(
 		PutMappingIndexRequest putMappingIndexRequest) {
 
-		PutMappingResponse putMappingResponse = getPutMappingResponse(
+		PutMappingResponse putMappingResponse = _getPutMappingResponse(
 			putMappingIndexRequest,
 			createPutMappingRequest(putMappingIndexRequest));
 
@@ -58,11 +59,11 @@ public class PutMappingIndexRequestExecutor {
 			JSONObject mappingJSONObject = _jsonFactory.createJSONObject(
 				putMappingIndexRequest.getMapping());
 
-			List<Map<String, DynamicTemplate>> dynamicTemplates =
-				IndexUtil.getDynamicTemplatesMap(mappingJSONObject);
+			List<NamedValue<DynamicTemplate>> dynamicTemplates =
+				IndexUtil.getDynamicTemplatesList(mappingJSONObject);
 
 			if (dynamicTemplates != null) {
-				builder.dynamicTemplates(null);
+				builder.dynamicTemplates(dynamicTemplates);
 			}
 
 			builder.index(
@@ -82,7 +83,7 @@ public class PutMappingIndexRequestExecutor {
 		}
 	}
 
-	protected PutMappingResponse getPutMappingResponse(
+	private PutMappingResponse _getPutMappingResponse(
 		PutMappingIndexRequest putMappingIndexRequest,
 		PutMappingRequest putMappingRequest) {
 

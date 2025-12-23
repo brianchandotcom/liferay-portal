@@ -5,6 +5,17 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.facet;
 
+import co.elastic.clients.elasticsearch._types.SortOrder;
+import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
+import co.elastic.clients.elasticsearch._types.aggregations.AggregationBuilders;
+import co.elastic.clients.elasticsearch._types.aggregations.TermsAggregation;
+import co.elastic.clients.elasticsearch._types.aggregations.TermsInclude;
+import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.QueryBuilders;
+import co.elastic.clients.elasticsearch._types.query_dsl.QueryVariant;
+import co.elastic.clients.elasticsearch.core.SearchRequest;
+import co.elastic.clients.util.NamedValue;
+
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -24,17 +35,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import org.elasticsearch.action.search.SearchRequestBuilder;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.aggregations.AggregationBuilder;
-import org.elasticsearch.search.aggregations.AggregationBuilders;
-import org.elasticsearch.search.aggregations.BucketOrder;
-import org.elasticsearch.search.aggregations.bucket.terms.IncludeExclude;
-import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
-import org.elasticsearch.search.builder.SearchSourceBuilder;
-
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -49,8 +49,8 @@ public class DefaultFacetTranslator implements FacetTranslator {
 
 	@Override
 	public void translate(
-		SearchSourceBuilder searchSourceBuilder, Query query,
-		Map<String, Facet> facetsMap, boolean basicFacetSelection) {
+		boolean basicFacetSelection, Map<String, Facet> facetsMap, Query query,
+		SearchRequest.Builder searchRequestBuilder) {
 
 		if (MapUtil.isEmpty(facetsMap)) {
 			return;
@@ -61,11 +61,13 @@ public class DefaultFacetTranslator implements FacetTranslator {
 		FacetProcessorContext facetProcessorContext = _getFacetProcessorContext(
 			facets, basicFacetSelection);
 
-		List<QueryBuilder> postFilterQueryBuilders = new ArrayList<>();
+		List<co.elastic.clients.elasticsearch._types.query_dsl.Query>
+			postFilterQueries = new ArrayList<>();
 
 		if ((query != null) && (query.getPostFilter() != null)) {
-			postFilterQueryBuilders.add(
-				_filterTranslator.translate(query.getPostFilter(), null));
+			postFilterQueries.add(
+				new co.elastic.clients.elasticsearch._types.query_dsl.Query(
+					_filterTranslator.translate(query.getPostFilter(), null)));
 		}
 
 		for (Facet facet : facets) {
@@ -77,31 +79,36 @@ public class DefaultFacetTranslator implements FacetTranslator {
 				facet.getFacetFilterBooleanClause();
 
 			if (booleanClause != null) {
-				QueryBuilder postFilterQueryBuilder = _translateBooleanClause(
-					booleanClause);
+				co.elastic.clients.elasticsearch._types.query_dsl.Query
+					postFilterQuery = _getPostFilterQuery(booleanClause);
 
-				if (postFilterQueryBuilder != null) {
-					postFilterQueryBuilders.add(postFilterQueryBuilder);
+				if (postFilterQuery != null) {
+					postFilterQueries.add(postFilterQuery);
 				}
 			}
 
-			AggregationBuilder aggregationBuilder = _processFacet(facet);
+			Aggregation.Builder.ContainerBuilder containerBuilder =
+				_processFacet(facet);
 
-			if (aggregationBuilder != null) {
-				AggregationBuilder postProcessAggregationBuilder =
-					postProcessAggregationBuilder(
-						aggregationBuilder, facetProcessorContext);
+			if (containerBuilder == null) {
+				continue;
+			}
 
-				if (postProcessAggregationBuilder != null) {
-					searchSourceBuilder.aggregation(
-						postProcessAggregationBuilder);
-				}
+			String facetName = FacetUtil.getAggregationName(facet);
+
+			Aggregation.Builder.ContainerBuilder postProcessContainerBuilder =
+				postProcessAggregation(
+					containerBuilder, facetName, facetProcessorContext);
+
+			if (postProcessContainerBuilder != null) {
+				searchRequestBuilder.aggregations(
+					facetName, postProcessContainerBuilder.build());
 			}
 		}
 
-		if (ListUtil.isNotEmpty(postFilterQueryBuilders)) {
-			searchSourceBuilder.postFilter(
-				_getPostFilter(postFilterQueryBuilders));
+		if (ListUtil.isNotEmpty(postFilterQueries)) {
+			searchRequestBuilder.postFilter(
+				_getPostFilterQuery(postFilterQueries));
 		}
 	}
 
@@ -125,16 +132,16 @@ public class DefaultFacetTranslator implements FacetTranslator {
 		_serviceTrackerMap.close();
 	}
 
-	protected AggregationBuilder postProcessAggregationBuilder(
-		AggregationBuilder aggregationBuilder,
+	protected Aggregation.Builder.ContainerBuilder postProcessAggregation(
+		Aggregation.Builder.ContainerBuilder containerBuilder, String facetName,
 		FacetProcessorContext facetProcessorContext) {
 
 		if (facetProcessorContext != null) {
 			return facetProcessorContext.postProcessAggregationBuilder(
-				aggregationBuilder);
+				containerBuilder, facetName);
 		}
 
-		return aggregationBuilder;
+		return containerBuilder;
 	}
 
 	private FacetProcessorContext _getFacetProcessorContext(
@@ -147,24 +154,43 @@ public class DefaultFacetTranslator implements FacetTranslator {
 		return AggregationFilteringFacetProcessorContext.newInstance(facets);
 	}
 
-	private QueryBuilder _getPostFilter(List<QueryBuilder> queryBuilders) {
-		if (queryBuilders.size() == 1) {
-			return queryBuilders.get(0);
-		}
+	private co.elastic.clients.elasticsearch._types.query_dsl.Query
+		_getPostFilterQuery(BooleanClause<Filter> booleanClause) {
 
-		BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+		BooleanFilter booleanFilter = new BooleanFilter();
 
-		for (QueryBuilder queryBuilder : queryBuilders) {
-			boolQueryBuilder.must(queryBuilder);
-		}
+		booleanFilter.add(
+			booleanClause.getClause(), booleanClause.getBooleanClauseOccur());
 
-		return boolQueryBuilder;
+		return new co.elastic.clients.elasticsearch._types.query_dsl.Query(
+			_filterTranslator.translate(booleanFilter, null));
 	}
 
-	private AggregationBuilder _processFacet(Facet facet) {
+	private co.elastic.clients.elasticsearch._types.query_dsl.Query
+		_getPostFilterQuery(
+			List<co.elastic.clients.elasticsearch._types.query_dsl.Query>
+				queries) {
+
+		if (queries.size() == 1) {
+			return queries.get(0);
+		}
+
+		BoolQuery.Builder builder = QueryBuilders.bool();
+
+		for (co.elastic.clients.elasticsearch._types.query_dsl.Query query :
+				queries) {
+
+			builder.must(query);
+		}
+
+		return new co.elastic.clients.elasticsearch._types.query_dsl.Query(
+			builder.build());
+	}
+
+	private Aggregation.Builder.ContainerBuilder _processFacet(Facet facet) {
 		Class<?> clazz = facet.getClass();
 
-		FacetProcessor<SearchRequestBuilder> facetProcessor =
+		FacetProcessor<SearchRequest.Builder> facetProcessor =
 			_serviceTrackerMap.getService(clazz.getName());
 
 		if (facetProcessor == null) {
@@ -174,27 +200,19 @@ public class DefaultFacetTranslator implements FacetTranslator {
 		return facetProcessor.processFacet(facet);
 	}
 
-	private QueryBuilder _translateBooleanClause(
-		BooleanClause<Filter> booleanClause) {
-
-		BooleanFilter booleanFilter = new BooleanFilter();
-
-		booleanFilter.add(
-			booleanClause.getClause(), booleanClause.getBooleanClauseOccur());
-
-		return _filterTranslator.translate(booleanFilter, null);
-	}
-
-	private final FacetProcessor<SearchRequestBuilder> _defaultFacetProcessor =
-		new FacetProcessor<SearchRequestBuilder>() {
+	private final FacetProcessor<SearchRequest.Builder> _defaultFacetProcessor =
+		new FacetProcessor<SearchRequest.Builder>() {
 
 			@Override
-			public AggregationBuilder processFacet(Facet facet) {
-				TermsAggregationBuilder termsAggregationBuilder =
-					AggregationBuilders.terms(
-						FacetUtil.getAggregationName(facet));
+			public Aggregation.Builder.ContainerBuilder processFacet(
+				Facet facet) {
 
-				termsAggregationBuilder.field(facet.getFieldName());
+				Aggregation.Builder aggregationBuilder =
+					new Aggregation.Builder();
+
+				TermsAggregation.Builder builder = AggregationBuilders.terms();
+
+				builder.field(facet.getFieldName());
 
 				FacetConfiguration facetConfiguration =
 					facet.getFacetConfiguration();
@@ -204,32 +222,33 @@ public class DefaultFacetTranslator implements FacetTranslator {
 				String include = dataJSONObject.getString("include", null);
 
 				if (include != null) {
-					termsAggregationBuilder.includeExclude(
-						new IncludeExclude(include, null));
+					builder.include(
+						TermsInclude.of(
+							termsInclude -> termsInclude.regexp(include)));
 				}
 
 				int minDocCount = dataJSONObject.getInt(
 					"frequencyThreshold", -1);
 
 				if (minDocCount >= 0) {
-					termsAggregationBuilder.minDocCount(minDocCount);
+					builder.minDocCount(minDocCount);
 				}
 
-				termsAggregationBuilder.order(BucketOrder.count(false));
+				builder.order(NamedValue.of("_count", SortOrder.Desc));
 
 				int size = dataJSONObject.getInt("maxTerms");
 
 				if (size > 0) {
-					termsAggregationBuilder.size(size);
+					builder.size(size);
 				}
 
-				return termsAggregationBuilder;
+				return aggregationBuilder.terms(builder.build());
 			}
 
 		};
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)")
-	private FilterTranslator<QueryBuilder> _filterTranslator;
+	private FilterTranslator<QueryVariant> _filterTranslator;
 
 	@SuppressWarnings("rawtypes")
 	private ServiceTrackerMap<String, FacetProcessor> _serviceTrackerMap;

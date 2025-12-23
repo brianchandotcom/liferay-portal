@@ -5,40 +5,58 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.facet;
 
+import co.elastic.clients.elasticsearch._types.aggregations.Aggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.DateRangeAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.MultiBucketAggregateBase;
+import co.elastic.clients.elasticsearch._types.aggregations.RangeAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.SingleBucketAggregateBase;
+import co.elastic.clients.util.TaggedUnionUtils;
+
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 
-import org.elasticsearch.search.aggregations.Aggregation;
-import org.elasticsearch.search.aggregations.Aggregations;
-import org.elasticsearch.search.aggregations.bucket.MultiBucketsAggregation;
-import org.elasticsearch.search.aggregations.bucket.SingleBucketAggregation;
-import org.elasticsearch.search.aggregations.bucket.range.Range;
+import java.util.Map;
 
 /**
  * @author André de Oliveira
  */
 public class FacetCollectorFactory {
 
-	public FacetCollector getFacetCollector(Aggregation aggregation) {
-		if (aggregation instanceof SingleBucketAggregation) {
-			SingleBucketAggregation singleBucketAggregation =
-				(SingleBucketAggregation)aggregation;
+	public FacetCollector getFacetCollector(Aggregate aggregate, String name) {
+		Object object = TaggedUnionUtils.get(aggregate, aggregate._kind());
 
-			Aggregations aggregations =
-				singleBucketAggregation.getAggregations();
+		if (object instanceof DateRangeAggregate) {
+			DateRangeAggregate dateRangeAggregate = aggregate.dateRange();
 
-			return getFacetCollector(aggregations.get(aggregation.getName()));
+			return new RangeFacetCollector(dateRangeAggregate.buckets(), name);
 		}
 
-		if (aggregation instanceof Range) {
-			return new RangeFacetCollector((Range)aggregation);
+		// Order matters
+
+		if (object instanceof RangeAggregate) {
+			RangeAggregate rangeAggregate = aggregate.range();
+
+			return new RangeFacetCollector(rangeAggregate.buckets(), name);
 		}
 
-		if (aggregation instanceof MultiBucketsAggregation) {
+		if (object instanceof MultiBucketAggregateBase) {
+			MultiBucketAggregateBase multiBucketAggregateBase =
+				(MultiBucketAggregateBase)object;
+
 			return new MultiBucketsAggregationFacetCollector(
-				(MultiBucketsAggregation)aggregation);
+				name, multiBucketAggregateBase);
 		}
 
-		return new ElasticsearchFacetFieldCollector(aggregation);
+		if (object instanceof SingleBucketAggregateBase) {
+			SingleBucketAggregateBase singleBucketAggregateBase =
+				(SingleBucketAggregateBase)object;
+
+			Map<String, Aggregate> aggregations =
+				singleBucketAggregateBase.aggregations();
+
+			return getFacetCollector(aggregations.get(name), name);
+		}
+
+		return new ElasticsearchFacetFieldCollector(aggregate, name);
 	}
 
 }

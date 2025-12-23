@@ -5,10 +5,23 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.search;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.core.MsearchRequest;
+import co.elastic.clients.elasticsearch.core.MsearchResponse;
+import co.elastic.clients.elasticsearch.core.SearchRequest;
+import co.elastic.clients.elasticsearch.core.msearch.MultiSearchItem;
+import co.elastic.clients.elasticsearch.core.msearch.MultiSearchResponseItem;
+import co.elastic.clients.elasticsearch.core.msearch.MultisearchBody;
+import co.elastic.clients.elasticsearch.core.msearch.MultisearchHeader;
+import co.elastic.clients.elasticsearch.core.msearch.RequestItem;
+import co.elastic.clients.json.JsonData;
+
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
+import com.liferay.portal.search.elasticsearch8.internal.util.JsonpUtil;
 import com.liferay.portal.search.engine.adapter.search.MultisearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.MultisearchSearchResponse;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
@@ -17,16 +30,7 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-
-import org.elasticsearch.action.search.MultiSearchRequest;
-import org.elasticsearch.action.search.MultiSearchResponse;
-import org.elasticsearch.action.search.SearchRequest;
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.search.builder.SearchSourceBuilder;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -42,7 +46,8 @@ public class MultisearchSearchRequestExecutorImpl
 	public MultisearchSearchResponse execute(
 		MultisearchSearchRequest multisearchSearchRequest) {
 
-		MultiSearchRequest multiSearchRequest = new MultiSearchRequest();
+		MsearchRequest.Builder msearchRequestBuilder =
+			new MsearchRequest.Builder();
 
 		List<SearchSearchRequest> searchSearchRequests =
 			multisearchSearchRequest.getSearchSearchRequests();
@@ -52,54 +57,61 @@ public class MultisearchSearchRequestExecutorImpl
 
 		searchSearchRequests.forEach(
 			searchSearchRequest -> {
-				SearchRequest searchRequest = new SearchRequest(
-					searchSearchRequest.getIndexNames());
+				SearchRequest.Builder searchRequestBuilder =
+					new SearchRequest.Builder();
 
-				SearchSourceBuilder searchSourceBuilder =
-					new SearchSourceBuilder();
+				searchRequestBuilder.index(
+					ListUtil.fromArray(searchSearchRequest.getIndexNames()));
 
 				_searchSearchRequestAssembler.assemble(
-					searchSourceBuilder, searchSearchRequest, searchRequest);
+					searchRequestBuilder, searchSearchRequest);
 
-				SearchRequestHolder searchRequestHolder =
+				SearchRequest searchRequest = searchRequestBuilder.build();
+
+				searchRequestHolders.add(
 					new SearchRequestHolder(
-						searchSearchRequest, searchSourceBuilder);
+						searchRequest, searchSearchRequest));
 
-				searchRequestHolders.add(searchRequestHolder);
-
-				multiSearchRequest.add(searchRequest);
+				msearchRequestBuilder.searches(_toRequestItem(searchRequest));
 			});
 
-		MultiSearchResponse multiSearchResponse = _getMultiSearchResponse(
-			multiSearchRequest, multisearchSearchRequest);
+		return _createMultisearchSearchResponse(
+			_getMsearchResponse(
+				msearchRequestBuilder.build(), multisearchSearchRequest),
+			searchRequestHolders);
+	}
 
-		Iterator<MultiSearchResponse.Item> iterator =
-			multiSearchResponse.iterator();
+	private MultisearchSearchResponse _createMultisearchSearchResponse(
+		MsearchResponse<JsonData> msearchResponse,
+		List<SearchRequestHolder> searchRequestHolders) {
 
 		MultisearchSearchResponse multisearchSearchResponse =
 			new MultisearchSearchResponse();
 
-		int counter = 0;
+		List<MultiSearchResponseItem<JsonData>> multiSearchResponseItems =
+			msearchResponse.responses();
 
-		while (iterator.hasNext()) {
-			MultiSearchResponse.Item multiSearchResponseItem = iterator.next();
+		for (int i = 0; i < multiSearchResponseItems.size(); i++) {
+			MultiSearchResponseItem<JsonData> multiSearchResponseItem =
+				multiSearchResponseItems.get(i);
 
-			SearchResponse searchResponse =
-				multiSearchResponseItem.getResponse();
+			MultiSearchItem<JsonData> multiSearchItem =
+				multiSearchResponseItem.result();
 
 			SearchSearchResponse searchSearchResponse =
 				new SearchSearchResponse();
 
 			SearchRequestHolder searchRequestHolder = searchRequestHolders.get(
-				counter);
+				i);
 
 			SearchSearchRequest searchSearchRequest =
 				searchRequestHolder.getSearchSearchRequest();
 
 			_searchSearchResponseAssembler.assemble(
+				multiSearchItem,
 				DebugStringsUtil.getSearchRequestString(
-					searchRequestHolder.getSearchSourceBuilder()),
-				searchResponse, searchSearchRequest, searchSearchResponse);
+					searchRequestHolder.getSearchRequest()),
+				searchSearchRequest, searchSearchResponse);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
@@ -111,31 +123,55 @@ public class MultisearchSearchRequestExecutorImpl
 
 			if (searchSearchRequest.isIncludeResponseString()) {
 				searchSearchResponse.setSearchResponseString(
-					searchResponse.toString());
+					JsonpUtil.toString(multiSearchItem));
 			}
 
-			counter++;
+			multisearchSearchResponse.addSearchResponse(searchSearchResponse);
 		}
 
 		return multisearchSearchResponse;
 	}
 
-	private MultiSearchResponse _getMultiSearchResponse(
-		MultiSearchRequest multiSearchRequest,
+	private MsearchResponse<JsonData> _getMsearchResponse(
+		MsearchRequest msearchRequest,
 		MultisearchSearchRequest multisearchSearchRequest) {
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
 				multisearchSearchRequest.getConnectionId(),
 				multisearchSearchRequest.isPreferLocalCluster());
 
 		try {
-			return restHighLevelClient.msearch(
-				multiSearchRequest, RequestOptions.DEFAULT);
+			return elasticsearchClient.msearch(msearchRequest, JsonData.class);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
+	}
+
+	private RequestItem _toRequestItem(SearchRequest searchRequest) {
+		MultisearchBody.Builder builder = new MultisearchBody.Builder();
+
+		builder.aggregations(searchRequest.aggregations());
+		builder.from(searchRequest.from());
+		builder.highlight(searchRequest.highlight());
+		builder.minScore(searchRequest.minScore());
+		builder.postFilter(searchRequest.postFilter());
+		builder.query(searchRequest.query());
+		builder.searchAfter(searchRequest.searchAfter());
+		builder.size(searchRequest.size());
+		builder.sort(searchRequest.sort());
+		builder.source(searchRequest.source());
+		builder.suggest(searchRequest.suggest());
+		builder.trackScores(searchRequest.trackScores());
+		builder.trackTotalHits(searchRequest.trackTotalHits());
+
+		return RequestItem.of(
+			requestItem -> requestItem.body(
+				builder.build()
+			).header(
+				MultisearchHeader.of(multisearchHeader -> multisearchHeader)
+			));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -153,23 +189,23 @@ public class MultisearchSearchRequestExecutorImpl
 	private class SearchRequestHolder {
 
 		public SearchRequestHolder(
-			SearchSearchRequest searchSearchRequest,
-			SearchSourceBuilder searchSourceBuilder) {
+			SearchRequest searchRequest,
+			SearchSearchRequest searchSearchRequest) {
 
+			_searchRequest = searchRequest;
 			_searchSearchRequest = searchSearchRequest;
-			_searchSourceBuilder = searchSourceBuilder;
+		}
+
+		public SearchRequest getSearchRequest() {
+			return _searchRequest;
 		}
 
 		public SearchSearchRequest getSearchSearchRequest() {
 			return _searchSearchRequest;
 		}
 
-		public SearchSourceBuilder getSearchSourceBuilder() {
-			return _searchSourceBuilder;
-		}
-
+		private final SearchRequest _searchRequest;
 		private final SearchSearchRequest _searchSearchRequest;
-		private final SearchSourceBuilder _searchSourceBuilder;
 
 	}
 

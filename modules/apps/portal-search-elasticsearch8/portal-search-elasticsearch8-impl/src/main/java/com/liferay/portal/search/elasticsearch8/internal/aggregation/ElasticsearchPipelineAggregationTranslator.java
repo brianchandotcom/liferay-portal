@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.aggregation;
 
+import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
 import co.elastic.clients.elasticsearch._types.aggregations.AggregationBuilders;
 import co.elastic.clients.elasticsearch._types.aggregations.AverageBucketAggregation;
@@ -45,9 +46,13 @@ import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationVisitor
 import com.liferay.portal.search.aggregation.pipeline.SerialDiffPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.StatsBucketPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.SumBucketPipelineAggregation;
+import com.liferay.portal.search.elasticsearch8.internal.sort.ElasticsearchSortFieldTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.util.SetterUtil;
 import com.liferay.portal.search.script.Script;
+import com.liferay.portal.search.sort.FieldSort;
+import com.liferay.portal.search.sort.SortFieldTranslator;
 
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -137,6 +142,13 @@ public class ElasticsearchPipelineAggregationTranslator
 			builder::gapPolicy, bucketSortPipelineAggregation.getGapPolicy());
 		SetterUtil.setNotNullInteger(
 			builder::size, bucketSortPipelineAggregation.getSize());
+
+		List<FieldSort> fieldSorts =
+			bucketSortPipelineAggregation.getFieldSorts();
+
+		fieldSorts.forEach(
+			fieldSort -> builder.sort(
+				_sortFieldTranslator.translate(fieldSort)));
 
 		return new Aggregation(builder.build());
 	}
@@ -385,5 +397,8 @@ public class ElasticsearchPipelineAggregationTranslator
 
 		throw new IllegalArgumentException("Invalid gap policy " + gapPolicy);
 	}
+
+	private final SortFieldTranslator<SortOptions> _sortFieldTranslator =
+		new ElasticsearchSortFieldTranslator();
 
 }

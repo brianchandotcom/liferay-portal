@@ -5,14 +5,13 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.search;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.search.ClosePointInTimeRequest;
 import com.liferay.portal.search.engine.adapter.search.ClosePointInTimeResponse;
 
 import java.io.IOException;
-
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -28,40 +27,39 @@ public class ClosePointInTimeRequestExecutorImpl
 	public ClosePointInTimeResponse execute(
 		ClosePointInTimeRequest closePointInTimeRequest) {
 
-		org.elasticsearch.action.search.ClosePointInTimeRequest
-			elasticsearchClosePointInTimeRequest =
-				createClosePointInTimeRequest(closePointInTimeRequest);
-
-		org.elasticsearch.action.search.ClosePointInTimeResponse
-			closePointInTimeResponse = getClosePointInTimeResponse(
-				elasticsearchClosePointInTimeRequest, closePointInTimeRequest);
+		co.elastic.clients.elasticsearch.core.ClosePointInTimeResponse
+			closePointInTimeResponse = _getClosePointInTimeResponse(
+				closePointInTimeRequest,
+				_createClosePointInTimeRequest(closePointInTimeRequest));
 
 		return new ClosePointInTimeResponse(
-			closePointInTimeResponse.getNumFreed());
+			closePointInTimeResponse.numFreed());
 	}
 
-	protected org.elasticsearch.action.search.ClosePointInTimeRequest
-		createClosePointInTimeRequest(
+	private co.elastic.clients.elasticsearch.core.ClosePointInTimeRequest
+		_createClosePointInTimeRequest(
 			ClosePointInTimeRequest closePointInTimeSearchRequest) {
 
-		return new org.elasticsearch.action.search.ClosePointInTimeRequest(
-			closePointInTimeSearchRequest.getPointInTimeId());
+		return co.elastic.clients.elasticsearch.core.ClosePointInTimeRequest.of(
+			elasticsearchClosePointInTimeRequest ->
+				elasticsearchClosePointInTimeRequest.id(
+					closePointInTimeSearchRequest.getPointInTimeId()));
 	}
 
-	protected org.elasticsearch.action.search.ClosePointInTimeResponse
-		getClosePointInTimeResponse(
-			org.elasticsearch.action.search.ClosePointInTimeRequest
-				elasticsearchClosePointInTimeRequest,
-			ClosePointInTimeRequest closePointInTimeRequest) {
+	private co.elastic.clients.elasticsearch.core.ClosePointInTimeResponse
+		_getClosePointInTimeResponse(
+			ClosePointInTimeRequest closePointInTimeRequest,
+			co.elastic.clients.elasticsearch.core.ClosePointInTimeRequest
+				elasticsearchClosePointInTimeRequest) {
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
 				closePointInTimeRequest.getConnectionId(),
 				closePointInTimeRequest.isPreferLocalCluster());
 
 		try {
-			return restHighLevelClient.closePointInTime(
-				elasticsearchClosePointInTimeRequest, RequestOptions.DEFAULT);
+			return elasticsearchClient.closePointInTime(
+				elasticsearchClosePointInTimeRequest);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

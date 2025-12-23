@@ -37,7 +37,7 @@ public class HealthClusterRequestExecutor {
 		HealthClusterRequest healthClusterRequest) {
 
 		HealthResponse healthResponse = _getHealthResponse(
-			healthClusterRequest, createHealthRequest(healthClusterRequest));
+			healthClusterRequest, _createHealthRequest(healthClusterRequest));
 
 		return new HealthClusterResponse(
 			ClusterHealthStatusTranslatorUtil.translate(
@@ -45,7 +45,7 @@ public class HealthClusterRequestExecutor {
 			JsonpUtil.toString(healthResponse));
 	}
 
-	protected HealthRequest createHealthRequest(
+	private HealthRequest _createHealthRequest(
 		HealthClusterRequest healthClusterRequest) {
 
 		HealthRequest.Builder builder = new HealthRequest.Builder();
@@ -56,7 +56,7 @@ public class HealthClusterRequestExecutor {
 
 		if (healthClusterRequest.getTimeout() > 0) {
 			Time time = Time.of(
-				openSearchTime -> openSearchTime.time(
+				elasticsearchTime -> elasticsearchTime.time(
 					healthClusterRequest.getTimeout() +
 						TimeUnit.Milliseconds.jsonValue()));
 

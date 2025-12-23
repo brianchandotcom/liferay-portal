@@ -5,13 +5,13 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.stats;
 
+import co.elastic.clients.elasticsearch._types.aggregations.Aggregate;
+import co.elastic.clients.elasticsearch.core.SearchRequest;
+
 import com.liferay.portal.search.stats.StatsRequest;
 import com.liferay.portal.search.stats.StatsResponse;
 
 import java.util.Map;
-
-import org.elasticsearch.search.aggregations.Aggregation;
-import org.elasticsearch.search.builder.SearchSourceBuilder;
 
 /**
  * @author Michael C. Han
@@ -19,9 +19,9 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 public interface StatsTranslator {
 
 	public void populateRequest(
-		SearchSourceBuilder searchSourceBuilder, StatsRequest statsRequest);
+		SearchRequest.Builder searchRequestBuilder, StatsRequest statsRequest);
 
 	public StatsResponse translateResponse(
-		Map<String, Aggregation> aggregationMap, StatsRequest statsRequest);
+		Map<String, Aggregate> aggregateMap, StatsRequest statsRequest);
 
 }

@@ -5,6 +5,12 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.document;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import co.elastic.clients.elasticsearch._types.query_dsl.QueryVariant;
+import co.elastic.clients.elasticsearch.core.UpdateByQueryRequest;
+import co.elastic.clients.elasticsearch.core.UpdateByQueryResponse;
+
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch8.internal.legacy.query.ElasticsearchQueryTranslator;
@@ -13,20 +19,15 @@ import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentRe
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentResponse;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.QueryTranslator;
+import com.liferay.portal.search.script.Script;
 import com.liferay.portal.search.script.ScriptBuilder;
 import com.liferay.portal.search.script.ScriptType;
 import com.liferay.portal.search.script.Scripts;
 
 import java.io.IOException;
 
+import java.util.Arrays;
 import java.util.Map;
-
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.core.TimeValue;
-import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.reindex.BulkByScrollResponse;
-import org.elasticsearch.index.reindex.UpdateByQueryRequest;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -43,16 +44,12 @@ public class UpdateByQueryDocumentRequestExecutorImpl
 	public UpdateByQueryDocumentResponse execute(
 		UpdateByQueryDocumentRequest updateByQueryDocumentRequest) {
 
-		UpdateByQueryRequest updateByQueryRequest = createUpdateByQueryRequest(
-			updateByQueryDocumentRequest);
-
-		BulkByScrollResponse bulkByScrollResponse = getBulkByScrollResponse(
-			updateByQueryRequest, updateByQueryDocumentRequest);
-
-		TimeValue timeValue = bulkByScrollResponse.getTook();
+		UpdateByQueryResponse updateByQueryResponse = _getUpdateByQueryResponse(
+			updateByQueryDocumentRequest,
+			createUpdateByQueryRequest(updateByQueryDocumentRequest));
 
 		return new UpdateByQueryDocumentResponse(
-			bulkByScrollResponse.getUpdated(), timeValue.getMillis());
+			updateByQueryResponse.total(), updateByQueryResponse.took());
 	}
 
 	@Activate
@@ -64,81 +61,90 @@ public class UpdateByQueryDocumentRequestExecutorImpl
 	protected UpdateByQueryRequest createUpdateByQueryRequest(
 		UpdateByQueryDocumentRequest updateByQueryDocumentRequest) {
 
-		UpdateByQueryRequest updateByQueryRequest = new UpdateByQueryRequest();
+		UpdateByQueryRequest.Builder builder =
+			new UpdateByQueryRequest.Builder();
 
-		updateByQueryRequest.indices(
-			updateByQueryDocumentRequest.getIndexNames());
+		builder.index(
+			Arrays.asList(updateByQueryDocumentRequest.getIndexNames()));
 
 		if (updateByQueryDocumentRequest.getPortalSearchQuery() != null) {
-			QueryBuilder queryBuilder = _queryTranslator.translate(
-				updateByQueryDocumentRequest.getPortalSearchQuery());
-
-			updateByQueryRequest.setQuery(queryBuilder);
+			builder.query(
+				new Query(
+					_queryTranslator.translate(
+						updateByQueryDocumentRequest.getPortalSearchQuery())));
 		}
 		else {
-			@SuppressWarnings("deprecation")
-			QueryBuilder queryBuilder = _legacyQueryTranslator.translate(
-				updateByQueryDocumentRequest.getQuery(), null);
-
-			updateByQueryRequest.setQuery(queryBuilder);
+			builder.query(
+				new Query(
+					_legacyQueryTranslator.translate(
+						updateByQueryDocumentRequest.getQuery(), null)));
 		}
 
-		updateByQueryRequest.setRefresh(
-			updateByQueryDocumentRequest.isRefresh());
-
-		if (updateByQueryDocumentRequest.getScript() != null) {
-			updateByQueryRequest.setScript(
-				_scriptTranslator.translate(
-					updateByQueryDocumentRequest.getScript()));
-		}
-		else if (updateByQueryDocumentRequest.getScriptJSONObject() != null) {
-			ScriptBuilder scriptBuilder = _scripts.builder();
-
-			JSONObject scriptJSONObject =
-				updateByQueryDocumentRequest.getScriptJSONObject();
-
-			if (scriptJSONObject.has("idOrCode")) {
-				scriptBuilder.idOrCode(scriptJSONObject.getString("idOrCode"));
-			}
-
-			if (scriptJSONObject.has("language")) {
-				scriptBuilder.language(scriptJSONObject.getString("language"));
-			}
-
-			if (scriptJSONObject.has("optionsMap")) {
-				scriptBuilder.options(
-					(Map<String, String>)scriptJSONObject.get("optionsMap"));
-			}
-
-			if (scriptJSONObject.has("parametersMap")) {
-				scriptBuilder.parameters(
-					(Map<String, Object>)scriptJSONObject.get("parametersMap"));
-			}
-
-			if (scriptJSONObject.has("scriptType")) {
-				scriptBuilder.scriptType(
-					(ScriptType)scriptJSONObject.get("scriptType"));
-			}
-
-			updateByQueryRequest.setScript(
-				_scriptTranslator.translate(scriptBuilder.build()));
+		if (updateByQueryDocumentRequest.isRefresh()) {
+			builder.refresh(true);
 		}
 
-		return updateByQueryRequest;
+		Script script = _getScript(updateByQueryDocumentRequest);
+
+		if (script != null) {
+			builder.script(_scriptTranslator.translate(script));
+		}
+
+		return builder.build();
 	}
 
-	protected BulkByScrollResponse getBulkByScrollResponse(
-		UpdateByQueryRequest updateByQueryRequest,
+	private Script _getScript(
 		UpdateByQueryDocumentRequest updateByQueryDocumentRequest) {
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(
+		if (updateByQueryDocumentRequest.getScript() != null) {
+			return updateByQueryDocumentRequest.getScript();
+		}
+		else if (updateByQueryDocumentRequest.getScriptJSONObject() == null) {
+			return null;
+		}
+
+		JSONObject scriptJSONObject =
+			updateByQueryDocumentRequest.getScriptJSONObject();
+
+		ScriptBuilder scriptBuilder = _scripts.builder();
+
+		if (scriptJSONObject.has("idOrCode")) {
+			scriptBuilder.idOrCode(scriptJSONObject.getString("idOrCode"));
+		}
+
+		if (scriptJSONObject.has("language")) {
+			scriptBuilder.language(scriptJSONObject.getString("language"));
+		}
+
+		if (scriptJSONObject.has("optionsMap")) {
+			scriptBuilder.options(
+				(Map<String, String>)scriptJSONObject.get("optionsMap"));
+		}
+
+		if (scriptJSONObject.has("parametersMap")) {
+			scriptBuilder.parameters(
+				(Map<String, Object>)scriptJSONObject.get("parametersMap"));
+		}
+
+		if (scriptJSONObject.has("scriptType")) {
+			scriptBuilder.scriptType(
+				(ScriptType)scriptJSONObject.get("scriptType"));
+		}
+
+		return scriptBuilder.build();
+	}
+
+	private UpdateByQueryResponse _getUpdateByQueryResponse(
+		UpdateByQueryDocumentRequest updateByQueryDocumentRequest,
+		UpdateByQueryRequest updateByQueryRequest) {
+
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
 				updateByQueryDocumentRequest.getConnectionId(),
 				updateByQueryDocumentRequest.isPreferLocalCluster());
 
 		try {
-			return restHighLevelClient.updateByQuery(
-				updateByQueryRequest, RequestOptions.DEFAULT);
+			return elasticsearchClient.updateByQuery(updateByQueryRequest);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -151,9 +157,9 @@ public class UpdateByQueryDocumentRequestExecutorImpl
 	@Reference
 	private IndexNameBuilder _indexNameBuilder;
 
-	private com.liferay.portal.kernel.search.query.QueryTranslator<QueryBuilder>
+	private com.liferay.portal.kernel.search.query.QueryTranslator<QueryVariant>
 		_legacyQueryTranslator;
-	private final QueryTranslator<QueryBuilder> _queryTranslator =
+	private final QueryTranslator<QueryVariant> _queryTranslator =
 		new com.liferay.portal.search.elasticsearch8.internal.query.
 			ElasticsearchQueryTranslator();
 

@@ -5,6 +5,13 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.ccr;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.ccr.ElasticsearchCcrClient;
+import co.elastic.clients.elasticsearch.ccr.FollowInfoRequest;
+import co.elastic.clients.elasticsearch.ccr.FollowInfoResponse;
+import co.elastic.clients.elasticsearch.ccr.follow_info.FollowerIndex;
+import co.elastic.clients.elasticsearch.ccr.follow_info.FollowerIndexStatus;
+
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.ccr.FollowInfoCCRRequest;
 import com.liferay.portal.search.engine.adapter.ccr.FollowInfoCCRResponse;
@@ -13,12 +20,6 @@ import com.liferay.portal.search.engine.adapter.ccr.FollowInfoStatus;
 import java.io.IOException;
 
 import java.util.List;
-
-import org.elasticsearch.client.CcrClient;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.client.ccr.FollowInfoRequest;
-import org.elasticsearch.client.ccr.FollowInfoResponse;
 
 /**
  * @author Bryan Engler
@@ -34,46 +35,39 @@ public class FollowInfoCCRRequestExecutor {
 	public FollowInfoCCRResponse execute(
 		FollowInfoCCRRequest followInfoCCRRequest) {
 
-		FollowInfoRequest followInfoRequest = _createFollowInfoRequest(
-			followInfoCCRRequest);
-
 		FollowInfoResponse followInfoResponse = _getFollowInfoResponse(
-			followInfoRequest, followInfoCCRRequest);
+			followInfoCCRRequest,
+			FollowInfoRequest.of(
+				builder -> builder.index(followInfoCCRRequest.getIndexName())));
 
-		List<FollowInfoResponse.FollowerInfo> followerInfos =
-			followInfoResponse.getInfos();
+		List<FollowerIndex> followerIndices =
+			followInfoResponse.followerIndices();
 
-		FollowInfoResponse.FollowerInfo followerInfo = followerInfos.get(0);
+		FollowerIndex followerIndex = followerIndices.get(0);
 
-		FollowInfoResponse.Status status = followerInfo.getStatus();
+		FollowerIndexStatus followerIndexStatus = followerIndex.status();
 
-		if (status == FollowInfoResponse.Status.ACTIVE) {
+		if (followerIndexStatus == FollowerIndexStatus.Active) {
 			return new FollowInfoCCRResponse(FollowInfoStatus.ACTIVE);
 		}
 
 		return new FollowInfoCCRResponse(FollowInfoStatus.PAUSED);
 	}
 
-	private FollowInfoRequest _createFollowInfoRequest(
-		FollowInfoCCRRequest followInfoCCRRequest) {
-
-		return new FollowInfoRequest(followInfoCCRRequest.getIndexName());
-	}
-
 	private FollowInfoResponse _getFollowInfoResponse(
-		FollowInfoRequest followInfoRequest,
-		FollowInfoCCRRequest followInfoCCRRequest) {
+		FollowInfoCCRRequest followInfoCCRRequest,
+		FollowInfoRequest followInfoRequest) {
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
 				followInfoCCRRequest.getConnectionId(),
 				followInfoCCRRequest.isPreferLocalCluster());
 
-		CcrClient ccrClient = restHighLevelClient.ccr();
+		ElasticsearchCcrClient elasticsearchCcrClient =
+			elasticsearchClient.ccr();
 
 		try {
-			return ccrClient.getFollowInfo(
-				followInfoRequest, RequestOptions.DEFAULT);
+			return elasticsearchCcrClient.followInfo(followInfoRequest);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

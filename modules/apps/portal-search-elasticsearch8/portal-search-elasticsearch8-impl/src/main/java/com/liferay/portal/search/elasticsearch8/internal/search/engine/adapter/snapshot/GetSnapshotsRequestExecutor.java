@@ -5,19 +5,20 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.snapshot;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.snapshot.ElasticsearchSnapshotClient;
+import co.elastic.clients.elasticsearch.snapshot.GetSnapshotRequest;
+import co.elastic.clients.elasticsearch.snapshot.GetSnapshotResponse;
+import co.elastic.clients.elasticsearch.snapshot.SnapshotInfo;
+
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.snapshot.GetSnapshotsRequest;
 import com.liferay.portal.search.engine.adapter.snapshot.GetSnapshotsResponse;
-import com.liferay.portal.search.engine.adapter.snapshot.SnapshotDetails;
 
 import java.io.IOException;
 
 import java.util.List;
-
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.client.SnapshotClient;
-import org.elasticsearch.snapshots.SnapshotInfo;
 
 /**
  * @author Michael C. Han
@@ -33,69 +34,50 @@ public class GetSnapshotsRequestExecutor {
 	public GetSnapshotsResponse execute(
 		GetSnapshotsRequest getSnapshotsRequest) {
 
-		org.elasticsearch.action.admin.cluster.snapshots.get.GetSnapshotsRequest
-			elasticsearchGetSnapshotsRequest = createGetSnapshotsRequest(
-				getSnapshotsRequest);
-
-		org.elasticsearch.action.admin.cluster.snapshots.get.
-			GetSnapshotsResponse elasticsearchGetSnapshotsResponse =
-				_getGetSnapshotsResponse(
-					elasticsearchGetSnapshotsRequest, getSnapshotsRequest);
-
 		GetSnapshotsResponse getSnapshotsResponse = new GetSnapshotsResponse();
 
-		List<SnapshotInfo> snapshotInfos =
-			elasticsearchGetSnapshotsResponse.getSnapshots();
+		GetSnapshotResponse getSnapshotResponse = _getGetSnapshotResponse(
+			_createGetSnapshotRequest(getSnapshotsRequest),
+			getSnapshotsRequest);
+
+		List<SnapshotInfo> snapshotInfos = getSnapshotResponse.snapshots();
 
 		snapshotInfos.forEach(
-			snapshotInfo -> {
-				SnapshotDetails snapshotDetails = SnapshotInfoConverter.convert(
-					snapshotInfo);
-
-				getSnapshotsResponse.addSnapshotInfo(snapshotDetails);
-			});
+			snapshotInfo -> getSnapshotsResponse.addSnapshotInfo(
+				SnapshotInfoConverter.convert(snapshotInfo)));
 
 		return getSnapshotsResponse;
 	}
 
-	protected
-		org.elasticsearch.action.admin.cluster.snapshots.get.GetSnapshotsRequest
-			createGetSnapshotsRequest(GetSnapshotsRequest getSnapshotsRequest) {
+	private GetSnapshotRequest _createGetSnapshotRequest(
+		GetSnapshotsRequest getSnapshotsRequest) {
 
-		org.elasticsearch.action.admin.cluster.snapshots.get.GetSnapshotsRequest
-			elasticsearchGetSnapshotsRequest =
-				new org.elasticsearch.action.admin.cluster.snapshots.get.
-					GetSnapshotsRequest();
-
-		elasticsearchGetSnapshotsRequest.ignoreUnavailable(
-			getSnapshotsRequest.isIgnoreUnavailable());
-		elasticsearchGetSnapshotsRequest.repository(
-			getSnapshotsRequest.getRepositoryName());
-		elasticsearchGetSnapshotsRequest.snapshots(
-			getSnapshotsRequest.getSnapshotNames());
-		elasticsearchGetSnapshotsRequest.verbose(
-			getSnapshotsRequest.isVerbose());
-
-		return elasticsearchGetSnapshotsRequest;
+		return GetSnapshotRequest.of(
+			getSnapshotRequest -> getSnapshotRequest.ignoreUnavailable(
+				getSnapshotsRequest.isIgnoreUnavailable()
+			).repository(
+				getSnapshotsRequest.getRepositoryName()
+			).snapshot(
+				ListUtil.fromArray(getSnapshotsRequest.getSnapshotNames())
+			).verbose(
+				getSnapshotsRequest.isVerbose()
+			));
 	}
 
-	private
-		org.elasticsearch.action.admin.cluster.snapshots.get.
-			GetSnapshotsResponse _getGetSnapshotsResponse(
-				org.elasticsearch.action.admin.cluster.snapshots.get.
-					GetSnapshotsRequest elasticsearchGetSnapshotsRequest,
-				GetSnapshotsRequest getSnapshotsRequest) {
+	private GetSnapshotResponse _getGetSnapshotResponse(
+		GetSnapshotRequest getSnapshotRequest,
+		GetSnapshotsRequest getSnapshotsRequest) {
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
 				getSnapshotsRequest.getConnectionId(),
 				getSnapshotsRequest.isPreferLocalCluster());
 
-		SnapshotClient snapshotClient = restHighLevelClient.snapshot();
+		ElasticsearchSnapshotClient elasticsearchSnapshotClient =
+			elasticsearchClient.snapshot();
 
 		try {
-			return snapshotClient.get(
-				elasticsearchGetSnapshotsRequest, RequestOptions.DEFAULT);
+			return elasticsearchSnapshotClient.get(getSnapshotRequest);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

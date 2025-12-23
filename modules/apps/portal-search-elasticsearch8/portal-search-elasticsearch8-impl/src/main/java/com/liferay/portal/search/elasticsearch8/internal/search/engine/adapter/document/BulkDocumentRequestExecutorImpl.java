@@ -5,14 +5,28 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.document;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.ErrorCause;
+import co.elastic.clients.elasticsearch._types.Refresh;
+import co.elastic.clients.elasticsearch.core.BulkRequest;
+import co.elastic.clients.elasticsearch.core.BulkResponse;
+import co.elastic.clients.elasticsearch.core.bulk.BulkOperation;
+import co.elastic.clients.elasticsearch.core.bulk.BulkResponseItem;
+import co.elastic.clients.elasticsearch.core.bulk.DeleteOperation;
+import co.elastic.clients.elasticsearch.core.bulk.IndexOperation;
+import co.elastic.clients.elasticsearch.core.bulk.OperationType;
+import co.elastic.clients.elasticsearch.core.bulk.UpdateOperation;
+import co.elastic.clients.json.JsonData;
+
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
-import com.liferay.portal.search.elasticsearch8.internal.helper.SearchLogHelperUtil;
 import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.document.configuration.BulkDocumentRequestRetryConfiguration;
+import com.liferay.portal.search.elasticsearch8.internal.util.JsonpUtil;
+import com.liferay.portal.search.elasticsearch8.internal.util.SetterUtil;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentItemResponse;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentResponse;
@@ -22,18 +36,6 @@ import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 
 import java.util.Map;
-
-import org.elasticsearch.action.bulk.BulkItemResponse;
-import org.elasticsearch.action.bulk.BulkRequest;
-import org.elasticsearch.action.bulk.BulkResponse;
-import org.elasticsearch.action.delete.DeleteRequest;
-import org.elasticsearch.action.index.IndexRequest;
-import org.elasticsearch.action.support.WriteRequest;
-import org.elasticsearch.action.update.UpdateRequest;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.core.TimeValue;
-import org.elasticsearch.rest.RestStatus;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -54,48 +56,51 @@ public class BulkDocumentRequestExecutorImpl
 	public BulkDocumentResponse execute(
 		BulkDocumentRequest bulkDocumentRequest) {
 
-		BulkRequest bulkRequest = createBulkRequest(bulkDocumentRequest);
-
 		BulkResponse bulkResponse = _getBulkResponse(
-			bulkRequest, bulkDocumentRequest);
+			bulkDocumentRequest, createBulkRequest(bulkDocumentRequest));
 
-		SearchLogHelperUtil.logActionResponse(_log, bulkResponse);
-
-		TimeValue timeValue = bulkResponse.getTook();
+		JsonpUtil.logBulkResponse(bulkResponse, _log);
 
 		BulkDocumentResponse bulkDocumentResponse = new BulkDocumentResponse(
-			timeValue.getMillis());
+			bulkResponse.took());
 
-		for (BulkItemResponse bulkItemResponse : bulkResponse.getItems()) {
+		for (BulkResponseItem bulkResponseItem : bulkResponse.items()) {
 			BulkDocumentItemResponse bulkDocumentItemResponse =
 				new BulkDocumentItemResponse();
 
-			bulkDocumentResponse.addBulkDocumentItemResponse(
-				bulkDocumentItemResponse);
+			bulkDocumentItemResponse.setId(bulkResponseItem.id());
+			bulkDocumentItemResponse.setIndex(bulkResponseItem.index());
+			bulkDocumentItemResponse.setStatus(bulkResponseItem.status());
+			bulkDocumentItemResponse.setType(
+				_getType(bulkResponseItem.operationType()));
 
-			bulkDocumentItemResponse.setId(bulkItemResponse.getId());
-			bulkDocumentItemResponse.setIndex(bulkItemResponse.getIndex());
-			bulkDocumentItemResponse.setFailureMessage(
-				bulkItemResponse.getFailureMessage());
-			bulkDocumentItemResponse.setType(bulkItemResponse.getType());
-			bulkDocumentItemResponse.setVersion(bulkItemResponse.getVersion());
+			SetterUtil.setNotNullLong(
+				bulkDocumentItemResponse::setVersion,
+				bulkResponseItem.version());
 
-			RestStatus restStatus = bulkItemResponse.status();
+			ErrorCause errorCause = bulkResponseItem.error();
 
-			if (bulkItemResponse.isFailed()) {
+			if (errorCause != null) {
+				if (errorCause.causedBy() != null) {
+					ErrorCause causedByErrorCause = errorCause.causedBy();
+
+					bulkDocumentItemResponse.setFailureMessage(
+						causedByErrorCause.reason());
+					bulkDocumentItemResponse.setCause(
+						new Exception(JsonpUtil.toString(causedByErrorCause)));
+				}
+				else {
+					bulkDocumentItemResponse.setFailureMessage(
+						errorCause.reason());
+					bulkDocumentItemResponse.setCause(
+						new Exception(JsonpUtil.toString(errorCause)));
+				}
+
 				bulkDocumentResponse.setErrors(true);
-
-				BulkItemResponse.Failure bulkItemFailureResponse =
-					bulkItemResponse.getFailure();
-
-				bulkDocumentItemResponse.setAborted(
-					bulkItemFailureResponse.isAborted());
-				bulkDocumentItemResponse.setCause(
-					bulkItemFailureResponse.getCause());
-				restStatus = bulkItemFailureResponse.getStatus();
 			}
 
-			bulkDocumentItemResponse.setStatus(restStatus.getStatus());
+			bulkDocumentResponse.addBulkDocumentItemResponse(
+				bulkDocumentItemResponse);
 		}
 
 		return bulkDocumentResponse;
@@ -116,10 +121,10 @@ public class BulkDocumentRequestExecutorImpl
 	protected BulkRequest createBulkRequest(
 		BulkDocumentRequest bulkDocumentRequest) {
 
-		BulkRequest bulkRequest = new BulkRequest();
+		BulkRequest.Builder builder = new BulkRequest.Builder();
 
 		if (bulkDocumentRequest.isRefresh()) {
-			bulkRequest.setRefreshPolicy(WriteRequest.RefreshPolicy.IMMEDIATE);
+			builder.refresh(Refresh.True);
 		}
 
 		for (BulkableDocumentRequest<?> bulkableDocumentRequest :
@@ -128,40 +133,25 @@ public class BulkDocumentRequestExecutorImpl
 			bulkableDocumentRequest.accept(
 				request -> {
 					if (request instanceof DeleteDocumentRequest) {
-						DeleteDocumentRequest deleteDocumentRequest =
-							(DeleteDocumentRequest)request;
-
-						deleteDocumentRequest.setRefresh(false);
-
-						DeleteRequest deleteRequest =
+						DeleteOperation deleteOperation =
 							_elasticsearchBulkableDocumentRequestTranslator.
-								translate(deleteDocumentRequest);
+								translate((DeleteDocumentRequest)request);
 
-						bulkRequest.add(deleteRequest);
+						builder.operations(new BulkOperation(deleteOperation));
 					}
 					else if (request instanceof IndexDocumentRequest) {
-						IndexDocumentRequest indexDocumentRequest =
-							(IndexDocumentRequest)request;
-
-						indexDocumentRequest.setRefresh(false);
-
-						IndexRequest indexRequest =
+						IndexOperation<JsonData> indexOperation =
 							_elasticsearchBulkableDocumentRequestTranslator.
-								translate(indexDocumentRequest);
+								translate((IndexDocumentRequest)request);
 
-						bulkRequest.add(indexRequest);
+						builder.operations(new BulkOperation(indexOperation));
 					}
 					else if (request instanceof UpdateDocumentRequest) {
-						UpdateDocumentRequest updateDocumentRequest =
-							(UpdateDocumentRequest)request;
-
-						updateDocumentRequest.setRefresh(false);
-
-						UpdateRequest updateRequest =
+						UpdateOperation<JsonData, JsonData> updateOperation =
 							_elasticsearchBulkableDocumentRequestTranslator.
-								translate(updateDocumentRequest);
+								translate((UpdateDocumentRequest)request);
 
-						bulkRequest.add(updateRequest);
+						builder.operations(new BulkOperation(updateOperation));
 					}
 					else {
 						throw new IllegalArgumentException(
@@ -170,21 +160,20 @@ public class BulkDocumentRequestExecutorImpl
 				});
 		}
 
-		return bulkRequest;
+		return builder.build();
 	}
 
 	private BulkResponse _getBulkResponse(
-		BulkRequest bulkRequest, BulkDocumentRequest bulkDocumentRequest) {
+		BulkDocumentRequest bulkDocumentRequest, BulkRequest bulkRequest) {
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
 				bulkDocumentRequest.getConnectionId(),
 				bulkDocumentRequest.isPreferLocalCluster());
 
 		for (int i = 0;;) {
 			try {
-				return restHighLevelClient.bulk(
-					bulkRequest, RequestOptions.DEFAULT);
+				return elasticsearchClient.bulk(bulkRequest);
 			}
 			catch (Exception exception) {
 				if (i++ >= _numberOfTries) {
@@ -221,6 +210,10 @@ public class BulkDocumentRequestExecutorImpl
 				}
 			}
 		}
+	}
+
+	private String _getType(OperationType operationType) {
+		return operationType.jsonValue();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

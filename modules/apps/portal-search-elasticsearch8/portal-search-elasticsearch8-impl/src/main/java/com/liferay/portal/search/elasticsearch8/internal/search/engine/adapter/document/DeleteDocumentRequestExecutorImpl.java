@@ -5,17 +5,17 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.document;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.Result;
+import co.elastic.clients.elasticsearch.core.DeleteRequest;
+import co.elastic.clients.elasticsearch.core.DeleteResponse;
+
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
+import com.liferay.portal.search.elasticsearch8.internal.util.ConversionUtil;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentResponse;
 
 import java.io.IOException;
-
-import org.elasticsearch.action.delete.DeleteRequest;
-import org.elasticsearch.action.delete.DeleteResponse;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.rest.RestStatus;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -31,41 +31,39 @@ public class DeleteDocumentRequestExecutorImpl
 	public DeleteDocumentResponse execute(
 		DeleteDocumentRequest deleteDocumentRequest) {
 
-		DeleteRequest deleteRequest =
-			_elasticsearchBulkableDocumentRequestTranslator.translate(
-				deleteDocumentRequest);
-
 		DeleteResponse deleteResponse = _getDeleteResponse(
-			deleteRequest, deleteDocumentRequest);
+			deleteDocumentRequest,
+			_elasticsearchDocumentRequestTranslator.translate(
+				deleteDocumentRequest));
 
-		RestStatus restStatus = deleteResponse.status();
+		Result result = deleteResponse.result();
 
-		return new DeleteDocumentResponse(restStatus.getStatus());
+		return new DeleteDocumentResponse(
+			ConversionUtil.toHttpStatusCode(result), result.jsonValue());
 	}
 
 	private DeleteResponse _getDeleteResponse(
-		DeleteRequest deleteRequest,
-		DeleteDocumentRequest deleteDocumentRequest) {
+		DeleteDocumentRequest deleteDocumentRequest,
+		DeleteRequest deleteRequest) {
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
 				deleteDocumentRequest.getConnectionId(),
 				deleteDocumentRequest.isPreferLocalCluster());
 
 		try {
-			return restHighLevelClient.delete(
-				deleteRequest, RequestOptions.DEFAULT);
+			return elasticsearchClient.delete(deleteRequest);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
 	}
 
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
-	private ElasticsearchBulkableDocumentRequestTranslator
-		_elasticsearchBulkableDocumentRequestTranslator;
-
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
+
+	@Reference(target = "(search.engine.impl=Elasticsearch)")
+	private ElasticsearchDocumentRequestTranslator
+		_elasticsearchDocumentRequestTranslator;
 
 }

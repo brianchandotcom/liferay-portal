@@ -5,35 +5,63 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.script;
 
+import co.elastic.clients.json.JsonData;
+
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.script.Script;
 import com.liferay.portal.search.script.ScriptType;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Michael C. Han
  */
 public class ScriptTranslator {
 
-	public org.elasticsearch.script.Script translate(Script script) {
+	public co.elastic.clients.elasticsearch._types.Script translate(
+		Script script) {
+
 		ScriptType scriptType = script.getScriptType();
 
 		if (scriptType == null) {
-			return new org.elasticsearch.script.Script(script.getIdOrCode());
+			return co.elastic.clients.elasticsearch._types.Script.of(
+				elasticsearchScript -> elasticsearchScript.source(
+					script.getIdOrCode()));
 		}
 
 		if (scriptType == ScriptType.INLINE) {
-			return new org.elasticsearch.script.Script(
-				org.elasticsearch.script.ScriptType.INLINE,
-				script.getLanguage(), script.getIdOrCode(), script.getOptions(),
-				script.getParameters());
+			return co.elastic.clients.elasticsearch._types.Script.of(
+				elasticsearchScript -> elasticsearchScript.lang(
+					script.getLanguage()
+				).options(
+					script.getOptions()
+				).params(
+					_translateParams(script.getParameters())
+				).source(
+					script.getIdOrCode()
+				));
 		}
 
 		if (scriptType == ScriptType.STORED) {
-			return new org.elasticsearch.script.Script(
-				org.elasticsearch.script.ScriptType.STORED, null,
-				script.getIdOrCode(), null, script.getParameters());
+			return co.elastic.clients.elasticsearch._types.Script.of(
+				elasticsearchScript -> elasticsearchScript.id(
+					script.getIdOrCode()
+				).params(
+					_translateParams(script.getParameters())
+				));
 		}
 
-		throw new IllegalArgumentException();
+		throw new IllegalArgumentException("Invalid script type " + scriptType);
+	}
+
+	private Map<String, JsonData> _translateParams(Map<String, Object> params) {
+		Map<String, JsonData> jsonDatas = new HashMap<>();
+
+		MapUtil.isNotEmptyForEach(
+			params, (key, value) -> jsonDatas.put(key, JsonData.of(value)));
+
+		return jsonDatas;
 	}
 
 }

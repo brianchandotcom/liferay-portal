@@ -5,6 +5,14 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.index;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.indices.ElasticsearchIndicesClient;
+import co.elastic.clients.elasticsearch.indices.GetAliasRequest;
+import co.elastic.clients.elasticsearch.indices.GetAliasResponse;
+import co.elastic.clients.elasticsearch.indices.UpdateAliasesRequest;
+import co.elastic.clients.elasticsearch.indices.get_alias.IndexAliases;
+import co.elastic.clients.elasticsearch.indices.update_aliases.Action;
+
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -12,7 +20,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.ccr.CrossClusterReplicationHelper;
@@ -26,14 +34,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
-import org.elasticsearch.action.admin.indices.alias.IndicesAliasesRequest;
-import org.elasticsearch.action.admin.indices.alias.get.GetAliasesRequest;
-import org.elasticsearch.client.GetAliasesResponse;
-import org.elasticsearch.client.IndicesClient;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.cluster.metadata.AliasMetadata;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -59,11 +59,11 @@ public class CompanyConcurrentReindexManager
 
 		String newIndexName = baseIndexName + "-" + timeStampSuffix;
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchConnectionManager.getRestHighLevelClient();
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchConnectionManager.getElasticsearchClient();
 
 		if (_companyIndexHelper.hasIndex(
-				newIndexName, restHighLevelClient.indices())) {
+				elasticsearchClient.indices(), newIndexName)) {
 
 			return;
 		}
@@ -73,7 +73,7 @@ public class CompanyConcurrentReindexManager
 		}
 
 		_companyIndexHelper.createIndex(
-			companyId, newIndexName, restHighLevelClient.indices());
+			companyId, elasticsearchClient.indices(), newIndexName);
 
 		_companyLocalService.updateIndexNameNext(companyId, newIndexName);
 	}
@@ -89,15 +89,15 @@ public class CompanyConcurrentReindexManager
 		String indexName = company.getIndexNameNext();
 
 		if (!Validator.isBlank(indexName)) {
-			RestHighLevelClient restHighLevelClient =
-				_elasticsearchConnectionManager.getRestHighLevelClient();
+			ElasticsearchClient elasticsearchClient =
+				_elasticsearchConnectionManager.getElasticsearchClient();
 
 			if (_log.isInfoEnabled()) {
 				_log.info("Deleting next index " + indexName);
 			}
 
 			_companyIndexHelper.deleteIndex(
-				companyId, indexName, restHighLevelClient.indices(), false);
+				companyId, elasticsearchClient.indices(), indexName, false);
 		}
 	}
 
@@ -112,10 +112,11 @@ public class CompanyConcurrentReindexManager
 		String baseIndexName = _indexNameBuilder.getIndexName(companyId);
 		Company company = _companyLocalService.getCompany(companyId);
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchConnectionManager.getRestHighLevelClient();
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchConnectionManager.getElasticsearchClient();
 
-		IndicesClient indicesClient = restHighLevelClient.indices();
+		ElasticsearchIndicesClient elasticsearchIndicesClient =
+			elasticsearchClient.indices();
 
 		CrossClusterReplicationHelper crossClusterReplicationHelper =
 			_crossClusterReplicationHelperSnapshot.get();
@@ -130,7 +131,7 @@ public class CompanyConcurrentReindexManager
 			}
 		}
 
-		_updateAliases(baseIndexName, company, indicesClient);
+		_updateAliases(baseIndexName, company, elasticsearchIndicesClient);
 
 		_companyLocalService.updateIndexNames(
 			companyId, company.getIndexNameNext(), null);
@@ -141,16 +142,17 @@ public class CompanyConcurrentReindexManager
 	}
 
 	private Set<String> _getBaseIndexAliasIndexNames(
-			String baseIndexName, IndicesClient indicesClient)
+			String baseIndexName,
+			ElasticsearchIndicesClient elasticsearchIndicesClient)
 		throws Exception {
 
 		Set<String> baseIndexAliasIndexNames = new HashSet<>();
 
-		GetAliasesResponse getAliasesResponse = indicesClient.getAlias(
-			new GetAliasesRequest(baseIndexName), RequestOptions.DEFAULT);
+		GetAliasResponse getAliasResponse = elasticsearchIndicesClient.getAlias(
+			GetAliasRequest.of(
+				getAliasRequest -> getAliasRequest.index(baseIndexName)));
 
-		Map<String, Set<AliasMetadata>> aliases =
-			getAliasesResponse.getAliases();
+		Map<String, IndexAliases> aliases = getAliasResponse.result();
 
 		if (MapUtil.isNotEmpty(aliases)) {
 			baseIndexAliasIndexNames.addAll(aliases.keySet());
@@ -160,14 +162,16 @@ public class CompanyConcurrentReindexManager
 	}
 
 	private Set<String> _getRemoveIndexNames(
-			String baseIndexName, IndicesClient indicesClient)
+			String baseIndexName,
+			ElasticsearchIndicesClient elasticsearchIndicesClient)
 		throws Exception {
 
 		Set<String> removeIndexNames = _getBaseIndexAliasIndexNames(
-			baseIndexName, indicesClient);
+			baseIndexName, elasticsearchIndicesClient);
 
 		if (removeIndexNames.isEmpty() &&
-			_companyIndexHelper.hasIndex(baseIndexName, indicesClient)) {
+			_companyIndexHelper.hasIndex(
+				elasticsearchIndicesClient, baseIndexName)) {
 
 			removeIndexNames.add(baseIndexName);
 		}
@@ -176,26 +180,26 @@ public class CompanyConcurrentReindexManager
 	}
 
 	private void _updateAliases(
-			String baseIndexName, Company company, IndicesClient indicesClient)
+			String baseIndexName, Company company,
+			ElasticsearchIndicesClient elasticsearchIndicesClient)
 		throws Exception {
 
-		IndicesAliasesRequest indicesAliasesRequest =
-			new IndicesAliasesRequest();
+		UpdateAliasesRequest.Builder builder =
+			new UpdateAliasesRequest.Builder();
 
 		Set<String> removeIndexNames = _getRemoveIndexNames(
-			baseIndexName, indicesClient);
+			baseIndexName, elasticsearchIndicesClient);
 
 		if (!removeIndexNames.isEmpty()) {
 			if (_log.isInfoEnabled()) {
 				_log.info("Removing indexes " + removeIndexNames);
 			}
 
-			indicesAliasesRequest.addAliasAction(
-				new IndicesAliasesRequest.AliasActions(
-					IndicesAliasesRequest.AliasActions.Type.REMOVE_INDEX
-				).indices(
-					ArrayUtil.toStringArray(removeIndexNames)
-				));
+			builder.actions(
+				Action.of(
+					action -> action.removeIndex(
+						removeIndexAction -> removeIndexAction.indices(
+							ListUtil.fromCollection(removeIndexNames)))));
 		}
 
 		if (_log.isInfoEnabled()) {
@@ -205,17 +209,16 @@ public class CompanyConcurrentReindexManager
 					company.getIndexNameNext()));
 		}
 
-		indicesAliasesRequest.addAliasAction(
-			new IndicesAliasesRequest.AliasActions(
-				IndicesAliasesRequest.AliasActions.Type.ADD
-			).alias(
-				baseIndexName
-			).index(
-				company.getIndexNameNext()
-			));
+		builder.actions(
+			Action.of(
+				action -> action.add(
+					addAction -> addAction.alias(
+						baseIndexName
+					).index(
+						company.getIndexNameNext()
+					))));
 
-		indicesClient.updateAliases(
-			indicesAliasesRequest, RequestOptions.DEFAULT);
+		elasticsearchIndicesClient.updateAliases(builder.build());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

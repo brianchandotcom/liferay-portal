@@ -5,7 +5,13 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.search;
 
-import com.liferay.portal.kernel.util.Validator;
+import co.elastic.clients.elasticsearch._types.aggregations.Aggregate;
+import co.elastic.clients.elasticsearch.core.search.HitsMetadata;
+import co.elastic.clients.elasticsearch.core.search.ResponseBody;
+import co.elastic.clients.elasticsearch.core.search.TotalHits;
+import co.elastic.clients.json.JsonData;
+
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.aggregation.AggregationResultTranslator;
@@ -13,13 +19,16 @@ import com.liferay.portal.search.aggregation.AggregationResults;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationResultTranslator;
 import com.liferay.portal.search.document.DocumentBuilderFactory;
-import com.liferay.portal.search.elasticsearch8.internal.SearchHitDocumentTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.aggregation.AggregationResultTranslatorFactory;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.ElasticsearchAggregationResultTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.ElasticsearchAggregationResultsTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.ElasticsearchPipelineAggregationResultTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.aggregation.PipelineAggregationResultTranslatorFactory;
 import com.liferay.portal.search.elasticsearch8.internal.hits.HitsMetadataTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.search.response.SearchHitDocumentTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.search.response.SearchResponseTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.stats.StatsTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.util.SetterUtil;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.geolocation.GeoBuilders;
@@ -33,13 +42,7 @@ import com.liferay.portal.search.searcher.SearchTimeValue;
 
 import java.util.List;
 import java.util.Map;
-
-import org.apache.lucene.search.TotalHits;
-
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.core.TimeValue;
-import org.elasticsearch.search.SearchHits;
-import org.elasticsearch.search.aggregations.Aggregations;
+import java.util.concurrent.TimeUnit;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -50,49 +53,49 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = SearchSearchResponseAssembler.class)
 public class SearchSearchResponseAssemblerImpl
-	implements SearchSearchResponseAssembler {
+	implements AggregationResultTranslatorFactory,
+			   PipelineAggregationResultTranslatorFactory,
+			   SearchSearchResponseAssembler {
 
 	@Override
 	public void assemble(
-		String searchRequestString, SearchResponse searchResponse,
+		ResponseBody responseBody, String searchRequestString,
 		SearchSearchRequest searchSearchRequest,
 		SearchSearchResponse searchSearchResponse) {
 
 		_commonSearchResponseAssembler.assemble(
-			searchSearchRequest, searchSearchResponse, searchRequestString,
-			searchResponse);
+			searchSearchRequest, searchSearchResponse, responseBody,
+			searchRequestString);
 
 		_addAggregations(
-			searchResponse, searchSearchResponse, searchSearchRequest);
-		setCount(searchResponse, searchSearchResponse);
-		_setScrollId(searchResponse, searchSearchResponse);
-		_setSearchHits(
-			searchResponse, searchSearchResponse, searchSearchRequest);
-		_setSearchTimeValue(searchResponse, searchSearchResponse);
+			responseBody, searchSearchRequest, searchSearchResponse);
+		setCount(responseBody, searchSearchResponse);
+		_setScrollId(responseBody, searchSearchResponse);
+		_setSearchHits(responseBody, searchSearchRequest, searchSearchResponse);
+		_setSearchTimeValue(responseBody, searchSearchResponse);
 
 		_searchResponseTranslator.populate(
-			searchSearchResponse, searchResponse, searchSearchRequest);
+			responseBody, searchSearchRequest, searchSearchResponse);
 	}
 
+	@Override
 	public AggregationResultTranslator createAggregationResultTranslator(
-		org.elasticsearch.search.aggregations.Aggregation
-			elasticsearchAggregation) {
+		Aggregate aggregate) {
 
 		return new ElasticsearchAggregationResultTranslator(
-			null, _aggregationResults, _geoBuilders,
+			aggregate, _aggregationResults, _geoBuilders,
 			new HitsMetadataTranslator(
-				_searchHitBuilderFactory, _searchHitsBuilderFactory,
-				_documentBuilderFactory, _highlightFieldBuilderFactory,
-				_geoBuilders));
+				_documentBuilderFactory, _geoBuilders,
+				_highlightFieldBuilderFactory, _searchHitBuilderFactory,
+				_searchHitsBuilderFactory));
 	}
 
+	@Override
 	public PipelineAggregationResultTranslator
-		createPipelineAggregationResultTranslator(
-			org.elasticsearch.search.aggregations.Aggregation
-				elasticsearchAggregation) {
+		createPipelineAggregationResultTranslator(Aggregate aggregate) {
 
 		return new ElasticsearchPipelineAggregationResultTranslator(
-			null, _aggregationResults);
+			aggregate, _aggregationResults);
 	}
 
 	@Activate
@@ -104,25 +107,22 @@ public class SearchSearchResponseAssemblerImpl
 	}
 
 	protected void setCount(
-		SearchResponse searchResponse,
-		SearchSearchResponse searchSearchResponse) {
+		ResponseBody responseBody, SearchSearchResponse searchSearchResponse) {
 
-		SearchHits searchHits = searchResponse.getHits();
+		HitsMetadata<JsonData> hitsMetadata = responseBody.hits();
 
-		TotalHits totalHits = searchHits.getTotalHits();
+		TotalHits totalHits = hitsMetadata.total();
 
-		searchSearchResponse.setCount(totalHits.value);
+		searchSearchResponse.setCount(totalHits.value());
 	}
 
 	private void _addAggregations(
-		SearchResponse searchResponse,
-		SearchSearchResponse searchSearchResponse,
-		SearchSearchRequest searchSearchRequest) {
+		ResponseBody responseBody, SearchSearchRequest searchSearchRequest,
+		SearchSearchResponse searchSearchResponse) {
 
-		Aggregations elasticsearchAggregations =
-			searchResponse.getAggregations();
+		Map<String, Aggregate> aggregates = responseBody.aggregations();
 
-		if (elasticsearchAggregations == null) {
+		if (MapUtil.isEmpty(aggregates)) {
 			return;
 		}
 
@@ -135,11 +135,11 @@ public class SearchSearchResponseAssemblerImpl
 		ElasticsearchAggregationResultsTranslator
 			elasticsearchAggregationResultsTranslator =
 				new ElasticsearchAggregationResultsTranslator(
-					aggregationsMap::get, null, pipelineAggregationsMap::get,
-					null);
+					aggregationsMap::get, this, pipelineAggregationsMap::get,
+					this);
 
 		List<AggregationResult> aggregationResults =
-			elasticsearchAggregationResultsTranslator.translate(null);
+			elasticsearchAggregationResultsTranslator.translate(aggregates);
 
 		for (AggregationResult aggregationResult : aggregationResults) {
 			searchSearchResponse.addAggregationResult(aggregationResult);
@@ -147,44 +147,38 @@ public class SearchSearchResponseAssemblerImpl
 	}
 
 	private void _setScrollId(
-		SearchResponse searchResponse,
+		ResponseBody<JsonData> responseBody,
 		SearchSearchResponse searchSearchResponse) {
 
-		if (Validator.isNotNull(searchResponse.getScrollId())) {
-			searchSearchResponse.setScrollId(searchResponse.getScrollId());
-		}
+		SetterUtil.setNotBlankString(
+			searchSearchResponse::setScrollId, responseBody.scrollId());
 	}
 
 	private void _setSearchHits(
-		SearchResponse searchResponse,
-		SearchSearchResponse searchSearchResponse,
-		SearchSearchRequest searchSearchRequest) {
+		ResponseBody responseBody, SearchSearchRequest searchSearchRequest,
+		SearchSearchResponse searchSearchResponse) {
 
 		HitsMetadataTranslator hitsMetadataTranslator =
 			new HitsMetadataTranslator(
-				_searchHitBuilderFactory, _searchHitsBuilderFactory,
-				_documentBuilderFactory, _highlightFieldBuilderFactory,
-				_geoBuilders);
-
-		SearchHits searchHits = searchResponse.getHits();
+				_documentBuilderFactory, _geoBuilders,
+				_highlightFieldBuilderFactory, _searchHitBuilderFactory,
+				_searchHitsBuilderFactory);
 
 		searchSearchResponse.setSearchHits(
 			hitsMetadataTranslator.translate(
-				searchHits, searchSearchRequest.getAlternateUidFieldName()));
+				searchSearchRequest.getAlternateUidFieldName(),
+				responseBody.hits()));
 	}
 
 	private void _setSearchTimeValue(
-		SearchResponse searchResponse,
-		SearchSearchResponse searchSearchResponse) {
-
-		TimeValue took = searchResponse.getTook();
+		ResponseBody responseBody, SearchSearchResponse searchSearchResponse) {
 
 		SearchTimeValue.Builder builder = SearchTimeValue.Builder.newBuilder();
 
 		builder.duration(
-			took.duration()
+			responseBody.took()
 		).timeUnit(
-			took.timeUnit()
+			TimeUnit.MILLISECONDS
 		);
 
 		searchSearchResponse.setSearchTimeValue(builder.build());

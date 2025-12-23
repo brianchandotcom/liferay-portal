@@ -8,8 +8,6 @@ package com.liferay.portal.search.elasticsearch8.internal.connection;
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.json.JsonpMapper;
 
-import org.elasticsearch.client.RestHighLevelClient;
-
 /**
  * @author André de Oliveira
  */
@@ -23,12 +21,5 @@ public interface ElasticsearchClientResolver {
 		String connectionId, boolean preferLocalCluster);
 
 	public JsonpMapper getJsonpMapper(String connectionId);
-
-	public RestHighLevelClient getRestHighLevelClient();
-
-	public RestHighLevelClient getRestHighLevelClient(String connectionId);
-
-	public RestHighLevelClient getRestHighLevelClient(
-		String connectionId, boolean preferLocalCluster);
 
 }

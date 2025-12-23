@@ -5,152 +5,318 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.query.function.score;
 
+import co.elastic.clients.elasticsearch._types.query_dsl.DecayFunction;
+import co.elastic.clients.elasticsearch._types.query_dsl.DecayPlacement;
+import co.elastic.clients.elasticsearch._types.query_dsl.FieldValueFactorModifier;
+import co.elastic.clients.elasticsearch._types.query_dsl.FunctionScore;
+import co.elastic.clients.elasticsearch._types.query_dsl.FunctionScore.Builder.ContainerBuilder;
+import co.elastic.clients.elasticsearch._types.query_dsl.FunctionScoreBuilders;
+import co.elastic.clients.elasticsearch._types.query_dsl.UntypedDecayFunction;
+import co.elastic.clients.json.JsonData;
+
 import com.liferay.portal.search.elasticsearch8.internal.script.ScriptTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.util.SetterUtil;
+import com.liferay.portal.search.query.MultiValueMode;
 import com.liferay.portal.search.query.function.score.ExponentialDecayScoreFunction;
 import com.liferay.portal.search.query.function.score.FieldValueFactorScoreFunction;
 import com.liferay.portal.search.query.function.score.GaussianDecayScoreFunction;
 import com.liferay.portal.search.query.function.score.LinearDecayScoreFunction;
 import com.liferay.portal.search.query.function.score.RandomScoreFunction;
+import com.liferay.portal.search.query.function.score.ScoreFunction;
 import com.liferay.portal.search.query.function.score.ScoreFunctionTranslator;
 import com.liferay.portal.search.query.function.score.ScriptScoreFunction;
 import com.liferay.portal.search.query.function.score.WeightScoreFunction;
-
-import org.elasticsearch.common.lucene.search.function.FieldValueFactorFunction;
-import org.elasticsearch.index.query.functionscore.ExponentialDecayFunctionBuilder;
-import org.elasticsearch.index.query.functionscore.FieldValueFactorFunctionBuilder;
-import org.elasticsearch.index.query.functionscore.GaussDecayFunctionBuilder;
-import org.elasticsearch.index.query.functionscore.LinearDecayFunctionBuilder;
-import org.elasticsearch.index.query.functionscore.RandomScoreFunctionBuilder;
-import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilder;
-import org.elasticsearch.index.query.functionscore.ScriptScoreFunctionBuilder;
-import org.elasticsearch.index.query.functionscore.WeightBuilder;
 
 /**
  * @author Michael C. Han
  */
 public class ElasticsearchScoreFunctionTranslator
-	implements ScoreFunctionTranslator<ScoreFunctionBuilder<?>> {
+	implements ScoreFunctionTranslator<ContainerBuilder> {
 
 	@Override
-	public ScoreFunctionBuilder<?> translate(
+	public ContainerBuilder translate(
 		ExponentialDecayScoreFunction exponentialDecayScoreFunction) {
 
-		if (exponentialDecayScoreFunction.getDecay() != null) {
-			return new ExponentialDecayFunctionBuilder(
-				exponentialDecayScoreFunction.getField(),
-				exponentialDecayScoreFunction.getOrigin(),
-				exponentialDecayScoreFunction.getScale(),
-				exponentialDecayScoreFunction.getOffset(),
-				exponentialDecayScoreFunction.getDecay());
-		}
+		FunctionScore.Builder functionScoreBuilder =
+			new FunctionScore.Builder();
 
-		return new ExponentialDecayFunctionBuilder(
-			exponentialDecayScoreFunction.getField(),
-			exponentialDecayScoreFunction.getOrigin(),
-			exponentialDecayScoreFunction.getScale(),
-			exponentialDecayScoreFunction.getOffset());
+		DecayFunction.Builder decayFunctionBuilder =
+			FunctionScoreBuilders.exp();
+
+		UntypedDecayFunction.Builder untypedDecayFunctionBuilder =
+			new UntypedDecayFunction.Builder();
+
+		untypedDecayFunctionBuilder.field(
+			exponentialDecayScoreFunction.getField());
+
+		untypedDecayFunctionBuilder.multiValueMode(
+			_translateMultiValueMode(
+				exponentialDecayScoreFunction.getMultiValueMode()));
+
+		DecayPlacement.Builder decayPlacementBuilder =
+			new DecayPlacement.Builder();
+
+		SetterUtil.setNotNullDouble(
+			decayPlacementBuilder::decay,
+			exponentialDecayScoreFunction.getDecay());
+
+		decayPlacementBuilder.offset(
+			JsonData.of(exponentialDecayScoreFunction.getOffset()));
+		decayPlacementBuilder.origin(
+			JsonData.of(exponentialDecayScoreFunction.getOrigin()));
+		decayPlacementBuilder.scale(
+			JsonData.of(exponentialDecayScoreFunction.getScale()));
+
+		untypedDecayFunctionBuilder.placement(decayPlacementBuilder.build());
+
+		SetterUtil.setNotNullFloatAsDouble(
+			functionScoreBuilder::weight,
+			exponentialDecayScoreFunction.getWeight());
+
+		decayFunctionBuilder.untyped(untypedDecayFunctionBuilder.build());
+
+		return functionScoreBuilder.exp(decayFunctionBuilder.build());
 	}
 
 	@Override
-	public ScoreFunctionBuilder<?> translate(
+	public ContainerBuilder translate(
 		FieldValueFactorScoreFunction fieldValueFactorScoreFunction) {
 
-		FieldValueFactorFunctionBuilder fieldValueFactorFunctionBuilder =
-			new FieldValueFactorFunctionBuilder(
-				fieldValueFactorScoreFunction.getField());
+		FunctionScore.Builder functionScoreBuilder =
+			new FunctionScore.Builder();
 
-		if (fieldValueFactorScoreFunction.getFactor() != null) {
-			fieldValueFactorFunctionBuilder.factor(
-				fieldValueFactorScoreFunction.getFactor());
-		}
+		co.elastic.clients.elasticsearch._types.query_dsl.
+			FieldValueFactorScoreFunction.Builder
+				fieldValueFactorScoreFunctionBuilder =
+					FunctionScoreBuilders.fieldValueFactor();
 
-		if (fieldValueFactorScoreFunction.getMissing() != null) {
-			fieldValueFactorFunctionBuilder.missing(
-				fieldValueFactorScoreFunction.getMissing());
-		}
+		SetterUtil.setNotNullFloatAsDouble(
+			fieldValueFactorScoreFunctionBuilder::factor,
+			fieldValueFactorScoreFunction.getFactor());
+
+		fieldValueFactorScoreFunctionBuilder.field(
+			fieldValueFactorScoreFunction.getField());
+
+		SetterUtil.setNotNullDouble(
+			fieldValueFactorScoreFunctionBuilder::missing,
+			fieldValueFactorScoreFunction.getMissing());
 
 		if (fieldValueFactorScoreFunction.getModifier() != null) {
-			String modifier = fieldValueFactorScoreFunction.getModifier(
-			).toString();
-
-			fieldValueFactorFunctionBuilder.modifier(
-				FieldValueFactorFunction.Modifier.fromString(modifier));
+			fieldValueFactorScoreFunctionBuilder.modifier(
+				_translateModifier(
+					fieldValueFactorScoreFunction.getModifier()));
 		}
 
-		return fieldValueFactorFunctionBuilder;
+		SetterUtil.setNotNullFloatAsDouble(
+			functionScoreBuilder::weight,
+			fieldValueFactorScoreFunction.getWeight());
+
+		return functionScoreBuilder.fieldValueFactor(
+			fieldValueFactorScoreFunctionBuilder.build());
 	}
 
 	@Override
-	public ScoreFunctionBuilder<?> translate(
+	public ContainerBuilder translate(
 		GaussianDecayScoreFunction gaussianDecayScoreFunction) {
 
-		if (gaussianDecayScoreFunction.getDecay() != null) {
-			return new GaussDecayFunctionBuilder(
-				gaussianDecayScoreFunction.getField(),
-				gaussianDecayScoreFunction.getOrigin(),
-				gaussianDecayScoreFunction.getScale(),
-				gaussianDecayScoreFunction.getOffset(),
-				gaussianDecayScoreFunction.getDecay());
-		}
+		FunctionScore.Builder functionScoreBuilder =
+			new FunctionScore.Builder();
 
-		return new GaussDecayFunctionBuilder(
-			gaussianDecayScoreFunction.getField(),
-			gaussianDecayScoreFunction.getOrigin(),
-			gaussianDecayScoreFunction.getScale(),
-			gaussianDecayScoreFunction.getOffset());
+		DecayFunction.Builder decayFunctionBuilder =
+			FunctionScoreBuilders.gauss();
+
+		UntypedDecayFunction.Builder untypedDecayFunctionBuilder =
+			new UntypedDecayFunction.Builder();
+
+		untypedDecayFunctionBuilder.field(
+			gaussianDecayScoreFunction.getField());
+
+		untypedDecayFunctionBuilder.multiValueMode(
+			_translateMultiValueMode(
+				gaussianDecayScoreFunction.getMultiValueMode()));
+
+		DecayPlacement.Builder decayPlacementBuilder =
+			new DecayPlacement.Builder();
+
+		SetterUtil.setNotNullDouble(
+			decayPlacementBuilder::decay,
+			gaussianDecayScoreFunction.getDecay());
+
+		decayPlacementBuilder.offset(
+			JsonData.of(gaussianDecayScoreFunction.getOffset()));
+		decayPlacementBuilder.origin(
+			JsonData.of(gaussianDecayScoreFunction.getOrigin()));
+		decayPlacementBuilder.scale(
+			JsonData.of(gaussianDecayScoreFunction.getScale()));
+
+		untypedDecayFunctionBuilder.placement(decayPlacementBuilder.build());
+
+		SetterUtil.setNotNullFloatAsDouble(
+			functionScoreBuilder::weight,
+			gaussianDecayScoreFunction.getWeight());
+
+		decayFunctionBuilder.untyped(untypedDecayFunctionBuilder.build());
+
+		return functionScoreBuilder.gauss(decayFunctionBuilder.build());
 	}
 
 	@Override
-	public ScoreFunctionBuilder<?> translate(
+	public ContainerBuilder translate(
 		LinearDecayScoreFunction linearDecayScoreFunction) {
 
-		if (linearDecayScoreFunction.getDecay() != null) {
-			return new LinearDecayFunctionBuilder(
-				linearDecayScoreFunction.getField(),
-				linearDecayScoreFunction.getOrigin(),
-				linearDecayScoreFunction.getScale(),
-				linearDecayScoreFunction.getOffset(),
-				linearDecayScoreFunction.getDecay());
-		}
+		FunctionScore.Builder functionScoreBuilder =
+			new FunctionScore.Builder();
 
-		return new LinearDecayFunctionBuilder(
-			linearDecayScoreFunction.getField(),
-			linearDecayScoreFunction.getOrigin(),
-			linearDecayScoreFunction.getScale(),
-			linearDecayScoreFunction.getOffset());
+		DecayFunction.Builder decayFunctionBuilder =
+			FunctionScoreBuilders.linear();
+
+		UntypedDecayFunction.Builder untypedDecayFunctionBuilder =
+			new UntypedDecayFunction.Builder();
+
+		untypedDecayFunctionBuilder.field(linearDecayScoreFunction.getField());
+
+		untypedDecayFunctionBuilder.multiValueMode(
+			_translateMultiValueMode(
+				linearDecayScoreFunction.getMultiValueMode()));
+
+		DecayPlacement.Builder decayPlacementBuilder =
+			new DecayPlacement.Builder();
+
+		SetterUtil.setNotNullDouble(
+			decayPlacementBuilder::decay, linearDecayScoreFunction.getDecay());
+
+		decayPlacementBuilder.offset(
+			JsonData.of(linearDecayScoreFunction.getOffset()));
+		decayPlacementBuilder.origin(
+			JsonData.of(linearDecayScoreFunction.getOrigin()));
+		decayPlacementBuilder.scale(
+			JsonData.of(linearDecayScoreFunction.getScale()));
+
+		untypedDecayFunctionBuilder.placement(decayPlacementBuilder.build());
+
+		SetterUtil.setNotNullFloatAsDouble(
+			functionScoreBuilder::weight, linearDecayScoreFunction.getWeight());
+
+		decayFunctionBuilder.untyped(untypedDecayFunctionBuilder.build());
+
+		return functionScoreBuilder.linear(decayFunctionBuilder.build());
 	}
 
 	@Override
-	public ScoreFunctionBuilder<?> translate(
-		RandomScoreFunction randomScoreFunction) {
+	public ContainerBuilder translate(RandomScoreFunction randomScoreFunction) {
+		FunctionScore.Builder functionScoreBuilder =
+			new FunctionScore.Builder();
 
-		RandomScoreFunctionBuilder randomScoreFunctionBuilder =
-			new RandomScoreFunctionBuilder();
+		co.elastic.clients.elasticsearch._types.query_dsl.RandomScoreFunction.
+			Builder randomScoreFunctionBuilder =
+				FunctionScoreBuilders.randomScore();
 
-		if (randomScoreFunction.getField() != null) {
-			randomScoreFunctionBuilder.setField(randomScoreFunction.getField());
+		SetterUtil.setNotBlankString(
+			randomScoreFunctionBuilder::field, randomScoreFunction.getField());
+		SetterUtil.setNotBlankString(
+			randomScoreFunctionBuilder::seed,
+			String.valueOf(randomScoreFunction.getSeed()));
+
+		SetterUtil.setNotNullFloatAsDouble(
+			functionScoreBuilder::weight, randomScoreFunction.getWeight());
+
+		return functionScoreBuilder.randomScore(
+			randomScoreFunctionBuilder.build());
+	}
+
+	public ContainerBuilder translate(ScoreFunction scoreFunction) {
+		if (scoreFunction == null) {
+			return null;
 		}
 
-		if (randomScoreFunction.getSeed() != null) {
-			randomScoreFunctionBuilder.seed(randomScoreFunction.getSeed());
-		}
-
-		return randomScoreFunctionBuilder;
+		return scoreFunction.accept(this);
 	}
 
 	@Override
-	public ScoreFunctionBuilder<?> translate(
-		ScriptScoreFunction scriptScoreFunction) {
+	public ContainerBuilder translate(ScriptScoreFunction scriptScoreFunction) {
+		FunctionScore.Builder functionScoreBuilder =
+			new FunctionScore.Builder();
 
-		return new ScriptScoreFunctionBuilder(
+		co.elastic.clients.elasticsearch._types.query_dsl.ScriptScoreFunction.
+			Builder scriptScoreFunctionBuilder =
+				FunctionScoreBuilders.scriptScore();
+
+		scriptScoreFunctionBuilder.script(
 			_scriptTranslator.translate(scriptScoreFunction.getScript()));
+
+		SetterUtil.setNotNullFloatAsDouble(
+			functionScoreBuilder::weight, scriptScoreFunction.getWeight());
+
+		return functionScoreBuilder.scriptScore(
+			scriptScoreFunctionBuilder.build());
 	}
 
 	@Override
-	public ScoreFunctionBuilder<?> translate(
-		WeightScoreFunction weightScoreFunction) {
+	public ContainerBuilder translate(WeightScoreFunction weightScoreFunction) {
+		throw new UnsupportedOperationException();
+	}
 
-		return new WeightBuilder();
+	private FieldValueFactorModifier _translateModifier(
+		FieldValueFactorScoreFunction.Modifier modifier) {
+
+		if (modifier == FieldValueFactorScoreFunction.Modifier.LN) {
+			return FieldValueFactorModifier.Ln;
+		}
+		else if (modifier == FieldValueFactorScoreFunction.Modifier.LN1P) {
+			return FieldValueFactorModifier.Ln1p;
+		}
+		else if (modifier == FieldValueFactorScoreFunction.Modifier.LN2P) {
+			return FieldValueFactorModifier.Ln2p;
+		}
+		else if (modifier == FieldValueFactorScoreFunction.Modifier.LOG) {
+			return FieldValueFactorModifier.Log;
+		}
+		else if (modifier == FieldValueFactorScoreFunction.Modifier.LOG1P) {
+			return FieldValueFactorModifier.Log1p;
+		}
+		else if (modifier == FieldValueFactorScoreFunction.Modifier.LOG2P) {
+			return FieldValueFactorModifier.Log2p;
+		}
+		else if (modifier == FieldValueFactorScoreFunction.Modifier.NONE) {
+			return FieldValueFactorModifier.None;
+		}
+		else if (modifier ==
+					FieldValueFactorScoreFunction.Modifier.RECIPROCAL) {
+
+			return FieldValueFactorModifier.Reciprocal;
+		}
+		else if (modifier == FieldValueFactorScoreFunction.Modifier.SQRT) {
+			return FieldValueFactorModifier.Sqrt;
+		}
+		else if (modifier == FieldValueFactorScoreFunction.Modifier.SQUARE) {
+			return FieldValueFactorModifier.Square;
+		}
+
+		throw new IllegalArgumentException("Invalid modifier " + modifier);
+	}
+
+	private co.elastic.clients.elasticsearch._types.query_dsl.MultiValueMode
+		_translateMultiValueMode(MultiValueMode multiValueMode) {
+
+		if (multiValueMode == MultiValueMode.AVG) {
+			return co.elastic.clients.elasticsearch._types.query_dsl.
+				MultiValueMode.Avg;
+		}
+		else if (multiValueMode == MultiValueMode.MAX) {
+			return co.elastic.clients.elasticsearch._types.query_dsl.
+				MultiValueMode.Max;
+		}
+		else if (multiValueMode == MultiValueMode.MIN) {
+			return co.elastic.clients.elasticsearch._types.query_dsl.
+				MultiValueMode.Min;
+		}
+		else if (multiValueMode == MultiValueMode.SUM) {
+			return co.elastic.clients.elasticsearch._types.query_dsl.
+				MultiValueMode.Sum;
+		}
+
+		throw new IllegalArgumentException(
+			"Invalid multi value mode " + multiValueMode);
 	}
 
 	private final ScriptTranslator _scriptTranslator = new ScriptTranslator();

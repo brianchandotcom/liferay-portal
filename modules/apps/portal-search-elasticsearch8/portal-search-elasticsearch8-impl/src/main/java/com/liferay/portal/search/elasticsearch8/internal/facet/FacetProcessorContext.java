@@ -5,14 +5,14 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.facet;
 
-import org.elasticsearch.search.aggregations.AggregationBuilder;
+import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
 
 /**
  * @author André de Oliveira
  */
 public interface FacetProcessorContext {
 
-	public AggregationBuilder postProcessAggregationBuilder(
-		AggregationBuilder aggregationBuilder);
+	public Aggregation.Builder.ContainerBuilder postProcessAggregationBuilder(
+		Aggregation.Builder.ContainerBuilder containerBuilder, String name);
 
 }

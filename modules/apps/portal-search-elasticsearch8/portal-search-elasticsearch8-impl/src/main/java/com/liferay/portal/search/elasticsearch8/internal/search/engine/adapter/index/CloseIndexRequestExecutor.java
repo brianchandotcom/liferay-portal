@@ -31,8 +31,8 @@ public class CloseIndexRequestExecutor {
 
 	public CloseIndexResponse execute(CloseIndexRequest closeIndexRequest) {
 		co.elastic.clients.elasticsearch.indices.CloseIndexResponse
-			closeIndexResponse = getCloseIndexResponse(
-				createCloseIndexRequest(closeIndexRequest), closeIndexRequest);
+			closeIndexResponse = _getCloseIndexResponse(
+				closeIndexRequest, createCloseIndexRequest(closeIndexRequest));
 
 		return new CloseIndexResponse(closeIndexResponse.acknowledged());
 	}
@@ -67,11 +67,11 @@ public class CloseIndexRequestExecutor {
 		return builder.build();
 	}
 
-	protected co.elastic.clients.elasticsearch.indices.CloseIndexResponse
-		getCloseIndexResponse(
+	private co.elastic.clients.elasticsearch.indices.CloseIndexResponse
+		_getCloseIndexResponse(
+			CloseIndexRequest closeIndexRequest,
 			co.elastic.clients.elasticsearch.indices.CloseIndexRequest
-				elasticsearchCloseIndexRequest,
-			CloseIndexRequest closeIndexRequest) {
+				elasticsearchCloseIndexRequest) {
 
 		ElasticsearchClient elasticsearchClient =
 			_elasticsearchClientResolver.getElasticsearchClient(

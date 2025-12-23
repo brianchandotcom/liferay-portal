@@ -5,27 +5,26 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.facet;
 
+import co.elastic.clients.elasticsearch._types.FieldValue;
+import co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder.ContainerBuilder;
+import co.elastic.clients.elasticsearch._types.aggregations.AggregationBuilders;
+import co.elastic.clients.elasticsearch._types.aggregations.AggregationRange;
+import co.elastic.clients.elasticsearch._types.aggregations.DateRangeExpression;
+import co.elastic.clients.elasticsearch._types.aggregations.TermsAggregation;
+import co.elastic.clients.elasticsearch.core.SearchRequest;
+
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.bucket.DateRangeAggregation;
 import com.liferay.portal.search.aggregation.bucket.Range;
 import com.liferay.portal.search.aggregation.bucket.RangeAggregation;
+import com.liferay.portal.search.elasticsearch8.internal.util.ConversionUtil;
+import com.liferay.portal.search.elasticsearch8.internal.util.ElasticsearchStringUtil;
 import com.liferay.portal.search.facet.nested.NestedFacet;
-
-import org.elasticsearch.action.search.SearchRequestBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.query.TermQueryBuilder;
-import org.elasticsearch.search.aggregations.AggregationBuilder;
-import org.elasticsearch.search.aggregations.AggregationBuilders;
-import org.elasticsearch.search.aggregations.bucket.filter.FilterAggregationBuilder;
-import org.elasticsearch.search.aggregations.bucket.nested.NestedAggregationBuilder;
-import org.elasticsearch.search.aggregations.bucket.range.DateRangeAggregationBuilder;
-import org.elasticsearch.search.aggregations.bucket.range.RangeAggregationBuilder;
-import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -38,61 +37,98 @@ import org.osgi.service.component.annotations.Component;
 	service = FacetProcessor.class
 )
 public class NestedFacetProcessor
-	implements FacetProcessor<SearchRequestBuilder> {
+	implements FacetProcessor<SearchRequest.Builder> {
 
 	@Override
-	public AggregationBuilder processFacet(Facet facet) {
+	public ContainerBuilder processFacet(Facet facet) {
 		if (!(facet instanceof NestedFacet)) {
 			return null;
 		}
 
 		NestedFacet nestedFacet = (NestedFacet)facet;
 
-		NestedAggregationBuilder nestedAggregationBuilder =
-			AggregationBuilders.nested(
-				FacetUtil.getAggregationName(facet), nestedFacet.getPath());
+		co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder
+			nestedAggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					Aggregation.Builder();
 
-		TermsAggregationBuilder termsAggregationBuilder =
-			_getTermsAggregationBuilder(nestedFacet);
+		ContainerBuilder nestedAggregationContainerBuilder =
+			nestedAggregationBuilder.nested(
+				nestedAggregation -> nestedAggregation.path(
+					nestedFacet.getPath()));
+
+		co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+			termsAggregation =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					Aggregation(_getTermsAggregation(nestedFacet));
 
 		if ((nestedFacet.getChildAggregation() != null) ||
 			Validator.isNotNull(nestedFacet.getFilterField())) {
 
-			TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery(
-				nestedFacet.getFilterField(), nestedFacet.getFilterValue());
+			co.elastic.clients.elasticsearch._types.aggregations.Aggregation.
+				Builder filterAggregationBuilder =
+					new co.elastic.clients.elasticsearch._types.aggregations.
+						Aggregation.Builder();
 
-			FilterAggregationBuilder filterAggregationBuilder =
-				AggregationBuilders.filter(
-					FacetUtil.getAggregationName(facet), termQueryBuilder);
+			ContainerBuilder filterAggregationContainerBuilder =
+				filterAggregationBuilder.filter(
+					query -> query.term(
+						termQuery -> termQuery.field(
+							nestedFacet.getFilterField()
+						).value(
+							FieldValue.of(nestedFacet.getFilterValue())
+						)));
 
 			if (nestedFacet.getChildAggregation() != null) {
-				filterAggregationBuilder.subAggregation(
-					_getChildAggregationBuilder(
-						nestedFacet.getChildAggregation()));
+				filterAggregationContainerBuilder.aggregations(
+					FacetUtil.getAggregationName(facet),
+					_getChildAggregation(nestedFacet.getChildAggregation()));
 			}
 			else {
-				filterAggregationBuilder.subAggregation(
-					termsAggregationBuilder);
+				filterAggregationContainerBuilder.aggregations(
+					FacetUtil.getAggregationName(facet), termsAggregation);
 			}
 
-			nestedAggregationBuilder.subAggregation(filterAggregationBuilder);
+			nestedAggregationContainerBuilder.aggregations(
+				FacetUtil.getAggregationName(facet),
+				filterAggregationContainerBuilder.build());
 		}
 		else {
-			nestedAggregationBuilder.subAggregation(termsAggregationBuilder);
+			nestedAggregationContainerBuilder.aggregations(
+				FacetUtil.getAggregationName(facet), termsAggregation);
 		}
 
-		return nestedAggregationBuilder;
+		return nestedAggregationContainerBuilder;
 	}
 
-	private AggregationBuilder _getChildAggregationBuilder(
-		Aggregation aggregation) {
+	private AggregationRange _createAggregationRange(
+		Double from, String key, Double to) {
+
+		AggregationRange.Builder builder = new AggregationRange.Builder();
+
+		if (from != null) {
+			builder.from(from);
+		}
+
+		if (!Validator.isBlank(key)) {
+			builder.key(key);
+		}
+
+		if (to != null) {
+			builder.to(to);
+		}
+
+		return builder.build();
+	}
+
+	private co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		_getChildAggregation(Aggregation aggregation) {
 
 		if (aggregation instanceof DateRangeAggregation) {
-			return _getDateRangeAggregationBuilder(
-				(DateRangeAggregation)aggregation);
+			return _getDateRangeAggregation((DateRangeAggregation)aggregation);
 		}
 		else if (aggregation instanceof RangeAggregation) {
-			return _getRangeAggregationBuilder((RangeAggregation)aggregation);
+			return _getRangeAggregation((RangeAggregation)aggregation);
 		}
 
 		Class<?> clazz = aggregation.getClass();
@@ -102,52 +138,60 @@ public class NestedFacetProcessor
 				clazz.getName());
 	}
 
-	private AggregationBuilder _getDateRangeAggregationBuilder(
-		DateRangeAggregation dateRangeAggregation) {
+	private co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		_getDateRangeAggregation(DateRangeAggregation dateRangeAggregation) {
 
-		DateRangeAggregationBuilder dateRangeAggregationBuilder =
-			AggregationBuilders.dateRange(dateRangeAggregation.getName());
+		co.elastic.clients.elasticsearch._types.aggregations.
+			DateRangeAggregation.Builder builder =
+				AggregationBuilders.dateRange();
 
-		dateRangeAggregationBuilder.field(dateRangeAggregation.getField());
-		dateRangeAggregationBuilder.format(dateRangeAggregation.getFormat());
+		builder.field(dateRangeAggregation.getField());
+		builder.format(dateRangeAggregation.getFormat());
 
 		for (Range range : dateRangeAggregation.getRanges()) {
-			dateRangeAggregationBuilder.addRange(
-				range.getKey(), range.getFromAsString(), range.getToAsString());
+			builder.ranges(
+				DateRangeExpression.of(
+					dateRangeExpression -> dateRangeExpression.from(
+						ConversionUtil.toFieldDateMath(
+							range.getFromAsString(), range.getFrom())
+					).key(
+						range.getKey()
+					).to(
+						ConversionUtil.toFieldDateMath(
+							range.getToAsString(), range.getTo())
+					)));
 		}
 
-		return dateRangeAggregationBuilder;
+		return new co.elastic.clients.elasticsearch._types.aggregations.
+			Aggregation(builder.build());
 	}
 
-	private AggregationBuilder _getRangeAggregationBuilder(
-		RangeAggregation rangeAggregation) {
+	private co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		_getRangeAggregation(RangeAggregation rangeAggregation) {
 
-		RangeAggregationBuilder rangeAggregationBuilder =
-			AggregationBuilders.range(rangeAggregation.getName());
+		co.elastic.clients.elasticsearch._types.aggregations.RangeAggregation.
+			Builder builder = AggregationBuilders.range();
 
-		rangeAggregationBuilder.field(rangeAggregation.getField());
+		builder.field(rangeAggregation.getField());
 
-		if (!Validator.isBlank(rangeAggregation.getFormat())) {
-			rangeAggregationBuilder.format(rangeAggregation.getFormat());
-		}
+		ListUtil.isNotEmptyForEach(
+			rangeAggregation.getRanges(),
+			range -> builder.ranges(
+				_createAggregationRange(
+					ElasticsearchStringUtil.getFirstDoubleValue(
+						range::getFrom, range::getFromAsString),
+					range.getKey(),
+					ElasticsearchStringUtil.getFirstDoubleValue(
+						range::getTo, range::getToAsString))));
 
-		for (Range range : rangeAggregation.getRanges()) {
-			rangeAggregationBuilder.addRange(
-				range.getKey(), GetterUtil.getDouble(range.getFromAsString()),
-				GetterUtil.getDouble(range.getToAsString()));
-		}
-
-		return rangeAggregationBuilder;
+		return new co.elastic.clients.elasticsearch._types.aggregations.
+			Aggregation(builder.build());
 	}
 
-	private TermsAggregationBuilder _getTermsAggregationBuilder(
-		NestedFacet nestedFacet) {
+	private TermsAggregation _getTermsAggregation(NestedFacet nestedFacet) {
+		TermsAggregation.Builder builder = AggregationBuilders.terms();
 
-		TermsAggregationBuilder termsAggregationBuilder =
-			AggregationBuilders.terms(
-				FacetUtil.getAggregationName(nestedFacet));
-
-		termsAggregationBuilder.field(nestedFacet.getFieldName());
+		builder.field(nestedFacet.getFieldName());
 
 		FacetConfiguration facetConfiguration =
 			nestedFacet.getFacetConfiguration();
@@ -157,16 +201,16 @@ public class NestedFacetProcessor
 		int minDocCount = dataJSONObject.getInt("frequencyThreshold", -1);
 
 		if (minDocCount >= 0) {
-			termsAggregationBuilder.minDocCount(minDocCount);
+			builder.minDocCount(minDocCount);
 		}
 
 		int size = dataJSONObject.getInt("maxTerms");
 
 		if (size > 0) {
-			termsAggregationBuilder.size(size);
+			builder.size(size);
 		}
 
-		return termsAggregationBuilder;
+		return builder.build();
 	}
 
 }

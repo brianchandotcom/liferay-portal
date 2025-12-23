@@ -5,12 +5,19 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.sort;
 
+import co.elastic.clients.elasticsearch._types.NestedSortValue;
+import co.elastic.clients.elasticsearch._types.ScriptSortType;
+import co.elastic.clients.elasticsearch._types.SortOptions;
+import co.elastic.clients.elasticsearch._types.SortOptionsBuilders;
+import co.elastic.clients.elasticsearch._types.mapping.FieldType;
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import co.elastic.clients.elasticsearch._types.query_dsl.QueryVariant;
+
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.portal.search.elasticsearch8.internal.geolocation.DistanceUnitTranslator;
-import com.liferay.portal.search.elasticsearch8.internal.geolocation.GeoDistanceTypeTranslator;
-import com.liferay.portal.search.elasticsearch8.internal.geolocation.GeoLocationPointTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.geolocation.GeoTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.query.ElasticsearchQueryTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.script.ScriptTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.util.ConversionUtil;
 import com.liferay.portal.search.query.QueryTranslator;
 import com.liferay.portal.search.sort.FieldSort;
 import com.liferay.portal.search.sort.GeoDistanceSort;
@@ -23,189 +30,175 @@ import com.liferay.portal.search.sort.SortMode;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.SortVisitor;
 
-import org.elasticsearch.common.geo.GeoDistance;
-import org.elasticsearch.common.geo.GeoPoint;
-import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.script.Script;
-import org.elasticsearch.search.sort.FieldSortBuilder;
-import org.elasticsearch.search.sort.GeoDistanceSortBuilder;
-import org.elasticsearch.search.sort.NestedSortBuilder;
-import org.elasticsearch.search.sort.ScriptSortBuilder;
-import org.elasticsearch.search.sort.SortBuilder;
-import org.elasticsearch.search.sort.SortBuilders;
-
 /**
  * @author Michael C. Han
  */
 public class ElasticsearchSortFieldTranslator
-	implements SortFieldTranslator<SortBuilder<?>>,
-			   SortVisitor<SortBuilder<?>> {
+	implements SortFieldTranslator<SortOptions>, SortVisitor<SortOptions> {
 
 	@Override
-	public SortBuilder<?> translate(Sort sort) {
+	public SortOptions translate(Sort sort) {
 		return sort.accept(this);
 	}
 
 	@Override
-	public SortBuilder<?> visit(FieldSort fieldSort) {
-		FieldSortBuilder fieldSortBuilder = SortBuilders.fieldSort(
-			fieldSort.getField());
+	public SortOptions visit(FieldSort fieldSort) {
+		co.elastic.clients.elasticsearch._types.FieldSort.Builder builder =
+			SortOptionsBuilders.field();
 
-		fieldSortBuilder.order(translate(fieldSort.getSortOrder()));
+		builder.field(fieldSort.getField());
 
 		if (fieldSort.getMissing() != null) {
-			fieldSortBuilder.missing(fieldSort.getMissing());
-		}
-
-		if (fieldSort.getNestedSort() != null) {
-			fieldSortBuilder.setNestedSort(
-				translate(fieldSort.getNestedSort()));
+			builder.missing(
+				ConversionUtil.toFieldValue(fieldSort.getMissing()));
 		}
 
 		if (fieldSort.getSortMode() != null) {
-			fieldSortBuilder.sortMode(translate(fieldSort.getSortMode()));
+			builder.mode(translateSortMode(fieldSort.getSortMode()));
 		}
 
-		return fieldSortBuilder.unmappedType("keyword");
+		if (fieldSort.getNestedSort() != null) {
+			builder.nested(translateNestedSort(fieldSort.getNestedSort()));
+		}
+
+		builder.order(translateSortOrder(fieldSort.getSortOrder()));
+		builder.unmappedType(FieldType.Keyword);
+
+		return SortOptions.of(
+			sortOptions -> sortOptions.field(builder.build()));
 	}
 
 	@Override
-	public SortBuilder<?> visit(GeoDistanceSort geoDistanceSort) {
-		GeoDistanceSortBuilder geoDistanceSortBuilder =
-			SortBuilders.geoDistanceSort(
-				geoDistanceSort.getField(),
-				TransformUtil.transformToArray(
-					geoDistanceSort.getGeoLocationPoints(),
-					GeoLocationPointTranslator::translate, GeoPoint.class));
+	public SortOptions visit(GeoDistanceSort geoDistanceSort) {
+		co.elastic.clients.elasticsearch._types.GeoDistanceSort.Builder
+			builder = SortOptionsBuilders.geoDistance();
 
-		geoDistanceSortBuilder.order(translate(geoDistanceSort.getSortOrder()));
+		if (geoDistanceSort.getGeoDistanceType() != null) {
+			builder.distanceType(
+				_geoTranslator.translateGeoDistanceType(
+					geoDistanceSort.getGeoDistanceType()));
+		}
+
+		builder.field(geoDistanceSort.getField());
+		builder.location(
+			TransformUtil.transform(
+				geoDistanceSort.getGeoLocationPoints(),
+				_geoTranslator::translateGeoLocationPoint));
+
+		if (geoDistanceSort.getSortMode() != null) {
+			builder.mode(translateSortMode(geoDistanceSort.getSortMode()));
+		}
+
+		if (geoDistanceSort.getSortOrder() != null) {
+			builder.order(translateSortOrder(geoDistanceSort.getSortOrder()));
+		}
 
 		if (geoDistanceSort.getDistanceUnit() != null) {
-			geoDistanceSortBuilder.unit(
-				_distanceUnitTranslator.translate(
+			builder.unit(
+				_geoTranslator.translateDistanceUnit(
 					geoDistanceSort.getDistanceUnit()));
 		}
 
-		if (geoDistanceSort.getGeoDistanceType() != null) {
-			GeoDistance geoDistance = _geoDistanceTypeTranslator.translate(
-				geoDistanceSort.getGeoDistanceType());
-
-			geoDistanceSortBuilder.geoDistance(geoDistance);
-		}
-
-		if (geoDistanceSort.getNestedSort() != null) {
-			geoDistanceSortBuilder.setNestedSort(
-				translate(geoDistanceSort.getNestedSort()));
-		}
-
-		if (geoDistanceSort.getSortMode() != null) {
-			geoDistanceSortBuilder.sortMode(
-				translate(geoDistanceSort.getSortMode()));
-		}
-
-		return geoDistanceSortBuilder;
+		return SortOptions.of(
+			sortOptions -> sortOptions.geoDistance(builder.build()));
 	}
 
 	@Override
-	public SortBuilder<?> visit(ScoreSort scoreSort) {
-		return SortBuilders.scoreSort(
-		).order(
-			translate(scoreSort.getSortOrder())
-		);
+	public SortOptions visit(ScoreSort scoreSort) {
+		co.elastic.clients.elasticsearch._types.ScoreSort.Builder builder =
+			SortOptionsBuilders.score();
+
+		if (scoreSort.getSortOrder() != null) {
+			builder.order(translateSortOrder(scoreSort.getSortOrder()));
+		}
+
+		return SortOptions.of(
+			sortOptions -> sortOptions.score(builder.build()));
 	}
 
 	@Override
-	public SortBuilder<?> visit(ScriptSort scriptSort) {
-		Script script = _scriptTranslator.translate(scriptSort.getScript());
-
-		ScriptSortBuilder.ScriptSortType scriptSortType =
-			ScriptSortBuilder.ScriptSortType.NUMBER;
-
-		if (scriptSort.getScriptSortType() ==
-				ScriptSort.ScriptSortType.STRING) {
-
-			scriptSortType = ScriptSortBuilder.ScriptSortType.STRING;
-		}
-
-		ScriptSortBuilder scriptSortBuilder = SortBuilders.scriptSort(
-			script, scriptSortType);
-
-		if (scriptSort.getNestedSort() != null) {
-			scriptSortBuilder.setNestedSort(
-				translate(scriptSort.getNestedSort()));
-		}
+	public SortOptions visit(ScriptSort scriptSort) {
+		co.elastic.clients.elasticsearch._types.ScriptSort.Builder builder =
+			SortOptionsBuilders.script();
 
 		if (scriptSort.getSortMode() != null) {
-			scriptSortBuilder.sortMode(translate(scriptSort.getSortMode()));
+			builder.mode(translateSortMode(scriptSort.getSortMode()));
 		}
 
-		scriptSortBuilder.order(translate(scriptSort.getSortOrder()));
+		if (scriptSort.getNestedSort() != null) {
+			builder.nested(translateNestedSort(scriptSort.getNestedSort()));
+		}
 
-		return scriptSortBuilder;
+		builder.order(translateSortOrder(scriptSort.getSortOrder()));
+		builder.script(_scriptTranslator.translate(scriptSort.getScript()));
+
+		if (scriptSort.getScriptSortType() ==
+				ScriptSort.ScriptSortType.NUMBER) {
+
+			builder.type(ScriptSortType.Number);
+		}
+		else {
+			builder.type(ScriptSortType.String);
+		}
+
+		return SortOptions.of(
+			sortOptions -> sortOptions.script(builder.build()));
 	}
 
-	protected NestedSortBuilder translate(NestedSort nestedSort) {
-		NestedSortBuilder nestedSortBuilder = new NestedSortBuilder(
-			nestedSort.getPath());
+	protected NestedSortValue translateNestedSort(NestedSort nestedSort) {
+		NestedSortValue.Builder builder = new NestedSortValue.Builder();
 
 		if (nestedSort.getFilterQuery() != null) {
-			QueryBuilder queryBuilder = _queryTranslator.translate(
-				nestedSort.getFilterQuery());
-
-			nestedSortBuilder.setFilter(queryBuilder);
+			builder.filter(
+				new Query(
+					_queryTranslator.translate(nestedSort.getFilterQuery())));
 		}
+
+		builder.maxChildren(nestedSort.getMaxChildren());
 
 		if (nestedSort.getNestedSort() != null) {
-			NestedSort childNestedSort = nestedSort.getNestedSort();
-
-			nestedSortBuilder.setNestedSort(translate(childNestedSort));
+			builder.nested(translateNestedSort(nestedSort.getNestedSort()));
 		}
 
-		nestedSortBuilder.setMaxChildren(nestedSort.getMaxChildren());
+		builder.path(nestedSort.getPath());
 
-		return nestedSortBuilder;
+		return builder.build();
 	}
 
-	protected org.elasticsearch.search.sort.SortMode translate(
-		SortMode sortMode) {
+	protected co.elastic.clients.elasticsearch._types.SortMode
+		translateSortMode(SortMode sortMode) {
 
 		if (sortMode == SortMode.AVG) {
-			return org.elasticsearch.search.sort.SortMode.AVG;
+			return co.elastic.clients.elasticsearch._types.SortMode.Avg;
 		}
 		else if (sortMode == SortMode.MAX) {
-			return org.elasticsearch.search.sort.SortMode.MAX;
+			return co.elastic.clients.elasticsearch._types.SortMode.Max;
 		}
 		else if (sortMode == SortMode.MEDIAN) {
-			return org.elasticsearch.search.sort.SortMode.MEDIAN;
+			return co.elastic.clients.elasticsearch._types.SortMode.Median;
 		}
 		else if (sortMode == SortMode.MIN) {
-			return org.elasticsearch.search.sort.SortMode.MIN;
+			return co.elastic.clients.elasticsearch._types.SortMode.Min;
 		}
 		else if (sortMode == SortMode.SUM) {
-			return org.elasticsearch.search.sort.SortMode.SUM;
+			return co.elastic.clients.elasticsearch._types.SortMode.Sum;
 		}
 
-		throw new IllegalArgumentException("Invalid sort mode: " + sortMode);
+		throw new IllegalArgumentException("Invalid sort mode " + sortMode);
 	}
 
-	protected org.elasticsearch.search.sort.SortOrder translate(
-		SortOrder sortOrder) {
+	protected co.elastic.clients.elasticsearch._types.SortOrder
+		translateSortOrder(SortOrder sortOrder) {
 
 		if ((sortOrder == SortOrder.ASC) || (sortOrder == null)) {
-			return org.elasticsearch.search.sort.SortOrder.ASC;
-		}
-		else if (sortOrder == SortOrder.DESC) {
-			return org.elasticsearch.search.sort.SortOrder.DESC;
+			return co.elastic.clients.elasticsearch._types.SortOrder.Asc;
 		}
 
-		throw new IllegalArgumentException("Invalid sort order: " + sortOrder);
+		return co.elastic.clients.elasticsearch._types.SortOrder.Desc;
 	}
 
-	private final DistanceUnitTranslator _distanceUnitTranslator =
-		new DistanceUnitTranslator();
-	private final GeoDistanceTypeTranslator _geoDistanceTypeTranslator =
-		new GeoDistanceTypeTranslator();
-	private final QueryTranslator<QueryBuilder> _queryTranslator =
+	private final GeoTranslator _geoTranslator = new GeoTranslator();
+	private final QueryTranslator<QueryVariant> _queryTranslator =
 		new ElasticsearchQueryTranslator();
 	private final ScriptTranslator _scriptTranslator = new ScriptTranslator();
 

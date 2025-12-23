@@ -13,6 +13,7 @@ import com.liferay.petra.process.ProcessConfig;
 import com.liferay.petra.process.ProcessExecutor;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -55,8 +56,6 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
-
-import org.elasticsearch.common.settings.Settings;
 
 /**
  * @author Tina Tian
@@ -451,8 +450,7 @@ public class Sidecar {
 	}
 
 	private String _getSettings() {
-		SettingsHelperImpl settingsHelperImpl = new SettingsHelperImpl(
-			Settings.builder());
+		SettingsHelperImpl settingsHelperImpl = new SettingsHelperImpl();
 
 		String defaultConfigurations = ResourceUtil.getResourceAsString(
 			getClass(),
@@ -548,16 +546,17 @@ public class Sidecar {
 		settingsHelperImpl.loadFromSource(
 			_elasticsearchConfigurationWrapper.additionalConfigurations());
 
-		Settings settings = settingsHelperImpl.build();
+		JSONObject settingsJSONObject =
+			settingsHelperImpl.getSettingsJSONObject();
 
-		Set<String> keys = new TreeSet<>(settings.keySet());
+		Set<String> keys = new TreeSet<>(settingsJSONObject.keySet());
 
 		StringBundler sb = new StringBundler(keys.size() * 4);
 
 		for (String key : keys) {
 			sb.append(key);
 			sb.append(": ");
-			sb.append(settings.get(key));
+			sb.append(settingsJSONObject.get(key));
 			sb.append(StringPool.NEW_LINE);
 		}
 

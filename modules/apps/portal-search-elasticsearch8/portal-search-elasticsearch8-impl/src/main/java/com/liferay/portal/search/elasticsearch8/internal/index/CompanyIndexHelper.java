@@ -5,44 +5,53 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.index;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.indices.CloseIndexRequest;
+import co.elastic.clients.elasticsearch.indices.CreateIndexRequest;
+import co.elastic.clients.elasticsearch.indices.CreateIndexResponse;
+import co.elastic.clients.elasticsearch.indices.DeleteIndexRequest;
+import co.elastic.clients.elasticsearch.indices.ElasticsearchIndicesClient;
+import co.elastic.clients.elasticsearch.indices.ExistsRequest;
+import co.elastic.clients.elasticsearch.indices.IndexSettings;
+import co.elastic.clients.elasticsearch.indices.OpenRequest;
+import co.elastic.clients.elasticsearch.indices.PutIndicesSettingsRequest;
+import co.elastic.clients.json.JsonpMapper;
+import co.elastic.clients.transport.endpoints.BooleanResponse;
+
 import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomizer;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.PortalRunMode;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch8.internal.configuration.ElasticsearchConfigurationWrapper;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchConnectionNotInitializedException;
-import com.liferay.portal.search.elasticsearch8.internal.helper.SearchLogHelperUtil;
 import com.liferay.portal.search.elasticsearch8.internal.index.constants.IndexSettingsConstants;
 import com.liferay.portal.search.elasticsearch8.internal.index.util.IndexFactoryCompanyIdRegistryUtil;
 import com.liferay.portal.search.elasticsearch8.internal.settings.SettingsHelperImpl;
+import com.liferay.portal.search.elasticsearch8.internal.util.JsonpUtil;
 import com.liferay.portal.search.elasticsearch8.internal.util.ResourceUtil;
 import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.spi.index.configuration.contributor.CompanyIndexConfigurationContributor;
 import com.liferay.portal.search.spi.index.listener.CompanyIndexListener;
 
-import java.io.IOException;
+import jakarta.json.spi.JsonProvider;
 
-import org.elasticsearch.action.ActionResponse;
-import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
-import org.elasticsearch.action.admin.indices.open.OpenIndexRequest;
-import org.elasticsearch.action.admin.indices.settings.put.UpdateSettingsRequest;
-import org.elasticsearch.client.IndicesClient;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.client.indices.CloseIndexRequest;
-import org.elasticsearch.client.indices.CreateIndexRequest;
-import org.elasticsearch.client.indices.GetIndexRequest;
-import org.elasticsearch.common.settings.Settings;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.nio.charset.StandardCharsets;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -58,25 +67,29 @@ import org.osgi.service.component.annotations.Reference;
 public class CompanyIndexHelper {
 
 	public void createIndex(
-		long companyId, String indexName, IndicesClient indicesClient) {
+		long companyId, ElasticsearchIndicesClient elasticsearchIndicesClient,
+		String indexName) {
 
-		CreateIndexRequest createIndexRequest = new CreateIndexRequest(
-			indexName);
+		CreateIndexRequest.Builder builder = new CreateIndexRequest.Builder(
+		).index(
+			indexName
+		);
 
-		_setSettings(companyId, createIndexRequest);
+		_setSettings(builder, companyId);
 
 		MappingsHelperImpl mappingsHelperImpl = new MappingsHelperImpl(
-			indexName, indicesClient, _jsonFactory,
+			elasticsearchIndicesClient, indexName, _jsonFactory,
 			_elasticsearchConfigurationWrapper.overrideTypeMappings(),
 			_searchEngineInformation);
 
-		mappingsHelperImpl.setDefaultOrOverrideMappings(createIndexRequest);
+		mappingsHelperImpl.setDefaultOrOverrideMappings(
+			builder, _elasticsearchConnectionManager.getJsonpMapper(null));
 
 		try {
-			ActionResponse actionResponse = indicesClient.create(
-				createIndexRequest, RequestOptions.DEFAULT);
+			CreateIndexResponse createIndexResponse =
+				elasticsearchIndicesClient.create(builder.build());
 
-			SearchLogHelperUtil.logActionResponse(_log, actionResponse);
+			JsonpUtil.logInfoResponse(createIndexResponse, _log);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -88,19 +101,18 @@ public class CompanyIndexHelper {
 	}
 
 	public void deleteIndex(
-		long companyId, String indexName, IndicesClient indicesClient,
-		boolean resetBothIndexNames) {
+		long companyId, ElasticsearchIndicesClient elasticsearchIndicesClient,
+		String indexName, boolean resetBothIndexNames) {
 
 		_executeCompanyIndexListenersBeforeDelete(indexName);
 
-		DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest(
-			indexName);
-
 		try {
-			ActionResponse actionResponse = indicesClient.delete(
-				deleteIndexRequest, RequestOptions.DEFAULT);
-
-			SearchLogHelperUtil.logActionResponse(_log, actionResponse);
+			JsonpUtil.logInfoResponse(
+				elasticsearchIndicesClient.delete(
+					DeleteIndexRequest.of(
+						deleteIndexRequest -> deleteIndexRequest.index(
+							indexName))),
+				_log);
 
 			if (companyId != CompanyConstants.SYSTEM) {
 				if (resetBothIndexNames) {
@@ -127,12 +139,16 @@ public class CompanyIndexHelper {
 		return _indexNameBuilder.getIndexName(companyId);
 	}
 
-	public boolean hasIndex(String indexName, IndicesClient indicesClient) {
-		GetIndexRequest getIndexRequest = new GetIndexRequest(indexName);
+	public boolean hasIndex(
+		ElasticsearchIndicesClient elasticsearchIndicesClient,
+		String indexName) {
 
 		try {
-			return indicesClient.exists(
-				getIndexRequest, RequestOptions.DEFAULT);
+			BooleanResponse booleanResponse = elasticsearchIndicesClient.exists(
+				ExistsRequest.of(
+					existRequest -> existRequest.index(indexName)));
+
+			return booleanResponse.value();
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -140,12 +156,13 @@ public class CompanyIndexHelper {
 	}
 
 	public void updateIndex(
-		long companyId, String indexName, IndicesClient indicesClient) {
+		long companyId, ElasticsearchIndicesClient elasticsearchIndicesClient,
+		String indexName) {
 
-		_updateSettings(companyId, indexName, indicesClient);
+		_updateSettings(companyId, elasticsearchIndicesClient, indexName);
 
 		MappingsHelperImpl mappingsHelperImpl = new MappingsHelperImpl(
-			indexName, indicesClient, _jsonFactory,
+			elasticsearchIndicesClient, indexName, _jsonFactory,
 			_elasticsearchConfigurationWrapper.overrideTypeMappings(),
 			_searchEngineInformation);
 
@@ -212,6 +229,34 @@ public class CompanyIndexHelper {
 		if (_companyIndexConfigurationContributorServiceTrackerList != null) {
 			_companyIndexConfigurationContributorServiceTrackerList.close();
 		}
+	}
+
+	private PutIndicesSettingsRequest _buildPutIndicesSettingsRequest(
+		String indexName, String settings) {
+
+		PutIndicesSettingsRequest.Builder builder =
+			new PutIndicesSettingsRequest.Builder(
+			).index(
+				indexName
+			);
+
+		JsonpMapper jsonpMapper =
+			_elasticsearchConnectionManager.getJsonpMapper(null);
+
+		JsonProvider jsonProvider = jsonpMapper.jsonProvider();
+
+		try (InputStream inputStream = new ByteArrayInputStream(
+				settings.getBytes(StandardCharsets.UTF_8))) {
+
+			builder.settings(
+				IndexSettings._DESERIALIZER.deserialize(
+					jsonProvider.createParser(inputStream), jsonpMapper));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		return builder.build();
 	}
 
 	private void _executeCompanyIndexListenerAfterCreate(
@@ -334,11 +379,11 @@ public class CompanyIndexHelper {
 		CompanyIndexConfigurationContributor
 			companyIndexConfigurationContributor) {
 
-		RestHighLevelClient restHighLevelClient = null;
+		ElasticsearchClient elasticsearchClient = null;
 
 		try {
-			restHighLevelClient =
-				_elasticsearchConnectionManager.getRestHighLevelClient();
+			elasticsearchClient =
+				_elasticsearchConnectionManager.getElasticsearchClient();
 		}
 		catch (ElasticsearchConnectionNotInitializedException
 					elasticsearchConnectionNotInitializedException) {
@@ -348,37 +393,36 @@ public class CompanyIndexHelper {
 			return;
 		}
 
-		IndicesClient indicesClient = restHighLevelClient.indices();
+		ElasticsearchIndicesClient elasticsearchIndicesClient =
+			elasticsearchClient.indices();
 
 		_companyLocalService.forEachCompanyId(
 			companyId -> {
 				String indexName = getIndexName(companyId);
 
-				SettingsHelperImpl settingsHelperImpl = new SettingsHelperImpl(
-					Settings.builder());
+				SettingsHelperImpl settingsHelperImpl =
+					new SettingsHelperImpl();
 
 				companyIndexConfigurationContributor.contributeSettings(
 					companyId, settingsHelperImpl);
 
-				Settings settings = settingsHelperImpl.build();
+				JSONObject settingsJSONObject =
+					settingsHelperImpl.getSettingsJSONObject();
 
-				if (!settings.isEmpty()) {
-					UpdateSettingsRequest updateSettingsRequest =
-						new UpdateSettingsRequest(indexName);
-
-					updateSettingsRequest.settings(settings);
-
+				if (SetUtil.isNotEmpty(settingsJSONObject.keySet())) {
 					try {
-						indicesClient.close(
-							new CloseIndexRequest(indexName),
-							RequestOptions.DEFAULT);
+						elasticsearchIndicesClient.close(
+							CloseIndexRequest.of(
+								closeIndexRequest -> closeIndexRequest.index(
+									indexName)));
 
-						indicesClient.putSettings(
-							updateSettingsRequest, RequestOptions.DEFAULT);
+						elasticsearchIndicesClient.putSettings(
+							_buildPutIndicesSettingsRequest(
+								indexName, settingsJSONObject.toString()));
 
-						indicesClient.open(
-							new OpenIndexRequest(indexName),
-							RequestOptions.DEFAULT);
+						elasticsearchIndicesClient.open(
+							OpenRequest.of(
+								openRequest -> openRequest.index(indexName)));
 					}
 					catch (Exception exception) {
 						_log.error(
@@ -393,7 +437,7 @@ public class CompanyIndexHelper {
 				companyIndexConfigurationContributor.contributeMappings(
 					companyId,
 					new MappingsHelperImpl(
-						indexName, indicesClient, _jsonFactory,
+						elasticsearchIndicesClient, indexName, _jsonFactory,
 						_elasticsearchConfigurationWrapper.
 							overrideTypeMappings(),
 						_searchEngineInformation));
@@ -439,10 +483,9 @@ public class CompanyIndexHelper {
 	}
 
 	private void _setSettings(
-		long companyId, CreateIndexRequest createIndexRequest) {
+		CreateIndexRequest.Builder builder, long companyId) {
 
-		SettingsHelperImpl settingsHelperImpl = new SettingsHelperImpl(
-			Settings.builder());
+		SettingsHelperImpl settingsHelperImpl = new SettingsHelperImpl();
 
 		_loadDefaultSettings(settingsHelperImpl);
 
@@ -450,33 +493,55 @@ public class CompanyIndexHelper {
 
 		_loadAdditionalSettings(companyId, settingsHelperImpl, true);
 
-		createIndexRequest.settings(settingsHelperImpl.getBuilder());
+		_setSettings(
+			builder,
+			String.valueOf(settingsHelperImpl.getSettingsJSONObject()));
+	}
+
+	private void _setSettings(
+		CreateIndexRequest.Builder builder, String settings) {
+
+		JsonpMapper jsonpMapper =
+			_elasticsearchConnectionManager.getJsonpMapper(null);
+
+		JsonProvider jsonProvider = jsonpMapper.jsonProvider();
+
+		try (InputStream inputStream = new ByteArrayInputStream(
+				settings.getBytes(StandardCharsets.UTF_8))) {
+
+			builder.settings(
+				IndexSettings._DESERIALIZER.deserialize(
+					jsonProvider.createParser(inputStream), jsonpMapper));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	private void _updateSettings(
-		long companyId, String indexName, IndicesClient indicesClient) {
+		long companyId, ElasticsearchIndicesClient elasticsearchIndicesClient,
+		String indexName) {
 
-		UpdateSettingsRequest updateSettingsRequest = new UpdateSettingsRequest(
-			indexName);
-
-		SettingsHelperImpl settingsHelperImpl = new SettingsHelperImpl(
-			Settings.builder());
+		SettingsHelperImpl settingsHelperImpl = new SettingsHelperImpl();
 
 		_loadDefaultSettings(settingsHelperImpl);
 
 		_loadAdditionalSettings(companyId, settingsHelperImpl, false);
 
-		updateSettingsRequest.settings(settingsHelperImpl.getBuilder());
+		JSONObject settingsJSONObject =
+			settingsHelperImpl.getSettingsJSONObject();
 
 		try {
-			indicesClient.close(
-				new CloseIndexRequest(indexName), RequestOptions.DEFAULT);
+			elasticsearchIndicesClient.close(
+				CloseIndexRequest.of(
+					closeIndexRequest -> closeIndexRequest.index(indexName)));
 
-			indicesClient.putSettings(
-				updateSettingsRequest, RequestOptions.DEFAULT);
+			elasticsearchIndicesClient.putSettings(
+				_buildPutIndicesSettingsRequest(
+					indexName, settingsJSONObject.toString()));
 
-			indicesClient.open(
-				new OpenIndexRequest(indexName), RequestOptions.DEFAULT);
+			elasticsearchIndicesClient.open(
+				OpenRequest.of(openRequest -> openRequest.index(indexName)));
 		}
 		catch (Exception exception) {
 			_log.error(

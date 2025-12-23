@@ -27,7 +27,6 @@ public class TermCollectorHolder {
 		TermCollector termCollector = new DefaultTermCollector(term, frequency);
 
 		_termCollectors.add(termCollector);
-
 		_termCollectorsByName.put(term, termCollector);
 	}
 

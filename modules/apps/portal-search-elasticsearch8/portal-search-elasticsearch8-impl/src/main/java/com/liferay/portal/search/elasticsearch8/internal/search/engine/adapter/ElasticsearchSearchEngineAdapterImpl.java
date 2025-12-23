@@ -5,6 +5,8 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter;
 
+import co.elastic.clients.elasticsearch._types.query_dsl.QueryVariant;
+
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -37,8 +39,6 @@ import com.liferay.portal.search.engine.adapter.snapshot.SnapshotResponse;
 import com.liferay.portal.search.index.IndexNameBuilder;
 
 import java.util.List;
-
-import org.elasticsearch.index.query.QueryBuilder;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -203,9 +203,9 @@ public class ElasticsearchSearchEngineAdapterImpl
 	@Override
 	public String getQueryString(Query query) {
 		try {
-			QueryBuilder queryBuilder = _queryTranslator.translate(query, null);
+			QueryVariant queryVariant = _queryTranslator.translate(query, null);
 
-			return queryBuilder.toString();
+			return queryVariant.toString();
 		}
 		catch (RuntimeException runtimeException) {
 			throw _getRuntimeException(runtimeException);
@@ -271,7 +271,7 @@ public class ElasticsearchSearchEngineAdapterImpl
 	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private IndexRequestExecutor _indexRequestExecutor;
 
-	private QueryTranslator<QueryBuilder> _queryTranslator;
+	private QueryTranslator<QueryVariant> _queryTranslator;
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private SearchRequestExecutor _searchRequestExecutor;

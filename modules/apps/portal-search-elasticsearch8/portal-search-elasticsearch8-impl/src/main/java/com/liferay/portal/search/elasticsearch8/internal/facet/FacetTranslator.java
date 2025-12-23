@@ -5,12 +5,12 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.facet;
 
+import co.elastic.clients.elasticsearch.core.SearchRequest;
+
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.facet.Facet;
 
 import java.util.Map;
-
-import org.elasticsearch.search.builder.SearchSourceBuilder;
 
 /**
  * @author Michael C. Han
@@ -18,7 +18,7 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 public interface FacetTranslator {
 
 	public void translate(
-		SearchSourceBuilder searchSourceBuilder, Query query,
-		Map<String, Facet> facetsMap, boolean basicFacetSelection);
+		boolean basicFacetSelection, Map<String, Facet> facetsMap, Query query,
+		SearchRequest.Builder searchRequestBuilder);
 
 }

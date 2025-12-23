@@ -5,12 +5,11 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.search;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.search.ClearScrollRequest;
 import com.liferay.portal.search.engine.adapter.search.ClearScrollResponse;
-
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
 
 /**
  * @author Gustavo Lima
@@ -24,44 +23,37 @@ public class ClearScrollRequestExecutor {
 	}
 
 	public ClearScrollResponse execute(ClearScrollRequest clearScrollRequest) {
-		org.elasticsearch.action.search.ClearScrollRequest
-			elasticsearchClearScrollRequest = createClearScrollRequest(
-				clearScrollRequest);
+		co.elastic.clients.elasticsearch.core.ClearScrollResponse
+			clearScrollResponse = _getClearScrollResponse(
+				clearScrollRequest,
+				createClearScrollRequest(clearScrollRequest));
 
-		org.elasticsearch.action.search.ClearScrollResponse
-			clearScrollResponse = getClearScrollResponse(
-				clearScrollRequest, elasticsearchClearScrollRequest);
-
-		return new ClearScrollResponse(clearScrollResponse.getNumFreed());
+		return new ClearScrollResponse(clearScrollResponse.numFreed());
 	}
 
-	protected org.elasticsearch.action.search.ClearScrollRequest
+	protected co.elastic.clients.elasticsearch.core.ClearScrollRequest
 		createClearScrollRequest(ClearScrollRequest clearScrollRequest) {
 
-		org.elasticsearch.action.search.ClearScrollRequest
-			elasticsearchClearScrollRequest =
-				new org.elasticsearch.action.search.ClearScrollRequest();
-
-		elasticsearchClearScrollRequest.addScrollId(
-			clearScrollRequest.getScrollId());
-
-		return elasticsearchClearScrollRequest;
+		return co.elastic.clients.elasticsearch.core.ClearScrollRequest.of(
+			elasticsearchClearScrollRequest ->
+				elasticsearchClearScrollRequest.scrollId(
+					clearScrollRequest.getScrollId()));
 	}
 
-	protected org.elasticsearch.action.search.ClearScrollResponse
-		getClearScrollResponse(
+	private co.elastic.clients.elasticsearch.core.ClearScrollResponse
+		_getClearScrollResponse(
 			ClearScrollRequest clearScrollRequest,
-			org.elasticsearch.action.search.ClearScrollRequest
+			co.elastic.clients.elasticsearch.core.ClearScrollRequest
 				elasticsearchClearScrollRequest) {
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
 				clearScrollRequest.getConnectionId(),
 				clearScrollRequest.isPreferLocalCluster());
 
 		try {
-			return restHighLevelClient.clearScroll(
-				elasticsearchClearScrollRequest, RequestOptions.DEFAULT);
+			return elasticsearchClient.clearScroll(
+				elasticsearchClearScrollRequest);
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception.getMessage(), exception);

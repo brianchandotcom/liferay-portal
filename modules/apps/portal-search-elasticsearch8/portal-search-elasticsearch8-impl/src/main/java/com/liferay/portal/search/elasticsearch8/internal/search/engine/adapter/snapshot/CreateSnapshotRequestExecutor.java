@@ -5,17 +5,18 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.snapshot;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.snapshot.CreateSnapshotRequest.Builder;
+import co.elastic.clients.elasticsearch.snapshot.ElasticsearchSnapshotClient;
+
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.snapshot.CreateSnapshotRequest;
 import com.liferay.portal.search.engine.adapter.snapshot.CreateSnapshotResponse;
-import com.liferay.portal.search.engine.adapter.snapshot.SnapshotDetails;
 
 import java.io.IOException;
 
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.client.SnapshotClient;
+import java.util.Arrays;
 
 /**
  * @author Michael C. Han
@@ -31,61 +32,51 @@ public class CreateSnapshotRequestExecutor {
 	public CreateSnapshotResponse execute(
 		CreateSnapshotRequest createSnapshotRequest) {
 
-		org.elasticsearch.action.admin.cluster.snapshots.create.
-			CreateSnapshotRequest elasticsearchCreateSnapshotRequest =
-				createCreateSnapshotRequest(createSnapshotRequest);
+		co.elastic.clients.elasticsearch.snapshot.CreateSnapshotResponse
+			elasticsearchCreateSnapshotResponse = _getCreateSnapshotResponse(
+				createSnapshotRequest,
+				createCreateSnapshotRequest(createSnapshotRequest));
 
-		org.elasticsearch.action.admin.cluster.snapshots.create.
-			CreateSnapshotResponse elasticsearchCreateSnapshotResponse =
-				_getCreateSnapshotResponse(
-					elasticsearchCreateSnapshotRequest, createSnapshotRequest);
-
-		SnapshotDetails snapshotDetails = SnapshotInfoConverter.convert(
-			elasticsearchCreateSnapshotResponse.getSnapshotInfo());
-
-		return new CreateSnapshotResponse(snapshotDetails);
+		return new CreateSnapshotResponse(
+			SnapshotInfoConverter.convert(
+				elasticsearchCreateSnapshotResponse.snapshot()));
 	}
 
-	protected org.elasticsearch.action.admin.cluster.snapshots.create.
-		CreateSnapshotRequest createCreateSnapshotRequest(
+	protected co.elastic.clients.elasticsearch.snapshot.CreateSnapshotRequest
+		createCreateSnapshotRequest(
 			CreateSnapshotRequest createSnapshotRequest) {
 
-		org.elasticsearch.action.admin.cluster.snapshots.create.
-			CreateSnapshotRequest elasticsearchCreateSnapshotRequest =
-				new org.elasticsearch.action.admin.cluster.snapshots.create.
-					CreateSnapshotRequest();
+		Builder builder = new Builder();
 
 		if (ArrayUtil.isNotEmpty(createSnapshotRequest.getIndexNames())) {
-			elasticsearchCreateSnapshotRequest.indices(
-				createSnapshotRequest.getIndexNames());
+			builder.indices(
+				Arrays.asList(createSnapshotRequest.getIndexNames()));
 		}
 
-		elasticsearchCreateSnapshotRequest.repository(
-			createSnapshotRequest.getRepositoryName());
-		elasticsearchCreateSnapshotRequest.snapshot(
-			createSnapshotRequest.getSnapshotName());
-		elasticsearchCreateSnapshotRequest.waitForCompletion(
-			createSnapshotRequest.isWaitForCompletion());
+		builder.repository(createSnapshotRequest.getRepositoryName());
+		builder.snapshot(createSnapshotRequest.getSnapshotName());
+		builder.waitForCompletion(createSnapshotRequest.isWaitForCompletion());
 
-		return elasticsearchCreateSnapshotRequest;
+		return builder.build();
 	}
 
-	private org.elasticsearch.action.admin.cluster.snapshots.create.
-		CreateSnapshotResponse _getCreateSnapshotResponse(
-			org.elasticsearch.action.admin.cluster.snapshots.create.
-				CreateSnapshotRequest elasticsearchCreateSnapshotRequest,
-			CreateSnapshotRequest createSnapshotRequest) {
+	private co.elastic.clients.elasticsearch.snapshot.CreateSnapshotResponse
+		_getCreateSnapshotResponse(
+			CreateSnapshotRequest createSnapshotRequest,
+			co.elastic.clients.elasticsearch.snapshot.CreateSnapshotRequest
+				elasticsearchCreateSnapshotRequest) {
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
 				createSnapshotRequest.getConnectionId(),
 				createSnapshotRequest.isPreferLocalCluster());
 
-		SnapshotClient snapshotClient = restHighLevelClient.snapshot();
+		ElasticsearchSnapshotClient elasticsearchSnapshotClient =
+			elasticsearchClient.snapshot();
 
 		try {
-			return snapshotClient.create(
-				elasticsearchCreateSnapshotRequest, RequestOptions.DEFAULT);
+			return elasticsearchSnapshotClient.create(
+				elasticsearchCreateSnapshotRequest);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

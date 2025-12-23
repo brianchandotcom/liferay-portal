@@ -5,6 +5,18 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.response;
 
+import co.elastic.clients.elasticsearch._types.FieldValue;
+import co.elastic.clients.elasticsearch._types.aggregations.Aggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.Buckets;
+import co.elastic.clients.elasticsearch._types.aggregations.StringTermsAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.StringTermsBucket;
+import co.elastic.clients.elasticsearch._types.aggregations.TopHitsAggregate;
+import co.elastic.clients.elasticsearch.core.search.Hit;
+import co.elastic.clients.elasticsearch.core.search.HitsMetadata;
+import co.elastic.clients.elasticsearch.core.search.ResponseBody;
+import co.elastic.clients.elasticsearch.core.search.TotalHits;
+import co.elastic.clients.json.JsonData;
+
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Document;
@@ -20,11 +32,11 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.elasticsearch8.internal.SearchHitDocumentTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.facet.FacetCollectorFactory;
 import com.liferay.portal.search.elasticsearch8.internal.facet.FacetUtil;
 import com.liferay.portal.search.elasticsearch8.internal.groupby.GroupByTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.stats.StatsTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.util.ConversionUtil;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.groupby.GroupByRequest;
@@ -39,18 +51,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import org.apache.lucene.search.TotalHits;
-
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.core.TimeValue;
-import org.elasticsearch.search.SearchHit;
-import org.elasticsearch.search.SearchHits;
-import org.elasticsearch.search.aggregations.Aggregation;
-import org.elasticsearch.search.aggregations.Aggregations;
-import org.elasticsearch.search.aggregations.bucket.terms.Terms;
-import org.elasticsearch.search.aggregations.metrics.TopHits;
-import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 
 /**
  * @author Dylan Rebelak
@@ -72,47 +72,54 @@ public class SearchResponseTranslator {
 	}
 
 	public void populate(
-		SearchSearchResponse searchSearchResponse,
-		SearchResponse searchResponse,
-		SearchSearchRequest searchSearchRequest) {
+		ResponseBody<JsonData> responseBody,
+		SearchSearchRequest searchSearchRequest,
+		SearchSearchResponse searchSearchResponse) {
 
-		SearchHits searchHits = searchResponse.getHits();
+		HitsMetadata<JsonData> hitsMetadata = responseBody.hits();
 
 		Hits hits = new HitsImpl();
 
-		_updateFacetCollectors(searchResponse, searchSearchRequest.getFacets());
+		hits.setSearchTime((float)(responseBody.took() / 1000.0));
+
+		_updateFacetCollectors(searchSearchRequest.getFacets(), responseBody);
 
 		_updateGroupedHits(
-			searchSearchResponse, searchResponse, searchSearchRequest, hits,
-			searchSearchRequest.getAlternateUidFieldName(),
-			searchSearchRequest.getLocale());
+			searchSearchRequest.getAlternateUidFieldName(), hits,
+			searchSearchRequest.getLocale(), responseBody, searchSearchRequest,
+			searchSearchResponse);
 
 		_updateStatsResults(
-			hits, searchResponse.getAggregations(),
-			searchSearchRequest.getStats());
+			responseBody.aggregations(), hits, searchSearchRequest.getStats());
 
-		TimeValue timeValue = searchResponse.getTook();
-
-		hits.setSearchTime((float)timeValue.getSecondsFrac());
-
-		_processSearchHits(
-			searchHits, hits, searchSearchRequest.getAlternateUidFieldName(),
+		_processHits(
+			searchSearchRequest.getAlternateUidFieldName(), hits, hitsMetadata,
 			searchSearchRequest.getLocale());
 
 		searchSearchResponse.setHits(hits);
 	}
 
 	protected StatsResults getStatsResults(
-		Map<String, Aggregation> aggregationsMap, Stats stats) {
+		Map<String, Aggregate> aggregates, Stats stats) {
 
 		return _statsResultsTranslator.translate(
-			_statsTranslator.translateResponse(
-				aggregationsMap, _translate(stats)));
+			_statsTranslator.translateResponse(aggregates, _translate(stats)));
 	}
 
 	private void _addSnippets(
-		Document document, Map<String, HighlightField> highlightFields,
-		String fieldName, Locale locale) {
+		Document document, Hit<JsonData> hit, Locale locale) {
+
+		Map<String, List<String>> highlights = hit.highlight();
+
+		MapUtil.isNotEmptyForEach(
+			hit.highlight(),
+			(fieldName, fragments) -> _addSnippets(
+				document, fieldName, highlights, locale));
+	}
+
+	private void _addSnippets(
+		Document document, String fieldName,
+		Map<String, List<String>> highlights, Locale locale) {
 
 		String snippetFieldName = fieldName;
 
@@ -120,50 +127,36 @@ public class SearchResponseTranslator {
 			snippetFieldName = Field.getLocalizedName(locale, fieldName);
 		}
 
-		HighlightField highlightField = highlightFields.get(snippetFieldName);
+		List<String> fragments = highlights.get(snippetFieldName);
 
-		if (highlightField == null) {
-			highlightField = highlightFields.get(fieldName);
-
+		if (fragments == null) {
+			fragments = highlights.get(fieldName);
 			snippetFieldName = fieldName;
 		}
 
-		if (highlightField == null) {
+		if (ListUtil.isEmpty(fragments)) {
 			return;
 		}
-
-		Object[] array = highlightField.fragments();
 
 		document.add(
 			new Field(
 				StringBundler.concat(
 					Field.SNIPPET, StringPool.UNDERLINE, snippetFieldName),
-				StringUtil.merge(array, StringPool.TRIPLE_PERIOD)));
-	}
-
-	private void _addSnippets(SearchHit hit, Document document, Locale locale) {
-		Map<String, HighlightField> highlightFields = hit.getHighlightFields();
-
-		if (MapUtil.isEmpty(highlightFields)) {
-			return;
-		}
-
-		highlightFields.forEach(
-			(fieldName, highlightField) -> _addSnippets(
-				document, highlightFields, fieldName, locale));
+				StringUtil.merge(fragments, StringPool.TRIPLE_PERIOD)));
 	}
 
 	private FacetCollector _getFacetCollector(
-		Facet facet, Map<String, Aggregation> aggregationsMap) {
+		Map<String, Aggregate> aggregations, Facet facet) {
 
 		FacetCollectorFactory facetCollectorFactory =
 			new FacetCollectorFactory();
 
 		return facetCollectorFactory.getFacetCollector(
-			aggregationsMap.get(FacetUtil.getAggregationName(facet)));
+			aggregations.get(FacetUtil.getAggregationName(facet)),
+			FacetUtil.getAggregationName(facet));
 	}
 
-	private void _populateUID(Document document, String alternateUidFieldName) {
+	private void _populateUID(String alternateUidFieldName, Document document) {
 		Field uidField = document.getField(Field.UID);
 
 		if ((uidField != null) || Validator.isNull(alternateUidFieldName)) {
@@ -173,48 +166,43 @@ public class SearchResponseTranslator {
 		String uidValue = document.get(alternateUidFieldName);
 
 		if (Validator.isNotNull(uidValue)) {
-			uidField = new Field(Field.UID, uidValue);
-
-			document.add(uidField);
+			document.add(new Field(Field.UID, uidValue));
 		}
 	}
 
-	private Document _processSearchHit(
-		SearchHit searchHit, String alternateUidFieldName) {
+	private Document _processHit(
+		String alternateUidFieldName, Hit<JsonData> hit) {
 
-		Document document = _searchHitDocumentTranslator.translate(searchHit);
+		Document document = _searchHitDocumentTranslator.translate(hit);
 
-		_populateUID(document, alternateUidFieldName);
+		_populateUID(alternateUidFieldName, document);
 
 		return document;
 	}
 
-	private Hits _processSearchHits(
-		SearchHits searchHits, Hits hits, String alternateUidFieldName,
-		Locale locale) {
+	private Hits _processHits(
+		String alternateUidFieldName, Hits hits,
+		HitsMetadata<JsonData> hitsMetadata, Locale locale) {
 
 		List<Document> documents = new ArrayList<>();
 		List<Float> scores = new ArrayList<>();
 
-		TotalHits totalHits = searchHits.getTotalHits();
+		TotalHits totalHits = hitsMetadata.total();
 
-		if (totalHits.value > 0) {
-			SearchHit[] searchHitsArray = searchHits.getHits();
-
-			for (SearchHit searchHit : searchHitsArray) {
-				Document document = _processSearchHit(
-					searchHit, alternateUidFieldName);
+		if (totalHits.value() > 0) {
+			for (Hit<JsonData> hit : hitsMetadata.hits()) {
+				Document document = _processHit(alternateUidFieldName, hit);
 
 				documents.add(document);
 
-				scores.add(searchHit.getScore());
+				scores.add(ConversionUtil.toFloat(hit.score(), 0.0F));
 
-				_addSnippets(searchHit, document, locale);
+				_addSnippets(document, hit, locale);
 			}
 		}
 
 		hits.setDocs(documents.toArray(new Document[0]));
-		hits.setLength((int)totalHits.value);
+		hits.setLength((int)totalHits.value());
 		hits.setQueryTerms(new String[0]);
 		hits.setScores(ArrayUtil.toFloatArray(scores));
 
@@ -229,28 +217,27 @@ public class SearchResponseTranslator {
 	}
 
 	private void _updateFacetCollectors(
-		SearchResponse searchResponse, Map<String, Facet> facetsMap) {
+		Map<String, Facet> facets, ResponseBody<JsonData> responseBody) {
 
-		Aggregations aggregations = searchResponse.getAggregations();
+		Map<String, Aggregate> aggregations = responseBody.aggregations();
 
 		if (aggregations == null) {
 			return;
 		}
 
-		Map<String, Aggregation> aggregationsMap = aggregations.getAsMap();
-
-		for (Facet facet : facetsMap.values()) {
+		for (Facet facet : facets.values()) {
 			if (!facet.isStatic()) {
 				facet.setFacetCollector(
-					_getFacetCollector(facet, aggregationsMap));
+					_getFacetCollector(aggregations, facet));
 			}
 		}
 	}
 
 	private void _updateGroupedHits(
-		SearchSearchResponse searchSearchResponse,
-		SearchResponse searchResponse, SearchSearchRequest searchSearchRequest,
-		Hits hits, String alternateUidFieldName, Locale locale) {
+		String alternateUidFieldName, Hits hits, Locale locale,
+		ResponseBody<JsonData> responseBody,
+		SearchSearchRequest searchSearchRequest,
+		SearchSearchResponse searchSearchResponse) {
 
 		List<GroupByRequest> groupByRequests =
 			searchSearchRequest.getGroupByRequests();
@@ -258,9 +245,8 @@ public class SearchResponseTranslator {
 		if (ListUtil.isNotEmpty(groupByRequests)) {
 			for (GroupByRequest groupByRequest : groupByRequests) {
 				_updateGroupedHits(
-					searchSearchResponse, searchResponse,
-					groupByRequest.getField(), hits, alternateUidFieldName,
-					locale);
+					alternateUidFieldName, groupByRequest.getField(), hits,
+					locale, responseBody, searchSearchResponse);
 			}
 		}
 
@@ -268,69 +254,70 @@ public class SearchResponseTranslator {
 
 		if (groupBy != null) {
 			_updateGroupedHits(
-				searchSearchResponse, searchResponse, groupBy.getField(), hits,
-				alternateUidFieldName, locale);
+				alternateUidFieldName, groupBy.getField(), hits, locale,
+				responseBody, searchSearchResponse);
 		}
 	}
 
 	private void _updateGroupedHits(
-		SearchSearchResponse searchSearchResponse,
-		SearchResponse searchResponse, String field, Hits hits,
-		String alternateUidFieldName, Locale locale) {
+		String alternateUidFieldName, String field, Hits hits, Locale locale,
+		ResponseBody<JsonData> responseBody,
+		SearchSearchResponse searchSearchResponse) {
 
-		Aggregations aggregations = searchResponse.getAggregations();
+		Map<String, Aggregate> aggregations = responseBody.aggregations();
 
-		Map<String, Aggregation> aggregationsMap = aggregations.getAsMap();
-
-		Terms terms = (Terms)aggregationsMap.get(
+		Aggregate aggregate1 = aggregations.get(
 			GroupByTranslator.GROUP_BY_AGGREGATION_PREFIX + field);
 
-		List<? extends Terms.Bucket> buckets = terms.getBuckets();
+		StringTermsAggregate stringTermsAggregate = aggregate1.sterms();
+
+		Buckets<StringTermsBucket> buckets = stringTermsAggregate.buckets();
+
+		List<StringTermsBucket> stringTermsBuckets = buckets.array();
 
 		GroupByResponse groupByResponse =
 			_groupByResponseFactory.getGroupByResponse(field);
 
 		searchSearchResponse.addGroupByResponse(groupByResponse);
 
-		for (Terms.Bucket bucket : buckets) {
-			Aggregations bucketAggregations = bucket.getAggregations();
+		for (StringTermsBucket stringTermsBucket : stringTermsBuckets) {
+			Map<String, Aggregate> stringTermsBucketAggregations =
+				stringTermsBucket.aggregations();
 
-			TopHits topHits = bucketAggregations.get(
+			Aggregate aggregate2 = stringTermsBucketAggregations.get(
 				GroupByTranslator.TOP_HITS_AGGREGATION_NAME);
 
-			SearchHits groupedSearchHits = topHits.getHits();
+			TopHitsAggregate topHitsAggregate = aggregate2.topHits();
+
+			HitsMetadata<JsonData> hitsMetadata = topHitsAggregate.hits();
 
 			Hits groupedHits = new HitsImpl();
 
-			_processSearchHits(
-				groupedSearchHits, groupedHits, alternateUidFieldName, locale);
+			_processHits(
+				alternateUidFieldName, groupedHits, hitsMetadata, locale);
 
-			TotalHits totalHits = groupedSearchHits.getTotalHits();
+			TotalHits totalHits = hitsMetadata.total();
 
-			groupedHits.setLength((int)totalHits.value);
+			groupedHits.setLength((int)totalHits.value());
 
-			hits.addGroupedHits(bucket.getKeyAsString(), groupedHits);
+			FieldValue fieldValue = stringTermsBucket.key();
 
-			groupByResponse.putHits(bucket.getKeyAsString(), groupedHits);
+			hits.addGroupedHits(fieldValue._toJsonString(), groupedHits);
+
+			groupByResponse.putHits(fieldValue._toJsonString(), groupedHits);
 		}
 	}
 
 	private void _updateStatsResults(
-		Hits hits, Aggregations aggregations, Map<String, Stats> statsMap) {
-
-		if (aggregations != null) {
-			_updateStatsResults(hits, aggregations.getAsMap(), statsMap);
-		}
-	}
-
-	private void _updateStatsResults(
-		Hits hits, Map<String, Aggregation> aggregationsMap,
+		Map<String, Aggregate> aggregations, Hits hits,
 		Map<String, Stats> statsMap) {
 
-		if (MapUtil.isNotEmpty(statsMap)) {
-			for (Stats stats : statsMap.values()) {
-				hits.addStatsResults(getStatsResults(aggregationsMap, stats));
-			}
+		if ((aggregations == null) || MapUtil.isEmpty(statsMap)) {
+			return;
+		}
+
+		for (Stats stats : statsMap.values()) {
+			hits.addStatsResults(getStatsResults(aggregations, stats));
 		}
 	}
 

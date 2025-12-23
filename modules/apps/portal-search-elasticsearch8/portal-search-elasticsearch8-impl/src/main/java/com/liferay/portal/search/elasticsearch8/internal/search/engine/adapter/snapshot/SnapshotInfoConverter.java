@@ -5,14 +5,15 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.snapshot;
 
+import co.elastic.clients.elasticsearch._types.ShardStatistics;
+import co.elastic.clients.elasticsearch.snapshot.SnapshotInfo;
+
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.search.elasticsearch8.internal.util.ConversionUtil;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotDetails;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotState;
 
 import java.util.List;
-
-import org.elasticsearch.snapshots.SnapshotId;
-import org.elasticsearch.snapshots.SnapshotInfo;
 
 /**
  * @author Michael C. Han
@@ -20,10 +21,8 @@ import org.elasticsearch.snapshots.SnapshotInfo;
 public class SnapshotInfoConverter {
 
 	public static SnapshotDetails convert(SnapshotInfo snapshotInfo) {
-		SnapshotId snapshotId = snapshotInfo.snapshotId();
-
 		SnapshotDetails snapshotDetails = new SnapshotDetails(
-			snapshotId.getName(), snapshotId.getUUID());
+			snapshotInfo.snapshot(), snapshotInfo.uuid());
 
 		List<String> indices = snapshotInfo.indices();
 
@@ -31,34 +30,41 @@ public class SnapshotInfoConverter {
 			snapshotDetails.setIndexNames(indices.toArray(new String[0]));
 		}
 
-		snapshotDetails.setSnapshotState(convert(snapshotInfo.state()));
-		snapshotDetails.setSuccessfulShards(snapshotInfo.successfulShards());
-		snapshotDetails.setTotalShards(snapshotInfo.totalShards());
+		snapshotDetails.setSnapshotState(
+			_convertSnapshotState(snapshotInfo.state()));
+
+		ShardStatistics shardStatistics = snapshotInfo.shards();
+
+		if (shardStatistics != null) {
+			snapshotDetails.setSuccessfulShards(
+				ConversionUtil.toInt(shardStatistics.successful()));
+
+			snapshotDetails.setTotalShards(
+				ConversionUtil.toInt(shardStatistics.total()));
+		}
 
 		return snapshotDetails;
 	}
 
-	public static SnapshotState convert(
-		org.elasticsearch.snapshots.SnapshotState snapshotState) {
-
-		if (snapshotState.value() == 0) {
-			return SnapshotState.IN_PROGRESS;
-		}
-		else if (snapshotState.value() == 1) {
-			return SnapshotState.SUCCESS;
-		}
-		else if (snapshotState.value() == 2) {
+	private static SnapshotState _convertSnapshotState(String snapshotState) {
+		if (snapshotState.equals("FAILED")) {
 			return SnapshotState.FAILED;
 		}
-		else if (snapshotState.value() == 3) {
+		else if (snapshotState.equals("INCOMPATIBLE")) {
+			return SnapshotState.INCOMPATIBLE;
+		}
+		else if (snapshotState.equals("IN_PROGRESS")) {
+			return SnapshotState.IN_PROGRESS;
+		}
+		else if (snapshotState.equals("PARTIAL")) {
 			return SnapshotState.PARTIAL;
 		}
-		else if (snapshotState.value() == 4) {
-			return SnapshotState.INCOMPATIBLE;
+		else if (snapshotState.equals("SUCCESS")) {
+			return SnapshotState.SUCCESS;
 		}
 
 		throw new IllegalArgumentException(
-			"Invalid value for snapshot state: " + snapshotState);
+			"Invalid snapshot state " + snapshotState);
 	}
 
 }

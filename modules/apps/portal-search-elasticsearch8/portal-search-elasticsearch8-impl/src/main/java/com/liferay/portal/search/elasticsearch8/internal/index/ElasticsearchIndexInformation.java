@@ -5,21 +5,25 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.index;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.indices.ElasticsearchIndicesClient;
+import co.elastic.clients.elasticsearch.indices.GetIndexRequest;
+import co.elastic.clients.elasticsearch.indices.GetIndexResponse;
+import co.elastic.clients.elasticsearch.indices.GetMappingRequest;
+import co.elastic.clients.elasticsearch.indices.IndexState;
+
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
+import com.liferay.portal.search.elasticsearch8.internal.util.JsonpUtil;
 import com.liferay.portal.search.index.IndexInformation;
 import com.liferay.portal.search.index.IndexNameBuilder;
 
 import java.io.IOException;
 
-import org.elasticsearch.action.admin.indices.mapping.get.GetMappingsRequest;
-import org.elasticsearch.action.admin.indices.mapping.get.GetMappingsResponse;
-import org.elasticsearch.client.IndicesClient;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.client.indices.GetIndexRequest;
-import org.elasticsearch.client.indices.GetIndexResponse;
-import org.elasticsearch.common.Strings;
+import java.util.Map;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,57 +41,50 @@ public class ElasticsearchIndexInformation implements IndexInformation {
 
 	@Override
 	public String getFieldMappings(String indexName) {
-		GetMappingsRequest getMappingsRequest = new GetMappingsRequest();
+		ElasticsearchIndicesClient elasticsearchIndicesClient =
+			_getElasticsearchIndicesClient();
 
-		getMappingsRequest.indices(indexName);
+		try {
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				JsonpUtil.toString(
+					elasticsearchIndicesClient.getMapping(
+						GetMappingRequest.of(
+							getMappingRequest -> getMappingRequest.index(
+								indexName)))));
 
-		GetMappingsResponse getMappingsResponse = getMappingsResponse(
-			getMappingsRequest);
-
-		return Strings.toString(getMappingsResponse, true, true);
+			return jsonObject.toString(3);
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
 	}
 
 	@Override
 	public String[] getIndexNames() {
-		GetIndexRequest getIndexRequest = new GetIndexRequest(StringPool.STAR);
-
-		GetIndexResponse getIndexResponse = getIndexResponse(getIndexRequest);
-
-		return getIndexResponse.getIndices();
-	}
-
-	protected GetIndexResponse getIndexResponse(
-		GetIndexRequest getIndexRequest) {
-
-		IndicesClient indicesClient = _getIndicesClient();
+		ElasticsearchIndicesClient elasticsearchIndicesClient =
+			_getElasticsearchIndicesClient();
 
 		try {
-			return indicesClient.get(getIndexRequest, RequestOptions.DEFAULT);
+			GetIndexResponse getIndexResponse = elasticsearchIndicesClient.get(
+				GetIndexRequest.of(
+					getIndexRequest -> getIndexRequest.index(StringPool.STAR)));
+
+			Map<String, IndexState> indexStates = getIndexResponse.result();
+
+			Set<String> indexNames = indexStates.keySet();
+
+			return indexNames.toArray(new String[0]);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
 	}
 
-	protected GetMappingsResponse getMappingsResponse(
-		GetMappingsRequest getMappingsRequest) {
+	private ElasticsearchIndicesClient _getElasticsearchIndicesClient() {
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(null, true);
 
-		IndicesClient indicesClient = _getIndicesClient();
-
-		try {
-			return indicesClient.getMapping(
-				getMappingsRequest, RequestOptions.DEFAULT);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-	}
-
-	private IndicesClient _getIndicesClient() {
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(null, true);
-
-		return restHighLevelClient.indices();
+		return elasticsearchClient.indices();
 	}
 
 	@Reference
@@ -95,5 +92,8 @@ public class ElasticsearchIndexInformation implements IndexInformation {
 
 	@Reference
 	private IndexNameBuilder _indexNameBuilder;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

@@ -6,6 +6,7 @@
 package com.liferay.portal.search.elasticsearch8.internal.aggregation;
 
 import co.elastic.clients.elasticsearch._types.GeoHashPrecision;
+import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch._types.Time;
 import co.elastic.clients.elasticsearch._types.TimeUnit;
@@ -30,7 +31,9 @@ import co.elastic.clients.elasticsearch._types.aggregations.TermsExclude;
 import co.elastic.clients.elasticsearch._types.aggregations.TermsInclude;
 import co.elastic.clients.elasticsearch._types.aggregations.WeightedAverageAggregation;
 import co.elastic.clients.elasticsearch._types.aggregations.WeightedAverageValue;
+import co.elastic.clients.elasticsearch._types.query_dsl.FieldAndFormat;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import co.elastic.clients.elasticsearch._types.query_dsl.QueryVariant;
 import co.elastic.clients.elasticsearch.core.search.SourceConfig;
 import co.elastic.clients.elasticsearch.core.search.SourceConfigBuilders;
 import co.elastic.clients.elasticsearch.core.search.SourceFilter;
@@ -85,16 +88,22 @@ import com.liferay.portal.search.aggregation.metrics.WeightedAvgAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.geolocation.GeoTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.highlight.HighlightTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.query.ElasticsearchQueryTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.script.ScriptTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.sort.ElasticsearchSortFieldTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.util.ConversionUtil;
 import com.liferay.portal.search.elasticsearch8.internal.util.ElasticsearchStringUtil;
 import com.liferay.portal.search.elasticsearch8.internal.util.SetterUtil;
+import com.liferay.portal.search.query.QueryTranslator;
+import com.liferay.portal.search.script.Script;
 import com.liferay.portal.search.significance.ChiSquareSignificanceHeuristic;
 import com.liferay.portal.search.significance.GNDSignificanceHeuristic;
 import com.liferay.portal.search.significance.MutualInformationSignificanceHeuristic;
 import com.liferay.portal.search.significance.PercentageScoreSignificanceHeuristic;
 import com.liferay.portal.search.significance.ScriptSignificanceHeuristic;
 import com.liferay.portal.search.significance.SignificanceHeuristic;
+import com.liferay.portal.search.sort.SortFieldTranslator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -385,7 +394,11 @@ public class ElasticsearchAggregationTranslator
 					Aggregation.Builder();
 
 		return _translateChildAggregations(
-			filterAggregation, builder.filter(new Query(null)));
+			filterAggregation,
+			builder.filter(
+				new Query(
+					_queryTranslator.translate(
+						filterAggregation.getFilterQuery()))));
 	}
 
 	@Override
@@ -407,7 +420,8 @@ public class ElasticsearchAggregationTranslator
 
 		keyedQueries.forEach(
 			keyedQuery -> keyedFilters.put(
-				keyedQuery.getKey(), new Query(null)));
+				keyedQuery.getKey(),
+				new Query(_queryTranslator.translate(keyedQuery.getQuery()))));
 
 		Buckets.Builder<Query> bucketsBuilder = new Buckets.Builder<>();
 
@@ -522,13 +536,13 @@ public class ElasticsearchAggregationTranslator
 		rangeAggregationRanges.forEach(
 			rangeAggregationRange -> geoDistanceAggregationBuilder.ranges(
 				_createAggregationRange(
-					ElasticsearchStringUtil.getFirstStringValue(
-						rangeAggregationRange::getFromAsString,
-						rangeAggregationRange::getFrom),
+					ElasticsearchStringUtil.getFirstDoubleValue(
+						rangeAggregationRange::getFrom,
+						rangeAggregationRange::getFromAsString),
 					rangeAggregationRange.getKey(),
-					ElasticsearchStringUtil.getFirstStringValue(
-						rangeAggregationRange::getToAsString,
-						rangeAggregationRange::getTo))));
+					ElasticsearchStringUtil.getFirstDoubleValue(
+						rangeAggregationRange::getTo,
+						rangeAggregationRange::getToAsString))));
 
 		return _translateChildAggregations(
 			geoDistanceAggregation,
@@ -1066,7 +1080,8 @@ public class ElasticsearchAggregationTranslator
 						ScriptSignificanceHeuristic) {
 
 				significantTermsAggregationBuilder.scriptHeuristic(
-					_translateScriptSignificanceHeuristic());
+					_translateScriptSignificanceHeuristic(
+						(ScriptSignificanceHeuristic)significanceHeuristic));
 			}
 		}
 
@@ -1184,7 +1199,8 @@ public class ElasticsearchAggregationTranslator
 						ScriptSignificanceHeuristic) {
 
 				significantTextAggregationBuilder.scriptHeuristic(
-					_translateScriptSignificanceHeuristic());
+					_translateScriptSignificanceHeuristic(
+						(ScriptSignificanceHeuristic)significanceHeuristic));
 			}
 		}
 
@@ -1347,11 +1363,34 @@ public class ElasticsearchAggregationTranslator
 		co.elastic.clients.elasticsearch._types.aggregations.TopHitsAggregation.
 			Builder topHitsAggregationBuilder = AggregationBuilders.topHits();
 
+		if (ListUtil.isNotEmpty(topHitsAggregation.getSelectedFields())) {
+			topHitsAggregationBuilder.docvalueFields(
+				_toFieldAndFormats(topHitsAggregation.getSelectedFields()));
+		}
+
 		SetterUtil.setNotNullBoolean(
 			topHitsAggregationBuilder::explain,
 			topHitsAggregation.getExplain());
 		SetterUtil.setNotNullInteger(
 			topHitsAggregationBuilder::from, topHitsAggregation.getFrom());
+
+		if (topHitsAggregation.getHighlight() != null) {
+			topHitsAggregationBuilder.highlight(
+				_highlightTranslator.translate(
+					topHitsAggregation.getHighlight(), _queryTranslator));
+		}
+
+		ListUtil.isNotEmptyForEach(
+			topHitsAggregation.getScriptFields(),
+			scriptField -> topHitsAggregationBuilder.scriptFields(
+				scriptField.getField(),
+				co.elastic.clients.elasticsearch._types.ScriptField.of(
+					elasticsearchScriptField ->
+						elasticsearchScriptField.ignoreFailure(
+							scriptField.isIgnoreFailure()
+						).script(
+							scriptTranslator.translate(scriptField.getScript())
+						))));
 
 		SetterUtil.setNotNullInteger(
 			topHitsAggregationBuilder::size, topHitsAggregation.getSize());
@@ -1379,6 +1418,11 @@ public class ElasticsearchAggregationTranslator
 
 			topHitsAggregationBuilder.source(sourceConfigBuilder.build());
 		}
+
+		ListUtil.isNotEmptyForEach(
+			topHitsAggregation.getSortFields(),
+			sortField -> topHitsAggregationBuilder.sort(
+				_sortFieldTranslator.translate(sortField)));
 
 		SetterUtil.setNotNullBoolean(
 			topHitsAggregationBuilder::trackScores,
@@ -1439,7 +1483,8 @@ public class ElasticsearchAggregationTranslator
 		weightedAverageAggregationBuilder.value(
 			_getWeightedAverageValue(
 				weightedAvgAggregation.getValueField(),
-				weightedAvgAggregation.getValueMissing()));
+				weightedAvgAggregation.getValueMissing(),
+				weightedAvgAggregation.getValueScript()));
 
 		if (weightedAvgAggregation.getValueType() != null) {
 			weightedAverageAggregationBuilder.valueType(
@@ -1449,7 +1494,8 @@ public class ElasticsearchAggregationTranslator
 		weightedAverageAggregationBuilder.weight(
 			_getWeightedAverageValue(
 				weightedAvgAggregation.getWeightField(),
-				weightedAvgAggregation.getWeightMissing()));
+				weightedAvgAggregation.getWeightMissing(),
+				weightedAvgAggregation.getWeightScript()));
 
 		return _translateChildAggregations(
 			weightedAvgAggregation,
@@ -1461,7 +1507,7 @@ public class ElasticsearchAggregationTranslator
 		Consumer<Query> consumer, com.liferay.portal.search.query.Query query) {
 
 		if (query != null) {
-			consumer.accept(new Query(null));
+			consumer.accept(new Query(_queryTranslator.translate(query)));
 		}
 	}
 
@@ -1496,11 +1542,11 @@ public class ElasticsearchAggregationTranslator
 		ranges.forEach(
 			range -> builder.ranges(
 				_createAggregationRange(
-					ElasticsearchStringUtil.getFirstStringValue(
-						range::getFromAsString, range::getFrom),
+					ElasticsearchStringUtil.getFirstDoubleValue(
+						range::getFrom, range::getFromAsString),
 					range.getKey(),
-					ElasticsearchStringUtil.getFirstStringValue(
-						range::getToAsString, range::getTo))));
+					ElasticsearchStringUtil.getFirstDoubleValue(
+						range::getTo, range::getToAsString))));
 	}
 
 	protected co.elastic.clients.elasticsearch._types.aggregations.ValueType
@@ -1549,27 +1595,27 @@ public class ElasticsearchAggregationTranslator
 	protected final ScriptTranslator scriptTranslator = new ScriptTranslator();
 
 	private AggregationRange _createAggregationRange(
-		String from, String key, String to) {
+		Double from, String key, Double to) {
 
 		AggregationRange.Builder builder = new AggregationRange.Builder();
 
-		if (!Validator.isBlank(from)) {
-			builder.from(null);
+		if (from != null) {
+			builder.from(from);
 		}
 
 		if (!Validator.isBlank(key)) {
 			builder.key(key);
 		}
 
-		if (!Validator.isBlank(to)) {
-			builder.to(null);
+		if (to != null) {
+			builder.to(to);
 		}
 
 		return builder.build();
 	}
 
 	private WeightedAverageValue _getWeightedAverageValue(
-		String field, Object missing) {
+		String field, Object missing, Script script) {
 
 		WeightedAverageValue.Builder builder =
 			new WeightedAverageValue.Builder();
@@ -1580,7 +1626,23 @@ public class ElasticsearchAggregationTranslator
 			builder.missing(ConversionUtil.toDouble(missing));
 		}
 
+		if (script != null) {
+			builder.script(scriptTranslator.translate(script));
+		}
+
 		return builder.build();
+	}
+
+	private List<FieldAndFormat> _toFieldAndFormats(List<String> fieldNames) {
+		List<FieldAndFormat> fieldAndFormats = new ArrayList<>();
+
+		for (String fieldName : fieldNames) {
+			fieldAndFormats.add(
+				FieldAndFormat.of(
+					fieldAndFormat -> fieldAndFormat.field(fieldName)));
+		}
+
+		return fieldAndFormats;
 	}
 
 	private co.elastic.clients.elasticsearch._types.aggregations.Aggregation
@@ -1705,15 +1767,27 @@ public class ElasticsearchAggregationTranslator
 		return sortOrders;
 	}
 
-	private ScriptedHeuristic _translateScriptSignificanceHeuristic() {
-		return null;
+	private ScriptedHeuristic _translateScriptSignificanceHeuristic(
+		ScriptSignificanceHeuristic scriptSignificanceHeuristic) {
+
+		return ScriptedHeuristic.of(
+			scriptedHeuristic -> scriptedHeuristic.script(
+				scriptTranslator.translate(
+					scriptSignificanceHeuristic.getScript())));
 	}
 
 	private final GeoTranslator _geoTranslator = new GeoTranslator();
+	private final HighlightTranslator _highlightTranslator =
+		new HighlightTranslator();
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private PipelineAggregationTranslator
 		<co.elastic.clients.elasticsearch._types.aggregations.Aggregation>
 			_pipelineAggregationTranslator;
+
+	private final QueryTranslator<QueryVariant> _queryTranslator =
+		new ElasticsearchQueryTranslator();
+	private final SortFieldTranslator<SortOptions> _sortFieldTranslator =
+		new ElasticsearchSortFieldTranslator();
 
 }

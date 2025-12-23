@@ -5,19 +5,19 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.snapshot;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.snapshot.CreateRepositoryRequest;
+import co.elastic.clients.elasticsearch.snapshot.CreateRepositoryResponse;
+import co.elastic.clients.elasticsearch.snapshot.ElasticsearchSnapshotClient;
+import co.elastic.clients.elasticsearch.snapshot.Repository;
+import co.elastic.clients.elasticsearch.snapshot.SharedFileSystemRepository;
+import co.elastic.clients.elasticsearch.snapshot.SharedFileSystemRepositorySettings;
+
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.snapshot.CreateSnapshotRepositoryRequest;
 import com.liferay.portal.search.engine.adapter.snapshot.CreateSnapshotRepositoryResponse;
 
 import java.io.IOException;
-
-import org.elasticsearch.action.admin.cluster.repositories.put.PutRepositoryRequest;
-import org.elasticsearch.action.support.master.AcknowledgedResponse;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.client.SnapshotClient;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.repositories.fs.FsRepository;
 
 /**
  * @author Michael C. Han
@@ -33,54 +33,65 @@ public class CreateSnapshotRepositoryRequestExecutor {
 	public CreateSnapshotRepositoryResponse execute(
 		CreateSnapshotRepositoryRequest createSnapshotRepositoryRequest) {
 
-		PutRepositoryRequest putRepositoryRequest = createPutRepositoryRequest(
-			createSnapshotRepositoryRequest);
-
-		AcknowledgedResponse acknowledgedResponse = getAcknowledgedResponse(
-			putRepositoryRequest, createSnapshotRepositoryRequest);
+		CreateRepositoryResponse createRepositoryResponse =
+			_getCreateRepositoryResponse(
+				_createCreateRepositoryRequest(createSnapshotRepositoryRequest),
+				createSnapshotRepositoryRequest);
 
 		return new CreateSnapshotRepositoryResponse(
-			acknowledgedResponse.isAcknowledged());
+			createRepositoryResponse.acknowledged());
 	}
 
-	protected PutRepositoryRequest createPutRepositoryRequest(
+	private CreateRepositoryRequest _createCreateRepositoryRequest(
 		CreateSnapshotRepositoryRequest createSnapshotRepositoryRequest) {
 
-		PutRepositoryRequest putRepositoryRequest = new PutRepositoryRequest(
-			createSnapshotRepositoryRequest.getName());
+		String type = createSnapshotRepositoryRequest.getType();
 
-		Settings.Builder builder = Settings.builder();
+		if (!type.equals("fs")) {
+			throw new RuntimeException(
+				"Invalid repository type " +
+					createSnapshotRepositoryRequest.getType() +
+						". Only shared file system repository is supported");
+		}
 
-		builder.put(
-			FsRepository.COMPRESS_SETTING.getKey(),
-			createSnapshotRepositoryRequest.isCompress());
+		SharedFileSystemRepository.Builder sharedFileSystemRepositoryBuilder =
+			new SharedFileSystemRepository.Builder();
 
-		builder.put(
-			FsRepository.LOCATION_SETTING.getKey(),
-			createSnapshotRepositoryRequest.getLocation());
+		sharedFileSystemRepositoryBuilder.settings(
+			SharedFileSystemRepositorySettings.of(
+				settings -> settings.compress(
+					createSnapshotRepositoryRequest.isCompress()
+				).location(
+					createSnapshotRepositoryRequest.getLocation()
+				)));
 
-		putRepositoryRequest.settings(builder);
-
-		putRepositoryRequest.type(createSnapshotRepositoryRequest.getType());
-		putRepositoryRequest.verify(createSnapshotRepositoryRequest.isVerify());
-
-		return putRepositoryRequest;
+		return CreateRepositoryRequest.of(
+			createRepositoryRequest -> createRepositoryRequest.name(
+				createSnapshotRepositoryRequest.getName()
+			).repository(
+				Repository.of(
+					repository -> repository.fs(
+						sharedFileSystemRepositoryBuilder.build()))
+			).verify(
+				createSnapshotRepositoryRequest.isVerify()
+			));
 	}
 
-	protected AcknowledgedResponse getAcknowledgedResponse(
-		PutRepositoryRequest putRepositoryRequest,
+	private CreateRepositoryResponse _getCreateRepositoryResponse(
+		CreateRepositoryRequest createRepositoryRequest,
 		CreateSnapshotRepositoryRequest createSnapshotRepositoryRequest) {
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
 				createSnapshotRepositoryRequest.getConnectionId(),
 				createSnapshotRepositoryRequest.isPreferLocalCluster());
 
-		SnapshotClient snapshotClient = restHighLevelClient.snapshot();
+		ElasticsearchSnapshotClient elasticsearchSnapshotClient =
+			elasticsearchClient.snapshot();
 
 		try {
-			return snapshotClient.createRepository(
-				putRepositoryRequest, RequestOptions.DEFAULT);
+			return elasticsearchSnapshotClient.createRepository(
+				createRepositoryRequest);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

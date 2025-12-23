@@ -5,6 +5,22 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.legacy.query;
 
+import co.elastic.clients.elasticsearch._types.FieldValue;
+import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.ChildScoreMode;
+import co.elastic.clients.elasticsearch._types.query_dsl.Like;
+import co.elastic.clients.elasticsearch._types.query_dsl.LikeDocument;
+import co.elastic.clients.elasticsearch._types.query_dsl.MatchPhrasePrefixQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.MatchPhraseQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.Operator;
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import co.elastic.clients.elasticsearch._types.query_dsl.QueryBuilders;
+import co.elastic.clients.elasticsearch._types.query_dsl.QueryStringQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.QueryVariant;
+import co.elastic.clients.elasticsearch._types.query_dsl.RangeQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.TextQueryType;
+import co.elastic.clients.elasticsearch._types.query_dsl.ZeroTermsQuery;
+
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -12,7 +28,6 @@ import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryTerm;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.TermQuery;
@@ -30,68 +45,56 @@ import com.liferay.portal.kernel.search.generic.NestedQuery;
 import com.liferay.portal.kernel.search.generic.StringQuery;
 import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.kernel.search.query.QueryVisitor;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.elasticsearch8.internal.util.DocumentTypes;
+import com.liferay.portal.search.elasticsearch8.internal.util.QueryUtil;
+import com.liferay.portal.search.elasticsearch8.internal.util.SetterUtil;
 import com.liferay.portal.search.index.IndexNameBuilder;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-
-import org.apache.lucene.search.join.ScoreMode;
-
-import org.elasticsearch.common.unit.Fuzziness;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.DisMaxQueryBuilder;
-import org.elasticsearch.index.query.FuzzyQueryBuilder;
-import org.elasticsearch.index.query.MatchAllQueryBuilder;
-import org.elasticsearch.index.query.MatchPhrasePrefixQueryBuilder;
-import org.elasticsearch.index.query.MatchPhraseQueryBuilder;
-import org.elasticsearch.index.query.MatchQueryBuilder;
-import org.elasticsearch.index.query.MoreLikeThisQueryBuilder;
-import org.elasticsearch.index.query.MultiMatchQueryBuilder;
-import org.elasticsearch.index.query.NestedQueryBuilder;
-import org.elasticsearch.index.query.Operator;
-import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.query.QueryStringQueryBuilder;
-import org.elasticsearch.index.query.RangeQueryBuilder;
-import org.elasticsearch.index.query.TermQueryBuilder;
-import org.elasticsearch.index.query.WildcardQueryBuilder;
-import org.elasticsearch.index.query.ZeroTermsQueryOption;
 
 /**
  * @author André de Oliveira
  * @author Miguel Angelo Caldas Gallindo
  */
 public class ElasticsearchQueryTranslator
-	implements QueryTranslator<QueryBuilder>, QueryVisitor<QueryBuilder> {
+	implements QueryTranslator<QueryVariant>, QueryVisitor<QueryVariant> {
 
 	public ElasticsearchQueryTranslator(IndexNameBuilder indexNameBuilder) {
 		_indexNameBuilder = indexNameBuilder;
 	}
 
 	@Override
-	public QueryBuilder translate(Query query, SearchContext searchContext) {
-		QueryBuilder queryBuilder = query.accept(this);
+	public QueryVariant translate(
+		com.liferay.portal.kernel.search.Query query,
+		SearchContext searchContext) {
 
-		if (queryBuilder == null) {
-			queryBuilder = QueryBuilders.queryStringQuery(query.toString());
+		QueryVariant queryVariant = query.accept(this);
+
+		if (queryVariant != null) {
+			return queryVariant;
 		}
 
-		return queryBuilder;
+		return QueryBuilders.queryString(
+		).query(
+			query.toString()
+		).build();
 	}
 
 	@Override
-	public QueryBuilder visitQuery(BooleanQuery booleanQuery) {
-		BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+	public QueryVariant visitQuery(BooleanQuery booleanQuery) {
+		BoolQuery.Builder boolQueryBuilder = QueryBuilders.bool();
 
-		List<BooleanClause<Query>> clauses = booleanQuery.clauses();
+		List<BooleanClause<com.liferay.portal.kernel.search.Query>> clauses =
+			booleanQuery.clauses();
 
-		for (BooleanClause<Query> clause : clauses) {
-			_addClause(clause, boolQueryBuilder, this);
+		for (BooleanClause<com.liferay.portal.kernel.search.Query> clause :
+				clauses) {
+
+			_addBooleanClause(clause, boolQueryBuilder);
 		}
 
 		if (!booleanQuery.isDefaultBoost()) {
@@ -101,20 +104,20 @@ public class ElasticsearchQueryTranslator
 		BooleanFilter booleanFilter = booleanQuery.getPreBooleanFilter();
 
 		if (booleanFilter == null) {
-			return boolQueryBuilder;
+			return boolQueryBuilder.build();
 		}
 
 		// LPS-86537 The following conversion is present for backwards
 		// compatibility with how Liferay's Indexer frameworks handles queries.
 		// Ideally, we do not wrap the BooleanQuery with another BooleanQuery.
 
-		BoolQueryBuilder wrapperBoolQueryBuilder = QueryBuilders.boolQuery();
+		BoolQuery.Builder wrapperBoolQueryBuilder = QueryBuilders.bool();
 
 		if (!clauses.isEmpty()) {
-			wrapperBoolQueryBuilder.must(boolQueryBuilder);
+			wrapperBoolQueryBuilder.must(new Query(boolQueryBuilder.build()));
 		}
 
-		FilterTranslator<QueryBuilder> filterTranslator =
+		FilterTranslator<QueryVariant> filterTranslator =
 			_filterTranslatorSnapshot.get();
 
 		if (filterTranslator == null) {
@@ -122,80 +125,79 @@ public class ElasticsearchQueryTranslator
 				"Unable to translate boolean filter " + booleanFilter +
 					" because filter translator is null");
 
-			return boolQueryBuilder;
+			return boolQueryBuilder.build();
 		}
 
-		QueryBuilder filterQueryBuilder = filterTranslator.translate(
-			booleanFilter, null);
+		Query filterQuery = new Query(
+			filterTranslator.translate(booleanFilter, null));
 
-		wrapperBoolQueryBuilder.filter(filterQueryBuilder);
+		wrapperBoolQueryBuilder.filter(filterQuery);
 
-		return wrapperBoolQueryBuilder;
+		return wrapperBoolQueryBuilder.build();
 	}
 
 	@Override
-	public QueryBuilder visitQuery(DisMaxQuery disMaxQuery) {
-		DisMaxQueryBuilder disMaxQueryBuilder = QueryBuilders.disMaxQuery();
+	public QueryVariant visitQuery(DisMaxQuery disMaxQuery) {
+		co.elastic.clients.elasticsearch._types.query_dsl.DisMaxQuery.Builder
+			builder = QueryBuilders.disMax();
 
 		if (!disMaxQuery.isDefaultBoost()) {
-			disMaxQueryBuilder.boost(disMaxQuery.getBoost());
+			builder.boost(disMaxQuery.getBoost());
 		}
 
-		for (Query query : disMaxQuery.getQueries()) {
-			QueryBuilder queryBuilder = query.accept(this);
+		for (com.liferay.portal.kernel.search.Query query :
+				disMaxQuery.getQueries()) {
 
-			disMaxQueryBuilder.add(queryBuilder);
+			builder.queries(new Query(query.accept(this)));
 		}
 
-		if (disMaxQuery.getTieBreaker() != null) {
-			disMaxQueryBuilder.tieBreaker(disMaxQuery.getTieBreaker());
-		}
+		SetterUtil.setNotNullFloatAsDouble(
+			builder::tieBreaker, disMaxQuery.getTieBreaker());
 
-		return disMaxQueryBuilder;
+		return builder.build();
 	}
 
 	@Override
-	public QueryBuilder visitQuery(FuzzyQuery fuzzyQuery) {
-		FuzzyQueryBuilder fuzzyQueryBuilder = QueryBuilders.fuzzyQuery(
-			fuzzyQuery.getField(), fuzzyQuery.getValue());
-
-		if (fuzzyQuery.getFuzziness() != null) {
-			fuzzyQueryBuilder.fuzziness(
-				Fuzziness.build(fuzzyQuery.getFuzziness()));
-		}
-
-		if (fuzzyQuery.getMaxExpansions() != null) {
-			fuzzyQueryBuilder.maxExpansions(fuzzyQuery.getMaxExpansions());
-		}
-
-		if (fuzzyQuery.getPrefixLength() != null) {
-			fuzzyQueryBuilder.prefixLength(fuzzyQuery.getPrefixLength());
-		}
+	public QueryVariant visitQuery(FuzzyQuery fuzzyQuery) {
+		co.elastic.clients.elasticsearch._types.query_dsl.FuzzyQuery.Builder
+			builder = QueryBuilders.fuzzy();
 
 		if (!fuzzyQuery.isDefaultBoost()) {
-			fuzzyQueryBuilder.boost(fuzzyQuery.getBoost());
+			builder.boost(fuzzyQuery.getBoost());
 		}
 
-		return fuzzyQueryBuilder;
+		builder.field(fuzzyQuery.getField());
+
+		SetterUtil.setNotNullValueAsString(
+			builder::fuzziness, fuzzyQuery.getFuzziness());
+		SetterUtil.setNotNullInteger(
+			builder::maxExpansions, fuzzyQuery.getMaxExpansions());
+		SetterUtil.setNotNullInteger(
+			builder::prefixLength, fuzzyQuery.getPrefixLength());
+
+		builder.value(FieldValue.of(fuzzyQuery.getValue()));
+
+		return builder.build();
 	}
 
 	@Override
-	public QueryBuilder visitQuery(MatchAllQuery matchAllQuery) {
-		MatchAllQueryBuilder matchAllQueryBuilder =
-			QueryBuilders.matchAllQuery();
+	public QueryVariant visitQuery(MatchAllQuery matchAllQuery) {
+		co.elastic.clients.elasticsearch._types.query_dsl.MatchAllQuery.Builder
+			builder = QueryBuilders.matchAll();
 
 		if (!matchAllQuery.isDefaultBoost()) {
-			matchAllQueryBuilder.boost(matchAllQuery.getBoost());
+			builder.boost(matchAllQuery.getBoost());
 		}
 
-		return matchAllQueryBuilder;
+		return builder.build();
 	}
 
 	@Override
-	public QueryBuilder visitQuery(MatchQuery matchQuery) {
+	public QueryVariant visitQuery(MatchQuery matchQuery) {
 		String field = matchQuery.getField();
 
 		MatchQuery.Type type = matchQuery.getType();
+
 		String value = matchQuery.getValue();
 
 		if (value.startsWith(StringPool.QUOTE) &&
@@ -211,469 +213,467 @@ public class ElasticsearchQueryTranslator
 		}
 
 		if ((type == null) || (type == MatchQuery.Type.BOOLEAN)) {
-			return _translateMatchQuery(field, value, matchQuery);
+			return _translateMatchQuery(field, matchQuery, value);
 		}
 		else if (type == MatchQuery.Type.PHRASE) {
-			return _translateMatchPhraseQuery(field, value, matchQuery);
+			return _translateMatchPhraseQuery(field, matchQuery, value);
 		}
 		else if (type == MatchQuery.Type.PHRASE_PREFIX) {
-			return _translateMatchPhrasePrefixQuery(field, value, matchQuery);
+			return _translateMatchPhrasePrefixQuery(field, matchQuery, value);
 		}
 
-		throw new IllegalArgumentException("Invalid match query type: " + type);
+		throw new IllegalArgumentException("Invalid match query type " + type);
 	}
 
 	@Override
-	public QueryBuilder visitQuery(MoreLikeThisQuery moreLikeThisQuery) {
-		List<MoreLikeThisQueryBuilder.Item> likeItems = new ArrayList<>();
+	public QueryVariant visitQuery(MoreLikeThisQuery moreLikeThisQuery) {
+		co.elastic.clients.elasticsearch._types.query_dsl.MoreLikeThisQuery.
+			Builder builder = QueryBuilders.moreLikeThis();
 
-		if (moreLikeThisQuery.getDocumentUIDs() != null) {
-			String type = moreLikeThisQuery.getType();
-
-			if (Validator.isNotNull(type)) {
-				type = DocumentTypes.LIFERAY;
-			}
-
-			for (String documentUID : moreLikeThisQuery.getDocumentUIDs()) {
-				MoreLikeThisQueryBuilder.Item moreLikeThisQueryBuilderItem =
-					new MoreLikeThisQueryBuilder.Item(
-						_indexNameBuilder.getIndexName(
-							moreLikeThisQuery.getCompanyId()),
-						type, documentUID);
-
-				likeItems.add(moreLikeThisQueryBuilderItem);
-			}
-		}
-
-		List<String> fields = moreLikeThisQuery.getFields();
-
-		String[] fieldsArray = null;
-
-		if (!fields.isEmpty()) {
-			fieldsArray = fields.toArray(new String[0]);
-		}
-
-		List<String> likeTexts = new ArrayList<>();
-
-		if (Validator.isNotNull(moreLikeThisQuery.getLikeText())) {
-			likeTexts.add(moreLikeThisQuery.getLikeText());
-		}
-
-		MoreLikeThisQueryBuilder moreLikeThisQueryBuilder =
-			QueryBuilders.moreLikeThisQuery(
-				fieldsArray, likeTexts.toArray(new String[0]),
-				likeItems.toArray(new MoreLikeThisQueryBuilder.Item[0]));
-
-		if (Validator.isNotNull(moreLikeThisQuery.getAnalyzer())) {
-			moreLikeThisQueryBuilder.analyzer(moreLikeThisQuery.getAnalyzer());
-		}
-
-		if (moreLikeThisQuery.getMaxDocFrequency() != null) {
-			moreLikeThisQueryBuilder.maxDocFreq(
-				moreLikeThisQuery.getMaxDocFrequency());
-		}
-
-		if (moreLikeThisQuery.getMaxQueryTerms() != null) {
-			moreLikeThisQueryBuilder.maxQueryTerms(
-				moreLikeThisQuery.getMaxQueryTerms());
-		}
-
-		if (moreLikeThisQuery.getMaxWordLength() != null) {
-			moreLikeThisQueryBuilder.maxWordLength(
-				moreLikeThisQuery.getMaxWordLength());
-		}
-
-		if (moreLikeThisQuery.getMinDocFrequency() != null) {
-			moreLikeThisQueryBuilder.minDocFreq(
-				moreLikeThisQuery.getMinDocFrequency());
-		}
-
-		if (Validator.isNotNull(moreLikeThisQuery.getMinShouldMatch())) {
-			moreLikeThisQueryBuilder.minimumShouldMatch(
-				moreLikeThisQuery.getMinShouldMatch());
-		}
-
-		if (moreLikeThisQuery.getMinTermFrequency() != null) {
-			moreLikeThisQueryBuilder.minTermFreq(
-				moreLikeThisQuery.getMinTermFrequency());
-		}
-
-		if (moreLikeThisQuery.getMinWordLength() != null) {
-			moreLikeThisQueryBuilder.minWordLength(
-				moreLikeThisQuery.getMinWordLength());
-		}
+		SetterUtil.setNotBlankString(
+			builder::analyzer, moreLikeThisQuery.getAnalyzer());
 
 		if (!moreLikeThisQuery.isDefaultBoost()) {
-			moreLikeThisQueryBuilder.boost(moreLikeThisQuery.getBoost());
+			builder.boost(moreLikeThisQuery.getBoost());
 		}
+
+		SetterUtil.setNotNullFloatAsDouble(
+			builder::boostTerms, moreLikeThisQuery.getTermBoost());
+
+		builder.fields(moreLikeThisQuery.getFields());
+
+		SetterUtil.setNotNullBoolean(
+			builder::include, moreLikeThisQuery.isIncludeInput());
+
+		builder.like(_getLikes(moreLikeThisQuery));
+
+		SetterUtil.setNotNullInteger(
+			builder::maxDocFreq, moreLikeThisQuery.getMaxDocFrequency());
+		SetterUtil.setNotNullInteger(
+			builder::maxQueryTerms, moreLikeThisQuery.getMaxQueryTerms());
+		SetterUtil.setNotNullInteger(
+			builder::maxWordLength, moreLikeThisQuery.getMaxWordLength());
+		SetterUtil.setNotNullInteger(
+			builder::minDocFreq, moreLikeThisQuery.getMinDocFrequency());
+		SetterUtil.setNotBlankString(
+			builder::minimumShouldMatch, moreLikeThisQuery.getMinShouldMatch());
+		SetterUtil.setNotNullInteger(
+			builder::minTermFreq, moreLikeThisQuery.getMinTermFrequency());
+		SetterUtil.setNotNullInteger(
+			builder::minWordLength, moreLikeThisQuery.getMinWordLength());
 
 		Collection<String> stopWords = moreLikeThisQuery.getStopWords();
 
 		if (!stopWords.isEmpty()) {
-			moreLikeThisQueryBuilder.stopWords(
-				stopWords.toArray(new String[0]));
+			builder.stopWords(ListUtil.fromCollection(stopWords));
 		}
 
-		if (moreLikeThisQuery.getTermBoost() != null) {
-			moreLikeThisQueryBuilder.boostTerms(
-				moreLikeThisQuery.getTermBoost());
-		}
-
-		if (moreLikeThisQuery.isIncludeInput() != null) {
-			moreLikeThisQueryBuilder.include(
-				moreLikeThisQuery.isIncludeInput());
-		}
-
-		return moreLikeThisQueryBuilder;
+		return builder.build();
 	}
 
 	@Override
-	public QueryBuilder visitQuery(MultiMatchQuery multiMatchQuery) {
-		MultiMatchQueryBuilder multiMatchQueryBuilder =
-			QueryBuilders.multiMatchQuery(
-				multiMatchQuery.getValue(), StringPool.EMPTY_ARRAY);
+	public QueryVariant visitQuery(MultiMatchQuery multiMatchQuery) {
+		co.elastic.clients.elasticsearch._types.query_dsl.MultiMatchQuery.
+			Builder builder = QueryBuilders.multiMatch();
 
-		if (Validator.isNotNull(multiMatchQuery.getAnalyzer())) {
-			multiMatchQueryBuilder.analyzer(multiMatchQuery.getAnalyzer());
+		SetterUtil.setNotBlankString(
+			builder::analyzer, multiMatchQuery.getAnalyzer());
+
+		if (!multiMatchQuery.isDefaultBoost()) {
+			builder.boost(multiMatchQuery.getBoost());
 		}
 
-		if (multiMatchQuery.getCutOffFrequency() != null) {
-			multiMatchQueryBuilder.cutoffFrequency(
-				multiMatchQuery.getCutOffFrequency());
-		}
+		SetterUtil.setNotNullFloatAsDouble(
+			builder::cutoffFrequency, multiMatchQuery.getCutOffFrequency());
 
-		Map<String, Float> fieldsBoosts = multiMatchQuery.getFieldsBoosts();
+		builder.fields(
+			QueryUtil.fieldsBoostsToFieldsWithBoosts(
+				multiMatchQuery.getFieldsBoosts()));
 
-		for (String fields : multiMatchQuery.getFields()) {
-			Float fieldBoost = null;
-
-			if (fieldsBoosts != null) {
-				fieldBoost = fieldsBoosts.get(fields);
-			}
-
-			if (fieldBoost != null) {
-				multiMatchQueryBuilder.field(fields, fieldBoost);
-			}
-			else {
-				multiMatchQueryBuilder.field(fields);
-			}
-		}
-
-		if (multiMatchQuery.getFuzziness() != null) {
-			multiMatchQueryBuilder.fuzziness(
-				Fuzziness.build(multiMatchQuery.getFuzziness()));
-		}
+		SetterUtil.setNotBlankString(
+			builder::fuzziness, multiMatchQuery.getFuzziness());
 
 		if (multiMatchQuery.getFuzzyRewriteMethod() != null) {
-			String multiMatchQueryFuzzyRewriteMethod =
-				MatchQueryTranslatorUtil.translate(
-					multiMatchQuery.getFuzzyRewriteMethod());
-
-			multiMatchQueryBuilder.fuzzyRewrite(
-				multiMatchQueryFuzzyRewriteMethod);
+			builder.fuzzyRewrite(
+				_translateMatchQueryRewriteMethod(
+					multiMatchQuery.getFuzzyRewriteMethod()));
 		}
 
-		if (multiMatchQuery.getMaxExpansions() != null) {
-			multiMatchQueryBuilder.maxExpansions(
-				multiMatchQuery.getMaxExpansions());
-		}
-
-		if (Validator.isNotNull(multiMatchQuery.getMinShouldMatch())) {
-			multiMatchQueryBuilder.minimumShouldMatch(
-				multiMatchQuery.getMinShouldMatch());
-		}
+		SetterUtil.setNotNullBoolean(
+			builder::lenient, multiMatchQuery.isLenient());
+		SetterUtil.setNotNullInteger(
+			builder::maxExpansions, multiMatchQuery.getMaxExpansions());
+		SetterUtil.setNotBlankString(
+			builder::minimumShouldMatch, multiMatchQuery.getMinShouldMatch());
 
 		if (multiMatchQuery.getOperator() != null) {
-			Operator matchQueryBuilderOperator =
-				MatchQueryTranslatorUtil.translate(
-					multiMatchQuery.getOperator());
-
-			multiMatchQueryBuilder.operator(matchQueryBuilderOperator);
+			builder.operator(
+				_translateMatchQueryOperator(multiMatchQuery.getOperator()));
 		}
 
-		if (multiMatchQuery.getPrefixLength() != null) {
-			multiMatchQueryBuilder.prefixLength(
-				multiMatchQuery.getPrefixLength());
-		}
+		SetterUtil.setNotNullInteger(
+			builder::prefixLength, multiMatchQuery.getPrefixLength());
 
-		if (multiMatchQuery.getSlop() != null) {
-			multiMatchQueryBuilder.slop(multiMatchQuery.getSlop());
-		}
+		builder.query(multiMatchQuery.getValue());
+
+		SetterUtil.setNotNullInteger(builder::slop, multiMatchQuery.getSlop());
 
 		if (multiMatchQuery.getType() != null) {
-			MultiMatchQueryBuilder.Type multiMatchQueryBuilderType = _translate(
-				multiMatchQuery.getType());
-
-			multiMatchQueryBuilder.type(multiMatchQueryBuilderType);
+			builder.type(
+				_translateMultiMatchQueryType(multiMatchQuery.getType()));
 		}
 
 		if (multiMatchQuery.getZeroTermsQuery() != null) {
-			ZeroTermsQueryOption zeroTermsQueryOption =
-				MatchQueryTranslatorUtil.translate(
-					multiMatchQuery.getZeroTermsQuery());
-
-			multiMatchQueryBuilder.zeroTermsQuery(zeroTermsQueryOption);
+			builder.zeroTermsQuery(
+				_translateMatchQueryZeroTermsQuery(
+					multiMatchQuery.getZeroTermsQuery()));
 		}
 
-		if (!multiMatchQuery.isDefaultBoost()) {
-			multiMatchQueryBuilder.boost(multiMatchQuery.getBoost());
-		}
-
-		if (multiMatchQuery.isLenient() != null) {
-			multiMatchQueryBuilder.lenient(multiMatchQuery.isLenient());
-		}
-
-		return multiMatchQueryBuilder;
+		return builder.build();
 	}
 
 	@Override
-	public QueryBuilder visitQuery(NestedQuery nestedQuery) {
-		Query query = nestedQuery.getQuery();
-
-		QueryBuilder queryBuilder = query.accept(this);
-
-		NestedQueryBuilder nestedQueryBuilder = QueryBuilders.nestedQuery(
-			nestedQuery.getPath(), queryBuilder, ScoreMode.Total);
+	public QueryVariant visitQuery(NestedQuery nestedQuery) {
+		co.elastic.clients.elasticsearch._types.query_dsl.NestedQuery.Builder
+			builder = QueryBuilders.nested();
 
 		if (!nestedQuery.isDefaultBoost()) {
-			nestedQueryBuilder.boost(nestedQuery.getBoost());
+			builder.boost(nestedQuery.getBoost());
 		}
 
-		return nestedQueryBuilder;
+		builder.path(nestedQuery.getPath());
+
+		com.liferay.portal.kernel.search.Query query = nestedQuery.getQuery();
+
+		builder.query(new Query(query.accept(this)));
+
+		builder.scoreMode(ChildScoreMode.Sum);
+
+		return builder.build();
 	}
 
 	@Override
-	public QueryBuilder visitQuery(StringQuery stringQuery) {
-		QueryStringQueryBuilder queryStringQueryBuilder =
-			QueryBuilders.queryStringQuery(stringQuery.getQuery());
+	public QueryVariant visitQuery(StringQuery stringQuery) {
+		QueryStringQuery.Builder builder = QueryBuilders.queryString();
 
 		if (!stringQuery.isDefaultBoost()) {
-			queryStringQueryBuilder.boost(stringQuery.getBoost());
+			builder.boost(stringQuery.getBoost());
 		}
 
-		return queryStringQueryBuilder;
+		builder.query(stringQuery.getQuery());
+
+		return builder.build();
 	}
 
 	@Override
-	public QueryBuilder visitQuery(TermQuery termQuery) {
-		QueryTerm queryTerm = termQuery.getQueryTerm();
-
-		TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery(
-			queryTerm.getField(), queryTerm.getValue());
+	public QueryVariant visitQuery(TermQuery termQuery) {
+		co.elastic.clients.elasticsearch._types.query_dsl.TermQuery.Builder
+			builder = QueryBuilders.term();
 
 		if (!termQuery.isDefaultBoost()) {
-			termQueryBuilder.boost(termQuery.getBoost());
+			builder.boost(termQuery.getBoost());
 		}
 
-		return termQueryBuilder;
+		QueryTerm queryTerm = termQuery.getQueryTerm();
+
+		builder.field(queryTerm.getField());
+		builder.value(FieldValue.of(queryTerm.getValue()));
+
+		return builder.build();
 	}
 
 	@Override
-	public QueryBuilder visitQuery(TermRangeQuery termRangeQuery) {
-		RangeQueryBuilder rangeQueryBuilder = QueryBuilders.rangeQuery(
-			termRangeQuery.getField());
+	public QueryVariant visitQuery(TermRangeQuery termRangeQuery) {
+		RangeQuery.Builder builder = QueryBuilders.range();
 
-		rangeQueryBuilder.from(termRangeQuery.getLowerTerm());
-		rangeQueryBuilder.includeLower(termRangeQuery.includesLower());
-		rangeQueryBuilder.includeUpper(termRangeQuery.includesUpper());
-		rangeQueryBuilder.to(termRangeQuery.getUpperTerm());
+		co.elastic.clients.elasticsearch._types.query_dsl.TermRangeQuery.Builder
+			termRangeQueryBuilder =
+				new co.elastic.clients.elasticsearch._types.query_dsl.
+					TermRangeQuery.Builder();
 
 		if (!termRangeQuery.isDefaultBoost()) {
-			rangeQueryBuilder.boost(termRangeQuery.getBoost());
+			termRangeQueryBuilder.boost(termRangeQuery.getBoost());
 		}
 
-		return rangeQueryBuilder;
+		termRangeQueryBuilder.field(termRangeQuery.getField());
+
+		QueryUtil.setRanges(
+			termRangeQueryBuilder, termRangeQuery.includesLower(),
+			termRangeQuery.includesUpper(), termRangeQuery.getLowerTerm(),
+			termRangeQuery.getUpperTerm());
+
+		builder.term(termRangeQueryBuilder.build());
+
+		return builder.build();
 	}
 
 	@Override
-	public QueryBuilder visitQuery(WildcardQuery wildcardQuery) {
-		QueryTerm queryTerm = wildcardQuery.getQueryTerm();
-
-		WildcardQueryBuilder wildcardQueryBuilder = QueryBuilders.wildcardQuery(
-			queryTerm.getField(), queryTerm.getValue());
+	public QueryVariant visitQuery(WildcardQuery wildcardQuery) {
+		co.elastic.clients.elasticsearch._types.query_dsl.WildcardQuery.Builder
+			builder = QueryBuilders.wildcard();
 
 		if (!wildcardQuery.isDefaultBoost()) {
-			wildcardQueryBuilder.boost(wildcardQuery.getBoost());
+			builder.boost(wildcardQuery.getBoost());
 		}
 
-		return wildcardQueryBuilder;
+		QueryTerm queryTerm = wildcardQuery.getQueryTerm();
+
+		builder.field(queryTerm.getField());
+		builder.value(queryTerm.getValue());
+
+		return builder.build();
 	}
 
-	private void _addClause(
-		BooleanClause<Query> clause, BoolQueryBuilder boolQuery,
-		QueryVisitor<QueryBuilder> queryVisitor) {
+	private void _addBooleanClause(
+		BooleanClause<com.liferay.portal.kernel.search.Query> booleanClause,
+		BoolQuery.Builder builder) {
 
-		BooleanClauseOccur booleanClauseOccur = clause.getBooleanClauseOccur();
+		BooleanClauseOccur booleanClauseOccur =
+			booleanClause.getBooleanClauseOccur();
 
-		Query query = clause.getClause();
+		com.liferay.portal.kernel.search.Query query =
+			booleanClause.getClause();
 
-		QueryBuilder queryBuilder = query.accept(queryVisitor);
+		Query translatedQuery = new Query(query.accept(this));
 
 		if (booleanClauseOccur.equals(BooleanClauseOccur.MUST)) {
-			boolQuery.must(queryBuilder);
+			builder.must(translatedQuery);
 
 			return;
 		}
 
 		if (booleanClauseOccur.equals(BooleanClauseOccur.MUST_NOT)) {
-			boolQuery.mustNot(queryBuilder);
+			builder.mustNot(translatedQuery);
 
 			return;
 		}
 
 		if (booleanClauseOccur.equals(BooleanClauseOccur.SHOULD)) {
-			boolQuery.should(queryBuilder);
+			builder.should(translatedQuery);
 
 			return;
 		}
 
-		throw new IllegalArgumentException();
+		throw new IllegalArgumentException(
+			"Invalid Boolean clause occur " + booleanClauseOccur);
 	}
 
-	private MultiMatchQueryBuilder.Type _translate(
-		MultiMatchQuery.Type multiMatchQueryType) {
+	private List<Like> _getLikes(MoreLikeThisQuery moreLikeThisQuery) {
+		List<Like> likes = new ArrayList<>();
 
-		if (multiMatchQueryType == MultiMatchQuery.Type.BEST_FIELDS) {
-			return MultiMatchQueryBuilder.Type.BEST_FIELDS;
+		if (moreLikeThisQuery.getDocumentUIDs() == null) {
+			return likes;
 		}
-		else if (multiMatchQueryType == MultiMatchQuery.Type.CROSS_FIELDS) {
-			return MultiMatchQueryBuilder.Type.CROSS_FIELDS;
+
+		String indexName = _indexNameBuilder.getIndexName(
+			moreLikeThisQuery.getCompanyId());
+
+		for (String documentUID : moreLikeThisQuery.getDocumentUIDs()) {
+			likes.add(
+				Like.of(
+					like -> like.document(
+						LikeDocument.of(
+							likeDocument -> likeDocument.id(
+								documentUID
+							).index(
+								indexName
+							)))));
 		}
-		else if (multiMatchQueryType == MultiMatchQuery.Type.MOST_FIELDS) {
-			return MultiMatchQueryBuilder.Type.MOST_FIELDS;
+
+		if (Validator.isNotNull(moreLikeThisQuery.getLikeText())) {
+			likes.add(
+				Like.of(like -> like.text(moreLikeThisQuery.getLikeText())));
 		}
-		else if (multiMatchQueryType == MultiMatchQuery.Type.PHRASE) {
-			return MultiMatchQueryBuilder.Type.PHRASE;
+
+		return likes;
+	}
+
+	private QueryVariant _translateMatchPhrasePrefixQuery(
+		String field, MatchQuery matchQuery, String value) {
+
+		MatchPhrasePrefixQuery.Builder builder =
+			QueryBuilders.matchPhrasePrefix();
+
+		SetterUtil.setNotBlankString(
+			builder::analyzer, matchQuery.getAnalyzer());
+
+		if (!matchQuery.isDefaultBoost()) {
+			builder.boost(matchQuery.getBoost());
 		}
-		else if (multiMatchQueryType == MultiMatchQuery.Type.PHRASE_PREFIX) {
-			return MultiMatchQueryBuilder.Type.PHRASE_PREFIX;
+
+		builder.field(field);
+
+		SetterUtil.setNotNullInteger(
+			builder::maxExpansions, matchQuery.getMaxExpansions());
+
+		builder.query(value);
+
+		SetterUtil.setNotNullInteger(builder::slop, matchQuery.getSlop());
+
+		return builder.build();
+	}
+
+	private QueryVariant _translateMatchPhraseQuery(
+		String field, MatchQuery matchQuery, String value) {
+
+		MatchPhraseQuery.Builder builder = QueryBuilders.matchPhrase();
+
+		SetterUtil.setNotBlankString(
+			builder::analyzer, matchQuery.getAnalyzer());
+
+		if (!matchQuery.isDefaultBoost()) {
+			builder.boost(matchQuery.getBoost());
+		}
+
+		builder.field(field);
+		builder.query(value);
+
+		SetterUtil.setNotNullInteger(builder::slop, matchQuery.getSlop());
+
+		return builder.build();
+	}
+
+	private QueryVariant _translateMatchQuery(
+		String field, MatchQuery matchQuery, String value) {
+
+		co.elastic.clients.elasticsearch._types.query_dsl.MatchQuery.Builder
+			builder = QueryBuilders.match();
+
+		SetterUtil.setNotBlankString(
+			builder::analyzer, matchQuery.getAnalyzer());
+
+		if (!matchQuery.isDefaultBoost()) {
+			builder.boost(matchQuery.getBoost());
+		}
+
+		SetterUtil.setNotNullFloatAsDouble(
+			builder::cutoffFrequency, matchQuery.getCutOffFrequency());
+
+		builder.field(field);
+
+		SetterUtil.setNotNullValueAsString(
+			builder::fuzziness, matchQuery.getFuzziness());
+
+		if (matchQuery.getFuzzyRewriteMethod() != null) {
+			builder.fuzzyRewrite(
+				_translateMatchQueryRewriteMethod(
+					matchQuery.getFuzzyRewriteMethod()));
+		}
+
+		SetterUtil.setNotNullBoolean(
+			builder::fuzzyTranspositions, matchQuery.isFuzzyTranspositions());
+
+		SetterUtil.setNotNullBoolean(builder::lenient, matchQuery.isLenient());
+
+		SetterUtil.setNotNullInteger(
+			builder::maxExpansions, matchQuery.getMaxExpansions());
+		SetterUtil.setNotBlankString(
+			builder::minimumShouldMatch, matchQuery.getMinShouldMatch());
+
+		if (matchQuery.getOperator() != null) {
+			builder.operator(
+				_translateMatchQueryOperator(matchQuery.getOperator()));
+		}
+
+		SetterUtil.setNotNullInteger(
+			builder::prefixLength, matchQuery.getPrefixLength());
+
+		builder.query(FieldValue.of(value));
+
+		if (matchQuery.getZeroTermsQuery() != null) {
+			builder.zeroTermsQuery(
+				_translateMatchQueryZeroTermsQuery(
+					matchQuery.getZeroTermsQuery()));
+		}
+
+		return builder.build();
+	}
+
+	private Operator _translateMatchQueryOperator(
+		MatchQuery.Operator matchQueryOperator) {
+
+		if (matchQueryOperator == MatchQuery.Operator.AND) {
+			return Operator.And;
+		}
+		else if (matchQueryOperator == MatchQuery.Operator.OR) {
+			return Operator.Or;
 		}
 
 		throw new IllegalArgumentException(
-			"Invalid multi match query type: " + multiMatchQueryType);
+			"Invalid operator " + matchQueryOperator);
 	}
 
-	private QueryBuilder _translateMatchPhrasePrefixQuery(
-		String field, String value, MatchQuery matchQuery) {
+	private String _translateMatchQueryRewriteMethod(
+		MatchQuery.RewriteMethod rewriteMethod) {
 
-		MatchPhrasePrefixQueryBuilder matchPhrasePrefixQueryBuilder =
-			QueryBuilders.matchPhrasePrefixQuery(field, value);
+		if (rewriteMethod == MatchQuery.RewriteMethod.CONSTANT_SCORE_AUTO) {
+			return "constant_score_auto";
+		}
+		else if (rewriteMethod ==
+					MatchQuery.RewriteMethod.CONSTANT_SCORE_BOOLEAN) {
 
-		if (Validator.isNotNull(matchQuery.getAnalyzer())) {
-			matchPhrasePrefixQueryBuilder.analyzer(matchQuery.getAnalyzer());
+			return "constant_score_boolean";
+		}
+		else if (rewriteMethod ==
+					MatchQuery.RewriteMethod.CONSTANT_SCORE_FILTER) {
+
+			return "constant_score_filter";
+		}
+		else if (rewriteMethod == MatchQuery.RewriteMethod.SCORING_BOOLEAN) {
+			return "scoring_boolean";
+		}
+		else if (rewriteMethod == MatchQuery.RewriteMethod.TOP_TERMS_BOOST_N) {
+			return "top_terms_boost_N";
+		}
+		else if (rewriteMethod == MatchQuery.RewriteMethod.TOP_TERMS_N) {
+			return "top_terms_N";
 		}
 
-		if (matchQuery.getMaxExpansions() != null) {
-			matchPhrasePrefixQueryBuilder.maxExpansions(
-				matchQuery.getMaxExpansions());
-		}
-
-		if (matchQuery.getSlop() != null) {
-			matchPhrasePrefixQueryBuilder.slop(matchQuery.getSlop());
-		}
-
-		if (!matchQuery.isDefaultBoost()) {
-			matchPhrasePrefixQueryBuilder.boost(matchQuery.getBoost());
-		}
-
-		return matchPhrasePrefixQueryBuilder;
+		throw new IllegalArgumentException(
+			"Invalid rewrite method " + rewriteMethod);
 	}
 
-	private QueryBuilder _translateMatchPhraseQuery(
-		String field, String value, MatchQuery matchQuery) {
+	private ZeroTermsQuery _translateMatchQueryZeroTermsQuery(
+		MatchQuery.ZeroTermsQuery zeroTermsQuery) {
 
-		MatchPhraseQueryBuilder matchPhraseQueryBuilder =
-			QueryBuilders.matchPhraseQuery(field, value);
-
-		if (Validator.isNotNull(matchQuery.getAnalyzer())) {
-			matchPhraseQueryBuilder.analyzer(matchQuery.getAnalyzer());
+		if (zeroTermsQuery == MatchQuery.ZeroTermsQuery.ALL) {
+			return ZeroTermsQuery.All;
+		}
+		else if (zeroTermsQuery == MatchQuery.ZeroTermsQuery.NONE) {
+			return ZeroTermsQuery.None;
 		}
 
-		if (matchQuery.getSlop() != null) {
-			matchPhraseQueryBuilder.slop(matchQuery.getSlop());
-		}
-
-		if (!matchQuery.isDefaultBoost()) {
-			matchPhraseQueryBuilder.boost(matchQuery.getBoost());
-		}
-
-		return matchPhraseQueryBuilder;
+		throw new IllegalArgumentException(
+			"Invalid zero terms query " + zeroTermsQuery);
 	}
 
-	private QueryBuilder _translateMatchQuery(
-		String field, String value, MatchQuery matchQuery) {
+	private TextQueryType _translateMultiMatchQueryType(
+		MultiMatchQuery.Type type) {
 
-		MatchQueryBuilder matchQueryBuilder = QueryBuilders.matchQuery(
-			field, value);
-
-		if (Validator.isNotNull(matchQuery.getAnalyzer())) {
-			matchQueryBuilder.analyzer(matchQuery.getAnalyzer());
+		if (type == MultiMatchQuery.Type.BEST_FIELDS) {
+			return TextQueryType.BestFields;
+		}
+		else if (type == MultiMatchQuery.Type.CROSS_FIELDS) {
+			return TextQueryType.CrossFields;
+		}
+		else if (type == MultiMatchQuery.Type.MOST_FIELDS) {
+			return TextQueryType.MostFields;
+		}
+		else if (type == MultiMatchQuery.Type.PHRASE) {
+			return TextQueryType.Phrase;
+		}
+		else if (type == MultiMatchQuery.Type.PHRASE_PREFIX) {
+			return TextQueryType.PhrasePrefix;
 		}
 
-		if (matchQuery.getCutOffFrequency() != null) {
-			matchQueryBuilder.cutoffFrequency(matchQuery.getCutOffFrequency());
-		}
-
-		if (matchQuery.getFuzziness() != null) {
-			matchQueryBuilder.fuzziness(
-				Fuzziness.build(matchQuery.getFuzziness()));
-		}
-
-		if (matchQuery.getFuzzyRewriteMethod() != null) {
-			String matchQueryFuzzyRewrite = MatchQueryTranslatorUtil.translate(
-				matchQuery.getFuzzyRewriteMethod());
-
-			matchQueryBuilder.fuzzyRewrite(matchQueryFuzzyRewrite);
-		}
-
-		if (matchQuery.getMaxExpansions() != null) {
-			matchQueryBuilder.maxExpansions(matchQuery.getMaxExpansions());
-		}
-
-		if (Validator.isNotNull(matchQuery.getMinShouldMatch())) {
-			matchQueryBuilder.minimumShouldMatch(
-				matchQuery.getMinShouldMatch());
-		}
-
-		if (matchQuery.getOperator() != null) {
-			Operator operator = MatchQueryTranslatorUtil.translate(
-				matchQuery.getOperator());
-
-			matchQueryBuilder.operator(operator);
-		}
-
-		if (matchQuery.getPrefixLength() != null) {
-			matchQueryBuilder.prefixLength(matchQuery.getPrefixLength());
-		}
-
-		if (matchQuery.getZeroTermsQuery() != null) {
-			ZeroTermsQueryOption zeroTermsQueryOption =
-				MatchQueryTranslatorUtil.translate(
-					matchQuery.getZeroTermsQuery());
-
-			matchQueryBuilder.zeroTermsQuery(zeroTermsQueryOption);
-		}
-
-		if (!matchQuery.isDefaultBoost()) {
-			matchQueryBuilder.boost(matchQuery.getBoost());
-		}
-
-		if (matchQuery.isFuzzyTranspositions() != null) {
-			matchQueryBuilder.fuzzyTranspositions(
-				matchQuery.isFuzzyTranspositions());
-		}
-
-		if (matchQuery.isLenient() != null) {
-			matchQueryBuilder.lenient(matchQuery.isLenient());
-		}
-
-		return matchQueryBuilder;
+		throw new IllegalArgumentException(
+			"Invalid multi match query type " + type);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ElasticsearchQueryTranslator.class);
 
-	private static final Snapshot<FilterTranslator<QueryBuilder>>
+	private static final Snapshot<FilterTranslator<QueryVariant>>
 		_filterTranslatorSnapshot = new Snapshot<>(
 			ElasticsearchQueryTranslator.class,
 			Snapshot.cast(FilterTranslator.class),

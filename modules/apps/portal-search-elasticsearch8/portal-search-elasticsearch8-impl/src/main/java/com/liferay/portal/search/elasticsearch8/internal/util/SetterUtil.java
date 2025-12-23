@@ -143,7 +143,7 @@ public class SetterUtil {
 		Script script) {
 
 		if (script != null) {
-			consumer.accept(null);
+			consumer.accept(scriptTranslator.translate(script));
 		}
 	}
 

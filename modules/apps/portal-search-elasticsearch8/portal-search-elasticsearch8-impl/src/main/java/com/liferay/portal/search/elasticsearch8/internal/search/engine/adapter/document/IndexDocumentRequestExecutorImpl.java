@@ -5,17 +5,18 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.document;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.Result;
+import co.elastic.clients.elasticsearch.core.IndexRequest;
+import co.elastic.clients.elasticsearch.core.IndexResponse;
+import co.elastic.clients.json.JsonData;
+
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
+import com.liferay.portal.search.elasticsearch8.internal.util.ConversionUtil;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentResponse;
 
 import java.io.IOException;
-
-import org.elasticsearch.action.index.IndexRequest;
-import org.elasticsearch.action.index.IndexResponse;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.rest.RestStatus;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -31,41 +32,40 @@ public class IndexDocumentRequestExecutorImpl
 	public IndexDocumentResponse execute(
 		IndexDocumentRequest indexDocumentRequest) {
 
-		IndexRequest indexRequest =
-			_elasticsearchBulkableDocumentRequestTranslator.translate(
-				indexDocumentRequest);
-
 		IndexResponse indexResponse = _getIndexResponse(
-			indexRequest, indexDocumentRequest);
+			indexDocumentRequest,
+			_elasticsearchDocumentRequestTranslator.translate(
+				indexDocumentRequest));
 
-		RestStatus restStatus = indexResponse.status();
+		Result result = indexResponse.result();
 
 		return new IndexDocumentResponse(
-			restStatus.getStatus(), indexResponse.getId());
+			ConversionUtil.toHttpStatusCode(result), result.jsonValue(),
+			indexResponse.id());
 	}
 
 	private IndexResponse _getIndexResponse(
-		IndexRequest indexRequest, IndexDocumentRequest indexDocumentRequest) {
+		IndexDocumentRequest indexDocumentRequest,
+		IndexRequest<JsonData> indexRequest) {
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
 				indexDocumentRequest.getConnectionId(),
 				indexDocumentRequest.isPreferLocalCluster());
 
 		try {
-			return restHighLevelClient.index(
-				indexRequest, RequestOptions.DEFAULT);
+			return elasticsearchClient.index(indexRequest);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
 	}
 
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
-	private ElasticsearchBulkableDocumentRequestTranslator
-		_elasticsearchBulkableDocumentRequestTranslator;
-
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
+
+	@Reference(target = "(search.engine.impl=Elasticsearch)")
+	private ElasticsearchDocumentRequestTranslator
+		_elasticsearchDocumentRequestTranslator;
 
 }

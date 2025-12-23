@@ -5,43 +5,47 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.cluster;
 
+import co.elastic.clients.elasticsearch.indices.ElasticsearchIndicesClient;
+import co.elastic.clients.elasticsearch.indices.IndexSettings;
+import co.elastic.clients.elasticsearch.indices.PutIndicesSettingsRequest;
+import co.elastic.clients.elasticsearch.indices.PutIndicesSettingsResponse;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.search.elasticsearch8.internal.helper.SearchLogHelperUtil;
-
-import org.elasticsearch.action.ActionResponse;
-import org.elasticsearch.action.admin.indices.settings.put.UpdateSettingsRequest;
-import org.elasticsearch.client.IndicesClient;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.common.settings.Settings;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.search.elasticsearch8.internal.util.JsonpUtil;
 
 /**
  * @author André de Oliveira
+ * @author Petteri Karttunen
  */
 public class ReplicasManagerImpl implements ReplicasManager {
 
-	public ReplicasManagerImpl(IndicesClient indicesClient) {
-		_indicesClient = indicesClient;
+	public ReplicasManagerImpl(
+		ElasticsearchIndicesClient elasticsearchIndicesClient) {
+
+		_elasticsearchIndicesClient = elasticsearchIndicesClient;
 	}
 
 	@Override
 	public void updateNumberOfReplicas(
 		int numberOfReplicas, String... indices) {
 
-		UpdateSettingsRequest updateSettingsRequest = new UpdateSettingsRequest(
-			indices);
-
-		Settings.Builder builder = Settings.builder();
-
-		builder.put("number_of_replicas", numberOfReplicas);
-
-		updateSettingsRequest.settings(builder);
-
 		try {
-			ActionResponse actionResponse = _indicesClient.putSettings(
-				updateSettingsRequest, RequestOptions.DEFAULT);
+			PutIndicesSettingsResponse putIndicesSettingsResponse =
+				_elasticsearchIndicesClient.putSettings(
+					PutIndicesSettingsRequest.of(
+						putIndicesSettingsRequest ->
+							putIndicesSettingsRequest.index(
+								ListUtil.fromArray(indices)
+							).settings(
+								IndexSettings.of(
+									indexSettings ->
+										indexSettings.numberOfReplicas(
+											String.valueOf(numberOfReplicas)))
+							)));
 
-			SearchLogHelperUtil.logActionResponse(_log, actionResponse);
+			JsonpUtil.logInfoResponse(putIndicesSettingsResponse, _log);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -53,6 +57,6 @@ public class ReplicasManagerImpl implements ReplicasManager {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ReplicasManagerImpl.class);
 
-	private final IndicesClient _indicesClient;
+	private final ElasticsearchIndicesClient _elasticsearchIndicesClient;
 
 }

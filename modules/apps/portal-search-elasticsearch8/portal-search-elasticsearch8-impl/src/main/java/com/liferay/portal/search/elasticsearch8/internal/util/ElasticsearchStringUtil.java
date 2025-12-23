@@ -13,6 +13,25 @@ import java.util.function.Supplier;
 public class ElasticsearchStringUtil {
 
 	@SafeVarargs
+	public static Double getFirstDoubleValue(Supplier<Object>... suppliers) {
+		for (Supplier<Object> supplier : suppliers) {
+			Object object = supplier.get();
+
+			if (object == null) {
+				continue;
+			}
+
+			if (object instanceof Double) {
+				return (Double)object;
+			}
+
+			return Double.valueOf(String.valueOf(object));
+		}
+
+		return null;
+	}
+
+	@SafeVarargs
 	public static String getFirstStringValue(Supplier<Object>... suppliers) {
 		for (Supplier<Object> supplier : suppliers) {
 			Object object = supplier.get();

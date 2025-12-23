@@ -29,9 +29,9 @@ public class DeleteIndexRequestExecutor {
 
 	public DeleteIndexResponse execute(DeleteIndexRequest deleteIndexRequest) {
 		co.elastic.clients.elasticsearch.indices.DeleteIndexResponse
-			deleteIndexResponse = getDeleteIndexResponse(
-				deleteIndexRequest,
-				createDeleteIndexRequest(deleteIndexRequest));
+			deleteIndexResponse = _getDeleteIndexResponse(
+				createDeleteIndexRequest(deleteIndexRequest),
+				deleteIndexRequest);
 
 		return new DeleteIndexResponse(deleteIndexResponse.acknowledged());
 	}
@@ -56,11 +56,11 @@ public class DeleteIndexRequestExecutor {
 		return builder.build();
 	}
 
-	protected co.elastic.clients.elasticsearch.indices.DeleteIndexResponse
-		getDeleteIndexResponse(
-			DeleteIndexRequest deleteIndexRequest,
+	private co.elastic.clients.elasticsearch.indices.DeleteIndexResponse
+		_getDeleteIndexResponse(
 			co.elastic.clients.elasticsearch.indices.DeleteIndexRequest
-				elasticsearchDeleteIndexRequest) {
+				elasticsearchDeleteIndexRequest,
+			DeleteIndexRequest deleteIndexRequest) {
 
 		ElasticsearchClient elasticsearchClient =
 			_elasticsearchClientResolver.getElasticsearchClient(

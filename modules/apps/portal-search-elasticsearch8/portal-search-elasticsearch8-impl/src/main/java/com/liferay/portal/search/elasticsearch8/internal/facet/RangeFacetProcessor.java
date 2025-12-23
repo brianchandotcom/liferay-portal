@@ -5,19 +5,18 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.facet;
 
+import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
+import co.elastic.clients.elasticsearch._types.aggregations.AggregationBuilders;
+import co.elastic.clients.elasticsearch._types.aggregations.AggregationRange;
+import co.elastic.clients.elasticsearch._types.aggregations.RangeAggregation;
+import co.elastic.clients.elasticsearch.core.SearchRequest;
+
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.facet.util.RangeParserUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Validator;
-
-import org.elasticsearch.action.search.SearchRequestBuilder;
-import org.elasticsearch.search.aggregations.AggregationBuilder;
-import org.elasticsearch.search.aggregations.AggregationBuilders;
-import org.elasticsearch.search.aggregations.bucket.range.AbstractRangeBuilder;
-import org.elasticsearch.search.aggregations.bucket.range.RangeAggregator;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -35,50 +34,33 @@ import org.osgi.service.component.annotations.Component;
 	service = FacetProcessor.class
 )
 public class RangeFacetProcessor
-	implements FacetProcessor<SearchRequestBuilder> {
+	implements FacetProcessor<SearchRequest.Builder> {
 
 	@Override
-	public AggregationBuilder processFacet(Facet facet) {
+	public Aggregation.Builder.ContainerBuilder processFacet(Facet facet) {
 		FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
 
-		AbstractRangeBuilder abstractRangeBuilder = getRangeBuilder(
-			FacetUtil.getAggregationName(facet));
+		RangeAggregation.Builder rangeAggregationBuilder =
+			AggregationBuilders.range();
 
-		abstractRangeBuilder.field(facetConfiguration.getFieldName());
+		rangeAggregationBuilder.field(facetConfiguration.getFieldName());
 
-		JSONObject jsonObject = facetConfiguration.getData();
+		_addConfigurationRanges(rangeAggregationBuilder, facetConfiguration);
 
-		String format = jsonObject.getString("format");
+		RangeAggregation rangeAggregation = rangeAggregationBuilder.build();
 
-		if (Validator.isNotNull(format)) {
-			abstractRangeBuilder.format(format);
-		}
-
-		_addRanges(facetConfiguration, abstractRangeBuilder);
-
-		if (ListUtil.isEmpty(abstractRangeBuilder.ranges())) {
+		if (ListUtil.isEmpty(rangeAggregation.ranges())) {
 			return null;
 		}
 
-		return abstractRangeBuilder;
+		Aggregation.Builder aggregationBuilder = new Aggregation.Builder();
+
+		return aggregationBuilder.range(rangeAggregation);
 	}
 
-	protected AbstractRangeBuilder getRangeBuilder(String name) {
-		return AggregationBuilders.range(name);
-	}
-
-	private void _addRange(
-		AbstractRangeBuilder abstractRangeBuilder, String range) {
-
-		String[] rangeParts = RangeParserUtil.parserRange(range);
-
-		abstractRangeBuilder.addRange(
-			new RangeAggregator.Range(range, rangeParts[0], rangeParts[1]));
-	}
-
-	private void _addRanges(
-		FacetConfiguration facetConfiguration,
-		AbstractRangeBuilder abstractRangeBuilder) {
+	private void _addConfigurationRanges(
+		RangeAggregation.Builder builder,
+		FacetConfiguration facetConfiguration) {
 
 		JSONObject jsonObject = facetConfiguration.getData();
 
@@ -91,8 +73,22 @@ public class RangeFacetProcessor
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject rangeJSONObject = jsonArray.getJSONObject(i);
 
-			_addRange(abstractRangeBuilder, rangeJSONObject.getString("range"));
+			builder.ranges(
+				_createAggregationRange(rangeJSONObject.getString("range")));
 		}
+	}
+
+	private AggregationRange _createAggregationRange(String range) {
+		String[] rangeParts = RangeParserUtil.parserRange(range);
+
+		return AggregationRange.of(
+			aggregationRange -> aggregationRange.key(
+				range
+			).from(
+				Double.valueOf(rangeParts[0])
+			).to(
+				Double.valueOf(rangeParts[1])
+			));
 	}
 
 }

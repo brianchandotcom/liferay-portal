@@ -5,6 +5,18 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.suggest;
 
+import co.elastic.clients.elasticsearch._types.SuggestMode;
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import co.elastic.clients.elasticsearch._types.query_dsl.QueryVariant;
+import co.elastic.clients.elasticsearch.core.search.DirectGenerator;
+import co.elastic.clients.elasticsearch.core.search.FieldSuggester;
+import co.elastic.clients.elasticsearch.core.search.FieldSuggesterBuilders;
+import co.elastic.clients.elasticsearch.core.search.PhraseSuggestCollate;
+import co.elastic.clients.elasticsearch.core.search.PhraseSuggestCollateQuery;
+import co.elastic.clients.elasticsearch.core.search.PhraseSuggestHighlight;
+import co.elastic.clients.elasticsearch.core.search.StringDistance;
+import co.elastic.clients.elasticsearch.core.search.SuggestSort;
+
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.kernel.search.suggest.CompletionSuggester;
@@ -13,175 +25,159 @@ import com.liferay.portal.kernel.search.suggest.Suggester;
 import com.liferay.portal.kernel.search.suggest.SuggesterTranslator;
 import com.liferay.portal.kernel.search.suggest.SuggesterVisitor;
 import com.liferay.portal.kernel.search.suggest.TermSuggester;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch8.internal.legacy.query.ElasticsearchQueryTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.util.ConversionUtil;
+import com.liferay.portal.search.elasticsearch8.internal.util.JsonpUtil;
+import com.liferay.portal.search.elasticsearch8.internal.util.SetterUtil;
 import com.liferay.portal.search.index.IndexNameBuilder;
 
 import java.util.Set;
-
-import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.search.suggest.SortBy;
-import org.elasticsearch.search.suggest.SuggestBuilders;
-import org.elasticsearch.search.suggest.SuggestionBuilder;
-import org.elasticsearch.search.suggest.completion.CompletionSuggestionBuilder;
-import org.elasticsearch.search.suggest.phrase.DirectCandidateGeneratorBuilder;
-import org.elasticsearch.search.suggest.phrase.PhraseSuggestionBuilder;
-import org.elasticsearch.search.suggest.term.TermSuggestionBuilder;
 
 /**
  * @author Michael C. Han
  */
 public class ElasticsearchSuggesterTranslator
-	implements SuggesterTranslator<SuggestionBuilder>,
-			   SuggesterVisitor<SuggestionBuilder> {
+	implements SuggesterTranslator<FieldSuggester>,
+			   SuggesterVisitor<FieldSuggester> {
 
 	public ElasticsearchSuggesterTranslator(IndexNameBuilder indexNameBuilder) {
 		_queryTranslator = new ElasticsearchQueryTranslator(indexNameBuilder);
 	}
 
 	@Override
-	public SuggestionBuilder translate(
+	public FieldSuggester translate(
 		Suggester suggester, SearchContext searchContext) {
 
 		return suggester.accept(this);
 	}
 
 	@Override
-	public SuggestionBuilder visit(CompletionSuggester completionSuggester) {
-		CompletionSuggestionBuilder completionSuggesterBuilder =
-			SuggestBuilders.completionSuggestion(
-				completionSuggester.getField());
+	public FieldSuggester visit(CompletionSuggester completionSuggester) {
+		co.elastic.clients.elasticsearch.core.search.CompletionSuggester.Builder
+			completionSuggesterBuilder = FieldSuggesterBuilders.completion();
 
-		if (Validator.isNotNull(completionSuggester.getAnalyzer())) {
-			completionSuggesterBuilder.analyzer(
-				completionSuggester.getAnalyzer());
-		}
+		SetterUtil.setNotBlankString(
+			completionSuggesterBuilder::analyzer,
+			completionSuggester.getAnalyzer());
 
-		if (completionSuggester.getShardSize() != null) {
-			completionSuggesterBuilder.shardSize(
-				completionSuggester.getShardSize());
-		}
+		completionSuggesterBuilder.field(completionSuggester.getField());
 
-		if (completionSuggester.getSize() != null) {
-			completionSuggesterBuilder.size(completionSuggester.getSize());
-		}
+		SetterUtil.setNotNullInteger(
+			completionSuggesterBuilder::size, completionSuggester.getSize());
 
-		completionSuggesterBuilder.text(completionSuggester.getValue());
+		FieldSuggester.Builder fieldSuggesterBuilder =
+			new FieldSuggester.Builder();
 
-		return completionSuggesterBuilder;
+		fieldSuggesterBuilder.completion(completionSuggesterBuilder.build());
+		fieldSuggesterBuilder.text(completionSuggester.getValue());
+
+		return fieldSuggesterBuilder.build();
 	}
 
 	@Override
-	public SuggestionBuilder visit(PhraseSuggester phraseSuggester) {
-		PhraseSuggestionBuilder phraseSuggestionBuilder =
-			SuggestBuilders.phraseSuggestion(phraseSuggester.getField());
+	public FieldSuggester visit(PhraseSuggester phraseSuggester) {
+		FieldSuggester.Builder fieldSuggesterBuilder =
+			new FieldSuggester.Builder();
 
-		if (Validator.isNotNull(phraseSuggester.getAnalyzer())) {
-			phraseSuggestionBuilder.analyzer(phraseSuggester.getAnalyzer());
+		co.elastic.clients.elasticsearch.core.search.PhraseSuggester.Builder
+			phraseSuggesterBuilder = FieldSuggesterBuilders.phrase();
+
+		SetterUtil.setNotBlankString(
+			phraseSuggesterBuilder::analyzer, phraseSuggester.getAnalyzer());
+
+		Set<PhraseSuggester.CandidateGenerator> candidateGenerators =
+			phraseSuggester.getCandidateGenerators();
+
+		if (SetUtil.isNotEmpty(candidateGenerators)) {
+			candidateGenerators.forEach(
+				candidateGenerator -> phraseSuggesterBuilder.directGenerator(
+					_translateCandidateGenerator(candidateGenerator)));
 		}
 
-		_translate(
-			phraseSuggester.getCandidateGenerators(), phraseSuggestionBuilder);
-
-		_translate(phraseSuggester.getCollate(), phraseSuggestionBuilder);
-
-		if (phraseSuggester.getConfidence() != null) {
-			phraseSuggestionBuilder.confidence(phraseSuggester.getConfidence());
+		if (phraseSuggester.getCollate() != null) {
+			phraseSuggesterBuilder.collate(
+				_translateCollate(phraseSuggester.getCollate()));
 		}
 
-		if (phraseSuggester.isForceUnigrams() != null) {
-			phraseSuggestionBuilder.forceUnigrams(
-				phraseSuggester.isForceUnigrams());
-		}
+		SetterUtil.setNotNullFloatAsDouble(
+			phraseSuggesterBuilder::confidence,
+			phraseSuggester.getConfidence());
 
-		if (phraseSuggester.getGramSize() != null) {
-			phraseSuggestionBuilder.gramSize(phraseSuggester.getGramSize());
-		}
+		phraseSuggesterBuilder.field(phraseSuggester.getField());
 
-		if (phraseSuggester.getMaxErrors() != null) {
-			phraseSuggestionBuilder.maxErrors(phraseSuggester.getMaxErrors());
-		}
+		SetterUtil.setNotNullBoolean(
+			phraseSuggesterBuilder::forceUnigrams,
+			phraseSuggester.isForceUnigrams());
+		SetterUtil.setNotNullInteger(
+			phraseSuggesterBuilder::gramSize, phraseSuggester.getGramSize());
+		SetterUtil.setNotNullFloatAsDouble(
+			phraseSuggesterBuilder::maxErrors, phraseSuggester.getMaxErrors());
 
 		if (Validator.isNotNull(phraseSuggester.getPostHighlightFilter()) &&
 			Validator.isNotNull(phraseSuggester.getPreHighlightFilter())) {
 
-			phraseSuggestionBuilder.highlight(
-				phraseSuggester.getPreHighlightFilter(),
-				phraseSuggester.getPostHighlightFilter());
+			phraseSuggesterBuilder.highlight(
+				PhraseSuggestHighlight.of(
+					phraseSuggestHighlight -> phraseSuggestHighlight.postTag(
+						phraseSuggester.getPostHighlightFilter()
+					).preTag(
+						phraseSuggester.getPreHighlightFilter()
+					)));
 		}
 
-		if (phraseSuggester.getRealWordErrorLikelihood() != null) {
-			phraseSuggestionBuilder.realWordErrorLikelihood(
-				phraseSuggester.getRealWordErrorLikelihood());
-		}
+		SetterUtil.setNotNullFloatAsDouble(
+			phraseSuggesterBuilder::realWordErrorLikelihood,
+			phraseSuggester.getRealWordErrorLikelihood());
+		SetterUtil.setNotBlankString(
+			phraseSuggesterBuilder::separator, phraseSuggester.getSeparator());
+		SetterUtil.setNotNullInteger(
+			phraseSuggesterBuilder::shardSize, phraseSuggester.getShardSize());
+		SetterUtil.setNotNullInteger(
+			phraseSuggesterBuilder::size, phraseSuggester.getSize());
+		SetterUtil.setNotNullInteger(
+			phraseSuggesterBuilder::tokenLimit,
+			phraseSuggester.getTokenLimit());
 
-		if (phraseSuggester.getSeparator() != null) {
-			phraseSuggestionBuilder.separator(phraseSuggester.getSeparator());
-		}
+		fieldSuggesterBuilder.phrase(phraseSuggesterBuilder.build());
+		fieldSuggesterBuilder.text(phraseSuggester.getValue());
 
-		if (phraseSuggester.getShardSize() != null) {
-			phraseSuggestionBuilder.shardSize(phraseSuggester.getShardSize());
-		}
-
-		if (phraseSuggester.getSize() != null) {
-			phraseSuggestionBuilder.size(phraseSuggester.getSize());
-		}
-
-		if (phraseSuggester.getTokenLimit() != null) {
-			phraseSuggestionBuilder.tokenLimit(phraseSuggester.getTokenLimit());
-		}
-
-		phraseSuggestionBuilder.text(phraseSuggester.getValue());
-
-		return phraseSuggestionBuilder;
+		return fieldSuggesterBuilder.build();
 	}
 
 	@Override
-	public SuggestionBuilder visit(TermSuggester termSuggester) {
-		TermSuggestionBuilder termSuggesterBuilder =
-			SuggestBuilders.termSuggestion(termSuggester.getField());
+	public FieldSuggester visit(TermSuggester termSuggester) {
+		FieldSuggester.Builder fieldSuggesterBuilder =
+			new FieldSuggester.Builder();
 
-		if (Validator.isNotNull(termSuggester.getAnalyzer())) {
-			termSuggesterBuilder.analyzer(termSuggester.getAnalyzer());
-		}
+		co.elastic.clients.elasticsearch.core.search.TermSuggester.Builder
+			termSuggesterBuilder = FieldSuggesterBuilders.term();
 
-		if (termSuggester.getAccuracy() != null) {
-			termSuggesterBuilder.accuracy(termSuggester.getAccuracy());
-		}
+		termSuggesterBuilder.field(termSuggester.getField());
 
-		if (termSuggester.getMaxEdits() != null) {
-			termSuggesterBuilder.maxEdits(termSuggester.getMaxEdits());
-		}
-
-		if (termSuggester.getMaxInspections() != null) {
-			termSuggesterBuilder.maxInspections(
-				termSuggester.getMaxInspections());
-		}
-
-		if (termSuggester.getMaxTermFreq() != null) {
-			termSuggesterBuilder.maxTermFreq(termSuggester.getMaxTermFreq());
-		}
-
-		if (termSuggester.getMinWordLength() != null) {
-			termSuggesterBuilder.minWordLength(
-				termSuggester.getMinWordLength());
-		}
-
-		if (termSuggester.getMinDocFreq() != null) {
-			termSuggesterBuilder.minDocFreq(termSuggester.getMinDocFreq());
-		}
-
-		if (termSuggester.getPrefixLength() != null) {
-			termSuggesterBuilder.prefixLength(termSuggester.getPrefixLength());
-		}
-
-		if (termSuggester.getShardSize() != null) {
-			termSuggesterBuilder.shardSize(termSuggester.getShardSize());
-		}
-
-		if (termSuggester.getSize() != null) {
-			termSuggesterBuilder.size(termSuggester.getSize());
-		}
+		SetterUtil.setNotBlankString(
+			termSuggesterBuilder::analyzer, termSuggester.getAnalyzer());
+		SetterUtil.setNotNullInteger(
+			termSuggesterBuilder::maxEdits, termSuggester.getMaxEdits());
+		SetterUtil.setNotNullInteger(
+			termSuggesterBuilder::maxInspections,
+			termSuggester.getMaxInspections());
+		SetterUtil.setNotNullIntegerAsFloat(
+			termSuggesterBuilder::maxTermFreq, termSuggester.getMaxTermFreq());
+		SetterUtil.setNotNullIntegerAsFloat(
+			termSuggesterBuilder::minDocFreq, termSuggester.getMinDocFreq());
+		SetterUtil.setNotNullInteger(
+			termSuggesterBuilder::minWordLength,
+			termSuggester.getMinWordLength());
+		SetterUtil.setNotNullInteger(
+			termSuggesterBuilder::prefixLength,
+			termSuggester.getPrefixLength());
+		SetterUtil.setNotNullInteger(
+			termSuggesterBuilder::shardSize, termSuggester.getShardSize());
+		SetterUtil.setNotNullInteger(
+			termSuggesterBuilder::size, termSuggester.getSize());
 
 		if (termSuggester.getSort() != null) {
 			termSuggesterBuilder.sort(_translateSort(termSuggester.getSort()));
@@ -189,197 +185,117 @@ public class ElasticsearchSuggesterTranslator
 
 		if (termSuggester.getStringDistance() != null) {
 			termSuggesterBuilder.stringDistance(
-				_translateDistance(termSuggester.getStringDistance()));
+				_translateStringDistance(termSuggester.getStringDistance()));
 		}
 
 		if (termSuggester.getSuggestMode() != null) {
 			termSuggesterBuilder.suggestMode(
-				_translateMode(termSuggester.getSuggestMode()));
+				_translateSuggestMode(termSuggester.getSuggestMode()));
 		}
 
-		termSuggesterBuilder.text(termSuggester.getValue());
+		fieldSuggesterBuilder.term(termSuggesterBuilder.build());
+		fieldSuggesterBuilder.text(termSuggester.getValue());
 
-		return termSuggesterBuilder;
+		return fieldSuggesterBuilder.build();
 	}
 
-	private void _translate(
-		PhraseSuggester.Collate collate,
-		PhraseSuggestionBuilder phraseSuggestionBuilder) {
+	private DirectGenerator _translateCandidateGenerator(
+		PhraseSuggester.CandidateGenerator candidateGenerator) {
 
-		if (collate != null) {
-			QueryBuilder queryBuilder = _queryTranslator.translate(
-				collate.getQuery(), null);
+		DirectGenerator.Builder builder = new DirectGenerator.Builder();
 
-			phraseSuggestionBuilder.collateParams(collate.getParams());
+		builder.field(candidateGenerator.getField());
 
-			if (collate.isPrune() != null) {
-				phraseSuggestionBuilder.collatePrune(collate.isPrune());
-			}
+		SetterUtil.setNotNullInteger(
+			builder::maxEdits, candidateGenerator.getMaxEdits());
+		SetterUtil.setNotNullIntegerAsFloat(
+			builder::maxInspections, candidateGenerator.getMaxInspections());
+		SetterUtil.setNotNullIntegerAsFloat(
+			builder::maxTermFreq, candidateGenerator.getMaxTermFreq());
+		SetterUtil.setNotNullIntegerAsFloat(
+			builder::minDocFreq, candidateGenerator.getMinDocFreq());
+		SetterUtil.setNotNullInteger(
+			builder::minWordLength, candidateGenerator.getMinWordLength());
+		SetterUtil.setNotBlankString(
+			builder::postFilter, candidateGenerator.getPostFilterAnalyzer());
+		SetterUtil.setNotBlankString(
+			builder::preFilter, candidateGenerator.getPreFilterAnalyzer());
+		SetterUtil.setNotNullInteger(
+			builder::prefixLength, candidateGenerator.getPrefixLength());
+		SetterUtil.setNotNullInteger(
+			builder::size, candidateGenerator.getSize());
 
-			phraseSuggestionBuilder.collateQuery(queryBuilder.toString());
+		if (candidateGenerator.getSuggestMode() != null) {
+			builder.suggestMode(
+				_translateSuggestMode(candidateGenerator.getSuggestMode()));
 		}
+
+		return builder.build();
 	}
 
-	private void _translate(
-		Set<PhraseSuggester.CandidateGenerator> candidateGenerators,
-		PhraseSuggestionBuilder phraseSuggestionBuilder) {
+	private PhraseSuggestCollate _translateCollate(
+		PhraseSuggester.Collate collate) {
 
-		for (PhraseSuggester.CandidateGenerator candidateGenerator :
-				candidateGenerators) {
+		PhraseSuggestCollate.Builder builder =
+			new PhraseSuggestCollate.Builder();
 
-			DirectCandidateGeneratorBuilder directCandidateGenerator =
-				new DirectCandidateGeneratorBuilder(
-					candidateGenerator.getField());
-
-			if (candidateGenerator.getAccuracy() != null) {
-				directCandidateGenerator.accuracy(
-					candidateGenerator.getAccuracy());
-			}
-
-			if (candidateGenerator.getMaxEdits() != null) {
-				directCandidateGenerator.maxEdits(
-					candidateGenerator.getMaxEdits());
-			}
-
-			if (candidateGenerator.getMaxInspections() != null) {
-				directCandidateGenerator.maxInspections(
-					candidateGenerator.getMaxInspections());
-			}
-
-			if (candidateGenerator.getMaxTermFreq() != null) {
-				directCandidateGenerator.maxTermFreq(
-					candidateGenerator.getMaxTermFreq());
-			}
-
-			if (candidateGenerator.getMinWordLength() != null) {
-				directCandidateGenerator.minWordLength(
-					candidateGenerator.getMinWordLength());
-			}
-
-			if (candidateGenerator.getMinDocFreq() != null) {
-				directCandidateGenerator.minDocFreq(
-					candidateGenerator.getMinDocFreq());
-			}
-
-			if (candidateGenerator.getPrefixLength() != null) {
-				directCandidateGenerator.prefixLength(
-					candidateGenerator.getPrefixLength());
-			}
-
-			if (Validator.isNotNull(
-					candidateGenerator.getPostFilterAnalyzer())) {
-
-				directCandidateGenerator.postFilter(
-					candidateGenerator.getPostFilterAnalyzer());
-			}
-
-			if (Validator.isNotNull(
-					candidateGenerator.getPreFilterAnalyzer())) {
-
-				directCandidateGenerator.preFilter(
-					candidateGenerator.getPreFilterAnalyzer());
-			}
-
-			if (candidateGenerator.getSize() != null) {
-				directCandidateGenerator.size(candidateGenerator.getSize());
-			}
-
-			if (candidateGenerator.getSort() != null) {
-				directCandidateGenerator.sort(
-					_translate(candidateGenerator.getSort()));
-			}
-
-			if (candidateGenerator.getStringDistance() != null) {
-				directCandidateGenerator.stringDistance(
-					_translate(candidateGenerator.getStringDistance()));
-			}
-
-			if (candidateGenerator.getSuggestMode() != null) {
-				directCandidateGenerator.suggestMode(
-					_translate(candidateGenerator.getSuggestMode()));
-			}
-
-			phraseSuggestionBuilder.addCandidateGenerator(
-				directCandidateGenerator);
+		if (MapUtil.isNotEmpty(collate.getParams())) {
+			builder.params(ConversionUtil.toJsonDataMap(collate.getParams()));
 		}
+
+		SetterUtil.setNotNullBoolean(builder::prune, collate.isPrune());
+
+		builder.query(
+			PhraseSuggestCollateQuery.of(
+				phraseSuggestCollateQuery -> phraseSuggestCollateQuery.source(
+					JsonpUtil.toString(
+						new Query(
+							_queryTranslator.translate(
+								collate.getQuery(), null))))));
+
+		return builder.build();
 	}
 
-	private String _translate(Suggester.Sort sort) {
+	private SuggestSort _translateSort(Suggester.Sort sort) {
 		if (sort == Suggester.Sort.FREQUENCY) {
-			return "frequency";
+			return SuggestSort.Frequency;
 		}
 
-		return "score";
+		return SuggestSort.Score;
 	}
 
-	private String _translate(Suggester.StringDistance stringDistance) {
-		if (stringDistance == Suggester.StringDistance.DAMERAU_LEVENSHTEIN) {
-			return "damerau_levnshtein";
-		}
-		else if (stringDistance == Suggester.StringDistance.JAROWINKLER) {
-			return "jarowinkler";
-		}
-		else if (stringDistance == Suggester.StringDistance.LEVENSTEIN) {
-			return "levenstein";
-		}
-		else if (stringDistance == Suggester.StringDistance.NGRAM) {
-			return "ngram";
-		}
-
-		return "internal";
-	}
-
-	private String _translate(Suggester.SuggestMode suggestMode) {
-		if (suggestMode == Suggester.SuggestMode.ALWAYS) {
-			return "always";
-		}
-		else if (suggestMode == Suggester.SuggestMode.POPULAR) {
-			return "popular";
-		}
-
-		return "missing";
-	}
-
-	private TermSuggestionBuilder.StringDistanceImpl _translateDistance(
+	private StringDistance _translateStringDistance(
 		Suggester.StringDistance stringDistance) {
 
 		if (stringDistance == Suggester.StringDistance.DAMERAU_LEVENSHTEIN) {
-			return TermSuggestionBuilder.StringDistanceImpl.DAMERAU_LEVENSHTEIN;
+			return StringDistance.DamerauLevenshtein;
 		}
 		else if (stringDistance == Suggester.StringDistance.JAROWINKLER) {
-			return TermSuggestionBuilder.StringDistanceImpl.JARO_WINKLER;
+			return StringDistance.JaroWinkler;
 		}
 		else if (stringDistance == Suggester.StringDistance.LEVENSTEIN) {
-			return TermSuggestionBuilder.StringDistanceImpl.LEVENSHTEIN;
+			return StringDistance.Levenshtein;
 		}
 		else if (stringDistance == Suggester.StringDistance.NGRAM) {
-			return TermSuggestionBuilder.StringDistanceImpl.NGRAM;
+			return StringDistance.Ngram;
 		}
 
-		return TermSuggestionBuilder.StringDistanceImpl.INTERNAL;
+		return StringDistance.Internal;
 	}
 
-	private TermSuggestionBuilder.SuggestMode _translateMode(
+	private SuggestMode _translateSuggestMode(
 		Suggester.SuggestMode suggestMode) {
 
 		if (suggestMode == Suggester.SuggestMode.ALWAYS) {
-			return TermSuggestionBuilder.SuggestMode.ALWAYS;
+			return SuggestMode.Always;
 		}
 		else if (suggestMode == Suggester.SuggestMode.POPULAR) {
-			return TermSuggestionBuilder.SuggestMode.POPULAR;
+			return SuggestMode.Popular;
 		}
 
-		return TermSuggestionBuilder.SuggestMode.MISSING;
+		return SuggestMode.Missing;
 	}
 
-	private SortBy _translateSort(Suggester.Sort sort) {
-		if (sort == Suggester.Sort.FREQUENCY) {
-			return SortBy.FREQUENCY;
-		}
-
-		return SortBy.SCORE;
-	}
-
-	private final QueryTranslator<QueryBuilder> _queryTranslator;
+	private final QueryTranslator<QueryVariant> _queryTranslator;
 
 }

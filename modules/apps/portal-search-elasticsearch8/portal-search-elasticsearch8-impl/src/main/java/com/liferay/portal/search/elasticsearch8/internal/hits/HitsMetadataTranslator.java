@@ -5,12 +5,25 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.hits;
 
-import com.liferay.petra.function.transform.TransformUtil;
+import co.elastic.clients.elasticsearch.core.explain.Explanation;
+import co.elastic.clients.elasticsearch.core.search.Hit;
+import co.elastic.clients.elasticsearch.core.search.HitsMetadata;
+import co.elastic.clients.elasticsearch.core.search.TotalHits;
+import co.elastic.clients.json.JsonData;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.document.DocumentBuilderFactory;
-import com.liferay.portal.search.elasticsearch8.internal.document.DocumentFieldsTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.document.FieldsTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.util.ConversionUtil;
+import com.liferay.portal.search.elasticsearch8.internal.util.JsonpUtil;
 import com.liferay.portal.search.geolocation.GeoBuilders;
 import com.liferay.portal.search.highlight.HighlightField;
 import com.liferay.portal.search.highlight.HighlightFieldBuilderFactory;
@@ -22,166 +35,150 @@ import com.liferay.portal.search.hits.SearchHitsBuilder;
 import com.liferay.portal.search.hits.SearchHitsBuilderFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.lucene.search.Explanation;
-import org.apache.lucene.search.TotalHits;
-
-import org.elasticsearch.common.document.DocumentField;
-
 /**
  * @author Michael C. Han
+ * @author Petteri Karttunen
  */
 public class HitsMetadataTranslator {
 
 	public HitsMetadataTranslator(
-		SearchHitBuilderFactory searchHitBuilderFactory,
-		SearchHitsBuilderFactory searchHitsBuilderFactory,
-		DocumentBuilderFactory documentBuilderFactory,
+		DocumentBuilderFactory documentBuilderFactory, GeoBuilders geoBuilders,
 		HighlightFieldBuilderFactory highlightFieldBuilderFactory,
-		GeoBuilders geoBuilders) {
+		SearchHitBuilderFactory searchHitBuilderFactory,
+		SearchHitsBuilderFactory searchHitsBuilderFactory) {
 
+		_documentBuilderFactory = documentBuilderFactory;
+		_geoBuilders = geoBuilders;
+		_highlightFieldBuilderFactory = highlightFieldBuilderFactory;
 		_searchHitBuilderFactory = searchHitBuilderFactory;
 		_searchHitsBuilderFactory = searchHitsBuilderFactory;
-		_documentBuilderFactory = documentBuilderFactory;
-		_highlightFieldBuilderFactory = highlightFieldBuilderFactory;
-		_geoBuilders = geoBuilders;
+	}
+
+	public SearchHits translate(HitsMetadata<JsonData> hitsMetadata) {
+		return translate(null, hitsMetadata);
 	}
 
 	public SearchHits translate(
-		org.elasticsearch.search.SearchHits elasticsearchSearchHits) {
-
-		return translate(elasticsearchSearchHits, null);
-	}
-
-	public SearchHits translate(
-		org.elasticsearch.search.SearchHits elasticsearchSearchHits,
-		String alternateUidFieldName) {
+		String alternateUidFieldName, HitsMetadata<JsonData> hitsMetadata) {
 
 		SearchHitsBuilder searchHitsBuilder =
 			_searchHitsBuilderFactory.getSearchHitsBuilder();
 
-		TotalHits totalHits = elasticsearchSearchHits.getTotalHits();
+		List<Hit<JsonData>> hits = hitsMetadata.hits();
 
-		org.elasticsearch.search.SearchHit[] elasticsearchSearchHitArray =
-			elasticsearchSearchHits.getHits();
+		List<SearchHit> searchHits = new ArrayList<>(hits.size());
 
-		List<SearchHit> searchHits = new ArrayList<>(
-			elasticsearchSearchHitArray.length);
-
-		for (org.elasticsearch.search.SearchHit elasticsearchSearchHit :
-				elasticsearchSearchHitArray) {
-
-			searchHits.add(
-				translate(elasticsearchSearchHit, alternateUidFieldName));
+		for (Hit<JsonData> hit : hits) {
+			searchHits.add(translate(alternateUidFieldName, hit));
 		}
+
+		TotalHits totalHits = hitsMetadata.total();
 
 		return searchHitsBuilder.addSearchHits(
 			searchHits
 		).maxScore(
-			elasticsearchSearchHits.getMaxScore()
+			ConversionUtil.toFloat(hitsMetadata.maxScore(), 0.0F)
 		).totalHits(
-			totalHits.value
+			totalHits.value()
 		).build();
 	}
 
 	protected SearchHit translate(
-		org.elasticsearch.search.SearchHit elasticsearchSearchHit,
-		String alternateUidFieldName) {
+		String alternateUidFieldName, Hit<JsonData> hit) {
 
 		SearchHitBuilder searchHitBuilder =
 			_searchHitBuilderFactory.getSearchHitBuilder();
 
 		return searchHitBuilder.addHighlightFields(
-			_translateHighlightFields(elasticsearchSearchHit)
+			_translateHighlightFields(hit.highlight())
 		).addSources(
-			elasticsearchSearchHit.getSourceAsMap()
+			_translateSource(hit.source())
 		).document(
-			_translateDocument(elasticsearchSearchHit, alternateUidFieldName)
+			_translateDocument(alternateUidFieldName, hit)
 		).explanation(
-			_getExplanationString(elasticsearchSearchHit)
+			_getExplanationString(hit)
 		).id(
-			elasticsearchSearchHit.getId()
+			hit.id()
 		).matchedQueries(
-			elasticsearchSearchHit.getMatchedQueries()
+			ArrayUtil.toStringArray(hit.matchedQueries())
 		).score(
-			elasticsearchSearchHit.getScore()
+			ConversionUtil.toFloat(hit.score(), 0.0F)
 		).sortValues(
-			elasticsearchSearchHit.getSortValues()
+			ArrayUtil.toStringArray(hit.sort())
 		).version(
-			elasticsearchSearchHit.getVersion()
+			GetterUtil.getLong(hit.version())
 		).build();
 	}
 
-	private String _getExplanationString(
-		org.elasticsearch.search.SearchHit elasticsearchSearchHit) {
-
-		Explanation explanation = elasticsearchSearchHit.getExplanation();
+	private String _getExplanationString(Hit<JsonData> hit) {
+		Explanation explanation = hit.explanation();
 
 		if (explanation != null) {
-			return explanation.toString();
+			return JsonpUtil.toString(explanation);
 		}
 
 		return StringPool.BLANK;
 	}
 
 	private Document _translateDocument(
-		org.elasticsearch.search.SearchHit elasticsearchSearchHit,
-		String alternateUidFieldName) {
-
-		DocumentFieldsTranslator documentFieldsTranslator =
-			new DocumentFieldsTranslator(_geoBuilders);
+		String alternateUidFieldName, Hit<JsonData> hit) {
 
 		DocumentBuilder documentBuilder = _documentBuilderFactory.builder();
 
-		Map<String, Object> documentSourceMap =
-			elasticsearchSearchHit.getSourceAsMap();
+		FieldsTranslator fieldsTranslator = new FieldsTranslator(_geoBuilders);
 
-		documentFieldsTranslator.translate(documentBuilder, documentSourceMap);
+		fieldsTranslator.translateSource(documentBuilder, hit.source());
 
-		Map<String, DocumentField> documentFieldsMap =
-			elasticsearchSearchHit.getFields();
+		Map<String, JsonData> jsonDatas = hit.fields();
 
-		documentFieldsTranslator.translate(documentFieldsMap, documentBuilder);
+		fieldsTranslator.translateFields(documentBuilder, jsonDatas);
 
-		documentFieldsTranslator.populateAlternateUID(
-			documentFieldsMap, documentBuilder, alternateUidFieldName);
+		fieldsTranslator.populateAlternateUID(
+			alternateUidFieldName, documentBuilder, jsonDatas);
 
 		return documentBuilder.build();
 	}
 
-	private HighlightField _translateHighlightField(
-		org.elasticsearch.search.fetch.subphase.highlight.HighlightField
-			elasticsearchHighlightField) {
-
-		return _highlightFieldBuilderFactory.builder(
-		).fragments(
-			TransformUtil.transformToList(
-				elasticsearchHighlightField.getFragments(),
-				text -> text.toString())
-		).name(
-			elasticsearchHighlightField.getName()
-		).build();
-	}
-
 	private List<HighlightField> _translateHighlightFields(
-		org.elasticsearch.search.SearchHit elasticsearchSearchHit) {
-
-		Map
-			<String,
-			 org.elasticsearch.search.fetch.subphase.highlight.HighlightField>
-				map = elasticsearchSearchHit.getHighlightFields();
+		Map<String, List<String>> highlight) {
 
 		List<HighlightField> highlightFields = new ArrayList<>();
 
-		for (org.elasticsearch.search.fetch.subphase.highlight.HighlightField
-				highlightField : map.values()) {
-
-			highlightFields.add(_translateHighlightField(highlightField));
+		for (Map.Entry<String, List<String>> entry : highlight.entrySet()) {
+			highlightFields.add(
+				_highlightFieldBuilderFactory.builder(
+				).fragments(
+					entry.getValue()
+				).name(
+					entry.getKey()
+				).build());
 		}
 
 		return highlightFields;
+	}
+
+	private Map<String, Object> _translateSource(JsonData jsonData) {
+		if (jsonData == null) {
+			return Collections.emptyMap();
+		}
+
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+
+			TypeReference<HashMap<String, Object>> typeReference =
+				new TypeReference<HashMap<String, Object>>() {
+				};
+
+			return objectMapper.readValue(jsonData.toString(), typeReference);
+		}
+		catch (JsonProcessingException jsonProcessingException) {
+			throw new RuntimeException(jsonProcessingException);
+		}
 	}
 
 	private final DocumentBuilderFactory _documentBuilderFactory;

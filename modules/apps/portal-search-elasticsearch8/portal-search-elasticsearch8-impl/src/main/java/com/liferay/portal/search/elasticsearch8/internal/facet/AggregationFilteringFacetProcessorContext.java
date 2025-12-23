@@ -5,14 +5,26 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.facet;
 
+import co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder;
+import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.ChildScoreMode;
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import co.elastic.clients.elasticsearch._types.query_dsl.QueryBuilders;
+import co.elastic.clients.elasticsearch._types.query_dsl.RangeQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.TermsQueryField;
+import co.elastic.clients.elasticsearch._types.query_dsl.UntypedRangeQuery;
+import co.elastic.clients.json.JsonData;
+
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.RangeFacet;
 import com.liferay.portal.kernel.search.facet.util.RangeParserUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.bucket.DateRangeAggregation;
 import com.liferay.portal.search.aggregation.bucket.RangeAggregation;
+import com.liferay.portal.search.elasticsearch8.internal.util.ConversionUtil;
 import com.liferay.portal.search.facet.nested.NestedFacet;
 
 import java.util.ArrayList;
@@ -20,15 +32,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.lucene.search.join.ScoreMode;
-
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.query.RangeQueryBuilder;
-import org.elasticsearch.search.aggregations.AggregationBuilder;
-import org.elasticsearch.search.aggregations.bucket.filter.FilterAggregationBuilder;
 
 /**
  * @author Bryan Engler
@@ -39,36 +42,34 @@ public class AggregationFilteringFacetProcessorContext
 
 	public static FacetProcessorContext newInstance(Collection<Facet> facets) {
 		return new AggregationFilteringFacetProcessorContext(
-			_getSelectionFiltersMap(facets));
+			_getQueriesMap(facets));
 	}
 
 	@Override
-	public AggregationBuilder postProcessAggregationBuilder(
-		AggregationBuilder aggregationBuilder) {
+	public Builder.ContainerBuilder postProcessAggregationBuilder(
+		Builder.ContainerBuilder containerBuilder, String facetName) {
 
-		String aggregationName = aggregationBuilder.getName();
+		Builder.ContainerBuilder selectionFilterContainerBuilder =
+			_getFacetSelectionFilterContainerBuilder(facetName);
 
-		AggregationBuilder superAggregationBuilder =
-			_getSuperAggregationBuilder(aggregationName);
-
-		if (superAggregationBuilder != null) {
-			return superAggregationBuilder.subAggregation(aggregationBuilder);
+		if (selectionFilterContainerBuilder != null) {
+			return selectionFilterContainerBuilder.aggregations(
+				facetName, containerBuilder.build());
 		}
 
-		return aggregationBuilder;
+		return containerBuilder;
 	}
 
-	private static void _addNestedFacetChildAggregationFilters(
-		BoolQueryBuilder boolQueryBuilder, String fieldName,
-		NestedFacet nestedFacet) {
+	private static void _addNestedFacetChildAggregationFilterQueries(
+		BoolQuery.Builder builder, String fieldName, NestedFacet nestedFacet) {
 
 		if (nestedFacet.getChildAggregation() instanceof DateRangeAggregation) {
 			for (String value : nestedFacet.getSelections()) {
 				DateRangeAggregation dateRangeAggregation =
 					(DateRangeAggregation)nestedFacet.getChildAggregation();
 
-				boolQueryBuilder.must(
-					_rangeQuery(
+				builder.must(
+					_createRangeQuery(
 						fieldName, dateRangeAggregation.getFormat(),
 						RangeParserUtil.parserRange(value)));
 			}
@@ -80,8 +81,8 @@ public class AggregationFilteringFacetProcessorContext
 				RangeAggregation rangeAggregation =
 					(RangeAggregation)nestedFacet.getChildAggregation();
 
-				boolQueryBuilder.must(
-					_rangeQuery(
+				builder.must(
+					_createRangeQuery(
 						fieldName, rangeAggregation.getFormat(),
 						RangeParserUtil.parserRange(value)));
 			}
@@ -97,58 +98,110 @@ public class AggregationFilteringFacetProcessorContext
 		}
 	}
 
-	private static List<QueryBuilder> _getSelectionFilters(
+	private static Query _createRangeQuery(
+		String fieldName, String format, String[] rangeParts) {
+
+		RangeQuery.Builder builder = new RangeQuery.Builder();
+
+		UntypedRangeQuery.Builder untypedRangeQueryBuilder =
+			new UntypedRangeQuery.Builder();
+
+		untypedRangeQueryBuilder.field(fieldName);
+		untypedRangeQueryBuilder.gte(JsonData.of(rangeParts[0]));
+		untypedRangeQueryBuilder.lte(JsonData.of(rangeParts[1]));
+
+		if (!Validator.isBlank(format)) {
+			untypedRangeQueryBuilder.format(format);
+		}
+
+		builder.untyped(untypedRangeQueryBuilder.build());
+
+		return new Query(builder.build());
+	}
+
+	private static List<Query> _getFacetSelectionFilterQueries(
 		com.liferay.portal.search.facet.Facet facet) {
 
-		List<QueryBuilder> queryBuilders = new ArrayList<>();
+		List<Query> queries = new ArrayList<>();
 
 		String fieldName = facet.getFieldName();
 
 		if (facet instanceof NestedFacet) {
 			NestedFacet nestedFacet = (NestedFacet)facet;
 
-			BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+			BoolQuery.Builder builder = QueryBuilders.bool();
 
 			if (Validator.isNotNull(nestedFacet.getFilterField())) {
-				boolQueryBuilder.must(
-					QueryBuilders.termsQuery(
-						nestedFacet.getFilterField(),
-						nestedFacet.getFilterValue()));
+				builder.must(
+					new Query(
+						QueryBuilders.terms(
+						).field(
+							nestedFacet.getFilterField()
+						).terms(
+							TermsQueryField.of(
+								termsQueryField -> termsQueryField.value(
+									ConversionUtil.toFieldValues(
+										nestedFacet.getFilterValue())))
+						).build()));
 			}
 
 			if (nestedFacet.getChildAggregation() != null) {
-				_addNestedFacetChildAggregationFilters(
-					boolQueryBuilder, fieldName, nestedFacet);
+				_addNestedFacetChildAggregationFilterQueries(
+					builder, fieldName, nestedFacet);
 			}
 			else {
-				boolQueryBuilder.must(
-					QueryBuilders.termsQuery(
-						facet.getFieldName(), facet.getSelections()));
+				builder.must(
+					new Query(
+						QueryBuilders.terms(
+						).field(
+							fieldName
+						).terms(
+							TermsQueryField.of(
+								termsQueryField -> termsQueryField.value(
+									ConversionUtil.toFieldValues(
+										facet.getSelections())))
+						).build()));
 			}
 
-			queryBuilders.add(
-				QueryBuilders.nestedQuery(
-					nestedFacet.getPath(), boolQueryBuilder, ScoreMode.Total));
+			queries.add(
+				new Query(
+					QueryBuilders.nested(
+					).path(
+						nestedFacet.getPath()
+					).query(
+						new Query(builder.build())
+					).scoreMode(
+						ChildScoreMode.Sum
+					).build()));
 		}
 		else if (facet instanceof RangeFacet) {
 			for (String value : facet.getSelections()) {
-				queryBuilders.add(
-					_rangeQuery(
+				queries.add(
+					_createRangeQuery(
 						fieldName, null, RangeParserUtil.parserRange(value)));
 			}
 		}
 		else {
-			queryBuilders.add(
-				QueryBuilders.termsQuery(fieldName, facet.getSelections()));
+			queries.add(
+				new Query(
+					QueryBuilders.terms(
+					).field(
+						fieldName
+					).terms(
+						TermsQueryField.of(
+							termsQueryField -> termsQueryField.value(
+								ConversionUtil.toFieldValues(
+									facet.getSelections())))
+					).build()));
 		}
 
-		return queryBuilders;
+		return queries;
 	}
 
-	private static Map<String, List<QueryBuilder>> _getSelectionFiltersMap(
+	private static Map<String, List<Query>> _getQueriesMap(
 		Collection<Facet> facets) {
 
-		Map<String, List<QueryBuilder>> map = new HashMap<>();
+		Map<String, List<Query>> queriesMap = new HashMap<>();
 
 		for (Facet facet : facets) {
 			if ((facet instanceof com.liferay.portal.search.facet.Facet) &&
@@ -158,89 +211,73 @@ public class AggregationFilteringFacetProcessorContext
 					(com.liferay.portal.search.facet.Facet)facet;
 
 				if (ArrayUtil.isNotEmpty(osgiFacet.getSelections())) {
-					map.put(
+					queriesMap.put(
 						osgiFacet.getAggregationName(),
-						_getSelectionFilters(osgiFacet));
+						_getFacetSelectionFilterQueries(osgiFacet));
 				}
 			}
 		}
 
-		return map;
-	}
-
-	private static QueryBuilder _rangeQuery(
-		String fieldName, String format, String[] rangeParts) {
-
-		RangeQueryBuilder rangeQueryBuilder = QueryBuilders.rangeQuery(
-			fieldName);
-
-		if (!Validator.isBlank(format)) {
-			rangeQueryBuilder.format(format);
-		}
-
-		rangeQueryBuilder.from(rangeParts[0]);
-		rangeQueryBuilder.includeLower(true);
-		rangeQueryBuilder.includeUpper(true);
-		rangeQueryBuilder.to(rangeParts[1]);
-
-		return rangeQueryBuilder;
+		return queriesMap;
 	}
 
 	private AggregationFilteringFacetProcessorContext(
-		Map<String, List<QueryBuilder>> selectionFiltersMap) {
+		Map<String, List<Query>> queriesMap) {
 
-		_selectionFiltersMap = selectionFiltersMap;
+		_queriesMap = queriesMap;
 	}
 
-	private BoolQueryBuilder _getSelectionFiltersOfOthersAsBoolQueryBuilder(
+	private Builder.ContainerBuilder _getFacetSelectionFilterContainerBuilder(
 		String aggregationName) {
 
-		BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+		if (_queriesMap.isEmpty()) {
+			return null;
+		}
 
-		for (Map.Entry<String, List<QueryBuilder>> entry :
-				_selectionFiltersMap.entrySet()) {
+		BoolQuery boolQuery = _getRelatedSelectionsFilterQuery(aggregationName);
 
+		if (ListUtil.isEmpty(boolQuery.must()) &&
+			ListUtil.isEmpty(boolQuery.mustNot()) &&
+			ListUtil.isEmpty(boolQuery.should())) {
+
+			return null;
+		}
+
+		Builder builder = new Builder();
+
+		return builder.filter(new Query(boolQuery));
+	}
+
+	private BoolQuery _getRelatedSelectionsFilterQuery(String aggregationName) {
+		BoolQuery.Builder boolQueryBuilder = QueryBuilders.bool();
+
+		for (Map.Entry<String, List<Query>> entry : _queriesMap.entrySet()) {
 			String filterAggregationName = entry.getKey();
 
-			if (!filterAggregationName.equals(aggregationName)) {
-				List<QueryBuilder> queryBuilders = entry.getValue();
+			if (filterAggregationName.equals(aggregationName)) {
+				continue;
+			}
 
-				if (queryBuilders.size() == 1) {
-					boolQueryBuilder.must(queryBuilders.get(0));
+			List<Query> queries = entry.getValue();
+
+			if (queries.size() == 1) {
+				boolQueryBuilder.must(queries.get(0));
+			}
+			else if (queries.size() > 1) {
+				BoolQuery.Builder filterBoolQueryBuilder = QueryBuilders.bool();
+
+				for (Query query : queries) {
+					filterBoolQueryBuilder.should(query);
 				}
-				else if (queryBuilders.size() > 1) {
-					BoolQueryBuilder queryBuildersBoolQueryBuilder =
-						QueryBuilders.boolQuery();
 
-					for (QueryBuilder queryBuilder : queryBuilders) {
-						queryBuildersBoolQueryBuilder.should(queryBuilder);
-					}
-
-					boolQueryBuilder.must(queryBuildersBoolQueryBuilder);
-				}
+				boolQueryBuilder.must(
+					new Query(filterBoolQueryBuilder.build()));
 			}
 		}
 
-		return boolQueryBuilder;
+		return boolQueryBuilder.build();
 	}
 
-	private AggregationBuilder _getSuperAggregationBuilder(
-		String aggregationName) {
-
-		if (_selectionFiltersMap.isEmpty()) {
-			return null;
-		}
-
-		BoolQueryBuilder boolQueryBuilder =
-			_getSelectionFiltersOfOthersAsBoolQueryBuilder(aggregationName);
-
-		if (!boolQueryBuilder.hasClauses()) {
-			return null;
-		}
-
-		return new FilterAggregationBuilder(aggregationName, boolQueryBuilder);
-	}
-
-	private final Map<String, List<QueryBuilder>> _selectionFiltersMap;
+	private final Map<String, List<Query>> _queriesMap;
 
 }

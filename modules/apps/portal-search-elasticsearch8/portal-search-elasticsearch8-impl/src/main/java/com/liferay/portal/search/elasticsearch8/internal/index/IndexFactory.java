@@ -5,6 +5,9 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.index;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.indices.ElasticsearchIndicesClient;
+
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -18,9 +21,6 @@ import com.liferay.portal.search.elasticsearch8.internal.connection.Elasticsearc
 import com.liferay.portal.search.elasticsearch8.internal.index.util.IndexFactoryCompanyIdRegistryUtil;
 
 import java.io.Closeable;
-
-import org.elasticsearch.client.IndicesClient;
-import org.elasticsearch.client.RestHighLevelClient;
 
 /**
  * @author Michael C. Han
@@ -57,7 +57,9 @@ public class IndexFactory
 			this, elasticsearchConfigurationObserver);
 	}
 
-	public boolean deleteIndex(long companyId, IndicesClient indicesClient) {
+	public boolean deleteIndex(
+		long companyId, ElasticsearchIndicesClient elasticsearchIndicesClient) {
+
 		String indexName = _companyIndexHelper.getIndexName(companyId);
 
 		Company company = _companyLocalService.fetchCompany(companyId);
@@ -68,12 +70,14 @@ public class IndexFactory
 			indexName = company.getIndexNameCurrent();
 		}
 
-		if (!_companyIndexHelper.hasIndex(indexName, indicesClient)) {
+		if (!_companyIndexHelper.hasIndex(
+				elasticsearchIndicesClient, indexName)) {
+
 			return false;
 		}
 
 		_companyIndexHelper.deleteIndex(
-			companyId, indexName, indicesClient, true);
+			companyId, elasticsearchIndicesClient, indexName, true);
 
 		return true;
 	}
@@ -84,22 +88,25 @@ public class IndexFactory
 	}
 
 	public boolean initializeIndex(
-		long companyId, IndicesClient indicesClient) {
+		long companyId, ElasticsearchIndicesClient elasticsearchIndicesClient) {
 
 		String indexName = _companyIndexHelper.getIndexName(companyId);
 
-		if (_companyIndexHelper.hasIndex(indexName, indicesClient)) {
+		if (_companyIndexHelper.hasIndex(
+				elasticsearchIndicesClient, indexName)) {
+
 			if ((companyId != CompanyConstants.SYSTEM) &&
 				FeatureFlagManagerUtil.isEnabled(companyId, "LPD-7822")) {
 
 				_companyIndexHelper.updateIndex(
-					companyId, indexName, indicesClient);
+					companyId, elasticsearchIndicesClient, indexName);
 			}
 
 			return false;
 		}
 
-		_companyIndexHelper.createIndex(companyId, indexName, indicesClient);
+		_companyIndexHelper.createIndex(
+			companyId, elasticsearchIndicesClient, indexName);
 
 		return true;
 	}
@@ -125,10 +132,10 @@ public class IndexFactory
 
 	private void _initializeIndex(long companyId) {
 		try {
-			RestHighLevelClient restHighLevelClient =
-				_elasticsearchConnectionManager.getRestHighLevelClient();
+			ElasticsearchClient elasticsearchClient =
+				_elasticsearchConnectionManager.getElasticsearchClient();
 
-			initializeIndex(companyId, restHighLevelClient.indices());
+			initializeIndex(companyId, elasticsearchClient.indices());
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

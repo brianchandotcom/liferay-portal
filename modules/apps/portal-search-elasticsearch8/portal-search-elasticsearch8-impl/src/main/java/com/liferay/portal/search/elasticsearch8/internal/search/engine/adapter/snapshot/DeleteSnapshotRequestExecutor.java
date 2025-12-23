@@ -5,16 +5,14 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.snapshot;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.snapshot.ElasticsearchSnapshotClient;
+
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.snapshot.DeleteSnapshotRequest;
 import com.liferay.portal.search.engine.adapter.snapshot.DeleteSnapshotResponse;
 
 import java.io.IOException;
-
-import org.elasticsearch.action.support.master.AcknowledgedResponse;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.client.SnapshotClient;
 
 /**
  * @author Michael C. Han
@@ -30,49 +28,46 @@ public class DeleteSnapshotRequestExecutor {
 	public DeleteSnapshotResponse execute(
 		DeleteSnapshotRequest deleteSnapshotRequest) {
 
-		org.elasticsearch.action.admin.cluster.snapshots.delete.
-			DeleteSnapshotRequest elasticsearchDeleteSnapshotRequest =
-				createDeleteSnapshotRequest(deleteSnapshotRequest);
-
-		AcknowledgedResponse acknowledgedResponse = getAcknowledgedResponse(
-			elasticsearchDeleteSnapshotRequest, deleteSnapshotRequest);
+		co.elastic.clients.elasticsearch.snapshot.DeleteSnapshotResponse
+			deleteSnapshotResponse = _getDeleteSnapshotResponse(
+				deleteSnapshotRequest,
+				createDeleteSnapshotRequest(deleteSnapshotRequest));
 
 		return new DeleteSnapshotResponse(
-			acknowledgedResponse.isAcknowledged());
+			deleteSnapshotResponse.acknowledged());
 	}
 
-	protected org.elasticsearch.action.admin.cluster.snapshots.delete.
-		DeleteSnapshotRequest createDeleteSnapshotRequest(
+	protected co.elastic.clients.elasticsearch.snapshot.DeleteSnapshotRequest
+		createDeleteSnapshotRequest(
 			DeleteSnapshotRequest deleteSnapshotRequest) {
 
-		org.elasticsearch.action.admin.cluster.snapshots.delete.
-			DeleteSnapshotRequest elasticsearchDeleteSnapshotRequest =
-				new org.elasticsearch.action.admin.cluster.snapshots.delete.
-					DeleteSnapshotRequest();
-
-		elasticsearchDeleteSnapshotRequest.repository(
-			deleteSnapshotRequest.getRepositoryName());
-		elasticsearchDeleteSnapshotRequest.snapshots(
-			deleteSnapshotRequest.getSnapshotName());
-
-		return elasticsearchDeleteSnapshotRequest;
+		return co.elastic.clients.elasticsearch.snapshot.DeleteSnapshotRequest.
+			of(
+				elasticsearchDeleteSnapshotRequest ->
+					elasticsearchDeleteSnapshotRequest.repository(
+						deleteSnapshotRequest.getRepositoryName()
+					).snapshot(
+						deleteSnapshotRequest.getSnapshotName()
+					));
 	}
 
-	protected AcknowledgedResponse getAcknowledgedResponse(
-		org.elasticsearch.action.admin.cluster.snapshots.delete.
-			DeleteSnapshotRequest elasticsearchDeleteSnapshotRequest,
-		DeleteSnapshotRequest deleteSnapshotRequest) {
+	private co.elastic.clients.elasticsearch.snapshot.DeleteSnapshotResponse
+		_getDeleteSnapshotResponse(
+			DeleteSnapshotRequest deleteSnapshotRequest,
+			co.elastic.clients.elasticsearch.snapshot.DeleteSnapshotRequest
+				elasticsearchDeleteSnapshotRequest) {
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
 				deleteSnapshotRequest.getConnectionId(),
 				deleteSnapshotRequest.isPreferLocalCluster());
 
-		SnapshotClient snapshotClient = restHighLevelClient.snapshot();
+		ElasticsearchSnapshotClient elasticsearchSnapshotClient =
+			elasticsearchClient.snapshot();
 
 		try {
-			return snapshotClient.delete(
-				elasticsearchDeleteSnapshotRequest, RequestOptions.DEFAULT);
+			return elasticsearchSnapshotClient.delete(
+				elasticsearchDeleteSnapshotRequest);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

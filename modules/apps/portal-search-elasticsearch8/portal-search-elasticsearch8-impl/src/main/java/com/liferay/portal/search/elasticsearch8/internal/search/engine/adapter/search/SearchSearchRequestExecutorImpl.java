@@ -5,6 +5,15 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.search;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.Time;
+import co.elastic.clients.elasticsearch._types.TimeUnit;
+import co.elastic.clients.elasticsearch.core.ScrollRequest;
+import co.elastic.clients.elasticsearch.core.ScrollResponse;
+import co.elastic.clients.elasticsearch.core.SearchRequest;
+import co.elastic.clients.elasticsearch.core.SearchResponse;
+import co.elastic.clients.json.JsonData;
+
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -14,14 +23,6 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 
 import java.io.IOException;
-
-import org.elasticsearch.action.search.SearchRequest;
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.action.search.SearchScrollRequest;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.core.TimeValue;
-import org.elasticsearch.search.builder.SearchSourceBuilder;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,20 +38,11 @@ public class SearchSearchRequestExecutorImpl
 	public SearchSearchResponse execute(
 		SearchSearchRequest searchSearchRequest) {
 
-		SearchRequest searchRequest = new SearchRequest();
-
-		if (searchSearchRequest.getPointInTime() == null) {
-			searchRequest.indices(searchSearchRequest.getIndexNames());
-		}
-
-		if (searchSearchRequest.isRequestCache()) {
-			searchRequest.requestCache(searchSearchRequest.isRequestCache());
-		}
-
-		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+		SearchRequest.Builder searchRequestBuilder =
+			new SearchRequest.Builder();
 
 		_searchSearchRequestAssembler.assemble(
-			searchSourceBuilder, searchSearchRequest, searchRequest);
+			searchRequestBuilder, searchSearchRequest);
 
 		String indexNames = ArrayUtil.toString(
 			searchSearchRequest.getIndexNames(), "");
@@ -63,7 +55,7 @@ public class SearchSearchRequestExecutorImpl
 		}
 
 		String searchRequestString = DebugStringsUtil.getSearchRequestString(
-			searchSourceBuilder);
+			searchRequestBuilder);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -72,20 +64,20 @@ public class SearchSearchRequestExecutorImpl
 					searchRequestString));
 		}
 
-		SearchResponse searchResponse = null;
+		SearchResponse<JsonData> searchResponse = null;
 
 		if (searchSearchRequest.getScrollId() != null) {
-			searchResponse = _getScrollSearchResponse(searchSearchRequest);
+			_getScrollResponse(searchSearchRequest);
 		}
 		else {
 			searchResponse = _getSearchResponse(
-				searchRequest, searchSearchRequest);
+				searchRequestBuilder.build(), searchSearchRequest);
 		}
 
 		SearchSearchResponse searchSearchResponse = new SearchSearchResponse();
 
 		_searchSearchResponseAssembler.assemble(
-			searchRequestString, searchResponse, searchSearchRequest,
+			searchResponse, searchRequestString, searchSearchRequest,
 			searchSearchResponse);
 
 		if (_log.isDebugEnabled()) {
@@ -98,26 +90,33 @@ public class SearchSearchRequestExecutorImpl
 		return searchSearchResponse;
 	}
 
-	private SearchResponse _getScrollSearchResponse(
+	private ScrollResponse<JsonData> _getScrollResponse(
 		SearchSearchRequest searchSearchRequest) {
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
 				searchSearchRequest.getConnectionId(),
 				searchSearchRequest.isPreferLocalCluster());
 
-		SearchScrollRequest searchScrollRequest = new SearchScrollRequest(
-			searchSearchRequest.getScrollId());
+		ScrollRequest.Builder scrollRequestBuilder =
+			new ScrollRequest.Builder();
 
 		if (searchSearchRequest.getScrollKeepAliveMinutes() > 0) {
-			searchScrollRequest.scroll(
-				TimeValue.timeValueMinutes(
-					searchSearchRequest.getScrollKeepAliveMinutes()));
+			String scrollKeepAliveMinutes = String.valueOf(
+				searchSearchRequest.getScrollKeepAliveMinutes());
+
+			scrollRequestBuilder.scroll(
+				Time.of(
+					time -> time.time(
+						scrollKeepAliveMinutes +
+							TimeUnit.Minutes.jsonValue())));
 		}
 
+		scrollRequestBuilder.scrollId(searchSearchRequest.getScrollId());
+
 		try {
-			return restHighLevelClient.scroll(
-				searchScrollRequest, RequestOptions.DEFAULT);
+			return elasticsearchClient.scroll(
+				scrollRequestBuilder.build(), JsonData.class);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -127,14 +126,13 @@ public class SearchSearchRequestExecutorImpl
 	private SearchResponse _getSearchResponse(
 		SearchRequest searchRequest, SearchSearchRequest searchSearchRequest) {
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
 				searchSearchRequest.getConnectionId(),
 				searchSearchRequest.isPreferLocalCluster());
 
 		try {
-			return restHighLevelClient.search(
-				searchRequest, RequestOptions.DEFAULT);
+			return elasticsearchClient.search(searchRequest);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

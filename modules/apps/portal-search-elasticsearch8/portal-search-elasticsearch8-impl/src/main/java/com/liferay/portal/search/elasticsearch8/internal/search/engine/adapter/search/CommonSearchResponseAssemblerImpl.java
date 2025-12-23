@@ -5,11 +5,20 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.search;
 
+import co.elastic.clients.elasticsearch._types.aggregations.Aggregate;
+import co.elastic.clients.elasticsearch.core.search.Profile;
+import co.elastic.clients.elasticsearch.core.search.ResponseBody;
+import co.elastic.clients.elasticsearch.core.search.SearchProfile;
+import co.elastic.clients.elasticsearch.core.search.ShardProfile;
+import co.elastic.clients.json.JsonData;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.elasticsearch8.internal.stats.StatsTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.util.JsonpUtil;
+import com.liferay.portal.search.elasticsearch8.internal.util.SetterUtil;
 import com.liferay.portal.search.engine.adapter.search.BaseSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.BaseSearchResponse;
 import com.liferay.portal.search.stats.StatsRequest;
@@ -20,18 +29,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.common.Strings;
-import org.elasticsearch.core.TimeValue;
-import org.elasticsearch.search.aggregations.Aggregation;
-import org.elasticsearch.search.aggregations.Aggregations;
-import org.elasticsearch.search.profile.SearchProfileShardResult;
-import org.elasticsearch.search.profile.query.QueryProfileShardResult;
-import org.elasticsearch.xcontent.ToXContent;
-import org.elasticsearch.xcontent.XContentBuilder;
-import org.elasticsearch.xcontent.XContentFactory;
-import org.elasticsearch.xcontent.XContentType;
+import java.util.StringJoiner;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,83 +44,72 @@ public class CommonSearchResponseAssemblerImpl
 	@Override
 	public void assemble(
 		BaseSearchRequest baseSearchRequest,
-		BaseSearchResponse baseSearchResponse, String searchRequestString,
-		SearchResponse searchResponse) {
+		BaseSearchResponse baseSearchResponse,
+		ResponseBody<JsonData> responseBody, String searchRequestString) {
 
-		_setExecutionProfile(searchResponse, baseSearchResponse);
-		_setExecutionTime(searchResponse, baseSearchResponse);
-		_setPointInTimeId(searchResponse, baseSearchResponse);
-		_setScrollId(searchResponse, baseSearchResponse);
-		_setSearchRequestString(baseSearchResponse, searchRequestString);
-		setSearchResponseString(
-			searchResponse, baseSearchRequest, baseSearchResponse);
-		_setTerminatedEarly(searchResponse, baseSearchResponse);
-		_setTimedOut(searchResponse, baseSearchResponse);
-
-		_updateStatsResponses(
-			baseSearchResponse, searchResponse.getAggregations(),
+		_setExecutionProfile(baseSearchResponse, responseBody);
+		_setStatsResponses(
+			responseBody.aggregations(), baseSearchResponse,
 			baseSearchRequest.getStatsRequests());
-	}
 
-	protected void setSearchResponseString(
-		SearchResponse searchResponse, BaseSearchRequest baseSearchRequest,
-		BaseSearchResponse baseSearchResponse) {
+		baseSearchResponse.setExecutionTime(responseBody.took());
+
+		SetterUtil.setNotBlankString(
+			baseSearchResponse::setPointInTimeId, responseBody.pitId());
+		SetterUtil.setNotBlankString(
+			baseSearchResponse::setScrollId, responseBody.scrollId());
+
+		baseSearchResponse.setSearchRequestString(searchRequestString);
 
 		if (baseSearchRequest.isIncludeResponseString()) {
 			baseSearchResponse.setSearchResponseString(
-				searchResponse.toString());
+				JsonpUtil.toString(responseBody));
 		}
+
+		SetterUtil.setNotNullBoolean(
+			baseSearchResponse::setTerminatedEarly,
+			responseBody.terminatedEarly());
+		SetterUtil.setNotNullBoolean(
+			baseSearchResponse::setTimedOut, responseBody.timedOut());
 	}
 
-	private String _getSearchProfileShardResultString(
-			SearchProfileShardResult searchProfileShardResult)
+	private String _getShardProfileString(ShardProfile shardProfile)
 		throws IOException {
 
-		XContentBuilder xContentBuilder = XContentFactory.contentBuilder(
-			XContentType.JSON);
+		List<SearchProfile> searchProfiles = shardProfile.searches();
 
-		List<QueryProfileShardResult> queryProfileShardResults =
-			searchProfileShardResult.getQueryProfileResults();
+		StringJoiner joiner = new StringJoiner(",");
 
-		queryProfileShardResults.forEach(
-			queryProfileShardResult -> {
-				try {
-					xContentBuilder.startObject();
+		searchProfiles.forEach(
+			searchProfile -> joiner.add(JsonpUtil.toString(searchProfile)));
 
-					queryProfileShardResult.toXContent(
-						xContentBuilder, ToXContent.EMPTY_PARAMS);
-
-					xContentBuilder.endObject();
-				}
-				catch (IOException ioException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(ioException);
-					}
-				}
-			});
-
-		return Strings.toString(xContentBuilder);
+		return "{" + joiner.toString() + "}";
 	}
 
 	private void _setExecutionProfile(
-		SearchResponse searchResponse, BaseSearchResponse baseSearchResponse) {
+		BaseSearchResponse baseSearchResponse,
+		ResponseBody<JsonData> responseBody) {
 
-		Map<String, SearchProfileShardResult> searchProfileShardResults =
-			searchResponse.getProfileResults();
+		Profile profile = responseBody.profile();
 
-		if (MapUtil.isEmpty(searchProfileShardResults)) {
+		if (profile == null) {
 			return;
 		}
 
-		Map<String, String> executionProfile = new HashMap<>();
+		List<ShardProfile> shardProfiles = profile.shards();
 
-		searchProfileShardResults.forEach(
-			(shardKey, searchProfileShardResult) -> {
+		if (ListUtil.isEmpty(shardProfiles)) {
+			return;
+		}
+
+		Map<String, String> executionProfiles = new HashMap<>();
+
+		shardProfiles.forEach(
+			shardProfile -> {
 				try {
-					executionProfile.put(
-						shardKey,
-						_getSearchProfileShardResultString(
-							searchProfileShardResult));
+					executionProfiles.put(
+						shardProfile.id(),
+						_getShardProfileString(shardProfile));
 				}
 				catch (IOException ioException) {
 					if (_log.isInfoEnabled()) {
@@ -131,80 +118,21 @@ public class CommonSearchResponseAssemblerImpl
 				}
 			});
 
-		baseSearchResponse.setExecutionProfile(executionProfile);
+		baseSearchResponse.setExecutionProfile(executionProfiles);
 	}
 
-	private void _setExecutionTime(
-		SearchResponse searchResponse, BaseSearchResponse baseSearchResponse) {
-
-		TimeValue tookTimeValue = searchResponse.getTook();
-
-		baseSearchResponse.setExecutionTime(tookTimeValue.getMillis());
-	}
-
-	private void _setPointInTimeId(
-		SearchResponse searchResponse, BaseSearchResponse baseSearchResponse) {
-
-		if (searchResponse.pointInTimeId() != null) {
-			baseSearchResponse.setPointInTimeId(searchResponse.pointInTimeId());
-		}
-	}
-
-	private void _setScrollId(
-		SearchResponse searchResponse, BaseSearchResponse baseSearchResponse) {
-
-		if (searchResponse.getScrollId() != null) {
-			baseSearchResponse.setScrollId(searchResponse.getScrollId());
-		}
-	}
-
-	private void _setSearchRequestString(
-		BaseSearchResponse baseSearchResponse, String searchRequestString) {
-
-		baseSearchResponse.setSearchRequestString(searchRequestString);
-	}
-
-	private void _setTerminatedEarly(
-		SearchResponse searchResponse, BaseSearchResponse baseSearchResponse) {
-
-		baseSearchResponse.setTerminatedEarly(
-			GetterUtil.getBoolean(searchResponse.isTerminatedEarly()));
-	}
-
-	private void _setTimedOut(
-		SearchResponse searchResponse, BaseSearchResponse baseSearchResponse) {
-
-		baseSearchResponse.setTimedOut(searchResponse.isTimedOut());
-	}
-
-	private void _updateStatsResponse(
+	private void _setStatsResponses(
+		Map<String, Aggregate> aggregations,
 		BaseSearchResponse baseSearchResponse,
-		Map<String, Aggregation> aggregationsMap, StatsRequest statsRequest) {
-
-		baseSearchResponse.addStatsResponse(
-			_statsTranslator.translateResponse(aggregationsMap, statsRequest));
-	}
-
-	private void _updateStatsResponses(
-		BaseSearchResponse baseSearchResponse, Aggregations aggregations,
 		Collection<StatsRequest> statsRequests) {
 
-		if (aggregations == null) {
+		if (MapUtil.isEmpty(aggregations)) {
 			return;
 		}
 
-		_updateStatsResponses(
-			baseSearchResponse, aggregations.getAsMap(), statsRequests);
-	}
-
-	private void _updateStatsResponses(
-		BaseSearchResponse baseSearchResponse,
-		Map<String, Aggregation> aggregationsMap,
-		Collection<StatsRequest> statsRequests) {
-
 		for (StatsRequest statsRequest : statsRequests) {
-			_updateStatsResponse(
-				baseSearchResponse, aggregationsMap, statsRequest);
+			baseSearchResponse.addStatsResponse(
+				_statsTranslator.translateResponse(aggregations, statsRequest));
 		}
 	}
 

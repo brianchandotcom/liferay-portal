@@ -5,17 +5,18 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.document;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.Result;
+import co.elastic.clients.elasticsearch.core.UpdateRequest;
+import co.elastic.clients.elasticsearch.core.UpdateResponse;
+import co.elastic.clients.json.JsonData;
+
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
+import com.liferay.portal.search.elasticsearch8.internal.util.ConversionUtil;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentResponse;
 
 import java.io.IOException;
-
-import org.elasticsearch.action.update.UpdateRequest;
-import org.elasticsearch.action.update.UpdateResponse;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.rest.RestStatus;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -31,41 +32,39 @@ public class UpdateDocumentRequestExecutorImpl
 	public UpdateDocumentResponse execute(
 		UpdateDocumentRequest updateDocumentRequest) {
 
-		UpdateRequest updateRequest =
-			_elasticsearchBulkableDocumentRequestTranslator.translate(
-				updateDocumentRequest);
+		UpdateResponse<JsonData> updateResponse = _getUpdateResponse(
+			updateDocumentRequest,
+			_elasticsearchDocumentRequestTranslator.translate(
+				updateDocumentRequest));
 
-		UpdateResponse updateResponse = _getUpdateResponse(
-			updateRequest, updateDocumentRequest);
+		Result result = updateResponse.result();
 
-		RestStatus restStatus = updateResponse.status();
-
-		return new UpdateDocumentResponse(restStatus.getStatus());
+		return new UpdateDocumentResponse(
+			ConversionUtil.toHttpStatusCode(result), result.jsonValue());
 	}
 
-	private UpdateResponse _getUpdateResponse(
-		UpdateRequest updateRequest,
-		UpdateDocumentRequest updateDocumentRequest) {
+	private UpdateResponse<JsonData> _getUpdateResponse(
+		UpdateDocumentRequest updateDocumentRequest,
+		UpdateRequest<JsonData, JsonData> updateRequest) {
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
 				updateDocumentRequest.getConnectionId(),
 				updateDocumentRequest.isPreferLocalCluster());
 
 		try {
-			return restHighLevelClient.update(
-				updateRequest, RequestOptions.DEFAULT);
+			return elasticsearchClient.update(updateRequest, JsonData.class);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
 	}
 
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
-	private ElasticsearchBulkableDocumentRequestTranslator
-		_elasticsearchBulkableDocumentRequestTranslator;
-
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
+
+	@Reference(target = "(search.engine.impl=Elasticsearch)")
+	private ElasticsearchDocumentRequestTranslator
+		_elasticsearchDocumentRequestTranslator;
 
 }

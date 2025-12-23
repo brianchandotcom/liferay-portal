@@ -5,11 +5,27 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.search;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.core.SearchRequest;
+import co.elastic.clients.elasticsearch.core.SearchResponse;
+import co.elastic.clients.elasticsearch.core.search.CompletionSuggest;
+import co.elastic.clients.elasticsearch.core.search.CompletionSuggestOption;
+import co.elastic.clients.elasticsearch.core.search.FieldSuggester;
+import co.elastic.clients.elasticsearch.core.search.PhraseSuggest;
+import co.elastic.clients.elasticsearch.core.search.PhraseSuggestOption;
+import co.elastic.clients.elasticsearch.core.search.Suggester.Builder;
+import co.elastic.clients.elasticsearch.core.search.Suggestion;
+import co.elastic.clients.elasticsearch.core.search.TermSuggest;
+import co.elastic.clients.elasticsearch.core.search.TermSuggestOption;
+import co.elastic.clients.json.JsonData;
+
 import com.liferay.portal.kernel.search.suggest.Suggester;
 import com.liferay.portal.kernel.search.suggest.SuggesterTranslator;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch8.internal.suggest.ElasticsearchSuggesterTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.util.ConversionUtil;
+import com.liferay.portal.search.elasticsearch8.internal.util.SetterUtil;
 import com.liferay.portal.search.engine.adapter.search.SuggestSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SuggestSearchResponse;
 import com.liferay.portal.search.engine.adapter.search.SuggestSearchResult;
@@ -17,19 +33,9 @@ import com.liferay.portal.search.index.IndexNameBuilder;
 
 import java.io.IOException;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
-import org.elasticsearch.action.search.SearchRequest;
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.common.text.Text;
-import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.elasticsearch.search.suggest.Suggest;
-import org.elasticsearch.search.suggest.SuggestBuilder;
-import org.elasticsearch.search.suggest.SuggestionBuilder;
-import org.elasticsearch.search.suggest.term.TermSuggestion;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -46,29 +52,24 @@ public class SuggestSearchRequestExecutorImpl
 	public SuggestSearchResponse execute(
 		SuggestSearchRequest suggestSearchRequest) {
 
-		SearchRequest searchRequest = _createSearchRequest(
-			suggestSearchRequest);
+		SearchResponse<JsonData> searchResponse = getSearchResponse(
+			_createSearchRequest(suggestSearchRequest), suggestSearchRequest);
 
-		SearchResponse searchResponse = getSearchResponse(
-			searchRequest, suggestSearchRequest);
-
-		Suggest suggest = searchResponse.getSuggest();
+		Map<String, List<Suggestion<JsonData>>> suggests =
+			searchResponse.suggest();
 
 		SuggestSearchResponse suggestSearchResponse =
 			new SuggestSearchResponse();
 
-		if (suggest == null) {
+		if (MapUtil.isEmpty(suggests)) {
 			return suggestSearchResponse;
 		}
 
-		for (Suggest.Suggestion
-				<? extends Suggest.Suggestion.Entry
-					<? extends Suggest.Suggestion.Entry.Option>> suggestion :
-						suggest) {
+		for (Map.Entry<String, List<Suggestion<JsonData>>> entry :
+				suggests.entrySet()) {
 
-			SuggestSearchResult suggestSearchResult = translate(suggestion);
-
-			suggestSearchResponse.addSuggestSearchResult(suggestSearchResult);
+			suggestSearchResponse.addSuggestSearchResult(
+				_translateSuggests(entry.getKey(), entry.getValue()));
 		}
 
 		return suggestSearchResponse;
@@ -84,123 +85,129 @@ public class SuggestSearchRequestExecutorImpl
 		SearchRequest searchRequest,
 		SuggestSearchRequest suggestSearchRequest) {
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
 				suggestSearchRequest.getConnectionId(),
 				suggestSearchRequest.isPreferLocalCluster());
 
 		try {
-			return restHighLevelClient.search(
-				searchRequest, RequestOptions.DEFAULT);
+			return elasticsearchClient.search(searchRequest, JsonData.class);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
 	}
 
-	protected SuggestSearchResult.Entry.Option translate(
-		Suggest.Suggestion.Entry.Option suggestionEntryOption) {
+	private SearchRequest _createSearchRequest(
+		SuggestSearchRequest suggestSearchRequest) {
 
-		Text text = suggestionEntryOption.getText();
+		SearchRequest.Builder searchRequestBuilder =
+			new SearchRequest.Builder();
 
-		SuggestSearchResult.Entry.Option suggesterResultEntryOption =
-			new SuggestSearchResult.Entry.Option(
-				text.string(), suggestionEntryOption.getScore());
+		searchRequestBuilder.index(
+			Arrays.asList(suggestSearchRequest.getIndexNames()));
 
-		if (suggestionEntryOption.getHighlighted() != null) {
-			Text highlightedText = suggestionEntryOption.getHighlighted();
+		Map<String, Suggester> suggesters =
+			suggestSearchRequest.getSuggesterMap();
 
-			suggesterResultEntryOption.setHighlightedText(
-				highlightedText.string());
+		Builder suggesterBuilder = new Builder();
+
+		for (Map.Entry<String, Suggester> entry : suggesters.entrySet()) {
+			suggesterBuilder.suggesters(
+				entry.getKey(),
+				_suggesterTranslator.translate(entry.getValue(), null));
 		}
 
-		if (suggestionEntryOption instanceof TermSuggestion.Entry.Option) {
-			TermSuggestion.Entry.Option termSuggestionEntryOption =
-				(TermSuggestion.Entry.Option)suggestionEntryOption;
+		SetterUtil.setNotBlankString(
+			suggesterBuilder::text, suggestSearchRequest.getGlobalText());
 
-			suggesterResultEntryOption.setFrequency(
-				termSuggestionEntryOption.getFreq());
-		}
+		searchRequestBuilder.suggest(suggesterBuilder.build());
 
-		return suggesterResultEntryOption;
+		return searchRequestBuilder.build();
 	}
 
-	protected SuggestSearchResult.Entry translate(
-		Suggest.Suggestion.Entry<? extends Suggest.Suggestion.Entry.Option>
-			suggestionEntry) {
+	private SuggestSearchResult.Entry _translateCompletionSuggest(
+		CompletionSuggest<JsonData> completionSuggest) {
 
-		Text text = suggestionEntry.getText();
+		SuggestSearchResult.Entry entry = new SuggestSearchResult.Entry(
+			completionSuggest.text());
 
-		SuggestSearchResult.Entry suggesterResultEntry =
-			new SuggestSearchResult.Entry(text.string());
+		for (CompletionSuggestOption<JsonData> completionSuggestOption :
+				completionSuggest.options()) {
 
-		List<? extends Suggest.Suggestion.Entry.Option> suggestionEntryOptions =
-			suggestionEntry.getOptions();
-
-		for (Suggest.Suggestion.Entry.Option suggestionEntryOption :
-				suggestionEntryOptions) {
-
-			SuggestSearchResult.Entry.Option suggesterResultEntryOption =
-				translate(suggestionEntryOption);
-
-			suggesterResultEntry.addOption(suggesterResultEntryOption);
+			entry.addOption(
+				new SuggestSearchResult.Entry.Option(
+					completionSuggestOption.text(),
+					ConversionUtil.toFloat(completionSuggestOption.score())));
 		}
 
-		return suggesterResultEntry;
+		return entry;
 	}
 
-	protected SuggestSearchResult translate(
-		Suggest.Suggestion
-			<? extends Suggest.Suggestion.Entry
-				<? extends Suggest.Suggestion.Entry.Option>> suggestion) {
+	private SuggestSearchResult.Entry _translatePhraseSuggest(
+		PhraseSuggest phraseSuggest) {
 
-		SuggestSearchResult suggestSearchResult = new SuggestSearchResult(
-			suggestion.getName());
+		SuggestSearchResult.Entry entry = new SuggestSearchResult.Entry(
+			phraseSuggest.text());
 
-		for (Suggest.Suggestion.Entry<? extends Suggest.Suggestion.Entry.Option>
-				suggestionEntry : suggestion) {
+		for (PhraseSuggestOption phraseSuggestOption :
+				phraseSuggest.options()) {
 
-			SuggestSearchResult.Entry suggesterResultEntry = translate(
-				suggestionEntry);
+			SuggestSearchResult.Entry.Option option =
+				new SuggestSearchResult.Entry.Option(
+					phraseSuggestOption.text(),
+					ConversionUtil.toFloat(phraseSuggestOption.score()));
 
-			suggestSearchResult.addEntry(suggesterResultEntry);
+			SetterUtil.setNotBlankString(
+				option::setHighlightedText, phraseSuggestOption.highlighted());
+
+			entry.addOption(option);
+		}
+
+		return entry;
+	}
+
+	private SuggestSearchResult _translateSuggests(
+		String name, List<Suggestion<JsonData>> suggests) {
+
+		SuggestSearchResult suggestSearchResult = new SuggestSearchResult(name);
+
+		for (Suggestion<JsonData> suggest : suggests) {
+			if (suggest.isCompletion()) {
+				suggestSearchResult.addEntry(
+					_translateCompletionSuggest(suggest.completion()));
+			}
+			else if (suggest.isPhrase()) {
+				suggestSearchResult.addEntry(
+					_translatePhraseSuggest(suggest.phrase()));
+			}
+			else {
+				suggestSearchResult.addEntry(
+					_translateTermSuggest(suggest.term()));
+			}
 		}
 
 		return suggestSearchResult;
 	}
 
-	private SearchRequest _createSearchRequest(
-		SuggestSearchRequest suggestSearchRequest) {
+	private SuggestSearchResult.Entry _translateTermSuggest(
+		TermSuggest termSuggest) {
 
-		SearchRequest searchRequest = new SearchRequest(
-			suggestSearchRequest.getIndexNames());
+		SuggestSearchResult.Entry entry = new SuggestSearchResult.Entry(
+			termSuggest.text());
 
-		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+		for (TermSuggestOption termSuggestOption : termSuggest.options()) {
+			SuggestSearchResult.Entry.Option option =
+				new SuggestSearchResult.Entry.Option(
+					termSuggestOption.text(),
+					ConversionUtil.toFloat(termSuggestOption.score()));
 
-		Map<String, Suggester> suggesterMap =
-			suggestSearchRequest.getSuggesterMap();
+			option.setFrequency(Math.toIntExact(termSuggestOption.freq()));
 
-		SuggestBuilder suggestBuilder = new SuggestBuilder();
-
-		if (!Validator.isBlank(suggestSearchRequest.getGlobalText())) {
-			suggestBuilder.setGlobalText(suggestSearchRequest.getGlobalText());
+			entry.addOption(option);
 		}
 
-		for (Map.Entry<String, Suggester> entry : suggesterMap.entrySet()) {
-			Suggester suggester = entry.getValue();
-			String suggesterName = entry.getKey();
-
-			SuggestionBuilder suggestionBuilder =
-				_suggesterTranslator.translate(suggester, null);
-
-			suggestBuilder.addSuggestion(suggesterName, suggestionBuilder);
-		}
-
-		searchSourceBuilder.suggest(suggestBuilder);
-
-		searchRequest.source(searchSourceBuilder);
-
-		return searchRequest;
+		return entry;
 	}
 
 	@Reference
@@ -209,6 +216,6 @@ public class SuggestSearchRequestExecutorImpl
 	@Reference
 	private IndexNameBuilder _indexNameBuilder;
 
-	private SuggesterTranslator<SuggestionBuilder> _suggesterTranslator;
+	private SuggesterTranslator<FieldSuggester> _suggesterTranslator;
 
 }

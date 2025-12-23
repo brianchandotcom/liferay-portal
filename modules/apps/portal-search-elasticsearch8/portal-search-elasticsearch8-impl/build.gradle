@@ -30,6 +30,7 @@ cleanSidecar {
 dependencies {
 	compileInclude group: "co.elastic.clients", name: "elasticsearch-java", version: "8.19.8"
 	compileInclude group: "com.carrotsearch", name: "hppc", version: "0.10.0"
+	compileInclude group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.18.2"
 	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-smile", version: "2.18.2"
 	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-yaml", version: "2.18.2"
 	compileInclude group: "com.liferay", name: "org.apache.commons.logging", version: "1.2.LIFERAY-PATCHED-2"

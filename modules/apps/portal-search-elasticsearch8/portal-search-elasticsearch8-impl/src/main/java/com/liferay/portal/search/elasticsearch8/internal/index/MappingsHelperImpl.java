@@ -5,6 +5,17 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.index;
 
+import co.elastic.clients.elasticsearch._types.mapping.SourceField;
+import co.elastic.clients.elasticsearch._types.mapping.TypeMapping;
+import co.elastic.clients.elasticsearch.indices.CreateIndexRequest;
+import co.elastic.clients.elasticsearch.indices.ElasticsearchIndicesClient;
+import co.elastic.clients.elasticsearch.indices.GetMappingRequest;
+import co.elastic.clients.elasticsearch.indices.GetMappingResponse;
+import co.elastic.clients.elasticsearch.indices.PutMappingRequest;
+import co.elastic.clients.elasticsearch.indices.PutMappingResponse;
+import co.elastic.clients.elasticsearch.indices.get_mapping.IndexMappingRecord;
+import co.elastic.clients.json.JsonpMapper;
+
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -15,27 +26,22 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.elasticsearch8.internal.helper.SearchLogHelperUtil;
 import com.liferay.portal.search.elasticsearch8.internal.index.constants.IndexMappingsConstants;
+import com.liferay.portal.search.elasticsearch8.internal.util.JsonpUtil;
 import com.liferay.portal.search.elasticsearch8.internal.util.ResourceUtil;
 import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.spi.index.configuration.contributor.helper.MappingsHelper;
 
+import jakarta.json.spi.JsonProvider;
+
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+
+import java.nio.charset.StandardCharsets;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-
-import org.elasticsearch.action.ActionResponse;
-import org.elasticsearch.client.IndicesClient;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.indices.CreateIndexRequest;
-import org.elasticsearch.client.indices.GetMappingsRequest;
-import org.elasticsearch.client.indices.GetMappingsResponse;
-import org.elasticsearch.client.indices.PutMappingRequest;
-import org.elasticsearch.cluster.metadata.MappingMetadata;
-import org.elasticsearch.common.compress.CompressedXContent;
-import org.elasticsearch.xcontent.XContentType;
 
 /**
  * @author André de Oliveira
@@ -43,12 +49,12 @@ import org.elasticsearch.xcontent.XContentType;
 public class MappingsHelperImpl implements MappingsHelper {
 
 	public MappingsHelperImpl(
-		String indexName, IndicesClient indicesClient, JSONFactory jsonFactory,
-		String overrideMappings,
+		ElasticsearchIndicesClient elasticsearchIndicesClient, String indexName,
+		JSONFactory jsonFactory, String overrideMappings,
 		SearchEngineInformation searchEngineInformation) {
 
+		_elasticsearchIndicesClient = elasticsearchIndicesClient;
 		_indexName = indexName;
-		_indicesClient = indicesClient;
 		_jsonFactory = jsonFactory;
 		_overrideMappings = overrideMappings;
 		_searchEngineInformation = searchEngineInformation;
@@ -70,13 +76,23 @@ public class MappingsHelperImpl implements MappingsHelper {
 	}
 
 	public void setDefaultOrOverrideMappings(
-		CreateIndexRequest createIndexRequest) {
+		CreateIndexRequest.Builder builder, JsonpMapper jsonpMapper) {
 
-		JSONObject mappingsJSONObject =
-			_getDefaultOrOverrideMappingsJSONObject();
+		String mappings = String.valueOf(
+			_getDefaultOrOverrideMappingsJSONObject());
 
-		createIndexRequest.mapping(
-			mappingsJSONObject.toString(), XContentType.JSON);
+		try (InputStream inputStream = new ByteArrayInputStream(
+				mappings.getBytes(StandardCharsets.UTF_8))) {
+
+			JsonProvider jsonProvider = jsonpMapper.jsonProvider();
+
+			builder.mappings(
+				TypeMapping._DESERIALIZER.deserialize(
+					jsonProvider.createParser(inputStream), jsonpMapper));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	private String _addTextEmbeddingDynamicTemplates(String mappings) {
@@ -121,27 +137,24 @@ public class MappingsHelperImpl implements MappingsHelper {
 			return StringPool.BLANK;
 		}
 
-		GetMappingsRequest getMappingsRequest = new GetMappingsRequest();
-
-		getMappingsRequest.indices(indexName);
-
-		GetMappingsResponse getMappingsResponse = null;
-
 		try {
-			getMappingsResponse = _indicesClient.getMapping(
-				getMappingsRequest, RequestOptions.DEFAULT);
+			GetMappingResponse getMappingResponse =
+				_elasticsearchIndicesClient.getMapping(
+					GetMappingRequest.of(
+						getMappingRequest -> getMappingRequest.index(
+							indexName)));
+
+			Map<String, IndexMappingRecord> indexMappingRecords =
+				getMappingResponse.result();
+
+			IndexMappingRecord indexMappingRecord = indexMappingRecords.get(
+				indexName);
+
+			return JsonpUtil.toString(indexMappingRecord.mappings());
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
-
-		Map<String, MappingMetadata> mappings = getMappingsResponse.mappings();
-
-		MappingMetadata mappingMetadata = mappings.get(indexName);
-
-		CompressedXContent compressedXContent = mappingMetadata.source();
-
-		return compressedXContent.toString();
 	}
 
 	private JSONObject _getDefaultOrOverrideMappingsJSONObject() {
@@ -228,16 +241,22 @@ public class MappingsHelperImpl implements MappingsHelper {
 	}
 
 	private void _putMappings(JSONObject mappingsJSONObject) {
-		PutMappingRequest putMappingRequest = new PutMappingRequest(_indexName);
+		String mappings = String.valueOf(mappingsJSONObject);
 
-		putMappingRequest.source(
-			mappingsJSONObject.toString(), XContentType.JSON);
+		try (InputStream inputStream = new ByteArrayInputStream(
+				mappings.getBytes(StandardCharsets.UTF_8))) {
 
-		try {
-			ActionResponse actionResponse = _indicesClient.putMapping(
-				putMappingRequest, RequestOptions.DEFAULT);
+			PutMappingRequest.Builder builder = new PutMappingRequest.Builder(
+			).index(
+				_indexName
+			).source(
+				SourceField.of(sourceField -> sourceField.withJson(inputStream))
+			);
 
-			SearchLogHelperUtil.logActionResponse(_log, actionResponse);
+			PutMappingResponse putMappingResponse =
+				_elasticsearchIndicesClient.putMapping(builder.build());
+
+			JsonpUtil.logInfoResponse(putMappingResponse, _log);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -267,8 +286,8 @@ public class MappingsHelperImpl implements MappingsHelper {
 	private static final Log _log = LogFactoryUtil.getLog(
 		MappingsHelperImpl.class);
 
+	private final ElasticsearchIndicesClient _elasticsearchIndicesClient;
 	private final String _indexName;
-	private final IndicesClient _indicesClient;
 	private final JSONFactory _jsonFactory;
 	private final String _overrideMappings;
 	private final SearchEngineInformation _searchEngineInformation;

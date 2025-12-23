@@ -8,11 +8,11 @@ package com.liferay.portal.search.elasticsearch8.internal.util;
 import co.elastic.clients.elasticsearch._types.mapping.DynamicTemplate;
 import co.elastic.clients.elasticsearch._types.mapping.Property;
 import co.elastic.clients.json.JsonpMapper;
+import co.elastic.clients.util.NamedValue;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import jakarta.json.spi.JsonProvider;
@@ -35,7 +35,7 @@ import java.util.Map;
  */
 public class IndexUtil {
 
-	public static List<Map<String, DynamicTemplate>> getDynamicTemplatesMap(
+	public static List<NamedValue<DynamicTemplate>> getDynamicTemplatesList(
 		JSONObject mappingsJSONObject) {
 
 		JSONArray dynamicTemplatesJSONArray = mappingsJSONObject.getJSONArray(
@@ -49,7 +49,7 @@ public class IndexUtil {
 
 		JsonProvider jsonProvider = jsonpMapper.jsonProvider();
 
-		List<Map<String, DynamicTemplate>> dynamicTemplates = new ArrayList<>();
+		List<NamedValue<DynamicTemplate>> dynamicTemplates = new ArrayList<>();
 
 		for (int i = 0; i < dynamicTemplatesJSONArray.length(); i++) {
 			JSONObject dynamicTemplateJSONObject =
@@ -62,7 +62,7 @@ public class IndexUtil {
 					dynamicTemplateJSONObject.getJSONObject(
 						dynamicTemplateName);
 
-				_convertOpenSearchDynamicTemplate(templateJSONObject);
+				_convertElasticsearchDynamicTemplate(templateJSONObject);
 
 				String dynamicTemplateString = templateJSONObject.toString();
 
@@ -71,12 +71,11 @@ public class IndexUtil {
 							StandardCharsets.UTF_8))) {
 
 					dynamicTemplates.add(
-						HashMapBuilder.<String, DynamicTemplate>put(
+						NamedValue.of(
 							dynamicTemplateName,
 							DynamicTemplate._DESERIALIZER.deserialize(
 								jsonProvider.createParser(inputStream),
-								jsonpMapper)
-						).build());
+								jsonpMapper)));
 				}
 				catch (IOException ioException) {
 					throw new RuntimeException(ioException);
@@ -188,7 +187,7 @@ public class IndexUtil {
 		}
 	}
 
-	private static void _convertOpenSearchDynamicTemplate(
+	private static void _convertElasticsearchDynamicTemplate(
 		JSONObject templateJSONObject) {
 
 		JSONObject mappingJSONObject = templateJSONObject.getJSONObject(

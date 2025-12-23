@@ -5,6 +5,26 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.filter;
 
+import co.elastic.clients.elasticsearch._types.FieldValue;
+import co.elastic.clients.elasticsearch._types.GeoBounds;
+import co.elastic.clients.elasticsearch._types.TopLeftBottomRightGeoBounds;
+import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.DateRangeQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.ExistsQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.GeoBoundingBoxQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.GeoDistanceQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.GeoPolygonPoints;
+import co.elastic.clients.elasticsearch._types.query_dsl.GeoPolygonQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.PrefixQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import co.elastic.clients.elasticsearch._types.query_dsl.QueryBuilders;
+import co.elastic.clients.elasticsearch._types.query_dsl.QueryVariant;
+import co.elastic.clients.elasticsearch._types.query_dsl.RangeQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.TermQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.TermRangeQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.TermsSetQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.UntypedRangeQuery;
+
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -22,14 +42,15 @@ import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.RangeTermFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.kernel.search.geolocation.DistanceUnit;
 import com.liferay.portal.kernel.search.geolocation.GeoDistance;
 import com.liferay.portal.kernel.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.elasticsearch8.internal.geolocation.GeoTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.legacy.query.ElasticsearchQueryTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.util.QueryUtil;
+import com.liferay.portal.search.elasticsearch8.internal.util.SetterUtil;
 import com.liferay.portal.search.filter.DateRangeFilter;
 import com.liferay.portal.search.filter.FilterVisitor;
 import com.liferay.portal.search.filter.RangeFilter;
@@ -38,20 +59,6 @@ import com.liferay.portal.search.index.IndexNameBuilder;
 
 import java.text.Format;
 import java.text.ParseException;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.elasticsearch.common.geo.GeoPoint;
-import org.elasticsearch.common.unit.DistanceUnit;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.ExistsQueryBuilder;
-import org.elasticsearch.index.query.GeoBoundingBoxQueryBuilder;
-import org.elasticsearch.index.query.GeoDistanceQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.query.RangeQueryBuilder;
-import org.elasticsearch.index.query.TermsSetQueryBuilder;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -66,83 +73,82 @@ import org.osgi.service.component.annotations.Reference;
 	service = FilterTranslator.class
 )
 public class ElasticsearchFilterTranslator
-	implements FilterTranslator<QueryBuilder>, FilterVisitor<QueryBuilder> {
+	implements FilterTranslator<QueryVariant>, FilterVisitor<QueryVariant> {
 
 	@Override
-	public QueryBuilder translate(Filter filter, SearchContext searchContext) {
+	public QueryVariant translate(Filter filter, SearchContext searchContext) {
 		return filter.accept(this);
 	}
 
 	@Override
-	public QueryBuilder visit(BooleanFilter booleanFilter) {
-		BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+	public QueryVariant visit(BooleanFilter booleanFilter) {
+		BoolQuery.Builder boolQueryBuilder = QueryBuilders.bool();
 
 		for (BooleanClause<Filter> booleanClause :
 				booleanFilter.getMustBooleanClauses()) {
 
-			QueryBuilder queryBuilder = translate(booleanClause);
-
-			boolQueryBuilder.must(queryBuilder);
+			boolQueryBuilder.must(new Query(translate(booleanClause, this)));
 		}
 
 		for (BooleanClause<Filter> booleanClause :
 				booleanFilter.getMustNotBooleanClauses()) {
 
-			QueryBuilder queryBuilder = translate(booleanClause);
-
-			boolQueryBuilder.mustNot(queryBuilder);
+			boolQueryBuilder.mustNot(new Query(translate(booleanClause, this)));
 		}
 
 		for (BooleanClause<Filter> booleanClause :
 				booleanFilter.getShouldBooleanClauses()) {
 
-			QueryBuilder queryBuilder = translate(booleanClause);
-
-			boolQueryBuilder.should(queryBuilder);
+			boolQueryBuilder.should(new Query(translate(booleanClause, this)));
 		}
 
-		return boolQueryBuilder;
+		return boolQueryBuilder.build();
 	}
 
 	@Override
-	public QueryBuilder visit(DateRangeFilter dateRangeFilter) {
-		RangeQueryBuilder rangeQueryBuilder = QueryBuilders.rangeQuery(
-			dateRangeFilter.getFieldName());
+	public QueryVariant visit(DateRangeFilter dateRangeFilter) {
+		RangeQuery.Builder builder = QueryBuilders.range();
 
-		if (dateRangeFilter.getFormat() != null) {
-			rangeQueryBuilder.format(dateRangeFilter.getFormat());
-		}
+		DateRangeQuery.Builder dateRangeQueryBuilder =
+			new DateRangeQuery.Builder();
 
-		rangeQueryBuilder.from(dateRangeFilter.getFrom());
-		rangeQueryBuilder.includeLower(dateRangeFilter.isIncludeLower());
-		rangeQueryBuilder.includeUpper(dateRangeFilter.isIncludeUpper());
+		dateRangeQueryBuilder.field(dateRangeFilter.getFieldName());
 
-		if (dateRangeFilter.getTimeZoneId() != null) {
-			rangeQueryBuilder.timeZone(dateRangeFilter.getTimeZoneId());
-		}
+		SetterUtil.setNotBlankString(
+			dateRangeQueryBuilder::format, dateRangeFilter.getFormat());
 
-		rangeQueryBuilder.to(dateRangeFilter.getTo());
+		QueryUtil.setRanges(
+			dateRangeQueryBuilder, dateRangeFilter.isIncludeLower(),
+			dateRangeFilter.isIncludeUpper(), dateRangeFilter.getFrom(),
+			dateRangeFilter.getTo());
 
-		return rangeQueryBuilder;
+		SetterUtil.setNotBlankString(
+			dateRangeQueryBuilder::timeZone, dateRangeFilter.getTimeZoneId());
+
+		builder.date(dateRangeQueryBuilder.build());
+
+		return builder.build();
 	}
 
 	@Override
-	public QueryBuilder visit(DateRangeTermFilter dateRangeTermFilter) {
-		RangeQueryBuilder rangeQueryBuilder = QueryBuilders.rangeQuery(
-			dateRangeTermFilter.getField());
+	public QueryVariant visit(DateRangeTermFilter dateRangeTermFilter) {
+		DateRangeQuery.Builder dateRangeQueryBuilder =
+			new DateRangeQuery.Builder();
+
+		dateRangeQueryBuilder.field(dateRangeTermFilter.getField());
 
 		Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
 			dateRangeTermFilter.getDateFormat(),
 			dateRangeTermFilter.getTimeZone());
 
+		SetterUtil.setNotBlankString(
+			dateRangeQueryBuilder::format, dateRangeTermFilter.getDateFormat());
+
 		try {
-			rangeQueryBuilder.from(
-				format.parseObject(dateRangeTermFilter.getLowerBound()));
-			rangeQueryBuilder.includeLower(
-				dateRangeTermFilter.isIncludesLower());
-			rangeQueryBuilder.includeUpper(
-				dateRangeTermFilter.isIncludesUpper());
-			rangeQueryBuilder.to(
+			QueryUtil.setRanges(
+				dateRangeQueryBuilder, dateRangeTermFilter.isIncludesLower(),
+				dateRangeTermFilter.isIncludesUpper(),
+				format.parseObject(dateRangeTermFilter.getLowerBound()),
 				format.parseObject(dateRangeTermFilter.getUpperBound()));
 		}
 		catch (ParseException parseException) {
@@ -150,202 +156,210 @@ public class ElasticsearchFilterTranslator
 				"Invalid date range " + dateRangeTermFilter, parseException);
 		}
 
-		return rangeQueryBuilder;
+		RangeQuery.Builder builder = QueryBuilders.range();
+
+		builder.date(dateRangeQueryBuilder.build());
+
+		return builder.build();
 	}
 
 	@Override
-	public QueryBuilder visit(ExistsFilter existsFilter) {
-		return QueryBuilders.existsQuery(existsFilter.getField());
+	public QueryVariant visit(ExistsFilter existsFilter) {
+		return ExistsQuery.of(
+			existsQuery -> existsQuery.field(existsFilter.getField()));
 	}
 
 	@Override
-	public QueryBuilder visit(GeoBoundingBoxFilter geoBoundingBoxFilter) {
-		GeoBoundingBoxQueryBuilder geoBoundingBoxQueryBuilder =
-			QueryBuilders.geoBoundingBoxQuery(geoBoundingBoxFilter.getField());
+	public QueryVariant visit(GeoBoundingBoxFilter geoBoundingBoxFilter) {
+		TopLeftBottomRightGeoBounds tlbr = TopLeftBottomRightGeoBounds.of(
+			topLeftBottomRightGeoBounds ->
+				topLeftBottomRightGeoBounds.bottomRight(
+					_geoTranslator.translateGeoLocationPoint(
+						geoBoundingBoxFilter.getBottomRightGeoLocationPoint())
+				).topLeft(
+					_geoTranslator.translateGeoLocationPoint(
+						geoBoundingBoxFilter.getTopLeftGeoLocationPoint())
+				));
 
-		GeoLocationPoint bottomRightGeoLocationPoint =
-			geoBoundingBoxFilter.getBottomRightGeoLocationPoint();
-
-		GeoPoint bottomRightGeoPoint = new GeoPoint(
-			bottomRightGeoLocationPoint.getLatitude(),
-			bottomRightGeoLocationPoint.getLongitude());
-
-		GeoLocationPoint topLeftGeoLocationPoint =
-			geoBoundingBoxFilter.getTopLeftGeoLocationPoint();
-
-		GeoPoint topLeftGeoPoint = new GeoPoint(
-			topLeftGeoLocationPoint.getLatitude(),
-			topLeftGeoLocationPoint.getLongitude());
-
-		geoBoundingBoxQueryBuilder.setCorners(
-			topLeftGeoPoint, bottomRightGeoPoint);
-
-		return geoBoundingBoxQueryBuilder;
+		return GeoBoundingBoxQuery.of(
+			geoBoundingBoxQuery -> geoBoundingBoxQuery.field(
+				geoBoundingBoxFilter.getField()
+			).boundingBox(
+				GeoBounds.of(geoBounds -> geoBounds.tlbr(tlbr))
+			));
 	}
 
 	@Override
-	public QueryBuilder visit(GeoDistanceFilter geoDistanceFilter) {
-		GeoDistanceQueryBuilder geoDistanceQueryBuilder =
-			QueryBuilders.geoDistanceQuery(geoDistanceFilter.getField());
-
-		geoDistanceQueryBuilder.distance(
-			String.valueOf(geoDistanceFilter.getGeoDistance()));
-
-		GeoLocationPoint pinGeoLocationPoint =
-			geoDistanceFilter.getPinGeoLocationPoint();
-
-		geoDistanceQueryBuilder.point(
-			pinGeoLocationPoint.getLatitude(),
-			pinGeoLocationPoint.getLongitude());
-
-		return geoDistanceQueryBuilder;
+	public QueryVariant visit(GeoDistanceFilter geoDistanceFilter) {
+		return GeoDistanceQuery.of(
+			geoDistanceQuery -> geoDistanceQuery.distance(
+				String.valueOf(geoDistanceFilter.getGeoDistance())
+			).field(
+				geoDistanceFilter.getField()
+			).location(
+				_geoTranslator.translateGeoLocationPoint(
+					geoDistanceFilter.getPinGeoLocationPoint())
+			));
 	}
 
 	@Override
-	public QueryBuilder visit(GeoDistanceRangeFilter geoDistanceRangeFilter) {
-		GeoDistanceQueryBuilder geoDistanceQueryBuilder =
-			new GeoDistanceQueryBuilder(geoDistanceRangeFilter.getField());
+	public QueryVariant visit(GeoDistanceRangeFilter geoDistanceRangeFilter) {
+		GeoDistanceQuery.Builder builder = QueryBuilders.geoDistance();
 
 		GeoDistance geoDistance =
 			geoDistanceRangeFilter.getUpperBoundGeoDistance();
 
-		geoDistanceQueryBuilder.distance(
-			String.valueOf(geoDistance.getDistance()),
-			DistanceUnit.fromString(
-				String.valueOf(geoDistance.getDistanceUnit())));
+		DistanceUnit distanceUnit = geoDistance.getDistanceUnit();
 
-		GeoLocationPoint geoLocationPoint =
-			geoDistanceRangeFilter.getPinGeoLocationPoint();
+		builder.distance(
+			String.valueOf(geoDistance.getDistance()) + distanceUnit.getUnit());
 
-		geoDistanceQueryBuilder.point(
-			new GeoPoint(
-				geoLocationPoint.getLatitude(),
-				geoLocationPoint.getLongitude()));
+		builder.field(geoDistanceRangeFilter.getField());
+		builder.location(
+			_geoTranslator.translateGeoLocationPoint(
+				geoDistanceRangeFilter.getPinGeoLocationPoint()));
 
-		return geoDistanceQueryBuilder;
+		return builder.build();
 	}
 
 	@Override
-	public QueryBuilder visit(GeoPolygonFilter geoPolygonFilter) {
-		List<GeoPoint> geoPoints = new ArrayList<>();
+	public QueryVariant visit(GeoPolygonFilter geoPolygonFilter) {
+		GeoPolygonPoints.Builder builder = new GeoPolygonPoints.Builder();
 
 		for (GeoLocationPoint geoLocationPoint :
 				geoPolygonFilter.getGeoLocationPoints()) {
 
-			geoPoints.add(
-				new GeoPoint(
-					geoLocationPoint.getLatitude(),
-					geoLocationPoint.getLongitude()));
+			builder.points(
+				_geoTranslator.translateGeoLocationPoint(geoLocationPoint));
 		}
 
-		return QueryBuilders.geoPolygonQuery(
-			geoPolygonFilter.getField(), geoPoints);
+		return GeoPolygonQuery.of(
+			geoPolygonQuery -> geoPolygonQuery.field(
+				geoPolygonFilter.getField()
+			).polygon(
+				builder.build()
+			));
 	}
 
 	@Override
-	public QueryBuilder visit(MissingFilter missingFilter) {
-		BoolQueryBuilder missingQueryBuilder = new BoolQueryBuilder(
-		).mustNot(
-			new ExistsQueryBuilder(missingFilter.getField())
-		);
-
-		if (missingFilter.isExists() != null) {
-			missingFilter.setExists(missingFilter.isExists());
-		}
-
-		if (missingFilter.isNullValue() != null) {
-			missingFilter.setNullValue(missingFilter.isNullValue());
-		}
-
-		return missingQueryBuilder;
+	public QueryVariant visit(MissingFilter missingFilter) {
+		return BoolQuery.of(
+			boolQuery -> boolQuery.mustNot(
+				new Query(
+					ExistsQuery.of(
+						existsQuery -> existsQuery.field(
+							missingFilter.getField())))));
 	}
 
 	@Override
-	public QueryBuilder visit(PrefixFilter prefixFilter) {
-		return QueryBuilders.prefixQuery(
-			prefixFilter.getField(), prefixFilter.getPrefix());
+	public QueryVariant visit(PrefixFilter prefixFilter) {
+		return PrefixQuery.of(
+			prefixQuery -> prefixQuery.field(
+				prefixFilter.getField()
+			).value(
+				prefixFilter.getPrefix()
+			));
 	}
 
 	@Override
-	public QueryBuilder visit(QueryFilter queryFilter) {
+	public QueryVariant visit(QueryFilter queryFilter) {
 		return _queryTranslator.translate(queryFilter.getQuery(), null);
 	}
 
 	@Override
-	public QueryBuilder visit(RangeFilter rangeFilter) {
-		RangeQueryBuilder rangeQueryBuilder = QueryBuilders.rangeQuery(
-			rangeFilter.getFieldName());
+	public QueryVariant visit(RangeFilter rangeFilter) {
+		RangeQuery.Builder builder = QueryBuilders.range();
 
-		if (rangeFilter.getFormat() != null) {
-			rangeQueryBuilder.format(rangeFilter.getFormat());
-		}
+		UntypedRangeQuery.Builder untypedRangeQueryBuilder =
+			new UntypedRangeQuery.Builder();
 
-		rangeQueryBuilder.from(rangeFilter.getFrom());
-		rangeQueryBuilder.includeLower(rangeFilter.isIncludeLower());
-		rangeQueryBuilder.includeUpper(rangeFilter.isIncludeUpper());
+		untypedRangeQueryBuilder.field(rangeFilter.getFieldName());
 
-		if (rangeFilter.getTimeZoneId() != null) {
-			rangeQueryBuilder.timeZone(rangeFilter.getTimeZoneId());
-		}
+		SetterUtil.setNotBlankString(
+			untypedRangeQueryBuilder::format, rangeFilter.getFormat());
 
-		rangeQueryBuilder.to(rangeFilter.getTo());
+		QueryUtil.setRanges(
+			untypedRangeQueryBuilder, rangeFilter.isIncludeLower(),
+			rangeFilter.isIncludeUpper(), rangeFilter.getFrom(),
+			rangeFilter.getTo());
 
-		return rangeQueryBuilder;
+		SetterUtil.setNotBlankString(
+			untypedRangeQueryBuilder::timeZone, rangeFilter.getTimeZoneId());
+
+		builder.untyped(untypedRangeQueryBuilder.build());
+
+		return builder.build();
 	}
 
 	@Override
-	public QueryBuilder visit(RangeTermFilter rangeTermFilter) {
-		RangeQueryBuilder rangeQueryBuilder = QueryBuilders.rangeQuery(
-			rangeTermFilter.getField());
+	public QueryVariant visit(RangeTermFilter rangeTermFilter) {
+		RangeQuery.Builder builder = QueryBuilders.range();
 
-		rangeQueryBuilder.from(rangeTermFilter.getLowerBound());
-		rangeQueryBuilder.includeLower(rangeTermFilter.isIncludesLower());
-		rangeQueryBuilder.includeUpper(rangeTermFilter.isIncludesUpper());
-		rangeQueryBuilder.to(rangeTermFilter.getUpperBound());
+		TermRangeQuery.Builder termRangeQueryBuilder =
+			new TermRangeQuery.Builder();
 
-		return rangeQueryBuilder;
+		termRangeQueryBuilder.field(rangeTermFilter.getField());
+
+		QueryUtil.setRanges(
+			termRangeQueryBuilder, rangeTermFilter.isIncludesLower(),
+			rangeTermFilter.isIncludesUpper(), rangeTermFilter.getLowerBound(),
+			rangeTermFilter.getUpperBound());
+
+		builder.term(termRangeQueryBuilder.build());
+
+		return builder.build();
 	}
 
 	@Override
-	public QueryBuilder visit(TermFilter termFilter) {
-		return QueryBuilders.termQuery(
-			termFilter.getField(), termFilter.getValue());
+	public QueryVariant visit(TermFilter termFilter) {
+		return TermQuery.of(
+			termQuery -> termQuery.field(
+				termFilter.getField()
+			).value(
+				FieldValue.of(termFilter.getValue())
+			));
 	}
 
 	@Override
-	public QueryBuilder visit(TermsFilter termsFilter) {
+	public QueryVariant visit(TermsFilter termsFilter) {
 		return QueryUtil.translateTerms(
-			termsFilter.getField(), termsFilter.getValues());
+			null, termsFilter.getField(), termsFilter.getValues());
 	}
 
 	@Override
-	public QueryBuilder visit(TermsSetFilter termsSetFilter) {
-		TermsSetQueryBuilder termsSetQueryBuilder = new TermsSetQueryBuilder(
-			termsSetFilter.getFieldName(),
-			ListUtil.toList(termsSetFilter.getValues()));
+	public QueryVariant visit(TermsSetFilter termsSetFilter) {
+		TermsSetQuery.Builder builder = QueryBuilders.termsSet();
 
-		if (!Validator.isBlank(termsSetFilter.getMinimumShouldMatchField())) {
-			termsSetQueryBuilder.setMinimumShouldMatchField(
-				termsSetFilter.getMinimumShouldMatchField());
-		}
+		builder.field(termsSetFilter.getFieldName());
 
-		return termsSetQueryBuilder;
+		SetterUtil.setNotBlankString(
+			builder::minimumShouldMatchField,
+			termsSetFilter.getMinimumShouldMatchField());
+
+		builder.terms(termsSetFilter.getValues());
+
+		return builder.build();
 	}
 
 	@Activate
 	protected void activate() {
-		_queryTranslator = new ElasticsearchQueryTranslator(indexNameBuilder);
+		_queryTranslator = new ElasticsearchQueryTranslator(_indexNameBuilder);
 	}
 
-	protected QueryBuilder translate(BooleanClause<Filter> booleanClause) {
+	protected QueryVariant translate(
+		BooleanClause<Filter> booleanClause,
+		FilterVisitor<QueryVariant> filterVisitor) {
+
 		Filter filter = booleanClause.getClause();
 
-		return filter.accept(this);
+		return filter.accept(filterVisitor);
 	}
 
-	@Reference
-	protected IndexNameBuilder indexNameBuilder;
+	private final GeoTranslator _geoTranslator = new GeoTranslator();
 
-	private QueryTranslator<QueryBuilder> _queryTranslator;
+	@Reference
+	private IndexNameBuilder _indexNameBuilder;
+
+	private QueryTranslator<QueryVariant> _queryTranslator;
 
 }

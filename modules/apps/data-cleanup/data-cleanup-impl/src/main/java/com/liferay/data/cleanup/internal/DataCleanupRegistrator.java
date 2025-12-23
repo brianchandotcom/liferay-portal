@@ -152,6 +152,7 @@ public class DataCleanupRegistrator {
 	private void _registerModuleDataCleanups() {
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
+				"clean-up-module-data-help",
 				"clean-up-amazon-rankings-module-data",
 				"com.liferay.amazon.rankings.web",
 				DataCleanup.MODULE_DATA_CLEANUP,

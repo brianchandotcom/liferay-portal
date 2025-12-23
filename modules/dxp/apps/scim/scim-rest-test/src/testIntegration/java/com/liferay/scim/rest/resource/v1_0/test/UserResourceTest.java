@@ -160,6 +160,14 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 		assertHttpResponseStatusCode(200, httpResponse);
 		assertValid(User.toDTO(httpResponse.getContent()));
 
+		_userLocalService.updateStatus(
+			GetterUtil.getLong(user.getId()), WorkflowConstants.STATUS_INACTIVE,
+			new ServiceContext());
+
+		user = _getUser(user.getId());
+
+		Assert.assertFalse(user.getActive());
+
 		ConfigurationTestUtil.deleteConfiguration(_pid);
 
 		assertHttpResponseStatusCode(

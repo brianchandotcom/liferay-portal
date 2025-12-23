@@ -369,9 +369,9 @@
 			<category name="Upgrade" />
 			<description name="Remove and replaced dependencies in `build.gradle` that are already in `release.dxp.api` with `released.dxp.api` dependency." />
 		</check>
-		<check name="WhitespaceCheck">
+		<check name="GradleWhitespaceCheck">
 			<category name="Styling" />
-			<description name="Finds missing and unnecessary whitespace." />
+			<description name="Finds missing and unnecessary whitespace in `.gradle` files." />
 		</check>
 
 		<!-- Module Source Checks -->

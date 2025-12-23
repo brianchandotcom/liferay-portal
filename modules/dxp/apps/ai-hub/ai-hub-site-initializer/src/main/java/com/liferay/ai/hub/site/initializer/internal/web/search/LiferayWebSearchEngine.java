@@ -95,21 +95,20 @@ public class LiferayWebSearchEngine implements WebSearchEngine {
 
 			// TODO replace http://localhost:8080 with origin's base URL
 
-			String location = HttpComponentsUtil.addParameter(
-				"http://localhost:8080/o/search/v1.0/search", "page",
-				webSearchRequest.startPage());
-
-			location = HttpComponentsUtil.addParameter(
-				location, "pageSize", webSearchRequest.maxResults());
-
-			location = HttpComponentsUtil.addParameter(
-				location, "search", webSearchRequest.searchTerms());
+			String location = "http://localhost:8080/o/search/v1.0/search";
 
 			if (!Validator.isBlank(_blueprintExternalReferenceCode)) {
 				location = HttpComponentsUtil.addParameter(
 					location, "blueprintExternalReferenceCode",
 					_blueprintExternalReferenceCode);
 			}
+
+			location = HttpComponentsUtil.addParameter(
+				location, "page", webSearchRequest.startPage());
+			location = HttpComponentsUtil.addParameter(
+				location, "pageSize", webSearchRequest.maxResults());
+			location = HttpComponentsUtil.addParameter(
+				location, "search", webSearchRequest.searchTerms());
 
 			options.setLocation(location);
 

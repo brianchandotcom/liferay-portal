@@ -1,3 +1,16 @@
 .inline-text-input .form-control-inline {
 	font-size: 28px;
 }
+
+.inline-text-input .form-control-inline:not(:focus) {
+	border-bottom-left-radius: 0;
+	border-top-left-radius: 0;
+}
+
+.inline-text-input .inline-text-border {
+	border-left: 2px solid #9393a4;
+}
+
+.inline-text-input .inline-text-border:focus-within {
+	border-color: transparent;
+}

@@ -170,12 +170,12 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				exportImportDescriptor =
 					registration.getExportImportDescriptor();
 
-			if (!exportImportDescriptor.isStagingSupported()) {
-				return false;
+			if (exportImportDescriptor.isStagingSupported()) {
+				return true;
 			}
 		}
 
-		return true;
+		return false;
 	}
 
 	@Override

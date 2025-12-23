@@ -72,13 +72,13 @@ function getAxisElement(axis) {
 
 	divElement.appendChild(ulElement);
 
-	if (axis.test_class_tasks && axis.test_class_tasks.length > 0) {
-		for (var i = 0; i < axis.test_class_tasks.length; i++) {
+	if (axis.test_tasks && axis.test_tasks.length > 0) {
+		for (var i = 0; i < axis.test_tasks.length; i++) {
 			let liElement = document.createElement("li");
 
 			ulElement.appendChild(liElement);
 
-			liElement.appendChild(getTestClassTaskElement(axis.test_class_tasks[i]));
+			liElement.appendChild(getTestTaskElement(axis.test_tasks[i]));
 		}
 
 		return detailsElement;
@@ -355,12 +355,12 @@ function getTestClassElement(test_class) {
 	return detailsElement;
 }
 
-function getTestClassTaskElement(test_class_task) {
+function getTestTaskElement(test_task) {
 	let detailsElement = createDetailsElement();
 
 	let summaryElement = detailsElement.childNodes[0];
 
-	summaryElement.innerHTML = test_class_task.task_name + " - " + getDurationString(test_class_task.average_duration);
+	summaryElement.innerHTML = test_task.name + " - " + getDurationString(test_task.average_duration);
 	summaryElement.setAttribute("class", "level-5");
 
 	let divElement = detailsElement.childNodes[1];
@@ -369,12 +369,12 @@ function getTestClassTaskElement(test_class_task) {
 
 	divElement.appendChild(ulElement);
 
-	for (var i = 0; i < test_class_task.test_classes.length; i++) {
+	for (var i = 0; i < test_task.test_classes.length; i++) {
 		let liElement = document.createElement("li");
 
 		ulElement.appendChild(liElement);
 
-		liElement.appendChild(getTestClassElement(test_class_task.test_classes[i]));
+		liElement.appendChild(getTestClassElement(test_task.test_classes[i]));
 	}
 
 	return detailsElement;

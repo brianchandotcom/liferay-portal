@@ -3771,37 +3771,13 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static boolean isCINode() {
-		if (_ciNode != null) {
-			return _ciNode;
-		}
-
-		if (!isNullOrEmpty(System.getenv("JENKINS_HOME"))) {
-			_ciNode = true;
-
-			return _ciNode;
-		}
-
-		String hostName = getHostName("");
-
-		try {
-			List<String> jenkinsNodes = getJenkinsNodes();
-
-			String hostNameSuffix = ".lax.liferay.com";
-
-			if (hostName.endsWith(hostNameSuffix)) {
-				hostName = hostName.substring(
-					0, hostName.length() - hostNameSuffix.length());
-			}
-
-			if (jenkinsNodes.contains(hostName)) {
-				_ciNode = true;
-			}
-			else {
+		if (_ciNode == null) {
+			if (isNullOrEmpty(System.getenv("JENKINS_URL"))) {
 				_ciNode = false;
 			}
-		}
-		catch (Exception exception) {
-			_ciNode = false;
+			else {
+				_ciNode = true;
+			}
 		}
 
 		return _ciNode;

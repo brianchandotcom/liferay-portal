@@ -5,7 +5,6 @@
 
 package com.liferay.exportimport.content.processor;
 
-import com.liferay.exportimport.content.processor.constants.ExportImportContentProcessorConstants;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.osgi.util.StringPlus;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -117,9 +116,7 @@ public class ExportImportContentProcessorRegistryUtil {
 				_bundleContext.getService(serviceReference);
 
 			List<String> contentProcessorTypes = StringPlus.asList(
-				serviceReference.getProperty(
-					ExportImportContentProcessorConstants.
-						CONTENT_PROCESSOR_TYPE));
+				serviceReference.getProperty("content.processor.type"));
 
 			for (String processorType : contentProcessorTypes) {
 				_contentProcessorTypeExportImportContentProcessors.put(
@@ -157,9 +154,7 @@ public class ExportImportContentProcessorRegistryUtil {
 			_bundleContext.ungetService(serviceReference);
 
 			List<String> contentProcessorTypes = StringPlus.asList(
-				serviceReference.getProperty(
-					ExportImportContentProcessorConstants.
-						CONTENT_PROCESSOR_TYPE));
+				serviceReference.getProperty("content.processor.type"));
 
 			for (String contentProcessorType : contentProcessorTypes) {
 				_contentProcessorTypeExportImportContentProcessors.remove(

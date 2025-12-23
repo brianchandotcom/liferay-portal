@@ -628,12 +628,9 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 		JSONObject linkJSONObject = itemConfigJSONObject.getJSONObject("link");
 
-		if (linkJSONObject.has("layout")) {
-			_assertLayoutJSONObject(
-				externalReferenceCode, groupId, layoutId,
-				scopeExternalReferenceCode,
-				linkJSONObject.getJSONObject("layout"));
-		}
+		_assertLayoutJSONObject(
+			externalReferenceCode, groupId, layoutId,
+			scopeExternalReferenceCode, linkJSONObject.getJSONObject("layout"));
 	}
 
 	private void _assertFormContainerSuccessMessage(

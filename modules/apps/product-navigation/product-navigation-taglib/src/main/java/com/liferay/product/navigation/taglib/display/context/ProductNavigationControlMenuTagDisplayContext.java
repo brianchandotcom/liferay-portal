@@ -91,34 +91,6 @@ public class ProductNavigationControlMenuTagDisplayContext {
 		return _productNavigationControlMenuEntriesMap;
 	}
 
-	public boolean hasControlMenuEntries() {
-		Map<String, List<ProductNavigationControlMenuEntry>>
-			productNavigationControlMenuEntriesMap =
-				getProductNavigationControlMenuEntriesMap();
-
-		for (Map.Entry<String, List<ProductNavigationControlMenuEntry>> entry :
-				productNavigationControlMenuEntriesMap.entrySet()) {
-
-			List<ProductNavigationControlMenuEntry>
-				productNavigationControlMenuEntries = entry.getValue();
-
-			if (!productNavigationControlMenuEntries.isEmpty()) {
-				for (ProductNavigationControlMenuEntry
-						productNavigationControlMenuEntry :
-							productNavigationControlMenuEntries) {
-
-					if (productNavigationControlMenuEntry.isRelevant(
-							_httpServletRequest)) {
-
-						return true;
-					}
-				}
-			}
-		}
-
-		return false;
-	}
-
 	public void writeProductNavigationControlMenuEntries(Writer writer)
 		throws Exception {
 

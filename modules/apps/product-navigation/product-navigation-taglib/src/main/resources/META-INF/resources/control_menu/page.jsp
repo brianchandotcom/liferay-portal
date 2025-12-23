@@ -13,7 +13,7 @@ boolean applicationsMenuApp = GetterUtil.getBoolean(request.getAttribute("lifera
 ProductNavigationControlMenuTagDisplayContext productNavigationControlMenuTagDisplayContext = new ProductNavigationControlMenuTagDisplayContext(request, pageContext);
 %>
 
-<c:if test="<%= productNavigationControlMenuTagDisplayContext.hasControlMenuEntries() %>">
+<c:if test="<%= themeDisplay.isShowControlMenu() %>">
 	<nav aria-label="<%= LanguageUtil.get(request, "control-menu") %>" class="cadmin control-menu-container">
 		<liferay-util:dynamic-include key="com.liferay.product.navigation.taglib#/page.jsp#pre" />
 

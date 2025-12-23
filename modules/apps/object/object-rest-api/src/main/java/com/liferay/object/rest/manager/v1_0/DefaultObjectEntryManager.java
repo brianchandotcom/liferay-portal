@@ -56,21 +56,12 @@ public interface DefaultObjectEntryManager extends ObjectEntryManager {
 
 	public ObjectEntry copyObjectEntryByVersion(
 			DTOConverterContext dtoConverterContext,
-			ObjectDefinition objectDefinition, long objectEntryId, int version)
-		throws Exception;
-
-	public ObjectEntry copyObjectEntryByVersion(
-			DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,
 			String scopeKey, int version)
 		throws Exception;
 
 	public void deleteObjectEntry(
 			ObjectDefinition objectDefinition, long objectEntryId)
-		throws Exception;
-
-	public void deleteObjectEntryByVersion(
-			ObjectDefinition objectDefinition, long objectEntryId, int version)
 		throws Exception;
 
 	public void deleteObjectEntryByVersion(
@@ -114,11 +105,6 @@ public interface DefaultObjectEntryManager extends ObjectEntryManager {
 			DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,
 			String scopeKey)
-		throws Exception;
-
-	public ObjectEntry expireObjectEntryByVersion(
-			DTOConverterContext dtoConverterContext,
-			ObjectDefinition objectDefinition, long objectEntryId, int version)
 		throws Exception;
 
 	public ObjectEntry expireObjectEntryByVersion(
@@ -170,11 +156,6 @@ public interface DefaultObjectEntryManager extends ObjectEntryManager {
 		throws Exception;
 
 	public ObjectEntry getObjectEntryByVersion(
-			DTOConverterContext dtoConverterContext, Long objectEntryId,
-			int version)
-		throws Exception;
-
-	public ObjectEntry getObjectEntryByVersion(
 			DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,
 			String scopeKey, int version)
@@ -215,12 +196,6 @@ public interface DefaultObjectEntryManager extends ObjectEntryManager {
 
 	public Page<ObjectEntry> getVersionedObjectEntries(
 			DTOConverterContext dtoConverterContext,
-			ObjectDefinition objectDefinition, long objectEntryId,
-			Pagination pagination, Sort[] sorts)
-		throws Exception;
-
-	public Page<ObjectEntry> getVersionedObjectEntries(
-			DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,
 			String scopeKey, Pagination pagination, Sort[] sorts)
 		throws Exception;
@@ -253,11 +228,6 @@ public interface DefaultObjectEntryManager extends ObjectEntryManager {
 			DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,
 			String scopeKey)
-		throws Exception;
-
-	public ObjectEntry restoreObjectEntryByVersion(
-			DTOConverterContext dtoConverterContext,
-			ObjectDefinition objectDefinition, long objectEntryId, int version)
 		throws Exception;
 
 	public ObjectEntry restoreObjectEntryByVersion(

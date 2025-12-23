@@ -6,7 +6,6 @@
 package com.liferay.portal.vulcan.internal.template.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
@@ -55,7 +54,7 @@ public class RESTClientTemplateContextContributorTest {
 		bundle.start();
 
 		try {
-			JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			String friendlyUrlPath = HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(
 					"name", RandomTestUtil.randomString()
 				).put(
@@ -64,26 +63,39 @@ public class RESTClientTemplateContextContributorTest {
 				).put(
 					"templateType", "site-initializer"
 				).toString(),
-				"headless-admin-site/v1.0/sites", Http.Method.POST);
+				"headless-admin-site/v1.0/sites", Http.Method.POST
+			).getString(
+				"friendlyUrlPath"
+			);
 
 			HTTPTestUtil.customize(
 			).withoutModulePath(
 			).apply(
-				() -> Assert.assertThat(
-					HTTPTestUtil.invokeToString(
-						null,
-						"web" + jsonObject.getString("friendlyUrlPath") +
-							"/portal-vulcan-test?pageSize=2",
-						Http.Method.GET),
-					CoreMatchers.allOf(
-						CoreMatchers.containsString("Name: spain."),
-						CoreMatchers.containsString("Page Size (default): 20."),
-						CoreMatchers.containsString("Page Size (query): 1.")))
+				() -> _test(friendlyUrlPath)
+			);
+
+			HTTPTestUtil.customize(
+			).withoutModulePath(
+			).withGuest(
+			).apply(
+				() -> _test(friendlyUrlPath)
 			);
 		}
 		finally {
 			bundle.uninstall();
 		}
+	}
+
+	private void _test(String friendlyUrlPath) throws Exception {
+		Assert.assertThat(
+			HTTPTestUtil.invokeToString(
+				null,
+				"web" + friendlyUrlPath + "/portal-vulcan-test?pageSize=2",
+				Http.Method.GET),
+			CoreMatchers.allOf(
+				CoreMatchers.containsString("Name: spain."),
+				CoreMatchers.containsString("Page Size (default): 20."),
+				CoreMatchers.containsString("Page Size (query): 1.")));
 	}
 
 	private InputStream _toInputStream() throws Exception {

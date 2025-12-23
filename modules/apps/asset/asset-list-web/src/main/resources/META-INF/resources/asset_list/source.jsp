@@ -35,15 +35,7 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 
 			<%
 			for (long classNameId : editAssetListDisplayContext.getAvailableClassNameIds()) {
-				ClassName className = ClassNameLocalServiceUtil.getClassName(classNameId);
-
-				String itemTypeLabel = ResourceActionsUtil.getModelResource(locale, className.getValue());
-
-				ObjectDefinition objectDefinition = ObjectDefinitionLocalServiceUtil.fetchObjectDefinitionByClassName(company.getCompanyId(), className.getValue());
-
-				if ((objectDefinition != null) && objectDefinition.isCMS()) {
-					itemTypeLabel = StringUtil.appendParentheticalSuffix(itemTypeLabel, "CMS");
-				}
+				String itemTypeLabel = _getItemTypeLabel(ClassNameLocalServiceUtil.getClassName(classNameId), locale, company);
 
 				if (Arrays.binarySearch(classNameIds, classNameId) < 0) {
 					typesLeftList.add(new KeyValuePair(String.valueOf(classNameId), itemTypeLabel));
@@ -74,17 +66,7 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 	List<KeyValuePair> typesRightList = new ArrayList<KeyValuePair>();
 
 	for (long classNameId : editAssetListDisplayContext.getClassNameIds()) {
-		ClassName className = ClassNameLocalServiceUtil.getClassName(classNameId);
-
-		String itemTypeLabel = ResourceActionsUtil.getModelResource(locale, className.getValue());
-
-		ObjectDefinition objectDefinition = ObjectDefinitionLocalServiceUtil.fetchObjectDefinitionByClassName(company.getCompanyId(), className.getValue());
-
-		if ((objectDefinition != null) && objectDefinition.isCMS()) {
-			itemTypeLabel = StringUtil.appendParentheticalSuffix(itemTypeLabel, "CMS");
-		}
-
-		typesRightList.add(new KeyValuePair(String.valueOf(classNameId), itemTypeLabel));
+		typesRightList.add(new KeyValuePair(String.valueOf(classNameId), _getItemTypeLabel(ClassNameLocalServiceUtil.getClassName(classNameId), locale, company)));
 	}
 	%>
 
@@ -339,3 +321,17 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 	%>'
 	module="{Source} from asset-list-web"
 />
+
+<%!
+private String _getItemTypeLabel(ClassName className, Locale locale, Company company) {
+	String itemTypeLabel = ResourceActionsUtil.getModelResource(locale, className.getValue());
+
+	ObjectDefinition objectDefinition = ObjectDefinitionLocalServiceUtil.fetchObjectDefinitionByClassName(company.getCompanyId(), className.getValue());
+
+	if ((objectDefinition != null) && objectDefinition.isCMS()) {
+		itemTypeLabel = StringUtil.appendParentheticalSuffix(itemTypeLabel, "CMS");
+	}
+
+	return itemTypeLabel;
+}
+%>

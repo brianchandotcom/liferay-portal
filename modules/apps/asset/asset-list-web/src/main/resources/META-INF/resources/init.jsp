@@ -66,6 +66,7 @@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.exception.NoSuchModelException" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.ClassName" %><%@
+page import="com.liferay.portal.kernel.model.Company" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.security.permission.ResourceActionsUtil" %><%@
@@ -95,6 +96,7 @@ page import="com.liferay.taglib.search.ResultRow" %>
 page import="java.util.Arrays" %><%@
 page import="java.util.Date" %><%@
 page import="java.util.List" %><%@
+page import="java.util.Locale" %><%@
 page import="java.util.Map" %><%@
 page import="java.util.Objects" %>
 

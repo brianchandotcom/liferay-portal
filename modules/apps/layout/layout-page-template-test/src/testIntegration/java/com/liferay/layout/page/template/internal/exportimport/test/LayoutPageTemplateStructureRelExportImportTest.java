@@ -647,24 +647,15 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		JSONObject successMessageJSONObject =
 			itemConfigJSONObject.getJSONObject("successMessage");
 
-		JSONObject layoutJSONObject = successMessageJSONObject.getJSONObject(
-			"layout");
-
 		_assertLayoutJSONObject(
 			externalReferenceCode, groupId, layoutId,
-			scopeExternalReferenceCode, layoutJSONObject);
+			scopeExternalReferenceCode,
+			successMessageJSONObject.getJSONObject("layout"));
 	}
 
 	private void _assertLayoutJSONObject(
 		String externalReferenceCode, long groupId, long layoutId,
 		String scopeExternalReferenceCode, JSONObject layoutJSONObject) {
-
-		if (groupId > 0) {
-			Assert.assertEquals(groupId, layoutJSONObject.getLong("groupId"));
-		}
-		else {
-			Assert.assertFalse(layoutJSONObject.has("groupId"));
-		}
 
 		if (Validator.isNotNull(externalReferenceCode)) {
 			Assert.assertEquals(
@@ -673,6 +664,13 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		}
 		else {
 			Assert.assertFalse(layoutJSONObject.has("externalReferenceCode"));
+		}
+
+		if (groupId > 0) {
+			Assert.assertEquals(groupId, layoutJSONObject.getLong("groupId"));
+		}
+		else {
+			Assert.assertFalse(layoutJSONObject.has("groupId"));
 		}
 
 		if (layoutId > 0) {

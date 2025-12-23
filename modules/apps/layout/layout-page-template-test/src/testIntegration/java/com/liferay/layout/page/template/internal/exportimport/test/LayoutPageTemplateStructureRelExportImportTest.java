@@ -131,14 +131,10 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 		_updateLayoutStructureItem(
 			itemId,
-			jsonObject -> {
-				jsonObject.put(
-					"collection",
-					_createCollectionJSONObject(
-						assetListEntry2.getAssetListEntryId(), null, null));
-
-				return jsonObject;
-			});
+			jsonObject -> jsonObject.put(
+				"collection",
+				_createCollectionJSONObject(
+					assetListEntry2.getAssetListEntryId(), null, null)));
 
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
@@ -151,14 +147,9 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 		_updateLayoutStructureItem(
 			itemId,
-			jsonObject -> {
-				jsonObject.put(
-					"collection",
-					_createCollectionJSONObject(
-						0, externalReferenceCode, null));
-
-				return jsonObject;
-			});
+			jsonObject -> jsonObject.put(
+				"collection",
+				_createCollectionJSONObject(0, externalReferenceCode, null)));
 
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
@@ -171,14 +162,10 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 		_updateLayoutStructureItem(
 			itemId,
-			jsonObject -> {
-				jsonObject.put(
-					"collection",
-					_createCollectionJSONObject(
-						0, assetListEntry3.getExternalReferenceCode(), null));
-
-				return jsonObject;
-			});
+			jsonObject -> jsonObject.put(
+				"collection",
+				_createCollectionJSONObject(
+					0, assetListEntry3.getExternalReferenceCode(), null)));
 
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
@@ -195,15 +182,11 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 		_updateLayoutStructureItem(
 			itemId,
-			jsonObject -> {
-				jsonObject.put(
-					"collection",
-					_createCollectionJSONObject(
-						0, assetListEntry4.getExternalReferenceCode(),
-						guestGroup.getExternalReferenceCode()));
-
-				return jsonObject;
-			});
+			jsonObject -> jsonObject.put(
+				"collection",
+				_createCollectionJSONObject(
+					0, assetListEntry4.getExternalReferenceCode(),
+					guestGroup.getExternalReferenceCode())));
 
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
@@ -376,14 +359,13 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 		_updateLayoutStructureItem(
 			itemId,
-			jsonObject1 -> {
-				JSONObject layoutJSONObject = _createLayoutJSONObject(
-					null, group.getGroupId(), layout1.getLayoutId(),
-					layout1.getUuid(), layout1.isPrivateLayout(), null);
-
-				return jsonObject1.put(
-					"link", JSONUtil.put("layout", layoutJSONObject));
-			});
+			jsonObject1 -> jsonObject1.put(
+				"link",
+				JSONUtil.put(
+					"layout",
+					_createLayoutJSONObject(
+						null, group.getGroupId(), layout1.getLayoutId(),
+						layout1.getUuid(), layout1.isPrivateLayout(), null))));
 
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());

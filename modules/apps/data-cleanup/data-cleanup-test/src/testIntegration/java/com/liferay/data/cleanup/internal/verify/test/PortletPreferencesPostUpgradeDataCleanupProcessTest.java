@@ -11,12 +11,10 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upgrade.data.cleanup.util.OrphanReferencesDataCleanupUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.tools.DBUpgrader;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -37,38 +35,6 @@ import org.osgi.framework.Bundle;
 @RunWith(Arquillian.class)
 public class PortletPreferencesPostUpgradeDataCleanupProcessTest
 	extends BasePostUpgradeDataCleanupProcessTestCase {
-
-	@Test
-	public void testExecutionWithUpgradeClientDisplaysNotFullyExecutedMessage()
-		throws Exception {
-
-		AtomicReference<Boolean> originalUpgradeClient =
-			new AtomicReference<>();
-
-		test(
-			logCapture -> {
-				List<String> messages = logCapture.getMessages();
-
-				Assert.assertTrue(
-					messages.toString(),
-					messages.contains(
-						StringBundler.concat(
-							"Orphan Portlet table entries and portletId ",
-							"references in PortletPreferences table are not ",
-							"checked when executing the Database Upgrade ",
-							"Tool")));
-			},
-			() -> {
-				if (originalUpgradeClient.get() != null) {
-					ReflectionTestUtil.setFieldValue(
-						DBUpgrader.class, "_upgradeClient",
-						originalUpgradeClient.get());
-				}
-			},
-			() -> originalUpgradeClient.set(
-				ReflectionTestUtil.getAndSetFieldValue(
-					DBUpgrader.class, "_upgradeClient", true)));
-	}
 
 	@Test
 	public void testInstanceScopedPortletPreferenceLinkedToLiferayPortletIsNotDeleted()
@@ -162,45 +128,6 @@ public class PortletPreferencesPostUpgradeDataCleanupProcessTest
 	}
 
 	@Test
-	public void testInstanceScopedPortletPreferenceLinkedToNotFoundLiferayPortletIsNotDeletedWithUpgradeClient()
-		throws Exception {
-
-		AtomicReference<Boolean> originalUpgradeClient =
-			new AtomicReference<>();
-
-		String portletId = StringBundler.concat(
-			"com.liferay.", RandomTestUtil.randomString(), "_INSTANCE_",
-			RandomTestUtil.randomString());
-
-		test(
-			logCapture -> {
-				List<String> messages = logCapture.getMessages();
-
-				Assert.assertFalse(
-					messages.toString(), messages.contains(portletId));
-
-				Assert.assertTrue(_existsPortletPreference(portletId));
-			},
-			() -> {
-				if (originalUpgradeClient.get() != null) {
-					ReflectionTestUtil.setFieldValue(
-						DBUpgrader.class, "_upgradeClient",
-						originalUpgradeClient.get());
-				}
-
-				_deletePortletPreference(portletId);
-			},
-			() -> {
-				_addPortletPreference(0, portletId);
-
-				originalUpgradeClient.set(
-					ReflectionTestUtil.getAndSetFieldValue(
-						DBUpgrader.class, "_upgradeClient", true));
-			},
-			OrphanReferencesDataCleanupUtil.class.getName());
-	}
-
-	@Test
 	public void testNonliferayPortletIsNotDeleted() throws Exception {
 		String portletId =
 			"com.test.not.liferay." + RandomTestUtil.randomString();
@@ -260,42 +187,6 @@ public class PortletPreferencesPostUpgradeDataCleanupProcessTest
 				Assert.assertTrue(_existsPortlet(portletId));
 			},
 			() -> _deletePortlet(portletId), () -> _addPortlet(portletId));
-	}
-
-	@Test
-	public void testNotFoundLiferayPortletIsNotDeletedWithUpgradeClient()
-		throws Exception {
-
-		AtomicReference<Boolean> originalUpgradeClient =
-			new AtomicReference<>();
-		String portletId = "com.liferay." + RandomTestUtil.randomString();
-
-		test(
-			logCapture -> {
-				List<String> messages = logCapture.getMessages();
-
-				Assert.assertFalse(
-					messages.toString(), messages.contains(portletId));
-
-				Assert.assertTrue(_existsPortlet(portletId));
-			},
-			() -> {
-				if (originalUpgradeClient.get() != null) {
-					ReflectionTestUtil.setFieldValue(
-						DBUpgrader.class, "_upgradeClient",
-						originalUpgradeClient.get());
-				}
-
-				_deletePortlet(portletId);
-			},
-			() -> {
-				_addPortlet(portletId);
-
-				originalUpgradeClient.set(
-					ReflectionTestUtil.getAndSetFieldValue(
-						DBUpgrader.class, "_upgradeClient", true));
-			},
-			OrphanReferencesDataCleanupUtil.class.getName());
 	}
 
 	@Test
@@ -384,58 +275,6 @@ public class PortletPreferencesPostUpgradeDataCleanupProcessTest
 			},
 			() -> _deletePortletPreference(portletId),
 			() -> _addPortletPreference(plid, portletId),
-			OrphanReferencesDataCleanupUtil.class.getName());
-	}
-
-	@Test
-	public void testPortletPreferenceLinkedToNonexistentLayoutIsDeletedWithUpgradeClient()
-		throws Exception {
-
-		AtomicReference<Boolean> originalUpgradeClient =
-			new AtomicReference<>();
-
-		List<Portlet> portlets = PortletLocalServiceUtil.getPortlets();
-
-		Portlet portlet = portlets.get(0);
-
-		String portletId = portlet.getPortletId();
-
-		long plid = RandomTestUtil.nextLong();
-
-		test(
-			logCapture -> {
-				List<String> messages = logCapture.getMessages();
-
-				Assert.assertTrue(
-					messages.toString(),
-					messages.contains(
-						StringBundler.concat(
-							"Table ",
-							dbInspector.normalizeName("PortletPreferences"),
-							", 1 row deleted because ",
-							dbInspector.normalizeName("plid"), " ", plid,
-							" was not found in column ",
-							dbInspector.normalizeName("plid"), " from table ",
-							dbInspector.normalizeName("Layout"))));
-
-				Assert.assertFalse(_existsPortletPreference(portletId));
-			},
-			() -> {
-				if (originalUpgradeClient.get() != null) {
-					ReflectionTestUtil.setFieldValue(
-						DBUpgrader.class, "_upgradeClient",
-						originalUpgradeClient.get());
-				}
-
-				_deletePortletPreference(portletId);
-			},
-			() -> {
-				_addPortletPreference(plid, portletId);
-
-				originalUpgradeClient.set(
-					ReflectionTestUtil.getAndSetFieldValue(
-						DBUpgrader.class, "_upgradeClient", true));
-			},
 			OrphanReferencesDataCleanupUtil.class.getName());
 	}
 
@@ -531,42 +370,6 @@ public class PortletPreferencesPostUpgradeDataCleanupProcessTest
 	}
 
 	@Test
-	public void testPortletPreferenceLinkedToNotFoundLiferayPortletIsNotDeletedWithUpgradeClient()
-		throws Exception {
-
-		AtomicReference<Boolean> originalUpgradeClient =
-			new AtomicReference<>();
-		String portletId = "com.liferay." + RandomTestUtil.randomString();
-
-		test(
-			logCapture -> {
-				List<String> messages = logCapture.getMessages();
-
-				Assert.assertFalse(
-					messages.toString(), messages.contains(portletId));
-
-				Assert.assertTrue(_existsPortletPreference(portletId));
-			},
-			() -> {
-				if (originalUpgradeClient.get() != null) {
-					ReflectionTestUtil.setFieldValue(
-						DBUpgrader.class, "_upgradeClient",
-						originalUpgradeClient.get());
-				}
-
-				_deletePortletPreference(portletId);
-			},
-			() -> {
-				_addPortletPreference(0, portletId);
-
-				originalUpgradeClient.set(
-					ReflectionTestUtil.getAndSetFieldValue(
-						DBUpgrader.class, "_upgradeClient", true));
-			},
-			OrphanReferencesDataCleanupUtil.class.getName());
-	}
-
-	@Test
 	public void testPortletPreferenceValueLinkedToNonexistentPortletPreferenceIsDeleted()
 		throws Exception {
 
@@ -595,55 +398,6 @@ public class PortletPreferencesPostUpgradeDataCleanupProcessTest
 			},
 			() -> _deletePortletPreferenceValue(portletPreferencesId),
 			() -> _addPortletPreferenceValue(portletPreferencesId),
-			OrphanReferencesDataCleanupUtil.class.getName());
-	}
-
-	@Test
-	public void testPortletPreferenceValueLinkedToNonexistentPortletPreferenceIsDeletedWithUpgradeClient()
-		throws Exception {
-
-		AtomicReference<Boolean> originalUpgradeClient =
-			new AtomicReference<>();
-
-		long portletPreferencesId = RandomTestUtil.nextLong();
-
-		test(
-			logCapture -> {
-				List<String> messages = logCapture.getMessages();
-
-				Assert.assertTrue(
-					messages.toString(),
-					messages.contains(
-						StringBundler.concat(
-							"Table ",
-							dbInspector.normalizeName("PortletPreferenceValue"),
-							", 1 row deleted because ",
-							dbInspector.normalizeName("portletPreferencesId"),
-							" ", portletPreferencesId,
-							" was not found in column ",
-							dbInspector.normalizeName("portletPreferencesId"),
-							" from table ",
-							dbInspector.normalizeName("PortletPreferences"))));
-
-				Assert.assertFalse(
-					_existsPortletPreferenceValue(portletPreferencesId));
-			},
-			() -> {
-				if (originalUpgradeClient.get() != null) {
-					ReflectionTestUtil.setFieldValue(
-						DBUpgrader.class, "_upgradeClient",
-						originalUpgradeClient.get());
-				}
-
-				_deletePortletPreferenceValue(portletPreferencesId);
-			},
-			() -> {
-				_addPortletPreferenceValue(portletPreferencesId);
-
-				originalUpgradeClient.set(
-					ReflectionTestUtil.getAndSetFieldValue(
-						DBUpgrader.class, "_upgradeClient", true));
-			},
 			OrphanReferencesDataCleanupUtil.class.getName());
 	}
 
@@ -758,45 +512,6 @@ public class PortletPreferencesPostUpgradeDataCleanupProcessTest
 			},
 			() -> _deletePortletPreference(portletId),
 			() -> _addPortletPreference(0, portletId),
-			OrphanReferencesDataCleanupUtil.class.getName());
-	}
-
-	@Test
-	public void testUserScopedPortletPreferenceLinkedToNotFoundLiferayPortletIsNotDeletedWithUpgradeClient()
-		throws Exception {
-
-		AtomicReference<Boolean> originalUpgradeClient =
-			new AtomicReference<>();
-
-		String portletId = StringBundler.concat(
-			"com.liferay.", RandomTestUtil.randomString(), "_USER_",
-			RandomTestUtil.randomString());
-
-		test(
-			logCapture -> {
-				List<String> messages = logCapture.getMessages();
-
-				Assert.assertFalse(
-					messages.toString(), messages.contains(portletId));
-
-				Assert.assertTrue(_existsPortletPreference(portletId));
-			},
-			() -> {
-				if (originalUpgradeClient.get() != null) {
-					ReflectionTestUtil.setFieldValue(
-						DBUpgrader.class, "_upgradeClient",
-						originalUpgradeClient.get());
-				}
-
-				_deletePortletPreference(portletId);
-			},
-			() -> {
-				_addPortletPreference(0, portletId);
-
-				originalUpgradeClient.set(
-					ReflectionTestUtil.getAndSetFieldValue(
-						DBUpgrader.class, "_upgradeClient", true));
-			},
 			OrphanReferencesDataCleanupUtil.class.getName());
 	}
 

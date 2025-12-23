@@ -2106,6 +2106,8 @@ public class BatchEnginePortletDataHandlerTest {
 
 			_function = function;
 			_portletId = portletId;
+
+			_stagingSupported = true;
 		}
 
 		public TestExportImportVulcanBatchEngineTaskItemDelegate(
@@ -2255,13 +2257,11 @@ public class BatchEnginePortletDataHandlerTest {
 			};
 		}
 
-		private static String _modelClassName = RandomTestUtil.randomString();
-		private static String _resourceClassName =
-			RandomTestUtil.randomString();
-		private static boolean _stagingSupported = true;
-
 		private final Function<Filter, Page<TestItem>> _function;
+		private final String _modelClassName = RandomTestUtil.randomString();
 		private final String _portletId;
+		private final String _resourceClassName = RandomTestUtil.randomString();
+		private final boolean _stagingSupported;
 
 	}
 

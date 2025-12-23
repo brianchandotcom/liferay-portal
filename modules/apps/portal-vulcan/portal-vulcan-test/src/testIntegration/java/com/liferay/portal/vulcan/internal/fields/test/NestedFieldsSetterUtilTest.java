@@ -405,7 +405,7 @@ public class NestedFieldsSetterUtilTest {
 	}
 
 	@Path("/v1.0")
-	public static abstract class BaseProductResource_v1_0_Impl
+	public abstract static class BaseProductResource_v1_0_Impl
 		implements ProductResource_v1_0,
 				   VulcanBatchEngineTaskItemDelegate<Product> {
 
@@ -538,7 +538,7 @@ public class NestedFieldsSetterUtilTest {
 	}
 
 	@Path("/v2.0")
-	public static abstract class BaseProductResource_v2_0_Impl
+	public abstract static class BaseProductResource_v2_0_Impl
 		implements ProductResource_v2_0,
 				   VulcanBatchEngineTaskItemDelegate<Product> {
 

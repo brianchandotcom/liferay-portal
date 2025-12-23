@@ -261,8 +261,7 @@ public class LiferayMethodDataFetchingProcessor {
 					(Object[])Array.newInstance(
 						parameterType.getComponentType(), 0));
 			}
-
-			if (argument instanceof Map) {
+			else if (argument instanceof Map) {
 				ObjectMapper objectMapper = ObjectMapperHolder._objectMapper;
 
 				argument = objectMapper.convertValue(

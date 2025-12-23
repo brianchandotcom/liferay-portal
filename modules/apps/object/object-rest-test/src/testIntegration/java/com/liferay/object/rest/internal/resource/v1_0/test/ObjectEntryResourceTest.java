@@ -5688,6 +5688,26 @@ public class ObjectEntryResourceTest {
 
 		_testGetNestedFieldDetailsInRelationshipsWithoutPermission();
 
+		// Many to one relationship, custom and system object definitions
+
+		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
+			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
+			_userSystemObjectDefinition, _objectDefinition1,
+			_userAccountJSONObject.getLong("id"), _objectEntry1.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_testGetNestedFieldDetailsInRelationshipsWithoutPermission();
+
+		// Many to one relationship, custom object definitions
+
+		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
+			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
+			_objectDefinition2, _objectDefinition1,
+			_objectEntry2.getPrimaryKey(), _objectEntry1.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_testGetNestedFieldDetailsInRelationshipsWithoutPermission();
+
 		// One to many relationship, custom and system object definitions
 
 		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
@@ -16699,10 +16719,13 @@ public class ObjectEntryResourceTest {
 						_objectDefinition1),
 					Http.Method.GET);
 
-				Assert.assertEquals(
-					"[]",
-					String.valueOf(
+				Assert.assertTrue(
+					JSONUtil.isEmpty(
 						jsonObject.getJSONArray(
+							_objectRelationship1.getName())));
+				Assert.assertTrue(
+					JSONUtil.isEmpty(
+						jsonObject.getJSONObject(
 							_objectRelationship1.getName())));
 			}
 		);

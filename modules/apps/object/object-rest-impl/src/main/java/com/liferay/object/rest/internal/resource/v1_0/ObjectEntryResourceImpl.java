@@ -26,6 +26,7 @@ import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.tree.Edge;
@@ -106,6 +107,7 @@ public class ObjectEntryResourceImpl
 		ObjectDefinition objectDefinition,
 		Map<Long, ObjectDefinition> objectDefinitions,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
+		ObjectEntryService objectEntryService,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectEntryManagerRegistry objectEntryManagerRegistry,
 		ObjectFieldLocalService objectFieldLocalService,
@@ -119,6 +121,7 @@ public class ObjectEntryResourceImpl
 		_objectDefinition = objectDefinition;
 		_objectDefinitions = objectDefinitions;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
+		_objectEntryService = objectEntryService;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectEntryManagerRegistry = objectEntryManagerRegistry;
 		_objectFieldLocalService = objectFieldLocalService;
@@ -1072,7 +1075,7 @@ public class ObjectEntryResourceImpl
 		}
 
 		com.liferay.object.model.ObjectEntry objectEntry =
-			_objectEntryLocalService.getObjectEntry(objectEntryId);
+			_objectEntryService.getObjectEntry(objectEntryId);
 
 		List<Map<String, String>> failureMessages = new LinkedList<>();
 		List<String> successMessages = new ArrayList<>();
@@ -1762,6 +1765,7 @@ public class ObjectEntryResourceImpl
 	private final Map<Long, ObjectDefinition> _objectDefinitions;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectEntryManagerRegistry _objectEntryManagerRegistry;
+	private final ObjectEntryService _objectEntryService;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;

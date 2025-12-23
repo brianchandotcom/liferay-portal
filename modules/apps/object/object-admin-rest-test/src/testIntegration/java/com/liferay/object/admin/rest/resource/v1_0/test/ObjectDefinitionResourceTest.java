@@ -2197,33 +2197,6 @@ public class ObjectDefinitionResourceTest
 			expectedObjectDefinitions, (List<ObjectDefinition>)page.getItems());
 	}
 
-	private void _testGetObjectDefinitionsPage(
-			ObjectDefinition expectedObjectDefinition, Locale locale,
-			String search)
-		throws Exception {
-
-		User user = testVulcanCRUDItemDelegate_getUser();
-
-		ObjectDefinitionResource objectDefinitionResource =
-			ObjectDefinitionResource.builder(
-			).authentication(
-				user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
-			).endpoint(
-				testCompany.getVirtualHostname(), 8080, "http"
-			).locale(
-				locale
-			).build();
-
-		Page<ObjectDefinition> page =
-			objectDefinitionResource.getObjectDefinitionsPage(
-				search, null, null, Pagination.of(1, 2), null);
-
-		Assert.assertTrue(
-			_contains(
-				expectedObjectDefinition,
-				(List<ObjectDefinition>)page.getItems()));
-	}
-
 	private void _assertNotFound(JSONObject jsonObject) {
 		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
 		Assert.assertNull(jsonObject.get("title"));
@@ -2661,6 +2634,33 @@ public class ObjectDefinitionResourceTest
 		Assert.assertEquals(
 			"/o/c/" + objectDefinitionPluralName,
 			objectDefinition.getRestContextPath());
+	}
+
+	private void _testGetObjectDefinitionsPage(
+			ObjectDefinition expectedObjectDefinition, Locale locale,
+			String search)
+		throws Exception {
+
+		User user = testVulcanCRUDItemDelegate_getUser();
+
+		ObjectDefinitionResource objectDefinitionResource =
+			ObjectDefinitionResource.builder(
+			).authentication(
+				user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).locale(
+				locale
+			).build();
+
+		Page<ObjectDefinition> page =
+			objectDefinitionResource.getObjectDefinitionsPage(
+				search, null, null, Pagination.of(1, 2), null);
+
+		Assert.assertTrue(
+			_contains(
+				expectedObjectDefinition,
+				(List<ObjectDefinition>)page.getItems()));
 	}
 
 	private void _testGetObjectDefinitionWithRootObjectDefinitionExternalReferenceCodes()

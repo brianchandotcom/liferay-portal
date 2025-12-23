@@ -225,12 +225,8 @@ public class DLReferencesExportImportContentProcessorTest {
 	}
 
 	@Test
-	public void testImportDLReferences1() throws Exception {
+	public void testImportDLReferences() throws Exception {
 		_testImportDLReferences(false);
-	}
-
-	@Test
-	public void testImportDLReferences2() throws Exception {
 		_testImportDLReferences(true);
 	}
 

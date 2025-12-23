@@ -6,7 +6,6 @@
 package com.liferay.fragment.internal.exportimport.data.handler;
 
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
-import com.liferay.exportimport.content.processor.constants.ExportImportContentProcessorConstants;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
@@ -232,9 +231,7 @@ public class FragmentEntryStagedModelDataHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentEntryStagedModelDataHandler.class);
 
-	@Reference(
-		target = "(" + ExportImportContentProcessorConstants.CONTENT_PROCESSOR_TYPE + "=" + ExportImportContentProcessorConstants.DOCUMENT_LIBRARY_REFERENCES + ")"
-	)
+	@Reference(target = "(content.processor.type=DLReferences)")
 	private ExportImportContentProcessor<String>
 		_dlReferencesExportImportContentProcessor;
 

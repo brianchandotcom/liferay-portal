@@ -22,7 +22,6 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
-import com.liferay.exportimport.content.processor.constants.ExportImportContentProcessorConstants;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.exception.ExportImportRuntimeException;
 import com.liferay.exportimport.kernel.lar.ExportImportClassedModelUtil;
@@ -1779,9 +1778,7 @@ public class JournalArticleStagedModelDataHandler
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
-	@Reference(
-		target = "(" + ExportImportContentProcessorConstants.CONTENT_PROCESSOR_TYPE + "=" + ExportImportContentProcessorConstants.DOCUMENT_LIBRARY_REFERENCES + ")"
-	)
+	@Reference(target = "(content.processor.type=DLReferences)")
 	private ExportImportContentProcessor<String>
 		_dlReferencesExportImportContentProcessor;
 

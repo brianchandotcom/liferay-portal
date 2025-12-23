@@ -11,7 +11,6 @@ import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
-import com.liferay.exportimport.content.processor.constants.ExportImportContentProcessorConstants;
 import com.liferay.exportimport.controller.PortletExportController;
 import com.liferay.exportimport.controller.PortletImportController;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
@@ -3102,9 +3101,7 @@ public class LayoutStagedModelDataHandler
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
-	@Reference(
-		target = "(" + ExportImportContentProcessorConstants.CONTENT_PROCESSOR_TYPE + "=" + ExportImportContentProcessorConstants.DOCUMENT_LIBRARY_REFERENCES + ")"
-	)
+	@Reference(target = "(content.processor.type=DLReferences)")
 	private ExportImportContentProcessor<String>
 		_dlReferencesExportImportContentProcessor;
 

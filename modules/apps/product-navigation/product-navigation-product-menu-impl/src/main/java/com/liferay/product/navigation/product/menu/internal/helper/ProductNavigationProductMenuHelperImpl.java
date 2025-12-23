@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.applications.menu.configuration.ApplicationsMenuInstanceConfiguration;
-import com.liferay.product.navigation.control.menu.manager.ProductNavigationControlMenuManager;
 import com.liferay.product.navigation.product.menu.helper.ProductNavigationProductMenuHelper;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -44,10 +43,7 @@ public class ProductNavigationProductMenuHelperImpl
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (!themeDisplay.isSignedIn() ||
-			!_productNavigationControlMenuManager.isShowControlMenu(
-				httpServletRequest)) {
-
+		if (!themeDisplay.isSignedIn() || !themeDisplay.isShowControlMenu()) {
 			return false;
 		}
 
@@ -149,9 +145,5 @@ public class ProductNavigationProductMenuHelperImpl
 
 	@Reference
 	private PanelAppRegistry _panelAppRegistry;
-
-	@Reference
-	private ProductNavigationControlMenuManager
-		_productNavigationControlMenuManager;
 
 }

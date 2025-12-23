@@ -16,6 +16,8 @@ import com.liferay.headless.admin.site.client.custom.field.CustomValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.BasicWidgetPageWidgetInstance;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.GeneralConfig;
+import com.liferay.headless.admin.site.client.dto.v1_0.NestedApplicationsWidgetPageWidgetInstance;
+import com.liferay.headless.admin.site.client.dto.v1_0.NestedWidgetSection;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.Settings;
@@ -34,6 +36,7 @@ import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
@@ -51,6 +54,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.site.navigation.constants.SiteNavigationMenuPortletKeys;
@@ -863,6 +867,90 @@ public class PageSpecificationsTestUtil {
 		}
 
 		return expectedCustomFields;
+	}
+
+	private static WidgetPageWidgetInstance
+		_getNestedApplicationsWidgetPageWidgetInstance(
+			String column, String layoutTemplateId, int position) {
+
+		NestedApplicationsWidgetPageWidgetInstance
+			nestedApplicationsWidgetPageWidgetInstance =
+				new NestedApplicationsWidgetPageWidgetInstance();
+
+		String widgetInstanceId = RandomTestUtil.randomString();
+
+		String externalReferenceCode = PortletIdCodec.encode(
+			PortletKeys.NESTED_PORTLETS, widgetInstanceId);
+
+		nestedApplicationsWidgetPageWidgetInstance.setExternalReferenceCode(
+			externalReferenceCode);
+
+		String nextLayoutTemplateId = null;
+
+		if (layoutTemplateId.equals("1_2_1_columns_i")) {
+			nextLayoutTemplateId = "3_columns";
+		}
+		else if (layoutTemplateId.equals("3_columns")) {
+			nextLayoutTemplateId = "2_columns_i";
+		}
+
+		nestedApplicationsWidgetPageWidgetInstance.setNestedWidgetSections(
+			_getNestedWidgetSections(
+				externalReferenceCode, nextLayoutTemplateId));
+
+		nestedApplicationsWidgetPageWidgetInstance.setParentSectionId(column);
+		nestedApplicationsWidgetPageWidgetInstance.setPosition(position);
+		nestedApplicationsWidgetPageWidgetInstance.setType(
+			WidgetPageWidgetInstance.Type.
+				NESTED_APPLICATIONS_WIDGET_PAGE_WIDGET_INSTANCE);
+		nestedApplicationsWidgetPageWidgetInstance.setWidgetConfig(
+			_getWidgetConfig(nextLayoutTemplateId));
+		nestedApplicationsWidgetPageWidgetInstance.setWidgetInstanceId(
+			widgetInstanceId);
+		nestedApplicationsWidgetPageWidgetInstance.setWidgetLookAndFeelConfig(
+			() -> _getWidgetLookAndFeelConfig());
+		nestedApplicationsWidgetPageWidgetInstance.setWidgetName(
+			PortletKeys.NESTED_PORTLETS);
+		nestedApplicationsWidgetPageWidgetInstance.setWidgetPermissions(
+			() -> _getWidgetPermissions());
+
+		return nestedApplicationsWidgetPageWidgetInstance;
+	}
+
+	private static NestedWidgetSection[] _getNestedWidgetSections(
+		String externalReferenceCode, String layoutTemplateId) {
+
+		if (layoutTemplateId == null) {
+			return new NestedWidgetSection[0];
+		}
+
+		List<String> columns = new ArrayList<>();
+
+		String columnPrefix =
+			StringPool.UNDERLINE + externalReferenceCode +
+				StringPool.DOUBLE_UNDERLINE;
+
+		if (Objects.equals(layoutTemplateId, "2_columns_i")) {
+			columns.add(columnPrefix + "column-1");
+			columns.add(columnPrefix + "column-2");
+		}
+		else if (Objects.equals(layoutTemplateId, "3_columns")) {
+			columns.add(columnPrefix + "column-1");
+			columns.add(columnPrefix + "column-2");
+			columns.add(columnPrefix + "column-3");
+		}
+
+		return TransformUtil.transformToArray(
+			columns,
+			column -> new NestedWidgetSection() {
+				{
+					setId(() -> column);
+					setWidgetPageWidgetInstances(
+						() -> _getWidgetPageWidgetInstances(
+							column, 3, layoutTemplateId));
+				}
+			},
+			NestedWidgetSection.class);
 	}
 
 	private static GeneralConfig.ApplicationDecorator

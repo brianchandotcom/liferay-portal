@@ -65,7 +65,8 @@ public class DependencyManagementImportTaskPreAction
 			return;
 		}
 
-		Map<String, String> references = exportImportDescriptor.getReferences();
+		Map<String, String[]> references =
+			exportImportDescriptor.getReferences();
 
 		if (MapUtil.isEmpty(references)) {
 			return;
@@ -85,7 +86,7 @@ public class DependencyManagementImportTaskPreAction
 			return;
 		}
 
-		for (Map.Entry<String, String> entry : references.entrySet()) {
+		for (Map.Entry<String, String[]> entry : references.entrySet()) {
 			String fieldName = entry.getKey();
 
 			Method getMethod = _fetchDeclaredMethod(
@@ -123,38 +124,41 @@ public class DependencyManagementImportTaskPreAction
 				continue;
 			}
 
-			ExportImportContentProcessor<?> exportImportContentProcessor =
-				ExportImportContentProcessorRegistryUtil.
-					getExportImportContentProcessorByContentProcessorType(
-						entry.getValue());
+			for (String contentProcessorType : entry.getValue()) {
+				ExportImportContentProcessor<?> exportImportContentProcessor =
+					ExportImportContentProcessorRegistryUtil.
+						getExportImportContentProcessorByContentProcessorType(
+							contentProcessorType);
 
-			if (exportImportContentProcessor == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						StringBundler.concat(
-							"Unable to get the ",
-							ExportImportContentProcessor.class.getSimpleName(),
-							" for \"content.processor.type=", entry.getKey(),
-							"\""));
+				if (exportImportContentProcessor == null) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							StringBundler.concat(
+								"Unable to get the ",
+								ExportImportContentProcessor.class.
+									getSimpleName(),
+								" for content processor type: \"",
+								contentProcessorType, "\""));
+					}
+
+					continue;
 				}
 
-				continue;
-			}
+				String value;
 
-			String value;
+				if (getMethod != null) {
+					value = GetterUtil.getString(getMethod.invoke(item));
+				}
+				else {
+					value = GetterUtil.getString(
+						getPropertyValueMethod.invoke(item, fieldName));
+				}
 
-			if (getMethod != null) {
-				value = GetterUtil.getString(getMethod.invoke(item));
+				setMethod.invoke(
+					item, fieldName,
+					exportImportContentProcessor.replaceImportContentReferences(
+						value, portletDataContext));
 			}
-			else {
-				value = GetterUtil.getString(
-					getPropertyValueMethod.invoke(item, fieldName));
-			}
-
-			setMethod.invoke(
-				item, fieldName,
-				exportImportContentProcessor.replaceImportContentReferences(
-					value, portletDataContext));
 		}
 	}
 

@@ -505,15 +505,16 @@ public class ObjectEntryResourceImpl
 			}
 
 			@Override
-			public Map<String, String> getReferences() {
-				Map<String, String> references = new HashMap<>();
+			public Map<String, String[]> getReferences() {
+				Map<String, String[]> references = new HashMap<>();
 
 				for (ObjectField objectField :
 						_objectFieldLocalService.getObjectFieldsByBusinessType(
 							_objectDefinition.getObjectDefinitionId(),
 							ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT)) {
 
-					references.put(objectField.getName(), "DLReferences");
+					references.put(
+						objectField.getName(), new String[] {"DLReferences"});
 				}
 
 				return references;

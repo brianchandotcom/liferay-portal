@@ -39,7 +39,7 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 
 		public String getPortletId();
 
-		public default Map<String, String> getReferences() {
+		public default Map<String, String[]> getReferences() {
 			return null;
 		}
 

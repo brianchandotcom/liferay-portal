@@ -16,6 +16,7 @@ import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {remotePageTest} from '../../../fixtures/remotePageTest';
 import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
 import {webContentDisplayPageTest} from '../../../fixtures/webContentDisplayPageTest';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {createLayoutHierarchy} from '../../../utils/createLayoutHierarchy';
 import getGlobalSiteId from '../../../utils/getGlobalSiteId';
 import getRandomString from '../../../utils/getRandomString';
@@ -132,29 +133,29 @@ test(
 			let templateKey: string;
 
 			await test.step('Create a data structure and template for page links', async () => {
+				const structureName = getRandomString();
 				const fields: Array<any> = pageNumbers.flatMap((num) => [
 					{name: `Openpage${num}`, repeatable: false},
 					{name: `URL${num}`, repeatable: false},
 				]);
 
-				const structureName = getRandomString();
 				const dataDefinition = getDataStructureDefinition({
 					defaultLanguageId: 'en_US',
 					fields,
 					name: structureName,
 				});
+
 				structure = await apiHelpers.dataEngine.createStructure(
 					site.id,
 					dataDefinition
 				);
-
-				const templateName = 'template1';
 
 				const templateScript = pageNumbers
 					.map((number) => {
 						return `<p><a href="\${URL${number}.getData()}">\${Openpage${number}.getData()}</a></p>`;
 					})
 					.join('\n');
+				const templateName = 'template1';
 
 				await journalEditTemplatePage.goto(site.friendlyUrlPath);
 				await journalEditTemplatePage.selectStructure(structureName);
@@ -215,13 +216,13 @@ test(
 					dataDefinition2
 				);
 
-				const templateName2 = 'template2';
+				await journalEditTemplatePage.goto(site.friendlyUrlPath);
+				await journalEditTemplatePage.selectStructure(structureName2);
+
 				const templateScript2 =
 					'<h1>${Content1.getData()}</h1>\n' +
 					'<p>${Content2.getData()}</p>';
-
-				await journalEditTemplatePage.goto(site.friendlyUrlPath);
-				await journalEditTemplatePage.selectStructure(structureName2);
+				const templateName2 = 'template2';
 				await journalEditTemplatePage.editTemplate(
 					templateName2,
 					templateScript2
@@ -262,57 +263,33 @@ test(
 				}
 			});
 
-			let i = 0;
 			await test.step('Add web content articles to the display portlets on each page of the local site', async () => {
-				for (const layout of layouts) {
+				for (const [i, layout] of layouts.entries()) {
 					await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+					const webContentPortlets = page.locator(
+						'#wrapper, [id^="portlet-topper-toolbar_com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_"]:visible'
+					);
 
 					await expect(async () => {
 						await page.reload();
 						await webContentDisplayPage.addWebContentWithDisplay({
-							customLocator: await page
-								.locator(
-									'#wrapper, [id^="portlet-topper-toolbar_com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_"]:visible'
-								)
-								.nth(1),
+							customLocator: webContentPortlets.nth(1),
 							pageType: 'content',
 							waitAfterAddingWebcontent: true,
 							webContentName: webContentTitle,
 						});
-
-						await expect(
-							page.getByText(webContentTitle, {exact: true})
-						).toBeVisible({timeout: 1500});
-					}).toPass({
-						intervals: [1_000, 2_000],
-						timeout: 120_000,
-					});
+					}).toPass();
 
 					await expect(async () => {
 						await page.reload();
 						await webContentDisplayPage.addWebContentWithDisplay({
-							customLocator: await page
-								.locator(
-									'#wrapper, [id^="portlet-topper-toolbar_com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_"]:visible'
-								)
-								.nth(2),
+							customLocator: webContentPortlets.nth(2),
 							pageType: 'content',
 							waitAfterAddingWebcontent: true,
 							webContentName: `Title-${pageNumbers[i]}`,
 						});
-
-						await expect(
-							page
-								.getByText(`Title-${pageNumbers[i]}`, {
-									exact: true,
-								})
-								.first()
-						).toBeVisible({timeout: 1500});
-					}).toPass({
-						intervals: [1_000, 2_000],
-						timeout: 120_000,
-					});
-					i++;
+					}).toPass();
 				}
 			});
 
@@ -332,19 +309,18 @@ test(
 				);
 
 				for (const num of [111, 21, 3]) {
-					await remotePage
-						.getByRole('link', {exact: true, name: `Page ${num}`})
-						.click();
-					await remotePage.waitForLoadState('domcontentloaded');
+					await clickAndExpectToBeVisible({
+						target: remotePage.locator('h1', {
+							hasText: `Title-${num}`,
+						}),
+						trigger: remotePage.getByRole('link', {
+							exact: true,
+							name: `Page ${num}`,
+						}),
+					});
 
-					await expect(
-						remotePage
-							.locator('h1')
-							.filter({hasText: `Title-${num}`})
-					).toBeVisible();
-
-					await expect(remotePage.url()).toContain(
-						`/web/${site.name}/page-${num}`
+					await expect(remotePage).toHaveURL(
+						new RegExp(`/web/${site.name}/page-${num}`)
 					);
 				}
 			});

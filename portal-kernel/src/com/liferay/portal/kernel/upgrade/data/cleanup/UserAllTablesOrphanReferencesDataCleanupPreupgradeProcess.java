@@ -24,7 +24,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Luis Ortiz
@@ -134,6 +136,10 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 	private long _getAdminUserId(Connection connection, long companyId)
 		throws Exception {
 
+		if (_adminUserIds.containsKey(companyId)) {
+			return _adminUserIds.get(companyId);
+		}
+
 		DBInspector dbInspector = new DBInspector(connection);
 
 		boolean hasColumn = dbInspector.hasColumn("User_", "type_");
@@ -168,7 +174,11 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 						"No admin user found for company " + companyId);
 				}
 
-				return resultSet.getLong(1);
+				long userId = resultSet.getLong(1);
+
+				_adminUserIds.put(companyId, userId);
+
+				return userId;
 			}
 		}
 	}
@@ -195,5 +205,7 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess.class);
+
+	private final Map<Long, Long> _adminUserIds = new HashMap<>();
 
 }

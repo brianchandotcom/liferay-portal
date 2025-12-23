@@ -357,7 +357,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 			_getLayoutStructureItem(itemId, importedLayout.getPlid()),
 			guestGroup.getExternalReferenceCode());
 
-		Layout layout1 = LayoutTestUtil.addTypeContentLayout(group);
+		Layout mappedLayout = LayoutTestUtil.addTypeContentLayout(group);
 
 		_updateLayoutStructureItem(
 			itemId,
@@ -366,17 +366,20 @@ public class LayoutPageTemplateStructureRelExportImportTest
 				JSONUtil.put(
 					"layout",
 					_getLayoutJSONObject(
-						null, group.getGroupId(), layout1.getLayoutId(),
-						layout1.getUuid(), layout1.isPrivateLayout(), null))));
+						null, group.getGroupId(), mappedLayout.getLayoutId(),
+						mappedLayout.getUuid(), mappedLayout.isPrivateLayout(),
+						null))));
 
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
 
-		Layout importedLayout1 = _layoutLocalService.getLayoutByUuidAndGroupId(
-			layout1.getUuid(), importedGroup.getGroupId(), false);
+		Layout importedMappedLayout =
+			_layoutLocalService.getLayoutByUuidAndGroupId(
+				mappedLayout.getUuid(), importedGroup.getGroupId(), false);
 
 		_assertContainerLinkMappedLayout(
-			null, importedGroup.getGroupId(), importedLayout1.getLayoutId(),
+			null, importedGroup.getGroupId(),
+			importedMappedLayout.getLayoutId(),
 			_getLayoutStructureItem(itemId, importedLayout.getPlid()), null);
 	}
 
@@ -385,7 +388,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 	public void testFormContainerSuccessMessageWithMappedLayout()
 		throws Exception {
 
-		Layout layout2 = LayoutTestUtil.addTypeContentLayout(group);
+		Layout mappedLayout1 = LayoutTestUtil.addTypeContentLayout(group);
 
 		JSONObject jsonObject = ContentLayoutTestUtil.addItemToLayout(
 			JSONUtil.put(
@@ -397,8 +400,9 @@ public class LayoutPageTemplateStructureRelExportImportTest
 				JSONUtil.put(
 					"layout",
 					_getLayoutJSONObject(
-						null, layout2.getGroupId(), layout2.getLayoutId(),
-						layout2.getUuid(), layout2.isPrivateLayout(), null))
+						null, mappedLayout1.getGroupId(),
+						mappedLayout1.getLayoutId(), mappedLayout1.getUuid(),
+						mappedLayout1.isPrivateLayout(), null))
 			).toString(),
 			LayoutDataItemTypeConstants.TYPE_FORM, layout,
 			_layoutStructureProvider,
@@ -410,20 +414,23 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
 
-		Layout importedLayout1 = _layoutLocalService.getLayoutByUuidAndGroupId(
+		importedLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
 			layout.getUuid(), importedGroup.getGroupId(), false);
 
-		Layout importedLayout2 = _layoutLocalService.getLayoutByUuidAndGroupId(
-			layout2.getUuid(), importedGroup.getGroupId(), false);
+		Layout importedMappedLayout =
+			_layoutLocalService.getLayoutByUuidAndGroupId(
+				mappedLayout1.getUuid(), importedGroup.getGroupId(), false);
 
 		_assertFormContainerSuccessMessage(
-			null, importedGroup.getGroupId(), importedLayout2.getLayoutId(),
-			_getLayoutStructureItem(itemId, importedLayout1.getPlid()), null);
+			null, importedGroup.getGroupId(),
+			importedMappedLayout.getLayoutId(),
+			_getLayoutStructureItem(itemId, importedLayout.getPlid()), null);
 
 		Group guestGroup = _groupLocalService.getGroup(
 			TestPropsValues.getGroupId());
 
-		Layout layout3 = LayoutTestUtil.addTypeContentLayout(guestGroup);
+		Layout guestGroupLayout1 = LayoutTestUtil.addTypeContentLayout(
+			guestGroup);
 
 		_updateLayoutStructureItem(
 			itemId,
@@ -434,8 +441,10 @@ public class LayoutPageTemplateStructureRelExportImportTest
 				successMessageJSONObject.put(
 					"layout",
 					_getLayoutJSONObject(
-						null, guestGroup.getGroupId(), layout3.getLayoutId(),
-						layout3.getUuid(), layout3.isPrivateLayout(), null));
+						null, guestGroup.getGroupId(),
+						guestGroupLayout1.getLayoutId(),
+						guestGroupLayout1.getUuid(),
+						guestGroupLayout1.isPrivateLayout(), null));
 
 				return itemConfigJSONObject;
 			});
@@ -443,12 +452,12 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
 
-		importedLayout1 = _layoutLocalService.getLayoutByUuidAndGroupId(
+		importedLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
 			layout.getUuid(), importedGroup.getGroupId(), false);
 
 		_assertFormContainerSuccessMessage(
-			null, guestGroup.getGroupId(), layout3.getLayoutId(),
-			_getLayoutStructureItem(itemId, importedLayout1.getPlid()), null);
+			null, guestGroup.getGroupId(), guestGroupLayout1.getLayoutId(),
+			_getLayoutStructureItem(itemId, importedLayout.getPlid()), null);
 
 		String externalReferenceCode = RandomTestUtil.randomString();
 
@@ -471,36 +480,9 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 		_assertFormContainerSuccessMessage(
 			externalReferenceCode, 0, 0,
-			_getLayoutStructureItem(itemId, importedLayout1.getPlid()), null);
+			_getLayoutStructureItem(itemId, importedLayout.getPlid()), null);
 
-		Layout layout4 = LayoutTestUtil.addTypeContentLayout(group);
-
-		_updateLayoutStructureItem(
-			itemId,
-			itemConfigJSONObject -> {
-				JSONObject successMessageJSONObject =
-					itemConfigJSONObject.getJSONObject("successMessage");
-
-				successMessageJSONObject.put(
-					"layout",
-					_getLayoutJSONObject(
-						layout4.getExternalReferenceCode(), 0, 0, null, null,
-						null));
-
-				return itemConfigJSONObject;
-			});
-
-		exportImportLayouts(
-			new long[] {layout.getLayoutId()}, getImportParameterMap());
-
-		importedLayout2 = _layoutLocalService.getLayoutByUuidAndGroupId(
-			layout4.getUuid(), importedGroup.getGroupId(), false);
-
-		_assertFormContainerSuccessMessage(
-			importedLayout2.getExternalReferenceCode(), 0, 0,
-			_getLayoutStructureItem(itemId, importedLayout1.getPlid()), null);
-
-		Layout layout5 = LayoutTestUtil.addTypeContentLayout(guestGroup);
+		Layout mappedLayout2 = LayoutTestUtil.addTypeContentLayout(group);
 
 		_updateLayoutStructureItem(
 			itemId,
@@ -511,8 +493,36 @@ public class LayoutPageTemplateStructureRelExportImportTest
 				successMessageJSONObject.put(
 					"layout",
 					_getLayoutJSONObject(
-						layout5.getExternalReferenceCode(), 0, 0, null, null,
-						guestGroup.getExternalReferenceCode()));
+						mappedLayout2.getExternalReferenceCode(), 0, 0, null,
+						null, null));
+
+				return itemConfigJSONObject;
+			});
+
+		exportImportLayouts(
+			new long[] {layout.getLayoutId()}, getImportParameterMap());
+
+		importedMappedLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
+			mappedLayout2.getUuid(), importedGroup.getGroupId(), false);
+
+		_assertFormContainerSuccessMessage(
+			importedMappedLayout.getExternalReferenceCode(), 0, 0,
+			_getLayoutStructureItem(itemId, importedLayout.getPlid()), null);
+
+		Layout guestGroupLayout2 = LayoutTestUtil.addTypeContentLayout(
+			guestGroup);
+
+		_updateLayoutStructureItem(
+			itemId,
+			itemConfigJSONObject -> {
+				JSONObject successMessageJSONObject =
+					itemConfigJSONObject.getJSONObject("successMessage");
+
+				successMessageJSONObject.put(
+					"layout",
+					_getLayoutJSONObject(
+						guestGroupLayout2.getExternalReferenceCode(), 0, 0,
+						null, null, guestGroup.getExternalReferenceCode()));
 
 				return itemConfigJSONObject;
 			});
@@ -521,8 +531,8 @@ public class LayoutPageTemplateStructureRelExportImportTest
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
 
 		_assertFormContainerSuccessMessage(
-			layout5.getExternalReferenceCode(), 0, 0,
-			_getLayoutStructureItem(itemId, importedLayout1.getPlid()),
+			guestGroupLayout2.getExternalReferenceCode(), 0, 0,
+			_getLayoutStructureItem(itemId, importedLayout.getPlid()),
 			guestGroup.getExternalReferenceCode());
 	}
 

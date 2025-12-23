@@ -50,6 +50,13 @@ public class TestClassGroupFactory {
 		}
 
 		if (batchTestClassGroup instanceof JUnitBatchTestClassGroup) {
+			if (batchTestClassGroup instanceof
+					ModulesJUnitBatchTestClassGroup) {
+
+				return new ModulesJUnitAxisTestClassGroup(
+					(ModulesJUnitBatchTestClassGroup)batchTestClassGroup);
+			}
+
 			return new JUnitAxisTestClassGroup(
 				(JUnitBatchTestClassGroup)batchTestClassGroup);
 		}
@@ -88,6 +95,13 @@ public class TestClassGroupFactory {
 		}
 
 		if (batchTestClassGroup instanceof JUnitBatchTestClassGroup) {
+			if (batchTestClassGroup instanceof
+					ModulesJUnitBatchTestClassGroup) {
+
+				return new ModulesJUnitAxisTestClassGroup(
+					jsonObject, segmentTestClassGroup);
+			}
+
 			return new JUnitAxisTestClassGroup(
 				jsonObject, segmentTestClassGroup);
 		}

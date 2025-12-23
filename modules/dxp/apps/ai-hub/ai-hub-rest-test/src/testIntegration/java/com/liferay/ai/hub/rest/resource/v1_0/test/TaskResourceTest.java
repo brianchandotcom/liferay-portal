@@ -331,6 +331,8 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		Assert.assertEquals("event: Fix Spelling and Grammar", lines.get(2));
 		Assert.assertEquals(
 			"data: {\"data\":\"This text is wrong.\"}", lines.get(3));
+
+		SseUtil.closeAll();
 	}
 
 	private void _testPostByExternalReferenceCodeTaskWithTypeLLMNodeWithToolWorkflowDefinition()

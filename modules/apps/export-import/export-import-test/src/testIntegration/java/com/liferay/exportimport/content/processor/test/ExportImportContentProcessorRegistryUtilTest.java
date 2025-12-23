@@ -8,7 +8,6 @@ package com.liferay.exportimport.content.processor.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessorRegistryUtil;
-import com.liferay.exportimport.content.processor.constants.ExportImportContentProcessorConstants;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -75,9 +74,7 @@ public class ExportImportContentProcessorRegistryUtilTest {
 
 		try (AutoCloseable autoCloseable = _registerService(
 				HashMapDictionaryBuilder.put(
-					ExportImportContentProcessorConstants.
-						CONTENT_PROCESSOR_TYPE,
-					contentProcessorType
+					"content.processor.type", contentProcessorType
 				).build(),
 				exportImportContentProcessor)) {
 

@@ -76,14 +76,15 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 					" = ? where ", sourceColumnName, " = ? and companyId = ?"));
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
+			boolean partOfUniqueIndex = _isPartOfUniqueIndex(
+				connection, sourceColumnName, sourceTableName);
+
 			while (resultSet.next()) {
 				long companyId = resultSet.getLong(2);
 				long count = resultSet.getLong(3);
 				long userId = resultSet.getLong(1);
 
-				if (_isPartOfUniqueIndex(
-						connection, sourceColumnName, sourceTableName)) {
-
+				if (partOfUniqueIndex) {
 					preparedStatement2.setLong(1, userId);
 					preparedStatement2.setLong(2, companyId);
 

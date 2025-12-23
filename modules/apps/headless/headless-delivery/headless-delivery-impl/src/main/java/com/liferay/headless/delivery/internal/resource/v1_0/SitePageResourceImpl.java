@@ -587,7 +587,9 @@ public class SitePageResourceImpl
 
 		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
 			_friendlyURLEntryLocalService.getFriendlyURLEntryLocalization(
-				groupId, _portal.getClassNameId(resourceName), friendlyUrlPath);
+				groupId, _portal.getClassNameId(resourceName),
+				contextAcceptLanguage.getPreferredLanguageId(),
+				friendlyUrlPath);
 
 		return _layoutService.getLayout(
 			friendlyURLEntryLocalization.getClassPK());

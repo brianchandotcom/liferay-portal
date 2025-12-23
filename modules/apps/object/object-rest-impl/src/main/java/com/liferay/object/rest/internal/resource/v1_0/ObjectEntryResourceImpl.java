@@ -326,20 +326,6 @@ public class ObjectEntryResourceImpl
 	}
 
 	@Override
-	public void deleteObjectEntryByVersion(Long objectEntryId, Integer version)
-		throws Exception {
-
-		DefaultObjectEntryManager defaultObjectEntryManager =
-			DefaultObjectEntryManagerProvider.provide(
-				_objectEntryManagerRegistry.getObjectEntryManager(
-					_objectDefinition.getCompanyId(),
-					_objectDefinition.getStorageType()));
-
-		defaultObjectEntryManager.deleteObjectEntryByVersion(
-			_objectDefinition, objectEntryId, version);
-	}
-
-	@Override
 	public void deleteScopeScopeKeyByExternalReferenceCode(
 			String scopeKey, String externalReferenceCode)
 		throws Exception {
@@ -603,26 +589,6 @@ public class ObjectEntryResourceImpl
 	}
 
 	@Override
-	public Page<ObjectEntry> getObjectEntriesVersionsPage(
-			Long objectEntryId, Pagination pagination, Sort[] sorts)
-		throws Exception {
-
-		if (!_objectDefinition.isEnableObjectEntryVersioning()) {
-			throw new UnsupportedOperationException();
-		}
-
-		DefaultObjectEntryManager defaultObjectEntryManager =
-			DefaultObjectEntryManagerProvider.provide(
-				_objectEntryManagerRegistry.getObjectEntryManager(
-					_objectDefinition.getCompanyId(),
-					_objectDefinition.getStorageType()));
-
-		return defaultObjectEntryManager.getVersionedObjectEntries(
-			_getDTOConverterContext(objectEntryId), _objectDefinition,
-			objectEntryId, pagination, sorts);
-	}
-
-	@Override
 	public ObjectEntry getObjectEntry(Long objectEntryId) throws Exception {
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
@@ -633,25 +599,6 @@ public class ObjectEntryResourceImpl
 		return defaultObjectEntryManager.getObjectEntry(
 			_getDTOConverterContext(objectEntryId), _objectDefinition,
 			objectEntryId);
-	}
-
-	@Override
-	public ObjectEntry getObjectEntryByVersion(
-			Long objectEntryId, Integer version)
-		throws Exception {
-
-		if (!_objectDefinition.isEnableObjectEntryVersioning()) {
-			throw new UnsupportedOperationException();
-		}
-
-		DefaultObjectEntryManager defaultObjectEntryManager =
-			DefaultObjectEntryManagerProvider.provide(
-				_objectEntryManagerRegistry.getObjectEntryManager(
-					_objectDefinition.getCompanyId(),
-					_objectDefinition.getStorageType()));
-
-		return defaultObjectEntryManager.getObjectEntryByVersion(
-			_getDTOConverterContext(objectEntryId), objectEntryId, version);
 	}
 
 	@Override
@@ -1071,42 +1018,6 @@ public class ObjectEntryResourceImpl
 	}
 
 	@Override
-	public ObjectEntry postObjectEntryByVersionCopy(
-			Long objectEntryId, Integer version)
-		throws Exception {
-
-		DefaultObjectEntryManager defaultObjectEntryManager =
-			DefaultObjectEntryManagerProvider.provide(
-				_objectEntryManagerRegistry.getObjectEntryManager(
-					_objectDefinition.getCompanyId(),
-					_objectDefinition.getStorageType()));
-
-		return defaultObjectEntryManager.copyObjectEntryByVersion(
-			_getDTOConverterContext(objectEntryId), _objectDefinition,
-			objectEntryId, version);
-	}
-
-	@Override
-	public ObjectEntry postObjectEntryByVersionExpire(
-			Long objectEntryId, Integer version)
-		throws Exception {
-
-		if (!_objectDefinition.isEnableObjectEntryVersioning()) {
-			throw new UnsupportedOperationException();
-		}
-
-		DefaultObjectEntryManager defaultObjectEntryManager =
-			DefaultObjectEntryManagerProvider.provide(
-				_objectEntryManagerRegistry.getObjectEntryManager(
-					_objectDefinition.getCompanyId(),
-					_objectDefinition.getStorageType()));
-
-		return defaultObjectEntryManager.expireObjectEntryByVersion(
-			_getDTOConverterContext(null), _objectDefinition, objectEntryId,
-			version);
-	}
-
-	@Override
 	public ObjectEntry postObjectEntryExpire(Long objectEntryId)
 		throws Exception {
 
@@ -1333,26 +1244,6 @@ public class ObjectEntryResourceImpl
 			_objectDefinition.getName());
 
 		return super.putObjectEntryBatch(callbackURL, object);
-	}
-
-	@Override
-	public ObjectEntry putObjectEntryByVersionRestore(
-			Long objectEntryId, Integer version)
-		throws Exception {
-
-		if (!_objectDefinition.isEnableObjectEntryVersioning()) {
-			throw new UnsupportedOperationException();
-		}
-
-		DefaultObjectEntryManager defaultObjectEntryManager =
-			DefaultObjectEntryManagerProvider.provide(
-				_objectEntryManagerRegistry.getObjectEntryManager(
-					_objectDefinition.getCompanyId(),
-					_objectDefinition.getStorageType()));
-
-		return defaultObjectEntryManager.restoreObjectEntryByVersion(
-			_getDTOConverterContext(objectEntryId), _objectDefinition,
-			objectEntryId, version);
 	}
 
 	@Override

@@ -519,7 +519,7 @@ public class MarketplaceRestController extends BaseRestController {
 			if (publisherAssetLinks.isEmpty()) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"No publisher asset links to process product " +
+						"No publisher asset links to process for product " +
 							productId);
 				}
 
@@ -670,9 +670,8 @@ public class MarketplaceRestController extends BaseRestController {
 				publisherAssetLink.getAttachmentId());
 		}
 		finally {
-			MarketplaceUtil.deleteTempFile(publisherAssetFile, false);
-
 			MarketplaceUtil.deleteTempFile(publisherAssetArtifactFile, true);
+			MarketplaceUtil.deleteTempFile(publisherAssetFile, false);
 		}
 	}
 

@@ -260,12 +260,13 @@ function filterLocalOptions(query) {
 }
 
 const allowedSLAs = [
-	'Elite',
-	'Enhanced',
+	'Global 24/7 Support',
 	'Gold Subscription',
-	'Mission Critical',
-	'Premium Subscription',
 	'Platinum Subscription',
+	'Premier 24/7 Support',
+	'Premium Subscription',
+	'Standard 8/5 Support',
+	'Strategic 24/7 Support',
 ];
 
 function filterRemoteOptions(query, abortController) {

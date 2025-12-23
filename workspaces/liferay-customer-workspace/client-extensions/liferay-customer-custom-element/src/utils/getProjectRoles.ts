@@ -17,12 +17,12 @@ const getCurrentRoleType = (roleKey: string) => {
 
 export function getRolesFiltered(items: any[], project: IProject) {
 	const hasPrioritySLA =
-		project?.slaCurrent?.includes(SLA_TYPES.elite) ||
-		project?.slaCurrent?.includes(SLA_TYPES.enhanced) ||
-		project?.slaCurrent?.includes(SLA_TYPES.essential) ||
+		project?.slaCurrent?.includes(SLA_TYPES.global) ||
 		project?.slaCurrent?.includes(SLA_TYPES.gold) ||
-		project?.slaCurrent?.includes(SLA_TYPES.missionCritical) ||
-		project?.slaCurrent?.includes(SLA_TYPES.platinum);
+		project?.slaCurrent?.includes(SLA_TYPES.platinum) ||
+		project?.slaCurrent?.includes(SLA_TYPES.premier) ||
+		project?.slaCurrent?.includes(SLA_TYPES.standard) ||
+		project?.slaCurrent?.includes(SLA_TYPES.strategic);
 
 	const isProjectPartner = project?.partner;
 

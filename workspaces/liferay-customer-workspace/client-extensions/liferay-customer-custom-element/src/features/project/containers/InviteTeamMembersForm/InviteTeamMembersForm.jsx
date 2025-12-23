@@ -81,12 +81,13 @@ const InviteTeamMembersPage = ({
 	const [roleSelectorFilled, setRoleSelectorFilled] = useState(false);
 
 	const projectHasPrioritySLA =
-		project?.slaCurrent?.includes(SLA_TYPES.elite) ||
-		project?.slaCurrent?.includes(SLA_TYPES.enhanced) ||
-		project?.slaCurrent?.includes(SLA_TYPES.essential) ||
+		project?.slaCurrent?.includes(SLA_TYPES.global) ||
 		project?.slaCurrent?.includes(SLA_TYPES.gold) ||
-		project?.slaCurrent?.includes(SLA_TYPES.missionCritical) ||
-		project?.slaCurrent?.includes(SLA_TYPES.platinum);
+		project?.slaCurrent?.includes(SLA_TYPES.platinum) ||
+		project?.slaCurrent?.includes(SLA_TYPES.premier) ||
+		project?.slaCurrent?.includes(SLA_TYPES.standard) ||
+		project?.slaCurrent?.includes(SLA_TYPES.strategic);
+
 
 	const isUnlimitedSupportSeats =
 		project.maxRequestors === MAXIMUM_SUPPORT_SEATS_DEFAULT;

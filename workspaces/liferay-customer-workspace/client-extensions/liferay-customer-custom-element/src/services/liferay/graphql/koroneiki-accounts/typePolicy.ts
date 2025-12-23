@@ -19,12 +19,12 @@ export const koroneikiAccountsTypePolicy = {
 
 					return (
 						slaCurrent &&
-						(slaCurrent.includes(SLA_TYPES.elite) ||
-							slaCurrent.includes(SLA_TYPES.enhanced) ||
-							slaCurrent.includes(SLA_TYPES.essential) ||
+						(slaCurrent.includes(SLA_TYPES.global) ||
 							slaCurrent.includes(SLA_TYPES.gold) ||
-							slaCurrent.includes(SLA_TYPES.missionCritical) ||
-							slaCurrent.includes(SLA_TYPES.platinum))
+							slaCurrent.includes(SLA_TYPES.platinum) ||
+							slaCurrent.includes(SLA_TYPES.premier) ||
+							slaCurrent.includes(SLA_TYPES.standard) ||
+							slaCurrent.includes(SLA_TYPES.strategic))
 					);
 				},
 			},

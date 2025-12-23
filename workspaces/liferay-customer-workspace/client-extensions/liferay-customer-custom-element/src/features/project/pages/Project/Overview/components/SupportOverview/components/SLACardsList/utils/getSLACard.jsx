@@ -17,6 +17,8 @@ export default function getSLACard(endDate, startDate, title, label) {
 			FORMAT_DATE_TYPES.day2DMonth2DYearN,
 			startDate
 		),
-		title: title.split(' ')[0],
+		title: title.includes('/')
+			? `${title.split(' ')[0]} ${title.split(' ')[1]}`
+			: title.split(' ')[0],
 	};
 }

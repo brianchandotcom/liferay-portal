@@ -13,6 +13,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.ObjectRelationshipModel;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.dto.v1_0.TranslationResponse;
 import com.liferay.object.rest.dto.v1_0.ValidationError;
 import com.liferay.object.rest.dto.v1_0.ValidationRequest;
 import com.liferay.object.rest.dto.v1_0.ValidationResponse;
@@ -36,31 +37,47 @@ import com.liferay.object.tree.Tree;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.events.ServicePreAction;
+import com.liferay.portal.events.ThemeServicePreAction;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsContext;
+import com.liferay.portal.vulcan.multipart.BinaryFile;
+import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.NestedFieldsContextResource;
 import com.liferay.portal.vulcan.util.NestedFieldsContextUtil;
+import com.liferay.translation.manager.Translation;
 import com.liferay.translation.manager.TranslationManager;
 
+import jakarta.servlet.http.HttpServletResponse;
+
+import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotSupportedException;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.HttpHeaders;
@@ -73,6 +90,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -1121,6 +1139,40 @@ public class ObjectEntryResourceImpl
 	}
 
 	@Override
+	public TranslationResponse postObjectEntryTranslation(
+			Long objectEntryId, MultipartBody multipartBody)
+		throws Exception {
+
+		_checkFeatureFlag();
+
+		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
+
+		if (binaryFile == null) {
+			throw new BadRequestException("No file found in body");
+		}
+
+		com.liferay.object.model.ObjectEntry objectEntry =
+			_objectEntryLocalService.getObjectEntry(objectEntryId);
+
+		List<Map<String, String>> failureMessages = new LinkedList<>();
+		List<String> successMessages = new ArrayList<>();
+
+		_initThemeDisplay(objectEntry);
+
+		_translationManager.processXLIFFTranslation(
+			objectEntry.getGroupId(), _objectDefinition.getClassName(),
+			objectEntryId,
+			new Translation(
+				() -> MimeTypesUtil.getContentType(binaryFile.getFileName()),
+				binaryFile.getFileName(), binaryFile::getInputStream),
+			successMessages, failureMessages,
+			contextAcceptLanguage.getPreferredLocale(),
+			ServiceContextFactory.getInstance(contextHttpServletRequest));
+
+		return _toTranslationResponse(failureMessages, successMessages);
+	}
+
+	@Override
 	public ObjectEntry postScopeScopeKey(
 			String scopeKey, ObjectEntry objectEntry)
 		throws Exception {
@@ -1206,6 +1258,21 @@ public class ObjectEntryResourceImpl
 
 		defaultObjectEntryManager.subscribeObjectEntry(
 			externalReferenceCode, _objectDefinition, scopeKey);
+	}
+
+	@Override
+	public TranslationResponse
+			postScopeScopeKeyByExternalReferenceCodeTranslation(
+				String scopeKey, String externalReferenceCode,
+				MultipartBody multipartBody)
+		throws Exception {
+
+		_checkFeatureFlag();
+
+		ObjectEntry objectEntry = getScopeScopeKeyByExternalReferenceCode(
+			scopeKey, externalReferenceCode);
+
+		return postObjectEntryTranslation(objectEntry.getId(), multipartBody);
 	}
 
 	@Override
@@ -1674,6 +1741,64 @@ public class ObjectEntryResourceImpl
 		}
 
 		return null;
+	}
+
+	private void _initThemeDisplay(
+			com.liferay.object.model.ObjectEntry objectEntry)
+		throws Exception {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)contextHttpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay != null) {
+			return;
+		}
+
+		ServicePreAction servicePreAction = new ServicePreAction();
+
+		HttpServletResponse httpServletResponse =
+			new DummyHttpServletResponse();
+
+		servicePreAction.servicePre(
+			contextHttpServletRequest, httpServletResponse, false);
+
+		ThemeServicePreAction themeServicePreAction =
+			new ThemeServicePreAction();
+
+		themeServicePreAction.run(
+			contextHttpServletRequest, httpServletResponse);
+
+		themeDisplay = (ThemeDisplay)contextHttpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		themeDisplay.setCompany(contextCompany);
+		themeDisplay.setScopeGroupId(objectEntry.getGroupId());
+		themeDisplay.setUser(contextUser);
+	}
+
+	private TranslationResponse _toTranslationResponse(
+		List<Map<String, String>> failureMessages,
+		List<String> successMessages) {
+
+		TranslationResponse translationResponse = new TranslationResponse();
+
+		translationResponse.setFailureMessages(
+			() -> transformToArray(
+				failureMessages,
+				failureMessage -> {
+					JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+						failureMessage);
+
+					return jsonObject.toString();
+				},
+				String.class));
+
+		translationResponse.setSuccessMessages(
+			() -> transformToArray(
+				successMessages, successMesage -> successMesage, String.class));
+
+		return translationResponse;
 	}
 
 	private ValidationResponse _validateObjectEntry(

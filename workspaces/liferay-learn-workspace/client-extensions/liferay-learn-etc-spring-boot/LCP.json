@@ -1,5 +1,8 @@
 {
 	"cpu": 1,
+	"env": {
+		"GOOGLE_APPLICATION_CREDENTIALS": "/opt/liferay/credentials.json"
+	},
 	"environments": {
 		"infra": {
 			"deploy": false

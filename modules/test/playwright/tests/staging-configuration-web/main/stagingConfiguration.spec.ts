@@ -147,9 +147,10 @@ test(
 		});
 
 		await exportImportStagingSystemSettingsPage.goto();
-		await exportImportStagingSystemSettingsPage.checkShowAdvancedStagingConfiguration(
-			true
-		);
+		await exportImportStagingSystemSettingsPage.checkConfigurationOption({
+			checked: true,
+			label: 'Show Advanced Staging Configuration by Default',
+		});
 
 		try {
 			await enableLocalStaging(apiHelpers, page, site);

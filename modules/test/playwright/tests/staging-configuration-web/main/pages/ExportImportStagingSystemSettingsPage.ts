@@ -12,16 +12,11 @@ export class ExportImportStagingSystemSettingsPage {
 	readonly actionsButton: Locator;
 	readonly page: Page;
 	readonly resetDefaultValuesOption: Locator;
-	readonly showAdvancedConfigurationByDefault: Locator;
 	readonly systemSettingsPage: SystemSettingsPage;
 
 	constructor(page: Page) {
 		this.page = page;
 		this.systemSettingsPage = new SystemSettingsPage(page);
-		this.showAdvancedConfigurationByDefault =
-			this.systemSettingsPage.page.getByLabel(
-				'Show Advanced Staging Configuration by Default'
-			);
 		this.actionsButton = this.systemSettingsPage.page
 			.locator(
 				'[id="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_fm"]'
@@ -39,14 +34,19 @@ export class ExportImportStagingSystemSettingsPage {
 			'Infrastructure',
 			'Export/Import, Staging'
 		);
+
+		await this.page.waitForLoadState();
 	}
 
-	async checkShowAdvancedStagingConfiguration(checked: boolean) {
-		await this.systemSettingsPage.checkOption(
-			'Show Advanced Staging Configuration by Default',
-			checked
-		);
-		await this.systemSettingsPage.saveAndWaitForAlert();
+	async checkConfigurationOption({
+		checked,
+		label,
+	}: {
+		checked: boolean;
+		label: string;
+	}) {
+		await this.systemSettingsPage.checkOption(label, checked);
+		await this.systemSettingsPage.saveButton.click();
 	}
 
 	async resetDefaultValues() {

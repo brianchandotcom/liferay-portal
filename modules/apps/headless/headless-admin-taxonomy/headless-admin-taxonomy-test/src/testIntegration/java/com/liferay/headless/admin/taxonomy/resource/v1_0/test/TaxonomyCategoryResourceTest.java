@@ -91,7 +91,6 @@ public class TaxonomyCategoryResourceTest
 			UserLocalServiceUtil.getGuestUserId(testGroup.getCompanyId()),
 			testGroup.getGroupId(), RandomTestUtil.randomString(),
 			new ServiceContext());
-		_scopeType = Scope.Type.SITE;
 		_depotAssetVocabulary = _assetVocabularyLocalService.addVocabulary(
 			UserLocalServiceUtil.getGuestUserId(testGroup.getCompanyId()),
 			testDepotEntry.getGroupId(), RandomTestUtil.randomString(),
@@ -1647,6 +1646,6 @@ public class TaxonomyCategoryResourceTest
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
-	private Scope.Type _scopeType;
+	private Scope.Type _scopeType = Scope.Type.SITE;
 
 }

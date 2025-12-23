@@ -10,7 +10,7 @@ export const DOCUMENT_OBJECT_ENTRY = {
 			method: 'DELETE',
 		},
 		expire: {
-			href: 'http://localhost:8080/o/cms/basic-documents/38373/expire',
+			href: 'http://localhost:8080/o/cms/basic-documents/by-external-reference-code/97753061-a0cd-128c-2f29-02ab5eac6632/expire',
 			method: 'POST',
 		},
 		get: {

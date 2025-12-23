@@ -3763,41 +3763,6 @@
 				]
 			}
 		},
-		"/{object8Id}/expire": {
-			"post": {
-				"operationId": "postObject8Expire",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "object8Id",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Object8"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/Object8"
-								}
-							}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"Object8"
-				]
-			}
-		},
 		"/{object8Id}/permissions": {
 			"get": {
 				"operationId": "getObject8PermissionsPage",

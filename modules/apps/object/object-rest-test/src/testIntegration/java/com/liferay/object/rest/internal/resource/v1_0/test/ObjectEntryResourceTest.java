@@ -6199,16 +6199,17 @@ public class ObjectEntryResourceTest {
 			_objectDefinition1, TestPropsValues.getUser());
 
 		Page<com.liferay.object.rest.dto.v1_0.ObjectEntry> objectEntryPage =
-			objectEntryResource1.getObjectEntriesVersionsPage(
-				objectEntry.getObjectEntryId(),
+			objectEntryResource1.getByExternalReferenceCodeVersionsPage(
+				objectEntry.getExternalReferenceCode(),
 				Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS), null);
 
 		Assert.assertEquals(2, objectEntryPage.getTotalCount());
 
-		objectEntryPage = objectEntryResource1.getObjectEntriesVersionsPage(
-			objectEntry.getObjectEntryId(),
-			Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-			new Sort[] {new Sort("version", Sort.INT_TYPE, true)});
+		objectEntryPage =
+			objectEntryResource1.getByExternalReferenceCodeVersionsPage(
+				objectEntry.getExternalReferenceCode(),
+				Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+				new Sort[] {new Sort("version", Sort.INT_TYPE, true)});
 
 		List<com.liferay.object.rest.dto.v1_0.ObjectEntry> objectEntries =
 			new ArrayList<>(objectEntryPage.getItems());
@@ -6221,8 +6222,8 @@ public class ObjectEntryResourceTest {
 
 		AssertUtils.assertFailure(
 			NoSuchObjectEntryException.class, null,
-			() -> objectEntryResource2.getObjectEntriesVersionsPage(
-				objectEntry.getObjectEntryId(),
+			() -> objectEntryResource2.getByExternalReferenceCodeVersionsPage(
+				objectEntry.getExternalReferenceCode(),
 				Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS), null));
 	}
 
@@ -10708,8 +10709,9 @@ public class ObjectEntryResourceTest {
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
-				_getEndpoint(_objectDefinition1, 0), StringPool.SLASH,
-				companyObjectEntry.getObjectEntryId(), "/expire"),
+				_getEndpoint(_objectDefinition1, 0),
+				"/by-external-reference-code/",
+				companyObjectEntry.getExternalReferenceCode(), "/expire"),
 			Http.Method.POST);
 
 		Assert.assertEquals(

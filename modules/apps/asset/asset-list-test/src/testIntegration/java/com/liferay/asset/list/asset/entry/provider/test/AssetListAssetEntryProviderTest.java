@@ -500,7 +500,7 @@ public class AssetListAssetEntryProviderTest {
 		JournalTestUtil.addArticleWithXMLContent(
 			group.getGroupId(), JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
-			_readFileToString("journal_article_content.xml"),
+			_read("journal_article_content.xml"),
 			dataDefinition.getDataDefinitionKey(), null, LocaleUtil.US);
 
 		Locale originalThemeDisplayLocale =
@@ -2115,11 +2115,6 @@ public class AssetListAssetEntryProviderTest {
 	}
 
 	private String _read(String fileName) throws Exception {
-		return new String(
-			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
-	}
-
-	private String _readFileToString(String fileName) throws Exception {
 		return new String(
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
 	}

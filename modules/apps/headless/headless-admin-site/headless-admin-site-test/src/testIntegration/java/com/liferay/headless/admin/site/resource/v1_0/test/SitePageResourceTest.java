@@ -2193,6 +2193,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			"1_column", "2_columns_ii");
 		_testPutSiteSitePageWithPageSpecificationsWithWidgetPageSpecification(
 			"1_column", "1_2_1_columns_i");
+		_testPutSiteSitePageWithPageSpecificationsWithWidgetPageSpecification(
+			"1_2_1_columns_i", "1_column");
 	}
 
 	private void _testPutSiteSitePageWithPageSpecifications(

@@ -120,15 +120,17 @@ public class DataValuesMappingExportImportContentProcessor
 				classPK);
 		}
 		else if (Validator.isNotNull(externalReferenceCode)) {
-			assetListEntry =
-				_assetListEntryLocalService.
-					fetchAssetListEntryByExternalReferenceCode(
-						externalReferenceCode,
-						_getGroupId(
-							portletDataContext.getCompanyId(),
-							collectionJSONObject.getString(
-								"scopeExternalReferenceCode"),
-							portletDataContext.getScopeGroupId()));
+			Long assetListEntryGroupId = _getGroupId(
+				portletDataContext.getCompanyId(),
+				collectionJSONObject.getString("scopeExternalReferenceCode"),
+				portletDataContext.getScopeGroupId());
+
+			if (assetListEntryGroupId != null) {
+				assetListEntry =
+					_assetListEntryLocalService.
+						fetchAssetListEntryByExternalReferenceCode(
+							externalReferenceCode, assetListEntryGroupId);
+			}
 		}
 
 		if (assetListEntry != null) {
@@ -450,7 +452,7 @@ public class DataValuesMappingExportImportContentProcessor
 		return collectionJSONObject;
 	}
 
-	private long _getGroupId(
+	private Long _getGroupId(
 		long companyId, String scopeExternalReferenceCode, long scopeGroupId) {
 
 		if (Validator.isNull(scopeExternalReferenceCode)) {
@@ -461,7 +463,7 @@ public class DataValuesMappingExportImportContentProcessor
 			scopeExternalReferenceCode, companyId);
 
 		if (group == null) {
-			return scopeGroupId;
+			return null;
 		}
 
 		return group.getGroupId();

@@ -234,18 +234,19 @@ public class S3StoreUnitTest {
 			s3Store.activate(Collections.emptyMap());
 
 			try {
-				s3Store.getFileSize(
+				s3Store.hasFile(
 					RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
 					RandomTestUtil.randomString(), Store.VERSION_DEFAULT);
 
-				Assert.fail();
+				Assert.fail("The store should fail to connect");
 			}
 			catch (SystemException systemException) {
 				String message = systemException.getMessage();
 
 				Assert.assertTrue(
 					message.contains("Could not connect to proxy") ||
-					message.contains("Status Code: 403"));
+					message.contains("Status Code: 403") ||
+					message.contains("Status Code: 407"));
 
 				Assert.assertEquals(expectedProxyHit, proxyHit.get());
 			}

@@ -66,7 +66,7 @@ public class DeleteStyleBookEntryPreviewMVCActionCommandTest {
 	}
 
 	@Test(expected = NoSuchFileEntryException.class)
-	public void testDeleteStyleBookEntryPreviewFileEntry() throws Exception {
+	public void testProcessAction() throws Exception {
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryLocalService.addStyleBookEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), false,

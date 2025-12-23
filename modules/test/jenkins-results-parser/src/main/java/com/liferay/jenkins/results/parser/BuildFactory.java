@@ -115,15 +115,20 @@ public class BuildFactory {
 				else if (jobVariant.startsWith("integration") ||
 						 jobVariant.startsWith("js-unit") ||
 						 jobVariant.startsWith("modules-compile") ||
-						 jobVariant.startsWith("modules-integration") ||
 						 jobVariant.startsWith("modules-semantic-versioning") ||
-						 jobVariant.startsWith("modules-unit") ||
 						 jobVariant.startsWith("playwright-js") ||
 						 jobVariant.startsWith("rest-builder") ||
 						 jobVariant.startsWith("semantic-versioning") ||
 						 jobVariant.startsWith("service-builder")) {
 
 					return new JUnitDownstreamBuild(
+						buildURL, cachedDownstreamBuildReport,
+						(TopLevelBuild)parentBuild);
+				}
+				else if (jobVariant.startsWith("modules-integration") ||
+						 jobVariant.startsWith("modules-unit")) {
+
+					return new ModulesJUnitDownstreamBuild(
 						buildURL, cachedDownstreamBuildReport,
 						(TopLevelBuild)parentBuild);
 				}

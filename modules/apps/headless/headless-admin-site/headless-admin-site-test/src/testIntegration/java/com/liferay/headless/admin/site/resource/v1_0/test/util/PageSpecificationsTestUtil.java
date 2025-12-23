@@ -885,8 +885,14 @@ public class PageSpecificationsTestUtil {
 		return GeneralConfig.ApplicationDecorator.DECORATE;
 	}
 
-	private static Map<String, Object> _getWidgetConfig() {
+	private static Map<String, Object> _getWidgetConfig(
+		String layoutTemplateId) {
+
 		Map<String, Object> map = new TreeMap<>();
+
+		if (layoutTemplateId != null) {
+			map.put("layoutTemplateId", layoutTemplateId);
+		}
 
 		for (int i = 0; i < RandomTestUtil.randomInt(0, 3); i++) {
 			map.put(

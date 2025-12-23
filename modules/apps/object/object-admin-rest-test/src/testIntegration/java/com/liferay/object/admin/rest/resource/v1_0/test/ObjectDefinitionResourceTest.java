@@ -304,13 +304,13 @@ public class ObjectDefinitionResourceTest
 		objectDefinition = testGetObjectDefinitionsPage_addObjectDefinition(
 			randomObjectDefinition);
 
-		_assertGetObjectDefinitionsPageWithSearch(
+		_testGetObjectDefinitionsPage(
 			objectDefinition, LocaleUtil.BRAZIL, objectDefinitionLabel1);
-		_assertGetObjectDefinitionsPageWithSearch(
+		_testGetObjectDefinitionsPage(
 			objectDefinition, LocaleUtil.BRAZIL, objectDefinition.getName());
-		_assertGetObjectDefinitionsPageWithSearch(
+		_testGetObjectDefinitionsPage(
 			objectDefinition, LocaleUtil.US, objectDefinitionLabel2);
-		_assertGetObjectDefinitionsPageWithSearch(
+		_testGetObjectDefinitionsPage(
 			objectDefinition, LocaleUtil.US, objectDefinition.getName());
 	}
 
@@ -2197,7 +2197,7 @@ public class ObjectDefinitionResourceTest
 			expectedObjectDefinitions, (List<ObjectDefinition>)page.getItems());
 	}
 
-	private void _assertGetObjectDefinitionsPageWithSearch(
+	private void _testGetObjectDefinitionsPage(
 			ObjectDefinition expectedObjectDefinition, Locale locale,
 			String search)
 		throws Exception {

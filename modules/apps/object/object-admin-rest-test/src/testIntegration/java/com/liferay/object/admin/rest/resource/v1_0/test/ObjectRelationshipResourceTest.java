@@ -103,14 +103,14 @@ public class ObjectRelationshipResourceTest
 				testGetObjectDefinitionObjectRelationshipsPage_getObjectDefinitionId(),
 				randomObjectRelationship);
 
-		_assertGetObjectDefinitionObjectRelationshipsPage(
+		_testGetObjectDefinitionObjectRelationshipsPage(
 			objectRelationship, LocaleUtil.BRAZIL, objectRelationshipLabel1);
-		_assertGetObjectDefinitionObjectRelationshipsPage(
+		_testGetObjectDefinitionObjectRelationshipsPage(
 			objectRelationship, LocaleUtil.BRAZIL,
 			objectRelationship.getName());
-		_assertGetObjectDefinitionObjectRelationshipsPage(
+		_testGetObjectDefinitionObjectRelationshipsPage(
 			objectRelationship, LocaleUtil.US, objectRelationshipLabel2);
-		_assertGetObjectDefinitionObjectRelationshipsPage(
+		_testGetObjectDefinitionObjectRelationshipsPage(
 			objectRelationship, LocaleUtil.US, objectRelationship.getName());
 	}
 
@@ -390,7 +390,7 @@ public class ObjectRelationshipResourceTest
 			randomObjectRelationship());
 	}
 
-	private void _assertGetObjectDefinitionObjectRelationshipsPage(
+	private void _testGetObjectDefinitionObjectRelationshipsPage(
 			ObjectRelationship expectedObjectRelationship, Locale locale,
 			String search)
 		throws Exception {

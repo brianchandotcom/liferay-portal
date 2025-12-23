@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -108,8 +108,9 @@ public class LiferayDynamicRegistrationService
 			 allowedGrantTypes.contains("implicit"))) {
 
 			OAuth2ErrorUtil.reportInvalidRequestError(
-				"A Redirection URI is required", OAuthConstants.INVALID_REQUEST,
-				Response.Status.BAD_REQUEST);
+				"A Callback URI is required, please enter a valid value in " +
+					"Redirect URI field.",
+				OAuthConstants.INVALID_REQUEST, Response.Status.BAD_REQUEST);
 		}
 
 		List<String> resourceUris = clientRegistration.getResourceUris();
@@ -269,7 +270,7 @@ public class LiferayDynamicRegistrationService
 
 			OAuth2ErrorUtil.reportInvalidRequestError(
 				"A response type '" + allowedResponseTypes.get(0) +
-					"' is needed to match the provided grant types",
+					"' is needed to match the provided grant types.",
 				"invalid_client_metadata", Response.Status.BAD_REQUEST);
 		}
 
@@ -278,7 +279,7 @@ public class LiferayDynamicRegistrationService
 				if (!allowedResponseTypes.contains(responseType)) {
 					OAuth2ErrorUtil.reportInvalidRequestError(
 						"Invalid response type '" + responseType +
-							"' by provided grant types",
+							"' by provided grant types.",
 						"invalid_client_metadata", Response.Status.BAD_REQUEST);
 				}
 			}

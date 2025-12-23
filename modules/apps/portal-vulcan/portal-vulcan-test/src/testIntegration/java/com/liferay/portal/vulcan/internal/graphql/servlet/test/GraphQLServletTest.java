@@ -90,28 +90,6 @@ public class GraphQLServletTest {
 	}
 
 	@Test
-	public void testArrayQueryParameter() throws Exception {
-		int[] integers = {
-			RandomTestUtil.randomInt(), RandomTestUtil.randomInt()
-		};
-
-		Assert.assertArrayEquals(
-			integers,
-			JSONUtil.toIntegerArray(
-				JSONUtil.getValueAsJSONArray(
-					_invoke(
-						new GraphQLField(
-							"testDTO1Page",
-							HashMapBuilder.put(
-								"integers", (Object)integers
-							).build(),
-							new GraphQLField("integers")),
-						"query"),
-					"JSONObject/data", "JSONObject/testDTO1Page",
-					"JSONArray/integers")));
-	}
-
-	@Test
 	public void testGraphQLNameConflict() throws Exception {
 
 		// TestDTO2 has the GraphQL name "FileEntry" which is already
@@ -375,6 +353,28 @@ public class GraphQLServletTest {
 			0, () -> _test(-1, -1, null, -1));
 		PaginationConfigurationTestUtil.withPageSizeLimit(
 			0, () -> _test(-1, -1, null, 0));
+	}
+
+	@Test
+	public void testQueryWithArrayParameter() throws Exception {
+		int[] integers = {
+			RandomTestUtil.randomInt(), RandomTestUtil.randomInt()
+		};
+
+		Assert.assertArrayEquals(
+			integers,
+			JSONUtil.toIntegerArray(
+				JSONUtil.getValueAsJSONArray(
+					_invoke(
+						new GraphQLField(
+							"testDTO1Page",
+							HashMapBuilder.put(
+								"integers", (Object)integers
+							).build(),
+							new GraphQLField("integers")),
+						"query"),
+					"JSONObject/data", "JSONObject/testDTO1Page",
+					"JSONArray/integers")));
 	}
 
 	@Test

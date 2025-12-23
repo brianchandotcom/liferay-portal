@@ -376,7 +376,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 				String subtypeLabel = _getMappingSubtypeLabel();
 
 				if (Validator.isNull(subtypeLabel)) {
-					return StringPool.BLANK;
+					return null;
 				}
 
 				return HashMapBuilder.<String, Object>put(

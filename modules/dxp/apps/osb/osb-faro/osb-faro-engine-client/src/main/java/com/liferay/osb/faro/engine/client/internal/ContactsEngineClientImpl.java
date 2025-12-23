@@ -2232,11 +2232,16 @@ public class ContactsEngineClientImpl
 	@Override
 	public Results<IndividualSegmentRealTimeMembership>
 		getIndividualSegmentRealTimeMemberships(
-			FaroProject faroProject, String filter, String individualSegmentId,
-			int cur, int delta, List<OrderByField> orderByFields) {
+			FaroProject faroProject, String day, String filter,
+			String individualSegmentId, int cur, int delta,
+			List<OrderByField> orderByFields) {
 
 		Map<String, Object> uriVariables = getUriVariables(
 			faroProject, cur, delta, orderByFields);
+
+		if (Validator.isNotNull(day)) {
+			uriVariables.put("day", day);
+		}
 
 		uriVariables.put("filter", filter);
 		uriVariables.put("id", individualSegmentId);

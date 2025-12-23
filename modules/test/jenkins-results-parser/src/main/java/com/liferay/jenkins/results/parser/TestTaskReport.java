@@ -10,10 +10,14 @@ package com.liferay.jenkins.results.parser;
  */
 public interface TestTaskReport {
 
+	public DownstreamBuildReport getDownstreamBuildReport();
+
 	public long getDuration();
 
 	public String getName();
 
-	public boolean hasRun();
+	public long getOverheadDuration();
+
+	public boolean isMissing();
 
 }

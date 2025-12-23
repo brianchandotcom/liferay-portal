@@ -5,12 +5,19 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.Objects;
+
 import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
 public abstract class BaseTestTaskReport implements TestTaskReport {
+
+	@Override
+	public DownstreamBuildReport getDownstreamBuildReport() {
+		return _downstreamBuildReport;
+	}
 
 	@Override
 	public long getDuration() {
@@ -23,19 +30,48 @@ public abstract class BaseTestTaskReport implements TestTaskReport {
 	}
 
 	@Override
-	public boolean hasRun() {
-		if (getDuration() >= 0) {
+	public long getOverheadDuration() {
+		long overheadDuration = getDuration();
+
+		DownstreamBuildReport downstreamBuildReport =
+			getDownstreamBuildReport();
+
+		for (TestClassReport testClassReport :
+				downstreamBuildReport.getTestClassReports()) {
+
+			if (!Objects.equals(getName(), testClassReport.getTestTaskName())) {
+				continue;
+			}
+
+			overheadDuration -= testClassReport.getDuration();
+		}
+
+		if (overheadDuration <= 0) {
+			return 0L;
+		}
+
+		return overheadDuration;
+	}
+
+	@Override
+	public boolean isMissing() {
+		if (getDuration() <= 0) {
 			return true;
 		}
 
 		return false;
 	}
 
-	protected BaseTestTaskReport(JSONObject jsonObject) {
+	protected BaseTestTaskReport(
+		DownstreamBuildReport downstreamBuildReport, JSONObject jsonObject) {
+
+		_downstreamBuildReport = downstreamBuildReport;
+
 		_duration = jsonObject.optLong("duration");
 		_name = jsonObject.getString("name");
 	}
 
+	private final DownstreamBuildReport _downstreamBuildReport;
 	private final long _duration;
 	private final String _name;
 

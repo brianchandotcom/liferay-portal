@@ -32,7 +32,7 @@ public class ModulesJUnitDownstreamBuildReport
 		for (int i = 0; i < testTasksJSONArray.length(); i++) {
 			testTaskReports.add(
 				TestTaskReportFactory.newTestTaskReport(
-					testTasksJSONArray.getJSONObject(i)));
+					this, testTasksJSONArray.getJSONObject(i)));
 		}
 
 		return testTaskReports;

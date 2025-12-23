@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.upgrade.data.cleanup;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -49,6 +50,17 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 		if (!dbInspector.hasColumn(sourceTableName, "companyId")) {
 			return;
 		}
+
+		DB db = DBManagerUtil.getDB();
+
+		List<SafeCloseable> safeCloseables =
+			OrphanReferencesDataCleanupUtil.createIndexesIfNeeded(
+				new String[] {sourceColumnName}, connection, db,
+				sourceTableName);
+
+		safeCloseables.addAll(
+			OrphanReferencesDataCleanupUtil.createIndexesIfNeeded(
+				targetColumnNames, connection, db, targetTableName));
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
@@ -130,6 +142,11 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 						(targetColumnNames.length > 1) ? "s " : " ",
 						String.join(", ", targetColumnNames), " from table ",
 						targetTableName));
+			}
+		}
+		finally {
+			for (SafeCloseable safeCloseable : safeCloseables) {
+				safeCloseable.close();
 			}
 		}
 	}

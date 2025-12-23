@@ -2191,6 +2191,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testPutSiteSitePageWithPageSpecificationsWithCustomFields();
 		_testPutSiteSitePageWithPageSpecificationsWithWidgetPageSpecification(
 			"1_column", "2_columns_ii");
+		_testPutSiteSitePageWithPageSpecificationsWithWidgetPageSpecification(
+			"1_column", "1_2_1_columns_i");
 	}
 
 	private void _testPutSiteSitePageWithPageSpecifications(

@@ -8328,7 +8328,7 @@ public class ObjectEntryResourceTest {
 				group3.getGroupId(), _assetVocabulary.getVocabularyId());
 
 		TaxonomyCategory taxonomyCategory4 =
-			 _postTaxonomyCategoryTaxonomyCategory(
+			_postTaxonomyCategoryTaxonomyCategory(
 				group3.getGroupId(), taxonomyCategory3.getId(),
 				taxonomyCategory3.getTaxonomyVocabularyId());
 
@@ -15348,31 +15348,6 @@ public class ObjectEntryResourceTest {
 			actionId);
 	}
 
-	private TaxonomyCategory  _postTaxonomyCategoryTaxonomyCategory(
-			long groupId, String taxonomyCategoryId, long taxonomyVocabularyId)
-		throws Exception {
-
-		return _taxonomyCategoryResource.postTaxonomyCategoryTaxonomyCategory(
-			taxonomyCategoryId,
-			_randomTaxonomyCategory(groupId, taxonomyVocabularyId));
-	}
-
-	private TaxonomyCategory _postTaxonomyVocabularyTaxonomyCategory()
-		throws Exception {
-
-		return _postTaxonomyVocabularyTaxonomyCategory(
-			_testGroupId, _assetVocabulary.getVocabularyId());
-	}
-
-	private TaxonomyCategory _postTaxonomyVocabularyTaxonomyCategory(
-			long groupId, long taxonomyVocabularyId)
-		throws Exception {
-
-		return _taxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
-			taxonomyVocabularyId,
-			_randomTaxonomyCategory(groupId, taxonomyVocabularyId));
-	}
-
 	private FileEntry _addTempFileEntry(
 			String content, ObjectDefinition objectDefinition, String title)
 		throws Exception {
@@ -16502,6 +16477,31 @@ public class ObjectEntryResourceTest {
 					taxonomyCategories, TaxonomyCategory::getId, String.class)
 			).toString(),
 			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+	}
+
+	private TaxonomyCategory _postTaxonomyCategoryTaxonomyCategory(
+			long groupId, String taxonomyCategoryId, long taxonomyVocabularyId)
+		throws Exception {
+
+		return _taxonomyCategoryResource.postTaxonomyCategoryTaxonomyCategory(
+			taxonomyCategoryId,
+			_randomTaxonomyCategory(groupId, taxonomyVocabularyId));
+	}
+
+	private TaxonomyCategory _postTaxonomyVocabularyTaxonomyCategory()
+		throws Exception {
+
+		return _postTaxonomyVocabularyTaxonomyCategory(
+			_testGroupId, _assetVocabulary.getVocabularyId());
+	}
+
+	private TaxonomyCategory _postTaxonomyVocabularyTaxonomyCategory(
+			long groupId, long taxonomyVocabularyId)
+		throws Exception {
+
+		return _taxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
+			taxonomyVocabularyId,
+			_randomTaxonomyCategory(groupId, taxonomyVocabularyId));
 	}
 
 	private ObjectDefinition _publishLocalizedObjectDefinition(

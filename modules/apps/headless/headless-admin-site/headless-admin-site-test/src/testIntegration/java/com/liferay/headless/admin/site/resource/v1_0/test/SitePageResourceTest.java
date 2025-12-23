@@ -1928,6 +1928,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			SitePage.Type.WIDGET_PAGE);
 		_testPostSiteSitePageWithPageSpecificationsWithWidgetPageSpecification(
 			"1_column");
+		_testPostSiteSitePageWithPageSpecificationsWithWidgetPageSpecification(
+			"1_2_1_columns_i");
 
 		SitePage sitePage = _getRandomSitePage(SitePage.Type.CONTENT_PAGE);
 

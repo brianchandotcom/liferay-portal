@@ -88,7 +88,7 @@ public class AnalyticsRestController extends BaseRestController {
 		ProductPurchaseResource productPurchaseResource =
 			_koroneikiService.getProductPurchaseResource();
 
-		Page<ProductPurchase> productPurchasePage =
+		Page<ProductPurchase> productPurchasesPage =
 			productPurchaseResource.getProductPurchasesPage(
 				"",
 				StringBundler.concat(
@@ -97,7 +97,7 @@ public class AnalyticsRestController extends BaseRestController {
 					"'Analytics Cloud Enterprise')"),
 				Pagination.of(1, 20), "");
 
-		if (productPurchasePage.getTotalCount() == 0) {
+		if (productPurchasesPage.getTotalCount() == 0) {
 			ProductResource productResource =
 				_koroneikiService.getProductResource();
 
@@ -113,7 +113,7 @@ public class AnalyticsRestController extends BaseRestController {
 				).toString());
 		}
 
-		for (ProductPurchase productPurchase : productPurchasePage.getItems()) {
+		for (ProductPurchase productPurchase : productPurchasesPage.getItems()) {
 			ProductPurchase.Status status = productPurchase.getStatus();
 
 			if (!Objects.equals(status.getValue(), "Approved")) {

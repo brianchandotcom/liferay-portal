@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -10,7 +10,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseTestClassTaskReport implements TestClassTaskReport {
+public abstract class BaseTestTaskReport implements TestTaskReport {
 
 	@Override
 	public long getDuration() {
@@ -31,7 +31,7 @@ public abstract class BaseTestClassTaskReport implements TestClassTaskReport {
 		return false;
 	}
 
-	protected BaseTestClassTaskReport(JSONObject jsonObject) {
+	protected BaseTestTaskReport(JSONObject jsonObject) {
 		_duration = jsonObject.optLong("duration");
 		_name = jsonObject.getString("name");
 	}

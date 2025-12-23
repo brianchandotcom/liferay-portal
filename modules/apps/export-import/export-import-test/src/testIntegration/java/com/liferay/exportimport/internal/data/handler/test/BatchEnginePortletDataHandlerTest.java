@@ -1618,6 +1618,14 @@ public class BatchEnginePortletDataHandlerTest {
 			Function<Filter, Page<TestItem>> function, String portletId)
 		throws Exception {
 
+		return _register(function, portletId, false);
+	}
+
+	private SafeCloseable _register(
+			Function<Filter, Page<TestItem>> function, String portletId,
+			boolean stagingSupported)
+		throws Exception {
+
 		SafeCloseable safeCloseable1 = _registerServiceWithSafeCloseable(
 			Portlet.class,
 			new GenericPortlet() {
@@ -1626,7 +1634,7 @@ public class BatchEnginePortletDataHandlerTest {
 		SafeCloseable safeCloseable2 = _registerServiceWithSafeCloseable(
 			VulcanBatchEngineTaskItemDelegate.class,
 			new TestExportImportVulcanBatchEngineTaskItemDelegate(
-				function, portletId),
+				function, portletId, stagingSupported),
 			HashMapDictionaryBuilder.put(
 				"batch.engine.task.item.delegate", "true"
 			).put(
@@ -1958,29 +1966,8 @@ public class BatchEnginePortletDataHandlerTest {
 
 		String portletId = RandomTestUtil.randomString();
 
-		try (SafeCloseable safeCloseable1 = _registerServiceWithSafeCloseable(
-				Portlet.class,
-				new GenericPortlet() {
-				},
-				MapUtil.singletonDictionary("jakarta.portlet.name", portletId));
-			SafeCloseable safeCloseable2 = _registerServiceWithSafeCloseable(
-				VulcanBatchEngineTaskItemDelegate.class,
-				new TestExportImportVulcanBatchEngineTaskItemDelegate(
-					filter -> null, portletId, stagingSupported),
-				HashMapDictionaryBuilder.put(
-					"batch.engine.task.item.delegate", "true"
-				).put(
-					"batch.engine.task.item.delegate.class.name",
-					TestItem.class.getName()
-				).put(
-					"batch.engine.task.item.delegate.name",
-					RandomTestUtil.randomString()
-				).put(
-					"companyId", String.valueOf(TestPropsValues.getCompanyId())
-				).put(
-					"export.import.vulcan.batch.engine.task.item.delegate",
-					"true"
-				).build())) {
+		try (SafeCloseable safeCloseable = _register(
+				null, portletId, stagingSupported)) {
 
 			Thread.sleep(1000);
 

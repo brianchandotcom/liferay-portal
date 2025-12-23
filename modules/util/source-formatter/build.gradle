@@ -31,9 +31,11 @@ dependencies {
 	api group: "com.thoughtworks.qdox", name: "qdox", version: "2.0-M5"
 	api group: "commons-io", name: "commons-io", version: "2.19.0"
 	api group: "commons-lang", name: "commons-lang", version: "2.6"
+
 	api(group: "jaxen", name: "jaxen", version: "1.1.6") {
 		exclude group: "com.ibm.icu", module: "icu4j"
 	}
+
 	api group: "junit", name: "junit", version: "4.13.1"
 	api group: "org.antlr", name: "antlr4-runtime", version: "4.9.2"
 	api group: "org.apache.ant", name: "ant", version: "1.10.14"

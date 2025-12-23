@@ -302,6 +302,10 @@
 			<category name="Bug Prevention" />
 			<description name="Checks the version for dependencies in gradle build files." />
 		</check>
+		<check name="GradleEmptyLinesCheck">
+			<category name="Styling" />
+			<description name="Finds missing and unnecessary empty lines." />
+		</check>
 		<check name="GradleExportedPackageDependenciesCheck">
 			<category name="Bug Prevention" />
 			<description name="Validates dependencies in gradle build files." />

@@ -209,37 +209,6 @@ public abstract class BaseObjectEntryResourceImpl
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "objectEntryId"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "version"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
-	)
-	@jakarta.ws.rs.DELETE
-	@jakarta.ws.rs.Path("/{objectEntryId}/by-version/{version}")
-	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public void deleteObjectEntryByVersion(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("objectEntryId")
-			Long objectEntryId,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("version")
-			Integer version)
-		throws Exception {
-	}
-
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
 				name = "scopeKey"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -601,50 +570,6 @@ public abstract class BaseObjectEntryResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "nestedFields"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "page"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "pageSize"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "sort"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
-	)
-	@jakarta.ws.rs.GET
-	@jakarta.ws.rs.Path("/{objectEntryId}/versions")
-	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public Page<ObjectEntry> getObjectEntriesVersionsPage(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("objectEntryId")
-			Long objectEntryId,
-			@jakarta.ws.rs.core.Context Pagination pagination,
-			@jakarta.ws.rs.core.Context com.liferay.portal.kernel.search.Sort[]
-				sorts)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "objectEntryId"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "fields"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -669,39 +594,6 @@ public abstract class BaseObjectEntryResourceImpl
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("objectEntryId")
 			Long objectEntryId)
-		throws Exception {
-
-		return new ObjectEntry();
-	}
-
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "objectEntryId"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "version"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
-	)
-	@jakarta.ws.rs.GET
-	@jakarta.ws.rs.Path("/{objectEntryId}/by-version/{version}")
-	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public ObjectEntry getObjectEntryByVersion(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("objectEntryId")
-			Long objectEntryId,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("version")
-			Integer version)
 		throws Exception {
 
 		return new ObjectEntry();
@@ -2034,72 +1926,6 @@ public abstract class BaseObjectEntryResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
 				name = "objectEntryId"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "version"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
-	)
-	@jakarta.ws.rs.Path("/{objectEntryId}/by-version/{version}/copy")
-	@jakarta.ws.rs.POST
-	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public ObjectEntry postObjectEntryByVersionCopy(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("objectEntryId")
-			Long objectEntryId,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("version")
-			Integer version)
-		throws Exception {
-
-		return new ObjectEntry();
-	}
-
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "objectEntryId"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "version"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
-	)
-	@jakarta.ws.rs.Path("/{objectEntryId}/by-version/{version}/expire")
-	@jakarta.ws.rs.POST
-	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public ObjectEntry postObjectEntryByVersionExpire(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("objectEntryId")
-			Long objectEntryId,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("version")
-			Integer version)
-		throws Exception {
-
-		return new ObjectEntry();
-	}
-
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "objectEntryId"
 			)
 		}
 	)
@@ -2560,39 +2386,6 @@ public abstract class BaseObjectEntryResourceImpl
 			vulcanBatchEngineImportTaskResource.putImportTask(
 				ObjectEntry.class.getName(), callbackURL, object)
 		).build();
-	}
-
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "objectEntryId"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "version"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
-	)
-	@jakarta.ws.rs.Path("/{objectEntryId}/by-version/{version}/restore")
-	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
-	@jakarta.ws.rs.PUT
-	@Override
-	public ObjectEntry putObjectEntryByVersionRestore(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("objectEntryId")
-			Long objectEntryId,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("version")
-			Integer version)
-		throws Exception {
-
-		return new ObjectEntry();
 	}
 
 	@io.swagger.v3.oas.annotations.Parameters(

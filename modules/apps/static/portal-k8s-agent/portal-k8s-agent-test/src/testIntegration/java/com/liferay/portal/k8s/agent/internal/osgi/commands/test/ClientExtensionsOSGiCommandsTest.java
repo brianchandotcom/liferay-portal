@@ -159,9 +159,7 @@ public class ClientExtensionsOSGiCommandsTest {
 
 	@Test
 	public void testGetConfigurationNonexistentPid() {
-		String pid = "non-existent-pid";
-
-		Assert.assertNull(_getConfiguration(pid));
+		Assert.assertNull(_getConfiguration("non-existent-pid"));
 	}
 
 	@Test
@@ -361,13 +359,12 @@ public class ClientExtensionsOSGiCommandsTest {
 	private void _testGetConfigurations(
 		List<String> filtersList, List<String> expectedConfigurationNames) {
 
-		String[] filterStrings = filtersList.toArray(new String[0]);
-
 		Set<String> expectedConfigurationNamesSet = new HashSet<>(
 			expectedConfigurationNames);
 
 		Configuration[] configurations = _getConfigurations(
-			ArrayUtil.append(filterStrings, "test.only=true"));
+			ArrayUtil.append(
+				filtersList.toArray(new String[0]), "test.only=true"));
 
 		Set<String> namesFound = new HashSet<>();
 

@@ -5,6 +5,7 @@
 
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 import {UIElementsPage} from '../uielements/UIElementsPage';
 
@@ -214,24 +215,24 @@ export class WebContentDisplayPage {
 
 	async addWebContentWithWidget(webContentName: string) {
 		await this.webContentDisplayAddButton.click();
-		await this.uiElementsPage.pageCreatedAlert.waitFor({state: 'hidden'});
-		await this.uiElementsPage.pageUpdatedAlert.waitFor({state: 'hidden'});
 		await this.page
 			.getByText('Success:The application was added to the page.')
 			.waitFor({state: 'visible'});
+		await this.page
+			.getByText('Success:The application was added to the page.')
+			.waitFor({state: 'hidden'});
 		await this.page
 			.getByRole('heading', {name: 'Web Content Display'})
 			.hover();
 		await this.selectButton.waitFor({state: 'visible'});
-		await this.selectButton.click();
-		await this.page
-			.getByText('Success:The application was added to the page.')
-			.waitFor({state: 'hidden'});
-		await this.selectWebContentButton.waitFor({state: 'visible'});
-		await this.selectWebContentButton.click();
-		await this.webContentToSelect
-			.getByText(webContentName)
-			.waitFor({state: 'visible'});
+		await clickAndExpectToBeVisible({
+			target: this.selectWebContentButton,
+			trigger: this.selectButton,
+		});
+		await clickAndExpectToBeVisible({
+			target: this.webContentToSelect.getByText(webContentName),
+			trigger: this.selectWebContentButton,
+		});
 		await this.webContentToSelect.getByText(webContentName).hover();
 		await this.webContentToSelect.getByText(webContentName).click();
 		if (!this.saveButton.isVisible) {

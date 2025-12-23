@@ -82,7 +82,7 @@ public class DeleteLayoutUtilityPageEntryPreviewMVCActionCommandTest {
 
 	@Test
 	@TestInfo("LPD-74557")
-	public void testDeleteLayoutUtilityPageEntryPreview() throws Exception {
+	public void testDoProcessAction() throws Exception {
 		String name = RandomTestUtil.randomString();
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
@@ -127,9 +127,7 @@ public class DeleteLayoutUtilityPageEntryPreviewMVCActionCommandTest {
 
 	@Test
 	@TestInfo("LPD-74557")
-	public void testDeleteLayoutUtilityPageEntryPreviewWithoutPermissions()
-		throws Exception {
-
+	public void testDoProcessActionWithoutPermissions() throws Exception {
 		String name = RandomTestUtil.randomString();
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry =

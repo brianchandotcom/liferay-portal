@@ -83,7 +83,7 @@ public class ElasticsearchClusterRequestExecutor
 	}
 
 	@Reference
-	private static ElasticsearchClientResolver _elasticsearchClientResolver;
+	private ElasticsearchClientResolver _elasticsearchClientResolver;
 
 	private HealthClusterRequestExecutor _healthClusterRequestExecutor;
 

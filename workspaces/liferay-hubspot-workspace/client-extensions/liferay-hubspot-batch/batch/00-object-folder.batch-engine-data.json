@@ -11,11 +11,11 @@
 	},
 	"items": [
 		{
-			"externalReferenceCode": "C2K8_HUBSPOT",
+			"externalReferenceCode": "H1S4_HUBSPOT",
 			"label": {
-				"en_US": "C2K8 HubSpot"
+				"en_US": "H1S4 HubSpot"
 			},
-			"name": "C2K8HubSpot"
+			"name": "H1S4HubSpot"
 		}
 	]
 }

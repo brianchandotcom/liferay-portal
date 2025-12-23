@@ -15868,7 +15868,7 @@ public class ObjectEntryResourceTest {
 	}
 
 	private JSONArray _getCommentsJSONArray(
-			long groupId, int index, ObjectDefinition objectDefinition)
+			long groupId, ObjectDefinition objectDefinition)
 		throws Exception {
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
@@ -15878,7 +15878,7 @@ public class ObjectEntryResourceTest {
 
 		JSONArray jsonArray = jsonObject.getJSONArray("items");
 
-		jsonObject = jsonArray.getJSONObject(index);
+		jsonObject = jsonArray.getJSONObject(0);
 
 		return jsonObject.getJSONArray("comments");
 	}
@@ -16539,9 +16539,15 @@ public class ObjectEntryResourceTest {
 	}
 
 	private JSONObject _postObjectEntryWithComments(
-			JSONArray commentsJSONArray, long groupId,
+			JSONArray commentsJSONArray, long groupId, boolean nestedFields,
 			ObjectDefinition objectDefinition)
 		throws Exception {
+
+		String endpoint = _getEndpoint(objectDefinition, groupId);
+
+		if (nestedFields) {
+			endpoint = endpoint + "?nestedFields=comments";
+		}
 
 		return HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -16549,7 +16555,7 @@ public class ObjectEntryResourceTest {
 			).put(
 				"comments", commentsJSONArray
 			).toString(),
-			_getEndpoint(objectDefinition, groupId), Http.Method.POST);
+			endpoint, Http.Method.POST);
 	}
 
 	private void _postObjectEntryWithKeywords(String... keywords)
@@ -16917,10 +16923,9 @@ public class ObjectEntryResourceTest {
 				).put(
 					"text", text2
 				)),
-			groupId, objectDefinition);
+			groupId, false, objectDefinition);
 
-		JSONArray jsonArray = _getCommentsJSONArray(
-			groupId, 0, objectDefinition);
+		JSONArray jsonArray = _getCommentsJSONArray(groupId, objectDefinition);
 
 		Assert.assertEquals(3, jsonArray.length());
 
@@ -19323,36 +19328,53 @@ public class ObjectEntryResourceTest {
 			long groupId, ObjectDefinition objectDefinition)
 		throws Exception {
 
-		_postObjectEntryWithComments(
+		JSONObject jsonObject = _postObjectEntryWithComments(
 			JSONUtil.put(
 				JSONUtil.put(
 					"externalReferenceCode", RandomTestUtil.randomString()
 				).put(
 					"text", RandomTestUtil.randomString()
 				)),
-			groupId, objectDefinition);
+			groupId, true, objectDefinition);
 
-		JSONArray jsonArray = _getCommentsJSONArray(
-			groupId, 0, objectDefinition);
-
-		Assert.assertNull(jsonArray);
+		Assert.assertNull(jsonObject.getJSONArray("comments"));
 
 		_enableComments(objectDefinition);
 
-		String text = RandomTestUtil.randomString();
-
-		_postObjectEntryWithComments(
+		jsonObject = _postObjectEntryWithComments(
 			JSONUtil.put(
 				JSONUtil.put(
 					"externalReferenceCode", RandomTestUtil.randomString()
 				).put(
-					"text", text
+					"text", RandomTestUtil.randomString()
 				)),
-			groupId, objectDefinition);
+			groupId, true, objectDefinition);
 
-		jsonArray = _getCommentsJSONArray(groupId, 1, objectDefinition);
+		JSONArray jsonArray = jsonObject.getJSONArray("comments");
 
 		Assert.assertEquals(2, jsonArray.length());
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		jsonObject = _postObjectEntryWithComments(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"externalReferenceCode", externalReferenceCode
+				).put(
+					"text", RandomTestUtil.randomString()
+				),
+				JSONUtil.put(
+					"externalReferenceCode", RandomTestUtil.randomString()
+				).put(
+					"parentCommentExternalReferenceCode", externalReferenceCode
+				).put(
+					"text", RandomTestUtil.randomString()
+				)),
+			groupId, true, objectDefinition);
+
+		jsonArray = jsonObject.getJSONArray("comments");
+
+		Assert.assertEquals(3, jsonArray.length());
 	}
 
 	private void _testPostValidate(

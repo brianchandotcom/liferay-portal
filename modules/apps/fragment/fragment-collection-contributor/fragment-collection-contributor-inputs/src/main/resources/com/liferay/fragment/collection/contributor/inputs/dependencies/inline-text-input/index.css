@@ -14,3 +14,8 @@
 .inline-text-input .inline-text-border:focus-within {
 	border-color: transparent;
 }
+
+.inline-text-input .inline-text-border:has(.form-control[readonly]) {
+	border-left: none;
+	margin-left: -16px;
+}

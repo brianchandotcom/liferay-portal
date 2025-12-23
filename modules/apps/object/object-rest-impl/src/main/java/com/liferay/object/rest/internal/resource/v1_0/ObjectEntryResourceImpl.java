@@ -1511,6 +1511,61 @@ public class ObjectEntryResourceImpl
 		}
 	}
 
+	private void _create(
+			Collection<ObjectEntry> objectEntries,
+			Map<String, Serializable> parameters)
+		throws Exception {
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+		String scopeKey = _getScopeKey(parameters);
+		UnsafeFunction<ObjectEntry, ObjectEntry, Exception> unsafeFunction =
+			null;
+
+		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
+			unsafeFunction = objectEntry -> postScopeScopeKey(
+				scopeKey, objectEntry);
+		}
+		else if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
+				unsafeFunction = objectEntry -> {
+					try {
+						ObjectEntry getObjectEntry =
+							getScopeScopeKeyByExternalReferenceCode(
+								scopeKey,
+								objectEntry.getExternalReferenceCode());
+
+						return patchObjectEntry(
+							getObjectEntry.getId(), objectEntry);
+					}
+					catch (NoSuchModelException noSuchModelException) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(noSuchModelException);
+						}
+
+						return postScopeScopeKey(scopeKey, objectEntry);
+					}
+				};
+			}
+			else if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				unsafeFunction =
+					objectEntry -> putScopeScopeKeyByExternalReferenceCode(
+						scopeKey, objectEntry.getExternalReferenceCode(),
+						objectEntry);
+			}
+		}
+
+		if (unsafeFunction == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy + "\" is not supported");
+		}
+
+		contextBatchUnsafeBiConsumer.accept(objectEntries, unsafeFunction);
+	}
+
 	private DefaultDTOConverterContext _getDTOConverterContext(
 		Long objectEntryId) {
 
@@ -1614,62 +1669,6 @@ public class ObjectEntryResourceImpl
 		}
 
 		return null;
-	}
-
-	private void _create(
-			Collection<ObjectEntry> objectEntries,
-			Map<String, Serializable> parameters)
-		throws Exception {
-
-		String scopeKey = _getScopeKey(parameters);
-		UnsafeFunction<ObjectEntry, ObjectEntry, Exception> unsafeFunction =
-			null;
-
-		String createStrategy = (String)parameters.getOrDefault(
-			"createStrategy", "INSERT");
-
-		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			unsafeFunction = objectEntry -> postScopeScopeKey(
-				scopeKey, objectEntry);
-		}
-		else if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
-			String updateStrategy = (String)parameters.getOrDefault(
-				"updateStrategy", "UPDATE");
-
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-				unsafeFunction = objectEntry -> {
-					try {
-						ObjectEntry getObjectEntry =
-							getScopeScopeKeyByExternalReferenceCode(
-								scopeKey,
-								objectEntry.getExternalReferenceCode());
-
-						return patchObjectEntry(
-							getObjectEntry.getId(), objectEntry);
-					}
-					catch (NoSuchModelException noSuchModelException) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(noSuchModelException);
-						}
-
-						return postScopeScopeKey(scopeKey, objectEntry);
-					}
-				};
-			}
-			else if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				unsafeFunction =
-					objectEntry -> putScopeScopeKeyByExternalReferenceCode(
-						scopeKey, objectEntry.getExternalReferenceCode(),
-						objectEntry);
-			}
-		}
-
-		if (unsafeFunction == null) {
-			throw new NotSupportedException(
-				"Create strategy \"" + createStrategy + "\" is not supported");
-		}
-
-		contextBatchUnsafeBiConsumer.accept(objectEntries, unsafeFunction);
 	}
 
 	private ValidationResponse _validateObjectEntry(

@@ -150,9 +150,9 @@ public class MarketplaceCommandLineRunner
 		throws Exception {
 
 		for (int i = 1;; i++) {
-			Page<Order> page = _getOrdersPage(filterString, i, 200);
+			Page<Order> ordersPage = _getOrdersPage(filterString, i, 200);
 
-			for (Order order : page.getItems()) {
+			for (Order order : ordersPage.getItems()) {
 				try {
 					unsafeConsumer.accept(order);
 				}
@@ -161,7 +161,7 @@ public class MarketplaceCommandLineRunner
 				}
 			}
 
-			if (i == page.getLastPage()) {
+			if (i == ordersPage.getLastPage()) {
 				break;
 			}
 		}
@@ -519,14 +519,14 @@ public class MarketplaceCommandLineRunner
 	}
 
 	private void _processInProgressTrials() throws Exception {
-		Page<Order> page = _getOrdersPage(
+		Page<Order> ordersPage = _getOrdersPage(
 			StringBundler.concat(
 				"orderStatus/any(x:(x eq ", _ORDER_STATUS_IN_PROGRESS,
 				")) and orderTypeExternalReferenceCode in (",
 				"'SSA_SAAS', 'SOLUTIONS7')"),
 			-1, -1);
 
-		if (page.getTotalCount() == 0) {
+		if (ordersPage.getTotalCount() == 0) {
 			if (_log.isInfoEnabled()) {
 				_log.info("There are no in progress trials");
 			}
@@ -534,7 +534,7 @@ public class MarketplaceCommandLineRunner
 			return;
 		}
 
-		for (Order order : page.getItems()) {
+		for (Order order : ordersPage.getItems()) {
 			try {
 				ZonedDateTime nowZonedDateTime = ZonedDateTime.now();
 
@@ -611,12 +611,12 @@ public class MarketplaceCommandLineRunner
 	}
 
 	private void _processOnHoldTrials() throws Exception {
-		Page<Order> page = _getOrdersPage(
+		Page<Order> ordersPage = _getOrdersPage(
 			"orderStatus/any(x:(x eq " + _ORDER_STATUS_ON_HOLD +
 				")) and orderTypeExternalReferenceCode eq 'SOLUTIONS7'",
 			-1, -1);
 
-		if (page.getTotalCount() == 0) {
+		if (ordersPage.getTotalCount() == 0) {
 			if (_log.isInfoEnabled()) {
 				_log.info("There are no on hold trials");
 			}
@@ -636,7 +636,7 @@ public class MarketplaceCommandLineRunner
 
 		long available = availabilityJSONObject.getLong("available");
 
-		for (Order order : page.getItems()) {
+		for (Order order : ordersPage.getItems()) {
 			if (available == 0) {
 				if (_log.isInfoEnabled()) {
 					_log.info("There are no available seats");
@@ -697,12 +697,12 @@ public class MarketplaceCommandLineRunner
 	}
 
 	private void _processPendingOrders() throws Exception {
-		Page<Order> page = _getOrdersPage(
+		Page<Order> ordersPage = _getOrdersPage(
 			"orderStatus/any(x:(x eq " + _ORDER_STATUS_PENDING +
 				")) and orderTypeExternalReferenceCode ne 'SOLUTIONS7'",
 			-1, -1);
 
-		if (page.getTotalCount() == 0) {
+		if (ordersPage.getTotalCount() == 0) {
 			if (_log.isInfoEnabled()) {
 				_log.info("There are no pending orders");
 			}
@@ -710,7 +710,7 @@ public class MarketplaceCommandLineRunner
 			return;
 		}
 
-		for (Order order : page.getItems()) {
+		for (Order order : ordersPage.getItems()) {
 			if (order.getTotalAmount() > 0) {
 				if (_log.isInfoEnabled()) {
 					_log.info(

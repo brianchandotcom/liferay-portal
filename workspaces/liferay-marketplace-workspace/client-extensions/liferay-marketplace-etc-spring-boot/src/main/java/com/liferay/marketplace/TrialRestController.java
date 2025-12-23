@@ -86,15 +86,16 @@ public class TrialRestController extends BaseRestController {
 				orderTypeExternalReferenceCode)
 		throws Exception {
 
-		Page<PortalInstance> page = _getPortalInstancesPage(
+		Page<PortalInstance> portalInstancesPage = _getPortalInstancesPage(
 			_getTrialProvisioningContextJSONObject(
 				_getOrder(orderTypeExternalReferenceCode)));
 
 		return new JSONObject(
 		).put(
-			"active", _TRIAL_MAX_INSTANCES > page.getTotalCount()
+			"active", _TRIAL_MAX_INSTANCES > portalInstancesPage.getTotalCount()
 		).put(
-			"available", _TRIAL_MAX_INSTANCES - page.getTotalCount()
+			"available",
+			_TRIAL_MAX_INSTANCES - portalInstancesPage.getTotalCount()
 		).put(
 			"max", _TRIAL_MAX_INSTANCES
 		).toString();
@@ -113,10 +114,10 @@ public class TrialRestController extends BaseRestController {
 		String virtualHost =
 			projectPrefix + "." + jsonObject.getString("domain");
 
-		Page<PortalInstance> portalInstancePage = _getPortalInstancesPage(
+		Page<PortalInstance> portalInstancesPage = _getPortalInstancesPage(
 			jsonObject);
 
-		for (PortalInstance portalInstance : portalInstancePage.getItems()) {
+		for (PortalInstance portalInstance : portalInstancesPage.getItems()) {
 			if (Objects.equals(virtualHost, portalInstance.getVirtualHost())) {
 				return ResponseEntity.status(
 					HttpStatus.CONFLICT
@@ -417,10 +418,10 @@ public class TrialRestController extends BaseRestController {
 		PortalInstanceResource portalInstanceResource =
 			_getPortalInstanceResource(trialProvisioningContextJSONObject);
 
-		Page<PortalInstance> page =
+		Page<PortalInstance> portalInstancesPage =
 			portalInstanceResource.getPortalInstancesPage(true);
 
-		for (PortalInstance portalInstance : page.getItems()) {
+		for (PortalInstance portalInstance : portalInstancesPage.getItems()) {
 			if (Objects.equals(portalInstance.getVirtualHost(), virtualHost)) {
 				portalInstanceResource.deletePortalInstance(
 					portalInstance.getPortalInstanceId());

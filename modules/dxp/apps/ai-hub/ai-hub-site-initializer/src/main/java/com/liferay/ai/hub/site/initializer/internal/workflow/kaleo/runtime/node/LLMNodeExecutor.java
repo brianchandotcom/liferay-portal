@@ -102,7 +102,7 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 
 		AssistantHandlerUtil.handle(
 			AssistantHandlerContext.builder(
-			).contextRetriever(
+			).contentRetriever(
 				ContentRetrieverUtil.createContentRetriever(
 					kaleoNodeSettingValues)
 			).invocationParameters(

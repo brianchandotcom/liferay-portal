@@ -85,7 +85,7 @@ public class AssistantHandlerContext {
 			return new AssistantHandlerContext(this);
 		}
 
-		public Builder contextRetriever(ContentRetriever contentRetriever) {
+		public Builder contentRetriever(ContentRetriever contentRetriever) {
 			_contentRetriever = contentRetriever;
 
 			return this;

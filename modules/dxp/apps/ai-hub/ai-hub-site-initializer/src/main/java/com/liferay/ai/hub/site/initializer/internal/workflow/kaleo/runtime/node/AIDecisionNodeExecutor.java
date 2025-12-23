@@ -134,7 +134,7 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 
 		AssistantHandlerUtil.handle(
 			AssistantHandlerContext.builder(
-			).contextRetriever(
+			).contentRetriever(
 				ContentRetrieverUtil.createContentRetriever(
 					kaleoNodeSettingValues)
 			).invocationParameters(

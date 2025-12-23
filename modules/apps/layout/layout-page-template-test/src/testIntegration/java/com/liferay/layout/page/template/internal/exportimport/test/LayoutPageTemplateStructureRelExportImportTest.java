@@ -22,6 +22,7 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -50,7 +51,6 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.Map;
-import java.util.function.Function;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -130,6 +130,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		AssetListEntry assetListEntry2 = _addAssetList(guestGroup);
 
 		_updateLayoutStructureItem(
+			itemId,
 			jsonObject -> {
 				jsonObject.put(
 					"collection",
@@ -137,8 +138,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 						assetListEntry2.getAssetListEntryId(), null, null));
 
 				return jsonObject;
-			},
-			itemId);
+			});
 
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
@@ -150,6 +150,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		String externalReferenceCode = RandomTestUtil.randomString();
 
 		_updateLayoutStructureItem(
+			itemId,
 			jsonObject -> {
 				jsonObject.put(
 					"collection",
@@ -157,8 +158,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 						0, externalReferenceCode, null));
 
 				return jsonObject;
-			},
-			itemId);
+			});
 
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
@@ -170,6 +170,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		AssetListEntry assetListEntry3 = _addAssetList(group);
 
 		_updateLayoutStructureItem(
+			itemId,
 			jsonObject -> {
 				jsonObject.put(
 					"collection",
@@ -177,8 +178,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 						0, assetListEntry3.getExternalReferenceCode(), null));
 
 				return jsonObject;
-			},
-			itemId);
+			});
 
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
@@ -194,6 +194,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		AssetListEntry assetListEntry4 = _addAssetList(guestGroup);
 
 		_updateLayoutStructureItem(
+			itemId,
 			jsonObject -> {
 				jsonObject.put(
 					"collection",
@@ -202,8 +203,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 						guestGroup.getExternalReferenceCode()));
 
 				return jsonObject;
-			},
-			itemId);
+			});
 
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
@@ -255,6 +255,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		String externalReferenceCode = RandomTestUtil.randomString();
 
 		_updateLayoutStructureItem(
+			itemId,
 			jsonObject1 -> {
 				jsonObject1.put(
 					"link",
@@ -270,8 +271,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 						0, externalReferenceCode, null));
 
 				return jsonObject1;
-			},
-			itemId);
+			});
 
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
@@ -283,6 +283,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		FileEntry fileEntry2 = _addFileEntry(_serviceContext);
 
 		_updateLayoutStructureItem(
+			itemId,
 			jsonObject1 -> {
 				jsonObject1.put(
 					"link",
@@ -298,8 +299,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 						0, fileEntry2.getExternalReferenceCode(), null));
 
 				return jsonObject1;
-			},
-			itemId);
+			});
 
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
@@ -318,6 +318,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 			ServiceContextTestUtil.getServiceContext(guestGroup.getGroupId()));
 
 		_updateLayoutStructureItem(
+			itemId,
 			jsonObject1 -> {
 				jsonObject1.put(
 					"link",
@@ -333,8 +334,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 						fileEntry3.getFileEntryId(), null, null));
 
 				return jsonObject1;
-			},
-			itemId);
+			});
 
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
@@ -344,6 +344,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 			_getLayoutStructureItem(itemId, importedLayout.getPlid()), null);
 
 		_updateLayoutStructureItem(
+			itemId,
 			jsonObject1 -> {
 				jsonObject1.put(
 					"link",
@@ -361,8 +362,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 						guestGroup.getExternalReferenceCode()));
 
 				return jsonObject1;
-			},
-			itemId);
+			});
 
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
@@ -375,6 +375,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		Layout layout1 = LayoutTestUtil.addTypeContentLayout(group);
 
 		_updateLayoutStructureItem(
+			itemId,
 			jsonObject1 -> {
 				JSONObject layoutJSONObject = _createLayoutJSONObject(
 					null, group.getGroupId(), layout1.getLayoutId(),
@@ -382,8 +383,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 				return jsonObject1.put(
 					"link", JSONUtil.put("layout", layoutJSONObject));
-			},
-			itemId);
+			});
 
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
@@ -448,6 +448,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		Layout layout3 = LayoutTestUtil.addTypeContentLayout(guestGroup);
 
 		_updateLayoutStructureItem(
+			itemId,
 			jsonObject1 -> {
 				JSONObject successMessageJSONObject = jsonObject1.getJSONObject(
 					"successMessage");
@@ -459,8 +460,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 						layout3.getUuid(), layout3.isPrivateLayout(), null));
 
 				return jsonObject1;
-			},
-			itemId);
+			});
 
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
@@ -475,6 +475,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		String externalReferenceCode = RandomTestUtil.randomString();
 
 		_updateLayoutStructureItem(
+			itemId,
 			jsonObject1 -> {
 				JSONObject successMessageJSONObject = jsonObject1.getJSONObject(
 					"successMessage");
@@ -485,8 +486,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 						externalReferenceCode, 0, 0, null, null, null));
 
 				return jsonObject1;
-			},
-			itemId);
+			});
 
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
@@ -498,6 +498,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		Layout layout4 = LayoutTestUtil.addTypeContentLayout(group);
 
 		_updateLayoutStructureItem(
+			itemId,
 			jsonObject1 -> {
 				JSONObject successMessageJSONObject = jsonObject1.getJSONObject(
 					"successMessage");
@@ -509,8 +510,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 						null));
 
 				return jsonObject1;
-			},
-			itemId);
+			});
 
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
@@ -525,6 +525,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		Layout layout5 = LayoutTestUtil.addTypeContentLayout(guestGroup);
 
 		_updateLayoutStructureItem(
+			itemId,
 			jsonObject1 -> {
 				JSONObject successMessageJSONObject = jsonObject1.getJSONObject(
 					"successMessage");
@@ -536,8 +537,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 						guestGroup.getExternalReferenceCode()));
 
 				return jsonObject1;
-			},
-			itemId);
+			});
 
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
@@ -841,7 +841,8 @@ public class LayoutPageTemplateStructureRelExportImportTest
 	}
 
 	private void _updateLayoutStructureItem(
-			Function<JSONObject, JSONObject> function, String itemId)
+			String itemId,
+			UnsafeFunction<JSONObject, JSONObject, Exception> unsafeFunction)
 		throws Exception {
 
 		LayoutStructure layoutStructure =
@@ -852,7 +853,8 @@ public class LayoutPageTemplateStructureRelExportImportTest
 			layoutStructure.getLayoutStructureItem(itemId);
 
 		layoutStructureItem.updateItemConfig(
-			function.apply(layoutStructureItem.getItemConfigJSONObject()));
+			unsafeFunction.apply(
+				layoutStructureItem.getItemConfigJSONObject()));
 
 		LayoutPageTemplateStructureServiceUtil.
 			updateLayoutPageTemplateStructureData(

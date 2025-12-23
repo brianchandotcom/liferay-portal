@@ -44,6 +44,18 @@ export function translateConditionsToScript(
 
 			return script;
 		}
+		else if (condition.type === 'field') {
+			let script = `${condition.field}`;
+
+			if (condition.options?.type === 'equal') {
+				script += ` == "${condition.options?.value || ''}"`;
+			}
+			else {
+				script += ` != "${condition.options?.value || ''}"`;
+			}
+
+			return script;
+		}
 	});
 
 	if (!conditionScript.length) {

@@ -308,6 +308,8 @@ public class LayoutStructureRulesHelperImpl
 					conditionsJSONArray.getJSONObject(i);
 
 				if (Objects.equals(
+						conditionJSONObject.getString("type"), "field") ||
+					Objects.equals(
 						conditionJSONObject.getString("type"), "user")) {
 
 					continue;
@@ -340,7 +342,9 @@ public class LayoutStructureRulesHelperImpl
 			value = optionsJSONObject.get("value");
 		}
 
-		if (Objects.equals(conditionJSONObject.getString("type"), "form")) {
+		if (Objects.equals(conditionJSONObject.getString("type"), "field") ||
+			Objects.equals(conditionJSONObject.getString("type"), "form")) {
+
 			if (negated) {
 				return !Objects.equals(
 					fieldValuesMap.get(conditionJSONObject.getString("field")),

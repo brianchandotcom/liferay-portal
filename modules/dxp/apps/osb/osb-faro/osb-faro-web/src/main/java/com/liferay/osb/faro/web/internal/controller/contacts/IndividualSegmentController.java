@@ -241,8 +241,8 @@ public class IndividualSegmentController extends BaseFaroController {
 
 		Results<IndividualSegmentRealTimeMembership> results =
 			contactsEngineClient.getIndividualSegmentRealTimeMemberships(
-				faroProjectLocalService.getFaroProjectByGroupId(groupId), filter,
-				id, cur, delta, orderByFieldsFaroParam.getValue());
+				faroProjectLocalService.getFaroProjectByGroupId(groupId),
+				filter, id, cur, delta, orderByFieldsFaroParam.getValue());
 
 		return new FaroResultsDisplay(results);
 	}

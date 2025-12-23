@@ -27,7 +27,7 @@ public class PublisherAssetLink {
 		return _fileName;
 	}
 
-	public String getHref() {
+	public String getHREF() {
 		return _href;
 	}
 

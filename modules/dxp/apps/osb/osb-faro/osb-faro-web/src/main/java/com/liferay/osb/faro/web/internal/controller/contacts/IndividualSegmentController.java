@@ -233,15 +233,15 @@ public class IndividualSegmentController extends BaseFaroController {
 	@SuppressWarnings("unchecked")
 	public FaroResultsDisplay getRealTimeMemberships(
 			@PathParam("groupId") long groupId, @PathParam("id") String id,
-			@QueryParam("filter") String filter, @QueryParam("cur") int cur,
-			@QueryParam("delta") int delta,
+			@QueryParam("day") String day, @QueryParam("filter") String filter,
+			@QueryParam("cur") int cur, @QueryParam("delta") int delta,
 			@DefaultValue(StringPool.BLANK) @QueryParam("orderByFields")
 				FaroParam<List<OrderByField>> orderByFieldsFaroParam)
 		throws Exception {
 
 		Results<IndividualSegmentRealTimeMembership> results =
 			contactsEngineClient.getIndividualSegmentRealTimeMemberships(
-				faroProjectLocalService.getFaroProjectByGroupId(groupId),
+				faroProjectLocalService.getFaroProjectByGroupId(groupId), day,
 				filter, id, cur, delta, orderByFieldsFaroParam.getValue());
 
 		return new FaroResultsDisplay(results);

@@ -15,8 +15,10 @@
 		<div class="d-flex">
 			<div class="form-control form-control-tag-group input-group">
 				[#assign options=(input.attributes.options)![]]
-				[#assign values=((input.value!"")?has_content)?then((input.value?split(",")), [])]
+
 				[#assign loading=(options?size == 0)]
+
+				[#assign values=((input.value!"")?has_content)?then((input.value?split(",")), [])]
 
 				<div class="input-group-item">
 					<div class="input-group">

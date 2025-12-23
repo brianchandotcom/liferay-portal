@@ -59,6 +59,7 @@ import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
@@ -236,10 +237,11 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		return new ObjectEntryResourceImpl(
 			_dtoConverterRegistry, _entityModelProvider, objectDefinition,
 			_objectDefinitionsMap.get(restContextPath),
-			_objectDefinitionLocalService, _objectEntryLocalService,
-			_objectEntryManagerRegistry, _objectFieldLocalService,
-			_objectRelationshipLocalService, _objectScopeProviderRegistry,
-			_translationManager, _userLocalService);
+			_objectDefinitionLocalService, _objectEntryService,
+			_objectEntryLocalService, _objectEntryManagerRegistry,
+			_objectFieldLocalService, _objectRelationshipLocalService,
+			_objectScopeProviderRegistry, _translationManager,
+			_userLocalService);
 	}
 
 	private List<ServiceRegistration<?>> _deploy(
@@ -1219,6 +1221,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_objectEntryResourcePropertiesMap = new HashMap<>();
 	private final Map<String, ServiceRegistration<ObjectEntryResource>>
 		_objectEntryResourceServiceRegistrationsMap = new HashMap<>();
+
+	@Reference
+	private ObjectEntryService _objectEntryService;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

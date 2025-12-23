@@ -96,11 +96,11 @@ public class ClientExtensionsOSGiCommands implements OSGiCommands {
 
 		List<String> lines = new ArrayList<>();
 
-		List<String> sortedKeys = Collections.list(properties.keys());
+		List<String> keys = Collections.list(properties.keys());
 
-		Collections.sort(sortedKeys);
+		Collections.sort(keys);
 
-		for (String key : sortedKeys) {
+		for (String key : keys) {
 			Object value = properties.get(key);
 
 			if (value instanceof String[]) {
@@ -131,14 +131,14 @@ public class ClientExtensionsOSGiCommands implements OSGiCommands {
 	private Configuration _getConfiguration(String pid)
 		throws InvalidSyntaxException, IOException {
 
-		Configuration[] configuration = _getConfigurations(
+		Configuration[] configurations = _getConfigurations(
 			"service.pid=" + pid);
 
-		if (ArrayUtil.isEmpty(configuration)) {
+		if (ArrayUtil.isEmpty(configurations)) {
 			return null;
 		}
 
-		return configuration[0];
+		return configurations[0];
 	}
 
 	private Configuration[] _getConfigurations(String... filterStrings)
@@ -242,10 +242,10 @@ public class ClientExtensionsOSGiCommands implements OSGiCommands {
 	private Configuration _reloadConfiguration(Configuration configuration)
 		throws IOException {
 
-		Dictionary<String, Object> originalProperties =
+		Dictionary<String, Object> properties =
 			configuration.getProperties();
 
-		String originalPid = configuration.getPid();
+		String pid = configuration.getPid();
 
 		configuration.delete();
 
@@ -255,9 +255,9 @@ public class ClientExtensionsOSGiCommands implements OSGiCommands {
 
 			Configuration reloadedConfiguration =
 				ConfigurationUtil.getConfiguration(
-					_configurationAdmin, originalPid);
+					_configurationAdmin, pid);
 
-			reloadedConfiguration.update(originalProperties);
+			reloadedConfiguration.update(properties);
 
 			return reloadedConfiguration;
 		}

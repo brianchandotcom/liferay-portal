@@ -114,27 +114,27 @@ public class S3StoreTest {
 	}
 
 	@Test
-	public void testProxy() throws Exception {
-		_mockProxy(null, null);
+	public void testHasFile() throws Exception {
+		_mock(null, null);
 
-		_testProxy(true, null, null);
+		_testHasFile(true, null, null);
 
 		String proxyUserName = RandomTestUtil.randomString();
 		String proxyPassword = RandomTestUtil.randomString();
 
-		_mockProxy(proxyUserName, proxyPassword);
+		_mock(proxyUserName, proxyPassword);
 
-		_testProxy(false, proxyUserName, proxyPassword + "1");
+		_testHasFile(false, proxyUserName, proxyPassword + "1");
 
 		proxyUserName = RandomTestUtil.randomString();
 		proxyPassword = RandomTestUtil.randomString();
 
-		_mockProxy(proxyUserName, proxyPassword);
+		_mock(proxyUserName, proxyPassword);
 
-		_testProxy(true, proxyUserName, proxyPassword);
+		_testHasFile(true, proxyUserName, proxyPassword);
 	}
 
-	private void _mockProxy(String proxyUserName, String proxyPassword) {
+	private void _mock(String proxyUserName, String proxyPassword) {
 		Mockito.when(
 			_s3StoreConfiguration.proxyHost()
 		).thenReturn(
@@ -175,7 +175,7 @@ public class S3StoreTest {
 		}
 	}
 
-	private void _testProxy(
+	private void _testHasFile(
 			boolean expectedProxy, String proxyUserName, String proxyPassword)
 		throws Exception {
 

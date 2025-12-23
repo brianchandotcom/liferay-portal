@@ -73,7 +73,7 @@ public class DeleteFragmentEntryPreviewMVCActionCommandTest {
 
 	@Test
 	@TestInfo("LPD-73558")
-	public void testDeleteFragmentEntryPreview() throws Exception {
+	public void testDoProcessAction() throws Exception {
 		FragmentCollection fragmentCollection =
 			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 
@@ -115,9 +115,7 @@ public class DeleteFragmentEntryPreviewMVCActionCommandTest {
 
 	@Test
 	@TestInfo("LPD-73558")
-	public void testDeleteFragmentEntryPreviewWithoutPermissions()
-		throws Exception {
-
+	public void testDoProcessActionWithoutPermissions() throws Exception {
 		User user = UserTestUtil.addGroupUser(_group, RoleConstants.POWER_USER);
 
 		FragmentCollection fragmentCollection =

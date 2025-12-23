@@ -241,19 +241,19 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 				addAction(
 					ActionKeys.ADD_DOCUMENT, folder.getFolderId(),
 					"postDocumentFolderDocument", folder.getUserId(),
-					DLConstants.RESOURCE_NAME, folder.getGroupId())
+					DLFolderConstants.getClassName(), folder.getGroupId())
 			).put(
 				"createBatch",
 				addAction(
 					ActionKeys.ADD_DOCUMENT, folder.getFolderId(),
 					"postDocumentFolderDocumentBatch", folder.getUserId(),
-					DLConstants.RESOURCE_NAME, folder.getGroupId())
+					DLFolderConstants.getClassName(), folder.getGroupId())
 			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, folder.getFolderId(),
 					"getDocumentFolderDocumentsPage", folder.getUserId(),
-					DLConstants.RESOURCE_NAME, folder.getGroupId())
+					DLFolderConstants.getClassName(), folder.getGroupId())
 			).build(),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =

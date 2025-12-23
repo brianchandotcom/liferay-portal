@@ -360,7 +360,7 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 				OBJECT_FIELD_NAME_TEXT_1
 			));
 
-		// With "updateStrategy" PARTIAL_UPDATE and site scoped Object Entry
+		// With "updateStrategy" PARTIAL_UPDATE and site scoped object entry
 
 		ObjectEntry siteObjectEntry = ObjectEntryTestUtil.addObjectEntry(
 			testGroup.getGroupId(), siteObjectDefinition,

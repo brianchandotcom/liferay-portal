@@ -115,6 +115,7 @@ public class TaxonomyCategoryResourceTest
 		throws Exception {
 
 		_scopeType = Scope.Type.ASSET_LIBRARY;
+
 		super.testDeleteAssetLibraryTaxonomyCategoryByExternalReferenceCode();
 	}
 
@@ -122,6 +123,7 @@ public class TaxonomyCategoryResourceTest
 	@Test
 	public void testGetAssetLibraryTaxonomyCategoriesPage() throws Exception {
 		_scopeType = Scope.Type.ASSET_LIBRARY;
+
 		super.testGetAssetLibraryTaxonomyCategoriesPage();
 	}
 
@@ -131,6 +133,7 @@ public class TaxonomyCategoryResourceTest
 		throws Exception {
 
 		_scopeType = Scope.Type.ASSET_LIBRARY;
+
 		super.
 			testGetAssetLibraryTaxonomyCategoriesPageWithFilterDateTimeEquals();
 	}
@@ -141,6 +144,7 @@ public class TaxonomyCategoryResourceTest
 		throws Exception {
 
 		_scopeType = Scope.Type.ASSET_LIBRARY;
+
 		super.
 			testGetAssetLibraryTaxonomyCategoriesPageWithFilterStringContains();
 	}
@@ -151,6 +155,7 @@ public class TaxonomyCategoryResourceTest
 		throws Exception {
 
 		_scopeType = Scope.Type.ASSET_LIBRARY;
+
 		super.testGetAssetLibraryTaxonomyCategoriesPageWithFilterStringEquals();
 	}
 
@@ -160,6 +165,7 @@ public class TaxonomyCategoryResourceTest
 		throws Exception {
 
 		_scopeType = Scope.Type.ASSET_LIBRARY;
+
 		super.
 			testGetAssetLibraryTaxonomyCategoriesPageWithFilterStringStartsWith();
 	}
@@ -170,6 +176,7 @@ public class TaxonomyCategoryResourceTest
 		throws Exception {
 
 		_scopeType = Scope.Type.ASSET_LIBRARY;
+
 		super.
 			testGetAssetLibraryTaxonomyCategoriesPageWithFilterStringStartsWith();
 	}
@@ -180,6 +187,7 @@ public class TaxonomyCategoryResourceTest
 		throws Exception {
 
 		_scopeType = Scope.Type.ASSET_LIBRARY;
+
 		super.testGetAssetLibraryTaxonomyCategoriesPageWithSortDateTime();
 	}
 
@@ -189,6 +197,7 @@ public class TaxonomyCategoryResourceTest
 		throws Exception {
 
 		_scopeType = Scope.Type.ASSET_LIBRARY;
+
 		super.testGetAssetLibraryTaxonomyCategoriesPageWithSortString();
 	}
 
@@ -198,6 +207,7 @@ public class TaxonomyCategoryResourceTest
 		throws Exception {
 
 		_scopeType = Scope.Type.ASSET_LIBRARY;
+
 		super.testGetAssetLibraryTaxonomyCategoryByExternalReferenceCode();
 	}
 
@@ -303,6 +313,7 @@ public class TaxonomyCategoryResourceTest
 		throws Exception {
 
 		_scopeType = Scope.Type.ASSET_LIBRARY;
+
 		super.
 			testGraphQLDeleteAssetLibraryTaxonomyCategoryByExternalReferenceCode();
 	}
@@ -323,6 +334,7 @@ public class TaxonomyCategoryResourceTest
 		throws Exception {
 
 		_scopeType = Scope.Type.ASSET_LIBRARY;
+
 		super.testGraphQLGetAssetLibraryTaxonomyCategoriesPage();
 	}
 
@@ -332,6 +344,7 @@ public class TaxonomyCategoryResourceTest
 		throws Exception {
 
 		_scopeType = Scope.Type.ASSET_LIBRARY;
+
 		super.
 			testGraphQLGetAssetLibraryTaxonomyCategoryByExternalReferenceCode();
 	}
@@ -366,6 +379,7 @@ public class TaxonomyCategoryResourceTest
 	@Test
 	public void testGraphQLPostAssetLibraryTaxonomyCategory() throws Exception {
 		_scopeType = Scope.Type.ASSET_LIBRARY;
+
 		super.testGraphQLPostAssetLibraryTaxonomyCategory();
 	}
 
@@ -494,6 +508,7 @@ public class TaxonomyCategoryResourceTest
 		throws Exception {
 
 		_scopeType = Scope.Type.ASSET_LIBRARY;
+
 		super.testPutAssetLibraryTaxonomyCategoryByExternalReferenceCode();
 	}
 

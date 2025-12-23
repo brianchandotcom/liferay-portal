@@ -5,7 +5,6 @@
 
 package com.liferay.oauth.client.persistence.service.impl;
 
-import com.liferay.oauth.client.persistence.exception.DuplicateOAuthClientASIssuerException;
 import com.liferay.oauth.client.persistence.exception.DuplicateOAuthClientASLocalMetadataException;
 import com.liferay.oauth.client.persistence.exception.OAuthClientASLocalMetadataJSONException;
 import com.liferay.oauth.client.persistence.exception.OAuthClientASLocalMetadataLocalWellKnownURIException;
@@ -67,7 +66,7 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 				user.getCompanyId(), issuerString);
 
 		if (oAuthClientASLocalMetadata != null) {
-			throw new DuplicateOAuthClientASIssuerException();
+			throw new DuplicateOAuthClientASLocalMetadataException();
 		}
 
 		String localWellKnownURIOIC = _generateLocalWellKnownURI(

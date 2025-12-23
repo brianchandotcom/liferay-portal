@@ -97,7 +97,6 @@
 		</finder>
 	</entity>
 	<exceptions>
-		<exception>DuplicateOAuthClientASIssuer</exception>
 		<exception>DuplicateOAuthClientASLocalMetadata</exception>
 		<exception>DuplicateOAuthClientEntry</exception>
 		<exception>OAuthClientASLocalMetadataIssuerURI</exception>

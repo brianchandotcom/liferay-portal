@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -409,12 +410,11 @@ public class StyleBookEntryLocalServiceImpl
 		StyleBookEntry styleBookEntry =
 			styleBookEntryPersistence.findByPrimaryKey(styleBookEntryId);
 
-		if (previewFileEntryId == 0) {
-			PortletFileRepositoryUtil.deletePortletFileEntry(
-				styleBookEntry.getPreviewFileEntryId());
-		}
-
 		styleBookEntry.setModifiedDate(new Date());
+
+		long previousPreviewFileEntryId =
+			styleBookEntry.getPreviewFileEntryId();
+
 		styleBookEntry.setPreviewFileEntryId(previewFileEntryId);
 
 		StyleBookEntry draftStyleBookEntry = fetchDraft(styleBookEntry);
@@ -426,7 +426,14 @@ public class StyleBookEntryLocalServiceImpl
 			updateDraft(draftStyleBookEntry);
 		}
 
-		return styleBookEntryPersistence.update(styleBookEntry);
+		styleBookEntry = styleBookEntryPersistence.update(styleBookEntry);
+
+		if ((previewFileEntryId == 0) && (previousPreviewFileEntryId > 0)) {
+			_portletFileRepository.deletePortletFileEntry(
+				previousPreviewFileEntryId);
+		}
+
+		return styleBookEntry;
 	}
 
 	@Override
@@ -600,6 +607,9 @@ public class StyleBookEntryLocalServiceImpl
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
 
 	@Reference
 	private UserLocalService _userLocalService;

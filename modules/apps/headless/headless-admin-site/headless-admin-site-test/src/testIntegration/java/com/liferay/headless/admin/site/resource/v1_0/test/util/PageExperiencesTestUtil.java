@@ -56,29 +56,18 @@ public class PageExperiencesTestUtil {
 			pageExperience.getExternalReferenceCode());
 	}
 
-	public static PageExperience getPageExperience() {
-		PageExperience pageExperience = new PageExperience();
-
-		pageExperience.setExternalReferenceCode(RandomTestUtil::randomString);
-		pageExperience.setKey(RandomTestUtil.randomString());
-		pageExperience.setName_i18n(
-			Collections.singletonMap("en-US", RandomTestUtil.randomString()));
-
-		return pageExperience;
-	}
-
-	public static PageExperience[] getPageExperiences(
+	public static PageExperience[] getDefaultPageExperiences(
 		String contentPageSpecificationExternalReferenceCode,
 		long scopeGroupId) {
 
-		return getPageExperiences(
+		return getDefaultPageExperiences(
 			contentPageSpecificationExternalReferenceCode,
 			PageElementsTestUtil.getPageElements(
 				RandomTestUtil.randomInt(1, 3), StringPool.BLANK,
 				scopeGroupId));
 	}
 
-	public static PageExperience[] getPageExperiences(
+	public static PageExperience[] getDefaultPageExperiences(
 		String contentPageSpecificationExternalReferenceCode,
 		PageElement[] pageElements) {
 
@@ -93,6 +82,17 @@ public class PageExperiencesTestUtil {
 			contentPageSpecificationExternalReferenceCode);
 
 		return new PageExperience[] {pageExperience};
+	}
+
+	public static PageExperience getPageExperience() {
+		PageExperience pageExperience = new PageExperience();
+
+		pageExperience.setExternalReferenceCode(RandomTestUtil::randomString);
+		pageExperience.setKey(RandomTestUtil.randomString());
+		pageExperience.setName_i18n(
+			Collections.singletonMap("en-US", RandomTestUtil.randomString()));
+
+		return pageExperience;
 	}
 
 	public static void modifyPageExperiences(

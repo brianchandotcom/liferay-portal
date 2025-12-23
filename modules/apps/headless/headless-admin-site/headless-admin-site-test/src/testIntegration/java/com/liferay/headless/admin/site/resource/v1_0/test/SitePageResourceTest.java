@@ -1133,7 +1133,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				PageSpecification.Status.APPROVED);
 
 		draftContentPageSpecification.setPageExperiences(
-			PageExperiencesTestUtil.getPageExperiences(
+			PageExperiencesTestUtil.getDefaultPageExperiences(
 				draftContentPageSpecificationExternalReferenceCode,
 				pageElements));
 
@@ -1146,7 +1146,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			sitePage.getExternalReferenceCode());
 
 		publishedContentPageSpecification.setPageExperiences(
-			PageExperiencesTestUtil.getPageExperiences(
+			PageExperiencesTestUtil.getDefaultPageExperiences(
 				sitePage.getExternalReferenceCode(), pageElements));
 
 		sitePage.setPageSpecifications(

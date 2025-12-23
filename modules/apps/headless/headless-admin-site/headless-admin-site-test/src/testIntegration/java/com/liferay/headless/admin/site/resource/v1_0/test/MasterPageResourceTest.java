@@ -571,7 +571,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 				PageSpecification.Status.APPROVED);
 
 		draftContentPageSpecification.setPageExperiences(
-			PageExperiencesTestUtil.getPageExperiences(
+			PageExperiencesTestUtil.getDefaultPageExperiences(
 				RandomTestUtil.randomString(), pageElements));
 
 		ContentPageSpecification publishedContentPageSpecification =
@@ -582,7 +582,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		publishedContentPageSpecification.setExternalReferenceCode(
 			masterPage.getExternalReferenceCode());
 		publishedContentPageSpecification.setPageExperiences(
-			PageExperiencesTestUtil.getPageExperiences(
+			PageExperiencesTestUtil.getDefaultPageExperiences(
 				masterPage.getExternalReferenceCode(), pageElements));
 
 		masterPage.setPageSpecifications(

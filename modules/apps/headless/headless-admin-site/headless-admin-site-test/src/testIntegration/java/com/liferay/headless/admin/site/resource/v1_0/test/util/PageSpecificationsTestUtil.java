@@ -366,7 +366,7 @@ public class PageSpecificationsTestUtil {
 			contentPageSpecificationExternalReferenceCode);
 
 		if (pageExperiences == null) {
-			pageExperiences = PageExperiencesTestUtil.getPageExperiences(
+			pageExperiences = PageExperiencesTestUtil.getDefaultPageExperiences(
 				contentPageSpecificationExternalReferenceCode, scopeGroupId);
 		}
 		else {

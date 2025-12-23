@@ -120,13 +120,15 @@ test('LPD-49034 Custom Workflow Action Client Extension not working when the ass
 
 	await expect(page.getByText(`${journalArticleTitle1}`)).toBeVisible();
 
-	await journalPage.goto(site.friendlyUrlPath);
+	await expect(async () => {
+		await journalPage.goto(site.friendlyUrlPath);
 
-	await expect(
-		page
-			.locator('.list-group-item', {hasText: journalArticleTitle1})
-			.getByText('Approved')
-	).toBeVisible();
+		await expect(
+			page
+				.locator('.list-group-item', {hasText: journalArticleTitle1})
+				.getByText('Approved')
+		).toBeVisible();
+	}).toPass({timeout: 5000});
 
 	const journalArticleTitle2 = getRandomString();
 
@@ -155,13 +157,15 @@ test('LPD-49034 Custom Workflow Action Client Extension not working when the ass
 
 	await journalEditArticlePage.submitArticleForWorkflow(journalArticleTitle2);
 
-	await journalPage.goto(site.friendlyUrlPath);
+	await expect(async () => {
+		await journalPage.goto(site.friendlyUrlPath);
 
-	await expect(
-		page
-			.locator('.list-group-item', {hasText: journalArticleTitle2})
-			.getByText('Approved')
-	).toBeVisible();
+		await expect(
+			page
+				.locator('.list-group-item', {hasText: journalArticleTitle2})
+				.getByText('Approved')
+		).toBeVisible();
+	}).toPass({timeout: 5000});
 
 	await workflowPage.goto(site.friendlyUrlPath);
 

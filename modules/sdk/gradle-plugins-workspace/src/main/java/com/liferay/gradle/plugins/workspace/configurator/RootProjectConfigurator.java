@@ -185,7 +185,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	public static final String TAG_DOCKER_IMAGE_TASK_NAME = "tagDockerImage";
 
-	public static final String UPGRADE_CODE_TASK_NAME = "upgradeCode";
+	public static final String UPGRADE_SOURCE_CODE_TASK_NAME =
+		"upgradeSourceCode";
 
 	public static final String UPGRADE_JAKARTA_TASK_NAME = "upgradeJakarta";
 
@@ -273,7 +274,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			project, workspaceExtension, providedModulesConfiguration,
 			verifyProductTask);
 
-		_addTaskUpgradeCode(project);
+		_addTaskUpgradeSourceCode(project);
 
 		_addTaskUpgradeJakarta(project);
 	}
@@ -1507,9 +1508,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return dockerStopContainer;
 	}
 
-	private FormatSourceTask _addTaskUpgradeCode(Project project) {
+	private FormatSourceTask _addTaskUpgradeSourceCode(Project project) {
 		FormatSourceTask formatSourceTask = GradleUtil.addTask(
-			project, UPGRADE_CODE_TASK_NAME, FormatSourceTask.class);
+			project, UPGRADE_SOURCE_CODE_TASK_NAME, FormatSourceTask.class);
 
 		formatSourceTask.onlyIf(_skipIfExecutingParentTaskSpec);
 		formatSourceTask.setCheckCategoryNames("Upgrade");

@@ -479,11 +479,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		for (Registration registration :
 				_getActiveRegistrations(portletDataContext)) {
 
-			try (SafeCloseable safeCloseable1 =
-					ExportImportDescriptorThreadLocal.
-						setExportImportDescriptorWithSafeCloseable(
-							registration.getExportImportDescriptor());
-				SafeCloseable safeCloseable2 =
+			try (SafeCloseable safeCloseable =
 					PortletDataContextThreadLocal.
 						setPortletDataContextWithSafeCloseable(
 							portletDataContext)) {

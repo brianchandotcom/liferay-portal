@@ -292,19 +292,6 @@ public class MarketplaceRestController extends BaseRestController {
 		_marketplaceService.updateOrder(
 			null, order.getId(), MarketplaceConstants.ORDER_STATUS_PROCESSING);
 
-		Page<OrderItem> orderItemPage =
-			_marketplaceService.getOrderItemResource(
-			).getOrderIdOrderItemsPage(
-				order.getId(), Pagination.of(1, 10)
-			);
-
-		Map<String, String> productSpecificationsMap =
-			_marketplaceService.getProductSpecificationsMap(
-				_marketplaceService.getSku(
-					orderItemPage.fetchFirstItem(
-					).getSkuId()
-				).getProductId());
-
 		String orderTypeExternalReferenceCode =
 			order.getOrderTypeExternalReferenceCode();
 
@@ -331,6 +318,19 @@ public class MarketplaceRestController extends BaseRestController {
 				orderTypeExternalReferenceCode, "CLIENT_EXTENSION") ||
 			Objects.equals(
 				order.getOrderTypeExternalReferenceCode(), "DXP_APP")) {
+
+			Page<OrderItem> orderItemPage =
+				_marketplaceService.getOrderItemResource(
+				).getOrderIdOrderItemsPage(
+					order.getId(), Pagination.of(1, 10)
+				);
+
+			Map<String, String> productSpecificationsMap =
+				_marketplaceService.getProductSpecificationsMap(
+					_marketplaceService.getSku(
+						orderItemPage.fetchFirstItem(
+						).getSkuId()
+					).getProductId());
 
 			if (Objects.equals(
 					productSpecificationsMap.get("price-model"), "Free")) {

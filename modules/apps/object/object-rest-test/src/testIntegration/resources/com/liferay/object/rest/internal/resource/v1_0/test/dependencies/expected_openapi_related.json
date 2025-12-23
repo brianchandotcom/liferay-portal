@@ -5998,6 +5998,41 @@
 				]
 			}
 		},
+		"/by-external-reference-code/{externalReferenceCode}/expire": {
+			"post": {
+				"operationId": "postByExternalReferenceCodeExpire",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Object2"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Object2"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object2"
+				]
+			}
+		},
 		"/by-external-reference-code/{externalReferenceCode}/restore": {
 			"put": {
 				"operationId": "putByExternalReferenceCodeRestore",
@@ -8100,41 +8135,6 @@
 				},
 				"tags": [
 					"Collaborator"
-				]
-			}
-		},
-		"/{object2Id}/expire": {
-			"post": {
-				"operationId": "postObject2Expire",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "object2Id",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Object2"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/Object2"
-								}
-							}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"Object2"
 				]
 			}
 		},

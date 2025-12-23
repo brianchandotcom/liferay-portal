@@ -119,8 +119,10 @@ public class ViewObjectEntriesDisplayContextTest {
 			"item");
 		_assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(1),
-			"/o" + restContextPath + "/{id}/expire", "time", "expire", "expire",
-			"post", "item");
+			StringBundler.concat(
+				"/o", restContextPath, "/by-external-reference-code",
+				"/{externalReferenceCode}/expire"),
+			"time", "expire", "expire", "post", "item");
 		_assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(2), null, "trash", "deleteObjectEntry",
 			"delete", "delete", "item");

@@ -2158,6 +2158,41 @@
 				]
 			}
 		},
+		"/by-external-reference-code/{externalReferenceCode}/expire": {
+			"post": {
+				"operationId": "postByExternalReferenceCodeExpire",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Object9"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Object9"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object9"
+				]
+			}
+		},
 		"/by-external-reference-code/{externalReferenceCode}/restore": {
 			"put": {
 				"operationId": "putByExternalReferenceCodeRestore",
@@ -3141,41 +3176,6 @@
 				},
 				"tags": [
 					"Collaborator"
-				]
-			}
-		},
-		"/{object9Id}/expire": {
-			"post": {
-				"operationId": "postObject9Expire",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "object9Id",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Object9"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/Object9"
-								}
-							}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"Object9"
 				]
 			}
 		},

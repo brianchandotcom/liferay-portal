@@ -61,7 +61,7 @@ public class ClientExtensionsOSGiCommands implements OSGiCommands {
 		_printConfigurations(configurations);
 	}
 
-	public void reload(String pid) throws InvalidSyntaxException, IOException {
+	public void reload(String pid) throws Exception {
 		Configuration configuration = _getConfiguration(pid);
 
 		if (configuration == null) {
@@ -234,7 +234,7 @@ public class ClientExtensionsOSGiCommands implements OSGiCommands {
 	}
 
 	private Configuration _reloadConfiguration(Configuration configuration)
-		throws IOException {
+		throws Exception {
 
 		Dictionary<String, Object> properties = configuration.getProperties();
 
@@ -252,9 +252,6 @@ public class ClientExtensionsOSGiCommands implements OSGiCommands {
 			reloadedConfiguration.update(properties);
 
 			return reloadedConfiguration;
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
 		}
 	}
 

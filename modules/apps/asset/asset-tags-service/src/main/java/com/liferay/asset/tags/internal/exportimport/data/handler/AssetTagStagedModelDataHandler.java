@@ -324,7 +324,7 @@ public class AssetTagStagedModelDataHandler
 		for (int i = 0; i < assetTagGroupRelsJSONArray.length(); i++) {
 			String groupKey = assetTagGroupRelsJSONArray.getString(i);
 
-			Group group = _groupLocalService.getGroup(
+			Group group = _groupLocalService.fetchGroup(
 				portletDataContext.getCompanyId(), groupKey);
 
 			if (group == null) {

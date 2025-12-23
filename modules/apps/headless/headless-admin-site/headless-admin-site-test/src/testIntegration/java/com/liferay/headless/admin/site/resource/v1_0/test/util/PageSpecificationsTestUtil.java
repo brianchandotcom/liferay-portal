@@ -529,7 +529,9 @@ public class PageSpecificationsTestUtil {
 					setCustomizable(() -> Boolean.FALSE);
 					setId(() -> column);
 					setWidgetPageWidgetInstances(
-						() -> _getWidgetPageWidgetInstances(column));
+						() -> _getWidgetPageWidgetInstances(
+							column, RandomTestUtil.randomInt(0, 3),
+							layoutTemplateId));
 				}
 			},
 			WidgetPageSection.class);
@@ -789,6 +791,39 @@ public class PageSpecificationsTestUtil {
 		};
 	}
 
+	private static BasicWidgetPageWidgetInstance
+		_getBasicWidgetPageWidgetInstance(String column, int position) {
+
+		BasicWidgetPageWidgetInstance basicWidgetPageWidgetInstance =
+			new BasicWidgetPageWidgetInstance();
+
+		String widgetName = AssetPublisherPortletKeys.ASSET_PUBLISHER;
+
+		if (RandomTestUtil.randomBoolean()) {
+			widgetName = SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU;
+		}
+
+		String widgetInstanceId = RandomTestUtil.randomString();
+
+		basicWidgetPageWidgetInstance.setExternalReferenceCode(
+			PortletIdCodec.encode(widgetName, widgetInstanceId));
+
+		basicWidgetPageWidgetInstance.setParentSectionId(column);
+		basicWidgetPageWidgetInstance.setPosition(position);
+		basicWidgetPageWidgetInstance.setType(
+			WidgetPageWidgetInstance.Type.BASIC_WIDGET_PAGE_WIDGET_INSTANCE);
+		basicWidgetPageWidgetInstance.setWidgetConfig(
+			() -> _getWidgetConfig(null));
+		basicWidgetPageWidgetInstance.setWidgetInstanceId(widgetInstanceId);
+		basicWidgetPageWidgetInstance.setWidgetLookAndFeelConfig(
+			() -> _getWidgetLookAndFeelConfig());
+		basicWidgetPageWidgetInstance.setWidgetName(widgetName);
+		basicWidgetPageWidgetInstance.setWidgetPermissions(
+			() -> _getWidgetPermissions());
+
+		return basicWidgetPageWidgetInstance;
+	}
+
 	private static ContentPageSpecification[] _getContentPageSpecifications(
 		CustomField[] draftPageSpecificationCustomFields,
 		String draftPageSpecificationExternalReferenceCode,
@@ -1035,38 +1070,28 @@ public class PageSpecificationsTestUtil {
 	}
 
 	private static WidgetPageWidgetInstance[] _getWidgetPageWidgetInstances(
-		String column) {
+		String column, int count, String layoutTemplateId) {
 
 		List<WidgetPageWidgetInstance> widgetPageWidgetInstances =
 			new ArrayList<>();
 
-		for (int i = 0; i < RandomTestUtil.randomInt(0, 3); i++) {
-			WidgetPageWidgetInstance widgetPageWidgetInstance =
-				new BasicWidgetPageWidgetInstance();
+		for (int i = 0; i < count; i++) {
+			WidgetPageWidgetInstance widgetPageWidgetInstance = null;
 
-			String widgetName = AssetPublisherPortletKeys.ASSET_PUBLISHER;
+			if ((layoutTemplateId.equals("1_2_1_columns_i") &&
+				 (column.contains("column-1") || column.contains("column-3")) &&
+				 (i == 2)) ||
+				(layoutTemplateId.equals("3_columns") &&
+				 column.contains("column-3") && (i == 2))) {
 
-			if (RandomTestUtil.randomBoolean()) {
-				widgetName = SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU;
+				widgetPageWidgetInstance =
+					_getNestedApplicationsWidgetPageWidgetInstance(
+						column, layoutTemplateId, i);
 			}
-
-			String widgetInstanceId = RandomTestUtil.randomString();
-
-			widgetPageWidgetInstance.setExternalReferenceCode(
-				PortletIdCodec.encode(widgetName, widgetInstanceId));
-
-			widgetPageWidgetInstance.setParentSectionId(column);
-			widgetPageWidgetInstance.setPosition(i);
-			widgetPageWidgetInstance.setType(
-				WidgetPageWidgetInstance.Type.
-					BASIC_WIDGET_PAGE_WIDGET_INSTANCE);
-			widgetPageWidgetInstance.setWidgetConfig(() -> _getWidgetConfig());
-			widgetPageWidgetInstance.setWidgetInstanceId(widgetInstanceId);
-			widgetPageWidgetInstance.setWidgetLookAndFeelConfig(
-				() -> _getWidgetLookAndFeelConfig());
-			widgetPageWidgetInstance.setWidgetName(widgetName);
-			widgetPageWidgetInstance.setWidgetPermissions(
-				() -> _getWidgetPermissions());
+			else {
+				widgetPageWidgetInstance = _getBasicWidgetPageWidgetInstance(
+					column, i);
+			}
 
 			widgetPageWidgetInstances.add(widgetPageWidgetInstance);
 		}

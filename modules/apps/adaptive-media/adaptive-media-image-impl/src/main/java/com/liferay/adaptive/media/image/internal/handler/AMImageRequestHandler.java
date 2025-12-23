@@ -120,7 +120,7 @@ public class AMImageRequestHandler
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"Guest access denied, masking as " +
+						"Masking as PrincipalException as " +
 							"NoSuchFileEntryException",
 						portalException);
 				}

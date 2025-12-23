@@ -260,8 +260,8 @@ public class IBMS3StoreTest {
 
 	private final MockedStatic<ConfigurableUtil> _configurableUtilMockedStatic =
 		Mockito.mockStatic(ConfigurableUtil.class);
+	private S3StoreConfiguration _ibmS3StoreConfiguration;
 	private final InetSocketAddress _inetSocketAddress = new InetSocketAddress(
 		"localhost", 4250);
-	private S3StoreConfiguration _ibmS3StoreConfiguration;
 
 }

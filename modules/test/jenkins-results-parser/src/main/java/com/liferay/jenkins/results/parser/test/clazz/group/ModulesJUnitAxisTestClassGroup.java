@@ -7,7 +7,7 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.test.clazz.ModulesJUnitTestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
-import com.liferay.jenkins.results.parser.test.clazz.task.TestClassTask;
+import com.liferay.jenkins.results.parser.test.task.TestTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,27 +24,27 @@ public class ModulesJUnitAxisTestClassGroup extends JUnitAxisTestClassGroup {
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = super.getJSONObject();
 
-		JSONArray testClassTasksJSONArray = new JSONArray();
+		JSONArray testTasksJSONArray = new JSONArray();
 
-		jsonObject.put("test_class_tasks", testClassTasksJSONArray);
+		jsonObject.put("test_tasks", testTasksJSONArray);
 
-		for (TestClassTask testClassTask : getTestClassTasks()) {
-			testClassTasksJSONArray.put(testClassTask.getJSONObject());
+		for (TestTask testTask : getTestTasks()) {
+			testTasksJSONArray.put(testTask.getJSONObject());
 		}
 
 		return jsonObject;
 	}
 
-	public List<TestClassTask> getTestClassTasks() {
-		List<TestClassTask> testClassTasks = new ArrayList<>();
+	public List<TestTask> getTestTasks() {
+		List<TestTask> testTasks = new ArrayList<>();
 
 		for (ModulesJUnitTestClass modulesJUnitTestClass :
 				_getModulesJUnitTestClasses()) {
 
-			testClassTasks.add(modulesJUnitTestClass.getTestClassTask());
+			testTasks.add(modulesJUnitTestClass.getTestTask());
 		}
 
-		return testClassTasks;
+		return testTasks;
 	}
 
 	protected ModulesJUnitAxisTestClassGroup(

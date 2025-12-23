@@ -668,14 +668,16 @@ public class FragmentEntryLocalServiceImpl
 
 		long previousPreviewFileEntryId = fragmentEntry.getPreviewFileEntryId();
 
+		fragmentEntry.setPreviewFileEntryId(previewFileEntryId);
+
+		fragmentEntry = fragmentEntryPersistence.update(fragmentEntry);
+
 		if ((previewFileEntryId == 0) && (previousPreviewFileEntryId > 0)) {
 			_portletFileRepository.deletePortletFileEntry(
 				previousPreviewFileEntryId);
 		}
 
-		fragmentEntry.setPreviewFileEntryId(previewFileEntryId);
-
-		return fragmentEntryPersistence.update(fragmentEntry);
+		return fragmentEntry;
 	}
 
 	@Override

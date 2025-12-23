@@ -21,8 +21,9 @@ export class ExportImportStagingInstanceSettingsPage {
 			.locator(
 				'[id="_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_fm"]'
 			)
-			.getByRole('button')
-			.first();
+			.getByRole('button', {
+				name: 'Actions',
+			});
 		this.resetDefaultValuesOption = this.page.getByRole('menuitem', {
 			name: 'Reset Default Values',
 		});

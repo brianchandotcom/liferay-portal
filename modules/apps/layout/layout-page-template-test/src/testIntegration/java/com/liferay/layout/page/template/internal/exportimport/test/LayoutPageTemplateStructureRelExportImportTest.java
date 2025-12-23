@@ -122,7 +122,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 				return jsonObject;
 			},
-			itemId, layout);
+			itemId);
 
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
@@ -142,7 +142,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 				return jsonObject;
 			},
-			itemId, layout);
+			itemId);
 
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
@@ -162,7 +162,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 				return jsonObject;
 			},
-			itemId, layout);
+			itemId);
 
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
@@ -188,7 +188,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 				return jsonObject;
 			},
-			itemId, layout);
+			itemId);
 
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
@@ -258,7 +258,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 				return jsonObject1;
 			},
-			itemId, layout);
+			itemId);
 
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
@@ -286,7 +286,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 				return jsonObject1;
 			},
-			itemId, layout);
+			itemId);
 
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
@@ -320,7 +320,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 				return jsonObject1;
 			},
-			itemId, layout);
+			itemId);
 
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
@@ -348,7 +348,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 				return jsonObject1;
 			},
-			itemId, layout);
+			itemId);
 
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
@@ -369,7 +369,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 				return jsonObject1.put(
 					"link", JSONUtil.put("layout", layoutJSONObject));
 			},
-			itemId, layout);
+			itemId);
 
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
@@ -448,7 +448,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 				return jsonObject1;
 			},
-			itemId, layout);
+			itemId);
 
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
@@ -474,7 +474,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 				return jsonObject1;
 			},
-			itemId, layout);
+			itemId);
 
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
@@ -498,7 +498,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 				return jsonObject1;
 			},
-			itemId, layout);
+			itemId);
 
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
@@ -525,7 +525,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 				return jsonObject1;
 			},
-			itemId, layout);
+			itemId);
 
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
@@ -830,8 +830,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 	}
 
 	private void _updateLayoutStructureItem(
-			Function<JSONObject, JSONObject> function, String itemId,
-			Layout layout)
+			Function<JSONObject, JSONObject> function, String itemId)
 		throws Exception {
 
 		try {

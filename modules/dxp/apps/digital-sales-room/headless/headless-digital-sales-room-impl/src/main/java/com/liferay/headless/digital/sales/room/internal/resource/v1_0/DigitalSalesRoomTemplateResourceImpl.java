@@ -240,7 +240,8 @@ public class DigitalSalesRoomTemplateResourceImpl
 			sourceGroup.getExternalReferenceCode(), sourceGroup.getGroupId(),
 			dsrRoomObjectDefinition.getObjectDefinitionId());
 
-		String externalReferenceCode = targetGroup.getExternalReferenceCode();
+		String targetGroupExternalReferenceCode =
+			targetGroup.getExternalReferenceCode();
 
 		com.liferay.object.rest.dto.v1_0.ObjectEntry targetObjectEntry =
 			objectEntryManager.addObjectEntry(
@@ -254,7 +255,7 @@ public class DigitalSalesRoomTemplateResourceImpl
 
 								values.put(
 									"externalReferenceCode",
-									externalReferenceCode);
+									targetGroupExternalReferenceCode);
 
 								return Collections.unmodifiableMap(values);
 							});

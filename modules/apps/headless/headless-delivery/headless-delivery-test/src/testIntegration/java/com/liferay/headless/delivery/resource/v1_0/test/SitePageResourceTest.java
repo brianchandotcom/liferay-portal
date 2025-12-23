@@ -63,12 +63,14 @@ import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
@@ -78,11 +80,13 @@ import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -92,6 +96,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -101,6 +106,8 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -143,6 +150,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TimeZone;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -365,6 +373,93 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			sitePagePage.getItems(), SitePage::getPageType);
 
 		Assert.assertTrue(pageTypes.contains("Page Set"));
+	}
+
+	@Test
+	@TestInfo("LPD-75168")
+	public void testGetSiteSitePageWithLocalization() throws Exception {
+		SafeCloseable safeCloseable =
+			CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+				testCompany.getCompanyId());
+
+		String originalCompanyLocales = PrefsPropsUtil.getString(
+			testCompany.getCompanyId(), PropsKeys.LOCALES);
+
+		String originalDefaultLocale = PrefsPropsUtil.getString(
+			testCompany.getCompanyId(), PropsKeys.COMPANY_DEFAULT_LOCALE);
+
+		TimeZone timeZone = testCompany.getTimeZone();
+
+		Group group = null;
+
+		try {
+			_companyLocalService.updateDisplay(
+				testCompany.getCompanyId(), "ca_ES", timeZone.getID());
+
+			_companyLocalService.updatePreferences(
+				testCompany.getCompanyId(),
+				UnicodePropertiesBuilder.put(
+					PropsKeys.LOCALES, "ca_ES,en_US"
+				).build());
+
+			User user = UserTestUtil.getAdminUser(testCompany.getCompanyId());
+
+			group = GroupTestUtil.addGroup(
+				testCompany.getCompanyId(), user.getUserId(),
+				GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+			group = GroupTestUtil.updateDisplaySettings(
+				group.getGroupId(),
+				ListUtil.fromArray(
+					LocaleUtil.fromLanguageIds(
+						new String[] {"en_US", "ca_ES"})),
+				LocaleUtil.fromLanguageId("en_US"));
+
+			Layout layout = LayoutTestUtil.addTypeContentLayout(group);
+
+			LayoutTestUtil.updateFriendlyURL(
+				layout,
+				HashMapBuilder.put(
+					LocaleUtil.fromLanguageId("en_US"), "/english-page"
+				).put(
+					LocaleUtil.fromLanguageId("ca_ES"), "/spanish-page"
+				).build());
+
+			SitePageResource.Builder builder = SitePageResource.builder();
+
+			SitePageResource localizedSitePageResource = builder.authentication(
+				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+			).locale(
+				LocaleUtil.fromLanguageId("en_US")
+			).build();
+
+			SitePage sitePage = localizedSitePageResource.getSiteSitePage(
+				group.getGroupId(), "english-page");
+
+			Assert.assertNotNull(sitePage);
+			Assert.assertTrue(
+				sitePage.getFriendlyUrlPath(
+				).contains(
+					"english-page"
+				));
+		}
+		finally {
+			_companyLocalService.updateDisplay(
+				testCompany.getCompanyId(), originalDefaultLocale,
+				timeZone.getID());
+
+			_companyLocalService.updatePreferences(
+				testCompany.getCompanyId(),
+				UnicodePropertiesBuilder.put(
+					PropsKeys.LOCALES, originalCompanyLocales
+				).build());
+
+			if (group != null) {
+				GroupTestUtil.deleteGroup(group);
+			}
+
+			safeCloseable.close();
+		}
 	}
 
 	@Ignore
@@ -2176,6 +2271,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				roleKey = RoleConstants.OWNER;
 			}
 		};
+
+	@Inject
+	private static CompanyLocalService _companyLocalService;
 
 	@Inject
 	private static ExpandoColumnLocalService _expandoColumnLocalService;

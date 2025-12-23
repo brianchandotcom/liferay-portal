@@ -127,14 +127,14 @@ public class IBMS3StoreTest {
 
 		_mockProxy(proxyUserName, proxyPassword);
 
-		_testProxy(true, proxyUserName, proxyPassword);
+		_testProxy(false, proxyUserName, proxyPassword + "1");
 
 		proxyUserName = RandomTestUtil.randomString();
 		proxyPassword = RandomTestUtil.randomString();
 
 		_mockProxy(proxyUserName, proxyPassword);
 
-		_testProxy(false, proxyUserName, proxyPassword + "1");
+		_testProxy(true, proxyUserName, proxyPassword);
 	}
 
 	private void _mockProxy(String proxyUserName, String proxyPassword) {
@@ -179,11 +179,10 @@ public class IBMS3StoreTest {
 	}
 
 	private void _testProxy(
-			boolean expectedProxyHit, String proxyUserName,
-			String proxyPassword)
+			boolean expectedProxy, String proxyUserName, String proxyPassword)
 		throws Exception {
 
-		AtomicBoolean proxyHit = new AtomicBoolean(false);
+		AtomicBoolean proxy = new AtomicBoolean(false);
 
 		HttpProxyServerBootstrap httpProxyServerBootstrap =
 			DefaultHttpProxyServer.bootstrap();
@@ -194,7 +193,7 @@ public class IBMS3StoreTest {
 
 				@Override
 				public HttpFilters filterRequest(HttpRequest httpRequest) {
-					proxyHit.set(true);
+					proxy.set(true);
 
 					return super.filterRequest(httpRequest);
 				}
@@ -248,7 +247,7 @@ public class IBMS3StoreTest {
 					message.contains("Status Code: 403") ||
 					message.contains("Status Code: 407"));
 
-				Assert.assertEquals(expectedProxyHit, proxyHit.get());
+				Assert.assertEquals(expectedProxy, proxy.get());
 			}
 			finally {
 				ibmS3Store.deactivate();

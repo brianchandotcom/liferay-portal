@@ -118,26 +118,20 @@ public class S3StoreTest {
 		_mockProxy(null, null);
 
 		_testProxy(true, null, null);
-	}
 
-	@Test
-	public void testProxyAuthentication() throws Exception {
-		String proxyUserName = RandomTestUtil.randomString();
-		String proxyPassword = RandomTestUtil.randomString();
-
-		_mockProxy(proxyUserName, proxyPassword);
-
-		_testProxy(true, proxyUserName, proxyPassword);
-	}
-
-	@Test
-	public void testProxyAuthenticationFailed() throws Exception {
 		String proxyUserName = RandomTestUtil.randomString();
 		String proxyPassword = RandomTestUtil.randomString();
 
 		_mockProxy(proxyUserName, proxyPassword);
 
 		_testProxy(false, proxyUserName, proxyPassword + "1");
+
+		proxyUserName = RandomTestUtil.randomString();
+		proxyPassword = RandomTestUtil.randomString();
+
+		_mockProxy(proxyUserName, proxyPassword);
+
+		_testProxy(true, proxyUserName, proxyPassword);
 	}
 
 	private void _mockProxy(String proxyUserName, String proxyPassword) {

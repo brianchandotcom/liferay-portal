@@ -1926,7 +1926,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			SitePage.Type.CONTENT_PAGE);
 		_testPostSitePageWithPageSpecificationsWithSettings(
 			SitePage.Type.WIDGET_PAGE);
-		_testPostSiteSitePageWithPageSpecificationsWithWidgetPageSpecification();
+		_testPostSiteSitePageWithPageSpecificationsWithWidgetPageSpecification(
+			"1_column");
 
 		SitePage sitePage = _getRandomSitePage(SitePage.Type.CONTENT_PAGE);
 
@@ -2003,7 +2004,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		}
 	}
 
-	private void _testPostSiteSitePageWithPageSpecificationsWithWidgetPageSpecification()
+	private void
+			_testPostSiteSitePageWithPageSpecificationsWithWidgetPageSpecification(
+				String layoutTemplateId)
 		throws Exception {
 
 		SitePageResource sitePageResource = _getSitePageResource(
@@ -2011,9 +2014,15 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		SitePage randomSitePage = _getRandomSitePage(SitePage.Type.WIDGET_PAGE);
 
+		WidgetPageSettings widgetPageSettings =
+			(WidgetPageSettings)randomSitePage.getPageSettings();
+
+		widgetPageSettings.setLayoutTemplateId(layoutTemplateId);
+
 		randomSitePage.setPageSpecifications(
 			PageSpecificationsTestUtil.getWidgetPageSpecifications(
-				null, "1_column", randomSitePage.getExternalReferenceCode()));
+				null, widgetPageSettings.getLayoutTemplateId(),
+				randomSitePage.getExternalReferenceCode()));
 
 		SitePage sitePage = sitePageResource.postSiteSitePage(
 			testGroup.getExternalReferenceCode(), randomSitePage);

@@ -65,7 +65,8 @@ public class DependencyManagementExportTaskPostAction
 			return;
 		}
 
-		Map<String, String> references = exportImportDescriptor.getReferences();
+		Map<String, String[]> references =
+			exportImportDescriptor.getReferences();
 
 		if (MapUtil.isEmpty(references)) {
 			return;
@@ -88,7 +89,7 @@ public class DependencyManagementExportTaskPostAction
 		Method getPropertyValueMethod = null;
 		Method setPropertyValueMethod = null;
 
-		for (Map.Entry<String, String> entry : references.entrySet()) {
+		for (Map.Entry<String, String[]> entry : references.entrySet()) {
 			String fieldName = entry.getKey();
 
 			Class<?> itemClass = item.getClass();
@@ -130,47 +131,51 @@ public class DependencyManagementExportTaskPostAction
 				continue;
 			}
 
-			ExportImportContentProcessor<?> exportImportContentProcessor =
-				ExportImportContentProcessorRegistryUtil.
-					getExportImportContentProcessorByContentProcessorType(
-						entry.getValue());
+			for (String contentProcessorType : entry.getValue()) {
+				ExportImportContentProcessor<?> exportImportContentProcessor =
+					ExportImportContentProcessorRegistryUtil.
+						getExportImportContentProcessorByContentProcessorType(
+							contentProcessorType);
 
-			if (exportImportContentProcessor == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						StringBundler.concat(
-							"Unable to get the ",
-							ExportImportContentProcessor.class.getSimpleName(),
-							" for \"content.processor.type=", entry.getKey(),
-							"\""));
+				if (exportImportContentProcessor == null) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							StringBundler.concat(
+								"Unable to get the ",
+								ExportImportContentProcessor.class.
+									getSimpleName(),
+								" for content processor type: \"",
+								contentProcessorType, "\""));
+					}
+
+					continue;
 				}
 
-				continue;
-			}
+				String value;
 
-			String value;
+				if (getMethod != null) {
+					value = GetterUtil.getString(getMethod.invoke(item));
+				}
+				else {
+					value = GetterUtil.getString(
+						getPropertyValueMethod.invoke(item, fieldName));
+				}
 
-			if (getMethod != null) {
-				value = GetterUtil.getString(getMethod.invoke(item));
-			}
-			else {
-				value = GetterUtil.getString(
-					getPropertyValueMethod.invoke(item, fieldName));
-			}
-
-			if (setMethod != null) {
-				setMethod.invoke(
-					item, fieldName,
-					(UnsafeSupplier)() ->
+				if (setMethod != null) {
+					setMethod.invoke(
+						item, fieldName,
+						(UnsafeSupplier)() ->
+							exportImportContentProcessor.
+								replaceExportContentReferences(
+									value, portletDataContext));
+				}
+				else {
+					setPropertyValueMethod.invoke(
+						item, fieldName,
 						exportImportContentProcessor.
 							replaceExportContentReferences(
 								value, portletDataContext));
-			}
-			else {
-				setPropertyValueMethod.invoke(
-					item, fieldName,
-					exportImportContentProcessor.replaceExportContentReferences(
-						value, portletDataContext));
+				}
 			}
 		}
 	}

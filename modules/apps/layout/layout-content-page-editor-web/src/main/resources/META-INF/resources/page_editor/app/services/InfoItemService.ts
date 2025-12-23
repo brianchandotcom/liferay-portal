@@ -5,6 +5,7 @@
 
 import {EditableValue} from '../../types/editables/EditableValue';
 import {config} from '../config/index';
+import {ObjectFields} from '../contexts/ObjectDataContext';
 import {State} from '../reducers';
 import {PageContent} from '../utils/usePageContents';
 import serviceFetch from './serviceFetch';
@@ -42,7 +43,7 @@ function getAvailableStructureMappingFields({
 	classNameId: string;
 	classTypeId: string;
 }) {
-	return serviceFetch(config.mappingFieldsURL, {
+	return serviceFetch<ObjectFields>(config.mappingFieldsURL, {
 		body: {
 			classNameId,
 			classTypeId,

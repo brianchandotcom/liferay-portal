@@ -645,7 +645,7 @@ public class MarketplaceRestController extends BaseRestController {
 
 		try {
 			publisherAssetFile = _getPublisherAssetFile(
-				publisherAssetLink.getHref());
+				publisherAssetLink.getHREF());
 
 			publisherAssetArtifactFile = MarketplaceUtil.addArtifactMetadata(
 				publisherAssetFile, publisherAssetLink.getFileName(),

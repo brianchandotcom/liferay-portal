@@ -530,8 +530,7 @@ public class PageSpecificationsTestUtil {
 					setId(() -> column);
 					setWidgetPageWidgetInstances(
 						() -> _getWidgetPageWidgetInstances(
-							column, RandomTestUtil.randomInt(0, 3),
-							layoutTemplateId));
+							column, 3, layoutTemplateId));
 				}
 			},
 			WidgetPageSection.class);

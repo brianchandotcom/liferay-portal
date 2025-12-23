@@ -90,10 +90,9 @@ public class InstanceConfigurationResourceImpl
 
 		List<InstanceConfiguration> instanceConfigurations = new ArrayList<>();
 
-		_appendInstanceConfigurations(instanceConfigurations);
+		_addInstanceConfigurations(instanceConfigurations);
 
-		_appendConfigurationScreenInstanceConfigurations(
-			instanceConfigurations);
+		_addConfigurationScreenInstanceConfigurations(instanceConfigurations);
 
 		return Page.of(instanceConfigurations);
 	}
@@ -143,7 +142,7 @@ public class InstanceConfigurationResourceImpl
 		_serviceTrackerMap.close();
 	}
 
-	private void _appendConfigurationScreenInstanceConfigurations(
+	private void _addConfigurationScreenInstanceConfigurations(
 		List<InstanceConfiguration> instanceConfigurations) {
 
 		for (ConfigurationScreen configurationScreen :
@@ -177,7 +176,7 @@ public class InstanceConfigurationResourceImpl
 		}
 	}
 
-	private void _appendInstanceConfigurations(
+	private void _addInstanceConfigurations(
 			List<InstanceConfiguration> instanceConfigurations)
 		throws Exception {
 

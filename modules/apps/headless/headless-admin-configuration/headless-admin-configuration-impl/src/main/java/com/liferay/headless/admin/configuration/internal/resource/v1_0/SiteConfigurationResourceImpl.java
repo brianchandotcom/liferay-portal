@@ -102,10 +102,10 @@ public class SiteConfigurationResourceImpl
 
 		List<SiteConfiguration> siteConfigurations = new ArrayList<>();
 
-		_appendSiteConfigurations(
+		_addSiteConfigurations(
 			group.getGroupId(), siteConfigurations, siteExternalReferenceCode);
 
-		_appendConfigurationScreenSiteConfigurations(
+		_addConfigurationScreenSiteConfigurations(
 			group.getGroupId(), siteConfigurations);
 
 		return Page.of(
@@ -171,7 +171,7 @@ public class SiteConfigurationResourceImpl
 		_serviceTrackerMap.close();
 	}
 
-	private void _appendConfigurationScreenSiteConfigurations(
+	private void _addConfigurationScreenSiteConfigurations(
 		long groupId, List<SiteConfiguration> siteConfigurations) {
 
 		for (ConfigurationScreen configurationScreen :
@@ -205,7 +205,7 @@ public class SiteConfigurationResourceImpl
 		}
 	}
 
-	private void _appendSiteConfigurations(
+	private void _addSiteConfigurations(
 			long groupId, List<SiteConfiguration> siteConfigurations,
 			String siteExternalReferenceCode)
 		throws Exception {

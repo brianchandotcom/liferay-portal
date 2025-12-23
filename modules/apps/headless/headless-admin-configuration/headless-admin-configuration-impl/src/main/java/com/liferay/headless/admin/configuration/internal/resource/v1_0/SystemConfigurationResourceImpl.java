@@ -94,9 +94,9 @@ public class SystemConfigurationResourceImpl
 
 		List<SystemConfiguration> systemConfigurations = new ArrayList<>();
 
-		_appendSystemConfigurations(systemConfigurations);
+		_addSystemConfigurations(systemConfigurations);
 
-		_appendConfigurationScreenSystemConfigurations(systemConfigurations);
+		_addConfigurationScreenSystemConfigurations(systemConfigurations);
 
 		return Page.of(systemConfigurations);
 	}
@@ -148,7 +148,7 @@ public class SystemConfigurationResourceImpl
 		_serviceTrackerMap.close();
 	}
 
-	private void _appendConfigurationScreenSystemConfigurations(
+	private void _addConfigurationScreenSystemConfigurations(
 		List<SystemConfiguration> systemConfigurations) {
 
 		for (ConfigurationScreen configurationScreen :
@@ -182,7 +182,7 @@ public class SystemConfigurationResourceImpl
 		}
 	}
 
-	private void _appendSystemConfigurations(
+	private void _addSystemConfigurations(
 			List<SystemConfiguration> systemConfigurations)
 		throws Exception {
 

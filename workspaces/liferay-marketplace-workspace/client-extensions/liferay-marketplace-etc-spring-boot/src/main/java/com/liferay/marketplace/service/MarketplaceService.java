@@ -360,8 +360,9 @@ public class MarketplaceService extends BaseService {
 
 		if (httpResponse.statusCode() >= HttpURLConnection.HTTP_BAD_REQUEST) {
 			throw new IOException(
-				"Failed to download publisher asset. HTTP Status: " +
-					httpResponse.statusCode());
+				StringBundler.concat(
+					"Unable to download ", publisherAssetURL, ": ",
+					httpResponse.statusCode()));
 		}
 
 		return httpResponse.body();

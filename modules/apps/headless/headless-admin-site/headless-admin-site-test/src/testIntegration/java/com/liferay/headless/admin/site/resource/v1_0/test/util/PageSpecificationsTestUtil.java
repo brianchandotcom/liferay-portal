@@ -798,7 +798,7 @@ public class PageSpecificationsTestUtil {
 
 		String widgetName = AssetPublisherPortletKeys.ASSET_PUBLISHER;
 
-		if (RandomTestUtil.randomBoolean()) {
+		if ((position % 2) == 0) {
 			widgetName = SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU;
 		}
 

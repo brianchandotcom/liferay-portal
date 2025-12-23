@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {isNullOrUndefined} from '@liferay/layout-js-components-web';
+
 import {ConditionType} from '../../plugins/page_rules/components/RuleBuilderSection';
 import {Action, Condition, Rule} from '../../types/Rule';
 import {LayoutData} from '../../types/layout_data/LayoutData';
@@ -40,7 +42,7 @@ function addRule({
 				conditionType,
 				conditions: JSON.stringify(conditions),
 				name,
-				script: script || null,
+				...(isNullOrUndefined(script) ? {} : {script}),
 				segmentsExperienceId,
 			},
 		},
@@ -131,7 +133,7 @@ function updateRule({
 				conditions: JSON.stringify(conditions),
 				name,
 				ruleId,
-				script: script || null,
+				...(isNullOrUndefined(script) ? {} : {script}),
 				segmentsExperienceId,
 			},
 		},

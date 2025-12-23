@@ -506,9 +506,20 @@ public class PageSpecificationsTestUtil {
 		if (Objects.equals(layoutTemplateId, "1_column")) {
 			columns.add("column-1");
 		}
+		else if (Objects.equals(layoutTemplateId, "1_2_1_columns_i")) {
+			columns.add("column-1");
+			columns.add("column-2");
+			columns.add("column-3");
+			columns.add("column-4");
+		}
 		else if (Objects.equals(layoutTemplateId, "2_columns_ii")) {
 			columns.add("column-1");
 			columns.add("column-2");
+		}
+		else if (Objects.equals(layoutTemplateId, "3_columns")) {
+			columns.add("column-1");
+			columns.add("column-2");
+			columns.add("column-3");
 		}
 
 		return TransformUtil.transformToArray(

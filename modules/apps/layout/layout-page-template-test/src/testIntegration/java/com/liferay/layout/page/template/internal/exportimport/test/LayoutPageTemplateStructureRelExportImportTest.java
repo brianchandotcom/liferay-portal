@@ -662,21 +662,34 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		if (groupId > 0) {
 			Assert.assertEquals(groupId, layoutJSONObject.getLong("groupId"));
 		}
+		else {
+			Assert.assertFalse(layoutJSONObject.has("groupId"));
+		}
 
 		if (Validator.isNotNull(externalReferenceCode)) {
 			Assert.assertEquals(
 				externalReferenceCode,
 				layoutJSONObject.getString("externalReferenceCode"));
 		}
+		else {
+			Assert.assertFalse(layoutJSONObject.has("externalReferenceCode"));
+		}
 
 		if (layoutId > 0) {
 			Assert.assertEquals(layoutId, layoutJSONObject.getLong("layoutId"));
+		}
+		else {
+			Assert.assertFalse(layoutJSONObject.has("layoutId"));
 		}
 
 		if (Validator.isNotNull(scopeExternalReferenceCode)) {
 			Assert.assertEquals(
 				scopeExternalReferenceCode,
 				layoutJSONObject.getString("scopeExternalReferenceCode"));
+		}
+		else {
+			Assert.assertFalse(
+				layoutJSONObject.has("scopeExternalReferenceCode"));
 		}
 	}
 
@@ -687,17 +700,26 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		if (classPK > 0) {
 			Assert.assertEquals(classPK, jsonObject.getLong("classPK"));
 		}
+		else {
+			Assert.assertFalse(jsonObject.has("classPK"));
+		}
 
 		if (Validator.isNotNull(externalReferenceCode)) {
 			Assert.assertEquals(
 				externalReferenceCode,
 				jsonObject.getString("externalReferenceCode"));
 		}
+		else {
+			Assert.assertFalse(jsonObject.has("externalReferenceCode"));
+		}
 
 		if (Validator.isNotNull(scopeExternalReferenceCode)) {
 			Assert.assertEquals(
 				scopeExternalReferenceCode,
 				jsonObject.getString("scopeExternalReferenceCode"));
+		}
+		else {
+			Assert.assertFalse(jsonObject.has("scopeExternalReferenceCode"));
 		}
 	}
 

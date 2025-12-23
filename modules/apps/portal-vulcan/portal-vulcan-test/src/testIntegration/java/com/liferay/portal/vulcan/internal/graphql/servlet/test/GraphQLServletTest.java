@@ -356,7 +356,7 @@ public class GraphQLServletTest {
 	}
 
 	@Test
-	public void testQueryWithArrayParameter() throws Exception {
+	public void testQueryWithIntegerArray() throws Exception {
 		int[] integers = {
 			RandomTestUtil.randomInt(), RandomTestUtil.randomInt()
 		};

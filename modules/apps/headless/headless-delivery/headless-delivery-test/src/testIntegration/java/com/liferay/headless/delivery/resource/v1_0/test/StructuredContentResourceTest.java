@@ -20,6 +20,7 @@ import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.document.library.util.DLURLHelper;
@@ -33,7 +34,9 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
@@ -58,11 +61,14 @@ import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.problem.Problem;
 import com.liferay.headless.delivery.client.resource.v1_0.StructuredContentResource;
+import com.liferay.headless.delivery.dynamic.data.mapping.DDMFormFieldUtil;
+import com.liferay.headless.delivery.resource.v1_0.test.util.ContentFieldValueUtil;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -83,6 +89,7 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
@@ -109,7 +116,6 @@ import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -191,8 +197,10 @@ public class StructuredContentResourceTest
 		_journalFolder = JournalTestUtil.addFolder(
 			testGroup.getGroupId(), RandomTestUtil.randomString());
 		_layout = LayoutTestUtil.addTypeContentLayout(testGroup);
+		_localizedComplexDDMStructure = _addComplexDDMStructure(true);
 		_localizedDDMStructure = _addDDMStructure(
 			testGroup, "test-localized-ddm-structure.json");
+		_unLocalizedComplexDDMStructure = _addComplexDDMStructure(true);
 		_unlocalizedDDMStructure = _addDDMStructure(
 			testGroup, "test-unlocalized-ddm-structure.json");
 	}
@@ -765,6 +773,7 @@ public class StructuredContentResourceTest
 
 		_testPutStructuredContent(false);
 		_testPutStructuredContent(true);
+		_testPutStructuredContentWithCompleteStructure();
 	}
 
 	@Override
@@ -999,6 +1008,25 @@ public class StructuredContentResourceTest
 			testDepotEntry.getDepotEntryId(), structuredContent);
 	}
 
+	private DDMStructure _addComplexDDMStructure(boolean localizable)
+		throws Exception {
+
+		DDMStructureTestHelper ddmStructureTestHelper =
+			new DDMStructureTestHelper(
+				PortalUtil.getClassNameId(JournalArticle.class), testGroup);
+
+		return ddmStructureTestHelper.addStructure(
+			PortalUtil.getClassNameId(JournalArticle.class),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			_deserialize(
+				StringUtil.replace(
+					_read("test-complex-ddm-structure.json"), "\"[#", "#]\"",
+					HashMapBuilder.put(
+						"LOCALIZABLE", String.valueOf(localizable)
+					).build())),
+			StorageType.DEFAULT.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+	}
+
 	private DDMStructure _addDDMStructure(Group group, String fileName)
 		throws Exception {
 
@@ -1184,28 +1212,34 @@ public class StructuredContentResourceTest
 	}
 
 	private boolean _equals(
-		StructuredContent structuredContent1,
-		StructuredContent structuredContent2) {
+			DDMStructure ddmStructure, StructuredContent structuredContent1,
+			StructuredContent structuredContent2, String[] languageIds)
+		throws Exception {
 
 		assertEquals(structuredContent1, structuredContent2);
 
 		if (!Objects.deepEquals(
 				structuredContent1.getDescription(),
 				structuredContent2.getDescription()) ||
-			!equals(
-				(Map)structuredContent1.getDescription_i18n(),
-				(Map)structuredContent2.getDescription_i18n()) ||
 			!Objects.deepEquals(
 				structuredContent1.getFriendlyUrlPath(),
 				structuredContent2.getFriendlyUrlPath()) ||
-			!equals(
-				(Map)structuredContent1.getFriendlyUrlPath_i18n(),
-				(Map)structuredContent2.getFriendlyUrlPath_i18n()) ||
 			!Objects.deepEquals(
-				structuredContent1.getTitle(), structuredContent2.getTitle()) ||
-			!equals(
-				(Map)structuredContent1.getTitle_i18n(),
-				(Map)structuredContent2.getTitle_i18n())) {
+				structuredContent1.getTitle(), structuredContent2.getTitle())) {
+
+			return false;
+		}
+
+		if ((languageIds.length > 1) &&
+			(!equals(
+				(Map)structuredContent1.getDescription_i18n(),
+				(Map)structuredContent2.getDescription_i18n()) ||
+			 !equals(
+				 (Map)structuredContent1.getFriendlyUrlPath_i18n(),
+				 (Map)structuredContent2.getFriendlyUrlPath_i18n()) ||
+			 !equals(
+				 (Map)structuredContent1.getTitle_i18n(),
+				 (Map)structuredContent2.getTitle_i18n()))) {
 
 			return false;
 		}
@@ -1221,17 +1255,27 @@ public class StructuredContentResourceTest
 			ContentField contentField1 = contentFields1[i];
 			ContentField contentField2 = contentFields2[i];
 
-			if (!Objects.equals(
-					contentField1.getName(), contentField2.getName()) ||
-				!Objects.equals(
-					contentField1.getContentFieldValue(),
-					contentField2.getContentFieldValue()) ||
-				(Validator.isNull(contentField1.getDataType()) &&
-				 !equals(
-					 (Map)contentField1.getContentFieldValue_i18n(),
-					 (Map)contentField2.getContentFieldValue_i18n()))) {
+			for (String languageId : languageIds) {
+				Value value1 = ContentFieldValueUtil.getValue(
+					contentField1,
+					DDMFormFieldUtil.getDDMFormField(
+						_ddmStructureService, ddmStructure,
+						contentField1.getName()),
+					_dlAppService, testGroup.getGroupId(),
+					_journalArticleService, _layoutLocalService,
+					Locale.forLanguageTag(languageId));
+				Value value2 = ContentFieldValueUtil.getValue(
+					contentField2,
+					DDMFormFieldUtil.getDDMFormField(
+						_ddmStructureService, ddmStructure,
+						contentField2.getName()),
+					_dlAppService, testGroup.getGroupId(),
+					_journalArticleService, _layoutLocalService,
+					Locale.forLanguageTag(languageId));
 
-				return false;
+				if (!Objects.equals(value1, value2)) {
+					return false;
+				}
 			}
 		}
 
@@ -1270,20 +1314,14 @@ public class StructuredContentResourceTest
 			long dlFileEntryId, boolean localizable)
 		throws Exception {
 
-		DDMStructureTestHelper ddmStructureTestHelper =
-			new DDMStructureTestHelper(
-				PortalUtil.getClassNameId(JournalArticle.class), testGroup);
+		DDMStructure complexDDMStructure;
 
-		DDMStructure complexDDMStructure = ddmStructureTestHelper.addStructure(
-			PortalUtil.getClassNameId(JournalArticle.class),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			_deserialize(
-				StringUtil.replace(
-					_read("test-complex-ddm-structure.json"), "\"[#", "#]\"",
-					HashMapBuilder.put(
-						"LOCALIZABLE", String.valueOf(localizable)
-					).build())),
-			StorageType.DEFAULT.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+		if (localizable) {
+			complexDDMStructure = _localizedComplexDDMStructure;
+		}
+		else {
+			complexDDMStructure = _unLocalizedComplexDDMStructure;
+		}
 
 		Map<Locale, String> titleMap = HashMapBuilder.put(
 			LocaleUtil.getDefault(), RandomTestUtil.randomString()
@@ -3077,6 +3115,7 @@ public class StructuredContentResourceTest
 					new ContentField() {
 						{
 							contentFieldValue = englishContentFieldValue;
+							fieldReference = "MyText";
 							name = "MyText";
 						}
 					},
@@ -3084,6 +3123,7 @@ public class StructuredContentResourceTest
 						{
 							contentFieldValue = documentFieldValue;
 							dataType = "document";
+							fieldReference = "MyDocument";
 							name = "MyDocument";
 						}
 					},
@@ -3091,6 +3131,7 @@ public class StructuredContentResourceTest
 						{
 							contentFieldValue = imageFieldValue;
 							dataType = "image";
+							fieldReference = "MyImage";
 							name = "MyImage";
 						}
 					}
@@ -3126,6 +3167,7 @@ public class StructuredContentResourceTest
 										);
 								}
 							).build();
+							fieldReference = "MyText";
 							name = "MyText";
 						}
 					},
@@ -3149,6 +3191,7 @@ public class StructuredContentResourceTest
 								}
 							).build();
 							dataType = "document";
+							fieldReference = "MyDocument";
 							name = "MyDocument";
 						}
 					},
@@ -3172,17 +3215,64 @@ public class StructuredContentResourceTest
 								}
 							).build();
 							dataType = "image";
+							fieldReference = "MyImage";
 							name = "MyImage";
 						}
 					}
 				});
 		}
 
-		Assert.assertTrue(_equals(structuredContent2, putStructuredContent));
+		Assert.assertTrue(
+			_equals(
+				_localizedDDMStructure, structuredContent2,
+				putStructuredContent, new String[] {"es-ES", "en-US"}));
 
 		_assertLocalizedValues(
 			putStructuredContent,
 			LocaleUtil.toW3cLanguageId(LocaleUtil.getDefault()));
+		assertValid(putStructuredContent);
+	}
+
+	private void _testPutStructuredContentWithCompleteStructure()
+		throws Exception {
+
+		long dlFileEntryId = _dlFileEntry.getFileEntryId();
+
+		StructuredContent structuredContent = _randomCompleteStructuredContent(
+			dlFileEntryId, false);
+
+		StructuredContent postStructuredContent =
+			structuredContentResource.postSiteStructuredContent(
+				testGetSiteStructuredContentsPage_getSiteId(),
+				structuredContent);
+
+		Map<Locale, String> titleMap = HashMapBuilder.put(
+			LocaleUtil.getDefault(), RandomTestUtil.randomString()
+		).put(
+			LocaleUtil.FRANCE, _JOURNAL_ARTICLE_TITLE_FR
+		).build();
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			testGroup.getGroupId(), _journalFolder.getFolderId(),
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, titleMap, null,
+			titleMap, LocaleUtil.getSiteDefault(), false, true,
+			ServiceContextTestUtil.getServiceContext(
+				testCompany.getCompanyId(), testGroup.getGroupId(),
+				TestPropsValues.getUserId()));
+
+		structuredContent.setContentFields(
+			_randomContentFields(dlFileEntryId, journalArticle, false));
+
+		StructuredContent putStructuredContent =
+			structuredContentResource.putStructuredContent(
+				postStructuredContent.getId(), structuredContent);
+
+		Assert.assertTrue(
+			_equals(
+				_unLocalizedComplexDDMStructure, structuredContent,
+				putStructuredContent, new String[] {"en-US"}));
+
+		assertEquals(structuredContent, putStructuredContent);
 		assertValid(putStructuredContent);
 	}
 
@@ -3238,11 +3328,18 @@ public class StructuredContentResourceTest
 	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
 
 	private DDMStructure _ddmStructure;
+
+	@Inject
+	private DDMStructureService _ddmStructureService;
+
 	private DDMTemplate _ddmTemplate;
 	private DDMStructure _depotDDMStructure;
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
+
+	@Inject
+	private DLAppService _dlAppService;
 
 	private DLFileEntry _dlFileEntry;
 
@@ -3263,6 +3360,9 @@ public class StructuredContentResourceTest
 	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Inject
+	private JournalArticleService _journalArticleService;
+
+	@Inject
 	private JournalConverter _journalConverter;
 
 	private JournalFolder _journalFolder;
@@ -3273,9 +3373,13 @@ public class StructuredContentResourceTest
 	private Layout _layout;
 
 	@Inject
+	private LayoutLocalService _layoutLocalService;
+
+	@Inject
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
 
+	private DDMStructure _localizedComplexDDMStructure;
 	private DDMStructure _localizedDDMStructure;
 	private String _originalName;
 
@@ -3285,6 +3389,7 @@ public class StructuredContentResourceTest
 	@Inject
 	private RoleLocalService _roleLocalService;
 
+	private DDMStructure _unLocalizedComplexDDMStructure;
 	private DDMStructure _unlocalizedDDMStructure;
 	private boolean _useDepotDDMStructureStructureId;
 

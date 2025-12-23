@@ -247,7 +247,7 @@ html = html.trim();
 	<%= html %>
 </ul>
 
-<c:if test="<%= type.equals(Constants.EXPORT) && !stagingGroupHelper.isCompanyGroup(group) %>">
+<c:if test='<%= type.equals(Constants.EXPORT) && (!stagingGroupHelper.isCompanyGroup(group) || FeatureFlagManagerUtil.isEnabled(company.getCompanyId(), "LPD-69419")) %>'>
 	<liferay-util:buffer
 		var="selectedContentOptionsLabel"
 	>

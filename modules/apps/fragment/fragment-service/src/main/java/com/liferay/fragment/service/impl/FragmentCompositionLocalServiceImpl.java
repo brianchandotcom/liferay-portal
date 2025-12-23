@@ -310,13 +310,14 @@ public class FragmentCompositionLocalServiceImpl
 				fragmentCompositionId);
 
 		fragmentComposition.setModifiedDate(new Date());
+
+		long previousPreviewFileEntryId =
+			fragmentComposition.getPreviewFileEntryId();
+
 		fragmentComposition.setPreviewFileEntryId(previewFileEntryId);
 
 		fragmentComposition = fragmentCompositionPersistence.update(
 			fragmentComposition);
-
-		long previousPreviewFileEntryId =
-			fragmentComposition.getPreviewFileEntryId();
 
 		if ((previewFileEntryId == 0) && (previousPreviewFileEntryId > 0)) {
 			_portletFileRepository.deletePortletFileEntry(

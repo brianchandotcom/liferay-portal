@@ -13,12 +13,6 @@ buildIBMS3StoreUnitTest {
 	filter {
 		String line ->
 
-		line.replace "public class S3StoreUnitTest", "@Generated(\"\")\npublic class IBMS3StoreUnitTest"
-	}
-
-	filter {
-		String line ->
-
 		line.replace "S3Store s3Store", "IBMS3Store ibmS3Store"
 	}
 
@@ -31,13 +25,19 @@ buildIBMS3StoreUnitTest {
 	filter {
 		String line ->
 
-		line.replace "s3Store", "ibmS3Store"
+		line.replace "import java.net.InetSocketAddress;", "import jakarta.annotation.Generated;\n\nimport java.net.InetSocketAddress;"
 	}
 
 	filter {
 		String line ->
 
-		line.replace "import java.net.InetSocketAddress;", "import jakarta.annotation.Generated;\n\nimport java.net.InetSocketAddress;"
+		line.replace "public class S3StoreUnitTest", "@Generated(\"\")\npublic class IBMS3StoreUnitTest"
+	}
+
+	filter {
+		String line ->
+
+		line.replace "s3Store", "ibmS3Store"
 	}
 
 	from new File("src/test/java/com/liferay/portal/store/s3/S3StoreUnitTest.java")

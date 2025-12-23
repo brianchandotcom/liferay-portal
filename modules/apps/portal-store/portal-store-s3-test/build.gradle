@@ -24,13 +24,13 @@ buildIBMS3StoreTest {
 	filter {
 		String line ->
 
-		line.replace "s3.S3Store", "s3.IBMS3Store"
+		line.replace "import java.util.Dictionary;", "import jakarta.annotation.Generated;\n\nimport java.util.Dictionary;"
 	}
 
 	filter {
 		String line ->
 
-		line.replace "import java.util.Dictionary;", "import jakarta.annotation.Generated;\n\nimport java.util.Dictionary;"
+		line.replace "s3.S3Store", "s3.IBMS3Store"
 	}
 
 	from new File("src/testIntegration/java/com/liferay/portal/store/s3/test/S3StoreTest.java")

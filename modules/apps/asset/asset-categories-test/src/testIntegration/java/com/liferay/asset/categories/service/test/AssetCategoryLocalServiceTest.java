@@ -134,6 +134,20 @@ public class AssetCategoryLocalServiceTest {
 			"Expected title map length does not match", 1, titleMap.size());
 	}
 
+	@Test(expected = NoSuchVocabularyException.class)
+	public void testAddAssetCategoryInAssetVocabularyFromDifferentGroup()
+		throws Exception {
+
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			_group.getGroupId());
+
+		Group group = GroupTestUtil.addGroup();
+
+		AssetTestUtil.addCategory(
+			group.getGroupId(), assetVocabulary.getVocabularyId(),
+			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
+	}
+
 	@Test(expected = NoSuchCategoryException.class)
 	public void testAddAssetCategoryInParentAssetCategoryFromDifferentGroup()
 		throws Exception {
@@ -153,20 +167,6 @@ public class AssetCategoryLocalServiceTest {
 		AssetTestUtil.addCategory(
 			group.getGroupId(), assetVocabulary2.getVocabularyId(),
 			assetCategory.getCategoryId());
-	}
-
-	@Test(expected = NoSuchVocabularyException.class)
-	public void testAddAssetCategoryInAssetVocabularyFromDifferentGroup()
-		throws Exception {
-
-		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
-			_group.getGroupId());
-
-		Group group = GroupTestUtil.addGroup();
-
-		AssetTestUtil.addCategory(
-			group.getGroupId(), assetVocabulary.getVocabularyId(),
-			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 	}
 
 	@Test(expected = DuplicateCategoryExternalReferenceCodeException.class)
@@ -376,14 +376,12 @@ public class AssetCategoryLocalServiceTest {
 		String assetCategoryName = RandomTestUtil.randomString();
 
 		_assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			assetCategoryName, assetVocabulary.getVocabularyId(),
-			serviceContext);
+			TestPropsValues.getUserId(), _group.getGroupId(), assetCategoryName,
+			assetVocabulary.getVocabularyId(), serviceContext);
 
 		_assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			assetCategoryName, assetVocabulary.getVocabularyId(),
-			serviceContext);
+			TestPropsValues.getUserId(), _group.getGroupId(), assetCategoryName,
+			assetVocabulary.getVocabularyId(), serviceContext);
 	}
 
 	@Test(expected = AssetCategoryNameException.class)
@@ -896,9 +894,8 @@ public class AssetCategoryLocalServiceTest {
 		String assetCategoryName = RandomTestUtil.randomString();
 
 		AssetCategory assetCategory1 = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			assetCategoryName, _assetVocabulary.getVocabularyId(),
-			serviceContext);
+			TestPropsValues.getUserId(), _group.getGroupId(), assetCategoryName,
+			_assetVocabulary.getVocabularyId(), serviceContext);
 
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.addVocabulary(
@@ -906,9 +903,8 @@ public class AssetCategoryLocalServiceTest {
 				RandomTestUtil.randomString(), serviceContext);
 
 		AssetCategory assetCategory2 = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			assetCategoryName, assetVocabulary.getVocabularyId(),
-			serviceContext);
+			TestPropsValues.getUserId(), _group.getGroupId(), assetCategoryName,
+			assetVocabulary.getVocabularyId(), serviceContext);
 
 		List<AssetCategory> assetCategories = _assetCategoryLocalService.search(
 			_group.getGroupId(), assetCategoryName, null, QueryUtil.ALL_POS,
@@ -1041,9 +1037,8 @@ public class AssetCategoryLocalServiceTest {
 		String assetCategoryName = RandomTestUtil.randomString();
 
 		AssetCategory assetCategory1 = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			assetCategoryName, _assetVocabulary.getVocabularyId(),
-			serviceContext);
+			TestPropsValues.getUserId(), _group.getGroupId(), assetCategoryName,
+			_assetVocabulary.getVocabularyId(), serviceContext);
 
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.addVocabulary(
@@ -1051,9 +1046,8 @@ public class AssetCategoryLocalServiceTest {
 				RandomTestUtil.randomString(), serviceContext);
 
 		AssetCategory assetCategory2 = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			assetCategoryName, assetVocabulary.getVocabularyId(),
-			serviceContext);
+			TestPropsValues.getUserId(), _group.getGroupId(), assetCategoryName,
+			assetVocabulary.getVocabularyId(), serviceContext);
 
 		assetCategory1 = _assetCategoryLocalService.updateCategory(
 			assetCategory1.getExternalReferenceCode(),

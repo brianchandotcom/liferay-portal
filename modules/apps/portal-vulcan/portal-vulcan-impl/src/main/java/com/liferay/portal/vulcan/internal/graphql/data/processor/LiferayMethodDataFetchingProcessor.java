@@ -262,11 +262,7 @@ public class LiferayMethodDataFetchingProcessor {
 						parameterType.getComponentType(), 0));
 			}
 
-			Class<? extends Parameter> parameterClass = parameter.getClass();
-
-			if ((argument instanceof Map) &&
-				!parameterClass.isAssignableFrom(Map.class)) {
-
+			if (argument instanceof Map) {
 				ObjectMapper objectMapper = ObjectMapperHolder._objectMapper;
 
 				argument = objectMapper.convertValue(

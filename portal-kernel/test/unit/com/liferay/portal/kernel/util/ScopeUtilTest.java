@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import org.mockito.MockedStatic;
@@ -25,6 +26,11 @@ public class ScopeUtilTest {
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		_groupLocalServiceUtilMockedStatic.close();
+	}
+
+	@Before
+	public void setUp() {
+		_groupLocalServiceUtilMockedStatic.reset();
 	}
 
 	@Test

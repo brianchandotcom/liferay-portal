@@ -43,11 +43,13 @@ dependencies {
 	implementation group: "com.liferay", name: "com.liferay.gradle.plugins.target.platform", version: "4.0.1"
 	implementation group: "com.liferay", name: "com.liferay.gradle.plugins.theme.builder", version: "2.0.28"
 	implementation group: "com.liferay", name: "com.liferay.portal.tools.bundle.support", version: "3.7.7"
+
 	implementation(group: "com.liferay", name: "com.liferay.portal.tools.soy.builder", version: "3.0.7") {
 		exclude group: "com.google.template", module: "soy"
 		exclude group: "org.codehaus.plexus"
 		exclude group: "org.sonatype.plexus"
 	}
+
 	implementation group: "com.liferay", name: "com.liferay.project.templates.extensions", version: "1.0.146"
 	implementation group: "com.liferay", name: "com.liferay.release.util", version: "1.0.0"
 	implementation group: "de.undercouch", name: "gradle-download-task", version: "5.4.0"

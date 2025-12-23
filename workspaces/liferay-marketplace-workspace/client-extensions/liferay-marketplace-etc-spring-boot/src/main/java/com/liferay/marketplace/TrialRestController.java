@@ -113,10 +113,10 @@ public class TrialRestController extends BaseRestController {
 		String virtualHost =
 			projectPrefix + "." + jsonObject.getString("domain");
 
-		Page<PortalInstance> portalInstancePage = _getPortalInstancesPage(
+		Page<PortalInstance> portalInstancesPage = _getPortalInstancesPage(
 			jsonObject);
 
-		for (PortalInstance portalInstance : portalInstancePage.getItems()) {
+		for (PortalInstance portalInstance : portalInstancesPage.getItems()) {
 			if (Objects.equals(virtualHost, portalInstance.getVirtualHost())) {
 				return ResponseEntity.status(
 					HttpStatus.CONFLICT

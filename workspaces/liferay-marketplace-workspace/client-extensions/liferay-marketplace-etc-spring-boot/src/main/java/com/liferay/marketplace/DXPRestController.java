@@ -81,7 +81,7 @@ public class DXPRestController extends BaseRestController {
 			return order;
 		}
 
-		Page<OrderItem> orderItemPage =
+		Page<OrderItem> orderItemsPage =
 			_marketplaceService.getOrderItemResource(
 			).getOrderIdOrderItemsPage(
 				order.getId(), Pagination.of(1, 10)
@@ -90,7 +90,7 @@ public class DXPRestController extends BaseRestController {
 		Map<String, String> productSpecificationsMap =
 			_marketplaceService.getProductSpecificationsMap(
 				_marketplaceService.getSku(
-					orderItemPage.fetchFirstItem(
+					orderItemsPage.fetchFirstItem(
 					).getSkuId()
 				).getProductId());
 
@@ -103,7 +103,7 @@ public class DXPRestController extends BaseRestController {
 			customFields.put(
 				"cloud-provisioning",
 				MarketplaceUtil.createCloudProvisioningJSONArray(
-					orderItemPage
+					orderItemsPage
 				).toString());
 
 			_marketplaceService.updateOrder(

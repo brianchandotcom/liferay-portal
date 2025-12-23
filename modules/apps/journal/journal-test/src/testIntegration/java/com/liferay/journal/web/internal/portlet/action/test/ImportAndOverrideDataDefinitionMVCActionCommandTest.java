@@ -240,7 +240,7 @@ public class ImportAndOverrideDataDefinitionMVCActionCommandTest
 
 			_processAction(
 				dataDefinition.getId(),
-				"data_definition_with_valid_fields.json", true,
+				"data_definition_with_invalid_fields.json", true,
 				"Imported Structure");
 		}
 

@@ -1,0 +1,16 @@
+Bundle-Name: Liferay AI Hub Implementation
+Bundle-SymbolicName: com.liferay.ai.hub.impl
+Bundle-Version: 1.0.4
+Import-Package:\
+	!org.bouncycastle.jsse.*,\
+	\
+	!org.conscrypt.*,\
+	\
+	!org.openjsse.javax.net.ssl.*,\
+	!org.openjsse.net.ssl.*,\
+	\
+	android.*;resolution:=optional,\
+	\
+	*
+-dsannotations-options: inherit
+-fixupmessages: Classes found in the wrong directory: ...;is:=ignore

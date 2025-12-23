@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.ai.hub.site.initializer.internal.workflow.kaleo.runtime.node.util;
+package com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util;
 
-import com.liferay.ai.hub.site.initializer.internal.web.search.LiferayWebSearchEngine;
+import com.liferay.ai.hub.internal.web.search.LiferayWebSearchEngine;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;

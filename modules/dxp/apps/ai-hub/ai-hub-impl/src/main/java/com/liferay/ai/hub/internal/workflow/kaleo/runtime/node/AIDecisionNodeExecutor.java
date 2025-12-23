@@ -3,21 +3,20 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.ai.hub.site.initializer.internal.workflow.kaleo.runtime.node;
+package com.liferay.ai.hub.internal.workflow.kaleo.runtime.node;
 
-import com.liferay.ai.hub.site.initializer.internal.assistant.handler.AssistantHandlerContext;
-import com.liferay.ai.hub.site.initializer.internal.assistant.handler.AssistantHandlerUtil;
-import com.liferay.ai.hub.site.initializer.internal.mcp.tool.provider.MCPToolProviderUtil;
-import com.liferay.ai.hub.site.initializer.internal.workflow.kaleo.runtime.node.util.ContentRetrieverUtil;
-import com.liferay.ai.hub.site.initializer.internal.workflow.kaleo.runtime.node.util.InputVariablesUtil;
-import com.liferay.ai.hub.site.initializer.internal.workflow.kaleo.runtime.node.util.ToolsUtil;
+import com.liferay.ai.hub.internal.assistant.handler.AssistantHandlerContext;
+import com.liferay.ai.hub.internal.assistant.handler.AssistantHandlerUtil;
+import com.liferay.ai.hub.internal.mcp.tool.provider.MCPToolProviderUtil;
+import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.ContentRetrieverUtil;
+import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.InputVariablesUtil;
+import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.ToolsUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowNodeManager;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -32,9 +31,9 @@ import com.liferay.portal.workflow.kaleo.runtime.node.BaseNodeExecutor;
 import com.liferay.portal.workflow.kaleo.runtime.node.NodeExecutor;
 import com.liferay.portal.workflow.kaleo.service.KaleoNodeSettingLocalService;
 
-import dev.langchain4j.data.message.AiMessage;
+import dev.langchain4j.agent.tool.P;
+import dev.langchain4j.agent.tool.Tool;
 import dev.langchain4j.invocation.InvocationParameters;
-import dev.langchain4j.model.chat.response.ChatResponse;
 import dev.langchain4j.model.vertexai.gemini.VertexAiGeminiStreamingChatModel;
 
 import java.io.Serializable;
@@ -42,20 +41,56 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiConsumer;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Feliphe Marinho
+ * @author João Victor Alves
  */
 @Component(service = NodeExecutor.class)
-public class LLMNodeExecutor extends BaseNodeExecutor {
+public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 
 	@Override
 	public NodeType getNodeType() {
-		return NodeType.LLM;
+		return NodeType.AI_DECISION;
+	}
+
+	public class Tools {
+
+		@Tool(
+			"Complete the workflow node by proceeding to the chosen transition"
+		)
+		public void completeWorkflowNode(
+				InvocationParameters invocationParameters,
+				@P(
+					"A brief, one-sentence justification for the chosen transition."
+				)
+				String reason,
+				@P("Transition name") String transitionName)
+			throws PortalException {
+
+			ExecutionContext executionContext = invocationParameters.get(
+				"executionContext");
+
+			Map<String, Serializable> workflowContext =
+				executionContext.getWorkflowContext();
+
+			workflowContext.put("reason", reason);
+
+			PermissionThreadLocal.setPermissionChecker(
+				invocationParameters.get("permissionChecker"));
+
+			KaleoInstanceToken kaleoInstanceToken =
+				executionContext.getKaleoInstanceToken();
+
+			_workflowNodeManager.completeWorkflowNode(
+				kaleoInstanceToken.getCompanyId(),
+				kaleoInstanceToken.getUserId(),
+				kaleoInstanceToken.getKaleoInstanceTokenId(), transitionName,
+				workflowContext, false);
+		}
+
 	}
 
 	@Override
@@ -97,9 +132,6 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 				"gemini-2.5-flash-lite"
 			).build();
 
-		Map<String, Serializable> workflowContext =
-			executionContext.getWorkflowContext();
-
 		AssistantHandlerUtil.handle(
 			AssistantHandlerContext.builder(
 			).contentRetriever(
@@ -111,17 +143,15 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 						"executionContext", executionContext,
 						"permissionChecker",
 						PermissionThreadLocal.getPermissionChecker()))
-			).memoryId(
-				GetterUtil.getString(workflowContext.get("memoryId"))
 			).onCompleteResponse(
-				response -> _completeResponse(
-					response, executionContext, currentKaleoNode,
-					vertexAiGeminiStreamingChatModel)
+				response -> vertexAiGeminiStreamingChatModel.close()
 			).onError(
 				throwable -> vertexAiGeminiStreamingChatModel.close()
 			).systemMessageProvider(
 				object -> InputVariablesUtil.applyInputVariables(
 					executionContext, "prompt", kaleoNodeSettingValues)
+			).tools(
+				new Tools()
 			).toolProvider(
 				MCPToolProviderUtil.create(
 					kaleoInstanceToken.getCompanyId(), _dtoConverterRegistry,
@@ -135,8 +165,7 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 			).vertexAiGeminiStreamingChatModel(
 				vertexAiGeminiStreamingChatModel
 			).build(),
-			GetterUtil.getString(
-				workflowContext.get("assistantKey"), "default"));
+			"default");
 	}
 
 	@Override
@@ -162,46 +191,6 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 					executionContext.getKaleoInstanceToken(),
 					executionContext.getWorkflowContext(),
 					executionContext.getServiceContext())));
-	}
-
-	private void _completeResponse(
-		ChatResponse chatResponse, ExecutionContext executionContext,
-		KaleoNode kaleoNode,
-		VertexAiGeminiStreamingChatModel vertexAiGeminiStreamingChatModel) {
-
-		try {
-			Map<String, Serializable> workflowContext =
-				executionContext.getWorkflowContext();
-
-			BiConsumer<String, String> biConsumer =
-				(BiConsumer)workflowContext.get("sendOutBoundEvent");
-
-			AiMessage aiMessage = chatResponse.aiMessage();
-
-			biConsumer.accept(
-				aiMessage.text(),
-				GetterUtil.getString(workflowContext.get("outBoundEventName")));
-
-			KaleoInstanceToken kaleoInstanceToken =
-				executionContext.getKaleoInstanceToken();
-
-			List<KaleoTransition> kaleoTransitions =
-				kaleoNode.getKaleoTransitions();
-
-			KaleoTransition kaleoTransition = kaleoTransitions.get(0);
-
-			_workflowNodeManager.completeWorkflowNode(
-				kaleoInstanceToken.getCompanyId(),
-				kaleoInstanceToken.getUserId(),
-				kaleoInstanceToken.getKaleoInstanceTokenId(),
-				kaleoTransition.getName(), workflowContext, false);
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
-		finally {
-			vertexAiGeminiStreamingChatModel.close();
-		}
 	}
 
 	@Reference

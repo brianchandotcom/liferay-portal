@@ -3,37 +3,24 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.ai.hub.site.initializer.internal.assistant.handler;
+package com.liferay.ai.hub.internal.assistant.handler;
 
-import dev.langchain4j.memory.chat.MessageWindowChatMemory;
+import dev.langchain4j.invocation.InvocationParameters;
 import dev.langchain4j.service.AiServices;
-import dev.langchain4j.service.MemoryId;
 import dev.langchain4j.service.TokenStream;
 import dev.langchain4j.service.UserMessage;
-import dev.langchain4j.service.memory.ChatMemoryAccess;
-import dev.langchain4j.store.memory.chat.InMemoryChatMemoryStore;
 
 /**
  * @author Feliphe Marinho
  */
-public class ChatAssistantHandler implements AssistantHandler {
+public class DefaultAssistantHandler implements AssistantHandler {
 
-	public static final String KEY = "chat";
+	public static final String KEY = "default";
 
 	@Override
 	public void handle(AssistantHandlerContext assistantHandlerContext) {
-		AiServices<ChatAssistant> aiServices = AiServices.builder(
-			ChatAssistant.class
-		).chatMemoryProvider(
-			id -> MessageWindowChatMemory.builder(
-			).chatMemoryStore(
-				_inMemoryChatMemoryStore
-			).id(
-				id
-			).maxMessages(
-				30
-			).build()
-		);
+		AiServices<DefaultAssistant> aiServices = AiServices.builder(
+			DefaultAssistant.class);
 
 		if (assistantHandlerContext.getContentRetriever() != null) {
 			aiServices.contentRetriever(
@@ -46,12 +33,14 @@ public class ChatAssistantHandler implements AssistantHandler {
 			assistantHandlerContext.getSystemMessageProvider()
 		).toolProvider(
 			assistantHandlerContext.getToolProvider()
+		).tools(
+			assistantHandlerContext.getTools()
 		).build();
 
-		ChatAssistant chatAssistant = aiServices.build();
+		DefaultAssistant defaultAssistant = aiServices.build();
 
-		chatAssistant.chat(
-			assistantHandlerContext.getMemoryId(),
+		defaultAssistant.assist(
+			assistantHandlerContext.getInvocationParameters(),
 			assistantHandlerContext.getUserMessage()
 		).onCompleteResponse(
 			assistantHandlerContext.getOnCompleteResponse()
@@ -60,14 +49,12 @@ public class ChatAssistantHandler implements AssistantHandler {
 		).start();
 	}
 
-	public interface ChatAssistant extends ChatMemoryAccess {
+	public interface DefaultAssistant {
 
-		public TokenStream chat(
-			@MemoryId String memoryId, @UserMessage String userMessage);
+		public TokenStream assist(
+			InvocationParameters invocationParameters,
+			@UserMessage String userMessage);
 
 	}
-
-	private final InMemoryChatMemoryStore _inMemoryChatMemoryStore =
-		new InMemoryChatMemoryStore();
 
 }

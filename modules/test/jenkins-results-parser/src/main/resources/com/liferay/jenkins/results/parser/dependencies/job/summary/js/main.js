@@ -72,6 +72,18 @@ function getAxisElement(axis) {
 
 	divElement.appendChild(ulElement);
 
+	if (axis.test_class_tasks && axis.test_class_tasks.length > 0) {
+		for (var i = 0; i < axis.test_class_tasks.length; i++) {
+			let liElement = document.createElement("li");
+
+			ulElement.appendChild(liElement);
+
+			liElement.appendChild(getTestClassTaskElement(axis.test_class_tasks[i]));
+		}
+
+		return detailsElement;
+	}
+
 	for (var i = 0; i < axis.test_classes.length; i++) {
 		let liElement = document.createElement("li");
 
@@ -338,6 +350,31 @@ function getTestClassElement(test_class) {
 		liElement.innerHTML = test_class.methods[i].name;
 
 		ulElement.appendChild(liElement);
+	}
+
+	return detailsElement;
+}
+
+function getTestClassTaskElement(test_class_task) {
+	let detailsElement = createDetailsElement();
+
+	let summaryElement = detailsElement.childNodes[0];
+
+	summaryElement.innerHTML = test_class_task.task_name + " - " + getDurationString(test_class_task.average_duration);
+	summaryElement.setAttribute("class", "level-5");
+
+	let divElement = detailsElement.childNodes[1];
+
+	let ulElement = document.createElement("ul");
+
+	divElement.appendChild(ulElement);
+
+	for (var i = 0; i < test_class_task.test_classes.length; i++) {
+		let liElement = document.createElement("li");
+
+		ulElement.appendChild(liElement);
+
+		liElement.appendChild(getTestClassElement(test_class_task.test_classes[i]));
 	}
 
 	return detailsElement;

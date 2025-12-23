@@ -336,7 +336,7 @@ export function RuleBuilderConditionSection({
 						</span>
 					</div>
 
-					<div className="align-items-center d-flex">
+					<div>
 						<PopoverTooltip
 							content={Liferay.Language.get(
 								'the-basic-builder-does-not-support-advanced-expressions'
@@ -347,7 +347,7 @@ export function RuleBuilderConditionSection({
 									aria-label={Liferay.Language.get(
 										'show-more'
 									)}
-									className="mr-2 mt-0"
+									className="mr-2"
 									symbol="question-circle-full"
 								/>
 							}

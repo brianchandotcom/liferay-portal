@@ -12,19 +12,6 @@
 	"items": [
 		{
 			"accountEntryRestricted": false,
-			"accountEntryRestrictedObjectFieldName": "",
-			"actions": {
-				"delete": {
-				},
-				"exportObjectDefinition": {
-				},
-				"get": {
-				},
-				"permissions": {
-				},
-				"update": {
-				}
-			},
 			"active": true,
 			"enableCategorization": true,
 			"enableComments": false,
@@ -32,12 +19,12 @@
 			"enableLocalization": false,
 			"enableObjectEntryDraft": false,
 			"enableObjectEntryHistory": false,
-			"externalReferenceCode": "C2K8_LEAD",
+			"externalReferenceCode": "H1S4_LEAD",
 			"label": {
-				"en_US": "C2K8 Lead"
+				"en_US": "H1S4 Lead"
 			},
 			"modifiable": true,
-			"name": "C2K8Lead",
+			"name": "H1S4Lead",
 			"objectActions": [
 				{
 					"active": true,
@@ -45,7 +32,7 @@
 					"description": "",
 					"errorMessage": {
 					},
-					"externalReferenceCode": "C2K8_ON_CREATE_LEAD",
+					"externalReferenceCode": "H1S4_ON_CREATE_LEAD",
 					"label": {
 						"en_US": "On create lead"
 					},
@@ -84,7 +71,6 @@
 						}
 					],
 					"readOnly": "false",
-					"readOnlyConditionExpression": "",
 					"required": false,
 					"state": false,
 					"system": false,
@@ -110,7 +96,6 @@
 						}
 					],
 					"readOnly": "false",
-					"readOnlyConditionExpression": "",
 					"required": false,
 					"state": false,
 					"system": false,
@@ -136,7 +121,6 @@
 						}
 					],
 					"readOnly": "false",
-					"readOnlyConditionExpression": "",
 					"required": false,
 					"state": false,
 					"system": false,
@@ -162,7 +146,6 @@
 						}
 					],
 					"readOnly": "false",
-					"readOnlyConditionExpression": "",
 					"required": false,
 					"state": false,
 					"system": false,
@@ -184,7 +167,6 @@
 					"objectFieldSettings": [
 					],
 					"readOnly": "false",
-					"readOnlyConditionExpression": "",
 					"required": false,
 					"state": false,
 					"system": false,
@@ -210,7 +192,6 @@
 						}
 					],
 					"readOnly": "false",
-					"readOnlyConditionExpression": "",
 					"required": false,
 					"state": false,
 					"system": false,
@@ -236,7 +217,6 @@
 						}
 					],
 					"readOnly": "false",
-					"readOnlyConditionExpression": "",
 					"required": false,
 					"state": false,
 					"system": false,
@@ -244,7 +224,7 @@
 					"unique": false
 				}
 			],
-			"objectFolderExternalReferenceCode": "C2K8_HUBSPOT",
+			"objectFolderExternalReferenceCode": "H1S4_HUBSPOT",
 			"objectRelationships": [
 			],
 			"objectValidationRules": [
@@ -252,10 +232,10 @@
 			"panelCategoryKey": "control_panel.object",
 			"parameterRequired": false,
 			"pluralLabel": {
-				"en_US": "C2K8 Leads"
+				"en_US": "H1S4 Leads"
 			},
 			"portlet": true,
-			"restContextPath": "/o/c/c2k8leads",
+			"restContextPath": "/o/c/h1s4leads",
 			"scope": "company",
 			"status": {
 				"code": 0,
@@ -267,19 +247,6 @@
 		},
 		{
 			"accountEntryRestricted": false,
-			"accountEntryRestrictedObjectFieldName": "",
-			"actions": {
-				"delete": {
-				},
-				"exportObjectDefinition": {
-				},
-				"get": {
-				},
-				"permissions": {
-				},
-				"update": {
-				}
-			},
 			"active": true,
 			"enableCategorization": true,
 			"enableComments": false,
@@ -287,12 +254,12 @@
 			"enableLocalization": false,
 			"enableObjectEntryDraft": false,
 			"enableObjectEntryHistory": false,
-			"externalReferenceCode": "C2K8_CONTACT",
+			"externalReferenceCode": "H1S4_CONTACT",
 			"label": {
-				"en_US": "C2K8 Contact"
+				"en_US": "H1S4 Contact"
 			},
 			"modifiable": true,
-			"name": "C2K8Contact",
+			"name": "H1S4Contact",
 			"objectActions": [
 				{
 					"active": true,
@@ -300,7 +267,7 @@
 					"description": "",
 					"errorMessage": {
 					},
-					"externalReferenceCode": "C2K8_ON_CREATE_CONTACT",
+					"externalReferenceCode": "H1S4_ON_CREATE_CONTACT",
 					"label": {
 						"en_US": "On create contact"
 					},
@@ -339,7 +306,6 @@
 						}
 					],
 					"readOnly": "false",
-					"readOnlyConditionExpression": "",
 					"required": false,
 					"state": false,
 					"system": false,
@@ -365,7 +331,6 @@
 						}
 					],
 					"readOnly": "false",
-					"readOnlyConditionExpression": "",
 					"required": false,
 					"state": false,
 					"system": false,
@@ -391,7 +356,6 @@
 						}
 					],
 					"readOnly": "false",
-					"readOnlyConditionExpression": "",
 					"required": false,
 					"state": false,
 					"system": false,
@@ -417,7 +381,6 @@
 						}
 					],
 					"readOnly": "false",
-					"readOnlyConditionExpression": "",
 					"required": false,
 					"state": false,
 					"system": false,
@@ -425,17 +388,17 @@
 					"unique": false
 				}
 			],
-			"objectFolderExternalReferenceCode": "C2K8_HUBSPOT",
+			"objectFolderExternalReferenceCode": "H1S4_HUBSPOT",
 			"objectRelationships": [
 				{
 					"deletionType": "disassociate",
-					"externalReferenceCode": "C2K8_CONTACT_TO_C2K8_LEADS",
+					"externalReferenceCode": "H1S4_CONTACT_TO_H1S4_LEADS",
 					"label": {
-						"en_US": "C2K8 Contact to C2K8 Leads"
+						"en_US": "H1S4 Contact to H1S4 Leads"
 					},
-					"name": "c2k8ContactToC2K8Leads",
-					"objectDefinitionExternalReferenceCode1": "C2K8_CONTACT",
-					"objectDefinitionExternalReferenceCode2": "C2K8_LEAD",
+					"name": "H1S4ContactToH1S4Leads",
+					"objectDefinitionExternalReferenceCode1": "H1S4_CONTACT",
+					"objectDefinitionExternalReferenceCode2": "H1S4_LEAD",
 					"type": "oneToMany"
 				}
 			],
@@ -444,10 +407,10 @@
 			"panelCategoryKey": "control_panel.object",
 			"parameterRequired": false,
 			"pluralLabel": {
-				"en_US": "C2K8 Contacts"
+				"en_US": "H1S4 Contacts"
 			},
 			"portlet": true,
-			"restContextPath": "/o/c/c2k8contacts",
+			"restContextPath": "/o/c/h1s4contacts",
 			"scope": "company",
 			"status": {
 				"code": 0,
@@ -459,19 +422,6 @@
 		},
 		{
 			"accountEntryRestricted": false,
-			"accountEntryRestrictedObjectFieldName": "",
-			"actions": {
-				"delete": {
-				},
-				"exportObjectDefinition": {
-				},
-				"get": {
-				},
-				"permissions": {
-				},
-				"update": {
-				}
-			},
 			"active": true,
 			"enableCategorization": true,
 			"enableComments": false,
@@ -479,12 +429,12 @@
 			"enableLocalization": false,
 			"enableObjectEntryDraft": false,
 			"enableObjectEntryHistory": false,
-			"externalReferenceCode": "C2K8_COMPANY",
+			"externalReferenceCode": "H1S4_COMPANY",
 			"label": {
-				"en_US": "C2K8 Company"
+				"en_US": "H1S4 Company"
 			},
 			"modifiable": true,
-			"name": "C2K8Company",
+			"name": "H1S4Company",
 			"objectActions": [
 				{
 					"active": true,
@@ -492,7 +442,7 @@
 					"description": "",
 					"errorMessage": {
 					},
-					"externalReferenceCode": "C2K8_ON_CREATE_COMPANY",
+					"externalReferenceCode": "H1S4_ON_CREATE_COMPANY",
 					"label": {
 						"en_US": "On create company"
 					},
@@ -531,7 +481,6 @@
 						}
 					],
 					"readOnly": "false",
-					"readOnlyConditionExpression": "",
 					"required": false,
 					"state": false,
 					"system": false,
@@ -557,7 +506,6 @@
 						}
 					],
 					"readOnly": "false",
-					"readOnlyConditionExpression": "",
 					"required": false,
 					"state": false,
 					"system": false,
@@ -579,7 +527,6 @@
 					"objectFieldSettings": [
 					],
 					"readOnly": "false",
-					"readOnlyConditionExpression": "",
 					"required": false,
 					"state": false,
 					"system": false,
@@ -605,7 +552,6 @@
 						}
 					],
 					"readOnly": "false",
-					"readOnlyConditionExpression": "",
 					"required": false,
 					"state": false,
 					"system": false,
@@ -613,7 +559,7 @@
 					"unique": false
 				}
 			],
-			"objectFolderExternalReferenceCode": "C2K8_HUBSPOT",
+			"objectFolderExternalReferenceCode": "H1S4_HUBSPOT",
 			"objectRelationships": [
 			],
 			"objectValidationRules": [
@@ -621,10 +567,10 @@
 			"panelCategoryKey": "control_panel.object",
 			"parameterRequired": false,
 			"pluralLabel": {
-				"en_US": "C2K8 Companies"
+				"en_US": "H1S4 Companies"
 			},
 			"portlet": true,
-			"restContextPath": "/o/c/c2k8companies",
+			"restContextPath": "/o/c/h1s4companies",
 			"scope": "company",
 			"status": {
 				"code": 0,

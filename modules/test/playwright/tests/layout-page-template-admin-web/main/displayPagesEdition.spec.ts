@@ -1258,15 +1258,21 @@ test.describe('Object Display page', () => {
 					pageManagementSite.key
 				);
 
-			await page.goto(
-				`/web${pageManagementSite.friendlyUrlPath}/e/${displayPageTemplateName}/${className.classNameId}/${lemonObjectEntry.id}`
-			);
+			// Go to edit mode and edit only the lemon size field
 
-			// Edit only the lemon size field
+			await expect(async () => {
+				await page.goto(
+					`/web${pageManagementSite.friendlyUrlPath}/e/${displayPageTemplateName}/${className.classNameId}/${lemonObjectEntry.id}`
+				);
 
-			await page
-				.getByRole('textbox', {name: 'Lemon Size'})
-				.fill('lemonSize2');
+				await page
+					.getByRole('textbox', {name: 'Lemon Size'})
+					.waitFor({timeout: 2000});
+
+				await page
+					.getByRole('textbox', {name: 'Lemon Size'})
+					.fill('lemonSize2', {timeout: 2000});
+			}).toPass();
 
 			await page.getByRole('button', {name: 'Submit'}).click();
 

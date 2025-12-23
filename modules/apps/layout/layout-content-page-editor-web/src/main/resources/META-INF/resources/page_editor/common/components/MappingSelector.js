@@ -128,7 +128,7 @@ function loadMappingFields({item, sourceType}) {
 		const {selectedMappingTypes} = config;
 
 		classNameId = selectedMappingTypes.type.id;
-		classTypeId = selectedMappingTypes.subtype.id;
+		classTypeId = selectedMappingTypes.subtype?.id;
 	}
 	else if (
 		sourceType === MAPPING_SOURCE_TYPES.content &&

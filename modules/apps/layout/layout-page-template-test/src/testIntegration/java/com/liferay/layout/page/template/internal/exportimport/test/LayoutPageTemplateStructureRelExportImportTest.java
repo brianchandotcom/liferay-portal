@@ -377,8 +377,8 @@ public class LayoutPageTemplateStructureRelExportImportTest
 			_layoutLocalService.getLayoutByUuidAndGroupId(
 				mappedLayout.getUuid(), importedGroup.getGroupId(), false);
 
-		_assertContainerLinkMappedLayout(
-			null, importedGroup.getGroupId(),
+		_assertLayoutJSONObject(
+			null, importedGroup.getGroupId(), "link",
 			importedMappedLayout.getLayoutId(),
 			_getLayoutStructureItem(itemId, importedLayout.getPlid()), null);
 	}
@@ -421,8 +421,8 @@ public class LayoutPageTemplateStructureRelExportImportTest
 			_layoutLocalService.getLayoutByUuidAndGroupId(
 				mappedLayout1.getUuid(), importedGroup.getGroupId(), false);
 
-		_assertFormContainerSuccessMessage(
-			null, importedGroup.getGroupId(),
+		_assertLayoutJSONObject(
+			null, importedGroup.getGroupId(), "successMessage",
 			importedMappedLayout.getLayoutId(),
 			_getLayoutStructureItem(itemId, importedLayout.getPlid()), null);
 
@@ -455,8 +455,9 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		importedLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
 			layout.getUuid(), importedGroup.getGroupId(), false);
 
-		_assertFormContainerSuccessMessage(
-			null, guestGroup.getGroupId(), guestGroupLayout1.getLayoutId(),
+		_assertLayoutJSONObject(
+			null, guestGroup.getGroupId(), "successMessage",
+			guestGroupLayout1.getLayoutId(),
 			_getLayoutStructureItem(itemId, importedLayout.getPlid()), null);
 
 		String externalReferenceCode = RandomTestUtil.randomString();
@@ -478,8 +479,8 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
 
-		_assertFormContainerSuccessMessage(
-			externalReferenceCode, 0, 0,
+		_assertLayoutJSONObject(
+			externalReferenceCode, 0, "successMessage", 0,
 			_getLayoutStructureItem(itemId, importedLayout.getPlid()), null);
 
 		Layout mappedLayout2 = LayoutTestUtil.addTypeContentLayout(group);
@@ -505,8 +506,9 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		importedMappedLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
 			mappedLayout2.getUuid(), importedGroup.getGroupId(), false);
 
-		_assertFormContainerSuccessMessage(
-			importedMappedLayout.getExternalReferenceCode(), 0, 0,
+		_assertLayoutJSONObject(
+			importedMappedLayout.getExternalReferenceCode(), 0,
+			"successMessage", 0,
 			_getLayoutStructureItem(itemId, importedLayout.getPlid()), null);
 
 		Layout guestGroupLayout2 = LayoutTestUtil.addTypeContentLayout(
@@ -530,9 +532,9 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
 
-		_assertFormContainerSuccessMessage(
-			guestGroupLayout2.getExternalReferenceCode(), 0, 0,
-			_getLayoutStructureItem(itemId, importedLayout.getPlid()),
+		_assertLayoutJSONObject(
+			guestGroupLayout2.getExternalReferenceCode(), 0, "successMessage",
+			0, _getLayoutStructureItem(itemId, importedLayout.getPlid()),
 			guestGroup.getExternalReferenceCode());
 	}
 
@@ -618,41 +620,17 @@ public class LayoutPageTemplateStructureRelExportImportTest
 			scopeExternalReferenceCode);
 	}
 
-	private void _assertContainerLinkMappedLayout(
-		String externalReferenceCode, long groupId, long layoutId,
-		LayoutStructureItem layoutStructureItem,
-		String scopeExternalReferenceCode) {
-
-		JSONObject itemConfigJSONObject =
-			layoutStructureItem.getItemConfigJSONObject();
-
-		JSONObject linkJSONObject = itemConfigJSONObject.getJSONObject("link");
-
-		_assertLayoutJSONObject(
-			externalReferenceCode, groupId, layoutId,
-			scopeExternalReferenceCode, linkJSONObject.getJSONObject("layout"));
-	}
-
-	private void _assertFormContainerSuccessMessage(
-		String externalReferenceCode, long groupId, long layoutId,
-		LayoutStructureItem layoutStructureItem,
-		String scopeExternalReferenceCode) {
-
-		JSONObject itemConfigJSONObject =
-			layoutStructureItem.getItemConfigJSONObject();
-
-		JSONObject successMessageJSONObject =
-			itemConfigJSONObject.getJSONObject("successMessage");
-
-		_assertLayoutJSONObject(
-			externalReferenceCode, groupId, layoutId,
-			scopeExternalReferenceCode,
-			successMessageJSONObject.getJSONObject("layout"));
-	}
-
 	private void _assertLayoutJSONObject(
-		String externalReferenceCode, long groupId, long layoutId,
-		String scopeExternalReferenceCode, JSONObject layoutJSONObject) {
+		String externalReferenceCode, long groupId, String key, long layoutId,
+		LayoutStructureItem layoutStructureItem,
+		String scopeExternalReferenceCode) {
+
+		JSONObject itemConfigJSONObject =
+			layoutStructureItem.getItemConfigJSONObject();
+
+		JSONObject jsonObject = itemConfigJSONObject.getJSONObject(key);
+
+		JSONObject layoutJSONObject = jsonObject.getJSONObject("layout");
 
 		if (Validator.isNotNull(externalReferenceCode)) {
 			Assert.assertEquals(

@@ -151,6 +151,7 @@ public class ReportController extends BaseFaroController {
 			@QueryParam("individualId") String individualId,
 			@QueryParam("query") String query,
 			@QueryParam("rangeKey") String rangeKey,
+			@QueryParam("segmentId") String segmentId,
 			@QueryParam("toDate") String toDateString,
 			@PathParam("type") String type)
 		throws Exception {

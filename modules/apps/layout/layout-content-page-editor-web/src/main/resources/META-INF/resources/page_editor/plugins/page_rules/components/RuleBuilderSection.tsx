@@ -396,19 +396,8 @@ export function RuleBuilderConditionSection({
 			<ClayPanel.Body className="px-3">
 				{isNullOrUndefined(script) ? (
 					<>
-						<div role="menu">
-							<div
-								aria-label={
-									conditionType === 'all'
-										? Liferay.Language.get(
-												'if-all-of-the-following-conditions-are-met'
-											)
-										: Liferay.Language.get(
-												'if-any-of-the-following-conditions-are-met'
-											)
-								}
-								className="align-items-center d-flex mb-3 text-4"
-							>
+						<div>
+							<div className="align-items-center d-flex mb-3 text-4">
 								<span className="mr-3">
 									{Liferay.Language.get('if')}
 								</span>
@@ -475,26 +464,52 @@ export function RuleBuilderConditionSection({
 								</div>
 							</div>
 
-							{conditions.map((condition, index, conditions) => (
-								<ConditionComponent
-									condition={condition}
-									inputFragmentItems={inputFragmentItems}
-									key={condition.id}
-									onConditionChange={(condition) =>
-										onConditionChange(condition, index)
-									}
-									onDeleteCondition={() =>
-										onDeleteCondition(condition, index)
-									}
-									showDeleteButton={
-										conditions.length > 1 ||
-										!!condition.type
-									}
-									wrapperRef={(element) =>
-										setConditionRef(condition, element)
-									}
-								/>
-							))}
+							<div
+								aria-label={
+									conditionType === 'all'
+										? Liferay.Language.get(
+												'if-all-of-the-following-conditions-are-met'
+											)
+										: Liferay.Language.get(
+												'if-any-of-the-following-conditions-are-met'
+											)
+								}
+								role="menu"
+							>
+								{conditions.map(
+									(condition, index, conditions) => (
+										<ConditionComponent
+											condition={condition}
+											inputFragmentItems={
+												inputFragmentItems
+											}
+											key={condition.id}
+											onConditionChange={(condition) =>
+												onConditionChange(
+													condition,
+													index
+												)
+											}
+											onDeleteCondition={() =>
+												onDeleteCondition(
+													condition,
+													index
+												)
+											}
+											showDeleteButton={
+												conditions.length > 1 ||
+												!!condition.type
+											}
+											wrapperRef={(element) =>
+												setConditionRef(
+													condition,
+													element
+												)
+											}
+										/>
+									)
+								)}
+							</div>
 						</div>
 
 						<ClayButton

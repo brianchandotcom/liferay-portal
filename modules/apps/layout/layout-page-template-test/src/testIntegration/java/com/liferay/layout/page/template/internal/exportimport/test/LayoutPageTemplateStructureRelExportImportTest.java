@@ -204,14 +204,14 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		JSONObject jsonObject = ContentLayoutTestUtil.addItemToLayout(
 			JSONUtil.put(
 				"link",
-				_getMappedLinkJSONObject(
-					fileEntry1.getFileEntryId(), null, null)
+				_getFileEntryJSONObject(
+					fileEntry1.getFileEntryId(), null, null, "FileEntry_title")
 			).put(
 				"styles",
 				JSONUtil.put(
 					"backgroundImage",
 					_getFileEntryJSONObject(
-						fileEntry1.getFileEntryId(), null, null))
+						fileEntry1.getFileEntryId(), null, null, null))
 			).toString(),
 			LayoutDataItemTypeConstants.TYPE_CONTAINER, layout,
 			_layoutStructureProvider,
@@ -241,14 +241,16 @@ public class LayoutPageTemplateStructureRelExportImportTest
 			itemConfigJSONObject -> {
 				itemConfigJSONObject.put(
 					"link",
-					_getMappedLinkJSONObject(0, externalReferenceCode, null));
+					_getFileEntryJSONObject(
+						0, externalReferenceCode, null, "FileEntry_title"));
 
 				JSONObject stylesJSONObject =
 					itemConfigJSONObject.getJSONObject("styles");
 
 				stylesJSONObject.put(
 					"backgroundImage",
-					_getFileEntryJSONObject(0, externalReferenceCode, null));
+					_getFileEntryJSONObject(
+						0, externalReferenceCode, null, null));
 
 				return itemConfigJSONObject;
 			});
@@ -267,8 +269,9 @@ public class LayoutPageTemplateStructureRelExportImportTest
 			itemConfigJSONObject -> {
 				itemConfigJSONObject.put(
 					"link",
-					_getMappedLinkJSONObject(
-						0, fileEntry2.getExternalReferenceCode(), null));
+					_getFileEntryJSONObject(
+						0, fileEntry2.getExternalReferenceCode(), null,
+						"FileEntry_title"));
 
 				JSONObject stylesJSONObject =
 					itemConfigJSONObject.getJSONObject("styles");
@@ -276,7 +279,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 				stylesJSONObject.put(
 					"backgroundImage",
 					_getFileEntryJSONObject(
-						0, fileEntry2.getExternalReferenceCode(), null));
+						0, fileEntry2.getExternalReferenceCode(), null, null));
 
 				return itemConfigJSONObject;
 			});
@@ -302,8 +305,9 @@ public class LayoutPageTemplateStructureRelExportImportTest
 			itemConfigJSONObject -> {
 				itemConfigJSONObject.put(
 					"link",
-					_getMappedLinkJSONObject(
-						fileEntry3.getFileEntryId(), null, null));
+					_getFileEntryJSONObject(
+						fileEntry3.getFileEntryId(), null, null,
+						"FileEntry_title"));
 
 				JSONObject stylesJSONObject =
 					itemConfigJSONObject.getJSONObject("styles");
@@ -311,7 +315,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 				stylesJSONObject.put(
 					"backgroundImage",
 					_getFileEntryJSONObject(
-						fileEntry3.getFileEntryId(), null, null));
+						fileEntry3.getFileEntryId(), null, null, null));
 
 				return itemConfigJSONObject;
 			});
@@ -328,9 +332,10 @@ public class LayoutPageTemplateStructureRelExportImportTest
 			itemConfigJSONObject -> {
 				itemConfigJSONObject.put(
 					"link",
-					_getMappedLinkJSONObject(
+					_getFileEntryJSONObject(
 						0, fileEntry3.getExternalReferenceCode(),
-						guestGroup.getExternalReferenceCode()));
+						guestGroup.getExternalReferenceCode(),
+						"FileEntry_title"));
 
 				JSONObject stylesJSONObject =
 					itemConfigJSONObject.getJSONObject("styles");
@@ -339,7 +344,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 					"backgroundImage",
 					_getFileEntryJSONObject(
 						0, fileEntry3.getExternalReferenceCode(),
-						guestGroup.getExternalReferenceCode()));
+						guestGroup.getExternalReferenceCode(), null));
 
 				return itemConfigJSONObject;
 			});
@@ -391,15 +396,9 @@ public class LayoutPageTemplateStructureRelExportImportTest
 				"successMessage",
 				JSONUtil.put(
 					"layout",
-					JSONUtil.put(
-						"groupId", layout2.getGroupId()
-					).put(
-						"layoutId", layout2.getLayoutId()
-					).put(
-						"layoutUuid", layout2.getUuid()
-					).put(
-						"privateLayout", layout2.isPrivateLayout()
-					))
+					_getLayoutJSONObject(
+						null, layout2.getGroupId(), layout2.getLayoutId(),
+						layout2.getUuid(), layout2.isPrivateLayout(), null))
 			).toString(),
 			LayoutDataItemTypeConstants.TYPE_FORM, layout,
 			_layoutStructureProvider,
@@ -731,7 +730,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 	private JSONObject _getFileEntryJSONObject(
 		long classPK, String externalReferenceCode,
-		String scopeExternalReferenceCode) {
+		String scopeExternalReferenceCode, String fieldId) {
 
 		return JSONUtil.put(
 			"className", FileEntry.class.getName()
@@ -759,6 +758,8 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 				return externalReferenceCode;
 			}
+		).put(
+			"fieldId", fieldId
 		).put(
 			"itemSubtype",
 			_language.get(
@@ -848,16 +849,6 @@ public class LayoutPageTemplateStructureRelExportImportTest
 				plid, segmentsExperienceId);
 
 		return layoutStructure.getLayoutStructureItem(itemId);
-	}
-
-	private JSONObject _getMappedLinkJSONObject(
-		long classPK, String externalReferenceCode,
-		String scopeExternalReferenceCode) {
-
-		JSONObject jsonObject = _getFileEntryJSONObject(
-			classPK, externalReferenceCode, scopeExternalReferenceCode);
-
-		return jsonObject.put("fieldId", "FileEntry_title");
 	}
 
 	private byte[] _read(String fileName) throws Exception {

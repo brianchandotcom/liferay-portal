@@ -116,6 +116,7 @@ public class S3StoreUnitTest {
 	@Test
 	public void testProxy() throws Exception {
 		_mockProxy(null, null);
+
 		_testProxy(true, null, null);
 	}
 
@@ -125,6 +126,7 @@ public class S3StoreUnitTest {
 		String proxyPassword = RandomTestUtil.randomString();
 
 		_mockProxy(proxyUserName, proxyPassword);
+
 		_testProxy(true, proxyUserName, proxyPassword);
 	}
 
@@ -134,6 +136,7 @@ public class S3StoreUnitTest {
 		String proxyPassword = RandomTestUtil.randomString();
 
 		_mockProxy(proxyUserName, proxyPassword);
+
 		_testProxy(false, proxyUserName, proxyPassword + "1");
 	}
 

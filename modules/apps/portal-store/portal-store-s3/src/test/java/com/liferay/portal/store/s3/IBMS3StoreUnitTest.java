@@ -119,24 +119,21 @@ public class IBMS3StoreUnitTest {
 	@Test
 	public void testProxy() throws Exception {
 		_mockProxy(null, null);
+
 		_testProxy(true, null, null);
-	}
 
-	@Test
-	public void testProxyAuthentication() throws Exception {
 		String proxyUserName = RandomTestUtil.randomString();
 		String proxyPassword = RandomTestUtil.randomString();
 
 		_mockProxy(proxyUserName, proxyPassword);
+
 		_testProxy(true, proxyUserName, proxyPassword);
-	}
 
-	@Test
-	public void testProxyAuthenticationFailed() throws Exception {
-		String proxyUserName = RandomTestUtil.randomString();
-		String proxyPassword = RandomTestUtil.randomString();
+		proxyUserName = RandomTestUtil.randomString();
+		proxyPassword = RandomTestUtil.randomString();
 
 		_mockProxy(proxyUserName, proxyPassword);
+
 		_testProxy(false, proxyUserName, proxyPassword + "1");
 	}
 

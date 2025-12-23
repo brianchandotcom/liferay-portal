@@ -250,15 +250,15 @@ public class ClientExtensionsOSGiCommandsTest {
 	public void testReloadConfiguration() throws Exception {
 		String pid = _configurationPids.get(0);
 
-		CountDownLatch latch = new CountDownLatch(2);
+		CountDownLatch countDownLatch = new CountDownLatch(2);
 
-		List<Integer> receivedEventTypes = new ArrayList<>();
+		List<Integer> eventTypes = new ArrayList<>();
 
 		ConfigurationListener configurationListener = event -> {
 			if (Objects.equals(event.getPid(), pid)) {
-				receivedEventTypes.add(event.getType());
+				eventTypes.add(event.getType());
 
-				latch.countDown();
+				countDownLatch.countDown();
 			}
 		};
 
@@ -269,14 +269,13 @@ public class ClientExtensionsOSGiCommandsTest {
 		try {
 			_reloadConfiguration(_getConfiguration(pid));
 
-			Assert.assertTrue(latch.await(5, TimeUnit.SECONDS));
+			Assert.assertTrue(countDownLatch.await(5, TimeUnit.SECONDS));
 
-			Assert.assertEquals(
-				receivedEventTypes.toString(), 2, receivedEventTypes.size());
+			Assert.assertEquals(eventTypes.toString(), 2, eventTypes.size());
 			Assert.assertTrue(
-				receivedEventTypes.contains(ConfigurationEvent.CM_DELETED));
+				eventTypes.contains(ConfigurationEvent.CM_DELETED));
 			Assert.assertTrue(
-				receivedEventTypes.contains(ConfigurationEvent.CM_UPDATED));
+				eventTypes.contains(ConfigurationEvent.CM_UPDATED));
 		}
 		finally {
 			serviceRegistration.unregister();
@@ -357,27 +356,27 @@ public class ClientExtensionsOSGiCommandsTest {
 	}
 
 	private void _testGetConfigurations(
-		List<String> filtersList, List<String> expectedConfigurationNames) {
+		List<String> filterStrings, List<String> expectedConfigurationNames) {
 
 		Set<String> expectedConfigurationNamesSet = new HashSet<>(
 			expectedConfigurationNames);
 
 		Configuration[] configurations = _getConfigurations(
 			ArrayUtil.append(
-				filtersList.toArray(new String[0]), "test.only=true"));
+				filterStrings.toArray(new String[0]), "test.only=true"));
 
-		Set<String> namesFound = new HashSet<>();
+		Set<String> namesSet = new HashSet<>();
 
 		if (configurations != null) {
 			for (Configuration configuration : configurations) {
 				Dictionary<String, Object> properties =
 					configuration.getProperties();
 
-				namesFound.add(String.valueOf(properties.get("name")));
+				namesSet.add(String.valueOf(properties.get("name")));
 			}
 		}
 
-		Assert.assertEquals(expectedConfigurationNamesSet, namesFound);
+		Assert.assertEquals(expectedConfigurationNamesSet, namesSet);
 	}
 
 	private void _testReload(String pid, String expectedOutput)

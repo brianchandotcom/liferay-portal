@@ -23,7 +23,6 @@ import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.function.UnsafeFunction;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -697,39 +696,69 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		long classPK, String externalReferenceCode,
 		String scopeExternalReferenceCode) {
 
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
+			"classPK",
+			() -> {
+				if (classPK <= 0) {
+					return null;
+				}
+
+				return classPK;
+			}
+		).put(
+			"externalReferenceCode",
+			() -> {
+				if (Validator.isNull(externalReferenceCode)) {
+					return null;
+				}
+
+				return externalReferenceCode;
+			}
+		).put(
+			"scopeExternalReferenceCode",
+			() -> {
+				if (Validator.isNull(scopeExternalReferenceCode)) {
+					return null;
+				}
+
+				return scopeExternalReferenceCode;
+			}
+		).put(
 			"type",
-			"com.liferay.item.selector.criteria." +
-				"InfoListItemSelectorReturnType");
-
-		if (classPK > 0) {
-			jsonObject.put("classPK", classPK);
-		}
-
-		if (Validator.isNotNull(externalReferenceCode)) {
-			jsonObject.put("externalReferenceCode", externalReferenceCode);
-		}
-
-		if (Validator.isNotNull(scopeExternalReferenceCode)) {
-			jsonObject.put(
-				"scopeExternalReferenceCode", scopeExternalReferenceCode);
-		}
-
-		return jsonObject;
+			"com.liferay.item.selector.criteria.InfoListItemSelectorReturnType"
+		);
 	}
 
 	private JSONObject _getFileEntryJSONObject(
 		long classPK, String externalReferenceCode,
 		String scopeExternalReferenceCode) {
 
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"className", FileEntry.class.getName()
 		).put(
 			"classNameId", _portal.getClassNameId(FileEntry.class)
 		).put(
+			"classPK",
+			() -> {
+				if (classPK <= 0) {
+					return null;
+				}
+
+				return classPK;
+			}
+		).put(
 			"classTypeId",
 			String.valueOf(
 				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT)
+		).put(
+			"externalReferenceCode",
+			() -> {
+				if (Validator.isNull(externalReferenceCode)) {
+					return null;
+				}
+
+				return externalReferenceCode;
+			}
 		).put(
 			"itemSubtype",
 			_language.get(
@@ -738,24 +767,18 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		).put(
 			"itemType", "Document"
 		).put(
+			"scopeExternalReferenceCode",
+			() -> {
+				if (Validator.isNull(scopeExternalReferenceCode)) {
+					return null;
+				}
+
+				return scopeExternalReferenceCode;
+			}
+		).put(
 			"type",
 			"com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType"
 		);
-
-		if (classPK > 0) {
-			jsonObject.put("classPK", classPK);
-		}
-
-		if (Validator.isNotNull(externalReferenceCode)) {
-			jsonObject.put("externalReferenceCode", externalReferenceCode);
-		}
-
-		if (Validator.isNotNull(scopeExternalReferenceCode)) {
-			jsonObject.put(
-				"scopeExternalReferenceCode", scopeExternalReferenceCode);
-		}
-
-		return jsonObject;
 	}
 
 	private JSONObject _getLayoutJSONObject(
@@ -763,32 +786,54 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		String layoutUuid, Boolean privateLayout,
 		String scopeExternalReferenceCode) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		return JSONUtil.put(
+			"externalReferenceCode",
+			() -> {
+				if (Validator.isNull(externalReferenceCode)) {
+					return null;
+				}
 
-		if (Validator.isNotNull(externalReferenceCode)) {
-			jsonObject.put("externalReferenceCode", externalReferenceCode);
-		}
+				return externalReferenceCode;
+			}
+		).put(
+			"groupId",
+			() -> {
+				if (groupId <= 0) {
+					return null;
+				}
 
-		if ((groupId > 0) && (layoutId > 0) &&
-			Validator.isNotNull(layoutUuid) && (privateLayout != null)) {
+				return groupId;
+			}
+		).put(
+			"layoutId",
+			() -> {
+				if (layoutId <= 0) {
+					return null;
+				}
 
-			jsonObject.put(
-				"groupId", groupId
-			).put(
-				"layoutId", layoutId
-			).put(
-				"layoutUuid", layoutUuid
-			).put(
-				"privateLayout", privateLayout
-			);
-		}
+				return layoutId;
+			}
+		).put(
+			"layoutUuid",
+			() -> {
+				if (Validator.isNull(layoutUuid)) {
+					return null;
+				}
 
-		if (Validator.isNotNull(scopeExternalReferenceCode)) {
-			jsonObject.put(
-				"scopeExternalReferenceCode", scopeExternalReferenceCode);
-		}
+				return layoutUuid;
+			}
+		).put(
+			"privateLayout", privateLayout
+		).put(
+			"scopeExternalReferenceCode",
+			() -> {
+				if (Validator.isNull(scopeExternalReferenceCode)) {
+					return null;
+				}
 
-		return jsonObject;
+				return scopeExternalReferenceCode;
+			}
+		);
 	}
 
 	private LayoutStructureItem _getLayoutStructureItem(

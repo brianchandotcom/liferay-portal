@@ -112,6 +112,7 @@ public class LiferayWebSearchEngine implements WebSearchEngine {
 			}
 
 			options.setLocation(location);
+
 			options.setMethod(Http.Method.GET);
 
 			return JSONFactoryUtil.createJSONObject(

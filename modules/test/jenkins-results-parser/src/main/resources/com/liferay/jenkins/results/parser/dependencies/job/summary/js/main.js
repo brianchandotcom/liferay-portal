@@ -156,7 +156,7 @@ function getBatchElement(batch) {
 	ulElement.appendChild(batchSegmentsLiElement);
 
 	for (var i = 0; i < batch.segments.length; i++) {
-	    batchSegmentsLiElement.append(getSegmentElement(batch.segments[i]));
+		batchSegmentsLiElement.append(getSegmentElement(batch.segments[i]));
 	}
 
 	return detailsElement;
@@ -319,13 +319,13 @@ function getSegmentElement(segment) {
 
 	divElement.appendChild(ulElement);
 
-    for (var i = 0; i < segment.axes.length; i++) {
-        let liElement = document.createElement("li");
+	for (var i = 0; i < segment.axes.length; i++) {
+		let liElement = document.createElement("li");
 
-        ulElement.appendChild(liElement);
+		ulElement.appendChild(liElement);
 
-        liElement.appendChild(getAxisElement(segment.axes[i]));
-    }
+		liElement.appendChild(getAxisElement(segment.axes[i]));
+	}
 
 	return detailsElement;
 }

@@ -254,10 +254,10 @@ public class LiferayMethodDataFetchingProcessor {
 
 			Class<?> parameterClass = parameter.getType();
 
-			if ((argument instanceof ArrayList<?> listArgument) &&
+			if ((argument instanceof ArrayList<?> arrayList) &&
 				parameterClass.isArray()) {
 
-				argument = listArgument.toArray(
+				argument = arrayList.toArray(
 					(Object[])Array.newInstance(
 						parameterClass.getComponentType(), 0));
 			}

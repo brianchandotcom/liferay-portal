@@ -105,7 +105,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		AssetListEntry assetListEntry1 = _addAssetList(group);
 
 		String itemId = ContentLayoutTestUtil.addCollectionDisplayToLayout(
-			_createCollectionJSONObject(
+			_getCollectionJSONObject(
 				assetListEntry1.getAssetListEntryId(), null, null),
 			layout, _layoutStructureProvider, null, null, 0,
 			_segmentsExperienceId);
@@ -131,9 +131,9 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 		_updateLayoutStructureItem(
 			itemId,
-			jsonObject -> jsonObject.put(
+			itemConfigJSONObject -> itemConfigJSONObject.put(
 				"collection",
-				_createCollectionJSONObject(
+				_getCollectionJSONObject(
 					assetListEntry2.getAssetListEntryId(), null, null)));
 
 		exportImportLayouts(
@@ -147,9 +147,9 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 		_updateLayoutStructureItem(
 			itemId,
-			jsonObject -> jsonObject.put(
+			itemConfigJSONObject -> itemConfigJSONObject.put(
 				"collection",
-				_createCollectionJSONObject(0, externalReferenceCode, null)));
+				_getCollectionJSONObject(0, externalReferenceCode, null)));
 
 		exportImportLayouts(
 			new long[] {layout.getLayoutId()}, getImportParameterMap());
@@ -162,9 +162,9 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 		_updateLayoutStructureItem(
 			itemId,
-			jsonObject -> jsonObject.put(
+			itemConfigJSONObject -> itemConfigJSONObject.put(
 				"collection",
-				_createCollectionJSONObject(
+				_getCollectionJSONObject(
 					0, assetListEntry3.getExternalReferenceCode(), null)));
 
 		exportImportLayouts(
@@ -182,9 +182,9 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 		_updateLayoutStructureItem(
 			itemId,
-			jsonObject -> jsonObject.put(
+			itemConfigJSONObject -> itemConfigJSONObject.put(
 				"collection",
-				_createCollectionJSONObject(
+				_getCollectionJSONObject(
 					0, assetListEntry4.getExternalReferenceCode(),
 					guestGroup.getExternalReferenceCode())));
 
@@ -205,13 +205,13 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		JSONObject jsonObject = ContentLayoutTestUtil.addItemToLayout(
 			JSONUtil.put(
 				"link",
-				_createMappedLinkJSONObject(
+				_getMappedLinkJSONObject(
 					fileEntry1.getFileEntryId(), null, null)
 			).put(
 				"styles",
 				JSONUtil.put(
 					"backgroundImage",
-					_createBackgroundImageJSONObject(
+					_getFileEntryJSONObject(
 						fileEntry1.getFileEntryId(), null, null))
 			).toString(),
 			LayoutDataItemTypeConstants.TYPE_CONTAINER, layout,
@@ -239,21 +239,21 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 		_updateLayoutStructureItem(
 			itemId,
-			jsonObject1 -> {
-				jsonObject1.put(
+			itemConfigJSONObject -> {
+				itemConfigJSONObject.put(
 					"link",
-					_createMappedLinkJSONObject(
+					_getMappedLinkJSONObject(
 						0, externalReferenceCode, null));
 
-				JSONObject stylesJSONObject = jsonObject1.getJSONObject(
-					"styles");
+				JSONObject stylesJSONObject =
+					itemConfigJSONObject.getJSONObject("styles");
 
 				stylesJSONObject.put(
 					"backgroundImage",
-					_createBackgroundImageJSONObject(
+					_getFileEntryJSONObject(
 						0, externalReferenceCode, null));
 
-				return jsonObject1;
+				return itemConfigJSONObject;
 			});
 
 		exportImportLayouts(
@@ -267,21 +267,21 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 		_updateLayoutStructureItem(
 			itemId,
-			jsonObject1 -> {
-				jsonObject1.put(
+			itemConfigJSONObject -> {
+				itemConfigJSONObject.put(
 					"link",
-					_createMappedLinkJSONObject(
+					_getMappedLinkJSONObject(
 						0, fileEntry2.getExternalReferenceCode(), null));
 
-				JSONObject stylesJSONObject = jsonObject1.getJSONObject(
-					"styles");
+				JSONObject stylesJSONObject =
+					itemConfigJSONObject.getJSONObject("styles");
 
 				stylesJSONObject.put(
 					"backgroundImage",
-					_createBackgroundImageJSONObject(
+					_getFileEntryJSONObject(
 						0, fileEntry2.getExternalReferenceCode(), null));
 
-				return jsonObject1;
+				return itemConfigJSONObject;
 			});
 
 		exportImportLayouts(
@@ -302,21 +302,21 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 		_updateLayoutStructureItem(
 			itemId,
-			jsonObject1 -> {
-				jsonObject1.put(
+			itemConfigJSONObject -> {
+				itemConfigJSONObject.put(
 					"link",
-					_createMappedLinkJSONObject(
+					_getMappedLinkJSONObject(
 						fileEntry3.getFileEntryId(), null, null));
 
-				JSONObject stylesJSONObject = jsonObject1.getJSONObject(
-					"styles");
+				JSONObject stylesJSONObject =
+					itemConfigJSONObject.getJSONObject("styles");
 
 				stylesJSONObject.put(
 					"backgroundImage",
-					_createBackgroundImageJSONObject(
+					_getFileEntryJSONObject(
 						fileEntry3.getFileEntryId(), null, null));
 
-				return jsonObject1;
+				return itemConfigJSONObject;
 			});
 
 		exportImportLayouts(
@@ -328,23 +328,23 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 		_updateLayoutStructureItem(
 			itemId,
-			jsonObject1 -> {
-				jsonObject1.put(
+			itemConfigJSONObject -> {
+				itemConfigJSONObject.put(
 					"link",
-					_createMappedLinkJSONObject(
+					_getMappedLinkJSONObject(
 						0, fileEntry3.getExternalReferenceCode(),
 						guestGroup.getExternalReferenceCode()));
 
-				JSONObject stylesJSONObject = jsonObject1.getJSONObject(
-					"styles");
+				JSONObject stylesJSONObject =
+					itemConfigJSONObject.getJSONObject("styles");
 
 				stylesJSONObject.put(
 					"backgroundImage",
-					_createBackgroundImageJSONObject(
+					_getFileEntryJSONObject(
 						0, fileEntry3.getExternalReferenceCode(),
 						guestGroup.getExternalReferenceCode()));
 
-				return jsonObject1;
+				return itemConfigJSONObject;
 			});
 
 		exportImportLayouts(
@@ -359,11 +359,11 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 		_updateLayoutStructureItem(
 			itemId,
-			jsonObject1 -> jsonObject1.put(
+			itemConfigJSONObject -> itemConfigJSONObject.put(
 				"link",
 				JSONUtil.put(
 					"layout",
-					_createLayoutJSONObject(
+					_getLayoutJSONObject(
 						null, group.getGroupId(), layout1.getLayoutId(),
 						layout1.getUuid(), layout1.isPrivateLayout(), null))));
 
@@ -431,17 +431,17 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 		_updateLayoutStructureItem(
 			itemId,
-			jsonObject1 -> {
-				JSONObject successMessageJSONObject = jsonObject1.getJSONObject(
-					"successMessage");
+			itemConfigJSONObject -> {
+				JSONObject successMessageJSONObject =
+					itemConfigJSONObject.getJSONObject("successMessage");
 
 				successMessageJSONObject.put(
 					"layout",
-					_createLayoutJSONObject(
+					_getLayoutJSONObject(
 						null, guestGroup.getGroupId(), layout3.getLayoutId(),
 						layout3.getUuid(), layout3.isPrivateLayout(), null));
 
-				return jsonObject1;
+				return itemConfigJSONObject;
 			});
 
 		exportImportLayouts(
@@ -458,16 +458,16 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 		_updateLayoutStructureItem(
 			itemId,
-			jsonObject1 -> {
-				JSONObject successMessageJSONObject = jsonObject1.getJSONObject(
-					"successMessage");
+			itemConfigJSONObject -> {
+				JSONObject successMessageJSONObject =
+					itemConfigJSONObject.getJSONObject("successMessage");
 
 				successMessageJSONObject.put(
 					"layout",
-					_createLayoutJSONObject(
+					_getLayoutJSONObject(
 						externalReferenceCode, 0, 0, null, null, null));
 
-				return jsonObject1;
+				return itemConfigJSONObject;
 			});
 
 		exportImportLayouts(
@@ -481,17 +481,17 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 		_updateLayoutStructureItem(
 			itemId,
-			jsonObject1 -> {
-				JSONObject successMessageJSONObject = jsonObject1.getJSONObject(
-					"successMessage");
+			itemConfigJSONObject -> {
+				JSONObject successMessageJSONObject =
+					itemConfigJSONObject.getJSONObject("successMessage");
 
 				successMessageJSONObject.put(
 					"layout",
-					_createLayoutJSONObject(
+					_getLayoutJSONObject(
 						layout4.getExternalReferenceCode(), 0, 0, null, null,
 						null));
 
-				return jsonObject1;
+				return itemConfigJSONObject;
 			});
 
 		exportImportLayouts(
@@ -508,17 +508,17 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 		_updateLayoutStructureItem(
 			itemId,
-			jsonObject1 -> {
-				JSONObject successMessageJSONObject = jsonObject1.getJSONObject(
-					"successMessage");
+			itemConfigJSONObject -> {
+				JSONObject successMessageJSONObject =
+					itemConfigJSONObject.getJSONObject("successMessage");
 
 				successMessageJSONObject.put(
 					"layout",
-					_createLayoutJSONObject(
+					_getLayoutJSONObject(
 						layout5.getExternalReferenceCode(), 0, 0, null, null,
 						guestGroup.getExternalReferenceCode()));
 
-				return jsonObject1;
+				return itemConfigJSONObject;
 			});
 
 		exportImportLayouts(
@@ -695,7 +695,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		}
 	}
 
-	private JSONObject _createBackgroundImageJSONObject(
+	private JSONObject _getFileEntryJSONObject(
 		long classPK, String externalReferenceCode,
 		String scopeExternalReferenceCode) {
 
@@ -735,7 +735,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		return jsonObject;
 	}
 
-	private JSONObject _createCollectionJSONObject(
+	private JSONObject _getCollectionJSONObject(
 		long classPK, String externalReferenceCode,
 		String scopeExternalReferenceCode) {
 
@@ -760,7 +760,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		return jsonObject;
 	}
 
-	private JSONObject _createLayoutJSONObject(
+	private JSONObject _getLayoutJSONObject(
 		String externalReferenceCode, long groupId, long layoutId,
 		String layoutUuid, Boolean privateLayout,
 		String scopeExternalReferenceCode) {
@@ -793,11 +793,11 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		return jsonObject;
 	}
 
-	private JSONObject _createMappedLinkJSONObject(
+	private JSONObject _getMappedLinkJSONObject(
 		long classPK, String externalReferenceCode,
 		String scopeExternalReferenceCode) {
 
-		JSONObject jsonObject = _createBackgroundImageJSONObject(
+		JSONObject jsonObject = _getFileEntryJSONObject(
 			classPK, externalReferenceCode, scopeExternalReferenceCode);
 
 		return jsonObject.put("fieldId", "FileEntry_title");

@@ -467,37 +467,37 @@ public class AssetSearcher extends BaseSearcher {
 	private long[] _filterCategoryIdsByVisibilityType(
 		long[] assetCategoryIds, String fieldName) {
 
-		List<Long> filteredCategoryIds = TransformUtil.transformToList(
-			assetCategoryIds,
-			assetCategoryId -> {
-				AssetCategory assetCategory =
-					AssetCategoryLocalServiceUtil.fetchAssetCategory(
-						assetCategoryId);
+		return ArrayUtil.toLongArray(
+			TransformUtil.transformToList(
+				assetCategoryIds,
+				assetCategoryId -> {
+					AssetCategory assetCategory =
+						AssetCategoryLocalServiceUtil.fetchAssetCategory(
+							assetCategoryId);
 
-				if (assetCategory == null) {
-					return null;
-				}
+					if (assetCategory == null) {
+						return null;
+					}
 
-				AssetVocabulary assetVocabulary =
-					AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
-						assetCategory.getVocabularyId());
+					AssetVocabulary assetVocabulary =
+						AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
+							assetCategory.getVocabularyId());
 
-				if ((assetVocabulary == null) ||
-					((assetVocabulary.getVisibilityType() ==
-						AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL) &&
-					 Objects.equals(fieldName, Field.ASSET_CATEGORY_IDS)) ||
-					((assetVocabulary.getVisibilityType() ==
-						AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC) &&
-					 Objects.equals(
-						 fieldName, Field.ASSET_INTERNAL_CATEGORY_IDS))) {
+					if ((assetVocabulary == null) ||
+						((assetVocabulary.getVisibilityType() ==
+							AssetVocabularyConstants.
+								VISIBILITY_TYPE_INTERNAL) &&
+						 Objects.equals(fieldName, Field.ASSET_CATEGORY_IDS)) ||
+						((assetVocabulary.getVisibilityType() ==
+							AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC) &&
+						 Objects.equals(
+							 fieldName, Field.ASSET_INTERNAL_CATEGORY_IDS))) {
 
-					return null;
-				}
+						return null;
+					}
 
-				return assetCategoryId;
-			});
-
-		return ArrayUtil.toArray(filteredCategoryIds.toArray(new Long[0]));
+					return assetCategoryId;
+				}));
 	}
 
 	private BooleanFilter _getCategoryIdsBooleanFilter(

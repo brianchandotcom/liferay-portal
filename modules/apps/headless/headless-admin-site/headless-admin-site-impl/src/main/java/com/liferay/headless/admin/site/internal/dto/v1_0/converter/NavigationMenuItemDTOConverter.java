@@ -113,7 +113,16 @@ public class NavigationMenuItemDTOConverter
 				setDateCreated(siteNavigationMenuItem::getCreateDate);
 				setDateModified(siteNavigationMenuItem::getModifiedDate);
 				setDefaultLanguageId(
-					() -> unicodeProperties.getProperty("defaultLanguageId"));
+					() -> {
+						String defaultLanguageId =
+							unicodeProperties.getProperty("defaultLanguageId");
+
+						if (defaultLanguageId != null) {
+							return defaultLanguageId;
+						}
+
+						return LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+					});
 				setDisplayIcon(
 					() -> unicodeProperties.getProperty("displayIcon"));
 				setExternalReferenceCode(

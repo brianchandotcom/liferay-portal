@@ -20,7 +20,7 @@ import org.json.JSONObject;
 public class BaseTestTask implements TestTask {
 
 	@Override
-	public void addTestClasses(TestClass testClass) {
+	public void addTestClass(TestClass testClass) {
 		if (_testClasses.contains(testClass)) {
 			return;
 		}
@@ -34,7 +34,7 @@ public class BaseTestTask implements TestTask {
 			return true;
 		}
 
-		if (!(object instanceof TestClass)) {
+		if (!(object instanceof TestTask)) {
 			return false;
 		}
 

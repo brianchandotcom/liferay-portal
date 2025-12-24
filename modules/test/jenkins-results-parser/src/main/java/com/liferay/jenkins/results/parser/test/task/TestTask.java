@@ -16,7 +16,7 @@ import org.json.JSONObject;
  */
 public interface TestTask {
 
-	public void addTestClasses(TestClass testClass);
+	public void addTestClass(TestClass testClass);
 
 	public long getAverageDuration();
 

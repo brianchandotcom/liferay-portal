@@ -94,7 +94,8 @@ resource "kubernetes_manifest" "git_repo_credentials_secret_store" {
 			namespace=var.argocd_namespace
 		}
 		spec={
-			provider=local.secret_store_provider
+			provider=yamldecode(
+				jsonencode(local.secret_store_provider))
 		}
 	}
 }

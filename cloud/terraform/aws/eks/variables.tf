@@ -1,6 +1,10 @@
 variable "arn_partition" {
 	default="aws"
 }
+variable "demo_mode" {
+	default=false
+	type=bool
+}
 variable "deployment_name" {
 	default="liferay-self-hosted"
 	validation {

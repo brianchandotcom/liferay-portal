@@ -1,0 +1,80 @@
+module "aws_lb_controller_role" {
+	attach_load_balancer_controller_policy=true
+	name="${var.deployment_name}-lb-controller"
+	oidc_providers={
+		main={
+			namespace_service_accounts=[
+				"kube-system:aws-load-balancer-controller",
+			]
+			provider_arn=local.oidc_provider_arn
+		}
+	}
+	source="terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts"
+	version="~> 6.2.3"
+}
+resource "helm_release" "aws_lb_controller" {
+	chart="aws-load-balancer-controller"
+	depends_on=[
+		module.eks,
+	]
+	name="aws-load-balancer-controller"
+	namespace="kube-system"
+	repository="https://aws.github.io/eks-charts"
+	upgrade_install=true
+	values=[
+		yamlencode(
+			{
+				clusterName=module.eks.cluster_name
+				region=var.region
+				serviceAccount={
+					annotations={
+						"eks.amazonaws.com/role-arn"=module.aws_lb_controller_role.arn
+					}
+					create=true
+					name="aws-load-balancer-controller"
+				}
+				vpcId=module.vpc.vpc_id
+			}),
+	]
+	version="1.7.2"
+}
+resource "helm_release" "nginx_ingress" {
+	chart="ingress-nginx"
+	create_namespace=true
+	depends_on=[
+		helm_release.aws_lb_controller,
+	]
+	name="nginx-ingress-controller"
+	namespace="nginx-ingress-controller"
+	repository="https://kubernetes.github.io/ingress-nginx"
+	upgrade_install=true
+	values=[
+		yamlencode(
+			{
+				controller={
+					config={
+						"compute-full-forwardfor"="true"
+						"generate-request-id"="true"
+						"real-ip-header"="proxy_protocol"
+						"set-real-ip-from"=var.vpc_cidr
+						"use-forwarded-headers"="true"
+						"use-proxy-protocol"="true"
+					}
+					service={
+						annotations={
+							"service.beta.kubernetes.io/aws-load-balancer-attributes"="load_balancing.cross_zone.enabled=true"
+							"service.beta.kubernetes.io/aws-load-balancer-healthcheck-port"="traffic-port"
+							"service.beta.kubernetes.io/aws-load-balancer-healthcheck-protocol"="tcp"
+							"service.beta.kubernetes.io/aws-load-balancer-nlb-target-type"="ip"
+							"service.beta.kubernetes.io/aws-load-balancer-proxy-protocol"="*"
+							"service.beta.kubernetes.io/aws-load-balancer-scheme"=var.demo_mode ? "internet-facing" : "internal"
+							"service.beta.kubernetes.io/aws-load-balancer-target-group-attributes"="proxy_protocol_v2.enabled=true"
+							"service.beta.kubernetes.io/aws-load-balancer-type"="external"
+						}
+						externalTrafficPolicy="Local"
+					}
+				}
+			}),
+	]
+	version="4.11.3"
+}

@@ -145,6 +145,14 @@ public class TestHistoryMap {
 				testJSONObject.put(
 					"averageDuration", testTaskHistory.getAverageDuration()
 				).put(
+					"averageTotalDuration",
+					testTaskHistory.getAverageTotalDuration()
+				).put(
+					"latestReportMissing",
+					testTaskHistory.isLatestReportMissing()
+				).put(
+					"longestDuration", testTaskHistory.getLongestDuration()
+				).put(
 					"testTaskCount", testTaskHistory.getTestTaskCount()
 				).put(
 					"testTaskName", testTaskHistory.getTestTaskName()
@@ -411,22 +419,71 @@ public class TestHistoryMap {
 				testClassHistory.addTestClassReport(testClassReport);
 			}
 
-			StopWatchRecordsGroup stopWatchRecordsGroup =
-				downstreamBuildReport.getStopWatchRecordsGroup();
+			if (!(downstreamBuildReport instanceof
+					ModulesJUnitDownstreamBuildReport)) {
 
-			for (StopWatchRecord stopWatchRecord :
-					stopWatchRecordsGroup.getAllStopWatchRecords()) {
+				return;
+			}
 
-				Matcher matcher = _stopWatchGroupTestTaskNamePattern.matcher(
-					stopWatchRecord.getName());
+			boolean latestReport = false;
 
-				if (!matcher.find()) {
-					continue;
+			TestrayBuild latestTestrayBuild = getLatestTestrayBuild();
+
+			if (Objects.equals(
+					downstreamBuildReport.getTopLevelBuildReport(),
+					latestTestrayBuild.getTopLevelBuildReport())) {
+
+				latestReport = true;
+			}
+
+			ModulesJUnitDownstreamBuildReport
+				modulesJUnitDownstreamBuildReport =
+					(ModulesJUnitDownstreamBuildReport)downstreamBuildReport;
+
+			List<TestTaskReport> testTaskReports =
+				modulesJUnitDownstreamBuildReport.getTestTaskReports();
+
+			if ((testTaskReports == null) || testTaskReports.isEmpty()) {
+				testTaskReports = new ArrayList<>();
+
+				StopWatchRecordsGroup stopWatchRecordsGroup =
+					downstreamBuildReport.getStopWatchRecordsGroup();
+
+				for (StopWatchRecord stopWatchRecord :
+						stopWatchRecordsGroup.getAllStopWatchRecords()) {
+
+					Matcher matcher =
+						_stopWatchGroupTestTaskNamePattern.matcher(
+							stopWatchRecord.getName());
+
+					if (!matcher.find()) {
+						continue;
+					}
+
+					String testTaskName = matcher.group("testTaskName");
+
+					JSONObject jsonObject = new JSONObject();
+
+					jsonObject.put(
+						"duration", stopWatchRecord.getDuration()
+					).put(
+						"name", testTaskName.replaceAll("\\.", ":")
+					);
+
+					TestTaskReport testTaskReport =
+						TestTaskReportFactory.newTestTaskReport(
+							downstreamBuildReport, jsonObject);
+
+					if (testTaskReports.contains(testTaskReport)) {
+						continue;
+					}
+
+					testTaskReports.add(testTaskReport);
 				}
+			}
 
-				String testTaskName = matcher.group("testTaskName");
-
-				testTaskName = testTaskName.replaceAll("\\.", ":");
+			for (TestTaskReport testTaskReport : testTaskReports) {
+				String testTaskName = testTaskReport.getName();
 
 				TestTaskHistory testTaskHistory = _testTaskHistoryMap.get(
 					testTaskName);
@@ -435,27 +492,11 @@ public class TestHistoryMap {
 					testTaskHistory = new TestTaskHistory(testTaskName);
 				}
 
-				long testTaskDuration = stopWatchRecord.getDuration();
-
-				for (TestClassReport testClassReport :
-						downstreamBuildReport.getTestClassReports()) {
-
-					if (!Objects.equals(
-							testTaskName, testClassReport.getTestTaskName())) {
-
-						continue;
-					}
-
-					testTaskDuration -= testClassReport.getDuration();
+				if (latestReport && testTaskReport.isMissing()) {
+					testTaskHistory.setLatestReportMissing(true);
 				}
 
-				if ((testTaskDuration <= 0) ||
-					(testTaskDuration >= _MAXIMUM_TEST_DURATION)) {
-
-					continue;
-				}
-
-				testTaskHistory.addTestTaskDuration(testTaskDuration);
+				testTaskHistory.addTestTaskReport(testTaskReport);
 
 				_testTaskHistoryMap.put(testTaskName, testTaskHistory);
 			}
@@ -876,40 +917,69 @@ public class TestHistoryMap {
 			_testTaskName = testTaskName;
 		}
 
-		public void addTestTaskDuration(long testTaskDuration) {
-			if ((testTaskDuration <= 0) ||
-				(testTaskDuration >= _MAXIMUM_TEST_DURATION)) {
-
-				return;
-			}
-
-			_testTaskDurations.add(testTaskDuration);
+		public void addTestTaskReport(TestTaskReport testTaskReport) {
+			_testTaskReports.add(testTaskReport);
 		}
 
 		public long getAverageDuration() {
-			if (_testTaskDurations.isEmpty()) {
+			if (_testTaskReports.isEmpty()) {
 				return 0;
 			}
 
 			long totalDuration = 0;
 
-			for (long testTaskDuration : _testTaskDurations) {
-				totalDuration += testTaskDuration;
+			for (TestTaskReport testTaskReport : _testTaskReports) {
+				totalDuration += testTaskReport.getOverheadDuration();
 			}
 
-			return totalDuration / _testTaskDurations.size();
+			return totalDuration / _testTaskReports.size();
+		}
+
+		public long getAverageTotalDuration() {
+			if (_testTaskReports.isEmpty()) {
+				return 0;
+			}
+
+			long totalDuration = 0;
+
+			for (TestTaskReport testTaskReport : _testTaskReports) {
+				totalDuration += testTaskReport.getDuration();
+			}
+
+			return totalDuration / _testTaskReports.size();
+		}
+
+		public long getLongestDuration() {
+			long longestDuration = 0L;
+
+			for (TestTaskReport testTaskReport : _testTaskReports) {
+				if (longestDuration <= testTaskReport.getDuration()) {
+					longestDuration = testTaskReport.getDuration();
+				}
+			}
+
+			return longestDuration;
 		}
 
 		public int getTestTaskCount() {
-			return _testTaskDurations.size();
+			return _testTaskReports.size();
 		}
 
 		public String getTestTaskName() {
 			return _testTaskName;
 		}
 
-		private final List<Long> _testTaskDurations = new ArrayList<>();
+		public boolean isLatestReportMissing() {
+			return _latestReportMissing;
+		}
+
+		public void setLatestReportMissing(boolean latestReportMissing) {
+			_latestReportMissing = latestReportMissing;
+		}
+
+		private boolean _latestReportMissing;
 		private final String _testTaskName;
+		private final List<TestTaskReport> _testTaskReports = new ArrayList<>();
 
 	}
 

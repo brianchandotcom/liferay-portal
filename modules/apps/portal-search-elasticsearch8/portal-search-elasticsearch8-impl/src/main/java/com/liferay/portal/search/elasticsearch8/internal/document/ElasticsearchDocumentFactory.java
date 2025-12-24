@@ -79,7 +79,6 @@ public class ElasticsearchDocumentFactory {
 
 		Map<String, com.liferay.portal.kernel.search.Field> fields =
 			document.getFields();
-
 		Map<String, Object> translatedFields = new HashMap<>();
 
 		_addLegacyFields(fields.values(), translatedFields);

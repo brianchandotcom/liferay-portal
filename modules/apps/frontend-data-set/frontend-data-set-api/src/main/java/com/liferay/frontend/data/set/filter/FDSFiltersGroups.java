@@ -6,11 +6,9 @@
 package com.liferay.frontend.data.set.filter;
 
 import com.liferay.frontend.data.set.FDSEntryItemImportPolicy;
+import com.liferay.portal.kernel.json.JSONArray;
 
 import jakarta.servlet.http.HttpServletRequest;
-
-import java.util.LinkedHashMap;
-import java.util.List;
 
 /**
  * @author Daniel Sanz
@@ -21,7 +19,7 @@ public interface FDSFiltersGroups {
 		return FDSEntryItemImportPolicy.ITEM_PROXY;
 	}
 
-	public LinkedHashMap<String, List<FDSFilter>> getFDSFiltersMap(
+	public JSONArray getGroupedFDSFiltersJSONArray(
 		HttpServletRequest httpServletRequest);
 
 }

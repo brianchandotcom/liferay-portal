@@ -31,6 +31,7 @@ import com.liferay.frontend.data.set.view.FDSViewRegistry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -41,11 +42,12 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Collections;
-import java.util.LinkedHashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -188,34 +190,30 @@ public class SystemFDSSerializer
 			return jsonArray;
 		}
 
-		LinkedHashMap<String, List<FDSFilter>> fdsFiltersMap =
-			fdsFiltersGroups.getFDSFiltersMap(httpServletRequest);
+		JSONArray groupedFDSFiltersJSONArray =
+			fdsFiltersGroups.getGroupedFDSFiltersJSONArray(httpServletRequest);
 
-		for (Map.Entry<String, List<FDSFilter>> entry :
-				fdsFiltersMap.entrySet()) {
+		for (int i = 0; i < groupedFDSFiltersJSONArray.length(); i++) {
+			JSONObject jsonObject = groupedFDSFiltersJSONArray.getJSONObject(i);
 
-			jsonArray.put(
-				JSONUtil.put(
-					"filters",
-					() -> {
-						JSONArray fdsFiltersJSONArray = JSONUtil.putAll();
+			String key = StringPool.BLANK;
 
-						List<FDSFilter> fdsFilters = entry.getValue();
+			Iterator<String> iterator = jsonObject.keys();
 
-						if (ListUtil.isNotEmpty(fdsFilters)) {
-							for (FDSFilter fdsFilter : fdsFilters) {
-								if (fdsFilter != null) {
-									fdsFiltersJSONArray.put(
-										String.valueOf(fdsFilter.getId()));
-								}
-							}
-						}
+			while (iterator.hasNext()) {
+				key = iterator.next();
 
-						return fdsFiltersJSONArray;
-					}
-				).put(
-					"label", entry.getKey()
-				));
+				if (Validator.isBlank(key)) {
+					continue;
+				}
+
+				jsonArray.put(
+					JSONUtil.put(
+						"filters", jsonObject.getJSONArray(key)
+					).put(
+						"label", key
+					));
+			}
 		}
 
 		return jsonArray;

@@ -5,21 +5,13 @@
 
 package com.liferay.frontend.data.set.sample.web.internal.filter;
 
-import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
-import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilterRegistry;
 import com.liferay.frontend.data.set.filter.FDSFiltersGroups;
 import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleFDSNames;
-import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -34,45 +26,17 @@ import org.osgi.service.component.annotations.Reference;
 public class AdvancedFDSFiltersGroups implements FDSFiltersGroups {
 
 	@Override
-	public LinkedHashMap<String, List<FDSFilter>> getFDSFiltersMap(
+	public JSONArray getGroupedFDSFiltersJSONArray(
 		HttpServletRequest httpServletRequest) {
 
-		Map<String, FDSFilter> fdsFilterMap = new HashMap<>();
-
-		for (FDSFilter filter :
-				_fdsFilterRegistry.getFDSFilters(FDSSampleFDSNames.ADVANCED)) {
-
-			fdsFilterMap.put(filter.getId(), filter);
-		}
-
-		return LinkedHashMapBuilder.<String, List<FDSFilter>>put(
-			"Group 1",
-			Arrays.asList(fdsFilterMap.get("date"), fdsFilterMap.get("color"))
-		).put(
-			"Group 2",
-			Arrays.asList(fdsFilterMap.get("invalid"), fdsFilterMap.get("size"))
-		).put(
-			"Group 3",
-			Arrays.asList(fdsFilterMap.get("status"), fdsFilterMap.get("title"))
-		).put(
-			"Empty Group", new ArrayList<FDSFilter>()
-		).put(
-			"Group with not registered filter",
-			List.of(
-				new BaseSelectionFDSFilter() {
-
-					@Override
-					public String getId() {
-						return "notRegistered";
-					}
-
-					@Override
-					public String getLabel() {
-						return "This filter is not registered";
-					}
-
-				})
-		).build();
+		return JSONUtil.putAll(
+			JSONUtil.put("Empty Group", JSONUtil.putAll()),
+			JSONUtil.put("Group 1", JSONUtil.putAll("date", "color")),
+			JSONUtil.put("Group 2", JSONUtil.putAll(null, "size")),
+			JSONUtil.put("Group 3", JSONUtil.putAll("status", "title")),
+			JSONUtil.put(
+				"Group with not registered filter",
+				JSONUtil.putAll("notRegistered")));
 	}
 
 	@Reference

@@ -54,16 +54,35 @@
 			"objectFields": [
 				{
 					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "9907622c-cfc6-b05a-31f1-34751513be7a",
+					"businessType": "Picklist",
+					"externalReferenceCode": "HS_LEAD_LABEL",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "First Name"
+						"en_US": "HS Lead Label"
+					},
+					"listTypeDefinitionExternalReferenceCode": "H1S4_LEAD_LABEL",
+					"localized": false,
+					"name": "hsLeadLabel",
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "HS_LEAD_NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "HS Lead Name"
 					},
 					"localized": false,
-					"name": "firstName",
+					"name": "hsLeadName",
 					"objectFieldSettings": [
 						{
 							"name": "showCounter",
@@ -79,147 +98,20 @@
 				},
 				{
 					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "b9336ff1-c782-d77c-df58-c9c0ddfa2d49",
+					"businessType": "Picklist",
+					"externalReferenceCode": "HS_LEAD_TYPE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Last Name"
+						"en_US": "HS Lead Type"
 					},
+					"listTypeDefinitionExternalReferenceCode": "H1S4_LEAD_TYPE",
 					"localized": false,
-					"name": "lastName",
-					"objectFieldSettings": [
-						{
-							"name": "showCounter",
-							"value": false
-						}
-					],
+					"name": "hsLeadType",
 					"readOnly": "false",
-					"required": false,
+					"required": true,
 					"state": false,
-					"system": false,
-					"type": "String",
-					"unique": false
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "fd7c7f2d-d91b-3ccf-9292-192f9f45791e",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Company Name"
-					},
-					"localized": false,
-					"name": "companyName",
-					"objectFieldSettings": [
-						{
-							"name": "showCounter",
-							"value": false
-						}
-					],
-					"readOnly": "false",
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String",
-					"unique": false
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "5ec78cb8-2e01-c466-9685-0c134586ca04",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Website URL"
-					},
-					"localized": false,
-					"name": "websiteURL",
-					"objectFieldSettings": [
-						{
-							"name": "showCounter",
-							"value": false
-						}
-					],
-					"readOnly": "false",
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String",
-					"unique": false
-				},
-				{
-					"DBType": "Long",
-					"businessType": "LongInteger",
-					"externalReferenceCode": "7eadd2ed-f78a-2c9b-c692-66ca65699b6b",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Number of Employees"
-					},
-					"localized": false,
-					"name": "numberOfEmployees",
-					"objectFieldSettings": [
-					],
-					"readOnly": "false",
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "Long",
-					"unique": false
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "3d945200-7901-4635-2308-82ed501e252e",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Phone"
-					},
-					"localized": false,
-					"name": "phone",
-					"objectFieldSettings": [
-						{
-							"name": "showCounter",
-							"value": false
-						}
-					],
-					"readOnly": "false",
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String",
-					"unique": false
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "c1bb94bb-9231-c936-6f97-f2a59bd28315",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Email"
-					},
-					"localized": false,
-					"name": "email",
-					"objectFieldSettings": [
-						{
-							"name": "showCounter",
-							"value": false
-						}
-					],
-					"readOnly": "false",
-					"required": false,
-					"state": false,
-					"system": false,
 					"type": "String",
 					"unique": false
 				}
@@ -290,7 +182,32 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "9907622c-cfc6-b05a-31f1-34751513be7b",
+					"externalReferenceCode": "EMAIL",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Email Address"
+					},
+					"localized": false,
+					"name": "email",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": false
+						}
+					],
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "FIRST_NAME",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -315,7 +232,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "b9336ff1-c782-d77c-df58-c9c0ddfa2d49",
+					"externalReferenceCode": "LAST_NAME",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -340,7 +257,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "3d945200-7901-4635-2308-82ed501e252e",
+					"externalReferenceCode": "PHONE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -349,31 +266,6 @@
 					},
 					"localized": false,
 					"name": "phone",
-					"objectFieldSettings": [
-						{
-							"name": "showCounter",
-							"value": false
-						}
-					],
-					"readOnly": "false",
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String",
-					"unique": false
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "c1bb94bb-9231-c936-6f97-f2a59bd28315",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Email"
-					},
-					"localized": false,
-					"name": "email",
 					"objectFieldSettings": [
 						{
 							"name": "showCounter",
@@ -396,7 +288,7 @@
 					"label": {
 						"en_US": "H1S4 Contact to H1S4 Leads"
 					},
-					"name": "H1S4ContactToH1S4Leads",
+					"name": "h1s4ContactToH1S4Leads",
 					"objectDefinitionExternalReferenceCode1": "H1S4_CONTACT",
 					"objectDefinitionExternalReferenceCode2": "H1S4_LEAD",
 					"type": "oneToMany"
@@ -465,7 +357,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "fd7c7f2d-d91b-3ccf-9292-192f9f45791e",
+					"externalReferenceCode": "NAME",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -473,7 +365,7 @@
 						"en_US": "Company Name"
 					},
 					"localized": false,
-					"name": "companyName",
+					"name": "name",
 					"objectFieldSettings": [
 						{
 							"name": "showCounter",
@@ -490,7 +382,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "5ec78cb8-2e01-c466-9685-0c134586ca04",
+					"externalReferenceCode": "WEBSITE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -498,7 +390,7 @@
 						"en_US": "Website URL"
 					},
 					"localized": false,
-					"name": "websiteURL",
+					"name": "website",
 					"objectFieldSettings": [
 						{
 							"name": "showCounter",
@@ -515,7 +407,7 @@
 				{
 					"DBType": "Long",
 					"businessType": "LongInteger",
-					"externalReferenceCode": "7eadd2ed-f78a-2c9b-c692-66ca65699b6b",
+					"externalReferenceCode": "NUMBER_OF_EMPLOYEES",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",
@@ -536,12 +428,12 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "3d945200-7901-4635-2308-82ed501e252e",
+					"externalReferenceCode": "PHONE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Phone"
+						"en_US": "Phone Number"
 					},
 					"localized": false,
 					"name": "phone",

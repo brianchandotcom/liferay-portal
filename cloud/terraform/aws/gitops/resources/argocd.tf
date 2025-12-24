@@ -116,7 +116,7 @@ resource "kubernetes_manifest" "liferay_applicationset" {
 				{
 					"app.kubernetes.io/name"="liferay-applicationset"
 				})
-			name="liferay-dxp-environments"
+			name="liferay-environments"
 			namespace=var.argocd_namespace
 		}
 		spec={
@@ -135,7 +135,7 @@ resource "kubernetes_manifest" "liferay_applicationset" {
 			]
 			template={
 				metadata={
-					name="liferay-dxp-${"{{path.basename}}"}"
+					name="liferay-${"{{path.basename}}"}"
 				}
 				spec={
 					project=local.liferay_appproject_name

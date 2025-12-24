@@ -58,7 +58,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsValues;
@@ -69,8 +68,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -808,20 +805,12 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		FDSFiltersGroups fdsFiltersGroups = new FDSFiltersGroups() {
 
 			@Override
-			public LinkedHashMap<String, List<FDSFilter>> getFDSFiltersMap(
+			public JSONArray getGroupedFDSFiltersJSONArray(
 				HttpServletRequest httpServletRequest) {
 
-				return LinkedHashMapBuilder.<String, List<FDSFilter>>put(
-					TITLES[0],
-					Arrays.asList(
-						_createFDSFilter(IDS[0], LABELS[0]),
-						_createFDSFilter(IDS[1], LABELS[1]))
-				).put(
-					TITLES[1],
-					Arrays.asList(
-						_createFDSFilter(IDS[2], LABELS[2]),
-						_createFDSFilter(IDS[3], LABELS[3]))
-				).build();
+				return JSONUtil.putAll(
+					JSONUtil.put(TITLES[0], JSONUtil.putAll(IDS[0], IDS[1])),
+					JSONUtil.put(TITLES[1], JSONUtil.putAll(IDS[2], IDS[3])));
 			}
 
 		};
@@ -844,17 +833,12 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 				new FDSFiltersGroups() {
 
 					@Override
-					public LinkedHashMap<String, List<FDSFilter>>
-						getFDSFiltersMap(
-							HttpServletRequest httpServletRequest) {
+					public JSONArray getGroupedFDSFiltersJSONArray(
+						HttpServletRequest httpServletRequest) {
 
-						return LinkedHashMapBuilder.
-							<String, List<FDSFilter>>put(
-								TITLES[2],
-								Arrays.asList(
-									_createFDSFilter(IDS[4], LABELS[4]),
-									_createFDSFilter(IDS[5], LABELS[5]))
-							).build();
+						return JSONUtil.putAll(
+							JSONUtil.put(
+								TITLES[2], JSONUtil.putAll(IDS[4], IDS[5])));
 					}
 
 				},
@@ -1747,22 +1731,6 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 			return new SystemFDSEntryWrapper(fdsName);
 		}
 
-	}
-
-	private FDSFilter _createFDSFilter(String id, String label) {
-		return new BaseSelectionFDSFilter() {
-
-			@Override
-			public String getId() {
-				return id;
-			}
-
-			@Override
-			public String getLabel() {
-				return label;
-			}
-
-		};
 	}
 
 	private FDSFilter _createFDSFilterDate(

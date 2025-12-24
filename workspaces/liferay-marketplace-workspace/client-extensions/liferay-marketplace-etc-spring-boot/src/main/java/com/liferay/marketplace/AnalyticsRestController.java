@@ -113,7 +113,9 @@ public class AnalyticsRestController extends BaseRestController {
 				).toString());
 		}
 
-		for (ProductPurchase productPurchase : productPurchasesPage.getItems()) {
+		for (ProductPurchase productPurchase :
+				productPurchasesPage.getItems()) {
+
 			ProductPurchase.Status status = productPurchase.getStatus();
 
 			if (!Objects.equals(status.getValue(), "Approved")) {
@@ -285,7 +287,7 @@ public class AnalyticsRestController extends BaseRestController {
 		String authorization =
 			_analyticsAuthEmailAddress + ":" + _analyticsAuthPassword;
 
-		return "Basic " +  encoder.encodeToString(authorization.getBytes());
+		return "Basic " + encoder.encodeToString(authorization.getBytes());
 	}
 
 	private static final Log _log = LogFactory.getLog(

@@ -351,9 +351,7 @@ public class OrphanReferencesDataCleanupUtil {
 			sb.append(targetColumnNames[i]);
 			sb.append(" = ");
 
-			if ((customJoinClauses != null) &&
-				(customJoinClauses[i] != null)) {
-
+			if ((customJoinClauses != null) && (customJoinClauses[i] != null)) {
 				sb.append(
 					StringUtil.replace(
 						customJoinClauses[i], "[$TARGET_TABLE_ALIAS$]",

@@ -7,7 +7,9 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.test.clazz.ModulesJUnitTestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
+import com.liferay.jenkins.results.parser.test.clazz.TestClassFactory;
 import com.liferay.jenkins.results.parser.test.task.TestTask;
+import com.liferay.jenkins.results.parser.test.task.TestTaskFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +24,13 @@ public class ModulesJUnitAxisTestClassGroup extends JUnitAxisTestClassGroup {
 
 	@Override
 	public JSONObject getJSONObject() {
-		JSONObject jsonObject = super.getJSONObject();
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put(
+			"average_duration", getAverageDuration()
+		).put(
+			"axis_name", getAxisName()
+		);
 
 		JSONArray testTasksJSONArray = new JSONArray();
 
@@ -36,21 +44,76 @@ public class ModulesJUnitAxisTestClassGroup extends JUnitAxisTestClassGroup {
 	}
 
 	public List<TestTask> getTestTasks() {
-		List<TestTask> testTasks = new ArrayList<>();
+		if (_testTasks != null) {
+			return _testTasks;
+		}
+
+		_testTasks = new ArrayList<>();
 
 		for (ModulesJUnitTestClass modulesJUnitTestClass :
 				_getModulesJUnitTestClasses()) {
 
-			testTasks.add(modulesJUnitTestClass.getTestTask());
+			TestTask testTask = modulesJUnitTestClass.getTestTask();
+
+			if (_testTasks.contains(testTask)) {
+				continue;
+			}
+
+			_testTasks.add(testTask);
 		}
 
-		return testTasks;
+		return _testTasks;
 	}
 
 	protected ModulesJUnitAxisTestClassGroup(
 		JSONObject jsonObject, SegmentTestClassGroup segmentTestClassGroup) {
 
 		super(jsonObject, segmentTestClassGroup);
+
+		JSONArray testTasksJSONArray = jsonObject.getJSONArray("test_tasks");
+
+		if ((testTasksJSONArray == null) || testTasksJSONArray.isEmpty()) {
+			return;
+		}
+
+		_testTasks = new ArrayList<>();
+
+		for (int i = 0; i < testTasksJSONArray.length(); i++) {
+			JSONObject testTaskJSONObject = testTasksJSONArray.getJSONObject(i);
+
+			JSONArray testClassesJSONArray = testTaskJSONObject.getJSONArray(
+				"test_classes");
+
+			if (testClassesJSONArray == null) {
+				continue;
+			}
+
+			TestTask testTask = TestTaskFactory.newTestTask(
+				testTaskJSONObject.getString("name"),
+				testTaskJSONObject.getLong("average_duration"));
+
+			for (int j = 0; j < testClassesJSONArray.length(); j++) {
+				JSONObject testClassJSONObject =
+					testClassesJSONArray.getJSONObject(j);
+
+				if (testClassJSONObject == null) {
+					continue;
+				}
+
+				TestClass testClass = TestClassFactory.newTestClass(
+					getBatchTestClassGroup(), testClassJSONObject);
+
+				addTestClass(testClass);
+
+				testTask.addTestClass(testClass);
+			}
+
+			if (_testTasks.contains(testTask)) {
+				continue;
+			}
+
+			_testTasks.add(testTask);
+		}
 	}
 
 	protected ModulesJUnitAxisTestClassGroup(
@@ -68,5 +131,7 @@ public class ModulesJUnitAxisTestClassGroup extends JUnitAxisTestClassGroup {
 
 		return modulesJUnitTestClasses;
 	}
+
+	private List<TestTask> _testTasks;
 
 }

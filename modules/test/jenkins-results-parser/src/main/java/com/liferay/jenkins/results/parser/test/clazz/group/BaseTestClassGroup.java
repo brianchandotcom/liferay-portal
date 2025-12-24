@@ -91,6 +91,10 @@ public abstract class BaseTestClassGroup implements TestClassGroup {
 	}
 
 	protected void addTestClass(TestClass testClass) {
+		if (_testClasses.contains(testClass)) {
+			return;
+		}
+
 		_testClasses.add(testClass);
 	}
 

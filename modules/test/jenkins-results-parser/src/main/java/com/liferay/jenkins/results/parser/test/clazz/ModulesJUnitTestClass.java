@@ -28,7 +28,7 @@ public class ModulesJUnitTestClass extends JUnitTestClass {
 		_testTask = TestTaskFactory.newTestTask(
 			getTestTaskName(), getAverageTestTaskDuration());
 
-		_testTask.addTestClasses(this);
+		_testTask.addTestClass(this);
 
 		return _testTask;
 	}

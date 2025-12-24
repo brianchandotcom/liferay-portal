@@ -11,7 +11,31 @@ export function translateConditionsToScript(
 	conditionType: ConditionType
 ) {
 	const conditionScript = conditions.map((condition) => {
-		if (condition.type === 'user') {
+		if (condition.type === 'field') {
+			let script = `${condition.field}`;
+
+			if (condition.options?.type === 'equal') {
+				script += ` == "${condition.options?.value || ''}"`;
+			}
+			else {
+				script += ` != "${condition.options?.value || ''}"`;
+			}
+
+			return script;
+		}
+		else if (condition.type === 'form') {
+			let script = `input__${condition.field?.replaceAll('-', '_')}`;
+
+			if (condition.options?.type === 'equal') {
+				script += ` == "${condition.options?.value || ''}"`;
+			}
+			else {
+				script += ` != "${condition.options?.value || ''}"`;
+			}
+
+			return script;
+		}
+		else if (condition.type === 'user') {
 			if (condition.field === 'role') {
 				if (condition.options?.type === 'equal') {
 					return `contains(roleIds, ${condition.options.value || ''})`;
@@ -31,30 +55,6 @@ export function translateConditionsToScript(
 			else {
 				return `userId == ${condition.options?.value}`;
 			}
-		}
-		else if (condition.type === 'form') {
-			let script = `input__${condition.field?.replaceAll('-', '_')}`;
-
-			if (condition.options?.type === 'equal') {
-				script += ` == "${condition.options?.value || ''}"`;
-			}
-			else {
-				script += ` != "${condition.options?.value || ''}"`;
-			}
-
-			return script;
-		}
-		else if (condition.type === 'field') {
-			let script = `${condition.field}`;
-
-			if (condition.options?.type === 'equal') {
-				script += ` == "${condition.options?.value || ''}"`;
-			}
-			else {
-				script += ` != "${condition.options?.value || ''}"`;
-			}
-
-			return script;
 		}
 	});
 

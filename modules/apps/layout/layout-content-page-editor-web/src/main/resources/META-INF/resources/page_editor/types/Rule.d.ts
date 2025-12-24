@@ -12,28 +12,8 @@ export interface Action {
 	id: string;
 	itemId?: string;
 	readOnly?: boolean;
-	type: 'show' | 'hide' | 'enable' | 'disable' | undefined;
+	type: 'disable' | 'enable' | 'hide' | 'show' | undefined;
 }
-
-export interface Condition {
-	error?: RuleError | null;
-	field?: 'user' | 'role' | 'segment' | string;
-	id: string;
-	options?: {
-		type: 'equal' | 'not-equal';
-		value?: string;
-	};
-	type: 'user' | 'form' | 'field' | undefined;
-}
-
-export type BasicRule = {
-	actions: Action[];
-	conditionType?: ConditionType;
-	conditions?: Condition[];
-	id: string;
-	name: string;
-	script?: never;
-};
 
 export type AdvancedRule = {
 	actions: Action[];
@@ -44,9 +24,29 @@ export type AdvancedRule = {
 	script: string;
 };
 
-export type Rule = BasicRule | AdvancedRule;
+export type BasicRule = {
+	actions: Action[];
+	conditionType?: ConditionType;
+	conditions?: Condition[];
+	id: string;
+	name: string;
+	script?: never;
+};
+
+export interface Condition {
+	error?: RuleError | null;
+	field?: 'user' | 'role' | 'segment' | string;
+	id: string;
+	options?: {
+		type: 'equal' | 'not-equal';
+		value?: string;
+	};
+	type: 'field' | 'form' | 'user' | undefined;
+}
+
+export type Rule = AdvancedRule | BasicRule;
 
 export type RuleError = {
-	element: HTMLButtonElement | HTMLInputElement | HTMLElement;
+	element: HTMLButtonElement | HTMLElement | HTMLInputElement;
 	message: string;
 };

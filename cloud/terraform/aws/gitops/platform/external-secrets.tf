@@ -4,6 +4,7 @@ resource "helm_release" "external_secrets" {
 	name="external-secrets"
 	namespace=var.external_secrets_namespace
 	repository="https://charts.external-secrets.io"
+	upgrade_install=true
 	values=[
 		yamlencode(
 			{

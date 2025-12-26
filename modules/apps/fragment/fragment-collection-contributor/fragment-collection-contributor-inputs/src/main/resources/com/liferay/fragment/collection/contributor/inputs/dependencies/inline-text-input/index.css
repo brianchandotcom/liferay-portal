@@ -32,3 +32,7 @@
 	border-left: none;
 	margin-left: -16px;
 }
+
+.inline-text-input .localized-text {
+	border-left: 2px solid #2e5aac;
+}

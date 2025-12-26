@@ -24,7 +24,7 @@
 			[/#if]
 		</div>
 
-		<p class="mt-1 text-secondary [#if input.errorMessage?has_content || !configuration.showCharactersCount]sr-only[/#if]" id="${fragmentElementId}-length-info">
+		<p class="mb-0 mt-1 text-secondary [#if input.errorMessage?has_content || !configuration.showCharactersCount]sr-only[/#if]" id="${fragmentElementId}-length-info">
 			<span class="sr-only" id="${fragmentElementId}-length-warning">
 				[@clay["icon"] symbol="info-circle" /]
 
@@ -40,6 +40,16 @@
 				<span id="${fragmentElementId}-inline-text-input-error-message">
 					${input.errorMessage}
 				</span>
+			</p>
+		[/#if]
+
+		[#if input.localizable]
+			<p class="localized-text mb-0 mt-2 pl-2 text-info" id="${fragmentElementId}-localized-text">
+				[#if input.value?has_content]
+					${input.value}
+				[#else]
+					${languageUtil.get(locale, "there-is-no-default-value-to-localize")}
+				[/#if]
 			</p>
 		[/#if]
 	</div>

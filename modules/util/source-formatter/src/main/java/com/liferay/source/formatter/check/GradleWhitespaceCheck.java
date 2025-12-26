@@ -20,15 +20,9 @@ public class GradleWhitespaceCheck extends WhitespaceCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		int index = -1;
+		int index = content.indexOf(" (group: \"");
 
-		while (true) {
-			index = content.indexOf(" (group: \"", index + 1);
-
-			if (index == -1) {
-				break;
-			}
-
+		if (index != -1) {
 			return StringUtil.replaceFirst(
 				content, StringPool.SPACE, StringPool.BLANK, index);
 		}

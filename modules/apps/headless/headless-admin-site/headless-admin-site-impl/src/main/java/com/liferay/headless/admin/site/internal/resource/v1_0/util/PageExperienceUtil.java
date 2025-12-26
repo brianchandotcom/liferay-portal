@@ -37,6 +37,8 @@ public class PageExperienceUtil {
 		}
 
 		if ((defaultPageExperience == null) ||
+			((defaultPageExperience.getPriority() != null) &&
+			 (defaultPageExperience.getPriority() != 0)) ||
 			(defaultPageExperience.getSegmentItemExternalReference() != null)) {
 
 			throw new UnsupportedOperationException();

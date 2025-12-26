@@ -80,7 +80,9 @@ import com.liferay.segments.service.SegmentsExperienceServiceUtil;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -1167,6 +1169,10 @@ public class LayoutUtil {
 				new HashMap<>();
 
 			int minPriority = Integer.MIN_VALUE;
+
+			Arrays.sort(
+				pageExperiences,
+				Comparator.comparingInt(PageExperience::getPriority));
 
 			for (PageExperience pageExperience : pageExperiences) {
 				SegmentsExperience oldSegmentsExperience =

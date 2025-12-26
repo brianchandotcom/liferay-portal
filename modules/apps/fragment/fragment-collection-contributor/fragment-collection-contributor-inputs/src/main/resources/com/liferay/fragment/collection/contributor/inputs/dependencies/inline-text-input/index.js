@@ -66,17 +66,24 @@ function main() {
 				const defaultLanguageId = themeDisplay.getDefaultLanguageId();
 
 				if (input.localizable) {
-					const {onChange} = registerLocalizedInput({
+					const {onBlur, onChange} = registerLocalizedInput({
 						defaultLanguageId,
 						initialValues: input.valueI18n,
 						inputElement,
 						inputName: input.name,
 						localizationInputsContainer: inputElement.parentNode,
+						localizedTextContainer: document.getElementById(
+							`${fragmentElementId}-localized-text`
+						),
 						namespace: fragmentElementId,
 					});
 
 					inputElement.addEventListener('change', (event) => {
 						onChange(event.target.value);
+					});
+
+					inputElement.addEventListener('blur', (event) => {
+						onBlur(event.target.value);
 					});
 				}
 				else {

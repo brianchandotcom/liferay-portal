@@ -19,6 +19,7 @@ type Args = {
 	inputElement?: HTMLInputElement;
 	inputName: string;
 	localizationInputsContainer: HTMLElement;
+	localizedTextContainer: HTMLElement;
 	namespace: string;
 	onAutoTranslate?: ({
 		languageId,
@@ -47,6 +48,7 @@ export function registerLocalizedInput({
 	inputElement,
 	inputName,
 	localizationInputsContainer,
+	localizedTextContainer,
 	namespace,
 	onAutoTranslate,
 	onLocaleChange,
@@ -407,6 +409,16 @@ export function registerLocalizedInput({
 	Liferay.fire(EVENT_INPUT_REGISTERED);
 
 	return {
+		onBlur: (value = null) => {
+			if (
+				localizedTextContainer &&
+				currentLanguageId === defaultLanguageId
+			) {
+				localizedTextContainer.innerText =
+					value ||
+					Liferay.Language.get('no-default-value-to-localize');
+			}
+		},
 		onChange: (value = null) => {
 			if (value !== null) {
 				setTranslationInputsValue(currentLanguageId, value);

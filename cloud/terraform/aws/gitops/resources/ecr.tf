@@ -154,6 +154,7 @@ resource "kubernetes_role_binding" "ecr_secret_manager_binding" {
 	}
 }
 resource "kubernetes_service_account" "ecr_sa" {
+	automount_service_account_token=false
 	count=local.liferay_helm_chart_config.ecr_credentials_sync_required ? 1 : 0
 	metadata {
 		annotations={

@@ -3,9 +3,11 @@ locals {
 	argocd_ecr_credentials_secret_name="argocd-ecr-credentials"
 	argocd_git_credentials_secret_name="argocd-git-credentials"
 	common_labels={
-		"app.kubernetes.io/managed-by"="terraform"
+		"app.kubernetes.io/component"="gitops-infrastructure"
+		"app.kubernetes.io/managed-by"=local.terraform_manager_name
 		"app.kubernetes.io/part-of"="liferay-gitops"
 		"environment"="internal"
+		"liferay.com/project"="liferay-cloud-native"
 	}
 	ecr_credentials_sync_image="alpine/k8s:1.29.1"
 	ecr_credentials_sync_schedule="0 */8 * * *"
@@ -79,4 +81,5 @@ locals {
 		}
 	} : var.git_repo_auth_config.secret_store_provider_hcl
 	secret_store_provider_default_enabled=var.git_repo_auth_config.secret_store_provider_hcl == null
+	terraform_manager_name="liferay-cloud-native-terraform"
 }

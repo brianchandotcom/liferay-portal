@@ -68,6 +68,7 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.PropsValues;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -554,18 +555,14 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	public long getFaviconFileEntryGroupId() {
-		if (Validator.isNull(getFaviconFileEntryScopeERC())) {
-			return getGroupId();
-		}
+		Long groupId = ScopeUtil.getItemGroupId(
+			getCompanyId(), getFaviconFileEntryScopeERC(), getGroupId());
 
-		Group group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
-			getFaviconFileEntryScopeERC(), getCompanyId());
-
-		if (group == null) {
+		if (groupId == null) {
 			return 0;
 		}
 
-		return group.getGroupId();
+		return groupId;
 	}
 
 	@Override

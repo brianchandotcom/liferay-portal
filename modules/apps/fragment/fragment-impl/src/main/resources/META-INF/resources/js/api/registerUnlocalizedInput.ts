@@ -11,6 +11,7 @@ type Args = {
 	onLocaleChange?: (languageId: string) => void;
 	readOnlyInputLabel?: HTMLSpanElement;
 	unlocalizedFieldsState: 'disabled' | 'read-only';
+	unlocalizedLabelTextContainer?: HTMLElement;
 	unlocalizedMessageContainer: HTMLElement;
 };
 
@@ -22,6 +23,7 @@ export function registerUnlocalizedInput({
 	onLocaleChange,
 	readOnlyInputLabel,
 	unlocalizedFieldsState,
+	unlocalizedLabelTextContainer,
 	unlocalizedMessageContainer,
 }: Args) {
 	Liferay.on(
@@ -31,12 +33,14 @@ export function registerUnlocalizedInput({
 
 			const editingDefaultLanguage = languageId === defaultLanguageId;
 
-			// Show unlocalized icon for non-default language
+			// Show unlocalized icon and unlocalized label text for non-default language
 
-			unlocalizedMessageContainer?.classList.toggle(
-				'd-none',
-				editingDefaultLanguage
-			);
+			[
+				unlocalizedMessageContainer,
+				unlocalizedLabelTextContainer,
+			].forEach((element) => {
+				element?.classList.toggle('d-none', editingDefaultLanguage);
+			});
 
 			if (changeTextDirection) {
 				inputElement?.setAttribute(

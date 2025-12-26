@@ -11,7 +11,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Mikel Lorza
@@ -30,14 +32,18 @@ public class PageExperienceUtil {
 
 		PageExperience defaultPageExperience = null;
 
+		Set<String> pageExperienceKeys = new HashSet<>(pageExperiences.length);
+
 		for (PageExperience pageExperience : pageExperiences) {
+			if (!pageExperienceKeys.add(pageExperience.getKey())) {
+				throw new UnsupportedOperationException();
+			}
+
 			if (Objects.equals(
 					pageExperience.getKey(),
 					SegmentsExperienceConstants.KEY_DEFAULT)) {
 
 				defaultPageExperience = pageExperience;
-
-				break;
 			}
 		}
 

@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 
@@ -91,6 +92,20 @@ public class PageExperiencesTestUtil {
 		pageExperience.setKey(RandomTestUtil.randomString());
 		pageExperience.setName_i18n(
 			Collections.singletonMap("en-US", RandomTestUtil.randomString()));
+
+		return pageExperience;
+	}
+
+	public static PageExperience getPageExperience(
+		long scopeGroupId, SegmentsEntry segmentsEntry) {
+
+		PageExperience pageExperience = getPageExperience();
+
+		if (segmentsEntry != null) {
+			pageExperience.setSegmentItemExternalReference(
+				() -> ReferencesTestUtil.getItemExternalReference(
+					segmentsEntry, scopeGroupId));
+		}
 
 		return pageExperience;
 	}

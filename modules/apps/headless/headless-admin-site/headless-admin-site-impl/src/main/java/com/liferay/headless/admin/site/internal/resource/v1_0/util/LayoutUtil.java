@@ -1142,7 +1142,10 @@ public class LayoutUtil {
 					layout,
 					UserLocalServiceUtil.getUser(serviceContext.getUserId()))) {
 
-			PageExperienceUtil.validatePageExperiences(pageExperiences);
+			PageExperienceUtil.validatePageExperiences(
+				SegmentsExperienceLocalServiceUtil.
+					fetchDefaultSegmentsExperience(layout.getPlid()),
+				pageExperiences);
 
 			if (pageExperiences.length > 1) {
 				SegmentsExperienceUtil.validateSegmentsExperienceLayout(layout);

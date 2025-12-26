@@ -7,7 +7,9 @@ package com.liferay.headless.admin.site.internal.resource.v1_0.util;
 
 import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.model.SegmentsExperience;
 
 import java.util.Objects;
 
@@ -17,9 +19,12 @@ import java.util.Objects;
 public class PageExperienceUtil {
 
 	public static void validatePageExperiences(
+		SegmentsExperience defaultSegmentsExperience,
 		PageExperience[] pageExperiences) {
 
-		if (ArrayUtil.isEmpty(pageExperiences)) {
+		if ((defaultSegmentsExperience == null) ||
+			ArrayUtil.isEmpty(pageExperiences)) {
+
 			throw new UnsupportedOperationException();
 		}
 
@@ -37,6 +42,9 @@ public class PageExperienceUtil {
 		}
 
 		if ((defaultPageExperience == null) ||
+			!StringUtil.equals(
+				defaultSegmentsExperience.getExternalReferenceCode(),
+				defaultPageExperience.getExternalReferenceCode()) ||
 			((defaultPageExperience.getPriority() != null) &&
 			 (defaultPageExperience.getPriority() != 0)) ||
 			(defaultPageExperience.getSegmentItemExternalReference() != null)) {

@@ -923,7 +923,7 @@ export class PageEditorPage {
 		await expect(async () => {
 			await this.page.keyboard.press('Escape');
 
-			await this.waitForChangesSaved();
+			await this.waitForChangesSaved({timeout: 2000});
 
 			await expect(editor).not.toBeVisible({
 				timeout: 1000,

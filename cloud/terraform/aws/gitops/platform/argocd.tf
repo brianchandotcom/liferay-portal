@@ -12,7 +12,7 @@ resource "helm_release" "argocd" {
 	values=[
 		yamlencode(
 			{
-				installCRDs=true 
+				installCRDs=true
 				server={
 					resources={
 						requests={

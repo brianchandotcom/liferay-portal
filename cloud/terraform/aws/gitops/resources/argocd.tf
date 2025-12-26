@@ -4,7 +4,7 @@ resource "kubernetes_manifest" "git_repo_credentials_external_secret" {
 	]
 	field_manager {
 		force_conflicts=true
-		name="terraform-external-secrets-manager"
+		name=local.terraform_manager_name
 	}
 	manifest={
 		apiVersion="external-secrets.io/v1"
@@ -81,6 +81,10 @@ resource "kubernetes_manifest" "git_repo_credentials_external_secret" {
 	}
 }
 resource "kubernetes_manifest" "git_repo_credentials_secret_store" {
+	field_manager {
+		force_conflicts=true
+		name=local.terraform_manager_name
+	}
 	manifest={
 		apiVersion="external-secrets.io/v1"
 		kind="SecretStore"
@@ -104,6 +108,10 @@ resource "kubernetes_manifest" "liferay_applicationset" {
 		kubernetes_manifest.git_repo_credentials_external_secret,
 		kubernetes_manifest.liferay_appproject,
 	]
+	field_manager {
+		force_conflicts=true
+		name=local.terraform_manager_name
+	}
 	manifest={
 		apiVersion="argoproj.io/v1alpha1"
 		kind="ApplicationSet"
@@ -186,6 +194,10 @@ resource "kubernetes_manifest" "liferay_applicationset" {
 	}
 }
 resource "kubernetes_manifest" "liferay_appproject" {
+	field_manager {
+		force_conflicts=true
+		name=local.terraform_manager_name
+	}
 	manifest={
 		apiVersion="argoproj.io/v1alpha1"
 		kind="AppProject"

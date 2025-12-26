@@ -45,6 +45,7 @@ resource "aws_iam_role" "argocd_git_repo_auth_role" {
 	name="${var.cluster_name}-argocd-git-repo-auth"
 }
 resource "kubernetes_service_account" "argocd_git_repo_auth_sa" {
+	automount_service_account_token=false
 	count=local.secret_store_provider_default_enabled ? 1 : 0
 	metadata {
 		annotations={

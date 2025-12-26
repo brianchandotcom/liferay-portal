@@ -12,7 +12,9 @@ import com.liferay.jenkins.results.parser.test.task.TestTask;
 import com.liferay.jenkins.results.parser.test.task.TestTaskFactory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -44,25 +46,31 @@ public class ModulesJUnitAxisTestClassGroup extends JUnitAxisTestClassGroup {
 	}
 
 	public List<TestTask> getTestTasks() {
-		if (_testTasks != null) {
-			return _testTasks;
+		if (!_testTasks.isEmpty()) {
+			return new ArrayList<>(_testTasks.values());
 		}
-
-		_testTasks = new ArrayList<>();
 
 		for (ModulesJUnitTestClass modulesJUnitTestClass :
 				_getModulesJUnitTestClasses()) {
 
-			TestTask testTask = modulesJUnitTestClass.getTestTask();
+			String testTaskName = modulesJUnitTestClass.getTestTaskName();
 
-			if (_testTasks.contains(testTask)) {
-				continue;
+			TestTask testTask = _testTasks.get(testTaskName);
+
+			if (testTask == null) {
+				testTask = TestTaskFactory.newTestTask(
+					testTaskName,
+					modulesJUnitTestClass.getAverageTestTaskDuration());
+
+				_testTasks.put(testTaskName, testTask);
 			}
 
-			_testTasks.add(testTask);
+			testTask.addTestClass(modulesJUnitTestClass);
+
+			modulesJUnitTestClass.setTestTask(testTask);
 		}
 
-		return _testTasks;
+		return new ArrayList<>(_testTasks.values());
 	}
 
 	protected ModulesJUnitAxisTestClassGroup(
@@ -76,8 +84,6 @@ public class ModulesJUnitAxisTestClassGroup extends JUnitAxisTestClassGroup {
 			return;
 		}
 
-		_testTasks = new ArrayList<>();
-
 		for (int i = 0; i < testTasksJSONArray.length(); i++) {
 			JSONObject testTaskJSONObject = testTasksJSONArray.getJSONObject(i);
 
@@ -88,9 +94,10 @@ public class ModulesJUnitAxisTestClassGroup extends JUnitAxisTestClassGroup {
 				continue;
 			}
 
+			String testTaskName = testTaskJSONObject.getString("name");
+
 			TestTask testTask = TestTaskFactory.newTestTask(
-				testTaskJSONObject.getString("name"),
-				testTaskJSONObject.getLong("average_duration"));
+				testTaskName, testTaskJSONObject.getLong("average_duration"));
 
 			for (int j = 0; j < testClassesJSONArray.length(); j++) {
 				JSONObject testClassJSONObject =
@@ -106,13 +113,18 @@ public class ModulesJUnitAxisTestClassGroup extends JUnitAxisTestClassGroup {
 				addTestClass(testClass);
 
 				testTask.addTestClass(testClass);
+
+				if (!(testClass instanceof ModulesJUnitTestClass)) {
+					continue;
+				}
+
+				ModulesJUnitTestClass modulesJUnitTestClass =
+					(ModulesJUnitTestClass)testClass;
+
+				modulesJUnitTestClass.setTestTask(testTask);
 			}
 
-			if (_testTasks.contains(testTask)) {
-				continue;
-			}
-
-			_testTasks.add(testTask);
+			_testTasks.put(testTaskName, testTask);
 		}
 	}
 
@@ -132,6 +144,6 @@ public class ModulesJUnitAxisTestClassGroup extends JUnitAxisTestClassGroup {
 		return modulesJUnitTestClasses;
 	}
 
-	private List<TestTask> _testTasks;
+	private final Map<String, TestTask> _testTasks = new HashMap<>();
 
 }

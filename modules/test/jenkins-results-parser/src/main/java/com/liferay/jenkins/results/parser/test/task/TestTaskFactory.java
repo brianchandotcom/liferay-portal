@@ -5,26 +5,13 @@
 
 package com.liferay.jenkins.results.parser.test.task;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author Michael Hashimoto
  */
 public class TestTaskFactory {
 
 	public static TestTask newTestTask(String name, long averageDuration) {
-		if (_testTasks.containsKey(name)) {
-			return _testTasks.get(name);
-		}
-
-		TestTask testTask = new DefaultTestTask(name, averageDuration);
-
-		_testTasks.put(name, testTask);
-
-		return testTask;
+		return new DefaultTestTask(name, averageDuration);
 	}
-
-	private static final Map<String, TestTask> _testTasks = new HashMap<>();
 
 }

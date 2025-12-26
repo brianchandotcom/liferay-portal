@@ -7,7 +7,6 @@ package com.liferay.jenkins.results.parser.test.clazz;
 
 import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 import com.liferay.jenkins.results.parser.test.task.TestTask;
-import com.liferay.jenkins.results.parser.test.task.TestTaskFactory;
 
 import java.io.File;
 
@@ -21,16 +20,11 @@ import org.json.JSONObject;
 public class ModulesJUnitTestClass extends JUnitTestClass {
 
 	public TestTask getTestTask() {
-		if (_testTask != null) {
-			return _testTask;
-		}
-
-		_testTask = TestTaskFactory.newTestTask(
-			getTestTaskName(), getAverageTestTaskDuration());
-
-		_testTask.addTestClass(this);
-
 		return _testTask;
+	}
+
+	public void setTestTask(TestTask testTask) {
+		_testTask = testTask;
 	}
 
 	protected ModulesJUnitTestClass(

@@ -43,7 +43,7 @@ resource "helm_release" "external_secrets" {
 						}
 					}
 				}
-			})
+			}),
 	]
 	version="1.0.0"
 	wait=true

@@ -172,7 +172,9 @@ resource "kubernetes_manifest" "liferay_applicationset" {
 					ignoreDifferences = [
 						{
 							group=""
-							jsonPointers=["/data"]
+							jsonPointers=[
+								"/data",
+							]
 							kind="Secret"
 							name="liferay-default"
 						},

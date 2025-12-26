@@ -8,10 +8,12 @@ import {Locator, Page, expect} from '@playwright/test';
 import getRandomString from '../../../../utils/getRandomString';
 
 export class StagingPage {
+	readonly localStagingButton: Locator;
 	readonly page: Page;
 	readonly stagedPortletCheckbox: (stagedPortletName: string) => Locator;
 
 	constructor(page: Page) {
+		this.localStagingButton = page.getByTestId('stagingType_local');
 		this.page = page;
 		this.stagedPortletCheckbox = (stagedPortletName: string) =>
 			this.page
@@ -21,7 +23,7 @@ export class StagingPage {
 	}
 
 	async enableLocalStaging(stagedPortlets?: string[]) {
-		await this.page.getByTestId('stagingType_local').check();
+		await this.localStagingButton.check();
 
 		this.page.once('dialog', async (dialog) => {
 			expect(dialog.message()).toContain(

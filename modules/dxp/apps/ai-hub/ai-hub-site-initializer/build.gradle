@@ -1,46 +1,14 @@
 dependencies {
-	compileInclude group: "com.google.api.grpc", name: "proto-google-cloud-vertexai-v1", version: "1.27.0"
-	compileInclude group: "com.google.cloud", name: "google-cloud-vertexai", version: "1.27.0"
-	compileInclude group: "com.squareup.okhttp3", name: "okhttp", version: "4.12.0"
-	compileInclude group: "com.squareup.okhttp3", name: "okhttp-sse", version: "4.12.0"
-	compileInclude group: "com.squareup.okio", name: "okio", version: "3.6.0"
-	compileInclude group: "com.squareup.okio", name: "okio-jvm", version: "3.6.0"
-	compileInclude group: "dev.langchain4j", name: "langchain4j", version: "1.7.1"
-	compileInclude group: "dev.langchain4j", name: "langchain4j-core", version: "1.7.1"
-	compileInclude group: "dev.langchain4j", name: "langchain4j-http-client", version: "1.7.1"
-	compileInclude group: "dev.langchain4j", name: "langchain4j-mcp", version: "1.7.1-beta14"
-	compileInclude group: "dev.langchain4j", name: "langchain4j-vertex-ai-gemini", version: "1.7.1-beta14"
-	compileInclude group: "org.apache.opennlp", name: "opennlp-tools", version: "2.5.4"
-	compileInclude group: "org.jetbrains", name: "annotations", version: "13.0"
-	compileInclude group: "org.jetbrains.kotlin", name: "kotlin-stdlib", version: "1.8.21"
-	compileInclude group: "org.jetbrains.kotlin", name: "kotlin-stdlib-common", version: "1.8.21"
-	compileInclude group: "org.jetbrains.kotlin", name: "kotlin-stdlib-jdk7", version: "1.8.21"
-	compileInclude group: "org.jetbrains.kotlin", name: "kotlin-stdlib-jdk8", version: "1.8.21"
-	compileInclude group: "org.jspecify", name: "jspecify", version: "1.0.0"
-	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
-	compileOnly group: "com.liferay", name: "jakarta.ws.rs", version: "3.1.0.LIFERAY-PATCHED-1"
 	compileOnly group: "com.liferay.jakarta.portlet", name: "com.liferay.jakarta.portlet-api", version: "4.0.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "jakarta.servlet", name: "jakarta.servlet-api", version: "6.0.0"
-	compileOnly group: "org.osgi", name: "org.osgi.annotation.versioning", version: "1.1.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:batch-engine:batch-engine-api")
 	compileOnly project(":apps:object:object-admin-rest-api")
-	compileOnly project(":apps:object:object-api")
-	compileOnly project(":apps:object:object-rest-api")
-	compileOnly project(":apps:portal-configuration:portal-configuration-module-configuration-api")
-	compileOnly project(":apps:portal-search:portal-search-api")
-	compileOnly project(":apps:portal-search:portal-search-rest-api")
-	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
 	compileOnly project(":apps:portal-workflow:portal-workflow-api")
-	compileOnly project(":apps:portal-workflow:portal-workflow-kaleo-api")
-	compileOnly project(":apps:portal-workflow:portal-workflow-kaleo-definition-api")
-	compileOnly project(":apps:portal-workflow:portal-workflow-kaleo-runtime-api")
 	compileOnly project(":apps:site:site-api")
-	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":core:petra:petra-function")
-	compileOnly project(":core:petra:petra-reflect")
 	compileOnly project(":core:petra:petra-string")
 }

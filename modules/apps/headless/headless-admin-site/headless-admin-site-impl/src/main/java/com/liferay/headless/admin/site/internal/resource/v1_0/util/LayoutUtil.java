@@ -1168,21 +1168,18 @@ public class LayoutUtil {
 
 			int minPriority = Integer.MIN_VALUE;
 
-			int priority;
-
 			for (PageExperience pageExperience : pageExperiences) {
 				SegmentsExperience oldSegmentsExperience =
 					originalSegmentsExperiencesMap.get(
 						pageExperience.getExternalReferenceCode());
+
+				int priority = 0;
 
 				if (!Objects.equals(
 						pageExperience.getKey(),
 						SegmentsExperienceConstants.KEY_DEFAULT)) {
 
 					priority = minPriority++;
-				}
-				else {
-					priority = 0;
 				}
 
 				if (oldSegmentsExperience == null) {

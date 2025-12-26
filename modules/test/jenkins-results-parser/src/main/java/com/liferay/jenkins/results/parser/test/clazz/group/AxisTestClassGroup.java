@@ -255,7 +255,7 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 
 		setSegmentTestClassGroup(segmentTestClassGroup);
 
-		JSONArray testClassesJSONArray = jsonObject.getJSONArray(
+		JSONArray testClassesJSONArray = jsonObject.optJSONArray(
 			"test_classes");
 
 		if ((testClassesJSONArray == null) || testClassesJSONArray.isEmpty()) {

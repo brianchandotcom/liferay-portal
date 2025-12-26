@@ -9,13 +9,13 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageElementsTestUtil;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.PageExperiencesTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.ReferencesTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
@@ -156,21 +156,27 @@ public class PageExperienceResourceTest
 	public void testPostSitePageSpecificationPageExperience() throws Exception {
 		super.testPostSitePageSpecificationPageExperience();
 
-		_testPostSitePageSpecificationPageExperience(_getPageExperience(null));
+		_testPostSitePageSpecificationPageExperience(
+			PageExperiencesTestUtil.getPageExperience(
+				testGroup.getGroupId(), null));
 
 		_testPostSitePageSpecificationPageExperience(
-			_getPageExperience(
+			PageExperiencesTestUtil.getPageExperience(
+				testGroup.getGroupId(),
 				SegmentsTestUtil.addSegmentsEntry(testGroup.getGroupId())));
 
 		_testPostSitePageSpecificationPageExperience(
-			_getPageExperience(
+			PageExperiencesTestUtil.getPageExperience(
+				testGroup.getGroupId(),
 				SegmentsTestUtil.addSegmentsEntry(testCompany.getGroupId())));
 	}
 
 	@Override
 	@Test
 	public void testPutSitePageExperience() throws Exception {
-		PageExperience pageExperience = _getPageExperience(null);
+		PageExperience pageExperience =
+			PageExperiencesTestUtil.getPageExperience(
+				testGroup.getGroupId(), null);
 
 		pageExperience = _testPutSitePageExperience(pageExperience);
 
@@ -250,20 +256,6 @@ public class PageExperienceResourceTest
 				2, null, testGroup.getGroupId()));
 		pageExperience.setPageSpecificationExternalReferenceCode(
 			_draftLayout.getExternalReferenceCode());
-
-		return pageExperience;
-	}
-
-	private PageExperience _getPageExperience(SegmentsEntry segmentsEntry)
-		throws Exception {
-
-		PageExperience pageExperience = _getPageExperience();
-
-		if (segmentsEntry != null) {
-			pageExperience.setSegmentItemExternalReference(
-				() -> ReferencesTestUtil.getItemExternalReference(
-					segmentsEntry, testGroup.getGroupId()));
-		}
 
 		return pageExperience;
 	}

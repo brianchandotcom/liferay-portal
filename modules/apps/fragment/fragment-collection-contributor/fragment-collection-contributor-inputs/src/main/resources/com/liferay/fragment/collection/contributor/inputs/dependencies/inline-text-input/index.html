@@ -4,6 +4,10 @@
 			<span id="${fragmentElementId}-inline-text-input-readonly" class="[#if !input.readOnly]d-none[/#if]">(${languageUtil.get(locale, "read-only")})</span>
 			
 			[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
+
+			[#if !input.localizable]
+				<span class="d-none font-weight-normal ml-2 text-secondary" id="${fragmentElementId}-unlocalized-label-text">(${languageUtil.get(locale, "not-localizable")})</span>
+			[/#if]
 		</label>
 
 		[#if input.showHelpText && input.helpText?has_content]

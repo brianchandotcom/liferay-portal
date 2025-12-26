@@ -88,6 +88,9 @@ function main() {
 						),
 						unlocalizedFieldsState:
 							input.attributes.unlocalizedFieldsState,
+						unlocalizedLabelTextContainer: document.getElementById(
+							`${fragmentElementId}-unlocalized-label-text`
+						),
 						unlocalizedMessageContainer: document.getElementById(
 							`${fragmentElementId}-unlocalized-info`
 						),

@@ -110,6 +110,7 @@ GradleCommerceDependenciesCheck | [Bug Prevention](bug_prevention_checks.md#bug-
 [GradleDependencyArtifactsCheck](check/gradle_dependency_artifacts_check.md#gradledependencyartifactscheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .eslintignore, .gradle, .prettierignore, or .properties | Performs several checks on dependencies artifacts. |
 GradleDependencyConfigurationCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .gradle | Validates the scope of dependencies in build gradle files. |
 GradleDependencyVersionCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .gradle | Checks the version for dependencies in gradle build files. |
+GradleEmptyLinesCheck | [Styling](styling_checks.md#styling-checks) | .gradle | Finds missing and unnecessary empty lines. |
 GradleExportedPackageDependenciesCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .gradle | Validates dependencies in gradle build files. |
 GradleImportsCheck | [Styling](styling_checks.md#styling-checks) | .gradle | Sorts and groups imports in `.gradle` files. |
 GradleIndentationCheck | [Styling](styling_checks.md#styling-checks) | .gradle | Finds incorrect indentation in gradle build files. |
@@ -126,6 +127,7 @@ GradleStylingCheck | [Styling](styling_checks.md#styling-checks) | .gradle | App
 GradleTestDependencyVersionCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .gradle | Checks the version for dependencies in gradle build files. |
 GradleTestUtilDeployDirCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .gradle | Checks for incorrect use of `deployDir`. |
 [GradleUpgradeReleaseDXPCheck](check/gradle_upgrade_release_dxp_check.md#gradleupgradereleasedxpcheck) | [Upgrade](upgrade_checks.md#upgrade-checks) | .gradle | Remove and replaced dependencies in `build.gradle` that are already in `release.dxp.api` with `released.dxp.api` dependency. |
+GradleWhitespaceCheck | [Styling](styling_checks.md#styling-checks) | .gradle | Finds missing and unnecessary whitespace. |
 GroovyImportsCheck | [Styling](styling_checks.md#styling-checks) | .groovy | Sorts and groups imports in `.groovy` files. |
 HTMLEmptyLinesCheck | [Styling](styling_checks.md#styling-checks) | .html or .path | Finds missing and unnecessary empty lines. |
 HTMLWhitespaceCheck | [Styling](styling_checks.md#styling-checks) | .html or .path | Finds missing and unnecessary whitespace in `.html` files. |
@@ -593,7 +595,7 @@ VariableDeclarationAsUsedCheck | [Performance](performance_checks.md#performance
 VariableNameCheck | [Naming Conventions](naming_conventions_checks.md#naming-conventions-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Checks that variable names follow naming conventions. |
 [WhitespaceAfterCheck](https://checkstyle.sourceforge.io/checks/whitespace/whitespaceafter.html) | [Styling](styling_checks.md#styling-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Checks that a token is followed by whitespace, with the exception that it does not check for whitespace after the semicolon of an empty for iterator. |
 [WhitespaceAroundCheck](https://checkstyle.sourceforge.io/checks/whitespace/whitespacearound.html) | [Styling](styling_checks.md#styling-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Checks that a token is surrounded by whitespace. |
-WhitespaceCheck | [Styling](styling_checks.md#styling-checks) | .cql, .css, .dtd, .expect, .gradle, .groovy, .scss, .sh, .soy, .sql, .tld, .tpl, .ts, .tsx, Dockerfile, or packageinfo | Finds missing and unnecessary whitespace. |
+WhitespaceCheck | [Styling](styling_checks.md#styling-checks) | .cql, .css, .dtd, .expect, .groovy, .scss, .sh, .soy, .sql, .tld, .tpl, .ts, .tsx, Dockerfile, or packageinfo | Finds missing and unnecessary whitespace. |
 XMLBuildFileCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .action, .function, .jelly, .jrxml, .macro, .pom, .project, .properties, .qti, .svg, .testcase, .toggle, .tpl, .wsdl, .xml, or .xsd | Performs several checks on `build.xml`. |
 XMLCDATACheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .action, .function, .jelly, .jrxml, .macro, .pom, .project, .properties, .qti, .svg, .testcase, .toggle, .tpl, .wsdl, .xml, or .xsd | Performs several checks on `CDATA` inside `xml`. |
 XMLCheckstyleFileCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .action, .function, .jelly, .jrxml, .macro, .pom, .project, .properties, .qti, .svg, .testcase, .toggle, .tpl, .wsdl, .xml, or .xsd | Performs several checks on `checkstyle.xml` file. |

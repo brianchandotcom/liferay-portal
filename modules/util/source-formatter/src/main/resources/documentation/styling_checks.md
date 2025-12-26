@@ -45,10 +45,12 @@ FTLWhitespaceCheck | .ftl | Finds missing and unnecessary whitespace in `.ftl` f
 [GetterUtilCheck](check/getter_util_check.md#getterutilcheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Finds cases where the default value is passed to `GetterUtil.get*` or `ParamUtil.get*`. |
 GradleBlockOrderCheck | .gradle | Sorts logic in gradle build files. |
 GradleBodyCheck | .gradle | Applies rules to enforce consistency in the body of gradle build files. |
+GradleEmptyLinesCheck | .gradle | Finds missing and unnecessary empty lines. |
 GradleImportsCheck | .gradle | Sorts and groups imports in `.gradle` files. |
 GradleIndentationCheck | .gradle | Finds incorrect indentation in gradle build files. |
 GradleStylingCheck | .gradle | Applies rules to enforce consistency in code style. |
 [GradleTaskCreationCheck](check/gradle_task_creation_check.md#gradletaskcreationcheck) | .gradle | Checks that a task is declared on a separate line before the closure. |
+GradleWhitespaceCheck | .gradle | Finds missing and unnecessary whitespace. |
 GroovyImportsCheck | .groovy | Sorts and groups imports in `.groovy` files. |
 HTMLEmptyLinesCheck | .html or .path | Finds missing and unnecessary empty lines. |
 HTMLWhitespaceCheck | .html or .path | Finds missing and unnecessary whitespace in `.html` files. |
@@ -182,7 +184,7 @@ TextBlockCheck | .java | Finds usage of text block. |
 UnnecessaryMethodCallCheck | .java | Finds unnecessary method calls. |
 [WhitespaceAfterCheck](https://checkstyle.sourceforge.io/checks/whitespace/whitespaceafter.html) | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Checks that a token is followed by whitespace, with the exception that it does not check for whitespace after the semicolon of an empty for iterator. |
 [WhitespaceAroundCheck](https://checkstyle.sourceforge.io/checks/whitespace/whitespacearound.html) | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Checks that a token is surrounded by whitespace. |
-WhitespaceCheck | .cql, .css, .dtd, .expect, .gradle, .groovy, .scss, .sh, .soy, .sql, .tld, .tpl, .ts, .tsx, Dockerfile, or packageinfo | Finds missing and unnecessary whitespace. |
+WhitespaceCheck | .cql, .css, .dtd, .expect, .groovy, .scss, .sh, .soy, .sql, .tld, .tpl, .ts, .tsx, Dockerfile, or packageinfo | Finds missing and unnecessary whitespace. |
 XMLCustomSQLOrderCheck | .action, .function, .jelly, .jrxml, .macro, .pom, .project, .properties, .qti, .svg, .testcase, .toggle, .tpl, .wsdl, .xml, or .xsd | Checks the order of attributes in `custom-sql` file. |
 XMLCustomSQLStylingCheck | .action, .function, .jelly, .jrxml, .macro, .pom, .project, .properties, .qti, .svg, .testcase, .toggle, .tpl, .wsdl, .xml, or .xsd | Applies rules to enforce consistency in code style for `.xml` files in directory `custom-sql`. |
 XMLDDLStructuresFileCheck | .action, .function, .jelly, .jrxml, .macro, .pom, .project, .properties, .qti, .svg, .testcase, .toggle, .tpl, .wsdl, .xml, or .xsd | Checks the order of attributes in `-structures.xml` file. |

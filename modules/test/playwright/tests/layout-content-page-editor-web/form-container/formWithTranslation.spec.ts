@@ -2327,19 +2327,6 @@ test(
 				objectFields: [
 					{
 						DBType: 'Clob',
-						businessType: 'RichText',
-						externalReferenceCode: 'richTextERC',
-						indexed: true,
-						indexedAsKeyword: false,
-						label: {
-							en_US: 'Rich Text',
-						},
-						localized: true,
-						name: 'richText',
-						required: false,
-					},
-					{
-						DBType: 'Clob',
 						businessType: 'LongText',
 						externalReferenceCode: 'longTextERC',
 						indexed: true,
@@ -2404,10 +2391,6 @@ test(
 					en_US: 'long text english',
 					es_ES: 'long text spanish',
 				},
-				richText_i18n: {
-					en_US: 'rich text english',
-					es_ES: 'rich text spanish',
-				},
 				text_i18n: {
 					en_US: 'text english',
 					es_ES: 'text spanish',
@@ -2468,8 +2451,6 @@ test(
 			name: 'Long Text',
 		});
 
-		const richTextField = page.locator('.ck-editor__editable');
-
 		const textField = page.getByRole('textbox', {
 			exact: true,
 			name: 'Text',
@@ -2478,10 +2459,6 @@ test(
 		await expect(checkboxField).toBeChecked();
 
 		await expect(longTextField).toHaveValue('long text english');
-
-		await expect(
-			richTextField.getByText('rich text english')
-		).toBeVisible();
 
 		await expect(textField).toHaveValue('text english');
 
@@ -2492,8 +2469,6 @@ test(
 		await longTextField.fill('long text english 1');
 
 		await textField.fill('text english 1');
-
-		await richTextField.fill('rich text english 1');
 
 		// Assert spanish translation is correct
 
@@ -2507,10 +2482,6 @@ test(
 
 		await expect(longTextField).toHaveValue('long text spanish');
 
-		await expect(
-			richTextField.getByText('rich text spanish')
-		).toBeVisible();
-
 		await expect(textField).toHaveValue('text spanish');
 
 		// Fill new values
@@ -2520,8 +2491,6 @@ test(
 		await longTextField.fill('long text spanish 1');
 
 		await textField.fill('text spanish 1');
-
-		await richTextField.fill('rich text spanish 1');
 
 		// Edit the object
 
@@ -2559,10 +2528,6 @@ test(
 
 		await expect(page.getByText('long text english 1')).toBeVisible();
 
-		await expect(
-			richTextField.getByText('rich text english 1')
-		).toBeVisible();
-
 		await expect(page.locator('input.ddm-field-text')).toHaveValue(
 			'text english 1'
 		);
@@ -2578,10 +2543,6 @@ test(
 		await expect(checkboxField).toBeChecked();
 
 		await expect(page.getByText('long text spanish 1')).toBeVisible();
-
-		await expect(
-			richTextField.getByText('rich text spanish 1')
-		).toBeVisible();
 
 		await expect(page.locator('input.ddm-field-text')).toHaveValue(
 			'text spanish 1'

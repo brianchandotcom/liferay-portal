@@ -37,7 +37,7 @@ resource "aws_iam_role" "argocd_git_repo_auth_role" {
 							"${local.oidc_provider}:sub"="system:serviceaccount:${var.argocd_namespace}:argocd-git-repo-auth-sa"
 						}
 					}
-				}
+				},
 			]
 			Version="2012-10-17"
 		})

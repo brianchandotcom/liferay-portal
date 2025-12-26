@@ -28,7 +28,7 @@ resource "helm_release" "argocd" {
 						type="ClusterIP"
 					}
 				}
-			})
+			}),
 	]
 	version="9.1.5"
 	wait=true

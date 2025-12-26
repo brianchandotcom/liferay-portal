@@ -2,6 +2,14 @@
 	font-size: 28px;
 }
 
+.inline-text-input .form-control-inline:disabled {
+	background-color: transparent;
+}
+
+.inline-text-input .form-control-inline:disabled::placeholder {
+	color: #cdced9;
+}
+
 .inline-text-input .form-control-inline:not(:focus) {
 	border-bottom-left-radius: 0;
 	border-top-left-radius: 0;
@@ -13,6 +21,10 @@
 
 .inline-text-input .inline-text-border:focus-within {
 	border-color: transparent;
+}
+
+.inline-text-input .inline-text-border:has(.form-control[disabled]) {
+	border-color: #cdced9;
 }
 
 .inline-text-input .inline-text-border:has(.form-control[readonly]) {

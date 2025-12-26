@@ -12,12 +12,11 @@ import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.cache.CacheField;
 import com.liferay.portal.kernel.module.service.Snapshot;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Date;
@@ -66,20 +65,14 @@ public class FragmentEntryLinkImpl extends FragmentEntryLinkBaseImpl {
 
 	@Override
 	public long getFragmentEntryGroupId() {
-		if (Validator.isNotNull(getFragmentEntryScopeERC())) {
-			try {
-				Group fragmentEntryGroup =
-					GroupLocalServiceUtil.getGroupByExternalReferenceCode(
-						getFragmentEntryScopeERC(), getCompanyId());
+		Long groupId = ScopeUtil.getItemGroupId(
+			getCompanyId(), getFragmentEntryScopeERC(), getGroupId());
 
-				return fragmentEntryGroup.getGroupId();
-			}
-			catch (PortalException portalException) {
-				throw new RuntimeException(portalException);
-			}
+		if (groupId == null) {
+			return 0;
 		}
 
-		return getGroupId();
+		return groupId;
 	}
 
 	@Override

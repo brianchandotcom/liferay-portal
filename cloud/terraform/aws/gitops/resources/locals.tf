@@ -64,7 +64,7 @@ locals {
 	)
 	oidc_provider=replace(data.aws_eks_cluster.target.identity[0].oidc[0].issuer, "https://", "")
 	secret_store_name="argocd-git-credentials-vault"
-	secret_store_provider=var.git_repo_auth_config.enable_aws_secretmanager_default_irsa ? {
+	secret_store_provider=local.secret_store_provider_default_enabled ? {
 		aws={
 			auth={
 				jwt={
@@ -77,5 +77,6 @@ locals {
 			region=var.region
 			service="SecretsManager"
 		}
-	} : (var.git_repo_auth_config.secret_store_provider_hcl_spec != null ? var.git_repo_auth_config.secret_store_provider_hcl_spec : {})
+	} : var.git_repo_auth_config.secret_store_provider_hcl
+	secret_store_provider_default_enabled=var.git_repo_auth_config.secret_store_provider_hcl == null
 }

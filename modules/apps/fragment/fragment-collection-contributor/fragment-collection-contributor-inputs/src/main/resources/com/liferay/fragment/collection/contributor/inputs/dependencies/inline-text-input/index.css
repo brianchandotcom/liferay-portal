@@ -19,6 +19,7 @@
 	border-left: 2px solid #9393a4;
 }
 
+.inline-text-input:not(:focus-within) .form-control-inline:hover,
 .inline-text-input .inline-text-border:focus-within {
 	border-color: transparent;
 }

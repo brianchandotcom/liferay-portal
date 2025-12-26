@@ -155,9 +155,15 @@ public class SegmentsExperienceUtil {
 			throw new UnsupportedOperationException();
 		}
 
+		long plid = layout.getPlid();
+
+		if (layout.getClassPK() > 0) {
+			plid = layout.getClassPK();
+		}
+
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			LayoutPageTemplateEntryLocalServiceUtil.
-				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
+				fetchLayoutPageTemplateEntryByPlid(plid);
 
 		if (layoutPageTemplateEntry != null) {
 			throw new UnsupportedOperationException();

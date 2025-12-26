@@ -9,6 +9,7 @@ GradleCommerceDependenciesCheck | [Bug Prevention](bug_prevention_checks.md#bug-
 [GradleDependencyArtifactsCheck](check/gradle_dependency_artifacts_check.md#gradledependencyartifactscheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Performs several checks on dependencies artifacts. |
 GradleDependencyConfigurationCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Validates the scope of dependencies in build gradle files. |
 GradleDependencyVersionCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Checks the version for dependencies in gradle build files. |
+GradleEmptyLinesCheck | [Styling](styling_checks.md#styling-checks) | Finds missing and unnecessary empty lines. |
 GradleExportedPackageDependenciesCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Validates dependencies in gradle build files. |
 GradleImportsCheck | [Styling](styling_checks.md#styling-checks) | Sorts and groups imports in `.gradle` files. |
 GradleIndentationCheck | [Styling](styling_checks.md#styling-checks) | Finds incorrect indentation in gradle build files. |
@@ -25,4 +26,4 @@ GradleStylingCheck | [Styling](styling_checks.md#styling-checks) | Applies rules
 GradleTestDependencyVersionCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Checks the version for dependencies in gradle build files. |
 GradleTestUtilDeployDirCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Checks for incorrect use of `deployDir`. |
 [GradleUpgradeReleaseDXPCheck](check/gradle_upgrade_release_dxp_check.md#gradleupgradereleasedxpcheck) | [Upgrade](upgrade_checks.md#upgrade-checks) | Remove and replaced dependencies in `build.gradle` that are already in `release.dxp.api` with `released.dxp.api` dependency. |
-WhitespaceCheck | [Styling](styling_checks.md#styling-checks) | Finds missing and unnecessary whitespace. |
+GradleWhitespaceCheck | [Styling](styling_checks.md#styling-checks) | Finds missing and unnecessary whitespace. |

@@ -7822,7 +7822,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 			<property name="docker.start.script" value="docker_start.sh" />
 
-			<echo>Starting docker container for @{image} on host @{name} with run options: @{run.options}.</echo>
+			<echo>Starting Docker container for @{image} on host @{name} with run options: @{run.options}.</echo>
 
 			<if>
 				<or>

@@ -29,6 +29,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.LayoutFriendlyURLRandomizerBumper;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -1077,16 +1078,19 @@ public class DefaultExportImportContentProcessorTest {
 	}
 
 	private String _extractValidContent(String content) {
-		List<String> lines = ListUtil.fromArray(StringUtil.splitLines(content));
-		List<String> validLines = new ArrayList<>();
+		return StringUtil.merge(
+			TransformUtil.transform(
+				ListUtil.fromArray(StringUtil.splitLines(content)),
+				line -> {
+					if (Validator.isNotNull(line) &&
+						!line.endsWith(StringPool.COLON)) {
 
-		for (String line : lines) {
-			if (Validator.isNotNull(line) && !line.endsWith(StringPool.COLON)) {
-				validLines.add(line);
-			}
-		}
+						return line;
+					}
 
-		return StringUtil.merge(validLines, StringPool.NEW_LINE);
+					return null;
+				}),
+			StringPool.NEW_LINE);
 	}
 
 	private String _getContent(String fileName) throws Exception {
@@ -1113,21 +1117,19 @@ public class DefaultExportImportContentProcessorTest {
 	}
 
 	private List<String> _getURLs(String content) {
-		List<String> urls = new ArrayList<>();
-
 		Matcher matcher = _pattern.matcher(StringPool.BLANK);
 
-		String[] lines = StringUtil.split(content, StringPool.NEW_LINE);
+		return TransformUtil.transformToList(
+			StringUtil.split(content, StringPool.NEW_LINE),
+			line -> {
+				matcher.reset(line);
 
-		for (String line : lines) {
-			matcher.reset(line);
+				if (matcher.find()) {
+					return line;
+				}
 
-			if (matcher.find()) {
-				urls.add(line);
-			}
-		}
-
-		return urls;
+				return null;
+			});
 	}
 
 	private String _replaceExternalGroupFriendlyURLs(String content) {

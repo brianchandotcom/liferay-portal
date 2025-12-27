@@ -14,6 +14,7 @@ import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleListener;
 import com.liferay.exportimport.kernel.lifecycle.constants.ExportImportLifecycleConstants;
 import com.liferay.exportimport.test.util.constants.DummyFolderPortletKeys;
 import com.liferay.exportimport.test.util.exportimport.data.handler.DummyFolderWithMissingDummyPortletDataHandler;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -258,11 +259,16 @@ public class ExportedMissingReferenceBackwardCompatbilityExportImportTest
 		Class<?> currentClazz = clazz;
 
 		while (currentClazz != Object.class) {
-			for (Method method : currentClazz.getDeclaredMethods()) {
-				if (method.isAnnotationPresent(annotation)) {
-					methods.add(method);
-				}
-			}
+			methods.addAll(
+				TransformUtil.transformToList(
+					(Method[])currentClazz.getDeclaredMethods(),
+					method -> {
+						if (method.isAnnotationPresent(annotation)) {
+							return method;
+						}
+
+						return null;
+					}));
 
 			currentClazz = currentClazz.getSuperclass();
 		}

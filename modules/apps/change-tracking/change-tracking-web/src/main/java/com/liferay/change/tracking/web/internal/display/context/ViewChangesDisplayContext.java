@@ -1331,7 +1331,23 @@ public class ViewChangesDisplayContext {
 						"label", _language.get(_httpServletRequest, "edit")
 					).put(
 						"symbolLeft", "pencil"
-					));
+					)
+				).put(
+					JSONUtil.put(
+						"href",
+						PublicationsPortletURLUtil.getHref(
+							_renderResponse.createActionURL(),
+							ActionRequest.ACTION_NAME,
+							"/change_tracking/reindex_ct_collection",
+							"redirect", _themeDisplay.getURLCurrent(),
+							"ctCollectionId",
+							String.valueOf(_ctCollection.getCtCollectionId()))
+					).put(
+						"label", _language.get(_httpServletRequest, "reindex")
+					).put(
+						"symbolLeft", "reset"
+					)
+				);
 			}
 		}
 

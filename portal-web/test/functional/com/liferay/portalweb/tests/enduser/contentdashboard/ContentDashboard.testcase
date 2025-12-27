@@ -111,7 +111,7 @@ definition {
 				userLoginFullName = "Test Test");
 		}
 
-		task ("Natigate to Content Dashboard") {
+		task ("Navigate to Content Dashboard") {
 			ContentDashboard.goToContentDashboard();
 		}
 
@@ -1894,7 +1894,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Crete a Role with proper permissons") {
+		task ("Crete a Role with proper permissions") {
 			JSONRole.addRegularRole(
 				roleKey = "WC Creator Edit Permissions Test",
 				roleTitle = "WC Creator Edit Permissions Test");
@@ -6774,7 +6774,7 @@ definition {
 			JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Natigate to Content Dashboard") {
+		task ("Navigate to Content Dashboard") {
 			ContentDashboard.goToContentDashboard();
 		}
 

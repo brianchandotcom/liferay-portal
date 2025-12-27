@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -124,23 +123,16 @@ public class PermissionImporterImpl implements PermissionImporter {
 			long resourcePK = GetterUtil.getLong(
 				portletDataElement.attributeValue("resource-pk"));
 
-			List<KeyValuePair> permissionKeyValuePairs = new ArrayList<>();
-
 			List<Element> permissionsElements = portletDataElement.elements(
 				"permissions");
 
-			for (Element permissionsElement : permissionsElements) {
-				String roleName = permissionsElement.attributeValue(
-					"role-name");
-				String actions = permissionsElement.attributeValue("actions");
-
-				KeyValuePair permission = new KeyValuePair(roleName, actions);
-
-				permissionKeyValuePairs.add(permission);
-			}
-
 			portletDataContext.addPermissions(
-				resourceName, resourcePK, permissionKeyValuePairs);
+				resourceName, resourcePK,
+				TransformUtil.transform(
+					permissionsElements,
+					permissionsElement -> new KeyValuePair(
+						permissionsElement.attributeValue("role-name"),
+						permissionsElement.attributeValue("actions"))));
 		}
 	}
 

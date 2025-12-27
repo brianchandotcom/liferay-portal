@@ -413,7 +413,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		}
 
 		dockerBuildImage.setDescription(
-			"Builds a child docker image from Liferay base image with all " +
+			"Builds a child Docker image from Liferay base image with all " +
 				"configs deployed.");
 		dockerBuildImage.setGroup(DOCKER_GROUP);
 
@@ -849,7 +849,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		copy.setDescription(
 			"Copy the Liferay configs and provided configurations to the " +
-				"docker build directory.");
+				"Docker build directory.");
 		copy.setGroup(DOCKER_GROUP);
 
 		copy.setDestinationDir(workspaceExtension.getDockerDir());

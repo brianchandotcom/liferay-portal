@@ -831,7 +831,7 @@ OSB_FARO_FRONTEND_URL=${analytics.cloud.faro.frontend.url}</echo>
 
 										while [[ -n $(docker ps | grep "health: starting") ]] || [[ -n $(docker ps | grep "unhealthy") ]]
 										do
-											echo "Waiting for docker compose to be healthy."
+											echo "Waiting for Docker compose to be healthy."
 
 											sleep 30
 										done

@@ -17,6 +17,7 @@ import com.liferay.expando.kernel.service.ExpandoValueLocalServiceUtil;
 import com.liferay.expando.kernel.service.ExpandoValueServiceUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -240,13 +240,9 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 
 	@Override
 	public Enumeration<String> getAttributeNames() {
-		List<String> columnNames = new ArrayList<>();
-
-		for (ExpandoColumn column : getAttributeColumns()) {
-			columnNames.add(column.getName());
-		}
-
-		return Collections.enumeration(columnNames);
+		return Collections.enumeration(
+			TransformUtil.transform(
+				getAttributeColumns(), column -> column.getName()));
 	}
 
 	@Override

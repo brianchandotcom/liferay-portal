@@ -181,7 +181,7 @@ public class ResourceActionsDefinitionTest {
 		if (headers.get("Liferay-Service") == null) {
 			sb.append("\n\t\tModel resources are defined in bundle ");
 			sb.append(bundle.getSymbolicName());
-			sb.append(" which is not liferay service bundle");
+			sb.append(" which is not Liferay service bundle");
 		}
 	}
 

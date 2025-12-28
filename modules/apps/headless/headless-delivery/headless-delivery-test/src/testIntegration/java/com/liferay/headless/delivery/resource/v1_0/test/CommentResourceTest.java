@@ -133,7 +133,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 			commentResource.
 				deleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCodeHttpResponse(
 					testDeleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
-					testDeleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getParentCommentExternalReferenceCode(),
+					RandomTestUtil.randomString(),
 					RandomTestUtil.randomString()));
 
 		// Comment associated to a different parent comment with diff parent
@@ -343,7 +343,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 			commentResource.
 				getSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCodeHttpResponse(
 					testGetSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
-					testGetSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getParentCommentExternalReferenceCode(),
+					RandomTestUtil.randomString(),
 					RandomTestUtil.randomString()));
 
 		// Comment associated to a different parent comment with diff parent
@@ -650,7 +650,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 			commentResource.
 				putSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCodeHttpResponse(
 					testPutSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
-					testPutSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getParentCommentExternalReferenceCode(),
+					_parentComment.getExternalReferenceCode(),
 					randomComment.getExternalReferenceCode(), randomComment));
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
@@ -675,7 +675,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 				commentResource.
 					putSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCodeHttpResponse(
 						testPutSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
-						testPutSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getParentCommentExternalReferenceCode(),
+						_parentComment.getExternalReferenceCode(),
 						comment3.getExternalReferenceCode(), randomComment));
 		}
 	}
@@ -790,14 +790,6 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 		throws Exception {
 
 		return _addCommentComment();
-	}
-
-	@Override
-	protected String
-			testDeleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getParentCommentExternalReferenceCode()
-		throws Exception {
-
-		return _parentComment.getExternalReferenceCode();
 	}
 
 	@Override
@@ -921,14 +913,6 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 	}
 
 	@Override
-	protected String
-			testGetSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getParentCommentExternalReferenceCode()
-		throws Exception {
-
-		return _parentComment.getExternalReferenceCode();
-	}
-
-	@Override
 	protected Long
 			testGetSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId()
 		throws Exception {
@@ -1015,14 +999,6 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 	}
 
 	@Override
-	protected String
-			testGraphQLDeleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getParentCommentExternalReferenceCode()
-		throws Exception {
-
-		return _parentComment.getExternalReferenceCode();
-	}
-
-	@Override
 	protected Comment
 			testGraphQLDeleteSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_addComment()
 		throws Exception {
@@ -1084,14 +1060,6 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 		throws Exception {
 
 		return _addCommentComment();
-	}
-
-	@Override
-	protected String
-			testGraphQLGetSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getParentCommentExternalReferenceCode()
-		throws Exception {
-
-		return _parentComment.getExternalReferenceCode();
 	}
 
 	@Override
@@ -1196,11 +1164,16 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 	}
 
 	@Override
-	protected String
-			testPutSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getParentCommentExternalReferenceCode()
+	protected Comment
+			testPutSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_createComment()
 		throws Exception {
 
-		return _parentComment.getExternalReferenceCode();
+		Comment randomComment = randomComment();
+
+		randomComment.setParentCommentExternalReferenceCode(
+			_parentComment.getExternalReferenceCode());
+
+		return randomComment;
 	}
 
 	@Override

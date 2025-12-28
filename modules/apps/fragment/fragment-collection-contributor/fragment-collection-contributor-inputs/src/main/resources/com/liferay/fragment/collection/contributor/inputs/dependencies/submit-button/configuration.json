@@ -24,7 +24,7 @@
 				},
 				{
 					"dataType": "string",
-					"defaultValue": "approved",
+					"defaultValue": "0",
 					"label": "submitted-entry-status",
 					"name": "submittedEntryStatus",
 					"type": "select",

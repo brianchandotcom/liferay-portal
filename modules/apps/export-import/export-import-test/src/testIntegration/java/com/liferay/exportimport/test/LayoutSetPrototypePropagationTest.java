@@ -638,33 +638,34 @@ public class LayoutSetPrototypePropagationTest
 		Layout masterLayout = LayoutLocalServiceUtil.getLayout(
 			masterLayoutPageTemplateEntry.getPlid());
 
+		Theme masterLayoutTheme = masterLayout.getTheme();
+
 		Layout siteMasterLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(
 			group.getGroupId(), false, masterLayout.getFriendlyURL());
 
+		Theme siteMasterLayoutTheme = siteMasterLayout.getTheme();
+
 		Assert.assertEquals(
-			siteMasterLayout.getTheme(
-			).getThemeId(),
-			masterLayout.getTheme(
-			).getThemeId());
-		Assert.assertEquals(
-			siteMasterLayout.getTheme(
-			).getThemeId(),
-			_THEME_ID);
+			siteMasterLayoutTheme.getThemeId(), masterLayoutTheme.getThemeId());
+		Assert.assertEquals(siteMasterLayoutTheme.getThemeId(), _THEME_ID);
 
 		Layout siteLayoutFromMasterLayout =
 			LayoutLocalServiceUtil.getFriendlyURLLayout(
 				group.getGroupId(), false,
 				siteTemplateLayoutFromMasterLayout.getFriendlyURL());
 
+		Theme siteLayoutFromMasterLayoutTheme =
+			siteLayoutFromMasterLayout.getTheme();
+
+		Theme siteTemplateLayoutFromMasterLayoutTheme =
+			siteTemplateLayoutFromMasterLayout.getTheme();
+
 		Assert.assertEquals(
-			siteLayoutFromMasterLayout.getTheme(
-			).getThemeId(),
-			siteTemplateLayoutFromMasterLayout.getTheme(
-			).getThemeId());
+			siteLayoutFromMasterLayoutTheme.getThemeId(),
+			siteTemplateLayoutFromMasterLayoutTheme.getThemeId());
+
 		Assert.assertEquals(
-			siteLayoutFromMasterLayout.getTheme(
-			).getThemeId(),
-			_THEME_ID);
+			siteLayoutFromMasterLayoutTheme.getThemeId(), _THEME_ID);
 	}
 
 	@Test

@@ -732,21 +732,20 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
 				layout.getUuid(), importedGroup.getGroupId(), false);
 
+		Set<String> layoutPortletIds = _getLayoutPortletIds(
+			importedParentLayout.getPlid());
+
 		Assert.assertEquals(
-			0,
-			_getLayoutPortletIds(
-				importedParentLayout.getPlid()
-			).size());
+			layoutPortletIds.toString(), 0, layoutPortletIds.size());
 
 		Layout importedChildLayout =
 			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
 				childLayout.getUuid(), importedGroup.getGroupId(), false);
 
+		layoutPortletIds = _getLayoutPortletIds(importedChildLayout.getPlid());
+
 		Assert.assertEquals(
-			0,
-			_getLayoutPortletIds(
-				importedChildLayout.getPlid()
-			).size());
+			layoutPortletIds.toString(), 0, layoutPortletIds.size());
 
 		LayoutTestUtil.addPortletToLayout(
 			layout, JournalContentPortletKeys.JOURNAL_CONTENT);
@@ -765,16 +764,15 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 		importLayouts(exportParameterMap, false);
 
+		layoutPortletIds = _getLayoutPortletIds(importedParentLayout.getPlid());
+
 		Assert.assertEquals(
-			1,
-			_getLayoutPortletIds(
-				importedParentLayout.getPlid()
-			).size());
+			layoutPortletIds.toString(), 1, layoutPortletIds.size());
+
+		layoutPortletIds = _getLayoutPortletIds(importedChildLayout.getPlid());
+
 		Assert.assertEquals(
-			1,
-			_getLayoutPortletIds(
-				importedChildLayout.getPlid()
-			).size());
+			layoutPortletIds.toString(), 1, layoutPortletIds.size());
 	}
 
 	@FeatureFlag("LPS-199086")
@@ -862,21 +860,20 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
 				layout.getUuid(), importedGroup.getGroupId(), false);
 
+		Set<String> layoutPortletIds = _getLayoutPortletIds(
+			importedParentLayout.getPlid());
+
 		Assert.assertEquals(
-			0,
-			_getLayoutPortletIds(
-				importedParentLayout.getPlid()
-			).size());
+			layoutPortletIds.toString(), 0, layoutPortletIds.size());
 
 		Layout importedChildLayout =
 			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
 				childLayout.getUuid(), importedGroup.getGroupId(), false);
 
+		layoutPortletIds = _getLayoutPortletIds(importedChildLayout.getPlid());
+
 		Assert.assertEquals(
-			0,
-			_getLayoutPortletIds(
-				importedChildLayout.getPlid()
-			).size());
+			layoutPortletIds.toString(), 0, layoutPortletIds.size());
 
 		LayoutTestUtil.addPortletToLayout(
 			layout, JournalContentPortletKeys.JOURNAL_CONTENT);
@@ -895,16 +892,15 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 		importLayouts(exportParameterMap, false);
 
+		layoutPortletIds = _getLayoutPortletIds(importedParentLayout.getPlid());
+
 		Assert.assertEquals(
-			0,
-			_getLayoutPortletIds(
-				importedParentLayout.getPlid()
-			).size());
+			layoutPortletIds.toString(), 0, layoutPortletIds.size());
+
+		layoutPortletIds = _getLayoutPortletIds(importedChildLayout.getPlid());
+
 		Assert.assertEquals(
-			1,
-			_getLayoutPortletIds(
-				importedChildLayout.getPlid()
-			).size());
+			layoutPortletIds.toString(), 1, layoutPortletIds.size());
 	}
 
 	@FeatureFlag("LPS-199086")

@@ -104,7 +104,7 @@ components:
                     type: integer
                 type:
                     default: AssetLibrary
-                    enum: [AssetLibrary, Space]
+                    enum: [AssetLibrary, Space, Project]
                     type: string
                 userAccounts:
                     description:

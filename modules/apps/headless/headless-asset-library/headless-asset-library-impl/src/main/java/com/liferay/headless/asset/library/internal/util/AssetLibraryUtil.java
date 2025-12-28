@@ -31,7 +31,8 @@ public class AssetLibraryUtil {
 
 	private static final AssetLibrary.Type[] _assetLibraryTypes =
 		new AssetLibrary.Type[] {
-			AssetLibrary.Type.ASSET_LIBRARY, AssetLibrary.Type.SPACE
+			AssetLibrary.Type.ASSET_LIBRARY, AssetLibrary.Type.SPACE,
+			AssetLibrary.Type.PROJECT
 		};
 	private static final Map<String, Integer> _depotEntryTypes =
 		HashMapBuilder.put(
@@ -40,6 +41,9 @@ public class AssetLibraryUtil {
 		).put(
 			StringUtil.toLowerCase(AssetLibrary.Type.SPACE.getValue()),
 			getDepotEntryType(AssetLibrary.Type.SPACE)
+		).put(
+			StringUtil.toLowerCase(AssetLibrary.Type.PROJECT.getValue()),
+			getDepotEntryType(AssetLibrary.Type.PROJECT)
 		).build();
 
 }

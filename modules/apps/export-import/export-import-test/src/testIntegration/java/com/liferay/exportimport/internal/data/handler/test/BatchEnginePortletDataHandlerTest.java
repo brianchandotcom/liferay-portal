@@ -918,7 +918,6 @@ public class BatchEnginePortletDataHandlerTest {
 	@TestInfo("LPD-70661")
 	public void testIsConfigurationEnabled() throws Exception {
 		_testIsConfigurationEnabled(false);
-
 		_testIsConfigurationEnabled(true);
 	}
 

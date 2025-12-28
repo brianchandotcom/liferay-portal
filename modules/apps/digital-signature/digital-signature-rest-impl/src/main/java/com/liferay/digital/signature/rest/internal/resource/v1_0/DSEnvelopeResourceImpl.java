@@ -45,12 +45,14 @@ public class DSEnvelopeResourceImpl extends BaseDSEnvelopeResourceImpl {
 		Long siteId, String fromDate, String keywords, String order,
 		String status, Pagination pagination) {
 
+		Page<com.liferay.digital.signature.model.DSEnvelope> page =
+			_dsEnvelopeManager.getDSEnvelopesPage(
+				contextCompany.getCompanyId(), siteId, fromDate, keywords,
+				order, pagination, status);
+
 		return Page.of(
 			transform(
-				_dsEnvelopeManager.getDSEnvelopesPage(
-					contextCompany.getCompanyId(), siteId, fromDate, keywords,
-					order, pagination, status
-				).getItems(),
+				page.getItems(),
 				dsEnvelope -> DSEnvelopeUtil.toDSEnvelope(dsEnvelope)));
 	}
 

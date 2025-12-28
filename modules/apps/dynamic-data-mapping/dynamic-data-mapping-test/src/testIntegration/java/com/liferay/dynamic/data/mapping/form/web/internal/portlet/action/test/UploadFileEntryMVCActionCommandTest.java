@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -182,14 +183,14 @@ public class UploadFileEntryMVCActionCommandTest {
 
 		Assert.assertEquals(user.getUserId(), dlFileEntry.getUserId());
 
+		Role role = RoleLocalServiceUtil.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
+
 		Assert.assertFalse(
 			_resourcePermissionLocalService.hasResourcePermission(
 				TestPropsValues.getCompanyId(), DLFileEntry.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(dlFileEntry.getFileEntryId()),
-				RoleLocalServiceUtil.getRole(
-					TestPropsValues.getCompanyId(), RoleConstants.GUEST
-				).getRoleId(),
+				String.valueOf(dlFileEntry.getFileEntryId()), role.getRoleId(),
 				ActionKeys.VIEW));
 	}
 

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -208,13 +209,13 @@ public class UploadFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				DDMFormConstants.SERVICE_NAME, folderId, file, uniqueFileName,
 				mimeType, true);
 
+			Role role = _roleLocalService.getRole(
+				themeDisplay.getCompanyId(), RoleConstants.GUEST);
+
 			_resourcePermissionLocalService.removeResourcePermission(
 				themeDisplay.getCompanyId(), DLFileEntry.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(fileEntry.getFileEntryId()),
-				_roleLocalService.getRole(
-					themeDisplay.getCompanyId(), RoleConstants.GUEST
-				).getRoleId(),
+				String.valueOf(fileEntry.getFileEntryId()), role.getRoleId(),
 				ActionKeys.VIEW);
 
 			return fileEntry;

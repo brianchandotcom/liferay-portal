@@ -469,9 +469,9 @@ public class BatchEnginePortletDataHandlerTest {
 
 		Group group2 = GroupTestUtil.addGroup();
 
-		BundleContext bundleContext = FrameworkUtil.getBundle(
-			getClass()
-		).getBundleContext();
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		BundleContext bundleContext = bundle.getBundleContext();
 
 		ServiceRegistration<?> serviceRegistration =
 			bundleContext.registerService(

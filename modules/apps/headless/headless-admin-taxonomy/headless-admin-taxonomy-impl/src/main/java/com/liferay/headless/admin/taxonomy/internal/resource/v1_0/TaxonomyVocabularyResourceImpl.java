@@ -395,18 +395,6 @@ public class TaxonomyVocabularyResourceImpl
 			taxonomyVocabulary.getExternalReferenceCode(), siteId,
 			taxonomyVocabulary);
 
-		Group group = _groupLocalService.getGroup(siteId);
-
-		if (FeatureFlagManagerUtil.isEnabled(
-				group.getCompanyId(), "LPD-17564") &&
-			group.isCMS()) {
-
-			_assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
-				assetVocabulary.getVocabularyId(),
-				_getAssetLibraryGroupIds(
-					group.getCompanyId(), taxonomyVocabulary));
-		}
-
 		return _toTaxonomyVocabulary(assetVocabulary);
 	}
 

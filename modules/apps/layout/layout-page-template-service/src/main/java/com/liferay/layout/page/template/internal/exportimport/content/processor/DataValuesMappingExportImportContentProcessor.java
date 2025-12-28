@@ -111,7 +111,6 @@ public class DataValuesMappingExportImportContentProcessor
 		AssetListEntry assetListEntry = null;
 
 		long classPK = collectionJSONObject.getLong("classPK");
-
 		String externalReferenceCode = collectionJSONObject.getString(
 			"externalReferenceCode");
 

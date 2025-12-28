@@ -545,6 +545,7 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 
 		serviceContext.setCompanyId(contextCompany.getCompanyId());
 		serviceContext.setModifiedDate(new Date());
+		serviceContext.setUserId(contextUser.getUserId());
 
 		return serviceContext;
 	}

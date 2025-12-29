@@ -98,6 +98,7 @@ import com.liferay.object.model.ObjectFilter;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.ObjectState;
 import com.liferay.object.model.ObjectStateFlow;
+import com.liferay.object.model.util.ObjectFieldBag;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionLocalizationTable;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionLocalizationTableFactory;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
@@ -1133,12 +1134,14 @@ public class ObjectEntryLocalServiceImpl
 				extensionDynamicObjectDefinitionTable, primaryKey, null,
 				systemObjectDefinitionManager));
 
+		ObjectFieldBag objectFieldBag = objectDefinition.getObjectFieldBag();
+
 		List<Object[]> rows = _list(
 			_getExtensionDynamicObjectDefinitionTableSelectDSLQuery(
 				dynamicObjectDefinitionLocalizationTable,
 				extensionDynamicObjectDefinitionTable, primaryKey,
 				selectExpressions, systemObjectDefinitionManager),
-			objectDefinition.getObjectDefinitionId(), selectExpressions);
+			objectFieldBag, selectExpressions);
 
 		Object[] row = null;
 
@@ -1147,14 +1150,14 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		Map<String, Serializable> values = _getValues(
-			objectDefinition.getObjectDefinitionId(), row, selectExpressions);
+			objectFieldBag, row, selectExpressions);
 
 		values.remove(objectDefinition.getPKObjectFieldName());
 
 		_addLocalizedObjectFieldValues(
 			LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
-			dynamicObjectDefinitionLocalizationTable,
-			objectDefinition.getObjectDefinitionId(), primaryKey, values);
+			dynamicObjectDefinitionLocalizationTable, objectFieldBag,
+			primaryKey, values);
 		_addObjectRelationshipERCFieldValue(
 			_objectFieldLocalService.getObjectFields(
 				objectDefinition.getObjectDefinitionId()),
@@ -1169,37 +1172,25 @@ public class ObjectEntryLocalServiceImpl
 
 		ObjectDefinition objectDefinition = objectEntry.getObjectDefinition();
 
+		ObjectFieldBag objectFieldBag = objectDefinition.getObjectFieldBag();
+
 		List<ObjectField> indexedObjectFields =
-			_objectFieldPersistence.findByODI_I(
-				objectEntry.getObjectDefinitionId(), true);
+			objectFieldBag.getIndexedObjectFields();
 
 		// Title object field is always needed during reindexing whether it is
 		// indexed or not
 
-		long titleObjectFieldId = objectDefinition.getTitleObjectFieldId();
+		ObjectField titleObjectField = objectFieldBag.getObjectField(
+			objectDefinition.getTitleObjectFieldId());
 
-		boolean found = false;
+		if (!titleObjectField.isIndexed() &&
+			!Objects.equals(
+				titleObjectField.getName(), "externalReferenceCode") &&
+			!Objects.equals(titleObjectField.getName(), "id")) {
 
-		for (ObjectField indexedObjectField : indexedObjectFields) {
-			if (indexedObjectField.getObjectFieldId() == titleObjectFieldId) {
-				found = true;
+			indexedObjectFields = new ArrayList<>(indexedObjectFields);
 
-				break;
-			}
-		}
-
-		if (!found) {
-			ObjectField titleObjectField =
-				_objectFieldPersistence.findByPrimaryKey(titleObjectFieldId);
-
-			if (!Objects.equals(
-					titleObjectField.getName(), "externalReferenceCode") &&
-				!Objects.equals(titleObjectField.getName(), "id")) {
-
-				indexedObjectFields = new ArrayList<>(indexedObjectFields);
-
-				indexedObjectFields.add(titleObjectField);
-			}
+			indexedObjectFields.add(titleObjectField);
 		}
 
 		DynamicObjectDefinitionLocalizationTable
@@ -1262,21 +1253,19 @@ public class ObjectEntryLocalServiceImpl
 					objectEntry.getObjectEntryId()
 				)
 			),
-			objectEntry.getObjectDefinitionId(), selectExpressionsArray);
+			objectFieldBag, selectExpressionsArray);
 
 		if (ListUtil.isEmpty(rows)) {
 			return Collections.emptyMap();
 		}
 
 		Map<String, Serializable> values = _getValues(
-			objectEntry.getObjectDefinitionId(), rows.get(0),
-			selectExpressionsArray);
+			objectFieldBag, rows.get(0), selectExpressionsArray);
 
 		_addLocalizedObjectFieldValues(
 			objectEntry.getDefaultLanguageId(),
-			dynamicObjectDefinitionLocalizationTable,
-			objectEntry.getObjectDefinitionId(), objectEntry.getObjectEntryId(),
-			values);
+			dynamicObjectDefinitionLocalizationTable, objectFieldBag,
+			objectEntry.getObjectEntryId(), values);
 
 		return values;
 	}
@@ -1604,11 +1593,13 @@ public class ObjectEntryLocalServiceImpl
 			DynamicObjectDefinitionTableUtil.getDynamicObjectDefinitionTable(
 				false, objectDefinition, _objectFieldLocalService);
 
+		ObjectFieldBag objectFieldBag = objectDefinition.getObjectFieldBag();
+
 		return TransformUtil.transform(
 			objectEntryPersistence.dslQuery(
 				_applyOrderBy(dslQuery, objectDefinition, start, end, sorts)),
 			value -> (Long)_getResult(
-				value, objectDefinitionId,
+				value, objectFieldBag,
 				dynamicObjectDefinitionTable.getPrimaryKeyColumn()));
 	}
 
@@ -1701,6 +1692,10 @@ public class ObjectEntryLocalServiceImpl
 	public Map<String, Serializable> getSystemValues(ObjectEntry objectEntry)
 		throws PortalException {
 
+		ObjectDefinition objectDefinition = objectEntry.getObjectDefinition();
+
+		ObjectFieldBag objectFieldBag = objectDefinition.getObjectFieldBag();
+
 		List<Object[]> rows = _list(
 			DSLQueryFactoryUtil.select(
 				_EXPRESSIONS
@@ -1710,10 +1705,9 @@ public class ObjectEntryLocalServiceImpl
 				ObjectEntryTable.INSTANCE.objectEntryId.eq(
 					objectEntry.getObjectEntryId())
 			),
-			objectEntry.getObjectDefinitionId(), _EXPRESSIONS);
+			objectFieldBag, _EXPRESSIONS);
 
-		return _getValues(
-			objectEntry.getObjectDefinitionId(), rows.get(0), _EXPRESSIONS);
+		return _getValues(objectFieldBag, rows.get(0), _EXPRESSIONS);
 	}
 
 	@Override
@@ -1807,6 +1801,8 @@ public class ObjectEntryLocalServiceImpl
 				null, null),
 			extensionSelectExpressions);
 
+		ObjectFieldBag objectFieldBag = objectDefinition.getObjectFieldBag();
+
 		List<Object[]> rows = _list(
 			DSLQueryFactoryUtil.select(
 				selectExpressions
@@ -1825,21 +1821,19 @@ public class ObjectEntryLocalServiceImpl
 					objectEntry.getObjectEntryId()
 				)
 			),
-			objectEntry.getObjectDefinitionId(), selectExpressions);
+			objectFieldBag, selectExpressions);
 
 		if (ListUtil.isEmpty(rows)) {
 			return Collections.emptyMap();
 		}
 
 		Map<String, Serializable> values = _getValues(
-			objectEntry.getObjectDefinitionId(), rows.get(0),
-			selectExpressions);
+			objectFieldBag, rows.get(0), selectExpressions);
 
 		_addLocalizedObjectFieldValues(
 			objectEntry.getDefaultLanguageId(),
-			dynamicObjectDefinitionLocalizationTable,
-			objectEntry.getObjectDefinitionId(), objectEntry.getObjectEntryId(),
-			values);
+			dynamicObjectDefinitionLocalizationTable, objectFieldBag,
+			objectEntry.getObjectEntryId(), values);
 		_addObjectRelationshipERCFieldValue(
 			_objectFieldLocalService.getObjectFields(
 				objectEntry.getObjectDefinitionId()),
@@ -2740,7 +2734,7 @@ public class ObjectEntryLocalServiceImpl
 			String defaultLanguageId,
 			DynamicObjectDefinitionLocalizationTable
 				dynamicObjectDefinitionLocalizationTable,
-			long objectDefinitionId, long primaryKey,
+			ObjectFieldBag objectFieldBag, long primaryKey,
 			Map<String, Serializable> values)
 		throws PortalException {
 
@@ -2763,7 +2757,7 @@ public class ObjectEntryLocalServiceImpl
 					primaryKey
 				)
 			),
-			objectDefinitionId, selectExpressions);
+			objectFieldBag, selectExpressions);
 
 		if (ListUtil.isEmpty(rows)) {
 			return;
@@ -3968,12 +3962,7 @@ public class ObjectEntryLocalServiceImpl
 		return columns;
 	}
 
-	private String _getDBType(Alias<?> alias, long objectDefinitionId)
-		throws PortalException {
-
-		ObjectField objectField = _objectFieldLocalService.getObjectField(
-			objectDefinitionId, alias.getName());
-
+	private String _getDBType(ObjectField objectField) throws PortalException {
 		ObjectFieldSetting objectFieldSetting =
 			_objectFieldSettingPersistence.fetchByOFI_N(
 				objectField.getObjectFieldId(), "output");
@@ -4759,7 +4748,7 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private Object _getResult(
-			Object entryValues, long objectDefinitionId,
+			Object entryValues, ObjectFieldBag objectFieldBag,
 			Expression<?> selectExpression)
 		throws PortalException {
 
@@ -4771,7 +4760,8 @@ public class ObjectEntryLocalServiceImpl
 			result = _getValue(
 				entryValues,
 				DynamicObjectDefinitionTableUtil.getSQLType(
-					_getDBType(alias, objectDefinitionId)));
+					_getDBType(
+						objectFieldBag.getObjectField(alias.getName()))));
 		}
 		else if (selectExpression instanceof Column) {
 			Column<?, ?> column = (Column<?, ?>)selectExpression;
@@ -5086,7 +5076,7 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private Map<String, Serializable> _getValues(
-			long objectDefinitionId, Object[] objects,
+			ObjectFieldBag objectFieldBag, Object[] objects,
 			Expression<?>[] selectExpressions)
 		throws PortalException {
 
@@ -5110,7 +5100,7 @@ public class ObjectEntryLocalServiceImpl
 				columnName = alias.getName();
 
 				javaTypeClass = DynamicObjectDefinitionTableUtil.getJavaClass(
-					_getDBType(alias, objectDefinitionId));
+					_getDBType(objectFieldBag.getObjectField(alias.getName())));
 			}
 			else if (selectExpression instanceof Column) {
 				Column<?, ?> column = (Column<?, ?>)selectExpressions[i];
@@ -5144,8 +5134,8 @@ public class ObjectEntryLocalServiceImpl
 
 				columnName = columnName.substring(0, columnName.length() - 1);
 
-				ObjectField objectField = _objectFieldPersistence.fetchByODI_N(
-					objectDefinitionId, columnName);
+				ObjectField objectField = objectFieldBag.getObjectField(
+					columnName);
 
 				if ((object != null) && (objectField != null) &&
 					objectField.compareBusinessType(
@@ -5513,7 +5503,7 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private List<Object[]> _list(
-			DSLQuery dslQuery, long objectDefinitionId,
+			DSLQuery dslQuery, ObjectFieldBag objectFieldBag,
 			Expression<?>[] selectExpressions)
 		throws PortalException {
 
@@ -5526,12 +5516,12 @@ public class ObjectEntryLocalServiceImpl
 
 			if (selectExpressions.length == 1) {
 				result[0] = _getResult(
-					entryValues, objectDefinitionId, selectExpressions[0]);
+					entryValues, objectFieldBag, selectExpressions[0]);
 			}
 			else {
 				for (int i = 0; i < selectExpressions.length; i++) {
 					result[i] = _getResult(
-						((Object[])entryValues)[i], objectDefinitionId,
+						((Object[])entryValues)[i], objectFieldBag,
 						selectExpressions[i]);
 				}
 			}

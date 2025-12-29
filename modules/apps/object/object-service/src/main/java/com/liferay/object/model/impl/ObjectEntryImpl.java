@@ -14,6 +14,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.util.ObjectFieldBag;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryFolderLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
@@ -201,9 +202,11 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 		if ((objectDefinition != null) &&
 			(objectDefinition.getTitleObjectFieldId() > 0)) {
 
-			ObjectField objectField =
-				ObjectFieldLocalServiceUtil.fetchObjectField(
-					objectDefinition.getTitleObjectFieldId());
+			ObjectFieldBag objectFieldBag =
+				objectDefinition.getObjectFieldBag();
+
+			ObjectField objectField = objectFieldBag.getObjectField(
+				objectDefinition.getTitleObjectFieldId());
 
 			if (objectField != null) {
 				if (Objects.equals(

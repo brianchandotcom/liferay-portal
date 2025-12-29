@@ -202,6 +202,40 @@ describe('ReactFieldBase', () => {
 		});
 	});
 
+	it('adds group role and aria-labelledby to field when type is fieldset', () => {
+		render(
+			<FieldBaseWithProvider
+				label=""
+				name="myField"
+				showLabel={false}
+				spritemap={spritemap}
+				text="Help text"
+				type="fieldset"
+			/>
+		);
+
+		const group = screen.getByRole('group');
+
+		expect(group).toBeInTheDocument();
+		expect(group).toHaveAttribute('aria-labelledby');
+	});
+
+	it('does not add aria-labelledby to fieldset when it has a label', () => {
+		render(
+			<FieldBaseWithProvider
+				label="My label"
+				name="myField"
+				spritemap={spritemap}
+				type="fieldset"
+			/>
+		);
+
+		const group = screen.getByRole('group');
+
+		expect(group).toBeInTheDocument();
+		expect(group).not.toHaveAttribute('aria-labelledby');
+	});
+
 	it('does not render the add button when repeatable is true and the maximum limit of repetions is reached', () => {
 		const {container} = render(
 			<FieldBaseWithProvider

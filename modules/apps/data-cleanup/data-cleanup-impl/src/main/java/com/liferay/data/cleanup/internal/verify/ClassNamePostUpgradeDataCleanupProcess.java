@@ -8,6 +8,7 @@ package com.liferay.data.cleanup.internal.verify;
 import com.liferay.data.cleanup.internal.verify.util.PostUpgradeDataCleanupProcessUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -22,6 +23,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -66,6 +68,17 @@ public class ClassNamePostUpgradeDataCleanupProcess
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 		DBInspector dbInspector = new DBInspector(_connection);
 		Set<String> models = new HashSet<>(ModelHintsUtil.getModels());
+		List<String> tableNames = new ArrayList<>();
+
+		for (String tableName : dbInspector.getTableNames(null)) {
+			if (!dbInspector.hasColumn(tableName, "classNameId") ||
+				StringUtil.equalsIgnoreCase(tableName, "ClassName_")) {
+
+				continue;
+			}
+
+			tableNames.add(tableName);
+		}
 
 		for (ClassName className : classNames) {
 			String value = className.getValue();
@@ -108,16 +121,9 @@ public class ClassNamePostUpgradeDataCleanupProcess
 				continue;
 			}
 
-			List<String> tableNames = dbInspector.getTableNames(null);
 			Set<String> usedTableNames = new HashSet<>();
 
-			tableNames.remove(dbInspector.normalizeName("ClassName_"));
-
 			for (String tableName : tableNames) {
-				if (!dbInspector.hasColumn(tableName, "classNameId")) {
-					continue;
-				}
-
 				try (PreparedStatement preparedStatement =
 						_connection.prepareStatement(
 							"select 1 from " + tableName +

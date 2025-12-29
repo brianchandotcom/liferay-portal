@@ -449,43 +449,45 @@ public class SitePageResourceImpl
 			typeSettingsUnicodeProperties.toString(), hidden, friendlyUrlMap,
 			null, serviceContext);
 
-		_importPageDefinition(
-			layout, sitePage.getPageDefinition(), serviceContext);
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-		layout = _layoutService.getLayout(layout.getPlid());
+		try (AutoCloseable autoCloseable =
+				_layoutServiceContextHelper.getServiceContextAutoCloseable(
+					layout, contextUser)) {
 
-		PageDefinition pageDefinition = sitePage.getPageDefinition();
+			_importPageDefinition(layout, sitePage.getPageDefinition());
 
-		if (pageDefinition != null) {
-			Settings settings = pageDefinition.getSettings();
+			layout = _layoutService.getLayout(layout.getPlid());
 
-			if (settings != null) {
-				ServiceContextThreadLocal.pushServiceContext(serviceContext);
+			PageDefinition pageDefinition = sitePage.getPageDefinition();
 
-				try {
+			if (pageDefinition != null) {
+				Settings settings = pageDefinition.getSettings();
+
+				if (settings != null) {
 					layout = _layoutsImporter.importLayoutSettings(
 						contextUser.getUserId(), layout, settings.toString());
 				}
-				finally {
-					ServiceContextThreadLocal.popServiceContext();
-				}
 			}
+
+			Layout draftLayout = _updateDraftLayout(layout);
+
+			layout.setModifiedDate(draftLayout.getModifiedDate());
+
+			layout.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+			layout = _layoutLocalService.updateLayout(layout);
+
+			_updateModelResourcePermissions(
+				layout.getCompanyId(), siteId, layout.getPlid(), sitePage);
+
+			_updateSEOEntry(siteId, layout.getLayoutId(), sitePage);
+
+			return layout;
 		}
-
-		Layout draftLayout = _updateDraftLayout(layout);
-
-		layout.setModifiedDate(draftLayout.getModifiedDate());
-
-		layout.setStatus(WorkflowConstants.STATUS_APPROVED);
-
-		layout = _layoutLocalService.updateLayout(layout);
-
-		_updateModelResourcePermissions(
-			layout.getCompanyId(), siteId, layout.getPlid(), sitePage);
-
-		_updateSEOEntry(siteId, layout.getLayoutId(), sitePage);
-
-		return layout;
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 	}
 
 	private ServiceContext _createServiceContext(
@@ -692,8 +694,7 @@ public class SitePageResourceImpl
 	}
 
 	private void _importPageDefinition(
-			Layout layout, PageDefinition pageDefinition,
-			ServiceContext serviceContext)
+			Layout layout, PageDefinition pageDefinition)
 		throws Exception {
 
 		if (pageDefinition == null) {
@@ -714,21 +715,9 @@ public class SitePageResourceImpl
 			return;
 		}
 
-		contextHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));
-
-		serviceContext.setRequest(contextHttpServletRequest);
-
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
-		try {
-			_layoutsImporter.importPageElement(
-				layout, layoutStructure, layoutStructure.getMainItemId(),
-				pageElement.toString(), 0, true);
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
-		}
+		_layoutsImporter.importPageElement(
+			layout, layoutStructure, layoutStructure.getMainItemId(),
+			pageElement.toString(), 0, true);
 	}
 
 	private boolean _isEmbeddedPageDefinition() {

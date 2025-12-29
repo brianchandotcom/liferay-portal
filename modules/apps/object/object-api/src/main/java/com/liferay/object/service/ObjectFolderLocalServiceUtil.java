@@ -352,6 +352,14 @@ public class ObjectFolderLocalServiceUtil {
 		return getService().getOrAddDefaultObjectFolder(companyId);
 	}
 
+	public static ObjectFolder getOrAddEmptyObjectFolder(
+			String externalReferenceCode, long companyId, long userId)
+		throws PortalException {
+
+		return getService().getOrAddEmptyObjectFolder(
+			externalReferenceCode, companyId, userId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

@@ -407,6 +407,15 @@ public class ObjectFolderLocalServiceWrapper
 		return _objectFolderLocalService.getOrAddDefaultObjectFolder(companyId);
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectFolder getOrAddEmptyObjectFolder(
+			String externalReferenceCode, long companyId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectFolderLocalService.getOrAddEmptyObjectFolder(
+			externalReferenceCode, companyId, userId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

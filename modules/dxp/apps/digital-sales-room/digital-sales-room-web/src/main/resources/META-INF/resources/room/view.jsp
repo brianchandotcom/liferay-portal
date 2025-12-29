@@ -15,7 +15,7 @@ ViewDigitalSalesRoomListDisplayContext viewDigitalSalesRoomListDisplayContext = 
 	<liferay-ui:message key="rooms" />
 </h2>
 
-<div class="portlet-digital-sales-room-management">
+<div class="dsr-room-management portlet-digital-sales-room-management">
 	<frontend-data-set:headless-display
 		apiURL="<%= viewDigitalSalesRoomListDisplayContext.getAPIURL() %>"
 		creationMenu="<%= viewDigitalSalesRoomListDisplayContext.getCreationMenu() %>"

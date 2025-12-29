@@ -47,6 +47,24 @@ public class ViewDigitalSalesRoomListDisplayContext {
 
 		return FDSActionDropdownItemList.of(
 			FDSActionDropdownItemBuilder.setIcon(
+				"pencil"
+			).setLabel(
+				LanguageUtil.get(_httpServletRequest, "edit")
+			).setMethod(
+				"patch"
+			).build(
+				"edit"
+			),
+			FDSActionDropdownItemBuilder.setIcon(
+				"download"
+			).setLabel(
+				LanguageUtil.get(_httpServletRequest, "save-as-template")
+			).setMethod(
+				"post"
+			).build(
+				"saveAsTemplate"
+			),
+			FDSActionDropdownItemBuilder.setIcon(
 				"trash"
 			).setLabel(
 				LanguageUtil.get(_httpServletRequest, "delete")

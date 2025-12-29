@@ -19,6 +19,7 @@ export type TDSRDataContext = {
 		base64?: string;
 	};
 	clientName: string;
+	description?: string;
 	errors: {
 		accountId?: null | string;
 		banner?: null | string;
@@ -26,6 +27,7 @@ export type TDSRDataContext = {
 		channelName?: null | string;
 		clientLogo?: null | string;
 		clientName?: null | string;
+		description?: null | string;
 		friendlyURL?: null | string;
 		primaryColor?: null | string;
 		roomName?: null | string;
@@ -57,4 +59,9 @@ export type TDSRRoomDetailsStepProps = {
 export type TDSRInitializerProps = {
 	closeModal: () => void;
 	numberOfSteps: number;
+};
+
+export type TDSRRoomSaveAsTemplateProps = {
+	closeModal: () => void;
+	digitalSalesRoomId: number;
 };

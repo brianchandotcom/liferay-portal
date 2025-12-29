@@ -9,15 +9,16 @@ import {openToast} from 'frontend-js-components-web';
 import React, {SetStateAction, useCallback, useState} from 'react';
 
 import DigitalSalesRoomService from '../commons/DigitalSalesRoomService';
-import DSRRoomDetailsStep from './DSRRoomDetailsStep';
-import DSRRoomSettingsStep from './DSRRoomSettingsStep';
-import DSRShareRoomStep from './DSRShareRoomStep';
+import {getColor} from './DSRInitializer';
+import DSRTemplateDetailsStep from './DSRTemplateDetailsStep';
+import DSRTemplateSettingsStep from './DSRTemplateSettingsStep';
 import {TDSRContext, TDSRDataContext, TDSRInitializerProps} from './DSRTypes';
 
 const DEFAULT_DATA_CONTEXT: TDSRDataContext = {
 	banner: {},
 	clientLogo: {},
 	clientName: '',
+	description: '',
 	errors: {},
 	friendlyURL: '',
 	primaryColor: '0B5FFF',
@@ -33,34 +34,6 @@ export const DSRContext = React.createContext<TDSRContext>({
 	setDataContext: () => {},
 });
 
-export function getColor(color: string) {
-	if (!color) {
-		return '';
-	}
-
-	if (color.startsWith('#')) {
-		return color;
-	}
-
-	if (/^([0-9A-F]{3}){1,2}$/i.test(color)) {
-		return `#${color}`;
-	}
-
-	return color;
-}
-
-function getFriendlyURL(friendlyURL: string) {
-	if (!friendlyURL) {
-		return '';
-	}
-
-	if (friendlyURL.startsWith('/')) {
-		return friendlyURL;
-	}
-
-	return `/${friendlyURL}`;
-}
-
 function StepLoader({
 	numberOfSteps,
 	setHandleStepSubmit,
@@ -74,33 +47,28 @@ function StepLoader({
 }) {
 	if (step === 1) {
 		return (
-			<DSRRoomDetailsStep
+			<DSRTemplateSettingsStep
 				numberOfSteps={numberOfSteps}
 				setHandleStepSubmit={setHandleStepSubmit}
-			></DSRRoomDetailsStep>
+			></DSRTemplateSettingsStep>
 		);
 	}
 	else if (step === 2) {
 		return (
-			<DSRRoomSettingsStep
+			<DSRTemplateDetailsStep
 				numberOfSteps={numberOfSteps}
 				setHandleStepSubmit={setHandleStepSubmit}
-			></DSRRoomSettingsStep>
-		);
-	}
-	else if (step === 3) {
-		return (
-			<DSRShareRoomStep
-				numberOfSteps={numberOfSteps}
-				setHandleStepSubmit={setHandleStepSubmit}
-			></DSRShareRoomStep>
+			></DSRTemplateDetailsStep>
 		);
 	}
 
 	return <div></div>;
 }
 
-function DSRInitializer({closeModal, numberOfSteps = 3}: TDSRInitializerProps) {
+function DSRTemplateInitializer({
+	closeModal,
+	numberOfSteps = 2,
+}: TDSRInitializerProps) {
 	const [dataContext, setDataContext] = useState(DEFAULT_DATA_CONTEXT);
 	const [handleStepSubmit, setHandleStepSubmit] = useState(
 		() =>
@@ -151,43 +119,34 @@ function DSRInitializer({closeModal, numberOfSteps = 3}: TDSRInitializerProps) {
 				const stepValid = await handleStepSubmit(event);
 
 				if (stepValid) {
-					const digitalSalesRoom =
-						await DigitalSalesRoomService.postDigitalSalesRoom({
-							accountId: dataContext.accountId || 0,
-							banner: {
-								fileBase64:
-									(dataContext.banner.base64 || '')
-										.split(',')
-										.pop() || '',
-							},
-							channelId: dataContext.channelId || 0,
-							channelName: dataContext.channelName || '',
-							clientLogo: {
-								fileBase64:
-									(dataContext.clientLogo.base64 || '')
-										.split(',')
-										.pop() || '',
-							},
-							clientName: dataContext.clientName,
-							friendlyUrlPath: getFriendlyURL(
-								dataContext.friendlyURL
-							),
-							name: dataContext.roomName,
-							primaryColor: getColor(dataContext.primaryColor),
-							secondaryColor: getColor(
-								dataContext.secondaryColor
-							),
-							userAccountBriefs: (
-								dataContext.share?.emailAddresses || []
-							).map((email) => {
-								return {
-									emailAddress: email,
-									roleKey: dataContext.share?.roleKey || '',
-								};
-							}),
-						});
+					const digitalSalesRoomTemplate =
+						await DigitalSalesRoomService.postDigitalSalesRoomTemplate(
+							{
+								banner: {
+									fileBase64:
+										(dataContext.banner.base64 || '')
+											.split(',')
+											.pop() || '',
+								},
+								clientLogo: {
+									fileBase64:
+										(dataContext.clientLogo.base64 || '')
+											.split(',')
+											.pop() || '',
+								},
+								clientName: dataContext.clientName,
+								description: dataContext.description,
+								name: dataContext.roomName,
+								primaryColor: getColor(
+									dataContext.primaryColor
+								),
+								secondaryColor: getColor(
+									dataContext.secondaryColor
+								),
+							}
+						);
 
-					window.location.href = `/web${digitalSalesRoom.friendlyUrlPath}?p_l_back_url=/web${digitalSalesRoom.friendlyUrlPath}&p_l_mode=edit`;
+					window.location.href = `/web${digitalSalesRoomTemplate.friendlyUrlPath}?p_l_back_url=/web${digitalSalesRoomTemplate.friendlyUrlPath}&p_l_mode=edit`;
 				}
 			}
 			catch (error) {
@@ -208,7 +167,11 @@ function DSRInitializer({closeModal, numberOfSteps = 3}: TDSRInitializerProps) {
 			<ClayModal.Header
 				closeButtonAriaLabel={Liferay.Language.get('close')}
 			>
-				<>{Liferay.Language.get('create-new-digital-sales-room')}</>
+				<>
+					{Liferay.Language.get(
+						'create-new-digital-sales-room-template'
+					)}
+				</>
 			</ClayModal.Header>
 
 			<ClayModal.Body>
@@ -270,4 +233,4 @@ function DSRInitializer({closeModal, numberOfSteps = 3}: TDSRInitializerProps) {
 	);
 }
 
-export default DSRInitializer;
+export default DSRTemplateInitializer;

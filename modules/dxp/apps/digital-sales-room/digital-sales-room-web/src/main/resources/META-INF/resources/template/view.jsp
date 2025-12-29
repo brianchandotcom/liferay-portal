@@ -15,14 +15,14 @@ ViewDigitalSalesRoomTemplateListDisplayContext viewDigitalSalesRoomTemplateListD
 	<liferay-ui:message key="templates" />
 </h2>
 
-<div class="portlet-digital-sales-room-management">
+<div class="dsr-template-management portlet-digital-sales-room-management">
 	<frontend-data-set:headless-display
 		apiURL="<%= viewDigitalSalesRoomTemplateListDisplayContext.getAPIURL() %>"
 		creationMenu="<%= viewDigitalSalesRoomTemplateListDisplayContext.getCreationMenu() %>"
 		fdsActionDropdownItems="<%= viewDigitalSalesRoomTemplateListDisplayContext.getFDSActionDropdownItems() %>"
 		formName="fm"
 		id="<%= DigitalSalesRoomFDSNames.TEMPLATES %>"
-		propsTransformer="{DSRListFDSPropsTransformer} from digital-sales-room-web"
+		propsTransformer="{DSRTemplateListFDSPropsTransformer} from digital-sales-room-web"
 		style="fluid"
 	/>
 </div>

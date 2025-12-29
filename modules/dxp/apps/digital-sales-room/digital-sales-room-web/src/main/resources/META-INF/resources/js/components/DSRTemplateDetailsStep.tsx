@@ -5,7 +5,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayColorPicker from '@clayui/color-picker';
-import ClayForm, {ClayInput} from '@clayui/form';
+import ClayForm from '@clayui/form';
 import Sticker from '@clayui/sticker';
 import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
@@ -19,29 +19,12 @@ import React, {
 import {useDropzone} from 'react-dropzone';
 
 import '../../css/main.scss';
-
-import ClayIcon from '@clayui/icon';
-
-import {DSRContext} from './DSRInitializer';
+import {getBase64, getImage} from './DSRRoomDetailsStep';
+import {DSRContext} from './DSRTemplateInitializer';
 import {TDSRContext, TDSRRoomDetailsStepProps} from './DSRTypes';
 import FieldErrorMessage from './FieldErrorMessage';
 
-export function getBase64(file: File): Promise<string> {
-	return new Promise((resolve, reject) => {
-		const reader = new FileReader();
-
-		reader.onload = () => resolve(reader.result as string);
-		reader.onerror = (error) => reject(error);
-
-		reader.readAsDataURL(file);
-	});
-}
-
-export function getImage(name: string): string {
-	return `${Liferay.ThemeDisplay.getPortalURL()}${Liferay.ThemeDisplay.getPathContext()}/o/digital-sales-room-web/images/${name}`;
-}
-
-function DSRRoomDetailsStep({
+function DSRTemplateDetailsStep({
 	numberOfSteps,
 	setHandleStepSubmit,
 }: TDSRRoomDetailsStepProps) {
@@ -81,17 +64,6 @@ function DSRRoomDetailsStep({
 			}
 		},
 	});
-
-	const fieldValid = useCallback(
-		(name: string, value: null | string | undefined): boolean => {
-			if (['clientName', 'roomName'].includes(name)) {
-				return !!value;
-			}
-
-			return true;
-		},
-		[]
-	);
 
 	const handleBannerDelete = useCallback(
 		(event: any) => {
@@ -180,14 +152,12 @@ function DSRRoomDetailsStep({
 				...prevState,
 				errors: {
 					...prevState.errors,
-					[name]: fieldValid(name, value)
-						? ''
-						: Liferay.Language.get('this-field-is-mandatory'),
+					[name]: '',
 				},
 				[name]: value,
 			}));
 		},
-		[setDataContext, fieldValid]
+		[setDataContext]
 	);
 
 	const handlePrimaryColorChange = useCallback(
@@ -208,59 +178,27 @@ function DSRRoomDetailsStep({
 		setHandleStepSubmit(() => async (event: Event): Promise<boolean> => {
 			event.preventDefault();
 
-			handleFieldChange({
-				target: {name: 'clientName', value: dataContext.clientName},
-			});
-			handleFieldChange({
-				target: {name: 'roomName', value: dataContext.roomName},
-			});
-			setDataContext((prevState) => ({
-				...prevState,
-				errors: {
-					...prevState.errors,
-					banner: null,
-					clientLogo: null,
-				},
-			}));
-
-			if (
-				!fieldValid('banner', dataContext.banner.base64) ||
-				!fieldValid('clientLogo', dataContext.clientLogo.base64) ||
-				!fieldValid('clientName', dataContext.clientName) ||
-				!fieldValid('primaryColor', dataContext.primaryColor) ||
-				!fieldValid('roomName', dataContext.roomName) ||
-				!fieldValid('secondaryColor', dataContext.secondaryColor)
-			) {
-				return Promise.resolve(false);
-			}
-
 			return Promise.resolve(true);
 		});
-	}, [
-		dataContext,
-		fieldValid,
-		handleFieldChange,
-		setDataContext,
-		setHandleStepSubmit,
-	]);
+	}, [setHandleStepSubmit]);
 
 	return (
 		<>
 			<div>
 				<div className="mb-1 text-secondary" data-qa-id="stepLocator">
-					{sub(Liferay.Language.get('step-x-of-x'), 1, numberOfSteps)}
+					{sub(Liferay.Language.get('step-x-of-x'), 2, numberOfSteps)}
 				</div>
 
 				<div
 					className="mb-1 text-6 text-weight-bold"
 					data-qa-id="stepTitle"
 				>
-					{Liferay.Language.get('customize-your-room')}
+					{Liferay.Language.get('customize-your-template')}
 				</div>
 
 				<div className="text-secondary">
 					{Liferay.Language.get(
-						"personalize-your-room-to-match-your-customers'-brand"
+						"personalize-your-template-to-match-your-customers'-brand"
 					)}
 				</div>
 			</div>
@@ -323,67 +261,6 @@ function DSRRoomDetailsStep({
 					<FieldErrorMessage
 						error={dataContext.errors.clientLogo}
 						name="clientLogo"
-					/>
-				</ClayForm.Group>
-			</div>
-			<div className="row">
-				<ClayForm.Group
-					className={classNames('col-6', {
-						'has-error': !!dataContext.errors.clientName,
-					})}
-				>
-					<label className="d-block" htmlFor="dsr-client-name">
-						{Liferay.Language.get('client-name')}
-
-						<span className="c-ml-2 reference-mark">
-							<ClayIcon symbol="asterisk" />
-						</span>
-					</label>
-
-					<ClayInput
-						aria-label={Liferay.Language.get('client-name')}
-						data-qa-id="clientNameInput"
-						id="dsr-client-name"
-						name="clientName"
-						onChange={handleFieldChange}
-						required={true}
-						type="text"
-						value={dataContext.clientName || ''}
-					/>
-
-					<FieldErrorMessage
-						error={dataContext.errors.clientName}
-						name="clientName"
-					/>
-				</ClayForm.Group>
-
-				<ClayForm.Group
-					className={classNames('col-6', {
-						'has-error': !!dataContext.errors.roomName,
-					})}
-				>
-					<label className="d-block" htmlFor="dsr-room-name">
-						{Liferay.Language.get('room-name')}
-
-						<span className="c-ml-2 reference-mark">
-							<ClayIcon symbol="asterisk" />
-						</span>
-					</label>
-
-					<ClayInput
-						aria-label={Liferay.Language.get('room-name')}
-						data-qa-id="roomNameInput"
-						id="dsr-room-name"
-						name="roomName"
-						onChange={handleFieldChange}
-						required={true}
-						type="text"
-						value={dataContext.roomName || ''}
-					/>
-
-					<FieldErrorMessage
-						error={dataContext.errors.roomName}
-						name="roomName"
 					/>
 				</ClayForm.Group>
 			</div>
@@ -520,34 +397,8 @@ function DSRRoomDetailsStep({
 					/>
 				</ClayForm.Group>
 			</div>
-			<div className="row">
-				<ClayForm.Group
-					className={classNames('col-12', {
-						'has-error': !!dataContext.errors.friendlyURL,
-					})}
-				>
-					<label className="d-block" htmlFor="dsr-friendly-url">
-						{Liferay.Language.get('friendly-url')}
-					</label>
-
-					<ClayInput
-						aria-label={Liferay.Language.get('friendly-url')}
-						data-qa-id="friendlyURLInput"
-						id="dsr-friendly-url"
-						name="friendlyURL"
-						onChange={handleFieldChange}
-						type="text"
-						value={dataContext.friendlyURL || ''}
-					/>
-
-					<FieldErrorMessage
-						error={dataContext.errors.friendlyURL}
-						name="friendlyURL"
-					/>
-				</ClayForm.Group>
-			</div>
 		</>
 	);
 }
 
-export default DSRRoomDetailsStep;
+export default DSRTemplateDetailsStep;

@@ -18,7 +18,7 @@ const ProductOutlet = ({product}) => {
 				return true;
 			}
 
-			const activationProductNames = activationProductName.split(',')
+			const activationProductNames = (activationProductName || '').split(',')
 				.map(name => name.trim())
 				.filter(name => name.length > 0);
 

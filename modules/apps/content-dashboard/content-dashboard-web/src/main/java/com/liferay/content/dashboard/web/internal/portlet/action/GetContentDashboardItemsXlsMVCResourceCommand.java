@@ -194,15 +194,15 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 			contentDashboardItem.getSpecificInformationList(locale);
 
 		workbookBuilder.cell(
-			_toString(specificInformations, "extension", themeDisplay));
+			_toString("extension", specificInformations, themeDisplay));
 
 		workbookBuilder.cell(
-			_toString(specificInformations, "file-name", themeDisplay));
+			_toString("file-name", specificInformations, themeDisplay));
 
 		workbookBuilder.cell(
-			_toString(specificInformations, "size", themeDisplay)
+			_toString("size", specificInformations, themeDisplay)
 		).cell(
-			_toString(specificInformations, "display-date", themeDisplay)
+			_toString("display-date", specificInformations, themeDisplay)
 		).cell(
 			_toString(contentDashboardItem.getCreateDate(), themeDisplay)
 		);
@@ -342,8 +342,9 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 	}
 
 	private String _toString(
+		String fieldName,
 		List<ContentDashboardItem.SpecificInformation<?>> specificInformations,
-		String fieldName, ThemeDisplay themeDisplay) {
+		ThemeDisplay themeDisplay) {
 
 		if (specificInformations == null) {
 			return StringPool.BLANK;
@@ -353,16 +354,16 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 				specificInformations) {
 
 			if (Objects.equals(specificInformation.getKey(), fieldName)) {
-				return _toString(specificInformation.getValue(), themeDisplay);
+				return _toString(themeDisplay, specificInformation.getValue());
 			}
 		}
 
 		return StringPool.BLANK;
 	}
 
-	private String _toString(Object value, ThemeDisplay themeDisplay) {
+	private String _toString(ThemeDisplay themeDisplay, Object value) {
 		if (value instanceof Date) {
-			return _toString((Date)value, themeDisplay);
+			return _toString(themeDisplay, (Date)value);
 		}
 
 		if (value == null) {

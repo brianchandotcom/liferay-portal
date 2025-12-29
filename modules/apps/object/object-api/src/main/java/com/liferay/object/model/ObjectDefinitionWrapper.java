@@ -730,6 +730,11 @@ public class ObjectDefinitionWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.util.ObjectFieldBag getObjectFieldBag() {
+		return model.getObjectFieldBag();
+	}
+
+	@Override
 	public String getObjectFolderExternalReferenceCode() {
 		return model.getObjectFolderExternalReferenceCode();
 	}
@@ -1575,6 +1580,13 @@ public class ObjectDefinitionWrapper
 		java.util.List<ObjectDefinitionSetting> objectDefinitionSettings) {
 
 		model.setObjectDefinitionSettings(objectDefinitionSettings);
+	}
+
+	@Override
+	public void setObjectFieldBag(
+		com.liferay.object.model.util.ObjectFieldBag objectFieldBag) {
+
+		model.setObjectFieldBag(objectFieldBag);
 	}
 
 	/**

@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
+import com.liferay.headless.admin.site.client.dto.v1_0.PageSetPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSpecification;
 import com.liferay.headless.admin.site.client.http.HttpInvoker;
@@ -949,6 +950,23 @@ public abstract class BasePageSpecificationResourceTestCase {
 			testPostSitePageSpecificationPublish_addPageSpecification(
 				contentPageSpecification));
 
+		PageSetPageSpecification pageSetPageSpecification =
+			new PageSetPageSpecification() {
+				{
+					externalReferenceCode = StringUtil.toLowerCase(
+						RandomTestUtil.randomString());
+					siteTemplatePageSpecificationExternalReferenceCode =
+						StringUtil.toLowerCase(RandomTestUtil.randomString());
+
+					type = Type.create("PageSetPageSpecification");
+				}
+			};
+
+		assertEquals(
+			pageSetPageSpecification,
+			testPostSitePageSpecificationPublish_addPageSpecification(
+				pageSetPageSpecification));
+
 		WidgetPageSpecification widgetPageSpecification =
 			new WidgetPageSpecification() {
 				{
@@ -1806,6 +1824,21 @@ public abstract class BasePageSpecificationResourceTestCase {
 
 				pageSpecification.setType(
 					PageSpecification.Type.create("ContentPageSpecification"));
+
+				return pageSpecification;
+			},
+			() -> {
+				PageSetPageSpecification pageSpecification =
+					new PageSetPageSpecification();
+
+				pageSpecification.setExternalReferenceCode(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+				pageSpecification.
+					setSiteTemplatePageSpecificationExternalReferenceCode(
+						StringUtil.toLowerCase(RandomTestUtil.randomString()));
+
+				pageSpecification.setType(
+					PageSpecification.Type.create("PageSetPageSpecification"));
 
 				return pageSpecification;
 			},

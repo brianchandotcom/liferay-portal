@@ -16,7 +16,7 @@ type LengthErrorParams = {
 export function handleInputLengthError({
 	configuration,
 	currentLength,
-	errorMessage,
+	errorContainer,
 	event,
 	formGroup,
 	input,
@@ -25,7 +25,7 @@ export function handleInputLengthError({
 	lengthWarningText,
 }: {
 	currentLength: HTMLElement;
-	errorMessage: HTMLElement;
+	errorContainer: HTMLElement;
 	event: KeyboardEvent;
 	input: {attributes: {maxLength: number}};
 } & LengthErrorParams) {
@@ -33,7 +33,7 @@ export function handleInputLengthError({
 
 	currentLength.innerText = String(length);
 
-	errorMessage?.remove();
+	errorContainer?.remove();
 
 	const params = {
 		configuration,

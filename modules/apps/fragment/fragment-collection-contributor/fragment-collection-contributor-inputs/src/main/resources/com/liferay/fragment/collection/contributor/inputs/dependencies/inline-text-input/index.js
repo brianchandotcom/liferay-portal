@@ -47,7 +47,7 @@ function main() {
 					handleInputLengthError({
 						configuration,
 						currentLength,
-						errorMessage: error,
+						errorContainer: error,
 						event,
 						formGroup,
 						input,

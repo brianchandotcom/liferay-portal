@@ -24,10 +24,10 @@
 		</p>
 
 		[#if input.errorMessage?has_content]
-			<p class="font-weight-semi-bold mt-1 text-danger" id="${fragmentElementId}-text-input-error-message">
+			<p class="font-weight-semi-bold mt-1 text-danger" id="${fragmentElementId}-inline-text-input-error">
 				[@clay["icon"] symbol="info-circle" /]
 
-				<span>
+				<span id="${fragmentElementId}-inline-text-input-error-message">
 					${input.errorMessage}
 				</span>
 			</p>

@@ -1,9 +1,7 @@
 const currentLength = document.getElementById(
 	`${fragmentElementId}-current-length`
 );
-const errorMessage = document.getElementById(
-	`${fragmentElementId}-textarea-error-message`
-);
+const error = document.getElementById(`${fragmentElementId}-textarea-error`);
 const formGroup = document.getElementById(`${fragmentElementId}-form-group`);
 const lengthInfo = document.getElementById(`${fragmentElementId}-length-info`);
 const lengthWarning = document.getElementById(
@@ -29,7 +27,7 @@ function main() {
 				currentLength.innerText = textarea.value.length;
 
 				if (
-					!errorMessage &&
+					!error &&
 					textarea.value.length > input.attributes.maxLength
 				) {
 					hideLengthError({
@@ -45,7 +43,7 @@ function main() {
 					handleInputLengthError({
 						configuration,
 						currentLength,
-						errorMessage,
+						errorMessage: error,
 						event,
 						formGroup,
 						input,

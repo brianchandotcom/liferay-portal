@@ -716,6 +716,7 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		account.setDefaultBillingAddressExternalReferenceCode(StringPool.BLANK);
 		account.setDefaultShippingAddressExternalReferenceCode(
 			StringPool.BLANK);
+		account.setId(0L);
 		account.setLogoBase64(StringPool.BLANK);
 		account.setLogoId(0L);
 		account.setParentAccountExternalReferenceCode(StringPool.BLANK);

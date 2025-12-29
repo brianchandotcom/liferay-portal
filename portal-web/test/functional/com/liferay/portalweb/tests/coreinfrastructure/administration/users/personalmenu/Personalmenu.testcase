@@ -194,6 +194,8 @@ definition {
 
 	@priority = 4
 	test RenderAppsWithCurrentTheme {
+		property browser.chrome.version = "139.0";
+
 		Navigator.openURL();
 
 		UserBar.gotoDropdownItem(dropdownItem = "Notifications");
@@ -309,6 +311,8 @@ definition {
 	@description = "This is a use case for LPS-105387."
 	@priority = 4
 	test UpdateUserPortrait {
+		property browser.chrome.version = "139.0";
+
 		UserBar.viewUserDefaultIcon();
 
 		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");

@@ -435,6 +435,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 			SitePageResource localizedSitePageResource = builder.authentication(
 				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+			).header(
+				"X-Liferay-Accept-All-Languages", "true"
 			).locale(
 				LocaleUtil.US
 			).build();

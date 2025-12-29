@@ -434,12 +434,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			SitePage sitePage = localizedSitePageResource.getSiteSitePage(
 				testGroup.getGroupId(), "english-page");
 
-			Assert.assertNotNull(sitePage);
-			Assert.assertTrue(
-				sitePage.getFriendlyUrlPath(
-				).contains(
-					"english-page"
-				));
+			Assert.assertEquals("/english-page", sitePage.getFriendlyUrlPath());
 		}
 		finally {
 			_companyLocalService.updateDisplay(

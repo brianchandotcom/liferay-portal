@@ -76,8 +76,9 @@ public class ContentStructureResourceImpl
 
 		return SearchUtil.search(
 			Collections.emptyMap(),
-			booleanQuery -> {
-			},
+			booleanQuery -> booleanQuery.addRequiredTerm(
+				Field.CLASS_NAME_ID,
+				_portal.getClassNameId(JournalArticle.class)),
 			filter, DDMStructure.class.getName(), search, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),

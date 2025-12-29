@@ -13,6 +13,7 @@ import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
@@ -23,7 +24,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 
@@ -42,8 +43,10 @@ public class ContentStructureResourceTest
 
 	@Test
 	public void testGetSiteContentStructuresPageSearch() throws Exception {
+		String name = RandomTestUtil.randomString();
+
 		DDMStructure ddmStructure = _addDDMStructure(
-			testGroup, RandomTestUtil.randomString());
+			_portal.getClassNameId(JournalArticle.class), testGroup, name);
 
 		Page<ContentStructure> page =
 			contentStructureResource.getSiteContentStructuresPage(
@@ -52,9 +55,10 @@ public class ContentStructureResourceTest
 
 		Assert.assertEquals(1, page.getTotalCount());
 
+		_addDDMStructure(
+			_portal.getClassNameId(DDMFormInstance.class), testGroup, name);
 		page = contentStructureResource.getSiteContentStructuresPage(
-			testGroup.getGroupId(), ddmStructure.getDescription("en_US"), null,
-			null, null, null);
+			testGroup.getGroupId(), name, null, null, null, null);
 
 		Assert.assertEquals(1, page.getTotalCount());
 	}
@@ -83,6 +87,7 @@ public class ContentStructureResourceTest
 
 		return _toContentStructure(
 			_addDDMStructure(
+				_portal.getClassNameId(JournalArticle.class),
 				depotEntry.getGroup(), contentStructure.getName()));
 	}
 
@@ -91,7 +96,9 @@ public class ContentStructureResourceTest
 		throws Exception {
 
 		return _toContentStructure(
-			_addDDMStructure(testGroup, RandomTestUtil.randomString()));
+			_addDDMStructure(
+				_portal.getClassNameId(JournalArticle.class), testGroup,
+				RandomTestUtil.randomString()));
 	}
 
 	@Override
@@ -118,6 +125,7 @@ public class ContentStructureResourceTest
 
 		return _toContentStructure(
 			_addDDMStructure(
+				_portal.getClassNameId(JournalArticle.class),
 				GroupLocalServiceUtil.getGroup(siteId),
 				contentStructure.getName()));
 	}
@@ -153,16 +161,16 @@ public class ContentStructureResourceTest
 		return testGetContentStructure_addContentStructure();
 	}
 
-	private DDMStructure _addDDMStructure(Group group, String name)
+	private DDMStructure _addDDMStructure(
+			long classNameId, Group group, String name)
 		throws Exception {
 
 		DDMStructureTestHelper ddmStructureTestHelper =
-			new DDMStructureTestHelper(
-				PortalUtil.getClassNameId(JournalArticle.class), group);
+			new DDMStructureTestHelper(classNameId, group);
 
 		return ddmStructureTestHelper.addStructure(
-			PortalUtil.getClassNameId(JournalArticle.class),
-			RandomTestUtil.randomString(), name, RandomTestUtil.randomString(),
+			classNameId, RandomTestUtil.randomString(), name,
+			RandomTestUtil.randomString(),
 			_deserialize(_read("test-ddm-structure.json")),
 			StorageType.DEFAULT.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 	}
@@ -201,5 +209,8 @@ public class ContentStructureResourceTest
 
 	@Inject(filter = "ddm.form.deserializer.type=json")
 	private static DDMFormDeserializer _jsonDDMFormDeserializer;
+
+	@Inject
+	private Portal _portal;
 
 }

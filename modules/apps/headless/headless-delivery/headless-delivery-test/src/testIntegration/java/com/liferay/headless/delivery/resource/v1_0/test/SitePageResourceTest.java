@@ -60,6 +60,7 @@ import com.liferay.headless.delivery.client.resource.v1_0.SitePageResource;
 import com.liferay.headless.delivery.client.serdes.v1_0.SitePageSerDes;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
+import com.liferay.layout.test.util.LayoutFriendlyURLRandomizerBumper;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -415,12 +416,19 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 			Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
 
+			String esURLTitle = StringUtil.toLowerCase(
+				RandomTestUtil.randomString(
+					LayoutFriendlyURLRandomizerBumper.INSTANCE));
+			String usURLTitle = StringUtil.toLowerCase(
+				RandomTestUtil.randomString(
+					LayoutFriendlyURLRandomizerBumper.INSTANCE));
+
 			LayoutTestUtil.updateFriendlyURL(
 				layout,
 				HashMapBuilder.put(
-					LocaleUtil.SPAIN, "/spanish-page"
+					LocaleUtil.SPAIN, StringPool.FORWARD_SLASH + esURLTitle
 				).put(
-					LocaleUtil.US, "/english-page"
+					LocaleUtil.US, StringPool.FORWARD_SLASH + usURLTitle
 				).build());
 
 			SitePageResource.Builder builder = SitePageResource.builder();
@@ -432,9 +440,11 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			).build();
 
 			SitePage sitePage = localizedSitePageResource.getSiteSitePage(
-				testGroup.getGroupId(), "english-page");
+				testGroup.getGroupId(), usURLTitle);
 
-			Assert.assertEquals("/english-page", sitePage.getFriendlyUrlPath());
+			Assert.assertEquals(
+				StringPool.FORWARD_SLASH + usURLTitle,
+				sitePage.getFriendlyUrlPath());
 		}
 		finally {
 			_companyLocalService.updateDisplay(

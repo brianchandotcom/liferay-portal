@@ -5,9 +5,7 @@
 
 package com.liferay.customer;
 
-import com.liferay.customer.exception.JiraIssueNotFoundException;
 import com.liferay.customer.exception.JiraOrganizationNotFoundException;
-import com.liferay.customer.model.JiraSupportIssue;
 import com.liferay.customer.service.JiraService;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -30,11 +28,6 @@ public class BaseRestController
 
 		try {
 			return _getAccountKey(organizationId, workspaceId);
-		}
-		catch (JiraIssueNotFoundException jiraIssueNotFoundException) {
-			_log.error(jiraIssueNotFoundException, jiraIssueNotFoundException);
-
-			throw jiraIssueNotFoundException;
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

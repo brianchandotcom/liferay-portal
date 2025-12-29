@@ -158,16 +158,17 @@ public class PageExperienceResourceTest
 
 		_testPostSitePageSpecificationPageExperience(
 			PageExperiencesTestUtil.getPageExperience(
-				testGroup.getGroupId(), null));
+				_draftLayout.getExternalReferenceCode(), testGroup.getGroupId(),
+				null));
 
 		_testPostSitePageSpecificationPageExperience(
 			PageExperiencesTestUtil.getPageExperience(
-				testGroup.getGroupId(),
+				_draftLayout.getExternalReferenceCode(), testGroup.getGroupId(),
 				SegmentsTestUtil.addSegmentsEntry(testGroup.getGroupId())));
 
 		_testPostSitePageSpecificationPageExperience(
 			PageExperiencesTestUtil.getPageExperience(
-				testGroup.getGroupId(),
+				_draftLayout.getExternalReferenceCode(), testGroup.getGroupId(),
 				SegmentsTestUtil.addSegmentsEntry(testCompany.getGroupId())));
 	}
 
@@ -176,7 +177,8 @@ public class PageExperienceResourceTest
 	public void testPutSitePageExperience() throws Exception {
 		PageExperience pageExperience =
 			PageExperiencesTestUtil.getPageExperience(
-				testGroup.getGroupId(), null);
+				_draftLayout.getExternalReferenceCode(), testGroup.getGroupId(),
+				null);
 
 		pageExperience = _testPutSitePageExperience(pageExperience);
 

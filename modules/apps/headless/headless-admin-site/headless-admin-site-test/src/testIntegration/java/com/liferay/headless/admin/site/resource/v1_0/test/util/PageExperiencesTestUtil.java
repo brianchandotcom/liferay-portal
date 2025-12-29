@@ -124,9 +124,13 @@ public class PageExperiencesTestUtil {
 	}
 
 	public static PageExperience getPageExperience(
-		long scopeGroupId, SegmentsEntry segmentsEntry) {
+		String pageSpecificationExternalReferenceCode, long scopeGroupId,
+		SegmentsEntry segmentsEntry) {
 
 		PageExperience pageExperience = getPageExperience();
+
+		pageExperience.setPageSpecificationExternalReferenceCode(
+			pageSpecificationExternalReferenceCode);
 
 		if (segmentsEntry != null) {
 			pageExperience.setSegmentItemExternalReference(
@@ -142,12 +146,11 @@ public class PageExperiencesTestUtil {
 		long scopeGroupId, SegmentsEntry segmentsEntry) {
 
 		PageExperience pageExperience = getPageExperience(
-			scopeGroupId, segmentsEntry);
+			contentPageSpecificationExternalReferenceCode, scopeGroupId,
+			segmentsEntry);
 
 		pageExperience.setPageElements(
 			PageElementsTestUtil.getPageElements(scopeGroupId));
-		pageExperience.setPageSpecificationExternalReferenceCode(
-			contentPageSpecificationExternalReferenceCode);
 		pageExperience.setPriority(priority);
 
 		return pageExperience;

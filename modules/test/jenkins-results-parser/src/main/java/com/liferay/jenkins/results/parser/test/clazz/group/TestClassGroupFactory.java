@@ -355,6 +355,11 @@ public class TestClassGroupFactory {
 					batchTestClassGroup = new JUnitBatchTestClassGroup(
 						jsonObject, portalTestClassJob);
 				}
+				else if (testBatch != null) {
+					batchTestClassGroup = new JUnitBatchTestClassGroup(
+						batchName, portalTestClassJob,
+						(JUnitTestBatch)testBatch);
+				}
 				else {
 					batchTestClassGroup = new JUnitBatchTestClassGroup(
 						batchName, portalTestClassJob);

@@ -5,6 +5,7 @@
 
 package com.liferay.jenkins.results.parser.test.task;
 
+import com.liferay.jenkins.results.parser.WeightedItem;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 
 import java.util.List;
@@ -14,7 +15,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public interface TestTask {
+public interface TestTask extends WeightedItem {
 
 	public void addTestClass(TestClass testClass);
 

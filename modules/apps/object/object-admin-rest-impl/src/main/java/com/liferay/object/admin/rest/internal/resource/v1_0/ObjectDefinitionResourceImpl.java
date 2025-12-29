@@ -1338,9 +1338,9 @@ public class ObjectDefinitionResourceImpl
 		}
 
 		ObjectFolder objectFolder =
-			_objectFolderLocalService.getObjectFolderByExternalReferenceCode(
+			_objectFolderLocalService.getOrAddEmptyObjectFolder(
 				objectFolderExternalReferenceCode,
-				contextCompany.getCompanyId());
+				contextCompany.getCompanyId(), contextUser.getUserId());
 
 		return objectFolder.getObjectFolderId();
 	}

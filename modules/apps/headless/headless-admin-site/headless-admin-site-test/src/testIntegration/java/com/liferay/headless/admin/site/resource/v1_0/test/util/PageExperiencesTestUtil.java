@@ -144,20 +144,6 @@ public class PageExperiencesTestUtil {
 		return pageExperience;
 	}
 
-	public static PageExperience getPageExperience(
-		String contentPageSpecificationExternalReferenceCode,
-		PageElement[] pageElements, int priority) {
-
-		PageExperience pageExperience = getPageExperience();
-
-		pageExperience.setPageElements(pageElements);
-		pageExperience.setPageSpecificationExternalReferenceCode(
-			contentPageSpecificationExternalReferenceCode);
-		pageExperience.setPriority(priority);
-
-		return pageExperience;
-	}
-
 	public static PageExperience[] getPageExperiences(
 			long companyGroupId,
 			String contentPageSpecificationExternalReferenceCode, long groupId)

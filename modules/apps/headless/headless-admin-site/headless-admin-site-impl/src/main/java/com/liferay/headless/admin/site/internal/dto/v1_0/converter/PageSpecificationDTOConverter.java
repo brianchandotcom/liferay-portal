@@ -14,6 +14,7 @@ import com.liferay.headless.admin.site.dto.v1_0.FavIconClientExtension;
 import com.liferay.headless.admin.site.dto.v1_0.FavIconItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
+import com.liferay.headless.admin.site.dto.v1_0.PageSetPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.Settings;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSection;
@@ -32,6 +33,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLo
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -49,6 +51,7 @@ import com.liferay.segments.service.SegmentsExperienceService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -72,6 +75,10 @@ public class PageSpecificationDTOConverter
 
 		if (layout.isTypeAssetDisplay() || layout.isTypeContent()) {
 			return _toContentPageSpecification(dtoConverterContext, layout);
+		}
+
+		if (Objects.equals(layout.getType(), LayoutConstants.TYPE_NODE)) {
+			return _toPageSetPageSpecification(layout);
 		}
 
 		if (dtoConverterContext == null) {
@@ -422,6 +429,20 @@ public class PageSpecificationDTOConverter
 						return Status.DRAFT;
 					});
 				setType(() -> Type.CONTENT_PAGE_SPECIFICATION);
+			}
+		};
+	}
+
+	private PageSpecification _toPageSetPageSpecification(Layout layout) {
+		return new PageSetPageSpecification() {
+			{
+				setCustomFields(
+					() -> CustomFieldsUtil.toCustomFields(
+						true, Layout.class.getName(), layout.getPlid(),
+						layout.getCompanyId(), null));
+				setExternalReferenceCode(layout::getExternalReferenceCode);
+				setStatus(() -> Status.APPROVED);
+				setType(() -> Type.PAGE_SET_PAGE_SPECIFICATION);
 			}
 		};
 	}

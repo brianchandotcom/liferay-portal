@@ -105,6 +105,16 @@
 	}
 }
 
+.dsr-room-management,
+.dsr-template-management {
+	.cell-modifiedDate {
+		white-space: nowrap;
+	}
+	.cell-name {
+		max-width: 37rem;
+	}
+}
+
 .portlet-digital-sales-room-management {
 	background-color: #fff;
 	border: 1px solid $gray-200;

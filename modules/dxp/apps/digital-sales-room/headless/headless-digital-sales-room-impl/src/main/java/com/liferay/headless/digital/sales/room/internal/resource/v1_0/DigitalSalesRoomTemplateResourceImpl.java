@@ -111,6 +111,15 @@ public class DigitalSalesRoomTemplateResourceImpl
 	}
 
 	@Override
+	public Page<DigitalSalesRoomTemplate>
+			getDigitalSalesRoomDigitalSalesRoomTemplatesPage(
+				Long digitalSalesRoomId)
+		throws Exception {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public DigitalSalesRoomTemplate getDigitalSalesRoomTemplate(
 			Long digitalSalesRoomTemplateId)
 		throws Exception {
@@ -175,7 +184,8 @@ public class DigitalSalesRoomTemplateResourceImpl
 	@Override
 	public DigitalSalesRoomTemplate
 			postDigitalSalesRoomDigitalSalesRoomTemplate(
-				Long digitalSalesRoomId)
+				Long digitalSalesRoomId,
+				DigitalSalesRoomTemplate digitalSalesRoomTemplate)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
@@ -195,8 +205,10 @@ public class DigitalSalesRoomTemplateResourceImpl
 		}
 
 		Group targetGroup = _addGroup(
-			sourceGroup.getDescription(
-				contextAcceptLanguage.getPreferredLocale()),
+			GetterUtil.getString(
+				digitalSalesRoomTemplate.getDescription(),
+				sourceGroup.getDescription(
+					contextAcceptLanguage.getPreferredLocale())),
 			"blank-site-initializer",
 			UniqueUtil.getUniqueValue(
 				"template",
@@ -210,8 +222,10 @@ public class DigitalSalesRoomTemplateResourceImpl
 
 					return false;
 				},
-				sourceGroup.getName(
-					contextAcceptLanguage.getPreferredLocale())));
+				GetterUtil.getString(
+					digitalSalesRoomTemplate.getName(),
+					sourceGroup.getName(
+						contextAcceptLanguage.getPreferredLocale()))));
 
 		ObjectDefinition objectDefinition = _getObjectDefinition();
 

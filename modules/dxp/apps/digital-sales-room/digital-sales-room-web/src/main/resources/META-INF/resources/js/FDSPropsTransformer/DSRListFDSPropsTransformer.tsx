@@ -3,10 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+// @ts-ignore
+
+import {IInternalRenderer} from '@liferay/frontend-data-set-web';
 import {openModal} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 
-import {DSRInitializer} from '../index';
+import DSRRoomSaveAsTemplate from '../components/DSRRoomSaveAsTemplate';
+import {DSRInitializer, DSRRoomNameRenderer} from '../index';
 import deleteDSRAction from './actions/deleteDSRAction';
 
 export default function propsTransformer({
@@ -50,6 +54,15 @@ export default function propsTransformer({
 				}
 			),
 		},
+		customRenderers: {
+			tableCell: [
+				{
+					component: DSRRoomNameRenderer,
+					name: 'roomName',
+					type: 'internal',
+				} as IInternalRenderer,
+			],
+		},
 		itemsActions,
 		onActionDropdownItemClick: ({
 			action,
@@ -65,6 +78,7 @@ export default function propsTransformer({
 			};
 			event: Event;
 			itemData: {
+				friendlyUrlPath: string;
 				id: number;
 				name: string;
 			};
@@ -82,6 +96,30 @@ export default function propsTransformer({
 						),
 						itemData.name
 					),
+				});
+			}
+			else if (action?.data?.id === 'edit') {
+				event?.preventDefault();
+
+				window.location.href = `/web${itemData.friendlyUrlPath}`;
+			}
+			else if (action?.data?.id === 'saveAsTemplate') {
+				event?.preventDefault();
+
+				return openModal({
+					containerProps: {
+						className: '',
+					},
+					contentComponent: ({
+						closeModal,
+					}: {
+						closeModal: () => void;
+					}) =>
+						DSRRoomSaveAsTemplate({
+							closeModal,
+							digitalSalesRoomId: itemData.id,
+						}),
+					size: 'md',
 				});
 			}
 		},

@@ -303,6 +303,13 @@ test(
 			await virtualInstancesPage.deleteVirtualInstance(
 				DEFAULT_VIRTUAL_INSTANCE_NAME
 			);
+
+			await instanceSettingsPage.goToInstanceSetting(
+				'Accessibility',
+				'Accessibility Menu'
+			);
+
+			await instanceSettingsPage.resetInstanceSetting();
 		}
 	}
 );

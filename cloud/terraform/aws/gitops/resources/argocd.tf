@@ -143,7 +143,7 @@ resource "kubernetes_manifest" "liferay_applicationset" {
 			]
 			template={
 				metadata={
-					name="liferay-${"{{path.basename}}"}"
+					name: "liferay-{{path.basename}}"
 				}
 				spec={
 					project=local.liferay_appproject_name
@@ -157,7 +157,7 @@ resource "kubernetes_manifest" "liferay_applicationset" {
 								]
 							}
 							repoURL=local.liferay_helm_chart_config.source_repourl_value
-							targetRevision=var.liferay_helm_chart_version
+							targetRevision=local.liferay_helm_chart_config.version
 						},
 						{
 							ref="values"
@@ -166,7 +166,7 @@ resource "kubernetes_manifest" "liferay_applicationset" {
 						},
 					]
 					destination={
-						namespace="liferay-${"{{path.basename}}"}"
+						namespace="liferay-{{path.basename}}"
 						server="https://kubernetes.default.svc"
 					}
 					ignoreDifferences = [
@@ -185,9 +185,10 @@ resource "kubernetes_manifest" "liferay_applicationset" {
 							selfHeal=true
 						}
 						syncOptions=[
-							"RespectIgnoreDifferences=true",
 							"ApplyOutOfSyncOnly=true",
 							"CreateNamespace=true",
+							"RespectIgnoreDifferences=true",
+							"SkipDryRunOnMissingResource=true"
 						]
 					}
 				}

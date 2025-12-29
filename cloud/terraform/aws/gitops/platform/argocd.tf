@@ -43,6 +43,11 @@ resource "kubernetes_secret" "argocd_secret" {
 	data={
 		"server.secretkey"=random_password.argocd_server_secretkey.result
 	}
+	lifecycle {
+		ignore_changes=[
+			data,
+		]
+	}
 	metadata {
 		annotations={
 			"meta.helm.sh/release-name"="argocd"

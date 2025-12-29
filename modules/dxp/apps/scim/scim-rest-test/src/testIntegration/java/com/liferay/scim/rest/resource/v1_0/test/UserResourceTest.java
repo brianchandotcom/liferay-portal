@@ -120,6 +120,11 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 
 		Assert.assertFalse(portalUser.isActive());
 
+		_userLocalService.deleteUser(portalUser);
+
+		assertHttpResponseStatusCode(
+			404, userResource.getV2UserByIdHttpResponse(user.getId()));
+
 		// Delete an existing user with no SCIM client ID
 
 		portalUser = UserTestUtil.addUser();

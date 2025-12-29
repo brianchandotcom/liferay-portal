@@ -6,8 +6,10 @@
 package com.liferay.product.navigation.product.menu.theme.contributor.internal.template;
 
 import com.liferay.portal.kernel.template.TemplateContextContributor;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.product.menu.helper.ProductNavigationProductMenuHelper;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,7 +35,12 @@ public class ProductMenuTemplateContextContributor
 		Map<String, Object> contextObjects,
 		HttpServletRequest httpServletRequest) {
 
-		if (!_productNavigationProductMenuHelper.isShowProductMenu(
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (!themeDisplay.isShowControlMenu() ||
+			!_productNavigationProductMenuHelper.isShowProductMenu(
 				httpServletRequest)) {
 
 			return;

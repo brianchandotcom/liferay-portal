@@ -45,7 +45,7 @@ public class ProductNavigationProductMenuTopHeadDynamicInclude
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (!themeDisplay.isSignedIn() ||
+		if (!themeDisplay.isShowControlMenu() ||
 			!_productNavigationProductMenuHelper.isShowProductMenu(
 				httpServletRequest)) {
 

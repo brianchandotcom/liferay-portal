@@ -159,11 +159,6 @@ public class ExportImportHelperUtilTest {
 				new TestPortletDataHandler(
 					new String[] {className}, true, DataLevel.SITE),
 				RandomTestUtil.randomString());
-			SafeCloseable safeCloseable5 = _registerWithSafeCloseable(
-				bundleContext, List.of(companyId2, RandomTestUtil.randomLong()),
-				new TestPortletDataHandler(
-					new String[] {className}, false, DataLevel.SITE),
-				RandomTestUtil.randomString());
 			SafeCloseable safeCloseable6 = _registerWithSafeCloseable(
 				bundleContext, List.of(companyId2, RandomTestUtil.randomLong()),
 				new TestPortletDataHandler(

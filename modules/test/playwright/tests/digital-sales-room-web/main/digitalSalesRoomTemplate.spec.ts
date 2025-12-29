@@ -20,6 +20,13 @@ export const test = mergeTests(
 );
 
 test.afterEach(async ({apiHelpers}) => {
+	const digitalSalesRooms =
+		await apiHelpers.headlessDigitalSalesRoom.getDigitalSalesRooms();
+
+	for (const digitalSalesRoom of digitalSalesRooms.items) {
+		await apiHelpers.headlessSite.deleteSite(digitalSalesRoom.id);
+	}
+
 	const digitalSalesRoomTemplates =
 		await apiHelpers.headlessDigitalSalesRoom.getDigitalSalesRoomTemplates();
 

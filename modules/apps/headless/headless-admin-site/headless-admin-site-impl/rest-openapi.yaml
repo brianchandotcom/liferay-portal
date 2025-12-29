@@ -2895,10 +2895,18 @@ components:
                         The page rule condition's value.
                     type: string
             type: object
+        PageSetPageSettings:
+            allOf:
+                -   $ref: "#/components/schemas/PageSettings"
+            # @review
+            description:
+                The settings of a page set page.
+            type: object
         PageSettings:
             discriminator:
                 mapping:
                     ContentPageSettings: "#/components/schemas/ContentPageSettings"
+                    PageSetPageSettings: "#/components/schemas/PageSetPageSettings"
                     WidgetPageSettings: "#/components/schemas/WidgetPageSettings"
                 propertyName: type
             properties:
@@ -2941,6 +2949,7 @@ components:
                 type:
                     enum:
                         -   ContentPageSettings
+                        -   PageSetPageSettings
                         -   WidgetPageSettings
                     type: string
             type: object
@@ -3577,6 +3586,7 @@ components:
                 type:
                     enum:
                         -   ContentPage
+                        -   PageSetPage
                         -   WidgetPage
                     type: string
                 uuid:

@@ -1,6 +1,7 @@
 @component-name = "portal-content-management"
 definition {
 
+	property browser.chrome.version = "139.0";
 	property custom.properties = "default.layout.template.id=1_column";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Social Bookmarks";

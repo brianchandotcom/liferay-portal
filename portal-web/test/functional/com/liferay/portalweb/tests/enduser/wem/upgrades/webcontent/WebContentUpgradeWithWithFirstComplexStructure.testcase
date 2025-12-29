@@ -1,6 +1,7 @@
 @component-name = "portal-content-management"
 definition {
 
+	property browser.chrome.version = "139.0";
 	property ci.retries.disabled = "true";
 	property data.archive.type = "data-archive-web-content-first-complex-fields";
 	property database.types = "db2,mariadb,mysql,oracle,postgresql";

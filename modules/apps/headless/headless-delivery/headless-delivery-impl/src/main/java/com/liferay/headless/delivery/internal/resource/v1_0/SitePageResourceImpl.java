@@ -77,6 +77,7 @@ import com.liferay.portal.kernel.theme.ThemeUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -581,15 +582,26 @@ public class SitePageResourceImpl
 		String resourceName = ResourceActionsUtil.getCompositeModelName(
 			Layout.class.getName(), "false");
 
+		long classNameId = _portal.getClassNameId(resourceName);
+
 		if (!StringUtil.startsWith(friendlyUrlPath, StringPool.FORWARD_SLASH)) {
 			friendlyUrlPath = StringPool.FORWARD_SLASH + friendlyUrlPath;
 		}
 
 		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
-			_friendlyURLEntryLocalService.getFriendlyURLEntryLocalization(
-				groupId, _portal.getClassNameId(resourceName),
+			_friendlyURLEntryLocalService.fetchFriendlyURLEntryLocalization(
+				groupId, classNameId,
 				contextAcceptLanguage.getPreferredLanguageId(),
 				friendlyUrlPath);
+
+		if (friendlyURLEntryLocalization == null) {
+			friendlyURLEntryLocalization =
+				_friendlyURLEntryLocalService.getFriendlyURLEntryLocalization(
+					groupId, classNameId,
+					LocaleUtil.toLanguageId(
+						_portal.getSiteDefaultLocale(groupId)),
+					friendlyUrlPath);
+		}
 
 		return _layoutService.getLayout(
 			friendlyURLEntryLocalization.getClassPK());

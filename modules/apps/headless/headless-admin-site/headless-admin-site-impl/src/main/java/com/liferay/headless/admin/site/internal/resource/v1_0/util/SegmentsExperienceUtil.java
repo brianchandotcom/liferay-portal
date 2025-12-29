@@ -55,7 +55,7 @@ public class SegmentsExperienceUtil {
 				UnicodePropertiesBuilder.create(
 					true
 				).build(),
-				serviceContext);
+				new ServiceContext());
 
 		LayoutLocalServiceUtil.updateLayoutContent(
 			_getData(

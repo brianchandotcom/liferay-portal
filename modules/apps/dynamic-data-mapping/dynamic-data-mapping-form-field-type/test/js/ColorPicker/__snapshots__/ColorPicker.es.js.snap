@@ -72,7 +72,6 @@ exports[`Field Color Picker renders field disabled 1`] = `
 exports[`Field Color Picker renders field with helptext 1`] = `
 <div>
   <div
-    aria-labelledby="colorPicker_fieldDetails"
     class="form-group hide"
     data-field-name="colorPicker"
   >

@@ -3,7 +3,6 @@
 exports[`Field Text has a helptext 1`] = `
 <div>
   <div
-    aria-labelledby="textField_fieldDetails"
     class="form-group hide"
     data-field-name="textField"
   >

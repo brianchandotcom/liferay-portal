@@ -43,7 +43,7 @@ public class ProductNavigationProductMenuHelperImpl
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (!themeDisplay.isSignedIn() || !themeDisplay.isShowControlMenu()) {
+		if (!themeDisplay.isSignedIn()) {
 			return false;
 		}
 

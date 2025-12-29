@@ -46,9 +46,7 @@ public class BackgroundTaskModelListenerTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testSetCTCollectionStatusToIncompleteWhenBackgroundTaskFails()
-		throws Exception {
-
+	public void testOnAfterUpdate() throws Exception {
 		_workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(
 			null, TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
 			TestPropsValues.getGroupId(), JournalArticle.class.getName(), 0, 0,

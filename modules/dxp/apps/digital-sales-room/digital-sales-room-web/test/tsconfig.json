@@ -1,5 +1,5 @@
 {
-	"@generated": "0637b60341dcd62ec21fd1de503e191615dcd448",
+	"@generated": "d5859c55c87ff120bdca1730c9d9082f30a2ef3a",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -11,6 +11,9 @@
 		"module": "es2022",
 		"moduleResolution": "node",
 		"paths": {
+			"@liferay/frontend-data-set-web": [
+				"../../../../../apps/frontend-data-set/frontend-data-set-web/src/main/resources/META-INF/resources/index.ts"
+			],
 			"@liferay/frontend-js-react-web": [
 				"../../../../../apps/frontend-js/frontend-js-react-web/src/main/resources/META-INF/resources/js/index.ts"
 			],
@@ -48,6 +51,9 @@
 		"../src/**/*.tsx"
 	],
 	"references": [
+		{
+			"path": "../../../../../apps/frontend-data-set/frontend-data-set-web/src/main/resources/META-INF/resources/tsconfig.json"
+		},
 		{
 			"path": "../../../../../apps/frontend-js/frontend-js-react-web/src/main/resources/META-INF/resources/tsconfig.json"
 		},

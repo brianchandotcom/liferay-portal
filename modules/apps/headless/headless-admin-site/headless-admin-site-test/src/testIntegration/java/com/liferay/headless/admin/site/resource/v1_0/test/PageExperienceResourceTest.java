@@ -158,17 +158,19 @@ public class PageExperienceResourceTest
 
 		_testPostSitePageSpecificationPageExperience(
 			PageExperiencesTestUtil.getPageExperience(
-				_draftLayout.getExternalReferenceCode(), testGroup.getGroupId(),
-				null));
+				_draftLayout.getExternalReferenceCode(), 1,
+				testGroup.getGroupId(), null));
 
 		_testPostSitePageSpecificationPageExperience(
 			PageExperiencesTestUtil.getPageExperience(
-				_draftLayout.getExternalReferenceCode(), testGroup.getGroupId(),
+				_draftLayout.getExternalReferenceCode(), 2,
+				testGroup.getGroupId(),
 				SegmentsTestUtil.addSegmentsEntry(testGroup.getGroupId())));
 
 		_testPostSitePageSpecificationPageExperience(
 			PageExperiencesTestUtil.getPageExperience(
-				_draftLayout.getExternalReferenceCode(), testGroup.getGroupId(),
+				_draftLayout.getExternalReferenceCode(), 3,
+				testGroup.getGroupId(),
 				SegmentsTestUtil.addSegmentsEntry(testCompany.getGroupId())));
 	}
 
@@ -177,8 +179,8 @@ public class PageExperienceResourceTest
 	public void testPutSitePageExperience() throws Exception {
 		PageExperience pageExperience =
 			PageExperiencesTestUtil.getPageExperience(
-				_draftLayout.getExternalReferenceCode(), testGroup.getGroupId(),
-				null);
+				_draftLayout.getExternalReferenceCode(), 1,
+				testGroup.getGroupId(), null);
 
 		pageExperience = _testPutSitePageExperience(pageExperience);
 
@@ -199,7 +201,10 @@ public class PageExperienceResourceTest
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"externalReferenceCode", "name_i18n"};
+		return new String[] {
+			"externalReferenceCode", "name_i18n", "priority",
+			"segmentItemExternalReference"
+		};
 	}
 
 	@Override

@@ -156,7 +156,9 @@ public class SitePageResourceImpl
 	public SitePage getSiteSitePage(Long siteId, String friendlyUrlPath)
 		throws Exception {
 
-		return _toSitePage(true, _getLayout(siteId, friendlyUrlPath));
+		Layout layout = _getLayout(siteId, friendlyUrlPath);
+
+		return _toSitePage(true, layout, _getThemeDisplay(layout));
 	}
 
 	@Override
@@ -257,9 +259,11 @@ public class SitePageResourceImpl
 				long plid = GetterUtil.getLong(
 					document.get(Field.ENTRY_CLASS_PK));
 
+				Layout layout = _layoutService.getLayout(plid);
+
 				return _toSitePage(
-					_isEmbeddedPageDefinition(),
-					_layoutService.getLayout(plid));
+					_isEmbeddedPageDefinition(), layout,
+					_getThemeDisplay(layout));
 			});
 	}
 
@@ -615,7 +619,7 @@ public class SitePageResourceImpl
 		throws Exception {
 
 		if (Validator.isNull(segmentsExperienceKey)) {
-			return _getUserSegmentsExperience(layout);
+			return _getUserSegmentsExperience(layout, _getThemeDisplay(layout));
 		}
 
 		return _segmentsExperienceService.fetchSegmentsExperience(
@@ -660,11 +664,12 @@ public class SitePageResourceImpl
 		return themeDisplay;
 	}
 
-	private SegmentsExperience _getUserSegmentsExperience(Layout layout)
+	private SegmentsExperience _getUserSegmentsExperience(
+			Layout layout, ThemeDisplay themeDisplay)
 		throws Exception {
 
 		contextHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));
+			WebKeys.THEME_DISPLAY, themeDisplay);
 
 		long[] segmentsEntryIds = _segmentsEntryRetriever.getSegmentsEntryIds(
 			layout.getGroupId(), contextUser.getUserId(),
@@ -839,7 +844,9 @@ public class SitePageResourceImpl
 		}
 	}
 
-	private SitePage _toSitePage(boolean embeddedPageDefinition, Layout layout)
+	private SitePage _toSitePage(
+		boolean embeddedPageDefinition, Layout layout,
+		ThemeDisplay themeDisplay)
 		throws Exception {
 
 		DefaultDTOConverterContext dtoConverterContext =
@@ -854,7 +861,8 @@ public class SitePageResourceImpl
 			"embeddedPageDefinition", embeddedPageDefinition);
 		dtoConverterContext.setAttribute("groupId", layout.getGroupId());
 		dtoConverterContext.setAttribute(
-			"segmentsExperience", _getUserSegmentsExperience(layout));
+			"segmentsExperience",
+			_getUserSegmentsExperience(layout, themeDisplay));
 
 		return _sitePageDTOConverter.toDTO(dtoConverterContext, layout);
 	}

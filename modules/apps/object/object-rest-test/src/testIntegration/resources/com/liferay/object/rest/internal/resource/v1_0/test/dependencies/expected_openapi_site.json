@@ -135,6 +135,7 @@
 				}
 			},
 			"Comment": {
+				"description": "Optional field with the comments associated with this object entry, can be embedded with nestedFields",
 				"properties": {
 					"actions": {
 						"additionalProperties": {
@@ -180,6 +181,10 @@
 						"readOnly": true,
 						"type": "integer"
 					},
+					"parentCommentExternalReferenceCode": {
+						"description": "The parent comment's external reference code.",
+						"type": "string"
+					},
 					"parentCommentId": {
 						"description": "The ID of the comment's parent, if it exists.",
 						"format": "int64",
@@ -212,6 +217,7 @@
 				}
 			},
 			"Creator": {
+				"description": "The comment's author.",
 				"properties": {
 					"additionalName": {
 						"description": "The author's additional name (e.g., middle name).",
@@ -330,6 +336,13 @@
 						"readOnly": true,
 						"type": "array",
 						"x-batch-unsupported-formats": "CSV"
+					},
+					"comments": {
+						"description": "Optional field with the comments associated with this object entry, can be embedded with nestedFields",
+						"items": {
+							"$ref": "#/components/schemas/Comment"
+						},
+						"type": "array"
 					},
 					"creator": {
 						"readOnly": true,
@@ -2782,6 +2795,114 @@
 				]
 			}
 		},
+		"/scopes/{scopeKey}/by-external-reference-code/{externalReferenceCode}/translations": {
+			"get": {
+				"operationId": "getScopeScopeKeyByExternalReferenceCodeTranslation",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "scopeKey",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "sourceLanguageId",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "targetLanguageIds",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "version",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/zip": {
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object8"
+				]
+			}
+		},
+		"/scopes/{scopeKey}/by-external-reference-code/{externalReferenceCode}/translations/{languageId}": {
+			"get": {
+				"operationId": "getScopeScopeKeyByExternalReferenceCodeTranslationLanguage",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "scopeKey",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "languageId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "targetLanguageId",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/x-xliff+xml": {
+							},
+							"application/xliff+xml": {
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object8"
+				]
+			}
+		},
 		"/scopes/{scopeKey}/by-external-reference-code/{externalReferenceCode}/unsubscribe": {
 			"post": {
 				"operationId": "postScopeScopeKeyByExternalReferenceCodeUnsubscribe",
@@ -3783,6 +3904,98 @@
 								"schema": {
 									"$ref": "#/components/schemas/PagePermission"
 								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object8"
+				]
+			}
+		},
+		"/{object8Id}/translations": {
+			"get": {
+				"operationId": "getObject8Translation",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "object8Id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "sourceLanguageId",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "targetLanguageIds",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "version",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/zip": {
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object8"
+				]
+			}
+		},
+		"/{object8Id}/translations/{languageId}": {
+			"get": {
+				"operationId": "getObject8TranslationLanguage",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "object8Id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "languageId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "targetLanguageId",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/x-xliff+xml": {
+							},
+							"application/xliff+xml": {
 							}
 						},
 						"description": "default response"

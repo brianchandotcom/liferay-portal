@@ -135,6 +135,7 @@
 				}
 			},
 			"Comment": {
+				"description": "Optional field with the comments associated with this object entry, can be embedded with nestedFields",
 				"properties": {
 					"actions": {
 						"additionalProperties": {
@@ -180,6 +181,10 @@
 						"readOnly": true,
 						"type": "integer"
 					},
+					"parentCommentExternalReferenceCode": {
+						"description": "The parent comment's external reference code.",
+						"type": "string"
+					},
 					"parentCommentId": {
 						"description": "The ID of the comment's parent, if it exists.",
 						"format": "int64",
@@ -212,6 +217,7 @@
 				}
 			},
 			"Creator": {
+				"description": "The comment's author.",
 				"properties": {
 					"additionalName": {
 						"description": "The author's additional name (e.g., middle name).",
@@ -471,6 +477,13 @@
 						"readOnly": true,
 						"type": "array",
 						"x-batch-unsupported-formats": "CSV"
+					},
+					"comments": {
+						"description": "Optional field with the comments associated with this object entry, can be embedded with nestedFields",
+						"items": {
+							"$ref": "#/components/schemas/Comment"
+						},
+						"type": "array"
 					},
 					"creator": {
 						"readOnly": true,
@@ -1278,6 +1291,13 @@
 						"readOnly": true,
 						"type": "array",
 						"x-batch-unsupported-formats": "CSV"
+					},
+					"comments": {
+						"description": "Optional field with the comments associated with this object entry, can be embedded with nestedFields",
+						"items": {
+							"$ref": "#/components/schemas/Comment"
+						},
+						"type": "array"
 					},
 					"creator": {
 						"readOnly": true,
@@ -2216,6 +2236,13 @@
 						"readOnly": true,
 						"type": "array",
 						"x-batch-unsupported-formats": "CSV"
+					},
+					"comments": {
+						"description": "Optional field with the comments associated with this object entry, can be embedded with nestedFields",
+						"items": {
+							"$ref": "#/components/schemas/Comment"
+						},
+						"type": "array"
 					},
 					"creator": {
 						"readOnly": true,
@@ -9090,6 +9117,98 @@
 								"schema": {
 									"$ref": "#/components/schemas/Object3"
 								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object2"
+				]
+			}
+		},
+		"/{object2Id}/translations": {
+			"get": {
+				"operationId": "getObject2Translation",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "object2Id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "sourceLanguageId",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "targetLanguageIds",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "version",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/zip": {
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object2"
+				]
+			}
+		},
+		"/{object2Id}/translations/{languageId}": {
+			"get": {
+				"operationId": "getObject2TranslationLanguage",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "object2Id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "languageId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "targetLanguageId",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/x-xliff+xml": {
+							},
+							"application/xliff+xml": {
 							}
 						},
 						"description": "default response"

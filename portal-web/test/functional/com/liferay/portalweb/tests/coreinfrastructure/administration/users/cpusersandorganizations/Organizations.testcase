@@ -1065,6 +1065,7 @@ definition {
 	@description = "A new user can add an organization with localized country name."
 	@priority = 3
 	test LocalizeCountryName {
+		property browser.chrome.version = "139.0";
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		task ("Add a new user") {
@@ -1662,6 +1663,8 @@ definition {
 
 	@priority = 4
 	test ViewOrganizationSiteViaSitesDirectory {
+		property browser.chrome.version = "139.0";
+
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");

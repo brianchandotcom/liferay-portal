@@ -161,28 +161,28 @@ public class ExportImportHelperUtilTest {
 				new TestPortletDataHandler(
 					new String[] {className}, true, DataLevel.SITE),
 				RandomTestUtil.randomString());
-			SafeCloseable safeCloseable6 = _registerWithSafeCloseable(
+			SafeCloseable safeCloseable5 = _registerWithSafeCloseable(
 				bundleContext, List.of(companyId2, RandomTestUtil.randomLong()),
 				new TestPortletDataHandler(
 					new String[] {className}, true, DataLevel.SITE),
 				RandomTestUtil.randomString());
-			SafeCloseable safeCloseable7 = _registerWithSafeCloseable(
+			SafeCloseable safeCloseable6 = _registerWithSafeCloseable(
 				bundleContext, List.of(companyId2, RandomTestUtil.randomLong()),
 				new TestPortletDataHandler(null, false, DataLevel.SITE),
 				RandomTestUtil.randomString());
-			SafeCloseable safeCloseable8 = _registerWithSafeCloseable(
+			SafeCloseable safeCloseable7 = _registerWithSafeCloseable(
 				bundleContext, List.of(companyId2),
 				new TestPortletDataHandler(
 					new String[] {className}, false,
 					DataLevel.PORTLET_INSTANCE),
 				RandomTestUtil.randomString());
-			SafeCloseable safeCloseable9 = _registerWithSafeCloseable(
+			SafeCloseable safeCloseable8 = _registerWithSafeCloseable(
 				bundleContext, List.of(companyId2),
 				new TestPortletDataHandler(
 					new String[] {RandomTestUtil.randomString()}, false,
 					DataLevel.SITE),
 				RandomTestUtil.randomString());
-			SafeCloseable safeCloseable10 = _registerWithSafeCloseable(
+			SafeCloseable safeCloseable9 = _registerWithSafeCloseable(
 				bundleContext,
 				List.of(companyId1, RandomTestUtil.randomLong(), companyId2),
 				null, RandomTestUtil.randomString())) {

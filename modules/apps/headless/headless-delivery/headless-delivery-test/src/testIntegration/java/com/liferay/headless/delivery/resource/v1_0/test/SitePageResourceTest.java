@@ -394,29 +394,33 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		try {
 			_companyLocalService.updateDisplay(
-				testCompany.getCompanyId(), "ca_ES", user.getTimeZoneId());
+				testCompany.getCompanyId(),
+				LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
+				user.getTimeZoneId());
 
 			_companyLocalService.updatePreferences(
 				testCompany.getCompanyId(),
 				UnicodePropertiesBuilder.put(
-					PropsKeys.LOCALES, "ca_ES,en_US"
+					PropsKeys.LOCALES,
+					StringUtil.merge(
+						LocaleUtil.toLanguageIds(
+							new Locale[] {LocaleUtil.SPAIN, LocaleUtil.US}),
+						StringPool.COMMA)
 				).build());
 
 			testGroup = GroupTestUtil.updateDisplaySettings(
 				testGroup.getGroupId(),
-				ListUtil.fromArray(
-					LocaleUtil.fromLanguageIds(
-						new String[] {"en_US", "ca_ES"})),
-				LocaleUtil.fromLanguageId("en_US"));
+				ListUtil.fromArray(LocaleUtil.SPAIN, LocaleUtil.US),
+				LocaleUtil.US);
 
 			Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
 
 			LayoutTestUtil.updateFriendlyURL(
 				layout,
 				HashMapBuilder.put(
-					LocaleUtil.fromLanguageId("en_US"), "/english-page"
+					LocaleUtil.SPAIN, "/spanish-page"
 				).put(
-					LocaleUtil.fromLanguageId("ca_ES"), "/spanish-page"
+					LocaleUtil.US, "/english-page"
 				).build());
 
 			SitePageResource.Builder builder = SitePageResource.builder();
@@ -424,7 +428,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			SitePageResource localizedSitePageResource = builder.authentication(
 				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
 			).locale(
-				LocaleUtil.fromLanguageId("en_US")
+				LocaleUtil.US
 			).build();
 
 			SitePage sitePage = localizedSitePageResource.getSiteSitePage(

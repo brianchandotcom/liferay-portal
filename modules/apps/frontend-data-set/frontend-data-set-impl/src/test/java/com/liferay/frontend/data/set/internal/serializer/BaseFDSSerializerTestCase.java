@@ -8,11 +8,11 @@ package com.liferay.frontend.data.set.internal.serializer;
 import com.liferay.frontend.data.set.SystemFDSEntry;
 import com.liferay.frontend.data.set.action.FDSCreationMenu;
 import com.liferay.frontend.data.set.action.FDSItemsActions;
-import com.liferay.frontend.data.set.filter.FDSFiltersGroups;
+import com.liferay.frontend.data.set.filter.GroupedFDSFilters;
 import com.liferay.frontend.data.set.internal.SystemFDSEntryRegistryImpl;
 import com.liferay.frontend.data.set.internal.action.FDSCreationMenuRegistryImpl;
 import com.liferay.frontend.data.set.internal.action.FDSItemsActionsRegistryImpl;
-import com.liferay.frontend.data.set.internal.filter.FDSFiltersGroupsRegistryImpl;
+import com.liferay.frontend.data.set.internal.filter.GroupedFDSFiltersRegistryImpl;
 import com.liferay.frontend.data.set.internal.sort.FDSSortsRegistryImpl;
 import com.liferay.frontend.data.set.internal.view.FDSViewContextContributorRegistryImpl;
 import com.liferay.frontend.data.set.internal.view.FDSViewRegistryImpl;
@@ -71,17 +71,17 @@ public abstract class BaseFDSSerializerTestCase {
 								 ServiceTrackerCustomizerFactory.
 									 <FDSCreationMenu>serviceWrapper(
 										 bundleContext))));
-		systemFDSSerializer.fdsFiltersGroupsRegistry =
-			new FDSFiltersGroupsRegistryImpl(
+		systemFDSSerializer.groupedFDSFiltersRegistry =
+			new GroupedFDSFiltersRegistryImpl(
 				(ServiceTrackerMap
 					<String,
 					 ServiceTrackerCustomizerFactory.ServiceWrapper
-						 <FDSFiltersGroups>>)_registerServiceTrackerMap(
+						 <GroupedFDSFilters>>)_registerServiceTrackerMap(
 							 ServiceTrackerMapFactory.openSingleValueMap(
-								 bundleContext, FDSFiltersGroups.class,
+								 bundleContext, GroupedFDSFilters.class,
 								 "frontend.data.set.name",
 								 ServiceTrackerCustomizerFactory.
-									 <FDSFiltersGroups>serviceWrapper(
+									 <GroupedFDSFilters>serviceWrapper(
 										 bundleContext))));
 		systemFDSSerializer.fdsItemsActionsRegistry =
 			new FDSItemsActionsRegistryImpl(

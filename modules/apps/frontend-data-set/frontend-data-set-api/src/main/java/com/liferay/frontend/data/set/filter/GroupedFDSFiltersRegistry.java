@@ -8,8 +8,8 @@ package com.liferay.frontend.data.set.filter;
 /**
  * @author Daniel Sanz
  */
-public interface FDSFiltersGroupsRegistry {
+public interface GroupedFDSFiltersRegistry {
 
-	public FDSFiltersGroups getFDSFiltersGroups(String fdsName);
+	public GroupedFDSFilters getGroupedFDSFilters(String fdsName);
 
 }

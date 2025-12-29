@@ -17,7 +17,7 @@ import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.DateFDSFilterItem;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilterContextContributor;
-import com.liferay.frontend.data.set.filter.FDSFiltersGroups;
+import com.liferay.frontend.data.set.filter.GroupedFDSFilters;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
 import com.liferay.frontend.data.set.internal.action.FDSBulkActionsRegistryImpl;
 import com.liferay.frontend.data.set.internal.filter.ClientExtensionFDSFilterContextContributor;
@@ -796,13 +796,13 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 	}
 
 	@Test
-	public void testSerializeFiltersGroups() throws Exception {
+	public void testSerializeGroupedFDSFilters() throws Exception {
 
 		// Different filters groups
 
 		mockLanguage();
 
-		FDSFiltersGroups fdsFiltersGroups = new FDSFiltersGroups() {
+		GroupedFDSFilters groupedFDSFilters = new GroupedFDSFilters() {
 
 			@Override
 			public JSONArray getGroupedFDSFiltersJSONArray(
@@ -828,9 +828,9 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 			));
 
 		_registerServices(
-			_registerFDSFiltersGroups(fdsFiltersGroups, FDS_NAMES[0]),
-			_registerFDSFiltersGroups(
-				new FDSFiltersGroups() {
+			_registerGroupedFDSFilters(groupedFDSFilters, FDS_NAMES[0]),
+			_registerGroupedFDSFilters(
+				new GroupedFDSFilters() {
 
 					@Override
 					public JSONArray getGroupedFDSFiltersJSONArray(
@@ -848,7 +848,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		JSONAssert.assertEquals(
 			serializedFdsFiltersGroupsJSONArray.toString(),
-			systemFDSSerializer.serializeFiltersGroups(
+			systemFDSSerializer.serializeGroupedFDSFilters(
 				FDS_NAMES[0], httpServletRequest
 			).toString(),
 			JSONCompareMode.STRICT);
@@ -861,7 +861,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 					"label", TITLES[2]
 				)
 			).toString(),
-			systemFDSSerializer.serializeFiltersGroups(
+			systemFDSSerializer.serializeGroupedFDSFilters(
 				FDS_NAMES[1], httpServletRequest
 			).toString(),
 			JSONCompareMode.STRICT);
@@ -875,7 +875,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
 			).toString(),
-			systemFDSSerializer.serializeFiltersGroups(
+			systemFDSSerializer.serializeGroupedFDSFilters(
 				FDS_NAMES[0], httpServletRequest
 			).toString(),
 			JSONCompareMode.STRICT);
@@ -885,20 +885,20 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		// Shared filters groups
 
 		_registerServices(
-			_registerFDSFiltersGroups(fdsFiltersGroups, FDS_NAMES[0]),
-			_registerFDSFiltersGroups(fdsFiltersGroups, FDS_NAMES[1]),
+			_registerGroupedFDSFilters(groupedFDSFilters, FDS_NAMES[0]),
+			_registerGroupedFDSFilters(groupedFDSFilters, FDS_NAMES[1]),
 			_registerSystemFDSEntry(FDS_NAMES[0]),
 			_registerSystemFDSEntry(FDS_NAMES[1]));
 
 		JSONAssert.assertEquals(
 			serializedFdsFiltersGroupsJSONArray.toString(),
-			systemFDSSerializer.serializeFiltersGroups(
+			systemFDSSerializer.serializeGroupedFDSFilters(
 				FDS_NAMES[0], httpServletRequest
 			).toString(),
 			JSONCompareMode.STRICT);
 		JSONAssert.assertEquals(
 			serializedFdsFiltersGroupsJSONArray.toString(),
-			systemFDSSerializer.serializeFiltersGroups(
+			systemFDSSerializer.serializeGroupedFDSFilters(
 				FDS_NAMES[1], httpServletRequest
 			).toString(),
 			JSONCompareMode.STRICT);
@@ -1817,14 +1817,6 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 			MapUtil.singletonDictionary("frontend.data.set.name", fdsName));
 	}
 
-	private ServiceRegistration<FDSFiltersGroups> _registerFDSFiltersGroups(
-		FDSFiltersGroups fdsFiltersGroups, String fdsName) {
-
-		return bundleContext.registerService(
-			FDSFiltersGroups.class, fdsFiltersGroups,
-			MapUtil.singletonDictionary("frontend.data.set.name", fdsName));
-	}
-
 	private ServiceRegistration<FDSItemsActions> _registerFDSItemsActions(
 		List<FDSActionDropdownItem> fdsActionDropdownItems, String fdsName) {
 
@@ -1866,6 +1858,14 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		return bundleContext.registerService(
 			FDSView.class, fdsView,
+			MapUtil.singletonDictionary("frontend.data.set.name", fdsName));
+	}
+
+	private ServiceRegistration<GroupedFDSFilters> _registerGroupedFDSFilters(
+		GroupedFDSFilters groupedFDSFilters, String fdsName) {
+
+		return bundleContext.registerService(
+			GroupedFDSFilters.class, groupedFDSFilters,
 			MapUtil.singletonDictionary("frontend.data.set.name", fdsName));
 	}
 

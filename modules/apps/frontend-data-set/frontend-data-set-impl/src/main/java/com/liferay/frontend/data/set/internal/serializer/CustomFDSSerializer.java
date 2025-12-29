@@ -320,12 +320,12 @@ public class CustomFDSSerializer
 	}
 
 	@Override
-	public JSONArray serializeFiltersGroups(
+	public JSONArray serializeGroupedFDSFilters(
 		String fdsName, HttpServletRequest httpServletRequest) {
 
-		// rely on system serializer until filters groups are supported by DSM
+		// rely on system serializer until grouped filters are supported by DSM
 
-		return _systemFDSSerializer.serializeFiltersGroups(
+		return _systemFDSSerializer.serializeGroupedFDSFilters(
 			fdsName, httpServletRequest);
 	}
 

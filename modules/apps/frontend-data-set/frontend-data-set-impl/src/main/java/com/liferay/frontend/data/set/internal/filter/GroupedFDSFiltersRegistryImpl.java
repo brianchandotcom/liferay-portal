@@ -5,8 +5,8 @@
 
 package com.liferay.frontend.data.set.internal.filter;
 
-import com.liferay.frontend.data.set.filter.FDSFiltersGroups;
-import com.liferay.frontend.data.set.filter.FDSFiltersGroupsRegistry;
+import com.liferay.frontend.data.set.filter.GroupedFDSFilters;
+import com.liferay.frontend.data.set.filter.GroupedFDSFiltersRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -22,29 +22,30 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Daniel Sanz
  */
-@Component(service = FDSFiltersGroupsRegistry.class)
-public class FDSFiltersGroupsRegistryImpl implements FDSFiltersGroupsRegistry {
+@Component(service = GroupedFDSFiltersRegistry.class)
+public class GroupedFDSFiltersRegistryImpl
+	implements GroupedFDSFiltersRegistry {
 
-	public FDSFiltersGroupsRegistryImpl() {
+	public GroupedFDSFiltersRegistryImpl() {
 	}
 
-	public FDSFiltersGroupsRegistryImpl(
-		ServiceTrackerMap<String, ServiceWrapper<FDSFiltersGroups>>
+	public GroupedFDSFiltersRegistryImpl(
+		ServiceTrackerMap<String, ServiceWrapper<GroupedFDSFilters>>
 			serviceTrackerMap) {
 
 		_serviceTrackerMap = serviceTrackerMap;
 	}
 
 	@Override
-	public FDSFiltersGroups getFDSFiltersGroups(String fdsName) {
-		ServiceWrapper<FDSFiltersGroups> fdsFiltersGroupsServiceWrapper =
+	public GroupedFDSFilters getGroupedFDSFilters(String fdsName) {
+		ServiceWrapper<GroupedFDSFilters> fdsFiltersGroupsServiceWrapper =
 			_serviceTrackerMap.getService(fdsName);
 
 		if (fdsFiltersGroupsServiceWrapper == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"No frontend data set filters groups are associated with " +
-						fdsName);
+					"No frontend data set grouped filters are associated " +
+						"with " + fdsName);
 			}
 
 			return null;
@@ -56,8 +57,8 @@ public class FDSFiltersGroupsRegistryImpl implements FDSFiltersGroupsRegistry {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, FDSFiltersGroups.class, "frontend.data.set.name",
-			ServiceTrackerCustomizerFactory.<FDSFiltersGroups>serviceWrapper(
+			bundleContext, GroupedFDSFilters.class, "frontend.data.set.name",
+			ServiceTrackerCustomizerFactory.<GroupedFDSFilters>serviceWrapper(
 				bundleContext));
 	}
 
@@ -67,9 +68,9 @@ public class FDSFiltersGroupsRegistryImpl implements FDSFiltersGroupsRegistry {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		FDSFiltersGroupsRegistryImpl.class);
+		GroupedFDSFiltersRegistryImpl.class);
 
-	private ServiceTrackerMap<String, ServiceWrapper<FDSFiltersGroups>>
+	private ServiceTrackerMap<String, ServiceWrapper<GroupedFDSFilters>>
 		_serviceTrackerMap;
 
 }

@@ -36,11 +36,13 @@ public abstract class BaseWebContextResourceAbsolutePortalURLBuilderImpl<T>
 
 		String prefix = pathModule + webContextPath;
 
-		String hashedFileURI = hashedFilesRegistry.getHashedFileURI(
-			prefix + resourcePath);
+		if (hashedFilesRegistry != null) {
+			String hashedFileURI = hashedFilesRegistry.getHashedFileURI(
+				prefix + resourcePath);
 
-		if (hashedFileURI != null) {
-			resourcePath = hashedFileURI.substring(prefix.length());
+			if (hashedFileURI != null) {
+				resourcePath = hashedFileURI.substring(prefix.length());
+			}
 		}
 
 		_cdnHost = cdnHost;

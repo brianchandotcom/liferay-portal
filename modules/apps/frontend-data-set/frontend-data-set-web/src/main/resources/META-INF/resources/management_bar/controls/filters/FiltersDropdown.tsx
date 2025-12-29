@@ -36,7 +36,7 @@ const FiltersDropdown = () => {
 					)
 					.filter(Boolean);
 
-				if (children.length) {
+				if (children.length && !!children.length) {
 					return {
 						children,
 						label: group.label,

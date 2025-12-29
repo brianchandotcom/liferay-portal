@@ -5,8 +5,7 @@
 
 package com.liferay.frontend.data.set.sample.web.internal.filter;
 
-import com.liferay.frontend.data.set.filter.FDSFilterRegistry;
-import com.liferay.frontend.data.set.filter.FDSFiltersGroups;
+import com.liferay.frontend.data.set.filter.GroupedFDSFilters;
 import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleFDSNames;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -14,16 +13,15 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Sanz
  */
 @Component(
 	property = "frontend.data.set.name=" + FDSSampleFDSNames.ADVANCED,
-	service = FDSFiltersGroups.class
+	service = GroupedFDSFilters.class
 )
-public class AdvancedFDSFiltersGroups implements FDSFiltersGroups {
+public class AdvancedGroupedFDSFilters implements GroupedFDSFilters {
 
 	@Override
 	public JSONArray getGroupedFDSFiltersJSONArray(
@@ -38,8 +36,5 @@ public class AdvancedFDSFiltersGroups implements FDSFiltersGroups {
 				"Group with not registered filter",
 				JSONUtil.putAll("notRegistered")));
 	}
-
-	@Reference
-	private FDSFilterRegistry _fdsFilterRegistry;
 
 }

@@ -17,8 +17,8 @@ import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilterContextContributor;
 import com.liferay.frontend.data.set.filter.FDSFilterContextContributorRegistry;
 import com.liferay.frontend.data.set.filter.FDSFilterRegistry;
-import com.liferay.frontend.data.set.filter.FDSFiltersGroups;
-import com.liferay.frontend.data.set.filter.FDSFiltersGroupsRegistry;
+import com.liferay.frontend.data.set.filter.GroupedFDSFilters;
+import com.liferay.frontend.data.set.filter.GroupedFDSFiltersRegistry;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.model.FDSSortItem;
 import com.liferay.frontend.data.set.serializer.FDSSerializer;
@@ -178,20 +178,20 @@ public class SystemFDSSerializer
 	}
 
 	@Override
-	public JSONArray serializeFiltersGroups(
+	public JSONArray serializeGroupedFDSFilters(
 		String fdsName, HttpServletRequest httpServletRequest) {
 
 		JSONArray jsonArray = JSONUtil.putAll();
 
-		FDSFiltersGroups fdsFiltersGroups =
-			fdsFiltersGroupsRegistry.getFDSFiltersGroups(fdsName);
+		GroupedFDSFilters groupedFDSFilters =
+			groupedFDSFiltersRegistry.getGroupedFDSFilters(fdsName);
 
-		if (fdsFiltersGroups == null) {
+		if (groupedFDSFilters == null) {
 			return jsonArray;
 		}
 
 		JSONArray groupedFDSFiltersJSONArray =
-			fdsFiltersGroups.getGroupedFDSFiltersJSONArray(httpServletRequest);
+			groupedFDSFilters.getGroupedFDSFiltersJSONArray(httpServletRequest);
 
 		for (int i = 0; i < groupedFDSFiltersJSONArray.length(); i++) {
 			JSONObject jsonObject = groupedFDSFiltersJSONArray.getJSONObject(i);
@@ -417,9 +417,6 @@ public class SystemFDSSerializer
 	protected FDSFilterRegistry fdsFilterRegistry;
 
 	@Reference
-	protected FDSFiltersGroupsRegistry fdsFiltersGroupsRegistry;
-
-	@Reference
 	protected FDSItemsActionsRegistry fdsItemsActionsRegistry;
 
 	@Reference
@@ -431,6 +428,9 @@ public class SystemFDSSerializer
 
 	@Reference
 	protected FDSViewRegistry fdsViewRegistry;
+
+	@Reference
+	protected GroupedFDSFiltersRegistry groupedFDSFiltersRegistry;
 
 	@Reference
 	protected SystemFDSEntryRegistry systemFDSEntryRegistry;

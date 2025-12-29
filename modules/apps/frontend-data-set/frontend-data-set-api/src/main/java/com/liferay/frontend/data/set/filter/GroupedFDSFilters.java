@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 /**
  * @author Daniel Sanz
  */
-public interface FDSFiltersGroups {
+public interface GroupedFDSFilters {
 
 	public default FDSEntryItemImportPolicy getFDSEntryItemImportPolicy() {
 		return FDSEntryItemImportPolicy.ITEM_PROXY;

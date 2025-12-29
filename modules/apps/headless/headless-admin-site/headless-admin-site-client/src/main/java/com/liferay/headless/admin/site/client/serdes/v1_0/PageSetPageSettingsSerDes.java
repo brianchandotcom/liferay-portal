@@ -1,15 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
-import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.CustomMetaTag;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSetPageSettings;
-import com.liferay.headless.admin.site.client.dto.v1_0.PageSettings;
-import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSettings;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -25,140 +22,213 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class PageSettingsSerDes {
+public class PageSetPageSettingsSerDes {
 
-	public static PageSettings toDTO(String json) {
-		PageSettingsJSONParser pageSettingsJSONParser =
-			new PageSettingsJSONParser();
+	public static PageSetPageSettings toDTO(String json) {
+		PageSetPageSettingsJSONParser pageSetPageSettingsJSONParser =
+			new PageSetPageSettingsJSONParser();
 
-		return pageSettingsJSONParser.parseToDTO(json);
+		return pageSetPageSettingsJSONParser.parseToDTO(json);
 	}
 
-	public static PageSettings[] toDTOs(String json) {
-		PageSettingsJSONParser pageSettingsJSONParser =
-			new PageSettingsJSONParser();
+	public static PageSetPageSettings[] toDTOs(String json) {
+		PageSetPageSettingsJSONParser pageSetPageSettingsJSONParser =
+			new PageSetPageSettingsJSONParser();
 
-		return pageSettingsJSONParser.parseToDTOs(json);
+		return pageSetPageSettingsJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(PageSettings pageSettings) {
-		if (pageSettings == null) {
+	public static String toJSON(PageSetPageSettings pageSetPageSettings) {
+		if (pageSetPageSettings == null) {
 			return "null";
 		}
 
-		PageSettings.Type type = pageSettings.getType();
+		StringBuilder sb = new StringBuilder();
 
-		if (type != null) {
-			String typeString = type.toString();
+		sb.append("{");
 
-			if (typeString.equals("ContentPageSettings")) {
-				return ContentPageSettingsSerDes.toJSON(
-					(ContentPageSettings)pageSettings);
+		if (pageSetPageSettings.getCustomMetaTags() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
 			}
 
-			if (typeString.equals("PageSetPageSettings")) {
-				return PageSetPageSettingsSerDes.toJSON(
-					(PageSetPageSettings)pageSettings);
+			sb.append("\"customMetaTags\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < pageSetPageSettings.getCustomMetaTags().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(pageSetPageSettings.getCustomMetaTags()[i]));
+
+				if ((i + 1) < pageSetPageSettings.getCustomMetaTags().length) {
+					sb.append(", ");
+				}
 			}
 
-			if (typeString.equals("WidgetPageSettings")) {
-				return WidgetPageSettingsSerDes.toJSON(
-					(WidgetPageSettings)pageSettings);
-			}
-
-			throw new IllegalArgumentException("Unknown type " + typeString);
+			sb.append("]");
 		}
-		else {
-			throw new IllegalArgumentException("Missing type parameter");
+
+		if (pageSetPageSettings.getHiddenFromNavigation() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"hiddenFromNavigation\": ");
+
+			sb.append(pageSetPageSettings.getHiddenFromNavigation());
 		}
+
+		if (pageSetPageSettings.getNavigationSettings() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"navigationSettings\": ");
+
+			sb.append(
+				String.valueOf(pageSetPageSettings.getNavigationSettings()));
+		}
+
+		if (pageSetPageSettings.getOpenGraphSettings() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"openGraphSettings\": ");
+
+			sb.append(
+				String.valueOf(pageSetPageSettings.getOpenGraphSettings()));
+		}
+
+		if (pageSetPageSettings.getPriority() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"priority\": ");
+
+			sb.append(pageSetPageSettings.getPriority());
+		}
+
+		if (pageSetPageSettings.getSeoSettings() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"seoSettings\": ");
+
+			sb.append(String.valueOf(pageSetPageSettings.getSeoSettings()));
+		}
+
+		if (pageSetPageSettings.getType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+			sb.append(pageSetPageSettings.getType());
+			sb.append("\"");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		PageSettingsJSONParser pageSettingsJSONParser =
-			new PageSettingsJSONParser();
+		PageSetPageSettingsJSONParser pageSetPageSettingsJSONParser =
+			new PageSetPageSettingsJSONParser();
 
-		return pageSettingsJSONParser.parseToMap(json);
+		return pageSetPageSettingsJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(PageSettings pageSettings) {
-		if (pageSettings == null) {
+	public static Map<String, String> toMap(
+		PageSetPageSettings pageSetPageSettings) {
+
+		if (pageSetPageSettings == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (pageSettings.getCustomMetaTags() == null) {
+		if (pageSetPageSettings.getCustomMetaTags() == null) {
 			map.put("customMetaTags", null);
 		}
 		else {
 			map.put(
 				"customMetaTags",
-				String.valueOf(pageSettings.getCustomMetaTags()));
+				String.valueOf(pageSetPageSettings.getCustomMetaTags()));
 		}
 
-		if (pageSettings.getHiddenFromNavigation() == null) {
+		if (pageSetPageSettings.getHiddenFromNavigation() == null) {
 			map.put("hiddenFromNavigation", null);
 		}
 		else {
 			map.put(
 				"hiddenFromNavigation",
-				String.valueOf(pageSettings.getHiddenFromNavigation()));
+				String.valueOf(pageSetPageSettings.getHiddenFromNavigation()));
 		}
 
-		if (pageSettings.getNavigationSettings() == null) {
+		if (pageSetPageSettings.getNavigationSettings() == null) {
 			map.put("navigationSettings", null);
 		}
 		else {
 			map.put(
 				"navigationSettings",
-				String.valueOf(pageSettings.getNavigationSettings()));
+				String.valueOf(pageSetPageSettings.getNavigationSettings()));
 		}
 
-		if (pageSettings.getOpenGraphSettings() == null) {
+		if (pageSetPageSettings.getOpenGraphSettings() == null) {
 			map.put("openGraphSettings", null);
 		}
 		else {
 			map.put(
 				"openGraphSettings",
-				String.valueOf(pageSettings.getOpenGraphSettings()));
+				String.valueOf(pageSetPageSettings.getOpenGraphSettings()));
 		}
 
-		if (pageSettings.getPriority() == null) {
+		if (pageSetPageSettings.getPriority() == null) {
 			map.put("priority", null);
 		}
 		else {
-			map.put("priority", String.valueOf(pageSettings.getPriority()));
+			map.put(
+				"priority", String.valueOf(pageSetPageSettings.getPriority()));
 		}
 
-		if (pageSettings.getSeoSettings() == null) {
+		if (pageSetPageSettings.getSeoSettings() == null) {
 			map.put("seoSettings", null);
 		}
 		else {
 			map.put(
-				"seoSettings", String.valueOf(pageSettings.getSeoSettings()));
+				"seoSettings",
+				String.valueOf(pageSetPageSettings.getSeoSettings()));
 		}
 
-		if (pageSettings.getType() == null) {
+		if (pageSetPageSettings.getType() == null) {
 			map.put("type", null);
 		}
 		else {
-			map.put("type", String.valueOf(pageSettings.getType()));
+			map.put("type", String.valueOf(pageSetPageSettings.getType()));
 		}
 
 		return map;
 	}
 
-	public static class PageSettingsJSONParser
-		extends BaseJSONParser<PageSettings> {
+	public static class PageSetPageSettingsJSONParser
+		extends BaseJSONParser<PageSetPageSettings> {
 
 		@Override
-		protected PageSettings createDTO() {
-			return null;
+		protected PageSetPageSettings createDTO() {
+			return new PageSetPageSettings();
 		}
 
 		@Override
-		protected PageSettings[] createDTOArray(int size) {
-			return new PageSettings[size];
+		protected PageSetPageSettings[] createDTOArray(int size) {
+			return new PageSetPageSettings[size];
 		}
 
 		@Override
@@ -193,37 +263,8 @@ public class PageSettingsSerDes {
 		}
 
 		@Override
-		public PageSettings parseToDTO(String json) {
-			Map<String, Object> jsonMap = parseToMap(json);
-
-			Object type = jsonMap.get("type");
-
-			if (type != null) {
-				String typeString = type.toString();
-
-				if (typeString.equals("ContentPageSettings")) {
-					return ContentPageSettings.toDTO(json);
-				}
-
-				if (typeString.equals("PageSetPageSettings")) {
-					return PageSetPageSettings.toDTO(json);
-				}
-
-				if (typeString.equals("WidgetPageSettings")) {
-					return WidgetPageSettings.toDTO(json);
-				}
-
-				throw new IllegalArgumentException(
-					"Unknown type " + typeString);
-			}
-			else {
-				throw new IllegalArgumentException("Missing type parameter");
-			}
-		}
-
-		@Override
 		protected void setField(
-			PageSettings pageSettings, String jsonParserFieldName,
+			PageSetPageSettings pageSetPageSettings, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "customMetaTags")) {
@@ -239,14 +280,14 @@ public class PageSettingsSerDes {
 							(String)jsonParserFieldValues[i]);
 					}
 
-					pageSettings.setCustomMetaTags(customMetaTagsArray);
+					pageSetPageSettings.setCustomMetaTags(customMetaTagsArray);
 				}
 			}
 			else if (Objects.equals(
 						jsonParserFieldName, "hiddenFromNavigation")) {
 
 				if (jsonParserFieldValue != null) {
-					pageSettings.setHiddenFromNavigation(
+					pageSetPageSettings.setHiddenFromNavigation(
 						(Boolean)jsonParserFieldValue);
 				}
 			}
@@ -254,34 +295,35 @@ public class PageSettingsSerDes {
 						jsonParserFieldName, "navigationSettings")) {
 
 				if (jsonParserFieldValue != null) {
-					pageSettings.setNavigationSettings(
+					pageSetPageSettings.setNavigationSettings(
 						SitePageNavigationSettingsSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "openGraphSettings")) {
 				if (jsonParserFieldValue != null) {
-					pageSettings.setOpenGraphSettings(
+					pageSetPageSettings.setOpenGraphSettings(
 						OpenGraphSettingsSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "priority")) {
 				if (jsonParserFieldValue != null) {
-					pageSettings.setPriority(
+					pageSetPageSettings.setPriority(
 						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "seoSettings")) {
 				if (jsonParserFieldValue != null) {
-					pageSettings.setSeoSettings(
+					pageSetPageSettings.setSeoSettings(
 						SEOSettingsSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
-					pageSettings.setType(
-						PageSettings.Type.create((String)jsonParserFieldValue));
+					pageSetPageSettings.setType(
+						PageSetPageSettings.Type.create(
+							(String)jsonParserFieldValue));
 				}
 			}
 		}

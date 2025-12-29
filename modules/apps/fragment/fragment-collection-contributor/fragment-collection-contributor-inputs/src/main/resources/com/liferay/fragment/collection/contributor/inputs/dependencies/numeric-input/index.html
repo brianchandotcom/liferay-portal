@@ -21,12 +21,12 @@
 		</div>
 
 		[#if input.errorMessage?has_content]
-			<p class="font-weight-semi-bold mt-1 text-danger" id="${fragmentElementId}-numeric-input-error-message">
+			<p class="font-weight-semi-bold mt-1 text-danger" id="${fragmentElementId}-numeric-input-error">
 				<svg class="lexicon-icon lexicon-icon-info-circle" focusable="false" role="presentation">
 					<use xlink:href="${siteSpritemap}#info-circle" />
 				</svg>
 
-				<span>
+				<span id="${fragmentElementId}-numeric-input-error-message">
 					${input.errorMessage}
 				</span>
 			</p>

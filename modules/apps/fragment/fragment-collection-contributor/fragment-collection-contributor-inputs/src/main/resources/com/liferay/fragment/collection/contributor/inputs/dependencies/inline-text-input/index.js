@@ -1,8 +1,8 @@
 const currentLength = document.getElementById(
 	`${fragmentElementId}-current-length`
 );
-const errorMessage = document.getElementById(
-	`${fragmentElementId}-inline-text-input-error-message`
+const error = document.getElementById(
+	`${fragmentElementId}-inline-text-input-error`
 );
 const formGroup = document.getElementById(`${fragmentElementId}-form-group`);
 const inputElement = document.getElementById(
@@ -31,7 +31,7 @@ function main() {
 				currentLength.innerText = inputElement.value.length;
 
 				if (
-					!errorMessage &&
+					!error &&
 					inputElement.value.length > input.attributes.maxLength
 				) {
 					hideLengthError({
@@ -47,7 +47,7 @@ function main() {
 					handleInputLengthError({
 						configuration,
 						currentLength,
-						errorMessage,
+						errorMessage: error,
 						event,
 						formGroup,
 						input,

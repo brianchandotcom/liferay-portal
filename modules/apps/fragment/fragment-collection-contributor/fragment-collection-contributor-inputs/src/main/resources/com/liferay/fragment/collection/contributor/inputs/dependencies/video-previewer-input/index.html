@@ -30,10 +30,10 @@
 		</p>
 
 		[#if input.errorMessage?has_content]
-			<p class="font-weight-semi-bold mt-1 text-danger" id="${fragmentElementId}-video-previewer-error-message">
+			<p class="font-weight-semi-bold mt-1 text-danger" id="${fragmentElementId}-video-previewer-error">
 				[@clay["icon"] symbol="info-circle" /]
 
-				<span>${input.errorMessage}</span>
+				<span id="${fragmentElementId}-video-previewer-error-message">${input.errorMessage}</span>
 			</p>
 		[/#if]
 

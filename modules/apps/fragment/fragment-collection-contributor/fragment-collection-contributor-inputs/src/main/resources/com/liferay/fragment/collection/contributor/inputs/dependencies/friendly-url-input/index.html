@@ -19,10 +19,10 @@
 				<input aria-labelledby="${fragmentElementId}-friendly-url-input-label [#if input.errorMessage?has_content]${fragmentElementId}-friendly-url-input-error-message[/#if]" class="form-control form-control-sm" id="${fragmentElementId}-friendly-url-input" name="${input.name}" [#if input.readOnly]readonly[/#if] type="text" [#if input.value??]value="${input.value}"[/#if] />
 
 				[#if input.errorMessage?has_content]
-					<p class="font-weight-semi-bold mt-1 text-danger" id="${fragmentElementId}-friendly-url-input-error-message">
+					<p class="font-weight-semi-bold mt-1 text-danger" id="${fragmentElementId}-friendly-url-input-error">
 						[@clay["icon"] symbol="info-circle" /]
 
-						<span>
+						<span id="${fragmentElementId}-friendly-url-input-error-message">
 							${input.errorMessage}
 						</span>
 					</p>

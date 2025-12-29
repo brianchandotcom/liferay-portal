@@ -28,10 +28,10 @@
 		</p>
 
 		[#if input.errorMessage?has_content]
-			<p class="font-weight-semi-bold mt-1 text-danger" id="${fragmentElementId}-textarea-error-message">
+			<p class="font-weight-semi-bold mt-1 text-danger" id="${fragmentElementId}-textarea-error">
 				[@clay["icon"] symbol="info-circle" /]
 
-				<span>
+				<span id="${fragmentElementId}-textarea-error-message">
 					${input.errorMessage}
 				</span>
 			</p>

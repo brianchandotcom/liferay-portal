@@ -59,6 +59,8 @@ public interface ObjectDefinition
 	public java.util.List<ObjectDefinitionSetting>
 		getObjectDefinitionSettings();
 
+	public com.liferay.object.model.util.ObjectFieldBag getObjectFieldBag();
+
 	public String getObjectFolderExternalReferenceCode();
 
 	public String getOSGiJaxRsName();
@@ -101,5 +103,8 @@ public interface ObjectDefinition
 
 	public void setObjectDefinitionSettings(
 		java.util.List<ObjectDefinitionSetting> objectDefinitionSettings);
+
+	public void setObjectFieldBag(
+		com.liferay.object.model.util.ObjectFieldBag objectFieldBag);
 
 }

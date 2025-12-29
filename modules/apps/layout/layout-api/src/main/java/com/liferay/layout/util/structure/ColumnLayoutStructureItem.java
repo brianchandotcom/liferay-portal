@@ -100,11 +100,13 @@ public class ColumnLayoutStructureItem extends LayoutStructureItem {
 	public void setViewportConfiguration(
 		String viewportSizeId, JSONObject configurationJSONObject) {
 
+		JSONObject viewportConfigurationJSONObject =
+			_viewportConfigurationJSONObjects.getOrDefault(
+				viewportSizeId, JSONFactoryUtil.createJSONObject());
+
 		_viewportConfigurationJSONObjects.put(
 			viewportSizeId,
-			_viewportConfigurationJSONObjects.getOrDefault(
-				viewportSizeId, JSONFactoryUtil.createJSONObject()
-			).put(
+			viewportConfigurationJSONObject.put(
 				"size",
 				() -> {
 					if (configurationJSONObject.has("size")) {
@@ -112,8 +114,7 @@ public class ColumnLayoutStructureItem extends LayoutStructureItem {
 					}
 
 					return null;
-				}
-			));
+				}));
 	}
 
 	@Override

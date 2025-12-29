@@ -75,10 +75,12 @@ public class TextFragmentEntryLinkEditorConfigContributor
 				"disallowedContent", "br"
 			).put(
 				"documentBrowseLinkUrl",
-				itemSelector.getItemSelectorURL(
-					requestBackedPortletURLFactory, "_EDITOR_NAME_selectItem",
-					getFileItemSelectorCriterion(), getLayoutItemSelectorURL()
-				).toString()
+				String.valueOf(
+					itemSelector.getItemSelectorURL(
+						requestBackedPortletURLFactory,
+						"_EDITOR_NAME_selectItem",
+						getFileItemSelectorCriterion(),
+						getLayoutItemSelectorURL()))
 			).put(
 				"enterMode", 2
 			).put(

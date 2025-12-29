@@ -198,11 +198,13 @@ public class RowStyledLayoutStructureItem extends StyledLayoutStructureItem {
 	public void setViewportConfiguration(
 		String viewportSizeId, JSONObject configurationJSONObject) {
 
+		JSONObject viewportConfigurationJSONObject =
+			_viewportConfigurationJSONObjects.getOrDefault(
+				viewportSizeId, JSONFactoryUtil.createJSONObject());
+
 		_viewportConfigurationJSONObjects.put(
 			viewportSizeId,
-			_viewportConfigurationJSONObjects.getOrDefault(
-				viewportSizeId, JSONFactoryUtil.createJSONObject()
-			).put(
+			viewportConfigurationJSONObject.put(
 				"modulesPerRow",
 				() -> {
 					if (configurationJSONObject.has("modulesPerRow")) {

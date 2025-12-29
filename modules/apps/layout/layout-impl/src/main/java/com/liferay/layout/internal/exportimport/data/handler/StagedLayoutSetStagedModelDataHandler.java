@@ -314,19 +314,24 @@ public class StagedLayoutSetStagedModelDataHandler
 					layout.getLayoutSetPrototypeLayoutERC(),
 					layoutSetPrototype.getGroupId());
 
-			if ((sourcePrototypeLayout == null) &&
-				_layoutLocalService.hasLayout(
+			if ((sourcePrototypeLayout != null) ||
+				!_layoutLocalService.hasLayout(
 					layout.getUuid(), layout.getGroupId(),
-					layout.isPrivateLayout()) &&
-				!layout.getLayoutSet(
-				).getSettings(
-				).contains(
-					Sites.MERGE_FAIL_FRIENDLY_URL_LAYOUTS
-				)) {
+					layout.isPrivateLayout())) {
 
-				_layoutLocalService.deleteLayout(
-					layout, ServiceContextThreadLocal.getServiceContext());
+				continue;
 			}
+
+			LayoutSet layoutSet = layout.getLayoutSet();
+
+			String settings = layoutSet.getSettings();
+
+			if (settings.contains(Sites.MERGE_FAIL_FRIENDLY_URL_LAYOUTS)) {
+				continue;
+			}
+
+			_layoutLocalService.deleteLayout(
+				layout, ServiceContextThreadLocal.getServiceContext());
 		}
 	}
 

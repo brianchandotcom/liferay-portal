@@ -423,11 +423,12 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 		initImport();
 
 		if (faviconEnabled != null) {
-			portletDataContext.getParameterMap(
-			).put(
+			Map<String, String[]> parameterMap =
+				portletDataContext.getParameterMap();
+
+			parameterMap.put(
 				PortletDataHandlerKeys.FAVICON,
-				new String[] {String.valueOf(faviconEnabled)}
-			);
+				new String[] {String.valueOf(faviconEnabled)});
 		}
 
 		FileEntry exportedFaviconFileEntry = (FileEntry)readExportedStagedModel(

@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -189,6 +190,8 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 			long classNameId, long classPK)
 		throws Exception {
 
+		User user = TestPropsValues.getUser();
+
 		_db.runSQL(
 			StringBundler.concat(
 				"insert into LayoutPageTemplateStructure (ctCollectionId, ",
@@ -198,11 +201,9 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 				_counterLocalService.increment(), ",",
 				TestPropsValues.getGroupId(), ", ",
 				TestPropsValues.getCompanyId(), ", ",
-				TestPropsValues.getUserId(), ", '",
-				TestPropsValues.getUser(
-				).getFullName(),
-				"', '", LocalDate.now(), "', '", LocalDate.now(), "', ",
-				classNameId, ", ", classPK, ")"));
+				TestPropsValues.getUserId(), ", '", user.getFullName(), "', '",
+				LocalDate.now(), "', '", LocalDate.now(), "', ", classNameId,
+				", ", classPK, ")"));
 	}
 
 	private void _runUpgrade() throws Exception {

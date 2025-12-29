@@ -1,3 +1,6 @@
+const error = document.getElementById(
+	`${fragmentElementId}-friendly-url-input-error`
+);
 const inputElement = document.getElementById(
 	`${fragmentElementId}-friendly-url-input`
 );
@@ -8,7 +11,11 @@ function main() {
 	}
 	else {
 		import('@liferay/fragment-impl/api').then(
-			({registerLocalizedInput}) => {
+			({focusInput, registerLocalizedInput}) => {
+				if (error) {
+					focusInput(inputElement);
+				}
+
 				const {onChange} = registerLocalizedInput({
 					defaultLanguageId: themeDisplay.getDefaultLanguageId(),
 					initialValues: input.valueI18n,

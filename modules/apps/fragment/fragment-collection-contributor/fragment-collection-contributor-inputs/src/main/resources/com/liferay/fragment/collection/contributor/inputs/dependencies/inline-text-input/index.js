@@ -23,11 +23,16 @@ function main() {
 	else {
 		import('@liferay/fragment-impl/api').then(
 			({
+				focusInput,
 				handleInputLengthError,
 				hideLengthError,
 				registerLocalizedInput,
 				registerUnlocalizedInput,
 			}) => {
+				if (error) {
+					focusInput(inputElement);
+				}
+
 				currentLength.innerText = inputElement.value.length;
 
 				if (

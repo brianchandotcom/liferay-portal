@@ -84,6 +84,43 @@ public abstract class BaseDigitalSalesRoomTemplateResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-digital-sales-room/v1.0/digital-sales-rooms/{digitalSalesRoomId}/digital-sales-room-templates'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "digitalSalesRoomId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "DigitalSalesRoomTemplate"
+			)
+		}
+	)
+	@jakarta.ws.rs.GET
+	@jakarta.ws.rs.Path(
+		"/digital-sales-rooms/{digitalSalesRoomId}/digital-sales-room-templates"
+	)
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Page<DigitalSalesRoomTemplate>
+			getDigitalSalesRoomDigitalSalesRoomTemplatesPage(
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@jakarta.validation.constraints.NotNull
+				@jakarta.ws.rs.PathParam("digitalSalesRoomId")
+				Long digitalSalesRoomId)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-digital-sales-room/v1.0/digital-sales-room-templates/{digitalSalesRoomTemplateId}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -162,7 +199,7 @@ public abstract class BaseDigitalSalesRoomTemplateResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-digital-sales-room/v1.0/digital-sales-rooms/{digitalSalesRoomId}/digital-sales-room-template'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-digital-sales-room/v1.0/digital-sales-rooms/{digitalSalesRoomId}/digital-sales-room-templates' -d $'{"banner": ___, "clientLogo": ___, "clientName": ___, "description": ___, "name": ___, "primaryColor": ___, "secondaryColor": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -179,8 +216,9 @@ public abstract class BaseDigitalSalesRoomTemplateResourceImpl
 			)
 		}
 	)
+	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
 	@jakarta.ws.rs.Path(
-		"/digital-sales-rooms/{digitalSalesRoomId}/digital-sales-room-template"
+		"/digital-sales-rooms/{digitalSalesRoomId}/digital-sales-room-templates"
 	)
 	@jakarta.ws.rs.POST
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
@@ -190,7 +228,8 @@ public abstract class BaseDigitalSalesRoomTemplateResourceImpl
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@jakarta.validation.constraints.NotNull
 				@jakarta.ws.rs.PathParam("digitalSalesRoomId")
-				Long digitalSalesRoomId)
+				Long digitalSalesRoomId,
+				DigitalSalesRoomTemplate digitalSalesRoomTemplate)
 		throws Exception {
 
 		return new DigitalSalesRoomTemplate();

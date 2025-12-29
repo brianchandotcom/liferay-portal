@@ -5,11 +5,7 @@ definition {
 
 	@summary = "Default summary"
 	macro closePublishedFormWindow() {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Forms");
+		FormsAdminNavigator.openFormsAdmin(siteURLKey = "guest");
 	}
 
 	@summary = "Default summary"

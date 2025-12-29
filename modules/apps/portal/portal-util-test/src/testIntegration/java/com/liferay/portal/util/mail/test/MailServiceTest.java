@@ -10,6 +10,7 @@ import com.liferay.mail.kernel.service.MailService;
 import com.liferay.mail.settings.configuration.MailSettingCompanyConfiguration;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
+import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
@@ -145,6 +146,34 @@ public class MailServiceTest {
 
 			_mailService.clearSession();
 		}
+	}
+
+	@Test
+	public void testGetSessionWithConfigurationUpdates() throws Exception {
+		long companyId = RandomTestUtil.randomLong();
+
+		_testGetSessionWithConfigurationUpdates(companyId, 1111);
+
+		_testGetSessionWithConfigurationUpdates(companyId, 2222);
+
+		_mailService.clearSession();
+	}
+
+	private void _testGetSessionWithConfigurationUpdates(
+			long companyId, int port)
+		throws Exception {
+
+		ConfigurationTestUtil.saveConfiguration(
+			"com.liferay.mail.settings.configuration." +
+				"MailSettingCompanyConfiguration",
+			HashMapDictionaryBuilder.<String, Object>put(
+				"outgoingSMTPPort", port
+			).build());
+
+		Session session = _mailService.getSession(companyId);
+
+		Assert.assertEquals(
+			String.valueOf(port), session.getProperty("mail.smtp.port"));
 	}
 
 	@Inject

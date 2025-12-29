@@ -39,8 +39,6 @@ import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.events.ServicePreAction;
-import com.liferay.portal.events.ThemeServicePreAction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -69,7 +67,6 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.TeamLocalService;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
-import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -105,8 +102,6 @@ import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.processor.SegmentsExperienceRequestProcessorRegistry;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperienceService;
-
-import jakarta.servlet.http.HttpServletResponse;
 
 import jakarta.ws.rs.core.MultivaluedMap;
 
@@ -634,33 +629,6 @@ public class SitePageResourceImpl
 
 		return _segmentsExperienceLocalService.getSegmentsExperiences(
 			layout.getGroupId(), layout.getPlid(), true);
-	}
-
-	private ThemeDisplay _getThemeDisplay(Layout layout) throws Exception {
-		ServicePreAction servicePreAction = new ServicePreAction();
-
-		HttpServletResponse httpServletResponse =
-			new DummyHttpServletResponse();
-
-		servicePreAction.servicePre(
-			contextHttpServletRequest, httpServletResponse, false);
-
-		ThemeServicePreAction themeServicePreAction =
-			new ThemeServicePreAction();
-
-		themeServicePreAction.run(
-			contextHttpServletRequest, httpServletResponse);
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)contextHttpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		themeDisplay.setLayout(layout);
-		themeDisplay.setResponse(httpServletResponse);
-		themeDisplay.setScopeGroupId(layout.getGroupId());
-		themeDisplay.setSiteGroupId(layout.getGroupId());
-
-		return themeDisplay;
 	}
 
 	private SegmentsExperience _getUserSegmentsExperience(

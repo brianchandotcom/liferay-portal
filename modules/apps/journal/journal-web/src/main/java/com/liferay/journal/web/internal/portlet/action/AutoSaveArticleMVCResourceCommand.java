@@ -63,6 +63,7 @@ import jakarta.portlet.ResourceResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -113,6 +114,8 @@ public class AutoSaveArticleMVCResourceCommand extends BaseMVCResourceCommand {
 				_journalArticleService, _journalConverter, _journalHelper,
 				_localization, _portal, resourceRequest);
 
+			Date modifiedDate = article.getModifiedDate();
+
 			jsonObject = JSONUtil.put(
 				"articleId", article.getArticleId()
 			).put(
@@ -130,9 +133,7 @@ public class AutoSaveArticleMVCResourceCommand extends BaseMVCResourceCommand {
 							article.getDefaultLanguageId()));
 				}
 			).put(
-				"modifiedDate",
-				article.getModifiedDate(
-				).getTime()
+				"modifiedDate", modifiedDate.getTime()
 			).put(
 				"success", true
 			).put(

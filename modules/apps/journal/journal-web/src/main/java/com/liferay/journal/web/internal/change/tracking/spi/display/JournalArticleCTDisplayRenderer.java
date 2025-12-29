@@ -42,6 +42,7 @@ import jakarta.portlet.PortletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -205,19 +206,18 @@ public class JournalArticleCTDisplayRenderer
 
 		JournalArticle journalArticle = displayBuilder.getModel();
 
+		Map<Locale, String> friendlyURLMap = journalArticle.getFriendlyURLMap();
+		String title = journalArticle.getTitle(displayBuilder.getLocale());
+
 		displayBuilder.display(
-			"name", journalArticle.getTitle(displayBuilder.getLocale())
+			"name", title
 		).display(
-			"title", journalArticle.getTitle(displayBuilder.getLocale())
+			"title", title
 		).display(
 			"description",
 			journalArticle.getDescription(displayBuilder.getLocale())
 		).display(
-			"friendly-url",
-			journalArticle.getFriendlyURLMap(
-			).get(
-				displayBuilder.getLocale()
-			)
+			"friendly-url", friendlyURLMap.get(displayBuilder.getLocale())
 		).display(
 			"created-by",
 			() -> {

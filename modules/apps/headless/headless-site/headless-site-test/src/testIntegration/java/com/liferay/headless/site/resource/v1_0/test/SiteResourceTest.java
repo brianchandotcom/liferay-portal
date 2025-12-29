@@ -360,12 +360,14 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 
 	private void _assertEquals(Group group, Site site) throws Exception {
 		Assert.assertEquals(site.getActive(), group.isActive());
+
+		Map<String, String> description = site.getDescription();
+		Locale locale = LocaleUtil.getDefault();
+
 		Assert.assertEquals(
-			site.getDescription(
-			).get(
-				String.valueOf(LocaleUtil.getDefault())
-			),
-			group.getDescription(LocaleUtil.getDefault()));
+			description.get(String.valueOf(locale)),
+			group.getDescription(locale));
+
 		Assert.assertEquals(site.getFriendlyUrlPath(), group.getFriendlyURL());
 		Assert.assertEquals(
 			site.getManualMembership(), group.isManualMembership());
@@ -376,8 +378,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 			site.getMembershipType(),
 			Site.MembershipType.create(
 				GroupConstants.getTypeLabel(group.getType())));
-		Assert.assertEquals(
-			site.getName(), group.getName(LocaleUtil.getDefault()));
+		Assert.assertEquals(site.getName(), group.getName(locale));
 	}
 
 	private void _testGetSiteByExternalReferenceCodeWithDollar()
@@ -953,12 +954,9 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 
 		Site postSite = _testPostSite_addSite(site);
 
-		Assert.assertEquals(
-			postSite.getTypeSettings(
-			).get(
-				PropsKeys.LOCALES
-			),
-			locales);
+		Map<String, String> typeSettings = postSite.getTypeSettings();
+
+		Assert.assertEquals(typeSettings.get(PropsKeys.LOCALES), locales);
 	}
 
 	private void _testPostSiteWithoutAuthentication() throws Exception {

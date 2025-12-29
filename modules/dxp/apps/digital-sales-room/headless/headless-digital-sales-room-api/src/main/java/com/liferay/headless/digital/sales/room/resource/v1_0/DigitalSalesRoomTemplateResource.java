@@ -46,6 +46,11 @@ public interface DigitalSalesRoomTemplateResource {
 	public void deleteDigitalSalesRoomTemplate(Long digitalSalesRoomTemplateId)
 		throws Exception;
 
+	public Page<DigitalSalesRoomTemplate>
+			getDigitalSalesRoomDigitalSalesRoomTemplatesPage(
+				Long digitalSalesRoomId)
+		throws Exception;
+
 	public DigitalSalesRoomTemplate getDigitalSalesRoomTemplate(
 			Long digitalSalesRoomTemplateId)
 		throws Exception;
@@ -56,7 +61,8 @@ public interface DigitalSalesRoomTemplateResource {
 
 	public DigitalSalesRoomTemplate
 			postDigitalSalesRoomDigitalSalesRoomTemplate(
-				Long digitalSalesRoomId)
+				Long digitalSalesRoomId,
+				DigitalSalesRoomTemplate digitalSalesRoomTemplate)
 		throws Exception;
 
 	public DigitalSalesRoomTemplate postDigitalSalesRoomTemplate(

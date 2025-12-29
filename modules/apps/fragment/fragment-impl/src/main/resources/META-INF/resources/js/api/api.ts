@@ -5,6 +5,7 @@
 
 export {LocalizationSelect} from './LocalizationSelect';
 
+export {focusInput} from './focusInput';
 export {getTranslationInput} from './getTranslationInput';
 export {
 	handleInputLengthError,

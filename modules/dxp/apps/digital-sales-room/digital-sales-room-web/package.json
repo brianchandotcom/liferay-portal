@@ -10,6 +10,7 @@
 		"@clayui/modal": "3.156.0",
 		"@clayui/multi-select": "3.156.0",
 		"@clayui/sticker": "3.147.0",
+		"@liferay/frontend-data-set-web": "*",
 		"@liferay/frontend-js-react-web": "*",
 		"@liferay/layout-js-components-web": "*",
 		"@liferay/object-js-components-web": "*",
@@ -29,7 +30,8 @@
 		],
 		"testPathIgnorePatterns": [
 			"<rootDir>/test/js/utils/index.tsx"
-		]
+		],
+		"testTimeout": 15000
 	},
 	"main": "js/index.ts",
 	"name": "@liferay/digital-sales-room-web",

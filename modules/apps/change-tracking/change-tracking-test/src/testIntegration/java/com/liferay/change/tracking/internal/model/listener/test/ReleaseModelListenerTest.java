@@ -201,7 +201,6 @@ public class ReleaseModelListenerTest {
 		Assert.assertTrue(
 			_ctSchemaVersionLocalService.isLatestCTSchemaVersion(
 				incompleteCTCollection.getSchemaVersionId()));
-
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_INCOMPLETE,
 			incompleteCTCollection.getStatus());

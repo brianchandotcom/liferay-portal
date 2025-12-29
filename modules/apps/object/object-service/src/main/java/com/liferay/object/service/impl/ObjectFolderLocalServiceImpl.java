@@ -5,6 +5,7 @@
 
 package com.liferay.object.service.impl;
 
+import com.liferay.exportimport.kernel.empty.model.EmptyModelManager;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.exception.ObjectFolderLabelException;
 import com.liferay.object.exception.ObjectFolderNameException;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -56,24 +58,7 @@ public class ObjectFolderLocalServiceImpl
 
 		_validateName(user.getCompanyId(), name);
 
-		ObjectFolder objectFolder = objectFolderPersistence.create(
-			counterLocalService.increment());
-
-		objectFolder.setExternalReferenceCode(externalReferenceCode);
-		objectFolder.setCompanyId(user.getCompanyId());
-		objectFolder.setUserId(userId);
-		objectFolder.setUserName(user.getFullName());
-		objectFolder.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
-		objectFolder.setName(name);
-
-		objectFolder = objectFolderPersistence.update(objectFolder);
-
-		_resourceLocalService.addResources(
-			objectFolder.getCompanyId(), 0, objectFolder.getUserId(),
-			ObjectFolder.class.getName(), objectFolder.getObjectFolderId(),
-			false, true, true);
-
-		return objectFolder;
+		return _addObjectFolder(externalReferenceCode, user, labelMap, name);
 	}
 
 	@Override
@@ -176,6 +161,24 @@ public class ObjectFolderLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
+	public ObjectFolder getOrAddEmptyObjectFolder(
+			String externalReferenceCode, long companyId, long userId)
+		throws PortalException {
+
+		return _emptyModelManager.getOrAddEmptyModel(
+			ObjectFolder.class, companyId,
+			() -> _addObjectFolder(
+				externalReferenceCode, _userLocalService.getUser(userId),
+				Collections.singletonMap(
+					LocaleUtil.getDefault(), externalReferenceCode),
+				externalReferenceCode),
+			externalReferenceCode,
+			this::fetchObjectFolderByExternalReferenceCode,
+			this::getObjectFolderByExternalReferenceCode);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public ObjectFolder updateObjectFolder(
 			String externalReferenceCode, long objectFolderId,
 			Map<Locale, String> labelMap)
@@ -194,6 +197,31 @@ public class ObjectFolderLocalServiceImpl
 		objectFolder.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 
 		return objectFolderPersistence.update(objectFolder);
+	}
+
+	private ObjectFolder _addObjectFolder(
+			String externalReferenceCode, User user,
+			Map<Locale, String> labelMap, String name)
+		throws PortalException {
+
+		ObjectFolder objectFolder = objectFolderPersistence.create(
+			counterLocalService.increment());
+
+		objectFolder.setExternalReferenceCode(externalReferenceCode);
+		objectFolder.setCompanyId(user.getCompanyId());
+		objectFolder.setUserId(user.getUserId());
+		objectFolder.setUserName(user.getFullName());
+		objectFolder.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
+		objectFolder.setName(name);
+
+		objectFolder = objectFolderPersistence.update(objectFolder);
+
+		_resourceLocalService.addResources(
+			objectFolder.getCompanyId(), 0, objectFolder.getUserId(),
+			ObjectFolder.class.getName(), objectFolder.getObjectFolderId(),
+			false, true, true);
+
+		return objectFolder;
 	}
 
 	private void _validateLabel(Map<Locale, String> labelMap)
@@ -233,6 +261,9 @@ public class ObjectFolderLocalServiceImpl
 			throw new ObjectFolderNameException.MustNotBeDuplicate(name);
 		}
 	}
+
+	@Reference
+	private EmptyModelManager _emptyModelManager;
 
 	@Reference
 	private ObjectFolderItemLocalService _objectFolderItemLocalService;

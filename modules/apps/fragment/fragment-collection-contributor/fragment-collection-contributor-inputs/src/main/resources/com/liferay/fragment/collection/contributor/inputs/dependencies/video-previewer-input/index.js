@@ -30,6 +30,7 @@ function main() {
 	else {
 		import('@liferay/fragment-impl/api').then(
 			({
+				focusInput,
 				handleInputLengthError,
 				hideLengthError,
 				registerLocalizedInput,
@@ -66,6 +67,10 @@ function main() {
 				inputElement.addEventListener('blur', (event) => {
 					updateVideoPreview(event.target.value);
 				});
+
+				if (error) {
+					focusInput(inputElement);
+				}
 
 				currentLength.innerText = inputElement.value.length;
 

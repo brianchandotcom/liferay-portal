@@ -60,14 +60,23 @@ export default function InfoPanel({title, url}) {
 							const builder = document.querySelector(
 								'.ddm-form-builder--sidebar-open'
 							);
+							const contextualSidebar = document.querySelector(
+								'.contextual-sidebar-content'
+							);
+
 							const sidebar = document.querySelector(
 								'.multi-panel-sidebar-content-open'
 							);
 
-							builder.classList.remove(
+							builder?.classList.remove(
 								'ddm-form-builder--sidebar-open'
 							);
-							sidebar.classList.remove(
+
+							contextualSidebar?.classList.remove(
+								'contextual-sidebar-content--sidebar-open'
+							);
+
+							sidebar?.classList.remove(
 								'multi-panel-sidebar-content-open'
 							);
 

@@ -30,7 +30,7 @@ export function Tabs({activePage, pages}) {
 
 	return (
 		<nav className="component-tbar ddm-form-tabs mb-3 tbar">
-			<ClayLayout.ContainerFluid className="pr-0">
+			<ClayLayout.ContainerFluid className="pl-0 pr-0">
 				<ClayTabs>
 					{pages.map((page, index) => (
 						<ClayTabs.Item

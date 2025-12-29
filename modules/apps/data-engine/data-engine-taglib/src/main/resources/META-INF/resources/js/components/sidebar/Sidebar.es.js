@@ -144,12 +144,20 @@ const SidebarTitle = ({className, title}) => (
 				const builder = document.querySelector(
 					'.ddm-form-builder--sidebar-open'
 				);
+
+				const contextualSidebar = document.querySelector(
+					'.contextual-sidebar-content--sidebar-open'
+				);
+
 				const sidebar = document.querySelector(
 					'.multi-panel-sidebar-content-open'
 				);
 
-				builder.classList.remove('ddm-form-builder--sidebar-open');
-				sidebar.classList.remove('multi-panel-sidebar-content-open');
+				builder?.classList.remove('ddm-form-builder--sidebar-open');
+				contextualSidebar?.classList.remove(
+					'contextual-sidebar-content--sidebar-open'
+				);
+				sidebar?.classList.remove('multi-panel-sidebar-content-open');
 
 				const builderTab = document.querySelector(
 					`[data-panel-id="Builder"]`

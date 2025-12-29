@@ -19,21 +19,20 @@
 	}
 }
 
+.contextual-sidebar-content--sidebar-open {
+	transition: padding ease $transition-time;
+
+	padding-right: 420px;
+}
+
 .error-icon {
 	color: #da1414;
 	margin-right: 5px;
 }
 
 .ddm-form-web__exception-container {
-	transition: padding ease $transition-time;
-
 	.alert-dismissible:first-child {
 		margin-top: 24px;
-	}
-
-	&--sidebar-open {
-		padding-left: 0;
-		padding-right: 408px;
 	}
 }
 

@@ -135,17 +135,14 @@ export function FormBuilder() {
 	}, [focusedField]);
 
 	return (
-		<div
-			className={classNames(
-				'data-engine-form-builder ddm-form-builder pb-5',
-				{
-					'ddm-form-builder--sidebar-open': sidebarOpen,
-				}
-			)}
-		>
+		<div className="container data-engine-form-builder ddm-form-builder pb-5">
 			<ClayLayout.Sheet>
 				<div className="ddm-form-builder-wrapper">
-					<div className="container ddm-form-builder">
+					<div
+						className={classNames('container ddm-form-builder', {
+							'ddm-form-builder--sidebar-open': sidebarOpen,
+						})}
+					>
 						<DragLayer />
 
 						<Pages

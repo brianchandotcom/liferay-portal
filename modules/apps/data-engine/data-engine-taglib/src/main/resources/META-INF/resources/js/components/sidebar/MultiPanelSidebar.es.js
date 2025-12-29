@@ -71,25 +71,35 @@ export default function MultiPanelSidebar({
 	};
 
 	const handlePanelClick = ({sidebarPanelId}) => {
-		const builder = document.querySelector('.ddm-form-builder');
+		const builder = document.querySelector('.container.ddm-form-builder');
+		const contextualSidebar = document.querySelector(
+			'.contextual-sidebar-content'
+		);
 		const sidebar = document.querySelector('.multi-panel-sidebar-content');
-		const closeButtonPressed =
-			builder.classList.contains('ddm-form-builder--sidebar-open') !==
-			open;
 
-		if (closeButtonPressed) {
-			builder.classList.toggle('ddm-form-builder--sidebar-open');
-			sidebar.classList.toggle('multi-panel-sidebar-content-open');
+		const sidebarOpen = sidebarPanelId !== currentPanelId ? true : !open;
+
+		if (sidebarOpen) {
+			builder?.classList.add('ddm-form-builder--sidebar-open');
+			sidebar?.classList.add('multi-panel-sidebar-content-open');
+			contextualSidebar?.classList.add(
+				'contextual-sidebar-content--sidebar-open'
+			);
 		}
-
-		const newOpen = closeButtonPressed ? open : !open;
+		else {
+			builder?.classList.remove('ddm-form-builder--sidebar-open');
+			sidebar?.classList.remove('multi-panel-sidebar-content-open');
+			contextualSidebar?.classList.remove(
+				'contextual-sidebar-content--sidebar-open'
+			);
+		}
 
 		if (sidebarPanelId !== currentPanelId) {
 			setActivePanel(sidebarPanelId);
 		}
 
 		onChange({
-			sidebarOpen: sidebarPanelId !== currentPanelId || newOpen,
+			sidebarOpen,
 			sidebarPanelId,
 		});
 	};

@@ -109,107 +109,109 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 		</clay:container-fluid>
 	</nav>
 
-	<clay:container-fluid
-		cssClass="ddm-translation-manager hide"
-	>
-		<liferay-frontend:translation-manager
-			availableLocales="<%= ddmFormAdminDisplayContext.getAvailableLocales() %>"
-			changeableDefaultLanguage="<%= false %>"
-			defaultLanguageId="<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>"
-			id="translationManager"
-		/>
-	</clay:container-fluid>
-
-	<aui:form action="<%= saveFormInstanceURL %>" cssClass="ddm-form-builder-form" enctype="multipart/form-data" method="post" name="editForm">
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-		<aui:input name="formInstanceId" type="hidden" value="<%= formInstanceId %>" />
-		<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
-		<aui:input name="ddmStructureId" type="hidden" value="<%= ddmStructureId %>" />
-		<aui:input name="name" type="hidden" value="<%= ddmFormAdminDisplayContext.getFormLocalizedNameJSONObject(formInstance) %>" />
-		<aui:input name="description" type="hidden" value="<%= ddmFormAdminDisplayContext.getFormLocalizedDescriptionJSONObject() %>" />
-		<aui:input name="serializedFormBuilderContext" type="hidden" value="<%= formBuilderContextJSONObject %>" />
-		<aui:input name="serializedSettingsContext" type="hidden" value="" />
-
-		<%@ include file="/admin/exceptions.jspf" %>
-		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/dynamic_data_mapping_form/get_form_report_data" var="formReportDataURL">
-			<portlet:param name="formInstanceId" value="<%= String.valueOf(formInstanceId) %>" />
-		</liferay-portlet:resourceURL>
-
-		<div id="<portlet:namespace />-container">
-			<react:component
-				module="{App} from dynamic-data-mapping-form-web"
-				props='<%=
-					HashMapBuilder.<String, Object>put(
-						"autocompleteUserURL", ddmFormAdminDisplayContext.getAutocompleteUserURL()
-					).put(
-						"autosaveInterval", ddmFormAdminDisplayContext.getAutosaveInterval()
-					).put(
-						"autosaveURL", autoSaveFormInstanceURL.toString()
-					).put(
-						"availableLanguageIds", ddmFormAdminDisplayContext.getAvailableLanguageIdsJSONArray()
-					).put(
-						"availableLocales", ddmFormAdminDisplayContext.getAvailableLocalesJSONArray()
-					).put(
-						"context", formBuilderContextJSONObject
-					).put(
-						"dataEngineModule", ddmFormAdminDisplayContext.getDataEngineModule()
-					).put(
-						"dataProviderInstanceParameterSettingsURL", dataProviderInstanceParameterSettingsURL
-					).put(
-						"dataProviderInstancesURL", dataProviderInstancesURL
-					).put(
-						"defaultLanguageId", ddmFormAdminDisplayContext.getDefaultLanguageId()
-					).put(
-						"displayChartAsTable", ddmFormAdminDisplayContext.isDisplayChartAsTable()
-					).put(
-						"elementSets", ddmFormAdminDisplayContext.getFieldSetsJSONArray()
-					).put(
-						"fieldSetDefinitionURL", ddmFormAdminDisplayContext.getFieldSetDefinitionURL()
-					).put(
-						"fieldTypes", ddmFormAdminDisplayContext.getDDMFormFieldTypesJSONArray()
-					).put(
-						"formInstanceId", formInstanceId
-					).put(
-						"formReportDataURL", formReportDataURL.toString()
-					).put(
-						"formSettingsContext", ddmFormAdminDisplayContext.getDDMFormSettingsContext(pageContext)
-					).put(
-						"functionsMetadata", functionsMetadataJSONObject
-					).put(
-						"functionsURL", functionsURL
-					).put(
-						"groupId", groupId
-					).put(
-						"localizedDescription", ddmFormAdminDisplayContext.getFormLocalizedDescriptionJSONObject()
-					).put(
-						"localizedName", ddmFormAdminDisplayContext.getFormLocalizedNameJSONObject(formInstance)
-					).put(
-						"portletNamespace", liferayPortletResponse.getNamespace()
-					).put(
-						"published", ddmFormAdminDisplayContext.isFormPublished()
-					).put(
-						"publishFormInstanceURL", publishFormInstanceURL.toString()
-					).put(
-						"rolesURL", rolesURL
-					).put(
-						"rules", ddmFormRulesJSONArray
-					).put(
-						"saved", formInstance != null
-					).put(
-						"sharedFormURL", ddmFormAdminDisplayContext.getSharedFormURL()
-					).put(
-						"shareFormInstanceURL", ddmFormAdminDisplayContext.getShareFormInstanceURL(formInstance)
-					).put(
-						"showPublishAlert", ddmFormAdminDisplayContext.isShowPublishAlert()
-					).put(
-						"spritemap", themeDisplay.getPathThemeSpritemap()
-					).put(
-						"view", "formBuilder"
-					).build()
-				%>'
+	<div class="contextual-sidebar-content contextual-sidebar-content--sidebar-open">
+		<clay:container-fluid
+			cssClass="ddm-translation-manager hide"
+		>
+			<liferay-frontend:translation-manager
+				availableLocales="<%= ddmFormAdminDisplayContext.getAvailableLocales() %>"
+				changeableDefaultLanguage="<%= false %>"
+				defaultLanguageId="<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>"
+				id="translationManager"
 			/>
-		</div>
-	</aui:form>
+		</clay:container-fluid>
+
+		<aui:form action="<%= saveFormInstanceURL %>" cssClass="ddm-form-builder-form" enctype="multipart/form-data" method="post" name="editForm">
+			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+			<aui:input name="formInstanceId" type="hidden" value="<%= formInstanceId %>" />
+			<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
+			<aui:input name="ddmStructureId" type="hidden" value="<%= ddmStructureId %>" />
+			<aui:input name="name" type="hidden" value="<%= ddmFormAdminDisplayContext.getFormLocalizedNameJSONObject(formInstance) %>" />
+			<aui:input name="description" type="hidden" value="<%= ddmFormAdminDisplayContext.getFormLocalizedDescriptionJSONObject() %>" />
+			<aui:input name="serializedFormBuilderContext" type="hidden" value="<%= formBuilderContextJSONObject %>" />
+			<aui:input name="serializedSettingsContext" type="hidden" value="" />
+
+			<%@ include file="/admin/exceptions.jspf" %>
+			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/dynamic_data_mapping_form/get_form_report_data" var="formReportDataURL">
+				<portlet:param name="formInstanceId" value="<%= String.valueOf(formInstanceId) %>" />
+			</liferay-portlet:resourceURL>
+
+			<div id="<portlet:namespace />-container">
+				<react:component
+					module="{App} from dynamic-data-mapping-form-web"
+					props='<%=
+						HashMapBuilder.<String, Object>put(
+							"autocompleteUserURL", ddmFormAdminDisplayContext.getAutocompleteUserURL()
+						).put(
+							"autosaveInterval", ddmFormAdminDisplayContext.getAutosaveInterval()
+						).put(
+							"autosaveURL", autoSaveFormInstanceURL.toString()
+						).put(
+							"availableLanguageIds", ddmFormAdminDisplayContext.getAvailableLanguageIdsJSONArray()
+						).put(
+							"availableLocales", ddmFormAdminDisplayContext.getAvailableLocalesJSONArray()
+						).put(
+							"context", formBuilderContextJSONObject
+						).put(
+							"dataEngineModule", ddmFormAdminDisplayContext.getDataEngineModule()
+						).put(
+							"dataProviderInstanceParameterSettingsURL", dataProviderInstanceParameterSettingsURL
+						).put(
+							"dataProviderInstancesURL", dataProviderInstancesURL
+						).put(
+							"defaultLanguageId", ddmFormAdminDisplayContext.getDefaultLanguageId()
+						).put(
+							"displayChartAsTable", ddmFormAdminDisplayContext.isDisplayChartAsTable()
+						).put(
+							"elementSets", ddmFormAdminDisplayContext.getFieldSetsJSONArray()
+						).put(
+							"fieldSetDefinitionURL", ddmFormAdminDisplayContext.getFieldSetDefinitionURL()
+						).put(
+							"fieldTypes", ddmFormAdminDisplayContext.getDDMFormFieldTypesJSONArray()
+						).put(
+							"formInstanceId", formInstanceId
+						).put(
+							"formReportDataURL", formReportDataURL.toString()
+						).put(
+							"formSettingsContext", ddmFormAdminDisplayContext.getDDMFormSettingsContext(pageContext)
+						).put(
+							"functionsMetadata", functionsMetadataJSONObject
+						).put(
+							"functionsURL", functionsURL
+						).put(
+							"groupId", groupId
+						).put(
+							"localizedDescription", ddmFormAdminDisplayContext.getFormLocalizedDescriptionJSONObject()
+						).put(
+							"localizedName", ddmFormAdminDisplayContext.getFormLocalizedNameJSONObject(formInstance)
+						).put(
+							"portletNamespace", liferayPortletResponse.getNamespace()
+						).put(
+							"published", ddmFormAdminDisplayContext.isFormPublished()
+						).put(
+							"publishFormInstanceURL", publishFormInstanceURL.toString()
+						).put(
+							"rolesURL", rolesURL
+						).put(
+							"rules", ddmFormRulesJSONArray
+						).put(
+							"saved", formInstance != null
+						).put(
+							"sharedFormURL", ddmFormAdminDisplayContext.getSharedFormURL()
+						).put(
+							"shareFormInstanceURL", ddmFormAdminDisplayContext.getShareFormInstanceURL(formInstance)
+						).put(
+							"showPublishAlert", ddmFormAdminDisplayContext.isShowPublishAlert()
+						).put(
+							"spritemap", themeDisplay.getPathThemeSpritemap()
+						).put(
+							"view", "formBuilder"
+						).build()
+					%>'
+				/>
+			</div>
+		</aui:form>
+	</div>
 </div>
 
 <aui:script>

@@ -177,20 +177,6 @@ $productMenuWidth: 320px;
 				}
 			}
 
-			.contextual-sidebar-mr {
-				margin: 0 $sidebarWidthClosed + 4px 0 4px;
-				padding-top: $toolbarHeight + 1.5rem;
-
-				@include media-breakpoint-up(lg) {
-					margin: 0 $sidebarWidth + 8px 0 0;
-					padding-top: $toolbarDesktopHeight;
-				}
-			}
-
-			.contextual-sidebar-mr-n {
-				margin-right: -$sidebarWidth;
-			}
-
 			.sidebar-body {
 				@include media-breakpoint-down(md) {
 					height: calc(
@@ -199,6 +185,12 @@ $productMenuWidth: 320px;
 					);
 				}
 			}
+		}
+
+		.contextual-sidebar-content--sidebar-open {
+			transition: padding ease 0.5s;
+
+			padding-right: 430px;
 		}
 
 		.edit-article-sidebar {

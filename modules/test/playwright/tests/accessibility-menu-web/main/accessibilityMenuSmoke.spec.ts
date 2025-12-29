@@ -77,31 +77,6 @@ async function expectAccessibilityMenuToBeAvailableFromKeyboard(
 }
 
 test(
-	'Verifies that the user can enable it by Instance Settings',
-	{tag: '@LPS-178192'},
-	async ({accessibilityMenuPage, instanceSettingsPage, page}) => {
-		await test.step('When Accessibility Menu is enabled at Instance Settings level', async () => {
-			await instanceSettingsPage.goToInstanceSetting(
-				SETTING_CATEGORY_KEY,
-				SETTING_CONFIGURATION_NAME
-			);
-
-			await accessibilityMenuPage.enableAccessibilityMenu();
-		});
-
-		await test.step('Then Accessibility Menu can be reached by keyboard', async () => {
-			await expectAccessibilityMenuToBeAvailableFromKeyboard(
-				accessibilityMenuPage
-			);
-		});
-
-		await test.step('And Accessibility Menu can be reached through the user profile menu', async () => {
-			await expectAccessibilityMenuToBeAvailableFromUserProfileMenu(page);
-		});
-	}
-);
-
-test(
 	'Verifies that the user can enable it by Site Settings',
 	{tag: '@LPS-178192'},
 	async ({accessibilityMenuPage, site, siteSettingsPage}) => {

@@ -730,7 +730,7 @@ public class ObjectDefinitionWrapper
 	}
 
 	@Override
-	public com.liferay.object.model.util.ObjectFieldBag getObjectFieldBag() {
+	public com.liferay.object.model.bag.ObjectFieldBag getObjectFieldBag() {
 		return model.getObjectFieldBag();
 	}
 
@@ -1584,7 +1584,7 @@ public class ObjectDefinitionWrapper
 
 	@Override
 	public void setObjectFieldBag(
-		com.liferay.object.model.util.ObjectFieldBag objectFieldBag) {
+		com.liferay.object.model.bag.ObjectFieldBag objectFieldBag) {
 
 		model.setObjectFieldBag(objectFieldBag);
 	}

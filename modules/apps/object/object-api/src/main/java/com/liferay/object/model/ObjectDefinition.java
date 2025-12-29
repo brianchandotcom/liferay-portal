@@ -59,7 +59,7 @@ public interface ObjectDefinition
 	public java.util.List<ObjectDefinitionSetting>
 		getObjectDefinitionSettings();
 
-	public com.liferay.object.model.util.ObjectFieldBag getObjectFieldBag();
+	public com.liferay.object.model.bag.ObjectFieldBag getObjectFieldBag();
 
 	public String getObjectFolderExternalReferenceCode();
 
@@ -105,6 +105,6 @@ public interface ObjectDefinition
 		java.util.List<ObjectDefinitionSetting> objectDefinitionSettings);
 
 	public void setObjectFieldBag(
-		com.liferay.object.model.util.ObjectFieldBag objectFieldBag);
+		com.liferay.object.model.bag.ObjectFieldBag objectFieldBag);
 
 }

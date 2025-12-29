@@ -21,6 +21,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.test.util.TestUserIdStrategy;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
@@ -64,6 +65,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Scanner;
 
 import org.junit.Assert;
@@ -185,28 +187,34 @@ public class ExportImportHelperUtilTest {
 				List.of(companyId1, RandomTestUtil.randomLong(), companyId2),
 				null, RandomTestUtil.randomString())) {
 
-			Thread.sleep(1000);
-
-			Portlet portlet = ExportImportHelperUtil.getDataSiteLevelPortlet(
-				className, companyId1, false);
-
-			Assert.assertEquals(portletId1, portlet.getRootPortletId());
-			Assert.assertEquals(
-				portletDataHandler1, portlet.getPortletDataHandlerInstance());
-
-			portlet = ExportImportHelperUtil.getDataSiteLevelPortlet(
-				className, companyId2, true);
-
-			Assert.assertEquals(portletId2, portlet.getRootPortletId());
-			Assert.assertEquals(
-				portletDataHandler2, portlet.getPortletDataHandlerInstance());
-
+			Assert.assertNotNull(
+				_getPortlet(
+					className, companyId1, false,
+					portlet ->
+						(portlet != null) &&
+						Objects.equals(
+							portletId1, portlet.getRootPortletId()) &&
+						Objects.equals(
+							portletDataHandler1,
+							portlet.getPortletDataHandlerInstance())));
+			Assert.assertNotNull(
+				_getPortlet(
+					className, companyId2, true,
+					portlet ->
+						(portlet != null) &&
+						Objects.equals(
+							portletId2, portlet.getRootPortletId()) &&
+						Objects.equals(
+							portletDataHandler2,
+							portlet.getPortletDataHandlerInstance())));
 			Assert.assertNull(
-				ExportImportHelperUtil.getDataSiteLevelPortlet(
-					RandomTestUtil.randomString(), companyId1, false));
+				_getPortlet(
+					RandomTestUtil.randomString(), companyId1, false,
+					Objects::isNull));
 			Assert.assertNull(
-				ExportImportHelperUtil.getDataSiteLevelPortlet(
-					RandomTestUtil.randomString(), companyId2, true));
+				_getPortlet(
+					RandomTestUtil.randomString(), companyId2, true,
+					Objects::isNull));
 		}
 	}
 
@@ -1070,6 +1078,27 @@ public class ExportImportHelperUtilTest {
 		Assert.assertEquals(portletSetup, actualPortletSetup);
 		Assert.assertEquals(
 			portletUserPreferences, actualPortletUserPreferences);
+	}
+
+	private Portlet _getPortlet(
+			String className, long companyId, boolean excludeDataAlwaysStaged,
+			UnsafeFunction<Portlet, Boolean, Exception> unsafeFunction)
+		throws Exception {
+
+		long startTime = System.currentTimeMillis();
+
+		while ((System.currentTimeMillis() - startTime) < 5000) {
+			Portlet portlet = ExportImportHelperUtil.getDataSiteLevelPortlet(
+				className, companyId, excludeDataAlwaysStaged);
+
+			if (unsafeFunction.apply(portlet)) {
+				return portlet;
+			}
+
+			Thread.sleep(50);
+		}
+
+		throw new AssertionError("No portlet found for the given criteria");
 	}
 
 	private SafeCloseable _registerWithSafeCloseable(

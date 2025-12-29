@@ -350,7 +350,30 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/DigitalSalesRoom"
             tags: ["DigitalSalesRoom"]
-    "/digital-sales-rooms/{digitalSalesRoomId}/digital-sales-room-template":
+    "/digital-sales-rooms/{digitalSalesRoomId}/digital-sales-room-templates":
+        get:
+            operationId: getDigitalSalesRoomDigitalSalesRoomTemplatesPage
+            parameters:
+                -   in: path
+                    name: digitalSalesRoomId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DigitalSalesRoomTemplate"
+                                    type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DigitalSalesRoomTemplate"
+                                    type: array
+            tags: ["DigitalSalesRoomTemplate"]
         post:
             operationId: postDigitalSalesRoomDigitalSalesRoomTemplate
             parameters:
@@ -360,6 +383,14 @@ paths:
                     schema:
                         format: int64
                         type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DigitalSalesRoomTemplate"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DigitalSalesRoomTemplate"
             responses:
                 200:
                     content:

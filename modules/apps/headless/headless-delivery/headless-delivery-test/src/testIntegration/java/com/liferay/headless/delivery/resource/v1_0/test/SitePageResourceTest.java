@@ -431,22 +431,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 					LocaleUtil.US, StringPool.FORWARD_SLASH + usURLTitle
 				).build());
 
-			SitePageResource.Builder builder = SitePageResource.builder();
-
-			SitePageResource localizedSitePageResource = builder.authentication(
-				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
-			).header(
-				"X-Liferay-Accept-All-Languages", "true"
-			).locale(
-				LocaleUtil.US
-			).build();
-
-			SitePage sitePage = localizedSitePageResource.getSiteSitePage(
-				testGroup.getGroupId(), usURLTitle);
-
-			Assert.assertEquals(
-				StringPool.FORWARD_SLASH + usURLTitle,
-				sitePage.getFriendlyUrlPath());
+			_testGetSiteSitePageWithLocalization(esURLTitle, LocaleUtil.SPAIN);
+			_testGetSiteSitePageWithLocalization(usURLTitle, LocaleUtil.US);
 		}
 		finally {
 			_companyLocalService.updateDisplay(
@@ -458,6 +444,26 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 					PropsKeys.LOCALES, originalLanguageIds
 				).build());
 		}
+	}
+
+	private void _testGetSiteSitePageWithLocalization(String friendlyUrlPath, Locale locale)
+		throws Exception {
+
+
+		SitePageResource localizedSitePageResource =  SitePageResource.builder().authentication(
+			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+		).header(
+			"X-Liferay-Accept-All-Languages", "true"
+		).locale(
+			locale
+		).build();
+
+		SitePage sitePage = localizedSitePageResource.getSiteSitePage(
+			testGroup.getGroupId(), friendlyUrlPath);
+
+		Assert.assertEquals(
+			StringPool.FORWARD_SLASH + friendlyUrlPath,
+			sitePage.getFriendlyUrlPath());
 	}
 
 	@Ignore

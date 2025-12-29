@@ -14,8 +14,10 @@ import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectDefinitionSetting;
 import com.liferay.object.model.ObjectFolder;
+import com.liferay.object.model.util.ObjectFieldBag;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectDefinitionSettingLocalServiceUtil;
+import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.service.ObjectFolderLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -96,6 +98,18 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 		}
 
 		return _objectDefinitionSettings;
+	}
+
+	@Override
+	public ObjectFieldBag getObjectFieldBag() {
+		if (_objectFieldBag == null) {
+			setObjectFieldBag(
+				new ObjectFieldBag(
+					ObjectFieldLocalServiceUtil.getObjectFields(
+						getObjectDefinitionId())));
+		}
+
+		return _objectFieldBag;
 	}
 
 	@Override
@@ -319,6 +333,12 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 		_objectDefinitionSettings = objectDefinitionSettings;
 	}
 
+	@Override
+	public void setObjectFieldBag(ObjectFieldBag objectFieldBag) {
+		_objectFieldBag = objectFieldBag;
+	}
+
 	private List<ObjectDefinitionSetting> _objectDefinitionSettings;
+	private ObjectFieldBag _objectFieldBag;
 
 }

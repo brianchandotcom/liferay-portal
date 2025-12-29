@@ -40,6 +40,7 @@ Export-Package:\
 	com.liferay.object.label.key.provider,\
 	com.liferay.object.model,\
 	com.liferay.object.model.listener,\
+	com.liferay.object.model.util,\
 	com.liferay.object.odata.filter.expression.field.predicate.provider,\
 	com.liferay.object.petra.sql.dsl,\
 	com.liferay.object.related.models,\

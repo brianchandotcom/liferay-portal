@@ -207,12 +207,11 @@ public class JournalArticleCTDisplayRenderer
 		JournalArticle journalArticle = displayBuilder.getModel();
 
 		Map<Locale, String> friendlyURLMap = journalArticle.getFriendlyURLMap();
-		String title = journalArticle.getTitle(displayBuilder.getLocale());
 
 		displayBuilder.display(
-			"name", title
+			"name", journalArticle.getTitle(displayBuilder.getLocale())
 		).display(
-			"title", title
+			"title", journalArticle.getTitle(displayBuilder.getLocale())
 		).display(
 			"description",
 			journalArticle.getDescription(displayBuilder.getLocale())

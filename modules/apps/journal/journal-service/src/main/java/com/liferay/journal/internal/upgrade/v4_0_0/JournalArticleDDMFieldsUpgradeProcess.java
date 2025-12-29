@@ -152,8 +152,9 @@ public class JournalArticleDDMFieldsUpgradeProcess extends UpgradeProcess {
 		transformer.transform(
 			new DOMSource(document), new StreamResult(stringWriter));
 
-		return stringWriter.getBuffer(
-		).toString();
+		StringBuffer stringBuffer = stringWriter.getBuffer();
+
+		return stringBuffer.toString();
 	}
 
 	private final ClassNameLocalService _classNameLocalService;

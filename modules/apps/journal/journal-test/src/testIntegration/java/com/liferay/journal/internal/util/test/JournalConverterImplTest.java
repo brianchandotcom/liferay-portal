@@ -828,13 +828,14 @@ public class JournalConverterImplTest {
 	}
 
 	private void _assertFields(Fields expectedFields, Fields actualFields) {
-		Assert.assertEquals(
-			expectedFields.getNames(
-			).size(),
-			actualFields.getNames(
-			).size());
+		Set<String> actualFieldsNames = actualFields.getNames();
+		Set<String> expectedFieldsNames = expectedFields.getNames();
 
-		for (String name : expectedFields.getNames()) {
+		Assert.assertEquals(
+			actualFieldsNames.toString(), expectedFieldsNames.size(),
+			actualFieldsNames.size());
+
+		for (String name : expectedFieldsNames) {
 			Assert.assertEquals(
 				expectedFields.getDDMStructureId(),
 				actualFields.getDDMStructureId());

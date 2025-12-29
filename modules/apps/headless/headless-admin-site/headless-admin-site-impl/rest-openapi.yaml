@@ -2902,6 +2902,13 @@ components:
             description:
                 The settings of a page set page.
             type: object
+        PageSetPageSpecification:
+            allOf:
+                -   $ref: "#/components/schemas/PageSpecification"
+            # @review
+            description:
+                A page specification of a page set page.
+            type: object
         PageSettings:
             discriminator:
                 mapping:
@@ -2962,6 +2969,7 @@ components:
             discriminator:
                 mapping:
                     ContentPageSpecification: "#/components/schemas/ContentPageSpecification"
+                    PageSetPageSpecification: "#/components/schemas/PageSetPageSpecification"
                     WidgetPageSpecification: "#/components/schemas/WidgetPageSpecification"
                 propertyName: type
             properties:
@@ -2998,6 +3006,7 @@ components:
                         The type of the page specification.
                     enum:
                         -   ContentPageSpecification
+                        -   PageSetPageSpecification
                         -   WidgetPageSpecification
                     type: string
             type: object

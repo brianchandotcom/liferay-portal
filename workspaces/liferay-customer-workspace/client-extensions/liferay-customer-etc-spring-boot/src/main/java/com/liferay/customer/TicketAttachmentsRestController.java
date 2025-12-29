@@ -10,8 +10,6 @@ import com.google.cloud.storage.StorageException;
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
 import com.liferay.customer.constants.JiraIssueConstants;
 import com.liferay.customer.exception.FileServerUnavailableException;
-import com.liferay.customer.exception.JiraIssueClosedException;
-import com.liferay.customer.exception.JiraIssueNotFoundException;
 import com.liferay.customer.exception.JiraOrganizationNotFoundException;
 import com.liferay.customer.exception.TicketAttachmentAlreadyApprovedException;
 import com.liferay.customer.exception.TicketAttachmentNotFoundException;

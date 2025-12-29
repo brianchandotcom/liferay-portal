@@ -82,7 +82,9 @@ export default function useCheckAttachmentAccess(): IResponse {
 					}
 				}
 
-				const endpoint = `/tickets/${jiraIssueKey}/ticket-attachments/upload-access-check`;
+				const endpoint = isDownload
+					? `/tickets/${jiraIssueKey}/ticket-attachments/download-access-check`
+					: `/tickets/${jiraIssueKey}/ticket-attachments/upload-access-check`;
 
 				const response =
 					await Liferay.OAuth2Client.FromUserAgentApplication(

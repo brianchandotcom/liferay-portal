@@ -10,8 +10,8 @@ package com.liferay.jenkins.results.parser.test.task;
  */
 public class DefaultTestTask extends BaseTestTask {
 
-	protected DefaultTestTask(String taskName, long averageDuration) {
-		super(taskName, averageDuration);
+	protected DefaultTestTask(long averageDuration, String name) {
+		super(averageDuration, name);
 	}
 
 }

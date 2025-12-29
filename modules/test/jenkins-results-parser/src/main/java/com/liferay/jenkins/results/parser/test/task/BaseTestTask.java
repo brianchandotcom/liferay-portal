@@ -84,9 +84,9 @@ public class BaseTestTask implements TestTask {
 		return name.hashCode();
 	}
 
-	protected BaseTestTask(String name, long averageDuration) {
-		_name = name;
+	protected BaseTestTask(long averageDuration, String name) {
 		_averageDuration = averageDuration;
+		_name = name;
 	}
 
 	private final long _averageDuration;

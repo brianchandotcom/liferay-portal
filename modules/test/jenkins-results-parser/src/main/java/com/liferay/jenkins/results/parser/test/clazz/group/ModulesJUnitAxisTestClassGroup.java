@@ -59,8 +59,8 @@ public class ModulesJUnitAxisTestClassGroup extends JUnitAxisTestClassGroup {
 
 			if (testTask == null) {
 				testTask = TestTaskFactory.newTestTask(
-					testTaskName,
-					modulesJUnitTestClass.getAverageTestTaskDuration());
+					modulesJUnitTestClass.getAverageTestTaskDuration(),
+					testTaskName);
 
 				_testTasks.put(testTaskName, testTask);
 			}
@@ -97,7 +97,7 @@ public class ModulesJUnitAxisTestClassGroup extends JUnitAxisTestClassGroup {
 			String testTaskName = testTaskJSONObject.getString("name");
 
 			TestTask testTask = TestTaskFactory.newTestTask(
-				testTaskName, testTaskJSONObject.getLong("average_duration"));
+				testTaskJSONObject.getLong("average_duration"), testTaskName);
 
 			for (int j = 0; j < testClassesJSONArray.length(); j++) {
 				JSONObject testClassJSONObject =

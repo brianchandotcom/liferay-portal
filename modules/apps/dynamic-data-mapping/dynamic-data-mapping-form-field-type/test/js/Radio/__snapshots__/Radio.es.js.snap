@@ -3,7 +3,6 @@
 exports[`Field Radio has a helptext 1`] = `
 <div>
   <div
-    aria-labelledby="radioField_fieldDetails"
     class="form-group hide"
     data-field-name="radioField"
   >

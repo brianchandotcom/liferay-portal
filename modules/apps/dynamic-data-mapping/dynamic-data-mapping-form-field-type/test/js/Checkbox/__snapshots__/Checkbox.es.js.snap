@@ -3,7 +3,6 @@
 exports[`Field Checkbox has a helptext 1`] = `
 <div>
   <div
-    aria-labelledby="ID_fieldDetails"
     class="form-group hide"
   >
     <div

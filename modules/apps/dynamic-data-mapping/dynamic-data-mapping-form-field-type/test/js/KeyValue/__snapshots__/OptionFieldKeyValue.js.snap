@@ -56,7 +56,6 @@ exports[`OptionFieldKeyValue has a helptext 1`] = `
           display-name
         </label>
         <div
-          aria-labelledby="OptionFieldKeyValue_fieldDetails"
           class="form-group hide"
           data-field-name="OptionFieldKeyValue"
         >
@@ -123,7 +122,6 @@ exports[`OptionFieldKeyValue has a helptext 1`] = `
           option-reference
         </label>
         <div
-          aria-labelledby="undefined_fieldDetails"
           class="form-group hide"
         >
           <div

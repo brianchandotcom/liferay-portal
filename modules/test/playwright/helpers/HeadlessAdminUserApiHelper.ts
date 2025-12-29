@@ -308,8 +308,16 @@ export class HeadlessAdminUserApiHelper {
 
 	async deleteUserRole(
 		roleExternalReferenceCode: string,
-		userId: number | string
+		userId: number | string,
+		siteId?: number | string
 	) {
+		if (siteId) {
+			return this.apiHelpers.delete(
+				`${this.apiHelpers.baseUrl}${this.basePath}roles/by-external-reference-code/${roleExternalReferenceCode}/association/user-account/${userId}/site/${siteId}`,
+				{data: {}, failOnStatusCode: true}
+			);
+		}
+
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}roles/by-external-reference-code/${roleExternalReferenceCode}/association/user-account/${userId}`,
 			{data: {}, failOnStatusCode: true}

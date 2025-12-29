@@ -50,50 +50,46 @@ public class UsersAdminUtilTest {
 	public void testUpdateFieldPermissionWithInheritedRole() throws Exception {
 		String[] fieldEditableUserTypes = PropsValues.FIELD_EDITABLE_USER_TYPES;
 
-		try {
-			PropsUtil.set(
-				PropsKeys.FIELD_EDITABLE_USER_TYPES, StringPool.BLANK);
+		PropsUtil.set(PropsKeys.FIELD_EDITABLE_USER_TYPES, StringPool.BLANK);
 
-			Organization organization = OrganizationTestUtil.addOrganization();
-			User user1 = UserTestUtil.addUser();
+		Organization organization = OrganizationTestUtil.addOrganization();
+		User user1 = UserTestUtil.addUser();
 
-			_userLocalService.addOrganizationUser(
-				organization.getOrganizationId(), user1);
+		_userLocalService.addOrganizationUser(
+			organization.getOrganizationId(), user1);
 
-			_roleLocalService.addGroupRole(
-				organization.getGroupId(),
-				_roleLocalService.getRole(
-					TestPropsValues.getCompanyId(), "administrator"));
+		_roleLocalService.addGroupRole(
+			organization.getGroupId(),
+			_roleLocalService.getRole(
+				TestPropsValues.getCompanyId(), "administrator"));
 
-			PermissionChecker userPermissionChecker =
-				PermissionCheckerFactoryUtil.create(user1);
+		PermissionChecker userPermissionChecker =
+			PermissionCheckerFactoryUtil.create(user1);
 
-			try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-					user1, userPermissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user1, userPermissionChecker)) {
 
-				Assert.assertTrue(
-					UsersAdminUtil.hasUpdateFieldPermission(
-						userPermissionChecker, user1, user1, "suffix"));
-			}
-
-			User user2 = UserTestUtil.addUser();
-
-			PermissionChecker user2PermissionChecker =
-				PermissionCheckerFactoryUtil.create(user2);
-
-			try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-					user2, user2PermissionChecker)) {
-
-				Assert.assertFalse(
-					UsersAdminUtil.hasUpdateFieldPermission(
-						user2PermissionChecker, user2, user2, "suffix"));
-			}
+			Assert.assertTrue(
+				UsersAdminUtil.hasUpdateFieldPermission(
+					userPermissionChecker, user1, user1, "suffix"));
 		}
-		finally {
-			PropsUtil.set(
-				PropsKeys.FIELD_EDITABLE_USER_TYPES,
-				StringUtil.merge(fieldEditableUserTypes, StringPool.COMMA));
+
+		User user2 = UserTestUtil.addUser();
+
+		PermissionChecker user2PermissionChecker =
+			PermissionCheckerFactoryUtil.create(user2);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user2, user2PermissionChecker)) {
+
+			Assert.assertFalse(
+				UsersAdminUtil.hasUpdateFieldPermission(
+					user2PermissionChecker, user2, user2, "suffix"));
 		}
+
+		PropsUtil.set(
+			PropsKeys.FIELD_EDITABLE_USER_TYPES,
+			StringUtil.merge(fieldEditableUserTypes, StringPool.COMMA));
 	}
 
 	@Inject

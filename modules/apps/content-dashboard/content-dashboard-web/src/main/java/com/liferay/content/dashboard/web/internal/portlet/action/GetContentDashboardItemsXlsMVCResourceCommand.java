@@ -335,10 +335,10 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 	}
 
 	private String _toString(Date date, ThemeDisplay themeDisplay) {
-		Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(
+		Format format = FastDateFormatFactoryUtil.getDateTime(
 			themeDisplay.getLocale(), themeDisplay.getTimeZone());
 
-		return dateTimeFormat.format(date);
+		return format.format(date);
 	}
 
 	private String _toString(

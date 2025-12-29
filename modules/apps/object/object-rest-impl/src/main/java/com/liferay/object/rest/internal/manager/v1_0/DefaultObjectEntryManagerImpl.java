@@ -609,7 +609,7 @@ public class DefaultObjectEntryManagerImpl
 
 		return _objectEntryDTOConverter.toDTO(
 			_getObjectEntryVersionDTOConverterContext(
-				dtoConverterContext, objectEntryVersion,
+				dtoConverterContext, objectDefinition, objectEntryVersion,
 				serviceBuilderObjectEntry),
 			serviceBuilderObjectEntry);
 	}
@@ -953,7 +953,7 @@ public class DefaultObjectEntryManagerImpl
 
 		return _objectEntryDTOConverter.toDTO(
 			_getObjectEntryVersionDTOConverterContext(
-				dtoConverterContext, objectEntryVersion,
+				dtoConverterContext, objectDefinition, objectEntryVersion,
 				serviceBuilderObjectEntry),
 			serviceBuilderObjectEntry);
 	}
@@ -1155,8 +1155,8 @@ public class DefaultObjectEntryManagerImpl
 					_getOrderByComparator(sorts)),
 				objectEntryVersion -> _objectEntryDTOConverter.toDTO(
 					_getObjectEntryVersionDTOConverterContext(
-						dtoConverterContext, objectEntryVersion,
-						serviceBuilderObjectEntry),
+						dtoConverterContext, objectDefinition,
+						objectEntryVersion, serviceBuilderObjectEntry),
 					serviceBuilderObjectEntry)),
 			pagination,
 			_objectEntryVersionService.getObjectEntryVersionsCount(
@@ -1308,7 +1308,7 @@ public class DefaultObjectEntryManagerImpl
 
 		return updateObjectEntry(
 			_getObjectEntryVersionDTOConverterContext(
-				dtoConverterContext,
+				dtoConverterContext, objectDefinition,
 				_objectEntryVersionService.getObjectEntryVersion(
 					objectEntry.getId(), version),
 				_objectEntryService.getObjectEntry(objectEntry.getId())),
@@ -2366,7 +2366,7 @@ public class DefaultObjectEntryManagerImpl
 
 		return _objectEntryDTOConverter.toDTO(
 			_getObjectEntryVersionDTOConverterContext(
-				dtoConverterContext,
+				dtoConverterContext, objectDefinition,
 				_objectEntryVersionService.getObjectEntryVersion(
 					objectEntry.getId(), version),
 				serviceBuilderObjectEntry),
@@ -2403,6 +2403,7 @@ public class DefaultObjectEntryManagerImpl
 
 	private DTOConverterContext _getObjectEntryVersionDTOConverterContext(
 			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition,
 			ObjectEntryVersion objectEntryVersion,
 			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry)
 		throws Exception {
@@ -2436,9 +2437,14 @@ public class DefaultObjectEntryManagerImpl
 					}
 
 					return _addAction(
-						ActionKeys.ADD_ENTRY, "postObjectEntryByVersionCopy",
-						serviceBuilderObjectEntry, templateParameterMap,
-						dtoConverterContext.getUriInfo());
+						ActionKeys.ADD_ENTRY,
+						new String[] {
+							"postByExternalReferenceCodeByVersionCopy",
+							"postScopeScopeKeyByExternalReferenceCodeBy" +
+								"VersionCopy"
+						},
+						objectDefinition, serviceBuilderObjectEntry,
+						templateParameterMap, dtoConverterContext.getUriInfo());
 				}
 			).put(
 				"delete",
@@ -2448,9 +2454,14 @@ public class DefaultObjectEntryManagerImpl
 					}
 
 					return _addAction(
-						ActionKeys.DELETE, "deleteObjectEntryByVersion",
-						serviceBuilderObjectEntry, templateParameterMap,
-						dtoConverterContext.getUriInfo());
+						ActionKeys.DELETE,
+						new String[] {
+							"deleteByExternalReferenceCodeByVersion",
+							"deleteScopeScopeKeyByExternalReferenceCodeBy" +
+								"Version"
+						},
+						objectDefinition, serviceBuilderObjectEntry,
+						templateParameterMap, dtoConverterContext.getUriInfo());
 				}
 			).put(
 				"expire",
@@ -2466,16 +2477,25 @@ public class DefaultObjectEntryManagerImpl
 					}
 
 					return _addAction(
-						ActionKeys.UPDATE, "postObjectEntryByVersionExpire",
-						serviceBuilderObjectEntry, templateParameterMap,
-						dtoConverterContext.getUriInfo());
+						ActionKeys.UPDATE,
+						new String[] {
+							"postByExternalReferenceCodeByVersionExpire",
+							"postScopeScopeKeyByExternalReferenceCodeBy" +
+								"VersionExpire"
+						},
+						objectDefinition, serviceBuilderObjectEntry,
+						templateParameterMap, dtoConverterContext.getUriInfo());
 				}
 			).put(
 				"get",
 				_addAction(
-					ActionKeys.VIEW, "getObjectEntryByVersion",
-					serviceBuilderObjectEntry, templateParameterMap,
-					dtoConverterContext.getUriInfo())
+					ActionKeys.VIEW,
+					new String[] {
+						"getByExternalReferenceCodeByVersion",
+						"getScopeScopeKeyByExternalReferenceCodeByVersion"
+					},
+					objectDefinition, serviceBuilderObjectEntry,
+					templateParameterMap, dtoConverterContext.getUriInfo())
 			).put(
 				"restore",
 				() -> {
@@ -2486,9 +2506,14 @@ public class DefaultObjectEntryManagerImpl
 					}
 
 					return _addAction(
-						ActionKeys.UPDATE, "putObjectEntryByVersionRestore",
-						serviceBuilderObjectEntry, templateParameterMap,
-						dtoConverterContext.getUriInfo());
+						ActionKeys.UPDATE,
+						new String[] {
+							"putByExternalReferenceCodeByVersionRestore",
+							"putScopeScopeKeyByExternalReferenceCodeBy" +
+								"VersionRestore"
+						},
+						objectDefinition, serviceBuilderObjectEntry,
+						templateParameterMap, dtoConverterContext.getUriInfo());
 				}
 			).build();
 		}
@@ -3430,8 +3455,13 @@ public class DefaultObjectEntryManagerImpl
 			).put(
 				"versions",
 				_addAction(
-					ActionKeys.VIEW, "getObjectEntriesVersionsPage",
-					serviceBuilderObjectEntry, dtoConverterContext.getUriInfo())
+					ActionKeys.VIEW,
+					new String[] {
+						"getByExternalReferenceCodeVersionsPage",
+						"getScopeScopeKeyByExternalReferenceCodeVersionsPage"
+					},
+					objectDefinition, serviceBuilderObjectEntry, null,
+					dtoConverterContext.getUriInfo())
 			).putAll(
 				_getSubscriptionActions(
 					dtoConverterContext, objectDefinition,

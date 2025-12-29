@@ -85,7 +85,6 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 		_assertCTCollectionActions(
 			List.of("delete", "get", "reactivate"), ctCollection,
 			WorkflowConstants.STATUS_EXPIRED);
-
 		_assertCTCollectionActions(
 			List.of(
 				"checkout", "delete", "get", "permissions", "publish",

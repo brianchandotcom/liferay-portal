@@ -124,34 +124,22 @@ public class PageExperiencesTestUtil {
 	}
 
 	public static PageExperience getPageExperience(
-		String pageSpecificationExternalReferenceCode, long scopeGroupId,
-		SegmentsEntry segmentsEntry) {
+		String contentPageSpecificationExternalReferenceCode, int priority,
+		long scopeGroupId, SegmentsEntry segmentsEntry) {
 
 		PageExperience pageExperience = getPageExperience();
 
 		pageExperience.setPageSpecificationExternalReferenceCode(
-			pageSpecificationExternalReferenceCode);
+			contentPageSpecificationExternalReferenceCode);
+		pageExperience.setPageElements(
+			PageElementsTestUtil.getPageElements(scopeGroupId));
+		pageExperience.setPriority(priority);
 
 		if (segmentsEntry != null) {
 			pageExperience.setSegmentItemExternalReference(
 				() -> ReferencesTestUtil.getItemExternalReference(
 					segmentsEntry, scopeGroupId));
 		}
-
-		return pageExperience;
-	}
-
-	public static PageExperience getPageExperience(
-		String contentPageSpecificationExternalReferenceCode, int priority,
-		long scopeGroupId, SegmentsEntry segmentsEntry) {
-
-		PageExperience pageExperience = getPageExperience(
-			contentPageSpecificationExternalReferenceCode, scopeGroupId,
-			segmentsEntry);
-
-		pageExperience.setPageElements(
-			PageElementsTestUtil.getPageElements(scopeGroupId));
-		pageExperience.setPriority(priority);
 
 		return pageExperience;
 	}

@@ -10,6 +10,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.exportimport.test.rule.LazyReferencing;
+import com.liferay.exportimport.test.rule.LazyReferencingTestRule;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectAction;
@@ -115,7 +117,9 @@ import java.util.function.Function;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -133,6 +137,11 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 @RunWith(Arquillian.class)
 public class ObjectDefinitionResourceTest
 	extends BaseObjectDefinitionResourceTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LazyReferencingTestRule lazyReferencingTestRule =
+		LazyReferencingTestRule.INSTANCE;
 
 	@Before
 	@Override
@@ -593,6 +602,7 @@ public class ObjectDefinitionResourceTest
 	}
 
 	@FeatureFlag("LPD-17564")
+	@LazyReferencing
 	@Override
 	@Test
 	@TestInfo("LPD-49994")
@@ -800,6 +810,25 @@ public class ObjectDefinitionResourceTest
 
 		assertEquals(postObjectDefinition, randomObjectDefinition);
 		assertValid(postObjectDefinition);
+
+		// Object folder
+
+		randomObjectDefinition = randomObjectDefinition();
+
+		randomObjectDefinition.setObjectFolderExternalReferenceCode(
+			RandomTestUtil::randomString);
+
+		postObjectDefinition = testPostObjectDefinition_addObjectDefinition(
+			randomObjectDefinition);
+
+		Assert.assertEquals(
+			postObjectDefinition.getObjectFolderExternalReferenceCode(),
+			randomObjectDefinition.getObjectFolderExternalReferenceCode());
+
+		Assert.assertNotNull(
+			_objectFolderLocalService.fetchObjectFolderByExternalReferenceCode(
+				postObjectDefinition.getObjectFolderExternalReferenceCode(),
+				TestPropsValues.getCompanyId()));
 
 		// Object relationship
 

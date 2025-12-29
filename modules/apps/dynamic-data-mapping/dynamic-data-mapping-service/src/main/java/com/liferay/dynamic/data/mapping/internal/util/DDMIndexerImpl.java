@@ -1197,7 +1197,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 			DDMForm ddmForm = ddmStructure.getFullHierarchyDDMForm(false);
 
 			List<DDMFormFieldValue> ddmFormFieldValues =
-				DDMFormValuesConverterUtil.addMissingDDMFormFieldValues(
+				DDMFormValuesConverterUtil.getDDMFormFieldValues(
 					ddmForm.getDDMFormFields(),
 					ddmFormValues.getDDMFormFieldValuesMap(true));
 

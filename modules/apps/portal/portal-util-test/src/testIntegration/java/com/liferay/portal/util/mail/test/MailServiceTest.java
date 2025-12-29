@@ -10,6 +10,7 @@ import com.liferay.mail.kernel.service.MailService;
 import com.liferay.mail.settings.configuration.MailSettingCompanyConfiguration;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
+import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
@@ -113,6 +114,17 @@ public class MailServiceTest {
 	}
 
 	@Test
+	public void testGetSessionReflectsConfigurationUpdates() throws Exception {
+		long companyId = RandomTestUtil.randomLong();
+
+		_updateAndAssertSMTPPort(companyId, 1111);
+
+		_updateAndAssertSMTPPort(companyId, 2222);
+
+		_mailService.clearSession();
+	}
+
+	@Test
 	public void testGetSessionWithCompanyId() throws Exception {
 		long companyId = RandomTestUtil.randomLong();
 		String smtpHost = "test.local";
@@ -145,6 +157,22 @@ public class MailServiceTest {
 
 			_mailService.clearSession();
 		}
+	}
+
+	private void _updateAndAssertSMTPPort(long companyId, int port)
+		throws Exception {
+
+		ConfigurationTestUtil.saveConfiguration(
+			"com.liferay.mail.settings.configuration." +
+				"MailSettingCompanyConfiguration",
+			HashMapDictionaryBuilder.<String, Object>put(
+				"outgoingSMTPPort", port
+			).build());
+
+		Session session = _mailService.getSession(companyId);
+
+		Assert.assertEquals(
+			String.valueOf(port), session.getProperty("mail.smtp.port"));
 	}
 
 	@Inject

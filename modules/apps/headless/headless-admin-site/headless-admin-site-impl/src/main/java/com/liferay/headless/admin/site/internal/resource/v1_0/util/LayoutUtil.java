@@ -1172,7 +1172,9 @@ public class LayoutUtil {
 
 			Arrays.sort(
 				pageExperiences,
-				Comparator.comparingInt(PageExperience::getPriority));
+				Comparator.comparing(
+					PageExperience::getPriority,
+					Comparator.nullsLast(Comparator.naturalOrder())));
 
 			for (PageExperience pageExperience : pageExperiences) {
 				SegmentsExperience oldSegmentsExperience =

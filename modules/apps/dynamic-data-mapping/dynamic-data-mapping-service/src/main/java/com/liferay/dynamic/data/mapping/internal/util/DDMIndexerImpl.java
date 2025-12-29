@@ -120,10 +120,6 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 				String indexType = ddmFormField.getIndexType();
 
-				if (Validator.isNull(indexType) || indexType.equals("none")) {
-					continue;
-				}
-
 				String name = null;
 				Serializable value = null;
 
@@ -555,6 +551,12 @@ public class DDMIndexerImpl implements DDMIndexer {
 		if ((ddmFormField == null) || ddmFormField.isTransient() ||
 			(ddmFormFieldValue.getValue() == null)) {
 
+			return;
+		}
+
+		String indexType = ddmFormField.getIndexType();
+
+		if (Validator.isNull(indexType) || indexType.equals("none")) {
 			return;
 		}
 

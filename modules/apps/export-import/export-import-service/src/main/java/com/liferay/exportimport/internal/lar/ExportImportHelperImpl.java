@@ -188,15 +188,11 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			if ((portletDataHandler == null) ||
 				!ArrayUtil.contains(
 					portletDataHandler.getClassNames(), className) ||
-				!portletDataHandler.isDataSiteLevel()) {
+				!portletDataHandler.isDataSiteLevel() ||
+				(excludeDataAlwaysStaged &&
+				 portletDataHandler.isDataAlwaysStaged())) {
 
 				continue;
-			}
-
-			if (excludeDataAlwaysStaged &&
-				portletDataHandler.isDataAlwaysStaged()) {
-
-				return null;
 			}
 
 			return portlet;

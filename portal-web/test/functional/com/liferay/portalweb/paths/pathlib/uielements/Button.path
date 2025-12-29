@@ -642,7 +642,7 @@
 </tr>
 <tr>
 	<td>PLUS</td>
-	<td>//button[not(contains(@class,'borderless'))][not(contains(@class,'btn-unstyled') or contains(@class,'none'))][*[contains(@class,'icon-plus')]] | //*[self::a or self::button][contains(@class,'btn-primary')][normalize-space()='New'] | //button[not(contains(@class,'d-md-none'))][contains(@class, 'd-md-flex')][contains(@data-qa-id,'creationMenuNewButton')]</td>
+	<td>//button[not(contains(@class,'borderless'))][not(contains(@class,'btn-unstyled') or contains(@class,'none'))][*[contains(@class,'icon-plus')]] | //*[self::a or self::button][contains(@class,'btn-primary')][normalize-space()='New'] | //button[not(contains(@class,'d-md-none'))][contains(@class, 'd-md-flex')][contains(@data-qa-id,'creationMenuNewButton')] | //button[not(contains(@class,'d-md-none'))][contains(@data-testid,'fdsCreationActionButton')]</td>
 	<td></td>
 </tr>
 <tr>

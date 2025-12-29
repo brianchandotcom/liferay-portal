@@ -129,10 +129,10 @@ public class PageExperiencesTestUtil {
 
 		PageExperience pageExperience = getPageExperience();
 
-		pageExperience.setPageSpecificationExternalReferenceCode(
-			pageSpecificationExternalReferenceCode);
 		pageExperience.setPageElements(
 			PageElementsTestUtil.getPageElements(scopeGroupId));
+		pageExperience.setPageSpecificationExternalReferenceCode(
+			pageSpecificationExternalReferenceCode);
 		pageExperience.setPriority(priority);
 
 		if (segmentsEntry != null) {

@@ -246,6 +246,7 @@ public abstract class PageSpecification implements Cloneable, Serializable {
 	public static enum Type {
 
 		CONTENT_PAGE_SPECIFICATION("ContentPageSpecification"),
+		PAGE_SET_PAGE_SPECIFICATION("PageSetPageSpecification"),
 		WIDGET_PAGE_SPECIFICATION("WidgetPageSpecification");
 
 		public static Type create(String value) {

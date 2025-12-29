@@ -1,14 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
-import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSetPageSpecification;
-import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
-import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSpecification;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -24,97 +21,177 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class PageSpecificationSerDes {
+public class PageSetPageSpecificationSerDes {
 
-	public static PageSpecification toDTO(String json) {
-		PageSpecificationJSONParser pageSpecificationJSONParser =
-			new PageSpecificationJSONParser();
+	public static PageSetPageSpecification toDTO(String json) {
+		PageSetPageSpecificationJSONParser pageSetPageSpecificationJSONParser =
+			new PageSetPageSpecificationJSONParser();
 
-		return pageSpecificationJSONParser.parseToDTO(json);
+		return pageSetPageSpecificationJSONParser.parseToDTO(json);
 	}
 
-	public static PageSpecification[] toDTOs(String json) {
-		PageSpecificationJSONParser pageSpecificationJSONParser =
-			new PageSpecificationJSONParser();
+	public static PageSetPageSpecification[] toDTOs(String json) {
+		PageSetPageSpecificationJSONParser pageSetPageSpecificationJSONParser =
+			new PageSetPageSpecificationJSONParser();
 
-		return pageSpecificationJSONParser.parseToDTOs(json);
+		return pageSetPageSpecificationJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(PageSpecification pageSpecification) {
-		if (pageSpecification == null) {
+	public static String toJSON(
+		PageSetPageSpecification pageSetPageSpecification) {
+
+		if (pageSetPageSpecification == null) {
 			return "null";
 		}
 
-		PageSpecification.Type type = pageSpecification.getType();
+		StringBuilder sb = new StringBuilder();
 
-		if (type != null) {
-			String typeString = type.toString();
+		sb.append("{");
 
-			if (typeString.equals("ContentPageSpecification")) {
-				return ContentPageSpecificationSerDes.toJSON(
-					(ContentPageSpecification)pageSpecification);
+		if (pageSetPageSpecification.getCustomFields() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
 			}
 
-			if (typeString.equals("PageSetPageSpecification")) {
-				return PageSetPageSpecificationSerDes.toJSON(
-					(PageSetPageSpecification)pageSpecification);
+			sb.append("\"customFields\": ");
+
+			sb.append("[");
+
+			for (int i = 0;
+				 i < pageSetPageSpecification.getCustomFields().length; i++) {
+
+				sb.append(pageSetPageSpecification.getCustomFields()[i]);
+
+				if ((i + 1) <
+						pageSetPageSpecification.getCustomFields().length) {
+
+					sb.append(", ");
+				}
 			}
 
-			if (typeString.equals("WidgetPageSpecification")) {
-				return WidgetPageSpecificationSerDes.toJSON(
-					(WidgetPageSpecification)pageSpecification);
-			}
-
-			throw new IllegalArgumentException("Unknown type " + typeString);
+			sb.append("]");
 		}
-		else {
-			throw new IllegalArgumentException("Missing type parameter");
+
+		if (pageSetPageSpecification.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(pageSetPageSpecification.getExternalReferenceCode()));
+
+			sb.append("\"");
 		}
+
+		if (pageSetPageSpecification.getSettings() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"settings\": ");
+
+			sb.append(String.valueOf(pageSetPageSpecification.getSettings()));
+		}
+
+		if (pageSetPageSpecification.
+				getSiteTemplatePageSpecificationExternalReferenceCode() !=
+					null) {
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(
+				"\"siteTemplatePageSpecificationExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(
+					pageSetPageSpecification.
+						getSiteTemplatePageSpecificationExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
+		if (pageSetPageSpecification.getStatus() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"status\": ");
+
+			sb.append("\"");
+			sb.append(pageSetPageSpecification.getStatus());
+			sb.append("\"");
+		}
+
+		if (pageSetPageSpecification.getType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+			sb.append(pageSetPageSpecification.getType());
+			sb.append("\"");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		PageSpecificationJSONParser pageSpecificationJSONParser =
-			new PageSpecificationJSONParser();
+		PageSetPageSpecificationJSONParser pageSetPageSpecificationJSONParser =
+			new PageSetPageSpecificationJSONParser();
 
-		return pageSpecificationJSONParser.parseToMap(json);
+		return pageSetPageSpecificationJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		PageSpecification pageSpecification) {
+		PageSetPageSpecification pageSetPageSpecification) {
 
-		if (pageSpecification == null) {
+		if (pageSetPageSpecification == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (pageSpecification.getCustomFields() == null) {
+		if (pageSetPageSpecification.getCustomFields() == null) {
 			map.put("customFields", null);
 		}
 		else {
 			map.put(
 				"customFields",
-				String.valueOf(pageSpecification.getCustomFields()));
+				String.valueOf(pageSetPageSpecification.getCustomFields()));
 		}
 
-		if (pageSpecification.getExternalReferenceCode() == null) {
+		if (pageSetPageSpecification.getExternalReferenceCode() == null) {
 			map.put("externalReferenceCode", null);
 		}
 		else {
 			map.put(
 				"externalReferenceCode",
-				String.valueOf(pageSpecification.getExternalReferenceCode()));
+				String.valueOf(
+					pageSetPageSpecification.getExternalReferenceCode()));
 		}
 
-		if (pageSpecification.getSettings() == null) {
+		if (pageSetPageSpecification.getSettings() == null) {
 			map.put("settings", null);
 		}
 		else {
 			map.put(
-				"settings", String.valueOf(pageSpecification.getSettings()));
+				"settings",
+				String.valueOf(pageSetPageSpecification.getSettings()));
 		}
 
-		if (pageSpecification.
+		if (pageSetPageSpecification.
 				getSiteTemplatePageSpecificationExternalReferenceCode() ==
 					null) {
 
@@ -124,38 +201,39 @@ public class PageSpecificationSerDes {
 			map.put(
 				"siteTemplatePageSpecificationExternalReferenceCode",
 				String.valueOf(
-					pageSpecification.
+					pageSetPageSpecification.
 						getSiteTemplatePageSpecificationExternalReferenceCode()));
 		}
 
-		if (pageSpecification.getStatus() == null) {
+		if (pageSetPageSpecification.getStatus() == null) {
 			map.put("status", null);
 		}
 		else {
-			map.put("status", String.valueOf(pageSpecification.getStatus()));
+			map.put(
+				"status", String.valueOf(pageSetPageSpecification.getStatus()));
 		}
 
-		if (pageSpecification.getType() == null) {
+		if (pageSetPageSpecification.getType() == null) {
 			map.put("type", null);
 		}
 		else {
-			map.put("type", String.valueOf(pageSpecification.getType()));
+			map.put("type", String.valueOf(pageSetPageSpecification.getType()));
 		}
 
 		return map;
 	}
 
-	public static class PageSpecificationJSONParser
-		extends BaseJSONParser<PageSpecification> {
+	public static class PageSetPageSpecificationJSONParser
+		extends BaseJSONParser<PageSetPageSpecification> {
 
 		@Override
-		protected PageSpecification createDTO() {
-			return null;
+		protected PageSetPageSpecification createDTO() {
+			return new PageSetPageSpecification();
 		}
 
 		@Override
-		protected PageSpecification[] createDTOArray(int size) {
-			return new PageSpecification[size];
+		protected PageSetPageSpecification[] createDTOArray(int size) {
+			return new PageSetPageSpecification[size];
 		}
 
 		@Override
@@ -188,38 +266,9 @@ public class PageSpecificationSerDes {
 		}
 
 		@Override
-		public PageSpecification parseToDTO(String json) {
-			Map<String, Object> jsonMap = parseToMap(json);
-
-			Object type = jsonMap.get("type");
-
-			if (type != null) {
-				String typeString = type.toString();
-
-				if (typeString.equals("ContentPageSpecification")) {
-					return ContentPageSpecification.toDTO(json);
-				}
-
-				if (typeString.equals("PageSetPageSpecification")) {
-					return PageSetPageSpecification.toDTO(json);
-				}
-
-				if (typeString.equals("WidgetPageSpecification")) {
-					return WidgetPageSpecification.toDTO(json);
-				}
-
-				throw new IllegalArgumentException(
-					"Unknown type " + typeString);
-			}
-			else {
-				throw new IllegalArgumentException("Missing type parameter");
-			}
-		}
-
-		@Override
 		protected void setField(
-			PageSpecification pageSpecification, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
+			PageSetPageSpecification pageSetPageSpecification,
+			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "customFields")) {
 				if (jsonParserFieldValue != null) {
@@ -238,20 +287,20 @@ public class PageSpecificationSerDes {
 									(String)jsonParserFieldValues[i]);
 					}
 
-					pageSpecification.setCustomFields(customFieldsArray);
+					pageSetPageSpecification.setCustomFields(customFieldsArray);
 				}
 			}
 			else if (Objects.equals(
 						jsonParserFieldName, "externalReferenceCode")) {
 
 				if (jsonParserFieldValue != null) {
-					pageSpecification.setExternalReferenceCode(
+					pageSetPageSpecification.setExternalReferenceCode(
 						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "settings")) {
 				if (jsonParserFieldValue != null) {
-					pageSpecification.setSettings(
+					pageSetPageSpecification.setSettings(
 						SettingsSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
@@ -260,22 +309,22 @@ public class PageSpecificationSerDes {
 						"siteTemplatePageSpecificationExternalReferenceCode")) {
 
 				if (jsonParserFieldValue != null) {
-					pageSpecification.
+					pageSetPageSpecification.
 						setSiteTemplatePageSpecificationExternalReferenceCode(
 							(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "status")) {
 				if (jsonParserFieldValue != null) {
-					pageSpecification.setStatus(
-						PageSpecification.Status.create(
+					pageSetPageSpecification.setStatus(
+						PageSetPageSpecification.Status.create(
 							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
-					pageSpecification.setType(
-						PageSpecification.Type.create(
+					pageSetPageSpecification.setType(
+						PageSetPageSpecification.Type.create(
 							(String)jsonParserFieldValue));
 				}
 			}

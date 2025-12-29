@@ -50,6 +50,9 @@ import java.util.function.Supplier;
 			name = "ContentPageSettings", value = ContentPageSettings.class
 		),
 		@JsonSubTypes.Type(
+			name = "PageSetPageSettings", value = PageSetPageSettings.class
+		),
+		@JsonSubTypes.Type(
 			name = "WidgetPageSettings", value = WidgetPageSettings.class
 		)
 	}
@@ -533,6 +536,7 @@ public abstract class PageSettings implements Serializable {
 	public static enum Type {
 
 		CONTENT_PAGE_SETTINGS("ContentPageSettings"),
+		PAGE_SET_PAGE_SETTINGS("PageSetPageSettings"),
 		WIDGET_PAGE_SETTINGS("WidgetPageSettings");
 
 		@JsonCreator

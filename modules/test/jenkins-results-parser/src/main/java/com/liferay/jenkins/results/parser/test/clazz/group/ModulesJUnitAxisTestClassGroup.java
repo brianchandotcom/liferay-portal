@@ -25,6 +25,21 @@ import org.json.JSONObject;
 public class ModulesJUnitAxisTestClassGroup extends JUnitAxisTestClassGroup {
 
 	@Override
+	public long getAverageTotalTestTaskDuration() {
+		if (_averageTotalTestTaskDuration != null) {
+			return _averageTotalTestTaskDuration;
+		}
+
+		_averageTotalTestTaskDuration = 0L;
+
+		for (TestTask testTask : getTestTasks()) {
+			_averageTotalTestTaskDuration += testTask.getLongestDuration();
+		}
+
+		return _averageTotalTestTaskDuration;
+	}
+
+	@Override
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = new JSONObject();
 
@@ -60,6 +75,8 @@ public class ModulesJUnitAxisTestClassGroup extends JUnitAxisTestClassGroup {
 			if (testTask == null) {
 				testTask = TestTaskFactory.newTestTask(
 					modulesJUnitTestClass.getAverageTestTaskDuration(),
+					modulesJUnitTestClass.getAverageTotalTestTaskDuration(),
+					modulesJUnitTestClass.getLongestTestTaskDuration(),
 					testTaskName);
 
 				_testTasks.put(testTaskName, testTask);
@@ -97,7 +114,9 @@ public class ModulesJUnitAxisTestClassGroup extends JUnitAxisTestClassGroup {
 			String testTaskName = testTaskJSONObject.getString("name");
 
 			TestTask testTask = TestTaskFactory.newTestTask(
-				testTaskJSONObject.getLong("average_duration"), testTaskName);
+				testTaskJSONObject.getLong("average_duration"),
+				testTaskJSONObject.getLong("average_total_duration"),
+				testTaskJSONObject.getLong("longest_duration"), testTaskName);
 
 			for (int j = 0; j < testClassesJSONArray.length(); j++) {
 				JSONObject testClassJSONObject =
@@ -144,6 +163,7 @@ public class ModulesJUnitAxisTestClassGroup extends JUnitAxisTestClassGroup {
 		return modulesJUnitTestClasses;
 	}
 
+	private Long _averageTotalTestTaskDuration;
 	private final Map<String, TestTask> _testTasks = new HashMap<>();
 
 }

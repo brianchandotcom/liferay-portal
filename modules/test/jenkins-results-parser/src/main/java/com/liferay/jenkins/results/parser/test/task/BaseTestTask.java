@@ -47,11 +47,20 @@ public class BaseTestTask implements TestTask {
 	}
 
 	@Override
+	public long getAverageTotalDuration() {
+		return _averageTotalDuration;
+	}
+
+	@Override
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put(
 			"average_duration", getAverageDuration()
+		).put(
+			"average_total_duration", getAverageTotalDuration()
+		).put(
+			"longest_duration", getLongestDuration()
 		).put(
 			"name", getName()
 		);
@@ -68,6 +77,11 @@ public class BaseTestTask implements TestTask {
 	}
 
 	@Override
+	public long getLongestDuration() {
+		return _longestDuration;
+	}
+
+	@Override
 	public String getName() {
 		return _name;
 	}
@@ -75,7 +89,7 @@ public class BaseTestTask implements TestTask {
 	@Override
 	public long getOverheadWeight() {
 		if (_testClasses.isEmpty()) {
-			return 0;
+			throw new RuntimeException("Missing associated test classes");
 		}
 
 		TestClass testClass = _testClasses.get(0);
@@ -100,7 +114,13 @@ public class BaseTestTask implements TestTask {
 
 	@Override
 	public long getWeight() {
-		return getAverageDuration();
+		long longestDuration = getLongestDuration();
+
+		if (longestDuration <= 0L) {
+			return Long.MAX_VALUE;
+		}
+
+		return longestDuration;
 	}
 
 	@Override
@@ -110,12 +130,19 @@ public class BaseTestTask implements TestTask {
 		return name.hashCode();
 	}
 
-	protected BaseTestTask(long averageDuration, String name) {
+	protected BaseTestTask(
+		long averageDuration, long averageTotalDuration, long longestDuration,
+		String name) {
+
 		_averageDuration = averageDuration;
+		_averageTotalDuration = averageTotalDuration;
+		_longestDuration = longestDuration;
 		_name = name;
 	}
 
 	private final long _averageDuration;
+	private final long _averageTotalDuration;
+	private final long _longestDuration;
 	private final String _name;
 	private final List<TestClass> _testClasses = new ArrayList<>();
 

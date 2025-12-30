@@ -127,6 +127,7 @@ definition {
 	@description = "Verify buyers without the Manage Addresses permission cannot add a shipping and billing address at checkout, only select existing ones."
 	@priority = 5
 	test CanOnlySelectPreDefinedShippingAndBillingAddressesWhithouPermission {
+		property browser.chrome.version = "139.0";
 		property portal.acceptance = "true";
 
 		task ("Given the buyer role doesn't have permission to manage addresses") {

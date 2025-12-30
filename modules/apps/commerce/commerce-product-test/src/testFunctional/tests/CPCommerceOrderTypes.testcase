@@ -1,6 +1,7 @@
 @component-name = "portal-commerce"
 definition {
 
+	property browser.chrome.version = "139.0";
 	property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 	property portal.release = "true";
 	property portal.upstream = "true";
@@ -105,6 +106,7 @@ definition {
 	@description = "This is a test for COMMERCE-11591. Verify when we add a product to the cart and there is one active order type eligible for the channel, then the Select Order Type popup is not shown"
 	@priority = 5
 	test CanCreateOrderAutomaticallyWhenThereIsOnlyOneEligibleOrderType {
+		property browser.chrome.version = "139.0";
 		property portal.acceptance = "true";
 
 		task ("Given two active order types are created") {

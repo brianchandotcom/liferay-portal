@@ -16,6 +16,7 @@ definition {
 	@description = "Test for COMMERCE-11398. As a B2X site guest user, I want to be able to search for a product"
 	@priority = 5
 	test CanB2XGuestUsersSearchProducts {
+		property browser.chrome.version = "139.0";
 		property portal.acceptance = "true";
 
 		task ("Given the channel Site Type is set to B2X") {

@@ -106,28 +106,6 @@ public class PageSpecificationSerDes {
 				String.valueOf(pageSpecification.getExternalReferenceCode()));
 		}
 
-		if (pageSpecification.getSettings() == null) {
-			map.put("settings", null);
-		}
-		else {
-			map.put(
-				"settings", String.valueOf(pageSpecification.getSettings()));
-		}
-
-		if (pageSpecification.
-				getSiteTemplatePageSpecificationExternalReferenceCode() ==
-					null) {
-
-			map.put("siteTemplatePageSpecificationExternalReferenceCode", null);
-		}
-		else {
-			map.put(
-				"siteTemplatePageSpecificationExternalReferenceCode",
-				String.valueOf(
-					pageSpecification.
-						getSiteTemplatePageSpecificationExternalReferenceCode()));
-		}
-
 		if (pageSpecification.getStatus() == null) {
 			map.put("status", null);
 		}
@@ -165,15 +143,6 @@ public class PageSpecificationSerDes {
 			}
 			else if (Objects.equals(
 						jsonParserFieldName, "externalReferenceCode")) {
-
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "settings")) {
-				return false;
-			}
-			else if (Objects.equals(
-						jsonParserFieldName,
-						"siteTemplatePageSpecificationExternalReferenceCode")) {
 
 				return false;
 			}
@@ -247,22 +216,6 @@ public class PageSpecificationSerDes {
 				if (jsonParserFieldValue != null) {
 					pageSpecification.setExternalReferenceCode(
 						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "settings")) {
-				if (jsonParserFieldValue != null) {
-					pageSpecification.setSettings(
-						SettingsSerDes.toDTO((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName,
-						"siteTemplatePageSpecificationExternalReferenceCode")) {
-
-				if (jsonParserFieldValue != null) {
-					pageSpecification.
-						setSiteTemplatePageSpecificationExternalReferenceCode(
-							(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "status")) {

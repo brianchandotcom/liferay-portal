@@ -49,6 +49,37 @@ public class WidgetPageSpecificationSerDes {
 
 		sb.append("{");
 
+		if (widgetPageSpecification.getSettings() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"settings\": ");
+
+			sb.append(String.valueOf(widgetPageSpecification.getSettings()));
+		}
+
+		if (widgetPageSpecification.
+				getSiteTemplatePageSpecificationExternalReferenceCode() !=
+					null) {
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(
+				"\"siteTemplatePageSpecificationExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(
+					widgetPageSpecification.
+						getSiteTemplatePageSpecificationExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (widgetPageSpecification.getWidgetPageSections() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -116,37 +147,6 @@ public class WidgetPageSpecificationSerDes {
 			sb.append("\"");
 		}
 
-		if (widgetPageSpecification.getSettings() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"settings\": ");
-
-			sb.append(String.valueOf(widgetPageSpecification.getSettings()));
-		}
-
-		if (widgetPageSpecification.
-				getSiteTemplatePageSpecificationExternalReferenceCode() !=
-					null) {
-
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append(
-				"\"siteTemplatePageSpecificationExternalReferenceCode\": ");
-
-			sb.append("\"");
-
-			sb.append(
-				_escape(
-					widgetPageSpecification.
-						getSiteTemplatePageSpecificationExternalReferenceCode()));
-
-			sb.append("\"");
-		}
-
 		if (widgetPageSpecification.getStatus() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -192,6 +192,29 @@ public class WidgetPageSpecificationSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (widgetPageSpecification.getSettings() == null) {
+			map.put("settings", null);
+		}
+		else {
+			map.put(
+				"settings",
+				String.valueOf(widgetPageSpecification.getSettings()));
+		}
+
+		if (widgetPageSpecification.
+				getSiteTemplatePageSpecificationExternalReferenceCode() ==
+					null) {
+
+			map.put("siteTemplatePageSpecificationExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"siteTemplatePageSpecificationExternalReferenceCode",
+				String.valueOf(
+					widgetPageSpecification.
+						getSiteTemplatePageSpecificationExternalReferenceCode()));
+		}
+
 		if (widgetPageSpecification.getWidgetPageSections() == null) {
 			map.put("widgetPageSections", null);
 		}
@@ -219,29 +242,6 @@ public class WidgetPageSpecificationSerDes {
 				"externalReferenceCode",
 				String.valueOf(
 					widgetPageSpecification.getExternalReferenceCode()));
-		}
-
-		if (widgetPageSpecification.getSettings() == null) {
-			map.put("settings", null);
-		}
-		else {
-			map.put(
-				"settings",
-				String.valueOf(widgetPageSpecification.getSettings()));
-		}
-
-		if (widgetPageSpecification.
-				getSiteTemplatePageSpecificationExternalReferenceCode() ==
-					null) {
-
-			map.put("siteTemplatePageSpecificationExternalReferenceCode", null);
-		}
-		else {
-			map.put(
-				"siteTemplatePageSpecificationExternalReferenceCode",
-				String.valueOf(
-					widgetPageSpecification.
-						getSiteTemplatePageSpecificationExternalReferenceCode()));
 		}
 
 		if (widgetPageSpecification.getStatus() == null) {
@@ -277,7 +277,18 @@ public class WidgetPageSpecificationSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "widgetPageSections")) {
+			if (Objects.equals(jsonParserFieldName, "settings")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"siteTemplatePageSpecificationExternalReferenceCode")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "widgetPageSections")) {
+
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
@@ -285,15 +296,6 @@ public class WidgetPageSpecificationSerDes {
 			}
 			else if (Objects.equals(
 						jsonParserFieldName, "externalReferenceCode")) {
-
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "settings")) {
-				return false;
-			}
-			else if (Objects.equals(
-						jsonParserFieldName,
-						"siteTemplatePageSpecificationExternalReferenceCode")) {
 
 				return false;
 			}
@@ -312,7 +314,25 @@ public class WidgetPageSpecificationSerDes {
 			WidgetPageSpecification widgetPageSpecification,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "widgetPageSections")) {
+			if (Objects.equals(jsonParserFieldName, "settings")) {
+				if (jsonParserFieldValue != null) {
+					widgetPageSpecification.setSettings(
+						SettingsSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"siteTemplatePageSpecificationExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					widgetPageSpecification.
+						setSiteTemplatePageSpecificationExternalReferenceCode(
+							(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "widgetPageSections")) {
+
 				if (jsonParserFieldValue != null) {
 					Object[] jsonParserFieldValues =
 						(Object[])jsonParserFieldValue;
@@ -356,22 +376,6 @@ public class WidgetPageSpecificationSerDes {
 				if (jsonParserFieldValue != null) {
 					widgetPageSpecification.setExternalReferenceCode(
 						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "settings")) {
-				if (jsonParserFieldValue != null) {
-					widgetPageSpecification.setSettings(
-						SettingsSerDes.toDTO((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName,
-						"siteTemplatePageSpecificationExternalReferenceCode")) {
-
-				if (jsonParserFieldValue != null) {
-					widgetPageSpecification.
-						setSiteTemplatePageSpecificationExternalReferenceCode(
-							(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "status")) {

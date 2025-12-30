@@ -7,6 +7,7 @@ package com.liferay.portal.url.builder.internal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesRegistry;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesUtil;
@@ -16,6 +17,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.BrowserSnifferUtil;
+import com.liferay.portal.url.builder.configuration.PortalURLBuilderConfiguration;
 import com.liferay.portal.url.builder.facet.CacheAwareAbsolutePortalURLBuilder.CachePolicy;
 import com.liferay.portal.url.builder.internal.util.CacheHelper;
 
@@ -70,6 +72,32 @@ public abstract class BaseAbsolutePortalURLBuilderTestCase {
 		);
 
 		return cacheHelper;
+	}
+
+	protected ConfigurationProvider mockConfigurationProvider()
+		throws Exception {
+
+		ConfigurationProvider configurationProvider = Mockito.mock(
+			ConfigurationProvider.class);
+
+		PortalURLBuilderConfiguration portalURLBuilderConfiguration =
+			Mockito.mock(PortalURLBuilderConfiguration.class);
+
+		Mockito.when(
+			portalURLBuilderConfiguration.enableESModulesHashing()
+		).thenReturn(
+			true
+		);
+
+		Mockito.when(
+			configurationProvider.getCompanyConfiguration(
+				Mockito.eq(PortalURLBuilderConfiguration.class),
+				Mockito.anyLong())
+		).thenReturn(
+			portalURLBuilderConfiguration
+		);
+
+		return configurationProvider;
 	}
 
 	protected HashedFilesRegistry mockHashedFilesRegistry() {

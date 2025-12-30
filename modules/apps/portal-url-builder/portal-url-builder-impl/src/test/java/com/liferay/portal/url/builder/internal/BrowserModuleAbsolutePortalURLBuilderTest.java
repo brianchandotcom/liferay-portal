@@ -55,8 +55,9 @@ public class BrowserModuleAbsolutePortalURLBuilderTest
 		super.setUp();
 
 		_absolutePortalURLBuilder = new AbsolutePortalURLBuilderImpl(
-			mockCacheHelper(), mockHashedFilesRegistry(),
-			mockPortal(context, proxy, cdnHost), mockHttpServletRequest());
+			mockCacheHelper(), mockConfigurationProvider(),
+			mockHashedFilesRegistry(), mockPortal(context, proxy, cdnHost),
+			mockHttpServletRequest());
 
 		Bundle bundle = Mockito.mock(Bundle.class);
 

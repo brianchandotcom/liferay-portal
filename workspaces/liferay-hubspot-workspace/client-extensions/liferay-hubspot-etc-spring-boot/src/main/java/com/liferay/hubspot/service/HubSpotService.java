@@ -6,6 +6,12 @@
 package com.liferay.hubspot.service;
 
 import com.liferay.client.extension.util.spring.boot3.service.BaseService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -18,146 +24,134 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
 /**
+ * @author Keven Leone
  * @author Ricardo Mariz
  */
 @Component
 public class HubSpotService extends BaseService {
 
-	public String createCompany(
-			String name, String numberOfEmployees, String phone,
-			String websiteURL)
+	public JSONObject createCompany(JSONObject propertiesJSONObject)
 		throws Exception {
 
-		JSONObject bodyJSONObject = new JSONObject(
-		).put(
-			"properties",
-			new JSONObject(
-			).put(
-				"domain", websiteURL
-			).put(
-				"name", name
-			).put(
-				"numberofemployees", numberOfEmployees
-			).put(
-				"phone", phone
-			)
-		);
+		JSONObject companyJSONObject = searchHubSpotResource(
+			"companies", "name", propertiesJSONObject.getString("name"));
 
-		return post(
-			getAuthorization(), bodyJSONObject.toString(),
-			UriComponentsBuilder.fromUriString(
-				_hubspotAuthURL
-			).path(
-				"/crm/v3/objects/companies"
-			).build(
-			).toUri());
-	}
-
-	public String createContact(
-			String email, String firstName, String lastName, String phone)
-		throws Exception {
-
-		String contact = post(
-			getAuthorization(),
-			new JSONObject(
-			).put(
-				"properties",
-				new JSONObject(
-				).put(
-					"email", email
-				).put(
-					"firstname", firstName
-				).put(
-					"lastname", lastName
-				).put(
-					"phone", phone
-				)
-			).toString(),
-			UriComponentsBuilder.fromUriString(
-				_hubspotAuthURL
-			).path(
-				"/crm/v3/objects/contacts"
-			).build(
-			).toUri());
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Contact created: " + contact);
-		}
-
-		return contact;
-	}
-
-	public void createLead(
-			String email, String firstName, String lastName, String phone,
-			String companyName, String numberOfEmployees, String websiteURL)
-		throws Exception {
-
-		String contactId = getOrCreateContact(
-			email, firstName, lastName, phone
-		).getString(
-			"id"
-		);
-
-		createLeadWithContactAssociation(
-			contactId, "WARM", "Lead Capture for " + companyName,
-			"NEW_BUSINESS");
-	}
-
-	public void createLeadWithContactAssociation(
-			String contactId, String leadLabel, String leadName,
-			String leadType)
-		throws Exception {
-
-		post(
-			getAuthorization(),
-			new JSONObject(
-			).put(
-				"associations",
-				new JSONArray(
-				).put(
+		if (companyJSONObject == null) {
+			JSONObject jsonObject = new JSONObject(
+				post(
+					_getAuthorization(),
 					new JSONObject(
 					).put(
-						"to",
+						"properties",
+						_getHubSpotPropertiesJSONObject(
+							propertiesJSONObject, "companies")
+					).toString(),
+					UriComponentsBuilder.fromUriString(
+						_hubSpotURL
+					).path(
+						"/crm/v3/objects/companies"
+					).build(
+					).toUri()));
+
+			if (_log.isInfoEnabled()) {
+				_log.info("HubSpot company created: " + jsonObject);
+			}
+
+			return jsonObject;
+		}
+
+		return null;
+	}
+
+	public JSONObject createContact(JSONObject propertiesJSONObject)
+		throws Exception {
+
+		JSONObject contactJSONObject = searchHubSpotResource(
+			"contacts", "email", propertiesJSONObject.getString("email"));
+
+		if (contactJSONObject == null) {
+			JSONObject jsonObject = new JSONObject(
+				post(
+					_getAuthorization(),
+					new JSONObject(
+					).put(
+						"properties",
+						_getHubSpotPropertiesJSONObject(
+							propertiesJSONObject, "contacts")
+					).toString(),
+					UriComponentsBuilder.fromUriString(
+						_hubSpotURL
+					).path(
+						"/crm/v3/objects/contacts"
+					).build(
+					).toUri()));
+
+			if (_log.isInfoEnabled()) {
+				_log.info("HubSpot contact created: " + jsonObject);
+			}
+
+			return jsonObject;
+		}
+
+		return null;
+	}
+
+	public JSONObject createLead(
+			String contactId, JSONObject propertiesJSONObject)
+		throws Exception {
+
+		JSONObject jsonObject = new JSONObject(
+			post(
+				_getAuthorization(),
+				new JSONObject(
+				).put(
+					"associations",
+					new JSONArray(
+					).put(
 						new JSONObject(
 						).put(
-							"id", contactId
-						)
-					).put(
-						"types",
-						new JSONArray(
-						).put(
+							"to",
 							new JSONObject(
 							).put(
-								"associationCategory", "HUBSPOT_DEFINED"
+								"id", contactId
+							)
+						).put(
+							"types",
+							new JSONArray(
 							).put(
-								"associationTypeId",
-								_CONTACT_TO_LEAD_ASSOCIATION_TYPE_ID
+								new JSONObject(
+								).put(
+									"associationCategory", "HUBSPOT_DEFINED"
+								).put(
+									"associationTypeId", _ASSOCIATION_TYPE_ID
+								)
 							)
 						)
 					)
-				)
-			).put(
-				"properties",
-				new JSONObject(
 				).put(
-					"hs_lead_label", leadLabel
-				).put(
-					"hs_lead_name", leadName
-				).put(
-					"hs_lead_type", leadType
-				)
-			).toString(),
-			UriComponentsBuilder.fromUriString(
-				_hubspotAuthURL
-			).path(
-				"/crm/v3/objects/leads"
-			).build(
-			).toUri());
+					"properties",
+					_getHubSpotPropertiesJSONObject(
+						propertiesJSONObject, "leads")
+				).toString(),
+				UriComponentsBuilder.fromUriString(
+					_hubSpotURL
+				).path(
+					"/crm/v3/objects/leads"
+				).build(
+				).toUri()));
+
+		if (_log.isInfoEnabled()) {
+			_log.info("HubSpot lead created: " + jsonObject);
+		}
+
+		return jsonObject;
 	}
 
-	public JSONObject findCompanyByName(String name) throws Exception {
+	public JSONObject searchHubSpotResource(
+		String objectName, String propertyName, String value) {
+
 		String response = post(
-			getAuthorization(),
+			_getAuthorization(),
 			new JSONObject(
 			).put(
 				"filterGroups",
@@ -172,146 +166,131 @@ public class HubSpotService extends BaseService {
 							).put(
 								"operator", "EQ"
 							).put(
-								"propertyName", "name"
+								"propertyName", propertyName
 							).put(
-								"value", name
+								"value", value
 							)
 						)
 					)
 				)
 			).put(
-				"limit", 10
+				"limit", 1
 			).toString(),
 			UriComponentsBuilder.fromUriString(
-				_hubspotAuthURL
+				_hubSpotURL
 			).path(
-				"/crm/v3/objects/companies/search"
+				"/crm/v3/objects/" + objectName + "/search"
 			).build(
 			).toUri());
 
-		JSONArray resultsJSONArray = new JSONObject(
-			response
-		).optJSONArray(
-			"results"
-		);
+		JSONObject jsonObject = new JSONObject(response);
 
-		if ((resultsJSONArray != null) && !resultsJSONArray.isEmpty()) {
-			return resultsJSONArray.getJSONObject(0);
-		}
-
-		return null;
-	}
-
-	public JSONObject findContactByEmail(String email) throws Exception {
-		String response = post(
-			getAuthorization(),
-			new JSONObject(
-			).put(
-				"filterGroups",
-				new JSONArray(
-				).put(
-					new JSONObject(
-					).put(
-						"filters",
-						new JSONArray(
-						).put(
-							new JSONObject(
-							).put(
-								"operator", "EQ"
-							).put(
-								"propertyName", "email"
-							).put(
-								"value", email
-							)
-						)
-					)
-				)
-			).put(
-				"limit", 10
-			).toString(),
-			UriComponentsBuilder.fromUriString(
-				_hubspotAuthURL
-			).path(
-				"/crm/v3/objects/contacts/search"
-			).build(
-			).toUri());
-
-		JSONArray resultsJSONArray = new JSONObject(
-			response
-		).optJSONArray(
-			"results"
-		);
-
-		if ((resultsJSONArray != null) && !resultsJSONArray.isEmpty()) {
-			return resultsJSONArray.getJSONObject(0);
-		}
-
-		return null;
-	}
-
-	public void getOrCreateCompany(
-			String name, String numberOfEmployees, String phone,
-			String websiteURL)
-		throws Exception {
-
-		JSONObject existingJSONObject = findCompanyByName(name);
-
-		if (existingJSONObject != null) {
-			if (_log.isInfoEnabled()) {
-				_log.info("Existing company: " + existingJSONObject);
-			}
-
-			return;
-		}
-
-		JSONObject createdJSONObject = new JSONObject(
-			createCompany(name, numberOfEmployees, phone, websiteURL));
+		JSONArray jsonArray = jsonObject.optJSONArray("results");
 
 		if (_log.isInfoEnabled()) {
-			_log.info("New company created: " + createdJSONObject);
+			_log.info(
+				StringBundler.concat(
+					"Found ", jsonObject.optInt("total"), " results for \"",
+					objectName, "\" equal to \"", value, "\""));
 		}
+
+		if (jsonArray.isEmpty()) {
+			return null;
+		}
+
+		return jsonArray.getJSONObject(0);
 	}
 
-	public JSONObject getOrCreateContact(
-			String email, String firstName, String lastName, String phone)
-		throws Exception {
+	private String _getAuthorization() {
+		return "Bearer " + _hubSpotToken;
+	}
 
-		JSONObject existingJSONObject = findContactByEmail(email);
+	private JSONObject _getHubSpotPropertiesJSONObject(
+		JSONObject jsonObject, String propertyName) {
 
-		if (existingJSONObject != null) {
-			if (_log.isInfoEnabled()) {
-				_log.info("Existing contact returned: " + existingJSONObject);
+		Map<String, JSONObject> map = _writeObject(
+			_getPropertyJSONArray(propertyName));
+
+		JSONObject propertiesJSONObject = new JSONObject();
+
+		for (String key : jsonObject.keySet()) {
+			Object value = jsonObject.get(key);
+
+			String normalizedKey = _normalizeKey(key);
+
+			if (map.containsKey(normalizedKey)) {
+				JSONObject hubspotPropertyJSONObject = map.get(normalizedKey);
+
+				Object propertyValue = value;
+
+				JSONArray optionsJSONArray =
+					hubspotPropertyJSONObject.optJSONArray("options");
+
+				for (int i = 0; i < optionsJSONArray.length(); i++) {
+					JSONObject optionJSONObject =
+						optionsJSONArray.getJSONObject(i);
+
+					if (Objects.equals(
+							_normalizeKey(optionJSONObject.getString("value")),
+							_normalizeKey(String.valueOf(value)))) {
+
+						propertyValue = optionJSONObject.getString("value");
+
+						break;
+					}
+				}
+
+				propertiesJSONObject.put(
+					hubspotPropertyJSONObject.getString("name"), propertyValue);
 			}
-
-			return existingJSONObject;
 		}
 
-		JSONObject createdJSONObject = new JSONObject(
-			createContact(email, firstName, lastName, phone));
-
-		if (_log.isInfoEnabled()) {
-			_log.info("New contact created: " + createdJSONObject);
-		}
-
-		return createdJSONObject;
+		return propertiesJSONObject;
 	}
 
-	protected String getAuthorization() throws Exception {
-		if (_authToken == null) {
-			throw new Exception("Unable to get token authorization");
-		}
+	private JSONArray _getPropertyJSONArray(String propertyName) {
+		JSONObject jsonObject = new JSONObject(
+			get(
+				_getAuthorization(),
+				UriComponentsBuilder.fromUriString(
+					_hubSpotURL
+				).path(
+					"/crm/v3/properties/" + propertyName
+				).build(
+				).toUri()));
 
-		return "Bearer " + _authToken;
+		return jsonObject.optJSONArray("results");
 	}
 
-	private static final int _CONTACT_TO_LEAD_ASSOCIATION_TYPE_ID = 578;
+	private String _normalizeKey(String key) {
+		return key.toLowerCase(
+		).replaceAll(
+			"[^a-z0-9]", StringPool.BLANK
+		);
+	}
+
+	private Map<String, JSONObject> _writeObject(JSONArray jsonArray) {
+		Map<String, JSONObject> map = new HashMap<>();
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject propertyJSONObject = jsonArray.getJSONObject(i);
+
+			String propertyName = propertyJSONObject.getString("name");
+
+			map.put(_normalizeKey(propertyName), propertyJSONObject);
+		}
+
+		return map;
+	}
+
+	private static final int _ASSOCIATION_TYPE_ID = 578;
 
 	private static final Log _log = LogFactory.getLog(HubSpotService.class);
 
-	@Value("${liferay.hubspot.auth.token}")
-	private String _authToken;
+	@Value("${liferay.hubspot.token}")
+	private String _hubSpotToken;
 
-	@Value("${liferay.hubspot.auth.url}")
-	private String _hubspotAuthURL;
+	@Value("${liferay.hubspot.url}")
+	private String _hubSpotURL;
 
 }

@@ -11,6 +11,27 @@
 	},
 	"items": [
 		{
+			"externalReferenceCode": "H1S4_LEAD_LABEL",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "COLD",
+					"key": "cold",
+					"name": "Cold"
+				},
+				{
+					"externalReferenceCode": "HOT",
+					"key": "hot",
+					"name": "Hot"
+				},
+				{
+					"externalReferenceCode": "WARM",
+					"key": "warm",
+					"name": "Warm"
+				}
+			],
+			"name": "H1S4 Lead Label"
+		},
+		{
 			"externalReferenceCode": "H1S4_LEAD_TYPE",
 			"listTypeEntries": [
 				{
@@ -19,38 +40,17 @@
 					"name": "New Business"
 				},
 				{
+					"externalReferenceCode": "RE_ATTEMPTING",
+					"key": "reattempting",
+					"name": "Re-attempting"
+				},
+				{
 					"externalReferenceCode": "UPSELL",
 					"key": "upsell",
 					"name": "Upsell"
-				},
-				{
-					"externalReferenceCode": "RE_ATTEMPTING",
-					"key": "reAttempting",
-					"name": "Re-attempting"
 				}
 			],
 			"name": "H1S4 Lead Type"
-		},
-		{
-			"externalReferenceCode": "H1S4_LEAD_LABEL",
-			"listTypeEntries": [
-				{
-					"externalReferenceCode": "HOT",
-					"key": "hot",
-					"name": "HOT"
-				},
-				{
-					"externalReferenceCode": "WARM",
-					"key": "warm",
-					"name": "Warm"
-				},
-				{
-					"externalReferenceCode": "COLD",
-					"key": "cold",
-					"name": "Cold"
-				}
-			],
-			"name": "H1S4 Lead Label"
 		}
 	]
 }

@@ -19,12 +19,12 @@
 			"enableLocalization": false,
 			"enableObjectEntryDraft": false,
 			"enableObjectEntryHistory": false,
-			"externalReferenceCode": "H1S4_LEAD",
+			"externalReferenceCode": "H1S4_COMPANY",
 			"label": {
-				"en_US": "H1S4 Lead"
+				"en_US": "H1S4 Company"
 			},
 			"modifiable": true,
-			"name": "H1S4Lead",
+			"name": "H1S4Company",
 			"objectActions": [
 				{
 					"active": true,
@@ -32,21 +32,15 @@
 					"description": "",
 					"errorMessage": {
 					},
-					"externalReferenceCode": "H1S4_ON_CREATE_LEAD",
+					"externalReferenceCode": "H1S4_ON_CREATE_COMPANY",
 					"label": {
-						"en_US": "On create lead"
+						"en_US": "On create company"
 					},
-					"name": "onCreateLead",
-					"objectActionExecutorKey": "function#liferay-hubspot-post-lead",
+					"name": "onCreateCompany",
+					"objectActionExecutorKey": "function#liferay-hubspot-post-company",
 					"objectActionTriggerKey": "onAfterAdd",
 					"parameters": {
-					},
-					"status": {
-						"code": 1,
-						"label": "success",
-						"label_i18n": "Success"
-					},
-					"system": false
+					}
 				}
 			],
 			"objectDefinitionSettings": [
@@ -54,35 +48,62 @@
 			"objectFields": [
 				{
 					"DBType": "String",
-					"businessType": "Picklist",
-					"externalReferenceCode": "HS_LEAD_LABEL",
+					"businessType": "Text",
+					"externalReferenceCode": "NAME",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "HS Lead Label"
+						"en_US": "Company Name"
 					},
-					"listTypeDefinitionExternalReferenceCode": "H1S4_LEAD_LABEL",
 					"localized": false,
-					"name": "hsLeadLabel",
+					"name": "name",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": false
+						}
+					],
 					"readOnly": "false",
-					"required": true,
+					"required": false,
 					"state": false,
+					"system": false,
 					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"externalReferenceCode": "NUMBER_OF_EMPLOYEES",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Number of Employees"
+					},
+					"localized": false,
+					"name": "numberOfEmployees",
+					"objectFieldSettings": [
+					],
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Long",
 					"unique": false
 				},
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "HS_LEAD_NAME",
+					"externalReferenceCode": "PHONE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "HS Lead Name"
+						"en_US": "Phone Number"
 					},
 					"localized": false,
-					"name": "hsLeadName",
+					"name": "phone",
 					"objectFieldSettings": [
 						{
 							"name": "showCounter",
@@ -98,20 +119,26 @@
 				},
 				{
 					"DBType": "String",
-					"businessType": "Picklist",
-					"externalReferenceCode": "HS_LEAD_TYPE",
+					"businessType": "Text",
+					"externalReferenceCode": "WEBSITE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "HS Lead Type"
+						"en_US": "Website URL"
 					},
-					"listTypeDefinitionExternalReferenceCode": "H1S4_LEAD_TYPE",
 					"localized": false,
-					"name": "hsLeadType",
+					"name": "website",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": false
+						}
+					],
 					"readOnly": "false",
-					"required": true,
+					"required": false,
 					"state": false,
+					"system": false,
 					"type": "String",
 					"unique": false
 				}
@@ -124,10 +151,10 @@
 			"panelCategoryKey": "control_panel.object",
 			"parameterRequired": false,
 			"pluralLabel": {
-				"en_US": "H1S4 Leads"
+				"en_US": "H1S4 Companies"
 			},
 			"portlet": true,
-			"restContextPath": "/o/c/h1s4leads",
+			"restContextPath": "/o/c/h1s4companies",
 			"scope": "company",
 			"status": {
 				"code": 0,
@@ -135,7 +162,7 @@
 				"label_i18n": "Approved"
 			},
 			"system": false,
-			"titleObjectFieldName": "id"
+			"titleObjectFieldName": "name"
 		},
 		{
 			"accountEntryRestricted": false,
@@ -167,13 +194,7 @@
 					"objectActionExecutorKey": "function#liferay-hubspot-post-contact",
 					"objectActionTriggerKey": "onAfterAdd",
 					"parameters": {
-					},
-					"status": {
-						"code": 1,
-						"label": "success",
-						"label_i18n": "Success"
-					},
-					"system": false
+					}
 				}
 			],
 			"objectDefinitionSettings": [
@@ -310,7 +331,7 @@
 				"label_i18n": "Approved"
 			},
 			"system": false,
-			"titleObjectFieldName": "id"
+			"titleObjectFieldName": "email"
 		},
 		{
 			"accountEntryRestricted": false,
@@ -321,12 +342,12 @@
 			"enableLocalization": false,
 			"enableObjectEntryDraft": false,
 			"enableObjectEntryHistory": false,
-			"externalReferenceCode": "H1S4_COMPANY",
+			"externalReferenceCode": "H1S4_LEAD",
 			"label": {
-				"en_US": "H1S4 Company"
+				"en_US": "H1S4 Lead"
 			},
 			"modifiable": true,
-			"name": "H1S4Company",
+			"name": "H1S4Lead",
 			"objectActions": [
 				{
 					"active": true,
@@ -334,21 +355,15 @@
 					"description": "",
 					"errorMessage": {
 					},
-					"externalReferenceCode": "H1S4_ON_CREATE_COMPANY",
+					"externalReferenceCode": "H1S4_ON_CREATE_LEAD",
 					"label": {
-						"en_US": "On create company"
+						"en_US": "On create lead"
 					},
-					"name": "onCreateCompany",
-					"objectActionExecutorKey": "function#liferay-hubspot-post-company",
+					"name": "onCreateLead",
+					"objectActionExecutorKey": "function#liferay-hubspot-post-lead",
 					"objectActionTriggerKey": "onAfterAdd",
 					"parameters": {
-					},
-					"status": {
-						"code": 1,
-						"label": "success",
-						"label_i18n": "Success"
-					},
-					"system": false
+					}
 				}
 			],
 			"objectDefinitionSettings": [
@@ -356,16 +371,35 @@
 			"objectFields": [
 				{
 					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "NAME",
+					"businessType": "Picklist",
+					"externalReferenceCode": "HS_LEAD_LABEL",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Company Name"
+						"en_US": "HS Lead Label"
+					},
+					"listTypeDefinitionExternalReferenceCode": "H1S4_LEAD_LABEL",
+					"localized": false,
+					"name": "hsLeadLabel",
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "HS_LEAD_NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "HS Lead Name"
 					},
 					"localized": false,
-					"name": "name",
+					"name": "hsLeadName",
 					"objectFieldSettings": [
 						{
 							"name": "showCounter",
@@ -381,72 +415,20 @@
 				},
 				{
 					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "WEBSITE",
+					"businessType": "Picklist",
+					"externalReferenceCode": "HS_LEAD_TYPE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Website URL"
+						"en_US": "HS Lead Type"
 					},
+					"listTypeDefinitionExternalReferenceCode": "H1S4_LEAD_TYPE",
 					"localized": false,
-					"name": "website",
-					"objectFieldSettings": [
-						{
-							"name": "showCounter",
-							"value": false
-						}
-					],
+					"name": "hsLeadType",
 					"readOnly": "false",
-					"required": false,
+					"required": true,
 					"state": false,
-					"system": false,
-					"type": "String",
-					"unique": false
-				},
-				{
-					"DBType": "Long",
-					"businessType": "LongInteger",
-					"externalReferenceCode": "NUMBER_OF_EMPLOYEES",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Number of Employees"
-					},
-					"localized": false,
-					"name": "numberOfEmployees",
-					"objectFieldSettings": [
-					],
-					"readOnly": "false",
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "Long",
-					"unique": false
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "PHONE",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Phone Number"
-					},
-					"localized": false,
-					"name": "phone",
-					"objectFieldSettings": [
-						{
-							"name": "showCounter",
-							"value": false
-						}
-					],
-					"readOnly": "false",
-					"required": false,
-					"state": false,
-					"system": false,
 					"type": "String",
 					"unique": false
 				}
@@ -459,10 +441,10 @@
 			"panelCategoryKey": "control_panel.object",
 			"parameterRequired": false,
 			"pluralLabel": {
-				"en_US": "H1S4 Companies"
+				"en_US": "H1S4 Leads"
 			},
 			"portlet": true,
-			"restContextPath": "/o/c/h1s4companies",
+			"restContextPath": "/o/c/h1s4leads",
 			"scope": "company",
 			"status": {
 				"code": 0,
@@ -470,7 +452,7 @@
 				"label_i18n": "Approved"
 			},
 			"system": false,
-			"titleObjectFieldName": "id"
+			"titleObjectFieldName": "hsLeadName"
 		}
 	]
 }

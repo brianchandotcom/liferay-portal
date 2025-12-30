@@ -303,9 +303,9 @@ export interface IFrontendDataSetProps {
 	};
 	fileDropSettings?: IFileDropSettings;
 	filters?: Array<any>;
-	filtersGroups?: Array<any>;
 	formId?: string;
 	formName?: string;
+	groupedFDSFilters?: Array<any>;
 	header?: IHeader;
 	hideManagementBarInEmptyState?: boolean;
 	id: string;

@@ -198,7 +198,7 @@ public class FDSRendererImpl implements FDSRenderer {
 						return filtersJSONArray;
 					}
 				).put(
-					"filtersGroups",
+					"groupedFDSFilters",
 					() -> {
 						JSONArray groupedFDSFiltersJSONArray =
 							fdsSerializer.serializeGroupedFDSFilters(

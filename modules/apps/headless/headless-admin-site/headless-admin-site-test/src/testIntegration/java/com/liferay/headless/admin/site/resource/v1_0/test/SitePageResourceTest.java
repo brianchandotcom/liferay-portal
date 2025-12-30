@@ -373,7 +373,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 	@Override
 	protected boolean equals(SitePage sitePage1, SitePage sitePage2) {
-		super.equals(sitePage1, sitePage2);
+		if (!super.equals(sitePage1, sitePage2)) {
+			return false;
+		}
 
 		PageSettings pageSettings1 = sitePage1.getPageSettings();
 		PageSettings pageSettings2 = sitePage2.getPageSettings();

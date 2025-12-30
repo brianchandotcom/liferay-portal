@@ -377,7 +377,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	}
 
 	@Test
-	@TestInfo("LPD-75168")
+	@TestInfo({"LPD-75168", "LPD-75364"})
 	public void testGetSiteSitePageWithLocalization() throws Exception {
 		User user = testCompany.getGuestUser();
 

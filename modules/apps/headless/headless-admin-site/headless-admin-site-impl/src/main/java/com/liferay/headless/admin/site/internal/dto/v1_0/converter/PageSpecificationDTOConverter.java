@@ -324,7 +324,6 @@ public class PageSpecificationDTOConverter
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
-
 		List<String> nestedColumnIds = StringUtil.split(
 			layout.getTypeSettingsProperty(
 				LayoutTypePortletConstants.NESTED_COLUMN_IDS));

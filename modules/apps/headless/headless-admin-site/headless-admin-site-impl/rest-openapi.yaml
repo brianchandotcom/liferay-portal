@@ -498,6 +498,11 @@ components:
                             items:
                                 $ref: "#/components/schemas/PageExperience"
                             type: array
+                        siteTemplatePageSpecificationExternalReferenceCode:
+                            # @review
+                            description:
+                                The site template page specification's external reference code.
+                            type: string
             # @review
             description:
                 A page specification of a content page. A content page will contain 1 page specification for its draft
@@ -2987,11 +2992,6 @@ components:
                     type: string
                 settings:
                     $ref: "#/components/schemas/Settings"
-                siteTemplatePageSpecificationExternalReferenceCode:
-                    # @review
-                    description:
-                        The site template page specification's external reference code.
-                    type: string
                 status:
                     # @review
                     description:
@@ -4624,6 +4624,11 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/PageSpecification"
                 -   properties:
+                        siteTemplatePageSpecificationExternalReferenceCode:
+                            # @review
+                            description:
+                                The site template page specification's external reference code.
+                            type: string
                         widgetPageSections:
                             # @review
                             description:

@@ -24,6 +24,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.model.LayoutSEOEntryCustomMetaTag;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
@@ -40,7 +41,10 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -88,8 +92,37 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 				setDatePublished(layout::getPublishDate);
 				setExternalReferenceCode(layout::getExternalReferenceCode);
 				setFriendlyUrlPath_i18n(
-					() -> LocalizedMapUtil.getI18nMap(
-						true, layout.getFriendlyURLMap()));
+					() -> {
+						Map<Locale, String> friendlyURLMap =
+							layout.getFriendlyURLMap();
+
+						String layoutIdFriendlyURL =
+							StringPool.SLASH + layout.getLayoutId();
+
+						Map<String, String> i18nMap = new HashMap<>();
+
+						for (Map.Entry<Locale, String> entry :
+								friendlyURLMap.entrySet()) {
+
+							String friendlyURL = entry.getValue();
+
+							if (Objects.equals(
+									friendlyURL, layoutIdFriendlyURL)) {
+
+								continue;
+							}
+
+							i18nMap.put(
+								LocaleUtil.toBCP47LanguageId(entry.getKey()),
+								friendlyURL);
+						}
+
+						if (i18nMap.isEmpty()) {
+							return null;
+						}
+
+						return i18nMap;
+					});
 				setKeywords(
 					() -> AssetUtil.getKeywords(
 						Layout.class.getName(), layout.getPlid()));

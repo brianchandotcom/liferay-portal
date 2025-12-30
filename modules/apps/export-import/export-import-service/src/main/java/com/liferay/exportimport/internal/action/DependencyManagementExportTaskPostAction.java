@@ -163,7 +163,7 @@ public class DependencyManagementExportTaskPostAction
 
 				if (setMethod != null) {
 					setMethod.invoke(
-						item, fieldName,
+						item,
 						(UnsafeSupplier)() ->
 							exportImportContentProcessor.
 								replaceExportContentReferences(

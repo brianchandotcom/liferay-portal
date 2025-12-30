@@ -173,7 +173,12 @@ describe('ExportTranslationModalContent', () => {
 
 		await waitFor(() => {
 			expect(mockedFetch).toHaveBeenCalledWith(
-				'/o/cms/basic-web-contents/123/translations?sourceLanguageId=en_US&targetLanguageIds=es_ES%2Cfr_FR&version=2.0'
+				'/o/cms/basic-web-contents/123/translations?sourceLanguageId=en_US&targetLanguageIds=es_ES%2Cfr_FR&version=2.0',
+				expect.objectContaining({
+					headers: expect.objectContaining({
+						Accept: 'application/zip',
+					}),
+				})
 			);
 		});
 	});

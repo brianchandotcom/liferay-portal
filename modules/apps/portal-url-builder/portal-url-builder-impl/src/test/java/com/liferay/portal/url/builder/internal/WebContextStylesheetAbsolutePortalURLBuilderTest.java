@@ -49,8 +49,9 @@ public class WebContextStylesheetAbsolutePortalURLBuilderTest
 		super.setUp();
 
 		_absolutePortalURLBuilder = new AbsolutePortalURLBuilderImpl(
-			mockCacheHelper(), mockHashedFilesRegistry(),
-			mockPortal(context, proxy, cdnHost), mockHttpServletRequest());
+			mockCacheHelper(), mockConfigurationProvider(),
+			mockHashedFilesRegistry(), mockPortal(context, proxy, cdnHost),
+			mockHttpServletRequest());
 
 		_webContextStylesheetAbsolutePortalURLBuilder =
 			_absolutePortalURLBuilder.forWebContextStylesheet(

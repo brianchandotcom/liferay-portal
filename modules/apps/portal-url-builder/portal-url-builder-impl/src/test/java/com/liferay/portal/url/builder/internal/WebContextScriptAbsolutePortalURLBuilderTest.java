@@ -49,8 +49,9 @@ public class WebContextScriptAbsolutePortalURLBuilderTest
 		super.setUp();
 
 		_absolutePortalURLBuilder = new AbsolutePortalURLBuilderImpl(
-			mockCacheHelper(), mockHashedFilesRegistry(),
-			mockPortal(context, proxy, cdnHost), mockHttpServletRequest());
+			mockCacheHelper(), mockConfigurationProvider(),
+			mockHashedFilesRegistry(), mockPortal(context, proxy, cdnHost),
+			mockHttpServletRequest());
 
 		_webContextScriptAbsolutePortalURLBuilder =
 			_absolutePortalURLBuilder.forWebContextScript(

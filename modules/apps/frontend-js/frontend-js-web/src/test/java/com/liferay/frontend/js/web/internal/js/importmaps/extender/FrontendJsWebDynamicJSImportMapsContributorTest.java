@@ -7,10 +7,12 @@ package com.liferay.frontend.js.web.internal.js.importmaps.extender;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesRegistry;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.url.builder.configuration.PortalURLBuilderConfiguration;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -42,6 +44,32 @@ public class FrontendJsWebDynamicJSImportMapsContributorTest {
 	public void testWriteGlobalImports() throws Exception {
 		_testWriteGlobalImports("/dxp");
 		_testWriteGlobalImports(StringPool.BLANK);
+	}
+
+	private ConfigurationProvider _mockConfigurationProvider()
+		throws Exception {
+
+		ConfigurationProvider configurationProvider = Mockito.mock(
+			ConfigurationProvider.class);
+
+		PortalURLBuilderConfiguration portalURLBuilderConfiguration =
+			Mockito.mock(PortalURLBuilderConfiguration.class);
+
+		Mockito.when(
+			portalURLBuilderConfiguration.enableESModulesHashing()
+		).thenReturn(
+			true
+		);
+
+		Mockito.when(
+			configurationProvider.getCompanyConfiguration(
+				Mockito.eq(PortalURLBuilderConfiguration.class),
+				Mockito.anyLong())
+		).thenReturn(
+			portalURLBuilderConfiguration
+		);
+
+		return configurationProvider;
 	}
 
 	private HashedFilesRegistry _mockHashedFileRegistry(String pathContext) {
@@ -93,6 +121,9 @@ public class FrontendJsWebDynamicJSImportMapsContributorTest {
 			frontendJsWebDynamicJSImportMapsContributor =
 				new FrontendJsWebDynamicJSImportMapsContributor();
 
+		ReflectionTestUtils.setField(
+			frontendJsWebDynamicJSImportMapsContributor,
+			"_configurationProvider", _mockConfigurationProvider());
 		ReflectionTestUtils.setField(
 			frontendJsWebDynamicJSImportMapsContributor, "_hashedFilesRegistry",
 			_mockHashedFileRegistry(pathContext));

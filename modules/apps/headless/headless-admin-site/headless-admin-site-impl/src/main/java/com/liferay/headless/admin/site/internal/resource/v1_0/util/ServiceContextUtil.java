@@ -132,12 +132,12 @@ public class ServiceContextUtil {
 
 	public static void setLayoutSetPrototypeLayoutERC(
 			long groupId, PageSpecification pageSpecification,
-			ServiceContext serviceContext)
+			ServiceContext serviceContext,
+			String siteTemplatePageSpecificationExternalReferenceCode)
 		throws Exception {
 
 		if (Validator.isNull(
-				pageSpecification.
-					getSiteTemplatePageSpecificationExternalReferenceCode())) {
+				siteTemplatePageSpecificationExternalReferenceCode)) {
 
 			return;
 		}
@@ -190,10 +190,6 @@ public class ServiceContextUtil {
 				getLayoutSetPrototypeByUuidAndCompanyId(
 					layoutSet.getLayoutSetPrototypeUuid(),
 					layoutSet.getCompanyId());
-
-		String siteTemplatePageSpecificationExternalReferenceCode =
-			pageSpecification.
-				getSiteTemplatePageSpecificationExternalReferenceCode();
 
 		Layout layoutSetPrototypeLayout =
 			LayoutLocalServiceUtil.fetchLayoutByExternalReferenceCode(

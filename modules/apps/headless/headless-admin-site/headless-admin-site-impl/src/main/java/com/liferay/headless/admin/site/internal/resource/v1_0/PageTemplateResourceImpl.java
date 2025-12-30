@@ -564,7 +564,9 @@ public class PageTemplateResourceImpl
 
 			ServiceContextUtil.setLayoutSetPrototypeLayoutERC(
 				serviceContext.getScopeGroupId(), widgetPageSpecification,
-				serviceContext);
+				serviceContext,
+				widgetPageSpecification.
+					getSiteTemplatePageSpecificationExternalReferenceCode());
 		}
 
 		LayoutPrototype layoutPrototype =

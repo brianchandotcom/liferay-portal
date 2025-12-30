@@ -3,7 +3,7 @@
 		"extends browserslist-config-clay"
 	],
 	"dependencies": {
-		"@clayui/layout": "3.144.1",
+		"@clayui/layout": "*",
 		"classnames": "2.3.1"
 	},
 	"description": "ClayManagementToolbar component",
@@ -18,7 +18,7 @@
 	"main": "src/index.tsx",
 	"name": "@clayui/management-toolbar",
 	"peerDependencies": {
-		"@clayui/css": "3.x",
+		"@clayui/css": "*",
 		"react": "^16.0.0 || ^17.0.0 || ^18.0.0",
 		"react-dom": "^16.0.0 || ^17.0.0 || ^18.0.0"
 	},

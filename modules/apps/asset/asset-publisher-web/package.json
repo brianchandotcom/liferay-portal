@@ -1,8 +1,8 @@
 {
 	"dependencies": {
-		"@clayui/button": "3.156.0",
-		"@clayui/form": "3.156.0",
-		"@clayui/icon": "3.144.1",
+		"@clayui/button": "*",
+		"@clayui/form": "*",
+		"@clayui/icon": "*",
 		"asset-taglib": "*",
 		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",

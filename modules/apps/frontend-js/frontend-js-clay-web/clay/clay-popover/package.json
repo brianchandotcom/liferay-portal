@@ -3,7 +3,7 @@
 		"extends browserslist-config-clay"
 	],
 	"dependencies": {
-		"@clayui/shared": "3.151.0",
+		"@clayui/shared": "*",
 		"classnames": "2.3.1"
 	},
 	"description": "ClayPopover component",
@@ -18,7 +18,7 @@
 	"main": "src/index.tsx",
 	"name": "@clayui/popover",
 	"peerDependencies": {
-		"@clayui/css": "3.x",
+		"@clayui/css": "*",
 		"react": "^16.0.0 || ^17.0.0 || ^18.0.0",
 		"react-dom": "^16.0.0 || ^17.0.0 || ^18.0.0"
 	},

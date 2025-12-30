@@ -3,14 +3,14 @@
 		"extends browserslist-config-clay"
 	],
 	"dependencies": {
-		"@clayui/autocomplete": "3.155.0",
-		"@clayui/button": "3.144.1",
-		"@clayui/drop-down": "3.155.0",
-		"@clayui/form": "3.151.0",
-		"@clayui/icon": "3.144.1",
-		"@clayui/label": "3.144.1",
-		"@clayui/loading-indicator": "3.144.1",
-		"@clayui/shared": "3.151.0",
+		"@clayui/autocomplete": "*",
+		"@clayui/button": "*",
+		"@clayui/drop-down": "*",
+		"@clayui/form": "*",
+		"@clayui/icon": "*",
+		"@clayui/label": "*",
+		"@clayui/loading-indicator": "*",
+		"@clayui/shared": "*",
 		"classnames": "2.3.1",
 		"fuzzy": "^0.1.3"
 	},
@@ -26,7 +26,7 @@
 	"main": "src/index.tsx",
 	"name": "@clayui/multi-select",
 	"peerDependencies": {
-		"@clayui/css": "3.x",
+		"@clayui/css": "*",
 		"react": "^16.0.0 || ^17.0.0 || ^18.0.0",
 		"react-dom": "^16.0.0 || ^17.0.0 || ^18.0.0"
 	},

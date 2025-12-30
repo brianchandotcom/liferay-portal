@@ -1,7 +1,7 @@
 {
 	"dependencies": {
-		"@clayui/core": "^3.106.1",
-		"@clayui/icon": "^3.106.1",
+		"@clayui/core": "*",
+		"@clayui/icon": "*",
 		"classnames": "^2.3.1",
 		"react": "16.12.0",
 		"react-dom": "16.12.0"

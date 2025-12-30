@@ -4,7 +4,7 @@
 	},
 	"description": "Liferay Sample Theme Spritemap 2",
 	"devDependencies": {
-		"@clayui/css": "^3.92.0"
+		"@clayui/css": "*"
 	},
 	"name": "@liferay/liferay-sample-theme-spritemap-2",
 	"scripts": {

@@ -71,18 +71,6 @@ public abstract class BaseFDSSerializerTestCase {
 								 ServiceTrackerCustomizerFactory.
 									 <FDSCreationMenu>serviceWrapper(
 										 bundleContext))));
-		systemFDSSerializer.groupedFDSFiltersRegistry =
-			new GroupedFDSFiltersRegistryImpl(
-				(ServiceTrackerMap
-					<String,
-					 ServiceTrackerCustomizerFactory.ServiceWrapper
-						 <GroupedFDSFilters>>)_registerServiceTrackerMap(
-							 ServiceTrackerMapFactory.openSingleValueMap(
-								 bundleContext, GroupedFDSFilters.class,
-								 "frontend.data.set.name",
-								 ServiceTrackerCustomizerFactory.
-									 <GroupedFDSFilters>serviceWrapper(
-										 bundleContext))));
 		systemFDSSerializer.fdsItemsActionsRegistry =
 			new FDSItemsActionsRegistryImpl(
 				(ServiceTrackerMap
@@ -131,6 +119,18 @@ public abstract class BaseFDSSerializerTestCase {
 							 "frontend.data.set.name",
 							 ServiceTrackerCustomizerFactory.
 								 <FDSView>serviceWrapper(bundleContext))));
+		systemFDSSerializer.groupedFDSFiltersRegistry =
+			new GroupedFDSFiltersRegistryImpl(
+				(ServiceTrackerMap
+					<String,
+					 ServiceTrackerCustomizerFactory.ServiceWrapper
+						 <GroupedFDSFilters>>)_registerServiceTrackerMap(
+							 ServiceTrackerMapFactory.openSingleValueMap(
+								 bundleContext, GroupedFDSFilters.class,
+								 "frontend.data.set.name",
+								 ServiceTrackerCustomizerFactory.
+									 <GroupedFDSFilters>serviceWrapper(
+										 bundleContext))));
 		systemFDSSerializer.systemFDSEntryRegistry =
 			new SystemFDSEntryRegistryImpl(
 				(ServiceTrackerMap<String, SystemFDSEntry>)

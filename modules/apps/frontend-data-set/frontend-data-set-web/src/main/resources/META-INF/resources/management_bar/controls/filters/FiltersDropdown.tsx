@@ -15,8 +15,10 @@ import ViewsContext, {
 import Filter, {IFilter} from './Filter';
 
 const FiltersDropdown = () => {
-	const [{filters, filtersGroups}]: [IViewsContext, TViewsContextDispatch] =
-		useContext(ViewsContext);
+	const [{filters, groupedFDSFilters}]: [
+		IViewsContext,
+		TViewsContextDispatch,
+	] = useContext(ViewsContext);
 
 	const [active, setActive] = useState(false);
 	const [activeFilter, setActiveFilter] = useState<IFilter | null>(null);
@@ -27,8 +29,8 @@ const FiltersDropdown = () => {
 		[filters]
 	);
 
-	const groupedFilters = useMemo(() => {
-		return filtersGroups
+	const renderableGroupedFDSFilters = useMemo(() => {
+		return groupedFDSFilters
 			?.map((group) => {
 				const children = group.filters
 					.map((filterId: string) =>
@@ -44,11 +46,11 @@ const FiltersDropdown = () => {
 				}
 			})
 			.filter(Boolean);
-	}, [filtersGroups, validFilters]);
+	}, [groupedFDSFilters, validFilters]);
 
 	const filtersList =
-		Liferay.FeatureFlags['LPD-68829'] && filtersGroups
-			? groupedFilters
+		Liferay.FeatureFlags['LPD-68829'] && groupedFDSFilters
+			? renderableGroupedFDSFilters
 			: validFilters;
 
 	return (
@@ -111,7 +113,8 @@ const FiltersDropdown = () => {
 
 					{filtersList?.length ? (
 						<ClayDropDown.ItemList items={filtersList}>
-							{Liferay.FeatureFlags['LPD-68829'] && filtersGroups
+							{Liferay.FeatureFlags['LPD-68829'] &&
+							groupedFDSFilters
 								? (group: any) => (
 										<ClayDropDown.Group
 											header={group.label}

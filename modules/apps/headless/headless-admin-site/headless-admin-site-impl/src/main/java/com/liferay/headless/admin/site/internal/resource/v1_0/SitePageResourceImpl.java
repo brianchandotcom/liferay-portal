@@ -435,6 +435,11 @@ public class SitePageResourceImpl
 			existingSitePage.setPageSpecifications(
 				sitePage::getPageSpecifications);
 		}
+
+		if (sitePage.getTaxonomyCategoryItemExternalReferences() != null) {
+			existingSitePage.setTaxonomyCategoryItemExternalReferences(
+				sitePage::getTaxonomyCategoryItemExternalReferences);
+		}
 	}
 
 	private Layout _addLayout(

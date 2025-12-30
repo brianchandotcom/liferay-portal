@@ -61,10 +61,10 @@ public class OAuthAuthorizationServerInfoMapperJSONUpgradeProcessTest {
 				createOAuthClientASLocalMetadata(
 					_counterLocalService.increment());
 
-		String issuerString = RandomTestUtil.randomString();
+		String issuer = RandomTestUtil.randomString();
 
 		OIDCProviderMetadata oidcProviderMetadata = new OIDCProviderMetadata(
-			new Issuer(issuerString), List.of(SubjectType.PUBLIC),
+			new Issuer(issuer), List.of(SubjectType.PUBLIC),
 			new URI(RandomTestUtil.randomString()));
 
 		oAuthClientASLocalMetadata2.setMetadataJSON(
@@ -94,7 +94,7 @@ public class OAuthAuthorizationServerInfoMapperJSONUpgradeProcessTest {
 						getOAuthClientASLocalMetadataId());
 
 		Assert.assertEquals(
-			issuerString, oAuthClientASLocalMetadata2AfterUpgrade.getIssuer());
+			issuer, oAuthClientASLocalMetadata2AfterUpgrade.getIssuer());
 	}
 
 	private void _runUpgrade() throws Exception {

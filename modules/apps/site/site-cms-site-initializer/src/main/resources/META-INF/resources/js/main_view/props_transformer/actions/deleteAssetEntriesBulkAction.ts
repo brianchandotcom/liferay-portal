@@ -187,6 +187,9 @@ async function showModal(
 			},
 		],
 		center: true,
+		containerProps: {
+			className: '',
+		},
 		status: 'danger',
 		title,
 	});

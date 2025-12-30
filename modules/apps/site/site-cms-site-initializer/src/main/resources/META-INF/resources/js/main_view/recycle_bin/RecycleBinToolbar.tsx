@@ -49,6 +49,9 @@ export default function RecycleBinToolbar({breadcrumbItems}: Props) {
 										onClick: () => {
 											openModal({
 												center: true,
+												containerProps: {
+													className: '',
+												},
 												contentComponent: ({
 													closeModal,
 												}: {

@@ -44,6 +44,9 @@ export default function confirmAndDeleteEntryAction({
 				},
 			},
 		],
+		containerProps: {
+			className: '',
+		},
 		role: 'alert',
 		status: 'danger',
 		title,

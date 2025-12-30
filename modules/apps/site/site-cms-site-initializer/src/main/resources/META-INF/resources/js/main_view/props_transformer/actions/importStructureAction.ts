@@ -13,6 +13,9 @@ export default function importStructureAction(
 	loadData?: () => {}
 ) {
 	openModal({
+		containerProps: {
+			className: '',
+		},
 		contentComponent: ({closeModal}: {closeModal: () => void}) =>
 			ImportStructureModalContent({
 				closeModal,

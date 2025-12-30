@@ -233,6 +233,9 @@ const EditCategoryPage = ({
 						},
 					},
 				],
+				containerProps: {
+					className: '',
+				},
 				status: 'warning',
 				title: sub(
 					Liferay.Language.get('edit-x'),

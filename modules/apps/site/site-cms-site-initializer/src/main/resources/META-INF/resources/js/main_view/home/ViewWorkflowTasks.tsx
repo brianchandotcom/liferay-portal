@@ -154,6 +154,9 @@ export default function ViewWorkflowTasks({
 							label: Liferay.Language.get('approve'),
 							onClick: ({itemData}: any) => {
 								openModal({
+									containerProps: {
+										className: '',
+									},
 									contentComponent: ({
 										closeModal,
 									}: {
@@ -176,6 +179,9 @@ export default function ViewWorkflowTasks({
 							label: Liferay.Language.get('reject'),
 							onClick: ({itemData}: any) => {
 								openModal({
+									containerProps: {
+										className: '',
+									},
 									contentComponent: ({
 										closeModal,
 									}: {
@@ -198,6 +204,9 @@ export default function ViewWorkflowTasks({
 							label: Liferay.Language.get('assign-to'),
 							onClick: ({itemData}: any) => {
 								openModal({
+									containerProps: {
+										className: '',
+									},
 									contentComponent: ({
 										closeModal,
 									}: {
@@ -220,6 +229,9 @@ export default function ViewWorkflowTasks({
 							label: Liferay.Language.get('update-due-date'),
 							onClick: ({itemData}: any) => {
 								openModal({
+									containerProps: {
+										className: '',
+									},
 									contentComponent: ({
 										closeModal,
 									}: {
@@ -244,6 +256,9 @@ export default function ViewWorkflowTasks({
 							label: Liferay.Language.get('assign-to-me'),
 							onClick: ({itemData}: any) => {
 								openModal({
+									containerProps: {
+										className: '',
+									},
 									contentComponent: ({
 										closeModal,
 									}: {
@@ -266,6 +281,9 @@ export default function ViewWorkflowTasks({
 							label: Liferay.Language.get('assign-to-...'),
 							onClick: ({itemData}: any) => {
 								openModal({
+									containerProps: {
+										className: '',
+									},
 									contentComponent: ({
 										closeModal,
 									}: {
@@ -288,6 +306,9 @@ export default function ViewWorkflowTasks({
 							label: Liferay.Language.get('update-due-date'),
 							onClick: ({itemData}: any) => {
 								openModal({
+									containerProps: {
+										className: '',
+									},
 									contentComponent: ({
 										closeModal,
 									}: {

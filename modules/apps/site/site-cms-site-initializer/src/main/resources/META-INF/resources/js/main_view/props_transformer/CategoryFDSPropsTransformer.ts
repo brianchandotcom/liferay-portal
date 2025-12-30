@@ -57,6 +57,9 @@ export default function CategoryFDSPropsTransformer({
 			}
 			if (action.data.id === 'move') {
 				openModal({
+					containerProps: {
+						className: '',
+					},
 					contentComponent: ({
 						closeModal,
 					}: {

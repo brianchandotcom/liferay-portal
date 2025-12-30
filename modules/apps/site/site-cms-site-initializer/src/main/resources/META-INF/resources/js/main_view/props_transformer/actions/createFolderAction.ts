@@ -24,6 +24,9 @@ export default function createFolderAction(
 ) {
 	openModal({
 		center: true,
+		containerProps: {
+			className: '',
+		},
 		contentComponent: ({closeModal}: {closeModal: () => void}) =>
 			CreationModalContent({
 				...data,

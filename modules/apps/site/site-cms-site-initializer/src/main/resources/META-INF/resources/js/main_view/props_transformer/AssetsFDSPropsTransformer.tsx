@@ -304,6 +304,9 @@ export default function AssetsFDSPropsTransformer({
 				event?.preventDefault();
 
 				openModal({
+					containerProps: {
+						className: '',
+					},
 					contentComponent: ({
 						closeModal,
 					}: {
@@ -335,6 +338,9 @@ export default function AssetsFDSPropsTransformer({
 				event?.preventDefault();
 
 				openModal({
+					containerProps: {
+						className: '',
+					},
 					size: 'full-screen',
 					title: action.label,
 					url: replaceTokens(action.href, itemData),

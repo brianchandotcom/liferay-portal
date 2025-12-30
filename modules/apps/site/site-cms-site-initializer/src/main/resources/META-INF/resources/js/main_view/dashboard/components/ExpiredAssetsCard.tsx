@@ -138,6 +138,9 @@ function ExpiredAssetItem({
 					displayType="secondary"
 					onClick={() => {
 						openModal({
+							containerProps: {
+								className: '',
+							},
 							size: 'full-screen',
 							title,
 							url: replaceTokens(href, title),

@@ -27,6 +27,7 @@ import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
+import com.liferay.journal.internal.thread.local.JournalArticleDDMStructureThreadLocal;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.model.JournalFolder;
@@ -282,6 +283,12 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 	@Override
 	public DDMStructure getDDMStructure() {
+		DDMStructure ddmStructure = JournalArticleDDMStructureThreadLocal.get();
+
+		if (ddmStructure != null) {
+			return ddmStructure;
+		}
+
 		return DDMStructureLocalServiceUtil.fetchStructure(getDDMStructureId());
 	}
 

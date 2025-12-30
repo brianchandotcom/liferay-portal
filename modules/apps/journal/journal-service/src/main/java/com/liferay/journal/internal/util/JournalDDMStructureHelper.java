@@ -8,6 +8,7 @@ package com.liferay.journal.internal.util;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
+import com.liferay.journal.internal.thread.local.JournalArticleDDMStructureThreadLocal;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.JournalConverter;
@@ -82,17 +83,25 @@ public class JournalDDMStructureHelper {
 		}
 		else {
 			performActionMethod = (JournalArticle journalArticle) -> {
-				try (SafeCloseable safeCloseable =
+				try (SafeCloseable ctCollectionIdSafeCloseable =
 						CTCollectionThreadLocal.
 							setCTCollectionIdWithSafeCloseable(
 								ddmStructure.getCtCollectionId())) {
 
-					_ddmFieldLocalService.updateDDMFormValues(
-						ddmStructure.getStructureId(), journalArticle.getId(),
-						_fieldsToDDMFormValuesConverter.convert(
-							ddmStructure,
-							_journalConverter.getDDMFields(
-								ddmStructure, journalArticle.getContent())));
+					try (SafeCloseable journalArticleDDMStructureSafeCloseable =
+							JournalArticleDDMStructureThreadLocal.
+								setJournalArticleDDMStructureWithSafeCloseable(
+									originalDDMStructure)) {
+
+						_ddmFieldLocalService.updateDDMFormValues(
+							ddmStructure.getStructureId(),
+							journalArticle.getId(),
+							_fieldsToDDMFormValuesConverter.convert(
+								ddmStructure,
+								_journalConverter.getDDMFields(
+									ddmStructure,
+									journalArticle.getContent())));
+					}
 				}
 			};
 		}

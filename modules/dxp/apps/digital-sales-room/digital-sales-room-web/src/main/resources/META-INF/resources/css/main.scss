@@ -32,11 +32,6 @@
 			padding: 0;
 		}
 
-		.navbar-nav {
-			flex-direction: column;
-			width: 100%;
-		}
-
 		.nav-link {
 			border-radius: 0;
 			margin-bottom: 0;
@@ -78,6 +73,11 @@
 				}
 			}
 		}
+
+		.navbar-nav {
+			flex-direction: column;
+			width: 100%;
+		}
 	}
 
 	.page-header {
@@ -92,16 +92,16 @@
 }
 
 .dsr-site-role-input {
-	.input-group-item-shrink {
-		padding-left: 2.5rem;
-	}
-
 	.dsr-site-role-trigger-button {
 		background-color: transparent;
 		border: 0;
 		bottom: 0.5rem;
 		position: absolute;
 		right: 2.5rem;
+	}
+
+	.input-group-item-shrink {
+		padding-left: 2.5rem;
 	}
 }
 
@@ -110,6 +110,7 @@
 	.cell-modifiedDate {
 		white-space: nowrap;
 	}
+
 	.cell-name {
 		max-width: 37rem;
 	}

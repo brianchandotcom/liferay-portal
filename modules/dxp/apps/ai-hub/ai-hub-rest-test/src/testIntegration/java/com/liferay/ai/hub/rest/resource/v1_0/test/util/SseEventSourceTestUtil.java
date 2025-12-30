@@ -41,6 +41,19 @@ public class SseEventSourceTestUtil {
 			String uri)
 		throws Exception {
 
+		String credentials =
+			"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD;
+
+		return open(
+			"Basic " + Base64.encode(credentials.getBytes()), countDownLatches,
+			lines, uri);
+	}
+
+	public static String open(
+			String authorizationHeader, List<CountDownLatch> countDownLatches,
+			List<String> lines, String uri)
+		throws Exception {
+
 		CountDownLatch openConnectionCountDownLatch = new CountDownLatch(2);
 
 		HttpClient httpClient = HttpClient.newBuilder(
@@ -48,17 +61,13 @@ public class SseEventSourceTestUtil {
 			Duration.ofSeconds(5)
 		).build();
 
-		String credentials =
-			"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD;
-
 		CompletableFuture<HttpResponse<InputStream>> completableFuture =
 			httpClient.sendAsync(
 				HttpRequest.newBuilder(
 				).header(
 					"Accept", "text/event-stream"
 				).header(
-					"Authorization",
-					"Basic " + Base64.encode(credentials.getBytes())
+					"Authorization", authorizationHeader
 				).uri(
 					URI.create("http://localhost:8080/o/ai-hub/v1.0/" + uri)
 				).GET(

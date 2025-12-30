@@ -735,6 +735,11 @@ public class ObjectDefinitionWrapper
 	}
 
 	@Override
+	public ObjectFolder getObjectFolder() {
+		return model.getObjectFolder();
+	}
+
+	@Override
 	public String getObjectFolderExternalReferenceCode() {
 		return model.getObjectFolderExternalReferenceCode();
 	}
@@ -1587,6 +1592,11 @@ public class ObjectDefinitionWrapper
 		com.liferay.object.model.bag.ObjectFieldBag objectFieldBag) {
 
 		model.setObjectFieldBag(objectFieldBag);
+	}
+
+	@Override
+	public void setObjectFolder(ObjectFolder objectFolder) {
+		model.setObjectFolder(objectFolder);
 	}
 
 	/**

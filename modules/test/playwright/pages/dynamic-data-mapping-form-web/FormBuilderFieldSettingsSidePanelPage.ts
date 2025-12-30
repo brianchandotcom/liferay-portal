@@ -10,9 +10,11 @@ export class FormBuilderFieldSettingsSidePanelPage {
 	readonly advancedTabButton: Locator;
 	readonly allowMultipleSelectionsSettingToggle: Locator;
 	readonly createListSettingSelect: Locator;
+	readonly dataProviderSelect: Locator;
 	readonly inlineToggle: Locator;
 	readonly optionDisplayNameInputField: Locator;
 	readonly optionReferenceInputField: Locator;
+	readonly outputParameterSelect: Locator;
 	readonly page: Page;
 	readonly repeatableToggle: Locator;
 	readonly requiredFieldToggle: Locator;
@@ -28,10 +30,16 @@ export class FormBuilderFieldSettingsSidePanelPage {
 			'Allow Multiple Selections'
 		);
 		this.createListSettingSelect = page.getByLabel('Create List');
+		this.dataProviderSelect = page.getByRole('combobox', {
+			name: 'Choose a Data Provider',
+		});
 		this.inlineToggle = page.getByText('Inline');
 		this.optionDisplayNameInputField = page.getByPlaceholder('Option');
 		this.optionReferenceInputField = page.getByLabel('Option Reference', {
 			exact: true,
+		});
+		this.outputParameterSelect = page.getByRole('combobox', {
+			name: 'Choose an Output Parameter',
 		});
 		this.page = page;
 		this.repeatableToggle = page.getByText('Repeatable');
@@ -81,5 +89,19 @@ export class FormBuilderFieldSettingsSidePanelPage {
 			.dispatchEvent('click');
 
 		await this.page.waitForTimeout(2000);
+	}
+
+	async selectDataProviderSetting(dataProviderName: string) {
+		await this.dataProviderSelect.click();
+		await this.page
+			.getByRole('option', {name: dataProviderName})
+			.dispatchEvent('click');
+	}
+
+	async selectOutputParameterSetting(outputParameter: string) {
+		await this.outputParameterSelect.click();
+		await this.page
+			.getByRole('option', {name: outputParameter})
+			.dispatchEvent('click');
 	}
 }

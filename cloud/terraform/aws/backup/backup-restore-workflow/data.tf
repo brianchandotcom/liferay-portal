@@ -29,7 +29,7 @@ data "aws_iam_policy_document" "liferay_backup_restore_policy_doc" {
 			"s3:DeleteObject",
 			"s3:GetObject",
 			"s3:ListBucket",
-			"s3:PutObject"
+			"s3:PutObject",
 		]
 		effect="Allow"
 		resources=[
@@ -39,9 +39,7 @@ data "aws_iam_policy_document" "liferay_backup_restore_policy_doc" {
 		sid="AllowArtifactRepositoryAccess"
 	}
 	statement {
-		actions=[
-			"iam:PassRole"
-		]
+		actions=["iam:PassRole"]
 		effect="Allow"
 		resources=[var.aws_backup_service_assumed_iam_role_arn]
 		sid="AllowPassingRoleToAWSBackupService"
@@ -75,7 +73,7 @@ data "aws_iam_policy_document" "liferay_backup_restore_policy_doc" {
 			"s3:GetReplicationConfiguration",
 			"s3:ListBucket",
 			"s3:PutBucket*",
-			"s3:PutEncryptionConfiguration"
+			"s3:PutEncryptionConfiguration",
 		]
 		effect="Allow"
 		resources=["*"]
@@ -85,7 +83,7 @@ data "aws_iam_policy_document" "liferay_backup_restore_policy_doc" {
 		actions=[
 			"s3:GetObject",
 			"s3:ListBucket",
-			"s3:PutObject"
+			"s3:PutObject",
 		]
 		effect="Allow"
 		resources=[

@@ -13,7 +13,7 @@ build {
         inline=[
             "sudo mkdir --parents /opt/liferay/bin",
             "sudo mkdir --parents /opt/liferay/terraform",
-            "sudo chown --recursive ec2-user:ec2-user /opt/liferay"
+            "sudo chown --recursive ec2-user:ec2-user /opt/liferay",
         ]
     }
     provisioner "file" {
@@ -38,13 +38,11 @@ build {
     provisioner "shell" {
         inline=[
             "sudo mv /tmp/cloud_config.yaml /etc/cloud/cloud.cfg.d/99-cloud-config.cfg",
-            "tree -a /opt/liferay"
+            "tree -a /opt/liferay",
         ]
     }
 
-    sources=[
-        "source.amazon-ebs.this"
-    ]
+    sources=["source.amazon-ebs.this"]
 }
 data "amazon-ami" "al2023_base" {
     filters={
@@ -53,9 +51,7 @@ data "amazon-ami" "al2023_base" {
         virtualization-type="hvm"
     }
     most_recent=true
-    owners=[
-        "amazon"
-    ]
+    owners=["amazon"]
     region=var.region
 }
 locals {

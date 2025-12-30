@@ -122,12 +122,8 @@ resource "kubernetes_role" "ecr_secret_manager" {
 		namespace=var.argocd_namespace
 	}
 	rule {
-		api_groups=[
-			"",
-		]
-		resources=[
-			"secrets",
-		]
+		api_groups=[""]
+		resources=["secrets"]
 		verbs=[
 			"create",
 			"get",

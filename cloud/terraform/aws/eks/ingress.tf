@@ -3,9 +3,7 @@ module "aws_lb_controller_role" {
 	name="${var.deployment_name}-lb-controller"
 	oidc_providers={
 		main={
-			namespace_service_accounts=[
-				"kube-system:aws-load-balancer-controller",
-			]
+			namespace_service_accounts=["kube-system:aws-load-balancer-controller"]
 			provider_arn=local.oidc_provider_arn
 		}
 	}

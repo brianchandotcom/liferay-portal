@@ -116,9 +116,7 @@ resource "kubernetes_manifest" "liferay_applicationset" {
 		apiVersion="argoproj.io/v1alpha1"
 		kind="ApplicationSet"
 		metadata={
-			finalizers=[
-				"resources-finalizer.argocd.argoproj.io",
-			]
+			finalizers=["resources-finalizer.argocd.argoproj.io"]
 			labels=merge(
 				local.common_labels,
 				{
@@ -172,9 +170,7 @@ resource "kubernetes_manifest" "liferay_applicationset" {
 					ignoreDifferences = [
 						{
 							group=""
-							jsonPointers=[
-								"/data",
-							]
+							jsonPointers=["/data"]
 							kind="Secret"
 							name="liferay-default"
 						},
@@ -246,12 +242,8 @@ resource "kubernetes_role" "eso_secret_writer" {
 		namespace=var.argocd_namespace
 	}
 	rule {
-		api_groups=[
-			"",
-		]
-		resources=[
-			"secrets",
-		]
+		api_groups=[""]
+		resources=["secrets"]
 		verbs=[
 			"create",
 			"delete",

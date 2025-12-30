@@ -6,4 +6,7 @@
 export const config = {
 	name: 'accessibility-menu-web.main',
 	testDir: 'tests/accessibility-menu-web/main',
+	use: {
+		testIdAttribute: 'data-qa-id',
+	},
 };

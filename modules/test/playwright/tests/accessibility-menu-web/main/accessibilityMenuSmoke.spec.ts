@@ -40,9 +40,7 @@ async function expectAccessibilityMenuToBeAvailableFromUserProfileMenu(
 	page: Page,
 	expectedStatus: 'visible' | 'hidden' = 'visible'
 ) {
-	const userProfileTrigger = page.locator(
-		'button[data-qa-id=userPersonalMenu]'
-	);
+	const userProfileTrigger = page.getByTestId('userPersonalMenu');
 	const accessibilityMenuItem = page.getByRole('menuitem', {
 		name: SETTING_CONFIGURATION_NAME,
 	});

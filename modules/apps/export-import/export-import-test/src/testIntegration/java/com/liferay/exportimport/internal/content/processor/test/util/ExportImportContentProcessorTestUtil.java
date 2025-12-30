@@ -262,6 +262,22 @@ public class ExportImportContentProcessorTestUtil {
 		return StringUtil.merge(outURLs, StringPool.NEW_LINE);
 	}
 
+	private static String _extractValidContent(String content) {
+		return StringUtil.merge(
+			TransformUtil.transform(
+				ListUtil.fromArray(StringUtil.splitLines(content)),
+				line -> {
+					if (Validator.isNotNull(line) &&
+						!line.endsWith(StringPool.COLON)) {
+
+						return line;
+					}
+
+					return null;
+				}),
+			StringPool.NEW_LINE);
+	}
+
 	private static String _getFriendlyURL(Layout layout) {
 		return layout.getFriendlyURL();
 	}
@@ -322,22 +338,6 @@ public class ExportImportContentProcessorTestUtil {
 		}
 
 		return StringUtil.merge(outURLs, StringPool.NEW_LINE);
-	}
-
-	private String _extractValidContent(String content) {
-		return StringUtil.merge(
-			TransformUtil.transform(
-				ListUtil.fromArray(StringUtil.splitLines(content)),
-				line -> {
-					if (Validator.isNotNull(line) &&
-						!line.endsWith(StringPool.COLON)) {
-
-						return line;
-					}
-
-					return null;
-				}),
-			StringPool.NEW_LINE);
 	}
 
 	private static final String[] _EXTERNAL_GROUP_FRIENDLY_URL_VARIABLES = {

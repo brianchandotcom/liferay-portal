@@ -17,6 +17,7 @@ export class FormBuilderSidePanelPage {
 	readonly allowGuestUsersToggle: Locator;
 	readonly backButton: Locator;
 	readonly collapsibleToggleSwitch: Locator;
+	readonly fieldReference: Locator;
 	readonly helpText: Locator;
 	readonly htmlAutocompleteAttributeField: Locator;
 	readonly inputMaskToggle: Locator;
@@ -57,6 +58,7 @@ export class FormBuilderSidePanelPage {
 		this.collapsibleToggleSwitch = page.getByRole('switch', {
 			name: 'Collapsible',
 		});
+		this.fieldReference = page.getByLabel('Field Reference');
 		this.helpText = page.getByLabel('Help Text');
 		this.htmlAutocompleteAttributeField = page.getByLabel(
 			'HTML Autocomplete Attribute'

@@ -4,14 +4,17 @@
  */
 
 import {expect, mergeTests} from '@playwright/test';
-import path from 'path';
 
 import {formsPagesTest} from '../../../fixtures/formsPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {virtualInstancesPagesTest} from '../../../fixtures/virtualInstancesPagesTest';
+import {DataProviderPage} from '../../../pages/dynamic-data-mapping-form-web/DataProviderPage';
+import {FormBuilderFieldSettingsSidePanelPage} from '../../../pages/dynamic-data-mapping-form-web/FormBuilderFieldSettingsSidePanelPage';
 import {FormBuilderPage} from '../../../pages/dynamic-data-mapping-form-web/FormBuilderPage';
+import {FormBuilderSidePanelPage} from '../../../pages/dynamic-data-mapping-form-web/FormBuilderSidePanelPage';
 import {FormsPage} from '../../../pages/dynamic-data-mapping-form-web/FormsPage';
 import {getRandomInt} from '../../../utils/getRandomInt';
+import getRandomString from '../../../utils/getRandomString';
 import performLogin from '../../../utils/performLogin';
 import {deleteItems} from './utils/deleteItems';
 
@@ -73,102 +76,256 @@ test.describe('Manage forms through submission page', () => {
 			`@${DEFAULT_VIRTUAL_INSTANCE_NAME}.com`
 		);
 
-		const virtualInstanceFormsPage = new FormsPage(virtualInstancePage);
-
-		await virtualInstanceFormsPage.goTo();
-
 		hasDataProvider = true;
 
-		await virtualInstanceFormsPage.importForm(
-			path.join(
-				__dirname,
-				'dependencies',
-				'form-with-data-provider.portlet.lar'
-			)
+		const dataProviderName = 'DataProvider' + getRandomString();
+		const formTitle = 'FormTitle' + getRandomInt();
+		const virtualInstanceDataProviderPage = new DataProviderPage(
+			virtualInstancePage
 		);
-
-		await virtualInstanceFormsPage.openForm('Form with data provider');
-
 		const virtualInstanceFormBuilderPage = new FormBuilderPage(
 			virtualInstancePage
 		);
+		const virtualInstanceFormBuilderSidePanelPage =
+			new FormBuilderSidePanelPage(virtualInstancePage);
+		const virtualInstanceFormBuilderFieldSettingsSidePanelPage =
+			new FormBuilderFieldSettingsSidePanelPage(virtualInstancePage);
+		const virtualInstanceFormsPage = new FormsPage(virtualInstancePage);
 
-		await virtualInstanceFormBuilderPage.clickPublishFormButton();
+		await test.step('create a data provider with region input and population output', async () => {
+			await virtualInstanceFormsPage.goTo();
 
-		const formSubmissionURL =
-			await virtualInstanceFormBuilderPage.getFormSubmissionURL();
+			await virtualInstanceFormsPage.dataProvidersTab.click();
 
-		await virtualInstancePage.goto(formSubmissionURL, {
-			waitUntil: 'networkidle',
+			await virtualInstanceDataProviderPage.addNewDataProviderLink.click();
+
+			await virtualInstanceDataProviderPage.nameInputField.fill(
+				dataProviderName
+			);
+
+			await virtualInstanceDataProviderPage.urlInputField.fill(
+				'https://restcountries.com/v3.1/all?fields=name'
+			);
+
+			await virtualInstanceDataProviderPage.outputPathInputField.fill(
+				'$..name.common'
+			);
+
+			await virtualInstanceDataProviderPage.selectOutputType('List');
+
+			await virtualInstanceDataProviderPage.outputLabel.fill(
+				'Country Name'
+			);
+
+			await virtualInstanceDataProviderPage.saveButton.click();
+
+			await expect(
+				virtualInstancePage.getByText('Success:Your request')
+			).toBeVisible();
 		});
 
-		await expect(virtualInstancePage.getByLabel('Country')).toHaveValue(
-			'Brazil'
-		);
+		await test.step('create a form with region and population fields and publish it', async () => {
+			await virtualInstancePage.setViewportSize({
+				height: 1080,
+				width: 1920,
+			});
 
-		await virtualInstancePage.getByRole('button', {name: 'Submit'}).click();
+			await virtualInstanceFormBuilderPage.goToNew();
 
-		await expect(
-			virtualInstancePage.getByText(
-				'Your information was successfully received. Thank you for filling out the form.'
-			)
-		).toBeVisible();
+			await virtualInstanceFormBuilderPage.fillFormTitle(formTitle);
 
-		await virtualInstanceFormsPage.goTo();
+			await virtualInstanceFormBuilderSidePanelPage.addFieldByDoubleClick(
+				'Select from List'
+			);
 
-		await virtualInstanceFormsPage.openForm('Form with data provider');
+			await virtualInstanceFormBuilderFieldSettingsSidePanelPage.selectCreateListSetting(
+				'From Data Provider'
+			);
 
-		await virtualInstanceFormBuilderPage.entriesTab.click();
+			await expect(
+				virtualInstanceFormBuilderFieldSettingsSidePanelPage.dataProviderSelect
+			).toBeVisible();
 
-		await expect(
-			virtualInstancePage.getByText('Brazil', {exact: true})
-		).toBeVisible();
+			await virtualInstanceFormBuilderFieldSettingsSidePanelPage.selectDataProviderSetting(
+				dataProviderName
+			);
+
+			await expect(
+				virtualInstanceFormBuilderFieldSettingsSidePanelPage.dataProviderSelect
+			).toHaveText(dataProviderName);
+
+			await expect(
+				virtualInstanceFormBuilderFieldSettingsSidePanelPage.outputParameterSelect
+			).toBeVisible();
+
+			await virtualInstanceFormBuilderFieldSettingsSidePanelPage.selectOutputParameterSetting(
+				'Country Name'
+			);
+
+			await expect(
+				virtualInstanceFormBuilderFieldSettingsSidePanelPage.outputParameterSelect
+			).toHaveText('Country Name');
+
+			await virtualInstancePage.waitForTimeout(2000);
+
+			await virtualInstanceFormBuilderPage.clickPublishFormButton();
+		});
+
+		await test.step('go to form submission page, submit an entry and assert it is persisted', async () => {
+			const formSubmissionURL =
+				await virtualInstanceFormBuilderPage.getFormSubmissionURL();
+
+			await virtualInstancePage.goto(formSubmissionURL, {
+				waitUntil: 'networkidle',
+			});
+
+			await virtualInstancePage.getByLabel('Select from List').click();
+
+			await virtualInstancePage
+				.getByRole('option', {name: 'Brazil'})
+				.click();
+
+			await virtualInstancePage
+				.getByRole('button', {name: 'Submit'})
+				.click();
+
+			await expect(
+				virtualInstancePage.getByText(
+					'Your information was successfully received. Thank you for filling out the form.'
+				)
+			).toBeVisible();
+
+			await virtualInstanceFormsPage.goTo();
+
+			await virtualInstanceFormsPage.openForm(formTitle);
+
+			await virtualInstanceFormBuilderPage.entriesTab.click();
+
+			await expect(
+				virtualInstancePage.getByText('Brazil', {exact: true})
+			).toBeVisible();
+		});
 
 		await virtualInstancePage.close();
 	});
 
 	test('can submit manual entry while using data provider autofill rule', async ({
+		dataProviderPage,
 		formBuilderPage,
+		formBuilderSidePanelPage,
 		formsPage,
 		page,
+		rulesBuilderPage,
 	}) => {
 		hasDataProvider = true;
 
-		await formsPage.goTo();
+		const dataProviderName = 'DataProvider' + getRandomString();
+		const formTitle = 'FormTitle' + getRandomInt();
 
-		await formsPage.importForm(
-			path.join(
-				__dirname,
-				'dependencies',
-				'form-with-data-provider.portlet.lar'
-			)
-		);
+		await test.step('create a data provider with region input and population output', async () => {
+			await formsPage.goTo();
 
-		await formsPage.openForm('Form with data provider');
+			await formsPage.dataProvidersTab.click();
 
-		await formBuilderPage.clickPublishFormButton();
+			await dataProviderPage.addNewDataProviderLink.click();
 
-		const formSubmissionURL = await formBuilderPage.getFormSubmissionURL();
+			await dataProviderPage.nameInputField.fill(dataProviderName);
 
-		await page.goto(formSubmissionURL, {waitUntil: 'networkidle'});
+			await dataProviderPage.urlInputField.fill(
+				'https://restcountries.com/v3.1/region/{region}'
+			);
 
-		await page.getByLabel('Country').fill('123456');
+			await dataProviderPage.inputPathInputField.fill('region');
 
-		await page.getByRole('button', {name: 'Submit'}).click();
+			await dataProviderPage.selectInputType('Text');
 
-		await expect(
-			page.getByText(
-				'Your information was successfully received. Thank you for filling out the form.'
-			)
-		).toBeVisible();
+			await dataProviderPage.inputLabel.fill('Region');
 
-		await formsPage.goTo();
+			await dataProviderPage.outputPathInputField.fill('$[0].population');
 
-		await formsPage.openForm('Form with data provider');
+			await dataProviderPage.selectOutputType('Text');
 
-		await formBuilderPage.entriesTab.click();
+			await dataProviderPage.outputLabel.fill('Population');
 
-		await expect(page.getByText('123456')).toBeVisible();
+			await dataProviderPage.saveButton.click();
+
+			await expect(page.getByText('Success:Your request')).toBeVisible();
+		});
+
+		await test.step('create a form with region and population fields', async () => {
+			await formBuilderPage.goToNew();
+
+			await formBuilderPage.fillFormTitle(formTitle);
+
+			await formBuilderSidePanelPage.addFieldByDoubleClick('Text');
+
+			await formBuilderSidePanelPage.label.fill('Region');
+
+			await formBuilderSidePanelPage.advancedTab.click();
+
+			await formBuilderSidePanelPage.fieldReference.fill('Region');
+
+			await formBuilderSidePanelPage.predefinedValueField.fill('europe');
+
+			await formBuilderSidePanelPage.backButton.click();
+
+			await formBuilderSidePanelPage.addFieldByDoubleClick('Text');
+
+			await formBuilderSidePanelPage.label.fill('Population');
+
+			await formBuilderSidePanelPage.advancedTab.click();
+
+			await formBuilderSidePanelPage.fieldReference.fill('Population');
+		});
+
+		await test.step('create a rule to autofill fields with data from provider', async () => {
+			await rulesBuilderPage.rulesTab.click();
+
+			await rulesBuilderPage.addElementsButton.click();
+
+			await rulesBuilderPage.selectConditionLeftFormField('Region');
+
+			await rulesBuilderPage.selectConditionOperator('Is Not Empty');
+
+			await rulesBuilderPage.selectAction('Autofill');
+
+			await rulesBuilderPage.selectAutofillDataProvider(dataProviderName);
+
+			await rulesBuilderPage.selectDataProviderInput('Region');
+
+			await rulesBuilderPage.selectDataProviderOutput('Population');
+
+			await rulesBuilderPage.saveButton.click();
+		});
+
+		await test.step('go to for submission, override autofilled value and assert that it is persisted', async () => {
+			await formBuilderPage.formTab.click();
+
+			await formBuilderPage.clickPublishFormButton();
+
+			const formSubmissionURL =
+				await formBuilderPage.getFormSubmissionURL();
+
+			await page.goto(formSubmissionURL, {waitUntil: 'networkidle'});
+
+			await page.getByLabel('Population').fill('123456');
+
+			await page.getByRole('button', {name: 'Submit'}).click();
+
+			await expect(
+				page.getByText(
+					'Your information was successfully received. Thank you for filling out the form.'
+				)
+			).toBeVisible();
+
+			await formsPage.goTo();
+
+			await formsPage.openForm(formTitle);
+
+			await formBuilderPage.entriesTab.click();
+
+			await expect(page.getByText('123456')).toBeVisible();
+		});
 	});
 
 	test('verify that a Form can require CAPTCHA before being accessed', async ({

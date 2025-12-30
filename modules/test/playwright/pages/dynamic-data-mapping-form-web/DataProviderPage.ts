@@ -7,6 +7,9 @@ import {Locator, Page} from '@playwright/test';
 
 export class DataProviderPage {
 	readonly addNewDataProviderLink: Locator;
+	readonly inputLabel: Locator;
+	readonly inputPathInputField: Locator;
+	readonly inputTypeSelect: Locator;
 	readonly nameInputField: Locator;
 	readonly outputLabel: Locator;
 	readonly outputPathInputField: Locator;
@@ -22,6 +25,16 @@ export class DataProviderPage {
 		this.addNewDataProviderLink = page.getByRole('link', {
 			name: 'REST Data Provider',
 		});
+		this.inputLabel = page
+			.getByLabel('inputs')
+			.getByPlaceholder('Enter a label.');
+		this.inputPathInputField = page.getByPlaceholder(
+			'Enter the parameter.'
+		);
+		this.inputTypeSelect = page
+			.getByLabel('inputs')
+			.getByRole('combobox')
+			.and(page.getByLabel('Type'));
 		this.nameInputField = page.getByPlaceholder(
 			"Enter the data provider's"
 		);
@@ -43,6 +56,11 @@ export class DataProviderPage {
 			'Enter the REST service URL.'
 		);
 		this.userNameInputField = page.getByPlaceholder('Enter a user name.');
+	}
+
+	async selectInputType(type: string) {
+		await this.inputTypeSelect.click();
+		await this.page.getByRole('option', {name: type}).click();
 	}
 
 	async selectOutputType(type: string) {

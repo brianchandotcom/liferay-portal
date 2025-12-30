@@ -1,13 +1,21 @@
+@import 'atlas-variables';
+
 .quick-actions {
 	.row {
 		align-items: stretch;
+
 		.btn.quick-action {
-			border-color: rgb(241, 242, 245);
+			border-color: $secondary-l2;
 			border-radius: 10px;
-			border-width: 2px;
+			border-width: 0.05rem;
 			overflow-wrap: break-word;
 			white-space: normal;
 			word-wrap: break-word;
+
+			&:hover,
+			&:focus {
+				background-color: $light-l1;
+			}
 		}
 	}
 }

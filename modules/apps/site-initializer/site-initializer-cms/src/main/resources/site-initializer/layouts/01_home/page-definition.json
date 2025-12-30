@@ -103,9 +103,9 @@
 											"fragmentFields": [
 											],
 											"fragmentStyle": {
-												"borderColor": "rgb(241, 242, 245)",
+												"borderColor": "rgb(205, 206, 217)",
 												"borderRadius": "10px",
-												"borderWidth": "2px",
+												"borderWidth": "0.05rem",
 												"marginBottom": "3"
 											},
 											"indexed": true
@@ -149,9 +149,9 @@
 											"fragmentFields": [
 											],
 											"fragmentStyle": {
-												"borderColor": "rgb(241, 242, 245)",
+												"borderColor": "rgb(205, 206, 217)",
 												"borderRadius": "10px",
-												"borderWidth": "2px"
+												"borderWidth": "0.05rem"
 											},
 											"indexed": true
 										},

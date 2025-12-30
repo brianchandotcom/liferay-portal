@@ -65,9 +65,9 @@
 									"fragmentFields": [
 									],
 									"fragmentStyle": {
-										"borderColor": "rgb(241, 242, 245)",
+										"borderColor": "rgb(205, 206, 217)",
 										"borderRadius": "10px",
-										"borderWidth": "2px",
+										"borderWidth": "0.05rem",
 										"marginBottom": "4",
 										"marginLeft": "3",
 										"paddingLeft": "3",
@@ -89,9 +89,9 @@
 									"fragmentFields": [
 									],
 									"fragmentStyle": {
-										"borderColor": "rgb(241, 242, 245)",
+										"borderColor": "rgb(205, 206, 217)",
 										"borderRadius": "10px",
-										"borderWidth": "2px",
+										"borderWidth": "0.05rem",
 										"marginLeft": "3",
 										"marginTop": "4",
 										"paddingBottom": "3",
@@ -141,9 +141,9 @@
 									"fragmentFields": [
 									],
 									"fragmentStyle": {
-										"borderColor": "rgb(241, 242, 245)",
+										"borderColor": "rgb(205, 206, 217)",
 										"borderRadius": "10px",
-										"borderWidth": "2px",
+										"borderWidth": "0.05rem",
 										"marginBottom": "4",
 										"marginRight": "3",
 										"paddingLeft": "3",
@@ -165,9 +165,9 @@
 									"fragmentFields": [
 									],
 									"fragmentStyle": {
-										"borderColor": "rgb(241, 242, 245)",
+										"borderColor": "rgb(205, 206, 217)",
 										"borderRadius": "10px",
-										"borderWidth": "2px",
+										"borderWidth": "0.05rem",
 										"marginRight": "3",
 										"marginTop": "4",
 										"paddingLeft": "3",

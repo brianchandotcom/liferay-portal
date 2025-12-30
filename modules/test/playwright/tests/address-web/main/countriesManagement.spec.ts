@@ -26,6 +26,55 @@ async function waitForLoading(page: Page) {
 	});
 }
 
+async function deleteRegion(
+	countriesManagementPage: any,
+	page: Page,
+	countryName: string,
+	regionName: string
+) {
+	await countriesManagementPage.goto();
+
+	await countriesManagementPage.countriesTable.search(countryName);
+	await (
+		await countriesManagementPage.countriesTable.cellLink(countryName)
+	).click();
+	await countriesManagementPage.regionsLink.click();
+
+	await expect(async () => {
+		await (
+			await countriesManagementPage.regionsTable.rowActions(regionName)
+		).click();
+		await countriesManagementPage.deleteButton.click({
+			timeout: 500,
+		});
+
+		await waitForAlert(page);
+	}).toPass();
+}
+
+async function deleteRegionAndCountry(
+	countriesManagementPage: any,
+	page: Page,
+	countryName: string,
+	regionName: string
+) {
+	await deleteRegion(countriesManagementPage, page, countryName, regionName);
+
+	await countriesManagementPage.goto();
+
+	await expect(async () => {
+		await countriesManagementPage.countriesTable.search(countryName);
+		await (
+			await countriesManagementPage.countriesTable.rowActions(countryName)
+		).click();
+		await countriesManagementPage.deleteButton.click({
+			timeout: 500,
+		});
+
+		await waitForAlert(page);
+	}).toPass();
+}
+
 test(
 	'Can activate/deactivate a country',
 	{tag: ['@LPD-55901']},
@@ -474,28 +523,12 @@ test(
 			).toBeVisible();
 		}
 		finally {
-			await countriesManagementPage.goto();
-
-			await countriesManagementPage.countriesTable.search('Antarctica');
-			await (
-				await countriesManagementPage.countriesTable.cellLink(
-					'Antarctica'
-				)
-			).click();
-			await countriesManagementPage.regionsLink.click();
-
-			await expect(async () => {
-				await (
-					await countriesManagementPage.regionsTable.rowActions(
-						region.name
-					)
-				).click();
-				await countriesManagementPage.deleteButton.click({
-					timeout: 500,
-				});
-
-				await waitForAlert(page);
-			}).toPass();
+			await deleteRegion(
+				countriesManagementPage,
+				page,
+				'Antarctica',
+				region.name
+			);
 		}
 	}
 );
@@ -620,28 +653,12 @@ test(
 			await expect(editRegionPage.titleInput).toHaveValue(region.name);
 		}
 		finally {
-			await countriesManagementPage.goto();
-
-			await countriesManagementPage.countriesTable.search('Antarctica');
-			await (
-				await countriesManagementPage.countriesTable.cellLink(
-					'Antarctica'
-				)
-			).click();
-			await countriesManagementPage.regionsLink.click();
-
-			await expect(async () => {
-				await (
-					await countriesManagementPage.regionsTable.rowActions(
-						region.name
-					)
-				).click();
-				await countriesManagementPage.deleteButton.click({
-					timeout: 500,
-				});
-
-				await waitForAlert(page);
-			}).toPass();
+			await deleteRegion(
+				countriesManagementPage,
+				page,
+				'Antarctica',
+				region.name
+			);
 		}
 	}
 );
@@ -1087,28 +1104,112 @@ test(
 			).toBeVisible();
 		}
 		finally {
+			await deleteRegion(
+				countriesManagementPage,
+				page,
+				'Antarctica',
+				region.name
+			);
+		}
+	}
+);
+
+test(
+	'Test XSS vulnerability when adding region with malicious region code to a country',
+	{tag: ['@LPD-72279']},
+	async ({
+		countriesManagementPage,
+		editCountryPage,
+		editRegionPage,
+		page,
+	}) => {
+		await countriesManagementPage.goto();
+
+		await expect(
+			countriesManagementPage.countriesTable.searchInput
+		).toBeEditable();
+
+		const country = {
+			key: `AA1${getRandomInt()}`,
+			number: String(getRandomInt()),
+			priority: '0',
+			threeLetterIsocode: getRandomString().substring(0, 3),
+			title: `XSS_Test_${getRandomInt()}`,
+			twoLetterIsocode: getRandomString().substring(0, 2),
+		};
+
+		await expect(async () => {
+			await countriesManagementPage.countriesTable.newButton.click();
+
+			await expect(editCountryPage.titleInput).toBeVisible();
+		}).toPass();
+
+		await editCountryPage.editCountry(country);
+
+		await editCountryPage.backButton.click();
+
+		await countriesManagementPage.countriesTable.search(country.title);
+
+		await (
+			await countriesManagementPage.countriesTable.cellLink(country.title)
+		).click();
+		await countriesManagementPage.regionsLink.click();
+
+		await expect(
+			countriesManagementPage.regionsTable.searchInput
+		).toBeEditable();
+
+		await expect(async () => {
+			await countriesManagementPage.regionsTable.newButton.click();
+
+			await expect(editRegionPage.titleInput).toBeVisible();
+		}).toPass();
+
+		const region = {
+			key: `XSS_${getRandomInt()}`,
+			name: `XSS_Region_${getRandomInt()}`,
+			priority: '1.0',
+			regionCode: `<img src=x onerror="alert('x')">`,
+		};
+
+		await editRegionPage.editRegion(region);
+
+		const dialogHandler = async (dialog) => {
+			if (dialog.type() === 'alert') {
+				throw new Error('XSS');
+			}
+		};
+
+		try {
+			await editRegionPage.backButton.click();
+
 			await countriesManagementPage.goto();
 
-			await countriesManagementPage.countriesTable.search('Antarctica');
+			await countriesManagementPage.countriesTable.search(country.title);
 			await (
 				await countriesManagementPage.countriesTable.cellLink(
-					'Antarctica'
+					country.title
 				)
 			).click();
+
+			page.on('dialog', dialogHandler);
+
 			await countriesManagementPage.regionsLink.click();
 
-			await expect(async () => {
-				await (
-					await countriesManagementPage.regionsTable.rowActions(
-						region.name
-					)
-				).click();
-				await countriesManagementPage.deleteButton.click({
-					timeout: 500,
-				});
+			await expect(
+				countriesManagementPage.regionsTable.cell(region.name)
+			).toBeVisible();
+		}
+		finally {
+			page.off('dialog', dialogHandler);
+			page.on('dialog', async (dialog) => await dialog.accept());
 
-				await waitForAlert(page);
-			}).toPass();
+			await deleteRegionAndCountry(
+				countriesManagementPage,
+				page,
+				country.title,
+				region.name
+			);
 		}
 	}
 );

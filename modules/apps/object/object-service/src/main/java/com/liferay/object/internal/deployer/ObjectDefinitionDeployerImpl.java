@@ -302,7 +302,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					new ObjectEntryModelIndexerWriterContributor(
 						_dynamicQueryBatchIndexingActionableFactory,
 						objectDefinition, _objectDefinitionLocalService,
-						_objectEntryLocalService);
+						_objectEntryLocalService, _objectFieldLocalService,
+						_objectFolderLocalService);
 			ObjectEntryModelSummaryContributor
 				objectEntryModelSummaryContributor =
 					new ObjectEntryModelSummaryContributor();

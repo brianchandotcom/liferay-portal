@@ -34,7 +34,7 @@ public class AdvancedGroupedFDSFilters implements GroupedFDSFilters {
 			JSONUtil.put("Group 2", JSONUtil.putAll(null, "size")),
 			JSONUtil.put("Group 3", JSONUtil.putAll("status", "title")),
 			JSONUtil.put(
-				"Group with not registered filter",
+				"Group With Unregistered Filter",
 				JSONUtil.putAll(StringUtil.randomString())));
 	}
 

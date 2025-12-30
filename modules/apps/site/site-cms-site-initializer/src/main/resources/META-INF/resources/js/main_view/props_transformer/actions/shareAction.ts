@@ -51,6 +51,9 @@ export default async function shareAction({
 
 		openModal({
 			className: 'share-modal',
+			containerProps: {
+				className: '',
+			},
 			contentComponent: ({closeModal}: {closeModal: () => void}) =>
 				ShareModalContent({
 					autocompleteURL,

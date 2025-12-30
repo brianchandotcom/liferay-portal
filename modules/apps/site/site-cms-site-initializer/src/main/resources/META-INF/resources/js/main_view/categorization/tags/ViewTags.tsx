@@ -38,6 +38,9 @@ export default function ViewTags({
 				label: Liferay.Language.get('new'),
 				onClick: () => {
 					openModal({
+						containerProps: {
+							className: '',
+						},
 						contentComponent: ({
 							closeModal,
 						}: {
@@ -144,6 +147,9 @@ export default function ViewTags({
 					},
 				},
 			],
+			containerProps: {
+				className: '',
+			},
 			status: 'danger',
 			title: sub(
 				Liferay.Language.get('delete-x'),
@@ -160,6 +166,9 @@ export default function ViewTags({
 		loadData: () => {};
 	}) => {
 		openModal({
+			containerProps: {
+				className: '',
+			},
 			contentComponent: ({closeModal}: {closeModal: () => void}) =>
 				EditTagsModal({
 					assetLibraries: itemData.assetLibraries,
@@ -181,6 +190,9 @@ export default function ViewTags({
 		loadData: () => {};
 	}) => {
 		openModal({
+			containerProps: {
+				className: '',
+			},
 			contentComponent: ({closeModal}: {closeModal: () => void}) =>
 				MergeTagsModal({
 					closeModal,

@@ -44,6 +44,9 @@ const ViewButton = ({
 				displayType="secondary"
 				onClick={() => {
 					openModal({
+						containerProps: {
+							className: '',
+						},
 						size: 'full-screen',
 						title: item.name,
 						url: replaceTokens(itemData.url as string, item.name),

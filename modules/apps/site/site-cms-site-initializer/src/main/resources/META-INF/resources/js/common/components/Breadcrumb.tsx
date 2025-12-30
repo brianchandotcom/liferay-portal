@@ -59,6 +59,9 @@ function ActionDropdownItem({
 	const handleTargetAction = async () => {
 		if (target === 'modal') {
 			openModal({
+				containerProps: {
+					className: '',
+				},
 				size,
 				title: label,
 				url: href,
@@ -126,6 +129,9 @@ function ActionDropdownItem({
 						},
 					},
 				],
+				containerProps: {
+					className: '',
+				},
 				role: 'alertdialog',
 				status: 'danger',
 				title: confirmationTitle || Liferay.Language.get('delete'),

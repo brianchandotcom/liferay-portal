@@ -80,6 +80,9 @@ export function defaultPermissionsBulkAction({
 				},
 			],
 			center: true,
+			containerProps: {
+				className: '',
+			},
 			status: 'warning',
 			title: Liferay.Language.get('action-not-allowed'),
 		});

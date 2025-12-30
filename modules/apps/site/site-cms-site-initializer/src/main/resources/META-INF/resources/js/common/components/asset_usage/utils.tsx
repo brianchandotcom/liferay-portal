@@ -107,6 +107,9 @@ const openAssetUsageListModal = async ({
 
 	if (!!firstItem?.usages || folderThatContainsUsages) {
 		openModal({
+			containerProps: {
+				className: '',
+			},
 			contentComponent: ({closeModal}: {closeModal: () => void}) => (
 				<AssetUsageListModal
 					apiParams={{
@@ -135,6 +138,9 @@ const openDetailedAssetUsageModal = ({
 	onClose: () => void;
 }) => {
 	openModal({
+		containerProps: {
+			className: '',
+		},
 		contentComponent: () => <DetailedAssetUsageModal item={item} />,
 		onClose,
 		size: 'lg',

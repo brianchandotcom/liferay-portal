@@ -66,6 +66,9 @@ export default function openResetAssetPermissionModal({
 				},
 			},
 		],
+		containerProps: {
+			className: '',
+		},
 		status: 'warning',
 		title: Liferay.Language.get('confirm-reset-to-default-permissions'),
 	});

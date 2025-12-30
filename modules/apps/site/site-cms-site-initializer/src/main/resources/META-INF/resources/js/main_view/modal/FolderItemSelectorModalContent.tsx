@@ -190,6 +190,9 @@ function openDuplicatedAssetFolderNamesModal(
 	onContinueClick: (operation: Option) => void
 ) {
 	openModal({
+		containerProps: {
+			className: '',
+		},
 		contentComponent: ({closeModal}: {closeModal: () => void}) =>
 			DuplicatedAssetFolderNamesModalContent({
 				action,

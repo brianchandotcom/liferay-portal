@@ -30,6 +30,9 @@ export default function createAssetAction(data: AssetData) {
 
 	openModal({
 		center: true,
+		containerProps: {
+			className: '',
+		},
 		contentComponent: ({closeModal}: {closeModal: () => void}) =>
 			CreationModalContent({
 				...data,

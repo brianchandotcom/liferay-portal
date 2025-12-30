@@ -17,6 +17,9 @@ export default function manageConnectedSitesAction(
 	loadData?: () => void
 ) {
 	openModal({
+		containerProps: {
+			className: '',
+		},
 		contentComponent: () => SpaceConnectedSitesModal(data),
 		onClose: loadData,
 		size: 'md',

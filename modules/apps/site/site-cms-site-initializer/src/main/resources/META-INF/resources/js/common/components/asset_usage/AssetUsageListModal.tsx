@@ -217,6 +217,9 @@ const AssetUsageListModal: React.FC<IAssetUsageListModalProps> = ({
 			item,
 			onClose: () => {
 				openModal({
+					containerProps: {
+						className: '',
+					},
 					contentComponent: ({
 						closeModal,
 					}: {

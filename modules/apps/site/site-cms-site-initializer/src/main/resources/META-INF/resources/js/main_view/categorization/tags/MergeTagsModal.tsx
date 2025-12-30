@@ -143,6 +143,9 @@ export default function MergeTagsModalContent({
 							type: 'cancel',
 						},
 					],
+					containerProps: {
+						className: '',
+					},
 					onClose: () => {
 						mergeModel?.removeAttribute('hidden');
 					},
@@ -172,6 +175,9 @@ export default function MergeTagsModalContent({
 						},
 					},
 				],
+				containerProps: {
+					className: '',
+				},
 				onClose: () => {
 					mergeModel?.removeAttribute('hidden');
 				},
@@ -331,6 +337,9 @@ export default function MergeTagsModalContent({
 
 	const handleSelectButtonClick = () => {
 		openModal({
+			containerProps: {
+				className: '',
+			},
 			contentComponent: ({closeModal}: {closeModal: () => void}) => (
 				<SelectTagsDataSetModalContent closeModal={closeModal} />
 			),

@@ -1837,3 +1837,56 @@ test(
 		await waitForAlert(page);
 	}
 );
+
+test(
+	'Test XSS vulnerability when adding user with malicious first name to an organization',
+	{tag: ['@LPD-72282']},
+	async ({
+		apiHelpers,
+		organizationUsersPage,
+		page,
+		usersAndOrganizationsPage,
+	}) => {
+		const userAccount = await apiHelpers.headlessAdminUser.postUserAccount({
+			alternateName: `xsstest${getRandomInt()}`,
+			emailAddress: `xsstest${getRandomInt()}@liferay.com`,
+			familyName: `TestUser${getRandomInt()}`,
+			givenName: `<img src=x onerror="alert('x')">`,
+		});
+
+		const organization =
+			await apiHelpers.headlessAdminUser.postOrganization();
+
+		await apiHelpers.headlessAdminUser.assignUserToOrganizationByEmailAddress(
+			organization.id,
+			userAccount.emailAddress
+		);
+
+		apiHelpers.data.push({
+			id: `${organization.id}_${userAccount.emailAddress}`,
+			type: 'organizationUserAccountAssociation',
+		});
+
+		await usersAndOrganizationsPage.goToOrganizations();
+
+		await usersAndOrganizationsPage.organizationsTable
+			.valueLink(organization.name)
+			.click();
+
+		await expect(organizationUsersPage.filterButton).toBeVisible();
+
+		page.on('dialog', async (dialog) => {
+			if (dialog.type() === 'alert') {
+				throw new Error('XSS');
+			}
+		});
+
+		await organizationUsersPage.organizationUsersTable.changeView('Cards');
+
+		await expect(
+			await organizationUsersPage.screenName(
+				userAccount.givenName + ' ' + userAccount.familyName
+			)
+		).toBeVisible();
+	}
+);

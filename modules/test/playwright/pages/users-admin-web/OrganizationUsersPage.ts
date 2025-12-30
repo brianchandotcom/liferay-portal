@@ -5,6 +5,8 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {DataTablePage} from '../account-admin-web/DataTablePage';
+
 export const searchTableRowByValue = async function (
 	tableLocator: Locator,
 	colPosition: number,
@@ -34,6 +36,7 @@ export const searchTableRowByValue = async function (
 
 export class OrganizationUsersPage {
 	readonly filterButton: Locator;
+	readonly organizationUsersTable: DataTablePage;
 	readonly page: Page;
 	readonly removeMenuItem: Locator;
 	readonly screenName: (screenName: string) => Promise<Locator>;
@@ -48,6 +51,12 @@ export class OrganizationUsersPage {
 
 	constructor(page: Page) {
 		this.filterButton = page.getByRole('button', {name: 'Filter'});
+		this.organizationUsersTable = new DataTablePage(
+			page,
+			page.locator(
+				'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_organizationUsersSearchContainer'
+			)
+		);
 		this.page = page;
 		this.removeMenuItem = page.getByRole('menuitem', {
 			name: 'Remove',

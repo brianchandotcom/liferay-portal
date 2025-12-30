@@ -5,50 +5,49 @@
 
 package com.liferay.osb.faro.engine.client.model;
 
-import java.util.Map;
-
 /**
  * @author Nilton Vieira
  */
 public class RealTimeMembershipMetric {
 
-	public Map<String, Object> getAverageSegmentMembershipDuration() {
-		return _averageSegmentMembershipDuration;
+	public Metric getAverageSegmentMembershipDurationMetric() {
+		return _averageSegmentMembershipDurationMetric;
 	}
 
-	public Map<String, Object> getEntryRate() {
-		return _entryRate;
+	public Metric getEntryRateMetric() {
+		return _entryRateMetric;
 	}
 
-	public Map<String, Object> getExitRate() {
-		return _exitRate;
+	public Metric getExitRateMetric() {
+		return _exitRateMetric;
 	}
 
-	public Map<String, Object> getTotalMembers() {
-		return _totalMembers;
+	public TotalMemberMetric getTotalMemberMetric() {
+		return _totalMemberMetric;
 	}
 
-	public void setAverageSegmentMembershipDuration(
-		Map<String, Object> averageSegmentMembershipDuration) {
+	public void setAverageSegmentMembershipDurationMetric(
+		Metric averageSegmentMembershipDurationMetric) {
 
-		_averageSegmentMembershipDuration = averageSegmentMembershipDuration;
+		_averageSegmentMembershipDurationMetric =
+			averageSegmentMembershipDurationMetric;
 	}
 
-	public void setEntryRate(Map<String, Object> entryRate) {
-		_entryRate = entryRate;
+	public void setEntryRateMetric(Metric entryRateMetric) {
+		_entryRateMetric = entryRateMetric;
 	}
 
-	public void setExitRate(Map<String, Object> exitRate) {
-		_exitRate = exitRate;
+	public void setExitRateMetric(Metric exitRateMetric) {
+		_exitRateMetric = exitRateMetric;
 	}
 
-	public void setTotalMembers(Map<String, Object> totalMembers) {
-		_totalMembers = totalMembers;
+	public void setTotalMemberMetric(TotalMemberMetric totalMemberMetric) {
+		_totalMemberMetric = totalMemberMetric;
 	}
 
-	private Map<String, Object> _averageSegmentMembershipDuration;
-	private Map<String, Object> _entryRate;
-	private Map<String, Object> _exitRate;
-	private Map<String, Object> _totalMembers;
+	private Metric _averageSegmentMembershipDurationMetric;
+	private Metric _entryRateMetric;
+	private Metric _exitRateMetric;
+	private TotalMemberMetric _totalMemberMetric;
 
 }

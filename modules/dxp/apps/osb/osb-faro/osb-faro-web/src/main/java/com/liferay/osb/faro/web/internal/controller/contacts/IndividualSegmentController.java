@@ -84,16 +84,6 @@ public class IndividualSegmentController extends BaseFaroController {
 		return new IndividualSegmentDisplay(individualSegment);
 	}
 
-	@GET
-	@Path("/{id}/real-time-metrics")
-	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public RealTimeMembershipMetric getRealTimeMembershipMetric(
-		@PathParam("groupId") long groupId,
-		@PathParam("id") String id)
-		throws Exception {
-		return contactsEngineClient.getRealTimeMembershipMetric(faroProjectLocalService.getFaroProjectByGroupId(groupId), id);
-	}
-
 	@POST
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
 	public IndividualSegmentDisplay create(
@@ -236,6 +226,17 @@ public class IndividualSegmentController extends BaseFaroController {
 				cur, delta, orderByFieldsFaroParam.getValue());
 
 		return new FaroResultsDisplay(results);
+	}
+
+	@GET
+	@Path("/{id}/real-time-metrics")
+	@RolesAllowed(RoleConstants.SITE_MEMBER)
+	public RealTimeMembershipMetric getRealTimeMembershipMetric(
+			@PathParam("groupId") long groupId, @PathParam("id") String id)
+		throws Exception {
+
+		return contactsEngineClient.getRealTimeMembershipMetric(
+			faroProjectLocalService.getFaroProjectByGroupId(groupId), id);
 	}
 
 	@GET

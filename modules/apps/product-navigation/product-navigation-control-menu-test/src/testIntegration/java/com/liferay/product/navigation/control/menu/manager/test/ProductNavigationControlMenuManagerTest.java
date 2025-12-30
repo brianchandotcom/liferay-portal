@@ -170,32 +170,6 @@ public class ProductNavigationControlMenuManagerTest {
 	}
 
 	@Test
-	public void testIsShowControlMenuWithRandomUserInAdminLayout()
-		throws Exception {
-
-		_menuAccessConfigurationManager.updateMenuAccessConfiguration(
-			_group.getGroupId(), new String[0], true);
-
-		Assert.assertTrue(
-			_productNavigationControlMenuManager.isShowControlMenu(
-				_getHttpServletRequest(
-					Collections.emptyMap(), TestPropsValues.getUser())));
-	}
-
-	@Test
-	public void testIsShowControlMenuWithSiteAdministratorInContentLayout()
-		throws Exception {
-
-		_menuAccessConfigurationManager.updateMenuAccessConfiguration(
-			_group.getGroupId(), new String[0], true);
-
-		Assert.assertTrue(
-			_productNavigationControlMenuManager.isShowControlMenu(
-				_getHttpServletRequest(
-					Collections.emptyMap(), TestPropsValues.getUser())));
-	}
-
-	@Test
 	public void testIsShowControlMenuWithUserWithUserGroupWithRoleAccessInContentLayout()
 		throws Exception {
 

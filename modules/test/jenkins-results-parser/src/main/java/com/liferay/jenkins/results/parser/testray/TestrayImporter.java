@@ -1364,9 +1364,17 @@ public class TestrayImporter {
 		TestrayBuild testrayBuild = getTestrayBuild(
 			axisTestClassGroup.getTestBaseDir());
 
-		TestrayRun testrayRun = TestrayFactory.newTestrayRun(
-			testrayBuild, axisTestClassGroup.getBatchName(),
-			job.getJobPropertiesFiles());
+		TestrayRun testrayRun;
+
+		if (axisTestClassGroup instanceof FunctionalAxisTestClassGroup) {
+			testrayRun = TestrayFactory.newTestrayRun(
+				testrayBuild, axisTestClassGroup, job.getJobPropertiesFiles());
+		}
+		else {
+			testrayRun = TestrayFactory.newTestrayRun(
+				testrayBuild, axisTestClassGroup.getBatchName(),
+				job.getJobPropertiesFiles());
+		}
 
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 

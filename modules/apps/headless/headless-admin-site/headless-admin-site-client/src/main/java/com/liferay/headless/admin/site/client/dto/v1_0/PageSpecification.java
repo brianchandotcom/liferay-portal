@@ -75,54 +75,6 @@ public abstract class PageSpecification implements Cloneable, Serializable {
 
 	protected String externalReferenceCode;
 
-	public Settings getSettings() {
-		return settings;
-	}
-
-	public void setSettings(Settings settings) {
-		this.settings = settings;
-	}
-
-	public void setSettings(
-		UnsafeSupplier<Settings, Exception> settingsUnsafeSupplier) {
-
-		try {
-			settings = settingsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Settings settings;
-
-	public String getSiteTemplatePageSpecificationExternalReferenceCode() {
-		return siteTemplatePageSpecificationExternalReferenceCode;
-	}
-
-	public void setSiteTemplatePageSpecificationExternalReferenceCode(
-		String siteTemplatePageSpecificationExternalReferenceCode) {
-
-		this.siteTemplatePageSpecificationExternalReferenceCode =
-			siteTemplatePageSpecificationExternalReferenceCode;
-	}
-
-	public void setSiteTemplatePageSpecificationExternalReferenceCode(
-		UnsafeSupplier<String, Exception>
-			siteTemplatePageSpecificationExternalReferenceCodeUnsafeSupplier) {
-
-		try {
-			siteTemplatePageSpecificationExternalReferenceCode =
-				siteTemplatePageSpecificationExternalReferenceCodeUnsafeSupplier.
-					get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String siteTemplatePageSpecificationExternalReferenceCode;
-
 	public Status getStatus() {
 		return status;
 	}

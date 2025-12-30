@@ -251,10 +251,14 @@ public class LayoutUtil {
 			draftContentPageSpecification.getExternalReferenceCode());
 
 		ServiceContextUtil.setLayoutSetPrototypeLayoutERC(
-			groupId, publishedContentPageSpecification, serviceContext);
+			groupId, publishedContentPageSpecification, serviceContext,
+			publishedContentPageSpecification.
+				getSiteTemplatePageSpecificationExternalReferenceCode());
 
 		ServiceContextUtil.setLayoutSetPrototypeLayoutERC(
-			groupId, draftContentPageSpecification, serviceContext);
+			groupId, draftContentPageSpecification, serviceContext,
+			draftContentPageSpecification.
+				getSiteTemplatePageSpecificationExternalReferenceCode());
 
 		if (Objects.equals(
 				publishedContentPageSpecification.getStatus(),

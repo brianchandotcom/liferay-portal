@@ -20,6 +20,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -30,9 +31,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Component
 public class HubSpotService extends BaseService {
 
-	public JSONObject createCompany(JSONObject propertiesJSONObject)
-		throws Exception {
-
+	public JSONObject createCompany(JSONObject propertiesJSONObject) {
 		JSONObject companyJSONObject = searchHubSpotResource(
 			"companies", "name", propertiesJSONObject.getString("name"));
 
@@ -63,9 +62,7 @@ public class HubSpotService extends BaseService {
 		return null;
 	}
 
-	public JSONObject createContact(JSONObject propertiesJSONObject)
-		throws Exception {
-
+	public JSONObject createContact(JSONObject propertiesJSONObject) {
 		JSONObject contactJSONObject = searchHubSpotResource(
 			"contacts", "email", propertiesJSONObject.getString("email"));
 
@@ -97,8 +94,7 @@ public class HubSpotService extends BaseService {
 	}
 
 	public JSONObject createLead(
-			String contactId, JSONObject propertiesJSONObject)
-		throws Exception {
+		String contactId, JSONObject propertiesJSONObject) {
 
 		JSONObject jsonObject = new JSONObject(
 			post(
@@ -147,6 +143,7 @@ public class HubSpotService extends BaseService {
 		return jsonObject;
 	}
 
+	@Cacheable("hubSpotSearch")
 	public JSONObject searchHubSpotResource(
 		String objectName, String propertyName, String value) {
 
@@ -248,6 +245,7 @@ public class HubSpotService extends BaseService {
 		return propertiesJSONObject;
 	}
 
+	@Cacheable("hubSpotProperty")
 	private JSONArray _getPropertyJSONArray(String propertyName) {
 		JSONObject jsonObject = new JSONObject(
 			get(

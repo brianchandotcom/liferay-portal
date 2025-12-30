@@ -9,6 +9,7 @@ import com.liferay.frontend.data.set.filter.GroupedFDSFilters;
 import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleFDSNames;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -34,7 +35,7 @@ public class AdvancedGroupedFDSFilters implements GroupedFDSFilters {
 			JSONUtil.put("Group 3", JSONUtil.putAll("status", "title")),
 			JSONUtil.put(
 				"Group with not registered filter",
-				JSONUtil.putAll("notRegistered")));
+				JSONUtil.putAll(StringUtil.randomString())));
 	}
 
 }

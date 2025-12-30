@@ -593,6 +593,18 @@ export class StructureBuilderPage {
 		}
 	}
 
+	async switchLanguage(languageId: string) {
+		const trigger = this.page.getByLabel('Open Localizations');
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.locator('.dropdown-item', {hasText: languageId}),
+			trigger,
+		});
+
+		await expect(trigger).toHaveAttribute('title', languageId);
+	}
+
 	async switchTab(name: 'General' | 'Search' | 'Workflow') {
 		const target =
 			name === 'General'

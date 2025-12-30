@@ -117,9 +117,26 @@ test(
 
 		await structureBuilderPage.changeFieldSettings({name: 'field'});
 
-		// Set label and empty name
+		// Set label for another language, publish and check an error is shown for the default language
 
 		await structureBuilderPage.selectStructure();
+
+		await structureBuilderPage.switchLanguage('es_ES');
+
+		await structureBuilderPage.changeStructureSettings({
+			label: 'Spanish label',
+		});
+
+		await clickAndExpectToBeVisible({
+			target: page.getByText(
+				'Please enter a valid label for the default language'
+			),
+			trigger: structureBuilderPage.publishButton,
+		});
+
+		// Set label and empty name
+
+		await structureBuilderPage.switchLanguage('en_US');
 
 		const label = `Structure${getRandomInt()}`;
 

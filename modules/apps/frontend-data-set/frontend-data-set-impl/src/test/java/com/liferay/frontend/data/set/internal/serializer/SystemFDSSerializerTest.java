@@ -815,7 +815,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		};
 
-		JSONArray serializedFdsFiltersGroupsJSONArray = JSONUtil.putAll(
+		JSONArray serializedGroupedFDSFiltersJSONArray = JSONUtil.putAll(
 			JSONUtil.put(
 				"filters", JSONUtil.putAll(IDS[0], IDS[1])
 			).put(
@@ -847,7 +847,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 			_registerSystemFDSEntry(FDS_NAMES[1]));
 
 		JSONAssert.assertEquals(
-			serializedFdsFiltersGroupsJSONArray.toString(),
+			serializedGroupedFDSFiltersJSONArray.toString(),
 			systemFDSSerializer.serializeGroupedFDSFilters(
 				FDS_NAMES[0], httpServletRequest
 			).toString(),
@@ -891,13 +891,13 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 			_registerSystemFDSEntry(FDS_NAMES[1]));
 
 		JSONAssert.assertEquals(
-			serializedFdsFiltersGroupsJSONArray.toString(),
+			serializedGroupedFDSFiltersJSONArray.toString(),
 			systemFDSSerializer.serializeGroupedFDSFilters(
 				FDS_NAMES[0], httpServletRequest
 			).toString(),
 			JSONCompareMode.STRICT);
 		JSONAssert.assertEquals(
-			serializedFdsFiltersGroupsJSONArray.toString(),
+			serializedGroupedFDSFiltersJSONArray.toString(),
 			systemFDSSerializer.serializeGroupedFDSFilters(
 				FDS_NAMES[1], httpServletRequest
 			).toString(),

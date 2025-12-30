@@ -38,10 +38,10 @@ public class GroupedFDSFiltersRegistryImpl
 
 	@Override
 	public GroupedFDSFilters getGroupedFDSFilters(String fdsName) {
-		ServiceWrapper<GroupedFDSFilters> fdsFiltersGroupsServiceWrapper =
+		ServiceWrapper<GroupedFDSFilters> groupedFDSFiltersServiceWrapper =
 			_serviceTrackerMap.getService(fdsName);
 
-		if (fdsFiltersGroupsServiceWrapper == null) {
+		if (groupedFDSFiltersServiceWrapper == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"No frontend data set grouped filters are associated " +
@@ -51,7 +51,7 @@ public class GroupedFDSFiltersRegistryImpl
 			return null;
 		}
 
-		return fdsFiltersGroupsServiceWrapper.getService();
+		return groupedFDSFiltersServiceWrapper.getService();
 	}
 
 	@Activate

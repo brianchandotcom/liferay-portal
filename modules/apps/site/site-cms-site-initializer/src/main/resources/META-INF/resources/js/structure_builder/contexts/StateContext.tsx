@@ -834,7 +834,7 @@ function reducer(state: State, action: Action): State {
 					erc,
 					label,
 					spaces,
-					...(!isPublished && {name: nextName}),
+					...(!isPublished && 'name' in action && {name: nextName}),
 				},
 				objectDefinitions,
 			});

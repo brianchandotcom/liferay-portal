@@ -70,7 +70,7 @@ SearchContainer<Region> regionSearchContainer = RegionSearchContainerFactory.cre
 
 				<liferay-ui:search-container-column-text
 					name="region-code"
-					property="regionCode"
+					value="<%= HtmlUtil.escape(region.getRegionCode()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text

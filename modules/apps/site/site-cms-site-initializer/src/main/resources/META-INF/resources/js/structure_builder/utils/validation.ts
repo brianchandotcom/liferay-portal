@@ -33,6 +33,7 @@ export type ValidationError =
 	| 'in-use'
 	| 'lowercase'
 	| 'max-length'
+	| 'default-language-label'
 	| 'prefix-reserved'
 	| 'unexpected'
 	| 'uppercase';
@@ -148,10 +149,12 @@ export function validateRepeatableGroup({
 export function validateStructure({
 	currentErrors,
 	data,
+	isGlobalValidation = false,
 	objectDefinitions,
 }: {
 	currentErrors?: ErrorMap;
 	data: Partial<Structure>;
+	isGlobalValidation?: boolean;
 	objectDefinitions?: ObjectDefinitions;
 }): ErrorMap {
 	const {erc, label, name, spaces} = data;
@@ -197,6 +200,9 @@ export function validateStructure({
 	}
 
 	if (!isNullOrUndefined(label)) {
+		const defaultLanguageValue =
+			label[Liferay.ThemeDisplay.getDefaultLanguageId()];
+
 		const values = Object.values(label ?? {});
 
 		if (!!values.length && values.every(Boolean)) {
@@ -204,6 +210,13 @@ export function validateStructure({
 		}
 		else {
 			errors.set('label', 'empty');
+		}
+
+		if (isGlobalValidation && !defaultLanguageValue) {
+			errors.set('global', 'default-language-label');
+		}
+		else if (defaultLanguageValue) {
+			errors.delete('global');
 		}
 	}
 
@@ -228,6 +241,15 @@ export function getErrorMessage(
 		if (error === 'unexpected') {
 			return Liferay.Language.get(
 				'an-unexpected-error-occurred-while-saving-or-publishing-the-content-structure'
+			);
+		}
+
+		if (error === 'default-language-label') {
+			return sub(
+				Liferay.Language.get(
+					'please-enter-a-valid-label-for-the-default-language-x'
+				),
+				Liferay.ThemeDisplay.getDefaultLanguageId()
 			);
 		}
 	}
@@ -355,7 +377,7 @@ export function useValidate() {
 
 		const invalids = new Map(state.invalids);
 
-		errors = validateStructure({data: structure});
+		errors = validateStructure({data: structure, isGlobalValidation: true});
 
 		if (errors.size) {
 			invalids.set(structure.uuid, errors);

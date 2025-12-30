@@ -323,7 +323,7 @@ public class CustomFDSSerializer
 	public JSONArray serializeGroupedFDSFilters(
 		String fdsName, HttpServletRequest httpServletRequest) {
 
-		// rely on system serializer until grouped filters are supported by DSM
+		// TODO LPD-70111
 
 		return _systemFDSSerializer.serializeGroupedFDSFilters(
 			fdsName, httpServletRequest);

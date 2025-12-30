@@ -25,6 +25,25 @@ import org.json.JSONObject;
 public class ModulesJUnitAxisTestClassGroup extends JUnitAxisTestClassGroup {
 
 	@Override
+	public long getAverageDuration() {
+		if (_averageDuration != null) {
+			return _averageDuration;
+		}
+
+		GroupingStrategy groupingStrategy = getGroupingStrategy();
+
+		if (groupingStrategy == GroupingStrategy.DEFAULT) {
+			_averageDuration = super.getAverageDuration();
+
+			return _averageDuration;
+		}
+
+		_averageDuration =
+			getAverageOverheadDuration() + getAverageTotalTestTaskDuration();
+
+		return _averageDuration;
+	}
+
 	public long getAverageTotalTestTaskDuration() {
 		if (_averageTotalTestTaskDuration != null) {
 			return _averageTotalTestTaskDuration;
@@ -32,8 +51,25 @@ public class ModulesJUnitAxisTestClassGroup extends JUnitAxisTestClassGroup {
 
 		_averageTotalTestTaskDuration = 0L;
 
+		GroupingStrategy groupingStrategy = getGroupingStrategy();
+
 		for (TestTask testTask : getTestTasks()) {
-			_averageTotalTestTaskDuration += testTask.getLongestDuration();
+			if (groupingStrategy ==
+					GroupingStrategy.TEST_TASK_AVERAGE_DURATION) {
+
+				_averageTotalTestTaskDuration += testTask.getAverageDuration();
+			}
+			else if (groupingStrategy ==
+						GroupingStrategy.TEST_TASK_AVERAGE_TOTAL_DURATION) {
+
+				_averageTotalTestTaskDuration +=
+					testTask.getAverageTotalDuration();
+			}
+			else if (groupingStrategy ==
+						GroupingStrategy.TEST_TASK_LONGEST_DURATION) {
+
+				_averageTotalTestTaskDuration += testTask.getLongestDuration();
+			}
 		}
 
 		return _averageTotalTestTaskDuration;
@@ -65,6 +101,9 @@ public class ModulesJUnitAxisTestClassGroup extends JUnitAxisTestClassGroup {
 			return new ArrayList<>(_testTasks.values());
 		}
 
+		TestClassGroup.GroupingStrategy groupingStrategy =
+			getGroupingStrategy();
+
 		for (ModulesJUnitTestClass modulesJUnitTestClass :
 				_getModulesJUnitTestClasses()) {
 
@@ -76,6 +115,7 @@ public class ModulesJUnitAxisTestClassGroup extends JUnitAxisTestClassGroup {
 				testTask = TestTaskFactory.newTestTask(
 					modulesJUnitTestClass.getAverageTestTaskDuration(),
 					modulesJUnitTestClass.getAverageTotalTestTaskDuration(),
+					groupingStrategy,
 					modulesJUnitTestClass.getLongestTestTaskDuration(),
 					testTaskName);
 
@@ -101,6 +141,9 @@ public class ModulesJUnitAxisTestClassGroup extends JUnitAxisTestClassGroup {
 			return;
 		}
 
+		TestClassGroup.GroupingStrategy groupingStrategy =
+			getGroupingStrategy();
+
 		for (int i = 0; i < testTasksJSONArray.length(); i++) {
 			JSONObject testTaskJSONObject = testTasksJSONArray.getJSONObject(i);
 
@@ -116,6 +159,7 @@ public class ModulesJUnitAxisTestClassGroup extends JUnitAxisTestClassGroup {
 			TestTask testTask = TestTaskFactory.newTestTask(
 				testTaskJSONObject.getLong("average_duration"),
 				testTaskJSONObject.getLong("average_total_duration"),
+				groupingStrategy,
 				testTaskJSONObject.getLong("longest_duration"), testTaskName);
 
 			for (int j = 0; j < testClassesJSONArray.length(); j++) {
@@ -163,6 +207,7 @@ public class ModulesJUnitAxisTestClassGroup extends JUnitAxisTestClassGroup {
 		return modulesJUnitTestClasses;
 	}
 
+	private Long _averageDuration;
 	private Long _averageTotalTestTaskDuration;
 	private final Map<String, TestTask> _testTasks = new HashMap<>();
 

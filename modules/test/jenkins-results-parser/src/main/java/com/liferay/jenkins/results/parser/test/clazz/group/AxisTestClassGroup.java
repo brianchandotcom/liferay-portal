@@ -32,8 +32,7 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 		}
 
 		_averageDuration =
-			getAverageOverheadDuration() + getAverageTotalTestDuration() +
-				getAverageTotalTestTaskDuration();
+			getAverageOverheadDuration() + getAverageTotalTestDuration();
 
 		if (_averageDuration <= 0L) {
 			BatchHistory batchHistory = getBatchHistory();
@@ -82,10 +81,6 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 		}
 
 		return _averageTotalTestDuration;
-	}
-
-	public long getAverageTotalTestTaskDuration() {
-		return 0L;
 	}
 
 	public String getAxisName() {
@@ -167,6 +162,8 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 			"average_duration", getAverageDuration()
 		).put(
 			"axis_name", getAxisName()
+		).put(
+			"grouping_strategy", String.valueOf(getGroupingStrategy())
 		);
 
 		JSONArray testClassesJSONArray = new JSONArray();
@@ -305,6 +302,10 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 		}
 
 		return _getBaseSlaveLabel();
+	}
+
+	protected GroupingStrategy getGroupingStrategy() {
+		return _batchTestClassGroup.getGroupingStrategy();
 	}
 
 	protected void setBatchTestClassGroup(

@@ -5,17 +5,21 @@
 
 package com.liferay.jenkins.results.parser.test.task;
 
+import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroup;
+
 /**
  * @author Michael Hashimoto
  */
 public class TestTaskFactory {
 
 	public static TestTask newTestTask(
-		long averageDuration, long averageTotalDuration, long longestDuration,
+		long averageDuration, long averageTotalDuration,
+		TestClassGroup.GroupingStrategy groupingStrategy, long longestDuration,
 		String name) {
 
 		return new DefaultTestTask(
-			averageDuration, averageTotalDuration, longestDuration, name);
+			averageDuration, averageTotalDuration, groupingStrategy,
+			longestDuration, name);
 	}
 
 }

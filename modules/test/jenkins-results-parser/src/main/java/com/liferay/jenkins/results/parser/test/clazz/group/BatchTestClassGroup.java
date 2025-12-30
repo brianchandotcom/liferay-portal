@@ -138,6 +138,22 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return averageDuration;
 	}
 
+	public long getAverageTotalTestTaskDuration(String testName) {
+		TestTaskHistory testTaskHistory = _getTestTaskHistory(testName);
+
+		if (testTaskHistory == null) {
+			return _getDefaultTestTaskDuration();
+		}
+
+		long averageTotalDuration = testTaskHistory.getAverageTotalDuration();
+
+		if (averageTotalDuration == 0) {
+			return _getDefaultTestTaskDuration();
+		}
+
+		return testTaskHistory.getAverageTotalDuration();
+	}
+
 	public int getAxisCount() {
 		if (ignore()) {
 			return 0;
@@ -374,6 +390,22 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		);
 
 		return jsonObject;
+	}
+
+	public long getLongestTestTaskDuration(String testName) {
+		TestTaskHistory testTaskHistory = _getTestTaskHistory(testName);
+
+		if (testTaskHistory == null) {
+			return 0L;
+		}
+
+		long longestDuration = testTaskHistory.getLongestDuration();
+
+		if (longestDuration <= 0) {
+			return 0L;
+		}
+
+		return longestDuration;
 	}
 
 	public Integer getMaximumSlavesPerHost() {

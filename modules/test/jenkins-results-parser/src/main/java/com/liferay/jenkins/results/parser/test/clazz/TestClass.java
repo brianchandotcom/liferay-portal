@@ -30,11 +30,15 @@ public interface TestClass extends Comparable<TestClass>, WeightedItem {
 
 	public long getAverageTestTaskDuration();
 
+	public long getAverageTotalTestTaskDuration();
+
 	public AxisTestClassGroup getAxisTestClassGroup();
 
 	public BatchTestClassGroup getBatchTestClassGroup();
 
 	public JSONObject getJSONObject();
+
+	public long getLongestTestTaskDuration();
 
 	public String getName();
 

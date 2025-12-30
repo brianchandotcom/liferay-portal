@@ -97,6 +97,20 @@ public abstract class BaseTestClass implements TestClass {
 	}
 
 	@Override
+	public long getAverageTotalTestTaskDuration() {
+		if (_averageTotalTestTaskDuration != null) {
+			return _averageTotalTestTaskDuration;
+		}
+
+		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
+
+		_averageTotalTestTaskDuration =
+			batchTestClassGroup.getAverageTotalTestTaskDuration(getTestName());
+
+		return _averageTotalTestTaskDuration;
+	}
+
+	@Override
 	public AxisTestClassGroup getAxisTestClassGroup() {
 		return _axisTestClassGroup;
 	}
@@ -133,6 +147,20 @@ public abstract class BaseTestClass implements TestClass {
 		);
 
 		return jsonObject;
+	}
+
+	@Override
+	public long getLongestTestTaskDuration() {
+		if (_longestTestTaskDuration != null) {
+			return _longestTestTaskDuration;
+		}
+
+		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
+
+		_longestTestTaskDuration =
+			batchTestClassGroup.getLongestTestTaskDuration(getTestName());
+
+		return _longestTestTaskDuration;
 	}
 
 	@Override
@@ -355,8 +383,10 @@ public abstract class BaseTestClass implements TestClass {
 	private Long _averageDuration;
 	private Long _averageOverheadDuration;
 	private Long _averageTestTaskDuration;
+	private Long _averageTotalTestTaskDuration;
 	private AxisTestClassGroup _axisTestClassGroup;
 	private BatchTestClassGroup _batchTestClassGroup;
+	private Long _longestTestTaskDuration;
 	private SegmentTestClassGroup _segmentTestClassGroup;
 	private final File _testClassFile;
 	private final List<TestClassMethod> _testClassMethods = new ArrayList<>();

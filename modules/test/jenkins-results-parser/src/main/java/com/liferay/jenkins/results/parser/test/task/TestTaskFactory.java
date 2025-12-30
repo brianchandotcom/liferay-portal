@@ -10,8 +10,12 @@ package com.liferay.jenkins.results.parser.test.task;
  */
 public class TestTaskFactory {
 
-	public static TestTask newTestTask(long averageDuration, String name) {
-		return new DefaultTestTask(averageDuration, name);
+	public static TestTask newTestTask(
+		long averageDuration, long averageTotalDuration, long longestDuration,
+		String name) {
+
+		return new DefaultTestTask(
+			averageDuration, averageTotalDuration, longestDuration, name);
 	}
 
 }

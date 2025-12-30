@@ -21,7 +21,11 @@ public interface TestTask extends WeightedItem {
 
 	public long getAverageDuration();
 
+	public long getAverageTotalDuration();
+
 	public JSONObject getJSONObject();
+
+	public long getLongestDuration();
 
 	public String getName();
 

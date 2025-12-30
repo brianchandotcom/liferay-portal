@@ -165,12 +165,12 @@
 </tr>
 <tr>
 	<td>SELECT_MORE_THAN_ONE_ASSET_TYPE_MOVE_AVAILABLE</td>
-	<td>//button[contains(@class,'transfer-button-ltr') and contains(@aria-label,'Move selected items from Selected to Available.')]</td>
+	<td>//button[contains(@class,'transfer-button-rtl') and contains(@aria-label,'Move selected items from In Use to Available.')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECT_MORE_THAN_ONE_ASSET_TYPE_MOVE_SELECTED</td>
-	<td>//button[contains(@class,'transfer-button-rtl') and contains(@aria-label,'Move selected items from Available to Selected.')]</td>
+	<td>//button[contains(@class,'transfer-button-ltr') and contains(@aria-label,'Move selected items from Available to In Use.')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -183,12 +183,12 @@
 
 <tr>
 	<td>SELECT_MORE_THAN_ONE_ASSET_SUBTYPE_MOVE_AVAILABLE</td>
-	<td>xpath=(//button[contains(@class,'transfer-button-ltr') and contains(@aria-label,'Move selected items from Selected to Available.')])[3]</td>
+	<td>xpath=(//button[contains(@class,'transfer-button-rtl') and contains(@aria-label,'Move selected items from In Use to Available.')])[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECT_MORE_THAN_ONE_ASSET_SUBTYPE_MOVE_SELECTED</td>
-	<td>xpath=(//button[contains(@class,'transfer-button-rtl') and contains(@aria-label,'Move selected items from Available to Selected.')])[3]</td>
+	<td>xpath=(//button[contains(@class,'transfer-button-ltr') and contains(@aria-label,'Move selected items from Available to In Use.')])[3]</td>
 	<td></td>
 </tr>
 <tr>

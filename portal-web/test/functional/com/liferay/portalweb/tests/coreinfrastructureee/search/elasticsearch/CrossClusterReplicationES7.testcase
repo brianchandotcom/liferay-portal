@@ -1,6 +1,7 @@
 @component-name = "portal-search"
 definition {
 
+	property browser.chrome.version = "139.0";
 	property elasticsearch.ccr.enabled = "true";
 	property elasticsearch.multiple.connections = "true";
 	property minimum.slave.ram = "24";
@@ -419,7 +420,6 @@ definition {
 
 	@priority = 3
 	test CreateBlogsEntryWithNewWorkflow {
-		property browser.chrome.version = "139.0";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -520,7 +520,6 @@ definition {
 
 	@priority = 3
 	test SearchWithVirtualInstance {
-		property browser.chrome.version = "139.0";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

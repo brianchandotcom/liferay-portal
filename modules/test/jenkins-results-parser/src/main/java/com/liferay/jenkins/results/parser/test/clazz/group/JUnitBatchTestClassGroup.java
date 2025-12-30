@@ -647,7 +647,16 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			else {
 				List<List<TestClass>> testClassLists;
 
-				if (this instanceof ModulesJUnitBatchTestClassGroup) {
+				GroupingStrategy groupingStrategy = getGroupingStrategy();
+
+				if ((this instanceof ModulesJUnitBatchTestClassGroup) &&
+					((groupingStrategy ==
+						GroupingStrategy.TEST_TASK_AVERAGE_DURATION) ||
+					 (groupingStrategy ==
+						 GroupingStrategy.TEST_TASK_AVERAGE_TOTAL_DURATION) ||
+					 (groupingStrategy ==
+						 GroupingStrategy.TEST_TASK_LONGEST_DURATION))) {
+
 					TestTaskBalancedListSplitter testTaskBalancedListSplitter =
 						new TestTaskBalancedListSplitter(targetAxisDuration);
 

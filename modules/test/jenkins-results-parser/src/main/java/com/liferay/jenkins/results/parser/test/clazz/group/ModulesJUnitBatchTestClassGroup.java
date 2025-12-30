@@ -44,6 +44,9 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 
 		_testTasks = new HashMap<>();
 
+		TestClassGroup.GroupingStrategy groupingStrategy =
+			getGroupingStrategy();
+
 		for (ModulesJUnitTestClass modulesJUnitTestClass :
 				_getModulesJUnitTestClasses()) {
 
@@ -55,6 +58,7 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 				testTask = TestTaskFactory.newTestTask(
 					modulesJUnitTestClass.getAverageTestTaskDuration(),
 					modulesJUnitTestClass.getAverageTotalTestTaskDuration(),
+					groupingStrategy,
 					modulesJUnitTestClass.getLongestTestTaskDuration(),
 					testTaskName);
 

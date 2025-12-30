@@ -344,6 +344,25 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return _globTestClassMethodNamesMap;
 	}
 
+	public GroupingStrategy getGroupingStrategy() {
+		JobProperty jobProperty = getJobProperty(
+			"test.batch.grouping.strategy");
+
+		if (jobProperty == null) {
+			return GroupingStrategy.DEFAULT;
+		}
+
+		String jobPropertyValue = jobProperty.getValue();
+
+		if (!GroupingStrategy.isValid(jobPropertyValue)) {
+			return GroupingStrategy.DEFAULT;
+		}
+
+		recordJobProperty(jobProperty);
+
+		return GroupingStrategy.getByString(jobPropertyValue);
+	}
+
 	@Override
 	public Job getJob() {
 		return portalTestClassJob;

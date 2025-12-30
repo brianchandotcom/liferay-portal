@@ -360,7 +360,26 @@ function getTestTaskElement(test_task) {
 
 	let summaryElement = detailsElement.childNodes[0];
 
-	summaryElement.innerHTML = test_task.name + " - " + getDurationString(test_task.average_duration);
+	let test_task_duration = 0;
+
+	if (test_task.grouping_strategy == "test_task_average_duration") {
+		test_task_duration = test_task.average_duration;
+	}
+	else if (test_task.grouping_strategy == "test_task_average_total_duration") {
+		test_task_duration = test_task.average_total_duration;
+	}
+	else if (test_task.grouping_strategy == "test_task_longest_duration") {
+		test_task_duration = test_task.longest_duration;
+	}
+
+	let test_task_duration_string = "n/a";
+
+	if ((test_task_duration != undefined) && (test_task_duration > 0)) {
+		test_task_duration_string = getDurationString(test_task_duration);
+	}
+
+	summaryElement.innerHTML = test_task.name + " - " + test_task_duration_string;
+
 	summaryElement.setAttribute("class", "level-5");
 
 	let divElement = detailsElement.childNodes[1];

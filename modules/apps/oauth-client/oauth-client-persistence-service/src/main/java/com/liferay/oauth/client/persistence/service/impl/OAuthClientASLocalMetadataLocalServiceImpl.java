@@ -193,14 +193,6 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 
 	@Override
 	public OAuthClientASLocalMetadata fetchOAuthClientASLocalMetadata(
-		long oAuthClientASLocalMetadataId) {
-
-		return oAuthClientASLocalMetadataPersistence.
-			fetchByOAuthClientASLocalMetadataId(oAuthClientASLocalMetadataId);
-	}
-
-	@Override
-	public OAuthClientASLocalMetadata fetchOAuthClientASLocalMetadata(
 		long companyId, boolean enabled,
 		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator) {
 

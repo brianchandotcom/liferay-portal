@@ -30,8 +30,8 @@ const test = mergeTests(
 
 const DEFAULT_VIRTUAL_INSTANCE_NAME = 'www.able.com';
 
-const FIRST_SITENAME = `First Site ${getRandomInt()}`;
-const SECOND_SITENAME = `Second Site ${getRandomInt()}`;
+const FIRST_SITE_NAME = `First Site ${getRandomInt()}`;
+const SECOND_SITE_NAME = `Second Site ${getRandomInt()}`;
 
 const SETTING_CATEGORY_KEY = 'Accessibility';
 const SETTING_CONFIGURATION_NAME = 'Accessibility Menu';
@@ -154,7 +154,7 @@ test(
 				);
 
 				[firstSite, secondSite] = await Promise.all(
-					[FIRST_SITENAME, SECOND_SITENAME].map((name) =>
+					[FIRST_SITE_NAME, SECOND_SITE_NAME].map((name) =>
 						apiHelpers.headlessSite.createSite({name})
 					)
 				);

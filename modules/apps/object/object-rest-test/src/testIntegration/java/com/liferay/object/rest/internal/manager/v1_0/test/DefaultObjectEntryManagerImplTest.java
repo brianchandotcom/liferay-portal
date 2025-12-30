@@ -3825,13 +3825,14 @@ public class DefaultObjectEntryManagerImplTest
 
 		_updateObjectEntryVersion(_objectDefinition1, objectEntry1, 2);
 
-		Assert.assertEquals(
-			2,
+		Page<ObjectEntry> page =
 			_defaultObjectEntryManager.getVersionedObjectEntries(
 				dtoConverterContext, objectEntry1.getExternalReferenceCode(),
-				_objectDefinition1, null, null, null
-			).getItems(
-			).size());
+				_objectDefinition1, null, null, null);
+
+		Collection<ObjectEntry> items = page.getItems();
+
+		Assert.assertEquals(items.toString(), 2, items.size());
 
 		AssertUtils.assertFailure(
 			RequiredObjectEntryVersionException.MustNotDeleteLatestVersion.
@@ -3843,13 +3844,13 @@ public class DefaultObjectEntryManagerImplTest
 		_defaultObjectEntryManager.deleteObjectEntryByVersion(
 			_objectDefinition1, objectEntry1.getId(), 1);
 
-		Assert.assertEquals(
-			1,
-			_defaultObjectEntryManager.getVersionedObjectEntries(
-				dtoConverterContext, objectEntry1.getExternalReferenceCode(),
-				_objectDefinition1, null, null, null
-			).getItems(
-			).size());
+		page = _defaultObjectEntryManager.getVersionedObjectEntries(
+			dtoConverterContext, objectEntry1.getExternalReferenceCode(),
+			_objectDefinition1, null, null, null);
+
+		items = page.getItems();
+
+		Assert.assertEquals(items.toString(), 1, items.size());
 
 		// Site scope
 
@@ -3867,13 +3868,13 @@ public class DefaultObjectEntryManagerImplTest
 
 		_updateObjectEntryVersion(_objectDefinition4, objectEntry2, 2);
 
-		Assert.assertEquals(
-			2,
-			_defaultObjectEntryManager.getVersionedObjectEntries(
-				dtoConverterContext, objectEntry2.getExternalReferenceCode(),
-				_objectDefinition4, _group.getGroupKey(), null, null
-			).getItems(
-			).size());
+		page = _defaultObjectEntryManager.getVersionedObjectEntries(
+			dtoConverterContext, objectEntry2.getExternalReferenceCode(),
+			_objectDefinition4, _group.getGroupKey(), null, null);
+
+		items = page.getItems();
+
+		Assert.assertEquals(items.toString(), 2, items.size());
 
 		AssertUtils.assertFailure(
 			RequiredObjectEntryVersionException.MustNotDeleteLatestVersion.
@@ -3887,13 +3888,13 @@ public class DefaultObjectEntryManagerImplTest
 			objectEntry2.getExternalReferenceCode(), _objectDefinition4,
 			_group.getGroupKey(), 1);
 
-		Assert.assertEquals(
-			1,
-			_defaultObjectEntryManager.getVersionedObjectEntries(
-				dtoConverterContext, objectEntry2.getExternalReferenceCode(),
-				_objectDefinition4, _group.getGroupKey(), null, null
-			).getItems(
-			).size());
+		page = _defaultObjectEntryManager.getVersionedObjectEntries(
+			dtoConverterContext, objectEntry2.getExternalReferenceCode(),
+			_objectDefinition4, _group.getGroupKey(), null, null);
+
+		items = page.getItems();
+
+		Assert.assertEquals(items.toString(), 1, items.size());
 
 		// Status in trash
 

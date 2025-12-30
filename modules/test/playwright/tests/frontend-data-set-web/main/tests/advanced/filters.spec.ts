@@ -106,7 +106,7 @@ test(
 					.click();
 			});
 
-			await test.step('Check filters groups visibility', async () => {
+			await test.step('Check grouped FDS filters visibility', async () => {
 				await expect(
 					page.locator('li.dropdown-subheader', {hasText: 'Group 1'})
 				).toBeVisible();
@@ -123,21 +123,21 @@ test(
 				).not.toBeVisible();
 				await expect(
 					page.locator('li.dropdown-subheader', {
-						hasText: 'Group with not registered filter',
+						hasText: 'Group With Unregistered Filter',
 					})
 				).not.toBeVisible();
 			});
 
-			await test.step('Check filters groups order', async () => {
+			await test.step('Check grouped FDS filters order', async () => {
 				const filtersDropdownMenu = page.getByLabel('Filters');
 
-				const filtersGroups = filtersDropdownMenu.getByRole('menu');
+				const groupedFDSFilters = filtersDropdownMenu.getByRole('menu');
 
 				await expect(
-					filtersGroups.locator('li.dropdown-subheader')
+					groupedFDSFilters.locator('li.dropdown-subheader')
 				).toHaveText(['Group 1', 'Group 2', 'Group 3']);
 
-				const group1 = filtersGroups.getByRole('group', {
+				const group1 = groupedFDSFilters.getByRole('group', {
 					name: 'Group 1',
 				});
 
@@ -146,13 +146,13 @@ test(
 					'Color',
 				]);
 
-				const group2 = filtersGroups.getByRole('group', {
+				const group2 = groupedFDSFilters.getByRole('group', {
 					name: 'Group 2',
 				});
 
 				await expect(group2.getByRole('menuitem')).toHaveText(['Size']);
 
-				const group3 = filtersGroups.getByRole('group', {
+				const group3 = groupedFDSFilters.getByRole('group', {
 					name: 'Group 3',
 				});
 

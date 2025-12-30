@@ -34,6 +34,7 @@ export default function UpperToolbar({
 	isView,
 	languageIds,
 	portletNamespace,
+	scope,
 }) {
 	const {
 		active,
@@ -218,14 +219,17 @@ export default function UpperToolbar({
 		} = validXMLDefinition;
 
 		const publishedOrSavedDefinitionResponse =
-			await saveOrPublishDefinitionRequest({
-				active,
-				content: xmlDefinition,
-				name,
-				title: definitionTitle,
-				title_i18n: definitionTitleTranslations,
-				version,
-			});
+			await saveOrPublishDefinitionRequest(
+				{
+					active,
+					content: xmlDefinition,
+					name,
+					title: definitionTitle,
+					title_i18n: definitionTitleTranslations,
+					version,
+				},
+				scope ? scope : {}
+			);
 
 		const publishedOrSavedDefinitionResponseJSON =
 			await publishedOrSavedDefinitionResponse.json();

@@ -55,6 +55,7 @@ import com.liferay.portal.workflow.kaleo.util.comparator.KaleoDefinitionVersionT
 import jakarta.portlet.PortletException;
 import jakarta.portlet.PortletRequest;
 import jakarta.portlet.PortletURL;
+import jakarta.portlet.RenderParameters;
 import jakarta.portlet.RenderRequest;
 
 import java.text.SimpleDateFormat;
@@ -415,6 +416,12 @@ public class KaleoDesignerDisplayContext {
 		}
 
 		return "publish";
+	}
+
+	public String getScope(RenderRequest renderRequest) {
+		RenderParameters renderParameters = renderRequest.getRenderParameters();
+
+		return renderParameters.getValue("scope");
 	}
 
 	public String getScriptManagementConfigurationPortletURL()

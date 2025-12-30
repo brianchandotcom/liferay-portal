@@ -350,123 +350,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testGetSiteSitePagesPageSet();
 	}
 
-	private void _testGetSiteSitePagesPageSet() throws Exception {
-		LayoutTestUtil.addTypeContentLayout(testGroup);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				testGroup.getGroupId(), TestPropsValues.getUserId());
-
-		Layout layout = _layoutLocalService.addLayout(
-			null, serviceContext.getUserId(), testGroup.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			LayoutConstants.TYPE_NODE, false, StringPool.BLANK, serviceContext);
-
-		_layoutLocalService.addLayout(
-			null, serviceContext.getUserId(), testGroup.getGroupId(), false,
-			layout.getLayoutId(), RandomTestUtil.randomString(),
-			StringPool.BLANK, StringPool.BLANK, LayoutConstants.TYPE_PORTLET,
-			false, StringPool.BLANK, serviceContext);
-
-		Page<SitePage> sitePagePage = sitePageResource.getSiteSitePagesPage(
-			testGroup.getGroupId(), null, null, null, null, null);
-
-		List<String> pageTypes = TransformUtil.transform(
-			sitePagePage.getItems(), SitePage::getPageType);
-
-		Assert.assertTrue(pageTypes.contains("Page Set"));
-	}
-
-	private void _testGetSiteSitePageWithLocalization() throws Exception {
-		User user = testCompany.getGuestUser();
-
-		String originalLanguageId = user.getLanguageId();
-
-		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
-			testCompany.getCompanyId());
-
-		String originalLanguageIds = portletPreferences.getValue(
-			PropsKeys.LOCALES,
-			StringUtil.merge(
-				LocaleUtil.toLanguageIds(
-					LanguageUtil.getCompanyAvailableLocales(
-						testCompany.getCompanyId())),
-				StringPool.COMMA));
-
-		Locale originalDefaultLocale = LocaleUtil.getDefault();
-		Locale originalSiteDefaultLocale =
-			LocaleThreadLocal.getSiteDefaultLocale();
-
-		try {
-			_companyLocalService.updateDisplay(
-				testCompany.getCompanyId(),
-				LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
-				user.getTimeZoneId());
-
-			_companyLocalService.updatePreferences(
-				testCompany.getCompanyId(),
-				UnicodePropertiesBuilder.put(
-					PropsKeys.LOCALES,
-					StringUtil.merge(
-						LocaleUtil.toLanguageIds(
-							new Locale[] {
-								LocaleUtil.SPAIN, LocaleUtil.UK, LocaleUtil.US
-							}),
-						StringPool.COMMA)
-				).build());
-
-			LocaleUtil.setDefault(
-				LocaleUtil.SPAIN.getLanguage(), LocaleUtil.SPAIN.getCountry(),
-				LocaleUtil.SPAIN.getVariant());
-
-			testGroup = GroupTestUtil.updateDisplaySettings(
-				testGroup.getGroupId(),
-				ListUtil.fromArray(
-					LocaleUtil.SPAIN, LocaleUtil.UK, LocaleUtil.US),
-				LocaleUtil.US);
-
-			LocaleThreadLocal.setSiteDefaultLocale(LocaleUtil.US);
-
-			Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
-
-			String esURLTitle = StringUtil.toLowerCase(
-				RandomTestUtil.randomString(
-					LayoutFriendlyURLRandomizerBumper.INSTANCE));
-			String usURLTitle = StringUtil.toLowerCase(
-				RandomTestUtil.randomString(
-					LayoutFriendlyURLRandomizerBumper.INSTANCE));
-
-			LayoutTestUtil.updateFriendlyURL(
-				layout,
-				HashMapBuilder.put(
-					LocaleUtil.SPAIN, StringPool.FORWARD_SLASH + esURLTitle
-				).put(
-					LocaleUtil.US, StringPool.FORWARD_SLASH + usURLTitle
-				).build());
-
-			_testGetSiteSitePageWithLocalization(esURLTitle, LocaleUtil.SPAIN);
-
-			_testGetSiteSitePageWithLocalization(usURLTitle, LocaleUtil.UK);
-			_testGetSiteSitePageWithLocalization(usURLTitle, LocaleUtil.US);
-		}
-		finally {
-			_companyLocalService.updateDisplay(
-				testCompany.getCompanyId(), originalLanguageId,
-				user.getTimeZoneId());
-			_companyLocalService.updatePreferences(
-				testCompany.getCompanyId(),
-				UnicodePropertiesBuilder.put(
-					PropsKeys.LOCALES, originalLanguageIds
-				).build());
-			LocaleUtil.setDefault(
-				originalDefaultLocale.getLanguage(),
-				originalDefaultLocale.getCountry(),
-				originalDefaultLocale.getVariant());
-			LocaleThreadLocal.setSiteDefaultLocale(originalSiteDefaultLocale);
-		}
-	}
-
 	@Ignore
 	@Override
 	@Test
@@ -790,6 +673,123 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		).user(
 			UserTestUtil.getAdminUser(testCompany.getCompanyId())
 		).build();
+	}
+
+	private void _testGetSiteSitePagesPageSet() throws Exception {
+		LayoutTestUtil.addTypeContentLayout(testGroup);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				testGroup.getGroupId(), TestPropsValues.getUserId());
+
+		Layout layout = _layoutLocalService.addLayout(
+			null, serviceContext.getUserId(), testGroup.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			LayoutConstants.TYPE_NODE, false, StringPool.BLANK, serviceContext);
+
+		_layoutLocalService.addLayout(
+			null, serviceContext.getUserId(), testGroup.getGroupId(), false,
+			layout.getLayoutId(), RandomTestUtil.randomString(),
+			StringPool.BLANK, StringPool.BLANK, LayoutConstants.TYPE_PORTLET,
+			false, StringPool.BLANK, serviceContext);
+
+		Page<SitePage> sitePagePage = sitePageResource.getSiteSitePagesPage(
+			testGroup.getGroupId(), null, null, null, null, null);
+
+		List<String> pageTypes = TransformUtil.transform(
+			sitePagePage.getItems(), SitePage::getPageType);
+
+		Assert.assertTrue(pageTypes.contains("Page Set"));
+	}
+
+	private void _testGetSiteSitePageWithLocalization() throws Exception {
+		User user = testCompany.getGuestUser();
+
+		String originalLanguageId = user.getLanguageId();
+
+		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
+			testCompany.getCompanyId());
+
+		String originalLanguageIds = portletPreferences.getValue(
+			PropsKeys.LOCALES,
+			StringUtil.merge(
+				LocaleUtil.toLanguageIds(
+					LanguageUtil.getCompanyAvailableLocales(
+						testCompany.getCompanyId())),
+				StringPool.COMMA));
+
+		Locale originalDefaultLocale = LocaleUtil.getDefault();
+		Locale originalSiteDefaultLocale =
+			LocaleThreadLocal.getSiteDefaultLocale();
+
+		try {
+			_companyLocalService.updateDisplay(
+				testCompany.getCompanyId(),
+				LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
+				user.getTimeZoneId());
+
+			_companyLocalService.updatePreferences(
+				testCompany.getCompanyId(),
+				UnicodePropertiesBuilder.put(
+					PropsKeys.LOCALES,
+					StringUtil.merge(
+						LocaleUtil.toLanguageIds(
+							new Locale[] {
+								LocaleUtil.SPAIN, LocaleUtil.UK, LocaleUtil.US
+							}),
+						StringPool.COMMA)
+				).build());
+
+			LocaleUtil.setDefault(
+				LocaleUtil.SPAIN.getLanguage(), LocaleUtil.SPAIN.getCountry(),
+				LocaleUtil.SPAIN.getVariant());
+
+			testGroup = GroupTestUtil.updateDisplaySettings(
+				testGroup.getGroupId(),
+				ListUtil.fromArray(
+					LocaleUtil.SPAIN, LocaleUtil.UK, LocaleUtil.US),
+				LocaleUtil.US);
+
+			LocaleThreadLocal.setSiteDefaultLocale(LocaleUtil.US);
+
+			Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
+
+			String esURLTitle = StringUtil.toLowerCase(
+				RandomTestUtil.randomString(
+					LayoutFriendlyURLRandomizerBumper.INSTANCE));
+			String usURLTitle = StringUtil.toLowerCase(
+				RandomTestUtil.randomString(
+					LayoutFriendlyURLRandomizerBumper.INSTANCE));
+
+			LayoutTestUtil.updateFriendlyURL(
+				layout,
+				HashMapBuilder.put(
+					LocaleUtil.SPAIN, StringPool.FORWARD_SLASH + esURLTitle
+				).put(
+					LocaleUtil.US, StringPool.FORWARD_SLASH + usURLTitle
+				).build());
+
+			_testGetSiteSitePageWithLocalization(esURLTitle, LocaleUtil.SPAIN);
+
+			_testGetSiteSitePageWithLocalization(usURLTitle, LocaleUtil.UK);
+			_testGetSiteSitePageWithLocalization(usURLTitle, LocaleUtil.US);
+		}
+		finally {
+			_companyLocalService.updateDisplay(
+				testCompany.getCompanyId(), originalLanguageId,
+				user.getTimeZoneId());
+			_companyLocalService.updatePreferences(
+				testCompany.getCompanyId(),
+				UnicodePropertiesBuilder.put(
+					PropsKeys.LOCALES, originalLanguageIds
+				).build());
+			LocaleUtil.setDefault(
+				originalDefaultLocale.getLanguage(),
+				originalDefaultLocale.getCountry(),
+				originalDefaultLocale.getVariant());
+			LocaleThreadLocal.setSiteDefaultLocale(originalSiteDefaultLocale);
+		}
 	}
 
 	private void _testGetSiteSitePageWithLocalization(

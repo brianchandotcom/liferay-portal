@@ -19,11 +19,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.model.bag.ObjectFieldBag;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
-import com.liferay.object.service.ObjectEntryLocalService;
-import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -68,22 +64,12 @@ public class ObjectEntryModelDocumentContributor
 	public ObjectEntryModelDocumentContributor(
 		AccountEntryOrganizationRelLocalService
 			accountEntryOrganizationRelLocalService,
-		String className,
-		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryFolderLocalService objectEntryFolderLocalService,
-		ObjectEntryLocalService objectEntryLocalService,
-		ObjectFieldLocalService objectFieldLocalService,
-		ObjectFolderLocalService objectFolderLocalService,
 		TextEmbeddingDocumentContributor textEmbeddingDocumentContributor) {
 
 		_accountEntryOrganizationRelLocalService =
 			accountEntryOrganizationRelLocalService;
-		_className = className;
-		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryFolderLocalService = objectEntryFolderLocalService;
-		_objectEntryLocalService = objectEntryLocalService;
-		_objectFieldLocalService = objectFieldLocalService;
-		_objectFolderLocalService = objectFolderLocalService;
 		_textEmbeddingDocumentContributor = textEmbeddingDocumentContributor;
 	}
 
@@ -390,8 +376,7 @@ public class ObjectEntryModelDocumentContributor
 		document.add(
 			new Field("objectEntryTitle", objectEntry.getTitleValue()));
 
-		ObjectFolder objectFolder = _objectFolderLocalService.getObjectFolder(
-			objectDefinition.getObjectFolderId());
+		ObjectFolder objectFolder = objectDefinition.getObjectFolder();
 
 		document.addKeyword(
 			"objectFolderExternalReferenceCode",
@@ -558,12 +543,7 @@ public class ObjectEntryModelDocumentContributor
 
 	private final AccountEntryOrganizationRelLocalService
 		_accountEntryOrganizationRelLocalService;
-	private final String _className;
-	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryFolderLocalService _objectEntryFolderLocalService;
-	private final ObjectEntryLocalService _objectEntryLocalService;
-	private final ObjectFieldLocalService _objectFieldLocalService;
-	private final ObjectFolderLocalService _objectFolderLocalService;
 	private final TextEmbeddingDocumentContributor
 		_textEmbeddingDocumentContributor;
 

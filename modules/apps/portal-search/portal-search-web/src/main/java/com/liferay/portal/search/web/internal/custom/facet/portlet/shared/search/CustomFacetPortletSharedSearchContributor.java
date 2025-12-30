@@ -327,6 +327,8 @@ public class CustomFacetPortletSharedSearchContributor
 				filterValue
 			).frequencyThreshold(
 				customFacetPortletPreferences.getFrequencyThreshold()
+			).maxTerms(
+				customFacetPortletPreferences.getMaxTerms()
 			).path(
 				path
 			).selectedValues(

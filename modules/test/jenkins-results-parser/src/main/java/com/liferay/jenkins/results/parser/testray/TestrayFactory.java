@@ -282,6 +282,14 @@ public class TestrayFactory {
 	}
 
 	public static TestrayRun newTestrayRun(
+		TestrayBuild testrayBuild, AxisTestClassGroup axisTestClassGroup,
+		List<File> propertiesFiles) {
+
+		return new TestrayRun(
+			testrayBuild, axisTestClassGroup, propertiesFiles);
+	}
+
+	public static TestrayRun newTestrayRun(
 		TestrayBuild testrayBuild, JSONObject jsonObject) {
 
 		return new TestrayRun(testrayBuild, jsonObject);

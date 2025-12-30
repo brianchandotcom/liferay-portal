@@ -65,11 +65,13 @@ export default function StructureSettings() {
 				error={errors.get('label')}
 				formGroupClassName="ml-n3"
 				onSave={(translations) => {
-					dispatch({
-						label: translations,
-						objectDefinitions,
-						type: 'update-structure',
-					});
+					if (Object.keys(translations).length) {
+						dispatch({
+							label: translations,
+							objectDefinitions,
+							type: 'update-structure',
+						});
+					}
 				}}
 				placeholder={Liferay.Language.get('content-structure-label')}
 				required

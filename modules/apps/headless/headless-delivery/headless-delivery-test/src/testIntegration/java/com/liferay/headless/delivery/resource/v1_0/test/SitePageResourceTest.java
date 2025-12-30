@@ -103,6 +103,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
@@ -393,6 +394,10 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 						testCompany.getCompanyId())),
 				StringPool.COMMA));
 
+		Locale originalDefaultLocale = LocaleUtil.getDefault();
+		Locale originalSiteDefaultLocale =
+			LocaleThreadLocal.getSiteDefaultLocale();
+
 		try {
 			_companyLocalService.updateDisplay(
 				testCompany.getCompanyId(),
@@ -411,11 +416,17 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 						StringPool.COMMA)
 				).build());
 
+			LocaleUtil.setDefault(
+				LocaleUtil.SPAIN.getLanguage(), LocaleUtil.SPAIN.getCountry(),
+				LocaleUtil.SPAIN.getVariant());
+
 			testGroup = GroupTestUtil.updateDisplaySettings(
 				testGroup.getGroupId(),
 				ListUtil.fromArray(
 					LocaleUtil.SPAIN, LocaleUtil.UK, LocaleUtil.US),
 				LocaleUtil.US);
+
+			LocaleThreadLocal.setSiteDefaultLocale(LocaleUtil.US);
 
 			Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
 
@@ -448,6 +459,11 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				UnicodePropertiesBuilder.put(
 					PropsKeys.LOCALES, originalLanguageIds
 				).build());
+			LocaleUtil.setDefault(
+				originalDefaultLocale.getLanguage(),
+				originalDefaultLocale.getCountry(),
+				originalDefaultLocale.getVariant());
+			LocaleThreadLocal.setSiteDefaultLocale(originalSiteDefaultLocale);
 		}
 	}
 

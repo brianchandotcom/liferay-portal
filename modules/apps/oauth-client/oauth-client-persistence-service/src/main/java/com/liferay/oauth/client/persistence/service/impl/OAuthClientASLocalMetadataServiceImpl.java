@@ -111,9 +111,8 @@ public class OAuthClientASLocalMetadataServiceImpl
 		throws PortalException {
 
 		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
-			oAuthClientASLocalMetadataPersistence.
-				fetchByOAuthClientASLocalMetadataId(
-					oAuthClientASLocalMetadataId);
+			oAuthClientASLocalMetadataPersistence.fetchByPrimaryKey(
+				oAuthClientASLocalMetadataId);
 
 		if (oAuthClientASLocalMetadata != null) {
 			_oAuthClientASLocalMetadataModelResourcePermission.check(
@@ -232,9 +231,8 @@ public class OAuthClientASLocalMetadataServiceImpl
 
 		_oAuthClientASLocalMetadataModelResourcePermission.check(
 			getPermissionChecker(),
-			oAuthClientASLocalMetadataPersistence.
-				findByOAuthClientASLocalMetadataId(
-					oAuthClientASLocalMetadataId),
+			oAuthClientASLocalMetadataPersistence.findByPrimaryKey(
+				oAuthClientASLocalMetadataId),
 			ActionKeys.UPDATE);
 
 		return oAuthClientASLocalMetadataLocalService.

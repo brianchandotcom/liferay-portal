@@ -56,15 +56,9 @@ public class CommercePaymentEntryAuditTypeRegistryImpl
 	public List<CommercePaymentEntryAuditType>
 		getCommercePaymentEntryAuditTypes() {
 
-		List
-			<ServiceTrackerCustomizerFactory.ServiceWrapper
-				<CommercePaymentEntryAuditType>>
-					commercePaymentEntryAuditTypeServiceWrappers =
-						ListUtil.fromCollection(_serviceTrackerMap.values());
-
 		return Collections.unmodifiableList(
 			TransformUtil.transform(
-				commercePaymentEntryAuditTypeServiceWrappers,
+				ListUtil.fromCollection(_serviceTrackerMap.values()),
 				commerceDiscountRuleTypeServiceWrapper ->
 					commerceDiscountRuleTypeServiceWrapper.getService()));
 	}

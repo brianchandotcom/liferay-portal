@@ -204,6 +204,8 @@ public class JournalArticleDDMFormConverterTest {
 		Assert.assertEquals(
 			"Test Content", _getValue(ddmFormValues.getDDMFormFieldValues()));
 
+		String content = journalArticle.getContent();
+
 		DataDefinition updatedDataDefinition = DataDefinition.toDTO(
 			_readFileToString("dependencies/data_definition.json"));
 
@@ -213,7 +215,7 @@ public class JournalArticleDDMFormConverterTest {
 		journalArticle = _journalArticleLocalService.updateArticle(
 			journalArticle.getUserId(), journalArticle.getGroupId(),
 			journalArticle.getFolderId(), journalArticle.getArticleId(),
-			journalArticle.getVersion(), journalArticle.getContent(),
+			journalArticle.getVersion(), content,
 			ServiceContextTestUtil.getServiceContext());
 
 		ddmFormValues = journalArticle.getDDMFormValues();

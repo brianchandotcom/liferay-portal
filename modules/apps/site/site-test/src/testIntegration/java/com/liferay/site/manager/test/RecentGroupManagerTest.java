@@ -136,6 +136,7 @@ public class RecentGroupManagerTest {
 		themeDisplay.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
 		themeDisplay.setSignedIn(true);
+		themeDisplay.setUser(TestPropsValues.getUser());
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);

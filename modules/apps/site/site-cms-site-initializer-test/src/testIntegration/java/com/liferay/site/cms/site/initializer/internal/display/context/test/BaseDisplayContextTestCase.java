@@ -17,6 +17,7 @@ import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -159,8 +160,12 @@ public abstract class BaseDisplayContextTestCase {
 		themeDisplay.setCompany(
 			companyLocalService.getCompany(TestPropsValues.getCompanyId()));
 		themeDisplay.setLanguageId(group.getDefaultLanguageId());
-		themeDisplay.setLayout(
-			LayoutTestUtil.addTypeContentLayout(group, "test"));
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(group, "test");
+
+		themeDisplay.setLayout(layout);
+		themeDisplay.setLayoutSet(layout.getLayoutSet());
+
 		themeDisplay.setLocale(LocaleUtil.getDefault());
 		themeDisplay.setPathMain(portal.getPathMain());
 		themeDisplay.setPermissionChecker(

@@ -755,25 +755,30 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 			Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
 
-			String esURLTitle = StringUtil.toLowerCase(
-				RandomTestUtil.randomString(
-					LayoutFriendlyURLRandomizerBumper.INSTANCE));
-			String usURLTitle = StringUtil.toLowerCase(
-				RandomTestUtil.randomString(
-					LayoutFriendlyURLRandomizerBumper.INSTANCE));
+			String esFriendlyURL =
+				StringPool.FORWARD_SLASH +
+					StringUtil.toLowerCase(
+						RandomTestUtil.randomString(
+							LayoutFriendlyURLRandomizerBumper.INSTANCE));
+			String usFriendlyURL =
+				StringPool.FORWARD_SLASH +
+					StringUtil.toLowerCase(
+						RandomTestUtil.randomString(
+							LayoutFriendlyURLRandomizerBumper.INSTANCE));
 
 			LayoutTestUtil.updateFriendlyURL(
 				layout,
 				HashMapBuilder.put(
-					LocaleUtil.SPAIN, StringPool.FORWARD_SLASH + esURLTitle
+					LocaleUtil.SPAIN, esFriendlyURL
 				).put(
-					LocaleUtil.US, StringPool.FORWARD_SLASH + usURLTitle
+					LocaleUtil.US, usFriendlyURL
 				).build());
 
-			_testGetSiteSitePageWithLocalization(esURLTitle, LocaleUtil.SPAIN);
+			_testGetSiteSitePageWithLocalization(
+				esFriendlyURL, LocaleUtil.SPAIN);
 
-			_testGetSiteSitePageWithLocalization(usURLTitle, LocaleUtil.UK);
-			_testGetSiteSitePageWithLocalization(usURLTitle, LocaleUtil.US);
+			_testGetSiteSitePageWithLocalization(usFriendlyURL, LocaleUtil.UK);
+			_testGetSiteSitePageWithLocalization(usFriendlyURL, LocaleUtil.US);
 		}
 		finally {
 			_companyLocalService.updateDisplay(
@@ -808,9 +813,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		SitePage sitePage = localizedSitePageResource.getSiteSitePage(
 			testGroup.getGroupId(), friendlyUrlPath);
 
-		Assert.assertEquals(
-			StringPool.FORWARD_SLASH + friendlyUrlPath,
-			sitePage.getFriendlyUrlPath());
+		Assert.assertEquals(friendlyUrlPath, sitePage.getFriendlyUrlPath());
 	}
 
 	private void _testGetSiteSitePageWithoutPermissions() throws Exception {

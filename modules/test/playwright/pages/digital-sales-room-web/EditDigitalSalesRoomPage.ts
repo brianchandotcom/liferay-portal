@@ -3,13 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page, expect} from '@playwright/test';
+import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
 import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
 
 export class EditDigitalSalesRoomPage {
 	readonly bannerImage: Locator;
+	readonly cancelButton: Locator;
 	readonly clientLogoButton: Locator;
 	readonly clientNameInput: Locator;
 	readonly nextButton: Locator;
@@ -21,11 +22,16 @@ export class EditDigitalSalesRoomPage {
 	readonly selectAccountInput: Locator;
 	readonly selectChannelInput: Locator;
 	readonly selectOption: (value: string) => Locator;
+	readonly templatePreviewFrame: FrameLocator;
 	readonly usersEmailAddressesGridCell: (email: string) => Locator;
 	readonly usersEmailAddressesInput: Locator;
 
 	constructor(page: Page) {
 		this.bannerImage = page.getByTestId('bannerImage');
+		this.cancelButton = page.getByRole('button', {
+			exact: true,
+			name: 'Cancel',
+		});
 		this.clientLogoButton = page.getByTestId('clientLogoButton');
 		this.clientNameInput = page.getByLabel('Client Name');
 		this.nextButton = page.getByRole('button', {name: 'Next'});
@@ -42,6 +48,9 @@ export class EditDigitalSalesRoomPage {
 		});
 		this.selectOption = (value: string) =>
 			page.getByRole('option', {name: value});
+		this.templatePreviewFrame = page
+			.getByLabel('Create New Digital Sales Room')
+			.frameLocator('iframe');
 		this.usersEmailAddressesGridCell = (email: string) =>
 			page.getByRole('gridcell', {exact: true, name: email});
 		this.usersEmailAddressesInput = page.getByTestId('emailAddressesInput');

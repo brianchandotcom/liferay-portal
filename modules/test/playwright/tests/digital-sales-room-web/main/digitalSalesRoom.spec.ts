@@ -246,3 +246,92 @@ test(
 		).toBeVisible();
 	}
 );
+
+test(
+	'Create a digital sales room from template',
+	{tag: '@LPD-73189'},
+	async ({
+		digitalSalesRoomTemplatesPage,
+		digitalSalesRoomsPage,
+		editDigitalSalesRoomPage,
+		editDigitalSalesRoomTemplatePage,
+		page,
+	}) => {
+		const name = `A${getRandomInt()}`;
+
+		await digitalSalesRoomsPage.goto();
+		await digitalSalesRoomsPage.templateLink.click();
+
+		await expect(async () => {
+			await digitalSalesRoomTemplatesPage.newDigitalSalesRoomTemplateButton.click();
+
+			await expect(
+				editDigitalSalesRoomTemplatePage.nameInput
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
+		await editDigitalSalesRoomTemplatePage.addDigitalSalesRoomTemplate({
+			name,
+			primaryColor: 'red',
+		});
+
+		const roomName = `A${getRandomInt()}`;
+
+		await digitalSalesRoomsPage.goto();
+
+		await expect(
+			digitalSalesRoomsPage.digitalSalesRoomsTable.searchInput
+		).toBeVisible();
+
+		await expect(async () => {
+			await digitalSalesRoomsPage.digitalSalesRoomsTable.newButton.click();
+
+			await expect(
+				digitalSalesRoomsPage.startFromScratchButton
+			).toBeVisible({timeout: 200});
+		}).toPass({timeout: 2000});
+
+		await digitalSalesRoomsPage.startFromScratchButton.click();
+
+		await expect(editDigitalSalesRoomPage.clientNameInput).toBeVisible();
+
+		await editDigitalSalesRoomPage.cancelButton.click();
+
+		await expect(async () => {
+			await digitalSalesRoomsPage.digitalSalesRoomsTable.newButton.click();
+
+			await expect(
+				digitalSalesRoomsPage.startFromTemplateButton
+			).toBeVisible({timeout: 200});
+		}).toPass({timeout: 2000});
+
+		await digitalSalesRoomsPage.startFromTemplateButton.click();
+
+		await page.getByText(name).click();
+
+		await expect(
+			editDigitalSalesRoomPage.templatePreviewFrame.getByRole(
+				'menuitem',
+				{name: 'Onboarding'}
+			)
+		).toBeVisible();
+
+		await editDigitalSalesRoomPage.nextButton.click();
+
+		await expect(editDigitalSalesRoomPage.clientNameInput).toBeVisible();
+		await expect(editDigitalSalesRoomPage.primaryColorInput).toHaveValue(
+			'red'
+		);
+
+		await editDigitalSalesRoomPage.addDigitalSalesRoom({
+			primaryColor: 'red',
+			roomName,
+		});
+
+		await digitalSalesRoomsPage.goto();
+
+		await expect(
+			digitalSalesRoomsPage.digitalSalesRoomsTable.cell(roomName)
+		).toBeVisible();
+	}
+);

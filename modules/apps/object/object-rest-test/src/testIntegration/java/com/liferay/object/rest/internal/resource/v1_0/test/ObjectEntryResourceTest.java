@@ -5993,7 +5993,7 @@ public class ObjectEntryResourceTest {
 		}
 	}
 
-	@FeatureFlag("LPD-69419")
+	@FeatureFlag("LPD-43996")
 	@Test
 	public void testGetObjectEntriesPageWithComments() throws Exception {
 
@@ -10672,7 +10672,7 @@ public class ObjectEntryResourceTest {
 				_objectDefinition1.getRESTContextPath(), Http.Method.POST));
 	}
 
-	@FeatureFlag("LPD-69419")
+	@FeatureFlag("LPD-43996")
 	@Test
 	public void testPostObjectEntriesWithComments() throws Exception {
 

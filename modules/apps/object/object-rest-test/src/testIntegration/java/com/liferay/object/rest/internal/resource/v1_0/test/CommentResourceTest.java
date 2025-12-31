@@ -46,7 +46,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Guilherme Camacho
  */
-@FeatureFlag("LPD-69419")
+@FeatureFlag("LPD-43996")
 @RunWith(Arquillian.class)
 public class CommentResourceTest {
 
@@ -99,7 +99,7 @@ public class CommentResourceTest {
 			_siteScopedObjectDefinition);
 	}
 
-	@FeatureFlag("LPD-69419")
+	@FeatureFlag("LPD-43996")
 	@Test
 	public void testDeleteByExternalReferenceCodeComment() throws Exception {
 
@@ -114,7 +114,7 @@ public class CommentResourceTest {
 			_testGroupId, _siteScopedObjectDefinition, _siteObjectEntry);
 	}
 
-	@FeatureFlag("LPD-69419")
+	@FeatureFlag("LPD-43996")
 	@Test
 	public void testGetByExternalReferenceCodeComment() throws Exception {
 
@@ -129,7 +129,7 @@ public class CommentResourceTest {
 			_testGroupId, _siteScopedObjectDefinition, _siteObjectEntry);
 	}
 
-	@FeatureFlag("LPD-69419")
+	@FeatureFlag("LPD-43996")
 	@Test
 	public void testGetByExternalReferenceCodeCommentChildCommentsPage()
 		throws Exception {
@@ -145,7 +145,7 @@ public class CommentResourceTest {
 			_testGroupId, _siteScopedObjectDefinition, _siteObjectEntry);
 	}
 
-	@FeatureFlag("LPD-69419")
+	@FeatureFlag("LPD-43996")
 	@Test
 	public void testGetByExternalReferenceCodeCommentsPage() throws Exception {
 
@@ -160,7 +160,7 @@ public class CommentResourceTest {
 			_testGroupId, _siteScopedObjectDefinition, _siteObjectEntry);
 	}
 
-	@FeatureFlag("LPD-69419")
+	@FeatureFlag("LPD-43996")
 	@Test
 	public void testPostByExternalReferenceCodeComment() throws Exception {
 
@@ -175,7 +175,7 @@ public class CommentResourceTest {
 			_testGroupId, _siteScopedObjectDefinition, _siteObjectEntry);
 	}
 
-	@FeatureFlag("LPD-69419")
+	@FeatureFlag("LPD-43996")
 	@Test
 	public void testPostByExternalReferenceCodeCommentReplyComment()
 		throws Exception {
@@ -191,7 +191,7 @@ public class CommentResourceTest {
 			_testGroupId, _siteScopedObjectDefinition, _siteObjectEntry);
 	}
 
-	@FeatureFlag("LPD-69419")
+	@FeatureFlag("LPD-43996")
 	@Test
 	public void testPutByExternalReferenceCodeComment() throws Exception {
 

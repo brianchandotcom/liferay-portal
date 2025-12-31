@@ -89,7 +89,7 @@ export function ConfigurationContainer({
 					disabled={disabled}
 					label={sub(
 						Liferay.Language.get('enable-x'),
-						Liferay.FeatureFlags['LPD-69419']
+						Liferay.FeatureFlags['LPD-43996']
 							? Liferay.Language.get('comments')
 							: Liferay.Language.get('comments-in-page-builder')
 					)}
@@ -109,7 +109,7 @@ export function ConfigurationContainer({
 					toggled={values.enableComments}
 				/>
 
-				{Liferay.FeatureFlags['LPD-69419'] && (
+				{Liferay.FeatureFlags['LPD-43996'] && (
 					<>
 						&nbsp;
 						<ClayTooltipProvider>

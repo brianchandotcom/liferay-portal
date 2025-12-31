@@ -1383,7 +1383,7 @@ public class ObjectEntryDTOConverter
 			"comments",
 			nestedFieldNames -> {
 				if (!FeatureFlagManagerUtil.isEnabled(
-						objectDefinition.getCompanyId(), "LPD-69419") ||
+						objectDefinition.getCompanyId(), "LPD-43996") ||
 					!objectDefinition.isEnableComments() ||
 					!_discussionPermission.hasViewPermission(
 						PermissionThreadLocal.getPermissionChecker(),

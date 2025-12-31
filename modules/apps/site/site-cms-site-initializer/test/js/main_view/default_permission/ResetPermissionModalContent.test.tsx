@@ -58,6 +58,9 @@ describe('ResetPermissionModalContent', () => {
 		expect(openModal).toHaveBeenCalledTimes(1);
 
 		const modalConfig = (openModal as jest.Mock).mock.calls[0][0];
+
+		expect(modalConfig.containerProps.className).toBe('');
+
 		const confirmButton = modalConfig.buttons.find(
 			(button: any) => button.label === 'confirm'
 		);

@@ -207,17 +207,7 @@ components:
                                 $ref: "#/components/schemas/CollectionDisplayViewport"
                             type: array
                         collectionSettings:
-                            properties:
-                                collectionConfig:
-                                    additionalProperties:
-                                        type: object
-                                    # @review
-                                    description:
-                                        The configuration keys and values of the collection.
-                                    type: object
-                                collectionReference:
-                                    $ref: "#/components/schemas/CollectionReference"
-                            type: object
+                            $ref: "#/components/schemas/CollectionSettings"
                         displayAllItems:
                             # @review
                             description:
@@ -354,6 +344,18 @@ components:
                         The collection's type (Collection, CollectionProvider).
                     enum: [Collection, CollectionProvider]
                     type: string
+            type: object
+        CollectionSettings:
+            properties:
+                collectionConfig:
+                    additionalProperties:
+                        type: object
+                    # @review
+                    description:
+                        The configuration keys and values of the collection.
+                    type: object
+                collectionReference:
+                    $ref: "#/components/schemas/CollectionReference"
             type: object
         ColorPaletteFragmentConfigurationFieldValue:
             allOf:

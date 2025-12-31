@@ -41,6 +41,7 @@ import com.liferay.headless.admin.site.resource.v1_0.test.util.PageSpecification
 import com.liferay.headless.admin.site.resource.v1_0.test.util.SettingsTestUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
+import com.liferay.layout.test.util.LayoutFriendlyURLRandomizerBumper;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeTriConsumer;
@@ -996,6 +997,14 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		return pageSettings;
 	}
 
+	private String _getRandomFriendlyURL() {
+		String urlTitle = StringUtil.toLowerCase(
+			RandomTestUtil.randomString(
+				LayoutFriendlyURLRandomizerBumper.INSTANCE));
+
+		return StringPool.FORWARD_SLASH + urlTitle;
+	}
+
 	private SitePage _getRandomSitePage(
 			ServiceContext serviceContext, SitePage.Type type)
 		throws Exception {
@@ -1028,12 +1037,10 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		sitePage.setFriendlyUrlPath_i18n(
 			() -> HashMapBuilder.put(
 				LocaleUtil.toBCP47LanguageId(LocaleUtil.SPAIN),
-				StringPool.FORWARD_SLASH +
-					StringUtil.toLowerCase(RandomTestUtil.randomString())
+				_getRandomFriendlyURL()
 			).put(
 				LocaleUtil.toBCP47LanguageId(LocaleUtil.US),
-				StringPool.FORWARD_SLASH +
-					StringUtil.toLowerCase(RandomTestUtil.randomString())
+				_getRandomFriendlyURL()
 			).build());
 		sitePage.setKeywords(AssetTestUtil.randomKeywords(serviceContext));
 		sitePage.setName_i18n(
@@ -1381,12 +1388,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		Map<String, String> newFriendlyURLsMap = HashMapBuilder.put(
 			LocaleUtil.toBCP47LanguageId(LocaleUtil.SPAIN),
-			StringPool.FORWARD_SLASH +
-				StringUtil.toLowerCase(RandomTestUtil.randomString())
+			_getRandomFriendlyURL()
 		).put(
-			LocaleUtil.toBCP47LanguageId(LocaleUtil.US),
-			StringPool.FORWARD_SLASH +
-				StringUtil.toLowerCase(RandomTestUtil.randomString())
+			LocaleUtil.toBCP47LanguageId(LocaleUtil.US), _getRandomFriendlyURL()
 		).build();
 
 		sitePage.setFriendlyUrlPath_i18n(() -> newFriendlyURLsMap);
@@ -2201,6 +2205,30 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		Assert.assertTrue(
 			MapUtil.isNotEmpty(importedSitePage.getFriendlyUrlPath_i18n()));
+
+		String friendlyURL = _getRandomFriendlyURL();
+
+		Layout importedLayout = LayoutTestUtil.updateFriendlyURL(
+			_layoutLocalService.fetchLayoutByExternalReferenceCode(
+				layout.getExternalReferenceCode(), testGroup.getGroupId()),
+			HashMapBuilder.put(
+				LocaleUtil.US, friendlyURL
+			).build());
+
+		Assert.assertEquals(
+			friendlyURL, importedLayout.getFriendlyURL(LocaleUtil.US));
+
+		importedSitePage = sitePageResource.putSiteSitePage(
+			testGroup.getExternalReferenceCode(),
+			importedLayout.getExternalReferenceCode(), sitePage);
+
+		Map<String, String> friendlyUrlPathI18n =
+			importedSitePage.getFriendlyUrlPath_i18n();
+
+		Assert.assertEquals(
+			friendlyURL,
+			friendlyUrlPathI18n.get(
+				LocaleUtil.toBCP47LanguageId(LocaleUtil.US)));
 	}
 
 	private void _testPutSiteSitePageWithPageElements() throws Exception {

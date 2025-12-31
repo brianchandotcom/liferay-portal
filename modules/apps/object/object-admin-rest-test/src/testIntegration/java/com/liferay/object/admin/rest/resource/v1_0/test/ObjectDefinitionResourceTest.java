@@ -824,7 +824,6 @@ public class ObjectDefinitionResourceTest
 		Assert.assertEquals(
 			postObjectDefinition.getObjectFolderExternalReferenceCode(),
 			randomObjectDefinition.getObjectFolderExternalReferenceCode());
-
 		Assert.assertNotNull(
 			_objectFolderLocalService.fetchObjectFolderByExternalReferenceCode(
 				postObjectDefinition.getObjectFolderExternalReferenceCode(),

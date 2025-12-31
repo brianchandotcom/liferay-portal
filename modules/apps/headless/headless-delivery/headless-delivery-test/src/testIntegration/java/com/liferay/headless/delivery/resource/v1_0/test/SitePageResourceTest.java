@@ -773,10 +773,12 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				).build());
 
 			_testGetSiteSitePageWithLocalization(
-				esFriendlyURL, LocaleUtil.SPAIN);
+				esFriendlyURL, layout.getPlid(), LocaleUtil.SPAIN);
 
-			_testGetSiteSitePageWithLocalization(usFriendlyURL, LocaleUtil.UK);
-			_testGetSiteSitePageWithLocalization(usFriendlyURL, LocaleUtil.US);
+			_testGetSiteSitePageWithLocalization(
+				usFriendlyURL, layout.getPlid(), LocaleUtil.UK);
+			_testGetSiteSitePageWithLocalization(
+				usFriendlyURL, layout.getPlid(), LocaleUtil.US);
 		}
 		finally {
 			_companyLocalService.updateDisplay(
@@ -796,7 +798,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	}
 
 	private void _testGetSiteSitePageWithLocalization(
-			String friendlyUrlPath, Locale locale)
+			String friendlyUrlPath, Long id, Locale locale)
 		throws Exception {
 
 		SitePageResource localizedSitePageResource = SitePageResource.builder(
@@ -812,6 +814,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			testGroup.getGroupId(), friendlyUrlPath);
 
 		Assert.assertEquals(friendlyUrlPath, sitePage.getFriendlyUrlPath());
+		Assert.assertEquals(id, sitePage.getId());
 	}
 
 	private void _testGetSiteSitePageWithoutPermissions() throws Exception {

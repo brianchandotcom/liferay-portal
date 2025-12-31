@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.FeatureFlagTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -48,6 +49,8 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.staging.StagingGroupHelper;
@@ -78,67 +81,79 @@ public class LayoutImportBackgroundTaskExecutorTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@FeatureFlags(
+		featureFlags = {@FeatureFlag("LPD-35443"), @FeatureFlag("LPD-35914")}
+	)
 	@Test
 	public void testGetStatusCompletedWithErrors() throws Exception {
-		ServiceContextThreadLocal.pushServiceContext(
-			ServiceContextTestUtil.getServiceContext());
+		FeatureFlagTestUtil.invokeFeatureFlagListeners(
+			TestPropsValues.getCompanyId(), true, "LPD-35914");
 
-		UserTestUtil.setUser(TestPropsValues.getUser());
+		try {
+			ServiceContextThreadLocal.pushServiceContext(
+				ServiceContextTestUtil.getServiceContext());
 
-		Group group = _stagingGroupHelper.fetchCompanyGroup(
-			TestPropsValues.getCompanyId());
+			UserTestUtil.setUser(TestPropsValues.getUser());
 
-		ObjectDefinition objectDefinition = _addObjectDefinition(
-			ObjectDefinitionConstants.SCOPE_COMPANY);
+			Group group = _stagingGroupHelper.fetchCompanyGroup(
+				TestPropsValues.getCompanyId());
 
-		ObjectEntry[] objectEntries = _addObjectEntries(
-			3, 0L, objectDefinition);
+			ObjectDefinition objectDefinition = _addObjectDefinition(
+				ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		File larFile = _exportLayouts(
-			true, group.getGroupId(), false, new long[0], objectDefinition);
+			ObjectEntry[] objectEntries = _addObjectEntries(
+				3, 0L, objectDefinition);
 
-		_deleteObjectEntries(objectEntries);
+			File larFile = _exportLayouts(
+				true, group.getGroupId(), false, new long[0], objectDefinition);
 
-		ObjectEntry objectEntry = objectEntries[1];
+			_deleteObjectEntries(objectEntries);
 
-		Map<String, Serializable> values = objectEntry.getValues();
+			ObjectEntry objectEntry = objectEntries[1];
 
-		_addObjectEntry(
-			GroupConstants.DEFAULT_PARENT_GROUP_ID, objectDefinition,
-			values.get(_OBJECT_FIELD_NAME_TEXT));
+			Map<String, Serializable> values = objectEntry.getValues();
 
-		long backgroundTaskId =
-			ExportImportLocalServiceUtil.importLayoutsInBackground(
-				TestPropsValues.getUserId(),
-				ExportImportConfigurationLocalServiceUtil.
-					addExportImportConfiguration(
-						TestPropsValues.getUserId(), group.getGroupId(),
-						RandomTestUtil.randomString(),
-						RandomTestUtil.randomString(), 0,
-						ExportImportConfigurationSettingsMapFactoryUtil.
-							buildImportLayoutSettingsMap(
-								TestPropsValues.getUser(), group.getGroupId(),
-								false, new long[0],
-								_getExportImportParameterMap(
-									false, true,
-									Arrays.asList(objectDefinition))),
-						WorkflowConstants.STATUS_DRAFT,
-						ServiceContextTestUtil.getServiceContext()),
-				larFile);
+			_addObjectEntry(
+				GroupConstants.DEFAULT_PARENT_GROUP_ID, objectDefinition,
+				values.get(_OBJECT_FIELD_NAME_TEXT));
 
-		ExportImportTestUtil.retryAssert(
-			1, TimeUnit.SECONDS, 5, TimeUnit.SECONDS,
-			() -> {
-				BackgroundTask backgroundTask =
-					_backgroundTaskLocalService.getBackgroundTask(
-						backgroundTaskId);
+			long backgroundTaskId =
+				ExportImportLocalServiceUtil.importLayoutsInBackground(
+					TestPropsValues.getUserId(),
+					ExportImportConfigurationLocalServiceUtil.
+						addExportImportConfiguration(
+							TestPropsValues.getUserId(), group.getGroupId(),
+							RandomTestUtil.randomString(),
+							RandomTestUtil.randomString(), 0,
+							ExportImportConfigurationSettingsMapFactoryUtil.
+								buildImportLayoutSettingsMap(
+									TestPropsValues.getUser(),
+									group.getGroupId(), false, new long[0],
+									_getExportImportParameterMap(
+										false, true,
+										Arrays.asList(objectDefinition))),
+							WorkflowConstants.STATUS_DRAFT,
+							ServiceContextTestUtil.getServiceContext()),
+					larFile);
 
-				Assert.assertEquals(
-					BackgroundTaskConstants.STATUS_COMPLETED_WITH_ERRORS,
-					backgroundTask.getStatus());
-			});
+			ExportImportTestUtil.retryAssert(
+				1, TimeUnit.SECONDS, 5, TimeUnit.SECONDS,
+				() -> {
+					BackgroundTask backgroundTask =
+						_backgroundTaskLocalService.getBackgroundTask(
+							backgroundTaskId);
 
-		ServiceContextThreadLocal.popServiceContext();
+					Assert.assertEquals(
+						BackgroundTaskConstants.STATUS_COMPLETED_WITH_ERRORS,
+						backgroundTask.getStatus());
+				});
+
+			ServiceContextThreadLocal.popServiceContext();
+		}
+		finally {
+			FeatureFlagTestUtil.invokeFeatureFlagListeners(
+				TestPropsValues.getCompanyId(), false, "LPD-35914");
+		}
 	}
 
 	private DLFileEntry _addDLFileEntry(String content, long groupId)

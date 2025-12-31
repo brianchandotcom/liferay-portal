@@ -17,6 +17,8 @@ export class DigitalSalesRoomsPage {
 	readonly page: Page;
 	readonly roomLink: Locator;
 	readonly saveAsTemplateMenuItem: Locator;
+	readonly startFromScratchButton: Locator;
+	readonly startFromTemplateButton: Locator;
 	readonly templateLink: Locator;
 
 	constructor(page: Page) {
@@ -36,6 +38,12 @@ export class DigitalSalesRoomsPage {
 		this.roomLink = page.getByRole('link', {exact: true, name: 'Room'});
 		this.saveAsTemplateMenuItem = page.getByRole('menuitem', {
 			name: 'Save as Template',
+		});
+		this.startFromScratchButton = page.getByRole('menuitem', {
+			name: 'Start from Scratch',
+		});
+		this.startFromTemplateButton = page.getByRole('menuitem', {
+			name: 'Start from Template',
 		});
 		this.templateLink = page.getByRole('link', {
 			exact: true,

@@ -31,7 +31,7 @@ export default function confirmAndDeleteEntryAction({
 			{
 				displayType: 'danger',
 				label: Liferay.Language.get('delete'),
-				onClick: ({processClose}) => {
+				onClick: ({processClose}: {processClose: () => void}) => {
 					processClose();
 
 					executeAsyncItemAction({

@@ -204,7 +204,11 @@ const EditCategoryPage = ({
 					{
 						displayType: 'primary',
 						label: Liferay.Language.get('save'),
-						onClick: async ({processClose}) => {
+						onClick: async ({
+							processClose,
+						}: {
+							processClose: () => void;
+						}) => {
 							processClose();
 
 							const {error} =

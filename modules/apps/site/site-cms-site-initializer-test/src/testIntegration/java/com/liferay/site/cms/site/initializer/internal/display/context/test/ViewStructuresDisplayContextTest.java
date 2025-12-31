@@ -13,6 +13,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -97,7 +98,9 @@ public class ViewStructuresDisplayContextTest
 		DropdownItem dropdownItem, String expectedLabel,
 		String objectFolderExternalReferenceCode) {
 
-		Assert.assertEquals(expectedLabel, dropdownItem.get("label"));
+		Assert.assertEquals(
+			language.get(LocaleUtil.getDefault(), expectedLabel),
+			dropdownItem.get("label"));
 		Assert.assertEquals(
 			GroupConstants.CMS_FRIENDLY_URL +
 				"/structure-builder?objectFolderExternalReferenceCode=" +
@@ -116,7 +119,9 @@ public class ViewStructuresDisplayContextTest
 		Assert.assertEquals(method, data.get("method"));
 
 		Assert.assertEquals(icon, fdsActionDropdownItem.get("icon"));
-		Assert.assertEquals(label, fdsActionDropdownItem.get("label"));
+		Assert.assertEquals(
+			language.get(LocaleUtil.getDefault(), label),
+			fdsActionDropdownItem.get("label"));
 
 		if (visibilityFilters != null) {
 			Assert.assertEquals(

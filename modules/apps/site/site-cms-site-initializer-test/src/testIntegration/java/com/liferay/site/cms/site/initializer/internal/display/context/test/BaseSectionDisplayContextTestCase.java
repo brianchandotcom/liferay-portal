@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -460,7 +459,9 @@ public abstract class BaseSectionDisplayContextTestCase
 		Assert.assertEquals(method, data.get("method"));
 
 		Assert.assertEquals(icon, fdsActionDropdownItem.get("icon"));
-		Assert.assertEquals(label, fdsActionDropdownItem.get("label"));
+		Assert.assertEquals(
+			language.get(LocaleUtil.getDefault(), label),
+			fdsActionDropdownItem.get("label"));
 		Assert.assertEquals(type, fdsActionDropdownItem.get("type"));
 	}
 
@@ -904,7 +905,9 @@ public abstract class BaseSectionDisplayContextTestCase
 
 			DropdownItem dropdownItem = dropdownItems.get(index);
 
-			Assert.assertEquals(entry.getKey(), dropdownItem.get("label"));
+			Assert.assertEquals(
+				language.get(LocaleUtil.getDefault(), entry.getKey()),
+				dropdownItem.get("label"));
 
 			if (Validator.isNull(entry.getValue())) {
 				Assert.assertNull(_getRedirect(dropdownItem));

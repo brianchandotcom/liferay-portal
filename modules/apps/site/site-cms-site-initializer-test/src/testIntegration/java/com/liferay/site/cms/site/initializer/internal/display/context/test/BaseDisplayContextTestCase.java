@@ -15,6 +15,7 @@ import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -179,6 +180,10 @@ public abstract class BaseDisplayContextTestCase {
 	protected CompanyLocalService companyLocalService;
 
 	protected Group group;
+
+	@Inject
+	protected Language language;
+
 	protected MockHttpServletRequest mockHttpServletRequest;
 
 	@Inject

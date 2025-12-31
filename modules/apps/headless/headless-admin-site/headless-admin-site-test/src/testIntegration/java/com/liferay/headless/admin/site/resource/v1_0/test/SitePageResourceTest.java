@@ -52,7 +52,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CustomizedPages;
 import com.liferay.portal.kernel.model.Group;
@@ -2163,21 +2162,13 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		String layoutIdFriendlyURL = StringPool.SLASH + layout.getLayoutId();
 
-		layout = LayoutTestUtil.updateFriendlyURL(
-			layout,
+		layout = _updateFriendlyURL(
 			HashMapBuilder.put(
 				LocaleUtil.SPAIN, layoutIdFriendlyURL
 			).put(
 				LocaleUtil.US, layoutIdFriendlyURL
-			).build());
-
-		for (Locale locale :
-				LanguageUtil.getAvailableLocales(
-					irrelevantGroup.getGroupId())) {
-
-			Assert.assertEquals(
-				layoutIdFriendlyURL, layout.getFriendlyURL(locale));
-		}
+			).build(),
+			layout);
 
 		Layout testGroupLayout = LayoutTestUtil.addTypePortletLayout(testGroup);
 
@@ -2208,15 +2199,12 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		String friendlyURL = _getRandomFriendlyURL();
 
-		Layout importedLayout = LayoutTestUtil.updateFriendlyURL(
-			_layoutLocalService.fetchLayoutByExternalReferenceCode(
-				layout.getExternalReferenceCode(), testGroup.getGroupId()),
+		Layout importedLayout = _updateFriendlyURL(
 			HashMapBuilder.put(
 				LocaleUtil.US, friendlyURL
-			).build());
-
-		Assert.assertEquals(
-			friendlyURL, importedLayout.getFriendlyURL(LocaleUtil.US));
+			).build(),
+			_layoutLocalService.fetchLayoutByExternalReferenceCode(
+				layout.getExternalReferenceCode(), testGroup.getGroupId()));
 
 		importedSitePage = sitePageResource.putSiteSitePage(
 			testGroup.getExternalReferenceCode(),
@@ -2229,6 +2217,35 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			friendlyURL,
 			friendlyUrlPathI18n.get(
 				LocaleUtil.toBCP47LanguageId(LocaleUtil.US)));
+
+		layout = _updateFriendlyURL(
+			HashMapBuilder.put(
+				LocaleUtil.SPAIN, _getRandomFriendlyURL()
+			).put(
+				LocaleUtil.US, _getRandomFriendlyURL()
+			).build(),
+			layout);
+
+		sitePage = sitePageResource.getSiteSitePage(
+			irrelevantGroup.getExternalReferenceCode(),
+			layout.getExternalReferenceCode());
+
+		_assertSitePage(layout, sitePage);
+
+		importedSitePage = sitePageResource.putSiteSitePage(
+			testGroup.getExternalReferenceCode(),
+			importedLayout.getExternalReferenceCode(), sitePage);
+
+		Assert.assertTrue(
+			equals(
+				(Map)sitePage.getFriendlyUrlPath_i18n(),
+				(Map)importedSitePage.getFriendlyUrlPath_i18n()));
+
+		_assertSitePage(
+			_layoutLocalService.getLayoutByExternalReferenceCode(
+				importedSitePage.getExternalReferenceCode(),
+				testGroup.getGroupId()),
+			importedSitePage);
 	}
 
 	private void _testPutSiteSitePageWithPageElements() throws Exception {
@@ -2701,6 +2718,20 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			sitePage1.getExternalReferenceCode(), 1, sitePage2);
 		_assertParentAndPriority(
 			sitePage1.getExternalReferenceCode(), 2, sitePage4);
+	}
+
+	private Layout _updateFriendlyURL(
+			Map<Locale, String> friendlyURLMap, Layout layout)
+		throws Exception {
+
+		layout = LayoutTestUtil.updateFriendlyURL(layout, friendlyURLMap);
+
+		for (Map.Entry<Locale, String> entry : friendlyURLMap.entrySet()) {
+			Assert.assertEquals(
+				entry.getValue(), layout.getFriendlyURL(entry.getKey()));
+		}
+
+		return layout;
 	}
 
 	private static final List<SitePage.Type> _types = Arrays.asList(

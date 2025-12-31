@@ -5,10 +5,15 @@
 
 import '@testing-library/jest-dom';
 import {waitFor} from '@testing-library/react';
+import {openModal} from 'frontend-js-components-web';
 
 import CMSAssetPermissionService from '../../../../src/main/resources/META-INF/resources/js/common/services/CMSAssetPermissionService';
 import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../../../src/main/resources/META-INF/resources/js/common/utils/constants';
 import openResetAssetPermissionModal from '../../../../src/main/resources/META-INF/resources/js/main_view/default_permission/ResetPermissionModalContent';
+
+jest.mock('frontend-js-components-web', () => ({
+	openModal: jest.fn(),
+}));
 
 describe('ResetPermissionModalContent', () => {
 	let resetAssetPermissionSpy: jest.SpyInstance;
@@ -24,7 +29,7 @@ describe('ResetPermissionModalContent', () => {
 			openToast: jest.fn(),
 		};
 
-		(Liferay.Util.openModal as jest.Mock).mockClear();
+		(openModal as jest.Mock).mockClear();
 		(Liferay.Util.openToast as jest.Mock).mockClear();
 
 		resetAssetPermissionSpy = jest.spyOn(
@@ -50,10 +55,9 @@ describe('ResetPermissionModalContent', () => {
 
 		openResetAssetPermissionModal(props);
 
-		expect(Liferay.Util.openModal).toHaveBeenCalledTimes(1);
+		expect(openModal).toHaveBeenCalledTimes(1);
 
-		const modalConfig = (Liferay.Util.openModal as jest.Mock).mock
-			.calls[0][0];
+		const modalConfig = (openModal as jest.Mock).mock.calls[0][0];
 		const confirmButton = modalConfig.buttons.find(
 			(button: any) => button.label === 'confirm'
 		);
@@ -88,10 +92,9 @@ describe('ResetPermissionModalContent', () => {
 
 		openResetAssetPermissionModal(props);
 
-		expect(Liferay.Util.openModal).toHaveBeenCalledTimes(1);
+		expect(openModal).toHaveBeenCalledTimes(1);
 
-		const modalConfig = (Liferay.Util.openModal as jest.Mock).mock
-			.calls[0][0];
+		const modalConfig = (openModal as jest.Mock).mock.calls[0][0];
 		const confirmButton = modalConfig.buttons.find(
 			(button: any) => button.label === 'confirm'
 		);
@@ -124,10 +127,9 @@ describe('ResetPermissionModalContent', () => {
 
 		openResetAssetPermissionModal(props);
 
-		expect(Liferay.Util.openModal).toHaveBeenCalledTimes(1);
+		expect(openModal).toHaveBeenCalledTimes(1);
 
-		const modalConfig = (Liferay.Util.openModal as jest.Mock).mock
-			.calls[0][0];
+		const modalConfig = (openModal as jest.Mock).mock.calls[0][0];
 		const cancelButton = modalConfig.buttons.find(
 			(button: any) => button.type === 'cancel'
 		);

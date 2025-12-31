@@ -98,7 +98,7 @@ public class ViewContentsSectionDisplayContextTest
 			fdsActionDropdownItems.get(12), "copy", "copy", "copy-to", null,
 			"item");
 		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(13), "move", "move", "move", null,
+			fdsActionDropdownItems.get(13), "move-folder", "move", "move", null,
 			"item");
 
 		FDSActionDropdownItem permissionsFDSActionDropdownItem =

@@ -443,9 +443,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				datePublished = RandomTestUtil.nextDate();
-				friendlyUrlPath =
-					StringPool.FORWARD_SLASH +
-						StringUtil.toLowerCase(RandomTestUtil.randomString());
+				friendlyUrlPath = _getRandomFriendlyURL();
 				id = RandomTestUtil.randomLong();
 				pageType = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
@@ -508,6 +506,14 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 					" does not contain " + taxonomyCategoryBrief1,
 				contains);
 		}
+	}
+
+	private String _getRandomFriendlyURL() {
+		String urlTitle = StringUtil.toLowerCase(
+			RandomTestUtil.randomString(
+				LayoutFriendlyURLRandomizerBumper.INSTANCE));
+
+		return StringPool.FORWARD_SLASH + urlTitle;
 	}
 
 	private VulcanCRUDItemDelegate _getVulcanCRUDItemDelegate(Locale locale)
@@ -755,16 +761,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 			Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
 
-			String esFriendlyURL =
-				StringPool.FORWARD_SLASH +
-					StringUtil.toLowerCase(
-						RandomTestUtil.randomString(
-							LayoutFriendlyURLRandomizerBumper.INSTANCE));
-			String usFriendlyURL =
-				StringPool.FORWARD_SLASH +
-					StringUtil.toLowerCase(
-						RandomTestUtil.randomString(
-							LayoutFriendlyURLRandomizerBumper.INSTANCE));
+			String esFriendlyURL = _getRandomFriendlyURL();
+			String usFriendlyURL = _getRandomFriendlyURL();
 
 			LayoutTestUtil.updateFriendlyURL(
 				layout,
@@ -2252,9 +2250,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			HashMapBuilder.put(
 				"en-US", randomSitePage.getFriendlyUrlPath()
 			).put(
-				"es-ES",
-				StringPool.FORWARD_SLASH +
-					StringUtil.toLowerCase(RandomTestUtil.randomString())
+				"es-ES", _getRandomFriendlyURL()
 			).build());
 
 		postSitePage = testPostSiteSitePage_addSitePage(randomSitePage);

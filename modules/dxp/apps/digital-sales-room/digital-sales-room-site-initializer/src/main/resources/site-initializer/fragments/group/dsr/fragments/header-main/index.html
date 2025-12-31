@@ -1,9 +1,21 @@
 [#if !portalUtil.isSystemGroup(themeDisplay.getScopeGroupName())]
+	[#if paramUtil.get(themeDisplay.getRequest(), "preview", false)]
+		[@liferay_aui.style]
+			.control-menu-container {
+				display: none
+			}
+		[/@]
+	[/#if]
+
 	<div id="dsr-header-main">
 		<div>
 			[#assign groupId = themeDisplay.getScopeGroupId() /]
 			<div>
 				[#assign response = restClient.get("/headless-digital-sales-room/v1.0/digital-sales-rooms/${groupId}") /]
+
+				[#if !response?has_content || !response.id?has_content]
+					[#assign response = restClient.get("/headless-digital-sales-room/v1.0/digital-sales-room-templates/${groupId}") /]
+				[/#if]
 
 				[#if response?has_content && response.banner?has_content]
 					[@liferay_aui.style]

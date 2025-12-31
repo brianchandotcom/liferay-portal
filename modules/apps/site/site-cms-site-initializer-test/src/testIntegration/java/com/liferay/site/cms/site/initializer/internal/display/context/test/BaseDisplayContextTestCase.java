@@ -160,6 +160,7 @@ public abstract class BaseDisplayContextTestCase {
 		themeDisplay.setLanguageId(group.getDefaultLanguageId());
 		themeDisplay.setLayout(
 			LayoutTestUtil.addTypeContentLayout(group, "test"));
+		themeDisplay.setLocale(LocaleUtil.getDefault());
 		themeDisplay.setPathMain(portal.getPathMain());
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());

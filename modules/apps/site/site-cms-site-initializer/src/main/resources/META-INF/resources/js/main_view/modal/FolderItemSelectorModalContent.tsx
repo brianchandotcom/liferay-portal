@@ -7,7 +7,7 @@ import Alert from '@clayui/alert';
 import {useModal} from '@clayui/modal';
 import {IFrontendDataSetProps, IView} from '@liferay/frontend-data-set-web';
 import {ItemSelectorModal} from '@liferay/frontend-js-item-selector-web';
-import {openModal, openToast} from 'frontend-js-components-web';
+import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
@@ -15,6 +15,7 @@ import ApiHelper, {RequestResult} from '../../common/services/ApiHelper';
 import FolderService from '../../common/services/FolderService';
 import {AssetLibrary} from '../../common/types/AssetLibrary';
 import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../common/utils/constants';
+import {openCMSModal} from '../../common/utils/openCMSModal';
 import {displayErrorToast} from '../../common/utils/toastUtil';
 import DuplicatedAssetFolderNamesModalContent, {
 	Option,
@@ -189,10 +190,7 @@ function openDuplicatedAssetFolderNamesModal(
 	itemData: ItemData,
 	onContinueClick: (operation: Option) => void
 ) {
-	openModal({
-		containerProps: {
-			className: '',
-		},
+	openCMSModal({
 		contentComponent: ({closeModal}: {closeModal: () => void}) =>
 			DuplicatedAssetFolderNamesModalContent({
 				action,

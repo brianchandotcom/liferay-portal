@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {openModal} from 'frontend-js-components-web';
 import {sessionStorage, sub} from 'frontend-js-web';
 import React from 'react';
 
 import {IAssetFile, IAssetObjectEntry} from '../../../common/types/AssetType';
+import {openCMSModal} from '../../../common/utils/openCMSModal';
 import FilePreviewerModalContent from '../../modal/FilePreviewerModalContent';
 import confirmAndDeleteEntryAction from '../../props_transformer/actions/confirmAndDeleteEntryAction';
 import {executeAsyncItemAction} from '../../props_transformer/utils/executeAsyncItemAction';
@@ -141,10 +141,7 @@ export const VERSION_ACTIONS: any = {
 		) => {
 			event?.preventDefault();
 
-			openModal({
-				containerProps: {
-					className: '',
-				},
+			openCMSModal({
 				size: 'full-screen',
 				title: sub(
 					Liferay.Language.get('x-version-x'),
@@ -166,10 +163,7 @@ export const VERSION_ACTIONS: any = {
 		) => {
 			event?.preventDefault();
 
-			openModal({
-				containerProps: {
-					className: '',
-				},
+			openCMSModal({
 				contentComponent: () =>
 					FilePreviewerModalContent({
 						file,

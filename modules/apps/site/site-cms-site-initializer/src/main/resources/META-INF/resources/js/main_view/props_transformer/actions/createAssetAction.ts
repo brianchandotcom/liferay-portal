@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {openModal} from 'frontend-js-components-web';
 import {navigate} from 'frontend-js-web';
 
 import {AssetLibrary} from '../../../common/types/AssetLibrary';
+import {openCMSModal} from '../../../common/utils/openCMSModal';
 import CreationModalContent from '../../modal/CreationModalContent';
 
 export type AssetData = {
@@ -28,11 +28,8 @@ export default function createAssetAction(data: AssetData) {
 		return;
 	}
 
-	openModal({
+	openCMSModal({
 		center: true,
-		containerProps: {
-			className: '',
-		},
 		contentComponent: ({closeModal}: {closeModal: () => void}) =>
 			CreationModalContent({
 				...data,

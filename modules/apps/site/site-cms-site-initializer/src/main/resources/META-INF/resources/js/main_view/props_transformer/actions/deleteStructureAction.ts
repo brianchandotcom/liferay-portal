@@ -3,12 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {openModal, openToast} from 'frontend-js-components-web';
+import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 
 import ApiHelper from '../../../common/services/ApiHelper';
 import StructureService from '../../../common/services/StructureService';
 import {ObjectDefinition} from '../../../common/types/ObjectDefinition';
+import {openCMSModal} from '../../../common/utils/openCMSModal';
 import ObjectDefinitionService from '../../../structure_builder/services/ObjectDefinitionService';
 import DeleteStructureModalContent from '../../modal/DeleteStructureModalContent';
 
@@ -85,7 +86,7 @@ export default async function deleteStructureAction({
 			repeatableGroupIds
 		)
 	) {
-		openModal({
+		openCMSModal({
 			bodyHTML: `<p>${sub(
 				Liferay.Language.get(
 					'x-is-currently-referenced-by-or-referencing-other-content-structures,-and-so-cannot-be-deleted'
@@ -101,9 +102,6 @@ export default async function deleteStructureAction({
 					},
 				},
 			],
-			containerProps: {
-				className: '',
-			},
 			size: 'md',
 			status: 'warning',
 			title: Liferay.Language.get('deletion-not-allowed'),
@@ -112,10 +110,7 @@ export default async function deleteStructureAction({
 		return;
 	}
 
-	openModal({
-		containerProps: {
-			className: '',
-		},
+	openCMSModal({
 		contentComponent: ({closeModal}: {closeModal: () => void}) =>
 			DeleteStructureModalContent({
 				closeModal,

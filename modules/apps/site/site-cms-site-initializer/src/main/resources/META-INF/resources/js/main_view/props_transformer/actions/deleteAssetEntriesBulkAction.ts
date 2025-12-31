@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {openModal} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 
 import SpaceService from '../../../common/services/SpaceService';
 import {IBulkActionFDSData} from '../../../common/types/BulkActionTask';
 import {getScopeExternalReferenceCode} from '../../../common/utils/getScopeExternalReferenceCode';
+import {openCMSModal} from '../../../common/utils/openCMSModal';
 import {isFromRecycleBin} from '../utils/isFromRecycleBin';
 import {triggerAssetBulkAction} from './triggerAssetBulkAction';
 
@@ -154,7 +154,7 @@ async function showModal(
 	title: string,
 	selectedData: any
 ): Promise<void> {
-	openModal({
+	openCMSModal({
 		bodyHTML: `
 			<div>
 				<p>
@@ -187,9 +187,6 @@ async function showModal(
 			},
 		],
 		center: true,
-		containerProps: {
-			className: '',
-		},
 		status: 'danger',
 		title,
 	});

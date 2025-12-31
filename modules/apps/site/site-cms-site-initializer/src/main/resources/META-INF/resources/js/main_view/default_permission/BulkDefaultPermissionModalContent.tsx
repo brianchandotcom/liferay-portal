@@ -10,13 +10,13 @@ import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal from '@clayui/modal';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import {openModal} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import CMSDefaultPermissionService from '../../common/services/CMSDefaultPermissionService';
 import SpaceService from '../../common/services/SpaceService';
 import {getScopeExternalReferenceCode} from '../../common/utils/getScopeExternalReferenceCode';
+import {openCMSModal} from '../../common/utils/openCMSModal';
 import {triggerAssetBulkAction} from '../props_transformer/actions/triggerAssetBulkAction';
 import DefaultPermissionFormContainer from './DefaultPermissionFormContainer';
 import {
@@ -67,7 +67,7 @@ export function defaultPermissionsBulkAction({
 				(item: any) => item.entryClassName !== className
 			))
 	) {
-		return openModal({
+		return openCMSModal({
 			bodyHTML: Liferay.Language.get(
 				'this-action-is-not-available-for-the-item-you-have-selected'
 			),
@@ -80,18 +80,12 @@ export function defaultPermissionsBulkAction({
 				},
 			],
 			center: true,
-			containerProps: {
-				className: '',
-			},
 			status: 'warning',
 			title: Liferay.Language.get('action-not-allowed'),
 		});
 	}
 
-	return openModal({
-		containerProps: {
-			className: '',
-		},
+	return openCMSModal({
 		contentComponent: ({closeModal}: {closeModal: () => void}) =>
 			BulkDefaultPermissionModalContent({
 				...defaultPermissionAdditionalProps,

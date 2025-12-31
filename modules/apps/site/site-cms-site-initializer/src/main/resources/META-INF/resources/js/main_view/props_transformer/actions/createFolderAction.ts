@@ -3,11 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {openModal, openToast} from 'frontend-js-components-web';
+import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 
 import FolderService from '../../../common/services/FolderService';
 import {AssetLibrary} from '../../../common/types/AssetLibrary';
+import {openCMSModal} from '../../../common/utils/openCMSModal';
 import CreationModalContent from '../../modal/CreationModalContent';
 
 export type FolderData = {
@@ -22,11 +23,8 @@ export default function createFolderAction(
 	data: FolderData,
 	loadData?: () => {}
 ) {
-	openModal({
+	openCMSModal({
 		center: true,
-		containerProps: {
-			className: '',
-		},
 		contentComponent: ({closeModal}: {closeModal: () => void}) =>
 			CreationModalContent({
 				...data,

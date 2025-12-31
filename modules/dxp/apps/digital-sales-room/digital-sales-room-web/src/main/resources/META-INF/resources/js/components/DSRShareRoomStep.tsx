@@ -38,6 +38,7 @@ function isEmailAddressValid(email: string) {
 function DSRShareRoomStep({
 	numberOfSteps,
 	setHandleStepSubmit,
+	step = 3,
 }: TDSRRoomDetailsStepProps) {
 	const {dataContext, setDataContext} = useContext<TDSRContext>(DSRContext);
 
@@ -94,7 +95,11 @@ function DSRShareRoomStep({
 		<>
 			<div>
 				<div className="mb-1 text-secondary" data-qa-id="stepLocator">
-					{sub(Liferay.Language.get('step-x-of-x'), 3, numberOfSteps)}
+					{sub(
+						Liferay.Language.get('step-x-of-x'),
+						step,
+						numberOfSteps
+					)}
 				</div>
 
 				<div

@@ -7,10 +7,14 @@ package com.liferay.headless.digital.sales.room.internal.resource.v1_0;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryService;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactory;
+import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
+import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.headless.digital.sales.room.dto.v1_0.DigitalSalesRoom;
 import com.liferay.headless.digital.sales.room.dto.v1_0.FileEntry;
 import com.liferay.headless.digital.sales.room.dto.v1_0.UserAccountBrief;
 import com.liferay.headless.digital.sales.room.internal.dto.v1_0.converter.DigitalSalesRoomDTOConverterContext;
+import com.liferay.headless.digital.sales.room.internal.util.v1_0.ExportImportUtil;
 import com.liferay.headless.digital.sales.room.resource.v1_0.DigitalSalesRoomResource;
 import com.liferay.headless.digital.sales.room.resource.v1_0.UserAccountBriefResource;
 import com.liferay.layout.util.LayoutServiceContextHelper;
@@ -32,6 +36,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -39,6 +44,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -48,6 +54,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -72,6 +79,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -177,6 +185,15 @@ public class DigitalSalesRoomResourceImpl
 			pagination,
 			_groupService.searchCount(
 				contextCompany.getCompanyId(), classNameIds, search, params));
+	}
+
+	@Override
+	public Page<DigitalSalesRoom>
+			getDigitalSalesRoomTemplateDigitalSalesRoomsPage(
+				Long digitalSalesRoomTemplateId)
+		throws Exception {
+
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -287,6 +304,86 @@ public class DigitalSalesRoomResourceImpl
 
 		return _toDigitalSalesRoom(
 			group,
+			_objectEntryLocalService.getObjectEntry(objectEntry.getId()));
+	}
+
+	@Override
+	public DigitalSalesRoom postDigitalSalesRoomTemplateDigitalSalesRoom(
+			Long digitalSalesRoomTemplateId, DigitalSalesRoom digitalSalesRoom)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-66359")) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		ObjectDefinition dsrTemplateObjectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_DSR_TEMPLATE", contextCompany.getCompanyId());
+		Group sourceGroup = _groupService.getGroup(digitalSalesRoomTemplateId);
+
+		if (!Objects.equals(
+				dsrTemplateObjectDefinition.getClassName(),
+				sourceGroup.getClassName())) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		long[] layoutIds = ListUtil.toLongArray(
+			_layoutLocalService.getLayouts(sourceGroup.getGroupId(), false),
+			Layout::getLayoutId);
+
+		if (ArrayUtil.isEmpty(layoutIds)) {
+			throw new UnsupportedOperationException();
+		}
+
+		Group targetGroup = _addGroup(
+			digitalSalesRoom.getExternalReferenceCode(),
+			digitalSalesRoom.getDescription(),
+			digitalSalesRoom.getFriendlyUrlPath(), "blank-site-initializer",
+			digitalSalesRoom.getName());
+
+		ObjectDefinition objectDefinition = _getObjectDefinition();
+
+		targetGroup.setClassName(objectDefinition.getClassName());
+
+		ObjectEntryManager objectEntryManager =
+			_objectEntryManagerRegistry.getObjectEntryManager(
+				objectDefinition.getCompanyId(),
+				objectDefinition.getStorageType());
+
+		DefaultDTOConverterContext defaultDTOConverterContext =
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), null,
+				_dtoConverterRegistry, contextHttpServletRequest, null,
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser);
+
+		defaultDTOConverterContext.setAttribute("addActions", Boolean.FALSE);
+
+		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
+			objectEntryManager.addObjectEntry(
+				defaultDTOConverterContext, objectDefinition,
+				_toObjectEntry(digitalSalesRoom, targetGroup),
+				targetGroup.getGroupKey());
+
+		targetGroup.setClassPK(objectEntry.getId());
+
+		targetGroup = _groupLocalService.updateGroup(targetGroup);
+
+		ExportImportUtil.importLayouts(
+			_exportImportConfigurationLocalService,
+			_exportImportConfigurationSettingsMapFactory,
+			_exportImportLocalService, layoutIds, sourceGroup.getGroupId(),
+			targetGroup.getGroupId(), contextUser);
+
+		_updateFrontendTokensValues(digitalSalesRoom, targetGroup);
+		_updateNestedResources(digitalSalesRoom, targetGroup);
+
+		return _toDigitalSalesRoom(
+			targetGroup,
 			_objectEntryLocalService.getObjectEntry(objectEntry.getId()));
 	}
 
@@ -741,6 +838,17 @@ public class DigitalSalesRoomResourceImpl
 	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
+	private ExportImportConfigurationLocalService
+		_exportImportConfigurationLocalService;
+
+	@Reference
+	private ExportImportConfigurationSettingsMapFactory
+		_exportImportConfigurationSettingsMapFactory;
+
+	@Reference
+	private ExportImportLocalService _exportImportLocalService;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
@@ -748,6 +856,9 @@ public class DigitalSalesRoomResourceImpl
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private LayoutServiceContextHelper _layoutServiceContextHelper;

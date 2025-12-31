@@ -44,6 +44,7 @@ export function getImage(name: string): string {
 function DSRRoomDetailsStep({
 	numberOfSteps,
 	setHandleStepSubmit,
+	step = 1,
 }: TDSRRoomDetailsStepProps) {
 	const {dataContext, setDataContext} = useContext<TDSRContext>(DSRContext);
 	const clientLogoInputFileRef = useRef(null);
@@ -248,7 +249,11 @@ function DSRRoomDetailsStep({
 		<>
 			<div>
 				<div className="mb-1 text-secondary" data-qa-id="stepLocator">
-					{sub(Liferay.Language.get('step-x-of-x'), 1, numberOfSteps)}
+					{sub(
+						Liferay.Language.get('step-x-of-x'),
+						step,
+						numberOfSteps
+					)}
 				</div>
 
 				<div

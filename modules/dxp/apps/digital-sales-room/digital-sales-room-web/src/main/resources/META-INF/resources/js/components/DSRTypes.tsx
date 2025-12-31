@@ -42,6 +42,7 @@ export type TDSRDataContext = {
 		emailAddresses: Array<string>;
 		roleKey?: string;
 	};
+	templateId?: number;
 };
 
 export type TDSRContext = {
@@ -54,6 +55,7 @@ export type TDSRRoomDetailsStepProps = {
 		callback: SetStateAction<(event: Event) => Promise<boolean>>
 	): void;
 	numberOfSteps: number;
+	step?: number;
 };
 
 export type TDSRInitializerProps = {

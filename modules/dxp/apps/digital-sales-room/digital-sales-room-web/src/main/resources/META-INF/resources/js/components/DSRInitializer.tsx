@@ -10,6 +10,7 @@ import React, {SetStateAction, useCallback, useState} from 'react';
 
 import DigitalSalesRoomService from '../commons/DigitalSalesRoomService';
 import DSRRoomDetailsStep from './DSRRoomDetailsStep';
+import DSRRoomSelectTemplateStep from './DSRRoomSelectTemplateStep';
 import DSRRoomSettingsStep from './DSRRoomSettingsStep';
 import DSRShareRoomStep from './DSRShareRoomStep';
 import {TDSRContext, TDSRDataContext, TDSRInitializerProps} from './DSRTypes';
@@ -27,6 +28,30 @@ const DEFAULT_DATA_CONTEXT: TDSRDataContext = {
 		emailAddresses: [],
 	},
 };
+
+const STEPS_DEFINITION = [
+	{
+		numberOfSteps: 1,
+		steps: [DSRRoomDetailsStep],
+	},
+	{
+		numberOfSteps: 2,
+		steps: [DSRRoomDetailsStep, DSRRoomSettingsStep],
+	},
+	{
+		numberOfSteps: 3,
+		steps: [DSRRoomDetailsStep, DSRRoomSettingsStep, DSRShareRoomStep],
+	},
+	{
+		numberOfSteps: 4,
+		steps: [
+			DSRRoomSelectTemplateStep,
+			DSRRoomDetailsStep,
+			DSRRoomSettingsStep,
+			DSRShareRoomStep,
+		],
+	},
+];
 
 export const DSRContext = React.createContext<TDSRContext>({
 	dataContext: DEFAULT_DATA_CONTEXT,
@@ -72,28 +97,19 @@ function StepLoader({
 	) => void;
 	step: number;
 }) {
-	if (step === 1) {
+	const stepDefinition = STEPS_DEFINITION.find(
+		(item) => item.numberOfSteps === numberOfSteps
+	);
+
+	if (stepDefinition) {
+		const Component = stepDefinition.steps[step - 1];
+
 		return (
-			<DSRRoomDetailsStep
+			<Component
 				numberOfSteps={numberOfSteps}
 				setHandleStepSubmit={setHandleStepSubmit}
-			></DSRRoomDetailsStep>
-		);
-	}
-	else if (step === 2) {
-		return (
-			<DSRRoomSettingsStep
-				numberOfSteps={numberOfSteps}
-				setHandleStepSubmit={setHandleStepSubmit}
-			></DSRRoomSettingsStep>
-		);
-	}
-	else if (step === 3) {
-		return (
-			<DSRShareRoomStep
-				numberOfSteps={numberOfSteps}
-				setHandleStepSubmit={setHandleStepSubmit}
-			></DSRShareRoomStep>
+				step={step}
+			></Component>
 		);
 	}
 
@@ -151,41 +167,47 @@ function DSRInitializer({closeModal, numberOfSteps = 3}: TDSRInitializerProps) {
 				const stepValid = await handleStepSubmit(event);
 
 				if (stepValid) {
-					const digitalSalesRoom =
-						await DigitalSalesRoomService.postDigitalSalesRoom({
-							accountId: dataContext.accountId || 0,
-							banner: {
-								fileBase64:
-									(dataContext.banner.base64 || '')
-										.split(',')
-										.pop() || '',
-							},
-							channelId: dataContext.channelId || 0,
-							channelName: dataContext.channelName || '',
-							clientLogo: {
-								fileBase64:
-									(dataContext.clientLogo.base64 || '')
-										.split(',')
-										.pop() || '',
-							},
-							clientName: dataContext.clientName,
-							friendlyUrlPath: getFriendlyURL(
-								dataContext.friendlyURL
-							),
-							name: dataContext.roomName,
-							primaryColor: getColor(dataContext.primaryColor),
-							secondaryColor: getColor(
-								dataContext.secondaryColor
-							),
-							userAccountBriefs: (
-								dataContext.share?.emailAddresses || []
-							).map((email) => {
-								return {
-									emailAddress: email,
-									roleKey: dataContext.share?.roleKey || '',
-								};
-							}),
-						});
+					const payload = {
+						accountId: dataContext.accountId || 0,
+						banner: {
+							fileBase64:
+								(dataContext.banner.base64 || '')
+									.split(',')
+									.pop() || '',
+						},
+						channelId: dataContext.channelId || 0,
+						channelName: dataContext.channelName || '',
+						clientLogo: {
+							fileBase64:
+								(dataContext.clientLogo.base64 || '')
+									.split(',')
+									.pop() || '',
+						},
+						clientName: dataContext.clientName,
+						friendlyUrlPath: getFriendlyURL(
+							dataContext.friendlyURL
+						),
+						name: dataContext.roomName,
+						primaryColor: getColor(dataContext.primaryColor),
+						secondaryColor: getColor(dataContext.secondaryColor),
+						userAccountBriefs: (
+							dataContext.share?.emailAddresses || []
+						).map((email) => {
+							return {
+								emailAddress: email,
+								roleKey: dataContext.share?.roleKey || '',
+							};
+						}),
+					};
+
+					const digitalSalesRoom = await (dataContext.templateId
+						? DigitalSalesRoomService.postDigitalSalesRoomTemplateDigitalSalesRoom(
+								dataContext.templateId,
+								payload
+							)
+						: DigitalSalesRoomService.postDigitalSalesRoom(
+								payload
+							));
 
 					window.location.href = `/web${digitalSalesRoom.friendlyUrlPath}?p_l_back_url=/web${digitalSalesRoom.friendlyUrlPath}&p_l_mode=edit`;
 				}

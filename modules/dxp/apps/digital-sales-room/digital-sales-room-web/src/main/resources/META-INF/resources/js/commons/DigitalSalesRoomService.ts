@@ -93,10 +93,12 @@ export type TDSRPayload = {
 
 export type TDSRTemplateDTO = {
 	banner?: {
+		fileBase64?: string;
 		fileURL: string;
 		id: number;
 	};
 	clientLogo?: {
+		fileBase64?: string;
 		fileURL: string;
 		id: number;
 	};
@@ -115,6 +117,14 @@ export type TDSRTemplateDTO = {
 	usages?: number;
 };
 
+export type TDSRTemplatesDTO = {
+	items: Array<TDSRTemplateDTO>;
+	lastPage: number;
+	page: number;
+	pageSize: number;
+	totalCount: number;
+};
+
 export type TDSRTemplatePayload = {
 	banner?: {
 		fileBase64: string;
@@ -128,6 +138,14 @@ export type TDSRTemplatePayload = {
 	primaryColor?: string;
 	secondaryColor?: string;
 };
+
+async function deleteDigitalSalesRoom(groupId: number) {
+	return await ApiHelper.delete(`${PATH}/${groupId}`);
+}
+
+async function deleteDigitalSalesRoomTemplate(groupId: number) {
+	return await ApiHelper.delete(`${TEMPLATE_PATH}/${groupId}`);
+}
 
 async function getAccounts(accountName = ''): Promise<TAccountsDTO> {
 	const {data, error} = await ApiHelper.get(
@@ -148,6 +166,18 @@ async function getChannels(channelName = ''): Promise<TChannelsDTO> {
 
 	if (data) {
 		return data as TChannelsDTO;
+	}
+
+	throw new Error(error);
+}
+
+async function getDigitalSalesRoomTemplates(): Promise<TDSRTemplatesDTO> {
+	const {data, error} = await ApiHelper.get(
+		`${TEMPLATE_PATH}?nestedFields=fileBase64`
+	);
+
+	if (data) {
+		return data as TDSRTemplatesDTO;
 	}
 
 	throw new Error(error);
@@ -234,12 +264,46 @@ async function postDigitalSalesRoomTemplate({
 	throw new Error(error);
 }
 
-async function deleteDigitalSalesRoom(groupId: number) {
-	return await ApiHelper.delete(`${PATH}/${groupId}`);
-}
+async function postDigitalSalesRoomTemplateDigitalSalesRoom(
+	digitalSalesRoomTemplateId: number,
+	{
+		accountId,
+		banner,
+		channelId,
+		channelName,
+		clientLogo,
+		clientName,
+		description,
+		friendlyUrlPath,
+		name,
+		primaryColor,
+		secondaryColor,
+		userAccountBriefs,
+	}: TDSRPayload
+): Promise<TDSRDTO> {
+	const {data, error} = await ApiHelper.post(
+		`${TEMPLATE_PATH}/${digitalSalesRoomTemplateId}/digital-sales-rooms`,
+		{
+			accountId,
+			banner,
+			channelId,
+			channelName,
+			clientLogo,
+			clientName,
+			description,
+			friendlyUrlPath,
+			name,
+			primaryColor,
+			secondaryColor,
+			userAccountBriefs,
+		}
+	);
 
-async function deleteDigitalSalesRoomTemplate(groupId: number) {
-	return await ApiHelper.delete(`${TEMPLATE_PATH}/${groupId}`);
+	if (data) {
+		return data as TDSRDTO;
+	}
+
+	throw new Error(error);
 }
 
 export default {
@@ -247,7 +311,9 @@ export default {
 	deleteDigitalSalesRoomTemplate,
 	getAccounts,
 	getChannels,
+	getDigitalSalesRoomTemplates,
 	postDigitalSalesRoom,
 	postDigitalSalesRoomDigitalSalesRoomTemplate,
 	postDigitalSalesRoomTemplate,
+	postDigitalSalesRoomTemplateDigitalSalesRoom,
 };

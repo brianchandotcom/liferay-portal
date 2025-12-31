@@ -32,7 +32,12 @@ export default function propsTransformer({
 						onClick() {
 							const action = item?.data?.action;
 
-							if (action && action === 'addDigitalSalesRoom') {
+							if (
+								action &&
+								(action === 'addDigitalSalesRoom' ||
+									action ===
+										'addDigitalSalesRoomFromTemplate')
+							) {
 								return openModal({
 									containerProps: {
 										className: '',
@@ -44,7 +49,11 @@ export default function propsTransformer({
 									}) =>
 										DSRInitializer({
 											closeModal,
-											numberOfSteps: 3,
+											numberOfSteps:
+												action ===
+												'addDigitalSalesRoomFromTemplate'
+													? 4
+													: 3,
 										}),
 									size: 'md',
 								});

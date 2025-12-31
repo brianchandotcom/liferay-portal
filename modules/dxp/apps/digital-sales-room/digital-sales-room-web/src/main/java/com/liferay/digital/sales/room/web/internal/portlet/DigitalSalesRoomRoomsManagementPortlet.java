@@ -7,7 +7,9 @@ package com.liferay.digital.sales.room.web.internal.portlet;
 
 import com.liferay.digital.sales.room.web.internal.constants.DigitalSalesRoomPortletKeys;
 import com.liferay.digital.sales.room.web.internal.display.context.ViewDigitalSalesRoomListDisplayContext;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -54,7 +56,8 @@ public class DigitalSalesRoomRoomsManagementPortlet extends MVCPortlet {
 		ViewDigitalSalesRoomListDisplayContext
 			viewDigitalSalesRoomListDisplayContext =
 				new ViewDigitalSalesRoomListDisplayContext(
-					_portal.getHttpServletRequest(renderRequest));
+					_groupService, _portal.getHttpServletRequest(renderRequest),
+					_objectDefinitionLocalService, _portal);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -62,6 +65,12 @@ public class DigitalSalesRoomRoomsManagementPortlet extends MVCPortlet {
 
 		super.render(renderRequest, renderResponse);
 	}
+
+	@Reference
+	private GroupService _groupService;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private Portal _portal;

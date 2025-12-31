@@ -59,6 +59,7 @@ function getChannelId(
 function DSRRoomSettingsStep({
 	numberOfSteps,
 	setHandleStepSubmit,
+	step = 2,
 }: TDSRRoomDetailsStepProps) {
 	const {dataContext, setDataContext} = useContext<TDSRContext>(DSRContext);
 
@@ -204,7 +205,11 @@ function DSRRoomSettingsStep({
 		<>
 			<div>
 				<div className="mb-1 text-secondary" data-qa-id="stepLocator">
-					{sub(Liferay.Language.get('step-x-of-x'), 2, numberOfSteps)}
+					{sub(
+						Liferay.Language.get('step-x-of-x'),
+						step,
+						numberOfSteps
+					)}
 				</div>
 
 				<div

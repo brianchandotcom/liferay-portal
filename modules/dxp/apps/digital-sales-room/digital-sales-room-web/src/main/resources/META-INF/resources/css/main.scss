@@ -91,6 +91,29 @@
 	}
 }
 
+.dsr-select-template-modal {
+	.list-group-header {
+		background-color: transparent;
+		border: 0;
+		border-bottom: 1px solid $gray-200;
+		margin-bottom: 0;
+		padding-bottom: 1rem;
+	}
+
+	.list-group-item {
+		border: 0;
+		border-radius: 0.5rem;
+	}
+
+	.modal-body {
+		display: flex;
+
+		& > .row {
+			flex: 1;
+		}
+	}
+}
+
 .dsr-site-role-input {
 	.dsr-site-role-trigger-button {
 		background-color: transparent;
@@ -113,6 +136,34 @@
 
 	.cell-name {
 		max-width: 37rem;
+	}
+}
+
+.dsr-template-preview {
+	background: $gray-200 url(../images/success_state.svg) no-repeat center
+		center;
+	background-size: 16rem;
+	border: 1px solid $gray-200;
+	border-radius: 0.5rem;
+	height: 100%;
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+
+	iframe {
+		border: 0;
+		height: 100%;
+		width: 100%;
+		z-index: 1;
+	}
+
+	.iframe-wrapper {
+		bottom: 0;
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+		z-index: 10;
 	}
 }
 

@@ -1,6 +1,7 @@
 @component-name = "portal-content-management"
 definition {
 
+	property browser.chrome.version = "139.0";
 	property custom.properties = "feature.flag.LPD-35013=false";
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
 	property osgi.modules.includes = "wiki";

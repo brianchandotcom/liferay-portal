@@ -461,6 +461,111 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 	}
 
 	@Test
+	public void testGetDigitalSalesRoomTemplateDigitalSalesRoomsPage()
+		throws Exception {
+
+		Long digitalSalesRoomTemplateId =
+			testGetDigitalSalesRoomTemplateDigitalSalesRoomsPage_getDigitalSalesRoomTemplateId();
+		Long irrelevantDigitalSalesRoomTemplateId =
+			testGetDigitalSalesRoomTemplateDigitalSalesRoomsPage_getIrrelevantDigitalSalesRoomTemplateId();
+
+		Page<DigitalSalesRoom> page =
+			digitalSalesRoomResource.
+				getDigitalSalesRoomTemplateDigitalSalesRoomsPage(
+					digitalSalesRoomTemplateId);
+
+		long totalCount = page.getTotalCount();
+
+		if (irrelevantDigitalSalesRoomTemplateId != null) {
+			DigitalSalesRoom irrelevantDigitalSalesRoom =
+				testGetDigitalSalesRoomTemplateDigitalSalesRoomsPage_addDigitalSalesRoom(
+					irrelevantDigitalSalesRoomTemplateId,
+					randomIrrelevantDigitalSalesRoom());
+
+			page =
+				digitalSalesRoomResource.
+					getDigitalSalesRoomTemplateDigitalSalesRoomsPage(
+						irrelevantDigitalSalesRoomTemplateId);
+
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(
+				irrelevantDigitalSalesRoom,
+				(List<DigitalSalesRoom>)page.getItems());
+			assertValid(
+				page,
+				testGetDigitalSalesRoomTemplateDigitalSalesRoomsPage_getExpectedActions(
+					irrelevantDigitalSalesRoomTemplateId));
+		}
+
+		DigitalSalesRoom digitalSalesRoom1 =
+			testGetDigitalSalesRoomTemplateDigitalSalesRoomsPage_addDigitalSalesRoom(
+				digitalSalesRoomTemplateId, randomDigitalSalesRoom());
+
+		DigitalSalesRoom digitalSalesRoom2 =
+			testGetDigitalSalesRoomTemplateDigitalSalesRoomsPage_addDigitalSalesRoom(
+				digitalSalesRoomTemplateId, randomDigitalSalesRoom());
+
+		page =
+			digitalSalesRoomResource.
+				getDigitalSalesRoomTemplateDigitalSalesRoomsPage(
+					digitalSalesRoomTemplateId);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(
+			digitalSalesRoom1, (List<DigitalSalesRoom>)page.getItems());
+		assertContains(
+			digitalSalesRoom2, (List<DigitalSalesRoom>)page.getItems());
+		assertValid(
+			page,
+			testGetDigitalSalesRoomTemplateDigitalSalesRoomsPage_getExpectedActions(
+				digitalSalesRoomTemplateId));
+
+		digitalSalesRoomResource.deleteDigitalSalesRoom(
+			digitalSalesRoom1.getId());
+
+		digitalSalesRoomResource.deleteDigitalSalesRoom(
+			digitalSalesRoom2.getId());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetDigitalSalesRoomTemplateDigitalSalesRoomsPage_getExpectedActions(
+				Long digitalSalesRoomTemplateId)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	protected DigitalSalesRoom
+			testGetDigitalSalesRoomTemplateDigitalSalesRoomsPage_addDigitalSalesRoom(
+				Long digitalSalesRoomTemplateId,
+				DigitalSalesRoom digitalSalesRoom)
+		throws Exception {
+
+		return digitalSalesRoomResource.
+			postDigitalSalesRoomTemplateDigitalSalesRoom(
+				digitalSalesRoomTemplateId, digitalSalesRoom);
+	}
+
+	protected Long
+			testGetDigitalSalesRoomTemplateDigitalSalesRoomsPage_getDigitalSalesRoomTemplateId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetDigitalSalesRoomTemplateDigitalSalesRoomsPage_getIrrelevantDigitalSalesRoomTemplateId()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
 	public void testGetDigitalSalesRoomsPage() throws Exception {
 		Page<DigitalSalesRoom> page =
 			digitalSalesRoomResource.getDigitalSalesRoomsPage(
@@ -657,6 +762,31 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostDigitalSalesRoomTemplateDigitalSalesRoom()
+		throws Exception {
+
+		DigitalSalesRoom randomDigitalSalesRoom = randomDigitalSalesRoom();
+
+		DigitalSalesRoom postDigitalSalesRoom =
+			testPostDigitalSalesRoomTemplateDigitalSalesRoom_addDigitalSalesRoom(
+				randomDigitalSalesRoom);
+
+		assertEquals(randomDigitalSalesRoom, postDigitalSalesRoom);
+		assertValid(postDigitalSalesRoom);
+	}
+
+	protected DigitalSalesRoom
+			testPostDigitalSalesRoomTemplateDigitalSalesRoom_addDigitalSalesRoom(
+				DigitalSalesRoom digitalSalesRoom)
+		throws Exception {
+
+		return digitalSalesRoomResource.
+			postDigitalSalesRoomTemplateDigitalSalesRoom(
+				testGetDigitalSalesRoomTemplateDigitalSalesRoomsPage_getDigitalSalesRoomTemplateId(),
+				digitalSalesRoom);
 	}
 
 	protected void assertContains(

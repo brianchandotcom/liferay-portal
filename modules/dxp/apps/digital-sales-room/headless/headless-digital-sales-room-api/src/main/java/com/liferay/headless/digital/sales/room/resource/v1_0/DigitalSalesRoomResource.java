@@ -49,6 +49,11 @@ public interface DigitalSalesRoomResource {
 	public DigitalSalesRoom getDigitalSalesRoom(Long digitalSalesRoomId)
 		throws Exception;
 
+	public Page<DigitalSalesRoom>
+			getDigitalSalesRoomTemplateDigitalSalesRoomsPage(
+				Long digitalSalesRoomTemplateId)
+		throws Exception;
+
 	public Page<DigitalSalesRoom> getDigitalSalesRoomsPage(
 			String search, Pagination pagination)
 		throws Exception;
@@ -59,6 +64,10 @@ public interface DigitalSalesRoomResource {
 
 	public DigitalSalesRoom postDigitalSalesRoom(
 			DigitalSalesRoom digitalSalesRoom)
+		throws Exception;
+
+	public DigitalSalesRoom postDigitalSalesRoomTemplateDigitalSalesRoom(
+			Long digitalSalesRoomTemplateId, DigitalSalesRoom digitalSalesRoom)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

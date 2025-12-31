@@ -247,13 +247,13 @@ html = html.trim();
 	<%= html %>
 </ul>
 
-<c:if test='<%= type.equals(Constants.EXPORT) && (FeatureFlagManagerUtil.isEnabled(company.getCompanyId(), "LPD-69419") || !stagingGroupHelper.isCompanyGroup(group)) %>'>
+<c:if test='<%= type.equals(Constants.EXPORT) && (FeatureFlagManagerUtil.isEnabled(company.getCompanyId(), "LPD-43996") || !stagingGroupHelper.isCompanyGroup(group)) %>'>
 	<liferay-util:buffer
 		var="selectedContentOptionsLabel"
 	>
 		<liferay-ui:message key="for-each-of-the-selected-content-types,-export-their" />
 
-		<c:if test='<%= !FeatureFlagManagerUtil.isEnabled(company.getCompanyId(), "LPD-69419") %>'>
+		<c:if test='<%= !FeatureFlagManagerUtil.isEnabled(company.getCompanyId(), "LPD-43996") %>'>
 			<span aria-label="<%= LanguageUtil.get(request, "comments-associated-to-object-entries-are-currently-excluded-from-the-export") %>" class="lfr-portal-tooltip ml-1" title="<%= LanguageUtil.get(request, "comments-associated-to-object-entries-are-currently-excluded-from-the-export") %>">
 				<clay:icon
 					symbol="question-circle-full"

@@ -73,7 +73,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 
 		if (!_objectDefinition.isEnableComments() ||
 			!FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-69419")) {
+				_objectDefinition.getCompanyId(), "LPD-43996")) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -101,7 +101,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 
 		if (!_objectDefinition.isEnableComments() ||
 			!FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-69419")) {
+				_objectDefinition.getCompanyId(), "LPD-43996")) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -199,7 +199,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 
 		if (!_objectDefinition.isEnableComments() ||
 			!FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-69419")) {
+				_objectDefinition.getCompanyId(), "LPD-43996")) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -220,7 +220,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 
 		if (!_objectDefinition.isEnableComments() ||
 			!FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-69419")) {
+				_objectDefinition.getCompanyId(), "LPD-43996")) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -250,7 +250,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 
 		if (!_objectDefinition.isEnableComments() ||
 			!FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-69419")) {
+				_objectDefinition.getCompanyId(), "LPD-43996")) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -271,7 +271,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 
 		if (!_objectDefinition.isEnableComments() ||
 			!FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-69419")) {
+				_objectDefinition.getCompanyId(), "LPD-43996")) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -302,7 +302,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 
 		if (!_objectDefinition.isEnableComments() ||
 			!FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-69419")) {
+				_objectDefinition.getCompanyId(), "LPD-43996")) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -333,7 +333,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 
 		if (!_objectDefinition.isEnableComments() ||
 			!FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-69419")) {
+				_objectDefinition.getCompanyId(), "LPD-43996")) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -443,7 +443,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 
 		if (!_objectDefinition.isEnableComments() ||
 			!FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-69419")) {
+				_objectDefinition.getCompanyId(), "LPD-43996")) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -472,7 +472,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 
 		if (!_objectDefinition.isEnableComments() ||
 			!FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-69419")) {
+				_objectDefinition.getCompanyId(), "LPD-43996")) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -527,7 +527,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 
 		if (!_objectDefinition.isEnableComments() ||
 			!FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-69419")) {
+				_objectDefinition.getCompanyId(), "LPD-43996")) {
 
 			throw new UnsupportedOperationException();
 		}

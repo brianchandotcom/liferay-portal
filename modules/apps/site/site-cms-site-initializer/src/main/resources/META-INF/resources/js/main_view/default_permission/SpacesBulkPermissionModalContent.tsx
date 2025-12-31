@@ -7,10 +7,10 @@ import '../../../css/components/DefaultPermission.scss';
 
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
-import {openModal} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
+import {openCMSModal} from '../../common/utils/openCMSModal';
 import {triggerAssetBulkAction} from '../props_transformer/actions/triggerAssetBulkAction';
 import {DEPOT_CLASS_NAME} from './BulkDefaultPermissionModalContent';
 import DefaultPermissionForm from './DefaultPermissionForm';
@@ -31,10 +31,7 @@ export function permissionsBulkAction({
 	selectedData: any;
 	spacePermissionAdditionalProps: any;
 }) {
-	return openModal({
-		containerProps: {
-			className: '',
-		},
+	return openCMSModal({
 		contentComponent: ({closeModal}: {closeModal: () => void}) =>
 			SpacesBulkPermissionModalContent({
 				...spacePermissionAdditionalProps,

@@ -13,10 +13,10 @@ import ClayList from '@clayui/list';
 import ClayModal from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import {openModal} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 
+import {openCMSModal} from '../../utils/openCMSModal';
 import {AssetIcon, MimeTypes} from '../AssetIcon';
 import {BulkActionItem, BulkActionItemResponse} from './types';
 import {fetchUsageAssetData, openDetailedAssetUsageModal} from './utils';
@@ -216,10 +216,7 @@ const AssetUsageListModal: React.FC<IAssetUsageListModalProps> = ({
 		openDetailedAssetUsageModal({
 			item,
 			onClose: () => {
-				openModal({
-					containerProps: {
-						className: '',
-					},
+				openCMSModal({
 					contentComponent: ({
 						closeModal,
 					}: {

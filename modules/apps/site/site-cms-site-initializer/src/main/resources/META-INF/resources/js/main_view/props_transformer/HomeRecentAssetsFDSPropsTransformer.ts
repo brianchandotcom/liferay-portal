@@ -4,10 +4,10 @@
  */
 
 import {IInternalRenderer, replaceTokens} from '@liferay/frontend-data-set-web';
-import {openModal} from 'frontend-js-components-web';
 
 import {openAssetUsageListModal} from '../../common/components/asset_usage/utils';
 import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../common/utils/constants';
+import {openCMSModal} from '../../common/utils/openCMSModal';
 import DefaultPermissionModalContent from '../default_permission/DefaultPermissionModalContent';
 import openResetAssetPermissionModal from '../default_permission/ResetPermissionModalContent';
 import AssetNavigationModalContent from '../modal/asset_navigation_view/AssetNavigationModalContent';
@@ -113,10 +113,7 @@ export default function HomeRecentAssetsFDSPropsTransformer({
 				action?.data?.id === 'default-permissions' ||
 				action?.data?.id === 'edit-and-propagate-default-permissions'
 			) {
-				openModal({
-					containerProps: {
-						className: '',
-					},
+				openCMSModal({
 					contentComponent: ({
 						closeModal,
 					}: {
@@ -160,10 +157,7 @@ export default function HomeRecentAssetsFDSPropsTransformer({
 			) {
 				event?.preventDefault();
 
-				openModal({
-					containerProps: {
-						className: '',
-					},
+				openCMSModal({
 					size: 'full-screen',
 					title: action.label,
 					url: replaceTokens(action.href, itemData),
@@ -186,10 +180,7 @@ export default function HomeRecentAssetsFDSPropsTransformer({
 					(item: any) => item.embedded.id === itemData.embedded.id
 				);
 
-				openModal({
-					containerProps: {
-						className: '',
-					},
+				openCMSModal({
 					contentComponent: () =>
 						AssetNavigationModalContent({
 							additionalProps,

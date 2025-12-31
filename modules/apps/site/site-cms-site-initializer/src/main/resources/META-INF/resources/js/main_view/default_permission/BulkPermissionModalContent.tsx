@@ -10,7 +10,6 @@ import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal from '@clayui/modal';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import {openModal} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
@@ -18,6 +17,7 @@ import CMSDefaultPermissionService from '../../common/services/CMSDefaultPermiss
 import SpaceService from '../../common/services/SpaceService';
 import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../common/utils/constants';
 import {getScopeExternalReferenceCode} from '../../common/utils/getScopeExternalReferenceCode';
+import {openCMSModal} from '../../common/utils/openCMSModal';
 import {triggerAssetBulkAction} from '../props_transformer/actions/triggerAssetBulkAction';
 import {
 	DEFAULT_PERMISSIONS,
@@ -47,10 +47,7 @@ export function permissionsBulkAction({
 	selectedData: any;
 	singleRoleMode?: boolean;
 }) {
-	return openModal({
-		containerProps: {
-			className: '',
-		},
+	return openCMSModal({
 		contentComponent: ({closeModal}: {closeModal: () => void}) =>
 			BulkPermissionModalContent({
 				...defaultPermissionAdditionalProps,

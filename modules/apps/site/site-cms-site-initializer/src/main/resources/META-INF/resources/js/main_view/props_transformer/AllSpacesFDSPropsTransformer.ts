@@ -4,9 +4,9 @@
  */
 
 import {IInternalRenderer} from '@liferay/frontend-data-set-web';
-import {openModal} from 'frontend-js-components-web';
 import {navigate, sub} from 'frontend-js-web';
 
+import {openCMSModal} from '../../common/utils/openCMSModal';
 import {defaultPermissionsBulkAction} from '../default_permission/BulkDefaultPermissionModalContent';
 import DefaultPermissionModalContent from '../default_permission/DefaultPermissionModalContent';
 import {permissionsBulkAction} from '../default_permission/SpacesBulkPermissionModalContent';
@@ -108,10 +108,7 @@ export default function AllSpacesFDSPropsTransformer({
 				action.data.id === 'default-permissions' ||
 				action.data.id === 'edit-and-propagate-default-permissions'
 			) {
-				openModal({
-					containerProps: {
-						className: '',
-					},
+				openCMSModal({
 					contentComponent: ({
 						closeModal,
 					}: {

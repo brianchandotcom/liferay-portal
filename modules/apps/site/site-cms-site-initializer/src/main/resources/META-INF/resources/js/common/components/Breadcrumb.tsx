@@ -7,7 +7,7 @@ import ClayBreadcrumb from '@clayui/breadcrumb';
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown, {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClaySticker from '@clayui/sticker';
-import {openModal, openToast} from 'frontend-js-components-web';
+import {openToast} from 'frontend-js-components-web';
 import {navigate} from 'frontend-js-web';
 import React, {ComponentProps} from 'react';
 
@@ -15,6 +15,7 @@ import DefaultPermissionModalContent from '../../main_view/default_permission/De
 import {DefaultPermissionModalContentProps} from '../../main_view/default_permission/DefaultPermissionTypes';
 import ApiHelper from '../services/ApiHelper';
 import {LogoColor} from '../types/Space';
+import {openCMSModal} from '../utils/openCMSModal';
 import {displayErrorToast} from '../utils/toastUtil';
 import SpaceSticker from './SpaceSticker';
 
@@ -58,10 +59,7 @@ function ActionDropdownItem({
 }: {label: string} & ActionDropdownItemProps) {
 	const handleTargetAction = async () => {
 		if (target === 'modal') {
-			openModal({
-				containerProps: {
-					className: '',
-				},
+			openCMSModal({
 				size,
 				title: label,
 				url: href,
@@ -92,10 +90,7 @@ function ActionDropdownItem({
 			target === 'defaultPermissionsModal' &&
 			defaultPermissionAdditionalProps
 		) {
-			openModal({
-				containerProps: {
-					className: '',
-				},
+			openCMSModal({
 				contentComponent: ({closeModal}: {closeModal: () => void}) =>
 					DefaultPermissionModalContent({
 						...defaultPermissionAdditionalProps,
@@ -111,7 +106,7 @@ function ActionDropdownItem({
 
 	const handleClick = () => {
 		if (confirmationMessage) {
-			openModal({
+			openCMSModal({
 				bodyHTML: confirmationMessage,
 				buttons: [
 					{
@@ -129,9 +124,6 @@ function ActionDropdownItem({
 						},
 					},
 				],
-				containerProps: {
-					className: '',
-				},
 				role: 'alertdialog',
 				status: 'danger',
 				title: confirmationTitle || Liferay.Language.get('delete'),

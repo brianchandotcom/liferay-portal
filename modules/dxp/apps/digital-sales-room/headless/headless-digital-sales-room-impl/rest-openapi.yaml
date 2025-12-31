@@ -238,6 +238,57 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/DigitalSalesRoomTemplate"
             tags: ["DigitalSalesRoomTemplate"]
+    "/digital-sales-room-templates/{digitalSalesRoomTemplateId}/digital-sales-rooms":
+        get:
+            operationId: getDigitalSalesRoomTemplateDigitalSalesRoomsPage
+            parameters:
+                -   in: path
+                    name: digitalSalesRoomTemplateId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DigitalSalesRoom"
+                                    type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DigitalSalesRoom"
+                                    type: array
+            tags: ["DigitalSalesRoom"]
+        post:
+            operationId: postDigitalSalesRoomTemplateDigitalSalesRoom
+            parameters:
+                -   in: path
+                    name: digitalSalesRoomTemplateId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DigitalSalesRoom"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DigitalSalesRoom"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DigitalSalesRoom"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DigitalSalesRoom"
+            tags: ["DigitalSalesRoom"]
     "/digital-sales-rooms":
         get:
             operationId: getDigitalSalesRoomsPage

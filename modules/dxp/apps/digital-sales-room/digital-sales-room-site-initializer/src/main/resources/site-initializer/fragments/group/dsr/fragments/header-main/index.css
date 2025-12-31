@@ -25,6 +25,7 @@
 
 .dsr-header-banner {
 	align-items: center;
+	background-color: var(--gray-200);
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: 100% auto;

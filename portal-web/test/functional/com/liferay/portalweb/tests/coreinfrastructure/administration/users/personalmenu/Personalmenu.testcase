@@ -419,6 +419,8 @@ definition {
 
 	@priority = 4
 	test ViewMyAccountViaSignInPortlet {
+		property browser.chrome.version = "139.0";
+
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");

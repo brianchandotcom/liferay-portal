@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CustomizedPages;
 import com.liferay.portal.kernel.model.Group;
@@ -345,7 +346,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 	@Override
 	@Test
-	@TestInfo("LPD-75450")
+	@TestInfo({"LPD-74331", "LPD-75450"})
 	public void testPutSiteSitePage() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -355,6 +356,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testPutSiteSitePage(serviceContext, SitePage.Type.WIDGET_PAGE);
 
 		_testPutSiteSitePageWithExportedSitePage();
+		_testPutSiteSitePageWithExportedSitePageWithLayoutIdFriendlyURL();
 		_testPutSiteSitePageWithPageElements();
 		_testPutSiteSitePageWithPageExperiences();
 		_testPutSiteSitePageWithPageSpecifications();
@@ -2146,6 +2148,39 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		_testPutSiteSitePage(sitePage, irrelevantGroup, sitePage);
 		_testPutSiteSitePage(sitePage, testGroup, sitePage);
+	}
+
+	private void _testPutSiteSitePageWithExportedSitePageWithLayoutIdFriendlyURL()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(irrelevantGroup);
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+
+		String layoutIdFriendlyURL = StringPool.SLASH + layout.getLayoutId();
+
+		layout = LayoutTestUtil.updateFriendlyURL(
+			layout,
+			HashMapBuilder.put(
+				LocaleUtil.SPAIN, layoutIdFriendlyURL
+			).put(
+				LocaleUtil.US, layoutIdFriendlyURL
+			).build());
+
+		for (Locale locale :
+				LanguageUtil.getAvailableLocales(
+					irrelevantGroup.getGroupId())) {
+
+			Assert.assertEquals(
+				layoutIdFriendlyURL, layout.getFriendlyURL(locale));
+		}
+
+		sitePageResource.putSiteSitePage(
+			testGroup.getExternalReferenceCode(),
+			layout.getExternalReferenceCode(),
+			sitePageResource.getSiteSitePage(
+				irrelevantGroup.getExternalReferenceCode(),
+				layout.getExternalReferenceCode()));
 	}
 
 	private void _testPutSiteSitePageWithPageElements() throws Exception {

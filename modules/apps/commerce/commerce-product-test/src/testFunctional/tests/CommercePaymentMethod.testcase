@@ -129,6 +129,7 @@ definition {
 	@description = "Verify an activated offline payment method can be used for an order."
 	@priority = 5
 	test AnOfflinePaymentMethodCanBeUsedForAnOrder {
+		property browser.chrome.version = "139.0";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -290,6 +291,7 @@ definition {
 	@description = "Verify an activated offline payment method can be selected for an order when multiple payment methods are active."
 	@priority = 3
 	test CreateOrderWithMultipleActivePaymentMethods {
+		property browser.chrome.version = "139.0";
 		property portal.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

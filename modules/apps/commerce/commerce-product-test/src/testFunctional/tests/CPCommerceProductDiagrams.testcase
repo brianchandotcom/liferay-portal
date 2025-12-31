@@ -97,6 +97,7 @@ definition {
 	@description = "This is a test for COMMERCE-8865. CanDragFunctionWorkAfterDoubleClickOnMappedProduct"
 	@priority = 4
 	test CanDragFunctionWorkAfterDoubleClickOnMappedProduct {
+		property browser.chrome.version = "139.0";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site") {
@@ -632,6 +633,7 @@ definition {
 	@description = "Verify user can use the pin tooltip to edit the information of a diagram product image pin"
 	@priority = 3
 	test UseToolTip {
+		property browser.chrome.version = "139.0";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site") {
@@ -694,6 +696,7 @@ definition {
 	@description = "This test asserts that the Mapped Products Table saves all info from pins"
 	@priority = 5
 	test VerifyMappedProductsTableSavesAllPins {
+		property browser.chrome.version = "139.0";
 		property portal.acceptance = "true";
 
 		task ("Given a minium site") {

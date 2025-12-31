@@ -361,6 +361,7 @@ definition {
 	@description = "This is a test for the ticket COMMERCE-9941"
 	@priority = 5
 	test CanDeleteVersionableProducts {
+		property browser.chrome.version = "139.0";
 		property portal.acceptance = "true";
 
 		task ("Given the admin has already created a new simple product and When the admin opens the product that was created before") {

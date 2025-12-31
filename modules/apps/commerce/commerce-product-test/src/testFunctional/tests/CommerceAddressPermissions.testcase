@@ -56,6 +56,7 @@ definition {
 	@description = "Verify buyers without the View Addresses permission cannot view addresses on the addresses list."
 	@priority = 5
 	test CanBuyerRoleViewAddressesWithPermission {
+		property browser.chrome.version = "139.0";
 		property portal.acceptance = "true";
 
 		task ("Given the buyer role doesn't have permission to view addresses") {

@@ -429,4 +429,177 @@ describe('DSRInitializer', () => {
 			],
 		});
 	});
+
+	it('calls API on save button with four steps', async () => {
+		fetchMock.get(/headless-admin-user\/.*\/accounts.*/i, () => {
+			return {
+				items: [
+					{
+						id: 100,
+						name: 'account1',
+					},
+					{
+						id: 101,
+						name: 'account2',
+					},
+				],
+			};
+		});
+		fetchMock.get(
+			/headless-commerce-delivery-catalog\/.*\/channels.*/i,
+			() => {
+				return {
+					items: [
+						{
+							id: 200,
+							name: 'channel1',
+						},
+						{
+							id: 201,
+							name: 'channel2',
+						},
+					],
+				};
+			}
+		);
+		fetchMock.get(
+			/headless-digital-sales-room\/.*\/digital-sales-room-templates.*/i,
+			() => {
+				return {
+					items: [
+						{
+							banner: {
+								fileBase64: '/9j/4template1BannerBase64',
+							},
+							clientLogo: {
+								fileBase64: '/9j/4template1ClientLogoBase64',
+							},
+							description: 'template1descr',
+							id: 100,
+							name: 'template1',
+							primaryColor: 'red',
+							secondaryColor: 'green',
+						},
+						{
+							banner: {
+								fileBase64: '/9j/4template2BannerBase64',
+							},
+							clientLogo: {
+								fileBase64: '/9j/4template2ClientLogoBase64',
+							},
+							description: 'template2descr',
+							id: 101,
+							name: 'template2',
+							primaryColor: 'black',
+							secondaryColor: 'white',
+						},
+					],
+				};
+			}
+		);
+
+		const spyOnPostDigitalSalesRoomTemplateDigitalSalesRoom = jest.spyOn(
+			DigitalSalesRoomService,
+			'postDigitalSalesRoomTemplateDigitalSalesRoom'
+		);
+
+		renderComponent({
+			closeModal: jest.fn(),
+			numberOfSteps: 4,
+		});
+
+		await waitFor(() => {
+			expect(screen.getByTestId(`template_${100}`)).toBeInTheDocument();
+			expect(screen.getByTestId(`template_${101}`)).toBeInTheDocument();
+		});
+
+		await waitFor(() => {
+			screen.getByRole('button', {name: 'next'}).click();
+		});
+
+		expect(screen.queryByTestId('clientNameInput')).not.toBeInTheDocument();
+
+		await waitFor(() => {
+			screen.getByTestId(`templateName_${101}`).click();
+		});
+
+		await waitFor(() => {
+			screen.getByRole('button', {name: 'next'}).click();
+		});
+
+		await waitFor(() => {
+			expect(screen.getByTestId('clientNameInput')).toBeInTheDocument();
+		});
+
+		expect(screen.getByTestId('primaryColorInput')).toHaveValue('black');
+		expect(screen.getByTestId('secondaryColorInput')).toHaveValue('white');
+
+		await setFieldValue(
+			screen.getByTestId('clientNameInput'),
+			'testClientName'
+		);
+		await setFieldValue(
+			screen.getByTestId('roomNameInput'),
+			'testRoomName'
+		);
+		await setFieldValue(
+			screen.getByTestId('friendlyURLInput'),
+			'testFriendlyURL'
+		);
+
+		await waitFor(() => {
+			screen.getByRole('button', {name: 'next'}).click();
+		});
+
+		await setFieldValue(screen.getByTestId('selectAccountInput'), 'ac');
+		screen.getByRole('option', {name: 'account1'}).click();
+		await setFieldValue(screen.getByTestId('selectChannelInput'), 'ch');
+		screen.getByRole('option', {name: 'channel2'}).click();
+
+		await waitFor(() => {
+			screen.getByRole('button', {name: 'next'}).click();
+		});
+
+		await waitFor(async () => {
+			await userEvent.type(
+				screen.getByTestId('emailAddressesInput'),
+				'test@liferay.com, test1@liferay.com,'
+			);
+			screen.getByTestId('roleKeyButton').click();
+			screen.getByTestId('roleKeyItem_edit').click();
+		});
+
+		await waitFor(() => {
+			screen.getByRole('button', {name: 'save'}).click();
+		});
+
+		expect(
+			spyOnPostDigitalSalesRoomTemplateDigitalSalesRoom
+		).toBeCalledWith(101, {
+			accountId: 100,
+			banner: {
+				fileBase64: '/9j/4template2BannerBase64',
+			},
+			channelId: 201,
+			channelName: 'channel2',
+			clientLogo: {
+				fileBase64: '/9j/4template2ClientLogoBase64',
+			},
+			clientName: 'testClientName',
+			friendlyUrlPath: '/testFriendlyURL',
+			name: 'testRoomName',
+			primaryColor: 'black',
+			secondaryColor: 'white',
+			userAccountBriefs: [
+				{
+					emailAddress: 'test@liferay.com',
+					roleKey: 'Site Administrator',
+				},
+				{
+					emailAddress: 'test1@liferay.com',
+					roleKey: 'Site Administrator',
+				},
+			],
+		});
+	});
 });

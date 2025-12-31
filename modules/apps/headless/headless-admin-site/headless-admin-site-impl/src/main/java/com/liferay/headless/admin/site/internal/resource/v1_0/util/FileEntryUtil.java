@@ -69,17 +69,19 @@ public class FileEntryUtil {
 
 		options.setLocation(thumbnailURLReference.getUrl());
 
-		InputStream inputStream = HttpUtil.URLtoInputStream(options);
+		File file = null;
 
-		Http.Response response = options.getResponse();
+		try (InputStream inputStream = HttpUtil.URLtoInputStream(options)) {
+			Http.Response response = options.getResponse();
 
-		if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
-			throw new IllegalArgumentException(
-				"Unable to download file from " +
-					thumbnailURLReference.getUrl());
+			if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
+				throw new IllegalArgumentException(
+					"Unable to download file from " +
+						thumbnailURLReference.getUrl());
+			}
+
+			file = FileUtil.createTempFile(inputStream);
 		}
-
-		File file = FileUtil.createTempFile(inputStream);
 
 		String mimeType = MimeTypesUtil.getContentType(file);
 

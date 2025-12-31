@@ -19,6 +19,7 @@ definition {
 
 	@priority = 4
 	test ViewStoreFrontSimpleProduct {
+		property browser.chrome.version = "139.0";
 		property portal.acceptance = "false";
 
 		CommerceNavigator.gotoPortlet(

@@ -20,6 +20,7 @@ definition {
 	@description = "Verify users can view the end of life date for a discontinued product in the product details page"
 	@priority = 5
 	test AssertEndOfLifeDateIsVisibleInProductDetailsPage {
+		property browser.chrome.version = "139.0";
 		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
@@ -126,6 +127,7 @@ definition {
 	@description = "COMMERCE-9093. As a buyer, I want to be able to view a discontinued product's information on the product card."
 	@priority = 3
 	test CanViewDiscontinuedProductInformationOnProductCard {
+		property browser.chrome.version = "139.0";
 		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 

@@ -243,6 +243,7 @@ definition {
 	@description = "This is a test for COMMERCE-11432. Users can view the Mercanet secret key as masked from both page and page's HTML source"
 	@priority = 3
 	test CanViewMercanetSecretKeyisMasked {
+		property browser.chrome.version = "139.0";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site is created") {
@@ -342,6 +343,7 @@ definition {
 	@description = "This is a test for COMMERCE-6218. MoneyOrder Payment Method lifecycle"
 	@priority = 5
 	test MoneyOrderCheckout {
+		property browser.chrome.version = "139.0";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

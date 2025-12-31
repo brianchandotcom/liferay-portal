@@ -20,6 +20,7 @@ definition {
 	@description = "This is a test for COMMERCE-6062. AddAProductRelations"
 	@priority = 3
 	test AddAProductRelations {
+		property browser.chrome.version = "139.0";
 		property portal.acceptance = "false";
 
 		CommerceProducts.openProductsAdmin();
@@ -153,6 +154,7 @@ definition {
 	@description = "This is a test for COMMERCE-8308. SearchProductRelations"
 	@priority = 5
 	test SearchProductRelations {
+		property browser.chrome.version = "139.0";
 		property portal.acceptance = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");

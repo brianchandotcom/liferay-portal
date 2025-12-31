@@ -2189,12 +2189,18 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			layout.getExternalReferenceCode(),
 			testGroupLayout.getExternalReferenceCode());
 
-		sitePageResource.putSiteSitePage(
+		SitePage sitePage = sitePageResource.getSiteSitePage(
+			irrelevantGroup.getExternalReferenceCode(),
+			layout.getExternalReferenceCode());
+
+		Assert.assertTrue(MapUtil.isEmpty(sitePage.getFriendlyUrlPath_i18n()));
+
+		SitePage importedSitePage = sitePageResource.putSiteSitePage(
 			testGroup.getExternalReferenceCode(),
-			layout.getExternalReferenceCode(),
-			sitePageResource.getSiteSitePage(
-				irrelevantGroup.getExternalReferenceCode(),
-				layout.getExternalReferenceCode()));
+			layout.getExternalReferenceCode(), sitePage);
+
+		Assert.assertTrue(
+			MapUtil.isNotEmpty(importedSitePage.getFriendlyUrlPath_i18n()));
 	}
 
 	private void _testPutSiteSitePageWithPageElements() throws Exception {

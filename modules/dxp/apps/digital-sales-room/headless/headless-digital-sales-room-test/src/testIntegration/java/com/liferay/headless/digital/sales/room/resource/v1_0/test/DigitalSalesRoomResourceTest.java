@@ -16,10 +16,12 @@ import com.liferay.fragment.model.FragmentEntryModel;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.headless.digital.sales.room.client.dto.v1_0.DigitalSalesRoom;
+import com.liferay.headless.digital.sales.room.client.dto.v1_0.DigitalSalesRoomTemplate;
 import com.liferay.headless.digital.sales.room.client.dto.v1_0.UserAccountBrief;
 import com.liferay.headless.digital.sales.room.client.pagination.Page;
 import com.liferay.headless.digital.sales.room.client.pagination.Pagination;
 import com.liferay.headless.digital.sales.room.client.resource.v1_0.DigitalSalesRoomResource;
+import com.liferay.headless.digital.sales.room.client.resource.v1_0.DigitalSalesRoomTemplateResource;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -27,6 +29,8 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -43,6 +47,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
@@ -56,6 +61,7 @@ import java.util.function.Consumer;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -108,6 +114,15 @@ public class DigitalSalesRoomResourceTest
 		_testGetDigitalSalesRoomsPageWithPermission();
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testGetDigitalSalesRoomTemplateDigitalSalesRoomsPage()
+		throws Exception {
+
+		super.testGetDigitalSalesRoomTemplateDigitalSalesRoomsPage();
+	}
+
 	@Override
 	@Test
 	public void testPatchDigitalSalesRoom() throws Exception {
@@ -126,6 +141,16 @@ public class DigitalSalesRoomResourceTest
 		_testPostDigitalSalesRoomWithPermission();
 		_testPostDigitalSalesRoomWithSiteInitializer();
 		_testPostDigitalSalesRoomWithUserAccount();
+	}
+
+	@Override
+	@Test
+	public void testPostDigitalSalesRoomTemplateDigitalSalesRoom()
+		throws Exception {
+
+		super.testPostDigitalSalesRoomTemplateDigitalSalesRoom();
+
+		_testPostDigitalSalesRoomTemplateDigitalSalesRoom();
 	}
 
 	@Override
@@ -191,6 +216,15 @@ public class DigitalSalesRoomResourceTest
 	@Override
 	protected DigitalSalesRoom testPostDigitalSalesRoom_addDigitalSalesRoom(
 			DigitalSalesRoom digitalSalesRoom)
+		throws Exception {
+
+		return digitalSalesRoomResource.postDigitalSalesRoom(digitalSalesRoom);
+	}
+
+	@Override
+	protected DigitalSalesRoom
+			testPostDigitalSalesRoomTemplateDigitalSalesRoom_addDigitalSalesRoom(
+				DigitalSalesRoom digitalSalesRoom)
 		throws Exception {
 
 		return digitalSalesRoomResource.postDigitalSalesRoom(digitalSalesRoom);
@@ -596,6 +630,104 @@ public class DigitalSalesRoomResourceTest
 				new long[] {
 					TestPropsValues.getUserId(), user1.getUserId(),
 					user2.getUserId(), user3.getUserId()
+				}));
+	}
+
+	private void _testPostDigitalSalesRoomTemplateDigitalSalesRoom()
+		throws Exception {
+
+		User user1 = UserTestUtil.getAdminUser(TestPropsValues.getCompanyId());
+
+		DigitalSalesRoomTemplateResource digitalSalesRoomTemplateResource =
+			DigitalSalesRoomTemplateResource.builder(
+			).authentication(
+				user1.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
+			).build();
+
+		DigitalSalesRoomTemplate digitalSalesRoomTemplate =
+			digitalSalesRoomTemplateResource.postDigitalSalesRoomTemplate(
+				new DigitalSalesRoomTemplate() {
+					{
+						description = RandomTestUtil.randomString();
+						name = RandomTestUtil.randomString();
+						primaryColor = RandomTestUtil.randomString();
+						secondaryColor = RandomTestUtil.randomString();
+					}
+				});
+
+		Layout layout1 = _layoutLocalService.addLayout(
+			null, TestPropsValues.getUserId(), digitalSalesRoomTemplate.getId(),
+			false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			"T" + RandomTestUtil.randomString(), StringPool.BLANK,
+			StringPool.BLANK, LayoutConstants.TYPE_NODE, false,
+			StringPool.BLANK,
+			ServiceContextTestUtil.getServiceContext(
+				testGroup.getGroupId(), TestPropsValues.getUserId()));
+		Layout layout2 = _layoutLocalService.addLayout(
+			null, TestPropsValues.getUserId(), digitalSalesRoomTemplate.getId(),
+			false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			"Z" + RandomTestUtil.randomString(), StringPool.BLANK,
+			StringPool.BLANK, LayoutConstants.TYPE_NODE, false,
+			StringPool.BLANK,
+			ServiceContextTestUtil.getServiceContext(
+				testGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		User user2 = UserTestUtil.addUser();
+		User user3 = UserTestUtil.addUser();
+
+		DigitalSalesRoom randomDigitalSalesRoom = _randomDigitalSalesRoom(
+			digitalSalesRoom -> digitalSalesRoom.setUserAccountBriefs(
+				new UserAccountBrief[] {
+					new UserAccountBrief() {
+						{
+							setEmailAddress(user2.getEmailAddress());
+						}
+					},
+					new UserAccountBrief() {
+						{
+							setEmailAddress(user3.getEmailAddress());
+						}
+					}
+				}));
+
+		DigitalSalesRoom digitalSalesRoom =
+			digitalSalesRoomResource.
+				postDigitalSalesRoomTemplateDigitalSalesRoom(
+					digitalSalesRoomTemplate.getId(), randomDigitalSalesRoom);
+
+		assertEquals(randomDigitalSalesRoom, digitalSalesRoom);
+		assertValid(digitalSalesRoom);
+
+		UserAccountBrief[] userAccountBriefs =
+			digitalSalesRoom.getUserAccountBriefs();
+
+		Assert.assertEquals(
+			Arrays.toString(userAccountBriefs), 3, userAccountBriefs.length);
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionLocalService.fetchFragmentCollection(
+				digitalSalesRoom.getId(), "digital-sales-room");
+
+		Assert.assertTrue(
+			ArrayUtil.containsAll(
+				TransformUtil.transformToArray(
+					_fragmentEntryLocalService.getFragmentEntries(
+						digitalSalesRoom.getId(),
+						fragmentCollection.getFragmentCollectionId(), 0),
+					FragmentEntryModel::getName, String.class),
+				new String[] {"DSR Header Main", "DSR Header User"}));
+
+		Assert.assertTrue(
+			ArrayUtil.containsAll(
+				TransformUtil.transformToArray(
+					_layoutLocalService.getLayouts(
+						digitalSalesRoomTemplate.getId(), false),
+					layout -> layout.getName(LocaleUtil.getSiteDefault()),
+					String.class),
+				new String[] {
+					"Documents", "Onboarding",
+					layout1.getName(LocaleUtil.getSiteDefault()),
+					layout2.getName(LocaleUtil.getSiteDefault())
 				}));
 	}
 

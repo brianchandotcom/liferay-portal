@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
@@ -159,7 +160,8 @@ public class DisplayPageLayoutTypeController
 			displayPageLayoutTypeControllerDisplayContext =
 				new DisplayPageLayoutTypeControllerDisplayContext(
 					httpServletRequest, _infoItemServiceRegistry,
-					_infoSearchClassMapperRegistry);
+					_infoSearchClassMapperRegistry,
+					_layoutPageTemplateEntryModelResourcePermission);
 
 		httpServletRequest.setAttribute(
 			DisplayPageLayoutTypeControllerWebKeys.
@@ -193,6 +195,7 @@ public class DisplayPageLayoutTypeController
 		try {
 			boolean hasViewPermission =
 				displayPageLayoutTypeControllerDisplayContext.hasPermission(
+					_fetchLayoutPageTemplateEntry(layout),
 					themeDisplay.getPermissionChecker(), ActionKeys.VIEW);
 
 			if (!hasViewPermission && themeDisplay.isSignedIn()) {
@@ -391,6 +394,12 @@ public class DisplayPageLayoutTypeController
 	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.layout.page.template.model.LayoutPageTemplateEntry)"
+	)
+	private ModelResourcePermission<LayoutPageTemplateEntry>
+		_layoutPageTemplateEntryModelResourcePermission;
 
 	@Reference
 	private Portal _portal;

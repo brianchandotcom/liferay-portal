@@ -12,6 +12,7 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
@@ -36,6 +37,8 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -62,13 +65,17 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
+import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterRegistry;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
@@ -110,6 +117,17 @@ public abstract class BaseSectionDisplayContextTestCase
 				"true&entryClassNames=com.liferay.portal.kernel.model.",
 				"User,com.liferay.portal.kernel.model.",
 				"UserGroup&nestedFields=embedded")
+		).put(
+			"availableExportFileFormats",
+			() -> TransformUtil.transform(
+				_translationInfoItemFieldValuesExporterRegistry.
+					getTranslationInfoItemFieldValuesExporters(),
+				this::_getExportFileFormatJSONObject)
+		).put(
+			"availableTargetLocales",
+			_getLocalesJSONArray(
+				themeDisplay.getLocale(),
+				LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId()))
 		).put(
 			"baseAssetLibraryViewURL",
 			StringBundler.concat(
@@ -769,6 +787,25 @@ public abstract class BaseSectionDisplayContextTestCase
 		return jsonArray;
 	}
 
+	private JSONObject _getExportFileFormatJSONObject(
+		TranslationInfoItemFieldValuesExporter
+			translationInfoItemFieldValuesExporter) {
+
+		return JSONUtil.put(
+			"displayName",
+			() -> {
+				InfoLocalizedValue<String> labelInfoLocalizedValue =
+					translationInfoItemFieldValuesExporter.
+						getLabelInfoLocalizedValue();
+
+				return labelInfoLocalizedValue.getValue(
+					themeDisplay.getLocale());
+			}
+		).put(
+			"mimeType", translationInfoItemFieldValuesExporter.getMimeType()
+		);
+	}
+
 	private JSONArray _getJSONArray(List<DepotEntry> depotEntries) {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -805,6 +842,23 @@ public abstract class BaseSectionDisplayContextTestCase
 		).put(
 			"name", group.getName(LocaleUtil.getDefault())
 		);
+	}
+
+	private JSONArray _getLocalesJSONArray(
+		Locale locale, Collection<Locale> locales) {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		locales.forEach(
+			currentLocale -> jsonArray.put(
+				JSONUtil.put(
+					"displayName",
+					LocaleUtil.getLocaleDisplayName(currentLocale, locale)
+				).put(
+					"languageId", LocaleUtil.toLanguageId(currentLocale)
+				)));
+
+		return jsonArray;
 	}
 
 	private String _getRedirect(DropdownItem dropdownItem) {
@@ -920,5 +974,9 @@ public abstract class BaseSectionDisplayContextTestCase
 
 	@Inject
 	private Portal _portal;
+
+	@Inject
+	private TranslationInfoItemFieldValuesExporterRegistry
+		_translationInfoItemFieldValuesExporterRegistry;
 
 }

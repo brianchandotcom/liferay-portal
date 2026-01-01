@@ -466,9 +466,7 @@ public class DLURLHelperImpl implements DLURLHelper {
 
 		sb.append(previewURLPrefix);
 		sb.append(FriendlyURLResolverConstants.URL_SEPARATOR_Y_FILE_ENTRY);
-
 		sb.append(groupFriendlyURL);
-
 		sb.append(StringPool.SLASH);
 		sb.append(fileEntryFriendlyURL);
 

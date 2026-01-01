@@ -121,9 +121,10 @@ public class PageTemplateDTOConverter
 					() -> NestedFieldsSupplier.supply(
 						"thumbnail",
 						fieldName ->
-							ThumbnailUtil.getPortletFileEntryThumbnailURLReference(
-								layoutPageTemplateEntry.
-									getPreviewFileEntryId())));
+							ThumbnailUtil.
+								getPortletFileEntryThumbnailURLReference(
+									layoutPageTemplateEntry.
+										getPreviewFileEntryId())));
 				setType(() -> Type.CONTENT_PAGE_TEMPLATE);
 				setUuid(layoutPageTemplateEntry::getUuid);
 			}
@@ -217,9 +218,10 @@ public class PageTemplateDTOConverter
 					() -> NestedFieldsSupplier.supply(
 						"thumbnail",
 						fieldName ->
-							ThumbnailUtil.getPortletFileEntryThumbnailURLReference(
-								layoutPageTemplateEntry.
-									getPreviewFileEntryId())));
+							ThumbnailUtil.
+								getPortletFileEntryThumbnailURLReference(
+									layoutPageTemplateEntry.
+										getPreviewFileEntryId())));
 				setType(() -> Type.WIDGET_PAGE_TEMPLATE);
 				setUuid(layoutPageTemplateEntry::getUuid);
 			}

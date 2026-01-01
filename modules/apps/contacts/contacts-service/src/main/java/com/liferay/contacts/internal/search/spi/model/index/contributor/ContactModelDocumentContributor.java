@@ -5,13 +5,20 @@
 
 package com.liferay.contacts.internal.search.spi.model.index.contributor;
 
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
+import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.ReindexCacheThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -28,15 +35,10 @@ public class ContactModelDocumentContributor
 
 	@Override
 	public void contribute(Document document, Contact contact) {
-		if (contact.isUser()) {
-			User user = userLocalService.fetchUserByContactId(
-				contact.getContactId());
+		if (contact.isUser() &&
+			_isGuestOrNotApprovedUserContact(contact.getContactId())) {
 
-			if ((user == null) || user.isGuestUser() ||
-				(user.getStatus() != WorkflowConstants.STATUS_APPROVED)) {
-
-				return;
-			}
+			return;
 		}
 
 		document.addKeyword(Field.COMPANY_ID, contact.getCompanyId());
@@ -54,5 +56,40 @@ public class ContactModelDocumentContributor
 
 	@Reference
 	protected UserLocalService userLocalService;
+
+	private boolean _isGuestOrNotApprovedUserContact(long contactId) {
+		Set<Long> guestAndNotApprovedUserContactIds =
+			ReindexCacheThreadLocal.getGlobalReindexCache(
+				() -> -1, ContactModelDocumentContributor.class.getName(),
+				count -> new HashSet<>(
+					userLocalService.dslQuery(
+						DSLQueryFactoryUtil.select(
+							UserTable.INSTANCE.contactId
+						).from(
+							UserTable.INSTANCE
+						).where(
+							UserTable.INSTANCE.type.eq(
+								UserConstants.TYPE_GUEST
+							).or(
+								UserTable.INSTANCE.status.neq(
+									WorkflowConstants.STATUS_APPROVED)
+							)
+						),
+						false)));
+
+		if (guestAndNotApprovedUserContactIds == null) {
+			User user = userLocalService.fetchUserByContactId(contactId);
+
+			if ((user == null) || user.isGuestUser() ||
+				(user.getStatus() != WorkflowConstants.STATUS_APPROVED)) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		return guestAndNotApprovedUserContactIds.contains(contactId);
+	}
 
 }

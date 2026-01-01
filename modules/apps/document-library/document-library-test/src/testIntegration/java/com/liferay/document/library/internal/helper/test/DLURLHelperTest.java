@@ -345,11 +345,13 @@ public class DLURLHelperTest {
 
 	@Test
 	public void testGetPreviewURLWithPathContext() {
+		String contextPath = "/" + RandomTestUtil.randomString();
+
 		PortalImpl portalImpl = new PortalImpl() {
 
 			@Override
 			public String getPathContext() {
-				return "/test";
+				return contextPath;
 			}
 
 		};
@@ -362,7 +364,7 @@ public class DLURLHelperTest {
 
 			Assert.assertEquals(
 				StringBundler.concat(
-					"/test/documents/d", _group.getFriendlyURL(), "/",
+					contextPath, "/documents/d", _group.getFriendlyURL(), "/",
 					randomFriendlyURL),
 				_dlURLHelper.getPreviewURL(
 					randomFriendlyURL, _group.getFriendlyURL()));

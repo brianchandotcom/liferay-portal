@@ -347,7 +347,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			_layoutLocalService.getLayoutsCount(testGroup.getGroupId(), false),
 			sitePagePage.getTotalCount());
 
-		_testGetSiteSitePagesPageSet();
+		_testGetSiteSitePagesPagePageSet();
 	}
 
 	@Ignore
@@ -681,7 +681,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		).build();
 	}
 
-	private void _testGetSiteSitePagesPageSet() throws Exception {
+	private void _testGetSiteSitePagesPagePageSet() throws Exception {
 		LayoutTestUtil.addTypeContentLayout(testGroup);
 
 		ServiceContext serviceContext =

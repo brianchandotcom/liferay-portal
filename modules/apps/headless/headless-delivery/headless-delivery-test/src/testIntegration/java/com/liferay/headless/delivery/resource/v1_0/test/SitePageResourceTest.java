@@ -234,8 +234,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		_testGetSiteSitePageWithLocalization();
 		_testGetSiteSitePageWithoutPermissions();
-
-		_testVulcanCRUDItemDelegateGetItem();
 	}
 
 	@Override
@@ -2228,7 +2226,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			expectedTaxonomyCategoryBriefs, inputTaxonomyCategoryBriefs);
 	}
 
-	private void _testVulcanCRUDItemDelegateGetItem() throws Exception {
+	@Test
+	@TestInfo("LPD-57341")
+	public void testVulcanCRUDItemDelegateGetItem() throws Exception {
 
 		// Default locale
 

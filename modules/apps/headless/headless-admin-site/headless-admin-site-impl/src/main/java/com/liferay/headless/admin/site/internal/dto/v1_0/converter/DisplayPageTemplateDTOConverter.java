@@ -134,9 +134,10 @@ public class DisplayPageTemplateDTOConverter
 					() -> NestedFieldsSupplier.supply(
 						"thumbnail",
 						fieldName ->
-							ThumbnailUtil.getPortletFileEntryThumbnailURLReference(
-								layoutPageTemplateEntry.
-									getPreviewFileEntryId())));
+							ThumbnailUtil.
+								getPortletFileEntryThumbnailURLReference(
+									layoutPageTemplateEntry.
+										getPreviewFileEntryId())));
 				setUuid(layoutPageTemplateEntry::getUuid);
 			}
 		};

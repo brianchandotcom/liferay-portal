@@ -84,7 +84,7 @@ public class UtilityPageDTOConverter
 					() -> NestedFieldsSupplier.supply(
 						"thumbnail",
 						fieldName ->
-							ThumbnailUtil.getPortletFileEntryURLReference(
+							ThumbnailUtil.getPortletFileEntryThumbnailURLReference(
 								layoutUtilityPageEntry.
 									getPreviewFileEntryId())));
 				setType(() -> _getType(layoutUtilityPageEntry.getType()));

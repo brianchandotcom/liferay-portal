@@ -424,6 +424,57 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testPostSiteSitePageSuccessTaxonomyCategoryBriefNonsitePage();
 	}
 
+	@Test
+	@TestInfo("LPD-57341")
+	public void testVulcanCRUDItemDelegateGetItem() throws Exception {
+
+		// Default locale
+
+		SitePage postSitePage = testPostSiteSitePage_addSitePage(
+			randomSitePage());
+
+		VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
+			_getVulcanCRUDItemDelegate(LocaleUtil.getDefault());
+
+		assertEquals(
+			sitePageResource.getSiteSitePage(
+				testGroup.getGroupId(), postSitePage.getFriendlyUrlPath()),
+			SitePageSerDes.toDTO(
+				String.valueOf(
+					vulcanCRUDItemDelegate.getItem(postSitePage.getId()))));
+
+		// Different locale
+
+		SitePage randomSitePage = randomSitePage();
+
+		randomSitePage.setFriendlyUrlPath_i18n(
+			HashMapBuilder.put(
+				"en-US", randomSitePage.getFriendlyUrlPath()
+			).put(
+				"es-ES", _getRandomFriendlyURL()
+			).build());
+
+		postSitePage = testPostSiteSitePage_addSitePage(randomSitePage);
+
+		SitePageResource spainSitePageResource = SitePageResource.builder(
+		).authentication(
+			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.SPAIN
+		).build();
+
+		vulcanCRUDItemDelegate = _getVulcanCRUDItemDelegate(LocaleUtil.SPAIN);
+
+		assertEquals(
+			spainSitePageResource.getSiteSitePage(
+				testGroup.getGroupId(), postSitePage.getFriendlyUrlPath()),
+			SitePageSerDes.toDTO(
+				String.valueOf(
+					vulcanCRUDItemDelegate.getItem(postSitePage.getId()))));
+	}
+
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"friendlyUrlPath", "title"};
@@ -2224,57 +2275,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		_testPostSiteSitePageSuccessTaxonomyCategoryBriefs(
 			expectedTaxonomyCategoryBriefs, inputTaxonomyCategoryBriefs);
-	}
-
-	@Test
-	@TestInfo("LPD-57341")
-	public void testVulcanCRUDItemDelegateGetItem() throws Exception {
-
-		// Default locale
-
-		SitePage postSitePage = testPostSiteSitePage_addSitePage(
-			randomSitePage());
-
-		VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
-			_getVulcanCRUDItemDelegate(LocaleUtil.getDefault());
-
-		assertEquals(
-			sitePageResource.getSiteSitePage(
-				testGroup.getGroupId(), postSitePage.getFriendlyUrlPath()),
-			SitePageSerDes.toDTO(
-				String.valueOf(
-					vulcanCRUDItemDelegate.getItem(postSitePage.getId()))));
-
-		// Different locale
-
-		SitePage randomSitePage = randomSitePage();
-
-		randomSitePage.setFriendlyUrlPath_i18n(
-			HashMapBuilder.put(
-				"en-US", randomSitePage.getFriendlyUrlPath()
-			).put(
-				"es-ES", _getRandomFriendlyURL()
-			).build());
-
-		postSitePage = testPostSiteSitePage_addSitePage(randomSitePage);
-
-		SitePageResource spainSitePageResource = SitePageResource.builder(
-		).authentication(
-			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
-		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
-		).locale(
-			LocaleUtil.SPAIN
-		).build();
-
-		vulcanCRUDItemDelegate = _getVulcanCRUDItemDelegate(LocaleUtil.SPAIN);
-
-		assertEquals(
-			spainSitePageResource.getSiteSitePage(
-				testGroup.getGroupId(), postSitePage.getFriendlyUrlPath()),
-			SitePageSerDes.toDTO(
-				String.valueOf(
-					vulcanCRUDItemDelegate.getItem(postSitePage.getId()))));
 	}
 
 	private static final String _CLASS_NAME_EXCEPTION_MAPPER =

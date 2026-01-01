@@ -71,16 +71,18 @@ public class ExportImportAttachmentManagerImpl
 	}
 
 	@Override
-	public URL getURL(String url) throws MalformedURLException {
+	public URL getURL(String urlString) throws MalformedURLException {
 		PortletDataContext portletDataContext =
 			PortletDataContextThreadLocal.getPortletDataContext();
 
-		if (!url.startsWith(_PROTOCOL + ":") || (portletDataContext == null)) {
-			return new URL(url);
+		if (!urlString.startsWith(_PROTOCOL + ":") ||
+			(portletDataContext == null)) {
+
+			return new URL(urlString);
 		}
 
 		return new URL(
-			null, url,
+			null, urlString,
 			new URLStreamHandler() {
 
 				protected URLConnection openConnection(URL url) {

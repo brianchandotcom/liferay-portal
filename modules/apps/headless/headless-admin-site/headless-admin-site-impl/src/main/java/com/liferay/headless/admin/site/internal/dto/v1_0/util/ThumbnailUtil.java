@@ -38,7 +38,7 @@ public class ThumbnailUtil {
 		};
 	}
 
-	public static ThumbnailURLReference getPortletFileEntryURLReference(
+	public static ThumbnailURLReference getPortletFileEntryThumbnailURLReference(
 			long fileEntryId)
 		throws PortalException {
 

@@ -121,7 +121,7 @@ public class PageTemplateDTOConverter
 					() -> NestedFieldsSupplier.supply(
 						"thumbnail",
 						fieldName ->
-							ThumbnailUtil.getPortletFileEntryURLReference(
+							ThumbnailUtil.getPortletFileEntryThumbnailURLReference(
 								layoutPageTemplateEntry.
 									getPreviewFileEntryId())));
 				setType(() -> Type.CONTENT_PAGE_TEMPLATE);
@@ -217,7 +217,7 @@ public class PageTemplateDTOConverter
 					() -> NestedFieldsSupplier.supply(
 						"thumbnail",
 						fieldName ->
-							ThumbnailUtil.getPortletFileEntryURLReference(
+							ThumbnailUtil.getPortletFileEntryThumbnailURLReference(
 								layoutPageTemplateEntry.
 									getPreviewFileEntryId())));
 				setType(() -> Type.WIDGET_PAGE_TEMPLATE);

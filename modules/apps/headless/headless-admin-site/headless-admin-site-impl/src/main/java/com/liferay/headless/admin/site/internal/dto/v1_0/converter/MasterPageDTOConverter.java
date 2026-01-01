@@ -84,7 +84,7 @@ public class MasterPageDTOConverter
 					() -> NestedFieldsSupplier.supply(
 						"thumbnail",
 						fieldName ->
-							ThumbnailUtil.getPortletFileEntryURLReference(
+							ThumbnailUtil.getPortletFileEntryThumbnailURLReference(
 								layoutPageTemplateEntry.
 									getPreviewFileEntryId())));
 				setUuid(layoutPageTemplateEntry::getUuid);

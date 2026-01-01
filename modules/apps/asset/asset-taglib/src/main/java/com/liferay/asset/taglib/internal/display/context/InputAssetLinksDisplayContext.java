@@ -318,18 +318,18 @@ public class InputAssetLinksDisplayContext {
 
 		Group scopeGroup = _themeDisplay.getScopeGroup();
 
-		long groupId = scopeGroup.getGroupId();
-
-		if (_isStagedLocally() && scopeGroup.isStagingGroup()) {
-			boolean stagedReferencePortlet = scopeGroup.isStagedPortlet(
-				assetRendererFactory.getPortletId());
-
-			if (_isStagedReferrerPortlet() && !stagedReferencePortlet) {
-				groupId = scopeGroup.getLiveGroupId();
-			}
+		if (!_isStagedLocally() || !scopeGroup.isStagingGroup()) {
+			return scopeGroup.getGroupId();
 		}
 
-		return groupId;
+		boolean stagedReferencePortlet = scopeGroup.isStagedPortlet(
+			assetRendererFactory.getPortletId());
+
+		if (_isStagedReferrerPortlet() && !stagedReferencePortlet) {
+			return scopeGroup.getLiveGroupId();
+		}
+
+		return scopeGroup.getGroupId();
 	}
 
 	private PortletURL _getAssetEntryItemSelectorPortletURL(

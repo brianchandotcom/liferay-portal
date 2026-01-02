@@ -1,6 +1,7 @@
 @component-name = "portal-content-management"
 definition {
 
+	property browser.chrome.version = "139.0";
 	property custom.properties = "default.layout.template.id=1_column${line.separator}feature.flag.LPD-35013=false{line.separator}jsonws.web.service.paths.excludes=";
 	property osgi.modules.includes = "wiki";
 	property portal.acceptance = "true";

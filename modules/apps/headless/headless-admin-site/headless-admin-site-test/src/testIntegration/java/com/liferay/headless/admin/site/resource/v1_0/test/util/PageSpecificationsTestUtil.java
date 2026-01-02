@@ -19,6 +19,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.GeneralConfig;
 import com.liferay.headless.admin.site.client.dto.v1_0.NestedApplicationsWidgetPageWidgetInstance;
 import com.liferay.headless.admin.site.client.dto.v1_0.NestedWidgetSection;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
+import com.liferay.headless.admin.site.client.dto.v1_0.PageSetPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.Settings;
 import com.liferay.headless.admin.site.client.dto.v1_0.SitePage;
@@ -303,6 +304,21 @@ public class PageSpecificationsTestUtil {
 			pageSpecifications[1], draftLayout.getPlid());
 	}
 
+	public static void assertPageSpecifications(
+		PageSpecification[] actualPageSpecifications,
+		PageSpecification[] expectedPageSpecifications) {
+
+		Assert.assertEquals(
+			actualPageSpecifications.toString(),
+			expectedPageSpecifications.length, actualPageSpecifications.length);
+		Assert.assertEquals(
+			actualPageSpecifications.toString(), 1,
+			actualPageSpecifications.length);
+
+		Assert.assertEquals(
+			expectedPageSpecifications[0], actualPageSpecifications[0]);
+	}
+
 	public static void assertWidgetPageSpecification(
 		WidgetPageSpecification expectedWidgetPageSpecification,
 		WidgetPageSpecification actualWidgetPageSpecification) {
@@ -415,6 +431,14 @@ public class PageSpecificationsTestUtil {
 		throws Exception {
 
 		return new ExpandoTableAutocloseable();
+	}
+
+	public static PageSpecification[] getPageSetPageSpecifications(
+		String externalReferenceCode) {
+
+		return new PageSpecification[] {
+			_getPageSetPageSpecification(externalReferenceCode)
+		};
 	}
 
 	public static PageSpecification[] getPageSpecifications(
@@ -999,6 +1023,24 @@ public class PageSpecificationsTestUtil {
 				}
 			},
 			NestedWidgetSection.class);
+	}
+
+	private static PageSetPageSpecification _getPageSetPageSpecification(
+		String externalReferenceCode) {
+
+		PageSetPageSpecification pageSetPageSpecification =
+			new PageSetPageSpecification() {
+				{
+					setType(() -> Type.PAGE_SET_PAGE_SPECIFICATION);
+				}
+			};
+
+		pageSetPageSpecification.setCustomFields(new CustomField[0]);
+		pageSetPageSpecification.setExternalReferenceCode(
+			externalReferenceCode);
+		pageSetPageSpecification.setStatus(PageSpecification.Status.APPROVED);
+
+		return pageSetPageSpecification;
 	}
 
 	private static GeneralConfig.ApplicationDecorator

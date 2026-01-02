@@ -69,7 +69,7 @@ test(
 );
 
 test(
-	'Can access Add button',
+	'Can access Add button when there are no items',
 	{tag: '@LPD-62706'},
 	async ({page, spaceSummaryPage}) => {
 		const spaceName = 'Default';
@@ -80,7 +80,7 @@ test(
 
 		let dropdown = page.locator('.dropdown-menu.show');
 
-		await expect(dropdown.getByText('Basic Content')).toBeVisible();
+		await expect(dropdown.getByText('Basic Web Content')).toBeVisible();
 		await expect(dropdown.getByText('Blog')).toBeVisible();
 		await expect(dropdown.getByText('Folder')).toBeVisible();
 
@@ -90,9 +90,7 @@ test(
 
 		dropdown = page.locator('.dropdown-menu.show');
 
-		await expect(
-			dropdown.getByText('External Video Shortcut')
-		).toBeVisible();
+		await expect(dropdown.getByText('External Video')).toBeVisible();
 		await expect(dropdown.getByText('Folder')).toBeVisible();
 		await expect(dropdown.getByText('Multiple Files')).toBeVisible();
 		await expect(dropdown.getByText('Single File')).toBeVisible();

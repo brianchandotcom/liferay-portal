@@ -131,6 +131,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
@@ -978,15 +979,14 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					objectDefinition.getPortletId(),
 					TempFileEntryUtil.getTempFileName(fileName), file,
 					_mimeTypes.getContentType(file, fileName));
+				Role role = _roleLocalService.getRole(
+					themeDisplay.getCompanyId(), RoleConstants.GUEST);
 
 				_resourcePermissionLocalService.removeResourcePermission(
 					themeDisplay.getCompanyId(), DLFileEntry.class.getName(),
 					ResourceConstants.SCOPE_INDIVIDUAL,
 					String.valueOf(tempFileEntry.getFileEntryId()),
-					_roleLocalService.getRole(
-						themeDisplay.getCompanyId(), RoleConstants.GUEST
-					).getRoleId(),
-					ActionKeys.DOWNLOAD);
+					role.getRoleId(), ActionKeys.DOWNLOAD);
 
 				return tempFileEntry;
 			}

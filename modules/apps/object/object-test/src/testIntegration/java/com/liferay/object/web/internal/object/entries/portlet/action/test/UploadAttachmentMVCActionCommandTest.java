@@ -22,6 +22,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -134,13 +135,13 @@ public class UploadAttachmentMVCActionCommandTest {
 				TestPropsValues.getUserId()
 			).build());
 
+		Role role = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
+
 		_resourcePermissionLocalService.addResourcePermission(
 			TestPropsValues.getCompanyId(), objectDefinition.getResourceName(),
 			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(TestPropsValues.getCompanyId()),
-			_roleLocalService.getRole(
-				TestPropsValues.getCompanyId(), RoleConstants.GUEST
-			).getRoleId(),
+			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
 			ObjectActionKeys.ADD_OBJECT_ENTRY);
 
 		Bundle bundle = FrameworkUtil.getBundle(
@@ -215,14 +216,14 @@ public class UploadAttachmentMVCActionCommandTest {
 		DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchDLFileEntry(
 			fileJSONObject.getLong("fileEntryId"));
 
+		Role role = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
+
 		Assert.assertFalse(
 			_resourcePermissionLocalService.hasResourcePermission(
 				TestPropsValues.getCompanyId(), DLFileEntry.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(dlFileEntry.getFileEntryId()),
-				_roleLocalService.getRole(
-					TestPropsValues.getCompanyId(), RoleConstants.GUEST
-				).getRoleId(),
+				String.valueOf(dlFileEntry.getFileEntryId()), role.getRoleId(),
 				ActionKeys.DOWNLOAD));
 	}
 

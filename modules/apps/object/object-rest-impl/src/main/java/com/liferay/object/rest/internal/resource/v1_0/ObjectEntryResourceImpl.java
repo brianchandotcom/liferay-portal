@@ -109,9 +109,9 @@ public class ObjectEntryResourceImpl
 		ObjectDefinition objectDefinition,
 		Map<Long, ObjectDefinition> objectDefinitions,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
-		ObjectEntryService objectEntryService,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectEntryManagerRegistry objectEntryManagerRegistry,
+		ObjectEntryService objectEntryService,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
 		ObjectScopeProviderRegistry objectScopeProviderRegistry,
@@ -123,9 +123,9 @@ public class ObjectEntryResourceImpl
 		_objectDefinition = objectDefinition;
 		_objectDefinitions = objectDefinitions;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
-		_objectEntryService = objectEntryService;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectEntryManagerRegistry = objectEntryManagerRegistry;
+		_objectEntryService = objectEntryService;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;

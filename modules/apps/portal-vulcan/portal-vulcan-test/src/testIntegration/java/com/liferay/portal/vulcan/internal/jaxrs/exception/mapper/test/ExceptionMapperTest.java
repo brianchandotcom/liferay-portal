@@ -134,8 +134,11 @@ public class ExceptionMapperTest {
 				null, "/test-vulcan/testPrincipalException2",
 				HashMapBuilder.put(
 					"Accept-Language",
-					LocaleUtil.getDefault(
-					).toLanguageTag()
+					() -> {
+						Locale defaultLocale = LocaleUtil.getDefault();
+
+						return defaultLocale.toLanguageTag();
+					}
 				).build(),
 				Http.Method.POST
 			).getString(

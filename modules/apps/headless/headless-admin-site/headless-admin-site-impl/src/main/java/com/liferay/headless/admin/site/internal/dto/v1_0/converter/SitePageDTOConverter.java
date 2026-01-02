@@ -153,6 +153,10 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 				});
 		}
 
+		if (customMetaTags.isEmpty()) {
+			return null;
+		}
+
 		return customMetaTags.toArray(new CustomMetaTag[0]);
 	}
 

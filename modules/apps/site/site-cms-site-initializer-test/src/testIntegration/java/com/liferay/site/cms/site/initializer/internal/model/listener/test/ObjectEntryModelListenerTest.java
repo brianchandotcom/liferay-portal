@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -64,6 +65,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Stefano Motta
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @FeatureFlag("LPD-17564")
 @RunWith(Arquillian.class)
 public class ObjectEntryModelListenerTest {

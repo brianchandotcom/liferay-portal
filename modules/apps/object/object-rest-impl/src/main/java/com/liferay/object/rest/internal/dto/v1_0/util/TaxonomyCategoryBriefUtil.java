@@ -31,7 +31,7 @@ public class TaxonomyCategoryBriefUtil {
 
 	public static TaxonomyCategoryBrief toTaxonomyCategoryBrief(
 			AssetCategory assetCategory,
-			DTOConverterContext dtoConverterContext)
+			DTOConverterContext dtoConverterContext, long groupId)
 		throws Exception {
 
 		return new TaxonomyCategoryBrief() {
@@ -71,9 +71,15 @@ public class TaxonomyCategoryBriefUtil {
 						};
 					});
 				setScope(
-					() -> Scope.of(
-						assetCategory.getGroupId(),
-						dtoConverterContext.getLocale()));
+					() -> {
+						if (groupId == assetCategory.getGroupId()) {
+							return null;
+						}
+
+						return Scope.of(
+							assetCategory.getGroupId(),
+							dtoConverterContext.getLocale());
+					});
 				setTaxonomyCategoryExternalReferenceCode(
 					assetCategory::getExternalReferenceCode);
 				setTaxonomyCategoryId(assetCategory::getCategoryId);

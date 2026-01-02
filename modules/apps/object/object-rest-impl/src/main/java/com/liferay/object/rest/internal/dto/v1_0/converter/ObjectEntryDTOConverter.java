@@ -463,7 +463,8 @@ public class ObjectEntryDTOConverter
 						serviceBuilderObjectEntry.getObjectEntryId()),
 					assetCategory ->
 						TaxonomyCategoryBriefUtil.toTaxonomyCategoryBrief(
-							assetCategory, dtoConverterContext),
+							assetCategory, dtoConverterContext,
+							serviceBuilderObjectEntry.getGroupId()),
 					TaxonomyCategoryBrief.class);
 			});
 

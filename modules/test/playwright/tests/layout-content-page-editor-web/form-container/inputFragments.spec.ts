@@ -500,13 +500,11 @@ test.describe('Date Fragment', () => {
 			await expect(page.locator('.date-input')).toContainText(
 				'Please enter a valid date.'
 			);
+			await expect(page.locator('.date-input input')).toBeFocused();
 
 			// Delete validation
 
-			const objectvalidationRuleAPIClient =
-				await apiHelpers.buildRestClient(ObjectValidationRuleAPI);
-
-			await objectvalidationRuleAPIClient.deleteObjectValidationRule(
+			await objectValidationRuleAPIClient.deleteObjectValidationRule(
 				objectValidationRule.id
 			);
 		}
@@ -650,6 +648,114 @@ test.describe('Date and Time Fragment', () => {
 			await expect(row).toContainText('Oct 10, 2022, 10:10:00 AM');
 		}
 	);
+
+	test(
+		'User should see error message below date time fragment',
+		{
+			tag: ['@LPS-182728', '@LPD-75305'],
+		},
+		async ({apiHelpers, page, pageManagementSite}) => {
+
+			// Add date validation
+
+			const objectValidationRuleAPIClient =
+				await apiHelpers.buildRestClient(ObjectValidationRuleAPI);
+
+			const {body: objectValidationRule} =
+				await objectValidationRuleAPIClient.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+					getObjectERC('All Fields'),
+					{
+						active: true,
+						engine: 'ddm',
+						engineLabel: 'Expression Builder',
+						errorLabel: {
+							en_US: 'Please enter a valid date.',
+						},
+						name: {
+							en_US: 'Date Time Validation',
+						},
+						objectValidationRuleSettings: [
+							{
+								name: 'outputObjectFieldExternalReferenceCode',
+								value: 'date-time-erc',
+							} as any,
+						],
+						outputType: 'partialValidation',
+						script: "futureDates(date, '2022-06-01')",
+						system: false,
+					}
+				);
+
+			// Create a page with a form fragment with a date time fragment
+
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
+					getObjectERC('All Fields')
+				)
+			).body;
+
+			const dateTimeDefinition = getFragmentDefinition({
+				fragmentConfig: {
+					inputFieldId: 'ObjectField_dateAndTime',
+				},
+				id: getRandomString(),
+				key: 'INPUTS-date-time-input',
+			});
+
+			const submitFragmentDefinition = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'INPUTS-submit-button',
+			});
+
+			const formDefinition = getFormContainerDefinition({
+				id: getRandomString(),
+				objectDefinitionClassName,
+				pageElements: [dateTimeDefinition, submitFragmentDefinition],
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to view mode
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			// Edit date
+
+			await page.locator('input[name="ObjectField_dateAndTime"]').click();
+
+			await page.keyboard.type('10/10/2020');
+			await page.keyboard.press('ArrowRight');
+			await page.keyboard.type('10:10');
+			await page.keyboard.press('ArrowRight');
+			await page.keyboard.type('AM');
+
+			await page.locator('body').click();
+
+			await page.getByText('Submit', {exact: true}).click();
+
+			// Assert error message
+
+			await expect(page.locator('.date-input')).toContainText(
+				'Please enter a valid date.'
+			);
+			await expect(page.locator('.date-input input')).toBeFocused();
+
+			// Delete validation
+
+			await objectValidationRuleAPIClient.deleteObjectValidationRule(
+				objectValidationRule.id
+			);
+		}
+	);
 });
 
 test.describe('Friendly URL Fragment', () => {
@@ -752,10 +858,144 @@ test.describe('Friendly URL Fragment', () => {
 			).toBeAttached();
 		}
 	);
+
+	test(
+		'Check the friendly URL error',
+		{
+			tag: '@LPD-75305',
+		},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Create an object with a friendly url field
+
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+			const {body: objectDefinition} =
+				await objectDefinitionAPIClient.postObjectDefinition({
+					active: true,
+					enableFriendlyURLCustomization: true,
+					enableLocalization: true,
+					externalReferenceCode: 'erc',
+					label: {
+						en_US: 'Test',
+					},
+					name: 'Test',
+					objectFields: [
+						{
+							DBType: 'String',
+							businessType: 'Text',
+							externalReferenceCode: 'new-friendly-url-erc',
+							indexed: true,
+							indexedAsKeyword: true,
+							label: {
+								en_US: 'New Friendly URL',
+							},
+							localized: true,
+							name: 'newFriendlyUrl',
+							required: false,
+						},
+					],
+					pluralLabel: {
+						en_US: 'Tests',
+					},
+					scope: 'company',
+					status: {
+						code: 0,
+					},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			// Add a validation for the field
+
+			const objectValidationRuleAPIClient =
+				await apiHelpers.buildRestClient(ObjectValidationRuleAPI);
+
+			const {body: objectValidationRule} =
+				await objectValidationRuleAPIClient.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+					'erc',
+					{
+						active: true,
+						engine: 'ddm',
+						engineLabel: 'Expression Builder',
+						errorLabel: {
+							en_US: 'Enter a valid URL',
+						},
+						externalReferenceCode: 'friendly-url-validation-erc',
+						name: {
+							en_US: 'Friendly URL Validation',
+						},
+						objectDefinitionExternalReferenceCode: 'erc',
+						objectValidationRuleSettings: [
+							{
+								name: 'outputObjectFieldExternalReferenceCode',
+								value: 'new-friendly-url-erc' as any,
+							},
+						],
+						outputType: 'partialValidation',
+						script: 'contains(newFriendlyUrl, "/")',
+						system: false,
+					}
+				);
+
+			// Create a page with a Form fragment and the field
+
+			const formId = getRandomString();
+
+			const formDefinition = getFormContainerDefinition({
+				id: formId,
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			// Map the form to the Test object and add only the New Friendly URL field
+
+			await pageEditorPage.mapFormFragment(formId, 'Test', [
+				'New Friendly URL',
+			]);
+
+			await pageEditorPage.publishPage();
+
+			// Go to view mode and check the field error
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			const newFriendlyUrlInput = page.getByLabel('New Friendly URL');
+
+			await newFriendlyUrlInput.fill('url');
+
+			await page.getByText('Submit', {exact: true}).click();
+
+			await expect(page.getByText('Enter a valid URL')).toBeVisible();
+
+			await expect(newFriendlyUrlInput).toBeFocused();
+
+			// Delete validation
+
+			await objectValidationRuleAPIClient.deleteObjectValidationRule(
+				objectValidationRule.id
+			);
+		}
+	);
 });
 
 test.describe('Numeric input field', () => {
-	test('Check the numeric input configuration', async ({
+	test('Check the Numeric input configuration', async ({
 		apiHelpers,
 		page,
 		pageEditorPage,
@@ -948,6 +1188,8 @@ test.describe('Numeric input field', () => {
 		await expect(
 			page.getByText('The lemon weight must be greater than 0')
 		).toBeVisible();
+
+		await expect(lemonWeightInput).toBeFocused();
 
 		// Submit the form with a correct value
 
@@ -1628,6 +1870,109 @@ test.describe('URL Video Previewer Fragment', () => {
 			await fillAndBlurInput('');
 
 			await expect(iframe).not.toBeAttached();
+		}
+	);
+
+	test(
+		'Check the Video Previewer error',
+		{
+			tag: '@LPD-75305',
+		},
+		async ({apiHelpers, page, pageManagementSite}) => {
+
+			// Create a page with a form fragment with a URL Video Previewer fragment
+
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
+					getObjectERC('All Fields')
+				)
+			).body;
+
+			const objectValidationRuleAPIClient =
+				await apiHelpers.buildRestClient(ObjectValidationRuleAPI);
+
+			// Add a validation for the URL Video Previewer field
+
+			const {body: objectValidationRule} =
+				await objectValidationRuleAPIClient.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+					'all-fields-object-erc',
+					{
+						active: true,
+						engine: 'ddm',
+						engineLabel: 'Expression Builder',
+						errorLabel: {
+							en_US: 'Enter a valid URL',
+						},
+						externalReferenceCode: 'url-validation-erc',
+						name: {
+							en_US: 'Url Validation',
+						},
+						objectDefinitionExternalReferenceCode:
+							'all-fields-object-erc',
+						objectValidationRuleSettings: [
+							{
+								name: 'outputObjectFieldExternalReferenceCode',
+								value: 'text-erc' as any,
+							},
+						],
+						outputType: 'partialValidation',
+						script: 'contains(text, "https://")',
+						system: false,
+					}
+				);
+
+			const submitButtonDefinition = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'INPUTS-submit-button',
+			});
+
+			const videoPreviewerDefinition = getFragmentDefinition({
+				fragmentConfig: {
+					inputFieldId: 'ObjectField_text',
+				},
+				id: getRandomString(),
+				key: 'INPUTS-video-previewer-input',
+			});
+
+			const formDefinition = getFormContainerDefinition({
+				id: getRandomString(),
+				objectDefinitionClassName,
+				pageElements: [
+					videoPreviewerDefinition,
+					submitButtonDefinition,
+				],
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to view mode and check the error
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			const videoURLInput = page.getByLabel('Text');
+
+			await videoURLInput.fill('video');
+
+			await page.getByText('Submit', {exact: true}).click();
+
+			await expect(page.getByText('Enter a valid URL')).toBeVisible();
+
+			await expect(videoURLInput).toBeFocused();
+
+			// Delete validation
+
+			await objectValidationRuleAPIClient.deleteObjectValidationRule(
+				objectValidationRule.id
+			);
 		}
 	);
 });

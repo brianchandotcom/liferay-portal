@@ -176,7 +176,7 @@ test.describe('Text input field', () => {
 
 	test(
 		'An error is shown when the number of input characters is exceeded',
-		{tag: ['@LPS-149725', '@LPS-173849']},
+		{tag: ['@LPS-149725', '@LPS-173849', '@LPD-75305']},
 		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
 
 			// Create a page with a Form fragment
@@ -218,13 +218,17 @@ test.describe('Text input field', () => {
 				'Maximum Number of Characters Exceeded: 290 / 280'
 			);
 
-			await page.getByRole('textbox', {name: 'Lemon Size'}).click();
+			const lemonSizeInput = page.getByRole('textbox', {
+				name: 'Lemon Size',
+			});
+
+			await lemonSizeInput.click();
 
 			await page.keyboard.type('a'.repeat(290));
 
 			await expect(inputError).toBeVisible();
 
-			// Submit the form and check that the error
+			// Submit the form and check the error
 
 			await page.getByText('Submit', {exact: true}).click();
 
@@ -233,6 +237,8 @@ test.describe('Text input field', () => {
 			await expect(
 				page.getByText('Value exceeds maximum length of 280.')
 			).toBeVisible();
+
+			await expect(lemonSizeInput).toBeFocused();
 		}
 	);
 
@@ -297,6 +303,83 @@ test.describe('Text input field', () => {
 			await expect(
 				page.getByRole('textbox', {name: 'Potato Origin'})
 			).toHaveAttribute('required');
+		}
+	);
+});
+
+test.describe('Inline Text input field', () => {
+	test(
+		'An error is shown when the number of input characters is exceeded',
+		{tag: ['@LPD-75305']},
+		async ({apiHelpers, page, pageManagementSite}) => {
+
+			// Create a Page with a Form fragment with an Inline Text input
+
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
+					getObjectERC('Lemon')
+				)
+			).body;
+
+			const inlineTextInput = getFragmentDefinition({
+				fragmentConfig: {
+					inputFieldId: 'ObjectField_lemonSize',
+				},
+				id: getRandomString(),
+				key: 'INPUTS-inline-text-input',
+			});
+
+			const submitFragmentDefinition = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'INPUTS-submit-button',
+			});
+
+			const formDefinition = getFormContainerDefinition({
+				id: getRandomString(),
+				objectDefinitionClassName,
+				pageElements: [inlineTextInput, submitFragmentDefinition],
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to view mode and type 290 characters and check that the input error is shown
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			const inputInlineError = page.getByText(
+				'Maximum Number of Characters Exceeded: 290 / 280'
+			);
+
+			const lemonSizeInput = page.getByRole('textbox', {
+				name: 'Lemon Size',
+			});
+
+			await lemonSizeInput.click();
+
+			await page.keyboard.type('a'.repeat(290));
+
+			await expect(inputInlineError).toBeVisible();
+
+			// Submit the form and check that the error
+
+			await page.getByText('Submit', {exact: true}).click();
+
+			await expect(inputInlineError).not.toBeVisible();
+
+			await expect(
+				page.getByText('Value exceeds maximum length of 280.')
+			).toBeVisible();
+
+			await expect(lemonSizeInput).toBeFocused();
 		}
 	);
 });
@@ -457,7 +540,7 @@ test.describe('Textarea input field', () => {
 
 	test(
 		'Check the Textarea input errors',
-		{tag: ['@LPS-170206', '@LPS-173849', '@LPS-182728']},
+		{tag: ['@LPS-170206', '@LPS-173849', '@LPS-182728', '@LPD-75305']},
 		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
 
 			// Create a page with a Form fragment
@@ -499,7 +582,9 @@ test.describe('Textarea input field', () => {
 				'Maximum Number of Characters Exceeded: 310 / 300'
 			);
 
-			await page.getByRole('textbox', {name: 'Lemon History'}).click();
+			const textarea = page.getByRole('textbox', {name: 'Lemon History'});
+
+			await textarea.click();
 
 			await page.keyboard.type('a'.repeat(310));
 
@@ -510,6 +595,8 @@ test.describe('Textarea input field', () => {
 			await page.getByText('Submit', {exact: true}).click();
 
 			await expect(inputError).not.toBeVisible();
+
+			await expect(textarea).toBeFocused();
 
 			await expect(
 				page.getByText('Value exceeds maximum length of 300.')

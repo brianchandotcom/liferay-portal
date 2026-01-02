@@ -12,6 +12,7 @@ import com.liferay.batch.engine.unit.BatchEngineUnit;
 import com.liferay.batch.engine.unit.BatchEngineUnitConfiguration;
 import com.liferay.batch.engine.unit.BatchEngineUnitMetaInfo;
 import com.liferay.batch.engine.unit.BatchEngineUnitReader;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.io.Deserializer;
 import com.liferay.petra.io.Serializer;
 import com.liferay.petra.string.StringPool;
@@ -292,11 +293,8 @@ public class BatchEngineUnitReaderImpl implements BatchEngineUnitReader {
 			return advancedBundleBatchEngineUnitImpl;
 		}
 
-		List<URL> urls = new ArrayList<>();
-
-		for (String path : paths) {
-			urls.add(bundle.getEntry(path));
-		}
+		List<URL> urls = TransformUtil.transformToList(
+			paths, path -> bundle.getEntry(path));
 
 		ClassicBundleBatchEngineUnitImpl classicBundleBatchEngineUnitImpl =
 			new ClassicBundleBatchEngineUnitImpl(bundle, urls);

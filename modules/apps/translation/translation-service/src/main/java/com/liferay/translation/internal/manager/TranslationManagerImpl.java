@@ -324,7 +324,7 @@ public class TranslationManagerImpl implements TranslationManager {
 						Function<String, String> exceptionMessageFunction =
 							_exceptionMessageFunctions.getOrDefault(
 								xliffFileException.getClass(),
-								s -> "the-xliff-file-is-invalid");
+								key -> "the-xliff-file-is-invalid");
 
 						return _language.get(
 							locale, exceptionMessageFunction.apply(className));
@@ -349,18 +349,18 @@ public class TranslationManagerImpl implements TranslationManager {
 				HashMapBuilder.
 					<Class<? extends Exception>, Function<String, String>>put(
 						XLIFFFileException.MustBeSupportedLanguage.class,
-						s ->
+						key ->
 							"the-xliff-file-has-an-unavailable-language-" +
 								"translation"
 					).put(
 						XLIFFFileException.MustBeValid.class,
-						s -> "the-file-is-an-invalid-xliff-file"
+						key -> "the-file-is-an-invalid-xliff-file"
 					).put(
 						XLIFFFileException.MustBeWellFormed.class,
-						s -> "the-xliff-file-does-not-have-all-needed-fields"
+						key -> "the-xliff-file-does-not-have-all-needed-fields"
 					).put(
 						XLIFFFileException.MustHaveCorrectEncoding.class,
-						s ->
+						key ->
 							"the-translation-file-has-an-incorrect-encoding." +
 								"the-supported-encoding-format-is-utf-8"
 					).put(
@@ -368,15 +368,15 @@ public class TranslationManagerImpl implements TranslationManager {
 						TranslationManagerImpl::_getMustHaveValidIdMessage
 					).put(
 						XLIFFFileException.MustHaveValidModel.class,
-						s ->
+						key ->
 							"the-xliff-file-contains-a-translation-for-an-" +
 								"invalid-model"
 					).put(
 						XLIFFFileException.MustHaveValidParameter.class,
-						s -> "the-xliff-file-has-invalid-parameters"
+						key -> "the-xliff-file-has-invalid-parameters"
 					).put(
 						XLIFFFileException.MustNotHaveMoreThanOne.class,
-						s -> "the-xliff-file-is-invalid"
+						key -> "the-xliff-file-is-invalid"
 					).build();
 
 	@Reference

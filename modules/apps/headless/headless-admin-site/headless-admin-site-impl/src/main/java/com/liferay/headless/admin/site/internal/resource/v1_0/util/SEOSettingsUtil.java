@@ -27,15 +27,15 @@ public class SEOSettingsUtil {
 	public static SEOSettings getSeoSettings(
 		LayoutSEOEntryLocalService layoutSEOEntryLocalService, Layout layout) {
 
-		LayoutSEOEntry layoutSEOEntry =
-			layoutSEOEntryLocalService.fetchLayoutSEOEntry(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId());
-
 		return new SEOSettings() {
 			{
 				setCustomCanonicalURL_i18n(
 					() -> {
+						LayoutSEOEntry layoutSEOEntry =
+							layoutSEOEntryLocalService.fetchLayoutSEOEntry(
+								layout.getGroupId(), layout.isPrivateLayout(),
+								layout.getLayoutId());
+
 						if ((layoutSEOEntry == null) ||
 							!layoutSEOEntry.isCanonicalURLEnabled()) {
 

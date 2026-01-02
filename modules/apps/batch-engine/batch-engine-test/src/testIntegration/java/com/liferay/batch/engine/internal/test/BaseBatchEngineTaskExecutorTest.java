@@ -398,16 +398,7 @@ public class BaseBatchEngineTaskExecutorTest {
 			return Page.of(
 				TransformUtil.transformToList(
 					hits.getDocs(),
-					document -> {
-						BlogPosting item = transformUnsafeFunction.apply(
-							document);
-
-						if (item == null) {
-							return null;
-						}
-
-						return item;
-					}),
+					document -> transformUnsafeFunction.apply(document)),
 				pagination, indexer.searchCount(searchContext));
 		}
 

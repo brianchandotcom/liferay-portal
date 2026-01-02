@@ -10,12 +10,17 @@
 	position: relative;
 
 	.panel-notifications-count {
+		border-radius: $rounded-pill;
 		display: block;
 		margin: 0;
 		max-width: none;
 		position: absolute;
 		right: calc(100% - 0.7rem);
 		top: -0.4rem;
+
+		.badge {
+			margin: 0.25rem;
+		}
 	}
 
 	.text-default {

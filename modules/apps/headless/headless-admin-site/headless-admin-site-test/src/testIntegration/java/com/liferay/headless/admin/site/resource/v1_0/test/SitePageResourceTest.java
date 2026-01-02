@@ -2892,6 +2892,10 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		PageSpecificationsTestUtil.assertPageSpecifications(
 			putSitePage.getPageSpecifications(),
 			sitePage.getPageSpecifications());
+
+		sitePageResource.deleteSiteSitePage(
+			testGroup.getExternalReferenceCode(),
+			putSitePage.getExternalReferenceCode());
 	}
 
 	private void

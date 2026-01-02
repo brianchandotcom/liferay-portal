@@ -80,9 +80,11 @@ test(
 
 		let dropdown = page.locator('.dropdown-menu.show');
 
-		await expect(dropdown.getByText('Basic Web Content')).toBeVisible();
-		await expect(dropdown.getByText('Blog')).toBeVisible();
-		await expect(dropdown.getByText('Folder')).toBeVisible();
+		await Promise.all([
+			expect(dropdown.getByText('Basic Web Content')).toBeVisible(),
+			expect(dropdown.getByText('Blog')).toBeVisible(),
+			expect(dropdown.getByText('Folder')).toBeVisible(),
+		]);
 
 		await page.getByRole('button', {name: `Add Content`}).click();
 
@@ -90,10 +92,12 @@ test(
 
 		dropdown = page.locator('.dropdown-menu.show');
 
-		await expect(dropdown.getByText('External Video')).toBeVisible();
-		await expect(dropdown.getByText('Folder')).toBeVisible();
-		await expect(dropdown.getByText('Multiple Files')).toBeVisible();
-		await expect(dropdown.getByText('Single File')).toBeVisible();
+		await Promise.all([
+			expect(dropdown.getByText('External Video')).toBeVisible(),
+			expect(dropdown.getByText('Folder')).toBeVisible(),
+			expect(dropdown.getByText('Multiple Files')).toBeVisible(),
+			expect(dropdown.getByText('Single File')).toBeVisible(),
+		]);
 	}
 );
 

@@ -150,11 +150,10 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 
 	@Override
 	public Map<String, Schema> getSchemas(Class<?> entityClass) {
+		ModelConverters modelConverters = ModelConverters.getInstance();
+
 		return new HashMap<>(
-			ModelConverters.getInstance(
-			).readAll(
-				new AnnotatedType(entityClass)
-			));
+			modelConverters.readAll(new AnnotatedType(entityClass)));
 	}
 
 	@Override

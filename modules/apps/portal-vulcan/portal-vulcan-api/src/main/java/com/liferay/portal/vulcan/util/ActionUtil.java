@@ -285,15 +285,13 @@ public class ActionUtil {
 			() -> {
 				UriBuilder uriBuilder = uriBuilderSupplier.get();
 
-				if (clazz.getSuperclass(
-					).isAnnotationPresent(
-						Path.class
-					)) {
+				Class<?> superClass = clazz.getSuperclass();
 
-					uriBuilder = uriBuilder.path(clazz.getSuperclass());
+				if (superClass.isAnnotationPresent(Path.class)) {
+					uriBuilder = uriBuilder.path(superClass);
 				}
 
-				uriBuilder = uriBuilder.path(clazz.getSuperclass(), methodName);
+				uriBuilder = uriBuilder.path(superClass, methodName);
 
 				if (parameterId != null) {
 					uriBuilder = uriBuilder.resolveTemplates(

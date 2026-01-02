@@ -25,6 +25,7 @@ import com.liferay.portal.vulcan.openapi.OpenAPIContext;
 import com.liferay.portal.vulcan.openapi.contributor.OpenAPIContributor;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
+import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.PathItem;
@@ -61,12 +62,13 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 	public void contribute(OpenAPI openAPI, OpenAPIContext openAPIContext)
 		throws Exception {
 
-		if ((openAPIContext == null) || (openAPI.getComponents() == null)) {
+		Components components = openAPI.getComponents();
+
+		if ((components == null) || (openAPIContext == null)) {
 			return;
 		}
 
-		Map<String, Schema> schemas = openAPI.getComponents(
-		).getSchemas();
+		Map<String, Schema> schemas = components.getSchemas();
 
 		if (MapUtil.isEmpty(schemas)) {
 			return;

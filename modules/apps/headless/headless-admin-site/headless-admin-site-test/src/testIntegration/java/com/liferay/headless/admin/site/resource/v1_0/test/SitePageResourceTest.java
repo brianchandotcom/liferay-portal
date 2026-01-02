@@ -28,6 +28,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.OpenGraphSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
+import com.liferay.headless.admin.site.client.dto.v1_0.PageSetPageSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.SEOSettings;
@@ -390,6 +391,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				testGroup.getGroupId(), TestPropsValues.getUserId());
 
 		_testPutSiteSitePage(serviceContext, SitePage.Type.CONTENT_PAGE);
+		_testPutSiteSitePage(serviceContext, SitePage.Type.PAGE_SET_PAGE);
 		_testPutSiteSitePage(serviceContext, SitePage.Type.WIDGET_PAGE);
 
 		_testPutSiteSitePageWithExportedSitePage();
@@ -746,6 +748,13 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		}
 	}
 
+	private void _assertPageSetSitePage(SitePage sitePage) {
+		Assert.assertTrue(
+			sitePage.getPageSettings() instanceof PageSetPageSettings);
+
+		Assert.assertEquals(SitePage.Type.PAGE_SET_PAGE, sitePage.getType());
+	}
+
 	private void _assertPageSpecifications(
 			ContentPageSpecification draftContentPageSpecification,
 			ContentPageSpecification publishedContentPageSpecification,
@@ -904,6 +913,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		if (Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) {
 			_assertContentSitePage(sitePage);
+		}
+		else if (Objects.equals(layout.getType(), LayoutConstants.TYPE_NODE)) {
+			_assertPageSetSitePage(sitePage);
 		}
 		else {
 			_assertWidgetSitePage(layout, sitePage);
@@ -1125,6 +1137,13 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			pageSettings = new ContentPageSettings() {
 				{
 					setType(Type.CONTENT_PAGE_SETTINGS);
+				}
+			};
+		}
+		else if (type == SitePage.Type.PAGE_SET_PAGE) {
+			pageSettings = new PageSetPageSettings() {
+				{
+					setType(Type.PAGE_SET_PAGE_SETTINGS);
 				}
 			};
 		}
@@ -2770,6 +2789,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			"1_column", "2_columns_ii");
 		_testPutSiteSitePageWithPageSpecificationsWithWidgetPageSpecification(
 			"1_2_1_columns_i", "1_column");
+		_testPutSiteSitePageWithPageSpecificationsWithPageSetPageSpecification();
 	}
 
 	private void _testPutSiteSitePageWithPageSpecifications(
@@ -2864,6 +2884,35 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				pageSpecification -> pageSpecification.getCustomFields(),
 				CustomField[].class),
 			testGroup.getGroupId(), updateSitePage.getPageSpecifications());
+	}
+
+	private void _testPutSiteSitePageWithPageSpecificationsWithPageSetPageSpecification()
+		throws Exception {
+
+		SitePageResource sitePageResource = _getSitePageResource(
+			"pageSpecifications");
+
+		SitePage randomSitePage = _getRandomSitePage(
+			SitePage.Type.PAGE_SET_PAGE);
+
+		randomSitePage.setPageSpecifications(
+			PageSpecificationsTestUtil.getPageSetPageSpecifications(
+				randomSitePage.getExternalReferenceCode()));
+
+		SitePage sitePage = sitePageResource.postSiteSitePage(
+			testGroup.getExternalReferenceCode(), randomSitePage);
+
+		sitePage.setPageSpecifications(
+			() -> PageSpecificationsTestUtil.getPageSetPageSpecifications(
+				sitePage.getExternalReferenceCode()));
+
+		SitePage putSitePage = sitePageResource.putSiteSitePage(
+			testGroup.getExternalReferenceCode(),
+			sitePage.getExternalReferenceCode(), sitePage);
+
+		PageSpecificationsTestUtil.assertPageSpecifications(
+			putSitePage.getPageSpecifications(),
+			sitePage.getPageSpecifications());
 	}
 
 	private void

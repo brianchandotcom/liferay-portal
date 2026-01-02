@@ -237,8 +237,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		return new ObjectEntryResourceImpl(
 			_dtoConverterRegistry, _entityModelProvider, objectDefinition,
 			_objectDefinitionsMap.get(restContextPath),
-			_objectDefinitionLocalService, _objectEntryService,
-			_objectEntryLocalService, _objectEntryManagerRegistry,
+			_objectDefinitionLocalService, _objectEntryLocalService,
+			_objectEntryManagerRegistry, _objectEntryService,
 			_objectFieldLocalService, _objectRelationshipLocalService,
 			_objectScopeProviderRegistry, _translationManager,
 			_userLocalService);

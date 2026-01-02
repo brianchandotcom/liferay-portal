@@ -821,7 +821,10 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		return Math.min(priority, maxPriority);
 	}
 
-	private PageSettings _getPageSettings(SitePage.Type type) throws Exception {
+	private PageSettings _getPageSettings(
+			String parentSitePageExternalReferenceCode, SitePage.Type type)
+		throws Exception {
+
 		PageSettings pageSettings = null;
 
 		if (type == SitePage.Type.CONTENT_PAGE) {
@@ -867,6 +870,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 					}
 				}
 			});
+		pageSettings.setHiddenFromNavigation(RandomTestUtil::randomBoolean);
 		pageSettings.setNavigationSettings(
 			() -> new SitePageNavigationSettings() {
 				{
@@ -931,6 +935,10 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 						).build());
 				}
 			});
+		pageSettings.setPriority(
+			_priorities.merge(
+				parentSitePageExternalReferenceCode, 0,
+				(oldPriority, defaultPriority) -> oldPriority + 1));
 		pageSettings.setSeoSettings(
 			() -> new SEOSettings() {
 				{
@@ -1030,17 +1038,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				LocaleUtil.toBCP47LanguageId(LocaleUtil.SPAIN),
 				RandomTestUtil.randomString()
 			).build());
-
-		PageSettings pageSettings = _getPageSettings(type);
-
-		pageSettings.setHiddenFromNavigation(RandomTestUtil::randomBoolean);
-		pageSettings.setPriority(
-			_priorities.merge(
-				parentSitePageExternalReferenceCode, 0,
-				(oldPriority, defaultPriority) -> oldPriority + 1));
-
-		sitePage.setPageSettings(pageSettings);
-
+		sitePage.setPageSettings(
+			_getPageSettings(parentSitePageExternalReferenceCode, type));
 		sitePage.setParentSitePageExternalReferenceCode(
 			parentSitePageExternalReferenceCode);
 		sitePage.setTaxonomyCategoryItemExternalReferences(

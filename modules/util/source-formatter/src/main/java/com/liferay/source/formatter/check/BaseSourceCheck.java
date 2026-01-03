@@ -856,7 +856,9 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	protected boolean isUpgradeProcess(String absolutePath, String content) {
-		return _isDerivedFrom(absolutePath, "UpgradeProcess", content);
+		return _isDerivedFrom(
+			absolutePath, content,
+			"com.liferay.portal.kernel.upgrade.UpgradeProcess");
 	}
 
 	protected synchronized void populateModelInformations() throws IOException {
@@ -996,7 +998,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	private boolean _isDerivedFrom(
-		String absolutePath, String className, String content) {
+		String absolutePath, String content, String fullyQualifiedClassName) {
 
 		Pattern pattern = Pattern.compile(
 			" class " + JavaSourceUtil.getClassName(absolutePath) +
@@ -1010,7 +1012,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 		String extendedClassName = matcher.group(1);
 
-		if (extendedClassName.equals(className)) {
+		if (extendedClassName.equals(fullyQualifiedClassName)) {
 			return true;
 		}
 
@@ -1021,11 +1023,14 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		if (matcher.find()) {
 			extendedClassName = matcher.group(1);
 		}
-
-		if (!extendedClassName.contains(StringPool.PERIOD)) {
+		else {
 			extendedClassName =
 				JavaSourceUtil.getPackageName(content) + StringPool.PERIOD +
 					extendedClassName;
+		}
+
+		if (extendedClassName.equals(fullyQualifiedClassName)) {
+			return true;
 		}
 
 		if (!extendedClassName.startsWith("com.liferay.")) {
@@ -1041,7 +1046,8 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		}
 
 		return _isDerivedFrom(
-			file.getAbsolutePath(), className, FileUtil.read(file));
+			file.getAbsolutePath(), FileUtil.read(file),
+			fullyQualifiedClassName);
 	}
 
 	private static final String _MODULES_PROPERTIES_FILE_NAME =

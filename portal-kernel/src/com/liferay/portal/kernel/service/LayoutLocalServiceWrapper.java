@@ -1307,28 +1307,6 @@ public class LayoutLocalServiceWrapper
 			groupId, keywords, types, statuses, start, end, orderByComparator);
 	}
 
-	@Override
-	public java.util.List<Layout> getLayoutsByPortletLayoutPageTemplateEntryERC(
-		String portletLayoutPageTemplateEntryERC,
-		String portletLayoutPageTemplateEntryScopeERC) {
-
-		return _layoutLocalService.
-			getLayoutsByPortletLayoutPageTemplateEntryERC(
-				portletLayoutPageTemplateEntryERC,
-				portletLayoutPageTemplateEntryScopeERC);
-	}
-
-	@Override
-	public int getLayoutsByPortletLayoutPageTemplateEntryERCCount(
-		String portletLayoutPageTemplateEntryERC,
-		String portletLayoutPageTemplateEntryScopeERC) {
-
-		return _layoutLocalService.
-			getLayoutsByPortletLayoutPageTemplateEntryERCCount(
-				portletLayoutPageTemplateEntryERC,
-				portletLayoutPageTemplateEntryScopeERC);
-	}
-
 	/**
 	 * Returns all the layouts matching the UUID and company.
 	 *

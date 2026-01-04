@@ -220,8 +220,9 @@ public class LayoutLocalServiceStagingAdvice {
 				layout, hasIconImage, iconBytes, "iconImageId", 0, 0, 0);
 		}
 
-		layout.setLayoutPrototypeLinkEnabled(
-			ParamUtil.getBoolean(serviceContext, "layoutPrototypeLinkEnabled"));
+		layout.setPortletLayoutPageTemplateEntryLinkEnabled(
+			ParamUtil.getBoolean(
+				serviceContext, "portletLayoutPageTemplateEntryLinkEnabled"));
 		layout.setExpandoBridgeAttributes(serviceContext);
 
 		layout = _layoutPersistence.update(layout);

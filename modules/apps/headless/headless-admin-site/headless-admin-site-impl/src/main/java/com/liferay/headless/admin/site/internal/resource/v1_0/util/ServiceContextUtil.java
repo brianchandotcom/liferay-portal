@@ -71,7 +71,7 @@ public class ServiceContextUtil {
 				(WidgetPageSettings)pageSettings;
 
 			serviceContext.setAttribute(
-				"layoutPrototypeLinkEnabled",
+				"portletLayoutPageTemplateEntryLinkEnabled",
 				widgetPageSettings.getInheritChanges());
 
 			ItemExternalReference itemExternalReference =

@@ -6,6 +6,7 @@
 package com.liferay.portal.search.web.internal.layout.prototype;
 
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.instance.lifecycle.InitialRequestPortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Group;
@@ -37,7 +38,8 @@ public class AddLayoutPrototypeInitialRequestPortalInstanceLifecycleListener
 
 		_searchLayoutFactory = new SearchLayoutFactory(
 			_groupLocalService, _layoutLocalService,
-			_layoutPrototypeLocalService, _localization, _userLocalService);
+			_layoutPageTemplateEntryLocalService, _layoutPrototypeLocalService,
+			_localization, _userLocalService);
 	}
 
 	@Override
@@ -67,6 +69,10 @@ public class AddLayoutPrototypeInitialRequestPortalInstanceLifecycleListener
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;

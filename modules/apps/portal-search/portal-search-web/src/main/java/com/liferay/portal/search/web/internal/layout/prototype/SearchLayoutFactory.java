@@ -5,6 +5,8 @@
 
 package com.liferay.portal.search.web.internal.layout.prototype;
 
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -40,11 +42,14 @@ public class SearchLayoutFactory {
 	public SearchLayoutFactory(
 		GroupLocalService groupLocalService,
 		LayoutLocalService layoutLocalService,
+		LayoutPageTemplateEntryLocalService layoutPageTemplateEntryLocalService,
 		LayoutPrototypeLocalService layoutPrototypeLocalService,
 		Localization localization, UserLocalService userLocalService) {
 
 		_groupLocalService = groupLocalService;
 		_layoutLocalService = layoutLocalService;
+		_layoutPageTemplateEntryLocalService =
+			layoutPageTemplateEntryLocalService;
 		_layoutPrototypeLocalService = layoutPrototypeLocalService;
 		_localization = localization;
 		_userLocalService = userLocalService;
@@ -98,10 +103,20 @@ public class SearchLayoutFactory {
 
 		ServiceContext serviceContext = new ServiceContext();
 
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				getFirstLayoutPageTemplateEntry(
+					layoutPrototype.getLayoutPrototypeId());
+
 		serviceContext.setAttribute(
-			"layoutPrototypeLinkEnabled", Boolean.FALSE);
+			"portletLayoutPageTemplateEntryERC",
+			layoutPageTemplateEntry.getExternalReferenceCode());
+
 		serviceContext.setAttribute(
-			"layoutPrototypeUuid", layoutPrototype.getUuid());
+			"portletLayoutPageTemplateEntryLinkEnabled", Boolean.FALSE);
+		serviceContext.setAttribute(
+			"portletLayoutPageTemplateEntryScopeERC",
+			group.getExternalReferenceCode());
 		serviceContext.setUserId(group.getCreatorUserId());
 
 		_layoutLocalService.addLayout(
@@ -282,6 +297,8 @@ public class SearchLayoutFactory {
 			new DefaultSearchLayoutPrototypeCustomizer();
 	private final GroupLocalService _groupLocalService;
 	private final LayoutLocalService _layoutLocalService;
+	private final LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 	private final LayoutPrototypeLocalService _layoutPrototypeLocalService;
 	private final Localization _localization;
 	private final UserLocalService _userLocalService;

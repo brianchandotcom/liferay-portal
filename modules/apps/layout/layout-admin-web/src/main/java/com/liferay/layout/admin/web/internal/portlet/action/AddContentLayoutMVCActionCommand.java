@@ -13,14 +13,14 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.portal.kernel.change.tracking.CTTransactionException;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.LayoutPrototypeService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -92,12 +92,15 @@ public class AddContentLayoutMVCActionCommand
 			if ((layoutPageTemplateEntry != null) &&
 				(layoutPageTemplateEntry.getLayoutPrototypeId() > 0)) {
 
-				LayoutPrototype layoutPrototype =
-					_layoutPrototypeService.getLayoutPrototype(
-						layoutPageTemplateEntry.getLayoutPrototypeId());
+				serviceContext.setAttribute(
+					"portletLayoutPageTemplateEntryERC",
+					layoutPageTemplateEntry.getExternalReferenceCode());
+
+				Group group = _groupLocalService.getGroup(groupId);
 
 				serviceContext.setAttribute(
-					"layoutPrototypeUuid", layoutPrototype.getUuid());
+					"portletLayoutPageTemplateEntryScopeERC",
+					group.getExternalReferenceCode());
 
 				layout = _layoutService.addLayout(
 					null, groupId, privateLayout, parentLayoutId, nameMap,
@@ -180,11 +183,11 @@ public class AddContentLayoutMVCActionCommand
 	}
 
 	@Reference
-	private LayoutPageTemplateEntryLocalService
-		_layoutPageTemplateEntryLocalService;
+	private GroupLocalService _groupLocalService;
 
 	@Reference
-	private LayoutPrototypeService _layoutPrototypeService;
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private LayoutService _layoutService;

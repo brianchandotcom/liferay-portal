@@ -87,12 +87,17 @@ public class DeleteLayoutPrototypeMVCActionCommandTest {
 				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE, 0,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
+		serviceContext.setAttribute(
+			"portletLayoutPageTemplateEntryERC",
+			layoutPageTemplateEntry.getExternalReferenceCode());
+
+		serviceContext.setAttribute(
+			"portletLayoutPageTemplateEntryScopeERC",
+			_group.getExternalReferenceCode());
+
 		LayoutPrototype layoutPrototype =
 			_layoutPrototypeLocalService.getLayoutPrototype(
 				layoutPageTemplateEntry.getLayoutPrototypeId());
-
-		serviceContext.setAttribute(
-			"layoutPrototypeUuid", layoutPrototype.getUuid());
 
 		LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), false, layoutPrototype, true);

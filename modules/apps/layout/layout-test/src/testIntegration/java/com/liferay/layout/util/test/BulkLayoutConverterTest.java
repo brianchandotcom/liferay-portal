@@ -9,7 +9,9 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.BulkLayoutConverter;
@@ -133,15 +135,21 @@ public class BulkLayoutConverterTest {
 		LayoutPrototype layoutPrototype = LayoutTestUtil.addLayoutPrototype(
 			StringUtil.randomString());
 
-		layout.setLayoutPrototypeUuid(layoutPrototype.getUuid());
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				getFirstLayoutPageTemplateEntry(
+					layoutPrototype.getLayoutPrototypeId());
 
-		layout.setLayoutPrototypeLinkEnabled(true);
+		layout.setPortletLayoutPageTemplateEntryERC(
+			layoutPageTemplateEntry.getExternalReferenceCode());
+
+		layout.setPortletLayoutPageTemplateEntryLinkEnabled(true);
 
 		layout = _layoutLocalService.updateLayout(layout);
 
 		Assert.assertEquals(LayoutConstants.TYPE_PORTLET, layout.getType());
-		Assert.assertTrue(layout.isLayoutPrototypeLinkEnabled());
-		Assert.assertNotNull(layout.getLayoutPrototypeUuid());
+		Assert.assertNotNull(layout.getPortletLayoutPageTemplateEntryERC());
+		Assert.assertTrue(layout.isPortletLayoutPageTemplateEntryLinkEnabled());
 
 		_bulkLayoutConverter.convertLayout(layout.getPlid());
 
@@ -151,9 +159,11 @@ public class BulkLayoutConverterTest {
 		Assert.assertEquals(
 			LayoutConstants.TYPE_CONTENT, convertedLayout.getType());
 
-		Assert.assertFalse(convertedLayout.isLayoutPrototypeLinkEnabled());
+		Assert.assertFalse(
+			convertedLayout.isPortletLayoutPageTemplateEntryLinkEnabled());
 		Assert.assertEquals(
-			convertedLayout.getLayoutPrototypeUuid(), StringPool.BLANK);
+			convertedLayout.getMasterLayoutPageTemplateEntryERC(),
+			StringPool.BLANK);
 	}
 
 	@Test
@@ -424,6 +434,10 @@ public class BulkLayoutConverterTest {
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Inject
 	private LayoutPageTemplateStructureLocalService

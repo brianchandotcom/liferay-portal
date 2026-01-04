@@ -163,11 +163,16 @@ public class PublishLayoutMVCActionCommand
 			typeSettingsUnicodeProperties.remove(
 				LayoutTypeSettingsConstants.KEY_DESIGN_CONFIGURATION_MODIFIED);
 
-			String layoutPrototypeUuid = layout.getLayoutPrototypeUuid();
+			String portletLayoutPageTemplateEntryERC =
+				layout.getPortletLayoutPageTemplateEntryERC();
 
-			if (Validator.isNotNull(layoutPrototypeUuid)) {
+			if (Validator.isNotNull(portletLayoutPageTemplateEntryERC)) {
 				typeSettingsUnicodeProperties.setProperty(
-					"layoutPrototypeUuid", layoutPrototypeUuid);
+					"portletLayoutPageTemplateEntryERC",
+					portletLayoutPageTemplateEntryERC);
+				typeSettingsUnicodeProperties.setProperty(
+					"portletLayoutPageTemplateEntryScopeERC",
+					layout.getPortletLayoutPageTemplateEntryScopeERC());
 			}
 
 			typeSettingsUnicodeProperties.put(
@@ -236,7 +241,7 @@ public class PublishLayoutMVCActionCommand
 				updatedTypeSettingsUnicodeProperties);
 
 			layout.setType(draftLayout.getType());
-			layout.setLayoutPrototypeUuid(null);
+			layout.setPortletLayoutPageTemplateEntryERC(null);
 			layout.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 			layout = _layoutLocalService.updateLayout(layout);

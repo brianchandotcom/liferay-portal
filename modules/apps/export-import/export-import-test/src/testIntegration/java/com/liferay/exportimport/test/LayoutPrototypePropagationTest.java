@@ -71,7 +71,7 @@ public class LayoutPrototypePropagationTest
 
 	@Override
 	protected void setLinkEnabled(boolean linkEnabled) throws Exception {
-		layout.setLayoutPrototypeLinkEnabled(linkEnabled);
+		layout.setPortletLayoutPageTemplateEntryLinkEnabled(linkEnabled);
 
 		layout = LayoutLocalServiceUtil.updateLayout(layout);
 	}

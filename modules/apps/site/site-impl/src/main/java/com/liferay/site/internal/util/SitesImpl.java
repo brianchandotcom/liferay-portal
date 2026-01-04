@@ -18,6 +18,8 @@ import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.background.task.util.comparator.BackgroundTaskCreateDateComparator;
@@ -134,10 +136,14 @@ public class SitesImpl implements Sites {
 
 		long[] originalAssetCategoryIds = serviceContext.getAssetCategoryIds();
 		String[] originalAssetTagNames = serviceContext.getAssetTagNames();
-		Serializable originalLayoutPrototypeLinkEnabled =
-			serviceContext.getAttribute("layoutPrototypeLinkEnabled");
-		Serializable originalLayoutPrototypeUuid = serviceContext.getAttribute(
-			"layoutPrototypeUuid");
+		Serializable originalPortletLayoutPageTemplateEntryERC =
+			serviceContext.getAttribute("portletLayoutPageTemplateEntryERC");
+		Serializable originalPortletLayoutPageTemplateEntryScopeERC =
+			serviceContext.getAttribute(
+				"portletLayoutPageTemplateEntryScopeERC");
+		Serializable originalPortletLayoutPageTemplateEntryLinkEnabled =
+			serviceContext.getAttribute(
+				"portletLayoutPageTemplateEntryLinkEnabled");
 
 		try {
 			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
@@ -146,10 +152,24 @@ public class SitesImpl implements Sites {
 			serviceContext.setAssetCategoryIds(assetEntry.getCategoryIds());
 			serviceContext.setAssetTagNames(assetEntry.getTagNames());
 
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					getFirstLayoutPageTemplateEntry(
+						layoutPrototype.getLayoutPrototypeId());
+
 			serviceContext.setAttribute(
-				"layoutPrototypeLinkEnabled", linkEnabled);
+				"portletLayoutPageTemplateEntryERC",
+				layoutPageTemplateEntry.getExternalReferenceCode());
+
+			Group group = _groupLocalService.getGroup(
+				targetLayout.getGroupId());
+
 			serviceContext.setAttribute(
-				"layoutPrototypeUuid", layoutPrototype.getUuid());
+				"portletLayoutPageTemplateEntryScopeERC",
+				group.getExternalReferenceCode());
+
+			serviceContext.setAttribute(
+				"portletLayoutPageTemplateEntryLinkEnabled", linkEnabled);
 
 			Locale targetSiteDefaultLocale = _portal.getSiteDefaultLocale(
 				targetLayout.getGroupId());
@@ -172,21 +192,34 @@ public class SitesImpl implements Sites {
 			serviceContext.setAssetCategoryIds(originalAssetCategoryIds);
 			serviceContext.setAssetTagNames(originalAssetTagNames);
 
-			if (originalLayoutPrototypeLinkEnabled == null) {
-				serviceContext.removeAttribute("layoutPrototypeLinkEnabled");
+			if (originalPortletLayoutPageTemplateEntryERC == null) {
+				serviceContext.removeAttribute(
+					"portletLayoutPageTemplateEntryERC");
 			}
 			else {
 				serviceContext.setAttribute(
-					"layoutPrototypeLinkEnabled",
-					originalLayoutPrototypeLinkEnabled);
+					"portletLayoutPageTemplateEntryERC",
+					originalPortletLayoutPageTemplateEntryERC);
 			}
 
-			if (originalLayoutPrototypeUuid == null) {
-				serviceContext.removeAttribute("layoutPrototypeUuid");
+			if (originalPortletLayoutPageTemplateEntryScopeERC == null) {
+				serviceContext.removeAttribute(
+					"portletLayoutPageTemplateEntryScopeERC");
 			}
 			else {
 				serviceContext.setAttribute(
-					"layoutPrototypeUuid", originalLayoutPrototypeUuid);
+					"portletLayoutPageTemplateEntryScopeERC",
+					originalPortletLayoutPageTemplateEntryScopeERC);
+			}
+
+			if (originalPortletLayoutPageTemplateEntryLinkEnabled == null) {
+				serviceContext.removeAttribute(
+					"portletLayoutPageTemplateEntryLinkEnabled");
+			}
+			else {
+				serviceContext.setAttribute(
+					"portletLayoutPageTemplateEntryLinkEnabled",
+					originalPortletLayoutPageTemplateEntryLinkEnabled);
 			}
 
 			LocaleThreadLocal.setSiteDefaultLocale(siteDefaultLocale);
@@ -1407,6 +1440,10 @@ public class SitesImpl implements Sites {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;

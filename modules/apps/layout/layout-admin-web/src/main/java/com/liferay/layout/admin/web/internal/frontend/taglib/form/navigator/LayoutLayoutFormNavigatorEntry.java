@@ -44,7 +44,8 @@ public class LayoutLayoutFormNavigatorEntry
 	@Override
 	public boolean isVisible(User user, Layout layout) {
 		if ((!layout.isTypeAssetDisplay() && !layout.isTypeContent()) ||
-			Validator.isNotNull(layout.getLayoutPrototypeUuid())) {
+			Validator.isNotNull(
+				layout.getPortletLayoutPageTemplateEntryERC())) {
 
 			return true;
 		}

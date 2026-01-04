@@ -260,7 +260,7 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 
 			draftLayout = _layoutLocalService.getLayout(draftLayout.getPlid());
 
-			draftLayout.setLayoutPrototypeLinkEnabled(false);
+			draftLayout.setPortletLayoutPageTemplateEntryLinkEnabled(false);
 
 			UnicodeProperties typeSettingsUnicodeProperties =
 				draftLayout.getTypeSettingsProperties();
@@ -276,8 +276,9 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 			layout = _layoutLocalService.getLayout(layout.getPlid());
 
 			layout.setType(draftLayout.getType());
-			layout.setLayoutPrototypeUuid(StringPool.BLANK);
-			layout.setLayoutPrototypeLinkEnabled(false);
+			layout.setPortletLayoutPageTemplateEntryERC(StringPool.BLANK);
+			layout.setPortletLayoutPageTemplateEntryScopeERC(StringPool.BLANK);
+			layout.setPortletLayoutPageTemplateEntryLinkEnabled(false);
 			layout.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 			return _layoutLocalService.updateLayout(layout);

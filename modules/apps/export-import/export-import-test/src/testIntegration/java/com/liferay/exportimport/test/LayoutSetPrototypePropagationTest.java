@@ -1433,13 +1433,13 @@ public class LayoutSetPrototypePropagationTest
 		if ((layout != null) && (_layout != null)) {
 			layout = LayoutLocalServiceUtil.getLayout(layout.getPlid());
 
-			layout.setLayoutPrototypeLinkEnabled(linkEnabled);
+			layout.setPortletLayoutPageTemplateEntryLinkEnabled(linkEnabled);
 
 			LayoutLocalServiceUtil.updateLayout(layout);
 
 			_layout = LayoutLocalServiceUtil.getLayout(_layout.getPlid());
 
-			_layout.setLayoutPrototypeLinkEnabled(linkEnabled);
+			_layout.setPortletLayoutPageTemplateEntryLinkEnabled(linkEnabled);
 
 			LayoutLocalServiceUtil.updateLayout(_layout);
 		}

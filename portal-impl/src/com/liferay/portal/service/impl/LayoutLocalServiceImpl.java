@@ -116,6 +116,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.PropsValues;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -359,8 +360,11 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		String portletLayoutPageTemplateEntryERC = ParamUtil.getString(
 			serviceContext, "portletLayoutPageTemplateEntryERC");
-		String portletLayoutPageTemplateEntryScopeERC = ParamUtil.getString(
-			serviceContext, "portletLayoutPageTemplateEntryScopeERC");
+		String portletLayoutPageTemplateEntryScopeERC =
+			ScopeUtil.getItemScopeExternalReferenceCode(
+				ParamUtil.getString(
+					serviceContext, "portletLayoutPageTemplateEntryScopeERC"),
+				groupId);
 		boolean portletLayoutPageTemplateEntryLinkEnabled =
 			ParamUtil.getBoolean(
 				serviceContext, "portletLayoutPageTemplateEntryLinkEnabled",
@@ -3083,8 +3087,12 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			boolean applyLayoutPrototype = ParamUtil.getBoolean(
 				serviceContext, "applyLayoutPrototype");
 
-			String portletLayoutPageTemplateEntryScopeERC = ParamUtil.getString(
-				serviceContext, "portletLayoutPageTemplateEntryScopeERC");
+			String portletLayoutPageTemplateEntryScopeERC =
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					ParamUtil.getString(
+						serviceContext,
+						"portletLayoutPageTemplateEntryScopeERC"),
+					groupId);
 
 			layout.setPortletLayoutPageTemplateEntryScopeERC(
 				portletLayoutPageTemplateEntryScopeERC);
@@ -3996,23 +4004,14 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			boolean portletLayoutPageTemplateEntryLinkEnabled)
 		throws PortalException {
 
-		long groupId = layout.getGroupId();
-
-		if (Validator.isNotNull(portletLayoutPageTemplateEntryScopeERC)) {
-			Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
-				portletLayoutPageTemplateEntryScopeERC, layout.getCompanyId());
-
-			if (group == null) {
-				return;
-			}
-
-			groupId = group.getGroupId();
-		}
-
 		LayoutPrototype layoutPrototype =
 			LayoutPageTemplateEntryLayoutProviderUtil.
 				getLayoutPageTemplateEntryLayoutPrototype(
-					groupId, portletLayoutPageTemplateEntryERC);
+					ScopeUtil.getItemGroupId(
+						layout.getCompanyId(),
+						portletLayoutPageTemplateEntryScopeERC,
+						layout.getGroupId()),
+					portletLayoutPageTemplateEntryERC);
 
 		if (layoutPrototype == null) {
 			return;

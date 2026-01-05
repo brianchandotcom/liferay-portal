@@ -182,11 +182,11 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 				layout.getTypeSettingsProperties()));
 		pageSettings.setOpenGraphSettings(
 			() -> OpenGraphSettingsUtil.getOpenGraphSettings(
-				_dlAppService, _layoutSEOEntryLocalService, layout));
+				_dlAppService, layout, _layoutSEOEntryLocalService));
 		pageSettings.setPriority(layout::getPriority);
 		pageSettings.setSeoSettings(
 			() -> SEOSettingsUtil.getSeoSettings(
-				_layoutSEOEntryLocalService, layout));
+				layout, _layoutSEOEntryLocalService));
 
 		return pageSettings;
 	}

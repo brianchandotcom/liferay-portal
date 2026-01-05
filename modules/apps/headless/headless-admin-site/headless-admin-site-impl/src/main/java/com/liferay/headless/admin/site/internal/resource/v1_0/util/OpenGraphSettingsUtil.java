@@ -26,8 +26,8 @@ import java.util.Map;
 public class OpenGraphSettingsUtil {
 
 	public static OpenGraphSettings getOpenGraphSettings(
-		DLAppService dlAppService,
-		LayoutSEOEntryLocalService layoutSEOEntryLocalService, Layout layout) {
+		DLAppService dlAppService, Layout layout,
+		LayoutSEOEntryLocalService layoutSEOEntryLocalService) {
 
 		LayoutSEOEntry layoutSEOEntry =
 			layoutSEOEntryLocalService.fetchLayoutSEOEntry(

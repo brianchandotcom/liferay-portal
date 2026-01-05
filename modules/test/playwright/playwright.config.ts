@@ -52,6 +52,7 @@ import {config as commerceThemeMiniumWebConfig} from './tests/commerce/commerce-
 import {config as commerceWishListWebConfig} from './tests/commerce/commerce-wish-list-web/main/config';
 import {config as configurationAdminWebConfig} from './tests/configuration-admin-web/main/config';
 import {config as contentDashboardWebConfig} from './tests/content-dashboard-web/main/config';
+import {config as controlMenuWebConfig} from './tests/control-menu-web/main/config';
 import {config as cookiesBannerWebConfig} from './tests/cookies-banner-web/main/config';
 import {config as dataCleanupConfig} from './tests/data-cleanup/main/config';
 import {config as depotWebConfig} from './tests/depot-web/main/config';
@@ -237,6 +238,7 @@ export default defineConfig({
 		commerceWorkspaceConfig,
 		configurationAdminWebConfig,
 		contentDashboardWebConfig,
+		controlMenuWebConfig,
 		cookiesBannerWebConfig,
 		customerConfig,
 		depotWebConfig,

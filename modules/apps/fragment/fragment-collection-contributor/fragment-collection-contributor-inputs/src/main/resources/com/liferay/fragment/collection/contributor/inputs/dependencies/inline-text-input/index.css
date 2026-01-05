@@ -33,6 +33,10 @@
 	margin-left: -16px;
 }
 
+.inline-text-input .has-error .inline-text-border {
+	border-color: #da1414;
+}
+
 .inline-text-input .localized-text {
 	border-left: 2px solid #2e5aac;
 }

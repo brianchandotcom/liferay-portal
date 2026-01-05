@@ -86,6 +86,16 @@ async function handleRequest<T>(
 	}
 }
 
+async function patch<T>(url: string, data?: Record<string, any>) {
+	return handleRequest<T>(() =>
+		fetch(url, {
+			body: JSON.stringify(data),
+			headers: HEADERS,
+			method: 'PATCH',
+		})
+	);
+}
+
 async function post<T>(url: string, data?: Record<string, any>) {
 	return handleRequest<T>(() =>
 		fetch(url, {
@@ -99,5 +109,6 @@ async function post<T>(url: string, data?: Record<string, any>) {
 export default {
 	delete: deleteRequest,
 	get,
+	patch,
 	post,
 };

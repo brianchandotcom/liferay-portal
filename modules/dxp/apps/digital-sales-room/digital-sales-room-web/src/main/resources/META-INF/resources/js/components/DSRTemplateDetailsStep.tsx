@@ -27,6 +27,7 @@ import FieldErrorMessage from './FieldErrorMessage';
 function DSRTemplateDetailsStep({
 	numberOfSteps,
 	setHandleStepSubmit,
+	showHeader = true,
 }: TDSRRoomDetailsStepProps) {
 	const {dataContext, setDataContext} = useContext<TDSRContext>(DSRContext);
 	const clientLogoInputFileRef = useRef(null);
@@ -184,24 +185,36 @@ function DSRTemplateDetailsStep({
 
 	return (
 		<>
-			<div>
-				<div className="mb-1 text-secondary" data-qa-id="stepLocator">
-					{sub(Liferay.Language.get('step-x-of-x'), 2, numberOfSteps)}
-				</div>
+			{showHeader ? (
+				<div>
+					<div
+						className="mb-1 text-secondary"
+						data-qa-id="stepLocator"
+					>
+						{sub(
+							Liferay.Language.get('step-x-of-x'),
+							2,
+							numberOfSteps
+						)}
+					</div>
 
-				<div
-					className="mb-1 text-6 text-weight-bold"
-					data-qa-id="stepTitle"
-				>
-					{Liferay.Language.get('customize-your-template')}
-				</div>
+					<div
+						className="mb-1 text-6 text-weight-bold"
+						data-qa-id="stepTitle"
+					>
+						{Liferay.Language.get('customize-your-template')}
+					</div>
 
-				<div className="text-secondary">
-					{Liferay.Language.get(
-						"personalize-your-template-to-match-your-customers'-brand"
-					)}
+					<div className="text-secondary">
+						{Liferay.Language.get(
+							"personalize-your-template-to-match-your-customers'-brand"
+						)}
+					</div>
 				</div>
-			</div>
+			) : (
+				<></>
+			)}
+
 			<div className="mt-4 row">
 				<ClayForm.Group
 					className={classNames('col-12', {

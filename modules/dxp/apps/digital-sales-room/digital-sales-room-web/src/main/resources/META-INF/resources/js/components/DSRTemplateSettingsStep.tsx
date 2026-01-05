@@ -19,6 +19,7 @@ import FieldErrorMessage from './FieldErrorMessage';
 function DSRTemplateSettingsStep({
 	numberOfSteps,
 	setHandleStepSubmit,
+	showHeader = true,
 }: TDSRRoomDetailsStepProps) {
 	const {dataContext, setDataContext} = useContext<TDSRContext>(DSRContext);
 
@@ -91,22 +92,35 @@ function DSRTemplateSettingsStep({
 
 	return (
 		<>
-			<div>
-				<div className="mb-1 text-secondary" data-qa-id="stepLocator">
-					{sub(Liferay.Language.get('step-x-of-x'), 1, numberOfSteps)}
-				</div>
+			{showHeader ? (
+				<div>
+					<div
+						className="mb-1 text-secondary"
+						data-qa-id="stepLocator"
+					>
+						{sub(
+							Liferay.Language.get('step-x-of-x'),
+							1,
+							numberOfSteps
+						)}
+					</div>
 
-				<div
-					className="mb-1 text-6 text-weight-bold"
-					data-qa-id="stepTitle"
-				>
-					{Liferay.Language.get('template-settings')}
-				</div>
+					<div
+						className="mb-1 text-6 text-weight-bold"
+						data-qa-id="stepTitle"
+					>
+						{Liferay.Language.get('template-settings')}
+					</div>
 
-				<div className="text-secondary">
-					{Liferay.Language.get('create-a-new-template-from-scratch')}
+					<div className="text-secondary">
+						{Liferay.Language.get(
+							'create-a-new-template-from-scratch'
+						)}
+					</div>
 				</div>
-			</div>
+			) : (
+				<></>
+			)}
 			<div className="mt-4">
 				<ClayForm.Group
 					className={classNames({

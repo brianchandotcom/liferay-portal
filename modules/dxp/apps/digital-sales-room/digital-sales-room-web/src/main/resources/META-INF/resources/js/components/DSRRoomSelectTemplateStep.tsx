@@ -23,7 +23,7 @@ import DigitalSalesRoomService, {
 import {DSRContext} from './DSRInitializer';
 import {TDSRContext, TDSRRoomDetailsStepProps} from './DSRTypes';
 
-function getImageURL(base64: string) {
+export function getImageURL(base64: string) {
 	if (base64) {
 		return `data:image;base64,${base64}`;
 	}

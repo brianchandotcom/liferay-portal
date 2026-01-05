@@ -55,6 +55,7 @@ export type TDSRRoomDetailsStepProps = {
 		callback: SetStateAction<(event: Event) => Promise<boolean>>
 	): void;
 	numberOfSteps: number;
+	showHeader?: boolean;
 	step?: number;
 };
 

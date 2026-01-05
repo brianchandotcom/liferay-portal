@@ -80,6 +80,7 @@ export default function propsTransformer({
 			};
 			event: Event;
 			itemData: {
+				friendlyUrlPath: string;
 				id: number;
 				name: string;
 			};
@@ -96,6 +97,11 @@ export default function propsTransformer({
 						'delete-digital-sales-room-template-confirmation-title'
 					),
 				});
+			}
+			else if (action?.data?.id === 'edit') {
+				event?.preventDefault();
+
+				window.location.href = `/web${itemData.friendlyUrlPath}`;
 			}
 		},
 	};

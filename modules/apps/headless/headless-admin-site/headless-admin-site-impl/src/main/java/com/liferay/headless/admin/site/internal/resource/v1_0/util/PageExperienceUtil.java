@@ -30,9 +30,9 @@ public class PageExperienceUtil {
 			throw new UnsupportedOperationException();
 		}
 
-		PageExperience defaultPageExperience = null;
-
 		Set<String> pageExperienceKeys = new HashSet<>(pageExperiences.length);
+
+		PageExperience defaultPageExperience = null;
 
 		for (PageExperience pageExperience : pageExperiences) {
 			if (!pageExperienceKeys.add(pageExperience.getKey())) {

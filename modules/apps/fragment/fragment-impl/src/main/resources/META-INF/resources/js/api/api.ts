@@ -7,10 +7,7 @@ export {LocalizationSelect} from './LocalizationSelect';
 
 export {focusInput} from './focusInput';
 export {getTranslationInput} from './getTranslationInput';
-export {
-	handleInputLengthError,
-	hideLengthError,
-} from './handleInputLengthError';
+export {handleInputLengthError, showInputError} from './handleInputError';
 export {registerLocalizedInput} from './registerLocalizedInput';
 export {registerUnlocalizedInput} from './registerUnlocalizedInput';
 export {updateDLVideo} from './updateDLVideo';

@@ -2,7 +2,7 @@
 	<div class="form-group [#if  input.errorMessage?has_content]has-error[/#if] mb-0" id="${fragmentElementId}-form-group">
 		<label class="mb-0[#if !input.showLabel || !input.label?has_content] sr-only[/#if]" for="${fragmentElementId}-inline-text-input" id="${fragmentElementId}-inline-text-input-label">${htmlUtil.escape(input.label)}
 			<span id="${fragmentElementId}-inline-text-input-readonly" class="[#if !input.readOnly]d-none[/#if]">(${languageUtil.get(locale, "read-only")})</span>
-			
+
 			[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
 
 			[#if !input.localizable]
@@ -24,24 +24,19 @@
 			[/#if]
 		</div>
 
-		<p class="mb-0 mt-1 text-secondary [#if input.errorMessage?has_content || !configuration.showCharactersCount]sr-only[/#if]" id="${fragmentElementId}-length-info">
-			<span class="sr-only" id="${fragmentElementId}-length-warning">
-				[@clay["icon"] symbol="info-circle" /]
-
-				<span aria-live="assertive" data-error-message="${languageUtil.get(locale, "maximum-number-of-characters-exceeded")}" data-valid-message="${languageUtil.get(locale, "current-text-length-is-valid")}" id="${fragmentElementId}-length-warning-text"></span>:
-			</span>
+		<p class="mb-0 mt-1 text-secondary[#if !configuration.showCharactersCount] d-none[/#if]" id="${fragmentElementId}-length-info">
 			<span id="${fragmentElementId}-current-length">0</span> / [#if input.attributes.maxLength??]${input.attributes.maxLength}[/#if]
 		</p>
 
-		[#if input.errorMessage?has_content]
-			<p class="font-weight-semi-bold mt-1 text-danger" id="${fragmentElementId}-inline-text-input-error">
-				[@clay["icon"] symbol="info-circle" /]
+		<p class="font-weight-semi-bold mb-0 mt-1 text-danger[#if !input.errorMessage?has_content] sr-only[/#if]" id="${fragmentElementId}-inline-text-input-error">
+			[@clay["icon"] symbol="info-circle" /]
 
-				<span id="${fragmentElementId}-inline-text-input-error-message">
+			<span data-length-feedback="${languageUtil.get(locale, "maximum-number-of-characters-exceeded")}" data-required-feedback="${languageUtil.get(locale, 'this-field-is-required')}" data-valid-feedback="${languageUtil.get(locale, "current-text-length-is-valid")}" id="${fragmentElementId}-inline-text-input-error-message" role="alert">
+				[#if input.errorMessage?has_content]
 					${input.errorMessage}
-				</span>
-			</p>
-		[/#if]
+				[/#if]
+			</span>
+		</p>
 
 		[#if input.localizable]
 			<p class="localized-text mb-0 mt-2 pl-2 text-info" id="${fragmentElementId}-localized-text">

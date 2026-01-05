@@ -70,7 +70,7 @@ public class CustomizationSettingsProcessor implements ColumnProcessor {
 
 		if ((selLayout instanceof VirtualLayout) ||
 			!selLayout.isLayoutUpdateable() ||
-			selLayout.isLayoutPrototypeLinkActive()) {
+			selLayout.isPortletLayoutPageTemplateEntryLinkActive()) {
 
 			_customizationEnabled = false;
 		}

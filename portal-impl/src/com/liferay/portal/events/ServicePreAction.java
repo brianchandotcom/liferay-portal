@@ -1763,7 +1763,9 @@ public class ServicePreAction extends Action {
 			themeDisplay.setShowPageSettingsIcon(false);
 		}
 
-		if ((layout != null) && layout.isLayoutPrototypeLinkActive()) {
+		if ((layout != null) &&
+			layout.isPortletLayoutPageTemplateEntryLinkActive()) {
+
 			themeDisplay.setShowPageCustomizationIcon(false);
 		}
 

@@ -389,7 +389,7 @@ public class SitesImpl implements Sites {
 	public boolean isLayoutModifiedSinceLastMerge(Layout layout) {
 		if ((layout == null) ||
 			Validator.isNull(layout.getLayoutSetPrototypeLayoutERC()) ||
-			layout.isLayoutPrototypeLinkActive() ||
+			layout.isPortletLayoutPageTemplateEntryLinkActive() ||
 			(layout instanceof VirtualLayout) || !layout.isLayoutUpdateable()) {
 
 			return false;
@@ -619,7 +619,7 @@ public class SitesImpl implements Sites {
 	protected void doMergeLayoutPrototypeLayout(Group group, Layout layout)
 		throws Exception {
 
-		if (!layout.isLayoutPrototypeLinkActive() ||
+		if (!layout.isPortletLayoutPageTemplateEntryLinkActive() ||
 			group.isLayoutPrototype() || group.hasStagingGroup()) {
 
 			return;

@@ -157,7 +157,7 @@ public class InformationMessagesProductNavigationControlMenuEntry
 		Group group = layout.getGroup();
 
 		if ((layout instanceof VirtualLayout) || !layout.isLayoutUpdateable() ||
-			(layout.isLayoutPrototypeLinkActive() &&
+			(layout.isPortletLayoutPageTemplateEntryLinkActive() &&
 			 !group.hasStagingGroup())) {
 
 			return LayoutPermissionUtil.containsWithoutViewableGroup(

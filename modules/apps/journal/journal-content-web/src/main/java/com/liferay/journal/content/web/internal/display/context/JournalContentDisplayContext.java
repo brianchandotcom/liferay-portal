@@ -986,7 +986,7 @@ public class JournalContentDisplayContext {
 
 		Layout layout = _themeDisplay.getLayout();
 
-		if (layout.isLayoutPrototypeLinkActive()) {
+		if (layout.isPortletLayoutPageTemplateEntryLinkActive()) {
 			_showSelectArticleLink = false;
 
 			return _showSelectArticleLink;

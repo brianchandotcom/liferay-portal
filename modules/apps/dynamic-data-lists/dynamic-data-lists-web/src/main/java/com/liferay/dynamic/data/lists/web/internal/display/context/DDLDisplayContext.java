@@ -669,7 +669,7 @@ public class DDLDisplayContext {
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (layout.isLayoutPrototypeLinkActive()) {
+		if (layout.isPortletLayoutPageTemplateEntryLinkActive()) {
 			return _hasShowIconsActionPermission;
 		}
 

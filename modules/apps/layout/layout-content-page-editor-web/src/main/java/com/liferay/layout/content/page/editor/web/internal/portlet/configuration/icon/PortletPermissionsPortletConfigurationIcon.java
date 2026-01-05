@@ -126,7 +126,7 @@ public class PortletPermissionsPortletConfigurationIcon
 		}
 
 		if (layout.isEmbeddedPersonalApplication() ||
-			layout.isLayoutPrototypeLinkActive() ||
+			layout.isPortletLayoutPageTemplateEntryLinkActive() ||
 			layout.isTypeControlPanel()) {
 
 			showPermissionsIcon = false;

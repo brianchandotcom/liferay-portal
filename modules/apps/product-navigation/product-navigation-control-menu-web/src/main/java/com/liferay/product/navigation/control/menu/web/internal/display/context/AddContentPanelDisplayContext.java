@@ -219,7 +219,7 @@ public class AddContentPanelDisplayContext {
 		Layout layout = _themeDisplay.getLayout();
 
 		if (!stateMaximized && layout.isTypePortlet() &&
-			!layout.isLayoutPrototypeLinkActive() &&
+			!layout.isPortletLayoutPageTemplateEntryLinkActive() &&
 			!layoutTypeController.isFullPageDisplayable() &&
 			(hasLayoutUpdatePermission() ||
 			 (layoutTypePortlet.isCustomizable() &&

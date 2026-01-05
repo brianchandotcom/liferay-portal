@@ -134,7 +134,7 @@ public class PermissionsPortletConfigurationIcon
 						themeDisplay.getPermissionChecker(), layout, portletId,
 						ActionKeys.PERMISSIONS) &&
 					!layout.isEmbeddedPersonalApplication() &&
-					!layout.isLayoutPrototypeLinkActive() &&
+					!layout.isPortletLayoutPageTemplateEntryLinkActive() &&
 					!layout.isTypeControlPanel()) {
 
 					return true;

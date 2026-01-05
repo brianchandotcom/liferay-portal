@@ -235,7 +235,7 @@ public class AssetPublisherPortletToolbarContributor
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (layout.isLayoutPrototypeLinkActive() &&
+		if (layout.isPortletLayoutPageTemplateEntryLinkActive() &&
 			assetPublisherDisplayContext.isSelectionStyleManual()) {
 
 			return false;

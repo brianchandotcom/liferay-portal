@@ -187,7 +187,7 @@ public class OrphanPortletsDisplayContext {
 
 		Layout selLayout = getSelLayout();
 
-		if (!selLayout.isLayoutPrototypeLinkActive()) {
+		if (!selLayout.isPortletLayoutPageTemplateEntryLinkActive()) {
 			orphanPortletsSearchContainer.setRowChecker(
 				new EmptyOnClickRowChecker(_liferayPortletResponse));
 		}

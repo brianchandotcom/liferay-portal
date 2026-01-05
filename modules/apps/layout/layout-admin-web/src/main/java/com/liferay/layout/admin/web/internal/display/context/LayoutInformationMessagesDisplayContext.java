@@ -61,7 +61,7 @@ public class LayoutInformationMessagesDisplayContext {
 
 				Group group = themeDisplay.getScopeGroup();
 
-				if (layout.isLayoutPrototypeLinkActive() &&
+				if (layout.isPortletLayoutPageTemplateEntryLinkActive() &&
 					!group.hasStagingGroup()) {
 
 					message = "this-page-is-linked-to-a-page-template";

@@ -83,7 +83,7 @@ public class JournalContentPortletToolbarContributor
 		Layout layout = themeDisplay.getLayout();
 
 		if (!_hasAddArticlePermission(themeDisplay) ||
-			layout.isLayoutPrototypeLinkActive()) {
+			layout.isPortletLayoutPageTemplateEntryLinkActive()) {
 
 			return Collections.emptyList();
 		}

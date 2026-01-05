@@ -63,7 +63,7 @@ public class ProductNavigationControlMenuUtil {
 
 		Layout layout = themeDisplay.getLayout();
 
-		return !layout.isLayoutPrototypeLinkActive();
+		return !layout.isPortletLayoutPageTemplateEntryLinkActive();
 	}
 
 	private static boolean _hasCustomizePermission(ThemeDisplay themeDisplay)

@@ -26,7 +26,8 @@ public class JavaLiferayFilterCheck extends BaseJavaTermCheck {
 		String fileName, String absolutePath, JavaTerm javaTerm,
 		String fileContent) {
 
-		if (!fileName.endsWith("Filter.java") ||
+		if (fileName.endsWith("/PortalInstancesFilter.java") ||
+			!fileName.endsWith("Filter.java") ||
 			!_isLiferayFilter(absolutePath, fileContent)) {
 
 			return javaTerm.getContent();

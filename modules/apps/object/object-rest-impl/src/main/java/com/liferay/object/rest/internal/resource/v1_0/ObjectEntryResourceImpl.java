@@ -36,6 +36,7 @@ import com.liferay.object.tree.Tree;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -899,6 +900,22 @@ public class ObjectEntryResourceImpl
 	}
 
 	@Override
+	public ObjectEntry postByExternalReferenceCodeExpire(
+			String externalReferenceCode)
+		throws Exception {
+
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getCompanyId(),
+					_objectDefinition.getStorageType()));
+
+		return defaultObjectEntryManager.expireObjectEntry(
+			_getDTOConverterContext(null), externalReferenceCode,
+			_objectDefinition, StringPool.BLANK);
+	}
+
+	@Override
 	public void postByExternalReferenceCodeSubscribe(
 			String externalReferenceCode)
 		throws Exception {
@@ -1031,20 +1048,6 @@ public class ObjectEntryResourceImpl
 		return defaultObjectEntryManager.moveObjectEntry(
 			_getDTOConverterContext(objectEntryId), objectEntryId,
 			objectEntryFolderId, true);
-	}
-
-	@Override
-	public ObjectEntry postObjectEntryExpire(Long objectEntryId)
-		throws Exception {
-
-		DefaultObjectEntryManager defaultObjectEntryManager =
-			DefaultObjectEntryManagerProvider.provide(
-				_objectEntryManagerRegistry.getObjectEntryManager(
-					_objectDefinition.getCompanyId(),
-					_objectDefinition.getStorageType()));
-
-		return defaultObjectEntryManager.expireObjectEntry(
-			_getDTOConverterContext(objectEntryId), objectEntryId);
 	}
 
 	@Override

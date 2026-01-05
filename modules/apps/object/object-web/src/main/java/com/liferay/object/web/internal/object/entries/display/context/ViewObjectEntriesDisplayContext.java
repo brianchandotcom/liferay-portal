@@ -140,7 +140,9 @@ public class ViewObjectEntriesDisplayContext {
 				LanguageUtil.get(_objectRequestHelper.getRequest(), "view"),
 				"get", null, null),
 			new FDSActionDropdownItem(
-				_getRESTContextPathURL() + "/{id}/expire", "time", "expire",
+				getByExternalReferenceCodePath() +
+					"/{externalReferenceCode}/expire",
+				"time", "expire",
 				LanguageUtil.get(_objectRequestHelper.getRequest(), "expire"),
 				"post", "expire", "async"),
 			new FDSActionDropdownItem(

@@ -33,25 +33,23 @@ public class HubSpotRestController extends BaseRestController {
 
 	@PostMapping("/company")
 	public void postCompany(@RequestBody String json) throws Exception {
-		JSONObject jsonObject = _hubSpotService.postCompany(
-			_getObjectEntryValuesJSONObject(json));
-
-		_patchObjectEntry(jsonObject, "o/c/h1s4companies/" + _getClassPK(json));
+		_patchObjectEntry(
+			_hubSpotService.postCompany(_getObjectEntryValuesJSONObject(json)),
+			"o/c/h1s4companies/" + _getClassPK(json));
 	}
 
 	@PostMapping("/contact")
 	public void postContact(@RequestBody String json) throws Exception {
-		JSONObject jsonObject = _hubSpotService.postContact(
-			_getObjectEntryValuesJSONObject(json));
-
-		_patchObjectEntry(jsonObject, "o/c/h1s4contacts/" + _getClassPK(json));
+		_patchObjectEntry(
+			_hubSpotService.postContact(_getObjectEntryValuesJSONObject(json)),
+			"o/c/h1s4contacts/" + _getClassPK(json));
 	}
 
 	@PostMapping("/lead")
 	public void postLead(@RequestBody String json) throws Exception {
 		JSONObject jsonObject = _getObjectEntryValuesJSONObject(json);
 
-		String contactId;
+		String contactId = null;
 
 		if (jsonObject.optString(
 				"r_h1s4ContactToH1S4Leads_c_h1s4ContactERC"
@@ -82,10 +80,9 @@ public class HubSpotRestController extends BaseRestController {
 			contactId = contactJSONObject.getString("id");
 		}
 
-		JSONObject leadJSONObject = _hubSpotService.postLead(
-			contactId, jsonObject);
-
-		_patchObjectEntry(leadJSONObject, "o/c/h1s4leads/" + _getClassPK(json));
+		_patchObjectEntry(
+			_hubSpotService.postLead(contactId, jsonObject),
+			"o/c/h1s4leads/" + _getClassPK(json));
 	}
 
 	private long _getClassPK(String json) {

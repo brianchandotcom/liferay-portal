@@ -161,7 +161,7 @@ test.describe('Text input field', () => {
 
 			const characterText = page.getByText('0 / 280');
 
-			await expect(characterText).toHaveClass(/sr-only/);
+			await expect(characterText).toHaveClass(/d-none/);
 
 			await pageEditorPage.changeFragmentConfiguration({
 				fieldLabel: 'Show Characters Count',
@@ -170,7 +170,7 @@ test.describe('Text input field', () => {
 				value: true,
 			});
 
-			await expect(characterText).not.toHaveClass(/sr-only/);
+			await expect(characterText).not.toHaveClass(/d-none/);
 		}
 	);
 
@@ -525,7 +525,7 @@ test.describe('Textarea input field', () => {
 
 			const characterText = page.getByText('0 / 300');
 
-			await expect(characterText).toHaveClass(/sr-only/);
+			await expect(characterText).toHaveClass(/d-none/);
 
 			await pageEditorPage.changeFragmentConfiguration({
 				fieldLabel: 'Show Characters Count',
@@ -534,7 +534,7 @@ test.describe('Textarea input field', () => {
 				value: true,
 			});
 
-			await expect(characterText).not.toHaveClass(/sr-only/);
+			await expect(characterText).not.toHaveClass(/d-none/);
 		}
 	);
 

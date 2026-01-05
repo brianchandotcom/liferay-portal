@@ -1126,7 +1126,8 @@ test.describe('Numeric input field', () => {
 					errorLabel: {
 						en_US: 'The lemon weight must be greater than 0',
 					},
-					externalReferenceCode: 'lemon-weight-validation-erc',
+					externalReferenceCode:
+						'lemon-weight-numeric-validation-erc',
 					name: {
 						en_US: 'Lemon Weight Validation',
 					},
@@ -1659,7 +1660,7 @@ test.describe('URL Video Previewer Fragment', () => {
 
 			// Show characters count
 
-			await expect(page.getByText('0 / 280')).toHaveClass(/sr-only/);
+			await expect(page.getByText('0 / 280')).toHaveClass(/d-none/);
 
 			await pageEditorPage.changeFragmentConfiguration({
 				fieldLabel: 'Show Characters Count',
@@ -1668,7 +1669,7 @@ test.describe('URL Video Previewer Fragment', () => {
 				value: true,
 			});
 
-			await expect(page.getByText('0 / 280')).not.toHaveClass(/sr-only/);
+			await expect(page.getByText('0 / 280')).not.toHaveClass(/d-none/);
 
 			// Change preview label
 
@@ -1874,7 +1875,7 @@ test.describe('URL Video Previewer Fragment', () => {
 	);
 
 	test(
-		'Check the Video Previewer error',
+		'Check the Video Previewer inline error',
 		{
 			tag: '@LPD-75305',
 		},
@@ -1973,6 +1974,82 @@ test.describe('URL Video Previewer Fragment', () => {
 			await objectValidationRuleAPIClient.deleteObjectValidationRule(
 				objectValidationRule.id
 			);
+		}
+	);
+
+	test(
+		'An error is shown when the number of input characters is exceeded',
+		{tag: ['@LPD-66593']},
+		async ({apiHelpers, page, pageManagementSite}) => {
+
+			// Create a page with a form fragment with a URL Video Previewer fragment
+
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
+					getObjectERC('All Fields')
+				)
+			).body;
+
+			const submitButtonDefinition = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'INPUTS-submit-button',
+			});
+
+			const videoPreviewerDefinition = getFragmentDefinition({
+				fragmentConfig: {
+					inputFieldId: 'ObjectField_text',
+				},
+				id: getRandomString(),
+				key: 'INPUTS-video-previewer-input',
+			});
+
+			const formDefinition = getFormContainerDefinition({
+				id: getRandomString(),
+				objectDefinitionClassName,
+				pageElements: [
+					videoPreviewerDefinition,
+					submitButtonDefinition,
+				],
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			// Type 310 characters and check that the input error is shown
+
+			const inputError = page.getByText(
+				'Maximum Number of Characters Exceeded: 310 / 280'
+			);
+
+			const input = page.getByRole('textbox', {name: 'Text'});
+
+			await input.click();
+
+			await page.keyboard.type('a'.repeat(310));
+
+			await expect(inputError).toBeVisible();
+
+			// Submit the form and check the error
+
+			await page.getByText('Submit', {exact: true}).click();
+
+			await expect(inputError).not.toBeVisible();
+
+			await expect(input).toBeFocused();
+
+			await expect(
+				page.getByText('Value exceeds maximum length of 280.')
+			).toBeVisible();
 		}
 	);
 });

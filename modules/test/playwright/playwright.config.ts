@@ -51,6 +51,7 @@ import {config as commerceTaxEngineWebConfig} from './tests/commerce/commerce-ta
 import {config as commerceThemeMiniumWebConfig} from './tests/commerce/commerce-theme-minium/main/config';
 import {config as commerceWishListWebConfig} from './tests/commerce/commerce-wish-list-web/main/config';
 import {config as configurationAdminWebConfig} from './tests/configuration-admin-web/main/config';
+import {config as systemSettingsOverrideConfig} from './tests/configuration-admin-web/override-properties-only/config';
 import {config as systemSettingsOverrideOsgiConfig} from './tests/configuration-admin-web/override-with-osgi/config';
 import {config as contentDashboardWebConfig} from './tests/content-dashboard-web/main/config';
 import {config as cookiesBannerWebConfig} from './tests/cookies-banner-web/main/config';
@@ -239,6 +240,7 @@ export default defineConfig({
 		commerceWorkspaceConfig,
 		configurationAdminWebConfig,
 		systemSettingsOverrideOsgiConfig,
+		systemSettingsOverrideConfig,
 		contentDashboardWebConfig,
 		cookiesBannerWebConfig,
 		customerConfig,

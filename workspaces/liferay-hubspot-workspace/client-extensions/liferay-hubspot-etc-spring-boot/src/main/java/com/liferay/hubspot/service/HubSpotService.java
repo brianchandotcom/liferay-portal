@@ -36,7 +36,7 @@ public class HubSpotService extends BaseService {
 			"companies", "name", propertiesJSONObject.getString("name"));
 
 		if (companyJSONObject != null) {
-			return null;
+			return companyJSONObject;
 		}
 
 		JSONObject jsonObject = new JSONObject(
@@ -67,7 +67,7 @@ public class HubSpotService extends BaseService {
 			"contacts", "email", propertiesJSONObject.getString("email"));
 
 		if (contactJSONObject != null) {
-			return null;
+			return contactJSONObject;
 		}
 
 		JSONObject jsonObject = new JSONObject(

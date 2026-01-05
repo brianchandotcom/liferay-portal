@@ -2964,4 +2964,6 @@ public interface PropsKeys {
 	public static final String ZIP_FILE_WRITER_EXPORT_BUFFER_SIZE =
 		"zip.file.writer.export.buffer.size";
 
+	public String ZIP_FILE_READER_NIO_ENABLED = "zip.file.reader.nio.enabled";
+
 }

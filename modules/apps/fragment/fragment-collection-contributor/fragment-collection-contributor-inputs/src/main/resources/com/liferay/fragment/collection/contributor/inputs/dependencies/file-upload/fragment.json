@@ -3,6 +3,7 @@
 	"fragmentEntryKey": "file-upload",
 	"icon": "upload",
 	"name": "file-upload",
+	"thumbnail": "file_upload.svg",
 	"type": "input",
 	"typeOptions": {
 		"fieldTypes": [

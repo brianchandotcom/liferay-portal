@@ -3,6 +3,7 @@
 	"fragmentEntryKey": "date-input",
 	"icon": "calendar",
 	"name": "date",
+	"thumbnail": "date.svg",
 	"type": "input",
 	"typeOptions": {
 		"fieldTypes": [

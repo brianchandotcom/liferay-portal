@@ -3,6 +3,7 @@
 	"fragmentEntryKey": "text-input",
 	"icon": "custom-field",
 	"name": "text",
+	"thumbnail": "text.svg",
 	"type": "input",
 	"typeOptions": {
 		"fieldTypes": [

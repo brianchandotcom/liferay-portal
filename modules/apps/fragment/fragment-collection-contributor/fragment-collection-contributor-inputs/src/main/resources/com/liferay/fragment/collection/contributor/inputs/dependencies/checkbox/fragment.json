@@ -3,6 +3,7 @@
 	"fragmentEntryKey": "checkbox",
 	"icon": "check-square",
 	"name": "checkbox",
+	"thumbnail": "checkbox.svg",
 	"type": "input",
 	"typeOptions": {
 		"fieldTypes": [

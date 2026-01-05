@@ -3,6 +3,7 @@
 	"fragmentEntryKey": "multiselect-list",
 	"icon": "select-from-list",
 	"name": "multiselector-checkbox",
+	"thumbnail": "multiselector_checkbox.svg",
 	"type": "input",
 	"typeOptions": {
 		"fieldTypes": [

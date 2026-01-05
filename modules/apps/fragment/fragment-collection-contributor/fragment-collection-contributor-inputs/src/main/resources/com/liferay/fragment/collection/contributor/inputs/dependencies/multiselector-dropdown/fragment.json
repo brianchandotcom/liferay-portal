@@ -3,6 +3,7 @@
 	"fragmentEntryKey": "multiselector-dropdown",
 	"icon": "select-from-list",
 	"name": "multiselector-dropdown",
+	"thumbnail": "multiselector_dropdown.svg",
 	"type": "input",
 	"typeOptions": {
 		"fieldTypes": [

@@ -3,6 +3,7 @@
 	"fragmentEntryKey": "friendly-url-input",
 	"icon": "link",
 	"name": "friendly-url",
+	"thumbnail": "friendly_url.svg",
 	"type": "input",
 	"typeOptions": {
 		"fieldTypes": [

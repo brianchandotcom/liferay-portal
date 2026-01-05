@@ -3,6 +3,7 @@
 	"fragmentEntryKey": "numeric-input",
 	"icon": "number",
 	"name": "numeric",
+	"thumbnail": "numeric.svg",
 	"type": "input",
 	"typeOptions": {
 		"fieldTypes": [

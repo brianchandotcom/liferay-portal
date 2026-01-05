@@ -3,6 +3,7 @@
 	"fragmentEntryKey": "date-time-input",
 	"icon": "date-time",
 	"name": "date-and-time",
+	"thumbnail": "date_and_time.svg",
 	"type": "input",
 	"typeOptions": {
 		"fieldTypes": [

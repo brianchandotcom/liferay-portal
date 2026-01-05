@@ -3,6 +3,7 @@
 	"fragmentEntryKey": "stepper",
 	"icon": "breadcrumb",
 	"name": "stepper",
+	"thumbnail": "stepper.svg",
 	"type": "input",
 	"typeOptions": {
 		"fieldTypes": [

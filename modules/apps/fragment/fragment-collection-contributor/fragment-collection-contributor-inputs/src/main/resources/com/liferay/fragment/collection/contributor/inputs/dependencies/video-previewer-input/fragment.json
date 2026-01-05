@@ -3,6 +3,7 @@
 	"fragmentEntryKey": "video-previewer-input",
 	"icon": "video",
 	"name": "url-video-previewer",
+	"thumbnail": "url_video_previewer.svg",
 	"type": "input",
 	"typeOptions": {
 		"fieldTypes": [

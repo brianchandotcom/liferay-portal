@@ -3,6 +3,7 @@
 	"fragmentEntryKey": "textarea",
 	"icon": "field-area",
 	"name": "textarea",
+	"thumbnail": "text_area.svg",
 	"type": "input",
 	"typeOptions": {
 		"fieldTypes": [

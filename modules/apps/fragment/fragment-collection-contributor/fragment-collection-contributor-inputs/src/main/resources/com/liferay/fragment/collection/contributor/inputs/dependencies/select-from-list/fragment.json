@@ -3,6 +3,7 @@
 	"fragmentEntryKey": "select-from-list",
 	"icon": "select",
 	"name": "select",
+	"thumbnail": "select.svg",
 	"type": "input",
 	"typeOptions": {
 		"fieldTypes": [

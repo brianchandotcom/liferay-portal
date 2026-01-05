@@ -3,6 +3,7 @@
 	"fragmentEntryKey": "rich-text-input",
 	"icon": "field-area",
 	"name": "rich-text",
+	"thumbnail": "rich_text.svg",
 	"type": "input",
 	"typeOptions": {
 		"fieldTypes": [

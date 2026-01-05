@@ -3,6 +3,7 @@
 	"fragmentEntryKey": "submit-button",
 	"icon": "button",
 	"name": "form-button",
+	"thumbnail": "form_button.svg",
 	"type": "input",
 	"typeOptions": {
 		"fieldTypes": [

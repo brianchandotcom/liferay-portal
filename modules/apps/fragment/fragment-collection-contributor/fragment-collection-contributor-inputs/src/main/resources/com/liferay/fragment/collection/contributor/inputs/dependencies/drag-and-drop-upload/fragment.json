@@ -3,6 +3,7 @@
 	"fragmentEntryKey": "drag-and-drop-upload",
 	"icon": "upload",
 	"name": "drag-and-drop-upload",
+	"thumbnail": "drag_and_drop_upload.svg",
 	"type": "input",
 	"typeOptions": {
 		"fieldTypes": [

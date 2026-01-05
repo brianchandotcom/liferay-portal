@@ -3,6 +3,7 @@
 	"fragmentEntryKey": "captcha",
 	"icon": "reload",
 	"name": "captcha",
+	"thumbnail": "captcha.svg",
 	"type": "input",
 	"typeOptions": {
 		"fieldTypes": [

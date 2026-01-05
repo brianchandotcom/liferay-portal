@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
-import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.UserConstants;
@@ -120,16 +119,9 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 					continue;
 				}
 
-				long newUserId = 0;
+				long newUserId = _getAdminUserId(connection, companyId);
 
-				try {
-					newUserId = _getAdminUserId(connection, companyId);
-				}
-				catch (NoSuchUserException noSuchUserException) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(noSuchUserException);
-					}
-
+				if (newUserId == 0) {
 					continue;
 				}
 
@@ -197,12 +189,14 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 			}
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (!resultSet.next()) {
-					throw new NoSuchUserException(
-						"No admin user found for company " + companyId);
-				}
+				long userId = 0;
 
-				long userId = resultSet.getLong(1);
+				if (resultSet.next()) {
+					userId = resultSet.getLong(1);
+				}
+				else {
+					_log.error("No admin user found for company " + companyId);
+				}
 
 				_adminUserIds.put(companyId, userId);
 

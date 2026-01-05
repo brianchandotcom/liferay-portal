@@ -113,8 +113,8 @@ public class DLReferencesExportImportContentProcessor
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"The file entry does not exist and the friendlyURL " +
-							"parameter has not been parsed");
+						"The file entry does not exist and the friendly URL " +
+							"parameter was not parsed");
 				}
 
 				continue;
@@ -131,7 +131,7 @@ public class DLReferencesExportImportContentProcessor
 			if (group == null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"Unable to get group for DL reference " +
+						"Unable to get group for document library reference " +
 							dlReference.getReference());
 				}
 
@@ -205,7 +205,7 @@ public class DLReferencesExportImportContentProcessor
 									getFileEntryFriendlyURL(),
 								" and group with friendly URL ",
 								documentLibraryReference.getGroupFriendlyURL(),
-								" exists but it may contain wrong data"));
+								" exists but it may contain incorrect data"));
 					}
 				}
 

@@ -962,6 +962,11 @@ public class LayoutWrapper
 		return model.getLayoutId();
 	}
 
+	@Override
+	public String getLayoutPrototypeUuid() {
+		return model.getLayoutPrototypeUuid();
+	}
+
 	/**
 	 * Returns the current layout's {@link LayoutSet}.
 	 *
@@ -1810,6 +1815,11 @@ public class LayoutWrapper
 	}
 
 	@Override
+	public boolean isLayoutPrototypeLinkEnabled() {
+		return model.isLayoutPrototypeLinkEnabled();
+	}
+
+	@Override
 	public boolean isLayoutSortable() {
 		return model.isLayoutSortable();
 	}
@@ -1832,6 +1842,11 @@ public class LayoutWrapper
 	@Override
 	public boolean isPortletEmbedded(String portletId, long groupId) {
 		return model.isPortletEmbedded(portletId, groupId);
+	}
+
+	@Override
+	public boolean isPortletLayoutPageTemplateEntryLinkActive() {
+		return model.isPortletLayoutPageTemplateEntryLinkActive();
 	}
 
 	/**

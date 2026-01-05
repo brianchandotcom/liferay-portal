@@ -35,62 +35,62 @@ public class HubSpotService extends BaseService {
 		JSONObject companyJSONObject = searchHubSpotResource(
 			"companies", "name", propertiesJSONObject.getString("name"));
 
-		if (companyJSONObject == null) {
-			JSONObject jsonObject = new JSONObject(
-				post(
-					_getAuthorization(),
-					new JSONObject(
-					).put(
-						"properties",
-						_getHubSpotPropertiesJSONObject(
-							propertiesJSONObject, "companies")
-					).toString(),
-					UriComponentsBuilder.fromUriString(
-						_hubSpotURL
-					).path(
-						"/crm/v3/objects/companies"
-					).build(
-					).toUri()));
-
-			if (_log.isInfoEnabled()) {
-				_log.info("HubSpot company created: " + jsonObject);
-			}
-
-			return jsonObject;
+		if (companyJSONObject != null) {
+			return null;
 		}
 
-		return null;
+		JSONObject jsonObject = new JSONObject(
+			post(
+				_getAuthorization(),
+				new JSONObject(
+				).put(
+					"properties",
+					_getHubSpotPropertiesJSONObject(
+						propertiesJSONObject, "companies")
+				).toString(),
+				UriComponentsBuilder.fromUriString(
+					_hubSpotURL
+				).path(
+					"/crm/v3/objects/companies"
+				).build(
+				).toUri()));
+
+		if (_log.isInfoEnabled()) {
+			_log.info("HubSpot company created: " + jsonObject);
+		}
+
+		return jsonObject;
 	}
 
 	public JSONObject postContact(JSONObject propertiesJSONObject) {
 		JSONObject contactJSONObject = searchHubSpotResource(
 			"contacts", "email", propertiesJSONObject.getString("email"));
 
-		if (contactJSONObject == null) {
-			JSONObject jsonObject = new JSONObject(
-				post(
-					_getAuthorization(),
-					new JSONObject(
-					).put(
-						"properties",
-						_getHubSpotPropertiesJSONObject(
-							propertiesJSONObject, "contacts")
-					).toString(),
-					UriComponentsBuilder.fromUriString(
-						_hubSpotURL
-					).path(
-						"/crm/v3/objects/contacts"
-					).build(
-					).toUri()));
-
-			if (_log.isInfoEnabled()) {
-				_log.info("HubSpot contact created: " + jsonObject);
-			}
-
-			return jsonObject;
+		if (contactJSONObject != null) {
+			return null;
 		}
 
-		return null;
+		JSONObject jsonObject = new JSONObject(
+			post(
+				_getAuthorization(),
+				new JSONObject(
+				).put(
+					"properties",
+					_getHubSpotPropertiesJSONObject(
+						propertiesJSONObject, "contacts")
+				).toString(),
+				UriComponentsBuilder.fromUriString(
+					_hubSpotURL
+				).path(
+					"/crm/v3/objects/contacts"
+				).build(
+				).toUri()));
+
+		if (_log.isInfoEnabled()) {
+			_log.info("HubSpot contact created: " + jsonObject);
+		}
+
+		return jsonObject;
 	}
 
 	public JSONObject postLead(

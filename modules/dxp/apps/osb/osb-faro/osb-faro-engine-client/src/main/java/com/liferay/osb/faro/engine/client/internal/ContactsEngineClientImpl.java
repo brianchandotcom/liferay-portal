@@ -291,16 +291,16 @@ public class ContactsEngineClientImpl
 
 	@Override
 	public IndividualSegment addIndividualSegment(
-		FaroProject faroProject, long userId, String channelId, String filter,
-		boolean includeAnonymousUsers, String name, String segmentType,
-		String status) {
+		FaroProject faroProject, long userId, String channelId,
+		String filterString, boolean includeAnonymousUsers, String name,
+		String segmentType, String status) {
 
 		IndividualSegment individualSegment = new IndividualSegment();
 
 		individualSegment.setAuthor(getAuthor(userId));
 		individualSegment.setChannelId(channelId);
 		individualSegment.setDateModified(new Date());
-		individualSegment.setFilter(filter);
+		individualSegment.setFilter(filterString);
 		individualSegment.setIncludeAnonymousUsers(includeAnonymousUsers);
 		individualSegment.setName(name);
 		individualSegment.setSegmentType(segmentType);
@@ -649,7 +649,7 @@ public class ContactsEngineClientImpl
 	@Override
 	public Results<Account> getAccounts(
 		FaroProject faroProject, String channelId, String dataSourceId,
-		String individualSegmentId, String filter, String query,
+		String individualSegmentId, String filterString, String query,
 		List<String> fields, int cur, int delta,
 		List<OrderByField> orderByFields) {
 
@@ -666,7 +666,7 @@ public class ContactsEngineClientImpl
 		filterBuilder.addFilter(
 			"dataSourceId", FilterConstants.COMPARISON_OPERATOR_EQUALS,
 			dataSourceId);
-		filterBuilder.addFilter(filter);
+		filterBuilder.addFilter(filterString);
 		filterBuilder.addSearchFilter(
 			query, fields, FilterConstants.FIELD_NAME_CONTEXT_ACCOUNT);
 
@@ -695,15 +695,15 @@ public class ContactsEngineClientImpl
 	@Override
 	public Results<Distribution> getAccountsDistribution(
 		FaroProject faroProject, String channelId, String fieldMappingFieldName,
-		String filter, String individualSegmentId, int count, int numberOfBins,
-		List<OrderByField> orderByFields) {
+		String filterString, String individualSegmentId, int count,
+		int numberOfBins, List<OrderByField> orderByFields) {
 
 		Map<String, Object> uriVariables = getUriVariables(
 			faroProject, 0, count, orderByFields);
 
 		uriVariables.put("channelId", channelId);
 		uriVariables.put("fieldMappingFieldName", fieldMappingFieldName);
-		uriVariables.put("filter", filter);
+		uriVariables.put("filter", filterString);
 		uriVariables.put("individualSegmentId", individualSegmentId);
 		uriVariables.put("numberOfBins", numberOfBins);
 
@@ -1927,7 +1927,7 @@ public class ContactsEngineClientImpl
 	public Results<Individual> getIndividuals(
 		FaroProject faroProject, String accountId, String channelId,
 		String dataSourceId, String individualSegmentId,
-		String notIndividualSegmentId, String interestName, String filter,
+		String notIndividualSegmentId, String interestName, String filterString,
 		String query, List<String> fields, boolean includeAnonymousUsers,
 		int cur, int delta, List<OrderByField> orderByFields) {
 
@@ -1947,8 +1947,8 @@ public class ContactsEngineClientImpl
 			uriVariables.put("dataSourceId", dataSourceId);
 		}
 
-		if (Validator.isNotNull(filter)) {
-			uriVariables.put("filter", filter);
+		if (Validator.isNotNull(filterString)) {
+			uriVariables.put("filter", filterString);
 		}
 
 		uriVariables.put("includeAnonymousUsers", includeAnonymousUsers);
@@ -2014,9 +2014,10 @@ public class ContactsEngineClientImpl
 
 	@Override
 	public Results<Individual> getIndividualsByIndividualSegment(
-		FaroProject faroProject, String individualSegmentId, String filter,
-		String query, List<String> fields, boolean includeAnonymousUsers,
-		int cur, int delta, List<OrderByField> orderByFields) {
+		FaroProject faroProject, String individualSegmentId,
+		String filterString, String query, List<String> fields,
+		boolean includeAnonymousUsers, int cur, int delta,
+		List<OrderByField> orderByFields) {
 
 		Map<String, Object> uriVariables = getUriVariables(
 			faroProject, cur, delta, orderByFields,
@@ -2024,7 +2025,7 @@ public class ContactsEngineClientImpl
 
 		FilterBuilder filterBuilder = new FilterBuilder();
 
-		filterBuilder.addFilter(filter);
+		filterBuilder.addFilter(filterString);
 		filterBuilder.addSearchFilter(
 			query, fields, FilterConstants.FIELD_NAME_CONTEXT_INDIVIDUAL);
 
@@ -2232,7 +2233,7 @@ public class ContactsEngineClientImpl
 	@Override
 	public Results<IndividualSegmentRealTimeMembership>
 		getIndividualSegmentRealTimeMemberships(
-			FaroProject faroProject, String day, String filter,
+			FaroProject faroProject, String day, String filterString,
 			String individualSegmentId, int cur, int delta,
 			List<OrderByField> orderByFields) {
 
@@ -2243,7 +2244,7 @@ public class ContactsEngineClientImpl
 			uriVariables.put("day", day);
 		}
 
-		uriVariables.put("filter", filter);
+		uriVariables.put("filter", filterString);
 		uriVariables.put("id", individualSegmentId);
 
 		PagedModel<?, IndividualSegmentRealTimeMembership> pagedModel = get(
@@ -2540,7 +2541,7 @@ public class ContactsEngineClientImpl
 	@Override
 	public Results<String> getSessionValues(
 		FaroProject faroProject, String channelId, String fieldName,
-		String filter, String query, int cur, int delta) {
+		String filterString, String query, int cur, int delta) {
 
 		Map<String, Object> uriVariables = getUriVariables(
 			faroProject, cur, delta, null);
@@ -2549,7 +2550,7 @@ public class ContactsEngineClientImpl
 
 		FilterBuilder filterBuilder = new FilterBuilder();
 
-		filterBuilder.addFilter(filter);
+		filterBuilder.addFilter(filterString);
 		filterBuilder.addFilter(
 			"channelId", FilterConstants.COMPARISON_OPERATOR_EQUALS,
 			Long.valueOf(channelId));
@@ -2896,7 +2897,7 @@ public class ContactsEngineClientImpl
 	@Override
 	public IndividualSegment updateIndividualSegment(
 		FaroProject faroProject, String id, long userId, String channelId,
-		String filter, boolean includeAnonymousUsers, String name,
+		String filterString, boolean includeAnonymousUsers, String name,
 		String segmentType) {
 
 		IndividualSegment individualSegment = new IndividualSegment();
@@ -2904,7 +2905,7 @@ public class ContactsEngineClientImpl
 		individualSegment.setId(id);
 		individualSegment.setAuthor(getAuthor(userId));
 		individualSegment.setChannelId(channelId);
-		individualSegment.setFilter(filter);
+		individualSegment.setFilter(filterString);
 		individualSegment.setIncludeAnonymousUsers(includeAnonymousUsers);
 		individualSegment.setName(name);
 		individualSegment.setSegmentType(segmentType);

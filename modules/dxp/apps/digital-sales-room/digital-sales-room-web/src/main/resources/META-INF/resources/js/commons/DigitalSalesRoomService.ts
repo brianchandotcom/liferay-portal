@@ -171,6 +171,20 @@ async function getChannels(channelName = ''): Promise<TChannelsDTO> {
 	throw new Error(error);
 }
 
+async function getDigitalSalesRoomTemplate(
+	digitalSalesRoomTemplateId: number
+): Promise<TDSRTemplateDTO> {
+	const {data, error} = await ApiHelper.get(
+		`${TEMPLATE_PATH}/${digitalSalesRoomTemplateId}?nestedFields=fileBase64`
+	);
+
+	if (data) {
+		return data as TDSRTemplateDTO;
+	}
+
+	throw new Error(error);
+}
+
 async function getDigitalSalesRoomTemplates(): Promise<TDSRTemplatesDTO> {
 	const {data, error} = await ApiHelper.get(
 		`${TEMPLATE_PATH}?nestedFields=fileBase64`
@@ -178,6 +192,38 @@ async function getDigitalSalesRoomTemplates(): Promise<TDSRTemplatesDTO> {
 
 	if (data) {
 		return data as TDSRTemplatesDTO;
+	}
+
+	throw new Error(error);
+}
+
+async function patchDigitalSalesRoomTemplate(
+	digitalSalesRoomTemplateId: number,
+	{
+		banner,
+		clientLogo,
+		clientName,
+		description,
+		name,
+		primaryColor,
+		secondaryColor,
+	}: TDSRTemplatePayload
+): Promise<TDSRTemplateDTO> {
+	const {data, error} = await ApiHelper.patch(
+		`${TEMPLATE_PATH}/${digitalSalesRoomTemplateId}`,
+		{
+			banner,
+			clientLogo,
+			clientName,
+			description,
+			name,
+			primaryColor,
+			secondaryColor,
+		}
+	);
+
+	if (data) {
+		return data as TDSRTemplateDTO;
 	}
 
 	throw new Error(error);
@@ -311,7 +357,9 @@ export default {
 	deleteDigitalSalesRoomTemplate,
 	getAccounts,
 	getChannels,
+	getDigitalSalesRoomTemplate,
 	getDigitalSalesRoomTemplates,
+	patchDigitalSalesRoomTemplate,
 	postDigitalSalesRoom,
 	postDigitalSalesRoomDigitalSalesRoomTemplate,
 	postDigitalSalesRoomTemplate,

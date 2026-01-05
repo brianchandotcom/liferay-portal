@@ -750,6 +750,44 @@ public abstract class BaseDigitalSalesRoomTemplateResourceTestCase {
 	}
 
 	@Test
+	public void testPatchDigitalSalesRoomTemplate() throws Exception {
+		DigitalSalesRoomTemplate postDigitalSalesRoomTemplate =
+			testPatchDigitalSalesRoomTemplate_addDigitalSalesRoomTemplate();
+
+		DigitalSalesRoomTemplate randomPatchDigitalSalesRoomTemplate =
+			randomPatchDigitalSalesRoomTemplate();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DigitalSalesRoomTemplate patchDigitalSalesRoomTemplate =
+			digitalSalesRoomTemplateResource.patchDigitalSalesRoomTemplate(
+				postDigitalSalesRoomTemplate.getId(),
+				randomPatchDigitalSalesRoomTemplate);
+
+		DigitalSalesRoomTemplate expectedPatchDigitalSalesRoomTemplate =
+			postDigitalSalesRoomTemplate.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchDigitalSalesRoomTemplate,
+			expectedPatchDigitalSalesRoomTemplate);
+
+		DigitalSalesRoomTemplate getDigitalSalesRoomTemplate =
+			digitalSalesRoomTemplateResource.getDigitalSalesRoomTemplate(
+				patchDigitalSalesRoomTemplate.getId());
+
+		assertEquals(
+			expectedPatchDigitalSalesRoomTemplate, getDigitalSalesRoomTemplate);
+		assertValid(getDigitalSalesRoomTemplate);
+	}
+
+	protected DigitalSalesRoomTemplate
+			testPatchDigitalSalesRoomTemplate_addDigitalSalesRoomTemplate()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPostDigitalSalesRoomDigitalSalesRoomTemplate()
 		throws Exception {
 

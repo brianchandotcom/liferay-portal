@@ -783,7 +783,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				testCompany.getCompanyId(),
 				LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
 				user.getTimeZoneId());
-
 			_companyLocalService.updatePreferences(
 				testCompany.getCompanyId(),
 				UnicodePropertiesBuilder.put(
@@ -823,7 +822,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 			_testGetSiteSitePageWithLocalization(
 				esFriendlyURL, layout.getPlid(), LocaleUtil.SPAIN);
-
 			_testGetSiteSitePageWithLocalization(
 				usFriendlyURL, layout.getPlid(), LocaleUtil.UK);
 			_testGetSiteSitePageWithLocalization(
@@ -850,7 +848,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			String friendlyUrlPath, Long id, Locale locale)
 		throws Exception {
 
-		SitePageResource localizedSitePageResource = SitePageResource.builder(
+		SitePageResource sitePageResource = SitePageResource.builder(
 		).authentication(
 			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
 		).header(
@@ -859,7 +857,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			locale
 		).build();
 
-		SitePage sitePage = localizedSitePageResource.getSiteSitePage(
+		SitePage sitePage = sitePageResource.getSiteSitePage(
 			testGroup.getGroupId(), friendlyUrlPath);
 
 		Assert.assertEquals(friendlyUrlPath, sitePage.getFriendlyUrlPath());

@@ -397,7 +397,6 @@ public class LayoutServiceContextHelperImpl
 				}
 
 				themeDisplay.setPlid(_layout.getPlid());
-
 				themeDisplay.setSiteDefaultLocale(
 					_portal.getSiteDefaultLocale(_group.getGroupId()));
 			}

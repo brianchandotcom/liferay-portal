@@ -59,6 +59,11 @@ public interface DigitalSalesRoomTemplateResource {
 			String search, Pagination pagination)
 		throws Exception;
 
+	public DigitalSalesRoomTemplate patchDigitalSalesRoomTemplate(
+			Long digitalSalesRoomTemplateId,
+			DigitalSalesRoomTemplate digitalSalesRoomTemplate)
+		throws Exception;
+
 	public DigitalSalesRoomTemplate
 			postDigitalSalesRoomDigitalSalesRoomTemplate(
 				Long digitalSalesRoomId,

@@ -199,6 +199,44 @@ public abstract class BaseDigitalSalesRoomTemplateResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-digital-sales-room/v1.0/digital-sales-room-templates/{digitalSalesRoomTemplateId}' -d $'{"banner": ___, "clientLogo": ___, "clientName": ___, "description": ___, "name": ___, "primaryColor": ___, "secondaryColor": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "digitalSalesRoomTemplateId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "DigitalSalesRoomTemplate"
+			)
+		}
+	)
+	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
+	@jakarta.ws.rs.PATCH
+	@jakarta.ws.rs.Path(
+		"/digital-sales-room-templates/{digitalSalesRoomTemplateId}"
+	)
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public DigitalSalesRoomTemplate patchDigitalSalesRoomTemplate(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("digitalSalesRoomTemplateId")
+			Long digitalSalesRoomTemplateId,
+			DigitalSalesRoomTemplate digitalSalesRoomTemplate)
+		throws Exception {
+
+		return new DigitalSalesRoomTemplate();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-digital-sales-room/v1.0/digital-sales-rooms/{digitalSalesRoomId}/digital-sales-room-templates' -d $'{"banner": ___, "clientLogo": ___, "clientName": ___, "description": ___, "name": ___, "primaryColor": ___, "secondaryColor": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(

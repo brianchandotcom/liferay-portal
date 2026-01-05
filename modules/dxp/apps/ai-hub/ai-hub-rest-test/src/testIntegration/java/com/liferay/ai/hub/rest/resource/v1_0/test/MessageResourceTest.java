@@ -10,7 +10,9 @@ import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.test.rule.FeatureFlag;
@@ -44,8 +46,13 @@ public class MessageResourceTest extends BaseMessageResourceTestCase {
 
 		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
 
+		ServiceContextThreadLocal.pushServiceContext(
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
+
 		SiteInitializer siteInitializer =
-			_siteInitializerRegistry.getSiteInitializer("ai-hub-initializer");
+			_siteInitializerRegistry.getSiteInitializer(
+				"com.liferay.ai.hub.site.initializer");
 
 		siteInitializer.initialize(TestPropsValues.getGroupId());
 	}
@@ -53,6 +60,8 @@ public class MessageResourceTest extends BaseMessageResourceTestCase {
 	@AfterClass
 	public static void tearDownClass() {
 		PrincipalThreadLocal.setName(_originalName);
+
+		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@After

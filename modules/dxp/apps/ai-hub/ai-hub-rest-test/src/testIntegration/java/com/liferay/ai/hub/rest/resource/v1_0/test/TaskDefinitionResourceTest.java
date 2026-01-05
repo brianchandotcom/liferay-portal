@@ -11,7 +11,9 @@ import com.liferay.ai.hub.rest.client.pagination.Pagination;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
@@ -41,8 +43,13 @@ public class TaskDefinitionResourceTest
 
 		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
 
+		ServiceContextThreadLocal.pushServiceContext(
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
+
 		SiteInitializer siteInitializer =
-			_siteInitializerRegistry.getSiteInitializer("ai-hub-initializer");
+			_siteInitializerRegistry.getSiteInitializer(
+				"com.liferay.ai.hub.site.initializer");
 
 		siteInitializer.initialize(TestPropsValues.getGroupId());
 	}
@@ -50,6 +57,8 @@ public class TaskDefinitionResourceTest
 	@AfterClass
 	public static void tearDownClass() {
 		PrincipalThreadLocal.setName(_originalName);
+
+		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Test

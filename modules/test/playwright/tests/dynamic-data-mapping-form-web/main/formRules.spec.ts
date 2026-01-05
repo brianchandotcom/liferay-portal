@@ -354,13 +354,11 @@ test('Select from list with multiple selections allowed is auto-filled by data p
 
 	await dataProviderPage.timeoutInputField.fill('30000');
 
-	await dataProviderPage.outputPathInputField.fill(
-		'$..nameCurrentValue;$..name'
-	);
+	await dataProviderPage.outputPathField.fill('$..nameCurrentValue;$..name');
 
 	await dataProviderPage.selectOutputType('List');
 
-	await dataProviderPage.outputLabel.fill('Name');
+	await dataProviderPage.outputLabelField.fill('Name');
 
 	await dataProviderPage.saveButton.click();
 

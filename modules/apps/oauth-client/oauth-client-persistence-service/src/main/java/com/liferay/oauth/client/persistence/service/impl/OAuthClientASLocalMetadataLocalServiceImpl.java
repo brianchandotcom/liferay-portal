@@ -6,8 +6,8 @@
 package com.liferay.oauth.client.persistence.service.impl;
 
 import com.liferay.oauth.client.persistence.exception.DuplicateOAuthClientASLocalMetadataException;
-import com.liferay.oauth.client.persistence.exception.OAuthClientASLocalMetadataJSONException;
 import com.liferay.oauth.client.persistence.exception.OAuthClientASLocalMetadataLocalWellKnownURIException;
+import com.liferay.oauth.client.persistence.exception.OAuthClientASLocalMetadataMetadataJSONException;
 import com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata;
 import com.liferay.oauth.client.persistence.service.base.OAuthClientASLocalMetadataLocalServiceBaseImpl;
 import com.liferay.petra.string.StringBundler;
@@ -374,7 +374,7 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 			).toJSONString();
 		}
 		catch (Exception exception) {
-			throw new OAuthClientASLocalMetadataJSONException(
+			throw new OAuthClientASLocalMetadataMetadataJSONException(
 				exception.getMessage(), exception);
 		}
 	}
@@ -426,7 +426,7 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 			).toJSONString();
 		}
 		catch (Exception exception) {
-			throw new OAuthClientASLocalMetadataJSONException(
+			throw new OAuthClientASLocalMetadataMetadataJSONException(
 				exception.getMessage(), exception);
 		}
 	}
@@ -472,7 +472,7 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 			return AuthorizationServerMetadata.parse(metadataJSON);
 		}
 		catch (Exception exception) {
-			throw new OAuthClientASLocalMetadataJSONException(
+			throw new OAuthClientASLocalMetadataMetadataJSONException(
 				exception.getMessage(), exception);
 		}
 	}

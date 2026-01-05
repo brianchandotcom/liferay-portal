@@ -39,6 +39,8 @@ components:
             type: object
         TaskDefinition:
             properties:
+                description:
+                    type: string
                 name:
                     type: string
                 version:

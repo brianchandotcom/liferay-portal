@@ -84,7 +84,10 @@ public class TaskDefinitionResourceImpl extends BaseTaskDefinitionResourceImpl {
 
 		return new TaskDefinition() {
 			{
-				setName(kaleoDefinition::getName);
+				setDescription(kaleoDefinition::getDescription);
+				setName(
+					() -> kaleoDefinition.getTitle(
+						contextAcceptLanguage.getPreferredLocale()));
 				setVersion(kaleoDefinition::getVersion);
 			}
 		};

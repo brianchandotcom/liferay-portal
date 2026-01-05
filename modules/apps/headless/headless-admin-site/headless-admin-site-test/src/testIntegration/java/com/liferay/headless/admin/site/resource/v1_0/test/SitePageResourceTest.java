@@ -87,10 +87,12 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -2175,14 +2177,61 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			testGroup.getExternalReferenceCode(),
 			_getRandomSitePage(SitePage.Type.CONTENT_PAGE));
 
+		ContentPageSpecification contentPageSpecification =
+			(ContentPageSpecification)postSitePage.getPageSpecifications()[0];
+
+		PageExperience defaultPageExperience =
+			PageExperiencesTestUtil.getDefaultPageExperience(
+				contentPageSpecification.getPageExperiences());
+
 		SitePage putSitePage = _testPutSiteSitePageWithPageExperiences(
+			ArrayUtil.append(
+				PageExperiencesTestUtil.getPageExperiences(
+					testCompany.getGroupId(),
+					contentPageSpecification.getExternalReferenceCode(),
+					testGroup.getGroupId()),
+				defaultPageExperience),
 			postSitePage, sitePageResource);
 
-		_testPutSiteSitePageWithPageExperiences(putSitePage, sitePageResource);
+		putSitePage = _testPutSiteSitePageWithPageExperiences(
+			ArrayUtil.append(
+				PageExperiencesTestUtil.getPageExperiences(
+					testCompany.getGroupId(),
+					contentPageSpecification.getExternalReferenceCode(),
+					testGroup.getGroupId()),
+				defaultPageExperience),
+			putSitePage, sitePageResource);
+
+		contentPageSpecification =
+			(ContentPageSpecification)putSitePage.getPageSpecifications()[0];
+
+		PageExperience[] pageExperiences =
+			contentPageSpecification.getPageExperiences();
+
+		for (int i = 0; i < pageExperiences.length; i++) {
+			PageExperience pageExperience = pageExperiences[i];
+
+			if (!Objects.equals(
+					pageExperience.getKey(),
+					SegmentsExperienceConstants.KEY_DEFAULT)) {
+
+				pageExperience.setPriority(i + 1);
+			}
+		}
+
+		Arrays.sort(
+			pageExperiences,
+			Comparator.comparingInt(
+				PageExperience::getPriority
+			).reversed());
+
+		_testPutSiteSitePageWithPageExperiences(
+			pageExperiences, putSitePage, sitePageResource);
 	}
 
 	private SitePage _testPutSiteSitePageWithPageExperiences(
-			SitePage sitePage, SitePageResource sitePageResource)
+			PageExperience[] pageExperiences, SitePage sitePage,
+			SitePageResource sitePageResource)
 		throws Exception {
 
 		PageSpecification[] pageSpecifications =
@@ -2190,14 +2239,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		ContentPageSpecification contentPageSpecification =
 			(ContentPageSpecification)pageSpecifications[0];
-
-		PageExperience[] pageExperiences = ArrayUtil.append(
-			PageExperiencesTestUtil.getPageExperiences(
-				testCompany.getGroupId(),
-				contentPageSpecification.getExternalReferenceCode(),
-				testGroup.getGroupId()),
-			PageExperiencesTestUtil.getDefaultPageExperience(
-				contentPageSpecification.getPageExperiences()));
 
 		contentPageSpecification.setPageExperiences(pageExperiences);
 

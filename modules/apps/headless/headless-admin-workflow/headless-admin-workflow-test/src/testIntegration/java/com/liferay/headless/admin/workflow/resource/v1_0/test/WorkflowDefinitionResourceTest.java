@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.kaleo.definition.util.WorkflowDefinitionContentUtil;
 import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
@@ -286,8 +287,8 @@ public class WorkflowDefinitionResourceTest
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
-			"active", "name", "nodes", "title", "title_i18n", "transitions",
-			"version"
+			"active", "name", "nodes", "scope", "title", "title_i18n",
+			"transitions", "version"
 		};
 	}
 
@@ -332,6 +333,7 @@ public class WorkflowDefinitionResourceTest
 					}
 				}
 			});
+		workflowDefinition.setScope(WorkflowDefinitionConstants.SCOPE_ALL);
 		workflowDefinition.setTitle_i18n(
 			HashMapBuilder.put(
 				LanguageUtil.getLanguageId(LocaleUtil.US),

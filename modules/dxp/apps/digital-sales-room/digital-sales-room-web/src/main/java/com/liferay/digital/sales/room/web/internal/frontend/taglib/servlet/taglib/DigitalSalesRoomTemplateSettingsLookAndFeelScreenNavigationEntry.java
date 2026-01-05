@@ -1,18 +1,15 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.digital.sales.room.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.digital.sales.room.web.internal.constants.DigitalSalesRoomScreenNavigationEntryConstants;
-import com.liferay.digital.sales.room.web.internal.display.context.ViewDigitalSalesRoomTemplateListDisplayContext;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.model.Group;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,22 +25,22 @@ import org.osgi.service.component.annotations.Reference;
  * @author Stefano Motta
  */
 @Component(
-	property = "screen.navigation.entry.order:Integer=10",
+	property = "screen.navigation.entry.order:Integer=20",
 	service = ScreenNavigationEntry.class
 )
-public class DigitalSalesRoomTemplateScreenNavigationEntry
-	implements ScreenNavigationEntry<Organization> {
+public class DigitalSalesRoomTemplateSettingsLookAndFeelScreenNavigationEntry
+	implements ScreenNavigationEntry<Group> {
 
 	@Override
 	public String getCategoryKey() {
 		return DigitalSalesRoomScreenNavigationEntryConstants.
-			CATEGORY_KEY_TEMPLATE;
+			CATEGORY_KEY_LOOK_AND_FEEL;
 	}
 
 	@Override
 	public String getEntryKey() {
 		return DigitalSalesRoomScreenNavigationEntryConstants.
-			CATEGORY_KEY_TEMPLATE;
+			CATEGORY_KEY_LOOK_AND_FEEL;
 	}
 
 	@Override
@@ -51,13 +48,13 @@ public class DigitalSalesRoomTemplateScreenNavigationEntry
 		return _language.get(
 			locale,
 			DigitalSalesRoomScreenNavigationEntryConstants.
-				CATEGORY_KEY_TEMPLATE);
+				CATEGORY_KEY_LOOK_AND_FEEL);
 	}
 
 	@Override
 	public String getScreenNavigationKey() {
 		return DigitalSalesRoomScreenNavigationEntryConstants.
-			SCREEN_NAVIGATION_KEY_DIGITAL_SALES_ROOM;
+			SCREEN_NAVIGATION_KEY_DIGITAL_SALES_ROOM_TEMPLATE_SETTINGS;
 	}
 
 	@Override
@@ -66,17 +63,9 @@ public class DigitalSalesRoomTemplateScreenNavigationEntry
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		ViewDigitalSalesRoomTemplateListDisplayContext
-			viewDigitalSalesRoomTemplateListDisplayContext =
-				new ViewDigitalSalesRoomTemplateListDisplayContext(
-					httpServletRequest, _portal);
-
-		httpServletRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			viewDigitalSalesRoomTemplateListDisplayContext);
-
 		_jspRenderer.renderJSP(
-			httpServletRequest, httpServletResponse, "/template/view.jsp");
+			httpServletRequest, httpServletResponse,
+			"/template/settings/edit_look_and_feel.jsp");
 	}
 
 	@Reference
@@ -84,8 +73,5 @@ public class DigitalSalesRoomTemplateScreenNavigationEntry
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private Portal _portal;
 
 }

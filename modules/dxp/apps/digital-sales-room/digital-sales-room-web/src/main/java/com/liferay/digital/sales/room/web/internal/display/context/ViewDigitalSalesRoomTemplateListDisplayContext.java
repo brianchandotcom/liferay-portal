@@ -5,12 +5,17 @@
 
 package com.liferay.digital.sales.room.web.internal.display.context;
 
+import com.liferay.digital.sales.room.web.internal.constants.DigitalSalesRoomPortletKeys;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItemBuilder;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.util.Portal;
+
+import jakarta.portlet.PortletRequest;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -22,9 +27,10 @@ import java.util.List;
 public class ViewDigitalSalesRoomTemplateListDisplayContext {
 
 	public ViewDigitalSalesRoomTemplateListDisplayContext(
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest, Portal portal) {
 
 		_httpServletRequest = httpServletRequest;
+		_portal = portal;
 	}
 
 	public String getAPIURL() {
@@ -49,6 +55,37 @@ public class ViewDigitalSalesRoomTemplateListDisplayContext {
 
 		return FDSActionDropdownItemList.of(
 			FDSActionDropdownItemBuilder.setIcon(
+				"pencil"
+			).setLabel(
+				LanguageUtil.get(_httpServletRequest, "edit")
+			).setMethod(
+				"patch"
+			).build(
+				"edit"
+			),
+			FDSActionDropdownItemBuilder.setHref(
+				() -> PortletURLBuilder.create(
+					_portal.getControlPanelPortletURL(
+						_httpServletRequest,
+						DigitalSalesRoomPortletKeys.
+							DIGITAL_SALES_ROOM_MANAGEMENT,
+						PortletRequest.RENDER_PHASE)
+				).setMVCRenderCommandName(
+					"/digital_sales_room" +
+						"/edit_digital_sales_room_template_settings"
+				).setParameter(
+					"digitalSalesRoomTemplateId", "{id}"
+				).buildString()
+			).setIcon(
+				"cog"
+			).setLabel(
+				LanguageUtil.get(_httpServletRequest, "settings")
+			).setMethod(
+				"get"
+			).build(
+				"settings"
+			),
+			FDSActionDropdownItemBuilder.setIcon(
 				"trash"
 			).setLabel(
 				LanguageUtil.get(_httpServletRequest, "delete")
@@ -60,5 +97,6 @@ public class ViewDigitalSalesRoomTemplateListDisplayContext {
 	}
 
 	private final HttpServletRequest _httpServletRequest;
+	private final Portal _portal;
 
 }

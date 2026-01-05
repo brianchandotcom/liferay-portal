@@ -1139,19 +1139,19 @@ public class LayoutUtil {
 			PageExperience[] pageExperiences, ServiceContext serviceContext)
 		throws Exception {
 
+		PageExperienceUtil.validatePageExperiences(
+			SegmentsExperienceLocalServiceUtil.fetchDefaultSegmentsExperience(
+				layout.getPlid()),
+			pageExperiences);
+
+		if (pageExperiences.length > 1) {
+			SegmentsExperienceUtil.validateSegmentsExperienceLayout(layout);
+		}
+
 		try (AutoCloseable autoCloseable =
 				LayoutServiceContextHelperUtil.getServiceContextAutoCloseable(
 					layout,
 					UserLocalServiceUtil.getUser(serviceContext.getUserId()))) {
-
-			PageExperienceUtil.validatePageExperiences(
-				SegmentsExperienceLocalServiceUtil.
-					fetchDefaultSegmentsExperience(layout.getPlid()),
-				pageExperiences);
-
-			if (pageExperiences.length > 1) {
-				SegmentsExperienceUtil.validateSegmentsExperienceLayout(layout);
-			}
 
 			Map<String, SegmentsExperience> originalSegmentsExperiencesMap =
 				new HashMap<>();

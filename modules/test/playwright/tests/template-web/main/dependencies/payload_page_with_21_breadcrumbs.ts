@@ -44,6 +44,7 @@ export function data(
 									'com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet_INSTANCE_XOf87o2mPO5w',
 								parentSectionId: 'column-1',
 								position: 0,
+								type: 'BasicWidgetPageWidgetInstance',
 								widgetConfig: {
 									displayStyle,
 									displayStyleGroupExternalReferenceCode,
@@ -72,6 +73,7 @@ export function data(
 									'com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet_INSTANCE_BreeHMSyGVM8',
 								parentSectionId: 'column-1',
 								position: 1,
+								type: 'BasicWidgetPageWidgetInstance',
 								widgetConfig: {
 									displayStyle,
 									displayStyleGroupExternalReferenceCode,
@@ -95,6 +97,7 @@ export function data(
 									'com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet_INSTANCE_f0nldPEP4fDr',
 								parentSectionId: 'column-1',
 								position: 2,
+								type: 'BasicWidgetPageWidgetInstance',
 								widgetConfig: {
 									displayStyle,
 									displayStyleGroupExternalReferenceCode,
@@ -118,6 +121,7 @@ export function data(
 									'com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet_INSTANCE_Ypu4hijIYzKw',
 								parentSectionId: 'column-1',
 								position: 3,
+								type: 'BasicWidgetPageWidgetInstance',
 								widgetConfig: {
 									displayStyle,
 									displayStyleGroupExternalReferenceCode,
@@ -141,6 +145,7 @@ export function data(
 									'com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet_INSTANCE_AEtbeurjggyt',
 								parentSectionId: 'column-1',
 								position: 4,
+								type: 'BasicWidgetPageWidgetInstance',
 								widgetConfig: {
 									displayStyle,
 									displayStyleGroupExternalReferenceCode,
@@ -164,6 +169,7 @@ export function data(
 									'com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet_INSTANCE_vDzT4asRO3GF',
 								parentSectionId: 'column-1',
 								position: 5,
+								type: 'BasicWidgetPageWidgetInstance',
 								widgetConfig: {
 									displayStyle,
 									displayStyleGroupExternalReferenceCode,
@@ -187,6 +193,7 @@ export function data(
 									'com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet_INSTANCE_LGjAqF6dli6Q',
 								parentSectionId: 'column-1',
 								position: 6,
+								type: 'BasicWidgetPageWidgetInstance',
 								widgetConfig: {
 									displayStyle,
 									displayStyleGroupExternalReferenceCode,
@@ -216,6 +223,7 @@ export function data(
 									'com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet_INSTANCE_61kJb3n48SGK',
 								parentSectionId: 'column-2',
 								position: 0,
+								type: 'BasicWidgetPageWidgetInstance',
 								widgetConfig: {
 									displayStyle,
 									displayStyleGroupExternalReferenceCode,
@@ -239,6 +247,7 @@ export function data(
 									'com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet_INSTANCE_6DmfNzTEAdKN',
 								parentSectionId: 'column-2',
 								position: 1,
+								type: 'BasicWidgetPageWidgetInstance',
 								widgetConfig: {
 									displayStyle,
 									displayStyleGroupExternalReferenceCode,
@@ -262,6 +271,7 @@ export function data(
 									'com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet_INSTANCE_ayrByP7fqsZ1',
 								parentSectionId: 'column-2',
 								position: 2,
+								type: 'BasicWidgetPageWidgetInstance',
 								widgetConfig: {
 									displayStyle,
 									displayStyleGroupExternalReferenceCode,
@@ -285,6 +295,7 @@ export function data(
 									'com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet_INSTANCE_9d7cicA2oYnX',
 								parentSectionId: 'column-2',
 								position: 3,
+								type: 'BasicWidgetPageWidgetInstance',
 								widgetConfig: {
 									displayStyle,
 									displayStyleGroupExternalReferenceCode,
@@ -308,6 +319,7 @@ export function data(
 									'com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet_INSTANCE_RxISyDFIWe2S',
 								parentSectionId: 'column-2',
 								position: 4,
+								type: 'BasicWidgetPageWidgetInstance',
 								widgetConfig: {
 									displayStyle,
 									displayStyleGroupExternalReferenceCode,
@@ -331,6 +343,7 @@ export function data(
 									'com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet_INSTANCE_NU8OMMqsOtWn',
 								parentSectionId: 'column-2',
 								position: 5,
+								type: 'BasicWidgetPageWidgetInstance',
 								widgetConfig: {
 									displayStyle,
 									displayStyleGroupExternalReferenceCode,
@@ -354,6 +367,7 @@ export function data(
 									'com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet_INSTANCE_WoCys6ybhoAS',
 								parentSectionId: 'column-2',
 								position: 6,
+								type: 'BasicWidgetPageWidgetInstance',
 								widgetConfig: {
 									displayStyle,
 									displayStyleGroupExternalReferenceCode,
@@ -383,6 +397,7 @@ export function data(
 									'com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet_INSTANCE_WmnJvggtpcGo',
 								parentSectionId: 'column-3',
 								position: 0,
+								type: 'BasicWidgetPageWidgetInstance',
 								widgetConfig: {
 									displayStyle,
 									displayStyleGroupExternalReferenceCode,
@@ -406,6 +421,7 @@ export function data(
 									'com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet_INSTANCE_A1OffnKm9L4s',
 								parentSectionId: 'column-3',
 								position: 1,
+								type: 'BasicWidgetPageWidgetInstance',
 								widgetConfig: {
 									displayStyle,
 									displayStyleGroupExternalReferenceCode,
@@ -429,6 +445,7 @@ export function data(
 									'com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet_INSTANCE_LGKaS1ZDk6yX',
 								parentSectionId: 'column-3',
 								position: 2,
+								type: 'BasicWidgetPageWidgetInstance',
 								widgetConfig: {
 									displayStyle,
 									displayStyleGroupExternalReferenceCode,
@@ -452,6 +469,7 @@ export function data(
 									'com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet_INSTANCE_B1PA94UgODzQ',
 								parentSectionId: 'column-3',
 								position: 3,
+								type: 'BasicWidgetPageWidgetInstance',
 								widgetConfig: {
 									displayStyle,
 									displayStyleGroupExternalReferenceCode,
@@ -475,6 +493,7 @@ export function data(
 									'com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet_INSTANCE_gezrxt6kfr9L',
 								parentSectionId: 'column-3',
 								position: 4,
+								type: 'BasicWidgetPageWidgetInstance',
 								widgetConfig: {
 									displayStyle,
 									displayStyleGroupExternalReferenceCode,
@@ -498,6 +517,7 @@ export function data(
 									'com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet_INSTANCE_NZhv8jIzMsTh',
 								parentSectionId: 'column-3',
 								position: 5,
+								type: 'BasicWidgetPageWidgetInstance',
 								widgetConfig: {
 									displayStyle,
 									displayStyleGroupExternalReferenceCode,
@@ -521,6 +541,7 @@ export function data(
 									'com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet_INSTANCE_c7DU9chRKKfy',
 								parentSectionId: 'column-3',
 								position: 6,
+								type: 'BasicWidgetPageWidgetInstance',
 								widgetConfig: {
 									displayStyle,
 									displayStyleGroupExternalReferenceCode,

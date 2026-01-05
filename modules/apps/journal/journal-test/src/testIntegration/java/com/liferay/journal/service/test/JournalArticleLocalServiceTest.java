@@ -64,11 +64,9 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchImageException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -95,18 +93,15 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
-import com.liferay.portal.kernel.service.ResourcePermissionService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -2903,15 +2898,6 @@ public class JournalArticleLocalServiceTest {
 	}
 
 	@Inject
-	private static ConfigurationProvider _configurationProvider;
-
-	@Inject(
-		filter = "model.class.name=com.liferay.journal.model.JournalArticle"
-	)
-	private static ModelResourcePermission<JournalArticle>
-		_journalArticleModelResourcePermission;
-
-	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Inject
@@ -2984,10 +2970,6 @@ public class JournalArticleLocalServiceTest {
 	private LayoutLocalService _layoutLocalService;
 
 	@Inject
-	private LayoutPageTemplateEntryLocalService
-		_layoutPageTemplateEntryLocalService;
-
-	@Inject
 	private PermissionCheckerFactory _permissionCheckerFactory;
 
 	@Inject
@@ -3000,17 +2982,11 @@ public class JournalArticleLocalServiceTest {
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	@Inject
-	private ResourcePermissionService _resourcePermissionService;
-
-	@Inject
 	private RoleLocalService _roleLocalService;
 
 	@Inject
 	private StagingLocalService _stagingLocalService;
 
 	private ThemeDisplay _themeDisplay;
-
-	@Inject
-	private UserLocalService _userLocalService;
 
 }

@@ -9,7 +9,6 @@ import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
 import com.liferay.hubspot.service.HubSpotService;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringUtil;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -55,8 +54,8 @@ public class HubSpotRestController extends BaseRestController {
 			"r_h1s4ContactToH1S4Leads_c_h1s4ContactERC");
 
 		if (externalReferenceCode.startsWith(_PREFIX_HUBSPOT_ID)) {
-			contactId = StringUtil.replace(
-				externalReferenceCode, _PREFIX_HUBSPOT_ID, null);
+			contactId = externalReferenceCode.substring(
+				_PREFIX_HUBSPOT_ID.length());
 		}
 		else {
 			JSONObject contactJSONObject = _getH1S4ContactJSONObject(

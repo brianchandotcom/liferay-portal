@@ -19,6 +19,8 @@ import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportService;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
@@ -52,7 +54,9 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.io.File;
@@ -231,11 +235,12 @@ public class LayoutSetPrototypeStagedModelDataHandler
 
 		Conjunction conjunction = RestrictionsFactoryUtil.conjunction();
 
-		Property layoutPrototypeUuidProperty = PropertyFactoryUtil.forName(
-			"layoutPrototypeUuid");
+		Property portletLayoutPageTemplateEntryERCProperty =
+			PropertyFactoryUtil.forName("portletLayoutPageTemplateEntryERC");
 
-		conjunction.add(layoutPrototypeUuidProperty.isNotNull());
-		conjunction.add(layoutPrototypeUuidProperty.ne(StringPool.BLANK));
+		conjunction.add(portletLayoutPageTemplateEntryERCProperty.isNotNull());
+		conjunction.add(
+			portletLayoutPageTemplateEntryERCProperty.ne(StringPool.BLANK));
 
 		dynamicQuery.add(conjunction);
 
@@ -245,11 +250,27 @@ public class LayoutSetPrototypeStagedModelDataHandler
 			"layout_set_prototypes", "page-templates");
 
 		for (Layout layout : layouts) {
+			Long groupId = ScopeUtil.getItemGroupId(
+				layout.getCompanyId(),
+				layout.getPortletLayoutPageTemplateEntryScopeERC(),
+				layout.getGroupId());
+
+			if (Validator.isNull(groupId)) {
+				continue;
+			}
+
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntryByExternalReferenceCode(
+						layout.getPortletLayoutPageTemplateEntryERC(), groupId);
+
+			if (layoutPageTemplateEntry == null) {
+				continue;
+			}
+
 			LayoutPrototype layoutPrototype =
-				_layoutPrototypeLocalService.
-					getLayoutPrototypeByUuidAndCompanyId(
-						layout.getLayoutPrototypeUuid(),
-						portletDataContext.getCompanyId());
+				_layoutPrototypeLocalService.fetchLayoutPrototype(
+					layoutPageTemplateEntry.getLayoutPrototypeId());
 
 			portletDataContext.addReferenceElement(
 				layout, layoutSetPrototypeElement, layoutPrototype,
@@ -577,6 +598,10 @@ public class LayoutSetPrototypeStagedModelDataHandler
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;

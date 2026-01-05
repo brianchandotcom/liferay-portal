@@ -1205,19 +1205,17 @@ public class LayoutUtil {
 							fragmentEntryProcessorRegistry,
 							infoItemServiceRegistry, layout, pageExperience,
 							priority, oldSegmentsExperience, serviceContext));
+
+					originalSegmentsExperiencesMap.remove(
+						pageExperience.getExternalReferenceCode());
 				}
 			}
 
 			for (SegmentsExperience originalSegmentsExperience :
 					originalSegmentsExperiencesMap.values()) {
 
-				if (!actualSegmentsExperiencesMap.containsKey(
-						originalSegmentsExperience.
-							getExternalReferenceCode())) {
-
-					SegmentsExperienceLocalServiceUtil.deleteSegmentsExperience(
-						originalSegmentsExperience);
-				}
+				SegmentsExperienceLocalServiceUtil.deleteSegmentsExperience(
+					originalSegmentsExperience);
 			}
 
 			for (PageExperience pageExperience : pageExperiences) {

@@ -1,0 +1,48 @@
+{
+	"externalReferenceCode": "C_NOTIFICATION_TARGET",
+	"label": {
+		"en_US": "Notification Target"
+	},
+	"name": "NotificationTarget",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"externalReferenceCode": "C_NOTIFICATION_TARGET_type",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "Type"
+			},
+			"listTypeDefinitionExternalReferenceCode": "LT_NOTIFICATION_TARGET_TYPE",
+			"localized": false,
+			"name": "type",
+			"readOnly": false,
+			"readOnlyConditionExpression": "",
+			"required": true,
+			"state": false,
+			"system": false,
+			"type": "String",
+			"unique": false
+		},
+		{
+			"DBType": "String",
+			"externalReferenceCode": "C_NOTIFICATION_TARGET_target",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "Target"
+			},
+			"name": "target",
+			"required": true
+		}
+	],
+	"panelCategoryKey": "applications_menu.applications.content",
+	"pluralLabel": {
+		"en_US": "Notification Targets"
+	},
+	"portlet": true,
+	"scope": "company",
+	"system": false,
+	"titleObjectFieldName": "target"
+}

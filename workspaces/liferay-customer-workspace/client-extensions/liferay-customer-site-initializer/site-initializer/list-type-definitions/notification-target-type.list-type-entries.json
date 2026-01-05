@@ -1,0 +1,18 @@
+[
+	{
+		"key": "emailAddress",
+		"name": "Email Address",
+		"name_i18n": {
+			"en-US": "Email Address"
+		},
+		"type": "string"
+	},
+	{
+		"key": "role",
+		"name": "Role",
+		"name_i18n": {
+			"en-US": "Role"
+		},
+		"type": "string"
+	}
+]

@@ -1,0 +1,42 @@
+[
+	{
+		"key": "businessEvent",
+		"name": "Business Event",
+		"name_i18n": {
+			"en-US": "Business Event"
+		},
+		"type": "string"
+	},
+	{
+		"key": "licenseExpiration",
+		"name": "License Expiration",
+		"name_i18n": {
+			"en-US": "License Expiration"
+		},
+		"type": "string"
+	},
+	{
+		"key": "securityVulnerability",
+		"name": "Security Vulnerability",
+		"name_i18n": {
+			"en-US": "Security Vulnerability"
+		},
+		"type": "string"
+	},
+	{
+		"key": "release",
+		"name": "Release",
+		"name_i18n": {
+			"en-US": "Release"
+		},
+		"type": "string"
+	},
+	{
+		"key": "announcement",
+		"name": "Announcement",
+		"name_i18n": {
+			"en-US": "Announcement"
+		},
+		"type": "string"
+	}
+]

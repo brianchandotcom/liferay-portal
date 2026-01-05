@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en_US": "Notification Target to Notification Subscription"
+	},
+	"name": "notificationTargetToNotificationSub",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:NotificationTarget$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:NotificationSubscription$]",
+	"objectDefinitionName2": "NotificationSubscription",
+	"type": "oneToMany"
+}

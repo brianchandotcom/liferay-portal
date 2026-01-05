@@ -72,6 +72,7 @@ export class ApplicationsMenuPage {
 	private readonly systemSettingsItem: Locator;
 	private readonly userGroupsItem: Locator;
 	private readonly usersAndOrganizationsItem: Locator;
+	readonly viewAllLink: Locator;
 	private readonly virtualInstancesItem: Locator;
 
 	constructor(page: Page) {
@@ -324,6 +325,7 @@ export class ApplicationsMenuPage {
 			exact: true,
 			name: 'Users and Organizations',
 		});
+		this.viewAllLink = page.getByRole('button', {name: 'View All'});
 		this.virtualInstancesItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Virtual Instances',

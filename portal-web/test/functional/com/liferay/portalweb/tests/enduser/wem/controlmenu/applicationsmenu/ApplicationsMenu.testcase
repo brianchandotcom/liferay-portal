@@ -79,45 +79,6 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-112989 and LPS-112993. View All link will be shown in Applications Menu when the total amount of Recently Visited and My Sites more than 7."
-	@priority = 5
-	@uitest
-	test ShowViewAllWhenTotalAmountOfSitesFromRecentlyVisitedAndMySitesMoreThanSeven {
-		property portal.acceptance = "true";
-
-		task ("Add six new sites") {
-			for (var n : list "1,2,3,4,5,6") {
-				HeadlessSite.addSite(siteName = "Test Site Name ${n}");
-			}
-		}
-
-		task ("Assert View All link shown in Applications Menu") {
-			ApplicationsMenuHelper.openApplicationsMenu();
-
-			AssertVisible(locator1 = "ApplicationsMenu#VIEW_ALL_LINK");
-		}
-
-		task ("Go to Site via View All link") {
-			WaitForLiferayEvent.initializeLiferayEventLog();
-
-			Click(locator1 = "ApplicationsMenu#VIEW_ALL_LINK");
-
-			AssertVisible(locator1 = "Portlet#MODAL_TITLE");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-			Navigator.gotoNavItem(navItem = "All Sites");
-
-			SiteSelector.selectSite(site = "Test Site Name 3");
-
-			ProductMenuHelper.openProductMenu();
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME",
-				value1 = "Test Site Name 3");
-		}
-	}
-
 	@description = "This is a use case for LPS-112990, LPS-112992 and LPS-112989. The Applications Menu icon and User Avatar icon buttons are located in Control Menu when user is in application admin. The Applications Menu icon is located in Control Menu but User Avatar icon is located in Nav Bar when user is in site page. The Global Menu icon is not shown but User Avatar icon is located in Nav Bar when user is in page editor. The Global Menu icon is located in Control Menu but User Avatar icon is located in Nav Bar when user is in Staging site page and Live site page."
 	@priority = 5
 	@uitest

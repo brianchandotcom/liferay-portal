@@ -5,8 +5,10 @@
 
 package com.liferay.portal.zip.internal.reader.factory;
 
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactory;
+import com.liferay.portal.zip.internal.reader.NioZipReaderImpl;
 import com.liferay.portal.zip.internal.reader.ZipReaderImpl;
 
 import java.io.File;
@@ -18,16 +20,26 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Raymond Augé
  */
-@Component(service = ZipReaderFactory.class)
+@Component(
+	property = "service.ranking:Integer=1000", service = ZipReaderFactory.class
+)
 public class ZipReaderFactoryImpl implements ZipReaderFactory {
 
 	@Override
 	public ZipReader getZipReader(File file) {
+		if (PropsValues.ZIP_FILE_READER_NIO_ENABLED) {
+			return new NioZipReaderImpl(file);
+		}
+
 		return new ZipReaderImpl(file);
 	}
 
 	@Override
 	public ZipReader getZipReader(InputStream inputStream) throws IOException {
+		if (PropsValues.ZIP_FILE_READER_NIO_ENABLED) {
+			return new NioZipReaderImpl(inputStream);
+		}
+
 		return new ZipReaderImpl(inputStream);
 	}
 

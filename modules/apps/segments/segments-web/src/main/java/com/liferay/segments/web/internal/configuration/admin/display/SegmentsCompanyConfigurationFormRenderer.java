@@ -5,10 +5,12 @@
 
 package com.liferay.segments.web.internal.configuration.admin.display;
 
-import com.liferay.configuration.admin.display.ConfigurationScreen;
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.configuration.admin.display.ConfigurationFormRenderer;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.segments.configuration.SegmentsCompanyConfiguration;
 import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
 import com.liferay.segments.web.internal.display.context.SegmentsCompanyConfigurationDisplayContext;
 
@@ -19,7 +21,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -28,27 +30,26 @@ import org.osgi.service.component.annotations.Reference;
  * @author Cristina González
  * @author Stefan Tanasie
  */
-@Component(service = ConfigurationScreen.class)
-public class SegmentsCompanyConfigurationScreen implements ConfigurationScreen {
+@Component(service = ConfigurationFormRenderer.class)
+public class SegmentsCompanyConfigurationFormRenderer
+	implements ConfigurationFormRenderer {
 
 	@Override
-	public String getCategoryKey() {
-		return "segments";
+	public String getPid() {
+		return SegmentsCompanyConfiguration.class.getName();
 	}
 
 	@Override
-	public String getKey() {
-		return "segments-service";
-	}
+	public Map<String, Object> getRequestParameters(
+		HttpServletRequest httpServletRequest) {
 
-	@Override
-	public String getName(Locale locale) {
-		return _language.get(locale, "segments-service-configuration-name");
-	}
-
-	@Override
-	public String getScope() {
-		return ExtendedObjectClassDefinition.Scope.COMPANY.getValue();
+		return HashMapBuilder.<String, Object>put(
+			"roleSegmentationEnabled",
+			ParamUtil.getBoolean(httpServletRequest, "roleSegmentationEnabled")
+		).put(
+			"segmentationEnabled",
+			ParamUtil.getBoolean(httpServletRequest, "segmentationEnabled")
+		).build();
 	}
 
 	@Override

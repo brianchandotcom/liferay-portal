@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+
+<workflow-definition
+	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+>
+	<name>Chat Message Pipeline</name>
+	<version>1</version>
+	<llm>
+		<name>chatMessageHandler</name>
+		<description>Generate content, summarize and classify data using LLM models.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						275.0001220703125,
+						243.9999771118164
+					]
+				}
+			]]>
+		</metadata>
+		<labels>
+			<label language-id="en_US">
+				Chat Message Pipeline
+			</label>
+		</labels>
+		<input-variables>
+			<![CDATA[
+[
+	{
+		"name": "content",
+		"type": "string"
+	},
+	{
+		"name": "title",
+		"type": "string"
+	},
+	{
+		"name": "userMessage",
+		"type": "string"
+	}
+]
+]]>
+		</input-variables>
+		<output-variables>
+			<![CDATA[
+[
+	{
+		"name": "assistantResponse",
+		"type": "string"
+	}
+]
+]]>
+		</output-variables>
+		<prompt>
+			<![CDATA[You are a highly helpful and context-aware chat assistant. The context you are aware is the content and the title, they can be present or not and they will be passed during the conversation because they are dynamically updated. Maintain a friendly and professional conversational tone, and use the chat history to maintain flow.
+]]>
+		</prompt>
+		<tools>
+			<![CDATA[
+[]
+]]>
+		</tools>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="en_US">
+						End
+					</label>
+				</labels>
+				<name>end</name>
+				<target>end</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+		<user-message>
+			<![CDATA[This is the content: "{{content}}" and title: "{{title}}", reply to this message: "{{userMessage}}"
+]]>
+		</user-message>
+	</llm>
+	<state>
+		<name>start</name>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						273,
+						25
+					]
+				}
+			]]>
+		</metadata>
+		<initial>true</initial>
+		<labels>
+			<label language-id="en_US">
+				Start
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="en_US">
+						Chat Message Pipeline
+					</label>
+				</labels>
+				<name>chatMessageHandler</name>
+				<target>chatMessageHandler</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</state>
+	<state>
+		<name>end</name>
+		<metadata>
+			<![CDATA[
+				{
+					"terminal": true,
+					"xy": [
+						277,
+						459
+					]
+				}
+			]]>
+		</metadata>
+		<labels>
+			<label language-id="en_US">
+				End
+			</label>
+		</labels>
+	</state>
+</workflow-definition>

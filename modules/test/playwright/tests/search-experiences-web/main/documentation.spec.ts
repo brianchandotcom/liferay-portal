@@ -19,7 +19,6 @@ export const test = mergeTests(
 	isolatedLayoutTest({type: 'portlet'}),
 	dataApiHelpersTest,
 	featureFlagsTest({
-		'LPS-129412': {enabled: true}, // Collection Providers for Blueprint
 		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,

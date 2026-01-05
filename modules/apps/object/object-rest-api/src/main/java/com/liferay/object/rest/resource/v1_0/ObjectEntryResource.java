@@ -177,6 +177,10 @@ public interface ObjectEntryResource {
 			String externalReferenceCode, Integer version)
 		throws Exception;
 
+	public ObjectEntry postByExternalReferenceCodeExpire(
+			String externalReferenceCode)
+		throws Exception;
+
 	public void postByExternalReferenceCodeSubscribe(
 			String externalReferenceCode)
 		throws Exception;
@@ -212,9 +216,6 @@ public interface ObjectEntryResource {
 
 	public ObjectEntry postObjectEntryByObjectEntryFolderMoveReplace(
 			Long objectEntryId, Long objectEntryFolderId)
-		throws Exception;
-
-	public ObjectEntry postObjectEntryExpire(Long objectEntryId)
 		throws Exception;
 
 	public ObjectEntry postScopeScopeKey(

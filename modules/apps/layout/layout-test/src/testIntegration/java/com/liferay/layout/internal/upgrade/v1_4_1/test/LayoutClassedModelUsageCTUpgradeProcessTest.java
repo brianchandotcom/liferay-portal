@@ -53,6 +53,7 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.sql.Connection;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
@@ -105,13 +106,23 @@ public class LayoutClassedModelUsageCTUpgradeProcessTest
 
 		_deleteLayoutClassedModelUsage(_journalArticle.getResourcePrimKey());
 
-		_updateFragmentEntryLinkInNewCTCollection(
-			fragmentEntryLink, _journalArticle);
+		List<CTCollection> ctCollections = new ArrayList<>();
 
-		_updateFragmentEntryLinkInNewCTCollection(
-			fragmentEntryLink, _journalArticle);
+		try {
+			ctCollections.add(
+				_updateFragmentEntryLinkInNewCTCollection(
+					fragmentEntryLink, _journalArticle));
+			ctCollections.add(
+				_updateFragmentEntryLinkInNewCTCollection(
+					fragmentEntryLink, _journalArticle));
 
-		runUpgrade();
+			runUpgrade();
+		}
+		finally {
+			for (CTCollection ctCollection : ctCollections) {
+				_ctCollectionLocalService.deleteCTCollection(ctCollection);
+			}
+		}
 	}
 
 	@Test
@@ -333,7 +344,7 @@ public class LayoutClassedModelUsageCTUpgradeProcessTest
 		}
 	}
 
-	private void _updateFragmentEntryLinkInNewCTCollection(
+	private CTCollection _updateFragmentEntryLinkInNewCTCollection(
 			FragmentEntryLink fragmentEntryLink, JournalArticle journalArticle)
 		throws Exception {
 
@@ -349,6 +360,8 @@ public class LayoutClassedModelUsageCTUpgradeProcessTest
 				fragmentEntryLink);
 			_deleteLayoutClassedModelUsage(journalArticle.getResourcePrimKey());
 		}
+
+		return ctCollection;
 	}
 
 	private static final String _CLASS_NAME =

@@ -2599,6 +2599,10 @@ public class PropsValues {
 		GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.YUI_COMPRESSOR_CSS_LINE_BREAK));
 
+	public static final boolean ZIP_FILE_READER_NIO_ENABLED =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.ZIP_FILE_READER_NIO_ENABLED));
+
 	public static final long ZIP_FILE_WRITER_EXPORT_BUFFER_SIZE =
 		GetterUtil.getLong(
 			PropsUtil.get(PropsKeys.ZIP_FILE_WRITER_EXPORT_BUFFER_SIZE));

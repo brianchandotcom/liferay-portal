@@ -139,6 +139,33 @@
 		},
 		{
 			"properties": {
+				"clientId": {
+					"title": "Client ID",
+					"type": "string"
+				},
+				"clientSecret": {
+					"title": "Client Secret",
+					"type": "string"
+				},
+				"pid": {
+					"const": "com.liferay.ai.hub.configuration.AIHubConfiguration",
+					"title": "AI Hub Configuration"
+				},
+				"serviceURL": {
+					"title": "Service URL",
+					"type": "string"
+				}
+			},
+			"required": [
+				"pid",
+				"clientId",
+				"clientSecret",
+				"serviceURL"
+			],
+			"title": "AI Hub Configuration"
+		},
+		{
+			"properties": {
 				"commerceSyncEnabledAnalyticsChannelIds": {
 					"items": {
 						"type": "string"
@@ -4853,6 +4880,7 @@
 				"com.liferay.adaptive.media.image.content.transformer.backwards.compatibility.internal.configuration.AMBackwardsCompatibilityHtmlContentTransformerConfiguration",
 				"com.liferay.adaptive.media.image.internal.configuration.AMImageCompanyConfiguration",
 				"com.liferay.ai.creator.openai.configuration.AICreatorOpenAICompanyConfiguration",
+				"com.liferay.ai.hub.configuration.AIHubConfiguration",
 				"com.liferay.analytics.settings.configuration.AnalyticsConfiguration",
 				"com.liferay.asset.auto.tagger.google.cloud.natural.language.internal.configuration.GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration",
 				"com.liferay.asset.auto.tagger.internal.configuration.AssetAutoTaggerCompanyConfiguration",

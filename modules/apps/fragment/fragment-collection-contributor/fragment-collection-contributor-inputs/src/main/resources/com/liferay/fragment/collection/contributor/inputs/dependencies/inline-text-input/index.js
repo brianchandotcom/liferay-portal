@@ -26,6 +26,21 @@ function main() {
 				registerUnlocalizedInput,
 				showInputError,
 			}) => {
+				if (input.required) {
+					inputElement.addEventListener('invalid', (event) => {
+						event.preventDefault();
+
+						focusInput(inputElement);
+
+						showInputError({
+							errorContainer: error,
+							errorMessageContainer: errorMessage,
+							errorType: 'required',
+							formGroup,
+						});
+					});
+				}
+
 				if (error) {
 					focusInput(inputElement);
 				}

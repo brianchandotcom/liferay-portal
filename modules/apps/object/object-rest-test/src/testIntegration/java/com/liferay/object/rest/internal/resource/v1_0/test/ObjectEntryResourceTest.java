@@ -8376,17 +8376,21 @@ public class ObjectEntryResourceTest {
 					taxonomyCategory1.getId(), taxonomyCategory2.getId(),
 					taxonomyCategory3.getId(), taxonomyCategory4.getId())
 			).toString(),
-			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+			StringBundler.concat(
+				_siteScopedObjectDefinition1.getRESTContextPath(), "/scopes/",
+				_testGroupId),
+			Http.Method.POST);
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
-			_objectDefinition1.getRESTContextPath() + StringPool.SLASH +
-				jsonObject.getString("id"),
+			StringBundler.concat(
+				_siteScopedObjectDefinition1.getRESTContextPath(),
+				StringPool.SLASH, jsonObject.getString("id")),
 			Http.Method.GET);
 
 		_assertTaxonomyCategories(
-			jsonObject.getJSONArray("taxonomyCategoryBriefs"), false,
-			taxonomyCategory1, taxonomyCategory2, taxonomyCategory3,
+			_testGroupId, jsonObject.getJSONArray("taxonomyCategoryBriefs"),
+			false, taxonomyCategory1, taxonomyCategory2, taxonomyCategory3,
 			taxonomyCategory4);
 	}
 
@@ -8418,6 +8422,7 @@ public class ObjectEntryResourceTest {
 			Http.Method.GET);
 
 		_assertTaxonomyCategories(
+			jsonObject.getLong("scopeKey"),
 			jsonObject.getJSONArray("taxonomyCategoryBriefs"), true,
 			taxonomyCategory1, taxonomyCategory2);
 	}
@@ -8927,6 +8932,7 @@ public class ObjectEntryResourceTest {
 			Http.Method.PATCH);
 
 		_assertTaxonomyCategories(
+			jsonObject.getLong("scopeKey"),
 			jsonObject.getJSONArray("taxonomyCategoryBriefs"), false,
 			taxonomyCategory1, taxonomyCategory2, taxonomyCategory3);
 	}
@@ -15775,7 +15781,8 @@ public class ObjectEntryResourceTest {
 	}
 
 	private void _assertTaxonomyCategories(
-			JSONArray jsonArray1, boolean withEmbeddedTaxonomyCategory,
+			long groupId, JSONArray jsonArray1,
+			boolean withEmbeddedTaxonomyCategory,
 			TaxonomyCategory... taxonomyCategories)
 		throws Exception {
 
@@ -15784,7 +15791,7 @@ public class ObjectEntryResourceTest {
 		for (TaxonomyCategory taxonomyCategory : taxonomyCategories) {
 			jsonArray2.put(
 				_toTaxonomyCategoryJSONObject(
-					taxonomyCategory, withEmbeddedTaxonomyCategory));
+					groupId, taxonomyCategory, withEmbeddedTaxonomyCategory));
 		}
 
 		JSONAssert.assertEquals(
@@ -20485,12 +20492,9 @@ public class ObjectEntryResourceTest {
 	}
 
 	private JSONObject _toTaxonomyCategoryJSONObject(
-			TaxonomyCategory taxonomyCategory,
+			long groupId, TaxonomyCategory taxonomyCategory,
 			boolean withEmbeddedTaxonomyCategory)
 		throws Exception {
-
-		Scope scope = Scope.of(
-			taxonomyCategory.getSiteId(), LocaleUtil.getDefault());
 
 		JSONObject jsonObject = JSONUtil.put(
 			"parentTaxonomyCategory",
@@ -20518,11 +20522,20 @@ public class ObjectEntryResourceTest {
 			}
 		).put(
 			"scope",
-			JSONUtil.put(
-				"externalReferenceCode", scope.getExternalReferenceCode()
-			).put(
-				"type", scope.getTypeAsString()
-			)
+			() -> {
+				if (groupId == taxonomyCategory.getSiteId()) {
+					return null;
+				}
+
+				Scope scope = Scope.of(
+					taxonomyCategory.getSiteId(), LocaleUtil.getDefault());
+
+				return JSONUtil.put(
+					"externalReferenceCode", scope.getExternalReferenceCode()
+				).put(
+					"type", scope.getTypeAsString()
+				);
+			}
 		).put(
 			"taxonomyCategoryExternalReferenceCode",
 			taxonomyCategory.getExternalReferenceCode()

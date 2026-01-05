@@ -36,7 +36,7 @@ public class SessionController extends BaseFaroController {
 			@PathParam("groupId") long groupId,
 			@QueryParam("channelId") String channelId,
 			@QueryParam("fieldName") String fieldName,
-			@QueryParam("filter") String filter,
+			@QueryParam("filter") String filterString,
 			@QueryParam("query") String query, @QueryParam("cur") int cur,
 			@QueryParam("delta") int delta)
 		throws Exception {
@@ -44,7 +44,7 @@ public class SessionController extends BaseFaroController {
 		return new FaroResultsDisplay(
 			contactsEngineClient.getSessionValues(
 				faroProjectLocalService.getFaroProjectByGroupId(groupId),
-				channelId, fieldName, filter, query, cur, delta));
+				channelId, fieldName, filterString, query, cur, delta));
 	}
 
 }

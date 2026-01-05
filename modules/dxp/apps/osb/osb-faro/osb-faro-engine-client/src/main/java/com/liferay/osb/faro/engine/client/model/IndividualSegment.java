@@ -153,8 +153,8 @@ public class IndividualSegment {
 		_embeddedResources = embeddedResources;
 	}
 
-	public void setFilter(String filter) {
-		_filter = filter;
+	public void setFilter(String filterString) {
+		_filter = filterString;
 	}
 
 	public void setFilterMetadata(String filterMetadata) {

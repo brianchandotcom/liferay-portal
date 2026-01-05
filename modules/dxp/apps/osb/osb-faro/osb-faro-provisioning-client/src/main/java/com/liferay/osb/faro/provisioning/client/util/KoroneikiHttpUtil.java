@@ -143,10 +143,10 @@ public class KoroneikiHttpUtil {
 		return Collections.emptyList();
 	}
 
-	public static int getAccountsCount(String filter) throws Exception {
+	public static int getAccountsCount(String filterString) throws Exception {
 		HttpInvoker.HttpResponse httpResponse =
 			_accountResource.getAccountsPageHttpResponse(
-				null, filter, null, null);
+				null, filterString, null, null);
 
 		if (httpResponse.getStatusCode() == HttpServletResponse.SC_OK) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
@@ -164,11 +164,11 @@ public class KoroneikiHttpUtil {
 	}
 
 	public static List<Account> searchAccounts(
-			String filter, int page, int size)
+			String filterString, int page, int size)
 		throws Exception {
 
 		Page<Account> accountsPage = _accountResource.getAccountsPage(
-			null, filter, Pagination.of(page, size), null);
+			null, filterString, Pagination.of(page, size), null);
 
 		if ((accountsPage != null) && (accountsPage.getItems() != null)) {
 			return new ArrayList<>(accountsPage.getItems());

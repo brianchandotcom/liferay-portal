@@ -8,6 +8,7 @@ package com.liferay.layout.set.prototype.exportimport.data.handler.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
+import com.liferay.layout.page.template.kernel.provider.util.LayoutPageTemplateEntryLayoutProviderUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -364,7 +366,8 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 		validatePrototypedLayouts(
 			LayoutPrototype.class, importedLayoutPrototype.getGroupId());
 
-		Assert.assertNotNull(layoutSetPrototypeLayout.getLayoutPrototypeUuid());
+		Assert.assertNotNull(
+			layoutSetPrototypeLayout.getPortletLayoutPageTemplateEntryERC());
 
 		Layout importedLayout =
 			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
@@ -375,9 +378,19 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 		Assert.assertEquals(
 			importedLayoutSetPrototype.getGroupId(),
 			importedLayout.getGroupId());
+
+		LayoutPrototype layoutPrototype =
+			LayoutPageTemplateEntryLayoutProviderUtil.
+				getLayoutPageTemplateEntryLayoutPrototype(
+					ScopeUtil.getItemGroupId(
+						importedLayout.getCompanyId(),
+						importedLayout.
+							getPortletLayoutPageTemplateEntryScopeERC(),
+						importedLayout.getGroupId()),
+					importedLayout.getPortletLayoutPageTemplateEntryERC());
+
 		Assert.assertEquals(
-			importedLayoutPrototype.getUuid(),
-			importedLayout.getLayoutPrototypeUuid());
+			importedLayoutPrototype.getUuid(), layoutPrototype.getUuid());
 	}
 
 	protected void validatePrototypedLayouts(Class<?> clazz, long groupId)

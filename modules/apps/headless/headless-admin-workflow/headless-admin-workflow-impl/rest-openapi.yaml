@@ -240,6 +240,8 @@ components:
                         $ref: "#/components/schemas/Node"
                     readOnly: true
                     type: array
+                scope:
+                    type: string
                 title:
                     type: string
                 title_i18n:

@@ -34,6 +34,7 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.comparator.WorkflowComparatorFactory;
+import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
 import jakarta.ws.rs.core.MultivaluedMap;
@@ -217,6 +218,9 @@ public class WorkflowDefinitionResourceImpl
 				workflowDefinition.getExternalReferenceCode(),
 				contextCompany.getCompanyId(), contextUser.getUserId(),
 				_getTitle(workflowDefinition), workflowDefinition.getName(),
+				GetterUtil.getString(
+					workflowDefinition.getScope(),
+					WorkflowDefinitionConstants.SCOPE_ALL),
 				content.getBytes()));
 	}
 
@@ -232,6 +236,9 @@ public class WorkflowDefinitionResourceImpl
 				workflowDefinition.getExternalReferenceCode(),
 				contextCompany.getCompanyId(), contextUser.getUserId(),
 				_getTitle(workflowDefinition), workflowDefinition.getName(),
+				GetterUtil.getString(
+					workflowDefinition.getScope(),
+					WorkflowDefinitionConstants.SCOPE_ALL),
 				content.getBytes()));
 	}
 
@@ -359,6 +366,7 @@ public class WorkflowDefinitionResourceImpl
 							contextAcceptLanguage.getPreferredLocale(),
 							workflowNode),
 						Node.class));
+				setScope(workflowDefinition::getScope);
 				setTitle(
 					() -> workflowDefinition.getTitle(
 						_language.getLanguageId(

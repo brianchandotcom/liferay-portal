@@ -32,7 +32,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class HubSpotService extends BaseService {
 
 	public JSONObject postCompany(JSONObject propertiesJSONObject) {
-		JSONObject companyJSONObject = searchHubSpotResource(
+		JSONObject companyJSONObject = search(
 			"companies", "name", propertiesJSONObject.getString("name"));
 
 		if (companyJSONObject != null) {
@@ -56,14 +56,14 @@ public class HubSpotService extends BaseService {
 				).toUri()));
 
 		if (_log.isInfoEnabled()) {
-			_log.info("HubSpot company created: " + jsonObject);
+			_log.info("HubSpot company: " + jsonObject);
 		}
 
 		return jsonObject;
 	}
 
 	public JSONObject postContact(JSONObject propertiesJSONObject) {
-		JSONObject contactJSONObject = searchHubSpotResource(
+		JSONObject contactJSONObject = search(
 			"contacts", "email", propertiesJSONObject.getString("email"));
 
 		if (contactJSONObject != null) {
@@ -87,7 +87,7 @@ public class HubSpotService extends BaseService {
 				).toUri()));
 
 		if (_log.isInfoEnabled()) {
-			_log.info("HubSpot contact created: " + jsonObject);
+			_log.info("HubSpot contact: " + jsonObject);
 		}
 
 		return jsonObject;
@@ -137,17 +137,17 @@ public class HubSpotService extends BaseService {
 				).toUri()));
 
 		if (_log.isInfoEnabled()) {
-			_log.info("HubSpot lead created: " + jsonObject);
+			_log.info("HubSpot lead: " + jsonObject);
 		}
 
 		return jsonObject;
 	}
 
 	@Cacheable("hubSpotSearch")
-	public JSONObject searchHubSpotResource(
+	public JSONObject search(
 		String objectName, String propertyName, String value) {
 
-		String response = post(
+		String json = post(
 			_getAuthorization(),
 			new JSONObject(
 			).put(
@@ -180,7 +180,7 @@ public class HubSpotService extends BaseService {
 			).build(
 			).toUri());
 
-		JSONObject jsonObject = new JSONObject(response);
+		JSONObject jsonObject = new JSONObject(json);
 
 		JSONArray jsonArray = jsonObject.optJSONArray("results");
 

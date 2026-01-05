@@ -2136,6 +2136,12 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		_assertSitePage(layout, sitePage);
 		_testPutSiteSitePage(sitePage, testGroup, sitePage);
+
+		sitePage.setPageSettings(
+			_getPageSettings(null, SitePage.Type.CONTENT_PAGE));
+
+		_testPutSiteSitePage(sitePage, irrelevantGroup, sitePage);
+		_testPutSiteSitePage(sitePage, testGroup, sitePage);
 	}
 
 	private void _testPutSiteSitePageWithPageElements() throws Exception {

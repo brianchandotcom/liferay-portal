@@ -27,7 +27,6 @@ export default function propsTransformer({itemsActions, ...otherProps}) {
 				return {
 					...action,
 					isVisible: (item) =>
-						Liferay.FeatureFlags['LPS-129412'] &&
 						!!item.configuration.generalConfiguration
 							.collectionProvider,
 				};
@@ -36,7 +35,6 @@ export default function propsTransformer({itemsActions, ...otherProps}) {
 				return {
 					...action,
 					isVisible: (item) =>
-						Liferay.FeatureFlags['LPS-129412'] &&
 						!item.configuration.generalConfiguration
 							.collectionProvider,
 				};

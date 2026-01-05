@@ -57,8 +57,6 @@ describe('Configuration', () => {
 	});
 
 	it('renders the enable as a collection provider toggle but not legacy return type asset toggle', () => {
-		Liferay.FeatureFlags['LPS-129412'] = true;
-
 		const {getByText, queryByText} = renderBuilder({
 			frameworkConfig: {
 				clauseContributorsExcludes: [],
@@ -80,8 +78,6 @@ describe('Configuration', () => {
 	});
 
 	it('renders the legacy return type asset toggle', () => {
-		Liferay.FeatureFlags['LPS-129412'] = true;
-
 		const {getByText} = renderBuilder({
 			frameworkConfig: {
 				clauseContributorsExcludes: [],

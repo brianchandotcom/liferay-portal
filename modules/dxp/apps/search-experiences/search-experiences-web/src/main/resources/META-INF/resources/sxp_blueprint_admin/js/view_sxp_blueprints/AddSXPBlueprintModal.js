@@ -56,19 +56,12 @@ const AddModal = ({
 				configuration: {
 					advancedConfiguration: DEFAULT_ADVANCED_CONFIGURATION,
 					aggregationConfiguration: {},
-					generalConfiguration: Liferay.FeatureFlags['LPS-129412']
-						? {
-								clauseContributorsExcludes: [],
-								clauseContributorsIncludes: ['*'],
-								collectionProvider:
-									collectionProviderToggleValue,
-								searchableAssetTypes: [],
-							}
-						: {
-								clauseContributorsExcludes: [],
-								clauseContributorsIncludes: ['*'],
-								searchableAssetTypes: [],
-							},
+					generalConfiguration: {
+						clauseContributorsExcludes: [],
+						clauseContributorsIncludes: ['*'],
+						collectionProvider: collectionProviderToggleValue,
+						searchableAssetTypes: [],
+					},
 					highlightConfiguration: DEFAULT_HIGHLIGHT_CONFIGURATION,
 					parameterConfiguration: DEFAULT_PARAMETER_CONFIGURATION,
 					queryConfiguration: {
@@ -225,41 +218,39 @@ const AddModal = ({
 						/>
 					</div>
 
-					{Liferay.FeatureFlags['LPS-129412'] && (
-						<div className="form-group">
-							<ClayToggle
-								aria-label={Liferay.Language.get(
-									'enable-as-a-collection-provider'
-								)}
-								checked={collectionProviderToggleValue}
-								label={
-									<>
-										{Liferay.Language.get(
-											'enable-as-a-collection-provider'
-										)}
+					<div className="form-group">
+						<ClayToggle
+							aria-label={Liferay.Language.get(
+								'enable-as-a-collection-provider'
+							)}
+							checked={collectionProviderToggleValue}
+							label={
+								<>
+									{Liferay.Language.get(
+										'enable-as-a-collection-provider'
+									)}
 
-										<ClayTooltipProvider>
-											<span
-												title={Liferay.Language.get(
-													'enable-as-a-collection-provider-help'
-												)}
-											>
-												<ClayIcon
-													className="c-ml-2 text-3 text-secondary"
-													symbol="question-circle-full"
-												/>
-											</span>
-										</ClayTooltipProvider>
-									</>
-								}
-								onChange={() =>
-									setCollectionProviderToggleValue(
-										!collectionProviderToggleValue
-									)
-								}
-							/>
-						</div>
-					)}
+									<ClayTooltipProvider>
+										<span
+											title={Liferay.Language.get(
+												'enable-as-a-collection-provider-help'
+											)}
+										>
+											<ClayIcon
+												className="c-ml-2 text-3 text-secondary"
+												symbol="question-circle-full"
+											/>
+										</span>
+									</ClayTooltipProvider>
+								</>
+							}
+							onChange={() =>
+								setCollectionProviderToggleValue(
+									!collectionProviderToggleValue
+								)
+							}
+						/>
+					</div>
 				</ClayModal.Body>
 
 				<ClayModal.Footer

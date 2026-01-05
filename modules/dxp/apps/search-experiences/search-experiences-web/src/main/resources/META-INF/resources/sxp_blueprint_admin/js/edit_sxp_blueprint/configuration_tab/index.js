@@ -62,7 +62,7 @@ function ConfigurationTab({
 
 	/**
 	 * Called when the "Enable as Collection Provider" toggle selection is
-	 * changed. Currently behind feature flag LPS-129412.
+	 * changed.
 	 */
 	const _handleCollectionProviderChange = () => {
 		setFieldValue('frameworkConfig', {
@@ -84,7 +84,6 @@ function ConfigurationTab({
 	 * Type Asset" toggle. This ensures backward compatibility (LPD-58958) for
 	 * older blueprints, allowing them to continue acting as collection providers
 	 * returning Assets. New blueprints will not utilize `legacyAssetCollectionProvider`.
-	 * This feature is currently under the LPS-129412 feature flag.
 	 */
 	const _handleLegacyAssetCollectionProviderChange = () => {
 		setFieldValue('frameworkConfig', {
@@ -175,93 +174,86 @@ function ConfigurationTab({
 						<LearnMessage resourceKey="search-blueprint-configuration" />
 					</div>
 
-					{Liferay.FeatureFlags['LPS-129412'] && (
-						<>
-							<div className="align-items-center c-mb-4">
-								<ClayToggle
-									aria-label={Liferay.Language.get(
+					<div className="align-items-center c-mb-4">
+						<ClayToggle
+							aria-label={Liferay.Language.get(
+								'enable-as-a-collection-provider'
+							)}
+							label={
+								<>
+									{Liferay.Language.get(
 										'enable-as-a-collection-provider'
 									)}
-									label={
-										<>
-											{Liferay.Language.get(
-												'enable-as-a-collection-provider'
-											)}
 
-											<ClayTooltipProvider>
-												<span
-													title={
-														!frameworkConfig.collectionProvider
-															? Liferay.Language.get(
-																	'enable-as-a-collection-provider-help'
-																)
-															: Liferay.Language.get(
-																	'disable-as-a-collection-provider-help'
-																)
-													}
-												>
-													<ClayIcon
-														className="c-ml-2 text-secondary"
-														symbol="question-circle-full"
-													/>
-												</span>
-											</ClayTooltipProvider>
-										</>
-									}
-									onToggle={_handleCollectionProviderChange}
-									toggled={
-										frameworkConfig.collectionProvider ||
-										false
-									}
-								/>
+									<ClayTooltipProvider>
+										<span
+											title={
+												!frameworkConfig.collectionProvider
+													? Liferay.Language.get(
+															'enable-as-a-collection-provider-help'
+														)
+													: Liferay.Language.get(
+															'disable-as-a-collection-provider-help'
+														)
+											}
+										>
+											<ClayIcon
+												className="c-ml-2 text-secondary"
+												symbol="question-circle-full"
+											/>
+										</span>
+									</ClayTooltipProvider>
+								</>
+							}
+							onToggle={_handleCollectionProviderChange}
+							toggled={
+								frameworkConfig.collectionProvider || false
+							}
+						/>
 
-								<span className="c-ml-2 sheet-text">
-									<LearnMessage resourceKey="collections-with-search-blueprints" />
-								</span>
-							</div>
+						<span className="c-ml-2 sheet-text">
+							<LearnMessage resourceKey="collections-with-search-blueprints" />
+						</span>
+					</div>
 
-							{isDefined(
-								frameworkConfig.legacyAssetCollectionProvider
-							) && (
-								<div className="align-items-center c-mb-4">
-									<ClayToggle
-										aria-label={Liferay.Language.get(
+					{isDefined(
+						frameworkConfig.legacyAssetCollectionProvider
+					) && (
+						<div className="align-items-center c-mb-4">
+							<ClayToggle
+								aria-label={Liferay.Language.get(
+									'enable-as-a-collection-provider-with-return-type-asset'
+								)}
+								disabled={!frameworkConfig.collectionProvider}
+								label={
+									<>
+										{Liferay.Language.get(
 											'enable-as-a-collection-provider-with-return-type-asset'
 										)}
-										disabled={
-											!frameworkConfig.collectionProvider
-										}
-										label={
-											<>
-												{Liferay.Language.get(
-													'enable-as-a-collection-provider-with-return-type-asset'
-												)}
 
-												<ClayTooltipProvider>
-													<span
-														title={Liferay.Language.get(
-															'enable-as-a-collection-provider-with-return-type-asset-help'
-														)}
-													>
-														<ClayIcon
-															className="c-ml-2 text-secondary"
-															symbol="question-circle-full"
-														/>
-													</span>
-												</ClayTooltipProvider>
-											</>
-										}
-										onToggle={
-											_handleLegacyAssetCollectionProviderChange
-										}
-										toggled={
-											frameworkConfig.legacyAssetCollectionProvider ??
-											false
-										}
-									/>
-								</div>
-							)}
-						</>
+										<ClayTooltipProvider>
+											<span
+												title={Liferay.Language.get(
+													'enable-as-a-collection-provider-with-return-type-asset-help'
+												)}
+											>
+												<ClayIcon
+													className="c-ml-2 text-secondary"
+													symbol="question-circle-full"
+												/>
+											</span>
+										</ClayTooltipProvider>
+									</>
+								}
+								onToggle={
+									_handleLegacyAssetCollectionProviderChange
+								}
+								toggled={
+									frameworkConfig.legacyAssetCollectionProvider ??
+									false
+								}
+							/>
+						</div>
 					)}
 
 					<ClayForm.Group>

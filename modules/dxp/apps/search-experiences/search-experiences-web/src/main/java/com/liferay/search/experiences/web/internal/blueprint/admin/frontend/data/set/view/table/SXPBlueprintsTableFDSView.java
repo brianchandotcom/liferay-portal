@@ -10,7 +10,6 @@ import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.search.experiences.web.internal.blueprint.admin.constants.SXPBlueprintAdminFDSNames;
 
 import java.util.Locale;
@@ -33,7 +32,7 @@ public class SXPBlueprintsTableFDSView extends BaseTableFDSView {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
 			_fdsTableSchemaBuilderFactory.create();
 
-		fdsTableSchemaBuilder.add(
+		return fdsTableSchemaBuilder.add(
 			"title", "title",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"actionLink"
@@ -42,16 +41,11 @@ public class SXPBlueprintsTableFDSView extends BaseTableFDSView {
 			)
 		).add(
 			"description", "description"
-		);
-
-		if (FeatureFlagManagerUtil.isEnabled("LPS-129412")) {
-			fdsTableSchemaBuilder.add(
-				"collectionProvider", "collection-provider",
-				fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-					"collectionProviderCellRenderer"));
-		}
-
-		return fdsTableSchemaBuilder.add(
+		).add(
+			"collectionProvider", "collection-provider",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"collectionProviderCellRenderer")
+		).add(
 			"id", "id"
 		).add(
 			"userName", "author"

@@ -254,24 +254,21 @@ function SelectTypes({
 												{displayName}
 											</ClayList.ItemTitle>
 
-											{Liferay.FeatureFlags[
-												'LPS-129412'
-											] &&
-												hasSubtype && (
-													<SelectSubtypes
-														className={className}
-														onChangeSubtypes={_handleChangeSubtypes(
-															className
-														)}
-														onRemoveSubtype={
-															_handleRemoveSubtype
-														}
-														selectedSubtypes={getSelectedSubtypes(
-															selected,
-															className
-														)}
-													/>
-												)}
+											{hasSubtype && (
+												<SelectSubtypes
+													className={className}
+													onChangeSubtypes={_handleChangeSubtypes(
+														className
+													)}
+													onRemoveSubtype={
+														_handleRemoveSubtype
+													}
+													selectedSubtypes={getSelectedSubtypes(
+														selected,
+														className
+													)}
+												/>
+											)}
 										</ClayList.ItemField>
 
 										<ClayList.ItemField>

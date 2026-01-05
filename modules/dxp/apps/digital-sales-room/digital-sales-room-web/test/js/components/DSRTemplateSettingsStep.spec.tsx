@@ -35,6 +35,7 @@ let {result: useStateHookResult} = renderHook(() =>
 const component = ({
 	numberOfSteps = 1,
 	setHandleStepSubmit,
+	showHeader = true,
 }: TDSRRoomDetailsStepProps) => {
 	return (
 		<DSRContext.Provider
@@ -46,6 +47,7 @@ const component = ({
 			<DSRTemplateSettingsStep
 				numberOfSteps={numberOfSteps}
 				setHandleStepSubmit={setHandleStepSubmit}
+				showHeader={showHeader}
 			/>
 		</DSRContext.Provider>
 	);
@@ -54,8 +56,9 @@ const component = ({
 const renderComponent = ({
 	numberOfSteps = 1,
 	setHandleStepSubmit,
+	showHeader = true,
 }: TDSRRoomDetailsStepProps) => {
-	return render(component({numberOfSteps, setHandleStepSubmit}));
+	return render(component({numberOfSteps, setHandleStepSubmit, showHeader}));
 };
 
 describe('DSRTemplateSettingsStep', () => {
@@ -88,6 +91,21 @@ describe('DSRTemplateSettingsStep', () => {
 
 		expect(screen.getByTestId('roomNameInput')).toBeInTheDocument();
 		expect(screen.getByTestId('descriptionInput')).toBeInTheDocument();
+		expect(screen.getByTestId('stepLocator')).toBeInTheDocument();
+		expect(screen.getByTestId('stepTitle')).toBeInTheDocument();
+	});
+
+	it('hides header based on the parameter', async () => {
+		renderComponent({
+			numberOfSteps: 1,
+			setHandleStepSubmit: () => {},
+			showHeader: false,
+		});
+
+		expect(screen.getByTestId('roomNameInput')).toBeInTheDocument();
+		expect(screen.getByTestId('descriptionInput')).toBeInTheDocument();
+		expect(screen.queryByTestId('stepLocator')).not.toBeInTheDocument();
+		expect(screen.queryByTestId('stepTitle')).not.toBeInTheDocument();
 	});
 
 	it('validate step', async () => {

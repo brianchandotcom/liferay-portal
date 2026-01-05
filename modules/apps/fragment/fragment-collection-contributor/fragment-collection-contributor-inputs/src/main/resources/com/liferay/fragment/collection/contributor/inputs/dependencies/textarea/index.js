@@ -2,14 +2,11 @@ const currentLength = document.getElementById(
 	`${fragmentElementId}-current-length`
 );
 const error = document.getElementById(`${fragmentElementId}-textarea-error`);
+const errorMessage = document.getElementById(
+	`${fragmentElementId}-textarea-error-message`
+);
 const formGroup = document.getElementById(`${fragmentElementId}-form-group`);
 const lengthInfo = document.getElementById(`${fragmentElementId}-length-info`);
-const lengthWarning = document.getElementById(
-	`${fragmentElementId}-length-warning`
-);
-const lengthWarningText = document.getElementById(
-	`${fragmentElementId}-length-warning-text`
-);
 const textarea = document.getElementById(`${fragmentElementId}-textarea`);
 
 function main() {
@@ -21,40 +18,38 @@ function main() {
 			({
 				focusInput,
 				handleInputLengthError,
-				hideLengthError,
 				registerLocalizedInput,
 				registerUnlocalizedInput,
+				showInputError,
 			}) => {
-				if (error) {
+				const hasError = formGroup.classList.contains('has-error');
+
+				if (hasError) {
 					focusInput(textarea);
 				}
 
 				currentLength.innerText = textarea.value.length;
 
 				if (
-					!error &&
+					!hasError &&
 					textarea.value.length > input.attributes.maxLength
 				) {
-					hideLengthError({
-						configuration,
+					showInputError({
+						errorType: 'length',
 						formGroup,
-						lengthInfo,
-						lengthWarning,
-						lengthWarningText,
+						lengthInfoContainer: lengthInfo,
 					});
 				}
 
 				const onKeyup = (event) =>
 					handleInputLengthError({
-						configuration,
 						currentLength,
 						errorContainer: error,
+						errorMessageContainer: errorMessage,
 						event,
 						formGroup,
 						input,
-						lengthInfo,
-						lengthWarning,
-						lengthWarningText,
+						lengthInfoContainer: lengthInfo,
 					});
 
 				textarea.addEventListener('keyup', onKeyup);

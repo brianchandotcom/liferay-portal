@@ -41,14 +41,16 @@ function main() {
 					});
 				}
 
-				if (error) {
+				const hasError = formGroup.classList.contains('has-error');
+
+				if (hasError) {
 					focusInput(inputElement);
 				}
 
 				currentLength.innerText = inputElement.value.length;
 
 				if (
-					!error &&
+					!hasError &&
 					inputElement.value.length > input.attributes.maxLength
 				) {
 					showInputError({

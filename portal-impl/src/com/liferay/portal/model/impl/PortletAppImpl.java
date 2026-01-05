@@ -24,6 +24,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 import javax.xml.XMLConstants;
 
@@ -217,7 +218,7 @@ public class PortletAppImpl implements PortletApp {
 		new LinkedHashMap<>();
 	private String _defaultNamespace = XMLConstants.NULL_NS_URI;
 	private final Set<EventDefinition> _eventDefinitions =
-		new LinkedHashSet<>();
+		new CopyOnWriteArraySet<>();
 	private final Set<PortletFilter> _portletFilters = new LinkedHashSet<>();
 	private final Map<String, PortletFilter> _portletFiltersMap =
 		new HashMap<>();

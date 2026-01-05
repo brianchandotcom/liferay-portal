@@ -42,11 +42,11 @@ public class DataDefinitionTestUtil {
 
 		DataDefinition dataDefinition = DataDefinition.toDTO(json);
 
-		DataDefinitionResource.Builder dataDefinitionResourcedBuilder =
+		DataDefinitionResource.Builder dataDefinitionResourceBuilder =
 			dataDefinitionResourceFactory.create();
 
 		DataDefinitionResource dataDefinitionResource =
-			dataDefinitionResourcedBuilder.user(
+			dataDefinitionResourceBuilder.user(
 				user
 			).build();
 

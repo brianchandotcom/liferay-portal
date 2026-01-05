@@ -13,6 +13,7 @@ dependencies {
 	compileOnly project(":apps:asset:asset-api")
 	compileOnly project(":apps:asset:asset-link-api")
 	compileOnly project(":apps:asset:asset-list-api")
+	compileOnly project(":apps:batch-engine:batch-engine-api")
 	compileOnly project(":apps:blogs:blogs-api")
 	compileOnly project(":apps:calendar:calendar-api")
 	compileOnly project(":apps:client-extension:client-extension-api")

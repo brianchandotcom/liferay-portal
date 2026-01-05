@@ -811,11 +811,11 @@ public class ContentManagerImpl implements ContentManager {
 		AssetListEntry assetListEntry, HttpServletRequest httpServletRequest,
 		String redirect) {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			if (_assetListEntryModelResourcePermission.contains(
 					themeDisplay.getPermissionChecker(), assetListEntry,
 					ActionKeys.UPDATE)) {
@@ -852,11 +852,11 @@ public class ContentManagerImpl implements ContentManager {
 	private String _getAssetListEntryPermissionsURL(
 		AssetListEntry assetListEntry, HttpServletRequest httpServletRequest) {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			if (_assetListEntryModelResourcePermission.contains(
 					themeDisplay.getPermissionChecker(), assetListEntry,
 					ActionKeys.PERMISSIONS)) {

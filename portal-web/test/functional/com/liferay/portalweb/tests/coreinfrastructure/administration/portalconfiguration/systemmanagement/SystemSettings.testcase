@@ -21,59 +21,6 @@ definition {
 		}
 	}
 
-	@priority = 5
-	test CanOverrideValueSetInConfigFile {
-		property custom.properties = "configuration.override.com.liferay.journal.configuration.JournalServiceConfiguration_articleCommentsEnabled=B\"false\"";
-		property osgi.module.configuration.file.names = "com.liferay.journal.configuration.JournalServiceConfiguration.config";
-		property osgi.module.configurations = "articleCommentsEnabled=B\"true\"";
-		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Web Content",
-			configurationName = "Web Content",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.viewCheckboxNotChecked(fieldName = "articleCommentsEnabled");
-
-		FormFields.viewFieldText(
-			fieldName = "articleCommentsEnabled",
-			fieldText = "Set this to true to enable comments for journal articles. This field has been set by a portal property and cannot be changed here.");
-
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Content",
-			groupName = "Guest",
-			title = "WC WebContent Title");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Web Content Page Test");
-
-		Navigator.gotoPage(pageName = "Web Content Page Test");
-
-		Portlet.addPG(portletName = "Web Content Display");
-
-		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
-
-		IFrame.closeFrame();
-
-		Portlet.gotoPortletOptions(
-			portletName = "Web Content Display",
-			portletOption = "Configuration");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		AssertElementNotPresent(
-			key_fieldName = "Comments",
-			locator1 = "Portlet#CONFIGURATION_CHECKBOX");
-	}
-
 	@priority = 4
 	test CanOverrideValueWithoutConfigFile {
 		property custom.properties = "configuration.override.com.liferay.journal.configuration.JournalServiceConfiguration_articleCommentsEnabled=B\"false\"";

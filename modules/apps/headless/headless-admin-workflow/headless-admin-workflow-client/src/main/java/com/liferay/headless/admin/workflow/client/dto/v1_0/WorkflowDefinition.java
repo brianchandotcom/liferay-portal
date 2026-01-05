@@ -255,6 +255,27 @@ public class WorkflowDefinition implements Cloneable, Serializable {
 
 	protected Node[] nodes;
 
+	public String getScope() {
+		return scope;
+	}
+
+	public void setScope(String scope) {
+		this.scope = scope;
+	}
+
+	public void setScope(
+		UnsafeSupplier<String, Exception> scopeUnsafeSupplier) {
+
+		try {
+			scope = scopeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String scope;
+
 	public String getTitle() {
 		return title;
 	}

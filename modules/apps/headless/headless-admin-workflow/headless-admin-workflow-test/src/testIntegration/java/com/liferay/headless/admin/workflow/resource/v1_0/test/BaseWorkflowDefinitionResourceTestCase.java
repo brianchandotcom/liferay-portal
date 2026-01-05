@@ -216,6 +216,7 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 		workflowDefinition.setDescription(regex);
 		workflowDefinition.setExternalReferenceCode(regex);
 		workflowDefinition.setName(regex);
+		workflowDefinition.setScope(regex);
 		workflowDefinition.setTitle(regex);
 		workflowDefinition.setVersion(regex);
 
@@ -230,6 +231,7 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 		Assert.assertEquals(
 			regex, workflowDefinition.getExternalReferenceCode());
 		Assert.assertEquals(regex, workflowDefinition.getName());
+		Assert.assertEquals(regex, workflowDefinition.getScope());
 		Assert.assertEquals(regex, workflowDefinition.getTitle());
 		Assert.assertEquals(regex, workflowDefinition.getVersion());
 	}
@@ -1753,6 +1755,14 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("scope", additionalAssertFieldName)) {
+				if (workflowDefinition.getScope() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("title", additionalAssertFieldName)) {
 				if (workflowDefinition.getTitle() == null) {
 					valid = false;
@@ -2026,6 +2036,17 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 				if (!Objects.deepEquals(
 						workflowDefinition1.getNodes(),
 						workflowDefinition2.getNodes())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("scope", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						workflowDefinition1.getScope(),
+						workflowDefinition2.getScope())) {
 
 					return false;
 				}
@@ -2452,6 +2473,52 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("scope")) {
+			Object object = workflowDefinition.getScope();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("title")) {
 			Object object = workflowDefinition.getTitle();
 
@@ -2609,6 +2676,7 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				scope = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				title = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				version = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}

@@ -120,11 +120,9 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 		};
 	}
 
-	private CustomMetaTag[] _getCustomMetaTags(
-		Layout layout, LayoutSEOEntryLocalService layoutSEOEntryLocalService) {
-
+	private CustomMetaTag[] _getCustomMetaTags(Layout layout) {
 		LayoutSEOEntry layoutSEOEntry =
-			layoutSEOEntryLocalService.fetchLayoutSEOEntry(
+			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
 				layout.getGroupId(), layout.isPrivateLayout(),
 				layout.getLayoutId());
 
@@ -133,7 +131,7 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 		}
 
 		List<LayoutSEOEntryCustomMetaTag> layoutSEOEntryCustomMetaTags =
-			layoutSEOEntryLocalService.getLayoutSEOEntryCustomMetaTags(
+			_layoutSEOEntryLocalService.getLayoutSEOEntryCustomMetaTags(
 				layoutSEOEntry.getGroupId(),
 				layoutSEOEntry.getLayoutSEOEntryId());
 
@@ -177,8 +175,7 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 	private PageSettings _toPageSettings(Layout layout) {
 		PageSettings pageSettings = _getPageSettings(layout);
 
-		pageSettings.setCustomMetaTags(
-			() -> _getCustomMetaTags(layout, _layoutSEOEntryLocalService));
+		pageSettings.setCustomMetaTags(() -> _getCustomMetaTags(layout));
 		pageSettings.setHiddenFromNavigation(layout::isHidden);
 		pageSettings.setNavigationSettings(
 			() -> NavigationSettingsUtil.toSitePageNavigationSettings(

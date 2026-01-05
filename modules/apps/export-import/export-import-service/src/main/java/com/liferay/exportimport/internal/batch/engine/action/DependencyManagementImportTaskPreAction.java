@@ -54,12 +54,7 @@ public class DependencyManagementImportTaskPreAction
 
 		if (exportImportDescriptor == null) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						"Unable to get the ",
-						ExportImportVulcanBatchEngineTaskItemDelegate.
-							ExportImportDescriptor.class.getSimpleName(),
-						" from the ThreadLocal"));
+				_log.debug("Unable to get the export import descriptor");
 			}
 
 			return;
@@ -77,10 +72,7 @@ public class DependencyManagementImportTaskPreAction
 
 		if (portletDataContext == null) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to get the " +
-						PortletDataContext.class.getSimpleName() +
-							" from the ThreadLocal");
+				_log.debug("Unable to get the portlet data context");
 			}
 
 			return;
@@ -134,10 +126,8 @@ public class DependencyManagementImportTaskPreAction
 					if (_log.isDebugEnabled()) {
 						_log.debug(
 							StringBundler.concat(
-								"Unable to get the ",
-								ExportImportContentProcessor.class.
-									getSimpleName(),
-								" for content processor type: \"",
+								"Unable to get the export import content ",
+								"processor for the content processor type \"",
 								contentProcessorType, "\""));
 					}
 

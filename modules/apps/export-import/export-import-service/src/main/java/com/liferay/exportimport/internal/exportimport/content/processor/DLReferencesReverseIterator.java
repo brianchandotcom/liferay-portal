@@ -62,12 +62,10 @@ public class DLReferencesReverseIterator
 		long groupId) {
 
 		_content = content;
-
-		_endPos = content.length();
-
 		_fileEntryFriendlyURLResolver = fileEntryFriendlyURLResolver;
 		_groupId = groupId;
 
+		_endPos = content.length();
 		_pathContext = PortalUtil.getPathContext();
 
 		_patterns = _getPatterns(_pathContext);

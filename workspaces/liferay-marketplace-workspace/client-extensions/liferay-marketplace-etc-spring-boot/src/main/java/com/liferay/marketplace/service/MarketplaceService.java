@@ -177,7 +177,7 @@ public class MarketplaceService extends BaseService {
 		).build();
 	}
 
-	public BillingAddress getBillingAddress(Long id) throws Exception {
+	public BillingAddress getBillingAddress(long id) throws Exception {
 		BillingAddressResource billingAddressResource =
 			getBillingAddressResource();
 
@@ -195,7 +195,7 @@ public class MarketplaceService extends BaseService {
 		).build();
 	}
 
-	public Catalog getCatalog(Long catalogId) throws Exception {
+	public Catalog getCatalog(long catalogId) throws Exception {
 		CatalogResource catalogResource = _getCatalogResource();
 
 		return catalogResource.getCatalog(catalogId);
@@ -212,7 +212,7 @@ public class MarketplaceService extends BaseService {
 		).build();
 	}
 
-	public Order getOrder(Long id) throws Exception {
+	public Order getOrder(long id) throws Exception {
 		OrderResource orderResource = getOrderResource();
 
 		return orderResource.getOrder(id);
@@ -253,7 +253,7 @@ public class MarketplaceService extends BaseService {
 		).build();
 	}
 
-	public Product getProduct(Long id) throws Exception {
+	public Product getProduct(long id) throws Exception {
 		ProductResource productResource = getProductResource();
 
 		return productResource.getProduct(id);
@@ -303,7 +303,7 @@ public class MarketplaceService extends BaseService {
 		return map;
 	}
 
-	public String getProductVersion(Long skuId) {
+	public String getProductVersion(long skuId) {
 		String version = "1.0.0";
 
 		try {
@@ -389,7 +389,7 @@ public class MarketplaceService extends BaseService {
 				).toUri()));
 	}
 
-	public Sku getSku(Long id) throws Exception {
+	public Sku getSku(long id) throws Exception {
 		SkuResource skuResource = getSkuResource();
 
 		return skuResource.getSku(id);

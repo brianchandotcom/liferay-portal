@@ -366,8 +366,6 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 	@Override
 	@Test
 	public void testPutSiteMasterPage() throws Exception {
-		String thumbnailURL = RandomTestUtil.randomString();
-
 		_testPutSiteMasterPage(randomMasterPage());
 
 		MasterPage masterPage = testPostSiteMasterPage_addMasterPage(
@@ -379,6 +377,8 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 				testGroup, TestPropsValues.getUserId()));
 
 		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
+
+		String thumbnailURL = RandomTestUtil.randomString();
 
 		_testPutSiteMasterPage(
 			_getMasterPage(

@@ -20,6 +20,7 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
 import java.util.Collections;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -197,6 +198,54 @@ public class PageExperienceResourceTest
 				testGroup.getGroupId()));
 
 		_testPutSitePageExperience(pageExperience);
+	}
+
+	@Override
+	protected void assertValid(PageExperience pageExperience) throws Exception {
+		boolean valid = true;
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(
+					additionalAssertFieldName, "externalReferenceCode")) {
+
+				if (pageExperience.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(additionalAssertFieldName, "name_i18n")) {
+				if (pageExperience.getName_i18n() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(additionalAssertFieldName, "priority")) {
+				if (pageExperience.getPriority() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					additionalAssertFieldName,
+					"segmentItemExternalReference")) {
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		Assert.assertTrue(valid);
 	}
 
 	@Override

@@ -180,6 +180,60 @@ public class DigitalSalesRoomTemplateResourceImpl
 	}
 
 	@Override
+	public DigitalSalesRoomTemplate patchDigitalSalesRoomTemplate(
+			Long digitalSalesRoomTemplateId,
+			DigitalSalesRoomTemplate digitalSalesRoomTemplate)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-66359")) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		Group group = _groupService.getGroup(digitalSalesRoomTemplateId);
+
+		if (Validator.isNotNull(digitalSalesRoomTemplate.getName())) {
+			group.setName(digitalSalesRoomTemplate.getName());
+		}
+
+		if (Validator.isNotNull(digitalSalesRoomTemplate.getDescription())) {
+			group.setDescription(digitalSalesRoomTemplate.getDescription());
+		}
+
+		group = _groupLocalService.updateGroup(group);
+
+		ObjectDefinition objectDefinition = _getObjectDefinition();
+
+		ObjectEntryManager objectEntryManager =
+			_objectEntryManagerRegistry.getObjectEntryManager(
+				objectDefinition.getCompanyId(),
+				objectDefinition.getStorageType());
+
+		DefaultDTOConverterContext defaultDTOConverterContext =
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), null,
+				_dtoConverterRegistry, contextHttpServletRequest, null,
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser);
+
+		defaultDTOConverterContext.setAttribute("addActions", Boolean.FALSE);
+
+		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
+			objectEntryManager.partialUpdateObjectEntry(
+				objectDefinition.getCompanyId(), defaultDTOConverterContext,
+				group.getExternalReferenceCode(), objectDefinition,
+				_toObjectEntry(digitalSalesRoomTemplate, group),
+				group.getGroupKey());
+
+		_updateFrontendTokensValues(digitalSalesRoomTemplate, group);
+
+		return _toDigitalSalesRoomTemplate(
+			group,
+			_objectEntryLocalService.getObjectEntry(objectEntry.getId()));
+	}
+
+	@Override
 	public DigitalSalesRoomTemplate
 			postDigitalSalesRoomDigitalSalesRoomTemplate(
 				Long digitalSalesRoomId,
@@ -554,13 +608,13 @@ public class DigitalSalesRoomTemplateResourceImpl
 				).build();
 			}
 		).put(
-			"clientName", digitalSalesRoomTemplate.getClientName()
+			"clientName", digitalSalesRoomTemplate::getClientName
 		).put(
 			"externalReferenceCode", group.getExternalReferenceCode()
 		).put(
-			"primaryColor", digitalSalesRoomTemplate.getPrimaryColor()
+			"primaryColor", digitalSalesRoomTemplate::getPrimaryColor
 		).put(
-			"secondaryColor", digitalSalesRoomTemplate.getSecondaryColor()
+			"secondaryColor", digitalSalesRoomTemplate::getSecondaryColor
 		).build();
 	}
 

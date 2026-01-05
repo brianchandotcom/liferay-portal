@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -533,6 +534,25 @@ public class KaleoDesignerDisplayContext {
 
 		return HtmlUtil.escape(
 			kaleoDefinitionVersion.getTitle(themeDisplay.getLanguageId()));
+	}
+
+	public String getURLBack(RenderRequest renderRequest) {
+		RenderParameters renderParameters = renderRequest.getRenderParameters();
+
+		String redirectURL = renderParameters.getValue("redirect");
+
+		if (redirectURL == null) {
+			return PortletURLBuilder.create(
+				PortalUtil.getControlPanelPortletURL(
+					renderRequest,
+					KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW,
+					PortletRequest.RENDER_PHASE)
+			).setMVCPath(
+				"/view.jsp"
+			).buildString();
+		}
+
+		return redirectURL;
 	}
 
 	public String getUserName(KaleoDefinitionVersion kaleoDefinitionVersion) {

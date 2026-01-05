@@ -26,7 +26,9 @@ public class AppServerBundleDownstreamBuild extends BaseDownstreamBuild {
 		Map<String, String> startPropertiesTempMap =
 			getStartPropertiesTempMap();
 
-		String filePath = getAxisVariable() + "/" + _FILE_NAME_BUILD_FAILURE;
+		String axisVariable = getAxisVariable();
+
+		String filePath = axisVariable + "/" + _FILE_NAME_BUILD_FAILURE;
 
 		String s3ObjectPath =
 			startPropertiesTempMap.get("S3_BUCKET_DIST_PATH") + "/" + filePath;
@@ -38,13 +40,24 @@ public class AppServerBundleDownstreamBuild extends BaseDownstreamBuild {
 		PortalWorkspaceBuild portalWorkspaceBuild =
 			(PortalWorkspaceBuild)getTopLevelBuild();
 
-		Workspace portalWorkspace = portalWorkspaceBuild.getWorkspace();
+		Workspace workspace = portalWorkspaceBuild.getWorkspace();
+
+		if (!(workspace instanceof PortalWorkspace)) {
+			return;
+		}
+
+		PortalWorkspace portalWorkspace = (PortalWorkspace)workspace;
 
 		WorkspaceGitRepository workspaceGitRepository =
-			portalWorkspace.getPrimaryWorkspaceGitRepository();
+			portalWorkspace.getPortalWorkspaceGitRepository();
+
+		if (axisVariable.equals("analytics.cloud")) {
+			workspaceGitRepository = portalWorkspace.getWorkspaceGitRepository(
+				"com-liferay-osb-asah-private");
+		}
 
 		File directory = new File(
-			workspaceGitRepository.getDirectory(), getAxisVariable());
+			workspaceGitRepository.getDirectory(), axisVariable);
 
 		directory.mkdirs();
 

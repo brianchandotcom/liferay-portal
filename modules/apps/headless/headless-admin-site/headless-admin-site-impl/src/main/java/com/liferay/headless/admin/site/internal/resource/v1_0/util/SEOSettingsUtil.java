@@ -25,7 +25,7 @@ import java.util.HashMap;
 public class SEOSettingsUtil {
 
 	public static SEOSettings getSeoSettings(
-		LayoutSEOEntryLocalService layoutSEOEntryLocalService, Layout layout) {
+		Layout layout, LayoutSEOEntryLocalService layoutSEOEntryLocalService) {
 
 		return new SEOSettings() {
 			{

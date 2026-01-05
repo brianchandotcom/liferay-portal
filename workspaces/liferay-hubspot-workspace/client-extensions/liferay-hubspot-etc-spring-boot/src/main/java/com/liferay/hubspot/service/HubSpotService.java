@@ -147,40 +147,39 @@ public class HubSpotService extends BaseService {
 	public JSONObject search(
 		String objectName, String propertyName, String value) {
 
-		String json = post(
-			_getAuthorization(),
-			new JSONObject(
-			).put(
-				"filterGroups",
-				new JSONArray(
+		JSONObject jsonObject = new JSONObject(
+			post(
+				_getAuthorization(),
+				new JSONObject(
 				).put(
-					new JSONObject(
+					"filterGroups",
+					new JSONArray(
 					).put(
-						"filters",
-						new JSONArray(
+						new JSONObject(
 						).put(
-							new JSONObject(
+							"filters",
+							new JSONArray(
 							).put(
-								"operator", "EQ"
-							).put(
-								"propertyName", propertyName
-							).put(
-								"value", value
+								new JSONObject(
+								).put(
+									"operator", "EQ"
+								).put(
+									"propertyName", propertyName
+								).put(
+									"value", value
+								)
 							)
 						)
 					)
-				)
-			).put(
-				"limit", 1
-			).toString(),
-			UriComponentsBuilder.fromUriString(
-				_hubSpotURL
-			).path(
-				"/crm/v3/objects/" + objectName + "/search"
-			).build(
-			).toUri());
-
-		JSONObject jsonObject = new JSONObject(json);
+				).put(
+					"limit", 1
+				).toString(),
+				UriComponentsBuilder.fromUriString(
+					_hubSpotURL
+				).path(
+					"/crm/v3/objects/" + objectName + "/search"
+				).build(
+				).toUri()));
 
 		JSONArray jsonArray = jsonObject.optJSONArray("results");
 

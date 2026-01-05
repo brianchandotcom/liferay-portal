@@ -1203,22 +1203,30 @@ public class ObjectEntryLocalServiceImpl
 		List<Expression<?>> selectExpressions = new ArrayList<>(
 			dynamicObjectDefinitionTable.getColumns());
 
-		List<Expression<?>> extensionSelectExpressions = new ArrayList<>(
-			extensionDynamicObjectDefinitionTable.getColumns());
-
-		extensionSelectExpressions.remove(
-			extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn());
+		Collection<Column<DynamicObjectDefinitionTable, ?>> extensionColumns =
+			extensionDynamicObjectDefinitionTable.getColumns();
 
 		Predicate innerJoinPredicate = null;
 
-		if (!extensionSelectExpressions.isEmpty()) {
+		if (extensionColumns.size() > 1) {
 			innerJoinPredicate =
 				dynamicObjectDefinitionTable.getPrimaryKeyColumn(
 				).eq(
 					extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn()
 				);
 
-			selectExpressions.addAll(extensionSelectExpressions);
+			Column<?, ?> pkColumn =
+				extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn();
+
+			for (Column<DynamicObjectDefinitionTable, ?> column :
+					extensionColumns) {
+
+				if (column == pkColumn) {
+					continue;
+				}
+
+				selectExpressions.add(column);
+			}
 		}
 
 		Expression<?>[] selectExpressionsArray = selectExpressions.toArray(

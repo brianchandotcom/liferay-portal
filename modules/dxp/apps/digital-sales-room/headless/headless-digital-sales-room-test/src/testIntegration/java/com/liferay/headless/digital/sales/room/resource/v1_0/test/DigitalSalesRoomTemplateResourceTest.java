@@ -123,6 +123,15 @@ public class DigitalSalesRoomTemplateResourceTest
 
 	@Override
 	protected DigitalSalesRoomTemplate
+			testPatchDigitalSalesRoomTemplate_addDigitalSalesRoomTemplate()
+		throws Exception {
+
+		return digitalSalesRoomTemplateResource.postDigitalSalesRoomTemplate(
+			randomDigitalSalesRoomTemplate());
+	}
+
+	@Override
+	protected DigitalSalesRoomTemplate
 			testPostDigitalSalesRoomDigitalSalesRoomTemplate_addDigitalSalesRoomTemplate(
 				DigitalSalesRoomTemplate digitalSalesRoomTemplate)
 		throws Exception {

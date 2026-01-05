@@ -584,9 +584,9 @@ public class DLReferencesReverseIterator
 			}
 		}
 
-		Set<String> hostNames = new HashSet<>();
+		Set<String> hostnames = new HashSet<>();
 
-		hostNames.add(portalURL);
+		hostnames.add(portalURL);
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
@@ -596,9 +596,9 @@ public class DLReferencesReverseIterator
 
 			String hostname = virtualHost.getHostname();
 
-			hostNames.add(hostname);
-			hostNames.add(Http.HTTP_WITH_SLASH + hostname);
-			hostNames.add(Http.HTTPS_WITH_SLASH + hostname);
+			hostnames.add(hostname);
+			hostnames.add(Http.HTTP_WITH_SLASH + hostname);
+			hostnames.add(Http.HTTPS_WITH_SLASH + hostname);
 		}
 
 		int colonPos = 0;
@@ -622,7 +622,7 @@ public class DLReferencesReverseIterator
 				content.substring(beginPos - colonPos + 1, beginPos));
 		}
 
-		for (String hostName : hostNames) {
+		for (String hostName : hostnames) {
 			if (urlPort > 0) {
 				int serverPort = PortalUtil.getPortalServerPort(
 					hostName.startsWith(Http.HTTPS_WITH_SLASH));

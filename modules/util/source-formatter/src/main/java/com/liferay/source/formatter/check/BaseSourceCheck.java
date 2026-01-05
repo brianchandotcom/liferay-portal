@@ -997,7 +997,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return null;
 	}
 
-	private boolean _isDerivedFrom(
+	protected boolean _isDerivedFrom(
 		String absolutePath, String content, String fullyQualifiedClassName) {
 
 		Pattern pattern = Pattern.compile(

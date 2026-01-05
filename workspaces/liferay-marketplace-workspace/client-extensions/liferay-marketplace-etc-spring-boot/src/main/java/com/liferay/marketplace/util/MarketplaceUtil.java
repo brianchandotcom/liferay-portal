@@ -191,7 +191,7 @@ public class MarketplaceUtil {
 		}
 	}
 
-	public static Map<String, Properties> getArtifactProperties(
+	public static Map<String, Properties> getArtifactPropertiesMap(
 		Product product, Map<String, String> productSpecificationsMap,
 		PublisherAssetLink publisherAssetLink) {
 

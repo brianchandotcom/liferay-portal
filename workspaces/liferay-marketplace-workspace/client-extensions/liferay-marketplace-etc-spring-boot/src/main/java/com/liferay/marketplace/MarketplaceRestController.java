@@ -46,6 +46,8 @@ import java.math.BigDecimal;
 
 import java.net.URL;
 
+import java.nio.file.Files;
+
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -582,7 +584,9 @@ public class MarketplaceRestController extends BaseRestController {
 	private File _getPublisherAssetFile(String publisherAssetURL)
 		throws Exception {
 
-		File tempFile = File.createTempFile("publisher_asset_", ".zip");
+		File tempFile = Files.createTempFile(
+			"publisher_asset_", ".zip"
+		).toFile();
 
 		try (InputStream inputStream =
 				_marketplaceService.getPublisherAssetInputStream(
@@ -649,7 +653,7 @@ public class MarketplaceRestController extends BaseRestController {
 
 			publisherAssetArtifactFile = MarketplaceUtil.addArtifactMetadata(
 				publisherAssetFile, publisherAssetLink.getFileName(),
-				MarketplaceUtil.getArtifactProperties(
+				MarketplaceUtil.getArtifactPropertiesMap(
 					product, productSpecificationsMap, publisherAssetLink));
 
 			_marketplaceService.postVirtualFileEntry(

@@ -606,10 +606,18 @@ public class PageTemplateResourceImpl
 				getFirstLayoutPageTemplateEntry(
 					layoutPrototype.getLayoutPrototypeId());
 
+		if (widgetPageTemplate.getUuid() != null) {
+			layoutPageTemplateEntry.setUuid(widgetPageTemplate.getUuid());
+		}
+
 		if (widgetPageTemplate.getExternalReferenceCode() != null) {
 			layoutPageTemplateEntry.setExternalReferenceCode(
 				widgetPageTemplate.getExternalReferenceCode());
 		}
+
+		layoutPageTemplateEntry.setGroupId(groupId);
+		layoutPageTemplateEntry.setLayoutPageTemplateCollectionId(
+			layoutPageTemplateCollectionId);
 
 		if (widgetPageTemplate.getThumbnailURLReference() != null) {
 			layoutPageTemplateEntry.setPreviewFileEntryId(
@@ -617,14 +625,6 @@ public class PageTemplateResourceImpl
 					groupId, getResourceName(), serviceContext,
 					widgetPageTemplate.getThumbnailURLReference(),
 					contextUser));
-		}
-
-		layoutPageTemplateEntry.setGroupId(groupId);
-		layoutPageTemplateEntry.setLayoutPageTemplateCollectionId(
-			layoutPageTemplateCollectionId);
-
-		if (widgetPageTemplate.getUuid() != null) {
-			layoutPageTemplateEntry.setUuid(widgetPageTemplate.getUuid());
 		}
 
 		layoutPageTemplateEntry =

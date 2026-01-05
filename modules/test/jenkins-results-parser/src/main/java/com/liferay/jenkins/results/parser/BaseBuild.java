@@ -594,7 +594,7 @@ public abstract class BaseBuild implements Build {
 			return 0;
 		}
 
-		long duration = buildJSONObject.getLong("duration");
+		long duration = buildJSONObject.optLong("duration");
 
 		if (duration == 0) {
 			long timestamp = buildJSONObject.getLong("timestamp");
@@ -3338,8 +3338,7 @@ public abstract class BaseBuild implements Build {
 		else {
 			Dom4JUtil.getNewElement(
 				"td", buildInfoElement,
-				JenkinsResultsParserUtil.toDurationString(
-					stopWatchRecord.getDuration()));
+				JenkinsResultsParserUtil.toDurationString(duration));
 		}
 
 		Dom4JUtil.getNewElement("td", buildInfoElement, "&nbsp;");

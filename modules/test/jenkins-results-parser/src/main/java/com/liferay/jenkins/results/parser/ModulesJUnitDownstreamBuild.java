@@ -46,7 +46,11 @@ public class ModulesJUnitDownstreamBuild extends JUnitDownstreamBuild {
 			long duration = 0L;
 
 			if (stopWatchRecord != null) {
-				duration = stopWatchRecord.getDuration();
+				Long stopWatchRecordDuration = stopWatchRecord.getDuration();
+
+				if (stopWatchRecordDuration != null) {
+					duration = stopWatchRecordDuration;
+				}
 			}
 
 			JSONObject testTaskJSONObject = new JSONObject();

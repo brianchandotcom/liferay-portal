@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(
-	property = "destination.name=" + JournalDestinationNames.DDM_STRUCTURE_JOURNAL_ARTICLES_UPDATE,
+	property = "destination.name=" + JournalDestinationNames.JOURNAL_ARTICLE_DDM_STRUCTURE_UPDATE,
 	service = MessageListener.class
 )
 public class DDMStructureJournalArticlesUpdateMessageListener
@@ -43,7 +43,7 @@ public class DDMStructureJournalArticlesUpdateMessageListener
 		DestinationConfiguration destinationConfiguration =
 			new DestinationConfiguration(
 				DestinationConfiguration.DESTINATION_TYPE_SERIAL,
-				JournalDestinationNames.DDM_STRUCTURE_JOURNAL_ARTICLES_UPDATE);
+				JournalDestinationNames.JOURNAL_ARTICLE_DDM_STRUCTURE_UPDATE);
 
 		Destination destination = _destinationFactory.createDestination(
 			destinationConfiguration);

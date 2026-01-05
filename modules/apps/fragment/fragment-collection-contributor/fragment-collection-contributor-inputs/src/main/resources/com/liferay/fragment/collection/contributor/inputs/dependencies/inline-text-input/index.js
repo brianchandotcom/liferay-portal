@@ -12,6 +12,9 @@ const inputElement = document.getElementById(
 	`${fragmentElementId}-inline-text-input`
 );
 const lengthInfo = document.getElementById(`${fragmentElementId}-length-info`);
+const localizedText = document.getElementById(
+	`${fragmentElementId}-localized-text`
+);
 
 function main() {
 	if (layoutMode === 'edit' && inputElement) {
@@ -82,9 +85,7 @@ function main() {
 						inputElement,
 						inputName: input.name,
 						localizationInputsContainer: inputElement.parentNode,
-						localizedTextContainer: document.getElementById(
-							`${fragmentElementId}-localized-text`
-						),
+						localizedTextContainer: localizedText,
 						namespace: fragmentElementId,
 					});
 

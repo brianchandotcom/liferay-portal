@@ -38,5 +38,9 @@
 }
 
 .inline-text-input .localized-text {
-	border-left: 2px solid #2e5aac;
+	border-left: 2px solid #9393a4;
+}
+
+.inline-text-input .localized-text.text-info {
+	border-color: #2e5aac;
 }

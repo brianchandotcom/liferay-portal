@@ -414,9 +414,21 @@ export function registerLocalizedInput({
 				localizedTextContainer &&
 				currentLanguageId === defaultLanguageId
 			) {
+				const hasValue = Boolean(value);
+
 				localizedTextContainer.innerText =
 					value ||
 					Liferay.Language.get('no-default-value-to-localize');
+
+				localizedTextContainer.classList.toggle('text-info', !hasValue);
+				localizedTextContainer.classList.toggle(
+					'text-italic',
+					hasValue
+				);
+				localizedTextContainer.classList.toggle(
+					'text-secondary',
+					hasValue
+				);
 			}
 		},
 		onChange: (value = null) => {

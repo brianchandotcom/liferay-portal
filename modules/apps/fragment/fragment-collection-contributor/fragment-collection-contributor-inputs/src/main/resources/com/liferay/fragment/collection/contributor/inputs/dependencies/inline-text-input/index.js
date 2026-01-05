@@ -4,17 +4,14 @@ const currentLength = document.getElementById(
 const error = document.getElementById(
 	`${fragmentElementId}-inline-text-input-error`
 );
+const errorMessage = document.getElementById(
+	`${fragmentElementId}-inline-text-input-error-message`
+);
 const formGroup = document.getElementById(`${fragmentElementId}-form-group`);
 const inputElement = document.getElementById(
 	`${fragmentElementId}-inline-text-input`
 );
 const lengthInfo = document.getElementById(`${fragmentElementId}-length-info`);
-const lengthWarning = document.getElementById(
-	`${fragmentElementId}-length-warning`
-);
-const lengthWarningText = document.getElementById(
-	`${fragmentElementId}-length-warning-text`
-);
 
 function main() {
 	if (layoutMode === 'edit' && inputElement) {
@@ -25,9 +22,9 @@ function main() {
 			({
 				focusInput,
 				handleInputLengthError,
-				hideLengthError,
 				registerLocalizedInput,
 				registerUnlocalizedInput,
+				showInputError,
 			}) => {
 				if (error) {
 					focusInput(inputElement);
@@ -39,26 +36,22 @@ function main() {
 					!error &&
 					inputElement.value.length > input.attributes.maxLength
 				) {
-					hideLengthError({
-						configuration,
+					showInputError({
+						errorType: 'length',
 						formGroup,
-						lengthInfo,
-						lengthWarning,
-						lengthWarningText,
+						lengthInfoContainer: lengthInfo,
 					});
 				}
 
 				const onKeyup = (event) =>
 					handleInputLengthError({
-						configuration,
 						currentLength,
 						errorContainer: error,
+						errorMessageContainer: errorMessage,
 						event,
 						formGroup,
 						input,
-						lengthInfo,
-						lengthWarning,
-						lengthWarningText,
+						lengthInfoContainer: lengthInfo,
 					});
 
 				inputElement.addEventListener('keyup', onKeyup);

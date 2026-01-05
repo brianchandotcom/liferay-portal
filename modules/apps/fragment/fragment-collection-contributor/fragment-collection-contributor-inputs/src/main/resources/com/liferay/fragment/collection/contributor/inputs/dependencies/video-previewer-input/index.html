@@ -20,22 +20,19 @@
 			[/#if]
 		</div>
 
-		<p class="mt-1 text-secondary [#if input.errorMessage?has_content || !configuration.showCharactersCount]sr-only[/#if]" id="${fragmentElementId}-length-info">
-			<span class="sr-only" id="${fragmentElementId}-length-warning">
-				[@clay["icon"] symbol="info-circle" /]
-
-				<span aria-live="assertive" data-error-message="${languageUtil.get(locale, "maximum-number-of-characters-exceeded")}" data-valid-message="${languageUtil.get(locale, "current-text-length-is-valid")}" id="${fragmentElementId}-length-warning-text"></span>:
-			</span>
+		<p class="mt-1 text-secondary[#if !configuration.showCharactersCount] d-none[/#if]" id="${fragmentElementId}-length-info">
 			<span id="${fragmentElementId}-current-length">0</span> / [#if input.attributes.maxLength??]${input.attributes.maxLength}[/#if]
 		</p>
 
-		[#if input.errorMessage?has_content]
-			<p class="font-weight-semi-bold mt-1 text-danger" id="${fragmentElementId}-video-previewer-error">
-				[@clay["icon"] symbol="info-circle" /]
+		<p class="font-weight-semi-bold mt-1 text-danger[#if !input.errorMessage?has_content] sr-only[/#if]" id="${fragmentElementId}-video-previewer-error">
+			[@clay["icon"] symbol="info-circle" /]
 
-				<span id="${fragmentElementId}-video-previewer-error-message">${input.errorMessage}</span>
-			</p>
-		[/#if]
+			<span data-length-feedback="${languageUtil.get(locale, "maximum-number-of-characters-exceeded")}" data-valid-feedback="${languageUtil.get(locale, "current-text-length-is-valid")}" id="${fragmentElementId}-video-previewer-error-message" role="alert">
+				[#if input.errorMessage?has_content]
+					${input.errorMessage}
+				[/#if]
+			</span>
+		</p>
 
 		[#if input.showHelpText && input.helpText?has_content]
 			<p class="mb-0 mt-1 text-secondary" id="${fragmentElementId}-video-previewer-help-text">${htmlUtil.escape(input.helpText)}</p>

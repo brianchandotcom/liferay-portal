@@ -106,7 +106,6 @@ test(
 
 		await digitalSalesRoomsPage.goto();
 		await digitalSalesRoomsPage.templateLink.click();
-
 		await digitalSalesRoomTemplatesPage.newDigitalSalesRoomTemplateButton.click();
 
 		await editDigitalSalesRoomTemplatePage.addDigitalSalesRoomTemplate({
@@ -124,13 +123,22 @@ test(
 			)
 		).toBeVisible();
 
-		await (
-			await digitalSalesRoomTemplatesPage.digitalSalesRoomTemplatesTable.rowActions(
-				name,
-				0,
-				false
-			)
-		).click();
+		await expect(async () => {
+			await (
+				await digitalSalesRoomTemplatesPage.digitalSalesRoomTemplatesTable.rowActions(
+					name,
+					0,
+					false
+				)
+			).click();
+			await expect(
+				digitalSalesRoomTemplatesPage.deleteMenuItem
+			).toBeVisible({
+				timeout: 200,
+			});
+		}).toPass({timeout: 1000});
+
+		await digitalSalesRoomTemplatesPage.deleteMenuItem.click();
 
 		const modal = page.getByRole('alert');
 

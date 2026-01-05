@@ -10,6 +10,7 @@ import {ApplicationsMenuPage} from '../product-navigation-applications-menu/Appl
 
 export class DigitalSalesRoomTemplatesPage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly deleteMenuItem: Locator;
 	readonly digitalSalesRoomTemplatesTable: DataTablePage;
 	readonly newDigitalSalesRoomTemplateButton: Locator;
 	readonly noResultsFoundMessage: Locator;
@@ -19,6 +20,7 @@ export class DigitalSalesRoomTemplatesPage {
 
 	constructor(page: Page) {
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.deleteMenuItem = page.getByRole('menuitem', {name: 'Delete'});
 		this.digitalSalesRoomTemplatesTable = new DataTablePage(
 			page,
 			page.locator(

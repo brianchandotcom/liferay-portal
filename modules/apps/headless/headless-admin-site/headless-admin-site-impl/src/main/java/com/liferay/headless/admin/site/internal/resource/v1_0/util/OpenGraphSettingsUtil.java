@@ -10,8 +10,6 @@ import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.OpenGraphSettings;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ItemScopeUtil;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
-import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -26,13 +24,7 @@ import java.util.Map;
 public class OpenGraphSettingsUtil {
 
 	public static OpenGraphSettings getOpenGraphSettings(
-		DLAppService dlAppService, Layout layout,
-		LayoutSEOEntryLocalService layoutSEOEntryLocalService) {
-
-		LayoutSEOEntry layoutSEOEntry =
-			layoutSEOEntryLocalService.fetchLayoutSEOEntry(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId());
+		DLAppService dlAppService, LayoutSEOEntry layoutSEOEntry) {
 
 		if ((layoutSEOEntry == null) ||
 			(MapUtil.isEmpty(layoutSEOEntry.getOpenGraphDescriptionMap()) &&
@@ -76,7 +68,7 @@ public class OpenGraphSettingsUtil {
 								setScope(
 									() -> ItemScopeUtil.getItemScope(
 										fileEntry.getGroupId(),
-										layout.getGroupId()));
+										layoutSEOEntry.getGroupId()));
 							}
 						};
 					});

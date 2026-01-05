@@ -8,7 +8,6 @@ package com.liferay.headless.admin.site.internal.resource.v1_0.util;
 import com.liferay.headless.admin.site.dto.v1_0.SEOSettings;
 import com.liferay.headless.admin.site.dto.v1_0.SitemapSettings;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
-import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -25,17 +24,12 @@ import java.util.HashMap;
 public class SEOSettingsUtil {
 
 	public static SEOSettings getSeoSettings(
-		Layout layout, LayoutSEOEntryLocalService layoutSEOEntryLocalService) {
+		Layout layout, LayoutSEOEntry layoutSEOEntry) {
 
 		return new SEOSettings() {
 			{
 				setCustomCanonicalURL_i18n(
 					() -> {
-						LayoutSEOEntry layoutSEOEntry =
-							layoutSEOEntryLocalService.fetchLayoutSEOEntry(
-								layout.getGroupId(), layout.isPrivateLayout(),
-								layout.getLayoutId());
-
 						if ((layoutSEOEntry == null) ||
 							!layoutSEOEntry.isCanonicalURLEnabled()) {
 

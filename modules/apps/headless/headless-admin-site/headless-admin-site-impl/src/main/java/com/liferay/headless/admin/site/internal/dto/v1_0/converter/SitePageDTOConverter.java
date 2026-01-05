@@ -120,12 +120,7 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 		};
 	}
 
-	private CustomMetaTag[] _getCustomMetaTags(Layout layout) {
-		LayoutSEOEntry layoutSEOEntry =
-			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId());
-
+	private CustomMetaTag[] _getCustomMetaTags(LayoutSEOEntry layoutSEOEntry) {
 		if (layoutSEOEntry == null) {
 			return null;
 		}
@@ -175,18 +170,24 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 	private PageSettings _toPageSettings(Layout layout) {
 		PageSettings pageSettings = _getPageSettings(layout);
 
-		pageSettings.setCustomMetaTags(() -> _getCustomMetaTags(layout));
+		LayoutSEOEntry layoutSEOEntry =
+			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId());
+
+		pageSettings.setCustomMetaTags(
+			() -> _getCustomMetaTags(layoutSEOEntry));
+
 		pageSettings.setHiddenFromNavigation(layout::isHidden);
 		pageSettings.setNavigationSettings(
 			() -> NavigationSettingsUtil.toSitePageNavigationSettings(
 				layout.getTypeSettingsProperties()));
 		pageSettings.setOpenGraphSettings(
 			() -> OpenGraphSettingsUtil.getOpenGraphSettings(
-				_dlAppService, layout, _layoutSEOEntryLocalService));
+				_dlAppService, layoutSEOEntry));
 		pageSettings.setPriority(layout::getPriority);
 		pageSettings.setSeoSettings(
-			() -> SEOSettingsUtil.getSeoSettings(
-				layout, _layoutSEOEntryLocalService));
+			() -> SEOSettingsUtil.getSeoSettings(layout, layoutSEOEntry));
 
 		return pageSettings;
 	}

@@ -344,7 +344,7 @@ public class DLURLHelperTest {
 	}
 
 	@Test
-	public void testGetPreviewURLWithPathContext() {
+	public void testGetPreviewURLWithContextPath() {
 		String contextPath = "/" + RandomTestUtil.randomString();
 
 		PortalImpl portalImpl = new PortalImpl() {

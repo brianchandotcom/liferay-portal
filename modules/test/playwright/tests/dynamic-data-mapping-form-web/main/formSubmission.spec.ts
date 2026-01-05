@@ -107,13 +107,13 @@ test.describe('Manage forms through submission page', () => {
 				'https://restcountries.com/v3.1/all?fields=name'
 			);
 
-			await virtualInstanceDataProviderPage.outputPathInputField.fill(
+			await virtualInstanceDataProviderPage.outputPathField.fill(
 				'$..name.common'
 			);
 
 			await virtualInstanceDataProviderPage.selectOutputType('List');
 
-			await virtualInstanceDataProviderPage.outputLabel.fill(
+			await virtualInstanceDataProviderPage.outputLabelField.fill(
 				'Country Name'
 			);
 
@@ -235,17 +235,17 @@ test.describe('Manage forms through submission page', () => {
 				'https://restcountries.com/v3.1/region/{region}'
 			);
 
-			await dataProviderPage.inputPathInputField.fill('region');
+			await dataProviderPage.inputParameterField.fill('region');
 
 			await dataProviderPage.selectInputType('Text');
 
-			await dataProviderPage.inputLabel.fill('Region');
+			await dataProviderPage.inputLabelField.fill('Region');
 
-			await dataProviderPage.outputPathInputField.fill('$[0].population');
+			await dataProviderPage.outputPathField.fill('$[0].population');
 
 			await dataProviderPage.selectOutputType('Text');
 
-			await dataProviderPage.outputLabel.fill('Population');
+			await dataProviderPage.outputLabelField.fill('Population');
 
 			await dataProviderPage.saveButton.click();
 

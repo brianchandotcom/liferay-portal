@@ -204,7 +204,7 @@ public class HubSpotService extends BaseService {
 	private JSONObject _getHubSpotPropertiesJSONObject(
 		JSONObject jsonObject, String propertyName) {
 
-		Map<String, JSONObject> map = _writeObject(
+		Map<String, JSONObject> map = _toMap(
 			_getPropertyJSONArray(propertyName));
 
 		JSONObject propertiesJSONObject = new JSONObject();
@@ -268,7 +268,7 @@ public class HubSpotService extends BaseService {
 		);
 	}
 
-	private Map<String, JSONObject> _writeObject(JSONArray jsonArray) {
+	private Map<String, JSONObject> _toMap(JSONArray jsonArray) {
 		Map<String, JSONObject> map = new HashMap<>();
 
 		for (int i = 0; i < jsonArray.length(); i++) {

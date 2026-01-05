@@ -130,8 +130,7 @@ public class HubSpotRestController extends BaseRestController {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				StringBundler.concat(
-					"Object entry updated: ", body, ", ", path));
+				StringBundler.concat("Updated ", path, " with: ", body));
 		}
 	}
 

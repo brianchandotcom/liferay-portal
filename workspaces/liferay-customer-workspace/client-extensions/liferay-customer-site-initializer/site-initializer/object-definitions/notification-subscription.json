@@ -1,0 +1,73 @@
+{
+	"externalReferenceCode": "C_NOTIFICATION_SUBSCRIPTION",
+	"label": {
+		"en_US": "Notification Subscription"
+	},
+	"name": "NotificationSubscription",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"externalReferenceCode": "C_NOTIFICATION_SUBSCRIPTION_type",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "Type"
+			},
+			"listTypeDefinitionExternalReferenceCode": "LT_NOTIFICATION_SUBSCRIPTION_TYPE",
+			"localized": false,
+			"name": "type",
+			"readOnly": false,
+			"readOnlyConditionExpression": "",
+			"required": true,
+			"state": false,
+			"system": false,
+			"type": "String",
+			"unique": false
+		},
+		{
+			"DBType": "String",
+			"externalReferenceCode": "C_NOTIFICATION_SUBSCRIPTION_filter",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Filter"
+			},
+			"localized": false,
+			"name": "filter",
+			"required": false
+		},
+		{
+			"DBType": "Boolean",
+			"defaultValue": "false",
+			"externalReferenceCode": "C_NOTIFICATION_SUBSCRIPTION_unsubscribable",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Unsubscribable"
+			},
+			"name": "unsubscribable",
+			"required": false
+		},
+		{
+			"DBType": "Boolean",
+			"defaultValue": "false",
+			"externalReferenceCode": "C_NOTIFICATION_SUBSCRIPTION_active",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Active"
+			},
+			"name": "active",
+			"required": false
+		}
+	],
+	"panelCategoryKey": "applications_menu.applications.content",
+	"pluralLabel": {
+		"en_US": "Notification Subscriptions"
+	},
+	"portlet": true,
+	"scope": "company",
+	"system": false,
+	"titleObjectFieldName": "type"
+}

@@ -359,20 +359,17 @@ public class DLURLHelperTest {
 		Portal originalPortal = ReflectionTestUtil.getAndSetFieldValue(
 			_dlURLHelper, "_portal", portalImpl);
 
-		try {
-			String randomFriendlyURL = RandomTestUtil.randomString();
+		String randomFriendlyURL = RandomTestUtil.randomString();
 
-			Assert.assertEquals(
-				StringBundler.concat(
-					contextPath, "/documents/d", _group.getFriendlyURL(), "/",
-					randomFriendlyURL),
-				_dlURLHelper.getPreviewURL(
-					randomFriendlyURL, _group.getFriendlyURL()));
-		}
-		finally {
-			ReflectionTestUtil.setFieldValue(
-				_dlURLHelper, "_portal", originalPortal);
-		}
+		Assert.assertEquals(
+			StringBundler.concat(
+				contextPath, "/documents/d", _group.getFriendlyURL(), "/",
+				randomFriendlyURL),
+			_dlURLHelper.getPreviewURL(
+				randomFriendlyURL, _group.getFriendlyURL()));
+
+		ReflectionTestUtil.setFieldValue(
+			_dlURLHelper, "_portal", originalPortal);
 	}
 
 	private ThemeDisplay _getThemeDisplay() {

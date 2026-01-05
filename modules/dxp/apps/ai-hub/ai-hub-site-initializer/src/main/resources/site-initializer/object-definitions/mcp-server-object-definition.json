@@ -200,9 +200,6 @@
 	},
 	"portlet": true,
 	"scope": "site",
-	"status": {
-		"code": 0
-	},
 	"system": true,
 	"titleObjectFieldName": "title"
 }

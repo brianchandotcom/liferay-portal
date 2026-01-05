@@ -1,0 +1,11 @@
+{
+	"active": true,
+	"description": "Generate content, summarize and classify data using LLM models.",
+	"externalReferenceCode": "L_CHAT_MESSAGE_PIPELINE",
+	"name": "Chat Message Pipeline",
+	"scope": "ai",
+	"title": "Chat Message Pipeline",
+	"title_i18n": {
+		"en_US": "Chat Message Pipeline"
+	}
+}

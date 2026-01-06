@@ -7,10 +7,23 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {PagesAdminPage} from '../../../pages/layout-admin-web/PagesAdminPage';
 import getRandomString from '../../../utils/getRandomString';
+import {StagingPage} from '../../export-import-web/main/pages/StagingPage';
+import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 
-const test = mergeTests(apiHelpersTest, applicationsMenuPageTest, loginTest());
+const test = mergeTests(
+	apiHelpersTest,
+	applicationsMenuPageTest,
+	loginTest(),
+	featureFlagsTest({
+		'LPS-178052': {enabled: true},
+	})
+);
+const siteTest = mergeTests(test, isolatedSiteTest);
 
 test(
 	'It shows "View All" when total amount of sites of "recently visited" and "my sites" exceeds 7',
@@ -62,5 +75,108 @@ test(
 				);
 			});
 		}
+	}
+);
+
+siteTest(
+	'It displays Applications Menu and User Avatar in correct locations',
+	{tag: '@LPD-66980'},
+	async ({apiHelpers, applicationsMenuPage, page, site}) => {
+		const controlMenu = page.locator('.control-menu');
+
+		async function expectApplicationsMenuToBeInControlMenu() {
+			await expect(
+				controlMenu.getByTestId('applicationsMenu')
+			).toBeVisible();
+		}
+
+		async function expectApplicationsMenuToBeHidden() {
+			await expect(page.getByTestId('applicationsMenu')).toBeHidden();
+		}
+
+		async function expectUserAvatarToBeInControlMenu() {
+			await expect(
+				controlMenu.getByTestId('userPersonalMenu')
+			).toBeVisible();
+		}
+
+		async function expectUserAvatarToBeInNavigationBar() {
+			await expect(
+				page
+					.locator('.portlet-user-personal-bar')
+					.getByTestId('userPersonalMenu')
+			).toBeVisible();
+		}
+
+		const {sitePage, sitePageName} = await siteTest.step(
+			'Create site page',
+			async () => {
+				const sitePageName = getRandomString();
+				const sitePage =
+					await apiHelpers.headlessDelivery.createSitePage({
+						pageDefinition: getPageDefinition([]),
+						siteId: site.id,
+						title: sitePageName,
+					});
+
+				return {sitePage, sitePageName};
+			}
+		);
+
+		const pagesAdminPage = new PagesAdminPage(page);
+
+		await siteTest.step('Assert locations in pages admin', async () => {
+			await pagesAdminPage.goto(site.friendlyUrlPath);
+
+			await expectApplicationsMenuToBeInControlMenu();
+			await expectUserAvatarToBeInControlMenu();
+		});
+
+		await siteTest.step('Assert locations in page editor', async () => {
+			await pagesAdminPage.editPage(sitePageName);
+
+			await expectApplicationsMenuToBeHidden();
+			await expectUserAvatarToBeInNavigationBar();
+		});
+
+		await siteTest.step('Assert locations in sites admin', async () => {
+			await applicationsMenuPage.goToSites();
+
+			await expectApplicationsMenuToBeInControlMenu();
+			await expectUserAvatarToBeInControlMenu();
+		});
+
+		await siteTest.step('Assert locations in site page', async () => {
+			await page.goto(
+				`/web${site.friendlyUrlPath}${sitePage.friendlyUrlPath}`
+			);
+
+			await expectApplicationsMenuToBeInControlMenu();
+			await expectUserAvatarToBeInNavigationBar();
+		});
+
+		await siteTest.step('Assert locations in staging page', async () => {
+			const stagingPage = new StagingPage(page);
+
+			await stagingPage.goto(site.key);
+
+			await stagingPage.enableLocalStaging();
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}-staging${sitePage.friendlyUrlPath}`
+			);
+
+			await expectApplicationsMenuToBeInControlMenu();
+			await expectUserAvatarToBeInNavigationBar();
+		});
+
+		await siteTest.step('Assert locations in live page', async () => {
+			await page.goto(
+				`/web${site.friendlyUrlPath}${sitePage.friendlyUrlPath}`
+			);
+
+			await expectApplicationsMenuToBeInControlMenu();
+			await expectUserAvatarToBeInNavigationBar();
+		});
 	}
 );

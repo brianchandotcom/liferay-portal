@@ -6,4 +6,7 @@
 export const config = {
 	name: 'control-menu-web.main',
 	testDir: 'tests/control-menu-web/main',
+	use: {
+		testIdAttribute: 'data-qa-id',
+	},
 };

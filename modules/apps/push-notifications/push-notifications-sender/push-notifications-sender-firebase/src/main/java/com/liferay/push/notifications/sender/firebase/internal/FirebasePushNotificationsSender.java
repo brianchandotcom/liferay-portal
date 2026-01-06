@@ -5,6 +5,7 @@
 
 package com.liferay.push.notifications.sender.firebase.internal;
 
+import com.google.auth.oauth2.AccessToken;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.auth.oauth2.ServiceAccountCredentials;
 
@@ -258,8 +259,9 @@ public class FirebasePushNotificationsSender
 		try {
 			_googleCredentials.refresh();
 
-			return _googleCredentials.getAccessToken(
-			).getTokenValue();
+			AccessToken accessToken = _googleCredentials.getAccessToken();
+
+			return accessToken.getTokenValue();
 		}
 		catch (Exception exception) {
 			throw new PushNotificationsException(

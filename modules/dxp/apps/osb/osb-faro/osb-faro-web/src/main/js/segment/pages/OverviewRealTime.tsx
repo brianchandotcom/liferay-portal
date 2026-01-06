@@ -29,7 +29,7 @@ import {useTimeZone} from 'shared/hooks/useTimeZone';
 const DEFAULT_ORDER_BY_OPTIONS = [
 	{
 		label: Liferay.Language.get('name'),
-		value: 'memberName'
+		value: 'name'
 	},
 	{
 		label: Liferay.Language.get('account-name'),
@@ -56,17 +56,17 @@ const MEMBERSHIP_CHANGE_ORDER_BY_OPTION = {
 
 const FILTER_BY_DEFAULT_OPTIONS: FilterOptionType[] = [
 	{
-		key: 'profileType',
+		key: 'profileTypes',
 		label: Liferay.Language.get('profile-type'),
 		values: [
-			{label: Liferay.Language.get('known'), value: 'known'},
-			{label: Liferay.Language.get('anonymous'), value: 'anonymous'}
+			{label: Liferay.Language.get('known'), value: 'KNOWN'},
+			{label: Liferay.Language.get('anonymous'), value: 'ANONYMOUS'}
 		]
 	}
 ];
 
 const MEMBERSHIP_CHANGE_FILTER_OPTION: FilterOptionType = {
-	key: 'type',
+	key: 'types',
 	label: Liferay.Language.get('membership-change'),
 	values: [
 		{label: Liferay.Language.get('added'), value: 'ADDED'},
@@ -74,25 +74,13 @@ const MEMBERSHIP_CHANGE_FILTER_OPTION: FilterOptionType = {
 	]
 };
 
-const getAllMembers = (data: Data) => {
-	const {delta, groupId, id, orderIOMap, page, query} = data;
-
-	return API.individualSegment.fetchRealTimeMembership({
-		delta,
-		groupId,
-		orderIOMap,
-		page,
-		query,
-		segmentId: id
-	});
-};
-
 const getMembershipChanges = (data: Data) => {
-	const {delta, groupId, id, orderIOMap, query, selectedDate} = data;
+	const {delta, filters, groupId, id, orderIOMap, query, selectedDate} = data;
 
 	return API.individualSegment.fetchRealTimeMembershipChanges({
 		date: selectedDate,
 		delta,
+		filters,
 		groupId,
 		orderIOMap,
 		query,
@@ -103,6 +91,7 @@ const getMembershipChanges = (data: Data) => {
 type Data = {
 	channelId: string;
 	delta: number;
+	filters: {string: string[]};
 	groupId: string;
 	id: string;
 	selectedDate: string;
@@ -117,18 +106,7 @@ interface IOverviewProps {
 	segment: Segment;
 }
 
-const SelectedPointInfo = ({
-	dateRange,
-	selectedPointState,
-	setSelectedPointState
-}) => {
-	const handleClearDateSelection = () => {
-		setSelectedPointState({
-			hasSelectedPoint: false,
-			selectedPoint: null
-		});
-	};
-
+const SelectedPointInfo = ({dateRange, onClear, selectedPointState}) => {
 	const membersLanguageKey = selectedPointState.hasSelectedPoint
 		? Liferay.Language.get('members-on')
 		: Liferay.Language.get('members-from');
@@ -142,7 +120,7 @@ const SelectedPointInfo = ({
 						<Button
 							className='ml-3'
 							displayType='unstyled'
-							onClick={handleClearDateSelection}
+							onClick={onClear}
 						>
 							<Text color='primary' size={3} weight='semi-bold'>
 								{Liferay.Language.get('clear-date-selection')}
@@ -160,13 +138,7 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 	groupId,
 	segment
 }) => {
-	const fetchMembers = params => {
-		const fetchMembersFn = selectedPointState.hasSelectedPoint
-			? getMembershipChanges
-			: getAllMembers;
-
-		return fetchMembersFn(params);
-	};
+	const fetchMembers = params => getMembershipChanges(params);
 
 	const {criteriaString, id, includeAnonymousUsers} = segment;
 
@@ -240,7 +212,7 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 						...DEFAULT_ORDER_BY_OPTIONS,
 						MEMBERSHIP_CHANGE_ORDER_BY_OPTION
 				  ]
-				: [...DEFAULT_ORDER_BY_OPTIONS],
+				: DEFAULT_ORDER_BY_OPTIONS,
 		[selectedPointState.hasSelectedPoint]
 	);
 
@@ -263,8 +235,29 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 						ISO_8601_DATE_FORMAT
 				  )
 				: undefined,
-		[data, selectedPointState]
+		[
+			data,
+			selectedPointState.hasSelectedPoint,
+			selectedPointState.selectedPoint
+		]
 	);
+
+	const selectedFilters = {
+		profileTypes:
+			paginationParams.filterBy.get('profileTypes')?.toArray() || [],
+		types: paginationParams.filterBy.get('types')?.toArray() || []
+	};
+
+	const handleClearDateSelection = () => {
+		setSelectedPointState({
+			hasSelectedPoint: false,
+			selectedPoint: null
+		});
+
+		paginationParams.onFilterByChange(
+			paginationParams.filterBy.delete('types')
+		);
+	};
 
 	return (
 		<div>
@@ -319,8 +312,8 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 							</div>
 							<SelectedPointInfo
 								dateRange={dateRange}
+								onClear={handleClearDateSelection}
 								selectedPointState={selectedPointState}
-								setSelectedPointState={setSelectedPointState}
 							/>
 							<SearchableEntityTable
 								{...paginationParams}
@@ -328,11 +321,12 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 								dataSourceFn={fetchMembers}
 								dataSourceParams={{
 									channelId,
+									filters: selectedFilters,
 									groupId,
 									id,
 									selectedDate
 								}}
-								filterByOptions={[...filterByOptions]}
+								filterByOptions={filterByOptions}
 								key={
 									selectedPointState.hasSelectedPoint
 										? 'changes-view'

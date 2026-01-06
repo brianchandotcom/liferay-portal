@@ -150,55 +150,35 @@ export function fetchMembershipChanges({
 	});
 }
 
-export function fetchRealTimeMembership({
-	delta,
-	groupId,
-	orderIOMap,
-	page,
-	query,
-	segmentId
-}) {
-	const orderParams = orderIOMap.first();
-	const orderByFields = createOrderByField(
-		orderParams.field,
-		orderParams.sortOrder
-	);
-
-	return sendRequest({
-		data: {
-			delta,
-			orderByFields,
-			page,
-			query
-		},
-		method: 'GET',
-		path: `contacts/${groupId}/individual_segment/${segmentId}/real-time-memberships`
-	});
-}
-
 export function fetchRealTimeMembershipChanges({
 	date,
 	delta,
+	filters,
 	groupId,
 	orderIOMap,
 	query,
 	segmentId
 }) {
 	const orderParams = orderIOMap.first();
-	const orderByFields = createOrderByField(
-		orderParams.field,
-		orderParams.sortOrder
-	);
+	const orderByFields = [
+		createOrderByField(orderParams.field, orderParams.sortOrder)
+	];
+
+	const {profileTypes, types} = filters;
+
+	const data = {
+		day: date,
+		delta,
+		orderByFields,
+		profileTypes: profileTypes.length ? profileTypes : undefined,
+		query: query || undefined,
+		types: types.length ? types : undefined
+	};
 
 	return sendRequest({
-		data: {
-			day: date,
-			delta,
-			orderByFields,
-			query
-		},
+		data,
 		method: 'GET',
-		path: `contacts/${groupId}/individual_segment/${segmentId}/real_time_memberships`
+		path: `contacts/${groupId}/individual_segment/${segmentId}/real-time-memberships`
 	});
 }
 

@@ -40,9 +40,9 @@
 					"name": "New Business"
 				},
 				{
-					"externalReferenceCode": "RE_ATTEMPTING",
+					"externalReferenceCode": "REATTEMPTING",
 					"key": "reattempting",
-					"name": "Re-attempting"
+					"name": "Reattempting"
 				},
 				{
 					"externalReferenceCode": "UPSELL",

@@ -98,9 +98,7 @@ public class TaskDefinitionFragmentRenderer implements FragmentRenderer {
 	@Reference
 	private Portal _portal;
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.ai.hub.site.initializer)"
-	)
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.ai.hub.web)")
 	private ServletContext _servletContext;
 
 }

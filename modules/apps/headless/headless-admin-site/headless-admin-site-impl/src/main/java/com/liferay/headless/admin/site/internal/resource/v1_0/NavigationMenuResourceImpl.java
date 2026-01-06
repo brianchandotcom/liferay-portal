@@ -304,22 +304,22 @@ public class NavigationMenuResourceImpl
 				).build());
 
 		_createNavigationMenuItems(
-			navigationMenu.getNavigationMenuItems(), 0, groupId,
+			groupId, navigationMenu.getNavigationMenuItems(), 0,
 			siteNavigationMenu.getSiteNavigationMenuId());
 
 		return _toNavigationMenu(siteNavigationMenu);
 	}
 
 	private void _createNavigationMenuItem(
-			NavigationMenuItem navigationMenuItem, long parentNavigationMenuId,
-			long groupId, long siteNavigationMenuId)
+			long groupId, NavigationMenuItem navigationMenuItem,
+			long parentNavigationMenuId, long siteNavigationMenuId)
 		throws Exception {
 
 		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.putAll(
 			navigationMenuItem.getTypeSettings()
 		).build();
 
-		if (!_hasModel(navigationMenuItem, groupId, unicodeProperties)) {
+		if (!_hasModel(groupId, navigationMenuItem, unicodeProperties)) {
 			throw new IllegalArgumentException(
 				"Unable to find model for navigation menu item with external " +
 					"reference code " +
@@ -342,15 +342,14 @@ public class NavigationMenuResourceImpl
 				).build());
 
 		_createNavigationMenuItems(
-			navigationMenuItem.getNavigationMenuItems(),
-			siteNavigationMenuItem.getSiteNavigationMenuItemId(), groupId,
+			groupId, navigationMenuItem.getNavigationMenuItems(),
+			siteNavigationMenuItem.getSiteNavigationMenuItemId(),
 			siteNavigationMenuId);
 	}
 
 	private void _createNavigationMenuItems(
-			NavigationMenuItem[] navigationMenuItems,
-			long parentNavigationMenuId, long groupId,
-			long siteNavigationMenuId)
+			long groupId, NavigationMenuItem[] navigationMenuItems,
+			long parentNavigationMenuId, long siteNavigationMenuId)
 		throws Exception {
 
 		if (navigationMenuItems == null) {
@@ -359,7 +358,7 @@ public class NavigationMenuResourceImpl
 
 		for (NavigationMenuItem navigationMenuItem : navigationMenuItems) {
 			_createNavigationMenuItem(
-				navigationMenuItem, parentNavigationMenuId, groupId,
+				groupId, navigationMenuItem, parentNavigationMenuId,
 				siteNavigationMenuId);
 		}
 	}
@@ -531,7 +530,7 @@ public class NavigationMenuResourceImpl
 	}
 
 	private boolean _hasModel(
-			NavigationMenuItem navigationMenuItem, long groupId,
+			long groupId, NavigationMenuItem navigationMenuItem,
 			UnicodeProperties unicodeProperties)
 		throws Exception {
 
@@ -782,8 +781,8 @@ public class NavigationMenuResourceImpl
 		throws Exception {
 
 		_updateNavigationMenuItems(
-			navigationMenu.getNavigationMenuItems(), 0,
 			siteNavigationMenu.getGroupId(),
+			navigationMenu.getNavigationMenuItems(), 0,
 			siteNavigationMenu.getSiteNavigationMenuId());
 
 		ServiceContext serviceContext = ServiceContextBuilder.create(
@@ -802,9 +801,8 @@ public class NavigationMenuResourceImpl
 	}
 
 	private void _updateNavigationMenuItems(
-			NavigationMenuItem[] navigationMenuItems,
-			long parentSiteNavigationMenuItemId, long groupId,
-			long siteNavigationMenuId)
+			long groupId, NavigationMenuItem[] navigationMenuItems,
+			long parentSiteNavigationMenuItemId, long siteNavigationMenuId)
 		throws Exception {
 
 		List<SiteNavigationMenuItem> siteNavigationMenuItems = new ArrayList<>(
@@ -843,7 +841,7 @@ public class NavigationMenuResourceImpl
 					).build();
 
 				if (!_hasModel(
-						navigationMenuItem, groupId, unicodeProperties)) {
+						groupId, navigationMenuItem, unicodeProperties)) {
 
 					throw new IllegalArgumentException(
 						"Unable to find model for navigation menu item with " +
@@ -866,15 +864,15 @@ public class NavigationMenuResourceImpl
 						).build());
 
 				_updateNavigationMenuItems(
-					navigationMenuItem.getNavigationMenuItems(),
+					groupId, navigationMenuItem.getNavigationMenuItems(),
 					updatedSiteNavigationMenuItem.getSiteNavigationMenuItemId(),
-					groupId, siteNavigationMenuId);
+					siteNavigationMenuId);
 
 				siteNavigationMenuItems.remove(siteNavigationMenuItem);
 			}
 			else {
 				_createNavigationMenuItem(
-					navigationMenuItem, parentSiteNavigationMenuItemId, groupId,
+					groupId, navigationMenuItem, parentSiteNavigationMenuItemId,
 					siteNavigationMenuId);
 			}
 		}

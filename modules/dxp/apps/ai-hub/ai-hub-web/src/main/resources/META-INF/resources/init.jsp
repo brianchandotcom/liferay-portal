@@ -20,7 +20,7 @@ page import="com.liferay.ai.hub.web.internal.display.context.TaskDefinitionDispl
 <liferay-frontend:defineObjects />
 
 <liferay-util:html-top>
-	<aui:link hashedFile="<%= true %>" href="ai-hub-site-initializer/css/main.css" rel="stylesheet" type="text/css" />
+	<aui:link hashedFile="<%= true %>" href="ai-hub-web/css/main.css" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
 <liferay-theme:defineObjects />

@@ -172,3 +172,45 @@ test('Should persist and apply system configuration changes made via the User In
 		);
 	});
 });
+
+test(
+	'Check that system settings scope is corrected',
+	{tag: '@LPS-79394'},
+	async ({
+		accessibilityMenuPage,
+		instanceSettingsPage,
+		systemSettingsPage,
+	}) => {
+		const SETTING_CATEGORY_KEY = 'Accessibility';
+		const SETTING_CONFIGURATION_NAME = 'Accessibility Menu';
+
+		await test.step('Navigate to System Settings and enable Accessibility Menu configuration', async () => {
+			await systemSettingsPage.goToSystemSetting(
+				SETTING_CATEGORY_KEY,
+				SETTING_CONFIGURATION_NAME
+			);
+
+			await accessibilityMenuPage.enableAccessibilityMenu();
+		});
+
+		await test.step('Navigate to Instance Settings and disable Accessibility Menu configuration', async () => {
+			await instanceSettingsPage.goToInstanceSetting(
+				SETTING_CATEGORY_KEY,
+				SETTING_CONFIGURATION_NAME
+			);
+
+			await accessibilityMenuPage.disableAccessibilityMenu();
+		});
+
+		await test.step('Check System Settings scope is corrected', async () => {
+			await systemSettingsPage.goToSystemSetting(
+				SETTING_CATEGORY_KEY,
+				SETTING_CONFIGURATION_NAME
+			);
+
+			await expect(
+				accessibilityMenuPage.enableAccessibilityMenuCheckbox
+			).toBeChecked();
+		});
+	}
+);

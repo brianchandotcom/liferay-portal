@@ -13,7 +13,9 @@ const AssistantMessageBalloon: React.FC<{error: boolean; message: string}> = ({
 	message,
 }) => {
 	return (
-		<div className={`d-flex flex-row font-weight-semi-bold mb-2 rounded ${error ? "ai-assistant-chat__ai-assistant-error-message-balloon" : "ai-assistant-chat__ai-assistant-message-balloon"}`}>
+		<div
+			className={`d-flex flex-row font-weight-semi-bold mb-2 rounded ${error ? 'ai-assistant-chat__ai-assistant-error-message-balloon' : 'ai-assistant-chat__ai-assistant-message-balloon'}`}
+		>
 			<div className="align-items-start d-inline-block ml-2 mt-2">
 				<ClayIcon
 					color={error ? '#FF0000' : '#0B5FFF'}

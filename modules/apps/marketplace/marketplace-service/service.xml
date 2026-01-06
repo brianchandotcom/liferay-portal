@@ -33,7 +33,7 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
-		<finder name="RemoteAppId" return-type="App">
+		<finder name="RemoteAppId" return-type="Collection">
 			<finder-column name="remoteAppId" />
 		</finder>
 		<finder name="Category" return-type="Collection">
@@ -68,11 +68,11 @@
 		<finder name="ContextName" return-type="Collection">
 			<finder-column name="contextName" />
 		</finder>
-		<finder name="A_CN" return-type="Module">
+		<finder name="A_CN" return-type="Collection">
 			<finder-column name="appId" />
 			<finder-column name="contextName" />
 		</finder>
-		<finder name="A_BSN_BV" return-type="Module">
+		<finder name="A_BSN_BV" return-type="Collection">
 			<finder-column name="appId" />
 			<finder-column name="bundleSymbolicName" />
 			<finder-column name="bundleVersion" />

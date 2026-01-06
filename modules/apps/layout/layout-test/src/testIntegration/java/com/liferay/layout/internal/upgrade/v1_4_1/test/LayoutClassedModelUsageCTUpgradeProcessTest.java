@@ -108,20 +108,17 @@ public class LayoutClassedModelUsageCTUpgradeProcessTest
 
 		List<CTCollection> ctCollections = new ArrayList<>();
 
-		try {
-			ctCollections.add(
-				_updateFragmentEntryLinkInNewCTCollection(
-					fragmentEntryLink, _journalArticle));
-			ctCollections.add(
-				_updateFragmentEntryLinkInNewCTCollection(
-					fragmentEntryLink, _journalArticle));
+		ctCollections.add(
+			_updateFragmentEntryLinkInNewCTCollection(
+				fragmentEntryLink, _journalArticle));
+		ctCollections.add(
+			_updateFragmentEntryLinkInNewCTCollection(
+				fragmentEntryLink, _journalArticle));
 
-			runUpgrade();
-		}
-		finally {
-			for (CTCollection ctCollection : ctCollections) {
-				_ctCollectionLocalService.deleteCTCollection(ctCollection);
-			}
+		runUpgrade();
+
+		for (CTCollection ctCollection : ctCollections) {
+			_ctCollectionLocalService.deleteCTCollection(ctCollection);
 		}
 	}
 

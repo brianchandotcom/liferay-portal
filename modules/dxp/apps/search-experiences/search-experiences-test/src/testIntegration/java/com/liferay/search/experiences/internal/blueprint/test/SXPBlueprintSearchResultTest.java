@@ -76,7 +76,6 @@ import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.test.util.DocumentsAssert;
-import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -1870,7 +1869,6 @@ public class SXPBlueprintSearchResultTest {
 		_assertSearch("[Pepsi Cola]");
 	}
 
-	@FeatureFlag("LPS-129412")
 	@Test
 	public void testSearchableAssetTypesWithSubtype() throws Exception {
 		JournalTestUtil.addArticle(

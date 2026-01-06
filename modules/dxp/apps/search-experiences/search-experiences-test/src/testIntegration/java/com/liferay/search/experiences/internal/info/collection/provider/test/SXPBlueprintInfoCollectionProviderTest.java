@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.FeatureFlagTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -29,7 +28,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -41,10 +39,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -55,7 +51,6 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Joshua Cords
  */
-@FeatureFlag("LPS-129412")
 @RunWith(Arquillian.class)
 public class SXPBlueprintInfoCollectionProviderTest {
 
@@ -65,18 +60,6 @@ public class SXPBlueprintInfoCollectionProviderTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
-
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), true, "LPS-129412");
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), false, "LPS-129412");
-	}
 
 	@Before
 	public void setUp() throws Exception {

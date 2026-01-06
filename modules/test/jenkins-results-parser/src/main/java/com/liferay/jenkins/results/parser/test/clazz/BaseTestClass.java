@@ -260,6 +260,24 @@ public abstract class BaseTestClass implements TestClass {
 	}
 
 	@Override
+	public boolean isIsolated() {
+		return isLatestReportMissing();
+	}
+
+	public boolean isLatestReportMissing() {
+		if (_latestBuildReportMissing != null) {
+			return _latestBuildReportMissing;
+		}
+
+		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
+
+		_latestBuildReportMissing = batchTestClassGroup.isLatestReportMissing(
+			getTestName());
+
+		return _latestBuildReportMissing;
+	}
+
+	@Override
 	public void setAxisTestClassGroup(AxisTestClassGroup axisTestClassGroup) {
 		_axisTestClassGroup = axisTestClassGroup;
 	}
@@ -376,6 +394,7 @@ public abstract class BaseTestClass implements TestClass {
 	private Long _averageTotalTestTaskDuration;
 	private AxisTestClassGroup _axisTestClassGroup;
 	private BatchTestClassGroup _batchTestClassGroup;
+	private Boolean _latestBuildReportMissing;
 	private Long _longestTestTaskDuration;
 	private SegmentTestClassGroup _segmentTestClassGroup;
 	private final File _testClassFile;

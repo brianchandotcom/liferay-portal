@@ -116,6 +116,7 @@ public class ModulesJUnitAxisTestClassGroup extends JUnitAxisTestClassGroup {
 					modulesJUnitTestClass.getAverageTestTaskDuration(),
 					modulesJUnitTestClass.getAverageTotalTestTaskDuration(),
 					groupingStrategy,
+					modulesJUnitTestClass.isLatestReportMissing(),
 					modulesJUnitTestClass.getLongestTestTaskDuration(),
 					testTaskName);
 
@@ -160,6 +161,7 @@ public class ModulesJUnitAxisTestClassGroup extends JUnitAxisTestClassGroup {
 				testTaskJSONObject.getLong("average_duration"),
 				testTaskJSONObject.getLong("average_total_duration"),
 				groupingStrategy,
+				testTaskJSONObject.getBoolean("latest_report_missing"),
 				testTaskJSONObject.getLong("longest_duration"), testTaskName);
 
 			for (int j = 0; j < testClassesJSONArray.length(); j++) {

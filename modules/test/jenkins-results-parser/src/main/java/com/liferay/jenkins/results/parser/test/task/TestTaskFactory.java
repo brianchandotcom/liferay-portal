@@ -14,12 +14,12 @@ public class TestTaskFactory {
 
 	public static TestTask newTestTask(
 		long averageDuration, long averageTotalDuration,
-		TestClassGroup.GroupingStrategy groupingStrategy, long longestDuration,
-		String name) {
+		TestClassGroup.GroupingStrategy groupingStrategy,
+		boolean latestReportMissing, long longestDuration, String name) {
 
 		return new DefaultTestTask(
 			averageDuration, averageTotalDuration, groupingStrategy,
-			longestDuration, name);
+			latestReportMissing, longestDuration, name);
 	}
 
 }

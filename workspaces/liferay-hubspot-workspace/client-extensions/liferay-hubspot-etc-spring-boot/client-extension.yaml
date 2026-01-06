@@ -16,18 +16,18 @@ liferay-hubspot-etc-spring-boot-oaua:
     scopes:
         -   Liferay.Headless.Admin.User.everything
     type: oAuthApplicationUserAgent
-liferay-hubspot-post-company:
-    name: Liferay HubSpot Post Company
+liferay-hubspot-etc-spring-boot-object-action-company:
+    name: Liferay HubSpot Etc Spring Boot Object Action Company
     oAuth2ApplicationExternalReferenceCode: liferay-hubspot-etc-spring-boot-oaua
-    resourcePath: /hubspot/company
+    resourcePath: /object/action/company
     type: objectAction
-liferay-hubspot-post-contact:
-    name: Liferay HubSpot Post Contact
+liferay-hubspot-etc-spring-boot-object-action-contact:
+    name: Liferay HubSpot Etc Spring Boot Object Action Contact
     oAuth2ApplicationExternalReferenceCode: liferay-hubspot-etc-spring-boot-oaua
-    resourcePath: /hubspot/contact
+    resourcePath: /object/action/contact
     type: objectAction
-liferay-hubspot-post-lead:
-    name: Liferay HubSpot Post Lead
+liferay-hubspot-etc-spring-boot-object-action-lead:
+    name: Liferay HubSpot Etc Spring Boot Object Action Lead
     oAuth2ApplicationExternalReferenceCode: liferay-hubspot-etc-spring-boot-oaua
-    resourcePath: /hubspot/lead
+    resourcePath: /object/action/lead
     type: objectAction

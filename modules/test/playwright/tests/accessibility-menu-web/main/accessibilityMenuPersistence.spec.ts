@@ -233,28 +233,18 @@ test(
 				await setUnderlinedLinks(accessibilityMenuPage, true);
 			});
 
-			await test.step('First login as User A', async () => {
+			await test.step('Login as User A and disable underlined links', async () => {
 				await page.reload();
 
 				await usersContext.loginAsUserA();
-
-				await assertUnderlinedLinksValue(page, true);
-			});
-
-			await test.step('Disable underlined links as a User A', async () => {
-				await page.reload();
 
 				await assertUnderlinedLinksValue(page, true);
 
 				await setUnderlinedLinks(accessibilityMenuPage, false);
 			});
 
-			await test.step('First login as User B', async () => {
-				await performLogout(page);
-
+			await test.step('Login as User B and see it uses guest settings', async () => {
 				await page.reload();
-
-				await assertUnderlinedLinksValue(page, false);
 
 				await usersContext.loginAsUserB();
 

@@ -145,7 +145,6 @@ public class ProductNavigationControlMenuManagerTest {
 			"com.liferay.portal.kernel.model.Group", 1,
 			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
 			"VIEW_SITE_ADMINISTRATION");
-
 		ResourcePermissionServiceUtil.addResourcePermission(
 			_group.getGroupId(), TestPropsValues.getCompanyId(),
 			"com_liferay_style_book_web_internal_portlet_StyleBookPortlet", 1,
@@ -180,7 +179,6 @@ public class ProductNavigationControlMenuManagerTest {
 			"com.liferay.portal.kernel.model.Group", 1,
 			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
 			"VIEW_SITE_ADMINISTRATION");
-
 		ResourcePermissionServiceUtil.addResourcePermission(
 			_group.getGroupId(), TestPropsValues.getCompanyId(),
 			"com_liferay_style_book_web_internal_portlet_StyleBookPortlet", 1,

@@ -5,7 +5,7 @@
 			{
 				"definition": {
 					"fragment": {
-						"key": "com.liferay.ai.hub.site.initializer.internal.fragment.renderer.TaskDefinitionFragmentRenderer"
+						"key": "com.liferay.ai.hub.web.internal.fragment.renderer.TaskDefinitionFragmentRenderer"
 					},
 					"fragmentConfig": {
 					},

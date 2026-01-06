@@ -414,10 +414,9 @@ public interface ContactsEngineClient {
 
 	public Results<IndividualSegmentRealTimeMembership>
 		getIndividualSegmentRealTimeMemberships(
-			FaroProject faroProject, String day, String filterString,
-			String individualSegmentId, List<String> profileTypes,
-			List<String> types, int cur, int delta,
-			List<OrderByField> orderByFields);
+			FaroProject faroProject, String day, String individualSegmentId,
+			List<String> profileTypes, String query, List<String> types,
+			int cur, int delta, List<OrderByField> orderByFields);
 
 	public Results<IndividualSegment> getIndividualSegments(
 		FaroProject faroProject, String channelId, String dataSourceId,

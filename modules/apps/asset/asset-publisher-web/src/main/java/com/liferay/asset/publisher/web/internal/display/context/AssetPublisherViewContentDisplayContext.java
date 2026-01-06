@@ -84,7 +84,14 @@ public class AssetPublisherViewContentDisplayContext {
 			return false;
 		}
 
-		if (_assetEntry.isVisible() && !_enablePermissions) {
+		if (!_assetEntry.isVisible()) {
+			SessionErrors.add(
+				_renderRequest, NoSuchModelException.class.getName());
+
+			return false;
+		}
+
+		if (!_enablePermissions) {
 			return true;
 		}
 

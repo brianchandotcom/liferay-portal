@@ -353,6 +353,13 @@ public class InfoRequestFieldValuesProviderHelper {
 
 		for (String parameterName : allParameterNames) {
 			if (parameterName.startsWith(infoField.getUniqueId())) {
+				if ((infoField.getInfoFieldType() ==
+						RelationshipInfoFieldType.INSTANCE) &&
+					parameterName.endsWith("-label")) {
+
+					continue;
+				}
+
 				if (!infoField.isLocalizable()) {
 					inputNames.add(parameterName);
 

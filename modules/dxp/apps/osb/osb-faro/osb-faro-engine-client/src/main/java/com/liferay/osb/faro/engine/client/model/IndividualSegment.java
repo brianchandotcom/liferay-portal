@@ -57,12 +57,13 @@ public class IndividualSegment {
 		return _embeddedResources;
 	}
 
-	public String getFilter() {
-		return _filter;
-	}
-
 	public String getFilterMetadata() {
 		return _filterMetadata;
+	}
+
+	@JsonProperty("filter")
+	public String getFilterString() {
+		return _filterString;
 	}
 
 	public String getId() {
@@ -153,12 +154,12 @@ public class IndividualSegment {
 		_embeddedResources = embeddedResources;
 	}
 
-	public void setFilter(String filterString) {
-		_filter = filterString;
-	}
-
 	public void setFilterMetadata(String filterMetadata) {
 		_filterMetadata = filterMetadata;
+	}
+
+	public void setFilterString(String filterString) {
+		_filterString = filterString;
 	}
 
 	public void setId(String id) {
@@ -242,8 +243,8 @@ public class IndividualSegment {
 	private Date _dateCreated;
 	private Date _dateModified;
 	private Map<String, Object> _embeddedResources = new HashMap<>();
-	private String _filter;
 	private String _filterMetadata;
+	private String _filterString;
 	private String _id;
 	private boolean _includeAnonymousUsers;
 	private long _individualCount;

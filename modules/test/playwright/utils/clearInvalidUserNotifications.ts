@@ -3,18 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Page, expect} from '@playwright/test';
+import {Page} from '@playwright/test';
+
+import {AccountNotificationsPage} from '../pages/portal-workflow-task-web/AccountNotificationsPage';
 
 export default async function (page: Page) {
-	await page.getByTitle('User Profile Menu').click();
+	const accountNotificationsPage = new AccountNotificationsPage(page);
 
-	await page.getByRole('menuitem', {name: 'Notifications'}).click();
+	await accountNotificationsPage.goToAccountNotifications();
 
-	await page.waitForLoadState('networkidle');
-
-	await expect(
-		page.getByRole('heading', {name: 'Notifications'})
-	).toBeVisible();
+	await accountNotificationsPage.deleteEnabledNotifications();
 
 	while (
 		(await page.getByText('Notification no longer applies.').count()) > 0

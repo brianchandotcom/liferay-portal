@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.AfterClass;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,8 +41,8 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class TokenResourceTest extends BaseTokenResourceTestCase {
 
-	@AfterClass
-	public static void tearDownClass() {
+	@After
+	public void tearDown() {
 		SseUtil.closeAll();
 
 		try {

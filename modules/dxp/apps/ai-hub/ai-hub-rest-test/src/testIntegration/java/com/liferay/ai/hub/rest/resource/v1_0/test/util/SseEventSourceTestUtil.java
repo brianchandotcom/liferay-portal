@@ -50,7 +50,7 @@ public class SseEventSourceTestUtil {
 	}
 
 	public static String open(
-			String authorizationHeader, List<CountDownLatch> countDownLatches,
+			String authorization, List<CountDownLatch> countDownLatches,
 			List<String> lines, String uri)
 		throws Exception {
 
@@ -67,7 +67,7 @@ public class SseEventSourceTestUtil {
 				).header(
 					"Accept", "text/event-stream"
 				).header(
-					"Authorization", authorizationHeader
+					"Authorization", authorization
 				).uri(
 					URI.create("http://localhost:8080/o/ai-hub/v1.0/" + uri)
 				).GET(

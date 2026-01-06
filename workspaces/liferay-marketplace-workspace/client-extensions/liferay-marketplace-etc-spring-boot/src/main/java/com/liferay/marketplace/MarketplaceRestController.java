@@ -422,10 +422,6 @@ public class MarketplaceRestController extends BaseRestController {
 			return;
 		}
 
-		OrderItemResource orderItemResource =
-			_marketplaceService.getOrderItemResource();
-		OrderResource orderResource = _marketplaceService.getOrderResource();
-
 		com.liferay.headless.commerce.admin.order.client.dto.v1_0.Account
 			account = order.getAccount();
 
@@ -442,46 +438,52 @@ public class MarketplaceRestController extends BaseRestController {
 			 _europeanCountriesISOCode.contains(
 				 billingAddress.getCountryISOCode()))) {
 
+			OrderResource orderResource =
+				_marketplaceService.getOrderResource();
+
+			OrderItemResource orderItemResource =
+				_marketplaceService.getOrderItemResource();
+
 			taxAmount = subtotalAmount.multiply(
 				BigDecimal.valueOf(_MARKETPLACE_TAX_PERCENTAGE));
 
 			total = subtotalAmount.add(taxAmount);
-		}
+			BigDecimal finalTaxAmount = taxAmount;
 
-		BigDecimal finalTaxAmount = taxAmount;
-		BigDecimal finalTotal = total;
+			BigDecimal finalTotal = total;
 
-		for (OrderItem orderItem : order.getOrderItems()) {
-			orderItemResource.patchOrderItem(
-				orderItem.getId(),
-				new OrderItem() {
+			for (OrderItem orderItem : order.getOrderItems()) {
+				orderItemResource.patchOrderItem(
+					orderItem.getId(),
+					new OrderItem() {
+						{
+							setFinalPrice(orderItem::getFinalPrice);
+							setFinalPriceWithTaxAmount(
+								() -> orderItem.getFinalPrice(
+								).add(
+									orderItem.getFinalPrice(
+									).multiply(
+										BigDecimal.valueOf(
+											_MARKETPLACE_TAX_PERCENTAGE)
+									)
+								));
+							setPriceManuallyAdjusted(() -> true);
+						}
+					});
+			}
+
+			_setExchangeRate(order);
+
+			orderResource.patchOrder(
+				orderId,
+				new Order() {
 					{
-						setFinalPrice(orderItem::getFinalPrice);
-						setFinalPriceWithTaxAmount(
-							() -> orderItem.getFinalPrice(
-							).add(
-								orderItem.getFinalPrice(
-								).multiply(
-									BigDecimal.valueOf(
-										_MARKETPLACE_TAX_PERCENTAGE)
-								)
-							));
-						setPriceManuallyAdjusted(() -> true);
+						setCustomFields(order::getCustomFields);
+						setTaxAmount(() -> finalTaxAmount);
+						setTotal(() -> finalTotal);
 					}
 				});
 		}
-
-		_setExchangeRate(order);
-
-		orderResource.patchOrder(
-			orderId,
-			new Order() {
-				{
-					setCustomFields(order::getCustomFields);
-					setTaxAmount(() -> finalTaxAmount);
-					setTotal(() -> finalTotal);
-				}
-			});
 	}
 
 	private Long _getAccountAdministratorRoleId(long accountId)
@@ -754,7 +756,7 @@ public class MarketplaceRestController extends BaseRestController {
 
 	private static final int _ACCOUNT_TYPE_PERSON = 1;
 
-	private static final double _MARKETPLACE_TAX_PERCENTAGE = 0.23;
+	private static final double _MARKETPLACE_TAX_PERCENTAGE = 0.20;
 
 	private static final Log _log = LogFactory.getLog(
 		MarketplaceRestController.class);

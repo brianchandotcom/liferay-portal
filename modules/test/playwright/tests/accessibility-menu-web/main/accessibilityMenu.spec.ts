@@ -3,13 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {Page, expect, mergeTests} from '@playwright/test';
 
 import {accessibilityMenuPagesTest} from '../../../fixtures/accessibilityMenuPagesTest';
 import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {doAndGoBack} from '../../../utils/doAndGoBack';
 import {performLoginViaApi, performLogout} from '../../../utils/performLogin';
+import {assertBodyClass} from './utils/assertBodyClass';
+import {assertUnderlinedLinksValue} from './utils/assertUnderlinedLinksValue';
 
 const test = mergeTests(
 	accessibilityMenuPagesTest,
@@ -43,19 +45,22 @@ test.afterEach(async ({instanceSettingsPage, page}) => {
 
 const OPTIONS = [
 	{
-		expectedClass: /c-prefers-link-underline/,
+		assert: assertUnderlinedLinksValue,
 		label: 'Underlined Links',
 	},
 	{
-		expectedClass: /c-prefers-letter-spacing-1/,
+		assert: (page: Page, enabled: boolean) =>
+			assertBodyClass(page, enabled, /c-prefers-letter-spacing-1/),
 		label: 'Increased Text Spacing',
 	},
 	{
-		expectedClass: /c-prefers-expanded-text/,
+		assert: (page: Page, enabled: boolean) =>
+			assertBodyClass(page, enabled, /c-prefers-expanded-text/),
 		label: 'Expanded Text',
 	},
 	{
-		expectedClass: /c-prefers-reduced-motion/,
+		assert: (page: Page, enabled: boolean) =>
+			assertBodyClass(page, enabled, /c-prefers-reduced-motion/),
 		label: 'Reduced Motion',
 	},
 ];
@@ -104,20 +109,20 @@ test(
 			await accessibilityMenuPage.openAccessibilityMenu();
 		});
 
-		for (const {expectedClass, label} of OPTIONS) {
+		for (const {assert, label} of OPTIONS) {
 			await test.step(`The "${label}" option can be configured via the accessibility menu`, async () => {
-				const body = page.locator('body');
 				const toggle = page.getByLabel(label);
 
+				await assert(page, false);
 				await expect(toggle).not.toBeChecked();
 
 				await accessibilityMenuPage.toggle(toggle, true);
 
-				await expect(body).toHaveClass(expectedClass);
+				await assert(page, true);
 
 				await accessibilityMenuPage.toggle(toggle, false);
 
-				await expect(body).not.toHaveClass(expectedClass);
+				await assert(page, false);
 			});
 		}
 	}
@@ -135,21 +140,20 @@ test(
 			await expect(accessibilityMenuPage.closeButton).toBeFocused();
 		});
 
-		for (const {expectedClass, label} of OPTIONS) {
+		for (const {assert, label} of OPTIONS) {
 			const toggle = page.getByLabel(label);
 
 			await test.step(`Focus ${label} using the keyboard`, async () => {
 				await page.keyboard.press('Tab');
 
+				await assert(page, false);
 				await expect(toggle).toBeFocused();
 			});
-
-			const body = page.locator('body');
 
 			await test.step(`Toggle ${label} using the keyboard and verify it is still focused`, async () => {
 				await page.keyboard.press('Enter');
 
-				await expect(body).toHaveClass(expectedClass);
+				await assert(page, true);
 				await expect(toggle).toBeChecked();
 				await expect(toggle).toBeFocused();
 			});
@@ -157,7 +161,7 @@ test(
 			await test.step(`Toggle ${label} again using the keyboard and verify it is still focused`, async () => {
 				await page.keyboard.press('Enter');
 
-				await expect(body).not.toHaveClass(expectedClass);
+				await assert(page, false);
 				await expect(toggle).not.toBeChecked();
 				await expect(toggle).toBeFocused();
 			});

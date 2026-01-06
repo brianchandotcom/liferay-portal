@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Page, expect, mergeTests} from '@playwright/test';
+import {mergeTests} from '@playwright/test';
 
 import {accessibilityMenuPagesTest} from '../../../fixtures/accessibilityMenuPagesTest';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
@@ -17,18 +17,7 @@ import {
 	performLogout,
 	userData,
 } from '../../../utils/performLogin';
-
-async function assertUnderlinedLinksValue(page: Page, enabled: boolean) {
-	const body = page.locator('body');
-	const underlinedLinksClass = /c-prefers-link-underline/;
-
-	if (enabled) {
-		await expect(body).toHaveClass(underlinedLinksClass);
-	}
-	else {
-		await expect(body).not.toHaveClass(underlinedLinksClass);
-	}
-}
+import {assertUnderlinedLinksValue} from './utils/assertUnderlinedLinksValue';
 
 async function setUnderlinedLinks(
 	accessibilityMenuPage: AccessibilityMenuPage,

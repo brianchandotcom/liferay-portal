@@ -116,10 +116,8 @@ public class GeneralSXPSearchRequestBodyContributor
 
 				classNamesSet.add(className);
 
-				if ((assetSubtypeIdentifier.getSubtypeExternalReferenceCode() ==
-						null) ||
-					!FeatureFlagManagerUtil.isEnabled(
-						CompanyThreadLocal.getCompanyId(), "LPS-129412")) {
+				if (assetSubtypeIdentifier.getSubtypeExternalReferenceCode() ==
+						null) {
 
 					continue;
 				}
@@ -142,14 +140,9 @@ public class GeneralSXPSearchRequestBodyContributor
 			searchRequestBuilder.entryClassNames(classNames);
 			searchRequestBuilder.modelIndexerClassNames(classNames);
 
-			if (FeatureFlagManagerUtil.isEnabled(
-					CompanyThreadLocal.getCompanyId(), "LPS-129412")) {
-
-				searchRequestBuilder.withSearchContext(
-					searchContext -> searchContext.setAttribute(
-						"assetSubtypeIdentifiersMap",
-						assetSubtypeIdentifiersMap));
-			}
+			searchRequestBuilder.withSearchContext(
+				searchContext -> searchContext.setAttribute(
+					"assetSubtypeIdentifiersMap", assetSubtypeIdentifiersMap));
 		}
 
 		if (ArrayUtil.isNotEmpty(generalConfiguration.getScope()) &&

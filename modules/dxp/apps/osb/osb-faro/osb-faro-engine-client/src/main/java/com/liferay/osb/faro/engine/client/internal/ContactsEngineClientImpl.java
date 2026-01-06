@@ -2234,7 +2234,8 @@ public class ContactsEngineClientImpl
 	public Results<IndividualSegmentRealTimeMembership>
 		getIndividualSegmentRealTimeMemberships(
 			FaroProject faroProject, String day, String filterString,
-			String individualSegmentId, int cur, int delta,
+			String individualSegmentId, List<String> profileTypes,
+			List<String> types, int cur, int delta,
 			List<OrderByField> orderByFields) {
 
 		Map<String, Object> uriVariables = getUriVariables(
@@ -2246,6 +2247,15 @@ public class ContactsEngineClientImpl
 
 		uriVariables.put("filter", filterString);
 		uriVariables.put("id", individualSegmentId);
+
+		if (profileTypes != null) {
+			uriVariables.put(
+				"profileTypes", String.join(StringPool.COMMA, profileTypes));
+		}
+
+		if (types != null) {
+			uriVariables.put("types", String.join(StringPool.COMMA, types));
+		}
 
 		PagedModel<?, IndividualSegmentRealTimeMembership> pagedModel = get(
 			faroProject, Rels.INDIVIDUAL_SEGMENT_REAL_TIME_MEMBERSHIPS,

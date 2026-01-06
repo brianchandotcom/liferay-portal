@@ -119,7 +119,7 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 
 	@Override
 	public App fetchRemoteApp(long remoteAppId) {
-		return appPersistence.fetchByRemoteAppId(remoteAppId);
+		return appPersistence.fetchByRemoteAppId_Last(remoteAppId, null);
 	}
 
 	@Override
@@ -248,7 +248,7 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 
 	@Override
 	public void installApp(long remoteAppId) throws PortalException {
-		App app = appPersistence.findByRemoteAppId(remoteAppId);
+		App app = appPersistence.findByRemoteAppId_Last(remoteAppId, null);
 
 		if (!_store.hasFile(
 				app.getCompanyId(), CompanyConstants.SYSTEM, app.getFilePath(),
@@ -299,7 +299,7 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 	public void uninstallApp(long remoteAppId) throws PortalException {
 		clearInstalledAppsCache();
 
-		App app = appPersistence.findByRemoteAppId(remoteAppId);
+		App app = appPersistence.findByRemoteAppId_Last(remoteAppId, null);
 
 		List<Module> modules = _modulePersistence.findByAppId(app.getAppId());
 
@@ -351,7 +351,7 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 
 		_validate(title, version);
 
-		App app = appPersistence.fetchByRemoteAppId(remoteAppId);
+		App app = appPersistence.fetchByRemoteAppId_Last(remoteAppId, null);
 
 		if (app == null) {
 			long appId = counterLocalService.increment();

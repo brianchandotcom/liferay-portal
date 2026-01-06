@@ -184,16 +184,6 @@ public abstract class BaseTestClass implements TestClass {
 	}
 
 	@Override
-	public long getSharedWeight() {
-		return 0L;
-	}
-
-	@Override
-	public String getSharedWeightName() {
-		return null;
-	}
-
-	@Override
 	public File getTestClassFile() {
 		return _testClassFile;
 	}

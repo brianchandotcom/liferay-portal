@@ -111,14 +111,6 @@ public abstract class BalancedListSplitter<T extends WeightedItem> {
 			return _item.getOverheadWeight();
 		}
 
-		public long getSharedWeight() {
-			return _item.getSharedWeight();
-		}
-
-		public String getSharedWeightName() {
-			return _item.getSharedWeightName();
-		}
-
 		public long getWeight() {
 			return _item.getWeight();
 		}
@@ -174,31 +166,17 @@ public abstract class BalancedListSplitter<T extends WeightedItem> {
 				return 0L;
 			}
 
-			Set<String> sharedWeightNames = new HashSet<>();
 			long totalOverheadWeight = 0L;
-			long totalSharedWeight = 0L;
 			long totalWeight = 0L;
 
 			for (ListItem listItem : this) {
 				totalOverheadWeight += listItem.getOverheadWeight();
 				totalWeight += listItem.getWeight();
-
-				if (listItem.getSharedWeightName() == null) {
-					continue;
-				}
-
-				if (!sharedWeightNames.contains(
-						listItem.getSharedWeightName())) {
-
-					totalSharedWeight += listItem.getSharedWeight();
-				}
-
-				sharedWeightNames.add(listItem.getSharedWeightName());
 			}
 
 			long averageOverheadWeight = totalOverheadWeight / size();
 
-			return averageOverheadWeight + totalSharedWeight + totalWeight;
+			return averageOverheadWeight + totalWeight;
 		}
 
 		public List<T> toList() {

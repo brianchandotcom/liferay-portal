@@ -59,6 +59,7 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 					modulesJUnitTestClass.getAverageTestTaskDuration(),
 					modulesJUnitTestClass.getAverageTotalTestTaskDuration(),
 					groupingStrategy,
+					modulesJUnitTestClass.isLatestReportMissing(),
 					modulesJUnitTestClass.getLongestTestTaskDuration(),
 					testTaskName);
 

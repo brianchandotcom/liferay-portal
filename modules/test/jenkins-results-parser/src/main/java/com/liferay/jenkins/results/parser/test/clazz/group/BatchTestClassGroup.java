@@ -523,6 +523,16 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return job.isBuildCachingEnabled();
 	}
 
+	public boolean isLatestReportMissing(String testName) {
+		TestTaskHistory testTaskHistory = _getTestTaskHistory(testName);
+
+		if (testTaskHistory == null) {
+			return false;
+		}
+
+		return testTaskHistory.isLatestReportMissing();
+	}
+
 	public boolean isTestAnalyticsCloud() {
 		if (_testAnalyticsCloud != null) {
 			return _testAnalyticsCloud;

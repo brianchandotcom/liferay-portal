@@ -14,7 +14,7 @@ const UnexpectedError = ({uploadErrorMessage}: IProps) => {
 		<AttachmentMessage
 			icon="warning-full"
 			subtitle={uploadErrorMessage}
-			title="unexpected-error"
+			title="an-unexpected-error-occurred"
 		/>
 	);
 };

@@ -966,9 +966,11 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		Site site = randomSite();
 
 		site.setDefaultLanguageId(String.valueOf(LocaleUtil.SPAIN));
+		site.setInheritLocales(false);
 
 		String[] locales = {
-			String.valueOf(LocaleUtil.BRAZIL), String.valueOf(LocaleUtil.SPAIN)
+			LocaleUtil.toW3cLanguageId(LocaleUtil.BRAZIL),
+			LocaleUtil.toW3cLanguageId(LocaleUtil.SPAIN)
 		};
 
 		site.setLocales(locales);

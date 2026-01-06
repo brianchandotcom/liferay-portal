@@ -3289,13 +3289,13 @@ definition {
 		var blueprintId = Blueprints.getBlueprintID(title = "Test Blueprint");
 
 		AssertTextEquals(
-			key_cellPosition = 4,
+			key_cellPosition = 5,
 			key_entryTitle = "Test Blueprint",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
 			value1 = ${blueprintId});
 
 		AssertTextEquals(
-			key_cellPosition = 5,
+			key_cellPosition = 6,
 			key_entryTitle = "Test Blueprint",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
 			value1 = "Test Test");
@@ -3303,13 +3303,13 @@ definition {
 		var currentDate = DateUtil.getCurrentYear();
 
 		AssertTextEquals.assertPartialText(
-			key_cellPosition = 6,
+			key_cellPosition = 7,
 			key_entryTitle = "Test Blueprint",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
 			value1 = ${currentDate});
 
 		AssertTextEquals.assertPartialText(
-			key_cellPosition = 7,
+			key_cellPosition = 8,
 			key_entryTitle = "Test Blueprint",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
 			value1 = ${currentDate});

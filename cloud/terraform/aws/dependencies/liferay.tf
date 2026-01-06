@@ -1,7 +1,7 @@
 locals {
 	bucket_active=local.is_active_data_blue ? module.s3_bucket_blue : module.s3_bucket_green
-	bucket_inactive=local.is_active_data_blue ? module.s3_bucket_green : module.s3_bucket_blue
 	bucket_extensions=module.s3_bucket_liferay_extensions
+	bucket_inactive=local.is_active_data_blue ? module.s3_bucket_green : module.s3_bucket_blue
 	data_inactive=local.is_active_data_blue ? "green" : "blue"
 	db_active=local.is_active_data_blue ? module.postgres_blue[0] : module.postgres_green[0]
 	is_active_data_blue=var.data_active=="blue"

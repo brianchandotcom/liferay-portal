@@ -468,38 +468,138 @@ public interface AppPersistence extends BasePersistence<App> {
 	public int countByCompanyId(long companyId);
 
 	/**
-	 * Returns the app where remoteAppId = &#63; or throws a <code>NoSuchAppException</code> if it could not be found.
+	 * Returns all the apps where remoteAppId = &#63;.
 	 *
 	 * @param remoteAppId the remote app ID
-	 * @return the matching app
+	 * @return the matching apps
+	 */
+	public java.util.List<App> findByRemoteAppId(long remoteAppId);
+
+	/**
+	 * Returns a range of all the apps where remoteAppId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppModelImpl</code>.
+	 * </p>
+	 *
+	 * @param remoteAppId the remote app ID
+	 * @param start the lower bound of the range of apps
+	 * @param end the upper bound of the range of apps (not inclusive)
+	 * @return the range of matching apps
+	 */
+	public java.util.List<App> findByRemoteAppId(
+		long remoteAppId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the apps where remoteAppId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppModelImpl</code>.
+	 * </p>
+	 *
+	 * @param remoteAppId the remote app ID
+	 * @param start the lower bound of the range of apps
+	 * @param end the upper bound of the range of apps (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching apps
+	 */
+	public java.util.List<App> findByRemoteAppId(
+		long remoteAppId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<App>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the apps where remoteAppId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppModelImpl</code>.
+	 * </p>
+	 *
+	 * @param remoteAppId the remote app ID
+	 * @param start the lower bound of the range of apps
+	 * @param end the upper bound of the range of apps (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching apps
+	 */
+	public java.util.List<App> findByRemoteAppId(
+		long remoteAppId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<App> orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first app in the ordered set where remoteAppId = &#63;.
+	 *
+	 * @param remoteAppId the remote app ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching app
 	 * @throws NoSuchAppException if a matching app could not be found
 	 */
-	public App findByRemoteAppId(long remoteAppId) throws NoSuchAppException;
+	public App findByRemoteAppId_First(
+			long remoteAppId,
+			com.liferay.portal.kernel.util.OrderByComparator<App>
+				orderByComparator)
+		throws NoSuchAppException;
 
 	/**
-	 * Returns the app where remoteAppId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the first app in the ordered set where remoteAppId = &#63;.
 	 *
 	 * @param remoteAppId the remote app ID
-	 * @return the matching app, or <code>null</code> if a matching app could not be found
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching app, or <code>null</code> if a matching app could not be found
 	 */
-	public App fetchByRemoteAppId(long remoteAppId);
+	public App fetchByRemoteAppId_First(
+		long remoteAppId,
+		com.liferay.portal.kernel.util.OrderByComparator<App>
+			orderByComparator);
 
 	/**
-	 * Returns the app where remoteAppId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the last app in the ordered set where remoteAppId = &#63;.
 	 *
 	 * @param remoteAppId the remote app ID
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching app, or <code>null</code> if a matching app could not be found
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching app
+	 * @throws NoSuchAppException if a matching app could not be found
 	 */
-	public App fetchByRemoteAppId(long remoteAppId, boolean useFinderCache);
+	public App findByRemoteAppId_Last(
+			long remoteAppId,
+			com.liferay.portal.kernel.util.OrderByComparator<App>
+				orderByComparator)
+		throws NoSuchAppException;
 
 	/**
-	 * Removes the app where remoteAppId = &#63; from the database.
+	 * Returns the last app in the ordered set where remoteAppId = &#63;.
 	 *
 	 * @param remoteAppId the remote app ID
-	 * @return the app that was removed
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching app, or <code>null</code> if a matching app could not be found
 	 */
-	public App removeByRemoteAppId(long remoteAppId) throws NoSuchAppException;
+	public App fetchByRemoteAppId_Last(
+		long remoteAppId,
+		com.liferay.portal.kernel.util.OrderByComparator<App>
+			orderByComparator);
+
+	/**
+	 * Returns the apps before and after the current app in the ordered set where remoteAppId = &#63;.
+	 *
+	 * @param appId the primary key of the current app
+	 * @param remoteAppId the remote app ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next app
+	 * @throws NoSuchAppException if a app with the primary key could not be found
+	 */
+	public App[] findByRemoteAppId_PrevAndNext(
+			long appId, long remoteAppId,
+			com.liferay.portal.kernel.util.OrderByComparator<App>
+				orderByComparator)
+		throws NoSuchAppException;
+
+	/**
+	 * Removes all the apps where remoteAppId = &#63; from the database.
+	 *
+	 * @param remoteAppId the remote app ID
+	 */
+	public void removeByRemoteAppId(long remoteAppId);
 
 	/**
 	 * Returns the number of apps where remoteAppId = &#63;.

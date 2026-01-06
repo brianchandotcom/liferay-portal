@@ -757,45 +757,149 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	public int countByContextName(String contextName);
 
 	/**
-	 * Returns the module where appId = &#63; and contextName = &#63; or throws a <code>NoSuchModuleException</code> if it could not be found.
+	 * Returns all the modules where appId = &#63; and contextName = &#63;.
 	 *
 	 * @param appId the app ID
 	 * @param contextName the context name
-	 * @return the matching module
+	 * @return the matching modules
+	 */
+	public java.util.List<Module> findByA_CN(long appId, String contextName);
+
+	/**
+	 * Returns a range of all the modules where appId = &#63; and contextName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ModuleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param appId the app ID
+	 * @param contextName the context name
+	 * @param start the lower bound of the range of modules
+	 * @param end the upper bound of the range of modules (not inclusive)
+	 * @return the range of matching modules
+	 */
+	public java.util.List<Module> findByA_CN(
+		long appId, String contextName, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the modules where appId = &#63; and contextName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ModuleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param appId the app ID
+	 * @param contextName the context name
+	 * @param start the lower bound of the range of modules
+	 * @param end the upper bound of the range of modules (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching modules
+	 */
+	public java.util.List<Module> findByA_CN(
+		long appId, String contextName, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Module>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the modules where appId = &#63; and contextName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ModuleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param appId the app ID
+	 * @param contextName the context name
+	 * @param start the lower bound of the range of modules
+	 * @param end the upper bound of the range of modules (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching modules
+	 */
+	public java.util.List<Module> findByA_CN(
+		long appId, String contextName, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Module>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first module in the ordered set where appId = &#63; and contextName = &#63;.
+	 *
+	 * @param appId the app ID
+	 * @param contextName the context name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching module
 	 * @throws NoSuchModuleException if a matching module could not be found
 	 */
-	public Module findByA_CN(long appId, String contextName)
+	public Module findByA_CN_First(
+			long appId, String contextName,
+			com.liferay.portal.kernel.util.OrderByComparator<Module>
+				orderByComparator)
 		throws NoSuchModuleException;
 
 	/**
-	 * Returns the module where appId = &#63; and contextName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the first module in the ordered set where appId = &#63; and contextName = &#63;.
 	 *
 	 * @param appId the app ID
 	 * @param contextName the context name
-	 * @return the matching module, or <code>null</code> if a matching module could not be found
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching module, or <code>null</code> if a matching module could not be found
 	 */
-	public Module fetchByA_CN(long appId, String contextName);
+	public Module fetchByA_CN_First(
+		long appId, String contextName,
+		com.liferay.portal.kernel.util.OrderByComparator<Module>
+			orderByComparator);
 
 	/**
-	 * Returns the module where appId = &#63; and contextName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the last module in the ordered set where appId = &#63; and contextName = &#63;.
 	 *
 	 * @param appId the app ID
 	 * @param contextName the context name
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching module, or <code>null</code> if a matching module could not be found
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching module
+	 * @throws NoSuchModuleException if a matching module could not be found
 	 */
-	public Module fetchByA_CN(
-		long appId, String contextName, boolean useFinderCache);
-
-	/**
-	 * Removes the module where appId = &#63; and contextName = &#63; from the database.
-	 *
-	 * @param appId the app ID
-	 * @param contextName the context name
-	 * @return the module that was removed
-	 */
-	public Module removeByA_CN(long appId, String contextName)
+	public Module findByA_CN_Last(
+			long appId, String contextName,
+			com.liferay.portal.kernel.util.OrderByComparator<Module>
+				orderByComparator)
 		throws NoSuchModuleException;
+
+	/**
+	 * Returns the last module in the ordered set where appId = &#63; and contextName = &#63;.
+	 *
+	 * @param appId the app ID
+	 * @param contextName the context name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching module, or <code>null</code> if a matching module could not be found
+	 */
+	public Module fetchByA_CN_Last(
+		long appId, String contextName,
+		com.liferay.portal.kernel.util.OrderByComparator<Module>
+			orderByComparator);
+
+	/**
+	 * Returns the modules before and after the current module in the ordered set where appId = &#63; and contextName = &#63;.
+	 *
+	 * @param moduleId the primary key of the current module
+	 * @param appId the app ID
+	 * @param contextName the context name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next module
+	 * @throws NoSuchModuleException if a module with the primary key could not be found
+	 */
+	public Module[] findByA_CN_PrevAndNext(
+			long moduleId, long appId, String contextName,
+			com.liferay.portal.kernel.util.OrderByComparator<Module>
+				orderByComparator)
+		throws NoSuchModuleException;
+
+	/**
+	 * Removes all the modules where appId = &#63; and contextName = &#63; from the database.
+	 *
+	 * @param appId the app ID
+	 * @param contextName the context name
+	 */
+	public void removeByA_CN(long appId, String contextName);
 
 	/**
 	 * Returns the number of modules where appId = &#63; and contextName = &#63;.
@@ -807,53 +911,165 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	public int countByA_CN(long appId, String contextName);
 
 	/**
-	 * Returns the module where appId = &#63; and bundleSymbolicName = &#63; and bundleVersion = &#63; or throws a <code>NoSuchModuleException</code> if it could not be found.
+	 * Returns all the modules where appId = &#63; and bundleSymbolicName = &#63; and bundleVersion = &#63;.
 	 *
 	 * @param appId the app ID
 	 * @param bundleSymbolicName the bundle symbolic name
 	 * @param bundleVersion the bundle version
-	 * @return the matching module
-	 * @throws NoSuchModuleException if a matching module could not be found
+	 * @return the matching modules
 	 */
-	public Module findByA_BSN_BV(
-			long appId, String bundleSymbolicName, String bundleVersion)
-		throws NoSuchModuleException;
-
-	/**
-	 * Returns the module where appId = &#63; and bundleSymbolicName = &#63; and bundleVersion = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param appId the app ID
-	 * @param bundleSymbolicName the bundle symbolic name
-	 * @param bundleVersion the bundle version
-	 * @return the matching module, or <code>null</code> if a matching module could not be found
-	 */
-	public Module fetchByA_BSN_BV(
+	public java.util.List<Module> findByA_BSN_BV(
 		long appId, String bundleSymbolicName, String bundleVersion);
 
 	/**
-	 * Returns the module where appId = &#63; and bundleSymbolicName = &#63; and bundleVersion = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns a range of all the modules where appId = &#63; and bundleSymbolicName = &#63; and bundleVersion = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ModuleModelImpl</code>.
+	 * </p>
 	 *
 	 * @param appId the app ID
 	 * @param bundleSymbolicName the bundle symbolic name
 	 * @param bundleVersion the bundle version
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching module, or <code>null</code> if a matching module could not be found
+	 * @param start the lower bound of the range of modules
+	 * @param end the upper bound of the range of modules (not inclusive)
+	 * @return the range of matching modules
 	 */
-	public Module fetchByA_BSN_BV(
-		long appId, String bundleSymbolicName, String bundleVersion,
+	public java.util.List<Module> findByA_BSN_BV(
+		long appId, String bundleSymbolicName, String bundleVersion, int start,
+		int end);
+
+	/**
+	 * Returns an ordered range of all the modules where appId = &#63; and bundleSymbolicName = &#63; and bundleVersion = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ModuleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param appId the app ID
+	 * @param bundleSymbolicName the bundle symbolic name
+	 * @param bundleVersion the bundle version
+	 * @param start the lower bound of the range of modules
+	 * @param end the upper bound of the range of modules (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching modules
+	 */
+	public java.util.List<Module> findByA_BSN_BV(
+		long appId, String bundleSymbolicName, String bundleVersion, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Module>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the modules where appId = &#63; and bundleSymbolicName = &#63; and bundleVersion = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ModuleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param appId the app ID
+	 * @param bundleSymbolicName the bundle symbolic name
+	 * @param bundleVersion the bundle version
+	 * @param start the lower bound of the range of modules
+	 * @param end the upper bound of the range of modules (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching modules
+	 */
+	public java.util.List<Module> findByA_BSN_BV(
+		long appId, String bundleSymbolicName, String bundleVersion, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Module>
+			orderByComparator,
 		boolean useFinderCache);
 
 	/**
-	 * Removes the module where appId = &#63; and bundleSymbolicName = &#63; and bundleVersion = &#63; from the database.
+	 * Returns the first module in the ordered set where appId = &#63; and bundleSymbolicName = &#63; and bundleVersion = &#63;.
 	 *
 	 * @param appId the app ID
 	 * @param bundleSymbolicName the bundle symbolic name
 	 * @param bundleVersion the bundle version
-	 * @return the module that was removed
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching module
+	 * @throws NoSuchModuleException if a matching module could not be found
 	 */
-	public Module removeByA_BSN_BV(
-			long appId, String bundleSymbolicName, String bundleVersion)
+	public Module findByA_BSN_BV_First(
+			long appId, String bundleSymbolicName, String bundleVersion,
+			com.liferay.portal.kernel.util.OrderByComparator<Module>
+				orderByComparator)
 		throws NoSuchModuleException;
+
+	/**
+	 * Returns the first module in the ordered set where appId = &#63; and bundleSymbolicName = &#63; and bundleVersion = &#63;.
+	 *
+	 * @param appId the app ID
+	 * @param bundleSymbolicName the bundle symbolic name
+	 * @param bundleVersion the bundle version
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching module, or <code>null</code> if a matching module could not be found
+	 */
+	public Module fetchByA_BSN_BV_First(
+		long appId, String bundleSymbolicName, String bundleVersion,
+		com.liferay.portal.kernel.util.OrderByComparator<Module>
+			orderByComparator);
+
+	/**
+	 * Returns the last module in the ordered set where appId = &#63; and bundleSymbolicName = &#63; and bundleVersion = &#63;.
+	 *
+	 * @param appId the app ID
+	 * @param bundleSymbolicName the bundle symbolic name
+	 * @param bundleVersion the bundle version
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching module
+	 * @throws NoSuchModuleException if a matching module could not be found
+	 */
+	public Module findByA_BSN_BV_Last(
+			long appId, String bundleSymbolicName, String bundleVersion,
+			com.liferay.portal.kernel.util.OrderByComparator<Module>
+				orderByComparator)
+		throws NoSuchModuleException;
+
+	/**
+	 * Returns the last module in the ordered set where appId = &#63; and bundleSymbolicName = &#63; and bundleVersion = &#63;.
+	 *
+	 * @param appId the app ID
+	 * @param bundleSymbolicName the bundle symbolic name
+	 * @param bundleVersion the bundle version
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching module, or <code>null</code> if a matching module could not be found
+	 */
+	public Module fetchByA_BSN_BV_Last(
+		long appId, String bundleSymbolicName, String bundleVersion,
+		com.liferay.portal.kernel.util.OrderByComparator<Module>
+			orderByComparator);
+
+	/**
+	 * Returns the modules before and after the current module in the ordered set where appId = &#63; and bundleSymbolicName = &#63; and bundleVersion = &#63;.
+	 *
+	 * @param moduleId the primary key of the current module
+	 * @param appId the app ID
+	 * @param bundleSymbolicName the bundle symbolic name
+	 * @param bundleVersion the bundle version
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next module
+	 * @throws NoSuchModuleException if a module with the primary key could not be found
+	 */
+	public Module[] findByA_BSN_BV_PrevAndNext(
+			long moduleId, long appId, String bundleSymbolicName,
+			String bundleVersion,
+			com.liferay.portal.kernel.util.OrderByComparator<Module>
+				orderByComparator)
+		throws NoSuchModuleException;
+
+	/**
+	 * Removes all the modules where appId = &#63; and bundleSymbolicName = &#63; and bundleVersion = &#63; from the database.
+	 *
+	 * @param appId the app ID
+	 * @param bundleSymbolicName the bundle symbolic name
+	 * @param bundleVersion the bundle version
+	 */
+	public void removeByA_BSN_BV(
+		long appId, String bundleSymbolicName, String bundleVersion);
 
 	/**
 	 * Returns the number of modules where appId = &#63; and bundleSymbolicName = &#63; and bundleVersion = &#63;.

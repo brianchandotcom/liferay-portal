@@ -1,0 +1,21 @@
+.ai-hub-title {
+	font-family:
+		'Source Sans 3',
+		system-ui,
+		-apple-system,
+		'system-ui',
+		'Segoe UI',
+		Roboto,
+		Oxygen-Sans,
+		Ubuntu,
+		Cantarell,
+		'Helvetica Neue',
+		Arial,
+		sans-serif;
+	font-size: 24px;
+	font-weight: 600;
+}
+
+.ai-hub-lexicon-icon{
+  color: #4b9bff;
+}

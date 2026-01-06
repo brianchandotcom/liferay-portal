@@ -1,0 +1,28 @@
+{
+	"pageElement": {
+		"id": "5dbfd435-2707-a0eb-433e-025d80be61dc",
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "com.liferay.ai.hub.site.initializer.internal.fragment.renderer.TaskDefinitionFragmentRenderer"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+					],
+					"indexed": true
+				},
+				"id": "a7d13a9c-2e29-4c4f-9f3b-5c6cbb0e8e01",
+				"type": "Fragment"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "ai-hub-master"
+		}
+	},
+	"version": 1.1
+}

@@ -53,7 +53,7 @@ public class DLFileVersionConstraintResolverTest {
 
 		DLFolder dlFolder = DLTestUtil.addDLFolder(group.getGroupId());
 
-		DLFileEntry dlFileEntry = DLTestUtil.addDLFileEntry(
+		DLFileEntry dlFileEntry1 = DLTestUtil.addDLFileEntry(
 			dlFolder.getFolderId());
 
 		CTCollection ctCollection1 = _ctCollectionLocalService.addCTCollection(
@@ -64,10 +64,10 @@ public class DLFileVersionConstraintResolverTest {
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					ctCollection1.getCtCollectionId())) {
 
-			dlFileEntry.setDescription(RandomTestUtil.randomString());
+			dlFileEntry1.setDescription(RandomTestUtil.randomString());
 
-			dlFileEntry = _dlFileEntryLocalService.updateDLFileEntry(
-				dlFileEntry);
+			dlFileEntry1 = _dlFileEntryLocalService.updateDLFileEntry(
+				dlFileEntry1);
 		}
 
 		CTCollection ctCollection2 = _ctCollectionLocalService.addCTCollection(
@@ -78,9 +78,9 @@ public class DLFileVersionConstraintResolverTest {
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					ctCollection2.getCtCollectionId())) {
 
-			dlFileEntry.setDescription(RandomTestUtil.randomString());
+			dlFileEntry1.setDescription(RandomTestUtil.randomString());
 
-			_dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
+			_dlFileEntryLocalService.updateDLFileEntry(dlFileEntry1);
 		}
 
 		_ctCollectionService.publishCTCollection(
@@ -88,6 +88,52 @@ public class DLFileVersionConstraintResolverTest {
 
 		Map<Long, List<ConflictInfo>> conflictsMap =
 			_ctCollectionLocalService.checkConflicts(ctCollection2);
+
+		Assert.assertFalse(conflictsMap.isEmpty());
+
+		DLFileEntry dlFileEntry2;
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
+
+			dlFileEntry2 = DLTestUtil.addDLFileEntry(dlFolder.getFolderId());
+		}
+
+		CTCollection ctCollection3 = _ctCollectionLocalService.addCTCollection(
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, RandomTestUtil.randomString(), null);
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollection3.getCtCollectionId())) {
+
+			dlFileEntry2.setDescription(RandomTestUtil.randomString());
+
+			dlFileEntry2 = _dlFileEntryLocalService.updateDLFileEntry(
+				dlFileEntry2);
+		}
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollection2.getCtCollectionId())) {
+
+			dlFileEntry2 = _dlFileEntryLocalService.getDLFileEntry(
+				dlFileEntry2.getFileEntryId());
+
+			dlFileEntry2.setDescription(RandomTestUtil.randomString());
+
+			dlFileEntry2 = _dlFileEntryLocalService.updateDLFileEntry(
+				dlFileEntry2);
+
+			dlFileEntry2.setDescription(RandomTestUtil.randomString());
+
+			_dlFileEntryLocalService.updateDLFileEntry(dlFileEntry2);
+		}
+
+		_ctCollectionService.publishCTCollection(
+			TestPropsValues.getUserId(), ctCollection3.getCtCollectionId());
+
+		conflictsMap = _ctCollectionLocalService.checkConflicts(ctCollection2);
 
 		Assert.assertFalse(conflictsMap.isEmpty());
 	}

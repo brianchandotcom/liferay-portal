@@ -2556,35 +2556,49 @@ public class ObjectEntryLocalServiceImpl
 		User user = _userLocalService.getUser(userId);
 
 		for (ObjectEntryComment objectEntryComment : objectEntryComments) {
-			long parentCommentId = 0;
-
 			if (Validator.isNotNull(
 					objectEntryComment.
 						getParentCommentExternalReferenceCode())) {
 
-				Comment comment = _commentManager.fetchComment(
+				Comment parentComment = _commentManager.fetchComment(
 					groupId,
 					objectEntryComment.getParentCommentExternalReferenceCode());
 
-				if (comment != null) {
-					parentCommentId = comment.getCommentId();
+				if (parentComment == null) {
+					parentComment = _commentManager.getOrAddEmptyComment(
+						objectEntryComment.
+							getParentCommentExternalReferenceCode(),
+						userId, groupId, objectDefinition.getClassName(),
+						objectEntry.getObjectEntryId());
 				}
-			}
 
-			if (parentCommentId == 0) {
+				_commentManager.addComment(
+					objectEntryComment.getExternalReferenceCode(), userId,
+					objectDefinition.getClassName(),
+					objectEntry.getObjectEntryId(), user.getFullName(),
+					parentComment.getCommentId(), null,
+					objectEntryComment.getText(),
+					_createServiceContextFunction());
+			}
+			else {
+				Comment comment = _commentManager.fetchComment(
+					groupId, objectEntryComment.getExternalReferenceCode());
+
+				if (comment != null) {
+					_commentManager.updateComment(
+						userId, objectDefinition.getClassName(),
+						objectEntry.getObjectEntryId(), comment.getCommentId(),
+						StringPool.BLANK, objectEntryComment.getText(),
+						_createServiceContextFunction());
+
+					continue;
+				}
+
 				_commentManager.addComment(
 					objectEntryComment.getExternalReferenceCode(), userId,
 					groupId, objectDefinition.getClassName(),
 					objectEntry.getObjectEntryId(), user.getFullName(), null,
 					objectEntryComment.getText(),
-					_createServiceContextFunction());
-			}
-			else {
-				_commentManager.addComment(
-					objectEntryComment.getExternalReferenceCode(), userId,
-					objectDefinition.getClassName(),
-					objectEntry.getObjectEntryId(), user.getFullName(),
-					parentCommentId, null, objectEntryComment.getText(),
 					_createServiceContextFunction());
 			}
 		}

@@ -34,10 +34,10 @@
 					},
 					"externalReferenceCode": "H1S4_ON_CREATE_COMPANY",
 					"label": {
-						"en_US": "On create company"
+						"en_US": "HubSpot Etc Spring Boot Object Action Company"
 					},
 					"name": "onCreateCompany",
-					"objectActionExecutorKey": "function#liferay-hubspot-post-company",
+					"objectActionExecutorKey": "function#liferay-hubspot-etc-spring-boot-object-action-company",
 					"objectActionTriggerKey": "onAfterAdd",
 					"parameters": {
 					}
@@ -188,10 +188,10 @@
 					},
 					"externalReferenceCode": "H1S4_ON_CREATE_CONTACT",
 					"label": {
-						"en_US": "On create contact"
+						"en_US": "HubSpot Etc Spring Boot Object Action Contact"
 					},
 					"name": "onCreateContact",
-					"objectActionExecutorKey": "function#liferay-hubspot-post-contact",
+					"objectActionExecutorKey": "function#liferay-hubspot-etc-spring-boot-object-action-contact",
 					"objectActionTriggerKey": "onAfterAdd",
 					"parameters": {
 					}
@@ -357,10 +357,10 @@
 					},
 					"externalReferenceCode": "H1S4_ON_CREATE_LEAD",
 					"label": {
-						"en_US": "On create lead"
+						"en_US": "HubSpot Etc Spring Boot Object Action Lead"
 					},
 					"name": "onCreateLead",
-					"objectActionExecutorKey": "function#liferay-hubspot-post-lead",
+					"objectActionExecutorKey": "function#liferay-hubspot-etc-spring-boot-object-action-lead",
 					"objectActionTriggerKey": "onAfterAdd",
 					"parameters": {
 					}

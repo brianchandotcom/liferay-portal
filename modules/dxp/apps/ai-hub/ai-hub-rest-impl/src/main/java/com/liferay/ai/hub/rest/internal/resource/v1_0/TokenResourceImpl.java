@@ -38,17 +38,16 @@ public class TokenResourceImpl extends BaseTokenResourceImpl {
 
 		Http.Options options = new Http.Options();
 
-		options.addPart("client_id", aiHubConfiguration.clientId());
-		options.addPart("client_secret", aiHubConfiguration.clientSecret());
-		options.addPart("grant_type", "client_credentials");
-
 		AIHubConfiguration aiHubConfiguration =
 			_configurationProvider.getCompanyConfiguration(
 				AIHubConfiguration.class, contextCompany.getCompanyId());
 
+		options.addPart("client_id", aiHubConfiguration.clientId());
+		options.addPart("client_secret", aiHubConfiguration.clientSecret());
+
+		options.addPart("grant_type", "client_credentials");
 		options.setLocation(
 			aiHubConfiguration.serviceURL() + "/o/oauth2/token");
-
 		options.setMethod(Http.Method.POST);
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject(

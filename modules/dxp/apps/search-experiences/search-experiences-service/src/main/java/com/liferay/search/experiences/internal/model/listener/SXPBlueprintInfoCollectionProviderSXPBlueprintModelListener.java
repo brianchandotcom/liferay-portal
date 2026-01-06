@@ -23,7 +23,6 @@ import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupService;
@@ -92,9 +91,7 @@ public class SXPBlueprintInfoCollectionProviderSXPBlueprintModelListener
 
 	@Override
 	public void onAfterCreate(SXPBlueprint sxpBlueprint) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-129412") ||
-			!_isCollectionProvider(sxpBlueprint)) {
-
+		if (!_isCollectionProvider(sxpBlueprint)) {
 			return;
 		}
 

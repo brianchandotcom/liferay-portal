@@ -980,6 +980,7 @@ information.
 					<local name="tasks.output" />
 
 					<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
+						<env key="GIT_DISCOVERY_ACROSS_FILESYSTEM" value="1" />
 						<arg if:set="env.JENKINS_HOME" value="--max-workers=4" />
 						<arg if:set="env.JENKINS_HOME" value="--no-daemon" />
 						<arg unless:true="${gradle.build.parallel.enabled}" value="--no-parallel" />
@@ -1121,6 +1122,7 @@ information.
 							</beanshell>
 
 							<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
+								<env key="GIT_DISCOVERY_ACROSS_FILESYSTEM" value="1" />
 								<args />
 								<arg if:set="env.JENKINS_HOME" value="--max-workers=4" />
 								<arg if:set="env.JENKINS_HOME" value="--no-daemon" />
@@ -1159,6 +1161,7 @@ information.
 
 							<echoxml>
 								<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
+									<env key="GIT_DISCOVERY_ACROSS_FILESYSTEM" value="1" />
 									<args />
 									<arg if:set="env.JENKINS_HOME" value="--max-workers=4" />
 									<arg if:set="env.JENKINS_HOME" value="--no-daemon" />

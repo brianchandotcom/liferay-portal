@@ -300,7 +300,7 @@ public class ContactsEngineClientImpl
 		individualSegment.setAuthor(getAuthor(userId));
 		individualSegment.setChannelId(channelId);
 		individualSegment.setDateModified(new Date());
-		individualSegment.setFilter(filterString);
+		individualSegment.setFilterString(filterString);
 		individualSegment.setIncludeAnonymousUsers(includeAnonymousUsers);
 		individualSegment.setName(name);
 		individualSegment.setSegmentType(segmentType);
@@ -2905,7 +2905,7 @@ public class ContactsEngineClientImpl
 		individualSegment.setId(id);
 		individualSegment.setAuthor(getAuthor(userId));
 		individualSegment.setChannelId(channelId);
-		individualSegment.setFilter(filterString);
+		individualSegment.setFilterString(filterString);
 		individualSegment.setIncludeAnonymousUsers(includeAnonymousUsers);
 		individualSegment.setName(name);
 		individualSegment.setSegmentType(segmentType);

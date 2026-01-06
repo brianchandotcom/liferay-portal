@@ -404,7 +404,7 @@ public class NaniteDemoCreatorService extends DemoCreatorService {
 					HashMapBuilder.<String, Object>put(
 						"channelId", individualSegment.getChannelId()
 					).put(
-						"filter", individualSegment.getFilter()
+						"filter", individualSegment.getFilterString()
 					).put(
 						"id", individualSegment.getId()
 					).put(

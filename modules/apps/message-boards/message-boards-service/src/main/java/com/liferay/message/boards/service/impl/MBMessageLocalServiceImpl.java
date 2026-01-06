@@ -384,7 +384,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		MBMessage parentMBMessage = fetchMBMessage(parentMessageId);
 
-		if ((parentMBMessage != null) && !parentMBMessage.isApproved()) {
+		if ((parentMBMessage != null) && !parentMBMessage.isApproved() &&
+			(parentMBMessage.getStatus() != WorkflowConstants.STATUS_EMPTY)) {
+
 			throw new PortalException("Parent message is not approved");
 		}
 
@@ -473,7 +475,16 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		message.setUrlSubject(
 			_getUniqueUrlSubject(groupId, messageId, subject));
 		message.setAllowPingbacks(allowPingbacks);
-		message.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+		int status = WorkflowConstants.STATUS_DRAFT;
+
+		if (_emptyModelManager.isEmptyModel() &&
+			(parentMessageId != MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID)) {
+
+			status = WorkflowConstants.STATUS_EMPTY;
+		}
+
+		message.setStatus(status);
 		message.setStatusByUserId(user.getUserId());
 		message.setStatusByUserName(userName);
 		message.setStatusDate(modifiedDate);
@@ -587,6 +598,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			serviceContext.isAssetEntryVisible());
 
 		// Workflow
+
+		if (status == WorkflowConstants.STATUS_EMPTY) {
+			return message;
+		}
 
 		return _startWorkflowInstance(userId, message, serviceContext);
 	}

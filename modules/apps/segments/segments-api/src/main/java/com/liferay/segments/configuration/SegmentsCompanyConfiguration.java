@@ -13,8 +13,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Cristina González
  */
 @ExtendedObjectClassDefinition(
-	category = "segments", generateUI = false,
-	scope = ExtendedObjectClassDefinition.Scope.COMPANY
+	category = "segments", scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
 	id = "com.liferay.segments.configuration.SegmentsCompanyConfiguration",

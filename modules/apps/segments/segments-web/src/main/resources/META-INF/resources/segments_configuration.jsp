@@ -23,30 +23,6 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 	<aui:link hashedFile="<%= true %>" href="segments-web/css/configuration.css" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
-<clay:sheet
-	cssClass="segments-configuration"
-	size="full"
->
-	<h2>
-		<liferay-ui:message key="segments-service-company-configuration-name" />
-
-		<c:if test="<%= segmentsCompanyConfigurationDisplayContext.isSegmentsCompanyConfigurationDefined() %>">
-
-				<%
-				SegmentsCompanyConfigurationActionDropdownItemsProvider segmentsCompanyConfigurationActionDropdownItemsProvider = new SegmentsCompanyConfigurationActionDropdownItemsProvider(request, segmentsCompanyConfigurationDisplayContext);
-				%>
-
-				<div class="float-right">
-					<clay:dropdown-actions
-						aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
-						dropdownItems="<%= segmentsCompanyConfigurationActionDropdownItemsProvider.getActionDropdownItems() %>"
-					/>
-				</div>
-
-		</c:if>
-	</h2>
-
-	<aui:form action="<%= segmentsCompanyConfigurationDisplayContext.getBindConfigurationActionURL() %>" cssClass="mt-3" method="post" name="fm">
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 		<c:if test="<%= !segmentsCompanyConfigurationDisplayContext.isSegmentationEnabled() %>">
@@ -112,8 +88,8 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 			/>
 		</c:if>
 
-		<div class="row <%= (!segmentsCompanyConfigurationDisplayContext.isRoleSegmentationEnabled() || !segmentsCompanyConfigurationDisplayContext.isSegmentationEnabled()) ? "c-mt-5" : "" %>">
-			<div class="col-sm-12 form-group">
+		<div class="row <%= (!segmentsCompanyConfigurationDisplayContext.isRoleSegmentationEnabled() || !segmentsCompanyConfigurationDisplayContext.isSegmentationEnabled()) ? "c-mt-3" : "" %>">
+			<div class="col-sm-12 form-group px-4">
 				<div class="form-group__inner">
 					<c:choose>
 						<c:when test="<%= segmentsCompanyConfigurationDisplayContext.isSegmentationChecked() || !segmentsCompanyConfigurationDisplayContext.isSegmentationEnabled() %>">
@@ -140,7 +116,7 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 		</div>
 
 		<div class="row">
-			<div class="col-sm-12 form-group mb-0">
+			<div class="col-sm-12 form-group mb-4 px-4">
 				<div class="form-group__inner">
 					<c:choose>
 						<c:when test="<%= segmentsCompanyConfigurationDisplayContext.isRoleSegmentationChecked() || !segmentsCompanyConfigurationDisplayContext.isRoleSegmentationEnabled() %>">
@@ -167,43 +143,6 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 				</div>
 			</div>
 		</div>
-
-		<div class="sheet-footer">
-			<div class="btn-group-item">
-				<c:choose>
-					<c:when test="<%= segmentsCompanyConfigurationDisplayContext.isSegmentsCompanyConfigurationDefined() %>">
-						<clay:button
-							cssClass="submit-btn"
-							displayType="primary"
-							id='<%= liferayPortletResponse.getNamespace() + "update" %>'
-							label='<%= LanguageUtil.get(request, "update") %>'
-							name='<%= liferayPortletResponse.getNamespace() + "update" %>'
-							type="submit"
-						/>
-					</c:when>
-					<c:otherwise>
-						<clay:button
-							cssClass="submit-btn"
-							displayType="primary"
-							id='<%= liferayPortletResponse.getNamespace() + "save" %>'
-							label='<%= LanguageUtil.get(request, "save") %>'
-							name='<%= liferayPortletResponse.getNamespace() + "save" %>'
-							type="submit"
-						/>
-					</c:otherwise>
-				</c:choose>
-
-				<clay:link
-					displayType="secondary"
-					href="<%= redirect %>"
-					id='<%= liferayPortletResponse.getNamespace() + "cancel" %>'
-					label="cancel"
-					type="button"
-				/>
-			</div>
-		</div>
-	</aui:form>
-</clay:sheet>
 
 <liferay-frontend:component
 	module="{ConfigurationFormEventHandler} from segments-web"

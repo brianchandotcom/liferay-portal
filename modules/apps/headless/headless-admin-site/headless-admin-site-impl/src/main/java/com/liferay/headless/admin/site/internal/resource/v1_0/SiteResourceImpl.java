@@ -809,8 +809,14 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 				String.valueOf(site.getInheritLocales()));
 		}
 
-		unicodeProperties.put(
-			"locales", StringUtil.merge(site.getLocales(), StringPool.COMMA));
+		if (site.getLocales() != null) {
+			unicodeProperties.put(
+				"locales",
+				StringUtil.merge(
+					LocaleUtil.fromLanguageIds(site.getLocales()),
+					StringPool.COMMA));
+		}
+
 		unicodeProperties.put(
 			"MAP_PROVIDER_KEY", site.getMapProviderKeyAsString());
 		unicodeProperties.put(

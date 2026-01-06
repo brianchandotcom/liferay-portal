@@ -281,9 +281,7 @@ public class LearnRestController extends BaseRestController {
 
 		AccessToken accessToken = googleCredentials.getAccessToken();
 
-		String accessTokenValue = accessToken.getTokenValue();
-
-		return "Bearer " + accessTokenValue;
+		return "Bearer " + accessToken.getTokenValue();
 	}
 
 	private int _getQuizQuestionScore(

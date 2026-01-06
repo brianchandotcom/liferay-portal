@@ -108,16 +108,6 @@ public class BaseTestTask implements TestTask {
 	}
 
 	@Override
-	public long getSharedWeight() {
-		return 0L;
-	}
-
-	@Override
-	public String getSharedWeightName() {
-		return null;
-	}
-
-	@Override
 	public List<TestClass> getTestClasses() {
 		return _testClasses;
 	}

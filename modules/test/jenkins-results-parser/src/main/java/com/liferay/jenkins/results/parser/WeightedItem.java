@@ -12,10 +12,6 @@ public interface WeightedItem {
 
 	public long getOverheadWeight();
 
-	public long getSharedWeight();
-
-	public String getSharedWeightName();
-
 	public long getWeight();
 
 }

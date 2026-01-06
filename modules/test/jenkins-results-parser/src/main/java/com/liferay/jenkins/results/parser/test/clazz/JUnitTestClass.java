@@ -96,16 +96,6 @@ public class JUnitTestClass extends BaseTestClass {
 		return jsonObject;
 	}
 
-	@Override
-	public long getSharedWeight() {
-		return getAverageTestTaskDuration();
-	}
-
-	@Override
-	public String getSharedWeightName() {
-		return getTestTaskName();
-	}
-
 	public List<String> getTestClassMethodNames() {
 		return _testClassMethodNames;
 	}

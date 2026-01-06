@@ -14,12 +14,12 @@ public class DefaultTestTask extends BaseTestTask {
 
 	protected DefaultTestTask(
 		long averageDuration, long averageTotalDuration,
-		TestClassGroup.GroupingStrategy groupingStrategy, long longestDuration,
-		String name) {
+		TestClassGroup.GroupingStrategy groupingStrategy,
+		boolean latestReportMissing, long longestDuration, String name) {
 
 		super(
 			averageDuration, averageTotalDuration, groupingStrategy,
-			longestDuration, name);
+			latestReportMissing, longestDuration, name);
 	}
 
 }

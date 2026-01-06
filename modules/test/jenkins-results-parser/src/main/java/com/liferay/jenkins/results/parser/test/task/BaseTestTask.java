@@ -76,6 +76,8 @@ public class BaseTestTask implements TestTask {
 		).put(
 			"grouping_strategy", String.valueOf(_groupingStrategy)
 		).put(
+			"latest_report_missing", isLatestReportMissing()
+		).put(
 			"longest_duration", getLongestDuration()
 		).put(
 			"name", getName()
@@ -114,6 +116,10 @@ public class BaseTestTask implements TestTask {
 
 	@Override
 	public long getWeight() {
+		if (_weight != null) {
+			return _weight;
+		}
+
 		long weight = 0;
 
 		if (_groupingStrategy ==
@@ -135,10 +141,14 @@ public class BaseTestTask implements TestTask {
 		}
 
 		if (weight <= 0) {
-			return Long.MAX_VALUE;
+			_latestReportMissing = true;
+
+			weight = 0L;
 		}
 
-		return weight;
+		_weight = weight;
+
+		return _weight;
 	}
 
 	@Override
@@ -148,14 +158,28 @@ public class BaseTestTask implements TestTask {
 		return name.hashCode();
 	}
 
+	@Override
+	public boolean isIsolated() {
+		if (_weight == null) {
+			getWeight();
+		}
+
+		return isLatestReportMissing();
+	}
+
+	public boolean isLatestReportMissing() {
+		return _latestReportMissing;
+	}
+
 	protected BaseTestTask(
 		long averageDuration, long averageTotalDuration,
-		TestClassGroup.GroupingStrategy groupingStrategy, long longestDuration,
-		String name) {
+		TestClassGroup.GroupingStrategy groupingStrategy,
+		boolean latestReportMissing, long longestDuration, String name) {
 
 		_averageDuration = averageDuration;
 		_averageTotalDuration = averageTotalDuration;
 		_groupingStrategy = groupingStrategy;
+		_latestReportMissing = latestReportMissing;
 		_longestDuration = longestDuration;
 		_name = name;
 	}
@@ -163,8 +187,10 @@ public class BaseTestTask implements TestTask {
 	private final long _averageDuration;
 	private final long _averageTotalDuration;
 	private final TestClassGroup.GroupingStrategy _groupingStrategy;
+	private boolean _latestReportMissing;
 	private final long _longestDuration;
 	private final String _name;
 	private final List<TestClass> _testClasses = new ArrayList<>();
+	private Long _weight;
 
 }

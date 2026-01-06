@@ -14,4 +14,6 @@ public interface WeightedItem {
 
 	public long getWeight();
 
+	public boolean isIsolated();
+
 }

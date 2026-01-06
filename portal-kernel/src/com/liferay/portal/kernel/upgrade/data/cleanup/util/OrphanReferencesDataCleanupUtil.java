@@ -60,7 +60,7 @@ public class OrphanReferencesDataCleanupUtil {
 			aliasNeeded = true;
 		}
 
-		List<SafeCloseable> safeCloseables = createIndexesIfNeeded(
+		List<SafeCloseable> safeCloseables = addTemporaryIndexes(
 			targetColumnNames, connection, db, targetTableName);
 
 		String whereClause = getWhereClause(
@@ -127,7 +127,7 @@ public class OrphanReferencesDataCleanupUtil {
 			targetTableName);
 	}
 
-	public static List<SafeCloseable> createIndexesIfNeeded(
+	public static List<SafeCloseable> addTemporaryIndexes(
 			String[] columnNames, Connection connection, DB db,
 			String tableName)
 		throws Exception {

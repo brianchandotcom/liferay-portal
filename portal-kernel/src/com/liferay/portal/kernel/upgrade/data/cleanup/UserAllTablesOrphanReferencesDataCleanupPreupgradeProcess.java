@@ -54,12 +54,12 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 		DB db = DBManagerUtil.getDB();
 
 		List<SafeCloseable> safeCloseables =
-			OrphanReferencesDataCleanupUtil.createIndexesIfNeeded(
+			OrphanReferencesDataCleanupUtil.addTemporaryIndexes(
 				new String[] {sourceColumnName}, connection, db,
 				sourceTableName);
 
 		safeCloseables.addAll(
-			OrphanReferencesDataCleanupUtil.createIndexesIfNeeded(
+			OrphanReferencesDataCleanupUtil.addTemporaryIndexes(
 				targetColumnNames, connection, db, targetTableName));
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(

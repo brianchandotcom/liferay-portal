@@ -31,8 +31,10 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
@@ -49,6 +51,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.zip.ZipReaderFactory;
@@ -779,6 +782,28 @@ public class AnalyticsBatchExportImportManagerImpl
 		}
 
 		try {
+			for (String groupId :
+					PrefsPropsUtil.getStringArray(
+						companyId, "liferayAnalyticsGroupIds",
+						StringPool.COMMA)) {
+
+				Group group = _groupLocalService.fetchGroup(
+					GetterUtil.getLong(groupId));
+
+				if (group == null) {
+					continue;
+				}
+
+				UnicodeProperties typeSettingsUnicodeProperties =
+					group.getTypeSettingsProperties();
+
+				typeSettingsUnicodeProperties.remove("analyticsChannelId");
+
+				group.setTypeSettingsProperties(typeSettingsUnicodeProperties);
+
+				_groupLocalService.updateGroup(group);
+			}
+
 			_companyLocalService.updatePreferences(
 				companyId,
 				UnicodePropertiesBuilder.create(
@@ -931,6 +956,9 @@ public class AnalyticsBatchExportImportManagerImpl
 
 	@Reference
 	private com.liferay.portal.kernel.util.File _file;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Http _http;

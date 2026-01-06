@@ -2260,6 +2260,10 @@
 			<category name="Styling" />
 			<description name="Checks the order of dependencies in `ivy.xml` file." />
 		</check>
+		<check name="XMLLiferayWebFileCheck">
+			<category name="Bug Prevention" />
+			<description name="Performs several checks on `liferay-web.xml` file." />
+		</check>
 		<check name="XMLServiceReferenceCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks for unused references in `service.xml` file." />

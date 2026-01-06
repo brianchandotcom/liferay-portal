@@ -20,6 +20,7 @@ import {OrderByDirections, SegmentTypes} from 'shared/util/constants';
 import {OrderedMap} from 'immutable';
 import {OrderParams, Segment} from 'shared/util/records';
 import {ReferencedObjectsProvider} from 'segment/segment-editor/dynamic/context/referencedObjects';
+import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
 import {SegmentGrowthChart} from 'segment/components/Growth';
 import {Text} from '@clayui/core';
 import {useRequest} from 'shared/hooks/useRequest';
@@ -270,7 +271,10 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 				/>
 			</ReferencedObjectsProvider>
 
-			<Card>
+			<Card
+				className='segment-membership-root'
+				reportContainer={ReportContainer.SegmentMembershipTrendCard}
+			>
 				<Card.Header>
 					<Card.Title>
 						{Liferay.Language.get('segment-membership-trend')}

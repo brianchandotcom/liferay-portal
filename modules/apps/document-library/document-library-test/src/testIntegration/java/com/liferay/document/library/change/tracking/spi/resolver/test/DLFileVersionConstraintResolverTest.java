@@ -9,18 +9,24 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.conflict.ConflictInfo;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
-import com.liferay.change.tracking.service.CTCollectionService;
-import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.model.DLFolder;
-import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
-import com.liferay.document.library.test.util.DLTestUtil;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -29,6 +35,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -47,14 +54,20 @@ public class DLFileVersionConstraintResolverTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+	}
+
 	@Test
 	public void testResolveConflict() throws Exception {
-		Group group = GroupTestUtil.addGroup();
+		String fileName = RandomTestUtil.randomString();
+		String title = RandomTestUtil.randomString();
 
-		DLFolder dlFolder = DLTestUtil.addDLFolder(group.getGroupId());
+		FileEntry fileEntry1 = _addFileEntry(fileName, title);
 
-		DLFileEntry dlFileEntry = DLTestUtil.addDLFileEntry(
-			dlFolder.getFolderId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(fileEntry1.getGroupId());
 
 		CTCollection ctCollection1 = _ctCollectionLocalService.addCTCollection(
 			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
@@ -64,41 +77,85 @@ public class DLFileVersionConstraintResolverTest {
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					ctCollection1.getCtCollectionId())) {
 
-			dlFileEntry.setDescription(RandomTestUtil.randomString());
+			fileEntry1 = _dlAppService.updateFileEntry(
+				fileEntry1.getFileEntryId(), fileEntry1.getFileName(),
+				fileEntry1.getMimeType(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), fileEntry1.getDescription(),
+				RandomTestUtil.randomString(), DLVersionNumberIncrease.MINOR,
+				null, fileEntry1.getSize(), fileEntry1.getDisplayDate(),
+				fileEntry1.getExpirationDate(), fileEntry1.getReviewDate(),
+				serviceContext);
 
-			dlFileEntry = _dlFileEntryLocalService.updateDLFileEntry(
-				dlFileEntry);
+			fileEntry1 = _dlAppService.updateFileEntry(
+				fileEntry1.getFileEntryId(), fileEntry1.getFileName(),
+				fileEntry1.getMimeType(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), fileEntry1.getDescription(),
+				RandomTestUtil.randomString(), DLVersionNumberIncrease.MINOR,
+				null, fileEntry1.getSize(), fileEntry1.getDisplayDate(),
+				fileEntry1.getExpirationDate(), fileEntry1.getReviewDate(),
+				serviceContext);
 		}
-
-		CTCollection ctCollection2 = _ctCollectionLocalService.addCTCollection(
-			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			0, RandomTestUtil.randomString(), null);
 
 		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ctCollection2.getCtCollectionId())) {
+				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
 
-			dlFileEntry.setDescription(RandomTestUtil.randomString());
+			FileEntry fileEntry2 = _dlAppService.getFileEntry(
+				fileEntry1.getFileEntryId());
 
-			_dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
+			_dlAppService.updateFileEntry(
+				fileEntry2.getFileEntryId(), fileEntry2.getFileName(),
+				fileEntry2.getMimeType(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), fileEntry2.getDescription(),
+				RandomTestUtil.randomString(), DLVersionNumberIncrease.MINOR,
+				null, fileEntry2.getSize(), fileEntry2.getDisplayDate(),
+				fileEntry2.getExpirationDate(), fileEntry2.getReviewDate(),
+				serviceContext);
 		}
 
-		_ctCollectionService.publishCTCollection(
-			TestPropsValues.getUserId(), ctCollection1.getCtCollectionId());
-
 		Map<Long, List<ConflictInfo>> conflictsMap =
-			_ctCollectionLocalService.checkConflicts(ctCollection2);
+			_ctCollectionLocalService.checkConflicts(ctCollection1);
 
 		Assert.assertFalse(conflictsMap.isEmpty());
+
+		for (Map.Entry<Long, List<ConflictInfo>> entry :
+				conflictsMap.entrySet()) {
+
+			for (ConflictInfo conflictInfo : entry.getValue()) {
+				Assert.assertTrue(conflictInfo.isResolved());
+			}
+		}
+	}
+
+	private FileEntry _addFileEntry(String fileName, String title)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		Folder folder = _dlAppLocalService.addFolder(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
+
+		return _dlAppLocalService.addFileEntry(
+			null, serviceContext.getUserId(), folder.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
+			ContentTypes.TEXT_PLAIN, title, StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, "liferay".getBytes(), null, null, null,
+			serviceContext);
 	}
 
 	@Inject
 	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Inject
-	private CTCollectionService _ctCollectionService;
+	private DLAppLocalService _dlAppLocalService;
 
 	@Inject
-	private DLFileEntryLocalService _dlFileEntryLocalService;
+	private DLAppService _dlAppService;
+
+	@DeleteAfterTestRun
+	private Group _group;
 
 }

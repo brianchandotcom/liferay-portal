@@ -1,0 +1,42 @@
+.lfr-cmp__info-summary {
+	&-header {
+		&-container {
+			align-items: center;
+			display: flex;
+			justify-content: space-between;
+			padding: 1rem 1.5rem;
+		}
+
+		&-content {
+			font-size: 0.875rem;
+			font-weight: 600;
+			letter-spacing: 0.05rem;
+			text-transform: uppercase;
+		}
+	}
+
+	&-content {
+		&-container {
+			border-top: 1px solid #e7e7ed;
+			display: flex;
+			flex-direction: column;
+			padding: 0.5rem 0;
+
+			&--hidden {
+				display: none;
+			}
+		}
+
+		&-item {
+			align-items: center;
+			display: grid;
+			font-size: 0.875rem;
+			grid-template-columns: 100px 1fr;
+			padding: 0.75rem 1.5rem;
+		}
+
+		&-label {
+			font-weight: 600;
+		}
+	}
+}

@@ -45,8 +45,6 @@ public class ClassNamePostUpgradeDataCleanupProcess
 		_classNameLocalService = classNameLocalService;
 
 		this.connection = connection;
-
-		_dbInspector = new DBInspector(connection);
 	}
 
 	@Override
@@ -149,7 +147,7 @@ public class ClassNamePostUpgradeDataCleanupProcess
 					_classNameLocalService.deleteClassName(className);
 
 					DataCleanupLoggingUtil.logDelete(
-						_log, 1, _dbInspector.normalizeName("ClassName_"),
+						_log, 1, dbInspector.normalizeName("ClassName_"),
 						StringBundler.concat(
 							"\"", value,
 							"\" is not defined in any deployed module and is ",
@@ -171,6 +169,5 @@ public class ClassNamePostUpgradeDataCleanupProcess
 		ClassNamePostUpgradeDataCleanupProcess.class);
 
 	private final ClassNameLocalService _classNameLocalService;
-	private final DBInspector _dbInspector;
 
 }

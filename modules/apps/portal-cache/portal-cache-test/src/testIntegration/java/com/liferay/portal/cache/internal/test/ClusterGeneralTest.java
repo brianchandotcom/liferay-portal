@@ -8,6 +8,7 @@ package com.liferay.portal.cache.internal.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.process.local.LocalProcessLauncher;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
@@ -24,12 +25,14 @@ import com.liferay.portal.kernel.cluster.ClusterableInvokerUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log4j.Log4JUtil;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
@@ -39,10 +42,13 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.language.override.model.PLOEntry;
+import com.liferay.portal.language.override.service.PLOEntryLocalServiceUtil;
 import com.liferay.portal.model.impl.CompanyImpl;
 import com.liferay.portal.test.cluster.tomcat.TomcatCluster;
 import com.liferay.portal.test.cluster.tomcat.TomcatNode;
@@ -64,6 +70,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
@@ -144,6 +151,71 @@ public class ClusterGeneralTest implements Serializable {
 	public void testEnableAndDisableFeatureFlag() throws Exception {
 		_testEnableAndDisableFeatureFlag(_tomcatNode1, _tomcatNode2);
 		_testEnableAndDisableFeatureFlag(_tomcatNode2, _tomcatNode1);
+	}
+
+	@Test
+	public void testLanguageOverrideSyncsBetweenNodes() throws Exception {
+		String key = RandomTestUtil.randomString();
+		String value = RandomTestUtil.randomString();
+
+		String languageId = "en_US";
+
+		Locale locale = LocaleUtil.fromLanguageId(languageId);
+
+		long companyId = TestPropsValues.getCompanyId();
+
+		long ploEntryId = _tomcatNode1.syncExecute(
+			() -> {
+				try (SafeCloseable safeCloseable =
+						CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+							companyId)) {
+
+					PLOEntry ploEntry =
+						PLOEntryLocalServiceUtil.addOrUpdatePLOEntry(
+							companyId, TestPropsValues.getUserId(), key,
+							languageId, value);
+
+					return ploEntry.getPloEntryId();
+				}
+			});
+
+		Assert.assertEquals(
+			value,
+			_tomcatNode2.syncExecute(
+				() -> {
+					try (SafeCloseable safeCloseable =
+							CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+								companyId)) {
+
+						return LanguageUtil.get(locale, key);
+					}
+				}));
+
+		Assert.assertEquals(
+			key,
+			_tomcatNode1.syncExecute(
+				() -> {
+					try (SafeCloseable safeCloseable =
+							CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+								companyId)) {
+
+						PLOEntryLocalServiceUtil.deletePLOEntry(ploEntryId);
+
+						return LanguageUtil.get(locale, key);
+					}
+				}));
+
+		Assert.assertEquals(
+			key,
+			_tomcatNode2.syncExecute(
+				() -> {
+					try (SafeCloseable safeCloseable =
+							CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+								companyId)) {
+
+						return LanguageUtil.get(locale, key);
+					}
+				}));
 	}
 
 	@Test

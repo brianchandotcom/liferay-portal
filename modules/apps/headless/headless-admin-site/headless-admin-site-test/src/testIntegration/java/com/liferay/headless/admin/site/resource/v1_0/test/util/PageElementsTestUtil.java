@@ -15,6 +15,7 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.util.FragmentRendererRegistryUtil;
 import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
+import com.liferay.headless.admin.site.client.dto.v1_0.BasicFragmentInstancePageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.ClassNameReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionDisplayListStyle;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionDisplayPageElementDefinition;
@@ -31,7 +32,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.FormStepContainerPageElem
 import com.liferay.headless.admin.site.client.dto.v1_0.FormStepPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentDropZonePageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentEditableElement;
-import com.liferay.headless.admin.site.client.dto.v1_0.FragmentInstancePageElementDefinition;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentInstance;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.GridPageElementDefinition;
@@ -88,7 +89,7 @@ public class PageElementsTestUtil {
 			externalReferenceCode, dropZonePageElementDefinition);
 	}
 
-	public static FragmentInstancePageElementDefinition
+	public static BasicFragmentInstancePageElementDefinition
 		getFragmentInstancePageElementDefinition(
 			Map<String, Object> configurationValuesMap,
 			FragmentEditableElement[] fragmentEditableElements,
@@ -100,7 +101,7 @@ public class PageElementsTestUtil {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null);
 	}
 
-	public static FragmentInstancePageElementDefinition
+	public static BasicFragmentInstancePageElementDefinition
 		getFragmentInstancePageElementDefinition(
 			Map<String, Object> configurationValuesMap,
 			FragmentEditableElement[] fragmentEditableElements,
@@ -108,31 +109,48 @@ public class PageElementsTestUtil {
 			String fragmentInstanceExternalReferenceCode, long scopeGroupId,
 			String namespace, String uuid, WidgetInstance[] widgetInstances) {
 
-		FragmentInstancePageElementDefinition
-			fragmentInstancePageElementDefinition =
-				new FragmentInstancePageElementDefinition();
+		return new BasicFragmentInstancePageElementDefinition() {
+			{
+				setFragmentInstance(
+					_getFragmentInstance(
+						configurationValuesMap, fragmentEditableElements,
+						fragmentEntry, fragmentInstanceExternalReferenceCode,
+						scopeGroupId, namespace, uuid, widgetInstances));
+				setType(() -> Type.BASIC_FRAGMENT);
+			}
+		};
+	}
 
-		fragmentInstancePageElementDefinition.setConfiguration(
+	private static FragmentInstance
+	_getFragmentInstance(
+		Map<String, Object> configurationValuesMap,
+		FragmentEditableElement[] fragmentEditableElements,
+		FragmentEntry fragmentEntry,
+		String fragmentInstanceExternalReferenceCode, long scopeGroupId,
+		String namespace, String uuid, WidgetInstance[] widgetInstances) {
+
+		FragmentInstance fragmentInstance = new FragmentInstance();
+
+		fragmentInstance.setConfiguration(
 			fragmentEntry::getConfiguration);
-		fragmentInstancePageElementDefinition.
-			setFragmentConfigurationFieldValues(
+		fragmentInstance.setFragmentConfigurationFieldValues(
 				() ->
 					FragmentConfigurationFieldValueTestUtil.
 						getFragmentConfigurationFieldValuesMap(
 							JSONFactoryUtil.createJSONObject(
 								fragmentEntry.getConfiguration()),
 							configurationValuesMap, scopeGroupId));
-		fragmentInstancePageElementDefinition.setFragmentEditableElements(
+		fragmentInstance.setFragmentEditableElements(
 			() -> fragmentEditableElements);
-		fragmentInstancePageElementDefinition.setCss(fragmentEntry::getCss);
-		fragmentInstancePageElementDefinition.setCssClasses(
+		fragmentInstance.setCss(fragmentEntry::getCss);
+		fragmentInstance.setCssClasses(
 			() -> new String[] {RandomTestUtil.randomString()});
-		fragmentInstancePageElementDefinition.setDatePropagated(
+		fragmentInstance.setDatePropagated(
 			RandomTestUtil::nextDate);
-		fragmentInstancePageElementDefinition.
+		fragmentInstance.
 			setFragmentInstanceExternalReferenceCode(
 				fragmentInstanceExternalReferenceCode);
-		fragmentInstancePageElementDefinition.setFragmentReference(
+		fragmentInstance.setFragmentReference(
 			() -> {
 				if (fragmentEntry.getFragmentEntryId() == 0) {
 					return _addDefaultFragmentReference(
@@ -144,37 +162,47 @@ public class PageElementsTestUtil {
 					ScopeTestUtil.getItemScope(
 						fragmentEntry.getGroupId(), scopeGroupId));
 			});
-		fragmentInstancePageElementDefinition.setFragmentType(
-			FragmentInstancePageElementDefinition.FragmentType.BASIC);
-		fragmentInstancePageElementDefinition.setHtml(fragmentEntry::getHtml);
-		fragmentInstancePageElementDefinition.setFragmentViewports(
+		fragmentInstance.setHtml(fragmentEntry::getHtml);
+		fragmentInstance.setFragmentViewports(
 			FragmentViewportTestUtil.getFragmentViewports());
-		fragmentInstancePageElementDefinition.setIndexed(
-			RandomTestUtil::randomBoolean);
-		fragmentInstancePageElementDefinition.setJs(fragmentEntry::getJs);
-		fragmentInstancePageElementDefinition.setName(
-			RandomTestUtil::randomString);
-		fragmentInstancePageElementDefinition.setNamespace(namespace);
-		fragmentInstancePageElementDefinition.setType(
-			PageElementDefinition.Type.FRAGMENT);
-		fragmentInstancePageElementDefinition.setUuid(uuid);
-		fragmentInstancePageElementDefinition.setWidgetInstances(
-			() -> widgetInstances);
+		fragmentInstance.setIndexed(RandomTestUtil::randomBoolean);
+		fragmentInstance.setJs(fragmentEntry::getJs);
+		fragmentInstance.setName(RandomTestUtil::randomString);
+		fragmentInstance.setNamespace(namespace);
+		fragmentInstance.setUuid(uuid);
+		fragmentInstance.setWidgetInstances(() -> widgetInstances);
 
-		return fragmentInstancePageElementDefinition;
+		return fragmentInstance;
 	}
 
-	public static FragmentInstancePageElementDefinition
+	public static BasicFragmentInstancePageElementDefinition
 		getFragmentInstancePageElementDefinition(
 			Map<String, Object> configurationValuesMap,
-			FragmentEditableElement[] curFragmentEditableElements,
+			FragmentEditableElement[] fragmentEditableElements,
 			FragmentRenderer fragmentRenderer, long scopeGroupId) {
+
+		return new BasicFragmentInstancePageElementDefinition() {
+			{
+				setFragmentInstance(
+					_getFragmentInstance(
+						configurationValuesMap, fragmentEditableElements,
+						fragmentRenderer, scopeGroupId));
+				setType(() -> Type.BASIC_FRAGMENT);
+			}
+		};
+	}
+
+	private static FragmentInstance
+	_getFragmentInstance(
+		Map<String, Object> configurationValuesMap,
+		FragmentEditableElement[] curFragmentEditableElements,
+		FragmentRenderer fragmentRenderer, long scopeGroupId) {
 
 		JSONObject configurationJSONObject =
 			fragmentRenderer.getConfigurationJSONObject(
 				new DefaultFragmentRendererContext(null));
 
-		return new FragmentInstancePageElementDefinition() {
+		return new FragmentInstance() {
 			{
 				setConfiguration(
 					() -> GetterUtil.getString(
@@ -202,19 +230,17 @@ public class PageElementsTestUtil {
 										DEFAULT_FRAGMENT_REFERENCE);
 						}
 					});
-				setFragmentType(FragmentType.BASIC);
 				setHtml(() -> StringPool.BLANK);
 				setIndexed(RandomTestUtil::randomBoolean);
 				setJs(() -> StringPool.BLANK);
 				setName(RandomTestUtil::randomString);
 				setNamespace(RandomTestUtil::randomString);
-				setType(Type.FRAGMENT);
 				setUuid(RandomTestUtil::randomString);
 			}
 		};
 	}
 
-	public static FragmentInstancePageElementDefinition
+	public static BasicFragmentInstancePageElementDefinition
 		getFragmentInstancePageElementDefinition(
 			Map<String, Object> configurationValuesMap, String key,
 			long scopeGroupId) {
@@ -347,7 +373,7 @@ public class PageElementsTestUtil {
 			};
 		}
 
-		if (Objects.equals(type, PageElementDefinition.Type.FRAGMENT)) {
+		if (Objects.equals(type, PageElementDefinition.Type.BASIC_FRAGMENT)) {
 			return getFragmentInstancePageElementDefinition(
 				Collections.emptyMap(), "BASIC_COMPONENT-heading",
 				scopeGroupId);
@@ -754,7 +780,7 @@ public class PageElementsTestUtil {
 
 	private static final List<PageElementDefinition.Type> _types =
 		Arrays.asList(
-			PageElementDefinition.Type.CONTAINER,
-			PageElementDefinition.Type.FRAGMENT);
+			PageElementDefinition.Type.BASIC_FRAGMENT,
+			PageElementDefinition.Type.CONTAINER);
 
 }

@@ -959,15 +959,14 @@ test('Can only import custom object entries when their definitions are already i
 	const objectActionAPIClient =
 		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
-	const objectDefinitionExternalReferenceCode =
-	`ObjectDefinition${getRandomInt()}`;
+	const objectDefinitionExternalReferenceCode = `ObjectDefinition${getRandomInt()}`;
 
 	const objectDefinition1 =
-	await apiHelpers.objectAdmin.postRandomObjectDefinition({
-		className: `com.liferay.object.model.ObjectDefinition#${objectDefinitionExternalReferenceCode}`,
-		objectDefinitionExternalReferenceCode,
-		status: { code: 0 },
-	});
+		await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			className: `com.liferay.object.model.ObjectDefinition#${objectDefinitionExternalReferenceCode}`,
+			objectDefinitionExternalReferenceCode,
+			status: {code: 0},
+		});
 
 	let objectEntry;
 	let exportFilePath;
@@ -997,18 +996,17 @@ test('Can only import custom object entries when their definitions are already i
 	await objectActionAPIClient.deleteObjectDefinition(objectDefinition1.id);
 
 	await companyExportImportPage.import({
-		expectedUploadErrorMessage:
-			`The Data Handler for the "${objectDefinitionExternalReferenceCode}" portlet is missing from the system.`,
+		expectedUploadErrorMessage: `The Data Handler for the "${objectDefinitionExternalReferenceCode}" portlet is missing from the system.`,
 		filePath: exportFilePath,
 		includePermissions: false,
 	});
 
-		const objectDefinition2 =
-	await apiHelpers.objectAdmin.postRandomObjectDefinition({
-		className: `com.liferay.object.model.ObjectDefinition#${objectDefinitionExternalReferenceCode}`,
-		objectDefinitionExternalReferenceCode,
-		status: { code: 0 },
-	});
+	const objectDefinition2 =
+		await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			className: `com.liferay.object.model.ObjectDefinition#${objectDefinitionExternalReferenceCode}`,
+			objectDefinitionExternalReferenceCode,
+			status: {code: 0},
+		});
 
 	apiHelpers.data.push({id: objectDefinition2.id, type: 'objectDefinition'});
 

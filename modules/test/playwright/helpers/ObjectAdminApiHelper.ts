@@ -57,7 +57,7 @@ export class ObjectAdminApiHelper {
 	}: {
 		className?: string;
 		enableFriendlyURLCustomization?: boolean;
-		objectDefinitionExternalReferenceCode?: string
+		objectDefinitionExternalReferenceCode?: string;
 		objectFields?: Partial<ObjectField>[];
 		objectFolderExternalReferenceCode?: string;
 		panelCategoryKey?: string;
@@ -65,13 +65,15 @@ export class ObjectAdminApiHelper {
 		status: {code: number};
 		titleObjectFieldName?: string;
 	}) {
-		const externalReferenceCode = objectDefinitionExternalReferenceCode ?? `ObjectDefinition${getRandomInt()}`;
+		const externalReferenceCode =
+			objectDefinitionExternalReferenceCode ??
+			`ObjectDefinition${getRandomInt()}`;
 
 		const requestBody: ObjectDefinition = {
 			active: true,
 			className,
 			enableFriendlyURLCustomization,
-			externalReferenceCode: externalReferenceCode,
+			externalReferenceCode,
 			label: {
 				en_US: externalReferenceCode,
 			},

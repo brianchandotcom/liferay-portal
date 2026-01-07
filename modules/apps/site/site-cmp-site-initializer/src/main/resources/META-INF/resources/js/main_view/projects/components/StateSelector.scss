@@ -1,0 +1,17 @@
+.lfr-cmp__state-selector {
+	display: inline-flex;
+	max-width: 145px;
+	min-height: unset !important;
+	transition: opacity 0.2s;
+
+	&:hover {
+		opacity: 0.8;
+	}
+
+	.label:not(.label-item) {
+		height: 16px;
+		margin: 0;
+		min-height: unset;
+		padding: 4px;
+	}
+}

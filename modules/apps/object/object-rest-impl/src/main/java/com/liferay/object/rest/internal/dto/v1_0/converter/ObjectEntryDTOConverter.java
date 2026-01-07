@@ -76,6 +76,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -85,7 +86,6 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -1402,8 +1402,16 @@ public class ObjectEntryDTOConverter
 						objectEntry.getObjectEntryId(),
 						WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 						QueryUtil.ALL_POS),
-					comment -> CommentUtil.toComment(
-						comment, _commentManager, PortalUtil.getPortal()),
+					comment -> {
+						if (!LazyReferencingThreadLocal.isEnabled() &&
+							comment.isRoot()) {
+
+							return null;
+						}
+
+						return CommentUtil.toComment(
+							comment, _commentManager, PortalUtil.getPortal());
+					},
 					Comment.class);
 			});
 	}

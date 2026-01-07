@@ -44,6 +44,10 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 
 		public String getPortletId();
 
+		public default int getRank() {
+			return 100;
+		}
+
 		public default Map<String, String[]> getReferences() {
 			return null;
 		}

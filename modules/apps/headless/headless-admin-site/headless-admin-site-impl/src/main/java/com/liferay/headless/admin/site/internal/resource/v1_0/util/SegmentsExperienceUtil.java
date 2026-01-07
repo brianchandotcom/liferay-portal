@@ -149,20 +149,20 @@ public class SegmentsExperienceUtil {
 
 		layoutStructure.addRootLayoutStructureItem();
 
-		if (pageExperience.getPageElements() != null) {
-			LayoutStructureItemImporterContext
-				layoutStructureItemImporterContext =
-					new LayoutStructureItemImporterContext(
-						serviceContext.getCompanyId(),
-						fragmentEntryProcessorRegistry, layout.getGroupId(),
-						infoItemServiceRegistry, layout, segmentsExperienceId,
-						serviceContext.getUserId());
+		if (ArrayUtil.isEmpty(pageExperience.getPageElements())) {
+			return layoutStructure.toString();
+		}
 
-			for (PageElement pageElement : pageExperience.getPageElements()) {
-				LayoutStructureUtil.addLayoutStructureItem(
-					layoutStructure, layoutStructureItemImporterContext,
-					pageElement);
-			}
+		LayoutStructureItemImporterContext layoutStructureItemImporterContext =
+			new LayoutStructureItemImporterContext(
+				serviceContext.getCompanyId(), fragmentEntryProcessorRegistry,
+				layout.getGroupId(), infoItemServiceRegistry, layout,
+				segmentsExperienceId, serviceContext.getUserId());
+
+		for (PageElement pageElement : pageExperience.getPageElements()) {
+			LayoutStructureUtil.addLayoutStructureItem(
+				layoutStructure, layoutStructureItemImporterContext,
+				pageElement);
 		}
 
 		return layoutStructure.toString();

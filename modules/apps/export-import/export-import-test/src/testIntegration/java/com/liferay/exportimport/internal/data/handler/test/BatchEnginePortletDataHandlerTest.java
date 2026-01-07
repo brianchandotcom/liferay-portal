@@ -592,6 +592,45 @@ public class BatchEnginePortletDataHandlerTest {
 			true, _addImageFileEntry(group.getGroupId()), true,
 			objectDefinition, sourceDepotEntry.getGroup());
 
+		// File Entry from the global site
+
+		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
+			null, null, false, false,
+			_addImageFileEntry(globalGroup.getGroupId()), false,
+			objectDefinition, sourceDepotEntry.getGroup());
+		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
+			null, null, false, true,
+			_addImageFileEntry(globalGroup.getGroupId()), false,
+			objectDefinition, sourceDepotEntry.getGroup());
+		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
+			null, null, false, true,
+			_addImageFileEntry(globalGroup.getGroupId()), true,
+			objectDefinition, sourceDepotEntry.getGroup());
+
+		// File Entry from the global site, deleted before exporting
+
+		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_EXPORT,
+			(fileEntry, targetGroup) -> new ObjectValuePair<>(
+				"", fileEntry.getGroupId()),
+			false, false, _addImageFileEntry(globalGroup.getGroupId()), false,
+			objectDefinition, sourceDepotEntry.getGroup());
+
+		// File Entry from the global site, deleted before importing
+
+		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
+			false, _addImageFileEntry(globalGroup.getGroupId()), false,
+			objectDefinition, sourceDepotEntry.getGroup());
+		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
+			true, _addImageFileEntry(globalGroup.getGroupId()), false,
+			objectDefinition, sourceDepotEntry.getGroup());
+		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
+			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
+			true, _addImageFileEntry(globalGroup.getGroupId()), true,
+			objectDefinition, sourceDepotEntry.getGroup());
+
 		// File Entry from the same depot
 
 		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
@@ -637,45 +676,6 @@ public class BatchEnginePortletDataHandlerTest {
 		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
 			DeleteFileEntry.BEFORE_IMPORT, null, true, true,
 			_addImageFileEntry(sourceDepotEntry.getGroupId()), true,
-			objectDefinition, sourceDepotEntry.getGroup());
-
-		// File Entry from the global site
-
-		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
-			null, null, false, false,
-			_addImageFileEntry(globalGroup.getGroupId()), false,
-			objectDefinition, sourceDepotEntry.getGroup());
-		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
-			null, null, false, true,
-			_addImageFileEntry(globalGroup.getGroupId()), false,
-			objectDefinition, sourceDepotEntry.getGroup());
-		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
-			null, null, false, true,
-			_addImageFileEntry(globalGroup.getGroupId()), true,
-			objectDefinition, sourceDepotEntry.getGroup());
-
-		// File Entry from the global site, deleted before exporting
-
-		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
-			DeleteFileEntry.BEFORE_EXPORT,
-			(fileEntry, targetGroup) -> new ObjectValuePair<>(
-				"", fileEntry.getGroupId()),
-			false, false, _addImageFileEntry(globalGroup.getGroupId()), false,
-			objectDefinition, sourceDepotEntry.getGroup());
-
-		// File Entry from the global site, deleted before importing
-
-		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
-			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
-			false, _addImageFileEntry(globalGroup.getGroupId()), false,
-			objectDefinition, sourceDepotEntry.getGroup());
-		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
-			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
-			true, _addImageFileEntry(globalGroup.getGroupId()), false,
-			objectDefinition, sourceDepotEntry.getGroup());
-		_testExportImportDepotObjectEntriesWithRichTextAndURLs(
-			DeleteFileEntry.BEFORE_IMPORT, _defaultReportEntryBiFunction, false,
-			true, _addImageFileEntry(globalGroup.getGroupId()), true,
 			objectDefinition, sourceDepotEntry.getGroup());
 	}
 

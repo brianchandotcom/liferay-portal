@@ -3510,7 +3510,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 							<trycatch property="exception.message">
 								<try>
-									<exec executable="/bin/bash">
+									<exec executable="/bin/bash" timeout="1800000">
 										<arg value="modules/test/playwright/env/set_up.sh" />
 										<env key="APP_SERVER_TYPE" value="@{app.server.type}" />
 										<env key="DATABASE_TYPE" value="@{database.type}" />
@@ -3574,7 +3574,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 								<finally>
 									<stop-docker-playwright />
 
-									<exec executable="/bin/bash">
+									<exec executable="/bin/bash" timeout="1800000">
 										<arg value="modules/test/playwright/env/tear_down.sh" />
 										<env key="APP_SERVER_TYPE" value="@{app.server.type}" />
 										<env key="DATABASE_TYPE" value="@{database.type}" />

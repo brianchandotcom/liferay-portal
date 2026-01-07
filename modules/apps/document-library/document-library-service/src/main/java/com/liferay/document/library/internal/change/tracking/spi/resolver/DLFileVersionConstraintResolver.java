@@ -14,17 +14,13 @@ import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.store.DLStoreRequest;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.document.library.kernel.util.comparator.DLFileVersionVersionComparator;
-import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.document.library.kernel.util.comparator.VersionNumberComparator;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
-import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
-import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
 
@@ -32,12 +28,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.TreeMap;
 import java.util.UUID;
 
 import org.osgi.service.component.annotations.Component;
@@ -83,80 +78,81 @@ public class DLFileVersionConstraintResolver
 		DLFileVersion dlFileVersion =
 			constraintResolverContext.getSourceCTModel();
 
-		DLFileVersion latestFileVersion = constraintResolverContext.getInTarget(
-			() -> _dlFileVersionLocalService.getLatestFileVersion(
-				dlFileVersion.getFileEntryId(), true));
+		List<String> latestVersionParts = constraintResolverContext.getInTarget(
+			() -> {
+				DLFileVersion latestFileVersion =
+					_dlFileVersionLocalService.getLatestFileVersion(
+						dlFileVersion.getFileEntryId(), false);
 
-		if (Validator.isNull(latestFileVersion.getVersion())) {
+				return StringUtil.split(
+					latestFileVersion.getVersion(), CharPool.PERIOD);
+			});
+
+		if (latestVersionParts.isEmpty()) {
 			return;
 		}
 
-		List<DLFileVersion> dlFileVersions;
-
-		try (SafeCloseable safeCloseable1 =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					dlFileVersion.getCtCollectionId());
-			SafeCloseable safeCloseable2 =
-				CTSQLModeThreadLocal.setCTSQLModeWithSafeCloseable(
-					CTSQLModeThreadLocal.CTSQLMode.CT_ONLY)) {
-
-			dlFileVersions = _dlFileVersionLocalService.getFileVersions(
+		List<DLFileVersion> dlFileVersions =
+			_dlFileVersionLocalService.getFileVersions(
 				dlFileVersion.getFileEntryId(), WorkflowConstants.STATUS_ANY);
-		}
 
 		dlFileVersions.sort(DLFileVersionVersionComparator.getInstance(true));
 
 		String newFileVersion = null;
-		String previousFileVersion = null;
+		DLFileVersion previousFileVersion = null;
 
-		Map<String, String> versionMap = new HashMap<>();
-		List<DLFileVersion> newDLFileVersions = new ArrayList<>();
+		Map<String, String> versionMap = new TreeMap<>(
+			new VersionNumberComparator());
 
 		for (DLFileVersion currentDLFileVersion : dlFileVersions) {
 			if (!constraintResolverContext.isSourceCTModel(
 					currentDLFileVersion)) {
 
+				previousFileVersion = currentDLFileVersion;
+
 				continue;
 			}
 
-			int[] ctVersionParts = StringUtil.split(
-				currentDLFileVersion.getVersion(), StringPool.PERIOD, 0);
-			int[] latestVersionParts = StringUtil.split(
-				latestFileVersion.getVersion(), StringPool.PERIOD, 0);
-
-			if (latestVersionParts.length != ctVersionParts.length) {
+			if (previousFileVersion == null) {
 				return;
 			}
 
-			StringBundler sb = new StringBundler(2 * latestVersionParts.length);
+			List<String> ctVersionParts = StringUtil.split(
+				currentDLFileVersion.getVersion(), CharPool.PERIOD);
+			List<String> previousVersionParts = StringUtil.split(
+				previousFileVersion.getVersion(), CharPool.PERIOD);
 
-			if (previousFileVersion == null) {
-				sb.append(latestVersionParts[0]);
-				sb.append(StringPool.PERIOD);
-				sb.append(latestVersionParts[1] + 1);
+			if ((latestVersionParts.size() != ctVersionParts.size()) ||
+				(latestVersionParts.size() != previousVersionParts.size())) {
+
+				return;
 			}
-			else {
-				int[] previousVersionParts = StringUtil.split(
-					previousFileVersion, StringPool.PERIOD, 0);
 
+			StringBundler sb = new StringBundler(2 * latestVersionParts.size());
+
+			for (int i = 0; i < latestVersionParts.size(); i++) {
 				int versionIncrease = Math.abs(
-					GetterUtil.getInteger(ctVersionParts[0]) -
-						GetterUtil.getInteger(previousVersionParts[0]));
+					GetterUtil.getInteger(ctVersionParts.get(i)) -
+						GetterUtil.getInteger(previousVersionParts.get(i)));
 
 				if (versionIncrease > 0) {
-					sb.append(latestVersionParts[0] + 1);
-					sb.append(".0");
+					int latestVersionPart = GetterUtil.getInteger(
+						latestVersionParts.get(i));
+
+					sb.append(latestVersionPart + versionIncrease);
+
+					for (int j = i + 1; j < ctVersionParts.size(); j++) {
+						sb.append(".0");
+					}
+
+					break;
 				}
-				else {
-					sb.append(latestVersionParts[0]);
-					sb.append(StringPool.PERIOD);
-					sb.append(latestVersionParts[1] + 1);
-				}
+
+				sb.append(latestVersionParts.get(i));
+				sb.append(StringPool.PERIOD);
 			}
 
 			newFileVersion = sb.toString();
-
-			previousFileVersion = currentDLFileVersion.getVersion();
 
 			String oldStoreFileName = currentDLFileVersion.getStoreFileName();
 
@@ -164,46 +160,34 @@ public class DLFileVersionConstraintResolver
 			currentDLFileVersion.setStoreUUID(
 				String.valueOf(UUID.randomUUID()));
 
-			newDLFileVersions.add(currentDLFileVersion);
+			currentDLFileVersion =
+				_dlFileVersionLocalService.updateDLFileVersion(
+					currentDLFileVersion);
 
 			versionMap.put(
-				currentDLFileVersion.getStoreFileName(), oldStoreFileName);
+				oldStoreFileName, currentDLFileVersion.getStoreFileName());
 
-			latestFileVersion = currentDLFileVersion;
+			previousFileVersion = currentDLFileVersion;
 		}
 
 		if (newFileVersion == null) {
 			return;
 		}
 
-		CTPersistence ctPersistence =
-			_dlFileVersionLocalService.getCTPersistence();
+		DLFileEntry dlFileEntry = dlFileVersion.getFileEntry();
 
-		DLFileEntry dlFileEntry = _dlFileEntryLocalService.getFileEntry(
-			dlFileVersion.getFileEntryId());
+		dlFileEntry.setVersion(newFileVersion);
 
-		for (int i = newDLFileVersions.size() - 1; i >= 0; i--) {
-			DLFileVersion currentDLFileVersion = newDLFileVersions.get(i);
+		dlFileEntry = _dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
 
-			DLFileVersion updatedDLFileVersion =
-				_dlFileVersionLocalService.getFileVersion(
-					currentDLFileVersion.getFileVersionId());
-
-			updatedDLFileVersion.setVersion(currentDLFileVersion.getVersion());
-			updatedDLFileVersion.setStoreUUID(
-				currentDLFileVersion.getStoreUUID());
-
-			String newStoreFileName = updatedDLFileVersion.getStoreFileName();
-
-			String oldStoreFileName = versionMap.get(newStoreFileName);
+		for (Map.Entry<String, String> entry : versionMap.entrySet()) {
+			String oldStoreFileName = entry.getKey();
+			String newStoreFileName = entry.getValue();
 
 			try (InputStream inputStream = DLStoreUtil.getFileAsStream(
 					dlFileEntry.getCompanyId(),
 					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
 					oldStoreFileName)) {
-
-				_dlFileVersionLocalService.updateDLFileVersion(
-					updatedDLFileVersion);
 
 				DLStoreUtil.addFile(
 					DLStoreRequest.builder(
@@ -221,17 +205,7 @@ public class DLFileVersionConstraintResolver
 			DLStoreUtil.deleteFile(
 				dlFileEntry.getCompanyId(), dlFileEntry.getRepositoryId(),
 				dlFileEntry.getName(), oldStoreFileName);
-
-			Session session = ctPersistence.getCurrentSession();
-
-			session.flush();
-
-			session.clear();
 		}
-
-		dlFileEntry.setVersion(newFileVersion);
-
-		_dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
 	}
 
 	@Reference

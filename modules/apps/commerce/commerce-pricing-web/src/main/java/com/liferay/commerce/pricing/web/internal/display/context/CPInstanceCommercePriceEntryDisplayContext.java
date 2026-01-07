@@ -173,6 +173,13 @@ public class CPInstanceCommercePriceEntryDisplayContext
 		).build();
 	}
 
+	public String getDiscountFormatted(BigDecimal discount)
+		throws PortalException {
+
+		return _commercePriceFormatter.format(
+			discount, cpRequestHelper.getLocale());
+	}
+
 	public String getItemSelectorUrl(String unitOfMeasureKey)
 		throws PortalException {
 
@@ -317,7 +324,7 @@ public class CPInstanceCommercePriceEntryDisplayContext
 		).buildPortletURL();
 	}
 
-	public String getPrice() throws PortalException {
+	public String getPriceFormatted() throws PortalException {
 		CommercePriceEntry commercePriceEntry = getCommercePriceEntry();
 
 		return _commercePriceFormatter.format(

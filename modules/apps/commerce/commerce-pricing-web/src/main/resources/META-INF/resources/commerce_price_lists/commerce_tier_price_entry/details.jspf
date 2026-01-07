@@ -14,13 +14,12 @@ BigDecimal minQuantity = BigDecimal.ZERO;
 
 if ((commerceTierPriceEntry != null) && (commerceTierPriceEntry.getMinQuantity() != null)) {
 	minQuantity = commerceTierPriceEntry.getMinQuantity();
-
-	minQuantity = minQuantity.stripTrailingZeros();
 }
 %>
 
-<aui:input label='<%= LanguageUtil.get(request, "quantity") %>' name="minQuantity" required="<%= true %>" value="<%= minQuantity.toString() %>">
+<aui:input label='<%= LanguageUtil.get(request, "quantity") %>' name="minQuantity" required="<%= true %>" value="<%= BigDecimalUtil.stripTrailingZeros(minQuantity) %>">
 	<aui:validator name="min"><%= 0 %></aui:validator>
+	<aui:validator name="number" />
 </aui:input>
 
 <aui:model-context bean="<%= commerceTierPriceEntry %>" model="<%= CommerceTierPriceEntry.class %>" />

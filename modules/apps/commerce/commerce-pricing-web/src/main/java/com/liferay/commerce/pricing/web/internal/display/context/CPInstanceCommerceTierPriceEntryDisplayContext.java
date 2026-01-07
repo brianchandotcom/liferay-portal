@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.pricing.web.internal.display.context;
 
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
@@ -17,6 +18,7 @@ import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -37,12 +39,14 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 
 	public CPInstanceCommerceTierPriceEntryDisplayContext(
 		ActionHelper actionHelper,
+		CommercePriceFormatter commercePriceFormatter,
 		CommercePriceListActionHelper commercePriceListActionHelper,
 		CPInstanceLocalService cpInstanceLocalService,
 		HttpServletRequest httpServletRequest) {
 
 		super(actionHelper, httpServletRequest);
 
+		_commercePriceFormatter = commercePriceFormatter;
 		_commercePriceListActionHelper = commercePriceListActionHelper;
 		_cpInstanceLocalService = cpInstanceLocalService;
 	}
@@ -182,6 +186,18 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 		).buildPortletURL();
 	}
 
+	public String getPriceFormatted() throws PortalException {
+		CommerceTierPriceEntry commerceTierPriceEntry =
+			getCommerceTierPriceEntry();
+
+		if (commerceTierPriceEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		return _commercePriceFormatter.format(
+			commerceTierPriceEntry.getPrice(), cpRequestHelper.getLocale());
+	}
+
 	@Override
 	public String getScreenNavigationCategoryKey() {
 		return "price-lists";
@@ -212,6 +228,7 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 		).buildString();
 	}
 
+	private final CommercePriceFormatter _commercePriceFormatter;
 	private final CommercePriceListActionHelper _commercePriceListActionHelper;
 	private CommerceTierPriceEntry _commerceTierPriceEntry;
 	private CPInstance _cpInstance;

@@ -21,6 +21,7 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -219,7 +220,10 @@ public class EditableDocumentFragmentEntryProcessor
 				element.removeAttr("view-tag-name");
 			}
 
-			if (fragmentEntryProcessorContext.isViewMode()) {
+			if (FeatureFlagManagerUtil.isEnabled(
+					fragmentEntryLink.getCompanyId(), "LPD-39437") &&
+				fragmentEntryProcessorContext.isViewMode()) {
+
 				AnalyticsAttributesUtil.addAnalyticsAttributes(
 					editableValueJSONObject, element,
 					fragmentEntryProcessorContext,

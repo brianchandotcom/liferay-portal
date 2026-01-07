@@ -309,6 +309,151 @@ test.describe('Text input field', () => {
 
 test.describe('Inline Text input field', () => {
 	test(
+		'Check the Inline Text input configuration',
+		{tag: '@LPD-66593'},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Create a Page with a Form fragment with an Inline Text input
+
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
+					getObjectERC('Lemon')
+				)
+			).body;
+
+			const inlineTextInput = getFragmentDefinition({
+				fragmentConfig: {
+					inputFieldId: 'ObjectField_lemonSize',
+				},
+				id: getRandomString(),
+				key: 'INPUTS-inline-text-input',
+			});
+
+			const submitFragmentDefinition = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'INPUTS-submit-button',
+			});
+
+			const formDefinition = getFormContainerDefinition({
+				id: getRandomString(),
+				objectDefinitionClassName,
+				pageElements: [inlineTextInput, submitFragmentDefinition],
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to edit mode
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			// Check Mark as Required field
+
+			const inputId = await pageEditorPage.getFragmentId('Inline Text');
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Mark as Required',
+				fragmentId: inputId,
+				tab: 'General',
+				value: true,
+			});
+
+			const requireIcon = page
+				.locator('label', {hasText: 'Lemon Size'})
+				.locator('svg.reference-mark');
+
+			await expect(requireIcon).toBeAttached();
+
+			// Check Label and Show Label fields
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Label',
+				fragmentId: inputId,
+				tab: 'General',
+				value: 'Lemon size in cm',
+			});
+
+			const label = page.locator('label', {hasText: 'Lemon size in cm'});
+
+			await expect(label).not.toHaveClass(/sr-only/);
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Show Label',
+				fragmentId: inputId,
+				tab: 'General',
+				value: false,
+			});
+
+			await expect(label).toHaveClass(/sr-only/);
+
+			// Check Help Text and Show Help Text fields
+
+			const helpText = page.getByText('Add your help text here.', {
+				exact: true,
+			});
+
+			await expect(helpText).not.toBeAttached();
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Show Help Text',
+				fragmentId: inputId,
+				tab: 'General',
+				value: true,
+			});
+
+			await expect(helpText).toBeVisible();
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Help Text',
+				fragmentId: inputId,
+				tab: 'General',
+				value: 'The lemon size must be in cm',
+			});
+
+			await expect(
+				page.getByText('The lemon size must be in cm')
+			).toBeVisible();
+
+			// Check Placeholder field
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Placeholder',
+				fragmentId: inputId,
+				tab: 'General',
+				value: 'Type the lemon size',
+			});
+
+			await expect(
+				page.getByPlaceholder('Type the lemon size')
+			).toBeVisible();
+
+			// Show characters count
+
+			const characterText = page.getByText('0 / 280');
+
+			await expect(characterText).toHaveClass(/d-none/);
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Show Characters Count',
+				fragmentId: inputId,
+				tab: 'General',
+				value: true,
+			});
+
+			await expect(characterText).not.toHaveClass(/d-none/);
+		}
+	);
+
+	test(
 		'An error is shown when the number of input characters is exceeded',
 		{tag: ['@LPD-75305']},
 		async ({apiHelpers, page, pageManagementSite}) => {

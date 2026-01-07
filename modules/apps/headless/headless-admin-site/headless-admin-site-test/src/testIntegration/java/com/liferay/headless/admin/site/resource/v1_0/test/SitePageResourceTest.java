@@ -2187,18 +2187,16 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		SitePage putSitePage = _testPutSiteSitePageWithPageExperiences(
 			ArrayUtil.append(
 				PageExperiencesTestUtil.getPageExperiences(
-					testCompany.getGroupId(),
-					contentPageSpecification.getExternalReferenceCode(),
-					testGroup.getGroupId()),
+					testCompany.getGroupId(), testGroup.getGroupId(),
+					contentPageSpecification.getExternalReferenceCode()),
 				defaultPageExperience),
 			postSitePage, sitePageResource);
 
 		putSitePage = _testPutSiteSitePageWithPageExperiences(
 			ArrayUtil.append(
 				PageExperiencesTestUtil.getPageExperiences(
-					testCompany.getGroupId(),
-					contentPageSpecification.getExternalReferenceCode(),
-					testGroup.getGroupId()),
+					testCompany.getGroupId(), testGroup.getGroupId(),
+					contentPageSpecification.getExternalReferenceCode()),
 				defaultPageExperience),
 			putSitePage, sitePageResource);
 

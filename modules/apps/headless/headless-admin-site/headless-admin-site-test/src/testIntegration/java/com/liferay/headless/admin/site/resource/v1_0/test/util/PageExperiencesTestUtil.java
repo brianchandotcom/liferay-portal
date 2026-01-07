@@ -124,8 +124,8 @@ public class PageExperiencesTestUtil {
 	}
 
 	public static PageExperience[] getPageExperiences(
-			long companyGroupId, String pageSpecificationExternalReferenceCode,
-			long groupId)
+			long companyGroupId, long groupId,
+			String pageSpecificationExternalReferenceCode)
 		throws PortalException {
 
 		return new PageExperience[] {

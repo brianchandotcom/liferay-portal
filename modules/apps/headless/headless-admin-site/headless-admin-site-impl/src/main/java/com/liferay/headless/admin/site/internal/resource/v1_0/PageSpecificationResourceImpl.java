@@ -450,7 +450,8 @@ public class PageSpecificationResourceImpl
 
 		if (draftLayout == null) {
 			if (!layout.isTypePortlet() &&
-				!Objects.equals(layout.getType(), LayoutConstants.TYPE_NODE)) {
+				!Objects.equals(layout.getType(), LayoutConstants.TYPE_NODE) &&
+				!Objects.equals(layout.getType(), LayoutConstants.TYPE_URL)) {
 
 				throw new UnsupportedOperationException();
 			}

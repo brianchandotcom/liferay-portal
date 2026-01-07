@@ -341,7 +341,7 @@ public class SitePageResourceImpl
 					Field.TYPE,
 					new String[] {
 						LayoutConstants.TYPE_CONTENT, LayoutConstants.TYPE_NODE,
-						LayoutConstants.TYPE_PORTLET
+						LayoutConstants.TYPE_PORTLET, LayoutConstants.TYPE_URL
 					});
 				searchContext.setAttribute(
 					"privateLayout", Boolean.FALSE.toString());

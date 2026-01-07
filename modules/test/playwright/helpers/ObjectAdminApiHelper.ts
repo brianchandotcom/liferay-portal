@@ -47,6 +47,7 @@ export class ObjectAdminApiHelper {
 	async postRandomObjectDefinition({
 		className,
 		enableFriendlyURLCustomization,
+		objectDefinitionExternalReferenceCode,
 		objectFields,
 		objectFolderExternalReferenceCode,
 		panelCategoryKey,
@@ -56,6 +57,7 @@ export class ObjectAdminApiHelper {
 	}: {
 		className?: string;
 		enableFriendlyURLCustomization?: boolean;
+		objectDefinitionExternalReferenceCode?: string
 		objectFields?: Partial<ObjectField>[];
 		objectFolderExternalReferenceCode?: string;
 		panelCategoryKey?: string;
@@ -63,18 +65,17 @@ export class ObjectAdminApiHelper {
 		status: {code: number};
 		titleObjectFieldName?: string;
 	}) {
-		const objectDefinitionExternalReferenceCode =
-			'ObjectDefinition' + getRandomInt();
+		const externalReferenceCode = objectDefinitionExternalReferenceCode ?? `ObjectDefinition${getRandomInt()}`;
 
 		const requestBody: ObjectDefinition = {
 			active: true,
 			className,
 			enableFriendlyURLCustomization,
-			externalReferenceCode: objectDefinitionExternalReferenceCode,
+			externalReferenceCode: externalReferenceCode,
 			label: {
-				en_US: objectDefinitionExternalReferenceCode,
+				en_US: externalReferenceCode,
 			},
-			name: objectDefinitionExternalReferenceCode,
+			name: externalReferenceCode,
 			objectFields: objectFields ?? [
 				{
 					DBType: 'String',
@@ -95,7 +96,7 @@ export class ObjectAdminApiHelper {
 			objectFolderExternalReferenceCode,
 			panelCategoryKey: panelCategoryKey ?? '',
 			pluralLabel: {
-				en_US: objectDefinitionExternalReferenceCode,
+				en_US: externalReferenceCode,
 			},
 			scope,
 			status,

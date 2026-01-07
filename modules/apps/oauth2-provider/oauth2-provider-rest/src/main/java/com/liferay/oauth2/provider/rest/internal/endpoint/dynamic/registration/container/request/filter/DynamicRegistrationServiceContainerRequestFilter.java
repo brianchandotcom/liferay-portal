@@ -13,6 +13,8 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -111,13 +113,25 @@ public class DynamicRegistrationServiceContainerRequestFilter
 					user.getCompanyId(),
 					GetterUtil.getString(jwtToken.getClaim("client_id")));
 
+			PermissionChecker permissionChecker =
+				_permissionCheckerFactory.create(user);
+
 			if ((oAuth2Application == null) ||
-				!StringUtil.equals(
-					OAuth2ApplicationConstants.NAME_DYNAMIC_REGISTRATOR,
-					oAuth2Application.getName()) ||
+				((StringUtil.equalsIgnoreCase(
+					httpServletRequest.getMethod(), "POST") ||
+				  StringUtil.equalsIgnoreCase(
+					  httpServletRequest.getMethod(), "GET")) &&
+				 !StringUtil.equalsIgnoreCase(
+					 OAuth2ApplicationConstants.NAME_DYNAMIC_REGISTRATOR,
+					 oAuth2Application.getName())) ||
 				!_oAuth2ApplicationModelResourcePermission.contains(
-					_permissionCheckerFactory.create(user), oAuth2Application,
-					OAuth2ProviderActionKeys.REGISTER_APPLICATION)) {
+					permissionChecker, oAuth2Application,
+					OAuth2ProviderActionKeys.REGISTER_APPLICATION) ||
+				(StringUtil.equalsIgnoreCase(
+					httpServletRequest.getMethod(), "DELETE") &&
+				 !_oAuth2ApplicationModelResourcePermission.contains(
+					 permissionChecker, oAuth2Application,
+					 ActionKeys.DELETE))) {
 
 				throw ExceptionUtils.toNotAuthorizedException(null, null);
 			}

@@ -8,6 +8,7 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -57,15 +58,17 @@ public abstract class BaseBulkActionTaskComponentSectionFragmentRenderer
 				getObjectDefinitionByExternalReferenceCode(
 					"L_CMS_BULK_ACTION_TASK", themeDisplay.getCompanyId());
 
+		ObjectRelationship objectRelationship =
+			objectRelationshipLocalService.getObjectRelationship(
+				objectDefinition.getObjectDefinitionId(),
+				"cmsBATaskToCMSBATaskItems");
+
 		List<ObjectEntry> objectEntries = ListUtil.filter(
 			objectEntryLocalService.getOneToManyObjectEntries(
 				cmsBulkActionTaskObjectEntry.getGroupId(),
-				objectRelationshipLocalService.getObjectRelationship(
-					objectDefinition.getObjectDefinitionId(),
-					"cmsBATaskToCMSBATaskItems"
-				).getObjectRelationshipId(),
-				null, false, cmsBulkActionTaskObjectEntry.getObjectEntryId(),
-				true, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+				objectRelationship.getObjectRelationshipId(), null, false,
+				cmsBulkActionTaskObjectEntry.getObjectEntryId(), true, null,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
 			objectEntry ->
 				Objects.equals(
 					GetterUtil.getLong(

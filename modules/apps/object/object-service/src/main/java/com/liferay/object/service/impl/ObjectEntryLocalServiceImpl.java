@@ -1199,14 +1199,13 @@ public class ObjectEntryLocalServiceImpl
 		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
 			DynamicObjectDefinitionTableUtil.getDynamicObjectDefinitionTable(
 				true, objectDefinition, indexedObjectFields);
+		Predicate innerJoinPredicate = null;
 
 		List<Expression<?>> selectExpressions = new ArrayList<>(
 			dynamicObjectDefinitionTable.getColumns());
 
 		Collection<Column<DynamicObjectDefinitionTable, ?>> extensionColumns =
 			extensionDynamicObjectDefinitionTable.getColumns();
-
-		Predicate innerJoinPredicate = null;
 
 		if (extensionColumns.size() > 1) {
 			innerJoinPredicate =

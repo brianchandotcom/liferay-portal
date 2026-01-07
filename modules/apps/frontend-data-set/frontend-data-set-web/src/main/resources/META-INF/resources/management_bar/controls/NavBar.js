@@ -28,7 +28,7 @@ function NavBar({creationMenu, showSearch}) {
 	const [showMobile, setShowMobile] = useState(false);
 
 	return (
-		<ManagementToolbar.ItemList
+		<div
 			className="container-fluid ml-2 navbar navbar-expand-md"
 			data-qa-id="managementToolbar"
 		>
@@ -97,7 +97,7 @@ function NavBar({creationMenu, showSearch}) {
 					</ManagementToolbar.Item>
 				)}
 			</ManagementToolbar.ItemList>
-		</ManagementToolbar.ItemList>
+		</div>
 	);
 }
 

@@ -1019,21 +1019,23 @@ public class BundleSiteInitializer implements SiteInitializer {
 				Keyword existingKeyword = null;
 
 				if (groupId != 0) {
-					existingKeyword =
+					Page<Keyword> page =
 						keywordResource.getAssetLibraryKeywordsPage(
 							groupId, null, null,
 							keywordResource.toFilter(
 								"name eq '" + keyword.getName() + "'"),
-							null, null
-						).fetchFirstItem();
+							null, null);
+
+					existingKeyword = page.fetchFirstItem();
 				}
 				else {
-					existingKeyword = keywordResource.getSiteKeywordsPage(
+					Page<Keyword> page = keywordResource.getSiteKeywordsPage(
 						groupId, null, null,
 						keywordResource.toFilter(
 							"name eq '" + keyword.getName() + "'"),
-						null, null
-					).fetchFirstItem();
+						null, null);
+
+					existingKeyword = page.fetchFirstItem();
 
 					groupId = serviceContext.getScopeGroupId();
 				}
@@ -1381,11 +1383,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 					_objectDefinitionLocalService.fetchObjectDefinition(
 						serviceContext.getCompanyId(), "C_" + entry.getKey());
 
+			ObjectDefinition objectDefinition = entry.getValue();
+
 			com.liferay.object.model.ObjectField serviceBuilderObjectField =
 				_objectFieldLocalService.fetchObjectField(
 					serviceBuilderObjectDefinition.getObjectDefinitionId(),
-					entry.getValue(
-					).getAccountEntryRestrictedObjectFieldName());
+					objectDefinition.
+						getAccountEntryRestrictedObjectFieldName());
 
 			if (serviceBuilderObjectDefinition.isDefaultStorageType()) {
 				_objectDefinitionLocalService.enableAccountEntryRestricted(

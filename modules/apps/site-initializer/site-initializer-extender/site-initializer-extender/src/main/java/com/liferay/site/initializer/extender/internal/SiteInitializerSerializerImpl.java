@@ -517,12 +517,12 @@ public class SiteInitializerSerializerImpl
 	}
 
 	private void _serializeObjectDefinition(
-			ObjectDefinition objectDefinition, ZipWriter zipWriter)
+			ObjectDefinition objectDefinition1, ZipWriter zipWriter)
 		throws Exception {
 
 		JSONArray objectFieldsJSONArray = JSONUtil.toJSONArray(
 			_objectFieldLocalService.getCustomObjectFields(
-				objectDefinition.getObjectDefinitionId()),
+				objectDefinition1.getObjectDefinitionId()),
 			objectField -> {
 				if (StringUtil.equals(
 						objectField.getBusinessType(),
@@ -576,17 +576,18 @@ public class SiteInitializerSerializerImpl
 			});
 
 		String name = StringUtil.removeSubstring(
-			objectDefinition.getName(), "C_");
+			objectDefinition1.getName(), "C_");
 
 		JSONArray objectRelationshipsJSONArray = JSONUtil.toJSONArray(
 			_objectRelationshipLocalService.getObjectRelationships(
-				objectDefinition.getObjectDefinitionId()),
+				objectDefinition1.getObjectDefinitionId()),
 			objectRelationship -> {
-				String objectDefinition2Name = StringUtil.removeSubstring(
+				ObjectDefinition objectDefinition2 =
 					_objectDefinitionLocalService.getObjectDefinition(
-						objectRelationship.getObjectDefinitionId2()
-					).getName(),
-					"C_");
+						objectRelationship.getObjectDefinitionId2());
+
+				String objectDefinition2Name = StringUtil.removeSubstring(
+					objectDefinition2.getName(), "C_");
 
 				return JSONUtil.put(
 					"deletionType", objectRelationship.getDeletionType()
@@ -611,10 +612,10 @@ public class SiteInitializerSerializerImpl
 
 		_addZipEntry(
 			"object-definitions/" +
-				_normalize(objectDefinition.getLabel(LocaleUtil.US)),
+				_normalize(objectDefinition1.getLabel(LocaleUtil.US)),
 			JSONUtil.put(
 				"label",
-				JSONUtil.put("en_US", objectDefinition.getLabel(LocaleUtil.US))
+				JSONUtil.put("en_US", objectDefinition1.getLabel(LocaleUtil.US))
 			).put(
 				"name", name
 			).put(
@@ -622,9 +623,9 @@ public class SiteInitializerSerializerImpl
 			).put(
 				"objectRelationships", objectRelationshipsJSONArray
 			).put(
-				"pluralLabel", objectDefinition.getPluralLabel(LocaleUtil.US)
+				"pluralLabel", objectDefinition1.getPluralLabel(LocaleUtil.US)
 			).put(
-				"scope", objectDefinition.getScope()
+				"scope", objectDefinition1.getScope()
 			),
 			zipWriter);
 	}

@@ -3722,11 +3722,10 @@ public class BundleSiteInitializerTest {
 			"Test Segments Entry 1",
 			segmentsEntry1.getName(LocaleUtil.getSiteDefault()));
 		Assert.assertTrue(segmentsEntry1.isActive());
-		Assert.assertFalse(
-			segmentsEntry1.getCriteria(
-			).contains(
-				"[$ROLE_ID:Test Role 1$]"
-			));
+
+		String criteria = segmentsEntry1.getCriteria();
+
+		Assert.assertFalse(criteria.contains("[$ROLE_ID:Test Role 1$]"));
 
 		SegmentsEntry segmentsEntry2 =
 			_segmentsEntryLocalService.fetchSegmentsEntry(
@@ -3737,11 +3736,10 @@ public class BundleSiteInitializerTest {
 			"Test Segments Entry 2",
 			segmentsEntry2.getName(LocaleUtil.getSiteDefault()));
 		Assert.assertFalse(segmentsEntry2.isActive());
-		Assert.assertFalse(
-			segmentsEntry2.getCriteria(
-			).contains(
-				"[$ROLE_ID:Test Role 2$]"
-			));
+
+		criteria = segmentsEntry2.getCriteria();
+
+		Assert.assertFalse(criteria.contains("[$ROLE_ID:Test Role 2$]"));
 
 		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
 			_group.getGroupId(), false, "/test-public-layout");

@@ -2,7 +2,7 @@
 
 <#include init />
 
-<html data-browser="${htmlUtil.escape(request.getHeader('user-agent'))}" dir="<@liferay.language key="lang.dir" />" lang="${w3c_language_id}">
+<html dir="<@liferay.language key="lang.dir" />" lang="${w3c_language_id}">
 
 <head>
 	<title>Analytics Cloud</title>

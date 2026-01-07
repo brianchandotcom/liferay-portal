@@ -204,6 +204,11 @@ public class ObjectDefinitionResourceImpl
 			}
 
 			@Override
+			public int getRank() {
+				return 99;
+			}
+
+			@Override
 			public String getResourceClassName() {
 				return ObjectDefinitionResourceImpl.class.getName();
 			}

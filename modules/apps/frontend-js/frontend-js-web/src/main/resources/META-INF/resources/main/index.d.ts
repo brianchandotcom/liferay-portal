@@ -855,7 +855,7 @@ export function setSessionValue(
 
 export function isReducedMotion(): boolean;
 
-export {default as deepClone} from './util/deepClone';
+export {default as deepClone} from '../liferay/util/deepClone';
 
 /**
  * Client Extensions API

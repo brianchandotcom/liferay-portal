@@ -23,7 +23,6 @@ export const {
 	createRenderURL,
 	createResourceURL,
 	debounce,
-	deepClone,
 	delegate,
 	escapeHTML,
 	fetch,
@@ -80,6 +79,7 @@ export const {
 	zIndex,
 } = Liferay.__INTERNALS;
 
+export {default as deepClone} from '../liferay/util/deepClone';
 export {
 	ALIGN_POSITIONS,
 	align,

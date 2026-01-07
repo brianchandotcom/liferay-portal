@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -104,7 +104,7 @@ public class JavaLiferayFilterCheck extends BaseJavaTermCheck {
 	}
 
 	private boolean _isLiferayFilter(String absolutePath, String content) {
-		return _isDerivedFrom(
+		return isDerivedFrom(
 			absolutePath, content,
 			"com.liferay.portal.kernel.servlet.BaseFilter");
 	}

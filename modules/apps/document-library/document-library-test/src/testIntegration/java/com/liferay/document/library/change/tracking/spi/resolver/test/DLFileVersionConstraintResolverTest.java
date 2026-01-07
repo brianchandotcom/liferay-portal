@@ -91,7 +91,7 @@ public class DLFileVersionConstraintResolverTest {
 
 		Assert.assertFalse(conflictsMap.isEmpty());
 
-		DLFileEntry dlFileEntry2 = null;
+		DLFileEntry dlFileEntry2;
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {

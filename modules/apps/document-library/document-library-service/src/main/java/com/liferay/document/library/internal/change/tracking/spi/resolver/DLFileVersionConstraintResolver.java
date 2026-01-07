@@ -109,8 +109,8 @@ public class DLFileVersionConstraintResolver
 		String newFileVersion = null;
 		String previousFileVersion = null;
 
-		List<DLFileVersion> newDLFileVersions = new ArrayList<>();
 		Map<String, String> versionMap = new HashMap<>();
+		List<DLFileVersion> newDLFileVersions = new ArrayList<>();
 
 		for (DLFileVersion currentDLFileVersion : dlFileVersions) {
 			if (!constraintResolverContext.isSourceCTModel(
@@ -124,7 +124,7 @@ public class DLFileVersionConstraintResolver
 			int[] latestVersionParts = StringUtil.split(
 				latestFileVersion.getVersion(), StringPool.PERIOD, 0);
 
-			if (ctVersionParts.length != latestVersionParts.length) {
+			if (latestVersionParts.length != ctVersionParts.length) {
 				return;
 			}
 

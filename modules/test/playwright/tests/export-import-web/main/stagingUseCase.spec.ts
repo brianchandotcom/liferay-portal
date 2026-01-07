@@ -21,6 +21,7 @@ import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
 import {webContentDisplayPageTest} from '../../../fixtures/webContentDisplayPageTest';
 import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
 import getRandomString from '../../../utils/getRandomString';
+import {normalizeRestPath} from '../../../utils/normalizeRestPath';
 import {reloadUntilVisible} from '../../../utils/reloadUntilVisible';
 import {enableLocalStaging} from '../../../utils/staging';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
@@ -30,7 +31,6 @@ import {exportPageTest} from './fixtures/exportPageTest';
 import {stagingConfigurationPageTest} from './fixtures/stagingConfigurationPageTest';
 import {stagingPageTest} from './fixtures/stagingPageTest';
 import {unzipAndCheckFolder} from './utils/stagingUtil';
-import {normalizeRestPath} from '../../../utils/normalizeRestPath';
 
 const test = mergeTests(
 	dataApiHelpersTest,
@@ -72,15 +72,15 @@ testWithBatchStagingFF(
 	{tag: ['@LPD-70661', '@LPD-72343']},
 	async ({apiHelpers, stagingPage}) => {
 		const objectDefinition =
-		await apiHelpers.objectAdmin.postRandomObjectDefinition({
-			status: {code: 0},
-			scope: 'site'
-		});
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				scope: 'site',
+				status: {code: 0},
+			});
 
-	apiHelpers.data.push({
-		id: objectDefinition.id,
-		type: 'objectDefinition',
-	});
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
 
 		const site = await apiHelpers.headlessSite.createSite({
 			name: getRandomString(),

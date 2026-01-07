@@ -55,7 +55,8 @@ import com.liferay.headless.admin.site.client.dto.v1_0.FragmentEditableElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentEditableElementValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentEditableElementValueFragmentLink;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentInlineValue;
-import com.liferay.headless.admin.site.client.dto.v1_0.FragmentInstancePageElementDefinition;
+import com.liferay.headless.admin.site.client.dto.v1_0.BasicFragmentInstancePageElementDefinition;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentInstance;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLink;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLinkInlineValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLinkMappedValue;
@@ -637,16 +638,18 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 	}
 
 	private void _assertDefaultValues(
-			FragmentInstancePageElementDefinition
-				fragmentInstancePageElementDefinition,
+		BasicFragmentInstancePageElementDefinition
+				basicFragmentInstancePageElementDefinition,
 			String... keys)
 		throws Exception {
+
+		FragmentInstance fragmentInstance =
+			basicFragmentInstancePageElementDefinition.getFragmentInstance();
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.
 				getFragmentEntryLinkByExternalReferenceCode(
-					fragmentInstancePageElementDefinition.
-						getFragmentInstanceExternalReferenceCode(),
+					fragmentInstance.getFragmentInstanceExternalReferenceCode(),
 					testGroup.getGroupId());
 
 		JSONObject defaultEditableValuesJSONObject =
@@ -1188,8 +1191,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 	private PageElement _getFragmentInstancePageElement(
 			String externalReferenceCode,
-			FragmentInstancePageElementDefinition
-				fragmentInstancePageElementDefinition)
+			BasicFragmentInstancePageElementDefinition
+				basicFragmentInstancePageElementDefinition)
 		throws Exception {
 
 		PageElement pageElement = super.randomPageElement();
@@ -1197,7 +1200,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		pageElement.setExternalReferenceCode(externalReferenceCode);
 
 		pageElement.setPageElementDefinition(
-			() -> fragmentInstancePageElementDefinition);
+			() -> basicFragmentInstancePageElementDefinition);
 
 		pageElement.setPageElements(new PageElement[0]);
 		pageElement.setParentExternalReferenceCode(StringPool.BLANK);
@@ -2199,7 +2202,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		throws Exception {
 
 		PageElement fragmentPageElement = _randomPageElement(
-			PageElementDefinition.Type.FRAGMENT, StringPool.BLANK);
+			PageElementDefinition.Type.BASIC_FRAGMENT, StringPool.BLANK);
 
 		_testPostSitePageSpecificationPageExperiencePageElement(
 			fragmentPageElement);
@@ -2474,7 +2477,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_randomPageElement(
-				PageElementDefinition.Type.FRAGMENT, StringPool.BLANK));
+				PageElementDefinition.Type.BASIC_FRAGMENT, StringPool.BLANK));
 
 		String externalReferenceCode = RandomTestUtil.randomString();
 
@@ -3487,7 +3490,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 							testGroup.getGroupId())));
 
 		_assertDefaultValues(
-			(FragmentInstancePageElementDefinition)
+			(BasicFragmentInstancePageElementDefinition)
 				pageElement.getPageElementDefinition(),
 			"element-html", "element-text");
 	}

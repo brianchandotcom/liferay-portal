@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
@@ -65,18 +64,6 @@ public class SegmentsExperienceUtil {
 			layout, segmentsExperience.getSegmentsExperienceId());
 
 		return segmentsExperience;
-	}
-
-	public static SegmentsExperience addSegmentsExperience(
-			FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry,
-			InfoItemServiceRegistry infoItemServiceRegistry, Layout layout,
-			PageExperience pageExperience, ServiceContext serviceContext)
-		throws Exception {
-
-		return addSegmentsExperience(
-			fragmentEntryProcessorRegistry, infoItemServiceRegistry, layout,
-			pageExperience, GetterUtil.getInteger(pageExperience.getPriority()),
-			serviceContext);
 	}
 
 	public static String getDefaultSegmentsExperienceExternalReferenceCode(
@@ -129,25 +116,6 @@ public class SegmentsExperienceUtil {
 			UnicodePropertiesBuilder.create(
 				true
 			).build());
-	}
-
-	public static SegmentsExperience updateSegmentsExperience(
-			FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry,
-			InfoItemServiceRegistry infoItemServiceRegistry, Layout layout,
-			PageExperience pageExperience,
-			SegmentsExperience segmentsExperience,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		int priority = segmentsExperience.getPriority();
-
-		if (pageExperience.getPriority() != null) {
-			priority = pageExperience.getPriority();
-		}
-
-		return updateSegmentsExperience(
-			fragmentEntryProcessorRegistry, infoItemServiceRegistry, layout,
-			pageExperience, priority, segmentsExperience, serviceContext);
 	}
 
 	public static void validateSegmentsExperienceLayout(Layout layout) {

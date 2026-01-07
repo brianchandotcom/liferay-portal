@@ -86,17 +86,6 @@ public class PageExperiencesTestUtil {
 
 	public static PageExperience[] getDefaultPageExperiences(
 		String contentPageSpecificationExternalReferenceCode,
-		long scopeGroupId) {
-
-		return getDefaultPageExperiences(
-			contentPageSpecificationExternalReferenceCode,
-			PageElementsTestUtil.getPageElements(
-				RandomTestUtil.randomInt(1, 3), StringPool.BLANK,
-				scopeGroupId));
-	}
-
-	public static PageExperience[] getDefaultPageExperiences(
-		String contentPageSpecificationExternalReferenceCode,
 		PageElement[] pageElements) {
 
 		PageExperience pageExperience = new PageExperience();

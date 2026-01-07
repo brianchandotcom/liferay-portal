@@ -42,19 +42,11 @@ CPInstance cpInstance = cpInstanceCommerceTierPriceEntryDisplayContext.getCPInst
 
 				if ((commerceTierPriceEntry != null) && (commerceTierPriceEntry.getMinQuantity() != null)) {
 					minQuantity = commerceTierPriceEntry.getMinQuantity();
-
-					minQuantity = minQuantity.stripTrailingZeros();
 				}
 
 				CommercePriceList commercePriceList = commercePriceEntry.getCommercePriceList();
 
 				CommerceCurrency commerceCurrency = commercePriceList.getCommerceCurrency();
-
-				BigDecimal price = BigDecimal.ZERO;
-
-				if ((commerceTierPriceEntry != null) && (commerceTierPriceEntry.getPrice() != null)) {
-					price = commerceCurrency.round(commerceTierPriceEntry.getPrice());
-				}
 
 				boolean discountDiscovery = BeanParamUtil.getBoolean(commerceTierPriceEntry, request, "discountDiscovery", true);
 
@@ -65,13 +57,14 @@ CPInstance cpInstance = cpInstanceCommerceTierPriceEntryDisplayContext.getCPInst
 				}
 				%>
 
-				<aui:input label='<%= LanguageUtil.get(request, "quantity") %>' name="minQuantity" required="<%= true %>" value="<%= minQuantity.toPlainString() %>">
+				<aui:input label='<%= LanguageUtil.get(request, "quantity") %>' name="minQuantity" required="<%= true %>" value="<%= BigDecimalUtil.stripTrailingZeros(minQuantity) %>">
 					<aui:validator name="min"><%= 0 %></aui:validator>
+					<aui:validator name="number" />
 				</aui:input>
 
 				<aui:model-context bean="<%= commerceTierPriceEntry %>" model="<%= CommerceTierPriceEntry.class %>" />
 
-				<aui:input label="tier-price" name="price" required="<%= true %>" suffix="<%= HtmlUtil.escape(commerceCurrency.getCode()) %>" type="text" value="<%= commerceCurrency.round(price) %>">
+				<aui:input label="tier-price" name="price" required="<%= true %>" suffix="<%= HtmlUtil.escape(commerceCurrency.getCode()) %>" type="currency" value="<%= cpInstanceCommerceTierPriceEntryDisplayContext.getFormattedPrice() %>">
 					<aui:validator name="max"><%= CommercePriceConstants.PRICE_VALUE_MAX %></aui:validator>
 					<aui:validator name="number" />
 				</aui:input>

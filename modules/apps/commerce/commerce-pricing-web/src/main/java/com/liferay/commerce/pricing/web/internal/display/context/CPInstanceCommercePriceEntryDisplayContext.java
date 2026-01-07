@@ -173,6 +173,20 @@ public class CPInstanceCommercePriceEntryDisplayContext
 		).build();
 	}
 
+	public String getFormattedDiscount(BigDecimal discount)
+		throws PortalException {
+
+		return _commercePriceFormatter.format(
+			discount, cpRequestHelper.getLocale());
+	}
+
+	public String getFormattedPrice() throws PortalException {
+		CommercePriceEntry commercePriceEntry = getCommercePriceEntry();
+
+		return _commercePriceFormatter.format(
+			commercePriceEntry.getPrice(), cpRequestHelper.getLocale());
+	}
+
 	public String getItemSelectorUrl(String unitOfMeasureKey)
 		throws PortalException {
 
@@ -315,13 +329,6 @@ public class CPInstanceCommercePriceEntryDisplayContext
 		).setParameter(
 			"screenNavigationEntryKey", "price-lists"
 		).buildPortletURL();
-	}
-
-	public String getPrice() throws PortalException {
-		CommercePriceEntry commercePriceEntry = getCommercePriceEntry();
-
-		return _commercePriceFormatter.format(
-			commercePriceEntry.getPrice(), cpRequestHelper.getLocale());
 	}
 
 	@Override

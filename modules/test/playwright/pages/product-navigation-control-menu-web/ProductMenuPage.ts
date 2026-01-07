@@ -1,10 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import {Locator, Page} from '@playwright/test';
 
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 
 export class ProductMenuPage {
@@ -24,6 +25,7 @@ export class ProductMenuPage {
 	readonly pagesButton: Locator;
 	readonly peopleButton: Locator;
 	readonly productMenuHeader: Locator;
+	readonly productMenuWrapper: Locator;
 	readonly publishingButton: Locator;
 	readonly siteBuilderButton: Locator;
 	readonly siteSettingsButton: Locator;
@@ -71,6 +73,9 @@ export class ProductMenuPage {
 		);
 		this.publishingButton = page.getByRole('menuitem', {
 			name: 'Publishing',
+		});
+		this.productMenuWrapper = page.getByRole('navigation', {
+			name: 'Product Menu',
 		});
 		this.siteBuilderButton = page.getByRole('menuitem', {
 			name: 'Site Builder',
@@ -200,10 +205,45 @@ export class ProductMenuPage {
 		await this.webContentButton.click();
 	}
 
+	async goToPortlet(panel: string, category: string, portlet: string) {
+		await this.page.reload();
+
+		await this.openProductMenuIfClosed();
+
+		const categoryTrigger = this.productMenuWrapper
+			.getByLabel(panel)
+			.getByRole('menuitem', {name: category});
+
+		await clickAndExpectToBeVisible({
+			target: categoryTrigger,
+			trigger: this.productMenuWrapper.getByRole('button', {
+				name: panel,
+			}),
+		});
+
+		const portletTrigger = this.productMenuWrapper
+			.getByLabel(panel)
+			.getByLabel(category)
+			.getByRole('menuitem', {name: portlet});
+
+		await clickAndExpectToBeVisible({
+			target: portletTrigger,
+			trigger: categoryTrigger,
+		});
+
+		await clickAndExpectToBeVisible({
+			target: this.page.getByRole('heading', {
+				exact: true,
+				name: portlet,
+			}),
+			trigger: portletTrigger,
+		});
+	}
+
 	async openProductMenuIfClosed() {
-		if (!(await this.contentAndDataButton.isVisible())) {
-			await this.openProductMenuButton.click();
-			await this.contentAndDataButton.isVisible();
-		}
+		await clickAndExpectToBeVisible({
+			target: this.productMenuWrapper,
+			trigger: this.openProductMenuButton,
+		});
 	}
 }

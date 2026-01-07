@@ -15,15 +15,15 @@ import getRandomString from '../../../utils/getRandomString';
 import {StagingPage} from '../../export-import-web/main/pages/StagingPage';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 
-const test = mergeTests(
-	apiHelpersTest,
-	applicationsMenuPageTest,
-	loginTest(),
+const test = mergeTests(apiHelpersTest, applicationsMenuPageTest, loginTest());
+
+const siteTest = mergeTests(
+	test,
+	isolatedSiteTest,
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	})
 );
-const siteTest = mergeTests(test, isolatedSiteTest);
 
 test(
 	'It shows "View All" when total amount of sites of "recently visited" and "my sites" exceeds 7',

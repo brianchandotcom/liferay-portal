@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -762,5 +762,11 @@ export class ApplicationsMenuPage {
 		await this.goto();
 		await this.controlPanelButton.click();
 		await this.virtualInstancesItem.click();
+	}
+
+	async isApplicationsMenuButtonVisible() {
+		return await this.page
+			.getByRole('button', {name: 'Applications Menu'})
+			.isVisible();
 	}
 }

@@ -155,7 +155,7 @@ export default function Breadcrumb({
 	const isTitle = breadcrumbItems.length === 1;
 
 	return (
-		<div
+		<section
 			aria-label={Liferay.Language.get('breadcrumb')}
 			className="autofit-row autofit-row-center cms-breadcrumb px-4"
 		>
@@ -209,6 +209,6 @@ export default function Breadcrumb({
 					</ClayDropDown>
 				</div>
 			)}
-		</div>
+		</section>
 	);
 }

@@ -1,0 +1,89 @@
+diff --git a/org/eclipse/osgi/internal/loader/BundleLoader.java b/org/eclipse/osgi/internal/loader/BundleLoader.java
+index 1dedaf8e2b763..3a64783811668 100644
+--- a/org/eclipse/osgi/internal/loader/BundleLoader.java
++++ b/org/eclipse/osgi/internal/loader/BundleLoader.java
+@@ -14,8 +14,6 @@ package org.eclipse.osgi.internal.loader;
+ import java.io.FileNotFoundException;
+ import java.io.IOException;
+ import java.net.URL;
+-import java.security.AccessController;
+-import java.security.PrivilegedAction;
+ import java.util.ArrayList;
+ import java.util.Collection;
+ import java.util.Collections;
+@@ -43,7 +41,6 @@ import org.eclipse.osgi.container.ModuleWire;
+ import org.eclipse.osgi.container.ModuleWiring;
+ import org.eclipse.osgi.container.builders.OSGiManifestBuilderFactory;
+ import org.eclipse.osgi.container.namespaces.EquinoxModuleDataNamespace;
+-import org.eclipse.osgi.framework.util.KeyedElement;
+ import org.eclipse.osgi.framework.util.KeyedHashSet;
+ import org.eclipse.osgi.internal.debug.Debug;
+ import org.eclipse.osgi.internal.framework.EquinoxConfiguration;
+@@ -124,9 +121,6 @@ public class BundleLoader extends ModuleLoader {
+ 	/* If not null, list of package names to import dynamically. */
+ 	private String[] dynamicImportPackages;
+ 
+-	private final Object classLoaderCreatedMonitor = new Object();
+-	/* @GuardedBy("classLoaderCreatedMonitor") */
+-	private ModuleClassLoader classLoaderCreated;
+ 	private volatile ModuleClassLoader classloader;
+ 	private final ClassLoader parent;
+ 	private final AtomicBoolean triggerClassLoaded = new AtomicBoolean(false);
+@@ -255,41 +249,26 @@ public class BundleLoader extends ModuleLoader {
+ 		if (result != null) {
+ 			return result;
+ 		}
+-		// doing optimistic class loader creating here to avoid holding any locks,
+-		// this may result in multiple classloaders being constructed but only one will be used.
+-		final List<ClassLoaderHook> hooks = container.getConfiguration().getHookRegistry().getClassLoaderHooks();
+-		final Generation generation = (Generation) wiring.getRevision().getRevisionInfo();
+-		if (System.getSecurityManager() == null) {
++
++		synchronized (this) {
++			result = classloader;
++
++			if (result != null) {
++				return result;
++			}
++
++			final List<ClassLoaderHook> hooks = container.getConfiguration().getHookRegistry().getClassLoaderHooks();
++			final Generation generation = (Generation) wiring.getRevision().getRevisionInfo();
++
+ 			result = createClassLoaderPrivledged(parent, generation.getBundleInfo().getStorage().getConfiguration(), this, generation, hooks);
+-		} else {
+-			final ClassLoader cl = parent;
+-			result = createClassLoaderPrivledged(cl, generation.getBundleInfo().getStorage().getConfiguration(), BundleLoader.this, generation, hooks);
+-		}
+ 
+-		// Synchronize on classLoaderCreatedMonitor in order to ensure hooks are called before returning.
+-		// Note that we do hold a lock here while calling hooks.
+-		// Not ideal, but hooks really should do little work from classLoaderCreated method.
+-		synchronized (classLoaderCreatedMonitor) {
+-			if (classLoaderCreated == null) {
+-				// must set createdClassloader before calling hooks; otherwise we could enter
+-				// and endless loop if the hook causes re-entry (that would be a bad hook impl)
+-				classLoaderCreated = result;
+-				// only send to hooks if this thread wins in creating the class loader.
+-				final ModuleClassLoader cl = result;
+-				for (ClassLoaderHook hook : hooks) {
+-					hook.classLoaderCreated(cl);
+-				}
+-				// finally set the class loader for use after calling hooks
+-				classloader = classLoaderCreated;
+-			} else {
+-				// return the classLoaderCreated here; not the final classloader
+-				// this is necessary in case re-entry by a hook.classLoaderCreated method
+-				result = classLoaderCreated;
+-				if (debug.DEBUG_LOADER) {
+-					Debug.println("BundleLoader[" + this + "].getModuleClassLoader() - created duplicate classloader"); //$NON-NLS-1$ //$NON-NLS-2$
+-				}
++			for (ClassLoaderHook hook : hooks) {
++				hook.classLoaderCreated(result);
+ 			}
++
++			classloader = result;
+ 		}
++
+ 		return result;
+ 	}
+ 

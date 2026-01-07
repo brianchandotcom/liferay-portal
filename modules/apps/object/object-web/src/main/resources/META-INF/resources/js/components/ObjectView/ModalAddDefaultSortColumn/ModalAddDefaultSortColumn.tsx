@@ -6,12 +6,13 @@
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayModal from '@clayui/modal';
-import {Observer} from '@clayui/modal/lib/types';
 import {SingleSelect} from '@liferay/object-js-components-web';
 import React, {FormEvent, useEffect, useMemo, useState} from 'react';
 
 import {TYPES, useViewContext} from '../objectViewContext';
 import {TObjectViewColumn} from '../types';
+
+import type {Observer} from '@clayui/modal/src/types';
 
 interface ModalAddDefaultSortColumnProps {
 	editingObjectFieldName?: string;

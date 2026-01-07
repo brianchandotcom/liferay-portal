@@ -55,7 +55,7 @@ export function Attachments({
 					label: stringUtils.getLocalizableLabel({
 						fallbackLabel: name,
 						fallbackLanguageId:
-							selectedObjectDefinitionItem?.defaultLanguageId as Locale,
+							selectedObjectDefinitionItem?.defaultLanguageId as Liferay.Language.Locale,
 						labels: label,
 					}),
 					value: id?.toString() as string,

@@ -6,7 +6,6 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm from '@clayui/form';
-import {TItem} from '@clayui/form/lib/SelectBox';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {fetch} from 'frontend-js-web';
@@ -29,6 +28,8 @@ import getFields, {
 } from '../../../../../utils/getFields';
 import openDefaultFailureToast from '../../../../../utils/openDefaultFailureToast';
 import {IField, ISelectionFilter} from '../../../../../utils/types';
+
+import type {TItem} from '@clayui/form/src/SelectBox';
 
 interface IApiRestApplicationModalContentProps {
 	filter?: ISelectionFilter;

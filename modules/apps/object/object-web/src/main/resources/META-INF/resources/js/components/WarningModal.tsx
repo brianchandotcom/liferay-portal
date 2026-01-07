@@ -5,8 +5,9 @@
 
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
-import {Observer} from '@clayui/modal/lib/types';
 import React from 'react';
+
+import type {Observer} from '@clayui/modal/src/types';
 
 export default function WarningModal({
 	children,

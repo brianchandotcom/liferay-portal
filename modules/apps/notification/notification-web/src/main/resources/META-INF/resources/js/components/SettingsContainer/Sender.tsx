@@ -11,7 +11,7 @@ import {NotificationTemplateError} from '../EditNotificationTemplate';
 
 interface SenderProps {
 	errors: FormError<NotificationTemplate & NotificationTemplateError>;
-	selectedLocale: Locale;
+	selectedLocale: Liferay.Language.Locale;
 	setValues: (values: Partial<NotificationTemplate>) => void;
 	values: NotificationTemplate;
 }

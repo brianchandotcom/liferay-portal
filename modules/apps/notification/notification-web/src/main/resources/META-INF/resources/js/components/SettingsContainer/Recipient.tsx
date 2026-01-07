@@ -41,7 +41,7 @@ interface RecipientProps {
 	recipientOptions: LabelValueObject[];
 	required?: boolean;
 	roles: MultiSelectItem[];
-	selectedLocale: Locale;
+	selectedLocale: Liferay.Language.Locale;
 	userEmailAddressLocalized?: boolean;
 	userGroups: MultiSelectItem[];
 	values: NotificationTemplate;

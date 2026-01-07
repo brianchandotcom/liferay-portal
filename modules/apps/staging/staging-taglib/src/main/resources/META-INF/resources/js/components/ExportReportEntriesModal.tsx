@@ -17,7 +17,7 @@ import {
 } from '../hooks/useBatchEngineExportTask';
 import {downloadFile} from '../utils/downloadFile';
 
-import type {Observer} from '@clayui/modal/lib/types';
+import type {Observer} from '@clayui/modal/src/types';
 
 type StatusInfo = {
 	displayType: 'success' | 'info' | 'danger';

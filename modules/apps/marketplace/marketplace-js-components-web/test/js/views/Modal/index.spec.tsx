@@ -4,12 +4,13 @@
  */
 
 import '@testing-library/jest-dom';
-import {Observer} from '@clayui/modal/lib/types';
 import {fireEvent, render} from '@testing-library/react';
 import React, {ReactNode} from 'react';
 
 import {MarketplaceContext} from '../../../../src/main/resources/META-INF/resources/js/MarketplaceContext';
 import {MarketplaceModal} from '../../../../src/main/resources/META-INF/resources/js/views/Modal';
+
+import type {Observer} from '@clayui/modal/src/types';
 
 const observer = {
 	dispatch: () => null,

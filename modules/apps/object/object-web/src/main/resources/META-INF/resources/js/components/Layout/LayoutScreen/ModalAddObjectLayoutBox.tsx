@@ -6,7 +6,6 @@
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayModal from '@clayui/modal';
-import {Observer} from '@clayui/modal/lib/types';
 import {
 	FormError,
 	Input,
@@ -17,6 +16,8 @@ import React from 'react';
 
 import {defaultLanguageId} from '../../../utils/constants';
 import {TYPES, useLayoutContext} from '../objectLayoutContext';
+
+import type {Observer} from '@clayui/modal/src/types';
 
 type TInitialValues = {
 	name: string;

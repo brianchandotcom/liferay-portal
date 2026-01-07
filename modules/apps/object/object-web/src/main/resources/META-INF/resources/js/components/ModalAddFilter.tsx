@@ -5,7 +5,6 @@
 
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
-import {Observer} from '@clayui/modal/lib/types';
 import {
 	API,
 	DatePicker,
@@ -32,6 +31,8 @@ import {
 } from '../utils/filter';
 
 import './ModalAddFilter.scss';
+
+import type {Observer} from '@clayui/modal/src/types';
 
 interface ModalAddFilterProps {
 	aggregationFilter?: boolean;

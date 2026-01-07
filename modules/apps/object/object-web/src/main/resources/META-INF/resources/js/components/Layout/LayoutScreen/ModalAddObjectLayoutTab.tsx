@@ -8,7 +8,6 @@ import {Option} from '@clayui/core';
 import ClayForm from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import ClayModal from '@clayui/modal';
-import {Observer} from '@clayui/modal/lib/types';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {
 	FormError,
@@ -26,6 +25,8 @@ import {TYPES as EVENT_TYPES, useLayoutContext} from '../objectLayoutContext';
 import {TObjectLayoutTab, TObjectRelationship} from '../types';
 
 import './ModalAddObjectLayoutTab.scss';
+
+import type {Observer} from '@clayui/modal/src/types';
 
 type TTabTypes = {
 	[key: string]: {

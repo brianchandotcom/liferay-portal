@@ -115,9 +115,10 @@ export default function EditNotificationTemplate({
 		ObjectDefinition[]
 	>([]);
 
-	const [selectedLocale, setSelectedLocale] = useState<Locale>(
-		Liferay.ThemeDisplay.getDefaultLanguageId
-	);
+	const [selectedLocale, setSelectedLocale] =
+		useState<Liferay.Language.Locale>(
+			Liferay.ThemeDisplay.getDefaultLanguageId
+		);
 
 	const [templateTitle, setTemplateTitle] = useState<string>('');
 

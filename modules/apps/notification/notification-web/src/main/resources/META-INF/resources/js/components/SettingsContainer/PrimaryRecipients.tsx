@@ -19,7 +19,7 @@ interface PrimaryRecipientProps {
 	learnResources: ILearnResourceContext;
 	recipientOptions: LabelValueObject[];
 	roles: MultiSelectItem[];
-	selectedLocale: Locale;
+	selectedLocale: Liferay.Language.Locale;
 	setValues: (values: Partial<NotificationTemplate>) => void;
 	userGroups: MultiSelectItem[];
 	values: NotificationTemplate;

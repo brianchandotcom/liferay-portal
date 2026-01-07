@@ -8,7 +8,6 @@ import ClayForm, {
 	ClayRadioGroup,
 	ClaySelectWithOption,
 } from '@clayui/form';
-import {TItem} from '@clayui/form/lib/SelectBox';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
@@ -27,6 +26,8 @@ import Configuration from '../Configuration';
 import Footer from '../Footer';
 import ApiRestApplication from './source_type/ApiRestApplication';
 import ObjectPicklist from './source_type/ObjectPicklist';
+
+import type {TItem} from '@clayui/form/src/SelectBox';
 
 function Header() {
 	return <>{Liferay.Language.get('new-selection-filter')}</>;

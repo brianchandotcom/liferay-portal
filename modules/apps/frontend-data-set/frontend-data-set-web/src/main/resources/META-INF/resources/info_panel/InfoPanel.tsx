@@ -4,11 +4,12 @@
  */
 
 import {SidePanel} from '@clayui/core';
-import {SidePanelProps} from '@clayui/core/lib/side-panel';
 import React, {useContext} from 'react';
 
 import FrontendDataSetContext from '../FrontendDataSetContext';
 import {IInfoPanelComponent} from '../utils/types';
+
+import type {SidePanelProps} from '@clayui/core/src/side-panel';
 
 export function InfoPanel({
 	component: InfoPanelContent,

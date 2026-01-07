@@ -8,7 +8,6 @@ import {Option} from '@clayui/core';
 import ClayForm from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import ClayModal from '@clayui/modal';
-import {Observer} from '@clayui/modal/lib/types';
 import {
 	FormError,
 	SingleSelect,
@@ -22,6 +21,8 @@ import React, {useMemo, useState} from 'react';
 import {TYPES, useLayoutContext} from '../objectLayoutContext';
 
 import './ModalAddObjectLayoutField.scss';
+
+import type {Observer} from '@clayui/modal/src/types';
 
 const objectFieldSizes = [1, 2, 3];
 

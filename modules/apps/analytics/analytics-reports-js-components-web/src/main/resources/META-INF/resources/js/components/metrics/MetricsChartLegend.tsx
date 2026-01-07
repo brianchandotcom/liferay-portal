@@ -4,12 +4,13 @@
  */
 
 import {Text} from '@clayui/core';
-import {ColorType} from '@clayui/core/lib/typography/Text';
 import ClayLink from '@clayui/link';
 import classNames from 'classnames';
 import React from 'react';
 
 import {DotProps} from './Dots';
+
+import type {ColorType} from '@clayui/core/src/typography/Text';
 
 export interface IMetricsChartLegendProps {
 	activeTabIndex: boolean;

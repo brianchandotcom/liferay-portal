@@ -5,12 +5,13 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayModal from '@clayui/modal';
-import {Observer} from '@clayui/modal/lib/types';
 import React from 'react';
 
 import LABELS from '../labels';
 import {IRequestQuoteCPInstance, IRequestQuoteData} from '../types';
 import RequestQuoteForm from './RequestQuoteForm';
+
+import type {Observer} from '@clayui/modal/src/types';
 
 interface IRequestQuoteModalProps {
 	data: IRequestQuoteData;

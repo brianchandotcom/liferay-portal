@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ColorType} from '@clayui/core/lib/typography/Text';
-
 import {AssetTypes, MetricName, MetricType} from '../types/global';
+
+import type {ColorType} from '@clayui/core/src/typography/Text';
 
 type AssetMetrics = {
 	[key in AssetTypes]: MetricName[];

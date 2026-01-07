@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ColorType} from '@clayui/core/lib/typography/Text';
 import React, {useMemo, useState} from 'react';
 import {Line} from 'recharts';
 
@@ -14,6 +13,8 @@ import MetricsChart from '../../metrics/MetricsChart';
 import {formatter, getFillOpacity} from '../../metrics/utils';
 import {Histogram, ICommonProps} from './AssetMetrics';
 import {AssetMetricsTooltip} from './AssetMetricsTooltip';
+
+import type {ColorType} from '@clayui/core/src/typography/Text';
 
 export enum MetricDataKey {
 	Current = 'METRIC_DATA_KEY',

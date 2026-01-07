@@ -4,12 +4,13 @@
  */
 
 import {Body, Cell, Head, Row, Table, Text} from '@clayui/core';
-import {WeightFont} from '@clayui/core/lib/typography/Heading';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {sub} from 'frontend-js-web';
 import React, {useMemo} from 'react';
 
 import {InventoryAnalysisDataType} from './InventoryAnalysisCard';
+
+import type {WeightFont} from '@clayui/core/src/typography/Heading';
 
 type TableData = {
 	percentage: number;

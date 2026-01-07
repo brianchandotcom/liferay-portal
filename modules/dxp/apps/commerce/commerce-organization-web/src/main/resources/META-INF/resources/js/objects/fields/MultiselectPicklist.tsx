@@ -6,7 +6,6 @@
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayMultiSelect from '@clayui/multi-select';
-import {Item} from '@clayui/multi-select/lib/types';
 import classnames from 'classnames';
 import React, {useCallback, useEffect, useState} from 'react';
 
@@ -15,6 +14,8 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {getListTypeEntries} from '../../data/listType';
 import ErrorMessage from '../ErrorMessage';
 import {TGenericFieldProps} from '../FieldsWrapper';
+
+import type {Item} from '@clayui/multi-select/src/types';
 
 const MULTISELECT_PICKLIST_SEPARATOR = ', ';
 

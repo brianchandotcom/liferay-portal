@@ -4,10 +4,11 @@
  */
 
 import ClayModal from '@clayui/modal';
-import {Observer} from '@clayui/modal/lib/types';
 import React from 'react';
 
 import {IOrderItem} from './Types';
+
+import type {Observer} from '@clayui/modal/src/types';
 
 interface IOrderItemModalDetailProps {
 	observer: Observer;

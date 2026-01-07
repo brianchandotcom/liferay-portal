@@ -16,7 +16,7 @@ interface SettingsContainerProps {
 	baseResourceURL: string;
 	errors: FormError<NotificationTemplate & NotificationTemplateError>;
 	learnResources: ILearnResourceContext;
-	selectedLocale: Locale;
+	selectedLocale: Liferay.Language.Locale;
 	setValues: (values: Partial<NotificationTemplate>) => void;
 	values: NotificationTemplate;
 }

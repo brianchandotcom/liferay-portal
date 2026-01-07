@@ -4,11 +4,12 @@
  */
 
 import '@testing-library/jest-dom';
-import {Observer} from '@clayui/modal/lib/types';
 import {fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import {ConnectionWithMarketplaceNeededModal} from '../../../../src/main/resources/META-INF/resources/js/views/Modal/ConnectionWithMarketplaceNeededModal';
+
+import type {Observer} from '@clayui/modal/src/types';
 
 globalThis.Liferay = {
 	Language: {

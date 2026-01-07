@@ -4,8 +4,9 @@
  */
 
 import ClayModal from '@clayui/modal';
-import {Observer, Size} from '@clayui/modal/lib/types';
 import React, {ReactNode} from 'react';
+
+import type {Observer, Size} from '@clayui/modal/src/types';
 
 type BaseModalProps = {
 	children: ReactNode;

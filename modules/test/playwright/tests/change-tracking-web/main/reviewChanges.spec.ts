@@ -715,4 +715,64 @@ test.describe('Publications with incomplete status tests', () => {
 			trigger: moreActionsButton,
 		});
 	});
+
+	test('LPD-73272 Can use toolbar actions in review changes page', async ({
+		changeTrackingPage,
+		ctCollection,
+		page,
+	}) => {
+		await changeTrackingPage.workOnProduction();
+		await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
+
+		await expect(
+			page.locator('.publication-name', {hasText: 'Pending Approval'})
+		).toBeVisible();
+
+		await page.getByLabel('More Actions').click();
+
+		const dropdownMenu = page.getByRole('menu');
+
+		await expect(dropdownMenu).toBeVisible();
+
+		const dropdownMenuItems = await dropdownMenu
+			.locator('li')
+			.allTextContents();
+
+		const expectedItems = [
+			'Show System Changes',
+			'Work on Publication',
+			'Edit',
+			'Reindex',
+			'Permissions',
+			'Delete',
+		];
+
+		expect(dropdownMenuItems.filter(Boolean)).toEqual(expectedItems);
+
+		const scheduleButton = page.locator('.btn', {hasText: 'Schedule'});
+
+		await scheduleButton.waitFor();
+		await scheduleButton.click();
+
+		await expect(
+			page
+				.getByTestId('headerTitle')
+				.getByText(
+					`Schedule to Publish Later: ${ctCollection.body.name}`
+				)
+		).toBeVisible();
+
+		await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
+
+		const publishButton = page.locator('.btn', {hasText: 'Publish'});
+
+		await publishButton.waitFor();
+		await publishButton.click();
+
+		await expect(
+			page
+				.getByTestId('headerTitle')
+				.getByText(`Publish: ${ctCollection.body.name}`)
+		).toBeVisible();
+	});
 });

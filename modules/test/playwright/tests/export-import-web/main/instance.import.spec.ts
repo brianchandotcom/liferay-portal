@@ -4,7 +4,6 @@
  */
 
 import {
-	ObjectDefinition,
 	ObjectDefinitionAPI,
 	ObjectRelationshipAPI,
 } from '@liferay/object-admin-rest-client-js';
@@ -36,7 +35,6 @@ import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 import {stagingPageTest} from './fixtures/stagingPageTest';
 import {createUserAssignRolesAndLogin} from './utils/createUserAssignRolesAndLogin';
 import {toDateRangeDate, toDateRangeTime} from './utils/dateRangeUtil';
-import {objectDefitionRequestData} from './utils/objectDefitionRequestData';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,

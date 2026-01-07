@@ -90,19 +90,19 @@ public class PageElementsTestUtil {
 	}
 
 	public static BasicFragmentInstancePageElementDefinition
-		getFragmentInstancePageElementDefinition(
+		getBasicFragmentInstancePageElementDefinition(
 			Map<String, Object> configurationValuesMap,
 			FragmentEditableElement[] fragmentEditableElements,
 			FragmentEntry fragmentEntry, long scopeGroupId) {
 
-		return getFragmentInstancePageElementDefinition(
+		return getBasicFragmentInstancePageElementDefinition(
 			configurationValuesMap, fragmentEditableElements, fragmentEntry,
 			RandomTestUtil.randomString(), scopeGroupId,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null);
 	}
 
 	public static BasicFragmentInstancePageElementDefinition
-		getFragmentInstancePageElementDefinition(
+		getBasicFragmentInstancePageElementDefinition(
 			Map<String, Object> configurationValuesMap,
 			FragmentEditableElement[] fragmentEditableElements,
 			FragmentEntry fragmentEntry,
@@ -176,7 +176,7 @@ public class PageElementsTestUtil {
 	}
 
 	public static BasicFragmentInstancePageElementDefinition
-		getFragmentInstancePageElementDefinition(
+		getBasicFragmentInstancePageElementDefinition(
 			Map<String, Object> configurationValuesMap,
 			FragmentEditableElement[] fragmentEditableElements,
 			FragmentRenderer fragmentRenderer, long scopeGroupId) {
@@ -241,7 +241,7 @@ public class PageElementsTestUtil {
 	}
 
 	public static BasicFragmentInstancePageElementDefinition
-		getFragmentInstancePageElementDefinition(
+		getBasicFragmentInstancePageElementDefinition(
 			Map<String, Object> configurationValuesMap, String key,
 			long scopeGroupId) {
 
@@ -249,7 +249,7 @@ public class PageElementsTestUtil {
 			FragmentCollectionContributorRegistryUtil.getFragmentEntry(key);
 
 		if (fragmentEntry != null) {
-			return getFragmentInstancePageElementDefinition(
+			return getBasicFragmentInstancePageElementDefinition(
 				configurationValuesMap, new FragmentEditableElement[0],
 				fragmentEntry, scopeGroupId);
 		}
@@ -258,7 +258,7 @@ public class PageElementsTestUtil {
 			FragmentRendererRegistryUtil.getFragmentRenderer(key);
 
 		if (fragmentRenderer != null) {
-			return getFragmentInstancePageElementDefinition(
+			return getBasicFragmentInstancePageElementDefinition(
 				configurationValuesMap, new FragmentEditableElement[0],
 				fragmentRenderer, scopeGroupId);
 		}
@@ -374,7 +374,7 @@ public class PageElementsTestUtil {
 		}
 
 		if (Objects.equals(type, PageElementDefinition.Type.BASIC_FRAGMENT)) {
-			return getFragmentInstancePageElementDefinition(
+			return getBasicFragmentInstancePageElementDefinition(
 				Collections.emptyMap(), "BASIC_COMPONENT-heading",
 				scopeGroupId);
 		}

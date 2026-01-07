@@ -1,6 +1,6 @@
 {
-	"main": "index.js",
-	"name": "ai-hub-web",
+	"main": "js/index.ts",
+	"name": "@liferay/ai-hub-web",
 	"scripts": {
 		"build": "node-scripts build",
 		"checkFormat": "node-scripts format --check",

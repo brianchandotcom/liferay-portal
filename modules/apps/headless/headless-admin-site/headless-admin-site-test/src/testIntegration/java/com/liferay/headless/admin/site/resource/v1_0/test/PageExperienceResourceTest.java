@@ -217,8 +217,38 @@ public class PageExperienceResourceTest
 				continue;
 			}
 
+			if (Objects.equals(additionalAssertFieldName, "key")) {
+				if (pageExperience.getKey() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(additionalAssertFieldName, "name_i18n")) {
 				if (pageExperience.getName_i18n() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(additionalAssertFieldName, "pageElements")) {
+				if (pageExperience.getPageElements() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					additionalAssertFieldName,
+					"pageSpecificationExternalReferenceCode")) {
+
+				String pageSpecificationExternalReferenceCode =
+					pageExperience.getPageSpecificationExternalReferenceCode();
+
+				if (pageSpecificationExternalReferenceCode == null) {
 					valid = false;
 				}
 
@@ -251,7 +281,8 @@ public class PageExperienceResourceTest
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
-			"externalReferenceCode", "name_i18n", "priority",
+			"externalReferenceCode", "key", "name_i18n", "pageElements",
+			"pageSpecificationExternalReferenceCode", "priority",
 			"segmentItemExternalReference"
 		};
 	}

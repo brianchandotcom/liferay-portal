@@ -1178,7 +1178,7 @@ public class LayoutUtil {
 
 			for (PageExperience pageExperience : pageExperiences) {
 				SegmentsExperience oldSegmentsExperience =
-					originalSegmentsExperiencesMap.get(
+					originalSegmentsExperiencesMap.remove(
 						pageExperience.getExternalReferenceCode());
 
 				int priority = 0;
@@ -1205,9 +1205,6 @@ public class LayoutUtil {
 							fragmentEntryProcessorRegistry,
 							infoItemServiceRegistry, layout, pageExperience,
 							priority, oldSegmentsExperience, serviceContext));
-
-					originalSegmentsExperiencesMap.remove(
-						pageExperience.getExternalReferenceCode());
 				}
 			}
 

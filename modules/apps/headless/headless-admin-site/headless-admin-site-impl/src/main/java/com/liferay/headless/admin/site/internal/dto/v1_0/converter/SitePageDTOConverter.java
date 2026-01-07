@@ -9,6 +9,7 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.CustomMetaTag;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
+import com.liferay.headless.admin.site.dto.v1_0.LinkToURLPageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.PageSetPageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.PageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.SitePage;
@@ -189,6 +190,21 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 
 		if (type == SitePage.Type.CONTENT_PAGE) {
 			return _toContentPageSettings(layout);
+		}
+		else if (type == SitePage.Type.LINK_TO_URL_PAGE) {
+			return new LinkToURLPageSettings() {
+				{
+					setPageURL(
+						() -> {
+							UnicodeProperties typeSettingsUnicodeProperties =
+								layout.getTypeSettingsProperties();
+
+							return typeSettingsUnicodeProperties.getProperty(
+								"url", StringPool.BLANK);
+						});
+					setType(() -> Type.LINK_TO_URL_PAGE_SETTINGS);
+				}
+			};
 		}
 		else if (type == SitePage.Type.PAGE_SET_PAGE) {
 			return new PageSetPageSettings() {

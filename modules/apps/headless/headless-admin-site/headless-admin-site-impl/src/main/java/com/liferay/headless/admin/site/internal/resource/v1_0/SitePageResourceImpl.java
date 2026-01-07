@@ -826,6 +826,17 @@ public class SitePageResourceImpl
 			return unicodePropertiesWrapper.build();
 		}
 
+		if (sitePage.getType() == SitePage.Type.LINK_TO_URL_PAGE) {
+			LinkToURLPageSettings linkToURLPageSettings =
+				(LinkToURLPageSettings)pageSettings;
+
+			unicodePropertiesWrapper.setProperty(
+				LayoutTypePortletConstants.URL,
+				linkToURLPageSettings.getPageURL());
+
+			return unicodePropertiesWrapper.build();
+		}
+
 		WidgetPageSettings widgetPageSettings =
 			(WidgetPageSettings)pageSettings;
 

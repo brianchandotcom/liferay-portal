@@ -5079,39 +5079,14 @@ public class ObjectEntryLocalServiceImpl
 	 * @see com.liferay.portal.upgrade.util.Table#getValue
 	 */
 	private Object _getValue(Object object, int sqlType) {
-		if (sqlType == Types.BIGINT) {
-			return GetterUtil.getLong(object);
-		}
-		else if (sqlType == Types.BOOLEAN) {
-			return GetterUtil.getBoolean(object);
-		}
-		else if (sqlType == Types.CLOB) {
-			return GetterUtil.getString(object);
-		}
-		else if ((sqlType == Types.DATE) || (sqlType == Types.TIMESTAMP)) {
-			if (object == null) {
-				return null;
-			}
+		Function<Object, Object> function = _getValueFunctions.get(sqlType);
 
-			Date date = (Date)object;
-
-			return new Timestamp(date.getTime());
-		}
-		else if (sqlType == Types.DECIMAL) {
-			return object;
-		}
-		else if (sqlType == Types.DOUBLE) {
-			return GetterUtil.getDouble(object);
-		}
-		else if (sqlType == Types.INTEGER) {
-			return GetterUtil.getInteger(object);
-		}
-		else if (sqlType == Types.VARCHAR) {
-			return object;
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"Unable to get value with SQL type " + sqlType);
 		}
 
-		throw new IllegalArgumentException(
-			"Unable to get value with SQL type " + sqlType);
+		return function.apply(object);
 	}
 
 	private Map<String, Serializable> _getValues(
@@ -7777,6 +7752,85 @@ public class ObjectEntryLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryLocalServiceImpl.class);
+
+	private static final Map<Integer, Function<Object, Object>>
+		_getValueFunctions =
+			HashMapBuilder.<Integer, Function<Object, Object>>put(
+				Types.BIGINT,
+				value -> {
+					if (value instanceof Long) {
+						return value;
+					}
+
+					return GetterUtil.getLong(value);
+				}
+			).put(
+				Types.BOOLEAN,
+				value -> {
+					if (value instanceof Boolean) {
+						return value;
+					}
+
+					return GetterUtil.getBoolean(value);
+				}
+			).put(
+				Types.CLOB,
+				value -> {
+					if (value instanceof String s) {
+						return s.trim();
+					}
+
+					if (value == null) {
+						return StringPool.BLANK;
+					}
+
+					return GetterUtil.getString(value);
+				}
+			).put(
+				Types.DATE,
+				value -> {
+					if ((value == null) || (value instanceof Timestamp)) {
+						return value;
+					}
+
+					Date date = (Date)value;
+
+					return new Timestamp(date.getTime());
+				}
+			).put(
+				Types.DECIMAL, Function.identity()
+			).put(
+				Types.DOUBLE,
+				value -> {
+					if (value instanceof Double) {
+						return value;
+					}
+
+					return GetterUtil.getDouble(value);
+				}
+			).put(
+				Types.INTEGER,
+				value -> {
+					if (value instanceof Integer) {
+						return value;
+					}
+
+					return GetterUtil.getInteger(value);
+				}
+			).put(
+				Types.TIMESTAMP,
+				value -> {
+					if ((value == null) || (value instanceof Timestamp)) {
+						return value;
+					}
+
+					Date date = (Date)value;
+
+					return new Timestamp(date.getTime());
+				}
+			).put(
+				Types.VARCHAR, Function.identity()
+			).build();
 
 	private static final Snapshot<ObjectActionEngine>
 		_objectActionEngineSnapshot = new Snapshot<>(

@@ -2251,8 +2251,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		contentPageSpecification =
 			(ContentPageSpecification)pageSpecifications[0];
 
-		PageExperiencesTestUtil.assertPageExperiences(
-			contentPageSpecification.getPageExperiences(), pageExperiences);
+		Assert.assertArrayEquals(
+			pageExperiences, contentPageSpecification.getPageExperiences());
 
 		return putSitePage;
 	}

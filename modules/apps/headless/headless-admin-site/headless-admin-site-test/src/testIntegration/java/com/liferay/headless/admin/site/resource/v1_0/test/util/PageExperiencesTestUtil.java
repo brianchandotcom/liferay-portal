@@ -59,16 +59,6 @@ public class PageExperiencesTestUtil {
 			pageExperience.getExternalReferenceCode());
 	}
 
-	public static void assertPageExperiences(
-		PageExperience[] actualPageExperiences,
-		PageExperience[] expectedPageExperiences) {
-
-		for (int i = 0; i < expectedPageExperiences.length; i++) {
-			Assert.assertEquals(
-				expectedPageExperiences[i], actualPageExperiences[i]);
-		}
-	}
-
 	public static PageExperience getDefaultPageExperience(
 		PageExperience[] pageExperiences) {
 

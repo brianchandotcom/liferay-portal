@@ -145,6 +145,11 @@ spec:
                 {{- with .statefulset.volumes }}
                 {{- toYaml . | nindent 16 }}
                 {{- end }}
+                {{- if and .statefulset.extensions .statefulset.extensions.enabled }}
+                -   name: {{ .statefulset.extensions.bucketName }}
+                    persistentVolumeClaim:
+                        claimName: {{ .statefulset.extensions.bucketName }}
+                {{- end }}
                 {{- range $k, $v := .statefulset.customVolumes }}
                 {{- toYaml $v | nindent 16 }}
                 {{- end }}

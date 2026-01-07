@@ -81,7 +81,9 @@ test(
 			page.getByText('Maximum Number of Characters Exceeded')
 		).toBeVisible();
 
-		await structureBuilderPage.changeStructureSettings({name: 'CMSBlog'});
+		await structureBuilderPage.changeStructureSettings({
+			name: 'CMSBasicDocument',
+		});
 
 		await expect(
 			page.getByText('This name is already in use')

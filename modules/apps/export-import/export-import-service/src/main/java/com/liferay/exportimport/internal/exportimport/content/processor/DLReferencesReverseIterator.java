@@ -66,6 +66,7 @@ public class DLReferencesReverseIterator
 		_groupId = groupId;
 
 		_endPos = content.length();
+
 		_pathContext = PortalUtil.getPathContext();
 
 		_patterns = _getPatterns(_pathContext);
@@ -622,17 +623,17 @@ public class DLReferencesReverseIterator
 				content.substring(beginPos - colonPos + 1, beginPos));
 		}
 
-		for (String hostName : hostnames) {
+		for (String hostname : hostnames) {
 			if (urlPort > 0) {
 				int serverPort = PortalUtil.getPortalServerPort(
-					hostName.startsWith(Http.HTTPS_WITH_SLASH));
+					hostname.startsWith(Http.HTTPS_WITH_SLASH));
 
 				if (urlPort != serverPort) {
 					continue;
 				}
 			}
 
-			int curBeginPos = beginPos - hostName.length() - colonPos;
+			int curBeginPos = beginPos - hostname.length() - colonPos;
 
 			if (curBeginPos < 0) {
 				continue;
@@ -640,7 +641,7 @@ public class DLReferencesReverseIterator
 
 			String substring = content.substring(curBeginPos, endPos);
 
-			if (substring.startsWith(hostName) &&
+			if (substring.startsWith(hostname) &&
 				(((curBeginPos == 0) && (endPos == content.length())) ||
 				 _isCreoleReference(content, curBeginPos) ||
 				 _isHTMLReference(content, curBeginPos) ||

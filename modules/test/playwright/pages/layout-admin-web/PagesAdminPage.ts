@@ -252,20 +252,16 @@ export class PagesAdminPage {
 	async changeTheme(themeName: string) {
 		await this.openThemeSelector();
 
-		await expect(async () => {
-			const themeCard = this.getThemeCard(themeName);
+		const themeCard = this.getThemeCard(themeName);
 
-			await themeCard.waitFor({state: 'visible', timeout: 2000});
+		await expect(themeCard).toBeVisible();
 
-			await clickAndExpectToBeHidden({
-				target: themeCard,
-				trigger: themeCard,
-			});
+		await clickAndExpectToBeHidden({
+			target: this.themeSelectorTitle,
+			trigger: themeCard,
+		});
 
-			await expect(this.themeSelectorTitle).toBeHidden();
-		}).toPass();
-
-		await this.configurationSaveButton.waitFor();
+		await expect(this.configurationSaveButton).toBeVisible();
 
 		await this.saveConfiguration();
 	}
@@ -279,19 +275,21 @@ export class PagesAdminPage {
 	}
 
 	async openThemeSelector() {
-		await expect(async () => {
-			const changeThemeButton = this.page.getByRole('button', {
-				name: 'Change Current Theme',
-			});
+		const changeThemeButton = this.page.getByRole('button', {
+			disabled: false,
+			exact: true,
+			name: 'Change Current Theme',
+		});
 
-			await this.defineCustomThemeRadio.click();
+		await clickAndExpectToBeVisible({
+			target: changeThemeButton,
+			trigger: this.defineCustomThemeRadio,
+		});
 
-			await expect(changeThemeButton).toBeEnabled();
-
-			await changeThemeButton.click();
-
-			await expect(this.themeSelectorTitle).toBeVisible();
-		}).toPass();
+		await clickAndExpectToBeVisible({
+			target: this.themeSelectorTitle,
+			trigger: changeThemeButton,
+		});
 	}
 
 	async clickOnJavaScriptClientExtensionsTab() {

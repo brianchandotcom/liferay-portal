@@ -43,6 +43,10 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 
 		String portletTitle = PortalUtil.getPortletTitle(portlet, application, locale);
 
+		if (StringUtil.equals(ObjectPortletKeys.OBJECT_DEFINITIONS, portlet.getPortletId())) {
+			portletTitle = LanguageUtil.get(request, "model.resource.com.liferay.object");
+		}
+
 		PortletDataHandlerControl[] exportMetadataPortletDataHandlerControls = portletDataHandler.getExportMetadataPortletDataHandlerControls();
 
 		PortletDataHandlerControl[] exportPortletDataHandlerControls = portletDataHandler.getExportPortletDataHandlerControls();

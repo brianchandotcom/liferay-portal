@@ -147,6 +147,27 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Override
+	public int getRank() {
+		if (_registrations.isEmpty()) {
+			return super.getRank();
+		}
+
+		int rank = Integer.MAX_VALUE;
+
+		for (Registration registration : _registrations) {
+			ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
+				exportImportDescriptor =
+					registration.getExportImportDescriptor();
+
+			if (exportImportDescriptor.getRank() < rank) {
+				rank = exportImportDescriptor.getRank();
+			}
+		}
+
+		return rank;
+	}
+
+	@Override
 	public String getSchemaVersion() {
 		return SCHEMA_VERSION;
 	}

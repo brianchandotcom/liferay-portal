@@ -2484,13 +2484,13 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getFragmentInstancePageElement(
 				externalReferenceCode,
-				PageElementsTestUtil.getFragmentInstancePageElementDefinition(
+				PageElementsTestUtil.getBasicFragmentInstancePageElementDefinition(
 					Collections.emptyMap(), "BASIC_COMPONENT-button",
 					testGroup.getGroupId())));
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getFragmentInstancePageElement(
 				externalReferenceCode,
-				PageElementsTestUtil.getFragmentInstancePageElementDefinition(
+				PageElementsTestUtil.getBasicFragmentInstancePageElementDefinition(
 					Collections.emptyMap(),
 					"com.liferay.fragment.internal.renderer." +
 						"ContentObjectFragmentRenderer",
@@ -2502,7 +2502,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getFragmentInstancePageElement(
 				externalReferenceCode,
-				PageElementsTestUtil.getFragmentInstancePageElementDefinition(
+				PageElementsTestUtil.getBasicFragmentInstancePageElementDefinition(
 					Collections.emptyMap(), new FragmentEditableElement[0],
 					_addFragmentEntry(
 						null, irrelevantGroup.getGroupId(), serviceContext),
@@ -2510,7 +2510,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getFragmentInstancePageElement(
 				externalReferenceCode,
-				PageElementsTestUtil.getFragmentInstancePageElementDefinition(
+				PageElementsTestUtil.getBasicFragmentInstancePageElementDefinition(
 					Collections.emptyMap(), new FragmentEditableElement[0],
 					_addFragmentEntry(
 						null, testGroup.getGroupId(), serviceContext),
@@ -2518,7 +2518,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getFragmentInstancePageElement(
 				externalReferenceCode,
-				PageElementsTestUtil.getFragmentInstancePageElementDefinition(
+				PageElementsTestUtil.getBasicFragmentInstancePageElementDefinition(
 					Collections.emptyMap(), new FragmentEditableElement[0],
 					_addFragmentEntry(
 						null, testGroup.getGroupId(), serviceContext),
@@ -2538,7 +2538,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getFragmentInstancePageElement(
 				externalReferenceCode,
-				PageElementsTestUtil.getFragmentInstancePageElementDefinition(
+				PageElementsTestUtil.getBasicFragmentInstancePageElementDefinition(
 					Collections.emptyMap(), new FragmentEditableElement[0],
 					fragmentEntry, fragmentInstanceExternalReferenceCode,
 					testGroup.getGroupId(), namespace, uuid,
@@ -2551,7 +2551,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getFragmentInstancePageElement(
 				externalReferenceCode,
-				PageElementsTestUtil.getFragmentInstancePageElementDefinition(
+				PageElementsTestUtil.getBasicFragmentInstancePageElementDefinition(
 					Collections.emptyMap(), new FragmentEditableElement[0],
 					fragmentEntry, fragmentInstanceExternalReferenceCode,
 					testGroup.getGroupId(), namespace, uuid,
@@ -2591,7 +2591,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				_getFragmentInstancePageElement(
 					externalReferenceCode,
 					PageElementsTestUtil.
-						getFragmentInstancePageElementDefinition(
+						getBasicFragmentInstancePageElementDefinition(
 							Collections.emptyMap(),
 							new FragmentEditableElement[0], fragmentEntry,
 							testGroup.getGroupId()))));
@@ -2608,7 +2608,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				_getFragmentInstancePageElement(
 					externalReferenceCode,
 					PageElementsTestUtil.
-						getFragmentInstancePageElementDefinition(
+						getBasicFragmentInstancePageElementDefinition(
 							Collections.emptyMap(),
 							new FragmentEditableElement[0], fragmentRenderer,
 							testGroup.getGroupId()))));
@@ -3134,7 +3134,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				_getFragmentInstancePageElement(
 					externalReferenceCode,
 					PageElementsTestUtil.
-						getFragmentInstancePageElementDefinition(
+						getBasicFragmentInstancePageElementDefinition(
 							configurationValuesMap,
 							new FragmentEditableElement[0], fragmentEntry,
 							testGroup.getGroupId())));
@@ -3485,7 +3485,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				_getFragmentInstancePageElement(
 					externalReferenceCode,
 					PageElementsTestUtil.
-						getFragmentInstancePageElementDefinition(
+						getBasicFragmentInstancePageElementDefinition(
 							null, fragmentEditableElements, fragmentEntry,
 							testGroup.getGroupId())));
 

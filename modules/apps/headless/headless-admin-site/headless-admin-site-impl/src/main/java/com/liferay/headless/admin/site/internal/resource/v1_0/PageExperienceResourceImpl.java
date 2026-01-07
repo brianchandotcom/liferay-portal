@@ -179,16 +179,6 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 			return _addPageExperience(groupId, pageExperience);
 		}
 
-		if ((pageExperience.getPriority() != null) &&
-			(segmentsExperience.getPriority() !=
-				pageExperience.getPriority())) {
-
-			segmentsExperience =
-				_segmentsExperienceService.updateSegmentsExperiencePriority(
-					segmentsExperience.getSegmentsExperienceId(),
-					GetterUtil.getInteger(pageExperience.getPriority()));
-		}
-
 		try (AutoCloseable autoCloseable =
 				LayoutServiceContextHelperUtil.getServiceContextAutoCloseable(
 					layout, contextUser)) {

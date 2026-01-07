@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ObjectDefinitionAPI} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 import {createReadStream, readdirSync} from 'fs';
 import path from 'path';
@@ -30,8 +29,8 @@ import {exportImportConfig} from './export_import.config';
 import {exportPageTest} from './fixtures/exportPageTest';
 import {stagingConfigurationPageTest} from './fixtures/stagingConfigurationPageTest';
 import {stagingPageTest} from './fixtures/stagingPageTest';
-import {objectDefitionRequestData} from './utils/objectDefitionRequestData';
 import {unzipAndCheckFolder} from './utils/stagingUtil';
+import {normalizeRestPath} from '../../../utils/normalizeRestPath';
 
 const test = mergeTests(
 	dataApiHelpersTest,
@@ -72,18 +71,16 @@ testWithBatchStagingFF(
 	'Object entries can not be staged through batch',
 	{tag: ['@LPD-70661', '@LPD-72343']},
 	async ({apiHelpers, stagingPage}) => {
-		const objectActionAPIClient =
-			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
-
-		const {body: objectDefinition} =
-			await objectActionAPIClient.postObjectDefinition(
-				objectDefitionRequestData({scope: 'site'})
-			);
-
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
+		const objectDefinition =
+		await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			status: {code: 0},
+			scope: 'site'
 		});
+
+	apiHelpers.data.push({
+		id: objectDefinition.id,
+		type: 'objectDefinition',
+	});
 
 		const site = await apiHelpers.headlessSite.createSite({
 			name: getRandomString(),
@@ -96,7 +93,7 @@ testWithBatchStagingFF(
 
 		await apiHelpers.objectEntry.postObjectEntry(
 			{externalReferenceCode: getRandomString(), name: getRandomString()},
-			`c/tests/scopes/${site.name}`
+			`${normalizeRestPath(objectDefinition.restContextPath)}/scopes/${site.name}`
 		);
 
 		await stagingPage.goto(site.name);

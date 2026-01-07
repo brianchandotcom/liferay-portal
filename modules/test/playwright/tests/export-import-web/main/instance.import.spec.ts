@@ -961,43 +961,29 @@ test('Can only import custom object entries when their definitions are already i
 	const objectActionAPIClient =
 		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
-	const objectDefinitionRequestBody: ObjectDefinition =
-		objectDefitionRequestData({
-			className:
-				'com.liferay.object.model.ObjectDefinition#test_definition',
-			externalReferenceCode: 'test-definition',
-			objectFields: [
-				{
-					DBType: 'String',
-					businessType: 'Text',
-					indexed: true,
-					indexedAsKeyword: true,
-					label: {
-						en_US: 'textField',
-					},
-					name: 'textField',
-					required: true,
-				},
-			],
-		});
+	const objectDefinitionExternalReferenceCode =
+	`ObjectDefinition${getRandomInt()}`;
 
-	let {body: objectDefinition} =
-		await objectActionAPIClient.postObjectDefinition(
-			objectDefinitionRequestBody
-		);
+	const objectDefinition1 =
+	await apiHelpers.objectAdmin.postRandomObjectDefinition({
+		className: `com.liferay.object.model.ObjectDefinition#${objectDefinitionExternalReferenceCode}`,
+		objectDefinitionExternalReferenceCode,
+		status: { code: 0 },
+	});
+
 	let objectEntry;
 	let exportFilePath;
 
 	try {
 		objectEntry = await apiHelpers.objectEntry.postObjectEntry(
 			{externalReferenceCode: 'testERC', textField: 'test'},
-			'c/tests'
+			`${normalizeRestPath(objectDefinition1.restContextPath)}`
 		);
 
 		await applicationsMenuPage.goToExport();
 
 		exportFilePath = await exportImportPage.export({
-			portletLabels: ['Tests 1 Items'],
+			portletLabels: [`${objectDefinitionExternalReferenceCode} 1 Items`],
 		});
 	}
 	catch {
@@ -1005,26 +991,28 @@ test('Can only import custom object entries when their definitions are already i
 		// Ensure cleanup if test execution stops before removing the object definition.
 
 		apiHelpers.data.push({
-			id: objectDefinition.id,
+			id: objectDefinition1.id,
 			type: 'objectDefinition',
 		});
 	}
 
-	await objectActionAPIClient.deleteObjectDefinition(objectDefinition.id);
+	await objectActionAPIClient.deleteObjectDefinition(objectDefinition1.id);
 
 	await companyExportImportPage.import({
 		expectedUploadErrorMessage:
-			'The Data Handler for the "Tests" portlet is missing from the system.',
+			`The Data Handler for the "${objectDefinitionExternalReferenceCode}" portlet is missing from the system.`,
 		filePath: exportFilePath,
 		includePermissions: false,
 	});
 
-	({body: objectDefinition} =
-		await objectActionAPIClient.postObjectDefinition(
-			objectDefinitionRequestBody
-		));
+		const objectDefinition2 =
+	await apiHelpers.objectAdmin.postRandomObjectDefinition({
+		className: `com.liferay.object.model.ObjectDefinition#${objectDefinitionExternalReferenceCode}`,
+		objectDefinitionExternalReferenceCode,
+		status: { code: 0 },
+	});
 
-	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
+	apiHelpers.data.push({id: objectDefinition2.id, type: 'objectDefinition'});
 
 	await companyExportImportPage.import({
 		filePath: exportFilePath,
@@ -1032,7 +1020,7 @@ test('Can only import custom object entries when their definitions are already i
 
 	expect(
 		await apiHelpers.get(
-			`${apiHelpers.baseUrl}c/tests/by-external-reference-code/${objectEntry.externalReferenceCode}`
+			`${apiHelpers.baseUrl}${normalizeRestPath(objectDefinition2.restContextPath)}/by-external-reference-code/${objectEntry.externalReferenceCode}`
 		)
 	).toEqual(
 		expect.objectContaining({

@@ -1420,12 +1420,6 @@ components:
                             description:
                                 The fragment reference of the fragment instance.
                             type: object
-                        fragmentType:
-                            # @review
-                            description:
-                                The fragment instance's type (basic, form).
-                            enum: [Basic, Form]
-                            type: string
                         fragmentViewports:
                             # @review
                             description:
@@ -2609,14 +2603,15 @@ components:
                 The page element definition.
             discriminator:
                 mapping:
+                    BasicFragment: "#/components/schemas/FragmentInstancePageElementDefinition"
                     CollectionDisplay: "#/components/schemas/CollectionDisplayPageElementDefinition"
                     CollectionItem: "#/components/schemas/CollectionItemPageElementDefinition"
                     Container: "#/components/schemas/ContainerPageElementDefinition"
                     DropZone: "#/components/schemas/DropZonePageElementDefinition"
                     FormContainer: "#/components/schemas/FormContainerPageElementDefinition"
+                    FormFragment: "#/components/schemas/FragmentInstancePageElementDefinition"
                     FormStep: "#/components/schemas/FormStepPageElementDefinition"
                     FormStepContainer: "#/components/schemas/FormStepContainerPageElementDefinition"
-                    Fragment: "#/components/schemas/FragmentInstancePageElementDefinition"
                     FragmentComposition: "#/components/schemas/FragmentCompositionInstancePageElementDefinition"
                     FragmentDropZone: "#/components/schemas/FragmentDropZonePageElementDefinition"
                     Grid: "#/components/schemas/GridPageElementDefinition"
@@ -2627,18 +2622,19 @@ components:
                 type:
                     # @review
                     description:
-                        The page element definition's type (collection display, collection item, container, drop zone,
-                        form container, form step, form step container, fragment, fragment composition, fragment drop
-                        zone, grid,  module or widget).
+                        The page element definition's type (basic fragment, collection display, collection item,
+                        container, drop zone, form container, form fragment, form step, form step container, fragment
+                        composition, fragment drop zone, grid,  module or widget).
                     enum:
+                        -   BasicFragment
                         -   CollectionDisplay
                         -   CollectionItem
                         -   Container
                         -   DropZone
                         -   FormContainer
+                        -   FormFragment
                         -   FormStep
                         -   FormStepContainer
-                        -   Fragment
                         -   FragmentComposition
                         -   FragmentDropZone
                         -   Grid

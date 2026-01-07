@@ -139,6 +139,7 @@ import com.liferay.object.util.comparator.ObjectEntryVersionVersionComparator;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.Column;
@@ -275,13 +276,10 @@ import com.liferay.trash.service.TrashEntryLocalService;
 import com.liferay.trash.service.TrashVersionLocalService;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
 import java.io.StringReader;
 
 import java.math.BigDecimal;
-
-import java.nio.charset.StandardCharsets;
 
 import java.security.Key;
 
@@ -315,8 +313,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 
 import javax.crypto.spec.SecretKeySpec;
-
-import org.apache.commons.io.IOUtils;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -5705,145 +5701,15 @@ public class ObjectEntryLocalServiceImpl
 		Class<?> javaTypeClass, String name, Object object,
 		Map<String, Serializable> values) {
 
-		if (javaTypeClass == BigDecimal.class) {
-			values.put(
-				name, BigDecimalUtil.stripTrailingZeros((BigDecimal)object));
-		}
-		else if (javaTypeClass == Blob.class) {
-			byte[] bytes = null;
+		Function<Object, Serializable> function = _putValueFunctions.get(
+			javaTypeClass);
 
-			if (object != null) {
-				if (object instanceof Blob) {
-
-					// Hypersonic
-
-					Blob blob = (Blob)object;
-
-					try {
-						bytes = blob.getBytes(1, (int)blob.length());
-					}
-					catch (SQLException sqlException) {
-						throw new SystemException(sqlException);
-					}
-				}
-				else if (object instanceof byte[]) {
-
-					// MySQL
-
-					bytes = (byte[])object;
-				}
-				else {
-					Class<?> objectClass = object.getClass();
-
-					throw new IllegalArgumentException(
-						StringBundler.concat(
-							"Unable to put \"", name,
-							"\" with unknown object class ",
-							objectClass.getName()));
-				}
-			}
-
-			values.put(name, bytes);
-		}
-		else if (javaTypeClass == Boolean.class) {
-			if (object == null) {
-				object = Boolean.FALSE;
-			}
-
-			if (object instanceof Byte) {
-				Byte byteObject = (Byte)object;
-
-				if (byteObject.intValue() == 0) {
-					object = Boolean.FALSE;
-				}
-				else {
-					object = Boolean.TRUE;
-				}
-			}
-
-			values.put(name, (Boolean)object);
-		}
-		else if (javaTypeClass == Clob.class) {
-			if (object == null) {
-				values.put(name, StringPool.BLANK);
-			}
-			else {
-				if (DBManagerUtil.getDBType() == DBType.POSTGRESQL) {
-					values.put(name, (String)object);
-				}
-				else {
-					Clob clob = (Clob)object;
-
-					try {
-						InputStream inputStream = clob.getAsciiStream();
-
-						values.put(
-							name,
-							GetterUtil.getString(
-								IOUtils.toString(
-									inputStream, StandardCharsets.UTF_8)));
-					}
-					catch (IOException | SQLException exception) {
-						throw new SystemException(exception);
-					}
-				}
-			}
-		}
-		else if (javaTypeClass == Date.class) {
-			values.put(name, (Date)object);
-		}
-		else if (javaTypeClass == Double.class) {
-			Number number = (Number)object;
-
-			if (number == null) {
-				number = Double.valueOf(0D);
-			}
-			else if (!(number instanceof Double)) {
-				number = number.doubleValue();
-			}
-
-			values.put(name, number);
-		}
-		else if (javaTypeClass == Integer.class) {
-			Number number = (Number)object;
-
-			if (number == null) {
-				number = Integer.valueOf(0);
-			}
-			else if (!(number instanceof Integer)) {
-				number = number.intValue();
-			}
-
-			values.put(name, number);
-		}
-		else if (javaTypeClass == Long.class) {
-			Number number = (Number)object;
-
-			if (number == null) {
-				number = Long.valueOf(0L);
-			}
-			else if (!(number instanceof Long)) {
-				number = number.longValue();
-			}
-
-			values.put(name, number);
-		}
-		else if (javaTypeClass == String.class) {
-			String string = (String)object;
-
-			if (string == null) {
-				string = StringPool.BLANK;
-			}
-
-			values.put(name, string);
-		}
-		else if (javaTypeClass == Timestamp.class) {
-			values.put(name, (Timestamp)object);
-		}
-		else {
+		if (function == null) {
 			throw new IllegalArgumentException(
 				"Unable to put value with class " + javaTypeClass.getName());
 		}
+
+		values.put(name, function.apply(object));
 	}
 
 	private void _reindex(ObjectEntry objectEntry) throws PortalException {
@@ -7839,6 +7705,123 @@ public class ObjectEntryLocalServiceImpl
 		_objectRelationshipLocalServiceSnapshot = new Snapshot<>(
 			ObjectEntryLocalServiceImpl.class,
 			ObjectRelationshipLocalService.class, null);
+
+	private static final Map<Class<?>, Function<Object, Serializable>>
+		_putValueFunctions =
+			HashMapBuilder.<Class<?>, Function<Object, Serializable>>put(
+				BigDecimal.class,
+				value -> BigDecimalUtil.stripTrailingZeros((BigDecimal)value)
+			).put(
+				Blob.class,
+				value -> {
+					if (value instanceof byte[] bytes) {
+						return bytes;
+					}
+
+					if (value instanceof Blob blob) {
+
+						// Hypersonic
+
+						try {
+							return blob.getBytes(1, (int)blob.length());
+						}
+						catch (SQLException sqlException) {
+							throw new SystemException(sqlException);
+						}
+					}
+
+					return null;
+				}
+			).put(
+				Boolean.class,
+				value -> {
+					if (value instanceof Boolean booleanValue) {
+						return booleanValue;
+					}
+
+					if (value instanceof Byte byteValue) {
+						if (byteValue.intValue() == 0) {
+							return Boolean.FALSE;
+						}
+
+						return Boolean.TRUE;
+					}
+
+					return Boolean.FALSE;
+				}
+			).put(
+				Clob.class,
+				value -> {
+					if (value instanceof Clob clob) {
+						try {
+							return StreamUtil.toString(
+								clob.getAsciiStream(), StringPool.UTF8);
+						}
+						catch (IOException | SQLException exception) {
+							throw new SystemException(exception);
+						}
+					}
+
+					if (value instanceof String s) {
+						return s;
+					}
+
+					return StringPool.BLANK;
+				}
+			).put(
+				Date.class, value -> (Date)value
+			).put(
+				Double.class,
+				value -> {
+					if (value instanceof Double doubleValue) {
+						return doubleValue;
+					}
+
+					if (value instanceof Number number) {
+						return number.doubleValue();
+					}
+
+					return 0D;
+				}
+			).put(
+				Integer.class,
+				value -> {
+					if (value instanceof Integer intValue) {
+						return intValue;
+					}
+
+					if (value instanceof Number number) {
+						return number.intValue();
+					}
+
+					return 0;
+				}
+			).put(
+				Long.class,
+				value -> {
+					if (value instanceof Long longValue) {
+						return longValue;
+					}
+
+					if (value instanceof Number number) {
+						return number.longValue();
+					}
+
+					return 0L;
+				}
+			).put(
+				String.class,
+				value -> {
+					if (value instanceof String s) {
+						return s;
+					}
+
+					return StringPool.BLANK;
+				}
+			).put(
+				Timestamp.class, value -> (Timestamp)value
+			).build();
+
 	private static final ThreadLocal<Boolean> _skipModelListeners =
 		new CentralizedThreadLocal<>(
 			ObjectEntryLocalServiceImpl.class + "._skipModelListeners",

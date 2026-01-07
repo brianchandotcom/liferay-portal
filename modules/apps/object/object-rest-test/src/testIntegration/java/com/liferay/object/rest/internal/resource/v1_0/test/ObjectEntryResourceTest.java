@@ -36,6 +36,7 @@ import com.liferay.headless.admin.taxonomy.client.dto.v1_0.ParentTaxonomyCategor
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.ParentTaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.client.resource.v1_0.TaxonomyCategoryResource;
+import com.liferay.headless.delivery.dto.v1_0.Comment;
 import com.liferay.headless.delivery.dto.v1_0.Creator;
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
@@ -106,10 +107,13 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.comment.WorkflowableComment;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -118,6 +122,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -10686,6 +10691,65 @@ public class ObjectEntryResourceTest {
 			_testGroupId, _siteScopedObjectDefinition1);
 	}
 
+	@FeatureFlag("LPD-43996")
+	@Test
+	public void testPostObjectEntriesWithMissingParentCommentReference()
+		throws Exception {
+
+		_enableComments(_objectDefinition1);
+
+		String parentExternalReferenceCode = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
+
+		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
+			new com.liferay.object.rest.dto.v1_0.ObjectEntry() {
+				{
+					comments = new Comment[] {
+						new Comment() {
+							{
+								externalReferenceCode = StringUtil.toLowerCase(
+									RandomTestUtil.randomString());
+								parentCommentExternalReferenceCode =
+									parentExternalReferenceCode;
+								text = StringUtil.toLowerCase(
+									RandomTestUtil.randomString());
+							}
+						}
+					};
+				}
+			};
+
+		Assert.assertNull(
+			_commentManager.fetchComment(
+				_testGroupId, parentExternalReferenceCode));
+
+		ObjectEntryResource objectEntryResource = _getObjectEntryResource(
+			_objectDefinition1, TestPropsValues.getUser());
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			objectEntryResource.postObjectEntry(objectEntry);
+		}
+
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
+		com.liferay.portal.kernel.comment.Comment serviceBuilderComment =
+			_commentManager.getComment(
+				company.getGroupId(), parentExternalReferenceCode);
+
+		Assert.assertTrue(serviceBuilderComment instanceof WorkflowableComment);
+
+		WorkflowableComment workflowableComment =
+			(WorkflowableComment)serviceBuilderComment;
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_EMPTY, workflowableComment.getStatus());
+
+		_commentManager.deleteComment(serviceBuilderComment.getCommentId());
+	}
+
 	@Test
 	public void testPostObjectEntryExpire() throws Exception {
 
@@ -20699,6 +20763,9 @@ public class ObjectEntryResourceTest {
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
+	private CommentManager _commentManager;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

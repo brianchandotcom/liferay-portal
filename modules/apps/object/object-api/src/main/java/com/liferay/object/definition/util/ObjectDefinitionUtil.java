@@ -133,6 +133,8 @@ public class ObjectDefinitionUtil {
 		).put(
 			"Bookmark", "/bookmarks"
 		).put(
+			"CMPProject", "/cmp/projects"
+		).put(
 			"CMSBasicDocument", "/cms/basic-documents"
 		).put(
 			"CMSBasicWebContent", "/cms/basic-web-contents"

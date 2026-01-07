@@ -1,0 +1,154 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+		"multiCompany": true,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"featureFlag": "LPD-58677",
+			"importStrategy": "ON_ERROR_FAIL",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "DEFAULT"
+	},
+	"items": [
+		{
+			"accountEntryRestricted": false,
+			"className": "com.liferay.object.model.ObjectDefinition#I5U9",
+			"enableCategorization": true,
+			"enableComments": true,
+			"enableFriendlyURLCustomization": true,
+			"enableIndexSearch": true,
+			"enableLocalization": true,
+			"enableObjectEntryDraft": true,
+			"enableObjectEntryHistory": true,
+			"enableObjectEntrySchedule": true,
+			"enableObjectEntrySubscription": true,
+			"enableObjectEntryVersioning": true,
+			"externalReferenceCode": "L_CMP_PROJECT",
+			"label": {
+				"en_US": "Project"
+			},
+			"modifiable": true,
+			"name": "CMPProject",
+			"objectDefinitionSettings": [
+				{
+					"name": "acceptAllGroups",
+					"value": "true"
+				},
+				{
+					"name": "visible",
+					"value": "true"
+				}
+			],
+			"objectFields": [
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"externalReferenceCode": "COMPLETION_RATE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Completion Rate"
+					},
+					"name": "completionRate",
+					"readOnly": "true",
+					"system": true
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "DESCRIPTION",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Description"
+					},
+					"name": "description",
+					"system": true
+				},
+				{
+					"DBType": "Date",
+					"businessType": "Date",
+					"externalReferenceCode": "DUE_DATE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Due Date"
+					},
+					"name": "dueDate",
+					"system": true
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"defaultValue": "notStarted",
+					"externalReferenceCode": "STATE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "State"
+					},
+					"listTypeDefinitionExternalReferenceCode": "L_CMP_PROJECT_STATES",
+					"name": "state",
+					"required": true,
+					"state": true,
+					"system": true
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "TITLE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Title"
+					},
+					"name": "title",
+					"required": true,
+					"system": true
+				},
+				{
+					"businessType": "Relationship",
+					"externalReferenceCode": "USER_TO_CMP_PROJECT_MANAGER",
+					"indexed": true,
+					"label": {
+						"en_US": "User to Project Manager"
+					},
+					"name": "r_userToCMPProjectManager_userId",
+					"objectDefinitionExternalReferenceCode1": "L_USER",
+					"objectRelationshipExternalReferenceCode": "L_USER_TO_L_CMP_PROJECT_MANAGER",
+					"relationshipType": "oneToMany",
+					"system": true
+				},
+				{
+					"businessType": "Relationship",
+					"externalReferenceCode": "USER_TO_CMP_PROJECT_SPONSOR",
+					"indexed": true,
+					"label": {
+						"en_US": "User to Project Sponsor"
+					},
+					"name": "r_userToCMPProjectSponsor_userId",
+					"objectDefinitionExternalReferenceCode1": "L_USER",
+					"objectRelationshipExternalReferenceCode": "L_USER_TO_L_CMP_PROJECT_SPONSOR",
+					"relationshipType": "oneToMany",
+					"system": true
+				}
+			],
+			"objectFolderExternalReferenceCode": "L_CMP_PROJECT_MANAGEMENT_DEFINITIONS",
+			"panelCategoryKey": "",
+			"pluralLabel": {
+				"en_US": "Projects"
+			},
+			"scope": "depot",
+			"status": {
+				"code": 0
+			},
+			"system": true,
+			"titleObjectFieldName": "title"
+		}
+	]
+}

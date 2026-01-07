@@ -75,7 +75,7 @@ public class PageExperiencesTestUtil {
 	}
 
 	public static PageExperience[] getDefaultPageExperiences(
-		String contentPageSpecificationExternalReferenceCode,
+		String pageSpecificationExternalReferenceCode,
 		PageElement[] pageElements) {
 
 		PageExperience pageExperience = new PageExperience();
@@ -86,7 +86,7 @@ public class PageExperiencesTestUtil {
 			Collections.singletonMap("en-US", RandomTestUtil.randomString()));
 		pageExperience.setPageElements(pageElements);
 		pageExperience.setPageSpecificationExternalReferenceCode(
-			contentPageSpecificationExternalReferenceCode);
+			pageSpecificationExternalReferenceCode);
 
 		return new PageExperience[] {pageExperience};
 	}
@@ -124,19 +124,18 @@ public class PageExperiencesTestUtil {
 	}
 
 	public static PageExperience[] getPageExperiences(
-			long companyGroupId,
-			String contentPageSpecificationExternalReferenceCode, long groupId)
+			long companyGroupId, String pageSpecificationExternalReferenceCode,
+			long groupId)
 		throws PortalException {
 
 		return new PageExperience[] {
 			getPageExperience(
-				contentPageSpecificationExternalReferenceCode, 3, groupId,
+				pageSpecificationExternalReferenceCode, 3, groupId,
 				SegmentsTestUtil.addSegmentsEntry(groupId)),
 			getPageExperience(
-				contentPageSpecificationExternalReferenceCode, 2, groupId,
-				null),
+				pageSpecificationExternalReferenceCode, 2, groupId, null),
 			getPageExperience(
-				contentPageSpecificationExternalReferenceCode, 1, groupId,
+				pageSpecificationExternalReferenceCode, 1, groupId,
 				SegmentsTestUtil.addSegmentsEntry(companyGroupId))
 		};
 	}

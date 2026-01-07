@@ -15532,14 +15532,12 @@ public class ObjectEntryResourceTest {
 
 	private void _assertCommentJSONObject(
 			JSONObject commentJSONObject, String externalReferenceCode,
-			int parentCommentId, String text)
+			String text)
 		throws Exception {
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
 				"externalReferenceCode", externalReferenceCode
-			).put(
-				"parentCommentId", parentCommentId
 			).put(
 				"text", text
 			).toString(),
@@ -16993,22 +16991,12 @@ public class ObjectEntryResourceTest {
 
 		JSONArray jsonArray = _getCommentsJSONArray(groupId, objectDefinition);
 
-		Assert.assertEquals(3, jsonArray.length());
-
-		JSONObject jsonObject = jsonArray.getJSONObject(0);
-
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"parentCommentId", 0
-			).toString(),
-			jsonObject.toString(), JSONCompareMode.LENIENT);
+		Assert.assertEquals(2, jsonArray.length());
 
 		_assertCommentJSONObject(
-			jsonArray.getJSONObject(1), _ERC_VALUE_1, jsonObject.getInt("id"),
-			text1);
+			jsonArray.getJSONObject(0), _ERC_VALUE_1, text1);
 		_assertCommentJSONObject(
-			jsonArray.getJSONObject(2), _ERC_VALUE_2, jsonObject.getInt("id"),
-			text2);
+			jsonArray.getJSONObject(1), _ERC_VALUE_2, text2);
 	}
 
 	private void _testGetObjectEntryActions(boolean sharingEnabled)
@@ -19417,7 +19405,7 @@ public class ObjectEntryResourceTest {
 
 		JSONArray jsonArray = jsonObject.getJSONArray("comments");
 
-		Assert.assertEquals(2, jsonArray.length());
+		Assert.assertEquals(1, jsonArray.length());
 
 		String externalReferenceCode = RandomTestUtil.randomString();
 
@@ -19439,7 +19427,7 @@ public class ObjectEntryResourceTest {
 
 		jsonArray = jsonObject.getJSONArray("comments");
 
-		Assert.assertEquals(3, jsonArray.length());
+		Assert.assertEquals(2, jsonArray.length());
 	}
 
 	private void _testPostValidate(

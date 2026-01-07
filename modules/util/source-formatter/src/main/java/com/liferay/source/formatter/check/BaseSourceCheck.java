@@ -776,6 +776,59 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return GetterUtil.getBoolean(attributeValue);
 	}
 
+	protected boolean isDerivedFrom(
+		String absolutePath, String content, String fullyQualifiedClassName) {
+
+		Pattern pattern = Pattern.compile(
+			" class " + JavaSourceUtil.getClassName(absolutePath) +
+				"\\s+extends\\s+([\\w.]+) ");
+
+		Matcher matcher = pattern.matcher(content);
+
+		if (!matcher.find()) {
+			return false;
+		}
+
+		String extendedClassName = matcher.group(1);
+
+		if (extendedClassName.equals(fullyQualifiedClassName)) {
+			return true;
+		}
+
+		pattern = Pattern.compile("\nimport (.*\\." + extendedClassName + ");");
+
+		matcher = pattern.matcher(content);
+
+		if (matcher.find()) {
+			extendedClassName = matcher.group(1);
+		}
+		else {
+			extendedClassName =
+				JavaSourceUtil.getPackageName(content) + StringPool.PERIOD +
+					extendedClassName;
+		}
+
+		if (extendedClassName.equals(fullyQualifiedClassName)) {
+			return true;
+		}
+
+		if (!extendedClassName.startsWith("com.liferay.")) {
+			return false;
+		}
+
+		File file = JavaSourceUtil.getJavaFile(
+			extendedClassName, SourceUtil.getRootDirName(absolutePath),
+			getBundleSymbolicNamesMap(absolutePath));
+
+		if (file == null) {
+			return false;
+		}
+
+		return isDerivedFrom(
+			file.getAbsolutePath(), FileUtil.read(file),
+			fullyQualifiedClassName);
+	}
+
 	protected boolean isExcludedPath(String key, String path) {
 		return isExcludedPath(key, path, -1);
 	}
@@ -856,7 +909,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	protected boolean isUpgradeProcess(String absolutePath, String content) {
-		return _isDerivedFrom(
+		return isDerivedFrom(
 			absolutePath, content,
 			"com.liferay.portal.kernel.upgrade.UpgradeProcess");
 	}
@@ -995,59 +1048,6 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		}
 
 		return null;
-	}
-
-	protected boolean _isDerivedFrom(
-		String absolutePath, String content, String fullyQualifiedClassName) {
-
-		Pattern pattern = Pattern.compile(
-			" class " + JavaSourceUtil.getClassName(absolutePath) +
-				"\\s+extends\\s+([\\w.]+) ");
-
-		Matcher matcher = pattern.matcher(content);
-
-		if (!matcher.find()) {
-			return false;
-		}
-
-		String extendedClassName = matcher.group(1);
-
-		if (extendedClassName.equals(fullyQualifiedClassName)) {
-			return true;
-		}
-
-		pattern = Pattern.compile("\nimport (.*\\." + extendedClassName + ");");
-
-		matcher = pattern.matcher(content);
-
-		if (matcher.find()) {
-			extendedClassName = matcher.group(1);
-		}
-		else {
-			extendedClassName =
-				JavaSourceUtil.getPackageName(content) + StringPool.PERIOD +
-					extendedClassName;
-		}
-
-		if (extendedClassName.equals(fullyQualifiedClassName)) {
-			return true;
-		}
-
-		if (!extendedClassName.startsWith("com.liferay.")) {
-			return false;
-		}
-
-		File file = JavaSourceUtil.getJavaFile(
-			extendedClassName, SourceUtil.getRootDirName(absolutePath),
-			getBundleSymbolicNamesMap(absolutePath));
-
-		if (file == null) {
-			return false;
-		}
-
-		return _isDerivedFrom(
-			file.getAbsolutePath(), FileUtil.read(file),
-			fullyQualifiedClassName);
 	}
 
 	private static final String _MODULES_PROPERTIES_FILE_NAME =

@@ -534,26 +534,6 @@ public class DefaultObjectEntryManagerImpl
 
 	@Override
 	public ObjectEntry expireObjectEntry(
-			DTOConverterContext dtoConverterContext, long objectEntryId)
-		throws Exception {
-
-		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
-			_objectEntryService.expireObjectEntry(
-				objectEntryId,
-				ServiceContextUtil.createServiceContext(objectEntryId));
-
-		_checkObjectEntryStatus(serviceBuilderObjectEntry);
-
-		_objectEntryVersionService.expireObjectEntryVersions(
-			serviceBuilderObjectEntry,
-			ServiceContextUtil.createServiceContext(objectEntryId));
-
-		return _objectEntryDTOConverter.toDTO(
-			dtoConverterContext, serviceBuilderObjectEntry);
-	}
-
-	@Override
-	public ObjectEntry expireObjectEntry(
 			DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,
 			String scopeKey)
@@ -564,10 +544,20 @@ public class DefaultObjectEntryManagerImpl
 				externalReferenceCode, getGroupId(objectDefinition, scopeKey),
 				objectDefinition.getObjectDefinitionId());
 
+		serviceBuilderObjectEntry = _objectEntryService.expireObjectEntry(
+			serviceBuilderObjectEntry.getObjectEntryId(),
+			ServiceContextUtil.createServiceContext(
+				serviceBuilderObjectEntry.getObjectEntryId()));
+
 		_checkObjectEntryStatus(serviceBuilderObjectEntry);
 
-		return expireObjectEntry(
-			dtoConverterContext, serviceBuilderObjectEntry.getObjectEntryId());
+		_objectEntryVersionService.expireObjectEntryVersions(
+			serviceBuilderObjectEntry,
+			ServiceContextUtil.createServiceContext(
+				serviceBuilderObjectEntry.getObjectEntryId()));
+
+		return _objectEntryDTOConverter.toDTO(
+			dtoConverterContext, serviceBuilderObjectEntry);
 	}
 
 	@Override

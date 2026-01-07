@@ -193,11 +193,13 @@ export const attributeListColumns = {
 
 export const membershipChangesColumns = {
 	accountNames: {
+		accessor: 'accountName',
 		cellRenderer: AccountName,
 		label: Liferay.Language.get('account-name'),
 		sortable: true
 	},
 	firstSeen: {
+		accessor: 'firstSeenTime',
 		cellRenderer: ({className, data: {firstSeenTime}}) => (
 			<td className={getCN('name-cell-root', className)}>
 				<div className='text-truncate'>
@@ -209,6 +211,7 @@ export const membershipChangesColumns = {
 		sortable: true
 	},
 	individualName: {
+		accessor: 'name',
 		cellRenderer: MemberCell,
 		className: 'table-cell-expand',
 		label: `${Liferay.Language.get('member-name')} | ${Liferay.Language.get(
@@ -217,6 +220,7 @@ export const membershipChangesColumns = {
 		sortable: true
 	},
 	lastActive: {
+		accessor: 'lastActivityTime',
 		cellRenderer: ({className, data: {lastActivityTime}}) => (
 			<td className={getCN('name-cell-root', className)}>
 				<div className='text-truncate'>
@@ -228,12 +232,13 @@ export const membershipChangesColumns = {
 		sortable: true
 	},
 	membershipChanges: {
-		accessor: 'membershipChange',
+		accessor: 'type',
 		cellRenderer: MembershipChanges,
 		label: Liferay.Language.get('membership-change'),
 		sortable: true
 	},
 	profileType: {
+		accessor: 'profileType',
 		cellRenderer: ProfileType,
 		label: Liferay.Language.get('profile-type'),
 		sortable: true

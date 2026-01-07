@@ -25,14 +25,17 @@ import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.display.template.constants.PortletDisplayTemplateConstants;
 import com.liferay.site.navigation.site.map.web.internal.configuration.SiteNavigationSiteMapPortletInstanceConfiguration;
 
 import jakarta.portlet.RenderResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -189,10 +192,25 @@ public class SiteNavigationSiteMapDisplayContext {
 	}
 
 	public List<Layout> getRootLayouts() {
+		List<Layout> rootLayouts = new ArrayList<>();
+
+		if (isIncludeRootInTree() &&
+			StringUtil.startsWith(
+				_siteNavigationSiteMapPortletInstanceConfiguration.
+					displayStyle(),
+				PortletDisplayTemplateConstants.DISPLAY_STYLE_PREFIX)) {
+
+			rootLayouts.add(getRootLayout());
+		}
+
 		Layout layout = _themeDisplay.getLayout();
 
-		return LayoutLocalServiceUtil.getLayouts(
-			layout.getGroupId(), layout.isPrivateLayout(), getRootLayoutId());
+		rootLayouts.addAll(
+			LayoutLocalServiceUtil.getLayouts(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				getRootLayoutId()));
+
+		return rootLayouts;
 	}
 
 	public SiteNavigationSiteMapPortletInstanceConfiguration

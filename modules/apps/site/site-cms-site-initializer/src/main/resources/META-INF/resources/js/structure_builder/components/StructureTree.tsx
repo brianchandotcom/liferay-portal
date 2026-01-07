@@ -21,6 +21,7 @@ import {
 	useStateDispatch,
 } from '../contexts/StateContext';
 import selectInvalids from '../selectors/selectInvalids';
+import selectPublishedChildren from '../selectors/selectPublishedChildren';
 import selectSelection from '../selectors/selectSelection';
 import selectStructure from '../selectors/selectStructure';
 import selectStructureChildren from '../selectors/selectStructureChildren';
@@ -33,6 +34,7 @@ import {
 	StructureChild,
 } from '../types/Structure';
 import {Uuid} from '../types/Uuid';
+import confirmChildrenDeletion from '../utils/confirmChildrenDeletion';
 import {FIELD_TYPE_ICON, FieldType} from '../utils/field';
 import isLocked from '../utils/isLocked';
 import isReferenced from '../utils/isReferenced';
@@ -64,6 +66,7 @@ export default function StructureTree({search}: {search: string}) {
 
 	const children = useSelector(selectStructureChildren);
 	const invalids = useSelector(selectInvalids);
+	const publishedChildren = useSelector(selectPublishedChildren);
 	const selection = useSelector(selectSelection);
 	const structureLabel = useSelector(selectStructureLocalizedLabel);
 	const structureUuid = useSelector(selectStructureUuid);
@@ -95,6 +98,7 @@ export default function StructureTree({search}: {search: string}) {
 					children,
 					dispatch,
 					invalids,
+					publishedChildren,
 					search,
 					structure,
 				}),
@@ -111,6 +115,7 @@ export default function StructureTree({search}: {search: string}) {
 		hasReferencedStructure,
 		invalids,
 		objectDefinitionsStatus,
+		publishedChildren,
 		search,
 		structure,
 		structureLabel,
@@ -413,12 +418,14 @@ function buildItems({
 	children,
 	dispatch,
 	invalids,
+	publishedChildren,
 	search,
 	structure,
 }: {
 	children: (ReferencedStructure | RepeatableGroup | Structure)['children'];
 	dispatch: React.Dispatch<Action>;
 	invalids: State['invalids'];
+	publishedChildren: State['publishedChildren'];
 	search: string;
 	structure: Structure;
 }): TreeItem[] {
@@ -434,12 +441,14 @@ function buildItems({
 					actions: getItemActions({
 						dispatch,
 						item: child,
+						publishedChildren,
 						structure,
 					}),
 					children: buildItems({
 						children: child.children,
 						dispatch,
 						invalids,
+						publishedChildren,
 						search,
 						structure,
 					}),
@@ -468,6 +477,7 @@ function buildItems({
 						actions: getItemActions({
 							dispatch,
 							item: child,
+							publishedChildren,
 							structure,
 						}),
 						icon: FIELD_TYPE_ICON[child.type],
@@ -497,10 +507,12 @@ function match(value: string, keyword: string) {
 function getItemActions({
 	dispatch,
 	item,
+	publishedChildren,
 	structure,
 }: {
 	dispatch: React.Dispatch<Action>;
 	item: StructureChild;
+	publishedChildren: State['publishedChildren'];
 	structure: Structure;
 }) {
 	if (isLocked(item)) {
@@ -548,11 +560,20 @@ function getItemActions({
 
 		actions.push({
 			label: Liferay.Language.get('delete-field'),
-			onClick: () =>
+			onClick: async () => {
+				if (publishedChildren.has(item.uuid)) {
+					const confirm = await confirmChildrenDeletion();
+
+					if (!confirm) {
+						return;
+					}
+				}
+
 				dispatch({
 					type: 'delete-child',
 					uuid: item.uuid,
-				}),
+				});
+			},
 			symbolLeft: 'trash',
 		});
 	}

@@ -11,7 +11,9 @@ import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
+import selectPublishedChildren from '../selectors/selectPublishedChildren';
 import selectSelection from '../selectors/selectSelection';
+import confirmChildrenDeletion from '../utils/confirmChildrenDeletion';
 import AddChildDropdown from './AddChildDropdown';
 import StructureTree from './StructureTree';
 
@@ -46,6 +48,7 @@ function Toolbar({
 }) {
 	const dispatch = useStateDispatch();
 	const selection = useSelector(selectSelection);
+	const publishedChildren = useSelector(selectPublishedChildren);
 
 	if (selection.length <= 1) {
 		return (
@@ -63,6 +66,18 @@ function Toolbar({
 		);
 	}
 
+	const onDeleteSelection = async () => {
+		if (selection.some((uuid) => publishedChildren.has(uuid))) {
+			const confirm = await confirmChildrenDeletion();
+
+			if (!confirm) {
+				return;
+			}
+		}
+
+		dispatch({type: 'delete-selection'});
+	};
+
 	return (
 		<ManagementToolbar.Container
 			active
@@ -75,7 +90,7 @@ function Toolbar({
 				items={[
 					{
 						label: Liferay.Language.get('delete'),
-						onClick: () => dispatch({type: 'delete-selection'}),
+						onClick: onDeleteSelection,
 						symbolLeft: 'trash',
 					},
 					{

@@ -91,7 +91,7 @@ public class DLFileVersionConstraintResolver
 			return;
 		}
 
-		List<DLFileVersion> dlFileVersions = null;
+		List<DLFileVersion> dlFileVersions;
 
 		try (SafeCloseable safeCloseable1 =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(

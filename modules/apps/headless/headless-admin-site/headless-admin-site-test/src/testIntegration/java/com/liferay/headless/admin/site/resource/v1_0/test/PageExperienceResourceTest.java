@@ -12,6 +12,7 @@ import com.liferay.headless.admin.site.resource.v1_0.test.util.PageElementsTestU
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageExperiencesTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.ReferencesTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
@@ -340,7 +341,7 @@ public class PageExperienceResourceTest
 
 		pageExperience.setPageElements(
 			PageElementsTestUtil.getPageElements(
-				2, null, testGroup.getGroupId()));
+				2, StringPool.BLANK, testGroup.getGroupId()));
 		pageExperience.setPageSpecificationExternalReferenceCode(
 			_draftLayout.getExternalReferenceCode());
 

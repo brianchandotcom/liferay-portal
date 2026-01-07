@@ -421,6 +421,9 @@ public class PageElementsTestUtil {
 						RandomTestUtil.randomInt(1, 2),
 						pageElement.getExternalReferenceCode(), scopeGroupId));
 			}
+			else {
+				pageElement.setPageElements(new PageElement[0]);
+			}
 
 			pageElement.setParentExternalReferenceCode(
 				parentExternalReferenceCode);

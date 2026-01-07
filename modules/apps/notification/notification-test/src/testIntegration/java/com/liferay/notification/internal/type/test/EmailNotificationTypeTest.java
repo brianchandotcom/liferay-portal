@@ -1450,7 +1450,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		_clearObjectEntryIdsMap();
 
 		defaultObjectEntryManager.expireObjectEntry(
-			dtoConverterContext, objectEntry.getId());
+			dtoConverterContext, objectEntry.getExternalReferenceCode(),
+			objectDefinition, group.getGroupKey());
 
 		_assertMailMessage(new String[] {user.getEmailAddress()});
 		_assertNotificationQueueEntryBody(

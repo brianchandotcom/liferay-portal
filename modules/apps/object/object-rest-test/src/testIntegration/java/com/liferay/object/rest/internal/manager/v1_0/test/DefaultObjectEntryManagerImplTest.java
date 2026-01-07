@@ -4399,7 +4399,8 @@ public class DefaultObjectEntryManagerImplTest
 			2);
 
 		objectEntry = _defaultObjectEntryManager.expireObjectEntry(
-			dtoConverterContext, objectEntry.getId());
+			dtoConverterContext, objectEntry.getExternalReferenceCode(),
+			_objectDefinition1, StringPool.BLANK);
 
 		Status status = objectEntry.getStatus();
 
@@ -4582,12 +4583,16 @@ public class DefaultObjectEntryManagerImplTest
 		_assertApprovedObjectEntries(objectEntry1, objectEntry2);
 
 		_defaultObjectEntryManager.expireObjectEntry(
-			_createDTOConverterContext(), objectEntry1.getId());
+			_createDTOConverterContext(),
+			objectEntry1.getExternalReferenceCode(), _objectDefinition1,
+			StringPool.BLANK);
 
 		_assertApprovedObjectEntries(objectEntry2);
 
 		_defaultObjectEntryManager.expireObjectEntry(
-			_createDTOConverterContext(), objectEntry2.getId());
+			_createDTOConverterContext(),
+			objectEntry2.getExternalReferenceCode(), _objectDefinition1,
+			StringPool.BLANK);
 
 		_assertApprovedObjectEntries();
 
@@ -4813,7 +4818,9 @@ public class DefaultObjectEntryManagerImplTest
 				null));
 
 		_defaultObjectEntryManager.expireObjectEntry(
-			_createDTOConverterContext(), objectEntry1.getId());
+			_createDTOConverterContext(),
+			objectEntry1.getExternalReferenceCode(), _objectDefinition1,
+			StringPool.BLANK);
 
 		AssertUtils.assertFailure(
 			NoSuchObjectEntryException.class, null,
@@ -8169,7 +8176,9 @@ public class DefaultObjectEntryManagerImplTest
 
 		assertEquals(
 			_defaultObjectEntryManager.expireObjectEntry(
-				_simpleDTOConverterContext, objectEntry.getId()),
+				_simpleDTOConverterContext,
+				objectEntry.getExternalReferenceCode(), objectDefinition,
+				StringPool.BLANK),
 			new ObjectEntry() {
 				{
 					actions = objectEntryActionsWithoutExpire;

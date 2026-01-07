@@ -32,6 +32,35 @@ liferay-default:
         x-liferay-aws:
             -   secretRef:
                     name: managed-service-details
+    customInitContainers:
+        x-liferay-copy-extensions:
+            -   containerTemplate: |
+                    -   command:
+                            -   bash
+                            -   -c
+                            -   |
+                                    {{- if and .extensions .extensions.enabled }}
+                                    {{- $extensions := .extensions -}}
+                                    {{- range $extensions.dirs }}
+                                    tree /mnt/liferay/
+                                    mkdir -p /temp/{{ . }}
+                                    cp -R /mnt/liferay/extensions/{{ . }}/* /temp/{{ . }}
+                                    tree /temp/{{ . }}
+                                    {{- end }}
+                                    {{- else }}
+                                    echo "Copying extensions not enabled."
+                                    {{- end }}
+                        image: {{ printf "%s:%s" .image.repository (.image.tag | toString) }}
+                        imagePullPolicy: {{ .image.pullPolicy }}
+                        name: liferay-copy-extensions
+                        {{- if and .extensions .extensions.enabled }}
+                        volumeMounts:
+                            -   mountPath: /mnt/liferay/extensions
+                                name: {{ .extensions.bucketName }}
+                                subPath: {{ .extensions.bucketPath }}
+                            -   mountPath: /temp
+                                name: liferay-persistent-volume
+                        {{- end }}
     customLabels:
         origin: liferay-aws
     customVolumeMounts:

@@ -277,6 +277,20 @@ resource "kubernetes_storage_class" "gp3_storage_class" {
 	storage_provisioner="ebs.csi.eks.amazonaws.com"
 	volume_binding_mode="Immediate"
 }
+resource "kubernetes_storage_class" "liferay_extensions_storage" {
+  allow_volume_expansion=false
+	depends_on=[
+		module.s3_bucket_liferay_extensions
+	]
+  metadata {
+    name=module.s3_bucket_liferay_extensions.s3_bucket_id
+  }
+  parameters={
+    "bucketName"=module.s3_bucket_liferay_extensions.s3_bucket_id
+  }
+  storage_provisioner="s3.csi.aws.com"
+  volume_binding_mode="WaitForFirstConsumer"
+}
 resource "null_resource" "opensearch_service_role" {
 	provisioner "local-exec" {
 		command=<<-EOT

@@ -1,0 +1,32 @@
+{{- if and .Values.extensions .Values.extensions.enabled }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+    name: {{ .Values.extensions.bucketName }}
+spec:
+    accessModes:
+        -   ReadWriteMany
+    capacity:
+        storage: 10Gi
+    claimRef:
+        name: {{ .Values.extensions.bucketName }}
+        namespace: {{ .Release.Namespace }}
+    csi:
+        driver: s3.csi.aws.com
+        volumeAttributes:
+            bucketName: {{ .Values.extensions.bucketName }}
+        volumeHandle: {{ .Values.extensions.bucketName }}
+    storageClassName: {{ .Values.extensions.bucketName }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+    name: {{ .Values.extensions.bucketName }}
+spec:
+    accessModes:
+        -   ReadWriteMany
+    resources:
+        requests:
+            storage: 10Gi
+    storageClassName: {{ .Values.extensions.bucketName }}
+{{- end }}

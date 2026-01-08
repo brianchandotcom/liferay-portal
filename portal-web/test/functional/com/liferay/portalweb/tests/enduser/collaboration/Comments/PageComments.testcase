@@ -34,7 +34,7 @@ definition {
 	@description = "This ensures that you can reply to loaded comments."
 	@priority = 4
 	test CanReplyToLoadedComment {
-		task ("Given the proprety is set to 1 and the comments widget is added to the comments page") {
+		task ("Given the property is set to 1 and the comments widget is added to the comments page") {
 			property custom.properties = "discussion.comments.delta.value=1";
 
 			Navigator.gotoPage(pageName = "Page Comments Page");

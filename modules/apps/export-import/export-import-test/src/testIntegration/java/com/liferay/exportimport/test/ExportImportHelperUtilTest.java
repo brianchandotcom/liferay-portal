@@ -100,6 +100,22 @@ public class ExportImportHelperUtilTest {
 	}
 
 	@Test
+	public void testGetDataSiteAndInstanceLevelPortlets() throws Exception {
+		List<Portlet> portlets =
+			ExportImportHelperUtil.getDataSiteAndInstanceLevelPortlets(
+				TestPropsValues.getCompanyId());
+
+		for (Portlet portlet : portlets) {
+			PortletDataHandler portletDataHandler =
+				portlet.getPortletDataHandlerInstance();
+
+			DataLevel portletDataLevel = portletDataHandler.getDataLevel();
+
+			Assert.assertTrue(!portletDataLevel.equals(DataLevel.PORTAL));
+		}
+	}
+
+	@Test
 	public void testGetDataSiteAndInstanceLevelPortletsRank() throws Exception {
 		List<Portlet> portlets =
 			ExportImportHelperUtil.getDataSiteAndInstanceLevelPortlets(
@@ -219,6 +235,24 @@ public class ExportImportHelperUtilTest {
 	}
 
 	@Test
+	public void testGetDataSiteLevelPortlets() throws Exception {
+		List<Portlet> portlets =
+			ExportImportHelperUtil.getDataSiteLevelPortlets(
+				TestPropsValues.getCompanyId());
+
+		for (Portlet portlet : portlets) {
+			PortletDataHandler portletDataHandler =
+				portlet.getPortletDataHandlerInstance();
+
+			DataLevel portletDataLevel = portletDataHandler.getDataLevel();
+
+			Assert.assertTrue(
+				!(portletDataLevel.equals(DataLevel.PORTAL) ||
+				  portletDataLevel.equals(DataLevel.PORTLET_INSTANCE)));
+		}
+	}
+
+	@Test
 	public void testGetDataSiteLevelPortletsRank() throws Exception {
 		List<Portlet> portlets =
 			ExportImportHelperUtil.getDataSiteLevelPortlets(
@@ -237,40 +271,6 @@ public class ExportImportHelperUtilTest {
 			}
 
 			previousRank = actualRank;
-		}
-	}
-
-	@Test
-	public void testGetDataSiteAndInstanceLevelPortlets() throws Exception {
-		List<Portlet> portlets =
-			ExportImportHelperUtil.getDataSiteAndInstanceLevelPortlets(
-				TestPropsValues.getCompanyId());
-
-		for (Portlet portlet : portlets) {
-			PortletDataHandler portletDataHandler =
-				portlet.getPortletDataHandlerInstance();
-
-			DataLevel portletDataLevel = portletDataHandler.getDataLevel();
-
-			Assert.assertTrue(!portletDataLevel.equals(DataLevel.PORTAL));
-		}
-	}
-
-	@Test
-	public void testGetDataSiteLevelPortlets() throws Exception {
-		List<Portlet> portlets =
-			ExportImportHelperUtil.getDataSiteLevelPortlets(
-				TestPropsValues.getCompanyId());
-
-		for (Portlet portlet : portlets) {
-			PortletDataHandler portletDataHandler =
-				portlet.getPortletDataHandlerInstance();
-
-			DataLevel portletDataLevel = portletDataHandler.getDataLevel();
-
-			Assert.assertTrue(
-				!(portletDataLevel.equals(DataLevel.PORTAL) ||
-				  portletDataLevel.equals(DataLevel.PORTLET_INSTANCE)));
 		}
 	}
 

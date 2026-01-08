@@ -20,9 +20,8 @@ public abstract class BalancedListSplitter<T extends WeightedItem> {
 	}
 
 	public List<List<T>> split(List<T> list) {
-		List<ListItemList> listItemLists = new ArrayList<>();
-
 		Set<ListItemList> candidateListItemLists = new TreeSet<>();
+		List<ListItemList> listItemLists = new ArrayList<>();
 
 		for (T item : list) {
 			ListItem listItem = new ListItem(item);
@@ -178,12 +177,11 @@ public abstract class BalancedListSplitter<T extends WeightedItem> {
 				return listItem.getWeight() + listItem.getOverheadWeight();
 			}
 
-			long newTotalWeight = _totalWeight + listItem.getWeight();
-			long newTotalOverheadWeight =
+			long totalWeight = _totalWeight + listItem.getWeight();
+			long totalOverheadWeight =
 				_totalOverheadWeight + listItem.getOverheadWeight();
-			int newSize = size() + 1;
 
-			return newTotalWeight + (newTotalOverheadWeight / newSize);
+			return totalWeight + (totalOverheadWeight / size() + 1);
 		}
 
 		public List<T> toList() {

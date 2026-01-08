@@ -6,8 +6,11 @@
 package com.liferay.object.internal.search.spi.model.index.contributor;
 
 import com.liferay.account.model.AccountEntryOrganizationRel;
+import com.liferay.account.model.AccountEntryOrganizationRelTable;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryTable;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
@@ -19,7 +22,10 @@ import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.model.bag.ObjectFieldBag;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
-import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.base.BaseTable;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -29,6 +35,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.FieldArray;
+import com.liferay.portal.kernel.search.ReindexCacheThreadLocal;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -45,10 +53,14 @@ import java.io.Serializable;
 
 import java.math.BigDecimal;
 
+import java.sql.Types;
+
 import java.text.Format;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -64,11 +76,13 @@ public class ObjectEntryModelDocumentContributor
 	public ObjectEntryModelDocumentContributor(
 		AccountEntryOrganizationRelLocalService
 			accountEntryOrganizationRelLocalService,
+		DLFileEntryLocalService dlFileEntryLocalService,
 		ObjectEntryFolderLocalService objectEntryFolderLocalService,
 		TextEmbeddingDocumentContributor textEmbeddingDocumentContributor) {
 
 		_accountEntryOrganizationRelLocalService =
 			accountEntryOrganizationRelLocalService;
+		_dlFileEntryLocalService = dlFileEntryLocalService;
 		_objectEntryFolderLocalService = objectEntryFolderLocalService;
 		_textEmbeddingDocumentContributor = textEmbeddingDocumentContributor;
 	}
@@ -147,18 +161,8 @@ public class ObjectEntryModelDocumentContributor
 				objectField.getBusinessType(),
 				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
 
-			long dlFileEntryId = GetterUtil.getLong(fieldValue);
-
-			fieldValue = StringPool.BLANK;
-
-			if (dlFileEntryId != 0) {
-				DLFileEntry dlFileEntry =
-					DLFileEntryLocalServiceUtil.fetchDLFileEntry(dlFileEntryId);
-
-				if (dlFileEntry != null) {
-					fieldValue = dlFileEntry.getFileName();
-				}
-			}
+			fieldValue = _getFileName(
+				GetterUtil.getLong(fieldValue), objectDefinition);
 		}
 		else if (StringUtil.equals(
 					objectField.getBusinessType(),
@@ -202,11 +206,7 @@ public class ObjectEntryModelDocumentContributor
 
 			document.addKeyword(
 				"accountEntryRestrictedOrganizationIds",
-				TransformUtil.transformToArray(
-					_accountEntryOrganizationRelLocalService.
-						getAccountEntryOrganizationRels(accountEntryId),
-					AccountEntryOrganizationRel::getOrganizationId,
-					Long.class));
+				_getOrganizationIds(accountEntryId));
 		}
 
 		String valueString = String.valueOf(fieldValue);
@@ -505,6 +505,117 @@ public class ObjectEntryModelDocumentContributor
 		return _format.format(value);
 	}
 
+	private String _getFileName(
+		long dlFileEntryId, ObjectDefinition objectDefinition) {
+
+		if (dlFileEntryId == 0) {
+			return StringPool.BLANK;
+		}
+
+		Map<Long, String> fileNames =
+			ReindexCacheThreadLocal.getScopeReindexCache(
+				ObjectEntryModelDocumentContributor.class.getName() +
+					"#_getFileName",
+				String.valueOf(objectDefinition.getObjectDefinitionId()),
+				() -> -1, () -> -1,
+				count -> {
+					Map<Long, String> localFileNames = new HashMap<>();
+
+					ObjectFieldBag objectFieldBag =
+						objectDefinition.getObjectFieldBag();
+
+					for (ObjectField objectField :
+							ListUtil.filter(
+								objectFieldBag.getIndexedObjectFields(),
+								objectField -> objectField.compareBusinessType(
+									ObjectFieldConstants.
+										BUSINESS_TYPE_ATTACHMENT))) {
+
+						ObjectFieldTable objectFieldTable =
+							new ObjectFieldTable(objectField);
+
+						for (Object[] values :
+								_dlFileEntryLocalService.
+									<List<Object[]>>dslQuery(
+										objectFieldTable.buildDSLQuery(),
+										false)) {
+
+							localFileNames.put(
+								(Long)values[0], (String)values[1]);
+						}
+					}
+
+					return localFileNames;
+				});
+
+		if (fileNames == null) {
+			DLFileEntry dlFileEntry =
+				DLFileEntryLocalServiceUtil.fetchDLFileEntry(dlFileEntryId);
+
+			if (dlFileEntry != null) {
+				return dlFileEntry.getFileName();
+			}
+
+			return StringPool.BLANK;
+		}
+
+		return fileNames.getOrDefault(dlFileEntryId, StringPool.BLANK);
+	}
+
+	private long[] _getOrganizationIds(Long accountEntryId) {
+		Map<Long, long[]> organizationIdsMap =
+			ReindexCacheThreadLocal.getGlobalReindexCache(
+				() -> -1,
+				ObjectEntryModelDocumentContributor.class.getName() +
+					"#_getOrganizationIds",
+				count -> {
+					Map<Long, List<Long>> organizationIdListMap =
+						new HashMap<>();
+
+					for (Object[] values :
+							_accountEntryOrganizationRelLocalService.
+								<List<Object[]>>dslQuery(
+									DSLQueryFactoryUtil.select(
+										AccountEntryOrganizationRelTable.
+											INSTANCE.accountEntryId,
+										AccountEntryOrganizationRelTable.
+											INSTANCE.organizationId
+									).from(
+										AccountEntryOrganizationRelTable.
+											INSTANCE
+									),
+									false)) {
+
+						List<Long> organizationIds =
+							organizationIdListMap.computeIfAbsent(
+								(Long)values[0], key -> new ArrayList<>());
+
+						organizationIds.add((Long)values[1]);
+					}
+
+					Map<Long, long[]> localOrganizationIdsMap = new HashMap<>();
+
+					for (Map.Entry<Long, List<Long>> entry :
+							organizationIdListMap.entrySet()) {
+
+						localOrganizationIdsMap.put(
+							entry.getKey(),
+							ArrayUtil.toLongArray(entry.getValue()));
+					}
+
+					return localOrganizationIdsMap;
+				});
+
+		if (organizationIdsMap == null) {
+			return ListUtil.toLongArray(
+				_accountEntryOrganizationRelLocalService.
+					getAccountEntryOrganizationRels(accountEntryId),
+				AccountEntryOrganizationRel::getOrganizationId);
+		}
+
+		return organizationIdsMap.get(accountEntryId);
+	}
+
 	private ObjectEntryFolder _getRootObjectEntryFolder(
 		ObjectEntryFolder objectEntryFolder) {
 
@@ -557,6 +668,7 @@ public class ObjectEntryModelDocumentContributor
 
 	private final AccountEntryOrganizationRelLocalService
 		_accountEntryOrganizationRelLocalService;
+	private final DLFileEntryLocalService _dlFileEntryLocalService;
 	private final ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 	private final TextEmbeddingDocumentContributor
 		_textEmbeddingDocumentContributor;
@@ -647,6 +759,31 @@ public class ObjectEntryModelDocumentContributor
 		private final StringBundler _contentSB;
 		private final Map<String, StringBundler> _localizedContentSBMap =
 			new TreeMap<>();
+
+	}
+
+	private static class ObjectFieldTable extends BaseTable<ObjectFieldTable> {
+
+		public DSLQuery buildDSLQuery() {
+			return DSLQueryFactoryUtil.select(
+				DLFileEntryTable.INSTANCE.fileEntryId,
+				DLFileEntryTable.INSTANCE.fileName
+			).from(
+				DLFileEntryTable.INSTANCE
+			).innerJoinON(
+				this, DLFileEntryTable.INSTANCE.fileEntryId.eq(_column)
+			);
+		}
+
+		private ObjectFieldTable(ObjectField objectField) {
+			super(objectField.getDBTableName(), () -> null);
+
+			_column = createColumn(
+				objectField.getDBColumnName(), Long.class, Types.BIGINT,
+				Column.FLAG_DEFAULT);
+		}
+
+		private final Column<ObjectFieldTable, Long> _column;
 
 	}
 

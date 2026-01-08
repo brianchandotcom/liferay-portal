@@ -9,8 +9,8 @@ import com.liferay.jenkins.results.parser.testray.TestrayBuild;
 
 import java.net.URL;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.json.JSONObject;
 
@@ -131,6 +131,6 @@ public class BuildReportFactory {
 	}
 
 	private static final Map<String, TopLevelBuildReport>
-		_topLevelBuildReports = new HashMap<>();
+		_topLevelBuildReports = new ConcurrentHashMap<>();
 
 }

@@ -5,8 +5,8 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.json.JSONObject;
 
@@ -109,6 +109,7 @@ public class WorkspaceFactory {
 		return workspace;
 	}
 
-	private static final Map<String, Workspace> _workspaces = new HashMap<>();
+	private static final Map<String, Workspace> _workspaces =
+		new ConcurrentHashMap<>();
 
 }

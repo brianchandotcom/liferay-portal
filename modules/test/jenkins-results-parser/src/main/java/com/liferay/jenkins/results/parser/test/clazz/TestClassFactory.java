@@ -26,9 +26,9 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.json.JSONObject;
 
@@ -403,10 +403,10 @@ public class TestClassFactory {
 	}
 
 	private static final Map<File, JUnitTestClass> _jUnitTestClasses =
-		new HashMap<>();
+		new ConcurrentHashMap<>();
 	private static final Map<File, NPMTestClass> _npmTestClasses =
-		new HashMap<>();
+		new ConcurrentHashMap<>();
 	private static final Map<File, PlaywrightJUnitTestClass>
-		_playwrightJUnitTestClasses = new HashMap<>();
+		_playwrightJUnitTestClasses = new ConcurrentHashMap<>();
 
 }

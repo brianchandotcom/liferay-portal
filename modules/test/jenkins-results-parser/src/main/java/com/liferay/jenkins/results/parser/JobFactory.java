@@ -9,10 +9,10 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -631,6 +631,6 @@ public class JobFactory {
 		return _jobs.get(key);
 	}
 
-	private static final Map<String, Job> _jobs = new HashMap<>();
+	private static final Map<String, Job> _jobs = new ConcurrentHashMap<>();
 
 }

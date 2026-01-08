@@ -7,8 +7,8 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 
 import org.json.JSONObject;
@@ -284,6 +284,6 @@ public class GitRepositoryFactory {
 	}
 
 	private static final Map<String, WorkspaceGitRepository>
-		_workspaceGitRepositories = new HashMap<>();
+		_workspaceGitRepositories = new ConcurrentHashMap<>();
 
 }

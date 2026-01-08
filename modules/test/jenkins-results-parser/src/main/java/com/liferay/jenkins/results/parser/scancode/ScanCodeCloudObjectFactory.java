@@ -9,8 +9,8 @@ import com.google.cloud.storage.Blob;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Brittney Nguyen
@@ -40,6 +40,6 @@ public class ScanCodeCloudObjectFactory {
 	}
 
 	private static final Map<String, ScanCodeCloudObject>
-		_scanCodeCloudObjects = new HashMap<>();
+		_scanCodeCloudObjects = new ConcurrentHashMap<>();
 
 }

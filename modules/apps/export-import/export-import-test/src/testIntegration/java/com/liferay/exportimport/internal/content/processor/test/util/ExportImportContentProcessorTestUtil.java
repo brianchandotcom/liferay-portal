@@ -299,14 +299,15 @@ public class ExportImportContentProcessorTestUtil {
 	private static String _replaceTimestampParameters(String content) {
 		List<String> urls = ListUtil.fromArray(StringUtil.splitLines(content));
 
-		String timestampParameter = "t=123456789";
+		String parameterPermutation1 = String.join(
+			"&", _TIMESTAMP_PARAMETER, _WIDTH_PARAMETER, _HEIGHT_PARAMETER);
+		String parameterPermutation2 = String.join(
+			"&", _WIDTH_PARAMETER, _HEIGHT_PARAMETER, _TIMESTAMP_PARAMETER);
+		String parameterPermutation3 = String.join(
+			"&", _WIDTH_PARAMETER, _TIMESTAMP_PARAMETER, _HEIGHT_PARAMETER);
 
-		String parameters1 = timestampParameter + "&width=100&height=100";
-		String parameters2 = "width=100&" + timestampParameter + "&height=100";
-		String parameters3 = "width=100&height=100&" + timestampParameter;
-		String parameters4 = StringBundler.concat(
-			timestampParameter, "?", timestampParameter,
-			"&width=100&height=100");
+		String timestampParameterPermutation = StringBundler.concat(
+			_TIMESTAMP_PARAMETER, "?", parameterPermutation1);
 
 		List<String> outURLs = new ArrayList<>();
 
@@ -322,19 +323,27 @@ public class ExportImportContentProcessorTestUtil {
 			outURLs.add(
 				StringUtil.replace(
 					url, new String[] {"[$TIMESTAMP$]", "[$TIMESTAMP_ONLY$]"},
-					new String[] {"&" + parameters1, "?" + parameters1}));
+					new String[] {
+						"&" + parameterPermutation1, "?" + parameterPermutation1
+					}));
 			outURLs.add(
 				StringUtil.replace(
 					url, new String[] {"[$TIMESTAMP$]", "[$TIMESTAMP_ONLY$]"},
-					new String[] {"&" + parameters2, "?" + parameters2}));
+					new String[] {
+						"&" + parameterPermutation2, "?" + parameterPermutation2
+					}));
 			outURLs.add(
 				StringUtil.replace(
 					url, new String[] {"[$TIMESTAMP$]", "[$TIMESTAMP_ONLY$]"},
-					new String[] {"&" + parameters3, "?" + parameters3}));
+					new String[] {
+						"&" + parameterPermutation3, "?" + parameterPermutation3
+					}));
 			outURLs.add(
 				StringUtil.replace(
 					url, new String[] {"[$TIMESTAMP$]", "[$TIMESTAMP_ONLY$]"},
-					new String[] {StringPool.BLANK, "?" + parameters4}));
+					new String[] {
+						StringPool.BLANK, "?" + timestampParameterPermutation
+					}));
 		}
 
 		return StringUtil.merge(outURLs, StringPool.NEW_LINE);
@@ -351,6 +360,8 @@ public class ExportImportContentProcessorTestUtil {
 		"[$PUBLIC_LAYOUT_FRIENDLY_URL$]"
 	};
 
+	private static final String _HEIGHT_PARAMETER = "height=100";
+
 	private static final String[] _MULTI_LOCALE_LAYOUT_VARIABLES = {
 		"[$LIVE_PUBLIC_LAYOUT_FRIENDLY_URL$]",
 		"[$PRIVATE_LAYOUT_FRIENDLY_URL$]", "[$PUBLIC_LAYOUT_FRIENDLY_URL$]"
@@ -361,6 +372,10 @@ public class ExportImportContentProcessorTestUtil {
 		"[$NON_DEFAULT_PRIVATE_LAYOUT_FRIENDLY_URL$]",
 		"[$NON_DEFAULT_PUBLIC_LAYOUT_FRIENDLY_URL$]"
 	};
+
+	private static final String _TIMESTAMP_PARAMETER = "t=123456789";
+
+	private static final String _WIDTH_PARAMETER = "width=100";
 
 	private static final Locale[] _locales = {
 		LocaleUtil.US, LocaleUtil.GERMANY, LocaleUtil.SPAIN

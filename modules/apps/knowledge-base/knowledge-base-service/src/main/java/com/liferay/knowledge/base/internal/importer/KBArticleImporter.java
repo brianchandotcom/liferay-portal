@@ -69,8 +69,8 @@ public class KBArticleImporter {
 			throw new KBArticleImportException("Input stream is null");
 		}
 
-		try {
-			ZipReader zipReader = _zipReaderFactory.getZipReader(inputStream);
+		try (ZipReader zipReader = _zipReaderFactory.getZipReader(
+				inputStream)) {
 
 			return _processKBArticleFiles(
 				userId, groupId, parentKBFolderId, prioritizeByNumericalPrefix,

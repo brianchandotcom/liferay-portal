@@ -68,8 +68,8 @@ public class UADApplicationExportController {
 			File file = uadExporter.exportAll(userId, _zipWriterFactory);
 
 			if (file.exists()) {
-				try {
-					ZipReader zipReader = _zipReaderFactory.getZipReader(file);
+				try (ZipReader zipReader = _zipReaderFactory.getZipReader(
+						file)) {
 
 					List<String> entries = zipReader.getEntries();
 

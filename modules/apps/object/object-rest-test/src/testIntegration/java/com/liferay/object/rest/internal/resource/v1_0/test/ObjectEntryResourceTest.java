@@ -354,6 +354,23 @@ public class ObjectEntryResourceTest {
 				LocaleUtil.US, RandomTestUtil.randomString()),
 			_listTypeDefinition.isSystem());
 
+		_depotScopedObjectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						RandomTestUtil.randomLocaleStringMap()
+					).name(
+						StringUtil.randomId()
+					).build()),
+				ObjectDefinitionConstants.SCOPE_DEPOT);
+
+		_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
+			_depotScopedObjectDefinition.getUserId(),
+			_depotScopedObjectDefinition.getObjectDefinitionId(),
+			ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS,
+			StringPool.TRUE);
+
 		String objectDefinitionName = ObjectDefinitionTestUtil.getRandomName();
 
 		_objectDefinition1 = ObjectDefinitionTestUtil.publishObjectDefinition(
@@ -8367,30 +8384,23 @@ public class ObjectEntryResourceTest {
 				group3.getGroupId(), taxonomyCategory3.getId(),
 				taxonomyCategory3.getTaxonomyVocabularyId());
 
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				_OBJECT_FIELD_NAME_1, "value"
-			).put(
-				"taxonomyCategoryIds",
-				JSONUtil.putAll(
-					taxonomyCategory1.getId(), taxonomyCategory2.getId(),
-					taxonomyCategory3.getId(), taxonomyCategory4.getId())
-			).toString(),
-			StringBundler.concat(
-				_siteScopedObjectDefinition1.getRESTContextPath(), "/scopes/",
-				_testGroupId),
-			Http.Method.POST);
+		// Company scope
 
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null,
-			StringBundler.concat(
-				_siteScopedObjectDefinition1.getRESTContextPath(),
-				StringPool.SLASH, jsonObject.getString("id")),
-			Http.Method.GET);
+		_testGetObjectEntryWithTaxonomyCategories(
+			0, _objectDefinition1, taxonomyCategory1, taxonomyCategory2,
+			taxonomyCategory3, taxonomyCategory4);
 
-		_assertTaxonomyCategories(
-			_testGroupId, jsonObject.getJSONArray("taxonomyCategoryBriefs"),
-			false, taxonomyCategory1, taxonomyCategory2, taxonomyCategory3,
+		// Site scope
+
+		_testGetObjectEntryWithTaxonomyCategories(
+			_testGroupId, _siteScopedObjectDefinition1, taxonomyCategory1,
+			taxonomyCategory2, taxonomyCategory3, taxonomyCategory4);
+
+		// Depot scope
+
+		_testGetObjectEntryWithTaxonomyCategories(
+			depotEntry.getGroupId(), _depotScopedObjectDefinition,
+			taxonomyCategory1, taxonomyCategory2, taxonomyCategory3,
 			taxonomyCategory4);
 	}
 
@@ -8557,23 +8567,6 @@ public class ObjectEntryResourceTest {
 
 		// Depot scope group ID
 
-		ObjectDefinition depotScopedObjectDefinition =
-			ObjectDefinitionTestUtil.publishObjectDefinition(
-				Collections.singletonList(
-					new TextObjectFieldBuilder(
-					).labelMap(
-						RandomTestUtil.randomLocaleStringMap()
-					).name(
-						StringUtil.randomId()
-					).build()),
-				ObjectDefinitionConstants.SCOPE_DEPOT);
-
-		_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
-			depotScopedObjectDefinition.getUserId(),
-			depotScopedObjectDefinition.getObjectDefinitionId(),
-			ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS,
-			StringPool.TRUE);
-
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
 					"WebApplicationExceptionMapper",
@@ -8583,7 +8576,7 @@ public class ObjectEntryResourceTest {
 				HTTPTestUtil.invokeToJSONObject(
 					null,
 					_getEndpoint(
-						depotScopedObjectDefinition,
+						_depotScopedObjectDefinition,
 						RandomTestUtil.randomLong()),
 					Http.Method.GET));
 		}
@@ -8595,12 +8588,12 @@ public class ObjectEntryResourceTest {
 			ServiceContextTestUtil.getServiceContext());
 
 		ObjectEntry depotScopedObjectEntry = ObjectEntryTestUtil.addObjectEntry(
-			depotEntry.getGroupId(), depotScopedObjectDefinition,
+			depotEntry.getGroupId(), _depotScopedObjectDefinition,
 			Collections.emptyMap());
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
-			_getEndpoint(depotScopedObjectDefinition, depotEntry.getGroupId()),
+			_getEndpoint(_depotScopedObjectDefinition, depotEntry.getGroupId()),
 			Http.Method.GET);
 
 		_assertItem(
@@ -16993,6 +16986,51 @@ public class ObjectEntryResourceTest {
 		unsafeTriConsumer.accept(actionJSONObject, jsonObject, objectAction);
 	}
 
+	private void _testGetObjectEntryWithTaxonomyCategories(
+			long groupId, ObjectDefinition objectDefinition,
+			TaxonomyCategory... taxonomyCategories)
+		throws Exception {
+
+		String endpoint = null;
+
+		ObjectScopeProvider objectScopeProvider =
+			_objectScopeProviderRegistry.getObjectScopeProvider(
+				objectDefinition.getScope());
+
+		if (objectScopeProvider.isGroupAware()) {
+			endpoint = StringBundler.concat(
+				objectDefinition.getRESTContextPath(), "/scopes/", groupId);
+		}
+		else {
+			endpoint = objectDefinition.getRESTContextPath();
+		}
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+		for (TaxonomyCategory taxonomyCategory : taxonomyCategories) {
+			jsonArray.put(taxonomyCategory.getId());
+		}
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, "value"
+			).put(
+				"taxonomyCategoryIds", jsonArray
+			).toString(),
+			endpoint, Http.Method.POST);
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			objectDefinition.getRESTContextPath() + StringPool.SLASH +
+				jsonObject.getString("id"),
+			Http.Method.GET);
+
+		_assertTaxonomyCategories(
+			jsonObject.getLong("scopeId"),
+			jsonObject.getJSONArray("taxonomyCategoryBriefs"), false,
+			taxonomyCategories);
+	}
+
 	private void _testPatchCustomObjectEntry(
 			Function<JSONObject, String> endpointFunction,
 			ObjectDefinition objectDefinition1,
@@ -20718,6 +20756,8 @@ public class ObjectEntryResourceTest {
 
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;
+
+	private ObjectDefinition _depotScopedObjectDefinition;
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;

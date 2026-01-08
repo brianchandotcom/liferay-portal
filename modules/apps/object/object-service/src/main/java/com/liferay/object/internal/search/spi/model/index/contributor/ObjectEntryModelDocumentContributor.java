@@ -11,7 +11,6 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
-import com.liferay.object.entry.util.ObjectEntryValuesUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryFolder;
@@ -34,6 +33,7 @@ import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlParserUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -125,7 +125,7 @@ public class ObjectEntryModelDocumentContributor
 		Object fieldValue, String locale,
 		ObjectContentHelper objectContentHelper,
 		ObjectDefinition objectDefinition, ObjectEntry objectEntry,
-		ObjectField objectField, Map<String, Serializable> values) {
+		ObjectField objectField) {
 
 		if (!objectField.isIndexed()) {
 			return;
@@ -145,13 +145,27 @@ public class ObjectEntryModelDocumentContributor
 
 		if (StringUtil.equals(
 				objectField.getBusinessType(),
-				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) ||
-			StringUtil.equals(
-				objectField.getBusinessType(),
-				ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT)) {
+				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
 
-			fieldValue = ObjectEntryValuesUtil.getValueString(
-				objectField, values);
+			long dlFileEntryId = GetterUtil.getLong(fieldValue);
+
+			fieldValue = StringPool.BLANK;
+
+			if (dlFileEntryId != 0) {
+				DLFileEntry dlFileEntry =
+					DLFileEntryLocalServiceUtil.fetchDLFileEntry(dlFileEntryId);
+
+				if (dlFileEntry != null) {
+					fieldValue = dlFileEntry.getFileName();
+				}
+			}
+		}
+		else if (StringUtil.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT)) {
+
+			fieldValue = HtmlParserUtil.extractText(
+				GetterUtil.getString(fieldValue));
 		}
 		else if (StringUtil.equals(
 					objectField.getBusinessType(),
@@ -353,7 +367,7 @@ public class ObjectEntryModelDocumentContributor
 							document, fieldArray, objectField.getName(),
 							entry.getValue(), entry.getKey(),
 							objectContentHelper, objectDefinition, objectEntry,
-							objectField, values);
+							objectField);
 					}
 				}
 				else {
@@ -361,7 +375,7 @@ public class ObjectEntryModelDocumentContributor
 						document, fieldArray, objectField.getName(),
 						values.get(objectField.getName()), null,
 						objectContentHelper, objectDefinition, objectEntry,
-						objectField, values);
+						objectField);
 				}
 			}
 

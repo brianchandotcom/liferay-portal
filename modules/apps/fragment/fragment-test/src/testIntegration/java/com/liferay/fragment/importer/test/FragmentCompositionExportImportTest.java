@@ -77,30 +77,32 @@ public class FragmentCompositionExportImportTest {
 
 		fragmentComposition.populateZipWriter(zipWriter, "test");
 
-		ZipReader zipReader = _zipReaderFactory.getZipReader(
-			zipWriter.getFile());
+		try (ZipReader zipReader = _zipReaderFactory.getZipReader(
+				zipWriter.getFile())) {
 
-		for (String entry : zipReader.getEntries()) {
-			if (!StringUtil.endsWith(
-					entry,
-					FragmentExportImportConstants.
-						FILE_NAME_FRAGMENT_COMPOSITION)) {
+			for (String entry : zipReader.getEntries()) {
+				if (!StringUtil.endsWith(
+						entry,
+						FragmentExportImportConstants.
+							FILE_NAME_FRAGMENT_COMPOSITION)) {
 
-				continue;
+					continue;
+				}
+
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					zipReader.getEntryAsString(entry));
+
+				Assert.assertNotNull(jsonObject);
+				Assert.assertEquals(
+					jsonObject.getString("name"),
+					fragmentComposition.getName());
+				Assert.assertEquals(
+					jsonObject.getString("description"),
+					fragmentComposition.getDescription());
+				Assert.assertEquals(
+					"fragment-composition-definition.json",
+					jsonObject.getString("fragmentCompositionDefinitionPath"));
 			}
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				zipReader.getEntryAsString(entry));
-
-			Assert.assertNotNull(jsonObject);
-			Assert.assertEquals(
-				jsonObject.getString("name"), fragmentComposition.getName());
-			Assert.assertEquals(
-				jsonObject.getString("description"),
-				fragmentComposition.getDescription());
-			Assert.assertEquals(
-				"fragment-composition-definition.json",
-				jsonObject.getString("fragmentCompositionDefinitionPath"));
 		}
 
 		FileUtil.delete(zipWriter.getFile());

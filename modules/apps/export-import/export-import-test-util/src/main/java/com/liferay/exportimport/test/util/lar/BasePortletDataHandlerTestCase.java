@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReader;
+import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactory;
@@ -188,28 +189,32 @@ public abstract class BasePortletDataHandlerTestCase {
 					return 0;
 				}
 			});
-		portletDataContext.setZipReader(
-			_zipReaderFactory.getZipReader(exportZipWriter.getFile()));
 
-		portletDataContext.clearScopedPrimaryKeys();
+		try (ZipReader zipReader = _zipReaderFactory.getZipReader(
+				exportZipWriter.getFile())) {
 
-		portletDataHandler.importData(
-			portletDataContext, portletId, portletPreferences, exportData);
+			portletDataContext.setZipReader(zipReader);
 
-		List<StagedModel> importedStagedModels = getStagedModels();
+			portletDataContext.clearScopedPrimaryKeys();
 
-		Set<String> exportedUuids = new HashSet<>();
-		Set<String> importedUuids = new HashSet<>();
+			portletDataHandler.importData(
+				portletDataContext, portletId, portletPreferences, exportData);
 
-		for (StagedModel stagedModel : exportedStagedModels) {
-			exportedUuids.add(stagedModel.getUuid());
+			List<StagedModel> importedStagedModels = getStagedModels();
+
+			Set<String> exportedUuids = new HashSet<>();
+			Set<String> importedUuids = new HashSet<>();
+
+			for (StagedModel stagedModel : exportedStagedModels) {
+				exportedUuids.add(stagedModel.getUuid());
+			}
+
+			for (StagedModel stagedModel : importedStagedModels) {
+				importedUuids.add(stagedModel.getUuid());
+			}
+
+			Assert.assertEquals(exportedUuids, importedUuids);
 		}
-
-		for (StagedModel stagedModel : importedStagedModels) {
-			importedUuids.add(stagedModel.getUuid());
-		}
-
-		Assert.assertEquals(exportedUuids, importedUuids);
 	}
 
 	@Test

@@ -4803,6 +4803,13 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		TaxonomyCategory taxonomyCategory1 =
+			testBatchEngineDeleteImportTask_addAssetLibraryTaxonomyCategory();
+
+		testBatchEngineDeleteImportTask_deleteTaxonomyCategory(
+			200, taxonomyCategory1.getExternalReferenceCode(), null,
+			"assetLibraryId", String.valueOf(testDepotEntryGroup.getGroupId()));
+
+		taxonomyCategory1 =
 			testBatchEngineDeleteImportTask_addTaxonomyCategory();
 
 		testBatchEngineDeleteImportTask_deleteTaxonomyCategory(
@@ -4812,6 +4819,85 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			404,
 			taxonomyCategoryResource.getTaxonomyCategoryHttpResponse(
 				taxonomyCategory1.getId()));
+
+		taxonomyCategory1 =
+			testBatchEngineDeleteImportTask_addSiteTaxonomyCategory();
+
+		testBatchEngineDeleteImportTask_deleteTaxonomyCategory(
+			200, taxonomyCategory1.getExternalReferenceCode(), null, "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		taxonomyCategory1 =
+			testBatchEngineDeleteImportTask_addAssetLibraryTaxonomyCategory();
+		TaxonomyCategory taxonomyCategory2 =
+			testBatchEngineDeleteImportTask_addAssetLibraryTaxonomyCategory();
+
+		testBatchEngineDeleteImportTask_deleteTaxonomyCategory(
+			200, taxonomyCategory2.getExternalReferenceCode(),
+			taxonomyCategory1.getId(), "assetLibraryId",
+			String.valueOf(testDepotEntryGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			taxonomyCategoryResource.getTaxonomyCategoryHttpResponse(
+				taxonomyCategory1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			taxonomyCategoryResource.getTaxonomyCategoryHttpResponse(
+				taxonomyCategory2.getId()));
+
+		testBatchEngineDeleteImportTask_deleteTaxonomyCategory(
+			200, taxonomyCategory2.getExternalReferenceCode(),
+			taxonomyCategory1.getId(), "assetLibraryId",
+			String.valueOf(testDepotEntryGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			taxonomyCategoryResource.getTaxonomyCategoryHttpResponse(
+				taxonomyCategory2.getId()));
+
+		taxonomyCategory1 =
+			testBatchEngineDeleteImportTask_addSiteTaxonomyCategory();
+		taxonomyCategory2 =
+			testBatchEngineDeleteImportTask_addSiteTaxonomyCategory();
+
+		testBatchEngineDeleteImportTask_deleteTaxonomyCategory(
+			200, taxonomyCategory2.getExternalReferenceCode(),
+			taxonomyCategory1.getId(), "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			taxonomyCategoryResource.getTaxonomyCategoryHttpResponse(
+				taxonomyCategory1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			taxonomyCategoryResource.getTaxonomyCategoryHttpResponse(
+				taxonomyCategory2.getId()));
+
+		testBatchEngineDeleteImportTask_deleteTaxonomyCategory(
+			200, taxonomyCategory2.getExternalReferenceCode(),
+			taxonomyCategory1.getId(), "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			taxonomyCategoryResource.getTaxonomyCategoryHttpResponse(
+				taxonomyCategory2.getId()));
+
+		taxonomyCategory1 =
+			testBatchEngineDeleteImportTask_addSiteTaxonomyCategory();
+
+		testBatchEngineDeleteImportTask_deleteTaxonomyCategory(
+			400, taxonomyCategory1.getExternalReferenceCode(),
+			taxonomyCategory1.getId(), "assetLibraryId",
+			String.valueOf(testDepotEntryGroup.getGroupId()), "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			200,
+			taxonomyCategoryResource.getTaxonomyCategoryHttpResponse(
+				taxonomyCategory1.getId()));
 	}
 
 	protected TaxonomyCategory
@@ -4819,6 +4905,20 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		throws Exception {
 
 		return testDeleteTaxonomyCategory_addTaxonomyCategory();
+	}
+
+	protected TaxonomyCategory
+			testBatchEngineDeleteImportTask_addAssetLibraryTaxonomyCategory()
+		throws Exception {
+
+		return testDeleteAssetLibraryTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory();
+	}
+
+	protected TaxonomyCategory
+			testBatchEngineDeleteImportTask_addSiteTaxonomyCategory()
+		throws Exception {
+
+		return testDeleteSiteTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory();
 	}
 
 	protected void testBatchEngineDeleteImportTask_deleteTaxonomyCategory(

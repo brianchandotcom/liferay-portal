@@ -1125,9 +1125,34 @@ public abstract class BaseNavigationMenuResourceImpl
 
 		UnsafeFunction<NavigationMenu, NavigationMenu, Exception>
 			navigationMenuUnsafeFunction = navigationMenu -> {
-				deleteNavigationMenu(navigationMenu.getId());
+				if (navigationMenu.getId() != null) {
+					try {
+						deleteNavigationMenu(navigationMenu.getId());
 
-				return navigationMenu;
+						return navigationMenu;
+					}
+					catch (Exception exception) {
+						if (navigationMenu.getExternalReferenceCode() != null) {
+							if (parameters.containsKey("siteId")) {
+								deleteSiteNavigationMenuByExternalReferenceCode(
+									(Long)parameters.get("siteId"),
+									navigationMenu.getExternalReferenceCode());
+
+								return navigationMenu;
+							}
+						}
+					}
+				}
+				else if (parameters.containsKey("siteId")) {
+					deleteSiteNavigationMenuByExternalReferenceCode(
+						(Long)parameters.get("siteId"),
+						navigationMenu.getExternalReferenceCode());
+
+					return navigationMenu;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete by external reference code or ID");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

@@ -1047,9 +1047,53 @@ public abstract class BaseDocumentMetadataSetResourceImpl
 
 		UnsafeFunction<DocumentMetadataSet, DocumentMetadataSet, Exception>
 			documentMetadataSetUnsafeFunction = documentMetadataSet -> {
-				deleteDocumentMetadataSet(documentMetadataSet.getId());
+				if (documentMetadataSet.getId() != null) {
+					try {
+						deleteDocumentMetadataSet(documentMetadataSet.getId());
 
-				return documentMetadataSet;
+						return documentMetadataSet;
+					}
+					catch (Exception exception) {
+						if (documentMetadataSet.getExternalReferenceCode() !=
+								null) {
+
+							if (parameters.containsKey("assetLibraryId")) {
+								deleteAssetLibraryDocumentMetadataSetByExternalReferenceCode(
+									(Long)parameters.get("assetLibraryId"),
+									documentMetadataSet.
+										getExternalReferenceCode());
+
+								return documentMetadataSet;
+							}
+
+							if (parameters.containsKey("siteId")) {
+								deleteSiteDocumentMetadataSetByExternalReferenceCode(
+									(Long)parameters.get("siteId"),
+									documentMetadataSet.
+										getExternalReferenceCode());
+
+								return documentMetadataSet;
+							}
+						}
+					}
+				}
+				else if (parameters.containsKey("assetLibraryId")) {
+					deleteAssetLibraryDocumentMetadataSetByExternalReferenceCode(
+						(Long)parameters.get("assetLibraryId"),
+						documentMetadataSet.getExternalReferenceCode());
+
+					return documentMetadataSet;
+				}
+				else if (parameters.containsKey("siteId")) {
+					deleteSiteDocumentMetadataSetByExternalReferenceCode(
+						(Long)parameters.get("siteId"),
+						documentMetadataSet.getExternalReferenceCode());
+
+					return documentMetadataSet;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete by external reference code or ID");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

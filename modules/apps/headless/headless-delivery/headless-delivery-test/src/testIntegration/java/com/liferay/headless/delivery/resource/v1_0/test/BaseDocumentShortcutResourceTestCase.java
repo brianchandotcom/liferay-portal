@@ -1789,6 +1789,42 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 			404,
 			documentShortcutResource.getDocumentShortcutHttpResponse(
 				documentShortcut1.getId()));
+
+		documentShortcut1 =
+			testBatchEngineDeleteImportTask_addSiteDocumentShortcut();
+
+		testBatchEngineDeleteImportTask_deleteDocumentShortcut(
+			200, documentShortcut1.getExternalReferenceCode(), null, "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		documentShortcut1 =
+			testBatchEngineDeleteImportTask_addSiteDocumentShortcut();
+		DocumentShortcut documentShortcut2 =
+			testBatchEngineDeleteImportTask_addSiteDocumentShortcut();
+
+		testBatchEngineDeleteImportTask_deleteDocumentShortcut(
+			200, documentShortcut2.getExternalReferenceCode(),
+			documentShortcut1.getId(), "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			documentShortcutResource.getDocumentShortcutHttpResponse(
+				documentShortcut1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			documentShortcutResource.getDocumentShortcutHttpResponse(
+				documentShortcut2.getId()));
+
+		testBatchEngineDeleteImportTask_deleteDocumentShortcut(
+			200, documentShortcut2.getExternalReferenceCode(),
+			documentShortcut1.getId(), "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			documentShortcutResource.getDocumentShortcutHttpResponse(
+				documentShortcut2.getId()));
 	}
 
 	protected DocumentShortcut
@@ -1796,6 +1832,13 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 		throws Exception {
 
 		return testDeleteDocumentShortcut_addDocumentShortcut();
+	}
+
+	protected DocumentShortcut
+			testBatchEngineDeleteImportTask_addSiteDocumentShortcut()
+		throws Exception {
+
+		return testDeleteSiteDocumentShortcutByExternalReferenceCode_addDocumentShortcut();
 	}
 
 	protected void testBatchEngineDeleteImportTask_deleteDocumentShortcut(

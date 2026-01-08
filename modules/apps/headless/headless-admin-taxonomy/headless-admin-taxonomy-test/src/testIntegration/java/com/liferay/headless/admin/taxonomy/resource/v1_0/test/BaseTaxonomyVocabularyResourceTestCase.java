@@ -3323,6 +3323,13 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		TaxonomyVocabulary taxonomyVocabulary1 =
+			testBatchEngineDeleteImportTask_addAssetLibraryTaxonomyVocabulary();
+
+		testBatchEngineDeleteImportTask_deleteTaxonomyVocabulary(
+			200, taxonomyVocabulary1.getExternalReferenceCode(), null,
+			"assetLibraryId", String.valueOf(testDepotEntryGroup.getGroupId()));
+
+		taxonomyVocabulary1 =
 			testBatchEngineDeleteImportTask_addTaxonomyVocabulary();
 
 		testBatchEngineDeleteImportTask_deleteTaxonomyVocabulary(
@@ -3332,6 +3339,85 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			404,
 			taxonomyVocabularyResource.getTaxonomyVocabularyHttpResponse(
 				taxonomyVocabulary1.getId()));
+
+		taxonomyVocabulary1 =
+			testBatchEngineDeleteImportTask_addSiteTaxonomyVocabulary();
+
+		testBatchEngineDeleteImportTask_deleteTaxonomyVocabulary(
+			200, taxonomyVocabulary1.getExternalReferenceCode(), null, "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		taxonomyVocabulary1 =
+			testBatchEngineDeleteImportTask_addAssetLibraryTaxonomyVocabulary();
+		TaxonomyVocabulary taxonomyVocabulary2 =
+			testBatchEngineDeleteImportTask_addAssetLibraryTaxonomyVocabulary();
+
+		testBatchEngineDeleteImportTask_deleteTaxonomyVocabulary(
+			200, taxonomyVocabulary2.getExternalReferenceCode(),
+			taxonomyVocabulary1.getId(), "assetLibraryId",
+			String.valueOf(testDepotEntryGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			taxonomyVocabularyResource.getTaxonomyVocabularyHttpResponse(
+				taxonomyVocabulary1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			taxonomyVocabularyResource.getTaxonomyVocabularyHttpResponse(
+				taxonomyVocabulary2.getId()));
+
+		testBatchEngineDeleteImportTask_deleteTaxonomyVocabulary(
+			200, taxonomyVocabulary2.getExternalReferenceCode(),
+			taxonomyVocabulary1.getId(), "assetLibraryId",
+			String.valueOf(testDepotEntryGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			taxonomyVocabularyResource.getTaxonomyVocabularyHttpResponse(
+				taxonomyVocabulary2.getId()));
+
+		taxonomyVocabulary1 =
+			testBatchEngineDeleteImportTask_addSiteTaxonomyVocabulary();
+		taxonomyVocabulary2 =
+			testBatchEngineDeleteImportTask_addSiteTaxonomyVocabulary();
+
+		testBatchEngineDeleteImportTask_deleteTaxonomyVocabulary(
+			200, taxonomyVocabulary2.getExternalReferenceCode(),
+			taxonomyVocabulary1.getId(), "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			taxonomyVocabularyResource.getTaxonomyVocabularyHttpResponse(
+				taxonomyVocabulary1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			taxonomyVocabularyResource.getTaxonomyVocabularyHttpResponse(
+				taxonomyVocabulary2.getId()));
+
+		testBatchEngineDeleteImportTask_deleteTaxonomyVocabulary(
+			200, taxonomyVocabulary2.getExternalReferenceCode(),
+			taxonomyVocabulary1.getId(), "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			taxonomyVocabularyResource.getTaxonomyVocabularyHttpResponse(
+				taxonomyVocabulary2.getId()));
+
+		taxonomyVocabulary1 =
+			testBatchEngineDeleteImportTask_addSiteTaxonomyVocabulary();
+
+		testBatchEngineDeleteImportTask_deleteTaxonomyVocabulary(
+			400, taxonomyVocabulary1.getExternalReferenceCode(),
+			taxonomyVocabulary1.getId(), "assetLibraryId",
+			String.valueOf(testDepotEntryGroup.getGroupId()), "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			200,
+			taxonomyVocabularyResource.getTaxonomyVocabularyHttpResponse(
+				taxonomyVocabulary1.getId()));
 	}
 
 	protected TaxonomyVocabulary
@@ -3339,6 +3425,20 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		throws Exception {
 
 		return testDeleteTaxonomyVocabulary_addTaxonomyVocabulary();
+	}
+
+	protected TaxonomyVocabulary
+			testBatchEngineDeleteImportTask_addAssetLibraryTaxonomyVocabulary()
+		throws Exception {
+
+		return testDeleteAssetLibraryTaxonomyVocabularyByExternalReferenceCode_addTaxonomyVocabulary();
+	}
+
+	protected TaxonomyVocabulary
+			testBatchEngineDeleteImportTask_addSiteTaxonomyVocabulary()
+		throws Exception {
+
+		return testDeleteSiteTaxonomyVocabularyByExternalReferenceCode_addTaxonomyVocabulary();
 	}
 
 	protected void testBatchEngineDeleteImportTask_deleteTaxonomyVocabulary(

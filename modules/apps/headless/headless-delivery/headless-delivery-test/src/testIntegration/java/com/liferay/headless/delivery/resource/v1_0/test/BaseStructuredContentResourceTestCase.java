@@ -4656,6 +4656,13 @@ public abstract class BaseStructuredContentResourceTestCase {
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		StructuredContent structuredContent1 =
+			testBatchEngineDeleteImportTask_addAssetLibraryStructuredContent();
+
+		testBatchEngineDeleteImportTask_deleteStructuredContent(
+			200, structuredContent1.getExternalReferenceCode(), null,
+			"assetLibraryId", String.valueOf(testDepotEntryGroup.getGroupId()));
+
+		structuredContent1 =
 			testBatchEngineDeleteImportTask_addStructuredContent();
 
 		testBatchEngineDeleteImportTask_deleteStructuredContent(
@@ -4665,6 +4672,85 @@ public abstract class BaseStructuredContentResourceTestCase {
 			404,
 			structuredContentResource.getStructuredContentHttpResponse(
 				structuredContent1.getId()));
+
+		structuredContent1 =
+			testBatchEngineDeleteImportTask_addSiteStructuredContent();
+
+		testBatchEngineDeleteImportTask_deleteStructuredContent(
+			200, structuredContent1.getExternalReferenceCode(), null, "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		structuredContent1 =
+			testBatchEngineDeleteImportTask_addAssetLibraryStructuredContent();
+		StructuredContent structuredContent2 =
+			testBatchEngineDeleteImportTask_addAssetLibraryStructuredContent();
+
+		testBatchEngineDeleteImportTask_deleteStructuredContent(
+			200, structuredContent2.getExternalReferenceCode(),
+			structuredContent1.getId(), "assetLibraryId",
+			String.valueOf(testDepotEntryGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentResource.getStructuredContentHttpResponse(
+				structuredContent1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			structuredContentResource.getStructuredContentHttpResponse(
+				structuredContent2.getId()));
+
+		testBatchEngineDeleteImportTask_deleteStructuredContent(
+			200, structuredContent2.getExternalReferenceCode(),
+			structuredContent1.getId(), "assetLibraryId",
+			String.valueOf(testDepotEntryGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentResource.getStructuredContentHttpResponse(
+				structuredContent2.getId()));
+
+		structuredContent1 =
+			testBatchEngineDeleteImportTask_addSiteStructuredContent();
+		structuredContent2 =
+			testBatchEngineDeleteImportTask_addSiteStructuredContent();
+
+		testBatchEngineDeleteImportTask_deleteStructuredContent(
+			200, structuredContent2.getExternalReferenceCode(),
+			structuredContent1.getId(), "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentResource.getStructuredContentHttpResponse(
+				structuredContent1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			structuredContentResource.getStructuredContentHttpResponse(
+				structuredContent2.getId()));
+
+		testBatchEngineDeleteImportTask_deleteStructuredContent(
+			200, structuredContent2.getExternalReferenceCode(),
+			structuredContent1.getId(), "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentResource.getStructuredContentHttpResponse(
+				structuredContent2.getId()));
+
+		structuredContent1 =
+			testBatchEngineDeleteImportTask_addSiteStructuredContent();
+
+		testBatchEngineDeleteImportTask_deleteStructuredContent(
+			400, structuredContent1.getExternalReferenceCode(),
+			structuredContent1.getId(), "assetLibraryId",
+			String.valueOf(testDepotEntryGroup.getGroupId()), "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			200,
+			structuredContentResource.getStructuredContentHttpResponse(
+				structuredContent1.getId()));
 	}
 
 	protected StructuredContent
@@ -4672,6 +4758,20 @@ public abstract class BaseStructuredContentResourceTestCase {
 		throws Exception {
 
 		return testDeleteStructuredContent_addStructuredContent();
+	}
+
+	protected StructuredContent
+			testBatchEngineDeleteImportTask_addAssetLibraryStructuredContent()
+		throws Exception {
+
+		return testDeleteAssetLibraryStructuredContentByExternalReferenceCode_addStructuredContent();
+	}
+
+	protected StructuredContent
+			testBatchEngineDeleteImportTask_addSiteStructuredContent()
+		throws Exception {
+
+		return testDeleteSiteStructuredContentByExternalReferenceCode_addStructuredContent();
 	}
 
 	protected void testBatchEngineDeleteImportTask_deleteStructuredContent(

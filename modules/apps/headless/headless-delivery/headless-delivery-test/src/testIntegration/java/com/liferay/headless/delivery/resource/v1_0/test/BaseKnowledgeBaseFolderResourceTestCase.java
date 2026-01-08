@@ -2046,6 +2046,42 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			404,
 			knowledgeBaseFolderResource.getKnowledgeBaseFolderHttpResponse(
 				knowledgeBaseFolder1.getId()));
+
+		knowledgeBaseFolder1 =
+			testBatchEngineDeleteImportTask_addSiteKnowledgeBaseFolder();
+
+		testBatchEngineDeleteImportTask_deleteKnowledgeBaseFolder(
+			200, knowledgeBaseFolder1.getExternalReferenceCode(), null,
+			"siteId", String.valueOf(testGroup.getGroupId()));
+
+		knowledgeBaseFolder1 =
+			testBatchEngineDeleteImportTask_addSiteKnowledgeBaseFolder();
+		KnowledgeBaseFolder knowledgeBaseFolder2 =
+			testBatchEngineDeleteImportTask_addSiteKnowledgeBaseFolder();
+
+		testBatchEngineDeleteImportTask_deleteKnowledgeBaseFolder(
+			200, knowledgeBaseFolder2.getExternalReferenceCode(),
+			knowledgeBaseFolder1.getId(), "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			knowledgeBaseFolderResource.getKnowledgeBaseFolderHttpResponse(
+				knowledgeBaseFolder1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			knowledgeBaseFolderResource.getKnowledgeBaseFolderHttpResponse(
+				knowledgeBaseFolder2.getId()));
+
+		testBatchEngineDeleteImportTask_deleteKnowledgeBaseFolder(
+			200, knowledgeBaseFolder2.getExternalReferenceCode(),
+			knowledgeBaseFolder1.getId(), "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			knowledgeBaseFolderResource.getKnowledgeBaseFolderHttpResponse(
+				knowledgeBaseFolder2.getId()));
 	}
 
 	protected KnowledgeBaseFolder
@@ -2053,6 +2089,13 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		throws Exception {
 
 		return testDeleteKnowledgeBaseFolder_addKnowledgeBaseFolder();
+	}
+
+	protected KnowledgeBaseFolder
+			testBatchEngineDeleteImportTask_addSiteKnowledgeBaseFolder()
+		throws Exception {
+
+		return testDeleteSiteKnowledgeBaseFolderByExternalReferenceCode_addKnowledgeBaseFolder();
 	}
 
 	protected void testBatchEngineDeleteImportTask_deleteKnowledgeBaseFolder(

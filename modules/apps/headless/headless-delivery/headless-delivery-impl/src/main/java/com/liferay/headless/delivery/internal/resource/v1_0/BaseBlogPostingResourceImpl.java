@@ -1450,9 +1450,34 @@ public abstract class BaseBlogPostingResourceImpl
 
 		UnsafeFunction<BlogPosting, BlogPosting, Exception>
 			blogPostingUnsafeFunction = blogPosting -> {
-				deleteBlogPosting(blogPosting.getId());
+				if (blogPosting.getId() != null) {
+					try {
+						deleteBlogPosting(blogPosting.getId());
 
-				return blogPosting;
+						return blogPosting;
+					}
+					catch (Exception exception) {
+						if (blogPosting.getExternalReferenceCode() != null) {
+							if (parameters.containsKey("siteId")) {
+								deleteSiteBlogPostingByExternalReferenceCode(
+									(Long)parameters.get("siteId"),
+									blogPosting.getExternalReferenceCode());
+
+								return blogPosting;
+							}
+						}
+					}
+				}
+				else if (parameters.containsKey("siteId")) {
+					deleteSiteBlogPostingByExternalReferenceCode(
+						(Long)parameters.get("siteId"),
+						blogPosting.getExternalReferenceCode());
+
+					return blogPosting;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete by external reference code or ID");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

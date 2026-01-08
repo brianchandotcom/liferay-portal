@@ -3485,6 +3485,42 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			404,
 			knowledgeBaseArticleResource.getKnowledgeBaseArticleHttpResponse(
 				knowledgeBaseArticle1.getId()));
+
+		knowledgeBaseArticle1 =
+			testBatchEngineDeleteImportTask_addSiteKnowledgeBaseArticle();
+
+		testBatchEngineDeleteImportTask_deleteKnowledgeBaseArticle(
+			200, knowledgeBaseArticle1.getExternalReferenceCode(), null,
+			"siteId", String.valueOf(testGroup.getGroupId()));
+
+		knowledgeBaseArticle1 =
+			testBatchEngineDeleteImportTask_addSiteKnowledgeBaseArticle();
+		KnowledgeBaseArticle knowledgeBaseArticle2 =
+			testBatchEngineDeleteImportTask_addSiteKnowledgeBaseArticle();
+
+		testBatchEngineDeleteImportTask_deleteKnowledgeBaseArticle(
+			200, knowledgeBaseArticle2.getExternalReferenceCode(),
+			knowledgeBaseArticle1.getId(), "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			knowledgeBaseArticleResource.getKnowledgeBaseArticleHttpResponse(
+				knowledgeBaseArticle1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			knowledgeBaseArticleResource.getKnowledgeBaseArticleHttpResponse(
+				knowledgeBaseArticle2.getId()));
+
+		testBatchEngineDeleteImportTask_deleteKnowledgeBaseArticle(
+			200, knowledgeBaseArticle2.getExternalReferenceCode(),
+			knowledgeBaseArticle1.getId(), "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			knowledgeBaseArticleResource.getKnowledgeBaseArticleHttpResponse(
+				knowledgeBaseArticle2.getId()));
 	}
 
 	protected KnowledgeBaseArticle
@@ -3492,6 +3528,13 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		throws Exception {
 
 		return testDeleteKnowledgeBaseArticle_addKnowledgeBaseArticle();
+	}
+
+	protected KnowledgeBaseArticle
+			testBatchEngineDeleteImportTask_addSiteKnowledgeBaseArticle()
+		throws Exception {
+
+		return testDeleteSiteKnowledgeBaseArticleByExternalReferenceCode_addKnowledgeBaseArticle();
 	}
 
 	protected void testBatchEngineDeleteImportTask_deleteKnowledgeBaseArticle(

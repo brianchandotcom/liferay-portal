@@ -240,8 +240,40 @@ public abstract class BaseAssetLibraryTestEntityResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		UnsafeFunction
+			<AssetLibraryTestEntity, AssetLibraryTestEntity, Exception>
+				assetLibraryTestEntityUnsafeFunction =
+					assetLibraryTestEntity -> {
+						if (parameters.containsKey("assetLibraryId")) {
+							deleteAssetLibraryAssetLibraryTestEntityByExternalReferenceCode(
+								(Long)parameters.get("assetLibraryId"),
+								assetLibraryTestEntity.
+									getExternalReferenceCode());
+
+							return assetLibraryTestEntity;
+						}
+
+						throw new UnsupportedOperationException(
+							"Unable to delete by external reference code or ID");
+					};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				assetLibraryTestEntities, assetLibraryTestEntityUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				assetLibraryTestEntities,
+				assetLibraryTestEntityUnsafeFunction::apply);
+		}
+		else {
+			for (AssetLibraryTestEntity assetLibraryTestEntity :
+					assetLibraryTestEntities) {
+
+				assetLibraryTestEntityUnsafeFunction.apply(
+					assetLibraryTestEntity);
+			}
+		}
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

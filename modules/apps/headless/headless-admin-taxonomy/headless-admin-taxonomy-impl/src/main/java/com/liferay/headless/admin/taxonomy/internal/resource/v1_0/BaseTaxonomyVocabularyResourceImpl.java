@@ -2082,9 +2082,53 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 
 		UnsafeFunction<TaxonomyVocabulary, TaxonomyVocabulary, Exception>
 			taxonomyVocabularyUnsafeFunction = taxonomyVocabulary -> {
-				deleteTaxonomyVocabulary(taxonomyVocabulary.getId());
+				if (taxonomyVocabulary.getId() != null) {
+					try {
+						deleteTaxonomyVocabulary(taxonomyVocabulary.getId());
 
-				return taxonomyVocabulary;
+						return taxonomyVocabulary;
+					}
+					catch (Exception exception) {
+						if (taxonomyVocabulary.getExternalReferenceCode() !=
+								null) {
+
+							if (parameters.containsKey("assetLibraryId")) {
+								deleteAssetLibraryTaxonomyVocabularyByExternalReferenceCode(
+									(Long)parameters.get("assetLibraryId"),
+									taxonomyVocabulary.
+										getExternalReferenceCode());
+
+								return taxonomyVocabulary;
+							}
+
+							if (parameters.containsKey("siteId")) {
+								deleteSiteTaxonomyVocabularyByExternalReferenceCode(
+									(Long)parameters.get("siteId"),
+									taxonomyVocabulary.
+										getExternalReferenceCode());
+
+								return taxonomyVocabulary;
+							}
+						}
+					}
+				}
+				else if (parameters.containsKey("assetLibraryId")) {
+					deleteAssetLibraryTaxonomyVocabularyByExternalReferenceCode(
+						(Long)parameters.get("assetLibraryId"),
+						taxonomyVocabulary.getExternalReferenceCode());
+
+					return taxonomyVocabulary;
+				}
+				else if (parameters.containsKey("siteId")) {
+					deleteSiteTaxonomyVocabularyByExternalReferenceCode(
+						(Long)parameters.get("siteId"),
+						taxonomyVocabulary.getExternalReferenceCode());
+
+					return taxonomyVocabulary;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete by external reference code or ID");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

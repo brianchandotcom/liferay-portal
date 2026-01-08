@@ -3549,6 +3549,42 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			404,
 			messageBoardMessageResource.getMessageBoardMessageHttpResponse(
 				messageBoardMessage1.getId()));
+
+		messageBoardMessage1 =
+			testBatchEngineDeleteImportTask_addSiteMessageBoardMessage();
+
+		testBatchEngineDeleteImportTask_deleteMessageBoardMessage(
+			200, messageBoardMessage1.getExternalReferenceCode(), null,
+			"siteId", String.valueOf(testGroup.getGroupId()));
+
+		messageBoardMessage1 =
+			testBatchEngineDeleteImportTask_addSiteMessageBoardMessage();
+		MessageBoardMessage messageBoardMessage2 =
+			testBatchEngineDeleteImportTask_addSiteMessageBoardMessage();
+
+		testBatchEngineDeleteImportTask_deleteMessageBoardMessage(
+			200, messageBoardMessage2.getExternalReferenceCode(),
+			messageBoardMessage1.getId(), "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardMessageResource.getMessageBoardMessageHttpResponse(
+				messageBoardMessage1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			messageBoardMessageResource.getMessageBoardMessageHttpResponse(
+				messageBoardMessage2.getId()));
+
+		testBatchEngineDeleteImportTask_deleteMessageBoardMessage(
+			200, messageBoardMessage2.getExternalReferenceCode(),
+			messageBoardMessage1.getId(), "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardMessageResource.getMessageBoardMessageHttpResponse(
+				messageBoardMessage2.getId()));
 	}
 
 	protected MessageBoardMessage
@@ -3556,6 +3592,13 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		throws Exception {
 
 		return testDeleteMessageBoardMessage_addMessageBoardMessage();
+	}
+
+	protected MessageBoardMessage
+			testBatchEngineDeleteImportTask_addSiteMessageBoardMessage()
+		throws Exception {
+
+		return testDeleteSiteMessageBoardMessageByExternalReferenceCode_addMessageBoardMessage();
 	}
 
 	protected void testBatchEngineDeleteImportTask_deleteMessageBoardMessage(

@@ -1047,9 +1047,34 @@ public abstract class BaseWikiPageResourceImpl
 
 		UnsafeFunction<WikiPage, WikiPage, Exception> wikiPageUnsafeFunction =
 			wikiPage -> {
-				deleteWikiPage(wikiPage.getId());
+				if (wikiPage.getId() != null) {
+					try {
+						deleteWikiPage(wikiPage.getId());
 
-				return wikiPage;
+						return wikiPage;
+					}
+					catch (Exception exception) {
+						if (wikiPage.getExternalReferenceCode() != null) {
+							if (parameters.containsKey("siteId")) {
+								deleteSiteWikiPageByExternalReferenceCode(
+									(Long)parameters.get("siteId"),
+									wikiPage.getExternalReferenceCode());
+
+								return wikiPage;
+							}
+						}
+					}
+				}
+				else if (parameters.containsKey("siteId")) {
+					deleteSiteWikiPageByExternalReferenceCode(
+						(Long)parameters.get("siteId"),
+						wikiPage.getExternalReferenceCode());
+
+					return wikiPage;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete by external reference code or ID");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

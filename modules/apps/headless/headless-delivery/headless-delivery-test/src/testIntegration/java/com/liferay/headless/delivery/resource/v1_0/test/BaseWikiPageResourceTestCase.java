@@ -1729,12 +1729,43 @@ public abstract class BaseWikiPageResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, wikiPageResource.getWikiPageHttpResponse(wikiPage1.getId()));
+
+		wikiPage1 = testBatchEngineDeleteImportTask_addSiteWikiPage();
+
+		testBatchEngineDeleteImportTask_deleteWikiPage(
+			200, wikiPage1.getExternalReferenceCode(), null, "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		wikiPage1 = testBatchEngineDeleteImportTask_addSiteWikiPage();
+		WikiPage wikiPage2 = testBatchEngineDeleteImportTask_addSiteWikiPage();
+
+		testBatchEngineDeleteImportTask_deleteWikiPage(
+			200, wikiPage2.getExternalReferenceCode(), wikiPage1.getId(),
+			"siteId", String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404, wikiPageResource.getWikiPageHttpResponse(wikiPage1.getId()));
+		assertHttpResponseStatusCode(
+			200, wikiPageResource.getWikiPageHttpResponse(wikiPage2.getId()));
+
+		testBatchEngineDeleteImportTask_deleteWikiPage(
+			200, wikiPage2.getExternalReferenceCode(), wikiPage1.getId(),
+			"siteId", String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404, wikiPageResource.getWikiPageHttpResponse(wikiPage2.getId()));
 	}
 
 	protected WikiPage testBatchEngineDeleteImportTask_addWikiPage()
 		throws Exception {
 
 		return testDeleteWikiPage_addWikiPage();
+	}
+
+	protected WikiPage testBatchEngineDeleteImportTask_addSiteWikiPage()
+		throws Exception {
+
+		return testDeleteSiteWikiPageByExternalReferenceCode_addWikiPage();
 	}
 
 	protected void testBatchEngineDeleteImportTask_deleteWikiPage(

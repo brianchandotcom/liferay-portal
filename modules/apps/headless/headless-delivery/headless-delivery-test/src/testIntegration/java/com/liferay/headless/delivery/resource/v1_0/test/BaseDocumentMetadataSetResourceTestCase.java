@@ -2185,6 +2185,13 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		DocumentMetadataSet documentMetadataSet1 =
+			testBatchEngineDeleteImportTask_addAssetLibraryDocumentMetadataSet();
+
+		testBatchEngineDeleteImportTask_deleteDocumentMetadataSet(
+			200, documentMetadataSet1.getExternalReferenceCode(), null,
+			"assetLibraryId", String.valueOf(testDepotEntryGroup.getGroupId()));
+
+		documentMetadataSet1 =
 			testBatchEngineDeleteImportTask_addDocumentMetadataSet();
 
 		testBatchEngineDeleteImportTask_deleteDocumentMetadataSet(
@@ -2194,6 +2201,85 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 			404,
 			documentMetadataSetResource.getDocumentMetadataSetHttpResponse(
 				documentMetadataSet1.getId()));
+
+		documentMetadataSet1 =
+			testBatchEngineDeleteImportTask_addSiteDocumentMetadataSet();
+
+		testBatchEngineDeleteImportTask_deleteDocumentMetadataSet(
+			200, documentMetadataSet1.getExternalReferenceCode(), null,
+			"siteId", String.valueOf(testGroup.getGroupId()));
+
+		documentMetadataSet1 =
+			testBatchEngineDeleteImportTask_addAssetLibraryDocumentMetadataSet();
+		DocumentMetadataSet documentMetadataSet2 =
+			testBatchEngineDeleteImportTask_addAssetLibraryDocumentMetadataSet();
+
+		testBatchEngineDeleteImportTask_deleteDocumentMetadataSet(
+			200, documentMetadataSet2.getExternalReferenceCode(),
+			documentMetadataSet1.getId(), "assetLibraryId",
+			String.valueOf(testDepotEntryGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			documentMetadataSetResource.getDocumentMetadataSetHttpResponse(
+				documentMetadataSet1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			documentMetadataSetResource.getDocumentMetadataSetHttpResponse(
+				documentMetadataSet2.getId()));
+
+		testBatchEngineDeleteImportTask_deleteDocumentMetadataSet(
+			200, documentMetadataSet2.getExternalReferenceCode(),
+			documentMetadataSet1.getId(), "assetLibraryId",
+			String.valueOf(testDepotEntryGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			documentMetadataSetResource.getDocumentMetadataSetHttpResponse(
+				documentMetadataSet2.getId()));
+
+		documentMetadataSet1 =
+			testBatchEngineDeleteImportTask_addSiteDocumentMetadataSet();
+		documentMetadataSet2 =
+			testBatchEngineDeleteImportTask_addSiteDocumentMetadataSet();
+
+		testBatchEngineDeleteImportTask_deleteDocumentMetadataSet(
+			200, documentMetadataSet2.getExternalReferenceCode(),
+			documentMetadataSet1.getId(), "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			documentMetadataSetResource.getDocumentMetadataSetHttpResponse(
+				documentMetadataSet1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			documentMetadataSetResource.getDocumentMetadataSetHttpResponse(
+				documentMetadataSet2.getId()));
+
+		testBatchEngineDeleteImportTask_deleteDocumentMetadataSet(
+			200, documentMetadataSet2.getExternalReferenceCode(),
+			documentMetadataSet1.getId(), "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			documentMetadataSetResource.getDocumentMetadataSetHttpResponse(
+				documentMetadataSet2.getId()));
+
+		documentMetadataSet1 =
+			testBatchEngineDeleteImportTask_addSiteDocumentMetadataSet();
+
+		testBatchEngineDeleteImportTask_deleteDocumentMetadataSet(
+			400, documentMetadataSet1.getExternalReferenceCode(),
+			documentMetadataSet1.getId(), "assetLibraryId",
+			String.valueOf(testDepotEntryGroup.getGroupId()), "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			200,
+			documentMetadataSetResource.getDocumentMetadataSetHttpResponse(
+				documentMetadataSet1.getId()));
 	}
 
 	protected DocumentMetadataSet
@@ -2201,6 +2287,20 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 		throws Exception {
 
 		return testDeleteDocumentMetadataSet_addDocumentMetadataSet();
+	}
+
+	protected DocumentMetadataSet
+			testBatchEngineDeleteImportTask_addAssetLibraryDocumentMetadataSet()
+		throws Exception {
+
+		return testDeleteAssetLibraryDocumentMetadataSetByExternalReferenceCode_addDocumentMetadataSet();
+	}
+
+	protected DocumentMetadataSet
+			testBatchEngineDeleteImportTask_addSiteDocumentMetadataSet()
+		throws Exception {
+
+		return testDeleteSiteDocumentMetadataSetByExternalReferenceCode_addDocumentMetadataSet();
 	}
 
 	protected void testBatchEngineDeleteImportTask_deleteDocumentMetadataSet(

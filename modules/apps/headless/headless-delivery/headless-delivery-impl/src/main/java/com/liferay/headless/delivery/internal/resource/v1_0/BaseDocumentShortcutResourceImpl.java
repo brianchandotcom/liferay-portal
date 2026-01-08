@@ -1025,9 +1025,37 @@ public abstract class BaseDocumentShortcutResourceImpl
 
 		UnsafeFunction<DocumentShortcut, DocumentShortcut, Exception>
 			documentShortcutUnsafeFunction = documentShortcut -> {
-				deleteDocumentShortcut(documentShortcut.getId());
+				if (documentShortcut.getId() != null) {
+					try {
+						deleteDocumentShortcut(documentShortcut.getId());
 
-				return documentShortcut;
+						return documentShortcut;
+					}
+					catch (Exception exception) {
+						if (documentShortcut.getExternalReferenceCode() !=
+								null) {
+
+							if (parameters.containsKey("siteId")) {
+								deleteSiteDocumentShortcutByExternalReferenceCode(
+									(Long)parameters.get("siteId"),
+									documentShortcut.
+										getExternalReferenceCode());
+
+								return documentShortcut;
+							}
+						}
+					}
+				}
+				else if (parameters.containsKey("siteId")) {
+					deleteSiteDocumentShortcutByExternalReferenceCode(
+						(Long)parameters.get("siteId"),
+						documentShortcut.getExternalReferenceCode());
+
+					return documentShortcut;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete by external reference code or ID");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

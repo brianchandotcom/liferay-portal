@@ -3914,6 +3914,13 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		StructuredContentFolder structuredContentFolder1 =
+			testBatchEngineDeleteImportTask_addAssetLibraryStructuredContentFolder();
+
+		testBatchEngineDeleteImportTask_deleteStructuredContentFolder(
+			200, structuredContentFolder1.getExternalReferenceCode(), null,
+			"assetLibraryId", String.valueOf(testDepotEntryGroup.getGroupId()));
+
+		structuredContentFolder1 =
 			testBatchEngineDeleteImportTask_addStructuredContentFolder();
 
 		testBatchEngineDeleteImportTask_deleteStructuredContentFolder(
@@ -3924,6 +3931,92 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			structuredContentFolderResource.
 				getStructuredContentFolderHttpResponse(
 					structuredContentFolder1.getId()));
+
+		structuredContentFolder1 =
+			testBatchEngineDeleteImportTask_addSiteStructuredContentFolder();
+
+		testBatchEngineDeleteImportTask_deleteStructuredContentFolder(
+			200, structuredContentFolder1.getExternalReferenceCode(), null,
+			"siteId", String.valueOf(testGroup.getGroupId()));
+
+		structuredContentFolder1 =
+			testBatchEngineDeleteImportTask_addAssetLibraryStructuredContentFolder();
+		StructuredContentFolder structuredContentFolder2 =
+			testBatchEngineDeleteImportTask_addAssetLibraryStructuredContentFolder();
+
+		testBatchEngineDeleteImportTask_deleteStructuredContentFolder(
+			200, structuredContentFolder2.getExternalReferenceCode(),
+			structuredContentFolder1.getId(), "assetLibraryId",
+			String.valueOf(testDepotEntryGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentFolderResource.
+				getStructuredContentFolderHttpResponse(
+					structuredContentFolder1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			structuredContentFolderResource.
+				getStructuredContentFolderHttpResponse(
+					structuredContentFolder2.getId()));
+
+		testBatchEngineDeleteImportTask_deleteStructuredContentFolder(
+			200, structuredContentFolder2.getExternalReferenceCode(),
+			structuredContentFolder1.getId(), "assetLibraryId",
+			String.valueOf(testDepotEntryGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentFolderResource.
+				getStructuredContentFolderHttpResponse(
+					structuredContentFolder2.getId()));
+
+		structuredContentFolder1 =
+			testBatchEngineDeleteImportTask_addSiteStructuredContentFolder();
+		structuredContentFolder2 =
+			testBatchEngineDeleteImportTask_addSiteStructuredContentFolder();
+
+		testBatchEngineDeleteImportTask_deleteStructuredContentFolder(
+			200, structuredContentFolder2.getExternalReferenceCode(),
+			structuredContentFolder1.getId(), "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentFolderResource.
+				getStructuredContentFolderHttpResponse(
+					structuredContentFolder1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			structuredContentFolderResource.
+				getStructuredContentFolderHttpResponse(
+					structuredContentFolder2.getId()));
+
+		testBatchEngineDeleteImportTask_deleteStructuredContentFolder(
+			200, structuredContentFolder2.getExternalReferenceCode(),
+			structuredContentFolder1.getId(), "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentFolderResource.
+				getStructuredContentFolderHttpResponse(
+					structuredContentFolder2.getId()));
+
+		structuredContentFolder1 =
+			testBatchEngineDeleteImportTask_addSiteStructuredContentFolder();
+
+		testBatchEngineDeleteImportTask_deleteStructuredContentFolder(
+			400, structuredContentFolder1.getExternalReferenceCode(),
+			structuredContentFolder1.getId(), "assetLibraryId",
+			String.valueOf(testDepotEntryGroup.getGroupId()), "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			200,
+			structuredContentFolderResource.
+				getStructuredContentFolderHttpResponse(
+					structuredContentFolder1.getId()));
 	}
 
 	protected StructuredContentFolder
@@ -3931,6 +4024,20 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		throws Exception {
 
 		return testDeleteStructuredContentFolder_addStructuredContentFolder();
+	}
+
+	protected StructuredContentFolder
+			testBatchEngineDeleteImportTask_addAssetLibraryStructuredContentFolder()
+		throws Exception {
+
+		return testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder();
+	}
+
+	protected StructuredContentFolder
+			testBatchEngineDeleteImportTask_addSiteStructuredContentFolder()
+		throws Exception {
+
+		return testDeleteSiteStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder();
 	}
 
 	protected void

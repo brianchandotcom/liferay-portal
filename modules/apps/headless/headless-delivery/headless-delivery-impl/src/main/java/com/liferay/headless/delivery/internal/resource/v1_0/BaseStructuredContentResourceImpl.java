@@ -2803,9 +2803,53 @@ public abstract class BaseStructuredContentResourceImpl
 
 		UnsafeFunction<StructuredContent, StructuredContent, Exception>
 			structuredContentUnsafeFunction = structuredContent -> {
-				deleteStructuredContent(structuredContent.getId());
+				if (structuredContent.getId() != null) {
+					try {
+						deleteStructuredContent(structuredContent.getId());
 
-				return structuredContent;
+						return structuredContent;
+					}
+					catch (Exception exception) {
+						if (structuredContent.getExternalReferenceCode() !=
+								null) {
+
+							if (parameters.containsKey("assetLibraryId")) {
+								deleteAssetLibraryStructuredContentByExternalReferenceCode(
+									(Long)parameters.get("assetLibraryId"),
+									structuredContent.
+										getExternalReferenceCode());
+
+								return structuredContent;
+							}
+
+							if (parameters.containsKey("siteId")) {
+								deleteSiteStructuredContentByExternalReferenceCode(
+									(Long)parameters.get("siteId"),
+									structuredContent.
+										getExternalReferenceCode());
+
+								return structuredContent;
+							}
+						}
+					}
+				}
+				else if (parameters.containsKey("assetLibraryId")) {
+					deleteAssetLibraryStructuredContentByExternalReferenceCode(
+						(Long)parameters.get("assetLibraryId"),
+						structuredContent.getExternalReferenceCode());
+
+					return structuredContent;
+				}
+				else if (parameters.containsKey("siteId")) {
+					deleteSiteStructuredContentByExternalReferenceCode(
+						(Long)parameters.get("siteId"),
+						structuredContent.getExternalReferenceCode());
+
+					return structuredContent;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete by external reference code or ID");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

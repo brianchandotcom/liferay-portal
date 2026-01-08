@@ -1116,9 +1116,34 @@ public abstract class BaseWikiNodeResourceImpl
 
 		UnsafeFunction<WikiNode, WikiNode, Exception> wikiNodeUnsafeFunction =
 			wikiNode -> {
-				deleteWikiNode(wikiNode.getId());
+				if (wikiNode.getId() != null) {
+					try {
+						deleteWikiNode(wikiNode.getId());
 
-				return wikiNode;
+						return wikiNode;
+					}
+					catch (Exception exception) {
+						if (wikiNode.getExternalReferenceCode() != null) {
+							if (parameters.containsKey("siteId")) {
+								deleteSiteWikiNodeByExternalReferenceCode(
+									(Long)parameters.get("siteId"),
+									wikiNode.getExternalReferenceCode());
+
+								return wikiNode;
+							}
+						}
+					}
+				}
+				else if (parameters.containsKey("siteId")) {
+					deleteSiteWikiNodeByExternalReferenceCode(
+						(Long)parameters.get("siteId"),
+						wikiNode.getExternalReferenceCode());
+
+					return wikiNode;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete by external reference code or ID");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

@@ -1838,12 +1838,55 @@ public abstract class BaseNavigationMenuResourceTestCase {
 			404,
 			navigationMenuResource.getNavigationMenuHttpResponse(
 				navigationMenu1.getId()));
+
+		navigationMenu1 =
+			testBatchEngineDeleteImportTask_addSiteNavigationMenu();
+
+		testBatchEngineDeleteImportTask_deleteNavigationMenu(
+			200, navigationMenu1.getExternalReferenceCode(), null, "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		navigationMenu1 =
+			testBatchEngineDeleteImportTask_addSiteNavigationMenu();
+		NavigationMenu navigationMenu2 =
+			testBatchEngineDeleteImportTask_addSiteNavigationMenu();
+
+		testBatchEngineDeleteImportTask_deleteNavigationMenu(
+			200, navigationMenu2.getExternalReferenceCode(),
+			navigationMenu1.getId(), "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			navigationMenuResource.getNavigationMenuHttpResponse(
+				navigationMenu1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			navigationMenuResource.getNavigationMenuHttpResponse(
+				navigationMenu2.getId()));
+
+		testBatchEngineDeleteImportTask_deleteNavigationMenu(
+			200, navigationMenu2.getExternalReferenceCode(),
+			navigationMenu1.getId(), "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			navigationMenuResource.getNavigationMenuHttpResponse(
+				navigationMenu2.getId()));
 	}
 
 	protected NavigationMenu testBatchEngineDeleteImportTask_addNavigationMenu()
 		throws Exception {
 
 		return testDeleteNavigationMenu_addNavigationMenu();
+	}
+
+	protected NavigationMenu
+			testBatchEngineDeleteImportTask_addSiteNavigationMenu()
+		throws Exception {
+
+		return testDeleteSiteNavigationMenuByExternalReferenceCode_addNavigationMenu();
 	}
 
 	protected void testBatchEngineDeleteImportTask_deleteNavigationMenu(

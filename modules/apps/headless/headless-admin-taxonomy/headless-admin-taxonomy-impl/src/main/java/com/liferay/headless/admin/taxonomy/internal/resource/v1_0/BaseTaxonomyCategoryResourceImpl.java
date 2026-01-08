@@ -2494,9 +2494,53 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 
 		UnsafeFunction<TaxonomyCategory, TaxonomyCategory, Exception>
 			taxonomyCategoryUnsafeFunction = taxonomyCategory -> {
-				deleteTaxonomyCategory(taxonomyCategory.getId());
+				if (taxonomyCategory.getId() != null) {
+					try {
+						deleteTaxonomyCategory(taxonomyCategory.getId());
 
-				return taxonomyCategory;
+						return taxonomyCategory;
+					}
+					catch (Exception exception) {
+						if (taxonomyCategory.getExternalReferenceCode() !=
+								null) {
+
+							if (parameters.containsKey("assetLibraryId")) {
+								deleteAssetLibraryTaxonomyCategoryByExternalReferenceCode(
+									(Long)parameters.get("assetLibraryId"),
+									taxonomyCategory.
+										getExternalReferenceCode());
+
+								return taxonomyCategory;
+							}
+
+							if (parameters.containsKey("siteId")) {
+								deleteSiteTaxonomyCategoryByExternalReferenceCode(
+									(Long)parameters.get("siteId"),
+									taxonomyCategory.
+										getExternalReferenceCode());
+
+								return taxonomyCategory;
+							}
+						}
+					}
+				}
+				else if (parameters.containsKey("assetLibraryId")) {
+					deleteAssetLibraryTaxonomyCategoryByExternalReferenceCode(
+						(Long)parameters.get("assetLibraryId"),
+						taxonomyCategory.getExternalReferenceCode());
+
+					return taxonomyCategory;
+				}
+				else if (parameters.containsKey("siteId")) {
+					deleteSiteTaxonomyCategoryByExternalReferenceCode(
+						(Long)parameters.get("siteId"),
+						taxonomyCategory.getExternalReferenceCode());
+
+					return taxonomyCategory;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete by external reference code or ID");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

@@ -2894,19 +2894,93 @@ public abstract class BaseKeywordResourceTestCase {
 
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
-		Keyword keyword1 = testBatchEngineDeleteImportTask_addKeyword();
+		Keyword keyword1 =
+			testBatchEngineDeleteImportTask_addAssetLibraryKeyword();
+
+		testBatchEngineDeleteImportTask_deleteKeyword(
+			200, keyword1.getExternalReferenceCode(), null, "assetLibraryId",
+			String.valueOf(testDepotEntryGroup.getGroupId()));
+
+		keyword1 = testBatchEngineDeleteImportTask_addKeyword();
 
 		testBatchEngineDeleteImportTask_deleteKeyword(
 			200, null, keyword1.getId());
 
 		assertHttpResponseStatusCode(
 			404, keywordResource.getKeywordHttpResponse(keyword1.getId()));
+
+		keyword1 = testBatchEngineDeleteImportTask_addSiteKeyword();
+
+		testBatchEngineDeleteImportTask_deleteKeyword(
+			200, keyword1.getExternalReferenceCode(), null, "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		keyword1 = testBatchEngineDeleteImportTask_addAssetLibraryKeyword();
+		Keyword keyword2 =
+			testBatchEngineDeleteImportTask_addAssetLibraryKeyword();
+
+		testBatchEngineDeleteImportTask_deleteKeyword(
+			200, keyword2.getExternalReferenceCode(), keyword1.getId(),
+			"assetLibraryId", String.valueOf(testDepotEntryGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404, keywordResource.getKeywordHttpResponse(keyword1.getId()));
+		assertHttpResponseStatusCode(
+			200, keywordResource.getKeywordHttpResponse(keyword2.getId()));
+
+		testBatchEngineDeleteImportTask_deleteKeyword(
+			200, keyword2.getExternalReferenceCode(), keyword1.getId(),
+			"assetLibraryId", String.valueOf(testDepotEntryGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404, keywordResource.getKeywordHttpResponse(keyword2.getId()));
+
+		keyword1 = testBatchEngineDeleteImportTask_addSiteKeyword();
+		keyword2 = testBatchEngineDeleteImportTask_addSiteKeyword();
+
+		testBatchEngineDeleteImportTask_deleteKeyword(
+			200, keyword2.getExternalReferenceCode(), keyword1.getId(),
+			"siteId", String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404, keywordResource.getKeywordHttpResponse(keyword1.getId()));
+		assertHttpResponseStatusCode(
+			200, keywordResource.getKeywordHttpResponse(keyword2.getId()));
+
+		testBatchEngineDeleteImportTask_deleteKeyword(
+			200, keyword2.getExternalReferenceCode(), keyword1.getId(),
+			"siteId", String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404, keywordResource.getKeywordHttpResponse(keyword2.getId()));
+
+		keyword1 = testBatchEngineDeleteImportTask_addSiteKeyword();
+
+		testBatchEngineDeleteImportTask_deleteKeyword(
+			400, keyword1.getExternalReferenceCode(), keyword1.getId(),
+			"assetLibraryId", String.valueOf(testDepotEntryGroup.getGroupId()),
+			"siteId", String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			200, keywordResource.getKeywordHttpResponse(keyword1.getId()));
 	}
 
 	protected Keyword testBatchEngineDeleteImportTask_addKeyword()
 		throws Exception {
 
 		return testDeleteKeyword_addKeyword();
+	}
+
+	protected Keyword testBatchEngineDeleteImportTask_addAssetLibraryKeyword()
+		throws Exception {
+
+		return testDeleteAssetLibraryKeywordByExternalReferenceCode_addKeyword();
+	}
+
+	protected Keyword testBatchEngineDeleteImportTask_addSiteKeyword()
+		throws Exception {
+
+		return testDeleteSiteKeywordByExternalReferenceCode_addKeyword();
 	}
 
 	protected void testBatchEngineDeleteImportTask_deleteKeyword(

@@ -3938,19 +3938,93 @@ public abstract class BaseDocumentResourceTestCase {
 
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
-		Document document1 = testBatchEngineDeleteImportTask_addDocument();
+		Document document1 =
+			testBatchEngineDeleteImportTask_addAssetLibraryDocument();
+
+		testBatchEngineDeleteImportTask_deleteDocument(
+			200, document1.getExternalReferenceCode(), null, "assetLibraryId",
+			String.valueOf(testDepotEntryGroup.getGroupId()));
+
+		document1 = testBatchEngineDeleteImportTask_addDocument();
 
 		testBatchEngineDeleteImportTask_deleteDocument(
 			200, null, document1.getId());
 
 		assertHttpResponseStatusCode(
 			404, documentResource.getDocumentHttpResponse(document1.getId()));
+
+		document1 = testBatchEngineDeleteImportTask_addSiteDocument();
+
+		testBatchEngineDeleteImportTask_deleteDocument(
+			200, document1.getExternalReferenceCode(), null, "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		document1 = testBatchEngineDeleteImportTask_addAssetLibraryDocument();
+		Document document2 =
+			testBatchEngineDeleteImportTask_addAssetLibraryDocument();
+
+		testBatchEngineDeleteImportTask_deleteDocument(
+			200, document2.getExternalReferenceCode(), document1.getId(),
+			"assetLibraryId", String.valueOf(testDepotEntryGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404, documentResource.getDocumentHttpResponse(document1.getId()));
+		assertHttpResponseStatusCode(
+			200, documentResource.getDocumentHttpResponse(document2.getId()));
+
+		testBatchEngineDeleteImportTask_deleteDocument(
+			200, document2.getExternalReferenceCode(), document1.getId(),
+			"assetLibraryId", String.valueOf(testDepotEntryGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404, documentResource.getDocumentHttpResponse(document2.getId()));
+
+		document1 = testBatchEngineDeleteImportTask_addSiteDocument();
+		document2 = testBatchEngineDeleteImportTask_addSiteDocument();
+
+		testBatchEngineDeleteImportTask_deleteDocument(
+			200, document2.getExternalReferenceCode(), document1.getId(),
+			"siteId", String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404, documentResource.getDocumentHttpResponse(document1.getId()));
+		assertHttpResponseStatusCode(
+			200, documentResource.getDocumentHttpResponse(document2.getId()));
+
+		testBatchEngineDeleteImportTask_deleteDocument(
+			200, document2.getExternalReferenceCode(), document1.getId(),
+			"siteId", String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404, documentResource.getDocumentHttpResponse(document2.getId()));
+
+		document1 = testBatchEngineDeleteImportTask_addSiteDocument();
+
+		testBatchEngineDeleteImportTask_deleteDocument(
+			400, document1.getExternalReferenceCode(), document1.getId(),
+			"assetLibraryId", String.valueOf(testDepotEntryGroup.getGroupId()),
+			"siteId", String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			200, documentResource.getDocumentHttpResponse(document1.getId()));
 	}
 
 	protected Document testBatchEngineDeleteImportTask_addDocument()
 		throws Exception {
 
 		return testDeleteDocument_addDocument();
+	}
+
+	protected Document testBatchEngineDeleteImportTask_addAssetLibraryDocument()
+		throws Exception {
+
+		return testDeleteAssetLibraryDocumentByExternalReferenceCode_addDocument();
+	}
+
+	protected Document testBatchEngineDeleteImportTask_addSiteDocument()
+		throws Exception {
+
+		return testDeleteSiteDocumentByExternalReferenceCode_addDocument();
 	}
 
 	protected void testBatchEngineDeleteImportTask_deleteDocument(

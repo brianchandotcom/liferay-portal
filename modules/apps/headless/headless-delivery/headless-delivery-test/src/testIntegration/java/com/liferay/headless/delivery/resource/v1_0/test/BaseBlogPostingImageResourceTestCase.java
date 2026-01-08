@@ -1610,6 +1610,42 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			404,
 			blogPostingImageResource.getBlogPostingImageHttpResponse(
 				blogPostingImage1.getId()));
+
+		blogPostingImage1 =
+			testBatchEngineDeleteImportTask_addSiteBlogPostingImage();
+
+		testBatchEngineDeleteImportTask_deleteBlogPostingImage(
+			200, blogPostingImage1.getExternalReferenceCode(), null, "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		blogPostingImage1 =
+			testBatchEngineDeleteImportTask_addSiteBlogPostingImage();
+		BlogPostingImage blogPostingImage2 =
+			testBatchEngineDeleteImportTask_addSiteBlogPostingImage();
+
+		testBatchEngineDeleteImportTask_deleteBlogPostingImage(
+			200, blogPostingImage2.getExternalReferenceCode(),
+			blogPostingImage1.getId(), "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			blogPostingImageResource.getBlogPostingImageHttpResponse(
+				blogPostingImage1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			blogPostingImageResource.getBlogPostingImageHttpResponse(
+				blogPostingImage2.getId()));
+
+		testBatchEngineDeleteImportTask_deleteBlogPostingImage(
+			200, blogPostingImage2.getExternalReferenceCode(),
+			blogPostingImage1.getId(), "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			blogPostingImageResource.getBlogPostingImageHttpResponse(
+				blogPostingImage2.getId()));
 	}
 
 	protected BlogPostingImage
@@ -1617,6 +1653,13 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		throws Exception {
 
 		return testDeleteBlogPostingImage_addBlogPostingImage();
+	}
+
+	protected BlogPostingImage
+			testBatchEngineDeleteImportTask_addSiteBlogPostingImage()
+		throws Exception {
+
+		return testDeleteSiteBlogPostingImageByExternalReferenceCode_addBlogPostingImage();
 	}
 
 	protected void testBatchEngineDeleteImportTask_deleteBlogPostingImage(

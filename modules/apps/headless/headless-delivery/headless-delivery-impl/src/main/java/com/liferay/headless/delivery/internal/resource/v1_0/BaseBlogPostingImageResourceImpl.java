@@ -616,9 +616,37 @@ public abstract class BaseBlogPostingImageResourceImpl
 
 		UnsafeFunction<BlogPostingImage, BlogPostingImage, Exception>
 			blogPostingImageUnsafeFunction = blogPostingImage -> {
-				deleteBlogPostingImage(blogPostingImage.getId());
+				if (blogPostingImage.getId() != null) {
+					try {
+						deleteBlogPostingImage(blogPostingImage.getId());
 
-				return blogPostingImage;
+						return blogPostingImage;
+					}
+					catch (Exception exception) {
+						if (blogPostingImage.getExternalReferenceCode() !=
+								null) {
+
+							if (parameters.containsKey("siteId")) {
+								deleteSiteBlogPostingImageByExternalReferenceCode(
+									(Long)parameters.get("siteId"),
+									blogPostingImage.
+										getExternalReferenceCode());
+
+								return blogPostingImage;
+							}
+						}
+					}
+				}
+				else if (parameters.containsKey("siteId")) {
+					deleteSiteBlogPostingImageByExternalReferenceCode(
+						(Long)parameters.get("siteId"),
+						blogPostingImage.getExternalReferenceCode());
+
+					return blogPostingImage;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete by external reference code or ID");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

@@ -2048,9 +2048,37 @@ public abstract class BaseMessageBoardMessageResourceImpl
 
 		UnsafeFunction<MessageBoardMessage, MessageBoardMessage, Exception>
 			messageBoardMessageUnsafeFunction = messageBoardMessage -> {
-				deleteMessageBoardMessage(messageBoardMessage.getId());
+				if (messageBoardMessage.getId() != null) {
+					try {
+						deleteMessageBoardMessage(messageBoardMessage.getId());
 
-				return messageBoardMessage;
+						return messageBoardMessage;
+					}
+					catch (Exception exception) {
+						if (messageBoardMessage.getExternalReferenceCode() !=
+								null) {
+
+							if (parameters.containsKey("siteId")) {
+								deleteSiteMessageBoardMessageByExternalReferenceCode(
+									(Long)parameters.get("siteId"),
+									messageBoardMessage.
+										getExternalReferenceCode());
+
+								return messageBoardMessage;
+							}
+						}
+					}
+				}
+				else if (parameters.containsKey("siteId")) {
+					deleteSiteMessageBoardMessageByExternalReferenceCode(
+						(Long)parameters.get("siteId"),
+						messageBoardMessage.getExternalReferenceCode());
+
+					return messageBoardMessage;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete by external reference code or ID");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

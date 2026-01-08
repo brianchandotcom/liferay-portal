@@ -1967,12 +1967,50 @@ public abstract class BaseBlogPostingResourceTestCase {
 			404,
 			blogPostingResource.getBlogPostingHttpResponse(
 				blogPosting1.getId()));
+
+		blogPosting1 = testBatchEngineDeleteImportTask_addSiteBlogPosting();
+
+		testBatchEngineDeleteImportTask_deleteBlogPosting(
+			200, blogPosting1.getExternalReferenceCode(), null, "siteId",
+			String.valueOf(testGroup.getGroupId()));
+
+		blogPosting1 = testBatchEngineDeleteImportTask_addSiteBlogPosting();
+		BlogPosting blogPosting2 =
+			testBatchEngineDeleteImportTask_addSiteBlogPosting();
+
+		testBatchEngineDeleteImportTask_deleteBlogPosting(
+			200, blogPosting2.getExternalReferenceCode(), blogPosting1.getId(),
+			"siteId", String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			blogPostingResource.getBlogPostingHttpResponse(
+				blogPosting1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			blogPostingResource.getBlogPostingHttpResponse(
+				blogPosting2.getId()));
+
+		testBatchEngineDeleteImportTask_deleteBlogPosting(
+			200, blogPosting2.getExternalReferenceCode(), blogPosting1.getId(),
+			"siteId", String.valueOf(testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			blogPostingResource.getBlogPostingHttpResponse(
+				blogPosting2.getId()));
 	}
 
 	protected BlogPosting testBatchEngineDeleteImportTask_addBlogPosting()
 		throws Exception {
 
 		return testDeleteBlogPosting_addBlogPosting();
+	}
+
+	protected BlogPosting testBatchEngineDeleteImportTask_addSiteBlogPosting()
+		throws Exception {
+
+		return testDeleteSiteBlogPostingByExternalReferenceCode_addBlogPosting();
 	}
 
 	protected void testBatchEngineDeleteImportTask_deleteBlogPosting(

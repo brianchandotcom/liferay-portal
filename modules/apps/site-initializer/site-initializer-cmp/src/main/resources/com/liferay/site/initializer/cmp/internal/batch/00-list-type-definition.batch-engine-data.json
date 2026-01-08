@@ -1,0 +1,47 @@
+{
+	"configuration": {
+		"className": "com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition",
+		"multiCompany": true,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"featureFlag": "LPD-58677",
+			"importStrategy": "ON_ERROR_FAIL",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "DEFAULT"
+	},
+	"items": [
+		{
+			"externalReferenceCode": "L_CMP_PROJECT_STATES",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "BLOCKED",
+					"key": "blocked",
+					"name": "Blocked",
+					"system": true
+				},
+				{
+					"externalReferenceCode": "DONE",
+					"key": "done",
+					"name": "Done",
+					"system": true
+				},
+				{
+					"externalReferenceCode": "IN_PROGRESS",
+					"key": "inProgress",
+					"name": "In Progress",
+					"system": true
+				},
+				{
+					"externalReferenceCode": "NOT_STARTED",
+					"key": "notStarted",
+					"name": "Not Started",
+					"system": true
+				}
+			],
+			"name": "Project States",
+			"system": true
+		}
+	]
+}

@@ -1280,14 +1280,16 @@ public class StructuredContentResourceImpl
 					_journalArticleService, _layoutLocalService,
 					contextAcceptLanguage.getPreferredLocale());
 
-				if (value != null) {
-					fieldValues.add(
-						FieldConstants.getSerializable(
-							contextAcceptLanguage.getPreferredLocale(),
-							LocaleUtil.ROOT, field.getDataType(),
-							value.getString(
-								contextAcceptLanguage.getPreferredLocale())));
+				if (value == null) {
+					continue;
 				}
+
+				fieldValues.add(
+					FieldConstants.getSerializable(
+						contextAcceptLanguage.getPreferredLocale(),
+						LocaleUtil.ROOT, field.getDataType(),
+						value.getString(
+							contextAcceptLanguage.getPreferredLocale())));
 			}
 
 			if (ListUtil.isNotEmpty(fieldValues)) {

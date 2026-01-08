@@ -707,18 +707,24 @@ test(
 
 		// Drag and drop a fragment inside master page fragments area, should throw an error
 
-		await pageEditorPage.dragAndDropFragment({
-			dragTarget: page.getByRole('menuitem', {
-				name: 'Add Button',
-			}),
-			dropTarget: page.locator('.page-editor__fragment-content--master'),
-			force: true,
-			page,
-		});
+		await expect(async () => {
+			await pageEditorPage.dragAndDropFragment({
+				dragTarget: page.getByRole('menuitem', {
+					name: 'Add Button',
+				}),
+				dropTarget: page.locator(
+					'.page-editor__fragment-content--master'
+				),
+				force: true,
+				page,
+				timeout: 1000,
+			});
 
-		await expect(page.locator('.alert-danger')).toHaveText(
-			'Error:Fragments and widgets cannot be placed inside this area.'
-		);
+			await expect(page.locator('.alert-danger')).toHaveText(
+				'Error:Fragments and widgets cannot be placed inside this area.',
+				{timeout: 2000}
+			);
+		}).toPass();
 	}
 );
 

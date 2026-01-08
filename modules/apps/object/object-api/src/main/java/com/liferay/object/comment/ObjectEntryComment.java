@@ -5,6 +5,8 @@
 
 package com.liferay.object.comment;
 
+import com.liferay.petra.string.StringBundler;
+
 import java.io.Serializable;
 
 /**
@@ -19,7 +21,7 @@ public class ObjectEntryComment implements Serializable {
 		_externalReferenceCode = externalReferenceCode;
 		_parentCommentExternalReferenceCode =
 			parentCommentExternalReferenceCode;
-		_text = text;
+		_text = StringBundler.concat("<p>", text, "</p>");
 	}
 
 	public String getExternalReferenceCode() {

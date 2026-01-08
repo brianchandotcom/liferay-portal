@@ -188,32 +188,32 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 		List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
 			new ArrayList<>();
 
-		ZipReader zipReader = _zipReaderFactory.getZipReader(file);
+		try (ZipReader zipReader = _zipReaderFactory.getZipReader(file)) {
+			_processMasterLayoutLayoutPageTemplateEntries(
+				groupId, layoutsImporterResultEntries, layoutsImportStrategy,
+				preserveItemIds, userId, zipReader);
 
-		_processMasterLayoutLayoutPageTemplateEntries(
-			groupId, layoutsImporterResultEntries, layoutsImportStrategy,
-			preserveItemIds, userId, zipReader);
+			_processBasicLayoutPageTemplateEntries(
+				groupId, layoutPageTemplateCollectionId,
+				layoutsImporterResultEntries, layoutsImportStrategy,
+				preserveItemIds, userId, zipReader);
 
-		_processBasicLayoutPageTemplateEntries(
-			groupId, layoutPageTemplateCollectionId,
-			layoutsImporterResultEntries, layoutsImportStrategy,
-			preserveItemIds, userId, zipReader);
+			Map<String, LayoutPageTemplateCollection>
+				layoutPageTemplateCollectionsMap =
+					_processDisplayPageLayoutPageTemplateCollections(
+						groupId, layoutPageTemplateCollectionId,
+						layoutsImporterResultEntries, layoutsImportStrategy,
+						zipReader);
 
-		Map<String, LayoutPageTemplateCollection>
-			layoutPageTemplateCollectionsMap =
-				_processDisplayPageLayoutPageTemplateCollections(
-					groupId, layoutPageTemplateCollectionId,
-					layoutsImporterResultEntries, layoutsImportStrategy,
-					zipReader);
+			_processDisplayPageLayoutPageTemplateEntries(
+				groupId, layoutPageTemplateCollectionId,
+				layoutPageTemplateCollectionsMap, layoutsImporterResultEntries,
+				layoutsImportStrategy, preserveItemIds, userId, zipReader);
 
-		_processDisplayPageLayoutPageTemplateEntries(
-			groupId, layoutPageTemplateCollectionId,
-			layoutPageTemplateCollectionsMap, layoutsImporterResultEntries,
-			layoutsImportStrategy, preserveItemIds, userId, zipReader);
-
-		_processLayoutUtilityPageEntries(
-			groupId, layoutsImporterResultEntries, layoutsImportStrategy,
-			preserveItemIds, userId, zipReader);
+			_processLayoutUtilityPageEntries(
+				groupId, layoutsImporterResultEntries, layoutsImportStrategy,
+				preserveItemIds, userId, zipReader);
+		}
 
 		return layoutsImporterResultEntries;
 	}
@@ -287,53 +287,56 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			long groupId, long layoutPageTemplateCollectionId, File file)
 		throws Exception {
 
-		ZipReader zipReader = _zipReaderFactory.getZipReader(file);
+		try (ZipReader zipReader = _zipReaderFactory.getZipReader(file)) {
+			List<String> entries = zipReader.getEntries();
 
-		List<String> entries = zipReader.getEntries();
+			for (String entry : entries) {
+				String content = zipReader.getEntryAsString(entry);
 
-		for (String entry : entries) {
-			String content = zipReader.getEntryAsString(entry);
+				if (Validator.isNull(content)) {
+					continue;
+				}
 
-			if (Validator.isNull(content)) {
-				continue;
-			}
+				if (_isDisplayPageTemplateCollectionFile(entry) &&
+					_isRootFolder(entries, entry) &&
+					!_isValidDisplayPageLayoutPageTemplateCollection(
+						content, entry, groupId,
+						layoutPageTemplateCollectionId)) {
 
-			if (_isDisplayPageTemplateCollectionFile(entry) &&
-				_isRootFolder(entries, entry) &&
-				!_isValidDisplayPageLayoutPageTemplateCollection(
-					content, entry, groupId, layoutPageTemplateCollectionId)) {
+					return false;
+				}
 
-				return false;
-			}
+				if (_isDisplayPageTemplateFile(entry) &&
+					_isRootFolder(entries, entry) &&
+					!_isValidDisplayPageLayoutPageTemplateEntry(
+						content, entry, groupId,
+						layoutPageTemplateCollectionId)) {
 
-			if (_isDisplayPageTemplateFile(entry) &&
-				_isRootFolder(entries, entry) &&
-				!_isValidDisplayPageLayoutPageTemplateEntry(
-					content, entry, groupId, layoutPageTemplateCollectionId)) {
+					return false;
+				}
 
-				return false;
-			}
+				if (_isMasterPageFile(entry) &&
+					!_isValidMasterLayoutLayoutPageTemplateEntry(
+						content, entry, groupId)) {
 
-			if (_isMasterPageFile(entry) &&
-				!_isValidMasterLayoutLayoutPageTemplateEntry(
-					content, entry, groupId)) {
+					return false;
+				}
 
-				return false;
-			}
+				if ((layoutPageTemplateCollectionId <= 0) &&
+					_isPageTemplateCollectionFile(entry) &&
+					!_isValidBasicLayoutPageTemplateCollection(
+						content, entry, groupId)) {
 
-			if ((layoutPageTemplateCollectionId <= 0) &&
-				_isPageTemplateCollectionFile(entry) &&
-				!_isValidBasicLayoutPageTemplateCollection(
-					content, entry, groupId)) {
+					return false;
+				}
 
-				return false;
-			}
+				if (_isPageTemplateFile(entry) &&
+					!_isValidBasicLayoutPageTemplateEntry(
+						content, entry, groupId,
+						layoutPageTemplateCollectionId)) {
 
-			if (_isPageTemplateFile(entry) &&
-				!_isValidBasicLayoutPageTemplateEntry(
-					content, entry, groupId, layoutPageTemplateCollectionId)) {
-
-				return false;
+					return false;
+				}
 			}
 		}
 

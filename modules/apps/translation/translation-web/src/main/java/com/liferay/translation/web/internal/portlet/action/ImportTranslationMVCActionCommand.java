@@ -345,10 +345,9 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 				translation.getContentType(), ContentTypes.APPLICATION_ZIP)) {
 
 			try (InputStream inputStream1 = translation.getInputStream()) {
-				ZipReader zipReader = _zipReaderFactory.getZipReader(
-					inputStream1);
+				try (ZipReader zipReader = _zipReaderFactory.getZipReader(
+						inputStream1)) {
 
-				try {
 					for (String entry : zipReader.getEntries()) {
 						try (InputStream inputStream2 =
 								zipReader.getEntryAsInputStream(entry)) {
@@ -360,9 +359,6 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 								locale);
 						}
 					}
-				}
-				finally {
-					zipReader.close();
 				}
 			}
 		}

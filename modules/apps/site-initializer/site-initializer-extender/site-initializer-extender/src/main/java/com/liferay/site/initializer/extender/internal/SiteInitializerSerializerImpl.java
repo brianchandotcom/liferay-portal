@@ -431,11 +431,8 @@ public class SiteInitializerSerializerImpl
 		throws Exception {
 
 		File file = _layoutsExporter.exportLayoutPageTemplateEntries(groupId);
-		ZipReader zipReader = null;
 
-		try {
-			zipReader = _zipReaderFactory.getZipReader(file);
-
+		try (ZipReader zipReader = _zipReaderFactory.getZipReader(file)) {
 			for (String name : zipReader.getEntries()) {
 				InputStream inputStream = zipReader.getEntryAsInputStream(name);
 
@@ -443,13 +440,8 @@ public class SiteInitializerSerializerImpl
 					"layout-page-templates/" + name, inputStream, zipWriter);
 			}
 		}
-		finally {
-			if (zipReader != null) {
-				zipReader.close();
-			}
 
-			file.delete();
-		}
+		file.delete();
 	}
 
 	private void _serializeLayouts(
@@ -492,11 +484,8 @@ public class SiteInitializerSerializerImpl
 				_layoutUtilityPageEntryLocalService.getLayoutUtilityPageEntries(
 					groupId),
 				LayoutUtilityPageEntry.LAYOUT_UTILITY_PAGE_ENTRY_ID_ACCESSOR));
-		ZipReader zipReader = null;
 
-		try {
-			zipReader = _zipReaderFactory.getZipReader(file);
-
+		try (ZipReader zipReader = _zipReaderFactory.getZipReader(file)) {
 			for (String name : zipReader.getEntries()) {
 				String fileName = "layout-utility-page-entries/";
 
@@ -507,13 +496,8 @@ public class SiteInitializerSerializerImpl
 					fileName, zipReader.getEntryAsInputStream(name), zipWriter);
 			}
 		}
-		finally {
-			if (zipReader != null) {
-				zipReader.close();
-			}
 
-			file.delete();
-		}
+		file.delete();
 	}
 
 	private void _serializeObjectDefinition(

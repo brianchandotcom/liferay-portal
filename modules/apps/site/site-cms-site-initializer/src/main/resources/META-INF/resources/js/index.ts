@@ -32,7 +32,10 @@ export {default as SearchBar} from './main_view/home/SearchBar';
 export {default as ViewWorkflowTasks} from './main_view/home/ViewWorkflowTasks';
 export {default as AssetTypeInfoPanelContent} from './main_view/info_panel/AssetTypeInfoPanelContent';
 export {default as AllSpacesFDSPropsTransformer} from './main_view/props_transformer/AllSpacesFDSPropsTransformer';
-export {default as AssetsFDSPropsTransformer} from './main_view/props_transformer/AssetsFDSPropsTransformer';
+export {
+	default as AssetsFDSPropsTransformer,
+	AdditionalProps,
+} from './main_view/props_transformer/AssetsFDSPropsTransformer';
 export {default as AssetsFilesDropFDSPropsTransformer} from './main_view/props_transformer/AssetsFilesDropFDSPropsTransformer';
 export {default as BulkActionTaskReportFDSPropsTransformer} from './main_view/props_transformer/BulkActionTaskReportFDSPropsTransformer';
 export {default as BulkActionTaskReportItemsFDSPropsTransformer} from './main_view/props_transformer/BulkActionTaskReportItemsFDSPropsTransformer';
@@ -48,6 +51,11 @@ export {default as StructuresFDSPropsTransformer} from './main_view/props_transf
 export {default as TagUsagesFDSPropsTransformer} from './main_view/props_transformer/TagUsagesFDSPropsTransformer';
 export {default as ViewVersionHistoryFDSPropsTransformer} from './main_view/props_transformer/ViewVersionHistoryFDSPropsTransformer';
 export {default as VocabularyFDSPropsTransformer} from './main_view/props_transformer/VocabularyFDSPropsTransformer';
+export {default as ACTIONS} from './main_view/props_transformer/actions/creationMenuActions';
+export {default as deleteItemAction} from './main_view/props_transformer/actions/deleteItemAction';
+export {default as manageMembersAction} from './main_view/props_transformer/actions/manageMembersAction';
+export {default as SimpleActionLinkRenderer} from './main_view/props_transformer/cell_renderers/SimpleActionLinkRenderer';
+export {default as addOnClickToCreationMenuItems} from './main_view/props_transformer/utils/addOnClickToCreationMenuItems';
 export {default as RecycleBinToolbar} from './main_view/recycle_bin/RecycleBinToolbar';
 export {default as AddSpaceMembers} from './main_view/spaces/AddSpaceMembers';
 export {default as NewSpace} from './main_view/spaces/NewSpace';

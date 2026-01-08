@@ -1197,8 +1197,8 @@ public class ObjectEntryLocalServiceImpl
 				true, objectDefinition, indexedObjectFields);
 		Predicate innerJoinPredicate = null;
 
-		List<Expression<?>> selectExpressions = new ArrayList<>(
-			dynamicObjectDefinitionTable.getColumns());
+		List<Column<DynamicObjectDefinitionTable, ?>> selectColumns =
+			new ArrayList<>(dynamicObjectDefinitionTable.getColumns());
 
 		Collection<Column<DynamicObjectDefinitionTable, ?>> extensionColumns =
 			extensionDynamicObjectDefinitionTable.getColumns();
@@ -1220,11 +1220,11 @@ public class ObjectEntryLocalServiceImpl
 					continue;
 				}
 
-				selectExpressions.add(column);
+				selectColumns.add(column);
 			}
 		}
 
-		Expression<?>[] selectExpressionsArray = selectExpressions.toArray(
+		Expression<?>[] selectExpressionsArray = selectColumns.toArray(
 			new Expression<?>[0]);
 
 		List<Object[]> rows = _list(
@@ -1240,14 +1240,14 @@ public class ObjectEntryLocalServiceImpl
 					objectEntry.getObjectEntryId()
 				)
 			),
-			objectFieldBag, selectExpressionsArray);
+			selectColumns);
 
 		if (ListUtil.isEmpty(rows)) {
 			return Collections.emptyMap();
 		}
 
 		Map<String, Serializable> values = _getValues(
-			objectFieldBag, rows.get(0), selectExpressionsArray);
+			rows.get(0), selectColumns);
 
 		_addLocalizedObjectFieldValues(
 			objectEntry.getDefaultLanguageId(),
@@ -5086,6 +5086,44 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private Map<String, Serializable> _getValues(
+			Object[] objects,
+			List<Column<DynamicObjectDefinitionTable, ?>> columns)
+		throws PortalException {
+
+		Map<String, Serializable> values = new HashMap<>();
+
+		for (int i = 0; i < columns.size(); i++) {
+			Column<?, ?> column = columns.get(i);
+
+			String columnName = column.getName();
+			Class<?> javaTypeClass = column.getJavaType();
+
+			if (columnName.endsWith(StringPool.UNDERLINE)) {
+				String[] parts = StringUtil.split(
+					columnName, StringPool.UNDERLINE);
+
+				if ((parts.length == 2) &&
+					(Objects.equals(parts[0], "classNameId") ||
+					 Objects.equals(parts[0], "classPK"))) {
+
+					_putValue(
+						javaTypeClass, parts[0], objects[i],
+						(Map<String, Serializable>)values.computeIfAbsent(
+							parts[1], key -> new HashMap<>()));
+
+					continue;
+				}
+
+				columnName = columnName.substring(0, columnName.length() - 1);
+			}
+
+			_putValue(javaTypeClass, columnName, objects[i], values);
+		}
+
+		return values;
+	}
+
+	private Map<String, Serializable> _getValues(
 			ObjectFieldBag objectFieldBag, Object[] objects,
 			Expression<?>[] selectExpressions)
 		throws PortalException {
@@ -5510,6 +5548,37 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		return staticValues;
+	}
+
+	private List<Object[]> _list(
+		DSLQuery dslQuery,
+		List<Column<DynamicObjectDefinitionTable, ?>> columns) {
+
+		List<Object> entriesValues = objectEntryPersistence.dslQuery(dslQuery);
+
+		List<Object[]> results = new ArrayList<>(entriesValues.size());
+
+		for (Object entryValues : entriesValues) {
+			Object[] result = new Object[columns.size()];
+
+			if (columns.size() == 1) {
+				Column<?, ?> column = columns.get(0);
+
+				result[0] = _getValue(entryValues, column.getSQLType());
+			}
+			else {
+				for (int i = 0; i < columns.size(); i++) {
+					Column<?, ?> column = columns.get(i);
+
+					result[i] = _getValue(
+						((Object[])entryValues)[i], column.getSQLType());
+				}
+			}
+
+			results.add(result);
+		}
+
+		return results;
 	}
 
 	private List<Object[]> _list(

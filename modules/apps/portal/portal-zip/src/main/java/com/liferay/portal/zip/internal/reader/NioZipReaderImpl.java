@@ -196,13 +196,9 @@ public class NioZipReaderImpl implements ZipReader {
 	}
 
 	private String _getRelativePath(Path path) {
-		String s = path.toString();
-
-		if (s.startsWith("/")) {
-			return s.substring(1);
-		}
-
-		return s;
+		return _rootPath.relativize(
+			path
+		).toString();
 	}
 
 	private void _init(File file) {

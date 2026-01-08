@@ -29,6 +29,8 @@ test(
 	'Change localization after Site Template is added in virtual instance',
 	{tag: ['@LPS-180299']},
 	async ({apiHelpers, localizationInstanceSettingsPage, page}) => {
+		test.slow();
+
 		const virtualInstance =
 			await apiHelpers.headlessPortalInstance.addVirtualInstance({
 				domain: VIRTUAL_INSTANCE_DOMAIN,

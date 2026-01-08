@@ -1,0 +1,35 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectFolder",
+		"multiCompany": true,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"featureFlag": "LPD-58677",
+			"importStrategy": "ON_ERROR_FAIL",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "DEFAULT"
+	},
+	"items": [
+		{
+			"actions": {
+				"delete": {
+				},
+				"get": {
+				},
+				"permissions": {
+				},
+				"update": {
+				}
+			},
+			"externalReferenceCode": "L_CMP_PROJECT_MANAGEMENT_DEFINITIONS",
+			"label": {
+				"en_US": "CMP Project Management Definitions"
+			},
+			"name": "CMPProjectManagementDefinitions",
+			"objectFolderItems": [
+			]
+		}
+	]
+}

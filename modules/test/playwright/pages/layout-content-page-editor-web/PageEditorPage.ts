@@ -1836,6 +1836,16 @@ export class PageEditorPage {
 				`.page-editor__layout-viewport--size-${VIEWPORTS_CLASSNAMES[viewport]}`
 			)
 			.waitFor({timeout});
+
+		const resizer = this.page.locator(
+			'.page-editor__layout-viewport__resizer'
+		);
+
+		const loadingIndicator = resizer.locator('.loading-animation');
+
+		if (await loadingIndicator.isVisible()) {
+			await loadingIndicator.waitFor({state: 'hidden'});
+		}
 	}
 
 	async undoAction() {

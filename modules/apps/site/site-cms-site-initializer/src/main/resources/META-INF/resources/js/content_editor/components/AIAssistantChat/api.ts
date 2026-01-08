@@ -6,18 +6,51 @@
 import {EventSource} from 'eventsource';
 import {fetch} from 'frontend-js-web';
 
-export function createEventSource() {
-	return new EventSource('/o/ai-hub/v1.0/chats/subscribe', {
-		fetch: (input, init) =>
-			fetch(input as RequestInfo, {
-				...init,
-				headers: new Headers({
-					'Accept': 'text/event-stream',
-					'x-csrf-token': Liferay.authToken,
-				}),
-			}),
-		withCredentials: true,
-	});
+export async function createEventSource() {
+	try {
+		const token = await postToken();
+
+		if (!token) {
+			return null;
+		}
+
+		return new EventSource('/o/ai-hub/v1.0/chats/subscribe', {
+			fetch: (input, init) => {
+				return fetch(input as RequestInfo, {
+					...init,
+					headers: new Headers({
+						Accept: 'text/event-stream',
+						Authorization: `Bearer ${token}`,
+					}),
+				});
+			},
+			withCredentials: true,
+		});
+	}
+	catch (error) {
+		console.warn((error as Error).message);
+	}
+}
+
+async function postToken() {
+	try {
+		const response = await fetch('/o/ai-hub/v1.0/tokens', {method: 'POST'});
+
+		if (!response.ok) {
+			throw new Error(`Unable to generate token: ${response.statusText}`);
+		}
+
+		const data = await response.json();
+
+		if (!data?.accessToken) {
+			throw new Error('Unable to generate token.');
+		}
+
+		return data.accessToken;
+	}
+	catch (error) {
+		console.warn((error as Error).message);
+	}
 }
 
 export async function postChatByExternalReferenceCodeMessage(
@@ -26,7 +59,13 @@ export async function postChatByExternalReferenceCodeMessage(
 	message: string,
 	title: string
 ) {
-	await fetch(
+	const token = await postToken();
+
+	if (!token) {
+		return;
+	}
+
+	return await fetch(
 		`/o/ai-hub/v1.0/chats/by-external-reference-code/${eventSourceReference}/messages`,
 		{
 			body: JSON.stringify({
@@ -38,6 +77,7 @@ export async function postChatByExternalReferenceCodeMessage(
 			}),
 			headers: new Headers({
 				'Accept': 'application/json',
+				'Authorization': `Bearer ${token}`,
 				'Content-Type': 'application/json',
 			}),
 			method: 'POST',

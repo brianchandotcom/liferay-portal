@@ -515,7 +515,9 @@ public class DigitalSalesRoomResourceTest
 				digitalSalesRoom.getId(), digitalSalesRoom));
 
 		_addUserRole(
-			new String[] {ActionKeys.PERMISSIONS, ActionKeys.UPDATE},
+			new String[] {
+				ActionKeys.PERMISSIONS, ActionKeys.UPDATE, ActionKeys.VIEW
+			},
 			user.getUserId());
 
 		assertHttpResponseStatusCode(

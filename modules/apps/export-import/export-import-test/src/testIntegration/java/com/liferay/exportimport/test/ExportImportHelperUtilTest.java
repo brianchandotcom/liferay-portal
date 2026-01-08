@@ -100,7 +100,7 @@ public class ExportImportHelperUtilTest {
 	}
 
 	@Test
-	public void testDataSiteAndInstanceLevelPortletsRank() throws Exception {
+	public void testGetDataSiteAndInstanceLevelPortletsRank() throws Exception {
 		List<Portlet> portlets =
 			ExportImportHelperUtil.getDataSiteAndInstanceLevelPortlets(
 				TestPropsValues.getCompanyId());
@@ -125,7 +125,7 @@ public class ExportImportHelperUtilTest {
 
 	@Test
 	@TestInfo("LPD-74703")
-	public void testDataSiteLevelPortlet() throws Exception {
+	public void testGetDataSiteLevelPortlet() throws Exception {
 		Bundle bundle = FrameworkUtil.getBundle(
 			ExportImportHelperUtilTest.class);
 
@@ -188,7 +188,7 @@ public class ExportImportHelperUtilTest {
 				null, RandomTestUtil.randomString())) {
 
 			Assert.assertNotNull(
-				_getPortlet(
+				_getDataSiteLevelPortlet(
 					className, companyId1, false,
 					portlet ->
 						(portlet != null) &&
@@ -198,7 +198,7 @@ public class ExportImportHelperUtilTest {
 							portletDataHandler1,
 							portlet.getPortletDataHandlerInstance())));
 			Assert.assertNotNull(
-				_getPortlet(
+				_getDataSiteLevelPortlet(
 					className, companyId2, true,
 					portlet ->
 						(portlet != null) &&
@@ -208,18 +208,18 @@ public class ExportImportHelperUtilTest {
 							portletDataHandler2,
 							portlet.getPortletDataHandlerInstance())));
 			Assert.assertNull(
-				_getPortlet(
+				_getDataSiteLevelPortlet(
 					RandomTestUtil.randomString(), companyId1, false,
 					Objects::isNull));
 			Assert.assertNull(
-				_getPortlet(
+				_getDataSiteLevelPortlet(
 					RandomTestUtil.randomString(), companyId2, true,
 					Objects::isNull));
 		}
 	}
 
 	@Test
-	public void testDataSiteLevelPortletsRank() throws Exception {
+	public void testGetDataSiteLevelPortletsRank() throws Exception {
 		List<Portlet> portlets =
 			ExportImportHelperUtil.getDataSiteLevelPortlets(
 				TestPropsValues.getCompanyId());
@@ -1080,7 +1080,7 @@ public class ExportImportHelperUtilTest {
 			portletUserPreferences, actualPortletUserPreferences);
 	}
 
-	private Portlet _getPortlet(
+	private Portlet _getDataSiteLevelPortlet(
 			String className, long companyId, boolean excludeDataAlwaysStaged,
 			UnsafeFunction<Portlet, Boolean, Exception> unsafeFunction)
 		throws Exception {

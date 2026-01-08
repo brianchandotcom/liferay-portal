@@ -8,18 +8,45 @@ import {fetch} from 'frontend-js-web';
 
 import {EActionType} from './types';
 
-export function createEventSource() {
+export async function createEventSource() {
+	const token = await postToken();
+
+	if (!token) {
+		return;
+	}
+
 	return new EventSource('/o/ai-hub/v1.0/tasks/subscribe', {
 		fetch: (input, init) =>
 			fetch(input as RequestInfo, {
 				...init,
 				headers: new Headers({
-					'Accept': 'text/event-stream',
-					'x-csrf-token': Liferay.authToken,
+					Accept: 'text/event-stream',
+					Authorization: `Bearer ${token}`,
 				}),
 			}),
 		withCredentials: true,
 	});
+}
+
+async function postToken() {
+	try {
+		const response = await fetch('/o/ai-hub/v1.0/tokens', {method: 'POST'});
+
+		if (!response.ok) {
+			throw new Error(`Unable to generate token: ${response.statusText}`);
+		}
+
+		const data = await response.json();
+
+		if (!data?.accessToken) {
+			throw new Error('Unable to generate token.');
+		}
+
+		return data.accessToken;
+	}
+	catch (error) {
+		console.warn((error as Error).message);
+	}
 }
 
 export async function postTask(
@@ -27,6 +54,12 @@ export async function postTask(
 	eventSourceReference: string,
 	type: EActionType
 ) {
+	const token = await postToken();
+
+	if (!token) {
+		return;
+	}
+
 	await fetch(`/o/ai-hub/v1.0/tasks`, {
 		body: JSON.stringify({
 			context: {
@@ -40,6 +73,7 @@ export async function postTask(
 		}),
 		headers: new Headers({
 			'Accept': 'application/json',
+			'Authorization': `Bearer ${token}`,
 			'Content-Type': 'application/json',
 		}),
 		method: 'POST',

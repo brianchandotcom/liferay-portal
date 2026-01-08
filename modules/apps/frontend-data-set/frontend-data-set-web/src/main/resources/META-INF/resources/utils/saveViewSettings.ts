@@ -19,7 +19,7 @@ export function saveViewSettings({
 	portletId?: string;
 	settings: any;
 }) {
-	if (Liferay.FeatureFlags['LPD-10683'] || !appURL) {
+	if (!appURL) {
 		return;
 	}
 

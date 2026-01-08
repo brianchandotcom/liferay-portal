@@ -544,7 +544,7 @@ const FrontendDataSetContent = ({
 
 		let initialVisibleFieldNames = {};
 
-		if (!Liferay.FeatureFlags['LPD-10683'] && activeViewSettings) {
+		if (activeViewSettings) {
 			const {name: activeViewName, visibleFieldNames} =
 				JSON.parse(activeViewSettings);
 

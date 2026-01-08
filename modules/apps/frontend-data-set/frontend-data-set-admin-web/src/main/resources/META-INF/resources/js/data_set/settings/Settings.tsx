@@ -385,34 +385,32 @@ const Settings = ({
 						</ClayLayout.Col>
 					</ClayLayout.Row>
 
-					{Liferay.FeatureFlags['LPD-10683'] && (
-						<ClayLayout.Row className="align-items-center justify-content-between mb-4">
-							<ClayLayout.Col size={11}>
-								<div>
-									<label htmlFor="user-views-toggle">
-										{Liferay.Language.get(
-											'enable-user-views'
-										)}
-									</label>
-								</div>
+					<ClayLayout.Row className="align-items-center justify-content-between mb-4">
+						<ClayLayout.Col size={11}>
+							<div>
+								<label htmlFor="user-views-toggle">
+									{Liferay.Language.get(
+										'enable-user-views'
+									)}
+								</label>
+							</div>
 
-								<div>
-									{Liferay.Language.get('user-views-help')}
-								</div>
-							</ClayLayout.Col>
+							<div>
+								{Liferay.Language.get('user-views-help')}
+							</div>
+						</ClayLayout.Col>
 
-							<ClayLayout.Col
-								className="align-self-start"
-								size={1}
-							>
-								<ClayToggle
-									id="user-views-toggle"
-									onToggle={setSnapshotsEnabled}
-									toggled={snapshotsEnabled}
-								/>
-							</ClayLayout.Col>
-						</ClayLayout.Row>
-					)}
+						<ClayLayout.Col
+							className="align-self-start"
+							size={1}
+						>
+							<ClayToggle
+								id="user-views-toggle"
+								onToggle={setSnapshotsEnabled}
+								toggled={snapshotsEnabled}
+							/>
+						</ClayLayout.Col>
+					</ClayLayout.Row>
 				</ClayLayout.SheetSection>
 
 				<ClayLayout.SheetFooter>

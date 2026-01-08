@@ -73,7 +73,8 @@ public class JobPropertyFactory {
 		sb.append("_");
 		sb.append(job.getJobName());
 
-		if (testBatchName.equals("modules-integration-analytics-cloud") &&
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(testBatchName) &&
+			testBatchName.equals("modules-integration-analytics-cloud") &&
 			(testBaseDir == null)) {
 
 			testBaseDir = _getOSBAsahDir();
@@ -182,7 +183,8 @@ public class JobPropertyFactory {
 		sb.append("_");
 		sb.append(job.getJobName());
 
-		if (testBatchName.equals("modules-integration-analytics-cloud") &&
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(testBatchName) &&
+			testBatchName.equals("modules-integration-analytics-cloud") &&
 			(testBaseDir == null)) {
 
 			testBaseDir = _getOSBAsahDir();

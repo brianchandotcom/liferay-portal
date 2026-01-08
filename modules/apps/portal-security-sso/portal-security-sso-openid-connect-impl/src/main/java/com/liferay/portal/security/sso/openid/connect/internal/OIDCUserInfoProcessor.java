@@ -60,7 +60,6 @@ import com.liferay.portal.security.sso.openid.connect.persistence.service.OpenId
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Locale;
@@ -730,7 +729,7 @@ public class OIDCUserInfoProcessor {
 			"groups", usersGroupsMapperJSONObject, userInfoJSONObject);
 
 		if (userGroupsJSONArray == null) {
-			return Collections.emptyList();
+			return null;
 		}
 
 		List<Long> userGroupIds = new ArrayList<>();

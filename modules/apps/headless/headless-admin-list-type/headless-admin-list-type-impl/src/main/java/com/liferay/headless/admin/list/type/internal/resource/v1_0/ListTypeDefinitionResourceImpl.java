@@ -106,6 +106,11 @@ public class ListTypeDefinitionResourceImpl
 			}
 
 			@Override
+			public int getRank() {
+				return 98;
+			}
+
+			@Override
 			public String getResourceClassName() {
 				return ListTypeDefinitionResourceImpl.class.getName();
 			}

@@ -17,7 +17,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Raymond Augé
  */
 @ProviderType
-public interface ZipReader {
+public interface ZipReader extends AutoCloseable {
 
 	public void close();
 

@@ -1370,30 +1370,6 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 					new Column(table, "ctCollectionId"), new LongValue("0"));
 			}
 
-			Table ctEntryTable = new Table("CTEntry");
-
-			PlainSelect ctEntryPlainSelect = new PlainSelect();
-
-			ctEntryPlainSelect.setSelectItems(
-				Collections.singletonList(
-					new SelectExpressionItem(
-						new Column(ctEntryTable, "modelClassPK"))));
-
-			ctEntryPlainSelect.setFromItem(ctEntryTable);
-
-			ctEntryPlainSelect.setWhere(
-				new AndExpression(
-					equalsTo(
-						new Column(ctEntryTable, "ctCollectionId"),
-						new LongValue(ctCollectionId)),
-					equalsTo(
-						new Column(ctEntryTable, "modelClassNameId"),
-						new LongValue(
-							ClassNameLocalServiceUtil.getClassNameId(
-								ctModelRegistration.getModelClass())))));
-
-			SelectBody selectBody = ctEntryPlainSelect;
-
 			CTService<?> ctService = _serviceTrackerMap.getService(
 				ctModelRegistration.getModelClass());
 
@@ -1415,6 +1391,33 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 
 			String primaryKeyName = ctModelRegistration.getPrimaryColumnName();
 
+			Table ctEntryTable = new Table("CTEntry");
+
+			PlainSelect ctEntryPlainSelect = new PlainSelect();
+
+			ctEntryPlainSelect.setSelectItems(
+				Collections.singletonList(
+					new SelectExpressionItem(new LongValue(1))));
+
+			ctEntryPlainSelect.setFromItem(ctEntryTable);
+
+			ctEntryPlainSelect.setWhere(
+				new AndExpression(
+					new AndExpression(
+						equalsTo(
+							new Column(ctEntryTable, "ctCollectionId"),
+							new LongValue(ctCollectionId)),
+						equalsTo(
+							new Column(ctEntryTable, "modelClassNameId"),
+							new LongValue(
+								ClassNameLocalServiceUtil.getClassNameId(
+									ctModelRegistration.getModelClass())))),
+					equalsTo(
+						new Column(ctEntryTable, "modelClassPK"),
+						new Column(table, primaryKeyName))));
+
+			SelectBody selectBody = ctEntryPlainSelect;
+
 			if (!uniqueIndexColumnNames.isEmpty()) {
 				List<SelectBody> selectBodies = new ArrayList<>(
 					uniqueIndexColumnNames.size() + 1);
@@ -1430,36 +1433,27 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 					uniqueIndexColumnNames.size());
 
 				for (String[] columnNames : uniqueIndexColumnNames) {
-					Table sourceTable = new Table(table.getName());
-
-					sourceTable.setAlias(new Alias("sourceTable", false));
-
 					PlainSelect plainSelect = new PlainSelect();
 
 					plainSelect.setSelectItems(
 						Collections.singletonList(
-							new SelectExpressionItem(
-								new Column(sourceTable, primaryKeyName))));
-
-					plainSelect.setFromItem(sourceTable);
+							new SelectExpressionItem(new LongValue(1))));
 
 					Table targetTable = new Table(table.getName());
 
 					targetTable.setAlias(new Alias("targetTable", false));
 
+					plainSelect.setFromItem(targetTable);
+
 					NotEqualsTo notEqualsTo = new NotEqualsTo("!=");
 
 					notEqualsTo.setLeftExpression(
-						new Column(sourceTable, primaryKeyName));
-					notEqualsTo.setRightExpression(
 						new Column(targetTable, primaryKeyName));
+					notEqualsTo.setRightExpression(
+						new Column(table, primaryKeyName));
 
 					AndExpression andExpression = new AndExpression(
-						new AndExpression(
-							notEqualsTo,
-							equalsTo(
-								new Column(sourceTable, "ctCollectionId"),
-								new LongValue("0"))),
+						notEqualsTo,
 						equalsTo(
 							new Column(targetTable, "ctCollectionId"),
 							new LongValue(ctCollectionId)));
@@ -1468,23 +1462,21 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 						andExpression = new AndExpression(
 							andExpression,
 							equalsTo(
-								new Column(sourceTable, columnName),
+								new Column(table, columnName),
 								new Column(targetTable, columnName)));
 					}
 
-					Join join = new Join();
-
-					join.setInner(true);
-					join.setOnExpression(andExpression);
-					join.setRightItem(targetTable);
-
-					plainSelect.setJoins(Collections.singletonList(join));
+					plainSelect.setWhere(andExpression);
 
 					selectBodies.add(plainSelect);
 
 					brackets.add(Boolean.FALSE);
 
-					setOperations.add(new UnionOp());
+					UnionOp unionOp = new UnionOp();
+
+					unionOp.setAll(true);
+
+					setOperations.add(unionOp);
 				}
 
 				SetOperationList setOperationList = new SetOperationList();
@@ -1499,10 +1491,10 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 
 			subSelect.setSelectBody(selectBody);
 
-			InExpression inExpression = new InExpression(
-				new Column(table, primaryKeyName), subSelect);
+			ExistsExpression existsExpression = new ExistsExpression();
 
-			inExpression.setNot(true);
+			existsExpression.setNot(true);
+			existsExpression.setRightExpression(subSelect);
 
 			return new Parenthesis(
 				new OrExpression(
@@ -1514,7 +1506,7 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 							equalsTo(
 								new Column(table, "ctCollectionId"),
 								new LongValue("0")),
-							inExpression))));
+							existsExpression))));
 		}
 
 		private final CTSQLModeThreadLocal.CTSQLMode _ctSQLMode;

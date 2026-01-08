@@ -69,6 +69,8 @@ test(
 
 		await assetsPage.gotoFiles();
 
+		await assetsPage.changeVisualizationMode('Gallery');
+
 		await testCanViewVersion(
 			assetsPage,
 			page,

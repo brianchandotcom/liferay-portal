@@ -129,9 +129,7 @@ public class LayoutImportController implements ImportController {
 			ExportImportConfiguration exportImportConfiguration, File file)
 		throws Exception {
 
-		ZipReader zipReader = null;
-
-		try {
+		try (ZipReader zipReader = _zipReaderFactory.getZipReader(file)) {
 
 			// LAR validation
 
@@ -151,14 +149,12 @@ public class LayoutImportController implements ImportController {
 			LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 				targetGroupId, privateLayout);
 
-			zipReader = _zipReaderFactory.getZipReader(file);
-
 			validateFile(
 				layoutSet.getCompanyId(), targetGroupId, parameterMap,
 				zipReader);
 
 			PortletDataContext portletDataContext = getPortletDataContext(
-				exportImportConfiguration, file);
+				exportImportConfiguration, zipReader);
 
 			boolean deletePortletData = MapUtil.getBoolean(
 				parameterMap, PortletDataHandlerKeys.DELETE_PORTLET_DATA);
@@ -182,10 +178,6 @@ public class LayoutImportController implements ImportController {
 		}
 		finally {
 			ExportImportThreadLocal.setLayoutDataDeletionImportInProcess(false);
-
-			if (zipReader != null) {
-				zipReader.close();
-			}
 		}
 	}
 
@@ -196,13 +188,13 @@ public class LayoutImportController implements ImportController {
 
 		PortletDataContext portletDataContext = null;
 
-		try {
+		try (ZipReader zipReader = _zipReaderFactory.getZipReader(file)) {
 			ExportImportThreadLocal.setExportImportConfigurationId(
 				exportImportConfiguration.getExportImportConfigurationId());
 			ExportImportThreadLocal.setLayoutImportInProcess(true);
 
 			portletDataContext = getPortletDataContext(
-				exportImportConfiguration, file);
+				exportImportConfiguration, zipReader);
 
 			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 				ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_STARTED,
@@ -249,9 +241,7 @@ public class LayoutImportController implements ImportController {
 			ExportImportConfiguration exportImportConfiguration, File file)
 		throws Exception {
 
-		ZipReader zipReader = null;
-
-		try {
+		try (ZipReader zipReader = _zipReaderFactory.getZipReader(file)) {
 			ExportImportThreadLocal.setLayoutValidationInProcess(true);
 
 			Map<String, Serializable> settingsMap =
@@ -266,14 +256,12 @@ public class LayoutImportController implements ImportController {
 			LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 				targetGroupId, privateLayout);
 
-			zipReader = _zipReaderFactory.getZipReader(file);
-
 			validateFile(
 				layoutSet.getCompanyId(), targetGroupId, parameterMap,
 				zipReader);
 
 			PortletDataContext portletDataContext = getPortletDataContext(
-				exportImportConfiguration, file);
+				exportImportConfiguration, zipReader);
 
 			portletDataContext.setPrivateLayout(privateLayout);
 
@@ -310,10 +298,6 @@ public class LayoutImportController implements ImportController {
 		}
 		finally {
 			ExportImportThreadLocal.setLayoutValidationInProcess(false);
-
-			if (zipReader != null) {
-				zipReader.close();
-			}
 		}
 	}
 
@@ -356,7 +340,8 @@ public class LayoutImportController implements ImportController {
 	}
 
 	protected PortletDataContext getPortletDataContext(
-			ExportImportConfiguration exportImportConfiguration, File file)
+			ExportImportConfiguration exportImportConfiguration,
+			ZipReader zipReader)
 		throws PortalException {
 
 		Map<String, Serializable> settingsMap =
@@ -379,7 +364,7 @@ public class LayoutImportController implements ImportController {
 				group.getCompanyId(), targetGroupId, parameterMap,
 				_exportImportHelper.getUserIdStrategy(
 					userId, userIdStrategyString),
-				_zipReaderFactory.getZipReader(file));
+				zipReader);
 
 		portletDataContext.setExportImportProcessId(
 			String.valueOf(
@@ -1025,10 +1010,6 @@ public class LayoutImportController implements ImportController {
 		if (_log.isInfoEnabled()) {
 			_log.info("Importing layouts takes " + stopWatch.getTime() + " ms");
 		}
-
-		ZipReader zipReader = portletDataContext.getZipReader();
-
-		zipReader.close();
 	}
 
 	private void _importLayoutsFromLegacyLar(

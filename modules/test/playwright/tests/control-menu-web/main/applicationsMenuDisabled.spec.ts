@@ -6,9 +6,11 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPagesTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {InstanceSettingsPage} from '../../../pages/configuration-admin-web/InstanceSettingsPage';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 
 async function goToApplicationsMenuSetting(
 	instanceSettingsPage: InstanceSettingsPage
@@ -23,6 +25,7 @@ async function goToApplicationsMenuSetting(
 
 const test = mergeTests(
 	instanceSettingsPagesTest,
+	isolatedSiteTest,
 	productMenuPageTest,
 	loginTest()
 );
@@ -50,10 +53,54 @@ test.afterEach(async ({instanceSettingsPage}) => {
 });
 
 test(
-	'The Product Menu replaces the Applications Menu when it is disabled (default instance)',
+	'The Product Menu replaces the Applications Menu when it is disabled',
 	{tag: '@LPD-66980'},
-	async ({page, productMenuPage}) => {
+	async ({page, productMenuPage, site}) => {
+		const siteName = page.locator('.site-name');
+
+		await test.step('It allows a user to choose a different site', async () => {
+			await expect(siteName).toHaveText('Liferay DXP');
+
+			const frame = page.frameLocator('iframe[title="Select Site"]');
+
+			const allSitesTab = frame.getByRole('link', {name: 'All Sites'});
+
+			await clickAndExpectToBeVisible({
+				target: allSitesTab,
+				trigger: page.getByRole('button', {name: 'Go to Other Site'}),
+			});
+
+			const siteLink = frame.getByRole('link', {
+				exact: true,
+				name: site.name,
+			});
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: siteLink,
+				trigger: allSitesTab,
+			});
+
+			await expect(siteName).toHaveText(site.name);
+		});
+
+		await test.step('Collapse Site Administration Panel', async () => {
+			await clickAndExpectToBeVisible({
+				target: page.getByRole('button', {
+					exact: true,
+					expanded: false,
+					name: site.name,
+				}),
+				trigger: siteName,
+			});
+		});
+
 		const testPages = [
+			{
+				category: 'Site Builder',
+				name: 'Pages',
+				panel: site.name,
+			},
 			{
 				category: 'Content',
 				name: 'Asset Libraries',

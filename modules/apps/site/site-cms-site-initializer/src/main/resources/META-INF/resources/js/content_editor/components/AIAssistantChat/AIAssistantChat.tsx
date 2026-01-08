@@ -145,37 +145,43 @@ const AIAssistantChat: React.FC = () => {
 	}
 
 	function openAIAssistantChatConnection() {
-		eventSourceRef.current = createEventSource();
-
-		eventSourceRef.current.addEventListener(
-			'Chat Message Sent',
-			(event) => {
-				setMessages((previousMessages) => {
-					setTimeout(() => {
-						messagesEndRef.current?.scrollIntoView({
-							behavior: 'smooth',
-						});
-					}, 0);
-
-					const dataJSON = JSON.parse(event.data);
-
-					return [
-						...previousMessages,
-						{
-							sender: 'assistant',
-							text: dataJSON['data'],
-						},
-					];
-				});
-
-				setMessage('');
-
-				setIsGenerating(false);
+		createEventSource().then((eventSource) => {
+			if (!eventSource) {
+				return;
 			}
-		);
 
-		eventSourceRef.current.addEventListener('Subscribe', (event) => {
-			eventSourceReference.current = event.data;
+			eventSourceRef.current = eventSource;
+
+			eventSourceRef.current.addEventListener(
+				'Chat Message Sent',
+				(event) => {
+					setMessages((previousMessages) => {
+						setTimeout(() => {
+							messagesEndRef.current?.scrollIntoView({
+								behavior: 'smooth',
+							});
+						}, 0);
+
+						const dataJSON = JSON.parse(event.data);
+
+						return [
+							...previousMessages,
+							{
+								sender: 'assistant',
+								text: dataJSON['data'],
+							},
+						];
+					});
+
+					setMessage('');
+
+					setIsGenerating(false);
+				}
+			);
+
+			eventSourceRef.current.addEventListener('Subscribe', (event) => {
+				eventSourceReference.current = event.data;
+			});
 		});
 	}
 

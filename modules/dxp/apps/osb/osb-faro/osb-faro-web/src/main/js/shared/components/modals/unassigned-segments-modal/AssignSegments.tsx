@@ -92,7 +92,7 @@ const AssignSegments: React.FC<IAssignSegmentsProps> = ({groupId, onClose}) => {
 				data-testid={`select-${id}`}
 				items={options as {label: string; value: string}[]}
 				onSelectionChange={selectedValue =>
-					updateSegment(id, selectedValue)
+					updateSegment(id, selectedValue as string)
 				}
 				required
 				selectedKey={channelMappings[id]}

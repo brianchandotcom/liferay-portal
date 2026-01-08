@@ -41,17 +41,21 @@ export default class WritingAssistant extends Plugin {
 	}
 
 	_addEventListeners() {
-		const eventSource = createEventSource();
+		createEventSource().then((eventSource) => {
+			if (!eventSource) {
+				return;
+			}
 
-		eventSource.addEventListener('Subscribe', (event) => {
-			this.eventSourceReference = event.data;
-		});
+			eventSource.addEventListener('Subscribe', (event) => {
+				this.eventSourceReference = event.data;
+			});
 
-		Object.values(EActionType).forEach((type) => {
-			eventSource.addEventListener(type, (event) => {
-				const dataJSON = JSON.parse(event.data);
+			Object.values(EActionType).forEach((type) => {
+				eventSource.addEventListener(type, (event) => {
+					const dataJSON = JSON.parse(event.data);
 
-				this._changeContent(dataJSON['data']);
+					this._changeContent(dataJSON['data']);
+				});
 			});
 		});
 	}

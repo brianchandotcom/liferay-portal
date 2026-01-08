@@ -131,7 +131,7 @@ public class NioZipReaderImpl implements ZipReader {
 		Path path = _resolvePath(name);
 
 		try {
-			if (Files.exists(path) && !Files.isDirectory(path)) {
+			if (Files.isRegularFile(path)) {
 				return Files.newInputStream(path);
 			}
 		}

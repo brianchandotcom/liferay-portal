@@ -10,6 +10,7 @@ import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.TestSuiteJob;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -72,6 +73,12 @@ public class JobPropertyFactory {
 		sb.append("_");
 		sb.append(job.getJobName());
 
+		if (testBatchName.equals("modules-integration-analytics-cloud") &&
+			(testBaseDir == null)) {
+
+			testBaseDir = _getOSBAsahDir();
+		}
+
 		if (testBaseDir != null) {
 			sb.append("_");
 			sb.append(JenkinsResultsParserUtil.getCanonicalPath(testBaseDir));
@@ -107,13 +114,6 @@ public class JobPropertyFactory {
 		else if ((type == JobProperty.Type.EXCLUDE_GLOB) ||
 				 (type == JobProperty.Type.FILTER_GLOB) ||
 				 (type == JobProperty.Type.INCLUDE_GLOB)) {
-
-			if (testBatchName.equals("modules-integration-analytics-cloud") &&
-				(testBaseDir == null)) {
-
-				testBaseDir = new File(
-					"/opt/dev/projects/github/com-liferay-osb-asah-private");
-			}
 
 			jobProperty = new DefaultGlobJobProperty(
 				job, type, testBaseDir, basePropertyName, useBasePropertyName,
@@ -182,6 +182,12 @@ public class JobPropertyFactory {
 		sb.append("_");
 		sb.append(job.getJobName());
 
+		if (testBatchName.equals("modules-integration-analytics-cloud") &&
+			(testBaseDir == null)) {
+
+			testBaseDir = _getOSBAsahDir();
+		}
+
 		if (testBaseDir != null) {
 			sb.append("_");
 			sb.append(JenkinsResultsParserUtil.getCanonicalPath(testBaseDir));
@@ -219,14 +225,6 @@ public class JobPropertyFactory {
 			else if ((type == JobProperty.Type.EXCLUDE_GLOB) ||
 					 (type == JobProperty.Type.FILTER_GLOB) ||
 					 (type == JobProperty.Type.INCLUDE_GLOB)) {
-
-				if (testBatchName.equals(
-						"modules-integration-analytics-cloud") &&
-					(testBaseDir == null)) {
-
-					testBaseDir = new File(
-						"/opt/dev/projects/github/com-liferay-osb-asah-private");
-				}
 
 				jobProperty = new DefaultGlobJobProperty(
 					job, type, testBaseDir, basePropertyName,
@@ -269,6 +267,33 @@ public class JobPropertyFactory {
 
 			return _jobProperties.get(key);
 		}
+	}
+
+	private static File _getOSBAsahDir() {
+		try {
+			File osbAsahDir = new File(
+				JenkinsResultsParserUtil.getBuildProperty(
+					"portal.test.properties[analytics.cloud.asah.dir]"));
+
+			if (!osbAsahDir.exists()) {
+				osbAsahDir = new File(
+					JenkinsResultsParserUtil.getBuildProperty(
+						"osb.asah.dir[7.0.x]"));
+			}
+
+			if (!osbAsahDir.exists()) {
+				osbAsahDir = new File(
+					"/opt/dev/projects/github/com-liferay-osb-asah-private");
+			}
+
+			if (osbAsahDir.exists()) {
+				return osbAsahDir;
+			}
+		}
+		catch (IOException ioException) {
+		}
+
+		return null;
 	}
 
 	private static final Map<String, JobProperty> _jobProperties =

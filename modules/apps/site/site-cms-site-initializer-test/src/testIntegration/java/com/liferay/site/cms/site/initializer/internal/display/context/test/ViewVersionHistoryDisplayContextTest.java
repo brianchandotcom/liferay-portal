@@ -15,7 +15,6 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -94,8 +93,9 @@ public class ViewVersionHistoryDisplayContextTest
 	public void testGetAPIURL() throws Exception {
 		Assert.assertEquals(
 			StringBundler.concat(
-				"/o", _objectDefinition.getRESTContextPath(), StringPool.SLASH,
-				_objectEntry.getObjectEntryId(),
+				"/o", _objectDefinition.getRESTContextPath(), "/scopes/",
+				_objectEntry.getGroupId(), "/by-external-reference-code/",
+				_objectEntry.getExternalReferenceCode(),
 				"/versions?nestedFields=file.thumbnailURL"),
 			ReflectionTestUtil.invoke(
 				_getViewVersionHistoryDisplayContext(

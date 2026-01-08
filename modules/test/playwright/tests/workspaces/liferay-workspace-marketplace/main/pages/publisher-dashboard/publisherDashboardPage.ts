@@ -39,6 +39,7 @@ export class PublisherDashboardPage {
 	}
 
 	async gotoNewAppPage() {
+		await this.page.waitForLoadState('networkidle');
 		expect(this.newAppButton).not.toBeDisabled();
 
 		await this.newAppButton.click();

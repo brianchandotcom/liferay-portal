@@ -62,7 +62,7 @@ export const products = {
 			ram: 0,
 		},
 		support: {
-			publisherWebsiteUrl: 'www.liferay.com',
+			publisherWebsiteUrl: 'https://www.liferay.com',
 			supportEmail: 'test@liferay.com',
 			supportPhone: '+00 00 000000000',
 		},
@@ -113,7 +113,7 @@ export const products = {
 			ram: 0,
 		},
 		support: {
-			publisherWebsiteUrl: 'www.liferay.com',
+			publisherWebsiteUrl: 'https://www.liferay.com',
 			supportEmail: 'test@liferay.com',
 			supportPhone: '+00 00 000000000',
 		},
@@ -160,7 +160,7 @@ export const products = {
 			ram: 0,
 		},
 		support: {
-			publisherWebsiteUrl: 'www.liferay.com',
+			publisherWebsiteUrl: 'https://www.liferay.com',
 			supportEmail: 'test@liferay.com',
 			supportPhone: '+00 00 000000000',
 		},
@@ -207,7 +207,7 @@ export const products = {
 			ram: 0,
 		},
 		support: {
-			publisherWebsiteUrl: 'www.liferay.com',
+			publisherWebsiteUrl: 'https://www.liferay.com',
 			supportEmail: 'test@liferay.com',
 			supportPhone: '+00 00 000000000',
 		},
@@ -262,7 +262,7 @@ export const products = {
 			ram: 0,
 		},
 		support: {
-			publisherWebsiteUrl: 'www.liferay.com',
+			publisherWebsiteUrl: 'https://www.liferay.com',
 			supportEmail: 'test@liferay.com',
 			supportPhone: '+00 00 000000000',
 		},

@@ -143,6 +143,7 @@ export class PublisherAppPage {
 	}
 
 	async continue() {
+		await this.page.waitForLoadState('networkidle');
 		expect(this.continueButton).toBeEnabled();
 
 		await this.continueButton.click();
@@ -243,13 +244,17 @@ export class PublisherAppPage {
 
 		let i = 0;
 
+		const fileName = this.publishProductPayload.appType === 'dxp'
+			? '../../dependencies/folder.marketplace.jar'
+			: '../../dependencies/folder.marketplace.zip';
+
 		for (const _ of this.publishProductPayload.dxpVersions) {
 			await this.importFile(
 				this.selectFileButton.nth(i),
 				await zipFolder(
 					path.join(
 						__dirname,
-						'../../dependencies/folder.marketplace.jar'
+						fileName
 					)
 				)
 			);

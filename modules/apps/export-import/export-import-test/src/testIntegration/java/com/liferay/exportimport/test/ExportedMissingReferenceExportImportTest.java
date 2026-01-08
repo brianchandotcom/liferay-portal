@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -186,24 +187,26 @@ public class ExportedMissingReferenceExportImportTest
 	}
 
 	protected void assertMissingReferences() throws Exception {
-		PortletDataContext portletDataContext =
-			PortletDataContextFactoryUtil.createImportPortletDataContext(
-				TestPropsValues.getCompanyId(), group.getGroupId(),
-				getImportParameterMap(),
-				ExportImportHelperUtil.getUserIdStrategy(
-					TestPropsValues.getUserId(),
-					TestUserIdStrategy.CURRENT_USER_ID),
-				_zipReaderFactory.getZipReader(larFile));
+		try (ZipReader zipReader = _zipReaderFactory.getZipReader(larFile)) {
+			PortletDataContext portletDataContext =
+				PortletDataContextFactoryUtil.createImportPortletDataContext(
+					TestPropsValues.getCompanyId(), group.getGroupId(),
+					getImportParameterMap(),
+					ExportImportHelperUtil.getUserIdStrategy(
+						TestPropsValues.getUserId(),
+						TestUserIdStrategy.CURRENT_USER_ID),
+					zipReader);
 
-		Element missingReferencesElement =
-			portletDataContext.getMissingReferencesElement();
+			Element missingReferencesElement =
+				portletDataContext.getMissingReferencesElement();
 
-		List<Element> missingReferenceElements =
-			missingReferencesElement.elements();
+			List<Element> missingReferenceElements =
+				missingReferencesElement.elements();
 
-		Assert.assertFalse(
-			missingReferenceElements.toString(),
-			missingReferenceElements.isEmpty());
+			Assert.assertFalse(
+				missingReferenceElements.toString(),
+				missingReferenceElements.isEmpty());
+		}
 	}
 
 	@Override

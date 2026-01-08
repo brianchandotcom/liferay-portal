@@ -70,6 +70,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -523,42 +524,47 @@ public class StagingImplTest {
 
 		File larFile = new File(larFileNames.get(larFileNames.size() - 1));
 
-		PortletDataContext portletDataContext =
-			PortletDataContextFactoryUtil.createImportPortletDataContext(
-				_group.getCompanyId(), _group.getGroupId(), parameterMap,
-				userIdStrategy, _zipReaderFactory.getZipReader(larFile));
+		try (ZipReader zipReader = _zipReaderFactory.getZipReader(larFile)) {
+			PortletDataContext portletDataContext =
+				PortletDataContextFactoryUtil.createImportPortletDataContext(
+					_group.getCompanyId(), _group.getGroupId(), parameterMap,
+					userIdStrategy, zipReader);
 
-		String journalPortletPath = ExportImportPathUtil.getPortletPath(
-			portletDataContext, JournalPortletKeys.JOURNAL);
+			String journalPortletPath = ExportImportPathUtil.getPortletPath(
+				portletDataContext, JournalPortletKeys.JOURNAL);
 
-		String portletData = portletDataContext.getZipEntryAsString(
-			StringBundler.concat(
-				journalPortletPath, StringPool.SLASH, _group.getGroupId(),
-				"/portlet-data.xml"));
-
-		if (portletData == null) {
-			String changesetPortletPath = ExportImportPathUtil.getPortletPath(
-				portletDataContext, ChangesetPortletKeys.CHANGESET);
-
-			portletData = portletDataContext.getZipEntryAsString(
+			String portletData = portletDataContext.getZipEntryAsString(
 				StringBundler.concat(
-					changesetPortletPath, StringPool.SLASH, _group.getGroupId(),
+					journalPortletPath, StringPool.SLASH, _group.getGroupId(),
 					"/portlet-data.xml"));
+
+			if (portletData == null) {
+				String changesetPortletPath =
+					ExportImportPathUtil.getPortletPath(
+						portletDataContext, ChangesetPortletKeys.CHANGESET);
+
+				portletData = portletDataContext.getZipEntryAsString(
+					StringBundler.concat(
+						changesetPortletPath, StringPool.SLASH,
+						_group.getGroupId(), "/portlet-data.xml"));
+			}
+
+			Document document = SAXReaderUtil.read(portletData);
+
+			portletDataContext.setImportDataRootElement(
+				document.getRootElement());
+
+			Element journalElement =
+				portletDataContext.getImportDataGroupElement(
+					JournalArticle.class);
+
+			List<Element> journalStagedModelElements = journalElement.elements(
+				"staged-model");
+
+			Assert.assertEquals(
+				journalStagedModelElements.toString(), 0,
+				journalStagedModelElements.size());
 		}
-
-		Document document = SAXReaderUtil.read(portletData);
-
-		portletDataContext.setImportDataRootElement(document.getRootElement());
-
-		Element journalElement = portletDataContext.getImportDataGroupElement(
-			JournalArticle.class);
-
-		List<Element> journalStagedModelElements = journalElement.elements(
-			"staged-model");
-
-		Assert.assertEquals(
-			journalStagedModelElements.toString(), 0,
-			journalStagedModelElements.size());
 	}
 
 	protected void enableLocalStaging(boolean branching) throws Exception {

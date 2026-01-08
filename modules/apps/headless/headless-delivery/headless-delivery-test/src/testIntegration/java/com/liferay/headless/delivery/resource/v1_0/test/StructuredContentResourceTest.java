@@ -200,7 +200,7 @@ public class StructuredContentResourceTest
 		_localizedComplexDDMStructure = _addComplexDDMStructure(true);
 		_localizedDDMStructure = _addDDMStructure(
 			testGroup, "test-localized-ddm-structure.json");
-		_unLocalizedComplexDDMStructure = _addComplexDDMStructure(false);
+		_unlocalizedComplexDDMStructure = _addComplexDDMStructure(false);
 		_unlocalizedDDMStructure = _addDDMStructure(
 			testGroup, "test-unlocalized-ddm-structure.json");
 	}
@@ -1311,7 +1311,7 @@ public class StructuredContentResourceTest
 			long dlFileEntryId, boolean localizable)
 		throws Exception {
 
-		DDMStructure complexDDMStructure = _unLocalizedComplexDDMStructure;
+		DDMStructure complexDDMStructure = _unlocalizedComplexDDMStructure;
 
 		if (localizable) {
 			complexDDMStructure = _localizedComplexDDMStructure;
@@ -3267,7 +3267,7 @@ public class StructuredContentResourceTest
 
 		Assert.assertTrue(
 			_equals(
-				_unLocalizedComplexDDMStructure, new String[] {"en-US"},
+				_unlocalizedComplexDDMStructure, new String[] {"en-US"},
 				structuredContent, putStructuredContent));
 
 		assertEquals(structuredContent, putStructuredContent);
@@ -3387,7 +3387,7 @@ public class StructuredContentResourceTest
 	@Inject
 	private RoleLocalService _roleLocalService;
 
-	private DDMStructure _unLocalizedComplexDDMStructure;
+	private DDMStructure _unlocalizedComplexDDMStructure;
 	private DDMStructure _unlocalizedDDMStructure;
 	private boolean _useDepotDDMStructureStructureId;
 

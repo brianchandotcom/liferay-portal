@@ -10,6 +10,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyGroupRel;
 import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -176,7 +177,7 @@ public class AssetCategoryModelDocumentContributor
 			return assetVocabularySettingsHelper.getClassNameIds();
 		}
 		catch (PortalException portalException) {
-			throw new SystemException(portalException);
+			return ReflectionUtil.throwException(portalException);
 		}
 	}
 

@@ -32,9 +32,9 @@ output "region" {
 output "s3_bucket_id_active" {
 	value=local.bucket_active.s3_bucket_id
 }
-output "s3_bucket_id_extensions" {
-	value=local.bucket_extensions.s3_bucket_id
-}
 output "s3_bucket_id_inactive" {
 	value=local.bucket_inactive.s3_bucket_id
+}
+output "s3_bucket_id_overlay" {
+	value=local.bucket_overlay.s3_bucket_id
 }

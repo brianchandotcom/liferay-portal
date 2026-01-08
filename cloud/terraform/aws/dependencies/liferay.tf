@@ -1,7 +1,7 @@
 locals {
 	bucket_active=local.is_active_data_blue ? module.s3_bucket_blue : module.s3_bucket_green
-	bucket_extensions=module.s3_bucket_liferay_extensions
 	bucket_inactive=local.is_active_data_blue ? module.s3_bucket_green : module.s3_bucket_blue
+	bucket_overlay=module.s3_bucket_liferay_overlay
 	data_inactive=local.is_active_data_blue ? "green" : "blue"
 	db_active=local.is_active_data_blue ? module.postgres_blue[0] : module.postgres_green[0]
 	is_active_data_blue=var.data_active=="blue"
@@ -50,10 +50,10 @@ module "s3_bucket_green" {
 	}
 	source="../modules/s3-bucket"
 }
-module "s3_bucket_liferay_extensions" {
+module "s3_bucket_liferay_overlay" {
 	block_public_acls=true
 	block_public_policy=true
-	bucket_prefix="${var.deployment_name}-extensions-"
+	bucket_prefix="${var.deployment_name}-overlay-"
 	control_object_ownership=true
 	force_destroy=true
 	ignore_public_acls=true
@@ -88,13 +88,13 @@ resource "aws_iam_policy" "ci_upload_only" {
 				{
 					Action="s3:ListBucket",
 					Effect="Allow",
-					Resource=module.s3_bucket_liferay_extensions.s3_bucket_arn
+					Resource=module.s3_bucket_liferay_overlay.s3_bucket_arn
 					Sid="AllowListBucket",
 				},
 				{
 					Action="s3:PutObject",
 					Effect="Allow",
-					Resource="${module.s3_bucket_liferay_extensions.s3_bucket_arn}/*"
+					Resource="${module.s3_bucket_liferay_overlay.s3_bucket_arn}/*"
 					Sid="AllowPutObject",
 				},
 				{
@@ -103,7 +103,7 @@ resource "aws_iam_policy" "ci_upload_only" {
 						"s3:DeleteObjectVersion"
 					],
 					Effect="Deny",
-					Resource="${module.s3_bucket_liferay_extensions.s3_bucket_arn}/*"
+					Resource="${module.s3_bucket_liferay_overlay.s3_bucket_arn}/*"
 					Sid="DenyDelete",
 				}
 			]
@@ -276,6 +276,20 @@ resource "kubernetes_storage_class" "gp3_storage_class" {
 	}
 	storage_provisioner="ebs.csi.eks.amazonaws.com"
 	volume_binding_mode="Immediate"
+}
+resource "kubernetes_storage_class" "liferay_overlay_storage" {
+  allow_volume_expansion=false
+	depends_on=[
+		module.s3_bucket_liferay_overlay
+	]
+  metadata {
+    name=module.s3_bucket_liferay_overlay.s3_bucket_id
+  }
+  parameters={
+    "bucketName"=module.s3_bucket_liferay_overlay.s3_bucket_id
+  }
+  storage_provisioner="s3.csi.aws.com"
+  volume_binding_mode="WaitForFirstConsumer"
 }
 resource "null_resource" "opensearch_service_role" {
 	provisioner "local-exec" {

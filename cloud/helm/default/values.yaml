@@ -152,6 +152,11 @@ env:
 envFrom:
     -   secretRef:
             name: liferay-default
+overlay:
+    bucketName: ""
+    bucketPath: ""
+    dirs: []
+    enabled: false
 fullnameOverride: ""
 image:
     pullPolicy: IfNotPresent
@@ -279,6 +284,9 @@ volumeMounts:
     -   mountPath: /opt/liferay/metrics
         name: liferay-persistent-volume
         subPath: liferay/metrics
+    -   mountPath: /opt/liferay/osgi/client-extensions
+        name: liferay-persistent-volume
+        subPath: osgi/client-extensions
     -   mountPath: /opt/liferay/osgi/configs
         name: liferay-persistent-volume
         subPath: osgi/configs

@@ -1,0 +1,32 @@
+{{- if and .Values.overlay .Values.overlay.enabled }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+    name: {{ .Values.overlay.bucketName }}
+spec:
+    accessModes:
+        -   ReadWriteMany
+    capacity:
+        storage: 10Gi
+    claimRef:
+        name: {{ .Values.overlay.bucketName }}
+        namespace: {{ .Release.Namespace }}
+    csi:
+        driver: s3.csi.aws.com
+        volumeAttributes:
+            bucketName: {{ .Values.overlay.bucketName }}
+        volumeHandle: {{ .Values.overlay.bucketName }}
+    storageClassName: {{ .Values.overlay.bucketName }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+    name: {{ .Values.overlay.bucketName }}
+spec:
+    accessModes:
+        -   ReadWriteMany
+    resources:
+        requests:
+            storage: 10Gi
+    storageClassName: {{ .Values.overlay.bucketName }}
+{{- end }}

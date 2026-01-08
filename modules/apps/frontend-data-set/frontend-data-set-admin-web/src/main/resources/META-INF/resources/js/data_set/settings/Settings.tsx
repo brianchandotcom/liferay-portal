@@ -389,21 +389,14 @@ const Settings = ({
 						<ClayLayout.Col size={11}>
 							<div>
 								<label htmlFor="user-views-toggle">
-									{Liferay.Language.get(
-										'enable-user-views'
-									)}
+									{Liferay.Language.get('enable-user-views')}
 								</label>
 							</div>
 
-							<div>
-								{Liferay.Language.get('user-views-help')}
-							</div>
+							<div>{Liferay.Language.get('user-views-help')}</div>
 						</ClayLayout.Col>
 
-						<ClayLayout.Col
-							className="align-self-start"
-							size={1}
-						>
+						<ClayLayout.Col className="align-self-start" size={1}>
 							<ClayToggle
 								id="user-views-toggle"
 								onToggle={setSnapshotsEnabled}

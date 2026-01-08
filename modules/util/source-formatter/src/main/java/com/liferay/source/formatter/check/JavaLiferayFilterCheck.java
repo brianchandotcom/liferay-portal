@@ -79,7 +79,7 @@ public class JavaLiferayFilterCheck extends BaseJavaTermCheck {
 		sb.append("Use \"CompanyThreadLocal.getCompanyId\" ");
 
 		if (methodCall.endsWith("getCompany")) {
-			sb.append("and \"CompanyLocalServiceUtil.fetchCompanyById\" ");
+			sb.append("and \"CompanyLocalServiceUtil.getCompany\" ");
 		}
 
 		sb.append("instead of \"");

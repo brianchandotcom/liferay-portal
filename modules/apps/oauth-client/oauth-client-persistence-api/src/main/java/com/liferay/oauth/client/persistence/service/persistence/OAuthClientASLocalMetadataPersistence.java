@@ -33,55 +33,6 @@ public interface OAuthClientASLocalMetadataPersistence
 	 */
 
 	/**
-	 * Returns the o auth client as local metadata where oAuthClientASLocalMetadataId = &#63; or throws a <code>NoSuchOAuthClientASLocalMetadataException</code> if it could not be found.
-	 *
-	 * @param oAuthClientASLocalMetadataId the o auth client as local metadata ID
-	 * @return the matching o auth client as local metadata
-	 * @throws NoSuchOAuthClientASLocalMetadataException if a matching o auth client as local metadata could not be found
-	 */
-	public OAuthClientASLocalMetadata findByOAuthClientASLocalMetadataId(
-			long oAuthClientASLocalMetadataId)
-		throws NoSuchOAuthClientASLocalMetadataException;
-
-	/**
-	 * Returns the o auth client as local metadata where oAuthClientASLocalMetadataId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param oAuthClientASLocalMetadataId the o auth client as local metadata ID
-	 * @return the matching o auth client as local metadata, or <code>null</code> if a matching o auth client as local metadata could not be found
-	 */
-	public OAuthClientASLocalMetadata fetchByOAuthClientASLocalMetadataId(
-		long oAuthClientASLocalMetadataId);
-
-	/**
-	 * Returns the o auth client as local metadata where oAuthClientASLocalMetadataId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param oAuthClientASLocalMetadataId the o auth client as local metadata ID
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching o auth client as local metadata, or <code>null</code> if a matching o auth client as local metadata could not be found
-	 */
-	public OAuthClientASLocalMetadata fetchByOAuthClientASLocalMetadataId(
-		long oAuthClientASLocalMetadataId, boolean useFinderCache);
-
-	/**
-	 * Removes the o auth client as local metadata where oAuthClientASLocalMetadataId = &#63; from the database.
-	 *
-	 * @param oAuthClientASLocalMetadataId the o auth client as local metadata ID
-	 * @return the o auth client as local metadata that was removed
-	 */
-	public OAuthClientASLocalMetadata removeByOAuthClientASLocalMetadataId(
-			long oAuthClientASLocalMetadataId)
-		throws NoSuchOAuthClientASLocalMetadataException;
-
-	/**
-	 * Returns the number of o auth client as local metadatas where oAuthClientASLocalMetadataId = &#63;.
-	 *
-	 * @param oAuthClientASLocalMetadataId the o auth client as local metadata ID
-	 * @return the number of matching o auth client as local metadatas
-	 */
-	public int countByOAuthClientASLocalMetadataId(
-		long oAuthClientASLocalMetadataId);
-
-	/**
 	 * Returns all the o auth client as local metadatas where companyId = &#63;.
 	 *
 	 * @param companyId the company ID

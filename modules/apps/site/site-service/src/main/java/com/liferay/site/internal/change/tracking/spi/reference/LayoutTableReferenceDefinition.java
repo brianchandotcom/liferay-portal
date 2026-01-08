@@ -9,16 +9,12 @@ import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntryTable;
-import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
-import com.liferay.petra.sql.dsl.spi.expression.Scalar;
 import com.liferay.portal.kernel.model.ClassNameTable;
 import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.model.ImageTable;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLTable;
 import com.liferay.portal.kernel.model.LayoutTable;
-import com.liferay.portal.kernel.model.PortletConstants;
-import com.liferay.portal.kernel.model.ResourcePermissionTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutPersistence;
 
@@ -58,22 +54,6 @@ public class LayoutTableReferenceDefinition
 				).and(
 					ClassNameTable.INSTANCE.classNameId.eq(
 						GroupTable.INSTANCE.classNameId)
-				)
-			)
-		).referenceInnerJoin(
-			fromStep -> fromStep.from(
-				ResourcePermissionTable.INSTANCE
-			).innerJoinON(
-				LayoutTable.INSTANCE,
-				LayoutTable.INSTANCE.companyId.eq(
-					ResourcePermissionTable.INSTANCE.companyId
-				).and(
-					ResourcePermissionTable.INSTANCE.primKey.like(
-						DSLFunctionFactoryUtil.concat(
-							DSLFunctionFactoryUtil.castText(
-								LayoutTable.INSTANCE.plid),
-							new Scalar<>(
-								PortletConstants.LAYOUT_SEPARATOR + "%")))
 				)
 			)
 		).referenceInnerJoin(

@@ -61,6 +61,7 @@ import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalServiceUtil;
 import com.liferay.ratings.test.util.RatingsTestUtil;
 
+import java.io.File;
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -733,50 +734,36 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 		userIdStrategy = new TestUserIdStrategy();
 
-		zipReader = _zipReaderFactory.getZipReader(zipWriter.getFile());
+		try (ZipReader zipReader = _getZipReader()) {
+			portletDataContext =
+				PortletDataContextFactoryUtil.createImportPortletDataContext(
+					importGroup.getCompanyId(), importGroup.getGroupId(),
+					getParameterMap(), userIdStrategy, zipReader);
 
-		String xml = zipReader.getEntryAsString("/manifest.xml");
+			portletDataContext.setExportImportProcessId(
+				BaseStagedModelDataHandlerTestCase.class.getName());
+			portletDataContext.setImportDataRootElement(rootElement);
 
-		if (xml == null) {
-			Document document = SAXReaderUtil.createDocument();
-
-			Element rootElement = document.addElement("root");
-
-			rootElement.addElement("header");
-
-			zipWriter.addEntry("/manifest.xml", document.asXML());
-
-			zipReader = _zipReaderFactory.getZipReader(zipWriter.getFile());
-		}
-
-		portletDataContext =
-			PortletDataContextFactoryUtil.createImportPortletDataContext(
-				importGroup.getCompanyId(), importGroup.getGroupId(),
-				getParameterMap(), userIdStrategy, zipReader);
-
-		portletDataContext.setExportImportProcessId(
-			BaseStagedModelDataHandlerTestCase.class.getName());
-		portletDataContext.setImportDataRootElement(rootElement);
-
-		Element missingReferencesElement = rootElement.element(
-			"missing-references");
-
-		if (missingReferencesElement == null) {
-			missingReferencesElement = rootElement.addElement(
+			Element missingReferencesElement = rootElement.element(
 				"missing-references");
+
+			if (missingReferencesElement == null) {
+				missingReferencesElement = rootElement.addElement(
+					"missing-references");
+			}
+
+			portletDataContext.setMissingReferencesElement(
+				missingReferencesElement);
+
+			Group sourceCompanyGroup = GroupLocalServiceUtil.getCompanyGroup(
+				exportGroup.getCompanyId());
+
+			portletDataContext.setSourceCompanyGroupId(
+				sourceCompanyGroup.getGroupId());
+
+			portletDataContext.setSourceCompanyId(exportGroup.getCompanyId());
+			portletDataContext.setSourceGroupId(exportGroup.getGroupId());
 		}
-
-		portletDataContext.setMissingReferencesElement(
-			missingReferencesElement);
-
-		Group sourceCompanyGroup = GroupLocalServiceUtil.getCompanyGroup(
-			exportGroup.getCompanyId());
-
-		portletDataContext.setSourceCompanyGroupId(
-			sourceCompanyGroup.getGroupId());
-
-		portletDataContext.setSourceCompanyId(exportGroup.getCompanyId());
-		portletDataContext.setSourceGroupId(exportGroup.getGroupId());
 	}
 
 	protected boolean isAssetPrioritySupported() {
@@ -1136,7 +1123,6 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 	protected Element rootElement;
 	protected Group stagingGroup;
 	protected UserIdStrategy userIdStrategy;
-	protected ZipReader zipReader;
 	protected ZipWriter zipWriter;
 
 	protected class StagedModelAssets implements Serializable {
@@ -1216,6 +1202,28 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 		private final long _userId;
 
+	}
+
+	private ZipReader _getZipReader() throws Exception {
+		File zipFile = zipWriter.getFile();
+
+		ZipReader zipReader = _zipReaderFactory.getZipReader(zipFile);
+
+		if (zipReader.getEntryAsString("/manifest.xml") != null) {
+			return zipReader;
+		}
+
+		zipReader.close();
+
+		Document document = SAXReaderUtil.createDocument();
+
+		Element rootElement = document.addElement("root");
+
+		rootElement.addElement("header");
+
+		zipWriter.addEntry("/manifest.xml", document.asXML());
+
+		return _zipReaderFactory.getZipReader(zipFile);
 	}
 
 	@Inject

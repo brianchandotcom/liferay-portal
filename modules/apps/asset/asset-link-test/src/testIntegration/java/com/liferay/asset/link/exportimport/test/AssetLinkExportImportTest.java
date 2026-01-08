@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.portal.model.adapter.util.ModelAdapterUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -128,25 +129,29 @@ public class AssetLinkExportImportTest extends BaseExportImportTestCase {
 
 		checkAssetLinksInLar(_journalArticle.getArticleResourceUuid());
 
-		// Journal article should not be in the LAR
+		try (ZipReader zipReader = _zipReaderFactory.getZipReader(larFile)) {
 
-		PortletDataContext portletDataContext = getPortletDataContext();
+			// Journal article should not be in the LAR
 
-		_journalArticle =
-			(JournalArticle)portletDataContext.getZipEntryAsObject(
-				ExportImportPathUtil.getModelPath(_journalArticle));
+			PortletDataContext portletDataContext = getPortletDataContext(
+				zipReader);
 
-		Assert.assertNull(_journalArticle);
+			_journalArticle =
+				(JournalArticle)portletDataContext.getZipEntryAsObject(
+					ExportImportPathUtil.getModelPath(_journalArticle));
 
-		// BookmarksE etry should not be in the LAR
+			Assert.assertNull(_journalArticle);
 
-		_bookmarksEntry =
-			(BookmarksEntry)portletDataContext.getZipEntryAsObject(
-				ExportImportPathUtil.getModelPath(_bookmarksEntry));
+			// BookmarksE etry should not be in the LAR
 
-		Assert.assertNull(_bookmarksEntry);
+			_bookmarksEntry =
+				(BookmarksEntry)portletDataContext.getZipEntryAsObject(
+					ExportImportPathUtil.getModelPath(_bookmarksEntry));
 
-		importLayouts(getImportParameterMap());
+			Assert.assertNull(_bookmarksEntry);
+
+			importLayouts(getImportParameterMap());
+		}
 	}
 
 	@Test
@@ -170,25 +175,29 @@ public class AssetLinkExportImportTest extends BaseExportImportTestCase {
 
 		checkAssetLinksInLar(_journalArticle.getArticleResourceUuid());
 
-		// Journal article should be in the LAR
+		try (ZipReader zipReader = _zipReaderFactory.getZipReader(larFile)) {
 
-		PortletDataContext portletDataContext = getPortletDataContext();
+			// Journal article should be in the LAR
 
-		_journalArticle =
-			(JournalArticle)portletDataContext.getZipEntryAsObject(
-				ExportImportPathUtil.getModelPath(_journalArticle));
+			PortletDataContext portletDataContext = getPortletDataContext(
+				zipReader);
 
-		Assert.assertNotNull(_journalArticle);
+			_journalArticle =
+				(JournalArticle)portletDataContext.getZipEntryAsObject(
+					ExportImportPathUtil.getModelPath(_journalArticle));
 
-		// Bookmarks entry should not be in the LAR
+			Assert.assertNotNull(_journalArticle);
 
-		_bookmarksEntry =
-			(BookmarksEntry)portletDataContext.getZipEntryAsObject(
-				ExportImportPathUtil.getModelPath(_bookmarksEntry));
+			// Bookmarks entry should not be in the LAR
 
-		Assert.assertNull(_bookmarksEntry);
+			_bookmarksEntry =
+				(BookmarksEntry)portletDataContext.getZipEntryAsObject(
+					ExportImportPathUtil.getModelPath(_bookmarksEntry));
 
-		importLayouts(getImportParameterMap());
+			Assert.assertNull(_bookmarksEntry);
+
+			importLayouts(getImportParameterMap());
+		}
 	}
 
 	@Test
@@ -269,21 +278,26 @@ public class AssetLinkExportImportTest extends BaseExportImportTestCase {
 		Assert.assertNotNull(assetLinks);
 		Assert.assertTrue(assetLinks.size() == 2);
 
-		PortletDataContext portletDataContext = getPortletDataContext();
+		try (ZipReader zipReader = _zipReaderFactory.getZipReader(larFile)) {
+			PortletDataContext portletDataContext = getPortletDataContext(
+				zipReader);
 
-		for (AssetLink assetLink : assetLinks) {
-			StagedAssetLink stagedAssetLink = ModelAdapterUtil.adapt(
-				assetLink, AssetLink.class, StagedAssetLink.class);
+			for (AssetLink assetLink : assetLinks) {
+				StagedAssetLink stagedAssetLink = ModelAdapterUtil.adapt(
+					assetLink, AssetLink.class, StagedAssetLink.class);
 
-			stagedAssetLink =
-				(StagedAssetLink)portletDataContext.getZipEntryAsObject(
-					ExportImportPathUtil.getModelPath(stagedAssetLink));
+				stagedAssetLink =
+					(StagedAssetLink)portletDataContext.getZipEntryAsObject(
+						ExportImportPathUtil.getModelPath(stagedAssetLink));
 
-			Assert.assertNotNull(stagedAssetLink);
+				Assert.assertNotNull(stagedAssetLink);
+			}
 		}
 	}
 
-	protected PortletDataContext getPortletDataContext() throws Exception {
+	protected PortletDataContext getPortletDataContext(ZipReader zipReader)
+		throws Exception {
+
 		Map<String, String[]> parameterMap =
 			ExportImportConfigurationParameterMapFactoryUtil.
 				buildParameterMap();
@@ -295,7 +309,7 @@ public class AssetLinkExportImportTest extends BaseExportImportTestCase {
 			group.getCompanyId(), importedGroup.getGroupId(), parameterMap,
 			ExportImportHelperUtil.getUserIdStrategy(
 				TestPropsValues.getUserId(), userIdStrategyString),
-			_zipReaderFactory.getZipReader(larFile));
+			zipReader);
 	}
 
 	private BookmarksEntry _bookmarksEntry;

@@ -421,22 +421,17 @@ public class NavigationMenuResourceImpl
 			contextAcceptLanguage.getPreferredLanguageId();
 
 		if (StringUtil.equals(type, "page")) {
-			if (!useCustomName && (layout == null)) {
+			if (useCustomName) {
+				return unicodeProperties.getProperty(
+					"name_" + preferredLanguageId,
+					unicodeProperties.getProperty("name_" + defaultLanguageId));
+			}
+
+			if (layout == null) {
 				return null;
 			}
 
-			if (!useCustomName && (layout != null)) {
-				return layout.getName(
-					contextAcceptLanguage.getPreferredLocale());
-			}
-
-			if (!useCustomName) {
-				return null;
-			}
-
-			return unicodeProperties.getProperty(
-				"name_" + preferredLanguageId,
-				unicodeProperties.getProperty("name_" + defaultLanguageId));
+			return layout.getName(contextAcceptLanguage.getPreferredLocale());
 		}
 
 		if (useCustomName) {

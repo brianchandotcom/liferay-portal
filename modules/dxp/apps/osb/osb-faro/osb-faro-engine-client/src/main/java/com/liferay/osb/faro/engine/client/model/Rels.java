@@ -140,8 +140,8 @@ public interface Rels {
 	public static final String INDIVIDUAL_SEGMENT_MEMBERSHIPS =
 		"individual-segment-memberships";
 
-	public static final String INDIVIDUAL_SEGMENT_REAL_TIME_MEMBERSHIP_METRICS =
-		"individual-segment-real-time-membership-metrics";
+	public static final String INDIVIDUAL_SEGMENT_REAL_TIME_MEMBERSHIP_METRIC =
+		"individual-segment-real-time-membership-metric";
 
 	public static final String INDIVIDUAL_SEGMENT_REAL_TIME_MEMBERSHIPS =
 		"individual-segment-real-time-memberships";

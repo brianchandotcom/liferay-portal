@@ -229,7 +229,7 @@ public class IndividualSegmentController extends BaseFaroController {
 	}
 
 	@GET
-	@Path("/{id}/real-time-metrics")
+	@Path("/{id}/real-time-membership-metric")
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
 	public RealTimeMembershipMetric getRealTimeMembershipMetric(
 			@PathParam("groupId") long groupId, @PathParam("id") String id)

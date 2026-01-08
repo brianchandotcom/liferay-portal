@@ -2496,7 +2496,7 @@ public class ContactsEngineClientImpl
 		FaroProject faroProject, String individualSegmentId) {
 
 		return get(
-			faroProject, Rels.INDIVIDUAL_SEGMENT_REAL_TIME_MEMBERSHIP_METRICS,
+			faroProject, Rels.INDIVIDUAL_SEGMENT_REAL_TIME_MEMBERSHIP_METRIC,
 			individualSegmentId, RealTimeMembershipMetric.class);
 	}
 

@@ -8,7 +8,7 @@ package com.liferay.osb.faro.engine.client.model;
 /**
  * @author Nilton Vieira
  */
-public class TotalMemberMetric extends Metric {
+public class TotalMembersMetric extends Metric {
 
 	public long getTotalIndividuals() {
 		return _totalIndividuals;

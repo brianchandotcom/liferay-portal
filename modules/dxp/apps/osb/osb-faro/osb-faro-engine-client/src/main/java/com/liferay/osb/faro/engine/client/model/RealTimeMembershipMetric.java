@@ -22,8 +22,8 @@ public class RealTimeMembershipMetric {
 		return _exitRateMetric;
 	}
 
-	public TotalMemberMetric getTotalMemberMetric() {
-		return _totalMemberMetric;
+	public TotalMembersMetric getTotalMembersMetric() {
+		return _totalMembersMetric;
 	}
 
 	public void setAverageSegmentMembershipDurationMetric(
@@ -41,13 +41,13 @@ public class RealTimeMembershipMetric {
 		_exitRateMetric = exitRateMetric;
 	}
 
-	public void setTotalMemberMetric(TotalMemberMetric totalMemberMetric) {
-		_totalMemberMetric = totalMemberMetric;
+	public void setTotalMembersMetric(TotalMembersMetric totalMembersMetric) {
+		_totalMembersMetric = totalMembersMetric;
 	}
 
 	private Metric _averageSegmentMembershipDurationMetric;
 	private Metric _entryRateMetric;
 	private Metric _exitRateMetric;
-	private TotalMemberMetric _totalMemberMetric;
+	private TotalMembersMetric _totalMembersMetric;
 
 }

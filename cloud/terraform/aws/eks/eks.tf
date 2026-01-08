@@ -147,8 +147,8 @@ resource "aws_iam_role_policy" "s3_csi_driver" {
 					]
 					Effect="Allow"
 					Resource=[
-						"arn:${var.arn_partition}:s3:::${var.deployment_name}-extensions-*",
-						"arn:${var.arn_partition}:s3:::${var.deployment_name}-extensions-*/*"
+						"arn:${var.arn_partition}:s3:::${var.deployment_name}-overlay-*",
+						"arn:${var.arn_partition}:s3:::${var.deployment_name}-overlay-*/*"
 					]
 					Sid="AllowS3BucketOperations"
 				}

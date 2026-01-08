@@ -449,8 +449,7 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		DLFileVersion lastDLFileVersion =
-			_dlFileVersionLocalService.getFileVersion(
-				dlFileEntry.getFileEntryId(), dlFileEntry.getVersion());
+			_dlFileVersionLocalService.getLatestFileVersion(fileEntryId, true);
 		DLFileVersion latestDLFileVersion =
 			_dlFileVersionLocalService.getLatestFileVersion(fileEntryId, false);
 

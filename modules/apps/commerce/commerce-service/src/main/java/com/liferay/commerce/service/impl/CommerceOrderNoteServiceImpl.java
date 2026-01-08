@@ -187,12 +187,17 @@ public class CommerceOrderNoteServiceImpl
 			long commerceOrderId, int start, int end)
 		throws PortalException {
 
-		_commerceOrderModelResourcePermission.check(
-			getPermissionChecker(), commerceOrderId,
-			CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES);
+		if (_commerceOrderModelResourcePermission.contains(
+				getPermissionChecker(), commerceOrderId,
+				CommerceOrderActionKeys.
+					MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES)) {
 
-		return commerceOrderNoteLocalService.getCommerceOrderNotes(
-			commerceOrderId, start, end);
+			return commerceOrderNoteLocalService.getCommerceOrderNotes(
+				commerceOrderId, start, end);
+		}
+
+		return commerceOrderNoteService.getCommerceOrderNotes(
+			commerceOrderId, false, start, end);
 	}
 
 	@Override

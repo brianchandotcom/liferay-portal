@@ -7,29 +7,24 @@ import {EventSource} from 'eventsource';
 import {fetch} from 'frontend-js-web';
 
 export async function createEventSource() {
-	try {
-		const token = await postToken();
+	const token = await postToken();
 
-		if (!token) {
-			return null;
-		}
+	if (!token) {
+		return null;
+	}
 
-		return new EventSource('/o/ai-hub/v1.0/chats/subscribe', {
-			fetch: (input, init) => {
-				return fetch(input as RequestInfo, {
-					...init,
-					headers: new Headers({
-						Accept: 'text/event-stream',
-						Authorization: `Bearer ${token}`,
-					}),
-				});
-			},
-			withCredentials: true,
-		});
-	}
-	catch (error) {
-		console.warn((error as Error).message);
-	}
+	return new EventSource('/o/ai-hub/v1.0/chats/subscribe', {
+		fetch: (input, init) => {
+			return fetch(input as RequestInfo, {
+				...init,
+				headers: new Headers({
+					Accept: 'text/event-stream',
+					Authorization: `Bearer ${token}`,
+				}),
+			});
+		},
+		withCredentials: true,
+	});
 }
 
 async function postToken() {

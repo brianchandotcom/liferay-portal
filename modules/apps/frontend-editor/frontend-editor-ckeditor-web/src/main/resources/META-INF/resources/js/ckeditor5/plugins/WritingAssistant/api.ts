@@ -9,28 +9,23 @@ import {fetch} from 'frontend-js-web';
 import {EActionType} from './types';
 
 export async function createEventSource() {
-	try {
-		const token = await postToken();
+	const token = await postToken();
 
-		if (!token) {
-			return;
-		}
+	if (!token) {
+		return;
+	}
 
-		return new EventSource('/o/ai-hub/v1.0/tasks/subscribe', {
-			fetch: (input, init) =>
-				fetch(input as RequestInfo, {
-					...init,
-					headers: new Headers({
-						Accept: 'text/event-stream',
-						Authorization: `Bearer ${token}`,
-					}),
+	return new EventSource('/o/ai-hub/v1.0/tasks/subscribe', {
+		fetch: (input, init) =>
+			fetch(input as RequestInfo, {
+				...init,
+				headers: new Headers({
+					Accept: 'text/event-stream',
+					Authorization: `Bearer ${token}`,
 				}),
-			withCredentials: true,
-		});
-	}
-	catch (error) {
-		console.warn((error as Error).message);
-	}
+			}),
+		withCredentials: true,
+	});
 }
 
 async function postToken() {

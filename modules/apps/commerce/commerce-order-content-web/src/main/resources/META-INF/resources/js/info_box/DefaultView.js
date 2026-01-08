@@ -20,7 +20,7 @@ const DefaultView = ({
 	field,
 	fieldValue,
 	fieldValueType,
-	hasPermission,
+	hasUpdatePermission,
 	isOpen,
 	label,
 	namespace,
@@ -114,7 +114,9 @@ const DefaultView = ({
 						<div className="h5 info-box-label m-0">{label}</div>
 					) : null}
 
-					{hasPermission && !readOnly && isEditable(field, isOpen) ? (
+					{hasUpdatePermission &&
+					!readOnly &&
+					isEditable(field, isOpen) ? (
 						<ClayButton
 							aria-controls={`${namespace}infoBoxModal`}
 							aria-label={
@@ -150,7 +152,7 @@ const DefaultView = ({
 							className="border-bottom border-dashed btn-sm p-0 small text-black-50 text-decoration-none"
 							displayType="link"
 							onClick={() =>
-								hasPermission &&
+								hasUpdatePermission &&
 								!readOnly &&
 								isEditable(field, isOpen) &&
 								onOpenChange(true)
@@ -162,7 +164,7 @@ const DefaultView = ({
 				</div>
 			</div>
 
-			{hasPermission && !readOnly && isEditable(field, isOpen) ? (
+			{hasUpdatePermission && !readOnly && isEditable(field, isOpen) ? (
 				<InfoBoxModal
 					additionalProps={additionalProps}
 					field={field}

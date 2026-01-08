@@ -15,7 +15,8 @@ import InfoBoxModalNotes from '../InfoBoxModalNotes';
 const OrderNotesView = ({
 	buttonDisplayType,
 	elementId,
-	hasPermission,
+	hasManageOrderRestrictedNotesPermission,
+	hasViewPermission,
 	label,
 	namespace,
 	orderId,
@@ -128,7 +129,7 @@ const OrderNotesView = ({
 				<div className="align-items-center d-flex">
 					<div className="h5 info-box-label m-0">{label}</div>
 
-					{hasPermission ? (
+					{hasViewPermission ? (
 						<ClayButton
 							aria-controls={`${namespace}InfoBoxModalNotes`}
 							className="ml-2"
@@ -151,6 +152,9 @@ const OrderNotesView = ({
 				handleDelete={handleDelete}
 				handleSubmit={handleSubmit}
 				handleToggle={handleToggle}
+				hasManageOrderRestrictedNotesPermission={
+					hasManageOrderRestrictedNotesPermission
+				}
 				id={`${namespace}InfoBoxModalNotes`}
 				isRestricted={isRestricted}
 				isValid={isValid}

@@ -14,6 +14,7 @@ const InfoBoxModalNotes = ({
 	handleDelete,
 	handleSubmit,
 	handleToggle,
+	hasManageOrderRestrictedNotesPermission,
 	id,
 	isRestricted,
 	isValid,
@@ -49,6 +50,9 @@ const InfoBoxModalNotes = ({
 									handleDelete={handleDelete}
 									handleSubmit={handleSubmit}
 									handleToggle={handleToggle}
+									hasManageOrderRestrictedNotesPermission={
+										hasManageOrderRestrictedNotesPermission
+									}
 									isRestricted={isRestricted}
 									notes={notes}
 									setInputValue={setInputValue}

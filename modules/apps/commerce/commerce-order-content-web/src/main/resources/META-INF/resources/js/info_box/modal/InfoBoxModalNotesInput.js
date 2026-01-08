@@ -16,6 +16,7 @@ import UserIcon from '../../UserIcon';
 const InfoBoxModalNotes = ({
 	handleDelete,
 	handleToggle,
+	hasManageOrderRestrictedNotesPermission,
 	isRestricted,
 	notes,
 	setInputValue,
@@ -146,21 +147,23 @@ const InfoBoxModalNotes = ({
 				</ClayInput.GroupItem>
 			</ClayInput.Group>
 
-			<div className="form-group inline-item">
-				<ClayToggle
-					label={Liferay.Language.get('private')}
-					onToggle={handleToggle}
-					spritemap={spritemap}
-					toggled={isRestricted}
-				/>
+			{hasManageOrderRestrictedNotesPermission ? (
+				<div className="form-group inline-item">
+					<ClayToggle
+						label={Liferay.Language.get('private')}
+						onToggle={handleToggle}
+						spritemap={spritemap}
+						toggled={isRestricted}
+					/>
 
-				<ClayButtonWithIcon
-					className="lfr-portal-tooltip ml-1 taglib-icon-help"
-					displayType="unstyled"
-					symbol="question-circle-full"
-					title={Liferay.Language.get('restricted-help')}
-				/>
-			</div>
+					<ClayButtonWithIcon
+						className="lfr-portal-tooltip ml-1 taglib-icon-help"
+						displayType="unstyled"
+						symbol="question-circle-full"
+						title={Liferay.Language.get('restricted-help')}
+					/>
+				</div>
+			) : null}
 		</>
 	);
 };

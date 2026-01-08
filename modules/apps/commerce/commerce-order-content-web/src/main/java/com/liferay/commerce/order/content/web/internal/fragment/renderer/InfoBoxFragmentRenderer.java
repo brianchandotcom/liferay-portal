@@ -7,6 +7,7 @@ package com.liferay.commerce.order.content.web.internal.fragment.renderer;
 
 import com.liferay.account.constants.AccountListTypeConstants;
 import com.liferay.account.model.AccountEntry;
+import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.model.CommerceAddress;
@@ -204,9 +205,20 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 				"liferay-commerce:info-box:fieldValueType",
 				_getEditableFieldValueType(field));
 			httpServletRequest.setAttribute(
-				"liferay-commerce:info-box:hasPermission",
-				_commerceOrderModelResourcePermission.contains(
+				"liferay-commerce:info-box:" +
+					"hasManageOrderRestrictedNotesPermission",
+				_hasPermission(
+					permissionChecker, commerceOrder,
+					CommerceOrderActionKeys.
+						MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES));
+			httpServletRequest.setAttribute(
+				"liferay-commerce:info-box:hasUpdatePermission",
+				_hasPermission(
 					permissionChecker, commerceOrder, ActionKeys.UPDATE));
+			httpServletRequest.setAttribute(
+				"liferay-commerce:info-box:hasViewPermission",
+				_hasPermission(
+					permissionChecker, commerceOrder, ActionKeys.VIEW));
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)httpServletRequest.getAttribute(
@@ -600,6 +612,15 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	private boolean _hasPermission(
+			PermissionChecker permissionChecker, CommerceOrder commerceOrder,
+			String actionId)
+		throws PortalException {
+
+		return _commerceOrderModelResourcePermission.contains(
+			permissionChecker, commerceOrder, actionId);
 	}
 
 	private boolean _isEditMode(HttpServletRequest httpServletRequest) {

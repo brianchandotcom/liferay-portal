@@ -11,8 +11,8 @@ import com.liferay.jenkins.results.parser.TestSuiteJob;
 
 import java.io.File;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Michael Hashimoto
@@ -263,6 +263,6 @@ public class JobPropertyFactory {
 	}
 
 	private static final Map<String, JobProperty> _jobProperties =
-		new HashMap<>();
+		new ConcurrentHashMap<>();
 
 }

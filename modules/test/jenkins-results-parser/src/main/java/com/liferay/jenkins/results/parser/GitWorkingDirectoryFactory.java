@@ -8,8 +8,8 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Michael Hashimoto
@@ -170,6 +170,6 @@ public class GitWorkingDirectoryFactory {
 	}
 
 	private static final Map<String, GitWorkingDirectory>
-		_gitWorkingDirectories = new HashMap<>();
+		_gitWorkingDirectories = new ConcurrentHashMap<>();
 
 }

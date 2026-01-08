@@ -11,8 +11,8 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import java.io.File;
 import java.io.IOException;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Michael Hashimoto
@@ -51,6 +51,6 @@ public class Jethr0ClientFactory {
 	}
 
 	private static final Map<String, Jethr0Client> _jethr0Clients =
-		new HashMap<>();
+		new ConcurrentHashMap<>();
 
 }

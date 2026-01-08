@@ -7,8 +7,8 @@ package com.liferay.jenkins.results.parser;
 
 import java.net.URL;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
 
 /**
@@ -142,10 +142,10 @@ public class PortalReleaseFactory {
 	}
 
 	private static final Map<String, PortalFixpackRelease>
-		_portalFixpackReleases = new HashMap<>();
+		_portalFixpackReleases = new ConcurrentHashMap<>();
 	private static final Map<String, PortalHotfixRelease>
-		_portalHotfixReleases = new HashMap<>();
+		_portalHotfixReleases = new ConcurrentHashMap<>();
 	private static final Map<String, PortalRelease> _portalReleases =
-		new HashMap<>();
+		new ConcurrentHashMap<>();
 
 }

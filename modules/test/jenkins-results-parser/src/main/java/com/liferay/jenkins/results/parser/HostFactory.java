@@ -5,8 +5,8 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Michael Hashimoto
@@ -23,6 +23,6 @@ public class HostFactory {
 		return _hosts.get(name);
 	}
 
-	private static final Map<String, Host> _hosts = new HashMap<>();
+	private static final Map<String, Host> _hosts = new ConcurrentHashMap<>();
 
 }

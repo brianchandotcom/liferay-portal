@@ -12,9 +12,9 @@ import java.text.ParseException;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -118,6 +118,6 @@ public class GitCommitFactory {
 	}
 
 	private static final Map<String, GitHubRemoteGitCommit>
-		_gitHubRemoteGitCommits = new HashMap<>();
+		_gitHubRemoteGitCommits = new ConcurrentHashMap<>();
 
 }

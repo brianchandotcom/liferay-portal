@@ -321,8 +321,8 @@ public class NavigationMenuResourceImpl
 
 		if (!_hasModel(groupId, navigationMenuItem, unicodeProperties)) {
 			throw new IllegalArgumentException(
-				"Unable to find model for navigation menu item with external " +
-					"reference code " +
+				"Unable to find navigation menu item with external reference " +
+					"code " +
 						navigationMenuItem.getExternalReferenceCode());
 		}
 
@@ -844,8 +844,8 @@ public class NavigationMenuResourceImpl
 						groupId, navigationMenuItem, unicodeProperties)) {
 
 					throw new IllegalArgumentException(
-						"Unable to find model for navigation menu item with " +
-							"external reference code " +
+						"Unable to find navigation menu item with external " +
+							"reference code " +
 								navigationMenuItemExternalReferenceCode);
 				}
 

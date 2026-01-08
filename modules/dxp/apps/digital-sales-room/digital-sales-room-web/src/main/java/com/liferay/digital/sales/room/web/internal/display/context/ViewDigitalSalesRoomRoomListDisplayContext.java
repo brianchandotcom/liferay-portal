@@ -5,6 +5,7 @@
 
 package com.liferay.digital.sales.room.web.internal.display.context;
 
+import com.liferay.digital.sales.room.web.internal.constants.DigitalSalesRoomPortletKeys;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItemBuilder;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItemList;
@@ -14,9 +15,12 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+
+import jakarta.portlet.PortletRequest;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -25,9 +29,9 @@ import java.util.List;
 /**
  * @author Stefano Motta
  */
-public class ViewDigitalSalesRoomListDisplayContext {
+public class ViewDigitalSalesRoomRoomListDisplayContext {
 
-	public ViewDigitalSalesRoomListDisplayContext(
+	public ViewDigitalSalesRoomRoomListDisplayContext(
 		GroupService groupService, HttpServletRequest httpServletRequest,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		Portal portal) {
@@ -113,6 +117,27 @@ public class ViewDigitalSalesRoomListDisplayContext {
 				"post"
 			).build(
 				"saveAsTemplate"
+			),
+			FDSActionDropdownItemBuilder.setHref(
+				() -> PortletURLBuilder.create(
+					_portal.getControlPanelPortletURL(
+						_httpServletRequest,
+						DigitalSalesRoomPortletKeys.
+							DIGITAL_SALES_ROOM_MANAGEMENT,
+						PortletRequest.RENDER_PHASE)
+				).setMVCRenderCommandName(
+					"/digital_sales_room/edit_digital_sales_room_room_settings"
+				).setParameter(
+					"digitalSalesRoomId", "{id}"
+				).buildString()
+			).setIcon(
+				"cog"
+			).setLabel(
+				LanguageUtil.get(_httpServletRequest, "settings")
+			).setMethod(
+				"get"
+			).build(
+				"settings"
 			),
 			FDSActionDropdownItemBuilder.setIcon(
 				"trash"

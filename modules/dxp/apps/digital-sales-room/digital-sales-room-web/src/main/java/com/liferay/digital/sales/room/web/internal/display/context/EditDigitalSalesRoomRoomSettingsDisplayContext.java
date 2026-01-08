@@ -19,13 +19,12 @@ import jakarta.servlet.http.HttpServletRequest;
 /**
  * @author Stefano Motta
  */
-public class EditDigitalSalesRoomTemplateSettingsDisplayContext {
+public class EditDigitalSalesRoomRoomSettingsDisplayContext {
 
-	public EditDigitalSalesRoomTemplateSettingsDisplayContext(
-		long digitalSalesRoomTemplateId,
-		HttpServletRequest httpServletRequest) {
+	public EditDigitalSalesRoomRoomSettingsDisplayContext(
+		long digitalSalesRoomId, HttpServletRequest httpServletRequest) {
 
-		_digitalSalesRoomTemplateId = digitalSalesRoomTemplateId;
+		_digitalSalesRoomId = digitalSalesRoomId;
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -49,14 +48,14 @@ public class EditDigitalSalesRoomTemplateSettingsDisplayContext {
 			renderResponse
 		).setParameter(
 			"screenNavigationCategoryKey",
-			DigitalSalesRoomScreenNavigationEntryConstants.CATEGORY_KEY_TEMPLATE
+			DigitalSalesRoomScreenNavigationEntryConstants.CATEGORY_KEY_ROOM
 		).buildString();
 	}
 
-	public long getDigitalSalesRoomTemplateId() {
-		return _digitalSalesRoomTemplateId;
+	public long getDigitalSalesRoomId() {
+		return _digitalSalesRoomId;
 	}
 
-	private final long _digitalSalesRoomTemplateId;
+	private final long _digitalSalesRoomId;
 
 }

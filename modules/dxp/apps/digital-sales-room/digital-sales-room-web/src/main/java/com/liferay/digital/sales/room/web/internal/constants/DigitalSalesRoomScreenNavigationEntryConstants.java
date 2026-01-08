@@ -18,8 +18,14 @@ public class DigitalSalesRoomScreenNavigationEntryConstants {
 
 	public static final String CATEGORY_KEY_TEMPLATE = "template";
 
+	public static final String CATEGORY_KEY_USERS = "users";
+
 	public static final String SCREEN_NAVIGATION_KEY_DIGITAL_SALES_ROOM =
 		"view.digital.sales.room";
+
+	public static final String
+		SCREEN_NAVIGATION_KEY_DIGITAL_SALES_ROOM_ROOM_SETTINGS =
+			"edit.digital.sales.room.room.settings";
 
 	public static final String
 		SCREEN_NAVIGATION_KEY_DIGITAL_SALES_ROOM_TEMPLATE_SETTINGS =

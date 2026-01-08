@@ -15,8 +15,9 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.digital.sales.room.web.internal.constants.DigitalSalesRoomFDSNames" %><%@
 page import="com.liferay.digital.sales.room.web.internal.constants.DigitalSalesRoomScreenNavigationEntryConstants" %><%@
+page import="com.liferay.digital.sales.room.web.internal.display.context.EditDigitalSalesRoomRoomSettingsDisplayContext" %><%@
 page import="com.liferay.digital.sales.room.web.internal.display.context.EditDigitalSalesRoomTemplateSettingsDisplayContext" %><%@
-page import="com.liferay.digital.sales.room.web.internal.display.context.ViewDigitalSalesRoomListDisplayContext" %><%@
+page import="com.liferay.digital.sales.room.web.internal.display.context.ViewDigitalSalesRoomRoomListDisplayContext" %><%@
 page import="com.liferay.digital.sales.room.web.internal.display.context.ViewDigitalSalesRoomTemplateListDisplayContext" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>

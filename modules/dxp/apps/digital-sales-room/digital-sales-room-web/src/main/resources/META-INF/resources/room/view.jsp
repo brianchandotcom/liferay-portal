@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ViewDigitalSalesRoomListDisplayContext viewDigitalSalesRoomListDisplayContext = (ViewDigitalSalesRoomListDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+ViewDigitalSalesRoomRoomListDisplayContext viewDigitalSalesRoomRoomListDisplayContext = (ViewDigitalSalesRoomRoomListDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
 <h2 class="font-weight-semi-bold page-title text-7 text-dark">
@@ -17,9 +17,9 @@ ViewDigitalSalesRoomListDisplayContext viewDigitalSalesRoomListDisplayContext = 
 
 <div class="dsr-room-management portlet-digital-sales-room-management">
 	<frontend-data-set:headless-display
-		apiURL="<%= viewDigitalSalesRoomListDisplayContext.getAPIURL() %>"
-		creationMenu="<%= viewDigitalSalesRoomListDisplayContext.getCreationMenu() %>"
-		fdsActionDropdownItems="<%= viewDigitalSalesRoomListDisplayContext.getFDSActionDropdownItems() %>"
+		apiURL="<%= viewDigitalSalesRoomRoomListDisplayContext.getAPIURL() %>"
+		creationMenu="<%= viewDigitalSalesRoomRoomListDisplayContext.getCreationMenu() %>"
+		fdsActionDropdownItems="<%= viewDigitalSalesRoomRoomListDisplayContext.getFDSActionDropdownItems() %>"
 		formName="fm"
 		id="<%= DigitalSalesRoomFDSNames.ROOMS %>"
 		propsTransformer="{DSRListFDSPropsTransformer} from digital-sales-room-web"

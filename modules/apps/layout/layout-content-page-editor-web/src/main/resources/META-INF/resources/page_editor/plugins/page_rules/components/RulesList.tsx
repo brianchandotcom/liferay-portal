@@ -303,6 +303,21 @@ function RuleItem({
 		>
 			<ClayList.ItemField expand>
 				<div className="align-items-center d-flex">
+					<ClayButtonWithIcon
+						aria-label={sub(Liferay.Language.get('move-x'), name)}
+						borderless
+						className="ml-n2 text-secondary"
+						onClick={(event) => {
+							event.stopPropagation();
+						}}
+						onKeyDown={handleKeyboardDragAndDrop}
+						ref={dragHandlerRef}
+						size="sm"
+						symbol="drag"
+						tabIndex={tabIndex}
+						title={sub(Liferay.Language.get('move-x'), name)}
+					/>
+
 					{editing ? (
 						<input
 							onBlur={() => {
@@ -349,27 +364,6 @@ function RuleItem({
 							className="flex-grow-1 font-weight-semi-bold"
 							onDoubleClick={() => setEditing(true)}
 						>
-							<ClayButtonWithIcon
-								aria-label={sub(
-									Liferay.Language.get('move-x'),
-									name
-								)}
-								borderless
-								className="ml-n2 mt-n1 text-secondary"
-								onClick={(event) => {
-									event.stopPropagation();
-								}}
-								onKeyDown={handleKeyboardDragAndDrop}
-								ref={dragHandlerRef}
-								size="sm"
-								symbol="drag"
-								tabIndex={tabIndex}
-								title={sub(
-									Liferay.Language.get('move-x'),
-									name
-								)}
-							/>
-
 							<span aria-hidden="true">
 								{name}
 

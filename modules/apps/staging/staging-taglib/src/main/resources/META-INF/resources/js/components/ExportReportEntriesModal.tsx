@@ -91,6 +91,13 @@ export function ExportReportEntriesModal({
 
 				<ClayProgressBar
 					aria-labelledby={`${importProcessId}status`}
+					messages={{
+						ariaLabelAttention: Liferay.Language.get(
+							'attention-value-is-at-x'
+						),
+						ariaLabelComplete: Liferay.Language.get('complete'),
+						ariaLabelInProgress: Liferay.Language.get('progress-x'),
+					}}
 					value={progress}
 				/>
 			</Modal.Body>

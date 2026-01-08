@@ -156,7 +156,19 @@ function SingleFileUploader({
 							</ClayLayout.ContentCol>
 
 							<ClayLayout.ContentCol expand>
-								<ClayProgressBar value={progress} />
+								<ClayProgressBar
+									messages={{
+										ariaLabelAttention:
+											Liferay.Language.get(
+												'attention-value-is-at-x'
+											),
+										ariaLabelComplete:
+											Liferay.Language.get('complete'),
+										ariaLabelInProgress:
+											Liferay.Language.get('progress-x'),
+									}}
+									value={progress}
+								/>
 							</ClayLayout.ContentCol>
 
 							<ClayLayout.ContentCol>

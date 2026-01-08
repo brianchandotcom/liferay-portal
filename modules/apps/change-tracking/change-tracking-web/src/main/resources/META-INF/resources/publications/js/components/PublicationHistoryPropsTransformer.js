@@ -59,7 +59,16 @@ export default function propsTransformer({
 		}, [props]);
 
 		return props.value.label === 'in-progress' ? (
-			<ClayProgressBar value={percentage} />
+			<ClayProgressBar
+				messages={{
+					ariaLabelAttention: Liferay.Language.get(
+						'attention-value-is-at-x'
+					),
+					ariaLabelComplete: Liferay.Language.get('complete'),
+					ariaLabelInProgress: Liferay.Language.get('progress-x'),
+				}}
+				value={percentage}
+			/>
 		) : (
 			<StatusRenderer value={props.value} />
 		);

@@ -43,9 +43,17 @@ public class NioZipReaderImpl implements ZipReader {
 	}
 
 	public NioZipReaderImpl(InputStream inputStream) throws IOException {
-		_tempFile = FileUtil.createTempFile(inputStream);
+		File tempFile = FileUtil.createTempFile(inputStream);
 
-		_init(_tempFile);
+		try {
+			_init(tempFile);
+			_tempFile = tempFile;
+		}
+		catch (Throwable throwable) {
+			_deleteTempFile(tempFile);
+
+			throw throwable;
+		}
 	}
 
 	@Override
@@ -60,7 +68,7 @@ public class NioZipReaderImpl implements ZipReader {
 		}
 		finally {
 			if (_tempFile != null) {
-				_tempFile.delete();
+				_deleteTempFile(_tempFile);
 			}
 		}
 	}
@@ -177,6 +185,13 @@ public class NioZipReaderImpl implements ZipReader {
 		}
 		catch (IOException ioException) {
 			throw new UncheckedIOException(ioException);
+		}
+	}
+
+	private void _deleteTempFile(File file) {
+		if (!file.delete() && _log.isWarnEnabled()) {
+			_log.warn(
+				"Failed to delete temporary file " + file.getAbsolutePath());
 		}
 	}
 

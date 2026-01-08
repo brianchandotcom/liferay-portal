@@ -518,8 +518,6 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		File file = FileUtil.createTempFile("lar");
 
-		ZipReader zipReader = null;
-
 		try (InputStream inputStream = _dlFileEntryLocalService.getFileAsStream(
 				fileEntry.getFileEntryId(), fileEntry.getVersion(), false)) {
 
@@ -529,20 +527,16 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			String userIdStrategy = MapUtil.getString(
 				parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
 
-			zipReader = _zipReaderFactory.getZipReader(file);
+			try (ZipReader zipReader = _zipReaderFactory.getZipReader(file)) {
+				PortletDataContext portletDataContext =
+					_portletDataContextFactory.createImportPortletDataContext(
+						group.getCompanyId(), groupId, parameterMap,
+						getUserIdStrategy(userId, userIdStrategy), zipReader);
 
-			PortletDataContext portletDataContext =
-				_portletDataContextFactory.createImportPortletDataContext(
-					group.getCompanyId(), groupId, parameterMap,
-					getUserIdStrategy(userId, userIdStrategy), zipReader);
-
-			manifestSummary = getManifestSummary(portletDataContext);
+				manifestSummary = getManifestSummary(portletDataContext);
+			}
 		}
 		finally {
-			if (zipReader != null) {
-				zipReader.close();
-			}
-
 			FileUtil.delete(file);
 		}
 

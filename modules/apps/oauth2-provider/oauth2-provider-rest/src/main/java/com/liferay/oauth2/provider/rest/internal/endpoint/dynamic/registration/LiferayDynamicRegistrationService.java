@@ -138,10 +138,10 @@ public class LiferayDynamicRegistrationService
 			properties.put("tos_uri", tosUri);
 		}
 
-		String clientLogoUri = clientRegistration.getLogoUri();
+		String logoUri = clientRegistration.getLogoUri();
 
-		if (Validator.isNotNull(clientLogoUri)) {
-			client.setApplicationLogoUri(clientLogoUri);
+		if (Validator.isNotNull(logoUri)) {
+			client.setApplicationLogoUri(logoUri);
 		}
 
 		String clientUri = clientRegistration.getClientUri();

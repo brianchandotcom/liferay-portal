@@ -148,13 +148,14 @@ public class OAuthClientASLocalMetadataModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long OAUTHCLIENTASLOCALMETADATAID_COLUMN_BITMASK = 32L;
+	public static final long USERID_COLUMN_BITMASK = 32L;
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long USERID_COLUMN_BITMASK = 64L;
+	public static final long OAUTHCLIENTASLOCALMETADATAID_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -410,16 +411,6 @@ public class OAuthClientASLocalMetadataModelImpl
 		}
 
 		_oAuthClientASLocalMetadataId = oAuthClientASLocalMetadataId;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public long getOriginalOAuthClientASLocalMetadataId() {
-		return GetterUtil.getLong(
-			this.<Long>getColumnOriginalValue("oAuthClientASLocalMetadataId"));
 	}
 
 	@JSON

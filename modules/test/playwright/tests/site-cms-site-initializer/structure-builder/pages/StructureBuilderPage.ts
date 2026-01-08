@@ -380,7 +380,10 @@ export class StructureBuilderPage {
 		}).toPass();
 	}
 
-	async deleteFields(fields: Field[]) {
+	async deleteFields(
+		fields: Field[],
+		{confirm}: {confirm?: boolean} = {confirm: true}
+	) {
 
 		// Deleting one field
 
@@ -424,7 +427,7 @@ export class StructureBuilderPage {
 			hasText: 'Delete Fields',
 		});
 
-		if (await modal.isVisible()) {
+		if ((await modal.isVisible()) && confirm) {
 			await clickAndExpectToBeHidden({
 				target: modal,
 				trigger: modal.getByText('Delete', {exact: true}),

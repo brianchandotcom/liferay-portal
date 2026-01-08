@@ -50,8 +50,9 @@ public class ViewVersionHistoryDisplayContext {
 
 	public String getAPIURL() throws PortalException {
 		return StringBundler.concat(
-			"/o", _objectDefinition.getRESTContextPath(), StringPool.SLASH,
-			_objectEntry.getObjectEntryId(),
+			"/o", _objectDefinition.getRESTContextPath(), "/scopes/",
+			_objectEntry.getGroupId(), "/by-external-reference-code/",
+			_objectEntry.getExternalReferenceCode(),
 			"/versions?nestedFields=file.thumbnailURL");
 	}
 

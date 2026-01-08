@@ -38,9 +38,9 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import org.junit.AfterClass;
+import org.junit.After;
 import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -59,8 +59,8 @@ public class FriendlyURLEntryLocalServiceImplTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		Mockito.when(
 			ModelHintsUtil.getMaxLength(
 				FriendlyURLEntryLocalization.class.getName(), "urlTitle")
@@ -75,8 +75,8 @@ public class FriendlyURLEntryLocalServiceImplTest {
 		);
 	}
 
-	@AfterClass
-	public static void tearDownClass() throws Exception {
+	@After
+	public void tearDown() throws Exception {
 		_batchEngineThreadLocalMockedStatic.close();
 		_exportImportThreadLocalMockedStatic.close();
 		_modelHintsUtilMockedStatic.close();
@@ -341,26 +341,20 @@ public class FriendlyURLEntryLocalServiceImplTest {
 		);
 	}
 
-	private static final MockedStatic<BatchEngineThreadLocal>
-		_batchEngineThreadLocalMockedStatic = Mockito.mockStatic(
-			BatchEngineThreadLocal.class);
-	private static final MockedStatic<ExportImportThreadLocal>
-		_exportImportThreadLocalMockedStatic = Mockito.mockStatic(
-			ExportImportThreadLocal.class);
-	private static final MockedStatic<ModelHintsUtil>
-		_modelHintsUtilMockedStatic = Mockito.mockStatic(ModelHintsUtil.class);
-	private static final MockedStatic<ResourceActionsUtil>
-		_resourceActionsUtilMockedStatic = Mockito.mockStatic(
-			ResourceActionsUtil.class);
-
 	private final AssetEntryLocalService _assetEntryLocalService = Mockito.mock(
 		AssetEntryLocalService.class);
+	private final MockedStatic<BatchEngineThreadLocal>
+		_batchEngineThreadLocalMockedStatic = Mockito.mockStatic(
+			BatchEngineThreadLocal.class);
 	private final ClassNameLocalService _classNameLocalService = Mockito.mock(
 		ClassNameLocalService.class);
 	private final CounterLocalService _counterLocalService = Mockito.mock(
 		CounterLocalService.class);
 	private final ExportImportHelper _exportImportHelper = Mockito.mock(
 		ExportImportHelper.class);
+	private final MockedStatic<ExportImportThreadLocal>
+		_exportImportThreadLocalMockedStatic = Mockito.mockStatic(
+			ExportImportThreadLocal.class);
 	private final FriendlyURLEntry _friendlyURLEntry = Mockito.mock(
 		FriendlyURLEntry.class);
 	private final FriendlyURLEntryLocalization _friendlyURLEntryLocalization =
@@ -380,6 +374,11 @@ public class FriendlyURLEntryLocalServiceImplTest {
 	private final GroupLocalService _groupLocalService = Mockito.mock(
 		GroupLocalService.class);
 	private final Language _language = Mockito.mock(Language.class);
+	private final MockedStatic<ModelHintsUtil> _modelHintsUtilMockedStatic =
+		Mockito.mockStatic(ModelHintsUtil.class);
 	private final Portal _portal = Mockito.mock(Portal.class);
+	private final MockedStatic<ResourceActionsUtil>
+		_resourceActionsUtilMockedStatic = Mockito.mockStatic(
+			ResourceActionsUtil.class);
 
 }

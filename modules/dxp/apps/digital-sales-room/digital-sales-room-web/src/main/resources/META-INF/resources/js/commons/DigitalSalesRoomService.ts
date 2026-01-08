@@ -43,11 +43,14 @@ export type TDSRDTO = {
 	accountId: number;
 	accountName?: string;
 	banner?: {
+		fileBase64?: string;
 		fileURL: string;
 		id: number;
 	};
 	channelId: number;
+	channelName?: string;
 	clientLogo?: {
+		fileBase64?: string;
 		fileURL: string;
 		id: number;
 	};
@@ -171,6 +174,20 @@ async function getChannels(channelName = ''): Promise<TChannelsDTO> {
 	throw new Error(error);
 }
 
+async function getDigitalSalesRoom(
+	digitalSalesRoomId: number
+): Promise<TDSRDTO> {
+	const {data, error} = await ApiHelper.get(
+		`${PATH}/${digitalSalesRoomId}?nestedFields=fileBase64`
+	);
+
+	if (data) {
+		return data as TDSRDTO;
+	}
+
+	throw new Error(error);
+}
+
 async function getDigitalSalesRoomTemplate(
 	digitalSalesRoomTemplateId: number
 ): Promise<TDSRTemplateDTO> {
@@ -192,6 +209,48 @@ async function getDigitalSalesRoomTemplates(): Promise<TDSRTemplatesDTO> {
 
 	if (data) {
 		return data as TDSRTemplatesDTO;
+	}
+
+	throw new Error(error);
+}
+
+async function patchDigitalSalesRoom(
+	digitalSalesRoomId: number,
+	{
+		accountId,
+		banner,
+		channelId,
+		channelName,
+		clientLogo,
+		clientName,
+		description,
+		friendlyUrlPath,
+		name,
+		primaryColor,
+		secondaryColor,
+		userAccountBriefs,
+	}: TDSRPayload
+): Promise<TDSRDTO> {
+	const {data, error} = await ApiHelper.patch(
+		`${PATH}/${digitalSalesRoomId}`,
+		{
+			accountId,
+			banner,
+			channelId,
+			channelName,
+			clientLogo,
+			clientName,
+			description,
+			friendlyUrlPath,
+			name,
+			primaryColor,
+			secondaryColor,
+			userAccountBriefs,
+		}
+	);
+
+	if (data) {
+		return data as TDSRDTO;
 	}
 
 	throw new Error(error);
@@ -357,8 +416,10 @@ export default {
 	deleteDigitalSalesRoomTemplate,
 	getAccounts,
 	getChannels,
+	getDigitalSalesRoom,
 	getDigitalSalesRoomTemplate,
 	getDigitalSalesRoomTemplates,
+	patchDigitalSalesRoom,
 	patchDigitalSalesRoomTemplate,
 	postDigitalSalesRoom,
 	postDigitalSalesRoomDigitalSalesRoomTemplate,

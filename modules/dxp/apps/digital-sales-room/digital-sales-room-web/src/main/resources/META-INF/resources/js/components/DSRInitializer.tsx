@@ -74,7 +74,7 @@ export function getColor(color: string) {
 	return color;
 }
 
-function getFriendlyURL(friendlyURL: string) {
+export function getFriendlyURL(friendlyURL: string) {
 	if (!friendlyURL) {
 		return '';
 	}

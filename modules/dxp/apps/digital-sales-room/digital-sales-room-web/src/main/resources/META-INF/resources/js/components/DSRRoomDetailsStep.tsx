@@ -44,6 +44,7 @@ export function getImage(name: string): string {
 function DSRRoomDetailsStep({
 	numberOfSteps,
 	setHandleStepSubmit,
+	showHeader = true,
 	step = 1,
 }: TDSRRoomDetailsStepProps) {
 	const {dataContext, setDataContext} = useContext<TDSRContext>(DSRContext);
@@ -247,28 +248,35 @@ function DSRRoomDetailsStep({
 
 	return (
 		<>
-			<div>
-				<div className="mb-1 text-secondary" data-qa-id="stepLocator">
-					{sub(
-						Liferay.Language.get('step-x-of-x'),
-						step,
-						numberOfSteps
-					)}
-				</div>
+			{showHeader ? (
+				<div>
+					<div
+						className="mb-1 text-secondary"
+						data-qa-id="stepLocator"
+					>
+						{sub(
+							Liferay.Language.get('step-x-of-x'),
+							step,
+							numberOfSteps
+						)}
+					</div>
 
-				<div
-					className="mb-1 text-6 text-weight-bold"
-					data-qa-id="stepTitle"
-				>
-					{Liferay.Language.get('customize-your-room')}
-				</div>
+					<div
+						className="mb-1 text-6 text-weight-bold"
+						data-qa-id="stepTitle"
+					>
+						{Liferay.Language.get('customize-your-room')}
+					</div>
 
-				<div className="text-secondary">
-					{Liferay.Language.get(
-						"personalize-your-room-to-match-your-customers'-brand"
-					)}
+					<div className="text-secondary">
+						{Liferay.Language.get(
+							"personalize-your-room-to-match-your-customers'-brand"
+						)}
+					</div>
 				</div>
-			</div>
+			) : (
+				<></>
+			)}
 			<div className="mt-4 row">
 				<ClayForm.Group
 					className={classNames('col-12', {

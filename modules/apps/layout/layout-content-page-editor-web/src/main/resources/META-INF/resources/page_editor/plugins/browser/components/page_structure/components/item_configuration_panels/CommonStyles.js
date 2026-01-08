@@ -15,6 +15,7 @@ import {
 	useSelector,
 	useSelectorRef,
 } from '../../../../../../app/contexts/StoreContext';
+import selectCanHideFragments from '../../../../../../app/selectors/selectCanHideFragments';
 import updateItemStyle from '../../../../../../app/utils/updateItemStyle';
 import {FieldSet, fieldIsDisabled} from './FieldSet';
 
@@ -187,6 +188,17 @@ function filterCommonStyles({item, permissions, role, styles}) {
 				...fieldSet,
 				styles: fieldSet.styles.filter((style) =>
 					isSpacingStyle(style)
+				),
+			};
+		});
+	}
+
+	if (!selectCanHideFragments({permissions})) {
+		nextStyles = nextStyles.map((fieldSet) => {
+			return {
+				...fieldSet,
+				styles: fieldSet.styles.filter(
+					(style) => style.type !== 'hideFragment'
 				),
 			};
 		});

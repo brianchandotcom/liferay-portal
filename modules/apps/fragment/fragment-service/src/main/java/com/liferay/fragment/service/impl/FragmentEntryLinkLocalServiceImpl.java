@@ -252,6 +252,21 @@ public class FragmentEntryLinkLocalServiceImpl
 	}
 
 	@Override
+	public void deleteFragmentEntryLinksByFragmentEntryERC(
+		String fragmentEntryERC, String fragmentEntryScopeERC,
+		boolean deleted) {
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			fragmentEntryLinkPersistence.findByFEERC_FESERC_D(
+				fragmentEntryERC, fragmentEntryScopeERC, deleted);
+
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			fragmentEntryLinkLocalService.deleteFragmentEntryLink(
+				fragmentEntryLink);
+		}
+	}
+
+	@Override
 	public List<FragmentEntryLink>
 		deleteLayoutPageTemplateEntryFragmentEntryLinks(
 			long groupId, long plid) {

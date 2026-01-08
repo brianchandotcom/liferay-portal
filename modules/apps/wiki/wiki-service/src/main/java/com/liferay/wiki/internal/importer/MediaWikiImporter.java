@@ -332,118 +332,120 @@ public class MediaWikiImporter {
 			return;
 		}
 
-		ZipReader zipReader = _zipReaderFactory.getZipReader(imagesInputStream);
+		try (ZipReader zipReader = _zipReaderFactory.getZipReader(
+				imagesInputStream)) {
 
-		List<String> entries = zipReader.getEntries();
+			List<String> entries = zipReader.getEntries();
 
-		if (entries == null) {
-			throw new ImportFilesException();
-		}
-
-		ProgressTracker progressTracker =
-			ProgressTrackerThreadLocal.getProgressTracker();
-
-		int count = 0;
-
-		int total = entries.size();
-
-		if (total > 0) {
-			try {
-				_wikiPageLocalService.getPage(
-					node.getNodeId(), WikiPageConstants.SHARED_IMAGES_TITLE);
+			if (entries == null) {
+				throw new ImportFilesException();
 			}
-			catch (NoSuchPageException noSuchPageException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchPageException);
+
+			ProgressTracker progressTracker =
+				ProgressTrackerThreadLocal.getProgressTracker();
+
+			int count = 0;
+
+			int total = entries.size();
+
+			if (total > 0) {
+				try {
+					_wikiPageLocalService.getPage(
+						node.getNodeId(),
+						WikiPageConstants.SHARED_IMAGES_TITLE);
 				}
-
-				ServiceContext serviceContext = new ServiceContext();
-
-				serviceContext.setAddGroupPermissions(true);
-				serviceContext.setAddGuestPermissions(true);
-
-				_wikiPageLocalService.addPage(
-					userId, node.getNodeId(),
-					WikiPageConstants.SHARED_IMAGES_TITLE, "See attachments",
-					null, true, serviceContext);
-			}
-		}
-
-		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
-			new ArrayList<>();
-
-		try {
-			int percentage = 50;
-
-			for (int i = 0; i < entries.size(); i++) {
-				String entry = entries.get(i);
-
-				String key = entry;
-
-				InputStream inputStream = zipReader.getEntryAsInputStream(
-					entry);
-
-				String[] paths = StringUtil.split(key, CharPool.SLASH);
-
-				if (!_isValidImage(paths, inputStream)) {
-					if (_log.isInfoEnabled()) {
-						_log.info("Ignoring " + key);
+				catch (NoSuchPageException noSuchPageException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(noSuchPageException);
 					}
 
-					continue;
+					ServiceContext serviceContext = new ServiceContext();
+
+					serviceContext.setAddGroupPermissions(true);
+					serviceContext.setAddGuestPermissions(true);
+
+					_wikiPageLocalService.addPage(
+						userId, node.getNodeId(),
+						WikiPageConstants.SHARED_IMAGES_TITLE,
+						"See attachments", null, true, serviceContext);
+				}
+			}
+
+			List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
+				new ArrayList<>();
+
+			try {
+				int percentage = 50;
+
+				for (int i = 0; i < entries.size(); i++) {
+					String entry = entries.get(i);
+
+					String key = entry;
+
+					InputStream inputStream = zipReader.getEntryAsInputStream(
+						entry);
+
+					String[] paths = StringUtil.split(key, CharPool.SLASH);
+
+					if (!_isValidImage(paths, inputStream)) {
+						if (_log.isInfoEnabled()) {
+							_log.info("Ignoring " + key);
+						}
+
+						continue;
+					}
+
+					String fileName = StringUtil.toLowerCase(
+						paths[paths.length - 1]);
+
+					ObjectValuePair<String, InputStream> inputStreamOVP =
+						new ObjectValuePair<>(fileName, inputStream);
+
+					inputStreamOVPs.add(inputStreamOVP);
+
+					count++;
+
+					if ((i % 5) == 0) {
+						_wikiPageLocalService.addPageAttachments(
+							userId, node.getNodeId(),
+							WikiPageConstants.SHARED_IMAGES_TITLE,
+							inputStreamOVPs);
+
+						inputStreamOVPs.clear();
+
+						if (progressTracker != null) {
+							percentage = Math.min(50 + ((i * 50) / total), 99);
+
+							progressTracker.setPercent(percentage);
+						}
+					}
 				}
 
-				String fileName = StringUtil.toLowerCase(
-					paths[paths.length - 1]);
-
-				ObjectValuePair<String, InputStream> inputStreamOVP =
-					new ObjectValuePair<>(fileName, inputStream);
-
-				inputStreamOVPs.add(inputStreamOVP);
-
-				count++;
-
-				if ((i % 5) == 0) {
+				if (!inputStreamOVPs.isEmpty()) {
 					_wikiPageLocalService.addPageAttachments(
 						userId, node.getNodeId(),
 						WikiPageConstants.SHARED_IMAGES_TITLE, inputStreamOVPs);
+				}
+			}
+			finally {
+				for (ObjectValuePair<String, InputStream> inputStreamOVP :
+						inputStreamOVPs) {
 
-					inputStreamOVPs.clear();
-
-					if (progressTracker != null) {
-						percentage = Math.min(50 + ((i * 50) / total), 99);
-
-						progressTracker.setPercent(percentage);
+					try (InputStream inputStream = inputStreamOVP.getValue()) {
+					}
+					catch (IOException ioException) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(ioException);
+						}
 					}
 				}
 			}
 
-			if (!inputStreamOVPs.isEmpty()) {
-				_wikiPageLocalService.addPageAttachments(
-					userId, node.getNodeId(),
-					WikiPageConstants.SHARED_IMAGES_TITLE, inputStreamOVPs);
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						"Imported ", count, " images into ", node.getName()));
 			}
-		}
-		finally {
-			for (ObjectValuePair<String, InputStream> inputStreamOVP :
-					inputStreamOVPs) {
-
-				try (InputStream inputStream = inputStreamOVP.getValue()) {
-				}
-				catch (IOException ioException) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(ioException);
-					}
-				}
-			}
-		}
-
-		zipReader.close();
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				StringBundler.concat(
-					"Imported ", count, " images into ", node.getName()));
 		}
 	}
 

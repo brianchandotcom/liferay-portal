@@ -44,7 +44,7 @@ public class TicketsTicketAttachmentsRestController extends BaseRestController {
 		@AuthenticationPrincipal Jwt jwt,
 		@PathVariable("ticketId") String ticketId) {
 
-		return _check(jwt, ticketId, false);
+		return _getResponse(jwt, ticketId, true);
 	}
 
 	@GetMapping("/upload-access-check")
@@ -52,11 +52,11 @@ public class TicketsTicketAttachmentsRestController extends BaseRestController {
 		@AuthenticationPrincipal Jwt jwt,
 		@PathVariable("ticketId") String ticketId) {
 
-		return _check(jwt, ticketId, true);
+		return _getResponse(jwt, ticketId, false);
 	}
 
-	private ResponseEntity<String> _check(
-		Jwt jwt, String ticketId, boolean upload) {
+	private ResponseEntity<String> _getResponse(
+		Jwt jwt, String ticketId, boolean allowClosedTicket) {
 
 		try {
 			JiraSupportIssue jiraSupportIssue =
@@ -67,7 +67,12 @@ public class TicketsTicketAttachmentsRestController extends BaseRestController {
 					"INVALID_TICKET_NUMBER", HttpStatus.NOT_FOUND);
 			}
 
-			if (!_contains(
+			if (jiraSupportIssue.isClosed() && !allowClosedTicket) {
+				return new ResponseEntity<>(
+					"TICKET_IS_CLOSED", HttpStatus.BAD_REQUEST);
+			}
+
+			if (!_hasViewPermission(
 					jwt,
 					getAccountKey(
 						jiraSupportIssue.getOrganizationId(),
@@ -75,11 +80,6 @@ public class TicketsTicketAttachmentsRestController extends BaseRestController {
 
 				return new ResponseEntity<>(
 					"FORBIDDEN_ACCESS", HttpStatus.FORBIDDEN);
-			}
-
-			if (jiraSupportIssue.isClosed() && upload) {
-				return new ResponseEntity<>(
-					"TICKET_IS_CLOSED", HttpStatus.BAD_REQUEST);
 			}
 
 			return new ResponseEntity<>("", HttpStatus.OK);
@@ -102,7 +102,8 @@ public class TicketsTicketAttachmentsRestController extends BaseRestController {
 		}
 	}
 
-	private boolean _contains(Jwt jwt, String accountExternalReferenceCode)
+	private boolean _hasViewPermission(
+			Jwt jwt, String accountExternalReferenceCode)
 		throws Exception {
 
 		UserAccountResource userAccountResource = UserAccountResource.builder(

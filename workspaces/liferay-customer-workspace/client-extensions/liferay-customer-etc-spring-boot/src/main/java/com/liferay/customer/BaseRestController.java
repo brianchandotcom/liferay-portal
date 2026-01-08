@@ -9,9 +9,6 @@ import com.liferay.customer.exception.JiraOrganizationNotFoundException;
 import com.liferay.customer.service.JiraService;
 import com.liferay.portal.kernel.util.Validator;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -23,28 +20,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class BaseRestController
 	extends com.liferay.client.extension.util.spring.boot3.BaseRestController {
 
-	protected String getAccountKey(String organizationId, String workspaceId)
-		throws Exception {
+	protected String getAccountKey(
+			String jiraOrganizationId, String jiraWorkspaceId)
+		throws JiraOrganizationNotFoundException {
 
-		try {
-			return _getAccountKey(organizationId, workspaceId);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
+		if (Validator.isNull(jiraOrganizationId) ||
+			Validator.isNull(jiraWorkspaceId)) {
 
-			throw new JiraOrganizationNotFoundException(exception);
-		}
-	}
-
-	private String _getAccountKey(String organizationId, String workspaceId)
-		throws Exception {
-
-		if (Validator.isNull(organizationId) || Validator.isNull(workspaceId)) {
 			throw new JiraOrganizationNotFoundException();
 		}
 
 		JSONObject assetObjectJSONObject = _jiraService.getAssetObject(
-			workspaceId, organizationId);
+			jiraWorkspaceId, jiraOrganizationId);
 
 		JSONArray jsonArray = assetObjectJSONObject.getJSONArray("attributes");
 
@@ -71,8 +58,6 @@ public class BaseRestController
 
 		throw new JiraOrganizationNotFoundException();
 	}
-
-	private static final Log _log = LogFactory.getLog(BaseRestController.class);
 
 	@Autowired
 	private JiraService _jiraService;

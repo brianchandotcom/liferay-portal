@@ -42,18 +42,16 @@ public class ObjectMapperProviderUtilTest {
 		ObjectWriter objectWriter = objectMapper.writer();
 
 		Assert.assertEquals(
-			"{\n  \"type\" : \"test\"\n}",
-			objectWriter.writeValueAsString(new TestSubclass()));
+			"{ }", objectWriter.writeValueAsString(new TestSubclass()));
 		Assert.assertEquals(
-			"{\n  \"type\" : \"ObjectMapperProviderUtilTest$1\"\n}",
+			"{ }",
 			objectWriter.writeValueAsString(
 				new TestSubclass() {
 					{
 					}
 				}));
 		Assert.assertEquals(
-			"{\n  \"type\" : \"ObjectMapperProviderUtilTest$2\",\n  \"type\" " +
-				": \"test\"\n}",
+			"{\n  \"type\" : \"test\"\n}",
 			objectWriter.writeValueAsString(
 				new TestSubclass() {
 					{

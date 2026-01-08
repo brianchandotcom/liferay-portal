@@ -463,11 +463,11 @@ public class StructuredContentResourceTest
 		super.testGetStructuredContent();
 
 		_testGetStructuredContentAssetLibrary();
-		_testGetStructuredContentWithAllTypesOfContentFields(false);
-		_testGetStructuredContentWithAllTypesOfContentFields(true);
-		_testGetStructuredContentWithAllTypesOfContentFieldsAndAcceptAllLanguagesHeader(
+		_testGetStructuredContentWithComplexStructure(false);
+		_testGetStructuredContentWithComplexStructure(true);
+		_testGetStructuredContentWithComplexStructureAndAcceptAllLanguagesHeader(
 			false);
-		_testGetStructuredContentWithAllTypesOfContentFieldsAndAcceptAllLanguagesHeader(
+		_testGetStructuredContentWithComplexStructureAndAcceptAllLanguagesHeader(
 			true);
 		_testGetStructuredContentWithArticleFieldWithDifferentLocale();
 		_testGetStructuredContentWithDataDefinitionEmptyDefaultValue();
@@ -773,7 +773,7 @@ public class StructuredContentResourceTest
 
 		_testPutStructuredContent(false);
 		_testPutStructuredContent(true);
-		_testPutStructuredContentWithCompleteStructure();
+		_testPutStructuredContentWithComplexStructure();
 	}
 
 	@Override
@@ -1311,7 +1311,7 @@ public class StructuredContentResourceTest
 			RandomTestUtil.randomInt(0, 100), RandomTestUtil.randomInt(0, 100));
 	}
 
-	private StructuredContent _randomCompleteStructuredContent(
+	private StructuredContent _randomComplexStructuredContent(
 			long dlFileEntryId, boolean localizable)
 		throws Exception {
 
@@ -1379,7 +1379,7 @@ public class StructuredContentResourceTest
 				{
 					contentFieldValue = new ContentFieldValue() {
 						{
-							data = _COMPLETE_STRUCTURED_CONTENT_OPTIONS
+							data = _COMPLEX_STRUCTURED_CONTENT_OPTIONS
 								[RandomTestUtil.randomInt(0, 2)];
 
 							setValue(
@@ -1388,7 +1388,7 @@ public class StructuredContentResourceTest
 										return null;
 									}
 
-									return _COMPLETE_STRUCTURED_CONTENT_OPTIONS
+									return _COMPLEX_STRUCTURED_CONTENT_OPTIONS
 										[RandomTestUtil.randomInt(0, 2)];
 								});
 						}
@@ -1401,7 +1401,7 @@ public class StructuredContentResourceTest
 				{
 					contentFieldValue = new ContentFieldValue() {
 						{
-							data = _COMPLETE_STRUCTURED_CONTENT_OPTIONS
+							data = _COMPLEX_STRUCTURED_CONTENT_OPTIONS
 								[RandomTestUtil.randomInt(0, 2)];
 
 							setValue(
@@ -1410,7 +1410,7 @@ public class StructuredContentResourceTest
 										return null;
 									}
 
-									return _COMPLETE_STRUCTURED_CONTENT_OPTIONS
+									return _COMPLEX_STRUCTURED_CONTENT_OPTIONS
 										[RandomTestUtil.randomInt(0, 2)];
 								});
 						}
@@ -1425,7 +1425,7 @@ public class StructuredContentResourceTest
 						{
 							data =
 								"[" +
-									_COMPLETE_STRUCTURED_CONTENT_OPTIONS
+									_COMPLEX_STRUCTURED_CONTENT_OPTIONS
 										[RandomTestUtil.randomInt(0, 2)] + "]";
 
 							setValue(
@@ -1435,7 +1435,7 @@ public class StructuredContentResourceTest
 									}
 
 									return "[" +
-										_COMPLETE_STRUCTURED_CONTENT_OPTIONS
+										_COMPLEX_STRUCTURED_CONTENT_OPTIONS
 											[RandomTestUtil.randomInt(0, 2)] +
 												"]";
 								});
@@ -1592,15 +1592,12 @@ public class StructuredContentResourceTest
 
 	private String _randomGrid() {
 		return StringBundler.concat(
-			"{", _COMPLETE_STRUCTURED_CONTENT_OPTIONS[0], ":",
-			_COMPLETE_STRUCTURED_CONTENT_OPTIONS
-				[RandomTestUtil.randomInt(0, 2)],
-			",", _COMPLETE_STRUCTURED_CONTENT_OPTIONS[1], ":",
-			_COMPLETE_STRUCTURED_CONTENT_OPTIONS
-				[RandomTestUtil.randomInt(0, 2)],
-			",", _COMPLETE_STRUCTURED_CONTENT_OPTIONS[2], ":",
-			_COMPLETE_STRUCTURED_CONTENT_OPTIONS
-				[RandomTestUtil.randomInt(0, 2)],
+			"{", _COMPLEX_STRUCTURED_CONTENT_OPTIONS[0], ":",
+			_COMPLEX_STRUCTURED_CONTENT_OPTIONS[RandomTestUtil.randomInt(0, 2)],
+			",", _COMPLEX_STRUCTURED_CONTENT_OPTIONS[1], ":",
+			_COMPLEX_STRUCTURED_CONTENT_OPTIONS[RandomTestUtil.randomInt(0, 2)],
+			",", _COMPLEX_STRUCTURED_CONTENT_OPTIONS[2], ":",
+			_COMPLEX_STRUCTURED_CONTENT_OPTIONS[RandomTestUtil.randomInt(0, 2)],
 			"}");
 	}
 
@@ -2169,54 +2166,13 @@ public class StructuredContentResourceTest
 				getStructuredContent3.getStructuredContentFolderId()));
 	}
 
-	private void _testGetStructuredContentWithAllTypesOfContentFields(
-			boolean localizable)
-		throws Exception {
-
-		StructuredContent postStructuredContent =
-			structuredContentResource.postSiteStructuredContent(
-				testGroup.getGroupId(),
-				_randomCompleteStructuredContent(
-					_dlFileEntry.getFileEntryId(), localizable));
-
-		StructuredContent getStructuredContent =
-			structuredContentResource.getStructuredContent(
-				postStructuredContent.getId());
-
-		assertEquals(postStructuredContent, getStructuredContent);
-		assertValid(getStructuredContent);
-	}
-
-	private void
-			_testGetStructuredContentWithAllTypesOfContentFieldsAndAcceptAllLanguagesHeader(
-				boolean localizable)
-		throws Exception {
-
-		StructuredContentResource acceptAllLanguagesStructuredContentResource =
-			_buildStructureContentResource(LocaleUtil.getDefault());
-
-		StructuredContent postStructuredContent =
-			acceptAllLanguagesStructuredContentResource.
-				postSiteStructuredContent(
-					testGroup.getGroupId(),
-					_randomCompleteStructuredContent(
-						_dlFileEntry.getFileEntryId(), localizable));
-
-		StructuredContent getStructuredContent =
-			acceptAllLanguagesStructuredContentResource.getStructuredContent(
-				postStructuredContent.getId());
-
-		assertEquals(postStructuredContent, getStructuredContent);
-		assertValid(getStructuredContent);
-	}
-
 	private void _testGetStructuredContentWithArticleFieldWithDifferentLocale()
 		throws Exception {
 
 		StructuredContent postStructuredContent =
 			structuredContentResource.postSiteStructuredContent(
 				testGroup.getGroupId(),
-				_randomCompleteStructuredContent(
+				_randomComplexStructuredContent(
 					_dlFileEntry.getFileEntryId(), false));
 
 		StructuredContentResource.Builder builder =
@@ -2253,6 +2209,47 @@ public class StructuredContentResourceTest
 
 		Assert.assertEquals(
 			_JOURNAL_ARTICLE_TITLE_FR, structuredContent.getTitle());
+	}
+
+	private void _testGetStructuredContentWithComplexStructure(
+			boolean localizable)
+		throws Exception {
+
+		StructuredContent postStructuredContent =
+			structuredContentResource.postSiteStructuredContent(
+				testGroup.getGroupId(),
+				_randomComplexStructuredContent(
+					_dlFileEntry.getFileEntryId(), localizable));
+
+		StructuredContent getStructuredContent =
+			structuredContentResource.getStructuredContent(
+				postStructuredContent.getId());
+
+		assertEquals(postStructuredContent, getStructuredContent);
+		assertValid(getStructuredContent);
+	}
+
+	private void
+			_testGetStructuredContentWithComplexStructureAndAcceptAllLanguagesHeader(
+				boolean localizable)
+		throws Exception {
+
+		StructuredContentResource acceptAllLanguagesStructuredContentResource =
+			_buildStructureContentResource(LocaleUtil.getDefault());
+
+		StructuredContent postStructuredContent =
+			acceptAllLanguagesStructuredContentResource.
+				postSiteStructuredContent(
+					testGroup.getGroupId(),
+					_randomComplexStructuredContent(
+						_dlFileEntry.getFileEntryId(), localizable));
+
+		StructuredContent getStructuredContent =
+			acceptAllLanguagesStructuredContentResource.getStructuredContent(
+				postStructuredContent.getId());
+
+		assertEquals(postStructuredContent, getStructuredContent);
+		assertValid(getStructuredContent);
 	}
 
 	private void _testGetStructuredContentWithDataDefinitionEmptyDefaultValue()
@@ -2350,7 +2347,7 @@ public class StructuredContentResourceTest
 			structuredContentResource.
 				postStructuredContentFolderStructuredContent(
 					_journalFolder.getFolderId(),
-					_randomCompleteStructuredContent(
+					_randomComplexStructuredContent(
 						_dlFileEntry.getFileEntryId(), true));
 
 		StructuredContent getStructuredContent =
@@ -2465,7 +2462,7 @@ public class StructuredContentResourceTest
 			structuredContentResource.
 				postStructuredContentFolderStructuredContent(
 					_journalFolder.getFolderId(),
-					_randomCompleteStructuredContent(
+					_randomComplexStructuredContent(
 						dlFileEntry.getFileEntryId(), true));
 
 		StructuredContent getStructuredContent =
@@ -2492,7 +2489,7 @@ public class StructuredContentResourceTest
 			structuredContentResource.
 				postStructuredContentFolderStructuredContent(
 					_journalFolder.getFolderId(),
-					_randomCompleteStructuredContent(
+					_randomComplexStructuredContent(
 						dlFileEntry.getFileEntryId(), true));
 
 		DLFileEntryLocalServiceUtil.deleteFileEntry(dlFileEntry);
@@ -3234,12 +3231,12 @@ public class StructuredContentResourceTest
 		assertValid(putStructuredContent);
 	}
 
-	private void _testPutStructuredContentWithCompleteStructure()
+	private void _testPutStructuredContentWithComplexStructure()
 		throws Exception {
 
 		long dlFileEntryId = _dlFileEntry.getFileEntryId();
 
-		StructuredContent structuredContent = _randomCompleteStructuredContent(
+		StructuredContent structuredContent = _randomComplexStructuredContent(
 			dlFileEntryId, false);
 
 		StructuredContent postStructuredContent =
@@ -3304,7 +3301,7 @@ public class StructuredContentResourceTest
 		}
 	}
 
-	private static final String[] _COMPLETE_STRUCTURED_CONTENT_OPTIONS = {
+	private static final String[] _COMPLEX_STRUCTURED_CONTENT_OPTIONS = {
 		"Option1", "Option2", "Option3"
 	};
 

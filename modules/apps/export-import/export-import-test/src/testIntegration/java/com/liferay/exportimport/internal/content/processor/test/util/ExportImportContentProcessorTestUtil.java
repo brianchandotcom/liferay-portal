@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -240,6 +241,22 @@ public class ExportImportContentProcessorTestUtil {
 		return _replaceTimestampParameters(content);
 	}
 
+	private static void _addPermutations(
+		int index, List<String> list, List<List<String>> result) {
+
+		if (index == list.size()) {
+			result.add(new ArrayList<>(list));
+
+			return;
+		}
+
+		for (int i = index; i < list.size(); i++) {
+			Collections.swap(list, index, i);
+			_addPermutations(index + 1, list, result);
+			Collections.swap(list, index, i);
+		}
+	}
+
 	private static String _duplicateLinesWithParamNames(
 		String[] addParams, String content, String[] findParams) {
 
@@ -278,6 +295,16 @@ public class ExportImportContentProcessorTestUtil {
 			StringPool.NEW_LINE);
 	}
 
+	private static List<List<String>> _generatePermutations(
+		String... parameters) {
+
+		List<List<String>> permutations = new ArrayList<>();
+
+		_addPermutations(0, ListUtil.fromArray(parameters), permutations);
+
+		return permutations;
+	}
+
 	private static String _getFriendlyURL(Layout layout) {
 		return layout.getFriendlyURL();
 	}
@@ -297,56 +324,46 @@ public class ExportImportContentProcessorTestUtil {
 	}
 
 	private static String _replaceTimestampParameters(String content) {
-		List<String> urls = ListUtil.fromArray(StringUtil.splitLines(content));
+		List<String> urls = new ArrayList<>();
 
-		String parameterPermutation1 = String.join(
-			"&", _TIMESTAMP_PARAMETER, _WIDTH_PARAMETER, _HEIGHT_PARAMETER);
-		String parameterPermutation2 = String.join(
-			"&", _WIDTH_PARAMETER, _HEIGHT_PARAMETER, _TIMESTAMP_PARAMETER);
-		String parameterPermutation3 = String.join(
-			"&", _WIDTH_PARAMETER, _TIMESTAMP_PARAMETER, _HEIGHT_PARAMETER);
+		List<List<String>> permutations = _generatePermutations(
+			_HEIGHT_PARAMETER, _TIMESTAMP_PARAMETER, _WIDTH_PARAMETER);
 
-		String timestampParameterPermutation = StringBundler.concat(
-			_TIMESTAMP_PARAMETER, "?", parameterPermutation1);
-
-		List<String> outURLs = new ArrayList<>();
-
-		for (String url : urls) {
+		for (String url : ListUtil.fromArray(StringUtil.splitLines(content))) {
 			if (Validator.isNotNull(url) && !url.contains("[$TIMESTAMP") &&
 				!url.endsWith(StringPool.COLON)) {
 
-				outURLs.add(url);
+				urls.add(url);
 
 				continue;
 			}
 
-			outURLs.add(
-				StringUtil.replace(
-					url, new String[] {"[$TIMESTAMP$]", "[$TIMESTAMP_ONLY$]"},
-					new String[] {
-						"&" + parameterPermutation1, "?" + parameterPermutation1
-					}));
-			outURLs.add(
-				StringUtil.replace(
-					url, new String[] {"[$TIMESTAMP$]", "[$TIMESTAMP_ONLY$]"},
-					new String[] {
-						"&" + parameterPermutation2, "?" + parameterPermutation2
-					}));
-			outURLs.add(
-				StringUtil.replace(
-					url, new String[] {"[$TIMESTAMP$]", "[$TIMESTAMP_ONLY$]"},
-					new String[] {
-						"&" + parameterPermutation3, "?" + parameterPermutation3
-					}));
-			outURLs.add(
-				StringUtil.replace(
-					url, new String[] {"[$TIMESTAMP$]", "[$TIMESTAMP_ONLY$]"},
-					new String[] {
-						StringPool.BLANK, "?" + timestampParameterPermutation
-					}));
+			for (List<String> permutation : permutations) {
+				String parameters = String.join("&", permutation);
+
+				urls.add(
+					StringUtil.replace(
+						url,
+						new String[] {"[$TIMESTAMP$]", "[$TIMESTAMP_ONLY$]"},
+						new String[] {"&" + parameters, "?" + parameters}));
+
+				if (url.contains("[$TIMESTAMP")) {
+					urls.add(
+						StringUtil.replace(
+							url,
+							new String[] {
+								"[$TIMESTAMP$]", "[$TIMESTAMP_ONLY$]"
+							},
+							new String[] {
+								StringPool.BLANK,
+								StringBundler.concat(
+									"?", _TIMESTAMP_PARAMETER, "?", parameters)
+							}));
+				}
+			}
 		}
 
-		return StringUtil.merge(outURLs, StringPool.NEW_LINE);
+		return StringUtil.merge(urls, StringPool.NEW_LINE);
 	}
 
 	private static final String[] _EXTERNAL_GROUP_FRIENDLY_URL_VARIABLES = {

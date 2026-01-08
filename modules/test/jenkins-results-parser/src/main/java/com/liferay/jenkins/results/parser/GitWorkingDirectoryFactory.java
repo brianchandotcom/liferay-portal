@@ -68,50 +68,54 @@ public class GitWorkingDirectoryFactory {
 			String key = JenkinsResultsParserUtil.combine(
 				gitRepositoryDirPath, "-", upstreamBranchName);
 
-			if (_gitWorkingDirectories.containsKey(key)) {
-				return _gitWorkingDirectories.get(key);
+			synchronized (_gitWorkingDirectories) {
+				if (_gitWorkingDirectories.containsKey(key)) {
+					return _gitWorkingDirectories.get(key);
+				}
+
+				GitWorkingDirectory gitWorkingDirectory = null;
+
+				if (gitRepositoryName.startsWith("com-liferay-") ||
+					gitRepositoryDirPath.matches(".*/com-liferay-[^/]*")) {
+
+					gitWorkingDirectory = new SubrepositoryGitWorkingDirectory(
+						upstreamBranchName, gitRepositoryDirPath,
+						gitRepositoryName);
+				}
+				else if (gitRepositoryName.startsWith("liferay-plugins") ||
+						 gitRepositoryDirPath.matches(
+							 ".*/liferay-plugins[^/]*")) {
+
+					gitWorkingDirectory = new PluginsGitWorkingDirectory(
+						upstreamBranchName, gitRepositoryDirPath,
+						gitRepositoryName);
+				}
+				else if (gitRepositoryName.startsWith("liferay-portal") ||
+						 gitRepositoryDirPath.matches(
+							 ".*/liferay-portal[^/]*")) {
+
+					gitWorkingDirectory = new PortalGitWorkingDirectory(
+						upstreamBranchName, gitRepositoryDirPath,
+						gitRepositoryName);
+				}
+				else if (gitRepositoryName.equals("liferay-qa-websites-ee") ||
+						 gitRepositoryDirPath.matches(
+							 ".*/liferay-qa-websites-ee")) {
+
+					gitWorkingDirectory = new QAWebsitesGitWorkingDirectory(
+						upstreamBranchName, gitRepositoryDirPath,
+						gitRepositoryName);
+				}
+				else {
+					gitWorkingDirectory = new GitWorkingDirectory(
+						upstreamBranchName, gitRepositoryDirPath,
+						gitRepositoryName);
+				}
+
+				_gitWorkingDirectories.put(key, gitWorkingDirectory);
+
+				return gitWorkingDirectory;
 			}
-
-			GitWorkingDirectory gitWorkingDirectory = null;
-
-			if (gitRepositoryName.startsWith("com-liferay-") ||
-				gitRepositoryDirPath.matches(".*/com-liferay-[^/]*")) {
-
-				gitWorkingDirectory = new SubrepositoryGitWorkingDirectory(
-					upstreamBranchName, gitRepositoryDirPath,
-					gitRepositoryName);
-			}
-			else if (gitRepositoryName.startsWith("liferay-plugins") ||
-					 gitRepositoryDirPath.matches(".*/liferay-plugins[^/]*")) {
-
-				gitWorkingDirectory = new PluginsGitWorkingDirectory(
-					upstreamBranchName, gitRepositoryDirPath,
-					gitRepositoryName);
-			}
-			else if (gitRepositoryName.startsWith("liferay-portal") ||
-					 gitRepositoryDirPath.matches(".*/liferay-portal[^/]*")) {
-
-				gitWorkingDirectory = new PortalGitWorkingDirectory(
-					upstreamBranchName, gitRepositoryDirPath,
-					gitRepositoryName);
-			}
-			else if (gitRepositoryName.equals("liferay-qa-websites-ee") ||
-					 gitRepositoryDirPath.matches(
-						 ".*/liferay-qa-websites-ee")) {
-
-				gitWorkingDirectory = new QAWebsitesGitWorkingDirectory(
-					upstreamBranchName, gitRepositoryDirPath,
-					gitRepositoryName);
-			}
-			else {
-				gitWorkingDirectory = new GitWorkingDirectory(
-					upstreamBranchName, gitRepositoryDirPath,
-					gitRepositoryName);
-			}
-
-			_gitWorkingDirectories.put(key, gitWorkingDirectory);
-
-			return gitWorkingDirectory;
 		}
 		catch (IOException ioException) {
 			ioException.printStackTrace();

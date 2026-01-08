@@ -203,63 +203,72 @@ public class JobPropertyFactory {
 
 		String key = sb.toString();
 
-		JobProperty jobProperty = _jobProperties.get(key);
+		synchronized (_jobProperties) {
+			JobProperty jobProperty = _jobProperties.get(key);
 
-		if (jobProperty != null) {
-			return jobProperty;
-		}
-
-		if (type == JobProperty.Type.DEFAULT_TEST_DIR) {
-			jobProperty = new DefaultTestDirProperty(
-				job, type, testBaseDir, basePropertyName, useBasePropertyName,
-				testSuiteName, testBatchName, ruleName);
-		}
-		else if ((type == JobProperty.Type.EXCLUDE_GLOB) ||
-				 (type == JobProperty.Type.FILTER_GLOB) ||
-				 (type == JobProperty.Type.INCLUDE_GLOB)) {
-
-			if (testBatchName.equals("modules-integration-analytics-cloud") &&
-				(testBaseDir == null)) {
-
-				testBaseDir = new File(
-					"/opt/dev/projects/github/com-liferay-osb-asah-private");
+			if (jobProperty != null) {
+				return jobProperty;
 			}
 
-			jobProperty = new DefaultGlobJobProperty(
-				job, type, testBaseDir, basePropertyName, useBasePropertyName,
-				testSuiteName, testBatchName, ruleName);
-		}
-		else if ((type == JobProperty.Type.MODULE_EXCLUDE_GLOB) ||
-				 (type == JobProperty.Type.MODULE_INCLUDE_GLOB)) {
+			if (type == JobProperty.Type.DEFAULT_TEST_DIR) {
+				jobProperty = new DefaultTestDirProperty(
+					job, type, testBaseDir, basePropertyName,
+					useBasePropertyName, testSuiteName, testBatchName,
+					ruleName);
+			}
+			else if ((type == JobProperty.Type.EXCLUDE_GLOB) ||
+					 (type == JobProperty.Type.FILTER_GLOB) ||
+					 (type == JobProperty.Type.INCLUDE_GLOB)) {
 
-			jobProperty = new ModuleGlobJobProperty(
-				job, type, testBaseDir, basePropertyName, useBasePropertyName,
-				testSuiteName, testBatchName, ruleName);
-		}
-		else if (type == JobProperty.Type.MODULE_TEST_DIR) {
-			jobProperty = new ModuleTestDirJobProperty(
-				job, type, testBaseDir, basePropertyName, useBasePropertyName,
-				testSuiteName, testBatchName, ruleName);
-		}
-		else if (type == JobProperty.Type.PLUGIN_TEST_DIR) {
-			jobProperty = new PluginTestDirProperty(
-				job, type, testBaseDir, basePropertyName, useBasePropertyName,
-				testSuiteName, testBatchName, ruleName);
-		}
-		else if (type == JobProperty.Type.QA_WEBSITES_TEST_DIR) {
-			jobProperty = new QAWebsitesTestDirJobProperty(
-				job, type, testBaseDir, basePropertyName, useBasePropertyName,
-				testSuiteName, testBatchName, ruleName);
-		}
-		else {
-			jobProperty = new DefaultJobProperty(
-				job, type, basePropertyName, useBasePropertyName, testSuiteName,
-				testBatchName, ruleName);
-		}
+				if (testBatchName.equals(
+						"modules-integration-analytics-cloud") &&
+					(testBaseDir == null)) {
 
-		_jobProperties.put(key, jobProperty);
+					testBaseDir = new File(
+						"/opt/dev/projects/github/com-liferay-osb-asah-private");
+				}
 
-		return _jobProperties.get(key);
+				jobProperty = new DefaultGlobJobProperty(
+					job, type, testBaseDir, basePropertyName,
+					useBasePropertyName, testSuiteName, testBatchName,
+					ruleName);
+			}
+			else if ((type == JobProperty.Type.MODULE_EXCLUDE_GLOB) ||
+					 (type == JobProperty.Type.MODULE_INCLUDE_GLOB)) {
+
+				jobProperty = new ModuleGlobJobProperty(
+					job, type, testBaseDir, basePropertyName,
+					useBasePropertyName, testSuiteName, testBatchName,
+					ruleName);
+			}
+			else if (type == JobProperty.Type.MODULE_TEST_DIR) {
+				jobProperty = new ModuleTestDirJobProperty(
+					job, type, testBaseDir, basePropertyName,
+					useBasePropertyName, testSuiteName, testBatchName,
+					ruleName);
+			}
+			else if (type == JobProperty.Type.PLUGIN_TEST_DIR) {
+				jobProperty = new PluginTestDirProperty(
+					job, type, testBaseDir, basePropertyName,
+					useBasePropertyName, testSuiteName, testBatchName,
+					ruleName);
+			}
+			else if (type == JobProperty.Type.QA_WEBSITES_TEST_DIR) {
+				jobProperty = new QAWebsitesTestDirJobProperty(
+					job, type, testBaseDir, basePropertyName,
+					useBasePropertyName, testSuiteName, testBatchName,
+					ruleName);
+			}
+			else {
+				jobProperty = new DefaultJobProperty(
+					job, type, basePropertyName, useBasePropertyName,
+					testSuiteName, testBatchName, ruleName);
+			}
+
+			_jobProperties.put(key, jobProperty);
+
+			return _jobProperties.get(key);
+		}
 	}
 
 	private static final Map<String, JobProperty> _jobProperties =

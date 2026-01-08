@@ -69,44 +69,46 @@ public class WorkspaceFactory {
 
 		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
 
-		Workspace workspace = _workspaces.get(gitDirectoryName);
+		synchronized (_workspaces) {
+			Workspace workspace = _workspaces.get(gitDirectoryName);
 
-		if (workspace != null) {
+			if (workspace != null) {
+				buildDatabase.putWorkspace(gitDirectoryName, workspace);
+
+				return workspace;
+			}
+
+			if (buildDatabase.hasWorkspace(gitDirectoryName)) {
+				workspace = buildDatabase.getWorkspace(gitDirectoryName);
+
+				_workspaces.put(gitDirectoryName, workspace);
+
+				return workspace;
+			}
+
+			if (repositoryName.matches("com-liferay-.*")) {
+				workspace = new SubrepositoryWorkspace(
+					repositoryName, upstreamBranchName, jobName);
+			}
+			else if (repositoryName.matches("liferay-plugins(-ee)?")) {
+				workspace = new PluginsWorkspace(
+					repositoryName, upstreamBranchName, jobName);
+			}
+			else if (repositoryName.matches("liferay-portal(-ee)?")) {
+				workspace = new PortalWorkspace(
+					repositoryName, upstreamBranchName, jobName);
+			}
+			else {
+				workspace = new DefaultWorkspace(
+					repositoryName, upstreamBranchName, jobName);
+			}
+
+			_workspaces.put(gitDirectoryName, workspace);
+
 			buildDatabase.putWorkspace(gitDirectoryName, workspace);
 
 			return workspace;
 		}
-
-		if (buildDatabase.hasWorkspace(gitDirectoryName)) {
-			workspace = buildDatabase.getWorkspace(gitDirectoryName);
-
-			_workspaces.put(gitDirectoryName, workspace);
-
-			return workspace;
-		}
-
-		if (repositoryName.matches("com-liferay-.*")) {
-			workspace = new SubrepositoryWorkspace(
-				repositoryName, upstreamBranchName, jobName);
-		}
-		else if (repositoryName.matches("liferay-plugins(-ee)?")) {
-			workspace = new PluginsWorkspace(
-				repositoryName, upstreamBranchName, jobName);
-		}
-		else if (repositoryName.matches("liferay-portal(-ee)?")) {
-			workspace = new PortalWorkspace(
-				repositoryName, upstreamBranchName, jobName);
-		}
-		else {
-			workspace = new DefaultWorkspace(
-				repositoryName, upstreamBranchName, jobName);
-		}
-
-		_workspaces.put(gitDirectoryName, workspace);
-
-		buildDatabase.putWorkspace(gitDirectoryName, workspace);
-
-		return workspace;
 	}
 
 	private static final Map<String, Workspace> _workspaces =

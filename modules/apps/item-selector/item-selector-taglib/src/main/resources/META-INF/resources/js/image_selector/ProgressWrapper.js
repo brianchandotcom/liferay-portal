@@ -12,7 +12,17 @@ const ProgressWrapper = ({fileName, onCancel, progressData, progressValue}) => (
 	<div className="progress-wrapper">
 		<p className="file-name">{fileName}</p>
 
-		<ClayProgressBar className="progressbar" value={progressValue} />
+		<ClayProgressBar
+			className="progressbar"
+			messages={{
+				ariaLabelAttention: Liferay.Language.get(
+					'attention-value-is-at-x'
+				),
+				ariaLabelComplete: Liferay.Language.get('complete'),
+				ariaLabelInProgress: Liferay.Language.get('progress-x'),
+			}}
+			value={progressValue}
+		/>
 
 		<p
 			className="progress-data size"

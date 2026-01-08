@@ -160,7 +160,16 @@ const AdaptiveMediaProgress = ({
 				data-percentage={percentage}
 				data-title={progressBarTooltip}
 			>
-				<ClayProgressBar value={percentage} />
+				<ClayProgressBar
+					messages={{
+						ariaLabelAttention: Liferay.Language.get(
+							'attention-value-is-at-x'
+						),
+						ariaLabelComplete: Liferay.Language.get('complete'),
+						ariaLabelInProgress: Liferay.Language.get('progress-x'),
+					}}
+					value={percentage}
+				/>
 			</div>
 
 			<span

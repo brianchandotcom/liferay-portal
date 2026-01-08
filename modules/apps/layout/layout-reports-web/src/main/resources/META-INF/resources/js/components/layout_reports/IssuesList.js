@@ -71,7 +71,16 @@ const LoadingProgressBar = ({percentage}) => (
 	<div className="c-my-4 text-secondary">
 		{Liferay.Language.get('connecting-with-google-pagespeed')}
 
-		<ClayProgressBar value={percentage} />
+		<ClayProgressBar
+			messages={{
+				ariaLabelAttention: Liferay.Language.get(
+					'attention-value-is-at-x'
+				),
+				ariaLabelComplete: Liferay.Language.get('complete'),
+				ariaLabelInProgress: Liferay.Language.get('progress-x'),
+			}}
+			value={percentage}
+		/>
 	</div>
 );
 

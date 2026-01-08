@@ -242,7 +242,18 @@ const GuestUploadFile = ({
 				value={getValue(value)}
 			/>
 
-			{progress !== 0 && <ClayProgressBar value={progress} />}
+			{progress !== 0 && (
+				<ClayProgressBar
+					messages={{
+						ariaLabelAttention: Liferay.Language.get(
+							'attention-value-is-at-x'
+						),
+						ariaLabelComplete: Liferay.Language.get('complete'),
+						ariaLabelInProgress: Liferay.Language.get('progress-x'),
+					}}
+					value={progress}
+				/>
+			)}
 
 			{message && <div className="form-feedback-item">{message}</div>}
 		</div>

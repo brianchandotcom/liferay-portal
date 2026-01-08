@@ -24,7 +24,17 @@ function Item({
 
 			<ClayList.ItemField>
 				{reindexing ? (
-					<ClayProgressBar value={completionPercentage} />
+					<ClayProgressBar
+						messages={{
+							ariaLabelAttention: Liferay.Language.get(
+								'attention-value-is-at-x'
+							),
+							ariaLabelComplete: Liferay.Language.get('complete'),
+							ariaLabelInProgress:
+								Liferay.Language.get('progress-x'),
+						}}
+						value={completionPercentage}
+					/>
 				) : (
 					<ClayButton
 						disabled={disabled}

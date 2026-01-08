@@ -61,7 +61,17 @@ function IndexerListItem({
 			<ClayList.ItemField className="index-action-wrapper">
 				{typeof progressPercentage === 'number' &&
 				progressPercentage >= 0 ? (
-					<ClayProgressBar value={progressPercentage} />
+					<ClayProgressBar
+						messages={{
+							ariaLabelAttention: Liferay.Language.get(
+								'attention-value-is-at-x'
+							),
+							ariaLabelComplete: Liferay.Language.get('complete'),
+							ariaLabelInProgress:
+								Liferay.Language.get('progress-x'),
+						}}
+						value={progressPercentage}
+					/>
 				) : (
 					<ClayButton
 						className="save-server-button"

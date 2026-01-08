@@ -51,7 +51,17 @@ const ExportModalBody = ({errorMessage, percentage, readyToDownload}) => {
 					<ClayLabel displayType={labelType}>{label}</ClayLabel>
 				</ClayForm.FeedbackGroup>
 
-				<ClayProgressBar value={percentage} warn={!!errorMessage} />
+				<ClayProgressBar
+					messages={{
+						ariaLabelAttention: Liferay.Language.get(
+							'attention-value-is-at-x'
+						),
+						ariaLabelComplete: Liferay.Language.get('complete'),
+						ariaLabelInProgress: Liferay.Language.get('progress-x'),
+					}}
+					value={percentage}
+					warn={!!errorMessage}
+				/>
 			</ClayForm.Group>
 		</ClayModal.Body>
 	);

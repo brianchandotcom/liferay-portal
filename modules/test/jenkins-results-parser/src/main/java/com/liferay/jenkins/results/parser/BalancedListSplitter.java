@@ -20,17 +20,13 @@ public abstract class BalancedListSplitter<T extends WeightedItem> {
 	}
 
 	public List<List<T>> split(List<T> list) {
-		List<ListItem> listItems = new ArrayList<>(list.size());
-
-		for (T item : list) {
-			listItems.add(new ListItem(item));
-		}
-
 		List<ListItemList> listItemLists = new ArrayList<>();
 
 		Set<ListItemList> candidateListItemLists = new TreeSet<>();
 
-		for (ListItem listItem : listItems) {
+		for (T item : list) {
+			ListItem listItem = new ListItem(item);
+
 			ListItemList chosenListItemList = null;
 
 			if (listItem.isIsolated()) {

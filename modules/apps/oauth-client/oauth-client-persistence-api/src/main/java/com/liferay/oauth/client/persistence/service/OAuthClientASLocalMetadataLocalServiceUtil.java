@@ -38,13 +38,13 @@ public class OAuthClientASLocalMetadataLocalServiceUtil {
 	 */
 	public static OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
 			long userId, String authorizationEndpoint, boolean enabled,
-			String issuerString, String jwksUri, String[] supportedGrantTypes,
+			String issuer, String jwksUri, String[] supportedGrantTypes,
 			String[] supportedScopes, String[] supportedSubjectTypes,
 			String tokenEndpointString, String userinfoEndpoint)
 		throws PortalException {
 
 		return getService().addOAuthClientASLocalMetadata(
-			userId, authorizationEndpoint, enabled, issuerString, jwksUri,
+			userId, authorizationEndpoint, enabled, issuer, jwksUri,
 			supportedGrantTypes, supportedScopes, supportedSubjectTypes,
 			tokenEndpointString, userinfoEndpoint);
 	}
@@ -376,7 +376,7 @@ public class OAuthClientASLocalMetadataLocalServiceUtil {
 
 	public static OAuthClientASLocalMetadata updateOAuthClientASLocalMetadata(
 			long oAuthClientASLocalMetadataId, String authorizationEndpoint,
-			boolean enabled, String issuerString, String jwksUri,
+			boolean enabled, String issuer, String jwksUri,
 			String[] supportedGrantTypes, String[] supportedScopes,
 			String[] supportedSubjectTypes, String tokenEndpointString,
 			String userinfoEndpoint)
@@ -384,7 +384,7 @@ public class OAuthClientASLocalMetadataLocalServiceUtil {
 
 		return getService().updateOAuthClientASLocalMetadata(
 			oAuthClientASLocalMetadataId, authorizationEndpoint, enabled,
-			issuerString, jwksUri, supportedGrantTypes, supportedScopes,
+			issuer, jwksUri, supportedGrantTypes, supportedScopes,
 			supportedSubjectTypes, tokenEndpointString, userinfoEndpoint);
 	}
 

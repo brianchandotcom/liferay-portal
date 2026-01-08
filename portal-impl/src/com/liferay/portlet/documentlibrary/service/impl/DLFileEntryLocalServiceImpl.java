@@ -481,7 +481,8 @@ public class DLFileEntryLocalServiceImpl
 
 		latestDLFileVersion.setChangeLog(changeLog);
 		latestDLFileVersion.setVersion(
-			_getNextVersion(dlFileEntry, computedDLVersionNumberIncrease));
+			_getNextVersion(
+				lastDLFileVersion, computedDLVersionNumberIncrease));
 		latestDLFileVersion.setStoreUUID(String.valueOf(UUID.randomUUID()));
 
 		latestDLFileVersion = _dlFileVersionPersistence.update(
@@ -3038,25 +3039,17 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	private String _getNextVersion(
-			DLFileEntry dlFileEntry,
+			DLFileVersion dlFileVersion,
 			DLVersionNumberIncrease dlVersionNumberIncrease)
 		throws InvalidFileVersionException {
 
-		String version = dlFileEntry.getVersion();
-
-		DLFileVersion dlFileVersion =
-			_dlFileVersionLocalService.fetchLatestFileVersion(
-				dlFileEntry.getFileEntryId(), true);
-
-		if (dlFileVersion != null) {
-			version = dlFileVersion.getVersion();
-		}
+		String version = dlFileVersion.getVersion();
 
 		if (!_isValidFileVersionNumber(version)) {
 			throw new InvalidFileVersionException(
 				StringBundler.concat(
 					"Unable to increase version number for file entry ",
-					dlFileEntry.getFileEntryId(),
+					dlFileVersion.getFileEntryId(),
 					" because original version number ", version,
 					" is invalid"));
 		}
@@ -3559,6 +3552,8 @@ public class DLFileEntryLocalServiceImpl
 
 		// File version
 
+		String oldStoreFileName = lastDLFileVersion.getStoreFileName();
+
 		lastDLFileVersion.setUserId(latestDLFileVersion.getUserId());
 		lastDLFileVersion.setUserName(latestDLFileVersion.getUserName());
 		lastDLFileVersion.setModifiedDate(
@@ -3574,7 +3569,7 @@ public class DLFileEntryLocalServiceImpl
 		lastDLFileVersion.setFileEntryTypeId(
 			latestDLFileVersion.getFileEntryTypeId());
 		lastDLFileVersion.setVersion(
-			_getNextVersion(dlFileEntry, dlVersionNumberIncrease));
+			_getNextVersion(lastDLFileVersion, dlVersionNumberIncrease));
 		lastDLFileVersion.setSize(latestDLFileVersion.getSize());
 		lastDLFileVersion.setStoreUUID(String.valueOf(UUID.randomUUID()));
 		lastDLFileVersion.setDisplayDate(latestDLFileVersion.getDisplayDate());
@@ -3625,13 +3620,9 @@ public class DLFileEntryLocalServiceImpl
 
 		// File
 
-		DLFileVersion previousDLFileVersion =
-			_dlFileVersionLocalService.getLatestFileVersion(
-				dlFileEntry.getFileEntryId(), true);
-
 		_deleteFile(
 			user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-			dlFileEntry.getName(), previousDLFileVersion.getStoreFileName());
+			dlFileEntry.getName(), oldStoreFileName);
 
 		_copyFileVersion(dlFileEntry, latestDLFileVersion, lastDLFileVersion);
 

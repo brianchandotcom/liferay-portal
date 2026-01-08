@@ -12,14 +12,15 @@ WHERE
   MainTable.ctCollectionId = [$CT_COLLECTION_ID$] OR
   (
    MainTable.ctCollectionId = 0 AND
-   MainTable.mainTableId NOT IN (
+   NOT EXISTS (
     SELECT
-     CTEntry.modelClassPK
+     1
     FROM
      CTEntry
     WHERE
      CTEntry.ctCollectionId = [$CT_COLLECTION_ID$] AND
-     CTEntry.modelClassNameId = [$MAIN_TABLE_CLASS_NAME_ID$]
+     CTEntry.modelClassNameId = [$MAIN_TABLE_CLASS_NAME_ID$] AND
+     CTEntry.modelClassPK = MainTable.mainTableId
    )
   )
  ) AND
@@ -27,14 +28,15 @@ WHERE
   ReferenceTable.ctCollectionId = [$CT_COLLECTION_ID$] OR
   (
    ReferenceTable.ctCollectionId = 0 AND
-   ReferenceTable.referenceTableId NOT IN (
+   NOT EXISTS (
     SELECT
-     CTEntry.modelClassPK
+     1
     FROM
      CTEntry
     WHERE
      CTEntry.ctCollectionId = [$CT_COLLECTION_ID$] AND
-     CTEntry.modelClassNameId = [$REFERENCE_TABLE_CLASS_NAME_ID$]
+     CTEntry.modelClassNameId = [$REFERENCE_TABLE_CLASS_NAME_ID$] AND
+     CTEntry.modelClassPK = ReferenceTable.referenceTableId
    )
   )
  )

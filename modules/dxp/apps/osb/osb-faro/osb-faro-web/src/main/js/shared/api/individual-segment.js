@@ -48,6 +48,13 @@ export function fetch({groupId, includeReferencedObjects = false, segmentId}) {
 	}));
 }
 
+export function fetchMembershipMetrics({groupId, individualSegmentId}) {
+	return sendRequest({
+		method: 'GET',
+		path: `contacts/${groupId}/individual_segment/${individualSegmentId}/real-time-membership-metric`
+	});
+}
+
 export function create({
 	channelId = '',
 	criteriaString = '',

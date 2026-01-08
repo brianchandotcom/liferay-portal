@@ -116,7 +116,7 @@ public class NioZipReaderImpl implements ZipReader {
 			}
 		}
 		catch (IOException ioException) {
-			_log.error("Error reading entry: " + name, ioException);
+			_log.error(ioException);
 		}
 
 		return null;
@@ -136,8 +136,7 @@ public class NioZipReaderImpl implements ZipReader {
 			}
 		}
 		catch (IOException ioException) {
-			_log.error(
-				"Error getting InputStream for entry: " + name, ioException);
+			throw new UncheckedIOException(ioException);
 		}
 
 		return null;
@@ -224,7 +223,7 @@ public class NioZipReaderImpl implements ZipReader {
 		}
 		catch (IOException ioException) {
 			throw new UncheckedIOException(
-				"Failed to initialize ZipNioReader for: " + file.getPath(),
+				"Failed to initialize NioZipReader for " + file.getPath(),
 				ioException);
 		}
 	}

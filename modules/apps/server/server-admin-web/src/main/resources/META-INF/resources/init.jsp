@@ -28,6 +28,7 @@ page import="com.liferay.document.library.kernel.util.AudioConverter" %><%@
 page import="com.liferay.document.library.kernel.util.VideoConverter" %><%@
 page import="com.liferay.expando.kernel.model.ExpandoBridge" %><%@
 page import="com.liferay.expando.kernel.model.ExpandoColumnConstants" %><%@
+page import="com.liferay.petra.function.transform.TransformUtil" %><%@
 page import="com.liferay.petra.string.CharPool" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.convert.ConvertProcess" %><%@

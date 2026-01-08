@@ -115,6 +115,9 @@ public class ViewProjectsSectionDisplayContext {
 	}
 
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
+		String baseViewProjectURL = ActionUtil.getBaseViewProjectURL(
+			_objectDefinition, _themeDisplay);
+
 		return ListUtil.fromArray(
 			new FDSActionDropdownItem(
 				StringBundler.concat(
@@ -124,11 +127,7 @@ public class ViewProjectsSectionDisplayContext {
 				"pencil", "edit", LanguageUtil.get(_httpServletRequest, "edit"),
 				"get", "update", null),
 			new FDSActionDropdownItem(
-				StringBundler.concat(
-					ActionUtil.getBaseViewProjectURL(
-						_objectDefinition, _themeDisplay),
-					"{embedded.id}?redirect=", _themeDisplay.getURLCurrent()),
-				"view", "actionLink",
+				baseViewProjectURL + "{embedded.id}", "view", "actionLink",
 				LanguageUtil.get(_httpServletRequest, "view"), null, "get",
 				null),
 			new FDSActionDropdownItem(

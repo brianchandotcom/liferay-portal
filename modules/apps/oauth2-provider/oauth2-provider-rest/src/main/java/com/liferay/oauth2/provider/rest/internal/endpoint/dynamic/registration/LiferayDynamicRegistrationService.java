@@ -112,30 +112,6 @@ public class LiferayDynamicRegistrationService
 				OAuthConstants.INVALID_REQUEST, Response.Status.BAD_REQUEST);
 		}
 
-		List<String> resourceUris = clientRegistration.getResourceUris();
-
-		if (resourceUris != null) {
-			client.setRegisteredAudiences(resourceUris);
-		}
-
-		String scope = clientRegistration.getScope();
-
-		if (!Validator.isBlank(scope)) {
-			client.setRegisteredScopes(OAuthUtils.parseScope(scope));
-		}
-
-		String clientUri = clientRegistration.getClientUri();
-
-		if (clientUri != null) {
-			client.setApplicationWebUri(clientUri);
-		}
-
-		String clientLogoUri = clientRegistration.getLogoUri();
-
-		if (Validator.isNotNull(clientLogoUri)) {
-			client.setApplicationLogoUri(clientLogoUri);
-		}
-
 		Map<String, String> properties = client.getProperties();
 
 		String jwks = clientRegistration.getStringProperty("jwks");
@@ -160,6 +136,30 @@ public class LiferayDynamicRegistrationService
 
 		if (Validator.isNotNull(tosUri)) {
 			properties.put("tos_uri", tosUri);
+		}
+
+		String clientLogoUri = clientRegistration.getLogoUri();
+
+		if (Validator.isNotNull(clientLogoUri)) {
+			client.setApplicationLogoUri(clientLogoUri);
+		}
+
+		String clientUri = clientRegistration.getClientUri();
+
+		if (clientUri != null) {
+			client.setApplicationWebUri(clientUri);
+		}
+
+		List<String> resourceUris = clientRegistration.getResourceUris();
+
+		if (resourceUris != null) {
+			client.setRegisteredAudiences(resourceUris);
+		}
+
+		String scope = clientRegistration.getScope();
+
+		if (!Validator.isBlank(scope)) {
+			client.setRegisteredScopes(OAuthUtils.parseScope(scope));
 		}
 	}
 

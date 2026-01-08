@@ -54,11 +54,11 @@ public abstract class BaseUADExporterTestCase<T extends BaseModel> {
 
 		File file = uadExporter.exportAll(user.getUserId(), _zipWriterFactory);
 
-		ZipReader zipReader = _zipReaderFactory.getZipReader(file);
+		try (ZipReader zipReader = _zipReaderFactory.getZipReader(file)) {
+			List<String> entries = zipReader.getEntries();
 
-		List<String> entries = zipReader.getEntries();
-
-		Assert.assertEquals(entries.toString(), 1, entries.size());
+			Assert.assertEquals(entries.toString(), 1, entries.size());
+		}
 	}
 
 	protected abstract T addBaseModel(long userId) throws Exception;

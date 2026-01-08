@@ -109,29 +109,30 @@ public class FragmentCollectionImplTest {
 
 		_fragmentCollection.populateZipWriter(zipWriter, "test");
 
-		ZipReader zipReader = _zipReaderFactory.getZipReader(
-			zipWriter.getFile());
+		try (ZipReader zipReader = _zipReaderFactory.getZipReader(
+				zipWriter.getFile())) {
 
-		List<String> entries = zipReader.getEntries();
+			List<String> entries = zipReader.getEntries();
 
-		for (String entry : entries) {
-			if (StringUtil.endsWith(
-					entry,
-					FragmentExportImportConstants.FILE_NAME_COLLECTION)) {
+			for (String entry : entries) {
+				if (StringUtil.endsWith(
+						entry,
+						FragmentExportImportConstants.FILE_NAME_COLLECTION)) {
 
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-					zipReader.getEntryAsString(entry));
+					JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+						zipReader.getEntryAsString(entry));
 
-				Assert.assertNotNull(jsonObject);
-				Assert.assertEquals(
-					jsonObject.getString("name"),
-					_fragmentCollection.getName());
-				Assert.assertEquals(
-					jsonObject.getString("description"),
-					_fragmentCollection.getDescription());
-			}
-			else if (StringUtil.contains(entry, "/resources")) {
-				Assert.assertTrue(entry.contains("/resources/liferay.png"));
+					Assert.assertNotNull(jsonObject);
+					Assert.assertEquals(
+						jsonObject.getString("name"),
+						_fragmentCollection.getName());
+					Assert.assertEquals(
+						jsonObject.getString("description"),
+						_fragmentCollection.getDescription());
+				}
+				else if (StringUtil.contains(entry, "/resources")) {
+					Assert.assertTrue(entry.contains("/resources/liferay.png"));
+				}
 			}
 		}
 
@@ -161,21 +162,24 @@ public class FragmentCollectionImplTest {
 		marketplaceFragmentEntry.populateZipWriter(
 			zipWriter, RandomTestUtil.randomString());
 
-		ZipReader zipReader = _zipReaderFactory.getZipReader(
-			zipWriter.getFile());
+		try (ZipReader zipReader = _zipReaderFactory.getZipReader(
+				zipWriter.getFile())) {
 
-		List<String> entries = zipReader.getEntries();
+			List<String> entries = zipReader.getEntries();
 
-		Assert.assertTrue(entries.isEmpty());
+			Assert.assertTrue(entries.isEmpty());
 
-		_fragmentCollection.populateZipWriter(
-			zipWriter, RandomTestUtil.randomString());
+			_fragmentCollection.populateZipWriter(
+				zipWriter, RandomTestUtil.randomString());
+		}
 
-		zipReader = _zipReaderFactory.getZipReader(zipWriter.getFile());
+		try (ZipReader zipReader = _zipReaderFactory.getZipReader(
+				zipWriter.getFile())) {
 
-		for (String entry : zipReader.getEntries()) {
-			Assert.assertFalse(
-				entry.contains(marketplaceFragmentEntry.getName()));
+			for (String entry : zipReader.getEntries()) {
+				Assert.assertFalse(
+					entry.contains(marketplaceFragmentEntry.getName()));
+			}
 		}
 	}
 

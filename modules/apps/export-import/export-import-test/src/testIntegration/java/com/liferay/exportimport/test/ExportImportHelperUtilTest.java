@@ -983,34 +983,34 @@ public class ExportImportHelperUtilTest {
 
 		zipWriter.addEntry("/manifest.xml", xml);
 
-		ZipReader zipReader = _zipReaderFactory.getZipReader(
-			zipWriter.getFile());
+		try (ZipReader zipReader = _zipReaderFactory.getZipReader(
+				zipWriter.getFile())) {
 
-		PortletDataContext portletDataContextImport =
-			PortletDataContextFactoryUtil.createImportPortletDataContext(
-				_liveGroup.getCompanyId(), _liveGroup.getGroupId(),
-				new HashMap<String, String[]>(), new TestUserIdStrategy(),
-				zipReader);
+			PortletDataContext portletDataContextImport =
+				PortletDataContextFactoryUtil.createImportPortletDataContext(
+					_liveGroup.getCompanyId(), _liveGroup.getGroupId(),
+					new HashMap<String, String[]>(), new TestUserIdStrategy(),
+					zipReader);
 
-		MissingReferences missingReferences =
-			ExportImportHelperUtil.validateMissingReferences(
-				portletDataContextImport);
+			MissingReferences missingReferences =
+				ExportImportHelperUtil.validateMissingReferences(
+					portletDataContextImport);
 
-		Map<String, MissingReference> dependencyMissingReferences =
-			missingReferences.getDependencyMissingReferences();
+			Map<String, MissingReference> dependencyMissingReferences =
+				missingReferences.getDependencyMissingReferences();
 
-		Map<String, MissingReference> weakMissingReferences =
-			missingReferences.getWeakMissingReferences();
+			Map<String, MissingReference> weakMissingReferences =
+				missingReferences.getWeakMissingReferences();
 
-		Assert.assertEquals(
-			dependencyMissingReferences.toString(), 2,
-			dependencyMissingReferences.size());
-		Assert.assertEquals(
-			weakMissingReferences.toString(), 1, weakMissingReferences.size());
+			Assert.assertEquals(
+				dependencyMissingReferences.toString(), 2,
+				dependencyMissingReferences.size());
+			Assert.assertEquals(
+				weakMissingReferences.toString(), 1,
+				weakMissingReferences.size());
 
-		FileUtil.delete(zipWriter.getFile());
-
-		zipReader.close();
+			FileUtil.delete(zipWriter.getFile());
+		}
 	}
 
 	protected String getContent(String fileName) throws Exception {

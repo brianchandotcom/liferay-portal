@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.DependenciesTestUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.PropsValues;
+import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
@@ -39,30 +40,36 @@ public class ZipReaderFactoryImplTest {
 
 		ZipReaderFactory zipReaderFactory = new ZipReaderFactoryImpl();
 
-		Assert.assertTrue(
-			zipReaderFactory.getZipReader(
+		try (ZipReader zipReader = zipReaderFactory.getZipReader(
 				DependenciesTestUtil.getDependencyAsFile(
-					BaseReaderImplTestCase.class, "file.zip")) instanceof
-						ZipReaderImpl);
-		Assert.assertTrue(
-			zipReaderFactory.getZipReader(
+					BaseReaderImplTestCase.class, "file.zip"))) {
+
+			Assert.assertTrue(zipReader instanceof ZipReaderImpl);
+		}
+
+		try (ZipReader zipReader = zipReaderFactory.getZipReader(
 				DependenciesTestUtil.getDependencyAsInputStream(
-					BaseReaderImplTestCase.class, "file.zip")) instanceof
-						ZipReaderImpl);
+					BaseReaderImplTestCase.class, "file.zip"))) {
+
+			Assert.assertTrue(zipReader instanceof ZipReaderImpl);
+		}
 
 		ReflectionTestUtil.setFieldValue(
 			PropsValues.class, "ZIP_FILE_READER_NIO_ENABLED", true);
 
-		Assert.assertTrue(
-			zipReaderFactory.getZipReader(
+		try (ZipReader zipReader = zipReaderFactory.getZipReader(
 				DependenciesTestUtil.getDependencyAsFile(
-					BaseReaderImplTestCase.class, "file.zip")) instanceof
-						NioZipReaderImpl);
-		Assert.assertTrue(
-			zipReaderFactory.getZipReader(
+					BaseReaderImplTestCase.class, "file.zip"))) {
+
+			Assert.assertTrue(zipReader instanceof NioZipReaderImpl);
+		}
+
+		try (ZipReader zipReader = zipReaderFactory.getZipReader(
 				DependenciesTestUtil.getDependencyAsInputStream(
-					BaseReaderImplTestCase.class, "file.zip")) instanceof
-						NioZipReaderImpl);
+					BaseReaderImplTestCase.class, "file.zip"))) {
+
+			Assert.assertTrue(zipReader instanceof NioZipReaderImpl);
+		}
 	}
 
 }

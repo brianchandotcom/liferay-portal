@@ -210,13 +210,12 @@ public class DigitalSalesRoomResourceImpl
 		Group group = _groupService.getGroup(digitalSalesRoomId);
 		ObjectDefinition objectDefinition = _getObjectDefinition();
 
-		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
-			group.getExternalReferenceCode(), group.getGroupId(),
-			objectDefinition.getObjectDefinitionId());
+		ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryLocalService.getObjectEntry(
+				group.getExternalReferenceCode(), group.getGroupId(),
+				objectDefinition.getObjectDefinitionId());
 
-		_checkPermission(ActionKeys.UPDATE, objectEntry);
-
-		ServiceContext serviceContext = _getServiceContext();
+		_checkPermission(ActionKeys.UPDATE, serviceBuilderObjectEntry);
 
 		group = _groupLocalService.updateGroup(
 			group.getGroupId(), group.getParentGroupId(),
@@ -226,24 +225,34 @@ public class DigitalSalesRoomResourceImpl
 			group.getMembershipRestriction(),
 			GetterUtil.get(
 				digitalSalesRoom.getFriendlyUrlPath(), group.getFriendlyURL()),
-			group.isInheritContent(), group.isActive(), serviceContext);
+			group.isInheritContent(), group.isActive(), _getServiceContext());
 
-		if (digitalSalesRoom.getAccountId() == 0) {
-			Map<String, Serializable> values = objectEntry.getValues();
+		ObjectEntryManager objectEntryManager =
+			_objectEntryManagerRegistry.getObjectEntryManager(
+				objectDefinition.getCompanyId(),
+				objectDefinition.getStorageType());
 
-			digitalSalesRoom.setAccountId(
-				() -> GetterUtil.getLong(values.get("accountId")));
-		}
+		DefaultDTOConverterContext defaultDTOConverterContext =
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), null,
+				_dtoConverterRegistry, contextHttpServletRequest, null,
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser);
 
-		_objectEntryLocalService.partialUpdateObjectEntry(
-			objectEntry.getUserId(), objectEntry.getObjectEntryId(),
-			objectEntry.getObjectEntryFolderId(),
-			_getProperties(digitalSalesRoom, group), serviceContext);
+		defaultDTOConverterContext.setAttribute("addActions", Boolean.FALSE);
+
+		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
+			objectEntryManager.partialUpdateObjectEntry(
+				objectDefinition.getCompanyId(), defaultDTOConverterContext,
+				group.getExternalReferenceCode(), objectDefinition,
+				_toObjectEntry(digitalSalesRoom, group), group.getGroupKey());
 
 		_updateFrontendTokensValues(digitalSalesRoom, group);
 		_updateNestedResources(digitalSalesRoom, group);
 
-		return _toDigitalSalesRoom(group, objectEntry);
+		return _toDigitalSalesRoom(
+			group,
+			_objectEntryLocalService.getObjectEntry(objectEntry.getId()));
 	}
 
 	@Override
@@ -615,7 +624,7 @@ public class DigitalSalesRoomResourceImpl
 		return HashMapBuilder.<String, Serializable>put(
 			"accountId",
 			() -> {
-				if (digitalSalesRoom.getAccountId() == 0) {
+				if (GetterUtil.getLong(digitalSalesRoom.getAccountId()) == 0) {
 					return null;
 				}
 
@@ -645,9 +654,9 @@ public class DigitalSalesRoomResourceImpl
 				).build();
 			}
 		).put(
-			"channelId", digitalSalesRoom.getChannelId()
+			"channelId", digitalSalesRoom::getChannelId
 		).put(
-			"channelName", digitalSalesRoom.getChannelName()
+			"channelName", digitalSalesRoom::getChannelName
 		).put(
 			"clientLogo",
 			() -> {
@@ -668,13 +677,13 @@ public class DigitalSalesRoomResourceImpl
 				).build();
 			}
 		).put(
-			"clientName", digitalSalesRoom.getClientName()
+			"clientName", digitalSalesRoom::getClientName
 		).put(
 			"externalReferenceCode", group.getExternalReferenceCode()
 		).put(
-			"primaryColor", digitalSalesRoom.getPrimaryColor()
+			"primaryColor", digitalSalesRoom::getPrimaryColor
 		).put(
-			"secondaryColor", digitalSalesRoom.getSecondaryColor()
+			"secondaryColor", digitalSalesRoom::getSecondaryColor
 		).build();
 	}
 

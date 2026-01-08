@@ -10,7 +10,6 @@ import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceCurrencyTable;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
-import com.liferay.commerce.price.list.discovery.CommercePriceListDiscovery;
 import com.liferay.commerce.price.list.exception.CommercePriceListCurrencyException;
 import com.liferay.commerce.price.list.exception.CommercePriceListDisplayDateException;
 import com.liferay.commerce.price.list.exception.CommercePriceListExpirationDateException;
@@ -681,16 +680,19 @@ public class CommercePriceListLocalServiceImpl
 			if (actualPriceList != null) {
 				commercePriceEntry =
 					_commercePriceEntryLocalService.fetchCommercePriceEntry(
-						actualPriceList.getCommercePriceListId(), cpInstanceUuid,
-						unitOfMeasureKey, true);
+						actualPriceList.getCommercePriceListId(),
+						cpInstanceUuid, unitOfMeasureKey, true);
 			}
 
-			if (actualPriceList == null || commercePriceEntry == null) {
+			if ((actualPriceList == null) || (commercePriceEntry == null)) {
 				actualPriceList =
 					commercePriceListLocalService.
 						getCommercePriceListsByUnqualified(
 							groupId, currencyCode,
-							CommercePriceListConstants.TYPE_PRICE_LIST).get(0);
+							CommercePriceListConstants.TYPE_PRICE_LIST
+						).get(
+							0
+						);
 
 				if (actualPriceList == null) {
 					return commercePriceListLocalService.getCommercePriceList(
@@ -699,8 +701,8 @@ public class CommercePriceListLocalServiceImpl
 
 				commercePriceEntry =
 					_commercePriceEntryLocalService.fetchCommercePriceEntry(
-						actualPriceList.getCommercePriceListId(), cpInstanceUuid,
-						unitOfMeasureKey, true);
+						actualPriceList.getCommercePriceListId(),
+						cpInstanceUuid, unitOfMeasureKey, true);
 			}
 
 			if (commercePriceEntry == null) {

@@ -5753,18 +5753,21 @@ public class ObjectEntryLocalServiceImpl
 		Class<?> javaTypeClass = column.getJavaType();
 
 		if (columnName.endsWith(StringPool.UNDERLINE)) {
-			String[] parts = StringUtil.split(columnName, StringPool.UNDERLINE);
+			if (columnName.startsWith("class")) {
+				String[] parts = StringUtil.split(
+					columnName, StringPool.UNDERLINE);
 
-			if ((parts.length == 2) &&
-				(Objects.equals(parts[0], "classNameId") ||
-				 Objects.equals(parts[0], "classPK"))) {
+				if ((parts.length == 2) &&
+					(Objects.equals(parts[0], "classNameId") ||
+					 Objects.equals(parts[0], "classPK"))) {
 
-				_putValue(
-					javaTypeClass, parts[0], object,
-					(Map<String, Serializable>)values.computeIfAbsent(
-						parts[1], key -> new HashMap<>()));
+					_putValue(
+						javaTypeClass, parts[0], object,
+						(Map<String, Serializable>)values.computeIfAbsent(
+							parts[1], key -> new HashMap<>()));
 
-				return;
+					return;
+				}
 			}
 
 			columnName = columnName.substring(0, columnName.length() - 1);

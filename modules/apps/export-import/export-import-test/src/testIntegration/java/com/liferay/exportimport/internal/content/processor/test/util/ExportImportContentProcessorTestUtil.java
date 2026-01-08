@@ -66,7 +66,7 @@ public class ExportImportContentProcessorTestUtil {
 			}
 		}
 
-		throw new Exception("Could not find a non-default locale");
+		throw new Exception("Unable to get nondefault locale");
 	}
 
 	public static List<String> getURLs(String content) {
@@ -241,7 +241,7 @@ public class ExportImportContentProcessorTestUtil {
 	}
 
 	private static String _duplicateLinesWithParamNames(
-		String content, String[] findParams, String[] addParams) {
+		String[] addParams, String content, String[] findParams) {
 
 		if (StringUtil.indexOfAny(content, findParams) <= -1) {
 			return content;
@@ -284,16 +284,16 @@ public class ExportImportContentProcessorTestUtil {
 
 	private static String _replaceExternalGroupFriendlyURLs(String content) {
 		return _duplicateLinesWithParamNames(
-			content, _GROUP_FRIENDLY_URL_VARIABLES,
-			_EXTERNAL_GROUP_FRIENDLY_URL_VARIABLES);
+			_EXTERNAL_GROUP_FRIENDLY_URL_VARIABLES, content,
+			_GROUP_FRIENDLY_URL_VARIABLES);
 	}
 
 	private static String _replaceMultiLocaleLayoutFriendlyURLs(
 		String content) {
 
 		return _duplicateLinesWithParamNames(
-			content, _MULTI_LOCALE_LAYOUT_VARIABLES,
-			_NONDEFAULT_MULTI_LOCALE_LAYOUT_VARIABLES);
+			_NONDEFAULT_MULTI_LOCALE_LAYOUT_VARIABLES, content,
+			_MULTI_LOCALE_LAYOUT_VARIABLES);
 	}
 
 	private static String _replaceTimestampParameters(String content) {

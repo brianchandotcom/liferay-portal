@@ -154,7 +154,7 @@ public class NioZipReaderImpl implements ZipReader {
 
 		Path folderPath = _resolvePath(path);
 
-		if (!Files.exists(folderPath) || !Files.isDirectory(folderPath)) {
+		if (!Files.isDirectory(folderPath)) {
 			return Collections.emptyList();
 		}
 

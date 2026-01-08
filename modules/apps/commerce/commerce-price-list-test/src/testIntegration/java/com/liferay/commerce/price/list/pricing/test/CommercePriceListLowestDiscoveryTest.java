@@ -19,6 +19,12 @@ import com.liferay.commerce.price.list.discovery.CommercePriceListDiscovery;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
+import com.liferay.commerce.pricing.constants.CommercePriceModifierConstants;
+import com.liferay.commerce.pricing.model.CommercePriceModifier;
+import com.liferay.commerce.pricing.service.CommercePriceModifierLocalService;
+import com.liferay.commerce.pricing.service.CommercePriceModifierLocalServiceUtil;
+import com.liferay.commerce.pricing.service.CommercePriceModifierRelLocalService;
+import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierUtil;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceCatalog;
@@ -29,20 +35,24 @@ import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.commerce.test.util.price.list.CommercePriceEntryTestUtil;
 import com.liferay.commerce.test.util.price.list.CommercePriceListTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 
 import org.frutilla.FrutillaRule;
 
@@ -459,6 +469,97 @@ public class CommercePriceListLowestDiscoveryTest {
 			discoveredCommercePriceList.getCommercePriceListId());
 	}
 
+	@Test
+	public void testRetrieveCorrectPromotionListWithPriceModifications()
+		throws Exception {
+
+		CPInstance cpInstance = CPTestUtil.addCPInstanceFromCatalog(
+			_commerceCatalog.getGroupId());
+
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+		CommercePriceList basePriceList =
+			CommercePriceListTestUtil.addCommercePriceList(
+				_commerceCatalog.getGroupId(), false, _TYPE, 1.0);
+
+		CommercePriceList basePromoPriceList =
+			CommercePriceListTestUtil.addCommercePriceList(
+				_commerceCatalog.getGroupId(), false,
+				CommercePriceListConstants.TYPE_PROMOTION, 1.0);
+
+		CommercePriceEntryTestUtil.addCommercePriceEntry(
+			RandomTestUtil.randomString(), cpDefinition.getCProductId(),
+			cpInstance.getCPInstanceUuid(),
+			basePriceList.getCommercePriceListId(),
+			BigDecimal.valueOf(RandomTestUtil.randomDouble()));
+
+		CommercePriceEntryTestUtil.addCommercePriceEntry(
+			RandomTestUtil.randomString(), cpDefinition.getCProductId(),
+			cpInstance.getCPInstanceUuid(),
+			basePromoPriceList.getCommercePriceListId(), BigDecimal.ZERO);
+
+		CommercePriceList discoveredCommercePriceList =
+			_commercePriceListDiscovery.getCommercePriceList(
+				_commerceCatalog.getGroupId(),
+				_accountEntry.getAccountEntryId(),
+				_commerceChannel.getCommerceChannelId(), 0,
+				cpInstance.getCPInstanceUuid(), null,
+				CommercePriceListConstants.TYPE_PROMOTION, StringPool.BLANK);
+
+		Assert.assertEquals(
+			basePromoPriceList.getCommercePriceListId(),
+			discoveredCommercePriceList.getCommercePriceListId());
+
+		CommercePriceList promoPriceList =
+			CommercePriceListTestUtil.addCommercePriceList(
+				_commerceCatalog.getGroupId(), false,
+				CommercePriceListConstants.TYPE_PROMOTION, 1.0);
+
+		discoveredCommercePriceList =
+			_commercePriceListDiscovery.getCommercePriceList(
+				_commerceCatalog.getGroupId(),
+				_accountEntry.getAccountEntryId(),
+				_commerceChannel.getCommerceChannelId(), 0,
+				cpInstance.getCPInstanceUuid(), null,
+				CommercePriceListConstants.TYPE_PROMOTION, StringPool.BLANK);
+
+		Assert.assertEquals(
+			basePromoPriceList.getCommercePriceListId(),
+			discoveredCommercePriceList.getCommercePriceListId());
+
+		Calendar calendar = CalendarFactoryUtil.getCalendar(_user.getTimeZone());
+
+		CommercePriceModifier commercePriceModifier =
+			_commercePriceModifierLocalService.addCommercePriceModifier(
+				_commerceCatalog.getGroupId(), RandomTestUtil.randomString(),
+				promoPriceList.getCommercePriceListId(),
+				CommercePriceModifierConstants.MODIFIER_TYPE_PERCENTAGE,
+				BigDecimal.valueOf(-50.0),
+				1.0, true, calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.YEAR),
+				calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),
+				calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
+				calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
+				calendar.get(Calendar.MINUTE), true, _serviceContext);
+
+		_commercePriceModifierRelLocalService.addCommercePriceModifierRel(
+			commercePriceModifier.getCommercePriceModifierId(),
+			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId(),
+			_serviceContext);
+
+		discoveredCommercePriceList =
+			_commercePriceListDiscovery.getCommercePriceList(
+				_commerceCatalog.getGroupId(),
+				_accountEntry.getAccountEntryId(),
+				_commerceChannel.getCommerceChannelId(), 0,
+				cpInstance.getCPInstanceUuid(), null,
+				CommercePriceListConstants.TYPE_PROMOTION, StringPool.BLANK);
+
+		Assert.assertEquals(
+			promoPriceList.getCommercePriceListId(),
+			discoveredCommercePriceList.getCommercePriceListId());
+	}
+
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
@@ -489,6 +590,12 @@ public class CommercePriceListLowestDiscoveryTest {
 
 	@Inject
 	private CommercePriceListLocalService _commercePriceListLocalService;
+
+	@Inject
+	private CommercePriceModifierLocalService _commercePriceModifierLocalService;
+
+	@Inject
+	private CommercePriceModifierRelLocalService _commercePriceModifierRelLocalService;
 
 	private Group _group;
 	private ServiceContext _serviceContext;

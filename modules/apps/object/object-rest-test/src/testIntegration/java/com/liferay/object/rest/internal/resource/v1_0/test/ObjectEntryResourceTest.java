@@ -8437,7 +8437,7 @@ public class ObjectEntryResourceTest {
 			Http.Method.GET);
 
 		_assertTaxonomyCategories(
-			jsonObject.getLong("scopeKey"),
+			jsonObject.getLong("scopeId"),
 			jsonObject.getJSONArray("taxonomyCategoryBriefs"), true,
 			taxonomyCategory1, taxonomyCategory2);
 	}
@@ -8930,7 +8930,7 @@ public class ObjectEntryResourceTest {
 			Http.Method.PATCH);
 
 		_assertTaxonomyCategories(
-			jsonObject.getLong("scopeKey"),
+			jsonObject.getLong("scopeId"),
 			jsonObject.getJSONArray("taxonomyCategoryBriefs"), false,
 			taxonomyCategory1, taxonomyCategory2, taxonomyCategory3);
 	}

@@ -458,10 +458,13 @@ public class DLFileEntryLocalServiceImpl
 				dlVersionNumberIncrease, lastDLFileVersion, latestDLFileVersion,
 				serviceContext.getWorkflowAction());
 
-		if (computedDLVersionNumberIncrease == DLVersionNumberIncrease.NONE) {
+		if ((computedDLVersionNumberIncrease == DLVersionNumberIncrease.NONE) ||
+			(lastDLFileVersion.getStatus() ==
+				WorkflowConstants.STATUS_PENDING)) {
+
 			_overwritePreviousFileVersion(
-				user, dlFileEntry, latestDLFileVersion, lastDLFileVersion,
-				serviceContext);
+				user, dlFileEntry, computedDLVersionNumberIncrease,
+				latestDLFileVersion, lastDLFileVersion, serviceContext);
 
 			unlockFileEntry(fileEntryId);
 
@@ -3527,6 +3530,7 @@ public class DLFileEntryLocalServiceImpl
 
 	private void _overwritePreviousFileVersion(
 			User user, DLFileEntry dlFileEntry,
+			DLVersionNumberIncrease dlVersionNumberIncrease,
 			DLFileVersion latestDLFileVersion, DLFileVersion lastDLFileVersion,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -3550,6 +3554,14 @@ public class DLFileEntryLocalServiceImpl
 		dlFileEntry = dlFileEntryPersistence.update(dlFileEntry);
 
 		// File version
+
+		if ((dlVersionNumberIncrease != DLVersionNumberIncrease.NONE) &&
+			(lastDLFileVersion.getStatus() ==
+				WorkflowConstants.STATUS_PENDING)) {
+
+			lastDLFileVersion.setVersion(
+				_getNextVersion(dlFileEntry, dlVersionNumberIncrease));
+		}
 
 		lastDLFileVersion.setUserId(latestDLFileVersion.getUserId());
 		lastDLFileVersion.setUserName(latestDLFileVersion.getUserName());

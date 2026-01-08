@@ -47,4 +47,10 @@ public class ActionUtil {
 			StringPool.SLASH);
 	}
 
+	public static String getProjectsURL(ThemeDisplay themeDisplay) {
+		return StringBundler.concat(
+			themeDisplay.getPathFriendlyURLPublic(),
+			GroupConstants.CMS_FRIENDLY_URL, "/projects");
+	}
+
 }

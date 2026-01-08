@@ -4,3 +4,4 @@
  */
 
 export {default as ProjectsFDSPropsTransformer} from './main_view/props_transformer/ProjectsFDSPropsTransformer';
+export {default as ProjectEditorToolbar} from './project_editor/components/ProjectEditorToolbar';

@@ -74,6 +74,8 @@ export default async function deleteItemAction(
 		);
 
 		if (!itemSpace.settings?.trashEnabled) {
+			const title = itemData.title || embedded.title;
+
 			confirmAndDeleteEntryAction({
 				bodyHTML:
 					itemData.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME
@@ -81,23 +83,23 @@ export default async function deleteItemAction(
 								Liferay.Language.get(
 									'delete-folder-confirmation-body'
 								),
-								itemData.title
+								title
 							)
 						: sub(
 								Liferay.Language.get(
 									'delete-asset-confirmation-body'
 								),
-								itemData.title
+								title
 							),
 				deleteAction: actions.delete,
 				loadData,
 				successMessage: sub(
 					Liferay.Language.get('x-was-successfully-deleted'),
-					`<strong>${itemData.title}</strong>`
+					`<strong>${title}</strong>`
 				),
 				title: sub(
 					Liferay.Language.get('delete-asset-confirmation-title'),
-					itemData.title
+					title
 				),
 			});
 		}

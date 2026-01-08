@@ -5,12 +5,14 @@
 
 import createAssetAction from './createAssetAction';
 import createFolderAction from './createFolderAction';
+import createProjectAction from './createProjectAction';
 import importTranslationAction from './importTranslationAction';
 import multipleFilesUploadAction from './multipleFilesUploadAction';
 
 const ACTIONS = {
 	createAsset: createAssetAction,
 	createFolder: createFolderAction,
+	createProject: createProjectAction,
 	importTranslation: importTranslationAction,
 	uploadMultipleFiles: multipleFilesUploadAction,
 };

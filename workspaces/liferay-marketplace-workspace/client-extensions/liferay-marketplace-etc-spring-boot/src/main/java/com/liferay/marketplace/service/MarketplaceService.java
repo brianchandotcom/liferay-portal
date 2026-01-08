@@ -340,6 +340,8 @@ public class MarketplaceService extends BaseService {
 	public InputStream getPublisherAssetInputStream(String publisherAssetURL)
 		throws Exception {
 
+		HttpClient httpClient = HttpClient.newHttpClient();
+
 		HttpRequest httpRequest = HttpRequest.newBuilder(
 		).uri(
 			URI.create(
@@ -352,8 +354,6 @@ public class MarketplaceService extends BaseService {
 				"liferay-marketplace-etc-spring-boot-oahs")
 		).GET(
 		).build();
-
-		HttpClient httpClient = HttpClient.newHttpClient();
 
 		HttpResponse<InputStream> httpResponse = httpClient.send(
 			httpRequest, HttpResponse.BodyHandlers.ofInputStream());

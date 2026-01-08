@@ -585,20 +585,19 @@ public class MarketplaceRestController extends BaseRestController {
 	private File _getPublisherAssetFile(String publisherAssetURL)
 		throws Exception {
 
-		Path tempFilePath = Files.createTempFile("publisher_asset_", ".zip");
+		Path path = Files.createTempFile("publisher_asset_", ".zip");
 
-		File tempFile = tempFilePath.toFile();
+		File file = path.toFile();
 
 		try (InputStream inputStream =
 				_marketplaceService.getPublisherAssetInputStream(
 					publisherAssetURL);
-			FileOutputStream fileOutputStream = new FileOutputStream(
-				tempFile)) {
+			FileOutputStream fileOutputStream = new FileOutputStream(file)) {
 
 			inputStream.transferTo(fileOutputStream);
 		}
 
-		return tempFile;
+		return file;
 	}
 
 	private List<PublisherAssetLink> _getPublisherAssetLinks(

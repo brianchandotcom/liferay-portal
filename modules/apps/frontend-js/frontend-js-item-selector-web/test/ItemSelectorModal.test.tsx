@@ -284,7 +284,10 @@ describe('ItemSelectorModal component', () => {
 
 		expect(selectedMessage).toBeInTheDocument();
 
-		expect(sub).toHaveBeenLastCalledWith('x-selected', mockFirstItem.name);
+		expect(sub).toHaveBeenCalledWith(
+			Liferay.Language.get('x-selected'),
+			mockFirstItem.name
+		);
 	});
 
 	it('shows selected items when they are provided', async () => {
@@ -309,7 +312,10 @@ describe('ItemSelectorModal component', () => {
 
 		expect(selectedMessage).toBeInTheDocument();
 
-		expect(sub).toHaveBeenLastCalledWith('x-selected', mockSecondItem.name);
+		expect(sub).toHaveBeenCalledWith(
+			Liferay.Language.get('x-selected'),
+			mockSecondItem.name
+		);
 
 		const select = await within(modal).findByRole('button', {
 			name: 'select',
@@ -514,6 +520,9 @@ describe('ItemSelectorModal component', () => {
 
 		expect(selectedMessage).toBeInTheDocument();
 
-		expect(sub).toHaveBeenLastCalledWith('x-selected', mockFirstItem.name);
+		expect(sub).toHaveBeenCalledWith(
+			Liferay.Language.get('x-selected'),
+			mockFirstItem.name
+		);
 	});
 });

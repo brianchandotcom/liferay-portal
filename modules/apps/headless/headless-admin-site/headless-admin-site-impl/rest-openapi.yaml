@@ -78,8 +78,13 @@ components:
             type: object
         BasicFragmentInstancePageElementDefinition:
             allOf:
-                -   $ref: "#/components/schemas/FragmentInstance"
-                -   $ref: "#/components/schemas/PageElementDefinition"
+                -   $ref: "#/components/schemas/PageElementDefinition"                               
+                -   properties:
+                        fragmentInstance:
+                            $ref: "#/components/schemas/FragmentInstance"
+                            # @review
+                            description:
+                                The fragment instance of the basic fragment page element definition.
             # @review
             description:
                 The page element definition of a basic fragment instance.
@@ -1081,8 +1086,13 @@ components:
             type: object
         FormFragmentInstancePageElementDefinition:
             allOf:
-                -   $ref: "#/components/schemas/FragmentInstance"    
-                -   $ref: "#/components/schemas/PageElementDefinition"    
+                -   $ref: "#/components/schemas/PageElementDefinition"                                  
+                -   properties:
+                        fragmentInstance:
+                            $ref: "#/components/schemas/FragmentInstance"
+                            # @review
+                            description:
+                                The fragment instance of the form fragment page element definition.
             # @review
             description:
                 The page element definition of a form fragment instance.

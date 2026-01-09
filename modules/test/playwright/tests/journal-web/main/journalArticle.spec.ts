@@ -2514,3 +2514,74 @@ baseTest(
 		);
 	}
 );
+
+baseTest(
+	'A user can expire a Web Content through its actions',
+	async ({apiHelpers, journalPage, page, site}) => {
+		const basicWebContentStructureId =
+			await getBasicWebContentStructureId(apiHelpers);
+
+		const title = getRandomString();
+
+		await apiHelpers.jsonWebServicesJournal.addWebContent({
+			ddmStructureId: basicWebContentStructureId,
+			groupId: site.id,
+			titleMap: {en_US: title},
+		});
+
+		await journalPage.goto(site.friendlyUrlPath);
+
+		await expect(page.getByText(title)).toBeVisible();
+
+		await journalPage.goToJournalArticleAction('Expire', title);
+
+		await expect(page.locator('.alert-success')).toBeVisible();
+
+		await expect(
+			page.locator('span').filter({hasText: 'Expired'}).nth(1)
+		).toBeVisible();
+	}
+);
+
+baseTest(
+	'A user can expire multiple Web Content though the toolbar',
+	async ({apiHelpers, journalPage, page, site}) => {
+		const basicWebContentStructureId =
+			await getBasicWebContentStructureId(apiHelpers);
+
+		const title1 = getRandomString();
+		const title2 = getRandomString();
+
+		await Promise.all([
+			apiHelpers.jsonWebServicesJournal.addWebContent({
+				ddmStructureId: basicWebContentStructureId,
+				groupId: site.id,
+				titleMap: {en_US: title1},
+			}),
+			apiHelpers.jsonWebServicesJournal.addWebContent({
+				ddmStructureId: basicWebContentStructureId,
+				groupId: site.id,
+				titleMap: {en_US: title2},
+			}),
+		]);
+
+		await journalPage.goto(site.friendlyUrlPath);
+
+		await expect(page.getByText(title1)).toBeVisible();
+		await expect(page.getByText(title2)).toBeVisible();
+
+		await page.getByLabel('Select All Items on the Page').check();
+
+		await page.getByRole('button', {name: 'Expire'}).click();
+
+		await expect(page.locator('.alert-success')).toBeVisible();
+
+		await expect(
+			page.locator('span').filter({hasText: 'Expired'}).nth(1)
+		).toBeVisible();
+
+		await expect(
+			page.locator('span').filter({hasText: 'Expired'}).nth(2)
+		).toBeVisible();
+	}
+);

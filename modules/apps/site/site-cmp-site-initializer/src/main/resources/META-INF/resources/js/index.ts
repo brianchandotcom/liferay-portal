@@ -5,4 +5,5 @@
 
 export {default as ProjectInfoSummary} from './main_view/projects/components/ProjectInfoSummary';
 export {default as ProjectsFDSPropsTransformer} from './main_view/props_transformer/ProjectsFDSPropsTransformer';
+export {default as TasksFDSPropsTransformer} from './main_view/props_transformer/TasksFDSPropsTransformer';
 export {default as ProjectEditorToolbar} from './project_editor/components/ProjectEditorToolbar';

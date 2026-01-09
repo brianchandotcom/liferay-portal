@@ -2539,9 +2539,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	private void _testPutSiteSitePageWithFormFragmentPageElements()
 		throws Exception {
 
-		SitePageResource sitePageResource = _getSitePageResource(
-			"pageSpecifications");
-
 		List<ObjectField> objectFields = _getObjectFields();
 
 		ObjectDefinition objectDefinition =
@@ -2564,13 +2561,41 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				infoField -> infoField.isEditable()),
 			layout);
 
+		int expectedFragmentEntryLinkCount = objectFields.size() + 2;
+
+		InfoForm expectedInfoForm = infoItemFormProvider.getInfoForm(
+			StringPool.BLANK, testGroup.getGroupId());
+
+		_testPutSiteSitePageWithFormFragmentPageElements(
+			expectedFragmentEntryLinkCount, expectedInfoForm, infoForm, layout);
+
+		_addFormAndPublishLayout(
+			objectDefinition.getClassName(),
+			ListUtil.filter(
+				infoForm.getAllInfoFields(),
+				infoField -> infoField.isEditable()),
+			layout);
+
+		_testPutSiteSitePageWithFormFragmentPageElements(
+			2 * expectedFragmentEntryLinkCount, expectedInfoForm, infoForm,
+			layout);
+	}
+
+	private void _testPutSiteSitePageWithFormFragmentPageElements(
+			int expectedFragmentEntryLinkCount, InfoForm expectedInfoForm,
+			InfoForm infoForm, Layout layout)
+		throws Exception {
+
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
 				layout.getGroupId(), layout.getPlid());
 
 		Assert.assertEquals(
-			fragmentEntryLinks.toString(), objectFields.size() + 2,
+			fragmentEntryLinks.toString(), expectedFragmentEntryLinkCount,
 			fragmentEntryLinks.size());
+
+		SitePageResource sitePageResource = _getSitePageResource(
+			"pageSpecifications");
 
 		SitePage sitePage = sitePageResource.getSiteSitePage(
 			irrelevantGroup.getExternalReferenceCode(),
@@ -2580,9 +2605,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testPutSiteSitePage(sitePage, testGroup, sitePage);
 
 		_assertInputFragmentEntryLinks(
-			fragmentEntryLinks, infoForm,
-			infoItemFormProvider.getInfoForm(
-				StringPool.BLANK, testGroup.getGroupId()),
+			fragmentEntryLinks, infoForm, expectedInfoForm,
 			_layoutLocalService.getLayoutByExternalReferenceCode(
 				layout.getExternalReferenceCode(), testGroup.getGroupId()));
 	}

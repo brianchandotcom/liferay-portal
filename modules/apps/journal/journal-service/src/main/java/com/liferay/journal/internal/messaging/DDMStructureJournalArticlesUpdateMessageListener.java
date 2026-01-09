@@ -8,7 +8,7 @@ package com.liferay.journal.internal.messaging;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
-import com.liferay.journal.internal.constants.JournalDestinationNames;
+import com.liferay.journal.internal.constants.DDMDestinationNames;
 import com.liferay.journal.internal.util.JournalDDMStructureHelper;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.JournalConverter;
@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(
-	property = "destination.name=" + JournalDestinationNames.DDM_STRUCTURE_JOURNAL_ARTICLES_UPDATE,
+	property = "destination.name=" + DDMDestinationNames.DDM_STRUCTURE_JOURNAL_ARTICLES_UPDATE,
 	service = MessageListener.class
 )
 public class DDMStructureJournalArticlesUpdateMessageListener
@@ -43,7 +43,7 @@ public class DDMStructureJournalArticlesUpdateMessageListener
 		DestinationConfiguration destinationConfiguration =
 			new DestinationConfiguration(
 				DestinationConfiguration.DESTINATION_TYPE_SERIAL,
-				JournalDestinationNames.DDM_STRUCTURE_JOURNAL_ARTICLES_UPDATE);
+				DDMDestinationNames.DDM_STRUCTURE_JOURNAL_ARTICLES_UPDATE);
 
 		Destination destination = _destinationFactory.createDestination(
 			destinationConfiguration);

@@ -76,6 +76,13 @@ components:
             description:
                 A fragment editable element value of type background image.
             type: object
+        BasicFragmentInstancePageElementDefinition:
+            allOf:
+                -   $ref: "#/components/schemas/FragmentInstancePageElementDefinition"
+            # @review
+            description:
+                The page element definition of a basic fragment instance.
+            type: object  
         BasicLayout:
             properties:
                 align:
@@ -1071,6 +1078,13 @@ components:
                     enum: [FormContainerClassSubtypeReference, FormContainerContextReference]
                     type: string
             type: object
+        FormFragmentInstancePageElementDefinition:
+            allOf:
+                -   $ref: "#/components/schemas/FragmentInstancePageElementDefinition"    
+            # @review
+            description:
+                The page element definition of a form fragment instance.
+            type: object          
         FormStepContainerPageElementDefinition:
             allOf:
                 -   $ref: "#/components/schemas/PageElementDefinition"

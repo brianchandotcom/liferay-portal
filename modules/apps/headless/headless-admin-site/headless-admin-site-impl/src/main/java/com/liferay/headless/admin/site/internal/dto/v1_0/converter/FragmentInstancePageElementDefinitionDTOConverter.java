@@ -22,13 +22,16 @@ import com.liferay.headless.admin.site.dto.v1_0.WidgetInstance;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentEditableElementUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentViewportUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ItemScopeUtil;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.LocalizedValueUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.WidgetInstanceUtil;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -82,13 +85,22 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 			throw new UnsupportedOperationException();
 		}
 
+		JSONObject editableValuesJSONObject =
+			fragmentEntryLink.getEditableValuesJSONObject();
+
+		JSONObject freeMarkerJSONObject =
+			editableValuesJSONObject.getJSONObject(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
+
 		if (fragmentEntryLink.isTypeComponent()) {
 			return new BasicFragmentInstancePageElementDefinition() {
 				{
 					setFragmentInstance(
 						() -> _getFragmentInstance(
 							companyId, fragmentEntryLink,
-							fragmentStyledLayoutStructureItem, scopeGroupId));
+							fragmentStyledLayoutStructureItem,
+							freeMarkerJSONObject, scopeGroupId));
 					setType(Type.BASIC_FRAGMENT);
 				}
 			};
@@ -96,13 +108,42 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 
 		return new FormFragmentInstancePageElementDefinition() {
 			{
+				setFieldKey(
+					() -> GetterUtil.getString(
+						_getStringValue(freeMarkerJSONObject, "inputFieldId"),
+						null));
 				setFragmentInstance(
 					() -> _getFragmentInstance(
 						companyId, fragmentEntryLink,
-						fragmentStyledLayoutStructureItem, scopeGroupId));
+						fragmentStyledLayoutStructureItem, freeMarkerJSONObject,
+						scopeGroupId));
+				setHelpText_i18n(
+					() -> _getI18nMap(freeMarkerJSONObject, "inputHelpText"));
+				setLabel_i18n(
+					() -> _getI18nMap(freeMarkerJSONObject, "inputLabel"));
+				setMarkAsRequired(
+					() -> _getBooleanValue(
+						freeMarkerJSONObject, "inputRequired"));
+				setReadOnlyField(
+					() -> _getBooleanValue(
+						freeMarkerJSONObject, "inputReadOnly"));
+				setShowHelpText(
+					() -> _getBooleanValue(
+						freeMarkerJSONObject, "inputShowHelpText"));
+				setShowLabel(
+					() -> _getBooleanValue(
+						freeMarkerJSONObject, "inputShowLabel"));
 				setType(Type.FORM_FRAGMENT);
 			}
 		};
+	}
+
+	private Boolean _getBooleanValue(JSONObject jsonObject, String key) {
+		if ((jsonObject == null) || !jsonObject.has(key)) {
+			return null;
+		}
+
+		return jsonObject.getBoolean(key);
 	}
 
 	private String _getDraftFragmentInstanceExternalReferenceCode(
@@ -142,16 +183,9 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 
 	private Map<String, FragmentConfigurationFieldValue>
 			_getFragmentConfigurationFieldValues(
-				FragmentEntryLink fragmentEntryLink)
+				FragmentEntryLink fragmentEntryLink,
+				JSONObject freeMarkerJSONObject)
 		throws Exception {
-
-		JSONObject editableValuesJSONObject =
-			fragmentEntryLink.getEditableValuesJSONObject();
-
-		JSONObject freeMarkerJSONObject =
-			editableValuesJSONObject.getJSONObject(
-				FragmentEntryProcessorConstants.
-					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
 
 		if (freeMarkerJSONObject == null) {
 			return Collections.emptyMap();
@@ -196,7 +230,7 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 	private FragmentInstance _getFragmentInstance(
 		long companyId, FragmentEntryLink fragmentEntryLink,
 		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem,
-		long scopeGroupId) {
+		JSONObject freeMarkerJSONObject, long scopeGroupId) {
 
 		return new FragmentInstance() {
 			{
@@ -220,7 +254,7 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 						fragmentEntryLink));
 				setFragmentConfigurationFieldValues(
 					() -> _getFragmentConfigurationFieldValues(
-						fragmentEntryLink));
+						fragmentEntryLink, freeMarkerJSONObject));
 				setFragmentEditableElements(
 					() ->
 						FragmentEditableElementUtil.getFragmentEditableElements(
@@ -284,6 +318,38 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 					() -> _getWidgetInstances(fragmentEntryLink));
 			}
 		};
+	}
+
+	private Map<String, String> _getI18nMap(JSONObject jsonObject, String key) {
+		if ((jsonObject == null) || !jsonObject.has(key)) {
+			return null;
+		}
+
+		Map<String, String> i18nMap = null;
+
+		Object value = jsonObject.get(key);
+
+		if (value instanceof JSONObject) {
+			JSONObject valueJSONObject = (JSONObject)value;
+
+			i18nMap = LocalizedValueUtil.toLocalizedValues(
+				valueJSONObject,
+				languageId -> valueJSONObject.getString(languageId));
+		}
+
+		if (MapUtil.isEmpty(i18nMap)) {
+			return null;
+		}
+
+		return i18nMap;
+	}
+
+	private String _getStringValue(JSONObject jsonObject, String key) {
+		if ((jsonObject == null) || !jsonObject.has(key)) {
+			return null;
+		}
+
+		return jsonObject.getString(key);
 	}
 
 	private WidgetInstance[] _getWidgetInstances(

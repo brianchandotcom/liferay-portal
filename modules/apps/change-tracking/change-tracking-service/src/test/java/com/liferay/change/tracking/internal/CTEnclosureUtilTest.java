@@ -17,12 +17,11 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.AbstractMap;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -56,14 +55,14 @@ public class CTEnclosureUtilTest {
 		Node node5 = new Node(3, 5);
 		Node node6 = new Node(4, 6);
 
-		List<Node> nodes = new ArrayList<>(
+		Set<Node> nodes = new LinkedHashSet<>(
 			Arrays.asList(node1, node2, node3, node4, node5));
 
 		CTClosure ctClosure = new CTClosureImpl(
 			1,
 			ReflectionTestUtil.invoke(
 				new CTClosureFactoryImpl(), "_getNodeMap",
-				new Class<?>[] {List.class, Map.class}, nodes,
+				new Class<?>[] {Collection.class, Map.class}, nodes,
 				HashMapBuilder.<Node, Collection<Edge>>put(
 					node1,
 					Arrays.asList(

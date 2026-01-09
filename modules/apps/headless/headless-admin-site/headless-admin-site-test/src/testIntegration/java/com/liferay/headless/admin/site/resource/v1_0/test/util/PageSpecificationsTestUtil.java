@@ -367,10 +367,10 @@ public class PageSpecificationsTestUtil {
 
 		if (pageExperiences == null) {
 			pageExperiences = PageExperiencesTestUtil.getDefaultPageExperiences(
-				contentPageSpecificationExternalReferenceCode,
 				PageElementsTestUtil.getPageElements(
 					RandomTestUtil.randomInt(1, 3), StringPool.BLANK,
-					scopeGroupId));
+					scopeGroupId),
+				contentPageSpecificationExternalReferenceCode);
 		}
 		else {
 			PageExperiencesTestUtil.modifyPageExperiences(

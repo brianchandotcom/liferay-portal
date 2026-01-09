@@ -16,6 +16,8 @@ public class DigitalSalesRoomScreenNavigationEntryConstants {
 
 	public static final String CATEGORY_KEY_ROOM = "room";
 
+	public static final String CATEGORY_KEY_SETTINGS = "settings";
+
 	public static final String CATEGORY_KEY_TEMPLATE = "template";
 
 	public static final String CATEGORY_KEY_USERS = "users";

@@ -21,13 +21,13 @@ import org.osgi.service.component.annotations.Reference;
 	property = "screen.navigation.category.order:Integer=20",
 	service = ScreenNavigationCategory.class
 )
-public class DigitalSalesRoomRoomSettingsLookAndFeelScreenNavigationCategory
+public class DigitalSalesRoomRoomSettingsSettingsScreenNavigationCategory
 	implements ScreenNavigationCategory {
 
 	@Override
 	public String getCategoryKey() {
 		return DigitalSalesRoomScreenNavigationEntryConstants.
-			CATEGORY_KEY_LOOK_AND_FEEL;
+			CATEGORY_KEY_SETTINGS;
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public class DigitalSalesRoomRoomSettingsLookAndFeelScreenNavigationCategory
 		return _language.get(
 			locale,
 			DigitalSalesRoomScreenNavigationEntryConstants.
-				CATEGORY_KEY_LOOK_AND_FEEL);
+				CATEGORY_KEY_SETTINGS);
 	}
 
 	@Override

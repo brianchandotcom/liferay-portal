@@ -8390,18 +8390,18 @@ public class ObjectEntryResourceTest {
 			0, _objectDefinition1, taxonomyCategory1, taxonomyCategory2,
 			taxonomyCategory3, taxonomyCategory4);
 
-		// Site scope
-
-		_testGetObjectEntryWithTaxonomyCategories(
-			_testGroupId, _siteScopedObjectDefinition1, taxonomyCategory1,
-			taxonomyCategory2, taxonomyCategory3, taxonomyCategory4);
-
 		// Depot scope
 
 		_testGetObjectEntryWithTaxonomyCategories(
 			depotEntry.getGroupId(), _depotScopedObjectDefinition,
 			taxonomyCategory1, taxonomyCategory2, taxonomyCategory3,
 			taxonomyCategory4);
+
+		// Site scope
+
+		_testGetObjectEntryWithTaxonomyCategories(
+			_testGroupId, _siteScopedObjectDefinition1, taxonomyCategory1,
+			taxonomyCategory2, taxonomyCategory3, taxonomyCategory4);
 	}
 
 	@Test

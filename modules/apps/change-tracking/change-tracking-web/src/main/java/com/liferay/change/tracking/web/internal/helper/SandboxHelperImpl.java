@@ -9,6 +9,7 @@ import com.liferay.change.tracking.configuration.helper.CTSettingsConfigurationH
 import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.change.tracking.helper.SandboxHelper;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTCollectionTable;
 import com.liferay.change.tracking.model.CTCollectionTemplate;
@@ -39,8 +40,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author David Truong
  */
 @Component(service = SandboxHelper.class)
-public class SandboxHelper {
+public class SandboxHelperImpl implements SandboxHelper {
 
+	@Override
 	public void sandbox(CTPreferences ctPreferences) throws PortalException {
 		if ((ctPreferences == null) ||
 			!_ctSettingsConfigurationHelper.isSandboxEnabled(

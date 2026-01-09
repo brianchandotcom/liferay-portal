@@ -5,8 +5,8 @@
 
 package com.liferay.change.tracking.web.internal.model.listener;
 
+import com.liferay.change.tracking.helper.SandboxHelper;
 import com.liferay.change.tracking.model.CTPreferences;
-import com.liferay.change.tracking.web.internal.helper.SandboxHelper;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;

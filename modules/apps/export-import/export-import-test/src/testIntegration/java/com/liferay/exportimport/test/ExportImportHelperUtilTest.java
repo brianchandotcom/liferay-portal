@@ -1008,9 +1008,9 @@ public class ExportImportHelperUtilTest {
 			Assert.assertEquals(
 				weakMissingReferences.toString(), 1,
 				weakMissingReferences.size());
-
-			FileUtil.delete(zipWriter.getFile());
 		}
+
+		FileUtil.delete(zipWriter.getFile());
 	}
 
 	protected String getContent(String fileName) throws Exception {

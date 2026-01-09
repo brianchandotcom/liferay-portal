@@ -9,6 +9,15 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.test.util.DLTestUtil;
+import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
+import com.liferay.fragment.helper.DefaultInputFragmentEntryConfigurationProvider;
+import com.liferay.fragment.input.template.parser.FragmentEntryInputTemplateNodeContextHelper;
+import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.headless.admin.site.client.custom.field.CustomField;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
@@ -39,10 +48,21 @@ import com.liferay.headless.admin.site.resource.v1_0.test.util.PageElementsTestU
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageExperiencesTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageSpecificationsTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.SettingsTestUtil;
+import com.liferay.info.field.InfoField;
+import com.liferay.info.field.type.InfoFieldType;
+import com.liferay.info.form.InfoForm;
+import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutFriendlyURLRandomizerBumper;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.field.util.ObjectFieldUtil;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
+import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -52,6 +72,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CustomizedPages;
 import com.liferay.portal.kernel.model.Group;
@@ -76,6 +97,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -89,6 +111,9 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -107,6 +132,8 @@ import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Rubén Pulido
@@ -357,6 +384,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		_testPutSiteSitePageWithExportedSitePage();
 		_testPutSiteSitePageWithExportedSitePageWithLayoutIdFriendlyURL();
+		_testPutSiteSitePageWithFormFragmentPageElements();
 		_testPutSiteSitePageWithPageElements();
 		_testPutSiteSitePageWithPageExperiences();
 		_testPutSiteSitePageWithPageSpecifications();
@@ -545,6 +573,59 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				jsonArray.toString(),
 				expectedFriendlyURLs.containsAll(
 					JSONUtil.toStringList(jsonArray)));
+		}
+	}
+
+	private void _assertInputFragmentEntryLinks(
+			List<FragmentEntryLink> expectedFragmentEntryLinks,
+			InfoForm expectedInfoForm, InfoForm infoForm, Layout layout)
+		throws Exception {
+
+		Assert.assertEquals(
+			expectedFragmentEntryLinks.size(),
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksCountByPlid(
+				layout.getGroupId(), layout.getPlid()));
+
+		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
+
+		for (Locale locale :
+				LanguageUtil.getAvailableLocales(layout.getGroupId())) {
+
+			for (FragmentEntryLink fragmentEntryLink :
+					expectedFragmentEntryLinks) {
+
+				Assert.assertEquals(
+					FragmentConstants.TYPE_INPUT, fragmentEntryLink.getType());
+
+				FragmentEntryLink importedFragmentEntryLink =
+					_fragmentEntryLinkLocalService.
+						getFragmentEntryLinkByExternalReferenceCode(
+							fragmentEntryLink.getExternalReferenceCode(),
+							layout.getGroupId());
+
+				Assert.assertEquals(
+					layout.getPlid(), importedFragmentEntryLink.getPlid());
+				Assert.assertEquals(
+					fragmentEntryLink.getRendererKey(),
+					importedFragmentEntryLink.getRendererKey());
+				Assert.assertEquals(
+					FragmentConstants.TYPE_INPUT,
+					importedFragmentEntryLink.getType());
+
+				String defaultInputLabel = RandomTestUtil.randomString();
+
+				Assert.assertEquals(
+					_fragmentEntryInputTemplateNodeContextHelper.
+						toInputTemplateNode(
+							Collections.emptyMap(), defaultInputLabel,
+							fragmentEntryLink, httpServletRequest,
+							expectedInfoForm, locale),
+					_fragmentEntryInputTemplateNodeContextHelper.
+						toInputTemplateNode(
+							Collections.emptyMap(), defaultInputLabel,
+							importedFragmentEntryLink, httpServletRequest,
+							infoForm, locale));
+			}
 		}
 	}
 
@@ -825,6 +906,100 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		}
 
 		return Math.min(priority, maxPriority);
+	}
+
+	private String _getInputFragmentEntryLinkEditableValues(
+		String inputFieldId) {
+
+		return JSONUtil.put(
+			FragmentEntryProcessorConstants.
+				KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+			JSONUtil.put(
+				"inputFieldId", inputFieldId
+			).put(
+				"inputHelpText", RandomTestUtil.randomLocaleStringMap()
+			).put(
+				"inputLabel", RandomTestUtil.randomLocaleStringMap()
+			).put(
+				"inputReadOnly", RandomTestUtil.randomBoolean()
+			).put(
+				"inputRequired", RandomTestUtil.randomBoolean()
+			).put(
+				"inputShowHelpText", RandomTestUtil.randomBoolean()
+			).put(
+				"inputShowLabel", RandomTestUtil.randomBoolean()
+			)
+		).toString();
+	}
+
+	private Layout _getLayout(
+			String className, Group group, List<InfoField> infoFields)
+		throws Exception {
+
+		JSONObject defaultInputFragmentEntryKeysJSONObject =
+			_defaultInputFragmentEntryConfigurationProvider.
+				getDefaultInputFragmentEntryKeysJSONObject(group.getGroupId());
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(group);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		long segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid());
+
+		JSONObject jsonObject = ContentLayoutTestUtil.addFormToLayout(
+			false, String.valueOf(_portal.getClassNameId(className)), "0",
+			draftLayout, _layoutStructureProvider, segmentsExperienceId);
+
+		String parentItemId = jsonObject.getString("addedItemId");
+
+		int position = 0;
+
+		for (InfoField<?> infoField : infoFields) {
+			InfoFieldType infoFieldType = infoField.getInfoFieldType();
+
+			JSONObject defaultInputFragmentEntryJSONObject =
+				defaultInputFragmentEntryKeysJSONObject.getJSONObject(
+					infoFieldType.getName());
+
+			FragmentEntry fragmentEntry =
+				_fragmentCollectionContributorRegistry.getFragmentEntry(
+					defaultInputFragmentEntryJSONObject.getString("key"));
+
+			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+				_getInputFragmentEntryLinkEditableValues(
+					infoField.getUniqueId()),
+				fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+				fragmentEntry.getExternalReferenceCode(),
+				fragmentEntry.getScopeERC(), fragmentEntry.getHtml(),
+				fragmentEntry.getJs(), draftLayout,
+				fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
+				parentItemId, position, segmentsExperienceId);
+
+			position++;
+		}
+
+		JSONObject defaultInputFragmentEntryJSONObject =
+			defaultInputFragmentEntryKeysJSONObject.getJSONObject(
+				DefaultInputFragmentEntryConfigurationProvider.
+					FORM_INPUT_SUBMIT_BUTTON);
+
+		FragmentEntry fragmentEntry =
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
+				defaultInputFragmentEntryJSONObject.getString("key"));
+
+		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			"{}", fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+			fragmentEntry.getExternalReferenceCode(),
+			fragmentEntry.getScopeERC(), fragmentEntry.getHtml(),
+			fragmentEntry.getJs(), draftLayout,
+			fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
+			parentItemId, position, segmentsExperienceId);
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		return layout;
 	}
 
 	private PageSettings _getPageSettings(
@@ -2248,6 +2423,62 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			importedSitePage);
 	}
 
+	private void _testPutSiteSitePageWithFormFragmentPageElements()
+		throws Exception {
+
+		SitePageResource sitePageResource = _getSitePageResource(
+			"pageSpecifications");
+
+		List<ObjectField> objectFields = ListUtil.fromArray(
+			ObjectFieldUtil.createObjectField(
+				ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
+				ObjectFieldConstants.DB_TYPE_BOOLEAN,
+				RandomTestUtil.randomString(), "boolean"),
+			ObjectFieldUtil.createObjectField(
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+				ObjectFieldConstants.DB_TYPE_STRING,
+				RandomTestUtil.randomString(), "text"));
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				objectFields, false);
+
+		InfoItemFormProvider<?> infoItemFormProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFormProvider.class, objectDefinition.getClassName());
+
+		InfoForm infoForm = infoItemFormProvider.getInfoForm(
+			StringPool.BLANK, irrelevantGroup.getGroupId());
+
+		Layout layout = _getLayout(
+			objectDefinition.getClassName(), irrelevantGroup,
+			ListUtil.filter(
+				infoForm.getAllInfoFields(),
+				infoField -> infoField.isEditable()));
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+				layout.getGroupId(), layout.getPlid());
+
+		Assert.assertEquals(
+			fragmentEntryLinks.toString(), objectFields.size() + 2,
+			fragmentEntryLinks.size());
+
+		SitePage sitePage = sitePageResource.getSiteSitePage(
+			irrelevantGroup.getExternalReferenceCode(),
+			layout.getExternalReferenceCode());
+
+		_assertSitePage(layout, sitePage);
+		_testPutSiteSitePage(sitePage, testGroup, sitePage);
+
+		_assertInputFragmentEntryLinks(
+			fragmentEntryLinks, infoForm,
+			infoItemFormProvider.getInfoForm(
+				StringPool.BLANK, testGroup.getGroupId()),
+			_layoutLocalService.getLayoutByExternalReferenceCode(
+				layout.getExternalReferenceCode(), testGroup.getGroupId()));
+	}
+
 	private void _testPutSiteSitePageWithPageElements() throws Exception {
 		PageElement[] pageElements = PageElementsTestUtil.getPageElements(
 			testGroup.getGroupId());
@@ -2738,7 +2969,28 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		SitePage.Type.CONTENT_PAGE, SitePage.Type.WIDGET_PAGE);
 
 	@Inject
+	private DefaultInputFragmentEntryConfigurationProvider
+		_defaultInputFragmentEntryConfigurationProvider;
+
+	@Inject
+	private FragmentCollectionContributorRegistry
+		_fragmentCollectionContributorRegistry;
+
+	@Inject
+	private FragmentEntryInputTemplateNodeContextHelper
+		_fragmentEntryInputTemplateNodeContextHelper;
+
+	@Inject
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Inject
+	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Inject
 	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Inject
 	private JSONFactory _jsonFactory;
@@ -2746,6 +2998,15 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	@Inject
 	private LayoutLocalService _layoutLocalService;
 
+	@Inject
+	private LayoutStructureProvider _layoutStructureProvider;
+
+	@Inject
+	private Portal _portal;
+
 	private final Map<String, Integer> _priorities = new HashMap<>();
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

@@ -11,18 +11,20 @@ import {Toolbar} from '@liferay/site-cms-site-initializer';
 import {sessionStorage, sub} from 'frontend-js-web';
 import React, {useEffect, useId, useState} from 'react';
 
-export default function ProjectEditorToolbar({
+export default function EditorToolbar({
 	backURL,
+	title,
 	viewProjectURL,
 }: {
 	backURL: string;
+	title: string;
 	viewProjectURL?: string;
 }) {
 	const [formId, setFormId] = useState<string | undefined>();
 
 	const submitLabelId = useId();
 	const submitTitle = getSubmitTitle(
-		sub(Liferay.Language.get('save-x'), Liferay.Language.get('project'))
+		sub(Liferay.Language.get('save-x'), title)
 	);
 
 	function getForm(): HTMLFormElement {
@@ -62,7 +64,7 @@ export default function ProjectEditorToolbar({
 		<Toolbar
 			backURL={backURL}
 			className="content-editor__toolbar position-fixed"
-			title={Liferay.Language.get('new-project')}
+			title={title}
 		>
 			<Toolbar.Item>
 				<ClayLink

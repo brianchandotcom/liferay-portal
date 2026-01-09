@@ -5,6 +5,7 @@
 
 package com.liferay.layout.page.template.internal.model.listener;
 
+import com.liferay.batch.engine.thread.local.BatchEngineThreadLocal;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -57,8 +58,9 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			_reindexLayout(layout);
 		}
 
-		if (ExportImportThreadLocal.isImportInProcess() ||
-			ExportImportThreadLocal.isStagingInProcess()) {
+		if (!BatchEngineThreadLocal.isBatchImportInProcess() &&
+			(ExportImportThreadLocal.isImportInProcess() ||
+			 ExportImportThreadLocal.isStagingInProcess())) {
 
 			return;
 		}

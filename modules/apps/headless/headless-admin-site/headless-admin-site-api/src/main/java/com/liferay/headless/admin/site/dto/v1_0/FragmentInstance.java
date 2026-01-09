@@ -1,16 +1,13 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.dto.v1_0;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -42,25 +39,17 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName(
-	description = "A page element definition of a fragment instance.",
-	value = "FragmentInstancePageElementDefinition"
-)
+@GraphQLName(description = "A fragment instance.", value = "FragmentInstance")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "FragmentInstancePageElementDefinition")
-public class FragmentInstancePageElementDefinition
-	extends PageElementDefinition implements Serializable {
+@XmlRootElement(name = "FragmentInstance")
+public class FragmentInstance implements Serializable {
 
-	public static FragmentInstancePageElementDefinition toDTO(String json) {
-		return ObjectMapperUtil.readValue(
-			FragmentInstancePageElementDefinition.class, json);
+	public static FragmentInstance toDTO(String json) {
+		return ObjectMapperUtil.readValue(FragmentInstance.class, json);
 	}
 
-	public static FragmentInstancePageElementDefinition unsafeToDTO(
-		String json) {
-
-		return ObjectMapperUtil.unsafeReadValue(
-			FragmentInstancePageElementDefinition.class, json);
+	public static FragmentInstance unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(FragmentInstance.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
@@ -541,63 +530,7 @@ public class FragmentInstancePageElementDefinition
 	private Supplier<FragmentReference> _fragmentReferenceSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment instance's type (basic, form)."
-	)
-	@JsonGetter("fragmentType")
-	@Valid
-	public FragmentType getFragmentType() {
-		if (_fragmentTypeSupplier != null) {
-			fragmentType = _fragmentTypeSupplier.get();
-
-			_fragmentTypeSupplier = null;
-		}
-
-		return fragmentType;
-	}
-
-	@JsonIgnore
-	public String getFragmentTypeAsString() {
-		FragmentType fragmentType = getFragmentType();
-
-		if (fragmentType == null) {
-			return null;
-		}
-
-		return fragmentType.toString();
-	}
-
-	public void setFragmentType(FragmentType fragmentType) {
-		this.fragmentType = fragmentType;
-
-		_fragmentTypeSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setFragmentType(
-		UnsafeSupplier<FragmentType, Exception> fragmentTypeUnsafeSupplier) {
-
-		_fragmentTypeSupplier = () -> {
-			try {
-				return fragmentTypeUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The fragment instance's type (basic, form).")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FragmentType fragmentType;
-
-	@JsonIgnore
-	private Supplier<FragmentType> _fragmentTypeSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "A list of fragment viewports of the fragment instance page element."
+		description = "A list of fragment viewports of the fragment instance."
 	)
 	@Valid
 	public FragmentViewport[] getFragmentViewports() {
@@ -635,7 +568,7 @@ public class FragmentInstancePageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "A list of fragment viewports of the fragment instance page element."
+		description = "A list of fragment viewports of the fragment instance."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentViewport[] fragmentViewports;
@@ -685,7 +618,7 @@ public class FragmentInstancePageElementDefinition
 	private Supplier<String> _htmlSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "A flag that indicates whether the fragment instance page element is indexed or not."
+		description = "A flag that indicates whether the fragment instance is indexed or not."
 	)
 	public Boolean getIndexed() {
 		if (_indexedSupplier != null) {
@@ -721,7 +654,7 @@ public class FragmentInstancePageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "A flag that indicates whether the fragment instance page element is indexed or not."
+		description = "A flag that indicates whether the fragment instance is indexed or not."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean indexed;
@@ -771,7 +704,7 @@ public class FragmentInstancePageElementDefinition
 	private Supplier<String> _jsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The custom name of a fragment instance page element."
+		description = "The custom name of a fragment instance."
 	)
 	public String getName() {
 		if (_nameSupplier != null) {
@@ -804,9 +737,7 @@ public class FragmentInstancePageElementDefinition
 		};
 	}
 
-	@GraphQLField(
-		description = "The custom name of a fragment instance page element."
-	)
+	@GraphQLField(description = "The custom name of a fragment instance.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
@@ -814,7 +745,7 @@ public class FragmentInstancePageElementDefinition
 	private Supplier<String> _nameSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment instance page element's namespace."
+		description = "The fragment instance's namespace."
 	)
 	public String getNamespace() {
 		if (_namespaceSupplier != null) {
@@ -849,9 +780,7 @@ public class FragmentInstancePageElementDefinition
 		};
 	}
 
-	@GraphQLField(
-		description = "The fragment instance page element's namespace."
-	)
+	@GraphQLField(description = "The fragment instance's namespace.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String namespace;
 
@@ -859,7 +788,7 @@ public class FragmentInstancePageElementDefinition
 	private Supplier<String> _namespaceSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "A valid external identifier to reference this fragment instance page element."
+		description = "A valid external identifier to reference this fragment instance."
 	)
 	public String getUuid() {
 		if (_uuidSupplier != null) {
@@ -893,7 +822,7 @@ public class FragmentInstancePageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "A valid external identifier to reference this fragment instance page element."
+		description = "A valid external identifier to reference this fragment instance."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String uuid;
@@ -902,7 +831,7 @@ public class FragmentInstancePageElementDefinition
 	private Supplier<String> _uuidSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "A list of widget instances within the fragment instance page element."
+		description = "A list of widget instances within the fragment instance."
 	)
 	@Valid
 	public WidgetInstance[] getWidgetInstances() {
@@ -940,7 +869,7 @@ public class FragmentInstancePageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "A list of widget instances within the fragment instance page element."
+		description = "A list of widget instances within the fragment instance."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected WidgetInstance[] widgetInstances;
@@ -954,16 +883,13 @@ public class FragmentInstancePageElementDefinition
 			return true;
 		}
 
-		if (!(object instanceof FragmentInstancePageElementDefinition)) {
+		if (!(object instanceof FragmentInstance)) {
 			return false;
 		}
 
-		FragmentInstancePageElementDefinition
-			fragmentInstancePageElementDefinition =
-				(FragmentInstancePageElementDefinition)object;
+		FragmentInstance fragmentInstance = (FragmentInstance)object;
 
-		return Objects.equals(
-			toString(), fragmentInstancePageElementDefinition.toString());
+		return Objects.equals(toString(), fragmentInstance.toString());
 	}
 
 	@Override
@@ -1150,20 +1076,6 @@ public class FragmentInstancePageElementDefinition
 			sb.append(String.valueOf(fragmentReference));
 		}
 
-		FragmentType fragmentType = getFragmentType();
-
-		if (fragmentType != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"fragmentType\": ");
-
-			sb.append("\"");
-			sb.append(fragmentType);
-			sb.append("\"");
-		}
-
 		FragmentViewport[] fragmentViewports = getFragmentViewports();
 
 		if (fragmentViewports != null) {
@@ -1300,20 +1212,6 @@ public class FragmentInstancePageElementDefinition
 			sb.append("]");
 		}
 
-		Type type = getType();
-
-		if (type != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"type\": ");
-
-			sb.append("\"");
-			sb.append(type);
-			sb.append("\"");
-		}
-
 		sb.append("}");
 
 		return sb.toString();
@@ -1321,48 +1219,10 @@ public class FragmentInstancePageElementDefinition
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.FragmentInstancePageElementDefinition",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.FragmentInstance",
 		name = "x-class-name"
 	)
 	public String xClassName;
-
-	@GraphQLName("FragmentType")
-	public static enum FragmentType {
-
-		BASIC("Basic"), FORM("Form");
-
-		@JsonCreator
-		public static FragmentType create(String value) {
-			if ((value == null) || value.equals("")) {
-				return null;
-			}
-
-			for (FragmentType fragmentType : values()) {
-				if (Objects.equals(fragmentType.getValue(), value)) {
-					return fragmentType;
-				}
-			}
-
-			throw new IllegalArgumentException("Invalid enum value: " + value);
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private FragmentType(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

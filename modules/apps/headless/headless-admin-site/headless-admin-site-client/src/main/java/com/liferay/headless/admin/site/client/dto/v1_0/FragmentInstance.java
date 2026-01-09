@@ -1,12 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.client.dto.v1_0;
 
 import com.liferay.headless.admin.site.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.site.client.serdes.v1_0.FragmentInstancePageElementDefinitionSerDes;
+import com.liferay.headless.admin.site.client.serdes.v1_0.FragmentInstanceSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -21,11 +21,10 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class FragmentInstancePageElementDefinition
-	extends PageElementDefinition implements Cloneable, Serializable {
+public class FragmentInstance implements Cloneable, Serializable {
 
-	public static FragmentInstancePageElementDefinition toDTO(String json) {
-		return FragmentInstancePageElementDefinitionSerDes.toDTO(json);
+	public static FragmentInstance toDTO(String json) {
+		return FragmentInstanceSerDes.toDTO(json);
 	}
 
 	public FragmentImage getBackgroundFragmentImage() {
@@ -264,35 +263,6 @@ public class FragmentInstancePageElementDefinition
 
 	protected FragmentReference fragmentReference;
 
-	public FragmentType getFragmentType() {
-		return fragmentType;
-	}
-
-	public String getFragmentTypeAsString() {
-		if (fragmentType == null) {
-			return null;
-		}
-
-		return fragmentType.toString();
-	}
-
-	public void setFragmentType(FragmentType fragmentType) {
-		this.fragmentType = fragmentType;
-	}
-
-	public void setFragmentType(
-		UnsafeSupplier<FragmentType, Exception> fragmentTypeUnsafeSupplier) {
-
-		try {
-			fragmentType = fragmentTypeUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected FragmentType fragmentType;
-
 	public FragmentViewport[] getFragmentViewports() {
 		return fragmentViewports;
 	}
@@ -456,10 +426,8 @@ public class FragmentInstancePageElementDefinition
 	protected WidgetInstance[] widgetInstances;
 
 	@Override
-	public FragmentInstancePageElementDefinition clone()
-		throws CloneNotSupportedException {
-
-		return (FragmentInstancePageElementDefinition)super.clone();
+	public FragmentInstance clone() throws CloneNotSupportedException {
+		return (FragmentInstance)super.clone();
 	}
 
 	@Override
@@ -468,16 +436,13 @@ public class FragmentInstancePageElementDefinition
 			return true;
 		}
 
-		if (!(object instanceof FragmentInstancePageElementDefinition)) {
+		if (!(object instanceof FragmentInstance)) {
 			return false;
 		}
 
-		FragmentInstancePageElementDefinition
-			fragmentInstancePageElementDefinition =
-				(FragmentInstancePageElementDefinition)object;
+		FragmentInstance fragmentInstance = (FragmentInstance)object;
 
-		return Objects.equals(
-			toString(), fragmentInstancePageElementDefinition.toString());
+		return Objects.equals(toString(), fragmentInstance.toString());
 	}
 
 	@Override
@@ -488,40 +453,7 @@ public class FragmentInstancePageElementDefinition
 	}
 
 	public String toString() {
-		return FragmentInstancePageElementDefinitionSerDes.toJSON(this);
-	}
-
-	public static enum FragmentType {
-
-		BASIC("Basic"), FORM("Form");
-
-		public static FragmentType create(String value) {
-			for (FragmentType fragmentType : values()) {
-				if (Objects.equals(fragmentType.getValue(), value) ||
-					Objects.equals(fragmentType.name(), value)) {
-
-					return fragmentType;
-				}
-			}
-
-			return null;
-		}
-
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private FragmentType(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
+		return FragmentInstanceSerDes.toJSON(this);
 	}
 
 }

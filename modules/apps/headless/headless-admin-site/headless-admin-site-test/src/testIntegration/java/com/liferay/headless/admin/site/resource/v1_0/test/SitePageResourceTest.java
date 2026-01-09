@@ -58,10 +58,20 @@ import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutFriendlyURLRandomizerBumper;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.list.type.entry.util.ListTypeEntryUtil;
+import com.liferay.list.type.model.ListTypeDefinition;
+import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectFieldSettingConstants;
+import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
+import com.liferay.object.field.builder.DateTimeObjectFieldBuilder;
+import com.liferay.object.field.builder.MultiselectPicklistObjectFieldBuilder;
+import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectFieldSetting;
+import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeTriConsumer;
@@ -861,6 +871,18 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			widgetPageSettings.getLayoutTemplateId());
 	}
 
+	private ObjectFieldSetting _createObjectFieldSetting(
+		String name, String value) {
+
+		ObjectFieldSetting objectFieldSetting =
+			_objectFieldSettingLocalService.createObjectFieldSetting(0L);
+
+		objectFieldSetting.setName(name);
+		objectFieldSetting.setValue(value);
+
+		return objectFieldSetting;
+	}
+
 	private int _getExpectedPriority(
 			String defaultParentSitePageExternalReferenceCode,
 			String parentSitePageExternalReferenceCode, Integer priority)
@@ -1000,6 +1022,101 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
 		return layout;
+	}
+
+	private List<ObjectField> _getObjectFields() throws Exception {
+		ListTypeDefinition listTypeDefinition =
+			_listTypeDefinitionLocalService.addListTypeDefinition(
+				null, TestPropsValues.getUserId(),
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString()),
+				false,
+				ListUtil.fromArray(
+					ListTypeEntryUtil.createListTypeEntry(
+						RandomTestUtil.randomString(),
+						Collections.singletonMap(
+							LocaleUtil.US, RandomTestUtil.randomString())),
+					ListTypeEntryUtil.createListTypeEntry(
+						RandomTestUtil.randomString(),
+						Collections.singletonMap(
+							LocaleUtil.US, RandomTestUtil.randomString())),
+					ListTypeEntryUtil.createListTypeEntry(
+						RandomTestUtil.randomString(),
+						Collections.singletonMap(
+							LocaleUtil.US, RandomTestUtil.randomString()))),
+				new ServiceContext());
+
+		return ListUtil.fromArray(
+			new AttachmentObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"attachment"
+			).objectFieldSettings(
+				Arrays.asList(
+					_createObjectFieldSetting("acceptedFileExtensions", "txt"),
+					_createObjectFieldSetting("fileSource", "userComputer"),
+					_createObjectFieldSetting("maximumFileSize", "100"))
+			).build(),
+			ObjectFieldUtil.createObjectField(
+				ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
+				ObjectFieldConstants.DB_TYPE_BOOLEAN,
+				RandomTestUtil.randomString(), "boolean"),
+			ObjectFieldUtil.createObjectField(
+				ObjectFieldConstants.BUSINESS_TYPE_DATE,
+				ObjectFieldConstants.DB_TYPE_DATE,
+				RandomTestUtil.randomString(), "date"),
+			new DateTimeObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"dateTime"
+			).objectFieldSettings(
+				Collections.singletonList(
+					_createObjectFieldSetting(
+						ObjectFieldSettingConstants.NAME_TIME_STORAGE,
+						ObjectFieldSettingConstants.VALUE_CONVERT_TO_UTC))
+			).build(),
+			ObjectFieldUtil.createObjectField(
+				ObjectFieldConstants.BUSINESS_TYPE_DECIMAL,
+				ObjectFieldConstants.DB_TYPE_DOUBLE,
+				RandomTestUtil.randomString(), "decimal"),
+			ObjectFieldUtil.createObjectField(
+				ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
+				ObjectFieldConstants.DB_TYPE_INTEGER,
+				RandomTestUtil.randomString(), "integer"),
+			ObjectFieldUtil.createObjectField(
+				ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
+				ObjectFieldConstants.DB_TYPE_LONG,
+				RandomTestUtil.randomString(), "longInteger"),
+			new MultiselectPicklistObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).listTypeDefinitionId(
+				listTypeDefinition.getListTypeDefinitionId()
+			).name(
+				"multiselectPicklist"
+			).build(),
+			new PicklistObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).listTypeDefinitionId(
+				listTypeDefinition.getListTypeDefinitionId()
+			).name(
+				"picklist"
+			).build(),
+			ObjectFieldUtil.createObjectField(
+				ObjectFieldConstants.BUSINESS_TYPE_PRECISION_DECIMAL,
+				ObjectFieldConstants.DB_TYPE_BIG_DECIMAL,
+				RandomTestUtil.randomString(), "precisionDecimal"),
+			ObjectFieldUtil.createObjectField(
+				ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT,
+				ObjectFieldConstants.DB_TYPE_STRING,
+				RandomTestUtil.randomString(), "richText"),
+			ObjectFieldUtil.createObjectField(
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+				ObjectFieldConstants.DB_TYPE_STRING,
+				RandomTestUtil.randomString(), "text"));
 	}
 
 	private PageSettings _getPageSettings(
@@ -2429,15 +2546,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		SitePageResource sitePageResource = _getSitePageResource(
 			"pageSpecifications");
 
-		List<ObjectField> objectFields = ListUtil.fromArray(
-			ObjectFieldUtil.createObjectField(
-				ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
-				ObjectFieldConstants.DB_TYPE_BOOLEAN,
-				RandomTestUtil.randomString(), "boolean"),
-			ObjectFieldUtil.createObjectField(
-				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-				ObjectFieldConstants.DB_TYPE_STRING,
-				RandomTestUtil.randomString(), "text"));
+		List<ObjectField> objectFields = _getObjectFields();
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
@@ -3000,6 +3109,12 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 	@Inject
 	private LayoutStructureProvider _layoutStructureProvider;
+
+	@Inject
+	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
+
+	@Inject
+	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
 
 	@Inject
 	private Portal _portal;

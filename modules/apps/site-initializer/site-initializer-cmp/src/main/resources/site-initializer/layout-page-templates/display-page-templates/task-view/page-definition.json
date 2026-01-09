@@ -244,6 +244,24 @@
 			},
 			{
 				"definition": {
+					"fragment": {
+						"key": "com.liferay.site.cms.site.initializer.internal.fragment.renderer.ViewRelatedAssetsJSPSectionFragmentRenderer"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+					],
+					"fragmentStyle": {
+						"paddingBottom": "3",
+						"paddingLeft": "3",
+						"paddingRight": "3"
+					},
+					"indexed": true
+				},
+				"type": "Fragment"
+			},
+			{
+				"definition": {
 					"indexed": true,
 					"layout": {
 					},

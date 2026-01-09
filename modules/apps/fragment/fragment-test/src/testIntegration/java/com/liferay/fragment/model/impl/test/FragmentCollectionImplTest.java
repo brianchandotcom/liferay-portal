@@ -168,10 +168,10 @@ public class FragmentCollectionImplTest {
 			List<String> entries = zipReader.getEntries();
 
 			Assert.assertTrue(entries.isEmpty());
-
-			_fragmentCollection.populateZipWriter(
-				zipWriter, RandomTestUtil.randomString());
 		}
+
+		_fragmentCollection.populateZipWriter(
+			zipWriter, RandomTestUtil.randomString());
 
 		try (ZipReader zipReader = _zipReaderFactory.getZipReader(
 				zipWriter.getFile())) {

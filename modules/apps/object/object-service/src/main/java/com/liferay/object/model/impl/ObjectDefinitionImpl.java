@@ -354,7 +354,7 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 	}
 
 	private List<ObjectDefinitionSetting> _objectDefinitionSettings;
-	private ObjectFieldBag _objectFieldBag;
+	private transient ObjectFieldBag _objectFieldBag;
 	private ObjectFolder _objectFolder;
 
 }

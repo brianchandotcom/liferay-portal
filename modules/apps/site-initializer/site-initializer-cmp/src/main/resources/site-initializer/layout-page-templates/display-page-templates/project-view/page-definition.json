@@ -501,6 +501,37 @@
 							"fragmentDropZoneId": "2"
 						},
 						"id": "5f561d22-abb2-bff7-7e7a-474ae5d0f194",
+						"pageElements": [
+							{
+								"definition": {
+									"indexed": true,
+									"layout": {
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "com.liferay.site.cmp.site.initializer.internal.fragment.renderer.ViewTasksJSPSectionFragmentRenderer"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+											],
+											"fragmentStyle": {
+												"borderColor": "rgb(241, 242, 245)",
+												"borderRadius": "10px",
+												"borderWidth": "2px",
+												"marginBottom": "3"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							}
+						],
 						"type": "FragmentDropZone"
 					}
 				],

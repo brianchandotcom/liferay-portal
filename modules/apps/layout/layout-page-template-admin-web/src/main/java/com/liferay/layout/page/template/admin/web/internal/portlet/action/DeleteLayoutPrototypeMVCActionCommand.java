@@ -6,6 +6,7 @@
 package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
+import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.RequiredLayoutPrototypeException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -55,11 +56,14 @@ public class DeleteLayoutPrototypeMVCActionCommand
 				_layoutPrototypeService.deleteLayoutPrototype(
 					curLayoutPrototypeId);
 			}
-			catch (RequiredLayoutPrototypeException
-						requiredLayoutPrototypeException) {
+			catch (ModelListenerException modelListenerException) {
+				Throwable throwable = modelListenerException.getCause();
 
-				SessionErrors.add(
-					actionRequest, requiredLayoutPrototypeException.getClass());
+				if (!(throwable instanceof RequiredLayoutPrototypeException)) {
+					throw modelListenerException;
+				}
+
+				SessionErrors.add(actionRequest, throwable.getClass());
 
 				hideDefaultErrorMessage(actionRequest);
 

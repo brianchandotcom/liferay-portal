@@ -11,7 +11,7 @@ import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisibl
 
 const test = mergeTests(loginTest(), productMenuPageTest);
 
-test('checks where the focus goes when the Product Menu is open', async ({
+test('The Product Menu panel should be focused when Product menu is opened', async ({
 	page,
 	productMenuPage,
 }) => {

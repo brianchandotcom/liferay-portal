@@ -50,12 +50,14 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -532,6 +534,19 @@ public class MarketplaceRestController extends BaseRestController {
 		}
 	}
 
+	private String _format(Date date) {
+		if (date == null) {
+			return "Not Applicable";
+		}
+
+		return date.toInstant(
+		).atZone(
+			ZoneId.of("GMT")
+		).format(
+			DateTimeFormatter.ofPattern("MMMM d, yyyy")
+		);
+	}
+
 	private Long _getAccountAdministratorRoleId(long accountId)
 		throws Exception {
 
@@ -769,6 +784,25 @@ public class MarketplaceRestController extends BaseRestController {
 				).replaceAll(
 					"(?<=accounts/)-?\\d+(?=/images)", "-1"
 				)
+			).put(
+				"[%SUBSCRIPTION_TYPE%]",
+				productSpecificationsMap.get("license-type")
+			).put(
+				"[%SUBSCRIPTION_STARTING_DATE%]",
+				ZonedDateTime.ofInstant(
+					order.getCreateDate(
+					).toInstant(),
+					ZoneOffset.UTC
+				).format(
+					DateTimeFormatter.ofPattern("MMMM d, yyyy")
+				)
+			).put(
+				"[%SUBSCRIPTION_EXPIRATION_DATE%]",
+				_format(
+					MarketplaceUtil.getOrderPurchaseEndDate(
+						productSpecificationsMap.get("license-type"),
+						MarketplaceUtil.getSkuOptionValue(
+							"license-usage-type", orderItem.getOptions())))
 			).put(
 				"[%TOTAL_FORMATTED%]", order.getTotalFormatted()
 			).put(

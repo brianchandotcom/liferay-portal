@@ -5,17 +5,17 @@
 
 package com.liferay.site.cmp.site.initializer.internal.display.context;
 
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cmp.site.initializer.internal.util.ActionUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,67 +26,63 @@ import java.util.Map;
 /**
  * @author Gabriel Albuquerque
  */
-public class ViewProjectsSectionDisplayContext
-	extends BaseSectionDisplayContext {
+public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 
-	public ViewProjectsSectionDisplayContext(
+	public ViewTasksSectionDisplayContext(
 		HttpServletRequest httpServletRequest,
 		ObjectDefinition objectDefinition) {
 
 		super(httpServletRequest, objectDefinition);
+
+		_assetEntry = (AssetEntry)httpServletRequest.getAttribute(
+			WebKeys.LAYOUT_ASSET_ENTRY);
 	}
 
 	public String getAPIURL() {
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(6);
 
 		sb.append("/o/search/v1.0/search?emptySearch=true&");
 		sb.append("filter=objectDefinitionId eq ");
 		sb.append(objectDefinition.getObjectDefinitionId());
-		sb.append("&nestedFields=embedded");
+
+		if (_assetEntry != null) {
+			sb.append(" and scopeGroupId eq ");
+			sb.append(_assetEntry.getGroupId());
+		}
+
+		sb.append("&nestedFields=cmpProjectToCMPTask,embedded");
 
 		return sb.toString();
 	}
 
-	public Map<String, Object> getBreadcrumbProps() throws PortalException {
-		return HashMapBuilder.<String, Object>put(
-			"breadcrumbItems",
-			JSONUtil.putAll(
-				JSONUtil.put(
-					"active", false
-				).put(
-					"label",
-					() -> {
-						Layout layout = themeDisplay.getLayout();
-
-						if (layout == null) {
-							return null;
-						}
-
-						return layout.getName(themeDisplay.getLocale(), true);
-					}
-				))
-		).put(
-			"hideSpace", true
-		).build();
-	}
-
 	public CreationMenu getCreationMenu() {
+		if (_assetEntry == null) {
+			return null;
+		}
+
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
-				dropdownItem.putData("action", "createProject");
+				dropdownItem.putData("action", "createTask");
 				dropdownItem.putData(
 					"objectDefinitionId",
 					String.valueOf(objectDefinition.getObjectDefinitionId()));
 				dropdownItem.putData(
 					"redirect",
-					ActionUtil.getAddProjectURL(
-						objectDefinition, themeDisplay));
+					StringBundler.concat(
+						themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+						GroupConstants.CMS_FRIENDLY_URL,
+						"/add_task?objectDefinitionId=",
+						objectDefinition.getObjectDefinitionId(), "&plid=",
+						themeDisplay.getPlid(), "&projectGroupId=",
+						_assetEntry.getGroupId(), "&projectId=",
+						_assetEntry.getClassPK(), "&redirect=",
+						themeDisplay.getURLCurrent()));
 				dropdownItem.putData(
 					"title",
 					objectDefinition.getLabel(themeDisplay.getLocale()));
 				dropdownItem.setIcon("forms");
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "new-project"));
+					LanguageUtil.get(httpServletRequest, "new-task"));
 			}
 		).build();
 	}
@@ -95,38 +91,37 @@ public class ViewProjectsSectionDisplayContext
 		return HashMapBuilder.<String, Object>put(
 			"description",
 			LanguageUtil.get(
-				httpServletRequest, "click-new-to-create-your-first-project")
+				httpServletRequest, "click-new-to-create-your-first-task")
 		).put(
-			"image", "/states/cmp_empty_state_projects.svg"
+			"image", "/states/cmp_empty_state_tasks.svg"
 		).put(
-			"title", LanguageUtil.get(httpServletRequest, "no-projects-yet")
+			"title", LanguageUtil.get(httpServletRequest, "no-tasks-yet")
 		).build();
 	}
 
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
-		String baseViewProjectURL = ActionUtil.getBaseViewProjectURL(
-			objectDefinition, themeDisplay);
-
 		return ListUtil.fromArray(
 			new FDSActionDropdownItem(
 				StringBundler.concat(
-					ActionUtil.getBaseEditProjectURL(
+					ActionUtil.getBaseEditTaskURL(
 						objectDefinition, themeDisplay),
 					"{embedded.id}?redirect=", themeDisplay.getURLCurrent()),
 				"pencil", "edit", LanguageUtil.get(httpServletRequest, "edit"),
 				"get", "update", null),
 			new FDSActionDropdownItem(
-				baseViewProjectURL + "{embedded.id}", "view", "actionLink",
+				StringBundler.concat(
+					ActionUtil.getBaseViewTaskURL(
+						objectDefinition, themeDisplay),
+					"{embedded.id}?redirect=", themeDisplay.getURLCurrent()),
+				"view", "actionLink",
 				LanguageUtil.get(httpServletRequest, "view"), null, "get",
 				null),
-			new FDSActionDropdownItem(
-				null, "users", "view-members",
-				LanguageUtil.get(httpServletRequest, "view-members"), null,
-				"get", null),
 			new FDSActionDropdownItem(
 				null, "trash", "delete",
 				LanguageUtil.get(httpServletRequest, "delete"), null, "delete",
 				null));
 	}
+
+	private final AssetEntry _assetEntry;
 
 }

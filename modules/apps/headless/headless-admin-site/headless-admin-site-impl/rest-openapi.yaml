@@ -1088,11 +1088,50 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/PageElementDefinition"                                  
                 -   properties:
+                        fieldKey:
+                            # @review
+                            description:
+                                The mapped field key.
+                            type: string                     
                         fragmentInstance:
                             $ref: "#/components/schemas/FragmentInstance"
                             # @review
                             description:
                                 The fragment instance of the form fragment page element definition.
+                        helpText_i18n:
+                            additionalProperties:
+                                type: string
+                            # @review
+                            description:
+                                The localized help texts of the form fragment.
+                            type: object                                
+                        label_i18n:
+                            additionalProperties:
+                                type: string
+                            # @review
+                            description:
+                                The localized labels of the form fragment.
+                            type: object                   
+                        markAsRequired:
+                            # @review
+                            description:
+                                Whether to mark as required.
+                            type: boolean              
+                        readOnlyField:
+                            # @review
+                            description:
+                                Whether to render as read-only field.
+                            type: boolean                        
+                        showHelpText:
+                            # @review
+                            description:
+                                Whether to show the help text.
+                            type: boolean                        
+                        showLabel:
+                            # @review
+                            description:
+                                Whether to show the label.
+                            type: boolean   
             # @review
             description:
                 The page element definition of a form fragment instance.

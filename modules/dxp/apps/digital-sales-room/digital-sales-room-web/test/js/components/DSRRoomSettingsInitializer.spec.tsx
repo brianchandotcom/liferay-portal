@@ -114,6 +114,84 @@ describe('DSRRoomSettingsInitializer', () => {
 		});
 	});
 
+	it('preload fields with step lookAndFeel', async () => {
+		const spyOnGetDigitalSalesRoom = jest.spyOn(
+			DigitalSalesRoomService,
+			'getDigitalSalesRoom'
+		);
+
+		fetchMock.get(/headless-admin-user\/.*\/accounts.*/i, () => {
+			return {
+				items: [
+					{
+						id: 100,
+						name: 'account1',
+					},
+					{
+						id: 101,
+						name: 'account2',
+					},
+				],
+			};
+		});
+		fetchMock.get(
+			/headless-commerce-delivery-catalog\/.*\/channels.*/i,
+			() => {
+				return {
+					items: [
+						{
+							id: 200,
+							name: 'channel1',
+						},
+						{
+							id: 201,
+							name: 'channel2',
+						},
+					],
+				};
+			}
+		);
+
+		fetchMock.get(
+			/headless-digital-sales-room\/.*\/digital-sales-rooms.*/i,
+			() => {
+				return {
+					accountId: 100,
+					accountName: 'account1',
+					channelId: 201,
+					channelName: 'channel1',
+					clientName: 'clientName1',
+					description: 'description1',
+					friendlyUrlPath: '/path1',
+					id: 101,
+					name: 'name1',
+					primaryColor: 'red',
+					secondaryColor: '#FF8A1C',
+				};
+			}
+		);
+
+		renderComponent({
+			digitalSalesRoomId: 101,
+			step: 'lookAndFeel',
+		});
+
+		await waitFor(() => {
+			screen.getByRole('button', {name: 'save'}).click();
+		});
+
+		expect(spyOnGetDigitalSalesRoom).toBeCalledWith(101);
+
+		await waitFor(() => {
+			expect(screen.getByTestId('selectAccountInput')).toHaveValue(
+				'account1'
+			);
+			expect(screen.getByTestId('selectChannelInput')).toHaveValue(
+				'channel1'
+			);
+		});
+	});
+
 	it('calls API on save button with step general', async () => {
 		const spyOnPatchDigitalSalesRoom = jest.spyOn(
 			DigitalSalesRoomService,
@@ -175,6 +253,91 @@ describe('DSRRoomSettingsInitializer', () => {
 			name: 'name2',
 			primaryColor: 'green',
 			secondaryColor: '#00FFFF',
+		});
+	});
+
+	it('calls API on save button with step lookAndFeel', async () => {
+		const spyOnPatchDigitalSalesRoom = jest.spyOn(
+			DigitalSalesRoomService,
+			'patchDigitalSalesRoom'
+		);
+
+		fetchMock.get(/headless-admin-user\/.*\/accounts.*/i, () => {
+			return {
+				items: [
+					{
+						id: 100,
+						name: 'account1',
+					},
+					{
+						id: 101,
+						name: 'account2',
+					},
+				],
+			};
+		});
+		fetchMock.get(
+			/headless-commerce-delivery-catalog\/.*\/channels.*/i,
+			() => {
+				return {
+					items: [
+						{
+							id: 200,
+							name: 'channel1',
+						},
+						{
+							id: 201,
+							name: 'channel2',
+						},
+					],
+				};
+			}
+		);
+		fetchMock.get(
+			/headless-digital-sales-room\/.*\/digital-sales-rooms.*/i,
+			() => {
+				return {
+					accountId: 100,
+					accountName: 'account1',
+					channelId: 200,
+					channelName: 'channel1',
+					clientName: 'clientName1',
+					friendlyUrlPath: '/path1',
+					id: 101,
+					name: 'name1',
+					primaryColor: 'red',
+					secondaryColor: '#FF8A1C',
+				};
+			}
+		);
+
+		renderComponent({
+			digitalSalesRoomId: 100,
+			step: 'lookAndFeel',
+		});
+
+		await waitFor(() => {
+			expect(screen.getByTestId('selectAccountInput')).toHaveValue(
+				'account1'
+			);
+		});
+
+		await setFieldValue(screen.getByTestId('selectAccountInput'), 'ac');
+
+		screen.getByRole('option', {name: 'account2'}).click();
+
+		await setFieldValue(screen.getByTestId('selectChannelInput'), 'ch');
+
+		screen.getByRole('option', {name: 'channel2'}).click();
+
+		await waitFor(() => {
+			screen.getByRole('button', {name: 'save'}).click();
+		});
+
+		expect(spyOnPatchDigitalSalesRoom).toBeCalledWith(100, {
+			accountId: 101,
+			channelId: 201,
+			channelName: 'channel2',
 		});
 	});
 });

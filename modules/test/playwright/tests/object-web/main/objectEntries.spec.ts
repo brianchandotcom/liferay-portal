@@ -3377,7 +3377,7 @@ cmsTest.describe('Manage attachment ObjectField download permission', () => {
 				const objectField = objectFields[0];
 
 				const objectFieldActionCheckbox = iframeLocator.locator(
-					'#guest_ACTION_download_' + objectField.name
+					'#guest_ACTION_DOWNLOAD_' + objectField.name.toUpperCase()
 				);
 
 				await page.waitForTimeout(500);

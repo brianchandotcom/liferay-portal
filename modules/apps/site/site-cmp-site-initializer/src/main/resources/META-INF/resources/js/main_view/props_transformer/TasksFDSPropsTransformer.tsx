@@ -1,0 +1,112 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {IInternalRenderer} from '@liferay/frontend-data-set-web';
+import {
+	ACTIONS,
+	AdditionalProps,
+	SimpleActionLinkRenderer,
+	addOnClickToCreationMenuItems,
+	deleteItemAction,
+} from '@liferay/site-cms-site-initializer';
+
+import StateLabel from '../../common/components/StateLabel';
+
+type action = {
+	data: {
+		id: string;
+	};
+};
+
+type Action = {
+	href: string;
+	method: string;
+};
+
+interface ItemData {
+	actions: {
+		delete: Action;
+		get: Action;
+		update: Action;
+	};
+	embedded: {
+		content: string;
+		content_i18n: {[locale: string]: string};
+		creator: {
+			contentType: string;
+			id: number;
+			image?: string;
+			name: string;
+		};
+		defaultLanguageId: string;
+		externalReferenceCode: string;
+		file?: any;
+		id: number;
+		objectEntryFolderExternalReferenceCode?: string;
+		objectEntryFolderId: number;
+		parentObjectEntryFolderExternalReferenceCode?: string;
+		scopeId: number;
+		systemProperties?: any;
+		title: string;
+		title_i18n: {[locale: string]: string};
+	};
+	entryClassName: string;
+	id: number;
+	title: string;
+}
+
+export default function TasksFDSPropsTransformer({
+	additionalProps,
+	creationMenu,
+	...otherProps
+}: {
+	additionalProps: AdditionalProps;
+	creationMenu: any;
+}) {
+	return {
+		...otherProps,
+		creationMenu: {
+			...creationMenu,
+			primaryItems: addOnClickToCreationMenuItems(
+				creationMenu.primaryItems,
+				ACTIONS
+			),
+		},
+		customRenderers: {
+			tableCell: [
+				{
+					component: ({actions, itemData, options, value}) =>
+						SimpleActionLinkRenderer({
+							actions,
+							additionalProps,
+							itemData,
+							options,
+							value,
+						}),
+					name: 'simpleActionLinkTableCellRenderer',
+					type: 'internal',
+				} as IInternalRenderer,
+				{
+					component: ({value}) => StateLabel(value),
+					name: 'stateTableCellRenderer',
+					type: 'internal',
+				} as IInternalRenderer,
+			],
+		},
+		async onActionDropdownItemClick({
+			action,
+			itemData,
+			loadData,
+		}: {
+			action: action;
+			itemData: ItemData;
+			loadData: () => {};
+		}) {
+			if (action?.data?.id === 'delete') {
+				await deleteItemAction(itemData, loadData);
+			}
+		},
+	};
+}

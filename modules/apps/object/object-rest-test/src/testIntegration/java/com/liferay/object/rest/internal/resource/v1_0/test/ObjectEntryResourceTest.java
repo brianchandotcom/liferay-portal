@@ -354,23 +354,6 @@ public class ObjectEntryResourceTest {
 				LocaleUtil.US, RandomTestUtil.randomString()),
 			_listTypeDefinition.isSystem());
 
-		_depotScopedObjectDefinition =
-			ObjectDefinitionTestUtil.publishObjectDefinition(
-				Collections.singletonList(
-					new TextObjectFieldBuilder(
-					).labelMap(
-						RandomTestUtil.randomLocaleStringMap()
-					).name(
-						StringUtil.randomId()
-					).build()),
-				ObjectDefinitionConstants.SCOPE_DEPOT);
-
-		_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
-			_depotScopedObjectDefinition.getUserId(),
-			_depotScopedObjectDefinition.getObjectDefinitionId(),
-			ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS,
-			StringPool.TRUE);
-
 		String objectDefinitionName = ObjectDefinitionTestUtil.getRandomName();
 
 		_objectDefinition1 = ObjectDefinitionTestUtil.publishObjectDefinition(
@@ -8392,8 +8375,25 @@ public class ObjectEntryResourceTest {
 
 		// Depot scope
 
+		ObjectDefinition depotScopedObjectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						RandomTestUtil.randomLocaleStringMap()
+					).name(
+						StringUtil.randomId()
+					).build()),
+				ObjectDefinitionConstants.SCOPE_DEPOT);
+
+		_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
+			depotScopedObjectDefinition.getUserId(),
+			depotScopedObjectDefinition.getObjectDefinitionId(),
+			ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS,
+			StringPool.TRUE);
+
 		_testGetObjectEntryWithTaxonomyCategories(
-			depotEntry.getGroupId(), _depotScopedObjectDefinition,
+			depotEntry.getGroupId(), depotScopedObjectDefinition,
 			taxonomyCategory1, taxonomyCategory2, taxonomyCategory3,
 			taxonomyCategory4);
 
@@ -8567,6 +8567,23 @@ public class ObjectEntryResourceTest {
 
 		// Depot scope group ID
 
+		ObjectDefinition depotScopedObjectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						RandomTestUtil.randomLocaleStringMap()
+					).name(
+						StringUtil.randomId()
+					).build()),
+				ObjectDefinitionConstants.SCOPE_DEPOT);
+
+		_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
+			depotScopedObjectDefinition.getUserId(),
+			depotScopedObjectDefinition.getObjectDefinitionId(),
+			ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS,
+			StringPool.TRUE);
+
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
 					"WebApplicationExceptionMapper",
@@ -8576,7 +8593,7 @@ public class ObjectEntryResourceTest {
 				HTTPTestUtil.invokeToJSONObject(
 					null,
 					_getEndpoint(
-						_depotScopedObjectDefinition,
+						depotScopedObjectDefinition,
 						RandomTestUtil.randomLong()),
 					Http.Method.GET));
 		}
@@ -8588,12 +8605,12 @@ public class ObjectEntryResourceTest {
 			ServiceContextTestUtil.getServiceContext());
 
 		ObjectEntry depotScopedObjectEntry = ObjectEntryTestUtil.addObjectEntry(
-			depotEntry.getGroupId(), _depotScopedObjectDefinition,
+			depotEntry.getGroupId(), depotScopedObjectDefinition,
 			Collections.emptyMap());
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
-			_getEndpoint(_depotScopedObjectDefinition, depotEntry.getGroupId()),
+			_getEndpoint(depotScopedObjectDefinition, depotEntry.getGroupId()),
 			Http.Method.GET);
 
 		_assertItem(
@@ -20738,8 +20755,6 @@ public class ObjectEntryResourceTest {
 
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;
-
-	private ObjectDefinition _depotScopedObjectDefinition;
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;

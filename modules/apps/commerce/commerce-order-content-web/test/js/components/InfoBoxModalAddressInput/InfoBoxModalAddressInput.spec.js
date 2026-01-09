@@ -460,7 +460,7 @@ describe('InfoBoxModalAddressInput', () => {
 					hasManageAddressesPermission: true,
 				}}
 				field="shippingAddress"
-				hasPermission={true}
+				hasUpdatePermission={true}
 				isOpen={true}
 				label="Shipping"
 				orderId="10"

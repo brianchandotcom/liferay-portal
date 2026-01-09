@@ -21,7 +21,7 @@ import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.definition.security.permission.resource.ObjectDefinitionPortletResourcePermissionRegistryUtil;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -108,14 +108,15 @@ public class DigitalSalesRoomResourceImpl
 		Group group = _groupService.getGroup(digitalSalesRoomId);
 		ObjectDefinition objectDefinition = _getObjectDefinition();
 
-		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
-			group.getExternalReferenceCode(), group.getGroupId(),
-			objectDefinition.getObjectDefinitionId());
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryLocalService.getObjectEntry(
+				group.getExternalReferenceCode(), group.getGroupId(),
+				objectDefinition.getObjectDefinitionId());
 
-		_checkPermission(ActionKeys.DELETE, objectEntry);
+		_checkPermission(ActionKeys.DELETE, serviceBuilderObjectEntry);
 
 		_objectEntryLocalService.deleteObjectEntry(
-			objectEntry.getObjectEntryId());
+			serviceBuilderObjectEntry.getObjectEntryId());
 
 		_groupLocalService.deleteGroup(group.getGroupId());
 	}
@@ -210,7 +211,7 @@ public class DigitalSalesRoomResourceImpl
 		Group group = _groupService.getGroup(digitalSalesRoomId);
 		ObjectDefinition objectDefinition = _getObjectDefinition();
 
-		ObjectEntry serviceBuilderObjectEntry =
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryLocalService.getObjectEntry(
 				group.getExternalReferenceCode(), group.getGroupId(),
 				objectDefinition.getObjectDefinitionId());
@@ -241,11 +242,10 @@ public class DigitalSalesRoomResourceImpl
 
 		defaultDTOConverterContext.setAttribute("addActions", Boolean.FALSE);
 
-		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
-			objectEntryManager.partialUpdateObjectEntry(
-				objectDefinition.getCompanyId(), defaultDTOConverterContext,
-				group.getExternalReferenceCode(), objectDefinition,
-				_toObjectEntry(digitalSalesRoom, group), group.getGroupKey());
+		ObjectEntry objectEntry = objectEntryManager.partialUpdateObjectEntry(
+			objectDefinition.getCompanyId(), defaultDTOConverterContext,
+			group.getExternalReferenceCode(), objectDefinition,
+			_toObjectEntry(digitalSalesRoom, group), group.getGroupKey());
 
 		_updateFrontendTokensValues(digitalSalesRoom, group);
 		_updateNestedResources(digitalSalesRoom, group);
@@ -299,10 +299,9 @@ public class DigitalSalesRoomResourceImpl
 
 		defaultDTOConverterContext.setAttribute("addActions", Boolean.FALSE);
 
-		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
-			objectEntryManager.addObjectEntry(
-				defaultDTOConverterContext, objectDefinition,
-				_toObjectEntry(digitalSalesRoom, group), group.getGroupKey());
+		ObjectEntry objectEntry = objectEntryManager.addObjectEntry(
+			defaultDTOConverterContext, objectDefinition,
+			_toObjectEntry(digitalSalesRoom, group), group.getGroupKey());
 
 		group.setClassPK(objectEntry.getId());
 
@@ -372,11 +371,10 @@ public class DigitalSalesRoomResourceImpl
 
 		defaultDTOConverterContext.setAttribute("addActions", Boolean.FALSE);
 
-		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
-			objectEntryManager.addObjectEntry(
-				defaultDTOConverterContext, objectDefinition,
-				_toObjectEntry(digitalSalesRoom, targetGroup),
-				targetGroup.getGroupKey());
+		ObjectEntry objectEntry = objectEntryManager.addObjectEntry(
+			defaultDTOConverterContext, objectDefinition,
+			_toObjectEntry(digitalSalesRoom, targetGroup),
+			targetGroup.getGroupKey());
 
 		targetGroup.setClassPK(objectEntry.getId());
 
@@ -398,7 +396,8 @@ public class DigitalSalesRoomResourceImpl
 
 	private Map<String, String> _addAction(
 		String actionName, long groupId, String methodName,
-		ModelResourcePermission<ObjectEntry> modelResourcePermission,
+		ModelResourcePermission<com.liferay.object.model.ObjectEntry>
+			modelResourcePermission,
 		long objectEntryId) {
 
 		Map<String, String> action = addAction(
@@ -471,16 +470,19 @@ public class DigitalSalesRoomResourceImpl
 		}
 	}
 
-	private void _checkPermission(String actionId, ObjectEntry objectEntry)
+	private void _checkPermission(
+			String actionId,
+			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry)
 		throws Exception {
 
-		ModelResourcePermission<ObjectEntry> modelResourcePermission =
-			_objectEntryService.getModelResourcePermission(
-				objectEntry.getObjectDefinitionId());
+		ModelResourcePermission<com.liferay.object.model.ObjectEntry>
+			modelResourcePermission =
+				_objectEntryService.getModelResourcePermission(
+					serviceBuilderObjectEntry.getObjectDefinitionId());
 
 		modelResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(),
-			objectEntry.getObjectEntryId(), actionId);
+			serviceBuilderObjectEntry.getObjectEntryId(), actionId);
 	}
 
 	private Map<Locale, String> _getDescriptionMap(
@@ -738,12 +740,14 @@ public class DigitalSalesRoomResourceImpl
 	}
 
 	private DigitalSalesRoom _toDigitalSalesRoom(
-			Group group, ObjectEntry objectEntry)
+			Group group,
+			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry)
 		throws Exception {
 
-		ModelResourcePermission<ObjectEntry> modelResourcePermission =
-			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
-				objectEntry.getModelClassName());
+		ModelResourcePermission<com.liferay.object.model.ObjectEntry>
+			modelResourcePermission =
+				ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+					serviceBuilderObjectEntry.getModelClassName());
 
 		return _digitalSalesRoomDTOConverter.toDTO(
 			new DigitalSalesRoomDTOConverterContext(
@@ -753,24 +757,24 @@ public class DigitalSalesRoomResourceImpl
 					_addAction(
 						ActionKeys.DELETE, group.getGroupId(),
 						"deleteDigitalSalesRoom", modelResourcePermission,
-						objectEntry.getObjectEntryId())
+						serviceBuilderObjectEntry.getObjectEntryId())
 				).put(
 					"update",
 					_addAction(
 						ActionKeys.UPDATE, group.getGroupId(),
 						"patchDigitalSalesRoom", modelResourcePermission,
-						objectEntry.getObjectEntryId())
+						serviceBuilderObjectEntry.getObjectEntryId())
 				).build(),
 				_dtoConverterRegistry, group.getGroupId(),
-				contextAcceptLanguage.getPreferredLocale(), objectEntry,
-				contextUriInfo, contextUser),
+				contextAcceptLanguage.getPreferredLocale(),
+				serviceBuilderObjectEntry, contextUriInfo, contextUser),
 			group);
 	}
 
-	private com.liferay.object.rest.dto.v1_0.ObjectEntry _toObjectEntry(
+	private ObjectEntry _toObjectEntry(
 		DigitalSalesRoom digitalSalesRoom, Group group) {
 
-		return new com.liferay.object.rest.dto.v1_0.ObjectEntry() {
+		return new ObjectEntry() {
 			{
 				setProperties(
 					() -> Collections.unmodifiableMap(

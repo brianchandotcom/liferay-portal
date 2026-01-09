@@ -204,6 +204,39 @@ public class CTStoreTest {
 	}
 
 	@Test
+	public void testDeleteCompany() throws Exception {
+
+		// Production mode, with files
+
+		_addFiles("testDir1/testFile1:v1", "testDir2/testDir3/testFile2:v1,v2");
+
+		_deleteDirectory();
+
+		_assertMethods(_DELETE_DIRECTORY_COMPANY_METHOD);
+
+		_assertFileNames(_ROOT);
+
+		// CT mode, delete company files
+
+		String fileName = "testFile";
+
+		_runInCTMode(
+			_ctCollections[0],
+			() -> {
+				_addCTFile(fileName, _DATA_1);
+				_deleteDirectory();
+
+				_assertMethods(
+					_HAS_FILE_METHOD, _DELETE_DIRECTORY_COMPANY_METHOD);
+				_assertNoSuchCTSContent(fileName);
+				_assertNoSuchFile(fileName);
+			});
+
+		_assertNoSuchCTSContent(fileName);
+		_assertNoSuchFile(fileName);
+	}
+
+	@Test
 	public void testDeleteDirectory() throws Exception {
 
 		// Production mode, empty dir
@@ -1026,6 +1059,10 @@ public class CTStoreTest {
 			_companyId, _REPOSITORY_ID, fileName, version, _STORE_TYPE);
 	}
 
+	private void _deleteDirectory() throws Exception {
+		_ctStore.deleteDirectory(_companyId);
+	}
+
 	private void _deleteDirectory(String dirName) {
 		_fileSystemStore.deleteDirectory(_companyId, _REPOSITORY_ID, dirName);
 	}
@@ -1262,6 +1299,8 @@ public class CTStoreTest {
 
 	private static final byte[] _DATA_3 = "Data3 abc".getBytes();
 
+	private static final Method _DELETE_DIRECTORY_COMPANY_METHOD;
+
 	private static final Method _DELETE_DIRECTORY_METHOD;
 
 	private static final Method _DELETE_FILE_METHOD;
@@ -1314,6 +1353,9 @@ public class CTStoreTest {
 			_ADD_FILE_METHOD = Store.class.getMethod(
 				"addFile", long.class, long.class, String.class, String.class,
 				InputStream.class);
+
+			_DELETE_DIRECTORY_COMPANY_METHOD = Store.class.getMethod(
+				"deleteDirectory", long.class);
 
 			_DELETE_DIRECTORY_METHOD = Store.class.getMethod(
 				"deleteDirectory", long.class, long.class, String.class);

@@ -165,15 +165,17 @@ export class TemplatesPage {
 	}
 
 	async goToViewUsages(widgetTemplateName: string) {
-		await this.page
-			.locator('tr')
-			.filter({hasText: widgetTemplateName})
-			.getByLabel('Show Actions')
-			.click();
-
-		await this.page
-			.getByRole('menuitem', {exact: true, name: 'View Usages'})
-			.click();
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {
+				exact: true,
+				name: 'View Usages',
+			}),
+			trigger: this.page
+				.locator('tr')
+				.filter({hasText: widgetTemplateName})
+				.getByLabel('Show Actions'),
+		});
 
 		await this.page.waitForURL(/view_widget_templates_usages/);
 	}

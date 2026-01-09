@@ -178,6 +178,7 @@ function DSRRoomSettingsInitializer({
 				setDataContext((prevState) => ({
 					...prevState,
 					accountId: room.accountId || 0,
+					accountName: room.accountName || '',
 					banner: {
 						base64: getImageURL(room.banner?.fileBase64 || ''),
 					},

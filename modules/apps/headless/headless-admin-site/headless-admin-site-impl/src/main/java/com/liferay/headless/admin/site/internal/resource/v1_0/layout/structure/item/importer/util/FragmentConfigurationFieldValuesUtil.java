@@ -94,7 +94,7 @@ public class FragmentConfigurationFieldValuesUtil {
 				basicFragmentInstancePageElementDefinition.
 					getFragmentInstance();
 
-			return getFreeMarkerFragmentEntryProcessorJSONObject(
+			return _getFreeMarkerFragmentEntryProcessorJSONObject(
 				fragmentInstance.getConfiguration(),
 				fragmentInstance.getFragmentConfigurationFieldValues(),
 				layoutStructureItemImporterContext);
@@ -115,7 +115,7 @@ public class FragmentConfigurationFieldValuesUtil {
 			formFragmentInstancePageElementDefinition.getFragmentInstance();
 
 		return JSONUtil.merge(
-			getFreeMarkerFragmentEntryProcessorJSONObject(
+			_getFreeMarkerFragmentEntryProcessorJSONObject(
 				fragmentInstance.getConfiguration(),
 				fragmentInstance.getFragmentConfigurationFieldValues(),
 				layoutStructureItemImporterContext),
@@ -146,57 +146,6 @@ public class FragmentConfigurationFieldValuesUtil {
 				"inputShowLabel",
 				formFragmentInstancePageElementDefinition.getShowLabel()
 			));
-	}
-
-	public static JSONObject getFreeMarkerFragmentEntryProcessorJSONObject(
-			String configuration,
-			Map<String, FragmentConfigurationFieldValue>
-				fragmentConfigurationFieldValuesMap,
-			LayoutStructureItemImporterContext
-				layoutStructureItemImporterContext)
-		throws Exception {
-
-		if (fragmentConfigurationFieldValuesMap == null) {
-			return null;
-		}
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		JSONObject configurationJSONObject = JSONFactoryUtil.createJSONObject(
-			configuration);
-
-		for (FragmentConfigurationField fragmentConfigurationField :
-				FragmentEntryConfigurationParserUtil.
-					getFragmentConfigurationFields(configurationJSONObject)) {
-
-			FragmentConfigurationFieldValue fragmentConfigurationFieldValue =
-				fragmentConfigurationFieldValuesMap.get(
-					fragmentConfigurationField.getName());
-
-			if (fragmentConfigurationFieldValue == null) {
-				continue;
-			}
-
-			if (!Objects.equals(
-					fragmentConfigurationFieldValue.getType(),
-					FragmentConfigurationFieldValueTypeUtil.toExternalType(
-						fragmentConfigurationField.getType()))) {
-
-				throw new UnsupportedOperationException();
-			}
-
-			jsonObject.put(
-				fragmentConfigurationField.getName(),
-				_fromFragmentConfigurationFieldValue(
-					fragmentConfigurationFieldValue, fragmentConfigurationField,
-					layoutStructureItemImporterContext));
-		}
-
-		if (jsonObject.length() == 0) {
-			return null;
-		}
-
-		return jsonObject;
 	}
 
 	private static Object _fromFragmentConfigurationFieldValue(
@@ -575,6 +524,57 @@ public class FragmentConfigurationFieldValuesUtil {
 		}
 
 		return LocalizedValueUtil.toJSONObject(valuesMap, unsafeFunction);
+	}
+
+	private static JSONObject _getFreeMarkerFragmentEntryProcessorJSONObject(
+			String configuration,
+			Map<String, FragmentConfigurationFieldValue>
+				fragmentConfigurationFieldValuesMap,
+			LayoutStructureItemImporterContext
+				layoutStructureItemImporterContext)
+		throws Exception {
+
+		if (fragmentConfigurationFieldValuesMap == null) {
+			return null;
+		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		JSONObject configurationJSONObject = JSONFactoryUtil.createJSONObject(
+			configuration);
+
+		for (FragmentConfigurationField fragmentConfigurationField :
+				FragmentEntryConfigurationParserUtil.
+					getFragmentConfigurationFields(configurationJSONObject)) {
+
+			FragmentConfigurationFieldValue fragmentConfigurationFieldValue =
+				fragmentConfigurationFieldValuesMap.get(
+					fragmentConfigurationField.getName());
+
+			if (fragmentConfigurationFieldValue == null) {
+				continue;
+			}
+
+			if (!Objects.equals(
+					fragmentConfigurationFieldValue.getType(),
+					FragmentConfigurationFieldValueTypeUtil.toExternalType(
+						fragmentConfigurationField.getType()))) {
+
+				throw new UnsupportedOperationException();
+			}
+
+			jsonObject.put(
+				fragmentConfigurationField.getName(),
+				_fromFragmentConfigurationFieldValue(
+					fragmentConfigurationFieldValue, fragmentConfigurationField,
+					layoutStructureItemImporterContext));
+		}
+
+		if (jsonObject.length() == 0) {
+			return null;
+		}
+
+		return jsonObject;
 	}
 
 	private static JSONObject _getItemJSONObject(

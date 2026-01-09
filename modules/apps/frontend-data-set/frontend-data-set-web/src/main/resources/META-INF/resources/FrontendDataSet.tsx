@@ -544,7 +544,7 @@ const FrontendDataSetContent = ({
 
 		let initialVisibleFieldNames = {};
 
-		if (activeViewSettings) {
+		if (!snapshotsEnabled && activeViewSettings) {
 			const {name: activeViewName, visibleFieldNames} =
 				JSON.parse(activeViewSettings);
 

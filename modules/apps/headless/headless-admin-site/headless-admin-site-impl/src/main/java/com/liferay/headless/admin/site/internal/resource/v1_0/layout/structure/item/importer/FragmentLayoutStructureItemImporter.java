@@ -98,7 +98,7 @@ public class FragmentLayoutStructureItemImporter
 		if (fragmentEntryLink == null) {
 			fragmentEntryLink = _addFragmentEntryLink(
 				fragmentInstance, layoutStructureItemImporterContext,
-				pageElementDefinition.getType());
+				pageElementDefinition);
 		}
 		else {
 			PortletRegistry portletRegistry =
@@ -112,8 +112,7 @@ public class FragmentLayoutStructureItemImporter
 
 			fragmentEntryLink = _updateFragmentEntryLink(
 				fragmentEntryLink, fragmentInstance,
-				layoutStructureItemImporterContext,
-				pageElementDefinition.getType());
+				layoutStructureItemImporterContext, pageElementDefinition);
 		}
 
 		if (fragmentEntryLink == null) {
@@ -192,7 +191,7 @@ public class FragmentLayoutStructureItemImporter
 			FragmentInstance fragmentInstance,
 			LayoutStructureItemImporterContext
 				layoutStructureItemImporterContext,
-			PageElementDefinition.Type pageElementDefinitionType)
+			PageElementDefinition pageElementDefinition)
 		throws Exception {
 
 		Layout layout = layoutStructureItemImporterContext.getLayout();
@@ -230,10 +229,11 @@ public class FragmentLayoutStructureItemImporter
 					GetterUtil.getString(fragmentInstance.getJs()),
 					GetterUtil.getString(fragmentInstance.getConfiguration()),
 					_getEditableValues(
-						fragmentInstance, layoutStructureItemImporterContext),
+						fragmentInstance, layoutStructureItemImporterContext,
+						pageElementDefinition),
 					fragmentInstance.getNamespace(), 0,
 					fragmentEntryReference.getRendererKey(),
-					_getType(pageElementDefinitionType), serviceContext);
+					_getType(pageElementDefinition.getType()), serviceContext);
 
 			FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry =
 				layoutStructureItemImporterContext.
@@ -259,7 +259,8 @@ public class FragmentLayoutStructureItemImporter
 	private String _getEditableValues(
 			FragmentInstance fragmentInstance,
 			LayoutStructureItemImporterContext
-				layoutStructureItemImporterContext)
+				layoutStructureItemImporterContext,
+			PageElementDefinition pageElementDefinition)
 		throws Exception {
 
 		return JSONUtil.put(
@@ -281,9 +282,7 @@ public class FragmentLayoutStructureItemImporter
 				KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
 			FragmentConfigurationFieldValuesUtil.
 				getFreeMarkerFragmentEntryProcessorJSONObject(
-					fragmentInstance.getConfiguration(),
-					fragmentInstance.getFragmentConfigurationFieldValues(),
-					layoutStructureItemImporterContext)
+					pageElementDefinition, layoutStructureItemImporterContext)
 		).toString();
 	}
 
@@ -415,7 +414,7 @@ public class FragmentLayoutStructureItemImporter
 			FragmentInstance fragmentInstance,
 			LayoutStructureItemImporterContext
 				layoutStructureItemImporterContext,
-			PageElementDefinition.Type pageElementDefinitionType)
+			PageElementDefinition pageElementDefinition)
 		throws Exception {
 
 		Layout layout = layoutStructureItemImporterContext.getLayout();
@@ -449,11 +448,12 @@ public class FragmentLayoutStructureItemImporter
 			GetterUtil.getString(fragmentInstance.getConfiguration()));
 		fragmentEntryLink.setEditableValues(
 			_getEditableValues(
-				fragmentInstance, layoutStructureItemImporterContext));
+				fragmentInstance, layoutStructureItemImporterContext,
+				pageElementDefinition));
 		fragmentEntryLink.setNamespace(fragmentInstance.getNamespace());
 		fragmentEntryLink.setRendererKey(
 			fragmentEntryReference.getRendererKey());
-		fragmentEntryLink.setType(_getType(pageElementDefinitionType));
+		fragmentEntryLink.setType(_getType(pageElementDefinition.getType()));
 		fragmentEntryLink.setLastPropagationDate(
 			fragmentInstance.getDatePropagated());
 

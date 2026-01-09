@@ -277,16 +277,20 @@ public class JobPropertyFactory {
 				JenkinsResultsParserUtil.getBuildProperty(
 					"portal.test.properties[analytics.cloud.asah.dir]"));
 
-			if (!osbAsahDir.exists()) {
-				osbAsahDir = new File(
-					JenkinsResultsParserUtil.getBuildProperty(
-						"osb.asah.dir[7.0.x]"));
+			if (osbAsahDir.exists()) {
+				return osbAsahDir;
 			}
 
-			if (!osbAsahDir.exists()) {
-				osbAsahDir = new File(
-					"/opt/dev/projects/github/com-liferay-osb-asah-private");
+			osbAsahDir = new File(
+				JenkinsResultsParserUtil.getBuildProperty(
+					"osb.asah.dir[7.0.x]"));
+
+			if (osbAsahDir.exists()) {
+				return osbAsahDir;
 			}
+
+			osbAsahDir = new File(
+				"/opt/dev/projects/github/com-liferay-osb-asah-private");
 
 			if (osbAsahDir.exists()) {
 				return osbAsahDir;

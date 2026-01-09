@@ -20,7 +20,7 @@ EditDigitalSalesRoomRoomSettingsDisplayContext editDigitalSalesRoomRoomSettingsD
 			).put(
 				"digitalSalesRoomId", editDigitalSalesRoomRoomSettingsDisplayContext.getDigitalSalesRoomId()
 			).put(
-				"step", "lookAndFeel"
+				"step", "settings"
 			).build()
 		%>'
 	/>

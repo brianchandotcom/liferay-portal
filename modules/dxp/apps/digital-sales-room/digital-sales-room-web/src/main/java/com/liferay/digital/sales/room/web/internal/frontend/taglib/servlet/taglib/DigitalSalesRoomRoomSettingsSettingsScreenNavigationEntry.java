@@ -28,19 +28,19 @@ import org.osgi.service.component.annotations.Reference;
 	property = "screen.navigation.entry.order:Integer=20",
 	service = ScreenNavigationEntry.class
 )
-public class DigitalSalesRoomRoomSettingsLookAndFeelScreenNavigationEntry
+public class DigitalSalesRoomRoomSettingsSettingsScreenNavigationEntry
 	implements ScreenNavigationEntry<Group> {
 
 	@Override
 	public String getCategoryKey() {
 		return DigitalSalesRoomScreenNavigationEntryConstants.
-			CATEGORY_KEY_LOOK_AND_FEEL;
+			CATEGORY_KEY_SETTINGS;
 	}
 
 	@Override
 	public String getEntryKey() {
 		return DigitalSalesRoomScreenNavigationEntryConstants.
-			CATEGORY_KEY_LOOK_AND_FEEL;
+			CATEGORY_KEY_SETTINGS;
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class DigitalSalesRoomRoomSettingsLookAndFeelScreenNavigationEntry
 		return _language.get(
 			locale,
 			DigitalSalesRoomScreenNavigationEntryConstants.
-				CATEGORY_KEY_LOOK_AND_FEEL);
+				CATEGORY_KEY_SETTINGS);
 	}
 
 	@Override
@@ -65,7 +65,7 @@ public class DigitalSalesRoomRoomSettingsLookAndFeelScreenNavigationEntry
 
 		_jspRenderer.renderJSP(
 			httpServletRequest, httpServletResponse,
-			"/room/settings/edit_look_and_feel.jsp");
+			"/room/settings/edit_settings.jsp");
 	}
 
 	@Reference

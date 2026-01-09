@@ -38,8 +38,8 @@ const STEPS_DEFINITION = [
 	},
 	{
 		step: DSRRoomSettingsStep,
-		title: Liferay.Language.get('look-and-feel'),
-		type: 'lookAndFeel',
+		title: Liferay.Language.get('settings'),
+		type: 'settings',
 	},
 ];
 

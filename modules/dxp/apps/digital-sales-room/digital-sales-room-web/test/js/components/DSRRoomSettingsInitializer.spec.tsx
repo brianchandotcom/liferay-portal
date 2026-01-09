@@ -114,7 +114,7 @@ describe('DSRRoomSettingsInitializer', () => {
 		});
 	});
 
-	it('preload fields with step lookAndFeel', async () => {
+	it('preload fields with step settings', async () => {
 		const spyOnGetDigitalSalesRoom = jest.spyOn(
 			DigitalSalesRoomService,
 			'getDigitalSalesRoom'
@@ -173,7 +173,7 @@ describe('DSRRoomSettingsInitializer', () => {
 
 		renderComponent({
 			digitalSalesRoomId: 101,
-			step: 'lookAndFeel',
+			step: 'settings',
 		});
 
 		await waitFor(() => {
@@ -229,6 +229,7 @@ describe('DSRRoomSettingsInitializer', () => {
 			'clientName2'
 		);
 		await setFieldValue(screen.getByTestId('friendlyURLInput'), 'path2');
+
 		await setFieldValue(screen.getByTestId('primaryColorInput'), 'green');
 		await setFieldValue(screen.getByTestId('roomNameInput'), 'name2');
 		await setFieldValue(
@@ -256,7 +257,7 @@ describe('DSRRoomSettingsInitializer', () => {
 		});
 	});
 
-	it('calls API on save button with step lookAndFeel', async () => {
+	it('calls API on save button with step settings', async () => {
 		const spyOnPatchDigitalSalesRoom = jest.spyOn(
 			DigitalSalesRoomService,
 			'patchDigitalSalesRoom'
@@ -313,7 +314,7 @@ describe('DSRRoomSettingsInitializer', () => {
 
 		renderComponent({
 			digitalSalesRoomId: 100,
-			step: 'lookAndFeel',
+			step: 'settings',
 		});
 
 		await waitFor(() => {

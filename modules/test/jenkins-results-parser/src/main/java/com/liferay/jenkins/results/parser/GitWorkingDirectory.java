@@ -2547,7 +2547,7 @@ public class GitWorkingDirectory {
 		String command = String.join(" ", commands);
 
 		if (_cacheBashCommands && _executionResults.containsKey(command)) {
-			System.out.println("Using cached excecution for: " + command);
+			System.out.println("Using cached execution for: " + command);
 
 			return _executionResults.get(command);
 		}

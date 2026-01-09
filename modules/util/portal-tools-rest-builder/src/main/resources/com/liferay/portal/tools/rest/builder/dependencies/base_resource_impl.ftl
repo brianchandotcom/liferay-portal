@@ -174,10 +174,14 @@ public abstract class Base${schemaName}ResourceImpl
 			</#if>
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "deleteAssetLibrary" + schemaName)>
 			<#assign deleteAssetLibraryBatchJavaMethodSignature = javaMethodSignature />
+		<#elseif stringUtil.equals(javaMethodSignature.methodName, "deleteAssetLibrary" + schemaName + "ByExternalReferenceCode")>
+			<#assign deleteAssetLibraryByExternalReferenceCodeBatchJavaMethodSignature = javaMethodSignature />
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName) && !freeMarkerTool.isExternalReferenceCodeMethod("delete", javaMethodSignature)>
 			<#assign deleteByIdBatchJavaMethodSignature = javaMethodSignature />
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "deleteSite" + schemaName)>
 			<#assign deleteSiteBatchJavaMethodSignature = javaMethodSignature />
+		<#elseif stringUtil.equals(javaMethodSignature.methodName, "deleteSite" + schemaName + "ByExternalReferenceCode")>
+			<#assign deleteSiteByExternalReferenceCodeBatchJavaMethodSignature = javaMethodSignature />
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + schemaName)>
 			<#assign getByIdJavaMethodSignature = javaMethodSignature />
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + parentSchemaName + schemaNames + "Page")>
@@ -1013,17 +1017,19 @@ public abstract class Base${schemaName}ResourceImpl
 		public void delete(Collection<${javaDataType}> ${schemaVarNames}, Map<String, Serializable> parameters) throws Exception {
 			<#assign
 				useDeleteAssetLibrary = deleteAssetLibraryBatchJavaMethodSignature?? && properties?keys?seq_contains("externalReferenceCode")
+				useDeleteAssetLibraryByExternalReferenceCode = deleteAssetLibraryByExternalReferenceCodeBatchJavaMethodSignature?? && properties?keys?seq_contains("externalReferenceCode")
 				useDeleteByExternalReferenceCode = deleteByExternalReferenceCodeBatchJavaMethodSignature?? && properties?keys?seq_contains("externalReferenceCode")
 				useDeleteById = deleteByIdBatchJavaMethodSignature?? && (properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id"))
 				useDeleteSite = deleteSiteBatchJavaMethodSignature?? && properties?keys?seq_contains("externalReferenceCode")
+				useDeleteSiteByExternalReferenceCode = deleteSiteByExternalReferenceCodeBatchJavaMethodSignature?? && properties?keys?seq_contains("externalReferenceCode")
 			/>
 
-			<#if useDeleteAssetLibrary || useDeleteByExternalReferenceCode || useDeleteById || useDeleteSite>
+			<#if useDeleteAssetLibrary || useDeleteByExternalReferenceCode || useDeleteById || useDeleteSite || useDeleteSiteByExternalReferenceCode>
 				UnsafeFunction<${javaDataType}, ${javaDataType}, Exception> ${schemaVarName}UnsafeFunction = ${schemaVarName} -> {
 					<#if useDeleteById>
 						<#assign getterMethodName = properties?keys?seq_contains("id")?then("getId", "get" + schemaName + "Id") />
 
-						<#if useDeleteAssetLibrary || useDeleteByExternalReferenceCode || useDeleteSite>
+						<#if useDeleteAssetLibrary || useDeleteByExternalReferenceCode || useDeleteSite || useDeleteSiteByExternalReferenceCode>
 							if (${schemaVarName}.${getterMethodName}() != null) {
 								try {
 						</#if>
@@ -1045,7 +1051,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 						return ${schemaVarName};
 
-						<#if useDeleteAssetLibrary || useDeleteByExternalReferenceCode || useDeleteSite>
+						<#if useDeleteAssetLibrary || useDeleteAssetLibraryByExternalReferenceCode || useDeleteByExternalReferenceCode || useDeleteSite || useDeleteSiteByExternalReferenceCode>
 							}
 							catch (Exception exception) {
 								if (${schemaVarName}.getExternalReferenceCode() != null) {
@@ -1066,6 +1072,16 @@ public abstract class Base${schemaName}ResourceImpl
 											}
 										</#if>
 
+										<#if useDeleteAssetLibraryByExternalReferenceCode>
+											if (parameters.containsKey("assetLibraryId")) {
+												${deleteAssetLibraryByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
+													<@getDeleteBatchJavaMethodParameters javaMethodParameters = deleteAssetLibraryByExternalReferenceCodeBatchJavaMethodSignature.javaMethodParameters />
+												);
+
+												return ${schemaVarName};
+											}
+										</#if>
+
 										<#if useDeleteSite>
 											if (parameters.containsKey("siteExternalReferenceCode")) {
 												${deleteSiteBatchJavaMethodSignature.methodName}(
@@ -1076,9 +1092,20 @@ public abstract class Base${schemaName}ResourceImpl
 											}
 										</#if>
 
+										<#if useDeleteSiteByExternalReferenceCode>
+											if (parameters.containsKey("siteId")) {
+												${deleteSiteByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
+													<@getDeleteBatchJavaMethodParameters javaMethodParameters = deleteSiteByExternalReferenceCodeBatchJavaMethodSignature.javaMethodParameters />
+												);
+
+												return ${schemaVarName};
+											}
+										</#if>
+
 										}
+									}
 									</#if>
-								}
+							}
 						</#if>
 					</#if>
 
@@ -1094,8 +1121,20 @@ public abstract class Base${schemaName}ResourceImpl
 						}
 					</#if>
 
+					<#if useDeleteAssetLibraryByExternalReferenceCode>
+						<#if useDeleteAssetLibrary || useDeleteById >else</#if>
+
+						if (parameters.containsKey("assetLibraryId")) {
+							${deleteAssetLibraryByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
+								<@getDeleteBatchJavaMethodParameters javaMethodParameters = deleteAssetLibraryByExternalReferenceCodeBatchJavaMethodSignature.javaMethodParameters />
+							);
+
+							return ${schemaVarName};
+						}
+					</#if>
+
 					<#if useDeleteByExternalReferenceCode>
-						<#if useDeleteAssetLibrary || useDeleteById>else</#if>
+						<#if useDeleteAssetLibrary || useDeleteAssetLibraryByExternalReferenceCode || useDeleteById>else</#if>
 
 						if (${schemaVarName}.getExternalReferenceCode() != null) {
 							${deleteByExternalReferenceCodeBatchJavaMethodSignature.methodName}(${schemaVarName}.getExternalReferenceCode());
@@ -1105,7 +1144,7 @@ public abstract class Base${schemaName}ResourceImpl
 					</#if>
 
 					<#if useDeleteSite>
-						<#if useDeleteAssetLibrary || useDeleteByExternalReferenceCode || useDeleteById>else</#if>
+						<#if useDeleteAssetLibrary || useDeleteAssetLibraryByExternalReferenceCode || useDeleteByExternalReferenceCode || useDeleteById>else</#if>
 
 						if (parameters.containsKey("siteExternalReferenceCode")) {
 							${deleteSiteBatchJavaMethodSignature.methodName}(
@@ -1116,7 +1155,19 @@ public abstract class Base${schemaName}ResourceImpl
 						}
 					</#if>
 
-					<#if useDeleteAssetLibrary || useDeleteByExternalReferenceCode || useDeleteSite>
+					<#if useDeleteSiteByExternalReferenceCode>
+						<#if useDeleteAssetLibrary || useDeleteAssetLibraryByExternalReferenceCode || useDeleteByExternalReferenceCode || useDeleteById || useDeleteSite>else</#if>
+
+						if (parameters.containsKey("siteId")) {
+							${deleteSiteByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
+								<@getDeleteBatchJavaMethodParameters javaMethodParameters = deleteSiteByExternalReferenceCodeBatchJavaMethodSignature.javaMethodParameters />
+							);
+
+							return ${schemaVarName};
+						}
+					</#if>
+
+					<#if useDeleteAssetLibrary || useDeleteAssetLibraryByExternalReferenceCode || useDeleteByExternalReferenceCode || useDeleteSite || useDeleteSiteByExternalReferenceCode>
 						throw new UnsupportedOperationException("Unable to delete by external reference code or ID");
 					</#if>
 				};

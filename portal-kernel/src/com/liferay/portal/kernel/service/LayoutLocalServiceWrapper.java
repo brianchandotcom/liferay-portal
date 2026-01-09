@@ -1638,6 +1638,14 @@ public class LayoutLocalServiceWrapper
 
 	@Override
 	public boolean hasLayouts(
+		long groupId, String portletLayoutPageTemplateEntryERC) {
+
+		return _layoutLocalService.hasLayouts(
+			groupId, portletLayoutPageTemplateEntryERC);
+	}
+
+	@Override
+	public boolean hasLayouts(
 			com.liferay.portal.kernel.model.User user, boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

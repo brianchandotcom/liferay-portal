@@ -1247,6 +1247,10 @@ public interface LayoutLocalService
 		long groupId, boolean privateLayout, long parentLayoutId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasLayouts(
+		long groupId, String portletLayoutPageTemplateEntryERC);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasLayouts(User user, boolean privateLayout)
 		throws PortalException;
 

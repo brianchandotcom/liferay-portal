@@ -79,6 +79,7 @@ components:
         BasicFragmentInstancePageElementDefinition:
             allOf:
                 -   $ref: "#/components/schemas/FragmentInstancePageElementDefinition"
+                -   $ref: "#/components/schemas/PageElementDefinition"
             # @review
             description:
                 The page element definition of a basic fragment instance.
@@ -1081,6 +1082,7 @@ components:
         FormFragmentInstancePageElementDefinition:
             allOf:
                 -   $ref: "#/components/schemas/FragmentInstancePageElementDefinition"    
+                -   $ref: "#/components/schemas/PageElementDefinition"    
             # @review
             description:
                 The page element definition of a form fragment instance.
@@ -1373,114 +1375,112 @@ components:
                     type: object
             type: object
         FragmentInstancePageElementDefinition:
-            allOf:
-                -   $ref: "#/components/schemas/PageElementDefinition"
-                -   properties:
-                        backgroundFragmentImage:
-                            $ref: "#/components/schemas/FragmentImage"
-                            # @review
-                            description:
-                                The fragment's background image.
-                        configuration:
-                            # @review
-                            description:
-                                The fragment instance's configuration.
-                            type: string
-                        css:
-                            # @review
-                            description:
-                                The fragment instance's CSS.
-                            type: string
-                        cssClasses:
-                            # @review
-                            description:
-                                A list of CSS classes that are applied to the fragment instance.
-                            items:
-                                type: string
-                            type: array
-                        datePropagated:
-                            description:
-                                The fragment instance's most recent propagation date.
-                            format: date-time
-                            type: string
-                        draftFragmentInstanceExternalReferenceCode:
-                            # @review
-                            description:
-                                The external reference code of the corresponding fragment instance in the draft of the
-                                page. Available only in the published page specification.
-                            type: string
-                        fragmentConfigurationFieldValues:
-                            additionalProperties:
-                                $ref: "#/components/schemas/FragmentConfigurationFieldValue"
-                            # @review
-                            description:
-                                The fragment configuration field values of the fragment instance.
-                            type: object
-                        fragmentEditableElements:
-                            # @review
-                            description:
-                                The fragment editable elements of the the fragment instance.
-                            items:
-                                $ref: "#/components/schemas/FragmentEditableElement"
-                            type: array
-                        fragmentInstanceExternalReferenceCode:
-                            # @review
-                            description:
-                                The fragment instance's external reference code.
-                            type: string
-                        fragmentReference:
-                            $ref: "#/components/schemas/FragmentReference"
-                            # @review
-                            description:
-                                The fragment reference of the fragment instance.
-                            type: object
-                        fragmentViewports:
-                            # @review
-                            description:
-                                A list of fragment viewports of the fragment instance page element.
-                            items:
-                                $ref: "#/components/schemas/FragmentViewport"
-                            type: array
-                        html:
-                            # @review
-                            description:
-                                The fragment instance's HTML.
-                            type: string
-                        indexed:
-                            # @review
-                            description:
-                                A flag that indicates whether the fragment instance page element is indexed or not.
-                            type: boolean
-                        js:
-                            # @review
-                            description:
-                                The fragment instance's JS.
-                            type: string
-                        name:
-                            # @review
-                            description:
-                                The custom name of a fragment instance page element.
-                            type: string
-                        namespace:
-                            # @review
-                            description:
-                                The fragment instance page element's namespace.
-                            type: string
-                        uuid:
-                            # @review
-                            description:
-                                A valid external identifier to reference this fragment instance page element.
-                            type: string
-                        widgetInstances:
-                            # @review
-                            description:
-                                A list of widget instances within the fragment instance page element.
-                            items:
-                                $ref: "#/components/schemas/WidgetInstance"
-                            type: array
             # @review
             description:
                 A page element definition of a fragment instance.
+            properties:
+                backgroundFragmentImage:
+                    $ref: "#/components/schemas/FragmentImage"
+                    # @review
+                    description:
+                        The fragment's background image.
+                configuration:
+                    # @review
+                    description:
+                        The fragment instance's configuration.
+                    type: string
+                css:
+                    # @review
+                    description:
+                        The fragment instance's CSS.
+                    type: string
+                cssClasses:
+                    # @review
+                    description:
+                        A list of CSS classes that are applied to the fragment instance.
+                    items:
+                        type: string
+                    type: array
+                datePropagated:
+                    description:
+                        The fragment instance's most recent propagation date.
+                    format: date-time
+                    type: string
+                draftFragmentInstanceExternalReferenceCode:
+                    # @review
+                    description:
+                        The external reference code of the corresponding fragment instance in the draft of the page.
+                        Available only in the published page specification.
+                    type: string
+                fragmentConfigurationFieldValues:
+                    additionalProperties:
+                        $ref: "#/components/schemas/FragmentConfigurationFieldValue"
+                    # @review
+                    description:
+                        The fragment configuration field values of the fragment instance.
+                    type: object
+                fragmentEditableElements:
+                    # @review
+                    description:
+                        The fragment editable elements of the the fragment instance.
+                    items:
+                        $ref: "#/components/schemas/FragmentEditableElement"
+                    type: array
+                fragmentInstanceExternalReferenceCode:
+                    # @review
+                    description:
+                        The fragment instance's external reference code.
+                    type: string
+                fragmentReference:
+                    $ref: "#/components/schemas/FragmentReference"
+                    # @review
+                    description:
+                        The fragment reference of the fragment instance.
+                    type: object
+                fragmentViewports:
+                    # @review
+                    description:
+                        A list of fragment viewports of the fragment instance page element.
+                    items:
+                        $ref: "#/components/schemas/FragmentViewport"
+                    type: array
+                html:
+                    # @review
+                    description:
+                        The fragment instance's HTML.
+                    type: string
+                indexed:
+                    # @review
+                    description:
+                        A flag that indicates whether the fragment instance page element is indexed or not.
+                    type: boolean
+                js:
+                    # @review
+                    description:
+                        The fragment instance's JS.
+                    type: string
+                name:
+                    # @review
+                    description:
+                        The custom name of a fragment instance page element.
+                    type: string
+                namespace:
+                    # @review
+                    description:
+                        The fragment instance page element's namespace.
+                    type: string
+                uuid:
+                    # @review
+                    description:
+                        A valid external identifier to reference this fragment instance page element.
+                    type: string
+                widgetInstances:
+                    # @review
+                    description:
+                        A list of widget instances within the fragment instance page element.
+                    items:
+                        $ref: "#/components/schemas/WidgetInstance"
+                    type: array
             type: object
         FragmentItemExternalReference:
             allOf:
@@ -2617,13 +2617,13 @@ components:
                 The page element definition.
             discriminator:
                 mapping:
-                    BasicFragment: "#/components/schemas/FragmentInstancePageElementDefinition"
+                    BasicFragment: "#/components/schemas/BasicFragmentInstancePageElementDefinition"
                     CollectionDisplay: "#/components/schemas/CollectionDisplayPageElementDefinition"
                     CollectionItem: "#/components/schemas/CollectionItemPageElementDefinition"
                     Container: "#/components/schemas/ContainerPageElementDefinition"
                     DropZone: "#/components/schemas/DropZonePageElementDefinition"
                     FormContainer: "#/components/schemas/FormContainerPageElementDefinition"
-                    FormFragment: "#/components/schemas/FragmentInstancePageElementDefinition"
+                    FormFragment: "#/components/schemas/FormFragmentInstancePageElementDefinition"
                     FormStep: "#/components/schemas/FormStepPageElementDefinition"
                     FormStepContainer: "#/components/schemas/FormStepContainerPageElementDefinition"
                     FragmentComposition: "#/components/schemas/FragmentCompositionInstancePageElementDefinition"

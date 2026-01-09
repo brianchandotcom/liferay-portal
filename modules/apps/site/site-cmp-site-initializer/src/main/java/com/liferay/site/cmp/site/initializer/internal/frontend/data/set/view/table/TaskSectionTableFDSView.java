@@ -22,10 +22,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gabriel Albuquerque
  */
 @Component(
-	property = "frontend.data.set.name=" + CMPSiteInitializerFDSNames.CMP_PROJECT,
+	property = "frontend.data.set.name=" + CMPSiteInitializerFDSNames.CMP_TASK,
 	service = FDSView.class
 )
-public class ProjectSectionTableFDSView extends BaseTableFDSView {
+public class TaskSectionTableFDSView extends BaseTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
@@ -40,20 +40,12 @@ public class ProjectSectionTableFDSView extends BaseTableFDSView {
 				"simpleActionLinkTableCellRenderer"
 			)
 		).add(
+			"embedded.assignTo.name", "assign-to"
+		).add(
+			"embedded.r_cmpProjectToCMPTask_c_cmpProject.title", "project"
+		).add(
 			FDSViewUtil.getDateFDSTableSchemaField(
 				"embedded.dueDate", "due-date")
-		).add(
-			"embedded.completionRate", "completion-rate",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"progressBarTableCellRenderer")
-		).add(
-			"embedded.r_userToCMPProjectManager_userERC", "manager",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"userRelationshipTableCellRenderer")
-		).add(
-			"embedded.r_userToCMPProjectSponsor_userERC", "sponsor",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"userRelationshipTableCellRenderer")
 		).add(
 			"embedded.state", "state",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(

@@ -13,4 +13,7 @@ public class CMPSiteInitializerFDSNames {
 	public static final String CMP_PROJECT =
 		CMPSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME + "-project";
 
+	public static final String CMP_TASK =
+		CMPSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME + "-task";
+
 }

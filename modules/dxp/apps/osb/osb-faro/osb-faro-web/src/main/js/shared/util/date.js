@@ -7,11 +7,15 @@ import {flow, get, head, last, rangeRight} from 'lodash/fp';
 import {INTERVAL_KEY_MAP} from 'shared/util/time';
 import {LanguageIds} from 'shared/util/constants';
 
-export const DEFAULT_DATE_FORMAT = 'YYYY-MM-DD';
-
 export const CUSTOM_DATE_FORMAT = 'MMM DD, YYYY';
 
-export const ISO_8601_DATE_FORMAT = 'YYYY-MM-DDTHH:mm:ss.SSS[Z]';
+export const DEFAULT_DATE_FORMAT = 'YYYY-MM-DD';
+
+export const DEFAULT_FORMAT = 'LL';
+
+export const DEFAULT_LANGUAGE_ID = LanguageIds.English;
+
+export const DEFAULT_TIMEZONE_ID = 'UTC';
 
 export const DATE_MASK = [
 	/\d/,
@@ -45,6 +49,15 @@ export const DATE_TIME_MASK = [
 	/\d/
 ];
 
+const FORMATTED_LANGUAGE_IDS = {
+	[LanguageIds.English]: 'en',
+	[LanguageIds.Japanese]: 'ja',
+	[LanguageIds.Portuguese]: 'pt-br',
+	[LanguageIds.Spanish]: 'es'
+};
+
+export const ISO_8601_DATE_FORMAT = 'YYYY-MM-DDTHH:mm:ss.SSS[Z]';
+
 export const WEEKDAYS = [
 	Liferay.Language.get('sunday'),
 	Liferay.Language.get('monday'),
@@ -55,26 +68,15 @@ export const WEEKDAYS = [
 	Liferay.Language.get('saturday')
 ];
 
-export const DEFAULT_LANGUAGE_ID = LanguageIds.English;
-
-export const DEFAULT_TIMEZONE_ID = 'UTC';
-
-export const DEFAULT_FORMAT = 'LL';
-
-const FORMATTED_LANGUAGE_IDS = {
-	[LanguageIds.English]: 'en',
-	[LanguageIds.Japanese]: 'ja',
-	[LanguageIds.Portuguese]: 'pt-br',
-	[LanguageIds.Spanish]: 'es'
-};
-
 moment.locale(FORMATTED_LANGUAGE_IDS[DEFAULT_LANGUAGE_ID]);
 
-export const convertMillisecondsToMonths = milliseconds =>
-	Math.round(milliseconds / 1000 / 60 / 60 / 24 / 30);
+export function convertMillisecondsToDays(milliseconds) {
+	return Math.round(milliseconds / 1000 / 60 / 60 / 24);
+}
 
-export const convertMillisecondsToDays = milliseconds =>
-	Math.round(milliseconds / 1000 / 60 / 60 / 24);
+export function convertMillisecondsToMonths(milliseconds) {
+	return Math.round(milliseconds / 1000 / 60 / 60 / 24 / 30);
+}
 
 /**
  * Formats unix timestamp to specified moment format
@@ -87,24 +89,28 @@ export function formatUTCDate(date, format = DEFAULT_FORMAT, inputFormatter) {
 	return moment.utc(date, inputFormatter).format(format);
 }
 
-export const formatUTCDateFromUnix = (date, format = DEFAULT_FORMAT) =>
-	formatUTCDate(date, format, 'x');
+export function formatUTCDateFromUnix(date, format = DEFAULT_FORMAT) {
+	return formatUTCDate(date, format, 'x');
+}
 
-export const formatDateToTimeZone = (
+export function formatDateToTimeZone(
 	date,
 	format = DEFAULT_FORMAT,
 	timeZoneId = DEFAULT_TIMEZONE_ID
-) => applyTimeZone(date, timeZoneId).format(format);
+) {
+	return applyTimeZone(date, timeZoneId).format(format);
+}
 
-export const applyTimeZone = (
+export function applyTimeZone(
 	date,
 	timeZoneId = DEFAULT_TIMEZONE_ID,
 	languageId = LanguageIds.English
-) =>
-	momentTimezone
+) {
+	return momentTimezone
 		.utc(date)
 		.tz(timeZoneId)
 		.locale(FORMATTED_LANGUAGE_IDS[languageId]);
+}
 
 export function generateDateRange(period = 30, interval = 'days') {
 	return rangeRight(0, period).map(cur =>
@@ -116,19 +122,25 @@ export function generateDateRange(period = 30, interval = 'days') {
  * Get Date
  * @param {string | number} [date]
  */
-export const getDate = date => moment.utc(date).toDate();
+export function getDate(date) {
+	return moment.utc(date).toDate();
+}
 
 /**
  * Get ISO Date
  * @param {string} date
  */
-export const getISODate = date => moment.utc(date).toISOString();
+export function getISODate(date) {
+	return moment.utc(date).toISOString();
+}
 
 /**
  * Get Date now.
  * @returns {Moment} Date at time of calling.
  */
-export const getDateNow = () => moment.utc();
+export function getDateNow() {
+	return moment.utc();
+}
 
 export function getDateRangeLabel(dates, interval, key) {
 	const firstDate = flow(head, get(key), formatUTCDate)(dates);
@@ -183,14 +195,14 @@ export function getLastDate(dates, interval, key) {
  * Get total days to date
  * @param {object} date
  */
-export const getTotalDaysToDate = createDate => {
+export function getTotalDaysToDate(createDate) {
 	const duration = moment.duration({
 		from: moment(createDate).clone(),
 		to: new Date()
 	});
 
 	return Math.floor(duration.asDays());
-};
+}
 
 export function toUnix(stringOrMoment) {
 	return moment.utc(stringOrMoment).valueOf() || null;

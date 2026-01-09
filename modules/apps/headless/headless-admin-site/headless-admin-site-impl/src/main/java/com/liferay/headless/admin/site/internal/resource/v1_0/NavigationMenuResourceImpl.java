@@ -322,8 +322,7 @@ public class NavigationMenuResourceImpl
 		if (!_hasModel(groupId, navigationMenuItem, unicodeProperties)) {
 			throw new IllegalArgumentException(
 				"Unable to find navigation menu item with external reference " +
-					"code " +
-						navigationMenuItem.getExternalReferenceCode());
+					"code " + navigationMenuItem.getExternalReferenceCode());
 		}
 
 		SiteNavigationMenuItem siteNavigationMenuItem =

@@ -67,9 +67,8 @@ public class DynamicObjectDefinitionTableUtil {
 	}
 
 	public static DynamicObjectDefinitionTable getDynamicObjectDefinitionTable(
-			boolean extension, ObjectDefinition objectDefinition,
-			List<ObjectField> objectFields)
-		throws PortalException {
+		boolean extension, ObjectDefinition objectDefinition,
+		List<ObjectField> objectFields) {
 
 		String dbTableName = objectDefinition.getDBTableName();
 

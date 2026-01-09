@@ -109,6 +109,7 @@ test.describe('Publish Marketplace Apps', () => {
 		test(`Test all items "${product.name}"`, async ({
 			apiHelpers,
 			marketplace,
+			marketplaceHelper,
 			page,
 			publisherAppPage,
 			publisherDashboardPage,
@@ -129,7 +130,7 @@ test.describe('Publish Marketplace Apps', () => {
 
 			await publisherDashboardPage.goto(marketplace.friendlyUrlPath);
 
-			await publisherDashboardPage.selectAccount(accountName);
+			await marketplaceHelper.selectAccount(accountName);
 
 			await publisherDashboardPage.gotoNewAppPage();
 

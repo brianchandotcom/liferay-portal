@@ -28,16 +28,6 @@ export class PublisherDashboardPage {
 		});
 	}
 
-	async selectAccount(accountName: string) {
-		await this.accountSearchDropdown.click();
-		await this.page.getByRole('menuitem', {name: accountName}).click();
-
-		// Necessary to wait few seconds because the page forces a full reload
-		// using window.reload()
-
-		await this.page.waitForTimeout(2000);
-	}
-
 	async gotoNewAppPage() {
 		await this.page.waitForLoadState('networkidle');
 		expect(this.newAppButton).not.toBeDisabled();

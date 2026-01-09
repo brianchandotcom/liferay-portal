@@ -117,13 +117,14 @@ test.describe('Publishers Can View Marketplace Solution Details', () => {
 
 	test('LPD-30131 The publisher can view the details tab and info', async ({
 		marketplace,
+		marketplaceHelper,
 		publisherDashboardSolutionDetailsPage,
 	}) => {
 		await publisherDashboardSolutionDetailsPage.goto(
 			marketplace.friendlyUrlPath
 		);
 
-		await publisherDashboardSolutionDetailsPage.selectAccount(accountName);
+		await marketplaceHelper.selectAccount(accountName);
 
 		await clickAndExpectToBeVisible({
 			target: publisherDashboardSolutionDetailsPage.publishedApp(

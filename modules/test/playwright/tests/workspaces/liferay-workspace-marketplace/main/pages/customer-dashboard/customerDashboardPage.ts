@@ -37,14 +37,4 @@ export class CustomerDashboardPage {
 			waitUntil: 'networkidle',
 		});
 	}
-
-	async selectAccount(accountName: string) {
-		await this.accountSearchDropdown.click();
-		await this.page.getByRole('menuitem', {name: accountName}).click();
-
-		// Necessary to wait few seconds because the page forces a full reload
-		// using window.reload()
-
-		await this.page.waitForTimeout(2000);
-	}
 }

@@ -231,24 +231,6 @@ export class PublisherSolutionPage {
 		await this.newSolutionButton.click();
 	}
 
-	async selectAccount(accountName: string) {
-		await this.accountSearchDropdown.click();
-
-		const accountItem = this.page.locator('li.item-list', {
-			hasText: accountName
-		});
-
-		await accountItem.waitFor();
-
-		if (!(await accountItem.evaluate(element => element.classList.contains('disabled')))) {
-			await accountItem.click();
-		}
-
-		await this.page.mouse.click(5, 5);
-
-		await this.page.waitForLoadState('load');
-	}
-
 	async reviewAndSubmit() {
 		await this.reviewCheckbox.check();
 

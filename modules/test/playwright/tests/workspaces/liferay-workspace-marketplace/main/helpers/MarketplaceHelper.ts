@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Page} from '@playwright/test';
+import {Locator, Page} from '@playwright/test';
 
 import {ApiHelpers} from '../../../../../helpers/ApiHelpers';
 import {TProduct} from '../../../../../helpers/HeadlessCommerceAdminCatalogApiHelper';
@@ -39,9 +39,12 @@ type GetVocabularyAndCategory = {
 
 export class MarketplaceHelper {
 	readonly apiHelpers: ApiHelpers;
+	accountSearchDropdown!: Locator;
+	readonly page: Page;
 
 	constructor(page: Page) {
 		this.apiHelpers = new ApiHelpers(page);
+		this.page = page;
 	}
 
 	async createAccountUserCatalog({
@@ -119,6 +122,25 @@ export class MarketplaceHelper {
 
 			throw error;
 		}
+	}
+
+	async selectAccount(accountName: string) {
+		this.accountSearchDropdown = this.page.locator('#account-search.dropdown');
+		await this.accountSearchDropdown.click();
+
+		const accountItem = this.page.locator('li.item-list', {
+			hasText: accountName
+		});
+
+		await accountItem.waitFor();
+
+		if (!(await accountItem.evaluate(element => element.classList.contains('disabled')))) {
+			await accountItem.click();
+		}
+
+		await this.page.mouse.click(5, 5);
+
+		await this.page.waitForLoadState('load');
 	}
 
 	async assignUserToAccountRole({

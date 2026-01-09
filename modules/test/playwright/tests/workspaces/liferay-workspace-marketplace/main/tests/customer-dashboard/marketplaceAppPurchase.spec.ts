@@ -133,10 +133,11 @@ test.describe('Can Purchase and Manage Apps', () => {
 		customerDashboardAppDetailsPage,
 		customerDashboardPage,
 		marketplace,
+		marketplaceHelper
 	}) => {
 		await customerDashboardPage.goto(marketplace.friendlyUrlPath);
 
-		await customerDashboardPage.selectAccount(accountName);
+		await marketplaceHelper.selectAccount(accountName);
 
 		await expect(
 			customerDashboardPage.purchasedApp(productName)
@@ -183,10 +184,11 @@ test.describe('Can Purchase and Manage Apps', () => {
 		customerDashboardAppDetailsPage,
 		customerDashboardPage,
 		marketplace,
+		marketplaceHelper
 	}) => {
 		await customerDashboardPage.goto(marketplace.friendlyUrlPath);
 
-		await customerDashboardPage.selectAccount(accountName);
+		await marketplaceHelper.selectAccount(accountName);
 
 		await expect(
 			customerDashboardPage.purchasedApp(productName)

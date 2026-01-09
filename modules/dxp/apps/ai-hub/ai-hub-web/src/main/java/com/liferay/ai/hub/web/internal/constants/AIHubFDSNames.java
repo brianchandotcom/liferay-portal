@@ -11,6 +11,7 @@ package com.liferay.ai.hub.web.internal.constants;
 public class AIHubFDSNames {
 
 	public static final String TASK_DEFINITIONS =
-		"com.liferay.ai.hub.web-taskDefinitions";
+		"com_liferay_ai_hub_web_internal_frontend_data_set_view_list_" +
+			"TaskDefinitionListFDSView-taskDefinitions";
 
 }

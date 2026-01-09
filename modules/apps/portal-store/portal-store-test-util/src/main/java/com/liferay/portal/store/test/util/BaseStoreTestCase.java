@@ -53,6 +53,35 @@ public abstract class BaseStoreTestCase {
 	}
 
 	@Test
+	public void testDeleteCompanyDirectory() throws Exception {
+		String dirName = RandomTestUtil.randomString();
+
+		String fileName1 = dirName + "/" + RandomTestUtil.randomString();
+
+		_store.addFile(
+			_companyId, _repositoryId, fileName1, Store.VERSION_DEFAULT,
+			new UnsyncByteArrayInputStream(DATA_VERSION));
+
+		long repositoryId = RandomTestUtil.nextLong();
+
+		String fileName2 = dirName + "/" + RandomTestUtil.randomString();
+
+		_store.addFile(
+			_companyId, repositoryId, fileName2, Store.VERSION_DEFAULT,
+			new UnsyncByteArrayInputStream(DATA_VERSION));
+
+		_store.deleteDirectory(_companyId);
+
+		Assert.assertFalse(
+			_store.hasFile(
+				_companyId, _repositoryId, fileName1, Store.VERSION_DEFAULT));
+
+		Assert.assertFalse(
+			_store.hasFile(
+				_companyId, repositoryId, fileName2, Store.VERSION_DEFAULT));
+	}
+
+	@Test
 	public void testDeleteDirectory() throws Exception {
 		String dirName = RandomTestUtil.randomString();
 

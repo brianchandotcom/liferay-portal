@@ -16991,17 +16991,13 @@ public class ObjectEntryResourceTest {
 			TaxonomyCategory... taxonomyCategories)
 		throws Exception {
 
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-		for (TaxonomyCategory taxonomyCategory : taxonomyCategories) {
-			jsonArray.put(taxonomyCategory.getId());
-		}
-
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				_OBJECT_FIELD_NAME_1, "value"
 			).put(
-				"taxonomyCategoryIds", jsonArray
+				"taxonomyCategoryIds",
+				JSONUtil.toJSONArray(
+					taxonomyCategories, TaxonomyCategory::getId)
 			).toString(),
 			_getEndpoint(objectDefinition, groupId), Http.Method.POST);
 

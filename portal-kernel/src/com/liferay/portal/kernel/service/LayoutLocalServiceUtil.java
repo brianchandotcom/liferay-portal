@@ -1502,6 +1502,13 @@ public class LayoutLocalServiceUtil {
 	}
 
 	public static boolean hasLayouts(
+		long groupId, String portletLayoutPageTemplateEntryERC) {
+
+		return getService().hasLayouts(
+			groupId, portletLayoutPageTemplateEntryERC);
+	}
+
+	public static boolean hasLayouts(
 			com.liferay.portal.kernel.model.User user, boolean privateLayout)
 		throws PortalException {
 

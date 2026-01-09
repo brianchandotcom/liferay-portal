@@ -13,6 +13,7 @@ export {default as ContentEditorSidePanel} from './content_editor/components/Con
 
 export {default as ContentEditorToolbar} from './content_editor/components/ContentEditorToolbar';
 export {default as Spaces} from './content_editor/components/Spaces';
+export {default as CommentsPanel} from './content_editor/components/panels/CommentsPanel';
 
 export {default as BulkActionTaskAssets} from './main_view/bulk_action_task/BulkActionTaskAssets';
 export {default as BulkActionTaskDuration} from './main_view/bulk_action_task/BulkActionTaskDuration';

@@ -10,7 +10,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
-import com.liferay.journal.internal.constants.JournalDestinationNames;
+import com.liferay.journal.internal.constants.DDMDestinationNames;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.JournalConverter;
@@ -67,8 +67,7 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 					).build());
 
 				_messageBus.sendMessage(
-					JournalDestinationNames.
-						DDM_STRUCTURE_JOURNAL_ARTICLES_UPDATE,
+					DDMDestinationNames.DDM_STRUCTURE_JOURNAL_ARTICLES_UPDATE,
 					message);
 
 				return null;

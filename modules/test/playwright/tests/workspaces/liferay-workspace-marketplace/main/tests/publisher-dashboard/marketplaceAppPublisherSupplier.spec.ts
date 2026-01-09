@@ -142,8 +142,6 @@ test.describe('Publish Marketplace Apps', () => {
 			await publisherAppPage.continue();
 			await publisherAppPage.fillProfile();
 			await publisherAppPage.fillBuild();
-
-			
 			await publisherAppPage.fillStoreFront();
 			await publisherAppPage.fillVersion();
 			await publisherAppPage.fillPricing();

@@ -193,6 +193,7 @@ const Profile = () => {
 					</Form.Label>
 
 					<ClayMultiSelect
+						aria-label={i18n.translate('categories')}
 						inputName="description-selector"
 						items={categories}
 						key={`cat-${categories.length}`}
@@ -229,6 +230,7 @@ const Profile = () => {
 					</Form.Label>
 
 					<ClayMultiSelect
+						aria-label={i18n.translate('tags')}
 						inputName="tags-selector"
 						items={tags}
 						key={`tags-${tags.length}`}

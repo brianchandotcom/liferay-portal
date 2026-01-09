@@ -18,6 +18,7 @@ import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
@@ -88,9 +89,33 @@ public class LiferayDynamicRegistrationService
 		return super.register(liferayClientRegistration);
 	}
 
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("{clientId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@PUT
+	public ClientRegistration updateClientRegistration(
+		@PathParam("clientId") String clientId,
+		LiferayClientRegistration liferayClientRegistration) {
+
+		return super.updateClientRegistration(
+			clientId, liferayClientRegistration);
+	}
+
 	@Override
 	protected void checkRegistrationAccessToken(
 		Client client, String accessToken) {
+	}
+
+	@Override
+	protected String createRegAccessToken(Client client) {
+		String regAccessToken = OAuthUtils.generateRandomTokenKey();
+
+		client.getProperties(
+		).put(
+			"registration_access_token", "reg-" + regAccessToken
+		);
+
+		return regAccessToken;
 	}
 
 	@Override
@@ -108,6 +133,9 @@ public class LiferayDynamicRegistrationService
 		}
 
 		Map<String, String> properties = client.getProperties();
+
+		properties.put(
+			"application_type", clientRegistration.getApplicationType());
 
 		String jwks = clientRegistration.getStringProperty("jwks");
 
@@ -260,6 +288,8 @@ public class LiferayDynamicRegistrationService
 
 			if (applicationType == null) {
 				applicationType = "web";
+
+				clientRegistration.setApplicationType(applicationType);
 			}
 
 			for (String redirectUri : redirectUris) {

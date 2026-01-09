@@ -2560,17 +2560,10 @@ public class ObjectEntryLocalServiceImpl
 					objectEntryComment.
 						getParentCommentExternalReferenceCode())) {
 
-				Comment parentComment = _commentManager.fetchComment(
-					groupId,
-					objectEntryComment.getParentCommentExternalReferenceCode());
-
-				if (parentComment == null) {
-					parentComment = _commentManager.getOrAddEmptyComment(
-						objectEntryComment.
-							getParentCommentExternalReferenceCode(),
-						userId, groupId, objectDefinition.getClassName(),
-						objectEntry.getObjectEntryId());
-				}
+				Comment parentComment = _commentManager.getOrAddEmptyComment(
+					objectEntryComment.getParentCommentExternalReferenceCode(),
+					userId, groupId, objectDefinition.getClassName(),
+					objectEntry.getObjectEntryId());
 
 				_commentManager.addComment(
 					objectEntryComment.getExternalReferenceCode(), userId,

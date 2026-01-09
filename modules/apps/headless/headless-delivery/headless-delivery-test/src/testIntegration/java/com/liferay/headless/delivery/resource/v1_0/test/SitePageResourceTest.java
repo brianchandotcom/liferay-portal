@@ -1792,6 +1792,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 						return new ContentDocument() {
 							{
+								externalReferenceCode =
+									dlFileEntry.getExternalReferenceCode();
 								id = dlFileEntry.getPrimaryKey();
 							}
 						};

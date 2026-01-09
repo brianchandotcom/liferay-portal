@@ -8,7 +8,7 @@ package com.liferay.journal.internal.constants;
 /**
  * @author Adolfo Pérez
  */
-public class JournalDestinationNames {
+public class DDMDestinationNames {
 
 	public static final String DDM_STRUCTURE_JOURNAL_ARTICLES_UPDATE =
 		"liferay/ddm_structure_journal_articles_update";

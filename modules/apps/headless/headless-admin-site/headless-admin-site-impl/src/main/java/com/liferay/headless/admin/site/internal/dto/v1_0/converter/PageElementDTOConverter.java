@@ -15,7 +15,6 @@ import com.liferay.headless.admin.site.dto.v1_0.FormContainerPageElementDefiniti
 import com.liferay.headless.admin.site.dto.v1_0.FormStepContainerPageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.FormStepPageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentDropZonePageElementDefinition;
-import com.liferay.headless.admin.site.dto.v1_0.FragmentInstancePageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.GridPageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.ModulePageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
@@ -327,8 +326,7 @@ public class PageElementDTOConverter
 		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.FragmentInstancePageElementDefinitionDTOConverter)"
 	)
 	private DTOConverter
-		<FragmentStyledLayoutStructureItem,
-		 FragmentInstancePageElementDefinition>
+		<FragmentStyledLayoutStructureItem, PageElementDefinition>
 			_fragmentInstancePageElementDefinitionDTOConverter;
 
 	@Reference(

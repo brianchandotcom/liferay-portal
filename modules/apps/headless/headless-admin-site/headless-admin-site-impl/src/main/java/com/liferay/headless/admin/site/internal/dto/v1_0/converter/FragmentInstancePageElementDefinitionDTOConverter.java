@@ -11,9 +11,11 @@ import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.headless.admin.site.dto.v1_0.BasicFragmentInstancePageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.DefaultFragmentReference;
+import com.liferay.headless.admin.site.dto.v1_0.FormFragmentInstancePageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentConfigurationFieldValue;
-import com.liferay.headless.admin.site.dto.v1_0.FragmentInstancePageElementDefinition;
+import com.liferay.headless.admin.site.dto.v1_0.FragmentInstance;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetInstance;
@@ -51,16 +53,15 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class FragmentInstancePageElementDefinitionDTOConverter
 	implements DTOConverter
-		<FragmentStyledLayoutStructureItem,
-		 FragmentInstancePageElementDefinition> {
+		<FragmentStyledLayoutStructureItem, PageElementDefinition> {
 
 	@Override
 	public String getContentType() {
-		return FragmentInstancePageElementDefinition.class.getSimpleName();
+		return PageElementDefinition.class.getSimpleName();
 	}
 
 	@Override
-	public FragmentInstancePageElementDefinition toDTO(
+	public PageElementDefinition toDTO(
 			DTOConverterContext dtoConverterContext,
 			FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem)
 		throws Exception {
@@ -81,15 +82,43 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 			throw new UnsupportedOperationException();
 		}
 
-		return new FragmentInstancePageElementDefinition() {
+		if (fragmentEntryLink.isTypeComponent()) {
+			return new BasicFragmentInstancePageElementDefinition() {
+				{
+					setFragmentInstance(
+						() -> _getFragmentInstance(
+							companyId, fragmentEntryLink,
+							fragmentStyledLayoutStructureItem, scopeGroupId));
+					setType(Type.BASIC_FRAGMENT);
+				}
+			};
+		}
+
+		return new FormFragmentInstancePageElementDefinition() {
+			{
+				setFragmentInstance(
+					() -> _getFragmentInstance(
+						companyId, fragmentEntryLink,
+						fragmentStyledLayoutStructureItem, scopeGroupId));
+				setType(Type.FORM_FRAGMENT);
+			}
+		};
+	}
+
+	private FragmentInstance _getFragmentInstance(
+		long companyId, FragmentEntryLink fragmentEntryLink,
+		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem,
+		long scopeGroupId) {
+
+		return new FragmentInstance() {
 			{
 				setConfiguration(fragmentEntryLink::getConfiguration);
 				setCss(fragmentEntryLink::getCss);
 				setCssClasses(
 					() -> {
 						if (SetUtil.isEmpty(
-								fragmentStyledLayoutStructureItem.
-									getCssClasses())) {
+							fragmentStyledLayoutStructureItem.
+								getCssClasses())) {
 
 							return null;
 						}
@@ -114,7 +143,7 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 				setFragmentReference(
 					() -> {
 						if (Validator.isNull(
-								fragmentEntryLink.getFragmentEntryERC()) &&
+							fragmentEntryLink.getFragmentEntryERC()) &&
 							Validator.isNull(
 								fragmentEntryLink.getRendererKey())) {
 
@@ -122,7 +151,7 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 						}
 
 						if (Validator.isNotNull(
-								fragmentEntryLink.getFragmentEntryERC())) {
+							fragmentEntryLink.getFragmentEntryERC())) {
 
 							return new FragmentItemExternalReference() {
 								{
@@ -153,14 +182,6 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 							}
 						};
 					});
-				setFragmentType(
-					() -> {
-						if (fragmentEntryLink.isTypeComponent()) {
-							return FragmentType.BASIC;
-						}
-
-						return FragmentType.FORM;
-					});
 				setFragmentViewports(
 					() -> FragmentViewportUtil.toFragmentViewports(
 						fragmentStyledLayoutStructureItem.
@@ -170,7 +191,6 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 				setJs(fragmentEntryLink::getJs);
 				setName(fragmentStyledLayoutStructureItem::getName);
 				setNamespace(fragmentEntryLink::getNamespace);
-				setType(() -> PageElementDefinition.Type.FRAGMENT);
 				setUuid(fragmentEntryLink::getUuid);
 				setWidgetInstances(
 					() -> _getWidgetInstances(fragmentEntryLink));

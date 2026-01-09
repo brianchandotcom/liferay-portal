@@ -13,7 +13,7 @@
 	},
 	"items": [
 		{
-			"externalReferenceCode": "L_CMP_PROJECT_STATES",
+			"externalReferenceCode": "L_CMP_STATES",
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "BLOCKED",
@@ -40,7 +40,7 @@
 					"system": true
 				}
 			],
-			"name": "CMP Project States",
+			"name": "CMP States",
 			"system": true
 		}
 	]

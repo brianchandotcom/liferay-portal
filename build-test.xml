@@ -860,7 +860,7 @@ jdbc.default.password=${database.password}
 
 jdbc.default.connectionTimeout=600000
 jdbc.default.maximumPoolSize=30
-jdbc.default.minimumIdle=0]]></echo>
+jdbc.default.minimumIdle=5]]></echo>
 
 			<if>
 				<equals arg1="${database.type}" arg2="oracle" />
@@ -12617,7 +12617,7 @@ jdbc.default.password=${database.password}
 
 jdbc.default.connectionTimeout=600000
 jdbc.default.maximumPoolSize=${database.max.pool.size}
-jdbc.default.minimumIdle=0
+jdbc.default.minimumIdle=5
 
 enterprise.product.notification.enabled=false
 company.security.strangers.verify=false

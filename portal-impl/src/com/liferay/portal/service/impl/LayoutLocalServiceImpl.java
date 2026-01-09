@@ -2598,6 +2598,36 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	@Override
+	public boolean hasLayouts(
+		long groupId, String portletLayoutPageTemplateEntryERC) {
+
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		if (group == null) {
+			return false;
+		}
+
+		int count = layoutPersistence.countByPLPTEERC_PLPTESERC(
+			portletLayoutPageTemplateEntryERC,
+			group.getExternalReferenceCode());
+
+		if (count > 0) {
+			return true;
+		}
+
+		List<Layout> layouts = layoutPersistence.findByPLPTEERC_PLPTESERC(
+			portletLayoutPageTemplateEntryERC, null);
+
+		for (Layout layout : layouts) {
+			if (groupId == layout.getGroupId()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean hasLayouts(User user, boolean privateLayout)
 		throws PortalException {
 

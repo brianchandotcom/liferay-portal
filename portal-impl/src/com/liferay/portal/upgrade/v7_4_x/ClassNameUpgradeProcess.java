@@ -6,7 +6,9 @@
 package com.liferay.portal.upgrade.v7_4_x;
 
 import com.liferay.document.library.kernel.processor.RawMetadataProcessor;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,11 +32,55 @@ public class ClassNameUpgradeProcess extends UpgradeProcess {
 
 		if (newClassNameId == 0) {
 			_updateValue(oldClassNameId);
-		}
-		else {
-			_updateDDMStructureClassNameId(newClassNameId, oldClassNameId);
 
-			_deleteClassName(oldClassNameId);
+			return;
+		}
+
+		_deleteClassName(oldClassNameId);
+
+		for (long companyId : PortalInstancePool.getCompanyIds()) {
+			long oldStructureId = _getDDMStructureId(oldClassNameId, companyId);
+
+			if (oldStructureId == 0) {
+				continue;
+			}
+
+			long newStructureId = _getDDMStructureId(newClassNameId, companyId);
+
+			if (newStructureId == 0) {
+				_updateDDMStructureClassNameId(newClassNameId, oldStructureId);
+
+				continue;
+			}
+
+			int oldCount = _getDLFileEntryMetadataCount(oldStructureId);
+
+			if (oldCount == 0) {
+				_deleteDDMStructure(oldStructureId);
+
+				continue;
+			}
+
+			int newCount = _getDLFileEntryMetadataCount(newStructureId);
+
+			if (newCount == 0) {
+				_deleteDDMStructure(newStructureId);
+				_updateDDMStructureClassNameId(newClassNameId, oldStructureId);
+
+				continue;
+			}
+
+			if (newCount >= oldCount) {
+				_updateDDMStructureRelatedTables(
+					newStructureId, oldStructureId);
+				_deleteDDMStructure(oldStructureId);
+			}
+			else {
+				_updateDDMStructureRelatedTables(
+					oldStructureId, newStructureId);
+				_deleteDDMStructure(newStructureId);
+				_updateDDMStructureClassNameId(newClassNameId, oldStructureId);
+			}
 		}
 	}
 
@@ -43,6 +89,24 @@ public class ClassNameUpgradeProcess extends UpgradeProcess {
 				"delete from ClassName_ where classNameId = ?")) {
 
 			preparedStatement.setLong(1, classNameId);
+
+			preparedStatement.execute();
+		}
+	}
+
+	private void _deleteDDMStructure(long structureId) throws Exception {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"delete from DDMStructureVersion where structureId = ?")) {
+
+			preparedStatement.setLong(1, structureId);
+
+			preparedStatement.execute();
+		}
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"delete from DDMStructure where structureId = ?")) {
+
+			preparedStatement.setLong(1, structureId);
 
 			preparedStatement.execute();
 		}
@@ -64,19 +128,117 @@ public class ClassNameUpgradeProcess extends UpgradeProcess {
 		return 0;
 	}
 
-	private void _updateDDMStructureClassNameId(
-			long newClassNameId, long oldClassNameId)
+	private long _getDDMStructureId(long classNameId, long companyId)
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"update DDMStructure set classNameId = ? where classNameId = " +
-					"?")) {
+				"select structureId from DDMStructure where classNameId = ? " +
+					"and companyId = ?")) {
 
-			preparedStatement.setLong(1, newClassNameId);
-			preparedStatement.setLong(2, oldClassNameId);
+			preparedStatement.setLong(1, classNameId);
+			preparedStatement.setLong(2, companyId);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next()) {
+				return resultSet.getLong("structureId");
+			}
+		}
+
+		return 0;
+	}
+
+	private long _getDDMStructureVersionId(long structureId) throws Exception {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select structureVersionId from DDMStructureVersion where " +
+					"structureId = ?")) {
+
+			preparedStatement.setLong(1, structureId);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next()) {
+				return resultSet.getLong("structureVersionId");
+			}
+		}
+
+		return 0;
+	}
+
+	private int _getDLFileEntryMetadataCount(long structureId)
+		throws Exception {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select count(*) from DLFileEntryMetadata where " +
+					"DDMStructureId = ?")) {
+
+			preparedStatement.setLong(1, structureId);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next()) {
+				return resultSet.getInt(1);
+			}
+		}
+
+		return 0;
+	}
+
+	private void _update(
+			String table, String column, long newValue, long oldValue)
+		throws Exception {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"update ", table, " set ", column, " = ? where ", column,
+					" = ?"))) {
+
+			preparedStatement.setLong(1, newValue);
+			preparedStatement.setLong(2, oldValue);
 
 			preparedStatement.execute();
 		}
+	}
+
+	private void _updateDDMStructureClassNameId(
+			long classNameId, long structureId)
+		throws Exception {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"update DDMStructure set classNameId = ? where structureId = " +
+					"?")) {
+
+			preparedStatement.setLong(1, classNameId);
+			preparedStatement.setLong(2, structureId);
+
+			preparedStatement.execute();
+		}
+	}
+
+	private void _updateDDMStructureRelatedTables(
+			long newStructureId, long oldStructureId)
+		throws Exception {
+
+		_update(
+			"DDMStorageLink", "structureId", newStructureId, oldStructureId);
+		_update(
+			"DDMStructureLink", "structureId", newStructureId, oldStructureId);
+		_update(
+			"DLFileEntryMetadata", "DDMStructureId", newStructureId,
+			oldStructureId);
+
+		long newStructureVersionId = _getDDMStructureVersionId(newStructureId);
+		long oldStructureVersionId = _getDDMStructureVersionId(oldStructureId);
+
+		_update(
+			"DDMField", "structureVersionId", newStructureVersionId,
+			oldStructureVersionId);
+		_update(
+			"DDMStorageLink", "structureVersionId", newStructureVersionId,
+			oldStructureVersionId);
+		_update(
+			"DDMStructureLayout", "structureVersionId", newStructureVersionId,
+			oldStructureVersionId);
 	}
 
 	private void _updateValue(long classNameId) throws Exception {

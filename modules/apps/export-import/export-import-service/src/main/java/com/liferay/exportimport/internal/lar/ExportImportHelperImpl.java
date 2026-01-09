@@ -1679,8 +1679,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 						DefaultConfigurationPortletDataHandler) &&
 					((portletDataHandler.isBatch() &&
 					  portletDataHandler.isDataPortalLevel()) ||
-					 portletDataHandler.isDataSiteLevel() ||
-					 portletDataHandler.isDataDepotLevel()) &&
+					 portletDataHandler.isDataDepotLevel() ||
+					 portletDataHandler.isDataSiteLevel()) &&
 					GetterUtil.getBoolean(
 						element.attributeValue("portlet-data"))) {
 

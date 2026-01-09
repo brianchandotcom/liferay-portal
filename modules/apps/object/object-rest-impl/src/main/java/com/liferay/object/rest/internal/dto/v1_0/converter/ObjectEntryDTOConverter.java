@@ -1403,8 +1403,8 @@ public class ObjectEntryDTOConverter
 						WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 						QueryUtil.ALL_POS),
 					comment -> {
-						if (!LazyReferencingThreadLocal.isEnabled() &&
-							comment.isRoot()) {
+						if (comment.isRoot() &&
+							!LazyReferencingThreadLocal.isEnabled()) {
 
 							return null;
 						}

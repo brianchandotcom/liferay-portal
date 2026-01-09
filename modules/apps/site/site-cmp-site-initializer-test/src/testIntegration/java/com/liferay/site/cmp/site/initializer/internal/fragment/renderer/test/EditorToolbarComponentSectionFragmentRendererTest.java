@@ -34,7 +34,7 @@ import org.junit.runner.RunWith;
 	featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-58677")}
 )
 @RunWith(Arquillian.class)
-public class ProjectEditorToolbarComponentSectionFragmentRendererTest
+public class EditorToolbarComponentSectionFragmentRendererTest
 	extends BaseComponentSectionFragmentRendererTestCase {
 
 	@ClassRule
@@ -61,7 +61,7 @@ public class ProjectEditorToolbarComponentSectionFragmentRendererTest
 	}
 
 	@Inject(
-		filter = "component.name=com.liferay.site.cmp.site.initializer.internal.fragment.renderer.ProjectEditorToolbarComponentSectionFragmentRenderer"
+		filter = "component.name=com.liferay.site.cmp.site.initializer.internal.fragment.renderer.EditorToolbarComponentSectionFragmentRenderer"
 	)
 	private FragmentRenderer _fragmentRenderer;
 

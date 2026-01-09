@@ -78,7 +78,7 @@ components:
             type: object
         BasicFragmentInstancePageElementDefinition:
             allOf:
-                -   $ref: "#/components/schemas/FragmentInstancePageElementDefinition"
+                -   $ref: "#/components/schemas/FragmentInstance"
                 -   $ref: "#/components/schemas/PageElementDefinition"
             # @review
             description:
@@ -1081,7 +1081,7 @@ components:
             type: object
         FormFragmentInstancePageElementDefinition:
             allOf:
-                -   $ref: "#/components/schemas/FragmentInstancePageElementDefinition"    
+                -   $ref: "#/components/schemas/FragmentInstance"    
                 -   $ref: "#/components/schemas/PageElementDefinition"    
             # @review
             description:
@@ -1374,10 +1374,10 @@ components:
                         The localized fragment's inline values.
                     type: object
             type: object
-        FragmentInstancePageElementDefinition:
+        FragmentInstance:
             # @review
             description:
-                A page element definition of a fragment instance.
+                A fragment instance.
             properties:
                 backgroundFragmentImage:
                     $ref: "#/components/schemas/FragmentImage"
@@ -1440,7 +1440,7 @@ components:
                 fragmentViewports:
                     # @review
                     description:
-                        A list of fragment viewports of the fragment instance page element.
+                        A list of fragment viewports of the fragment instance.
                     items:
                         $ref: "#/components/schemas/FragmentViewport"
                     type: array
@@ -1452,7 +1452,7 @@ components:
                 indexed:
                     # @review
                     description:
-                        A flag that indicates whether the fragment instance page element is indexed or not.
+                        A flag that indicates whether the fragment instance is indexed or not.
                     type: boolean
                 js:
                     # @review
@@ -1462,22 +1462,22 @@ components:
                 name:
                     # @review
                     description:
-                        The custom name of a fragment instance page element.
+                        The custom name of a fragment instance.
                     type: string
                 namespace:
                     # @review
                     description:
-                        The fragment instance page element's namespace.
+                        The fragment instance's namespace.
                     type: string
                 uuid:
                     # @review
                     description:
-                        A valid external identifier to reference this fragment instance page element.
+                        A valid external identifier to reference this fragment instance.
                     type: string
                 widgetInstances:
                     # @review
                     description:
-                        A list of widget instances within the fragment instance page element.
+                        A list of widget instances within the fragment instance.
                     items:
                         $ref: "#/components/schemas/WidgetInstance"
                     type: array

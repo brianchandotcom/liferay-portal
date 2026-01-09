@@ -499,6 +499,72 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			testGroup.getExternalReferenceCode(), sitePage);
 	}
 
+	private void _addFormAndPublishLayout(
+			String className, List<InfoField> infoFields, Layout layout)
+		throws Exception {
+
+		JSONObject defaultInputFragmentEntryKeysJSONObject =
+			_defaultInputFragmentEntryConfigurationProvider.
+				getDefaultInputFragmentEntryKeysJSONObject(layout.getGroupId());
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		long segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid());
+
+		JSONObject jsonObject = ContentLayoutTestUtil.addFormToLayout(
+			false, String.valueOf(_portal.getClassNameId(className)), "0",
+			draftLayout, _layoutStructureProvider, segmentsExperienceId);
+
+		String parentItemId = jsonObject.getString("addedItemId");
+
+		int position = 0;
+
+		for (InfoField<?> infoField : infoFields) {
+			InfoFieldType infoFieldType = infoField.getInfoFieldType();
+
+			JSONObject defaultInputFragmentEntryJSONObject =
+				defaultInputFragmentEntryKeysJSONObject.getJSONObject(
+					infoFieldType.getName());
+
+			FragmentEntry fragmentEntry =
+				_fragmentCollectionContributorRegistry.getFragmentEntry(
+					defaultInputFragmentEntryJSONObject.getString("key"));
+
+			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+				_getInputFragmentEntryLinkEditableValues(
+					infoField.getUniqueId()),
+				fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+				fragmentEntry.getExternalReferenceCode(),
+				fragmentEntry.getScopeERC(), fragmentEntry.getHtml(),
+				fragmentEntry.getJs(), draftLayout,
+				fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
+				parentItemId, position, segmentsExperienceId);
+
+			position++;
+		}
+
+		JSONObject defaultInputFragmentEntryJSONObject =
+			defaultInputFragmentEntryKeysJSONObject.getJSONObject(
+				DefaultInputFragmentEntryConfigurationProvider.
+					FORM_INPUT_SUBMIT_BUTTON);
+
+		FragmentEntry fragmentEntry =
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
+				defaultInputFragmentEntryJSONObject.getString("key"));
+
+		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			"{}", fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+			fragmentEntry.getExternalReferenceCode(),
+			fragmentEntry.getScopeERC(), fragmentEntry.getHtml(),
+			fragmentEntry.getJs(), draftLayout,
+			fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
+			parentItemId, position, segmentsExperienceId);
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+	}
+
 	private Layout _addLayout(
 			String type, String typeSettings, ServiceContext serviceContext)
 		throws Exception {
@@ -952,76 +1018,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				"inputShowLabel", RandomTestUtil.randomBoolean()
 			)
 		).toString();
-	}
-
-	private Layout _getLayout(
-			String className, Group group, List<InfoField> infoFields)
-		throws Exception {
-
-		JSONObject defaultInputFragmentEntryKeysJSONObject =
-			_defaultInputFragmentEntryConfigurationProvider.
-				getDefaultInputFragmentEntryKeysJSONObject(group.getGroupId());
-
-		Layout layout = LayoutTestUtil.addTypeContentLayout(group);
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		long segmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				draftLayout.getPlid());
-
-		JSONObject jsonObject = ContentLayoutTestUtil.addFormToLayout(
-			false, String.valueOf(_portal.getClassNameId(className)), "0",
-			draftLayout, _layoutStructureProvider, segmentsExperienceId);
-
-		String parentItemId = jsonObject.getString("addedItemId");
-
-		int position = 0;
-
-		for (InfoField<?> infoField : infoFields) {
-			InfoFieldType infoFieldType = infoField.getInfoFieldType();
-
-			JSONObject defaultInputFragmentEntryJSONObject =
-				defaultInputFragmentEntryKeysJSONObject.getJSONObject(
-					infoFieldType.getName());
-
-			FragmentEntry fragmentEntry =
-				_fragmentCollectionContributorRegistry.getFragmentEntry(
-					defaultInputFragmentEntryJSONObject.getString("key"));
-
-			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-				_getInputFragmentEntryLinkEditableValues(
-					infoField.getUniqueId()),
-				fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
-				fragmentEntry.getExternalReferenceCode(),
-				fragmentEntry.getScopeERC(), fragmentEntry.getHtml(),
-				fragmentEntry.getJs(), draftLayout,
-				fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
-				parentItemId, position, segmentsExperienceId);
-
-			position++;
-		}
-
-		JSONObject defaultInputFragmentEntryJSONObject =
-			defaultInputFragmentEntryKeysJSONObject.getJSONObject(
-				DefaultInputFragmentEntryConfigurationProvider.
-					FORM_INPUT_SUBMIT_BUTTON);
-
-		FragmentEntry fragmentEntry =
-			_fragmentCollectionContributorRegistry.getFragmentEntry(
-				defaultInputFragmentEntryJSONObject.getString("key"));
-
-		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-			"{}", fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
-			fragmentEntry.getExternalReferenceCode(),
-			fragmentEntry.getScopeERC(), fragmentEntry.getHtml(),
-			fragmentEntry.getJs(), draftLayout,
-			fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
-			parentItemId, position, segmentsExperienceId);
-
-		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
-
-		return layout;
 	}
 
 	private List<ObjectField> _getObjectFields() throws Exception {
@@ -2559,11 +2555,14 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		InfoForm infoForm = infoItemFormProvider.getInfoForm(
 			StringPool.BLANK, irrelevantGroup.getGroupId());
 
-		Layout layout = _getLayout(
-			objectDefinition.getClassName(), irrelevantGroup,
+		Layout layout = LayoutTestUtil.addTypeContentLayout(irrelevantGroup);
+
+		_addFormAndPublishLayout(
+			objectDefinition.getClassName(),
 			ListUtil.filter(
 				infoForm.getAllInfoFields(),
-				infoField -> infoField.isEditable()));
+				infoField -> infoField.isEditable()),
+			layout);
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(

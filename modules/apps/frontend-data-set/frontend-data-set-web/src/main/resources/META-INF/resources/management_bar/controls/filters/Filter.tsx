@@ -110,18 +110,8 @@ const Filter = ({id, moduleURL, onClose, type, ...otherProps}: IFilter) => {
 			...otherProps,
 		};
 
-		const resolvedFilter = {
-			...filter,
-			odataFilterString: filterImplementation.getOdataString(
-				filter as any
-			),
-			selectedItemsLabel: filterImplementation.getSelectedItemsLabel(
-				filter as any
-			),
-		};
-
 		onFilterChange({
-			changedFilter: resolvedFilter,
+			changedFilter: filter,
 		});
 	};
 

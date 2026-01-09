@@ -47,6 +47,7 @@ import {InfoPanel} from './info_panel/InfoPanel';
 // @ts-ignore
 
 import ManagementBar from './management_bar/ManagementBar';
+import {FILTER_IMPLEMENTATIONS} from './management_bar/controls/filters/Filter';
 
 // @ts-ignore
 
@@ -720,16 +721,15 @@ const FrontendDataSetContent = ({
 
 		const unfrozenGlobalFDSState: IFDSState = deepClone(globalFDSState);
 
-		const activeFiltersOdataStrings = unfrozenGlobalFDSState.filters.reduce(
+		const activeFilters: Array<IBaseFilterState> =
+			unfrozenGlobalFDSState.filters.filter((filter) => filter.active) ||
+			[];
 
-			// Difficult to type filter as it is a mix of filters from FDS and FILTER_IMPLEMENTATIONS<T>
+		const activeFiltersOdataStrings = activeFilters.map((filter) => {
+			const filterImplementation = FILTER_IMPLEMENTATIONS[filter.type];
 
-			(activeFilters: Array<string>, filter: any) =>
-				filter.active && filter.odataFilterString
-					? [...activeFilters, filter.odataFilterString]
-					: activeFilters,
-			[]
-		);
+			return filterImplementation.getOdataString(filter);
+		});
 
 		const activeSorts =
 			sorts.length > 1

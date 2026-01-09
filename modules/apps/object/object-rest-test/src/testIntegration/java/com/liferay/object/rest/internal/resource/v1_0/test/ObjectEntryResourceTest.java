@@ -16991,20 +16991,6 @@ public class ObjectEntryResourceTest {
 			TaxonomyCategory... taxonomyCategories)
 		throws Exception {
 
-		String endpoint = null;
-
-		ObjectScopeProvider objectScopeProvider =
-			_objectScopeProviderRegistry.getObjectScopeProvider(
-				objectDefinition.getScope());
-
-		if (objectScopeProvider.isGroupAware()) {
-			endpoint = StringBundler.concat(
-				objectDefinition.getRESTContextPath(), "/scopes/", groupId);
-		}
-		else {
-			endpoint = objectDefinition.getRESTContextPath();
-		}
-
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		for (TaxonomyCategory taxonomyCategory : taxonomyCategories) {
@@ -17017,7 +17003,7 @@ public class ObjectEntryResourceTest {
 			).put(
 				"taxonomyCategoryIds", jsonArray
 			).toString(),
-			endpoint, Http.Method.POST);
+			_getEndpoint(objectDefinition, groupId), Http.Method.POST);
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,

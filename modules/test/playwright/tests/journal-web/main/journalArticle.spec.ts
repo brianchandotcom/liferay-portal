@@ -2585,3 +2585,50 @@ baseTest(
 		).toBeVisible();
 	}
 );
+
+baseTest(
+	'The user can search for a specific Web Content in Web Content Admin',
+	async ({apiHelpers, journalPage, page, site}) => {
+		const basicWebContentStructureId =
+			await getBasicWebContentStructureId(apiHelpers);
+
+		const title1 = getRandomString();
+		const title2 = getRandomString();
+
+		await Promise.all([
+			apiHelpers.jsonWebServicesJournal.addWebContent({
+				ddmStructureId: basicWebContentStructureId,
+				groupId: site.id,
+				titleMap: {en_US: title1},
+			}),
+			apiHelpers.jsonWebServicesJournal.addWebContent({
+				ddmStructureId: basicWebContentStructureId,
+				groupId: site.id,
+				titleMap: {en_US: title2},
+			}),
+		]);
+
+		await journalPage.goto(site.friendlyUrlPath);
+
+		await expect(page.getByText(title1)).toBeVisible();
+		await expect(page.getByText(title2)).toBeVisible();
+
+		await page.getByPlaceholder('Search for').fill(title1);
+		await page.getByLabel('Search for', {exact: true}).click();
+
+		await expect(page.getByText(title1, {exact: true})).toBeVisible();
+		await expect(page.getByText(title2)).not.toBeVisible();
+
+		await page.getByPlaceholder('Search for').fill(title2);
+		await page.getByLabel('Search for', {exact: true}).click();
+
+		await expect(page.getByText(title1)).not.toBeVisible();
+		await expect(page.getByText(title2, {exact: true})).toBeVisible();
+
+		await page.getByPlaceholder('Search for').fill('Random Text');
+		await page.getByLabel('Search for', {exact: true}).click();
+
+		await expect(page.getByText(title1)).not.toBeVisible();
+		await expect(page.getByText(title2)).not.toBeVisible();
+	}
+);

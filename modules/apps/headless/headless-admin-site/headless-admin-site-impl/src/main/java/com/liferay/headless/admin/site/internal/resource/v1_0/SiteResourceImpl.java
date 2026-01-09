@@ -988,8 +988,17 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 				setFriendlyUrlPath(group::getFriendlyURL);
 				setId(group::getGroupId);
 				setInheritLocales(
-					() -> Boolean.parseBoolean(
-						group.getTypeSettingsProperty("inheritLocales")));
+					() -> {
+						if (group.getTypeSettingsProperty("inheritLocales") !=
+								null) {
+
+							return Boolean.parseBoolean(
+								group.getTypeSettingsProperty(
+									"inheritLocales"));
+						}
+
+						return true;
+					});
 				setKey(group::getGroupKey);
 				setLocales(
 					() -> LocaleUtil.toW3cLanguageIds(

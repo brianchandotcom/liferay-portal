@@ -1153,6 +1153,10 @@ public class LayoutUtil {
 					layout,
 					UserLocalServiceUtil.getUser(serviceContext.getUserId()))) {
 
+			Map<String, SegmentsExperience> actualSegmentsExperiencesMap =
+				new HashMap<>();
+			int minPriority = Integer.MIN_VALUE;
+
 			Map<String, SegmentsExperience> originalSegmentsExperiencesMap =
 				new HashMap<>();
 
@@ -1164,11 +1168,6 @@ public class LayoutUtil {
 					segmentsExperience.getExternalReferenceCode(),
 					segmentsExperience);
 			}
-
-			Map<String, SegmentsExperience> actualSegmentsExperiencesMap =
-				new HashMap<>();
-
-			int minPriority = Integer.MIN_VALUE;
 
 			Arrays.sort(
 				pageExperiences,

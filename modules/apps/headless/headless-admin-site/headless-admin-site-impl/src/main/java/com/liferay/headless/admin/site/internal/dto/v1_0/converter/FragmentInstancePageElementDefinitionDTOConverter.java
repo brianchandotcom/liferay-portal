@@ -105,99 +105,6 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 		};
 	}
 
-	private FragmentInstance _getFragmentInstance(
-		long companyId, FragmentEntryLink fragmentEntryLink,
-		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem,
-		long scopeGroupId) {
-
-		return new FragmentInstance() {
-			{
-				setConfiguration(fragmentEntryLink::getConfiguration);
-				setCss(fragmentEntryLink::getCss);
-				setCssClasses(
-					() -> {
-						if (SetUtil.isEmpty(
-							fragmentStyledLayoutStructureItem.
-								getCssClasses())) {
-
-							return null;
-						}
-
-						return ArrayUtil.toStringArray(
-							fragmentStyledLayoutStructureItem.getCssClasses());
-					});
-				setDatePropagated(fragmentEntryLink::getLastPropagationDate);
-				setDraftFragmentInstanceExternalReferenceCode(
-					() -> _getDraftFragmentInstanceExternalReferenceCode(
-						fragmentEntryLink));
-				setFragmentConfigurationFieldValues(
-					() -> _getFragmentConfigurationFieldValues(
-						fragmentEntryLink));
-				setFragmentEditableElements(
-					() ->
-						FragmentEditableElementUtil.getFragmentEditableElements(
-							companyId, fragmentEntryLink,
-							_infoItemServiceRegistry, scopeGroupId));
-				setFragmentInstanceExternalReferenceCode(
-					fragmentEntryLink::getExternalReferenceCode);
-				setFragmentReference(
-					() -> {
-						if (Validator.isNull(
-							fragmentEntryLink.getFragmentEntryERC()) &&
-							Validator.isNull(
-								fragmentEntryLink.getRendererKey())) {
-
-							return null;
-						}
-
-						if (Validator.isNotNull(
-							fragmentEntryLink.getFragmentEntryERC())) {
-
-							return new FragmentItemExternalReference() {
-								{
-									setExternalReferenceCode(
-										fragmentEntryLink::getFragmentEntryERC);
-									setFragmentReferenceType(
-										() ->
-											FragmentReferenceType.
-												FRAGMENT_ITEM_EXTERNAL_REFERENCE);
-									setScope(
-										() -> ItemScopeUtil.getItemScope(
-											fragmentEntryLink.getCompanyId(),
-											fragmentEntryLink.
-												getFragmentEntryScopeERC(),
-											fragmentEntryLink.getGroupId()));
-								}
-							};
-						}
-
-						return new DefaultFragmentReference() {
-							{
-								setDefaultFragmentKey(
-									fragmentEntryLink::getRendererKey);
-								setFragmentReferenceType(
-									() ->
-										FragmentReferenceType.
-											DEFAULT_FRAGMENT_REFERENCE);
-							}
-						};
-					});
-				setFragmentViewports(
-					() -> FragmentViewportUtil.toFragmentViewports(
-						fragmentStyledLayoutStructureItem.
-							getItemConfigJSONObject()));
-				setHtml(fragmentEntryLink::getHtml);
-				setIndexed(fragmentStyledLayoutStructureItem::isIndexed);
-				setJs(fragmentEntryLink::getJs);
-				setName(fragmentStyledLayoutStructureItem::getName);
-				setNamespace(fragmentEntryLink::getNamespace);
-				setUuid(fragmentEntryLink::getUuid);
-				setWidgetInstances(
-					() -> _getWidgetInstances(fragmentEntryLink));
-			}
-		};
-	}
-
 	private String _getDraftFragmentInstanceExternalReferenceCode(
 		FragmentEntryLink fragmentEntryLink) {
 
@@ -284,6 +191,99 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 		}
 
 		return map;
+	}
+
+	private FragmentInstance _getFragmentInstance(
+		long companyId, FragmentEntryLink fragmentEntryLink,
+		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem,
+		long scopeGroupId) {
+
+		return new FragmentInstance() {
+			{
+				setConfiguration(fragmentEntryLink::getConfiguration);
+				setCss(fragmentEntryLink::getCss);
+				setCssClasses(
+					() -> {
+						if (SetUtil.isEmpty(
+								fragmentStyledLayoutStructureItem.
+									getCssClasses())) {
+
+							return null;
+						}
+
+						return ArrayUtil.toStringArray(
+							fragmentStyledLayoutStructureItem.getCssClasses());
+					});
+				setDatePropagated(fragmentEntryLink::getLastPropagationDate);
+				setDraftFragmentInstanceExternalReferenceCode(
+					() -> _getDraftFragmentInstanceExternalReferenceCode(
+						fragmentEntryLink));
+				setFragmentConfigurationFieldValues(
+					() -> _getFragmentConfigurationFieldValues(
+						fragmentEntryLink));
+				setFragmentEditableElements(
+					() ->
+						FragmentEditableElementUtil.getFragmentEditableElements(
+							companyId, fragmentEntryLink,
+							_infoItemServiceRegistry, scopeGroupId));
+				setFragmentInstanceExternalReferenceCode(
+					fragmentEntryLink::getExternalReferenceCode);
+				setFragmentReference(
+					() -> {
+						if (Validator.isNull(
+								fragmentEntryLink.getFragmentEntryERC()) &&
+							Validator.isNull(
+								fragmentEntryLink.getRendererKey())) {
+
+							return null;
+						}
+
+						if (Validator.isNotNull(
+								fragmentEntryLink.getFragmentEntryERC())) {
+
+							return new FragmentItemExternalReference() {
+								{
+									setExternalReferenceCode(
+										fragmentEntryLink::getFragmentEntryERC);
+									setFragmentReferenceType(
+										() ->
+											FragmentReferenceType.
+												FRAGMENT_ITEM_EXTERNAL_REFERENCE);
+									setScope(
+										() -> ItemScopeUtil.getItemScope(
+											fragmentEntryLink.getCompanyId(),
+											fragmentEntryLink.
+												getFragmentEntryScopeERC(),
+											fragmentEntryLink.getGroupId()));
+								}
+							};
+						}
+
+						return new DefaultFragmentReference() {
+							{
+								setDefaultFragmentKey(
+									fragmentEntryLink::getRendererKey);
+								setFragmentReferenceType(
+									() ->
+										FragmentReferenceType.
+											DEFAULT_FRAGMENT_REFERENCE);
+							}
+						};
+					});
+				setFragmentViewports(
+					() -> FragmentViewportUtil.toFragmentViewports(
+						fragmentStyledLayoutStructureItem.
+							getItemConfigJSONObject()));
+				setHtml(fragmentEntryLink::getHtml);
+				setIndexed(fragmentStyledLayoutStructureItem::isIndexed);
+				setJs(fragmentEntryLink::getJs);
+				setName(fragmentStyledLayoutStructureItem::getName);
+				setNamespace(fragmentEntryLink::getNamespace);
+				setUuid(fragmentEntryLink::getUuid);
+				setWidgetInstances(
+					() -> _getWidgetInstances(fragmentEntryLink));
+			}
+		};
 	}
 
 	private WidgetInstance[] _getWidgetInstances(

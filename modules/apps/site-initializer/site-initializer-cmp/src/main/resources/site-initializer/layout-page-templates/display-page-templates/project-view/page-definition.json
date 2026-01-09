@@ -320,18 +320,86 @@
 													"layout": {
 													}
 												},
-												"id": "d1aefde6-4e50-1b84-ec77-f24fec31f1c9",
+												"id": "841e9e1a-69e8-499e-c222-0ba5275648c1",
 												"pageElements": [
 													{
 														"definition": {
-															"widgetInstance": {
-																"widgetConfig": {
+															"customCSS": ".[$FRAGMENT_CLASS$] {\n .navigation-bar .navbar-nav .nav-link {\n margin-bottom: 0px;\n border-color: #cdced9;\n }\n\n .navigation-bar .navbar-nav .nav-link.active {\n border-color: #cdced9 #cdced9 #fff;\n border-style: solid;\n border-width: 0.0625rem;\n border-radius: 0.5rem 0.5rem 0 0;\n}\n\n .navigation-bar .navbar-nav .nav-link.active::after {\n background-color: white !important;\n bottom: -0.2rem !important;}\n}",
+															"fragment": {
+																"key": "BASIC_COMPONENT-tabs"
+															},
+															"fragmentConfig": {
+																"numberOfTabs": 2
+															},
+															"fragmentFields": [
+																{
+																	"id": "title1",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Comments"
+																			}
+																		}
+																	}
 																},
-																"widgetName": "com_liferay_comment_page_comments_web_portlet_PageCommentsPortlet"
-															}
+																{
+																	"id": "title2",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "History"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"paddingBottom": "4",
+																"paddingTop": "4"
+															},
+															"indexed": true
 														},
-														"id": "129e710c-b0d5-d897-93f1-cfa9b0caed6a",
-														"type": "Widget"
+														"id": "61dc50c7-b3de-461c-6631-ec9bfcb3aa61",
+														"pageElements": [
+															{
+																"definition": {
+																	"fragmentDropZoneId": "1"
+																},
+																"id": "3fc26f0e-510c-1d98-fadb-fdcfb04c28eb",
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "com.liferay.site.cmp.site.initializer.internal.fragment.renderer.CommentsComponentSectionFragmentRenderer"
+																			},
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
+																			"fragmentStyle": {
+																				"paddingTop": "3"
+																			},
+																			"indexed": true
+																		},
+																		"id": "005a5946-a89c-8c17-5407-5e5a0a86f222",
+																		"type": "Fragment"
+																	}
+																],
+																"type": "FragmentDropZone"
+															},
+															{
+																"definition": {
+																	"fragmentDropZoneId": "2"
+																},
+																"id": "26a248b9-c942-c507-826f-6287da074cac",
+																"type": "FragmentDropZone"
+															}
+														],
+														"type": "Fragment"
 													}
 												],
 												"type": "Section"

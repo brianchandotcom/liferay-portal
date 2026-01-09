@@ -21,7 +21,11 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import java.time.Instant;
+import java.time.ZonedDateTime;
+
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.Map;
 import java.util.Objects;
@@ -231,6 +235,28 @@ public class MarketplaceUtil {
 
 	public static String getDefaultLocale(Map<String, String> localeMap) {
 		return localeMap.get("en_US");
+	}
+
+	public static Date getOrderPurchaseEndDate(
+		String licenseType, String licenseUsageType) {
+
+		ZonedDateTime zonedDateTime = ZonedDateTime.now();
+
+		if (Objects.equals(licenseType, "Subscription")) {
+			Instant instant = zonedDateTime.plusYears(
+				1
+			).toInstant();
+
+			return Date.from(instant);
+		}
+		else if (Objects.equals(licenseUsageType, "trial")) {
+			return Date.from(
+				zonedDateTime.plusMonths(
+					1
+				).toInstant());
+		}
+
+		return null;
 	}
 
 	public static String getSkuOptionValue(String key, SkuOption[] skuOptions) {

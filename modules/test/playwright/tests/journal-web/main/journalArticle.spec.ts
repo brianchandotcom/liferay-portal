@@ -2632,3 +2632,38 @@ baseTest(
 		await expect(page.getByText(title2)).not.toBeVisible();
 	}
 );
+
+baseTest(
+	'LPD-75537 - Publish button is not disabled when validating custom structures required fields',
+	async ({apiHelpers, journalEditArticlePage, page, site}) => {
+		const structureName = 'Structure 1';
+		const title = getRandomString();
+
+		const dataDefinition = getDataStructureDefinition({
+			defaultLanguageId: 'en_US',
+			fields: [
+				{name: 'Text'},
+				{
+					name: 'TextRequired',
+					required: true,
+				},
+			],
+			name: structureName,
+		});
+
+		await apiHelpers.dataEngine.createStructure(site.id, dataDefinition);
+
+		await journalEditArticlePage.goto({
+			siteUrl: site.friendlyUrlPath,
+			structureName,
+		});
+
+		await journalEditArticlePage.fillTitle(title);
+
+		await journalEditArticlePage.publishArticle(true);
+
+		await expect(journalEditArticlePage.publishButton).not.toBeDisabled();
+
+		await expect(page.getByText('This field is required.')).toBeVisible();
+	}
+);

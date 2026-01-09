@@ -5,6 +5,8 @@
 
 package com.liferay.portal.configuration.test.util;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
@@ -23,75 +25,83 @@ public class CompanyConfigurationTemporarySwapper implements AutoCloseable {
 			long companyId, String pid, Dictionary<String, Object> properties)
 		throws Exception {
 
-		_companyId = companyId;
-		_pid = pid;
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
 
-		Settings settings = FallbackKeysSettingsUtil.getSettings(
-			new CompanyServiceSettingsLocator(_companyId, _pid));
+			_companyId = companyId;
+			_pid = pid;
 
-		ModifiableSettings modifiableSettings =
-			settings.getModifiableSettings();
+			Settings settings = FallbackKeysSettingsUtil.getSettings(
+				new CompanyServiceSettingsLocator(_companyId, _pid));
 
-		_initialProperties = new HashMapDictionary();
+			ModifiableSettings modifiableSettings =
+				settings.getModifiableSettings();
 
-		Enumeration<String> keysEnumeration = properties.keys();
+			_initialProperties = new HashMapDictionary();
 
-		while (keysEnumeration.hasMoreElements()) {
-			String key = keysEnumeration.nextElement();
+			Enumeration<String> keysEnumeration = properties.keys();
 
-			String[] values = modifiableSettings.getValues(key, null);
+			while (keysEnumeration.hasMoreElements()) {
+				String key = keysEnumeration.nextElement();
 
-			if (values != null) {
-				_initialProperties.put(key, values);
+				String[] values = modifiableSettings.getValues(key, null);
+
+				if (values != null) {
+					_initialProperties.put(key, values);
+				}
+				else {
+					_initialProperties.put(
+						key, modifiableSettings.getValue(key, null));
+				}
+
+				Object value = properties.get(key);
+
+				if (value == null) {
+					modifiableSettings.setValue(key, null);
+				}
+				else if (value instanceof String[]) {
+					modifiableSettings.setValues(key, (String[])value);
+				}
+				else {
+					modifiableSettings.setValue(key, String.valueOf(value));
+				}
 			}
-			else {
-				_initialProperties.put(
-					key, modifiableSettings.getValue(key, null));
-			}
 
-			Object value = properties.get(key);
-
-			if (value == null) {
-				modifiableSettings.setValue(key, null);
-			}
-			else if (value instanceof String[]) {
-				modifiableSettings.setValues(key, (String[])value);
-			}
-			else {
-				modifiableSettings.setValue(key, String.valueOf(value));
-			}
+			modifiableSettings.store();
 		}
-
-		modifiableSettings.store();
 	}
 
 	@Override
 	public void close() throws Exception {
-		Settings settings = FallbackKeysSettingsUtil.getSettings(
-			new CompanyServiceSettingsLocator(_companyId, _pid));
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(_companyId)) {
 
-		ModifiableSettings modifiableSettings =
-			settings.getModifiableSettings();
+			Settings settings = FallbackKeysSettingsUtil.getSettings(
+				new CompanyServiceSettingsLocator(_companyId, _pid));
 
-		Enumeration<String> keysEnumeration = _initialProperties.keys();
+			ModifiableSettings modifiableSettings =
+				settings.getModifiableSettings();
 
-		while (keysEnumeration.hasMoreElements()) {
-			String key = keysEnumeration.nextElement();
+			Enumeration<String> keysEnumeration = _initialProperties.keys();
 
-			Object value = _initialProperties.get(key);
+			while (keysEnumeration.hasMoreElements()) {
+				String key = keysEnumeration.nextElement();
 
-			if (value == null) {
-				modifiableSettings.setValue(key, null);
+				Object value = _initialProperties.get(key);
+
+				if (value == null) {
+					modifiableSettings.setValue(key, null);
+				}
+				else if (value instanceof String[]) {
+					modifiableSettings.setValues(key, (String[])value);
+				}
+				else {
+					modifiableSettings.setValue(key, String.valueOf(value));
+				}
 			}
-			else if (value instanceof String[]) {
-				modifiableSettings.setValues(key, (String[])value);
-			}
-			else {
-				modifiableSettings.setValue(key, String.valueOf(value));
-			}
+
+			modifiableSettings.store();
 		}
-
-		modifiableSettings.store();
 	}
 
 	private final long _companyId;

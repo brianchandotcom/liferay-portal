@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.util.Dictionary;
@@ -31,11 +32,7 @@ public class CompanyConfigurationTemporarySwapper implements AutoCloseable {
 			_companyId = companyId;
 			_pid = pid;
 
-			Settings settings = FallbackKeysSettingsUtil.getSettings(
-				new CompanyServiceSettingsLocator(_companyId, _pid));
-
-			ModifiableSettings modifiableSettings =
-				settings.getModifiableSettings();
+			ModifiableSettings modifiableSettings = _getModifiableSettings();
 
 			_initialProperties = new HashMapDictionary<>();
 
@@ -76,11 +73,7 @@ public class CompanyConfigurationTemporarySwapper implements AutoCloseable {
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(_companyId)) {
 
-			Settings settings = FallbackKeysSettingsUtil.getSettings(
-				new CompanyServiceSettingsLocator(_companyId, _pid));
-
-			ModifiableSettings modifiableSettings =
-				settings.getModifiableSettings();
+			ModifiableSettings modifiableSettings = _getModifiableSettings();
 
 			Enumeration<String> keysEnumeration = _initialProperties.keys();
 
@@ -102,6 +95,15 @@ public class CompanyConfigurationTemporarySwapper implements AutoCloseable {
 
 			modifiableSettings.store();
 		}
+	}
+
+	private ModifiableSettings _getModifiableSettings()
+		throws SettingsException {
+
+		Settings settings = FallbackKeysSettingsUtil.getSettings(
+			new CompanyServiceSettingsLocator(_companyId, _pid));
+
+		return settings.getModifiableSettings();
 	}
 
 	private final long _companyId;

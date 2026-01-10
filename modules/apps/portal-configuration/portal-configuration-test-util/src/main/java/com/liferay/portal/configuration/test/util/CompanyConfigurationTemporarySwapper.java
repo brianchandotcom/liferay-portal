@@ -51,17 +51,7 @@ public class CompanyConfigurationTemporarySwapper implements AutoCloseable {
 						key, modifiableSettings.getValue(key, null));
 				}
 
-				Object value = properties.get(key);
-
-				if (value == null) {
-					modifiableSettings.setValue(key, null);
-				}
-				else if (value instanceof String[]) {
-					modifiableSettings.setValues(key, (String[])value);
-				}
-				else {
-					modifiableSettings.setValue(key, String.valueOf(value));
-				}
+				_setValue(modifiableSettings, key, properties.get(key));
 			}
 
 			modifiableSettings.store();
@@ -80,17 +70,7 @@ public class CompanyConfigurationTemporarySwapper implements AutoCloseable {
 			while (keysEnumeration.hasMoreElements()) {
 				String key = keysEnumeration.nextElement();
 
-				Object value = _initialProperties.get(key);
-
-				if (value == null) {
-					modifiableSettings.setValue(key, null);
-				}
-				else if (value instanceof String[]) {
-					modifiableSettings.setValues(key, (String[])value);
-				}
-				else {
-					modifiableSettings.setValue(key, String.valueOf(value));
-				}
+				_setValue(modifiableSettings, key, _initialProperties.get(key));
 			}
 
 			modifiableSettings.store();
@@ -104,6 +84,20 @@ public class CompanyConfigurationTemporarySwapper implements AutoCloseable {
 			new CompanyServiceSettingsLocator(_companyId, _pid));
 
 		return settings.getModifiableSettings();
+	}
+
+	private void _setValue(
+		ModifiableSettings modifiableSettings, String key, Object value) {
+
+		if (value == null) {
+			modifiableSettings.setValue(key, null);
+		}
+		else if (value instanceof String[]) {
+			modifiableSettings.setValues(key, (String[])value);
+		}
+		else {
+			modifiableSettings.setValue(key, String.valueOf(value));
+		}
 	}
 
 	private final long _companyId;

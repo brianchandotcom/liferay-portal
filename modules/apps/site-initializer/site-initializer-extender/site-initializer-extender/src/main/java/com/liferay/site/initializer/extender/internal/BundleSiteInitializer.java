@@ -2992,6 +2992,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 
 			try {
+				BundleContext bundleContext = _siteBundle.getBundleContext();
+
+				BatchEngineUnitThreadLocal.setFileName(
+					String.valueOf(bundleContext.getBundle()));
+
 				ListTypeDefinition existingListTypeDefinition =
 					listTypeDefinitionResource.
 						getListTypeDefinitionByExternalReferenceCode(
@@ -3007,6 +3012,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 				listTypeDefinition =
 					listTypeDefinitionResource.postListTypeDefinition(
 						listTypeDefinition);
+			}
+			finally {
+				BatchEngineUnitThreadLocal.setFileName(StringPool.BLANK);
 			}
 
 			stringUtilReplaceValues.put(

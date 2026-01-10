@@ -34,7 +34,7 @@ public class DigitalSalesRoomTemplateSettingsGeneralScreenNavigationEntry
 	@Override
 	public String getCategoryKey() {
 		return DigitalSalesRoomScreenNavigationEntryConstants.
-			CATEGORY_KEY_GENERAL;
+			CATEGORY_KEY_SETTINGS;
 	}
 
 	@Override

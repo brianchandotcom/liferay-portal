@@ -34,7 +34,7 @@ public class DigitalSalesRoomTemplateSettingsLookAndFeelScreenNavigationEntry
 	@Override
 	public String getCategoryKey() {
 		return DigitalSalesRoomScreenNavigationEntryConstants.
-			CATEGORY_KEY_LOOK_AND_FEEL;
+			CATEGORY_KEY_SETTINGS;
 	}
 
 	@Override

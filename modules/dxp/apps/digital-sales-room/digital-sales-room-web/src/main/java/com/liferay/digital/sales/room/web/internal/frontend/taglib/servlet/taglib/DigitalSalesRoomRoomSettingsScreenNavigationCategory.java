@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "screen.navigation.category.order:Integer=20",
 	service = ScreenNavigationCategory.class
 )
-public class DigitalSalesRoomRoomSettingsSettingsScreenNavigationCategory
+public class DigitalSalesRoomRoomSettingsScreenNavigationCategory
 	implements ScreenNavigationCategory {
 
 	@Override

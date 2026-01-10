@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Stefano Motta
  */
 @Component(
-	property = "screen.navigation.entry.order:Integer=10",
+	property = "screen.navigation.entry.order:Integer=30",
 	service = ScreenNavigationEntry.class
 )
 public class DigitalSalesRoomRoomSettingsUsersScreenNavigationEntry
@@ -34,7 +34,7 @@ public class DigitalSalesRoomRoomSettingsUsersScreenNavigationEntry
 	@Override
 	public String getCategoryKey() {
 		return DigitalSalesRoomScreenNavigationEntryConstants.
-			CATEGORY_KEY_USERS;
+			CATEGORY_KEY_SETTINGS;
 	}
 
 	@Override

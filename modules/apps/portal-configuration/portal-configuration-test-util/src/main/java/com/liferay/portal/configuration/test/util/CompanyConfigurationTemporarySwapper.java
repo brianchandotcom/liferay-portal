@@ -37,7 +37,7 @@ public class CompanyConfigurationTemporarySwapper implements AutoCloseable {
 			ModifiableSettings modifiableSettings =
 				settings.getModifiableSettings();
 
-			_initialProperties = new HashMapDictionary();
+			_initialProperties = new HashMapDictionary<>();
 
 			Enumeration<String> keysEnumeration = properties.keys();
 

@@ -38,19 +38,21 @@ public class DigitalSalesRoomRoomScreenNavigationEntry
 
 	@Override
 	public String getCategoryKey() {
-		return DigitalSalesRoomScreenNavigationEntryConstants.CATEGORY_KEY_ROOM;
+		return DigitalSalesRoomScreenNavigationEntryConstants.
+			CATEGORY_KEY_ROOMS;
 	}
 
 	@Override
 	public String getEntryKey() {
-		return DigitalSalesRoomScreenNavigationEntryConstants.CATEGORY_KEY_ROOM;
+		return DigitalSalesRoomScreenNavigationEntryConstants.
+			CATEGORY_KEY_ROOMS;
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
 		return _language.get(
 			locale,
-			DigitalSalesRoomScreenNavigationEntryConstants.CATEGORY_KEY_ROOM);
+			DigitalSalesRoomScreenNavigationEntryConstants.CATEGORY_KEY_ROOMS);
 	}
 
 	@Override

@@ -49,7 +49,8 @@ public class EditDigitalSalesRoomTemplateSettingsDisplayContext {
 			renderResponse
 		).setParameter(
 			"screenNavigationCategoryKey",
-			DigitalSalesRoomScreenNavigationEntryConstants.CATEGORY_KEY_TEMPLATE
+			DigitalSalesRoomScreenNavigationEntryConstants.
+				CATEGORY_KEY_TEMPLATES
 		).buildString();
 	}
 

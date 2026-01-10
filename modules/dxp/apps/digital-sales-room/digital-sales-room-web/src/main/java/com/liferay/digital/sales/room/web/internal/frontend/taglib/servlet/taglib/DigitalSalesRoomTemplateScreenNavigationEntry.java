@@ -37,13 +37,13 @@ public class DigitalSalesRoomTemplateScreenNavigationEntry
 	@Override
 	public String getCategoryKey() {
 		return DigitalSalesRoomScreenNavigationEntryConstants.
-			CATEGORY_KEY_TEMPLATE;
+			CATEGORY_KEY_TEMPLATES;
 	}
 
 	@Override
 	public String getEntryKey() {
 		return DigitalSalesRoomScreenNavigationEntryConstants.
-			CATEGORY_KEY_TEMPLATE;
+			CATEGORY_KEY_TEMPLATES;
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class DigitalSalesRoomTemplateScreenNavigationEntry
 		return _language.get(
 			locale,
 			DigitalSalesRoomScreenNavigationEntryConstants.
-				CATEGORY_KEY_TEMPLATE);
+				CATEGORY_KEY_TEMPLATES);
 	}
 
 	@Override

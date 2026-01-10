@@ -14,11 +14,11 @@ public class DigitalSalesRoomScreenNavigationEntryConstants {
 
 	public static final String CATEGORY_KEY_LOOK_AND_FEEL = "look-and-feel";
 
-	public static final String CATEGORY_KEY_ROOM = "room";
+	public static final String CATEGORY_KEY_ROOMS = "rooms";
 
 	public static final String CATEGORY_KEY_SETTINGS = "settings";
 
-	public static final String CATEGORY_KEY_TEMPLATE = "template";
+	public static final String CATEGORY_KEY_TEMPLATES = "templates";
 
 	public static final String CATEGORY_KEY_USERS = "users";
 

@@ -9,11 +9,11 @@
 
 <div class="dsr-page">
 	<liferay-frontend:screen-navigation
-		containerCssClass="col-lg-8"
-		containerWrapperCssClass="dsr-container-wrapper"
+		containerCssClass="col-lg-10"
+		containerWrapperCssClass="dsr-container-wrapper dsr-settings"
 		key="<%= DigitalSalesRoomScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_DIGITAL_SALES_ROOM_TEMPLATE_SETTINGS %>"
 		menubarCssClass="menubar menubar-transparent menubar-vertical-expand-lg"
-		navCssClass="col-lg-3"
+		navCssClass="col-lg-2"
 		portletURL="<%= currentURLObj %>"
 	/>
 </div>

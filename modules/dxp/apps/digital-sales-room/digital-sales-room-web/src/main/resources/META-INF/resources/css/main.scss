@@ -2,8 +2,36 @@
 
 .dsr-container-wrapper {
 	background-color: #fff;
-	flex: 1;
-	padding: 1.5rem;
+	flex: 0 0 calc(10 / 12 * 100%);
+	max-width: calc(10 / 12 * 100%);
+	padding: 2rem;
+
+	&.dsr-settings {
+		background-color: transparent;
+		display: flex;
+		flex: auto;
+		max-width: 100%;
+		padding: 0;
+		width: 100%;
+
+		& > .row {
+			margin: 0;
+			width: 100%;
+
+			& > .col-lg-2 {
+				padding: 2rem;
+			}
+
+			& > .col-lg-10 {
+				background-color: #fff;
+				padding: 2rem;
+			}
+		}
+	}
+
+	.menubar-vertical-expand-lg {
+		max-width: 100%;
+	}
 }
 
 .dsr-drag-zone {
@@ -22,7 +50,7 @@
 
 .dsr-page {
 	display: flex;
-	height: calc(100vh - var(--control-menu-height));
+	height: calc(100vh - 1px - var(--control-menu-height));
 
 	.navigation-bar {
 		background-color: transparent;
@@ -83,11 +111,42 @@
 	.page-header {
 		background-color: $gray-100;
 		border-right: 1px solid $gray-200;
-		width: 17.5rem;
+		flex: 0 0 calc(2 / 12 * 100%);
+		max-width: calc(2 / 12 * 100%);
 	}
 
 	.page-title {
 		margin-bottom: 1.5rem;
+	}
+
+	&.dsr-main {
+		.navigation-bar {
+			.nav-item:nth-child(1) {
+				.nav-link::before {
+					content: url(../images/room.svg);
+				}
+			}
+
+			.nav-item:nth-child(2) {
+				.nav-link::before {
+					content: url(../images/template.svg);
+				}
+			}
+
+			.nav-link {
+				padding: 0.75rem 1rem 0.75rem 3.25rem;
+
+				&::before {
+					display: block;
+					height: 1rem;
+					left: 1.5rem;
+					position: absolute;
+					top: 50%;
+					transform: translateY(-50%);
+					width: 1rem;
+				}
+			}
+		}
 	}
 }
 

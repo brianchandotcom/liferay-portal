@@ -7,13 +7,10 @@
 
 <%@ include file="/init.jsp" %>
 
-<div class="dsr-page">
+<div class="dsr-main dsr-page">
 	<liferay-frontend:screen-navigation
-		containerCssClass="col-lg-8"
 		containerWrapperCssClass="dsr-container-wrapper"
 		key="<%= DigitalSalesRoomScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_DIGITAL_SALES_ROOM %>"
-		menubarCssClass="menubar menubar-transparent menubar-vertical-expand-lg"
-		navCssClass="col-lg-3"
 		portletURL="<%= currentURLObj %>"
 	/>
 </div>

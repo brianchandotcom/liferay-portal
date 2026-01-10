@@ -388,11 +388,9 @@ public class UsersAdminPortletTest {
 
 		Assert.assertEquals(newFirstName, editUser.getFirstName());
 
-		Assert.assertEquals(
-			0,
-			_userLocalService.getRoleUsers(
-				role.getRoleId()
-			).size());
+		List<User> users = _userLocalService.getRoleUsers(role.getRoleId());
+
+		Assert.assertEquals(users.toString(), 0, users.size());
 	}
 
 	@Test
@@ -505,10 +503,9 @@ public class UsersAdminPortletTest {
 				"primaryKey", String.valueOf(address.getPrimaryKey())
 			).build());
 
-		address = organization.getAddresses(
-		).get(
-			0
-		);
+		List<Address> addresses = organization.getAddresses();
+
+		address = addresses.get(0);
 
 		Assert.assertTrue(address.isPrimary());
 
@@ -540,10 +537,9 @@ public class UsersAdminPortletTest {
 				"primaryKey", String.valueOf(address.getPrimaryKey())
 			).build());
 
-		address = organization.getAddresses(
-		).get(
-			0
-		);
+		addresses = organization.getAddresses();
+
+		address = addresses.get(0);
 
 		Assert.assertEquals(newAddressCity, address.getCity());
 
@@ -563,10 +559,9 @@ public class UsersAdminPortletTest {
 
 		_assertNoCTEntry();
 
-		Assert.assertEquals(
-			0,
-			organization.getAddresses(
-			).size());
+		addresses = organization.getAddresses();
+
+		Assert.assertEquals(addresses.toString(), 0, addresses.size());
 	}
 
 	@Test
@@ -603,10 +598,9 @@ public class UsersAdminPortletTest {
 				"primaryKey", String.valueOf(address.getPrimaryKey())
 			).build());
 
-		address = user.getAddresses(
-		).get(
-			0
-		);
+		List<Address> addresses = user.getAddresses();
+
+		address = addresses.get(0);
 
 		Assert.assertTrue(address.isPrimary());
 
@@ -634,10 +628,9 @@ public class UsersAdminPortletTest {
 				"primaryKey", String.valueOf(address.getPrimaryKey())
 			).build());
 
-		address = user.getAddresses(
-		).get(
-			0
-		);
+		addresses = user.getAddresses();
+
+		address = addresses.get(0);
 
 		Assert.assertEquals(newAddressCity, address.getCity());
 
@@ -657,10 +650,9 @@ public class UsersAdminPortletTest {
 
 		_assertNoCTEntry();
 
-		Assert.assertEquals(
-			0,
-			user.getAddresses(
-			).size());
+		addresses = user.getAddresses();
+
+		Assert.assertEquals(addresses.toString(), 0, addresses.size());
 	}
 
 	@Test

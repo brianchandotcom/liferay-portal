@@ -855,17 +855,16 @@ public class UserIndexerTest {
 	protected UserLocalService userLocalService;
 
 	private Version _getElasticsearchVersion() {
-		ConnectionInformation connectionInformation =
-			_searchEngineInformation.getConnectionInformationList(
-			).get(
-				0
-			);
+		List<ConnectionInformation> connectionInformationList =
+			_searchEngineInformation.getConnectionInformationList();
 
-		NodeInformation nodeInformation =
-			connectionInformation.getNodeInformationList(
-			).get(
-				0
-			);
+		ConnectionInformation connectionInformation =
+			connectionInformationList.get(0);
+
+		List<NodeInformation> nodeInformationList =
+			connectionInformation.getNodeInformationList();
+
+		NodeInformation nodeInformation = nodeInformationList.get(0);
 
 		return Version.parseVersion(nodeInformation.getVersion());
 	}

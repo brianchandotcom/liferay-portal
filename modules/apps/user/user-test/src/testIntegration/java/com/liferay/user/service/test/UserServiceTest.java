@@ -120,9 +120,6 @@ public class UserServiceTest {
 
 	@Test
 	public void testAddUserWithInvalidName() {
-		int firstNameMaxLength = ModelHintsUtil.getMaxLength(
-			User.class.getName(), "firstName");
-
 		try {
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext();
@@ -140,6 +137,8 @@ public class UserServiceTest {
 			Assert.fail();
 		}
 		catch (Exception exception) {
+			int firstNameMaxLength = ModelHintsUtil.getMaxLength(
+				User.class.getName(), "firstName");
 			String message = exception.getMessage();
 
 			Assert.assertTrue(

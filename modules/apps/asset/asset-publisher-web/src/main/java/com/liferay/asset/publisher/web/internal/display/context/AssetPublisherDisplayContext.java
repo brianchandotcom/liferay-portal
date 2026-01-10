@@ -384,7 +384,7 @@ public class AssetPublisherDisplayContext {
 		_assetEntryQuery.setEnablePermissions(isEnablePermissions());
 
 		_configureSubtypeFieldFilter(
-			_assetEntryQuery, _themeDisplay.getSiteDefaultLocale());
+			_assetEntryQuery, LocaleUtil.getMostRelevantLocale());
 
 		_assetEntryQuery.setPaginationType(getPaginationType());
 

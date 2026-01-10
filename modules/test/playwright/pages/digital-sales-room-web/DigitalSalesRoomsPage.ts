@@ -15,11 +15,11 @@ export class DigitalSalesRoomsPage {
 	readonly newDigitalSalesRoomButton: Locator;
 	readonly noResultsFoundMessage: Locator;
 	readonly page: Page;
-	readonly roomLink: Locator;
+	readonly roomsLink: Locator;
 	readonly saveAsTemplateMenuItem: Locator;
 	readonly startFromScratchButton: Locator;
 	readonly startFromTemplateButton: Locator;
-	readonly templateLink: Locator;
+	readonly templatesLink: Locator;
 
 	constructor(page: Page) {
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
@@ -35,7 +35,7 @@ export class DigitalSalesRoomsPage {
 		);
 		this.noResultsFoundMessage = page.getByText('No Results Found');
 		this.page = page;
-		this.roomLink = page.getByRole('link', {exact: true, name: 'Room'});
+		this.roomsLink = page.getByRole('link', {exact: true, name: 'Rooms'});
 		this.saveAsTemplateMenuItem = page.getByRole('menuitem', {
 			name: 'Save as Template',
 		});
@@ -45,9 +45,9 @@ export class DigitalSalesRoomsPage {
 		this.startFromTemplateButton = page.getByRole('menuitem', {
 			name: 'Start from Template',
 		});
-		this.templateLink = page.getByRole('link', {
+		this.templatesLink = page.getByRole('link', {
 			exact: true,
-			name: 'Template',
+			name: 'Templates',
 		});
 	}
 

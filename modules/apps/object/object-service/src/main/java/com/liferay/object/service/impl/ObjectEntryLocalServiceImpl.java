@@ -207,6 +207,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.ReindexCacheThreadLocal;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -1189,61 +1190,41 @@ public class ObjectEntryLocalServiceImpl
 			indexedObjectFields.add(titleObjectField);
 		}
 
-		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
-			DynamicObjectDefinitionTableUtil.getDynamicObjectDefinitionTable(
-				false, objectDefinition, indexedObjectFields);
-		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
-			DynamicObjectDefinitionTableUtil.getDynamicObjectDefinitionTable(
-				true, objectDefinition, indexedObjectFields);
-		Predicate innerJoinPredicate = null;
+		List<ObjectField> finalIndexedObjectFields = indexedObjectFields;
 
-		List<Column<DynamicObjectDefinitionTable, ?>> selectColumns =
-			new ArrayList<>(dynamicObjectDefinitionTable.getColumns());
+		Map<Long, Map<String, Serializable>> indexedValuesMap =
+			ReindexCacheThreadLocal.getScopeReindexCache(
+				ObjectEntryLocalServiceImpl.class.getName(),
+				String.valueOf(objectDefinition.getObjectDefinitionId()),
+				() -> objectEntryPersistence.dslQueryCount(
+					DSLQueryFactoryUtil.count(
+					).from(
+						ObjectEntryTable.INSTANCE
+					),
+					false),
+				() -> objectEntryPersistence.dslQueryCount(
+					DSLQueryFactoryUtil.count(
+					).from(
+						ObjectEntryTable.INSTANCE
+					).where(
+						ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
+							objectDefinition.getObjectDefinitionId())
+					),
+					false),
+				count -> _getIndexedValuesMap(
+					null, objectDefinition, finalIndexedObjectFields));
 
-		Collection<Column<DynamicObjectDefinitionTable, ?>> extensionColumns =
-			extensionDynamicObjectDefinitionTable.getColumns();
-
-		if (extensionColumns.size() > 1) {
-			innerJoinPredicate =
-				dynamicObjectDefinitionTable.getPrimaryKeyColumn(
-				).eq(
-					extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn()
-				);
-
-			Column<?, ?> pkColumn =
-				extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn();
-
-			for (Column<DynamicObjectDefinitionTable, ?> column :
-					extensionColumns) {
-
-				if (column == pkColumn) {
-					continue;
-				}
-
-				selectColumns.add(column);
-			}
+		if (indexedValuesMap == null) {
+			indexedValuesMap = _getIndexedValuesMap(
+				objectEntry, objectDefinition, indexedObjectFields);
 		}
 
-		List<Map<String, Serializable>> results = _list(
-			selectColumns,
-			DSLQueryFactoryUtil.select(
-				selectColumns.toArray(new Expression<?>[0])
-			).from(
-				dynamicObjectDefinitionTable
-			).innerJoinON(
-				extensionDynamicObjectDefinitionTable, innerJoinPredicate
-			).where(
-				dynamicObjectDefinitionTable.getPrimaryKeyColumn(
-				).eq(
-					objectEntry.getObjectEntryId()
-				)
-			));
+		Map<String, Serializable> values = indexedValuesMap.get(
+			objectEntry.getObjectEntryId());
 
-		if (ListUtil.isEmpty(results)) {
+		if (values == null) {
 			return Collections.emptyMap();
 		}
-
-		Map<String, Serializable> values = results.get(0);
 
 		_addLocalizedObjectFieldValues(
 			objectEntry.getDefaultLanguageId(),
@@ -4136,6 +4117,89 @@ public class ObjectEntryLocalServiceImpl
 			ObjectEntryTable.INSTANCE.headObjectEntryId);
 	}
 
+	private Map<Long, Map<String, Serializable>> _getIndexedValuesMap(
+		ObjectEntry objectEntry, ObjectDefinition objectDefinition,
+		List<ObjectField> indexedObjectFields) {
+
+		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
+			DynamicObjectDefinitionTableUtil.getDynamicObjectDefinitionTable(
+				false, objectDefinition, indexedObjectFields);
+		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
+			DynamicObjectDefinitionTableUtil.getDynamicObjectDefinitionTable(
+				true, objectDefinition, indexedObjectFields);
+		Predicate innerJoinPredicate = null;
+
+		List<Column<DynamicObjectDefinitionTable, ?>> selectColumns =
+			new ArrayList<>(dynamicObjectDefinitionTable.getColumns());
+
+		Collection<Column<DynamicObjectDefinitionTable, ?>> extensionColumns =
+			extensionDynamicObjectDefinitionTable.getColumns();
+
+		if (extensionColumns.size() > 1) {
+			innerJoinPredicate =
+				dynamicObjectDefinitionTable.getPrimaryKeyColumn(
+				).eq(
+					extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn()
+				);
+
+			Column<?, ?> pkColumn =
+				extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn();
+
+			for (Column<DynamicObjectDefinitionTable, ?> column :
+					extensionColumns) {
+
+				if (column == pkColumn) {
+					continue;
+				}
+
+				selectColumns.add(column);
+			}
+		}
+
+		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
+			selectColumns.toArray(new Expression<?>[0])
+		).from(
+			dynamicObjectDefinitionTable
+		).innerJoinON(
+			extensionDynamicObjectDefinitionTable, innerJoinPredicate
+		);
+
+		if (objectEntry != null) {
+			JoinStep joinStep = (JoinStep)dslQuery;
+
+			dslQuery = joinStep.where(
+				dynamicObjectDefinitionTable.getPrimaryKeyColumn(
+				).eq(
+					objectEntry.getObjectEntryId()
+				));
+		}
+
+		List<Map<String, Serializable>> valuesList = _list(
+			selectColumns, dslQuery);
+
+		if (objectEntry == null) {
+			Map<Long, Map<String, Serializable>> indexedValuesMap =
+				new HashMap<>();
+
+			for (Map<String, Serializable> values : valuesList) {
+				indexedValuesMap.put(
+					(Long)values.get(objectDefinition.getPKObjectFieldName()),
+					values);
+			}
+
+			return indexedValuesMap;
+		}
+
+		if (valuesList.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<String, Serializable> values = valuesList.get(0);
+
+		return Collections.singletonMap(
+			(Long)values.get(objectDefinition.getPKObjectFieldName()), values);
+	}
+
 	private Predicate _getInnerJoinRootObjectDefinitionTablePredicate(
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable) {
 
@@ -5508,6 +5572,36 @@ public class ObjectEntryLocalServiceImpl
 		return staticValues;
 	}
 
+	private List<Object[]> _list(
+			DSLQuery dslQuery, ObjectFieldBag objectFieldBag,
+			Expression<?>[] selectExpressions)
+		throws PortalException {
+
+		List<Object> entriesValues = objectEntryPersistence.dslQuery(dslQuery);
+
+		List<Object[]> results = new ArrayList<>(entriesValues.size());
+
+		for (Object entryValues : entriesValues) {
+			Object[] result = new Object[selectExpressions.length];
+
+			if (selectExpressions.length == 1) {
+				result[0] = _getResult(
+					entryValues, objectFieldBag, selectExpressions[0]);
+			}
+			else {
+				for (int i = 0; i < selectExpressions.length; i++) {
+					result[i] = _getResult(
+						((Object[])entryValues)[i], objectFieldBag,
+						selectExpressions[i]);
+				}
+			}
+
+			results.add(result);
+		}
+
+		return results;
+	}
+
 	private List<Map<String, Serializable>> _list(
 		List<Column<DynamicObjectDefinitionTable, ?>> columns,
 		DSLQuery dslQuery) {
@@ -5536,36 +5630,6 @@ public class ObjectEntryLocalServiceImpl
 						_getValue(
 							((Object[])entryValues)[i], column.getSQLType()),
 						column, result);
-				}
-			}
-
-			results.add(result);
-		}
-
-		return results;
-	}
-
-	private List<Object[]> _list(
-			DSLQuery dslQuery, ObjectFieldBag objectFieldBag,
-			Expression<?>[] selectExpressions)
-		throws PortalException {
-
-		List<Object> entriesValues = objectEntryPersistence.dslQuery(dslQuery);
-
-		List<Object[]> results = new ArrayList<>(entriesValues.size());
-
-		for (Object entryValues : entriesValues) {
-			Object[] result = new Object[selectExpressions.length];
-
-			if (selectExpressions.length == 1) {
-				result[0] = _getResult(
-					entryValues, objectFieldBag, selectExpressions[0]);
-			}
-			else {
-				for (int i = 0; i < selectExpressions.length; i++) {
-					result[i] = _getResult(
-						((Object[])entryValues)[i], objectFieldBag,
-						selectExpressions[i]);
 				}
 			}
 

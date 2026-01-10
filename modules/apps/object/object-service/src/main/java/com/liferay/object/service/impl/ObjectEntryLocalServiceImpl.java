@@ -1225,6 +1225,7 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		List<Map<String, Serializable>> results = _list(
+			selectColumns,
 			DSLQueryFactoryUtil.select(
 				selectColumns.toArray(new Expression<?>[0])
 			).from(
@@ -1236,8 +1237,7 @@ public class ObjectEntryLocalServiceImpl
 				).eq(
 					objectEntry.getObjectEntryId()
 				)
-			),
-			selectColumns);
+			));
 
 		if (ListUtil.isEmpty(results)) {
 			return Collections.emptyMap();
@@ -5509,8 +5509,8 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private List<Map<String, Serializable>> _list(
-		DSLQuery dslQuery,
-		List<Column<DynamicObjectDefinitionTable, ?>> columns) {
+		List<Column<DynamicObjectDefinitionTable, ?>> columns,
+		DSLQuery dslQuery) {
 
 		List<Object> entriesValues = objectEntryPersistence.dslQuery(dslQuery);
 

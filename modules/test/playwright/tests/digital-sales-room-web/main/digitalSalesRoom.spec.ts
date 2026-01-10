@@ -260,7 +260,7 @@ test(
 		const name = `A${getRandomInt()}`;
 
 		await digitalSalesRoomsPage.goto();
-		await digitalSalesRoomsPage.templateLink.click();
+		await digitalSalesRoomsPage.templatesLink.click();
 
 		await expect(async () => {
 			await digitalSalesRoomTemplatesPage.newDigitalSalesRoomTemplateButton.click();

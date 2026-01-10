@@ -39,7 +39,7 @@ test.afterEach(async ({apiHelpers}) => {
 });
 
 test(
-	'Go to the template page',
+	'Go to the templates page',
 	{tag: '@LPD-73189'},
 	async ({digitalSalesRoomTemplatesPage, digitalSalesRoomsPage}) => {
 		await digitalSalesRoomsPage.goto();
@@ -48,16 +48,16 @@ test(
 			digitalSalesRoomsPage.digitalSalesRoomsTable.searchInput
 		).toBeVisible();
 
-		await expect(digitalSalesRoomsPage.roomLink).toBeVisible();
-		await expect(digitalSalesRoomsPage.templateLink).toBeVisible();
+		await expect(digitalSalesRoomsPage.roomsLink).toBeVisible();
+		await expect(digitalSalesRoomsPage.templatesLink).toBeVisible();
 
-		await digitalSalesRoomsPage.templateLink.click();
+		await digitalSalesRoomsPage.templatesLink.click();
 
 		await expect(
 			digitalSalesRoomTemplatesPage.newDigitalSalesRoomTemplateButton
 		).toBeVisible();
-		await expect(digitalSalesRoomTemplatesPage.roomLink).toBeVisible();
-		await expect(digitalSalesRoomTemplatesPage.templateLink).toBeVisible();
+		await expect(digitalSalesRoomTemplatesPage.roomsLink).toBeVisible();
+		await expect(digitalSalesRoomTemplatesPage.templatesLink).toBeVisible();
 	}
 );
 
@@ -72,7 +72,7 @@ test(
 		const name = `A${getRandomInt()}`;
 
 		await digitalSalesRoomsPage.goto();
-		await digitalSalesRoomsPage.templateLink.click();
+		await digitalSalesRoomsPage.templatesLink.click();
 
 		await digitalSalesRoomTemplatesPage.newDigitalSalesRoomTemplateButton.click();
 
@@ -82,7 +82,7 @@ test(
 		});
 
 		await digitalSalesRoomsPage.goto();
-		await digitalSalesRoomsPage.templateLink.click();
+		await digitalSalesRoomsPage.templatesLink.click();
 
 		await expect(
 			digitalSalesRoomTemplatesPage.digitalSalesRoomTemplatesTable.cell(
@@ -105,7 +105,7 @@ test(
 		const name = `A${getRandomInt()}`;
 
 		await digitalSalesRoomsPage.goto();
-		await digitalSalesRoomsPage.templateLink.click();
+		await digitalSalesRoomsPage.templatesLink.click();
 		await digitalSalesRoomTemplatesPage.newDigitalSalesRoomTemplateButton.click();
 
 		await editDigitalSalesRoomTemplatePage.addDigitalSalesRoomTemplate({
@@ -114,7 +114,7 @@ test(
 		});
 
 		await digitalSalesRoomsPage.goto();
-		await digitalSalesRoomsPage.templateLink.click();
+		await digitalSalesRoomsPage.templatesLink.click();
 
 		await expect(
 			digitalSalesRoomTemplatesPage.digitalSalesRoomTemplatesTable.cell(

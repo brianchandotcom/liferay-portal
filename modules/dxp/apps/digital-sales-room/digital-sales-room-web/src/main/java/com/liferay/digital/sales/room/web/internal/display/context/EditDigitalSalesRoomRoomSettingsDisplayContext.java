@@ -48,7 +48,7 @@ public class EditDigitalSalesRoomRoomSettingsDisplayContext {
 			renderResponse
 		).setParameter(
 			"screenNavigationCategoryKey",
-			DigitalSalesRoomScreenNavigationEntryConstants.CATEGORY_KEY_ROOM
+			DigitalSalesRoomScreenNavigationEntryConstants.CATEGORY_KEY_ROOMS
 		).buildString();
 	}
 

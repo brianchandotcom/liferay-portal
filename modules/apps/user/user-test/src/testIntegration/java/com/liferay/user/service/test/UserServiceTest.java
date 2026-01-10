@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
@@ -123,6 +124,9 @@ public class UserServiceTest {
 			User.class.getName(), "firstName");
 
 		try {
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext();
+
 			UserTestUtil.addUser(
 				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 				RandomTestUtil.randomString(
@@ -130,10 +134,7 @@ public class UserServiceTest {
 					UniqueStringRandomizerBumper.INSTANCE),
 				LocaleUtil.getDefault(), RandomTestUtil.randomString(76),
 				RandomTestUtil.randomString(),
-				new long[] {
-					ServiceContextTestUtil.getServiceContext(
-					).getScopeGroupId()
-				},
+				new long[] {serviceContext.getScopeGroupId()},
 				ServiceContextTestUtil.getServiceContext());
 
 			Assert.fail();
@@ -159,14 +160,14 @@ public class UserServiceTest {
 			UniqueStringRandomizerBumper.INSTANCE);
 
 		try {
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext();
+
 			UserTestUtil.addUser(
 				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 				screenName, LocaleUtil.getDefault(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				new long[] {
-					ServiceContextTestUtil.getServiceContext(
-					).getScopeGroupId()
-				},
+				new long[] {serviceContext.getScopeGroupId()},
 				ServiceContextTestUtil.getServiceContext());
 
 			Assert.fail();

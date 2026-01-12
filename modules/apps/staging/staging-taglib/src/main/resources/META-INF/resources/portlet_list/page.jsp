@@ -85,13 +85,11 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 		}
 
 		List<String> subtitles = null;
-		String tag = null;
 
 		if (exportPortletDataHandlerControls.length == 1) {
 			PortletDataHandlerControl portletDataHandlerControl = exportPortletDataHandlerControls[0];
 
 			subtitles = portletDataHandlerControl.getSubtitles();
-			tag = portletDataHandlerControl.getTag();
 		}
 
 		boolean showPortletDataInput = MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId(), portletDataHandler.isPublishToLiveByDefault()) || MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL);
@@ -106,7 +104,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 				label="<%= portletTitle %>"
 				name="<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId() %>"
 				subtitles="<%= subtitles %>"
-				tag="<%= tag %>"
+				tag="<%= portletDataHandler.getTag(locale) %>"
 			/>
 
 			<%

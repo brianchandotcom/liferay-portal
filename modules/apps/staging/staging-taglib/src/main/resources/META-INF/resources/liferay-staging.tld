@@ -108,7 +108,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The language key of the checkbox's tag.</description>
+			<description>The checkbox's tag.</description>
 			<name>tag</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

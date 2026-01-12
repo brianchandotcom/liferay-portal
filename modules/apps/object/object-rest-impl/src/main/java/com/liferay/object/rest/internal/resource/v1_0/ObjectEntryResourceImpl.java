@@ -39,6 +39,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -76,6 +77,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -569,6 +571,15 @@ public class ObjectEntryResourceImpl
 
 					return null;
 				}
+			}
+
+			@Override
+			public String getTag(Locale locale) {
+				if (!_objectDefinition.isRootNode()) {
+					return null;
+				}
+
+				return LanguageUtil.get(locale, "root-object");
 			}
 
 			@Override

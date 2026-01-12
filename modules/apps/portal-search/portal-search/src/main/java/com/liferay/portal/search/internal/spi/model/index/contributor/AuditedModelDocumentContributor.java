@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.internal.spi.model.index.contributor;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
@@ -13,6 +12,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentContributor;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import org.osgi.service.component.annotations.Component;
@@ -38,15 +38,30 @@ public class AuditedModelDocumentContributor
 		document.addKeyword(Field.COMPANY_ID, auditedModel.getCompanyId());
 		document.addDate(Field.CREATE_DATE, auditedModel.getCreateDate());
 		document.addDate(Field.MODIFIED_DATE, auditedModel.getModifiedDate());
-		document.addKeyword(Field.USER_ID, auditedModel.getUserId());
-		document.addKeyword(
-			Field.USER_NAME,
-			portal.getUserName(
-				auditedModel.getUserId(), auditedModel.getUserName()),
-			true);
-		document.addKeyword(
-			"userExternalReferenceCode",
-			_getUserExternalReferenceCode(auditedModel));
+
+		long userId = auditedModel.getUserId();
+
+		document.addKeyword(Field.USER_ID, userId);
+
+		User user = null;
+
+		if (userId != 0) {
+			user = userLocalService.fetchUser(userId);
+		}
+
+		if (user == null) {
+			document.addKeyword(
+				Field.USER_NAME, auditedModel.getUserName(), true);
+		}
+		else {
+			document.addKeyword(
+				Field.USER_NAME,
+				GetterUtil.getString(
+					user.getFullName(), auditedModel.getUserName()),
+				true);
+			document.addKeyword(
+				"userExternalReferenceCode", user.getExternalReferenceCode());
+		}
 	}
 
 	@Reference
@@ -54,23 +69,5 @@ public class AuditedModelDocumentContributor
 
 	@Reference
 	protected UserLocalService userLocalService;
-
-	private String _getUserExternalReferenceCode(AuditedModel auditedModel) {
-		String userExternalReferenceCode = StringPool.BLANK;
-
-		long userId = auditedModel.getUserId();
-
-		if (userId == 0) {
-			return userExternalReferenceCode;
-		}
-
-		User user = userLocalService.fetchUser(userId);
-
-		if (user != null) {
-			userExternalReferenceCode = user.getExternalReferenceCode();
-		}
-
-		return userExternalReferenceCode;
-	}
 
 }

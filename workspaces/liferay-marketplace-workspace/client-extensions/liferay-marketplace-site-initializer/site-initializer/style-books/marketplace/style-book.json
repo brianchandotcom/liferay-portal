@@ -1,5 +1,6 @@
 {
 	"defaultStyleBookEntry": true,
 	"frontendTokensValuesPath": "frontend-tokens-values.json",
-	"name": "Marketplace"
+	"name": "Marketplace",
+	"themeId": "Classic"
 }

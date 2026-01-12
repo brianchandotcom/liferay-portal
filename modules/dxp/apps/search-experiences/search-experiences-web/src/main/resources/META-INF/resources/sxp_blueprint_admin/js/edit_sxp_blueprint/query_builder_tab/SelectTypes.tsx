@@ -224,9 +224,9 @@ function SelectTypes({
 				searchableTypes={mainSearchableTypesSorted}
 			>
 				<ClayButton
-					className="select-types-button"
+					className="c-mb-4"
 					displayType="secondary"
-					small
+					size="sm"
 				>
 					{Liferay.Language.get('select-asset-types')}
 				</ClayButton>

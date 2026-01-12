@@ -58,10 +58,12 @@ interface ItemData {
 export default function ProjectsFDSPropsTransformer({
 	additionalProps,
 	creationMenu,
+	itemsActions = [],
 	...otherProps
 }: {
 	additionalProps: AdditionalProps;
 	creationMenu: any;
+	itemsActions?: any[];
 }) {
 	return {
 		...otherProps,
@@ -103,6 +105,16 @@ export default function ProjectsFDSPropsTransformer({
 				} as IInternalRenderer,
 			],
 		},
+		itemsActions: itemsActions.map((action) => {
+			if (action?.data?.id === 'delete') {
+				return {
+					...action,
+					className: 'text-danger',
+				};
+			}
+
+			return action;
+		}),
 		async onActionDropdownItemClick({
 			action,
 			itemData,

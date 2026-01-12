@@ -19,13 +19,9 @@ import {
 	ISelectedSubtype,
 } from '../../utils/types';
 import {SIDEBAR_TYPES} from '../../utils/types/sidebarTypes';
-
-// @ts-ignore
-
-import QuerySettings from '../query_builder_tab/QuerySettings';
 import QuerySXPElements from './QuerySXPElements';
 import ScopeSelector from './ScopeSelector';
-import CustomPanel from './shared/CustomPanel';
+import Source from './Source';
 
 function QueryBuilderTab({
 	applyIndexerClauses,
@@ -72,7 +68,9 @@ function QueryBuilderTab({
 	onBlur: (event: React.FocusEvent<any>) => void;
 	onChange: (event: React.ChangeEvent<any>) => void;
 	onDeleteSXPElement: (id: number) => void;
-	onFetchSearchableTypes: () => void;
+	onFetchSearchableTypes: () => Promise<{
+		searchableTypes: ISearchableType[];
+	}>;
 	onFrameworkConfigChange: (value: IFrameworkConfiguration) => void;
 	openSidebar: (typeof SIDEBAR_TYPES)[keyof typeof SIDEBAR_TYPES] | '';
 	scope: IScope[];
@@ -127,6 +125,29 @@ function QueryBuilderTab({
 				<div className="vertical-nav-content-wrapper">
 					<ScopeSelector scope={scope} setScope={setScope} />
 
+					<Source
+						applyIndexerClauses={applyIndexerClauses}
+						assetSubtypesMap={assetSubtypesMap}
+						clauseContributorsList={clauseContributorsList}
+						frameworkConfig={frameworkConfig}
+						onApplyIndexerClausesChange={
+							onApplyIndexerClausesChange
+						}
+						onAssetSubtypesMapChange={onAssetSubtypesMapChange}
+						onChangeClauseContributorsVisibility={_handleChangeSidebarVisibility(
+							SIDEBAR_TYPES.CLAUSE_CONTRIBUTORS
+						)}
+						onChangeIndexerClausesHelpVisibility={_handleChangeSidebarVisibility(
+							SIDEBAR_TYPES.INDEXER_CLAUSES_HELP
+						)}
+						onChangeQueryContributorsHelpVisibility={_handleChangeSidebarVisibility(
+							SIDEBAR_TYPES.QUERY_CONTRIBUTORS_HELP
+						)}
+						onFetchSearchableTypes={onFetchSearchableTypes}
+						onFrameworkConfigChange={onFrameworkConfigChange}
+						searchableTypes={searchableTypes}
+					/>
+
 					<QuerySXPElements
 						elementInstances={elementInstances}
 						entityJSON={entityJSON}
@@ -145,34 +166,6 @@ function QueryBuilderTab({
 						setFieldValue={setFieldValue}
 						touched={touched}
 					/>
-
-					<CustomPanel
-						initialCollapse
-						title={Liferay.Language.get('query-settings')}
-					>
-						<QuerySettings
-							applyIndexerClauses={applyIndexerClauses}
-							assetSubtypesMap={assetSubtypesMap}
-							clauseContributorsList={clauseContributorsList}
-							frameworkConfig={frameworkConfig}
-							onApplyIndexerClausesChange={
-								onApplyIndexerClausesChange
-							}
-							onAssetSubtypesMapChange={onAssetSubtypesMapChange}
-							onChangeClauseContributorsVisibility={_handleChangeSidebarVisibility(
-								SIDEBAR_TYPES.CLAUSE_CONTRIBUTORS
-							)}
-							onChangeIndexerClausesHelpVisibility={_handleChangeSidebarVisibility(
-								SIDEBAR_TYPES.INDEXER_CLAUSES_HELP
-							)}
-							onChangeQueryContributorsHelpVisibility={_handleChangeSidebarVisibility(
-								SIDEBAR_TYPES.QUERY_CONTRIBUTORS_HELP
-							)}
-							onFetchSearchableTypes={onFetchSearchableTypes}
-							onFrameworkConfigChange={onFrameworkConfigChange}
-							searchableTypes={searchableTypes}
-						/>
-					</CustomPanel>
 				</div>
 			</div>
 		</ClayLayout.ContainerFluid>

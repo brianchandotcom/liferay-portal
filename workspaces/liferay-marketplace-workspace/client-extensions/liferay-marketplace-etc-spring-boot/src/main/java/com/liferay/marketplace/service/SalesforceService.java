@@ -16,6 +16,8 @@ import com.liferay.marketplace.model.SalesforceOpportunity;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
+import java.util.Date;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -49,6 +51,14 @@ public class SalesforceService extends BaseService {
 	}
 
 	private String _getAuthorization() throws Exception {
+		Date expirationTime = _accessToken.getExpirationTime();
+
+		if ((_accessToken != null) &&
+			(System.currentTimeMillis() < expirationTime.getTime())) {
+
+			return _authorization;
+		}
+
 		try (InputStream inputStream = new ByteArrayInputStream(
 				_gcfServiceAccountKey.getBytes())) {
 
@@ -66,11 +76,17 @@ public class SalesforceService extends BaseService {
 				throw new Exception("Unable to retrieve Google identity token");
 			}
 
-			return "Bearer " + accessToken.getTokenValue();
+			_accessToken = accessToken;
+			_authorization = "Bearer " + accessToken.getTokenValue();
+
+			return _authorization;
 		}
 	}
 
 	private static final Log _log = LogFactory.getLog(SalesforceService.class);
+
+	private AccessToken _accessToken;
+	private String _authorization;
 
 	@Value("${liferay.marketplace.salesforce.gcf.audience}")
 	private String _gcfAudience;

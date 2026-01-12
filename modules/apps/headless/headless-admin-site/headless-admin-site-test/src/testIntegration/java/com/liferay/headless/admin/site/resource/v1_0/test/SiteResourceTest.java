@@ -203,6 +203,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		_testPostSiteSuccessSiteInitializer();
 		_testPostSiteSuccessSiteTemplate();
 		_testPostSiteWithFriendlyURLMissingSlash();
+		_testPostSiteWithInheritLocales();
 		_testPostSiteWithLocalizedDescription();
 		_testPostSiteWithLocalizedName();
 		_testPostSiteWithNondefaultLocales();
@@ -912,6 +913,31 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 
 		Assert.assertEquals(
 			StringPool.SLASH + friendlyUrlPath, site.getFriendlyUrlPath());
+	}
+
+	private void _testPostSiteWithInheritLocales() throws Exception {
+		Site randomSite = randomSite();
+
+		Site postSite = _testPostSite_addSite(randomSite);
+
+		Assert.assertTrue(postSite.getInheritLocales());
+
+		randomSite = randomSite();
+
+		randomSite.setLocales(
+			new String[] {LocaleUtil.toW3cLanguageId(LocaleUtil.US)});
+
+		postSite = _testPostSite_addSite(randomSite);
+
+		Assert.assertFalse(postSite.getInheritLocales());
+
+		randomSite = randomSite();
+
+		randomSite.setInheritLocales(true);
+
+		postSite = _testPostSite_addSite(randomSite);
+
+		Assert.assertTrue(postSite.getInheritLocales());
 	}
 
 	private void _testPostSiteWithLocalizedDescription() throws Exception {

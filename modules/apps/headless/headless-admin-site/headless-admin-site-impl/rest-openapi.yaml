@@ -480,6 +480,24 @@ components:
         ContentPageSettings:
             allOf:
                 -   $ref: "#/components/schemas/PageSettings"
+                -   properties:
+                        customMetaTags:
+                            # @review
+                            description:
+                                A list of custom meta tags this page has.
+                            items:
+                                $ref: "#/components/schemas/CustomMetaTag"
+                            type: array
+                        openGraphSettings:
+                            $ref: "#/components/schemas/OpenGraphSettings"
+                            # @review
+                            description:
+                                The page's Open Graph settings.
+                        seoSettings:
+                            $ref: "#/components/schemas/SEOSettings"
+                            # @review
+                            description:
+                                The page's SEO settings.
             # @review
             description:
                 The settings of a content page.
@@ -2888,13 +2906,6 @@ components:
                     WidgetPageSettings: "#/components/schemas/WidgetPageSettings"
                 propertyName: type
             properties:
-                customMetaTags:
-                    # @review
-                    description:
-                        A list of custom meta tags this page has.
-                    items:
-                        $ref: "#/components/schemas/CustomMetaTag"
-                    type: array
                 hiddenFromNavigation:
                     # @review
                     description:
@@ -2905,11 +2916,6 @@ components:
                     # @review
                     description:
                         The page's navigation settings.
-                openGraphSettings:
-                    $ref: "#/components/schemas/OpenGraphSettings"
-                    # @review
-                    description:
-                        The page's Open Graph settings.
                 priority:
                     # @review
                     description:
@@ -2919,11 +2925,6 @@ components:
                     maximum: 2147483647
                     minimum: 0
                     type: integer
-                seoSettings:
-                    $ref: "#/components/schemas/SEOSettings"
-                    # @review
-                    description:
-                        The page's SEO settings.
                 type:
                     enum:
                         -   ContentPageSettings
@@ -4558,6 +4559,13 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/PageSettings"
                 -   properties:
+                        customMetaTags:
+                            # @review
+                            description:
+                                A list of custom meta tags this page has.
+                            items:
+                                $ref: "#/components/schemas/CustomMetaTag"
+                            type: array
                         customizable:
                             # @review
                             description:
@@ -4581,6 +4589,16 @@ components:
                             description:
                                 The ID of the layout template.
                             type: string
+                        openGraphSettings:
+                            $ref: "#/components/schemas/OpenGraphSettings"
+                            # @review
+                            description:
+                                The page's Open Graph settings.
+                        seoSettings:
+                            $ref: "#/components/schemas/SEOSettings"
+                            # @review
+                            description:
+                                The page's SEO settings.
                         widgetPageTemplateReference:
                             $ref: "#/components/schemas/ItemExternalReference"
                     required:

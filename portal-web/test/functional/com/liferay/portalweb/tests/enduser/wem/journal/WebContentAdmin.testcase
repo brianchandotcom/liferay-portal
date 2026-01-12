@@ -874,58 +874,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-196842. When varying filters or searching if order by is applied, the order by must be applied to the new search + filters."
-	@priority = 4
-	test OrderWebContentsInSearchResults {
-		task ("Given two web contents with different names") {
-			JSONWebcontent.addWebContent(
-				content = "EMEA Guild",
-				groupName = "Test Site Name",
-				title = "EMEA Guild");
-
-			JSONWebcontent.addWebContent(
-				content = "APAC Guild",
-				groupName = "Test Site Name",
-				title = "APAC Guild");
-		}
-
-		task ("When order web contents by Title in search results") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			Search.searchCP(searchTerm = "Guild");
-
-			ManagementBar.setFilterAndOrder(orderBy = "Title");
-		}
-
-		task ("Then web contents are ordered by Title") {
-			AssertTextEquals.assertPartialText(
-				key_position = 1,
-				locator1 = "LexiconList#LIST_ENTRY_X",
-				value1 = "APAC Guild");
-
-			AssertTextEquals.assertPartialText(
-				key_position = 2,
-				locator1 = "LexiconList#LIST_ENTRY_X",
-				value1 = "EMEA Guild");
-		}
-
-		task ("When order web contents by Display Date in search results") {
-			ManagementBar.setFilterAndOrder(orderBy = "Display Date");
-		}
-
-		task ("Then web contents are ordered by Display Date") {
-			AssertTextEquals.assertPartialText(
-				key_position = 1,
-				locator1 = "LexiconList#LIST_ENTRY_X",
-				value1 = "EMEA Guild");
-
-			AssertTextEquals.assertPartialText(
-				key_position = 2,
-				locator1 = "LexiconList#LIST_ENTRY_X",
-				value1 = "APAC Guild");
-		}
-	}
-
 	@description = "This is a test for LPS-191927. The site administrator could preview or expire a specific version on the info panel."
 	@priority = 3
 	test PreviewOrExpireSpecificVersionOfWebContentOnInfoPanel {

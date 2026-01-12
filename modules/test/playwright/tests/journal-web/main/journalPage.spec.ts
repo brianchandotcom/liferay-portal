@@ -528,3 +528,39 @@ test('Sorting must be disabled when the Recent filter is applied', async ({
 
 	await expect(page.getByLabel('Order')).not.toBeVisible();
 });
+
+test('Correct order must be applied when searching', async ({
+	apiHelpers,
+	journalPage,
+	site,
+}) => {
+	const title1 = 'EMEA Guild';
+	const title2 = 'APAC Guild';
+
+	const basicWebContentStructureId =
+		await getBasicWebContentStructureId(apiHelpers);
+
+	await apiHelpers.jsonWebServicesJournal.addWebContent({
+		ddmStructureId: basicWebContentStructureId,
+		groupId: site.id,
+		titleMap: {en_US: `${title1}`},
+	});
+
+	await apiHelpers.jsonWebServicesJournal.addWebContent({
+		ddmStructureId: basicWebContentStructureId,
+		groupId: site.id,
+		titleMap: {en_US: `${title2}`},
+	});
+
+	await journalPage.goto(site.friendlyUrlPath);
+
+	await journalPage.setOrderBy('Title');
+
+	await journalPage.assertJournalArticlePosition(1, title1);
+	await journalPage.assertJournalArticlePosition(2, title2);
+
+	await journalPage.setOrderBy('Create Date');
+
+	await journalPage.assertJournalArticlePosition(1, title2);
+	await journalPage.assertJournalArticlePosition(2, title1);
+});

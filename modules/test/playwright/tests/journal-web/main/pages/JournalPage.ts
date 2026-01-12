@@ -154,6 +154,17 @@ export class JournalPage {
 		await this.assertPermissions(permissions);
 	}
 
+	async assertJournalArticlePosition(position: number, title: string) {
+		await expect(
+			this.page
+				.locator(
+					`[id="_com_liferay_journal_web_portlet_JournalPortlet_articles_${position}"]`
+				)
+				.getByRole('link')
+				.nth(0)
+		).toHaveText(title);
+	}
+
 	async assertTitle(title: string) {
 		await expect(this.page.locator(`a[title='${title}']`)).toBeVisible();
 	}
@@ -312,6 +323,11 @@ export class JournalPage {
 	async setFilterBy(filterBy: FilterBy) {
 		await this.page.getByLabel('Filter', {exact: true}).click();
 		await this.page.getByRole('menuitem', {name: filterBy}).click();
+	}
+
+	async setOrderBy(orderBy: string) {
+		await this.page.getByLabel('Order').click();
+		await this.page.getByRole('menuitem', {name: `${orderBy}`}).click();
 	}
 
 	async selectTag(tagName: string) {

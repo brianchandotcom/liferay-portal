@@ -70,9 +70,13 @@ renderResponse.setTitle((vocabulary == null) ? LanguageUtil.get(request, "add-vo
 					</span>
 				</label>
 
-				<aui:input checked="<%= (vocabulary != null) ? (vocabulary.getVisibilityType() == AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC) : true %>" disabled="<%= !(vocabulary == null) %>" id="visibilityTypePublic" label="public" name="visibilityType" type="radio" value="<%= AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC %>" />
+				<%
+				boolean disabled = !((vocabulary == null) || (vocabulary.getVisibilityType() == AssetVocabularyConstants.VISIBILITY_TYPE_EMPTY));
+				%>
 
-				<aui:input checked="<%= (vocabulary != null) ? (vocabulary.getVisibilityType() == AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL) : false %>" disabled="<%= !(vocabulary == null) %>" label="internal" name="visibilityType" type="radio" value="<%= AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL %>" />
+				<aui:input checked="<%= (vocabulary != null) ? (vocabulary.getVisibilityType() == AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC) : true %>" disabled="<%= disabled %>" id="visibilityTypePublic" label="public" name="visibilityType" type="radio" value="<%= AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC %>" />
+
+				<aui:input checked="<%= (vocabulary != null) ? (vocabulary.getVisibilityType() == AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL) : false %>" disabled="<%= disabled %>" label="internal" name="visibilityType" type="radio" value="<%= AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL %>" />
 			</div>
 		</liferay-frontend:fieldset>
 

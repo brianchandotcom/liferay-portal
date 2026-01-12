@@ -91,10 +91,19 @@ public class EditAssetVocabularyMVCActionCommand extends BaseMVCActionCommand {
 
 			vocabulary = _assetVocabularyService.getVocabulary(vocabularyId);
 
+			int visibilityType = vocabulary.getVisibilityType();
+
+			if (visibilityType ==
+					AssetVocabularyConstants.VISIBILITY_TYPE_EMPTY) {
+
+				visibilityType = ParamUtil.getInteger(
+					actionRequest, "visibilityType", visibilityType);
+			}
+
 			vocabulary = _assetVocabularyService.updateVocabulary(
 				externalReferenceCode, vocabularyId, StringPool.BLANK, titleMap,
-				descriptionMap, _getSettings(actionRequest),
-				vocabulary.getVisibilityType(), serviceContext);
+				descriptionMap, _getSettings(actionRequest), visibilityType,
+				serviceContext);
 		}
 
 		actionRequest.setAttribute(

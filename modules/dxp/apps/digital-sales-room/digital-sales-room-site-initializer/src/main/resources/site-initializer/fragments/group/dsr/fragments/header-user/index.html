@@ -1,7 +1,15 @@
-<div id="dsr-header-user">
-	<div class="d-flex justify-content-end">
-		<div class="border-left">
-			[@liferay.user_personal_bar /]
+[#if !portalUtil.isSystemGroup(themeDisplay.getScopeGroupName())]
+	<div id="dsr-header-user">
+		<div class="d-flex justify-content-end">
+			<div>
+				[@liferay_digital_sales_room_ui["comments"]
+					digitalSalesRoomId=themeDisplay.getScopeGroupId()
+				/]
+			</div>
+
+			<div class="border-left ml-3 pl-3">
+				[@liferay.user_personal_bar /]
+			</div>
 		</div>
 	</div>
-</div>
+[/#if]

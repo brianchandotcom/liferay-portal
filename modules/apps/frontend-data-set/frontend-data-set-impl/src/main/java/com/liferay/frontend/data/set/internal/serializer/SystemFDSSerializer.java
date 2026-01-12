@@ -17,6 +17,8 @@ import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilterContextContributor;
 import com.liferay.frontend.data.set.filter.FDSFilterContextContributorRegistry;
 import com.liferay.frontend.data.set.filter.FDSFilterRegistry;
+import com.liferay.frontend.data.set.filter.GroupedFDSFilters;
+import com.liferay.frontend.data.set.filter.GroupedFDSFiltersRegistry;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.model.FDSSortItem;
 import com.liferay.frontend.data.set.serializer.FDSSerializer;
@@ -29,6 +31,7 @@ import com.liferay.frontend.data.set.view.FDSViewRegistry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -39,10 +42,12 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -170,6 +175,48 @@ public class SystemFDSSerializer
 
 		return serializeFilters(
 			Collections.emptyList(), fdsName, httpServletRequest);
+	}
+
+	@Override
+	public JSONArray serializeGroupedFDSFilters(
+		String fdsName, HttpServletRequest httpServletRequest) {
+
+		JSONArray jsonArray = JSONUtil.putAll();
+
+		GroupedFDSFilters groupedFDSFilters =
+			groupedFDSFiltersRegistry.getGroupedFDSFilters(fdsName);
+
+		if (groupedFDSFilters == null) {
+			return jsonArray;
+		}
+
+		JSONArray groupedFDSFiltersJSONArray =
+			groupedFDSFilters.getGroupedFDSFiltersJSONArray(httpServletRequest);
+
+		for (int i = 0; i < groupedFDSFiltersJSONArray.length(); i++) {
+			JSONObject jsonObject = groupedFDSFiltersJSONArray.getJSONObject(i);
+
+			String key = StringPool.BLANK;
+
+			Iterator<String> iterator = jsonObject.keys();
+
+			while (iterator.hasNext()) {
+				key = iterator.next();
+
+				if (Validator.isBlank(key)) {
+					continue;
+				}
+
+				jsonArray.put(
+					JSONUtil.put(
+						"filters", jsonObject.getJSONArray(key)
+					).put(
+						"label", key
+					));
+			}
+		}
+
+		return jsonArray;
 	}
 
 	@Override
@@ -381,6 +428,9 @@ public class SystemFDSSerializer
 
 	@Reference
 	protected FDSViewRegistry fdsViewRegistry;
+
+	@Reference
+	protected GroupedFDSFiltersRegistry groupedFDSFiltersRegistry;
 
 	@Reference
 	protected SystemFDSEntryRegistry systemFDSEntryRegistry;

@@ -24,6 +24,7 @@ import React, {
 	useCallback,
 	useContext,
 	useEffect,
+	useMemo,
 	useReducer,
 	useRef,
 	useState,
@@ -35,7 +36,7 @@ import isFileDropEnabled from './utils/isFileDropEnabled';
 
 import './styles/main.scss';
 
-import {State} from '@liferay/frontend-js-state-web';
+import {Atom, Selector, State} from '@liferay/frontend-js-state-web';
 
 import DnDContext from './DnDContext';
 import FrontendDataSetContext from './FrontendDataSetContext';
@@ -99,6 +100,31 @@ import viewsReducer, {EViewsActionTypes} from './views/viewsReducer';
 
 const DEFAULT_PAGINATION_DELTA = 20;
 const DEFAULT_PAGINATION_PAGE_NUMBER = 1;
+
+const getAtom = ({
+	atom,
+	id,
+}: {
+	atom: Atom<IFDSState> | undefined;
+	id: string;
+}): Atom<IFDSState> | Selector<IFDSState> => {
+	if (atom) {
+		return atom;
+	}
+
+	const key = `${id}_fdsState`;
+
+	const fallbackAtom: Atom<IFDSState> | null =
+		State.__unsafe__.getAtomOrSelectorKey(key) as Atom<IFDSState> | null;
+
+	return (
+		fallbackAtom ||
+		State.atom<IFDSState>(key, {
+			filters: [],
+			search: {query: ''},
+		})
+	);
+};
 
 const FrontendDataSetContent = ({
 	actionParameterName,
@@ -363,13 +389,10 @@ const FrontendDataSetContent = ({
 		id,
 	});
 
-	const [globalFDSState, setGlobalFDSState] = useLiferayState<IFDSState>(
-		atom ??
-			State.atom<IFDSState>(`${id}_fdsState`, {
-				filters: [],
-				search: {query: ''},
-			})
-	);
+	const atomStable = useMemo(() => getAtom({atom, id}), [atom, id]);
+
+	const [globalFDSState, setGlobalFDSState] =
+		useLiferayState<IFDSState>(atomStable);
 
 	const [globalFDSStateInitialized, setGlobalFDSStateInitialized] =
 		useState(false);

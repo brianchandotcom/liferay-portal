@@ -149,6 +149,10 @@ public interface SegmentsExperienceLocalService
 		throws PortalException;
 
 	public void deleteSegmentsEntrySegmentsExperiences(
+			long groupId, String segmentsEntryERC, String segmentsEntryScopeERC)
+		throws PortalException;
+
+	public void deleteSegmentsEntrySegmentsExperiences(
 			String segmentsEntryERC, String segmentsEntryScopeERC)
 		throws PortalException;
 

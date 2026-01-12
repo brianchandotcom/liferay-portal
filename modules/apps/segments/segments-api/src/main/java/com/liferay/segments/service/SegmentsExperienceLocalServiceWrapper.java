@@ -179,6 +179,15 @@ public class SegmentsExperienceLocalServiceWrapper
 
 	@Override
 	public void deleteSegmentsEntrySegmentsExperiences(
+			long groupId, String segmentsEntryERC, String segmentsEntryScopeERC)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_segmentsExperienceLocalService.deleteSegmentsEntrySegmentsExperiences(
+			groupId, segmentsEntryERC, segmentsEntryScopeERC);
+	}
+
+	@Override
+	public void deleteSegmentsEntrySegmentsExperiences(
 			String segmentsEntryERC, String segmentsEntryScopeERC)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

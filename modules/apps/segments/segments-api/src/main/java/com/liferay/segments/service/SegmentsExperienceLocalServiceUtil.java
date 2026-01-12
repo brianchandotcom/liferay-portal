@@ -167,6 +167,14 @@ public class SegmentsExperienceLocalServiceUtil {
 	}
 
 	public static void deleteSegmentsEntrySegmentsExperiences(
+			long groupId, String segmentsEntryERC, String segmentsEntryScopeERC)
+		throws PortalException {
+
+		getService().deleteSegmentsEntrySegmentsExperiences(
+			groupId, segmentsEntryERC, segmentsEntryScopeERC);
+	}
+
+	public static void deleteSegmentsEntrySegmentsExperiences(
 			String segmentsEntryERC, String segmentsEntryScopeERC)
 		throws PortalException {
 

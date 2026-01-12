@@ -1,5 +1,6 @@
 {
 	"active": true,
+	"description": "This writing agent acts as an expert linguistic editor, correcting grammar and spelling errors while strictly preserving your original tone and style.",
 	"externalReferenceCode": "L_FIX_SPELLING_AND_GRAMMAR",
 	"name": "Fix Spelling and Grammar",
 	"scope": "ai",

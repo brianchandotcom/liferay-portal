@@ -1,6 +1,6 @@
 {
 	"active": true,
-	"description": "Generate content, summarize and classify data using LLM models.",
+	"description": "This agent provides targeted support by searching the Liferay DXP instance for the most relevant data, ensuring every response is grounded in your specific environment.",
 	"externalReferenceCode": "L_CHAT_MESSAGE_PIPELINE",
 	"name": "Chat Message Pipeline",
 	"scope": "ai",

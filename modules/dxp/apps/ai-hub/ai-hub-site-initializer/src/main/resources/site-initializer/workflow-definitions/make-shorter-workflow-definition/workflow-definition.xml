@@ -6,6 +6,7 @@
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>Make Shorter</name>
+	<description>This writing agent takes your text and rewrites it to be briefer and easier to read.</description>
 	<version>1</version>
 	<llm>
 		<name>makeShorter</name>

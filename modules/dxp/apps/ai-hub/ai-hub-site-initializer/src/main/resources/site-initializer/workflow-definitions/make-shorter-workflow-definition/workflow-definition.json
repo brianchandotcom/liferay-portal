@@ -1,5 +1,6 @@
 {
 	"active": true,
+	"description": "This writing agent takes your text and rewrites it to be briefer and easier to read.",
 	"externalReferenceCode": "L_MAKE_SHORTER",
 	"name": "Make Shorter",
 	"scope": "ai",

@@ -267,16 +267,22 @@ public class FragmentEditableElementUtil {
 					fragmentEditableElementValue.getType(),
 					FragmentEditableElementValue.Type.TEXT)) {
 
+				TextFragmentEditableElementValue
+					textFragmentEditableElementValue =
+						(TextFragmentEditableElementValue)
+							fragmentEditableElementValue;
+
 				jsonObject.put(
 					fragmentEditableElement.getId(),
 					() -> _getJSONObject(
-						() -> _getTextFragmentEditableElementJSONObject(
+						() -> _getFragmentLinkTextJSONObject(
 							layoutStructureItemImporterContext.getCompanyId(),
+							textFragmentEditableElementValue.
+								getFragmentLinkTextValue(),
 							layoutStructureItemImporterContext.
 								getInfoItemServiceRegistry(),
-							layoutStructureItemImporterContext.getGroupId(),
-							(TextFragmentEditableElementValue)
-								fragmentEditableElementValue)));
+							"link",
+							layoutStructureItemImporterContext.getGroupId())));
 			}
 		}
 
@@ -648,18 +654,6 @@ public class FragmentEditableElementUtil {
 		}
 
 		return jsonObject;
-	}
-
-	private static JSONObject _getTextFragmentEditableElementJSONObject(
-			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
-			long scopeGroupId,
-			TextFragmentEditableElementValue textFragmentEditableElementValue)
-		throws Exception {
-
-		return _getFragmentLinkTextJSONObject(
-			companyId,
-			textFragmentEditableElementValue.getFragmentLinkTextValue(),
-			infoItemServiceRegistry, "link", scopeGroupId);
 	}
 
 	private static FragmentEditableElementValue

@@ -237,10 +237,6 @@ function checkProductAnalyticsConsentForTypes(cookieTypes, modalOptions) {
 }
 
 function isProductAnalyticsConfigurationModified(lastModified) {
-	if (!Liferay.FeatureFlags['LPD-65277']) {
-		return false;
-	}
-
 	const productAnalyticsConfiguredDateCookie = getCookie(
 		productAnalyticsConfiguredDateCookieName
 	);

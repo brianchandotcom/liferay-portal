@@ -16,14 +16,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
@@ -314,16 +312,6 @@ public class CookiesConfigurationProviderImpl
 	private HashMapDictionary<String, Object> _createDictionary(
 		int consentRenewalPeriod, boolean enabled,
 		boolean explicitConsentMode) {
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				CompanyThreadLocal.getCompanyId(), "LPD-65277")) {
-
-			return HashMapDictionaryBuilder.<String, Object>put(
-				"enabled", enabled
-			).put(
-				"explicitConsentMode", explicitConsentMode
-			).build();
-		}
 
 		return HashMapDictionaryBuilder.<String, Object>put(
 			"consentRenewalPeriod", consentRenewalPeriod

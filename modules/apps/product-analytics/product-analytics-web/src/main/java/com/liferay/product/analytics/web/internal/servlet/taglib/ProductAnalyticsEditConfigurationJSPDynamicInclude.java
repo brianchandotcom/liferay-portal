@@ -7,7 +7,6 @@ package com.liferay.product.analytics.web.internal.servlet.taglib;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -49,12 +48,6 @@ public class ProductAnalyticsEditConfigurationJSPDynamicInclude
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				themeDisplay.getCompanyId(), "LPD-65277")) {
-
-			return;
-		}
 
 		try {
 			httpServletRequest.setAttribute(

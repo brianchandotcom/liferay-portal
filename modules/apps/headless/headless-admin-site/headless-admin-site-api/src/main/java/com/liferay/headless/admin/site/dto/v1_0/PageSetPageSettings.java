@@ -72,28 +72,6 @@ public class PageSetPageSettings extends PageSettings implements Serializable {
 
 		sb.append("{");
 
-		CustomMetaTag[] customMetaTags = getCustomMetaTags();
-
-		if (customMetaTags != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"customMetaTags\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < customMetaTags.length; i++) {
-				sb.append(String.valueOf(customMetaTags[i]));
-
-				if ((i + 1) < customMetaTags.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
 		Boolean hiddenFromNavigation = getHiddenFromNavigation();
 
 		if (hiddenFromNavigation != null) {
@@ -118,18 +96,6 @@ public class PageSetPageSettings extends PageSettings implements Serializable {
 			sb.append(String.valueOf(navigationSettings));
 		}
 
-		OpenGraphSettings openGraphSettings = getOpenGraphSettings();
-
-		if (openGraphSettings != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"openGraphSettings\": ");
-
-			sb.append(String.valueOf(openGraphSettings));
-		}
-
 		Integer priority = getPriority();
 
 		if (priority != null) {
@@ -140,18 +106,6 @@ public class PageSetPageSettings extends PageSettings implements Serializable {
 			sb.append("\"priority\": ");
 
 			sb.append(priority);
-		}
-
-		SEOSettings seoSettings = getSeoSettings();
-
-		if (seoSettings != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"seoSettings\": ");
-
-			sb.append(String.valueOf(seoSettings));
 		}
 
 		Type type = getType();

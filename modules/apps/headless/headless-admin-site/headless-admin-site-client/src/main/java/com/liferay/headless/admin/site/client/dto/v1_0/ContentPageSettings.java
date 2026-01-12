@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.site.client.dto.v1_0;
 
+import com.liferay.headless.admin.site.client.function.UnsafeSupplier;
 import com.liferay.headless.admin.site.client.serdes.v1_0.ContentPageSettingsSerDes;
 
 import jakarta.annotation.Generated;
@@ -24,6 +25,71 @@ public class ContentPageSettings
 	public static ContentPageSettings toDTO(String json) {
 		return ContentPageSettingsSerDes.toDTO(json);
 	}
+
+	public CustomMetaTag[] getCustomMetaTags() {
+		return customMetaTags;
+	}
+
+	public void setCustomMetaTags(CustomMetaTag[] customMetaTags) {
+		this.customMetaTags = customMetaTags;
+	}
+
+	public void setCustomMetaTags(
+		UnsafeSupplier<CustomMetaTag[], Exception>
+			customMetaTagsUnsafeSupplier) {
+
+		try {
+			customMetaTags = customMetaTagsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected CustomMetaTag[] customMetaTags;
+
+	public OpenGraphSettings getOpenGraphSettings() {
+		return openGraphSettings;
+	}
+
+	public void setOpenGraphSettings(OpenGraphSettings openGraphSettings) {
+		this.openGraphSettings = openGraphSettings;
+	}
+
+	public void setOpenGraphSettings(
+		UnsafeSupplier<OpenGraphSettings, Exception>
+			openGraphSettingsUnsafeSupplier) {
+
+		try {
+			openGraphSettings = openGraphSettingsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected OpenGraphSettings openGraphSettings;
+
+	public SEOSettings getSeoSettings() {
+		return seoSettings;
+	}
+
+	public void setSeoSettings(SEOSettings seoSettings) {
+		this.seoSettings = seoSettings;
+	}
+
+	public void setSeoSettings(
+		UnsafeSupplier<SEOSettings, Exception> seoSettingsUnsafeSupplier) {
+
+		try {
+			seoSettings = seoSettingsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected SEOSettings seoSettings;
 
 	@Override
 	public ContentPageSettings clone() throws CloneNotSupportedException {

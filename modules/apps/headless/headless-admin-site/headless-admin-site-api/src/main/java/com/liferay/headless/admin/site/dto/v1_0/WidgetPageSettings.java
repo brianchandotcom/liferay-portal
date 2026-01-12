@@ -51,6 +51,51 @@ public class WidgetPageSettings extends PageSettings implements Serializable {
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A list of custom meta tags this page has."
+	)
+	@Valid
+	public CustomMetaTag[] getCustomMetaTags() {
+		if (_customMetaTagsSupplier != null) {
+			customMetaTags = _customMetaTagsSupplier.get();
+
+			_customMetaTagsSupplier = null;
+		}
+
+		return customMetaTags;
+	}
+
+	public void setCustomMetaTags(CustomMetaTag[] customMetaTags) {
+		this.customMetaTags = customMetaTags;
+
+		_customMetaTagsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setCustomMetaTags(
+		UnsafeSupplier<CustomMetaTag[], Exception>
+			customMetaTagsUnsafeSupplier) {
+
+		_customMetaTagsSupplier = () -> {
+			try {
+				return customMetaTagsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "A list of custom meta tags this page has.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected CustomMetaTag[] customMetaTags;
+
+	@JsonIgnore
+	private Supplier<CustomMetaTag[]> _customMetaTagsSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A flag that indicates whether the widget page is customizable."
 	)
 	public Boolean getCustomizable() {
@@ -227,6 +272,95 @@ public class WidgetPageSettings extends PageSettings implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _layoutTemplateIdSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page's Open Graph settings."
+	)
+	@Valid
+	public OpenGraphSettings getOpenGraphSettings() {
+		if (_openGraphSettingsSupplier != null) {
+			openGraphSettings = _openGraphSettingsSupplier.get();
+
+			_openGraphSettingsSupplier = null;
+		}
+
+		return openGraphSettings;
+	}
+
+	public void setOpenGraphSettings(OpenGraphSettings openGraphSettings) {
+		this.openGraphSettings = openGraphSettings;
+
+		_openGraphSettingsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setOpenGraphSettings(
+		UnsafeSupplier<OpenGraphSettings, Exception>
+			openGraphSettingsUnsafeSupplier) {
+
+		_openGraphSettingsSupplier = () -> {
+			try {
+				return openGraphSettingsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The page's Open Graph settings.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected OpenGraphSettings openGraphSettings;
+
+	@JsonIgnore
+	private Supplier<OpenGraphSettings> _openGraphSettingsSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page's SEO settings."
+	)
+	@Valid
+	public SEOSettings getSeoSettings() {
+		if (_seoSettingsSupplier != null) {
+			seoSettings = _seoSettingsSupplier.get();
+
+			_seoSettingsSupplier = null;
+		}
+
+		return seoSettings;
+	}
+
+	public void setSeoSettings(SEOSettings seoSettings) {
+		this.seoSettings = seoSettings;
+
+		_seoSettingsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setSeoSettings(
+		UnsafeSupplier<SEOSettings, Exception> seoSettingsUnsafeSupplier) {
+
+		_seoSettingsSupplier = () -> {
+			try {
+				return seoSettingsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The page's SEO settings.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected SEOSettings seoSettings;
+
+	@JsonIgnore
+	private Supplier<SEOSettings> _seoSettingsSupplier;
+
 	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public ItemExternalReference getWidgetPageTemplateReference() {
@@ -301,6 +435,28 @@ public class WidgetPageSettings extends PageSettings implements Serializable {
 
 		sb.append("{");
 
+		CustomMetaTag[] customMetaTags = getCustomMetaTags();
+
+		if (customMetaTags != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"customMetaTags\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < customMetaTags.length; i++) {
+				sb.append(String.valueOf(customMetaTags[i]));
+
+				if ((i + 1) < customMetaTags.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		Boolean customizable = getCustomizable();
 
 		if (customizable != null) {
@@ -367,6 +523,30 @@ public class WidgetPageSettings extends PageSettings implements Serializable {
 			sb.append("\"");
 		}
 
+		OpenGraphSettings openGraphSettings = getOpenGraphSettings();
+
+		if (openGraphSettings != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"openGraphSettings\": ");
+
+			sb.append(String.valueOf(openGraphSettings));
+		}
+
+		SEOSettings seoSettings = getSeoSettings();
+
+		if (seoSettings != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"seoSettings\": ");
+
+			sb.append(String.valueOf(seoSettings));
+		}
+
 		ItemExternalReference widgetPageTemplateReference =
 			getWidgetPageTemplateReference();
 
@@ -378,28 +558,6 @@ public class WidgetPageSettings extends PageSettings implements Serializable {
 			sb.append("\"widgetPageTemplateReference\": ");
 
 			sb.append(String.valueOf(widgetPageTemplateReference));
-		}
-
-		CustomMetaTag[] customMetaTags = getCustomMetaTags();
-
-		if (customMetaTags != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"customMetaTags\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < customMetaTags.length; i++) {
-				sb.append(String.valueOf(customMetaTags[i]));
-
-				if ((i + 1) < customMetaTags.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
 		}
 
 		Boolean hiddenFromNavigation = getHiddenFromNavigation();
@@ -426,18 +584,6 @@ public class WidgetPageSettings extends PageSettings implements Serializable {
 			sb.append(String.valueOf(navigationSettings));
 		}
 
-		OpenGraphSettings openGraphSettings = getOpenGraphSettings();
-
-		if (openGraphSettings != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"openGraphSettings\": ");
-
-			sb.append(String.valueOf(openGraphSettings));
-		}
-
 		Integer priority = getPriority();
 
 		if (priority != null) {
@@ -448,18 +594,6 @@ public class WidgetPageSettings extends PageSettings implements Serializable {
 			sb.append("\"priority\": ");
 
 			sb.append(priority);
-		}
-
-		SEOSettings seoSettings = getSeoSettings();
-
-		if (seoSettings != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"seoSettings\": ");
-
-			sb.append(String.valueOf(seoSettings));
 		}
 
 		Type type = getType();

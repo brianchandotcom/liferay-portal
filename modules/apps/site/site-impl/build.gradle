@@ -13,6 +13,7 @@ dependencies {
 	compileOnly project(":apps:depot:depot-api")
 	compileOnly project(":apps:export-import:export-import-api")
 	compileOnly project(":apps:layout:layout-api")
+	compileOnly project(":apps:layout:layout-page-template-api")
 	compileOnly project(":apps:layout:layout-seo-api")
 	compileOnly project(":apps:portal-background-task:portal-background-task-api")
 	compileOnly project(":apps:portal-configuration:portal-configuration-module-configuration-api")

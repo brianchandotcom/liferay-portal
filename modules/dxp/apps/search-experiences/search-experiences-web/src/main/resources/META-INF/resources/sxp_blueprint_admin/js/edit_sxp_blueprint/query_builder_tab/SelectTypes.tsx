@@ -13,7 +13,11 @@ import React, {useContext, useState} from 'react';
 // @ts-ignore
 
 import ThemeContext from '../../shared/ThemeContext';
-import {ISelectedItem, ISelectedSubtype} from '../../utils/types';
+import {
+	ISearchableType,
+	ISelectedItem,
+	ISelectedSubtype,
+} from '../../utils/types';
 
 // @ts-ignore
 
@@ -125,18 +129,10 @@ function SelectTypes({
 	initialSelectedTypes?: string[];
 	onAssetSubtypesMapChange: (subtypes: ISelectedSubtype[]) => void;
 	onFetchSearchableTypes: () => Promise<{
-		searchableTypes: {
-			className: string;
-			displayName: string;
-			hasSubtype?: boolean;
-		}[];
+		searchableTypes: ISearchableType[];
 	}>;
 	onFrameworkConfigChange: (config: {searchableAssetTypes: string[]}) => void;
-	searchableTypes?: {
-		className: string;
-		displayName: string;
-		hasSubtype?: boolean;
-	}[];
+	searchableTypes?: ISearchableType[];
 }) {
 	const {locale}: {locale: string} = useContext(ThemeContext);
 

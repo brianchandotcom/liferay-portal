@@ -64,7 +64,7 @@ export interface IScope {
 export interface ISearchableType {
 	className: string;
 	displayName: string;
-	hasSubtype: boolean;
+	hasSubtype?: boolean;
 }
 
 export interface ISorting {

@@ -22,7 +22,7 @@ interface AssigneeValue {
 interface Assignee {
 	label: string;
 	name: string;
-	onChange: (event: {target: {value: any}}) => void;
+	onChange?: (event: {target: {value: any}}) => void;
 	readOnly?: boolean;
 	searchURL: string;
 	value?: AssigneeValue;
@@ -34,13 +34,16 @@ export default function Assignee({
 	onChange,
 	readOnly,
 	searchURL,
-	value,
+	value: initialValue,
 	...otherProps
 }: Assignee) {
 	const {portletNamespace} = useConfig();
 
 	const [networkStatus, setNetworkStatus] = useState(4);
-	const [search, setSearch] = useState(value?.name ?? '');
+	const [search, setSearch] = useState(initialValue?.name ?? '');
+	const [value, setValue] = useState<AssigneeValue | null>(
+		initialValue ?? null
+	);
 
 	const {
 		resource,
@@ -63,7 +66,7 @@ export default function Assignee({
 		link: searchURL,
 		onNetworkStatusChange: setNetworkStatus,
 		variables: {
-			[`${portletNamespace}search`]: search,
+			[`${portletNamespace ?? ''}search`]: search,
 		},
 	});
 
@@ -87,7 +90,7 @@ export default function Assignee({
 					notFound: Liferay.Language.get('no-results-found'),
 				}}
 				onChange={(item: string) => {
-					if (!item) {
+					if (!item && onChange) {
 						onChange({
 							target: {
 								value: null,
@@ -104,14 +107,22 @@ export default function Assignee({
 					<Autocomplete.Item
 						key={name}
 						onClick={() => {
-							onChange({
-								target: {
-									value: {
-										externalReferenceCode,
-										name,
-										type,
+							if (onChange) {
+								onChange({
+									target: {
+										value: {
+											externalReferenceCode,
+											name,
+											type,
+										},
 									},
-								},
+								});
+							}
+
+							setValue({
+								externalReferenceCode,
+								name,
+								type,
 							});
 						}}
 						textValue={name}

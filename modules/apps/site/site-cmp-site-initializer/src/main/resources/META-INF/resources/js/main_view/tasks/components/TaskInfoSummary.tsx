@@ -8,29 +8,24 @@ import React from 'react';
 
 import InfoSummary from '../../../common/components/InfoSummary';
 import StateSelector, {State} from '../../../common/components/StateSelector';
-import {patchProjectById} from '../../../utils/api';
+import {patchTaskById} from '../../../utils/api';
 import {DISPLAY_TYPES} from '../../../utils/constants';
-import User, {UserProps} from './User';
 
-interface ProjectInfoSummaryProps {
+interface TaskInfoSummaryProps {
 	dueDate: string;
 	initialState: string;
-	manager: UserProps;
-	projectId: string;
-	sponsor: UserProps;
 	states: State[];
 	tags: string[];
+	taskId: string;
 }
 
-export default function ProjectInfoSummary({
+export default function TaskInfoSummary({
 	dueDate,
 	initialState,
-	manager,
-	projectId,
-	sponsor,
 	states,
 	tags,
-}: ProjectInfoSummaryProps) {
+	taskId,
+}: TaskInfoSummaryProps) {
 	return (
 		<InfoSummary
 			defaultOpen={true}
@@ -41,17 +36,15 @@ export default function ProjectInfoSummary({
 						<StateSelector
 							initialSelectedKey={initialState}
 							onChange={async (key: string) => {
-								await patchProjectById({
+								await patchTaskById({
 									body: {state: key},
-									projectId,
+									taskId,
 								});
 							}}
 							states={states}
 						/>
 					),
 				},
-				{label: 'Manager', value: <User {...manager} />},
-				{label: 'Sponsor', value: <User {...sponsor} />},
 				{label: 'Due Date', value: dueDate},
 				{
 					label: 'Tags',

@@ -275,10 +275,13 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 				className='segment-membership-root'
 				reportContainer={ReportContainer.SegmentMembershipTrendCard}
 			>
-				<Card.Header>
+				<Card.Header className='align-items-center d-flex justify-content-between'>
 					<Card.Title>
 						{Liferay.Language.get('segment-membership-trend')}
 					</Card.Title>
+					<span className='text-secondary text-uppercase'>
+						<strong>{Liferay.Language.get('last-30-days')}</strong>
+					</span>
 				</Card.Header>
 
 				<Card.Body className='segment-growth-root'>
@@ -303,8 +306,12 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 									}
 									height={360}
 									individualCounts={{
-										anonymousCount: 0,
-										knownCount: 0
+										anonymousCount:
+											data[data.length - 1]
+												.anonymousIndividualsCount,
+										knownCount:
+											data[data.length - 1]
+												.knownIndividualsCount
 									}}
 									selectedPoint={
 										selectedPointState.selectedPoint

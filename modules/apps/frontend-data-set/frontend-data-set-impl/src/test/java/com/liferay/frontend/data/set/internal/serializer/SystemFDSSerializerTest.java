@@ -17,6 +17,7 @@ import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.DateFDSFilterItem;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilterContextContributor;
+import com.liferay.frontend.data.set.filter.GroupedFDSFilters;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
 import com.liferay.frontend.data.set.internal.action.FDSBulkActionsRegistryImpl;
 import com.liferay.frontend.data.set.internal.filter.ClientExtensionFDSFilterContextContributor;
@@ -52,6 +53,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -791,6 +793,117 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		serviceTrackerMap1.close();
 		serviceTrackerMap2.close();
+	}
+
+	@Test
+	public void testSerializeGroupedFDSFilters() throws Exception {
+
+		// Different grouped FDS filters
+
+		mockLanguage();
+
+		GroupedFDSFilters groupedFDSFilters = new GroupedFDSFilters() {
+
+			@Override
+			public JSONArray getGroupedFDSFiltersJSONArray(
+				HttpServletRequest httpServletRequest) {
+
+				return JSONUtil.putAll(
+					JSONUtil.put(TITLES[0], JSONUtil.putAll(IDS[0], IDS[1])),
+					JSONUtil.put(TITLES[1], JSONUtil.putAll(IDS[2], IDS[3])));
+			}
+
+		};
+
+		String serializedGroupedFDSFilters = JSONUtil.putAll(
+			JSONUtil.put(
+				"filters", JSONUtil.putAll(IDS[0], IDS[1])
+			).put(
+				"label", TITLES[0]
+			),
+			JSONUtil.put(
+				"filters", JSONUtil.putAll(IDS[2], IDS[3])
+			).put(
+				"label", TITLES[1]
+			)
+		).toString();
+
+		_registerServices(
+			_registerGroupedFDSFilters(FDS_NAMES[0], groupedFDSFilters),
+			_registerGroupedFDSFilters(
+				FDS_NAMES[1],
+				new GroupedFDSFilters() {
+
+					@Override
+					public JSONArray getGroupedFDSFiltersJSONArray(
+						HttpServletRequest httpServletRequest) {
+
+						return JSONUtil.putAll(
+							JSONUtil.put(
+								TITLES[2], JSONUtil.putAll(IDS[4], IDS[5])));
+					}
+
+				}),
+			_registerSystemFDSEntry(FDS_NAMES[0]),
+			_registerSystemFDSEntry(FDS_NAMES[1]));
+
+		JSONAssert.assertEquals(
+			serializedGroupedFDSFilters,
+			systemFDSSerializer.serializeGroupedFDSFilters(
+				FDS_NAMES[0], httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"filters", JSONUtil.putAll(IDS[4], IDS[5])
+				).put(
+					"label", TITLES[2]
+				)
+			).toString(),
+			systemFDSSerializer.serializeGroupedFDSFilters(
+				FDS_NAMES[1], httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		_unregisterServices();
+
+		// No grouped FDS filters
+
+		_registerServices(_registerSystemFDSEntry(FDS_NAMES[0]));
+
+		JSONAssert.assertEquals(
+			"[]",
+			systemFDSSerializer.serializeGroupedFDSFilters(
+				FDS_NAMES[0], httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		_unregisterServices();
+
+		// Shared grouped FDS filters
+
+		_registerServices(
+			_registerGroupedFDSFilters(FDS_NAMES[0], groupedFDSFilters),
+			_registerGroupedFDSFilters(FDS_NAMES[1], groupedFDSFilters),
+			_registerSystemFDSEntry(FDS_NAMES[0]),
+			_registerSystemFDSEntry(FDS_NAMES[1]));
+
+		JSONAssert.assertEquals(
+			serializedGroupedFDSFilters,
+			systemFDSSerializer.serializeGroupedFDSFilters(
+				FDS_NAMES[0], httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+		JSONAssert.assertEquals(
+			serializedGroupedFDSFilters,
+			systemFDSSerializer.serializeGroupedFDSFilters(
+				FDS_NAMES[1], httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		_unregisterServices();
 	}
 
 	@Test
@@ -1745,6 +1858,14 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		return bundleContext.registerService(
 			FDSView.class, fdsView,
+			MapUtil.singletonDictionary("frontend.data.set.name", fdsName));
+	}
+
+	private ServiceRegistration<GroupedFDSFilters> _registerGroupedFDSFilters(
+		String fdsName, GroupedFDSFilters groupedFDSFilters) {
+
+		return bundleContext.registerService(
+			GroupedFDSFilters.class, groupedFDSFilters,
 			MapUtil.singletonDictionary("frontend.data.set.name", fdsName));
 	}
 

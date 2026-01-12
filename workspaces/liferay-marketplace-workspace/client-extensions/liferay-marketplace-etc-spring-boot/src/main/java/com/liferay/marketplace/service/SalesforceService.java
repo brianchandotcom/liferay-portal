@@ -1,0 +1,84 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.marketplace.service;
+
+import com.google.auth.oauth2.AccessToken;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.auth.oauth2.IdTokenCredentials;
+import com.google.auth.oauth2.IdTokenProvider;
+
+import com.liferay.client.extension.util.spring.boot3.service.BaseService;
+import com.liferay.marketplace.model.SalesforceOpportunity;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import org.springframework.web.util.UriComponentsBuilder;
+
+/**
+ * @author Keven Leone
+ */
+@Component
+public class SalesforceService extends BaseService {
+
+	public void postOpportunity(SalesforceOpportunity salesforceOpportunity)
+		throws Exception {
+
+		post(
+			_getAuthorization(), salesforceOpportunity.toString(),
+			UriComponentsBuilder.fromUriString(
+				_gcfBaseUrl
+			).path(
+				"/marketplace-api/opportunity"
+			).build(
+			).toUri());
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Created salesforce opportunity " +
+					salesforceOpportunity.toString());
+		}
+	}
+
+	private String _getAuthorization() throws Exception {
+		try (InputStream inputStream = new ByteArrayInputStream(
+				_gcfServiceAccountKey.getBytes())) {
+
+			IdTokenCredentials idTokenCredential =
+				IdTokenCredentials.newBuilder(
+				).setIdTokenProvider(
+					(IdTokenProvider)GoogleCredentials.fromStream(inputStream)
+				).setTargetAudience(
+					_gcfAudience
+				).build();
+
+			AccessToken accessToken = idTokenCredential.refreshAccessToken();
+
+			if (accessToken == null) {
+				throw new Exception("Unable to retrieve Google identity token");
+			}
+
+			return "Bearer " + accessToken.getTokenValue();
+		}
+	}
+
+	private static final Log _log = LogFactory.getLog(SalesforceService.class);
+
+	@Value("${liferay.marketplace.salesforce.gcf.audience}")
+	private String _gcfAudience;
+
+	@Value("${liferay.marketplace.salesforce.gcf.base.url}")
+	private String _gcfBaseUrl;
+
+	@Value("${liferay.marketplace.salesforce.gcf.service.account.key}")
+	private String _gcfServiceAccountKey;
+
+}

@@ -32,7 +32,7 @@ public class IndividualSegmentRealTimeMembership {
 		return _embeddedResources;
 	}
 
-	public long getFirstActivityTime() {
+	public long getFirstSeenTime() {
 		return _firstSeenTime;
 	}
 
@@ -76,8 +76,8 @@ public class IndividualSegmentRealTimeMembership {
 		_embeddedResources = embeddedResources;
 	}
 
-	public void setFirstActivityTime(long firstActivityTime) {
-		_firstSeenTime = firstActivityTime;
+	public void setFirstSeenTime(long firstSeenTime) {
+		_firstSeenTime = firstSeenTime;
 	}
 
 	public void setIdentityId(String identityId) {

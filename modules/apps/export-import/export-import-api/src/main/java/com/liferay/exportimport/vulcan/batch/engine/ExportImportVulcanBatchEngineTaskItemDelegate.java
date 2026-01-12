@@ -11,6 +11,7 @@ import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -22,6 +23,10 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 	public ExportImportDescriptor getExportImportDescriptor();
 
 	public interface ExportImportDescriptor {
+
+		public default String getDescription(Locale locale) {
+			return null;
+		}
 
 		public String getLabelLanguageKey();
 
@@ -48,6 +53,10 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 		public Scope getScope();
 
 		public default List<String> getSubtitleLanguageKeys() {
+			return null;
+		}
+
+		public default String getTag(Locale locale) {
 			return null;
 		}
 

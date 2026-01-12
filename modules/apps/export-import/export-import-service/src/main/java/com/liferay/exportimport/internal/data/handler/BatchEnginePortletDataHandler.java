@@ -59,6 +59,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.zip.ZipEntry;
@@ -133,6 +134,20 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Override
+	public String getDescription(Locale locale) {
+		if (_registrations.size() != 1) {
+			return null;
+		}
+
+		Registration registration = _registrations.get(0);
+
+		ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
+			exportImportDescriptor = registration.getExportImportDescriptor();
+
+		return exportImportDescriptor.getDescription(locale);
+	}
+
+	@Override
 	public String getName() {
 		return getPortletId();
 	}
@@ -140,6 +155,20 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	@Override
 	public String getSchemaVersion() {
 		return SCHEMA_VERSION;
+	}
+
+	@Override
+	public String getTag(Locale locale) {
+		if (_registrations.size() != 1) {
+			return null;
+		}
+
+		Registration registration = _registrations.get(0);
+
+		ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
+			exportImportDescriptor = registration.getExportImportDescriptor();
+
+		return exportImportDescriptor.getTag(locale);
 	}
 
 	@Override

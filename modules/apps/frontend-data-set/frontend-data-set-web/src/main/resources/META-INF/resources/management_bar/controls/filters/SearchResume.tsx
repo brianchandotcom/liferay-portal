@@ -10,7 +10,7 @@ import React, {useContext} from 'react';
 import FrontendDataSetContext from '../../../FrontendDataSetContext';
 
 function SearchResume() {
-	const {onSearch, searchParam} = useContext(FrontendDataSetContext);
+	const {onClearSearch, searchParam} = useContext(FrontendDataSetContext);
 
 	return (
 		<ClayButton.Group className="c-ml-2 search-resume">
@@ -26,9 +26,7 @@ function SearchResume() {
 				aria-label={Liferay.Language.get('clear-search')}
 				displayType="secondary"
 				monospaced
-				onClick={() => {
-					onSearch({query: ''});
-				}}
+				onClick={onClearSearch}
 				size="sm"
 				title={Liferay.Language.get('clear-search')}
 			>

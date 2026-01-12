@@ -19,7 +19,12 @@ import {
 } from '../../../../utils/dates';
 import {EEntityFieldType} from '../utils/types';
 
-import type {FilterImplementation, FilterImplementationArgs} from '../Filter';
+import type {
+	FilterImplementation,
+	FilterImplementationArgs,
+	IOdataStringArgs,
+	ISelectedItemsLabelArgs,
+} from '../Filter';
 
 export interface DateRangeFilterImplementationArgs
 	extends FilterImplementationArgs<SelectedData> {
@@ -75,7 +80,7 @@ const getIsoString = ({
 
 function getSelectedItemsLabel({
 	selectedData,
-}: DateRangeFilterImplementationArgs): string {
+}: ISelectedItemsLabelArgs): string {
 	return formatDateRangeObject(selectedData);
 }
 
@@ -83,8 +88,8 @@ function getOdataString({
 	entityFieldType,
 	id,
 	selectedData,
-}: DateRangeFilterImplementationArgs): string {
-	const {from, to} = selectedData;
+}: IOdataStringArgs): string {
+	const {from, to} = selectedData as unknown as SelectedData;
 
 	const fromIsoString =
 		from &&

@@ -13,16 +13,16 @@ export enum EViewsActionTypes {
 	ADD_OR_UPDATE_SNAPSHOT = 'ADD_OR_UPDATE_SNAPSHOT',
 	BATCH_UPDATE = 'BATCH_UPDATE',
 	DELETE_SNAPSHOT = 'DELETE_SNAPSHOT',
+	NOOP = 'NOOP',
 	RENAME_ACTIVE_SNAPSHOT = 'RENAME_ACTIVE_SNAPSHOT',
 	RESET_TO_DEFAULT_SNAPSHOT = 'RESET_TO_DEFAULT_SNAPSHOT',
 	UPDATE_ACTIVE_SNAPSHOT = 'UPDATE_ACTIVE_SNAPSHOT',
 	UPDATE_ACTIVE_VIEW = 'UPDATE_ACTIVE_VIEW',
 	UPDATE_FIELD = 'UPDATE_FIELD',
-	UPDATE_FILTERS = 'UPDATE_FILTERS',
-	UPDATE_FILTERS_CX = 'UPDATE_FILTERS_CX',
 	UPDATE_PAGE_NUMBER = 'UPDATE_PAGE_NUMBER',
 	UPDATE_PAGINATION_DELTA = 'UPDATE_PAGINATION_DELTA',
 	UPDATE_SEARCH_PARAM = 'UPDATE_SEARCH_PARAM',
+	UPDATE_SNAPSHOT_UPDATED = 'UPDATE_SNAPSHOT_UPDATED',
 	UPDATE_SORTING = 'UPDATE_SORTING',
 	UPDATE_VIEW_COMPONENT = 'UPDATE_VIEW_COMPONENT',
 	UPDATE_VISIBLE_FIELD_NAMES = 'UPDATE_VISIBLE_FIELD_NAMES',
@@ -94,6 +94,7 @@ const viewsActions: TViewsActions = {
 			snapshots: remainingSnapshots,
 		};
 	},
+	[EViewsActionTypes.NOOP]: (state) => state,
 	[EViewsActionTypes.RENAME_ACTIVE_SNAPSHOT]: (state, value) => {
 		const {activeSnapshotERC, snapshots} = state;
 
@@ -156,22 +157,6 @@ const viewsActions: TViewsActions = {
 			snapshotUpdated: true,
 		};
 	},
-	[EViewsActionTypes.UPDATE_FILTERS]: (state, value) => {
-		return {
-			...state,
-			filters: value,
-			snapshotUpdated: true,
-		};
-	},
-	[EViewsActionTypes.UPDATE_FILTERS_CX]: (state, value) => {
-		const {defaultSnapshot} = state;
-
-		return {
-			...state,
-			defaultSnapshot: {...defaultSnapshot, filters: deepClone(value)},
-			filters: value,
-		};
-	},
 	[EViewsActionTypes.UPDATE_FIELD]: (state, value) => {
 		const {defaultSnapshot, modifiedFields} = state;
 
@@ -213,6 +198,12 @@ const viewsActions: TViewsActions = {
 			searchParam: value,
 		};
 	},
+	[EViewsActionTypes.UPDATE_SNAPSHOT_UPDATED]: (state, value: boolean) => {
+		return {
+			...state,
+			snapshotUpdated: value,
+		};
+	},
 	[EViewsActionTypes.UPDATE_SORTING]: (state, value) => {
 		return {
 			...state,
@@ -220,7 +211,6 @@ const viewsActions: TViewsActions = {
 			sorts: value,
 		};
 	},
-
 	[EViewsActionTypes.UPDATE_VIEW_COMPONENT]: (state, value) => {
 		const {activeView, views} = state;
 

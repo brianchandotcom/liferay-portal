@@ -5,13 +5,10 @@
 
 import {createContext} from 'react';
 
-import {IFilter} from '../management_bar/controls/filters/Filter';
-
 export interface IViewsContext {
 	activeSnapshotERC: null | string;
 	activeView: any;
 	defaultSnapshot?: any;
-	filters: IFilter[];
 	filtersGroups: Array<any>;
 	modifiedFields: any;
 	paginationDelta: any;
@@ -41,7 +38,6 @@ const ViewsContext = createContext<[IViewsContext, any]>([
 	{
 		activeSnapshotERC: null,
 		activeView: null,
-		filters: [],
 		filtersGroups: [],
 		modifiedFields: {},
 		paginationDelta: null,

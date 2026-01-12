@@ -5,7 +5,9 @@
 
 import {deepClone} from 'frontend-js-web';
 
-export function deactivateFilter(filter: any) {
+import {IBaseFilterState} from '../types';
+
+export function deactivateFilter(filter: IBaseFilterState) {
 	const updatedFilter = deepClone(filter);
 
 	updatedFilter.active = false;

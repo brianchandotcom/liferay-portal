@@ -31,15 +31,18 @@ export {default as FDS_EVENT} from './utils/eventsDefinitions';
 export {
 	DisplayType,
 	EConfigInURLBehavior,
+	IBaseFilterState,
 	ICardSchema,
 	IClientExtensionRenderer,
 	ICreationActionItem,
+	IFDSState,
 	IFileDropSettings,
 	IFrontendDataSetProps,
 	IInfoPanelComponent,
 	IInternalRenderer,
 	IItemsActions,
 	IItemActionsData,
+	ISelectionFilterState,
 	IView,
 	TOnFileDrop,
 } from './utils/types';

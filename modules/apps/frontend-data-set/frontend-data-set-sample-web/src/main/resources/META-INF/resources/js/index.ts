@@ -12,6 +12,8 @@ import EmptyPropsTransformer from './EmptyPropsTransformer';
 import GreenCheckColorTableCell from './GreenCheckColorTableCell';
 import ReactFrontendDataSet from './ReactFrontendDataSet';
 import SingleSelectionPropsTransformer from './SingleSelectionPropsTransformer';
+import Filters from './fragments/Filters';
+import Search from './fragments/Search';
 
 export {
 	AdvancedPropsTransformer,
@@ -20,7 +22,9 @@ export {
 	CustomAuthorTableCell,
 	CustomInternalViewPropsTransformer,
 	EmptyPropsTransformer,
+	Filters,
 	GreenCheckColorTableCell,
 	ReactFrontendDataSet,
 	SingleSelectionPropsTransformer,
+	Search,
 };

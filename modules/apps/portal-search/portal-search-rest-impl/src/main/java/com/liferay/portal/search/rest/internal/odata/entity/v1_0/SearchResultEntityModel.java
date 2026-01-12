@@ -38,6 +38,8 @@ public class SearchResultEntityModel implements EntityModel {
 					"objectFolderExternalReferenceCode",
 					locale -> "objectFolderExternalReferenceCode")),
 			new DateTimeEntityField(
+				"cmpDueDate", locale -> "cmpDueDate", locale -> "cmpDueDate"),
+			new DateTimeEntityField(
 				"dateCreated",
 				locale -> Field.getSortableFieldName(Field.CREATE_DATE),
 				locale -> Field.CREATE_DATE),
@@ -61,12 +63,19 @@ public class SearchResultEntityModel implements EntityModel {
 				"dateReview",
 				locale -> Field.getSortableFieldName("reviewDate"),
 				locale -> "reviewDate"),
+			new IntegerEntityField(
+				"cmpProjectManagerUserId", locale -> "cmpProjectManagerUserId"),
+			new IntegerEntityField(
+				"cmpProjectSponsorUserId", locale -> "cmpProjectSponsorUserId"),
+			new IntegerEntityField(
+				"cmpTaskCMPProjectId", locale -> "cmpTaskCMPProjectId"),
 			new IntegerEntityField("creatorId", locale -> Field.USER_ID),
 			new IntegerEntityField("folderId", locale -> Field.FOLDER_ID),
 			new IntegerEntityField(
 				"objectDefinitionId", locale -> "objectDefinitionId"),
 			new IntegerEntityField("scopeGroupId", locale -> "scopeGroupId"),
 			new IntegerEntityField("status", locale -> Field.STATUS),
+			new StringEntityField("cmpState", locale -> "cmpState"),
 			new StringEntityField("cmsKind", locale -> "cms_kind"),
 			new StringEntityField("cmsSection", locale -> "cms_section"),
 			new StringEntityField("extension", locale -> "extension"),

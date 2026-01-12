@@ -10,6 +10,7 @@ import React, {useContext, useMemo, useState} from 'react';
 
 import FrontendDataSetContext from '../../../FrontendDataSetContext';
 import {IClientExtensionFilterState} from '../../../utils/types';
+
 import ViewsContext, {
 	IViewsContext,
 	TViewsContextDispatch,
@@ -19,8 +20,10 @@ import Filter, {IFilter} from './Filter';
 const FiltersDropdown = () => {
 	const {globalFDSState} = useContext(FrontendDataSetContext);
 
-	const [{filtersGroups}]: [IViewsContext, TViewsContextDispatch] =
-		useContext(ViewsContext);
+	const [{groupedFDSFilters}]: [
+		IViewsContext,
+		TViewsContextDispatch,
+	] = useContext(ViewsContext);
 
 	const [active, setActive] = useState(false);
 	const [activeFilter, setActiveFilter] = useState<IFilter | null>(null);
@@ -40,20 +43,28 @@ const FiltersDropdown = () => {
 		[globalFDSState.filters]
 	);
 
-	const groupedFilters = useMemo(() => {
-		return filtersGroups?.map((group) => ({
-			children: group.filters
-				.map((filterId: string) =>
-					validFilters.find((filter) => filter.id === filterId)
-				)
-				.filter(Boolean),
-			label: group.label,
-		}));
-	}, [filtersGroups, validFilters]);
+	const renderableGroupedFDSFilters = useMemo(() => {
+		return groupedFDSFilters
+			?.map((group) => {
+				const children = group.filters
+					.map((filterId: string) =>
+						validFilters.find((filter) => filter.id === filterId)
+					)
+					.filter(Boolean);
+
+				if (children.length && !!children.length) {
+					return {
+						children,
+						label: group.label,
+					};
+				}
+			})
+			.filter(Boolean);
+	}, [groupedFDSFilters, validFilters]);
 
 	const filtersList =
-		Liferay.FeatureFlags['LPD-68829'] && filtersGroups
-			? groupedFilters
+		Liferay.FeatureFlags['LPD-68829'] && groupedFDSFilters
+			? renderableGroupedFDSFilters
 			: validFilters;
 
 	return (
@@ -116,7 +127,8 @@ const FiltersDropdown = () => {
 
 					{filtersList?.length ? (
 						<ClayDropDown.ItemList items={filtersList}>
-							{Liferay.FeatureFlags['LPD-68829'] && filtersGroups
+							{Liferay.FeatureFlags['LPD-68829'] &&
+							groupedFDSFilters
 								? (group: any) => (
 										<ClayDropDown.Group
 											header={group.label}

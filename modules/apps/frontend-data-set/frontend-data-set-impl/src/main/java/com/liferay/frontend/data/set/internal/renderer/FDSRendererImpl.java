@@ -13,6 +13,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;
@@ -194,6 +196,23 @@ public class FDSRendererImpl implements FDSRenderer {
 						}
 
 						return filtersJSONArray;
+					}
+				).put(
+					"groupedFDSFilters",
+					() -> {
+						JSONArray groupedFDSFiltersJSONArray =
+							fdsSerializer.serializeGroupedFDSFilters(
+								fdsName, httpServletRequest);
+
+						if (JSONUtil.isEmpty(groupedFDSFiltersJSONArray) ||
+							!FeatureFlagManagerUtil.isEnabled(
+								PortalUtil.getCompanyId(httpServletRequest),
+								"LPD-68829")) {
+
+							return null;
+						}
+
+						return groupedFDSFiltersJSONArray;
 					}
 				).put(
 					"hideManagementBarInEmptyState",

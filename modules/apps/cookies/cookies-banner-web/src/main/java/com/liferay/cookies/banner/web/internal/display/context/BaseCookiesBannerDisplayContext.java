@@ -12,7 +12,6 @@ import com.liferay.cookies.configuration.consent.CookiesConsentConfiguration;
 import com.liferay.layout.utility.page.kernel.provider.LayoutUtilityPageEntryLayoutProvider;
 import com.liferay.portal.kernel.cookies.ConsentCookieType;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -89,15 +88,6 @@ public class BaseCookiesBannerDisplayContext {
 				false, CookiesConstants.NAME_CONSENT_TYPE_NECESSARY, true));
 
 		return _requiredConsentCookieTypes;
-	}
-
-	public boolean isConsentRenewalPeriodEnabled() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		return FeatureFlagManagerUtil.isEnabled(
-			themeDisplay.getCompanyId(), "LPD-65277");
 	}
 
 	public boolean isIncludeDeclineAllButton() {

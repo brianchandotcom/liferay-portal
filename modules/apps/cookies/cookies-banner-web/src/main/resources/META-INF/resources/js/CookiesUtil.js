@@ -62,29 +62,20 @@ export function removeAllCookies(
 }
 
 export function setCookie(consentRenewalPeriod, name, value) {
-	if (!Liferay.FeatureFlags['LPD-65277']) {
-		setCookieUtil(name, value, COOKIE_TYPES.NECESSARY, {
-			path: themeDisplay.getPathContext() || '/',
-		});
-	}
-	else {
-		setCookieUtil(name, value, COOKIE_TYPES.NECESSARY, {
-			'max-age': 60 * 60 * 24 * 365 * (consentRenewalPeriod / 12),
-			'path': themeDisplay.getPathContext() || '/',
-		});
-	}
+	setCookieUtil(name, value, COOKIE_TYPES.NECESSARY, {
+		'max-age': 60 * 60 * 24 * 365 * (consentRenewalPeriod / 12),
+		'path': themeDisplay.getPathContext() || '/',
+	});
 }
 
 export function setUserConfigCookie(consentRenewalPeriod) {
 	setCookie(consentRenewalPeriod, userConfigCookieName, 'true');
 
-	if (Liferay.FeatureFlags['LPD-65277']) {
-		setCookie(
-			consentRenewalPeriod,
-			userConfigDateCookieName,
-			new Date().getTime()
-		);
-	}
+	setCookie(
+		consentRenewalPeriod,
+		userConfigDateCookieName,
+		new Date().getTime()
+	);
 
 	getOpener()?.Liferay.fire('cookieBannerSetCookie');
 }

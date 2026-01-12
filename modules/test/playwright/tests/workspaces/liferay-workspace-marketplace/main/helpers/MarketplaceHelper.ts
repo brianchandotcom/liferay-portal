@@ -198,7 +198,7 @@ export class MarketplaceHelper {
 							unitPrice: orderItems.UNIT_PRICE,
 						},
 					],
-					orderTypeExternalReferenceCode: ORDER_TYPES.DXPAPP,
+					orderTypeExternalReferenceCode: ORDER_TYPES.DXP_APP,
 				});
 
 			await this.apiHelpers.headlessCommerceAdminOrder.patchOrder(

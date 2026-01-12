@@ -126,7 +126,6 @@ function useConfigInURL<K extends keyof IConfigInURL>({
 			configWriter,
 			id,
 			key,
-
 			type,
 		}),
 	];

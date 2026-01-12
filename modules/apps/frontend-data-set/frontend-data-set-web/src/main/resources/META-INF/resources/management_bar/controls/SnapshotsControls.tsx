@@ -74,17 +74,18 @@ const SnapshotsControlsTrigger = React.forwardRef(
 
 const SnapshotsControls = () => {
 	const {
-		handleSnapshotChange,
+		globalFDSState,
 		id: fdsName,
 		namespace,
+		onSnapshotChange,
 		portletId,
 	} = useContext(FrontendDataSetContext);
+
 	const [
 		{
 			activeSnapshotERC,
 			activeView,
 			defaultSnapshot,
-			filters,
 			paginationDelta,
 			snapshotUpdated,
 			snapshots,
@@ -147,29 +148,25 @@ const SnapshotsControls = () => {
 
 		if (!snapshotERC) {
 			method = 'POST';
-			url = `/o/data-set-admin/snapshots`;
+			url = '/o/data-set-admin/snapshots';
 		}
 		else {
 			method = 'PATCH';
 			url = `/o/data-set-admin/snapshots/by-external-reference-code/${snapshotERC}`;
 		}
 
-		const externalReferenceCode = snapshotERC ?? getRandomId();
-
-		const viewState = {
-			activeView,
-			filters,
-			paginationDelta,
-			sorts,
-			visibleFieldNames,
-		};
-
 		const body = {
-			externalReferenceCode,
+			externalReferenceCode: snapshotERC ?? getRandomId(),
 			fdsName,
 			label: label || activeSnapshot.label,
 			portletId,
-			viewConfig: JSON.stringify(viewState),
+			viewConfig: JSON.stringify({
+				activeView,
+				filters: globalFDSState.filters,
+				paginationDelta,
+				sorts,
+				visibleFieldNames,
+			}),
 		};
 
 		fetch(url, {
@@ -392,10 +389,6 @@ const SnapshotsControls = () => {
 		});
 	};
 
-	const handleSelectionChange = (value: React.Key) => {
-		handleSnapshotChange({defaultSnapshot, snapshots, value});
-	};
-
 	return (
 		<>
 			<ManagementToolbar.Item>
@@ -412,7 +405,9 @@ const SnapshotsControls = () => {
 						scrollToTopAriaLabel:
 							Liferay.Language.get('scroll-to-top'),
 					}}
-					onSelectionChange={handleSelectionChange}
+					onSelectionChange={(value) => {
+						onSnapshotChange({defaultSnapshot, snapshots, value});
+					}}
 					selectedKey={activeSnapshot.erc}
 					snapshotUpdated={snapshotUpdated}
 					triggerLabel={

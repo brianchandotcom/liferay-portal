@@ -14,7 +14,6 @@ import React, {useContext, useEffect, useState} from 'react';
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 import {OPEN_SIDE_PANEL} from '../../utils/eventsDefinitions';
 import {getOpenedSidePanel} from '../../utils/sidePanels';
-import ViewsContext from '../../views/ViewsContext';
 import InfoPanelToggleButton from './InfoPanelToggleButton';
 
 function getQueryString(key, values = []) {
@@ -46,14 +45,13 @@ function BulkActions({
 		actionParameterName,
 		allItemsSelectedActive,
 		apiURL,
+		globalFDSState,
 		onBulkActionItemClick,
 		searchParam,
 		showBulkActionsManagementBar,
 		showBulkActionsManagementBarActions,
 		showInfoPanel,
 	} = useContext(FrontendDataSetContext);
-
-	const [{filters}] = useContext(ViewsContext);
 
 	const [currentSidePanelActionPayload, setCurrentSidePanelActionPayload] =
 		useState(null);
@@ -115,7 +113,7 @@ function BulkActions({
 					keyValues: allItemsSelectedActive ? [] : selectedItemsValue,
 					selectAll: allItemsSelectedActive,
 					...(allItemsSelectedActive &&
-						getAdditionalData(filters, searchParam)),
+						getAdditionalData(globalFDSState.filters, searchParam)),
 				},
 			});
 		}
@@ -134,7 +132,10 @@ function BulkActions({
 								: selectedItemsValue.join(','),
 						selectAll: allItemsSelectedActive,
 						...(allItemsSelectedActive &&
-							getAdditionalData(filters, searchParam)),
+							getAdditionalData(
+								globalFDSState.filters,
+								searchParam
+							)),
 					},
 					url: href || form.action,
 				});

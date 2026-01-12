@@ -11,8 +11,8 @@ import React, {useContext} from 'react';
 import FrontendDataSetContext from '../FrontendDataSetContext';
 import BulkActions from './controls/BulkActions';
 import NavBar from './controls/NavBar';
+import ResultsBar from './controls/ResultsBar';
 import SelectionCheckbox from './controls/SelectionCheckbox';
-import ActiveFiltersBar from './controls/filters/ActiveFiltersBar';
 
 function ManagementBar({
 	bulkActions,
@@ -105,7 +105,7 @@ function ManagementBar({
 				)}
 			</div>
 
-			<ActiveFiltersBar
+			<ResultsBar
 				dataLoading={dataLoading}
 				disabled={!!selectedItemsValue.length}
 				total={total}

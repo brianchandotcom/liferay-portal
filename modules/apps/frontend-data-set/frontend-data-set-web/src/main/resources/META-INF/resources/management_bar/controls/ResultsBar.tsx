@@ -5,33 +5,28 @@
 
 import ClayButton from '@clayui/button';
 import {sub} from 'frontend-js-web';
-import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
-import FrontendDataSetContext from '../../../FrontendDataSetContext';
-import {deactivateFilter} from '../../../utils/filters/deactivateFilter';
-import ViewsContext from '../../../views/ViewsContext';
-import FilterResume from './FilterResume';
-import SearchResume from './SearchResume';
+import FrontendDataSetContext from '../../FrontendDataSetContext';
+import FilterResume from './filters/FilterResume';
+import SearchResume from './filters/SearchResume';
 
-function ActiveFiltersBar({dataLoading, disabled, total}) {
-	const {onSearch, searchParam, searching, setSearching, updateFilters} =
+function ResultsBar({
+	dataLoading,
+	disabled,
+	total,
+}: {
+	dataLoading: boolean;
+	disabled: boolean;
+	total: number;
+}) {
+	const {globalFDSState, onClearResultsBar, searchParam, searching} =
 		useContext(FrontendDataSetContext);
-	const [{filters}, viewsDispatch] = useContext(ViewsContext);
-
 	const searchActive = Boolean(searchParam?.trim());
 
-	const resetFiltersValue = () => {
-		setSearching(true);
-
-		viewsDispatch(
-			updateFilters(filters.map((filter) => deactivateFilter(filter)))
-		);
-
-		onSearch({query: ''});
-	};
-
-	const activeFilters = filters.filter((filter) => filter.active);
+	const activeFilters = globalFDSState.filters.filter(
+		(filter) => filter.active
+	);
 
 	return activeFilters.length || searchActive ? (
 		<div
@@ -70,8 +65,8 @@ function ActiveFiltersBar({dataLoading, disabled, total}) {
 									return (
 										<FilterResume
 											disabled={disabled}
+											filter={filter}
 											key={filter.id}
-											{...filter}
 										/>
 									);
 								})}
@@ -84,7 +79,7 @@ function ActiveFiltersBar({dataLoading, disabled, total}) {
 									className="component-link tbar-link"
 									disabled={disabled}
 									displayType="unstyled"
-									onClick={resetFiltersValue}
+									onClick={onClearResultsBar}
 								>
 									{Liferay.Language.get('clear')}
 								</ClayButton>
@@ -97,10 +92,4 @@ function ActiveFiltersBar({dataLoading, disabled, total}) {
 	) : null;
 }
 
-ActiveFiltersBar.propTypes = {
-	dataLoading: PropTypes.bool,
-	disabled: PropTypes.bool,
-	total: PropTypes.number,
-};
-
-export default ActiveFiltersBar;
+export default ResultsBar;

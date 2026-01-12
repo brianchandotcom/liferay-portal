@@ -15,6 +15,8 @@ import type {
 import type {
 	FilterImplementation,
 	FilterImplementationArgs,
+	IOdataStringArgs,
+	ISelectedItemsLabelArgs,
 	SetFilterArgs,
 } from '../Filter';
 
@@ -34,7 +36,7 @@ function getSelectedItemsLabel({
 	clientExtensionFilterImplementation,
 	clientExtensionFilterURL,
 	selectedData,
-}: ClientExtensionFilterImplementationArgs) {
+}: ISelectedItemsLabelArgs) {
 	if (!clientExtensionFilterImplementation) {
 		return LOADING_LABEL;
 	}
@@ -74,7 +76,7 @@ function getOdataString({
 	clientExtensionFilterImplementation,
 	clientExtensionFilterURL,
 	selectedData,
-}: ClientExtensionFilterImplementationArgs) {
+}: IOdataStringArgs) {
 	if (!clientExtensionFilterImplementation) {
 		return '';
 	}

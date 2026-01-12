@@ -7,19 +7,27 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
 import FrontendDataSetContext from '../../../FrontendDataSetContext';
 import {deactivateFilter} from '../../../utils/filters/deactivateFilter';
-import ViewsContext from '../../../views/ViewsContext';
-import Filter from './Filter';
+import {IBaseFilterState} from '../../../utils/types';
+import Filter, {FILTER_IMPLEMENTATIONS} from './Filter';
 
-function FilterResume(props) {
-	const {setSearching, updateFilters} = useContext(FrontendDataSetContext);
-	const [{filters}, viewsDispatch] = useContext(ViewsContext);
+function FilterResume({
+	disabled,
+	filter,
+}: {
+	disabled: boolean;
+	filter: IBaseFilterState;
+}) {
+	const {id, label, type} = filter;
+
+	const {globalFDSState, onFilterChange} = useContext(FrontendDataSetContext);
 
 	const [open, setOpen] = useState(false);
+
+	const filterImplementation = FILTER_IMPLEMENTATIONS[type];
 
 	const button = (
 		<ClayButton
@@ -30,7 +38,7 @@ function FilterResume(props) {
 				'tbar-label',
 				open && 'active'
 			)}
-			disabled={props.disabled}
+			disabled={disabled}
 			displayType="secondary"
 			size="sm"
 		>
@@ -39,7 +47,11 @@ function FilterResume(props) {
 			</span>
 
 			<span className="label-section">
-				{props.label}: <strong>{props.selectedItemsLabel}</strong>
+				<span>{`${label}: `}</span>
+
+				<strong>
+					{filterImplementation.getSelectedItemsLabel(filter)}
+				</strong>
 			</span>
 		</ClayButton>
 	);
@@ -52,30 +64,27 @@ function FilterResume(props) {
 				onActiveChange={setOpen}
 				trigger={button}
 			>
-				<li className="dropdown-subheader">{props.label}</li>
+				<li className="dropdown-subheader">{label}</li>
 
-				<Filter {...props} onClose={() => setOpen(false)} />
+				<Filter {...filter} onClose={() => setOpen(false)} />
 			</ClayDropDown>
 
 			<ClayButton
 				aria-label={Liferay.Language.get('remove-filter')}
 				className="filter-resume-close"
-				disabled={props.disabled}
+				disabled={disabled}
 				displayType="secondary"
 				monospaced
 				onClick={() => {
-					setSearching(true);
-
-					viewsDispatch(
-						updateFilters(
-							filters.map((filter) => ({
-								...filter,
-								...(filter.id === props.id
-									? deactivateFilter(filter)
-									: {}),
-							}))
-						)
+					const filter = globalFDSState.filters.find(
+						(filter) => filter.id === id
 					);
+
+					if (!filter) {
+						return;
+					}
+
+					onFilterChange({changedFilter: deactivateFilter(filter)});
 				}}
 				size="sm"
 				title={Liferay.Language.get('remove-filter')}
@@ -85,17 +94,7 @@ function FilterResume(props) {
 		</ClayButton.Group>
 	);
 
-	return props.disabled ? button : dropDownButtonGroup;
+	return disabled ? button : dropDownButtonGroup;
 }
-
-FilterResume.propTypes = {
-	disabled: PropTypes.bool,
-	id: PropTypes.string,
-	label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-	selectedItemsLabel: PropTypes.oneOfType([
-		PropTypes.string,
-		PropTypes.number,
-	]),
-};
 
 export default FilterResume;

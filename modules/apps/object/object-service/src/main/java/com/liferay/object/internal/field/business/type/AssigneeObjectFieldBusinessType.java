@@ -14,6 +14,8 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.Assignee;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.log.Log;
@@ -136,6 +138,15 @@ public class AssigneeObjectFieldBusinessType
 					MapUtil.getString(valueMap, "name"), objectField,
 					MapUtil.getString(valueMap, "type"));
 			}
+			else if (value instanceof String) {
+				JSONObject jsonObject = _jsonFactory.createJSONObject(
+					(String)value);
+
+				return _getValue(
+					jsonObject.getString("externalReferenceCode"),
+					jsonObject.getString("name"), objectField,
+					jsonObject.getString("type"));
+			}
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -208,6 +219,9 @@ public class AssigneeObjectFieldBusinessType
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssigneeObjectFieldBusinessType.class);
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Portal _portal;

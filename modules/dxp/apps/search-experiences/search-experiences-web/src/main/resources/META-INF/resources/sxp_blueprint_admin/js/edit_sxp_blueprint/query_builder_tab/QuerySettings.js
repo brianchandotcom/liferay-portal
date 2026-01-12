@@ -87,16 +87,11 @@ function QuerySettings({
 
 	return (
 		<div className="query-settings">
-			{!Liferay.FeatureFlags['LPD-37320'] && (
-				<ClayLayout.Row
-					className="configuration-header"
-					justify="between"
-				>
-					<ClayLayout.Col size={12}>
-						{Liferay.Language.get('query-settings')}
-					</ClayLayout.Col>
-				</ClayLayout.Row>
-			)}
+			<ClayLayout.Row className="configuration-header" justify="between">
+				<ClayLayout.Col size={12}>
+					{Liferay.Language.get('query-settings')}
+				</ClayLayout.Col>
+			</ClayLayout.Row>
 
 			<div className="sheet">
 				<ClayPanel.Group flush small>

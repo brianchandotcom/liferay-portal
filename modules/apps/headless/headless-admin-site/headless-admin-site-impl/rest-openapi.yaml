@@ -1572,6 +1572,22 @@ components:
                 A unique reference to a FragmentLinkValue of type FragmentMappedValue which remains constant across
                 environments.
             type: object
+        FragmentLinkTextValue:
+            # @review
+            description:
+                The link text value for an editable fragment field.
+            properties:
+                fragmentEditableElementValueFragmentLink:
+                    $ref: "#/components/schemas/FragmentEditableElementValueFragmentLink"
+                    # @review
+                    description:
+                        The fragment link of a fragment editable element value.
+                textFragmentValue:
+                    $ref: "#/components/schemas/TextFragmentValue"
+                    # @review
+                    description:
+                        The fragment editable element's text value.
+            type: object
         FragmentLinkValue:
             # @review
             description:
@@ -3808,16 +3824,11 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/FragmentEditableElementValue"
                 -   properties:
-                        fragmentEditableElementValueFragmentLink:
-                            $ref: "#/components/schemas/FragmentEditableElementValueFragmentLink"
+                        fragmentLinkTextValue:
+                            $ref: "#/components/schemas/FragmentLinkTextValue"
                             # @review
                             description:
-                                The fragment link of a text fragment editable element value.
-                        textFragmentValue:
-                            $ref: "#/components/schemas/TextFragmentValue"
-                            # @review
-                            description:
-                                The fragment editable element's text.
+                                The link text value for the text fragment editable element value.
             # @review
             description:
                 A fragment editable element of type text.

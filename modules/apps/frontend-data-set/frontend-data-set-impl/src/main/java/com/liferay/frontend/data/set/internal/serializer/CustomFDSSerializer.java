@@ -320,6 +320,16 @@ public class CustomFDSSerializer
 	}
 
 	@Override
+	public JSONArray serializeGroupedFDSFilters(
+		String fdsName, HttpServletRequest httpServletRequest) {
+
+		// TODO LPD-70111
+
+		return _systemFDSSerializer.serializeGroupedFDSFilters(
+			fdsName, httpServletRequest);
+	}
+
+	@Override
 	public boolean serializeHideManagementBarInEmptyState(
 		String fdsName, HttpServletRequest httpServletRequest) {
 

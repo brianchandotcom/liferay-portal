@@ -31,6 +31,7 @@ import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductV
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.SkuResource;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.BillingAddress;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
+import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.BillingAddressResource;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderItemResource;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderResource;
@@ -229,6 +230,20 @@ public class MarketplaceService extends BaseService {
 		).build();
 	}
 
+	public Long getOrderProductId(Order order) throws Exception {
+		OrderItem[] orderItems = order.getOrderItems();
+
+		OrderItem orderItem = orderItems[0];
+
+		if (orderItem == null) {
+			return null;
+		}
+
+		Sku sku = getSku(orderItem.getSkuId());
+
+		return sku.getProductId();
+	}
+
 	public OrderResource getOrderResource() throws Exception {
 		return OrderResource.builder(
 		).header(
@@ -238,7 +253,7 @@ public class MarketplaceService extends BaseService {
 		).endpoint(
 			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
 		).parameters(
-			"nestedFields", "account,billingAddress,orderItems"
+			"nestedFields", "account,billingAddress,orderItems,shippingAddress"
 		).build();
 	}
 
@@ -538,14 +553,21 @@ public class MarketplaceService extends BaseService {
 				map));
 		notificationQueueEntry.setType(notificationTemplate::getType);
 
-		notificationQueueEntryResource.postNotificationQueueEntry(
-			notificationQueueEntry);
+		try {
+			notificationQueueEntryResource.postNotificationQueueEntry(
+				notificationQueueEntry);
 
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				StringBundler.concat(
-					"Sent ", externalReferenceCode, " notification to ",
-					emailAddress));
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						"Sent ", externalReferenceCode, " notification to ",
+						emailAddress));
+			}
+		}
+		catch (Exception exception) {
+			_log.error(
+				"Unable to post notification queue " + externalReferenceCode,
+				exception);
 		}
 	}
 

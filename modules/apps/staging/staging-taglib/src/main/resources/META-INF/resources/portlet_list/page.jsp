@@ -84,14 +84,6 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 			}
 		}
 
-		List<String> subtitles = null;
-
-		if (exportPortletDataHandlerControls.length == 1) {
-			PortletDataHandlerControl portletDataHandlerControl = exportPortletDataHandlerControls[0];
-
-			subtitles = portletDataHandlerControl.getSubtitles();
-		}
-
 		boolean showPortletDataInput = MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId(), portletDataHandler.isPublishToLiveByDefault()) || MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL);
 	%>
 
@@ -99,11 +91,11 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 			<liferay-staging:checkbox
 				checked="<%= showPortletDataInput %>"
 				deletions="<%= modelDeletionCount %>"
+				description="<%= portletDataHandler.getDescription(locale) %>"
 				disabled="<%= disableInputs %>"
 				items="<%= exportModelCount %>"
 				label="<%= portletTitle %>"
 				name="<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId() %>"
-				subtitles="<%= subtitles %>"
 				tag="<%= portletDataHandler.getTag(locale) %>"
 			/>
 

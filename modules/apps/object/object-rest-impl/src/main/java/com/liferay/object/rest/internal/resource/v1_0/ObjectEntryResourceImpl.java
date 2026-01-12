@@ -468,6 +468,53 @@ public class ObjectEntryResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
+			public String getDescription(Locale locale) {
+				if (!_objectDefinition.isRootNode()) {
+					return null;
+				}
+
+				try {
+					List<String> childLabels = new ArrayList<>();
+
+					ObjectDefinitionTreeFactory objectDefinitionTreeFactory =
+						new ObjectDefinitionTreeFactory(
+							_objectDefinitionLocalService,
+							_objectRelationshipLocalService);
+
+					Tree tree = objectDefinitionTreeFactory.create(
+						_objectDefinition.getObjectDefinitionId());
+
+					Iterator<Node> iterator = tree.iterator();
+
+					while (iterator.hasNext()) {
+						Node node = iterator.next();
+
+						if (node.isRoot()) {
+							continue;
+						}
+
+						childLabels.add(
+							LanguageUtil.get(
+								locale,
+								_getLabelLanguageKey(
+									_objectDefinitionLocalService.
+										getObjectDefinition(
+											node.getPrimaryKey()))));
+					}
+
+					return StringUtil.merge(
+						childLabels, StringPool.COMMA_AND_SPACE);
+				}
+				catch (Exception exception) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(exception);
+					}
+
+					return null;
+				}
+			}
+
+			@Override
 			public String getLabelLanguageKey() {
 				return _getLabelLanguageKey(_objectDefinition);
 			}

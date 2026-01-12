@@ -129,12 +129,6 @@ export default function propsTransformer({
 		return props;
 	};
 
-	const filtersGroups = [
-		{filters: ['date', 'color'], label: 'Group 1'},
-		{filters: ['clientExtension', 'invalid', 'size'], label: 'Group 2'},
-		{filters: ['status', 'title'], label: 'Group 3'},
-	];
-
 	return {
 		...otherProps,
 		atom: advancedFDSAtom,
@@ -142,7 +136,6 @@ export default function propsTransformer({
 			tableCell: [customAuthorTableCellRenderer],
 		},
 		fileDropSettings,
-		filtersGroups,
 		infoPanelComponent: SampleInfoPanel,
 		itemsActions: applyStyles(itemsActions),
 		onActionDropdownItemClick({

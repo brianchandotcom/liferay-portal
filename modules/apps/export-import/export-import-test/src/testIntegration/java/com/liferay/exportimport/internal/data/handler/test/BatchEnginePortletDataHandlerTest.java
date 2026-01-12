@@ -368,6 +368,8 @@ public class BatchEnginePortletDataHandlerTest {
 	public void testExportImportCompanyObjectEntriesWithRichTextAndURLs()
 		throws Exception {
 
+		// File entry from a depot entry
+
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
@@ -376,8 +378,6 @@ public class BatchEnginePortletDataHandlerTest {
 
 		ObjectDefinition objectDefinition = _addObjectDefinition(
 			ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		// File entry from a depot entry
 
 		DepotEntry depotEntry = _addDepotEntry();
 
@@ -503,12 +503,12 @@ public class BatchEnginePortletDataHandlerTest {
 	public void testExportImportDepotObjectEntriesWithRichTextAndURLs()
 		throws Exception {
 
+		// File entry from a different depot entry
+
 		ObjectDefinition objectDefinition = _addObjectDefinition(
 			ObjectDefinitionConstants.SCOPE_DEPOT);
 
 		DepotEntry sourceDepotEntry = _addDepotEntry();
-
-		// File entry from a different depot entry
 
 		DepotEntry differentDepotEntry = _addDepotEntry();
 
@@ -1026,14 +1026,14 @@ public class BatchEnginePortletDataHandlerTest {
 	public void testExportImportSiteObjectEntriesWithRichTextAndURLs()
 		throws Exception {
 
+		// File entry from a depot entry
+
 		DepotEntry depotEntry = _addDepotEntry();
 
 		ObjectDefinition objectDefinition = _addObjectDefinition(
 			ObjectDefinitionConstants.SCOPE_SITE);
 
 		Group sourceGroup = GroupTestUtil.addGroup();
-
-		// File entry from a depot entry
 
 		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
 			null, null, false, false,

@@ -12,12 +12,10 @@ import com.liferay.cookies.banner.web.internal.display.context.CookiesPreference
 import com.liferay.cookies.configuration.CookiesConfigurationProvider;
 import com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -52,23 +50,14 @@ public class CookiesPreferenceHandlingConfigurationFormRenderer
 	public Map<String, Object> getRequestParameters(
 		HttpServletRequest httpServletRequest) {
 
-		HashMapBuilder.HashMapWrapper<String, Object> hashMapWrapper =
-			HashMapBuilder.<String, Object>put(
-				"enabled", ParamUtil.getBoolean(httpServletRequest, "enabled")
-			).put(
-				"explicitConsentMode",
-				ParamUtil.getBoolean(httpServletRequest, "explicitConsentMode")
-			);
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				_portal.getCompanyId(httpServletRequest), "LPD-65277")) {
-
-			return hashMapWrapper.build();
-		}
-
-		return hashMapWrapper.put(
+		return HashMapBuilder.<String, Object>put(
 			"consentRenewalPeriod",
 			ParamUtil.getInteger(httpServletRequest, "consentRenewalPeriod")
+		).put(
+			"enabled", ParamUtil.getBoolean(httpServletRequest, "enabled")
+		).put(
+			"explicitConsentMode",
+			ParamUtil.getBoolean(httpServletRequest, "explicitConsentMode")
 		).put(
 			"modifiedDate",
 			() -> {
@@ -148,9 +137,6 @@ public class CookiesPreferenceHandlingConfigurationFormRenderer
 
 	@Reference
 	private CookiesConfigurationProvider _cookiesConfigurationProvider;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.cookies.banner.web)"

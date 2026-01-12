@@ -78,8 +78,14 @@ public class SiteNavigationMenuPortletUtil {
 						siteNavigationMenuItemTypeRegistry, themeDisplay)
 				).put(
 					"displayIcon",
-					siteNavigationMenuItemType.getDisplayIcon(
-						siteNavigationMenuItem)
+					() -> {
+						if (siteNavigationMenuItemType != null) {
+							return siteNavigationMenuItemType.getDisplayIcon(
+								siteNavigationMenuItem);
+						}
+
+						return StringPool.BLANK;
+					}
 				).put(
 					"dynamic",
 					() -> {
@@ -97,7 +103,7 @@ public class SiteNavigationMenuPortletUtil {
 								siteNavigationMenuItem);
 						}
 
-						return StringPool.BLANK;
+						return "warning-full";
 					}
 				).put(
 					"parentSiteNavigationMenuItemId",

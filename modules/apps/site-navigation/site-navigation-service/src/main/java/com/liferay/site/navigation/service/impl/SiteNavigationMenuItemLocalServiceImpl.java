@@ -5,6 +5,7 @@
 
 package com.liferay.site.navigation.service.impl;
 
+import com.liferay.batch.engine.thread.local.BatchEngineThreadLocal;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -18,6 +19,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.site.navigation.exception.InvalidSiteNavigationMenuItemOrderException;
 import com.liferay.site.navigation.exception.InvalidSiteNavigationMenuItemTypeException;
 import com.liferay.site.navigation.exception.SiteNavigationMenuItemNameException;
@@ -87,11 +90,27 @@ public class SiteNavigationMenuItemLocalServiceImpl
 			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
 				type);
 
-		if (siteNavigationMenuItemType == null) {
+		if (!BatchEngineThreadLocal.isBatchImportInProcess() &&
+			(siteNavigationMenuItemType == null)) {
+
 			throw new InvalidSiteNavigationMenuItemTypeException(type);
 		}
 
-		String name = siteNavigationMenuItemType.getName(typeSettings);
+		String name = null;
+
+		if (BatchEngineThreadLocal.isBatchImportInProcess() &&
+			(siteNavigationMenuItemType == null)) {
+
+			UnicodeProperties typeSettingsUnicodeProperties =
+				UnicodePropertiesBuilder.fastLoad(
+					typeSettings
+				).build();
+
+			name = typeSettingsUnicodeProperties.getProperty("title");
+		}
+		else {
+			name = siteNavigationMenuItemType.getName(typeSettings);
+		}
 
 		_validateName(name);
 

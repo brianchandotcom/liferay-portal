@@ -6,6 +6,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly project(":apps:change-tracking:change-tracking-spi")
 	compileOnly project(":apps:export-import:export-import-api")
+	compileOnly project(":apps:layout:layout-page-template-api")
 	compileOnly project(":apps:layout:layout-set-prototype-api")
 	compileOnly project(":apps:xstream:xstream-configurator-api")
 	compileOnly project(":core:petra:petra-function")

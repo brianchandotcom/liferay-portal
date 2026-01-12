@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -132,7 +133,9 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 			layoutPageTemplateEntry.getExternalReferenceCode(),
 			layout2.getPortletLayoutPageTemplateEntryERC());
 
-		Assert.assertNull(layout2.getPortletLayoutPageTemplateEntryScopeERC());
+		Assert.assertTrue(
+			Validator.isNull(
+				layout2.getPortletLayoutPageTemplateEntryScopeERC()));
 
 		Assert.assertFalse(
 			_dbInspector.hasColumn("Layout", "layoutPrototypeUuid"));
@@ -211,11 +214,24 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 	}
 
 	private LayoutPrototype _addLayoutPrototype(long groupId) throws Exception {
-		return _layoutPrototypeLocalService.addLayoutPrototype(
-			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(), true,
-			ServiceContextTestUtil.getServiceContext(groupId));
+		LayoutPrototype layoutPrototype =
+			_layoutPrototypeLocalService.addLayoutPrototype(
+				TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(), true,
+				ServiceContextTestUtil.getServiceContext(groupId));
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				getFirstLayoutPageTemplateEntry(
+					layoutPrototype.getLayoutPrototypeId());
+
+		layoutPageTemplateEntry.setGroupId(groupId);
+
+		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+			layoutPageTemplateEntry);
+
+		return layoutPrototype;
 	}
 
 	private void _updateLayoutPrototypeUuid(

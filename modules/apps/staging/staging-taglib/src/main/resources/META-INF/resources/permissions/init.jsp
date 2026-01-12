@@ -24,13 +24,13 @@ if (exportImportConfiguration != null) {
 	parameterMap = (Map<String, String[]>)settingsMap.get("parameterMap");
 }
 
-String inputDescription = StringPool.BLANK;
+String inputWarning = StringPool.BLANK;
 
 if (global) {
-	inputDescription = "publish-global-permissions-help";
+	inputWarning = "publish-global-permissions-help";
 }
 else {
-	inputDescription = "export-import-permissions-help";
+	inputWarning = "export-import-permissions-help";
 }
 
 String inputTitle = StringPool.BLANK;

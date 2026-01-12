@@ -45,10 +45,10 @@
 
 			<liferay-staging:checkbox
 				checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.DELETIONS, exportImportServiceConfiguration.replicateIndividualDeletionsByDefault()) %>"
-				description="<%= individualDeletionsDescription %>"
 				disabled="<%= disableInputs %>"
 				label="<%= individualDeletionsTitle %>"
 				name="<%= PortletDataHandlerKeys.DELETIONS %>"
+				warning="<%= individualDeletionsWarning %>"
 			/>
 		</clay:sheet-section>
 	</div>

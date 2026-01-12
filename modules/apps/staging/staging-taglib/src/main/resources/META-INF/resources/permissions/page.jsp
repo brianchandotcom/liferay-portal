@@ -19,10 +19,10 @@
 
 		<liferay-staging:checkbox
 			checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PERMISSIONS, exportImportServiceConfiguration.publishPermissionsByDefault()) %>"
-			description="<%= inputDescription %>"
 			disabled="<%= disableInputs %>"
 			label="<%= inputTitle %>"
 			name="<%= PortletDataHandlerKeys.PERMISSIONS %>"
+			warning="<%= inputWarning %>"
 		/>
 	</clay:sheet-section>
 </div>

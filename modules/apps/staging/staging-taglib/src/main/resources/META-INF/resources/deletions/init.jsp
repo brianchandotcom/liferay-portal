@@ -23,15 +23,15 @@ if (exportImportConfiguration != null) {
 	parameterMap = (Map<String, String[]>)settingsMap.get("parameterMap");
 }
 
-String individualDeletionsDescription = StringPool.BLANK;
 String individualDeletionsTitle = StringPool.BLANK;
+String individualDeletionsWarning = StringPool.BLANK;
 
 if (cmd.equals(Constants.EXPORT)) {
-	individualDeletionsDescription = "deletions-help-export";
 	individualDeletionsTitle = "export-individual-deletions";
+	individualDeletionsWarning = "deletions-help-export";
 }
 else {
-	individualDeletionsDescription = LanguageUtil.format(request, "x-deletions-help", StringUtil.toLowerCase(group.getScopeSimpleName(themeDisplay)), false);
 	individualDeletionsTitle = "replicate-individual-deletions";
+	individualDeletionsWarning = LanguageUtil.format(request, "x-deletions-help", StringUtil.toLowerCase(group.getScopeSimpleName(themeDisplay)), false);
 }
 %>

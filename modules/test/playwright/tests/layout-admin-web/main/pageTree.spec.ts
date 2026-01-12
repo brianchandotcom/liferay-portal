@@ -753,7 +753,7 @@ test(
 
 		await page
 			.getByRole('treeitem', {name: secondLayoutTitle})
-			.getByRole('button')
+			.getByRole('presentation')
 			.first()
 			.click();
 

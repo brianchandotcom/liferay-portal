@@ -6,9 +6,13 @@
 package com.liferay.object.rest.internal.util;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.object.comment.ObjectEntryComment;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.dto.v1_0.ParentTaxonomyCategory;
+import com.liferay.object.rest.dto.v1_0.ParentTaxonomyVocabulary;
 import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
@@ -198,6 +202,53 @@ public class ServiceContextUtil {
 				AssetCategory assetCategory =
 					AssetCategoryLocalServiceUtil.getOrAddEmptyCategory(
 						externalReferenceCode, userId, groupId);
+
+				ParentTaxonomyVocabulary parentTaxonomyVocabulary =
+					taxonomyCategoryBrief.getParentTaxonomyVocabulary();
+
+				AssetVocabulary assetVocabulary = null;
+
+				if ((parentTaxonomyVocabulary != null) &&
+					Validator.isNotNull(
+						parentTaxonomyVocabulary.getExternalReferenceCode())) {
+
+					assetVocabulary =
+						AssetVocabularyLocalServiceUtil.getOrAddEmptyVocabulary(
+							parentTaxonomyVocabulary.getExternalReferenceCode(),
+							userId, groupId);
+
+					assetCategory.setVocabularyId(
+						assetVocabulary.getVocabularyId());
+				}
+
+				ParentTaxonomyCategory parentTaxonomyCategory =
+					taxonomyCategoryBrief.getParentTaxonomyCategory();
+
+				if (parentTaxonomyCategory != null) {
+					AssetCategory parentAssetCategory =
+						AssetCategoryLocalServiceUtil.getOrAddEmptyCategory(
+							parentTaxonomyCategory.getExternalReferenceCode(),
+							userId, groupId);
+
+					if (assetVocabulary != null) {
+						parentAssetCategory.setVocabularyId(
+							assetVocabulary.getVocabularyId());
+
+						parentAssetCategory =
+							AssetCategoryLocalServiceUtil.updateAssetCategory(
+								parentAssetCategory);
+					}
+
+					assetCategory.setParentCategoryId(
+						parentAssetCategory.getParentCategoryId());
+				}
+				else {
+					assetCategory.setParentCategoryId(0);
+				}
+
+				assetCategory =
+					AssetCategoryLocalServiceUtil.updateAssetCategory(
+						assetCategory);
 
 				assetCategoryIds.add(assetCategory.getCategoryId());
 			}

@@ -32,7 +32,7 @@ export function getModalDescription(
 	if (size === 1) {
 		return type === 'TaxonomyCategoryBulkAction'
 			? Liferay.Language.get(
-					'you-are-editing-the-tags-for-the-selected-item'
+					'you-are-editing-the-categories-for-the-selected-item'
 				)
 			: Liferay.Language.get(
 					'you-are-editing-the-tags-for-the-selected-item'

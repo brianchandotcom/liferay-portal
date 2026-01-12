@@ -617,6 +617,9 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 					content, _portal.getSiteDefaultLocale(_group), 1,
 					layout.getPlid());
 			}
+			finally {
+				_ctCollectionLocalService.deleteCTCollection(ctCollection);
+			}
 		}
 	}
 

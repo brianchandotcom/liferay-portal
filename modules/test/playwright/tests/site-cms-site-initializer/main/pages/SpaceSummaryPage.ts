@@ -62,7 +62,9 @@ export class SpaceSummaryPage {
 	async goto(spaceName: string) {
 		await this.page.goto(PORTLET_URLS.cms);
 		await this.page.getByRole('menuitem', {name: spaceName}).click();
-		await this.addContentButton.waitFor();
+		await this.page
+			.getByRole('heading', {exact: true, name: spaceName})
+			.waitFor();
 	}
 
 	async addUserOrUserGroup(name: string, type: UserOrUserGroupType) {

@@ -106,7 +106,7 @@ test(
 					.click();
 			});
 
-			await test.step('Check filters show up grouped together', async () => {
+			await test.step('Check grouped FDS filters visibility', async () => {
 				await expect(
 					page.locator('li.dropdown-subheader', {hasText: 'Group 1'})
 				).toBeVisible();
@@ -114,8 +114,52 @@ test(
 					page.locator('li.dropdown-subheader', {hasText: 'Group 2'})
 				).toBeVisible();
 				await expect(
-					page.locator('li.dropdown-subheader', {hasText: 'Group 2'})
+					page.locator('li.dropdown-subheader', {hasText: 'Group 3'})
 				).toBeVisible();
+				await expect(
+					page.locator('li.dropdown-subheader', {
+						hasText: 'Empty Group',
+					})
+				).not.toBeVisible();
+				await expect(
+					page.locator('li.dropdown-subheader', {
+						hasText: 'Group With Unregistered Filter',
+					})
+				).not.toBeVisible();
+			});
+
+			await test.step('Check grouped FDS filters order', async () => {
+				const filtersDropdownMenu = page.getByLabel('Filters');
+
+				const groupedFDSFilters = filtersDropdownMenu.getByRole('menu');
+
+				await expect(
+					groupedFDSFilters.locator('li.dropdown-subheader')
+				).toHaveText(['Group 1', 'Group 2', 'Group 3']);
+
+				const group1 = groupedFDSFilters.getByRole('group', {
+					name: 'Group 1',
+				});
+
+				await expect(group1.getByRole('menuitem')).toHaveText([
+					'Date Range',
+					'Color',
+				]);
+
+				const group2 = groupedFDSFilters.getByRole('group', {
+					name: 'Group 2',
+				});
+
+				await expect(group2.getByRole('menuitem')).toHaveText(['Size']);
+
+				const group3 = groupedFDSFilters.getByRole('group', {
+					name: 'Group 3',
+				});
+
+				await expect(group3.getByRole('menuitem')).toHaveText([
+					'Status',
+					'Title',
+				]);
 			});
 
 			await test.step('Enter a search term "status"', async () => {
@@ -168,6 +212,11 @@ test(
 		await test.step('Check selecting a filter', async () => {
 			await test.step('Refresh contents', async () => {
 				await fdsSamplePage.selectTab('Advanced');
+
+				await waitForFDS({
+					page,
+					visualizationMode: EFDSVisualizationMode.TABLE,
+				});
 			});
 
 			await test.step('Select "Red" color in the filters dropdown', async () => {
@@ -211,6 +260,11 @@ test(
 		await test.step('Check excluding a filter', async () => {
 			await test.step('Refresh contents', async () => {
 				await fdsSamplePage.selectTab('Advanced');
+
+				await waitForFDS({
+					page,
+					visualizationMode: EFDSVisualizationMode.TABLE,
+				});
 			});
 
 			await test.step('Check exclude switch for "Blue", "Green", "Yellow" colors', async () => {
@@ -242,6 +296,11 @@ test(
 		await test.step('Check editing a filter summary box', async () => {
 			await test.step('Refresh contents', async () => {
 				await fdsSamplePage.selectTab('Advanced');
+
+				await waitForFDS({
+					page,
+					visualizationMode: EFDSVisualizationMode.TABLE,
+				});
 			});
 
 			await test.step('Open the "Color" filter summary box', async () => {
@@ -289,6 +348,11 @@ test(
 		await test.step('Check filter can be removed using delete button', async () => {
 			await test.step('Refresh contents', async () => {
 				await fdsSamplePage.selectTab('Advanced');
+
+				await waitForFDS({
+					page,
+					visualizationMode: EFDSVisualizationMode.TABLE,
+				});
 			});
 
 			await test.step('Open the "Color" filter summary box', async () => {
@@ -320,6 +384,11 @@ test(
 		await test.step('Assert the synchronization of the filters', async () => {
 			await test.step('Refresh contents', async () => {
 				await fdsSamplePage.selectTab('Advanced');
+
+				await waitForFDS({
+					page,
+					visualizationMode: EFDSVisualizationMode.TABLE,
+				});
 			});
 
 			await test.step('Open the "Color" filter summary box', async () => {

@@ -20,7 +20,7 @@ String name = GetterUtil.getString(request.getAttribute("liferay-staging:checkbo
 String popoverTextKey = GetterUtil.getString(request.getAttribute("liferay-staging:checkbox:popover"));
 List<String> subtitleKeys = (List<String>)request.getAttribute("liferay-staging:checkbox:subtitles");
 String suggestionKey = GetterUtil.getString(request.getAttribute("liferay-staging:checkbox:suggestion"));
-String tagKey = GetterUtil.getString(request.getAttribute("liferay-staging:checkbox:tag"));
+String tag = GetterUtil.getString(request.getAttribute("liferay-staging:checkbox:tag"));
 String warningKey = GetterUtil.getString(request.getAttribute("liferay-staging:checkbox:warning"));
 
 if (Validator.isNull(id)) {
@@ -41,7 +41,6 @@ String popoverName = name + "_popover";
 String popoverText = Validator.isNull(popoverTextKey) ? " " : LanguageUtil.get(request, popoverTextKey);
 String subtitles = StringUtil.merge(TransformUtil.transform(subtitleKeys, subtitleKey -> LanguageUtil.get(request, subtitleKey)), StringPool.COMMA_AND_SPACE);
 String suggestion = LanguageUtil.get(request, suggestionKey);
-String tag = LanguageUtil.get(request, tagKey);
 String warning = LanguageUtil.get(request, warningKey);
 
 String separator = Validator.isNotNull(description + suggestion + warning) ? ":" : "";

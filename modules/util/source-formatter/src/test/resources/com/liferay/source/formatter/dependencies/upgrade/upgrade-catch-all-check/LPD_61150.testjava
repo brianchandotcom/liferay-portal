@@ -1,0 +1,48 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Regisson Aguiar
+ */
+public class LPD_61150 {
+
+	public void method(
+		long creatorUserId, long companyId, boolean autoPassword,
+		String password1, String password2, boolean autoScreenName,
+		String screenName, String emailAddress, Locale locale, String firstName,
+		String middleName, String lastName, long prefixListTypeId,
+		long suffixListTypeId, boolean male, int birthdayMonth, int birthdayDay,
+		int birthdayYear, String jobTitle, long[] groupIds,
+		long[] organizationIds, long[] roleIds, long[] userGroupIds,
+		boolean sendEmail, ServiceContext serviceContext) {
+
+		UserLocalServiceUtil.addUserWithWorkflow(
+			creatorUserId, companyId, autoPassword, password1, password2,
+			autoScreenName, screenName, emailAddress, locale, firstName,
+			middleName, lastName, prefixListTypeId, suffixListTypeId, male,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
+		_userLocalService.addUserWithWorkflow(
+			123, companyId, autoPassword, password1, password2, autoScreenName,
+			screenName, emailAddress, locale, firstName, middleName, lastName,
+			prefixListTypeId, suffixListTypeId, male, birthdayMonth,
+			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
+			roleIds, userGroupIds, sendEmail, serviceContext);
+		_userLocalService.addUserWithWorkflow(
+			creatorUserId, companyId, autoPassword, password1, password2,
+			autoScreenName, screenName, emailAddress, locale, firstName,
+			middleName, lastName, prefixListTypeId, suffixListTypeId, male,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
+	}
+
+	@Reference
+	private UserLocalService _userLocalService;
+
+}

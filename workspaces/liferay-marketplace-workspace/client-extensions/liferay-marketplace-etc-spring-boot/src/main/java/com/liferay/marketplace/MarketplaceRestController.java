@@ -6,7 +6,6 @@
 package com.liferay.marketplace;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
-import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
 import com.liferay.headless.admin.user.client.dto.v1_0.Account;
 import com.liferay.headless.admin.user.client.dto.v1_0.AccountRole;
 import com.liferay.headless.admin.user.client.dto.v1_0.PostalAddress;
@@ -28,8 +27,10 @@ import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderItemR
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderResource;
 import com.liferay.marketplace.constants.MarketplaceConstants;
 import com.liferay.marketplace.model.PublisherAssetLink;
+import com.liferay.marketplace.model.SalesforceOpportunity;
 import com.liferay.marketplace.service.KoroneikiService;
 import com.liferay.marketplace.service.MarketplaceService;
+import com.liferay.marketplace.service.SalesforceService;
 import com.liferay.marketplace.util.MarketplaceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -306,8 +307,12 @@ public class MarketplaceRestController extends BaseRestController {
 		String orderTypeExternalReferenceCode =
 			order.getOrderTypeExternalReferenceCode();
 
+		Map<String, String> productSpecificationsMap =
+			_marketplaceService.getProductSpecificationsMap(
+				_marketplaceService.getOrderProductId(order));
+
 		if (Objects.equals(orderTypeExternalReferenceCode, "ADDONS")) {
-			_setUpAddOns(jwt, order);
+			_setUpAddOns(jwt, productSpecificationsMap, order);
 
 			_marketplaceService.updateOrder(
 				null, order.getId(),
@@ -330,19 +335,6 @@ public class MarketplaceRestController extends BaseRestController {
 			Objects.equals(
 				order.getOrderTypeExternalReferenceCode(), "DXP_APP")) {
 
-			Page<OrderItem> orderItemsPage =
-				_marketplaceService.getOrderItemResource(
-				).getOrderIdOrderItemsPage(
-					order.getId(), Pagination.of(1, 10)
-				);
-
-			Map<String, String> productSpecificationsMap =
-				_marketplaceService.getProductSpecificationsMap(
-					_marketplaceService.getSku(
-						orderItemsPage.fetchFirstItem(
-						).getSkuId()
-					).getProductId());
-
 			if (Objects.equals(
 					productSpecificationsMap.get("price-model"), "Free")) {
 
@@ -354,8 +346,7 @@ public class MarketplaceRestController extends BaseRestController {
 			}
 
 			_setUpProductEntitlements(
-				jwt, productSpecificationsMap.get("license-type"), order,
-				orderItemsPage);
+				jwt, productSpecificationsMap.get("license-type"), order);
 		}
 	}
 
@@ -711,7 +702,7 @@ public class MarketplaceRestController extends BaseRestController {
 				product.getProductId());
 
 		_marketplaceService.postNotificationQueueEntry(
-			null, "MARKETPLACE-ORDER-PURCHASED-NOTIFICATION",
+			null, "MARKETPLACE-INVOICE-ORDER-SUBMIT-TEMPLATE",
 			new HashMapBuilder<String, String>().put(
 				"[%ACCOUNT_ID%]", String.valueOf(account.getId())
 			).put(
@@ -822,7 +813,27 @@ public class MarketplaceRestController extends BaseRestController {
 			).toString());
 	}
 
-	private void _setUpAddOns(Jwt jwt, Order order) throws Exception {
+	private void _setUpAddOns(
+			Jwt jwt, Map<String, String> productSpecificationsMap, Order order)
+		throws Exception {
+
+		String solutionType = productSpecificationsMap.get("solution-type");
+
+		if (Objects.equals(solutionType, "analytics")) {
+			_setUpAnalyticsAddOn(jwt, order);
+
+			return;
+		}
+
+		if (Objects.equals(solutionType, "ai-hub") ||
+			Objects.equals(solutionType, "content-data-platform")) {
+
+			_setUpCustomAddOn(
+				productSpecificationsMap.get("license-type"), order);
+		}
+	}
+
+	private void _setUpAnalyticsAddOn(Jwt jwt, Order order) throws Exception {
 		if (!order.getAccountExternalReferenceCode(
 			).startsWith(
 				"KOR-"
@@ -865,9 +876,30 @@ public class MarketplaceRestController extends BaseRestController {
 		}
 	}
 
+	private void _setUpCustomAddOn(String licenseType, Order order)
+		throws Exception {
+
+		OrderItem[] orderItems = order.getOrderItems();
+
+		OrderItem orderItem = orderItems[0];
+
+		if (orderItem == null) {
+			return;
+		}
+
+		UserAccount userAccount = _marketplaceService.getUserAccount(
+			order.getCreatorEmailAddress());
+
+		Product product = _marketplaceService.getProductBySkuId(
+			orderItem.getSkuId());
+
+		_salesforceService.postOpportunity(
+			new SalesforceOpportunity(
+				licenseType, order, orderItem, product, userAccount));
+	}
+
 	private void _setUpProductEntitlements(
-			Jwt jwt, String licenseType, Order order,
-			Page<OrderItem> orderItemsPage)
+			Jwt jwt, String licenseType, Order order)
 		throws Exception {
 
 		String accountExternalReferenceCode =
@@ -888,7 +920,7 @@ public class MarketplaceRestController extends BaseRestController {
 		}
 
 		try {
-			for (OrderItem orderItem : orderItemsPage.getItems()) {
+			for (OrderItem orderItem : order.getOrderItems()) {
 				_koroneikiService.postAccountAccountKeyProductPurchase(
 					accountExternalReferenceCode, jwt, licenseType,
 					MarketplaceUtil.getSkuOptionValue(
@@ -923,9 +955,9 @@ public class MarketplaceRestController extends BaseRestController {
 	private KoroneikiService _koroneikiService;
 
 	@Autowired
-	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
+	private MarketplaceService _marketplaceService;
 
 	@Autowired
-	private MarketplaceService _marketplaceService;
+	private SalesforceService _salesforceService;
 
 }

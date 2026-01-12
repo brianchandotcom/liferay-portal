@@ -1927,7 +1927,9 @@ const FrontendDataSetContent = ({
 							className={classNames(
 								`data-set-wrapper visualization-mode-${activeView.contentRenderer}`,
 								className,
-								selectable
+								{
+									selectable,
+								}
 							)}
 							data-testid={`visualization-mode-${activeView.name}`}
 							ref={dataSetWrapperRef}

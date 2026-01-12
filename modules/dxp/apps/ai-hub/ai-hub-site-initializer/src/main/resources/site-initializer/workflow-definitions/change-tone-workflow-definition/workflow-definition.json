@@ -1,5 +1,6 @@
 {
 	"active": true,
+	"description": "This writing agent adapts a given text to fit any tone you specify as input.",
 	"externalReferenceCode": "L_CHANGE_TONE",
 	"name": "Change Tone",
 	"scope": "ai",

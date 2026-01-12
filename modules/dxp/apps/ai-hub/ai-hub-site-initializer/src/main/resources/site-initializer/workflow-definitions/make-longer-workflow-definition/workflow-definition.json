@@ -1,5 +1,6 @@
 {
 	"active": true,
+	"description": "This writing agent takes a given text and expands it into a longer, more detailed version.",
 	"externalReferenceCode": "L_MAKE_LONGER",
 	"name": "Make Longer",
 	"scope": "ai",

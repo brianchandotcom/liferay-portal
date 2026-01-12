@@ -1,5 +1,6 @@
 {
 	"active": true,
+	"description": "This writing agent improves text eliminating wordiness and passive voice to deliver a clear, direct message.",
 	"externalReferenceCode": "L_IMPROVE_WRITING",
 	"name": "Improve Writing",
 	"scope": "ai",

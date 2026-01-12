@@ -6,6 +6,7 @@
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>Improve Writing</name>
+	<description>This writing agent improves text eliminating wordiness and passive voice to deliver a clear, direct message.</description>
 	<version>1</version>
 	<llm>
 		<name>improveWriting</name>

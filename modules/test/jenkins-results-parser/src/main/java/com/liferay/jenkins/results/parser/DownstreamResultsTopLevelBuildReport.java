@@ -12,7 +12,8 @@ import org.json.JSONObject;
 /**
  * @author Brittney Nguyen
  */
-public class TempTopLevelBuildReport extends BaseTopLevelBuildReport {
+public class DownstreamResultsTopLevelBuildReport
+	extends BaseTopLevelBuildReport {
 
 	@Override
 	public JSONObject getBuildReportJSONObject() {
@@ -23,7 +24,9 @@ public class TempTopLevelBuildReport extends BaseTopLevelBuildReport {
 		return null;
 	}
 
-	protected TempTopLevelBuildReport(TopLevelBuild topLevelBuild) {
+	protected DownstreamResultsTopLevelBuildReport(
+		TopLevelBuild topLevelBuild) {
+
 		super(topLevelBuild.getBuildURL());
 
 		_buildJSONObject = JenkinsAPIUtil.getAPIJSONObject(

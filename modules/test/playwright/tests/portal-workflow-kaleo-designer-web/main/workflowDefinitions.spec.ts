@@ -128,7 +128,10 @@ test('LPD-49034 Custom Workflow Action Client Extension not working when the ass
 				.locator('.list-group-item', {hasText: journalArticleTitle1})
 				.getByText('Approved')
 		).toBeVisible();
-	}).toPass({timeout: 5000});
+	}).toPass({
+		intervals: [1000],
+		timeout: 5000,
+	});
 
 	const journalArticleTitle2 = getRandomString();
 
@@ -165,7 +168,10 @@ test('LPD-49034 Custom Workflow Action Client Extension not working when the ass
 				.locator('.list-group-item', {hasText: journalArticleTitle2})
 				.getByText('Approved')
 		).toBeVisible();
-	}).toPass({timeout: 5000});
+	}).toPass({
+		intervals: [1000],
+		timeout: 5000,
+	});
 
 	await workflowPage.goto(site.friendlyUrlPath);
 

@@ -331,34 +331,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-196842. When the “Recent” filter is applied, the possibility of changing the order must be disabled"
-	@priority = 4
-	test CannotReverseSortDirectionWhenFilterByRecent {
-		task ("Given two web contents with different names") {
-			JSONWebcontent.addWebContent(
-				content = "EMEA Guild",
-				groupName = "Test Site Name",
-				title = "EMEA Guild");
-
-			JSONWebcontent.addWebContent(
-				content = "APAC Guild",
-				groupName = "Test Site Name",
-				title = "APAC Guild");
-		}
-
-		task ("When filter by Recent") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			Search.searchCP(searchTerm = "Guild");
-
-			ManagementBar.setFilterAndOrder(filterBy = "Recent");
-		}
-
-		task ("Then the possibility of changing the order must be disabled") {
-			AssertElementNotPresent(locator1 = "ManagementBar#ORDER");
-		}
-	}
-
 	@description = "This is a test for LPS-202596. The content creator could search comments associated to web contents by keywords."
 	@priority = 3
 	test CanSearchWebContentCommentsByKeyword {

@@ -645,6 +645,16 @@ public class SitesImpl implements Sites {
 			}
 		}
 
+		if (Validator.isNull(layout.getLayoutPrototypeUuid())) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Merge not performed because layout prototype does not " +
+						"exist for layout PLID " + layout.getPlid());
+			}
+
+			return;
+		}
+
 		LayoutPrototype layoutPrototype =
 			_layoutPrototypeLocalService.getLayoutPrototypeByUuidAndCompanyId(
 				layout.getLayoutPrototypeUuid(), layout.getCompanyId());

@@ -150,41 +150,46 @@ public class MetadataManagerUtil {
 	private static boolean _isSignAuthnRequest(
 		SamlProviderConfigurationHelper samlProviderConfigurationHelper) {
 
-		return _getSamlProviderConfiguration(
-			samlProviderConfigurationHelper
-		).signAuthnRequest();
+		SamlProviderConfiguration samlProviderConfiguration =
+			_getSamlProviderConfiguration(samlProviderConfigurationHelper);
+
+		return samlProviderConfiguration.signAuthnRequest();
 	}
 
 	private static boolean _isSignMetadata(
 		SamlProviderConfigurationHelper samlProviderConfigurationHelper) {
 
-		return _getSamlProviderConfiguration(
-			samlProviderConfigurationHelper
-		).signMetadata();
+		SamlProviderConfiguration samlProviderConfiguration =
+			_getSamlProviderConfiguration(samlProviderConfigurationHelper);
+
+		return samlProviderConfiguration.signMetadata();
 	}
 
 	private static boolean _isSSLRequired(
 		SamlProviderConfigurationHelper samlProviderConfigurationHelper) {
 
-		return _getSamlProviderConfiguration(
-			samlProviderConfigurationHelper
-		).sslRequired();
+		SamlProviderConfiguration samlProviderConfiguration =
+			_getSamlProviderConfiguration(samlProviderConfigurationHelper);
+
+		return samlProviderConfiguration.sslRequired();
 	}
 
 	private static boolean _isWantAssertionsSigned(
 		SamlProviderConfigurationHelper samlProviderConfigurationHelper) {
 
-		return _getSamlProviderConfiguration(
-			samlProviderConfigurationHelper
-		).assertionSignatureRequired();
+		SamlProviderConfiguration samlProviderConfiguration =
+			_getSamlProviderConfiguration(samlProviderConfigurationHelper);
+
+		return samlProviderConfiguration.assertionSignatureRequired();
 	}
 
 	private static boolean _isWantAuthnRequestSigned(
 		SamlProviderConfigurationHelper samlProviderConfigurationHelper) {
 
-		return _getSamlProviderConfiguration(
-			samlProviderConfigurationHelper
-		).authnRequestSignatureRequired();
+		SamlProviderConfiguration samlProviderConfiguration =
+			_getSamlProviderConfiguration(samlProviderConfigurationHelper);
+
+		return samlProviderConfiguration.authnRequestSignatureRequired();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

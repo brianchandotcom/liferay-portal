@@ -7,7 +7,6 @@ package com.liferay.portal.search.internal.spi.model.index.contributor;
 
 import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentContributor;
 import com.liferay.portal.kernel.search.Field;
@@ -43,24 +42,26 @@ public class AuditedModelDocumentContributor
 
 		document.addKeyword(Field.USER_ID, userId);
 
-		User user = null;
+		if (userId == 0) {
+			document.addKeyword(
+				Field.USER_NAME, auditedModel.getUserName(), true);
 
-		if (userId != 0) {
-			user = userLocalService.fetchUser(userId);
+			return;
 		}
 
-		if (user == null) {
+		String[] userData = UserDataUtil.getUserData(
+			baseModel.getClass(), userLocalService, userId);
+
+		if (userData == null) {
 			document.addKeyword(
 				Field.USER_NAME, auditedModel.getUserName(), true);
 		}
 		else {
 			document.addKeyword(
 				Field.USER_NAME,
-				GetterUtil.getString(
-					user.getFullName(), auditedModel.getUserName()),
+				GetterUtil.getString(userData[1], auditedModel.getUserName()),
 				true);
-			document.addKeyword(
-				"userExternalReferenceCode", user.getExternalReferenceCode());
+			document.addKeyword("userExternalReferenceCode", userData[0]);
 		}
 	}
 

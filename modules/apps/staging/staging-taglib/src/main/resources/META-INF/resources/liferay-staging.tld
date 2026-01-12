@@ -54,7 +54,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The language key of the checkbox's description text. It is displayed after the label.</description>
+			<description>The checkbox's description text. It is displayed below the checkbox</description>
 			<name>description</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -96,25 +96,19 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The language keys of the checkbox's subtitles.</description>
-			<name>subtitles</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>The language key of the checkbox's suggestion text. It is displayed after the label.</description>
+			<description>The language key of the checkbox's suggestion text. It is displayed after the warning.</description>
 			<name>suggestion</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The checkbox's tag.</description>
+			<description>The checkbox's tag. It is displayed after the label.</description>
 			<name>tag</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The language key of the checkbox's warning text. It is displayed after the suggestion.</description>
+			<description>The language key of the checkbox's warning text. It is displayed after the label.</description>
 			<name>warning</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

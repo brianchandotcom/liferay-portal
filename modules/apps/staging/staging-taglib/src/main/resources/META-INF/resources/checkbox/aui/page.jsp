@@ -16,11 +16,9 @@
 		</label>
 	</div>
 
-	<c:if test="<%= Validator.isNotNull(subtitles) %>">
-		<ul class="lfr-tree list-unstyled">
-			<li>
-				<span class="selected-labels"><%= subtitles %></span>
-			</li>
-		</ul>
+	<c:if test="<%= Validator.isNotNull(description) %>">
+		<div class="selected-labels">
+			<%= HtmlUtil.escape(description) %>
+		</div>
 	</c:if>
 </div>

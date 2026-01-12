@@ -40,7 +40,6 @@ page import="com.liferay.exportimport.kernel.service.ExportImportConfigurationLo
 page import="com.liferay.exportimport.kernel.staging.LayoutStagingUtil" %><%@
 page import="com.liferay.exportimport.kernel.staging.StagingUtil" %><%@
 page import="com.liferay.object.constants.ObjectPortletKeys" %><%@
-page import="com.liferay.petra.function.transform.TransformUtil" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil" %><%@
 page import="com.liferay.portal.kernel.backgroundtask.BackgroundTask" %><%@

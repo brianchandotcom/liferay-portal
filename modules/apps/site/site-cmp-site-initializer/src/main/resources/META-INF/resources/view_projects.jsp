@@ -25,6 +25,7 @@ ViewProjectsSectionDisplayContext viewProjectsSectionDisplayContext = (ViewProje
 			creationMenu="<%= viewProjectsSectionDisplayContext.getCreationMenu() %>"
 			emptyState="<%= viewProjectsSectionDisplayContext.getEmptyState() %>"
 			fdsActionDropdownItems="<%= viewProjectsSectionDisplayContext.getFDSActionDropdownItems() %>"
+			fdsFilters="<%= viewProjectsSectionDisplayContext.getFDSFilters() %>"
 			formName="fm"
 			id="<%= CMPSiteInitializerFDSNames.CMP_PROJECT %>"
 			itemsPerPage="<%= 20 %>"

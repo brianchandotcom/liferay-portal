@@ -18,6 +18,7 @@ ViewTasksSectionDisplayContext viewTasksSectionDisplayContext = (ViewTasksSectio
 		creationMenu="<%= viewTasksSectionDisplayContext.getCreationMenu() %>"
 		emptyState="<%= viewTasksSectionDisplayContext.getEmptyState() %>"
 		fdsActionDropdownItems="<%= viewTasksSectionDisplayContext.getFDSActionDropdownItems() %>"
+		fdsFilters="<%= viewTasksSectionDisplayContext.getFDSFilters() %>"
 		formName="fm"
 		id="<%= CMPSiteInitializerFDSNames.CMP_TASK %>"
 		itemsPerPage="<%= 20 %>"

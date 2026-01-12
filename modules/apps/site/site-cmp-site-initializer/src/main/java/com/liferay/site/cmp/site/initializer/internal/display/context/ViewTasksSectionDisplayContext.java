@@ -6,6 +6,7 @@
 package com.liferay.site.cmp.site.initializer.internal.display.context;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
@@ -16,10 +17,15 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.CreateDateFDSFilter;
+import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.DueDateRangeFDSFilter;
+import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.ProjectSelectionFDSFilter;
+import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.StateSelectionFDSFilter;
 import com.liferay.site.cmp.site.initializer.internal.util.ActionUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -30,9 +36,12 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 
 	public ViewTasksSectionDisplayContext(
 		HttpServletRequest httpServletRequest,
-		ObjectDefinition objectDefinition) {
+		ObjectDefinition projectObjectDefinition,
+		ObjectDefinition taskObjectDefinition) {
 
-		super(httpServletRequest, objectDefinition);
+		super(httpServletRequest, taskObjectDefinition);
+
+		_projectObjectDefinition = projectObjectDefinition;
 
 		_assetEntry = (AssetEntry)httpServletRequest.getAttribute(
 			WebKeys.LAYOUT_ASSET_ENTRY);
@@ -122,6 +131,23 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 				null));
 	}
 
+	public List<FDSFilter> getFDSFilters() {
+		List<FDSFilter> fdsFilters = new ArrayList<>();
+
+		fdsFilters.add(new CreateDateFDSFilter());
+		fdsFilters.add(new DueDateRangeFDSFilter());
+
+		if (_assetEntry == null) {
+			fdsFilters.add(
+				new ProjectSelectionFDSFilter(_projectObjectDefinition));
+		}
+
+		fdsFilters.add(new StateSelectionFDSFilter());
+
+		return fdsFilters;
+	}
+
 	private final AssetEntry _assetEntry;
+	private final ObjectDefinition _projectObjectDefinition;
 
 }

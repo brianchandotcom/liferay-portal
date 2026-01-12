@@ -2360,6 +2360,42 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		_testPostSiteSitePage(sitePageWithWidgetPageTemplate);
 
+		sitePageWithWidgetPageTemplate =
+			_getRandomSitePageWithWidgetPageTemplate(false);
+
+		widgetPageSettings =
+			(WidgetPageSettings)
+				sitePageWithWidgetPageTemplate.getPageSettings();
+
+		ItemExternalReference itemExternalReference =
+			new ItemExternalReference() {
+				{
+					setExternalReferenceCode(RandomTestUtil.randomString());
+				}
+			};
+
+		widgetPageSettings.setWidgetPageTemplateReference(
+			itemExternalReference);
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.headless.admin.site.internal.util.LogUtil",
+				LoggerTestUtil.WARN)) {
+
+			_testPostSiteSitePage(sitePageWithWidgetPageTemplate);
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(
+				"Unexpected log messages: " + logEntries.size(), 1,
+				logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			String message = logEntry.getMessage();
+
+			Assert.assertTrue(message.contains("LayoutPageTemplateEntry"));
+		}
+
 		_testPostSiteSitePage(_getRandomSitePageWithWidgetPageTemplate(true));
 	}
 

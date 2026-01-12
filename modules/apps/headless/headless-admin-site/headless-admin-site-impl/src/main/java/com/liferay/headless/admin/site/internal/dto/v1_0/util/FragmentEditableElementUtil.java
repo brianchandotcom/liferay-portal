@@ -243,6 +243,28 @@ public class FragmentEditableElementUtil {
 
 			if (Objects.equals(
 					fragmentEditableElementValue.getType(),
+					FragmentEditableElementValue.Type.LINK)) {
+
+				LinkFragmentEditableElementValue
+					linkFragmentEditableElementValue =
+						(LinkFragmentEditableElementValue)
+							fragmentEditableElementValue;
+
+				jsonObject.put(
+					fragmentEditableElement.getId(),
+					() -> _getJSONObject(
+						() -> _getFragmentLinkTextJSONObject(
+							layoutStructureItemImporterContext.getCompanyId(),
+							linkFragmentEditableElementValue.
+								getFragmentLinkTextValue(),
+							layoutStructureItemImporterContext.
+								getInfoItemServiceRegistry(),
+							null,
+							layoutStructureItemImporterContext.getGroupId())));
+			}
+
+			if (Objects.equals(
+					fragmentEditableElementValue.getType(),
 					FragmentEditableElementValue.Type.TEXT)) {
 
 				jsonObject.put(
@@ -373,13 +395,14 @@ public class FragmentEditableElementUtil {
 
 	private static JSONObject _getFragmentLinkTextJSONObject(
 			long companyId, FragmentLinkTextValue fragmentLinkTextValue,
-			InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId)
+			InfoItemServiceRegistry infoItemServiceRegistry, String mapperType,
+			long scopeGroupId)
 		throws Exception {
 
 		JSONObject jsonObject = _toConfigJSONObject(
 			companyId,
 			fragmentLinkTextValue.getFragmentEditableElementValueFragmentLink(),
-			infoItemServiceRegistry, "link", scopeGroupId);
+			infoItemServiceRegistry, mapperType, scopeGroupId);
 
 		TextFragmentValue textFragmentValue =
 			fragmentLinkTextValue.getTextFragmentValue();
@@ -636,7 +659,7 @@ public class FragmentEditableElementUtil {
 		return _getFragmentLinkTextJSONObject(
 			companyId,
 			textFragmentEditableElementValue.getFragmentLinkTextValue(),
-			infoItemServiceRegistry, scopeGroupId);
+			infoItemServiceRegistry, "link", scopeGroupId);
 	}
 
 	private static FragmentEditableElementValue

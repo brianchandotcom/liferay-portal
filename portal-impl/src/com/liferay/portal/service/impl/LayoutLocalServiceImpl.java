@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.exception.LayoutNameException;
 import com.liferay.portal.kernel.exception.LayoutTypeException;
 import com.liferay.portal.kernel.exception.MasterLayoutException;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
+import com.liferay.portal.kernel.exception.NoSuchLayoutPrototypeException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RequiredLayoutException;
 import com.liferay.portal.kernel.exception.SitemapChangeFrequencyException;
@@ -360,11 +361,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		String portletLayoutPageTemplateEntryERC = ParamUtil.getString(
 			serviceContext, "portletLayoutPageTemplateEntryERC");
-		String portletLayoutPageTemplateEntryScopeERC =
-			ScopeUtil.getItemScopeExternalReferenceCode(
-				ParamUtil.getString(
-					serviceContext, "portletLayoutPageTemplateEntryScopeERC"),
-				groupId);
+		String portletLayoutPageTemplateEntryScopeERC = ParamUtil.getString(
+			serviceContext, "portletLayoutPageTemplateEntryScopeERC");
 		boolean portletLayoutPageTemplateEntryLinkEnabled =
 			ParamUtil.getBoolean(
 				serviceContext, "portletLayoutPageTemplateEntryLinkEnabled",
@@ -374,7 +372,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			layout.setPortletLayoutPageTemplateEntryERC(
 				portletLayoutPageTemplateEntryERC);
 			layout.setPortletLayoutPageTemplateEntryScopeERC(
-				portletLayoutPageTemplateEntryScopeERC);
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					portletLayoutPageTemplateEntryScopeERC, groupId));
 			layout.setPortletLayoutPageTemplateEntryLinkEnabled(
 				portletLayoutPageTemplateEntryLinkEnabled);
 		}
@@ -423,8 +422,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			!portletLayoutPageTemplateEntryLinkEnabled) {
 
 			_applyLayoutPrototype(
-				portletLayoutPageTemplateEntryERC,
-				portletLayoutPageTemplateEntryScopeERC, layout,
+				layout, portletLayoutPageTemplateEntryERC,
+				portletLayoutPageTemplateEntryScopeERC,
 				portletLayoutPageTemplateEntryLinkEnabled);
 		}
 
@@ -3117,15 +3116,12 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			boolean applyLayoutPrototype = ParamUtil.getBoolean(
 				serviceContext, "applyLayoutPrototype");
 
-			String portletLayoutPageTemplateEntryScopeERC =
-				ScopeUtil.getItemScopeExternalReferenceCode(
-					ParamUtil.getString(
-						serviceContext,
-						"portletLayoutPageTemplateEntryScopeERC"),
-					groupId);
+			String portletLayoutPageTemplateEntryScopeERC = ParamUtil.getString(
+				serviceContext, "portletLayoutPageTemplateEntryScopeERC");
 
 			layout.setPortletLayoutPageTemplateEntryScopeERC(
-				portletLayoutPageTemplateEntryScopeERC);
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					portletLayoutPageTemplateEntryScopeERC, groupId));
 
 			boolean portletLayoutPageTemplateEntryLinkEnabled =
 				ParamUtil.getBoolean(
@@ -3140,8 +3136,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 					"applyLayoutPrototype", Boolean.FALSE);
 
 				_applyLayoutPrototype(
-					portletLayoutPageTemplateEntryERC,
-					portletLayoutPageTemplateEntryScopeERC, layout,
+					layout, portletLayoutPageTemplateEntryERC,
+					portletLayoutPageTemplateEntryScopeERC,
 					portletLayoutPageTemplateEntryLinkEnabled);
 
 				layout = layoutPersistence.findByG_P_L(
@@ -4029,8 +4025,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	private void _applyLayoutPrototype(
-			String portletLayoutPageTemplateEntryERC,
-			String portletLayoutPageTemplateEntryScopeERC, Layout layout,
+			Layout layout, String portletLayoutPageTemplateEntryERC,
+			String portletLayoutPageTemplateEntryScopeERC,
 			boolean portletLayoutPageTemplateEntryLinkEnabled)
 		throws PortalException {
 
@@ -4044,7 +4040,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 					portletLayoutPageTemplateEntryERC);
 
 		if (layoutPrototype == null) {
-			return;
+			throw new NoSuchLayoutPrototypeException();
 		}
 
 		try {

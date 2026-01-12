@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -142,6 +143,10 @@ public class BulkLayoutConverterTest {
 
 		layout.setPortletLayoutPageTemplateEntryERC(
 			layoutPageTemplateEntry.getExternalReferenceCode());
+		layout.setPortletLayoutPageTemplateEntryScopeERC(
+			ScopeUtil.getItemScopeExternalReferenceCode(
+				_group.getExternalReferenceCode(),
+				layoutPageTemplateEntry.getGroupId()));
 
 		layout.setPortletLayoutPageTemplateEntryLinkEnabled(true);
 
@@ -162,7 +167,7 @@ public class BulkLayoutConverterTest {
 		Assert.assertFalse(
 			convertedLayout.isPortletLayoutPageTemplateEntryLinkEnabled());
 		Assert.assertEquals(
-			convertedLayout.getMasterLayoutPageTemplateEntryERC(),
+			convertedLayout.getPortletLayoutPageTemplateEntryERC(),
 			StringPool.BLANK);
 	}
 

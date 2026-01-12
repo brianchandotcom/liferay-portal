@@ -138,12 +138,12 @@ public class SitesImpl implements Sites {
 		String[] originalAssetTagNames = serviceContext.getAssetTagNames();
 		Serializable originalPortletLayoutPageTemplateEntryERC =
 			serviceContext.getAttribute("portletLayoutPageTemplateEntryERC");
-		Serializable originalPortletLayoutPageTemplateEntryScopeERC =
-			serviceContext.getAttribute(
-				"portletLayoutPageTemplateEntryScopeERC");
 		Serializable originalPortletLayoutPageTemplateEntryLinkEnabled =
 			serviceContext.getAttribute(
 				"portletLayoutPageTemplateEntryLinkEnabled");
+		Serializable originalPortletLayoutPageTemplateEntryScopeERC =
+			serviceContext.getAttribute(
+				"portletLayoutPageTemplateEntryScopeERC");
 
 		try {
 			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
@@ -161,15 +161,15 @@ public class SitesImpl implements Sites {
 				"portletLayoutPageTemplateEntryERC",
 				layoutPageTemplateEntry.getExternalReferenceCode());
 
+			serviceContext.setAttribute(
+				"portletLayoutPageTemplateEntryLinkEnabled", linkEnabled);
+
 			Group group = _groupLocalService.getGroup(
 				targetLayout.getGroupId());
 
 			serviceContext.setAttribute(
 				"portletLayoutPageTemplateEntryScopeERC",
 				group.getExternalReferenceCode());
-
-			serviceContext.setAttribute(
-				"portletLayoutPageTemplateEntryLinkEnabled", linkEnabled);
 
 			Locale targetSiteDefaultLocale = _portal.getSiteDefaultLocale(
 				targetLayout.getGroupId());
@@ -202,16 +202,6 @@ public class SitesImpl implements Sites {
 					originalPortletLayoutPageTemplateEntryERC);
 			}
 
-			if (originalPortletLayoutPageTemplateEntryScopeERC == null) {
-				serviceContext.removeAttribute(
-					"portletLayoutPageTemplateEntryScopeERC");
-			}
-			else {
-				serviceContext.setAttribute(
-					"portletLayoutPageTemplateEntryScopeERC",
-					originalPortletLayoutPageTemplateEntryScopeERC);
-			}
-
 			if (originalPortletLayoutPageTemplateEntryLinkEnabled == null) {
 				serviceContext.removeAttribute(
 					"portletLayoutPageTemplateEntryLinkEnabled");
@@ -220,6 +210,16 @@ public class SitesImpl implements Sites {
 				serviceContext.setAttribute(
 					"portletLayoutPageTemplateEntryLinkEnabled",
 					originalPortletLayoutPageTemplateEntryLinkEnabled);
+			}
+
+			if (originalPortletLayoutPageTemplateEntryScopeERC == null) {
+				serviceContext.removeAttribute(
+					"portletLayoutPageTemplateEntryScopeERC");
+			}
+			else {
+				serviceContext.setAttribute(
+					"portletLayoutPageTemplateEntryScopeERC",
+					originalPortletLayoutPageTemplateEntryScopeERC);
 			}
 
 			LocaleThreadLocal.setSiteDefaultLocale(siteDefaultLocale);

@@ -943,7 +943,9 @@ public class LayoutStagedModelDataHandler
 		importedLayout.setPortletLayoutPageTemplateEntryERC(
 			_getPortletLayoutPageTemplateEntryERC(
 				portletDataContext.getCompanyId(), layout, layoutElement));
-
+		importedLayout.setPortletLayoutPageTemplateEntryScopeERC(
+			_getPortletLayoutPageTemplateEntryScopeERC(
+				portletDataContext.getCompanyId(), layout, layoutElement));
 		importedLayout.setPortletLayoutPageTemplateEntryLinkEnabled(
 			layout.isPortletLayoutPageTemplateEntryLinkEnabled());
 
@@ -1997,8 +1999,8 @@ public class LayoutStagedModelDataHandler
 		return portletIds;
 	}
 
-	private String _getPortletLayoutPageTemplateEntryERC(
-		long companyId, Layout layout, Element layoutElement) {
+	private LayoutPageTemplateEntry _getPortletLayoutPageTemplateEntry(
+		long companyId, Element layoutElement) {
 
 		boolean preloaded = GetterUtil.getBoolean(
 			layoutElement.attributeValue("preloaded"));
@@ -2012,7 +2014,7 @@ public class LayoutStagedModelDataHandler
 					companyId, layoutPrototypeName);
 
 			if (layoutPrototype == null) {
-				return layout.getPortletLayoutPageTemplateEntryERC();
+				return null;
 			}
 
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -2021,11 +2023,41 @@ public class LayoutStagedModelDataHandler
 						layoutPrototype.getLayoutPrototypeId());
 
 			if (layoutPageTemplateEntry != null) {
-				return layoutPageTemplateEntry.getExternalReferenceCode();
+				return layoutPageTemplateEntry;
 			}
 		}
 
-		return layout.getPortletLayoutPageTemplateEntryERC();
+		return null;
+	}
+
+	private String _getPortletLayoutPageTemplateEntryERC(
+		long companyId, Layout layout, Element layoutElement) {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_getPortletLayoutPageTemplateEntry(companyId, layoutElement);
+
+		if (layoutPageTemplateEntry == null) {
+			return layout.getPortletLayoutPageTemplateEntryERC();
+		}
+
+		return layoutPageTemplateEntry.getExternalReferenceCode();
+	}
+
+	private String _getPortletLayoutPageTemplateEntryScopeERC(
+			long companyId, Layout layout, Element layoutElement)
+		throws Exception {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_getPortletLayoutPageTemplateEntry(companyId, layoutElement);
+
+		if (layoutPageTemplateEntry == null) {
+			return layout.getPortletLayoutPageTemplateEntryScopeERC();
+		}
+
+		Group group = _groupLocalService.getGroup(
+			layoutPageTemplateEntry.getGroupId());
+
+		return group.getExternalReferenceCode();
 	}
 
 	private String _getUniqueFriendlyURL(

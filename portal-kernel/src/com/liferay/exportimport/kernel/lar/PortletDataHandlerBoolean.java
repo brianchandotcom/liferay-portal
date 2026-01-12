@@ -5,8 +5,6 @@
 
 package com.liferay.exportimport.kernel.lar;
 
-import java.util.List;
-
 /**
  * @author Raymond Augé
  */
@@ -73,21 +71,6 @@ public class PortletDataHandlerBoolean extends PortletDataHandlerControl {
 		String className, String referrerClassName) {
 
 		super(namespace, name, label, disabled, className, referrerClassName);
-
-		_defaultState = defaultState;
-		_childrenPortletDataHandlerControls =
-			childrenPortletDataHandlerControls;
-	}
-
-	public PortletDataHandlerBoolean(
-		String namespace, String name, String label, List<String> subtitles,
-		String tag, boolean defaultState, boolean disabled,
-		PortletDataHandlerControl[] childrenPortletDataHandlerControls,
-		String className, String referrerClassName) {
-
-		super(
-			namespace, name, label, subtitles, tag, disabled, className,
-			referrerClassName);
 
 		_defaultState = defaultState;
 		_childrenPortletDataHandlerControls =

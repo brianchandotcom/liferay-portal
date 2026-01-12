@@ -648,9 +648,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 		return new PortletDataHandlerBoolean(
 			getPortletId(), exportImportDescriptor.getResourceClassName(),
-			exportImportDescriptor.getLabelLanguageKey(),
-			exportImportDescriptor.getSubtitleLanguageKeys(),
-			exportImportDescriptor.getTagLanguageKey(), true, false, null,
+			exportImportDescriptor.getLabelLanguageKey(), true, false, null,
 			exportImportDescriptor.getResourceClassName(), null);
 	}
 
@@ -693,14 +691,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		}
 		else {
 			setEmptyControlsAllowed(true);
-
-			if (_registrations.size() == 1) {
-				setExportPortletDataHandlerControls(
-					_getPortletDataHandlerControl(_registrations.get(0)));
-			}
-			else {
-				setExportPortletDataHandlerControls();
-			}
+			setExportPortletDataHandlerControls();
 		}
 	}
 

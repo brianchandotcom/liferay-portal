@@ -52,15 +52,7 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 
 		public Scope getScope();
 
-		public default List<String> getSubtitleLanguageKeys() {
-			return null;
-		}
-
 		public default String getTag(Locale locale) {
-			return null;
-		}
-
-		public default String getTagLanguageKey() {
 			return null;
 		}
 

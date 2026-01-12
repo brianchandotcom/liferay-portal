@@ -578,64 +578,12 @@ public class ObjectEntryResourceImpl
 			}
 
 			@Override
-			public List<String> getSubtitleLanguageKeys() {
-				if (!_objectDefinition.isRootNode()) {
-					return null;
-				}
-
-				try {
-					List<String> subtitleLanguageKeys = new ArrayList<>();
-
-					ObjectDefinitionTreeFactory objectDefinitionTreeFactory =
-						new ObjectDefinitionTreeFactory(
-							_objectDefinitionLocalService,
-							_objectRelationshipLocalService);
-
-					Tree tree = objectDefinitionTreeFactory.create(
-						_objectDefinition.getObjectDefinitionId());
-
-					Iterator<Node> iterator = tree.iterator();
-
-					while (iterator.hasNext()) {
-						Node node = iterator.next();
-
-						if (node.isRoot()) {
-							continue;
-						}
-
-						subtitleLanguageKeys.add(
-							_getLabelLanguageKey(
-								_objectDefinitionLocalService.
-									getObjectDefinition(node.getPrimaryKey())));
-					}
-
-					return subtitleLanguageKeys;
-				}
-				catch (Exception exception) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(exception);
-					}
-
-					return null;
-				}
-			}
-
-			@Override
 			public String getTag(Locale locale) {
 				if (!_objectDefinition.isRootNode()) {
 					return null;
 				}
 
 				return LanguageUtil.get(locale, "root-object");
-			}
-
-			@Override
-			public String getTagLanguageKey() {
-				if (!_objectDefinition.isRootNode()) {
-					return null;
-				}
-
-				return "root-object";
 			}
 
 			@Override

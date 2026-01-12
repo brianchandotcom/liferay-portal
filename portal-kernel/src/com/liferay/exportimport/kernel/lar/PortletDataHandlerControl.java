@@ -10,7 +10,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -56,24 +55,6 @@ public class PortletDataHandlerControl {
 		_disabled = disabled;
 		_className = className;
 		_referrerClassName = referrerClassName;
-
-		_subtitles = null;
-		_tag = null;
-	}
-
-	public PortletDataHandlerControl(
-		String namespace, String name, String label, List<String> subtitles,
-		String tag, boolean disabled, String className,
-		String referrerClassName) {
-
-		_namespace = namespace;
-		_name = name;
-		_label = label;
-		_subtitles = subtitles;
-		_tag = tag;
-		_disabled = disabled;
-		_className = className;
-		_referrerClassName = referrerClassName;
 	}
 
 	public String getClassName() {
@@ -114,14 +95,6 @@ public class PortletDataHandlerControl {
 		return _referrerClassName;
 	}
 
-	public List<String> getSubtitles() {
-		return _subtitles;
-	}
-
-	public String getTag() {
-		return _tag;
-	}
-
 	public boolean isDisabled() {
 		return _disabled;
 	}
@@ -136,7 +109,5 @@ public class PortletDataHandlerControl {
 	private final String _name;
 	private String _namespace;
 	private final String _referrerClassName;
-	private final List<String> _subtitles;
-	private final String _tag;
 
 }

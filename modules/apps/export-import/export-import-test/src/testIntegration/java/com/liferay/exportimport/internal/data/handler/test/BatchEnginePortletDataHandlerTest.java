@@ -423,8 +423,9 @@ public class BatchEnginePortletDataHandlerTest {
 		Group testGroup = GroupTestUtil.addGroup();
 
 		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
-			null, null, false, false, _addImageFileEntry(testGroup.getGroupId()),
-			false, objectDefinition, group);
+			null, null, false, false,
+			_addImageFileEntry(testGroup.getGroupId()), false, objectDefinition,
+			group);
 		_testExportImportCompanyObjectEntriesWithRichTextAndURLs(
 			null, null, false, true, _addImageFileEntry(testGroup.getGroupId()),
 			false, objectDefinition, group);
@@ -1086,8 +1087,8 @@ public class BatchEnginePortletDataHandlerTest {
 			objectDefinition, sourceGroup);
 		_testExportImportSiteObjectEntriesWithRichTextAndURLs(
 			null, null, false, true,
-			_addImageFileEntry(differentGroup.getGroupId()), true, objectDefinition,
-			sourceGroup);
+			_addImageFileEntry(differentGroup.getGroupId()), true,
+			objectDefinition, sourceGroup);
 
 		// File entry from a different group, deleted before exporting
 
@@ -1095,8 +1096,8 @@ public class BatchEnginePortletDataHandlerTest {
 			DeleteFileEntry.BEFORE_EXPORT,
 			(fileEntry, targetGroup) -> new ObjectValuePair<>(
 				"", fileEntry.getGroupId()),
-			false, false, _addImageFileEntry(differentGroup.getGroupId()), false,
-			objectDefinition, sourceGroup);
+			false, false, _addImageFileEntry(differentGroup.getGroupId()),
+			false, objectDefinition, sourceGroup);
 
 		// File entry from a different group, deleted before importing
 

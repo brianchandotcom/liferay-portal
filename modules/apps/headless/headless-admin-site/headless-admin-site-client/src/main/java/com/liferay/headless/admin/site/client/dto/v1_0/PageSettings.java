@@ -25,28 +25,6 @@ public abstract class PageSettings implements Cloneable, Serializable {
 		return PageSettingsSerDes.toDTO(json);
 	}
 
-	public CustomMetaTag[] getCustomMetaTags() {
-		return customMetaTags;
-	}
-
-	public void setCustomMetaTags(CustomMetaTag[] customMetaTags) {
-		this.customMetaTags = customMetaTags;
-	}
-
-	public void setCustomMetaTags(
-		UnsafeSupplier<CustomMetaTag[], Exception>
-			customMetaTagsUnsafeSupplier) {
-
-		try {
-			customMetaTags = customMetaTagsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected CustomMetaTag[] customMetaTags;
-
 	public Boolean getHiddenFromNavigation() {
 		return hiddenFromNavigation;
 	}
@@ -92,28 +70,6 @@ public abstract class PageSettings implements Cloneable, Serializable {
 
 	protected SitePageNavigationSettings navigationSettings;
 
-	public OpenGraphSettings getOpenGraphSettings() {
-		return openGraphSettings;
-	}
-
-	public void setOpenGraphSettings(OpenGraphSettings openGraphSettings) {
-		this.openGraphSettings = openGraphSettings;
-	}
-
-	public void setOpenGraphSettings(
-		UnsafeSupplier<OpenGraphSettings, Exception>
-			openGraphSettingsUnsafeSupplier) {
-
-		try {
-			openGraphSettings = openGraphSettingsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected OpenGraphSettings openGraphSettings;
-
 	public Integer getPriority() {
 		return priority;
 	}
@@ -134,27 +90,6 @@ public abstract class PageSettings implements Cloneable, Serializable {
 	}
 
 	protected Integer priority;
-
-	public SEOSettings getSeoSettings() {
-		return seoSettings;
-	}
-
-	public void setSeoSettings(SEOSettings seoSettings) {
-		this.seoSettings = seoSettings;
-	}
-
-	public void setSeoSettings(
-		UnsafeSupplier<SEOSettings, Exception> seoSettingsUnsafeSupplier) {
-
-		try {
-			seoSettings = seoSettingsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected SEOSettings seoSettings;
 
 	public Type getType() {
 		return type;

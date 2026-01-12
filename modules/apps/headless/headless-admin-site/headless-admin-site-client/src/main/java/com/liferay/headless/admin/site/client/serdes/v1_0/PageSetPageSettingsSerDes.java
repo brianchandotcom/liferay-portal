@@ -5,7 +5,6 @@
 
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
-import com.liferay.headless.admin.site.client.dto.v1_0.CustomMetaTag;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSetPageSettings;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
@@ -47,29 +46,6 @@ public class PageSetPageSettingsSerDes {
 
 		sb.append("{");
 
-		if (pageSetPageSettings.getCustomMetaTags() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"customMetaTags\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < pageSetPageSettings.getCustomMetaTags().length;
-				 i++) {
-
-				sb.append(
-					String.valueOf(pageSetPageSettings.getCustomMetaTags()[i]));
-
-				if ((i + 1) < pageSetPageSettings.getCustomMetaTags().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
 		if (pageSetPageSettings.getHiddenFromNavigation() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -91,17 +67,6 @@ public class PageSetPageSettingsSerDes {
 				String.valueOf(pageSetPageSettings.getNavigationSettings()));
 		}
 
-		if (pageSetPageSettings.getOpenGraphSettings() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"openGraphSettings\": ");
-
-			sb.append(
-				String.valueOf(pageSetPageSettings.getOpenGraphSettings()));
-		}
-
 		if (pageSetPageSettings.getPriority() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -110,16 +75,6 @@ public class PageSetPageSettingsSerDes {
 			sb.append("\"priority\": ");
 
 			sb.append(pageSetPageSettings.getPriority());
-		}
-
-		if (pageSetPageSettings.getSeoSettings() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"seoSettings\": ");
-
-			sb.append(String.valueOf(pageSetPageSettings.getSeoSettings()));
 		}
 
 		if (pageSetPageSettings.getType() != null) {
@@ -155,15 +110,6 @@ public class PageSetPageSettingsSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (pageSetPageSettings.getCustomMetaTags() == null) {
-			map.put("customMetaTags", null);
-		}
-		else {
-			map.put(
-				"customMetaTags",
-				String.valueOf(pageSetPageSettings.getCustomMetaTags()));
-		}
-
 		if (pageSetPageSettings.getHiddenFromNavigation() == null) {
 			map.put("hiddenFromNavigation", null);
 		}
@@ -182,30 +128,12 @@ public class PageSetPageSettingsSerDes {
 				String.valueOf(pageSetPageSettings.getNavigationSettings()));
 		}
 
-		if (pageSetPageSettings.getOpenGraphSettings() == null) {
-			map.put("openGraphSettings", null);
-		}
-		else {
-			map.put(
-				"openGraphSettings",
-				String.valueOf(pageSetPageSettings.getOpenGraphSettings()));
-		}
-
 		if (pageSetPageSettings.getPriority() == null) {
 			map.put("priority", null);
 		}
 		else {
 			map.put(
 				"priority", String.valueOf(pageSetPageSettings.getPriority()));
-		}
-
-		if (pageSetPageSettings.getSeoSettings() == null) {
-			map.put("seoSettings", null);
-		}
-		else {
-			map.put(
-				"seoSettings",
-				String.valueOf(pageSetPageSettings.getSeoSettings()));
 		}
 
 		if (pageSetPageSettings.getType() == null) {
@@ -233,12 +161,7 @@ public class PageSetPageSettingsSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "customMetaTags")) {
-				return false;
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "hiddenFromNavigation")) {
-
+			if (Objects.equals(jsonParserFieldName, "hiddenFromNavigation")) {
 				return false;
 			}
 			else if (Objects.equals(
@@ -246,13 +169,7 @@ public class PageSetPageSettingsSerDes {
 
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "openGraphSettings")) {
-				return false;
-			}
 			else if (Objects.equals(jsonParserFieldName, "priority")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "seoSettings")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
@@ -267,25 +184,7 @@ public class PageSetPageSettingsSerDes {
 			PageSetPageSettings pageSetPageSettings, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "customMetaTags")) {
-				if (jsonParserFieldValue != null) {
-					Object[] jsonParserFieldValues =
-						(Object[])jsonParserFieldValue;
-
-					CustomMetaTag[] customMetaTagsArray =
-						new CustomMetaTag[jsonParserFieldValues.length];
-
-					for (int i = 0; i < customMetaTagsArray.length; i++) {
-						customMetaTagsArray[i] = CustomMetaTagSerDes.toDTO(
-							(String)jsonParserFieldValues[i]);
-					}
-
-					pageSetPageSettings.setCustomMetaTags(customMetaTagsArray);
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "hiddenFromNavigation")) {
-
+			if (Objects.equals(jsonParserFieldName, "hiddenFromNavigation")) {
 				if (jsonParserFieldValue != null) {
 					pageSetPageSettings.setHiddenFromNavigation(
 						(Boolean)jsonParserFieldValue);
@@ -300,23 +199,10 @@ public class PageSetPageSettingsSerDes {
 							(String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "openGraphSettings")) {
-				if (jsonParserFieldValue != null) {
-					pageSetPageSettings.setOpenGraphSettings(
-						OpenGraphSettingsSerDes.toDTO(
-							(String)jsonParserFieldValue));
-				}
-			}
 			else if (Objects.equals(jsonParserFieldName, "priority")) {
 				if (jsonParserFieldValue != null) {
 					pageSetPageSettings.setPriority(
 						Integer.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "seoSettings")) {
-				if (jsonParserFieldValue != null) {
-					pageSetPageSettings.setSeoSettings(
-						SEOSettingsSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {

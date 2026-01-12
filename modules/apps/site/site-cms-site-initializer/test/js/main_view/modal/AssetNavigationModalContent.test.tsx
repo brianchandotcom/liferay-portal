@@ -12,11 +12,14 @@ import React from 'react';
 
 import AssetNavigationModalContent from '../../../../src/main/resources/META-INF/resources/js/main_view/modal/asset_navigation_view/AssetNavigationModalContent';
 import {addParams} from '../../__mocks__/frontend-js-web';
+import {
+	IAssetObjectEntry
+} from "../../../../src/main/resources/META-INF/resources/js/common/types/AssetType";
 
 const ACTIONS = {
-	get: {href: '/link-to-get-action'},
-	update: {href: '/link-to-update-action'},
-	versions: {href: '/link-to-versions'},
+	get: {href: '/link-to-get-action', method: 'GET'},
+	update: {href: '/link-to-update-action', method: 'PATCH'},
+	versions: {href: '/link-to-versions', method: 'GET'},
 };
 
 const DATES = {
@@ -59,7 +62,7 @@ const item1 = {
 		scopeId: 35393,
 		scopeKey: 'Default',
 		title: 'liferay icon.png',
-	},
+	} as IAssetObjectEntry,
 	entryClassName: 'com.liferay.object.model.ObjectDefinition#Z7P5',
 	id: 36535,
 	score: 0,
@@ -81,7 +84,7 @@ const item2 = {
 		scopeId: 35393,
 		scopeKey: 'Default',
 		title: 'KB Article',
-	},
+	} as IAssetObjectEntry,
 	entryClassName: 'com.liferay.object.model.ObjectDefinition#H6H2',
 	id: 36599,
 	score: 0,
@@ -103,7 +106,7 @@ const item3 = {
 		scopeId: 35393,
 		scopeKey: 'Default',
 		title: 'First Blog',
-	},
+	} as IAssetObjectEntry,
 	entryClassName: 'com.liferay.object.model.ObjectDefinition#H6H2',
 	id: 36590,
 	score: 0,
@@ -173,7 +176,7 @@ describe('AssetNavigationModalContent', () => {
 
 		fireEvent.click(getByLabelText('next'));
 
-		expect(screen.getByText('KB Article')).toBeInTheDocument();
+		expect(screen.getByTestId('modal-header-name')).toHaveTextContent('KB Article');
 	});
 
 	it('wraps around to last item when pressing previous on first item', () => {
@@ -181,7 +184,7 @@ describe('AssetNavigationModalContent', () => {
 
 		fireEvent.click(getByLabelText('previous'));
 
-		expect(screen.getByText('First Blog')).toBeInTheDocument();
+		expect(screen.getByTestId('modal-header-name')).toHaveTextContent('First Blog');
 	});
 
 	it('arrows are hidden if there is only one element', () => {

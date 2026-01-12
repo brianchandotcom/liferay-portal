@@ -7,6 +7,7 @@ package com.liferay.asset.categories.internal.search.spi.model.index.contributor
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.model.AssetVocabularyGroupRel;
 import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
@@ -167,6 +168,10 @@ public class AssetCategoryModelDocumentContributor
 
 	private long[] _getClassNameIds(long vocabularyId) {
 		try {
+			if (vocabularyId == AssetVocabularyConstants.EMPTY_VOCABULARY_ID) {
+				return new long[0];
+			}
+
 			AssetVocabulary assetVocabulary =
 				_assetVocabularyLocalService.getVocabulary(vocabularyId);
 

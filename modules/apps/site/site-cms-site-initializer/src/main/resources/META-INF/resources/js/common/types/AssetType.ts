@@ -23,8 +23,23 @@ export interface IAssetFile {
 }
 
 export interface IAssetObjectEntry {
-	actions: any;
-	creator: any;
+	actions: {
+		[action: string]: {
+			href: string;
+			method: string | 'DELETE' | 'GET' | 'PATCH' | 'POST' | 'PUT';
+		};
+	};
+	content?: string;
+	contentRawText?: string;
+	creator: {
+		additionalName: string;
+		contentType: string;
+		externalReferenceCode: string;
+		familyName: string;
+		givenName: string;
+		id: number;
+		name: string;
+	};
 	dateCreated: string;
 	dateModified: string;
 	displayDate: string;
@@ -72,7 +87,8 @@ export interface ISearchAssetObjectEntry {
 	actions: any;
 	dateCreated: string;
 	dateModified: string;
-	embedded: Partial<IAssetObjectEntry>;
+    description?: string;
+    embedded: Partial<IAssetObjectEntry>;
 	entryClassName: string;
 	score: number;
 }

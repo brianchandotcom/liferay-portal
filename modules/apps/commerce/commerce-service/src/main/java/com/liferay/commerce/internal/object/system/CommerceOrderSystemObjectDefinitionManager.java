@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -307,6 +309,16 @@ public class CommerceOrderSystemObjectDefinitionManager
 	}
 
 	@Override
+	public boolean hasModelResourcePermission(
+			long objectDefinitionId, PermissionChecker permissionChecker,
+			long primaryKey, String actionId)
+		throws PortalException {
+
+		return _commerceOrderModelResourcePermission.contains(
+			permissionChecker, primaryKey, actionId);
+	}
+
+	@Override
 	public void updateBaseModel(
 			long primaryKey, User user, Map<String, Object> values)
 		throws Exception {
@@ -407,6 +419,12 @@ public class CommerceOrderSystemObjectDefinitionManager
 
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.model.CommerceOrder)"
+	)
+	private ModelResourcePermission<CommerceOrder>
+		_commerceOrderModelResourcePermission;
 
 	@Reference
 	private OrderResource.Factory _orderResourceFactory;

@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -195,6 +197,16 @@ public class CommercePricingClassSystemObjectDefinitionManager
 	}
 
 	@Override
+	public boolean hasModelResourcePermission(
+			long objectDefinitionId, PermissionChecker permissionChecker,
+			long primaryKey, String actionId)
+		throws PortalException {
+
+		return _commercePricingClassResourcePermission.contains(
+			permissionChecker, primaryKey, actionId);
+	}
+
+	@Override
 	public void updateBaseModel(
 			long primaryKey, User user, Map<String, Object> values)
 		throws Exception {
@@ -241,6 +253,12 @@ public class CommercePricingClassSystemObjectDefinitionManager
 
 	@Reference
 	private CommercePricingClassLocalService _commercePricingClassLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.pricing.model.CommercePricingClass)"
+	)
+	private ModelResourcePermission<CommercePricingClass>
+		_commercePricingClassResourcePermission;
 
 	@Reference
 	private ProductGroupResource.Factory _productGroupResourceFactory;

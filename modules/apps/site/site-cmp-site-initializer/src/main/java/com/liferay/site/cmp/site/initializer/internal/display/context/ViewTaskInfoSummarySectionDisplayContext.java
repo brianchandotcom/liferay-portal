@@ -8,22 +8,18 @@ package com.liferay.site.cmp.site.initializer.internal.display.context;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.util.Collections;
 import java.util.Map;
 
 /**
- * @author Igor Franca
+ * @author Pedro Leite
  */
-public class ViewProjectInfoSummarySectionDisplayContext
+public class ViewTaskInfoSummarySectionDisplayContext
 	extends BaseInfoSummarySectionDisplayContext {
 
-	public ViewProjectInfoSummarySectionDisplayContext(
+	public ViewTaskInfoSummarySectionDisplayContext(
 		ListTypeEntryLocalService listTypeEntryLocalService,
 		ObjectEntry objectEntry,
 		ObjectFieldLocalService objectFieldLocalService,
@@ -34,35 +30,12 @@ public class ViewProjectInfoSummarySectionDisplayContext
 			themeDisplay);
 	}
 
+	@Override
 	public Map<String, Object> getProperties() throws Exception {
 		return HashMapBuilder.<String, Object>put(
-			"manager",
-			_getUserInfoMap(
-				GetterUtil.getLong(
-					getFieldValue("r_userToCMPProjectManager_userId")))
-		).put(
-			"projectId", objectEntry.getObjectEntryId()
-		).put(
-			"sponsor",
-			_getUserInfoMap(
-				GetterUtil.getLong(
-					getFieldValue("r_userToCMPProjectSponsor_userId")))
+			"taskId", objectEntry.getObjectEntryId()
 		).putAll(
 			super.getProperties()
-		).build();
-	}
-
-	private Map<String, String> _getUserInfoMap(long userId) throws Exception {
-		User user = UserLocalServiceUtil.fetchUser(userId);
-
-		if (user == null) {
-			return Collections.emptyMap();
-		}
-
-		return HashMapBuilder.put(
-			"image", user.getPortraitURL(themeDisplay)
-		).put(
-			"name", user.getFullName()
 		).build();
 	}
 

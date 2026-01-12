@@ -13,7 +13,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.site.cmp.site.initializer.internal.display.context.ViewProjectInfoSummarySectionDisplayContext;
+import com.liferay.site.cmp.site.initializer.internal.display.context.ViewTaskInfoSummarySectionDisplayContext;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -21,10 +21,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Igor Franca
+ * @author Pedro Leite
  */
 @Component(service = FragmentRenderer.class)
-public class ViewProjectInfoSummaryJSPSectionFragmentRenderer
+public class ViewTaskInfoSummaryJSPSectionFragmentRenderer
 	extends BaseJSPSectionFragmentRenderer {
 
 	@Override
@@ -43,7 +43,7 @@ public class ViewProjectInfoSummaryJSPSectionFragmentRenderer
 			return null;
 		}
 
-		return new ViewProjectInfoSummarySectionDisplayContext(
+		return new ViewTaskInfoSummarySectionDisplayContext(
 			_listTypeEntryLocalService, (ObjectEntry)object,
 			_objectFieldLocalService,
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -52,12 +52,12 @@ public class ViewProjectInfoSummaryJSPSectionFragmentRenderer
 
 	@Override
 	protected String getJSPPath() {
-		return "/view_project_info_summary.jsp";
+		return "/view_task_info_summary.jsp";
 	}
 
 	@Override
 	protected String getLabelKey() {
-		return "project-info-summary";
+		return "task-info-summary";
 	}
 
 	@Reference

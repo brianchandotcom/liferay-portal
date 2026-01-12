@@ -1432,16 +1432,21 @@ public class BatchEnginePortletDataHandlerTest {
 				TestPropsValues.getCompanyId(), portletId));
 
 		try (SafeCloseable safeCloseable = _register(
-				filter -> {
-					if (filter != null) {
-						return Page.of(Arrays.asList(new TestItem(1)));
-					}
+				new TestExportImportVulcanBatchEngineTaskItemDelegateBuilder(
+				).withFunction(
+					filter -> {
+						if (filter != null) {
+							return Page.of(Arrays.asList(new TestItem(1)));
+						}
 
-					return Page.of(
-						Arrays.asList(
-							new TestItem(1), new TestItem(2), new TestItem(3)));
-				},
-				portletId)) {
+						return Page.of(
+							Arrays.asList(
+								new TestItem(1), new TestItem(2),
+								new TestItem(3)));
+					}
+				).withPortletId(
+					portletId
+				).build())) {
 
 			PortletDataHandler portletDataHandler =
 				_portletDataHandlerProvider.provide(
@@ -1575,7 +1580,12 @@ public class BatchEnginePortletDataHandlerTest {
 			_portletDataHandlerProvider.provide(
 				TestPropsValues.getCompanyId(), portletId));
 
-		try (SafeCloseable safeCloseable = _register(null, portletId)) {
+		try (SafeCloseable safeCloseable = _register(
+				new TestExportImportVulcanBatchEngineTaskItemDelegateBuilder(
+				).withPortletId(
+					portletId
+				).build())) {
+
 			PortletDataHandler portletDataHandler =
 				_portletDataHandlerProvider.provide(
 					TestPropsValues.getCompanyId(), portletId);
@@ -2292,26 +2302,20 @@ public class BatchEnginePortletDataHandlerTest {
 	}
 
 	private SafeCloseable _register(
-			Function<Filter, Page<TestItem>> function, String portletId)
-		throws Exception {
-
-		return _register(function, portletId, false);
-	}
-
-	private SafeCloseable _register(
-			Function<Filter, Page<TestItem>> function, String portletId,
-			boolean stagingSupported)
+			TestExportImportVulcanBatchEngineTaskItemDelegate
+				testExportImportVulcanBatchEngineTaskItemDelegate)
 		throws Exception {
 
 		SafeCloseable safeCloseable1 = _registerServiceWithSafeCloseable(
 			Portlet.class,
 			new GenericPortlet() {
 			},
-			MapUtil.singletonDictionary("jakarta.portlet.name", portletId));
+			MapUtil.singletonDictionary(
+				"jakarta.portlet.name",
+				testExportImportVulcanBatchEngineTaskItemDelegate._portletId));
 		SafeCloseable safeCloseable2 = _registerServiceWithSafeCloseable(
 			VulcanBatchEngineTaskItemDelegate.class,
-			new TestExportImportVulcanBatchEngineTaskItemDelegate(
-				function, portletId, stagingSupported),
+			testExportImportVulcanBatchEngineTaskItemDelegate,
 			HashMapDictionaryBuilder.put(
 				"batch.engine.task.item.delegate", "true"
 			).put(
@@ -2864,7 +2868,12 @@ public class BatchEnginePortletDataHandlerTest {
 		String portletId = RandomTestUtil.randomString();
 
 		try (SafeCloseable safeCloseable = _register(
-				null, portletId, stagingSupported)) {
+				new TestExportImportVulcanBatchEngineTaskItemDelegateBuilder(
+				).withPortletId(
+					portletId
+				).withStagingSupported(
+					stagingSupported
+				).build())) {
 
 			Thread.sleep(1000);
 
@@ -3009,20 +3018,12 @@ public class BatchEnginePortletDataHandlerTest {
 				   VulcanBatchEngineTaskItemDelegate<TestItem> {
 
 		public TestExportImportVulcanBatchEngineTaskItemDelegate(
-			Function<Filter, Page<TestItem>> function, String portletId) {
-
-			_function = function;
-			_portletId = portletId;
-
-			_stagingSupported = true;
-		}
-
-		public TestExportImportVulcanBatchEngineTaskItemDelegate(
 			Function<Filter, Page<TestItem>> function, String portletId,
-			boolean stagingSupported) {
+			Integer rank, boolean stagingSupported) {
 
 			_function = function;
 			_portletId = portletId;
+			_rank = rank;
 			_stagingSupported = stagingSupported;
 		}
 
@@ -3067,6 +3068,15 @@ public class BatchEnginePortletDataHandlerTest {
 				@Override
 				public String getPortletId() {
 					return _portletId;
+				}
+
+				@Override
+				public int getRank() {
+					if (_rank != null) {
+						return _rank;
+					}
+
+					return ExportImportDescriptor.super.getRank();
 				}
 
 				@Override
@@ -3167,8 +3177,56 @@ public class BatchEnginePortletDataHandlerTest {
 		private final Function<Filter, Page<TestItem>> _function;
 		private final String _modelClassName = RandomTestUtil.randomString();
 		private final String _portletId;
+		private final Integer _rank;
 		private final String _resourceClassName = RandomTestUtil.randomString();
 		private final boolean _stagingSupported;
+
+	}
+
+	private static class
+		TestExportImportVulcanBatchEngineTaskItemDelegateBuilder {
+
+		public TestExportImportVulcanBatchEngineTaskItemDelegate build() {
+			return new TestExportImportVulcanBatchEngineTaskItemDelegate(
+				_function, _portletId, _rank, _stagingSupported);
+		}
+
+		public TestExportImportVulcanBatchEngineTaskItemDelegateBuilder
+			withFunction(Function<Filter, Page<TestItem>> function) {
+
+			_function = function;
+
+			return this;
+		}
+
+		public TestExportImportVulcanBatchEngineTaskItemDelegateBuilder
+			withPortletId(String portletId) {
+
+			_portletId = portletId;
+
+			return this;
+		}
+
+		public TestExportImportVulcanBatchEngineTaskItemDelegateBuilder
+			withRank(int rank) {
+
+			_rank = rank;
+
+			return this;
+		}
+
+		public TestExportImportVulcanBatchEngineTaskItemDelegateBuilder
+			withStagingSupported(boolean stagingSupported) {
+
+			_stagingSupported = stagingSupported;
+
+			return this;
+		}
+
+		private Function<Filter, Page<TestItem>> _function;
+		private String _portletId;
+		private Integer _rank;
+		private boolean _stagingSupported;
 
 	}
 

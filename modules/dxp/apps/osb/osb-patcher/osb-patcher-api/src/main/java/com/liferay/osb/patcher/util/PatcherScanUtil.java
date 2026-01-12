@@ -363,8 +363,9 @@ public class PatcherScanUtil {
 		if (patcherProductVersionName.equals("DXP 7.4") ||
 			patcherProductVersionName.equals("Quarterly Releases")) {
 
-			final int fixedIssuesLength = patcherProjectVersion.getFixedIssues(
-			).length();
+			String fixedIssues = patcherProjectVersion.getFixedIssues();
+
+			int fixedIssuesLength = fixedIssues.length();
 
 			PatcherProductVersion quarterlyProduct =
 				PatcherProductVersionUtil.fetchPatcherProductVersion(

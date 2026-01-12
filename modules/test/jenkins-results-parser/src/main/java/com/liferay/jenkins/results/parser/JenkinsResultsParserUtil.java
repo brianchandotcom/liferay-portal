@@ -2886,9 +2886,9 @@ public class JenkinsResultsParserUtil {
 			localURLQueryString = remoteURL.substring(x);
 		}
 
-		if (isCloudCINode()) {
-			matcher = _remoteURLAuthorityPattern3.matcher(localURL);
+		Matcher matcher = _remoteURLAuthorityPattern3.matcher(localURL);
 
+		if (isCloudCINode()) {
 			if (matcher.find()) {
 				String localURLAuthority = combine(
 					"http://", matcher.group(1), "/");
@@ -2901,7 +2901,7 @@ public class JenkinsResultsParserUtil {
 			}
 		}
 
-		Matcher matcher = _remoteURLAuthorityPattern1.matcher(localURL);
+		matcher = _remoteURLAuthorityPattern1.matcher(localURL);
 
 		if (matcher.find()) {
 			String localURLAuthority = combine(
@@ -3489,9 +3489,9 @@ public class JenkinsResultsParserUtil {
 			remoteURLQueryString = localURL.substring(x);
 		}
 
-		if (isCloudCINode()) {
-			matcher = _localURLAuthorityPattern3.matcher(remoteURL);
+		Matcher matcher = _localURLAuthorityPattern3.matcher(remoteURL);
 
+		if (isCloudCINode()) {
 			if (matcher.find()) {
 				String localURLAuthority = matcher.group(0);
 				String remoteURLAuthority = combine(
@@ -3504,7 +3504,7 @@ public class JenkinsResultsParserUtil {
 			}
 		}
 
-		Matcher matcher = _localURLAuthorityPattern1.matcher(remoteURL);
+		matcher = _localURLAuthorityPattern1.matcher(remoteURL);
 
 		if (matcher.find()) {
 			String localURLAuthority = matcher.group(0);

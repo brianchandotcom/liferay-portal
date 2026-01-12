@@ -28,6 +28,7 @@ import com.liferay.headless.admin.site.dto.v1_0.ImageFragmentEditableElementValu
 import com.liferay.headless.admin.site.dto.v1_0.ImageValue;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.ItemImageValue;
+import com.liferay.headless.admin.site.dto.v1_0.LinkFragmentEditableElementValue;
 import com.liferay.headless.admin.site.dto.v1_0.MappedFragmentImageValue;
 import com.liferay.headless.admin.site.dto.v1_0.TextFragmentEditableElementValue;
 import com.liferay.headless.admin.site.dto.v1_0.TextFragmentInlineValue;
@@ -309,6 +310,11 @@ public class FragmentEditableElementUtil {
 
 		if (Objects.equals(type, "image")) {
 			return _toImageFragmentEditableElementValue(
+				companyId, infoItemServiceRegistry, jsonObject, scopeGroupId);
+		}
+
+		if (Objects.equals(type, "link")) {
+			return _toLinkFragmentEditableElementValue(
 				companyId, infoItemServiceRegistry, jsonObject, scopeGroupId);
 		}
 
@@ -1046,6 +1052,29 @@ public class FragmentEditableElementUtil {
 			FragmentEditableElementValue.Type.IMAGE);
 
 		return imageFragmentEditableElementValue;
+	}
+
+	private static LinkFragmentEditableElementValue
+		_toLinkFragmentEditableElementValue(
+			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
+			JSONObject jsonObject, long scopeGroupId) {
+
+		FragmentLinkTextValue fragmentLinkTextValue = _toFragmentLinkTextValue(
+			companyId, infoItemServiceRegistry, jsonObject, scopeGroupId);
+
+		if (fragmentLinkTextValue == null) {
+			return null;
+		}
+
+		LinkFragmentEditableElementValue linkFragmentEditableElementValue =
+			new LinkFragmentEditableElementValue();
+
+		linkFragmentEditableElementValue.setFragmentLinkTextValue(
+			() -> fragmentLinkTextValue);
+		linkFragmentEditableElementValue.setType(
+			() -> FragmentEditableElementValue.Type.LINK);
+
+		return linkFragmentEditableElementValue;
 	}
 
 	private static TextFragmentEditableElementValue

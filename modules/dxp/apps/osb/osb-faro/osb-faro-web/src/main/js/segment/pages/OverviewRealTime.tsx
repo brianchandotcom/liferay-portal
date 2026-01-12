@@ -8,6 +8,7 @@ import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React, {useMemo, useState} from 'react';
 import SearchableEntityTable from 'shared/components/SearchableEntityTable';
 import URLConstants from 'shared/util/url-constants';
+import {createOrderIOMap, NAME} from 'shared/util/pagination';
 import {
 	CUSTOM_DATE_FORMAT,
 	formatUTCDate,
@@ -16,12 +17,11 @@ import {
 import {fetchMembershipChangesAggregations} from 'shared/api/individual-segment';
 import {FilterOptionType} from 'shared/types';
 import {membershipChangesColumns} from 'shared/util/table-columns';
-import {OrderByDirections, SegmentTypes} from 'shared/util/constants';
-import {OrderedMap} from 'immutable';
-import {OrderParams, Segment} from 'shared/util/records';
 import {ReferencedObjectsProvider} from 'segment/segment-editor/dynamic/context/referencedObjects';
 import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
+import {Segment} from 'shared/util/records';
 import {SegmentGrowthChart} from 'segment/components/Growth';
+import {SegmentTypes} from 'shared/util/constants';
 import {Text} from '@clayui/core';
 import {useRequest} from 'shared/hooks/useRequest';
 import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
@@ -117,7 +117,7 @@ const SelectedPointInfo = ({dateRange, onClear, selectedPointState}) => {
 			<div className='selected-point-info'>
 				<Text color='secondary' size={3}>
 					{membersLanguageKey} {dateRange}
-					{selectedPointState.hasSelectedPoint ? (
+					{selectedPointState.hasSelectedPoint && (
 						<Button
 							className='ml-3'
 							displayType='unstyled'
@@ -127,7 +127,7 @@ const SelectedPointInfo = ({dateRange, onClear, selectedPointState}) => {
 								{Liferay.Language.get('clear-date-selection')}
 							</Text>
 						</Button>
-					) : null}
+					)}
 				</Text>
 			</div>
 		</div>
@@ -196,14 +196,7 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 	};
 
 	const paginationParams = useStatefulPagination(null, {
-		initialDelta: 20,
-		initialOrderIOMap: OrderedMap({
-			['name']: new OrderParams({
-				field: 'name',
-				sortOrder: OrderByDirections.Descending
-			})
-		}),
-		initialPage: 0
+		initialOrderIOMap: createOrderIOMap(NAME)
 	});
 
 	const orderByOptions = useMemo(
@@ -292,7 +285,7 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 							<div className='segment-growth-chart-container'>
 								<SegmentGrowthChart
 									alwaysShowSelectedTooltip
-									data={(data || []).map(item => ({
+									data={data?.map(item => ({
 										added: item.addedIndividualsCount,
 										anonymousCount:
 											item.anonymousIndividualsCount,
@@ -313,11 +306,16 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 											data[data.length - 1]
 												.knownIndividualsCount
 									}}
+									onSelectedPointChange={(
+										selectedPoint: number
+									) => {
+										setSelectedPointState({
+											hasSelectedPoint: true,
+											selectedPoint
+										});
+									}}
 									selectedPoint={
 										selectedPointState.selectedPoint
-									}
-									setSelectedPointState={
-										setSelectedPointState
 									}
 								/>
 							</div>

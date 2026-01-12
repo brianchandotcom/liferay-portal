@@ -170,10 +170,16 @@ export function fetchRealTimeMembershipChanges({
 		day: date,
 		delta,
 		orderByFields,
-		profileTypes: profileTypes.length ? profileTypes : undefined,
-		query: query || undefined,
-		types: types.length ? types : undefined
+		query
 	};
+
+	if (profileTypes.length) {
+		data.profileTypes = profileTypes;
+	}
+
+	if (types.length) {
+		data.types = types;
+	}
 
 	return sendRequest({
 		data,

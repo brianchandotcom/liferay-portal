@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -113,9 +114,13 @@ public class ExportImportLocalServiceTest {
 		serviceContext.setAttribute(
 			"portletLayoutPageTemplateEntryERC",
 			layoutPageTemplateEntry.getExternalReferenceCode());
+
+		Group layoutPageTemplateEntryGroup = _groupLocalService.getGroup(
+			layoutPageTemplateEntry.getGroupId());
+
 		serviceContext.setAttribute(
 			"portletLayoutPageTemplateEntryScopeERC",
-			group1.getExternalReferenceCode());
+			layoutPageTemplateEntryGroup.getExternalReferenceCode());
 
 		String layoutName = RandomTestUtil.randomString();
 
@@ -310,6 +315,9 @@ public class ExportImportLocalServiceTest {
 
 	@Inject
 	private ExportImportLocalService _exportImportLocalService;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private LayoutFriendlyURLEntryHelper _layoutFriendlyURLEntryHelper;

@@ -114,9 +114,14 @@ public class SearchLayoutFactory {
 
 		serviceContext.setAttribute(
 			"portletLayoutPageTemplateEntryLinkEnabled", Boolean.FALSE);
+
+		Group layoutPageTemplateEntryGroup = _groupLocalService.getGroup(
+			layoutPageTemplateEntry.getGroupId());
+
 		serviceContext.setAttribute(
 			"portletLayoutPageTemplateEntryScopeERC",
-			group.getExternalReferenceCode());
+			layoutPageTemplateEntryGroup.getExternalReferenceCode());
+
 		serviceContext.setUserId(group.getCreatorUserId());
 
 		_layoutLocalService.addLayout(

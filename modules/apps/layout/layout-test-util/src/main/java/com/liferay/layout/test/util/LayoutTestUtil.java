@@ -517,9 +517,13 @@ public class LayoutTestUtil {
 
 			serviceContext.setAttribute(
 				"portletLayoutPageTemplateEntryLinkEnabled", linkEnabled);
+
+			Group layoutPageTemplateEntryGroup = GroupLocalServiceUtil.getGroup(
+				layoutPageTemplateEntry.getGroupId());
+
 			serviceContext.setAttribute(
 				"portletLayoutPageTemplateEntryScopeERC",
-				group.getExternalReferenceCode());
+				layoutPageTemplateEntryGroup.getExternalReferenceCode());
 		}
 
 		return LayoutLocalServiceUtil.addLayout(

@@ -7,6 +7,8 @@ package com.liferay.object.model.bag;
 
 import com.liferay.object.model.ObjectField;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +17,7 @@ import java.util.Map;
 /**
  * @author Shuyang Zhou
  */
-public class ObjectFieldBag {
+public class ObjectFieldBag implements Serializable {
 
 	public ObjectFieldBag(List<ObjectField> objectFields) {
 		_objectFields = objectFields;

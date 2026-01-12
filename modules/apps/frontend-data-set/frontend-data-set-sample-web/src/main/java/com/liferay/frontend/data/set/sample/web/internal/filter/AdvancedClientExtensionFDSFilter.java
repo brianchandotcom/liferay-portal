@@ -46,7 +46,7 @@ public class AdvancedClientExtensionFDSFilter
 
 	@Override
 	public String getId() {
-		return "id";
+		return "clientExtension";
 	}
 
 	@Override

@@ -128,10 +128,9 @@ public class
 			argumentCaptor.capture()
 		);
 
-		Assert.assertEquals(
-			indexSearchLimit,
-			argumentCaptor.getValue(
-			).getSize());
+		SearchSearchRequest searchSearchRequest = argumentCaptor.getValue();
+
+		Assert.assertEquals(indexSearchLimit, searchSearchRequest.getSize());
 	}
 
 	private final IndexNameBuilder _indexNameBuilder = Mockito.mock(

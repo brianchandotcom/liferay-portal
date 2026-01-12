@@ -10,6 +10,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.BackgroundImageFragmentEd
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentEditableElementValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.HTMLFragmentEditableElementValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.ImageFragmentEditableElementValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.LinkFragmentEditableElementValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.TextFragmentEditableElementValue;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
@@ -78,6 +79,12 @@ public class FragmentEditableElementValueSerDes {
 			if (typeString.equals("Image")) {
 				return ImageFragmentEditableElementValueSerDes.toJSON(
 					(ImageFragmentEditableElementValue)
+						fragmentEditableElementValue);
+			}
+
+			if (typeString.equals("Link")) {
+				return LinkFragmentEditableElementValueSerDes.toJSON(
+					(LinkFragmentEditableElementValue)
 						fragmentEditableElementValue);
 			}
 
@@ -174,6 +181,10 @@ public class FragmentEditableElementValueSerDes {
 
 				if (typeString.equals("Image")) {
 					return ImageFragmentEditableElementValue.toDTO(json);
+				}
+
+				if (typeString.equals("Link")) {
+					return LinkFragmentEditableElementValue.toDTO(json);
 				}
 
 				if (typeString.equals("RichText")) {

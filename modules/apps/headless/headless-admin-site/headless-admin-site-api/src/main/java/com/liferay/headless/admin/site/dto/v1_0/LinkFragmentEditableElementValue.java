@@ -1,18 +1,13 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.dto.v1_0;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -41,90 +36,54 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "The fragment editable element value.",
-	value = "FragmentEditableElementValue"
+	description = "A fragment editable element of type link.",
+	value = "LinkFragmentEditableElementValue"
 )
 @JsonFilter("Liferay.Vulcan")
-@JsonSubTypes(
-	{
-		@JsonSubTypes.Type(
-			name = "Action", value = ActionFragmentEditableElementValue.class
-		),
-		@JsonSubTypes.Type(
-			name = "BackgroundImage",
-			value = BackgroundImageFragmentEditableElementValue.class
-		),
-		@JsonSubTypes.Type(
-			name = "HTML", value = HTMLFragmentEditableElementValue.class
-		),
-		@JsonSubTypes.Type(
-			name = "Image", value = ImageFragmentEditableElementValue.class
-		),
-		@JsonSubTypes.Type(
-			name = "Link", value = LinkFragmentEditableElementValue.class
-		),
-		@JsonSubTypes.Type(
-			name = "RichText", value = HTMLFragmentEditableElementValue.class
-		),
-		@JsonSubTypes.Type(
-			name = "Text", value = TextFragmentEditableElementValue.class
-		)
-	}
-)
-@JsonTypeInfo(
-	include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "type",
-	use = JsonTypeInfo.Id.NAME, visible = true
-)
-@XmlRootElement(name = "FragmentEditableElementValue")
-public abstract class FragmentEditableElementValue implements Serializable {
+@XmlRootElement(name = "LinkFragmentEditableElementValue")
+public class LinkFragmentEditableElementValue
+	extends FragmentEditableElementValue implements Serializable {
 
-	public static FragmentEditableElementValue toDTO(String json) {
+	public static LinkFragmentEditableElementValue toDTO(String json) {
 		return ObjectMapperUtil.readValue(
-			FragmentEditableElementValue.class, json);
+			LinkFragmentEditableElementValue.class, json);
 	}
 
-	public static FragmentEditableElementValue unsafeToDTO(String json) {
+	public static LinkFragmentEditableElementValue unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			FragmentEditableElementValue.class, json);
+			LinkFragmentEditableElementValue.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment editable element's type."
+		description = "The link text value for the link fragment editable element value."
 	)
-	@JsonGetter("type")
 	@Valid
-	public Type getType() {
-		if (_typeSupplier != null) {
-			type = _typeSupplier.get();
+	public FragmentLinkTextValue getFragmentLinkTextValue() {
+		if (_fragmentLinkTextValueSupplier != null) {
+			fragmentLinkTextValue = _fragmentLinkTextValueSupplier.get();
 
-			_typeSupplier = null;
+			_fragmentLinkTextValueSupplier = null;
 		}
 
-		return type;
+		return fragmentLinkTextValue;
+	}
+
+	public void setFragmentLinkTextValue(
+		FragmentLinkTextValue fragmentLinkTextValue) {
+
+		this.fragmentLinkTextValue = fragmentLinkTextValue;
+
+		_fragmentLinkTextValueSupplier = null;
 	}
 
 	@JsonIgnore
-	public String getTypeAsString() {
-		Type type = getType();
+	public void setFragmentLinkTextValue(
+		UnsafeSupplier<FragmentLinkTextValue, Exception>
+			fragmentLinkTextValueUnsafeSupplier) {
 
-		if (type == null) {
-			return null;
-		}
-
-		return type.toString();
-	}
-
-	public void setType(Type type) {
-		this.type = type;
-
-		_typeSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
-		_typeSupplier = () -> {
+		_fragmentLinkTextValueSupplier = () -> {
 			try {
-				return typeUnsafeSupplier.get();
+				return fragmentLinkTextValueUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -135,12 +94,14 @@ public abstract class FragmentEditableElementValue implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The fragment editable element's type.")
+	@GraphQLField(
+		description = "The link text value for the link fragment editable element value."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Type type;
+	protected FragmentLinkTextValue fragmentLinkTextValue;
 
 	@JsonIgnore
-	private Supplier<Type> _typeSupplier;
+	private Supplier<FragmentLinkTextValue> _fragmentLinkTextValueSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -148,15 +109,15 @@ public abstract class FragmentEditableElementValue implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof FragmentEditableElementValue)) {
+		if (!(object instanceof LinkFragmentEditableElementValue)) {
 			return false;
 		}
 
-		FragmentEditableElementValue fragmentEditableElementValue =
-			(FragmentEditableElementValue)object;
+		LinkFragmentEditableElementValue linkFragmentEditableElementValue =
+			(LinkFragmentEditableElementValue)object;
 
 		return Objects.equals(
-			toString(), fragmentEditableElementValue.toString());
+			toString(), linkFragmentEditableElementValue.toString());
 	}
 
 	@Override
@@ -170,6 +131,19 @@ public abstract class FragmentEditableElementValue implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		FragmentLinkTextValue fragmentLinkTextValue =
+			getFragmentLinkTextValue();
+
+		if (fragmentLinkTextValue != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fragmentLinkTextValue\": ");
+
+			sb.append(String.valueOf(fragmentLinkTextValue));
+		}
 
 		Type type = getType();
 
@@ -192,49 +166,10 @@ public abstract class FragmentEditableElementValue implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.FragmentEditableElementValue",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.LinkFragmentEditableElementValue",
 		name = "x-class-name"
 	)
 	public String xClassName;
-
-	@GraphQLName("Type")
-	public static enum Type {
-
-		ACTION("Action"), BACKGROUND_IMAGE("BackgroundImage"), HTML("HTML"),
-		IMAGE("Image"), LINK("Link"), RICH_TEXT("RichText"), TEXT("Text");
-
-		@JsonCreator
-		public static Type create(String value) {
-			if ((value == null) || value.equals("")) {
-				return null;
-			}
-
-			for (Type type : values()) {
-				if (Objects.equals(type.getValue(), value)) {
-					return type;
-				}
-			}
-
-			throw new IllegalArgumentException("Invalid enum value: " + value);
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private Type(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

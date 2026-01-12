@@ -1,12 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.client.dto.v1_0;
 
 import com.liferay.headless.admin.site.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.site.client.serdes.v1_0.TextFragmentEditableElementValueSerDes;
+import com.liferay.headless.admin.site.client.serdes.v1_0.LinkFragmentEditableElementValueSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -19,11 +19,11 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class TextFragmentEditableElementValue
+public class LinkFragmentEditableElementValue
 	extends FragmentEditableElementValue implements Cloneable, Serializable {
 
-	public static TextFragmentEditableElementValue toDTO(String json) {
-		return TextFragmentEditableElementValueSerDes.toDTO(json);
+	public static LinkFragmentEditableElementValue toDTO(String json) {
+		return LinkFragmentEditableElementValueSerDes.toDTO(json);
 	}
 
 	public FragmentLinkTextValue getFragmentLinkTextValue() {
@@ -51,10 +51,10 @@ public class TextFragmentEditableElementValue
 	protected FragmentLinkTextValue fragmentLinkTextValue;
 
 	@Override
-	public TextFragmentEditableElementValue clone()
+	public LinkFragmentEditableElementValue clone()
 		throws CloneNotSupportedException {
 
-		return (TextFragmentEditableElementValue)super.clone();
+		return (LinkFragmentEditableElementValue)super.clone();
 	}
 
 	@Override
@@ -63,15 +63,15 @@ public class TextFragmentEditableElementValue
 			return true;
 		}
 
-		if (!(object instanceof TextFragmentEditableElementValue)) {
+		if (!(object instanceof LinkFragmentEditableElementValue)) {
 			return false;
 		}
 
-		TextFragmentEditableElementValue textFragmentEditableElementValue =
-			(TextFragmentEditableElementValue)object;
+		LinkFragmentEditableElementValue linkFragmentEditableElementValue =
+			(LinkFragmentEditableElementValue)object;
 
 		return Objects.equals(
-			toString(), textFragmentEditableElementValue.toString());
+			toString(), linkFragmentEditableElementValue.toString());
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public class TextFragmentEditableElementValue
 	}
 
 	public String toString() {
-		return TextFragmentEditableElementValueSerDes.toJSON(this);
+		return LinkFragmentEditableElementValueSerDes.toJSON(this);
 	}
 
 }

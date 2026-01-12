@@ -7,13 +7,18 @@ package com.liferay.client.extension.web.internal.frontend.data.set.provider;
 
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.client.extension.web.internal.constants.ClientExtensionAdminFDSNames;
+import com.liferay.client.extension.web.internal.constants.ClientExtensionAdminPortletKeys;
 import com.liferay.client.extension.web.internal.frontend.data.set.model.CETFDSEntry;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -44,6 +49,8 @@ public class CETFDSDataProvider implements FDSDataProvider<CETFDSEntry> {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		_checkPermission(themeDisplay);
+
 		return TransformUtil.transform(
 			_cetManager.getCETs(
 				themeDisplay.getCompanyId(), fdsKeywords.getKeywords(), null,
@@ -62,11 +69,31 @@ public class CETFDSDataProvider implements FDSDataProvider<CETFDSEntry> {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		_checkPermission(themeDisplay);
+
 		return _cetManager.getCETsCount(
 			themeDisplay.getCompanyId(), fdsKeywords.getKeywords(), null);
 	}
 
+	private void _checkPermission(ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		if (!PortletPermissionUtil.hasControlPanelAccessPermission(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroupId(), _portlet)) {
+
+			throw new PrincipalException.MustHavePermission(
+				themeDisplay.getPermissionChecker(), _portlet.getPortletClass(),
+				_portlet.getPortletId(), ActionKeys.ACCESS_IN_CONTROL_PANEL);
+		}
+	}
+
 	@Reference
 	private CETManager _cetManager;
+
+	@Reference(
+		target = "(jakarta.portlet.name=" + ClientExtensionAdminPortletKeys.CLIENT_EXTENSION_ADMIN + ")"
+	)
+	private Portlet _portlet;
 
 }

@@ -13,12 +13,10 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryService;
-import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -96,67 +94,73 @@ public class ProjectBreadcrumbComponentSectionFragmentRenderer
 
 		return HashMapBuilder.<String, Object>put(
 			"actionItems",
-			_putAll(
-				unsafeConsumer -> {
-					if (_objectEntryService.hasModelResourcePermission(
-							objectEntry, ActionKeys.UPDATE)) {
+			() -> {
+				JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-						unsafeConsumer.accept(
-							JSONUtil.put(
-								"href",
+				if (_objectEntryService.hasModelResourcePermission(
+						objectEntry, ActionKeys.UPDATE)) {
+
+					jsonArray.put(
+						JSONUtil.put(
+							"href",
+							StringBundler.concat(
+								ActionUtil.getBaseEditProjectURL(
+									objectDefinition, themeDisplay),
+								objectEntry.getObjectEntryId(), "?redirect=",
+								themeDisplay.getURLCurrent())
+						).put(
+							"label",
+							LanguageUtil.get(httpServletRequest, "edit")
+						).put(
+							"symbolLeft", "pencil"
+						));
+				}
+
+				if (_objectEntryService.hasModelResourcePermission(
+						objectEntry, ActionKeys.DELETE)) {
+
+					jsonArray.put(
+						JSONUtil.put(
+							"confirmationMessage",
+							LanguageUtil.format(
+								httpServletRequest,
+								"delete-asset-confirmation-body", title)
+						).put(
+							"confirmationTitle",
+							LanguageUtil.format(
+								httpServletRequest,
+								"delete-asset-confirmation-title", title)
+						).put(
+							"href",
+							StringBundler.concat(
+								"/o", objectDefinition.getRESTContextPath(),
+								StringPool.SLASH,
+								objectEntry.getObjectEntryId())
+						).put(
+							"label",
+							LanguageUtil.get(httpServletRequest, "delete")
+						).put(
+							"redirect", ActionUtil.getProjectsURL(themeDisplay)
+						).put(
+							"successMessage",
+							LanguageUtil.format(
+								httpServletRequest,
+								"x-was-successfully-deleted",
 								StringBundler.concat(
-									ActionUtil.getBaseEditProjectURL(
-										objectDefinition, themeDisplay),
-									objectEntry.getObjectEntryId(),
-									"?redirect=", themeDisplay.getURLCurrent())
-							).put(
-								"label",
-								LanguageUtil.get(httpServletRequest, "edit")
-							).put(
-								"symbolLeft", "pencil"
-							));
-					}
+									"<strong>", title, "</strong>"))
+						).put(
+							"symbolLeft", "trash"
+						).put(
+							"target", "asyncDelete"
+						));
+				}
 
-					if (_objectEntryService.hasModelResourcePermission(
-							objectEntry, ActionKeys.DELETE)) {
+				if (jsonArray.length() == 0) {
+					return null;
+				}
 
-						unsafeConsumer.accept(
-							JSONUtil.put(
-								"confirmationMessage",
-								LanguageUtil.format(
-									httpServletRequest,
-									"delete-asset-confirmation-body", title)
-							).put(
-								"confirmationTitle",
-								LanguageUtil.format(
-									httpServletRequest,
-									"delete-asset-confirmation-title", title)
-							).put(
-								"href",
-								StringBundler.concat(
-									"/o", objectDefinition.getRESTContextPath(),
-									StringPool.SLASH,
-									objectEntry.getObjectEntryId())
-							).put(
-								"label",
-								LanguageUtil.get(httpServletRequest, "delete")
-							).put(
-								"redirect",
-								ActionUtil.getProjectsURL(themeDisplay)
-							).put(
-								"successMessage",
-								LanguageUtil.format(
-									httpServletRequest,
-									"x-was-successfully-deleted",
-									StringBundler.concat(
-										"<strong>", title, "</strong>"))
-							).put(
-								"symbolLeft", "trash"
-							).put(
-								"target", "asyncDelete"
-							));
-					}
-				})
+				return jsonArray;
+			}
 		).put(
 			"breadcrumbItems",
 			JSONUtil.putAll(
@@ -179,22 +183,6 @@ public class ProjectBreadcrumbComponentSectionFragmentRenderer
 		).put(
 			"size", "lg"
 		).build();
-	}
-
-	private JSONArray _putAll(
-			UnsafeConsumer<UnsafeConsumer<JSONObject, Exception>, Exception>
-				unsafeConsumer)
-		throws Exception {
-
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-		unsafeConsumer.accept(jsonArray::put);
-
-		if (jsonArray.length() == 0) {
-			return null;
-		}
-
-		return jsonArray;
 	}
 
 	@Reference

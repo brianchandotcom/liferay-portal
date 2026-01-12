@@ -358,7 +358,13 @@ export class PublisherAppPage {
 	}
 
 	async waitForStep(step: Steps) {
-		await this.page.waitForSelector(`.list-item-selected-${step}`);
+		await this.page.waitForSelector(
+			`.app-flow-list-item-container:has(
+				svg.app-flow-list-item-icon-selected
+			):has(
+				li:has-text("${step}")
+			)`
+		);
 	}
 
 	async goto() {

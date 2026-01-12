@@ -1314,6 +1314,7 @@ components:
                     BackgroundImage: "#/components/schemas/BackgroundImageFragmentEditableElementValue"
                     HTML: "#/components/schemas/HTMLFragmentEditableElementValue"
                     Image: "#/components/schemas/ImageFragmentEditableElementValue"
+                    Link: "#/components/schemas/LinkFragmentEditableElementValue"
                     RichText: "#/components/schemas/HTMLFragmentEditableElementValue"
                     Text: "#/components/schemas/TextFragmentEditableElementValue"
                 propertyName: type
@@ -1327,6 +1328,7 @@ components:
                         -   BackgroundImage
                         -   HTML
                         -   Image
+                        -   Link
                         -   RichText
                         -   Text
                     type: string
@@ -2165,6 +2167,19 @@ components:
             # @review
             description:
                 The value of a fragment configuration field of type length.
+            type: object
+        LinkFragmentEditableElementValue:
+            allOf:
+                -   $ref: "#/components/schemas/FragmentEditableElementValue"
+                -   properties:
+                        fragmentLinkTextValue:
+                            $ref: "#/components/schemas/FragmentLinkTextValue"
+                            # @review
+                            description:
+                                The link text value for the link fragment editable element value.
+            # @review
+            description:
+                A fragment editable element of type link.
             type: object
         ListStyle:
             # @review

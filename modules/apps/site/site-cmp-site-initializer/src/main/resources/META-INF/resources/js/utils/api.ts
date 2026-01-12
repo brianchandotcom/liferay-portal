@@ -24,3 +24,17 @@ export async function patchProjectById({
 		method: 'PATCH',
 	});
 }
+
+export async function patchTaskById({
+	body,
+	taskId,
+}: {
+	body: {[key: string]: any};
+	taskId: string;
+}): Promise<Response> {
+	return await fetch(`/o/cmp/tasks/${taskId}`, {
+		body: JSON.stringify(body),
+		headers,
+		method: 'PATCH',
+	});
+}

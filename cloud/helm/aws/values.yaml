@@ -22,106 +22,106 @@ liferay-default:
                 secretKey=""
     customEnv:
         x-liferay-aws:
-            -   name: LIFERAY_NETWORK_HOST_ADDRESSES
-                value: https://$(OPENSEARCH_ENDPOINT):443
-            -   name: LIFERAY_OPENSEARCH_ENABLED
-                value: "true"
-            -   name: LIFERAY_OPENSEARCH_PASSWORD
-                value: $(OPENSEARCH_PASSWORD)
+            - name: LIFERAY_NETWORK_HOST_ADDRESSES
+              value: https://$(OPENSEARCH_ENDPOINT):443
+            - name: LIFERAY_OPENSEARCH_ENABLED
+              value: "true"
+            - name: LIFERAY_OPENSEARCH_PASSWORD
+              value: $(OPENSEARCH_PASSWORD)
     customEnvFrom:
         x-liferay-aws:
-            -   secretRef:
-                    name: managed-service-details
+            - secretRef:
+                  name: managed-service-details
     customInitContainers:
         x-liferay-install-opensearch-modules:
-          - containerTemplate: |
-              - command:
-                    - sh
-                    - -c
-                    - |
-                      set -e
-                      DOWNLOAD_FOLDER="$(mktemp -d)"
-                      PRODUCT_VERSION={{ .image.tag }}
-                      function download_opensearch_modules {
-                          local FILE_NAME_PREFIX="com.liferay.portal.search.opensearch2"
-                          local URL="https://releases.liferay.com/opensearch2/dxp/${PRODUCT_VERSION}/${FILE_NAME_PREFIX}.{api,impl}.jar"
-                          echo "Starting to download OpenSearch modules for Product Version ${PRODUCT_VERSION}..."
-                      if ! curl \
-                          --fail \
-                          --location \
-                          --output-dir "${DOWNLOAD_FOLDER}" \
-                          --remote-name \
-                          --retry 5 \
-                          --retry-all-errors \
-                          --retry-delay 2 \
-                          "$URL" ; then
-                              local EXIT_CODE=$?
-                              echo "Error: Failed to download OpenSearch modules (Exit code: ${EXIT_CODE})."
-                              echo "You are likely using an unsupported Liferay image. Please refer to https://releases.liferay.com/opensearch2/dxp"
-                              exit 1
-                      fi
-                      echo "OpenSearch modules downloaded successfully."
-                          }
-                          function main {
-                              download_opensearch_modules "$PRODUCT_VERSION"
-                              echo "Starting to install OpenSearch modules..."
-                              mv "${DOWNLOAD_FOLDER}"/* "/temp/liferay/deploy"
-                              echo "OpenSearch modules installed successfully."
-                          }
-                          main "$PRODUCT_VERSION"
-                image: curlimages/curl:latest
-                name: liferay-install-opensearch-modules
-                volumeMounts:
-                    - mountPath: /temp
-                      name: liferay-persistent-volume
+            - containerTemplate: |
+                  - command:
+                        - sh
+                        - -c
+                        - |
+                          set -e
+                          DOWNLOAD_FOLDER="$(mktemp -d)"
+                          PRODUCT_VERSION={{.image.tag}}
+                          function download_opensearch_modules {
+                              local FILE_NAME_PREFIX="com.liferay.portal.search.opensearch2"
+                              local URL="https://releases.liferay.com/opensearch2/dxp/${PRODUCT_VERSION}/${FILE_NAME_PREFIX}.{api,impl}.jar"
+                              echo "Starting to download OpenSearch modules for Product Version ${PRODUCT_VERSION}..."
+                          if ! curl \
+                              --fail \
+                              --location \
+                              --output-dir "${DOWNLOAD_FOLDER}" \
+                              --remote-name \
+                              --retry 5 \
+                              --retry-all-errors \
+                              --retry-delay 2 \
+                              "$URL" ; then
+                                  local EXIT_CODE=$?
+                                  echo "Error: Failed to download OpenSearch modules (Exit code: ${EXIT_CODE})."
+                                  echo "You are likely using an unsupported Liferay image. Please refer to https://releases.liferay.com/opensearch2/dxp"
+                                  exit 1
+                          fi
+                          echo "OpenSearch modules downloaded successfully."
+                              }
+                              function main {
+                                  download_opensearch_modules "$PRODUCT_VERSION"
+                                  echo "Starting to install OpenSearch modules..."
+                                  mv "${DOWNLOAD_FOLDER}"/* "/temp/liferay/deploy"
+                                  echo "OpenSearch modules installed successfully."
+                              }
+                              main "$PRODUCT_VERSION"
+                    image: curlimages/curl:latest
+                    name: liferay-install-opensearch-modules
+                    volumeMounts:
+                        - mountPath: /temp
+                          name: liferay-persistent-volume
         x-liferay-overlay:
-            -   containerTemplate: |
-                    -   command:
-                            -   bash
-                            -   -c
-                            -   |
-                                    {{- if and .overlay .overlay.enabled }}
-                                    {{- $overlay := .overlay -}}
-                                    {{- range $overlay.dirs }}
-                                    tree /mnt/liferay/
-                                    mkdir -p /temp/{{ . }}
-                                    cp -R /mnt/liferay/overlay/{{ . }}/* /temp/{{ . }}
-                                    tree /temp/{{ . }}
-                                    {{- end }}
-                                    {{- else }}
-                                    echo "Overlay is not enabled."
-                                    {{- end }}
-                        image: {{ printf "%s:%s" .image.repository (.image.tag | toString) }}
-                        imagePullPolicy: {{ .image.pullPolicy }}
-                        name: liferay-overlay
-                        {{- if and .overlay .overlay.enabled }}
-                        volumeMounts:
-                            -   mountPath: /mnt/liferay/overlay
-                                name: {{ .overlay.bucketName }}
-                                subPath: {{ .overlay.bucketPath }}
-                            -   mountPath: /temp
-                                name: liferay-persistent-volume
-                        {{- end }}
+            - containerTemplate: |
+                  - command:
+                        - bash
+                        - -c
+                        - |
+                              {{- if and .overlay .overlay.enabled}}
+                              {{- $overlay := .overlay -}}
+                              {{- range $overlay.dirs}}
+                              tree /mnt/liferay/
+                              mkdir -p /temp/{{.}}
+                              cp -R /mnt/liferay/overlay/{{.}}/* /temp/{{.}}
+                              tree /temp/{{.}}
+                              {{- end}}
+                              {{- else}}
+                              echo "Overlay is not enabled."
+                              {{- end}}
+                    image: {{printf "%s:%s" .image.repository (.image.tag | toString)}}
+                    imagePullPolicy: {{.image.pullPolicy}}
+                    name: liferay-overlay
+                    {{- if and .overlay .overlay.enabled}}
+                    volumeMounts:
+                        - mountPath: /mnt/liferay/overlay
+                          name: {{.overlay.bucketName}}
+                          subPath: {{.overlay.bucketPath}}
+                        - mountPath: /temp
+                          name: liferay-persistent-volume
+                    {{- end}}
     customLabels:
         origin: liferay-aws
     customVolumeMounts:
         x-liferay-aws:
-            -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.search.opensearch2.configuration.OpenSearchConfiguration.config
-                name: liferay-configmap
-                subPath: com.liferay.portal.search.opensearch2.configuration.OpenSearchConfiguration.config
-            -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.search.opensearch2.configuration.OpenSearchConnectionConfiguration-REMOTE.config
-                name: liferay-configmap
-                subPath: com.liferay.portal.search.opensearch2.configuration.OpenSearchConnectionConfiguration-REMOTE.config
-            -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config
-                name: liferay-configmap
-                subPath: com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config
+            - mountPath: /opt/liferay/osgi/configs/com.liferay.portal.search.opensearch2.configuration.OpenSearchConfiguration.config
+              name: liferay-configmap
+              subPath: com.liferay.portal.search.opensearch2.configuration.OpenSearchConfiguration.config
+            - mountPath: /opt/liferay/osgi/configs/com.liferay.portal.search.opensearch2.configuration.OpenSearchConnectionConfiguration-REMOTE.config
+              name: liferay-configmap
+              subPath: com.liferay.portal.search.opensearch2.configuration.OpenSearchConnectionConfiguration-REMOTE.config
+            - mountPath: /opt/liferay/osgi/configs/com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config
+              name: liferay-configmap
+              subPath: com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config
     portalBundleDenyList:
-        -   com.liferay.portal.search.elasticsearch.cross.cluster.replication.impl
-        -   com.liferay.portal.search.elasticsearch.monitoring.web
-        -   com.liferay.portal.search.elasticsearch7.api
-        -   com.liferay.portal.search.elasticsearch7.impl
-        -   com.liferay.portal.search.learning.to.rank.api
-        -   com.liferay.portal.search.learning.to.rank.impl
+        - com.liferay.portal.search.elasticsearch.cross.cluster.replication.impl
+        - com.liferay.portal.search.elasticsearch.monitoring.web
+        - com.liferay.portal.search.elasticsearch7.api
+        - com.liferay.portal.search.elasticsearch7.impl
+        - com.liferay.portal.search.learning.to.rank.api
+        - com.liferay.portal.search.learning.to.rank.impl
     portalProperties: |
         dl.store.impl=com.liferay.portal.store.s3.S3Store
         jdbc.default.driverClassName=org.postgresql.Driver
@@ -140,12 +140,12 @@ liferay-default:
             service.beta.kubernetes.io/aws-load-balancer-internal: "true"
         type: LoadBalancer
     volumeClaimTemplates:
-        -   metadata:
-                name: liferay-persistent-volume
-            spec:
-                accessModes:
-                    -   ReadWriteOnce
-                resources:
-                    requests:
-                        storage: 10Gi
-                storageClassName: gp3
+        - metadata:
+              name: liferay-persistent-volume
+          spec:
+              accessModes:
+                  - ReadWriteOnce
+              resources:
+                  requests:
+                      storage: 10Gi
+              storageClassName: gp3

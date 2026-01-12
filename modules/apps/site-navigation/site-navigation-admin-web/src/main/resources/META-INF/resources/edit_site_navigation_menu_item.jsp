@@ -21,42 +21,52 @@ SiteNavigationMenuItem siteNavigationMenuItem = SiteNavigationMenuItemLocalServi
 	SiteNavigationMenuItemType siteNavigationMenuItemType = siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(siteNavigationMenuItem.getType());
 	%>
 
-	<portlet:actionURL name="/site_navigation_admin/edit_site_navigation_menu_item" var="editSiteNavigationMenuItemURL" />
+	<c:choose>
+		<c:when test="<%= siteNavigationMenuItemType != null %>">
+			<portlet:actionURL name="/site_navigation_admin/edit_site_navigation_menu_item" var="editSiteNavigationMenuItemURL" />
 
-	<aui:form action="<%= editSiteNavigationMenuItemURL %>">
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-		<aui:input name="siteNavigationMenuId" type="hidden" value="<%= siteNavigationMenuItem.getSiteNavigationMenuId() %>" />
-		<aui:input name="siteNavigationMenuItemId" type="hidden" value="<%= siteNavigationMenuItem.getSiteNavigationMenuItemId() %>" />
-		<aui:input name="parentSiteNavigationMenuItemId" type="hidden" value="<%= siteNavigationMenuItem.getParentSiteNavigationMenuItemId() %>" />
+			<aui:form action="<%= editSiteNavigationMenuItemURL %>">
+				<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+				<aui:input name="siteNavigationMenuId" type="hidden" value="<%= siteNavigationMenuItem.getSiteNavigationMenuId() %>" />
+				<aui:input name="siteNavigationMenuItemId" type="hidden" value="<%= siteNavigationMenuItem.getSiteNavigationMenuItemId() %>" />
+				<aui:input name="parentSiteNavigationMenuItemId" type="hidden" value="<%= siteNavigationMenuItem.getParentSiteNavigationMenuItemId() %>" />
 
-		<%
-		siteNavigationMenuItemType.renderEditPage(request, PipingServletResponseFactory.createPipingServletResponse(pageContext), siteNavigationMenuItem);
-		%>
+				<%
+				siteNavigationMenuItemType.renderEditPage(request, PipingServletResponseFactory.createPipingServletResponse(pageContext), siteNavigationMenuItem);
+				%>
 
-		<c:if test="<%= CustomAttributesUtil.hasCustomAttributes(company.getCompanyId(), SiteNavigationMenuItem.class.getName(), siteNavigationMenuItemId, null) %>">
-			<liferay-expando:custom-attribute-list
-				className="<%= SiteNavigationMenuItem.class.getName() %>"
-				classPK="<%= siteNavigationMenuItemId %>"
-				editable="<%= true %>"
-				label="<%= true %>"
+				<c:if test="<%= CustomAttributesUtil.hasCustomAttributes(company.getCompanyId(), SiteNavigationMenuItem.class.getName(), siteNavigationMenuItemId, null) %>">
+					<liferay-expando:custom-attribute-list
+						className="<%= SiteNavigationMenuItem.class.getName() %>"
+						classPK="<%= siteNavigationMenuItemId %>"
+						editable="<%= true %>"
+						label="<%= true %>"
+					/>
+				</c:if>
+
+				<div>
+					<react:component
+						module="{NavigationMenuIconSelector} from site-navigation-taglib"
+						props='<%=
+							HashMapBuilder.<String, Object>put(
+								"selectedIcon", siteNavigationMenuItemType.getDisplayIcon(siteNavigationMenuItem)
+							).build()
+						%>'
+					/>
+				</div>
+
+				<clay:button
+					block="<%= true %>"
+					label="save"
+					type="submit"
+				/>
+			</aui:form>
+		</c:when>
+		<c:otherwise>
+			<clay:alert
+				displayType="warning"
+				message='<%= LanguageUtil.format(request, "this-navigation-menu-item-references-the-following-entity,-which-is-missing-or-not-yet-available-x", siteNavigationMenuItem.getType()) %>'
 			/>
-		</c:if>
-
-		<div>
-			<react:component
-				module="{NavigationMenuIconSelector} from site-navigation-taglib"
-				props='<%=
-					HashMapBuilder.<String, Object>put(
-						"selectedIcon", siteNavigationMenuItemType.getDisplayIcon(siteNavigationMenuItem)
-					).build()
-				%>'
-			/>
-		</div>
-
-		<clay:button
-			block="<%= true %>"
-			label="save"
-			type="submit"
-		/>
-	</aui:form>
+		</c:otherwise>
+	</c:choose>
 </c:if>

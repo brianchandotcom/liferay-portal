@@ -6,6 +6,7 @@
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>Fix Spelling and Grammar</name>
+	<description>An agent that fixes spelling and grammar issues of a given text.</description>
 	<version>1</version>
 	<llm>
 		<name>fixSpellingAndGrammar</name>

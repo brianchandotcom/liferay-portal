@@ -6,6 +6,7 @@
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>Make Shorter</name>
+	<description>An agent that reduces the length of the provided text while preserving all essential information, key points, and original intent.</description>
 	<version>1</version>
 	<llm>
 		<name>makeShorter</name>

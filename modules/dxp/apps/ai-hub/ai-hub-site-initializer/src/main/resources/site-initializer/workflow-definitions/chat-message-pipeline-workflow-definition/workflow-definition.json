@@ -1,6 +1,6 @@
 {
 	"active": true,
-	"description": "Generate content, summarize and classify data using LLM models.",
+	"description": "A Liferay Knowledge Agent that assists users by retrieving accurate information specifically from the Liferay Digital Experience Platform (DXP) instance.",
 	"externalReferenceCode": "L_CHAT_MESSAGE_PIPELINE",
 	"name": "Chat Message Pipeline",
 	"scope": "ai",

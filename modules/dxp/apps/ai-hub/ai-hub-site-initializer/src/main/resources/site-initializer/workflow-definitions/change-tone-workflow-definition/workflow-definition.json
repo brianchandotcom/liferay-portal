@@ -1,5 +1,6 @@
 {
 	"active": true,
+	"description": "An agent that alters the tone of a text to a specific tone.",
 	"externalReferenceCode": "L_CHANGE_TONE",
 	"name": "Change Tone",
 	"scope": "ai",

@@ -1,5 +1,6 @@
 {
 	"active": true,
+	"description": "An agent that expands the provided text by adding relevant and natural details that clarify or enrich its meaning.",
 	"externalReferenceCode": "L_MAKE_LONGER",
 	"name": "Make Longer",
 	"scope": "ai",

@@ -112,7 +112,7 @@ interface ISegmentGrowthChartProps {
 	height?: number;
 	individualCounts?: {anonymousCount: number; knownCount: number};
 	selectedPoint?: number;
-	setSelectedPointState?: (value) => void;
+	onSelectedPointChange?: (selectedPoint: number) => void;
 }
 
 interface ITooltipProps {
@@ -129,7 +129,7 @@ export const SegmentGrowthChart: React.FC<ISegmentGrowthChartProps> = ({
 		knownCount: 0
 	},
 	selectedPoint,
-	setSelectedPointState
+	onSelectedPointChange
 }) => {
 	const [legendHoverItem, setLegendHoverItem] = useState(null);
 	const [mouseOutside, setMouseOutside] = useState(false);
@@ -309,10 +309,7 @@ export const SegmentGrowthChart: React.FC<ISegmentGrowthChartProps> = ({
 			return;
 		}
 
-		setSelectedPointState({
-			hasSelectedPoint: true,
-			selectedPoint: data?.activeTooltipIndex
-		});
+		onSelectedPointChange(data?.activeTooltipIndex);
 	};
 
 	return (

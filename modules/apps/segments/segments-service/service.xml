@@ -193,6 +193,11 @@
 			<finder-column name="segmentsEntryERC" />
 			<finder-column name="segmentsEntryScopeERC" />
 		</finder>
+		<finder name="G_SEERC_SESERC" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="segmentsEntryERC" />
+			<finder-column name="segmentsEntryScopeERC" />
+		</finder>
 		<finder name="G_SEK_P" return-type="SegmentsExperience" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="segmentsExperienceKey" />

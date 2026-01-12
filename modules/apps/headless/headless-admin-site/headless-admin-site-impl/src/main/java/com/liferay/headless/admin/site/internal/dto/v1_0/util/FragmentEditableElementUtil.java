@@ -379,7 +379,7 @@ public class FragmentEditableElementUtil {
 		JSONObject jsonObject = _toConfigJSONObject(
 			companyId,
 			fragmentLinkTextValue.getFragmentEditableElementValueFragmentLink(),
-			infoItemServiceRegistry, scopeGroupId);
+			infoItemServiceRegistry, "link", scopeGroupId);
 
 		TextFragmentValue textFragmentValue =
 			fragmentLinkTextValue.getTextFragmentValue();
@@ -496,7 +496,7 @@ public class FragmentEditableElementUtil {
 			imageFragmentEditableElementValue.
 				getFragmentEditableElementValueFragmentLink(),
 			layoutStructureItemImporterContext.getInfoItemServiceRegistry(),
-			layoutStructureItemImporterContext.getGroupId());
+			"link", layoutStructureItemImporterContext.getGroupId());
 
 		FragmentImage fragmentImage =
 			imageFragmentEditableElementValue.getFragmentImage();
@@ -672,7 +672,8 @@ public class FragmentEditableElementUtil {
 		long companyId,
 		FragmentEditableElementValueFragmentLink
 			fragmentEditableElementValueFragmentLink,
-		InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId) {
+		InfoItemServiceRegistry infoItemServiceRegistry, String mapperType,
+		long scopeGroupId) {
 
 		return JSONUtil.put(
 			"config",
@@ -690,7 +691,7 @@ public class FragmentEditableElementUtil {
 					return null;
 				}
 
-				configJSONObject.put("mapperType", "link");
+				configJSONObject.put("mapperType", mapperType);
 
 				FragmentEditableElementValueFragmentLink.Prefix prefix =
 					fragmentEditableElementValueFragmentLink.getPrefix();

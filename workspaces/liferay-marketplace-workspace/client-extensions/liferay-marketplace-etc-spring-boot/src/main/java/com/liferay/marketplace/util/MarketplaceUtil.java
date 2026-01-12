@@ -21,7 +21,12 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import java.time.Instant;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.Map;
 import java.util.Objects;
@@ -98,7 +103,7 @@ public class MarketplaceUtil {
 		properties.setProperty(
 			"product-id", String.valueOf(product.getProductId()));
 		properties.setProperty(
-			"product-name", _getDefaultLocale(product.getName()));
+			"product-name", getDefaultLocale(product.getName()));
 		properties.setProperty("product-version-id", "1");
 		properties.setProperty(
 			"publisher-asset-version", publisherAssetLink.getVersion());
@@ -116,13 +121,13 @@ public class MarketplaceUtil {
 			"category", Arrays.toString(product.getCategories()));
 		properties.setProperty("context-names", "");
 		properties.setProperty(
-			"description", _getDefaultLocale(product.getDescription()));
+			"description", getDefaultLocale(product.getDescription()));
 		properties.setProperty("icon-url", product.getThumbnail());
 		properties.setProperty(
 			"remote-app-id", String.valueOf(product.getId()));
 		properties.setProperty("required", "false");
 		properties.setProperty("restart-required", "false");
-		properties.setProperty("title", _getDefaultLocale(product.getName()));
+		properties.setProperty("title", getDefaultLocale(product.getName()));
 		properties.setProperty("version", publisherAssetLink.getVersion());
 
 		return properties;
@@ -191,6 +196,14 @@ public class MarketplaceUtil {
 		}
 	}
 
+	public static String formatDateToISOString(Date date) {
+		if (date == null) {
+			return null;
+		}
+
+		return DateTimeFormatter.ISO_INSTANT.format(date.toInstant());
+	}
+
 	public static Map<String, Properties> getArtifactPropertiesMap(
 		Product product, Map<String, String> productSpecificationsMap,
 		PublisherAssetLink publisherAssetLink) {
@@ -227,6 +240,32 @@ public class MarketplaceUtil {
 		}
 
 		return new JSONObject();
+	}
+
+	public static String getDefaultLocale(Map<String, String> localeMap) {
+		return localeMap.get("en_US");
+	}
+
+	public static Date getOrderPurchaseEndDate(
+		String licenseType, String licenseUsageType) {
+
+		ZonedDateTime zonedDateTime = ZonedDateTime.now();
+
+		if (Objects.equals(licenseUsageType, "trial")) {
+			return Date.from(
+				zonedDateTime.plusMonths(
+					1
+				).toInstant());
+		}
+		else if (Objects.equals(licenseType, "Subscription")) {
+			Instant instant = zonedDateTime.plusYears(
+				1
+			).toInstant();
+
+			return Date.from(instant);
+		}
+
+		return null;
 	}
 
 	public static String getSkuOptionValue(String key, SkuOption[] skuOptions) {
@@ -312,10 +351,6 @@ public class MarketplaceUtil {
 
 			zipOutputStream.closeEntry();
 		}
-	}
-
-	private static String _getDefaultLocale(Map<String, String> localeMap) {
-		return localeMap.get("en_US");
 	}
 
 	private static final Log _log = LogFactory.getLog(MarketplaceUtil.class);

@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -58,7 +57,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -180,22 +178,7 @@ public class UIItemsBuilder {
 	}
 
 	public DropdownItem createCheckoutDropdownItem() {
-		return DropdownItemBuilder.setDisabled(
-			() -> {
-				WorkflowInstanceLink workflowInstanceLink =
-					WorkflowInstanceLinkLocalServiceUtil.
-						fetchWorkflowInstanceLink(
-							_fileEntry.getCompanyId(), _fileEntry.getGroupId(),
-							DLFileEntry.class.getName(),
-							_fileVersion.getFileVersionId());
-
-				if (workflowInstanceLink != null) {
-					return true;
-				}
-
-				return false;
-			}
-		).setHref(
+		return DropdownItemBuilder.setHref(
 			PortletURLBuilder.create(
 				_getActionURL(
 					"/document_library/edit_file_entry", Constants.CHECKOUT)

@@ -1164,6 +1164,17 @@ public class FreeMarkerTool {
 			configYAML, propertyName, schema, schemas);
 	}
 
+	public boolean isExternalReferenceCodeExclusiveMethod(
+		String httpMethod, JavaMethodSignature javaMethodSignature) {
+
+		return StringUtil.equals(
+			StringBundler.concat(
+				httpMethod,
+				GetterUtil.getString(javaMethodSignature.getParentSchemaName()),
+				GetterUtil.getString(javaMethodSignature.getSchemaName())),
+			javaMethodSignature.getMethodName());
+	}
+
 	public boolean isExternalReferenceCodeMethod(
 		String httpMethod, JavaMethodSignature javaMethodSignature) {
 

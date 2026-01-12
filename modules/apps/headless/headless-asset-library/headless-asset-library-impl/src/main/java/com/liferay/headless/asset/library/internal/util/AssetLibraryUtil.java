@@ -5,11 +5,13 @@
 
 package com.liferay.headless.asset.library.internal.util;
 
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.headless.asset.library.dto.v1_0.AssetLibrary;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Adolfo Pérez
@@ -17,11 +19,25 @@ import java.util.Map;
 public class AssetLibraryUtil {
 
 	public static AssetLibrary.Type getAssetLibraryType(int depotEntryType) {
-		return _assetLibraryTypes[depotEntryType];
+		if (depotEntryType == DepotConstants.TYPE_ASSET_LIBRARY) {
+			return AssetLibrary.Type.ASSET_LIBRARY;
+		}
+		else if (depotEntryType == DepotConstants.TYPE_PROJECT) {
+			return AssetLibrary.Type.PROJECT;
+		}
+
+		return AssetLibrary.Type.SPACE;
 	}
 
 	public static int getDepotEntryType(AssetLibrary.Type assetLibraryType) {
-		return assetLibraryType.ordinal();
+		if (Objects.equals(assetLibraryType, AssetLibrary.Type.ASSET_LIBRARY)) {
+			return DepotConstants.TYPE_ASSET_LIBRARY;
+		}
+		else if (Objects.equals(assetLibraryType, AssetLibrary.Type.PROJECT)) {
+			return DepotConstants.TYPE_PROJECT;
+		}
+
+		return DepotConstants.TYPE_SPACE;
 	}
 
 	public static int getDepotEntryType(String assetLibraryTypeString) {
@@ -29,11 +45,6 @@ public class AssetLibraryUtil {
 			StringUtil.toLowerCase(assetLibraryTypeString));
 	}
 
-	private static final AssetLibrary.Type[] _assetLibraryTypes =
-		new AssetLibrary.Type[] {
-			AssetLibrary.Type.ASSET_LIBRARY, AssetLibrary.Type.PROJECT,
-			AssetLibrary.Type.SPACE
-		};
 	private static final Map<String, Integer> _depotEntryTypes =
 		HashMapBuilder.put(
 			StringUtil.toLowerCase(AssetLibrary.Type.ASSET_LIBRARY.getValue()),

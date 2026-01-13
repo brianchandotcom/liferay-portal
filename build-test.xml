@@ -17207,7 +17207,16 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 			</then>
 		</if>
 
-		<antcall target="run-selenium-test" />
+		<get-testcase-property property.name="skip.run.selenium.test" />
+
+		<if>
+			<not>
+				<equals arg1="${skip.run.selenium.test}" arg2="true" />
+			</not>
+			<then>
+				<antcall target="run-selenium-test" />
+			</then>
+		</if>
 
 		<if>
 			<equals arg1="${analytics.cloud.enabled}" arg2="true" />

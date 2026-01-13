@@ -9,6 +9,7 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.CustomMetaTag;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
+import com.liferay.headless.admin.site.dto.v1_0.PageSetPageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.PageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.SitePage;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSettings;
@@ -190,6 +191,13 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 			return new ContentPageSettings() {
 				{
 					setType(() -> Type.CONTENT_PAGE_SETTINGS);
+				}
+			};
+		}
+		else if (type == SitePage.Type.PAGE_SET_PAGE) {
+			return new PageSetPageSettings() {
+				{
+					setType(() -> Type.PAGE_SET_PAGE_SETTINGS);
 				}
 			};
 		}

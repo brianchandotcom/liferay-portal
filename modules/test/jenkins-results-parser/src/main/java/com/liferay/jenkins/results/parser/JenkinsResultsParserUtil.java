@@ -565,6 +565,7 @@ public class JenkinsResultsParserUtil {
 		string = string.replaceAll("'", "\\\\\\\'");
 		string = string.replaceAll("<", "\\\\\\<");
 		string = string.replaceAll(">", "\\\\\\>");
+		string = string.replaceAll(";", "\\\\;");
 		string = string.replaceAll("\"", "\\\\\\\"");
 		string = string.replaceAll("\\$", "\\\\\\$");
 		string = string.replaceAll("\\(", "\\\\\\(");

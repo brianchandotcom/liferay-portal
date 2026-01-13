@@ -148,7 +148,7 @@ test.describe('Publish Marketplace Apps', () => {
 			await publisherAppPage.fillPricing();
 			await publisherAppPage.fillSupport();
 			await publisherAppPage.reviewAndSubmit();
-			
+
 			const createdProduct =
 				await apiHelpers.headlessCommerceAdminCatalog.getProducts(
 					new URLSearchParams({
@@ -163,14 +163,15 @@ test.describe('Publish Marketplace Apps', () => {
 			await page.waitForResponse(
 				(r) =>
 					r.request().method() === 'POST' &&
-				r.url().includes('/o/c/publisherassetattachments')
+					r.url().includes('/o/c/publisherassetattachments')
 			);
-									
+
 			const response = await apiHelpers.get(
 				`/o/c/publisherassetses?sort=dateCreated:desc&pageSize=1`
 			);
 
-			const hasVersion = response.items[0]?.version === `${product.dxpVersions[0]}`;
+			const hasVersion =
+				response.items[0]?.version === `${product.dxpVersions[0]}`;
 			expect(hasVersion).toBeTruthy();
 
 			await expect(page.getByText(product.name)).toBeTruthy();

@@ -117,7 +117,7 @@ test.describe('Custumers Can View Marketplace App Details', () => {
 	test('LPD-30131 The customer can view the details tab and info', async ({
 		customerDashboardAppDetailsPage,
 		marketplace,
-		marketplaceHelper
+		marketplaceHelper,
 	}) => {
 		await customerDashboardAppDetailsPage.goto(marketplace.friendlyUrlPath);
 

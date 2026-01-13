@@ -86,22 +86,13 @@ public class TaskBreadcrumbComponentSectionFragmentRenderer
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				objectEntry.getObjectDefinitionId());
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		ObjectDefinition parentObjectDefinition =
-			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					"L_CMP_PROJECT", themeDisplay.getCompanyId());
-
 		long parentObjectEntryId = MapUtil.getLong(
 			objectEntry.getValues(), "r_cmpProjectToCMPTask_c_cmpProjectId");
 		String title = MapUtil.getString(objectEntry.getValues(), "title");
 
-		String viewProjectURL = ActionUtil.getBaseViewProjectURL(
-			parentObjectDefinition, themeDisplay);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return HashMapBuilder.<String, Object>put(
 			"actionItems",
@@ -185,7 +176,18 @@ public class TaskBreadcrumbComponentSectionFragmentRenderer
 				JSONUtil.put(
 					"active", false
 				).put(
-					"href", viewProjectURL + parentObjectEntryId
+					"href",
+					() -> {
+						String viewProjectURL =
+							ActionUtil.getBaseViewProjectURL(
+								_objectDefinitionLocalService.
+									fetchObjectDefinitionByExternalReferenceCode(
+										"L_CMP_PROJECT",
+										themeDisplay.getCompanyId()),
+								themeDisplay);
+
+						return viewProjectURL + parentObjectEntryId;
+					}
 				).put(
 					"label",
 					() -> {

@@ -61,12 +61,11 @@ public class AddTaskStrutsActionTest {
 	public void setUp() throws Exception {
 		CMPTestUtil.getOrAddGroup(AddTaskStrutsActionTest.class);
 
+		_projectObjectEntry = CMPTestUtil.addProjectObjectEntry();
 		_taskObjectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
 					"L_CMP_TASK", TestPropsValues.getCompanyId());
-
-		_projectObjectEntry = CMPTestUtil.addProject();
 	}
 
 	@Test
@@ -111,17 +110,17 @@ public class AddTaskStrutsActionTest {
 			GetterUtil.getLong(objectEntryId));
 
 		Assert.assertEquals(
+			_projectObjectEntry.getGroupId(), taskObjectEntry.getGroupId());
+		Assert.assertEquals(
 			_taskObjectDefinition.getObjectDefinitionId(),
 			taskObjectEntry.getObjectDefinitionId());
 		Assert.assertEquals(
-			_projectObjectEntry.getGroupId(), taskObjectEntry.getGroupId());
+			WorkflowConstants.STATUS_DRAFT, taskObjectEntry.getStatus());
 		Assert.assertEquals(
 			_projectObjectEntry.getObjectEntryId(),
 			MapUtil.getLong(
 				taskObjectEntry.getValues(),
 				"r_cmpProjectToCMPTask_c_cmpProjectId"));
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_DRAFT, taskObjectEntry.getStatus());
 	}
 
 	@Inject(filter = "path=/cms/add_task")

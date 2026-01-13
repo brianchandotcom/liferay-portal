@@ -32,8 +32,6 @@
 			},
 			"modifiable": false,
 			"name": "DSRRoom",
-			"objectActions": [
-			],
 			"objectFields": [
 				{
 					"DBType": "Long",
@@ -221,6 +219,24 @@
 					"system": true,
 					"type": "String",
 					"unique": false
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"externalReferenceCode": "TEMPLATE_GROUP_ID",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Template Group ID"
+					},
+					"name": "templateGroupId",
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Long",
+					"unique": false
 				}
 			],
 			"objectFolderExternalReferenceCode": "L_DSR_STRUCTURES",
@@ -257,8 +273,6 @@
 			},
 			"modifiable": false,
 			"name": "DSRTemplate",
-			"objectActions": [
-			],
 			"objectFields": [
 				{
 					"DBType": "Long",
@@ -391,6 +405,24 @@
 					"state": false,
 					"system": true,
 					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"externalReferenceCode": "USAGES",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Usages"
+					},
+					"name": "usages",
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Long",
 					"unique": false
 				}
 			],

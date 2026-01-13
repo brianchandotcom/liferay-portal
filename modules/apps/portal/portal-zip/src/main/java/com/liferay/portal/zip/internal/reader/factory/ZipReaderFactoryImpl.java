@@ -20,9 +20,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Raymond Augé
  */
-@Component(
-	property = "service.ranking:Integer=1000", service = ZipReaderFactory.class
-)
+@Component(service = ZipReaderFactory.class)
 public class ZipReaderFactoryImpl implements ZipReaderFactory {
 
 	@Override

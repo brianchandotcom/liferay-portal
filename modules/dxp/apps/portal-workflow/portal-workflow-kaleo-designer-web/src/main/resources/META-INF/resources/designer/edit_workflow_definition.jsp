@@ -49,7 +49,7 @@ renderResponse.setTitle(LanguageUtil.get(request, titleKey));
 		).put(
 			"functionActionExecutors", kaleoDesignerDisplayContext.getFunctionActionExecutorsJSONArray()
 		).put(
-			"isView", view || !kaleoDesignerDisplayContext.canPublishWorkflowDefinition()
+			"isView", view || kaleoDesignerDisplayContext.isReadOnly()
 		).put(
 			"languageIds", LocaleUtil.toLanguageIds(LanguageUtil.getAvailableLocales())
 		).put(

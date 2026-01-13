@@ -370,7 +370,8 @@ Liferay.Util.unescapeHTML = unescapeHTML;
 
 Liferay.Util.checkAll = (...args) => {
 	import(
-		themeDisplay.getPathContext() +
+		themeDisplay.getCDNHost() +
+			themeDisplay.getPathContext() +
 			'/o/frontend-js-web/__liferay__/legacy.js'
 	).then(({checkAll}) => {
 		checkAll(...args);
@@ -378,7 +379,8 @@ Liferay.Util.checkAll = (...args) => {
 };
 Liferay.Util.checkAllBox = (...args) => {
 	import(
-		themeDisplay.getPathContext() +
+		themeDisplay.getCDNHost() +
+			themeDisplay.getPathContext() +
 			'/o/frontend-js-web/__liferay__/legacy.js'
 	).then(({checkAllBox}) => {
 		checkAllBox(...args);

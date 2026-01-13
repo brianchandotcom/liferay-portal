@@ -277,15 +277,16 @@ public class ClassNameUpgradeProcessTest {
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
 				"insert into DDMStructure (mvccVersion, ctCollectionId, " +
-					"structureId, companyId, classNameId, structureKey) " +
-						"values (?, ?, ?, ?, ?, ?)")) {
+					"uuid_, structureId, companyId, classNameId, " +
+						"structureKey) values (?, ?, ?, ?, ?, ?, ?)")) {
 
 			preparedStatement.setLong(1, 0);
 			preparedStatement.setLong(2, 0);
-			preparedStatement.setLong(3, structureId);
-			preparedStatement.setLong(4, _companyId);
-			preparedStatement.setLong(5, classNameId);
-			preparedStatement.setString(6, RandomTestUtil.randomString());
+			preparedStatement.setString(3, RandomTestUtil.randomString());
+			preparedStatement.setLong(4, structureId);
+			preparedStatement.setLong(5, _companyId);
+			preparedStatement.setLong(6, classNameId);
+			preparedStatement.setString(7, RandomTestUtil.randomString());
 
 			preparedStatement.executeUpdate();
 		}
@@ -298,14 +299,15 @@ public class ClassNameUpgradeProcessTest {
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
 				"insert into DDMStructureLink (mvccVersion, ctCollectionId, " +
-					"structureLinkId, companyId, structureId) values (?, ?, " +
-						"?, ?, ?)")) {
+					"structureLinkId, companyId, classPK, structureId) " +
+						"values (?, ?, ?, ?, ?, ?)")) {
 
 			preparedStatement.setLong(1, 0);
 			preparedStatement.setLong(2, 0);
 			preparedStatement.setLong(3, RandomTestUtil.nextLong());
 			preparedStatement.setLong(4, _companyId);
-			preparedStatement.setLong(5, structureId);
+			preparedStatement.setLong(5, RandomTestUtil.randomLong());
+			preparedStatement.setLong(6, structureId);
 
 			preparedStatement.executeUpdate();
 		}
@@ -328,42 +330,49 @@ public class ClassNameUpgradeProcessTest {
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
 				"insert into DDMStorageLink (mvccVersion, ctCollectionId, " +
-					"storageLinkId, companyId, structureId, " +
-						"structureVersionId) values (?, ?, ?, ?, ?, ?)")) {
+					"storageLinkId, companyId, classPK, structureId, " +
+						"structureVersionId) values (?, ?, ?, ?, ?, ?, ?)")) {
 
 			preparedStatement.setLong(1, 0);
 			preparedStatement.setLong(2, 0);
 			preparedStatement.setLong(3, RandomTestUtil.nextLong());
 			preparedStatement.setLong(4, _companyId);
-			preparedStatement.setLong(5, structureId);
-			preparedStatement.setLong(6, structureVersionId);
+			preparedStatement.setLong(5, RandomTestUtil.randomLong());
+			preparedStatement.setLong(6, structureId);
+			preparedStatement.setLong(7, structureVersionId);
 
 			preparedStatement.executeUpdate();
 		}
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
 				"insert into DDMField (mvccVersion, ctCollectionId, fieldId, " +
-					"companyId, structureVersionId) values (?, ?, ?, ?, ?)")) {
+					"companyId, storageId, structureVersionId) values (?, ?, " +
+						"?, ?, ?, ?)")) {
 
 			preparedStatement.setLong(1, 0);
 			preparedStatement.setLong(2, 0);
 			preparedStatement.setLong(3, RandomTestUtil.nextLong());
 			preparedStatement.setLong(4, _companyId);
-			preparedStatement.setLong(5, structureVersionId);
+			preparedStatement.setLong(5, RandomTestUtil.randomLong());
+			preparedStatement.setLong(6, structureVersionId);
 
 			preparedStatement.executeUpdate();
 		}
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
-				"insert into DDMStructureLayout (mvccVersion, " +
-					"ctCollectionId, structureLayoutId, companyId, " +
-						"structureVersionId) values (?, ?, ?, ?, ?)")) {
+				StringBundler.concat(
+					"insert into DDMStructureLayout (mvccVersion, ",
+					"ctCollectionId, uuid_, structureLayoutId, companyId, ",
+					"structureLayoutKey, structureVersionId) values (?, ?, ?, ",
+					"?, ?, ?, ?)"))) {
 
 			preparedStatement.setLong(1, 0);
 			preparedStatement.setLong(2, 0);
-			preparedStatement.setLong(3, RandomTestUtil.nextLong());
-			preparedStatement.setLong(4, _companyId);
-			preparedStatement.setLong(5, structureVersionId);
+			preparedStatement.setString(3, RandomTestUtil.randomString());
+			preparedStatement.setLong(4, RandomTestUtil.nextLong());
+			preparedStatement.setLong(5, _companyId);
+			preparedStatement.setString(6, RandomTestUtil.randomString());
+			preparedStatement.setLong(7, structureVersionId);
 
 			preparedStatement.executeUpdate();
 		}
@@ -375,15 +384,19 @@ public class ClassNameUpgradeProcessTest {
 		long fileEntryMetadataId = RandomTestUtil.nextLong();
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
-				"insert into DLFileEntryMetadata (mvccVersion, " +
-					"ctCollectionId, fileEntryMetadataId, companyId, " +
-						"DDMStructureId) values (?, ?, ?, ?, ?)")) {
+				StringBundler.concat(
+					"insert into DLFileEntryMetadata (mvccVersion, ",
+					"ctCollectionId, fileEntryMetadataId, companyId, ",
+					"DDMStructureId, fileVersionId, externalReferenceCode) ",
+					"values (?, ?, ?, ?, ?, ?, ?)"))) {
 
 			preparedStatement.setLong(1, 0);
 			preparedStatement.setLong(2, 0);
 			preparedStatement.setLong(3, fileEntryMetadataId);
 			preparedStatement.setLong(4, _companyId);
 			preparedStatement.setLong(5, structureId);
+			preparedStatement.setLong(6, RandomTestUtil.randomLong());
+			preparedStatement.setString(7, RandomTestUtil.randomString());
 
 			preparedStatement.executeUpdate();
 		}

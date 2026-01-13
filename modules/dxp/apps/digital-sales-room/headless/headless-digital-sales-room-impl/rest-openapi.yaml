@@ -1,5 +1,35 @@
 components:
     schemas:
+        Comment:
+            properties:
+                category:
+                    type: string
+                creator:
+                    $ref: ../../../../../apps/headless/headless-delivery/headless-delivery-impl/rest-openapi.yaml#Creator
+                    readOnly: true
+                dateCreated:
+                    format: date-time
+                    readOnly: true
+                    type: string
+                dateModified:
+                    format: date-time
+                    readOnly: true
+                    type: string
+                externalReferenceCode:
+                    readOnly: true
+                    type: string
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                numberOfComments:
+                    readOnly: true
+                    type: integer
+                parentCommentId:
+                    format: int64
+                    type: integer
+                text:
+                    type: string
         DigitalSalesRoom:
             properties:
                 accountId:
@@ -428,6 +458,73 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/DigitalSalesRoom"
             tags: ["DigitalSalesRoom"]
+    "/digital-sales-rooms/{digitalSalesRoomId}/comments":
+        get:
+            operationId: getDigitalSalesRoomCommentsPage
+            parameters:
+                -   in: path
+                    name: digitalSalesRoomId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Comment"
+                                    type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Comment"
+                                    type: array
+            tags: ["Comment"]
+        post:
+            operationId: postDigitalSalesRoomComment
+            parameters:
+                -   in: path
+                    name: digitalSalesRoomId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Comment"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Comment"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+            tags: ["Comment"]
     "/digital-sales-rooms/{digitalSalesRoomId}/digital-sales-room-templates":
         get:
             operationId: getDigitalSalesRoomDigitalSalesRoomTemplatesPage

@@ -39,6 +39,10 @@ public class WorkflowContextUtil {
 			).put(
 				"sendOutBoundEvent",
 				(BiConsumer<String, String> & Serializable)(data, name) -> {
+					if (sseEventSinkKey == null) {
+						return;
+					}
+
 					SseEventSink sseEventSink = SseUtil.getSSEEventSink(
 						sseEventSinkKey);
 

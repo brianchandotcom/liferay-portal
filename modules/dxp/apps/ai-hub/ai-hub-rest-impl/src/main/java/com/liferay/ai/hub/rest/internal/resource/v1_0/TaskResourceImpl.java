@@ -48,10 +48,7 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 	}
 
 	@Override
-	public Task postByExternalReferenceCodeTask(
-			String externalReferenceCode, Task task)
-		throws Exception {
-
+	public Task postTask(Task task) throws Exception {
 		if (!FeatureFlagManagerUtil.isEnabled(
 				contextCompany.getCompanyId(), "LPD-62272")) {
 
@@ -61,7 +58,7 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 		Map<String, Serializable> workflowContext =
 			WorkflowContextUtil.toWorkflowContext(
 				task.getContext(), contextHttpServletRequest, _sse,
-				externalReferenceCode);
+				task.getSseEventSinkKey());
 
 		workflowContext.put("outBoundEventName", task.getType());
 

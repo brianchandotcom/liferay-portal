@@ -185,14 +185,14 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 	@Ignore
 	@Override
 	@Test
-	public void testPostByExternalReferenceCodeTask() throws Exception {
-		_testPostByExternalReferenceCodeTask();
-		_testPostByExternalReferenceCodeTaskWithScope();
-		_testPostByExternalReferenceCodeTaskWithTypeAIDecisionNodeWithToolWorkflowDefinition();
-		_testPostByExternalReferenceCodeTaskWithTypeAIDecisionNodeWorkflowDefinition();
-		_testPostByExternalReferenceCodeTaskWithTypeFixSpellingAndGrammar();
-		_testPostByExternalReferenceCodeTaskWithTypeLLMNodeWithRAGWorkflowDefinition();
-		_testPostByExternalReferenceCodeTaskWithTypeLLMNodeWithToolWorkflowDefinition();
+	public void testPostTask() throws Exception {
+		_testPostTask();
+		_testPostTaskWithScope();
+		_testPostTaskWithTypeAIDecisionNodeWithToolWorkflowDefinition();
+		_testPostTaskWithTypeAIDecisionNodeWorkflowDefinition();
+		_testPostTaskWithTypeFixSpellingAndGrammar();
+		_testPostTaskWithTypeLLMNodeWithRAGWorkflowDefinition();
+		_testPostTaskWithTypeLLMNodeWithToolWorkflowDefinition();
 	}
 
 	private static byte[] _getContentBytes(String fileName) throws Exception {
@@ -204,16 +204,16 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		return content.getBytes();
 	}
 
-	private void _testPostByExternalReferenceCodeTask() throws Exception {
+	private void _testPostTask() throws Exception {
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"context", JSONUtil.put("text", RandomTestUtil.randomString())
 			).put(
+				"sseEventSinkKey", RandomTestUtil.randomString()
+			).put(
 				"type", "Workflow Definition"
 			).toString(),
-			"ai-hub/v1.0/by-external-reference-code/" +
-				RandomTestUtil.randomString() + "/tasks",
-			Http.Method.POST);
+			"ai-hub/v1.0/tasks", Http.Method.POST);
 
 		WorkflowInstance workflowInstance =
 			_workflowInstanceManager.getWorkflowInstance(
@@ -225,9 +225,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 			workflowInstance.getWorkflowDefinitionName());
 	}
 
-	private void _testPostByExternalReferenceCodeTaskWithScope()
-		throws Exception {
-
+	private void _testPostTaskWithScope() throws Exception {
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"context", JSONUtil.put("text", RandomTestUtil.randomString())
@@ -236,11 +234,11 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 				JSONUtil.put(
 					"externalReferenceCode", _group.getExternalReferenceCode())
 			).put(
+				"sseEventSinkKey", RandomTestUtil.randomString()
+			).put(
 				"type", "Workflow Definition"
 			).toString(),
-			"ai-hub/v1.0/by-external-reference-code/" +
-				RandomTestUtil.randomString() + "/tasks",
-			Http.Method.POST);
+			"ai-hub/v1.0/tasks", Http.Method.POST);
 
 		WorkflowInstance workflowInstance =
 			_workflowInstanceManager.getWorkflowInstance(
@@ -253,7 +251,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 			workflowInstance.getWorkflowDefinitionName());
 	}
 
-	private void _testPostByExternalReferenceCodeTaskWithTypeAIDecisionNodeWithToolWorkflowDefinition()
+	private void _testPostTaskWithTypeAIDecisionNodeWithToolWorkflowDefinition()
 		throws Exception {
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
@@ -266,11 +264,11 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 				JSONUtil.put(
 					"externalReferenceCode", _group.getExternalReferenceCode())
 			).put(
+				"sseEventSinkKey", RandomTestUtil.randomString()
+			).put(
 				"type", "AI Decision Node With Tool Workflow Definition"
 			).toString(),
-			"ai-hub/v1.0/by-external-reference-code/" +
-				RandomTestUtil.randomString() + "/tasks",
-			Http.Method.POST);
+			"ai-hub/v1.0/tasks", Http.Method.POST);
 
 		IdempotentRetryAssert.retryAssert(
 			5, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
@@ -291,22 +289,21 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 			});
 	}
 
-	private void _testPostByExternalReferenceCodeTaskWithTypeAIDecisionNodeWorkflowDefinition()
+	private void _testPostTaskWithTypeAIDecisionNodeWorkflowDefinition()
 		throws Exception {
 
-		_testPostByExternalReferenceCodeTaskWithTypeAIDecisionNodeWorkflowDefinition(
+		_testPostTaskWithTypeAIDecisionNodeWorkflowDefinition(
 			"Blue banana, or Blue Java, is a variety of a banana that grows " +
 				"in Brazil.",
 			"approved");
-		_testPostByExternalReferenceCodeTaskWithTypeAIDecisionNodeWorkflowDefinition(
+		_testPostTaskWithTypeAIDecisionNodeWorkflowDefinition(
 			"Innovative technology transforms everyday life with smarter " +
 				"digital solutions.",
 			"rejected");
 	}
 
-	private void
-			_testPostByExternalReferenceCodeTaskWithTypeAIDecisionNodeWorkflowDefinition(
-				String content, String workflowNodeName)
+	private void _testPostTaskWithTypeAIDecisionNodeWorkflowDefinition(
+			String content, String workflowNodeName)
 		throws Exception {
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
@@ -317,11 +314,11 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 				JSONUtil.put(
 					"externalReferenceCode", _group.getExternalReferenceCode())
 			).put(
+				"sseEventSinkKey", RandomTestUtil.randomString()
+			).put(
 				"type", "AI Decision Node Workflow Definition"
 			).toString(),
-			"ai-hub/v1.0/by-external-reference-code/" +
-				RandomTestUtil.randomString() + "/tasks",
-			Http.Method.POST);
+			"ai-hub/v1.0/tasks", Http.Method.POST);
 
 		IdempotentRetryAssert.retryAssert(
 			5, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
@@ -342,9 +339,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 			});
 	}
 
-	private void _testPostByExternalReferenceCodeTaskWithTypeFixSpellingAndGrammar()
-		throws Exception {
-
+	private void _testPostTaskWithTypeFixSpellingAndGrammar() throws Exception {
 		CountDownLatch countDownLatch = new CountDownLatch(4);
 		List<String> lines = new ArrayList<>();
 
@@ -355,12 +350,12 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 			JSONUtil.put(
 				"context", JSONUtil.put("text", "Thi text ix wrong.")
 			).put(
+				"sseEventSinkKey", sseEventSinkKey
+			).put(
 				"type",
 				WorkflowDefinitionConstants.NAME_FIX_SPELLING_AND_GRAMMAR
 			).toString(),
-			"ai-hub/v1.0/by-external-reference-code/" + sseEventSinkKey +
-				"/tasks",
-			Http.Method.POST);
+			"ai-hub/v1.0/tasks", Http.Method.POST);
 
 		Assert.assertTrue(countDownLatch.await(10, TimeUnit.SECONDS));
 
@@ -372,7 +367,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		SseUtil.closeAll();
 	}
 
-	private void _testPostByExternalReferenceCodeTaskWithTypeLLMNodeWithRAGWorkflowDefinition()
+	private void _testPostTaskWithTypeLLMNodeWithRAGWorkflowDefinition()
 		throws Exception {
 
 		CountDownLatch countDownLatch1 = new CountDownLatch(4);
@@ -392,11 +387,11 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 				JSONUtil.put(
 					"externalReferenceCode", _group.getExternalReferenceCode())
 			).put(
+				"sseEventSinkKey", sseEventSinkKey
+			).put(
 				"type", "LLM Node With RAG Workflow Definition"
 			).toString(),
-			"ai-hub/v1.0/by-external-reference-code/" + sseEventSinkKey +
-				"/tasks",
-			Http.Method.POST);
+			"ai-hub/v1.0/tasks", Http.Method.POST);
 
 		Assert.assertTrue(countDownLatch1.await(10, TimeUnit.SECONDS));
 
@@ -426,11 +421,11 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 				JSONUtil.put(
 					"externalReferenceCode", _group.getExternalReferenceCode())
 			).put(
+				"sseEventSinkKey", sseEventSinkKey
+			).put(
 				"type", "LLM Node With RAG Workflow Definition"
 			).toString(),
-			"ai-hub/v1.0/by-external-reference-code/" + sseEventSinkKey +
-				"/tasks",
-			Http.Method.POST);
+			"ai-hub/v1.0/tasks", Http.Method.POST);
 
 		Assert.assertTrue(countDownLatch2.await(10, TimeUnit.SECONDS));
 
@@ -443,7 +438,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		SseUtil.closeAll();
 	}
 
-	private void _testPostByExternalReferenceCodeTaskWithTypeLLMNodeWithToolWorkflowDefinition()
+	private void _testPostTaskWithTypeLLMNodeWithToolWorkflowDefinition()
 		throws Exception {
 
 		CountDownLatch countDownLatch = new CountDownLatch(4);
@@ -462,11 +457,11 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 				JSONUtil.put(
 					"externalReferenceCode", _group.getExternalReferenceCode())
 			).put(
+				"sseEventSinkKey", sseEventSinkKey
+			).put(
 				"type", "LLM Node With Tool Workflow Definition"
 			).toString(),
-			"ai-hub/v1.0/by-external-reference-code/" + sseEventSinkKey +
-				"/tasks",
-			Http.Method.POST);
+			"ai-hub/v1.0/tasks", Http.Method.POST);
 
 		Assert.assertTrue(countDownLatch.await(10, TimeUnit.SECONDS));
 

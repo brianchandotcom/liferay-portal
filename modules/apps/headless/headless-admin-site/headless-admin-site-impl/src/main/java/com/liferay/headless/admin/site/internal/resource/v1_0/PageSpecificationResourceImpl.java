@@ -29,6 +29,7 @@ import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
 import com.liferay.portal.kernel.exception.LockedLayoutException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -432,7 +433,9 @@ public class PageSpecificationResourceImpl
 		Layout draftLayout = layout.fetchDraftLayout();
 
 		if (draftLayout == null) {
-			if (!layout.isTypePortlet()) {
+			if (!layout.isTypePortlet() &&
+				!Objects.equals(layout.getType(), LayoutConstants.TYPE_NODE)) {
+
 				throw new UnsupportedOperationException();
 			}
 

@@ -339,7 +339,7 @@ public class SitePageResourceImpl
 				searchContext.setAttribute(
 					Field.TYPE,
 					new String[] {
-						LayoutConstants.TYPE_CONTENT,
+						LayoutConstants.TYPE_CONTENT, LayoutConstants.TYPE_NODE,
 						LayoutConstants.TYPE_PORTLET
 					});
 				searchContext.setAttribute(

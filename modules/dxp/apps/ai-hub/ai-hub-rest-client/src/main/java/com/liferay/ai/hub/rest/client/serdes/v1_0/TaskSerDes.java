@@ -78,6 +78,20 @@ public class TaskSerDes {
 			sb.append(String.valueOf(task.getScope()));
 		}
 
+		if (task.getSseEventSinkKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"sseEventSinkKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(task.getSseEventSinkKey()));
+
+			sb.append("\"");
+		}
+
 		if (task.getType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -133,6 +147,14 @@ public class TaskSerDes {
 			map.put("scope", String.valueOf(task.getScope()));
 		}
 
+		if (task.getSseEventSinkKey() == null) {
+			map.put("sseEventSinkKey", null);
+		}
+		else {
+			map.put(
+				"sseEventSinkKey", String.valueOf(task.getSseEventSinkKey()));
+		}
+
 		if (task.getType() == null) {
 			map.put("type", null);
 		}
@@ -168,6 +190,9 @@ public class TaskSerDes {
 			else if (Objects.equals(jsonParserFieldName, "scope")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "sseEventSinkKey")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				return false;
 			}
@@ -196,6 +221,11 @@ public class TaskSerDes {
 				if (jsonParserFieldValue != null) {
 					task.setScope(
 						ScopeSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "sseEventSinkKey")) {
+				if (jsonParserFieldValue != null) {
+					task.setSseEventSinkKey((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {

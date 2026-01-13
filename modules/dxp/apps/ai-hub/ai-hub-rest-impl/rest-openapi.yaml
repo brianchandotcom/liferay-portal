@@ -148,6 +148,7 @@ paths:
             tags: ["TaskDefinition"]
     "/tasks":
         post:
+            operationId: postTask
             requestBody:
                 content:
                     application/json:

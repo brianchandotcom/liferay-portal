@@ -1,0 +1,130 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.site.cmp.site.initializer.internal.display.context.test;
+
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.site.cmp.site.initializer.test.util.CMPTestUtil;
+
+import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.Assert;
+import org.junit.Before;
+
+import org.springframework.mock.web.MockHttpServletRequest;
+
+/**
+ * @author Pedro Leite
+ */
+public abstract class BaseSectionDisplayContextTestCase {
+
+	@Before
+	public void setUp() throws Exception {
+		CMPTestUtil.getOrAddGroup(BaseSectionDisplayContextTestCase.class);
+
+		objectDefinition =
+			objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					getObjectDefinitionExternalReferenceCode(),
+					TestPropsValues.getCompanyId());
+		themeDisplay = new ThemeDisplay() {
+			{
+				setCompany(
+					_companyLocalService.getCompany(
+						TestPropsValues.getCompanyId()));
+				setLocale(LocaleUtil.getDefault());
+				setURLCurrent("http://localhost:8080/currentURL");
+				setUser(TestPropsValues.getUser());
+			}
+		};
+	}
+
+	protected void assertFDSActionDropdownItem(
+		String expectedIcon, String expectedId, String expectedLabel,
+		String expectedMethod, FDSActionDropdownItem fdsActionDropdownItem) {
+
+		Map<String, String> data =
+			(Map<String, String>)fdsActionDropdownItem.get("data");
+
+		Assert.assertEquals(expectedId, data.get("id"));
+		Assert.assertEquals(expectedMethod, data.get("method"));
+
+		Assert.assertEquals(expectedIcon, fdsActionDropdownItem.get("icon"));
+		Assert.assertEquals(expectedLabel, fdsActionDropdownItem.get("label"));
+	}
+
+	protected CreationMenu getCreationMenu(AssetEntry assetEntry)
+		throws Exception {
+
+		return ReflectionTestUtil.invoke(
+			getSectionDisplayContext(_getMockHttpServletRequest(assetEntry)),
+			"getCreationMenu", new Class<?>[0]);
+	}
+
+	protected List<FDSActionDropdownItem> getFDSActionDropdownItems(
+			AssetEntry assetEntry)
+		throws Exception {
+
+		return ReflectionTestUtil.invoke(
+			getSectionDisplayContext(_getMockHttpServletRequest(assetEntry)),
+			"getFDSActionDropdownItems", new Class<?>[0]);
+	}
+
+	protected abstract String getObjectDefinitionExternalReferenceCode();
+
+	protected abstract Object getSectionDisplayContext(
+			HttpServletRequest httpServletRequest)
+		throws Exception;
+
+	protected String getValue(DropdownItem dropdownItem, String key) {
+		return MapUtil.getString(
+			(HashMap<String, Object>)dropdownItem.get("data"), key);
+	}
+
+	protected ObjectDefinition objectDefinition;
+
+	@Inject
+	protected ObjectDefinitionLocalService objectDefinitionLocalService;
+
+	protected ThemeDisplay themeDisplay;
+
+	private MockHttpServletRequest _getMockHttpServletRequest(
+		AssetEntry assetEntry) {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		if (assetEntry != null) {
+			mockHttpServletRequest.setAttribute(
+				WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
+		}
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		return mockHttpServletRequest;
+	}
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
+}

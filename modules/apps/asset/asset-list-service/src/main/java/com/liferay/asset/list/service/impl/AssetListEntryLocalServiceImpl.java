@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -132,7 +131,7 @@ public class AssetListEntryLocalServiceImpl
 						)
 				)));
 
-		for (long assetEntryId : SetUtil.fromArray(assetEntryIds)) {
+		for (long assetEntryId : ArrayUtil.unique(assetEntryIds)) {
 			if (selectedAssetEntryIds.contains(assetEntryId)) {
 				continue;
 			}

@@ -11,6 +11,7 @@ import {FileData} from '../../multiple_file_uploader/MultipleFileUploader';
 export type MultipleFileUploaderData = {
 	assetLibraries: AssetLibrary[];
 	baseAssetLibraryViewURL: string;
+	keywords?: string;
 	parentObjectEntryFolderExternalReferenceCode: string;
 };
 

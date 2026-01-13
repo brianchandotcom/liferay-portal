@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -36,7 +37,7 @@ public class FileEntryUtil {
 
 	public static long getPreviewFileEntryId(
 			long groupId, String resourceName, ServiceContext serviceContext,
-			ThumbnailURLReference thumbnailURLReference, User user)
+			ThumbnailURLReference thumbnailURLReference)
 		throws Exception {
 
 		if ((thumbnailURLReference == null) ||
@@ -52,6 +53,9 @@ public class FileEntryUtil {
 					thumbnailURLReference.getExternalReferenceCode(), groupId);
 
 		if (fileEntry == null) {
+			User user = UserLocalServiceUtil.getUser(
+				serviceContext.getUserId());
+
 			fileEntry = _getFileEntry(
 				groupId, resourceName, serviceContext, thumbnailURLReference,
 				user);

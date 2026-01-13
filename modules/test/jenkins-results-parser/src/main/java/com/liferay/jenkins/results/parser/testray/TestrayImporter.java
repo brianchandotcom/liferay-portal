@@ -1601,21 +1601,13 @@ public class TestrayImporter {
 
 	private String _replaceEnvVars(String string, boolean truncate) {
 		string = _replaceEnvVarsControllerBuild(string);
-
 		string = _replaceEnvVarsPluginsBranchInformationBuild(string);
-
 		string = _replaceEnvVarsPluginsTopLevelBuild(string);
-
 		string = _replaceEnvVarsPortalAppReleaseTopLevelBuild(string);
-
 		string = _replaceEnvVarsPortalBranchInformationBuild(string);
-
 		string = _replaceEnvVarsPortalRelease(string);
-
 		string = _replaceEnvVarsPullRequestBuild(string);
-
 		string = _replaceEnvVarsQAWebsitesTopLevelBuild(string);
-
 		string = _replaceEnvVarsTopLevelBuild(string);
 
 		String jobName = _topLevelBuildReport.getJobName();

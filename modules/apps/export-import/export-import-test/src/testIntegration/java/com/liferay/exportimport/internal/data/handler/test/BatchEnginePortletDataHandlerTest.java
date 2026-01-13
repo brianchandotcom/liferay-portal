@@ -25,7 +25,6 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
-import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
@@ -80,6 +79,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -1366,6 +1366,62 @@ public class BatchEnginePortletDataHandlerTest {
 			JSONCompareMode.STRICT);
 	}
 
+	@FeatureFlag("LPD-34594")
+	@Test
+	public void testGetDescriptionAndTagWithRootObjectHierarchy()
+		throws Exception {
+
+		Tree tree = TreeTestUtil.createObjectDefinitionTree(
+			_objectDefinitionLocalService, _objectRelationshipLocalService,
+			true,
+			LinkedHashMapBuilder.put(
+				"A", new String[] {"AA"}
+			).put(
+				"AA", new String[] {"AAA"}
+			).put(
+				"AAA", new String[0]
+			).build());
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_A");
+
+		PortletDataHandler portletDataHandler =
+			_portletDataHandlerProvider.provide(
+				TestPropsValues.getCompanyId(),
+				objectDefinition.getPortletId());
+
+		String description = portletDataHandler.getDescription(
+			LocaleUtil.getDefault());
+
+		TreeTestUtil.forEachNodeObjectDefinition(
+			tree.iterator(), _objectDefinitionLocalService,
+			nodeObjectDefinition -> {
+				if (nodeObjectDefinition.isRootNode()) {
+					return;
+				}
+
+				String modelResourceNamePrefix =
+					ResourceActionsUtil.getModelResourceNamePrefix();
+
+				Assert.assertTrue(
+					description.contains(
+						LanguageUtil.get(
+							LocaleUtil.getDefault(),
+							modelResourceNamePrefix +
+								nodeObjectDefinition.getResourceName())));
+			});
+
+		Assert.assertEquals(
+			LanguageUtil.get(LocaleUtil.getDefault(), "root-object"),
+			portletDataHandler.getTag(LocaleUtil.getDefault()));
+
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService,
+			new String[] {"C_A", "C_AA", "C_AAA"}, _objectEntryLocalService,
+			_objectRelationshipLocalService);
+	}
+
 	@Test
 	@TestInfo("LPD-65748")
 	public void testGetExportModelCount() throws Exception {
@@ -1426,73 +1482,6 @@ public class BatchEnginePortletDataHandlerTest {
 		_testGetExportModelCount(
 			TestPropsValues.getGroupId(),
 			_addObjectDefinition(ObjectDefinitionConstants.SCOPE_SITE));
-	}
-
-	@FeatureFlag("LPD-34594")
-	@Test
-	public void testGetExportPortletDataHandlerControlsWithRootModelHierarchy()
-		throws Exception {
-
-		Tree tree = TreeTestUtil.createObjectDefinitionTree(
-			_objectDefinitionLocalService, _objectRelationshipLocalService,
-			true,
-			LinkedHashMapBuilder.put(
-				"A", new String[] {"AA"}
-			).put(
-				"AA", new String[] {"AAA"}
-			).put(
-				"AAA", new String[0]
-			).build());
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				TestPropsValues.getCompanyId(), "C_A");
-
-		PortletDataHandler portletDataHandler =
-			_portletDataHandlerProvider.provide(
-				TestPropsValues.getCompanyId(),
-				objectDefinition.getPortletId());
-
-		PortletDataHandlerControl[] exportPortletDataHandlerControls =
-			portletDataHandler.getExportPortletDataHandlerControls();
-
-		Assert.assertEquals(
-			Arrays.toString(exportPortletDataHandlerControls), 1,
-			exportPortletDataHandlerControls.length);
-
-		PortletDataHandlerControl exportPortletDataHandlerControl =
-			exportPortletDataHandlerControls[0];
-
-		List<String> subtitles = exportPortletDataHandlerControl.getSubtitles();
-
-		Assert.assertEquals(subtitles.toString(), 2, subtitles.size());
-
-		TreeTestUtil.forEachNodeObjectDefinition(
-			tree.iterator(), _objectDefinitionLocalService,
-			nodeObjectDefinition -> {
-				if (nodeObjectDefinition.isRootNode()) {
-					return;
-				}
-
-				String modelResourceNamePrefix =
-					ResourceActionsUtil.getModelResourceNamePrefix();
-
-				Assert.assertTrue(
-					ListUtil.exists(
-						subtitles,
-						subtitle -> StringUtil.equals(
-							subtitle,
-							modelResourceNamePrefix +
-								nodeObjectDefinition.getResourceName())));
-			});
-
-		Assert.assertEquals(
-			"root-object", exportPortletDataHandlerControl.getTag());
-
-		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			_objectDefinitionLocalService,
-			new String[] {"C_A", "C_AA", "C_AAA"}, _objectEntryLocalService,
-			_objectRelationshipLocalService);
 	}
 
 	@Test

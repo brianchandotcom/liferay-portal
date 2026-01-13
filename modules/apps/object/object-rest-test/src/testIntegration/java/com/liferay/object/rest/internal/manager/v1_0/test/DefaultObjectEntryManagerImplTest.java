@@ -18,9 +18,13 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalService;
 import com.liferay.asset.kernel.exception.NoSuchCategoryException;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
@@ -92,6 +96,8 @@ import com.liferay.object.rest.dto.v1_0.FileEntry;
 import com.liferay.object.rest.dto.v1_0.Link;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.dto.v1_0.ParentTaxonomyCategory;
+import com.liferay.object.rest.dto.v1_0.ParentTaxonomyVocabulary;
 import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.dto.v1_0.SystemProperties;
 import com.liferay.object.rest.dto.v1_0.TaxonomyCategoryBrief;
@@ -2393,15 +2399,15 @@ public class DefaultObjectEntryManagerImplTest
 			}
 		};
 
-		_assertPicklistOjectField(listEntry, listEntry);
+		_assertPicklistObjectField(listEntry, listEntry);
 
 		// Picklist by list type entry key
 
-		_assertPicklistOjectField(listEntry, listTypeEntry.getKey());
+		_assertPicklistObjectField(listEntry, listTypeEntry.getKey());
 
 		// Picklist by map
 
-		_assertPicklistOjectField(
+		_assertPicklistObjectField(
 			listEntry,
 			HashMapBuilder.put(
 				"key", listTypeEntry.getKey()
@@ -2746,9 +2752,13 @@ public class DefaultObjectEntryManagerImplTest
 
 		// Lazy referencing disabled
 
+		String parentTaxonomyCategoryExternalReferenceCode =
+			RandomTestUtil.randomString();
 		String taxonomyCategoryExternalReferenceCode1 =
 			RandomTestUtil.randomString();
 		String taxonomyCategoryExternalReferenceCode2 =
+			RandomTestUtil.randomString();
+		String taxonomyVocabularyExternalReferenceCode =
 			RandomTestUtil.randomString();
 
 		ObjectEntry objectEntry = new ObjectEntry() {
@@ -2761,6 +2771,14 @@ public class DefaultObjectEntryManagerImplTest
 									_group, LocaleUtil.getDefault());
 								taxonomyCategoryExternalReferenceCode =
 									taxonomyCategoryExternalReferenceCode1;
+
+								setParentTaxonomyCategory(
+									new ParentTaxonomyCategory() {
+										{
+											setExternalReferenceCode(
+												parentTaxonomyCategoryExternalReferenceCode);
+										}
+									});
 							}
 						},
 						new TaxonomyCategoryBrief() {
@@ -2769,6 +2787,14 @@ public class DefaultObjectEntryManagerImplTest
 									_group, LocaleUtil.getDefault());
 								taxonomyCategoryExternalReferenceCode =
 									taxonomyCategoryExternalReferenceCode2;
+
+								setParentTaxonomyVocabulary(
+									new ParentTaxonomyVocabulary() {
+										{
+											setExternalReferenceCode(
+												taxonomyVocabularyExternalReferenceCode);
+										}
+									});
 							}
 						}
 					});
@@ -2808,6 +2834,24 @@ public class DefaultObjectEntryManagerImplTest
 			Assert.assertEquals(
 				WorkflowConstants.STATUS_EMPTY, assetCategory1.getStatus());
 
+			Assert.assertEquals(
+				AssetVocabularyConstants.EMPTY_VOCABULARY_ID,
+				assetCategory1.getVocabularyId());
+
+			AssetCategory parentAssetCategory =
+				_assetCategoryLocalService.
+					getAssetCategoryByExternalReferenceCode(
+						parentTaxonomyCategoryExternalReferenceCode,
+						_group.getGroupId());
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_EMPTY,
+				parentAssetCategory.getStatus());
+
+			Assert.assertEquals(
+				parentAssetCategory.getCategoryId(),
+				assetCategory1.getParentCategoryId());
+
 			AssetCategory assetCategory2 =
 				_assetCategoryLocalService.
 					fetchAssetCategoryByExternalReferenceCode(
@@ -2816,6 +2860,23 @@ public class DefaultObjectEntryManagerImplTest
 
 			Assert.assertEquals(
 				WorkflowConstants.STATUS_EMPTY, assetCategory2.getStatus());
+
+			Assert.assertEquals(
+				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+				assetCategory2.getParentCategoryId());
+
+			AssetVocabulary assetVocabulary =
+				_assetVocabularyLocalService.
+					fetchAssetVocabularyByExternalReferenceCode(
+						taxonomyVocabularyExternalReferenceCode,
+						_group.getGroupId());
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_EMPTY, assetVocabulary.getStatus());
+
+			Assert.assertEquals(
+				assetVocabulary.getVocabularyId(),
+				assetCategory2.getVocabularyId());
 
 			AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 				_objectDefinition1.getClassName(), objectEntry.getId());
@@ -3771,7 +3832,7 @@ public class DefaultObjectEntryManagerImplTest
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(_user));
 
-		// Relationshp type prevent
+		// Relationship type prevent
 
 		objectRelationship =
 			_objectRelationshipLocalService.updateObjectRelationship(
@@ -10194,7 +10255,7 @@ public class DefaultObjectEntryManagerImplTest
 		}
 	}
 
-	private void _assertPicklistOjectField(
+	private void _assertPicklistObjectField(
 			ListEntry expectedListEntry, Object picklistObjectFieldValue)
 		throws Exception {
 
@@ -11907,6 +11968,9 @@ public class DefaultObjectEntryManagerImplTest
 
 	@Inject
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Inject
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	private Role _buyerRole;
 

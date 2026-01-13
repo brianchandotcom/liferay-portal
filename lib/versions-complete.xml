@@ -5087,7 +5087,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.io.grpc.jar!grpc-alts.jar</file-name>
-				<version>1.70.0</version>
+				<version>1.75.0</version>
 				<project-name>io.grpc:grpc-alts</project-name>
 				<project-url>https://github.com/grpc/grpc-java</project-url>
 				<licenses>
@@ -5099,7 +5099,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.io.grpc.jar!grpc-api.jar</file-name>
-				<version>1.70.0</version>
+				<version>1.75.0</version>
 				<project-name>io.grpc:grpc-api</project-name>
 				<project-url>https://github.com/grpc/grpc-java</project-url>
 				<licenses>
@@ -5111,7 +5111,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.io.grpc.jar!grpc-auth.jar</file-name>
-				<version>1.70.0</version>
+				<version>1.75.0</version>
 				<project-name>io.grpc:grpc-auth</project-name>
 				<project-url>https://github.com/grpc/grpc-java</project-url>
 				<licenses>
@@ -5123,7 +5123,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.io.grpc.jar!grpc-context.jar</file-name>
-				<version>1.70.0</version>
+				<version>1.75.0</version>
 				<project-name>io.grpc:grpc-context</project-name>
 				<project-url>https://github.com/grpc/grpc-java</project-url>
 				<licenses>
@@ -5135,7 +5135,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.io.grpc.jar!grpc-core.jar</file-name>
-				<version>1.70.0</version>
+				<version>1.75.0</version>
 				<project-name>io.grpc:grpc-core</project-name>
 				<project-url>https://github.com/grpc/grpc-java</project-url>
 				<licenses>
@@ -5147,7 +5147,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.io.grpc.jar!grpc-googleapis.jar</file-name>
-				<version>1.70.0</version>
+				<version>1.75.0</version>
 				<project-name>io.grpc:grpc-googleapis</project-name>
 				<project-url>https://github.com/grpc/grpc-java</project-url>
 				<licenses>
@@ -5159,7 +5159,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.io.grpc.jar!grpc-grpclb.jar</file-name>
-				<version>1.70.0</version>
+				<version>1.75.0</version>
 				<project-name>io.grpc:grpc-grpclb</project-name>
 				<project-url>https://github.com/grpc/grpc-java</project-url>
 				<licenses>
@@ -5171,7 +5171,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.io.grpc.jar!grpc-inprocess.jar</file-name>
-				<version>1.70.0</version>
+				<version>1.75.0</version>
 				<project-name>io.grpc:grpc-inprocess</project-name>
 				<project-url>https://github.com/grpc/grpc-java</project-url>
 				<licenses>
@@ -5183,7 +5183,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.io.grpc.jar!grpc-netty-shaded.jar</file-name>
-				<version>1.70.0</version>
+				<version>1.75.0</version>
 				<project-name>io.grpc:grpc-netty-shaded</project-name>
 				<project-url>https://github.com/grpc/grpc-java</project-url>
 				<licenses>
@@ -5195,7 +5195,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.io.grpc.jar!grpc-opentelemetry.jar</file-name>
-				<version>1.70.0</version>
+				<version>1.75.0</version>
 				<project-name>io.grpc:grpc-opentelemetry</project-name>
 				<project-url>https://github.com/grpc/grpc-java</project-url>
 				<licenses>
@@ -5207,7 +5207,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.io.grpc.jar!grpc-protobuf-lite.jar</file-name>
-				<version>1.70.0</version>
+				<version>1.75.0</version>
 				<project-name>io.grpc:grpc-protobuf-lite</project-name>
 				<project-url>https://github.com/grpc/grpc-java</project-url>
 				<licenses>
@@ -5219,7 +5219,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.io.grpc.jar!grpc-protobuf.jar</file-name>
-				<version>1.70.0</version>
+				<version>1.75.0</version>
 				<project-name>io.grpc:grpc-protobuf</project-name>
 				<project-url>https://github.com/grpc/grpc-java</project-url>
 				<licenses>
@@ -5231,7 +5231,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.io.grpc.jar!grpc-rls.jar</file-name>
-				<version>1.70.0</version>
+				<version>1.75.0</version>
 				<project-name>io.grpc:grpc-rls</project-name>
 				<project-url>https://github.com/grpc/grpc-java</project-url>
 				<licenses>
@@ -5243,7 +5243,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.io.grpc.jar!grpc-services.jar</file-name>
-				<version>1.70.0</version>
+				<version>1.75.0</version>
 				<project-name>io.grpc:grpc-services</project-name>
 				<project-url>https://github.com/grpc/grpc-java</project-url>
 				<licenses>
@@ -5255,7 +5255,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.io.grpc.jar!grpc-stub.jar</file-name>
-				<version>1.70.0</version>
+				<version>1.75.0</version>
 				<project-name>io.grpc:grpc-stub</project-name>
 				<project-url>https://github.com/grpc/grpc-java</project-url>
 				<licenses>
@@ -5267,7 +5267,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.io.grpc.jar!grpc-util.jar</file-name>
-				<version>1.70.0</version>
+				<version>1.75.0</version>
 				<project-name>io.grpc:grpc-util</project-name>
 				<project-url>https://github.com/grpc/grpc-java</project-url>
 				<licenses>
@@ -5279,7 +5279,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.io.grpc.jar!grpc-xds.jar</file-name>
-				<version>1.70.0</version>
+				<version>1.75.0</version>
 				<project-name>io.grpc:grpc-xds</project-name>
 				<project-url>https://github.com/grpc/grpc-java</project-url>
 				<licenses>

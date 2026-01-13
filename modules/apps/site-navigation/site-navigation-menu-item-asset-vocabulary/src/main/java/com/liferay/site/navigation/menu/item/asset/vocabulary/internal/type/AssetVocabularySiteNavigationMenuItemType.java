@@ -304,7 +304,12 @@ public class AssetVocabularySiteNavigationMenuItemType
 			siteNavigationMenuItem.getGroupId(),
 			typeSettingsUnicodeProperties.get("scopeExternalReferenceCode"));
 
-		if (groupId == 0) {
+		if ((groupId == 0) ||
+			!hasModel(
+				siteNavigationMenuItem.getCompanyId(),
+				siteNavigationMenuItem.getGroupId(),
+				typeSettingsUnicodeProperties)) {
+
 			return "warning-full";
 		}
 
@@ -396,9 +401,8 @@ public class AssetVocabularySiteNavigationMenuItemType
 
 	@Override
 	public boolean hasModel(
-			long companyId, long groupId,
-			UnicodeProperties typeSettingsUnicodeProperties)
-		throws PortalException {
+		long companyId, long groupId,
+		UnicodeProperties typeSettingsUnicodeProperties) {
 
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.

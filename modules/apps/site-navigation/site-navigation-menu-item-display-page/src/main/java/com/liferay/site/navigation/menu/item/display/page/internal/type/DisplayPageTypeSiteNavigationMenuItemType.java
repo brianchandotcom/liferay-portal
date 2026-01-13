@@ -258,7 +258,14 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 
 	@Override
 	public String getStatusIcon(SiteNavigationMenuItem siteNavigationMenuItem) {
-		if (!_hasAssetDisplayPage(siteNavigationMenuItem)) {
+		if (!_hasAssetDisplayPage(siteNavigationMenuItem) ||
+			!hasModel(
+				siteNavigationMenuItem.getCompanyId(),
+				siteNavigationMenuItem.getGroupId(),
+				UnicodePropertiesBuilder.fastLoad(
+					siteNavigationMenuItem.getTypeSettings()
+				).build())) {
+
 			return "warning-full";
 		}
 
@@ -363,9 +370,8 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 
 	@Override
 	public boolean hasModel(
-			long companyId, long groupId,
-			UnicodeProperties typeSettingsUnicodeProperties)
-		throws PortalException {
+		long companyId, long groupId,
+		UnicodeProperties typeSettingsUnicodeProperties) {
 
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
 			_displayPageTypeContext.getLayoutDisplayPageObjectProvider(

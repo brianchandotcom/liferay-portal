@@ -250,6 +250,22 @@ public class LayoutSiteNavigationMenuItemType
 	}
 
 	@Override
+	public String getStatusIcon(SiteNavigationMenuItem siteNavigationMenuItem) {
+		if (!hasModel(
+				siteNavigationMenuItem.getCompanyId(),
+				siteNavigationMenuItem.getGroupId(),
+				UnicodePropertiesBuilder.fastLoad(
+					siteNavigationMenuItem.getTypeSettings()
+				).build())) {
+
+			return "warning-full";
+		}
+
+		return SiteNavigationMenuItemType.super.getStatusIcon(
+			siteNavigationMenuItem);
+	}
+
+	@Override
 	public String getSubtitle(
 		SiteNavigationMenuItem siteNavigationMenuItem, Locale locale) {
 

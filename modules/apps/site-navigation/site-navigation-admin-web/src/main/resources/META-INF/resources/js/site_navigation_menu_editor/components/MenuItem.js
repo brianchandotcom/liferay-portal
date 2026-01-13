@@ -343,9 +343,7 @@ export function MenuItem({item, onMenuItemRemoved, sidebarPanelRef}) {
 										{item.icon && (
 											<ClayIcon
 												className="lfr-portal-tooltip ml-2 text-warning"
-												data-title={Liferay.Language.get(
-													'this-item-does-not-have-a-display-page'
-												)}
+												data-title={item.iconLabel}
 												symbol={item.icon}
 											/>
 										)}
@@ -456,6 +454,8 @@ export function MenuItem({item, onMenuItemRemoved, sidebarPanelRef}) {
 MenuItem.propTypes = {
 	item: PropTypes.shape({
 		children: PropTypes.array.isRequired,
+		icon: PropTypes.string,
+		iconLabel: PropTypes.string,
 		siteNavigationMenuItemId: PropTypes.string.isRequired,
 		title: PropTypes.string.isRequired,
 		type: PropTypes.string.isRequired,

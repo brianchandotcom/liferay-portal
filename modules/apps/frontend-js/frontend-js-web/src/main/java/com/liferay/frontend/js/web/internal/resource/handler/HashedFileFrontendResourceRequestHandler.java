@@ -5,9 +5,9 @@
 
 package com.liferay.frontend.js.web.internal.resource.handler;
 
+import com.liferay.frontend.js.web.internal.configuration.FrontendCachingConfiguration;
 import com.liferay.frontend.js.web.internal.resource.FrontendResource;
 import com.liferay.frontend.js.web.internal.resource.HashedFileFrontendResource;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesRegistry;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -31,17 +31,17 @@ public class HashedFileFrontendResourceRequestHandler
 	implements FrontendResourceRequestHandler {
 
 	public HashedFileFrontendResourceRequestHandler(
-		String contentType, String fileExtension,
-		HashedFilesRegistry hashedFilesRegistry, long maxAge, String maxAgeKey,
-		Portal portal, boolean sendNoCache, String sendNoCacheKey) {
+		String contentType, long defaultMaxAge, boolean defaultSendNoCache,
+		String fileExtension, HashedFilesRegistry hashedFilesRegistry,
+		String maxAgeKey, Portal portal, String sendNoCacheKey) {
 
 		_contentType = contentType;
+		_defaultMaxAge = defaultMaxAge;
+		_defaultSendNoCache = defaultSendNoCache;
 		_fileExtension = fileExtension;
 		_hashedFilesRegistry = hashedFilesRegistry;
-		_maxAge = maxAge;
 		_maxAgeKey = maxAgeKey;
 		_portal = portal;
-		_sendNoCache = sendNoCache;
 		_sendNoCacheKey = sendNoCacheKey;
 	}
 
@@ -49,24 +49,9 @@ public class HashedFileFrontendResourceRequestHandler
 	public boolean canHandleRequest(HttpServletRequest httpServletRequest) {
 		String requestURI = httpServletRequest.getRequestURI();
 
-		if (!requestURI.endsWith(_fileExtension)) {
-			return false;
-		}
+		if (requestURI.endsWith(_fileExtension) &&
+			(_hashedFilesRegistry.getResource(requestURI) != null)) {
 
-		if (HashedFilesUtil.containsHash(requestURI)) {
-			return true;
-		}
-
-		String hashedFileURI = _hashedFilesRegistry.getHashedFileURI(
-			requestURI);
-
-		if (hashedFileURI != null) {
-			return true;
-		}
-
-		URL resourceURL = _hashedFilesRegistry.getResource(requestURI);
-
-		if (resourceURL != null) {
 			return true;
 		}
 
@@ -79,98 +64,69 @@ public class HashedFileFrontendResourceRequestHandler
 
 		String requestURI = httpServletRequest.getRequestURI();
 
-		String requestHash = HashedFilesUtil.getHash(requestURI);
+		URL url = _hashedFilesRegistry.getResource(requestURI);
 
-		if (requestHash != null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Handling request " + requestURI);
-			}
-
-			return _createFrontendResource(
-				_portal.getCompanyId(httpServletRequest), requestHash, true,
-				requestURI);
+		if (url == null) {
+			return null;
 		}
 
-		String hashedFileURI = _hashedFilesRegistry.getHashedFileURI(
-			requestURI);
+		boolean immutable = false;
 
-		if (hashedFileURI == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Handling request " + requestURI);
-			}
-
-			return _createFrontendResource(
-				_portal.getCompanyId(httpServletRequest), null, false,
-				requestURI);
+		if (HashedFilesUtil.getHash(requestURI) != null) {
+			immutable = true;
 		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"Handling request ", requestURI, " with static file ",
-					hashedFileURI));
-		}
-
-		return _createFrontendResource(
-			_portal.getCompanyId(httpServletRequest),
-			HashedFilesUtil.getHash(hashedFileURI), false, hashedFileURI);
-	}
-
-	private FrontendResource _createFrontendResource(
-		long companyId, String eTag, boolean immutable, String resourceURI) {
 
 		long maxAge = 31536000;
 		boolean sendNoCache = false;
 
 		if (!immutable) {
-			maxAge = _maxAge;
-			sendNoCache = _sendNoCache;
+			maxAge = _defaultMaxAge;
+			sendNoCache = _defaultSendNoCache;
+
+			long companyId = _portal.getCompanyId(httpServletRequest);
 
 			try {
+				Class<FrontendCachingConfiguration>
+					frontendCachingConfigurationClass =
+						FrontendCachingConfiguration.class;
+
 				Settings settings = FallbackKeysSettingsUtil.getSettings(
 					new CompanyServiceSettingsLocator(
-						companyId,
-						"com.liferay.frontend.js.web.internal.configuration." +
-							"FrontendCachingConfiguration",
-						"com.liferay.frontend.js.web.internal.configuration." +
-							"FrontendCachingConfiguration"));
+						companyId, frontendCachingConfigurationClass.getName(),
+						frontendCachingConfigurationClass.getName()));
 
 				maxAge = Long.valueOf(
-					settings.getValue(_maxAgeKey, String.valueOf(_maxAge)));
+					settings.getValue(
+						_maxAgeKey, String.valueOf(_defaultMaxAge)));
 				sendNoCache = Boolean.valueOf(
 					settings.getValue(
-						_sendNoCacheKey, String.valueOf(_sendNoCache)));
+						_sendNoCacheKey, String.valueOf(_defaultSendNoCache)));
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Unable to get frontend caching configuration, using " +
-							"reasonable defaults instead",
+						"Unable to get frontend caching configuration for " +
+							"company " + companyId,
 						exception);
 				}
 			}
 		}
 
-		URL resourceURL = _hashedFilesRegistry.getResource(resourceURI);
-
-		if (resourceURL == null) {
-			return null;
-		}
-
 		return new HashedFileFrontendResource(
-			_contentType, eTag, immutable, maxAge, sendNoCache, resourceURL);
+			_contentType, HashedFilesUtil.getHash(url.getFile()), immutable,
+			maxAge, sendNoCache, url);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		HashedFileFrontendResourceRequestHandler.class);
 
 	private final String _contentType;
+	private final long _defaultMaxAge;
+	private final boolean _defaultSendNoCache;
 	private final String _fileExtension;
 	private final HashedFilesRegistry _hashedFilesRegistry;
-	private final long _maxAge;
 	private final String _maxAgeKey;
 	private final Portal _portal;
-	private final boolean _sendNoCache;
 	private final String _sendNoCacheKey;
 
 }

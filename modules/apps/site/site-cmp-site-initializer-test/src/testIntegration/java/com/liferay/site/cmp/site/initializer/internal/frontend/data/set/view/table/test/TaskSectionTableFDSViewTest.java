@@ -24,7 +24,7 @@ import org.junit.runner.RunWith;
 	featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-58677")}
 )
 @RunWith(Arquillian.class)
-public class ProjectSectionTableFDSViewTest
+public class TaskSectionTableFDSViewTest
 	extends BaseSectionTableFDSViewTestCase {
 
 	@ClassRule
@@ -36,16 +36,12 @@ public class ProjectSectionTableFDSViewTest
 
 	@Test
 	public void testGetFDSTableSchema() throws Exception {
-		assertFDSTableSchemaField(
-			null, "progressBarTableCellRenderer", "completion-rate",
-			"embedded.completionRate");
 		assertFDSTableSchemaField(null, "date", "due-date", "embedded.dueDate");
 		assertFDSTableSchemaField(
-			null, "userRelationshipTableCellRenderer", "manager",
-			"embedded.r_userToCMPProjectManager_userERC");
+			null, null, "assign-to", "embedded.assignTo.name");
 		assertFDSTableSchemaField(
-			null, "userRelationshipTableCellRenderer", "sponsor",
-			"embedded.r_userToCMPProjectSponsor_userERC");
+			null, null, "project",
+			"embedded.r_cmpProjectToCMPTask_c_cmpProject.title");
 		assertFDSTableSchemaField(
 			null, "stateTableCellRenderer", "state", "embedded.state");
 		assertFDSTableSchemaField(
@@ -55,7 +51,7 @@ public class ProjectSectionTableFDSViewTest
 
 	@Override
 	protected String getFDSName() {
-		return "com.liferay.site.cmp.site.initializer-project";
+		return "com.liferay.site.cmp.site.initializer-task";
 	}
 
 }

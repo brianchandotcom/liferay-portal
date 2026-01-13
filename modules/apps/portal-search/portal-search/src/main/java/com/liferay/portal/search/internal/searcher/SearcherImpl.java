@@ -76,10 +76,14 @@ public class SearcherImpl implements Searcher {
 
 		SearchContext searchContext = searchRequestImpl.getSearchContext();
 
-		if (Validator.isBlank(StringUtil.trim(searchContext.getKeywords())) &&
+		if ((Validator.isBlank(StringUtil.trim(searchContext.getKeywords())) &&
+			 !GetterUtil.getBoolean(
+				 searchContext.getAttribute(
+					 SearchContextAttributes.ATTRIBUTE_KEY_EMPTY_SEARCH))) ||
 			!GetterUtil.getBoolean(
 				searchContext.getAttribute(
-					SearchContextAttributes.ATTRIBUTE_KEY_EMPTY_SEARCH))) {
+					SearchContextAttributes.ATTRIBUTE_KEY_EXECUTE_SEARCH),
+				true)) {
 
 			searchResponseBuilder.hits(new HitsImpl());
 		}

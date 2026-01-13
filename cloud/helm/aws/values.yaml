@@ -43,9 +43,9 @@ liferay-default:
 
                               echo "Cleaning-up old OpenSearch modules to prevent conflicts..."
                               rm \
-                                --recursive \
-                                --force \
-                                --verbose /temp/osgi/modules/*opensearch*
+                                -r \
+                                -f \
+                                -v /temp/osgi/modules/*opensearch*
 
                               DEPLOY_DIR=/temp/liferay/deploy
                               PRODUCT_VERSION={{.image.tag}}

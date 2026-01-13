@@ -207,13 +207,14 @@ test.describe('Data Set Default Visualization Mode in fragment', () => {
 		});
 
 		await test.step('Reload page and check the default visualization mode', async () => {
-			await page.reload();
+			await dataSetFragmentPage.goToPage({layout});
 
 			await assertCardsVisualizationMode({dataSetFragmentPage});
 
 			await dataSetFragmentPage.activeViewSelector.waitFor({
 				state: 'visible',
 			});
+
 			await dataSetFragmentPage.activeViewSelector.click();
 
 			await page

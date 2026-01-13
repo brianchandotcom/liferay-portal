@@ -9,6 +9,7 @@ import {apiHelpersTest} from '../../../../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
+import {waitForFDS} from '../../../../../utils/waitFor';
 import {fdsSamplePageTest} from '../../fixtures/fdsSamplePageTest';
 
 const test = mergeTests(
@@ -26,9 +27,7 @@ test.beforeEach(async ({fdsSamplePage, page, site}) => {
 
 	await fdsSamplePage.selectTab('Empty');
 
-	await page
-		.locator('.fds .data-set-content-wrapper')
-		.waitFor({state: 'visible'});
+	await waitForFDS({empty: true, page});
 });
 
 test(

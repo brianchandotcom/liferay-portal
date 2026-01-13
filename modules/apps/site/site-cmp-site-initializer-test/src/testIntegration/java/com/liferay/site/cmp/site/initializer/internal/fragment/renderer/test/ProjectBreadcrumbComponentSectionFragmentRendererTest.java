@@ -64,8 +64,9 @@ public class ProjectBreadcrumbComponentSectionFragmentRendererTest
 				StringBundler.concat(
 					themeDisplay.getPathFriendlyURLPublic(),
 					GroupConstants.CMS_FRIENDLY_URL, "/e/edit-project/",
-					_portal.getClassNameId(objectDefinition.getClassName()),
-					StringPool.SLASH, objectEntry.getObjectEntryId(),
+					_portal.getClassNameId(
+						projectObjectDefinition.getClassName()),
+					StringPool.SLASH, projectObjectEntry.getObjectEntryId(),
 					"?redirect=", themeDisplay.getURLCurrent())
 			).put(
 				"label", "Edit"
@@ -80,17 +81,18 @@ public class ProjectBreadcrumbComponentSectionFragmentRendererTest
 			JSONUtil.put(
 				"confirmationMessage",
 				_language.format(
-					httpServletRequest, "delete-asset-confirmation-body", TITLE)
+					httpServletRequest, "delete-asset-confirmation-body",
+					projectTitle)
 			).put(
 				"confirmationTitle",
 				_language.format(
 					httpServletRequest, "delete-asset-confirmation-title",
-					TITLE)
+					projectTitle)
 			).put(
 				"href",
 				StringBundler.concat(
-					"/o", objectDefinition.getRESTContextPath(),
-					StringPool.SLASH, objectEntry.getObjectEntryId())
+					"/o", projectObjectDefinition.getRESTContextPath(),
+					StringPool.SLASH, projectObjectEntry.getObjectEntryId())
 			).put(
 				"label", "Delete"
 			).put(
@@ -102,7 +104,7 @@ public class ProjectBreadcrumbComponentSectionFragmentRendererTest
 				"successMessage",
 				_language.format(
 					httpServletRequest, "x-was-successfully-deleted",
-					StringBundler.concat("<strong>", TITLE, "</strong>"))
+					StringBundler.concat("<strong>", projectTitle, "</strong>"))
 			).put(
 				"symbolLeft", "trash"
 			).put(
@@ -135,7 +137,7 @@ public class ProjectBreadcrumbComponentSectionFragmentRendererTest
 			).put(
 				"href", StringPool.BLANK
 			).put(
-				"label", TITLE
+				"label", projectTitle
 			).toString(),
 			jsonObject.toString(), true);
 

@@ -269,6 +269,14 @@ public class PageExperienceResourceTest
 				continue;
 			}
 
+			if (Objects.equals(additionalAssertFieldName, "uuid")) {
+				if (pageExperience.getUuid() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -282,7 +290,7 @@ public class PageExperienceResourceTest
 		return new String[] {
 			"externalReferenceCode", "key", "name_i18n", "pageElements",
 			"pageSpecificationExternalReferenceCode", "priority",
-			"segmentItemExternalReference"
+			"segmentItemExternalReference", "uuid"
 		};
 	}
 

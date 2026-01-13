@@ -57,6 +57,9 @@ public class PageExperiencesTestUtil {
 		Assert.assertEquals(
 			segmentsExperience.getExternalReferenceCode(),
 			pageExperience.getExternalReferenceCode());
+
+		Assert.assertEquals(
+			expectedPageExperience.getUuid(), pageExperience.getUuid());
 	}
 
 	public static PageExperience getDefaultPageExperience(
@@ -87,6 +90,7 @@ public class PageExperiencesTestUtil {
 		pageExperience.setPageElements(pageElements);
 		pageExperience.setPageSpecificationExternalReferenceCode(
 			pageSpecificationExternalReferenceCode);
+		pageExperience.setUuid(RandomTestUtil::randomString);
 
 		return new PageExperience[] {pageExperience};
 	}
@@ -98,6 +102,7 @@ public class PageExperiencesTestUtil {
 		pageExperience.setKey(RandomTestUtil.randomString());
 		pageExperience.setName_i18n(
 			Collections.singletonMap("en-US", RandomTestUtil.randomString()));
+		pageExperience.setUuid(RandomTestUtil::randomString);
 
 		return pageExperience;
 	}

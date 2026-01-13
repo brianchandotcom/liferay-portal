@@ -234,7 +234,7 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 					GetterUtil.getInteger(pageExperience.getPriority()),
 					ServiceContextUtil.createServiceContext(
 						groupId, contextHttpServletRequest,
-						contextUser.getUserId())));
+						contextUser.getUserId(), pageExperience.getUuid())));
 		}
 	}
 

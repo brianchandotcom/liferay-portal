@@ -130,6 +130,18 @@ public class ServiceContextUtil {
 		return serviceContext;
 	}
 
+	public static ServiceContext createServiceContext(
+		long groupId, HttpServletRequest httpServletRequest, long userId,
+		String uuid) {
+
+		ServiceContext serviceContext = createServiceContext(
+			groupId, httpServletRequest, userId);
+
+		serviceContext.setUuid(uuid);
+
+		return serviceContext;
+	}
+
 	public static void setLayoutSetPrototypeLayoutERC(
 			long groupId, PageSpecification pageSpecification,
 			ServiceContext serviceContext)

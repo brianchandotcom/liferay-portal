@@ -76,11 +76,6 @@ public class SiteNavigationMenuPropagationTest {
 		_layout = _layoutLocalService.getFriendlyURLLayout(
 			_group.getGroupId(), false, _prototypeLayout.getFriendlyURL());
 
-		_layout.setLayoutPrototypeUuid(_prototypeLayout.getUuid());
-		_layout.setLayoutPrototypeLinkEnabled(true);
-
-		_layout = _layoutLocalService.updateLayout(_layout);
-
 		_siteNavigationMenu1 = SiteNavigationMenuTestUtil.addSiteNavigationMenu(
 			layoutSetPrototypeGroup, RandomTestUtil.randomString());
 

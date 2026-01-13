@@ -180,7 +180,7 @@ public class LayoutSetPrototypeImportBackgroundTaskExecutor
 			return BackgroundTaskResult.SUCCESS;
 		}
 		finally {
-			ExportImportThreadLocal.setLayoutValidationInProcess(false);
+			ExportImportThreadLocal.setLayoutImportInProcess(false);
 		}
 	}
 

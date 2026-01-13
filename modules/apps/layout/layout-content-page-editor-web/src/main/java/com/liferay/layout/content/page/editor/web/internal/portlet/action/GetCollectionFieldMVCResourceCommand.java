@@ -89,7 +89,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -385,12 +384,17 @@ public class GetCollectionFieldMVCResourceCommand
 			() -> {
 				JSONArray jsonArray = _jsonFactory.createJSONArray();
 
+				FragmentEntryProcessorContext fragmentEntryProcessorContext =
+					new DefaultFragmentEntryProcessorContext(
+						companyId, httpServletRequest, httpServletResponse,
+						LocaleUtil.fromLanguageId(languageId),
+						FragmentEntryLinkConstants.EDIT, scopeGroupId);
+
 				for (Object object : infoPage.getPageItems()) {
 					jsonArray.put(
 						_getDisplayObjectJSONObject(
-							companyId, httpServletRequest, httpServletResponse,
-							infoItemFieldValuesProvider, object,
-							LocaleUtil.fromLanguageId(languageId), scopeGroupId));
+							fragmentEntryProcessorContext,
+							infoItemFieldValuesProvider, object));
 				}
 
 				return jsonArray;
@@ -500,10 +504,9 @@ public class GetCollectionFieldMVCResourceCommand
 	}
 
 	private JSONObject _getDisplayObjectJSONObject(
-		long companyId, HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse,
+		FragmentEntryProcessorContext fragmentEntryProcessorContext,
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider,
-		Object object, Locale locale, long scopeGroupId) {
+		Object object) {
 
 		InfoItemFieldValues infoItemFieldValues =
 			infoItemFieldValuesProvider.getInfoItemFieldValues(object);
@@ -550,11 +553,6 @@ public class GetCollectionFieldMVCResourceCommand
 				return ercInfoItemIdentifier.getExternalReferenceCode();
 			}
 		);
-
-		FragmentEntryProcessorContext fragmentEntryProcessorContext =
-			new DefaultFragmentEntryProcessorContext(
-				companyId, httpServletRequest,  httpServletResponse, locale,
-				FragmentEntryLinkConstants.EDIT, scopeGroupId);
 
 		for (InfoFieldValue<Object> infoFieldValue :
 				infoItemFieldValues.getInfoFieldValues()) {

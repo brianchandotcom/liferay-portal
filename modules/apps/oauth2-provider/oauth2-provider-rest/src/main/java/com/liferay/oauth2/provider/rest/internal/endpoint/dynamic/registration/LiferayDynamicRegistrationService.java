@@ -194,6 +194,15 @@ public class LiferayDynamicRegistrationService
 
 		Map<String, String> properties = client.getProperties();
 
+		if (properties.get("jwks") != null) {
+			liferayClientRegistrationResponse.setJwks(properties.get("jwks"));
+		}
+
+		if (properties.get("jwks_uri") != null) {
+			liferayClientRegistrationResponse.setJwksUri(
+				properties.get("jwks_uri"));
+		}
+
 		liferayClientRegistrationResponse.setRegistrationAccessToken(
 			properties.get("registration_access_token"));
 
@@ -211,15 +220,6 @@ public class LiferayDynamicRegistrationService
 		if (ListUtil.isNotEmpty(client.getRegisteredScopes())) {
 			liferayClientRegistrationResponse.setScope(
 				client.getRegisteredScopes());
-		}
-
-		if (properties.get("jwks") != null) {
-			liferayClientRegistrationResponse.setJwks(properties.get("jwks"));
-		}
-
-		if (properties.get("jwks_uri") != null) {
-			liferayClientRegistrationResponse.setJwksUri(
-				properties.get("jwks_uri"));
 		}
 
 		if (properties.get("software_id") != null) {

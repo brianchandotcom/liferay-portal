@@ -2920,7 +2920,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 				<#if useDeleteAssetLibrary>
 					protected ${schemaName} testBatchEngineDeleteImportTask_addAssetLibrary${schemaName}() throws Exception {
-						<#if (hasExternalReferenceCodeProperty || hasIdProperty) && (freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "deleteAssetLibrary" + schemaName) || freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "deleteAssetLibrary" + schemaName + "ByExternalReferenceCode"))>
+						<#if hasExternalReferenceCodeProperty || hasIdProperty>
 							return test${deleteAssetLibraryBatchJavaMethodSignature.methodName?cap_first}_add${schemaName}();
 						<#else>
 							throw new UnsupportedOperationException("This method needs to be implemented");
@@ -2930,7 +2930,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 				<#if useDeleteSite>
 					protected ${schemaName} testBatchEngineDeleteImportTask_addSite${schemaName}() throws Exception {
-						<#if (hasExternalReferenceCodeProperty || hasIdProperty) && (freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "deleteSite" + schemaName) || freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "deleteSite" + schemaName + "ByExternalReferenceCode"))>
+						<#if hasExternalReferenceCodeProperty || hasIdProperty>
 							return test${deleteSiteBatchJavaMethodSignature.methodName?cap_first}_add${schemaName}();
 						<#else>
 							throw new UnsupportedOperationException("This method needs to be implemented");

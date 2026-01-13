@@ -5,7 +5,7 @@ dependencies {
 	compileOnly group: "com.google.http-client", name: "google-http-client-gson", version: "1.45.3"
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	compileOnly group: "io.grpc", name: "grpc-api", version: "1.70.0"
+	compileOnly group: "io.grpc", name: "grpc-api", version: "1.75.0"
 	compileOnly group: "io.opencensus", name: "opencensus-api", version: "0.31.1"
 	compileOnly group: "io.opencensus", name: "opencensus-contrib-http-util", version: "0.31.1"
 	compileOnly group: "jakarta.annotation", name: "jakarta.annotation-api", version: "2.1.1"

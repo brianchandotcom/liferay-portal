@@ -6,10 +6,7 @@
 package com.liferay.object.rest.internal.util;
 
 import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.model.AssetCategoryConstants;
-import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
-import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.object.comment.ObjectEntryComment;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.ParentTaxonomyCategory;
@@ -122,55 +119,6 @@ public class ServiceContextUtil {
 		return serviceContext;
 	}
 
-	private static AssetCategory _getAssetCategory(
-			String externalReferenceCode, long groupId,
-			String parentTaxonomyCategoryExternalReferenceCode,
-			String parentTaxonomyVocabularyExternalReferenceCode, long userId)
-		throws PortalException {
-
-		AssetCategory assetCategory =
-			AssetCategoryLocalServiceUtil.getOrAddEmptyCategory(
-				externalReferenceCode, userId, groupId);
-
-		AssetVocabulary assetVocabulary = null;
-
-		if (Validator.isNotNull(
-				parentTaxonomyVocabularyExternalReferenceCode)) {
-
-			assetVocabulary =
-				AssetVocabularyLocalServiceUtil.getOrAddEmptyVocabulary(
-					parentTaxonomyVocabularyExternalReferenceCode, userId,
-					groupId);
-
-			assetCategory.setVocabularyId(assetVocabulary.getVocabularyId());
-		}
-
-		if (Validator.isNotNull(parentTaxonomyCategoryExternalReferenceCode)) {
-			AssetCategory parentAssetCategory =
-				AssetCategoryLocalServiceUtil.getOrAddEmptyCategory(
-					parentTaxonomyCategoryExternalReferenceCode, userId,
-					groupId);
-
-			if (assetVocabulary != null) {
-				parentAssetCategory.setVocabularyId(
-					assetVocabulary.getVocabularyId());
-
-				parentAssetCategory =
-					AssetCategoryLocalServiceUtil.updateAssetCategory(
-						parentAssetCategory);
-			}
-
-			assetCategory.setParentCategoryId(
-				parentAssetCategory.getParentCategoryId());
-		}
-		else {
-			assetCategory.setParentCategoryId(
-				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
-		}
-
-		return AssetCategoryLocalServiceUtil.updateAssetCategory(assetCategory);
-	}
-
 	private static long _getGroupId(
 		long companyId, long groupId, String externalReferenceCode,
 		TaxonomyCategoryBrief taxonomyCategoryBrief) {
@@ -252,6 +200,13 @@ public class ServiceContextUtil {
 				ParentTaxonomyCategory parentTaxonomyCategory =
 					taxonomyCategoryBrief.getParentTaxonomyCategory();
 
+				String parentTaxonomyCategoryExternalReferenceCode = null;
+
+				if (parentTaxonomyCategory != null) {
+					parentTaxonomyCategoryExternalReferenceCode =
+						parentTaxonomyCategory.getExternalReferenceCode();
+				}
+
 				ParentTaxonomyVocabulary parentTaxonomyVocabulary =
 					taxonomyCategoryBrief.getParentTaxonomyVocabulary();
 
@@ -262,17 +217,12 @@ public class ServiceContextUtil {
 						parentTaxonomyVocabulary.getExternalReferenceCode();
 				}
 
-				String parentTaxonomyCategoryExternalReferenceCode = null;
-
-				if (parentTaxonomyCategory != null) {
-					parentTaxonomyCategoryExternalReferenceCode =
-						parentTaxonomyCategory.getExternalReferenceCode();
-				}
-
-				AssetCategory assetCategory = _getAssetCategory(
-					externalReferenceCode, groupId,
-					parentTaxonomyCategoryExternalReferenceCode,
-					parentTaxonomyVocabularyExternalReferenceCode, userId);
+				AssetCategory assetCategory =
+					AssetCategoryLocalServiceUtil.
+						getOrAddEmptyCategoryWithAncestors(
+							externalReferenceCode, userId, groupId,
+							parentTaxonomyCategoryExternalReferenceCode,
+							parentTaxonomyVocabularyExternalReferenceCode);
 
 				assetCategoryIds.add(assetCategory.getCategoryId());
 			}

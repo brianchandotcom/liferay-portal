@@ -405,6 +405,8 @@ definition {
 
 		task ("Then the dropdown options for Acceptance Date are shown") {
 			for (var acceptedDateOptions : list "Future Dates,Past Dates,Range") {
+				SetWindowSize.maximizeWindow();
+
 				AssertVisible(
 					key_menuItem = ${acceptedDateOptions},
 					locator1 = "MenuItem#DROPDOWN_MENU_ITEM");

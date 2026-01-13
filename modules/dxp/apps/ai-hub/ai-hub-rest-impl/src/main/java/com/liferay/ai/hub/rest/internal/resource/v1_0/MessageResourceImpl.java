@@ -5,19 +5,15 @@
 
 package com.liferay.ai.hub.rest.internal.resource.v1_0;
 
+import com.liferay.ai.hub.agent.Agent;
+import com.liferay.ai.hub.agent.AgentContext;
 import com.liferay.ai.hub.rest.dto.v1_0.Message;
-import com.liferay.ai.hub.rest.internal.resource.v1_0.util.GroupUtil;
-import com.liferay.ai.hub.rest.internal.resource.v1_0.util.WorkflowContextUtil;
 import com.liferay.ai.hub.rest.resource.v1_0.MessageResource;
+import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.service.GroupService;
-import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
-import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.sse.Sse;
-
-import java.io.Serializable;
 
 import java.util.Map;
 
@@ -45,35 +41,23 @@ public class MessageResourceImpl extends BaseMessageResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		Map<String, Serializable> workflowContext =
-			WorkflowContextUtil.toWorkflowContext(
-				message.getContext(), contextHttpServletRequest, _sse,
-				externalReferenceCode);
+		SseUtil.setSse(_sse);
 
-		workflowContext.put("assistantKey", "chat");
-		workflowContext.put("memoryId", externalReferenceCode);
-		workflowContext.put("outBoundEventName", "Chat Message Sent");
-		workflowContext.put("userMessage", message.getText());
-
-		_workflowInstanceManager.startWorkflowInstance(
-			contextCompany.getCompanyId(),
-			GroupUtil.getGroupId(
-				contextCompany.getCompanyId(), _groupService,
-				message.getScope()),
-			contextUser.getUserId(),
-			WorkflowDefinitionConstants.NAME_CHAT_MESSAGE_PIPELINE, 1, null,
-			workflowContext);
+		_agent.invoke(
+			AgentContext.builder(
+			).input(
+				Map.of("message", message.getText())
+			).sseEventSinkKey(
+				externalReferenceCode
+			).build());
 
 		return message;
 	}
 
 	@Reference
-	private GroupService _groupService;
+	private Agent _agent;
 
 	@Context
 	private Sse _sse;
-
-	@Reference
-	private WorkflowInstanceManager _workflowInstanceManager;
 
 }

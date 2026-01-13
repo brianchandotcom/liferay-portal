@@ -28,6 +28,34 @@
 	}
 }
 
+.cms-related-assets {
+	&-header {
+		position: relative;
+		top: 3rem;
+	}
+
+	.c-empty-state-animation {
+		background-color: $light;
+		border-radius: 4px;
+		margin: 0;
+		max-height: unset;
+		max-width: unset;
+		outline: 2px dashed $secondary-l2;
+		padding: 2rem;
+		transition-duration: 0.2s;
+		transition-property: background-color, outline;
+		transition-timing-function: ease-in-out;
+	}
+
+	.c-empty-state-text {
+		font-weight: 700;
+	}
+
+	.c-empty-state-title {
+		display: none;
+	}
+}
+
 .cms-tabs-fluid {
 	.nav-tabs {
 		margin-inline: -1rem;
@@ -44,6 +72,7 @@
 	}
 }
 
+.custom-empty-state.cms-related-assets,
 .custom-empty-state.cms-space-summary {
 	.fds.c-slideout-container {
 		min-height: unset;

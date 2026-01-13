@@ -2,5 +2,6 @@ Bundle-Name: Liferay AI Hub API
 Bundle-SymbolicName: com.liferay.ai.hub.api
 Bundle-Version: 1.1.0
 Export-Package:\
+	com.liferay.ai.hub.agent,\
 	com.liferay.ai.hub.configuration,\
 	com.liferay.ai.hub.security

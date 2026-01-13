@@ -5,11 +5,12 @@ dependencies {
 	compileInclude group: "com.squareup.okhttp3", name: "okhttp-sse", version: "4.12.0"
 	compileInclude group: "com.squareup.okio", name: "okio", version: "3.6.0"
 	compileInclude group: "com.squareup.okio", name: "okio-jvm", version: "3.6.0"
-	compileInclude group: "dev.langchain4j", name: "langchain4j", version: "1.7.1"
-	compileInclude group: "dev.langchain4j", name: "langchain4j-core", version: "1.7.1"
-	compileInclude group: "dev.langchain4j", name: "langchain4j-http-client", version: "1.7.1"
-	compileInclude group: "dev.langchain4j", name: "langchain4j-mcp", version: "1.7.1-beta14"
-	compileInclude group: "dev.langchain4j", name: "langchain4j-vertex-ai-gemini", version: "1.7.1-beta14"
+	compileInclude group: "dev.langchain4j", name: "langchain4j", version: "1.10.0"
+	compileInclude group: "dev.langchain4j", name: "langchain4j-agentic", version: "1.10.0-beta18"
+	compileInclude group: "dev.langchain4j", name: "langchain4j-core", version: "1.10.0"
+	compileInclude group: "dev.langchain4j", name: "langchain4j-http-client", version: "1.10.0"
+	compileInclude group: "dev.langchain4j", name: "langchain4j-mcp", version: "1.10.0-beta18"
+	compileInclude group: "dev.langchain4j", name: "langchain4j-vertex-ai-gemini", version: "1.10.0-beta18"
 	compileInclude group: "org.apache.opennlp", name: "opennlp-tools", version: "2.5.4"
 	compileInclude group: "org.jetbrains", name: "annotations", version: "13.0"
 	compileInclude group: "org.jetbrains.kotlin", name: "kotlin-stdlib", version: "1.8.21"
@@ -43,5 +44,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-reflect")
 	compileOnly project(":core:petra:petra-string")
+	compileOnly project(":dxp:apps:ai-hub:ai-hub-api")
 	compileOnly project(":dxp:apps:ai-hub:ai-hub-rest-api")
 }

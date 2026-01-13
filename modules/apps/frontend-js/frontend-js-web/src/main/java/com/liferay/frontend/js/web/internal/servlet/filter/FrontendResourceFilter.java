@@ -5,7 +5,6 @@
 
 package com.liferay.frontend.js.web.internal.servlet.filter;
 
-import com.liferay.frontend.js.web.internal.configuration.FrontendCachingConfiguration;
 import com.liferay.frontend.js.web.internal.resource.FrontendResource;
 import com.liferay.frontend.js.web.internal.resource.handler.FrontendResourceRequestHandler;
 import com.liferay.frontend.js.web.internal.resource.handler.HashedFileFrontendResourceRequestHandler;
@@ -13,7 +12,6 @@ import com.liferay.frontend.js.web.internal.resource.handler.LanguageFrontendRes
 import com.liferay.frontend.js.web.internal.resource.handler.StyleSheetFrontendResourceRequestHandler;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesRegistry;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -35,13 +33,11 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -80,8 +76,7 @@ public class FrontendResourceFilter extends BasePortalFilter {
 	}
 
 	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
+	protected void activate() {
 		List<FrontendResourceRequestHandler> frontendResourceRequestHandlers =
 			new ArrayList<>();
 
@@ -102,7 +97,7 @@ public class FrontendResourceFilter extends BasePortalFilter {
 
 		frontendResourceRequestHandlers.add(
 			new StyleSheetFrontendResourceRequestHandler(
-				frontendCachingConfiguration, _hashedFilesRegistry, _portal,
+				_configurationProvider, _hashedFilesRegistry, _portal,
 				_themeLocalService));
 
 		frontendResourceRequestHandlers.add(

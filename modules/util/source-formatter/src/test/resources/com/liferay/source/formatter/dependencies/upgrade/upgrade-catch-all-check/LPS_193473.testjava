@@ -18,6 +18,11 @@ public class LPS_193473 {
 			123, className, classPK, number, extension, listTypeId, primary);
 		PhoneLocalServiceUtil.addPhone(
 			userId, className, classPK, number, extension, listTypeId, primary);
+		_phoneLocalService.addPhone(
+			userId, className, classPK, number, extension, listTypeId, primary);
 	}
+
+	@Reference
+	private PhoneLocalService _phoneLocalService;
 
 }

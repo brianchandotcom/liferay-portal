@@ -18,7 +18,11 @@ public class LPS_193473 {
 
 		PhoneLocalServiceUtil.addPhone(
 			123, className, classPK, number, extension, listTypeId, primary);
-		PhoneLocalServiceUtil.addPhone(userId, className, classPK, number, extension, listTypeId, primary, ServiceContextThreadLocal.getServiceContext());
+		PhoneLocalServiceUtil.addPhone(null, userId, className, classPK, number, extension, listTypeId, primary, ServiceContextThreadLocal.getServiceContext());
+		_phoneLocalService.addPhone(null, userId, className, classPK, number, extension, listTypeId, primary, ServiceContextThreadLocal.getServiceContext());
 	}
+
+	@Reference
+	private PhoneLocalService _phoneLocalService;
 
 }

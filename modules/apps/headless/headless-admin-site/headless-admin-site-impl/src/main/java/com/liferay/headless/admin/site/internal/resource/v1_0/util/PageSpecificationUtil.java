@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.site.internal.resource.v1_0.util;
 
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
+import com.liferay.headless.admin.site.dto.v1_0.PageSetPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSpecification;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -18,6 +19,31 @@ import java.util.Objects;
  * @author Rubén Pulido
  */
 public class PageSpecificationUtil {
+
+	public static PageSpecification getPageSpecification(
+		PageSpecification[] pageSpecifications) {
+
+		if (ArrayUtil.isEmpty(pageSpecifications)) {
+			return null;
+		}
+
+		if (pageSpecifications.length != 1) {
+			throw new UnsupportedOperationException();
+		}
+
+		PageSpecification pageSpecification = pageSpecifications[0];
+
+		if ((!(pageSpecification instanceof PageSetPageSpecification) &&
+			 !(pageSpecification instanceof WidgetPageSpecification)) ||
+			!Objects.equals(
+				pageSpecification.getStatus(),
+				PageSpecification.Status.APPROVED)) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		return pageSpecification;
+	}
 
 	public static int getPublishedStatus(
 		PageSpecification[] pageSpecifications) {
@@ -54,27 +80,8 @@ public class PageSpecificationUtil {
 	public static WidgetPageSpecification getWidgetPageSpecification(
 		PageSpecification[] pageSpecifications) {
 
-		if (ArrayUtil.isEmpty(pageSpecifications)) {
-			return null;
-		}
-
-		if ((pageSpecifications.length != 1) ||
-			!(pageSpecifications[0] instanceof WidgetPageSpecification)) {
-
-			throw new UnsupportedOperationException();
-		}
-
-		WidgetPageSpecification widgetPageSpecification =
-			(WidgetPageSpecification)pageSpecifications[0];
-
-		if (!Objects.equals(
-				widgetPageSpecification.getStatus(),
-				WidgetPageSpecification.Status.APPROVED)) {
-
-			throw new UnsupportedOperationException();
-		}
-
-		return widgetPageSpecification;
+		return (WidgetPageSpecification)getPageSpecification(
+			pageSpecifications);
 	}
 
 }

@@ -2886,7 +2886,7 @@ public class JenkinsResultsParserUtil {
 			localURLQueryString = remoteURL.substring(x);
 		}
 
-		Matcher matcher = _remoteURLAuthorityPattern3.matcher(localURL);
+		Matcher matcher = _remoteURLAuthorityPattern1.matcher(localURL);
 
 		if (isCloudCINode() && matcher.find()) {
 			String localURLAuthority = combine(
@@ -2899,7 +2899,7 @@ public class JenkinsResultsParserUtil {
 			return localURL + localURLQueryString;
 		}
 
-		matcher = _remoteURLAuthorityPattern1.matcher(localURL);
+		matcher = _remoteURLAuthorityPattern2.matcher(localURL);
 
 		if (matcher.find()) {
 			String localURLAuthority = combine(
@@ -2912,7 +2912,7 @@ public class JenkinsResultsParserUtil {
 			return localURL + localURLQueryString;
 		}
 
-		matcher = _remoteURLAuthorityPattern2.matcher(localURL);
+		matcher = _remoteURLAuthorityPattern3.matcher(localURL);
 
 		if (matcher.find()) {
 			String localURLAuthority = combine(
@@ -3487,7 +3487,7 @@ public class JenkinsResultsParserUtil {
 			remoteURLQueryString = localURL.substring(x);
 		}
 
-		Matcher matcher = _localURLAuthorityPattern3.matcher(remoteURL);
+		Matcher matcher = _localURLAuthorityPattern1.matcher(remoteURL);
 
 		if (isCloudCINode() && matcher.find()) {
 			String localURLAuthority = matcher.group(0);
@@ -3500,7 +3500,7 @@ public class JenkinsResultsParserUtil {
 			return remoteURL + remoteURLQueryString;
 		}
 
-		matcher = _localURLAuthorityPattern1.matcher(remoteURL);
+		matcher = _localURLAuthorityPattern2.matcher(remoteURL);
 
 		if (matcher.find()) {
 			String localURLAuthority = matcher.group(0);
@@ -3513,7 +3513,7 @@ public class JenkinsResultsParserUtil {
 			return remoteURL + remoteURLQueryString;
 		}
 
-		matcher = _localURLAuthorityPattern2.matcher(remoteURL);
+		matcher = _localURLAuthorityPattern3.matcher(remoteURL);
 
 		if (matcher.find()) {
 			String localURLAuthority = matcher.group(0);
@@ -7289,24 +7289,24 @@ public class JenkinsResultsParserUtil {
 	private static final Pattern _jenkinsSlavesPropertyNamePattern =
 		Pattern.compile("master.slaves\\((.+)\\)");
 	private static final Pattern _localURLAuthorityPattern1 = Pattern.compile(
-		"http://(test-[0-9]+-[0-9]+)/");
+		"http://(test-[0-9]+-[0])/");
 	private static final Pattern _localURLAuthorityPattern2 = Pattern.compile(
+		"http://(test-[0-9]+-[0-9]+)/");
+	private static final Pattern _localURLAuthorityPattern3 = Pattern.compile(
 		"https?://(mirrors/|mirrors.dlc.liferay.com/|mirrors.lax.liferay.com/" +
 			")?((files|releases).liferay.com)");
-	private static final Pattern _localURLAuthorityPattern3 = Pattern.compile(
-		"http://(test-[0-9]+-[0])/");
 	private static final Pattern _nestedPropertyPattern = Pattern.compile(
 		"\\$\\{([^\\}]+)\\}");
 	private static final Pattern _poshiFileNamePattern = Pattern.compile(
 		".*\\.(function|macro|path|prose|testcase)");
 	private static final Set<String> _redactTokens = new HashSet<>();
 	private static final Pattern _remoteURLAuthorityPattern1 = Pattern.compile(
-		"https://(test-[0-9]+-[0-9]+).liferay.com/");
+		"https://(test-[0-9]+-[0])-aws.liferay.com/");
 	private static final Pattern _remoteURLAuthorityPattern2 = Pattern.compile(
+		"https://(test-[0-9]+-[0-9]+).liferay.com/");
+	private static final Pattern _remoteURLAuthorityPattern3 = Pattern.compile(
 		"https?://(mirrors/|mirrors.dlc.liferay.com/|mirrors.lax.liferay.com/" +
 			")?((files|releases).liferay.com)");
-	private static final Pattern _remoteURLAuthorityPattern3 = Pattern.compile(
-		"https://(test-[0-9]+-[0])-aws.liferay.com/");
 	private static final Pattern _shaPattern = Pattern.compile(
 		"[0-9a-f]{7,40}");
 

@@ -218,6 +218,10 @@ export function registerLocalizedInput({
 			formId?: string;
 			languageId: Liferay.Language.Locale;
 		}) => {
+			localizedTextContainer?.classList.toggle(
+				'd-none',
+				languageId === defaultLanguageId
+			);
 
 			// Return if event is sent from a different form
 

@@ -19,6 +19,9 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -75,6 +78,12 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		_classNameLocalService.invalidate();
 
 		_originalName = PrincipalThreadLocal.getName();
+
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
 
 		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
 
@@ -159,6 +168,8 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 
 	@AfterClass
 	public static void tearDownClass() throws PortalException {
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_mcpServerObjectDefinition.getObjectDefinitionId());
 		_objectDefinitionLocalService.deleteObjectDefinition(
@@ -493,6 +504,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 	private static ObjectEntryLocalService _objectEntryLocalService;
 
 	private static String _originalName;
+	private static PermissionChecker _originalPermissionChecker;
 
 	@Inject
 	private static SiteInitializerRegistry _siteInitializerRegistry;

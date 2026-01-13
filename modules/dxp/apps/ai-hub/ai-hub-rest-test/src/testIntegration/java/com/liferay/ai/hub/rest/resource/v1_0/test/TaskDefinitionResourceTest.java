@@ -11,6 +11,9 @@ import com.liferay.ai.hub.rest.client.pagination.Pagination;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -41,6 +44,12 @@ public class TaskDefinitionResourceTest
 	public static void setUpClass() throws Exception {
 		_originalName = PrincipalThreadLocal.getName();
 
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
+
 		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
 
 		ServiceContextThreadLocal.pushServiceContext(
@@ -56,6 +65,7 @@ public class TaskDefinitionResourceTest
 
 	@AfterClass
 	public static void tearDownClass() {
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
 		PrincipalThreadLocal.setName(_originalName);
 
 		ServiceContextThreadLocal.popServiceContext();
@@ -92,6 +102,7 @@ public class TaskDefinitionResourceTest
 	}
 
 	private static String _originalName;
+	private static PermissionChecker _originalPermissionChecker;
 
 	@Inject
 	private static SiteInitializerRegistry _siteInitializerRegistry;

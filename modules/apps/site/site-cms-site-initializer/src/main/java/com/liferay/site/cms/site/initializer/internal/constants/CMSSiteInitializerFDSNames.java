@@ -60,6 +60,10 @@ public class CMSSiteInitializerFDSNames {
 	public static final String RECYCLE_BIN_SECTION =
 		CMSSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME + "-recycleBinSection";
 
+	public static final String RELATED_ASSETS_SECTION =
+		CMSSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME +
+			"-relatedAssetsSection";
+
 	public static final String SHARED_WITH_ME =
 		CMSSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME + "-sharedWithMe";
 

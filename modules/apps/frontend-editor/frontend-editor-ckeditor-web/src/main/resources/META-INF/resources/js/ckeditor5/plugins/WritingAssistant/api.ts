@@ -22,28 +22,26 @@ export function createEventSource() {
 	});
 }
 
-export async function postByExternalReferenceCodeTask(
+export async function postTask(
 	content: string,
 	eventSourceReference: string,
 	type: EActionType
 ) {
-	await fetch(
-		`/o/ai-hub/v1.0/by-external-reference-code/${eventSourceReference}/tasks`,
-		{
-			body: JSON.stringify({
-				context: {
-					text: content,
-				},
-				scope: {
-					externalReferenceCode: 'L_CMS',
-				},
-				type,
-			}),
-			headers: new Headers({
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
-			}),
-			method: 'POST',
-		}
-	);
+	await fetch(`/o/ai-hub/v1.0/tasks`, {
+		body: JSON.stringify({
+			context: {
+				text: content,
+			},
+			scope: {
+				externalReferenceCode: 'L_CMS',
+			},
+			sseEventSinkKey: eventSourceReference,
+			type,
+		}),
+		headers: new Headers({
+			'Accept': 'application/json',
+			'Content-Type': 'application/json',
+		}),
+		method: 'POST',
+	});
 }

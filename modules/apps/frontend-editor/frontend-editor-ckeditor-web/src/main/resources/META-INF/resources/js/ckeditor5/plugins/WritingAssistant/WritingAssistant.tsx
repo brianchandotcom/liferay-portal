@@ -11,7 +11,7 @@ import {cancelDebounce, debounce} from 'frontend-js-web';
 import React from 'react';
 import {Root, createRoot} from 'react-dom/client';
 
-import {createEventSource, postByExternalReferenceCodeTask} from './api';
+import {createEventSource, postTask} from './api';
 import WritingAssistantActions from './components/WritingAssistantActions';
 import WritingAssistantConfirmationAction from './components/WritingAssistantConfimationAction';
 import {EActionType} from './types';
@@ -219,7 +219,7 @@ export default class WritingAssistant extends Plugin {
 				<WritingAssistantActions
 					containerRef={reactView.element}
 					handleActionClick={async (type: EActionType) => {
-						await postByExternalReferenceCodeTask(
+						await postTask(
 							this.contentSelection,
 							this.eventSourceReference,
 							type

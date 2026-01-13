@@ -434,9 +434,10 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		DefaultFragmentEntryProcessorContext
 			defaultFragmentEntryProcessorContext =
 				new DefaultFragmentEntryProcessorContext(
-					httpServletRequest, httpServletResponse,
+					fragmentEntryLink.getCompanyId(), httpServletRequest,
+					httpServletResponse, fragmentRendererContext.getLocale(),
 					fragmentRendererContext.getMode(),
-					fragmentRendererContext.getLocale());
+					fragmentEntryLink.getGroupId());
 
 		defaultFragmentEntryProcessorContext.setAttributes(
 			fragmentRendererContext.getAttributes());

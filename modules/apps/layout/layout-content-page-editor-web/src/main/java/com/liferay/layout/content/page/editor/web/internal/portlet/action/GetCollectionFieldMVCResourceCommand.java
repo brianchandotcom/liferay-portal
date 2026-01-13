@@ -146,6 +146,7 @@ public class GetCollectionFieldMVCResourceCommand
 
 		try {
 			jsonObject = _getCollectionFieldsJSONObject(
+				themeDisplay.getCompanyId(),
 				_portal.getHttpServletRequest(resourceRequest),
 				_portal.getHttpServletResponse(resourceResponse), activePage,
 				displayAllItems, displayAllPages, languageId,
@@ -216,7 +217,7 @@ public class GetCollectionFieldMVCResourceCommand
 	}
 
 	private JSONObject _getCollectionFieldsJSONObject(
-			HttpServletRequest httpServletRequest,
+			long companyId, HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, int activePage,
 			boolean displayAllItems, boolean displayAllPages, String languageId,
 			String layoutObjectReference, String listStyle,
@@ -387,9 +388,9 @@ public class GetCollectionFieldMVCResourceCommand
 				for (Object object : infoPage.getPageItems()) {
 					jsonArray.put(
 						_getDisplayObjectJSONObject(
-							httpServletRequest, httpServletResponse,
+							companyId, httpServletRequest, httpServletResponse,
 							infoItemFieldValuesProvider, object,
-							LocaleUtil.fromLanguageId(languageId)));
+							LocaleUtil.fromLanguageId(languageId), scopeGroupId));
 				}
 
 				return jsonArray;
@@ -499,10 +500,10 @@ public class GetCollectionFieldMVCResourceCommand
 	}
 
 	private JSONObject _getDisplayObjectJSONObject(
-		HttpServletRequest httpServletRequest,
+		long companyId, HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse,
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider,
-		Object object, Locale locale) {
+		Object object, Locale locale, long scopeGroupId) {
 
 		InfoItemFieldValues infoItemFieldValues =
 			infoItemFieldValuesProvider.getInfoItemFieldValues(object);
@@ -552,8 +553,8 @@ public class GetCollectionFieldMVCResourceCommand
 
 		FragmentEntryProcessorContext fragmentEntryProcessorContext =
 			new DefaultFragmentEntryProcessorContext(
-				httpServletRequest, httpServletResponse,
-				FragmentEntryLinkConstants.EDIT, locale);
+				companyId, httpServletRequest,  httpServletResponse, locale,
+				FragmentEntryLinkConstants.EDIT, scopeGroupId);
 
 		for (InfoFieldValue<Object> infoFieldValue :
 				infoItemFieldValues.getInfoFieldValues()) {

@@ -155,9 +155,10 @@ public class DropZoneFragmentEntryLinkListener
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink,
 				new DefaultFragmentEntryProcessorContext(
-					httpServletRequest, httpServletResponse,
+					fragmentEntryLink.getCompanyId(), httpServletRequest,
+					httpServletResponse, serviceContext.getLocale(),
 					FragmentEntryLinkConstants.EDIT,
-					serviceContext.getLocale()));
+					fragmentEntryLink.getGroupId()));
 
 		Document document = _getDocument(processedHTML);
 
@@ -536,9 +537,10 @@ public class DropZoneFragmentEntryLinkListener
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink,
 				new DefaultFragmentEntryProcessorContext(
-					httpServletRequest, httpServletResponse,
+					fragmentEntryLink.getCompanyId(), httpServletRequest,
+					httpServletResponse, serviceContext.getLocale(),
 					FragmentEntryLinkConstants.EDIT,
-					serviceContext.getLocale()));
+					fragmentEntryLink.getGroupId()));
 
 		Document document = _getDocument(processedHTML);
 

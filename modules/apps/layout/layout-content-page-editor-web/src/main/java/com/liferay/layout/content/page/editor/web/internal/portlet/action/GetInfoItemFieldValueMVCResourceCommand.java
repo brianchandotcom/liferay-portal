@@ -90,10 +90,12 @@ public class GetInfoItemFieldValueMVCResourceCommand
 
 		FragmentEntryProcessorContext fragmentEntryProcessorContext =
 			new DefaultFragmentEntryProcessorContext(
+				themeDisplay.getCompanyId(),
 				_portal.getHttpServletRequest(resourceRequest),
 				_portal.getHttpServletResponse(resourceResponse),
+				LocaleUtil.fromLanguageId(languageId),
 				FragmentEntryLinkConstants.EDIT,
-				LocaleUtil.fromLanguageId(languageId));
+				themeDisplay.getScopeGroupId());
 
 		Object value = _fragmentEntryProcessorHelper.getFieldValue(
 			jsonObject, new HashMap<>(), fragmentEntryProcessorContext);

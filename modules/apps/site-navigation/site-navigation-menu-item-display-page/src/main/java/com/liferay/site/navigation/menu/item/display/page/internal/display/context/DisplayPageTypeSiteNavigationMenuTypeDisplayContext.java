@@ -44,6 +44,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.menu.item.display.page.internal.type.DisplayPageTypeContext;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
+import com.liferay.site.navigation.type.util.SiteNavigationMenuItemTypeRegistryUtil;
 
 import jakarta.portlet.PortletResponse;
 import jakarta.portlet.PortletURL;
@@ -170,6 +172,21 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 					new InfoItemReference(
 						_displayPageTypeContext.getClassName(),
 						infoItemIdentifier));
+			}
+		).put(
+			"hasModel",
+			() -> {
+				SiteNavigationMenuItemType siteNavigationMenuItemType =
+					SiteNavigationMenuItemTypeRegistryUtil.
+						getSiteNavigationMenuItemType(
+							_siteNavigationMenuItem.getType());
+
+				return siteNavigationMenuItemType.hasModel(
+					_siteNavigationMenuItem.getCompanyId(),
+					_siteNavigationMenuItem.getGroupId(),
+					UnicodePropertiesBuilder.fastLoad(
+						_siteNavigationMenuItem.getTypeSettings()
+					).build());
 			}
 		).put(
 			"item",

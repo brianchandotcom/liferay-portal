@@ -7,9 +7,9 @@ package com.liferay.frontend.js.web.internal.js.importmaps.extender;
 
 import com.liferay.frontend.js.importmaps.extender.DynamicJSImportMapsContributor;
 import com.liferay.frontend.js.web.internal.resource.handler.LanguageFrontendResourceRequestHandler;
+import com.liferay.frontend.js.web.internal.util.FrontendJsWebUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesRegistry;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -37,16 +37,16 @@ public class FrontendJsWebDynamicJSImportMapsContributor
 			HttpServletRequest httpServletRequest, Writer writer)
 		throws IOException {
 
+		String baseURL = FrontendJsWebUtil.getBaseURL(
+			httpServletRequest, _portal);
+
 		writer.write(StringPool.QUOTE);
 		writer.write(
 			LanguageFrontendResourceRequestHandler.LANGUAGE_MODULE_PREFIX);
 		writer.write("\": \"");
 
-		String cdnHost = _getCDNHost(httpServletRequest);
-
-		writer.write(cdnHost);
-
-		writer.write(_portal.getPathContext(httpServletRequest));
+		writer.write(baseURL);
+		writer.write(FrontendJsWebUtil.getPortalContextPath(_portal));
 		writer.write(
 			LanguageFrontendResourceRequestHandler.LANGUAGE_URI_PREFIX);
 		writer.write(StringPool.QUOTE);
@@ -68,9 +68,10 @@ public class FrontendJsWebDynamicJSImportMapsContributor
 
 				try {
 					writer.write(", \"");
+					writer.write(baseURL);
 					writer.write(unhashedFileURI);
 					writer.write("\": \"");
-					writer.write(cdnHost);
+					writer.write(baseURL);
 					writer.write(hashedFileURI);
 					writer.write(StringPool.QUOTE);
 				}
@@ -84,15 +85,6 @@ public class FrontendJsWebDynamicJSImportMapsContributor
 	public void writeScopedImports(
 			HttpServletRequest httpServletRequest, Writer writer)
 		throws IOException {
-	}
-
-	private String _getCDNHost(HttpServletRequest httpServletRequest) {
-		try {
-			return _portal.getCDNHost(httpServletRequest);
-		}
-		catch (PortalException portalException) {
-			throw new RuntimeException(portalException);
-		}
 	}
 
 	private PortalURLBuilderConfiguration _getPortalURLBuilderConfiguration(

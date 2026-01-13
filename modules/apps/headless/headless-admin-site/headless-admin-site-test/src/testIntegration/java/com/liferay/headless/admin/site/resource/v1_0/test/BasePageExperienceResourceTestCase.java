@@ -181,6 +181,7 @@ public abstract class BasePageExperienceResourceTestCase {
 		pageExperience.setExternalReferenceCode(regex);
 		pageExperience.setKey(regex);
 		pageExperience.setPageSpecificationExternalReferenceCode(regex);
+		pageExperience.setUuid(regex);
 
 		String json = PageExperienceSerDes.toJSON(pageExperience);
 
@@ -192,6 +193,7 @@ public abstract class BasePageExperienceResourceTestCase {
 		Assert.assertEquals(regex, pageExperience.getKey());
 		Assert.assertEquals(
 			regex, pageExperience.getPageSpecificationExternalReferenceCode());
+		Assert.assertEquals(regex, pageExperience.getUuid());
 	}
 
 	@Test
@@ -686,6 +688,14 @@ public abstract class BasePageExperienceResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("uuid", additionalAssertFieldName)) {
+				if (pageExperience.getUuid() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -897,6 +907,16 @@ public abstract class BasePageExperienceResourceTestCase {
 				if (!Objects.deepEquals(
 						pageExperience1.getSegmentItemExternalReference(),
 						pageExperience2.getSegmentItemExternalReference())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("uuid", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						pageExperience1.getUuid(), pageExperience2.getUuid())) {
 
 					return false;
 				}
@@ -1177,6 +1197,52 @@ public abstract class BasePageExperienceResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("uuid")) {
+			Object object = pageExperience.getUuid();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -1228,6 +1294,7 @@ public abstract class BasePageExperienceResourceTestCase {
 				pageSpecificationExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				priority = RandomTestUtil.randomInt();
+				uuid = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
 	}

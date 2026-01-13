@@ -202,6 +202,25 @@ public class PageExperience implements Cloneable, Serializable {
 
 	protected ItemExternalReference segmentItemExternalReference;
 
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+
+	public void setUuid(UnsafeSupplier<String, Exception> uuidUnsafeSupplier) {
+		try {
+			uuid = uuidUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String uuid;
+
 	@Override
 	public PageExperience clone() throws CloneNotSupportedException {
 		return (PageExperience)super.clone();

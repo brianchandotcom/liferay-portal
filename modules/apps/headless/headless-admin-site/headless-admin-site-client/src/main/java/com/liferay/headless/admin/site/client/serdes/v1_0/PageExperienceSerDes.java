@@ -167,6 +167,20 @@ public class PageExperienceSerDes {
 					pageExperience.getSegmentItemExternalReference()));
 		}
 
+		if (pageExperience.getUuid() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"uuid\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(pageExperience.getUuid()));
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -255,6 +269,13 @@ public class PageExperienceSerDes {
 					pageExperience.getSegmentItemExternalReference()));
 		}
 
+		if (pageExperience.getUuid() == null) {
+			map.put("uuid", null);
+		}
+		else {
+			map.put("uuid", String.valueOf(pageExperience.getUuid()));
+		}
+
 		return map;
 	}
 
@@ -300,6 +321,9 @@ public class PageExperienceSerDes {
 			else if (Objects.equals(
 						jsonParserFieldName, "segmentItemExternalReference")) {
 
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "uuid")) {
 				return false;
 			}
 
@@ -382,6 +406,11 @@ public class PageExperienceSerDes {
 					pageExperience.setSegmentItemExternalReference(
 						ItemExternalReferenceSerDes.toDTO(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "uuid")) {
+				if (jsonParserFieldValue != null) {
+					pageExperience.setUuid((String)jsonParserFieldValue);
 				}
 			}
 		}

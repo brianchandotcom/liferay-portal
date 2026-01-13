@@ -50,7 +50,6 @@ import com.liferay.portal.security.sso.openid.connect.persistence.service.OpenId
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.After;
@@ -215,6 +214,9 @@ public class OIDCUserInfoProcessorTest {
 			_testProcessUserInfo(
 				new String[] {"group2"}, "email", new String[0],
 				_customOIDCUserInfoMapperJSON);
+			_testProcessUserInfo(
+				new String[] {"group2"}, "email", null,
+				OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
 
 			_userGroupLocalService.deleteUserUserGroup(
 				user.getUserId(), userGroup.getUserGroupId());
@@ -224,6 +226,9 @@ public class OIDCUserInfoProcessorTest {
 				_customOIDCUserInfoMapperJSON);
 			_testProcessUserInfo(
 				new String[0], "email", new String[0],
+				OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
+			_testProcessUserInfo(
+				new String[0], "email", null,
 				OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
 			_testProcessUserInfo(
 				new String[] {"group1"}, "email", new String[] {"group1"},
@@ -366,19 +371,6 @@ public class OIDCUserInfoProcessorTest {
 
 		User existingUser = _fetchUser(matcherField);
 
-		List<String> newUserGroupNames = new ArrayList<>();
-
-		for (String userGroupName : userGroupNames) {
-			UserGroup userGroup = _userGroupLocalService.fetchUserGroup(
-				TestPropsValues.getCompanyId(), userGroupName);
-
-			if (userGroup != null) {
-				continue;
-			}
-
-			newUserGroupNames.add(userGroupName);
-		}
-
 		JSONObject userInfoJSONObject = JSONUtil.put(
 			"birthdate", String.valueOf(RandomTestUtil.nextDate())
 		).put(
@@ -449,11 +441,13 @@ public class OIDCUserInfoProcessorTest {
 					expectedUserGroupNames, userUserGroup.getName()));
 		}
 
-		for (String userGroupName : newUserGroupNames) {
-			_assertExpandoValue(
-				_userGroupLocalService.getUserGroup(
-					TestPropsValues.getCompanyId(), userGroupName),
-				oAuthClientEntry.getOAuthClientEntryId());
+		if (userGroupNames != null) {
+			for (String userGroupName : userGroupNames) {
+				_assertExpandoValue(
+					_userGroupLocalService.getUserGroup(
+						TestPropsValues.getCompanyId(), userGroupName),
+					oAuthClientEntry.getOAuthClientEntryId());
+			}
 		}
 
 		ExpandoTable expandoTable = _expandoTableLocalService.fetchTable(

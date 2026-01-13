@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -38,10 +40,12 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.RequiredWorkflowDefinitionException;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.script.management.configuration.helper.ScriptManagementConfigurationHelper;
+import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.exception.IncompleteWorkflowInstancesException;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerActionKeys;
+import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerWebKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoDefinitionVersionPermission;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoDesignerPermission;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.display.context.helper.KaleoDesignerRequestHelper;
@@ -63,6 +67,7 @@ import java.text.SimpleDateFormat;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
@@ -675,6 +680,32 @@ public class KaleoDesignerDisplayContext {
 		return KaleoDesignerPermission.contains(
 			permissionChecker, _themeDisplay.getCompanyGroupId(),
 			KaleoDesignerActionKeys.ADD_NEW_WORKFLOW);
+	}
+
+	public boolean isView() {
+		LiferayPortletRequest liferayPortletRequest =
+			_kaleoDesignerRequestHelper.getLiferayPortletRequest();
+
+		if (Objects.equals(
+				liferayPortletRequest.getParameter(
+					WorkflowWebKeys.WORKFLOW_JSP_STATE),
+				"view") ||
+			!canPublishWorkflowDefinition()) {
+
+			return true;
+		}
+
+		KaleoDefinitionVersion kaleoDefinitionVersion =
+			(KaleoDefinitionVersion)liferayPortletRequest.getAttribute(
+				KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION);
+
+		if (kaleoDefinitionVersion == null) {
+			return false;
+		}
+
+		return ArrayUtil.contains(
+			WorkflowDefinitionConstants.SYSTEM_WORKFLOW_DEFINITION_NAMES,
+			kaleoDefinitionVersion.getName());
 	}
 
 	public void setKaleoDesignerRequestHelper(RenderRequest renderRequest) {

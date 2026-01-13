@@ -57,4 +57,10 @@ public class WorkflowDefinitionConstants {
 
 	public static final String SCOPE_ALL = "all";
 
+	public static final String[] SYSTEM_WORKFLOW_DEFINITION_NAMES = {
+		NAME_CHANGE_TONE, NAME_CHAT_MESSAGE_PIPELINE,
+		NAME_FIX_SPELLING_AND_GRAMMAR, NAME_IMPROVE_WRITING, NAME_MAKE_LONGER,
+		NAME_MAKE_SHORTER
+	};
+
 }

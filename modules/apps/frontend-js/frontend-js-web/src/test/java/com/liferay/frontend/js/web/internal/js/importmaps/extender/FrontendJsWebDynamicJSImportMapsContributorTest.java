@@ -5,6 +5,7 @@
 
 package com.liferay.frontend.js.web.internal.js.importmaps.extender;
 
+import com.liferay.frontend.js.web.internal.util.FrontendJsWebUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -108,15 +109,31 @@ public class FrontendJsWebDynamicJSImportMapsContributorTest {
 		);
 
 		Mockito.when(
+			portal.getPathContext()
+		).thenReturn(
+			pathContext
+		);
+
+		Mockito.when(
 			portal.getPathContext((HttpServletRequest)Mockito.any())
 		).thenReturn(
 			pathContext
+		);
+
+		Mockito.when(
+			portal.getPathProxy()
+		).thenReturn(
+			StringPool.BLANK
 		);
 
 		return portal;
 	}
 
 	private void _testWriteGlobalImports(String pathContext) throws Exception {
+		ReflectionTestUtils.setField(FrontendJsWebUtil.class, "_baseURL", null);
+		ReflectionTestUtils.setField(
+			FrontendJsWebUtil.class, "_portalContextPath", null);
+
 		FrontendJsWebDynamicJSImportMapsContributor
 			frontendJsWebDynamicJSImportMapsContributor =
 				new FrontendJsWebDynamicJSImportMapsContributor();

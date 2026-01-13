@@ -522,7 +522,7 @@ public class ObjectEntryLocalServiceImpl
 			_startWorkflowInstance(userId, objectEntry, serviceContext, false);
 		}
 
-		_addComments(
+		_addOrUpdateComments(
 			groupId, userId, objectDefinition, objectEntry, serviceContext);
 
 		ObjectDefinitionResourcePermissionUtil.updateResourcePermissions(
@@ -2513,74 +2513,6 @@ public class ObjectEntryLocalServiceImpl
 	@Reference
 	protected ConfigurationProvider configurationProvider;
 
-	private void _addComments(
-			long groupId, long userId, ObjectDefinition objectDefinition,
-			ObjectEntry objectEntry, ServiceContext serviceContext)
-		throws PortalException {
-
-		List<ObjectEntryComment> objectEntryComments =
-			(List<ObjectEntryComment>)serviceContext.getAttribute(
-				"objectEntryComments");
-
-		if (!objectDefinition.isEnableComments() ||
-			ListUtil.isEmpty(objectEntryComments)) {
-
-			return;
-		}
-
-		if (groupId == 0) {
-			groupId = objectEntry.getNonzeroGroupId();
-		}
-
-		_discussionPermission.checkAddPermission(
-			PermissionThreadLocal.getPermissionChecker(),
-			objectDefinition.getCompanyId(), groupId,
-			objectDefinition.getClassName(), objectEntry.getObjectEntryId());
-
-		User user = _userLocalService.getUser(userId);
-
-		for (ObjectEntryComment objectEntryComment : objectEntryComments) {
-			if (Validator.isNotNull(
-					objectEntryComment.
-						getParentCommentExternalReferenceCode())) {
-
-				Comment parentComment = _commentManager.getOrAddEmptyComment(
-					objectEntryComment.getParentCommentExternalReferenceCode(),
-					userId, groupId, objectDefinition.getClassName(),
-					objectEntry.getObjectEntryId());
-
-				_commentManager.addComment(
-					objectEntryComment.getExternalReferenceCode(), userId,
-					objectDefinition.getClassName(),
-					objectEntry.getObjectEntryId(), user.getFullName(),
-					parentComment.getCommentId(), null,
-					objectEntryComment.getText(),
-					_createServiceContextFunction());
-			}
-			else {
-				Comment comment = _commentManager.fetchComment(
-					groupId, objectEntryComment.getExternalReferenceCode());
-
-				if (comment != null) {
-					_commentManager.updateComment(
-						userId, objectDefinition.getClassName(),
-						objectEntry.getObjectEntryId(), comment.getCommentId(),
-						StringPool.BLANK, objectEntryComment.getText(),
-						_createServiceContextFunction());
-
-					continue;
-				}
-
-				_commentManager.addComment(
-					objectEntryComment.getExternalReferenceCode(), userId,
-					groupId, objectDefinition.getClassName(),
-					objectEntry.getObjectEntryId(), user.getFullName(), null,
-					objectEntryComment.getText(),
-					_createServiceContextFunction());
-			}
-		}
-	}
-
 	private void _addDLFileEntries(
 			Map<ObjectField, Set<DLFileEntry>> dlFileEntriesMap, long groupId,
 			ObjectDefinition objectDefinition, long objectEntryId,
@@ -2936,6 +2868,104 @@ public class ObjectEntryLocalServiceImpl
 
 			values.put(
 				objectRelationshipERCObjectFieldName, externalReferenceCode);
+		}
+	}
+
+	private void _addOrUpdateComments(
+			long groupId, long userId, ObjectDefinition objectDefinition,
+			ObjectEntry objectEntry, ServiceContext serviceContext)
+		throws PortalException {
+
+		List<ObjectEntryComment> objectEntryComments =
+			(List<ObjectEntryComment>)serviceContext.getAttribute(
+				"objectEntryComments");
+
+		if (!objectDefinition.isEnableComments() ||
+			ListUtil.isEmpty(objectEntryComments)) {
+
+			return;
+		}
+
+		if (groupId == 0) {
+			groupId = objectEntry.getNonzeroGroupId();
+		}
+
+		Map<String, Comment> comments = new HashMap<>();
+		Set<Long> deleteCommentIds = new HashSet<>();
+
+		for (Comment comment :
+				_commentManager.getComments(
+					objectDefinition.getClassName(),
+					objectEntry.getObjectEntryId(),
+					WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS)) {
+
+			comments.put(comment.getExternalReferenceCode(), comment);
+
+			if (!comment.isRoot()) {
+				deleteCommentIds.add(comment.getCommentId());
+			}
+		}
+
+		User user = _userLocalService.getUser(userId);
+
+		for (ObjectEntryComment objectEntryComment : objectEntryComments) {
+			Comment comment = comments.get(
+				objectEntryComment.getExternalReferenceCode());
+
+			if (comment == null) {
+				_discussionPermission.checkAddPermission(
+					PermissionThreadLocal.getPermissionChecker(),
+					objectDefinition.getCompanyId(), groupId,
+					objectDefinition.getClassName(),
+					objectEntry.getObjectEntryId());
+
+				if (Validator.isNotNull(
+						objectEntryComment.
+							getParentCommentExternalReferenceCode())) {
+
+					Comment parentComment =
+						_commentManager.getOrAddEmptyComment(
+							objectEntryComment.
+								getParentCommentExternalReferenceCode(),
+							userId, groupId, objectDefinition.getClassName(),
+							objectEntry.getObjectEntryId());
+
+					_commentManager.addComment(
+						objectEntryComment.getExternalReferenceCode(), userId,
+						objectDefinition.getClassName(),
+						objectEntry.getObjectEntryId(), user.getFullName(),
+						parentComment.getCommentId(), null,
+						objectEntryComment.getText(),
+						_createServiceContextFunction());
+				}
+				else {
+					_commentManager.addComment(
+						objectEntryComment.getExternalReferenceCode(), userId,
+						groupId, objectDefinition.getClassName(),
+						objectEntry.getObjectEntryId(), user.getFullName(),
+						null, objectEntryComment.getText(),
+						_createServiceContextFunction());
+				}
+
+				continue;
+			}
+
+			_discussionPermission.checkUpdatePermission(
+				PermissionThreadLocal.getPermissionChecker(),
+				comment.getCommentId());
+
+			_commentManager.updateComment(
+				userId, objectDefinition.getClassName(),
+				objectEntry.getObjectEntryId(), comment.getCommentId(),
+				StringPool.BLANK, objectEntryComment.getText(),
+				_createServiceContextFunction());
+
+			deleteCommentIds.remove(comment.getCommentId());
+		}
+
+		for (Long deleteCommentId : deleteCommentIds) {
+			_commentManager.deleteComment(deleteCommentId);
 		}
 	}
 
@@ -6677,6 +6707,10 @@ public class ObjectEntryLocalServiceImpl
 
 		_addFriendlyURLEntry(
 			objectDefinition, objectEntry, serviceContext, values);
+
+		_addOrUpdateComments(
+			objectEntry.getGroupId(), userId, objectDefinition, objectEntry,
+			serviceContext);
 
 		_startWorkflowInstance(userId, objectEntry, serviceContext, true);
 

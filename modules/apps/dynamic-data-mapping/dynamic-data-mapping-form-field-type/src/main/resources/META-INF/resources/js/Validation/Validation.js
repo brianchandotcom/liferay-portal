@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayForm from '@clayui/form';
 import {useFormState} from 'data-engine-js-components-web';
 import React, {useEffect, useReducer} from 'react';
 
@@ -84,7 +83,7 @@ const Validation = ({
 	}, [readOnly, visible]);
 
 	return (
-		<ClayForm.Group className="lfr-ddm-form-field-validation">
+		<>
 			<Checkbox
 				label={label}
 				name="enableValidation"
@@ -99,6 +98,7 @@ const Validation = ({
 				}}
 				readOnly={readOnly}
 				showAsSwitcher
+				tip=""
 				value={enableValidation}
 				visible={visible}
 			/>
@@ -122,7 +122,7 @@ const Validation = ({
 					visible={visible}
 				/>
 			)}
-		</ClayForm.Group>
+		</>
 	);
 };
 

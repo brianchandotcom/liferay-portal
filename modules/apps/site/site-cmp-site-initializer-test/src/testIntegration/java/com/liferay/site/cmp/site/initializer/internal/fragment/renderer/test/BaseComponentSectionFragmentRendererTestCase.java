@@ -48,7 +48,7 @@ public abstract class BaseComponentSectionFragmentRendererTestCase {
 				getObjectDefinitionByExternalReferenceCode(
 					"L_CMP_PROJECT", TestPropsValues.getCompanyId());
 
-		projectObjectEntry = CMPTestUtil.addProject();
+		projectObjectEntry = CMPTestUtil.addProjectObjectEntry();
 
 		projectTitle = MapUtil.getString(
 			projectObjectEntry.getValues(), "title");

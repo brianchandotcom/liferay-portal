@@ -63,17 +63,17 @@ public class ViewTasksSectionDisplayContextTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		ObjectEntry objectEntry = CMPTestUtil.addProject();
+		ObjectDefinition objectDefinition =
+			objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_CMP_PROJECT", TestPropsValues.getCompanyId());
+
+		ObjectEntry objectEntry = CMPTestUtil.addProjectObjectEntry();
 
 		objectEntry = _objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
 			objectEntry.getObjectEntryFolderId(), objectEntry.getValues(),
 			ServiceContextTestUtil.getServiceContext());
-
-		ObjectDefinition objectDefinition =
-			objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					"L_CMP_PROJECT", TestPropsValues.getCompanyId());
 
 		_assetEntry = _assetEntryLocalService.getEntry(
 			objectDefinition.getClassName(), objectEntry.getObjectEntryId());

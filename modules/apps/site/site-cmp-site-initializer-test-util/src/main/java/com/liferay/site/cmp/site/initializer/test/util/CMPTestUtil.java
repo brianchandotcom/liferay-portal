@@ -39,7 +39,7 @@ import java.util.Collections;
  */
 public class CMPTestUtil {
 
-	public static ObjectEntry addProject() throws PortalException {
+	public static ObjectEntry addProjectObjectEntry() throws PortalException {
 		DepotEntry depotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),

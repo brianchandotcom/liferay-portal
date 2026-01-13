@@ -76,7 +76,7 @@ public abstract class BaseSectionDisplayContextTestCase {
 		throws Exception {
 
 		return ReflectionTestUtil.invoke(
-			getSectionDisplayContext(_getMockHttpServletRequest(assetEntry)),
+			getSectionDisplayContext(_getHttpServletRequest(assetEntry)),
 			"getCreationMenu", new Class<?>[0]);
 	}
 
@@ -85,7 +85,7 @@ public abstract class BaseSectionDisplayContextTestCase {
 		throws Exception {
 
 		return ReflectionTestUtil.invoke(
-			getSectionDisplayContext(_getMockHttpServletRequest(assetEntry)),
+			getSectionDisplayContext(_getHttpServletRequest(assetEntry)),
 			"getFDSActionDropdownItems", new Class<?>[0]);
 	}
 
@@ -107,21 +107,17 @@ public abstract class BaseSectionDisplayContextTestCase {
 
 	protected ThemeDisplay themeDisplay;
 
-	private MockHttpServletRequest _getMockHttpServletRequest(
-		AssetEntry assetEntry) {
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
+	private HttpServletRequest _getHttpServletRequest(AssetEntry assetEntry) {
+		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
 
 		if (assetEntry != null) {
-			mockHttpServletRequest.setAttribute(
+			httpServletRequest.setAttribute(
 				WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
 		}
 
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
+		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
-		return mockHttpServletRequest;
+		return httpServletRequest;
 	}
 
 	@Inject

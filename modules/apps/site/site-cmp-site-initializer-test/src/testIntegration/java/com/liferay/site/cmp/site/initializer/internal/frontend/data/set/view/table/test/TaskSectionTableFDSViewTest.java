@@ -36,9 +36,9 @@ public class TaskSectionTableFDSViewTest
 
 	@Test
 	public void testGetFDSTableSchema() throws Exception {
-		assertFDSTableSchemaField(null, "date", "due-date", "embedded.dueDate");
 		assertFDSTableSchemaField(
 			null, null, "assign-to", "embedded.assignTo.name");
+		assertFDSTableSchemaField(null, "date", "due-date", "embedded.dueDate");
 		assertFDSTableSchemaField(
 			null, null, "project",
 			"embedded.r_cmpProjectToCMPTask_c_cmpProject.title");

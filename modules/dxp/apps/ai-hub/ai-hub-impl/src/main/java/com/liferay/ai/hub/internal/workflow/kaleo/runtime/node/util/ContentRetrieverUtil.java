@@ -24,7 +24,9 @@ public class ContentRetrieverUtil {
 	public static ContentRetriever createContentRetriever(
 		Map<String, String> kaleoNodeSettingValues) {
 
-		if (kaleoNodeSettingValues.get("rag") == null) {
+		if ((kaleoNodeSettingValues.get("rag") == null) ||
+			Objects.equals(kaleoNodeSettingValues.get("rag"), "[]")) {
+
 			return null;
 		}
 

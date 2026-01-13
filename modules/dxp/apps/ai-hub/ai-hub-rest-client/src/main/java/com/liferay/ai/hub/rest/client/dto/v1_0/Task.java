@@ -87,6 +87,27 @@ public class Task implements Cloneable, Serializable {
 
 	protected Scope scope;
 
+	public String getSseEventSinkKey() {
+		return sseEventSinkKey;
+	}
+
+	public void setSseEventSinkKey(String sseEventSinkKey) {
+		this.sseEventSinkKey = sseEventSinkKey;
+	}
+
+	public void setSseEventSinkKey(
+		UnsafeSupplier<String, Exception> sseEventSinkKeyUnsafeSupplier) {
+
+		try {
+			sseEventSinkKey = sseEventSinkKeyUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String sseEventSinkKey;
+
 	public String getType() {
 		return type;
 	}

@@ -166,6 +166,7 @@ public abstract class BaseTaskResourceTestCase {
 		Task task = randomTask();
 
 		task.setExternalReferenceCode(regex);
+		task.setSseEventSinkKey(regex);
 		task.setType(regex);
 
 		String json = TaskSerDes.toJSON(task);
@@ -175,6 +176,7 @@ public abstract class BaseTaskResourceTestCase {
 		task = TaskSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, task.getExternalReferenceCode());
+		Assert.assertEquals(regex, task.getSseEventSinkKey());
 		Assert.assertEquals(regex, task.getType());
 	}
 
@@ -196,20 +198,23 @@ public abstract class BaseTaskResourceTestCase {
 	}
 
 	@Test
-	public void testPostByExternalReferenceCodeTask() throws Exception {
+	public void testPostTask() throws Exception {
 		Task randomTask = randomTask();
 
-		Task postTask = testPostByExternalReferenceCodeTask_addTask(randomTask);
+		Task postTask = testPostTask_addTask(randomTask);
 
 		assertEquals(randomTask, postTask);
 		assertValid(postTask);
 	}
 
-	protected Task testPostByExternalReferenceCodeTask_addTask(Task task)
-		throws Exception {
-
+	protected Task testPostTask_addTask(Task task) throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		Assert.assertTrue(true);
 	}
 
 	protected void assertContains(Task task, List<Task> tasks) {
@@ -296,6 +301,14 @@ public abstract class BaseTaskResourceTestCase {
 
 			if (Objects.equals("scope", additionalAssertFieldName)) {
 				if (task.getScope() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("sseEventSinkKey", additionalAssertFieldName)) {
+				if (task.getSseEventSinkKey() == null) {
 					valid = false;
 				}
 
@@ -450,6 +463,17 @@ public abstract class BaseTaskResourceTestCase {
 
 			if (Objects.equals("scope", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(task1.getScope(), task2.getScope())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("sseEventSinkKey", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						task1.getSseEventSinkKey(),
+						task2.getSseEventSinkKey())) {
+
 					return false;
 				}
 
@@ -627,6 +651,52 @@ public abstract class BaseTaskResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("sseEventSinkKey")) {
+			Object object = task.getSseEventSinkKey();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("type")) {
 			Object object = task.getType();
 
@@ -719,6 +789,8 @@ public abstract class BaseTaskResourceTestCase {
 		return new Task() {
 			{
 				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				sseEventSinkKey = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				type = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}

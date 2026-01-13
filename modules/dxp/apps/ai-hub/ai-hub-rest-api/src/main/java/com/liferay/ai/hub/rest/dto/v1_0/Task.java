@@ -172,6 +172,47 @@ public class Task implements Serializable {
 	private Supplier<Scope> _scopeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public String getSseEventSinkKey() {
+		if (_sseEventSinkKeySupplier != null) {
+			sseEventSinkKey = _sseEventSinkKeySupplier.get();
+
+			_sseEventSinkKeySupplier = null;
+		}
+
+		return sseEventSinkKey;
+	}
+
+	public void setSseEventSinkKey(String sseEventSinkKey) {
+		this.sseEventSinkKey = sseEventSinkKey;
+
+		_sseEventSinkKeySupplier = null;
+	}
+
+	@JsonIgnore
+	public void setSseEventSinkKey(
+		UnsafeSupplier<String, Exception> sseEventSinkKeyUnsafeSupplier) {
+
+		_sseEventSinkKeySupplier = () -> {
+			try {
+				return sseEventSinkKeyUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String sseEventSinkKey;
+
+	@JsonIgnore
+	private Supplier<String> _sseEventSinkKeySupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getType() {
 		if (_typeSupplier != null) {
 			type = _typeSupplier.get();
@@ -275,6 +316,22 @@ public class Task implements Serializable {
 			sb.append("\"scope\": ");
 
 			sb.append(String.valueOf(scope));
+		}
+
+		String sseEventSinkKey = getSseEventSinkKey();
+
+		if (sseEventSinkKey != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"sseEventSinkKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(sseEventSinkKey));
+
+			sb.append("\"");
 		}
 
 		String type = getType();

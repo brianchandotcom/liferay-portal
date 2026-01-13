@@ -318,8 +318,9 @@ public class BackgroundImageDocumentFragmentEntryProcessorTest {
 		DefaultFragmentEntryProcessorContext
 			defaultFragmentEntryProcessorContext =
 				new DefaultFragmentEntryProcessorContext(
-					_getMockHttpServletRequest(), new MockHttpServletResponse(),
-					null, LocaleUtil.getDefault());
+					_group.getCompanyId(), _getMockHttpServletRequest(),
+					new MockHttpServletResponse(), LocaleUtil.getDefault(),
+					null, _group.getGroupId());
 
 		String processFragmentEntryLinkHTML =
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(

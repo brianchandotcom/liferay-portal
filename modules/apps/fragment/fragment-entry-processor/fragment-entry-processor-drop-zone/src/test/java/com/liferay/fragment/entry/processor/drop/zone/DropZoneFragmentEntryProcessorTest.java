@@ -447,9 +447,11 @@ public class DropZoneFragmentEntryProcessorTest {
 		_dropZoneDocumentFragmentEntryProcessor.processFragmentEntryLinkHTML(
 			fragmentEntryLink, document,
 			new DefaultFragmentEntryProcessorContext(
+				fragmentEntryLink.getCompanyId(),
 				_getMockHttpServletRequest(layoutStructure), null,
+				LocaleUtil.getMostRelevantLocale(),
 				FragmentEntryLinkConstants.EDIT,
-				LocaleUtil.getMostRelevantLocale()));
+				fragmentEntryLink.getGroupId()));
 
 		Element bodyElement = document.body();
 

@@ -146,9 +146,9 @@ public class BasicComponentFragmentCollectionContributorTest {
 		throws Exception {
 
 		return new DefaultFragmentEntryProcessorContext(
-			_getHttpServletRequest(layout, locale),
-			new MockHttpServletResponse(), FragmentEntryLinkConstants.EDIT,
-			locale);
+			layout.getCompanyId(), _getHttpServletRequest(layout, locale),
+			new MockHttpServletResponse(), locale,
+			FragmentEntryLinkConstants.EDIT, layout.getGroupId());
 	}
 
 	private HttpServletRequest _getHttpServletRequest(

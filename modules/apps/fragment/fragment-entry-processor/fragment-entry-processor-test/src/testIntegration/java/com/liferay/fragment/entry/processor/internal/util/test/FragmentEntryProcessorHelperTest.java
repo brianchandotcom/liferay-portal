@@ -1259,8 +1259,9 @@ public class FragmentEntryProcessorHelperTest {
 
 		FragmentEntryProcessorContext fragmentEntryProcessorContext =
 			new DefaultFragmentEntryProcessorContext(
-				mockHttpServletRequest, new MockHttpServletResponse(),
-				FragmentEntryLinkConstants.EDIT, locale);
+				_group.getCompanyId(), mockHttpServletRequest,
+				new MockHttpServletResponse(), locale,
+				FragmentEntryLinkConstants.EDIT, _group.getGroupId());
 
 		return _fragmentEntryProcessorHelper.getFieldValue(
 			editableValuesJSONObject, new HashMap<>(),
@@ -1331,8 +1332,9 @@ public class FragmentEntryProcessorHelperTest {
 
 			FragmentEntryProcessorContext fragmentEntryProcessorContext =
 				new DefaultFragmentEntryProcessorContext(
-					mockHttpServletRequest, new MockHttpServletResponse(),
-					FragmentEntryLinkConstants.EDIT, LocaleUtil.US);
+					_group.getCompanyId(), mockHttpServletRequest,
+					new MockHttpServletResponse(), LocaleUtil.US,
+					FragmentEntryLinkConstants.EDIT, _group.getGroupId());
 
 			InfoItemFieldMapped actualInfoItemFieldMapped =
 				_fragmentEntryProcessorHelper.getInfoItemFieldMapped(
@@ -1375,9 +1377,10 @@ public class FragmentEntryProcessorHelperTest {
 
 		FragmentEntryProcessorContext fragmentEntryProcessorContext =
 			new DefaultFragmentEntryProcessorContext(
-				mockHttpServletRequest, new MockHttpServletResponse(),
-				FragmentEntryLinkConstants.EDIT,
-				_portal.getSiteDefaultLocale(_group));
+				_layout.getCompanyId(), mockHttpServletRequest,
+				new MockHttpServletResponse(),
+				_portal.getSiteDefaultLocale(_group),
+				FragmentEntryLinkConstants.EDIT, _layout.getGroupId());
 
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(

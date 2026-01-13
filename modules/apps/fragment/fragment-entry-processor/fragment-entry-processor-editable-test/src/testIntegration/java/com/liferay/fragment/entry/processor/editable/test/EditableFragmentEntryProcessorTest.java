@@ -2168,8 +2168,8 @@ public class EditableFragmentEntryProcessorTest {
 		throws Exception {
 
 		return new DefaultFragmentEntryProcessorContext(
-			_getHttpServletRequest(locale), new MockHttpServletResponse(), mode,
-			locale);
+			_layout.getCompanyId(), _getHttpServletRequest(locale),
+			new MockHttpServletResponse(), locale, mode, _layout.getGroupId());
 	}
 
 	private HttpServletRequest _getHttpServletRequest(Locale locale)

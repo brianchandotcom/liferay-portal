@@ -6,8 +6,6 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
-import {customFieldsPagesTest} from '../../../fixtures/customFieldsPagesTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {serverAdministrationPageTest} from '../../../fixtures/serverAdministrationPageTest';
 import {userGroupsPageTest} from '../../../fixtures/userGroupsPageTest';
@@ -21,21 +19,7 @@ import {getRandomInt} from '../../../utils/getRandomInt';
 import performLogin, {performLogout} from '../../../utils/performLogin';
 import {newScimUser} from './utils/newScimUserUtil';
 
-export const featureFlagDisabledtest = mergeTests(
-	featureFlagsTest({
-		'LPD-56434': {enabled: false},
-	}),
-
-	loginTest(),
-	customFieldsPagesTest,
-	usersAndOrganizationsPagesTest
-);
-
 export const test = mergeTests(
-	featureFlagsTest({
-		'LPD-56434': {enabled: true},
-	}),
-
 	loginTest(),
 	applicationsMenuPageTest,
 	serverAdministrationPageTest,
@@ -48,158 +32,6 @@ const DEFAULT_VIRTUAL_INSTANCE_NAME = 'www.able.com';
 const RESET_SCIM_HELP_TEXT =
 	'All SCIM Client related data and generated OAuth 2 tokens will be ' +
 	'removed. This is necessary to configure a new SCIM Client.';
-
-featureFlagDisabledtest(
-	'LPD-60870 Verify LPD-56434 is behind feature flag',
-	async ({
-		editUserPage,
-		page,
-		usersAndOrganizationsPage,
-		viewAttributesPage,
-	}) => {
-
-		// If the SCIM custom fields exist, remove them so we can test properly
-
-		await viewAttributesPage.goto('User');
-
-		await viewAttributesPage.addCustomFieldButton.waitFor();
-
-		const customFieldAttributes = [
-			'scimDisplayName',
-			'scimEntitlements',
-			'scimNickName',
-			'scimPhotos',
-			'scimPreferredLanguage',
-			'scimUserType',
-			'scimX509Certificates',
-		];
-
-		for (const customFieldAttribute of customFieldAttributes) {
-			if (
-				await viewAttributesPage.page
-					.getByRole('row')
-					.filter({hasText: customFieldAttribute})
-					.isVisible()
-			) {
-				await viewAttributesPage.deleteCustomField(
-					customFieldAttribute,
-					'User'
-				);
-			}
-		}
-
-		const scimConfigurationPage = new SCIMConfigurationPage(page);
-
-		await scimConfigurationPage.goTo();
-
-		await scimConfigurationPage.configureSCIM('email', 'Test SCIM Client');
-
-		await scimConfigurationPage.generateToken();
-
-		const accessToken =
-			await scimConfigurationPage.accessTokenField.inputValue();
-
-		const randomNumber = getRandomInt();
-
-		const newUser = await newScimUser(randomNumber);
-
-		const apiHelper = new ApiHelpers(page);
-
-		await apiHelper.scim.postUserWithOAuth(newUser, accessToken);
-
-		const response = await (
-			await apiHelper.scim.getUsersWithOAuth(accessToken)
-		).text();
-
-		expect(response).toContain('"totalResults":1');
-
-		await usersAndOrganizationsPage.goto(false);
-
-		await usersAndOrganizationsPage.goToUser(newUser.userName);
-
-		await editUserPage.emailAddressInput.waitFor();
-
-		await expect(editUserPage.emailAddressInput).toHaveValue(
-			`able${randomNumber}@liferay.com`
-		);
-
-		await expect(editUserPage.firstNameInput).toHaveValue(
-			newUser.name.givenName
-		);
-
-		await expect(editUserPage.lastNameInput).toHaveValue(
-			newUser.name.familyName
-		);
-
-		await expect(editUserPage.middleNameInput).toHaveValue(
-			newUser.name.middleName
-		);
-
-		await expect(editUserPage.prefixInput).toHaveValue('');
-
-		await expect(editUserPage.suffixInput).toHaveValue('');
-
-		for (const customFieldAttribute of customFieldAttributes) {
-			await expect(
-				await page.getByLabel(customFieldAttribute)
-			).not.toBeVisible();
-		}
-
-		await editUserPage.rolesLink.click();
-
-		await editUserPage.page
-			.getByText('Regular Roles', {exact: true})
-			.waitFor();
-
-		await expect(
-			editUserPage.page.getByText(
-				'This user is not assigned any regular roles.'
-			)
-		).toBeVisible();
-
-		await editUserPage.contactLink.click();
-
-		await expect(
-			editUserPage.page.getByText(
-				'This user does not have any addresses.'
-			)
-		).toBeVisible();
-
-		await editUserPage.contactInformationLink.click();
-
-		await expect(
-			editUserPage.page.getByText(
-				'This user does not have any additional email addresses.'
-			)
-		).toBeVisible();
-
-		await expect(await editUserPage.jabberInput).toBeEmpty();
-
-		await expect(await editUserPage.skypeInput).toBeEmpty();
-
-		await expect(
-			editUserPage.page.getByText(
-				'This user does not have any phone numbers.'
-			)
-		).toBeVisible();
-
-		await expect(
-			editUserPage.page.getByText('This user does not have any websites.')
-		).toBeVisible();
-
-		await editUserPage.preferencesLink.click();
-
-		await editUserPage.displaySettingsLink.click();
-
-		await editUserPage.timeZoneInput.waitFor();
-
-		await expect(await editUserPage.timeZoneInput).toHaveValue('UTC');
-
-		await scimConfigurationPage.goTo();
-
-		await scimConfigurationPage.resetClientData();
-	}
-);
 
 test('smoke: test SCIM configuration options', async ({page}) => {
 	const scimConfigurationPage = new SCIMConfigurationPage(page);

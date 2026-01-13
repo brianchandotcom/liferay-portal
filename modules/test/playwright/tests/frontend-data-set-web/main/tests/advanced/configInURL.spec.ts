@@ -191,6 +191,8 @@ const changeFilterSelections = async (
 	}
 
 	await page.getByRole('button', {name: 'Show Results'}).click();
+
+	await waitForFDS({page});
 };
 
 const assertView = async (
@@ -464,11 +466,15 @@ for (const spaConfiguration of spaConfigurations) {
 
 				await test.step('Check back navigation', async () => {
 					await page.goBack();
+					await waitForFDS({page});
 					await checkFilter(true, 'color', 'Color: Yellow, Green');
+
 					await page.goBack();
+					await waitForFDS({page});
 					await checkFilter(true, 'color', 'Color: Blue, Yellow');
 
 					await page.goBack();
+					await waitForFDS({page});
 					await checkFilter(
 						false,
 						'color',
@@ -478,6 +484,7 @@ for (const spaConfiguration of spaConfigurations) {
 					// initial, pre-applied filter
 
 					await page.goBack();
+					await waitForFDS({page});
 					await checkFilter(
 						true,
 						'color',
@@ -487,22 +494,31 @@ for (const spaConfiguration of spaConfigurations) {
 
 				await test.step('Check forward navigation', async () => {
 					await page.goForward();
+					await waitForFDS({page});
 					await checkFilter(
 						false,
 						'color',
 						'Color: Blue, Green, Yellow'
 					);
+
 					await page.goForward();
+					await waitForFDS({page});
 					await checkFilter(true, 'color', 'Color: Blue, Yellow');
+
 					await page.goForward();
+					await waitForFDS({page});
 					await checkFilter(true, 'color', 'Color: Yellow, Green');
+
 					await page.goForward();
+					await waitForFDS({page});
 					await checkFilter(true, 'color', 'Color: Green, Red');
 				});
 
 				await test.step('Mix navigation and change via UI', async () => {
 					await page.goBack();
+					await waitForFDS({page});
 					await checkFilter(true, 'color', 'Color: Yellow, Green');
+
 					await changeFilterSelections(
 						['Blue'],
 						'Color: Yellow, Green',
@@ -513,15 +529,20 @@ for (const spaConfiguration of spaConfigurations) {
 					// last view value (green, red) is removed from history
 
 					await page.goBack();
+					await waitForFDS({page});
 					await checkFilter(true, 'color', 'Color: Yellow, Green');
+
 					await page.goForward();
+					await waitForFDS({page});
 					await checkFilter(true, 'color', 'Color: Blue');
+
 					await checkFiltersInURL(false, [
 						'date',
 						'size',
 						'status',
 						'title',
 					]);
+
 					expect(await page.goForward()).toBeNull();
 				});
 
@@ -899,39 +920,59 @@ for (const spaConfiguration of spaConfigurations) {
 				};
 				await test.step('Change search parameter via UI several times', async () => {
 					await setSearchParam('test1');
+					await waitForFDS({empty: true, page});
+
 					await clearSearchParam();
+					await waitForFDS({page});
+
 					await setSearchParam('test3');
+					await waitForFDS({empty: true, page});
 				});
 
 				await test.step('Check back navigation', async () => {
 					await page.goBack();
+					await waitForFDS({page});
 					await checkSearchParam('');
+
 					await page.goBack();
+					await waitForFDS({empty: true, page});
 					await checkSearchParam('test1');
 
 					await page.goBack();
+					await waitForFDS({page});
 					await checkSearchParam('');
 				});
 
 				await test.step('Check forward navigation', async () => {
 					await page.goForward();
+					await waitForFDS({empty: true, page});
 					await checkSearchParam('test1');
+
 					await page.goForward();
+					await waitForFDS({page});
 					await checkSearchParam('');
+
 					await page.goForward();
+					await waitForFDS({empty: true, page});
 					await checkSearchParam('test3');
 				});
 
 				await test.step('Mix navigation and change via UI', async () => {
 					await page.goBack();
+					await waitForFDS({page});
 					await checkSearchParam('');
 
 					await setSearchParam('test4');
+					await waitForFDS({empty: true, page});
 
 					await page.goBack();
+					await waitForFDS({page});
 					await checkSearchParam('');
+
 					await page.goForward();
+					await waitForFDS({empty: true, page});
 					await checkSearchParam('test4');
+
 					expect(await page.goForward()).toBeNull();
 				});
 			}

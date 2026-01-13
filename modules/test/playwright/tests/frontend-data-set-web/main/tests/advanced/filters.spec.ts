@@ -9,7 +9,7 @@ import {apiHelpersTest} from '../../../../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
-import {EFDSVisualizationMode, waitForFDS} from '../../../../../utils/waitFor';
+import {waitForFDS} from '../../../../../utils/waitFor';
 import {fdsSamplePageTest} from '../../fixtures/fdsSamplePageTest';
 
 const test = mergeTests(
@@ -24,11 +24,14 @@ const test = mergeTests(
 );
 
 test.beforeEach(async ({fdsSamplePage, page, site}) => {
-	await fdsSamplePage.setupFDSSampleWidget({site});
+	await fdsSamplePage.setupFDSSampleWidget({
+		fragmentKeys: ['filters-fds-sample'],
+		site,
+	});
 
 	await fdsSamplePage.selectTab('Advanced');
 
-	await waitForFDS({page, visualizationMode: EFDSVisualizationMode.TABLE});
+	await waitForFDS({page});
 });
 
 test(
@@ -43,6 +46,11 @@ test(
 			.or(page.getByRole('cell', {name: '🍏'}));
 		const redCells = page.getByRole('cell', {name: 'Red'});
 		const yellowCells = page.getByRole('cell', {name: 'Yellow'});
+
+		const filtersFragment = {
+			activeToggle: page.getByTestId('activeFiltersFDSSampleToggle'),
+			excludeToggle: page.getByTestId('excludeFiltersFDSSampleToggle'),
+		};
 
 		await test.step('Check filter is preloaded when entering on an FDS page for first time', async () => {
 			await test.step('Check the active filters button displays with "Blue, Green, Yellow"', async () => {
@@ -96,6 +104,10 @@ test(
 				const redCells = page.getByRole('cell', {name: 'Red'});
 
 				expect.soft(await redCells.count()).toBeGreaterThan(0);
+			});
+
+			await test.step('Check "Active" toggle in fragment', async () => {
+				await expect(filtersFragment.activeToggle).not.toBeChecked();
 			});
 		});
 
@@ -166,8 +178,10 @@ test(
 		});
 
 		await test.step('Check selecting a filter', async () => {
-			await test.step('Refresh contents', async () => {
+			await test.step('Refresh the page', async () => {
 				await fdsSamplePage.selectTab('Advanced');
+
+				await waitForFDS({page});
 			});
 
 			await test.step('Select "Red" color in the filters dropdown', async () => {
@@ -209,18 +223,20 @@ test(
 		});
 
 		await test.step('Check excluding a filter', async () => {
-			await test.step('Refresh contents', async () => {
+			await test.step('Refresh the page', async () => {
 				await fdsSamplePage.selectTab('Advanced');
+
+				await waitForFDS({page});
 			});
 
-			await test.step('Check exclude switch for "Blue", "Green", "Yellow" colors', async () => {
-				await fdsSamplePage.managementToolbar.container
-					.getByRole('button', {name: 'Filter'})
-					.click();
+			await test.step('Exclude "Blue", "Green" and "Yellow" colors', async () => {
+				await fdsSamplePage.managementToolbar.filterButton.click();
 
 				await page.getByRole('menuitem', {name: 'Color'}).click();
 
-				await page.getByLabel('Exclude').check();
+				await fdsSamplePage.filterDropdownMenu
+					.getByLabel('Exclude')
+					.check();
 			});
 
 			await test.step('Click "Show Results"', async () => {
@@ -237,11 +253,17 @@ test(
 				expect(await redCells.count()).toBeGreaterThan(0);
 				expect(await yellowCells.count()).toEqual(0);
 			});
+
+			await test.step('Check "Exclude" toggle in fragment', async () => {
+				await expect(filtersFragment.excludeToggle).toBeChecked();
+			});
 		});
 
 		await test.step('Check editing a filter summary box', async () => {
-			await test.step('Refresh contents', async () => {
+			await test.step('Refresh the page', async () => {
 				await fdsSamplePage.selectTab('Advanced');
+
+				await waitForFDS({page});
 			});
 
 			await test.step('Open the "Color" filter summary box', async () => {
@@ -284,11 +306,17 @@ test(
 				expect.soft(await yellowCells.count()).toBeGreaterThan(0);
 				expect.soft(await redCells.count()).toBeGreaterThan(0);
 			});
+
+			await test.step('Check "Active" toggle in fragment', async () => {
+				await expect(filtersFragment.activeToggle).not.toBeChecked();
+			});
 		});
 
 		await test.step('Check filter can be removed using delete button', async () => {
-			await test.step('Refresh contents', async () => {
+			await test.step('Refresh the page', async () => {
 				await fdsSamplePage.selectTab('Advanced');
+
+				await waitForFDS({page});
 			});
 
 			await test.step('Open the "Color" filter summary box', async () => {
@@ -318,8 +346,10 @@ test(
 		});
 
 		await test.step('Assert the synchronization of the filters', async () => {
-			await test.step('Refresh contents', async () => {
+			await test.step('Refresh the page', async () => {
 				await fdsSamplePage.selectTab('Advanced');
+
+				await waitForFDS({page});
 			});
 
 			await test.step('Open the "Color" filter summary box', async () => {
@@ -368,6 +398,30 @@ test(
 				await expect(
 					page.getByRole('button', {name: 'Color: Yellow'})
 				).toBeVisible();
+			});
+		});
+
+		await test.step('Global state integration, with "Filters FDS Fragment"', async () => {
+			await test.step('Refresh the page', async () => {
+				await fdsSamplePage.selectTab('Advanced');
+
+				await waitForFDS({page});
+			});
+
+			await test.step('Toggle "Exclude" filter', async () => {
+				await filtersFragment.excludeToggle.click();
+
+				await expect(
+					page.getByText('Color: (Exclude) Blue, Green, Yellow')
+				).toBeVisible();
+			});
+
+			await test.step('Toggle "Active" filter', async () => {
+				await filtersFragment.activeToggle.click();
+
+				await expect(
+					fdsSamplePage.activeFiltersToolbar.container
+				).not.toBeVisible();
 			});
 		});
 	}

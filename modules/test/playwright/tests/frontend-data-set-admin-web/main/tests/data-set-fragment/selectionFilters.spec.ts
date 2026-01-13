@@ -194,7 +194,6 @@ test('Selection filter of type "Object Picklist" is displayed in fragment @LPD-1
 	dataSetFragmentPage,
 	dataSetManagerApiHelpers,
 	layout,
-	page,
 	picklistApiHelpers,
 }) => {
 	const filterLabel = getRandomString();
@@ -238,7 +237,8 @@ test('Selection filter of type "Object Picklist" is displayed in fragment @LPD-1
 	});
 
 	await test.step('Check current items in the Frontend Data Set', async () => {
-		await page.reload();
+		await dataSetFragmentPage.goToPage({layout});
+
 		await dataSetFragmentPage.paginationResults.scrollIntoViewIfNeeded();
 
 		await expect(
@@ -300,7 +300,6 @@ test('Selection filter of type "Object Picklist" can be configured to use single
 	dataSetFragmentPage,
 	dataSetManagerApiHelpers,
 	layout,
-	page,
 	picklistApiHelpers,
 }) => {
 	const filterLabel = getRandomString();
@@ -356,7 +355,7 @@ test('Selection filter of type "Object Picklist" can be configured to use single
 	});
 
 	await test.step('Reload and check that the filter appears the Frontend Data Set', async () => {
-		await page.reload();
+		await dataSetFragmentPage.goToPage({layout});
 
 		await expect(dataSetFragmentPage.filterButton).toBeInViewport();
 	});
@@ -366,7 +365,6 @@ test('Selection filter of type "Object Picklist" can be configured to include or
 	dataSetFragmentPage,
 	dataSetManagerApiHelpers,
 	layout,
-	page,
 	picklistApiHelpers,
 }) => {
 	const filterLabel = getRandomString();
@@ -447,11 +445,12 @@ test('Selection filter of type "Object Picklist" can be configured to include or
 	});
 
 	await test.step('Check current items in the Frontend Data Set', async () => {
-		await page.reload();
-		await expect(dataSetFragmentPage.filterResumeButton).toBeVisible();
+		await dataSetFragmentPage.goToPage({layout});
+
 		await expect(dataSetFragmentPage.filterResumeButton).toContainText(
 			`${filterLabel}: ${picklistBooleanOptionLabel}`
 		);
+
 		await dataSetFragmentPage.paginationResults.scrollIntoViewIfNeeded();
 
 		await expect(

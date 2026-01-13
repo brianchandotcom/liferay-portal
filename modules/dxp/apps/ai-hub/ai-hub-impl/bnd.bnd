@@ -2,6 +2,8 @@ Bundle-Name: Liferay AI Hub Implementation
 Bundle-SymbolicName: com.liferay.ai.hub.impl
 Bundle-Version: 1.0.5
 Import-Package:\
+	!com.fasterxml.jackson.datatype.*,\
+	\
 	!org.bouncycastle.jsse.*,\
 	\
 	!org.conscrypt.*,\

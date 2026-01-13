@@ -233,6 +233,10 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 												String portletTitle = PortalUtil.getPortletTitle(portlet, application, locale);
 
+												if (StringUtil.equals(ObjectPortletKeys.OBJECT_DEFINITIONS, portlet.getPortletId())) {
+													portletTitle = LanguageUtil.get(request, "model.resource.com.liferay.object");
+												}
+
 												long importModelCount = portletDataHandler.getExportModelCount(manifestSummary);
 
 												long modelDeletionCount = manifestSummary.getModelDeletionCount(portletDataHandler.getDeletionSystemEventStagedModelTypes());

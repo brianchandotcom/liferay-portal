@@ -104,6 +104,11 @@ public class StyleSheetFrontendResource implements FrontendResource {
 	}
 
 	@Override
+	public boolean isPrivate() {
+		return false;
+	}
+
+	@Override
 	public boolean isSendNoCache() {
 		return _sendNoCache;
 	}

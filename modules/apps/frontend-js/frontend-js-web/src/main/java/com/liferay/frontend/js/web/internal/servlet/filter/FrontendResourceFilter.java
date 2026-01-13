@@ -82,9 +82,9 @@ public class FrontendResourceFilter extends BasePortalFilter {
 
 		frontendResourceRequestHandlers.add(
 			new HashedFileFrontendResourceRequestHandler(
-				ContentTypes.APPLICATION_JSON, ".map", _hashedFilesRegistry,
-				86400, "esModulesMaxAge", _portal, false,
-				"sendNoCacheForESModules"));
+				ContentTypes.APPLICATION_JSON, 86400, false, ".map",
+				_hashedFilesRegistry, "jsFilesMaxAge", _portal,
+				"sendNoCacheForJSFiles"));
 		frontendResourceRequestHandlers.add(
 			new HashedFileFrontendResourceRequestHandler(
 				ContentTypes.TEXT_JAVASCRIPT, ".js", _hashedFilesRegistry,

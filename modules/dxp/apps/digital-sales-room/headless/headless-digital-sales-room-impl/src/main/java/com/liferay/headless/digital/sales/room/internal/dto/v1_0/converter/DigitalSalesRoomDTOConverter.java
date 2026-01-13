@@ -135,6 +135,8 @@ public class DigitalSalesRoomDTOConverter
 					() -> GetterUtil.getString(values.get("primaryColor")));
 				setSecondaryColor(
 					() -> GetterUtil.getString(values.get("secondaryColor")));
+				setTemplateGroupId(
+					() -> GetterUtil.getLong(values.get("templateGroupId")));
 				setUserAccountBriefs(
 					() -> TransformUtil.transformToArray(
 						_userLocalService.getGroupUsers(group.getGroupId()),

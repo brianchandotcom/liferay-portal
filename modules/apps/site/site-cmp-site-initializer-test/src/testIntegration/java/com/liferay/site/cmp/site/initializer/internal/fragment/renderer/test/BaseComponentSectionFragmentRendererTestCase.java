@@ -44,7 +44,7 @@ public abstract class BaseComponentSectionFragmentRendererTestCase {
 			BaseComponentSectionFragmentRendererTestCase.class);
 
 		projectObjectDefinition =
-			_objectDefinitionLocalService.
+			objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
 					"L_CMP_PROJECT", TestPropsValues.getCompanyId());
 
@@ -52,23 +52,6 @@ public abstract class BaseComponentSectionFragmentRendererTestCase {
 
 		projectTitle = MapUtil.getString(
 			projectObjectEntry.getValues(), "title");
-
-		httpServletRequest = new MockHttpServletRequest();
-
-		httpServletRequest.setAttribute(
-			InfoDisplayWebKeys.INFO_ITEM, projectObjectEntry);
-
-		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-			_layoutDisplayPageProviderRegistry.
-				getLayoutDisplayPageProviderByClassName(
-					projectObjectDefinition.getClassName());
-
-		httpServletRequest.setAttribute(
-			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
-			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
-				new InfoItemReference(
-					layoutDisplayPageProvider.getClassName(),
-					projectObjectEntry.getObjectEntryId())));
 
 		themeDisplay = new ThemeDisplay() {
 			{
@@ -80,10 +63,37 @@ public abstract class BaseComponentSectionFragmentRendererTestCase {
 			}
 		};
 
-		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+		httpServletRequest = getHttpServletRequest(
+			projectObjectDefinition, projectObjectEntry);
 	}
 
 	protected abstract FragmentRenderer getFragmentRenderer();
+
+	protected HttpServletRequest getHttpServletRequest(
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
+		throws Exception {
+
+		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
+
+		httpServletRequest.setAttribute(
+			InfoDisplayWebKeys.INFO_ITEM, objectEntry);
+
+		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
+			_layoutDisplayPageProviderRegistry.
+				getLayoutDisplayPageProviderByClassName(
+					objectDefinition.getClassName());
+
+		httpServletRequest.setAttribute(
+			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
+			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+				new InfoItemReference(
+					layoutDisplayPageProvider.getClassName(),
+					objectEntry.getObjectEntryId())));
+
+		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+
+		return httpServletRequest;
+	}
 
 	protected Map<String, Object> getProps() {
 		return ReflectionTestUtil.invoke(
@@ -95,6 +105,10 @@ public abstract class BaseComponentSectionFragmentRendererTestCase {
 	}
 
 	protected HttpServletRequest httpServletRequest;
+
+	@Inject
+	protected ObjectDefinitionLocalService objectDefinitionLocalService;
+
 	protected ObjectDefinition projectObjectDefinition;
 	protected ObjectEntry projectObjectEntry;
 	protected String projectTitle;
@@ -106,8 +120,5 @@ public abstract class BaseComponentSectionFragmentRendererTestCase {
 	@Inject
 	private LayoutDisplayPageProviderRegistry
 		_layoutDisplayPageProviderRegistry;
-
-	@Inject
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 }

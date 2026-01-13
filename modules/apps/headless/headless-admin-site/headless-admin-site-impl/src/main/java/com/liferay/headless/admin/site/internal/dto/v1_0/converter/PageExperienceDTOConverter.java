@@ -94,6 +94,7 @@ public class PageExperienceDTOConverter
 							}
 						};
 					});
+				setUuid(segmentsExperience::getUuid);
 			}
 		};
 	}

@@ -106,9 +106,9 @@ test.describe('Can Publish Marketplace Apps', () => {
 			_productId = productId;
 
 			await page.waitForResponse(
-				(r) =>
-					r.request().method() === 'POST' &&
-					r.url().includes('/o/c/publisherassetattachments')
+				(response) =>
+					response.request().method() === 'POST' &&
+					response.url().includes('/o/c/publisherassetattachments')
 			);
 
 			const response = await apiHelpers.get(

@@ -88,7 +88,7 @@ test.describe('Can Publish and Manage Solutions', () => {
 			);
 
 			await expect(publisherSolutionPage.continueButton).toBeEnabled();
-			publisherSolutionPage.continueButton.click();
+			await publisherSolutionPage.continueButton.click();
 
 			await publisherSolutionPage.goToCustomizeSolutionHeader();
 			await publisherSolutionPage.fillCustomizeSolutionHeader(

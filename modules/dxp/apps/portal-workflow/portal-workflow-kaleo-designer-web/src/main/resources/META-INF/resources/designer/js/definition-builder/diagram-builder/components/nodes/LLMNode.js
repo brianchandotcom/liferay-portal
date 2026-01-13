@@ -17,6 +17,7 @@ export default function LLMNode({
 		newNode,
 		outputVariables,
 		prompt,
+		rag,
 		tools,
 		userMessage,
 	} = {},
@@ -42,6 +43,7 @@ export default function LLMNode({
 			nodeTypeClassName="llm-node"
 			outputVariables={outputVariables}
 			prompt={prompt}
+			rag={rag}
 			tools={tools}
 			type="llm"
 			userMessage={userMessage}

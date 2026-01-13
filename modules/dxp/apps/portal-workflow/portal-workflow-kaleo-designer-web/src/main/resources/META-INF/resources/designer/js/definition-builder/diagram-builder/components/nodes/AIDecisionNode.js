@@ -17,6 +17,7 @@ export default function AIDecisionNode({
 		newNode,
 		outputVariables,
 		prompt,
+		rag,
 		tools,
 		userMessage,
 	} = {},
@@ -42,6 +43,7 @@ export default function AIDecisionNode({
 			nodeTypeClassName="ai-decision"
 			outputVariables={outputVariables}
 			prompt={prompt}
+			rag={rag}
 			tools={tools}
 			type="ai-decision"
 			userMessage={userMessage}

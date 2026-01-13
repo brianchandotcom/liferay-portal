@@ -62,6 +62,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -135,16 +136,9 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 	@Override
 	public String getDescription(Locale locale) {
-		if (_registrations.size() != 1) {
-			return null;
-		}
-
-		Registration registration = _registrations.get(0);
-
-		ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
-			exportImportDescriptor = registration.getExportImportDescriptor();
-
-		return exportImportDescriptor.getDescription(locale);
+		return _getSoleProperty(
+			exportImportDescriptor -> exportImportDescriptor.getDescription(
+				locale));
 	}
 
 	@Override
@@ -159,16 +153,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 	@Override
 	public String getTag(Locale locale) {
-		if (_registrations.size() != 1) {
-			return null;
-		}
-
-		Registration registration = _registrations.get(0);
-
-		ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
-			exportImportDescriptor = registration.getExportImportDescriptor();
-
-		return exportImportDescriptor.getTag(locale);
+		return _getSoleProperty(
+			exportImportDescriptor -> exportImportDescriptor.getTag(locale));
 	}
 
 	@Override
@@ -196,16 +182,10 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 	@Override
 	public boolean isHidden() {
-		if (_registrations.size() != 1) {
-			return false;
-		}
-
-		Registration registration = _registrations.get(0);
-
-		ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
-			exportImportDescriptor = registration.getExportImportDescriptor();
-
-		return exportImportDescriptor.isHidden();
+		return Boolean.TRUE.equals(
+			_getSoleProperty(
+				ExportImportVulcanBatchEngineTaskItemDelegate.
+					ExportImportDescriptor::isHidden));
 	}
 
 	@Override
@@ -650,6 +630,21 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			getPortletId(), exportImportDescriptor.getResourceClassName(),
 			exportImportDescriptor.getLabelLanguageKey(), true, false, null,
 			exportImportDescriptor.getResourceClassName(), null);
+	}
+
+	private <T> T _getSoleProperty(
+		Function
+			<ExportImportVulcanBatchEngineTaskItemDelegate.
+				ExportImportDescriptor,
+			 T> function) {
+
+		if (_registrations.size() != 1) {
+			return null;
+		}
+
+		Registration registration = _registrations.get(0);
+
+		return function.apply(registration.getExportImportDescriptor());
 	}
 
 	private long _getUserId() {

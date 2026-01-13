@@ -11,6 +11,7 @@ import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionService;
+import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -56,33 +57,40 @@ public class AddTaskStrutsAction implements StrutsAction {
 				objectDefinition.getCompanyId(),
 				objectDefinition.getStorageType());
 
-		ObjectEntry objectEntry = new ObjectEntry();
-
-		objectEntry.setObjectEntryFolderExternalReferenceCode(
-			() -> ParamUtil.getString(
-				httpServletRequest, "objectEntryFolderExternalReferenceCode"));
-		objectEntry.setProperties(
-			() -> HashMapBuilder.<String, Object>put(
-				"r_cmpProjectToCMPTasks_c_cmpProjectId",
-				ParamUtil.getLong(httpServletRequest, "projectId")
-			).build());
-		objectEntry.setStatus(
-			() -> new Status() {
-				{
-					setCode(() -> WorkflowConstants.STATUS_DRAFT);
-				}
-			});
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		objectEntry = objectEntryManager.addObjectEntry(
+		ObjectEntry objectEntry = objectEntryManager.addObjectEntry(
 			new DefaultDTOConverterContext(
 				false, null, null, null, null,
 				themeDisplay.getSiteDefaultLocale(), null,
 				themeDisplay.getUser()),
-			objectDefinition, objectEntry,
+			objectDefinition,
+			new ObjectEntry() {
+				{
+					setKeywords(
+						() -> new String[] {
+							"L_CMP_TASK_" +
+								RandomUtil.nextInt(Integer.MAX_VALUE)
+						});
+					setObjectEntryFolderExternalReferenceCode(
+						() -> ParamUtil.getString(
+							httpServletRequest,
+							"objectEntryFolderExternalReferenceCode"));
+					setProperties(
+						() -> HashMapBuilder.<String, Object>put(
+							"r_cmpProjectToCMPTasks_c_cmpProjectId",
+							ParamUtil.getLong(httpServletRequest, "projectId")
+						).build());
+					setStatus(
+						() -> new Status() {
+							{
+								setCode(() -> WorkflowConstants.STATUS_DRAFT);
+							}
+						});
+				}
+			},
 			ParamUtil.getString(httpServletRequest, "projectGroupId"));
 
 		String editTaskURL =

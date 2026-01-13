@@ -21,6 +21,7 @@ function AssetVocabularyContextualSidebar({
 	assetVocabulary,
 	chooseAssetVocabularyProps,
 	defaultLanguageId,
+	hasModel,
 	locales,
 	localizedNames,
 	namespace,
@@ -216,7 +217,7 @@ function AssetVocabularyContextualSidebar({
 
 			<ClayForm.Group
 				className={classNames({
-					'has-warning': !numberOfCategories,
+					'has-warning': !hasModel || !numberOfCategories,
 				})}
 			>
 				<label htmlFor={`${namespace}_itemInput`}>
@@ -251,14 +252,24 @@ function AssetVocabularyContextualSidebar({
 						<ClayAlert
 							className="mt-1"
 							displayType="warning"
-							title={Liferay.Language.get('no-categories-inside')}
+							title={
+								hasModel
+									? Liferay.Language.get(
+											'no-categories-inside'
+										)
+									: Liferay.Language.get('no-reference-found')
+							}
 							variant="feedback"
 						/>
 
 						<p className="small text-secondary">
-							{Liferay.Language.get(
-								'vocabularies-without-categories-are-hidden-from-navigation-menus'
-							)}
+							{hasModel
+								? Liferay.Language.get(
+										'vocabularies-without-categories-are-hidden-from-navigation-menus'
+									)
+								: Liferay.Language.get(
+										'this-item-references-an-entity-that-is-missing-or-not-yet-available'
+									)}
 						</p>
 					</>
 				)}

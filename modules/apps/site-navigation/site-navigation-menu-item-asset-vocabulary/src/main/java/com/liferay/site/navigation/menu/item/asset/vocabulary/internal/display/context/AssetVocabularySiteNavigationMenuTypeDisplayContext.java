@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
+import com.liferay.site.navigation.type.util.SiteNavigationMenuItemTypeRegistryUtil;
 
 import jakarta.portlet.PortletResponse;
 
@@ -114,6 +116,21 @@ public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
 		).put(
 			"defaultLanguageId",
 			LocaleUtil.toLanguageId(LocaleUtil.getMostRelevantLocale())
+		).put(
+			"hasModel",
+			() -> {
+				SiteNavigationMenuItemType siteNavigationMenuItemType =
+					SiteNavigationMenuItemTypeRegistryUtil.
+						getSiteNavigationMenuItemType(
+							_siteNavigationMenuItem.getType());
+
+				return siteNavigationMenuItemType.hasModel(
+					_siteNavigationMenuItem.getCompanyId(),
+					_siteNavigationMenuItem.getGroupId(),
+					UnicodePropertiesBuilder.fastLoad(
+						_siteNavigationMenuItem.getTypeSettings()
+					).build());
+			}
 		).put(
 			"locales",
 			JSONUtil.toJSONArray(

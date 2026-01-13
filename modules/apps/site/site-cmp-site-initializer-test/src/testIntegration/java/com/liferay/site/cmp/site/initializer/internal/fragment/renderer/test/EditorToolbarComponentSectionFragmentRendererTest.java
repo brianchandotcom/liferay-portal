@@ -7,19 +7,27 @@ package com.liferay.site.cmp.site.initializer.internal.fragment.renderer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
-import java.util.HashMap;
+import java.io.Serializable;
+
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -46,14 +54,43 @@ public class EditorToolbarComponentSectionFragmentRendererTest
 
 	@Test
 	public void testGetProps() throws Exception {
-		Assert.assertEquals(
-			StringBundler.concat(
-				themeDisplay.getPathFriendlyURLPublic(),
-				GroupConstants.CMS_FRIENDLY_URL, "/e/project/",
-				PortalUtil.getClassNameId(
-					projectObjectDefinition.getClassName()),
-				StringPool.SLASH, projectObjectEntry.getObjectEntryId()),
-			MapUtil.getString(new HashMap<>(getProps()), "viewProjectURL"));
+		Map<String, Object> props = getProps();
+
+		Assert.assertEquals("New Project", props.get("title"));
+
+		String viewProjectUrl = StringBundler.concat(
+			themeDisplay.getPathFriendlyURLPublic(),
+			GroupConstants.CMS_FRIENDLY_URL, "/e/project/",
+			PortalUtil.getClassNameId(projectObjectDefinition.getClassName()),
+			StringPool.SLASH, projectObjectEntry.getObjectEntryId());
+
+		Assert.assertEquals(viewProjectUrl, props.get("viewProjectURL"));
+
+		ObjectDefinition taskObjectDefinition =
+			objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_CMP_TASK", TestPropsValues.getCompanyId());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		httpServletRequest = getHttpServletRequest(
+			taskObjectDefinition,
+			_objectEntryLocalService.addObjectEntry(
+				projectObjectEntry.getGroupId(), projectObjectEntry.getUserId(),
+				taskObjectDefinition.getObjectDefinitionId(), 0, null,
+				HashMapBuilder.<String, Serializable>put(
+					"r_cmpProjectToCMPTask_c_cmpProjectId",
+					projectObjectEntry.getObjectEntryId()
+				).build(),
+				serviceContext));
+
+		props = getProps();
+
+		Assert.assertEquals("New Task", props.get("title"));
+		Assert.assertEquals(viewProjectUrl, props.get("viewProjectURL"));
 	}
 
 	@Override
@@ -65,5 +102,8 @@ public class EditorToolbarComponentSectionFragmentRendererTest
 		filter = "component.name=com.liferay.site.cmp.site.initializer.internal.fragment.renderer.EditorToolbarComponentSectionFragmentRenderer"
 	)
 	private FragmentRenderer _fragmentRenderer;
+
+	@Inject
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 }

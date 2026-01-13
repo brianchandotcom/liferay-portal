@@ -17719,9 +17719,14 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 			<finally>
 				<lstopwatch action="total" name="upgrade-legacy-database" />
 
-				<print-docker-database-logs />
+				<if>
+					<isset property="database.docker.image" />
+					<then>
+						<print-docker-database-logs />
 
-				<print-docker-stats />
+						<print-docker-stats />
+					</then>
+				</if>
 			</finally>
 		</trycatch>
 	</target>

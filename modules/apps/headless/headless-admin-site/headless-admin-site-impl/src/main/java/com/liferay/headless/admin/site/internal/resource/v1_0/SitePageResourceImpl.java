@@ -752,7 +752,9 @@ public class SitePageResourceImpl
 				"targetType", targetTypeString
 			);
 
-		if (sitePage.getType() == SitePage.Type.CONTENT_PAGE) {
+		if ((sitePage.getType() == SitePage.Type.CONTENT_PAGE) ||
+			(sitePage.getType() == SitePage.Type.PAGE_SET_PAGE)) {
+
 			return unicodePropertiesWrapper.build();
 		}
 

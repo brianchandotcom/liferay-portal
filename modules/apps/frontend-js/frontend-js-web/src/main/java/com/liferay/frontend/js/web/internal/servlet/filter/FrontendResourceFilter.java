@@ -184,7 +184,12 @@ public class FrontendResourceFilter extends BasePortalFilter {
 				sb.append(", must-revalidate");
 			}
 
-			sb.append(", public");
+			if (frontendResource.isPrivate()) {
+				sb.append(", private");
+			}
+			else {
+				sb.append(", public");
+			}
 
 			httpServletResponse.setHeader(
 				HttpHeaders.CACHE_CONTROL, sb.toString());

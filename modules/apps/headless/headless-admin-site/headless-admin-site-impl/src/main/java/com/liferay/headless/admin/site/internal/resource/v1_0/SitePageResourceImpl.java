@@ -1033,8 +1033,10 @@ public class SitePageResourceImpl
 
 			publishedPageSpecification = publishedContentPageSpecification;
 		}
-		else if (Objects.equals(
-					sitePage.getType(), SitePage.Type.WIDGET_PAGE) &&
+		else if ((Objects.equals(
+					sitePage.getType(), SitePage.Type.PAGE_SET_PAGE) ||
+				  Objects.equals(
+					  sitePage.getType(), SitePage.Type.WIDGET_PAGE)) &&
 				 (pageSpecifications.length == 1)) {
 
 			publishedPageSpecification = pageSpecifications[0];

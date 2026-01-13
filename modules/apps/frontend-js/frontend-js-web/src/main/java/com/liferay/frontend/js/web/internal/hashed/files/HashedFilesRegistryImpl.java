@@ -63,6 +63,14 @@ public class HashedFilesRegistryImpl implements HashedFilesRegistry {
 	public URL getResource(String path) {
 		_lazyActivate();
 
+		if (!HashedFilesUtil.containsHash(path)) {
+			String hashedFileURI = getHashedFileURI(path);
+
+			if (hashedFileURI != null) {
+				path = hashedFileURI;
+			}
+		}
+
 		List<String> pathParts = Arrays.asList(path.split(StringPool.SLASH));
 
 		int subpathIndex = 3;

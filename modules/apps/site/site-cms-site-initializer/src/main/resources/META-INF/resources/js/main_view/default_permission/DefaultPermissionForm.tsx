@@ -230,6 +230,15 @@ export default function DefaultPermissionForm({
 															key={`${role.key}_${action.key}`}
 														>
 															<ClayCheckbox
+																aria-label={Liferay.Util.sub(
+																	Liferay.Language.get(
+																		'give-x-permission-to-users-with-the-x-role'
+																	),
+																	[
+																		action.label,
+																		role.name,
+																	]
+																)}
 																checked={
 																	data[
 																		`${role.key}#${action.key}`

@@ -8,12 +8,14 @@ import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 export default function PermissionsCheckbox({
+	actionId,
 	checked: initialChecked,
 	componentId: _componentId,
 	indeterminate: initialIndeterminate,
 	locale: _locale,
 	portletId: _portletId,
 	portletNamespace: _portletNamespace,
+	roleName,
 	...otherProps
 }) {
 	const [checked, setChecked] = useState(
@@ -28,6 +30,12 @@ export default function PermissionsCheckbox({
 
 	return (
 		<ClayCheckbox
+			aria-label={Liferay.Util.sub(
+				Liferay.Language.get(
+					'give-x-permission-to-users-with-the-x-role'
+				),
+				[actionId, roleName]
+			)}
 			checked={checked}
 			indeterminate={indeterminate}
 			inline

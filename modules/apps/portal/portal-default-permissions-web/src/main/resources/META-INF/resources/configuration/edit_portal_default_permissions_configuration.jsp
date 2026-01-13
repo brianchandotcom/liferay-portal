@@ -118,6 +118,8 @@ SearchContainer<Role> roleSearchContainer = editPortalDefaultPermissionsConfigur
 									module="{PermissionsCheckbox} from portlet-configuration-web"
 									props='<%=
 										HashMapBuilder.<String, Object>put(
+											"actionId", ResourceActionsUtil.getAction(request, action)
+										).put(
 											"checked", checked
 										).put(
 											"disabled", disabled
@@ -125,6 +127,8 @@ SearchContainer<Role> roleSearchContainer = editPortalDefaultPermissionsConfigur
 											"id", inputId
 										).put(
 											"name", inputName
+										).put(
+											"roleName", role.getName()
 										).build()
 									%>'
 								/>

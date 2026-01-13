@@ -187,6 +187,8 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 									module="{PermissionsCheckbox} from portlet-configuration-web"
 									props='<%=
 										HashMapBuilder.<String, Object>put(
+											"actionId", _getActionLabel(request, resourceName, action)
+										).put(
 											"checked", checked
 										).put(
 											"disabled", disabled
@@ -196,6 +198,8 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 											"indeterminate", indeterminate
 										).put(
 											"name", inputName
+										).put(
+											"roleName", role.getName()
 										).put(
 											"title", dataMessage
 										).build()

@@ -5,13 +5,13 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.test.clazz.JUnitTestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.task.TestTask;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.json.JSONObject;
 
@@ -52,49 +52,22 @@ public class ModulesJUnitSegmentTestClassGroup
 
 				sb.append("[");
 
-				List<TestClass> testClasses = testTask.getTestClasses();
+				List<String> testClassFileMethodNames = new ArrayList<>();
 
-				for (TestClass testClass : testClasses) {
-					Matcher matcher = _pattern.matcher(
-						String.valueOf(testClass.getTestClassFile()));
-
-					if (!matcher.find()) {
+				for (TestClass testClass : testTask.getTestClasses()) {
+					if (!(testClass instanceof JUnitTestClass)) {
 						continue;
 					}
 
 					JUnitTestClass jUnitTestClass = (JUnitTestClass)testClass;
 
-					String testClassFileName = matcher.group(
-						"testClassFileName");
-
-					testClassFileName = testClassFileName.replace(
-						".java", ".class");
-
-					List<String> testClassMethodNames =
-						jUnitTestClass.getTestClassMethodNames();
-
-					if ((testClassMethodNames != null) &&
-						!testClassMethodNames.isEmpty()) {
-
-						for (String testClassMethodName :
-								testClassMethodNames) {
-
-							sb.append(testClassFileName);
-							sb.append("#");
-							sb.append(testClassMethodName);
-							sb.append(",");
-						}
-					}
-					else {
-						sb.append(testClassFileName);
-
-						sb.append(",");
-					}
+					testClassFileMethodNames.addAll(
+						jUnitTestClass.getTestClassFileMethodNames());
 				}
 
-				if (!testClasses.isEmpty()) {
-					sb.setLength(sb.length() - 1);
-				}
+				sb.append(
+					JenkinsResultsParserUtil.join(
+						",", testClassFileMethodNames));
 
 				sb.append("];");
 			}
@@ -118,8 +91,5 @@ public class ModulesJUnitSegmentTestClassGroup
 
 		super(batchTestClassGroup, jsonObject);
 	}
-
-	private static final Pattern _pattern = Pattern.compile(
-		".*/(?<testClassFileName>com/.*)");
 
 }

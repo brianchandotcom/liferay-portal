@@ -11,8 +11,6 @@ import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.json.JSONObject;
 
@@ -32,53 +30,28 @@ public class JUnitSegmentTestClassGroup extends SegmentTestClassGroup {
 		for (int axisIndex = 0; axisIndex < getAxisCount(); axisIndex++) {
 			axisIndexes.add(String.valueOf(axisIndex));
 
-			AxisTestClassGroup axisTestClassGroup = getAxisTestClassGroup(
-				axisIndex);
-
-			List<TestClass> testClasses = axisTestClassGroup.getTestClasses();
-
 			sb.append("TEST_CLASS_GROUP_");
 			sb.append(axisIndex);
 			sb.append("=");
 
-			for (TestClass testClass : testClasses) {
-				Matcher matcher = _pattern.matcher(
-					String.valueOf(testClass.getTestClassFile()));
+			AxisTestClassGroup axisTestClassGroup = getAxisTestClassGroup(
+				axisIndex);
 
-				if (!matcher.find()) {
+			List<String> testClassFileMethodNames = new ArrayList<>();
+
+			for (TestClass testClass : axisTestClassGroup.getTestClasses()) {
+				if (!(testClass instanceof JUnitTestClass)) {
 					continue;
 				}
 
 				JUnitTestClass jUnitTestClass = (JUnitTestClass)testClass;
 
-				String testClassFileName = matcher.group("testClassFileName");
-
-				testClassFileName = testClassFileName.replace(
-					".java", ".class");
-
-				List<String> testClassMethodNames =
-					jUnitTestClass.getTestClassMethodNames();
-
-				if ((testClassMethodNames != null) &&
-					!testClassMethodNames.isEmpty()) {
-
-					for (String testClassMethodName : testClassMethodNames) {
-						sb.append(testClassFileName);
-						sb.append("#");
-						sb.append(testClassMethodName);
-						sb.append(",");
-					}
-				}
-				else {
-					sb.append(testClassFileName);
-
-					sb.append(",");
-				}
+				testClassFileMethodNames.addAll(
+					jUnitTestClass.getTestClassFileMethodNames());
 			}
 
-			if (!testClasses.isEmpty()) {
-				sb.setLength(sb.length() - 1);
-			}
+			sb.append(
+				JenkinsResultsParserUtil.join(",", testClassFileMethodNames));
 
 			sb.append("\n");
 		}
@@ -101,8 +74,5 @@ public class JUnitSegmentTestClassGroup extends SegmentTestClassGroup {
 
 		super(batchTestClassGroup, jsonObject);
 	}
-
-	private static final Pattern _pattern = Pattern.compile(
-		".*/(?<testClassFileName>com/.*)");
 
 }

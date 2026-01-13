@@ -388,9 +388,10 @@ public class FragmentLayoutStructureItemImporter
 
 		FragmentEntryProcessorContext fragmentEntryProcessorContext =
 			new DefaultFragmentEntryProcessorContext(
-				httpServletRequest, httpServletResponse,
+				fragmentEntryLink.getCompanyId(), httpServletRequest,
+				httpServletResponse, LocaleUtil.getMostRelevantLocale(),
 				FragmentEntryLinkConstants.EDIT,
-				LocaleUtil.getMostRelevantLocale());
+				fragmentEntryLink.getGroupId());
 
 		return fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 			fragmentEntryLink, fragmentEntryProcessorContext);

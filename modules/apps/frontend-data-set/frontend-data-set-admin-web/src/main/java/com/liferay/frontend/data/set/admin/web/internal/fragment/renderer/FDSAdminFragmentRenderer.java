@@ -208,8 +208,9 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 			DefaultFragmentEntryProcessorContext
 				defaultFragmentEntryProcessorContext =
 					_getDefaultFragmentEntryProcessorContext(
+						fragmentEntryLink.getCompanyId(),
 						fragmentRendererContext, httpServletRequest,
-						httpServletResponse);
+						httpServletResponse, fragmentEntryLink.getGroupId());
 
 			boolean hasTokens = _hasTokens(
 				externalReferenceCode, httpServletRequest);
@@ -271,16 +272,16 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 
 	private DefaultFragmentEntryProcessorContext
 		_getDefaultFragmentEntryProcessorContext(
-			FragmentRendererContext fragmentRendererContext,
+			long companyId, FragmentRendererContext fragmentRendererContext,
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse) {
+			HttpServletResponse httpServletResponse, long scopeGroupId) {
 
 		DefaultFragmentEntryProcessorContext
 			defaultFragmentEntryProcessorContext =
 				new DefaultFragmentEntryProcessorContext(
-					httpServletRequest, httpServletResponse,
-					fragmentRendererContext.getMode(),
-					fragmentRendererContext.getLocale());
+					companyId, httpServletRequest, httpServletResponse,
+					fragmentRendererContext.getLocale(),
+					fragmentRendererContext.getMode(), scopeGroupId);
 
 		defaultFragmentEntryProcessorContext.setAttributes(
 			fragmentRendererContext.getAttributes());

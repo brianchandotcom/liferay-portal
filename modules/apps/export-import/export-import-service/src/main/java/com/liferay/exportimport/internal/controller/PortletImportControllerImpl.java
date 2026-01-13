@@ -217,11 +217,11 @@ public class PortletImportControllerImpl implements PortletImportController {
 			ExportImportConfiguration exportImportConfiguration, File file)
 		throws Exception {
 
-		try (ZipReader zipReader = _zipReaderFactory.getZipReader(file)) {
+		ExportImportThreadLocal.setPortletDataDeletionImportInProcess(true);
+
+		try {
 
 			// LAR validation
-
-			ExportImportThreadLocal.setPortletDataDeletionImportInProcess(true);
 
 			Map<String, Serializable> settingsMap =
 				exportImportConfiguration.getSettingsMap();
@@ -234,31 +234,33 @@ public class PortletImportControllerImpl implements PortletImportController {
 
 			Layout layout = _layoutLocalService.getLayout(targetPlid);
 
-			validateFile(
-				layout.getCompanyId(), targetGroupId, portletId, zipReader);
+			try (ZipReader zipReader = _zipReaderFactory.getZipReader(file)) {
+				validateFile(
+					layout.getCompanyId(), targetGroupId, portletId, zipReader);
 
-			PortletDataContext portletDataContext = getPortletDataContext(
-				exportImportConfiguration, zipReader);
+				PortletDataContext portletDataContext = getPortletDataContext(
+					exportImportConfiguration, zipReader);
 
-			boolean deletePortletData = MapUtil.getBoolean(
-				parameterMap, PortletDataHandlerKeys.DELETE_PORTLET_DATA);
+				boolean deletePortletData = MapUtil.getBoolean(
+					parameterMap, PortletDataHandlerKeys.DELETE_PORTLET_DATA);
 
-			// Portlet data deletion
+				// Portlet data deletion
 
-			if (deletePortletData) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Deleting portlet data");
+				if (deletePortletData) {
+					if (_log.isDebugEnabled()) {
+						_log.debug("Deleting portlet data");
+					}
+
+					deletePortletData(portletDataContext);
 				}
 
-				deletePortletData(portletDataContext);
+				// Deletion system events
+
+				populateDeletionStagedModelTypes(portletDataContext);
+
+				_deletionSystemEventImporter.importDeletionSystemEvents(
+					portletDataContext);
 			}
-
-			// Deletion system events
-
-			populateDeletionStagedModelTypes(portletDataContext);
-
-			_deletionSystemEventImporter.importDeletionSystemEvents(
-				portletDataContext);
 		}
 		finally {
 			ExportImportThreadLocal.setPortletDataDeletionImportInProcess(
@@ -271,11 +273,11 @@ public class PortletImportControllerImpl implements PortletImportController {
 			ExportImportConfiguration exportImportConfiguration, File file)
 		throws Exception {
 
+		ExportImportThreadLocal.setPortletImportInProcess(true);
+
 		PortletDataContext portletDataContext = null;
 
 		try (ZipReader zipReader = _zipReaderFactory.getZipReader(file)) {
-			ExportImportThreadLocal.setPortletImportInProcess(true);
-
 			portletDataContext = getPortletDataContext(
 				exportImportConfiguration, zipReader);
 
@@ -809,7 +811,7 @@ public class PortletImportControllerImpl implements PortletImportController {
 			ExportImportConfiguration exportImportConfiguration, File file)
 		throws Exception {
 
-		try (ZipReader zipReader = _zipReaderFactory.getZipReader(file)) {
+		try {
 			ExportImportThreadLocal.setPortletValidationInProcess(true);
 
 			Map<String, Serializable> settingsMap =
@@ -822,13 +824,17 @@ public class PortletImportControllerImpl implements PortletImportController {
 
 			Layout layout = _layoutLocalService.getLayout(targetPlid);
 
-			validateFile(
-				layout.getCompanyId(), targetGroupId, portletId, zipReader);
+			MissingReferences missingReferences = null;
 
-			MissingReferences missingReferences =
-				_exportImportHelper.validateMissingReferences(
-					getPortletDataContext(
-						exportImportConfiguration, zipReader));
+			try (ZipReader zipReader = _zipReaderFactory.getZipReader(file)) {
+				validateFile(
+					layout.getCompanyId(), targetGroupId, portletId, zipReader);
+
+				missingReferences =
+					_exportImportHelper.validateMissingReferences(
+						getPortletDataContext(
+							exportImportConfiguration, zipReader));
+			}
 
 			Map<String, MissingReference> dependencyMissingReferences =
 				missingReferences.getDependencyMissingReferences();

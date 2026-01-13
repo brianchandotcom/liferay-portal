@@ -27,7 +27,7 @@ export interface IAssetObjectEntry {
 	actions: {
 		[action: string]: {
 			href: string;
-			method: 'DELETE' | 'GET' | 'PATCH' | 'POST' | 'PUT';
+			method: string | 'DELETE' | 'GET' | 'PATCH' | 'POST' | 'PUT';
 		};
 	};
 	content?: string;
@@ -103,7 +103,7 @@ export interface ISearchAssetObjectEntry {
 	actions: IAssetObjectEntry['actions'];
 	dateCreated: string;
 	dateModified: string;
-	description: string;
+	description?: string;
 	embedded: IAssetObjectEntry;
 	entryClassName: string;
 	score: number;

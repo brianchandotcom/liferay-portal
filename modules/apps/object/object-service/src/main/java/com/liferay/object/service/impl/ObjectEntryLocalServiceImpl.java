@@ -5508,6 +5508,36 @@ public class ObjectEntryLocalServiceImpl
 		return staticValues;
 	}
 
+	private List<Object[]> _list(
+			DSLQuery dslQuery, ObjectFieldBag objectFieldBag,
+			Expression<?>[] selectExpressions)
+		throws PortalException {
+
+		List<Object> entriesValues = objectEntryPersistence.dslQuery(dslQuery);
+
+		List<Object[]> results = new ArrayList<>(entriesValues.size());
+
+		for (Object entryValues : entriesValues) {
+			Object[] result = new Object[selectExpressions.length];
+
+			if (selectExpressions.length == 1) {
+				result[0] = _getResult(
+					entryValues, objectFieldBag, selectExpressions[0]);
+			}
+			else {
+				for (int i = 0; i < selectExpressions.length; i++) {
+					result[i] = _getResult(
+						((Object[])entryValues)[i], objectFieldBag,
+						selectExpressions[i]);
+				}
+			}
+
+			results.add(result);
+		}
+
+		return results;
+	}
+
 	private List<Map<String, Serializable>> _list(
 		List<Column<DynamicObjectDefinitionTable, ?>> columns,
 		DSLQuery dslQuery) {
@@ -5536,36 +5566,6 @@ public class ObjectEntryLocalServiceImpl
 						_getValue(
 							((Object[])entryValues)[i], column.getSQLType()),
 						column, result);
-				}
-			}
-
-			results.add(result);
-		}
-
-		return results;
-	}
-
-	private List<Object[]> _list(
-			DSLQuery dslQuery, ObjectFieldBag objectFieldBag,
-			Expression<?>[] selectExpressions)
-		throws PortalException {
-
-		List<Object> entriesValues = objectEntryPersistence.dslQuery(dslQuery);
-
-		List<Object[]> results = new ArrayList<>(entriesValues.size());
-
-		for (Object entryValues : entriesValues) {
-			Object[] result = new Object[selectExpressions.length];
-
-			if (selectExpressions.length == 1) {
-				result[0] = _getResult(
-					entryValues, objectFieldBag, selectExpressions[0]);
-			}
-			else {
-				for (int i = 0; i < selectExpressions.length; i++) {
-					result[i] = _getResult(
-						((Object[])entryValues)[i], objectFieldBag,
-						selectExpressions[i]);
 				}
 			}
 

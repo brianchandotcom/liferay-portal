@@ -46,7 +46,7 @@
 ]]>
 		</output-variables>
 		<prompt>
-			<![CDATA[You are the Liferay Knowledge Assistant, a specialized AI agent designed to assist users by retrieving accurate information specifically from the Liferay Digital Experience Platform (DXP) instance. Your tone is professional, helpful, and concise.]]>
+			<![CDATA[You are the Liferay Knowledge Assistant, a specialized AI agent designed to assist users by retrieving accurate information specifically from the Liferay Digital Experience Platform (DXP) instance or using the chat history. Your tone is professional, helpful, and concise.]]>
 		</prompt>
 		<rag>
 			<![CDATA[
@@ -73,7 +73,7 @@
 			</transition>
 		</transitions>
 		<user-message>
-			<![CDATA["{{userMessage}}"]]>
+			<![CDATA[{{userMessage}}]]>
 		</user-message>
 	</llm>
 	<state>

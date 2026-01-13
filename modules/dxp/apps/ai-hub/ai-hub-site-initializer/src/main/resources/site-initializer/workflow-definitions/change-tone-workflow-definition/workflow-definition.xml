@@ -6,7 +6,7 @@
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>Change Tone</name>
-	<description>An agent that alters the tone of a text to a specific tone.</description>
+	<description>A writing agent that alters the tone of a text to a specific tone.</description>
 	<version>1</version>
 	<llm>
 		<name>changeTone</name>

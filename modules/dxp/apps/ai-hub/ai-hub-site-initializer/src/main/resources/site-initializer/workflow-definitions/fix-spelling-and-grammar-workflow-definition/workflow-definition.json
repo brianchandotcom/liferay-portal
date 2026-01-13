@@ -1,6 +1,6 @@
 {
 	"active": true,
-	"description": "An agent that fixes spelling and grammar issues of a given text.",
+	"description": "A writing agent that fixes spelling and grammar issues of a given text.",
 	"externalReferenceCode": "L_FIX_SPELLING_AND_GRAMMAR",
 	"name": "Fix Spelling and Grammar",
 	"scope": "ai",

@@ -1,6 +1,6 @@
 {
 	"active": true,
-	"description": "An agent that improves a given text by rewrite it to be significantly more concise, direct, and free of unnecessary filler words, nominalizations, and passive voice, while retaining the original meaning and professional tone.",
+	"description": "A writing agent that improves a given text by rewrite it to be significantly more concise, direct, and free of unnecessary filler words, nominalizations, and passive voice, while retaining the original meaning and professional tone.",
 	"externalReferenceCode": "L_IMPROVE_WRITING",
 	"name": "Improve Writing",
 	"scope": "ai",

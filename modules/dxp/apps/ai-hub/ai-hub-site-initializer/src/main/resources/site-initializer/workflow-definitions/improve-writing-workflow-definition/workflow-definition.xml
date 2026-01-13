@@ -6,7 +6,7 @@
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>Improve Writing</name>
-	<description>An agent that improves a given text by rewrite it to be significantly more concise, direct, and free of unnecessary filler words, nominalizations, and passive voice, while retaining the original meaning and professional tone.</description>
+	<description>A writing agent that improves a given text by rewrite it to be significantly more concise, direct, and free of unnecessary filler words, nominalizations, and passive voice, while retaining the original meaning and professional tone.</description>
 	<version>1</version>
 	<llm>
 		<name>improveWriting</name>

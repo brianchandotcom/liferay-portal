@@ -1,6 +1,6 @@
 {
 	"active": true,
-	"description": "An agent that reduces the length of the provided text while preserving all essential information, key points, and original intent.",
+	"description": "A writing agent that reduces the length of the provided text while preserving all essential information, key points, and original intent.",
 	"externalReferenceCode": "L_MAKE_SHORTER",
 	"name": "Make Shorter",
 	"scope": "ai",

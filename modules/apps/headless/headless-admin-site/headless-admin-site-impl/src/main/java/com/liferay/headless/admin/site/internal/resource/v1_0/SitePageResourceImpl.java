@@ -860,6 +860,16 @@ public class SitePageResourceImpl
 				_getTypeSettingsUnicodeProperties(sitePage),
 				sitePage.getPageSpecifications(), serviceContext);
 		}
+		else if (Objects.equals(
+					sitePage.getType(), SitePage.Type.PAGE_SET_PAGE)) {
+
+			layout = LayoutUtil.updateNodeLayout(
+				_cetManager, layout, nameMap, titleMap, descriptionMap,
+				keywordsMap, robotsMap, friendlyURLMap,
+				PageSpecificationUtil.getPageSpecification(
+					sitePage.getPageSpecifications()),
+				_getTypeSettingsUnicodeProperties(sitePage), serviceContext);
+		}
 		else {
 			layout = LayoutUtil.updatePortletLayout(
 				_cetManager, layout, nameMap, titleMap, descriptionMap,

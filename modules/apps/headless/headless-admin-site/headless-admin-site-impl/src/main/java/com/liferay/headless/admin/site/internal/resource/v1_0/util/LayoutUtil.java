@@ -600,6 +600,32 @@ public class LayoutUtil {
 			serviceContext);
 	}
 
+	public static Layout updateNodeLayout(
+			CETManager cetManager, Layout layout, Map<Locale, String> nameMap,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			Map<Locale, String> keywordsMap, Map<Locale, String> robotsMap,
+			Map<Locale, String> friendlyURLMap,
+			PageSpecification pageSpecification,
+			UnicodeProperties typeSettingsUnicodeProperties,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		_setExpandoBridgeAttributes(pageSpecification, serviceContext);
+
+		if (!Objects.equals(
+				typeSettingsUnicodeProperties,
+				layout.getTypeSettingsProperties())) {
+
+			layout = LayoutServiceUtil.updateTypeSettings(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId(), typeSettingsUnicodeProperties.toString());
+		}
+
+		return _updateLayout(
+			cetManager, layout, nameMap, titleMap, descriptionMap, keywordsMap,
+			robotsMap, friendlyURLMap, pageSpecification, serviceContext);
+	}
+
 	public static Layout updatePortletLayout(
 			CETManager cetManager, Layout layout, Map<Locale, String> nameMap,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,

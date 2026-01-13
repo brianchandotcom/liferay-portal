@@ -2757,6 +2757,11 @@ components:
                     # @review
                     description:
                         The segment's item external reference.
+                uuid:
+                    # @review
+                    description:
+                        A valid external identifier to reference this page experience.
+                    type: string
             type: object
         PageNavigationMenuItemSettings:
             description:

@@ -12,7 +12,7 @@
 	<uri>http://liferay.com/tld/digital-sales-room-ui</uri>
 	<tag>
 		<name>comments</name>
-		<tag-class>com.liferay.digital.sales.room.web.internal.frontend.taglib.servlet.taglib.CommentsTag</tag-class>
+		<tag-class>com.liferay.digital.sales.room.web.internal.servlet.taglib.CommentsTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<name>digitalSalesRoomId</name>

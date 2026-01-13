@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.digital.sales.room.web.internal.frontend.taglib.servlet.taglib;
+package com.liferay.digital.sales.room.web.internal.servlet.taglib;
 
-import com.liferay.digital.sales.room.web.frontend.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.digital.sales.room.web.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import jakarta.servlet.http.HttpServletRequest;

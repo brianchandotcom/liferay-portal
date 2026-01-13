@@ -34,6 +34,8 @@ components:
                     type: string
                 scope:
                     $ref: "#/components/schemas/Scope"
+                sseEventSinkKey:
+                    type: string
                 type:
                     type: string
             type: object
@@ -66,33 +68,6 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
-    "/by-external-reference-code/{externalReferenceCode}/tasks":
-        post:
-            operationId: postByExternalReferenceCodeTask
-            parameters:
-                -   in: path
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        type: string
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/Task"
-                    application/xml:
-                        schema:
-                            $ref: "#/components/schemas/Task"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Task"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Task"
-            tags: ["Task"]
     "/chats/by-external-reference-code/{externalReferenceCode}/messages":
         post:
             operationId: postChatByExternalReferenceCodeMessage
@@ -171,6 +146,26 @@ paths:
                                     $ref: "#/components/schemas/TaskDefinition"
                                 type: array
             tags: ["TaskDefinition"]
+    "/tasks":
+        post:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Task"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Task"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Task"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Task"
+            tags: ["Task"]
     "/tasks/subscribe":
         get:
             operationId: getTaskSubscribe

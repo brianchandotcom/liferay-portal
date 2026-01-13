@@ -40,36 +40,31 @@ liferay-default:
                         - -c
                         - |
                               set -e
-
                               echo "Cleaning-up old OpenSearch modules to prevent conflicts..."
                               rm \
-                                -r \
-                                -f \
-                                -v /temp/osgi/modules/*opensearch*
-
+                                  -r \
+                                  -f \
+                                  -v /temp/osgi/modules/*opensearch*
                               DEPLOY_DIR=/temp/liferay/deploy
                               PRODUCT_VERSION={{.image.tag}}
                               mkdir -p "$DEPLOY_DIR"
-
                               function main {
-                                local FILE_NAME_PREFIX="com.liferay.portal.search.opensearch2"
-                                local URL="https://releases.liferay.com/opensearch2/dxp/${PRODUCT_VERSION}/${FILE_NAME_PREFIX}.{api,impl}.jar"
-                
-                                if ! curl \
-                                  --fail \
-                                  --location \
-                                  --output-dir "$DEPLOY_DIR" \
-                                  --remote-name \
-                                  --retry 5 \
-                                  --retry-all-errors \
-                                  --retry-delay 2 \
-                                  "$URL" ; then
-                                      echo "Error: Failed to install OpenSearch modules." >&2
-                                      echo "If your current image already has OpenSearch installed, you may disable this validation by setting \".search.setup=false\" onto your Helm chart." >&2
-                                      exit 1
-                                fi
+                                  local FILE_NAME_PREFIX="com.liferay.portal.search.opensearch2"
+                                  local URL="https://releases.liferay.com/opensearch2/dxp/${PRODUCT_VERSION}/${FILE_NAME_PREFIX}.{api,impl}.jar"
+                                  if ! curl \
+                                      --fail \
+                                      --location \
+                                      --output-dir "$DEPLOY_DIR" \
+                                      --remote-name \
+                                      --retry 5 \
+                                      --retry-all-errors \
+                                      --retry-delay 2 \
+                                      "$URL" ; then
+                                          echo "Error: Failed to install OpenSearch modules." >&2
+                                          echo "If your current image already has OpenSearch installed, you may disable this validation by setting \".search.setup=false\" onto your Helm chart." >&2
+                                          exit 1
+                                  fi
                               }
-                
                               echo "Starting to install OpenSearch modules for Product Version ${PRODUCT_VERSION}..."
                               main "$PRODUCT_VERSION"
                               echo "OpenSearch modules installed successfully."

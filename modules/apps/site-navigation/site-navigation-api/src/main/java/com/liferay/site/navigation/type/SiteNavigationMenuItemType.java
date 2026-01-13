@@ -180,9 +180,8 @@ public interface SiteNavigationMenuItemType {
 	}
 
 	public default boolean hasModel(
-			long companyId, long groupId,
-			UnicodeProperties typeSettingsUnicodeProperties)
-		throws PortalException {
+		long companyId, long groupId,
+		UnicodeProperties typeSettingsUnicodeProperties) {
 
 		return true;
 	}

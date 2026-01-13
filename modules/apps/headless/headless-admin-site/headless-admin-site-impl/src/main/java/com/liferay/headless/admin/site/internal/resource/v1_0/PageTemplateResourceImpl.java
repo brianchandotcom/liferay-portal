@@ -410,7 +410,7 @@ public class PageTemplateResourceImpl
 
 		long previewFileEntryId = FileEntryUtil.getPreviewFileEntryId(
 			groupId, getResourceName(), serviceContext,
-			pageTemplate.getThumbnailURLReference(), contextUser);
+			pageTemplate.getThumbnailURLReference());
 
 		if (previewFileEntryId !=
 				layoutPageTemplateEntry.getPreviewFileEntryId()) {
@@ -517,8 +517,7 @@ public class PageTemplateResourceImpl
 				LayoutPageTemplateEntryTypeConstants.BASIC,
 				FileEntryUtil.getPreviewFileEntryId(
 					groupId, getResourceName(), serviceContext,
-					contentPageTemplate.getThumbnailURLReference(),
-					contextUser),
+					contentPageTemplate.getThumbnailURLReference()),
 				false, 0,
 				_getLayoutPlid(contentPageTemplate, groupId, serviceContext), 0,
 				PageSpecificationUtil.getPublishedStatus(
@@ -623,8 +622,7 @@ public class PageTemplateResourceImpl
 			layoutPageTemplateEntry.setPreviewFileEntryId(
 				FileEntryUtil.getPreviewFileEntryId(
 					groupId, getResourceName(), serviceContext,
-					widgetPageTemplate.getThumbnailURLReference(),
-					contextUser));
+					widgetPageTemplate.getThumbnailURLReference()));
 		}
 
 		layoutPageTemplateEntry =

@@ -418,7 +418,7 @@ public class DisplayPageTemplateResourceImpl
 		long previewFileEntryId = FileEntryUtil.getPreviewFileEntryId(
 			groupId, getResourceName(),
 			_getServiceContext(displayPageTemplate, groupId),
-			displayPageTemplate.getThumbnailURLReference(), contextUser);
+			displayPageTemplate.getThumbnailURLReference());
 
 		if (previewFileEntryId !=
 				layoutPageTemplateEntry.getPreviewFileEntryId()) {
@@ -582,8 +582,7 @@ public class DisplayPageTemplateResourceImpl
 				FileEntryUtil.getPreviewFileEntryId(
 					groupId, getResourceName(),
 					_getServiceContext(displayPageTemplate, groupId),
-					displayPageTemplate.getThumbnailURLReference(),
-					contextUser),
+					displayPageTemplate.getThumbnailURLReference()),
 				GetterUtil.getBoolean(displayPageTemplate.getMarkedAsDefault()),
 				0L, layout.getPlid(), 0L,
 				PageSpecificationUtil.getPublishedStatus(

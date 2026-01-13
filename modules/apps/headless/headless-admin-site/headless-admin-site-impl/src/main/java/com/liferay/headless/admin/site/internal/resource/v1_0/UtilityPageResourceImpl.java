@@ -309,7 +309,7 @@ public class UtilityPageResourceImpl
 		long previewFileEntryId = FileEntryUtil.getPreviewFileEntryId(
 			groupId, getResourceName(),
 			_getServiceContext(groupId, utilityPage),
-			utilityPage.getThumbnailURLReference(), contextUser);
+			utilityPage.getThumbnailURLReference());
 
 		if (previewFileEntryId !=
 				layoutUtilityPageEntry.getPreviewFileEntryId()) {
@@ -382,7 +382,7 @@ public class UtilityPageResourceImpl
 				FileEntryUtil.getPreviewFileEntryId(
 					groupId, getResourceName(),
 					_getServiceContext(groupId, utilityPage),
-					utilityPage.getThumbnailURLReference(), contextUser),
+					utilityPage.getThumbnailURLReference()),
 				utilityPage.getMarkedAsDefault(), utilityPage.getName(),
 				_getType(utilityPage.getType()), null, serviceContext));
 	}

@@ -125,16 +125,22 @@ export class MarketplaceHelper {
 	}
 
 	async selectAccount(accountName: string) {
-		this.accountSearchDropdown = this.page.locator('#account-search.dropdown');
+		this.accountSearchDropdown = this.page.locator(
+			'#account-search.dropdown'
+		);
 		await this.accountSearchDropdown.click();
 
 		const accountItem = this.page.locator('li.item-list', {
-			hasText: accountName
+			hasText: accountName,
 		});
 
 		await accountItem.waitFor();
 
-		if (!(await accountItem.evaluate(element => element.classList.contains('disabled')))) {
+		if (
+			!(await accountItem.evaluate((element) =>
+				element.classList.contains('disabled')
+			))
+		) {
 			await accountItem.click();
 		}
 

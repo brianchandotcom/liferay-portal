@@ -48,14 +48,9 @@ test.describe('Can Publish Marketplace Apps', () => {
 
 	test.afterEach(async ({apiHelpers}) => {
 		await apiHelpers.headlessAdminUser.deleteAccount(_account.id);
-		await apiHelpers.headlessAdminUser.deleteAccount(_account.id);
 
 		await apiHelpers.headlessCommerceAdminCatalog.deleteProduct(_productId);
-		await apiHelpers.headlessCommerceAdminCatalog.deleteProduct(_productId);
 
-		await apiHelpers.headlessCommerceAdminCatalog.deleteCatalog(
-			_catalog.id
-		);
 		await apiHelpers.headlessCommerceAdminCatalog.deleteCatalog(
 			_catalog.id
 		);
@@ -79,7 +74,7 @@ test.describe('Can Publish Marketplace Apps', () => {
 			// Go to Publisher Dashboard
 
 			await publisherDashboardPage.goto(marketplace.friendlyUrlPath);
-			
+
 			await marketplaceHelper.selectAccount(accountName);
 
 			await publisherDashboardPage.gotoNewAppPage();
@@ -93,31 +88,37 @@ test.describe('Can Publish Marketplace Apps', () => {
 			await publisherAppPage.continue();
 			await publisherAppPage.fillProfile();
 			await publisherAppPage.fillBuild();
+			await publisherAppPage.fillStoreFront();
+			await publisherAppPage.fillVersion();
+			await publisherAppPage.fillPricing();
+			await publisherAppPage.fillSupport();
+			await publisherAppPage.reviewAndSubmit();
 
 			const createdProduct =
-			await apiHelpers.headlessCommerceAdminCatalog.getProducts(
-				new URLSearchParams({
-					filter: `name eq '${product.name}'`,
-				})
-			);
-			
+				await apiHelpers.headlessCommerceAdminCatalog.getProducts(
+					new URLSearchParams({
+						filter: `name eq '${product.name}'`,
+					})
+				);
+
 			const productId = createdProduct.items[0].productId;
-			
+
 			_productId = productId;
-			
+
 			await page.waitForResponse(
 				(r) =>
 					r.request().method() === 'POST' &&
-				r.url().includes('/o/c/publisherassetattachments')
+					r.url().includes('/o/c/publisherassetattachments')
 			);
-									
+
 			const response = await apiHelpers.get(
 				`/o/c/publisherassetses?sort=dateCreated:desc&pageSize=1`
 			);
 
-			const hasVersion = response.items[0]?.version === `${product.dxpVersions[0]}`;
+			const hasVersion =
+				response.items[0]?.version === `${product.dxpVersions[0]}`;
 			expect(hasVersion).toBeTruthy();
-			
+
 			await expect(page.getByText(product.name)).toBeTruthy();
 		});
 	}

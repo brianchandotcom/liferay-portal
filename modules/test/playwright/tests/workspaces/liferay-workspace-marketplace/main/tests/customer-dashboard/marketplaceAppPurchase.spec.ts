@@ -133,7 +133,7 @@ test.describe('Can Purchase and Manage Apps', () => {
 		customerDashboardAppDetailsPage,
 		customerDashboardPage,
 		marketplace,
-		marketplaceHelper
+		marketplaceHelper,
 	}) => {
 		await customerDashboardPage.goto(marketplace.friendlyUrlPath);
 
@@ -184,7 +184,7 @@ test.describe('Can Purchase and Manage Apps', () => {
 		customerDashboardAppDetailsPage,
 		customerDashboardPage,
 		marketplace,
-		marketplaceHelper
+		marketplaceHelper,
 	}) => {
 		await customerDashboardPage.goto(marketplace.friendlyUrlPath);
 

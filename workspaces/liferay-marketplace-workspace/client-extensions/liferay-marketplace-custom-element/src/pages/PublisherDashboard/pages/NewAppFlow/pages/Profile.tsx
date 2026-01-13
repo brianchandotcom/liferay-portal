@@ -230,8 +230,7 @@ const Profile = () => {
 					</Form.Label>
 
 					<MultiSelect
-						aria-label={i18n.translate('area')}
-						className='area-multiselect'
+						ariaLabel={i18n.translate('area')}
 						inputName="area"
 						key={`areas-${areas.length}`}
 						multiselectKey={`area-${
@@ -266,8 +265,7 @@ const Profile = () => {
 					</Form.Label>
 
 					<MultiSelect
-						aria-label={i18n.translate('tags')}
-						className='tags-multiselect'
+						ariaLabel={i18n.translate('tags')}
 						inputName="tags-selector"
 						key={`tags-${tags.length}`}
 						multiselectKey={`tag-${

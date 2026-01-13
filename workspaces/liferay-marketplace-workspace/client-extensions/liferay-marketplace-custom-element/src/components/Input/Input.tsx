@@ -87,6 +87,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 					</ClayInput.Group>
 				) : (
 					<ClayInput
+						aria-label={label}
 						className="custom-input"
 						component={component}
 						onChange={onChange}

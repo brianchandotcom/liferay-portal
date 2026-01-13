@@ -63,7 +63,9 @@ export class PublisherSolutionPage {
 			name: 'Continue',
 		});
 		this.createTemplate = page.getByText('Create template', {exact: true});
-		this.customizeSolutionDetails = page.getByRole('heading', { name: 'Customize Storefront Solution' })
+		this.customizeSolutionDetails = page.getByRole('heading', {
+			name: 'Customize Storefront Solution',
+		});
 		this.customizeSolutionHeader = page.getByText(
 			'Define the solution profile',
 			{exact: true}
@@ -160,7 +162,7 @@ export class PublisherSolutionPage {
 	}
 
 	async fillCustomizeSolutionHeader(header) {
-		await this.page.waitForLoadState('networkidle'); 
+		await this.page.waitForLoadState('networkidle');
 
 		await this.headerTitle.fill(header.title);
 		await this.richTextEditor.fill(header.description);

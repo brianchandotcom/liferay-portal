@@ -188,13 +188,11 @@ public class LoginUtil {
 			HttpServletRequest httpServletRequest, long plid)
 		throws PortletModeException, WindowStateException {
 
-		String portletName = LoginPortletKeys.LOGIN;
-
 		PortletConfig portletConfig =
 			(PortletConfig)httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_CONFIG);
 
-		portletName = portletConfig.getPortletName();
+		String portletName = portletConfig.getPortletName();
 
 		if (!portletName.equals(LoginPortletKeys.CREATE_ACCOUNT) &&
 			!portletName.equals(LoginPortletKeys.LOGIN) &&

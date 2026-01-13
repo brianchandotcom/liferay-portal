@@ -87,6 +87,10 @@ components:
                     type: string
                 secondaryColor:
                     type: string
+                templateGroupId:
+                    format: int64
+                    readOnly: true
+                    type: integer
                 userAccountBriefs:
                     items:
                         $ref: "#/components/schemas/UserAccountBrief"

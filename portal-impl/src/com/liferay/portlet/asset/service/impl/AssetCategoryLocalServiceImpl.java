@@ -470,7 +470,17 @@ public class AssetCategoryLocalServiceImpl
 				_assetVocabularyLocalService.getOrAddEmptyVocabulary(
 					vocabularyExternalReferenceCode, userId, groupId);
 
-			assetCategory.setVocabularyId(assetVocabulary.getVocabularyId());
+			long vocabularyId = assetVocabulary.getVocabularyId();
+
+			if ((assetCategory.getVocabularyId() !=
+					AssetVocabularyConstants.EMPTY_VOCABULARY_ID) &&
+				(vocabularyId != assetCategory.getVocabularyId())) {
+
+				throw new PortalException(
+					"Category exists in a different vocabulary");
+			}
+
+			assetCategory.setVocabularyId(vocabularyId);
 		}
 
 		if (Validator.isNotNull(parentCategoryExternalReferenceCode)) {
@@ -478,13 +488,30 @@ public class AssetCategoryLocalServiceImpl
 				assetCategoryLocalService.getOrAddEmptyCategory(
 					parentCategoryExternalReferenceCode, userId, groupId);
 
+			long parentVocabularyId = parentAssetCategory.getVocabularyId();
+
 			if (assetVocabulary != null) {
+				if ((parentVocabularyId !=
+						AssetVocabularyConstants.EMPTY_VOCABULARY_ID) &&
+					(parentVocabularyId != assetVocabulary.getVocabularyId())) {
+
+					throw new PortalException(
+						"Parent category exists in a different vocabulary");
+				}
+
 				parentAssetCategory.setVocabularyId(
 					assetVocabulary.getVocabularyId());
 
 				parentAssetCategory =
 					assetCategoryLocalService.updateAssetCategory(
 						parentAssetCategory);
+			}
+			else if ((parentVocabularyId !=
+						AssetVocabularyConstants.EMPTY_VOCABULARY_ID) &&
+					 (assetCategory.getVocabularyId() ==
+						 AssetVocabularyConstants.EMPTY_VOCABULARY_ID)) {
+
+				assetCategory.setVocabularyId(parentVocabularyId);
 			}
 
 			assetCategory.setParentCategoryId(

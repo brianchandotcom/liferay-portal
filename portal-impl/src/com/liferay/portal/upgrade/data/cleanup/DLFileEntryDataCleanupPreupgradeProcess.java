@@ -81,6 +81,9 @@ public class DLFileEntryDataCleanupPreupgradeProcess
 
 		return new DataCleanupPreupgradeProcess(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
+				null, null, "fileEntryId", "DLFileEntry", "fileEntryId",
+				"DLFileVersion"),
+			new TableOrphanReferencesDataCleanupPreupgradeProcess(
 				null, null, "fileEntryId", "DLFileEntryMetadata", "fileEntryId",
 				"DLFileEntry"),
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(

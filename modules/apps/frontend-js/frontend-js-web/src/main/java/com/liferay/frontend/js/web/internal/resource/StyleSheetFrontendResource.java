@@ -45,34 +45,7 @@ public class StyleSheetFrontendResource implements FrontendResource {
 
 	@Override
 	public String getETag() {
-		if (_eTag == null) {
-			return null;
-		}
-
-		if (_tokens == null) {
-			return _eTag;
-		}
-
-		StringBuilder tokensSB = new StringBuilder();
-
-		for (Map.Entry<String, String> entry : _tokens.entrySet()) {
-			tokensSB.append(entry.getKey());
-			tokensSB.append(StringPool.EQUAL);
-			tokensSB.append(entry.getValue());
-			tokensSB.append(StringPool.POUND);
-		}
-
-		int hash = 0;
-
-		String tokensString = tokensSB.toString();
-
-		byte[] data = tokensString.getBytes(StandardCharsets.UTF_8);
-
-		for (byte b : data) {
-			hash = (31 * hash) + b;
-		}
-
-		return _eTag + StringPool.DASH + StringUtil.toHexString(hash);
+		return _eTag;
 	}
 
 	@Override

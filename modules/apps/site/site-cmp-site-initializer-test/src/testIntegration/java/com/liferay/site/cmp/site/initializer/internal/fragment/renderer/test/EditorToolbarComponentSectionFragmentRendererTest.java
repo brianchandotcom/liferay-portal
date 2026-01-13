@@ -50,8 +50,9 @@ public class EditorToolbarComponentSectionFragmentRendererTest
 			StringBundler.concat(
 				themeDisplay.getPathFriendlyURLPublic(),
 				GroupConstants.CMS_FRIENDLY_URL, "/e/project/",
-				PortalUtil.getClassNameId(objectDefinition.getClassName()),
-				StringPool.SLASH, objectEntry.getObjectEntryId()),
+				PortalUtil.getClassNameId(
+					projectObjectDefinition.getClassName()),
+				StringPool.SLASH, projectObjectEntry.getObjectEntryId()),
 			MapUtil.getString(new HashMap<>(getProps()), "viewProjectURL"));
 	}
 

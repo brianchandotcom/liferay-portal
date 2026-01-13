@@ -5,9 +5,6 @@
 
 package com.liferay.site.cmp.site.initializer.internal.fragment.renderer.test;
 
-import com.liferay.depot.constants.DepotConstants;
-import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.info.constants.InfoDisplayWebKeys;
@@ -18,26 +15,18 @@ import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.site.cmp.site.initializer.test.util.CMPTestUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.io.Serializable;
-
-import java.util.Collections;
 import java.util.Map;
 
 import org.junit.Before;
@@ -54,48 +43,32 @@ public abstract class BaseComponentSectionFragmentRendererTestCase {
 		CMPTestUtil.getOrAddGroup(
 			BaseComponentSectionFragmentRendererTestCase.class);
 
-		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
-			Collections.singletonMap(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-			Collections.singletonMap(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-			DepotConstants.TYPE_PROJECT,
-			ServiceContextTestUtil.getServiceContext());
-
-		objectDefinition =
+		projectObjectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
 					"L_CMP_PROJECT", TestPropsValues.getCompanyId());
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
+		projectObjectEntry = CMPTestUtil.addProject();
 
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
-
-		objectEntry = objectEntryLocalService.addObjectEntry(
-			depotEntry.getGroupId(), depotEntry.getUserId(),
-			objectDefinition.getObjectDefinitionId(), 0, null,
-			HashMapBuilder.<String, Serializable>put(
-				"title", TITLE
-			).build(),
-			serviceContext);
+		projectTitle = MapUtil.getString(
+			projectObjectEntry.getValues(), "title");
 
 		httpServletRequest = new MockHttpServletRequest();
 
 		httpServletRequest.setAttribute(
-			InfoDisplayWebKeys.INFO_ITEM, objectEntry);
+			InfoDisplayWebKeys.INFO_ITEM, projectObjectEntry);
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			_layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(
-					objectDefinition.getClassName());
+					projectObjectDefinition.getClassName());
 
 		httpServletRequest.setAttribute(
 			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
 			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
 				new InfoItemReference(
 					layoutDisplayPageProvider.getClassName(),
-					objectEntry.getObjectEntryId())));
+					projectObjectEntry.getObjectEntryId())));
 
 		themeDisplay = new ThemeDisplay() {
 			{
@@ -121,22 +94,14 @@ public abstract class BaseComponentSectionFragmentRendererTestCase {
 			null, httpServletRequest);
 	}
 
-	protected static final String TITLE = RandomTestUtil.randomString();
-
 	protected HttpServletRequest httpServletRequest;
-	protected ObjectDefinition objectDefinition;
-	protected ObjectEntry objectEntry;
-
-	@Inject
-	protected ObjectEntryLocalService objectEntryLocalService;
-
+	protected ObjectDefinition projectObjectDefinition;
+	protected ObjectEntry projectObjectEntry;
+	protected String projectTitle;
 	protected ThemeDisplay themeDisplay;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
-
-	@Inject
-	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Inject
 	private LayoutDisplayPageProviderRegistry

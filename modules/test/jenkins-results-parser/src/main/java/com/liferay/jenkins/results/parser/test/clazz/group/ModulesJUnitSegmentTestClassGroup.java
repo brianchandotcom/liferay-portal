@@ -75,6 +75,8 @@ public class ModulesJUnitSegmentTestClassGroup
 			if (!testTasks.isEmpty()) {
 				sb.setLength(sb.length() - 1);
 			}
+
+			sb.append("\n");
 		}
 
 		return sb.toString();

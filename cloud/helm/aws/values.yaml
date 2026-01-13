@@ -40,7 +40,12 @@ liferay-default:
                         - -c
                         - |
                               set -e
+                              rm -rfv /temp/osgi/modules/*opensearch*
+
+                              DEPLOY_DIR=/temp/liferay/deploy
                               PRODUCT_VERSION={{.image.tag}}
+                              mkdir -p "$DEPLOY_DIR"
+
                               function main {
                                   local FILE_NAME_PREFIX="com.liferay.portal.search.opensearch2"
                                   local URL="https://releases.liferay.com/opensearch2/dxp/${PRODUCT_VERSION}/${FILE_NAME_PREFIX}.{api,impl}.jar"
@@ -48,7 +53,7 @@ liferay-default:
                                 if ! curl \
                                   --fail \
                                   --location \
-                                  --output-dir /temp/liferay/deploy \
+                                  --output-dir "$DEPLOY_DIR" \
                                   --remote-name \
                                   --retry 5 \
                                   --retry-all-errors \

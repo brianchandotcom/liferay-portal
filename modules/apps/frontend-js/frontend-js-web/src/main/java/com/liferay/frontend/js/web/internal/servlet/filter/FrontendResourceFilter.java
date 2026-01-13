@@ -8,6 +8,7 @@ package com.liferay.frontend.js.web.internal.servlet.filter;
 import com.liferay.frontend.js.web.internal.resource.FrontendResource;
 import com.liferay.frontend.js.web.internal.resource.handler.FrontendResourceRequestHandler;
 import com.liferay.frontend.js.web.internal.resource.handler.HashedFileFrontendResourceRequestHandler;
+import com.liferay.frontend.js.web.internal.resource.handler.JavaScriptFrontendResourceRequestHandler;
 import com.liferay.frontend.js.web.internal.resource.handler.LanguageFrontendResourceRequestHandler;
 import com.liferay.frontend.js.web.internal.resource.handler.StyleSheetFrontendResourceRequestHandler;
 import com.liferay.petra.io.StreamUtil;
@@ -16,6 +17,7 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesRegistry;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -86,20 +88,13 @@ public class FrontendResourceFilter extends BasePortalFilter {
 				_hashedFilesRegistry, "jsFilesMaxAge", _portal,
 				"sendNoCacheForJSFiles"));
 		frontendResourceRequestHandlers.add(
-			new HashedFileFrontendResourceRequestHandler(
-				ContentTypes.TEXT_JAVASCRIPT, ".js", _hashedFilesRegistry,
-				86400, "esModulesMaxAge", _portal, false,
-				"sendNoCacheForESModules"));
-
-		FrontendCachingConfiguration frontendCachingConfiguration =
-			ConfigurableUtil.createConfigurable(
-				FrontendCachingConfiguration.class, properties);
-
+			new JavaScriptFrontendResourceRequestHandler(
+				_configurationProvider, _hashedFilesRegistry, _language,
+				_portal, PortletConfigFactoryUtil.getPortletConfigFactory()));
 		frontendResourceRequestHandlers.add(
 			new StyleSheetFrontendResourceRequestHandler(
 				_configurationProvider, _hashedFilesRegistry, _portal,
 				_themeLocalService));
-
 		frontendResourceRequestHandlers.add(
 			new LanguageFrontendResourceRequestHandler(
 				_configurationProvider, _hashedFilesRegistry, _jsonFactory,

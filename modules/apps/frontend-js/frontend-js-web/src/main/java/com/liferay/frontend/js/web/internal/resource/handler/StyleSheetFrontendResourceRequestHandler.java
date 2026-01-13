@@ -10,6 +10,7 @@ import com.liferay.frontend.js.web.internal.resource.FrontendResource;
 import com.liferay.frontend.js.web.internal.resource.StyleSheetFrontendResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesRegistry;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesUtil;
@@ -37,11 +38,11 @@ public class StyleSheetFrontendResourceRequestHandler
 	implements FrontendResourceRequestHandler {
 
 	public StyleSheetFrontendResourceRequestHandler(
-		FrontendCachingConfiguration frontendCachingConfiguration,
+		ConfigurationProvider configurationProvider,
 		HashedFilesRegistry hashedFilesRegistry, Portal portal,
 		ThemeLocalService themeLocalService) {
 
-		_frontendCachingConfiguration = frontendCachingConfiguration;
+		_configurationProvider = configurationProvider;
 		_hashedFilesRegistry = hashedFilesRegistry;
 		_portal = portal;
 		_themeLocalService = themeLocalService;
@@ -187,7 +188,7 @@ public class StyleSheetFrontendResourceRequestHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		StyleSheetFrontendResourceRequestHandler.class);
 
-	private final FrontendCachingConfiguration _frontendCachingConfiguration;
+	private final ConfigurationProvider _configurationProvider;
 	private final HashedFilesRegistry _hashedFilesRegistry;
 	private final Portal _portal;
 	private final ThemeLocalService _themeLocalService;

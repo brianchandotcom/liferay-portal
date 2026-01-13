@@ -62,6 +62,10 @@ components:
                     type: string
                 description:
                     type: string
+                digitalSalesRoomTemplateId:
+                    format: int64
+                    readOnly: true
+                    type: integer
                 externalReferenceCode:
                     type: string
                 friendlyUrlPath:

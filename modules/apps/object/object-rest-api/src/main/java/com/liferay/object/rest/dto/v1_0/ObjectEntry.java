@@ -1382,6 +1382,9 @@ public class ObjectEntry implements Serializable {
 		else if (Objects.equals(propertyName, "auditEvents")) {
 			setAuditEvents((AuditEvent[])propertyValue);
 		}
+		else if (Objects.equals(propertyName, "comments")) {
+			setComments((Comment[])propertyValue);
+		}
 		else if (Objects.equals(propertyName, "creator")) {
 			setCreator((Creator)propertyValue);
 		}

@@ -113,6 +113,28 @@ public class DigitalSalesRoomResourceImpl
 				group.getExternalReferenceCode(), group.getGroupId(),
 				objectDefinition.getObjectDefinitionId());
 
+		Map<String, Serializable> values =
+			serviceBuilderObjectEntry.getValues();
+
+		long templateGroupId = GetterUtil.getLong(
+			values.get("templateGroupId"));
+
+		if (templateGroupId > 0) {
+			Group templateGroup = _groupLocalService.fetchGroup(
+				templateGroupId);
+
+			if (templateGroup != null) {
+				ObjectDefinition dsrTemplateObjectDefinition =
+					_objectDefinitionLocalService.
+						getObjectDefinitionByExternalReferenceCode(
+							"L_DSR_TEMPLATE", contextCompany.getCompanyId());
+
+				_updateDSRTemplateObjectEntryUsages(
+					templateGroup,
+					dsrTemplateObjectDefinition.getObjectDefinitionId(), -1);
+			}
+		}
+
 		_checkPermission(ActionKeys.DELETE, serviceBuilderObjectEntry);
 
 		_objectEntryLocalService.deleteObjectEntry(
@@ -245,7 +267,7 @@ public class DigitalSalesRoomResourceImpl
 		ObjectEntry objectEntry = objectEntryManager.partialUpdateObjectEntry(
 			objectDefinition.getCompanyId(), defaultDTOConverterContext,
 			group.getExternalReferenceCode(), objectDefinition,
-			_toObjectEntry(digitalSalesRoom, group), group.getGroupKey());
+			_toObjectEntry(digitalSalesRoom, group, 0), group.getGroupKey());
 
 		_updateFrontendTokensValues(digitalSalesRoom, group);
 		_updateNestedResources(digitalSalesRoom, group);
@@ -301,7 +323,7 @@ public class DigitalSalesRoomResourceImpl
 
 		ObjectEntry objectEntry = objectEntryManager.addObjectEntry(
 			defaultDTOConverterContext, objectDefinition,
-			_toObjectEntry(digitalSalesRoom, group), group.getGroupKey());
+			_toObjectEntry(digitalSalesRoom, group, 0), group.getGroupKey());
 
 		group.setClassPK(objectEntry.getId());
 
@@ -373,7 +395,8 @@ public class DigitalSalesRoomResourceImpl
 
 		ObjectEntry objectEntry = objectEntryManager.addObjectEntry(
 			defaultDTOConverterContext, objectDefinition,
-			_toObjectEntry(digitalSalesRoom, targetGroup),
+			_toObjectEntry(
+				digitalSalesRoom, targetGroup, digitalSalesRoomTemplateId),
 			targetGroup.getGroupKey());
 
 		targetGroup.setClassPK(objectEntry.getId());
@@ -388,6 +411,10 @@ public class DigitalSalesRoomResourceImpl
 
 		_updateFrontendTokensValues(digitalSalesRoom, targetGroup);
 		_updateNestedResources(digitalSalesRoom, targetGroup);
+
+		_updateDSRTemplateObjectEntryUsages(
+			sourceGroup, dsrTemplateObjectDefinition.getObjectDefinitionId(),
+			1);
 
 		return _toDigitalSalesRoom(
 			targetGroup,
@@ -772,15 +799,47 @@ public class DigitalSalesRoomResourceImpl
 	}
 
 	private ObjectEntry _toObjectEntry(
-		DigitalSalesRoom digitalSalesRoom, Group group) {
+		DigitalSalesRoom digitalSalesRoom, Group group, long templateGroupId) {
 
 		return new ObjectEntry() {
 			{
 				setProperties(
-					() -> Collections.unmodifiableMap(
-						_getProperties(digitalSalesRoom, group)));
+					() -> {
+						Map<String, Serializable> propertiesMap =
+							_getProperties(digitalSalesRoom, group);
+
+						if (templateGroupId > 0) {
+							propertiesMap.put(
+								"templateGroupId", templateGroupId);
+						}
+
+						return Collections.unmodifiableMap(propertiesMap);
+					});
 			}
 		};
+	}
+
+	private void _updateDSRTemplateObjectEntryUsages(
+			Group group, long objectDefinitionId, int value)
+		throws Exception {
+
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryLocalService.getObjectEntry(
+				group.getExternalReferenceCode(), group.getGroupId(),
+				objectDefinitionId);
+
+		Map<String, Serializable> values =
+			serviceBuilderObjectEntry.getValues();
+
+		values.put(
+			"usages",
+			Math.max(0, GetterUtil.getLong(values.get("usages")) + value));
+
+		_objectEntryLocalService.partialUpdateObjectEntry(
+			serviceBuilderObjectEntry.getUserId(),
+			serviceBuilderObjectEntry.getObjectEntryId(),
+			serviceBuilderObjectEntry.getObjectEntryFolderId(), values,
+			new ServiceContext());
 	}
 
 	private void _updateFrontendTokensValues(

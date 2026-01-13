@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -51,12 +51,12 @@ public class SalesforceService extends BaseService {
 	}
 
 	private String _getAuthorization() throws Exception {
-		Date expirationTime = _accessToken.getExpirationTime();
+		if (_accessToken != null) {
+			Date expirationTime = _accessToken.getExpirationTime();
 
-		if ((_accessToken != null) &&
-			(System.currentTimeMillis() < expirationTime.getTime())) {
-
-			return _authorization;
+			if (System.currentTimeMillis() < expirationTime.getTime()) {
+				return _authorization;
+			}
 		}
 
 		try (InputStream inputStream = new ByteArrayInputStream(
@@ -77,6 +77,7 @@ public class SalesforceService extends BaseService {
 			}
 
 			_accessToken = accessToken;
+
 			_authorization = "Bearer " + accessToken.getTokenValue();
 
 			return _authorization;

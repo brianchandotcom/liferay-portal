@@ -9,3 +9,4 @@ export {default as ProjectInfoSummary} from './components/project/ProjectInfoSum
 export {default as ProjectsFDSPropsTransformer} from './components/props_transformer/ProjectsFDSPropsTransformer';
 export {default as TasksFDSPropsTransformer} from './components/props_transformer/TasksFDSPropsTransformer';
 export {default as TaskInfoSummary} from './components/task/TaskInfoSummary';
+export {default as TasksOverview} from './components/task/TasksOverview';

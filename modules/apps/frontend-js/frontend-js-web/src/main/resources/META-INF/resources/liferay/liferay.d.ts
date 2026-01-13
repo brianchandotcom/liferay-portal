@@ -255,6 +255,7 @@ declare module Liferay {
 
 	namespace ThemeDisplay {
 		export function getBCP47LanguageId(): string;
+		export function getCDNHost(): string;
 		export function getCompanyId(): string;
 		export function getDefaultLanguageId(): Language.Locale;
 		export function getLanguageId(): Language.Locale;

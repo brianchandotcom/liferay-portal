@@ -37,19 +37,6 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 
 		JavaClass javaClass = (JavaClass)javaTerm;
 
-		_checkDataAccessGetConnection(fileName, fileContent, javaClass);
-
-		return javaTerm.getContent();
-	}
-
-	@Override
-	protected String[] getCheckableJavaTermNames() {
-		return new String[] {JAVA_CLASS};
-	}
-
-	private void _checkDataAccessGetConnection(
-		String fileName, String fileContent, JavaClass javaClass) {
-
 		for (JavaTerm childJavaTerm : javaClass.getChildJavaTerms()) {
 			if (!childJavaTerm.isJavaMethod()) {
 				continue;
@@ -79,6 +66,13 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 					"DataAccess.getConnection",
 				getLineNumber(fileContent, x));
 		}
+
+		return javaTerm.getContent();
+	}
+
+	@Override
+	protected String[] getCheckableJavaTermNames() {
+		return new String[] {JAVA_CLASS};
 	}
 
 }

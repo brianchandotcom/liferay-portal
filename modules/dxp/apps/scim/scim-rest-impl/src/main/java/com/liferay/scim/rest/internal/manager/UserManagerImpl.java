@@ -26,7 +26,6 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.WebsiteURLException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Address;
@@ -481,10 +480,6 @@ public class UserManagerImpl implements UserManager {
 				scimClientOAuth2ApplicationConfiguration);
 		}
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-56434")) {
-			return ScimUtil.toScimUser(portalUser);
-		}
-
 		_addOrUpdateExpandoValue(
 			"scimDisplayName", portalUser, false, scimUser.getDisplayName());
 		_addOrUpdateExpandoValue(
@@ -764,9 +759,7 @@ public class UserManagerImpl implements UserManager {
 		portalUser.setExternalReferenceCode(
 			scimUser.getExternalReferenceCode());
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-56434") &&
-			Validator.isNotNull(scimUser.getTimeZoneId())) {
-
+		if (Validator.isNotNull(scimUser.getTimeZoneId())) {
 			portalUser.setTimeZoneId(scimUser.getTimeZoneId());
 		}
 

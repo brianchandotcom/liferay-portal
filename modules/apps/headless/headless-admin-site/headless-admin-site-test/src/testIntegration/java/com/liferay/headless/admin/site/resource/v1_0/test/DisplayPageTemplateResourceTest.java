@@ -1264,7 +1264,7 @@ public class DisplayPageTemplateResourceTest
 	private void _testPatchSiteDisplayPageTemplateWithThumbnail()
 		throws Exception {
 
-		DisplayPageTemplate displayPageTemplate = randomDisplayPageTemplate();
+		DisplayPageTemplate displayPageTemplate1 = randomDisplayPageTemplate();
 
 		Repository repository = _portletFileRepository.addPortletRepository(
 			testGroup.getGroupId(), RandomTestUtil.randomString(),
@@ -1275,7 +1275,7 @@ public class DisplayPageTemplateResourceTest
 
 		String thumbnailURL = RandomTestUtil.randomString();
 
-		displayPageTemplate.setThumbnailURLReference(
+		displayPageTemplate1.setThumbnailURLReference(
 			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
@@ -1289,19 +1289,19 @@ public class DisplayPageTemplateResourceTest
 
 		DisplayPageTemplate postDisplayPageTemplate =
 			displayPageTemplateResource.postSiteDisplayPageTemplate(
-				testGroup.getExternalReferenceCode(), displayPageTemplate);
+				testGroup.getExternalReferenceCode(), displayPageTemplate1);
 
 		Assert.assertEquals(
-			displayPageTemplate.getKey(), postDisplayPageTemplate.getKey());
+			displayPageTemplate1.getKey(), postDisplayPageTemplate.getKey());
 
 		_assertThumbnailFileEntryId(
-			false, displayPageTemplate.getExternalReferenceCode(),
+			false, displayPageTemplate1.getExternalReferenceCode(),
 			fileEntry.getExternalReferenceCode());
 
 		FileEntry newFileEntry = _addPortletFileEntry(
 			repository.getDlFolderId());
 
-		displayPageTemplate.setThumbnailURLReference(
+		displayPageTemplate1.setThumbnailURLReference(
 			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
@@ -1312,15 +1312,14 @@ public class DisplayPageTemplateResourceTest
 
 		displayPageTemplateResource.patchSiteDisplayPageTemplate(
 			testGroup.getExternalReferenceCode(),
-			displayPageTemplate.getExternalReferenceCode(),
-			displayPageTemplate);
+			displayPageTemplate1.getExternalReferenceCode(),
+			displayPageTemplate1);
 
 		_assertThumbnailFileEntryId(
-			false, displayPageTemplate.getExternalReferenceCode(),
+			false, displayPageTemplate1.getExternalReferenceCode(),
 			newFileEntry.getExternalReferenceCode());
 
-		DisplayPageTemplate displayPageTemplateError =
-			randomDisplayPageTemplate();
+		DisplayPageTemplate displayPageTemplate2 = randomDisplayPageTemplate();
 
 		ThumbnailURLReference thumbnailURLReference =
 			new ThumbnailURLReference() {
@@ -1333,14 +1332,13 @@ public class DisplayPageTemplateResourceTest
 				}
 			};
 
-		displayPageTemplateError.setThumbnailURLReference(
-			thumbnailURLReference);
+		displayPageTemplate2.setThumbnailURLReference(thumbnailURLReference);
 
 		try {
 			displayPageTemplateResource.patchSiteDisplayPageTemplate(
 				testGroup.getExternalReferenceCode(),
-				displayPageTemplate.getExternalReferenceCode(),
-				displayPageTemplateError);
+				displayPageTemplate1.getExternalReferenceCode(),
+				displayPageTemplate2);
 		}
 		catch (Problem.ProblemException problemException) {
 			Problem problem = problemException.getProblem();
@@ -1617,7 +1615,7 @@ public class DisplayPageTemplateResourceTest
 	private void _testPostSiteDisplayPageTemplateWithThumbnail()
 		throws Exception {
 
-		DisplayPageTemplate displayPageTemplate = randomDisplayPageTemplate();
+		DisplayPageTemplate displayPageTemplate1 = randomDisplayPageTemplate();
 
 		Repository repository = _portletFileRepository.addPortletRepository(
 			testGroup.getGroupId(), RandomTestUtil.randomString(),
@@ -1626,7 +1624,7 @@ public class DisplayPageTemplateResourceTest
 
 		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
 
-		displayPageTemplate.setThumbnailURLReference(
+		displayPageTemplate1.setThumbnailURLReference(
 			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
@@ -1636,14 +1634,13 @@ public class DisplayPageTemplateResourceTest
 
 		DisplayPageTemplate postDisplayPageTemplate =
 			displayPageTemplateResource.postSiteDisplayPageTemplate(
-				testGroup.getExternalReferenceCode(), displayPageTemplate);
+				testGroup.getExternalReferenceCode(), displayPageTemplate1);
 
 		_assertThumbnailFileEntryId(
 			false, postDisplayPageTemplate.getExternalReferenceCode(),
 			fileEntry.getExternalReferenceCode());
 
-		DisplayPageTemplate displayPageTemplateError =
-			randomDisplayPageTemplate();
+		DisplayPageTemplate displayPageTemplate2 = randomDisplayPageTemplate();
 
 		ThumbnailURLReference thumbnailURLReference =
 			new ThumbnailURLReference() {
@@ -1656,12 +1653,11 @@ public class DisplayPageTemplateResourceTest
 				}
 			};
 
-		displayPageTemplateError.setThumbnailURLReference(
-			thumbnailURLReference);
+		displayPageTemplate2.setThumbnailURLReference(thumbnailURLReference);
 
 		try {
 			testPostSiteDisplayPageTemplate_addDisplayPageTemplate(
-				displayPageTemplateError);
+				displayPageTemplate2);
 		}
 		catch (Problem.ProblemException problemException) {
 			Problem problem = problemException.getProblem();
@@ -1941,9 +1937,9 @@ public class DisplayPageTemplateResourceTest
 	private void _testPutSiteDisplayPageTemplateWithThumbnail()
 		throws Exception {
 
-		DisplayPageTemplate displayPageTemplate = randomDisplayPageTemplate();
+		DisplayPageTemplate displayPageTemplate1 = randomDisplayPageTemplate();
 
-		displayPageTemplate.setExternalReferenceCode(
+		displayPageTemplate1.setExternalReferenceCode(
 			RandomTestUtil.randomString());
 
 		Repository repository = _portletFileRepository.addPortletRepository(
@@ -1953,7 +1949,7 @@ public class DisplayPageTemplateResourceTest
 
 		FileEntry fileEntry1 = _addPortletFileEntry(repository.getDlFolderId());
 
-		displayPageTemplate.setThumbnailURLReference(
+		displayPageTemplate1.setThumbnailURLReference(
 			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
@@ -1964,8 +1960,8 @@ public class DisplayPageTemplateResourceTest
 		DisplayPageTemplate putDisplayPageTemplate =
 			displayPageTemplateResource.putSiteDisplayPageTemplate(
 				testGroup.getExternalReferenceCode(),
-				displayPageTemplate.getExternalReferenceCode(),
-				displayPageTemplate);
+				displayPageTemplate1.getExternalReferenceCode(),
+				displayPageTemplate1);
 
 		_assertThumbnailFileEntryId(
 			false, putDisplayPageTemplate.getExternalReferenceCode(),
@@ -2002,8 +1998,7 @@ public class DisplayPageTemplateResourceTest
 		_assertThumbnailFileEntryId(
 			true, putDisplayPageTemplate.getExternalReferenceCode(), null);
 
-		DisplayPageTemplate displayPageTemplateError =
-			randomDisplayPageTemplate();
+		DisplayPageTemplate displayPageTemplate2 = randomDisplayPageTemplate();
 
 		ThumbnailURLReference thumbnailURLReference =
 			new ThumbnailURLReference() {
@@ -2016,14 +2011,13 @@ public class DisplayPageTemplateResourceTest
 				}
 			};
 
-		displayPageTemplateError.setThumbnailURLReference(
-			thumbnailURLReference);
+		displayPageTemplate2.setThumbnailURLReference(thumbnailURLReference);
 
 		try {
 			displayPageTemplateResource.putSiteDisplayPageTemplate(
 				testGroup.getExternalReferenceCode(),
 				putDisplayPageTemplate.getExternalReferenceCode(),
-				displayPageTemplateError);
+				displayPageTemplate2);
 		}
 		catch (Problem.ProblemException problemException) {
 			Problem problem = problemException.getProblem();

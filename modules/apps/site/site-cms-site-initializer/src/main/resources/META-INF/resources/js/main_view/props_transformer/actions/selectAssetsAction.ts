@@ -1,0 +1,112 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {IView} from '@liferay/frontend-data-set-web';
+import {openItemSelectorModal} from '@liferay/frontend-js-item-selector-web';
+import {openToast} from 'frontend-js-components-web';
+import {v4 as uuidv4} from 'uuid';
+
+import ApiHelper from '../../../common/services/ApiHelper';
+
+type Asset = {
+	actions: {
+		update: {href: string};
+	};
+	embedded: {
+		file?: {
+			mimeType: string;
+		};
+		id: number;
+		keywords: string[];
+		title: string;
+	};
+};
+
+export default function selectAssetsAction(
+	{keywords, searchAPIURL}: {keywords: string; searchAPIURL: string},
+	loadData?: () => void
+) {
+	openItemSelectorModal({
+		apiURL: `${window.location.origin}${Liferay.ThemeDisplay.getPathContext()}${searchAPIURL}`,
+		fdsProps: {
+			id: `itemSelectorModal-cms-${uuidv4()}`,
+			pagination: {
+				deltas: [{label: 20}, {label: 40}, {label: 60}],
+				initialDelta: 20,
+			},
+			views: [
+				{
+					contentRenderer: 'cards',
+					label: Liferay.Language.get('cards'),
+					name: 'cards',
+					schema: {
+						description: 'embedded.description',
+						image: 'embedded.file.thumbnailURL',
+						title: 'embedded.title',
+					},
+					setItemComponentProps: ({
+						item,
+						props,
+					}: {
+						item: Asset;
+						props: any;
+					}) => {
+						const {embedded} = item;
+
+						if (!embedded.file?.mimeType.startsWith('image')) {
+							return {
+								...props,
+								className: 'file-icon-color-5',
+								displayType: 'unstyled',
+								imgProps: null,
+							};
+						}
+
+						return {
+							...props,
+							className: 'file-icon-color-5',
+							displayType: 'unstyled',
+						};
+					},
+					thumbnail: 'cards2',
+				},
+			] as IView[],
+		},
+		itemTypeLabel: Liferay.Language.get('cms-assets'),
+		items: [],
+		locator: {
+			id: 'embedded.id',
+			label: 'embedded.title',
+			value: 'embedded.id',
+		},
+		multiSelect: true,
+		onItemsChange: async (assets: Asset[]) => {
+			await Promise.all(
+				assets.map(async (asset: Asset) => {
+					const {actions, embedded} = asset;
+
+					await ApiHelper.patch(
+						{
+							keywords: [
+								...keywords.split(','),
+								...embedded.keywords,
+							],
+						},
+						actions.update.href
+					);
+				})
+			);
+
+			openToast({
+				message: Liferay.Language.get(
+					'your-request-completed-successfully'
+				),
+				type: 'success',
+			});
+
+			loadData?.();
+		},
+	});
+}

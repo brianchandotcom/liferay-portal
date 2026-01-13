@@ -9,6 +9,7 @@ import createProjectAction from './createProjectAction';
 import createTaskAction from './createTaskAction';
 import importTranslationAction from './importTranslationAction';
 import multipleFilesUploadAction from './multipleFilesUploadAction';
+import selectAssetsAction from './selectAssetsAction';
 
 const ACTIONS = {
 	createAsset: createAssetAction,
@@ -16,6 +17,7 @@ const ACTIONS = {
 	createProject: createProjectAction,
 	createTask: createTaskAction,
 	importTranslation: importTranslationAction,
+	selectAssets: selectAssetsAction,
 	uploadMultipleFiles: multipleFilesUploadAction,
 };
 

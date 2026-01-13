@@ -8,7 +8,8 @@ package com.liferay.frontend.js.web.internal.resource.handler;
 import com.liferay.frontend.js.web.internal.configuration.FrontendCachingConfiguration;
 import com.liferay.frontend.js.web.internal.resource.FrontendResource;
 import com.liferay.frontend.js.web.internal.resource.StyleSheetFrontendResource;
-import com.liferay.petra.string.StringBundler;
+import com.liferay.frontend.js.web.internal.util.FrontendJsWebUtil;
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -19,6 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 
 import jakarta.servlet.ServletContext;
@@ -29,7 +31,11 @@ import java.io.IOException;
 
 import java.net.URL;
 
+import java.nio.charset.StandardCharsets;
+
+import java.util.Map;
 import java.util.SortedMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Iván Zaera Avellón
@@ -52,24 +58,9 @@ public class StyleSheetFrontendResourceRequestHandler
 	public boolean canHandleRequest(HttpServletRequest httpServletRequest) {
 		String requestURI = httpServletRequest.getRequestURI();
 
-		if (!requestURI.endsWith(".css")) {
-			return false;
-		}
+		if (requestURI.endsWith(".css") &&
+			(_hashedFilesRegistry.getResource(requestURI) != null)) {
 
-		if (HashedFilesUtil.containsHash(requestURI)) {
-			return true;
-		}
-
-		String hashedFileURI = _hashedFilesRegistry.getHashedFileURI(
-			requestURI);
-
-		if (hashedFileURI != null) {
-			return true;
-		}
-
-		URL resourceURL = _hashedFilesRegistry.getResource(requestURI);
-
-		if (resourceURL != null) {
 			return true;
 		}
 
@@ -82,107 +73,162 @@ public class StyleSheetFrontendResourceRequestHandler
 
 		String requestURI = httpServletRequest.getRequestURI();
 
-		String requestHash = HashedFilesUtil.getHash(requestURI);
+		URL url = _hashedFilesRegistry.getResource(requestURI);
 
-		SortedMap<String, String> tokens = _getTokens(httpServletRequest);
-
-		if (requestHash != null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Handling request: " + requestURI);
-			}
-
-			return _createFrontendResource(
-				requestHash, tokens == null, requestURI, tokens);
-		}
-
-		String hashedFileURI = _hashedFilesRegistry.getHashedFileURI(
-			requestURI);
-
-		if (hashedFileURI == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Handling request: " + requestURI);
-			}
-
-			return _createFrontendResource(null, false, requestURI, tokens);
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"Handling request ", requestURI, " with static file ",
-					hashedFileURI));
-		}
-
-		return _createFrontendResource(
-			HashedFilesUtil.getHash(hashedFileURI), false, hashedFileURI,
-			tokens);
-	}
-
-	private FrontendResource _createFrontendResource(
-		String eTag, boolean immutable, String resourceURI,
-		SortedMap<String, String> tokens) {
-
-		long maxAge = 31536000;
-		boolean sendNoCache = false;
-
-		if (!immutable) {
-			maxAge = _frontendCachingConfiguration.cssStyleSheetsMaxAge();
-			sendNoCache =
-				_frontendCachingConfiguration.sendNoCacheForCSSStyleSheets();
-		}
-
-		URL resourceURL = _hashedFilesRegistry.getResource(resourceURI);
-
-		if (resourceURL == null) {
+		if (url == null) {
 			return null;
 		}
 
-		return new StyleSheetFrontendResource(
-			eTag, immutable, maxAge, sendNoCache, tokens, resourceURL);
-	}
+		boolean immutable = false;
 
-	private SortedMap<String, String> _getTokens(
-		HttpServletRequest httpServletRequest) {
+		SortedMap<String, String> tokensSortedMap = _getTokensSortedMap(
+			httpServletRequest, url);
 
-		SortedMap<String, String> tokens = null;
+		if ((HashedFilesUtil.getHash(requestURI) != null) &&
+			(tokensSortedMap == null)) {
 
-		if (Boolean.valueOf(httpServletRequest.getParameter("tokenize"))) {
-			String proxyPath = _portal.getPathProxy();
-
-			ServletContext servletContext =
-				httpServletRequest.getServletContext();
-
-			String baseURL = proxyPath.concat(servletContext.getContextPath());
-
-			if (baseURL.endsWith(StringPool.SLASH)) {
-				baseURL = baseURL.substring(0, baseURL.length() - 1);
-			}
-
-			String themeImagePath;
-
-			try {
-				Theme theme = _themeLocalService.getTheme(
-					_portal.getCompanyId(httpServletRequest),
-					httpServletRequest.getParameter("themeId"));
-
-				themeImagePath =
-					_portal.getCDNHost(httpServletRequest) +
-						theme.getStaticResourcePath() + theme.getImagesPath();
-			}
-			catch (PortalException portalException) {
-				throw new RuntimeException(portalException);
-			}
-
-			tokens = TreeMapBuilder.put(
-				"base_url", baseURL
-			).put(
-				"portal_ctx", _portal.getPathContext()
-			).put(
-				"theme_image_path", themeImagePath
-			).build();
+			immutable = true;
 		}
 
-		return tokens;
+		FrontendCachingConfiguration frontendCachingConfiguration =
+			FrontendJsWebUtil.getFrontendCachingConfiguration(
+				_portal.getCompanyId(httpServletRequest),
+				_configurationProvider);
+
+		long maxAge = frontendCachingConfiguration.cssStyleSheetsMaxAge();
+		boolean sendNoCache =
+			frontendCachingConfiguration.sendNoCacheForCSSStyleSheets();
+
+		if (immutable) {
+			maxAge = 31536000;
+			sendNoCache = false;
+		}
+		else if (tokensSortedMap != null) {
+			maxAge =
+				frontendCachingConfiguration.tokenizedCSSStyleSheetsMaxAge();
+			sendNoCache =
+				frontendCachingConfiguration.
+					sendNoCacheForTokenizedCSSStyleSheets();
+		}
+
+		return new StyleSheetFrontendResource(
+			_getETag(url, tokensSortedMap), immutable, maxAge, sendNoCache,
+			tokensSortedMap, url);
+	}
+
+	private String _getETag(
+		URL url, SortedMap<String, String> tokensSortedMap) {
+
+		String eTag = HashedFilesUtil.getHash(url.getFile());
+
+		if (eTag == null) {
+			return null;
+		}
+
+		if (tokensSortedMap == null) {
+			return eTag;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		for (Map.Entry<String, String> entry : tokensSortedMap.entrySet()) {
+			sb.append(entry.getKey());
+			sb.append(StringPool.EQUAL);
+			sb.append(entry.getValue());
+			sb.append(StringPool.POUND);
+		}
+
+		int hash = 0;
+
+		String tokensString = sb.toString();
+
+		byte[] data = tokensString.getBytes(StandardCharsets.UTF_8);
+
+		for (byte b : data) {
+			hash = (31 * hash) + b;
+		}
+
+		return eTag + StringPool.DASH + StringUtil.toHexString(hash);
+	}
+
+	private SortedMap<String, String> _getTokensSortedMap(
+		HttpServletRequest httpServletRequest, URL url) {
+
+		if (!_isTokenizable(url)) {
+			return null;
+		}
+
+		String themeId = httpServletRequest.getParameter("themeId");
+
+		if (themeId == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get themeId parameter when serving resource " +
+						url);
+			}
+
+			return null;
+		}
+
+		String proxyPath = _portal.getPathProxy();
+
+		ServletContext servletContext = httpServletRequest.getServletContext();
+
+		String baseURL = proxyPath.concat(servletContext.getContextPath());
+
+		if (baseURL.endsWith(StringPool.SLASH)) {
+			baseURL = baseURL.substring(0, baseURL.length() - 1);
+		}
+
+		String themeImagePath;
+
+		try {
+			Theme theme = _themeLocalService.getTheme(
+				_portal.getCompanyId(httpServletRequest), themeId);
+
+			themeImagePath =
+				_portal.getCDNHost(httpServletRequest) +
+					theme.getStaticResourcePath() + theme.getImagesPath();
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
+
+		return TreeMapBuilder.put(
+			"base_url", baseURL
+		).put(
+			"portal_ctx", _portal.getPathContext()
+		).put(
+			"theme_image_path", themeImagePath
+		).build();
+	}
+
+	private boolean _isTokenizable(URL url) {
+		String key = url.toString();
+
+		if (!_tokenizable.containsKey(key)) {
+			try {
+				String content = StreamUtil.toString(url.openStream());
+
+				if (content.contains("@base_url@") ||
+					content.contains("@portal_ctx@") ||
+					content.contains("@theme_image_path@")) {
+
+					_tokenizable.putIfAbsent(key, true);
+				}
+				else {
+					_tokenizable.putIfAbsent(key, false);
+				}
+			}
+			catch (IOException ioException) {
+				_log.error(
+					"Unable to read tokenizable resource " + url, ioException);
+
+				_tokenizable.putIfAbsent(key, false);
+			}
+		}
+
+		return _tokenizable.get(key);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -192,5 +238,6 @@ public class StyleSheetFrontendResourceRequestHandler
 	private final HashedFilesRegistry _hashedFilesRegistry;
 	private final Portal _portal;
 	private final ThemeLocalService _themeLocalService;
+	private final Map<String, Boolean> _tokenizable = new ConcurrentHashMap<>();
 
 }

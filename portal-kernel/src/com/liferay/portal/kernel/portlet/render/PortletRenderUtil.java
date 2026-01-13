@@ -271,7 +271,6 @@ public class PortletRenderUtil {
 		if (_isTokenized(unhashedFileURI)) {
 			url = HttpComponentsUtil.addParameter(
 				url, "themeId", themeDisplay.getThemeId());
-			url = HttpComponentsUtil.addParameter(url, "tokenize", true);
 		}
 
 		return url;

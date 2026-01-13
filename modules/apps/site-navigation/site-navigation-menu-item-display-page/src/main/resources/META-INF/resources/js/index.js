@@ -23,6 +23,7 @@ function DisplayPageItemContextualSidebar({
 	chooseItemProps,
 	defaultLanguageId,
 	hasDisplayPage: initiallyHasDisplayPage,
+	hasModel,
 	item,
 	itemSubtype,
 	itemType,
@@ -188,7 +189,9 @@ function DisplayPageItemContextualSidebar({
 			</ClayForm.Group>
 
 			<ClayForm.Group
-				className={classNames({'has-warning': !hasDisplayPage})}
+				className={classNames({
+					'has-warning': !hasModel || !hasDisplayPage,
+				})}
 			>
 				<label htmlFor={`${namespace}_itemInput`}>
 					{Liferay.Language.get('item')}
@@ -223,17 +226,25 @@ function DisplayPageItemContextualSidebar({
 							className="mt-1"
 							displayType="warning"
 							role={null}
-							title={Liferay.Language.get('no-display-page')}
+							title={
+								hasModel
+									? Liferay.Language.get('no-display-page')
+									: Liferay.Language.get('no-reference-found')
+							}
 							variant="feedback"
 						/>
 
 						<p className="small text-secondary">
-							{`${Liferay.Language.get(
-								'this-item-does-not-have-a-display-page'
-							)} 
+							{hasModel
+								? `${Liferay.Language.get(
+										'this-item-does-not-have-a-display-page'
+									)} 
 								${Liferay.Language.get(
 									'items-without-display-page-do-not-have-links-and-are-hidden-from-menus'
-								)}`}
+								)}`
+								: Liferay.Language.get(
+										'this-item-references-an-entity-that-is-missing-or-not-yet-available'
+									)}
 						</p>
 					</>
 				)}

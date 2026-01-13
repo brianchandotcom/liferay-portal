@@ -59,6 +59,13 @@ public interface FrontendResource {
 	public boolean isImmutable();
 
 	/**
+	 * Whether to send private or public directive
+	 *
+	 * @review
+	 */
+	public boolean isPrivate();
+
+	/**
 	 * Whether to use no-cache (instead of must-revalidate).
 	 *
 	 * Note that for immutable resources it may be ignored, as immutable

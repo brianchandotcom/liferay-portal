@@ -196,6 +196,18 @@ public class TestClassGroupFactory {
 			return new FunctionalSegmentTestClassGroup(batchTestClassGroup);
 		}
 		else if (batchTestClassGroup instanceof JUnitBatchTestClassGroup) {
+			if (batchTestClassGroup instanceof
+					ModulesJUnitBatchTestClassGroup) {
+
+				if (jsonObject != null) {
+					return new ModulesJUnitSegmentTestClassGroup(
+						batchTestClassGroup, jsonObject);
+				}
+
+				return new ModulesJUnitSegmentTestClassGroup(
+					batchTestClassGroup);
+			}
+
 			if (jsonObject != null) {
 				return new JUnitSegmentTestClassGroup(
 					batchTestClassGroup, jsonObject);

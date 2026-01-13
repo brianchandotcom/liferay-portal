@@ -440,8 +440,9 @@ public class SiteInitializerSerializerImpl
 					"layout-page-templates/" + name, inputStream, zipWriter);
 			}
 		}
-
-		file.delete();
+		finally {
+			file.delete();
+		}
 	}
 
 	private void _serializeLayouts(
@@ -496,8 +497,9 @@ public class SiteInitializerSerializerImpl
 					fileName, zipReader.getEntryAsInputStream(name), zipWriter);
 			}
 		}
-
-		file.delete();
+		finally {
+			file.delete();
+		}
 	}
 
 	private void _serializeObjectDefinition(

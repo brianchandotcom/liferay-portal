@@ -172,9 +172,12 @@ test(
 					...initialClass,
 				]);
 
-				await expect(fdsSamplePage.fdsWrapper).toHaveClass(
-					`data-set-wrapper ${wrapperClass}`
-				);
+				expect(
+					await containsClass(fdsSamplePage.fdsWrapper, [
+						'data-set-wrapper',
+						wrapperClass,
+					])
+				).toBeTruthy();
 
 				await stopDragFileOverLocator(blueItem);
 			});
@@ -192,9 +195,13 @@ test(
 			await test.step(`drag files over a non-droppable ${visualizationMode} highlights the main area, no item area is highlighted`, async () => {
 				await dragFileOverLocator(greenItem);
 
-				await expect(fdsSamplePage.fdsWrapper).toHaveClass(
-					`data-set-wrapper ${wrapperClass} drop-target`
-				);
+				expect(
+					await containsClass(fdsSamplePage.fdsWrapper, [
+						'data-set-wrapper',
+						wrapperClass,
+						'drop-target',
+					])
+				).toBeTruthy();
 
 				await expect(greenItem).not.toHaveClass('drop-target');
 

@@ -277,10 +277,6 @@ public class JenkinsConsoleTextLoader {
 											" bytes.");
 
 									System.out.println(message);
-
-									NotificationUtil.sendEmail(
-										message, "jenkins", "Large console log",
-										"qa-slave-verify-fail@liferay.com");
 								}
 							}
 						}

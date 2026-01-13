@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -694,6 +695,9 @@ public class DigitalSalesRoomResourceTest
 					}
 				});
 
+		Assert.assertEquals(
+			0, GetterUtil.getLong(digitalSalesRoomTemplate.getUsages()));
+
 		Layout layout1 = _layoutLocalService.addLayout(
 			null, TestPropsValues.getUserId(), digitalSalesRoomTemplate.getId(),
 			false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
@@ -760,6 +764,23 @@ public class DigitalSalesRoomResourceTest
 					"Question and Answer Block", "Text Block", "Timeline Block",
 					"Video Block", "Welcome Block"
 				}));
+
+		digitalSalesRoomTemplate =
+			digitalSalesRoomTemplateResource.getDigitalSalesRoomTemplate(
+				digitalSalesRoomTemplate.getId());
+
+		Assert.assertEquals(
+			1, GetterUtil.getLong(digitalSalesRoomTemplate.getUsages()));
+
+		digitalSalesRoomResource.deleteDigitalSalesRoom(
+			digitalSalesRoom.getId());
+
+		digitalSalesRoomTemplate =
+			digitalSalesRoomTemplateResource.getDigitalSalesRoomTemplate(
+				digitalSalesRoomTemplate.getId());
+
+		Assert.assertEquals(
+			0, GetterUtil.getLong(digitalSalesRoomTemplate.getUsages()));
 
 		_assertLayouts(
 			digitalSalesRoomTemplate.getId(),

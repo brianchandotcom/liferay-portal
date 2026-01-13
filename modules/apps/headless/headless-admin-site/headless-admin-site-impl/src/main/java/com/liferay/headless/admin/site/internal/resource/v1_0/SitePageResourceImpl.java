@@ -516,6 +516,24 @@ public class SitePageResourceImpl
 					sitePage.getFriendlyUrlPath_i18n()),
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 		}
+		else if (Objects.equals(
+					sitePage.getType(), SitePage.Type.PAGE_SET_PAGE)) {
+
+			layout = LayoutUtil.addNodeLayout(
+				sitePage.getExternalReferenceCode(), groupId,
+				_getParentLayoutId(
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, groupId,
+					sitePage.getParentSitePageExternalReferenceCode(),
+					serviceContext),
+				nameMap, titleMap, descriptionMap, keywordsMap,
+				typeSettingsUnicodeProperties,
+				_isHiddenFromNavigation(false, sitePage.getPageSettings()),
+				LocalizedMapUtil.getLocalizedMap(
+					sitePage.getFriendlyUrlPath_i18n()),
+				PageSpecificationUtil.getPageSpecification(
+					sitePage.getPageSpecifications()),
+				serviceContext);
+		}
 		else {
 			layout = LayoutUtil.addPortletLayout(
 				_cetManager, sitePage.getExternalReferenceCode(),

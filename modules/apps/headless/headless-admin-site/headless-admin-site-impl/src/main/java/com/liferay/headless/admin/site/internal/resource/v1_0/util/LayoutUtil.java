@@ -345,6 +345,30 @@ public class LayoutUtil {
 			serviceContext);
 	}
 
+	public static Layout addNodeLayout(
+			String externalReferenceCode, long groupId, long parentLayoutId,
+			Map<Locale, String> nameMap, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, Map<Locale, String> keywordsMap,
+			UnicodeProperties typeSettingsUnicodeProperties,
+			boolean hiddenFromNavigation, Map<Locale, String> friendlyURLMap,
+			PageSpecification pageSpecification, ServiceContext serviceContext)
+		throws Exception {
+
+		String typeSettings = null;
+
+		if (typeSettingsUnicodeProperties != null) {
+			typeSettings = typeSettingsUnicodeProperties.toString();
+		}
+
+		_setExpandoBridgeAttributes(pageSpecification, serviceContext);
+
+		return LayoutServiceUtil.addLayout(
+			externalReferenceCode, groupId, false, parentLayoutId, nameMap,
+			titleMap, descriptionMap, keywordsMap, null,
+			LayoutConstants.TYPE_NODE, typeSettings, hiddenFromNavigation,
+			friendlyURLMap, null, serviceContext);
+	}
+
 	public static Layout addPortletLayout(
 			CETManager cetManager, String externalReferenceCode,
 			InfoItemServiceRegistry infoItemServiceRegistry, long groupId,

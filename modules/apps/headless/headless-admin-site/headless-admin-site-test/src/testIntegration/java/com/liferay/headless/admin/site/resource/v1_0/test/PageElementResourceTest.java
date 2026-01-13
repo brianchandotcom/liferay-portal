@@ -2547,7 +2547,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 					getBasicFragmentInstancePageElementDefinition(
 						Collections.emptyMap(), new FragmentEditableElement[0],
 						fragmentEntry, fragmentInstanceExternalReferenceCode,
-						testGroup.getGroupId(), namespace, uuid,
+						namespace, testGroup.getGroupId(), uuid,
 						new WidgetInstance[] {
 							_getWidgetInstance(
 								_getWidgetConfig(), namespace,
@@ -2561,7 +2561,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 					getBasicFragmentInstancePageElementDefinition(
 						Collections.emptyMap(), new FragmentEditableElement[0],
 						fragmentEntry, fragmentInstanceExternalReferenceCode,
-						testGroup.getGroupId(), namespace, uuid,
+						namespace, testGroup.getGroupId(), uuid,
 						new WidgetInstance[] {
 							_getWidgetInstance(
 								new HashMap<>(), namespace,

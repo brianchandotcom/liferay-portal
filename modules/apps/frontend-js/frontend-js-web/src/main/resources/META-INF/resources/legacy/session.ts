@@ -94,7 +94,8 @@ export class Session {
 
 	async openToast(args: any) {
 		const {openToast} = await import(
-			Liferay.ThemeDisplay.getPathContext() +
+			Liferay.ThemeDisplay.getCDNHost() +
+				Liferay.ThemeDisplay.getPathContext() +
 				'/o/frontend-js-components-web/__liferay__/index.js'
 		);
 

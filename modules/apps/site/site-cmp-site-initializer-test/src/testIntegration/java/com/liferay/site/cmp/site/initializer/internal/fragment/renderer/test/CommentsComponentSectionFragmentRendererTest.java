@@ -66,8 +66,8 @@ public class CommentsComponentSectionFragmentRendererTest
 		return StringBundler.concat(
 			themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
 			GroupConstants.CMS_FRIENDLY_URL, actionId, "?classNameId=",
-			_portal.getClassNameId(objectDefinition.getClassName()),
-			"&classPK=", objectEntry.getObjectEntryId());
+			_portal.getClassNameId(projectObjectDefinition.getClassName()),
+			"&classPK=", projectObjectEntry.getObjectEntryId());
 	}
 
 	@Inject(

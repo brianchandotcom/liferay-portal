@@ -217,6 +217,9 @@ public class OIDCUserInfoProcessorTest {
 			_testProcessUserInfo(
 				new String[] {"group2"}, "email", new String[0],
 				_customOIDCUserInfoMapperJSON);
+			_testProcessUserInfo(
+				new String[] {"group2"}, "email", null,
+				OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
 
 			_userGroupLocalService.deleteUserUserGroup(
 				user.getUserId(), userGroup.getUserGroupId());
@@ -226,6 +229,9 @@ public class OIDCUserInfoProcessorTest {
 				_customOIDCUserInfoMapperJSON);
 			_testProcessUserInfo(
 				new String[0], "email", new String[0],
+				OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
+			_testProcessUserInfo(
+				new String[0], "email", null,
 				OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
 			_testProcessUserInfo(
 				new String[] {"group1"}, "email", new String[] {"group1"},
@@ -370,19 +376,6 @@ public class OIDCUserInfoProcessorTest {
 
 		User existingUser = _fetchUser(matcherField);
 
-		List<String> newUserGroupNames = new ArrayList<>();
-
-		for (String userGroupName : userGroupNames) {
-			UserGroup userGroup = _userGroupLocalService.fetchUserGroup(
-				TestPropsValues.getCompanyId(), userGroupName);
-
-			if (userGroup != null) {
-				continue;
-			}
-
-			newUserGroupNames.add(userGroupName);
-		}
-
 		JSONObject userInfoJSONObject = JSONUtil.put(
 			"birthdate", String.valueOf(RandomTestUtil.nextDate())
 		).put(
@@ -393,8 +386,6 @@ public class OIDCUserInfoProcessorTest {
 			"family_name", StringUtil.randomString()
 		).put(
 			"given_name", StringUtil.randomString()
-		).put(
-			"groups", userGroupNames
 		).put(
 			"middle_name", StringUtil.randomString()
 		).put(
@@ -408,6 +399,23 @@ public class OIDCUserInfoProcessorTest {
 		).put(
 			"website", "www.test.com"
 		);
+
+		List<String> newUserGroupNames = new ArrayList<>();
+
+		if (userGroupNames != null) {
+			userInfoJSONObject.put("groups", userGroupNames);
+
+			for (String userGroupName : userGroupNames) {
+				UserGroup userGroup = _userGroupLocalService.fetchUserGroup(
+					TestPropsValues.getCompanyId(), userGroupName);
+
+				if (userGroup != null) {
+					continue;
+				}
+
+				newUserGroupNames.add(userGroupName);
+			}
+		}
 
 		long userId = 0;
 

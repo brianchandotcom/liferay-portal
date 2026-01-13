@@ -178,16 +178,31 @@ export class FiltersPage {
 		await expect(visualFeedback).toContainText(text);
 	}
 
-	async assertTableCellContent({filterData, page, rowIndex = 0}) {
-		await page
-			.locator('.orderable-table > tbody > .orderable-table-row')
-			.first()
-			.waitFor();
+	async assertTableCellContent({
+		filterData,
+		page,
+		rowIndex = 0,
+	}: {
+		filterData: any;
+		page: Page;
+		rowIndex: number | null;
+	}) {
+		const orderableTableRows = page.locator('.orderable-table-row');
 
-		const tableRowContent = await page
-			.locator('.orderable-table-row')
-			.nth(rowIndex)
-			.locator('td');
+		let orderableTableRowCells: Locator;
+
+		if (rowIndex) {
+			orderableTableRowCells = orderableTableRows
+				.nth(rowIndex)
+				.locator('td');
+		}
+		else {
+			const rowWithData = orderableTableRows.filter({
+				has: page.locator('td').nth(1).getByText(filterData.name),
+			});
+
+			orderableTableRowCells = rowWithData.locator('td');
+		}
 
 		const expectedRowContent = [
 			filterData.name,
@@ -196,19 +211,19 @@ export class FiltersPage {
 			filterData.status,
 		];
 
-		await expect(tableRowContent).toContainText(expectedRowContent);
+		await expect(orderableTableRowCells).toContainText(expectedRowContent);
 
 		if (!Object.keys(filterData).includes('actionsDropdown')) {
 			return;
 		}
 
+		const actionsDropdown = orderableTableRowCells.locator('.dropdown');
+
 		if (filterData.actionsDropdown) {
-			await expect(tableRowContent.locator('.dropdown')).toBeAttached();
+			await expect(actionsDropdown).toBeAttached();
 		}
 		else {
-			await expect(
-				tableRowContent.locator('.dropdown')
-			).not.toBeAttached();
+			await expect(actionsDropdown).not.toBeAttached();
 		}
 	}
 

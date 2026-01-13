@@ -516,8 +516,6 @@ test(
 					dataSetLabel,
 				});
 
-				let i = 0;
-
 				for (const section of sections) {
 					await filtersPage.assertTableCellContent({
 						filterData: {
@@ -528,7 +526,7 @@ test(
 							type: section[2],
 						},
 						page: filtersPage.page,
-						rowIndex: i++,
+						rowIndex: null,
 					});
 				}
 

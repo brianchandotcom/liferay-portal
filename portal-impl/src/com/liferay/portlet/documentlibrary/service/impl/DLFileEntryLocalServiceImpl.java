@@ -3106,6 +3106,17 @@ public class DLFileEntryLocalServiceImpl
 		return versionParts[0] + StringPool.PERIOD + versionParts[1];
 	}
 
+	private boolean _hasApprovedVersion(DLFileEntry dlFileEntry) {
+		int fileVersionsCount = dlFileEntry.getFileVersionsCount(
+			WorkflowConstants.STATUS_APPROVED);
+
+		if (fileVersionsCount > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _isInTrashExplicitly(TrashedModel trashedModel) {
 		TrashHelper trashHelper = _trashHelperSnapshot.get();
 
@@ -3533,21 +3544,32 @@ public class DLFileEntryLocalServiceImpl
 
 		// File entry
 
-		dlFileEntry.setModifiedDate(latestDLFileVersion.getModifiedDate());
-		dlFileEntry.setFileName(latestDLFileVersion.getFileName());
-		dlFileEntry.setExtension(latestDLFileVersion.getExtension());
-		dlFileEntry.setMimeType(latestDLFileVersion.getMimeType());
-		dlFileEntry.setTitle(latestDLFileVersion.getTitle());
-		dlFileEntry.setDescription(latestDLFileVersion.getDescription());
-		dlFileEntry.setExtraSettings(latestDLFileVersion.getExtraSettings());
-		dlFileEntry.setFileEntryTypeId(
-			latestDLFileVersion.getFileEntryTypeId());
-		dlFileEntry.setSize(latestDLFileVersion.getSize());
-		dlFileEntry.setDisplayDate(latestDLFileVersion.getDisplayDate());
-		dlFileEntry.setExpirationDate(lastDLFileVersion.getExpirationDate());
-		dlFileEntry.setReviewDate(lastDLFileVersion.getReviewDate());
+		String version = _getVersion(
+			lastDLFileVersion, dlVersionNumberIncrease);
 
-		dlFileEntry = dlFileEntryPersistence.update(dlFileEntry);
+		if (!_hasApprovedVersion(dlFileEntry) ||
+			(lastDLFileVersion.getStatus() !=
+				WorkflowConstants.STATUS_PENDING)) {
+
+			dlFileEntry.setModifiedDate(latestDLFileVersion.getModifiedDate());
+			dlFileEntry.setFileName(latestDLFileVersion.getFileName());
+			dlFileEntry.setExtension(latestDLFileVersion.getExtension());
+			dlFileEntry.setMimeType(latestDLFileVersion.getMimeType());
+			dlFileEntry.setTitle(latestDLFileVersion.getTitle());
+			dlFileEntry.setDescription(latestDLFileVersion.getDescription());
+			dlFileEntry.setExtraSettings(
+				latestDLFileVersion.getExtraSettings());
+			dlFileEntry.setFileEntryTypeId(
+				latestDLFileVersion.getFileEntryTypeId());
+			dlFileEntry.setVersion(version);
+			dlFileEntry.setSize(latestDLFileVersion.getSize());
+			dlFileEntry.setDisplayDate(latestDLFileVersion.getDisplayDate());
+			dlFileEntry.setExpirationDate(
+				lastDLFileVersion.getExpirationDate());
+			dlFileEntry.setReviewDate(lastDLFileVersion.getReviewDate());
+
+			dlFileEntry = dlFileEntryPersistence.update(dlFileEntry);
+		}
 
 		// File version
 
@@ -3567,8 +3589,7 @@ public class DLFileEntryLocalServiceImpl
 			latestDLFileVersion.getExtraSettings());
 		lastDLFileVersion.setFileEntryTypeId(
 			latestDLFileVersion.getFileEntryTypeId());
-		lastDLFileVersion.setVersion(
-			_getVersion(lastDLFileVersion, dlVersionNumberIncrease));
+		lastDLFileVersion.setVersion(version);
 		lastDLFileVersion.setSize(latestDLFileVersion.getSize());
 		lastDLFileVersion.setStoreUUID(String.valueOf(UUID.randomUUID()));
 		lastDLFileVersion.setDisplayDate(latestDLFileVersion.getDisplayDate());

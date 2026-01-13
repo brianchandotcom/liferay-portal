@@ -668,7 +668,7 @@ test.describe('Publications with incomplete status tests', () => {
 		});
 	});
 
-	test('LPD-73271 Can view CTEntry actions in review change page', async ({
+	test('LPD-73271 Can view CTEntry and workflow actions in review change page', async ({
 		changeTrackingPage,
 		ctCollection,
 		page,
@@ -700,6 +700,18 @@ test.describe('Publications with incomplete status tests', () => {
 		await clickAndExpectToBeVisible({
 			autoClick: false,
 			target: page.getByRole('menuitem', {name: 'Move Changes'}),
+			trigger: moreActionsButton,
+		});
+
+		await clickAndExpectToBeVisible({
+			autoClick: false,
+			target: page.getByRole('menuitem', {name: 'Assign to Me'}),
+			trigger: moreActionsButton,
+		});
+
+		await clickAndExpectToBeVisible({
+			autoClick: false,
+			target: page.getByRole('menuitem', {name: 'Assign to...'}),
 			trigger: moreActionsButton,
 		});
 	});

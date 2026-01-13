@@ -86,7 +86,28 @@ public class SearcherImplTest {
 	}
 
 	@Test
-	public void testSearchExcludeContributrosAndIncludeContributors()
+	public void testExecuteSearchAttribute() throws Exception {
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setKeywords("keyword");
+
+		SearchResponse searchResponse = _searcherImpl.doSearch(
+			_createSearchRequestImpl(searchContext));
+
+		_assertDocumentReturned(searchResponse, 1);
+
+		searchContext.setAttribute(
+			SearchContextAttributes.ATTRIBUTE_KEY_EXECUTE_SEARCH,
+			Boolean.FALSE);
+
+		searchResponse = _searcherImpl.doSearch(
+			_createSearchRequestImpl(searchContext));
+
+		_assertDocumentReturned(searchResponse, 0);
+	}
+
+	@Test
+	public void testSearchExcludeContributorsAndIncludeContributors()
 		throws Exception {
 
 		SearchContext searchContext = new SearchContext();

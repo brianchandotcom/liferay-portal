@@ -2111,9 +2111,24 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				type);
 
 		for (PageSpecification pageSpecification : pageSpecifications) {
-			pageSpecification.setSettings(
-				SettingsTestUtil.getSettings(
-					favIconType, optionalMasterPageReference, serviceContext));
+			if (type == SitePage.Type.CONTENT_PAGE) {
+				ContentPageSpecification contentPageSpecification =
+					(ContentPageSpecification)pageSpecification;
+
+				contentPageSpecification.setSettings(
+					SettingsTestUtil.getSettings(
+						favIconType, optionalMasterPageReference,
+						serviceContext));
+			}
+			else {
+				WidgetPageSpecification widgetPageSpecification =
+					(WidgetPageSpecification)pageSpecification;
+
+				widgetPageSpecification.setSettings(
+					SettingsTestUtil.getSettings(
+						favIconType, optionalMasterPageReference,
+						serviceContext));
+			}
 
 			favIconType = FavIcon.FavIconType.CLIENT_EXTENSION;
 			optionalMasterPageReference = true;

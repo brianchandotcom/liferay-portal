@@ -12,10 +12,13 @@ import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplate;
 import com.liferay.headless.admin.site.dto.v1_0.MasterPage;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.PageTemplate;
+import com.liferay.headless.admin.site.dto.v1_0.Settings;
 import com.liferay.headless.admin.site.dto.v1_0.SitePage;
 import com.liferay.headless.admin.site.dto.v1_0.UtilityPage;
+import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSpecification;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
+import com.liferay.headless.admin.site.internal.resource.v1_0.util.SettingsUtil;
 import com.liferay.headless.admin.site.resource.v1_0.PageSpecificationResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.info.item.InfoItemServiceRegistry;
@@ -349,9 +352,22 @@ public class PageSpecificationResourceImpl
 		PageSpecification pageSpecification,
 		PageSpecification existingPageSpecification) {
 
-		if (pageSpecification.getSettings() != null) {
-			existingPageSpecification.setSettings(
-				pageSpecification::getSettings);
+		Settings settings = SettingsUtil.getSettings(pageSpecification);
+
+		if (settings != null) {
+			if (pageSpecification instanceof ContentPageSpecification) {
+				ContentPageSpecification existingContentPageSpecification =
+					(ContentPageSpecification)existingPageSpecification;
+
+				existingContentPageSpecification.setSettings(() -> settings);
+			}
+
+			if (pageSpecification instanceof WidgetPageSpecification) {
+				WidgetPageSpecification existingWidgetPageSpecification =
+					(WidgetPageSpecification)existingPageSpecification;
+
+				existingWidgetPageSpecification.setSettings(() -> settings);
+			}
 		}
 
 		if (!Objects.equals(

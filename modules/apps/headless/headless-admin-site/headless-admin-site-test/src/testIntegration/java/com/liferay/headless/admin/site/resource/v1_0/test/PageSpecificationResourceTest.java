@@ -397,8 +397,8 @@ public class PageSpecificationResourceTest
 
 			if (Objects.equals(additionalAssertFieldName, "settings")) {
 				SettingsTestUtil.assertSettings(
-					pageSpecification1.getSettings(),
-					pageSpecification2.getSettings());
+					SettingsTestUtil.getSettings(pageSpecification1),
+					SettingsTestUtil.getSettings(pageSpecification2));
 
 				continue;
 			}
@@ -786,24 +786,41 @@ public class PageSpecificationResourceTest
 		if (!typeUtility) {
 			SettingsTestUtil.modifySettings(
 				FavIcon.FavIconType.CLIENT_EXTENSION, serviceContext,
-				pageSpecification.getSettings());
+				SettingsTestUtil.getSettings(pageSpecification));
 
 			return;
 		}
 
-		pageSpecification.setSettings(
-			() -> new Settings() {
-				{
-					setMasterPageItemExternalReference(
-						() ->
-							SettingsTestUtil.getMasterPageItemExternalReference(
-								false, serviceContext));
-					setStyleBookItemExternalReference(
-						() ->
-							SettingsTestUtil.getStyleBookItemExternalReference(
-								serviceContext));
-				}
-			});
+		if (!(pageSpecification instanceof ContentPageSpecification) &&
+			!(pageSpecification instanceof WidgetPageSpecification)) {
+
+			return;
+		}
+
+		Settings settings = new Settings() {
+			{
+				setMasterPageItemExternalReference(
+					() -> SettingsTestUtil.getMasterPageItemExternalReference(
+						false, serviceContext));
+				setStyleBookItemExternalReference(
+					() -> SettingsTestUtil.getStyleBookItemExternalReference(
+						serviceContext));
+			}
+		};
+
+		if (pageSpecification instanceof ContentPageSpecification) {
+			ContentPageSpecification contentPageSpecification =
+				(ContentPageSpecification)pageSpecification;
+
+			contentPageSpecification.setSettings(() -> settings);
+
+			return;
+		}
+
+		WidgetPageSpecification widgetPageSpecification =
+			(WidgetPageSpecification)pageSpecification;
+
+		widgetPageSpecification.setSettings(() -> settings);
 	}
 
 	private void _testDeleteSitePageSpecification(
@@ -855,7 +872,7 @@ public class PageSpecificationResourceTest
 			pageSpecification.getExternalReferenceCode());
 
 		SettingsTestUtil.assertPageSpecificationSetting(
-			layout, pageSpecification.getSettings());
+			layout, SettingsTestUtil.getSettings(pageSpecification));
 
 		if (layout.isDraftLayout()) {
 			if (layout.isApproved()) {

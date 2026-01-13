@@ -1076,11 +1076,7 @@ public class LayoutUtil {
 			PageSpecification pageSpecification, ServiceContext serviceContext)
 		throws Exception {
 
-		Settings settings = null;
-
-		if (pageSpecification != null) {
-			settings = pageSpecification.getSettings();
-		}
+		Settings settings = SettingsUtil.getSettings(pageSpecification);
 
 		_updateClientExtensions(cetManager, layout, settings, serviceContext);
 

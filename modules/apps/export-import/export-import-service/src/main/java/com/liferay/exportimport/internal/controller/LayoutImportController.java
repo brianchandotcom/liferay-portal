@@ -129,7 +129,7 @@ public class LayoutImportController implements ImportController {
 			ExportImportConfiguration exportImportConfiguration, File file)
 		throws Exception {
 
-		try (ZipReader zipReader = _zipReaderFactory.getZipReader(file)) {
+		try {
 
 			// LAR validation
 
@@ -149,32 +149,34 @@ public class LayoutImportController implements ImportController {
 			LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 				targetGroupId, privateLayout);
 
-			validateFile(
-				layoutSet.getCompanyId(), targetGroupId, parameterMap,
-				zipReader);
+			try (ZipReader zipReader = _zipReaderFactory.getZipReader(file)) {
+				validateFile(
+					layoutSet.getCompanyId(), targetGroupId, parameterMap,
+					zipReader);
 
-			PortletDataContext portletDataContext = getPortletDataContext(
-				exportImportConfiguration, zipReader);
+				PortletDataContext portletDataContext = getPortletDataContext(
+					exportImportConfiguration, zipReader);
 
-			boolean deletePortletData = MapUtil.getBoolean(
-				parameterMap, PortletDataHandlerKeys.DELETE_PORTLET_DATA);
+				boolean deletePortletData = MapUtil.getBoolean(
+					parameterMap, PortletDataHandlerKeys.DELETE_PORTLET_DATA);
 
-			// Portlet data deletion
+				// Portlet data deletion
 
-			if (deletePortletData) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Deleting portlet data");
+				if (deletePortletData) {
+					if (_log.isDebugEnabled()) {
+						_log.debug("Deleting portlet data");
+					}
+
+					deletePortletData(portletDataContext);
 				}
 
-				deletePortletData(portletDataContext);
+				// Deletion system events
+
+				populateDeletionStagedModelTypes(portletDataContext);
+
+				_deletionSystemEventImporter.importDeletionSystemEvents(
+					portletDataContext);
 			}
-
-			// Deletion system events
-
-			populateDeletionStagedModelTypes(portletDataContext);
-
-			_deletionSystemEventImporter.importDeletionSystemEvents(
-				portletDataContext);
 		}
 		finally {
 			ExportImportThreadLocal.setLayoutDataDeletionImportInProcess(false);
@@ -188,37 +190,42 @@ public class LayoutImportController implements ImportController {
 
 		PortletDataContext portletDataContext = null;
 
-		try (ZipReader zipReader = _zipReaderFactory.getZipReader(file)) {
+		try {
 			ExportImportThreadLocal.setExportImportConfigurationId(
 				exportImportConfiguration.getExportImportConfigurationId());
 			ExportImportThreadLocal.setLayoutImportInProcess(true);
 
-			portletDataContext = getPortletDataContext(
-				exportImportConfiguration, zipReader);
+			try (ZipReader zipReader = _zipReaderFactory.getZipReader(file)) {
+				portletDataContext = getPortletDataContext(
+					exportImportConfiguration, zipReader);
 
-			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
-				ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_STARTED,
-				getProcessFlag(),
-				String.valueOf(
-					exportImportConfiguration.getExportImportConfigurationId()),
-				_portletDataContextFactory.clonePortletDataContext(
-					portletDataContext));
+				_exportImportLifecycleManager.fireExportImportLifecycleEvent(
+					ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_STARTED,
+					getProcessFlag(),
+					String.valueOf(
+						exportImportConfiguration.
+							getExportImportConfigurationId()),
+					_portletDataContextFactory.clonePortletDataContext(
+						portletDataContext));
 
-			long userId = MapUtil.getLong(
-				exportImportConfiguration.getSettingsMap(), "userId");
+				long userId = MapUtil.getLong(
+					exportImportConfiguration.getSettingsMap(), "userId");
 
-			_importFile(portletDataContext, userId);
+				_importFile(portletDataContext, userId);
 
-			ExportImportThreadLocal.setLayoutImportInProcess(false);
+				ExportImportThreadLocal.setLayoutImportInProcess(false);
 
-			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
-				ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_SUCCEEDED,
-				getProcessFlag(),
-				String.valueOf(
-					exportImportConfiguration.getExportImportConfigurationId()),
-				_portletDataContextFactory.clonePortletDataContext(
-					portletDataContext),
-				userId);
+				_exportImportLifecycleManager.fireExportImportLifecycleEvent(
+					ExportImportLifecycleConstants.
+						EVENT_LAYOUT_IMPORT_SUCCEEDED,
+					getProcessFlag(),
+					String.valueOf(
+						exportImportConfiguration.
+							getExportImportConfigurationId()),
+					_portletDataContextFactory.clonePortletDataContext(
+						portletDataContext),
+					userId);
+			}
 		}
 		catch (Throwable throwable) {
 			ExportImportThreadLocal.setLayoutImportInProcess(false);
@@ -241,7 +248,7 @@ public class LayoutImportController implements ImportController {
 			ExportImportConfiguration exportImportConfiguration, File file)
 		throws Exception {
 
-		try (ZipReader zipReader = _zipReaderFactory.getZipReader(file)) {
+		try {
 			ExportImportThreadLocal.setLayoutValidationInProcess(true);
 
 			Map<String, Serializable> settingsMap =
@@ -256,18 +263,22 @@ public class LayoutImportController implements ImportController {
 			LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 				targetGroupId, privateLayout);
 
-			validateFile(
-				layoutSet.getCompanyId(), targetGroupId, parameterMap,
-				zipReader);
+			MissingReferences missingReferences = null;
 
-			PortletDataContext portletDataContext = getPortletDataContext(
-				exportImportConfiguration, zipReader);
+			try (ZipReader zipReader = _zipReaderFactory.getZipReader(file)) {
+				validateFile(
+					layoutSet.getCompanyId(), targetGroupId, parameterMap,
+					zipReader);
 
-			portletDataContext.setPrivateLayout(privateLayout);
+				PortletDataContext portletDataContext = getPortletDataContext(
+					exportImportConfiguration, zipReader);
 
-			MissingReferences missingReferences =
-				_exportImportHelper.validateMissingReferences(
-					portletDataContext);
+				portletDataContext.setPrivateLayout(privateLayout);
+
+				missingReferences =
+					_exportImportHelper.validateMissingReferences(
+						portletDataContext);
+			}
 
 			Map<String, MissingReference> dependencyMissingReferences =
 				missingReferences.getDependencyMissingReferences();

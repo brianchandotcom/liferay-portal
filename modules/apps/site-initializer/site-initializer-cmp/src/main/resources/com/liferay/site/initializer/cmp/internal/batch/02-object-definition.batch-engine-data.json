@@ -311,7 +311,7 @@
 			"panelCategoryKey": "",
 			"parameterRequired": false,
 			"pluralLabel": {
-				"en_US": "CMP Tasks"
+				"en_US": "Tasks"
 			},
 			"portlet": false,
 			"scope": "depot",

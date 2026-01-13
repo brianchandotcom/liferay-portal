@@ -40,16 +40,15 @@ liferay-default:
                         - -c
                         - |
                               set -e
-                              DOWNLOAD_FOLDER="$(mktemp -d)"
                               PRODUCT_VERSION={{.image.tag}}
-                              function download_opensearch_modules {
+                              function main {
                                   local FILE_NAME_PREFIX="com.liferay.portal.search.opensearch2"
                                   local URL="https://releases.liferay.com/opensearch2/dxp/${PRODUCT_VERSION}/${FILE_NAME_PREFIX}.{api,impl}.jar"
                                   echo "Starting to download OpenSearch modules for Product Version ${PRODUCT_VERSION}..."
                                 if ! curl \
                                   --fail \
                                   --location \
-                                  --output-dir "${DOWNLOAD_FOLDER}" \
+                                  --output-dir /temp/liferay/deploy \
                                   --remote-name \
                                   --retry 5 \
                                   --retry-all-errors \
@@ -60,16 +59,12 @@ liferay-default:
                                       echo "You are likely using an unsupported Liferay image. Please refer to https://releases.liferay.com/opensearch2/dxp"
                                       exit 1
                                 fi
-                                echo "OpenSearch modules downloaded successfully."
                               }
-                              function main {
-                                download_opensearch_modules "$PRODUCT_VERSION"
-                                echo "Starting to install OpenSearch modules..."
-                                mv "${DOWNLOAD_FOLDER}"/* "/temp/liferay/deploy"
-                                echo "OpenSearch modules installed successfully."
-                              }
+
+                              echo "Starting to install OpenSearch modules..."
                               main "$PRODUCT_VERSION"
-                    image: curlimages/curl:latest
+                              echo "OpenSearch modules downloaded successfully."
+                  image: curlimages/curl:latest
                     name: liferay-install-opensearch-modules
                     volumeMounts:
                         - mountPath: /temp

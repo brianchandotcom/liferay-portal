@@ -17,9 +17,13 @@ import com.liferay.headless.digital.sales.room.client.resource.v1_0.DigitalSales
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -60,6 +64,15 @@ public class DigitalSalesRoomTemplateResourceTest
 		super.testGetDigitalSalesRoomDigitalSalesRoomTemplatesPage();
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testGetDigitalSalesRoomTemplateDigitalSalesRoomTemplatesPage()
+		throws Exception {
+
+		super.testGetDigitalSalesRoomTemplateDigitalSalesRoomTemplatesPage();
+	}
+
 	@Override
 	@Test
 	public void testPostDigitalSalesRoomDigitalSalesRoomTemplate()
@@ -67,7 +80,17 @@ public class DigitalSalesRoomTemplateResourceTest
 
 		super.testPostDigitalSalesRoomDigitalSalesRoomTemplate();
 
-		_testPostDigitalSalesRoomDigitalSalesRoomTemplateWithDigitalSalesRoom();
+		_testPostDigitalSalesRoomDigitalSalesRoomTemplate();
+	}
+
+	@Override
+	@Test
+	public void testPostDigitalSalesRoomTemplateDigitalSalesRoomTemplate()
+		throws Exception {
+
+		super.testPostDigitalSalesRoomTemplateDigitalSalesRoomTemplate();
+
+		_testPostDigitalSalesRoomTemplateDigitalSalesRoomTemplate();
 	}
 
 	@Override
@@ -150,7 +173,17 @@ public class DigitalSalesRoomTemplateResourceTest
 			digitalSalesRoomTemplate);
 	}
 
-	private void _testPostDigitalSalesRoomDigitalSalesRoomTemplateWithDigitalSalesRoom()
+	@Override
+	protected DigitalSalesRoomTemplate
+			testPostDigitalSalesRoomTemplateDigitalSalesRoomTemplate_addDigitalSalesRoomTemplate(
+				DigitalSalesRoomTemplate digitalSalesRoomTemplate)
+		throws Exception {
+
+		return digitalSalesRoomTemplateResource.postDigitalSalesRoomTemplate(
+			digitalSalesRoomTemplate);
+	}
+
+	private void _testPostDigitalSalesRoomDigitalSalesRoomTemplate()
 		throws Exception {
 
 		User user = UserTestUtil.getAdminUser(
@@ -225,6 +258,80 @@ public class DigitalSalesRoomTemplateResourceTest
 					layout -> layout.getName(LocaleUtil.getSiteDefault()),
 					String.class),
 				new String[] {"Documents", "Onboarding"}));
+	}
+
+	private void _testPostDigitalSalesRoomTemplateDigitalSalesRoomTemplate()
+		throws Exception {
+
+		DigitalSalesRoomTemplate digitalSalesRoomTemplate1 =
+			digitalSalesRoomTemplateResource.postDigitalSalesRoomTemplate(
+				randomDigitalSalesRoomTemplate());
+
+		Layout layout1 = _layoutLocalService.addLayout(
+			null, TestPropsValues.getUserId(),
+			digitalSalesRoomTemplate1.getId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			"T" + RandomTestUtil.randomString(), StringPool.BLANK,
+			StringPool.BLANK, LayoutConstants.TYPE_NODE, false,
+			StringPool.BLANK,
+			ServiceContextTestUtil.getServiceContext(
+				testGroup.getGroupId(), TestPropsValues.getUserId()));
+		Layout layout2 = _layoutLocalService.addLayout(
+			null, TestPropsValues.getUserId(),
+			digitalSalesRoomTemplate1.getId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			"Z" + RandomTestUtil.randomString(), StringPool.BLANK,
+			StringPool.BLANK, LayoutConstants.TYPE_NODE, false,
+			StringPool.BLANK,
+			ServiceContextTestUtil.getServiceContext(
+				testGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		DigitalSalesRoomTemplate digitalSalesRoomTemplate2 =
+			digitalSalesRoomTemplateResource.
+				postDigitalSalesRoomTemplateDigitalSalesRoomTemplate(
+					digitalSalesRoomTemplate1.getId());
+
+		Assert.assertEquals(
+			digitalSalesRoomTemplate1.getClientName(),
+			digitalSalesRoomTemplate2.getClientName());
+		Assert.assertEquals(
+			digitalSalesRoomTemplate1.getDescription(),
+			digitalSalesRoomTemplate2.getDescription());
+		Assert.assertEquals(
+			digitalSalesRoomTemplate1.getName() + " (Copy)",
+			digitalSalesRoomTemplate2.getName());
+		Assert.assertEquals(
+			digitalSalesRoomTemplate1.getPrimaryColor(),
+			digitalSalesRoomTemplate2.getPrimaryColor());
+		Assert.assertEquals(
+			digitalSalesRoomTemplate1.getSecondaryColor(),
+			digitalSalesRoomTemplate2.getSecondaryColor());
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionLocalService.fetchFragmentCollection(
+				digitalSalesRoomTemplate2.getId(), "digital-sales-room");
+
+		Assert.assertTrue(
+			ArrayUtil.containsAll(
+				TransformUtil.transformToArray(
+					_fragmentEntryLocalService.getFragmentEntries(
+						digitalSalesRoomTemplate2.getId(),
+						fragmentCollection.getFragmentCollectionId(), 0),
+					FragmentEntryModel::getName, String.class),
+				new String[] {"DSR Header Main", "DSR Header User"}));
+
+		Assert.assertTrue(
+			ArrayUtil.containsAll(
+				TransformUtil.transformToArray(
+					_layoutLocalService.getLayouts(
+						digitalSalesRoomTemplate2.getId(), false),
+					layout -> layout.getName(LocaleUtil.getSiteDefault()),
+					String.class),
+				new String[] {
+					"Documents", "Onboarding",
+					layout1.getName(LocaleUtil.getSiteDefault()),
+					layout2.getName(LocaleUtil.getSiteDefault())
+				}));
 	}
 
 	private ObjectDefinition _dsrRoomObjectDefinition;

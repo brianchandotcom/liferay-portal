@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
@@ -176,6 +177,13 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 		if (segmentsExperience != null) {
 			return segmentsExperience;
+		}
+
+		String defaultSegmentsExperienceUuid = GetterUtil.getString(
+			serviceContext.getAttribute("defaultSegmentsExperienceUuid"));
+
+		if (Validator.isNotNull(defaultSegmentsExperienceUuid)) {
+			serviceContext.setUuid(defaultSegmentsExperienceUuid);
 		}
 
 		return _segmentsExperienceLocalService.addDefaultSegmentsExperience(

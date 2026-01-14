@@ -208,7 +208,7 @@
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Email Address"
+						"en_US": "Email"
 					},
 					"localized": false,
 					"name": "email",

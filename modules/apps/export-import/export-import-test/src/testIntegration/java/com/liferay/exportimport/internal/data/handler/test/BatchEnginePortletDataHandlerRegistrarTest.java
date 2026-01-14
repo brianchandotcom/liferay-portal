@@ -192,11 +192,7 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 							new String[] {className2},
 							portletDataHandler.getClassNames()) &&
 						_hasPortletDataHandlerControls(
-							new PortletDataHandlerControl[] {
-								new PortletDataHandlerBoolean(
-									portletId, className2, className2, true,
-									false, null, className2, null)
-							},
+							new PortletDataHandlerControl[0],
 							portletDataHandler.
 								getExportPortletDataHandlerControls()));
 

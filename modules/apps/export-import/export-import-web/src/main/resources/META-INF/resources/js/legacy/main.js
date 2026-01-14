@@ -904,11 +904,9 @@ AUI.add(
 							.byId('PORTLET_DATA_' + portletId)
 							.attr('checked')
 					) {
-						if (selectedContent.length) {
-							instance
-								.byId('PORTLET_DATA_' + portletId)
-								.attr('checked', false);
-						}
+						instance
+							.byId('PORTLET_DATA_' + portletId)
+							.attr('checked', false);
 
 						instance.byId('showChangeContent_' + portletId).hide();
 

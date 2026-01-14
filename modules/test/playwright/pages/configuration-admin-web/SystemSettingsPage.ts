@@ -4,11 +4,8 @@
  */
 
 import {Locator, Page, expect} from '@playwright/test';
-import {readFile} from 'fs/promises';
-import path from 'path';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import {getTempDir} from '../../utils/temp';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
@@ -80,20 +77,6 @@ export class SystemSettingsPage {
 			target: this.page.getByRole('menuitem', {name: actionName}),
 			trigger: this.page.getByRole('button', {name: 'Actions'}),
 		});
-	}
-
-	async getExportedConfiguration() {
-		const downloadPromise = this.page.waitForEvent('download');
-
-		await this.clickOnAction('Export');
-
-		const download = await downloadPromise;
-
-		const filePath = path.join(getTempDir(), download.suggestedFilename());
-
-		await download.saveAs(filePath);
-
-		return await readFile(filePath, 'utf-8');
 	}
 
 	async resetToDefaultValues() {

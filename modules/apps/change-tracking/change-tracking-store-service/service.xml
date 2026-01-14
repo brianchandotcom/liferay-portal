@@ -31,6 +31,10 @@
 
 		<!-- Finder methods -->
 
+		<finder name="R_P" return-type="Collection">
+			<finder-column name="repositoryId" />
+			<finder-column name="path" />
+		</finder>
 		<finder name="C_R_S" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="repositoryId" />

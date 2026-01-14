@@ -5,12 +5,25 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.history.BatchHistory;
+
 import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
 public class TestTaskHistory {
+
+	public TestTaskHistory(BatchHistory batchHistory, JSONObject jsonObject) {
+		_batchHistory = batchHistory;
+
+		_averageDuration = jsonObject.optLong("averageDuration");
+		_latestReportMissing = jsonObject.optBoolean("latestReportMissing");
+		_averageTotalDuration = jsonObject.optLong("averageTotalDuration");
+		_longestDuration = jsonObject.optLong("longestDuration");
+		_testTaskCount = jsonObject.optInt("testTaskCount");
+		_testTaskName = jsonObject.optString("testTaskName");
+	}
 
 	public long getAverageDuration() {
 		return _averageDuration;
@@ -38,19 +51,6 @@ public class TestTaskHistory {
 
 	public boolean isLatestReportMissing() {
 		return _latestReportMissing;
-	}
-
-	protected TestTaskHistory(
-		BatchHistory batchHistory, JSONObject jsonObject) {
-
-		_batchHistory = batchHistory;
-
-		_averageDuration = jsonObject.optLong("averageDuration");
-		_latestReportMissing = jsonObject.optBoolean("latestReportMissing");
-		_averageTotalDuration = jsonObject.optLong("averageTotalDuration");
-		_longestDuration = jsonObject.optLong("longestDuration");
-		_testTaskCount = jsonObject.optInt("testTaskCount");
-		_testTaskName = jsonObject.optString("testTaskName");
 	}
 
 	private final long _averageDuration;

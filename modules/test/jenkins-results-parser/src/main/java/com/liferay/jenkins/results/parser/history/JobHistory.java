@@ -5,8 +5,6 @@
 
 package com.liferay.jenkins.results.parser.history;
 
-import com.liferay.jenkins.results.parser.BatchHistory;
-
 import java.net.URL;
 
 import java.util.List;

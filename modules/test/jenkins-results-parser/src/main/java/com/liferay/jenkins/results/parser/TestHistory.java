@@ -5,6 +5,7 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.history.BatchHistory;
 import com.liferay.jenkins.results.parser.history.JobHistory;
 
 import org.json.JSONObject;
@@ -13,6 +14,20 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public class TestHistory {
+
+	public TestHistory(BatchHistory batchHistory, JSONObject jsonObject) {
+		_batchHistory = batchHistory;
+
+		_averageDuration = jsonObject.optLong("averageDuration");
+		_averageOverheadDuration = jsonObject.optLong(
+			"averageOverheadDuration");
+		_failureCount = jsonObject.optInt("failureCount");
+		_statusChanges = jsonObject.optInt("statusChanges");
+		_testName = jsonObject.getString("testName");
+		_testCount = jsonObject.optInt("testCount");
+		_testrayCaseResultID = jsonObject.optLong("testrayCaseResultID");
+		_testTaskName = jsonObject.optString("testTaskName");
+	}
 
 	public long getAverageDuration() {
 		return _averageDuration;
@@ -77,20 +92,6 @@ public class TestHistory {
 
 	public String getTestTaskName() {
 		return _testTaskName;
-	}
-
-	protected TestHistory(BatchHistory batchHistory, JSONObject jsonObject) {
-		_batchHistory = batchHistory;
-
-		_averageDuration = jsonObject.optLong("averageDuration");
-		_averageOverheadDuration = jsonObject.optLong(
-			"averageOverheadDuration");
-		_failureCount = jsonObject.optInt("failureCount");
-		_statusChanges = jsonObject.optInt("statusChanges");
-		_testName = jsonObject.getString("testName");
-		_testCount = jsonObject.optInt("testCount");
-		_testrayCaseResultID = jsonObject.optLong("testrayCaseResultID");
-		_testTaskName = jsonObject.optString("testTaskName");
 	}
 
 	private final long _averageDuration;

@@ -5,7 +5,6 @@
 
 package com.liferay.jenkins.results.parser.history;
 
-import com.liferay.jenkins.results.parser.BatchHistory;
 import com.liferay.jenkins.results.parser.CloudBucketUtil;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
@@ -75,7 +74,7 @@ public abstract class BaseJobHistory implements JobHistory {
 
 		if (batchesJSONArray != JSONObject.NULL) {
 			for (int i = 0; i < batchesJSONArray.length(); i++) {
-				BatchHistory batchHistory = new BatchHistory(
+				BatchHistory batchHistory = HistoryFactory.newBatchHistory(
 					this, batchesJSONArray.getJSONObject(i));
 
 				_batchHistories.put(batchHistory.getBatchName(), batchHistory);

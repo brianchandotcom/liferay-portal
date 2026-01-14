@@ -149,6 +149,10 @@ public class NioZipReaderImpl implements ZipReader {
 
 	@Override
 	public String getEntryAsString(String name) {
+		if (Validator.isNull(name)) {
+			return null;
+		}
+
 		if (!_initialized) {
 			_initFile();
 		}

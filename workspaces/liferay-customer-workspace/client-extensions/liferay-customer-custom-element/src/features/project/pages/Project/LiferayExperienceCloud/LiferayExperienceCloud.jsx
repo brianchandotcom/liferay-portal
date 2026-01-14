@@ -32,7 +32,9 @@ const LiferayExperienceCloud = () => {
 
 	const subscriptionGroupLxcEnvironment = subscriptionGroups?.find(
 		(subscriptionGroup) =>
-			subscriptionGroup.name === PRODUCT_TYPES.liferayExperienceCloud
+			subscriptionGroup.name === PRODUCT_TYPES.liferayCloud &&
+			subscriptionGroup.activationProductName.split(',')
+				.includes(PRODUCT_TYPES.liferayExperienceCloud)
 	);
 
 	if (!project || !subscriptionGroups) {

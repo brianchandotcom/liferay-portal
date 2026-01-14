@@ -10,35 +10,20 @@ import Skeleton from '~/components/Skeleton';
 import {PRODUCT_TYPES} from '~/features/project/utils/constants/productTypes';
 import ManageUsersButton from './components/ManageUsersButton/ManageUsersButton';
 import useActiveAccountSubscriptionGroups from './hooks/useActiveAccountSubscriptionGroups';
-
 import './ManageProductUsers.css';
 
-const getManagedContactURL = (URLField, groupName) => {
-	if (!URLField) {
+const getManagedContactURL = (manageContactsURL, activationProductName) => {
+	if (!manageContactsURL) {
 		return '';
 	}
 
 	try {
-		const jsonURLs = JSON.parse(URLField);
+		const jsonURLs = JSON.parse(manageContactsURL);
 
-		if (groupName === 'DXP Cloud') {
-			return jsonURLs.liferayPaas || jsonURLs.dxpCloud || '';
-		}
-
-        if (groupName === 'Liferay Cloud' || groupName === 'Liferay Experience Cloud') {
-			return (
-                jsonURLs.liferaySaas ||
-                jsonURLs.liferayPaas ||
-                jsonURLs.liferayExperienceCloud ||
-                ''
-            );
-		}
-
-		return jsonURLs[groupName] || '';
+		return jsonURLs[activationProductName] || '';
 	}
 	catch (exception) {
-
-		return URLField;
+		return manageContactsURL;
 	}
 };
 
@@ -51,8 +36,7 @@ const ManageProductUsers = ({koroneikiAccount, loading}) => {
 		loading,
 		[
 			PRODUCT_TYPES.analyticsCloud,
-			PRODUCT_TYPES.dxpCloud,
-			PRODUCT_TYPES.liferayExperienceCloud,
+			PRODUCT_TYPES.liferayCloud,
 		]
 	);
 	const {featureFlags} = useAppPropertiesContext();
@@ -61,7 +45,10 @@ const ManageProductUsers = ({koroneikiAccount, loading}) => {
 	const accountSubscriptionGroupLiferayExperienceCloud = useMemo(
 		() =>
 			accountSubscriptionGroups?.find(
-				({name}) => name === PRODUCT_TYPES.liferayExperienceCloud
+				(subscriptionGroup) =>
+					subscriptionGroup.name === PRODUCT_TYPES.liferayCloud &&
+					subscriptionGroup.activationProductName.split(',')
+						.includes(PRODUCT_TYPES.liferayExperienceCloud)
 			),
 		[accountSubscriptionGroups]
 	);
@@ -75,7 +62,7 @@ const ManageProductUsers = ({koroneikiAccount, loading}) => {
 					href={
 						getManagedContactURL(
 							accountSubscriptionGroupLiferayExperienceCloud.manageContactsURL,
-							'Liferay Cloud'
+							PRODUCT_TYPES.liferayExperienceCloud
 						)
 					}
 					title={i18n.translate(
@@ -88,10 +75,13 @@ const ManageProductUsers = ({koroneikiAccount, loading}) => {
 		return (
 			<div className="d-flex">
 				{accountSubscriptionGroups?.map(
-					({manageContactsURL, name}, index) => {
-						const targetURL = getManagedContactURL(manageContactsURL, name);
+					({activationProductName, manageContactsURL, name}, index) => {
+						if (activationProductName.split(',')
+								.includes(PRODUCT_TYPES.dxpCloud)) {
 
-						if (name === PRODUCT_TYPES.dxpCloud) {
+							const targetURL = getManagedContactURL(
+								manageContactsURL, PRODUCT_TYPES.dxpCloud);
+
 							return (
 								<ManageUsersButton
 									href={targetURL}
@@ -102,6 +92,9 @@ const ManageProductUsers = ({koroneikiAccount, loading}) => {
 								/>
 							);
 						}
+
+						const targetURL = getManagedContactURL(
+							manageContactsURL, PRODUCT_TYPES.analyticsCloud);
 
 						return (
 							<ManageUsersButton

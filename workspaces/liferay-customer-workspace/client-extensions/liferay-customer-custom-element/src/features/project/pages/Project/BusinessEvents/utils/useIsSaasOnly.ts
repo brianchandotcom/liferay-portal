@@ -13,7 +13,9 @@ export default function useIsSaasOnly(
 	const isSaasOnly = useMemo(
 		() =>
 			subscriptionGroups?.length === 1 &&
-			subscriptionGroups[0].name === PRODUCT_TYPES.liferayExperienceCloud,
+			subscriptionGroups[0].name === PRODUCT_TYPES.liferayCloud &&
+			subscriptionGroups[0].activationProductName ===
+				PRODUCT_TYPES.liferayExperienceCloud,
 		[subscriptionGroups]
 	);
 

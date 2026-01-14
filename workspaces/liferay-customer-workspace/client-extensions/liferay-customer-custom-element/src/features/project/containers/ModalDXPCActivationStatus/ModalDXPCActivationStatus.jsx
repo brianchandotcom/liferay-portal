@@ -52,7 +52,10 @@ const ModalDXPCActivationStatus = ({
 
 	const updateSubscriptionGroupsStatus = async () => {
 		const dxpCloudSubscriptionGroup = subscriptionGroups.find(
-			(subscription) => subscription.name === PRODUCT_TYPES.dxpCloud
+			(subscriptionGroup) =>
+				subscriptionGroup.name === PRODUCT_TYPES.liferayCloud &&
+				subscriptionGroup.activationProductName.split(',')
+					.includes(PRODUCT_TYPES.dxpCloud)
 		);
 
 		await client.mutate({

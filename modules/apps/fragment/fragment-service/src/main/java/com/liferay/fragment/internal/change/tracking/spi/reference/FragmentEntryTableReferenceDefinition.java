@@ -14,6 +14,7 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLinkTable;
 import com.liferay.fragment.model.FragmentEntryTable;
 import com.liferay.fragment.service.persistence.FragmentEntryPersistence;
+import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -31,9 +32,40 @@ public class FragmentEntryTableReferenceDefinition
 		ChildTableReferenceInfoBuilder<FragmentEntryTable>
 			childTableReferenceInfoBuilder) {
 
-		childTableReferenceInfoBuilder.singleColumnReference(
-			FragmentEntryTable.INSTANCE.externalReferenceCode,
-			FragmentEntryLinkTable.INSTANCE.fragmentEntryERC
+		childTableReferenceInfoBuilder.referenceInnerJoin(
+			fromStep -> fromStep.from(
+				FragmentEntryLinkTable.INSTANCE
+			).innerJoinON(
+				FragmentEntryTable.INSTANCE,
+				FragmentEntryLinkTable.INSTANCE.fragmentEntryERC.eq(
+					FragmentEntryTable.INSTANCE.externalReferenceCode
+				).and(
+					FragmentEntryLinkTable.INSTANCE.fragmentEntryScopeERC.eq(
+						(String)null)
+				).and(
+					FragmentEntryLinkTable.INSTANCE.groupId.eq(
+						FragmentEntryTable.INSTANCE.groupId)
+				)
+			)
+		).referenceInnerJoin(
+			fromStep -> fromStep.from(
+				FragmentEntryLinkTable.INSTANCE
+			).innerJoinON(
+				FragmentEntryTable.INSTANCE,
+				FragmentEntryLinkTable.INSTANCE.fragmentEntryERC.eq(
+					FragmentEntryTable.INSTANCE.externalReferenceCode)
+			).innerJoinON(
+				GroupTable.INSTANCE,
+				FragmentEntryLinkTable.INSTANCE.fragmentEntryScopeERC.eq(
+					GroupTable.INSTANCE.externalReferenceCode
+				).and(
+					FragmentEntryLinkTable.INSTANCE.companyId.eq(
+						GroupTable.INSTANCE.companyId)
+				).and(
+					GroupTable.INSTANCE.groupId.eq(
+						FragmentEntryTable.INSTANCE.groupId)
+				)
+			)
 		).singleColumnReference(
 			FragmentEntryTable.INSTANCE.previewFileEntryId,
 			DLFileEntryTable.INSTANCE.fileEntryId

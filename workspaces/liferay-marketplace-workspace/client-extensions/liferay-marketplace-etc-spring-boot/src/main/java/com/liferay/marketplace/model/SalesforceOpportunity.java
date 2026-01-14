@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -74,9 +74,9 @@ public class SalesforceOpportunity {
 		).put(
 			"soldBySalesTerritory", shippingAddress.getCountryISOCode()
 		).put(
-			"termType", "Term Type"
+			"termType", "Single Year"
 		).put(
-			"typeOfBusiness", "Type of Business"
+			"typeOfBusiness", "New Business"
 		);
 
 		if (Objects.equals(_order.getPaymentMethod(), "money-order")) {

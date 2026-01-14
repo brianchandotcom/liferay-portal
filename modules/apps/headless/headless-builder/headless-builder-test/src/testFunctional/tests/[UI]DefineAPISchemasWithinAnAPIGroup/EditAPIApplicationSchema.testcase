@@ -133,7 +133,7 @@ definition {
 				schema = "testSchema edited");
 		}
 
-		task ("And Then the original schmea is not present") {
+		task ("And Then the original schema is not present") {
 			AssertElementNotPresent(
 				locator1 = "OpenAPI#SCHEMA_ENTITY",
 				schema = "testSchema");

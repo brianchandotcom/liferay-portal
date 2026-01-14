@@ -211,6 +211,7 @@
 	},
 	{
 		"dataType": 15,
+		"defaultValue": "{}",
 		"modelResource": "com.liferay.commerce.model.CommerceOrder",
 		"name": "order-metadata",
 		"properties": {
@@ -253,6 +254,7 @@
 	},
 	{
 		"dataType": 15,
+		"defaultValue": "{}",
 		"modelResource": "com.liferay.commerce.model.CommerceOrder",
 		"name": "trial-settings",
 		"properties": {

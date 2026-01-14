@@ -145,14 +145,14 @@ public class DDMStructureStagedModelDataHandlerTest
 
 		User targetGuestUser = _targetCompany.getGuestUser();
 
-		try (SafeCloseable safeCloseable =
-				 initImportWithSafeCloseable(
-					companyGroup, _targetCompany.getGroup())) {
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable(
+				companyGroup, _targetCompany.getGroup())) {
 
 			portletDataContext.setUserIdStrategy(
 				new TestUserIdStrategy(targetGuestUser));
 
-			StagedModel exportedStagedModel = readExportedStagedModel(structure);
+			StagedModel exportedStagedModel = readExportedStagedModel(
+				structure);
 
 			Assert.assertNotNull(exportedStagedModel);
 
@@ -204,7 +204,8 @@ public class DDMStructureStagedModelDataHandlerTest
 		}
 
 		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
-			StagedModel exportedStagedModel = readExportedStagedModel(structure);
+			StagedModel exportedStagedModel = readExportedStagedModel(
+				structure);
 
 			Assert.assertNotNull(exportedStagedModel);
 
@@ -544,7 +545,7 @@ public class DDMStructureStagedModelDataHandlerTest
 		throws Exception {
 
 		try (SafeCloseable safeCloseable = initImportWithSafeCloseable(
-			exportGroup, importGroup)) {
+				exportGroup, importGroup)) {
 
 			if (Objects.nonNull(structure)) {
 				DDMStructure exportedStructure =

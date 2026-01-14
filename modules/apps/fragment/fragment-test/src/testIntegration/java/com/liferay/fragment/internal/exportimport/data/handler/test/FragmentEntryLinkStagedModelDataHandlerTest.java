@@ -528,7 +528,8 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 			fragmentEntryLink.getFragmentEntryGroupId());
 
 		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
-			StagedModel exportedStagedModel = readExportedStagedModel(stagedModel);
+			StagedModel exportedStagedModel = readExportedStagedModel(
+				stagedModel);
 
 			Assert.assertNotNull(exportedStagedModel);
 

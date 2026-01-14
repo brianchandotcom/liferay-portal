@@ -176,13 +176,13 @@ public class SiteNavigationMenuItemStagedModelDataHandlerTest
 
 		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
 			SiteNavigationMenuItem exportedSiteNavigationMenuItem =
-				(SiteNavigationMenuItem) readExportedStagedModel(
+				(SiteNavigationMenuItem)readExportedStagedModel(
 					siteNavigationMenuItem);
 
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, exportedSiteNavigationMenuItem);
 
-			return (SiteNavigationMenuItem) getStagedModel(
+			return (SiteNavigationMenuItem)getStagedModel(
 				siteNavigationMenuItem.getUuid(), liveGroup);
 		}
 	}

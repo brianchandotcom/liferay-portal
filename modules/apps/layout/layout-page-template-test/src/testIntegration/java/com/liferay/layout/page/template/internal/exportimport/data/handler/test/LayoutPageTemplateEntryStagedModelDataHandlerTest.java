@@ -85,7 +85,7 @@ public class LayoutPageTemplateEntryStagedModelDataHandlerTest
 
 		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
 			LayoutPageTemplateEntry exportedLayoutPageTemplateEntry1 =
-				(LayoutPageTemplateEntry) readExportedStagedModel(
+				(LayoutPageTemplateEntry)readExportedStagedModel(
 					layoutPageTemplateEntry1);
 
 			LayoutPageTemplateEntry importedLayoutPageTemplateEntry1 =
@@ -124,7 +124,7 @@ public class LayoutPageTemplateEntryStagedModelDataHandlerTest
 
 		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
 			LayoutPageTemplateEntry exportedLayoutPageTemplateEntry1 =
-				(LayoutPageTemplateEntry) readExportedStagedModel(
+				(LayoutPageTemplateEntry)readExportedStagedModel(
 					layoutPageTemplateEntry1);
 
 			LayoutPageTemplateEntry importedLayoutPageTemplateEntry1 =
@@ -136,7 +136,7 @@ public class LayoutPageTemplateEntryStagedModelDataHandlerTest
 				importedLayoutPageTemplateEntry1.isDefaultTemplate());
 
 			LayoutPageTemplateEntry exportedLayoutPageTemplateEntry2 =
-				(LayoutPageTemplateEntry) readExportedStagedModel(
+				(LayoutPageTemplateEntry)readExportedStagedModel(
 					layoutPageTemplateEntry2);
 
 			LayoutPageTemplateEntry importedLayoutUtilityPageEntry2 =
@@ -164,7 +164,7 @@ public class LayoutPageTemplateEntryStagedModelDataHandlerTest
 
 		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
 			LayoutPageTemplateEntry exportedLayoutPageTemplateEntry =
-				(LayoutPageTemplateEntry) readExportedStagedModel(
+				(LayoutPageTemplateEntry)readExportedStagedModel(
 					layoutPageTemplateEntry);
 
 			LayoutPageTemplateEntry importedLayoutPageTemplateEntry =
@@ -224,7 +224,7 @@ public class LayoutPageTemplateEntryStagedModelDataHandlerTest
 		}
 
 		try (SafeCloseable safeCloseable = initImportWithSafeCloseable(
-			companyGroup, _targetCompany.getGroup())) {
+				companyGroup, _targetCompany.getGroup())) {
 
 			portletDataContext.setUserIdStrategy(
 				new TestUserIdStrategy(targetGuestUser));

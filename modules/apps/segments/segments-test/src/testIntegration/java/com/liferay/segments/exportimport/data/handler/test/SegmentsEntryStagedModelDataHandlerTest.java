@@ -115,7 +115,8 @@ public class SegmentsEntryStagedModelDataHandlerTest
 
 		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
 			StagedExpandoColumn exportedStagedExpandoColumn =
-				(StagedExpandoColumn)readExportedStagedModel(stagedExpandoColumn);
+				(StagedExpandoColumn)readExportedStagedModel(
+					stagedExpandoColumn);
 
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, exportedStagedExpandoColumn);
@@ -175,7 +176,7 @@ public class SegmentsEntryStagedModelDataHandlerTest
 			portletDataContext, _segmentsEntry);
 
 		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
-			Team exportedTeam = (Team) readExportedStagedModel(team);
+			Team exportedTeam = (Team)readExportedStagedModel(team);
 
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, exportedTeam);
@@ -184,12 +185,12 @@ public class SegmentsEntryStagedModelDataHandlerTest
 				team.getUuid(), liveGroup.getGroupId());
 
 			SegmentsEntry exportedSegmentsEntry =
-				(SegmentsEntry) readExportedStagedModel(_segmentsEntry);
+				(SegmentsEntry)readExportedStagedModel(_segmentsEntry);
 
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, exportedSegmentsEntry);
 
-			_importedSegmentsEntry = (SegmentsEntry) getStagedModel(
+			_importedSegmentsEntry = (SegmentsEntry)getStagedModel(
 				_segmentsEntry.getUuid(), liveGroup);
 
 			String importedFilterString = _getFilterString(

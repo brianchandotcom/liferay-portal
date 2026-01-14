@@ -77,14 +77,16 @@ public class FolderStagedModelDataHandlerTest
 			portletDataContext, stagedModel);
 
 		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
-			StagedModel exportedStagedModel = readExportedStagedModel(stagedModel);
+			StagedModel exportedStagedModel = readExportedStagedModel(
+				stagedModel);
 
 			Assert.assertNotNull(exportedStagedModel);
 
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, exportedStagedModel);
 
-			validateCompanyDependenciesImport(dependentStagedModelsMap, liveGroup);
+			validateCompanyDependenciesImport(
+				dependentStagedModelsMap, liveGroup);
 		}
 	}
 

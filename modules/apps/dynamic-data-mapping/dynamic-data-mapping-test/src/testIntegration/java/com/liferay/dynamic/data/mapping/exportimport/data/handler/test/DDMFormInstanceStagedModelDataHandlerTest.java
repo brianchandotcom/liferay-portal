@@ -139,13 +139,15 @@ public class DDMFormInstanceStagedModelDataHandlerTest
 					objectDefinition1.getObjectDefinitionId(),
 					portletDataContext.getZipEntryAsString(
 						ExportImportPathUtil.getModelPath(
-							ddmFormInstance1, "settings-ddm-form-values.json")));
+							ddmFormInstance1,
+							"settings-ddm-form-values.json")));
 
 				StagedModelDataHandlerUtil.importStagedModel(
 					portletDataContext, ddmFormInstance1);
 
-				DDMFormInstance ddmFormInstance2 = (DDMFormInstance)getStagedModel(
-					ddmFormInstance1.getUuid(), liveGroup);
+				DDMFormInstance ddmFormInstance2 =
+					(DDMFormInstance)getStagedModel(
+						ddmFormInstance1.getUuid(), liveGroup);
 
 				_assertDDMFormInstanceSettings(
 					objectDefinition2.getObjectDefinitionId(),

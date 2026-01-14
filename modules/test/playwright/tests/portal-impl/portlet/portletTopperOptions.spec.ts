@@ -31,8 +31,8 @@ test('Verify portlet-topper options are accessible', async ({page}) => {
 	});
 
 	await test.step('Then the look and feel configuration modal is present', async () => {
-		const lookAndFeelModal = page.locator('.liferay-modal', {
-			hasText: 'Look and Feel Configuration',
+		const lookAndFeelModal = page.getByRole('dialog', {
+			name: 'Look and Feel Configuration',
 		});
 
 		await expect(lookAndFeelModal).toBeVisible();

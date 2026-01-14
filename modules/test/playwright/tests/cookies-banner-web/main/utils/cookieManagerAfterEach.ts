@@ -20,44 +20,37 @@ export async function resetAllCookieManagerConfigurations(systemSettingsPage) {
 	const menuItems = await systemSettingsPage.page.getByRole('menuitem').all();
 
 	for (const menuItem of menuItems.reverse()) {
-		if (await menuItem.getByText('Product Analytics').isVisible()) {
-			continue;
-		}
-
 		await menuItem.click();
 
 		await systemSettingsPage.page.waitForTimeout(1000);
 
 		await systemSettingsPage.page.waitForLoadState();
 
-		if (
-			await systemSettingsPage.page
-				.getByRole('button', {name: 'Actions'})
-				.isVisible()
-		) {
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: systemSettingsPage.page.getByRole('menuitem', {
-					name: 'Reset Default Values',
-				}),
-				trigger: systemSettingsPage.page.getByRole('button', {
-					name: 'Actions',
-				}),
-			});
+		let dialog = false;
+
+		if (await menuItem.getByText('Product Analytics').isVisible()) {
+			continue;
 		}
+		else if (await menuItem.getByText('Cookie Manager').isVisible()) {
+			dialog = true;
+		}
+
+		await resetConfiguration(dialog, systemSettingsPage);
 	}
 }
 
-export async function resetCookieManagerConfiguration(systemSettingsPage) {
-	await systemSettingsPage.goToSystemSetting('Privacy', 'Cookie Manager');
-
-	await systemSettingsPage.page.waitForLoadState();
-
+async function resetConfiguration(dialog = false, systemSettingsPage) {
 	if (
 		await systemSettingsPage.page
 			.getByRole('button', {name: 'Actions'})
 			.isVisible()
 	) {
+		if (dialog) {
+			systemSettingsPage.page.once('dialog', async (dialogWindow) => {
+				await dialogWindow.accept();
+			});
+		}
+
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: systemSettingsPage.page.getByRole('menuitem', {
@@ -68,4 +61,14 @@ export async function resetCookieManagerConfiguration(systemSettingsPage) {
 			}),
 		});
 	}
+}
+
+export async function resetCookieManagerConfiguration(systemSettingsPage) {
+	await systemSettingsPage.goToSystemSetting('Privacy', 'Cookie Manager');
+
+	await systemSettingsPage.page.waitForTimeout(1000);
+
+	await systemSettingsPage.page.waitForLoadState();
+
+	await resetConfiguration(true, systemSettingsPage);
 }

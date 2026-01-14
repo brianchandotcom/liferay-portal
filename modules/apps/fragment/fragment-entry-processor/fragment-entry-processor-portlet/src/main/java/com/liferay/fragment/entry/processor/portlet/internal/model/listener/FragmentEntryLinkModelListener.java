@@ -94,11 +94,9 @@ public class FragmentEntryLinkModelListener
 		List<String> usedPortletNames = new ArrayList<>();
 
 		for (FragmentEntryLink curFragmentEntryLink :
-				_fragmentEntryLinkLocalService.
-					getFragmentEntryLinksBySegmentsExperienceId(
-						fragmentEntryLink.getGroupId(),
-						fragmentEntryLink.getSegmentsExperienceId(),
-						fragmentEntryLink.getPlid(), false)) {
+				_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+					fragmentEntryLink.getGroupId(),
+					fragmentEntryLink.getPlid())) {
 
 			if (curFragmentEntryLink.getFragmentEntryLinkId() ==
 					fragmentEntryLink.getFragmentEntryLinkId()) {

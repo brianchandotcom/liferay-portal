@@ -67,6 +67,39 @@ definition {
 		}
 	}
 
+	@description = "LPD-65187: Given a user starts the portal with a database created previously. When core and module indexes are missing and properties database.indexes.update.on.startup and upgrade.database.auto.run are set to true simultaneously. Then portal creates missing indexes."
+	@priority = 4
+	test MissingIndexesAreCreatedWithIndexesUpdateOnStartupAndUpgradeDatabaseAutoRun {
+		property custom.properties = "database.indexes.update.on.startup=true${line.separator}upgrade.database.auto.run=true";
+		property database.types = "mysql";
+
+		SQL.dropMySQLIndex(
+			indexName = "IX_EC00543C",
+			tableName = "Company");
+
+		SQL.dropMySQLIndex(
+			indexName = "IX_D3ACAD4A",
+			tableName = "JournalArticle");
+
+		task ("Restart portal and cleaning the logs") {
+			Portlet.shutdownServer();
+
+			Portlet.startServer(keepOsGiState = "true");
+		}
+
+		var hasCompanyMissingIndex = SQL.hasMySQLIndex(indexName = "IX_EC00543C");
+
+		if (${hasCompanyMissingIndex} == "false") {
+			fail("Company index IX_EC00543C wasn't recreated");
+		}
+
+		var hasJournalArticleMissingIndex = SQL.hasMySQLIndex(indexName = "IX_D3ACAD4A");
+
+		if (${hasJournalArticleMissingIndex} == "false") {
+			fail("JournalArticle index IX_D3ACAD4A wasn't recreated");
+		}
+	}
+
 	@description = "LPS-158090. Given auto upgrade is enabled. Then all upgrades finish before server startup."
 	@priority = 5
 	test UpgradeCheckReturnsEmptyOnStartupWithAutoUpgrade {

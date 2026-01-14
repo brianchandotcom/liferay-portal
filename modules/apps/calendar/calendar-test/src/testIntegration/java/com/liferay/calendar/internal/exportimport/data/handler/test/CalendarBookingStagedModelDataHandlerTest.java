@@ -16,6 +16,7 @@ import com.liferay.calendar.test.util.CalendarTestUtil;
 import com.liferay.calendar.test.util.RecurrenceTestUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.test.util.lar.BaseWorkflowedStagedModelDataHandlerTestCase;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
@@ -87,32 +88,32 @@ public class CalendarBookingStagedModelDataHandlerTest
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, calendarBooking);
 
-		initImport();
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			CalendarBooking exportedCalendarBooking =
+				(CalendarBooking)readExportedStagedModel(calendarBooking);
 
-		CalendarBooking exportedCalendarBooking =
-			(CalendarBooking)readExportedStagedModel(calendarBooking);
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedCalendarBooking);
 
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedCalendarBooking);
+			CalendarBooking importedCalendarBooking =
+				(CalendarBooking)getStagedModel(
+					exportedCalendarBooking.getUuid(), liveGroup);
 
-		CalendarBooking importedCalendarBooking =
-			(CalendarBooking)getStagedModel(
-				exportedCalendarBooking.getUuid(), liveGroup);
+			List<CalendarBooking> importedCalendarBookingInstances =
+				_calendarBookingLocalService.getRecurringCalendarBookings(
+					importedCalendarBooking);
 
-		List<CalendarBooking> importedCalendarBookingInstances =
-			_calendarBookingLocalService.getRecurringCalendarBookings(
-				importedCalendarBooking);
+			CalendarBookingModel importedCalendarBookingInstance =
+				importedCalendarBookingInstances.get(0);
 
-		CalendarBookingModel importedCalendarBookingInstance =
-			importedCalendarBookingInstances.get(0);
+			Assert.assertNotEquals(
+				calendarBooking.getCalendarBookingId(),
+				importedCalendarBookingInstance.getRecurringCalendarBookingId());
 
-		Assert.assertNotEquals(
-			calendarBooking.getCalendarBookingId(),
-			importedCalendarBookingInstance.getRecurringCalendarBookingId());
-
-		Assert.assertEquals(
-			importedCalendarBooking.getCalendarBookingId(),
-			importedCalendarBookingInstance.getRecurringCalendarBookingId());
+			Assert.assertEquals(
+				importedCalendarBooking.getCalendarBookingId(),
+				importedCalendarBookingInstance.getRecurringCalendarBookingId());
+		}
 	}
 
 	@Override

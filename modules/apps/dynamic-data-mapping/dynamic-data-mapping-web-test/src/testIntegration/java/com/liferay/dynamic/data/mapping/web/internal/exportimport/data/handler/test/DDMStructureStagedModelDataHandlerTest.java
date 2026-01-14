@@ -27,6 +27,7 @@ import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -144,29 +145,32 @@ public class DDMStructureStagedModelDataHandlerTest
 
 		User targetGuestUser = _targetCompany.getGuestUser();
 
-		initImport(companyGroup, _targetCompany.getGroup());
+		try (SafeCloseable safeCloseable =
+				 initImportWithSafeCloseable(
+					companyGroup, _targetCompany.getGroup())) {
 
-		portletDataContext.setUserIdStrategy(
-			new TestUserIdStrategy(targetGuestUser));
+			portletDataContext.setUserIdStrategy(
+				new TestUserIdStrategy(targetGuestUser));
 
-		StagedModel exportedStagedModel = readExportedStagedModel(structure);
+			StagedModel exportedStagedModel = readExportedStagedModel(structure);
 
-		Assert.assertNotNull(exportedStagedModel);
+			Assert.assertNotNull(exportedStagedModel);
 
-		try {
-			ExportImportThreadLocal.setPortletImportInProcess(true);
+			try {
+				ExportImportThreadLocal.setPortletImportInProcess(true);
 
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, exportedStagedModel);
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, exportedStagedModel);
+			}
+			finally {
+				ExportImportThreadLocal.setPortletImportInProcess(false);
+			}
+
+			StagedModel importedStagedModel = getStagedModel(
+				exportedStagedModel.getUuid(), _targetCompany.getGroup());
+
+			Assert.assertNotNull(importedStagedModel);
 		}
-		finally {
-			ExportImportThreadLocal.setPortletImportInProcess(false);
-		}
-
-		StagedModel importedStagedModel = getStagedModel(
-			exportedStagedModel.getUuid(), _targetCompany.getGroup());
-
-		Assert.assertNotNull(importedStagedModel);
 	}
 
 	@Test
@@ -199,26 +203,26 @@ public class DDMStructureStagedModelDataHandlerTest
 			ExportImportThreadLocal.setPortletExportInProcess(false);
 		}
 
-		initImport();
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			StagedModel exportedStagedModel = readExportedStagedModel(structure);
 
-		StagedModel exportedStagedModel = readExportedStagedModel(structure);
+			Assert.assertNotNull(exportedStagedModel);
 
-		Assert.assertNotNull(exportedStagedModel);
+			try {
+				ExportImportThreadLocal.setPortletImportInProcess(true);
 
-		try {
-			ExportImportThreadLocal.setPortletImportInProcess(true);
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, exportedStagedModel);
+			}
+			finally {
+				ExportImportThreadLocal.setPortletImportInProcess(false);
+			}
 
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, exportedStagedModel);
+			StagedModel importedStagedModel = getStagedModel(
+				exportedStagedModel.getUuid(), liveGroup);
+
+			Assert.assertNotNull(importedStagedModel);
 		}
-		finally {
-			ExportImportThreadLocal.setPortletImportInProcess(false);
-		}
-
-		StagedModel importedStagedModel = getStagedModel(
-			exportedStagedModel.getUuid(), liveGroup);
-
-		Assert.assertNotNull(importedStagedModel);
 	}
 
 	@Test
@@ -539,14 +543,16 @@ public class DDMStructureStagedModelDataHandlerTest
 			Group exportGroup, Group importGroup, DDMStructure structure)
 		throws Exception {
 
-		initImport(exportGroup, importGroup);
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable(
+			exportGroup, importGroup)) {
 
-		if (Objects.nonNull(structure)) {
-			DDMStructure exportedStructure =
-				(DDMStructure)readExportedStagedModel(structure);
+			if (Objects.nonNull(structure)) {
+				DDMStructure exportedStructure =
+					(DDMStructure)readExportedStagedModel(structure);
 
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, exportedStructure);
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, exportedStructure);
+			}
 		}
 	}
 

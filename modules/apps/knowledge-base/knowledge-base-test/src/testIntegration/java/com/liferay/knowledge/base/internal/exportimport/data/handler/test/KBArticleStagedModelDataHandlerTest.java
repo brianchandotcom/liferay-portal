@@ -12,6 +12,7 @@ import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
@@ -83,20 +84,20 @@ public class KBArticleStagedModelDataHandlerTest
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, kbArticle);
 
-		initImport();
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			KBArticle exportedKBArticle = (KBArticle)readExportedStagedModel(
+				kbArticle);
 
-		KBArticle exportedKBArticle = (KBArticle)readExportedStagedModel(
-			kbArticle);
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedKBArticle);
 
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedKBArticle);
+			KBArticle importedKBArticle = (KBArticle)getStagedModel(
+				kbArticle.getUuid(), liveGroup);
 
-		KBArticle importedKBArticle = (KBArticle)getStagedModel(
-			kbArticle.getUuid(), liveGroup);
-
-		_assertKBArticleAttachments(
-			new String[] {fileEntry1.getFileName(), fileEntry2.getFileName()},
-			importedKBArticle);
+			_assertKBArticleAttachments(
+				new String[] {fileEntry1.getFileName(), fileEntry2.getFileName()},
+				importedKBArticle);
+		}
 
 		initExport();
 
@@ -112,18 +113,18 @@ public class KBArticleStagedModelDataHandlerTest
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, kbArticle);
 
-		initImport();
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			KBArticle exportedKBArticle = (KBArticle)readExportedStagedModel(kbArticle);
 
-		exportedKBArticle = (KBArticle)readExportedStagedModel(kbArticle);
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedKBArticle);
 
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedKBArticle);
+			KBArticle importedKBArticle = (KBArticle)getStagedModel(
+				kbArticle.getUuid(), liveGroup);
 
-		importedKBArticle = (KBArticle)getStagedModel(
-			kbArticle.getUuid(), liveGroup);
-
-		_assertKBArticleAttachments(
-			new String[] {fileEntry1.getFileName()}, importedKBArticle);
+			_assertKBArticleAttachments(
+				new String[] {fileEntry1.getFileName()}, importedKBArticle);
+		}
 	}
 
 	@Test
@@ -142,35 +143,35 @@ public class KBArticleStagedModelDataHandlerTest
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, kbArticle);
 
-		initImport();
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			KBArticle exportedKBArticle = (KBArticle)readExportedStagedModel(
+				kbArticle);
 
-		KBArticle exportedKBArticle = (KBArticle)readExportedStagedModel(
-			kbArticle);
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedKBArticle);
 
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedKBArticle);
+			KBArticle importedKBArticle = (KBArticle)getStagedModel(
+				kbArticle.getUuid(), liveGroup);
 
-		KBArticle importedKBArticle = (KBArticle)getStagedModel(
-			kbArticle.getUuid(), liveGroup);
+			Assert.assertEquals(
+				kbArticle.getExternalReferenceCode(),
+				importedKBArticle.getExternalReferenceCode());
+			Assert.assertEquals(
+				kbArticle.isScheduled(), importedKBArticle.isScheduled());
 
-		Assert.assertEquals(
-			kbArticle.getExternalReferenceCode(),
-			importedKBArticle.getExternalReferenceCode());
-		Assert.assertEquals(
-			kbArticle.isScheduled(), importedKBArticle.isScheduled());
+			importedKBArticle.setDisplayDate(
+				new Date(System.currentTimeMillis() - (Time.MINUTE * 10)));
 
-		importedKBArticle.setDisplayDate(
-			new Date(System.currentTimeMillis() - (Time.MINUTE * 10)));
+			importedKBArticle = _kbArticleLocalService.updateKBArticle(
+				importedKBArticle);
 
-		importedKBArticle = _kbArticleLocalService.updateKBArticle(
-			importedKBArticle);
+			_kbArticleLocalService.checkKBArticles(liveGroup.getCompanyId());
 
-		_kbArticleLocalService.checkKBArticles(liveGroup.getCompanyId());
+			importedKBArticle = _kbArticleLocalService.fetchKBArticle(
+				importedKBArticle.getKbArticleId());
 
-		importedKBArticle = _kbArticleLocalService.fetchKBArticle(
-			importedKBArticle.getKbArticleId());
-
-		Assert.assertFalse(importedKBArticle.isScheduled());
+			Assert.assertFalse(importedKBArticle.isScheduled());
+		}
 	}
 
 	@Test

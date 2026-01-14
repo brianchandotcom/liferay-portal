@@ -17,6 +17,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryRegistryUtil;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -112,42 +113,42 @@ public class SegmentsEntryStagedModelDataHandlerTest
 
 		_expandoColumnLocalService.deleteColumn(expandoColumn.getColumnId());
 
-		initImport();
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			StagedExpandoColumn exportedStagedExpandoColumn =
+				(StagedExpandoColumn)readExportedStagedModel(stagedExpandoColumn);
 
-		StagedExpandoColumn exportedStagedExpandoColumn =
-			(StagedExpandoColumn)readExportedStagedModel(stagedExpandoColumn);
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedStagedExpandoColumn);
 
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedStagedExpandoColumn);
+			List<StagedExpandoColumn> stagedExpandoColumns =
+				_stagedModelRepository.fetchStagedModelsByUuidAndCompanyId(
+					stagedExpandoColumn.getUuid(), liveGroup.getCompanyId());
 
-		List<StagedExpandoColumn> stagedExpandoColumns =
-			_stagedModelRepository.fetchStagedModelsByUuidAndCompanyId(
-				stagedExpandoColumn.getUuid(), liveGroup.getCompanyId());
+			if (ListUtil.isEmpty(stagedExpandoColumns)) {
+				return;
+			}
 
-		if (ListUtil.isEmpty(stagedExpandoColumns)) {
-			return;
+			StagedExpandoColumn importedStagedExpandoColumn =
+				stagedExpandoColumns.get(0);
+
+			SegmentsEntry exportedSegmentsEntry =
+				(SegmentsEntry)readExportedStagedModel(_segmentsEntry);
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedSegmentsEntry);
+
+			_importedSegmentsEntry = (SegmentsEntry)getStagedModel(
+				_segmentsEntry.getUuid(), liveGroup);
+
+			String importedFilterString = _getFilterString(
+				_importedSegmentsEntry.getCriteriaObj());
+
+			Assert.assertEquals(
+				String.format(
+					"(customField/%s eq '%s')",
+					_encodeName(importedStagedExpandoColumn), columnValue),
+				importedFilterString);
 		}
-
-		StagedExpandoColumn importedStagedExpandoColumn =
-			stagedExpandoColumns.get(0);
-
-		SegmentsEntry exportedSegmentsEntry =
-			(SegmentsEntry)readExportedStagedModel(_segmentsEntry);
-
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedSegmentsEntry);
-
-		_importedSegmentsEntry = (SegmentsEntry)getStagedModel(
-			_segmentsEntry.getUuid(), liveGroup);
-
-		String importedFilterString = _getFilterString(
-			_importedSegmentsEntry.getCriteriaObj());
-
-		Assert.assertEquals(
-			String.format(
-				"(customField/%s eq '%s')",
-				_encodeName(importedStagedExpandoColumn), columnValue),
-			importedFilterString);
 	}
 
 	@Test
@@ -173,31 +174,31 @@ public class SegmentsEntryStagedModelDataHandlerTest
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, _segmentsEntry);
 
-		initImport();
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			Team exportedTeam = (Team) readExportedStagedModel(team);
 
-		Team exportedTeam = (Team)readExportedStagedModel(team);
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedTeam);
 
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedTeam);
+			Team importedTeam = TeamLocalServiceUtil.fetchTeamByUuidAndGroupId(
+				team.getUuid(), liveGroup.getGroupId());
 
-		Team importedTeam = TeamLocalServiceUtil.fetchTeamByUuidAndGroupId(
-			team.getUuid(), liveGroup.getGroupId());
+			SegmentsEntry exportedSegmentsEntry =
+				(SegmentsEntry) readExportedStagedModel(_segmentsEntry);
 
-		SegmentsEntry exportedSegmentsEntry =
-			(SegmentsEntry)readExportedStagedModel(_segmentsEntry);
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedSegmentsEntry);
 
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedSegmentsEntry);
+			_importedSegmentsEntry = (SegmentsEntry) getStagedModel(
+				_segmentsEntry.getUuid(), liveGroup);
 
-		_importedSegmentsEntry = (SegmentsEntry)getStagedModel(
-			_segmentsEntry.getUuid(), liveGroup);
+			String importedFilterString = _getFilterString(
+				_importedSegmentsEntry.getCriteriaObj());
 
-		String importedFilterString = _getFilterString(
-			_importedSegmentsEntry.getCriteriaObj());
-
-		Assert.assertEquals(
-			String.format("(teamIds eq '%s')", importedTeam.getTeamId()),
-			importedFilterString);
+			Assert.assertEquals(
+				String.format("(teamIds eq '%s')", importedTeam.getTeamId()),
+				importedFilterString);
+		}
 	}
 
 	@Override

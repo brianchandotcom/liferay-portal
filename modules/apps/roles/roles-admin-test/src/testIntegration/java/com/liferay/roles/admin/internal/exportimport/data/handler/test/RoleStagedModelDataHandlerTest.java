@@ -159,7 +159,7 @@ public class RoleStagedModelDataHandlerTest
 		PermissionChecker originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		try (SafeCloseable safeCloseable =
+		try (SafeCloseable safeCloseable1 =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					_company.getCompanyId())) {
 
@@ -173,19 +173,21 @@ public class RoleStagedModelDataHandlerTest
 
 			_roleLocalService.deleteRole(role);
 
-			initImport(stagingGroup, _company.getGroup());
+			try (SafeCloseable safeCloseable2 = initImportWithSafeCloseable(
+				stagingGroup, _company.getGroup())) {
 
-			Role exportedRole = (Role)readExportedStagedModel(role);
+				Role exportedRole = (Role)readExportedStagedModel(role);
 
-			Role importedRole = _getImportedRole(
-				exportedRole, _company.getGroup(), role, user);
+				Role importedRole = _getImportedRole(
+					exportedRole, _company.getGroup(), role, user);
 
-			Assert.assertEquals(
-				exportedRole.getExternalReferenceCode(),
-				importedRole.getExternalReferenceCode());
-			Assert.assertEquals(exportedRole.getName(), importedRole.getName());
-			Assert.assertEquals(
-				exportedRole.getClassName(), importedRole.getClassName());
+				Assert.assertEquals(
+					exportedRole.getExternalReferenceCode(),
+					importedRole.getExternalReferenceCode());
+				Assert.assertEquals(exportedRole.getName(), importedRole.getName());
+				Assert.assertEquals(
+					exportedRole.getClassName(), importedRole.getClassName());
+				}
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(
@@ -220,7 +222,7 @@ public class RoleStagedModelDataHandlerTest
 		PermissionChecker originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		try (SafeCloseable safeCloseable =
+		try (SafeCloseable safeCloseable1 =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					_company.getCompanyId())) {
 
@@ -232,20 +234,22 @@ public class RoleStagedModelDataHandlerTest
 				PermissionCheckerFactoryUtil.create(user));
 			PrincipalThreadLocal.setName(user.getUserId());
 
-			initImport(stagingGroup, _company.getGroup());
+			try (SafeCloseable safeCloseable2 = initImportWithSafeCloseable(
+				stagingGroup, _company.getGroup())) {
 
-			Role exportedRole = (Role)readExportedStagedModel(role);
+				Role exportedRole = (Role)readExportedStagedModel(role);
 
-			Role importedRole = _getImportedRole(
-				exportedRole, _company.getGroup(), role, user);
+				Role importedRole = _getImportedRole(
+					exportedRole, _company.getGroup(), role, user);
 
-			Assert.assertEquals(
-				exportedRole.getExternalReferenceCode(),
-				importedRole.getExternalReferenceCode());
-			Assert.assertEquals(exportedRole.getName(), importedRole.getName());
-			Assert.assertEquals(
-				0,
-				_roleLocalService.getAssigneesTotal(importedRole.getRoleId()));
+				Assert.assertEquals(
+					exportedRole.getExternalReferenceCode(),
+					importedRole.getExternalReferenceCode());
+				Assert.assertEquals(exportedRole.getName(), importedRole.getName());
+				Assert.assertEquals(
+					0,
+					_roleLocalService.getAssigneesTotal(importedRole.getRoleId()));
+			}
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(

@@ -20,6 +20,25 @@ import java.util.Set;
  */
 public class PageExperienceUtil {
 
+	public static PageExperience getDefaultPageExperience(
+		PageExperience[] pageExperiences) {
+
+		if (ArrayUtil.isEmpty(pageExperiences)) {
+			throw new UnsupportedOperationException();
+		}
+
+		for (PageExperience pageExperience : pageExperiences) {
+			if (Objects.equals(
+					pageExperience.getKey(),
+					SegmentsExperienceConstants.KEY_DEFAULT)) {
+
+				return pageExperience;
+			}
+		}
+
+		throw new UnsupportedOperationException();
+	}
+
 	public static void validatePageExperiences(
 		SegmentsExperience defaultSegmentsExperience,
 		PageExperience[] pageExperiences) {

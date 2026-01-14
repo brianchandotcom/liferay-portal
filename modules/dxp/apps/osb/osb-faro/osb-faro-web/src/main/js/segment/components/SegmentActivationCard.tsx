@@ -23,7 +23,7 @@ export type SegmentActivationDetails = {
 
 const data: SegmentActivationDetails = {
 	frequencyType: SegmentActivationFrequencyTypes.Batch,
-	scheduleType: SegmentActivationScheduleTypes.Between,
+	scheduleType: SegmentActivationScheduleTypes.Indefinitely,
 	segmentActivationId: '1'
 };
 

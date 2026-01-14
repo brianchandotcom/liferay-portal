@@ -231,8 +231,7 @@ public class ConfigurationFilterStringUtilTest {
 	@Test
 	public void testGetPortletScopedFilterString() throws Exception {
 		String filterString =
-			ConfigurationFilterStringUtil.getPortletScopedFilterString(
-				null, null, null);
+			ConfigurationFilterStringUtil.getPortletScopedFilterString(null);
 
 		_test(
 			false, filterString,
@@ -247,65 +246,31 @@ public class ConfigurationFilterStringUtilTest {
 		_test(
 			true, filterString,
 			HashMapBuilder.<String, Serializable>put(
-				"groupId", "any"
-			).put(
 				"portletInstanceId", "any"
-			).build());
-		_test(
-			true, filterString,
-			HashMapBuilder.<String, Serializable>put(
-				"portletInstanceId", "any"
-			).put(
-				"siteExternalReferenceCode", "any"
 			).build());
 
-		Long groupId = RandomTestUtil.randomLong();
 		String portletInstanceId = RandomTestUtil.randomString();
-		String siteExternalReferenceCode = RandomTestUtil.randomString();
 
 		filterString =
 			ConfigurationFilterStringUtil.getPortletScopedFilterString(
-				groupId, portletInstanceId, siteExternalReferenceCode);
+				portletInstanceId);
 
 		_test(
 			false, filterString,
 			HashMapBuilder.<String, Serializable>put(
-				"groupId", "any"
-			).put(
-				"portletInstanceId", portletInstanceId
-			).build());
-		_test(
-			false, filterString,
-			HashMapBuilder.<String, Serializable>put(
-				"groupId", groupId
-			).put(
 				"portletInstanceId", "any"
 			).build());
 		_test(
-			false, filterString,
-			HashMapBuilder.<String, Serializable>put(
-				"portletInstanceId", portletInstanceId
-			).build());
-		_test(
-			true, filterString,
-			HashMapBuilder.<String, Serializable>put(
-				"groupId", groupId
-			).put(
-				"portletInstanceId", portletInstanceId
-			).build());
-		_test(
 			true, filterString,
 			HashMapBuilder.<String, Serializable>put(
 				"portletInstanceId", portletInstanceId
-			).put(
-				"siteExternalReferenceCode", siteExternalReferenceCode
 			).build());
 
 		String pid = "foo.scoped~123";
 
 		filterString =
 			ConfigurationFilterStringUtil.getPortletScopedFilterString(
-				null, pid, null, null);
+				pid, null);
 
 		String rawPid = ConfigurationPidUtil.getRawPid(pid);
 
@@ -313,8 +278,6 @@ public class ConfigurationFilterStringUtilTest {
 			false, filterString,
 			HashMapBuilder.<String, Serializable>put(
 				ConfigurationAdmin.SERVICE_FACTORYPID, rawPid
-			).put(
-				"groupId", "any"
 			).put(
 				"portletInstanceId", "any"
 			).build());
@@ -324,8 +287,6 @@ public class ConfigurationFilterStringUtilTest {
 				ConfigurationAdmin.SERVICE_FACTORYPID, rawPid
 			).put(
 				Constants.SERVICE_PID, pid
-			).put(
-				"groupId", "any"
 			).put(
 				"portletInstanceId", "any"
 			).build());

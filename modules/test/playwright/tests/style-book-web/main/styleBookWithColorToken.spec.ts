@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
@@ -21,6 +21,14 @@ const test = mergeTests(
 	pagesAdminPagesTest,
 	styleBookPageTest
 );
+
+const STYLEBOOK_BRAND_COLOR_1 = 'Brand Color 1';
+const STYLEBOOK_BRAND_COLOR_2 = 'Brand Color 2';
+const STYLEBOOK_BRAND_COLORS_SECTION = 'Brand Colors';
+
+async function waitForInvalidTokenMessage(page: Page, message: string) {
+	await expect(page.getByText(message)).toBeVisible();
+}
 
 test(
 	'Assert the reference will be autocompleted as 6 digit characters, if the user fill out 3 digit characters when clicking on the tab, intro or outside the output.',
@@ -72,17 +80,10 @@ test(
 	'Check if the user could cancel publish process in style book editor if link invalid color token.',
 	{tag: '@LPS-145650'},
 	async ({page, site, styleBooksPage}) => {
-		const STYLEBOOK_CATEGORY = 'Brand Color 1';
+		const INVALID_TOKEN_MESSAGE = 'Tokens cannot reference itself.';
 		const STYLEBOOK_CATEGORY_VALUE = '#00CCBB';
-		const STYLEBOOK_SECTION = 'Brand Colors';
 
 		const styleBookName = getRandomString();
-
-		async function waitForInvalidTokenMessage() {
-			await expect(
-				page.getByText('Tokens cannot reference itself.')
-			).toBeVisible();
-		}
 
 		await test.step('Create a style book', async () => {
 			await styleBooksPage.goto(site.friendlyUrlPath);
@@ -92,12 +93,12 @@ test(
 
 		await test.step('Change the Brand Color 1 to an invalid color token', async () => {
 			await styleBooksPage.updateTokenInputColor(
-				STYLEBOOK_CATEGORY,
-				STYLEBOOK_CATEGORY,
-				STYLEBOOK_SECTION
+				STYLEBOOK_BRAND_COLOR_1,
+				STYLEBOOK_BRAND_COLOR_1,
+				STYLEBOOK_BRAND_COLORS_SECTION
 			);
 
-			await waitForInvalidTokenMessage();
+			await waitForInvalidTokenMessage(page, INVALID_TOKEN_MESSAGE);
 		});
 
 		await test.step('Cancel the publish process', async () => {
@@ -105,14 +106,14 @@ test(
 		});
 
 		await test.step('View the invalid color token is still shown in Brand Color 1 field', async () => {
-			await waitForInvalidTokenMessage();
+			await waitForInvalidTokenMessage(page, INVALID_TOKEN_MESSAGE);
 		});
 
 		await test.step('Insert an valid color token in Brand Color 1 field then publish', async () => {
 			await styleBooksPage.updateTokenInputColor(
-				STYLEBOOK_CATEGORY,
+				STYLEBOOK_BRAND_COLOR_1,
 				STYLEBOOK_CATEGORY_VALUE,
-				STYLEBOOK_SECTION
+				STYLEBOOK_BRAND_COLORS_SECTION
 			);
 
 			await styleBooksPage.waitForAutoSave();
@@ -124,8 +125,45 @@ test(
 			await styleBooksPage.edit(styleBookName);
 
 			await styleBooksPage.assertTokenInputValue(
-				STYLEBOOK_CATEGORY,
+				STYLEBOOK_BRAND_COLOR_1,
 				STYLEBOOK_CATEGORY_VALUE
+			);
+		});
+	}
+);
+
+test(
+	'Check that the user cannot refer two tokens mutually.',
+	{tag: '@LPS-141568'},
+	async ({page, site, styleBooksPage}) => {
+		const styleBookName = getRandomString();
+
+		await test.step('Create a style book', async () => {
+			await styleBooksPage.goto(site.friendlyUrlPath);
+
+			await styleBooksPage.create(styleBookName);
+		});
+
+		await test.step('Change the Brand Color 1 to Brand Color 2', async () => {
+			await styleBooksPage.updateTokenInputColor(
+				STYLEBOOK_BRAND_COLOR_2,
+				STYLEBOOK_BRAND_COLOR_1,
+				STYLEBOOK_BRAND_COLORS_SECTION
+			);
+
+			await styleBooksPage.waitForAutoSave();
+		});
+
+		await test.step('Assert that is not possible to refer Brand Color 2 to Brand Color 1', async () => {
+			await styleBooksPage.updateTokenInputColor(
+				STYLEBOOK_BRAND_COLOR_1,
+				STYLEBOOK_BRAND_COLOR_2,
+				STYLEBOOK_BRAND_COLORS_SECTION
+			);
+
+			await waitForInvalidTokenMessage(
+				page,
+				'Tokens cannot be mutually referenced.'
 			);
 		});
 	}

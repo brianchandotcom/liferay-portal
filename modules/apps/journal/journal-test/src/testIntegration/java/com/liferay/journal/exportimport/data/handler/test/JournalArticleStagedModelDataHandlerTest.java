@@ -752,6 +752,9 @@ public class JournalArticleStagedModelDataHandlerTest
 		}
 
 		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			StagedModel exportedStagedModel = readExportedStagedModel(
+				journalArticle);
+
 			portletDataContext.setDataStrategy(
 				PortletDataHandlerKeys.DATA_STRATEGY_COPY_AS_NEW);
 

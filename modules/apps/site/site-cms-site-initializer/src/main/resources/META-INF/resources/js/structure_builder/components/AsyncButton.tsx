@@ -5,37 +5,29 @@
 
 import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import React, {useState} from 'react';
-
-type Props = {
-	disabled?: boolean;
-	displayType?: 'primary' | 'secondary';
-	label: string;
-	onClick: () => Promise<void>;
-};
+import React from 'react';
 
 type Status = 'loading' | 'idle';
 
+type Props = {
+	displayType?: 'primary' | 'secondary';
+	label: string;
+	onClick: () => Promise<void>;
+	status: Status;
+};
+
 export default function AsyncButton({
-	disabled,
 	displayType = 'primary',
 	label,
 	onClick,
+	status,
 }: Props) {
-	const [status, setStatus] = useState<Status>('idle');
-
 	return (
 		<ClayButton
 			className="align-items-center c-gap-2 d-flex"
-			disabled={disabled || status === 'loading'}
+			disabled={status === 'loading'}
 			displayType={displayType}
-			onClick={async () => {
-				setStatus('loading');
-
-				await onClick();
-
-				setStatus('idle');
-			}}
+			onClick={onClick}
 			size="sm"
 		>
 			{status === 'loading' ? (

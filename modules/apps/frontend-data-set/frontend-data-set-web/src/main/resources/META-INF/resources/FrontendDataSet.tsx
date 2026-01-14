@@ -356,14 +356,18 @@ const FrontendDataSetContent = ({
 				tableSchema.fields.forEach((field: IField) => {
 					const fieldName: string = String(field.fieldName);
 
-					if (visibleFieldNames[fieldName] !== undefined) {
+					const updatedFieldName = fieldName.includes('.')
+						? fieldName.replaceAll('.', ',')
+						: fieldName;
+
+						if (visibleFieldNames[fieldName] !== undefined) {
 						{
-							updatedVisibleFieldNames[fieldName] =
+							updatedVisibleFieldNames[updatedFieldName] =
 								visibleFieldNames[fieldName];
 						}
 					}
 					else {
-						updatedVisibleFieldNames[fieldName] = true;
+						updatedVisibleFieldNames[updatedFieldName] = true;
 					}
 				});
 

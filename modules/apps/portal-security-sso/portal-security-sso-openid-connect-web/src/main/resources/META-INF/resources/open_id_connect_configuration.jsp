@@ -194,17 +194,14 @@ OpenIdConnectProviderConfigurationDisplayContext openIdConnectProviderConfigurat
 	</aui:script>
 </c:if>
 
-<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-20879") %>'>
+<%
+String matcherField = openIdConnectProviderConfigurationDisplayContext.getMatcherField();
+%>
 
-	<%
-	String matcherField = openIdConnectProviderConfigurationDisplayContext.getMatcherField();
-	%>
-
-	<aui:select helpMessage="matcher-field-help" label="matcher-field" name="matcherField" required="<%= true %>" type="text">
-		<aui:option label="email" selected='<%= Objects.equals(matcherField, "email") %>' value="email" />
-		<aui:option label="screen-name" selected='<%= Objects.equals(matcherField, "screenName") %>' value="screenName" />
-	</aui:select>
-</c:if>
+<aui:select helpMessage="matcher-field-help" label="matcher-field" name="matcherField" required="<%= true %>" type="text">
+	<aui:option label="email" selected='<%= Objects.equals(matcherField, "email") %>' value="email" />
+	<aui:option label="screen-name" selected='<%= Objects.equals(matcherField, "screenName") %>' value="screenName" />
+</aui:select>
 
 <aui:script use="liferay-auto-fields">
 	new Liferay.AutoFields({

@@ -81,7 +81,6 @@ public interface OpenIdConnectProviderConfiguration {
 	)
 	public String jwksURI();
 
-	@ExtendedAttributeDefinition(featureFlagKey = "LPD-20879")
 	@Meta.AD(
 		deflt = "email", description = "matcher-field-help",
 		name = "matcher-field"

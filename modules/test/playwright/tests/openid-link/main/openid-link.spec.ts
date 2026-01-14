@@ -27,7 +27,6 @@ const test = mergeTests(
 	dataApiHelpersTest,
 	openIdSettingsPagesTest,
 	featureFlagsTest({
-		'LPD-20879': {enabled: true},
 		'LPD-57332': {enabled: true},
 	}),
 	loginTest(),

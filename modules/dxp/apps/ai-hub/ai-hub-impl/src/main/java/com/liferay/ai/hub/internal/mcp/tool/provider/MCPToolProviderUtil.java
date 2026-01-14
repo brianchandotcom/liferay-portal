@@ -90,7 +90,7 @@ public class MCPToolProviderUtil {
 		String url = GetterUtil.getString(properties.get("url"));
 
 		Map<String, String> customHeaders = _createCustomHeaders(
-			GetterUtil.getString(properties.get("authenticationArguments")));
+			GetterUtil.getString(properties.get("authArguments")));
 
 		if (url.endsWith("/sse")) {
 			return new HttpMcpTransport.Builder(

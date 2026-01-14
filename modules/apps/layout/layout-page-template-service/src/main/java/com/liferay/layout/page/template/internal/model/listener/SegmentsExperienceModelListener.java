@@ -6,17 +6,12 @@
 package com.liferay.layout.page.template.internal.model.listener;
 
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.segments.model.SegmentsExperience;
-
-import jakarta.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -44,26 +39,6 @@ public class SegmentsExperienceModelListener
 							segmentsExperience.getSegmentsExperienceId(),
 							segmentsExperience.getPlid())) {
 
-				for (String portletId :
-						_portletRegistry.getFragmentEntryLinkPortletIds(
-							fragmentEntryLink)) {
-
-					PortletPreferences jxPortletPreferences =
-						_portletPreferencesLocalService.fetchPreferences(
-							fragmentEntryLink.getCompanyId(),
-							PortletKeys.PREFS_OWNER_ID_DEFAULT,
-							PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-							fragmentEntryLink.getPlid(), portletId);
-
-					if (jxPortletPreferences != null) {
-						_portletPreferencesLocalService.
-							deletePortletPreferences(
-								PortletKeys.PREFS_OWNER_ID_DEFAULT,
-								PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-								fragmentEntryLink.getPlid(), portletId);
-					}
-				}
-
 				_fragmentEntryLinkLocalService.deleteFragmentEntryLink(
 					fragmentEntryLink);
 			}
@@ -79,11 +54,5 @@ public class SegmentsExperienceModelListener
 	@Reference(unbind = "-")
 	private LayoutPageTemplateStructureRelLocalService
 		_layoutPageTemplateStructureRelLocalService;
-
-	@Reference
-	private PortletPreferencesLocalService _portletPreferencesLocalService;
-
-	@Reference
-	private PortletRegistry _portletRegistry;
 
 }

@@ -8,6 +8,7 @@ import SegmentProfileCard from 'segment/components/ProfileCard';
 import {debounce} from 'lodash';
 import {ReferencedObjectsProvider} from 'segment/segment-editor/dynamic/context/referencedObjects';
 import {Segment} from 'shared/util/records';
+import {SegmentActivationCard} from 'segment/components/SegmentActivationCard';
 import {SegmentTypes} from 'shared/util/constants';
 import {useTimeZone} from 'shared/hooks/useTimeZone';
 
@@ -53,6 +54,10 @@ const Overview: React.FC<IOverviewProps> = ({channelId, groupId, segment}) => {
 	return (
 		<div className='overview-layout'>
 			<div className='overview-column-main'>
+				<SegmentActivationCard
+					segmentActivation={segment.activationStatus}
+				/>
+
 				<SegmentProfileCard
 					channelId={channelId}
 					groupId={groupId}

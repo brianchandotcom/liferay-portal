@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.props.test.util.PropsTemporarySwapper;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -80,7 +81,10 @@ public class FunctionCaptchaImplTest {
 
 		String servicePid = StringUtil.extractLast(pid, StringPool.TILDE);
 
-		try (CompanyConfigurationTemporarySwapper
+		try (PropsTemporarySwapper propsTemporarySwapper =
+				new PropsTemporarySwapper(
+					"captcha.enforce.disabled", Boolean.FALSE.toString());
+			CompanyConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper =
 					new CompanyConfigurationTemporarySwapper(
 						TestPropsValues.getCompanyId(),
@@ -90,6 +94,12 @@ public class FunctionCaptchaImplTest {
 							"captchaEngine",
 							"com.liferay.captcha.internal.function.captcha." +
 								"FunctionCaptchaImpl#" + servicePid
+						).put(
+							"createAccountCaptchaEnabled", true
+						).put(
+							"maxChallenges", 1
+						).put(
+							"sendPasswordCaptchaEnabled", true
 						).build())) {
 
 			Assert.assertTrue(

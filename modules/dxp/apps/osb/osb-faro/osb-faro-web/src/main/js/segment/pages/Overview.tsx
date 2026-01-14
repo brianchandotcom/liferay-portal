@@ -79,12 +79,6 @@ const Overview: React.FC<IOverviewProps> = ({channelId, groupId, segment}) => {
 			</div>
 
 			<div className='overview-column-side' ref={_sideColumnRef}>
-				<CompositionCard
-					activeIndividualCount={activeIndividualCount}
-					individualCount={individualCount}
-					knownIndividualCount={knownIndividualCount}
-				/>
-
 				<ReferencedObjectsProvider segment={segment}>
 					<CriteriaCard
 						criteriaString={criteriaString}
@@ -93,6 +87,12 @@ const Overview: React.FC<IOverviewProps> = ({channelId, groupId, segment}) => {
 						timeZoneId={timeZoneId}
 					/>
 				</ReferencedObjectsProvider>
+
+				<CompositionCard
+					activeIndividualCount={activeIndividualCount}
+					individualCount={individualCount}
+					knownIndividualCount={knownIndividualCount}
+				/>
 			</div>
 		</div>
 	);

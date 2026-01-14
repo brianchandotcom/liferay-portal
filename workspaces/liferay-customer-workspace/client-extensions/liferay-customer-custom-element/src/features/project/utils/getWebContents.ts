@@ -37,7 +37,7 @@ export function getWebContents(
 						(productName) =>
 							productName === subscriptionGroup?.name ||
 							subscriptionGroup.activationProductName
-								.split(',')
+								?.split(',')
 								.includes(productName)
 					);
 
@@ -74,7 +74,7 @@ export function getWebContents(
 			subscriptionGroup.name === PRODUCT_TYPES.dxp ||
 			(subscriptionGroup.name === PRODUCT_TYPES.liferayCloud &&
 				subscriptionGroup.activationProductName
-					.split(',')
+					?.split(',')
 					.includes(PRODUCT_TYPES.dxpCloud) &&
 				subscriptionGroup.activationStatus === 'Active')
 	);

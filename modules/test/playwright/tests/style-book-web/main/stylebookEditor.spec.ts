@@ -520,6 +520,36 @@ test.describe('Cannot preview style book', () => {
 	});
 });
 
+test(
+	'The back button displays a tooltip with its title when hovered',
+	{tag: '@LPD-66976'},
+	async ({page, site, styleBooksPage}) => {
+		await test.step('Go to Style Book editor', async () => {
+			await styleBooksPage.goto(site.friendlyUrlPath);
+
+			await styleBooksPage.create(getRandomString());
+		});
+
+		await test.step('Assert the tooltip is visible when the back button is hovered', async () => {
+			const title = 'Go to Style Books';
+
+			const backButton = page
+				.locator('.control-menu-nav-item')
+				.getByTitle(title);
+
+			await expect(backButton).toBeVisible();
+
+			const tooltip = page.getByRole('tooltip', {name: title});
+
+			await expect(tooltip).toBeHidden();
+
+			await backButton.hover();
+
+			await expect(tooltip).toBeVisible();
+		});
+	}
+);
+
 const themeScopedTest = mergeTests(
 	isolatedSiteTest,
 	loginTest(),

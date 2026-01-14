@@ -40,6 +40,8 @@ async function checkCookies(
 }
 
 export async function clearProductAnalyticsCookies(page: Page) {
+	await page.waitForLoadState();
+
 	await page.context().clearCookies({name: /^PRODUCT_ANALYTICS/});
 
 	await page.reload({waitUntil: 'domcontentloaded'});

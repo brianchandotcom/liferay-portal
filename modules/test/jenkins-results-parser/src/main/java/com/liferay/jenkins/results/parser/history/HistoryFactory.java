@@ -3,7 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.jenkins.results.parser;
+package com.liferay.jenkins.results.parser.history;
+
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.Job;
+import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
+import com.liferay.jenkins.results.parser.PortalTestClassJob;
+import com.liferay.jenkins.results.parser.TestSuiteJob;
 
 import java.io.IOException;
 
@@ -13,24 +19,26 @@ import java.util.Map;
 /**
  * @author Michael Hashimoto
  */
-public class HistoryUtil {
+public class HistoryFactory {
 
-	public static JobHistory getJobHistory(Job job) {
+	public static JobHistory newJobHistory(Job job) {
 		String ciHistoryURL = _getCIHistoryURL(job);
 
 		if (ciHistoryURL == null) {
 			return null;
 		}
 
-		JobHistory jobHistory = _jobHistories.get(ciHistoryURL);
+		synchronized (_jobHistories) {
+			JobHistory jobHistory = _jobHistories.get(ciHistoryURL);
 
-		if (jobHistory == null) {
-			jobHistory = new JobHistory(ciHistoryURL);
+			if (jobHistory == null) {
+				jobHistory = new DefaultJobHistory(ciHistoryURL);
 
-			_jobHistories.put(ciHistoryURL, jobHistory);
+				_jobHistories.put(ciHistoryURL, jobHistory);
+			}
+
+			return jobHistory;
 		}
-
-		return jobHistory;
 	}
 
 	private static String _getCIHistoryURL(Job job) {

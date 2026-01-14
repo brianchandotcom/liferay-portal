@@ -1,9 +1,13 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.jenkins.results.parser;
+package com.liferay.jenkins.results.parser.history;
+
+import com.liferay.jenkins.results.parser.BatchHistory;
+import com.liferay.jenkins.results.parser.CloudBucketUtil;
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +15,9 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,8 +28,14 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class JobHistory {
+public abstract class BaseJobHistory implements JobHistory {
 
+	@Override
+	public List<BatchHistory> getBatchHistories() {
+		return new ArrayList<>(_batchHistories.values());
+	}
+
+	@Override
 	public BatchHistory getBatchHistory(String batchName) {
 		Matcher matcher = _pattern.matcher(batchName);
 
@@ -38,15 +50,17 @@ public class JobHistory {
 		return _batchHistories.get(batchName);
 	}
 
+	@Override
 	public URL getTestrayURL() {
 		return _testrayURL;
 	}
 
+	@Override
 	public String getUpstreamBranchName() {
 		return _upstreamBranchName;
 	}
 
-	protected JobHistory(String ciHistoryURL) {
+	protected BaseJobHistory(String ciHistoryURL) {
 		JSONObject ciHistoryJSONObject = _getCIHistoryJSONObject(ciHistoryURL);
 
 		if (ciHistoryJSONObject == null) {

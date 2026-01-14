@@ -10,3 +10,4 @@ export {default as ProjectsFDSPropsTransformer} from './components/props_transfo
 export {default as TasksFDSPropsTransformer} from './components/props_transformer/TasksFDSPropsTransformer';
 export {default as TaskInfoSummary} from './components/task/TaskInfoSummary';
 export {default as TasksOverview} from './components/task/TasksOverview';
+export {default as TasksQuickFilters} from './components/task/TasksQuickFilters';

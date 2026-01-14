@@ -11,6 +11,12 @@
 ViewTasksSectionDisplayContext viewTasksSectionDisplayContext = (ViewTasksSectionDisplayContext)request.getAttribute(ViewTasksSectionDisplayContext.class.getName());
 %>
 
+<div>
+	<react:component
+		module="{TasksQuickFilters} from site-cmp-site-initializer"
+	/>
+</div>
+
 <div class="cms-section custom-empty-state">
 	<frontend-data-set:headless-display
 		apiURL="<%= viewTasksSectionDisplayContext.getAPIURL() %>"

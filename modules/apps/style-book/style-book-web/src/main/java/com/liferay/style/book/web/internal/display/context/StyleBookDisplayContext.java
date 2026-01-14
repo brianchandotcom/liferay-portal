@@ -133,7 +133,7 @@ public class StyleBookDisplayContext {
 					styleBookEntriesSearchContainer.getOrderByComparator()));
 
 			styleBookEntriesSearchContainer.setResultsAndTotal(
-				() -> styleBookEntries, styleBookEntriesCount + 1);
+				() -> styleBookEntries, styleBookEntriesCount);
 		}
 
 		if (StyleBookPermission.contains(

@@ -265,7 +265,28 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 			return classPKInfoItemIdentifier.getClassPK();
 		}
 
-		return 0;
+		if (infoItemFieldMapped.getObject() == null) {
+			return 0;
+		}
+
+		InfoItemDetailsProvider infoItemDetailsProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemDetailsProvider.class,
+				infoItemFieldMapped.getClassName());
+
+		InfoItemDetails infoItemDetails =
+			infoItemDetailsProvider.getInfoItemDetails(
+				scopeGroupId, ClassPKInfoItemIdentifier.class,
+				infoItemFieldMapped.getObject());
+
+		InfoItemReference infoItemReference =
+			infoItemDetails.getInfoItemReference();
+
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)
+				infoItemReference.getInfoItemIdentifier();
+
+		return classPKInfoItemIdentifier.getClassPK();
 	}
 
 	@Reference

@@ -844,7 +844,8 @@ function reducer(state: State, action: Action): State {
 					erc,
 					label,
 					spaces,
-					...(!isPublished && 'name' in action && {name: nextName}),
+					...(!isPublished &&
+						nextName !== structure.name && {name: nextName}),
 				},
 				objectDefinitions,
 			});

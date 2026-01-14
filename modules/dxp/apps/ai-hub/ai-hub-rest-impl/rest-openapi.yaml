@@ -41,6 +41,8 @@ components:
             type: object
         TaskDefinition:
             properties:
+                active:
+                    type: boolean
                 description:
                     type: string
                 name:

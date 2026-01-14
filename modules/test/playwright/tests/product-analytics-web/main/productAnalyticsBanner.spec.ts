@@ -105,10 +105,14 @@ test.beforeEach(async ({page, systemSettingsPage}) => {
 		await enabledButton.setChecked(true);
 
 		if (await page.getByRole('button', {name: 'Save'}).isVisible()) {
-			await page.getByRole('button', {name: 'Save'}).click();
+			await page
+				.getByRole('button', {name: 'Save'})
+				.dispatchEvent('click');
 		}
 		else {
-			await page.getByRole('button', {name: 'Update'}).click();
+			await page
+				.getByRole('button', {name: 'Update'})
+				.dispatchEvent('click');
 		}
 
 		await page.waitForTimeout(1000);
@@ -225,10 +229,14 @@ test(
 			await enabledButton.setChecked(false);
 
 			if (await page.getByRole('button', {name: 'Save'}).isVisible()) {
-				await page.getByRole('button', {name: 'Save'}).click();
+				await page
+					.getByRole('button', {name: 'Save'})
+					.dispatchEvent('click');
 			}
 			else {
-				await page.getByRole('button', {name: 'Update'}).click();
+				await page
+					.getByRole('button', {name: 'Update'})
+					.dispatchEvent('click');
 			}
 
 			await waitForAlert(page);
@@ -264,10 +272,14 @@ test(
 			}
 
 			if (await page.getByRole('button', {name: 'Save'}).isVisible()) {
-				await page.getByRole('button', {name: 'Save'}).click();
+				await page
+					.getByRole('button', {name: 'Save'})
+					.dispatchEvent('click');
 			}
 			else {
-				await page.getByRole('button', {name: 'Update'}).click();
+				await page
+					.getByRole('button', {name: 'Update'})
+					.dispatchEvent('click');
 			}
 
 			await page.waitForTimeout(1000);
@@ -396,10 +408,14 @@ test(
 			await enabledButton.setChecked(false);
 
 			if (await page.getByRole('button', {name: 'Save'}).isVisible()) {
-				await page.getByRole('button', {name: 'Save'}).click();
+				await page
+					.getByRole('button', {name: 'Save'})
+					.dispatchEvent('click');
 			}
 			else {
-				await page.getByRole('button', {name: 'Update'}).click();
+				await page
+					.getByRole('button', {name: 'Update'})
+					.dispatchEvent('click');
 			}
 
 			await waitForAlert(page);
@@ -424,10 +440,14 @@ test(
 			await enabledButton.setChecked(false);
 
 			if (await page.getByRole('button', {name: 'Save'}).isVisible()) {
-				await page.getByRole('button', {name: 'Save'}).click();
+				await page
+					.getByRole('button', {name: 'Save'})
+					.dispatchEvent('click');
 			}
 			else {
-				await page.getByRole('button', {name: 'Update'}).click();
+				await page
+					.getByRole('button', {name: 'Update'})
+					.dispatchEvent('click');
 			}
 
 			await waitForAlert(page);

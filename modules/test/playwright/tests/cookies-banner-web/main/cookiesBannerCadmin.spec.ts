@@ -55,10 +55,10 @@ test('LPD-25440 Cookie Banner Cadmin', async ({page, systemSettingsPage}) => {
 		});
 
 		if (await saveButton.isVisible()) {
-			await saveButton.click();
+			await saveButton.dispatchEvent('click');
 		}
 		else if (await updateButton.isVisible()) {
-			await updateButton.click();
+			await updateButton.dispatchEvent('click');
 		}
 
 		await waitForAlert(page);

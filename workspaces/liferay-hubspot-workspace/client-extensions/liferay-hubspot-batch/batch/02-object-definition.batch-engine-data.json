@@ -32,11 +32,11 @@
 					"description": "",
 					"errorMessage": {
 					},
-					"externalReferenceCode": "H1S4_ON_CREATE_COMPANY",
+					"externalReferenceCode": "H1S4_ADD_COMPANY",
 					"label": {
-						"en_US": "Liferay HubSpot Etc Spring Boot Object Action Company"
+						"en_US": "H1S4 Add Company"
 					},
-					"name": "onCreateCompany",
+					"name": "h1s4AddCompany",
 					"objectActionExecutorKey": "function#liferay-hubspot-etc-spring-boot-object-action-company",
 					"objectActionTriggerKey": "onAfterAdd",
 					"parameters": {
@@ -186,11 +186,11 @@
 					"description": "",
 					"errorMessage": {
 					},
-					"externalReferenceCode": "H1S4_ON_CREATE_CONTACT",
+					"externalReferenceCode": "H1S4_ADD_CONTACT",
 					"label": {
-						"en_US": "Liferay HubSpot Etc Spring Boot Object Action Contact"
+						"en_US": "H1S4 Add Contact"
 					},
-					"name": "onCreateContact",
+					"name": "h1s4AddContact",
 					"objectActionExecutorKey": "function#liferay-hubspot-etc-spring-boot-object-action-contact",
 					"objectActionTriggerKey": "onAfterAdd",
 					"parameters": {
@@ -355,11 +355,11 @@
 					"description": "",
 					"errorMessage": {
 					},
-					"externalReferenceCode": "H1S4_ON_CREATE_LEAD",
+					"externalReferenceCode": "H1S4_ADD_LEAD",
 					"label": {
-						"en_US": "Liferay HubSpot Etc Spring Boot Object Action Lead"
+						"en_US": "H1S4 Add Lead"
 					},
-					"name": "onCreateLead",
+					"name": "h1s4AddLead",
 					"objectActionExecutorKey": "function#liferay-hubspot-etc-spring-boot-object-action-lead",
 					"objectActionTriggerKey": "onAfterAdd",
 					"parameters": {

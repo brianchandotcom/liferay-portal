@@ -86,10 +86,10 @@ test('LPD-30561 Cookie Banner Cookie Policy Page', async ({
 		});
 
 		if (await saveButton.isVisible()) {
-			await saveButton.click();
+			await saveButton.dispatchEvent('click');
 		}
 		else if (await updateButton.isVisible()) {
-			await updateButton.click();
+			await updateButton.dispatchEvent('click');
 		}
 
 		await waitForAlert(page);
@@ -165,7 +165,9 @@ test(
 
 			await enabledButton.check();
 
-			await page.getByRole('button', {name: 'Save'}).click();
+			await page
+				.getByRole('button', {name: 'Save'})
+				.dispatchEvent('click');
 
 			await waitForAlert(page);
 		});

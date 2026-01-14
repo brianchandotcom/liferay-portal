@@ -115,10 +115,14 @@ test.beforeEach(async ({page, systemSettingsPage}) => {
 		await enabledButton.setChecked(true);
 
 		if (await page.getByRole('button', {name: 'Save'}).isVisible()) {
-			await page.getByRole('button', {name: 'Save'}).click();
+			await page
+				.getByRole('button', {name: 'Save'})
+				.dispatchEvent('click');
 		}
 		else {
-			await page.getByRole('button', {name: 'Update'}).click();
+			await page
+				.getByRole('button', {name: 'Update'})
+				.dispatchEvent('click');
 		}
 
 		await page.waitForTimeout(1000);

@@ -576,6 +576,24 @@ public class EditableFragmentEntryProcessorTest {
 					"display_page.json",
 				StringPool.BLANK),
 			fieldId, "displayPage");
+
+		Group group = GroupTestUtil.addGroup();
+
+		ObjectEntry scopedObjectEntry = _addObjectEntry(
+			group.getGroupId(), objectDefinition.getObjectDefinitionId());
+
+		displayPageURL = _getDisplayPageURL(
+			objectDefinition.getClassName(), classNameId, scopedObjectEntry);
+
+		_testFragmentEntryProcessorEditableActionMappedActionOnSuccessDisplayPage(
+			classNameId, scopedObjectEntry.getPrimaryKey(), displayPageURL,
+			_getEditableValues(
+				classNameId, 0, scopedObjectEntry.getExternalReferenceCode(),
+				fieldId,
+				"action/editable_values_action_mapped_action_on_success_" +
+					"display_page.json",
+				group.getExternalReferenceCode()),
+			fieldId, "displayPage");
 	}
 
 	@Test
@@ -1980,9 +1998,14 @@ public class EditableFragmentEntryProcessorTest {
 	private ObjectEntry _addObjectEntry(long objectDefinitionId)
 		throws Exception {
 
+		return _addObjectEntry(_group.getGroupId(), objectDefinitionId);
+	}
+
+	private ObjectEntry _addObjectEntry(long groupId, long objectDefinitionId)
+		throws Exception {
+
 		return _objectEntryLocalService.addObjectEntry(
-			_group.getGroupId(), TestPropsValues.getUserId(),
-			objectDefinitionId,
+			groupId, TestPropsValues.getUserId(), objectDefinitionId,
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			null,
 			HashMapBuilder.<String, Serializable>put(
@@ -2030,7 +2053,7 @@ public class EditableFragmentEntryProcessorTest {
 		throws Exception {
 
 		DisplayPageTemplateTestUtil.addDisplayPageTemplate(
-			_group.getGroupId(), classNameId, 0, true,
+			objectEntry.getGroupId(), classNameId, 0, true,
 			WorkflowConstants.STATUS_APPROVED);
 
 		InfoItemFieldValuesProvider infoItemFieldValuesProvider =

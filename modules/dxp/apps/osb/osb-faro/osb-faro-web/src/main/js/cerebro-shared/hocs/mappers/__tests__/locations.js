@@ -1,5 +1,3 @@
-jest.unmock('clay-charts');
-
 import {getLocationsMapper, getLocationsMapperCountries} from '../locations';
 
 const ASSET_ID = 'formId';

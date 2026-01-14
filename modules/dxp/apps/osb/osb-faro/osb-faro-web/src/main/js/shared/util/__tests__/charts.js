@@ -1,5 +1,3 @@
-jest.unmock('clay-charts');
-
 import moment from 'moment';
 import {
 	dateRangeFormatter,

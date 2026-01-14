@@ -1,5 +1,3 @@
-jest.unmock('clay-charts');
-
 import {
 	getFinitePercent,
 	toDuration,

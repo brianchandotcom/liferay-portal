@@ -36,7 +36,6 @@ const config = {
 					alias: {
 						assets: resolveModule('assets'),
 						'cerebro-shared': resolveModule('cerebro-shared'),
-						'clay-charts-react': resolveModule('clay-charts-react'),
 						commerce: resolveModule('commerce'),
 						contacts: resolveModule('contacts'),
 						'custom-types': resolveModule('custom-types'),

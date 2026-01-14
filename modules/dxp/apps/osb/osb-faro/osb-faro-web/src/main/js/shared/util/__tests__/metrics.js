@@ -1,5 +1,3 @@
-jest.unmock('clay-charts');
-
 import {Colors} from 'shared/util/charts';
 import {getIcon, getStatsColor, Icons} from '../metrics';
 

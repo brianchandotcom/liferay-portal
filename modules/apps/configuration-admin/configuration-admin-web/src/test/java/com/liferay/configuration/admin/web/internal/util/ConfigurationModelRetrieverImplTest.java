@@ -255,20 +255,10 @@ public class ConfigurationModelRetrieverImplTest {
 			).put(
 				"groupId", "any"
 			).build());
-
-		_test(
-			false, pidFilterString,
-			HashMapBuilder.put(
-				key, pid
-			).put(
-				"portletInstanceId", "any"
-			).build());
 		_test(
 			true, pidFilterString,
 			HashMapBuilder.put(
 				key, pid
-			).put(
-				"groupId", "any"
 			).put(
 				"portletInstanceId", "any"
 			).build());
@@ -276,8 +266,6 @@ public class ConfigurationModelRetrieverImplTest {
 			true, pidFilterString,
 			HashMapBuilder.put(
 				key, pid + ".scoped"
-			).put(
-				"groupId", "any"
 			).put(
 				"portletInstanceId", "any"
 			).build());

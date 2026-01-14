@@ -380,7 +380,7 @@ public class ConfigurationModelRetrieverImpl
 		}
 
 		return ConfigurationFilterStringUtil.getPortletScopedFilterString(
-			null, pid, null, null);
+			pid, null);
 	}
 
 	private BundleContext _bundleContext;

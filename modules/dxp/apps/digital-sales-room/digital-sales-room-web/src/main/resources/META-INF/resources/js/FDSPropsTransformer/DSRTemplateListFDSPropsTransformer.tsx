@@ -10,6 +10,7 @@ import {openModal} from 'frontend-js-components-web';
 
 import DSRTemplateInitializer from '../components/DSRTemplateInitializer';
 import deleteDSRAction from './actions/deleteDSRAction';
+import duplicateDSRAction from './actions/duplicateDSRAction';
 import DSRRoomNameRenderer from './cell_renderers/DSRRoomNameRenderer';
 
 export default function propsTransformer({
@@ -96,6 +97,14 @@ export default function propsTransformer({
 					title: Liferay.Language.get(
 						'delete-digital-sales-room-template-confirmation-title'
 					),
+				});
+			}
+			else if (action?.data?.id === 'duplicate') {
+				event?.preventDefault();
+
+				duplicateDSRAction({
+					groupId: itemData.id,
+					loadData,
 				});
 			}
 			else if (action?.data?.id === 'edit') {

@@ -53,7 +53,7 @@ const SegmentActivationCard: React.FC<ISegmentActivationCardProps> = ({
 			  ]);
 
 	return (
-		<Card className='segment-membership-root'>
+		<Card className='card-root'>
 			<Card.Header className='align-items-center d-flex justify-content-between'>
 				<Card.Title>{Liferay.Language.get('activations')}</Card.Title>
 			</Card.Header>

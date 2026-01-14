@@ -39,7 +39,7 @@ import getUuid from '../utils/getUuid';
 import insertGroup from '../utils/insertGroup';
 import isLocked from '../utils/isLocked';
 import isReferenced from '../utils/isReferenced';
-import normalizeName from '../utils/normalizeName';
+import normalizeString from '../utils/normalizeString';
 import refreshReferencedStructures from '../utils/refreshReferencedStructures';
 import sortChildren from '../utils/sortChildren';
 import ungroup from '../utils/ungroup';
@@ -988,7 +988,7 @@ function getNextName({
 
 	const localizedLabel = getLocalizedValue(action.label);
 
-	return normalizeName(localizedLabel, {
+	return normalizeString(localizedLabel, {
 		style: 'status' in item ? 'pascal' : 'camel',
 	});
 }

@@ -4,7 +4,7 @@
  */
 
 import getUuid from './getUuid';
-import normalizeName from './normalizeName';
+import normalizeString from './normalizeString';
 
 export default function getRandomName({
 	capitalize,
@@ -14,5 +14,5 @@ export default function getRandomName({
 	// We are using 28 as limit because it's the max length that is then
 	// supported in the objectDefinition when building relationships
 
-	return normalizeName(`${prefix}${getUuid()}`, {limit: 28});
+	return normalizeString(`${prefix}${getUuid()}`, {limit: 28});
 }

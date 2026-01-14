@@ -8,7 +8,7 @@ type Options = {
 	style?: 'camel' | 'pascal';
 };
 
-export default function normalizeName(
+export default function normalizeString(
 	name: string,
 	{limit, style}: Options = {}
 ) {

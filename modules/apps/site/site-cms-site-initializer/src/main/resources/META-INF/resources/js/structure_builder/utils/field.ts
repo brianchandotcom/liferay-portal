@@ -7,7 +7,7 @@ import {ObjectField} from '../../common/types/ObjectDefinition';
 import {Uuid} from '../types/Uuid';
 import getRandomId from './getRandomId';
 import getUuid from './getUuid';
-import normalizeName from './normalizeName';
+import normalizeString from './normalizeString';
 
 // Constants
 
@@ -216,7 +216,7 @@ export function getDefaultField({
 		},
 		localized: true,
 		locked,
-		name: name ?? normalizeName(FIELD_TYPE_LABEL[type], {style: 'camel'}),
+		name: name ?? normalizeString(FIELD_TYPE_LABEL[type], {style: 'camel'}),
 		parent,
 		required,
 		settings: {},

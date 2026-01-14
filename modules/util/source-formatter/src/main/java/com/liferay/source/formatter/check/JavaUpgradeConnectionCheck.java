@@ -37,6 +37,10 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 
 		JavaClass javaClass = (JavaClass)javaTerm;
 
+		if (javaClass.getParentJavaClass() != null) {
+			return javaTerm.getContent();
+		}
+
 		for (JavaTerm childJavaTerm : javaClass.getChildJavaTerms()) {
 			if (!childJavaTerm.isJavaMethod()) {
 				continue;
@@ -54,7 +58,7 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 
 			String methodContent = javaMethod.getContent();
 
-			int x = methodContent.indexOf("DataAccess.getConnection");
+			int x = methodContent.indexOf("DataAccess.getConnection(");
 
 			if (x == -1) {
 				continue;
@@ -62,8 +66,8 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 
 			addMessage(
 				fileName,
-				"Use existing connection field instead of " +
-					"DataAccess.getConnection",
+				"Use existing connection field instead of calling DataAccess." +
+					"getConnection",
 				getLineNumber(fileContent, x));
 		}
 

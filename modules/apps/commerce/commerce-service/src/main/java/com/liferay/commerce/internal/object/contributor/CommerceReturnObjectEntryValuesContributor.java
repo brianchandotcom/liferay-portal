@@ -17,6 +17,7 @@ import com.liferay.object.entry.ObjectEntryContext;
 import com.liferay.object.entry.contributor.ObjectEntryValuesContributor;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -127,14 +128,16 @@ public class CommerceReturnObjectEntryValuesContributor
 			return;
 		}
 
+		ObjectRelationship objectRelationships =
+			_objectRelationshipLocalService.getObjectRelationship(
+				originalObjectEntry.getObjectDefinitionId(),
+				"commerceReturnToCommerceReturnItems");
+
 		List<ObjectEntry> objectEntries =
 			_objectEntryLocalService.getOneToManyObjectEntries(
 				originalObjectEntry.getGroupId(),
-				_objectRelationshipLocalService.getObjectRelationship(
-					originalObjectEntry.getObjectDefinitionId(),
-					"commerceReturnToCommerceReturnItems"
-				).getObjectRelationshipId(),
-				null, false, originalObjectEntry.getObjectEntryId(), true, null,
+				objectRelationships.getObjectRelationshipId(), null, false,
+				originalObjectEntry.getObjectEntryId(), true, null,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Map<String, List<ObjectEntry>> returnItemStatusObjectEntriesMap =

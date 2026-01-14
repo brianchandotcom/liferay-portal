@@ -266,9 +266,12 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 				/>
 			</ReferencedObjectsProvider>
 
+			<SegmentActivationCard
+				segmentActivation={segment.activationStatus}
+			/>
+
 			<MembershipMetrics />
 
-			<SegmentActivationCard segment={segment} />
 			<Card
 				className='segment-membership-root'
 				reportContainer={ReportContainer.SegmentMembershipTrendCard}

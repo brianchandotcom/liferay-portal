@@ -2,43 +2,55 @@ import Card from 'shared/components/Card';
 import Label from '@clayui/label';
 import List from '@clayui/list';
 import React from 'react';
-import {Segment} from 'shared/util/records';
+import {formatUTCDateFromUnix} from 'shared/util/date';
+import {
+	SegmentActivationFrequencyTypes,
+	SegmentActivationScheduleTypes
+} from 'shared/util/constants';
+import {sub} from 'shared/util/lang';
 
 interface ISegmentActivationCardProps {
-	segment?: Segment;
+	segmentActivation: SegmentActivationDetails;
 }
 
 export type SegmentActivationDetails = {
-	scheduleEndDate: string;
-	scheduleStartDate: string;
-	scheduleType: 'BETWEEN' | 'INDEFINITELY';
-	frequencyType: 'BATCH' | 'REAL_TIME';
+	scheduleEndDate?: string;
+	scheduleStartDate?: string;
+	scheduleType: SegmentActivationScheduleTypes;
+	frequencyType: SegmentActivationFrequencyTypes;
 	segmentActivationId: string;
 };
 
 const data: SegmentActivationDetails = {
-	frequencyType: 'BATCH',
-	scheduleEndDate: '',
-	scheduleStartDate: '',
-	scheduleType: 'INDEFINITELY',
+	frequencyType: SegmentActivationFrequencyTypes.Batch,
+	scheduleType: SegmentActivationScheduleTypes.Between,
 	segmentActivationId: '1'
 };
 
-const FREQUENCY_TYPE_LABELS: Record<'BATCH' | 'REAL_TIME', string> = {
-	BATCH: Liferay.Language.get('batch'),
-	REAL_TIME: Liferay.Language.get('real-time')
-};
-
-const SCHEDULE_TYPE_LABELS: Record<'BETWEEN' | 'INDEFINITELY', string> = {
-	BETWEEN: Liferay.Language.get('between'),
-	INDEFINITELY: Liferay.Language.get('indefinitely')
+const FREQUENCY_TYPE_LABELS: Record<SegmentActivationFrequencyTypes, string> = {
+	[SegmentActivationFrequencyTypes.Batch]: Liferay.Language.get('batch'),
+	[SegmentActivationFrequencyTypes.RealTime]: Liferay.Language.get(
+		'real-time'
+	)
 };
 
 const SegmentActivationCard: React.FC<ISegmentActivationCardProps> = ({
-	segment
+	segmentActivation
 }) => {
 	// Use mocked data
-	const {frequencyType, scheduleType} = segment.activationStatus || data;
+	const {frequencyType, scheduleEndDate, scheduleStartDate, scheduleType} =
+		segmentActivation || data;
+
+	const labelMessage =
+		scheduleType === SegmentActivationScheduleTypes.Indefinitely
+			? sub(Liferay.Language.get('x-sync-will-run-indefinitely'), [
+					FREQUENCY_TYPE_LABELS[frequencyType]
+			  ])
+			: sub(Liferay.Language.get('x-sync-will-run-from-x-to-x'), [
+					FREQUENCY_TYPE_LABELS[frequencyType],
+					formatUTCDateFromUnix(scheduleStartDate, 'MMM DD, yyyy'),
+					formatUTCDateFromUnix(scheduleEndDate, 'MMM DD, yyyy')
+			  ]);
 
 	return (
 		<Card className='segment-membership-root'>
@@ -61,7 +73,7 @@ const SegmentActivationCard: React.FC<ISegmentActivationCardProps> = ({
 								className='align-self-start'
 								displayType='info'
 							>
-								{`${FREQUENCY_TYPE_LABELS[frequencyType]} sync will run ${SCHEDULE_TYPE_LABELS[scheduleType]}`}
+								{labelMessage}
 							</Label>
 						</List.ItemField>
 						<List.ItemField>

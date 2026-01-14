@@ -35,6 +35,7 @@ import executeResetPermissionBulkAction from './actions/executeResetPermissionBu
 import openFolderItemSelectorAction from './actions/openFolderItemSelectorAction';
 import shareAction from './actions/shareAction';
 import {triggerAssetDownloadBulkAction} from './actions/triggerAssetDownloadBulkAction';
+import AdditionalItemInfoRenderer from './cell_renderers/AdditionalItemInfoRenderer';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import SimpleActionLinkRenderer from './cell_renderers/SimpleActionLinkRenderer';
 import SpaceRendererWithCache from './cell_renderers/SpaceRendererWithCache';
@@ -63,6 +64,7 @@ export type AdditionalProps = {
 	parentObjectEntryFolderExternalReferenceCode: string;
 	redirect: string;
 	rootObjectEntryFolderExternalReferenceCode: string;
+	showAdditionalItemInfo?: boolean;
 };
 
 export default function AssetsFDSPropsTransformer({
@@ -125,14 +127,32 @@ export default function AssetsFDSPropsTransformer({
 					type: 'internal',
 				} as IInternalRenderer,
 				{
-					component: ({actions, itemData, options, value}) =>
-						SimpleActionLinkRenderer({
+					component: ({actions, itemData, options, value}) => {
+						if (additionalProps.showAdditionalItemInfo) {
+							return (
+								<>
+									<SimpleActionLinkRenderer
+										actions={actions}
+										additionalProps={additionalProps}
+										itemData={itemData}
+										options={options}
+										value={value}
+									/>
+									<AdditionalItemInfoRenderer
+										itemData={itemData}
+									/>
+								</>
+							);
+						}
+
+						return SimpleActionLinkRenderer({
 							actions,
 							additionalProps,
 							itemData,
 							options,
 							value,
-						}),
+						});
+					},
 					name: 'simpleActionLinkTableCellRenderer',
 					type: 'internal',
 				} as IInternalRenderer,

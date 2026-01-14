@@ -528,16 +528,6 @@ public class ResourcePermissionModelImpl
 		_primKeyId = primKeyId;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public long getOriginalPrimKeyId() {
-		return GetterUtil.getLong(
-			this.<Long>getColumnOriginalValue("primKeyId"));
-	}
-
 	@JSON
 	@Override
 	public long getRoleId() {

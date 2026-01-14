@@ -28,10 +28,10 @@ public class ObjectActionLeadRestController extends BaseRestController {
 
 	@PostMapping("/object/action/lead")
 	public void post(@RequestBody String json) throws Exception {
+		String contactId = null;
+
 		JSONObject jsonObject = _liferayService.getObjectEntryValuesJSONObject(
 			json);
-
-		String contactId = null;
 
 		String externalReferenceCode = jsonObject.optString(
 			"r_h1s4ContactToH1S4Leads_c_h1s4ContactERC");
@@ -43,8 +43,17 @@ public class ObjectActionLeadRestController extends BaseRestController {
 				HubSpotConstants.PREFIX_HUBSPOT_ID.length());
 		}
 		else {
-			JSONObject contactJSONObject = _getH1S4ContactJSONObject(
-				jsonObject.optLong("r_h1s4ContactToH1S4Leads_c_h1s4ContactId"));
+			long h1s4ContactId = jsonObject.optLong(
+				"r_h1s4ContactToH1S4Leads_c_h1s4ContactId");
+
+			JSONObject contactJSONObject = new JSONObject(
+				get(
+					_liferayOAuth2AccessTokenManager.getAuthorization(
+						"liferay-hubspot-etc-spring-boot-oahs"),
+					UriComponentsBuilder.fromPath(
+						"o/c/h1s4contacts/" + h1s4ContactId
+					).build(
+					).toUri()));
 
 			if (contactJSONObject == null) {
 				return;
@@ -63,17 +72,6 @@ public class ObjectActionLeadRestController extends BaseRestController {
 		_liferayService.patchObjectEntry(
 			_hubSpotService.postLead(contactId, jsonObject),
 			"o/c/h1s4leads/" + _liferayService.getClassPK(json));
-	}
-
-	private JSONObject _getH1S4ContactJSONObject(long id) {
-		return new JSONObject(
-			get(
-				_liferayOAuth2AccessTokenManager.getAuthorization(
-					"liferay-hubspot-etc-spring-boot-oahs"),
-				UriComponentsBuilder.fromPath(
-					"o/c/h1s4contacts/" + id
-				).build(
-				).toUri()));
 	}
 
 	@Autowired

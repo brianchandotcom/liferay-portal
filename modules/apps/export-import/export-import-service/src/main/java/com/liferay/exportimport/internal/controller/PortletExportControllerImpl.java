@@ -342,7 +342,7 @@ public class PortletExportControllerImpl implements PortletExportController {
 
 		// Data
 
-		if (exportPortletData) {
+		if (exportPortletData || portletDataHandler.isHidden()) {
 			jakarta.portlet.PortletPreferences jxPortletPreferences = null;
 
 			if (ExportImportThreadLocal.isInitialLayoutStagingInProcess()) {

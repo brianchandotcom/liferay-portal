@@ -6836,6 +6836,9 @@ public class ServiceBuilder {
 		}
 
 		for (Element finderElement : finderElements) {
+			boolean finderIndexOnly = GetterUtil.getBoolean(
+				finderElement.attributeValue(
+					"skip-db-index-optimization-and-finder-generation"));
 			String finderName = finderElement.attributeValue("name");
 			String finderPluralName = finderElement.attributeValue(
 				"plural-name");
@@ -6904,7 +6907,7 @@ public class ServiceBuilder {
 				EntityColumn entityColumn = Entity.getEntityColumn(
 					finderColumnName, entityColumns);
 
-				if (!entityColumn.isFinderPath()) {
+				if (!entityColumn.isFinderPath() && !finderIndexOnly) {
 					entityColumn.setFinderPath(true);
 				}
 

@@ -45,6 +45,10 @@ test.afterEach(async ({systemSettingsPage}) => {
 				.getByRole('button', {name: 'Actions'})
 				.isVisible()
 		) {
+			systemSettingsPage.page.once('dialog', async (dialogWindow) => {
+				await dialogWindow.accept();
+			});
+
 			await clickAndExpectToBeVisible({
 				autoClick: true,
 				target: systemSettingsPage.page.getByRole('menuitem', {
@@ -137,6 +141,10 @@ test(
 					.getByRole('button', {name: 'Actions'})
 					.isVisible()
 			) {
+				page.once('dialog', async (dialogWindow) => {
+					await dialogWindow.accept();
+				});
+
 				await clickAndExpectToBeVisible({
 					autoClick: true,
 					target: systemSettingsPage.page.getByRole('menuitem', {

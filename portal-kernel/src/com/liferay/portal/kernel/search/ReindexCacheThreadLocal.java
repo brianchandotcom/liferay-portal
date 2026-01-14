@@ -103,14 +103,27 @@ public class ReindexCacheThreadLocal {
 		return t;
 	}
 
+	public static boolean isFullMode() {
+		return _fullMode.get();
+	}
+
 	public static SafeCloseable openReindexMode() {
 		return _reindexCacheMap.setWithSafeCloseable(new ConcurrentHashMap<>());
 	}
 
 	public static SafeCloseable openReindexMode(
-		Map<String, Object> sharedReindexCacheMap) {
+		Map<String, Object> sharedReindexCacheMap, boolean fullMode) {
 
-		return _reindexCacheMap.setWithSafeCloseable(sharedReindexCacheMap);
+		SafeCloseable safeCloseable1 = _fullMode.setWithSafeCloseable(fullMode);
+
+		SafeCloseable safeCloseable2 = _reindexCacheMap.setWithSafeCloseable(
+			sharedReindexCacheMap);
+
+		return () -> {
+			safeCloseable2.close();
+
+			safeCloseable1.close();
+		};
 	}
 
 	private static final Object _NULL_HOLDER = new Object();
@@ -118,6 +131,9 @@ public class ReindexCacheThreadLocal {
 	private static final int _SIZE_LIMIT = GetterUtil.getInteger(
 		PropsUtil.get("reindex.cache.size.limit"), 1000000);
 
+	private static final CentralizedThreadLocal<Boolean> _fullMode =
+		new CentralizedThreadLocal<>(
+			ReindexCacheThreadLocal.class + "._fullMode", () -> Boolean.FALSE);
 	private static final CentralizedThreadLocal<Map<String, Object>>
 		_reindexCacheMap = new CentralizedThreadLocal<>(
 			ReindexCacheThreadLocal.class + "._reindexCacheMap");

@@ -9,32 +9,36 @@ interface ISegmentActivationCardProps {
 }
 
 export type SegmentActivationDetails = {
-	segmentActivationId: string;
-	title: string;
-	description: string;
-	scheduleType: 'BETWEEN' | 'INDEFINITELY';
 	scheduleEndDate: string;
 	scheduleStartDate: string;
+	scheduleType: 'BETWEEN' | 'INDEFINITELY';
 	frequencyType: 'BATCH' | 'REAL_TIME';
+	segmentActivationId: string;
 };
 
 const data: SegmentActivationDetails = {
-	description:
-		'Syncs individual profiles to Liferay DXP to deliver personalization via pages, collections, A/B tests, and recommendations.',
 	frequencyType: 'BATCH',
 	scheduleEndDate: '',
 	scheduleStartDate: '',
 	scheduleType: 'INDEFINITELY',
-	segmentActivationId: '1',
-	title: 'Liferay DXP'
+	segmentActivationId: '1'
+};
+
+const FREQUENCY_TYPE_LABELS: Record<'BATCH' | 'REAL_TIME', string> = {
+	BATCH: Liferay.Language.get('batch'),
+	REAL_TIME: Liferay.Language.get('real-time')
+};
+
+const SCHEDULE_TYPE_LABELS: Record<'BETWEEN' | 'INDEFINITELY', string> = {
+	BETWEEN: Liferay.Language.get('between'),
+	INDEFINITELY: Liferay.Language.get('indefinitely')
 };
 
 const SegmentActivationCard: React.FC<ISegmentActivationCardProps> = ({
 	segment
 }) => {
 	// Use mocked data
-	const {description, frequencyType, scheduleType, title} =
-		segment.activationStatus || data;
+	const {frequencyType, scheduleType} = segment.activationStatus || data;
 
 	return (
 		<Card className='segment-membership-root'>
@@ -46,16 +50,18 @@ const SegmentActivationCard: React.FC<ISegmentActivationCardProps> = ({
 					<List.Item className='px-2' flex>
 						<List.ItemField expand>
 							<List.ItemTitle className='mb-2'>
-								{title}
+								{Liferay.Language.get('liferay-dxp')}
 							</List.ItemTitle>
 							<List.ItemText className='mb-2'>
-								{description}
+								{Liferay.Language.get(
+									'syncs-individual-profiles-to-liferay-dxp-to-deliver-personalization-via-pages-collections-a-b-tests-and-recommendations'
+								)}
 							</List.ItemText>
 							<Label
 								className='align-self-start'
 								displayType='info'
 							>
-								{`${frequencyType} sync will run ${scheduleType}`}
+								{`${FREQUENCY_TYPE_LABELS[frequencyType]} sync will run ${SCHEDULE_TYPE_LABELS[scheduleType]}`}
 							</Label>
 						</List.ItemField>
 						<List.ItemField>

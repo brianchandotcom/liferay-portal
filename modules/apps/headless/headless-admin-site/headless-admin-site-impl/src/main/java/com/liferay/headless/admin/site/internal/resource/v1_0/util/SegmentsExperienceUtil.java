@@ -69,7 +69,7 @@ public class SegmentsExperienceUtil {
 		return segmentsExperience;
 	}
 
-	public static String getDefaultSegmentsExperienceExternalReferenceCode(
+	public static PageExperience getDefaultPageExperience(
 		PageExperience[] pageExperiences) {
 
 		if (ArrayUtil.isEmpty(pageExperiences)) {
@@ -81,7 +81,7 @@ public class SegmentsExperienceUtil {
 					pageExperience.getKey(),
 					SegmentsExperienceConstants.KEY_DEFAULT)) {
 
-				return pageExperience.getExternalReferenceCode();
+				return pageExperience;
 			}
 		}
 

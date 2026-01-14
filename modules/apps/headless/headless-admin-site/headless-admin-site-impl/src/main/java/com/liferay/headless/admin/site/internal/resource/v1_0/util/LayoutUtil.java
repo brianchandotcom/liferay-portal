@@ -226,16 +226,26 @@ public class LayoutUtil {
 			}
 		}
 
+		PageExperience defaultPageExperience =
+			SegmentsExperienceUtil.getDefaultPageExperience(
+				publishedContentPageSpecification.getPageExperiences());
+
 		serviceContext.setAttribute(
 			"defaultSegmentsExperienceExternalReferenceCode",
-			SegmentsExperienceUtil.
-				getDefaultSegmentsExperienceExternalReferenceCode(
-					publishedContentPageSpecification.getPageExperiences()));
+			defaultPageExperience.getExternalReferenceCode());
+		serviceContext.setAttribute(
+			"defaultSegmentsExperienceUuid", defaultPageExperience.getUuid());
+
+		defaultPageExperience = SegmentsExperienceUtil.getDefaultPageExperience(
+			draftContentPageSpecification.getPageExperiences());
+
 		serviceContext.setAttribute(
 			"draftLayoutDefaultSegmentsExperienceExternalReferenceCode",
-			SegmentsExperienceUtil.
-				getDefaultSegmentsExperienceExternalReferenceCode(
-					draftContentPageSpecification.getPageExperiences()));
+			defaultPageExperience.getExternalReferenceCode());
+		serviceContext.setAttribute(
+			"draftLayoutDefaultSegmentsExperienceUuid",
+			defaultPageExperience.getUuid());
+
 		serviceContext.setAttribute(
 			"draftLayoutExternalReferenceCode",
 			draftContentPageSpecification.getExternalReferenceCode());

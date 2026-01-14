@@ -14,6 +14,7 @@ export class EditDigitalSalesRoomPage {
 	readonly clientLogoButton: Locator;
 	readonly clientNameInput: Locator;
 	readonly nextButton: Locator;
+	readonly onboardingMenuItem: Locator;
 	readonly page: Page;
 	readonly primaryColorInput: Locator;
 	readonly roomNameInput: Locator;
@@ -35,6 +36,9 @@ export class EditDigitalSalesRoomPage {
 		this.clientLogoButton = page.getByTestId('clientLogoButton');
 		this.clientNameInput = page.getByLabel('Client Name');
 		this.nextButton = page.getByRole('button', {name: 'Next'});
+		this.onboardingMenuItem = page.getByRole('menuitem', {
+			name: 'Onboarding',
+		});
 		this.page = page;
 		this.primaryColorInput = page.getByTestId('primaryColorInput');
 		this.roomNameInput = page.getByLabel('Room Name');

@@ -335,3 +335,132 @@ test(
 		).toBeVisible();
 	}
 );
+
+test(
+	'Test edit menuitem for digital sales room',
+	{tag: '@LPD-76329'},
+	async ({digitalSalesRoomsPage, editDigitalSalesRoomPage}) => {
+		const roomName = `A${getRandomInt()}`;
+
+		await digitalSalesRoomsPage.goto();
+
+		await expect(
+			digitalSalesRoomsPage.digitalSalesRoomsTable.searchInput
+		).toBeVisible();
+
+		await digitalSalesRoomsPage.digitalSalesRoomsTable.newButton.click();
+
+		await editDigitalSalesRoomPage.addDigitalSalesRoom({
+			banner: path.join(__dirname, '/dependencies/liferay.png'),
+			roomName,
+		});
+
+		await digitalSalesRoomsPage.goto();
+
+		await expect(
+			digitalSalesRoomsPage.digitalSalesRoomsTable.cell(roomName)
+		).toBeVisible();
+
+		await expect(async () => {
+			await (
+				await digitalSalesRoomsPage.digitalSalesRoomsTable.rowActions(
+					roomName,
+					0
+				)
+			).click();
+			await expect(digitalSalesRoomsPage.editMenuItem).toBeVisible({
+				timeout: 200,
+			});
+		}).toPass({timeout: 1000});
+
+		await digitalSalesRoomsPage.editMenuItem.click();
+
+		await expect(editDigitalSalesRoomPage.onboardingMenuItem).toBeVisible();
+	}
+);
+
+test(
+	'Test settings menuitem for digital sales room',
+	{tag: '@LPD-76329'},
+	async ({
+		apiHelpers,
+		digitalSalesRoomSettingsPage,
+		digitalSalesRoomsPage,
+		editDigitalSalesRoomPage,
+		page,
+	}) => {
+		const roomName = `A${getRandomInt()}`;
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			type: 'business',
+		});
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({});
+
+		await digitalSalesRoomsPage.goto();
+
+		await expect(
+			digitalSalesRoomsPage.digitalSalesRoomsTable.searchInput
+		).toBeVisible();
+
+		await digitalSalesRoomsPage.digitalSalesRoomsTable.newButton.click();
+
+		await editDigitalSalesRoomPage.addDigitalSalesRoom({
+			accountName: account.name,
+			channelName: channel.name,
+			roomName,
+		});
+
+		await digitalSalesRoomsPage.goto();
+
+		await expect(
+			digitalSalesRoomsPage.digitalSalesRoomsTable.cell(roomName)
+		).toBeVisible();
+
+		await expect(async () => {
+			await (
+				await digitalSalesRoomsPage.digitalSalesRoomsTable.rowActions(
+					roomName,
+					0
+				)
+			).click();
+			await expect(digitalSalesRoomsPage.settingsMenuItem).toBeVisible({
+				timeout: 200,
+			});
+		}).toPass({timeout: 1000});
+
+		await digitalSalesRoomsPage.settingsMenuItem.click();
+
+		await expect(
+			digitalSalesRoomSettingsPage.clientNameInput
+		).toBeVisible();
+
+		const clientName = `Edited ${getRandomInt()}`;
+
+		await digitalSalesRoomSettingsPage.clientNameInput.fill(clientName);
+		await digitalSalesRoomSettingsPage.roomNameInput.fill(
+			`Edited ${roomName}`
+		);
+		await digitalSalesRoomSettingsPage.saveButton.click();
+
+		await waitForAlert(digitalSalesRoomSettingsPage.page);
+
+		await page.reload();
+
+		await expect(digitalSalesRoomSettingsPage.clientNameInput).toHaveValue(
+			clientName
+		);
+		await expect(digitalSalesRoomSettingsPage.roomNameInput).toHaveValue(
+			`Edited ${roomName}`
+		);
+
+		await digitalSalesRoomSettingsPage.settingsLink.click();
+
+		await expect(
+			digitalSalesRoomSettingsPage.selectChannelInput
+		).toHaveValue(channel.name);
+		await expect(
+			digitalSalesRoomSettingsPage.selectAccountInput
+		).toHaveValue(account.name);
+	}
+);

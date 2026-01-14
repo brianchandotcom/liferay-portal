@@ -47,6 +47,47 @@ public class TaskDefinition implements Serializable {
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public Boolean getActive() {
+		if (_activeSupplier != null) {
+			active = _activeSupplier.get();
+
+			_activeSupplier = null;
+		}
+
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+
+		_activeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setActive(
+		UnsafeSupplier<Boolean, Exception> activeUnsafeSupplier) {
+
+		_activeSupplier = () -> {
+			try {
+				return activeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean active;
+
+	@JsonIgnore
+	private Supplier<Boolean> _activeSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getDescription() {
 		if (_descriptionSupplier != null) {
 			description = _descriptionSupplier.get();
@@ -193,6 +234,18 @@ public class TaskDefinition implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		Boolean active = getActive();
+
+		if (active != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"active\": ");
+
+			sb.append(active);
+		}
 
 		String description = getDescription();
 

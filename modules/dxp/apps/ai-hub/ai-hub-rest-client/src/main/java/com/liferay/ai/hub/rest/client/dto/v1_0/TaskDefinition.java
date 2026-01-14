@@ -25,6 +25,27 @@ public class TaskDefinition implements Cloneable, Serializable {
 		return TaskDefinitionSerDes.toDTO(json);
 	}
 
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	public void setActive(
+		UnsafeSupplier<Boolean, Exception> activeUnsafeSupplier) {
+
+		try {
+			active = activeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean active;
+
 	public String getDescription() {
 		return description;
 	}

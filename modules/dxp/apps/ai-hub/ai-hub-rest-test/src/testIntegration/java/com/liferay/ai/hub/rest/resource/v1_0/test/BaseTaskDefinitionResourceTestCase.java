@@ -639,6 +639,14 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("active", additionalAssertFieldName)) {
+				if (taskDefinition.getActive() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (taskDefinition.getDescription() == null) {
 					valid = false;
@@ -781,6 +789,17 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("active", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						taskDefinition1.getActive(),
+						taskDefinition2.getActive())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						taskDefinition1.getDescription(),
@@ -920,6 +939,11 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("active")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
 
 		if (entityFieldName.equals("description")) {
 			Object object = taskDefinition.getDescription();
@@ -1064,6 +1088,7 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 	protected TaskDefinition randomTaskDefinition() throws Exception {
 		return new TaskDefinition() {
 			{
+				active = RandomTestUtil.randomBoolean();
 				description = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());

@@ -153,3 +153,175 @@ test(
 		).toBeVisible();
 	}
 );
+
+test(
+	'Test edit menuitem for digital sales room template',
+	{tag: '@LPD-76329'},
+	async ({
+		digitalSalesRoomTemplatesPage,
+		editDigitalSalesRoomPage,
+		editDigitalSalesRoomTemplatePage,
+	}) => {
+		const name = `A${getRandomInt()}`;
+
+		await digitalSalesRoomTemplatesPage.goto();
+
+		await expect(
+			digitalSalesRoomTemplatesPage.digitalSalesRoomTemplatesTable
+				.searchInput
+		).toBeVisible();
+
+		await expect(async () => {
+			await digitalSalesRoomTemplatesPage.newDigitalSalesRoomTemplateButton.click();
+
+			await expect(
+				editDigitalSalesRoomTemplatePage.nameInput
+			).toBeVisible({timeout: 200});
+		}).toPass({timeout: 1000});
+
+		await editDigitalSalesRoomTemplatePage.addDigitalSalesRoomTemplate({
+			name,
+			primaryColor: 'red',
+		});
+
+		await digitalSalesRoomTemplatesPage.goto();
+
+		await expect(
+			digitalSalesRoomTemplatesPage.digitalSalesRoomTemplatesTable.cell(
+				name
+			)
+		).toBeVisible();
+
+		await expect(async () => {
+			await (
+				await digitalSalesRoomTemplatesPage.digitalSalesRoomTemplatesTable.rowActions(
+					name,
+					0
+				)
+			).click();
+			await expect(
+				digitalSalesRoomTemplatesPage.editMenuItem
+			).toBeVisible({
+				timeout: 200,
+			});
+		}).toPass({timeout: 1000});
+
+		await digitalSalesRoomTemplatesPage.editMenuItem.click();
+
+		await expect(editDigitalSalesRoomPage.onboardingMenuItem).toBeVisible();
+	}
+);
+
+test(
+	'Test settings menuitem for digital sales room template',
+	{tag: '@LPD-76329'},
+	async ({
+		digitalSalesRoomTemplateSettingsPage,
+		digitalSalesRoomTemplatesPage,
+		editDigitalSalesRoomTemplatePage,
+		page,
+	}) => {
+		const name = `A${getRandomInt()}`;
+
+		await digitalSalesRoomTemplatesPage.goto();
+
+		await expect(
+			digitalSalesRoomTemplatesPage.digitalSalesRoomTemplatesTable
+				.searchInput
+		).toBeVisible();
+
+		await expect(async () => {
+			await digitalSalesRoomTemplatesPage.newDigitalSalesRoomTemplateButton.click();
+
+			await expect(
+				editDigitalSalesRoomTemplatePage.nameInput
+			).toBeVisible({timeout: 200});
+		}).toPass({timeout: 1000});
+
+		await editDigitalSalesRoomTemplatePage.addDigitalSalesRoomTemplate({
+			name,
+			primaryColor: 'red',
+		});
+
+		await digitalSalesRoomTemplatesPage.goto();
+
+		await expect(
+			digitalSalesRoomTemplatesPage.digitalSalesRoomTemplatesTable.cell(
+				name
+			)
+		).toBeVisible();
+
+		await expect(async () => {
+			await (
+				await digitalSalesRoomTemplatesPage.digitalSalesRoomTemplatesTable.rowActions(
+					name,
+					0
+				)
+			).click();
+			await expect(
+				digitalSalesRoomTemplatesPage.settingsMenuItem
+			).toBeVisible({
+				timeout: 200,
+			});
+		}).toPass({timeout: 1000});
+
+		await digitalSalesRoomTemplatesPage.settingsMenuItem.click();
+
+		await expect(
+			digitalSalesRoomTemplateSettingsPage.roomNameInput
+		).toBeVisible();
+
+		await digitalSalesRoomTemplateSettingsPage.roomNameInput.fill(
+			`Edited ${name}`
+		);
+		await digitalSalesRoomTemplateSettingsPage.descriptionInput.fill(
+			'Edited description'
+		);
+		await digitalSalesRoomTemplateSettingsPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		await page.reload();
+
+		await expect(
+			digitalSalesRoomTemplateSettingsPage.roomNameInput
+		).toHaveValue(`Edited ${name}`);
+		await expect(
+			digitalSalesRoomTemplateSettingsPage.descriptionInput
+		).toHaveValue('Edited description');
+
+		await digitalSalesRoomTemplateSettingsPage.lookAndFeelLink.click();
+
+		const fileChooserPromise = page.waitForEvent('filechooser');
+
+		await digitalSalesRoomTemplateSettingsPage.clientLogoButton.click();
+
+		await (
+			await fileChooserPromise
+		).setFiles(path.join(__dirname, '/dependencies/liferay.png'));
+
+		await digitalSalesRoomTemplateSettingsPage.primaryColorInput.fill(
+			'blue'
+		);
+		await digitalSalesRoomTemplateSettingsPage.secondaryColorInput.fill(
+			'blue'
+		);
+		await digitalSalesRoomTemplateSettingsPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		await page.reload();
+
+		await digitalSalesRoomTemplateSettingsPage.lookAndFeelLink.click();
+
+		await expect(
+			digitalSalesRoomTemplateSettingsPage.clientLogoSticker
+		).toHaveAttribute('src', /data:image;base64/);
+		await expect(
+			digitalSalesRoomTemplateSettingsPage.primaryColorInput
+		).toHaveValue('blue');
+		await expect(
+			digitalSalesRoomTemplateSettingsPage.secondaryColorInput
+		).toHaveValue('blue');
+	}
+);

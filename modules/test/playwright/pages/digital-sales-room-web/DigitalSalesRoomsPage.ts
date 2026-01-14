@@ -12,11 +12,13 @@ export class DigitalSalesRoomsPage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly deleteMenuItem: Locator;
 	readonly digitalSalesRoomsTable: DataTablePage;
+	readonly editMenuItem: Locator;
 	readonly newDigitalSalesRoomButton: Locator;
 	readonly noResultsFoundMessage: Locator;
 	readonly page: Page;
 	readonly roomsLink: Locator;
 	readonly saveAsTemplateMenuItem: Locator;
+	readonly settingsMenuItem: Locator;
 	readonly startFromScratchButton: Locator;
 	readonly startFromTemplateButton: Locator;
 	readonly templatesLink: Locator;
@@ -30,6 +32,7 @@ export class DigitalSalesRoomsPage {
 				'#portlet_com_liferay_digital_sales_room_web_internal_portlet_DigitalSalesRoomManagementPortlet'
 			)
 		);
+		this.editMenuItem = page.getByRole('menuitem', {name: 'Edit'});
 		this.newDigitalSalesRoomButton = page.getByText(
 			'New Digital Sales Room'
 		);
@@ -39,6 +42,7 @@ export class DigitalSalesRoomsPage {
 		this.saveAsTemplateMenuItem = page.getByRole('menuitem', {
 			name: 'Save as Template',
 		});
+		this.settingsMenuItem = page.getByRole('menuitem', {name: 'Settings'});
 		this.startFromScratchButton = page.getByRole('menuitem', {
 			name: 'Start from Scratch',
 		});

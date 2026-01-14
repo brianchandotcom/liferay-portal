@@ -559,6 +559,17 @@ function getItemActions({
 		}
 
 		actions.push({
+			label: Liferay.Language.get('duplicate'),
+			onClick: async () => {
+				dispatch({
+					type: 'duplicate-child',
+					uuid: item.uuid,
+				});
+			},
+			symbolLeft: 'copy',
+		});
+
+		actions.push({
 			label: Liferay.Language.get('delete-field'),
 			onClick: async () => {
 				if (publishedChildren.has(item.uuid)) {

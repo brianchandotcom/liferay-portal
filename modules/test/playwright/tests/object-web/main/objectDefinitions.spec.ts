@@ -48,6 +48,40 @@ const cmsTest = mergeTests(
 	})
 );
 
+test.describe('Manage export/import object definitions', () => {
+	test('can export data structure from a custom object', async ({
+		apiHelpers,
+		page,
+		viewObjectDefinitionsPage,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await viewObjectDefinitionsPage.goto();
+
+		const downloadPromise = page.waitForEvent('download');
+
+		await viewObjectDefinitionsPage.actionsButton.last().click();
+
+		await viewObjectDefinitionsPage.exportObjectDefinitionOption
+			.last()
+			.click();
+
+		const download = await downloadPromise;
+
+		expect(download.suggestedFilename()).toContain(
+			objectDefinition.externalReferenceCode
+		);
+	});
+});
+
 test.describe('Manage object definitions through Model Builder', () => {
 	test.beforeEach(({page}) => {
 		page.setViewportSize({height: 1080, width: 1920});

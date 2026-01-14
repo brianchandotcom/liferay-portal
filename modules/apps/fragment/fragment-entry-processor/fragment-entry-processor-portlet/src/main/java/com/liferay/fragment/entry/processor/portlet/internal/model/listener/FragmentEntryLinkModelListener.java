@@ -18,12 +18,12 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.service.PortletLocalService;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -42,7 +42,7 @@ public class FragmentEntryLinkModelListener
 		List<String> portletIds =
 			_portletRegistry.getFragmentEntryLinkPortletIds(fragmentEntryLink);
 
-		List<String> usedPortletNames = _getUsedNoninstanceablePortletNames(
+		Set<String> usedPortletNames = _getUsedNoninstanceablePortletNames(
 			fragmentEntryLink, portletIds);
 
 		for (String portletId : portletIds) {
@@ -70,28 +70,29 @@ public class FragmentEntryLinkModelListener
 		}
 	}
 
-	private List<String> _getUsedNoninstanceablePortletNames(
+	private Set<String> _getUsedNoninstanceablePortletNames(
 			FragmentEntryLink fragmentEntryLink, List<String> portletIds)
 		throws ModelListenerException {
 
-		List<String> portletNames = TransformUtil.transform(
-			portletIds,
-			portletId -> {
-				Portlet portlet = _portletLocalService.getPortletById(
-					fragmentEntryLink.getCompanyId(), portletId);
+		Set<String> portletNames = new HashSet<>(
+			TransformUtil.transform(
+				portletIds,
+				portletId -> {
+					Portlet portlet = _portletLocalService.getPortletById(
+						fragmentEntryLink.getCompanyId(), portletId);
 
-				if (portlet.isInstanceable()) {
-					return null;
-				}
+					if (portlet.isInstanceable()) {
+						return null;
+					}
 
-				return PortletIdCodec.decodePortletName(portletId);
-			});
+					return PortletIdCodec.decodePortletName(portletId);
+				}));
 
-		if (ListUtil.isEmpty(portletNames)) {
-			return Collections.emptyList();
+		if (portletNames.isEmpty()) {
+			return Collections.emptySet();
 		}
 
-		List<String> usedPortletNames = new ArrayList<>();
+		Set<String> usedPortletNames = new HashSet<>();
 
 		for (FragmentEntryLink curFragmentEntryLink :
 				_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(

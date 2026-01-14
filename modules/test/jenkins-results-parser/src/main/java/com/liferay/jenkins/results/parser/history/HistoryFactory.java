@@ -16,10 +16,18 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
 public class HistoryFactory {
+
+	public static BatchHistory newBatchHistory(
+		JobHistory jobHistory, JSONObject jsonObject) {
+
+		return new DefaultBatchHistory(jobHistory, jsonObject);
+	}
 
 	public static JobHistory newJobHistory(Job job) {
 		String ciHistoryURL = _getCIHistoryURL(job);

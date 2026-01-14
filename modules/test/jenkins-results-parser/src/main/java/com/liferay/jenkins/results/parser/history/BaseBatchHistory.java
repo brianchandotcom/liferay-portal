@@ -3,9 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.jenkins.results.parser;
+package com.liferay.jenkins.results.parser.history;
 
-import com.liferay.jenkins.results.parser.history.JobHistory;
+import com.liferay.jenkins.results.parser.TestHistory;
+import com.liferay.jenkins.results.parser.TestTaskHistory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,9 +17,34 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class BatchHistory {
+public abstract class BaseBatchHistory implements BatchHistory {
 
-	public BatchHistory(JobHistory jobHistory, JSONObject jsonObject) {
+	@Override
+	public long getAverageDuration() {
+		return _averageDuration;
+	}
+
+	@Override
+	public String getBatchName() {
+		return _batchName;
+	}
+
+	@Override
+	public JobHistory getJobHistory() {
+		return _jobHistory;
+	}
+
+	@Override
+	public TestHistory getTestHistory(String key) {
+		return _testHistories.get(key);
+	}
+
+	@Override
+	public TestTaskHistory getTestTaskHistory(String key) {
+		return _testTaskHistories.get(key);
+	}
+
+	protected BaseBatchHistory(JobHistory jobHistory, JSONObject jsonObject) {
 		_jobHistory = jobHistory;
 
 		_averageDuration = jsonObject.optLong("averageDuration");
@@ -46,26 +72,6 @@ public class BatchHistory {
 					testTaskHistory.getTestTaskName(), testTaskHistory);
 			}
 		}
-	}
-
-	public long getAverageDuration() {
-		return _averageDuration;
-	}
-
-	public String getBatchName() {
-		return _batchName;
-	}
-
-	public JobHistory getJobHistory() {
-		return _jobHistory;
-	}
-
-	public TestHistory getTestHistory(String key) {
-		return _testHistories.get(key);
-	}
-
-	public TestTaskHistory getTestTaskHistory(String key) {
-		return _testTaskHistories.get(key);
 	}
 
 	private final long _averageDuration;

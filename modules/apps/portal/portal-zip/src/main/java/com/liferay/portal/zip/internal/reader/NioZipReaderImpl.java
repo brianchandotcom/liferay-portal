@@ -39,21 +39,14 @@ import java.util.List;
 public class NioZipReaderImpl implements ZipReader {
 
 	public NioZipReaderImpl(File file) {
-		_init(file);
+		_file = file;
+
+		_tempFile = false;
 	}
 
 	public NioZipReaderImpl(InputStream inputStream) throws IOException {
-		File tempFile = FileUtil.createTempFile(inputStream);
-
-		try {
-			_init(tempFile);
-			_tempFile = tempFile;
-		}
-		catch (Throwable throwable) {
-			_deleteTempFile(tempFile);
-
-			throw throwable;
-		}
+		_file = FileUtil.createTempFile(inputStream);
+		_tempFile = true;
 	}
 
 	@Override
@@ -67,14 +60,18 @@ public class NioZipReaderImpl implements ZipReader {
 			_log.error(exception);
 		}
 		finally {
-			if (_tempFile != null) {
-				_deleteTempFile(_tempFile);
+			if (_tempFile && (_file != null)) {
+				_deleteFile(_file);
 			}
 		}
 	}
 
 	@Override
 	public List<String> getEntries() {
+		if (!_initialized) {
+			_initFile();
+		}
+
 		try {
 			List<String> entries = new ArrayList<>();
 
@@ -108,6 +105,10 @@ public class NioZipReaderImpl implements ZipReader {
 			return null;
 		}
 
+		if (!_initialized) {
+			_initFile();
+		}
+
 		Path path = _resolvePath(name);
 
 		try {
@@ -128,6 +129,10 @@ public class NioZipReaderImpl implements ZipReader {
 			return null;
 		}
 
+		if (!_initialized) {
+			_initFile();
+		}
+
 		Path path = _resolvePath(name);
 
 		try {
@@ -144,6 +149,10 @@ public class NioZipReaderImpl implements ZipReader {
 
 	@Override
 	public String getEntryAsString(String name) {
+		if (!_initialized) {
+			_initFile();
+		}
+
 		byte[] bytes = getEntryAsByteArray(name);
 
 		if (bytes != null) {
@@ -157,6 +166,10 @@ public class NioZipReaderImpl implements ZipReader {
 	public List<String> getFolderEntries(String path) {
 		if (Validator.isNull(path)) {
 			return Collections.emptyList();
+		}
+
+		if (!_initialized) {
+			_initFile();
 		}
 
 		Path folderPath = _resolvePath(path);
@@ -187,7 +200,7 @@ public class NioZipReaderImpl implements ZipReader {
 		}
 	}
 
-	private void _deleteTempFile(File file) {
+	private void _deleteFile(File file) {
 		if (!file.delete() && _log.isWarnEnabled()) {
 			_log.warn(
 				"Failed to delete temporary file " + file.getAbsolutePath());
@@ -200,9 +213,9 @@ public class NioZipReaderImpl implements ZipReader {
 		).toString();
 	}
 
-	private void _init(File file) {
+	private void _initFile() {
 		try {
-			URI uri = URI.create("jar:" + file.toURI());
+			URI uri = URI.create("jar:" + _file.toURI());
 
 			try {
 				_fileSystem = FileSystems.newFileSystem(
@@ -220,10 +233,16 @@ public class NioZipReaderImpl implements ZipReader {
 			}
 
 			_rootPath = _fileSystem.getPath("/");
+
+			_initialized = true;
 		}
 		catch (IOException ioException) {
+			if (_tempFile) {
+				_deleteFile(_file);
+			}
+
 			throw new UncheckedIOException(
-				"Failed to initialize NioZipReader for " + file.getPath(),
+				"Failed to initialize NioZipReader for " + _file.getPath(),
 				ioException);
 		}
 	}
@@ -239,8 +258,10 @@ public class NioZipReaderImpl implements ZipReader {
 	private static final Log _log = LogFactoryUtil.getLog(
 		NioZipReaderImpl.class);
 
+	private final File _file;
 	private FileSystem _fileSystem;
+	private volatile boolean _initialized;
 	private Path _rootPath;
-	private File _tempFile;
+	private final boolean _tempFile;
 
 }

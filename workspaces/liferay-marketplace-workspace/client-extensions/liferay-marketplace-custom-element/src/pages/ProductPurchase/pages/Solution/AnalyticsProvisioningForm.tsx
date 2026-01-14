@@ -101,8 +101,8 @@ const emptyStateMessages = {
 	WORKSPACE_ALREADY_EXISTS: {
 		description: (
 			<>
-				Your account already is linked to an existing Analytics Cloud
-				workspace. If you cannot access your workspace please contact
+				Your account is already linked to an existing Analytics Cloud
+				workspace. If you cannot access your workspace please contact{' '}
 				<SupportLink>support</SupportLink>.
 			</>
 		),

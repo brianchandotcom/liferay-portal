@@ -68,3 +68,28 @@ test(
 	}
 );
 
+test(
+	'A new style book can be used as default style book',
+	{tag: '@LPD-66976'},
+	async ({site, styleBooksPage}) => {
+		const styleBookName = getRandomString();
+
+		await test.step('Create a new style book', async () => {
+			await styleBooksPage.create(styleBookName);
+
+			await styleBooksPage.goto(site.friendlyUrlPath);
+		});
+
+		await test.step('Set the new style book as default', async () => {
+			const sticker = styleBooksPage
+				.getStyleBookCard(styleBookName)
+				.getByTitle('Marked as Default for Classic Theme');
+
+			await expect(sticker).toBeHidden();
+
+			await styleBooksPage.markAsDefault(styleBookName);
+
+			await expect(sticker).toBeVisible();
+		});
+	}
+);

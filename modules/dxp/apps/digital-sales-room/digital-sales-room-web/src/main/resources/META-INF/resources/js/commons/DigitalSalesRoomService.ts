@@ -411,6 +411,21 @@ async function postDigitalSalesRoomTemplateDigitalSalesRoom(
 	throw new Error(error);
 }
 
+async function postDigitalSalesRoomTemplateDigitalSalesRoomTemplate(
+	digitalSalesRoomTemplateId: number
+): Promise<TDSRDTO> {
+	const {data, error} = await ApiHelper.post(
+		`${TEMPLATE_PATH}/${digitalSalesRoomTemplateId}/digital-sales-room-templates`,
+		{}
+	);
+
+	if (data) {
+		return data as TDSRDTO;
+	}
+
+	throw new Error(error);
+}
+
 export default {
 	deleteDigitalSalesRoom,
 	deleteDigitalSalesRoomTemplate,
@@ -425,4 +440,5 @@ export default {
 	postDigitalSalesRoomDigitalSalesRoomTemplate,
 	postDigitalSalesRoomTemplate,
 	postDigitalSalesRoomTemplateDigitalSalesRoom,
+	postDigitalSalesRoomTemplateDigitalSalesRoomTemplate,
 };

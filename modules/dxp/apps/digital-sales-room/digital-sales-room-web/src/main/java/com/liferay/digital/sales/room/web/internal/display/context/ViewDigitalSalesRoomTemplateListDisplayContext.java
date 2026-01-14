@@ -86,6 +86,15 @@ public class ViewDigitalSalesRoomTemplateListDisplayContext {
 				"settings"
 			),
 			FDSActionDropdownItemBuilder.setIcon(
+				"copy"
+			).setLabel(
+				LanguageUtil.get(_httpServletRequest, "duplicate")
+			).setMethod(
+				"post"
+			).build(
+				"duplicate"
+			),
+			FDSActionDropdownItemBuilder.setIcon(
 				"trash"
 			).setLabel(
 				LanguageUtil.get(_httpServletRequest, "delete")

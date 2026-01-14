@@ -193,11 +193,7 @@ public class StyleBookManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isDisabled() {
-		if (getItemsTotal() > 1) {
-			return false;
-		}
-
-		return true;
+		return getItemsTotal() == 0;
 	}
 
 	@Override

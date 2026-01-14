@@ -2210,6 +2210,8 @@ public class ResourcePermissionLocalServiceImpl
 					DSLQuery dslQuery = DSLQueryFactoryUtil.select(
 						ResourcePermissionTable.INSTANCE.primKey,
 						ResourcePermissionTable.INSTANCE.roleId
+					).hints(
+						"INDEX(ResourcePermission IX_954084A2)"
 					).from(
 						ResourcePermissionTable.INSTANCE
 					).where(
@@ -2232,9 +2234,8 @@ public class ResourcePermissionLocalServiceImpl
 					Map<Long, Role> rolesMapByRoleIds = new HashMap<>();
 
 					for (Object[] values :
-							(List<Object[]>)
-								resourcePermissionPersistence.dslQuery(
-									dslQuery, false)) {
+							resourcePermissionPersistence.
+								<List<Object[]>>dslQuery(dslQuery, false)) {
 
 						Role role = rolesMapByRoleIds.computeIfAbsent(
 							(Long)values[1],

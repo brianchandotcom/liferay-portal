@@ -29,6 +29,28 @@ export class StyleBooksPage {
 		);
 	}
 
+	async assertTokenInputValue(
+		label: string,
+		value: string,
+		section?: string
+	) {
+		const parentElement = section
+			? this.page.locator('.panel').filter({hasText: section})
+			: this.page;
+
+		const input = parentElement
+			.locator('.form-group')
+			.filter({hasText: label})
+			.locator('input');
+
+		if (section && (await input.isHidden())) {
+			await this.page.getByRole('button', {name: section}).click();
+		}
+
+		await this.page.waitForTimeout(2000);
+		await expect(input).toHaveValue(value);
+	}
+
 	async changePreviewPage(currentPage: string, nextPage: string) {
 		await this.page.getByRole('button', {name: currentPage}).click();
 
@@ -124,15 +146,23 @@ export class StyleBooksPage {
 			.click();
 	}
 
-	async publish() {
+	async publish(publishing: boolean = true) {
 		await this.page.getByRole('button', {name: 'Publish'}).click();
 
-		await this.page
-			.getByRole('dialog')
-			.getByRole('button', {name: 'Publish'})
-			.click();
+		if (publishing) {
+			await this.page
+				.getByRole('dialog')
+				.getByRole('button', {name: 'Publish'})
+				.click();
 
-		await waitForAlert(this.page);
+			await waitForAlert(this.page);
+		}
+		else {
+			await this.page
+				.getByRole('dialog')
+				.getByRole('button', {name: 'Cancel'})
+				.click();
+		}
 	}
 
 	async search(styleBookName: string) {

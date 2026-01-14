@@ -127,6 +127,7 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.PropertiesParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PropsValues" %><%@
 page import="com.liferay.portal.kernel.util.ResourceBundleUtil" %><%@
+page import="com.liferay.portal.kernel.util.ScopeUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@

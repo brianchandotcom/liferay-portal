@@ -25,9 +25,15 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 	%>
 
 	<aui:input name="applyLayoutPrototype" type="hidden" value="<%= false %>" />
-	<aui:input name="layoutPrototypeUuid" type="hidden" value="<%= selLayout.getLayoutPrototypeUuid() %>" />
+	<aui:input name="portletLayoutPageTemplateEntryERC" type="hidden" value="<%= selLayout.getPortletLayoutPageTemplateEntryERC() %>" />
 
-	<aui:input aria-describedby='<%= liferayPortletResponse.getNamespace() + "inheritChangesDescription" %>' label="inherit-changes" labelCssClass="font-weight-normal" name="layoutPrototypeLinkEnabled" type="checkbox" value="<%= selLayout.isLayoutPrototypeLinkEnabled() %>" wrapperCssClass="c-mb-2" />
+	<%
+	Group group = GroupLocalServiceUtil.getGroup(ScopeUtil.getItemGroupId(selLayout.getCompanyId(), selLayout.getPortletLayoutPageTemplateEntryScopeERC(), selLayout.getGroupId()));
+	%>
+
+	<aui:input name="portletLayoutPageTemplateEntryScopeERC" type="hidden" value="<%= group.getExternalReferenceCode() %>" />
+
+	<aui:input aria-describedby='<%= liferayPortletResponse.getNamespace() + "inheritChangesDescription" %>' label="inherit-changes" labelCssClass="font-weight-normal" name="portletLayoutPageTemplateEntryLinkEnabled" type="checkbox" value="<%= selLayout.isPortletLayoutPageTemplateEntryLinkEnabled() %>" wrapperCssClass="c-mb-2" />
 
 	<p class="text-3 text-secondary" id="<portlet:namespace />inheritChangesDescription">
 		<liferay-ui:message arguments="<%= HtmlUtil.escape(layoutPrototype.getName(user.getLocale())) %>" key="if-enabled-this-page-will-inherit-changes-made-to-the-x-page-template" />

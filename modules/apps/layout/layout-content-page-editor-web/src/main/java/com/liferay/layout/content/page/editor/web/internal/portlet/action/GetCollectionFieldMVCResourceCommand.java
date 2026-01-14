@@ -308,7 +308,7 @@ public class GetCollectionFieldMVCResourceCommand
 			LayoutObjectReferenceUtil.getConfiguration(
 				layoutObjectReferenceJSONObject));
 		defaultLayoutListRetrieverContext.setContextObject(
-			_getInfoItem(httpServletRequest));
+			_getInfoItem(httpServletRequest, scopeGroupId));
 		defaultLayoutListRetrieverContext.setPagination(
 			CollectionPaginationUtil.getPagination(
 				activePage, displayAllItems, numberOfItems,
@@ -597,7 +597,9 @@ public class GetCollectionFieldMVCResourceCommand
 				InfoItemFieldValuesProvider.class, itemType);
 	}
 
-	private Object _getInfoItem(HttpServletRequest httpServletRequest) {
+	private Object _getInfoItem(
+		HttpServletRequest httpServletRequest, long scopeGroupId) {
+
 		String className = _portal.fetchClassName(
 			ParamUtil.getLong(httpServletRequest, "classNameId"));
 
@@ -642,7 +644,8 @@ public class GetCollectionFieldMVCResourceCommand
 		}
 
 		try {
-			return infoItemObjectProvider.getInfoItem(infoItemIdentifier);
+			return infoItemObjectProvider.getInfoItem(
+				scopeGroupId, infoItemIdentifier);
 		}
 		catch (NoSuchInfoItemException noSuchInfoItemException) {
 			if (_log.isDebugEnabled()) {

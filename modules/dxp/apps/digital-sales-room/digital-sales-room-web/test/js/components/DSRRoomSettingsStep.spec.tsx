@@ -79,6 +79,7 @@ const renderComponent = ({
 			loading,
 			numberOfSteps,
 			setHandleStepSubmit,
+			showHeader,
 		})
 	);
 };

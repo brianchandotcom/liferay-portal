@@ -457,7 +457,7 @@ components:
                 visibilityType:
                     description:
                         The vocabulary's visibility type.
-                    enum: [PUBLIC, INTERNAL]
+                    enum: [PUBLIC, INTERNAL, EMPTY]
                     type: string
             required:
                 -   name

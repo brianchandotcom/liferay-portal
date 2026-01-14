@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -31,6 +32,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
+
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -87,11 +90,13 @@ public class CommerceWishListUpgradeProcessTest {
 
 		_resourceActionLocalService.checkResourceActions();
 
-		Assert.assertEquals(
-			0,
+		List<ResourceAction> resourceActions =
 			_resourceActionLocalService.getResourceActions(
-				"MANAGE_COMMERCE_WISH_LISTS"
-			).size());
+				"MANAGE_COMMERCE_WISH_LISTS");
+
+		Assert.assertEquals(
+			resourceActions.toString(), 0, resourceActions.size());
+
 		Assert.assertNotNull(
 			_resourceActionLocalService.fetchResourceAction(
 				"com.liferay.commerce.wish.list",

@@ -1,0 +1,20 @@
+{
+	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
+		"editable_action": {
+			"config": {
+				"mappedAction": {
+					"classNameId": "[$CLASS_NAME_ID$]",
+					"classPK": "[$CLASS_PK$]",
+					"externalReferenceCode": "[$EXTERNAL_REFERENCE_CODE$]",
+					"fieldId": "[$FIELD_ID$]",
+					"scopeExternalReferenceCode": "[$SCOPE_EXTERNAL_REFERENCE_CODE$]"
+				},
+				"onSuccess": {
+					"displayPageUniqueFieldId": "ObjectEntry_displayPageURL",
+					"interaction": "displayPage"
+				}
+			}
+		}
+	},
+	"defaultValue": "Default Action Text"
+}

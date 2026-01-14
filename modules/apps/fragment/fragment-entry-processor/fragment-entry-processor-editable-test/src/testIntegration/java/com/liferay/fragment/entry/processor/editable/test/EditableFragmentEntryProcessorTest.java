@@ -38,12 +38,16 @@ import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryService;
+import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.JournalConverter;
+import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
@@ -102,6 +106,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlag;
@@ -521,6 +526,50 @@ public class EditableFragmentEntryProcessorTest {
 	}
 
 	@Test
+	public void testFragmentEntryProcessorEditableActionMappedActionOnSuccessDisplayPage()
+		throws Exception {
+
+		ObjectDefinition objectDefinition = _addObjectDefinition();
+
+		long classNameId = _portal.getClassNameId(
+			objectDefinition.getClassName());
+
+		ObjectAction objectAction = _addObjectAction(
+			RandomTestUtil.randomLocaleStringMap(),
+			objectDefinition.getObjectDefinitionId());
+
+		String fieldId =
+			ObjectAction.class.getSimpleName() + StringPool.UNDERLINE +
+				objectAction.getName();
+
+		_testFragmentEntryProcessorEditableActionMappedActionOnSuccessDisplayPage(
+			0, 0, null,
+			_getEditableValues(
+				classNameId, RandomTestUtil.randomLong(), StringPool.BLANK,
+				fieldId,
+				"action/editable_values_action_mapped_action_on_success_" +
+					"display_page.json",
+				StringPool.BLANK),
+			null, null);
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			objectDefinition.getObjectDefinitionId());
+
+		String displayPageURL = _getDisplayPageURL(
+			objectDefinition.getClassName(), classNameId, objectEntry);
+
+		_testFragmentEntryProcessorEditableActionMappedActionOnSuccessDisplayPage(
+			classNameId, objectEntry.getPrimaryKey(), displayPageURL,
+			_getEditableValues(
+				classNameId, objectEntry.getPrimaryKey(), StringPool.BLANK,
+				fieldId,
+				"action/editable_values_action_mapped_action_on_success_" +
+					"display_page.json",
+				StringPool.BLANK),
+			fieldId, "displayPage");
+	}
+
+	@Test
 	public void testFragmentEntryProcessorEditableActionMappedActionOnSuccessNone()
 		throws Exception {
 
@@ -664,20 +713,12 @@ public class EditableFragmentEntryProcessorTest {
 
 		element = _getElement(
 			"data-lfr-editable-id", "editable_action",
-			StringUtil.replace(
-				_readJSONFileToString(
-					"action/editable_values_action_mapped_action_on_" +
-						"success_page_with_external_references_codes.json"),
-				new String[] {
-					"[$CLASS_NAME_ID$]", "[$CLASS_PK$]", "[$FIELD_ID$]",
-					"[$EXTERNAL_REFERENCE_CODE$]",
-					"[$SCOPE_EXTERNAL_REFERENCE_CODE$]"
-				},
-				new String[] {
-					String.valueOf(classNameId), String.valueOf(classPK),
-					fieldId, layout.getExternalReferenceCode(),
-					group.getExternalReferenceCode()
-				}),
+			_getEditableValues(
+				classNameId, classPK, layout.getExternalReferenceCode(),
+				fieldId,
+				"action/editable_values_action_mapped_action_on_" +
+					"success_page_with_external_references_codes.json",
+				group.getExternalReferenceCode()),
 			"action/fragment_entry_action.html", LocaleUtil.getSiteDefault(),
 			FragmentEntryLinkConstants.VIEW);
 
@@ -805,33 +846,14 @@ public class EditableFragmentEntryProcessorTest {
 			LocaleUtil.US, RandomTestUtil.randomString()
 		).build();
 
-		ObjectAction objectAction = _objectActionLocalService.addObjectAction(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			objectDefinition.getObjectDefinitionId(), true, StringPool.BLANK,
-			RandomTestUtil.randomString(),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			labelMap, RandomTestUtil.randomString(),
-			ObjectActionExecutorConstants.KEY_WEBHOOK,
-			ObjectActionTriggerConstants.KEY_STANDALONE,
-			UnicodePropertiesBuilder.put(
-				"secret", "standalone"
-			).put(
-				"url", "https://standalone.com"
-			).build(),
-			false);
+		ObjectAction objectAction = _addObjectAction(
+			labelMap, objectDefinition.getObjectDefinitionId());
 
 		long classNameId = _portal.getClassNameId(
 			objectDefinition.getClassName());
 
-		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
-			_group.getGroupId(), TestPropsValues.getUserId(),
-			objectDefinition.getObjectDefinitionId(),
-			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-			null,
-			HashMapBuilder.<String, Serializable>put(
-				"text", RandomTestUtil.randomString()
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
+		ObjectEntry objectEntry = _addObjectEntry(
+			objectDefinition.getObjectDefinitionId());
 
 		String fieldId =
 			ObjectAction.class.getSimpleName() + StringPool.UNDERLINE +
@@ -1886,6 +1908,26 @@ public class EditableFragmentEntryProcessorTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
+	private ObjectAction _addObjectAction(
+			Map<Locale, String> labelMap, long objectDefinitionId)
+		throws Exception {
+
+		return _objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			objectDefinitionId, true, StringPool.BLANK,
+			RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			labelMap, RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_WEBHOOK,
+			ObjectActionTriggerConstants.KEY_STANDALONE,
+			UnicodePropertiesBuilder.put(
+				"secret", "standalone"
+			).put(
+				"url", "https://standalone.com"
+			).build(),
+			false);
+	}
+
 	private ObjectDefinition _addObjectDefinition() throws Exception {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
@@ -1926,6 +1968,43 @@ public class EditableFragmentEntryProcessorTest {
 			objectDefinition.getObjectDefinitionId());
 	}
 
+	private ObjectEntry _addObjectEntry(long objectDefinitionId)
+		throws Exception {
+
+		return _objectEntryLocalService.addObjectEntry(
+			_group.getGroupId(), TestPropsValues.getUserId(),
+			objectDefinitionId,
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
+			HashMapBuilder.<String, Serializable>put(
+				"text", RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+	}
+
+	private void _assertElementAttr(
+		String attrName, long attrValue, Element element) {
+
+		if (attrValue > 0) {
+			Assert.assertEquals(
+				String.valueOf(attrValue), element.attr(attrName));
+		}
+		else {
+			Assert.assertFalse(element.hasAttr(attrName));
+		}
+	}
+
+	private void _assertElementAttr(
+		String attrName, String attrValue, Element element) {
+
+		if (Validator.isNotNull(attrValue)) {
+			Assert.assertEquals(attrValue, element.attr(attrName));
+		}
+		else {
+			Assert.assertFalse(element.hasAttr(attrName));
+		}
+	}
+
 	private DDMForm _deserialize(String content) {
 		DDMFormDeserializerDeserializeRequest.Builder builder =
 			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(content);
@@ -1935,6 +2014,29 @@ public class EditableFragmentEntryProcessorTest {
 				_jsonDDMFormDeserializer.deserialize(builder.build());
 
 		return ddmFormDeserializerDeserializeResponse.getDDMForm();
+	}
+
+	private String _getDisplayPageURL(
+			String className, long classNameId, ObjectEntry objectEntry)
+		throws Exception {
+
+		DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+			_group.getGroupId(), classNameId, 0, true,
+			WorkflowConstants.STATUS_APPROVED);
+
+		InfoItemFieldValuesProvider infoItemFieldValuesProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFieldValuesProvider.class, className);
+
+		InfoFieldValue<?> infoFieldValue =
+			infoItemFieldValuesProvider.getInfoFieldValue(
+				objectEntry, "ObjectEntry_displayPageURL");
+
+		String displayPageURL = (String)infoFieldValue.getValue();
+
+		Assert.assertTrue(Validator.isNotNull(displayPageURL));
+
+		return displayPageURL;
 	}
 
 	private Document _getDocument(String html) {
@@ -1978,6 +2080,24 @@ public class EditableFragmentEntryProcessorTest {
 			new String[] {
 				String.valueOf(classNameId), String.valueOf(classPK), fieldId,
 				String.valueOf(groupId), String.valueOf(layoutId)
+			});
+	}
+
+	private String _getEditableValues(
+			long classNameId, long classPK, String externalReferenceCode,
+			String fieldId, String fileName, String scopeExternalReferenceCode)
+		throws Exception {
+
+		return StringUtil.replace(
+			_readJSONFileToString(fileName),
+			new String[] {
+				"[$CLASS_NAME_ID$]", "[$CLASS_PK$]",
+				"[$EXTERNAL_REFERENCE_CODE$]", "[$FIELD_ID$]",
+				"[$SCOPE_EXTERNAL_REFERENCE_CODE$]"
+			},
+			new String[] {
+				String.valueOf(classNameId), String.valueOf(classPK),
+				externalReferenceCode, fieldId, scopeExternalReferenceCode
 			});
 	}
 
@@ -2125,6 +2245,26 @@ public class EditableFragmentEntryProcessorTest {
 					layout, _serviceContext.getThemeDisplay())));
 	}
 
+	private void
+			_testFragmentEntryProcessorEditableActionMappedActionOnSuccessDisplayPage(
+				long classNameId, long classPK, String displayPageURL,
+				String editableValues, String fieldId, String interaction)
+		throws Exception {
+
+		Element element = _getElement(
+			"data-lfr-editable-id", "editable_action", editableValues,
+			"action/fragment_entry_action.html", LocaleUtil.getSiteDefault(),
+			FragmentEntryLinkConstants.VIEW);
+
+		_assertElementAttr("data-lfr-class-name-id", classNameId, element);
+		_assertElementAttr("data-lfr-class-pk", classPK, element);
+		_assertElementAttr("data-lfr-field-id", fieldId, element);
+		_assertElementAttr(
+			"data-lfr-on-success-interaction", interaction, element);
+		_assertElementAttr(
+			"data-lfr-on-success-page-url", displayPageURL, element);
+	}
+
 	private void _testFragmentEntryProcessorEditableLinkInlineValue(
 			String expectedHref, String mode)
 		throws Exception {
@@ -2215,6 +2355,9 @@ public class EditableFragmentEntryProcessorTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Inject
 	private JournalConverter _journalConverter;

@@ -153,3 +153,61 @@ test(
 		).toBeVisible();
 	}
 );
+
+test(
+	'Duplicate a digital sales room template',
+	{tag: '@LPD-73189'},
+	async ({
+		digitalSalesRoomTemplatesPage,
+		digitalSalesRoomsPage,
+		editDigitalSalesRoomTemplatePage,
+		page,
+	}) => {
+		const name = `A${getRandomInt()}`;
+
+		await digitalSalesRoomsPage.goto();
+		await digitalSalesRoomsPage.templatesLink.click();
+		await digitalSalesRoomTemplatesPage.newDigitalSalesRoomTemplateButton.click();
+
+		await editDigitalSalesRoomTemplatePage.addDigitalSalesRoomTemplate({
+			banner: path.join(__dirname, '/dependencies/liferay.png'),
+			name,
+		});
+
+		await digitalSalesRoomsPage.goto();
+		await digitalSalesRoomsPage.templatesLink.click();
+
+		await expect(
+			digitalSalesRoomTemplatesPage.digitalSalesRoomTemplatesTable.cell(
+				name,
+				false
+			)
+		).toBeVisible();
+
+		await expect(async () => {
+			await (
+				await digitalSalesRoomTemplatesPage.digitalSalesRoomTemplatesTable.rowActions(
+					name,
+					0,
+					false
+				)
+			).click();
+			await expect(
+				digitalSalesRoomTemplatesPage.duplicateMenuItem
+			).toBeVisible({
+				timeout: 200,
+			});
+		}).toPass({timeout: 1000});
+
+		await digitalSalesRoomTemplatesPage.duplicateMenuItem.click();
+
+		await waitForAlert(page);
+
+		await expect(
+			digitalSalesRoomTemplatesPage.digitalSalesRoomTemplatesTable.cell(
+				`${name} (Copy)`,
+				false
+			)
+		).toBeVisible();
+	}
+);

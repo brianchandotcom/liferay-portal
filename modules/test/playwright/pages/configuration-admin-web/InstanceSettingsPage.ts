@@ -37,11 +37,11 @@ export class InstanceSettingsPage {
 				await this.page.reload();
 			}
 
-			await this.productMenuPage.goToPortlet(
-				'Control Panel',
-				'Configuration',
-				'Instance Settings'
-			);
+			await this.productMenuPage.goToPortlet({
+				category: 'Configuration',
+				panel: 'Control Panel',
+				portlet: 'Instance Settings',
+			});
 		}
 	}
 

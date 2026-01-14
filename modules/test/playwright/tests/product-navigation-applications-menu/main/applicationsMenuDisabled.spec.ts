@@ -17,12 +17,12 @@ import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisibl
 import performLogin from '../../../utils/performLogin';
 
 const MENU_TEST_PAGES = [
-	{category: 'Sites', name: 'Sites', panel: 'Control Panel'},
-	{category: 'Order Management', name: 'Orders', panel: 'Commerce'},
+	{category: 'Sites', panel: 'Control Panel', portlet: 'Sites'},
+	{category: 'Order Management', panel: 'Commerce', portlet: 'Orders'},
 	{
 		category: 'Content',
-		name: 'Asset Libraries',
 		panel: 'Applications',
+		portlet: 'Asset Libraries',
 	},
 ];
 
@@ -135,16 +135,20 @@ test.describe('Disabled Applications Menu - Default Instance', () => {
 
 			const menuTestPages = MENU_TEST_PAGES.concat({
 				category: 'Site Builder',
-				name: 'Pages',
 				panel: site.name,
+				portlet: 'Pages',
 			});
 
-			for (const {category, name, panel} of menuTestPages) {
-				await test.step(`Navigate to ${panel} > ${category} > ${name} via Product Menu`, async () => {
-					await productMenuPage.goToPortlet(panel, category, name);
+			for (const {category, panel, portlet} of menuTestPages) {
+				await test.step(`Navigate to ${panel} > ${category} > ${portlet} via Product Menu`, async () => {
+					await productMenuPage.goToPortlet({
+						category,
+						panel,
+						portlet,
+					});
 
 					await expect(
-						page.getByRole('heading', {exact: true, name})
+						page.getByRole('heading', {exact: true, name: portlet})
 					).toBeVisible();
 				});
 			}
@@ -193,7 +197,7 @@ test.describe('Disabled Applications Menu - Virtual Instance', () => {
 	});
 
 	test(
-		'The Product Menu replaces the Applications Menu when it is disabled in a Virtual Instance',
+		'The Product Menu replaces the Applications Menu when it is disabled',
 		{tag: '@LPD-66980'},
 		async () => {
 			const virtualInstanceProductMenuPage = new ProductMenuPage(
@@ -220,18 +224,18 @@ test.describe('Disabled Applications Menu - Virtual Instance', () => {
 				await virtualInstanceProductMenuPage.openProductMenuIfClosed();
 			});
 
-			for (const {category, name, panel} of MENU_TEST_PAGES) {
-				await test.step(`Navigate to ${panel} > ${category} > ${name} via Product Menu`, async () => {
-					await virtualInstanceProductMenuPage.goToPortlet(
-						panel,
+			for (const {category, panel, portlet} of MENU_TEST_PAGES) {
+				await test.step(`Navigate to ${panel} > ${category} > ${portlet} via Product Menu`, async () => {
+					await virtualInstanceProductMenuPage.goToPortlet({
 						category,
-						name
-					);
+						panel,
+						portlet,
+					});
 
 					await expect(
 						virtualInstancePage.getByRole('heading', {
 							exact: true,
-							name,
+							name: portlet,
 						})
 					).toBeVisible();
 				});

@@ -205,7 +205,15 @@ export class ProductMenuPage {
 		await this.webContentButton.click();
 	}
 
-	async goToPortlet(panel: string, category: string, portlet: string) {
+	async goToPortlet({
+		category,
+		panel,
+		portlet,
+	}: {
+		category: string;
+		panel: string;
+		portlet: string;
+	}) {
 		await this.page.reload();
 
 		await this.openProductMenuIfClosed();

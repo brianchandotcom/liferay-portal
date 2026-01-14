@@ -30,8 +30,7 @@ public abstract class BaseLocalizedColumnUpgradeProcess extends UpgradeProcess {
 	protected void upgradeLocalizedColumn(
 			ResourceBundleLoader resourceBundleLoader, String tableName,
 			String columnName, String originalContent,
-			String localizationMapKey, String localizationXMLKey,
-			long[] companyIds)
+			String localizationMapKey, String localizationXMLKey)
 		throws SQLException {
 
 		try {
@@ -54,8 +53,7 @@ public abstract class BaseLocalizedColumnUpgradeProcess extends UpgradeProcess {
 							"content.Language", clazz.getClassLoader()),
 						resourceBundleLoader),
 					tableName, columnName, originalContent, localizationMapKey,
-					localizationXMLKey, companyId),
-				companyIds);
+					localizationXMLKey, companyId));
 		}
 		catch (Exception exception) {
 			throw new SQLException(exception);

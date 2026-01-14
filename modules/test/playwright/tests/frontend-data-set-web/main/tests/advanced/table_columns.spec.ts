@@ -10,7 +10,9 @@ import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
 import {EFDSVisualizationMode, waitForFDS} from '../../../../../utils/waitFor';
+import {waitForAlert} from '../../../../../utils/waitForAlert';
 import {fdsSamplePageTest} from '../../fixtures/fdsSamplePageTest';
+import {systemDataSetsPageTest} from '../../../../frontend-data-set-admin-web/main/tests/data-set-admin/fixtures/systemDataSetsPageTest';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -19,11 +21,16 @@ const test = mergeTests(
 		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,
-	loginTest()
+	loginTest(),
+	systemDataSetsPageTest
 );
 
+let fdsSamplePageURL: string;
+
 test.beforeEach(async ({fdsSamplePage, page, site}) => {
-	await fdsSamplePage.setupFDSSampleWidget({site});
+	const {url} = await fdsSamplePage.setupFDSSampleWidget({site});
+
+	fdsSamplePageURL = url;
 
 	await fdsSamplePage.selectTab('Advanced');
 
@@ -91,6 +98,84 @@ test(
 			);
 
 			await expect(rowAction).toBeAttached();
+		});
+	}
+);
+
+test(
+	'Columns with nested field names are shown',
+	{tag: '@LPD-75783'},
+	async ({fdsSamplePage, page, systemDataSetsPage}) => {
+		await test.step('Check author column, defined by creator.name field name, is visible', async () => {
+			expect(
+				fdsSamplePage.table.container.locator(
+					'[data-id="string,creator,name"]'
+				)
+			).toBeVisible();
+		});
+
+		await test.step('Create System Data Set', async () => {
+			await systemDataSetsPage.goto();
+
+			const creationModal = systemDataSetsPage.creationModal;
+
+			const advancedSampleListItem = creationModal.listItems.filter({
+				hasText: 'Advanced Sample',
+			});
+
+			await systemDataSetsPage.createButton.click();
+
+			await expect(advancedSampleListItem).toBeVisible();
+
+			await advancedSampleListItem.click();
+
+			await expect(advancedSampleListItem).toHaveClass(/selected/);
+
+			await creationModal.createButton.click();
+
+			await waitForAlert(systemDataSetsPage.page);
+		});
+
+		await test.step('Check author column is still visible', async () => {
+			await page.goto(fdsSamplePageURL);
+
+			await fdsSamplePage.selectTab('Advanced');
+
+			await waitForFDS({
+				page,
+				visualizationMode: EFDSVisualizationMode.TABLE,
+			});
+
+			expect(
+				fdsSamplePage.table.container.locator(
+					'[data-id="string,creator.name"]'
+				)
+			).toBeVisible();
+		});
+
+		await test.step('Delete used system data set', async () => {
+			await systemDataSetsPage.goto();
+
+			const fdsRows = systemDataSetsPage.pageContainer.locator('.fds tr');
+
+			const advancedSampleRow = fdsRows.filter({
+				hasText: 'Advanced Sample',
+			});
+
+			await advancedSampleRow.locator('.dropdown-toggle').click();
+
+			await systemDataSetsPage.page
+				.locator('.dropdown-menu.show')
+				.getByRole('menuitem', {name: 'Delete'})
+				.click();
+
+			const deleteModal = systemDataSetsPage.page.getByRole('dialog');
+
+			await deleteModal.getByRole('button', {name: 'Delete'}).click();
+
+			await waitForAlert(systemDataSetsPage.page);
+
+			await expect(advancedSampleRow).not.toBeAttached();
 		});
 	}
 );

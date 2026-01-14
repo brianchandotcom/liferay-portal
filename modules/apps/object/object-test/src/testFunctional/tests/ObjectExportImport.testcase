@@ -317,23 +317,6 @@ definition {
 			valueName = "ImportedSimpleObject.json");
 	}
 
-	@description = "LPS-142175 - Verify if it is possible to export the data structure from a custom objects"
-	@priority = 5
-	test CanExportDataStructure {
-		property portal.acceptance = "true";
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 146357",
-			objectName = "CustomObject146357",
-			pluralLabelName = "Custom Objects 146357");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectExportImport.exportObject(
-			objectLabel = "Custom Object 146357",
-			objectName = "CustomObject146357");
-	}
-
 	@description = "LPS-142175 - Verify it's possible to export an object with Actions"
 	@priority = 4
 	test CanExportObjectWithAction {

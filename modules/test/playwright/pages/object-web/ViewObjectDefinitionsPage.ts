@@ -19,6 +19,7 @@ export class ViewObjectDefinitionsPage {
 	readonly defaultObjectFolder: Locator;
 	readonly deleteObjectDefinitionOption: Locator;
 	readonly deleteObjectFolderButton: Locator;
+	readonly exportObjectDefinitionOption: Locator;
 	readonly frontendDataSetEntries: Locator;
 	readonly objectFolderActions: Locator;
 	readonly objectFolderCardHeader: Locator;
@@ -49,6 +50,9 @@ export class ViewObjectDefinitionsPage {
 		});
 		this.deleteObjectFolderButton = page.getByRole('button', {
 			name: 'Delete',
+		});
+		this.exportObjectDefinitionOption = page.getByRole('menuitem', {
+			name: 'Export Object Definition',
 		});
 		this.frontendDataSetEntries = page.locator('div.table-list-title a');
 		this.objectFolders = page

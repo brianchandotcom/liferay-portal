@@ -12,6 +12,7 @@ import {ManagementToolbar} from 'frontend-js-components-web';
 import React, {useState} from 'react';
 
 import sub from '../../utils/language/sub';
+import {ISearchableType} from '../../utils/types';
 
 function SearchableTypesModal({
 	initialSelectedTypes,
@@ -20,12 +21,19 @@ function SearchableTypesModal({
 	onClose,
 	onFetchSearchableTypes,
 	searchableTypes,
+}: {
+	initialSelectedTypes: string[];
+	observer: any;
+	onChangeTypes: (types: string[]) => void;
+	onClose: () => void;
+	onFetchSearchableTypes: () => void;
+	searchableTypes: ISearchableType[];
 }) {
 	const [modalSelectedTypes, setModalSelectedTypes] =
 		useState(initialSelectedTypes);
 
 	const searchableTypesClassNames = searchableTypes.map(
-		({className}) => className
+		({className}: {className: string}) => className
 	);
 
 	const _handleModalDone = () => {
@@ -34,12 +42,12 @@ function SearchableTypesModal({
 		onChangeTypes(modalSelectedTypes);
 	};
 
-	const _handleRowCheck = (type) => () => {
+	const _handleRowCheck = (type: string) => () => {
 		const isSelected = modalSelectedTypes.includes(type);
 
 		setModalSelectedTypes(
 			isSelected
-				? modalSelectedTypes.filter((item) => item !== type)
+				? modalSelectedTypes.filter((item: string) => item !== type)
 				: [...modalSelectedTypes, type]
 		);
 	};
@@ -60,8 +68,9 @@ function SearchableTypesModal({
 				<>
 					<ManagementToolbar.Container
 						className={
-							!!modalSelectedTypes.length &&
-							'management-bar-primary'
+							modalSelectedTypes.length
+								? 'management-bar-primary'
+								: ''
 						}
 					>
 						<div className="navbar-form navbar-form-autofit navbar-overlay">
@@ -131,7 +140,13 @@ function SearchableTypesModal({
 						<ClayTable>
 							<ClayTable.Body>
 								{searchableTypes.map(
-									({className, displayName}) => {
+									({
+										className,
+										displayName,
+									}: {
+										className: string;
+										displayName: string;
+									}) => {
 										const isSelected =
 											modalSelectedTypes.includes(
 												className
@@ -147,12 +162,14 @@ function SearchableTypesModal({
 											>
 												<ClayTable.Cell>
 													<ClayCheckbox
-														aria-label={sub(
-															Liferay.Language.get(
-																'select-x'
-															),
-															[displayName]
-														)}
+														aria-label={
+															sub(
+																Liferay.Language.get(
+																	'select-x'
+																),
+																[displayName]
+															) as string
+														}
 														checked={isSelected}
 														onChange={_handleRowCheck(
 															className
@@ -216,6 +233,12 @@ export default function ({
 	onChangeTypes,
 	onFetchSearchableTypes,
 	searchableTypes,
+}: {
+	children: React.ReactNode;
+	initialSelectedTypes: string[];
+	onChangeTypes: (types: string[]) => void;
+	onFetchSearchableTypes: () => void;
+	searchableTypes: ISearchableType[];
 }) {
 	const {observer, onOpenChange, open} = useModal();
 

@@ -113,6 +113,7 @@
 												"pageElements": [
 													{
 														"definition": {
+															"customCSS": ".[$FRAGMENT_CLASS$] {\n .sheet-subtitle {\n display: none \n }\n}",
 															"fragment": {
 																"key": "com.liferay.fragment.renderer.categorization.inputs.internal.TagsInputFragmentRenderer"
 															},
@@ -345,7 +346,7 @@
 											"fragmentFields": [
 											],
 											"fragmentStyle": {
-												"marginBottom": "3"
+												"marginBottom": "4"
 											},
 											"indexed": true
 										},

@@ -303,6 +303,7 @@
 												"pageElements": [
 													{
 														"definition": {
+															"customCSS": ".[$FRAGMENT_CLASS$] {\n .sheet-subtitle {\n display: none \n }\n}",
 															"fragment": {
 																"key": "com.liferay.fragment.renderer.categorization.inputs.internal.TagsInputFragmentRenderer"
 															},

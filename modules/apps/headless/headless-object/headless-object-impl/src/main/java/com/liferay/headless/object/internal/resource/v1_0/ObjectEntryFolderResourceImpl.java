@@ -20,8 +20,12 @@ import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.exception.NoSuchObjectEntryFolderException;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryFolderService;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
@@ -35,6 +39,8 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -57,8 +63,10 @@ import jakarta.ws.rs.core.MultivaluedMap;
 
 import java.io.Serializable;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -76,6 +84,64 @@ public class ObjectEntryFolderResourceImpl
 	extends BaseObjectEntryFolderResourceImpl
 	implements ExportImportVulcanBatchEngineTaskItemDelegate
 		<ObjectEntryFolder> {
+
+	@Override
+	public void create(
+			Collection<ObjectEntryFolder> objectEntryFolders,
+			Map<String, Serializable> parameters)
+		throws Exception {
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+		String scopeKey = _getScopeKey(parameters);
+		UnsafeFunction<ObjectEntryFolder, ObjectEntryFolder, Exception>
+			unsafeFunction = null;
+
+		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
+			unsafeFunction =
+				objectEntryFolder -> postScopeScopeKeyObjectEntryFolder(
+					scopeKey, objectEntryFolder);
+		}
+		else if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
+				unsafeFunction = objectEntryFolder -> {
+					try {
+						ObjectEntryFolder getObjectEntryFolder =
+							getScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
+								scopeKey,
+								objectEntryFolder.getExternalReferenceCode());
+
+						return patchObjectEntryFolder(
+							getObjectEntryFolder.getId(), objectEntryFolder);
+					}
+					catch (NoSuchModelException noSuchModelException) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(noSuchModelException);
+						}
+
+						return postScopeScopeKeyObjectEntryFolder(
+							scopeKey, objectEntryFolder);
+					}
+				};
+			}
+			else if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				unsafeFunction = objectEntryFolder ->
+					putScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
+						scopeKey, objectEntryFolder.getExternalReferenceCode(),
+						objectEntryFolder);
+			}
+		}
+
+		if (unsafeFunction == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy + "\" is not supported");
+		}
+
+		contextBatchUnsafeBiConsumer.accept(objectEntryFolders, unsafeFunction);
+	}
 
 	@Override
 	public void deleteObjectEntryFolder(Long objectEntryFolderId)
@@ -108,6 +174,11 @@ public class ObjectEntryFolderResourceImpl
 				getObjectEntryFolderByExternalReferenceCode(
 					externalReferenceCode, _getGroupId(scopeKey),
 					contextCompany.getCompanyId()));
+	}
+
+	@Override
+	public Set<String> getAvailableCreateStrategies() {
+		return SetUtil.fromArray("INSERT", "UPSERT");
 	}
 
 	@Override
@@ -721,6 +792,22 @@ public class ObjectEntryFolderResourceImpl
 		return serviceBuilderObjectEntryFolder.getObjectEntryFolderId();
 	}
 
+	private String _getScopeKey(Map<String, Serializable> parameters) {
+		if (parameters.containsKey("scopeKey")) {
+			return String.valueOf(parameters.get("scopeKey"));
+		}
+
+		if (parameters.containsKey("siteExternalReferenceCode")) {
+			return String.valueOf(parameters.get("siteExternalReferenceCode"));
+		}
+
+		if (parameters.containsKey("siteId")) {
+			return String.valueOf(parameters.get("siteId"));
+		}
+
+		return null;
+	}
+
 	private ObjectEntryFolder _toObjectEntryFolder(
 			com.liferay.object.model.ObjectEntryFolder
 				serviceBuilderObjectEntryFolder)
@@ -935,6 +1022,9 @@ public class ObjectEntryFolderResourceImpl
 					contextHttpServletRequest, null
 				).build()));
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectEntryFolderResourceImpl.class);
 
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;

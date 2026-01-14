@@ -88,8 +88,8 @@ public class LayoutClassedModelUsageStagedModelDataHandlerTest
 			portletDataContext, stagedModel);
 
 		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
-			StagedModel exportedStagedModel =
-				readExportedStagedModel(stagedModel);
+			StagedModel exportedStagedModel = readExportedStagedModel(
+				stagedModel);
 
 			_classNameLocalService.deleteClassName(
 				_classNameLocalService.getClassName(
@@ -103,7 +103,7 @@ public class LayoutClassedModelUsageStagedModelDataHandlerTest
 				portletDataContext, exportedStagedModel);
 
 			LayoutClassedModelUsage importedLayoutClassedModelUsage =
-				(LayoutClassedModelUsage) getStagedModel(
+				(LayoutClassedModelUsage)getStagedModel(
 					stagedModel.getUuid(), liveGroup);
 
 			Assert.assertEquals(

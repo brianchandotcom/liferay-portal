@@ -133,7 +133,7 @@ public class DisplayPageTemplateStagedModelDataHandlerTest
 		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext,
-				(LayoutPageTemplateEntry) readExportedStagedModel(
+				(LayoutPageTemplateEntry)readExportedStagedModel(
 					layoutPageTemplateEntry));
 		}
 
@@ -176,7 +176,7 @@ public class DisplayPageTemplateStagedModelDataHandlerTest
 		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext,
-				(LayoutPageTemplateEntry) readExportedStagedModel(
+				(LayoutPageTemplateEntry)readExportedStagedModel(
 					layoutPageTemplateEntry));
 
 			importedFragmentEntryLink =

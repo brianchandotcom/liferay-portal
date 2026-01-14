@@ -321,7 +321,7 @@ public class DDMTemplateStagedModelDataHandlerTest
 		throws Exception {
 
 		try (SafeCloseable safeCloseable = initImportWithSafeCloseable(
-			exportGroup, importGroup)) {
+				exportGroup, importGroup)) {
 
 			if (Objects.nonNull(journalArticle)) {
 				JournalArticle exportedJournalArticle =
@@ -347,8 +347,8 @@ public class DDMTemplateStagedModelDataHandlerTest
 			}
 
 			if (Objects.nonNull(template)) {
-				DDMTemplate exportedTemplate = (DDMTemplate)readExportedStagedModel(
-					template);
+				DDMTemplate exportedTemplate =
+					(DDMTemplate)readExportedStagedModel(template);
 
 				StagedModelDataHandlerUtil.importStagedModel(
 					portletDataContext, exportedTemplate);
@@ -362,7 +362,7 @@ public class DDMTemplateStagedModelDataHandlerTest
 		throws Exception {
 
 		try (SafeCloseable safeCloseable = initImportWithSafeCloseable(
-			exportGroup, importGroup)) {
+				exportGroup, importGroup)) {
 
 			if (Objects.nonNull(structure)) {
 				DDMStructure exportedStructure =
@@ -373,8 +373,8 @@ public class DDMTemplateStagedModelDataHandlerTest
 			}
 
 			if (Objects.nonNull(template)) {
-				DDMTemplate exportedTemplate = (DDMTemplate)readExportedStagedModel(
-					template);
+				DDMTemplate exportedTemplate =
+					(DDMTemplate)readExportedStagedModel(template);
 
 				StagedModelDataHandlerUtil.importStagedModel(
 					portletDataContext, exportedTemplate);

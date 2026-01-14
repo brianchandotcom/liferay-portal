@@ -62,7 +62,7 @@ public class LayoutUtilityPageEntryStagedModelDataHandlerTest
 
 		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
 			LayoutUtilityPageEntry exportedLayoutUtilityPageEntry1 =
-				(LayoutUtilityPageEntry) readExportedStagedModel(
+				(LayoutUtilityPageEntry)readExportedStagedModel(
 					layoutUtilityPageEntry1);
 
 			LayoutUtilityPageEntry importedLayoutUtilityPageEntry1 =
@@ -71,7 +71,8 @@ public class LayoutUtilityPageEntryStagedModelDataHandlerTest
 					layoutUtilityPageEntry1);
 
 			Assert.assertTrue(
-				importedLayoutUtilityPageEntry1.isDefaultLayoutUtilityPageEntry());
+				importedLayoutUtilityPageEntry1.
+					isDefaultLayoutUtilityPageEntry());
 		}
 
 		initExport();
@@ -94,7 +95,7 @@ public class LayoutUtilityPageEntryStagedModelDataHandlerTest
 
 		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
 			LayoutUtilityPageEntry exportedLayoutUtilityPageEntry1 =
-				(LayoutUtilityPageEntry) readExportedStagedModel(
+				(LayoutUtilityPageEntry)readExportedStagedModel(
 					layoutUtilityPageEntry1);
 
 			LayoutUtilityPageEntry importedLayoutUtilityPageEntry1 =
@@ -103,10 +104,11 @@ public class LayoutUtilityPageEntryStagedModelDataHandlerTest
 					layoutUtilityPageEntry1);
 
 			Assert.assertFalse(
-				importedLayoutUtilityPageEntry1.isDefaultLayoutUtilityPageEntry());
+				importedLayoutUtilityPageEntry1.
+					isDefaultLayoutUtilityPageEntry());
 
 			LayoutUtilityPageEntry exportedLayoutUtilityPageEntry2 =
-				(LayoutUtilityPageEntry) readExportedStagedModel(
+				(LayoutUtilityPageEntry)readExportedStagedModel(
 					layoutUtilityPageEntry2);
 
 			LayoutUtilityPageEntry importedLayoutUtilityPageEntry2 =
@@ -115,7 +117,8 @@ public class LayoutUtilityPageEntryStagedModelDataHandlerTest
 					layoutUtilityPageEntry2);
 
 			Assert.assertTrue(
-				importedLayoutUtilityPageEntry2.isDefaultLayoutUtilityPageEntry());
+				importedLayoutUtilityPageEntry2.
+					isDefaultLayoutUtilityPageEntry());
 		}
 	}
 
@@ -133,7 +136,7 @@ public class LayoutUtilityPageEntryStagedModelDataHandlerTest
 
 		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
 			LayoutUtilityPageEntry exportedLayoutUtilityPageEntry =
-				(LayoutUtilityPageEntry) readExportedStagedModel(
+				(LayoutUtilityPageEntry)readExportedStagedModel(
 					layoutUtilityPageEntry);
 
 			LayoutUtilityPageEntry importedLayoutUtilityPageEntry =
@@ -142,7 +145,8 @@ public class LayoutUtilityPageEntryStagedModelDataHandlerTest
 					layoutUtilityPageEntry);
 
 			Assert.assertFalse(
-				importedLayoutUtilityPageEntry.isDefaultLayoutUtilityPageEntry());
+				importedLayoutUtilityPageEntry.
+					isDefaultLayoutUtilityPageEntry());
 		}
 
 		initExport();
@@ -162,15 +166,17 @@ public class LayoutUtilityPageEntryStagedModelDataHandlerTest
 
 		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
 			LayoutUtilityPageEntry exportedLayoutUtilityPageEntry =
-				(LayoutUtilityPageEntry) readExportedStagedModel(
+				(LayoutUtilityPageEntry)readExportedStagedModel(
 					layoutUtilityPageEntry);
 
-			LayoutUtilityPageEntry importedLayoutUtilityPageEntry = _getImportedLayoutUtilityPageEntry(
-				exportedLayoutUtilityPageEntry, liveGroup,
-				layoutUtilityPageEntry);
+			LayoutUtilityPageEntry importedLayoutUtilityPageEntry =
+				_getImportedLayoutUtilityPageEntry(
+					exportedLayoutUtilityPageEntry, liveGroup,
+					layoutUtilityPageEntry);
 
 			Assert.assertTrue(
-				importedLayoutUtilityPageEntry.isDefaultLayoutUtilityPageEntry());
+				importedLayoutUtilityPageEntry.
+					isDefaultLayoutUtilityPageEntry());
 		}
 	}
 
@@ -206,7 +212,7 @@ public class LayoutUtilityPageEntryStagedModelDataHandlerTest
 					portletDataContext));
 
 			LayoutUtilityPageEntry exportedLayoutUtilityPageEntry =
-				(LayoutUtilityPageEntry) readExportedStagedModel(
+				(LayoutUtilityPageEntry)readExportedStagedModel(
 					layoutUtilityPageEntry);
 
 			portletDataContext.setDataStrategy(

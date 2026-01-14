@@ -41,7 +41,7 @@ public class TaskSectionTableFDSViewTest
 		assertFDSTableSchemaField(null, "date", "due-date", "embedded.dueDate");
 		assertFDSTableSchemaField(
 			null, null, "project",
-			"embedded.r_cmpProjectToCMPTask_c_cmpProject.title");
+			"embedded.r_cmpProjectToCMPTasks_c_cmpProject.title");
 		assertFDSTableSchemaField(
 			null, "stateTableCellRenderer", "state", "embedded.state");
 		assertFDSTableSchemaField(

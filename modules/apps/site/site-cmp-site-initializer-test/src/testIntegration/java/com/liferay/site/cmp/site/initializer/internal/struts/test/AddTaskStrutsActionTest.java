@@ -120,7 +120,7 @@ public class AddTaskStrutsActionTest {
 			_projectObjectEntry.getObjectEntryId(),
 			MapUtil.getLong(
 				taskObjectEntry.getValues(),
-				"r_cmpProjectToCMPTask_c_cmpProjectId"));
+				"r_cmpProjectToCMPTasks_c_cmpProjectId"));
 	}
 
 	@Inject(filter = "path=/cms/add_task")

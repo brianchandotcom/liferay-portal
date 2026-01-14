@@ -82,7 +82,7 @@ public class EditorToolbarComponentSectionFragmentRendererTest
 				projectObjectEntry.getGroupId(), projectObjectEntry.getUserId(),
 				taskObjectDefinition.getObjectDefinitionId(), 0, null,
 				HashMapBuilder.<String, Serializable>put(
-					"r_cmpProjectToCMPTask_c_cmpProjectId",
+					"r_cmpProjectToCMPTasks_c_cmpProjectId",
 					projectObjectEntry.getObjectEntryId()
 				).build(),
 				serviceContext));

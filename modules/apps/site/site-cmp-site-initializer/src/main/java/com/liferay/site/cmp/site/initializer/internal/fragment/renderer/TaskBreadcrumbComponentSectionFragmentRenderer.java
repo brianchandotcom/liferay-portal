@@ -87,7 +87,7 @@ public class TaskBreadcrumbComponentSectionFragmentRenderer
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				objectEntry.getObjectDefinitionId());
 		long parentObjectEntryId = MapUtil.getLong(
-			objectEntry.getValues(), "r_cmpProjectToCMPTask_c_cmpProjectId");
+			objectEntry.getValues(), "r_cmpProjectToCMPTasks_c_cmpProjectId");
 		String title = MapUtil.getString(objectEntry.getValues(), "title");
 
 		ThemeDisplay themeDisplay =

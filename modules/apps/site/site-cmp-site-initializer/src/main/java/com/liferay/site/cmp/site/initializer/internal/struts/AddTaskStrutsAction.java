@@ -63,7 +63,7 @@ public class AddTaskStrutsAction implements StrutsAction {
 				httpServletRequest, "objectEntryFolderExternalReferenceCode"));
 		objectEntry.setProperties(
 			() -> HashMapBuilder.<String, Object>put(
-				"r_cmpProjectToCMPTask_c_cmpProjectId",
+				"r_cmpProjectToCMPTasks_c_cmpProjectId",
 				ParamUtil.getLong(httpServletRequest, "projectId")
 			).build());
 		objectEntry.setStatus(

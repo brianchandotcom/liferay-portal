@@ -98,7 +98,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			_objectEntryLocalService.fetchObjectEntry(
 				MapUtil.getLong(
 					objectEntry.getValues(),
-					"r_cmpProjectToCMPTask_c_cmpProjectId"));
+					"r_cmpProjectToCMPTasks_c_cmpProjectId"));
 
 		if (parentObjectEntry == null) {
 			return;

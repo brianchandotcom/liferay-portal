@@ -50,7 +50,7 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 			sb.append(_assetEntry.getGroupId());
 		}
 
-		sb.append("&nestedFields=cmpProjectToCMPTask,embedded");
+		sb.append("&nestedFields=cmpProjectToCMPTasks,embedded");
 
 		return sb.toString();
 	}

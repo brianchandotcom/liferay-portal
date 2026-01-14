@@ -61,7 +61,7 @@ public abstract class BaseReaderImplTestCase {
 	}
 
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown() {
 		if (_zipReader != null) {
 			_zipReader.close();
 		}
@@ -83,21 +83,21 @@ public abstract class BaseReaderImplTestCase {
 	}
 
 	@Test
-	public void testConstructorNullFile() throws Exception {
+	public void testConstructorNullFile() {
 		ZipReader zipReader = getZipReader((File)null);
 
 		zipReader.close();
 	}
 
 	@Test
-	public void testConstructorNullInputStream() throws Exception {
+	public void testConstructorNullInputStream() {
 		Assert.assertThrows(
 			"Input stream is null", IllegalArgumentException.class,
 			() -> getZipReader((InputStream)null));
 	}
 
 	@Test
-	public void testGetEntries() throws Exception {
+	public void testGetEntries() {
 		List<String> entries = _zipReader.getEntries();
 
 		Assert.assertEquals(entries.toString(), 5, entries.size());
@@ -109,7 +109,7 @@ public abstract class BaseReaderImplTestCase {
 	}
 
 	@Test
-	public void testGetEntryAsByteArray() throws Exception {
+	public void testGetEntryAsByteArray() {
 		Assert.assertArrayEquals(
 			_expectedContent0.getBytes(_UTF_8),
 			_zipReader.getEntryAsByteArray(_FILE_PATH_0));
@@ -125,18 +125,18 @@ public abstract class BaseReaderImplTestCase {
 	}
 
 	@Test
-	public void testGetEntryAsByteArrayThatDoesNotExist() throws Exception {
+	public void testGetEntryAsByteArrayThatDoesNotExist() {
 		Assert.assertNull(_zipReader.getEntryAsByteArray("foo.txt"));
 	}
 
 	@Test
-	public void testGetEntryAsByteArrayThatIsADirectory() throws Exception {
+	public void testGetEntryAsByteArrayThatIsADirectory() {
 		Assert.assertNull(_zipReader.getEntryAsByteArray("1"));
 		Assert.assertNull(_zipReader.getEntryAsByteArray("/1"));
 	}
 
 	@Test
-	public void testGetEntryAsByteArrayWithEmptyName() throws Exception {
+	public void testGetEntryAsByteArrayWithEmptyName() {
 		Assert.assertNull(_zipReader.getEntryAsByteArray(""));
 		Assert.assertNull(_zipReader.getEntryAsByteArray(null));
 	}
@@ -150,24 +150,24 @@ public abstract class BaseReaderImplTestCase {
 	}
 
 	@Test
-	public void testGetEntryAsInputStreamThatDoesNotExist() throws Exception {
+	public void testGetEntryAsInputStreamThatDoesNotExist() {
 		Assert.assertNull(_zipReader.getEntryAsInputStream("foo.txt"));
 	}
 
 	@Test
-	public void testGetEntryAsInputStreamThatIsADirectory() throws Exception {
+	public void testGetEntryAsInputStreamThatIsADirectory() {
 		Assert.assertNull(_zipReader.getEntryAsInputStream("1"));
 		Assert.assertNull(_zipReader.getEntryAsInputStream("/1"));
 	}
 
 	@Test
-	public void testGetEntryAsInputStreamWithEmptyName() throws Exception {
+	public void testGetEntryAsInputStreamWithEmptyName() {
 		Assert.assertNull(_zipReader.getEntryAsInputStream(""));
 		Assert.assertNull(_zipReader.getEntryAsInputStream(null));
 	}
 
 	@Test
-	public void testGetEntryAsString() throws Exception {
+	public void testGetEntryAsString() {
 		Assert.assertEquals(
 			_expectedContent0, _zipReader.getEntryAsString(_FILE_PATH_0));
 
@@ -185,24 +185,24 @@ public abstract class BaseReaderImplTestCase {
 	}
 
 	@Test
-	public void testGetEntryAsStringThatDoesNotExist() throws Exception {
+	public void testGetEntryAsStringThatDoesNotExist() {
 		Assert.assertNull(_zipReader.getEntryAsString("foo.txt"));
 	}
 
 	@Test
-	public void testGetEntryAsStringThatIsADirectory() throws Exception {
+	public void testGetEntryAsStringThatIsADirectory() {
 		Assert.assertNull(_zipReader.getEntryAsString("1"));
 		Assert.assertNull(_zipReader.getEntryAsString("/1"));
 	}
 
 	@Test
-	public void testGetEntryAsStringWithEmptyName() throws Exception {
+	public void testGetEntryAsStringWithEmptyName() {
 		Assert.assertNull(_zipReader.getEntryAsString(""));
 		Assert.assertNull(_zipReader.getEntryAsString(null));
 	}
 
 	@Test
-	public void testGetFolderEntries() throws Exception {
+	public void testGetFolderEntries() {
 		List<String> entries1 = _zipReader.getFolderEntries("");
 
 		Assert.assertNotNull(entries1);
@@ -227,7 +227,7 @@ public abstract class BaseReaderImplTestCase {
 	}
 
 	@Test
-	public void testGetFolderEntriesThatDoesNotExist() throws Exception {
+	public void testGetFolderEntriesThatDoesNotExist() {
 		List<String> entries = _zipReader.getFolderEntries("foo");
 
 		Assert.assertNotNull(entries);

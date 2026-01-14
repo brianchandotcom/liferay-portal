@@ -43,14 +43,14 @@ function ContactSalesLink() {
 	);
 }
 
-function CustomerPortalLink() {
+function SupportLink(props: {children: React.ReactNode}) {
 	return (
 		<a
 			href="https://support.liferay.com"
 			referrerPolicy="no-referrer"
 			target="_blank"
 		>
-			Customer Portal
+			{props.children}
 		</a>
 	);
 }
@@ -65,7 +65,7 @@ const emptyStateMessages = {
 			<>
 				<p {...paragraphProps} className="px-5">
 					Analytics Cloud requires an active Liferay Enterprise
-					subscription and we could find any associated with your
+					subscription and we could not find any associated with your
 					account.
 				</p>
 
@@ -90,30 +90,20 @@ const emptyStateMessages = {
 					<li>
 						If neither of the above situations applies to you, or
 						you are experiencing a technical issue not covered here,
-						please contact our <CustomerPortalLink /> for
-						assistance.
+						please contact our{' '}
+						<SupportLink>Support Team</SupportLink> for assistance.
 					</li>
 				</ul>
 			</>
 		),
-		title: 'We could not find an Enterprise Subscription related to your User',
-	},
-	UPGRADE_PLAN: {
-		description: (
-			<>
-				We are sorry, but we are unable to automatically upgrade your
-				account to the Business Tier. To complete your upgrade, please
-				contact our <ContactSalesLink />
-			</>
-		),
-		title: 'Automatic Upgrade Unavailable',
+		title: 'We could not find an Enterprise Subscription related to your Account',
 	},
 	WORKSPACE_ALREADY_EXISTS: {
 		description: (
 			<>
-				A workspace has already been provisioned for this account. If
-				you need an additional workspace, contact your account manager
-				or the Sales team through the <CustomerPortalLink />.
+				Your account already is linked to an existing Analytics Cloud
+				workspace. If you cannot access your workspace please contact
+				<SupportLink>support</SupportLink>.
 			</>
 		),
 		title: 'This account already has an active\n Analytics Cloud workspace',
@@ -210,10 +200,6 @@ const AnalyticsProvisioning = () => {
 
 		if (!error || !errorInfo?.error) {
 			return null;
-		}
-
-		if (errorInfo.productName.includes('Basic')) {
-			return emptyStateMessages.UPGRADE_PLAN;
 		}
 
 		return error

@@ -565,7 +565,7 @@ public class TaxonomyVocabulary implements Cloneable, Serializable {
 
 	public static enum VisibilityType {
 
-		PUBLIC("PUBLIC"), INTERNAL("INTERNAL");
+		PUBLIC("PUBLIC"), INTERNAL("INTERNAL"), EMPTY("EMPTY");
 
 		public static VisibilityType create(String value) {
 			for (VisibilityType visibilityType : values()) {

@@ -80,7 +80,8 @@ public class BlogsEntryStagedModelDataHandlerTest
 		StagedModelDataHandlerUtil.exportStagedModel(portletDataContext, entry);
 
 		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
-			BlogsEntry exportedEntry = (BlogsEntry)readExportedStagedModel(entry);
+			BlogsEntry exportedEntry = (BlogsEntry)readExportedStagedModel(
+				entry);
 
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, exportedEntry);
@@ -113,7 +114,8 @@ public class BlogsEntryStagedModelDataHandlerTest
 		Long coverImageFileEntryId = null;
 
 		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
-			BlogsEntry exportedEntry = (BlogsEntry)readExportedStagedModel(entry);
+			BlogsEntry exportedEntry = (BlogsEntry)readExportedStagedModel(
+				entry);
 
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, exportedEntry);
@@ -134,8 +136,8 @@ public class BlogsEntryStagedModelDataHandlerTest
 		BlogsEntry importedUpdatedEntry = null;
 
 		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
-			BlogsEntry exportedUpdatedEntry = (BlogsEntry)readExportedStagedModel(
-				updatedEntry);
+			BlogsEntry exportedUpdatedEntry =
+				(BlogsEntry)readExportedStagedModel(updatedEntry);
 
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, exportedUpdatedEntry);
@@ -179,7 +181,8 @@ public class BlogsEntryStagedModelDataHandlerTest
 		StagedModelDataHandlerUtil.exportStagedModel(portletDataContext, entry);
 
 		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
-			BlogsEntry exportedEntry = (BlogsEntry)readExportedStagedModel(entry);
+			BlogsEntry exportedEntry = (BlogsEntry)readExportedStagedModel(
+				entry);
 
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, exportedEntry);
@@ -223,8 +226,8 @@ public class BlogsEntryStagedModelDataHandlerTest
 		StagedModelDataHandlerUtil.exportStagedModel(portletDataContext, entry);
 
 		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
-			BlogsEntry exportedEntry =
-				(BlogsEntry)readExportedStagedModel(entry);
+			BlogsEntry exportedEntry = (BlogsEntry)readExportedStagedModel(
+				entry);
 
 			Assert.assertNotNull(exportedEntry);
 
@@ -259,7 +262,8 @@ public class BlogsEntryStagedModelDataHandlerTest
 		Long smallImageFileEntryId = null;
 
 		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
-			BlogsEntry exportedEntry = (BlogsEntry)readExportedStagedModel(entry);
+			BlogsEntry exportedEntry = (BlogsEntry)readExportedStagedModel(
+				entry);
 
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, exportedEntry);
@@ -280,15 +284,14 @@ public class BlogsEntryStagedModelDataHandlerTest
 		BlogsEntry importedUpdatedEntry = null;
 
 		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
-			BlogsEntry exportedUpdatedEntry = (BlogsEntry)readExportedStagedModel(
-				updatedEntry);
+			BlogsEntry exportedUpdatedEntry =
+				(BlogsEntry)readExportedStagedModel(updatedEntry);
 
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, exportedUpdatedEntry);
 
 			importedUpdatedEntry = (BlogsEntry)getStagedModel(
 				updatedEntry.getUuid(), liveGroup);
-
 		}
 
 		Assert.assertEquals(
@@ -308,7 +311,8 @@ public class BlogsEntryStagedModelDataHandlerTest
 		StagedModelDataHandlerUtil.exportStagedModel(portletDataContext, entry);
 
 		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
-			BlogsEntry exportedEntry = (BlogsEntry)readExportedStagedModel(entry);
+			BlogsEntry exportedEntry = (BlogsEntry)readExportedStagedModel(
+				entry);
 
 			Assert.assertNotNull(exportedEntry);
 

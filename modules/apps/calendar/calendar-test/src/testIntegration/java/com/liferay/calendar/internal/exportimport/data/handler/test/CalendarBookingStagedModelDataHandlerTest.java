@@ -108,11 +108,13 @@ public class CalendarBookingStagedModelDataHandlerTest
 
 			Assert.assertNotEquals(
 				calendarBooking.getCalendarBookingId(),
-				importedCalendarBookingInstance.getRecurringCalendarBookingId());
+				importedCalendarBookingInstance.
+					getRecurringCalendarBookingId());
 
 			Assert.assertEquals(
 				importedCalendarBooking.getCalendarBookingId(),
-				importedCalendarBookingInstance.getRecurringCalendarBookingId());
+				importedCalendarBookingInstance.
+					getRecurringCalendarBookingId());
 		}
 	}
 

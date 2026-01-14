@@ -159,19 +159,19 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 					portletDataContext));
 
 			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, (Layout) readExportedStagedModel(layout1));
+				portletDataContext, (Layout)readExportedStagedModel(layout1));
 			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, (Layout) readExportedStagedModel(layout2));
+				portletDataContext, (Layout)readExportedStagedModel(layout2));
 			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, (Layout) readExportedStagedModel(layout3));
+				portletDataContext, (Layout)readExportedStagedModel(layout3));
 			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, (Layout) readExportedStagedModel(layout4));
+				portletDataContext, (Layout)readExportedStagedModel(layout4));
 
 			portletDataContext.setPrivateLayout(false);
 
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext,
-				(StagedLayoutSet) readExportedStagedModel(stagedLayoutSet));
+				(StagedLayoutSet)readExportedStagedModel(stagedLayoutSet));
 
 			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
 				ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_SUCCEEDED,
@@ -310,7 +310,7 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 					portletDataContext));
 
 			StagedLayoutSet exportedStagedLayoutSet =
-				(StagedLayoutSet) readExportedStagedModel(stagedLayoutSet);
+				(StagedLayoutSet)readExportedStagedModel(stagedLayoutSet);
 
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, exportedStagedLayoutSet);
@@ -365,8 +365,8 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext));
 
-			StagedLayoutSet exportedStagedLayoutSet = (StagedLayoutSet) readExportedStagedModel(
-				stagedLayoutSet);
+			StagedLayoutSet exportedStagedLayoutSet =
+				(StagedLayoutSet)readExportedStagedModel(stagedLayoutSet);
 
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, exportedStagedLayoutSet);
@@ -383,7 +383,8 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 				liveGroup.getPublicLayoutSet(), LayoutSet.class,
 				StagedLayoutSet.class);
 
-			LayoutSet importedLayoutSet = importedStagedLayoutSet.getLayoutSet();
+			LayoutSet importedLayoutSet =
+				importedStagedLayoutSet.getLayoutSet();
 
 			Assert.assertEquals(
 				1,
@@ -430,12 +431,11 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 
 				parameterMap.put(
 					PortletDataHandlerKeys.FAVICON,
-					new String[]{String.valueOf(faviconEnabled)});
+					new String[] {String.valueOf(faviconEnabled)});
 			}
 
 			FileEntry exportedFaviconFileEntry =
-				(FileEntry) readExportedStagedModel(
-					faviconFileEntry);
+				(FileEntry)readExportedStagedModel(faviconFileEntry);
 
 			if (exportedFaviconFileEntry != null) {
 				StagedModelDataHandlerUtil.importStagedModel(
@@ -443,7 +443,7 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 			}
 
 			StagedLayoutSet exportedStagedLayoutSet =
-				(StagedLayoutSet) readExportedStagedModel(stagedLayoutSet);
+				(StagedLayoutSet)readExportedStagedModel(stagedLayoutSet);
 
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, exportedStagedLayoutSet);

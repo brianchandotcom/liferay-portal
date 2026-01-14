@@ -53,7 +53,8 @@ public class CalendarStagedModelDataHandlerTest
 			portletDataContext, calendar);
 
 		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
-			Calendar exportedCalendar = (Calendar)readExportedStagedModel(calendar);
+			Calendar exportedCalendar = (Calendar)readExportedStagedModel(
+				calendar);
 
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, exportedCalendar);
@@ -88,7 +89,8 @@ public class CalendarStagedModelDataHandlerTest
 			portletDataContext, calendar);
 
 		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
-			Calendar exportedCalendar = (Calendar)readExportedStagedModel(calendar);
+			Calendar exportedCalendar = (Calendar)readExportedStagedModel(
+				calendar);
 
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, exportedCalendar);

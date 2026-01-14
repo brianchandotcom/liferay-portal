@@ -95,7 +95,9 @@ public class KBArticleStagedModelDataHandlerTest
 				kbArticle.getUuid(), liveGroup);
 
 			_assertKBArticleAttachments(
-				new String[] {fileEntry1.getFileName(), fileEntry2.getFileName()},
+				new String[] {
+					fileEntry1.getFileName(), fileEntry2.getFileName()
+				},
 				importedKBArticle);
 		}
 
@@ -114,7 +116,8 @@ public class KBArticleStagedModelDataHandlerTest
 			portletDataContext, kbArticle);
 
 		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
-			KBArticle exportedKBArticle = (KBArticle)readExportedStagedModel(kbArticle);
+			KBArticle exportedKBArticle = (KBArticle)readExportedStagedModel(
+				kbArticle);
 
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, exportedKBArticle);

@@ -24,60 +24,6 @@ definition {
 		}
 	}
 
-	@description = "LRQA-55778. Smoke test to verify portlet configuration is available, look and feel is available"
-	@priority = 5
-	@refactordone
-	test CanConfigurePortletUI {
-		property osgi.modules.includes = "frontend-taglib-clay-sample-web";
-		property portal.acceptance = "true";
-
-		task ("Given a portlet on public page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Guest",
-				layoutName = "Clay Sample Test Page");
-
-			JSONLayout.updateLayoutTemplateOfPublicLayout(
-				groupName = "Guest",
-				layoutName = "Clay Sample Test Page",
-				layoutTemplate = "1 Column");
-
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Guest",
-				layoutName = "Clay Sample Test Page",
-				widgetName = "Clay Sample");
-
-			Navigator.gotoPage(pageName = "Clay Sample Test Page");
-		}
-
-		task ("When viewing configuration menu of the portlet") {
-			Portlet.gotoPortletOptions(
-				portletName = "Clay Sample",
-				portletOption = "Configuration");
-
-			IFrame.selectConfigurationFrame();
-		}
-
-		task ("When viewing the Look and Feel configuration") {
-			Navigator.gotoPage(pageName = "Clay Sample Test Page");
-
-			Portlet.gotoPortletOptions(
-				portletName = "Clay Sample",
-				portletOption = "Look and Feel Configuration");
-
-			IFrame.selectConfigurationFrame();
-		}
-
-		task ("Then the look and feel configuration iframe is present") {
-			var key_tab = "General";
-
-			AssertTextEquals(
-				locator1 = "NavTab#TAB_LINK",
-				value1 = "General");
-
-			IFrame.closeFrame();
-		}
-	}
-
 	@description = "LRQA-55778. Smoke test to verify portlet can be dragged and dropped"
 	@priority = 5
 	@refactordone

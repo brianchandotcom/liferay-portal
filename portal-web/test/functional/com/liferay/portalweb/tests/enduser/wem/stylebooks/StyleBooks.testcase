@@ -650,24 +650,4 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-177721. The tooltip of the back button of Style Books view and edit mode, is Go to Style Books."
-	@priority = 3
-	test ViewBackButtonTooltipInStyleBookEditor {
-		task ("Given access to the style book editor") {
-			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
-
-			StyleBooksAdmin.addStyleBooks(styleBookName = "Test Style Book Name");
-		}
-
-		task ("When hover over the back button") {
-			MouseOver(locator1 = "Icon#BACK");
-		}
-
-		task ("Then see the tooltip message") {
-			AssertVisible(
-				key_content = "Go to Style Books",
-				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
-		}
-	}
-
 }

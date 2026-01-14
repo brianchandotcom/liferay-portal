@@ -227,7 +227,7 @@ public class LayoutUtil {
 		}
 
 		PageExperience defaultPageExperience =
-			SegmentsExperienceUtil.getDefaultPageExperience(
+			PageExperienceUtil.getDefaultPageExperience(
 				publishedContentPageSpecification.getPageExperiences());
 
 		serviceContext.setAttribute(
@@ -236,7 +236,7 @@ public class LayoutUtil {
 		serviceContext.setAttribute(
 			"defaultSegmentsExperienceUuid", defaultPageExperience.getUuid());
 
-		defaultPageExperience = SegmentsExperienceUtil.getDefaultPageExperience(
+		defaultPageExperience = PageExperienceUtil.getDefaultPageExperience(
 			draftContentPageSpecification.getPageExperiences());
 
 		serviceContext.setAttribute(

@@ -84,12 +84,13 @@ public class SegmentsExperienceLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		int lowestPriority = _getLowestPriority(groupId, plid);
+		int segmentsExperienceLowestPriority =
+			getSegmentsExperienceLowestPriority(groupId, plid);
 
 		return addSegmentsExperience(
 			externalReferenceCode, userId, groupId, segmentsEntryId, plid,
-			nameMap, lowestPriority - 1, active, typeSettingsUnicodeProperties,
-			serviceContext);
+			nameMap, segmentsExperienceLowestPriority - 1, active,
+			typeSettingsUnicodeProperties, serviceContext);
 	}
 
 	@Override
@@ -372,6 +373,18 @@ public class SegmentsExperienceLocalServiceImpl
 	}
 
 	@Override
+	public int getSegmentsExperienceLowestPriority(long groupId, long plid) {
+		SegmentsExperience segmentsExperience =
+			segmentsExperiencePersistence.fetchByG_P_Last(groupId, plid, null);
+
+		if (segmentsExperience == null) {
+			return 0;
+		}
+
+		return segmentsExperience.getPriority();
+	}
+
+	@Override
 	public List<SegmentsExperience> getSegmentsExperiences(
 		long groupId, long plid) {
 
@@ -633,17 +646,6 @@ public class SegmentsExperienceLocalServiceImpl
 	private int _getHighestPriority(long groupId, long plid) {
 		SegmentsExperience segmentsExperience =
 			segmentsExperiencePersistence.fetchByG_P_First(groupId, plid, null);
-
-		if (segmentsExperience == null) {
-			return 0;
-		}
-
-		return segmentsExperience.getPriority();
-	}
-
-	private int _getLowestPriority(long groupId, long plid) {
-		SegmentsExperience segmentsExperience =
-			segmentsExperiencePersistence.fetchByG_P_Last(groupId, plid, null);
 
 		if (segmentsExperience == null) {
 			return 0;

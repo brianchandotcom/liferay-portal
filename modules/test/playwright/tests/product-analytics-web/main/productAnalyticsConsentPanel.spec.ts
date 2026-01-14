@@ -46,7 +46,46 @@ export const test = mergeTests(
 	usersAndOrganizationsPagesTest
 );
 
-test.afterEach(async ({page}) => {
+test.afterEach(async ({page, systemSettingsPage}) => {
+	const productAnalyticsHeading = await page.getByRole('heading', {
+		name: 'Product Analytics',
+	});
+
+	await test.step('Reset Product Analytics System Settings if needed', async () => {
+		await systemSettingsPage.goToSystemSetting('Privacy', 'Cookie Manager');
+
+		if (!(await page.getByText('Product Analytics').isVisible())) {
+			return;
+		}
+
+		await systemSettingsPage.goToSystemSetting(
+			'Privacy',
+			'Product Analytics'
+		);
+
+		await productAnalyticsHeading.waitFor();
+
+		if (
+			await systemSettingsPage.page
+				.getByRole('button', {name: 'Actions'})
+				.isVisible()
+		) {
+			page.once('dialog', async (dialogWindow) => {
+				await dialogWindow.accept();
+			});
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: systemSettingsPage.page.getByRole('menuitem', {
+					name: 'Reset Default Values',
+				}),
+				trigger: systemSettingsPage.page.getByRole('button', {
+					name: 'Actions',
+				}),
+			});
+		}
+	});
+
 	await test.step('Clear Product Analytics cookies if present', async () => {
 		await clearProductAnalyticsCookies(page);
 	});

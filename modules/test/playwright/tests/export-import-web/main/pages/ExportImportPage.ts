@@ -476,4 +476,19 @@ export class ExportImportPage {
 
 		await this.exportReportEntriesModal.waitFor();
 	}
+
+	async selectImportFile(filePath: string) {
+		await this.newImportButton.click();
+
+		const fileChooserPromise = this.page.waitForEvent('filechooser');
+
+		await this.fileSelector.click();
+
+		const fileChooser = await fileChooserPromise;
+		await fileChooser.setFiles(filePath);
+
+		await this.continueButton.click();
+
+		await this.page.waitForLoadState('domcontentloaded');
+	}
 }

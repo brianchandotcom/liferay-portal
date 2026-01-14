@@ -2203,7 +2203,7 @@
 			<finder-column name="name" />
 			<finder-column name="scope" />
 			<finder-column name="primKeyId" />
-			<finder-column arrayable-operator="OR" arrayable-pagination="true" name="roleId" />
+			<finder-column name="roleId" />
 			<finder-column name="viewActionId" />
 		</finder>
 	</entity>

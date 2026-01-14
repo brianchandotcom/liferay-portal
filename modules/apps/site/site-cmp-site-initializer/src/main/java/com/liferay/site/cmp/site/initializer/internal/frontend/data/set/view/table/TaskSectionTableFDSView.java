@@ -42,7 +42,7 @@ public class TaskSectionTableFDSView extends BaseTableFDSView {
 		).add(
 			"embedded.assignTo.name", "assign-to"
 		).add(
-			"embedded.r_cmpProjectToCMPTask_c_cmpProject.title", "project"
+			"embedded.r_cmpProjectToCMPTasks_c_cmpProject.title", "project"
 		).add(
 			FDSViewUtil.getDateFDSTableSchemaField(
 				"embedded.dueDate", "due-date")

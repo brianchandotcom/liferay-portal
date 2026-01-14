@@ -265,7 +265,7 @@
 																"key": "INPUTS-select-from-list"
 															},
 															"fragmentConfig": {
-																"inputFieldId": "ObjectField_r_cmpProjectToCMPTask_c_cmpProjectId",
+																"inputFieldId": "ObjectField_r_cmpProjectToCMPTasks_c_cmpProjectId",
 																"inputLabel": {
 																	"en_US": "Project"
 																},

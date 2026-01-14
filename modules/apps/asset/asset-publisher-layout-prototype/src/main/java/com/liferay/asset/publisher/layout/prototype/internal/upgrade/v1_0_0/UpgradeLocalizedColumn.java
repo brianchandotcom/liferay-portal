@@ -5,7 +5,6 @@
 
 package com.liferay.asset.publisher.layout.prototype.internal.upgrade.v1_0_0;
 
-import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.upgrade.BaseLocalizedColumnUpgradeProcess;
 import com.liferay.portal.language.LanguageResources;
 
@@ -16,18 +15,14 @@ public class UpgradeLocalizedColumn extends BaseLocalizedColumnUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		long[] companyIds = PortalInstancePool.getCompanyIds();
-
 		upgradeLocalizedColumn(
 			LanguageResources.PORTAL_RESOURCE_BUNDLE_LOADER, "LayoutPrototype",
-			"name", _NAME, "layout-prototype-web-content-title", "Name",
-			companyIds);
+			"name", _NAME, "layout-prototype-web-content-title", "Name");
 
 		upgradeLocalizedColumn(
 			LanguageResources.PORTAL_RESOURCE_BUNDLE_LOADER, "LayoutPrototype",
 			"description", _DESCRIPTION,
-			"layout-prototype-web-content-description", "Description",
-			companyIds);
+			"layout-prototype-web-content-description", "Description");
 	}
 
 	private static final String _DESCRIPTION =

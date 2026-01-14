@@ -18,7 +18,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -212,12 +211,6 @@ public class OIDCUserInfoProcessor {
 
 	private void _addOpenIdConnectUser(String issuer, String subject, User user)
 		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				user.getCompanyId(), "LPD-20879")) {
-
-			return;
-		}
 
 		OpenIdConnectUser openIdConnectUser =
 			_openIdConnectUserLocalService.fetchOpenIdConnectUser(
@@ -452,11 +445,6 @@ public class OIDCUserInfoProcessor {
 		long companyId, String emailAddress, String issuer, String matcherField,
 		String screenName, String subject) {
 
-		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-20879")) {
-			return _userLocalService.fetchUserByEmailAddress(
-				companyId, emailAddress);
-		}
-
 		OpenIdConnectUser openIdConnectUser =
 			_openIdConnectUserLocalService.fetchOpenIdConnectUser(
 				companyId, issuer, subject);
@@ -582,10 +570,6 @@ public class OIDCUserInfoProcessor {
 			String authServerWellKnownURI, String clientId, long companyId,
 			String issuer, String tokenEndpoint)
 		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-20879")) {
-			return "email";
-		}
 
 		String filterString = null;
 

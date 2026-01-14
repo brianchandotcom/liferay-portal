@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.security.sso.openid.connect.persistence.model.OpenIdConnectUser;
 import com.liferay.portal.security.sso.openid.connect.persistence.service.OpenIdConnectUserLocalService;
-import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -179,7 +178,6 @@ public class OIDCUserInfoProcessorTest {
 		ConfigurationTestUtil.deleteConfiguration(_pid);
 	}
 
-	@FeatureFlag("LPD-20879")
 	@Test
 	public void testProcessUserInfo() throws Exception {
 		try (SafeCloseable safeCloseable1 = _updateSecurityWithSafeCloseable(
@@ -268,7 +266,6 @@ public class OIDCUserInfoProcessorTest {
 		}
 	}
 
-	@FeatureFlag("LPD-20879")
 	@Test
 	public void testProcessUserInfoExistingUserWithoutAllowingStrangers()
 		throws Exception {
@@ -290,7 +287,6 @@ public class OIDCUserInfoProcessorTest {
 		}
 	}
 
-	@FeatureFlag("LPD-20879")
 	@Test
 	public void testProcessUserInfoNewUserWithoutAllowingStrangers()
 		throws Exception {

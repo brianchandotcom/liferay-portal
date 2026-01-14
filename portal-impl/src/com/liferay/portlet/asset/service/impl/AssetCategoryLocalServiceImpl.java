@@ -49,6 +49,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -434,6 +436,7 @@ public class AssetCategoryLocalServiceImpl
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public AssetCategory getOrAddEmptyCategory(
 			String externalReferenceCode, long userId, long groupId)
 		throws PortalException {
@@ -453,6 +456,7 @@ public class AssetCategoryLocalServiceImpl
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public AssetCategory getOrAddEmptyCategoryWithAncestors(
 			String externalReferenceCode, long userId, long groupId,
 			String parentCategoryExternalReferenceCode,

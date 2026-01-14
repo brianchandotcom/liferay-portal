@@ -180,6 +180,15 @@ public class CTSContentPersistenceTest {
 	}
 
 	@Test
+	public void testCountByR_P() throws Exception {
+		_persistence.countByR_P(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByR_P(0L, "null");
+
+		_persistence.countByR_P(0L, (String)null);
+	}
+
+	@Test
 	public void testCountByC_R_S() throws Exception {
 		_persistence.countByC_R_S(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "");

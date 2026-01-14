@@ -34,6 +34,160 @@ public interface CTSContentPersistence
 	 */
 
 	/**
+	 * Returns all the cts contents where repositoryId = &#63; and path = &#63;.
+	 *
+	 * @param repositoryId the repository ID
+	 * @param path the path
+	 * @return the matching cts contents
+	 */
+	public java.util.List<CTSContent> findByR_P(long repositoryId, String path);
+
+	/**
+	 * Returns a range of all the cts contents where repositoryId = &#63; and path = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTSContentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param repositoryId the repository ID
+	 * @param path the path
+	 * @param start the lower bound of the range of cts contents
+	 * @param end the upper bound of the range of cts contents (not inclusive)
+	 * @return the range of matching cts contents
+	 */
+	public java.util.List<CTSContent> findByR_P(
+		long repositoryId, String path, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the cts contents where repositoryId = &#63; and path = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTSContentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param repositoryId the repository ID
+	 * @param path the path
+	 * @param start the lower bound of the range of cts contents
+	 * @param end the upper bound of the range of cts contents (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cts contents
+	 */
+	public java.util.List<CTSContent> findByR_P(
+		long repositoryId, String path, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CTSContent>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the cts contents where repositoryId = &#63; and path = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTSContentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param repositoryId the repository ID
+	 * @param path the path
+	 * @param start the lower bound of the range of cts contents
+	 * @param end the upper bound of the range of cts contents (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching cts contents
+	 */
+	public java.util.List<CTSContent> findByR_P(
+		long repositoryId, String path, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CTSContent>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first cts content in the ordered set where repositoryId = &#63; and path = &#63;.
+	 *
+	 * @param repositoryId the repository ID
+	 * @param path the path
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cts content
+	 * @throws NoSuchContentException if a matching cts content could not be found
+	 */
+	public CTSContent findByR_P_First(
+			long repositoryId, String path,
+			com.liferay.portal.kernel.util.OrderByComparator<CTSContent>
+				orderByComparator)
+		throws NoSuchContentException;
+
+	/**
+	 * Returns the first cts content in the ordered set where repositoryId = &#63; and path = &#63;.
+	 *
+	 * @param repositoryId the repository ID
+	 * @param path the path
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cts content, or <code>null</code> if a matching cts content could not be found
+	 */
+	public CTSContent fetchByR_P_First(
+		long repositoryId, String path,
+		com.liferay.portal.kernel.util.OrderByComparator<CTSContent>
+			orderByComparator);
+
+	/**
+	 * Returns the last cts content in the ordered set where repositoryId = &#63; and path = &#63;.
+	 *
+	 * @param repositoryId the repository ID
+	 * @param path the path
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cts content
+	 * @throws NoSuchContentException if a matching cts content could not be found
+	 */
+	public CTSContent findByR_P_Last(
+			long repositoryId, String path,
+			com.liferay.portal.kernel.util.OrderByComparator<CTSContent>
+				orderByComparator)
+		throws NoSuchContentException;
+
+	/**
+	 * Returns the last cts content in the ordered set where repositoryId = &#63; and path = &#63;.
+	 *
+	 * @param repositoryId the repository ID
+	 * @param path the path
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cts content, or <code>null</code> if a matching cts content could not be found
+	 */
+	public CTSContent fetchByR_P_Last(
+		long repositoryId, String path,
+		com.liferay.portal.kernel.util.OrderByComparator<CTSContent>
+			orderByComparator);
+
+	/**
+	 * Returns the cts contents before and after the current cts content in the ordered set where repositoryId = &#63; and path = &#63;.
+	 *
+	 * @param ctsContentId the primary key of the current cts content
+	 * @param repositoryId the repository ID
+	 * @param path the path
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next cts content
+	 * @throws NoSuchContentException if a cts content with the primary key could not be found
+	 */
+	public CTSContent[] findByR_P_PrevAndNext(
+			long ctsContentId, long repositoryId, String path,
+			com.liferay.portal.kernel.util.OrderByComparator<CTSContent>
+				orderByComparator)
+		throws NoSuchContentException;
+
+	/**
+	 * Removes all the cts contents where repositoryId = &#63; and path = &#63; from the database.
+	 *
+	 * @param repositoryId the repository ID
+	 * @param path the path
+	 */
+	public void removeByR_P(long repositoryId, String path);
+
+	/**
+	 * Returns the number of cts contents where repositoryId = &#63; and path = &#63;.
+	 *
+	 * @param repositoryId the repository ID
+	 * @param path the path
+	 * @return the number of matching cts contents
+	 */
+	public int countByR_P(long repositoryId, String path);
+
+	/**
 	 * Returns all the cts contents where companyId = &#63; and repositoryId = &#63; and storeType = &#63;.
 	 *
 	 * @param companyId the company ID

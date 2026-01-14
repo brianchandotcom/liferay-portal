@@ -4088,7 +4088,7 @@
 		{
 			"properties": {
 				"enableESModulesHashing": {
-					"default": true,
+					"default": false,
 					"description": "Enable this to generate import map entries that point to hashed file names for ES modules. This makes infinite caching for ES modules possible.",
 					"title": "Enable ES Modules Hashing",
 					"type": "boolean"

@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import ClayChart from '@clayui/charts';
+import GeomapChart from './GeomapChart';
 import GeoMapLangKey from './geo-map-lang-key';
 import getCN from 'classnames';
 import React, {useEffect, useRef, useState} from 'react';
@@ -228,7 +228,7 @@ export const GeomapCard = ({data, metricLabel}) => {
 	return (
 		<div className='analytics-geomap'>
 			<div style={{height: 232, width: 350}}>
-				<ClayChart
+				<GeomapChart
 					color={{
 						empty: Colors.mapEmpty,
 						range: {

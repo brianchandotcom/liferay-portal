@@ -211,7 +211,10 @@ public class AssetVocabularyLocalServiceImpl
 		vocabulary.setSettings(settings);
 		vocabulary.setVisibilityType(visibilityType);
 
-		if (EmptyModelManagerUtil.isEmptyModel()) {
+		if (EmptyModelManagerUtil.isEmptyModel() ||
+			(visibilityType ==
+				AssetVocabularyConstants.VISIBILITY_TYPE_EMPTY)) {
+
 			vocabulary.setStatus(WorkflowConstants.STATUS_EMPTY);
 		}
 		else {

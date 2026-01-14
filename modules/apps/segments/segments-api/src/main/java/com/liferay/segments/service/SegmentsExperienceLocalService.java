@@ -351,6 +351,9 @@ public interface SegmentsExperienceLocalService
 			String uuid, long groupId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSegmentsExperienceLowestPriority(long groupId, long plid);
+
 	/**
 	 * Returns a range of all the segments experiences.
 	 *

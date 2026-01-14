@@ -498,6 +498,12 @@ public class SegmentsExperienceLocalServiceWrapper
 			getSegmentsExperienceByUuidAndGroupId(uuid, groupId);
 	}
 
+	@Override
+	public int getSegmentsExperienceLowestPriority(long groupId, long plid) {
+		return _segmentsExperienceLocalService.
+			getSegmentsExperienceLowestPriority(groupId, plid);
+	}
+
 	/**
 	 * Returns a range of all the segments experiences.
 	 *

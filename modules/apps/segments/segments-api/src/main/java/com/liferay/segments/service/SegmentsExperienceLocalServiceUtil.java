@@ -439,6 +439,12 @@ public class SegmentsExperienceLocalServiceUtil {
 			uuid, groupId);
 	}
 
+	public static int getSegmentsExperienceLowestPriority(
+		long groupId, long plid) {
+
+		return getService().getSegmentsExperienceLowestPriority(groupId, plid);
+	}
+
 	/**
 	 * Returns a range of all the segments experiences.
 	 *

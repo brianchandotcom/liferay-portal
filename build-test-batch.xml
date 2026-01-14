@@ -1529,9 +1529,23 @@ app.server.type=@{app.server.type}]]></echo>
 		<sequential>
 			<property file="${project.dir}/test.class.file.names.properties" />
 
-			<propertycopy from="TEST_CLASS_GROUP_@{test.class.group.index}" name="test.class.group" />
+			<if>
+				<isset property="TEST_CLASS_GROUP_@{test.class.group.index}" />
+				<then>
+					<propertycopy from="TEST_CLASS_GROUP_@{test.class.group.index}" name="test.class.group" />
 
-			<echo>TEST_CLASS_GROUP_@{test.class.group.index}=${test.class.group}</echo>
+					<echo>TEST_CLASS_GROUP_@{test.class.group.index}=${test.class.group}</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="TEST_TASK_GROUP_@{test.class.group.index}" />
+				<then>
+					<propertycopy from="TEST_TASK_GROUP_@{test.class.group.index}" name="test.task.group" />
+
+					<echo>TEST_TASK_GROUP_@{test.class.group.index}=${test.task.group}</echo>
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 
@@ -2950,7 +2964,15 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 							<property name="test.junit.args" value="--continue -Dbuild.exclude.ant.plugin=true -Dtest.class.group.index=${axis.variable}" />
 
-							<run-modules-junit-test test.class.group="${test.class.group}" test.junit.args="${test.junit.args}" test.task="testIntegration" />
+							<if>
+								<isset property="test.task.group" />
+								<then>
+									<run-modules-junit-test test.junit.args="${test.junit.args}" test.task.group="${test.task.group}" />
+								</then>
+								<else>
+									<run-modules-junit-test test.class.group="${test.class.group}" test.junit.args="${test.junit.args}" test.task="testIntegration" />
+								</else>
+							</if>
 
 							<lstopwatch action="total" name="test.execution.duration" />
 
@@ -3127,9 +3149,10 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 	</macrodef>
 
 	<macrodef name="run-modules-junit-test">
-		<attribute name="test.class.group" />
+		<attribute default="" name="test.class.group" />
 		<attribute default="" name="test.junit.args" />
-		<attribute name="test.task" />
+		<attribute default="" name="test.task" />
+		<attribute default="" name="test.task.group" />
 
 		<sequential>
 			<sequential>
@@ -3160,25 +3183,6 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 						import java.util.concurrent.TimeoutException;
 						import java.util.regex.Matcher;
 						import java.util.regex.Pattern;
-
-						public static void addProjectToMap(String projectName, String testName, Map projectTestMap) {
-							if (!projectTestMap.containsKey(projectName)) {
-								List testList = new ArrayList();
-
-								testList.add(testName);
-
-								projectTestMap.put(projectName, testList);
-							}
-							else {
-								List currentTestList = projectTestMap.get(projectName);
-
-								if (!currentTestList.contains(testName)) {
-									currentTestList.add(testName);
-
-									projectTestMap.put(projectName, currentTestList);
-								}
-							}
-						}
 
 						public static void generateJunitReport(File baseDir, String testClassName, String testTaskName) {
 							Map parameters = new HashMap();
@@ -3301,35 +3305,78 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 							}
 						}
 
-						File projectDir = new File(project.getProperty("project.dir"));
-
-						String testClassGroup = project.getProperty("test.class.group");
-
-						String[] testClassFilePathList = testClassGroup.split(",");
-
-						Map projectTestMap = new HashMap();
-
 						File baseDir = getPortalGitWorkingDirectory();
 
-						for (String testClassFilePath : testClassFilePathList) {
-							testClassFilePath = testClassFilePath.replaceAll("\\.class", "\\.java");
+						File projectDir = new File(project.getProperty("project.dir"));
 
-							String testClassName = getTestClassNameForTestResults(testClassFilePath);
+						Map testTaskTestNameMap = new HashMap();
 
-							File testClassFile = JenkinsResultsParserUtil.getFileFromPathSnippet(projectDir, testClassName);
+						String testTaskGroup = "@{test.task.group}";
 
-							String testProjectName = getTestProjectName(testClassFile.toString());
+						if (!JenkinsResultsParserUtil.isNullOrEmpty(testTaskGroup)) {
+							for (String testTask : testTaskGroup.split(";")) {
+								Pattern pattern = Pattern.compile("([^\\[]+)\\[([^\\]]+)\\]");
 
-							String testTaskName = testProjectName + ":" + "@{test.task}";
+								Matcher matcher = pattern.matcher(testTask);
 
-							generateJunitReport(baseDir, testClassName, testTaskName);
+								if (!matcher.find()) {
+									continue;
+								}
 
-							String testName = getTestName(testClassFilePath);
+								String testTaskName = matcher.group(1);
 
-							addProjectToMap(testProjectName, testName, projectTestMap);
+								String testClassGroup = matcher.group(2);
+
+								String[] testClassFilePathList = testClassGroup.split(",");
+
+								for (String testClassFilePath : testClassFilePathList) {
+									testClassFilePath = testClassFilePath.replaceAll("\\.class", "\\.java");
+
+									String testClassName = getTestClassNameForTestResults(testClassFilePath);
+
+									generateJunitReport(baseDir, testClassName, testTaskName);
+
+									String testName = getTestName(testClassFilePath);
+
+									List testNames = testTaskTestNameMap.getOrDefault(testTaskName, new ArrayList());
+
+									if (!testNames.contains(testName)) {
+										testNames.add(testName);
+									}
+
+									testTaskTestNameMap.put(testTaskName, testNames);
+								}
+							}
+						}
+						else {
+							String testClassGroup = "@{test.class.group}";
+
+							String[] testClassFilePathList = testClassGroup.split(",");
+
+							for (String testClassFilePath : testClassFilePathList) {
+								testClassFilePath = testClassFilePath.replaceAll("\\.class", "\\.java");
+
+								String testClassName = getTestClassNameForTestResults(testClassFilePath);
+
+								File testClassFile = JenkinsResultsParserUtil.getFileFromPathSnippet(projectDir, testClassName);
+
+								String testTaskName = getTestProjectName(testClassFile.toString()) + ":" + "@{test.task}";
+
+								generateJunitReport(baseDir, testClassName, testTaskName);
+
+								String testName = getTestName(testClassFilePath);
+
+								List testNames = testTaskTestNameMap.getOrDefault(testTaskName, new ArrayList());
+
+								if (!testNames.contains(testName)) {
+									testNames.add(testName);
+								}
+
+								testTaskTestNameMap.put(testTaskName, testNames);
+							}
 						}
 
-						for (Map.Entry projectTestEntry : projectTestMap.entrySet()) {
+						for (Map.Entry testTaskTestNameEntry : testTaskTestNameMap.entrySet()) {
 							Map parameters = new HashMap();
 
 							parameters.put("dir", "modules");
@@ -3337,15 +3384,15 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 							StringBuilder sb = new StringBuilder();
 
-							for (String test : projectTestEntry.getValue()) {
+							for (String testName : testTaskTestNameEntry.getValue()) {
 								sb.append("--tests ");
-								sb.append(test);
+								sb.append(testName);
 								sb.append(" ");
 							}
 
 							parameters.put("test.name", sb.toString());
 
-							parameters.put("test.task", projectTestEntry.getKey() + ":" + "@{test.task}");
+							parameters.put("test.task", testTaskTestNameEntry.getKey());
 
 							int timeout = Integer.parseInt(project.getProperty("test.class.timeout.minutes"));
 
@@ -9182,7 +9229,15 @@ information. Make sure to commit in all format-javadoc results.
 
 				<property name="test.junit.args" value="--continue -Dbuild.exclude.ant.plugin=true ${test.arg.opensearch2.unit.tests} ${test.arg.project.templates} ${test.arg.solr.unit.tests} -Djunit.code.coverage=${test.batch.code.coverage} -Dtest.class.group.index=${axis.variable}" />
 
-				<run-modules-junit-test test.class.group="${test.class.group}" test.junit.args="${test.junit.args}" test.task="test" />
+				<if>
+					<isset property="test.task.group" />
+					<then>
+						<run-modules-junit-test test.junit.args="${test.junit.args}" test.task.group="${test.task.group}" />
+					</then>
+					<else>
+						<run-modules-junit-test test.class.group="${test.class.group}" test.junit.args="${test.junit.args}" test.task="test" />
+					</else>
+				</if>
 
 				<lstopwatch action="total" name="test.execution.duration" />
 			</test-action>

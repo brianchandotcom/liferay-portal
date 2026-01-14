@@ -8326,6 +8326,9 @@ public class ObjectEntryResourceTest {
 	@FeatureFlag("LPD-17564")
 	@Test
 	public void testGetObjectEntryWithTaxonomyCategories() throws Exception {
+
+		// Company scope
+
 		_addCMSGroup();
 
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
@@ -8371,8 +8374,6 @@ public class ObjectEntryResourceTest {
 			_postTaxonomyCategoryTaxonomyCategory(
 				group3.getGroupId(), taxonomyCategory3.getId(),
 				taxonomyCategory3.getTaxonomyVocabularyId());
-
-		// Company scope
 
 		_testGetObjectEntryWithTaxonomyCategories(
 			0, _objectDefinition1, taxonomyCategory1, taxonomyCategory2,

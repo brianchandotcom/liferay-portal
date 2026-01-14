@@ -5,6 +5,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.history.JobHistory;
+
 import org.json.JSONObject;
 
 /**

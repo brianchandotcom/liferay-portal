@@ -5,6 +5,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.history.HistoryFactory;
+import com.liferay.jenkins.results.parser.history.JobHistory;
 import com.liferay.jenkins.results.parser.job.property.GlobJobProperty;
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
 import com.liferay.jenkins.results.parser.job.property.JobPropertyFactory;
@@ -473,7 +475,7 @@ public abstract class BaseJob implements Job {
 			return _jobHistory;
 		}
 
-		_jobHistory = HistoryUtil.getJobHistory(this);
+		_jobHistory = HistoryFactory.newJobHistory(this);
 
 		return _jobHistory;
 	}

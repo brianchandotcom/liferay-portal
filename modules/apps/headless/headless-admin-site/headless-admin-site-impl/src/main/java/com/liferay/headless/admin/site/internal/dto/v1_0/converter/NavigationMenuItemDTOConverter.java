@@ -349,7 +349,7 @@ public class NavigationMenuItemDTOConverter
 		if (Objects.equals(
 				clazz.getName(),
 				DisplayPageTypeSiteNavigationMenuItemTypeConstants.
-					DISPLAY_PAGE_TYPE_CLASS_NAME)) {
+					CLASS_NAME)) {
 
 			return new DisplayPageNavigationMenuItemSettings() {
 				{

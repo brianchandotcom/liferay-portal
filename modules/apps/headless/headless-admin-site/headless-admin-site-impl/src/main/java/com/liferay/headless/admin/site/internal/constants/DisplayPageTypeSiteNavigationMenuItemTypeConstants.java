@@ -10,7 +10,7 @@ package com.liferay.headless.admin.site.internal.constants;
  */
 public class DisplayPageTypeSiteNavigationMenuItemTypeConstants {
 
-	public static final String DISPLAY_PAGE_TYPE_CLASS_NAME =
+	public static final String CLASS_NAME =
 		"com.liferay.site.navigation.menu.item.display.page.internal.type." +
 			"DisplayPageTypeSiteNavigationMenuItemType";
 

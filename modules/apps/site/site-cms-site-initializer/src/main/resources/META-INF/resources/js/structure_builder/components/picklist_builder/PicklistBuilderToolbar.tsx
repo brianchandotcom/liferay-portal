@@ -5,7 +5,7 @@
 
 import {openConfirmModal} from '@liferay/layout-js-components-web';
 import {openToast} from 'frontend-js-components-web';
-import React, {useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
 
 import Toolbar from '../../../common/components/Toolbar';
 import PicklistService from '../../../common/services/PicklistService';
@@ -33,6 +33,8 @@ export default function PicklistBuilderToolbar() {
 
 	const localizedName = useMemo(() => getLocalizedValue(name), [name]);
 
+	const [status, setStatus] = useState<'idle' | 'loading'>('idle');
+
 	const onSave = async () => {
 		if (deletedOptions) {
 			if (
@@ -56,6 +58,8 @@ export default function PicklistBuilderToolbar() {
 
 				return;
 			}
+
+			setStatus('loading');
 
 			const params = {
 				erc,
@@ -87,6 +91,8 @@ export default function PicklistBuilderToolbar() {
 
 			staleCache('picklists');
 
+			setStatus('idle');
+
 			openToast({
 				message: Liferay.Util.sub(
 					Liferay.Language.get('x-was-saved-successfully'),
@@ -97,6 +103,8 @@ export default function PicklistBuilderToolbar() {
 		}
 		catch (error) {
 			const {message} = error as Error;
+
+			setStatus('idle');
 
 			openToast({
 				message:
@@ -116,6 +124,7 @@ export default function PicklistBuilderToolbar() {
 					displayType="primary"
 					label={Liferay.Language.get('save')}
 					onClick={onSave}
+					status={status}
 				/>
 			</Toolbar.Item>
 		</Toolbar>

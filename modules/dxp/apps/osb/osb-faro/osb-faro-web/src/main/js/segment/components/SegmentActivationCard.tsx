@@ -14,10 +14,10 @@ interface ISegmentActivationCardProps {
 }
 
 export type SegmentActivationDetails = {
+	frequencyType: SegmentActivationFrequencyTypes;
 	scheduleEndDate?: string;
 	scheduleStartDate?: string;
 	scheduleType: SegmentActivationScheduleTypes;
-	frequencyType: SegmentActivationFrequencyTypes;
 	segmentActivationId: string;
 };
 

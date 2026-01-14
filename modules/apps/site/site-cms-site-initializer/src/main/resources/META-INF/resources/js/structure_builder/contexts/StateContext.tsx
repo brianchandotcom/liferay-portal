@@ -36,6 +36,7 @@ import findAvailableFieldName from '../utils/findAvailableFieldName';
 import findChild from '../utils/findChild';
 import {getChildrenUuids} from '../utils/getChildrenUuids';
 import getRandomId from '../utils/getRandomId';
+import getRandomName from '../utils/getRandomName';
 import getUuid from '../utils/getUuid';
 import insertChild from '../utils/insertChild';
 import isLocked from '../utils/isLocked';
@@ -127,6 +128,8 @@ type DeleteChildAction = {type: 'delete-child'; uuid: Uuid};
 
 type DeleteSelectionAction = {type: 'delete-selection'};
 
+type DuplicateChild = {type: 'duplicate-child'; uuid: Uuid};
+
 type PublishStructureAction = {id?: number; type: 'publish-structure'};
 
 type RefreshReferencedStructuresAction = {
@@ -198,6 +201,7 @@ export type Action =
 	| CreateStructureAction
 	| DeleteChildAction
 	| DeleteSelectionAction
+	| DuplicateChild
 	| PublishStructureAction
 	| RefreshReferencedStructuresAction
 	| SetSelectionAction
@@ -557,6 +561,58 @@ function reducer(state: State, action: Action): State {
 			}
 
 			return nextState;
+		}
+		case 'duplicate-child': {
+			const {structure} = state;
+
+			const {uuid} = action;
+
+			const child = findChild({root: structure, uuid});
+
+			if (!child) {
+				return state;
+			}
+
+			// Create copy of the given child
+
+			const parent = (findChild({
+				root: structure,
+				uuid: child.parent,
+			}) || structure) as Structure | RepeatableGroup;
+
+			const copyUuid = getUuid();
+
+			const copy = {...child, uuid: copyUuid};
+
+			if (copy.type === 'referenced-structure') {
+				copy.relationshipName = getRandomName();
+			}
+			else if (copy.type === 'repeatable-group') {
+				copy.erc = getRandomId();
+				copy.name = getRandomName({capitalize: true});
+				copy.relationshipName = getRandomName();
+			}
+			else {
+				copy.erc = getRandomId();
+				copy.name = findAvailableFieldName(parent.children, child.name);
+			}
+
+			// Insert the copy
+
+			const children = insertChild({
+				child: copy,
+				parentUuid: parent.uuid,
+				root: structure,
+			});
+
+			return {
+				...state,
+				selection: [copyUuid],
+				structure: {
+					...structure,
+					children,
+				},
+			};
 		}
 		case 'publish-structure': {
 			const {structure} = state;

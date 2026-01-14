@@ -90,11 +90,11 @@ public class LiferayProcessorRepositoryWrapper extends RepositoryWrapper {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		FileEntry fileEntry = getFileEntry(fileEntryId);
-
 		super.checkInFileEntry(
 			userId, fileEntryId, dlVersionNumberIncrease, changeLog,
 			serviceContext);
+
+		FileEntry fileEntry = getFileEntry(fileEntryId);
 
 		_processorCapability.copy(fileEntry, fileEntry.getFileVersion());
 	}
@@ -105,9 +105,9 @@ public class LiferayProcessorRepositoryWrapper extends RepositoryWrapper {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		FileEntry fileEntry = getFileEntry(fileEntryId);
-
 		super.checkInFileEntry(userId, fileEntryId, lockUuid, serviceContext);
+
+		FileEntry fileEntry = getFileEntry(fileEntryId);
 
 		_processorCapability.copy(fileEntry, fileEntry.getFileVersion());
 	}

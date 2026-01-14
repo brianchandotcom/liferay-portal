@@ -71,28 +71,22 @@ public class ConfigurationFilterStringUtil {
 	}
 
 	public static String getPortletScopedFilterString(
-		Serializable groupId, Serializable portletInstanceId,
-		String siteExternalReferenceCode) {
+		Serializable portletInstanceId) {
 
 		return StringBundler.concat(
-			"(&(|(", ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
-			StringPool.EQUAL, _toString(groupId),
-			")(siteExternalReferenceCode=",
-			GetterUtil.get(siteExternalReferenceCode, "*"), "))(",
+			"(&(",
 			ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE.
 				getPropertyKey(),
 			"=", _toString(portletInstanceId), "))");
 	}
 
 	public static String getPortletScopedFilterString(
-		Serializable groupId, String pid, Serializable portletInstanceId,
-		String siteExternalReferenceCode) {
+		String pid, Serializable portletInstanceId) {
 
 		return StringBundler.concat(
 			StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND,
 			_getScopedFilterString(pid),
-			getPortletScopedFilterString(
-				groupId, portletInstanceId, siteExternalReferenceCode),
+			getPortletScopedFilterString(portletInstanceId),
 			StringPool.CLOSE_PARENTHESIS);
 	}
 

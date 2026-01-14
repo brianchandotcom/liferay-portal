@@ -7,12 +7,13 @@ import {Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {siteSettingsPagesTest} from '../../../fixtures/siteSettingsPagesTest';
 import {virtualInstancesPagesTest} from '../../../fixtures/virtualInstancesPagesTest';
+import {getExportedConfiguration} from '../../../utils/getExportedConfiguration';
 import performLogin from '../../../utils/performLogin';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {waitForSPAToBeLoaded} from '../../../utils/waitForSPAToBeLoaded';
 
 export const test = mergeTests(
@@ -23,71 +24,55 @@ export const test = mergeTests(
 		'LPS-178052': {enabled: true},
 	}),
 	siteSettingsPagesTest,
-	isolatedSiteTest,
 	virtualInstancesPagesTest
 );
 
 const DEFAULT_VIRTUAL_INSTANCE_NAME = 'www.able.com';
+const GUEST_SITE_NAME = 'Guest';
 
 test('Check that Site OSGi configurations can be used across different systems.', async ({
 	browser,
 	page,
-	site,
 	siteSettingsPage,
 	virtualInstancesPage,
 }) => {
-	const firstAllowedAccountType = page
-		.getByLabel('Allowed Account Types')
-		.first()
-		.getByRole('combobox');
-
 	let virtualInstancePage: Page;
+
+	const firstAllowedAccountType = (targetPage: Page = page) =>
+		targetPage
+			.getByLabel('Allowed Account Types')
+			.first()
+			.getByRole('combobox');
 
 	async function expectExportedConfigurationToHaveSiteName(
 		systemUrl: string,
-		siteName: string
+		siteName: string,
+		targetPage?: Page
 	) {
-		expect(await siteSettingsPage.getExportedConfiguration()).toContain(
+		expect(await getExportedConfiguration(targetPage || page)).toContain(
 			`groupKey="${systemUrl}--${siteName}"`
 		);
 	}
 
-	async function goToAccountsConfiguration(systemPage: Page, site?: Site) {
-		systemPage.goto(
-			`/group${site?.friendlyUrlPath || '/guest'}${PORTLET_URLS.siteSettings}`
-		);
+	async function goToAccountsConfiguration(targetPage: Page) {
+		await targetPage.goto(`/group/guest${PORTLET_URLS.siteSettings}`);
 
-		await systemPage
+		await targetPage
 			.getByRole('link', {
 				exact: true,
 				name: 'Accounts',
 			})
 			.click();
 
-		await systemPage
+		await targetPage
 			.getByRole('menuitem', {
 				exact: true,
 				name: 'Accounts',
 			})
 			.click();
 
-		await waitForSPAToBeLoaded(systemPage);
+		await waitForSPAToBeLoaded(targetPage);
 	}
-
-	await test.step('Assert default configuration is applied', async () => {
-		await goToAccountsConfiguration(page, site);
-
-		await expect(siteSettingsPage.defaultValuesAlert).toBeVisible();
-		await expect(firstAllowedAccountType).toHaveText('Business');
-
-		await siteSettingsPage.saveConfiguration();
-
-		await expect(siteSettingsPage.defaultValuesAlert).toBeHidden();
-		await expectExportedConfigurationToHaveSiteName(
-			'liferay.com',
-			site.name
-		);
-	});
 
 	try {
 		await test.step('Create new virtual instance and login to add the new site', async () => {
@@ -109,22 +94,53 @@ test('Check that Site OSGi configurations can be used across different systems.'
 			);
 		});
 
-		await test.step('Assert custom configuration is applied and can be restored to default', async () => {
+		await test.step('Assert default configuration is applied', async () => {
+			const defaultValuesAlertVirtualInstance = virtualInstancePage
+				.getByRole('alert')
+				.first()
+				.getByText(
+					'Info:This configuration is not saved yet. The values shown are the default.'
+				);
+
 			await goToAccountsConfiguration(virtualInstancePage);
+
+			await expect(defaultValuesAlertVirtualInstance).toBeVisible();
+
+			await expect(
+				firstAllowedAccountType(virtualInstancePage)
+			).toHaveText('Business');
+
+			await virtualInstancePage
+				.getByRole('button', {name: 'Save'})
+				.or(virtualInstancePage.getByRole('button', {name: 'Update'}))
+				.click();
+
+			await waitForAlert(virtualInstancePage);
+
+			await expect(defaultValuesAlertVirtualInstance).toBeHidden();
+			await expectExportedConfigurationToHaveSiteName(
+				DEFAULT_VIRTUAL_INSTANCE_NAME,
+				GUEST_SITE_NAME,
+				virtualInstancePage
+			);
+		});
+
+		await test.step('Assert custom configuration is applied and can be restored to default', async () => {
+			await goToAccountsConfiguration(page);
 
 			await expect(siteSettingsPage.defaultValuesAlert).toBeHidden();
 
-			await expect(firstAllowedAccountType).not.toHaveText('Business');
+			await expect(firstAllowedAccountType()).not.toHaveText('Business');
 
 			await expectExportedConfigurationToHaveSiteName(
-				DEFAULT_VIRTUAL_INSTANCE_NAME,
-				'Guest'
+				'liferay.com',
+				GUEST_SITE_NAME
 			);
 
 			await siteSettingsPage.resetToDefaultValues();
 
 			await expect(siteSettingsPage.defaultValuesAlert).toBeVisible();
-			await expect(firstAllowedAccountType).toHaveText('Business');
+			await expect(firstAllowedAccountType()).toHaveText('Business');
 		});
 	}
 	finally {

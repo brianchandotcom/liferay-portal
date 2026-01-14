@@ -35,6 +35,8 @@ test('Should not allow enabling comments in Web Content Display when disabled by
 	systemSettingsPage,
 	webContentDisplayPage,
 }) => {
+	const basicWebContentTitle = getRandomString();
+
 	await test.step('Verify global comments restriction in System Settings', async () => {
 		await systemSettingsPage.goToSystemSetting(
 			'Web Content',
@@ -44,6 +46,7 @@ test('Should not allow enabling comments in Web Content Display when disabled by
 		await expect(
 			page.getByLabel('Article Comments Enabled')
 		).not.toBeChecked();
+
 		await expect(
 			page
 				.getByText(
@@ -52,8 +55,6 @@ test('Should not allow enabling comments in Web Content Display when disabled by
 				.first()
 		).toBeVisible();
 	});
-
-	const basicWebContentTitle = getRandomString();
 
 	const {layout} =
 		await test.step('Create Web Content and Page via API', async () => {
@@ -73,6 +74,7 @@ test('Should not allow enabling comments in Web Content Display when disabled by
 
 	await test.step('Add Web Content Display widget to page', async () => {
 		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
 		await pageEditorPage.addWidget(
 			'Content Management',
 			'Web Content Display'
@@ -84,16 +86,13 @@ test('Should not allow enabling comments in Web Content Display when disabled by
 		});
 	});
 
-	await test.step('Verify that "Comments" option is hidden in widget configuration', async () => {
-		await page
-			.locator('#wrapper')
-			.getByText('Web Content Display')
-			.locator('..')
-			.getByRole('button', {name: 'Options'})
-			.click();
+	await test.step('Verify that "Comments" option is hidden in Web Content Display configuration', async () => {
+		await webContentDisplayPage.goToConfigurationWithDisplay();
 
-		await webContentDisplayPage.configurationOption.click();
-
-		await expect(page.locator('input[id$="enableComments"]')).toBeHidden();
+		await expect(
+			webContentDisplayPage.configurationFrame.getByLabel('Comments', {
+				exact: true,
+			})
+		).toBeHidden();
 	});
 });

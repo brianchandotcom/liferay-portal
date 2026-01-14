@@ -4,13 +4,10 @@
  */
 
 import {Locator, Page} from '@playwright/test';
-import {readFile} from 'fs/promises';
-import path from 'path';
 
 import {ProductMenuPage} from '../../pages/product-navigation-control-menu-web/ProductMenuPage';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../utils/portletUrls';
-import {getTempDir} from '../../utils/temp';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {waitForSPAToBeLoaded} from '../../utils/waitForSPAToBeLoaded';
 
@@ -74,20 +71,6 @@ export class SiteSettingsPage {
 			target: this.page.getByRole('menuitem', {name: actionName}),
 			trigger: this.page.getByRole('button', {name: 'Actions'}),
 		});
-	}
-
-	async getExportedConfiguration() {
-		const downloadPromise = this.page.waitForEvent('download');
-
-		await this.clickOnAction('Export');
-
-		const download = await downloadPromise;
-
-		const filePath = path.join(getTempDir(), download.suggestedFilename());
-
-		await download.saveAs(filePath);
-
-		return await readFile(filePath, 'utf-8');
 	}
 
 	async resetToDefaultValues() {

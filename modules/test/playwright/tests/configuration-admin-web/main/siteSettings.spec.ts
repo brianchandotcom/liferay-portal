@@ -12,6 +12,7 @@ import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPages
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {siteSettingsPagesTest} from '../../../fixtures/siteSettingsPagesTest';
+import {getExportedConfiguration} from '../../../utils/getExportedConfiguration';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -37,7 +38,7 @@ test('Asserts that site scoped OSGi configurations can be used across different 
 		.getByRole('combobox');
 
 	async function expectExportedConfigurationToHaveSiteName(siteName: string) {
-		expect(await siteSettingsPage.getExportedConfiguration()).toContain(
+		expect(await getExportedConfiguration(page)).toContain(
 			`groupKey="liferay.com--${siteName}"`
 		);
 	}

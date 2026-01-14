@@ -15,7 +15,7 @@ import com.liferay.headless.digital.sales.room.internal.util.v1_0.ExportImportUt
 import com.liferay.headless.digital.sales.room.resource.v1_0.DigitalSalesRoomTemplateResource;
 import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -98,12 +98,13 @@ public class DigitalSalesRoomTemplateResourceImpl
 		Group group = _groupService.getGroup(digitalSalesRoomTemplateId);
 		ObjectDefinition objectDefinition = _getObjectDefinition();
 
-		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
-			group.getExternalReferenceCode(), group.getGroupId(),
-			objectDefinition.getObjectDefinitionId());
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryLocalService.getObjectEntry(
+				group.getExternalReferenceCode(), group.getGroupId(),
+				objectDefinition.getObjectDefinitionId());
 
 		_objectEntryLocalService.deleteObjectEntry(
-			objectEntry.getObjectEntryId());
+			serviceBuilderObjectEntry.getObjectEntryId());
 
 		_groupLocalService.deleteGroup(group.getGroupId());
 	}
@@ -228,12 +229,11 @@ public class DigitalSalesRoomTemplateResourceImpl
 
 		defaultDTOConverterContext.setAttribute("addActions", Boolean.FALSE);
 
-		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
-			objectEntryManager.partialUpdateObjectEntry(
-				objectDefinition.getCompanyId(), defaultDTOConverterContext,
-				group.getExternalReferenceCode(), objectDefinition,
-				_toObjectEntry(digitalSalesRoomTemplate, group),
-				group.getGroupKey());
+		ObjectEntry objectEntry = objectEntryManager.partialUpdateObjectEntry(
+			objectDefinition.getCompanyId(), defaultDTOConverterContext,
+			group.getExternalReferenceCode(), objectDefinition,
+			_toObjectEntry(digitalSalesRoomTemplate, group),
+			group.getGroupKey());
 
 		_updateFrontendTokensValues(digitalSalesRoomTemplate, group);
 
@@ -317,34 +317,35 @@ public class DigitalSalesRoomTemplateResourceImpl
 
 		defaultDTOConverterContext.setAttribute("addActions", Boolean.FALSE);
 
-		ObjectEntry sourceObjectEntry = _objectEntryLocalService.getObjectEntry(
-			sourceGroup.getExternalReferenceCode(), sourceGroup.getGroupId(),
-			dsrRoomObjectDefinition.getObjectDefinitionId());
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryLocalService.getObjectEntry(
+				sourceGroup.getExternalReferenceCode(),
+				sourceGroup.getGroupId(),
+				dsrRoomObjectDefinition.getObjectDefinitionId());
 
 		String targetGroupExternalReferenceCode =
 			targetGroup.getExternalReferenceCode();
 
-		com.liferay.object.rest.dto.v1_0.ObjectEntry targetObjectEntry =
-			objectEntryManager.addObjectEntry(
-				defaultDTOConverterContext, objectDefinition,
-				new com.liferay.object.rest.dto.v1_0.ObjectEntry() {
-					{
-						setProperties(
-							() -> {
-								Map<String, Serializable> values =
-									sourceObjectEntry.getValues();
+		ObjectEntry objectEntry = objectEntryManager.addObjectEntry(
+			defaultDTOConverterContext, objectDefinition,
+			new ObjectEntry() {
+				{
+					setProperties(
+						() -> {
+							Map<String, Serializable> values =
+								serviceBuilderObjectEntry.getValues();
 
-								values.put(
-									"externalReferenceCode",
-									targetGroupExternalReferenceCode);
+							values.put(
+								"externalReferenceCode",
+								targetGroupExternalReferenceCode);
 
-								return Collections.unmodifiableMap(values);
-							});
-					}
-				},
-				targetGroup.getGroupKey());
+							return Collections.unmodifiableMap(values);
+						});
+				}
+			},
+			targetGroup.getGroupKey());
 
-		targetGroup.setClassPK(targetObjectEntry.getId());
+		targetGroup.setClassPK(objectEntry.getId());
 
 		targetGroup = _groupLocalService.updateGroup(targetGroup);
 
@@ -356,7 +357,7 @@ public class DigitalSalesRoomTemplateResourceImpl
 
 		return _toDigitalSalesRoomTemplate(
 			targetGroup,
-			_objectEntryLocalService.getObjectEntry(targetObjectEntry.getId()));
+			_objectEntryLocalService.getObjectEntry(objectEntry.getId()));
 	}
 
 	@Override
@@ -393,11 +394,10 @@ public class DigitalSalesRoomTemplateResourceImpl
 
 		defaultDTOConverterContext.setAttribute("addActions", Boolean.FALSE);
 
-		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
-			objectEntryManager.addObjectEntry(
-				defaultDTOConverterContext, objectDefinition,
-				_toObjectEntry(digitalSalesRoomTemplate, group),
-				group.getGroupKey());
+		ObjectEntry objectEntry = objectEntryManager.addObjectEntry(
+			defaultDTOConverterContext, objectDefinition,
+			_toObjectEntry(digitalSalesRoomTemplate, group),
+			group.getGroupKey());
 
 		group.setClassPK(objectEntry.getId());
 
@@ -475,34 +475,35 @@ public class DigitalSalesRoomTemplateResourceImpl
 
 		defaultDTOConverterContext.setAttribute("addActions", Boolean.FALSE);
 
-		ObjectEntry sourceObjectEntry = _objectEntryLocalService.getObjectEntry(
-			sourceGroup.getExternalReferenceCode(), sourceGroup.getGroupId(),
-			objectDefinition.getObjectDefinitionId());
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryLocalService.getObjectEntry(
+				sourceGroup.getExternalReferenceCode(),
+				sourceGroup.getGroupId(),
+				objectDefinition.getObjectDefinitionId());
 
 		String targetGroupExternalReferenceCode =
 			targetGroup.getExternalReferenceCode();
 
-		com.liferay.object.rest.dto.v1_0.ObjectEntry targetObjectEntry =
-			objectEntryManager.addObjectEntry(
-				defaultDTOConverterContext, objectDefinition,
-				new com.liferay.object.rest.dto.v1_0.ObjectEntry() {
-					{
-						setProperties(
-							() -> {
-								Map<String, Serializable> values =
-									sourceObjectEntry.getValues();
+		ObjectEntry objectEntry = objectEntryManager.addObjectEntry(
+			defaultDTOConverterContext, objectDefinition,
+			new ObjectEntry() {
+				{
+					setProperties(
+						() -> {
+							Map<String, Serializable> values =
+								serviceBuilderObjectEntry.getValues();
 
-								values.put(
-									"externalReferenceCode",
-									targetGroupExternalReferenceCode);
+							values.put(
+								"externalReferenceCode",
+								targetGroupExternalReferenceCode);
 
-								return Collections.unmodifiableMap(values);
-							});
-					}
-				},
-				targetGroup.getGroupKey());
+							return Collections.unmodifiableMap(values);
+						});
+				}
+			},
+			targetGroup.getGroupKey());
 
-		targetGroup.setClassPK(targetObjectEntry.getId());
+		targetGroup.setClassPK(objectEntry.getId());
 
 		targetGroup = _groupLocalService.updateGroup(targetGroup);
 
@@ -514,7 +515,7 @@ public class DigitalSalesRoomTemplateResourceImpl
 
 		return _toDigitalSalesRoomTemplate(
 			targetGroup,
-			_objectEntryLocalService.getObjectEntry(targetObjectEntry.getId()));
+			_objectEntryLocalService.getObjectEntry(objectEntry.getId()));
 	}
 
 	private Group _addGroup(
@@ -785,21 +786,22 @@ public class DigitalSalesRoomTemplateResourceImpl
 	}
 
 	private DigitalSalesRoomTemplate _toDigitalSalesRoomTemplate(
-			Group group, ObjectEntry objectEntry)
+			Group group,
+			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry)
 		throws Exception {
 
 		return _digitalSalesRoomTemplateDTOConverter.toDTO(
 			new DigitalSalesRoomTemplateDTOConverterContext(
 				true, null, _dtoConverterRegistry, group.getGroupId(),
-				contextAcceptLanguage.getPreferredLocale(), objectEntry,
-				contextUriInfo, contextUser),
+				contextAcceptLanguage.getPreferredLocale(),
+				serviceBuilderObjectEntry, contextUriInfo, contextUser),
 			group);
 	}
 
-	private com.liferay.object.rest.dto.v1_0.ObjectEntry _toObjectEntry(
+	private ObjectEntry _toObjectEntry(
 		DigitalSalesRoomTemplate digitalSalesRoomTemplate, Group group) {
 
-		return new com.liferay.object.rest.dto.v1_0.ObjectEntry() {
+		return new ObjectEntry() {
 			{
 				setProperties(
 					() -> Collections.unmodifiableMap(

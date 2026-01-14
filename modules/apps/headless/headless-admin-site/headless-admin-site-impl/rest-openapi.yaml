@@ -2851,6 +2851,10 @@ components:
                     description:
                         Whether the Page is private.
                     type: boolean
+                title:
+                    description:
+                        The title or name of the entity that this navigation menu item is set to.
+                    type: string
             type: object
         PageRule:
             # @review

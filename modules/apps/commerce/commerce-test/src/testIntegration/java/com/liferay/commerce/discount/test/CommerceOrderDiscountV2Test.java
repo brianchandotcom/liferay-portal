@@ -672,12 +672,18 @@ public class CommerceOrderDiscountV2Test {
 			_commerceOrderPriceCalculation.getCommerceOrderPrice(
 				commerceOrder, commerceContext);
 
-		BigDecimal expectedSubtotalValue = commerceOrderPrice.getSubtotal(
-		).getPrice();
+		CommerceMoney subtotalCommerceMoney = commerceOrderPrice.getSubtotal();
+
+		BigDecimal expectedSubtotalValue = subtotalCommerceMoney.getPrice();
+
+		CommerceDiscountValue subtotalDiscountValue =
+			commerceOrderPrice.getSubtotalDiscountValue();
+
+		CommerceMoney subtotalDiscountAmountCommerceMoney =
+			subtotalDiscountValue.getDiscountAmount();
+
 		BigDecimal subtotalDiscountAmount =
-			commerceOrderPrice.getSubtotalDiscountValue(
-			).getDiscountAmount(
-			).getPrice();
+			subtotalDiscountAmountCommerceMoney.getPrice();
 
 		expectedSubtotalValue = expectedSubtotalValue.subtract(
 			subtotalDiscountAmount);
@@ -717,12 +723,12 @@ public class CommerceOrderDiscountV2Test {
 			_commerceOrderPriceCalculation.getTotal(
 				commerceOrder, commerceContext);
 
-		BigDecimal totalPrice = totalCommerceMoney.getPrice(
-		).round(
+		BigDecimal totalPrice = totalCommerceMoney.getPrice();
+
+		totalPrice = totalPrice.round(
 			new MathContext(
 				_commerceCurrency.getMaxFractionDigits(),
-				RoundingMode.HALF_EVEN)
-		);
+				RoundingMode.HALF_EVEN));
 
 		Assert.assertEquals(expectedTotalValue, totalPrice);
 	}

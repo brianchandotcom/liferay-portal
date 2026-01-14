@@ -40,6 +40,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
+import java.util.Date;
 import java.util.Map;
 
 import org.junit.After;
@@ -142,10 +143,11 @@ public class CommerceOrderSystemObjectDefinitionManagerTest {
 			variables.get("channelId"));
 		Assert.assertEquals(
 			_commerceCurrency.getCode(), variables.get("currencyCode"));
-		Assert.assertEquals(
-			commerceOrder.getOrderDate(
-			).getTime(),
-			variables.get("orderDate"));
+
+		Date orderDate = commerceOrder.getOrderDate();
+
+		Assert.assertEquals(orderDate.getTime(), variables.get("orderDate"));
+
 		Assert.assertEquals(
 			commerceOrder.getOrderStatus(), variables.get("orderStatus"));
 		Assert.assertEquals(

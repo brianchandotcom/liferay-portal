@@ -186,10 +186,12 @@ public class CommerceProductPriceEntryCalculationTest {
 				cpInstance.getCPInstanceId(), BigDecimal.ONE, true,
 				StringPool.BLANK, commerceContext);
 
-		CommerceMoney commerceMoney = commerceProductPrice.getFinalPrice();
+		CommerceMoney finalPriceCommerceMoney =
+			commerceProductPrice.getFinalPrice();
 
 		Assert.assertTrue(
-			BigDecimalUtil.eq(new BigDecimal(20), commerceMoney.getPrice()));
+			BigDecimalUtil.eq(
+				new BigDecimal(20), finalPriceCommerceMoney.getPrice()));
 
 		CommerceDiscount commerceDiscount1 =
 			CommerceDiscountTestUtil.addAccountCommerceDiscount(
@@ -239,7 +241,7 @@ public class CommerceProductPriceEntryCalculationTest {
 				cpInstance.getCPInstanceId(), BigDecimal.ONE, true,
 				StringPool.BLANK, commerceContext);
 
-		commerceMoney = commerceProductPrice.getFinalPrice();
+		finalPriceCommerceMoney = commerceProductPrice.getFinalPrice();
 
 		BigDecimal price = commercePriceEntry.getPrice();
 
@@ -248,11 +250,11 @@ public class CommerceProductPriceEntryCalculationTest {
 			BigDecimalUtil.divide(
 				commerceDiscount2.getLevel1(), 100, 2, RoundingMode.HALF_UP));
 
+		BigDecimal finalPrice = finalPriceCommerceMoney.getPrice();
+
 		Assert.assertEquals(
 			BigDecimalUtil.subtract(price, discountValue),
-			commerceMoney.getPrice(
-			).doubleValue(),
-			0);
+			finalPrice.doubleValue(), 0);
 	}
 
 	@Test

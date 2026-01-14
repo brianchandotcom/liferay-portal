@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
 
+import java.util.List;
+
 import org.junit.Before;
 
 /**
@@ -88,10 +90,10 @@ public abstract class BaseObjectValidationRuleEngineImplTestCase {
 		CommerceTestUtil.updateBackOrderCPDefinitionInventory(
 			cpInstance.getCPDefinition());
 
-		commerceOrderItem = commerceOrder.getCommerceOrderItems(
-		).get(
-			0
-		);
+		List<CommerceOrderItem> commerceOrderItems =
+			commerceOrder.getCommerceOrderItems();
+
+		commerceOrderItem = commerceOrderItems.get(0);
 	}
 
 	@DeleteAfterTestRun

@@ -83,6 +83,20 @@ public abstract class BaseReaderImplTestCase {
 	}
 
 	@Test
+	public void testConstructorNullFile() throws Exception {
+		ZipReader zipReader = getZipReader((File)null);
+
+		zipReader.close();
+	}
+
+	@Test
+	public void testConstructorNullInputStream() throws Exception {
+		Assert.assertThrows(
+			"Input stream is null", IllegalArgumentException.class,
+			() -> getZipReader((InputStream)null));
+	}
+
+	@Test
 	public void testGetEntries() throws Exception {
 		List<String> entries = _zipReader.getEntries();
 

@@ -24,7 +24,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface PortalURLBuilderConfiguration {
 
 	@Meta.AD(
-		deflt = "true", description = "enable-es-modules-hashing-help",
+		deflt = "false", description = "enable-es-modules-hashing-help",
 		name = "enable-es-modules-hashing", required = false
 	)
 	public boolean enableESModulesHashing();

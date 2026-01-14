@@ -120,11 +120,13 @@ const SideMenu = () => {
 
 					const redirectPage = getKebabCase(itemDisplayName);
 
-					const iconKey = name === PRODUCT_TYPES.dxpCloud
-						? 'lxc'
-						: name === PRODUCT_TYPES.liferayExperienceCloud
-							? 'experienceCloud'
-							: redirectPage.split('-')[0];
+					const iconKey = activationProductName.split(',')
+						.includes(PRODUCT_TYPES.dxpCloud)
+							? 'lxc'
+							: activationProductName.split(',')
+								.includes(PRODUCT_TYPES.liferayExperienceCloud)
+									? 'experienceCloud'
+									: redirectPage.split('-')[0];
 
 					const menuUpdateStatus = (isActive) =>
 						setMenuItemActiveStatus(

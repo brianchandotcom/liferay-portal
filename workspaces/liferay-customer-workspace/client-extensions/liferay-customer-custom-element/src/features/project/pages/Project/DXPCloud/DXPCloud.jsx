@@ -66,7 +66,9 @@ const DXPCloud = () => {
 				project={project}
 				subscriptionGroupDXPCloud={subscriptionGroups.find(
 					(subscriptionGroup) =>
-						subscriptionGroup.name === PRODUCT_TYPES.dxpCloud
+						subscriptionGroup.name === PRODUCT_TYPES.liferayCloud &&
+						subscriptionGroup.activationProductName.split(',')
+							.includes(PRODUCT_TYPES.dxpCloud)
 				)}
 				userAccount={userAccount}
 			/>

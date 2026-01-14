@@ -23,6 +23,7 @@ export interface IAccountSubscription {
 
 export interface IAccountSubscriptionGroup {
 	accountSubscriptionGroupId?: number;
+	activationProductName?: string;
 	activationStatus: string;
 	name?: string;
 }

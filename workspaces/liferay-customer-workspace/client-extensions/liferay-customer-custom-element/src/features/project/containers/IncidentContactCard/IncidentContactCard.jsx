@@ -14,6 +14,7 @@ import useCurrentKoroneikiAccount from '~/hooks/useCurrentKoroneikiAccount';
 import {useAppContext} from '~/features/project/context';
 import useMyUserAccountByAccountExternalReferenceCode from '~/features/project/pages/Project/TeamMembers/components/TeamMembersTable/hooks/useMyUserAccountByAccountExternalReferenceCode';
 import useUserAccountsByAccountExternalReferenceCode from '~/features/project/pages/Project/TeamMembers/components/TeamMembersTable/hooks/useUserAccountsByAccountExternalReferenceCode';
+import {PRODUCT_TYPES} from '~/features/project/utils/constants';
 import {
 	HIGH_PRIORITY_CONTACT_CATEGORIES,
 	getContactRoleByFilter,
@@ -69,7 +70,7 @@ const IncidentContactCard = ({
 		setModalMonitoring(false);
 	};
 
-	const lxcProductNames = ['Liferay Cloud', 'Liferay SaaS'];
+	const lxcProductNames = [PRODUCT_TYPES.liferayCloud, PRODUCT_TYPES.liferayExperienceCloud];
 
 	const isLXCEnvironment = accountSubscriptionGroupsNames?.some(name =>
 		lxcProductNames.includes(name)

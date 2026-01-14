@@ -11,6 +11,7 @@ export const PRODUCT_TYPES = {
 	dxp: 'DXP',
 	dxpCloud: 'Liferay PaaS',
 	enterpriseSearch: 'Enterprise Search',
+	liferayCloud: 'Liferay Cloud',
 	liferayExperienceCloud: 'Liferay SaaS',
 	other: 'Other',
 	partnership: 'Partnership',

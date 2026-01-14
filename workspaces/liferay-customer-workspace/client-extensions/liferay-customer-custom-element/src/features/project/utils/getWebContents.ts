@@ -34,7 +34,11 @@ export function getWebContents(
 		? subscriptionGroups.reduce(
 				(subscriptionGroupsAccumulator, subscriptionGroup) => {
 					const currentProductIndex = allProductsNames.findIndex(
-						(productName) => productName === subscriptionGroup?.name
+						(productName) =>
+							productName === subscriptionGroup?.name ||
+							subscriptionGroup.activationProductName
+								.split(',')
+								.includes(productName)
 					);
 
 					if (currentProductIndex !== -1) {
@@ -68,7 +72,10 @@ export function getWebContents(
 	const hasDXPOrDXPCloudActive = subscriptionGroups?.find(
 		(subscriptionGroup) =>
 			subscriptionGroup.name === PRODUCT_TYPES.dxp ||
-			(subscriptionGroup.name === PRODUCT_TYPES.dxpCloud &&
+			(subscriptionGroup.name === PRODUCT_TYPES.liferayCloud &&
+				subscriptionGroup.activationProductName
+					.split(',')
+					.includes(PRODUCT_TYPES.dxpCloud) &&
 				subscriptionGroup.activationStatus === 'Active')
 	);
 

@@ -23,6 +23,10 @@ public class ObjectEntryManagerUtil {
 		ObjectEntry existingObjectEntry, long objectDefinitionId,
 		ObjectEntry objectEntry) {
 
+		if (objectEntry.getComments() != null) {
+			existingObjectEntry.setComments(objectEntry::getComments);
+		}
+
 		if (objectEntry.getDateCreated() != null) {
 			existingObjectEntry.setDateCreated(objectEntry::getDateCreated);
 		}

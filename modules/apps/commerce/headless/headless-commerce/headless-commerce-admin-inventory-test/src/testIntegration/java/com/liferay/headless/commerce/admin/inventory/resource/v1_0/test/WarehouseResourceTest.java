@@ -19,6 +19,7 @@ import com.liferay.portal.test.rule.Inject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -58,12 +59,10 @@ public class WarehouseResourceTest extends BaseWarehouseResourceTestCase {
 		Warehouse warehouse1 = _addWarehouse(randomWarehouse());
 		Warehouse warehouse2 = _addWarehouse(randomWarehouse());
 
+		Map<String, String> name = warehouse1.getName();
+
 		Page<Warehouse> page = warehouseResource.getWarehousesPage(
-			warehouse1.getName(
-			).get(
-				"en_US"
-			),
-			null, Pagination.of(1, 10), null);
+			name.get("en_US"), null, Pagination.of(1, 10), null);
 
 		Assert.assertNotEquals(warehouse2, page.fetchFirstItem());
 

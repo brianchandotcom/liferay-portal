@@ -784,22 +784,18 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 							{
 								setCurrency(
 									() -> commerceCurrency.getName(locale));
-								setPrice(
-									() -> _getConvertedPrice(
-										commerceCurrency,
-										commercePriceEntry.
-											getCommercePriceList(),
-										commercePriceEntry.getPrice()
-									).doubleValue());
+
+								BigDecimal convertedPrice = _getConvertedPrice(
+									commerceCurrency,
+									commercePriceEntry.getCommercePriceList(),
+									commercePriceEntry.getPrice());
+
+								setPrice(convertedPrice::doubleValue);
 								setPriceFormatted(
 									() -> _commercePriceFormatter.format(
-										commerceCurrency,
-										_getConvertedPrice(
-											commerceCurrency,
-											commercePriceEntry.
-												getCommercePriceList(),
-											commercePriceEntry.getPrice()),
+										commerceCurrency, convertedPrice,
 										locale));
+
 								setPriceOnApplication(
 									commercePriceEntry::isPriceOnApplication);
 								setPricingQuantityPrice(
@@ -906,20 +902,16 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 		return new TierPrice() {
 			{
 				setCurrency(() -> commerceCurrency.getName(locale));
-				setPrice(
-					() -> _getConvertedPrice(
-						commerceCurrency,
-						commercePriceEntry.getCommercePriceList(),
-						commerceTierPriceEntryPrice
-					).doubleValue());
+
+				BigDecimal convertedPrice = _getConvertedPrice(
+					commerceCurrency, commercePriceEntry.getCommercePriceList(),
+					commerceTierPriceEntryPrice);
+
+				setPrice(convertedPrice::doubleValue);
 				setPriceFormatted(
 					() -> _commercePriceFormatter.format(
-						commerceCurrency,
-						_getConvertedPrice(
-							commerceCurrency,
-							commercePriceEntry.getCommercePriceList(),
-							commerceTierPriceEntryPrice),
-						locale));
+						commerceCurrency, convertedPrice, locale));
+
 				setPricingQuantityPrice(
 					() -> {
 						if (pricingQuantityUnitPriceCommerceMoney == null) {

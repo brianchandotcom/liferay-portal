@@ -475,25 +475,25 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 		Assert.assertTrue(
 			(skuUnitOfMeasures != null) && (skuUnitOfMeasures.length == 1));
 
+		BigDecimal randomSkuUnitOfMeasureBasePrice =
+			randomSkuUnitOfMeasure.getBasePrice();
 		SkuUnitOfMeasure skuUnitOfMeasure = skuUnitOfMeasures[0];
 
 		Assert.assertEquals(
 			skuUnitOfMeasure.getBasePrice(),
-			randomSkuUnitOfMeasure.getBasePrice(
-			).setScale(
-				2, RoundingMode.HALF_UP
-			));
+			randomSkuUnitOfMeasureBasePrice.setScale(2, RoundingMode.HALF_UP));
 		Assert.assertEquals(
 			skuUnitOfMeasure.getKey(), randomSkuUnitOfMeasure.getKey());
 		Assert.assertEquals(
 			skuUnitOfMeasure.getPriority(),
 			randomSkuUnitOfMeasure.getPriority());
+
+		BigDecimal randomSkuUnitOfMeasurePromoPrice =
+			randomSkuUnitOfMeasure.getPromoPrice();
+
 		Assert.assertEquals(
 			skuUnitOfMeasure.getPromoPrice(),
-			randomSkuUnitOfMeasure.getPromoPrice(
-			).setScale(
-				2, RoundingMode.HALF_UP
-			));
+			randomSkuUnitOfMeasurePromoPrice.setScale(2, RoundingMode.HALF_UP));
 
 		assertValid(patchSku);
 	}

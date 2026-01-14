@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import React from 'react';
+
 const SPLIT_REGEX = /({\d+})/g;
 
 /**
@@ -15,18 +17,22 @@ const SPLIT_REGEX = /({\d+})/g;
  * => 'search <b>all</b>'
  *
  * @param {string} langKey This is the language key used from our properties file
- * @param {string} args Arguments to pass into language key
+ * @param {(string|number|React.ReactNode)[]} args Arguments to pass into language key
  * @param {string} join Boolean used to indicate whether to call `.join()` on
  * the array before it is returned. Use `false` if subbing in JSX.
  * @return {(string|Array)}
  */
-export default function sub(langKey, args, join = true) {
+export default function sub(
+	langKey: string,
+	args: (string | number | React.ReactNode)[],
+	join: boolean = true
+): string | Array<string | number | React.ReactNode> {
 	const keyArray = langKey
 		.split(SPLIT_REGEX)
 		.filter((val) => val.length !== 0);
 
 	for (let i = 0; i < args.length; i++) {
-		const arg = args[i];
+		const arg = args[i] as any;
 
 		const indexKey = `{${i}}`;
 

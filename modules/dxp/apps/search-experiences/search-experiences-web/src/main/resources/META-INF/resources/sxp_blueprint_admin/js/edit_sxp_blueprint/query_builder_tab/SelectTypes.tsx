@@ -18,13 +18,7 @@ import {
 	ISelectedItem,
 	ISelectedSubtype,
 } from '../../utils/types';
-
-// @ts-ignore
-
 import SearchableTypesModal from './SearchableTypesModal';
-
-// @ts-ignore
-
 import SelectSubtypes from './SelectSubtypes';
 
 /**

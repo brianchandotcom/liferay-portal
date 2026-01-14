@@ -34,9 +34,6 @@ import ThemeContext from '../../shared/ThemeContext';
 // @ts-ignore
 
 import removeDuplicates from '../../utils/functions/remove_duplicates';
-
-// @ts-ignore
-
 import sub from '../../utils/language/sub';
 import {IAssetSubtype, ISelectedSubtype} from './../../utils/types';
 import {isMissing} from './SelectTypes';
@@ -368,14 +365,16 @@ export function SearchableSubtypesModal({
 												<Cell>
 													<div className="d-flex">
 														<ClayCheckbox
-															aria-label={sub(
-																Liferay.Language.get(
-																	'select-x'
-																),
-																[
-																	item.assetSubtypeLocalizedName,
-																]
-															)}
+															aria-label={
+																sub(
+																	Liferay.Language.get(
+																		'select-x'
+																	),
+																	[
+																		item.assetSubtypeLocalizedName,
+																	]
+																) as string
+															}
 															checked={isSelected(
 																item
 															)}

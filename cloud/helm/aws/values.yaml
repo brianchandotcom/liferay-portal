@@ -65,7 +65,6 @@ liferay-default:
                                         --retry-delay 2 \
                                         "$URL" ; then
                                             echo "Error: Failed to install OpenSearch modules." >&2
-                                            echo "If your current image already has OpenSearch installed, you may disable this validation by setting \".search.setup=false\" onto your Helm chart." >&2
                                             exit 1
                                     fi
                                 }

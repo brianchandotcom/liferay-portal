@@ -46,6 +46,16 @@ public class TaskDefinitionSerDes {
 
 		sb.append("{");
 
+		if (taskDefinition.getActive() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"active\": ");
+
+			sb.append(taskDefinition.getActive());
+		}
+
 		if (taskDefinition.getDescription() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -103,6 +113,13 @@ public class TaskDefinitionSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (taskDefinition.getActive() == null) {
+			map.put("active", null);
+		}
+		else {
+			map.put("active", String.valueOf(taskDefinition.getActive()));
+		}
+
 		if (taskDefinition.getDescription() == null) {
 			map.put("description", null);
 		}
@@ -143,7 +160,10 @@ public class TaskDefinitionSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "description")) {
+			if (Objects.equals(jsonParserFieldName, "active")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "description")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
@@ -161,7 +181,12 @@ public class TaskDefinitionSerDes {
 			TaskDefinition taskDefinition, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "description")) {
+			if (Objects.equals(jsonParserFieldName, "active")) {
+				if (jsonParserFieldValue != null) {
+					taskDefinition.setActive((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
 					taskDefinition.setDescription((String)jsonParserFieldValue);
 				}

@@ -15689,6 +15689,12 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 								<then>
 									<property name="mysql.host" value="127.0.0.1" />
 								</then>
+								<elseif>
+									<isset property="database.host" />
+									<then>
+										<property name="mysql.host" value="${database.host}" />
+									</then>
+								</elseif>
 								<else>
 									<property name="mysql.host" value="" />
 								</else>

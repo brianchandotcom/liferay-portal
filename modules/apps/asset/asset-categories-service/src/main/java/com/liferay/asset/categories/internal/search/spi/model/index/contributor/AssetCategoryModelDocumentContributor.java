@@ -92,7 +92,6 @@ public class AssetCategoryModelDocumentContributor
 			"classNameIds", _getClassNameIds(assetCategory.getVocabularyId()));
 		document.addKeyword(
 			"groupIds", _getGroupIds(assetCategory.getVocabularyId()));
-
 		document.addLocalizedKeyword(
 			"localized_title",
 			_localization.populateLocalizationMap(

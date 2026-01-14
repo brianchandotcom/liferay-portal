@@ -379,10 +379,6 @@ public class TaxonomyCategoryResourceImpl
 				searchContext.addVulcanAggregation(aggregation);
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 
-				if (Validator.isNotNull(search)) {
-					searchContext.setKeywords(search);
-				}
-
 				if ((depotEntry != null) &&
 					(depotEntry.getType() == DepotConstants.TYPE_SPACE)) {
 
@@ -394,6 +390,10 @@ public class TaxonomyCategoryResourceImpl
 				}
 				else {
 					searchContext.setGroupIds(new long[] {assetLibraryId});
+				}
+
+				if (Validator.isNotNull(search)) {
+					searchContext.setKeywords(search);
 				}
 			},
 			sorts,

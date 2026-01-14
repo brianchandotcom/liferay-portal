@@ -1190,6 +1190,14 @@ public class SQLDSLTest {
 
 		Assert.assertTrue(select.isDistinct());
 		Assert.assertSame(expressions, select.getExpressions());
+		Assert.assertNull(select.getHints());
+
+		FromStep fromStep = select.hints("INDEX (MainExample IX_00000000)");
+
+		Assert.assertEquals(
+			"select /*+ INDEX (MainExample IX_00000000) */ distinct " +
+				"MainExample.mainExampleId, MainExample.flag",
+			fromStep.toString());
 	}
 
 	@Test

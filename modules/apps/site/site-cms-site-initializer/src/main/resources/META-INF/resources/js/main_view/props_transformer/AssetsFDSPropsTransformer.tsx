@@ -128,30 +128,28 @@ export default function AssetsFDSPropsTransformer({
 				} as IInternalRenderer,
 				{
 					component: ({actions, itemData, options, value}) => {
-						if (additionalProps.showAdditionalItemInfo) {
-							return (
-								<>
-									<SimpleActionLinkRenderer
-										actions={actions}
-										additionalProps={additionalProps}
-										itemData={itemData}
-										options={options}
-										value={value}
-									/>
-									<AdditionalItemInfoRenderer
-										itemData={itemData}
-									/>
-								</>
-							);
+						const simpleActionLink = (
+							<SimpleActionLinkRenderer
+								actions={actions}
+								additionalProps={additionalProps}
+								itemData={itemData}
+								options={options}
+								value={value}
+							/>
+						);
+
+						if (!additionalProps.showAdditionalItemInfo) {
+							return simpleActionLink;
 						}
 
-						return SimpleActionLinkRenderer({
-							actions,
-							additionalProps,
-							itemData,
-							options,
-							value,
-						});
+						return (
+							<>
+								{simpleActionLink}
+								<AdditionalItemInfoRenderer
+									itemData={itemData}
+								/>
+							</>
+						);
 					},
 					name: 'simpleActionLinkTableCellRenderer',
 					type: 'internal',

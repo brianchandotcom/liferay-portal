@@ -211,10 +211,6 @@ public class TaxonomyVocabularyResourceImpl
 				assetVocabulary.getGroupId());
 		}
 
-		boolean internalVisibilityType =
-			TaxonomyVocabulary.VisibilityType.INTERNAL.equals(
-				taxonomyVocabulary.getVisibilityType());
-
 		assetVocabulary = _assetVocabularyService.updateVocabulary(
 			taxonomyVocabulary.getExternalReferenceCode(),
 			assetVocabulary.getVocabularyId(), null,
@@ -232,9 +228,7 @@ public class TaxonomyVocabularyResourceImpl
 				assetTypes, assetVocabulary.getGroupId(),
 				GetterUtil.getBoolean(
 					taxonomyVocabulary.getMultiValued(), true)),
-			internalVisibilityType ?
-				AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL :
-					AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC,
+			_getVisibilityType(taxonomyVocabulary.getVisibilityType()),
 			ServiceContextBuilder.create(
 				assetVocabulary.getGroupId(), contextHttpServletRequest,
 				taxonomyVocabulary.getViewableByAsString()
@@ -508,10 +502,6 @@ public class TaxonomyVocabularyResourceImpl
 			true, LocaleUtil.getSiteDefault(), "Taxonomy vocabulary", titleMap,
 			new HashSet<>(descriptionMap.keySet()));
 
-		boolean internalVisibilityType =
-			TaxonomyVocabulary.VisibilityType.INTERNAL.equals(
-				taxonomyVocabulary.getVisibilityType());
-
 		return _assetVocabularyService.addVocabulary(
 			externalReferenceCode, siteId,
 			titleMap.get(LocaleUtil.getSiteDefault()), null, titleMap,
@@ -520,9 +510,7 @@ public class TaxonomyVocabularyResourceImpl
 				taxonomyVocabulary.getAssetTypes(), siteId,
 				GetterUtil.getBoolean(
 					taxonomyVocabulary.getMultiValued(), true)),
-			internalVisibilityType ?
-				AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL :
-					AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC,
+			_getVisibilityType(taxonomyVocabulary.getVisibilityType()),
 			ServiceContextBuilder.create(
 				siteId, contextHttpServletRequest,
 				taxonomyVocabulary.getViewableByAsString()
@@ -904,6 +892,20 @@ public class TaxonomyVocabularyResourceImpl
 						document.get(Field.ASSET_VOCABULARY_ID)))));
 	}
 
+	private int _getVisibilityType(
+		TaxonomyVocabulary.VisibilityType visibilityType) {
+
+		if (TaxonomyVocabulary.VisibilityType.EMPTY.equals(visibilityType)) {
+			return AssetVocabularyConstants.VISIBILITY_TYPE_EMPTY;
+		}
+
+		if (TaxonomyVocabulary.VisibilityType.INTERNAL.equals(visibilityType)) {
+			return AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL;
+		}
+
+		return AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC;
+	}
+
 	private TaxonomyVocabulary _toTaxonomyVocabulary(
 		AssetVocabulary assetVocabulary) {
 
@@ -979,9 +981,26 @@ public class TaxonomyVocabularyResourceImpl
 						return GroupUtil.getSiteId(group);
 					});
 				setVisibilityType(
-					() -> (assetVocabulary.getVisibilityType() == 1) ?
-						TaxonomyVocabulary.VisibilityType.INTERNAL :
-							TaxonomyVocabulary.VisibilityType.PUBLIC);
+					() -> {
+						int visibilityType =
+							assetVocabulary.getVisibilityType();
+
+						if (visibilityType ==
+								AssetVocabularyConstants.
+									VISIBILITY_TYPE_EMPTY) {
+
+							return TaxonomyVocabulary.VisibilityType.EMPTY;
+						}
+
+						if (visibilityType ==
+								AssetVocabularyConstants.
+									VISIBILITY_TYPE_INTERNAL) {
+
+							return TaxonomyVocabulary.VisibilityType.INTERNAL;
+						}
+
+						return TaxonomyVocabulary.VisibilityType.PUBLIC;
+					});
 			}
 		};
 	}
@@ -1013,10 +1032,6 @@ public class TaxonomyVocabularyResourceImpl
 				_getAssetLibraryGroupIds(taxonomyVocabulary));
 		}
 
-		boolean internalVisibilityType =
-			TaxonomyVocabulary.VisibilityType.INTERNAL.equals(
-				taxonomyVocabulary.getVisibilityType());
-
 		return _assetVocabularyService.updateVocabulary(
 			taxonomyVocabulary.getExternalReferenceCode(),
 			assetVocabulary.getVocabularyId(), null, titleMap, descriptionMap,
@@ -1024,9 +1039,7 @@ public class TaxonomyVocabularyResourceImpl
 				taxonomyVocabulary.getAssetTypes(),
 				assetVocabulary.getGroupId(),
 				taxonomyVocabulary.getMultiValued()),
-			internalVisibilityType ?
-				AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL :
-					AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC,
+			_getVisibilityType(taxonomyVocabulary.getVisibilityType()),
 			ServiceContextBuilder.create(
 				assetVocabulary.getGroupId(), contextHttpServletRequest,
 				taxonomyVocabulary.getViewableByAsString()

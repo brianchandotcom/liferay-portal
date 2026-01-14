@@ -7,15 +7,17 @@ package com.liferay.fragment.entry.processor.editable.internal.mapper;
 
 import com.liferay.fragment.entry.processor.editable.element.constants.ActionEditableElementConstants;
 import com.liferay.fragment.entry.processor.editable.mapper.EditableElementMapper;
+import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
+import com.liferay.fragment.entry.processor.helper.InfoItemFieldMapped;
 import com.liferay.fragment.entry.processor.helper.LayoutReferenceResolver;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
-import com.liferay.info.item.InfoItemIdentifier;
+import com.liferay.info.item.InfoItemDetails;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
-import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.localized.bundle.FunctionInfoLocalizedValue;
 import com.liferay.info.type.WebURL;
 import com.liferay.petra.string.StringPool;
@@ -56,65 +58,42 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 			return;
 		}
 
-		String fieldId = mappedActionJSONObject.getString("fieldId");
+		InfoItemFieldMapped infoItemFieldMapped =
+			_fragmentEntryProcessorHelper.getInfoItemFieldMapped(
+				mappedActionJSONObject, fragmentEntryProcessorContext);
 
-		if (Validator.isNull(fieldId)) {
-			fieldId = mappedActionJSONObject.getString("collectionFieldId");
-		}
+		if ((infoItemFieldMapped == null) ||
+			(infoItemFieldMapped.getObject() == null)) {
 
-		if (Validator.isNull(fieldId)) {
-			fieldId = mappedActionJSONObject.getString("mappedField");
-		}
-
-		if (Validator.isNull(fieldId)) {
 			return;
 		}
 
-		long classNameId = mappedActionJSONObject.getLong("classNameId");
-		long classPK = mappedActionJSONObject.getLong("classPK");
+		element.attr(
+			"data-lfr-class-name-id",
+			String.valueOf(
+				_portal.getClassNameId(infoItemFieldMapped.getClassName())));
+		element.attr(
+			"data-lfr-class-pk",
+			String.valueOf(
+				_getClassPK(
+					infoItemFieldMapped,
+					fragmentEntryProcessorContext.getScopeGroupId())));
 
-		if ((classNameId == 0) || (classPK == 0)) {
-			InfoItemReference infoItemReference =
-				fragmentEntryProcessorContext.getContextInfoItemReference();
-
-			if (infoItemReference == null) {
-				return;
-			}
-
-			classNameId = _portal.getClassNameId(
-				infoItemReference.getClassName());
-
-			InfoItemIdentifier infoItemIdentifier =
-				infoItemReference.getInfoItemIdentifier();
-
-			if (infoItemIdentifier instanceof ClassPKInfoItemIdentifier) {
-				ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-					(ClassPKInfoItemIdentifier)infoItemIdentifier;
-
-				classPK = classPKInfoItemIdentifier.getClassPK();
-			}
-
-			if ((classNameId == 0) || (classPK == 0)) {
-				return;
-			}
-		}
-
-		element.attr("data-lfr-class-name-id", String.valueOf(classNameId));
-		element.attr("data-lfr-class-pk", String.valueOf(classPK));
-		element.attr("data-lfr-field-id", fieldId);
+		element.attr("data-lfr-field-id", infoItemFieldMapped.getFieldName());
 
 		_addDataAtributes(
-			classNameId, classPK, element, fragmentEntryProcessorContext,
+			element, fragmentEntryProcessorContext, infoItemFieldMapped,
 			configJSONObject.getJSONObject("onError"), "error");
 		_addDataAtributes(
-			classNameId, classPK, element, fragmentEntryProcessorContext,
+			element, fragmentEntryProcessorContext, infoItemFieldMapped,
 			configJSONObject.getJSONObject("onSuccess"), "success");
 	}
 
 	private void _addDataAtributes(
-			long classNameId, long classPK, Element element,
+			Element element,
 			FragmentEntryProcessorContext fragmentEntryProcessorContext,
-			JSONObject jsonObject, String resultType)
+			InfoItemFieldMapped infoItemFieldMapped, JSONObject jsonObject,
+			String resultType)
 		throws PortalException {
 
 		if (jsonObject == null) {
@@ -142,39 +121,25 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 		if (interaction.equals(
 				ActionEditableElementConstants.INTERACTION_DISPLAY_PAGE)) {
 
-			if (!resultType.equals("success")) {
-				return;
-			}
+			if (!resultType.equals("success") ||
+				(infoItemFieldMapped.getObject() == null)) {
 
-			String className = _portal.fetchClassName(classNameId);
-
-			InfoItemObjectProvider<?> infoItemObjectProvider =
-				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoItemObjectProvider.class, className,
-					ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
-
-			if (infoItemObjectProvider == null) {
 				return;
 			}
 
 			InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
 				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoItemFieldValuesProvider.class, className);
+					InfoItemFieldValuesProvider.class,
+					infoItemFieldMapped.getClassName());
 
 			if (infoItemFieldValuesProvider == null) {
 				return;
 			}
 
-			Object infoItem = infoItemObjectProvider.getInfoItem(
-				new ClassPKInfoItemIdentifier(classPK));
-
-			if (infoItem == null) {
-				return;
-			}
-
 			InfoFieldValue<Object> infoFieldValue =
 				infoItemFieldValuesProvider.getInfoFieldValue(
-					infoItem, jsonObject.getString("displayPageUniqueFieldId"));
+					infoItemFieldMapped.getObject(),
+					jsonObject.getString("displayPageUniqueFieldId"));
 
 			if (infoFieldValue == null) {
 				return;
@@ -286,6 +251,25 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 			element.attr("data-lfr-on-" + resultType + "-page-url", url);
 		}
 	}
+
+	private long _getClassPK(
+		InfoItemFieldMapped infoItemFieldMapped, long scopeGroupId) {
+
+		if (infoItemFieldMapped.getInfoItemIdentifier() instanceof
+				ClassPKInfoItemIdentifier) {
+
+			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+				(ClassPKInfoItemIdentifier)
+					infoItemFieldMapped.getInfoItemIdentifier();
+
+			return classPKInfoItemIdentifier.getClassPK();
+		}
+
+		return 0;
+	}
+
+	@Reference
+	private FragmentEntryProcessorHelper _fragmentEntryProcessorHelper;
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;

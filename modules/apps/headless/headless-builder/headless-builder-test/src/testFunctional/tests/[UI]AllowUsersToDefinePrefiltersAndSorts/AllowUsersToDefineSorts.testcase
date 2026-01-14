@@ -1,6 +1,7 @@
 @component-name = "portal-headless"
 definition {
 
+	property browser.chrome.version = "139.0";
 	property custom.properties = "feature.flag.LPS-178642=true";
 	property portal.acceptance = "quarantine";
 	property portal.release = "true";
@@ -73,6 +74,8 @@ definition {
 
 	@priority = 4
 	test CanApplySortingAndSortParameter {
+		property browser.chrome.version = "139.0";
+
 		task ("And Given setting the Sorting to 'age:asc'") {
 			APIBuilderUI.addAndPublishEndpointConfiguration(
 				editValue = "age:asc",
@@ -153,6 +156,8 @@ definition {
 
 	@priority = 5
 	test SortingAndSortParameterReturnTheSameData {
+		property browser.chrome.version = "139.0";
+
 		task ("And Given setting the Sorting to 'age:asc'") {
 			APIBuilderUI.addAndPublishEndpointConfiguration(
 				editValue = "age:asc",
@@ -203,6 +208,8 @@ definition {
 
 	@priority = 3
 	test SortingIsLimitedByODataCharacterLimit {
+		property browser.chrome.version = "139.0";
+
 		task ("When setting the Sorting with 10001 characters") {
 			APIBuilderUI.addAndPublishEndpointConfiguration(
 				editValue = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Duis auctor orci nec justo ullamcorper, at fermentum risus accumsan. Nullam convallis risus id lectus congue, vitae tincidunt orci tristique. Nam quis elit eu libero dapibus lobortis. Suspendisse potenti. Curabitur placerat velit vitae arcu tempor, non vestibulum lectus auctor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia CuraLorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Duis auctor orci nec justo ullamcorper, at fermentum risus accumsan. Nullam convallis risus id lectus congue, vitae tincidunt orci tristique. Nam quis elit eu libero dapibus lobortis. Suspendisse potenti. Curabitur placerat velit vitae arcu tempor, non vestibulum lectus auctor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia CuraLorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Duis auctor orci nec justo ullamcorper, at fermentumqd",

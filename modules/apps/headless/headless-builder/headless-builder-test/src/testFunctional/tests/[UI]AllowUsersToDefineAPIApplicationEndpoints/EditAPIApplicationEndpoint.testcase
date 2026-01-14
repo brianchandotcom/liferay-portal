@@ -1,6 +1,7 @@
 @component-name = "portal-headless"
 definition {
 
+	property browser.chrome.version = "139.0";
 	property custom.properties = "feature.flag.LPS-178642=true";
 	property portal.acceptance = "quarantine";
 	property portal.release = "true";
@@ -37,6 +38,8 @@ definition {
 
 	@priority = 3
 	test CanChangeSchemaOfEndpoint {
+		property browser.chrome.version = "139.0";
+
 		task ("And Given two API Schema in API Application") {
 			SchemaAPI.createAPISchema(
 				apiApplicationERC = "My-app",
@@ -128,6 +131,8 @@ definition {
 
 	@priority = 4
 	test CanRelateSchemaOfRelatedObjectsWithEndpoint {
+		property browser.chrome.version = "139.0";
+
 		task ("Given Student, University objects of scope 'Company' created with text field 'name'") {
 			ObjectDefinitionAPI.createAndPublishObjectDefinition(
 				en_US_label = "student",

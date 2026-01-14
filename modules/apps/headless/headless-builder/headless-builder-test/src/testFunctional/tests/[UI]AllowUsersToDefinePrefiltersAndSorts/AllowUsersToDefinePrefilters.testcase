@@ -1,6 +1,7 @@
 @component-name = "portal-headless"
 definition {
 
+	property browser.chrome.version = "139.0";
 	property custom.properties = "feature.flag.LPS-178642=true";
 	property portal.acceptance = "quarantine";
 	property portal.release = "true";
@@ -203,6 +204,8 @@ definition {
 
 	@priority = 5
 	test FiltersIsPresentInEndpointConfiguration {
+		property browser.chrome.version = "139.0";
+
 		task ("When navigating to the endpoint Configuration tab") {
 			APIBuilderUI.goToEditRelatedEntryInEditApplication(
 				entity = "Endpoints",
@@ -270,6 +273,8 @@ definition {
 
 	@priority = 4
 	test PrefilteringWorksWithMainObjectFieldsThatAreNotPartOfSchemaProperties {
+		property browser.chrome.version = "139.0";
+
 		task ("When setting the Filters to 'externalReferenceCode eq 'abc''") {
 			APIBuilderUI.addAndPublishEndpointConfiguration(
 				editValue = "externalReferenceCode eq 'abc'",
@@ -290,6 +295,8 @@ definition {
 
 	@priority = 4
 	test PrefilteringWorksWithSchemaPropertiesMadeOfMainObjectFields {
+		property browser.chrome.version = "139.0";
+
 		task ("When setting the Filters to 'contains(name,'abc')'") {
 			APIBuilderUI.addAndPublishEndpointConfiguration(
 				editValue = "contains(name,'abc')",
@@ -310,6 +317,8 @@ definition {
 
 	@priority = 4
 	test PrefilteringWorksWithSchemaPropertiesMadeOfObjectFieldsRelatedWithOneToManyRelationship {
+		property browser.chrome.version = "139.0";
+
 		task ("When setting the Filters to 'contains(studentSubjects/name,'abc')'") {
 			APIBuilderUI.addAndPublishEndpointConfiguration(
 				editValue = "contains(studentSubjects/name,'abc')",
@@ -330,6 +339,8 @@ definition {
 
 	@priority = 3
 	test PrefilterIsLimitedByODataCharacterLimit {
+		property browser.chrome.version = "139.0";
+
 		task ("When setting the Filters with 1001 characters") {
 			APIBuilderUI.addAndPublishEndpointConfiguration(
 				editValue = "ddLoremipsumdolorsitametconsecteturadipisicingelitSeddoeiusmodtemporincididuntutlaboretolaborumExcepteursintoccaecatcupidatatnonproidentsuntinculpaquiofficiadeseruntmollitanimidestlaborumggggggggggggggggggggggfhddfghdfContrarytopopularbelief,LoremIpsumisnotsimplyrandomtext.IthasrootsinapieceofclassicalLatinliteraturefrom45BC,makingitover2000yearsold.RichardMcClintock,aLatinprofessoratHampdenyCollegeinVirginia,lookeduponeofthemoreobscureLatinwords,consectetur,fromaLoremIpsumpassage,andgoingthroughthecitesofthewordinclassicalliterature,discoveredtheundoubtablesource.LoremIpsumcomesfromsections1.10.32and1.10.33ofttdeFinibusBonorumetMalorum(TheExtremesofGoodandEvil)byCicero,writtenin45BC.Thisbookisatreatiseonthetheoryofethics,verypopularduringtheRenaissance.ThefirstlineofLoremIpsum,ttLoremipsumdolorsitamet..tt,comesfromalineinsection1.10.3extoftheprintingaggggggvcxxdsafaertgertrwryrttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttbdff",

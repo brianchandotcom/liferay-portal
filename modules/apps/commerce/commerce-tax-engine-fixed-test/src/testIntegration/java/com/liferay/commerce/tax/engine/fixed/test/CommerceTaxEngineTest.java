@@ -216,10 +216,10 @@ public class CommerceTaxEngineTest {
 		CommerceOrder commerceOrder = _addCommerceOrder(
 			billingAddress.getAddressId(), shippingAddress.getAddressId());
 
+		BigDecimal taxAmount = commerceOrder.getTaxAmount();
+
 		Assert.assertNotEquals(
-			rate.stripTrailingZeros(),
-			commerceOrder.getTaxAmount(
-			).stripTrailingZeros());
+			rate.stripTrailingZeros(), taxAmount.stripTrailingZeros());
 	}
 
 	@Test
@@ -260,10 +260,10 @@ public class CommerceTaxEngineTest {
 		CommerceOrder commerceOrder = _addCommerceOrder(
 			address.getAddressId(), address.getAddressId());
 
+		BigDecimal taxAmount = commerceOrder.getTaxAmount();
+
 		Assert.assertNotEquals(
-			rate.stripTrailingZeros(),
-			commerceOrder.getTaxAmount(
-			).stripTrailingZeros());
+			rate.stripTrailingZeros(), taxAmount.stripTrailingZeros());
 	}
 
 	@Test
@@ -307,10 +307,10 @@ public class CommerceTaxEngineTest {
 		CommerceOrder commerceOrder = _addCommerceOrder(
 			billingAddress.getAddressId(), shippingAddress.getAddressId());
 
+		BigDecimal taxAmount = commerceOrder.getTaxAmount();
+
 		Assert.assertEquals(
-			rate.stripTrailingZeros(),
-			commerceOrder.getTaxAmount(
-			).stripTrailingZeros());
+			rate.stripTrailingZeros(), taxAmount.stripTrailingZeros());
 	}
 
 	@Test
@@ -337,10 +337,10 @@ public class CommerceTaxEngineTest {
 		CommerceOrder commerceOrder = _addCommerceOrder(
 			address.getAddressId(), address.getAddressId());
 
+		BigDecimal taxAmount = commerceOrder.getTaxAmount();
+
 		Assert.assertEquals(
-			rate.stripTrailingZeros(),
-			commerceOrder.getTaxAmount(
-			).stripTrailingZeros());
+			rate.stripTrailingZeros(), taxAmount.stripTrailingZeros());
 	}
 
 	private Address _addAddress(Country country, Region region, String zip)

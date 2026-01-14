@@ -20,6 +20,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -129,12 +130,12 @@ public class DisplayPageTemplateStagedModelDataHandlerTest
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, layoutPageTemplateEntry);
 
-		initImport();
-
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext,
-			(LayoutPageTemplateEntry)readExportedStagedModel(
-				layoutPageTemplateEntry));
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext,
+				(LayoutPageTemplateEntry) readExportedStagedModel(
+					layoutPageTemplateEntry));
+		}
 
 		initExport();
 
@@ -172,34 +173,35 @@ public class DisplayPageTemplateStagedModelDataHandlerTest
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, layoutPageTemplateEntry);
 
-		initImport();
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext,
+				(LayoutPageTemplateEntry) readExportedStagedModel(
+					layoutPageTemplateEntry));
 
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext,
-			(LayoutPageTemplateEntry)readExportedStagedModel(
-				layoutPageTemplateEntry));
+			importedFragmentEntryLink =
+				_fragmentEntryLinkLocalService.
+					fetchFragmentEntryLinkByUuidAndGroupId(
+						fragmentEntryLink.getUuid(), liveGroup.getGroupId());
 
-		importedFragmentEntryLink =
-			_fragmentEntryLinkLocalService.
-				fetchFragmentEntryLinkByUuidAndGroupId(
-					fragmentEntryLink.getUuid(), liveGroup.getGroupId());
+			Assert.assertEquals(
+				updatedText,
+				_getEditableValue(importedFragmentEntryLink, languageId));
 
-		Assert.assertEquals(
-			updatedText,
-			_getEditableValue(importedFragmentEntryLink, languageId));
+			_stagingLocalService.disableStaging(
+				liveGroup,
+				ServiceContextTestUtil.getServiceContext(
+					liveGroup.getGroupId()));
 
-		_stagingLocalService.disableStaging(
-			liveGroup,
-			ServiceContextTestUtil.getServiceContext(liveGroup.getGroupId()));
+			importedFragmentEntryLink =
+				_fragmentEntryLinkLocalService.
+					fetchFragmentEntryLinkByUuidAndGroupId(
+						fragmentEntryLink.getUuid(), liveGroup.getGroupId());
 
-		importedFragmentEntryLink =
-			_fragmentEntryLinkLocalService.
-				fetchFragmentEntryLinkByUuidAndGroupId(
-					fragmentEntryLink.getUuid(), liveGroup.getGroupId());
-
-		Assert.assertEquals(
-			updatedText,
-			_getEditableValue(importedFragmentEntryLink, languageId));
+			Assert.assertEquals(
+				updatedText,
+				_getEditableValue(importedFragmentEntryLink, languageId));
+		}
 	}
 
 	@Override

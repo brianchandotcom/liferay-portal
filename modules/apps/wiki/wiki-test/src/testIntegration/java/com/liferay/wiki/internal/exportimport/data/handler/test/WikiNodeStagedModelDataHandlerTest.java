@@ -8,6 +8,7 @@ package com.liferay.wiki.internal.exportimport.data.handler.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
@@ -66,15 +67,15 @@ public class WikiNodeStagedModelDataHandlerTest
 			validateExport(
 				portletDataContext, stagedModel, dependentStagedModelsMap);
 
-			initImport();
+			try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+				deleteStagedModel(
+					stagedModel, dependentStagedModelsMap, stagingGroup);
 
-			deleteStagedModel(
-				stagedModel, dependentStagedModelsMap, stagingGroup);
+				StagedModel exportedStagedModel = readExportedStagedModel(
+					stagedModel);
 
-			StagedModel exportedStagedModel = readExportedStagedModel(
-				stagedModel);
-
-			Assert.assertNull(exportedStagedModel);
+				Assert.assertNull(exportedStagedModel);
+			}
 		}
 	}
 
@@ -111,12 +112,12 @@ public class WikiNodeStagedModelDataHandlerTest
 
 			addDefaultStagedModel(liveGroup, secondDependentStagedModelsMap);
 
-			initImport();
+			try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+				StagedModel exportedStagedModel = readExportedStagedModel(
+					stagedModel);
 
-			StagedModel exportedStagedModel = readExportedStagedModel(
-				stagedModel);
-
-			Assert.assertNull(exportedStagedModel);
+				Assert.assertNull(exportedStagedModel);
+			}
 		}
 	}
 
@@ -147,12 +148,12 @@ public class WikiNodeStagedModelDataHandlerTest
 			validateExport(
 				portletDataContext, stagedModel, dependentStagedModelsMap);
 
-			initImport();
+			try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+				StagedModel exportedStagedModel = readExportedStagedModel(
+					stagedModel);
 
-			StagedModel exportedStagedModel = readExportedStagedModel(
-				stagedModel);
-
-			Assert.assertNull(exportedStagedModel);
+				Assert.assertNull(exportedStagedModel);
+			}
 		}
 	}
 

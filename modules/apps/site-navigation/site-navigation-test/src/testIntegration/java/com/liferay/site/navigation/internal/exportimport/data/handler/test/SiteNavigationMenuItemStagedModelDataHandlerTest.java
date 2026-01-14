@@ -13,6 +13,7 @@ import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.test.util.ExpandoTestUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
@@ -173,17 +174,17 @@ public class SiteNavigationMenuItemStagedModelDataHandlerTest
 			SiteNavigationMenuItem siteNavigationMenuItem)
 		throws Exception {
 
-		initImport();
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			SiteNavigationMenuItem exportedSiteNavigationMenuItem =
+				(SiteNavigationMenuItem) readExportedStagedModel(
+					siteNavigationMenuItem);
 
-		SiteNavigationMenuItem exportedSiteNavigationMenuItem =
-			(SiteNavigationMenuItem)readExportedStagedModel(
-				siteNavigationMenuItem);
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedSiteNavigationMenuItem);
 
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedSiteNavigationMenuItem);
-
-		return (SiteNavigationMenuItem)getStagedModel(
-			siteNavigationMenuItem.getUuid(), liveGroup);
+			return (SiteNavigationMenuItem) getStagedModel(
+				siteNavigationMenuItem.getUuid(), liveGroup);
+		}
 	}
 
 	private SiteNavigationMenuItem _updateSiteNavigationMenuItemExpandoValue(

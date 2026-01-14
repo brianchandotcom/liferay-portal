@@ -18,6 +18,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLoca
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
 import com.liferay.layout.page.template.test.util.LayoutPageTemplateTestUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -82,18 +83,19 @@ public class LayoutPageTemplateEntryStagedModelDataHandlerTest
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, layoutPageTemplateEntry1);
 
-		initImport();
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			LayoutPageTemplateEntry exportedLayoutPageTemplateEntry1 =
+				(LayoutPageTemplateEntry) readExportedStagedModel(
+					layoutPageTemplateEntry1);
 
-		LayoutPageTemplateEntry exportedLayoutPageTemplateEntry1 =
-			(LayoutPageTemplateEntry)readExportedStagedModel(
-				layoutPageTemplateEntry1);
+			LayoutPageTemplateEntry importedLayoutPageTemplateEntry1 =
+				_getImportedLayoutPageTemplateEntry(
+					exportedLayoutPageTemplateEntry1, liveGroup,
+					layoutPageTemplateEntry1);
 
-		LayoutPageTemplateEntry importedLayoutPageTemplateEntry1 =
-			_getImportedLayoutPageTemplateEntry(
-				exportedLayoutPageTemplateEntry1, liveGroup,
-				layoutPageTemplateEntry1);
-
-		Assert.assertTrue(importedLayoutPageTemplateEntry1.isDefaultTemplate());
+			Assert.assertTrue(
+				importedLayoutPageTemplateEntry1.isDefaultTemplate());
+		}
 
 		initExport();
 
@@ -120,29 +122,31 @@ public class LayoutPageTemplateEntryStagedModelDataHandlerTest
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, layoutPageTemplateEntry1);
 
-		initImport();
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			LayoutPageTemplateEntry exportedLayoutPageTemplateEntry1 =
+				(LayoutPageTemplateEntry) readExportedStagedModel(
+					layoutPageTemplateEntry1);
 
-		exportedLayoutPageTemplateEntry1 =
-			(LayoutPageTemplateEntry)readExportedStagedModel(
-				layoutPageTemplateEntry1);
+			LayoutPageTemplateEntry importedLayoutPageTemplateEntry1 =
+				_getImportedLayoutPageTemplateEntry(
+					exportedLayoutPageTemplateEntry1, liveGroup,
+					layoutPageTemplateEntry1);
 
-		importedLayoutPageTemplateEntry1 = _getImportedLayoutPageTemplateEntry(
-			exportedLayoutPageTemplateEntry1, liveGroup,
-			layoutPageTemplateEntry1);
+			Assert.assertFalse(
+				importedLayoutPageTemplateEntry1.isDefaultTemplate());
 
-		Assert.assertFalse(
-			importedLayoutPageTemplateEntry1.isDefaultTemplate());
+			LayoutPageTemplateEntry exportedLayoutPageTemplateEntry2 =
+				(LayoutPageTemplateEntry) readExportedStagedModel(
+					layoutPageTemplateEntry2);
 
-		LayoutPageTemplateEntry exportedLayoutPageTemplateEntry2 =
-			(LayoutPageTemplateEntry)readExportedStagedModel(
-				layoutPageTemplateEntry2);
+			LayoutPageTemplateEntry importedLayoutUtilityPageEntry2 =
+				_getImportedLayoutPageTemplateEntry(
+					exportedLayoutPageTemplateEntry2, liveGroup,
+					layoutPageTemplateEntry2);
 
-		LayoutPageTemplateEntry importedLayoutUtilityPageEntry2 =
-			_getImportedLayoutPageTemplateEntry(
-				exportedLayoutPageTemplateEntry2, liveGroup,
-				layoutPageTemplateEntry2);
-
-		Assert.assertTrue(importedLayoutUtilityPageEntry2.isDefaultTemplate());
+			Assert.assertTrue(
+				importedLayoutUtilityPageEntry2.isDefaultTemplate());
+		}
 	}
 
 	@Test
@@ -158,25 +162,25 @@ public class LayoutPageTemplateEntryStagedModelDataHandlerTest
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, layoutPageTemplateEntry);
 
-		initImport();
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			LayoutPageTemplateEntry exportedLayoutPageTemplateEntry =
+				(LayoutPageTemplateEntry) readExportedStagedModel(
+					layoutPageTemplateEntry);
 
-		LayoutPageTemplateEntry exportedLayoutPageTemplateEntry =
-			(LayoutPageTemplateEntry)readExportedStagedModel(
-				layoutPageTemplateEntry);
+			LayoutPageTemplateEntry importedLayoutPageTemplateEntry =
+				_getImportedLayoutPageTemplateEntry(
+					exportedLayoutPageTemplateEntry, liveGroup,
+					layoutPageTemplateEntry);
 
-		LayoutPageTemplateEntry importedLayoutPageTemplateEntry =
-			_getImportedLayoutPageTemplateEntry(
-				exportedLayoutPageTemplateEntry, liveGroup,
-				layoutPageTemplateEntry);
+			Layout importedLayout = _layoutLocalService.fetchLayout(
+				importedLayoutPageTemplateEntry.getPlid());
 
-		Layout importedLayout = _layoutLocalService.fetchLayout(
-			importedLayoutPageTemplateEntry.getPlid());
+			Assert.assertTrue(importedLayout.isPrivateLayout());
 
-		Assert.assertTrue(importedLayout.isPrivateLayout());
+			Layout draftImportedLayout = importedLayout.fetchDraftLayout();
 
-		Layout draftImportedLayout = importedLayout.fetchDraftLayout();
-
-		Assert.assertTrue(draftImportedLayout.isPrivateLayout());
+			Assert.assertTrue(draftImportedLayout.isPrivateLayout());
+		}
 	}
 
 	@Test
@@ -219,24 +223,26 @@ public class LayoutPageTemplateEntryStagedModelDataHandlerTest
 			ExportImportThreadLocal.setPortletExportInProcess(false);
 		}
 
-		initImport(companyGroup, _targetCompany.getGroup());
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable(
+			companyGroup, _targetCompany.getGroup())) {
 
-		portletDataContext.setUserIdStrategy(
-			new TestUserIdStrategy(targetGuestUser));
+			portletDataContext.setUserIdStrategy(
+				new TestUserIdStrategy(targetGuestUser));
 
-		StagedModel exportedStagedModel = readExportedStagedModel(
-			layoutPageTemplateEntry);
+			StagedModel exportedStagedModel = readExportedStagedModel(
+				layoutPageTemplateEntry);
 
-		Assert.assertNotNull(exportedStagedModel);
+			Assert.assertNotNull(exportedStagedModel);
 
-		try {
-			ExportImportThreadLocal.setPortletImportInProcess(true);
+			try {
+				ExportImportThreadLocal.setPortletImportInProcess(true);
 
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, exportedStagedModel);
-		}
-		finally {
-			ExportImportThreadLocal.setPortletImportInProcess(false);
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, exportedStagedModel);
+			}
+			finally {
+				ExportImportThreadLocal.setPortletImportInProcess(false);
+			}
 		}
 	}
 

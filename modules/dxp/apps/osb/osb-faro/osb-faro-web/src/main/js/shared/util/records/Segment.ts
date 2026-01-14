@@ -1,7 +1,9 @@
 import {EntityTypes} from '../constants';
 import {fromJS, Map, Record} from 'immutable';
+import {SegmentActivationDetails} from 'segment/components/SegmentActivationCard';
 
 interface ISegment {
+	activationStatus: SegmentActivationDetails;
 	activeIndividualCount: number;
 	activitiesCount: number;
 	anonymousIndividualCount: number;
@@ -26,6 +28,7 @@ interface ISegment {
 
 export default class Segment
 	extends Record({
+		activationStatus: null,
 		activeIndividualCount: 0,
 		activitiesCount: 0,
 		anonymousIndividualCount: 0,
@@ -53,6 +56,7 @@ export default class Segment
 		userName: null
 	})
 	implements ISegment {
+	activationStatus: SegmentActivationDetails;
 	activeIndividualCount: number;
 	activitiesCount: number;
 	anonymousIndividualCount: number;

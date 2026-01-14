@@ -57,6 +57,12 @@ export class StyleBooksPage {
 		await waitForAlert(this.page);
 	}
 
+	getStyleBookCard(styleBookName: string) {
+		return this.page.locator('.card').filter({
+			has: this.page.getByText(styleBookName),
+		});
+	}
+
 	async previewFragmentCollection(collectionName: string) {
 		await this.page
 			.getByRole('button', {name: 'Fragments'})

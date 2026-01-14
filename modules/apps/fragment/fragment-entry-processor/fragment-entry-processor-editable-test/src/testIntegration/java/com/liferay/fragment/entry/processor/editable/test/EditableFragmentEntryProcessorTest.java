@@ -290,14 +290,20 @@ public class EditableFragmentEntryProcessorTest {
 	public void testFragmentEntryProcessorEditableActionMappedActionEditMode()
 		throws Exception {
 
+		ObjectDefinition objectDefinition = _addObjectDefinition();
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			objectDefinition.getObjectDefinitionId());
+
+		ObjectAction objectAction = _addObjectAction(
+			RandomTestUtil.randomLocaleStringMap(),
+			objectDefinition.getObjectDefinitionId());
+
 		String editableValues = _getEditableFieldValues(
-			_portal.getClassNameId(
-				ObjectDefinitionConstants.
-					CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION +
-						RandomTestUtil.randomLong()),
-			RandomTestUtil.randomLong(),
+			_portal.getClassNameId(objectDefinition.getClassName()),
+			objectEntry.getPrimaryKey(),
 			ObjectAction.class.getSimpleName() + StringPool.UNDERLINE +
-				RandomTestUtil.randomLong(),
+				objectAction.getName(),
 			"action/editable_values_action_mapped_action.json");
 
 		Element element = _getElement(
@@ -317,14 +323,23 @@ public class EditableFragmentEntryProcessorTest {
 	public void testFragmentEntryProcessorEditableActionMappedActionOnErrorNone()
 		throws Exception {
 
+		ObjectDefinition objectDefinition = _addObjectDefinition();
+
 		long classNameId = _portal.getClassNameId(
-			ObjectDefinitionConstants.
-				CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION +
-					RandomTestUtil.randomLong());
-		long classPK = RandomTestUtil.randomLong();
+			objectDefinition.getClassName());
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			objectDefinition.getObjectDefinitionId());
+
+		long classPK = objectEntry.getPrimaryKey();
+
+		ObjectAction objectAction = _addObjectAction(
+			RandomTestUtil.randomLocaleStringMap(),
+			objectDefinition.getObjectDefinitionId());
+
 		String fieldId =
 			ObjectAction.class.getSimpleName() + StringPool.UNDERLINE +
-				RandomTestUtil.randomLong();
+				objectAction.getName();
 
 		String editableValues = _getEditableFieldValues(
 			classNameId, classPK, fieldId,
@@ -350,14 +365,23 @@ public class EditableFragmentEntryProcessorTest {
 	public void testFragmentEntryProcessorEditableActionMappedActionOnErrorNotification()
 		throws Exception {
 
+		ObjectDefinition objectDefinition = _addObjectDefinition();
+
 		long classNameId = _portal.getClassNameId(
-			ObjectDefinitionConstants.
-				CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION +
-					RandomTestUtil.randomLong());
-		long classPK = RandomTestUtil.randomLong();
+			objectDefinition.getClassName());
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			objectDefinition.getObjectDefinitionId());
+
+		long classPK = objectEntry.getPrimaryKey();
+
+		ObjectAction objectAction = _addObjectAction(
+			RandomTestUtil.randomLocaleStringMap(),
+			objectDefinition.getObjectDefinitionId());
+
 		String fieldId =
 			ObjectAction.class.getSimpleName() + StringPool.UNDERLINE +
-				RandomTestUtil.randomLong();
+				objectAction.getName();
 
 		String editableValues = _getEditableFieldValues(
 			classNameId, classPK, fieldId,
@@ -419,14 +443,23 @@ public class EditableFragmentEntryProcessorTest {
 	public void testFragmentEntryProcessorEditableActionMappedActionOnErrorPage()
 		throws Exception {
 
+		ObjectDefinition objectDefinition = _addObjectDefinition();
+
 		long classNameId = _portal.getClassNameId(
-			ObjectDefinitionConstants.
-				CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION +
-					RandomTestUtil.randomLong());
-		long classPK = RandomTestUtil.randomLong();
+			objectDefinition.getClassName());
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			objectDefinition.getObjectDefinitionId());
+
+		long classPK = objectEntry.getPrimaryKey();
+
+		ObjectAction objectAction = _addObjectAction(
+			RandomTestUtil.randomLocaleStringMap(),
+			objectDefinition.getObjectDefinitionId());
+
 		String fieldId =
 			ObjectAction.class.getSimpleName() + StringPool.UNDERLINE +
-				RandomTestUtil.randomLong();
+				objectAction.getName();
 
 		String editableValues = _getEditableFieldValues(
 			classNameId, classPK, fieldId,
@@ -455,14 +488,23 @@ public class EditableFragmentEntryProcessorTest {
 	public void testFragmentEntryProcessorEditableActionMappedActionOnErrorURL()
 		throws Exception {
 
+		ObjectDefinition objectDefinition = _addObjectDefinition();
+
 		long classNameId = _portal.getClassNameId(
-			ObjectDefinitionConstants.
-				CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION +
-					RandomTestUtil.randomLong());
-		long classPK = RandomTestUtil.randomLong();
+			objectDefinition.getClassName());
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			objectDefinition.getObjectDefinitionId());
+
+		long classPK = objectEntry.getPrimaryKey();
+
+		ObjectAction objectAction = _addObjectAction(
+			RandomTestUtil.randomLocaleStringMap(),
+			objectDefinition.getObjectDefinitionId());
+
 		String fieldId =
 			ObjectAction.class.getSimpleName() + StringPool.UNDERLINE +
-				RandomTestUtil.randomLong();
+				objectAction.getName();
 
 		String editableValues = _getEditableFieldValues(
 			classNameId, classPK, fieldId,
@@ -595,14 +637,23 @@ public class EditableFragmentEntryProcessorTest {
 	public void testFragmentEntryProcessorEditableActionMappedActionOnSuccessNone()
 		throws Exception {
 
+		ObjectDefinition objectDefinition = _addObjectDefinition();
+
 		long classNameId = _portal.getClassNameId(
-			ObjectDefinitionConstants.
-				CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION +
-					RandomTestUtil.randomLong());
-		long classPK = RandomTestUtil.randomLong();
+			objectDefinition.getClassName());
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			objectDefinition.getObjectDefinitionId());
+
+		long classPK = objectEntry.getPrimaryKey();
+
+		ObjectAction objectAction = _addObjectAction(
+			RandomTestUtil.randomLocaleStringMap(),
+			objectDefinition.getObjectDefinitionId());
+
 		String fieldId =
 			ObjectAction.class.getSimpleName() + StringPool.UNDERLINE +
-				RandomTestUtil.randomLong();
+				objectAction.getName();
 
 		String editableValues = _getEditableFieldValues(
 			classNameId, classPK, fieldId,
@@ -628,14 +679,23 @@ public class EditableFragmentEntryProcessorTest {
 	public void testFragmentEntryProcessorEditableActionMappedActionOnSuccessNotification()
 		throws Exception {
 
+		ObjectDefinition objectDefinition = _addObjectDefinition();
+
 		long classNameId = _portal.getClassNameId(
-			ObjectDefinitionConstants.
-				CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION +
-					RandomTestUtil.randomLong());
-		long classPK = RandomTestUtil.randomLong();
+			objectDefinition.getClassName());
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			objectDefinition.getObjectDefinitionId());
+
+		long classPK = objectEntry.getPrimaryKey();
+
+		ObjectAction objectAction = _addObjectAction(
+			RandomTestUtil.randomLocaleStringMap(),
+			objectDefinition.getObjectDefinitionId());
+
 		String fieldId =
 			ObjectAction.class.getSimpleName() + StringPool.UNDERLINE +
-				RandomTestUtil.randomLong();
+				objectAction.getName();
 
 		String editableValues = _getEditableFieldValues(
 			classNameId, classPK, fieldId,
@@ -698,14 +758,23 @@ public class EditableFragmentEntryProcessorTest {
 	public void testFragmentEntryProcessorEditableActionMappedActionOnSuccessPage()
 		throws Exception {
 
+		ObjectDefinition objectDefinition = _addObjectDefinition();
+
 		long classNameId = _portal.getClassNameId(
-			ObjectDefinitionConstants.
-				CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION +
-					RandomTestUtil.randomLong());
-		long classPK = RandomTestUtil.randomLong();
+			objectDefinition.getClassName());
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			objectDefinition.getObjectDefinitionId());
+
+		long classPK = objectEntry.getPrimaryKey();
+
+		ObjectAction objectAction = _addObjectAction(
+			RandomTestUtil.randomLocaleStringMap(),
+			objectDefinition.getObjectDefinitionId());
+
 		String fieldId =
 			ObjectAction.class.getSimpleName() + StringPool.UNDERLINE +
-				RandomTestUtil.randomLong();
+				objectAction.getName();
 
 		String editableValues = _getEditableFieldValues(
 			classNameId, classPK, fieldId,
@@ -761,14 +830,23 @@ public class EditableFragmentEntryProcessorTest {
 	public void testFragmentEntryProcessorEditableActionMappedActionOnSuccessURL()
 		throws Exception {
 
+		ObjectDefinition objectDefinition = _addObjectDefinition();
+
 		long classNameId = _portal.getClassNameId(
-			ObjectDefinitionConstants.
-				CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION +
-					RandomTestUtil.randomLong());
-		long classPK = RandomTestUtil.randomLong();
+			objectDefinition.getClassName());
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			objectDefinition.getObjectDefinitionId());
+
+		long classPK = objectEntry.getPrimaryKey();
+
+		ObjectAction objectAction = _addObjectAction(
+			RandomTestUtil.randomLocaleStringMap(),
+			objectDefinition.getObjectDefinitionId());
+
 		String fieldId =
 			ObjectAction.class.getSimpleName() + StringPool.UNDERLINE +
-				RandomTestUtil.randomLong();
+				objectAction.getName();
 
 		String editableValues = _getEditableFieldValues(
 			classNameId, classPK, fieldId,
@@ -830,14 +908,23 @@ public class EditableFragmentEntryProcessorTest {
 	public void testFragmentEntryProcessorEditableActionMappedActionViewMode()
 		throws Exception {
 
+		ObjectDefinition objectDefinition = _addObjectDefinition();
+
 		long classNameId = _portal.getClassNameId(
-			ObjectDefinitionConstants.
-				CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION +
-					RandomTestUtil.randomLong());
-		long classPK = RandomTestUtil.randomLong();
+			objectDefinition.getClassName());
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			objectDefinition.getObjectDefinitionId());
+
+		long classPK = objectEntry.getPrimaryKey();
+
+		ObjectAction objectAction = _addObjectAction(
+			RandomTestUtil.randomLocaleStringMap(),
+			objectDefinition.getObjectDefinitionId());
+
 		String fieldId =
 			ObjectAction.class.getSimpleName() + StringPool.UNDERLINE +
-				RandomTestUtil.randomLong();
+				objectAction.getName();
 
 		String editableValues = _getEditableFieldValues(
 			classNameId, classPK, fieldId,

@@ -39,6 +39,6 @@ Import-Package:\
 	\
 	*
 -exportcontents:\
-	grpc.*;version='1.70.0',\
+	grpc.*;version='1.75.0',\
 	\
-	io.grpc.*;version='1.70.0'
+	io.grpc.*;version='1.75.0'

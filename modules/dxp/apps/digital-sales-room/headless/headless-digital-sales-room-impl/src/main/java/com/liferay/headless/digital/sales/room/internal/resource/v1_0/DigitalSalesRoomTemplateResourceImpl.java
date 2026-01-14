@@ -139,6 +139,15 @@ public class DigitalSalesRoomTemplateResourceImpl
 	}
 
 	@Override
+	public Page<DigitalSalesRoomTemplate>
+			getDigitalSalesRoomTemplateDigitalSalesRoomTemplatesPage(
+				Long parentDigitalSalesRoomTemplateId)
+		throws Exception {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public Page<DigitalSalesRoomTemplate> getDigitalSalesRoomTemplatesPage(
 			String search, Pagination pagination)
 		throws Exception {
@@ -399,6 +408,113 @@ public class DigitalSalesRoomTemplateResourceImpl
 		return _toDigitalSalesRoomTemplate(
 			group,
 			_objectEntryLocalService.getObjectEntry(objectEntry.getId()));
+	}
+
+	@Override
+	public DigitalSalesRoomTemplate
+			postDigitalSalesRoomTemplateDigitalSalesRoomTemplate(
+				Long parentDigitalSalesRoomTemplateId)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-66359")) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		ObjectDefinition objectDefinition = _getObjectDefinition();
+		Group sourceGroup = _groupService.getGroup(
+			parentDigitalSalesRoomTemplateId);
+
+		if (!Objects.equals(
+				objectDefinition.getClassName(), sourceGroup.getClassName())) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		long[] layoutIds = ListUtil.toLongArray(
+			_layoutLocalService.getLayouts(sourceGroup.getGroupId(), false),
+			Layout::getLayoutId);
+
+		if (ArrayUtil.isEmpty(layoutIds)) {
+			throw new UnsupportedOperationException();
+		}
+
+		Group targetGroup = _addGroup(
+			sourceGroup.getDescription(
+				contextAcceptLanguage.getPreferredLocale()),
+			"blank-site-initializer",
+			UniqueUtil.getUniqueValue(
+				"copy",
+				uniqueValue -> {
+					Group group = _groupLocalService.fetchGroup(
+						contextCompany.getCompanyId(), uniqueValue);
+
+					if (group == null) {
+						return true;
+					}
+
+					return false;
+				},
+				sourceGroup.getName(
+					contextAcceptLanguage.getPreferredLocale())));
+
+		targetGroup.setClassName(objectDefinition.getClassName());
+
+		ObjectEntryManager objectEntryManager =
+			_objectEntryManagerRegistry.getObjectEntryManager(
+				objectDefinition.getCompanyId(),
+				objectDefinition.getStorageType());
+
+		DefaultDTOConverterContext defaultDTOConverterContext =
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), null,
+				_dtoConverterRegistry, contextHttpServletRequest, null,
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser);
+
+		defaultDTOConverterContext.setAttribute("addActions", Boolean.FALSE);
+
+		ObjectEntry sourceObjectEntry = _objectEntryLocalService.getObjectEntry(
+			sourceGroup.getExternalReferenceCode(), sourceGroup.getGroupId(),
+			objectDefinition.getObjectDefinitionId());
+
+		String targetGroupExternalReferenceCode =
+			targetGroup.getExternalReferenceCode();
+
+		com.liferay.object.rest.dto.v1_0.ObjectEntry targetObjectEntry =
+			objectEntryManager.addObjectEntry(
+				defaultDTOConverterContext, objectDefinition,
+				new com.liferay.object.rest.dto.v1_0.ObjectEntry() {
+					{
+						setProperties(
+							() -> {
+								Map<String, Serializable> values =
+									sourceObjectEntry.getValues();
+
+								values.put(
+									"externalReferenceCode",
+									targetGroupExternalReferenceCode);
+
+								return Collections.unmodifiableMap(values);
+							});
+					}
+				},
+				targetGroup.getGroupKey());
+
+		targetGroup.setClassPK(targetObjectEntry.getId());
+
+		targetGroup = _groupLocalService.updateGroup(targetGroup);
+
+		ExportImportUtil.importLayouts(
+			_exportImportConfigurationLocalService,
+			_exportImportConfigurationSettingsMapFactory,
+			_exportImportLocalService, layoutIds, sourceGroup.getGroupId(),
+			targetGroup.getGroupId(), contextUser);
+
+		return _toDigitalSalesRoomTemplate(
+			targetGroup,
+			_objectEntryLocalService.getObjectEntry(targetObjectEntry.getId()));
 	}
 
 	private Group _addGroup(

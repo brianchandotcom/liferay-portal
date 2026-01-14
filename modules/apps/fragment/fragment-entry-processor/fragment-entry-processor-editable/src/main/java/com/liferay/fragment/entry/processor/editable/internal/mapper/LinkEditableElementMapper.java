@@ -187,6 +187,20 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 			return StringPool.BLANK;
 		}
 
+		JSONObject layoutJSONObject = jsonObject.getJSONObject("layout");
+
+		if (layoutJSONObject == null) {
+			return StringPool.POUND;
+		}
+
+		Layout layout = _layoutReferenceResolver.resolve(
+			fragmentEntryProcessorContext.getCompanyId(), layoutJSONObject,
+			fragmentEntryProcessorContext.getScopeGroupId());
+
+		if (layout == null) {
+			return StringPool.POUND;
+		}
+
 		HttpServletRequest httpServletRequest =
 			fragmentEntryProcessorContext.getHttpServletRequest();
 
@@ -200,20 +214,6 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 
 		if (themeDisplay == null) {
 			return StringPool.BLANK;
-		}
-
-		JSONObject layoutJSONObject = jsonObject.getJSONObject("layout");
-
-		if (layoutJSONObject == null) {
-			return StringPool.POUND;
-		}
-
-		Layout layout = _layoutReferenceResolver.resolve(
-			themeDisplay.getCompanyId(), layoutJSONObject,
-			themeDisplay.getScopeGroupId());
-
-		if (layout == null) {
-			return StringPool.POUND;
 		}
 
 		return _portal.getLayoutRelativeURL(layout, themeDisplay);

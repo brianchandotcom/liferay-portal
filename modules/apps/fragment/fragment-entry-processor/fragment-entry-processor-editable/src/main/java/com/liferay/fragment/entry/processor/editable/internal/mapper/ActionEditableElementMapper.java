@@ -103,15 +103,16 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 		element.attr("data-lfr-field-id", fieldId);
 
 		_addDataAtributes(
-			classNameId, classPK, element,
+			classNameId, classPK, element, fragmentEntryProcessorContext,
 			configJSONObject.getJSONObject("onError"), "error");
 		_addDataAtributes(
-			classNameId, classPK, element,
+			classNameId, classPK, element, fragmentEntryProcessorContext,
 			configJSONObject.getJSONObject("onSuccess"), "success");
 	}
 
 	private void _addDataAtributes(
 			long classNameId, long classPK, Element element,
+			FragmentEntryProcessorContext fragmentEntryProcessorContext,
 			JSONObject jsonObject, String resultType)
 		throws PortalException {
 
@@ -135,19 +136,6 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 
 			element.attr(
 				"data-lfr-on-" + resultType + "-reload", StringPool.TRUE);
-		}
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if (serviceContext == null) {
-			return;
-		}
-
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
-		if (themeDisplay == null) {
-			return;
 		}
 
 		if (interaction.equals(
@@ -230,7 +218,8 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 			}
 
 			String text = textJSONObject.getString(
-				themeDisplay.getLanguageId());
+				LocaleUtil.toLanguageId(
+					fragmentEntryProcessorContext.getLocale()));
 
 			if (Validator.isNull(text)) {
 				return;
@@ -248,10 +237,23 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 			}
 
 			Layout layout = _layoutReferenceResolver.resolve(
-				themeDisplay.getCompanyId(), pageJSONObject,
-				themeDisplay.getScopeGroupId());
+				fragmentEntryProcessorContext.getCompanyId(), pageJSONObject,
+				fragmentEntryProcessorContext.getScopeGroupId());
 
 			if (layout == null) {
+				return;
+			}
+
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			if (serviceContext == null) {
+				return;
+			}
+
+			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+			if (themeDisplay == null) {
 				return;
 			}
 
@@ -268,7 +270,9 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 				return;
 			}
 
-			String url = urlJSONObject.getString(themeDisplay.getLanguageId());
+			String url = urlJSONObject.getString(
+				LocaleUtil.toLanguageId(
+					fragmentEntryProcessorContext.getLocale()));
 
 			if (Validator.isNull(url)) {
 				Locale locale = LocaleUtil.getSiteDefault();

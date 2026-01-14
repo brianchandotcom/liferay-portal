@@ -179,8 +179,9 @@ public class FragmentEntryProcessorHelperImpl
 		InfoItemReference infoItemReference, String fieldName, Locale locale) {
 
 		return _getFileEntryId(
-			infoItemReference.getClassName(), _getInfoItem(infoItemReference),
-			fieldName, 0, locale);
+			infoItemReference.getClassName(),
+			_getInfoItem(_getGroupId(0), infoItemReference), fieldName, 0,
+			locale);
 	}
 
 	@Override
@@ -408,6 +409,7 @@ public class FragmentEntryProcessorHelperImpl
 			if (infoItemObjectProvider != null) {
 				try {
 					object = infoItemObjectProvider.getInfoItem(
+						fragmentEntryProcessorContext.getScopeGroupId(),
 						infoItemIdentifier);
 				}
 				catch (NoSuchInfoItemException noSuchInfoItemException) {
@@ -427,7 +429,9 @@ public class FragmentEntryProcessorHelperImpl
 
 			fieldName = editableValueJSONObject.getString("collectionFieldId");
 
-			object = _getInfoItem(infoItemReference);
+			object = _getInfoItem(
+				fragmentEntryProcessorContext.getScopeGroupId(),
+				infoItemReference);
 		}
 		else if (isMappedDisplayPage(editableValueJSONObject)) {
 			HttpServletRequest httpServletRequest =
@@ -703,7 +707,9 @@ public class FragmentEntryProcessorHelperImpl
 
 			JSONObject valueJSONObject = webImage.toJSONObject();
 
-			long fileEntryId = getFileEntryId(webImage);
+			long fileEntryId = _getFileEntryId(
+				fragmentEntryProcessorContext.getScopeGroupId(),
+				webImage.getInfoItemReference());
 
 			if (fileEntryId != 0) {
 				valueJSONObject.put("fileEntryId", String.valueOf(fileEntryId));
@@ -1036,7 +1042,9 @@ public class FragmentEntryProcessorHelperImpl
 		return infoCollectionTextFormatter;
 	}
 
-	private Object _getInfoItem(InfoItemReference infoItemReference) {
+	private Object _getInfoItem(
+		long groupId, InfoItemReference infoItemReference) {
+
 		InfoItemIdentifier infoItemIdentifier =
 			infoItemReference.getInfoItemIdentifier();
 
@@ -1050,7 +1058,8 @@ public class FragmentEntryProcessorHelperImpl
 		}
 
 		try {
-			return infoItemObjectProvider.getInfoItem(infoItemIdentifier);
+			return infoItemObjectProvider.getInfoItem(
+				groupId, infoItemIdentifier);
 		}
 		catch (NoSuchInfoItemException noSuchInfoItemException) {
 			if (_log.isDebugEnabled()) {

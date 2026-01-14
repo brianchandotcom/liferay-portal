@@ -112,9 +112,7 @@ public class BackgroundImageDocumentFragmentEntryProcessor
 					if (fileEntryId == 0) {
 						fileEntryId =
 							_fragmentEntryProcessorHelper.getFileEntryId(
-								_getGroupId(
-									fragmentEntryProcessorContext.
-										getHttpServletRequest()),
+								_getGroupId(fragmentEntryProcessorContext),
 								valueJSONObject);
 					}
 
@@ -131,9 +129,7 @@ public class BackgroundImageDocumentFragmentEntryProcessor
 				if (fileEntryId == 0) {
 					fileEntryId = _fragmentEntryProcessorHelper.getFileEntryId(
 						editableValueJSONObject.getString("fieldId"),
-						_getGroupId(
-							fragmentEntryProcessorContext.
-								getHttpServletRequest()),
+						_getGroupId(fragmentEntryProcessorContext),
 						editableValueJSONObject,
 						fragmentEntryProcessorContext.getLocale());
 				}
@@ -185,7 +181,16 @@ public class BackgroundImageDocumentFragmentEntryProcessor
 		}
 	}
 
-	private long _getGroupId(HttpServletRequest httpServletRequest) {
+	private long _getGroupId(
+		FragmentEntryProcessorContext fragmentEntryProcessorContext) {
+
+		if (fragmentEntryProcessorContext.getScopeGroupId() > 0) {
+			return fragmentEntryProcessorContext.getScopeGroupId();
+		}
+
+		HttpServletRequest httpServletRequest =
+			fragmentEntryProcessorContext.getHttpServletRequest();
+
 		if (httpServletRequest == null) {
 			return 0;
 		}

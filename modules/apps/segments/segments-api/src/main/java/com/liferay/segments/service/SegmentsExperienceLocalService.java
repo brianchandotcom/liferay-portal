@@ -302,6 +302,9 @@ public interface SegmentsExperienceLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getLowestPriority(long groupId, long plid);
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

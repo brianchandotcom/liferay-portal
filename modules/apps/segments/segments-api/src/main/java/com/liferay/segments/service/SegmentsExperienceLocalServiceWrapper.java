@@ -426,6 +426,11 @@ public class SegmentsExperienceLocalServiceWrapper
 			getIndexableActionableDynamicQuery();
 	}
 
+	@Override
+	public int getLowestPriority(long groupId, long plid) {
+		return _segmentsExperienceLocalService.getLowestPriority(groupId, plid);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

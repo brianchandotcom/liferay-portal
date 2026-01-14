@@ -3968,18 +3968,18 @@ components:
                 A URL image value.
             type: object
         URLNavigationMenuItemSettings:
-          description:
-            Type-specific settings for a "URL" navigation menu item type.
-          properties:
-            url:
-              description:
-                The URL that this navigation menu item will take the user to.
-              type: string
-            useNewTab:
-              description:
-                Whether the target URL will open in a new tab instead of the same tab.
-              type: boolean
-          type: object
+            description:
+                Type-specific settings for a "URL" navigation menu item type.
+            properties:
+                url:
+                    description:
+                        The URL that this navigation menu item will take the user to.
+                    type: string
+                useNewTab:
+                    description:
+                        Whether the target URL will open in a new tab instead of the same tab.
+                    type: boolean
+            type: object
         URLValue:
             # @review
             description:

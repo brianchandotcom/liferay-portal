@@ -45,8 +45,6 @@ public class TestHistoryMap {
 			testrayBuilds = testrayBuilds.subList(0, maxBuildCount);
 		}
 
-		_latestTestrayBuild = testrayBuilds.get(0);
-
 		for (TestrayBuild testrayBuild : testrayBuilds) {
 			TopLevelBuildReport topLevelBuildReport =
 				testrayBuild.getTopLevelBuildReport();
@@ -56,6 +54,10 @@ public class TestHistoryMap {
 					topLevelBuildReport.getResult())) {
 
 				continue;
+			}
+
+			if (_latestTestrayBuild == null) {
+				setLatestTestrayBuild(testrayBuild);
 			}
 
 			for (DownstreamBuildReport downstreamBuildReport :
@@ -84,6 +86,10 @@ public class TestHistoryMap {
 
 	public TestrayBuild getLatestTestrayBuild() {
 		return _latestTestrayBuild;
+	}
+
+	public void setLatestTestrayBuild(TestrayBuild testrayBuild) {
+		_latestTestrayBuild = testrayBuild;
 	}
 
 	public void setMinimumStatusChanges(int minimumStatusChanges) {
@@ -381,7 +387,7 @@ public class TestHistoryMap {
 		Pattern.compile("test\\.execution\\.duration(?<testTaskName>\\..+)");
 
 	private final Map<String, BatchHistory> _batchHistoryMap = new HashMap<>();
-	private final TestrayBuild _latestTestrayBuild;
+	private TestrayBuild _latestTestrayBuild;
 	private int _minimumStatusChanges = 3;
 	private long _minimumTestDuration = 60 * 1000;
 	private final TestrayRoutine _testrayRoutine;

@@ -11,6 +11,7 @@ import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -86,27 +87,30 @@ public class LayoutClassedModelUsageStagedModelDataHandlerTest
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, stagedModel);
 
-		initImport();
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			StagedModel exportedStagedModel =
+				readExportedStagedModel(stagedModel);
 
-		StagedModel exportedStagedModel = readExportedStagedModel(stagedModel);
+			_classNameLocalService.deleteClassName(
+				_classNameLocalService.getClassName(
+					_CLASS_NAME_CONTAINER_TYPE));
 
-		_classNameLocalService.deleteClassName(
-			_classNameLocalService.getClassName(_CLASS_NAME_CONTAINER_TYPE));
+			_classNameLocalService.addClassName(_CLASS_NAME_CONTAINER_TYPE);
 
-		_classNameLocalService.addClassName(_CLASS_NAME_CONTAINER_TYPE);
+			Assert.assertNotNull(exportedStagedModel);
 
-		Assert.assertNotNull(exportedStagedModel);
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedStagedModel);
 
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedStagedModel);
+			LayoutClassedModelUsage importedLayoutClassedModelUsage =
+				(LayoutClassedModelUsage) getStagedModel(
+					stagedModel.getUuid(), liveGroup);
 
-		LayoutClassedModelUsage importedLayoutClassedModelUsage =
-			(LayoutClassedModelUsage)getStagedModel(
-				stagedModel.getUuid(), liveGroup);
-
-		Assert.assertEquals(
-			_classNameLocalService.getClassNameId(_CLASS_NAME_CONTAINER_TYPE),
-			importedLayoutClassedModelUsage.getContainerType());
+			Assert.assertEquals(
+				_classNameLocalService.getClassNameId(
+					_CLASS_NAME_CONTAINER_TYPE),
+				importedLayoutClassedModelUsage.getContainerType());
+		}
 	}
 
 	@Override

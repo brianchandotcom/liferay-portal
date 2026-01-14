@@ -11,6 +11,7 @@ import com.liferay.calendar.service.CalendarResourceLocalService;
 import com.liferay.calendar.test.util.CalendarResourceTestUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
@@ -64,21 +65,21 @@ public class CalendarResourceStagedModelDataHandlerTest
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, calendarResource);
 
-		initImport();
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			CalendarResource exportedCalendarResource =
+				(CalendarResource)readExportedStagedModel(calendarResource);
 
-		CalendarResource exportedCalendarResource =
-			(CalendarResource)readExportedStagedModel(calendarResource);
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedCalendarResource);
 
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedCalendarResource);
+			CalendarResource importedCalendarResource =
+				(CalendarResource)getStagedModel(
+					exportedCalendarResource.getUuid(), liveGroup);
 
-		CalendarResource importedCalendarResource =
-			(CalendarResource)getStagedModel(
-				exportedCalendarResource.getUuid(), liveGroup);
-
-		Assert.assertEquals(
-			exportedCalendarResource.getName(),
-			importedCalendarResource.getName());
+			Assert.assertEquals(
+				exportedCalendarResource.getName(),
+				importedCalendarResource.getName());
+		}
 	}
 
 	@Test
@@ -93,21 +94,21 @@ public class CalendarResourceStagedModelDataHandlerTest
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, calendarResource);
 
-		initImport();
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			CalendarResource exportedCalendarResource =
+				(CalendarResource)readExportedStagedModel(calendarResource);
 
-		CalendarResource exportedCalendarResource =
-			(CalendarResource)readExportedStagedModel(calendarResource);
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedCalendarResource);
 
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedCalendarResource);
+			CalendarResource importedCalendarResource =
+				(CalendarResource)getStagedModel(
+					exportedCalendarResource.getUuid(), liveGroup);
 
-		CalendarResource importedCalendarResource =
-			(CalendarResource)getStagedModel(
-				exportedCalendarResource.getUuid(), liveGroup);
-
-		Assert.assertNotEquals(
-			exportedCalendarResource.getName(),
-			importedCalendarResource.getName());
+			Assert.assertNotEquals(
+				exportedCalendarResource.getName(),
+				importedCalendarResource.getName());
+		}
 	}
 
 	@Override

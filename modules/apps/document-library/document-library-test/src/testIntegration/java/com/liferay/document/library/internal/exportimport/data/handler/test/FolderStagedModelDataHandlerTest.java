@@ -22,6 +22,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -75,16 +76,16 @@ public class FolderStagedModelDataHandlerTest
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, stagedModel);
 
-		initImport();
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			StagedModel exportedStagedModel = readExportedStagedModel(stagedModel);
 
-		StagedModel exportedStagedModel = readExportedStagedModel(stagedModel);
+			Assert.assertNotNull(exportedStagedModel);
 
-		Assert.assertNotNull(exportedStagedModel);
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedStagedModel);
 
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedStagedModel);
-
-		validateCompanyDependenciesImport(dependentStagedModelsMap, liveGroup);
+			validateCompanyDependenciesImport(dependentStagedModelsMap, liveGroup);
+		}
 	}
 
 	protected Map<String, List<StagedModel>> addCompanyDependencies()

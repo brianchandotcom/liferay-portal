@@ -14,6 +14,7 @@ import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -184,26 +185,26 @@ public class AssetVocabularyStagedModelDataHandlerTest
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, assetVocabulary);
 
-		initImport();
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			StagedModel exportedStagedModel = readExportedStagedModel(
+				assetVocabulary);
 
-		StagedModel exportedStagedModel = readExportedStagedModel(
-			assetVocabulary);
+			Assert.assertNotNull(exportedStagedModel);
 
-		Assert.assertNotNull(exportedStagedModel);
+			ExportImportThreadLocal.setPortletImportInProcess(true);
 
-		ExportImportThreadLocal.setPortletImportInProcess(true);
+			try {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, exportedStagedModel);
+			}
+			finally {
+				ExportImportThreadLocal.setPortletImportInProcess(false);
+			}
 
-		try {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, exportedStagedModel);
+			return _assetVocabularyLocalService.
+				fetchAssetVocabularyByUuidAndGroupId(
+					assetVocabulary.getUuid(), liveGroup.getGroupId());
 		}
-		finally {
-			ExportImportThreadLocal.setPortletImportInProcess(false);
-		}
-
-		return _assetVocabularyLocalService.
-			fetchAssetVocabularyByUuidAndGroupId(
-				assetVocabulary.getUuid(), liveGroup.getGroupId());
 	}
 
 	@Inject

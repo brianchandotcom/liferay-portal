@@ -140,7 +140,7 @@ public class DummyFolderStagedModelDataHandlerTest
 			super.testCleanStagedModelDataHandler();
 		}
 
-		try (SafeCloseable safeCloseable =
+		try (SafeCloseable safeCloseable1 =
 				_dummyFolderStagedModelDataHandler.setEnabledWithSafeCloseable(
 					false)) {
 
@@ -161,15 +161,15 @@ public class DummyFolderStagedModelDataHandlerTest
 			validateExport(
 				portletDataContext, stagedModel, dependentStagedModelsMap);
 
-			initImport();
+			try (SafeCloseable safeCloseable2 = initImportWithSafeCloseable()) {
+				deleteStagedModel(
+					stagedModel, dependentStagedModelsMap, stagingGroup);
 
-			deleteStagedModel(
-				stagedModel, dependentStagedModelsMap, stagingGroup);
+				StagedModel exportedStagedModel = readExportedStagedModel(
+					stagedModel);
 
-			StagedModel exportedStagedModel = readExportedStagedModel(
-				stagedModel);
-
-			Assert.assertNull(exportedStagedModel);
+				Assert.assertNull(exportedStagedModel);
+			}
 		}
 	}
 
@@ -207,12 +207,12 @@ public class DummyFolderStagedModelDataHandlerTest
 
 			addDefaultStagedModel(liveGroup, secondDependentStagedModelsMap);
 
-			initImport();
+			try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+				StagedModel exportedStagedModel = readExportedStagedModel(
+					stagedModel);
 
-			StagedModel exportedStagedModel = readExportedStagedModel(
-				stagedModel);
-
-			Assert.assertNull(exportedStagedModel);
+				Assert.assertNull(exportedStagedModel);
+			}
 		}
 		finally {
 			_dummyFolderStagedModelDataHandler.setEnabled(false);
@@ -247,12 +247,12 @@ public class DummyFolderStagedModelDataHandlerTest
 			validateExport(
 				portletDataContext, stagedModel, dependentStagedModelsMap);
 
-			initImport();
+			try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+				StagedModel exportedStagedModel = readExportedStagedModel(
+					stagedModel);
 
-			StagedModel exportedStagedModel = readExportedStagedModel(
-				stagedModel);
-
-			Assert.assertNull(exportedStagedModel);
+				Assert.assertNull(exportedStagedModel);
+			}
 		}
 		finally {
 			_dummyFolderStagedModelDataHandler.setEnabled(false);

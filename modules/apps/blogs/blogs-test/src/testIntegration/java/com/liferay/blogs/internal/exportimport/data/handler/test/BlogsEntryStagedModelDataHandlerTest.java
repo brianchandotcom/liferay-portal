@@ -19,6 +19,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.test.util.lar.BaseWorkflowedStagedModelDataHandlerTestCase;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -78,27 +79,27 @@ public class BlogsEntryStagedModelDataHandlerTest
 
 		StagedModelDataHandlerUtil.exportStagedModel(portletDataContext, entry);
 
-		initImport();
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			BlogsEntry exportedEntry = (BlogsEntry)readExportedStagedModel(entry);
 
-		BlogsEntry exportedEntry = (BlogsEntry)readExportedStagedModel(entry);
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedEntry);
 
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedEntry);
+			BlogsEntry importedEntry = (BlogsEntry)getStagedModel(
+				entry.getUuid(), liveGroup);
 
-		BlogsEntry importedEntry = (BlogsEntry)getStagedModel(
-			entry.getUuid(), liveGroup);
+			FileEntry coverImageFileEntry =
+				PortletFileRepositoryUtil.getPortletFileEntry(
+					importedEntry.getCoverImageFileEntryId());
 
-		FileEntry coverImageFileEntry =
-			PortletFileRepositoryUtil.getPortletFileEntry(
-				importedEntry.getCoverImageFileEntryId());
+			Folder coverImageFileEntryFolder = coverImageFileEntry.getFolder();
 
-		Folder coverImageFileEntryFolder = coverImageFileEntry.getFolder();
+			Assert.assertEquals(
+				liveGroup.getGroupId(), coverImageFileEntry.getGroupId());
 
-		Assert.assertEquals(
-			liveGroup.getGroupId(), coverImageFileEntry.getGroupId());
-
-		Assert.assertEquals(
-			liveGroup.getGroupId(), coverImageFileEntryFolder.getGroupId());
+			Assert.assertEquals(
+				liveGroup.getGroupId(), coverImageFileEntryFolder.getGroupId());
+		}
 	}
 
 	@Test
@@ -109,17 +110,19 @@ public class BlogsEntryStagedModelDataHandlerTest
 
 		StagedModelDataHandlerUtil.exportStagedModel(portletDataContext, entry);
 
-		initImport();
+		Long coverImageFileEntryId = null;
 
-		BlogsEntry exportedEntry = (BlogsEntry)readExportedStagedModel(entry);
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			BlogsEntry exportedEntry = (BlogsEntry)readExportedStagedModel(entry);
 
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedEntry);
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedEntry);
 
-		BlogsEntry importedEntry = (BlogsEntry)getStagedModel(
-			entry.getUuid(), liveGroup);
+			BlogsEntry importedEntry = (BlogsEntry)getStagedModel(
+				entry.getUuid(), liveGroup);
 
-		long coverImageFileEntryId = importedEntry.getCoverImageFileEntryId();
+			coverImageFileEntryId = importedEntry.getCoverImageFileEntryId();
+		}
 
 		initExport();
 
@@ -128,19 +131,21 @@ public class BlogsEntryStagedModelDataHandlerTest
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, updatedEntry);
 
-		initImport();
+		BlogsEntry importedUpdatedEntry = null;
 
-		BlogsEntry exportedUpdatedEntry = (BlogsEntry)readExportedStagedModel(
-			updatedEntry);
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			BlogsEntry exportedUpdatedEntry = (BlogsEntry)readExportedStagedModel(
+				updatedEntry);
 
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedUpdatedEntry);
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedUpdatedEntry);
 
-		BlogsEntry importedUpdatedEntry = (BlogsEntry)getStagedModel(
-			updatedEntry.getUuid(), liveGroup);
+			importedUpdatedEntry = (BlogsEntry)getStagedModel(
+				updatedEntry.getUuid(), liveGroup);
+		}
 
 		Assert.assertEquals(
-			coverImageFileEntryId,
+			coverImageFileEntryId.longValue(),
 			importedUpdatedEntry.getCoverImageFileEntryId());
 	}
 
@@ -173,40 +178,40 @@ public class BlogsEntryStagedModelDataHandlerTest
 
 		StagedModelDataHandlerUtil.exportStagedModel(portletDataContext, entry);
 
-		initImport();
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			BlogsEntry exportedEntry = (BlogsEntry)readExportedStagedModel(entry);
 
-		BlogsEntry exportedEntry = (BlogsEntry)readExportedStagedModel(entry);
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedEntry);
 
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedEntry);
+			BlogsEntry importedEntry = (BlogsEntry)getStagedModel(
+				entry.getUuid(), liveGroup);
 
-		BlogsEntry importedEntry = (BlogsEntry)getStagedModel(
-			entry.getUuid(), liveGroup);
+			FriendlyURLEntry mainFriendlyURLEntry =
+				_friendlyURLEntryLocalService.fetchMainFriendlyURLEntry(
+					_portal.getClassNameId(BlogsEntry.class.getName()),
+					importedEntry.getEntryId());
 
-		FriendlyURLEntry mainFriendlyURLEntry =
-			_friendlyURLEntryLocalService.fetchMainFriendlyURLEntry(
-				_portal.getClassNameId(BlogsEntry.class.getName()),
-				importedEntry.getEntryId());
+			Assert.assertNotNull(mainFriendlyURLEntry);
 
-		Assert.assertNotNull(mainFriendlyURLEntry);
+			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+				_portal.getClassNameId(FriendlyURLEntry.class.getName()),
+				mainFriendlyURLEntry.getFriendlyURLEntryId());
 
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			_portal.getClassNameId(FriendlyURLEntry.class.getName()),
-			mainFriendlyURLEntry.getFriendlyURLEntryId());
+			Assert.assertNotNull(assetEntry);
 
-		Assert.assertNotNull(assetEntry);
+			List<AssetCategory> assetCategories = assetEntry.getCategories();
 
-		List<AssetCategory> assetCategories = assetEntry.getCategories();
+			Assert.assertTrue(ListUtil.isNotEmpty(assetCategories));
 
-		Assert.assertTrue(ListUtil.isNotEmpty(assetCategories));
+			Assert.assertEquals(
+				assetCategories.toString(), 1, assetCategories.size());
 
-		Assert.assertEquals(
-			assetCategories.toString(), 1, assetCategories.size());
+			AssetCategory importedAssetCategory = assetCategories.get(0);
 
-		AssetCategory importedAssetCategory = assetCategories.get(0);
-
-		Assert.assertEquals(
-			assetCategory.getName(), importedAssetCategory.getName());
+			Assert.assertEquals(
+				assetCategory.getName(), importedAssetCategory.getName());
+		}
 	}
 
 	@Test
@@ -217,29 +222,30 @@ public class BlogsEntryStagedModelDataHandlerTest
 
 		StagedModelDataHandlerUtil.exportStagedModel(portletDataContext, entry);
 
-		initImport();
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			BlogsEntry exportedEntry =
+				(BlogsEntry)readExportedStagedModel(entry);
 
-		BlogsEntry exportedEntry = (BlogsEntry)readExportedStagedModel(entry);
+			Assert.assertNotNull(exportedEntry);
 
-		Assert.assertNotNull(exportedEntry);
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedEntry);
 
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedEntry);
+			BlogsEntry importedEntry = (BlogsEntry)getStagedModel(
+				entry.getUuid(), liveGroup);
 
-		BlogsEntry importedEntry = (BlogsEntry)getStagedModel(
-			entry.getUuid(), liveGroup);
+			FileEntry smallImageFileEntry =
+				PortletFileRepositoryUtil.getPortletFileEntry(
+					importedEntry.getSmallImageFileEntryId());
 
-		FileEntry smallImageFileEntry =
-			PortletFileRepositoryUtil.getPortletFileEntry(
-				importedEntry.getSmallImageFileEntryId());
+			Folder smallImageFileEntryFolder = smallImageFileEntry.getFolder();
 
-		Folder smallImageFileEntryFolder = smallImageFileEntry.getFolder();
+			Assert.assertEquals(
+				liveGroup.getGroupId(), smallImageFileEntry.getGroupId());
 
-		Assert.assertEquals(
-			liveGroup.getGroupId(), smallImageFileEntry.getGroupId());
-
-		Assert.assertEquals(
-			liveGroup.getGroupId(), smallImageFileEntryFolder.getGroupId());
+			Assert.assertEquals(
+				liveGroup.getGroupId(), smallImageFileEntryFolder.getGroupId());
+		}
 	}
 
 	@Test
@@ -250,17 +256,19 @@ public class BlogsEntryStagedModelDataHandlerTest
 
 		StagedModelDataHandlerUtil.exportStagedModel(portletDataContext, entry);
 
-		initImport();
+		Long smallImageFileEntryId = null;
 
-		BlogsEntry exportedEntry = (BlogsEntry)readExportedStagedModel(entry);
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			BlogsEntry exportedEntry = (BlogsEntry)readExportedStagedModel(entry);
 
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedEntry);
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedEntry);
 
-		BlogsEntry importedEntry = (BlogsEntry)getStagedModel(
-			entry.getUuid(), liveGroup);
+			BlogsEntry importedEntry = (BlogsEntry)getStagedModel(
+				entry.getUuid(), liveGroup);
 
-		long smallImageFileEntryId = importedEntry.getSmallImageFileEntryId();
+			smallImageFileEntryId = importedEntry.getSmallImageFileEntryId();
+		}
 
 		initExport();
 
@@ -269,19 +277,22 @@ public class BlogsEntryStagedModelDataHandlerTest
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, updatedEntry);
 
-		initImport();
+		BlogsEntry importedUpdatedEntry = null;
 
-		BlogsEntry exportedUpdatedEntry = (BlogsEntry)readExportedStagedModel(
-			updatedEntry);
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			BlogsEntry exportedUpdatedEntry = (BlogsEntry)readExportedStagedModel(
+				updatedEntry);
 
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedUpdatedEntry);
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedUpdatedEntry);
 
-		BlogsEntry importedUpdatedEntry = (BlogsEntry)getStagedModel(
-			updatedEntry.getUuid(), liveGroup);
+			importedUpdatedEntry = (BlogsEntry)getStagedModel(
+				updatedEntry.getUuid(), liveGroup);
+
+		}
 
 		Assert.assertEquals(
-			smallImageFileEntryId,
+			smallImageFileEntryId.longValue(),
 			importedUpdatedEntry.getSmallImageFileEntryId());
 	}
 
@@ -296,21 +307,21 @@ public class BlogsEntryStagedModelDataHandlerTest
 
 		StagedModelDataHandlerUtil.exportStagedModel(portletDataContext, entry);
 
-		initImport();
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			BlogsEntry exportedEntry = (BlogsEntry)readExportedStagedModel(entry);
 
-		BlogsEntry exportedEntry = (BlogsEntry)readExportedStagedModel(entry);
+			Assert.assertNotNull(exportedEntry);
 
-		Assert.assertNotNull(exportedEntry);
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedEntry);
 
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedEntry);
+			BlogsEntry importedEntry = (BlogsEntry)getStagedModel(
+				entry.getUuid(), liveGroup);
 
-		BlogsEntry importedEntry = (BlogsEntry)getStagedModel(
-			entry.getUuid(), liveGroup);
-
-		Assert.assertTrue(importedEntry.isSmallImage());
-		Assert.assertEquals(
-			entry.getSmallImageURL(), importedEntry.getSmallImageURL());
+			Assert.assertTrue(importedEntry.isSmallImage());
+			Assert.assertEquals(
+				entry.getSmallImageURL(), importedEntry.getSmallImageURL());
+		}
 	}
 
 	@Override

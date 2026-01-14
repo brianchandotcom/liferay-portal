@@ -11,6 +11,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -104,33 +105,34 @@ public class LayoutPrototypeStagedModelDataHandlerTest
 			LayoutPrototypeLocalServiceUtil.updateLayoutPrototype(
 				_layoutPrototype);
 
-		initImport();
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			StagedModel exportedStagedModel =
+				readExportedStagedModel(stagedModel);
 
-		StagedModel exportedStagedModel = readExportedStagedModel(stagedModel);
+			Assert.assertNotNull(exportedStagedModel);
 
-		Assert.assertNotNull(exportedStagedModel);
+			portletDataContext.setDataStrategy(
+				PortletDataHandlerKeys.DATA_STRATEGY_COPY_AS_NEW);
 
-		portletDataContext.setDataStrategy(
-			PortletDataHandlerKeys.DATA_STRATEGY_COPY_AS_NEW);
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedStagedModel);
 
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedStagedModel);
+			LayoutPrototype importedLayoutPrototype =
+				LayoutPrototypeLocalServiceUtil.getLayoutPrototype(
+					_layoutPrototype.getCompanyId(), layoutPrototypeName);
 
-		LayoutPrototype importedLayoutPrototype =
-			LayoutPrototypeLocalServiceUtil.getLayoutPrototype(
-				_layoutPrototype.getCompanyId(), layoutPrototypeName);
+			Assert.assertNotEquals(
+				_layoutPrototype.getUuid(), importedLayoutPrototype.getUuid());
 
-		Assert.assertNotEquals(
-			_layoutPrototype.getUuid(), importedLayoutPrototype.getUuid());
+			Layout layout = _layoutPrototype.getLayout();
 
-		Layout layout = _layoutPrototype.getLayout();
+			Layout importedLayout = importedLayoutPrototype.getLayout();
 
-		Layout importedLayout = importedLayoutPrototype.getLayout();
+			Assert.assertNotEquals(layout.getUuid(), importedLayout.getUuid());
 
-		Assert.assertNotEquals(layout.getUuid(), importedLayout.getUuid());
-
-		LayoutPrototypeLocalServiceUtil.deleteLayoutPrototype(
-			importedLayoutPrototype);
+			LayoutPrototypeLocalServiceUtil.deleteLayoutPrototype(
+				importedLayoutPrototype);
+		}
 	}
 
 	@Override

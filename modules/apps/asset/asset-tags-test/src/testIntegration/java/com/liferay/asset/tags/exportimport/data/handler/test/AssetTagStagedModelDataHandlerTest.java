@@ -11,6 +11,7 @@ import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
@@ -112,12 +113,12 @@ public class AssetTagStagedModelDataHandlerTest
 
 		AssetTagLocalServiceUtil.deleteTag(tag);
 
-		initImport();
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			StagedModel exportStagedModel = readExportedStagedModel(tag);
 
-		StagedModel exportStagedModel = readExportedStagedModel(tag);
-
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportStagedModel);
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportStagedModel);
+		}
 	}
 
 }

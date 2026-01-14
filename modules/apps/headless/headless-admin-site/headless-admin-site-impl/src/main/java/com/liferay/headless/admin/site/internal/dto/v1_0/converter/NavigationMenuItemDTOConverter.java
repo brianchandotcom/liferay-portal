@@ -261,11 +261,9 @@ public class NavigationMenuItemDTOConverter
 					unicodeProperties.getProperty("name_" + defaultLanguageId));
 			}
 
-			if (layout == null) {
-				return null;
+			if (layout != null) {
+				return layout.getName(preferredLocale);
 			}
-
-			return layout.getName(preferredLocale);
 		}
 
 		if (useCustomName) {
@@ -324,6 +322,7 @@ public class NavigationMenuItemDTOConverter
 					setPrivatePage(
 						() -> Boolean.valueOf(
 							unicodeProperties.getProperty("privateLayout")));
+					setTitle(() -> unicodeProperties.getProperty("title"));
 				}
 			};
 		}

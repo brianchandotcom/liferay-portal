@@ -526,6 +526,13 @@ public class NavigationMenuResourceImpl
 				unicodeProperties.put("privateLayout", privatePage);
 			}
 
+			String title = _getSettingProperty(
+				navigationMenuItemSettings, "title");
+
+			if (title != null) {
+				unicodeProperties.put("title", title);
+			}
+
 			unicodeProperties.putAll(localizedPropertyMap);
 		}
 		else if (Objects.equals(

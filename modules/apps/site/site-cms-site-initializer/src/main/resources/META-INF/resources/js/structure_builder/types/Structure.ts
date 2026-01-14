@@ -8,7 +8,7 @@ import {Workflow} from '../../common/types/Workflow';
 import {Field} from '../utils/field';
 import {Uuid} from './Uuid';
 
-type Status = 'new' | 'draft' | 'published';
+type Status = 'new' | 'draft' | 'published' | 'publishing' | 'saving';
 
 type Spaces = 'all' | string[];
 

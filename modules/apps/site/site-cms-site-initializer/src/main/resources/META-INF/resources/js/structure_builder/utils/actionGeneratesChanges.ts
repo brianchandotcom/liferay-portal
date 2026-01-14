@@ -24,6 +24,7 @@ export default function actionGeneratesChanges(actionType: Action['type']) {
 		case 'publish-structure':
 		case 'refresh-referenced-structures':
 		case 'set-selection':
+		case 'set-structure-status':
 		case 'validate':
 			return false;
 		default: {

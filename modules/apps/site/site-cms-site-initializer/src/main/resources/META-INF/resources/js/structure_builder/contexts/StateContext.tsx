@@ -108,6 +108,7 @@ type AddRepeatableGroupAction = {
 type AddErrorAction = {
 	error: ValidationError;
 	property: ValidationProperty;
+	status?: Structure['status'];
 	type: 'add-error';
 	uuid: Uuid;
 };
@@ -135,6 +136,11 @@ type RefreshReferencedStructuresAction = {
 type SetSelectionAction = {
 	selection: State['selection'];
 	type: 'set-selection';
+};
+
+type SetStructureStatus = {
+	status: Structure['status'];
+	type: 'set-structure-status';
 };
 
 type SetWorkflowAction = {
@@ -194,6 +200,7 @@ export type Action =
 	| PublishStructureAction
 	| RefreshReferencedStructuresAction
 	| SetSelectionAction
+	| SetStructureStatus
 	| SetWorkflowAction
 	| UngroupAction
 	| UpdateFieldAction
@@ -393,7 +400,7 @@ function reducer(state: State, action: Action): State {
 			};
 		}
 		case 'add-error': {
-			const {error, property, uuid} = action;
+			const {error, property, status, uuid} = action;
 
 			const invalids = new Map(state.invalids);
 
@@ -405,6 +412,7 @@ function reducer(state: State, action: Action): State {
 
 			return {
 				...state,
+				...(status && {structure: {...state.structure, status}}),
 				invalids,
 			};
 		}
@@ -597,6 +605,17 @@ function reducer(state: State, action: Action): State {
 			const {selection} = action;
 
 			return {...state, selection};
+		}
+		case 'set-structure-status': {
+			const {status} = action;
+
+			return {
+				...state,
+				structure: {
+					...state.structure,
+					status,
+				},
+			};
 		}
 		case 'set-workflow': {
 			const {name, spaceERC} = action;

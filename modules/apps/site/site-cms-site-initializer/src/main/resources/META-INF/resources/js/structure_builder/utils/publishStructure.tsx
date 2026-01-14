@@ -176,13 +176,18 @@ export async function publishStructure({
 		});
 	};
 
+	const previousStatus = state.structure.status;
+
 	const onError = () =>
 		dispatch({
 			error: 'unexpected',
 			property: 'global',
+			status: previousStatus,
 			type: 'add-error',
 			uuid,
 		});
+
+	dispatch({status: 'publishing', type: 'set-structure-status'});
 
 	if (status === 'new') {
 		const {data, error} = await StructureService.createStructure({

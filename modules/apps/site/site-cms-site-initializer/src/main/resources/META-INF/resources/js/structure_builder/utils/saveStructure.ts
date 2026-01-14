@@ -52,13 +52,18 @@ export async function saveStructure({
 	const workflows = selectStructureWorkflows(state);
 	const uuid = selectStructureUuid(state);
 
+	const previousStatus = state.structure.status;
+
 	const onError = () =>
 		dispatch({
 			error: 'unexpected',
 			property: 'global',
+			status: previousStatus,
 			type: 'add-error',
 			uuid,
 		});
+
+	dispatch({status: 'saving', type: 'set-structure-status'});
 
 	if (status === 'new') {
 		const {data, error} = await StructureService.createStructure({

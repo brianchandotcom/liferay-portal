@@ -190,11 +190,14 @@ function SaveButton() {
 		});
 	};
 
+	const {status} = state.structure;
+
 	return (
 		<AsyncButton
 			displayType="secondary"
 			label={Liferay.Language.get('save')}
 			onClick={onSave}
+			status={status === 'saving' ? 'loading' : 'idle'}
 		/>
 	);
 }
@@ -219,11 +222,14 @@ function PublishButton() {
 		});
 	};
 
+	const {status} = state.structure;
+
 	return (
 		<AsyncButton
 			displayType="primary"
 			label={Liferay.Language.get('publish')}
 			onClick={onPublish}
+			status={status === 'publishing' ? 'loading' : 'idle'}
 		/>
 	);
 }

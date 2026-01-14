@@ -54,7 +54,7 @@
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Company Name"
+						"en_US": "Name"
 					},
 					"localized": false,
 					"name": "name",
@@ -100,7 +100,7 @@
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Phone Number"
+						"en_US": "Phone"
 					},
 					"localized": false,
 					"name": "phone",
@@ -125,7 +125,7 @@
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Website URL"
+						"en_US": "Website"
 					},
 					"localized": false,
 					"name": "website",

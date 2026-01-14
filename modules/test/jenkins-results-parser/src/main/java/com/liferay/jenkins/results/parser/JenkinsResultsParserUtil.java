@@ -563,9 +563,9 @@ public class JenkinsResultsParserUtil {
 	public static String escapeForBash(String string) {
 		string = string.replaceAll(" ", "\\\\ ");
 		string = string.replaceAll("'", "\\\\\\\'");
+		string = string.replaceAll(";", "\\\\;");
 		string = string.replaceAll("<", "\\\\\\<");
 		string = string.replaceAll(">", "\\\\\\>");
-		string = string.replaceAll(";", "\\\\;");
 		string = string.replaceAll("\"", "\\\\\\\"");
 		string = string.replaceAll("\\$", "\\\\\\$");
 		string = string.replaceAll("\\(", "\\\\\\(");

@@ -526,6 +526,7 @@ public class EditableFragmentEntryProcessorTest {
 	}
 
 	@Test
+	@TestInfo("LPD-76230")
 	public void testFragmentEntryProcessorEditableActionMappedActionOnSuccessDisplayPage()
 		throws Exception {
 
@@ -563,6 +564,14 @@ public class EditableFragmentEntryProcessorTest {
 			_getEditableValues(
 				classNameId, objectEntry.getPrimaryKey(), StringPool.BLANK,
 				fieldId,
+				"action/editable_values_action_mapped_action_on_success_" +
+					"display_page.json",
+				StringPool.BLANK),
+			fieldId, "displayPage");
+		_testFragmentEntryProcessorEditableActionMappedActionOnSuccessDisplayPage(
+			classNameId, objectEntry.getPrimaryKey(), displayPageURL,
+			_getEditableValues(
+				classNameId, 0, objectEntry.getExternalReferenceCode(), fieldId,
 				"action/editable_values_action_mapped_action_on_success_" +
 					"display_page.json",
 				StringPool.BLANK),

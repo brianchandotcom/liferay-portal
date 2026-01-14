@@ -9,6 +9,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,20 +22,28 @@ import java.util.Map;
 public class ToolsUtil {
 
 	public static List<String> getMCPServerExternalReferenceCodes(
-			JSONFactory jsonFactory, Map<String, String> kaleoNodeSettingValues)
-		throws JSONException {
+		JSONFactory jsonFactory, Map<String, String> kaleoNodeSettingValues) {
 
 		List<String> mcpServerExternalReferenceCodes = new ArrayList<>();
 
-		JSONArray jsonArray = jsonFactory.createJSONArray(
-			kaleoNodeSettingValues.get("tools"));
+		try {
+			JSONArray jsonArray = jsonFactory.createJSONArray(
+				kaleoNodeSettingValues.get("tools"));
 
-		for (JSONObject jsonObject : (Iterable<JSONObject>)jsonArray) {
-			mcpServerExternalReferenceCodes.add(
-				jsonObject.getString("mcpServerExternalReferenceCode"));
+			for (JSONObject jsonObject : (Iterable<JSONObject>)jsonArray) {
+				mcpServerExternalReferenceCodes.add(
+					jsonObject.getString("mcpServerExternalReferenceCode"));
+			}
+		}
+		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException);
+			}
 		}
 
 		return mcpServerExternalReferenceCodes;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(ToolsUtil.class);
 
 }

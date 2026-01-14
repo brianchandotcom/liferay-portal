@@ -9,6 +9,8 @@ import com.liferay.ai.hub.internal.web.search.LiferayWebSearchEngine;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import dev.langchain4j.rag.content.retriever.ContentRetriever;
 import dev.langchain4j.rag.content.retriever.WebSearchContentRetriever;
@@ -47,10 +49,15 @@ public class ContentRetrieverUtil {
 			}
 		}
 		catch (JSONException jsonException) {
-			throw new RuntimeException(jsonException);
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException);
+			}
 		}
 
 		return null;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ContentRetrieverUtil.class);
 
 }

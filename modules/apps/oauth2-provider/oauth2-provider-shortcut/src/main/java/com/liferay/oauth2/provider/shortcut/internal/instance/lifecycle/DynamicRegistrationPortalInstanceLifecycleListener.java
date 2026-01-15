@@ -72,27 +72,21 @@ public class DynamicRegistrationPortalInstanceLifecycleListener
 			return;
 		}
 
-		OAuth2Application oAuth2Application =
-			_oAuth2ApplicationLocalService.fetchOAuth2Application(
-				company.getCompanyId(), "DynamicRegistrator");
-
-		if (oAuth2Application != null) {
-			return;
-		}
-
 		User user = _userLocalService.getUserByScreenName(
 			company.getCompanyId(), "default-service-account");
 
-		oAuth2Application = _oAuth2ApplicationLocalService.addOAuth2Application(
-			company.getCompanyId(), user.getUserId(), user.getScreenName(),
-			Collections.singletonList(GrantType.CLIENT_CREDENTIALS),
-			"client_secret_post", user.getUserId(),
-			OAuth2SecureRandomGenerator.generateClientId(),
-			ClientProfile.HEADLESS_SERVER.id(),
-			OAuth2SecureRandomGenerator.generateClientSecret(), null, null,
-			null, 0, null, OAuth2ApplicationConstants.NAME_DYNAMIC_REGISTRATOR,
-			null, Collections.emptyList(), false, false, null,
-			new ServiceContext());
+		OAuth2Application oAuth2Application =
+			_oAuth2ApplicationLocalService.addOAuth2Application(
+				company.getCompanyId(), user.getUserId(), user.getScreenName(),
+				Collections.singletonList(GrantType.CLIENT_CREDENTIALS),
+				"client_secret_post", user.getUserId(),
+				OAuth2SecureRandomGenerator.generateClientId(),
+				ClientProfile.HEADLESS_SERVER.id(),
+				OAuth2SecureRandomGenerator.generateClientSecret(), null, null,
+				null, 0, null,
+				OAuth2ApplicationConstants.NAME_DYNAMIC_REGISTRATOR, null,
+				Collections.emptyList(), false, false, null,
+				new ServiceContext());
 
 		Role role = _roleLocalService.fetchRole(
 			oAuth2Application.getCompanyId(), RoleConstants.OWNER);

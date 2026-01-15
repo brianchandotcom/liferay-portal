@@ -29,7 +29,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 
 		PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
 
-		if (!portletDataHandler.isEnabled(company.getCompanyId()) || (portletDataHandler.isDataPortalLevel() && !stagingGroupHelper.isCompanyGroup(group))) {
+		if (portletDataHandler.isHidden() || !portletDataHandler.isEnabled(company.getCompanyId()) || (portletDataHandler.isDataPortalLevel() && !stagingGroupHelper.isCompanyGroup(group))) {
 			continue;
 		}
 
@@ -87,7 +87,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 		boolean showPortletDataInput = MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId(), portletDataHandler.isPublishToLiveByDefault()) || MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL);
 	%>
 
-		<li class="tree-item <%= ((exportModelCount > 0) || showAllPortlets) ? StringPool.BLANK : "deletions" %> <%= !portletDataHandler.isHidden() ? StringPool.BLANK : "hide" %>">
+		<li class="tree-item <%= ((exportModelCount > 0) || showAllPortlets) ? StringPool.BLANK : "deletions" %>">
 			<liferay-staging:checkbox
 				checked="<%= showPortletDataInput %>"
 				deletions="<%= modelDeletionCount %>"

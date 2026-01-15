@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -37,7 +38,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mariano Álvaro Sáiz
@@ -70,63 +70,75 @@ public class ObjectDBResourceProvider implements DBResourceProvider {
 		throws PortalException {
 
 		try {
-			return _objectRelationshipLocalService.getAllObjectRelationships(
+			ObjectRelationshipLocalService objectRelationshipLocalService =
+				_objectRelationshipLocalServiceSnapshot.get();
+
+			if (objectRelationshipLocalService == null) {
+				return _getAllObjectRelationshipsFallback(
+					connection, objectDefinition);
+			}
+
+			return objectRelationshipLocalService.getAllObjectRelationships(
 				objectDefinition.getObjectDefinitionId());
 		}
-		catch (Exception exception1) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception1);
+				_log.debug(exception);
 			}
 
-			try (PreparedStatement preparedStatement =
-					connection.prepareStatement(
-						StringBundler.concat(
-							"select dbTableName, objectDefinitionId1, ",
-							"objectDefinitionId2, objectRelationshipId, type_ ",
-							"from ObjectRelationship where companyId = ? and ",
-							"(objectDefinitionId1 = ? or objectDefinitionId2 ",
-							"= ?) and reverse = ?"))) {
+			return _getAllObjectRelationshipsFallback(
+				connection, objectDefinition);
+		}
+	}
 
-				preparedStatement.setLong(1, objectDefinition.getCompanyId());
-				preparedStatement.setLong(
-					2, objectDefinition.getObjectDefinitionId());
-				preparedStatement.setLong(
-					3, objectDefinition.getObjectDefinitionId());
-				preparedStatement.setBoolean(4, false);
+	private List<ObjectRelationship> _getAllObjectRelationshipsFallback(
+			Connection connection, ObjectDefinition objectDefinition)
+		throws PortalException {
 
-				try (ResultSet resultSet = preparedStatement.executeQuery()) {
-					List<ObjectRelationship> objectRelationships =
-						new ArrayList<>();
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select dbTableName, objectDefinitionId1, ",
+					"objectDefinitionId2, objectRelationshipId, type_ from ",
+					"ObjectRelationship where companyId = ? and ",
+					"(objectDefinitionId1 = ? or objectDefinitionId2 = ?) and ",
+					"reverse = ?"))) {
 
-					while (resultSet.next()) {
-						ObjectRelationship objectRelationship =
-							new ObjectRelationshipImpl() {
-								{
-									setDBTableName(
-										resultSet.getString("dbTableName"));
-									setObjectDefinitionId1(
-										resultSet.getLong(
-											"objectDefinitionId1"));
-									setObjectDefinitionId2(
-										resultSet.getLong(
-											"objectDefinitionId2"));
-									setObjectRelationshipId(
-										resultSet.getLong(
-											"objectRelationshipId"));
-									setReverse(false);
-									setType(resultSet.getString("type_"));
-								}
-							};
+			preparedStatement.setLong(1, objectDefinition.getCompanyId());
+			preparedStatement.setLong(
+				2, objectDefinition.getObjectDefinitionId());
+			preparedStatement.setLong(
+				3, objectDefinition.getObjectDefinitionId());
+			preparedStatement.setBoolean(4, false);
 
-						objectRelationships.add(objectRelationship);
-					}
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				List<ObjectRelationship> objectRelationships =
+					new ArrayList<>();
 
-					return objectRelationships;
+				while (resultSet.next()) {
+					ObjectRelationship objectRelationship =
+						new ObjectRelationshipImpl() {
+							{
+								setDBTableName(
+									resultSet.getString("dbTableName"));
+								setObjectDefinitionId1(
+									resultSet.getLong("objectDefinitionId1"));
+								setObjectDefinitionId2(
+									resultSet.getLong("objectDefinitionId2"));
+								setObjectRelationshipId(
+									resultSet.getLong("objectRelationshipId"));
+								setReverse(false);
+								setType(resultSet.getString("type_"));
+							}
+						};
+
+					objectRelationships.add(objectRelationship);
 				}
+
+				return objectRelationships;
 			}
-			catch (Exception exception2) {
-				throw new PortalException(exception2);
-			}
+		}
+		catch (Exception exception) {
+			throw new PortalException(exception);
 		}
 	}
 
@@ -136,8 +148,15 @@ public class ObjectDBResourceProvider implements DBResourceProvider {
 		Map<Long, ObjectDefinition> objectDefinitions = new HashMap<>();
 
 		try {
+			ObjectDefinitionLocalService objectDefinitionLocalService =
+				_objectDefinitionLocalServiceSnapshot.get();
+
+			if (objectDefinitionLocalService == null) {
+				return _getObjectDefinitionsFallback(companyId);
+			}
+
 			for (ObjectDefinition objectDefinition :
-					_objectDefinitionLocalService.getObjectDefinitions(
+					objectDefinitionLocalService.getObjectDefinitions(
 						companyId, WorkflowConstants.STATUS_APPROVED)) {
 
 				objectDefinitions.put(
@@ -150,7 +169,14 @@ public class ObjectDBResourceProvider implements DBResourceProvider {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}
+
+			return _getObjectDefinitionsFallback(companyId);
 		}
+	}
+
+	private Map<Long, ObjectDefinition> _getObjectDefinitionsFallback(
+			long companyId)
+		throws PortalException {
 
 		try (Connection connection = DataAccess.getConnection()) {
 			try (PreparedStatement preparedStatement =
@@ -165,6 +191,9 @@ public class ObjectDBResourceProvider implements DBResourceProvider {
 				preparedStatement.setInt(2, WorkflowConstants.STATUS_APPROVED);
 
 				try (ResultSet resultSet = preparedStatement.executeQuery()) {
+					Map<Long, ObjectDefinition> objectDefinitions =
+						new HashMap<>();
+
 					while (resultSet.next()) {
 						ObjectDefinition objectDefinition =
 							new ObjectDefinitionImpl() {
@@ -204,10 +233,18 @@ public class ObjectDBResourceProvider implements DBResourceProvider {
 		throws Exception {
 
 		try {
+			ObjectFieldLocalService objectFieldLocalService =
+				_objectFieldLocalServiceSnapshot.get();
+
+			if (objectFieldLocalService == null) {
+				return _getObjectLocalizationTablePrimaryKeyColumnNamesFallback(
+					dbInspector, objectDefinition);
+			}
+
 			DynamicObjectDefinitionLocalizationTable
 				dynamicObjectDefinitionLocalizationTable =
 					DynamicObjectDefinitionLocalizationTableFactory.create(
-						objectDefinition, _objectFieldLocalService);
+						objectDefinition, objectFieldLocalService);
 
 			if (dynamicObjectDefinitionLocalizationTable != null) {
 				return Collections.singletonMap(
@@ -221,16 +258,27 @@ public class ObjectDBResourceProvider implements DBResourceProvider {
 				_log.debug(exception);
 			}
 
-			if (dbInspector.hasTable(
-					objectDefinition.getLocalizationDBTableName())) {
+			return _getObjectLocalizationTablePrimaryKeyColumnNamesFallback(
+				dbInspector, objectDefinition);
+		}
 
-				return Collections.singletonMap(
-					objectDefinition.getLocalizationDBTableName(),
-					new String[] {
-						objectDefinition.getPKObjectFieldDBColumnName(),
-						"languageId"
-					});
-			}
+		return Collections.emptyMap();
+	}
+
+	private Map<String, String[]>
+			_getObjectLocalizationTablePrimaryKeyColumnNamesFallback(
+				DBInspector dbInspector, ObjectDefinition objectDefinition)
+		throws Exception {
+
+		if (dbInspector.hasTable(
+				objectDefinition.getLocalizationDBTableName())) {
+
+			return Collections.singletonMap(
+				objectDefinition.getLocalizationDBTableName(),
+				new String[] {
+					objectDefinition.getPKObjectFieldDBColumnName(),
+					"languageId"
+				});
 		}
 
 		return Collections.emptyMap();
@@ -288,6 +336,10 @@ public class ObjectDBResourceProvider implements DBResourceProvider {
 		try (Connection connection = DataAccess.getConnection()) {
 			DBInspector dbInspector = new DBInspector(connection);
 
+			if (!dbInspector.hasTable("ObjectDefinition")) {
+				return tablesPrimaryKeyColumnNames;
+			}
+
 			Map<Long, ObjectDefinition> objectDefinitions =
 				_getObjectDefinitions(companyId);
 
@@ -322,13 +374,17 @@ public class ObjectDBResourceProvider implements DBResourceProvider {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectDBResourceProvider.class);
 
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Reference
-	private ObjectFieldLocalService _objectFieldLocalService;
-
-	@Reference
-	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+	private final Snapshot<ObjectDefinitionLocalService>
+		_objectDefinitionLocalServiceSnapshot = new Snapshot<>(
+			ObjectDBResourceProvider.class, ObjectDefinitionLocalService.class,
+			null, true);
+	private final Snapshot<ObjectFieldLocalService>
+		_objectFieldLocalServiceSnapshot = new Snapshot<>(
+			ObjectDBResourceProvider.class, ObjectFieldLocalService.class, null,
+			true);
+	private final Snapshot<ObjectRelationshipLocalService>
+		_objectRelationshipLocalServiceSnapshot = new Snapshot<>(
+			ObjectDBResourceProvider.class,
+			ObjectRelationshipLocalService.class, null, true);
 
 }

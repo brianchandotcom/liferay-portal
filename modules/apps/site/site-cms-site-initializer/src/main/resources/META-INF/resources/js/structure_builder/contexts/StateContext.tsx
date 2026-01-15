@@ -313,10 +313,20 @@ function reducer(state: State, action: Action): State {
 				return state;
 			}
 
-			if (
-				reasons.includes('is-referenced') ||
-				items.some(({uuid}) => publishedChildren.has(uuid))
-			) {
+			if (reasons.includes('is-referenced')) {
+				showWarning({
+					text: Liferay.Language.get(
+						'the-repeatable-group-cannot-be-created-because-referenced-structure-fields-are-not-allowed-in-repeatable-groups'
+					),
+					title: Liferay.Language.get(
+						'repeatable-group-creation-not-allowed'
+					),
+				});
+
+				return state;
+			}
+
+			if (items.some(({uuid}) => publishedChildren.has(uuid))) {
 				showWarning({
 					text: Liferay.Language.get(
 						'the-repeatable-group-cannot-be-created-because-one-or-more-fields-of-the-selection-are-already-published'

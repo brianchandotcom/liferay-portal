@@ -64,7 +64,7 @@ export const Colors = {
 	mapSelected: '#4B9BFF',
 	mormont: '#FFB46E',
 	negative: '#DA1414',
-	neutral: '#AEB0BB',
+	neutral: '#6B6C7E',
 	pallete: [
 		'#4B9BFF',
 		'#FFB46E',

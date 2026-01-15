@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.site.internal.resource.v1_0.util;
 
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
+import com.liferay.headless.admin.site.dto.v1_0.LinkToURLPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.PageSetPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSpecification;
@@ -33,7 +34,8 @@ public class PageSpecificationUtil {
 
 		PageSpecification pageSpecification = pageSpecifications[0];
 
-		if ((!(pageSpecification instanceof PageSetPageSpecification) &&
+		if ((!(pageSpecification instanceof LinkToURLPageSpecification) &&
+			 !(pageSpecification instanceof PageSetPageSpecification) &&
 			 !(pageSpecification instanceof WidgetPageSpecification)) ||
 			!Objects.equals(
 				pageSpecification.getStatus(),

@@ -454,3 +454,43 @@ test(
 		).toBeVisible();
 	}
 );
+
+test(
+	'Verify Variable Rate Shipping Option Settings is viewed from Shipping Option',
+	{tag: ['@LPD-71919']},
+	async ({
+		apiHelpers,
+		commerceAdminChannelDetailsPage,
+		commerceAdminChannelsPage,
+		site,
+	}) => {
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		await commerceAdminChannelsPage.changeCommerceChannelSiteType(
+			channel.name,
+			'B2B'
+		);
+
+		await commerceAdminChannelDetailsPage.activateChannelConfiguration(
+			'Variable Rate',
+			'Shipping Methods'
+		);
+		await commerceAdminChannelDetailsPage.addVariableRateShippingOption(
+			'variable rate'
+		);
+		await commerceAdminChannelDetailsPage.addVariableRateShippingOptionSetting(
+			'variable rate',
+			'10'
+		);
+
+		await expect(
+			await commerceAdminChannelDetailsPage.shippingOptionsSettingsTableLink(
+				'variable rate',
+				'Shipping Methods'
+			)
+		).toBeVisible();
+	}
+);

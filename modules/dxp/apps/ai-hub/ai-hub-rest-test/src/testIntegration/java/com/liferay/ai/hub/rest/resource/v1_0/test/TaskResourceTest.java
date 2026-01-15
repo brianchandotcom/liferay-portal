@@ -482,7 +482,12 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 			).put(
 				"type", "LLM Node With RAG Workflow Definition"
 			).toString(),
-			"ai-hub/v1.0/tasks", Http.Method.POST);
+			"ai-hub/v1.0/tasks",
+			HashMapBuilder.put(
+				"Liferay-AI-Hub-On-Behalf-Of",
+				_generateToken(TestPropsValues.getUserId())
+			).build(),
+			Http.Method.POST);
 
 		Assert.assertTrue(countDownLatch1.await(10, TimeUnit.SECONDS));
 
@@ -516,7 +521,12 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 			).put(
 				"type", "LLM Node With RAG Workflow Definition"
 			).toString(),
-			"ai-hub/v1.0/tasks", Http.Method.POST);
+			"ai-hub/v1.0/tasks",
+			HashMapBuilder.put(
+				"Liferay-AI-Hub-On-Behalf-Of",
+				_generateToken(TestPropsValues.getUserId())
+			).build(),
+			Http.Method.POST);
 
 		Assert.assertTrue(countDownLatch2.await(10, TimeUnit.SECONDS));
 

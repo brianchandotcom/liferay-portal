@@ -25,8 +25,7 @@ export default function LogoSelector({
 		logoName:
 			initialLogoURL === defaultLogoURL
 				? Liferay.Language.get('default')
-				: initialLogoName ||
-					sub(Liferay.Language.get('custom-x'), label),
+				: initialLogoName || Liferay.Language.get('custom-image'),
 		logoURL: initialLogoURL,
 	});
 
@@ -128,7 +127,7 @@ export default function LogoSelector({
 						className="mr-2"
 						id={`${portletNamespace}logoName`}
 						readOnly
-						value={logoName || Liferay.Language.get('custom-x')}
+						value={logoName || Liferay.Language.get('custom-image')}
 					/>
 
 					<ClayButtonWithIcon

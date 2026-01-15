@@ -229,34 +229,7 @@ export default function StructureTree({search}: {search: string}) {
 							symbol={item.icon}
 						/>
 
-						<span className="ml-1">
-							{item.label}
-
-							<ItemStatus item={item} />
-						</span>
-
-						{item.type === 'referenced-structure' ||
-						item.type === 'repeatable-group' ? (
-							<ClayIcon
-								className="ml-2"
-								data-title={Liferay.Language.get('repeatable')}
-								symbol="repeat"
-							/>
-						) : (
-							<></>
-						)}
-
-						{item.invalid ? (
-							<ClayIcon
-								className="ml-2 text-danger"
-								data-title={Liferay.Language.get(
-									'invalid-element'
-								)}
-								symbol="exclamation-full"
-							/>
-						) : (
-							<></>
-						)}
+						<ItemContent item={item} />
 					</ClayTreeView.ItemStack>
 
 					<ClayTreeView.Group items={item.children}>
@@ -303,41 +276,50 @@ export default function StructureTree({search}: {search: string}) {
 									symbol={childItem.icon}
 								/>
 
-								<span className="ml-1">
-									{childItem.label}
-
-									<ItemStatus item={childItem} />
-								</span>
-
-								{childItem.locked ? (
-									<ClayIcon
-										className="ml-2"
-										data-title={Liferay.Language.get(
-											'locked-field'
-										)}
-										symbol="lock"
-									/>
-								) : (
-									<></>
-								)}
-
-								{childItem.invalid ? (
-									<ClayIcon
-										className="ml-2 text-danger"
-										data-title={Liferay.Language.get(
-											'invalid-element'
-										)}
-										symbol="exclamation-full"
-									/>
-								) : (
-									<></>
-								)}
+								<ItemContent item={childItem} />
 							</ClayTreeView.Item>
 						)}
 					</ClayTreeView.Group>
 				</ClayTreeView.Item>
 			)}
 		</ClayTreeView>
+	);
+}
+
+function ItemContent({item}: {item: TreeItem}) {
+	return (
+		<div className="align-items-center c-gap-2 d-flex ml-1">
+			<span>
+				{item.label}
+
+				<ItemStatus item={item} />
+			</span>
+
+			{item.type === 'referenced-structure' ||
+			item.type === 'repeatable-group' ? (
+				<ClayIcon
+					className="mt-0"
+					data-title={Liferay.Language.get('repeatable')}
+					symbol="repeat"
+				/>
+			) : null}
+
+			{item.locked ? (
+				<ClayIcon
+					className="mt-0"
+					data-title={Liferay.Language.get('locked-field')}
+					symbol="lock"
+				/>
+			) : null}
+
+			{item.invalid ? (
+				<ClayIcon
+					className="mt-0 text-danger"
+					data-title={Liferay.Language.get('invalid-element')}
+					symbol="exclamation-full"
+				/>
+			) : null}
+		</div>
 	);
 }
 

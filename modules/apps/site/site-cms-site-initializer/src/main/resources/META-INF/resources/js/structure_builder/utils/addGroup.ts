@@ -7,10 +7,11 @@ import {RepeatableGroup, Structure, StructureChild} from '../types/Structure';
 import {Uuid} from '../types/Uuid';
 import getRandomId from './getRandomId';
 import getRandomName from './getRandomName';
+import sortChildren from './sortChildren';
 
 const DEFAULT_GROUP_LABEL = Liferay.Language.get('repeatable-group');
 
-export default function insertGroup({
+export default function addGroup({
 	groupChildren,
 	groupParent,
 	groupUuid,
@@ -38,7 +39,7 @@ export default function insertGroup({
 		if (child.type === 'repeatable-group') {
 			const group: RepeatableGroup = {
 				...child,
-				children: insertGroup({
+				children: addGroup({
 					groupChildren,
 					groupParent,
 					groupUuid,
@@ -53,7 +54,7 @@ export default function insertGroup({
 		}
 	}
 
-	// Insert new group if this is the correct parent
+	// Add new group if this is the correct parent
 
 	if (root.uuid === groupParent) {
 		const group: RepeatableGroup = {
@@ -78,5 +79,5 @@ export default function insertGroup({
 		children.set(group.uuid, group);
 	}
 
-	return children;
+	return sortChildren(children);
 }

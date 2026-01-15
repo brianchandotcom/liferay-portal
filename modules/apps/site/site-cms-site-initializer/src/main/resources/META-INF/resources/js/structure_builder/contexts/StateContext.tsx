@@ -24,6 +24,7 @@ import {
 } from '../types/Structure';
 import {Uuid} from '../types/Uuid';
 import actionGeneratesChanges from '../utils/actionGeneratesChanges';
+import addGroup from '../utils/addGroup';
 import deleteChildren from '../utils/deleteChildren';
 import {
 	Field,
@@ -36,7 +37,7 @@ import findChild from '../utils/findChild';
 import {getChildrenUuids} from '../utils/getChildrenUuids';
 import getRandomId from '../utils/getRandomId';
 import getUuid from '../utils/getUuid';
-import insertGroup from '../utils/insertGroup';
+import insertChild from '../utils/insertChild';
 import isLocked from '../utils/isLocked';
 import isReferenced from '../utils/isReferenced';
 import normalizeString from '../utils/normalizeString';
@@ -384,19 +385,17 @@ function reducer(state: State, action: Action): State {
 
 			const groupUuid = getUuid();
 
-			const children = insertGroup({
+			const children = addGroup({
 				groupChildren: items,
 				groupParent: parents[0].uuid,
 				groupUuid,
 				root: structure,
 			});
 
-			const sortedChildren = sortChildren(children);
-
 			return {
 				...state,
 				selection: [groupUuid],
-				structure: {...structure, children: sortedChildren},
+				structure: {...structure, children},
 			};
 		}
 		case 'add-error': {

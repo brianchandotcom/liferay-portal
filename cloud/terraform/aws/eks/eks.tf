@@ -34,6 +34,7 @@ module "eks" {
 	}
 	create_cloudwatch_log_group=true
 	create_kms_key=false
+	create_node_iam_role=true
 	enable_cluster_creator_admin_permissions=true
 	enable_irsa=true
 	encryption_config={
@@ -48,10 +49,11 @@ module "eks" {
 		AmazonEKSNetworkingPolicy="arn:${var.arn_partition}:iam::aws:policy/AmazonEKSNetworkingPolicy"
 	}
 	kubernetes_version=data.aws_eks_cluster_versions.available.cluster_versions[0].cluster_version
-	name="${var.deployment_name}-eks"
-	node_security_group_id=aws_security_group.nodes.id
-	security_group_id=aws_security_group.cluster.id
 	name=local.cluster_name
+	node_iam_role_additional_policies={
+		AWSXRayDaemonWriteAccess="arn:${var.arn_partition}:iam::aws:policy/AWSXRayDaemonWriteAccess"
+		CloudWatchAgentServerPolicy="arn:${var.arn_partition}:iam::aws:policy/CloudWatchAgentServerPolicy"
+	}
 	source="terraform-aws-modules/eks/aws"
 	subnet_ids=module.vpc.private_subnets
 	version="21.3.1"
@@ -72,8 +74,8 @@ resource "aws_iam_role" "ebs_csi_driver" {
 					Action="sts:AssumeRoleWithWebIdentity"
 					Condition={
 						StringEquals={
-							"${module.eks.oidc_provider}:sub"="system:serviceaccount:kube-system:ebs-csi-controller-sa"
 							"${module.eks.oidc_provider}:aud"="sts.amazonaws.com"
+							"${module.eks.oidc_provider}:sub"="system:serviceaccount:kube-system:ebs-csi-controller-sa"
 						}
 					}
 					Effect="Allow"
@@ -96,7 +98,10 @@ resource "aws_iam_role" "irsa" {
 					Action="sts:AssumeRoleWithWebIdentity"
 					Condition={
 						StringEquals={
-							"${module.eks.oidc_provider}:sub" : "system:serviceaccount:${var.deployment_namespace}:liferay-default"
+							"${module.eks.oidc_provider}:aud"="sts.amazonaws.com"
+						}
+						StringLike={
+							"${module.eks.oidc_provider}:sub"="system:serviceaccount:liferay-*:liferay-default"
 						}
 					}
 					Effect="Allow"
@@ -161,7 +166,7 @@ resource "aws_iam_role_policy" "s3_csi_driver" {
 	role=aws_iam_role.s3_csi_driver.id
 }
 resource "aws_iam_role_policy" "this" {
-	count = length(var.ecr_repositories) > 0 ? 1 : 0
+	count=length(var.ecr_repositories) > 0 ? 1 : 0
 	policy=jsonencode(
 		{
 			Statement=[
@@ -194,6 +199,13 @@ resource "aws_kms_alias" "eks_kms_alias" {
 resource "aws_kms_key" "eks_secrets" {
 	deletion_window_in_days=7
 	description="KMS key for EKS secrets encryption"
+}
+resource "aws_vpc_security_group_ingress_rule" "node_liferay_ingress" {
+	cidr_ipv4=var.vpc_cidr
+	from_port=8080
+	ip_protocol="tcp"
+	security_group_id=module.eks.node_security_group_id
+	to_port=8080
 }
 resource "kubernetes_storage_class_v1" "gp3_storage_class" {
 	allowed_topologies {

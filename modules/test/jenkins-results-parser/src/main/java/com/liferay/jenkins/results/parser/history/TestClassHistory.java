@@ -16,20 +16,20 @@ public interface TestClassHistory {
 
 	public BatchHistory getBatchHistory();
 
+	public String getBatchName();
+
 	public int getFailureCount();
 
 	public int getStatusChanges();
 
+	public String getTestClassName();
+
 	public long getTestCount();
-
-	public String getTestName();
-
-	public long getTestrayCaseResultID();
-
-	public String getTestrayCaseResultURL();
 
 	public TestTaskHistory getTestTaskHistory();
 
 	public String getTestTaskName();
+
+	public boolean isFlaky();
 
 }

@@ -68,7 +68,7 @@ public abstract class BaseBatchHistory implements BatchHistory {
 						this, testsJSONArray.getJSONObject(i));
 
 				_testClassHistories.put(
-					testClassHistory.getTestName(), testClassHistory);
+					testClassHistory.getTestClassName(), testClassHistory);
 			}
 		}
 

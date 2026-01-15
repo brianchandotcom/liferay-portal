@@ -5,8 +5,6 @@
 
 package com.liferay.jenkins.results.parser.history;
 
-import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
-
 import org.json.JSONObject;
 
 /**
@@ -26,6 +24,11 @@ public abstract class BaseTestClassHistory implements TestClassHistory {
 		return _batchHistory;
 	}
 
+	@Override
+	public String getBatchName() {
+		return _batchHistory.getBatchName();
+	}
+
 	public int getFailureCount() {
 		return _failureCount;
 	}
@@ -34,41 +37,12 @@ public abstract class BaseTestClassHistory implements TestClassHistory {
 		return _statusChanges;
 	}
 
+	public String getTestClassName() {
+		return _testClassName;
+	}
+
 	public long getTestCount() {
 		return _testCount;
-	}
-
-	public String getTestName() {
-		return _testName;
-	}
-
-	public long getTestrayCaseResultID() {
-		return _testrayCaseResultID;
-	}
-
-	public String getTestrayCaseResultURL() {
-		long testrayCaseResultID = getTestrayCaseResultID();
-
-		if (testrayCaseResultID <= 0L) {
-			return null;
-		}
-
-		BatchHistory batchHistory = getBatchHistory();
-
-		if (batchHistory == null) {
-			return null;
-		}
-
-		JobHistory jobHistory = batchHistory.getJobHistory();
-
-		if (jobHistory == null) {
-			return null;
-		}
-
-		return JenkinsResultsParserUtil.combine(
-			String.valueOf(jobHistory.getTestrayURL()),
-			"/home/-/testray/case_results/",
-			String.valueOf(testrayCaseResultID), "/history");
 	}
 
 	public TestTaskHistory getTestTaskHistory() {
@@ -77,6 +51,11 @@ public abstract class BaseTestClassHistory implements TestClassHistory {
 
 	public String getTestTaskName() {
 		return _testTaskName;
+	}
+
+	@Override
+	public boolean isFlaky() {
+		return false;
 	}
 
 	protected BaseTestClassHistory(
@@ -89,9 +68,8 @@ public abstract class BaseTestClassHistory implements TestClassHistory {
 			"averageOverheadDuration");
 		_failureCount = jsonObject.optInt("failureCount");
 		_statusChanges = jsonObject.optInt("statusChanges");
-		_testName = jsonObject.getString("testName");
+		_testClassName = jsonObject.getString("testName");
 		_testCount = jsonObject.optInt("testCount");
-		_testrayCaseResultID = jsonObject.optLong("testrayCaseResultID");
 		_testTaskName = jsonObject.optString("testTaskName");
 	}
 
@@ -100,9 +78,8 @@ public abstract class BaseTestClassHistory implements TestClassHistory {
 	private final BatchHistory _batchHistory;
 	private final int _failureCount;
 	private final int _statusChanges;
+	private final String _testClassName;
 	private final int _testCount;
-	private final String _testName;
-	private final long _testrayCaseResultID;
 	private final String _testTaskName;
 
 }

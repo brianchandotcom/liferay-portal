@@ -24,4 +24,6 @@ public interface TestTaskHistory {
 
 	public boolean isLatestReportMissing();
 
+	public void setLatestReportMissing(boolean latestReportMissing);
+
 }

@@ -75,8 +75,7 @@ public abstract class BaseTestClassResult implements TestClassResult {
 			summaryElement.addText(" - ");
 
 			summaryElement.add(
-				Dom4JUtil.getNewAnchorElement(
-					testClassHistory.getTestrayCaseResultURL(),
+				Dom4JUtil.getNewElement(
 					JenkinsResultsParserUtil.combine(
 						"Failed ",
 						String.valueOf(testClassHistory.getFailureCount()),

@@ -80,8 +80,7 @@ public class PoshiJUnitTestResult extends JUnitTestResult {
 			downstreamBuildListItemElement.addText(" - ");
 
 			downstreamBuildListItemElement.add(
-				Dom4JUtil.getNewAnchorElement(
-					testClassHistory.getTestrayCaseResultURL(),
+				Dom4JUtil.getNewElement(
 					JenkinsResultsParserUtil.combine(
 						"Failed ",
 						String.valueOf(testClassHistory.getFailureCount()),

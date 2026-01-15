@@ -47,6 +47,11 @@ public abstract class BaseTestTaskHistory implements TestTaskHistory {
 		return _latestReportMissing;
 	}
 
+	@Override
+	public void setLatestReportMissing(boolean latestReportMissing) {
+		_latestReportMissing = latestReportMissing;
+	}
+
 	protected BaseTestTaskHistory(
 		BatchHistory batchHistory, JSONObject jsonObject) {
 
@@ -63,7 +68,7 @@ public abstract class BaseTestTaskHistory implements TestTaskHistory {
 	private final long _averageDuration;
 	private final long _averageTotalDuration;
 	private final BatchHistory _batchHistory;
-	private final boolean _latestReportMissing;
+	private boolean _latestReportMissing;
 	private final long _longestDuration;
 	private final int _testTaskCount;
 	private final String _testTaskName;

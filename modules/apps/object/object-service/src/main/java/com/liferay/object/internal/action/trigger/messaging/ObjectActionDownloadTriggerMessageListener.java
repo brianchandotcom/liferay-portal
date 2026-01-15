@@ -8,7 +8,7 @@ package com.liferay.object.internal.action.trigger.messaging;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.internal.entry.util.ObjectEntryUtil;
+import com.liferay.object.entry.util.ObjectEntryPayloadUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -123,7 +123,7 @@ public class ObjectActionDownloadTriggerMessageListener
 		_objectActionEngine.executeObjectActions(
 			objectDefinition.getClassName(), message.getLong("companyId"),
 			ObjectActionTriggerConstants.KEY_ON_AFTER_ATTACHMENT_DOWNLOAD,
-			() -> ObjectEntryUtil.getPayloadJSONObject(
+			() -> ObjectEntryPayloadUtil.getPayloadJSONObject(
 				_dtoConverterRegistry, _jsonFactory,
 				ObjectActionTriggerConstants.KEY_ON_AFTER_ATTACHMENT_DOWNLOAD,
 				objectDefinition, objectEntry, null, null,

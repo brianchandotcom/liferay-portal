@@ -12,8 +12,8 @@ import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.entry.util.ObjectEntryPayloadUtil;
 import com.liferay.object.entry.util.ObjectEntryThreadLocal;
-import com.liferay.object.internal.entry.util.ObjectEntryUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
@@ -228,7 +228,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		_objectActionEngine.executeObjectActions(
 			objectEntry.getModelClassName(), objectEntry.getCompanyId(),
 			objectActionTriggerKey,
-			() -> ObjectEntryUtil.getPayloadJSONObject(
+			() -> ObjectEntryPayloadUtil.getPayloadJSONObject(
 				_dtoConverterRegistry, _jsonFactory, objectActionTriggerKey,
 				_objectDefinitionLocalService.getObjectDefinition(
 					objectEntry.getObjectDefinitionId()),
@@ -515,7 +515,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			if (count > 0) {
 				_objectValidationRuleLocalService.validate(
 					objectEntry, objectEntry.getObjectDefinitionId(),
-					ObjectEntryUtil.getPayloadJSONObject(
+					ObjectEntryPayloadUtil.getPayloadJSONObject(
 						_dtoConverterRegistry, _jsonFactory, null,
 						_objectDefinitionLocalService.getObjectDefinition(
 							objectEntry.getObjectDefinitionId()),

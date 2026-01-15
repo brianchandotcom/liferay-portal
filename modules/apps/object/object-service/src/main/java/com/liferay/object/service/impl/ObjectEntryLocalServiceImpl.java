@@ -58,6 +58,7 @@ import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.entry.ObjectEntryContext;
 import com.liferay.object.entry.contributor.ObjectEntryValuesContributor;
 import com.liferay.object.entry.folder.subscription.util.ObjectEntryFolderSubscriptionUtil;
+import com.liferay.object.entry.util.ObjectEntryPayloadUtil;
 import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.entry.util.ObjectEntryValuesUtil;
 import com.liferay.object.exception.DuplicateObjectEntryExternalReferenceCodeException;
@@ -80,7 +81,6 @@ import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.internal.entry.folder.util.ObjectEntryFolderUtil;
 import com.liferay.object.internal.entry.util.ObjectEntrySearchUtil;
-import com.liferay.object.internal.entry.util.ObjectEntryUtil;
 import com.liferay.object.internal.filter.parser.CurrentUserObjectFilterParser;
 import com.liferay.object.internal.filter.parser.DateRangeObjectFilterParser;
 import com.liferay.object.internal.filter.parser.EqualityOperatorsObjectFilterParser;
@@ -3481,7 +3481,7 @@ public class ObjectEntryLocalServiceImpl
 			objectDefinition.getClassName(), companyId, objectActionTriggerKey,
 			() -> {
 				JSONObject payloadJSONObject =
-					ObjectEntryUtil.getPayloadJSONObject(
+					ObjectEntryPayloadUtil.getPayloadJSONObject(
 						_dtoConverterRegistry, _jsonFactory,
 						objectActionTriggerKey, objectDefinition, objectEntry,
 						originalObjectEntry, preferredLanguageId, user);
@@ -3515,7 +3515,7 @@ public class ObjectEntryLocalServiceImpl
 			ObjectActionTriggerConstants.KEY_ON_AFTER_ROOT_UPDATE,
 			() -> {
 				JSONObject payloadJSONObject =
-					ObjectEntryUtil.getPayloadJSONObject(
+					ObjectEntryPayloadUtil.getPayloadJSONObject(
 						_dtoConverterRegistry, _jsonFactory,
 						ObjectActionTriggerConstants.KEY_ON_AFTER_ROOT_UPDATE,
 						_objectDefinitionPersistence.fetchByPrimaryKey(

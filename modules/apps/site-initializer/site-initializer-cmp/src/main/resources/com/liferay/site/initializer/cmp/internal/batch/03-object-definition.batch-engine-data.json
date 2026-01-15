@@ -147,6 +147,7 @@
 					"system": true
 				},
 				{
+					"DBType": "Long",
 					"businessType": "Relationship",
 					"externalReferenceCode": "USER_TO_CMP_PROJECT_MANAGER",
 					"indexed": true,
@@ -155,11 +156,22 @@
 					},
 					"name": "r_userToCMPProjectManager_userId",
 					"objectDefinitionExternalReferenceCode1": "L_USER",
+					"objectFieldSettings": [
+						{
+							"name": "objectDefinition1ShortName",
+							"value": "User"
+						},
+						{
+							"name": "objectRelationshipERCObjectFieldName",
+							"value": "r_userToCMPProjectManager_userERC"
+						}
+					],
 					"objectRelationshipExternalReferenceCode": "L_USER_TO_L_CMP_PROJECT_MANAGER",
 					"relationshipType": "oneToMany",
 					"system": true
 				},
 				{
+					"DBType": "Long",
 					"businessType": "Relationship",
 					"externalReferenceCode": "USER_TO_CMP_PROJECT_SPONSOR",
 					"indexed": true,
@@ -168,6 +180,16 @@
 					},
 					"name": "r_userToCMPProjectSponsor_userId",
 					"objectDefinitionExternalReferenceCode1": "L_USER",
+					"objectFieldSettings": [
+						{
+							"name": "objectDefinition1ShortName",
+							"value": "User"
+						},
+						{
+							"name": "objectRelationshipERCObjectFieldName",
+							"value": "r_userToCMPProjectSponsor_userERC"
+						}
+					],
 					"objectRelationshipExternalReferenceCode": "L_USER_TO_L_CMP_PROJECT_SPONSOR",
 					"relationshipType": "oneToMany",
 					"system": true

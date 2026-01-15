@@ -14,11 +14,15 @@ import com.liferay.portal.kernel.security.auth.AccessControlContext;
 import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
+import com.liferay.portal.kernel.security.service.access.policy.ServiceAccessPolicy;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.osgi.service.component.annotations.Component;
@@ -78,6 +82,15 @@ public class AIHubRequestAuthVerifier implements AuthVerifier {
 
 				return authVerifierResult;
 			}
+
+			Map<String, Object> settings = authVerifierResult.getSettings();
+
+			List<String> serviceAccessPolicyNames =
+				(List<String>)settings.computeIfAbsent(
+					ServiceAccessPolicy.SERVICE_ACCESS_POLICY_NAMES,
+					value -> new ArrayList<>());
+
+			serviceAccessPolicyNames.add("AI_HUB_TOKEN");
 
 			authVerifierResult.setState(AuthVerifierResult.State.SUCCESS);
 			authVerifierResult.setUserId(userId);

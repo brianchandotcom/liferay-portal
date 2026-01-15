@@ -54,6 +54,9 @@ public class MessageResourceImpl extends BaseMessageResourceImpl {
 		workflowContext.put("memoryId", externalReferenceCode);
 		workflowContext.put("outBoundEventName", "Chat Message Sent");
 		workflowContext.put("userMessage", message.getText());
+		workflowContext.put(
+			"userToken",
+			contextHttpServletRequest.getHeader("Liferay-AI-Hub-On-Behalf-Of"));
 
 		_workflowInstanceManager.startWorkflowInstance(
 			contextCompany.getCompanyId(),

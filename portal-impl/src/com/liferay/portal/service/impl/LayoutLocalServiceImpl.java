@@ -3121,12 +3121,12 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			boolean applyLayoutPrototype = ParamUtil.getBoolean(
 				serviceContext, "applyLayoutPrototype");
 
-			String portletLayoutPageTemplateEntryScopeERC = ParamUtil.getString(
-				serviceContext, "portletLayoutPageTemplateEntryScopeERC");
-
 			layout.setPortletLayoutPageTemplateEntryScopeERC(
 				ScopeUtil.getItemScopeExternalReferenceCode(
-					portletLayoutPageTemplateEntryScopeERC, groupId));
+					ParamUtil.getString(
+						serviceContext,
+						"portletLayoutPageTemplateEntryScopeERC"),
+					groupId));
 
 			boolean portletLayoutPageTemplateEntryLinkEnabled =
 				ParamUtil.getBoolean(
@@ -3142,7 +3142,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 				_applyLayoutPrototype(
 					layout, portletLayoutPageTemplateEntryERC,
-					portletLayoutPageTemplateEntryScopeERC,
+					layout.getPortletLayoutPageTemplateEntryScopeERC(),
 					portletLayoutPageTemplateEntryLinkEnabled);
 
 				layout = layoutPersistence.findByG_P_L(

@@ -32,24 +32,24 @@ public class OAuthClientASLocalMetadataServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.oauth.client.persistence.service.impl.OAuthClientASLocalMetadataServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
-			long userId, String authorizationEndpoint, boolean enabled,
-			String issuerString, String jwksUri, String[] supportedGrantTypes,
+			String authorizationEndpoint, boolean enabled, String issuerString,
+			String jwksUri, String[] supportedGrantTypes,
 			String[] supportedScopes, String[] supportedSubjectTypes,
 			String tokenEndpointString, String userinfoEndpoint)
 		throws PortalException {
 
 		return getService().addOAuthClientASLocalMetadata(
-			userId, authorizationEndpoint, enabled, issuerString, jwksUri,
+			authorizationEndpoint, enabled, issuerString, jwksUri,
 			supportedGrantTypes, supportedScopes, supportedSubjectTypes,
 			tokenEndpointString, userinfoEndpoint);
 	}
 
 	public static OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
-			long userId, String metadataJSON, String wellKnownURISuffix)
+			String metadataJSON, String wellKnownURISuffix)
 		throws PortalException {
 
 		return getService().addOAuthClientASLocalMetadata(
-			userId, metadataJSON, wellKnownURISuffix);
+			metadataJSON, wellKnownURISuffix);
 	}
 
 	public static OAuthClientASLocalMetadata deleteOAuthClientASLocalMetadata(

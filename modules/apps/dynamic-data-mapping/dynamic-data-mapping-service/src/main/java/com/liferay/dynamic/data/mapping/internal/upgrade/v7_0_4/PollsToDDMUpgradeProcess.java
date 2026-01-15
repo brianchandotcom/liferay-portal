@@ -6,7 +6,6 @@
 package com.liferay.dynamic.data.mapping.internal.upgrade.v7_0_4;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -23,29 +22,31 @@ public class PollsToDDMUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				SQLTransformer.transform(
-					StringBundler.concat(
-						"select ctCollectionId, resourcePermissionId from ",
-						"ResourcePermission where name = '", _CLASS_NAME_POLLS,
-						"'")));
-			PreparedStatement preparedStatement2 =
-				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection,
-					"update ResourcePermission set name = ? where " +
-						"ctCollectionId = ? and resourcePermissionId = ?");
-			ResultSet resultSet = preparedStatement1.executeQuery()) {
+					"select ctCollectionId, resourcePermissionId from " +
+						"ResourcePermission where name = ?"))) {
 
-			while (resultSet.next()) {
-				preparedStatement2.setString(
-					1, DDMFormInstance.class.getName());
-				preparedStatement2.setLong(
-					2, resultSet.getLong("ctCollectionId"));
-				preparedStatement2.setLong(
-					3, resultSet.getLong("resourcePermissionId"));
+			preparedStatement1.setString(1, _CLASS_NAME_POLLS);
 
-				preparedStatement2.addBatch();
+			try (PreparedStatement preparedStatement2 =
+					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+						connection,
+						"update ResourcePermission set name = ? where " +
+							"ctCollectionId = ? and resourcePermissionId = ?");
+				ResultSet resultSet = preparedStatement1.executeQuery()) {
+
+				while (resultSet.next()) {
+					preparedStatement2.setString(
+						1, DDMFormInstance.class.getName());
+					preparedStatement2.setLong(
+						2, resultSet.getLong("ctCollectionId"));
+					preparedStatement2.setLong(
+						3, resultSet.getLong("resourcePermissionId"));
+
+					preparedStatement2.addBatch();
+				}
+
+				preparedStatement2.executeBatch();
 			}
-
-			preparedStatement2.executeBatch();
 		}
 	}
 

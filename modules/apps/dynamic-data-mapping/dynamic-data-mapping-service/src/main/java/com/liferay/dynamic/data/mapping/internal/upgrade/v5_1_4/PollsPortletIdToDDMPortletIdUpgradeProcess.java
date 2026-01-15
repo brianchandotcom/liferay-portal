@@ -73,27 +73,31 @@ public class PollsPortletIdToDDMPortletIdUpgradeProcess
 
 	protected void removeDuplicatePortletPreferences() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				StringBundler.concat(
-					"select ownerId, ownerType, plid from PortletPreferences ",
-					"where portletId = '", _PORTLET_ID_POLLS, "'"));
-			ResultSet resultSet = preparedStatement1.executeQuery();
-			PreparedStatement preparedStatement2 =
-				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection,
-					"delete from PortletPreferences where ownerId = ? and " +
-						"ownerType = ? and plid = ? and portletId = ?")) {
+				"select ownerId, ownerType, plid from PortletPreferences " +
+					"where portletId = ?")) {
 
-			while (resultSet.next()) {
-				preparedStatement2.setLong(1, resultSet.getLong(1));
-				preparedStatement2.setInt(2, resultSet.getInt(2));
-				preparedStatement2.setLong(3, resultSet.getLong(3));
-				preparedStatement2.setString(
-					4, DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN);
+			preparedStatement1.setString(1, _PORTLET_ID_POLLS);
 
-				preparedStatement2.addBatch();
+			try (ResultSet resultSet = preparedStatement1.executeQuery();
+				PreparedStatement preparedStatement2 =
+					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+						connection,
+						"delete from PortletPreferences where ownerId = ? " +
+							"and ownerType = ? and plid = ? and portletId = " +
+								"?")) {
+
+				while (resultSet.next()) {
+					preparedStatement2.setLong(1, resultSet.getLong(1));
+					preparedStatement2.setInt(2, resultSet.getInt(2));
+					preparedStatement2.setLong(3, resultSet.getLong(3));
+					preparedStatement2.setString(
+						4, DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN);
+
+					preparedStatement2.addBatch();
+				}
+
+				preparedStatement2.executeBatch();
 			}
-
-			preparedStatement2.executeBatch();
 		}
 	}
 

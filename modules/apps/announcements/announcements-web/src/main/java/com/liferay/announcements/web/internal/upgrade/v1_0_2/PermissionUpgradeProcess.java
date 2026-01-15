@@ -180,8 +180,8 @@ public class PermissionUpgradeProcess extends UpgradeProcess {
 
 	private void _upgradeResourcePermission(String name) throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select resourceActionId, bitwiseValue from ResourceAction "+
-				"where actionId = 'ADD_ENTRY' and name = ?")) {
+				"select resourceActionId, bitwiseValue from ResourceAction " +
+					"where actionId = 'ADD_ENTRY' and name = ?")) {
 
 			preparedStatement1.setString(1, name);
 
@@ -230,14 +230,13 @@ public class PermissionUpgradeProcess extends UpgradeProcess {
 								resourcePermissionId, actionIds - bitwiseValue);
 
 							if (scope == ResourceConstants.SCOPE_INDIVIDUAL) {
-								if (primKey.contains("_LAYOUT_")) {
-									primKey = String.valueOf(companyId);
-									primKeyId = companyId;
-									scope = ResourceConstants.SCOPE_COMPANY;
-								}
-								else {
+								if (!primKey.contains("_LAYOUT_")) {
 									continue;
 								}
+
+								primKey = String.valueOf(companyId);
+								primKeyId = companyId;
+								scope = ResourceConstants.SCOPE_COMPANY;
 							}
 
 							long roleId = resultSet.getLong("roleId");

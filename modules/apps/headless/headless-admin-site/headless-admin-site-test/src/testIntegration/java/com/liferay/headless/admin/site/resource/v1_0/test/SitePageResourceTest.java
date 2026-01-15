@@ -2367,15 +2367,12 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			(WidgetPageSettings)
 				sitePageWithWidgetPageTemplate.getPageSettings();
 
-		ItemExternalReference itemExternalReference =
-			new ItemExternalReference() {
-				{
-					setExternalReferenceCode(RandomTestUtil.randomString());
-				}
-			};
-
 		widgetPageSettings.setWidgetPageTemplateReference(
-			itemExternalReference);
+			() -> new ItemExternalReference() {
+				{
+					setExternalReferenceCode(RandomTestUtil::randomString);
+				}
+			});
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.headless.admin.site.internal.util.LogUtil",

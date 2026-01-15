@@ -5,28 +5,18 @@
 
 package com.liferay.frontend.js.web.internal.resource.handler;
 
-import com.liferay.frontend.js.web.internal.configuration.FrontendCachingConfiguration;
 import com.liferay.frontend.js.web.internal.resource.FrontendResource;
 import com.liferay.frontend.js.web.test.util.FrontendJSWebTestUtil;
 import com.liferay.petra.io.StreamUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesRegistry;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import jakarta.servlet.http.HttpServletRequest;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-
-import java.net.URL;
-
-import java.nio.charset.StandardCharsets;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -39,15 +29,13 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import org.mockito.Mockito;
-import org.mockito.stubbing.Answer;
-
-import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Iván Zaera Avellón
  */
 @RunWith(Parameterized.class)
-public class StyleSheetFrontendResourceRequestHandlerTest {
+public class StyleSheetFrontendResourceRequestHandlerTest
+	extends BaseFrontendResourceRequestHandlerTestCase {
 
 	@ClassRule
 	@Rule
@@ -60,8 +48,8 @@ public class StyleSheetFrontendResourceRequestHandlerTest {
 	public static Collection<Object[]> data() {
 		return Arrays.asList(
 			new Object[][] {
-				{0, false, false, _INVALID_EXTENSION_URL, false},
-				{1, false, false, _INVALID_URL, false},
+				{0, false, false, "/o/frontend-js-web/css/main.nocss", false},
+				{1, false, false, "/nonsense/request/main.css", false},
 				{2, false, false, _VALID_URL, false},
 				{3, false, false, _VALID_URL, true},
 				{4, false, false, _VALID_HASHED_URL, false},
@@ -83,13 +71,44 @@ public class StyleSheetFrontendResourceRequestHandlerTest {
 
 	@Test
 	public void test() throws Exception {
+		HashedFilesRegistry hashedFilesRegistry = Mockito.mock(
+			HashedFilesRegistry.class);
+
+		mockDeployedFile(
+			hashedFilesRegistry, deployHashed ? _VALID_HASHED_URL : _VALID_URL,
+			deployTokenizable ? _TOKENIZABLE_CSS_CONTENT : _CSS_CONTENT);
+
 		StyleSheetFrontendResourceRequestHandler
 			styleSheetFrontendResourceRequestHandler =
 				new StyleSheetFrontendResourceRequestHandler(
-					_mockConfigurationProvider(), _mockHashedFilesRegistry(),
-					_mockPortal(), _mockThemeLocalService());
+					mockConfigurationProvider(
+						HashMapBuilder.<String, Object>put(
+							"cssStyleSheetsMaxAge", _CSS_STYLE_SHEETS_MAX_AGE
+						).put(
+							"sendNoCacheForCSSStyleSheets",
+							_SEND_NO_CACHE_FOR_CSS_STYLE_SHEETS
+						).put(
+							"sendNoCacheForTokenizedCSSStyleSheets",
+							_SEND_NO_CACHE_FOR_TOKENIZED_CSS_STYLE_SHEETS
+						).put(
+							"tokenizedCSSStyleSheetsMaxAge",
+							_TOKENIZED_CSS_STYLE_SHEETS_MAX_AGE
+						).build()),
+					hashedFilesRegistry, mockPortal(),
+					_mockThemeLocalService());
 
-		HttpServletRequest httpServletRequest = _mockHttpServletRequest();
+		HttpServletRequest httpServletRequest;
+
+		if (requestHasThemeId) {
+			httpServletRequest = mockHttpServletRequest(
+				requestURL,
+				HashMapBuilder.put(
+					"themeId", _THEME_ID
+				).build());
+		}
+		else {
+			httpServletRequest = mockHttpServletRequest(requestURL, null);
+		}
 
 		Assert.assertEquals(
 			_EXPECTED_CAN_HANDLE_REQUEST[index],
@@ -115,8 +134,7 @@ public class StyleSheetFrontendResourceRequestHandlerTest {
 		}
 		else if (_EXPECTED_E_TAG[index] == ExpectedETag.HASH_PLUS_TOKENS_HASH) {
 			Assert.assertEquals(
-				_HASH + StringPool.DASH + _TOKENS_HASH,
-				frontendResource.getETag());
+				_HASH + "-44795a18", frontendResource.getETag());
 		}
 		else if (_EXPECTED_E_TAG[index] == ExpectedETag.NULL) {
 			Assert.assertNull(frontendResource.getETag());
@@ -194,135 +212,6 @@ public class StyleSheetFrontendResourceRequestHandlerTest {
 	@Parameterized.Parameter(3)
 	public String requestURL;
 
-	private ConfigurationProvider _mockConfigurationProvider()
-		throws Exception {
-
-		ConfigurationProvider configurationProvider = Mockito.mock(
-			ConfigurationProvider.class);
-
-		FrontendCachingConfiguration frontendCachingConfiguration =
-			Mockito.mock(FrontendCachingConfiguration.class);
-
-		Mockito.when(
-			frontendCachingConfiguration.cssStyleSheetsMaxAge()
-		).thenReturn(
-			_CSS_STYLE_SHEETS_MAX_AGE
-		);
-
-		Mockito.when(
-			frontendCachingConfiguration.tokenizedCSSStyleSheetsMaxAge()
-		).thenReturn(
-			_TOKENIZED_CSS_STYLE_SHEETS_MAX_AGE
-		);
-
-		Mockito.when(
-			frontendCachingConfiguration.sendNoCacheForCSSStyleSheets()
-		).thenReturn(
-			_SEND_NO_CACHE_FOR_CSS_STYLE_SHEETS
-		);
-
-		Mockito.when(
-			frontendCachingConfiguration.sendNoCacheForTokenizedCSSStyleSheets()
-		).thenReturn(
-			_SEND_NO_CACHE_FOR_TOKENIZED_CSS_STYLE_SHEETS
-		);
-
-		Mockito.when(
-			configurationProvider.getCompanyConfiguration(
-				FrontendCachingConfiguration.class, _COMPANY_ID)
-		).thenReturn(
-			frontendCachingConfiguration
-		);
-
-		return configurationProvider;
-	}
-
-	private HashedFilesRegistry _mockHashedFilesRegistry() throws Exception {
-		HashedFilesRegistry hashedFilesRegistry = Mockito.mock(
-			HashedFilesRegistry.class);
-
-		Mockito.when(
-			hashedFilesRegistry.getHashedFileURI(Mockito.eq(_VALID_URL))
-		).thenReturn(
-			deployHashed ? _VALID_HASHED_FILE : _VALID_FILE
-		);
-
-		URL url = Mockito.mock(URL.class);
-
-		Mockito.when(
-			url.getFile()
-		).thenReturn(
-			deployHashed ? _VALID_HASHED_FILE : _VALID_FILE
-		);
-
-		String content =
-			deployTokenizable ? _TOKENIZABLE_CSS_CONTENT : _CSS_CONTENT;
-
-		Mockito.when(
-			url.openStream()
-		).thenAnswer(
-			(Answer<InputStream>)invocationOnMock -> new ByteArrayInputStream(
-				content.getBytes(StandardCharsets.UTF_8))
-		);
-
-		Mockito.when(
-			hashedFilesRegistry.getResource(Mockito.eq(_VALID_HASHED_URL))
-		).thenReturn(
-			deployHashed ? url : null
-		);
-
-		Mockito.when(
-			hashedFilesRegistry.getResource(Mockito.eq(_VALID_URL))
-		).thenReturn(
-			url
-		);
-
-		return hashedFilesRegistry;
-	}
-
-	private HttpServletRequest _mockHttpServletRequest() {
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setRequestURI(requestURL);
-
-		if (requestHasThemeId) {
-			mockHttpServletRequest.addParameter("themeId", _THEME_ID);
-		}
-
-		return mockHttpServletRequest;
-	}
-
-	private Portal _mockPortal() throws Exception {
-		Portal portal = Mockito.mock(Portal.class);
-
-		Mockito.when(
-			portal.getCDNHost(Mockito.any(HttpServletRequest.class))
-		).thenReturn(
-			StringPool.BLANK
-		);
-
-		Mockito.when(
-			portal.getCompanyId(Mockito.any(HttpServletRequest.class))
-		).thenReturn(
-			_COMPANY_ID
-		);
-
-		Mockito.when(
-			portal.getPathContext()
-		).thenReturn(
-			StringPool.BLANK
-		);
-
-		Mockito.when(
-			portal.getPathProxy()
-		).thenReturn(
-			StringPool.BLANK
-		);
-
-		return portal;
-	}
-
 	private ThemeLocalService _mockThemeLocalService() {
 		ThemeLocalService themeLocalService = Mockito.mock(
 			ThemeLocalService.class);
@@ -342,15 +231,13 @@ public class StyleSheetFrontendResourceRequestHandlerTest {
 		);
 
 		Mockito.when(
-			themeLocalService.getTheme(_COMPANY_ID, _THEME_ID)
+			themeLocalService.getTheme(COMPANY_ID, _THEME_ID)
 		).thenReturn(
 			theme
 		);
 
 		return themeLocalService;
 	}
-
-	private static final long _COMPANY_ID = 100;
 
 	private static final String _CSS_CONTENT = "body {font-weight: bold;}";
 
@@ -417,11 +304,6 @@ public class StyleSheetFrontendResourceRequestHandlerTest {
 	private static final String _HASH =
 		FrontendJSWebTestUtil.randomHashedFileHash();
 
-	private static final String _INVALID_EXTENSION_URL =
-		"/o/frontend-js-web/css/main.nocss";
-
-	private static final String _INVALID_URL = "/nonsense/request/main.css";
-
 	private static final boolean _SEND_NO_CACHE_FOR_CSS_STYLE_SHEETS = true;
 
 	private static final boolean _SEND_NO_CACHE_FOR_TOKENIZED_CSS_STYLE_SHEETS =
@@ -439,17 +321,10 @@ public class StyleSheetFrontendResourceRequestHandlerTest {
 
 	private static final long _TOKENIZED_CSS_STYLE_SHEETS_MAX_AGE = 2000;
 
-	private static final String _TOKENS_HASH = "44795a18";
-
-	private static final String _VALID_FILE = "main.css";
-
-	private static final String _VALID_HASHED_FILE = "main.(" + _HASH + ").css";
-
 	private static final String _VALID_HASHED_URL =
-		"/o/frontend-js-web/css/" + _VALID_HASHED_FILE;
+		"/o/frontend-js-web/css/main.(" + _HASH + ").css";
 
-	private static final String _VALID_URL =
-		"/o/frontend-js-web/css/" + _VALID_FILE;
+	private static final String _VALID_URL = "/o/frontend-js-web/css/main.css";
 
 	private enum ExpectedContent {
 

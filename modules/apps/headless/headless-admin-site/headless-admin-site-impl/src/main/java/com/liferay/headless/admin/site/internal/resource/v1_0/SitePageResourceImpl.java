@@ -13,6 +13,7 @@ import com.liferay.headless.admin.site.dto.v1_0.ContentPageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.CustomMetaTag;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
+import com.liferay.headless.admin.site.dto.v1_0.LinkToURLPageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.OpenGraphSettings;
 import com.liferay.headless.admin.site.dto.v1_0.PageSetPageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.PageSettings;
@@ -722,6 +723,12 @@ public class SitePageResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
+		if ((sitePage.getType() == SitePage.Type.LINK_TO_URL_PAGE) &&
+			!(pageSettings instanceof LinkToURLPageSettings)) {
+
+			throw new UnsupportedOperationException();
+		}
+
 		if ((sitePage.getType() == SitePage.Type.PAGE_SET_PAGE) &&
 			!(pageSettings instanceof PageSetPageSettings)) {
 
@@ -1082,7 +1089,9 @@ public class SitePageResourceImpl
 			publishedPageSpecification = publishedContentPageSpecification;
 		}
 		else if ((Objects.equals(
-					sitePage.getType(), SitePage.Type.PAGE_SET_PAGE) ||
+					sitePage.getType(), SitePage.Type.LINK_TO_URL_PAGE) ||
+				  Objects.equals(
+					  sitePage.getType(), SitePage.Type.PAGE_SET_PAGE) ||
 				  Objects.equals(
 					  sitePage.getType(), SitePage.Type.WIDGET_PAGE)) &&
 				 (pageSpecifications.length == 1)) {

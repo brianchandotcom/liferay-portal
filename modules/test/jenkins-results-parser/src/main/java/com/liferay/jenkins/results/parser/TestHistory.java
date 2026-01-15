@@ -7,6 +7,7 @@ package com.liferay.jenkins.results.parser;
 
 import com.liferay.jenkins.results.parser.history.BatchHistory;
 import com.liferay.jenkins.results.parser.history.JobHistory;
+import com.liferay.jenkins.results.parser.history.TestTaskHistory;
 
 import org.json.JSONObject;
 

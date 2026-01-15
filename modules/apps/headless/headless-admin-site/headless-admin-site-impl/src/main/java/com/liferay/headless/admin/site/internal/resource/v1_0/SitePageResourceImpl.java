@@ -578,50 +578,53 @@ public class SitePageResourceImpl
 			sitePage.getDateModified(), contextUser.getUserId(),
 			sitePage.getUuid());
 
-		if (sitePage.getPageSettings() instanceof WidgetPageSettings) {
-			WidgetPageSettings widgetPageSettings =
-				(WidgetPageSettings)sitePage.getPageSettings();
-
-			ItemExternalReference itemExternalReference =
-				widgetPageSettings.getWidgetPageTemplateReference();
-
-			if (itemExternalReference != null) {
-				Long itemGroupId = ItemScopeUtil.getItemGroupId(
-					contextCompany.getCompanyId(),
-					itemExternalReference.getScope(), groupId);
-
-				LayoutPageTemplateEntry layoutPageTemplateEntry = null;
-
-				if (itemGroupId != null) {
-					layoutPageTemplateEntry =
-						_layoutPageTemplateEntryLocalService.
-							fetchLayoutPageTemplateEntryByExternalReferenceCode(
-								itemExternalReference.
-									getExternalReferenceCode(),
-								itemGroupId);
-				}
-
-				if (layoutPageTemplateEntry == null) {
-					LogUtil.logOptionalReference(
-						LayoutPageTemplateEntry.class.getName(),
-						itemExternalReference.getExternalReferenceCode(),
-						itemExternalReference.getScope(), groupId);
-				}
-
-				serviceContext.setAttribute(
-					"portletLayoutPageTemplateEntryERC",
-					itemExternalReference.getExternalReferenceCode());
-
-				serviceContext.setAttribute(
-					"portletLayoutPageTemplateEntryLinkEnabled",
-					widgetPageSettings.getInheritChanges());
-
-				serviceContext.setAttribute(
-					"portletLayoutPageTemplateEntryScopeERC",
-					ItemScopeUtil.getItemScopeExternalReferenceCode(
-						itemExternalReference.getScope(), groupId));
-			}
+		if (!(sitePage.getPageSettings() instanceof WidgetPageSettings)) {
+			return serviceContext;
 		}
+
+		WidgetPageSettings widgetPageSettings =
+			(WidgetPageSettings)sitePage.getPageSettings();
+
+		ItemExternalReference itemExternalReference =
+			widgetPageSettings.getWidgetPageTemplateReference();
+
+		if (itemExternalReference == null) {
+			return serviceContext;
+		}
+
+		Long itemGroupId = ItemScopeUtil.getItemGroupId(
+			contextCompany.getCompanyId(), itemExternalReference.getScope(),
+			groupId);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry = null;
+
+		if (itemGroupId != null) {
+			layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntryByExternalReferenceCode(
+						itemExternalReference.getExternalReferenceCode(),
+						itemGroupId);
+		}
+
+		if (layoutPageTemplateEntry == null) {
+			LogUtil.logOptionalReference(
+				LayoutPageTemplateEntry.class.getName(),
+				itemExternalReference.getExternalReferenceCode(),
+				itemExternalReference.getScope(), groupId);
+		}
+
+		serviceContext.setAttribute(
+			"portletLayoutPageTemplateEntryERC",
+			itemExternalReference.getExternalReferenceCode());
+
+		serviceContext.setAttribute(
+			"portletLayoutPageTemplateEntryLinkEnabled",
+			widgetPageSettings.getInheritChanges());
+
+		serviceContext.setAttribute(
+			"portletLayoutPageTemplateEntryScopeERC",
+			ItemScopeUtil.getItemScopeExternalReferenceCode(
+				itemExternalReference.getScope(), groupId));
 
 		return serviceContext;
 	}

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -70,7 +71,7 @@ public class GetLayoutActionsMVCResourceCommand extends BaseMVCResourceCommand {
 
 		LayoutsAdminDisplayContext layoutsAdminDisplayContext =
 			new LayoutsAdminDisplayContext(
-				_itemSelector, layoutActionsHelper, _layoutLocalService,
+				_itemSelector, layoutActionsHelper, _layoutService,
 				_layoutSetPrototypeHelper,
 				_portal.getLiferayPortletRequest(resourceRequest),
 				_portal.getLiferayPortletResponse(resourceResponse));
@@ -98,6 +99,9 @@ public class GetLayoutActionsMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutService _layoutService;
 
 	@Reference
 	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;

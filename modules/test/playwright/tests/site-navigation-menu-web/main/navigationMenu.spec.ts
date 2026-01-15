@@ -1406,3 +1406,102 @@ test(
 		await expect(page.getByRole('link', {name: urlItemName})).toBeVisible();
 	}
 );
+
+test(
+	'Ensure nested submenu without browsable element is not displayed',
+	{
+		tag: '@LPD-76455',
+	},
+	async ({
+		apiHelpers,
+		navigationMenuWidgetPage,
+		navigationMenusPage,
+		page,
+		pagesAdminPage,
+		site,
+		widgetPagePage,
+	}) => {
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: getRandomString(),
+		});
+
+		const layoutWithViewPermission =
+			await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				title: getRandomString(),
+			});
+
+		const layoutWithoutViewPermission =
+			await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				title: getRandomString(),
+			});
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		await pagesAdminPage.changePagesPermissions(
+			[layoutWithoutViewPermission.nameCurrentValue],
+			['guest_ACTION_VIEW']
+		);
+
+		await navigationMenusPage.goto(site.friendlyUrlPath);
+
+		const navigationMenuName = getRandomString();
+
+		await navigationMenusPage.createNavigationMenu(navigationMenuName);
+
+		const parentSubmenuItemName = getRandomString();
+
+		await navigationMenusPage.addSubmenuItem(parentSubmenuItemName);
+
+		const firstChildSubmenuItemName = getRandomString();
+
+		await navigationMenusPage.addSubmenuItem(
+			firstChildSubmenuItemName,
+			parentSubmenuItemName
+		);
+
+		await navigationMenusPage.addChildPage(
+			firstChildSubmenuItemName,
+			layoutWithViewPermission.nameCurrentValue
+		);
+
+		const secondChildSubmenuItemName = getRandomString();
+
+		await navigationMenusPage.addSubmenuItem(
+			secondChildSubmenuItemName,
+			parentSubmenuItemName
+		);
+
+		await navigationMenusPage.addChildPage(
+			secondChildSubmenuItemName,
+			layoutWithoutViewPermission.nameCurrentValue
+		);
+
+		await widgetPagePage.goto(layout, site.friendlyUrlPath);
+
+		await navigationMenuWidgetPage.openConfigurationModal(
+			layout.nameCurrentValue
+		);
+
+		await navigationMenuWidgetPage.selectCustomNavigationMenu(
+			navigationMenuName
+		);
+
+		await navigationMenuWidgetPage.saveAndCloseConfigurationModal();
+
+		await performLogout(page);
+
+		await widgetPagePage.goto(layout, site.friendlyUrlPath);
+
+		await page.getByRole('menuitem', {name: parentSubmenuItemName}).hover();
+
+		await expect(
+			page.getByText(secondChildSubmenuItemName)
+		).not.toBeVisible();
+		await expect(
+			page.getByText(layoutWithoutViewPermission.nameCurrentValue)
+		).not.toBeVisible();
+	}
+);

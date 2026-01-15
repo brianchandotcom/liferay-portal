@@ -233,7 +233,7 @@ export class NavigationMenusPage {
 
 			await (await this.getMenuItem('Add Child')).hover();
 
-			await this.page.getByText('Submenu', {exact: true}).nth(4).click();
+			await (await this.getMenuItem('Submenu')).click();
 		}
 		else {
 			await this.addMenuItemButton.click();

@@ -49,6 +49,12 @@ public class HistoryFactory {
 		}
 	}
 
+	public static TestHistory newTestHistory(
+		BatchHistory batchHistory, JSONObject jsonObject) {
+
+		return new DefaultTestHistory(batchHistory, jsonObject);
+	}
+
 	public static TestTaskHistory newTestTaskHistory(
 		BatchHistory batchHistory, JSONObject jsonObject) {
 

@@ -11,5 +11,5 @@ data "aws_iam_role" "opensearch_service_linked_role" {
 	name="AWSServiceRoleForAmazonOpenSearchService"
 }
 data "aws_vpc" "current" {
-	id=local.vpc_config.vpc_id
+	id=data.aws_eks_cluster.cluster.vpc_config[0].vpc_id
 }

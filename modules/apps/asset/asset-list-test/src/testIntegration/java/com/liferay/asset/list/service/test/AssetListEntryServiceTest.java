@@ -11,6 +11,7 @@ import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.exception.AssetListEntryTitleException;
 import com.liferay.asset.list.exception.DuplicateAssetListEntryTitleException;
 import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
 import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService;
 import com.liferay.asset.list.service.AssetListEntryService;
 import com.liferay.asset.list.test.util.AssetListTestUtil;
@@ -43,6 +44,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
@@ -214,6 +216,58 @@ public class AssetListEntryServiceTest {
 			_assetListEntryAssetEntryRelLocalService.
 				getAssetListEntryAssetEntryRelsCount(
 					assetListEntry.getAssetListEntryId()));
+	}
+
+	@Test
+	public void testAssetEntrySelectionRetainsOrder() throws PortalException {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		AssetListEntry assetListEntry =
+			_assetListEntryService.addAssetListEntry(
+				RandomTestUtil.randomString(), _group.getGroupId(),
+				RandomTestUtil.randomString(),
+				AssetListEntryTypeConstants.TYPE_MANUAL, serviceContext);
+
+		AssetEntry assetEntry1 = AssetTestUtil.addAssetEntry(
+			_group.getGroupId(), null,
+			TestAssetRendererFactory.class.getName());
+		AssetEntry assetEntry2 = AssetTestUtil.addAssetEntry(
+			_group.getGroupId(), null,
+			TestAssetRendererFactory.class.getName());
+		AssetEntry assetEntry3 = AssetTestUtil.addAssetEntry(
+			_group.getGroupId(), null,
+			TestAssetRendererFactory.class.getName());
+
+		long[] expectedAssetEntryIds = {
+			assetEntry2.getEntryId(), assetEntry1.getEntryId(),
+			assetEntry3.getEntryId()
+		};
+
+		_assetListEntryService.addAssetEntrySelections(
+			assetListEntry.getAssetListEntryId(), expectedAssetEntryIds,
+			SegmentsEntryConstants.ID_DEFAULT, serviceContext);
+
+		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
+			_assetListEntryAssetEntryRelLocalService.
+				getAssetListEntryAssetEntryRels(
+					assetListEntry.getAssetListEntryId(),
+					SegmentsEntryConstants.ID_DEFAULT, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			assetListEntryAssetEntryRels.toString(),
+			expectedAssetEntryIds.length, assetListEntryAssetEntryRels.size());
+
+		for (int i = 0; i < expectedAssetEntryIds.length; i++) {
+			Assert.assertEquals(
+				assetListEntryAssetEntryRels.toString(),
+				expectedAssetEntryIds[i],
+				assetListEntryAssetEntryRels.get(
+					i
+				).getAssetEntryId());
+		}
 	}
 
 	@Test

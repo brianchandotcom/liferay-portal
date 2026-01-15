@@ -100,6 +100,8 @@ public class DataCleanupPreupgradeProcessSuite {
 			new GroupDataCleanupPreupgradeProcess();
 		DataCleanupPreupgradeProcess journalDataCleanupPreupgradeProcess =
 			new JournalDataCleanupPreupgradeProcess();
+		DataCleanupPreupgradeProcess layoutDataCleanupPreupgradeProcess =
+			new LayoutDataCleanupPreupgradeProcess();
 		DataCleanupPreupgradeProcess
 			nullUnicodeContentDataCleanupPreupgradeProcess =
 				new NullUnicodeContentDataCleanupPreupgradeProcess();
@@ -154,6 +156,7 @@ public class DataCleanupPreupgradeProcessSuite {
 					dlFileEntryDataCleanupPreupgradeProcess,
 					groupDataCleanupPreupgradeProcess,
 					journalDataCleanupPreupgradeProcess,
+					layoutDataCleanupPreupgradeProcess,
 					nullUnicodeContentDataCleanupPreupgradeProcess,
 					portalPreferencesDataCleanupPreupgradeProcess,
 					portletPreferencesDataCleanupPreupgradeProcess,
@@ -191,6 +194,12 @@ public class DataCleanupPreupgradeProcessSuite {
 					databaseTableAndColumnCaseDataCleanupPreupgradeProcess,
 					ddmDataCleanupPreupgradeProcess)
 			).put(
+				layoutDataCleanupPreupgradeProcess,
+				DataCleanupPreupgradeProcess.dependsOn(
+					companyDataCleanupPreupgradeProcess,
+					groupDataCleanupPreupgradeProcess,
+					userDataCleanupPreupgradeProcess)
+			).put(
 				nullUnicodeContentDataCleanupPreupgradeProcess,
 				DataCleanupPreupgradeProcess.dependsOn(
 					databaseTableAndColumnCaseDataCleanupPreupgradeProcess,
@@ -198,9 +207,7 @@ public class DataCleanupPreupgradeProcessSuite {
 			).put(
 				portalPreferencesDataCleanupPreupgradeProcess,
 				DataCleanupPreupgradeProcess.dependsOn(
-					companyDataCleanupPreupgradeProcess,
-					groupDataCleanupPreupgradeProcess,
-					userDataCleanupPreupgradeProcess)
+					layoutDataCleanupPreupgradeProcess)
 			).put(
 				portletPreferencesDataCleanupPreupgradeProcess,
 				DataCleanupPreupgradeProcess.dependsOn(

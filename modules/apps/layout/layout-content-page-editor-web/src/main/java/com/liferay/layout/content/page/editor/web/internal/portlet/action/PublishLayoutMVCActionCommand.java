@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.search.IndexStatusManagerThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
+import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
@@ -143,7 +144,7 @@ public class PublishLayoutMVCActionCommand
 			IndexStatusManagerThreadLocal.setIndexReadOnly(true);
 
 			try {
-				_layoutLocalService.copyLayoutContent(draftLayout, layout);
+				_layoutService.copyLayoutContent(draftLayout, layout);
 			}
 			finally {
 				IndexStatusManagerThreadLocal.setIndexReadOnly(indexReadOnly);
@@ -271,6 +272,9 @@ public class PublishLayoutMVCActionCommand
 
 	@Reference
 	private LayoutRevisionLocalService _layoutRevisionLocalService;
+
+	@Reference
+	private LayoutService _layoutService;
 
 	@Reference
 	private Portal _portal;

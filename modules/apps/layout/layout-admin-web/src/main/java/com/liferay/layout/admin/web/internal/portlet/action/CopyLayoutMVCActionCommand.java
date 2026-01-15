@@ -98,7 +98,7 @@ public class CopyLayoutMVCActionCommand extends BaseMVCActionCommand {
 				targetLayout = draftLayout;
 			}
 
-			_layoutLocalService.copyLayoutContent(sourceLayout, targetLayout);
+			_layoutService.copyLayoutContent(sourceLayout, targetLayout);
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 

@@ -9,6 +9,7 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -72,7 +73,7 @@ public class SaveVariantSegmentsExperienceMVCActionCommand
 				sourceSegmentsExperience.getSegmentsExperienceKey(),
 				layout.getPlid());
 
-		_layoutLocalService.copyLayoutContent(
+		_layoutService.copyLayoutContent(
 			sourceSegmentsExperience.getSegmentsExperienceId(), draftLayout,
 			targetSegmentsExperience.getSegmentsExperienceId(), layout);
 
@@ -83,6 +84,9 @@ public class SaveVariantSegmentsExperienceMVCActionCommand
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutService _layoutService;
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

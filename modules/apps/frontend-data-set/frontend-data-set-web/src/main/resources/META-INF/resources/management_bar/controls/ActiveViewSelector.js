@@ -10,7 +10,6 @@ import {sub} from 'frontend-js-web';
 import React, {useContext} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
-import {saveViewSettings} from '../../utils/saveViewSettings';
 import ViewsContext from '../../views/ViewsContext';
 
 const ActiveViewSelectorTrigger = React.forwardRef(
@@ -28,20 +27,11 @@ const ActiveViewSelectorTrigger = React.forwardRef(
 );
 
 function ActiveViewSelector({views}) {
-	const {appURL, id, portletId, updateView} = useContext(
-		FrontendDataSetContext
-	);
+	const {updateView} = useContext(FrontendDataSetContext);
 	const [{activeView}, viewsDispatch] = useContext(ViewsContext);
 
 	const handleSelectionChange = (value) => {
 		viewsDispatch(updateView(value));
-
-		saveViewSettings({
-			appURL,
-			id,
-			portletId,
-			settings: {name: value},
-		});
 	};
 
 	return (

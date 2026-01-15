@@ -52,6 +52,7 @@ import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.NoSuchObjectEntryException;
+import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
@@ -1672,6 +1673,106 @@ public class BatchEnginePortletDataHandlerTest {
 		_assertNull(
 			objectDefinition.getObjectDefinitionId(), objectEntries[0],
 			objectEntries[1]);
+	}
+
+	@Test
+	@TestInfo("LPD-75687")
+	public void testImportOrderByRank() throws Exception {
+		Group group = _stagingGroupHelper.fetchCompanyGroup(
+			TestPropsValues.getCompanyId());
+
+		// First: list type definition
+
+		ListTypeDefinition listTypeDefinition = _addListTypeDefinition();
+
+		ListTypeEntry[] listTypeEntries = _addListTypeEntries(
+			3, listTypeDefinition);
+
+		// Second: object definition
+
+		String picklistName = StringUtil.randomId();
+		String textFieldName = StringUtil.randomId();
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Arrays.asList(
+					new PicklistObjectFieldBuilder(
+					).externalReferenceCode(
+						picklistName
+					).labelMap(
+						RandomTestUtil.randomLocaleStringMap()
+					).name(
+						picklistName
+					).listTypeDefinitionId(
+						listTypeDefinition.getListTypeDefinitionId()
+					).build(),
+					new TextObjectFieldBuilder(
+					).labelMap(
+						RandomTestUtil.randomLocaleStringMap()
+					).name(
+						StringUtil.randomId()
+					).required(
+						false
+					).build()));
+
+		// Third: object entries
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			GroupConstants.DEFAULT_PARENT_GROUP_ID, objectDefinition,
+			(Map)HashMapBuilder.<String, Serializable>put(
+				picklistName, listTypeEntries[0].getKey()
+			).put(
+				textFieldName, RandomTestUtil.randomString()
+			).build());
+
+		File larFile = new ExportImportExecutor(
+		).withGroupId(
+			group.getGroupId()
+		).withIncludeListTypeDefinitions(
+		).withObjectDefinition(
+			objectDefinition
+		).executeExport();
+
+		_objectEntryLocalService.deleteObjectEntry(objectEntry);
+
+		_objectFieldLocalService.deleteObjectField(
+			_objectFieldLocalService.fetchObjectField(
+				picklistName, objectDefinition.getObjectDefinitionId()));
+
+		_listTypeDefinitionLocalService.deleteListTypeDefinition(
+			listTypeDefinition);
+
+		new ExportImportExecutor(
+		).withGroupId(
+			group.getGroupId()
+		).withIncludeListTypeDefinitions(
+		).withLARFile(
+			larFile
+		).withObjectDefinition(
+			objectDefinition
+		).executeImport();
+
+		_assertListTypeDefinition(
+			listTypeDefinition, listTypeEntries.length, listTypeEntries);
+
+		Assert.assertNotNull(
+			_objectFieldLocalService.fetchObjectField(
+				picklistName, objectDefinition.getObjectDefinitionId()));
+
+		List<ObjectEntry> importedObjectEntries =
+			_objectEntryLocalService.getObjectEntries(
+				GroupConstants.DEFAULT_PARENT_GROUP_ID,
+				objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			importedObjectEntries.toString(), 1, importedObjectEntries.size());
+
+		ObjectEntry importedObjectEntry = importedObjectEntries.get(0);
+
+		Assert.assertEquals(
+			listTypeEntries[0].getKey(),
+			MapUtil.getString(importedObjectEntry.getValues(), picklistName));
 	}
 
 	@FeatureFlag("LPD-41367")

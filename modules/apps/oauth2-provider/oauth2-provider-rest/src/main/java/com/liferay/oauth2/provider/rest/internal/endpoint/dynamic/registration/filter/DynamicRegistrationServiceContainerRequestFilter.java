@@ -177,9 +177,10 @@ public class DynamicRegistrationServiceContainerRequestFilter
 			throw ExceptionUtils.toNotAuthorizedException(null, null);
 		}
 
-		return new JwsJwtCompactConsumer(
-			authorizationHeader.substring("Bearer ".length())
-		).getJwtToken();
+		JwsJwtCompactConsumer jwsJwtCompactConsumer = new JwsJwtCompactConsumer(
+			authorizationHeader.substring("Bearer ".length()));
+
+		return jwsJwtCompactConsumer.getJwtToken();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

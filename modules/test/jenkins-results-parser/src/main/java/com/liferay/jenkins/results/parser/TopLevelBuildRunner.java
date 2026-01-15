@@ -230,7 +230,9 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 
 		workspace.setUp();
 
-		workspace.synchronizeToGitHubDev();
+		if (!JenkinsResultsParserUtil.isCloudCINode()) {
+			workspace.synchronizeToGitHubDev();
+		}
 	}
 
 	protected void updateJenkinsReport() {

@@ -9,6 +9,9 @@ import com.liferay.ai.hub.agent.Agent;
 import com.liferay.ai.hub.agent.AgentContext;
 import com.liferay.ai.hub.internal.web.search.LiferayWebSearchEngine;
 import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
+import com.liferay.petra.executor.PortalExecutorManager;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import dev.langchain4j.agentic.AgenticServices;
@@ -21,8 +24,10 @@ import dev.langchain4j.service.V;
 import dev.langchain4j.store.memory.chat.InMemoryChatMemoryStore;
 
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author João Victor Alves
@@ -42,38 +47,47 @@ public class AgentImpl implements Agent {
 				"ai-hub-liferay"
 			).build();
 
-		try {
-			LiferayKnowledgeAgent liferayKnowledgeAgent =
-				AgenticServices.agentBuilder(
-					LiferayKnowledgeAgent.class
-				).chatMemoryProvider(
-					id -> MessageWindowChatMemory.builder(
-					).chatMemoryStore(
-						_inMemoryChatMemoryStore
-					).id(
-						id
-					).maxMessages(
-						30
-					).build()
-				).chatModel(
-					vertexAiGeminiChatModel
-				).contentRetriever(
-					WebSearchContentRetriever.builder(
-					).webSearchEngine(
-						new LiferayWebSearchEngine(null)
-					).build()
-				).build();
+		ExecutorService executorService =
+			_portalExecutorManager.getPortalExecutor(AgentImpl.class.getName());
 
-			Map<String, Object> input = agentContext.getInput();
+		executorService.submit(
+			() -> {
+				try {
+					LiferayKnowledgeAgent liferayKnowledgeAgent =
+						AgenticServices.agentBuilder(
+							LiferayKnowledgeAgent.class
+						).chatMemoryProvider(
+							id -> MessageWindowChatMemory.builder(
+							).chatMemoryStore(
+								_inMemoryChatMemoryStore
+							).id(
+								id
+							).maxMessages(
+								30
+							).build()
+						).chatModel(
+							vertexAiGeminiChatModel
+						).contentRetriever(
+							WebSearchContentRetriever.builder(
+							).webSearchEngine(
+								new LiferayWebSearchEngine(null)
+							).build()
+						).build();
 
-			SseUtil.send(
-				liferayKnowledgeAgent.invoke(
-					GetterUtil.getString(input.get("message"))),
-				"Chat Message Sent", agentContext.getSseEventSinkKey());
-		}
-		finally {
-			vertexAiGeminiChatModel.close();
-		}
+					Map<String, Object> input = agentContext.getInput();
+
+					SseUtil.send(
+						liferayKnowledgeAgent.invoke(
+							GetterUtil.getString(input.get("message"))),
+						"Chat Message Sent", agentContext.getSseEventSinkKey());
+				}
+				catch (Exception exception) {
+					_log.error(exception);
+				}
+				finally {
+					vertexAiGeminiChatModel.close();
+				}
+			});
 	}
 
 	public interface LiferayKnowledgeAgent {
@@ -90,7 +104,12 @@ public class AgentImpl implements Agent {
 
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(AgentImpl.class);
+
 	private final InMemoryChatMemoryStore _inMemoryChatMemoryStore =
 		new InMemoryChatMemoryStore();
+
+	@Reference
+	private PortalExecutorManager _portalExecutorManager;
 
 }

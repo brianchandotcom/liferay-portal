@@ -2973,6 +2973,10 @@ public class LayoutStagedModelDataHandler
 		layoutElement.addAttribute(
 			"layout-priority", String.valueOf(layout.getPriority()));
 
+		if (Validator.isNull(layout.getPortletLayoutPageTemplateEntryERC())) {
+			return;
+		}
+
 		Long groupId = ScopeUtil.getItemGroupId(
 			layout.getCompanyId(),
 			layout.getPortletLayoutPageTemplateEntryScopeERC(),

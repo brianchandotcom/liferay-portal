@@ -751,7 +751,7 @@ public class LiferayOAuthDataProvider
 			_oAuth2ApplicationLocalService.addOAuth2Application(
 				companyId, user.getUserId(),
 				user.getScreenName() + "_dynamic_registered",
-				_getAllowedGrantTypes(client.getAllowedGrantTypes()),
+				_getAllowedGrantTypes(client),
 				client.getTokenEndpointAuthMethod(), user.getUserId(),
 				client.getClientId(), 0, client.getClientSecret(), null, null,
 				client.getApplicationWebUri(), 0, jwks,
@@ -1147,8 +1147,6 @@ public class LiferayOAuthDataProvider
 			OAuth2ErrorUtil.reportInvalidRequestError(
 				"The JWKS URI field must use the HTTPS scheme.",
 				OAuthConstants.INVALID_REQUEST, Response.Status.BAD_REQUEST);
-
-			return null;
 		}
 
 		Http.Options options = new Http.Options();
@@ -1180,36 +1178,38 @@ public class LiferayOAuthDataProvider
 		return null;
 	}
 
-	private List<GrantType> _getAllowedGrantTypes(List<String> grantTypes) {
+	private List<GrantType> _getAllowedGrantTypes(Client client) {
 		Set<GrantType> allowedGrantTypes = new HashSet<>();
 
-		for (String grantType : grantTypes) {
+		for (String allowedGrantType : client.getAllowedGrantTypes()) {
 			if (OAuthConstants.AUTHORIZATION_CODE_GRANT.equalsIgnoreCase(
-					grantType)) {
+					allowedGrantType)) {
 
 				allowedGrantTypes.add(GrantType.AUTHORIZATION_CODE);
 			}
 			else if (OAuthConstants.CLIENT_CREDENTIALS_GRANT.equalsIgnoreCase(
-						grantType)) {
+						allowedGrantType)) {
 
 				allowedGrantTypes.add(GrantType.CLIENT_CREDENTIALS);
 			}
-			else if (Constants.JWT_BEARER_GRANT.equalsIgnoreCase(grantType)) {
+			else if (Constants.JWT_BEARER_GRANT.equalsIgnoreCase(
+						allowedGrantType)) {
+
 				allowedGrantTypes.add(GrantType.JWT_BEARER);
 			}
 			else if (OAuth2ProviderRESTEndpointConstants.
 						AUTHORIZATION_CODE_PKCE_GRANT.equalsIgnoreCase(
-							grantType)) {
+							allowedGrantType)) {
 
 				allowedGrantTypes.add(GrantType.AUTHORIZATION_CODE_PKCE);
 			}
 			else if (OAuthConstants.RESOURCE_OWNER_GRANT.equalsIgnoreCase(
-						grantType)) {
+						allowedGrantType)) {
 
 				allowedGrantTypes.add(GrantType.RESOURCE_OWNER_PASSWORD);
 			}
 			else if (OAuthConstants.REFRESH_TOKEN_GRANT.equalsIgnoreCase(
-						grantType)) {
+						allowedGrantType)) {
 
 				allowedGrantTypes.add(GrantType.REFRESH_TOKEN);
 			}
@@ -1322,7 +1322,7 @@ public class LiferayOAuthDataProvider
 		throws PortalException {
 
 		OAuth2Application oAuth2Application =
-			_oAuth2ApplicationLocalService.fetchOAuth2Application(
+			_oAuth2ApplicationLocalService.getOAuth2Application(
 				oAuth2Authorization.getOAuth2ApplicationId());
 
 		Client client = getClient(oAuth2Application.getClientId());

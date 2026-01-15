@@ -271,3 +271,79 @@ test(
 		});
 	}
 );
+
+test(
+	'Assert that the token changes from style book should be applied to the usages.',
+	{tag: '@LPS-136199'},
+	async ({page, pageEditorPage, pagesAdminPage, site, styleBooksPage}) => {
+		const pageName = getRandomString();
+		const backgroundColorSection = page.getByLabel('Background Color', {
+			exact: true,
+		});
+		const backgroundColorInput =
+			backgroundColorSection.getByRole('textbox');
+
+		const styleBookName = getRandomString();
+
+		await test.step('Create a content page and add a heading', async () => {
+			await pagesAdminPage.goto(site.friendlyUrlPath);
+
+			await pagesAdminPage.createNewPage({
+				draft: true,
+				name: pageName,
+			});
+
+			await pageEditorPage.addFragment('Layout Elements', 'Container');
+		});
+
+		await test.step('Change the background color to success', async () => {
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Background Color',
+				fragmentId: await pageEditorPage.getFragmentId('Container'),
+				tab: 'Styles',
+				value: 'Success',
+				valueFromStylebook: true,
+			});
+		});
+
+		await test.step('Assert that the color reference is shown', async () => {
+			await expect(
+				pageEditorPage.getFragment(
+					await pageEditorPage.getFragmentId('Container')
+				)
+			).toHaveCSS('background-color', 'rgb(40, 125, 60)');
+		});
+
+		await test.step('Create a style book', async () => {
+			await styleBooksPage.goto(site.friendlyUrlPath);
+
+			await styleBooksPage.create(styleBookName);
+		});
+
+		await test.step('Change Success to a custom token and publish', async () => {
+			await styleBooksPage.updateTokenInput(
+				'Success',
+				'#34f787',
+				'Theme Colors'
+			);
+
+			await styleBooksPage.waitForAutoSave();
+
+			await styleBooksPage.publish();
+		});
+
+		await test.step('Apply the new style book to the page and assert that the custom token is being applied', async () => {
+			await page.goto(
+				`/web${site.friendlyUrlPath}/${pageName}?p_l_mode=edit`
+			);
+
+			await pageEditorPage.selectStyleBook(styleBookName);
+
+			await expect(
+				pageEditorPage.getFragment(
+					await pageEditorPage.getFragmentId('Container')
+				)
+			).toHaveCSS('background-color', 'rgb(52, 247, 135)');
+		});
+	}
+);

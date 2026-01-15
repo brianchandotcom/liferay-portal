@@ -32,21 +32,23 @@ test(
 		const sites: Array<Site> = [];
 
 		try {
-			for (let index = 1; index < 7; index++) {
-				await test.step(`Assert "View All" link visibility after extra site ${index}`, async () => {
+			await test.step(`Assert "View All" link visibility after creating 6 more sites`, async () => {
+				for (let index = 1; index < 7; index++) {
 					sites.push(
 						await apiHelpers.headlessSite.createSite({
 							name: getRandomString(),
 						})
 					);
 
-					await applicationsMenuPage.goto();
+					if (index >= 5) {
+						await applicationsMenuPage.goto();
 
-					await expect(applicationsMenuPage.viewAllLink).toBeVisible({
-						visible: index + 1 >= 7,
-					});
-				});
-			}
+						await expect(
+							applicationsMenuPage.viewAllLink
+						).toBeVisible({visible: index + 1 >= 7});
+					}
+				}
+			});
 
 			const randomSite = sites[Math.floor(Math.random() * sites.length)];
 

@@ -5,8 +5,11 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.history.BatchHistory;
+import com.liferay.jenkins.results.parser.history.JobHistory;
+import com.liferay.jenkins.results.parser.history.TestClassHistory;
+import com.liferay.jenkins.results.parser.history.TestTaskHistory;
 import com.liferay.jenkins.results.parser.testray.TestrayBuild;
-import com.liferay.jenkins.results.parser.testray.TestrayCaseResult;
 import com.liferay.jenkins.results.parser.testray.TestrayCaseType;
 import com.liferay.jenkins.results.parser.testray.TestrayFactory;
 import com.liferay.jenkins.results.parser.testray.TestrayRoutine;
@@ -68,12 +71,17 @@ public class TestHistoryMap {
 				BatchHistory batchHistory = _batchHistoryMap.get(batchName);
 
 				if (batchHistory == null) {
-					batchHistory = new BatchHistory(batchName);
+					batchHistory = new PrivateBatchHistory(batchName);
 
 					_batchHistoryMap.put(batchName, batchHistory);
 				}
 
-				batchHistory.addBuildReport(downstreamBuildReport);
+				if (batchHistory instanceof PrivateBatchHistory) {
+					PrivateBatchHistory privateBatchHistory =
+						(PrivateBatchHistory)batchHistory;
+
+					privateBatchHistory.addBuildReport(downstreamBuildReport);
+				}
 			}
 		}
 
@@ -129,14 +137,6 @@ public class TestHistoryMap {
 				).put(
 					"testTaskName", testClassHistory.getTestTaskName()
 				);
-
-				TestrayCaseResult testrayCaseResult =
-					testClassHistory.getTestrayCaseResult();
-
-				if (testrayCaseResult != null) {
-					testJSONObject.put(
-						"testrayCaseResultID", testrayCaseResult.getID());
-				}
 
 				testsJSONArray.put(testJSONObject);
 			}
@@ -237,20 +237,26 @@ public class TestHistoryMap {
 
 				JSONArray statusesJSONArray = new JSONArray();
 
-				for (TestClassReport testClassReport :
-						testClassHistory.getTestClassReports()) {
+				if (testClassHistory instanceof PrivateTestClassHistory) {
+					PrivateTestClassHistory privateTestClassHistory =
+						(PrivateTestClassHistory)testClassHistory;
 
-					JSONArray statusJSONArray = new JSONArray();
+					for (TestClassReport testClassReport :
+							privateTestClassHistory.getTestClassReports()) {
 
-					statusJSONArray.put(
-						_fixStatus(testClassReport.getStatus()));
+						JSONArray statusJSONArray = new JSONArray();
 
-					DownstreamBuildReport downstreamBuildReport =
-						testClassReport.getDownstreamBuildReport();
+						statusJSONArray.put(
+							_fixStatus(testClassReport.getStatus()));
 
-					statusJSONArray.put(downstreamBuildReport.getBuildURL());
+						DownstreamBuildReport downstreamBuildReport =
+							testClassReport.getDownstreamBuildReport();
 
-					statusesJSONArray.put(statusJSONArray);
+						statusJSONArray.put(
+							downstreamBuildReport.getBuildURL());
+
+						statusesJSONArray.put(statusJSONArray);
+					}
 				}
 
 				jsonArray.put(statusesJSONArray);
@@ -315,9 +321,9 @@ public class TestHistoryMap {
 	private long _minimumTestDuration = 60 * 1000;
 	private final TestrayRoutine _testrayRoutine;
 
-	private class BatchHistory {
+	private class PrivateBatchHistory implements BatchHistory {
 
-		public BatchHistory(String batchName) {
+		public PrivateBatchHistory(String batchName) {
 			_batchName = batchName;
 		}
 
@@ -339,13 +345,18 @@ public class TestHistoryMap {
 					testClassName);
 
 				if (testClassHistory == null) {
-					testClassHistory = new TestClassHistory(
+					testClassHistory = new PrivateTestClassHistory(
 						this, testClassName);
 
 					_testClassHistoryMap.put(testClassName, testClassHistory);
 				}
 
-				testClassHistory.addTestClassReport(testClassReport);
+				if (testClassHistory instanceof PrivateTestClassHistory) {
+					PrivateTestClassHistory privateTestClassHistory =
+						(PrivateTestClassHistory)testClassHistory;
+
+					privateTestClassHistory.addTestClassReport(testClassReport);
+				}
 			}
 
 			if (!(downstreamBuildReport instanceof
@@ -418,14 +429,19 @@ public class TestHistoryMap {
 					testTaskName);
 
 				if (testTaskHistory == null) {
-					testTaskHistory = new TestTaskHistory(testTaskName);
+					testTaskHistory = new PrivateTestTaskHistory(testTaskName);
 				}
 
 				if (latestReport && testTaskReport.isMissing()) {
 					testTaskHistory.setLatestReportMissing(true);
 				}
 
-				testTaskHistory.addTestTaskReport(testTaskReport);
+				if (testTaskHistory instanceof PrivateTestTaskHistory) {
+					PrivateTestTaskHistory privateTestTaskHistory =
+						(PrivateTestTaskHistory)testTaskHistory;
+
+					privateTestTaskHistory.addTestTaskReport(testTaskReport);
+				}
 
 				_testTaskHistoryMap.put(testTaskName, testTaskHistory);
 			}
@@ -455,14 +471,22 @@ public class TestHistoryMap {
 			return totalDuration / count;
 		}
 
+		@Override
 		public String getBatchName() {
 			return _batchName;
 		}
 
+		@Override
+		public JobHistory getJobHistory() {
+			return null;
+		}
+
+		@Override
 		public List<TestClassHistory> getTestClassHistories() {
 			return new ArrayList<>(_testClassHistoryMap.values());
 		}
 
+		@Override
 		public TestClassHistory getTestClassHistory(String testClassName) {
 			return _testClassHistoryMap.get(testClassName);
 		}
@@ -508,8 +532,14 @@ public class TestHistoryMap {
 			return _testrayRun;
 		}
 
+		@Override
 		public List<TestTaskHistory> getTestTaskHistories() {
 			return new ArrayList<>(_testTaskHistoryMap.values());
+		}
+
+		@Override
+		public TestTaskHistory getTestTaskHistory(String key) {
+			return null;
 		}
 
 		private boolean _excludeTestClassReport(
@@ -554,9 +584,9 @@ public class TestHistoryMap {
 
 	}
 
-	private class TestClassHistory {
+	private class PrivateTestClassHistory implements TestClassHistory {
 
-		public TestClassHistory(
+		public PrivateTestClassHistory(
 			BatchHistory batchHistory, String testClassName) {
 
 			_batchHistory = batchHistory;
@@ -567,6 +597,7 @@ public class TestHistoryMap {
 			_testClassReports.add(testClassReport);
 		}
 
+		@Override
 		public long getAverageDuration() {
 			long count = 0;
 			long totalDuration = 0;
@@ -594,6 +625,7 @@ public class TestHistoryMap {
 			return totalDuration / count;
 		}
 
+		@Override
 		public long getAverageOverheadDuration() {
 			long count = 0;
 			long totalOverheadDuration = 0;
@@ -616,10 +648,16 @@ public class TestHistoryMap {
 			return totalOverheadDuration / count;
 		}
 
+		@Override
+		public BatchHistory getBatchHistory() {
+			return _batchHistory;
+		}
+
 		public String getBatchName() {
 			return _batchHistory.getBatchName();
 		}
 
+		@Override
 		public int getFailureCount() {
 			int failureCount = 0;
 
@@ -634,6 +672,7 @@ public class TestHistoryMap {
 			return failureCount;
 		}
 
+		@Override
 		public int getStatusChanges() {
 			int statusChanges = 0;
 
@@ -666,14 +705,17 @@ public class TestHistoryMap {
 			return _testClassReports;
 		}
 
-		public int getTestCount() {
+		@Override
+		public long getTestCount() {
 			return _testClassReports.size();
 		}
 
-		public TestrayCaseResult getTestrayCaseResult() {
-			return _testrayCaseResult;
+		@Override
+		public TestTaskHistory getTestTaskHistory() {
+			return null;
 		}
 
+		@Override
 		public String getTestTaskName() {
 			if (_testClassReports.isEmpty()) {
 				return null;
@@ -688,6 +730,7 @@ public class TestHistoryMap {
 			return testClassReport.getTestTaskName();
 		}
 
+		@Override
 		public boolean isFlaky() {
 			if (getStatusChanges() >= _minimumStatusChanges) {
 				return true;
@@ -696,21 +739,16 @@ public class TestHistoryMap {
 			return false;
 		}
 
-		public void setTestrayCaseResult(TestrayCaseResult testrayCaseResult) {
-			_testrayCaseResult = testrayCaseResult;
-		}
-
 		private final BatchHistory _batchHistory;
 		private final String _testClassName;
 		private final List<TestClassReport> _testClassReports =
 			new ArrayList<>();
-		private TestrayCaseResult _testrayCaseResult;
 
 	}
 
-	private class TestTaskHistory {
+	private class PrivateTestTaskHistory implements TestTaskHistory {
 
-		public TestTaskHistory(String testTaskName) {
+		public PrivateTestTaskHistory(String testTaskName) {
 			_testTaskName = testTaskName;
 		}
 
@@ -718,6 +756,7 @@ public class TestHistoryMap {
 			_testTaskReports.add(testTaskReport);
 		}
 
+		@Override
 		public long getAverageDuration() {
 			if (_testTaskReports.isEmpty()) {
 				return 0;
@@ -732,6 +771,7 @@ public class TestHistoryMap {
 			return totalDuration / _testTaskReports.size();
 		}
 
+		@Override
 		public long getAverageTotalDuration() {
 			if (_testTaskReports.isEmpty()) {
 				return 0;
@@ -746,6 +786,12 @@ public class TestHistoryMap {
 			return totalDuration / _testTaskReports.size();
 		}
 
+		@Override
+		public BatchHistory getBatchHistory() {
+			return null;
+		}
+
+		@Override
 		public long getLongestDuration() {
 			long longestDuration = 0L;
 
@@ -758,18 +804,22 @@ public class TestHistoryMap {
 			return longestDuration;
 		}
 
-		public int getTestTaskCount() {
+		@Override
+		public long getTestTaskCount() {
 			return _testTaskReports.size();
 		}
 
+		@Override
 		public String getTestTaskName() {
 			return _testTaskName;
 		}
 
+		@Override
 		public boolean isLatestReportMissing() {
 			return _latestReportMissing;
 		}
 
+		@Override
 		public void setLatestReportMissing(boolean latestReportMissing) {
 			_latestReportMissing = latestReportMissing;
 		}

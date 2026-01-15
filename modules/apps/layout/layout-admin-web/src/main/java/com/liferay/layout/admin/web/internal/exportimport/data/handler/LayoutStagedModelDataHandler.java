@@ -940,13 +940,17 @@ public class LayoutStagedModelDataHandler
 			}
 		}
 
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_getPortletLayoutPageTemplateEntry(
+				portletDataContext.getCompanyId(), layoutElement);
+
 		importedLayout.setPortletLayoutPageTemplateEntryERC(
 			_getPortletLayoutPageTemplateEntryERC(
-				portletDataContext.getCompanyId(), layout, layoutElement));
+				layout, layoutPageTemplateEntry));
 		importedLayout.setPortletLayoutPageTemplateEntryScopeERC(
 			_getPortletLayoutPageTemplateEntryScopeERC(
-				portletDataContext.getCompanyId(), groupId, layout,
-				layoutElement));
+				layout, layoutPageTemplateEntry, groupId));
+
 		importedLayout.setPortletLayoutPageTemplateEntryLinkEnabled(
 			layout.isPortletLayoutPageTemplateEntryLinkEnabled());
 
@@ -2032,10 +2036,7 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private String _getPortletLayoutPageTemplateEntryERC(
-		long companyId, Layout layout, Element layoutElement) {
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_getPortletLayoutPageTemplateEntry(companyId, layoutElement);
+		Layout layout, LayoutPageTemplateEntry layoutPageTemplateEntry) {
 
 		if (layoutPageTemplateEntry == null) {
 			return layout.getPortletLayoutPageTemplateEntryERC();
@@ -2045,17 +2046,15 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private String _getPortletLayoutPageTemplateEntryScopeERC(
-			long companyId, long groupId, Layout layout, Element layoutElement)
+			Layout layout, LayoutPageTemplateEntry layoutPageTemplateEntry,
+			long scopeGroupId)
 		throws Exception {
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_getPortletLayoutPageTemplateEntry(companyId, layoutElement);
 
 		if (layoutPageTemplateEntry == null) {
 			return layout.getPortletLayoutPageTemplateEntryScopeERC();
 		}
 
-		if (layoutPageTemplateEntry.getGroupId() == groupId) {
+		if (layoutPageTemplateEntry.getGroupId() == scopeGroupId) {
 			return StringPool.BLANK;
 		}
 

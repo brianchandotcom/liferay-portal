@@ -899,8 +899,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		long[] companyIds = null;
 
 		if (!CompanyThreadLocal.isLocked()) {
-			companyIds = ListUtil.toLongArray(
-				companyLocalService.getCompanies(), Company::getCompanyId);
+			companyIds = PortalInstancePool.getCompanyIds();
 		}
 
 		forEachCompanyId(unsafeConsumer, companyIds);

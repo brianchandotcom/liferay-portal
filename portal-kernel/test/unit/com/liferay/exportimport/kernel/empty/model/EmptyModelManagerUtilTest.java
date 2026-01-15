@@ -102,6 +102,48 @@ public class EmptyModelManagerUtilTest {
 	}
 
 	@Test
+	public void testGetOrAddEmptyModelByCompanyIdWithModelName()
+		throws Exception {
+
+		_atomicReference.set(_emptyModelManager);
+
+		User user = Mockito.mock(User.class);
+
+		Mockito.when(
+			_emptyModelManager.getOrAddEmptyModel(
+				Mockito.any(), Mockito.anyLong(),
+				Mockito.any(UnsafeSupplier.class), Mockito.anyString(),
+				Mockito.any(BiFunction.class),
+				Mockito.any(UnsafeBiFunction.class), Mockito.anyString())
+		).thenReturn(
+			user
+		);
+
+		BiFunction<String, Long, User> biFunction = (a, b) -> Mockito.mock(
+			User.class);
+		long companyId = RandomTestUtil.randomLong();
+		String externalReferenceCode = RandomTestUtil.randomString();
+		String modelName = RandomTestUtil.randomString();
+		UnsafeBiFunction<String, Long, User, PortalException> unsafeBiFunction =
+			(a, b) -> Mockito.mock(User.class);
+		UnsafeSupplier<User, PortalException> unsafeSupplier =
+			() -> Mockito.mock(User.class);
+
+		Assert.assertSame(
+			user,
+			EmptyModelManagerUtil.getOrAddEmptyModel(
+				User.class, companyId, externalReferenceCode, biFunction,
+				unsafeBiFunction, unsafeSupplier, modelName));
+
+		Mockito.verify(
+			_emptyModelManager
+		).getOrAddEmptyModel(
+			User.class, companyId, unsafeSupplier, externalReferenceCode,
+			biFunction, unsafeBiFunction, modelName
+		);
+	}
+
+	@Test
 	public void testGetOrAddEmptyModelByGroupId() throws Exception {
 		_atomicReference.set(_emptyModelManager);
 
@@ -136,6 +178,49 @@ public class EmptyModelManagerUtilTest {
 		).getOrAddEmptyModel(
 			User.class, unsafeSupplier, externalReferenceCode, biFunction,
 			unsafeBiFunction, groupId
+		);
+	}
+
+	@Test
+	public void testGetOrAddEmptyModelByGroupIdWithModelName()
+		throws Exception {
+
+		_atomicReference.set(_emptyModelManager);
+
+		User user = Mockito.mock(User.class);
+
+		Mockito.when(
+			_emptyModelManager.getOrAddEmptyModel(
+				Mockito.anyString(), Mockito.any(),
+				Mockito.any(UnsafeSupplier.class), Mockito.anyString(),
+				Mockito.any(BiFunction.class),
+				Mockito.any(UnsafeBiFunction.class), Mockito.anyLong(),
+				Mockito.anyString())
+		).thenReturn(
+			user
+		);
+
+		BiFunction<String, Long, User> biFunction = (a, b) -> Mockito.mock(
+			User.class);
+		String externalReferenceCode = RandomTestUtil.randomString();
+		long groupId = RandomTestUtil.randomLong();
+		String modelName = RandomTestUtil.randomString();
+		UnsafeBiFunction<String, Long, User, PortalException> unsafeBiFunction =
+			(a, b) -> Mockito.mock(User.class);
+		UnsafeSupplier<User, PortalException> unsafeSupplier =
+			() -> Mockito.mock(User.class);
+
+		Assert.assertSame(
+			user,
+			EmptyModelManagerUtil.getOrAddEmptyModel(
+				User.class, unsafeSupplier, externalReferenceCode, biFunction,
+				unsafeBiFunction, groupId, modelName));
+
+		Mockito.verify(
+			_emptyModelManager
+		).getOrAddEmptyModel(
+			User.class.getName(), null, unsafeSupplier, externalReferenceCode,
+			biFunction, unsafeBiFunction, groupId, modelName
 		);
 	}
 

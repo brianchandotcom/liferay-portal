@@ -142,50 +142,14 @@ public class EmptyModelManagerImplTest {
 	public void testGetOrAddEmptyModelCompanyScopedWithEnabledLazyReferencingAndAddingEmptyItem()
 		throws Exception {
 
-		try (SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+		_testGetOrAddEmptyModelCompanyScopedWithEnabledLazyReferencingAndAddingEmptyItem(
+			null);
 
-			long classNameId = RandomTestUtil.randomLong();
+		Mockito.clearInvocations(
+			_classNameLocalService, _exportImportReportEntryLocalService);
 
-			Mockito.when(
-				_classNameLocalService.getClassNameId(User.class.getName())
-			).thenReturn(
-				classNameId
-			);
-
-			long exportImportConfigurationId = RandomTestUtil.randomLong();
-
-			ExportImportThreadLocal.setExportImportConfigurationId(
-				exportImportConfigurationId);
-
-			long companyId = RandomTestUtil.randomLong();
-			String externalReferenceCode = RandomTestUtil.randomString();
-
-			Assert.assertSame(
-				_user,
-				_emptyModelManager.getOrAddEmptyModel(
-					User.class, companyId, () -> _user, externalReferenceCode,
-					_toBiFunction(() -> null),
-					_toUnsafeBiFunction(
-						() -> {
-							Assert.fail();
-
-							return null;
-						})));
-
-			Mockito.verify(
-				_classNameLocalService
-			).getClassNameId(
-				User.class.getName()
-			);
-
-			Mockito.verify(
-				_exportImportReportEntryLocalService
-			).addEmptyExportImportReportEntry(
-				0L, companyId, externalReferenceCode, classNameId,
-				exportImportConfigurationId, User.class.getName()
-			);
-		}
+		_testGetOrAddEmptyModelCompanyScopedWithEnabledLazyReferencingAndAddingEmptyItem(
+			RandomTestUtil.randomString());
 	}
 
 	@Test
@@ -278,105 +242,15 @@ public class EmptyModelManagerImplTest {
 	public void testGetOrAddEmptyModelGroupScopedWithEnabledLazyReferencingAndAddingEmptyItem()
 		throws Exception {
 
-		StagingGroupHelper stagingGroupHelper = Mockito.mock(
-			StagingGroupHelper.class);
+		_testGetOrAddEmptyModelGroupScopedWithEnabledLazyReferencingAndAddingEmptyItem(
+			null);
 
-		Mockito.when(
-			stagingGroupHelper.isCompanyGroup(_group)
-		).thenReturn(
-			false
-		);
+		Mockito.clearInvocations(
+			_classNameLocalService, _exportImportReportEntryLocalService,
+			_group, _groupLocalService);
 
-		_stagingGroupHelperUtilMockedStatic.when(
-			StagingGroupHelperUtil::getStagingGroupHelper
-		).thenReturn(
-			stagingGroupHelper
-		);
-
-		try (SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
-
-			long classNameId = RandomTestUtil.randomLong();
-
-			Mockito.when(
-				_classNameLocalService.getClassNameId(User.class.getName())
-			).thenReturn(
-				classNameId
-			);
-
-			long companyId = RandomTestUtil.randomLong();
-
-			Mockito.when(
-				_group.getCompanyId()
-			).thenReturn(
-				companyId
-			);
-
-			String groupExternalReferenceCode = RandomTestUtil.randomString();
-
-			Mockito.when(
-				_group.getExternalReferenceCode()
-			).thenReturn(
-				groupExternalReferenceCode
-			);
-
-			Mockito.when(
-				_group.isCompany()
-			).thenReturn(
-				false
-			);
-
-			long groupId = RandomTestUtil.randomLong();
-
-			Mockito.when(
-				_groupLocalService.fetchGroup(groupId)
-			).thenReturn(
-				_group
-			);
-
-			long exportImportConfigurationId = RandomTestUtil.randomLong();
-
-			ExportImportThreadLocal.setExportImportConfigurationId(
-				exportImportConfigurationId);
-
-			String userExternalReferenceCode = RandomTestUtil.randomString();
-
-			Assert.assertSame(
-				_user,
-				_emptyModelManager.getOrAddEmptyModel(
-					User.class, () -> _user, userExternalReferenceCode,
-					_toBiFunction(() -> null),
-					_toUnsafeBiFunction(
-						() -> {
-							Assert.fail();
-
-							return null;
-						}),
-					groupId));
-
-			Mockito.verify(
-				_classNameLocalService
-			).getClassNameId(
-				User.class.getName()
-			);
-
-			Mockito.verify(
-				_group
-			).getCompanyId();
-
-			Mockito.verify(
-				_groupLocalService
-			).fetchGroup(
-				groupId
-			);
-
-			Mockito.verify(
-				_exportImportReportEntryLocalService
-			).addEmptyExportImportReportEntry(
-				groupId, companyId, userExternalReferenceCode, classNameId,
-				exportImportConfigurationId, User.class.getName()
-			);
-		}
+		_testGetOrAddEmptyModelGroupScopedWithEnabledLazyReferencingAndAddingEmptyItem(
+			RandomTestUtil.randomString());
 	}
 
 	@Test
@@ -476,6 +350,199 @@ public class EmptyModelManagerImplTest {
 			).addEmptyExportImportReportEntry(
 				0L, companyId, externalReferenceCode, classNameId,
 				exportImportConfigurationId, User.class.getName()
+			);
+		}
+	}
+
+	private void
+			_testGetOrAddEmptyModelCompanyScopedWithEnabledLazyReferencingAndAddingEmptyItem(
+				String modelName)
+		throws Exception {
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			long classNameId = RandomTestUtil.randomLong();
+
+			Mockito.when(
+				_classNameLocalService.getClassNameId(User.class.getName())
+			).thenReturn(
+				classNameId
+			);
+
+			long exportImportConfigurationId = RandomTestUtil.randomLong();
+
+			ExportImportThreadLocal.setExportImportConfigurationId(
+				exportImportConfigurationId);
+
+			long companyId = RandomTestUtil.randomLong();
+			String externalReferenceCode = RandomTestUtil.randomString();
+
+			if (modelName == null) {
+				modelName = User.class.getName();
+
+				Assert.assertSame(
+					_user,
+					_emptyModelManager.getOrAddEmptyModel(
+						User.class, companyId, () -> _user,
+						externalReferenceCode, _toBiFunction(() -> null),
+						_toUnsafeBiFunction(
+							() -> {
+								Assert.fail();
+
+								return null;
+							})));
+			}
+			else {
+				Assert.assertSame(
+					_user,
+					_emptyModelManager.getOrAddEmptyModel(
+						User.class, companyId, () -> _user,
+						externalReferenceCode, _toBiFunction(() -> null),
+						_toUnsafeBiFunction(
+							() -> {
+								Assert.fail();
+
+								return null;
+							}),
+						modelName));
+			}
+
+			Mockito.verify(
+				_classNameLocalService
+			).getClassNameId(
+				User.class.getName()
+			);
+
+			Mockito.verify(
+				_exportImportReportEntryLocalService
+			).addEmptyExportImportReportEntry(
+				0L, companyId, externalReferenceCode, classNameId,
+				exportImportConfigurationId, modelName
+			);
+		}
+	}
+
+	private void
+			_testGetOrAddEmptyModelGroupScopedWithEnabledLazyReferencingAndAddingEmptyItem(
+				String modelName)
+		throws Exception {
+
+		StagingGroupHelper stagingGroupHelper = Mockito.mock(
+			StagingGroupHelper.class);
+
+		Mockito.when(
+			stagingGroupHelper.isCompanyGroup(_group)
+		).thenReturn(
+			false
+		);
+
+		_stagingGroupHelperUtilMockedStatic.when(
+			StagingGroupHelperUtil::getStagingGroupHelper
+		).thenReturn(
+			stagingGroupHelper
+		);
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			long classNameId = RandomTestUtil.randomLong();
+
+			Mockito.when(
+				_classNameLocalService.getClassNameId(User.class.getName())
+			).thenReturn(
+				classNameId
+			);
+
+			long companyId = RandomTestUtil.randomLong();
+
+			Mockito.when(
+				_group.getCompanyId()
+			).thenReturn(
+				companyId
+			);
+
+			String groupExternalReferenceCode = RandomTestUtil.randomString();
+
+			Mockito.when(
+				_group.getExternalReferenceCode()
+			).thenReturn(
+				groupExternalReferenceCode
+			);
+
+			Mockito.when(
+				_group.isCompany()
+			).thenReturn(
+				false
+			);
+
+			long groupId = RandomTestUtil.randomLong();
+
+			Mockito.when(
+				_groupLocalService.fetchGroup(groupId)
+			).thenReturn(
+				_group
+			);
+
+			long exportImportConfigurationId = RandomTestUtil.randomLong();
+
+			ExportImportThreadLocal.setExportImportConfigurationId(
+				exportImportConfigurationId);
+
+			String userExternalReferenceCode = RandomTestUtil.randomString();
+
+			if (modelName == null) {
+				modelName = User.class.getName();
+
+				Assert.assertSame(
+					_user,
+					_emptyModelManager.getOrAddEmptyModel(
+						User.class, () -> _user, userExternalReferenceCode,
+						_toBiFunction(() -> null),
+						_toUnsafeBiFunction(
+							() -> {
+								Assert.fail();
+
+								return null;
+							}),
+						groupId));
+			}
+			else {
+				Assert.assertSame(
+					_user,
+					_emptyModelManager.getOrAddEmptyModel(
+						User.class.getName(), companyId, () -> _user,
+						userExternalReferenceCode, _toBiFunction(() -> null),
+						_toUnsafeBiFunction(
+							() -> {
+								Assert.fail();
+
+								return null;
+							}),
+						groupId, modelName));
+			}
+
+			Mockito.verify(
+				_classNameLocalService
+			).getClassNameId(
+				User.class.getName()
+			);
+
+			Mockito.verify(
+				_group
+			).getCompanyId();
+
+			Mockito.verify(
+				_groupLocalService
+			).fetchGroup(
+				groupId
+			);
+
+			Mockito.verify(
+				_exportImportReportEntryLocalService
+			).addEmptyExportImportReportEntry(
+				groupId, companyId, userExternalReferenceCode, classNameId,
+				exportImportConfigurationId, modelName
 			);
 		}
 	}

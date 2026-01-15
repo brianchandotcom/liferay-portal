@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.ReindexCacheThreadLocal;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.Time;
@@ -210,7 +211,9 @@ public class SearchEngineInitializer implements Runnable {
 											backgroundTaskId);
 								SafeCloseable safeCloseable2 =
 									ReindexCacheThreadLocal.openReindexMode(
-										finalFullMode, sharedReindexCacheMap)) {
+										finalFullMode, sharedReindexCacheMap);
+								SafeCloseable safeCloseable3 =
+									SearchContext.openBatchMode(false)) {
 
 								reindex(indexer);
 

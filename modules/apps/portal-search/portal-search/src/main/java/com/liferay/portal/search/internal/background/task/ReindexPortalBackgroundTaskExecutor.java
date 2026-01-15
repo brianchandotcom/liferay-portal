@@ -6,11 +6,13 @@
 package com.liferay.portal.search.internal.background.task;
 
 import com.liferay.petra.executor.PortalExecutorManager;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.background.task.ReindexBackgroundTaskConstants;
 import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSenderUtil;
 import com.liferay.portal.search.index.ConcurrentReindexManager;
@@ -47,41 +49,43 @@ public class ReindexPortalBackgroundTaskExecutor
 			String className, long[] companyIds, String executionMode)
 		throws Exception {
 
-		for (long companyId : companyIds) {
-			ReindexStatusMessageSenderUtil.sendStatusMessage(
-				ReindexBackgroundTaskConstants.PORTAL_START, companyId,
-				companyIds);
-
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					StringBundler.concat(
-						"Start reindexing company ", companyId,
-						" with execution mode ", executionMode));
-			}
-
-			try {
-				SearchEngineInitializer searchEngineInitializer =
-					new SearchEngineInitializer(
-						_bundleContext, companyId,
-						_concurrentReindexManagerSnapshot.get(), executionMode,
-						_portalExecutorManager,
-						_syncReindexManagerSnapshot.get());
-
-				searchEngineInitializer.reindex();
-			}
-			catch (Exception exception) {
-				_log.error(exception);
-			}
-			finally {
+		try (SafeCloseable safeCloseable = SearchContext.openBatchMode()) {
+			for (long companyId : companyIds) {
 				ReindexStatusMessageSenderUtil.sendStatusMessage(
-					ReindexBackgroundTaskConstants.PORTAL_END, companyId,
+					ReindexBackgroundTaskConstants.PORTAL_START, companyId,
 					companyIds);
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						StringBundler.concat(
-							"Finished reindexing company ", companyId,
+							"Start reindexing company ", companyId,
 							" with execution mode ", executionMode));
+				}
+
+				try {
+					SearchEngineInitializer searchEngineInitializer =
+						new SearchEngineInitializer(
+							_bundleContext, companyId,
+							_concurrentReindexManagerSnapshot.get(),
+							executionMode, _portalExecutorManager,
+							_syncReindexManagerSnapshot.get());
+
+					searchEngineInitializer.reindex();
+				}
+				catch (Exception exception) {
+					_log.error(exception);
+				}
+				finally {
+					ReindexStatusMessageSenderUtil.sendStatusMessage(
+						ReindexBackgroundTaskConstants.PORTAL_END, companyId,
+						companyIds);
+
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							StringBundler.concat(
+								"Finished reindexing company ", companyId,
+								" with execution mode ", executionMode));
+					}
 				}
 			}
 		}

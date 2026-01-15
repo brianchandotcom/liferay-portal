@@ -104,14 +104,15 @@ function Toolbar({
 			<ClayDropDownWithItems
 				items={[
 					{
-						label: Liferay.Language.get('delete'),
-						onClick: onDeleteSelection,
-						symbolLeft: 'trash',
-					},
-					{
 						label: Liferay.Language.get('create-repeatable-group'),
 						onClick: () => dispatch({type: 'add-repeatable-group'}),
 						symbolLeft: 'repeat',
+					},
+					{type: 'divider'},
+					{
+						label: Liferay.Language.get('delete'),
+						onClick: onDeleteSelection,
+						symbolLeft: 'trash',
 					},
 				]}
 				trigger={

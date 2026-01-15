@@ -43,11 +43,12 @@ import AddChildDropdown from './AddChildDropdown';
 type TreeItem = {
 	actions?: Array<{
 		href?: string;
-		label: string;
+		label?: string;
 		onClick?: () => void;
 		symbolLeft?: string;
 		symbolRight?: string;
 		target?: string;
+		type?: 'divider';
 	}>;
 	children?: TreeItem[];
 	editURL?: string;
@@ -531,22 +532,27 @@ function getItemActions({
 		});
 	}
 
-	if (!isReferenced({item, root: structure})) {
-		if (
-			item.type !== 'referenced-structure' &&
-			item.type !== 'repeatable-group'
-		) {
-			actions.push({
-				label: Liferay.Language.get('create-repeatable-group'),
-				onClick: () =>
-					dispatch({
-						type: 'add-repeatable-group',
-						uuid: item.uuid,
-					}),
-				symbolLeft: 'repeat',
-			});
-		}
+	if (
+		!isReferenced({item, root: structure}) &&
+		item.type !== 'referenced-structure' &&
+		item.type !== 'repeatable-group'
+	) {
+		actions.push({
+			label: Liferay.Language.get('create-repeatable-group'),
+			onClick: () =>
+				dispatch({
+					type: 'add-repeatable-group',
+					uuid: item.uuid,
+				}),
+			symbolLeft: 'repeat',
+		});
+	}
 
+	if (actions.length) {
+		actions.push({type: 'divider' as const});
+	}
+
+	if (!isReferenced({item, root: structure})) {
 		if (item.type === 'repeatable-group') {
 			actions.push({
 				label: Liferay.Language.get('ungroup'),
@@ -568,6 +574,8 @@ function getItemActions({
 			},
 			symbolLeft: 'copy',
 		});
+
+		actions.push({type: 'divider' as const});
 
 		actions.push({
 			label: Liferay.Language.get('delete-field'),

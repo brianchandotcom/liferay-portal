@@ -36,11 +36,13 @@ public class OAuthClientASLocalMetadataServiceImpl
 
 	@Override
 	public OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
-			long userId, String authorizationEndpoint, boolean enabled,
-			String issuerString, String jwksUri, String[] supportedGrantTypes,
+			String authorizationEndpoint, boolean enabled, String issuerString,
+			String jwksUri, String[] supportedGrantTypes,
 			String[] supportedScopes, String[] supportedSubjectTypes,
 			String tokenEndpointString, String userinfoEndpoint)
 		throws PortalException {
+
+		long userId = getUserId();
 
 		ModelResourcePermissionUtil.check(
 			_oAuthClientASLocalMetadataModelResourcePermission,
@@ -57,8 +59,10 @@ public class OAuthClientASLocalMetadataServiceImpl
 
 	@Override
 	public OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
-			long userId, String metadataJSON, String wellKnownURISuffix)
+			String metadataJSON, String wellKnownURISuffix)
 		throws PortalException {
+
+		long userId = getUserId();
 
 		ModelResourcePermissionUtil.check(
 			_oAuthClientASLocalMetadataModelResourcePermission,

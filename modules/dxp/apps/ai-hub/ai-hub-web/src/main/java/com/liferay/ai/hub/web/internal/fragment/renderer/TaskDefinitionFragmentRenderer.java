@@ -5,12 +5,15 @@
 
 package com.liferay.ai.hub.web.internal.fragment.renderer;
 
+import com.liferay.ai.hub.web.internal.constants.AIHubWebConstants;
+import com.liferay.ai.hub.web.internal.display.context.TaskDefinitionDisplayContext;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.RequestDispatcher;
@@ -69,6 +72,14 @@ public class TaskDefinitionFragmentRenderer implements FragmentRenderer {
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher("/view.jsp");
 
+			TaskDefinitionDisplayContext taskDefinitionDisplayContext =
+				new TaskDefinitionDisplayContext(httpServletRequest, _portal);
+
+			Class<?> clazz = taskDefinitionDisplayContext.getClass();
+
+			httpServletRequest.setAttribute(
+				clazz.getName(), taskDefinitionDisplayContext);
+
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (IOException | RuntimeException exception) {
@@ -85,7 +96,12 @@ public class TaskDefinitionFragmentRenderer implements FragmentRenderer {
 	@Reference
 	private Language _language;
 
-	@Reference(target = "(osgi.web.symbolicname=com.liferay.ai.hub.web)")
+	@Reference
+	private Portal _portal;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=" + AIHubWebConstants.BUNDLE_SYMBOLIC_NAME + ")"
+	)
 	private ServletContext _servletContext;
 
 }

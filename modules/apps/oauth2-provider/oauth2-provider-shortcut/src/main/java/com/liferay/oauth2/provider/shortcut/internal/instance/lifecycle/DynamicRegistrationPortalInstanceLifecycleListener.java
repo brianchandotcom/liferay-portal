@@ -94,18 +94,6 @@ public class DynamicRegistrationPortalInstanceLifecycleListener
 			null, Collections.emptyList(), false, false, null,
 			new ServiceContext());
 
-		_addResourcePermissions(oAuth2Application);
-	}
-
-	@Activate
-	protected void activate(Map<String, Object> properties) throws Exception {
-		_lastModifiedTime = ConfigurationPersistenceUtil.update(
-			this, properties);
-	}
-
-	private void _addResourcePermissions(OAuth2Application oAuth2Application)
-		throws Exception {
-
 		Role role = _roleLocalService.fetchRole(
 			oAuth2Application.getCompanyId(), RoleConstants.OWNER);
 
@@ -135,6 +123,12 @@ public class DynamicRegistrationPortalInstanceLifecycleListener
 				OAuth2ProviderActionKeys.REGISTER_APPLICATION,
 				OAuth2ProviderActionKeys.REVOKE_TOKEN
 			});
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) throws Exception {
+		_lastModifiedTime = ConfigurationPersistenceUtil.update(
+			this, properties);
 	}
 
 	private long _lastModifiedTime;

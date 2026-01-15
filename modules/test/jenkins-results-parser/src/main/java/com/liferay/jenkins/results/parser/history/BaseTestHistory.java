@@ -3,32 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.jenkins.results.parser;
+package com.liferay.jenkins.results.parser.history;
 
-import com.liferay.jenkins.results.parser.history.BatchHistory;
-import com.liferay.jenkins.results.parser.history.JobHistory;
-import com.liferay.jenkins.results.parser.history.TestTaskHistory;
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
 import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
-public class TestHistory {
-
-	public TestHistory(BatchHistory batchHistory, JSONObject jsonObject) {
-		_batchHistory = batchHistory;
-
-		_averageDuration = jsonObject.optLong("averageDuration");
-		_averageOverheadDuration = jsonObject.optLong(
-			"averageOverheadDuration");
-		_failureCount = jsonObject.optInt("failureCount");
-		_statusChanges = jsonObject.optInt("statusChanges");
-		_testName = jsonObject.getString("testName");
-		_testCount = jsonObject.optInt("testCount");
-		_testrayCaseResultID = jsonObject.optLong("testrayCaseResultID");
-		_testTaskName = jsonObject.optString("testTaskName");
-	}
+public abstract class BaseTestHistory implements TestHistory {
 
 	public long getAverageDuration() {
 		return _averageDuration;
@@ -93,6 +77,22 @@ public class TestHistory {
 
 	public String getTestTaskName() {
 		return _testTaskName;
+	}
+
+	protected BaseTestHistory(
+		BatchHistory batchHistory, JSONObject jsonObject) {
+
+		_batchHistory = batchHistory;
+
+		_averageDuration = jsonObject.optLong("averageDuration");
+		_averageOverheadDuration = jsonObject.optLong(
+			"averageOverheadDuration");
+		_failureCount = jsonObject.optInt("failureCount");
+		_statusChanges = jsonObject.optInt("statusChanges");
+		_testName = jsonObject.getString("testName");
+		_testCount = jsonObject.optInt("testCount");
+		_testrayCaseResultID = jsonObject.optLong("testrayCaseResultID");
+		_testTaskName = jsonObject.optString("testTaskName");
 	}
 
 	private final long _averageDuration;

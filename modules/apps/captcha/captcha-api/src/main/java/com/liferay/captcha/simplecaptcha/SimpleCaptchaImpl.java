@@ -177,17 +177,17 @@ public class SimpleCaptchaImpl implements Captcha {
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		HttpSession httpSession = _getHttpSession(httpServletRequest);
+		String captchaId = ParamUtil.getString(httpServletRequest, "captchaId");
 
-		String key = WebKeys.CAPTCHA_TEXT;
-
-		String portletId = ParamUtil.getString(httpServletRequest, "portletId");
-
-		if (Validator.isNotNull(portletId)) {
-			key = portal.getPortletNamespace(portletId) + key;
+		if (Validator.isNull(captchaId)) {
+			return;
 		}
 
+		String key = captchaId + WebKeys.CAPTCHA_TEXT;
+
 		nl.captcha.Captcha simpleCaptcha = getSimpleCaptcha();
+
+		HttpSession httpSession = _getHttpSession(httpServletRequest);
 
 		httpSession.setAttribute(key, simpleCaptcha.getAnswer());
 
@@ -211,17 +211,17 @@ public class SimpleCaptchaImpl implements Captcha {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException {
 
-		PortletSession portletSession = resourceRequest.getPortletSession();
+		String captchaId = ParamUtil.getString(resourceRequest, "captchaId");
+
+		if (Validator.isNull(captchaId)) {
+			return;
+		}
+
+		String key = captchaId + WebKeys.CAPTCHA_TEXT;
 
 		nl.captcha.Captcha simpleCaptcha = getSimpleCaptcha();
 
-		String key = WebKeys.CAPTCHA_TEXT;
-
-		String portletId = portal.getPortletId(resourceRequest);
-
-		if (Validator.isNotNull(portletId)) {
-			key = portal.getPortletNamespace(portletId) + key;
-		}
+		PortletSession portletSession = resourceRequest.getPortletSession();
 
 		portletSession.setAttribute(key, simpleCaptcha.getAnswer());
 
@@ -398,10 +398,10 @@ public class SimpleCaptchaImpl implements Captcha {
 	private String _getHttpSessionKey(
 		String key, HttpServletRequest httpServletRequest) {
 
-		String portletId = portal.getPortletId(httpServletRequest);
+		String captchaId = ParamUtil.getString(httpServletRequest, "captchaId");
 
-		if (Validator.isNotNull(portletId)) {
-			return portal.getPortletNamespace(portletId) + key;
+		if (Validator.isNotNull(captchaId)) {
+			return captchaId + key;
 		}
 
 		return key;

@@ -710,8 +710,7 @@ public class PageTemplateResourceImpl
 			pageTemplate.getTaxonomyCategoryItemExternalReferences(),
 			contextCompany.getCompanyId(), pageTemplate.getDateCreated(),
 			groupId, contextHttpServletRequest, pageTemplate.getKeywords(),
-			pageTemplate.getDateModified(), contextUser.getUserId(), uuid,
-			null);
+			pageTemplate.getDateModified(), contextUser.getUserId(), uuid);
 	}
 
 	private UnicodeProperties

@@ -437,7 +437,7 @@ public class MasterPageResourceImpl
 			contextCompany.getCompanyId(), masterPage.getDateCreated(), groupId,
 			contextHttpServletRequest, masterPage.getKeywords(),
 			masterPage.getDateModified(), contextUser.getUserId(),
-			masterPage.getUuid(), null);
+			masterPage.getUuid());
 	}
 
 	private static final EntityModel _entityModel = new MasterPageEntityModel();

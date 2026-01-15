@@ -9,15 +9,10 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
-import com.liferay.headless.admin.site.dto.v1_0.PageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
-import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSettings;
-import com.liferay.headless.admin.site.internal.dto.v1_0.util.ItemScopeUtil;
 import com.liferay.headless.admin.site.internal.util.LogUtil;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -48,8 +43,7 @@ public class ServiceContextUtil {
 			ItemExternalReference[] assetCategoriesItemExternalReferences,
 			long companyId, Date createDate, long groupId,
 			HttpServletRequest httpServletRequest, String[] keywords,
-			Date modifiedDate, long userId, String uuid,
-			PageSettings pageSettings)
+			Date modifiedDate, long userId, String uuid)
 		throws Exception {
 
 		ServiceContext serviceContext = ServiceContextBuilder.create(
@@ -65,50 +59,6 @@ public class ServiceContextUtil {
 		serviceContext.setModifiedDate(modifiedDate);
 		serviceContext.setUserId(userId);
 		serviceContext.setUuid(uuid);
-
-		if (pageSettings instanceof WidgetPageSettings) {
-			WidgetPageSettings widgetPageSettings =
-				(WidgetPageSettings)pageSettings;
-
-			ItemExternalReference itemExternalReference =
-				widgetPageSettings.getWidgetPageTemplateReference();
-
-			if (itemExternalReference != null) {
-				Long itemGroupId = ItemScopeUtil.getItemGroupId(
-					companyId, itemExternalReference.getScope(), groupId);
-
-				LayoutPageTemplateEntry layoutPageTemplateEntry = null;
-
-				if (itemGroupId != null) {
-					layoutPageTemplateEntry =
-						LayoutPageTemplateEntryLocalServiceUtil.
-							fetchLayoutPageTemplateEntryByExternalReferenceCode(
-								itemExternalReference.getExternalReferenceCode(),
-								itemGroupId);
-				}
-
-				if (layoutPageTemplateEntry == null) {
-					LogUtil.logOptionalReference(
-						LayoutPageTemplateEntry.class.getName(),
-						itemExternalReference.getExternalReferenceCode(),
-						itemExternalReference.getScope(),
-						groupId);
-				}
-
-				serviceContext.setAttribute(
-					"portletLayoutPageTemplateEntryERC",
-					itemExternalReference.getExternalReferenceCode());
-
-				serviceContext.setAttribute(
-					"portletLayoutPageTemplateEntryLinkEnabled",
-					widgetPageSettings.getInheritChanges());
-
-				serviceContext.setAttribute(
-					"portletLayoutPageTemplateEntryScopeERC",
-					ItemScopeUtil.getItemScopeExternalReferenceCode(
-						itemExternalReference.getScope(), groupId));
-			}
-		}
 
 		return serviceContext;
 	}

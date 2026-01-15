@@ -12,6 +12,7 @@ import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSettings;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.ItemScopeUtil;
 import com.liferay.headless.admin.site.internal.util.LogUtil;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
@@ -74,30 +74,21 @@ public class ServiceContextUtil {
 				widgetPageSettings.getWidgetPageTemplateReference();
 
 			if (itemExternalReference != null) {
-				Group group = null;
-				long scopeGroupId = groupId;
-
-				Scope scope = itemExternalReference.getScope();
-
-				if (scope != null) {
-					group =
-						GroupLocalServiceUtil.getGroupByExternalReferenceCode(
-							scope.getExternalReferenceCode(), companyId);
-
-					scopeGroupId = group.getGroupId();
-				}
+				Long itemGroupId = ItemScopeUtil.getItemGroupId(
+					companyId, itemExternalReference.getScope(), groupId);
 
 				LayoutPageTemplateEntry layoutPageTemplateEntry =
 					LayoutPageTemplateEntryLocalServiceUtil.
 						fetchLayoutPageTemplateEntryByExternalReferenceCode(
 							itemExternalReference.getExternalReferenceCode(),
-							scopeGroupId);
+							itemGroupId);
 
 				if (layoutPageTemplateEntry == null) {
 					LogUtil.logOptionalReference(
-						LayoutPageTemplateEntry.class,
+						LayoutPageTemplateEntry.class.getName(),
 						itemExternalReference.getExternalReferenceCode(),
-						scopeGroupId);
+						itemExternalReference.getScope(),
+						groupId);
 				}
 
 				serviceContext.setAttribute(
@@ -108,11 +99,10 @@ public class ServiceContextUtil {
 					"portletLayoutPageTemplateEntryLinkEnabled",
 					widgetPageSettings.getInheritChanges());
 
-				if (group != null) {
-					serviceContext.setAttribute(
-						"portletLayoutPageTemplateEntryScopeERC",
-						group.getExternalReferenceCode());
-				}
+				serviceContext.setAttribute(
+					"portletLayoutPageTemplateEntryScopeERC",
+					ItemScopeUtil.getItemScopeExternalReferenceCode(
+						itemExternalReference.getScope(), groupId));
 			}
 		}
 

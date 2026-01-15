@@ -1,6 +1,6 @@
 resource "aws_iam_policy" "argocd_git_repo_auth_policy" {
-	count=local.secret_store_provider_default_enabled ? 1 : 0
-	name="${var.cluster_name}-argocd-git-repo-auth-policy"
+	count=local.git_repo_secret_store_provider_default_enabled ? 1 : 0
+	name="${local.cluster_name}-argocd-git-repo-auth-policy"
 	policy=jsonencode(
 		{
 			Statement=[
@@ -10,7 +10,9 @@ resource "aws_iam_policy" "argocd_git_repo_auth_policy" {
 						"secretsmanager:GetSecretValue",
 					]
 					Effect="Allow"
-					Resource="arn:aws:secretsmanager:${var.region}:${local.account_id}:secret:${var.git_repo_auth_config.vault_secret_name}*"
+					Resource=[
+						for c in local.git_repo_auth_configs : "arn:aws:secretsmanager:${var.region}:${local.account_id}:secret:${c.vault_secret_name}*"
+					]
 				},
 			]
 			Version="2012-10-17"
@@ -36,17 +38,17 @@ resource "aws_iam_role" "argocd_git_repo_auth_role" {
 			]
 			Version="2012-10-17"
 		})
-	count=local.secret_store_provider_default_enabled ? 1 : 0
-	name="${var.cluster_name}-argocd-git-repo-auth"
+	count=local.git_repo_secret_store_provider_default_enabled ? 1 : 0
+	name="${local.cluster_name}-argocd-git-repo-auth"
 }
 resource "aws_iam_role_policy_attachment" "argocd_git_repo_auth_policy_attachment" {
-	count=local.secret_store_provider_default_enabled ? 1 : 0
+	count=local.git_repo_secret_store_provider_default_enabled ? 1 : 0
 	policy_arn=aws_iam_policy.argocd_git_repo_auth_policy[0].arn
 	role=aws_iam_role.argocd_git_repo_auth_role[0].name
 }
 resource "kubernetes_service_account" "argocd_git_repo_auth_sa" {
 	automount_service_account_token=false
-	count=local.secret_store_provider_default_enabled ? 1 : 0
+	count=local.git_repo_secret_store_provider_default_enabled ? 1 : 0
 	metadata {
 		annotations={
 			"eks.amazonaws.com/role-arn"=aws_iam_role.argocd_git_repo_auth_role[0].arn

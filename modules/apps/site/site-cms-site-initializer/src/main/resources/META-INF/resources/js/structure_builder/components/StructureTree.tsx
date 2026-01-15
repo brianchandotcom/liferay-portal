@@ -10,7 +10,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useEventListener} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import React, {Key, useEffect, useMemo, useState} from 'react';
+import React, {Key, useEffect, useMemo, useRef, useState} from 'react';
 
 import getLocalizedValue from '../../common/utils/getLocalizedValue';
 import {useCache} from '../contexts/CacheContext';
@@ -20,6 +20,7 @@ import {
 	useSelector,
 	useStateDispatch,
 } from '../contexts/StateContext';
+import useIsBeingRenamed from '../hooks/useIsBeingRenamed';
 import selectInvalids from '../selectors/selectInvalids';
 import selectPublishedChildren from '../selectors/selectPublishedChildren';
 import selectSelection from '../selectors/selectSelection';
@@ -38,6 +39,7 @@ import confirmChildrenDeletion from '../utils/confirmChildrenDeletion';
 import {FIELD_TYPE_ICON, FieldType} from '../utils/field';
 import isLocked from '../utils/isLocked';
 import isReferenced from '../utils/isReferenced';
+import isRenamable from '../utils/isRenamable';
 import AddChildDropdown from './AddChildDropdown';
 
 type TreeItem = {
@@ -64,6 +66,8 @@ type TreeItem = {
 
 export default function StructureTree({search}: {search: string}) {
 	const dispatch = useStateDispatch();
+
+	const isBeingRenamed = useIsBeingRenamed();
 
 	const children = useSelector(selectStructureChildren);
 	const invalids = useSelector(selectInvalids);
@@ -236,36 +240,39 @@ export default function StructureTree({search}: {search: string}) {
 						{(childItem, selectedKeys) => (
 							<ClayTreeView.Item
 								actions={
-									<>
-										{childItem.type ===
-										'repeatable-group' ? (
-											<AddChildDropdown
-												className="component-action quick-action-item"
-												displayType="unstyled"
-												parentUuid={childItem.id}
-											/>
-										) : null}
+									isBeingRenamed(childItem.id) ? undefined : (
+										<>
+											{childItem.type ===
+											'repeatable-group' ? (
+												<AddChildDropdown
+													className="component-action quick-action-item"
+													displayType="unstyled"
+													parentUuid={childItem.id}
+												/>
+											) : null}
 
-										{childItem.actions?.length ? (
-											<ClayDropDownWithItems
-												items={childItem.actions}
-												trigger={
-													<ClayButtonWithIcon
-														aria-label={Liferay.Language.get(
-															'field-options'
-														)}
-														borderless
-														disabled={
-															selection.length > 1
-														}
-														displayType="unstyled"
-														size="sm"
-														symbol="ellipsis-v"
-													/>
-												}
-											/>
-										) : undefined}
-									</>
+											{childItem.actions?.length ? (
+												<ClayDropDownWithItems
+													items={childItem.actions}
+													trigger={
+														<ClayButtonWithIcon
+															aria-label={Liferay.Language.get(
+																'field-options'
+															)}
+															borderless
+															disabled={
+																selection.length >
+																1
+															}
+															displayType="unstyled"
+															size="sm"
+															symbol="ellipsis-v"
+														/>
+													}
+												/>
+											) : undefined}
+										</>
+									)
 								}
 								className={classNames({
 									active: selectedKeys.has(childItem.id),
@@ -287,10 +294,16 @@ export default function StructureTree({search}: {search: string}) {
 }
 
 function ItemContent({item}: {item: TreeItem}) {
+	const isBeingRenamed = useIsBeingRenamed();
+
+	if (isBeingRenamed(item.id)) {
+		return <ItemNameInput item={item} />;
+	}
+
 	return (
 		<div className="align-items-center c-gap-2 d-flex ml-1">
 			<span>
-				{item.label}
+				<ItemLabel item={item} />
 
 				<ItemStatus item={item} />
 			</span>
@@ -320,6 +333,76 @@ function ItemContent({item}: {item: TreeItem}) {
 				/>
 			) : null}
 		</div>
+	);
+}
+
+function ItemLabel({item}: {item: TreeItem}) {
+	const dispatch = useStateDispatch();
+
+	const structure = useSelector(selectStructure);
+
+	return (
+		<span
+			onDoubleClick={() => {
+				if (isRenamable({structure, uuid: item.id})) {
+					dispatch({type: 'set-renaming-item-uuid', uuid: item.id});
+				}
+			}}
+		>
+			{item.label}
+		</span>
+	);
+}
+
+function ItemNameInput({item}: {item: TreeItem}) {
+	const dispatch = useStateDispatch();
+
+	const inputRef = useRef<HTMLInputElement>(null);
+
+	const [name, setName] = useState(item.label);
+
+	const onFinishRenaming = () =>
+		dispatch({name, type: 'rename-item', uuid: item.id});
+
+	useEffect(() => {
+		if (inputRef.current) {
+			inputRef.current.focus();
+		}
+	}, []);
+
+	return (
+		<input
+			className="structure-builder__tree-node--input"
+			onBlur={() => onFinishRenaming()}
+			onChange={(event) => {
+				setName(event.target.value);
+			}}
+			onFocus={() => {
+				if (!inputRef.current) {
+					return;
+				}
+
+				inputRef.current.setSelectionRange(0, name.length);
+			}}
+			onKeyDown={(event) => {
+				if (
+					event.key === 'Enter' ||
+					event.key === 'Escape' ||
+					event.key === 'Tab'
+				) {
+					onFinishRenaming();
+				}
+
+				if (!event.key.match(/[a-z0-9-_ ]/gi)) {
+					event.preventDefault();
+				}
+
+				event.stopPropagation();
+			}}
+			ref={inputRef}
+			type="text"
+			value={name}
+		/>
 	);
 }
 

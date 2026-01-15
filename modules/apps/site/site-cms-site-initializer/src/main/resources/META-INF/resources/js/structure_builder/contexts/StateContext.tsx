@@ -67,6 +67,7 @@ export type State = {
 	history: History;
 	invalids: Map<Uuid, ErrorMap>;
 	publishedChildren: Set<Uuid>;
+	renamingItemUuid: Uuid | null;
 	selection: Uuid[];
 	structure: Structure;
 	unsavedChanges: boolean;
@@ -80,6 +81,7 @@ const INITIAL_STATE: State = {
 	},
 	invalids: new Map(),
 	publishedChildren: new Set(),
+	renamingItemUuid: null,
 	selection: [],
 	structure: {
 		children: new Map(),
@@ -135,6 +137,17 @@ type PublishStructureAction = {id?: number; type: 'publish-structure'};
 type RefreshReferencedStructuresAction = {
 	objectDefinitions: ObjectDefinitions;
 	type: 'refresh-referenced-structures';
+};
+
+type RenameItem = {
+	name: string;
+	type: 'rename-item';
+	uuid: Uuid;
+};
+
+type SetRenamingItemUuid = {
+	type: 'set-renaming-item-uuid';
+	uuid: Uuid;
 };
 
 type SetSelectionAction = {
@@ -204,6 +217,8 @@ export type Action =
 	| DuplicateChild
 	| PublishStructureAction
 	| RefreshReferencedStructuresAction
+	| RenameItem
+	| SetRenamingItemUuid
 	| SetSelectionAction
 	| SetStructureStatus
 	| SetWorkflowAction
@@ -648,6 +663,52 @@ function reducer(state: State, action: Action): State {
 			};
 
 			return {...state, structure: nextStructure};
+		}
+		case 'rename-item': {
+			const {name, uuid} = action;
+			const {structure} = state;
+
+			const defaultLanguageId =
+				Liferay.ThemeDisplay.getDefaultLanguageId();
+
+			if (uuid === structure.uuid) {
+				return {
+					...state,
+					renamingItemUuid: null,
+					structure: {
+						...structure,
+						label: {...structure.label, [defaultLanguageId]: name},
+					},
+				};
+			}
+
+			const child = findChild({root: structure, uuid});
+
+			if (!child) {
+				return state;
+			}
+
+			const children = updateChild({
+				child: {
+					...child,
+					label: {...child.label, [defaultLanguageId]: name},
+				},
+				root: structure,
+			});
+
+			return {
+				...state,
+				renamingItemUuid: null,
+				structure: {
+					...structure,
+					children,
+				},
+			};
+		}
+		case 'set-renaming-item-uuid': {
+			const {uuid} = action;
+
+			return {...state, renamingItemUuid: uuid};
 		}
 		case 'set-selection': {
 			const {selection} = action;

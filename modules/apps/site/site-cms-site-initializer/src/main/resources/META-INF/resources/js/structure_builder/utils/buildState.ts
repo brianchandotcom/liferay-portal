@@ -35,6 +35,7 @@ export default function buildState({
 			structure.status === 'published'
 				? getChildrenUuids({root: structure})
 				: new Set(),
+		renamingItemUuid: null,
 		selection: [],
 		structure,
 		unsavedChanges: false,

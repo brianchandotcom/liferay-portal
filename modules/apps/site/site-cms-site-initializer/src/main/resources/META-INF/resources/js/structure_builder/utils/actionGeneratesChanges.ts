@@ -12,6 +12,7 @@ export default function actionGeneratesChanges(actionType: Action['type']) {
 		case 'add-repeatable-group':
 		case 'delete-child':
 		case 'duplicate-child':
+		case 'rename-item':
 		case 'set-workflow':
 		case 'ungroup':
 		case 'update-field':
@@ -24,6 +25,7 @@ export default function actionGeneratesChanges(actionType: Action['type']) {
 		case 'delete-selection':
 		case 'publish-structure':
 		case 'refresh-referenced-structures':
+		case 'set-renaming-item-uuid':
 		case 'set-selection':
 		case 'set-structure-status':
 		case 'validate':

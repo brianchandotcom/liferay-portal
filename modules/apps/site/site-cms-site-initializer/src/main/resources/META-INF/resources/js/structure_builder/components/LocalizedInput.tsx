@@ -6,7 +6,7 @@
 import ClayForm from '@clayui/form';
 import classNames from 'classnames';
 import {InputLocalized} from 'frontend-js-components-web';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 type Translations = Liferay.Language.LocalizedValue<string>;
 
@@ -40,6 +40,10 @@ export function LocalizedInput({
 	const [locale, setLocale] = useState(
 		Liferay.ThemeDisplay.getDefaultLanguageId()
 	);
+
+	useEffect(() => {
+		setTranslations(initialTranslations);
+	}, [initialTranslations]);
 
 	return (
 		<ClayForm.Group

@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -116,7 +117,7 @@ public class PublishLayoutPageTemplateEntryMVCActionCommand
 		UnicodeProperties previousLayouTypeSettingsUnicodeProperties =
 			layout.getTypeSettingsProperties();
 
-		_layoutLocalService.copyLayoutContent(draftLayout, layout);
+		_layoutService.copyLayoutContent(draftLayout, layout);
 
 		LayoutStructureUtil.deleteMarkedForDeletionItems(
 			draftLayout.getGroupId(), draftLayout.getPlid(), userId);
@@ -170,6 +171,9 @@ public class PublishLayoutPageTemplateEntryMVCActionCommand
 
 	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
+
+	@Reference
+	private LayoutService _layoutService;
 
 	@Reference
 	private Portal _portal;

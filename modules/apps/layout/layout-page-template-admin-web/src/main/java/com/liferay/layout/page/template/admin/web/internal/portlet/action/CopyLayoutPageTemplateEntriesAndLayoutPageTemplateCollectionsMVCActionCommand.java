@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -132,7 +133,7 @@ public class
 			Layout targetLayout = _layoutLocalService.getLayout(
 				layoutPageTemplateEntry.getPlid());
 
-			_layoutLocalService.copyLayoutContent(
+			_layoutService.copyLayoutContent(
 				sourceLayout, targetLayout.fetchDraftLayout());
 		}
 
@@ -159,6 +160,9 @@ public class
 
 	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
+
+	@Reference
+	private LayoutService _layoutService;
 
 	private class
 		CopyLayoutPageTemplateEntryAndLayoutPageTemplateCollectionCallable

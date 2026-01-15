@@ -106,7 +106,8 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 			AssistantHandlerContext.builder(
 			).contentRetriever(
 				ContentRetrieverUtil.createContentRetriever(
-					kaleoNodeSettingValues)
+					kaleoNodeSettingValues,
+					GetterUtil.getString(workflowContext.get("userToken")))
 			).invocationParameters(
 				InvocationParameters.from(
 					Map.of(

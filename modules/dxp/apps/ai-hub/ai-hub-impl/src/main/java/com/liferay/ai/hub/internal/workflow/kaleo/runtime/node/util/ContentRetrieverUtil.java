@@ -24,7 +24,7 @@ import java.util.Objects;
 public class ContentRetrieverUtil {
 
 	public static ContentRetriever createContentRetriever(
-		Map<String, String> kaleoNodeSettingValues) {
+		Map<String, String> kaleoNodeSettingValues, String userToken) {
 
 		if (kaleoNodeSettingValues.get("rag") == null) {
 			return null;
@@ -44,7 +44,8 @@ public class ContentRetrieverUtil {
 				).webSearchEngine(
 					new LiferayWebSearchEngine(
 						contentRetrieverJSONObject.getString(
-							"blueprintExternalReferenceCode"))
+							"blueprintExternalReferenceCode"),
+						userToken)
 				).build();
 			}
 		}

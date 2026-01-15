@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
+import com.liferay.portal.kernel.util.ScopeUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -59,12 +60,16 @@ public class LayoutPageTemplateEntryLayoutProviderImpl
 	}
 
 	public LayoutPrototype getLayoutPageTemplateEntryLayoutPrototype(
-		long groupId, String externalReferenceCode) {
+		long companyId, String externalReferenceCode,
+		String layoutPageTemplateEntryScopeERC, long scopeGroupId) {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.
 				fetchLayoutPageTemplateEntryByExternalReferenceCode(
-					externalReferenceCode, groupId);
+					externalReferenceCode,
+					ScopeUtil.getItemGroupId(
+						companyId, layoutPageTemplateEntryScopeERC,
+						scopeGroupId));
 
 		if (layoutPageTemplateEntry != null) {
 			return _layoutPrototypeLocalService.fetchLayoutPrototype(

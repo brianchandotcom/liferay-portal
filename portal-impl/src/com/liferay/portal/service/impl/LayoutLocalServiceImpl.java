@@ -4033,11 +4033,9 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		LayoutPrototype layoutPrototype =
 			LayoutPageTemplateEntryLayoutProviderUtil.
 				getLayoutPageTemplateEntryLayoutPrototype(
-					ScopeUtil.getItemGroupId(
-						layout.getCompanyId(),
-						portletLayoutPageTemplateEntryScopeERC,
-						layout.getGroupId()),
-					portletLayoutPageTemplateEntryERC);
+					layout.getCompanyId(), portletLayoutPageTemplateEntryERC,
+					portletLayoutPageTemplateEntryScopeERC,
+					layout.getGroupId());
 
 		if (layoutPrototype == null) {
 			throw new NoSuchLayoutPrototypeException();

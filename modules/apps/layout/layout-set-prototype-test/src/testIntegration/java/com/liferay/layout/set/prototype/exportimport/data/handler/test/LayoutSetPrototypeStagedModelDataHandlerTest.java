@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -382,12 +381,10 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 		LayoutPrototype layoutPrototype =
 			LayoutPageTemplateEntryLayoutProviderUtil.
 				getLayoutPageTemplateEntryLayoutPrototype(
-					ScopeUtil.getItemGroupId(
-						importedLayout.getCompanyId(),
-						importedLayout.
-							getPortletLayoutPageTemplateEntryScopeERC(),
-						importedLayout.getGroupId()),
-					importedLayout.getPortletLayoutPageTemplateEntryERC());
+					importedLayout.getCompanyId(),
+					importedLayout.getPortletLayoutPageTemplateEntryERC(),
+					importedLayout.getPortletLayoutPageTemplateEntryScopeERC(),
+					importedLayout.getGroupId());
 
 		Assert.assertEquals(
 			importedLayoutPrototype.getUuid(), layoutPrototype.getUuid());

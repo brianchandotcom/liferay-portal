@@ -28,7 +28,8 @@ public class LayoutPageTemplateEntryLayoutProviderUtil {
 	}
 
 	public static LayoutPrototype getLayoutPageTemplateEntryLayoutPrototype(
-		long groupId, String externalReferenceCode) {
+		long companyId, String externalReferenceCode,
+		String layoutPageTemplateEntryScopeERC, long scopeGroupId) {
 
 		LayoutPageTemplateEntryLayoutProvider
 			layoutPageTemplateEntryLayoutProvider =
@@ -36,7 +37,8 @@ public class LayoutPageTemplateEntryLayoutProviderUtil {
 
 		return layoutPageTemplateEntryLayoutProvider.
 			getLayoutPageTemplateEntryLayoutPrototype(
-				groupId, externalReferenceCode);
+				companyId, externalReferenceCode,
+				layoutPageTemplateEntryScopeERC, scopeGroupId);
 	}
 
 	private static final Snapshot<LayoutPageTemplateEntryLayoutProvider>

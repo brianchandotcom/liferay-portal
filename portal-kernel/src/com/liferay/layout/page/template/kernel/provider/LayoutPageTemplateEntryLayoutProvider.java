@@ -20,6 +20,7 @@ public interface LayoutPageTemplateEntryLayoutProvider {
 		long groupId, String externalReferenceCode, long plid);
 
 	public LayoutPrototype getLayoutPageTemplateEntryLayoutPrototype(
-		long groupId, String externalReferenceCode);
+		long companyId, String externalReferenceCode,
+		String layoutPageTemplateEntryScopeERC, long scopeGroupId);
 
 }

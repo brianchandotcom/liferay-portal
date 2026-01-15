@@ -777,11 +777,8 @@ public class LayoutImpl extends LayoutBaseImpl {
 		LayoutPrototype layoutPrototype =
 			LayoutPageTemplateEntryLayoutProviderUtil.
 				getLayoutPageTemplateEntryLayoutPrototype(
-					ScopeUtil.getItemGroupId(
-						getCompanyId(),
-						getPortletLayoutPageTemplateEntryScopeERC(),
-						getGroupId()),
-					getPortletLayoutPageTemplateEntryERC());
+					getCompanyId(), getPortletLayoutPageTemplateEntryERC(),
+					getPortletLayoutPageTemplateEntryScopeERC(), getGroupId());
 
 		if (layoutPrototype == null) {
 			return null;

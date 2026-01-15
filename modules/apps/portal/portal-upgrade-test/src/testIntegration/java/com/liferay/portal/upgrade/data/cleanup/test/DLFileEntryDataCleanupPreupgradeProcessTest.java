@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.document.library.kernel.service.DLFileShortcutLocalService;
+import com.liferay.document.library.kernel.service.persistence.DLFileEntryPersistence;
 import com.liferay.document.library.service.DLFileVersionPreviewLocalService;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -257,6 +258,30 @@ public class DLFileEntryDataCleanupPreupgradeProcessTest
 	}
 
 	@Test
+	public void testUpgradeWithFileEntryNoFileVersion() throws Exception {
+		FileEntry fileEntry = _dlAppService.addFileEntry(
+			null, TestPropsValues.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, null, 0, null, null, null,
+			ServiceContextTestUtil.getServiceContext());
+
+		long fileEntryId = fileEntry.getFileEntryId();
+
+		FileVersion latestFileVersion = fileEntry.getLatestFileVersion();
+
+		_dlAppService.deleteFileVersion(latestFileVersion.getFileVersionId());
+
+		upgrade();
+
+		_dlFileEntryPersistence.clearCache();
+
+		Assert.assertNull(
+			_dlFileEntryLocalService.fetchDLFileEntry(fileEntryId));
+	}
+
+	@Test
 	public void testUpgradeWithPWCFileVersion() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
@@ -333,6 +358,9 @@ public class DLFileEntryDataCleanupPreupgradeProcessTest
 
 	@Inject
 	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
+
+	@Inject
+	private DLFileEntryPersistence _dlFileEntryPersistence;
 
 	@Inject
 	private DLFileShortcutLocalService _dlFileShortcutLocalService;

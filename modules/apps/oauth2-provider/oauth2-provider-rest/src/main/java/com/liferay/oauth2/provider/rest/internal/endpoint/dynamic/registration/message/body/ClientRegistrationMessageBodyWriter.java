@@ -80,12 +80,9 @@ public class ClientRegistrationMessageBodyWriter
 		ObjectMapper objectMapper = ObjectMapperHolder._objectMapper;
 
 		try {
-			outputStream.write(
-				objectMapper.writeValueAsString(
-					clientRegistration
-				).getBytes(
-					StandardCharsets.UTF_8
-				));
+			String string = objectMapper.writeValueAsString(clientRegistration);
+
+			outputStream.write(string.getBytes(StandardCharsets.UTF_8));
 		}
 		catch (IOException ioException) {
 			if (_log.isDebugEnabled()) {

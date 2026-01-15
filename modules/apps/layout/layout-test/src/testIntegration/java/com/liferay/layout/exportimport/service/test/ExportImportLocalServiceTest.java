@@ -115,13 +115,6 @@ public class ExportImportLocalServiceTest {
 			"portletLayoutPageTemplateEntryERC",
 			layoutPageTemplateEntry.getExternalReferenceCode());
 
-		Group layoutPageTemplateEntryGroup = _groupLocalService.getGroup(
-			layoutPageTemplateEntry.getGroupId());
-
-		serviceContext.setAttribute(
-			"portletLayoutPageTemplateEntryScopeERC",
-			layoutPageTemplateEntryGroup.getExternalReferenceCode());
-
 		String layoutName = RandomTestUtil.randomString();
 
 		_addLayoutFromLayoutPrototypeAndChangeFriendlyURL(

@@ -96,13 +96,16 @@ public class AddContentLayoutMVCActionCommand
 					"portletLayoutPageTemplateEntryERC",
 					layoutPageTemplateEntry.getExternalReferenceCode());
 
-				Group layoutPageTemplateEntryGroup =
-					_groupLocalService.getGroup(
-						layoutPageTemplateEntry.getGroupId());
+				if (layoutPageTemplateEntry.getGroupId() != groupId) {
+					Group layoutPageTemplateEntryGroup =
+						_groupLocalService.getGroup(
+							layoutPageTemplateEntry.getGroupId());
 
-				serviceContext.setAttribute(
-					"portletLayoutPageTemplateEntryScopeERC",
-					layoutPageTemplateEntryGroup.getExternalReferenceCode());
+					serviceContext.setAttribute(
+						"portletLayoutPageTemplateEntryScopeERC",
+						layoutPageTemplateEntryGroup.
+							getExternalReferenceCode());
+				}
 
 				layout = _layoutService.addLayout(
 					null, groupId, privateLayout, parentLayoutId, nameMap,

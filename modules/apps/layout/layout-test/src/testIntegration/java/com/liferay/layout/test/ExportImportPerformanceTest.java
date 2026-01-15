@@ -280,8 +280,6 @@ public class ExportImportPerformanceTest {
 			layout.setPortletLayoutPageTemplateEntryERC(
 				layoutPageTemplateEntry.getExternalReferenceCode());
 
-			layout.setPortletLayoutPageTemplateEntryScopeERC(
-				_group.getExternalReferenceCode());
 			layout.setPortletLayoutPageTemplateEntryLinkEnabled(true);
 
 			_layoutLocalService.updateLayout(layout);

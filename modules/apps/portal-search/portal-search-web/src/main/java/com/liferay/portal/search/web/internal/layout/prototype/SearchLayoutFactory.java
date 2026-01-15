@@ -115,12 +115,14 @@ public class SearchLayoutFactory {
 		serviceContext.setAttribute(
 			"portletLayoutPageTemplateEntryLinkEnabled", Boolean.FALSE);
 
-		Group layoutPageTemplateEntryGroup = _groupLocalService.getGroup(
-			layoutPageTemplateEntry.getGroupId());
+		if (group.getGroupId() != layoutPageTemplateEntry.getGroupId()) {
+			Group layoutPageTemplateEntryGroup = _groupLocalService.getGroup(
+				layoutPageTemplateEntry.getGroupId());
 
-		serviceContext.setAttribute(
-			"portletLayoutPageTemplateEntryScopeERC",
-			layoutPageTemplateEntryGroup.getExternalReferenceCode());
+			serviceContext.setAttribute(
+				"portletLayoutPageTemplateEntryScopeERC",
+				layoutPageTemplateEntryGroup.getExternalReferenceCode());
+		}
 
 		serviceContext.setUserId(group.getCreatorUserId());
 

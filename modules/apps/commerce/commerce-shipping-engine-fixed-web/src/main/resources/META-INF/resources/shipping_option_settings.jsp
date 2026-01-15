@@ -16,6 +16,8 @@ CommerceShippingFixedOptionRelsDisplayContext commerceShippingFixedOptionRelsDis
 		<frontend-data-set:classic-display
 			contextParams='<%=
 				HashMapBuilder.<String, String>put(
+					"commerceShippingFixedOptionId", String.valueOf(commerceShippingFixedOptionRelsDisplayContext.getCommerceShippingFixedOptionId())
+				).put(
 					"commerceShippingMethodId", String.valueOf(commerceShippingFixedOptionRelsDisplayContext.getCommerceShippingMethodId())
 				).build()
 			%>'

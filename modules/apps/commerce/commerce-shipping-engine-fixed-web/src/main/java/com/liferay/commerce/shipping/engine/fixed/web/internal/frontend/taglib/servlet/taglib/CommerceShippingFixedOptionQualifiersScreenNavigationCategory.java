@@ -20,7 +20,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = "screen.navigation.category.order:Integer=20",
+	property = "screen.navigation.category.order:Integer=30",
 	service = ScreenNavigationCategory.class
 )
 public class CommerceShippingFixedOptionQualifiersScreenNavigationCategory

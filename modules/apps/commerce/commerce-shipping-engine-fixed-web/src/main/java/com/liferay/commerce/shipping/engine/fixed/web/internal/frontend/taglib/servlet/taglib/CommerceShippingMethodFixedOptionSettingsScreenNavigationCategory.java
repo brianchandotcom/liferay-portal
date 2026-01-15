@@ -20,7 +20,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = "screen.navigation.category.order:Integer=30",
+	property = "screen.navigation.category.order:Integer=20",
 	service = ScreenNavigationCategory.class
 )
 public class CommerceShippingMethodFixedOptionSettingsScreenNavigationCategory
@@ -46,7 +46,7 @@ public class CommerceShippingMethodFixedOptionSettingsScreenNavigationCategory
 	@Override
 	public String getScreenNavigationKey() {
 		return CommerceShippingFixedOptionScreenNavigationConstants.
-			SCREEN_NAVIGATION_KEY_COMMERCE_SHIPPING_METHOD;
+			SCREEN_NAVIGATION_KEY_COMMERCE_SHIPPING_FIXED_OPTION;
 	}
 
 	@Reference

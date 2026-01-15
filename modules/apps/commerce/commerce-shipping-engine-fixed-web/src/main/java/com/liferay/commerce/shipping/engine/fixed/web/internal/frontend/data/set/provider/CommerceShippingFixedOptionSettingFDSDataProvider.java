@@ -56,7 +56,9 @@ public class CommerceShippingFixedOptionSettingFDSDataProvider
 
 		return TransformUtil.transform(
 			_commerceShippingFixedOptionRelService.
-				getCommerceShippingMethodFixedOptionRels(
+				getCommerceShippingFixedOptionRels(
+					ParamUtil.getLong(
+						httpServletRequest, "commerceShippingFixedOptionId"),
 					ParamUtil.getLong(
 						httpServletRequest, "commerceShippingMethodId"),
 					fdsPagination.getStartPosition(),
@@ -89,12 +91,12 @@ public class CommerceShippingFixedOptionSettingFDSDataProvider
 			FDSKeywords fdsKeywords, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		long commerceShippingMethodId = ParamUtil.getLong(
-			httpServletRequest, "commerceShippingMethodId");
-
 		return _commerceShippingFixedOptionRelService.
-			getCommerceShippingMethodFixedOptionRelsCount(
-				commerceShippingMethodId);
+			getCommerceShippingFixedOptionRelsCount(
+				ParamUtil.getLong(
+					httpServletRequest, "commerceShippingFixedOptionId"),
+				ParamUtil.getLong(
+					httpServletRequest, "commerceShippingMethodId"));
 	}
 
 	private String _getCountry(

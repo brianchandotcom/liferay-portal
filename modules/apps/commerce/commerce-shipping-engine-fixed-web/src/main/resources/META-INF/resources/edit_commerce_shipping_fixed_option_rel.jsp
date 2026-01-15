@@ -14,6 +14,7 @@ CommerceShippingFixedOptionRel commerceShippingFixedOptionRel = commerceShipping
 
 long countryId = commerceShippingFixedOptionRelsDisplayContext.getCountryId();
 long regionId = commerceShippingFixedOptionRelsDisplayContext.getRegionId();
+long commerceShippingFixedOptionId = commerceShippingFixedOptionRelsDisplayContext.getCommerceShippingFixedOptionId();
 long commerceShippingMethodId = commerceShippingFixedOptionRelsDisplayContext.getCommerceShippingMethodId();
 
 long commerceShippingFixedOptionRelId = 0;
@@ -31,6 +32,7 @@ if (commerceShippingFixedOptionRel != null) {
 	<aui:form action="<%= editCommerceShippingFixedOptionRelActionURL %>" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceShippingFixedOptionRel == null) ? Constants.ADD : Constants.UPDATE %>" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input name="commerceShippingFixedOptionId" type="hidden" value="<%= commerceShippingFixedOptionId %>" />
 		<aui:input name="commerceShippingFixedOptionRelId" type="hidden" value="<%= commerceShippingFixedOptionRelId %>" />
 		<aui:input name="commerceShippingMethodId" type="hidden" value="<%= commerceShippingMethodId %>" />
 
@@ -43,24 +45,6 @@ if (commerceShippingFixedOptionRel != null) {
 		<commerce-ui:panel
 			title='<%= LanguageUtil.get(request, "details") %>'
 		>
-			<div class="row">
-				<div class="col-md-12">
-					<aui:select bean="<%= commerceShippingFixedOptionRel %>" label="shipping-option" model="<%= CommerceShippingFixedOptionRel.class %>" name="commerceShippingFixedOptionId" required="<%= true %>">
-
-						<%
-						for (CommerceShippingFixedOption commerceShippingFixedOption : commerceShippingFixedOptionRelsDisplayContext.getCommerceShippingFixedOptions()) {
-						%>
-
-							<aui:option label="<%= commerceShippingFixedOption.getName(languageId) %>" value="<%= commerceShippingFixedOption.getCommerceShippingFixedOptionId() %>" />
-
-						<%
-						}
-						%>
-
-					</aui:select>
-				</div>
-			</div>
-
 			<div class="row">
 				<div class="col-md-4">
 					<aui:select bean="<%= commerceShippingFixedOptionRel %>" label="country" model="<%= CommerceShippingFixedOptionRel.class %>" name="countryId" showEmptyOption="<%= true %>">

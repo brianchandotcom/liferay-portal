@@ -124,24 +124,6 @@ export class WebContentDisplayPage {
 		await this.configurationOption.click();
 	}
 
-	async goToConfigurationWithDisplay() {
-		await this.webContentDisplayContent.waitFor({
-			state: 'visible',
-		});
-		await this.webContentDisplayContent.hover();
-		await this.webContentDisplayContent.click();
-
-		await this.page
-			.locator('#wrapper')
-			.getByText('Web Content Display')
-			.last()
-			.locator('..')
-			.getByRole('button', {name: 'Options'})
-			.click();
-
-		await this.configurationOption.click();
-	}
-
 	async addWebContentWithDisplay(
 		options: {pageType?: 'content' | 'widget'; webContentName?: string} = {
 			pageType: 'content',

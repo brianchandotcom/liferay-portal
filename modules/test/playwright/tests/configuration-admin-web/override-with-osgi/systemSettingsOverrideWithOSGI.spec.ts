@@ -5,94 +5,43 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {accessibilityMenuPagesTest} from '../../../fixtures/accessibilityMenuPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
-import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
-import {webContentDisplayPageTest} from '../../../fixtures/webContentDisplayPageTest';
-import getRandomString from '../../../utils/getRandomString';
-import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 
 export const test = mergeTests(
-	apiHelpersTest,
 	loginTest(),
 	systemSettingsPageTest,
-	featureFlagsTest({
-		'LPS-178052': {enabled: true},
-	}),
-	pageEditorPagesTest,
-	isolatedSiteTest,
-	webContentDisplayPageTest
+	accessibilityMenuPagesTest
 );
 
-test('Should not allow enabling comments in Web Content Display when disabled by Portal Properties', async ({
-	apiHelpers,
+test('Should not allow access Accessibility Menu by OSGI when disabled by Portal Properties', async ({
+	accessibilityMenuPage,
 	page,
-	pageEditorPage,
-	site,
 	systemSettingsPage,
-	webContentDisplayPage,
 }) => {
-	const basicWebContentTitle = getRandomString();
-
-	await test.step('Verify global comments restriction in System Settings', async () => {
+	await test.step('Verify Accessibility Menu restriction in System Settings', async () => {
 		await systemSettingsPage.goToSystemSetting(
-			'Web Content',
-			'Web Content'
+			'Accessibility',
+			'Accessibility Menu'
 		);
 
 		await expect(
-			page.getByLabel('Article Comments Enabled')
+			accessibilityMenuPage.enableAccessibilityMenuCheckbox
 		).not.toBeChecked();
 
 		await expect(
 			page
 				.getByText(
-					'Set this to true to enable comments for journal articles. This field has been set by a portal property and cannot be changed here.'
+					'Enable the accessibility menu which can be accessed by tabbing focus to the quick access menu. When enabled, users are able to save their accessibility settings in the browser local storage when not signed in and in the database when signed in. This field has been set by a portal property and cannot be changed here.'
 				)
 				.first()
 		).toBeVisible();
 	});
 
-	const {layout} =
-		await test.step('Create Web Content and Page via API', async () => {
-			await apiHelpers.jsonWebServicesJournal.addWebContent({
-				ddmStructureId: await getBasicWebContentStructureId(apiHelpers),
-				groupId: site.id,
-				titleMap: {en_US: basicWebContentTitle},
-			});
-
-			const layout = await apiHelpers.headlessDelivery.createSitePage({
-				siteId: site.id,
-				title: getRandomString(),
-			});
-
-			return {layout};
-		});
-
-	await test.step('Add Web Content Display widget to page', async () => {
-		await pageEditorPage.goto(layout, site.friendlyUrlPath);
-
-		await pageEditorPage.addWidget(
-			'Content Management',
-			'Web Content Display'
-		);
-
-		await webContentDisplayPage.addWebContentWithDisplay({
-			pageType: 'content',
-			webContentName: basicWebContentTitle,
-		});
-	});
-
-	await test.step('Verify that "Comments" option is hidden in Web Content Display configuration', async () => {
-		await webContentDisplayPage.goToConfigurationWithDisplay();
-
+	await test.step('Verify that Accessibility Menu is not accessible', async () => {
 		await expect(
-			webContentDisplayPage.configurationFrame.getByLabel('Comments', {
-				exact: true,
-			})
-		).toBeHidden();
+			accessibilityMenuPage.openAccessibilityMenuButton
+		).not.toBeAttached();
 	});
 });

@@ -5,6 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {accessibilityMenuPagesTest} from '../../../fixtures/accessibilityMenuPagesTest';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
@@ -12,21 +13,28 @@ import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 export const test = mergeTests(
 	apiHelpersTest,
 	loginTest(),
-	systemSettingsPageTest
+	systemSettingsPageTest,
+	accessibilityMenuPagesTest
 );
 
-test('Verify global comments restriction in System Settings', async ({
+test('Verify Accessibility Menu restriction in System Settings', async ({
+	accessibilityMenuPage,
 	page,
 	systemSettingsPage,
 }) => {
-	await systemSettingsPage.goToSystemSetting('Web Content', 'Web Content');
+	await systemSettingsPage.goToSystemSetting(
+		'Accessibility',
+		'Accessibility Menu'
+	);
 
-	await expect(page.getByLabel('Article Comments Enabled')).not.toBeChecked();
+	await expect(
+		accessibilityMenuPage.enableAccessibilityMenuCheckbox
+	).not.toBeChecked();
 
 	await expect(
 		page
 			.getByText(
-				'Set this to true to enable comments for journal articles. This field has been set by a portal property and cannot be changed here.'
+				'Enable the accessibility menu which can be accessed by tabbing focus to the quick access menu. When enabled, users are able to save their accessibility settings in the browser local storage when not signed in and in the database when signed in. This field has been set by a portal property and cannot be changed here.'
 			)
 			.first()
 	).toBeVisible();

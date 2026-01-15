@@ -10,36 +10,42 @@
 
 	<#list navItem.getChildren() as childNavigationItem>
 		<#assign
-			nav_child_css_class = ""
+			hasBrowsableChildren = childNavigationItem.hasBrowsableChildren()
 		/>
 
-		<#if !childNavigationItem.isChildSelected() && childNavigationItem.isSelected()>
+		<#if hasBrowsableChildren || childNavigationItem.isBrowsable()>
 			<#assign
-				nav_child_css_class = "active selected"
+				nav_child_css_class = ""
 			/>
-		</#if>
 
-		<li class="${nav_child_css_class}" id="layout_${portletDisplay.getId()}_${childNavigationItem.getLayoutId()}" role="presentation">
-			<#if childNavigationItem.isBrowsable()>
-				<#if menuItem>
-					<a class="dropdown-item" href="${childNavigationItem.getURL()}" ${childNavigationItem.getTarget()} role="menuitem">${childNavigationItem.getName()}</a>
-				<#else>
-					<a class="dropdown-item" href="${childNavigationItem.getURL()}" ${childNavigationItem.getTarget()}>${childNavigationItem.getName()}</a>
-				</#if>
-			<#else>
-				<span class="dropdown-item font-weight-semi-bold navigation-menu__submenu">${childNavigationItem.getName()}</span>
-			</#if>
-		</li>
-
-		<#if childNavigationItem.hasBrowsableChildren() && ((displayDepth == 0) || (navItemLevel < displayDepth))>
-			<ul class="list-unstyled pl-3">
-				<@buildChildrenNavItems
-					displayDepth = displayDepth
-					menuItem = false
-					navItem = childNavigationItem
-					navItemLevel = (navItemLevel + 1)
+			<#if !childNavigationItem.isChildSelected() && childNavigationItem.isSelected()>
+				<#assign
+					nav_child_css_class = "active selected"
 				/>
-			</ul>
+			</#if>
+
+			<li class="${nav_child_css_class}" id="layout_${portletDisplay.getId()}_${childNavigationItem.getLayoutId()}" role="presentation">
+				<#if childNavigationItem.isBrowsable()>
+					<#if menuItem>
+						<a class="dropdown-item" href="${childNavigationItem.getURL()}" ${childNavigationItem.getTarget()} role="menuitem">${childNavigationItem.getName()}</a>
+					<#else>
+						<a class="dropdown-item" href="${childNavigationItem.getURL()}" ${childNavigationItem.getTarget()}>${childNavigationItem.getName()}</a>
+					</#if>
+				<#else>
+					<span class="dropdown-item font-weight-semi-bold navigation-menu__submenu">${childNavigationItem.getName()}</span>
+				</#if>
+			</li>
+
+			<#if hasBrowsableChildren && ((displayDepth == 0) || (navItemLevel < displayDepth))>
+				<ul class="list-unstyled pl-3">
+					<@buildChildrenNavItems
+						displayDepth = displayDepth
+						menuItem = false
+						navItem = childNavigationItem
+						navItemLevel = (navItemLevel + 1)
+					/>
+				</ul>
+			</#if>
 		</#if>
 	</#list>
 </#macro>

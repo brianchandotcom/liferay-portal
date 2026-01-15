@@ -73,6 +73,7 @@ public class StagingPermissionImpl implements StagingPermission {
 			!actionId.equals(ActionKeys.DELETE) &&
 			!actionId.equals(ActionKeys.DELETE_DISCUSSION) &&
 			!actionId.equals(ActionKeys.DOWNLOAD) &&
+			!actionId.equals(ActionKeys.PERMISSIONS) &&
 			!actionId.equals(ActionKeys.UPDATE_DISCUSSION) &&
 			!actionId.equals(ActionKeys.VIEW) &&
 			group.hasLocalOrRemoteStagingGroup() &&

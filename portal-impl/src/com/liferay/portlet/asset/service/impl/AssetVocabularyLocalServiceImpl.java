@@ -415,7 +415,8 @@ public class AssetVocabularyLocalServiceImpl
 				new ServiceContext()),
 			externalReferenceCode,
 			this::fetchAssetVocabularyByExternalReferenceCode,
-			this::getAssetVocabularyByExternalReferenceCode, groupId);
+			this::getAssetVocabularyByExternalReferenceCode, groupId,
+			"vocabulary");
 	}
 
 	@Override

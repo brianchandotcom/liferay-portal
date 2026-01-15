@@ -861,7 +861,8 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 				externalReferenceCode, userId, className, classPK,
 				(fetchRole(companyId, name) != null) ? externalReferenceCode :
 					name,
-				null, null, type, StringPool.BLANK, new ServiceContext()));
+				null, null, type, StringPool.BLANK, new ServiceContext()),
+			"role");
 	}
 
 	/**

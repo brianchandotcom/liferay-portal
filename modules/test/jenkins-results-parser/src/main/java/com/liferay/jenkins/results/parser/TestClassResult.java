@@ -5,7 +5,7 @@
 
 package com.liferay.jenkins.results.parser;
 
-import com.liferay.jenkins.results.parser.history.TestHistory;
+import com.liferay.jenkins.results.parser.history.TestClassHistory;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 
 import java.util.List;
@@ -37,7 +37,7 @@ public interface TestClassResult {
 
 	public String getTestClassReportURL();
 
-	public TestHistory getTestHistory();
+	public TestClassHistory getTestClassHistory();
 
 	public TestResult getTestResult(String testName);
 

@@ -18,9 +18,9 @@ public interface BatchHistory {
 
 	public JobHistory getJobHistory();
 
-	public List<TestHistory> getTestHistories();
+	public List<TestClassHistory> getTestClassHistories();
 
-	public TestHistory getTestHistory(String key);
+	public TestClassHistory getTestClassHistory(String key);
 
 	public List<TestTaskHistory> getTestTaskHistories();
 

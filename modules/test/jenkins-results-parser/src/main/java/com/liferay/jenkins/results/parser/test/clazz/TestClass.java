@@ -6,7 +6,7 @@
 package com.liferay.jenkins.results.parser.test.clazz;
 
 import com.liferay.jenkins.results.parser.WeightedItem;
-import com.liferay.jenkins.results.parser.history.TestHistory;
+import com.liferay.jenkins.results.parser.history.TestClassHistory;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.SegmentTestClassGroup;
@@ -50,7 +50,7 @@ public interface TestClass extends Comparable<TestClass>, WeightedItem {
 
 	public String getTestClassName();
 
-	public TestHistory getTestHistory();
+	public TestClassHistory getTestClassHistory();
 
 	public String getTestTaskName();
 

@@ -8,7 +8,7 @@ package com.liferay.jenkins.results.parser.test.clazz;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.history.BatchHistory;
-import com.liferay.jenkins.results.parser.history.TestHistory;
+import com.liferay.jenkins.results.parser.history.TestClassHistory;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.SegmentTestClassGroup;
@@ -199,9 +199,9 @@ public abstract class BaseTestClass implements TestClass {
 	}
 
 	@Override
-	public TestHistory getTestHistory() {
-		if (_testHistory != null) {
-			return _testHistory;
+	public TestClassHistory getTestClassHistory() {
+		if (_testClassHistory != null) {
+			return _testClassHistory;
 		}
 
 		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
@@ -212,9 +212,9 @@ public abstract class BaseTestClass implements TestClass {
 			return null;
 		}
 
-		_testHistory = batchHistory.getTestHistory(getTestName());
+		_testClassHistory = batchHistory.getTestClassHistory(getTestName());
 
-		return _testHistory;
+		return _testClassHistory;
 	}
 
 	@Override
@@ -398,7 +398,7 @@ public abstract class BaseTestClass implements TestClass {
 	private Long _longestTestTaskDuration;
 	private SegmentTestClassGroup _segmentTestClassGroup;
 	private final File _testClassFile;
+	private TestClassHistory _testClassHistory;
 	private final List<TestClassMethod> _testClassMethods = new ArrayList<>();
-	private TestHistory _testHistory;
 
 }

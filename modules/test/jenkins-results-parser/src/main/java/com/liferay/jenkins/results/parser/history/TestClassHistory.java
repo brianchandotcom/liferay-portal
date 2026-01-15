@@ -8,7 +8,7 @@ package com.liferay.jenkins.results.parser.history;
 /**
  * @author Michael Hashimoto
  */
-public interface TestHistory {
+public interface TestClassHistory {
 
 	public long getAverageDuration();
 

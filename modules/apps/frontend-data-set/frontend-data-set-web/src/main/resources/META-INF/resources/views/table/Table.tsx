@@ -32,7 +32,6 @@ import {
 	getLocalizedValue,
 } from '../../utils/getLocalizedValue';
 import {getInputRendererById} from '../../utils/renderer';
-import {saveViewSettings} from '../../utils/saveViewSettings';
 import {
 	IItemsActions,
 	ITableSchema,
@@ -754,13 +753,10 @@ const Table = ({
 	schema: ITableSchema;
 }) => {
 	const {
-		appURL,
-		id,
 		inlineAddingSettings,
 		itemsChanges,
 		nestedItemsKey,
 		nestedItemsReferenceKey,
-		portletId,
 		selectable,
 		selectionType,
 		updateActiveSorts,

@@ -22,6 +22,7 @@ const test = mergeTests(
 	styleBookPageTest
 );
 
+const INVALID_TOKEN_MESSAGE = 'Tokens cannot reference itself.';
 const STYLEBOOK_BRAND_COLOR_1 = 'Brand Color 1';
 const STYLEBOOK_BRAND_COLOR_2 = 'Brand Color 2';
 const STYLEBOOK_BRAND_COLORS_SECTION = 'Brand Colors';
@@ -80,7 +81,6 @@ test(
 	'Check if the user could cancel publish process in style book editor if link invalid color token.',
 	{tag: '@LPS-145650'},
 	async ({page, site, styleBooksPage}) => {
-		const INVALID_TOKEN_MESSAGE = 'Tokens cannot reference itself.';
 		const STYLEBOOK_CATEGORY_VALUE = '#00CCBB';
 
 		const styleBookName = getRandomString();
@@ -102,7 +102,7 @@ test(
 		});
 
 		await test.step('Cancel the publish process', async () => {
-			await styleBooksPage.publish(false);
+			await styleBooksPage.publish('Cancel');
 		});
 
 		await test.step('View the invalid color token is still shown in Brand Color 1 field', async () => {
@@ -164,6 +164,58 @@ test(
 			await waitForInvalidTokenMessage(
 				page,
 				'Tokens cannot be mutually referenced.'
+			);
+		});
+	}
+);
+
+test(
+	'Check if the user could continue publish process in style book editor if link invalid color token. The tokens groups should be collapsed by default except the first one.',
+	{tag: '@LPS-145650'},
+	async ({page, site, styleBooksPage}) => {
+		const styleBookName = getRandomString();
+
+		async function assertSectionIsExpanded(
+			section: string,
+			expanded: boolean = true
+		) {
+			await expect(
+				page.locator('.panel').getByRole('button', {name: section})
+			).toHaveAttribute('aria-expanded', String(expanded));
+		}
+
+		await test.step('Create a style book', async () => {
+			await styleBooksPage.goto(site.friendlyUrlPath);
+
+			await styleBooksPage.create(styleBookName);
+		});
+
+		await test.step('View only the first tokens group is expanded by default', async () => {
+			await assertSectionIsExpanded(STYLEBOOK_BRAND_COLORS_SECTION);
+			await assertSectionIsExpanded('Grays', false);
+			await assertSectionIsExpanded('Theme Colors', false);
+		});
+
+		await test.step('Change the Brand Color 1 to an invalid token', async () => {
+			await styleBooksPage.updateTokenInputColor(
+				STYLEBOOK_BRAND_COLOR_1,
+				STYLEBOOK_BRAND_COLOR_1,
+				STYLEBOOK_BRAND_COLORS_SECTION
+			);
+
+			await waitForInvalidTokenMessage(page, INVALID_TOKEN_MESSAGE);
+		});
+
+		await test.step('Continue the publish process', async () => {
+			await styleBooksPage.publish('Continue');
+		});
+
+		await test.step('View the Brand Color 1 is new color token', async () => {
+			await styleBooksPage.edit(styleBookName);
+
+			await styleBooksPage.assertTokenInputValue(
+				STYLEBOOK_BRAND_COLOR_1,
+				'#0B5FFF'
 			);
 		});
 	}

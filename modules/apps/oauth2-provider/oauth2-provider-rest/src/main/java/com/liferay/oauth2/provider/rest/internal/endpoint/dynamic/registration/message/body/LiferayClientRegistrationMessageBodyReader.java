@@ -33,13 +33,13 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.OAuth2.Application)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=ClientRegistrationMessageBodyReader"
+		"osgi.jaxrs.name=LiferayClientRegistrationMessageBodyReader"
 	},
 	service = MessageBodyReader.class
 )
 @Consumes(MediaType.APPLICATION_JSON)
 @Provider
-public class ClientRegistrationMessageBodyReader
+public class LiferayClientRegistrationMessageBodyReader
 	implements MessageBodyReader<LiferayClientRegistration> {
 
 	@Override

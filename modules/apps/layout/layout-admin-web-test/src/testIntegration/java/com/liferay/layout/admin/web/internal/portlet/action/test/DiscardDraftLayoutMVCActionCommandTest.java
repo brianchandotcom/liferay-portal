@@ -22,12 +22,15 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.test.TestInfo;
+import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.portlet.MockActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockActionResponse;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
@@ -48,6 +51,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
+
+import jakarta.portlet.PortletException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -155,6 +160,28 @@ public class DiscardDraftLayoutMVCActionCommandTest {
 		Assert.assertEquals(
 			_layoutLockManager.getLockedLayoutURL(mockActionRequest),
 			mockActionResponse.getRedirectedUrl());
+	}
+
+	@Test
+	public void testDiscardDraftLayoutWithoutPermissions() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		User user = _userLocalService.getDefaultUser(_group.getCompanyId());
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, PermissionCheckerFactoryUtil.create(user))) {
+
+			Exception exception = Assert.assertThrows(
+				PortletException.class,
+				() -> _discardDraftLayoutMVCActionCommand.processAction(
+					_getMockLiferayPortletActionRequest(draftLayout, user),
+					new MockLiferayPortletActionResponse()));
+
+			Assert.assertTrue(
+				exception.getCause() instanceof PrincipalException);
+		}
 	}
 
 	@Test
@@ -311,5 +338,8 @@ public class DiscardDraftLayoutMVCActionCommandTest {
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

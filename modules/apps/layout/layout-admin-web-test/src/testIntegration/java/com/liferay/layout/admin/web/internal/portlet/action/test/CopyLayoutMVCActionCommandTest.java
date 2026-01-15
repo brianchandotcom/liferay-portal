@@ -34,9 +34,12 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -46,11 +49,13 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.TestInfo;
+import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -79,6 +84,7 @@ import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
+import jakarta.portlet.PortletException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -261,6 +267,24 @@ public class CopyLayoutMVCActionCommandTest {
 				siteNavigationMenu.getSiteNavigationMenuId());
 
 		Assert.assertEquals(1, navigationItemCount);
+	}
+
+	@Test
+	public void testCopyLayoutWithoutPermissions() throws Exception {
+		_addFragmentEntryLinkToLayout(null);
+
+		User user = _userLocalService.getDefaultUser(_group.getCompanyId());
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, PermissionCheckerFactoryUtil.create(user))) {
+
+			Exception exception = Assert.assertThrows(
+				PortletException.class,
+				() -> _processAction(false, Collections.emptyMap(), user));
+
+			Assert.assertTrue(
+				exception.getCause() instanceof PrincipalException);
+		}
 	}
 
 	@Test
@@ -486,6 +510,21 @@ public class CopyLayoutMVCActionCommandTest {
 		return themeDisplay;
 	}
 
+	private ThemeDisplay _getThemeDisplay(User user) throws Exception {
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(
+			_companyLocalService.fetchCompany(_group.getCompanyId()));
+		themeDisplay.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+		themeDisplay.setRealUser(user);
+		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setSiteGroupId(_group.getGroupId());
+		themeDisplay.setUser(user);
+
+		return themeDisplay;
+	}
+
 	private void _processAction(
 			boolean copyPermissions, Map<String, String> map)
 		throws Exception {
@@ -510,6 +549,36 @@ public class CopyLayoutMVCActionCommandTest {
 
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+
+		_mvcActionCommand.processAction(
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
+	}
+
+	private void _processAction(
+			boolean copyPermissions, Map<String, String> map, User user)
+		throws Exception {
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			new MockLiferayPortletActionRequest();
+
+		mockLiferayPortletActionRequest.addParameter(
+			"copyPermissions", String.valueOf(copyPermissions));
+		mockLiferayPortletActionRequest.addParameter(
+			"groupId", String.valueOf(_group.getGroupId()));
+		mockLiferayPortletActionRequest.addParameter(
+			"privateLayout", String.valueOf(_layout.isPrivateLayout()));
+		mockLiferayPortletActionRequest.addParameter("name", _NAME);
+		mockLiferayPortletActionRequest.addParameter(
+			"sourcePlid", String.valueOf(_layout.getPlid()));
+
+		for (Map.Entry<String, String> entry : map.entrySet()) {
+			mockLiferayPortletActionRequest.addParameter(
+				entry.getKey(), entry.getValue());
+		}
+
+		mockLiferayPortletActionRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay(user));
 
 		_mvcActionCommand.processAction(
 			mockLiferayPortletActionRequest,
@@ -691,5 +760,8 @@ public class CopyLayoutMVCActionCommandTest {
 
 	@Inject
 	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

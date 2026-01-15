@@ -945,7 +945,8 @@ public class LayoutStagedModelDataHandler
 				portletDataContext.getCompanyId(), layout, layoutElement));
 		importedLayout.setPortletLayoutPageTemplateEntryScopeERC(
 			_getPortletLayoutPageTemplateEntryScopeERC(
-				portletDataContext.getCompanyId(), layout, layoutElement));
+				portletDataContext.getCompanyId(), groupId, layout,
+				layoutElement));
 		importedLayout.setPortletLayoutPageTemplateEntryLinkEnabled(
 			layout.isPortletLayoutPageTemplateEntryLinkEnabled());
 
@@ -2044,7 +2045,7 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private String _getPortletLayoutPageTemplateEntryScopeERC(
-			long companyId, Layout layout, Element layoutElement)
+			long companyId, long groupId, Layout layout, Element layoutElement)
 		throws Exception {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -2052,6 +2053,10 @@ public class LayoutStagedModelDataHandler
 
 		if (layoutPageTemplateEntry == null) {
 			return layout.getPortletLayoutPageTemplateEntryScopeERC();
+		}
+
+		if (layoutPageTemplateEntry.getGroupId() == groupId) {
+			return StringPool.BLANK;
 		}
 
 		Group group = _groupLocalService.getGroup(

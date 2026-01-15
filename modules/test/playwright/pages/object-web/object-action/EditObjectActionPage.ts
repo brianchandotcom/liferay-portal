@@ -64,19 +64,6 @@ export class EditObjectActionPage {
 		this.viewObjectActionsPage = new ViewObjectActionsPage(page);
 	}
 
-	async chooseNotificationOption() {
-		await this.inputThenCombo.click();
-		await this.optionNotification.click();
-	}
-
-	async clickInputNotificationsCombo() {
-		await this.inputNotificationsCombo.click();
-	}
-
-	async openActionBuilderTab() {
-		await this.actionBuilderTab.click();
-	}
-
 	async addNewAction({
 		expressionBuilderValue,
 		notificationTemplateName,
@@ -119,9 +106,22 @@ export class EditObjectActionPage {
 		await this.saveButton.click();
 	}
 
+	async chooseNotificationOption() {
+		await this.inputThenCombo.click();
+		await this.optionNotification.click();
+	}
+
+	async clickInputNotificationsCombo() {
+		await this.inputNotificationsCombo.click();
+	}
+
 	async fillExpression(expression: string) {
 		await this.enableConditionToggle.check();
 
 		await this.expressionInput.fill(expression);
+	}
+
+	async openActionBuilderTab() {
+		await this.actionBuilderTab.click();
 	}
 }

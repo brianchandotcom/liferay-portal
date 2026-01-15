@@ -5,27 +5,18 @@
 
 package com.liferay.frontend.js.web.internal.resource.handler;
 
-import com.liferay.frontend.js.web.internal.configuration.FrontendCachingConfiguration;
 import com.liferay.frontend.js.web.internal.resource.FrontendResource;
-import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesRegistry;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import jakarta.servlet.http.HttpServletRequest;
-
-import java.io.ByteArrayInputStream;
-
-import java.net.URL;
-
-import java.nio.charset.StandardCharsets;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -41,13 +32,12 @@ import org.junit.runners.Parameterized;
 import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
 
-import org.springframework.mock.web.MockHttpServletRequest;
-
 /**
  * @author Iván Zaera Avellón
  */
 @RunWith(Parameterized.class)
-public class LanguageFrontendResourceRequestHandlerTest {
+public class LanguageFrontendResourceRequestHandlerTest
+	extends BaseFrontendResourceRequestHandlerTestCase {
 
 	@ClassRule
 	@Rule
@@ -60,21 +50,37 @@ public class LanguageFrontendResourceRequestHandlerTest {
 	public static Collection<Object[]> data() {
 		return Arrays.asList(
 			new Object[][] {
-				{0, false, _INVALID_URL}, {1, false, _VALID_URL},
-				{2, true, _VALID_URL}
+				{0, false, "/nonsense/request/index.js"},
+				{1, false, _VALID_URL}, {2, true, _VALID_URL}
 			});
 	}
 
 	@Test
 	public void test() throws Exception {
+		HashedFilesRegistry hashedFilesRegistry = Mockito.mock(
+			HashedFilesRegistry.class);
+
+		if (deployLanguageJSON) {
+			mockDeployedFile(
+				hashedFilesRegistry, "/o/frontend-js-web/language.json",
+				"{keys:['a-key']}");
+		}
+
 		LanguageFrontendResourceRequestHandler
 			languageFrontendResourceRequestHandler =
 				new LanguageFrontendResourceRequestHandler(
-					_mockConfigurationProvider(), _mockHashedFilesRegistry(),
-					new JSONFactoryImpl(), _mockLanguage(), _mockPortal());
+					mockConfigurationProvider(
+						HashMapBuilder.<String, Object>put(
+							"labelsModulesMaxAge", _LABELS_MODULES_MAX_AGE
+						).put(
+							"sendNoCacheForLabelsModules",
+							_SEND_NO_CACHE_FOR_LABELS_MODULES
+						).build()),
+					hashedFilesRegistry, new JSONFactoryImpl(), _mockLanguage(),
+					mockPortal());
 
-		HttpServletRequest httpServletRequest = _mockHttpServletRequest(
-			requestURL);
+		HttpServletRequest httpServletRequest = mockHttpServletRequest(
+			requestURL, null);
 
 		Assert.assertEquals(
 			_EXPECTED_CAN_HANDLE_REQUEST[index],
@@ -118,71 +124,6 @@ public class LanguageFrontendResourceRequestHandlerTest {
 	@Parameterized.Parameter(2)
 	public String requestURL;
 
-	private ConfigurationProvider _mockConfigurationProvider()
-		throws Exception {
-
-		ConfigurationProvider configurationProvider = Mockito.mock(
-			ConfigurationProvider.class);
-
-		FrontendCachingConfiguration frontendCachingConfiguration =
-			Mockito.mock(FrontendCachingConfiguration.class);
-
-		Mockito.when(
-			frontendCachingConfiguration.labelsModulesMaxAge()
-		).thenReturn(
-			_LABELS_MODULES_MAX_AGE
-		);
-
-		Mockito.when(
-			frontendCachingConfiguration.sendNoCacheForLabelsModules()
-		).thenReturn(
-			_SEND_NO_CACHE_FOR_LABELS_MODULES
-		);
-
-		Mockito.when(
-			configurationProvider.getCompanyConfiguration(
-				FrontendCachingConfiguration.class, _COMPANY_ID)
-		).thenReturn(
-			frontendCachingConfiguration
-		);
-
-		return configurationProvider;
-	}
-
-	private HashedFilesRegistry _mockHashedFilesRegistry() throws Exception {
-		HashedFilesRegistry hashedFilesRegistry = Mockito.mock(
-			HashedFilesRegistry.class);
-
-		if (deployLanguageJSON) {
-			URL url = Mockito.mock(URL.class);
-
-			Mockito.when(
-				url.openStream()
-			).thenReturn(
-				new ByteArrayInputStream(
-					"{keys:['a-key']}".getBytes(StandardCharsets.UTF_8))
-			);
-
-			Mockito.when(
-				hashedFilesRegistry.getResource(
-					Mockito.endsWith("/language.json"))
-			).thenReturn(
-				url
-			);
-		}
-
-		return hashedFilesRegistry;
-	}
-
-	private HttpServletRequest _mockHttpServletRequest(String requestURI) {
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setRequestURI(requestURI);
-
-		return mockHttpServletRequest;
-	}
-
 	private Language _mockLanguage() {
 		Language language = Mockito.mock(Language.class);
 
@@ -207,32 +148,6 @@ public class LanguageFrontendResourceRequestHandlerTest {
 		return language;
 	}
 
-	private Portal _mockPortal() {
-		Portal portal = Mockito.mock(Portal.class);
-
-		Mockito.when(
-			portal.getCompanyId(Mockito.any(HttpServletRequest.class))
-		).thenReturn(
-			_COMPANY_ID
-		);
-
-		Mockito.when(
-			portal.getPathContext()
-		).thenReturn(
-			StringPool.BLANK
-		);
-
-		Mockito.when(
-			portal.getPathProxy()
-		).thenReturn(
-			StringPool.BLANK
-		);
-
-		return portal;
-	}
-
-	private static final long _COMPANY_ID = 100;
-
 	private static final boolean[] _EXPECTED_CAN_HANDLE_REQUEST = {
 		false, true, true
 	};
@@ -244,8 +159,6 @@ public class LanguageFrontendResourceRequestHandlerTest {
 	private static final boolean[] _EXPECTED_FRONTEND_RESOURCE = {
 		false, false, true
 	};
-
-	private static final String _INVALID_URL = "/nonsense/request/index.js";
 
 	private static final long _LABELS_MODULES_MAX_AGE = 1000;
 

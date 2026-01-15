@@ -18,12 +18,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.io.ByteArrayInputStream;
-
-import java.net.URL;
-
-import java.nio.charset.StandardCharsets;
-
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -39,13 +33,12 @@ import org.junit.runners.Parameterized;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
-import org.springframework.mock.web.MockHttpServletRequest;
-
 /**
  * @author Iván Zaera Avellón
  */
 @RunWith(Parameterized.class)
-public class HashedFileFrontendResourceRequestHandlerTest {
+public class HashedFileFrontendResourceRequestHandlerTest
+	extends BaseFrontendResourceRequestHandlerTestCase {
 
 	@ClassRule
 	@Rule
@@ -56,7 +49,8 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 	public static Collection<Object[]> data() {
 		return Arrays.asList(
 			new Object[][] {
-				{0, false, _INVALID_EXTENSION_URL}, {1, false, _INVALID_URL},
+				{0, false, "/o/frontend-js-web/index.js.nomap"},
+				{1, false, "/nonsense/request/index.js.map"},
 				{2, false, _VALID_HASHED_URL}, {3, false, _VALID_URL},
 				{4, true, _VALID_HASHED_URL}, {5, true, _VALID_URL}
 			});
@@ -100,15 +94,22 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 
 	@Test
 	public void test() throws Exception {
+		HashedFilesRegistry hashedFilesRegistry = Mockito.mock(
+			HashedFilesRegistry.class);
+
+		mockDeployedFile(
+			hashedFilesRegistry, deployHashed ? _VALID_HASHED_URL : _VALID_URL,
+			_CONTENT);
+
 		HashedFileFrontendResourceRequestHandler
 			hashedFileFrontendResourceRequestHandler =
 				new HashedFileFrontendResourceRequestHandler(
 					ContentTypes.APPLICATION_JSON, _MAX_AGE, _SEND_NO_CACHE,
-					".map", _mockHashedFilesRegistry(), "maxAgeKey",
+					".map", hashedFilesRegistry, "maxAgeKey",
 					Mockito.mock(Portal.class), "sendNoCacheKey");
 
-		HttpServletRequest httpServletRequest = _mockHttpServletRequest(
-			requestURL);
+		HttpServletRequest httpServletRequest = mockHttpServletRequest(
+			requestURL, null);
 
 		Assert.assertEquals(
 			_EXPECTED_CAN_HANDLE_REQUEST[index],
@@ -169,54 +170,6 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 	@Parameterized.Parameter(2)
 	public String requestURL;
 
-	private HashedFilesRegistry _mockHashedFilesRegistry() throws Exception {
-		HashedFilesRegistry hashedFilesRegistry = Mockito.mock(
-			HashedFilesRegistry.class);
-
-		Mockito.when(
-			hashedFilesRegistry.getHashedFileURI(Mockito.eq(_VALID_URL))
-		).thenReturn(
-			deployHashed ? _VALID_HASHED_URL : _VALID_URL
-		);
-
-		URL url = Mockito.mock(URL.class);
-
-		Mockito.when(
-			url.getFile()
-		).thenReturn(
-			deployHashed ? _VALID_HASHED_FILE : _VALID_FILE
-		);
-
-		Mockito.when(
-			url.openStream()
-		).thenReturn(
-			new ByteArrayInputStream(_CONTENT.getBytes(StandardCharsets.UTF_8))
-		);
-
-		Mockito.when(
-			hashedFilesRegistry.getResource(Mockito.eq(_VALID_HASHED_URL))
-		).thenReturn(
-			deployHashed ? url : null
-		);
-
-		Mockito.when(
-			hashedFilesRegistry.getResource(Mockito.eq(_VALID_URL))
-		).thenReturn(
-			url
-		);
-
-		return hashedFilesRegistry;
-	}
-
-	private HttpServletRequest _mockHttpServletRequest(String requestURI) {
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setRequestURI(requestURI);
-
-		return mockHttpServletRequest;
-	}
-
 	private static final String _CONTENT = "{}";
 
 	private static final boolean[] _EXPECTED_CAN_HANDLE_REQUEST = {
@@ -250,25 +203,14 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 	private static final String _HASH =
 		FrontendJSWebTestUtil.randomHashedFileHash();
 
-	private static final String _INVALID_EXTENSION_URL =
-		"/o/frontend-js-web/index.js.nomap";
-
-	private static final String _INVALID_URL = "/nonsense/request/index.js.map";
-
 	private static final long _MAX_AGE = 1000;
 
 	private static final boolean _SEND_NO_CACHE = true;
 
-	private static final String _VALID_FILE = "index.js.map";
-
-	private static final String _VALID_HASHED_FILE =
-		"index.js.(" + _HASH + ").map";
-
 	private static final String _VALID_HASHED_URL =
-		"/o/frontend-js-web/" + _VALID_HASHED_FILE;
+		"/o/frontend-js-web/index.js.(" + _HASH + ").map";
 
-	private static final String _VALID_URL =
-		"/o/frontend-js-web/" + _VALID_FILE;
+	private static final String _VALID_URL = "/o/frontend-js-web/index.js.map";
 
 	private MockedStatic<FallbackKeysSettingsUtil>
 		_fallbackKeysSettingsUtilMockedStatic;

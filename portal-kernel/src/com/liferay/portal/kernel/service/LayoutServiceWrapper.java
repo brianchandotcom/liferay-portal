@@ -291,6 +291,24 @@ public class LayoutServiceWrapper
 			copyPermissions, sourcePlid, serviceContext);
 	}
 
+	@Override
+	public Layout copyLayoutContent(Layout sourceLayout, Layout targetLayout)
+		throws Exception {
+
+		return _layoutService.copyLayoutContent(sourceLayout, targetLayout);
+	}
+
+	@Override
+	public Layout copyLayoutContent(
+			long sourceSegmentsExperienceId, Layout sourceLayout,
+			long targetSegmentsExperienceId, Layout targetLayout)
+		throws Exception {
+
+		return _layoutService.copyLayoutContent(
+			sourceSegmentsExperienceId, sourceLayout, targetSegmentsExperienceId,
+			targetLayout);
+	}
+
 	/**
 	 * Deletes the layout with the primary key, also deleting the layout's child
 	 * layouts, and associated resources.

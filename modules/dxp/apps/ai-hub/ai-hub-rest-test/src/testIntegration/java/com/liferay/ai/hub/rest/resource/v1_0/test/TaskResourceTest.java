@@ -5,8 +5,10 @@
 
 package com.liferay.ai.hub.rest.resource.v1_0.test;
 
+import com.liferay.ai.hub.configuration.AIHubConfiguration;
 import com.liferay.ai.hub.rest.resource.v1_0.test.util.SseEventSourceTestUtil;
 import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
+import com.liferay.ai.hub.security.JWTTokenUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.field.builder.LongTextObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
@@ -14,23 +16,34 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsValues;
@@ -86,6 +99,16 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
 
 		_originalName = PrincipalThreadLocal.getName();
+
+		ConfigurationTestUtil.saveConfiguration(
+			AIHubConfiguration.class.getName(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"clientId", RandomTestUtil.randomString()
+			).put(
+				"clientSecret", RandomTestUtil.randomString()
+			).put(
+				"serviceURL", "http://localhost:8080"
+			).build());
 
 		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
 
@@ -178,6 +201,14 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 			_objectDefinition.getObjectDefinitionId());
 
 		PrincipalThreadLocal.setName(_originalName);
+
+		try {
+			ConfigurationTestUtil.deleteConfiguration(
+				AIHubConfiguration.class.getName());
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
 	}
 
 	@After
@@ -205,6 +236,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		_testPostTaskWithTypeAIDecisionNodeWorkflowDefinition();
 		_testPostTaskWithTypeFixSpellingAndGrammar();
 		_testPostTaskWithTypeLLMNodeWithRAGWorkflowDefinition();
+		_testPostTaskWithTypeLLMNodeWithRAGWorkflowDefinitionWithRestrictedUser();
 		_testPostTaskWithTypeLLMNodeWithToolWorkflowDefinition();
 	}
 
@@ -215,6 +247,12 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		String content = StringUtil.read(inputStream);
 
 		return content.getBytes();
+	}
+
+	private String _generateToken(long userId) throws Exception {
+		return JWTTokenUtil.generateToken(
+			TimeUnit.MINUTES.toMillis(1), RandomTestUtil.randomString(),
+			userId);
 	}
 
 	private void _testPostTask() throws Exception {
@@ -491,6 +529,125 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		SseUtil.closeAll();
 	}
 
+	private void _testPostTaskWithTypeLLMNodeWithRAGWorkflowDefinitionWithRestrictedUser()
+		throws Exception {
+
+		CountDownLatch countDownLatch1 = new CountDownLatch(4);
+		CountDownLatch countDownLatch2 = new CountDownLatch(6);
+		List<String> lines = new ArrayList<>();
+
+		String password = RandomTestUtil.randomString();
+
+		User user = UserTestUtil.addUser(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			password, RandomTestUtil.randomString() + "@liferay.com",
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			ServiceContextTestUtil.getServiceContext());
+
+		user.setEmailAddressVerified(true);
+
+		user = UserLocalServiceUtil.updateUser(user);
+
+		long userId = user.getUserId();
+
+		String userToken = _generateToken(userId);
+
+		_objectEntryLocalService.addObjectEntry(
+			0L, TestPropsValues.getUserId(),
+			_objectDefinition.getObjectDefinitionId(), 0,
+			LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
+			HashMapBuilder.<String, Serializable>put(
+				"description", "His favorite food is Brazilian barbecue."
+			).put(
+				"name", "Feliphe"
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(), _objectDefinition.getClassName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
+			new String[] {ActionKeys.VIEW});
+
+		String sseEventSinkKey = SseEventSourceTestUtil.open(
+			List.of(countDownLatch1, countDownLatch2), lines,
+			"tasks/subscribe");
+
+		HTTPTestUtil.customize(
+		).withCredentials(
+			user.getEmailAddress(), password
+		).apply(
+			() -> {
+				HTTPTestUtil.invokeToJSONObject(
+					JSONUtil.put(
+						"context",
+						JSONUtil.put(
+							"userMessage", "What is Feliphe's favorite food?")
+					).put(
+						"scope",
+						JSONUtil.put(
+							"externalReferenceCode",
+							_group.getExternalReferenceCode())
+					).put(
+						"sseEventSinkKey", sseEventSinkKey
+					).put(
+						"type", "LLM Node With RAG Workflow Definition"
+					).toString(),
+					"ai-hub/v1.0/tasks",
+					HashMapBuilder.put(
+						"Liferay-AI-Hub-On-Behalf-Of", userToken
+					).build(),
+					Http.Method.POST);
+
+				Assert.assertTrue(countDownLatch1.await(10, TimeUnit.SECONDS));
+
+				Assert.assertEquals(lines.toString(), 4, lines.size());
+
+				String response = StringUtil.toLowerCase(lines.get(3));
+
+				Assert.assertFalse(
+					response, response.contains("brazilian barbecue"));
+
+				UserLocalServiceUtil.addRoleUser(role.getRoleId(), userId);
+
+				HTTPTestUtil.invokeToJSONObject(
+					JSONUtil.put(
+						"context",
+						JSONUtil.put(
+							"userMessage", "What is Feliphe's favorite food?")
+					).put(
+						"scope",
+						JSONUtil.put(
+							"externalReferenceCode",
+							_group.getExternalReferenceCode())
+					).put(
+						"sseEventSinkKey", sseEventSinkKey
+					).put(
+						"type", "LLM Node With RAG Workflow Definition"
+					).toString(),
+					"ai-hub/v1.0/tasks",
+					HashMapBuilder.put(
+						"Liferay-AI-Hub-On-Behalf-Of", userToken
+					).build(),
+					Http.Method.POST);
+
+				Assert.assertTrue(countDownLatch2.await(10, TimeUnit.SECONDS));
+
+				Assert.assertEquals(lines.toString(), 6, lines.size());
+
+				response = StringUtil.toLowerCase(lines.get(5));
+
+				Assert.assertTrue(
+					response, response.contains("brazilian barbecue"));
+			}
+		);
+
+		SseUtil.closeAll();
+	}
+
 	private void _testPostTaskWithTypeLLMNodeWithToolWorkflowDefinition()
 		throws Exception {
 
@@ -548,6 +705,9 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 
 	@Inject
 	private static WorkflowDefinitionManager _workflowDefinitionManager;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	@Inject
 	private WorkflowInstanceManager _workflowInstanceManager;

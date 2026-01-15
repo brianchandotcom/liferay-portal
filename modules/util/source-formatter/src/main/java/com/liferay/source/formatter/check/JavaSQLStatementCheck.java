@@ -86,7 +86,7 @@ public class JavaSQLStatementCheck extends BaseFileCheck {
 		for (int i = 0; i < (sqlStatementParts.size() - 1); i++) {
 			String sqlStatementPart = sqlStatementParts.get(i);
 
-			if (!sqlStatementPart.matches("\".+ *= *\"")) {
+			if (!sqlStatementPart.matches("\".+ *= *'?\"")) {
 				continue;
 			}
 

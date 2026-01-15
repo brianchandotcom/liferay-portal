@@ -446,25 +446,6 @@ public abstract class BaseSectionDisplayContextTestCase
 			type, ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 
-	protected void assertFDSActionDropdownItem(
-		FDSActionDropdownItem fdsActionDropdownItem, String icon, String id,
-		String label, String method, String type) {
-
-		Assert.assertNotNull(fdsActionDropdownItem);
-
-		Map<String, String> data =
-			(Map<String, String>)fdsActionDropdownItem.get("data");
-
-		Assert.assertEquals(id, data.get("id"));
-		Assert.assertEquals(method, data.get("method"));
-
-		Assert.assertEquals(icon, fdsActionDropdownItem.get("icon"));
-		Assert.assertEquals(
-			language.get(LocaleUtil.getDefault(), label),
-			fdsActionDropdownItem.get("label"));
-		Assert.assertEquals(type, fdsActionDropdownItem.get("type"));
-	}
-
 	protected CreationMenu getCreationMenu() throws Exception {
 		return getCreationMenu(null);
 	}

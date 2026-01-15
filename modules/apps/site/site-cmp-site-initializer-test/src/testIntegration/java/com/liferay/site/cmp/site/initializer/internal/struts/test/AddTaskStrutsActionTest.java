@@ -6,6 +6,7 @@
 package com.liferay.site.cmp.site.initializer.internal.struts.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -121,10 +122,21 @@ public class AddTaskStrutsActionTest {
 			MapUtil.getLong(
 				taskObjectEntry.getValues(),
 				"r_cmpProjectToCMPTasks_c_cmpProjectId"));
+
+		String[] tagNames = _assetTagLocalService.getTagNames(
+			_taskObjectDefinition.getClassName(),
+			taskObjectEntry.getObjectEntryId());
+
+		Assert.assertTrue(
+			StringUtil.startsWith(
+				tagNames[0], _taskObjectDefinition.getExternalReferenceCode()));
 	}
 
 	@Inject(filter = "path=/cms/add_task")
 	private StrutsAction _addTaskStrutsAction;
+
+	@Inject
+	private AssetTagLocalService _assetTagLocalService;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

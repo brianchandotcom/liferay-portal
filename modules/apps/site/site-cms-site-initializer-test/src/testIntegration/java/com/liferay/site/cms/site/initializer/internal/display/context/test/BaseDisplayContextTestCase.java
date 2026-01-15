@@ -5,6 +5,7 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context.test;
 
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
@@ -35,7 +36,9 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
+import org.junit.Assert;
 import org.junit.Before;
 
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -125,6 +128,25 @@ public abstract class BaseDisplayContextTestCase {
 		return addCustomObjectDefinition(
 			objectFolderId, active, enableObjectEntryDraft,
 			Collections.emptyList(), scope, status);
+	}
+
+	protected void assertFDSActionDropdownItem(
+		FDSActionDropdownItem fdsActionDropdownItem, String icon, String id,
+		String label, String method, String type) {
+
+		Assert.assertNotNull(fdsActionDropdownItem);
+
+		Map<String, String> data =
+			(Map<String, String>)fdsActionDropdownItem.get("data");
+
+		Assert.assertEquals(id, data.get("id"));
+		Assert.assertEquals(method, data.get("method"));
+
+		Assert.assertEquals(icon, fdsActionDropdownItem.get("icon"));
+		Assert.assertEquals(
+			language.get(LocaleUtil.getDefault(), label),
+			fdsActionDropdownItem.get("label"));
+		Assert.assertEquals(type, fdsActionDropdownItem.get("type"));
 	}
 
 	protected MockHttpServletRequest getMockHttpServletRequest()

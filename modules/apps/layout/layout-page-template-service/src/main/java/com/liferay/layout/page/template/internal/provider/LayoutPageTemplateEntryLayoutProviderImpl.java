@@ -63,13 +63,17 @@ public class LayoutPageTemplateEntryLayoutProviderImpl
 		long companyId, String externalReferenceCode,
 		String layoutPageTemplateEntryScopeERC, long scopeGroupId) {
 
+		Long itemGroupId = ScopeUtil.getItemGroupId(
+			companyId, layoutPageTemplateEntryScopeERC, scopeGroupId);
+
+		if (itemGroupId == null) {
+			return null;
+		}
+
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.
 				fetchLayoutPageTemplateEntryByExternalReferenceCode(
-					externalReferenceCode,
-					ScopeUtil.getItemGroupId(
-						companyId, layoutPageTemplateEntryScopeERC,
-						scopeGroupId));
+					externalReferenceCode, itemGroupId);
 
 		if (layoutPageTemplateEntry != null) {
 			return _layoutPrototypeLocalService.fetchLayoutPrototype(

@@ -230,30 +230,23 @@ function reducer(state: State, action: Action): State {
 				}
 			}
 
-			const name = findAvailableFieldName(parent.children, field.name);
+			const nextField = {
+				...field,
+				name: findAvailableFieldName(parent.children, field.name),
+			};
 
-			const children = new Map(parent.children);
-
-			children.set(field.uuid, {...field, name});
-
-			let nextChildren;
-
-			if (parent.type === 'repeatable-group') {
-				nextChildren = updateChild({
-					child: {...parent, children: sortChildren(children)},
-					root: structure,
-				});
-			}
-			else {
-				nextChildren = sortChildren(children);
-			}
+			const children = insertChild({
+				child: nextField,
+				parentUuid: parent.uuid,
+				root: structure,
+			});
 
 			return {
 				...state,
 				selection: [field.uuid],
 				structure: {
 					...structure,
-					children: nextChildren,
+					children,
 				},
 			};
 		}

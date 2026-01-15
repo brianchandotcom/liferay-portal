@@ -588,6 +588,27 @@ public class TaxonomyCategoryResourceTest
 	}
 
 	@Override
+	protected TaxonomyCategory
+			testBatchEngineDeleteImportTask_addAssetLibraryTaxonomyCategory()
+		throws Exception {
+
+		_scopeType = Scope.Type.ASSET_LIBRARY;
+
+		return super.
+			testBatchEngineDeleteImportTask_addAssetLibraryTaxonomyCategory();
+	}
+
+	@Override
+	protected TaxonomyCategory
+			testBatchEngineDeleteImportTask_addSiteTaxonomyCategory()
+		throws Exception {
+
+		_scopeType = Scope.Type.SITE;
+
+		return super.testBatchEngineDeleteImportTask_addSiteTaxonomyCategory();
+	}
+
+	@Override
 	protected Long
 		testDeleteAssetLibraryTaxonomyCategoryByExternalReferenceCode_getAssetLibraryId() {
 

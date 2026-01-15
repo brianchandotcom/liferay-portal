@@ -11,53 +11,56 @@ export default function propsTransformer({
 	portletNamespace,
 	...props
 }) {
-	const url = new URL(itemSelectorURL);
-
 	return {
 		...props,
 		onClick() {
-			const externalReferenceCodeInput = document.getElementById(
-				`${portletNamespace}externalReferenceCode`
+			openLayoutSelectionModal(
+				portletNamespace,
+				itemSelectorURL,
+				eventName
 			);
-
-			const layoutItemRemoveButton = document.getElementById(
-				`${portletNamespace}layoutItemRemove`
-			);
-
-			const layoutNameInput = document.getElementById(
-				`${portletNamespace}layoutNameInput`
-			);
-
-			const privateLayoutInput = document.getElementById(
-				`${portletNamespace}privateLayout`
-			);
-
-			openSelectionModal({
-				buttonAddLabel: Liferay.Language.get('select'),
-				height: '70vh',
-				multiple: true,
-				onSelect: (selectedItem) => {
-					if (selectedItem) {
-						externalReferenceCodeInput.value =
-							selectedItem.externalReferenceCode;
-						layoutNameInput.textContent = selectedItem.name;
-						privateLayoutInput.value = selectedItem.privateLayout;
-
-						url.searchParams.set(
-							`${getPortletNamespace(
-								Liferay.PortletKeys.ITEM_SELECTOR
-							)}externalReferenceCode`,
-							selectedItem.externalReferenceCode
-						);
-
-						layoutItemRemoveButton.classList.remove('hide');
-					}
-				},
-				selectEventName: eventName,
-				size: 'md',
-				title: Liferay.Language.get('select-layout'),
-				url: url.href,
-			});
 		},
 	};
+}
+
+export function openLayoutSelectionModal(
+	portletNamespace,
+	itemSelectorURL,
+	eventName
+) {
+	const url = new URL(itemSelectorURL);
+
+	const externalReferenceCodeInput = document.getElementById(
+		`${portletNamespace}externalReferenceCode`
+	);
+
+	const itemInput = document.getElementById(`${portletNamespace}itemInput`);
+
+	const privateLayoutInput = document.getElementById(
+		`${portletNamespace}privateLayout`
+	);
+	openSelectionModal({
+		buttonAddLabel: Liferay.Language.get('select'),
+		height: '70vh',
+		multiple: true,
+		onSelect: (selectedItem) => {
+			if (selectedItem) {
+				externalReferenceCodeInput.value =
+					selectedItem.externalReferenceCode;
+				itemInput.value = selectedItem.name;
+				privateLayoutInput.value = selectedItem.privateLayout;
+
+				url.searchParams.set(
+					`${getPortletNamespace(
+						Liferay.PortletKeys.ITEM_SELECTOR
+					)}externalReferenceCode`,
+					selectedItem.externalReferenceCode
+				);
+			}
+		},
+		selectEventName: eventName,
+		size: 'md',
+		title: Liferay.Language.get('select-layout'),
+		url: url.href,
+	});
 }

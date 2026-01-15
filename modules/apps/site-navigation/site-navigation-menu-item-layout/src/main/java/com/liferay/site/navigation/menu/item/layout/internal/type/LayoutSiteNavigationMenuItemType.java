@@ -567,6 +567,14 @@ public class LayoutSiteNavigationMenuItemType
 				WebKeys.THEME_DISPLAY);
 
 		httpServletRequest.setAttribute(
+			SiteNavigationMenuItemTypeLayoutWebKeys.HAS_MODEL,
+			hasModel(
+				siteNavigationMenuItem.getCompanyId(),
+				siteNavigationMenuItem.getGroupId(),
+				UnicodePropertiesBuilder.fastLoad(
+					siteNavigationMenuItem.getTypeSettings()
+				).build()));
+		httpServletRequest.setAttribute(
 			SiteNavigationMenuItemTypeLayoutWebKeys.ITEM_SELECTOR,
 			_itemSelector);
 		httpServletRequest.setAttribute(

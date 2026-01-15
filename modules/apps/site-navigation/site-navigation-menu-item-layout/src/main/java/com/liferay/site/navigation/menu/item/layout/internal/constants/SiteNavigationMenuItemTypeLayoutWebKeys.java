@@ -10,6 +10,8 @@ package com.liferay.site.navigation.menu.item.layout.internal.constants;
  */
 public class SiteNavigationMenuItemTypeLayoutWebKeys {
 
+	public static final String HAS_MODEL = "HAS_MODEL";
+
 	public static final String ITEM_SELECTOR = "ITEM_SELECTOR";
 
 	public static final String USE_CUSTOM_NAME = "USE_CUSTOM_NAME";

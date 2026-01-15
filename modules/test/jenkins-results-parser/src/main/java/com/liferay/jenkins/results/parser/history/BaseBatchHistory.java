@@ -5,8 +5,6 @@
 
 package com.liferay.jenkins.results.parser.history;
 
-import com.liferay.jenkins.results.parser.TestHistory;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,7 +51,7 @@ public abstract class BaseBatchHistory implements BatchHistory {
 
 		if ((testsJSONArray != null) && !testsJSONArray.isEmpty()) {
 			for (int i = 0; i < testsJSONArray.length(); i++) {
-				TestHistory testHistory = new TestHistory(
+				TestHistory testHistory = HistoryFactory.newTestHistory(
 					this, testsJSONArray.getJSONObject(i));
 
 				_testHistories.put(testHistory.getTestName(), testHistory);

@@ -8,6 +8,7 @@ package com.liferay.ai.hub.rest.resource.v1_0.test;
 import com.liferay.ai.hub.rest.resource.v1_0.test.util.SseEventSourceTestUtil;
 import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -93,7 +94,7 @@ public class MessageResourceTest extends BaseMessageResourceTestCase {
 			List.of(countDownLatch1, countDownLatch2), lines,
 			"chats/subscribe");
 
-		HTTPTestUtil.invokeToJSONObject(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"text", "Hello"
 			).toString(),
@@ -101,18 +102,28 @@ public class MessageResourceTest extends BaseMessageResourceTestCase {
 				"/messages",
 			Http.Method.POST);
 
+		Assert.assertEquals("Hello", jsonObject.getString("text"));
+
+		Assert.assertEquals(lines.toString(), 2, lines.size());
+
 		Assert.assertTrue(countDownLatch1.await(10, TimeUnit.SECONDS));
 
 		Assert.assertEquals(lines.toString(), 4, lines.size());
 		Assert.assertEquals("event: Chat Message Sent", lines.get(2));
 
-		HTTPTestUtil.invokeToJSONObject(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"text", "What was the first message sent in this chat?"
 			).toString(),
 			"ai-hub/v1.0/chats/by-external-reference-code/" + sseEventSinkKey +
 				"/messages",
 			Http.Method.POST);
+
+		Assert.assertEquals(
+			"What is the first message sent in this chat?",
+			jsonObject.getString("text"));
+
+		Assert.assertEquals(lines.toString(), 4, lines.size());
 
 		Assert.assertTrue(countDownLatch2.await(10, TimeUnit.SECONDS));
 

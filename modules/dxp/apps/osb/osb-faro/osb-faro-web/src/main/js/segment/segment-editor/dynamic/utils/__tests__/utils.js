@@ -226,7 +226,7 @@ describe('utils', () => {
 		it('should return the account name Property when provided with an account name Criterion', () => {
 			const criterion = data.generateCriterion({
 				operatorName: AccountsFilter,
-				propertyName: 'organization/accountName/value',
+				propertyName: 'accountName',
 				value: fromJS({
 					criterionGroup: {
 						conjunctionName: And,
@@ -242,22 +242,16 @@ describe('utils', () => {
 				})
 			});
 
-			const mockProperty = new Property();
-
-			const referencedPropertiesIMap = fromJS({
-				account: {
-					organization: {
-						accountName: mockProperty
-					}
-				}
+			const mockProperty = new Property({
+				entityName: 'Account',
+				label: 'Account Name',
+				name: 'accountName',
+				type: 'account-text'
 			});
 
-			const property = utils.findPropertyByCriterion(
-				criterion,
-				referencedPropertiesIMap
-			);
+			const property = utils.findPropertyByCriterion(criterion);
 
-			expect(property).toBe(mockProperty);
+			expect(property.get('name')).toEqual(mockProperty.get('name'));
 		});
 
 		it('should return the session url Property when provided with a session url Criterion', () => {

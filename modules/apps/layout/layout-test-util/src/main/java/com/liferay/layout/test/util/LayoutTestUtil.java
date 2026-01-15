@@ -511,6 +511,12 @@ public class LayoutTestUtil {
 					getFirstLayoutPageTemplateEntry(
 						layoutPrototype.getLayoutPrototypeId());
 
+			layoutPageTemplateEntry.setGroupId(group.getGroupId());
+
+			layoutPageTemplateEntry =
+				LayoutPageTemplateEntryLocalServiceUtil.
+					updateLayoutPageTemplateEntry(layoutPageTemplateEntry);
+
 			serviceContext.setAttribute(
 				"portletLayoutPageTemplateEntryERC",
 				layoutPageTemplateEntry.getExternalReferenceCode());

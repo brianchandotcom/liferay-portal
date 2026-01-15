@@ -256,6 +256,17 @@ public class ExportImportPerformanceTest {
 			LayoutPrototype layoutPrototype = LayoutTestUtil.addLayoutPrototype(
 				RandomTestUtil.randomString());
 
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					getFirstLayoutPageTemplateEntry(
+						layoutPrototype.getLayoutPrototypeId());
+
+			layoutPageTemplateEntry.setGroupId(_group.getGroupId());
+
+			layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					updateLayoutPageTemplateEntry(layoutPageTemplateEntry);
+
 			Layout layoutPrototypeLayout = layoutPrototype.getLayout();
 
 			layoutPrototypeLayout.setType(layout.getType());
@@ -265,11 +276,6 @@ public class ExportImportPerformanceTest {
 
 			_layoutLocalService.copyLayoutContent(
 				layout, layoutPrototypeLayout);
-
-			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				_layoutPageTemplateEntryLocalService.
-					getFirstLayoutPageTemplateEntry(
-						layoutPrototype.getLayoutPrototypeId());
 
 			layout.setPortletLayoutPageTemplateEntryERC(
 				layoutPageTemplateEntry.getExternalReferenceCode());

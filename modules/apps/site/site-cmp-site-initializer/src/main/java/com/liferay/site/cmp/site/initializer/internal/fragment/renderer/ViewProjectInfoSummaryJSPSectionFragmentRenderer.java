@@ -10,6 +10,7 @@ import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -43,6 +44,15 @@ public class ViewProjectInfoSummaryJSPSectionFragmentRenderer
 			return null;
 		}
 
+		ObjectEntry objectEntry = (ObjectEntry)object;
+
+		httpServletRequest.setAttribute(
+			"OBJECT_RELATIONSHIP",
+			_objectRelationshipLocalService.
+				fetchObjectRelationshipByExternalReferenceCode(
+					"L_CMP_PROJECT_TO_L_CMP_TASKS",
+					objectEntry.getObjectDefinitionId()));
+
 		return new ViewProjectInfoSummarySectionDisplayContext(
 			_listTypeEntryLocalService, (ObjectEntry)object,
 			_objectFieldLocalService,
@@ -65,5 +75,8 @@ public class ViewProjectInfoSummaryJSPSectionFragmentRenderer
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 }

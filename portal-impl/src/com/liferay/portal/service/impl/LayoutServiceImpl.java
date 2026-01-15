@@ -393,6 +393,36 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			copyPermissions, sourcePlid, serviceContext);
 	}
 
+	@Override
+	public Layout copyLayoutContent(Layout sourceLayout, Layout targetLayout)
+		throws Exception {
+
+		LayoutPermissionUtil.check(
+			getPermissionChecker(), sourceLayout, ActionKeys.VIEW);
+
+		LayoutPermissionUtil.checkLayoutUpdatePermission(
+			getPermissionChecker(), targetLayout);
+
+		return layoutLocalService.copyLayoutContent(sourceLayout, targetLayout);
+	}
+
+	@Override
+	public Layout copyLayoutContent(
+			long sourceSegmentsExperienceId, Layout sourceLayout,
+			long targetSegmentsExperienceId, Layout targetLayout)
+		throws Exception {
+
+		LayoutPermissionUtil.check(
+			getPermissionChecker(), sourceLayout, ActionKeys.VIEW);
+
+		LayoutPermissionUtil.checkLayoutUpdatePermission(
+			getPermissionChecker(), targetLayout);
+
+		return layoutLocalService.copyLayoutContent(
+			sourceSegmentsExperienceId, sourceLayout,
+			targetSegmentsExperienceId, targetLayout);
+	}
+
 	/**
 	 * Deletes the layout with the primary key, also deleting the layout's child
 	 * layouts, and associated resources.

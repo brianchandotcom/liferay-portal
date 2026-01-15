@@ -52,6 +52,10 @@ import java.util.function.Supplier;
 			value = ContentPageSpecification.class
 		),
 		@JsonSubTypes.Type(
+			name = "LinkToURLPageSpecification",
+			value = LinkToURLPageSpecification.class
+		),
+		@JsonSubTypes.Type(
 			name = "PageSetPageSpecification",
 			value = PageSetPageSpecification.class
 		),
@@ -432,6 +436,7 @@ public abstract class PageSpecification implements Serializable {
 	public static enum Type {
 
 		CONTENT_PAGE_SPECIFICATION("ContentPageSpecification"),
+		LINK_TO_URL_PAGE_SPECIFICATION("LinkToURLPageSpecification"),
 		PAGE_SET_PAGE_SPECIFICATION("PageSetPageSpecification"),
 		WIDGET_PAGE_SPECIFICATION("WidgetPageSpecification");
 

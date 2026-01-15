@@ -1,15 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
-import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.LinkToURLPageSpecification;
-import com.liferay.headless.admin.site.client.dto.v1_0.PageSetPageSpecification;
-import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
-import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSpecification;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -25,121 +21,170 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class PageSpecificationSerDes {
+public class LinkToURLPageSpecificationSerDes {
 
-	public static PageSpecification toDTO(String json) {
-		PageSpecificationJSONParser pageSpecificationJSONParser =
-			new PageSpecificationJSONParser();
+	public static LinkToURLPageSpecification toDTO(String json) {
+		LinkToURLPageSpecificationJSONParser
+			linkToURLPageSpecificationJSONParser =
+				new LinkToURLPageSpecificationJSONParser();
 
-		return pageSpecificationJSONParser.parseToDTO(json);
+		return linkToURLPageSpecificationJSONParser.parseToDTO(json);
 	}
 
-	public static PageSpecification[] toDTOs(String json) {
-		PageSpecificationJSONParser pageSpecificationJSONParser =
-			new PageSpecificationJSONParser();
+	public static LinkToURLPageSpecification[] toDTOs(String json) {
+		LinkToURLPageSpecificationJSONParser
+			linkToURLPageSpecificationJSONParser =
+				new LinkToURLPageSpecificationJSONParser();
 
-		return pageSpecificationJSONParser.parseToDTOs(json);
+		return linkToURLPageSpecificationJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(PageSpecification pageSpecification) {
-		if (pageSpecification == null) {
+	public static String toJSON(
+		LinkToURLPageSpecification linkToURLPageSpecification) {
+
+		if (linkToURLPageSpecification == null) {
 			return "null";
 		}
 
-		PageSpecification.Type type = pageSpecification.getType();
+		StringBuilder sb = new StringBuilder();
 
-		if (type != null) {
-			String typeString = type.toString();
+		sb.append("{");
 
-			if (typeString.equals("ContentPageSpecification")) {
-				return ContentPageSpecificationSerDes.toJSON(
-					(ContentPageSpecification)pageSpecification);
+		if (linkToURLPageSpecification.getCustomFields() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
 			}
 
-			if (typeString.equals("LinkToURLPageSpecification")) {
-				return LinkToURLPageSpecificationSerDes.toJSON(
-					(LinkToURLPageSpecification)pageSpecification);
+			sb.append("\"customFields\": ");
+
+			sb.append("[");
+
+			for (int i = 0;
+				 i < linkToURLPageSpecification.getCustomFields().length; i++) {
+
+				sb.append(linkToURLPageSpecification.getCustomFields()[i]);
+
+				if ((i + 1) <
+						linkToURLPageSpecification.getCustomFields().length) {
+
+					sb.append(", ");
+				}
 			}
 
-			if (typeString.equals("PageSetPageSpecification")) {
-				return PageSetPageSpecificationSerDes.toJSON(
-					(PageSetPageSpecification)pageSpecification);
-			}
-
-			if (typeString.equals("WidgetPageSpecification")) {
-				return WidgetPageSpecificationSerDes.toJSON(
-					(WidgetPageSpecification)pageSpecification);
-			}
-
-			throw new IllegalArgumentException("Unknown type " + typeString);
+			sb.append("]");
 		}
-		else {
-			throw new IllegalArgumentException("Missing type parameter");
+
+		if (linkToURLPageSpecification.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(linkToURLPageSpecification.getExternalReferenceCode()));
+
+			sb.append("\"");
 		}
+
+		if (linkToURLPageSpecification.getStatus() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"status\": ");
+
+			sb.append("\"");
+			sb.append(linkToURLPageSpecification.getStatus());
+			sb.append("\"");
+		}
+
+		if (linkToURLPageSpecification.getType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+			sb.append(linkToURLPageSpecification.getType());
+			sb.append("\"");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		PageSpecificationJSONParser pageSpecificationJSONParser =
-			new PageSpecificationJSONParser();
+		LinkToURLPageSpecificationJSONParser
+			linkToURLPageSpecificationJSONParser =
+				new LinkToURLPageSpecificationJSONParser();
 
-		return pageSpecificationJSONParser.parseToMap(json);
+		return linkToURLPageSpecificationJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		PageSpecification pageSpecification) {
+		LinkToURLPageSpecification linkToURLPageSpecification) {
 
-		if (pageSpecification == null) {
+		if (linkToURLPageSpecification == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (pageSpecification.getCustomFields() == null) {
+		if (linkToURLPageSpecification.getCustomFields() == null) {
 			map.put("customFields", null);
 		}
 		else {
 			map.put(
 				"customFields",
-				String.valueOf(pageSpecification.getCustomFields()));
+				String.valueOf(linkToURLPageSpecification.getCustomFields()));
 		}
 
-		if (pageSpecification.getExternalReferenceCode() == null) {
+		if (linkToURLPageSpecification.getExternalReferenceCode() == null) {
 			map.put("externalReferenceCode", null);
 		}
 		else {
 			map.put(
 				"externalReferenceCode",
-				String.valueOf(pageSpecification.getExternalReferenceCode()));
+				String.valueOf(
+					linkToURLPageSpecification.getExternalReferenceCode()));
 		}
 
-		if (pageSpecification.getStatus() == null) {
+		if (linkToURLPageSpecification.getStatus() == null) {
 			map.put("status", null);
 		}
 		else {
-			map.put("status", String.valueOf(pageSpecification.getStatus()));
+			map.put(
+				"status",
+				String.valueOf(linkToURLPageSpecification.getStatus()));
 		}
 
-		if (pageSpecification.getType() == null) {
+		if (linkToURLPageSpecification.getType() == null) {
 			map.put("type", null);
 		}
 		else {
-			map.put("type", String.valueOf(pageSpecification.getType()));
+			map.put(
+				"type", String.valueOf(linkToURLPageSpecification.getType()));
 		}
 
 		return map;
 	}
 
-	public static class PageSpecificationJSONParser
-		extends BaseJSONParser<PageSpecification> {
+	public static class LinkToURLPageSpecificationJSONParser
+		extends BaseJSONParser<LinkToURLPageSpecification> {
 
 		@Override
-		protected PageSpecification createDTO() {
-			return null;
+		protected LinkToURLPageSpecification createDTO() {
+			return new LinkToURLPageSpecification();
 		}
 
 		@Override
-		protected PageSpecification[] createDTOArray(int size) {
-			return new PageSpecification[size];
+		protected LinkToURLPageSpecification[] createDTOArray(int size) {
+			return new LinkToURLPageSpecification[size];
 		}
 
 		@Override
@@ -163,42 +208,9 @@ public class PageSpecificationSerDes {
 		}
 
 		@Override
-		public PageSpecification parseToDTO(String json) {
-			Map<String, Object> jsonMap = parseToMap(json);
-
-			Object type = jsonMap.get("type");
-
-			if (type != null) {
-				String typeString = type.toString();
-
-				if (typeString.equals("ContentPageSpecification")) {
-					return ContentPageSpecification.toDTO(json);
-				}
-
-				if (typeString.equals("LinkToURLPageSpecification")) {
-					return LinkToURLPageSpecification.toDTO(json);
-				}
-
-				if (typeString.equals("PageSetPageSpecification")) {
-					return PageSetPageSpecification.toDTO(json);
-				}
-
-				if (typeString.equals("WidgetPageSpecification")) {
-					return WidgetPageSpecification.toDTO(json);
-				}
-
-				throw new IllegalArgumentException(
-					"Unknown type " + typeString);
-			}
-			else {
-				throw new IllegalArgumentException("Missing type parameter");
-			}
-		}
-
-		@Override
 		protected void setField(
-			PageSpecification pageSpecification, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
+			LinkToURLPageSpecification linkToURLPageSpecification,
+			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "customFields")) {
 				if (jsonParserFieldValue != null) {
@@ -217,28 +229,29 @@ public class PageSpecificationSerDes {
 									(String)jsonParserFieldValues[i]);
 					}
 
-					pageSpecification.setCustomFields(customFieldsArray);
+					linkToURLPageSpecification.setCustomFields(
+						customFieldsArray);
 				}
 			}
 			else if (Objects.equals(
 						jsonParserFieldName, "externalReferenceCode")) {
 
 				if (jsonParserFieldValue != null) {
-					pageSpecification.setExternalReferenceCode(
+					linkToURLPageSpecification.setExternalReferenceCode(
 						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "status")) {
 				if (jsonParserFieldValue != null) {
-					pageSpecification.setStatus(
-						PageSpecification.Status.create(
+					linkToURLPageSpecification.setStatus(
+						LinkToURLPageSpecification.Status.create(
 							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
-					pageSpecification.setType(
-						PageSpecification.Type.create(
+					linkToURLPageSpecification.setType(
+						LinkToURLPageSpecification.Type.create(
 							(String)jsonParserFieldValue));
 				}
 			}

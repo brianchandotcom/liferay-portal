@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSettings;
+import com.liferay.headless.admin.site.client.dto.v1_0.LinkToURLPageSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSetPageSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSettings;
@@ -53,6 +54,11 @@ public class PageSettingsSerDes {
 			if (typeString.equals("ContentPageSettings")) {
 				return ContentPageSettingsSerDes.toJSON(
 					(ContentPageSettings)pageSettings);
+			}
+
+			if (typeString.equals("LinkToURLPageSettings")) {
+				return LinkToURLPageSettingsSerDes.toJSON(
+					(LinkToURLPageSettings)pageSettings);
 			}
 
 			if (typeString.equals("PageSetPageSettings")) {
@@ -165,6 +171,10 @@ public class PageSettingsSerDes {
 
 				if (typeString.equals("ContentPageSettings")) {
 					return ContentPageSettings.toDTO(json);
+				}
+
+				if (typeString.equals("LinkToURLPageSettings")) {
+					return LinkToURLPageSettings.toDTO(json);
 				}
 
 				if (typeString.equals("PageSetPageSettings")) {

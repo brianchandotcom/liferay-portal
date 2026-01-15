@@ -11,12 +11,15 @@ import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
+import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionRelService;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService;
 import com.liferay.commerce.shipping.engine.fixed.web.internal.ByWeightCommerceShippingEngine;
 import com.liferay.commerce.shipping.engine.fixed.web.internal.display.context.CommerceShippingFixedOptionRelsDisplayContext;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.RegionService;
@@ -45,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class CommerceShippingMethodFixedOptionSettingsScreenNavigationEntry
 	extends CommerceShippingMethodFixedOptionSettingsScreenNavigationCategory
-	implements ScreenNavigationEntry<CommerceShippingMethod> {
+	implements ScreenNavigationEntry<CommerceShippingFixedOption> {
 
 	@Override
 	public String getEntryKey() {
@@ -54,15 +57,35 @@ public class CommerceShippingMethodFixedOptionSettingsScreenNavigationEntry
 
 	@Override
 	public boolean isVisible(
-		User user, CommerceShippingMethod commerceShippingMethod) {
+		User user, CommerceShippingFixedOption commerceShippingFixedOption) {
 
-		if (commerceShippingMethod == null) {
+		if (commerceShippingFixedOption == null) {
 			return false;
 		}
 
-		String engineKey = commerceShippingMethod.getEngineKey();
+		long commerceShippingMethodId =
+			commerceShippingFixedOption.getCommerceShippingMethodId();
 
-		return engineKey.equals(ByWeightCommerceShippingEngine.KEY);
+		if (commerceShippingMethodId == 0) {
+			return false;
+		}
+
+		try {
+			CommerceShippingMethod commerceShippingMethod =
+				_commerceShippingMethodService.getCommerceShippingMethod(
+					commerceShippingMethodId);
+
+			String engineKey = commerceShippingMethod.getEngineKey();
+
+			return engineKey.equals(ByWeightCommerceShippingEngine.KEY);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return false;
 	}
 
 	@Override
@@ -97,6 +120,9 @@ public class CommerceShippingMethodFixedOptionSettingsScreenNavigationEntry
 			_servletContext, httpServletRequest, httpServletResponse,
 			"/shipping_option_settings.jsp");
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CommerceShippingMethodFixedOptionSettingsScreenNavigationEntry.class);
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;

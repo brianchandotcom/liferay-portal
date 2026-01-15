@@ -107,6 +107,10 @@ public class CommerceShippingFixedOptionSettingFDSActionProvider
 		).setMVCRenderCommandName(
 			"/commerce_shipping_methods/edit_commerce_shipping_fixed_option_rel"
 		).setParameter(
+			"commerceShippingFixedOptionId",
+			ParamUtil.getLong(
+				httpServletRequest, "commerceShippingFixedOptionId")
+		).setParameter(
 			"commerceShippingFixedOptionRelId", shippingFixedOptionSettingId
 		).setParameter(
 			"commerceShippingMethodId",

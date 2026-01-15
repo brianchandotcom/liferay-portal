@@ -24,13 +24,48 @@
 			"enableObjectEntryHistory": true,
 			"enableObjectEntrySchedule": true,
 			"enableObjectEntrySubscription": true,
-			"enableObjectEntryVersioning": true,
 			"externalReferenceCode": "L_CMP_PROJECT",
 			"label": {
 				"en_US": "Project"
 			},
 			"modifiable": true,
 			"name": "CMPProject",
+			"objectActions": [
+				{
+					"active": true,
+					"conditionExpression": "status != 3",
+					"externalReferenceCode": "L_CMP_PROJECT_SUBSCRIPTION_COMMENT_ADDED_OBJECT_ACTION",
+					"label": {
+						"en_US": "Project Subscription Comment Added"
+					},
+					"name": "CMPProjectSubscriptionCommentAdded",
+					"objectActionExecutorKey": "notification",
+					"objectActionTriggerKey": "liferay/cmp_project_comment_added",
+					"parameters": {
+						"notificationTemplateExternalReferenceCode": "L_CMP_PROJECT_SUBSCRIPTION_COMMENT_ADDED_NOTIFICATION_TEMPLATE",
+						"type": "email",
+						"usePreferredLanguageForGuests": true
+					},
+					"system": true
+				},
+				{
+					"active": true,
+					"conditionExpression": "status != 3",
+					"externalReferenceCode": "L_CMP_PROJECT_SUBSCRIPTION_UPDATED_OBJECT_ACTION",
+					"label": {
+						"en_US": "Project Subscription Updated"
+					},
+					"name": "CMPProjectSubscriptionUpdated",
+					"objectActionExecutorKey": "notification",
+					"objectActionTriggerKey": "onAfterUpdate",
+					"parameters": {
+						"notificationTemplateExternalReferenceCode": "L_CMP_PROJECT_SUBSCRIPTION_UPDATED_NOTIFICATION_TEMPLATE",
+						"type": "email",
+						"usePreferredLanguageForGuests": true
+					},
+					"system": true
+				}
+			],
 			"objectDefinitionSettings": [
 				{
 					"name": "acceptAllGroups",
@@ -207,8 +242,6 @@
 			"enableObjectEntryDraft": true,
 			"enableObjectEntryHistory": true,
 			"enableObjectEntrySchedule": true,
-			"enableObjectEntrySubscription": true,
-			"enableObjectEntryVersioning": true,
 			"externalReferenceCode": "L_CMP_TASK",
 			"label": {
 				"en_US": "Task"
@@ -216,6 +249,32 @@
 			"modifiable": true,
 			"name": "CMPTask",
 			"objectActions": [
+				{
+					"active": true,
+					"conditionExpression": "isEmpty(oldValue(\"title\")) == true",
+					"externalReferenceCode": "L_CMP_TASK_SUBSCRIPTION_ADDED_OBJECT_ACTION",
+					"label": {
+						"en_US": "Task Subscription Added"
+					},
+					"name": "CMPTaskSubscriptionAdded",
+					"objectActionExecutorKey": "notification",
+					"objectActionTriggerKey": "onAfterUpdate",
+					"parameters": {
+						"notificationTemplateExternalReferenceCode": "L_CMP_TASK_SUBSCRIPTION_ADDED_NOTIFICATION_TEMPLATE",
+						"objectDefinitionExternalReferenceCode": "L_CMP_TASK",
+						"predefinedValues": [
+							{
+								"businessType": "Relationship",
+								"inputAsValue": false,
+								"name": "parentClassPK",
+								"value": "r_cmpProjectToCMPTasks_c_cmpProjectId"
+							}
+						],
+						"type": "email",
+						"usePreferredLanguageForGuests": true
+					},
+					"system": true
+				}
 			],
 			"objectDefinitionSettings": [
 				{

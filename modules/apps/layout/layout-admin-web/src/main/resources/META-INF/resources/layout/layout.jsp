@@ -26,12 +26,7 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 	<aui:input name="applyLayoutPrototype" type="hidden" value="<%= false %>" />
 	<aui:input name="portletLayoutPageTemplateEntryERC" type="hidden" value="<%= selLayout.getPortletLayoutPageTemplateEntryERC() %>" />
-
-	<%
-	Group group = GroupLocalServiceUtil.getGroup(ScopeUtil.getItemGroupId(selLayout.getCompanyId(), selLayout.getPortletLayoutPageTemplateEntryScopeERC(), selLayout.getGroupId()));
-	%>
-
-	<aui:input name="portletLayoutPageTemplateEntryScopeERC" type="hidden" value="<%= group.getExternalReferenceCode() %>" />
+	<aui:input name="portletLayoutPageTemplateEntryScopeERC" type="hidden" value="<%= selLayout.getPortletLayoutPageTemplateEntryScopeERC() %>" />
 
 	<aui:input aria-describedby='<%= liferayPortletResponse.getNamespace() + "inheritChangesDescription" %>' label="inherit-changes" labelCssClass="font-weight-normal" name="portletLayoutPageTemplateEntryLinkEnabled" type="checkbox" value="<%= selLayout.isPortletLayoutPageTemplateEntryLinkEnabled() %>" wrapperCssClass="c-mb-2" />
 

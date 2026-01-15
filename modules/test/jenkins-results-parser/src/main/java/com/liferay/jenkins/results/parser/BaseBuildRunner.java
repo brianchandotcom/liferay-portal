@@ -46,8 +46,6 @@ public abstract class BaseBuildRunner<T extends BuildData>
 
 	protected BaseBuildRunner(T buildData) {
 		_buildData = buildData;
-
-		_job = JobFactory.newJob(_buildData);
 	}
 
 	protected void cleanUpHostServices() {
@@ -57,6 +55,12 @@ public abstract class BaseBuildRunner<T extends BuildData>
 	}
 
 	protected Job getJob() {
+		if (_job != null) {
+			return _job;
+		}
+
+		_job = JobFactory.newJob(_buildData);
+
 		return _job;
 	}
 
@@ -262,7 +266,7 @@ public abstract class BaseBuildRunner<T extends BuildData>
 	private static final long _MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
 
 	private final T _buildData;
-	private final Job _job;
+	private Job _job;
 	private List<JSONObject> _previousBuildJSONObjects;
 
 }

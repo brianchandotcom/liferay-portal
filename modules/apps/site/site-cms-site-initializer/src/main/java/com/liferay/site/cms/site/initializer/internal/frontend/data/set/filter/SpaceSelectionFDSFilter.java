@@ -16,6 +16,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
+		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.ALL_RELATED_ASSETS_SECTION,
 		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.ALL_SECTION,
 		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.CATEGORIZATION_SECTION,
 		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.CONTENTS_SECTION,

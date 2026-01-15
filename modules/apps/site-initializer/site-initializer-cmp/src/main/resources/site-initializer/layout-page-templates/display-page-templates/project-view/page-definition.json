@@ -23,7 +23,7 @@
 						"key": "BASIC_COMPONENT-tabs"
 					},
 					"fragmentConfig": {
-						"numberOfTabs": 2,
+						"numberOfTabs": 3,
 						"persistSelectedTab": false
 					},
 					"fragmentFields": [
@@ -47,6 +47,18 @@
 								"text": {
 									"value_i18n": {
 										"en_US": "Tasks"
+									}
+								}
+							}
+						},
+						{
+							"id": "title3",
+							"value": {
+								"fragmentLink": {
+								},
+								"text": {
+									"value_i18n": {
+										"en_US": "Assets"
 									}
 								}
 							}
@@ -514,6 +526,47 @@
 										"definition": {
 											"fragment": {
 												"key": "com.liferay.site.cmp.site.initializer.internal.fragment.renderer.ViewTasksJSPSectionFragmentRenderer"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+											],
+											"fragmentStyle": {
+												"borderColor": "rgb(241, 242, 245)",
+												"borderRadius": "10px",
+												"borderWidth": "2px",
+												"paddingBottom": "3",
+												"paddingLeft": "3",
+												"paddingRight": "3",
+												"paddingTop": "3"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "FragmentDropZone"
+					},
+					{
+						"definition": {
+							"fragmentDropZoneId": "3"
+						},
+						"id": "5f561d22-abb2-bff7-7e7a-474ae5d0aaaa",
+						"pageElements": [
+							{
+								"definition": {
+									"indexed": true,
+									"layout": {
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "com.liferay.site.cms.site.initializer.internal.fragment.renderer.ViewAllRelatedAssetsJSPSectionFragmentRenderer"
 											},
 											"fragmentConfig": {
 											},

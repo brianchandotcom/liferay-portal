@@ -33,13 +33,13 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 
 	@Override
 	public void run() {
-		validateBuildParameters();
-
 		publishJenkinsReport();
 
 		updateBuildDescription();
 
 		setUpWorkspace();
+
+		validateBuildParameters();
 
 		prepareInvocationBuildDataList();
 

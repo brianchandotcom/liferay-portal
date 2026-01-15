@@ -250,6 +250,16 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 
 				return sortedCustomizableSectionIds.toArray(new String[0]);
 			});
+		widgetPageSettings.setInheritChanges(
+			() -> {
+				if (Validator.isNull(
+						layout.getPortletLayoutPageTemplateEntryERC())) {
+
+					return null;
+				}
+
+				return layout.isPortletLayoutPageTemplateEntryLinkEnabled();
+			});
 		widgetPageSettings.setLayoutTemplateId(
 			() -> layout.getTypeSettingsProperty(
 				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID));
@@ -262,9 +272,6 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 
 					return null;
 				}
-
-				widgetPageSettings.setInheritChanges(
-					layout::isPortletLayoutPageTemplateEntryLinkEnabled);
 
 				return new ItemExternalReference() {
 					{

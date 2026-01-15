@@ -92,13 +92,6 @@ public class DeleteLayoutPrototypeMVCActionCommandTest {
 			"portletLayoutPageTemplateEntryERC",
 			layoutPageTemplateEntry.getExternalReferenceCode());
 
-		Group layoutPageTemplateEntryGroup = _groupLocalService.getGroup(
-			layoutPageTemplateEntry.getGroupId());
-
-		serviceContext.setAttribute(
-			"portletLayoutPageTemplateEntryScopeERC",
-			layoutPageTemplateEntryGroup.getExternalReferenceCode());
-
 		LayoutPrototype layoutPrototype =
 			_layoutPrototypeLocalService.getLayoutPrototype(
 				layoutPageTemplateEntry.getLayoutPrototypeId());

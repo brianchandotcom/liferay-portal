@@ -148,10 +148,6 @@ public class BulkLayoutConverterTest {
 
 		layout.setPortletLayoutPageTemplateEntryERC(
 			layoutPageTemplateEntry.getExternalReferenceCode());
-		layout.setPortletLayoutPageTemplateEntryScopeERC(
-			ScopeUtil.getItemScopeExternalReferenceCode(
-				_group.getExternalReferenceCode(),
-				layoutPageTemplateEntry.getGroupId()));
 
 		layout.setPortletLayoutPageTemplateEntryLinkEnabled(true);
 

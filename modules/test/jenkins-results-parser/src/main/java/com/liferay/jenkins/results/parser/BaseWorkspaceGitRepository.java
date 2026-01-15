@@ -1145,7 +1145,9 @@ public abstract class BaseWorkspaceGitRepository
 			}
 		}
 
-		_setSnapshot(true);
+		if (!jobName.contains("root-cause-analysis-tool")) {
+			_setSnapshot(true);
+		}
 
 		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
 

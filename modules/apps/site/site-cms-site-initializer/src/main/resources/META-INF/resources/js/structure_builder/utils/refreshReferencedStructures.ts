@@ -87,7 +87,13 @@ export default function refreshReferencedStructures({
 
 			// Insert it with updated data and refresh its children
 
-			const relatedObjectDefinition = objectDefinitions[child.erc]!;
+			const relatedObjectDefinition = objectDefinitions[child.erc];
+
+			if (!relatedObjectDefinition) {
+				children.set(child.uuid, child);
+
+				continue;
+			}
 
 			const repeatableGroup: RepeatableGroup = {
 				...child,

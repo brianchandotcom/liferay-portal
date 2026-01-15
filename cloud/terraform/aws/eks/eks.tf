@@ -193,3 +193,30 @@ resource "aws_kms_key" "eks_secrets" {
 	deletion_window_in_days=7
 	description="KMS key for EKS secrets encryption"
 }
+resource "kubernetes_storage_class_v1" "gp3_storage_class" {
+	allowed_topologies {
+		match_label_expressions {
+			key="eks.amazonaws.com/compute-type"
+			values=["auto"]
+		}
+	}
+	allow_volume_expansion=true
+	depends_on=[time_sleep.cluster_addons_ready_time_buffer]
+	metadata {
+		annotations={
+			"storageclass.kubernetes.io/is-default-class"="true"
+		}
+		name="gp3"
+	}
+	parameters={
+		encrypted=true
+		type="gp3"
+	}
+	reclaim_policy="Delete"
+	storage_provisioner="ebs.csi.eks.amazonaws.com"
+	volume_binding_mode="WaitForFirstConsumer"
+}
+resource "time_sleep" "cluster_addons_ready_time_buffer" {
+	create_duration="30s"
+	depends_on=[module.eks.cluster_addons]
+}

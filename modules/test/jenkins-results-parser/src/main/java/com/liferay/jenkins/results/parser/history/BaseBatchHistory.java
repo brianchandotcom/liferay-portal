@@ -6,7 +6,6 @@
 package com.liferay.jenkins.results.parser.history;
 
 import com.liferay.jenkins.results.parser.TestHistory;
-import com.liferay.jenkins.results.parser.TestTaskHistory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -65,8 +64,9 @@ public abstract class BaseBatchHistory implements BatchHistory {
 
 		if ((testTasksJSONArray != null) && !testTasksJSONArray.isEmpty()) {
 			for (int i = 0; i < testTasksJSONArray.length(); i++) {
-				TestTaskHistory testTaskHistory = new TestTaskHistory(
-					this, testTasksJSONArray.getJSONObject(i));
+				TestTaskHistory testTaskHistory =
+					HistoryFactory.newTestTaskHistory(
+						this, testTasksJSONArray.getJSONObject(i));
 
 				_testTaskHistories.put(
 					testTaskHistory.getTestTaskName(), testTaskHistory);

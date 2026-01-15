@@ -5,21 +5,23 @@
 
 package com.liferay.jenkins.results.parser.history;
 
-import com.liferay.jenkins.results.parser.TestHistory;
-
 /**
  * @author Michael Hashimoto
  */
-public interface BatchHistory {
+public interface TestTaskHistory {
 
 	public long getAverageDuration();
 
-	public String getBatchName();
+	public long getAverageTotalDuration();
 
-	public JobHistory getJobHistory();
+	public BatchHistory getBatchHistory();
 
-	public TestHistory getTestHistory(String key);
+	public long getLongestDuration();
 
-	public TestTaskHistory getTestTaskHistory(String key);
+	public long getTestTaskCount();
+
+	public String getTestTaskName();
+
+	public boolean isLatestReportMissing();
 
 }

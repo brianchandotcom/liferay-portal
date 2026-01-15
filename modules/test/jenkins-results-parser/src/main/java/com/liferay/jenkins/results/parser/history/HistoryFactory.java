@@ -49,6 +49,12 @@ public class HistoryFactory {
 		}
 	}
 
+	public static TestTaskHistory newTestTaskHistory(
+		BatchHistory batchHistory, JSONObject jsonObject) {
+
+		return new DefaultTestTaskHistory(batchHistory, jsonObject);
+	}
+
 	private static String _getCIHistoryURL(Job job) {
 		String jobName = job.getJobName();
 

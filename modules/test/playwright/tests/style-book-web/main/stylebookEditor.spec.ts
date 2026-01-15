@@ -78,7 +78,7 @@ test('Checks the correct label for restricted pages in the preview selector', as
 });
 
 test(
-	'Preview StyleBook when edit StyleBook',
+	'Preview StyleBook when edit StyleBook and block interactions',
 	{tag: '@LPD-35561'},
 	async ({
 		page,
@@ -329,6 +329,13 @@ test(
 			await expect(
 				previewIframe.getByRole('menuitem', {name: pageName})
 			).toHaveCSS('font-family', 'times');
+		});
+
+		await test.step('Assert that interaction with the preview page is not allowed', async () => {
+			const overlay = previewIframe.locator(
+				'div[style*="z-index: 100000"]'
+			);
+			await expect(overlay).toHaveCSS('cursor', 'not-allowed');
 		});
 	}
 );

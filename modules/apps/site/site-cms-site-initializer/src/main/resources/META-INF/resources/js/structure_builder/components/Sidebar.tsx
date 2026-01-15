@@ -13,7 +13,10 @@ import React, {useState} from 'react';
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectPublishedChildren from '../selectors/selectPublishedChildren';
 import selectSelection from '../selectors/selectSelection';
+import selectStructure from '../selectors/selectStructure';
 import confirmChildrenDeletion from '../utils/confirmChildrenDeletion';
+import findChild from '../utils/findChild';
+import isReferenced from '../utils/isReferenced';
 import AddChildDropdown from './AddChildDropdown';
 import StructureTree from './StructureTree';
 
@@ -48,6 +51,7 @@ function Toolbar({
 }) {
 	const dispatch = useStateDispatch();
 	const selection = useSelector(selectSelection);
+	const structure = useSelector(selectStructure);
 	const publishedChildren = useSelector(selectPublishedChildren);
 
 	if (selection.length <= 1) {
@@ -67,10 +71,21 @@ function Toolbar({
 	}
 
 	const onDeleteSelection = async () => {
-		if (selection.some((uuid) => publishedChildren.has(uuid))) {
-			const confirm = await confirmChildrenDeletion();
+		for (const uuid of selection) {
+			const item = findChild({root: structure, uuid})!;
 
-			if (!confirm) {
+			if (
+				!isReferenced({item, root: structure}) &&
+				publishedChildren.has(uuid)
+			) {
+				const confirm = await confirmChildrenDeletion();
+
+				if (confirm) {
+					dispatch({type: 'delete-selection'});
+
+					return;
+				}
+
 				return;
 			}
 		}

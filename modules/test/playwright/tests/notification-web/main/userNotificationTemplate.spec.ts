@@ -151,11 +151,11 @@ test.describe('User notification template', () => {
 
 		await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
 
-		await editObjectActionPage.addNewAction(
-			'Notification',
-			'On After Add',
-			notificationTemplateName
-		);
+		await editObjectActionPage.addNewAction({
+			notificationTemplateName,
+			thenOption: 'Notification',
+			whenOption: 'On After Add',
+		});
 
 		const applicationName =
 			'c/' + objectDefinition.name.toLowerCase() + 's';

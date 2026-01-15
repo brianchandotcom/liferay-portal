@@ -5,6 +5,8 @@
 
 package com.liferay.jenkins.results.parser.history;
 
+import java.util.List;
+
 /**
  * @author Michael Hashimoto
  */
@@ -16,7 +18,11 @@ public interface BatchHistory {
 
 	public JobHistory getJobHistory();
 
+	public List<TestHistory> getTestHistories();
+
 	public TestHistory getTestHistory(String key);
+
+	public List<TestTaskHistory> getTestTaskHistories();
 
 	public TestTaskHistory getTestTaskHistory(String key);
 

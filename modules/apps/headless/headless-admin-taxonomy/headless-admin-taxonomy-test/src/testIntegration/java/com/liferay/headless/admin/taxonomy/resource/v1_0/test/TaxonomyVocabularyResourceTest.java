@@ -245,6 +245,24 @@ public class TaxonomyVocabularyResourceTest
 		_testGetTaxonomyVocabularyWithoutPermissionsAction();
 	}
 
+	@Test
+	public void testPostSiteTaxonomyVocabulary() throws Exception {
+		super.testPostSiteTaxonomyVocabulary();
+
+		TaxonomyVocabulary randomTaxonomyVocabulary =
+			randomTaxonomyVocabulary();
+
+		randomTaxonomyVocabulary.setVisibilityType(
+			TaxonomyVocabulary.VisibilityType.EMPTY);
+
+		TaxonomyVocabulary postTaxonomyVocabulary =
+			testPostSiteTaxonomyVocabulary_addTaxonomyVocabulary(
+				randomTaxonomyVocabulary);
+
+		assertEquals(randomTaxonomyVocabulary, postTaxonomyVocabulary);
+		assertValid(postTaxonomyVocabulary);
+	}
+
 	@Override
 	@Test
 	public void testPutTaxonomyVocabulary() throws Exception {

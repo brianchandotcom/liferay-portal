@@ -61,6 +61,8 @@ public class AgentSpecsProviderImpl implements AgentSpecsProvider {
 				HashMapBuilder.<String, Serializable>put(
 					WorkflowConstants.CONTEXT_SERVICE_CONTEXT,
 					_agentContext.getServiceContext()
+				).put(
+					"userToken", _agentContext.getUserToken()
 				).build();
 
 			for (Map.Entry<String, Object> entry : input.entrySet()) {

@@ -873,13 +873,6 @@ const Table = ({
 					});
 
 					viewsDispatch(updateVisibleFields(visibleFieldNames));
-
-					saveViewSettings({
-						appURL,
-						id,
-						portletId,
-						settings: {visibleFieldNames},
-					});
 				}}
 				sort={getSorting()}
 				visibleColumns={getVisibleFieldsMap(

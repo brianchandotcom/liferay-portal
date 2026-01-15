@@ -135,11 +135,32 @@ public class CommerceShippingFixedOptionRelLocalServiceImpl
 	}
 
 	@Override
+	public List<CommerceShippingFixedOptionRel>
+		getCommerceShippingFixedOptionRels(
+			long commerceShippingFixedOptionId, long commerceShippingMethodId,
+			int start, int end,
+			OrderByComparator<CommerceShippingFixedOptionRel>
+				orderByComparator) {
+
+		return commerceShippingFixedOptionRelPersistence.findByC_C(
+			commerceShippingFixedOptionId, commerceShippingMethodId, start, end,
+			orderByComparator);
+	}
+
+	@Override
 	public int getCommerceShippingFixedOptionRelsCount(
 		long commerceShippingFixedOptionId) {
 
 		return commerceShippingFixedOptionRelPersistence.
 			countByCommerceShippingFixedOptionId(commerceShippingFixedOptionId);
+	}
+
+	@Override
+	public int getCommerceShippingFixedOptionRelsCount(
+		long commerceShippingFixedOptionId, long commerceShippingMethodId) {
+
+		return commerceShippingFixedOptionRelPersistence.countByC_C(
+			commerceShippingFixedOptionId, commerceShippingMethodId);
 	}
 
 	@Override

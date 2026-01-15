@@ -115,6 +115,41 @@ public class CommerceShippingFixedOptionRelServiceImpl
 
 	@Override
 	public List<CommerceShippingFixedOptionRel>
+			getCommerceShippingFixedOptionRels(
+				long commerceShippingFixedOptionId,
+				long commerceShippingMethodId, int start, int end,
+				OrderByComparator<CommerceShippingFixedOptionRel>
+					orderByComparator)
+		throws PortalException {
+
+		CommerceShippingMethod commerceShippingMethod =
+			_commerceShippingMethodService.getCommerceShippingMethod(
+				commerceShippingMethodId);
+
+		return commerceShippingFixedOptionRelLocalService.
+			getCommerceShippingFixedOptionRels(
+				commerceShippingFixedOptionId,
+				commerceShippingMethod.getCommerceShippingMethodId(), start,
+				end, orderByComparator);
+	}
+
+	@Override
+	public int getCommerceShippingFixedOptionRelsCount(
+			long commerceShippingFixedOptionId, long commerceShippingMethodId)
+		throws PortalException {
+
+		CommerceShippingMethod commerceShippingMethod =
+			_commerceShippingMethodService.getCommerceShippingMethod(
+				commerceShippingMethodId);
+
+		return commerceShippingFixedOptionRelLocalService.
+			getCommerceShippingFixedOptionRelsCount(
+				commerceShippingFixedOptionId,
+				commerceShippingMethod.getCommerceShippingMethodId());
+	}
+
+	@Override
+	public List<CommerceShippingFixedOptionRel>
 			getCommerceShippingMethodFixedOptionRels(
 				long commerceShippingMethodId, int start, int end,
 				OrderByComparator<CommerceShippingFixedOptionRel>

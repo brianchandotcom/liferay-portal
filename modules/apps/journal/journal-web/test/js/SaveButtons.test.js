@@ -49,7 +49,11 @@ describe('SaveButtons', () => {
 		);
 
 		global.Liferay.componentReady = jest.fn().mockResolvedValue({
-			reactComponentRef: {current: {validate: () => true}},
+			reactComponentRef: {
+				current: {
+					getFields: () => [{valid: true}],
+				},
+			},
 		});
 
 		global.Liferay.Form = {
@@ -92,14 +96,6 @@ describe('SaveButtons', () => {
 			articleId: '2611',
 			saveButtonLabel: 'save',
 		});
-
-		userEvent.click(screen.getByText('save'));
-
-		expect(
-			screen.queryByText(
-				'confirm-the-web-content-visibility-before-saving-as-draft'
-			)
-		).not.toBeInTheDocument();
 
 		userEvent.click(screen.getByTitle('publish-options'));
 

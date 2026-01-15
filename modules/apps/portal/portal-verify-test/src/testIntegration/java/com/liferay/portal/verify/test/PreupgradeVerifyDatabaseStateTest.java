@@ -6,6 +6,9 @@
 package com.liferay.portal.verify.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -180,7 +183,37 @@ public class PreupgradeVerifyDatabaseStateTest
 	}
 
 	@Test
-	public void testVerifyPreupgradeMissingTable() throws Exception {
+	public void testVerifyPreupgradeMissingNonserviceBuilderTable()
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition();
+
+		DB db = DBManagerUtil.getDB();
+
+		db.runSQL("drop table " + objectDefinition.getDBTableName());
+
+		try {
+			testVerify();
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertEquals(
+				"Missing tables detected: [" +
+					objectDefinition.getDBTableName() + "]",
+				exception.getMessage());
+		}
+		finally {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition);
+		}
+	}
+
+	@Test
+	public void testVerifyPreupgradeMissingServiceComponentTable()
+		throws Exception {
+
 		ServiceComponent serviceComponent =
 			_serviceComponentLocalService.createServiceComponent(
 				RandomTestUtil.nextLong());
@@ -391,6 +424,9 @@ public class PreupgradeVerifyDatabaseStateTest
 
 	private static Version _currentSchemaVersion;
 	private static SafeCloseable _safeCloseable;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Inject
 	private ServiceComponentLocalService _serviceComponentLocalService;

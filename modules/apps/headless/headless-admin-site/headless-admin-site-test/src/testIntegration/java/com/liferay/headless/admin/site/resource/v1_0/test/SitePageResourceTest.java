@@ -2382,9 +2382,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(
-				"Unexpected log messages: " + logEntries.size(), 1,
-				logEntries.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
 			LogEntry logEntry = logEntries.get(0);
 

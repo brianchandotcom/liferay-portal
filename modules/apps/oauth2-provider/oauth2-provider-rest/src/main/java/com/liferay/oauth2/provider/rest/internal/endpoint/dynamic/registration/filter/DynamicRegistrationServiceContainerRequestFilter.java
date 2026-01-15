@@ -9,10 +9,7 @@ import com.liferay.oauth2.provider.constants.OAuth2ApplicationConstants;
 import com.liferay.oauth2.provider.constants.OAuth2ProviderActionKeys;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
-import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -106,7 +103,8 @@ public class DynamicRegistrationServiceContainerRequestFilter
 				throw ExceptionUtils.toNotAuthorizedException(null, null);
 			}
 
-			user = _getUser(GetterUtil.getLong(jwtToken.getClaim("sub")));
+			user = _userLocalService.getUser(
+				GetterUtil.getLong(jwtToken.getClaim("sub")));
 
 			OAuth2Application oAuth2Application =
 				_oAuth2ApplicationLocalService.fetchOAuth2Application(
@@ -117,8 +115,9 @@ public class DynamicRegistrationServiceContainerRequestFilter
 				!StringUtil.equals(
 					OAuth2ApplicationConstants.NAME_DYNAMIC_REGISTRATOR,
 					oAuth2Application.getName()) ||
-				!_containsOAuth2RegisterApplicationPermission(
-					oAuth2Application, user)) {
+				!_oAuth2ApplicationModelResourcePermission.contains(
+					_permissionCheckerFactory.create(user), oAuth2Application,
+					OAuth2ProviderActionKeys.REGISTER_APPLICATION)) {
 
 				throw ExceptionUtils.toNotAuthorizedException(null, null);
 			}
@@ -168,21 +167,8 @@ public class DynamicRegistrationServiceContainerRequestFilter
 		}
 	}
 
-	private boolean _containsOAuth2RegisterApplicationPermission(
-			OAuth2Application oAuth2Application, User user)
-		throws Exception {
-
-		if (oAuth2Application == null) {
-			return false;
-		}
-
-		return _oAuth2ApplicationModelResourcePermission.contains(
-			_permissionCheckerFactory.create(user), oAuth2Application,
-			OAuth2ProviderActionKeys.REGISTER_APPLICATION);
-	}
-
 	private JwtToken _getJwtToken(HttpServletRequest httpServletRequest)
-		throws JSONException, WebApplicationException {
+		throws WebApplicationException {
 
 		String authorizationHeader = httpServletRequest.getHeader(
 			"Authorization");
@@ -194,15 +180,6 @@ public class DynamicRegistrationServiceContainerRequestFilter
 		return new JwsJwtCompactConsumer(
 			authorizationHeader.substring("Bearer ".length())
 		).getJwtToken();
-	}
-
-	private User _getUser(long userId) {
-		try {
-			return _userLocalService.getUser(userId);
-		}
-		catch (PortalException portalException) {
-			return ReflectionUtil.throwException(portalException);
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

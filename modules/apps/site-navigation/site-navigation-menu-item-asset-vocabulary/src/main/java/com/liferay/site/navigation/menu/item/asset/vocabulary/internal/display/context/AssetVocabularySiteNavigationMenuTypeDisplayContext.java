@@ -154,7 +154,8 @@ public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
 			"siteName",
 			() -> {
 				Group group = GroupLocalServiceUtil.getGroup(
-					_assetVocabulary.getGroupId());
+					_siteNavigationMenuItem.getGroupId());
+
 				String scopeExternalReferenceCode =
 					_typeSettingsUnicodeProperties.get(
 						"scopeExternalReferenceCode");
@@ -164,6 +165,11 @@ public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
 						GroupLocalServiceUtil.getGroupByExternalReferenceCode(
 							scopeExternalReferenceCode,
 							_themeDisplay.getCompanyId());
+				}
+
+				if (group == null) {
+					return LanguageUtil.format(
+						_httpServletRequest, "unable-to-find-x", "site");
 				}
 
 				if (group.getGroupId() == _themeDisplay.getCompanyGroupId()) {

@@ -180,72 +180,78 @@ public class PermissionUpgradeProcess extends UpgradeProcess {
 
 	private void _upgradeResourcePermission(String name) throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				StringBundler.concat(
-					"select resourceActionId, bitwiseValue from ",
-					"ResourceAction where actionId = 'ADD_ENTRY' and name = '",
-					name, "'"));
-			ResultSet resultSet1 = preparedStatement1.executeQuery()) {
+				"select resourceActionId, bitwiseValue from ResourceAction "+
+				"where actionId = 'ADD_ENTRY' and name = ?")) {
 
-			if (!resultSet1.next()) {
-				if (!_ignoreMissingAddEntryResourceAction) {
-					_log.error(
-						StringBundler.concat(
-							"Unable to upgrade ADD_ENTRY action, ",
-							"ResourceAction for ", name,
-							" is not initialized"));
-				}
+			preparedStatement1.setString(1, name);
 
-				return;
-			}
-
-			long bitwiseValue = resultSet1.getLong("bitwiseValue");
-
-			try (PreparedStatement preparedStatement2 =
-					connection.prepareStatement(
-						StringBundler.concat(
-							"select resourcePermissionId, companyId, scope, ",
-							"primKey, primKeyId, roleId, actionIds from ",
-							"ResourcePermission where name = '", name, "'"));
-				ResultSet resultSet = preparedStatement2.executeQuery()) {
-
-				while (resultSet.next()) {
-					long actionIds = resultSet.getLong("actionIds");
-
-					if ((bitwiseValue & actionIds) == 0) {
-						continue;
+			try (ResultSet resultSet1 = preparedStatement1.executeQuery()) {
+				if (!resultSet1.next()) {
+					if (!_ignoreMissingAddEntryResourceAction) {
+						_log.error(
+							StringBundler.concat(
+								"Unable to upgrade ADD_ENTRY action, ",
+								"ResourceAction for ", name,
+								" is not initialized"));
 					}
 
-					long resourcePermissionId = resultSet.getLong(
-						"resourcePermissionId");
-					long companyId = resultSet.getLong("companyId");
-					int scope = resultSet.getInt("scope");
-					String primKey = resultSet.getString("primKey");
-					long primKeyId = resultSet.getLong("primKeyId");
+					return;
+				}
 
-					_updateResourcePermission(
-						resourcePermissionId, actionIds - bitwiseValue);
+				long bitwiseValue = resultSet1.getLong("bitwiseValue");
 
-					if (scope == ResourceConstants.SCOPE_INDIVIDUAL) {
-						if (primKey.contains("_LAYOUT_")) {
-							primKey = String.valueOf(companyId);
-							primKeyId = companyId;
-							scope = ResourceConstants.SCOPE_COMPANY;
-						}
-						else {
-							continue;
+				try (PreparedStatement preparedStatement2 =
+						connection.prepareStatement(
+							StringBundler.concat(
+								"select resourcePermissionId, companyId, ",
+								"scope, primKey, primKeyId, roleId, actionIds ",
+								"from ResourcePermission where name = ?"))) {
+
+					preparedStatement2.setString(1, name);
+
+					try (ResultSet resultSet =
+							preparedStatement2.executeQuery()) {
+
+						while (resultSet.next()) {
+							long actionIds = resultSet.getLong("actionIds");
+
+							if ((bitwiseValue & actionIds) == 0) {
+								continue;
+							}
+
+							long resourcePermissionId = resultSet.getLong(
+								"resourcePermissionId");
+							long companyId = resultSet.getLong("companyId");
+							int scope = resultSet.getInt("scope");
+							String primKey = resultSet.getString("primKey");
+							long primKeyId = resultSet.getLong("primKeyId");
+
+							_updateResourcePermission(
+								resourcePermissionId, actionIds - bitwiseValue);
+
+							if (scope == ResourceConstants.SCOPE_INDIVIDUAL) {
+								if (primKey.contains("_LAYOUT_")) {
+									primKey = String.valueOf(companyId);
+									primKeyId = companyId;
+									scope = ResourceConstants.SCOPE_COMPANY;
+								}
+								else {
+									continue;
+								}
+							}
+
+							long roleId = resultSet.getLong("roleId");
+
+							_addAnnouncementsAdminViewResourcePermission(
+								companyId, scope, primKey, primKeyId, roleId);
 						}
 					}
-
-					long roleId = resultSet.getLong("roleId");
-
-					_addAnnouncementsAdminViewResourcePermission(
-						companyId, scope, primKey, primKeyId, roleId);
 				}
+
+				long resourceActionId = resultSet1.getLong("resourceActionId");
+
+				_deleteResourceAction(resourceActionId);
 			}
-
-			long resourceActionId = resultSet1.getLong("resourceActionId");
-
-			_deleteResourceAction(resourceActionId);
 		}
 	}
 

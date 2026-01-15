@@ -5,7 +5,9 @@
 
 package com.liferay.jenkins.results.parser.history;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONArray;
@@ -32,8 +34,18 @@ public abstract class BaseBatchHistory implements BatchHistory {
 	}
 
 	@Override
+	public List<TestHistory> getTestHistories() {
+		return new ArrayList<>(_testHistories.values());
+	}
+
+	@Override
 	public TestHistory getTestHistory(String key) {
 		return _testHistories.get(key);
+	}
+
+	@Override
+	public List<TestTaskHistory> getTestTaskHistories() {
+		return new ArrayList<>(_testTaskHistories.values());
 	}
 
 	@Override

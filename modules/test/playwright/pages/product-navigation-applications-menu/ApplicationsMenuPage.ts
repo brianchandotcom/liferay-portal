@@ -765,8 +765,13 @@ export class ApplicationsMenuPage {
 	}
 
 	async isApplicationsMenuButtonVisible() {
-		return await this.page
-			.getByRole('button', {name: 'Applications Menu'})
-			.isVisible();
+		const pattern = /Applications Menu/;
+
+		return (
+			(await this.page
+				.getByTitle(pattern)
+				.or(this.page.getByLabel(pattern))
+				.count()) > 0
+		);
 	}
 }

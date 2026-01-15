@@ -1128,15 +1128,18 @@ public class CompanyLocalServiceDBPartitionTest
 					"select count(pg_catalog.pg_rewrite.rulename) from ",
 					"pg_catalog.pg_rewrite join pg_catalog.pg_class on ",
 					"pg_catalog.pg_rewrite.ev_class = pg_catalog.pg_class.oid ",
-					"where pg_catalog.pg_class.relnamespace = '", partitionName,
-					"'::regnamespace and (pg_catalog.pg_rewrite.rulename like ",
+					"where pg_catalog.pg_class.relnamespace = ?::",
+					"regnamespace and (pg_catalog.pg_rewrite.rulename like ",
 					"'update_%' or pg_catalog.pg_rewrite.rulename like ",
-					"'delete_%')"));
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+					"'delete_%')"))) {
 
-			resultSet.next();
+			preparedStatement.setString(1, partitionName);
 
-			return resultSet.getInt(1);
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				resultSet.next();
+
+				return resultSet.getInt(1);
+			}
 		}
 	}
 

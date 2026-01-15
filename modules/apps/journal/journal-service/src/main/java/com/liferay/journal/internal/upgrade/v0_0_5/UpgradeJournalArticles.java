@@ -97,51 +97,56 @@ public class UpgradeJournalArticles extends BasePortletIdUpgradeProcess {
 				StringBundler.concat(
 					"select distinct PortletPreferences.portletPreferencesId ",
 					"from PortletPreferences inner join ",
-					"PortletPreferenceValue on ",
-					"PortletPreferenceValue.portletPreferencesId = ",
-					"PortletPreferences.portletPreferencesId where portletId ",
-					"= '", oldRootPortletId, "' OR portletId like '",
-					oldRootPortletId, "_INSTANCE_%' OR portletId like '",
-					oldRootPortletId, "_USER_%_INSTANCE_%'"));
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+					"PortletPreferenceValue on PortletPreferenceValue.",
+					"portletPreferencesId = PortletPreferences.",
+					"portletPreferencesId where portletId = ? OR portletId ",
+					"like ? OR portletId like ?"))) {
 
-			while (resultSet.next()) {
-				long portletPreferencesId = resultSet.getLong(
-					"portletPreferencesId");
+			preparedStatement.setString(1, oldRootPortletId);
+			preparedStatement.setString(2, oldRootPortletId + "_INSTANCE_%");
+			preparedStatement.setString(
+				3, oldRootPortletId + "_USER_%_INSTANCE_%");
 
-				com.liferay.portal.kernel.model.PortletPreferences
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					long portletPreferencesId = resultSet.getLong(
+						"portletPreferencesId");
+
+					com.liferay.portal.kernel.model.PortletPreferences
+						portletPreferences =
+							_portletPreferencesLocalService.
+								getPortletPreferences(portletPreferencesId);
+
+					long plid = portletPreferences.getPlid();
+
+					String portletId = portletPreferences.getPortletId();
+
+					long userId = PortletIdCodec.decodeUserId(portletId);
+					String instanceId = PortletIdCodec.decodeInstanceId(
+						portletId);
+
+					String newPortletId = PortletIdCodec.encode(
+						_PORTLET_ID_ASSET_PUBLISHER, userId, instanceId);
+
+					portletPreferences.setPortletId(newPortletId);
+
 					portletPreferences =
-						_portletPreferencesLocalService.getPortletPreferences(
-							portletPreferencesId);
+						_portletPreferencesLocalService.
+							updatePortletPreferences(portletPreferences);
 
-				long plid = portletPreferences.getPlid();
+					PortletPreferences oldPortletPreferences =
+						_portletPreferenceValueLocalService.getPreferences(
+							portletPreferences);
 
-				String portletId = portletPreferences.getPortletId();
-
-				long userId = PortletIdCodec.decodeUserId(portletId);
-				String instanceId = PortletIdCodec.decodeInstanceId(portletId);
-
-				String newPortletId = PortletIdCodec.encode(
-					_PORTLET_ID_ASSET_PUBLISHER, userId, instanceId);
-
-				portletPreferences.setPortletId(newPortletId);
-
-				portletPreferences =
-					_portletPreferencesLocalService.updatePortletPreferences(
-						portletPreferences);
-
-				PortletPreferences oldPortletPreferences =
-					_portletPreferenceValueLocalService.getPreferences(
-						portletPreferences);
-
-				_portletPreferencesLocalService.updatePreferences(
-					portletPreferences.getOwnerId(),
-					portletPreferences.getOwnerType(),
-					portletPreferences.getPlid(),
-					portletPreferences.getPortletId(),
-					_getNewPortletPreferences(
-						oldPortletPreferences, plid, oldRootPortletId,
-						newRootPortletId));
+					_portletPreferencesLocalService.updatePreferences(
+						portletPreferences.getOwnerId(),
+						portletPreferences.getOwnerType(),
+						portletPreferences.getPlid(),
+						portletPreferences.getPortletId(),
+						_getNewPortletPreferences(
+							oldPortletPreferences, plid, oldRootPortletId,
+							newRootPortletId));
+				}
 			}
 		}
 	}

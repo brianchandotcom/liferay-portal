@@ -26,7 +26,7 @@ import com.liferay.jenkins.results.parser.Workspace;
 import com.liferay.jenkins.results.parser.WorkspaceGitRepository;
 import com.liferay.jenkins.results.parser.history.BatchHistory;
 import com.liferay.jenkins.results.parser.history.JobHistory;
-import com.liferay.jenkins.results.parser.history.TestHistory;
+import com.liferay.jenkins.results.parser.history.TestClassHistory;
 import com.liferay.jenkins.results.parser.history.TestTaskHistory;
 import com.liferay.jenkins.results.parser.job.property.GlobJobProperty;
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
@@ -86,10 +86,11 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		BatchHistory batchHistory = getBatchHistory();
 
 		if (batchHistory != null) {
-			TestHistory testHistory = batchHistory.getTestHistory(testName);
+			TestClassHistory testClassHistory = batchHistory.getTestClassHistory(
+				testName);
 
-			if (testHistory != null) {
-				averageTestDuration = testHistory.getAverageDuration();
+			if (testClassHistory != null) {
+				averageTestDuration = testClassHistory.getAverageDuration();
 			}
 		}
 
@@ -108,11 +109,12 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		BatchHistory batchHistory = getBatchHistory();
 
 		if (batchHistory != null) {
-			TestHistory testHistory = batchHistory.getTestHistory(testName);
+			TestClassHistory testClassHistory = batchHistory.getTestClassHistory(
+				testName);
 
-			if (testHistory != null) {
+			if (testClassHistory != null) {
 				averageTestOverheadDuration =
-					testHistory.getAverageOverheadDuration();
+					testClassHistory.getAverageOverheadDuration();
 			}
 		}
 
@@ -1512,13 +1514,14 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			return null;
 		}
 
-		TestHistory testHistory = batchHistory.getTestHistory(testName);
+		TestClassHistory testClassHistory = batchHistory.getTestClassHistory(
+			testName);
 
-		if (testHistory == null) {
+		if (testClassHistory == null) {
 			return null;
 		}
 
-		_testTaskHistories.put(testName, testHistory.getTestTaskHistory());
+		_testTaskHistories.put(testName, testClassHistory.getTestTaskHistory());
 
 		return _testTaskHistories.get(testName);
 	}

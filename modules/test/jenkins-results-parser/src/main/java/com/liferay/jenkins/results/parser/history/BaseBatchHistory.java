@@ -34,13 +34,13 @@ public abstract class BaseBatchHistory implements BatchHistory {
 	}
 
 	@Override
-	public List<TestHistory> getTestHistories() {
-		return new ArrayList<>(_testHistories.values());
+	public List<TestClassHistory> getTestClassHistories() {
+		return new ArrayList<>(_testClassHistories.values());
 	}
 
 	@Override
-	public TestHistory getTestHistory(String key) {
-		return _testHistories.get(key);
+	public TestClassHistory getTestClassHistory(String key) {
+		return _testClassHistories.get(key);
 	}
 
 	@Override
@@ -63,10 +63,12 @@ public abstract class BaseBatchHistory implements BatchHistory {
 
 		if ((testsJSONArray != null) && !testsJSONArray.isEmpty()) {
 			for (int i = 0; i < testsJSONArray.length(); i++) {
-				TestHistory testHistory = HistoryFactory.newTestHistory(
-					this, testsJSONArray.getJSONObject(i));
+				TestClassHistory testClassHistory =
+					HistoryFactory.newTestClassHistory(
+						this, testsJSONArray.getJSONObject(i));
 
-				_testHistories.put(testHistory.getTestName(), testHistory);
+				_testClassHistories.put(
+					testClassHistory.getTestName(), testClassHistory);
 			}
 		}
 
@@ -87,7 +89,8 @@ public abstract class BaseBatchHistory implements BatchHistory {
 	private final long _averageDuration;
 	private final String _batchName;
 	private final JobHistory _jobHistory;
-	private final Map<String, TestHistory> _testHistories = new HashMap<>();
+	private final Map<String, TestClassHistory> _testClassHistories =
+		new HashMap<>();
 	private final Map<String, TestTaskHistory> _testTaskHistories =
 		new HashMap<>();
 

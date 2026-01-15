@@ -5,7 +5,7 @@
 
 package com.liferay.jenkins.results.parser;
 
-import com.liferay.jenkins.results.parser.history.TestHistory;
+import com.liferay.jenkins.results.parser.history.TestClassHistory;
 import com.liferay.jenkins.results.parser.test.clazz.JUnitTestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
@@ -69,19 +69,19 @@ public abstract class BaseTestClassResult implements TestClassResult {
 			Dom4JUtil.getNewAnchorElement(
 				getTestClassReportURL(), getClassName()));
 
-		TestHistory testHistory = getTestHistory();
+		TestClassHistory testClassHistory = getTestClassHistory();
 
-		if (testHistory != null) {
+		if (testClassHistory != null) {
 			summaryElement.addText(" - ");
 
 			summaryElement.add(
 				Dom4JUtil.getNewAnchorElement(
-					testHistory.getTestrayCaseResultURL(),
+					testClassHistory.getTestrayCaseResultURL(),
 					JenkinsResultsParserUtil.combine(
 						"Failed ",
-						String.valueOf(testHistory.getFailureCount()),
+						String.valueOf(testClassHistory.getFailureCount()),
 						" of last ",
-						String.valueOf(testHistory.getTestCount()))));
+						String.valueOf(testClassHistory.getTestCount()))));
 		}
 
 		List<Element> failureElements = new ArrayList<>();
@@ -230,14 +230,14 @@ public abstract class BaseTestClassResult implements TestClassResult {
 	}
 
 	@Override
-	public TestHistory getTestHistory() {
+	public TestClassHistory getTestClassHistory() {
 		TestClass testClass = getTestClass();
 
 		if (testClass == null) {
 			return null;
 		}
 
-		return testClass.getTestHistory();
+		return testClass.getTestClassHistory();
 	}
 
 	@Override

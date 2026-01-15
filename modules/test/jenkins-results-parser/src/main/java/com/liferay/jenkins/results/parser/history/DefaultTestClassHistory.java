@@ -10,9 +10,9 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class DefaultTestHistory extends BaseTestHistory {
+public class DefaultTestClassHistory extends BaseTestClassHistory {
 
-	protected DefaultTestHistory(
+	protected DefaultTestClassHistory(
 		BatchHistory batchHistory, JSONObject jsonObject) {
 
 		super(batchHistory, jsonObject);

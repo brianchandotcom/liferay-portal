@@ -12,7 +12,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseTestHistory implements TestHistory {
+public abstract class BaseTestClassHistory implements TestClassHistory {
 
 	public long getAverageDuration() {
 		return _averageDuration;
@@ -79,7 +79,7 @@ public abstract class BaseTestHistory implements TestHistory {
 		return _testTaskName;
 	}
 
-	protected BaseTestHistory(
+	protected BaseTestClassHistory(
 		BatchHistory batchHistory, JSONObject jsonObject) {
 
 		_batchHistory = batchHistory;

@@ -3,10 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.object.internal.entry.util;
+package com.liferay.object.entry.util;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
-import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
@@ -39,7 +38,7 @@ import java.util.Map;
 /**
  * @author Carolina Barbosa
  */
-public class ObjectEntryUtil {
+public class ObjectEntryPayloadUtil {
 
 	public static JSONObject getPayloadJSONObject(
 			BaseModel<?> baseModel, DTOConverterRegistry dtoConverterRegistry,
@@ -340,6 +339,6 @@ public class ObjectEntryUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ObjectEntryUtil.class);
+		ObjectEntryPayloadUtil.class);
 
 }

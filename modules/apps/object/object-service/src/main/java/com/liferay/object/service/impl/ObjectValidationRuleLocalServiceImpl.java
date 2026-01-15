@@ -12,6 +12,7 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.constants.ObjectValidationRuleSettingConstants;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
+import com.liferay.object.entry.util.ObjectEntryPayloadUtil;
 import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.exception.DuplicateObjectValidationRuleExternalReferenceCodeException;
 import com.liferay.object.exception.ObjectValidationRuleEngineException;
@@ -23,7 +24,6 @@ import com.liferay.object.exception.ObjectValidationRuleSettingValueException;
 import com.liferay.object.exception.ObjectValidationRuleSystemException;
 import com.liferay.object.exception.RequiredObjectValidationRuleSettingException;
 import com.liferay.object.internal.action.util.ObjectEntryVariablesUtil;
-import com.liferay.object.internal.entry.util.ObjectEntryUtil;
 import com.liferay.object.internal.validation.rule.FunctionObjectValidationRuleEngineImpl;
 import com.liferay.object.internal.validation.rule.UniqueCompositeKeyObjectValidationRuleEngineImpl;
 import com.liferay.object.model.ObjectDefinition;
@@ -455,7 +455,7 @@ public class ObjectValidationRuleLocalServiceImpl
 
 		_validate(
 			objectEntry, objectEntry.getObjectDefinitionId(),
-			ObjectEntryUtil.getPayloadJSONObject(
+			ObjectEntryPayloadUtil.getPayloadJSONObject(
 				_dtoConverterRegistry, _jsonFactory, null,
 				_objectDefinitionPersistence.fetchByPrimaryKey(
 					objectEntry.getObjectDefinitionId()),
@@ -490,7 +490,7 @@ public class ObjectValidationRuleLocalServiceImpl
 
 		Map<String, Object> variables = ObjectEntryVariablesUtil.getVariables(
 			_dtoConverterRegistry, objectDefinition, false,
-			ObjectEntryUtil.getPayloadJSONObject(
+			ObjectEntryPayloadUtil.getPayloadJSONObject(
 				_dtoConverterRegistry, _jsonFactory, objectDefinition,
 				primaryKey, _systemObjectDefinitionManagerRegistry, userId),
 			_systemObjectDefinitionManagerRegistry);

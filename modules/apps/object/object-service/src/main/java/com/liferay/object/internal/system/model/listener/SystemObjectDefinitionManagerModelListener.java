@@ -9,9 +9,9 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.action.util.ObjectActionThreadLocal;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
+import com.liferay.object.entry.util.ObjectEntryPayloadUtil;
 import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.field.util.ObjectFieldUtil;
-import com.liferay.object.internal.entry.util.ObjectEntryUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -192,7 +192,7 @@ public class SystemObjectDefinitionManagerModelListener<T extends BaseModel<T>>
 			_objectActionEngine.executeObjectActions(
 				_modelClass.getName(), _getCompanyId(baseModel),
 				objectActionTriggerKey,
-				() -> ObjectEntryUtil.getPayloadJSONObject(
+				() -> ObjectEntryPayloadUtil.getPayloadJSONObject(
 					baseModel, _dtoConverterRegistry, _jsonFactory,
 					objectActionTriggerKey, objectDefinition, originalBaseModel,
 					_systemObjectDefinitionManager, userId),
@@ -302,7 +302,7 @@ public class SystemObjectDefinitionManagerModelListener<T extends BaseModel<T>>
 			if (count > 0) {
 				_objectValidationRuleLocalService.validate(
 					model, objectDefinition.getObjectDefinitionId(),
-					ObjectEntryUtil.getPayloadJSONObject(
+					ObjectEntryPayloadUtil.getPayloadJSONObject(
 						model, _dtoConverterRegistry, _jsonFactory, null,
 						objectDefinition, originalModel,
 						_systemObjectDefinitionManager, userId),

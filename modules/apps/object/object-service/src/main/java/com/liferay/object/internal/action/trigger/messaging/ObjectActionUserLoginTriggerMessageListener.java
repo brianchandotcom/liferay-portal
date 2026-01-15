@@ -7,7 +7,7 @@ package com.liferay.object.internal.action.trigger.messaging;
 
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
-import com.liferay.object.internal.entry.util.ObjectEntryUtil;
+import com.liferay.object.entry.util.ObjectEntryPayloadUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
@@ -89,7 +89,7 @@ public class ObjectActionUserLoginTriggerMessageListener
 		_objectActionEngine.executeObjectActions(
 			objectDefinition.getClassName(), message.getLong("companyId"),
 			ObjectActionTriggerConstants.KEY_ON_AFTER_LOGIN,
-			() -> ObjectEntryUtil.getPayloadJSONObject(
+			() -> ObjectEntryPayloadUtil.getPayloadJSONObject(
 				user, _dtoConverterRegistry, _jsonFactory,
 				ObjectActionTriggerConstants.KEY_ON_AFTER_LOGIN,
 				objectDefinition, null,

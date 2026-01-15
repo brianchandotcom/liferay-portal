@@ -11,6 +11,8 @@ export class EditObjectActionPage {
 	readonly actionBuilderTab: Locator;
 	readonly actionLabelInput: Locator;
 	readonly checkbox: Locator;
+	readonly enableConditionToggle: Locator;
+	readonly expressionInput: Locator;
 	readonly iframeLocator: FrameLocator;
 	readonly inputNotificationsCombo: Locator;
 	readonly inputThenCombo: Locator;
@@ -29,6 +31,12 @@ export class EditObjectActionPage {
 			.frameLocator('iframe')
 			.getByPlaceholder('Text to translate');
 		this.checkbox = page.frameLocator('iframe').getByRole('checkbox');
+		this.enableConditionToggle = page
+			.frameLocator('iframe')
+			.getByLabel('Enable Condition');
+		this.expressionInput = page
+			.frameLocator('iframe')
+			.getByPlaceholder('Create an expression.');
 		this.iframeLocator = page.frameLocator('iframe');
 		this.inputNotificationsCombo = page
 			.frameLocator('iframe')
@@ -70,10 +78,12 @@ export class EditObjectActionPage {
 	}
 
 	async addNewAction({
+		expressionBuilderValue,
 		notificationTemplateName,
 		thenOption,
 		whenOption,
 	}: {
+		expressionBuilderValue?: string;
 		notificationTemplateName?: string;
 		thenOption: string;
 		whenOption: string;
@@ -89,6 +99,10 @@ export class EditObjectActionPage {
 			.getByRole('option', {name: whenOption})
 			.click();
 
+		if (expressionBuilderValue) {
+			await this.fillExpression(expressionBuilderValue);
+		}
+
 		await this.inputThenCombo.click();
 		await this.iframeLocator
 			.getByRole('option', {name: thenOption})
@@ -103,5 +117,11 @@ export class EditObjectActionPage {
 		}
 
 		await this.saveButton.click();
+	}
+
+	async fillExpression(expression: string) {
+		await this.enableConditionToggle.check();
+
+		await this.expressionInput.fill(expression);
 	}
 }

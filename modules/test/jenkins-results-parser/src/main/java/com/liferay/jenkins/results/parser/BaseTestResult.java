@@ -39,6 +39,17 @@ public abstract class BaseTestResult implements TestResult {
 	}
 
 	@Override
+	public TestClassHistory getTestClassHistory() {
+		TestClass testClass = getTestClass();
+
+		if (testClass == null) {
+			return null;
+		}
+
+		return testClass.getTestClassHistory();
+	}
+
+	@Override
 	public TestClassResult getTestClassResult() {
 		List<TestClassResult> testClassResults = _build.getTestClassResults();
 
@@ -59,17 +70,6 @@ public abstract class BaseTestResult implements TestResult {
 		}
 
 		return _testClassResult;
-	}
-
-	@Override
-	public TestClassHistory getTestClassHistory() {
-		TestClass testClass = getTestClass();
-
-		if (testClass == null) {
-			return null;
-		}
-
-		return testClass.getTestClassHistory();
 	}
 
 	@Override

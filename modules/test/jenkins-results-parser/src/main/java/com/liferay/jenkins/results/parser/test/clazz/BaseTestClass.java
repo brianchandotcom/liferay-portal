@@ -189,16 +189,6 @@ public abstract class BaseTestClass implements TestClass {
 	}
 
 	@Override
-	public List<TestClassMethod> getTestClassMethods() {
-		return _testClassMethods;
-	}
-
-	@Override
-	public String getTestClassName() {
-		return getName();
-	}
-
-	@Override
 	public TestClassHistory getTestClassHistory() {
 		if (_testClassHistory != null) {
 			return _testClassHistory;
@@ -215,6 +205,16 @@ public abstract class BaseTestClass implements TestClass {
 		_testClassHistory = batchHistory.getTestClassHistory(getTestName());
 
 		return _testClassHistory;
+	}
+
+	@Override
+	public List<TestClassMethod> getTestClassMethods() {
+		return _testClassMethods;
+	}
+
+	@Override
+	public String getTestClassName() {
+		return getName();
 	}
 
 	@Override

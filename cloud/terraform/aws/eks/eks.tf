@@ -1,4 +1,5 @@
 locals {
+	cluster_name="${var.deployment_name}-eks"
 	oidc_provider_arn="arn:${var.arn_partition}:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${module.eks.oidc_provider}"
 }
 module "eks" {
@@ -50,6 +51,7 @@ module "eks" {
 	name="${var.deployment_name}-eks"
 	node_security_group_id=aws_security_group.nodes.id
 	security_group_id=aws_security_group.cluster.id
+	name=local.cluster_name
 	source="terraform-aws-modules/eks/aws"
 	subnet_ids=module.vpc.private_subnets
 	version="21.3.1"
@@ -186,7 +188,7 @@ resource "aws_iam_role_policy_attachment" "role_policy_attachment_ebs_csi_driver
 	role=aws_iam_role.ebs_csi_driver.name
 }
 resource "aws_kms_alias" "eks_kms_alias" {
-	name="alias/${var.deployment_name}-eks_kms"
+	name="alias/${local.cluster_name}_kms"
 	target_key_id=aws_kms_key.eks_secrets.key_id
 }
 resource "aws_kms_key" "eks_secrets" {

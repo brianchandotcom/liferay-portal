@@ -268,6 +268,15 @@ public interface LayoutService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public Layout copyLayoutContent(
+			Layout sourceLayout, Layout targetLayout)
+		throws Exception;
+
+	public Layout copyLayoutContent(
+			long sourceSegmentsExperienceId, Layout sourceLayout,
+			long targetSegmentsExperienceId, Layout targetLayout)
+		throws Exception;
+
 	/**
 	 * Deletes the layout with the primary key, also deleting the layout's child
 	 * layouts, and associated resources.

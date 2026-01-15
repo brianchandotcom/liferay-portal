@@ -18,30 +18,35 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 <aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
-<c:if test="<%= Validator.isNotNull(selLayout.getLayoutPrototypeUuid()) %>">
-
-	<%
-	LayoutPrototype layoutPrototype = LayoutPrototypeLocalServiceUtil.getLayoutPrototypeByUuidAndCompanyId(selLayout.getLayoutPrototypeUuid(), company.getCompanyId());
-	%>
-
+<c:if test="<%= Validator.isNotNull(selLayout.getPortletLayoutPageTemplateEntryERC()) %>">
 	<aui:input name="applyLayoutPrototype" type="hidden" value="<%= false %>" />
 	<aui:input name="portletLayoutPageTemplateEntryERC" type="hidden" value="<%= selLayout.getPortletLayoutPageTemplateEntryERC() %>" />
 	<aui:input name="portletLayoutPageTemplateEntryScopeERC" type="hidden" value="<%= selLayout.getPortletLayoutPageTemplateEntryScopeERC() %>" />
 
 	<aui:input aria-describedby='<%= liferayPortletResponse.getNamespace() + "inheritChangesDescription" %>' label="inherit-changes" labelCssClass="font-weight-normal" name="portletLayoutPageTemplateEntryLinkEnabled" type="checkbox" value="<%= selLayout.isPortletLayoutPageTemplateEntryLinkEnabled() %>" wrapperCssClass="c-mb-2" />
 
+	<%
+	String layoutPrototypeName = selLayout.getPortletLayoutPageTemplateEntryERC();
+
+	LayoutPrototype layoutPrototype = LayoutPageTemplateEntryLayoutProviderUtil.getLayoutPageTemplateEntryLayoutPrototype(company.getCompanyId(), selLayout.getPortletLayoutPageTemplateEntryERC(), selLayout.getPortletLayoutPageTemplateEntryScopeERC(), selLayout.getGroupId());
+
+	if (layoutPrototype != null) {
+		layoutPrototypeName = layoutPrototype.getName(user.getLocale());
+	}
+	%>
+
 	<p class="text-3 text-secondary" id="<portlet:namespace />inheritChangesDescription">
-		<liferay-ui:message arguments="<%= HtmlUtil.escape(layoutPrototype.getName(user.getLocale())) %>" key="if-enabled-this-page-will-inherit-changes-made-to-the-x-page-template" />
+		<liferay-ui:message arguments="<%= HtmlUtil.escape(layoutPrototypeName) %>" key="if-enabled-this-page-will-inherit-changes-made-to-the-x-page-template" />
 	</p>
 
 	<clay:alert
-		cssClass='<%= selLayout.isLayoutPrototypeLinkActive() ? "layout-prototype-info-message" : "layout-prototype-info-message hide" %>'
+		cssClass='<%= selLayout.isPortletLayoutPageTemplateEntryLinkActive() ? "layout-prototype-info-message" : "layout-prototype-info-message hide" %>'
 		displayType="warning"
 	>
 		<liferay-ui:message arguments='<%= new String[] {"inherit-changes", "general"} %>' key="some-page-settings-are-unavailable-because-x-is-enabled" translateArguments="<%= true %>" />
 	</clay:alert>
 
-	<div class="<%= selLayout.isLayoutPrototypeLinkEnabled() ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />layoutPrototypeMergeAlert">
+	<div class="<%= selLayout.isPortletLayoutPageTemplateEntryLinkActive() ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />layoutPrototypeMergeAlert">
 
 		<%
 		request.setAttribute("edit_layout_prototype.jsp-layoutPrototype", layoutPrototype);
@@ -54,7 +59,7 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 </c:if>
 
 <c:if test="<%= !selLayout.isTypeAssetDisplay() && !selLayout.isTypeContent() %>">
-	<div class="<%= selLayout.isLayoutPrototypeLinkActive() ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />typeOptions">
+	<div class="<%= selLayout.isPortletLayoutPageTemplateEntryLinkActive() ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />typeOptions">
 		<liferay-util:include page="/layout_type_resources.jsp" servletContext="<%= application %>">
 			<liferay-util:param name="id" value="<%= selLayout.getType() %>" />
 			<liferay-util:param name="type" value="<%= selLayout.getType() %>" />

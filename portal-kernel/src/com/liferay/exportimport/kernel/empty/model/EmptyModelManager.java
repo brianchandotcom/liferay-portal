@@ -29,6 +29,16 @@ public interface EmptyModelManager {
 		throws E;
 
 	public <T, E extends PortalException> T getOrAddEmptyModel(
+			Class<T> clazz, long companyId,
+			UnsafeSupplier<T, E> emptyModelUnsafeSupplier,
+			String externalReferenceCode,
+			BiFunction<String, Long, T> fetchByExternalReferenceCodeBiFunction,
+			UnsafeBiFunction<String, Long, T, E>
+				getByExternalReferenceCodeUnsafeBiFunction,
+			String modelName)
+		throws E;
+
+	public <T, E extends PortalException> T getOrAddEmptyModel(
 			Class<T> clazz, UnsafeSupplier<T, E> emptyModelUnsafeSupplier,
 			String externalReferenceCode,
 			BiFunction<String, Long, T> fetchByExternalReferenceCodeBiFunction,

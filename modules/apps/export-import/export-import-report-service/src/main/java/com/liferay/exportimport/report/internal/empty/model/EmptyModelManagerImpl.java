@@ -39,6 +39,23 @@ public class EmptyModelManagerImpl implements EmptyModelManager {
 				getByExternalReferenceCodeUnsafeBiFunction)
 		throws E {
 
+		return getOrAddEmptyModel(
+			clazz, companyId, emptyModelUnsafeSupplier, externalReferenceCode,
+			fetchByExternalReferenceCodeBiFunction,
+			getByExternalReferenceCodeUnsafeBiFunction, clazz.getName());
+	}
+
+	@Override
+	public <T, E extends PortalException> T getOrAddEmptyModel(
+			Class<T> clazz, long companyId,
+			UnsafeSupplier<T, E> emptyModelUnsafeSupplier,
+			String externalReferenceCode,
+			BiFunction<String, Long, T> fetchByExternalReferenceCodeBiFunction,
+			UnsafeBiFunction<String, Long, T, E>
+				getByExternalReferenceCodeUnsafeBiFunction,
+			String modelName)
+		throws E {
+
 		if (!LazyReferencingThreadLocal.isEnabled()) {
 			return getByExternalReferenceCodeUnsafeBiFunction.apply(
 				externalReferenceCode, companyId);
@@ -61,7 +78,7 @@ public class EmptyModelManagerImpl implements EmptyModelManager {
 					GetterUtil.getLong(
 						ExportImportThreadLocal.
 							getExportImportConfigurationId()),
-					clazz.getName());
+					modelName);
 
 			return emptyModelUnsafeSupplier.get();
 		}

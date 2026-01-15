@@ -34,6 +34,22 @@ public class EmptyModelManagerUtil {
 	}
 
 	public static <T, E extends PortalException> T getOrAddEmptyModel(
+			Class<T> clazz, long companyId, String externalReferenceCode,
+			BiFunction<String, Long, T> fetchByExternalReferenceCodeBiFunction,
+			UnsafeBiFunction<String, Long, T, E>
+				getByExternalReferenceCodeUnsafeBiFunction,
+			UnsafeSupplier<T, E> emptyModelUnsafeSupplier, String modelName)
+		throws E {
+
+		EmptyModelManager emptyModelManager = _emptyModelManagerSnapshot.get();
+
+		return emptyModelManager.getOrAddEmptyModel(
+			clazz, companyId, emptyModelUnsafeSupplier, externalReferenceCode,
+			fetchByExternalReferenceCodeBiFunction,
+			getByExternalReferenceCodeUnsafeBiFunction, modelName);
+	}
+
+	public static <T, E extends PortalException> T getOrAddEmptyModel(
 			Class<T> clazz, UnsafeSupplier<T, E> emptyModelUnsafeSupplier,
 			String externalReferenceCode,
 			BiFunction<String, Long, T> fetchByExternalReferenceCodeBiFunction,
@@ -48,6 +64,23 @@ public class EmptyModelManagerUtil {
 			clazz, emptyModelUnsafeSupplier, externalReferenceCode,
 			fetchByExternalReferenceCodeBiFunction,
 			getByExternalReferenceCodeUnsafeBiFunction, groupId);
+	}
+
+	public static <T, E extends PortalException> T getOrAddEmptyModel(
+			Class<T> clazz, UnsafeSupplier<T, E> emptyModelUnsafeSupplier,
+			String externalReferenceCode,
+			BiFunction<String, Long, T> fetchByExternalReferenceCodeBiFunction,
+			UnsafeBiFunction<String, Long, T, E>
+				getByExternalReferenceCodeUnsafeBiFunction,
+			long groupId, String modelName)
+		throws E {
+
+		EmptyModelManager emptyModelManager = _emptyModelManagerSnapshot.get();
+
+		return emptyModelManager.getOrAddEmptyModel(
+			clazz.getName(), null, emptyModelUnsafeSupplier,
+			externalReferenceCode, fetchByExternalReferenceCodeBiFunction,
+			getByExternalReferenceCodeUnsafeBiFunction, groupId, modelName);
 	}
 
 	public static boolean isEmptyModel() {

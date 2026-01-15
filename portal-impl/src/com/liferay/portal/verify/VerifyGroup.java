@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -341,8 +340,7 @@ public class VerifyGroup extends VerifyProcess {
 	protected void verifyTree() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			CompanyLocalServiceUtil.forEachCompanyId(
-				companyId -> GroupLocalServiceUtil.rebuildTree(companyId),
-				PortalInstancePool.getCompanyIds());
+				companyId -> GroupLocalServiceUtil.rebuildTree(companyId));
 		}
 	}
 

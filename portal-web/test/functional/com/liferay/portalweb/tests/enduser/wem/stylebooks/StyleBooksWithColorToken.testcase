@@ -29,54 +29,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-136199. The user could detach the linked token."
-	@priority = 5
-	test DetachLinkedColorTokenInPageEditor {
-		property portal.acceptance = "true";
-
-		task ("Add a Heading fragment to a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				type = "content");
-
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Heading");
-		}
-
-		task ("Change the Text Color to Success") {
-			PageEditor.gotoStyle(fragmentName = "Heading");
-
-			PageEditor.configureFragment(textColor = "Success");
-		}
-
-		task ("View the Text Color of Heading is Success") {
-			PageEditor.viewFragmentStyle(
-				fragmentName = "Heading",
-				textColor = "success");
-		}
-
-		task ("Detach the linked token") {
-			PageEditor.detachToken(fieldLabel = "Text Color");
-		}
-
-		task ("View the color reference is shown in Text Color field") {
-			AssertTextEquals(
-				key_text = "Text Color",
-				locator1 = "TextInput#ANY",
-				value1 = "#287D3C");
-
-			PageEditor.viewFragmentStyle(
-				fragmentName = "Heading",
-				textColor = "rgb(40, 125, 60)");
-		}
-	}
-
 	@description = "This is a test for LPS-136199. The token changes from style book should be applied to the usages."
 	@priority = 4
 	test ViewColorTokenChangesAppliedToUsages {

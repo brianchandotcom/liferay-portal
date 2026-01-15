@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowNodeManager;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -132,11 +133,15 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 				"gemini-2.5-flash-lite"
 			).build();
 
+		Map<String, Serializable> workflowContext =
+			executionContext.getWorkflowContext();
+
 		AssistantHandlerUtil.handle(
 			AssistantHandlerContext.builder(
 			).contentRetriever(
 				ContentRetrieverUtil.createContentRetriever(
-					kaleoNodeSettingValues)
+					kaleoNodeSettingValues,
+					GetterUtil.getString(workflowContext.get("userToken")))
 			).invocationParameters(
 				InvocationParameters.from(
 					Map.of(

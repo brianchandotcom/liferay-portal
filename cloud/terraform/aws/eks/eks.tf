@@ -230,6 +230,15 @@ resource "kubernetes_storage_class_v1" "gp3_storage_class" {
 	storage_provisioner="ebs.csi.eks.amazonaws.com"
 	volume_binding_mode="WaitForFirstConsumer"
 }
+resource "terraform_data" "update_kubeconfig" {
+	depends_on=[time_sleep.cluster_addons_ready_time_buffer]
+	provisioner "local-exec" {
+		command="aws eks update-kubeconfig --name ${module.eks.cluster_name} --region ${var.region}"
+	}
+	triggers_replace=[
+		module.eks.cluster_id
+	]
+}
 resource "time_sleep" "cluster_addons_ready_time_buffer" {
 	create_duration="30s"
 	depends_on=[module.eks.cluster_addons]

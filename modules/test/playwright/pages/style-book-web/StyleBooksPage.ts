@@ -151,22 +151,19 @@ export class StyleBooksPage {
 			.click();
 	}
 
-	async publish(publishing: boolean = true) {
+	async publish(action: 'Publish' | 'Continue' | 'Cancel' = 'Publish') {
 		await this.page.getByRole('button', {name: 'Publish'}).click();
 
-		if (publishing) {
-			await this.page
-				.getByRole('dialog')
-				.getByRole('button', {name: 'Publish'})
-				.click();
+		const publishModalButton = (name: string) =>
+			this.page.getByRole('dialog').getByRole('button', {name});
 
-			await waitForAlert(this.page);
+		await publishModalButton(action).click();
+
+		if (action === 'Continue') {
+			await publishModalButton('Publish').click();
 		}
-		else {
-			await this.page
-				.getByRole('dialog')
-				.getByRole('button', {name: 'Cancel'})
-				.click();
+		else if (action === 'Publish') {
+			await waitForAlert(this.page);
 		}
 	}
 

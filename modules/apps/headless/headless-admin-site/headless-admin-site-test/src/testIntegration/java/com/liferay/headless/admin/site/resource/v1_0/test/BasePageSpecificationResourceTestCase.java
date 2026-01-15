@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
+import com.liferay.headless.admin.site.client.dto.v1_0.LinkToURLPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSetPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSpecification;
@@ -944,6 +945,21 @@ public abstract class BasePageSpecificationResourceTestCase {
 			testPostSitePageSpecificationPublish_addPageSpecification(
 				contentPageSpecification));
 
+		LinkToURLPageSpecification linkToURLPageSpecification =
+			new LinkToURLPageSpecification() {
+				{
+					externalReferenceCode = StringUtil.toLowerCase(
+						RandomTestUtil.randomString());
+
+					type = Type.create("LinkToURLPageSpecification");
+				}
+			};
+
+		assertEquals(
+			linkToURLPageSpecification,
+			testPostSitePageSpecificationPublish_addPageSpecification(
+				linkToURLPageSpecification));
+
 		PageSetPageSpecification pageSetPageSpecification =
 			new PageSetPageSpecification() {
 				{
@@ -1858,6 +1874,19 @@ public abstract class BasePageSpecificationResourceTestCase {
 
 				pageSpecification.setType(
 					PageSpecification.Type.create("ContentPageSpecification"));
+
+				return pageSpecification;
+			},
+			() -> {
+				LinkToURLPageSpecification pageSpecification =
+					new LinkToURLPageSpecification();
+
+				pageSpecification.setExternalReferenceCode(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+
+				pageSpecification.setType(
+					PageSpecification.Type.create(
+						"LinkToURLPageSpecification"));
 
 				return pageSpecification;
 			},

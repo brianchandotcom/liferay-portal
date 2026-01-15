@@ -3,18 +3,53 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.jenkins.results.parser;
-
-import com.liferay.jenkins.results.parser.history.BatchHistory;
+package com.liferay.jenkins.results.parser.history;
 
 import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
-public class TestTaskHistory {
+public abstract class BaseTestTaskHistory implements TestTaskHistory {
 
-	public TestTaskHistory(BatchHistory batchHistory, JSONObject jsonObject) {
+	@Override
+	public long getAverageDuration() {
+		return _averageDuration;
+	}
+
+	@Override
+	public long getAverageTotalDuration() {
+		return _averageTotalDuration;
+	}
+
+	@Override
+	public BatchHistory getBatchHistory() {
+		return _batchHistory;
+	}
+
+	@Override
+	public long getLongestDuration() {
+		return _longestDuration;
+	}
+
+	@Override
+	public long getTestTaskCount() {
+		return _testTaskCount;
+	}
+
+	@Override
+	public String getTestTaskName() {
+		return _testTaskName;
+	}
+
+	@Override
+	public boolean isLatestReportMissing() {
+		return _latestReportMissing;
+	}
+
+	protected BaseTestTaskHistory(
+		BatchHistory batchHistory, JSONObject jsonObject) {
+
 		_batchHistory = batchHistory;
 
 		_averageDuration = jsonObject.optLong("averageDuration");
@@ -23,34 +58,6 @@ public class TestTaskHistory {
 		_longestDuration = jsonObject.optLong("longestDuration");
 		_testTaskCount = jsonObject.optInt("testTaskCount");
 		_testTaskName = jsonObject.optString("testTaskName");
-	}
-
-	public long getAverageDuration() {
-		return _averageDuration;
-	}
-
-	public long getAverageTotalDuration() {
-		return _averageTotalDuration;
-	}
-
-	public BatchHistory getBatchHistory() {
-		return _batchHistory;
-	}
-
-	public long getLongestDuration() {
-		return _longestDuration;
-	}
-
-	public long getTestTaskCount() {
-		return _testTaskCount;
-	}
-
-	public String getTestTaskName() {
-		return _testTaskName;
-	}
-
-	public boolean isLatestReportMissing() {
-		return _latestReportMissing;
 	}
 
 	private final long _averageDuration;

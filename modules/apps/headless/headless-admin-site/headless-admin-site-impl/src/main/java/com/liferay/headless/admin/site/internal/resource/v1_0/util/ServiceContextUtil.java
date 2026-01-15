@@ -77,11 +77,15 @@ public class ServiceContextUtil {
 				Long itemGroupId = ItemScopeUtil.getItemGroupId(
 					companyId, itemExternalReference.getScope(), groupId);
 
-				LayoutPageTemplateEntry layoutPageTemplateEntry =
-					LayoutPageTemplateEntryLocalServiceUtil.
-						fetchLayoutPageTemplateEntryByExternalReferenceCode(
-							itemExternalReference.getExternalReferenceCode(),
-							itemGroupId);
+				LayoutPageTemplateEntry layoutPageTemplateEntry = null;
+
+				if (itemGroupId != null) {
+					layoutPageTemplateEntry =
+						LayoutPageTemplateEntryLocalServiceUtil.
+							fetchLayoutPageTemplateEntryByExternalReferenceCode(
+								itemExternalReference.getExternalReferenceCode(),
+								itemGroupId);
+				}
 
 				if (layoutPageTemplateEntry == null) {
 					LogUtil.logOptionalReference(

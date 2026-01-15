@@ -1,5 +1,12 @@
 import dateFns from 'date-fns';
 import {
+	ACCOUNT_PROPERTIES,
+	INDIVIDUAL_PROPERTIES,
+	ORGANIZATION_PROPERTIES,
+	SESSION_PROPERTIES,
+	WEB_BEHAVIORS
+} from '../utils/properties';
+import {
 	Conjunctions,
 	CustomFunctionOperators,
 	isKnown,
@@ -14,12 +21,6 @@ import {Event} from 'event-analysis/utils/types';
 import {every, isBoolean, isString, isUndefined} from 'lodash';
 import {FieldContexts, FieldOwnerTypes} from 'shared/util/constants';
 import {fromJS, Map} from 'immutable';
-import {
-	INDIVIDUAL_PROPERTIES,
-	ORGANIZATION_PROPERTIES,
-	SESSION_PROPERTIES,
-	WEB_BEHAVIORS
-} from '../utils/properties';
 import {Property} from 'shared/util/records';
 import {v4 as uuidv4} from 'uuid';
 
@@ -201,6 +202,10 @@ export const findPropertyByCriterion = (
 			NotOperators.NotAccountsFilter
 		].includes(operatorName)
 	) {
+		if (getPropertyContextFromRaw(propertyName) !== FieldContexts.Custom) {
+			return ACCOUNT_PROPERTIES.find(({name}) => name === propertyName);
+		}
+
 		return referencedPropertiesIMap.getIn(
 			[
 				'account',

@@ -35,9 +35,9 @@ public interface TestClassResult {
 
 	public TestClass getTestClass();
 
-	public String getTestClassReportURL();
-
 	public TestClassHistory getTestClassHistory();
+
+	public String getTestClassReportURL();
 
 	public TestResult getTestResult(String testName);
 

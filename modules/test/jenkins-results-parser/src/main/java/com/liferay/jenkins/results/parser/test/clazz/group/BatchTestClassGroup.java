@@ -86,8 +86,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		BatchHistory batchHistory = getBatchHistory();
 
 		if (batchHistory != null) {
-			TestClassHistory testClassHistory = batchHistory.getTestClassHistory(
-				testName);
+			TestClassHistory testClassHistory =
+				batchHistory.getTestClassHistory(testName);
 
 			if (testClassHistory != null) {
 				averageTestDuration = testClassHistory.getAverageDuration();
@@ -109,8 +109,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		BatchHistory batchHistory = getBatchHistory();
 
 		if (batchHistory != null) {
-			TestClassHistory testClassHistory = batchHistory.getTestClassHistory(
-				testName);
+			TestClassHistory testClassHistory =
+				batchHistory.getTestClassHistory(testName);
 
 			if (testClassHistory != null) {
 				averageTestOverheadDuration =

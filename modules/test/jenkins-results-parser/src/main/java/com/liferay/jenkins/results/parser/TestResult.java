@@ -39,9 +39,9 @@ public interface TestResult {
 
 	public TestClass getTestClass();
 
-	public TestClassResult getTestClassResult();
-
 	public TestClassHistory getTestClassHistory();
+
+	public TestClassResult getTestClassResult();
 
 	public String getTestName();
 

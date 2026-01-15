@@ -174,13 +174,15 @@ public class GetCollectionFieldMVCResourceCommandTest {
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getCollectionFieldsJSONObject",
 			new Class<?>[] {
-				HttpServletRequest.class, HttpServletResponse.class, int.class,
-				boolean.class, boolean.class, String.class, String.class,
-				String.class, String.class, String.class, int.class, int.class,
-				int.class, String.class, long.class, long.class, String.class
+				long.class, HttpServletRequest.class, HttpServletResponse.class,
+				int.class, boolean.class, boolean.class, String.class,
+				String.class, String.class, String.class, String.class,
+				int.class, int.class, int.class, String.class, long.class,
+				long.class, String.class
 			},
-			_getHttpServletRequest(), new MockHttpServletResponse(), 0, false,
-			false, LocaleUtil.toLanguageId(LocaleUtil.US),
+			_group.getCompanyId(), _getHttpServletRequest(),
+			new MockHttpServletResponse(), 0, false, false,
+			LocaleUtil.toLanguageId(LocaleUtil.US),
 			JSONUtil.put(
 				"itemType", BlogsEntry.class.getName()
 			).put(
@@ -217,13 +219,15 @@ public class GetCollectionFieldMVCResourceCommandTest {
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getCollectionFieldsJSONObject",
 			new Class<?>[] {
-				HttpServletRequest.class, HttpServletResponse.class, int.class,
-				boolean.class, boolean.class, String.class, String.class,
-				String.class, String.class, String.class, int.class, int.class,
-				int.class, String.class, long.class, long.class, String.class
+				long.class, HttpServletRequest.class, HttpServletResponse.class,
+				int.class, boolean.class, boolean.class, String.class,
+				String.class, String.class, String.class, String.class,
+				int.class, int.class, int.class, String.class, long.class,
+				long.class, String.class
 			},
-			_getHttpServletRequest(), new MockHttpServletResponse(), 0, false,
-			false, LocaleUtil.toLanguageId(LocaleUtil.US),
+			_group.getCompanyId(), _getHttpServletRequest(),
+			new MockHttpServletResponse(), 0, false, false,
+			LocaleUtil.toLanguageId(LocaleUtil.US),
 			JSONUtil.put(
 				"itemType", BlogsEntry.class.getName()
 			).put(
@@ -263,13 +267,15 @@ public class GetCollectionFieldMVCResourceCommandTest {
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getCollectionFieldsJSONObject",
 			new Class<?>[] {
-				HttpServletRequest.class, HttpServletResponse.class, int.class,
-				boolean.class, boolean.class, String.class, String.class,
-				String.class, String.class, String.class, int.class, int.class,
-				int.class, String.class, long.class, long.class, String.class
+				long.class, HttpServletRequest.class, HttpServletResponse.class,
+				int.class, boolean.class, boolean.class, String.class,
+				String.class, String.class, String.class, String.class,
+				int.class, int.class, int.class, String.class, long.class,
+				long.class, String.class
 			},
-			_getHttpServletRequest(), new MockHttpServletResponse(), 0, false,
-			false, LocaleUtil.toLanguageId(LocaleUtil.US),
+			_group.getCompanyId(), _getHttpServletRequest(),
+			new MockHttpServletResponse(), 0, false, false,
+			LocaleUtil.toLanguageId(LocaleUtil.US),
 			JSONUtil.put(
 				"classNameId",
 				String.valueOf(
@@ -320,13 +326,15 @@ public class GetCollectionFieldMVCResourceCommandTest {
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getCollectionFieldsJSONObject",
 			new Class<?>[] {
-				HttpServletRequest.class, HttpServletResponse.class, int.class,
-				boolean.class, boolean.class, String.class, String.class,
-				String.class, String.class, String.class, int.class, int.class,
-				int.class, String.class, long.class, long.class, String.class
+				long.class, HttpServletRequest.class, HttpServletResponse.class,
+				int.class, boolean.class, boolean.class, String.class,
+				String.class, String.class, String.class, String.class,
+				int.class, int.class, int.class, String.class, long.class,
+				long.class, String.class
 			},
-			_getHttpServletRequest(), new MockHttpServletResponse(), 0, false,
-			false, LocaleUtil.toLanguageId(LocaleUtil.US),
+			_group.getCompanyId(), _getHttpServletRequest(),
+			new MockHttpServletResponse(), 0, false, false,
+			LocaleUtil.toLanguageId(LocaleUtil.US),
 			JSONUtil.put(
 				"classNameId",
 				String.valueOf(
@@ -393,13 +401,15 @@ public class GetCollectionFieldMVCResourceCommandTest {
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getCollectionFieldsJSONObject",
 			new Class<?>[] {
-				HttpServletRequest.class, HttpServletResponse.class, int.class,
-				boolean.class, boolean.class, String.class, String.class,
-				String.class, String.class, String.class, int.class, int.class,
-				int.class, String.class, long.class, long.class, String.class
+				long.class, HttpServletRequest.class, HttpServletResponse.class,
+				int.class, boolean.class, boolean.class, String.class,
+				String.class, String.class, String.class, String.class,
+				int.class, int.class, int.class, String.class, long.class,
+				long.class, String.class
 			},
-			mockHttpServletRequest, new MockHttpServletResponse(), 0, false,
-			false, LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
+			_group.getCompanyId(), mockHttpServletRequest,
+			new MockHttpServletResponse(), 0, false, false,
+			LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
 			JSONUtil.put(
 				"fieldName", "Fieldset"
 			).put(
@@ -510,13 +520,15 @@ public class GetCollectionFieldMVCResourceCommandTest {
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getCollectionFieldsJSONObject",
 			new Class<?>[] {
-				HttpServletRequest.class, HttpServletResponse.class, int.class,
-				boolean.class, boolean.class, String.class, String.class,
-				String.class, String.class, String.class, int.class, int.class,
-				int.class, String.class, long.class, long.class, String.class
+				long.class, HttpServletRequest.class, HttpServletResponse.class,
+				int.class, boolean.class, boolean.class, String.class,
+				String.class, String.class, String.class, String.class,
+				int.class, int.class, int.class, String.class, long.class,
+				long.class, String.class
 			},
-			_getHttpServletRequest(), new MockHttpServletResponse(), 0, false,
-			false, LocaleUtil.toLanguageId(LocaleUtil.US),
+			_group.getCompanyId(), _getHttpServletRequest(),
+			new MockHttpServletResponse(), 0, false, false,
+			LocaleUtil.toLanguageId(LocaleUtil.US),
 			JSONUtil.put(
 				"classNameId",
 				_portal.getClassNameId(AssetListEntry.class.getName())
@@ -536,13 +548,15 @@ public class GetCollectionFieldMVCResourceCommandTest {
 		jsonObject = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getCollectionFieldsJSONObject",
 			new Class<?>[] {
-				HttpServletRequest.class, HttpServletResponse.class, int.class,
-				boolean.class, boolean.class, String.class, String.class,
-				String.class, String.class, String.class, int.class, int.class,
-				int.class, String.class, long.class, long.class, String.class
+				long.class, HttpServletRequest.class, HttpServletResponse.class,
+				int.class, boolean.class, boolean.class, String.class,
+				String.class, String.class, String.class, String.class,
+				int.class, int.class, int.class, String.class, long.class,
+				long.class, String.class
 			},
-			_getHttpServletRequest(), new MockHttpServletResponse(), 0, false,
-			false, LocaleUtil.toLanguageId(LocaleUtil.US),
+			_group.getCompanyId(), _getHttpServletRequest(),
+			new MockHttpServletResponse(), 0, false, false,
+			LocaleUtil.toLanguageId(LocaleUtil.US),
 			JSONUtil.put(
 				"classNameId",
 				_portal.getClassNameId(AssetListEntry.class.getName())
@@ -562,13 +576,15 @@ public class GetCollectionFieldMVCResourceCommandTest {
 		jsonObject = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getCollectionFieldsJSONObject",
 			new Class<?>[] {
-				HttpServletRequest.class, HttpServletResponse.class, int.class,
-				boolean.class, boolean.class, String.class, String.class,
-				String.class, String.class, String.class, int.class, int.class,
-				int.class, String.class, long.class, long.class, String.class
+				long.class, HttpServletRequest.class, HttpServletResponse.class,
+				int.class, boolean.class, boolean.class, String.class,
+				String.class, String.class, String.class, String.class,
+				int.class, int.class, int.class, String.class, long.class,
+				long.class, String.class
 			},
-			_getHttpServletRequest(), new MockHttpServletResponse(), 0, false,
-			false, LocaleUtil.toLanguageId(LocaleUtil.US),
+			_group.getCompanyId(), _getHttpServletRequest(),
+			new MockHttpServletResponse(), 0, false, false,
+			LocaleUtil.toLanguageId(LocaleUtil.US),
 			JSONUtil.put(
 				"classNameId",
 				_portal.getClassNameId(AssetListEntry.class.getName())
@@ -629,8 +645,8 @@ public class GetCollectionFieldMVCResourceCommandTest {
 				mockObject,
 				ReflectionTestUtil.invoke(
 					_mvcResourceCommand, "_getInfoItem",
-					new Class<?>[] {HttpServletRequest.class},
-					mockHttpServletRequest));
+					new Class<?>[] {HttpServletRequest.class, long.class},
+					mockHttpServletRequest, _group.getGroupId()));
 		}
 	}
 

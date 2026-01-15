@@ -72,53 +72,8 @@ public class TaskDefinitionResourceTest
 
 	@Test
 	public void testGetTaskDefinitionsPage() throws Exception {
-		Page<TaskDefinition> page =
-			taskDefinitionResource.getTaskDefinitionsPage(
-				null, null, Pagination.of(1, 10), null);
-
-		assertEquals(
-			List.of(
-				new TaskDefinition() {
-					{
-						name = WorkflowDefinitionConstants.NAME_CHANGE_TONE;
-						version = 1;
-					}
-				},
-				new TaskDefinition() {
-					{
-						name =
-							WorkflowDefinitionConstants.
-								NAME_CHAT_MESSAGE_PIPELINE;
-						version = 1;
-					}
-				},
-				new TaskDefinition() {
-					{
-						name =
-							WorkflowDefinitionConstants.
-								NAME_FIX_SPELLING_AND_GRAMMAR;
-						version = 1;
-					}
-				},
-				new TaskDefinition() {
-					{
-						name = WorkflowDefinitionConstants.NAME_IMPROVE_WRITING;
-						version = 1;
-					}
-				},
-				new TaskDefinition() {
-					{
-						name = WorkflowDefinitionConstants.NAME_MAKE_LONGER;
-						version = 1;
-					}
-				},
-				new TaskDefinition() {
-					{
-						name = WorkflowDefinitionConstants.NAME_MAKE_SHORTER;
-						version = 1;
-					}
-				}),
-			(List<TaskDefinition>)page.getItems());
+		_testGetTaskDefinitionsPage();
+		_testGetTaskDefinitionsPageWithFilter();
 	}
 
 	@Ignore
@@ -127,9 +82,15 @@ public class TaskDefinitionResourceTest
 	public void testGetTaskDefinitionsPageWithPagination() {
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testGetTaskDefinitionsPageWithSortInteger() throws Exception {
+	}
+
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"name", "version"};
+		return new String[] {"active", "name", "version"};
 	}
 
 	@Override
@@ -139,10 +100,83 @@ public class TaskDefinitionResourceTest
 		return taskDefinition;
 	}
 
+	private void _testGetTaskDefinitionsPage() throws Exception {
+		Page<TaskDefinition> page =
+			taskDefinitionResource.getTaskDefinitionsPage(
+				null, null, Pagination.of(1, 10), null);
+
+		assertEquals(
+			_systemTaskDefinitions, (List<TaskDefinition>)page.getItems());
+	}
+
+	private void _testGetTaskDefinitionsPageWithFilter() throws Exception {
+
+		// Active as 0
+
+		Page<TaskDefinition> page =
+			taskDefinitionResource.getTaskDefinitionsPage(
+				null, "(active eq 0)", Pagination.of(1, 10), null);
+
+		assertEquals(List.of(), (List<TaskDefinition>)page.getItems());
+
+		// Active as 1
+
+		page = taskDefinitionResource.getTaskDefinitionsPage(
+			null, "(active eq 1)", Pagination.of(1, 10), null);
+
+		assertEquals(
+			_systemTaskDefinitions, (List<TaskDefinition>)page.getItems());
+	}
+
 	private static String _originalName;
 	private static PermissionChecker _originalPermissionChecker;
 
 	@Inject
 	private static SiteInitializerRegistry _siteInitializerRegistry;
+
+	private static final List<TaskDefinition> _systemTaskDefinitions = List.of(
+		new TaskDefinition() {
+			{
+				active = true;
+				name = WorkflowDefinitionConstants.NAME_CHANGE_TONE;
+				version = 1;
+			}
+		},
+		new TaskDefinition() {
+			{
+				active = true;
+				name = WorkflowDefinitionConstants.NAME_CHAT_MESSAGE_PIPELINE;
+				version = 1;
+			}
+		},
+		new TaskDefinition() {
+			{
+				active = true;
+				name =
+					WorkflowDefinitionConstants.NAME_FIX_SPELLING_AND_GRAMMAR;
+				version = 1;
+			}
+		},
+		new TaskDefinition() {
+			{
+				active = true;
+				name = WorkflowDefinitionConstants.NAME_IMPROVE_WRITING;
+				version = 1;
+			}
+		},
+		new TaskDefinition() {
+			{
+				active = true;
+				name = WorkflowDefinitionConstants.NAME_MAKE_LONGER;
+				version = 1;
+			}
+		},
+		new TaskDefinition() {
+			{
+				active = true;
+				name = WorkflowDefinitionConstants.NAME_MAKE_SHORTER;
+				version = 1;
+			}
+		});
 
 }

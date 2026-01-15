@@ -31,10 +31,10 @@ public class LayoutPageTemplateEntryLayoutProviderUtil {
 		long groupId, String externalReferenceCode) {
 
 		LayoutPageTemplateEntryLayoutProvider
-			layoutPageTemplateEntryLayoutProviderUtil =
+			layoutPageTemplateEntryLayoutProvider =
 				_layoutPageTemplateEntryLayoutProviderSnapshot.get();
 
-		return layoutPageTemplateEntryLayoutProviderUtil.
+		return layoutPageTemplateEntryLayoutProvider.
 			getLayoutPageTemplateEntryLayoutPrototype(
 				groupId, externalReferenceCode);
 	}

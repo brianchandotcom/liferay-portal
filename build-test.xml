@@ -15329,6 +15329,49 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 			</then>
 		</if>
 
+		<local name="create.bare.mysql.sql.file" />
+
+		<if>
+			<or>
+				<equals arg1="${database.type}" arg2="mariadb" />
+				<equals arg1="${database.type}" arg2="mysql" />
+			</or>
+			<then>
+				<loadresource property="found.utf8mb3.line">
+					<concat>
+						<file file="${liferay.home}/mysql.sql" />
+						<filterchain>
+							<linecontainsregexp casesensitive="false">
+								<regexp pattern="DEFAULT CHARSET=utf8(mb3)?(?![mb4])" />
+							</linecontainsregexp>
+							<headfilter lines="1" />
+						</filterchain>
+					</concat>
+				</loadresource>
+
+				<if>
+					<isset property="found.utf8mb3.line" />
+					<then>
+						<copy
+							file="sql/create-bare/create-bare-mysql.sql"
+							overwrite="true"
+							tofile="sql/create-bare/create-bare-mysql-utf8mb3.sql"
+						>
+							<filterchain>
+								<tokenfilter>
+									<replaceregex flags="g" pattern="utf8mb4" replace="utf8mb3" />
+								</tokenfilter>
+							</filterchain>
+						</copy>
+						<property name="create.bare.mysql.sql.file" value="create-bare-mysql-utf8mb3.sql" />
+					</then>
+					<else>
+						<property name="create.bare.mysql.sql.file" value="create-bare-mysql.sql" />
+					</else>
+				</if>
+			</then>
+		</if>
+
 		<get-database-property property.name="database.docker.image" />
 
 		<if>
@@ -15408,7 +15451,7 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 							<antcall target="rebuild-database">
 								<param name="database.type" value="${database.type}" />
 								<param name="sql.dir" value="sql/create-bare/" />
-								<param name="sql.file" value="create-bare-mysql.sql" />
+								<param name="sql.file" value="${create.bare.mysql.sql.file}" />
 							</antcall>
 
 							<echo file="${import.database.sh.file.path}">
@@ -15454,7 +15497,7 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 							<antcall target="rebuild-database">
 								<param name="database.type" value="${database.type}" />
 								<param name="sql.dir" value="sql/create-bare/" />
-								<param name="sql.file" value="create-bare-mysql.sql" />
+								<param name="sql.file" value="${create.bare.mysql.sql.file}" />
 							</antcall>
 
 							<is-less-than arg1="${database.version}" arg2="8.0" property.name="mysql.upgrade" />
@@ -15610,7 +15653,7 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 							<antcall target="rebuild-database">
 								<param name="database.type" value="${database.type}" />
 								<param name="sql.dir" value="sql/create-bare/" />
-								<param name="sql.file" value="create-bare-mysql.sql" />
+								<param name="sql.file" value="${create.bare.mysql.sql.file}" />
 							</antcall>
 
 							<get-database-property property.name="database.password" />
@@ -15630,7 +15673,7 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 							<antcall target="rebuild-database">
 								<param name="database.type" value="${database.type}" />
 								<param name="sql.dir" value="sql/create-bare/" />
-								<param name="sql.file" value="create-bare-mysql.sql" />
+								<param name="sql.file" value="${create.bare.mysql.sql.file}" />
 							</antcall>
 
 							<var name="arg.line" value="" />
@@ -15756,6 +15799,7 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 				</if>
 			</else>
 		</if>
+		<delete file="sql/create-bare/create-bare-mysql-utf8mb3.sql" quiet="true" />
 	</target>
 
 	<target name="record-git-commit-bottom-test-jsp">

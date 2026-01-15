@@ -205,11 +205,11 @@ public class JavaScriptFrontendResourceRequestHandler
 				URL languageJsonURL = _hashedFilesRegistry.getResource(
 					prefix + "/language.json");
 
-				if (languageJsonURL != null) {
-					_translatable.putIfAbsent(requestURI, false);
+				if (languageJsonURL == null) {
+					_translatable.putIfAbsent(requestURI, true);
 				}
 				else {
-					_translatable.putIfAbsent(requestURI, true);
+					_translatable.putIfAbsent(requestURI, false);
 				}
 			}
 			catch (IOException ioException) {

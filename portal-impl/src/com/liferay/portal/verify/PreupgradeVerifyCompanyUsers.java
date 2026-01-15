@@ -7,7 +7,6 @@ package com.liferay.portal.verify;
 
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.events.StartupHelperUtil;
-import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
@@ -31,8 +30,7 @@ public class PreupgradeVerifyCompanyUsers extends PreupgradeVerifyProcess {
 			companyId -> {
 				_verifyCompanyAdminUser(companyId);
 				_verifyCompanyGuestUser(companyId);
-			},
-			PortalInstancePool.getCompanyIds());
+			});
 	}
 
 	private void _verifyCompanyAdminUser(long companyId) throws Exception {

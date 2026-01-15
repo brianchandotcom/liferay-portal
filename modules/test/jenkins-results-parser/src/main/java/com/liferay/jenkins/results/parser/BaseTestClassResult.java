@@ -198,6 +198,17 @@ public abstract class BaseTestClassResult implements TestClassResult {
 	}
 
 	@Override
+	public TestClassHistory getTestClassHistory() {
+		TestClass testClass = getTestClass();
+
+		if (testClass == null) {
+			return null;
+		}
+
+		return testClass.getTestClassHistory();
+	}
+
+	@Override
 	public String getTestClassReportURL() {
 		StringBuilder sb = new StringBuilder();
 
@@ -227,17 +238,6 @@ public abstract class BaseTestClassResult implements TestClassResult {
 		}
 
 		return testClassReportURL;
-	}
-
-	@Override
-	public TestClassHistory getTestClassHistory() {
-		TestClass testClass = getTestClass();
-
-		if (testClass == null) {
-			return null;
-		}
-
-		return testClass.getTestClassHistory();
 	}
 
 	@Override

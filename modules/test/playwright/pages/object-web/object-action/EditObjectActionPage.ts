@@ -69,11 +69,15 @@ export class EditObjectActionPage {
 		await this.actionBuilderTab.click();
 	}
 
-	async addNewAction(
-		thenOption: string,
-		whenOption: string,
-		notificationTemplateName?: string
-	) {
+	async addNewAction({
+		notificationTemplateName,
+		thenOption,
+		whenOption,
+	}: {
+		notificationTemplateName?: string;
+		thenOption: string;
+		whenOption: string;
+	}) {
 		await this.viewObjectActionsPage.openObjectActionSidePanel();
 
 		await this.actionLabelInput.fill(whenOption);

@@ -109,10 +109,10 @@ test.describe('Manage object actions through object actions tab', () => {
 		] as {objectAction: string}[];
 
 		for (const {objectAction} of objectActionsMock) {
-			await editObjectActionPage.addNewAction(
-				'Split Order by Catalog',
-				objectAction
-			);
+			await editObjectActionPage.addNewAction({
+				thenOption: 'Split Order by Catalog',
+				whenOption: objectAction,
+			});
 		}
 
 		const objectActionAPIClient =
@@ -156,11 +156,11 @@ test.describe('Manage object actions through object actions tab', () => {
 			createdObjectDefinition.label['en_US']
 		);
 
-		await editObjectActionPage.addNewAction(
-			'Notification',
-			'On After Add',
-			notificationTemplateName
-		);
+		await editObjectActionPage.addNewAction({
+			notificationTemplateName,
+			thenOption: 'Notification',
+			whenOption: 'On After Add',
+		});
 
 		await page.waitForLoadState('networkidle');
 

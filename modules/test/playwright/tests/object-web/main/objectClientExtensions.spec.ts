@@ -238,10 +238,11 @@ test('Can trigger object action as a client extension', async ({
 
 	await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
 
-	await editObjectActionPage.addNewAction(
-		'object-action-executor[function#liferay-sample-etc-spring-boot-object-action-1]',
-		'On After Add'
-	);
+	await editObjectActionPage.addNewAction({
+		thenOption:
+			'object-action-executor[function#liferay-sample-etc-spring-boot-object-action-1]',
+		whenOption: 'On After Add',
+	});
 
 	viewObjectEntriesPage.goto(objectDefinition.className);
 

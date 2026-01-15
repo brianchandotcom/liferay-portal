@@ -904,9 +904,15 @@ AUI.add(
 							.byId('PORTLET_DATA_' + portletId)
 							.attr('checked')
 					) {
-						instance
-							.byId('PORTLET_DATA_' + portletId)
-							.attr('checked', false);
+						if (
+							!instance
+								.byId('PORTLET_DATA_' + portletId)
+								.ancestor('[data-portlet-type="batch"]')
+						) {
+							instance
+								.byId('PORTLET_DATA_' + portletId)
+								.attr('checked', false);
+						}
 
 						instance.byId('showChangeContent_' + portletId).hide();
 

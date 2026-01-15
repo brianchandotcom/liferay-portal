@@ -23,7 +23,8 @@
 						"key": "BASIC_COMPONENT-tabs"
 					},
 					"fragmentConfig": {
-						"numberOfTabs": 2
+						"numberOfTabs": 2,
+						"persistSelectedTab": false
 					},
 					"fragmentFields": [
 						{

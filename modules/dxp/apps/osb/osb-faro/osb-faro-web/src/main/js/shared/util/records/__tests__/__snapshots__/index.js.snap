@@ -27,6 +27,7 @@ Immutable.Record {
 
 exports[`Records should return a Segment Record 1`] = `
 Immutable.Record {
+  "activationStatus": null,
   "activeIndividualCount": 0,
   "activitiesCount": 0,
   "anonymousIndividualCount": 0,

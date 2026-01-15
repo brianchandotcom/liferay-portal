@@ -1,0 +1,91 @@
+{
+	"configuration": {
+		"className": "com.liferay.notification.rest.dto.v1_0.NotificationTemplate",
+		"multiCompany": true,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"featureFlag": "LPD-58677",
+			"importStrategy": "ON_ERROR_FAIL",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "DEFAULT"
+	},
+	"items": [
+		{
+			"body": {
+				"en_US": "There is a new comment on the project ${ObjectField_title.getData()}.\nClick here to view the new comment: ${LayoutPageTemplateEntry_project.getData()}"
+			},
+			"editorType": "freeMarker",
+			"externalReferenceCode": "L_CMP_PROJECT_SUBSCRIPTION_COMMENT_ADDED_NOTIFICATION_TEMPLATE",
+			"name": "CMP Project Subscription Comment Added Notification",
+			"recipientType": "email",
+			"recipients": [
+				{
+					"from": "team@liferay.com",
+					"fromName": {
+						"en_US": "Liferay Team"
+					},
+					"singleRecipient": true,
+					"toType": "subscribers"
+				}
+			],
+			"subject": {
+				"en_US": "New comment on [%CMPPROJECT_TITLE%]."
+			},
+			"system": true,
+			"type": "email",
+			"typeLabel": "Email"
+		},
+		{
+			"body": {
+				"en_US": "A new task was created in the project ${.data_model['ObjectRelationship#CMPProject#cmpProjectToCMPTasks_title'].getData()}\n\nTask: ${ObjectField_title.getData()}\nAssigned To: ${ObjectField_assignTo.getData()}\nDue Date: ${ObjectField_dueDate.getData()}\nView Task: ${LayoutPageTemplateEntry_task.getData()}"
+			},
+			"editorType": "freeMarker",
+			"externalReferenceCode": "L_CMP_TASK_SUBSCRIPTION_ADDED_NOTIFICATION_TEMPLATE",
+			"name": "CMP Task Subscription Added Notification",
+			"recipientType": "email",
+			"recipients": [
+				{
+					"from": "team@liferay.com",
+					"fromName": {
+						"en_US": "Liferay Team"
+					},
+					"singleRecipient": true,
+					"toType": "subscribers"
+				}
+			],
+			"subject": {
+				"en_US": "New task created in [%CMPPROJECTTOCMPTASKS_CMPPROJECT_TITLE%]:[%CMPTASK_TITLE%]."
+			},
+			"system": true,
+			"type": "email",
+			"typeLabel": "Email"
+		},
+		{
+			"body": {
+				"en_US": "<p>Dear [%EMAIL_RECIPIENT_NAME%],</p>\n\n<p>The project [%CMPPROJECT_TITLE%] was updated by [%CURRENT_USER_FIRST_NAME%] [%CURRENT_USER_LAST_NAME%].</p>\n\n<p>Current Title: [%CMPPROJECT_TITLE%]</p>\n<p>Current Description: [%CMPPROJECT_DESCRIPTION%]</p>\n<p>Current State: [%CMPPROJECT_STATE%]</p>\n<p>Manager: [%USERTOCMPPROJECTMANAGER_USER_GIVENNAME%] [%USERTOCMPPROJECTMANAGER_USER_FAMILYNAME%]</p>\n<p>Sponsor: [%USERTOCMPPROJECTSPONSOR_USER_GIVENNAME%] [%USERTOCMPPROJECTSPONSOR_USER_FAMILYNAME%]</p>\n<p>Due Date: [%CMPPROJECT_DUEDATE%]</p>"
+			},
+			"editorType": "richText",
+			"externalReferenceCode": "L_CMP_PROJECT_SUBSCRIPTION_UPDATED_NOTIFICATION_TEMPLATE",
+			"name": "CMP Project Subscription Updated Notification",
+			"recipientType": "email",
+			"recipients": [
+				{
+					"from": "team@liferay.com",
+					"fromName": {
+						"en_US": "Liferay Team"
+					},
+					"singleRecipient": true,
+					"toType": "subscribers"
+				}
+			],
+			"subject": {
+				"en_US": "[%CMPPROJECT_TITLE%] was updated."
+			},
+			"system": true,
+			"type": "email",
+			"typeLabel": "Email"
+		}
+	]
+}

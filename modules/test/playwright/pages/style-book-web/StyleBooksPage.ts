@@ -161,7 +161,8 @@ export class StyleBooksPage {
 		const input = parentElement
 			.locator('.form-group')
 			.filter({hasText: label})
-			.locator('input');
+			.locator('input')
+			.first();
 
 		if (section && (await input.isHidden())) {
 			await this.page.getByRole('button', {name: section}).click();

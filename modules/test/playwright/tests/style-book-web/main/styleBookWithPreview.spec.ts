@@ -139,3 +139,46 @@ test(
 		});
 	}
 );
+
+test(
+	'The user can preview the effects on default fragments in styles book editor.',
+	{tag: '@LPS-140774'},
+	async ({page, site, styleBooksPage}) => {
+		const styleBookName = getRandomString();
+
+		await test.step('Create a style book', async () => {
+			await styleBooksPage.goto(site.friendlyUrlPath);
+
+			await styleBooksPage.create(styleBookName);
+		});
+
+		await test.step('Select the Basic Components set for preview', async () => {
+			await styleBooksPage.previewFragmentCollection('Basic Components');
+		});
+
+		await test.step('Define the background color for button primary', async () => {
+			await styleBooksPage.selectTokenCategory('Buttons');
+
+			await styleBooksPage.updateTokenInput(
+				'Background Color',
+				'#00FF00',
+				'Button Primary'
+			);
+
+			await styleBooksPage.waitForAutoSave();
+		});
+
+		await test.step('View the defined background color is applied on button primary fragment', async () => {
+			const firstButton = page
+				.frameLocator('iframe.style-book-editor__page-preview-frame')
+				.getByRole('link', {
+					name: 'Go Somewhere',
+				})
+				.first();
+
+			await firstButton.waitFor();
+
+			expect(firstButton).toHaveCSS('background-color', 'rgb(0, 255, 0)');
+		});
+	}
+);

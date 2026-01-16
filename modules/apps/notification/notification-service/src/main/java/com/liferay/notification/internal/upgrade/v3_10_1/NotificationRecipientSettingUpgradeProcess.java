@@ -26,40 +26,45 @@ public class NotificationRecipientSettingUpgradeProcess extends UpgradeProcess {
 					"from NotificationRecipient inner join ",
 					"NotificationQueueEntry on NotificationRecipient.classPK ",
 					"= NotificationQueueEntry.notificationQueueEntryId where ",
-					"NotificationQueueEntry.type_ = '",
-					NotificationConstants.TYPE_USER_NOTIFICATION, "'"));
-			ResultSet resultSet1 = preparedStatement1.executeQuery();
+					"NotificationQueueEntry.type_ = ?"));
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				StringBundler.concat(
 					"select NotificationRecipient.notificationRecipientId ",
 					"from NotificationRecipient inner join ",
 					"NotificationTemplate on NotificationRecipient.classPK = ",
 					"NotificationTemplate.notificationTemplateId where ",
-					"NotificationTemplate.type_ = '",
-					NotificationConstants.TYPE_USER_NOTIFICATION, "'"));
-			ResultSet resultSet2 = preparedStatement2.executeQuery();
-			PreparedStatement preparedStatement3 =
-				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection,
-					"delete from NotificationRecipientSetting where " +
-						"notificationRecipientId = ? and name = " +
-							"'singleRecipient'")) {
+					"NotificationTemplate.type_ = ?"))) {
 
-			while (resultSet1.next()) {
-				preparedStatement3.setLong(
-					1, resultSet1.getLong("notificationRecipientId"));
+			preparedStatement1.setString(
+				1, NotificationConstants.TYPE_USER_NOTIFICATION);
+			preparedStatement2.setString(
+				1, NotificationConstants.TYPE_USER_NOTIFICATION);
 
-				preparedStatement3.addBatch();
+			try (PreparedStatement preparedStatement3 =
+					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+						connection,
+						"delete from NotificationRecipientSetting where " +
+							"notificationRecipientId = ? and name = " +
+								"'singleRecipient'");
+				ResultSet resultSet1 = preparedStatement1.executeQuery();
+				ResultSet resultSet2 = preparedStatement2.executeQuery()) {
+
+				while (resultSet1.next()) {
+					preparedStatement3.setLong(
+						1, resultSet1.getLong("notificationRecipientId"));
+
+					preparedStatement3.addBatch();
+				}
+
+				while (resultSet2.next()) {
+					preparedStatement3.setLong(
+						1, resultSet2.getLong("notificationRecipientId"));
+
+					preparedStatement3.addBatch();
+				}
+
+				preparedStatement3.executeBatch();
 			}
-
-			while (resultSet2.next()) {
-				preparedStatement3.setLong(
-					1, resultSet2.getLong("notificationRecipientId"));
-
-				preparedStatement3.addBatch();
-			}
-
-			preparedStatement3.executeBatch();
 		}
 	}
 

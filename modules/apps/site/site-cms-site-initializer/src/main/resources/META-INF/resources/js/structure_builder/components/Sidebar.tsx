@@ -14,9 +14,7 @@ import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectPublishedChildren from '../selectors/selectPublishedChildren';
 import selectSelection from '../selectors/selectSelection';
 import selectStructure from '../selectors/selectStructure';
-import confirmChildrenDeletion from '../utils/confirmChildrenDeletion';
-import findChild from '../utils/findChild';
-import isReferenced from '../utils/isReferenced';
+import {deleteSelection} from '../utils/deleteSelection';
 import AddChildDropdown from './AddChildDropdown';
 import StructureTree from './StructureTree';
 
@@ -70,29 +68,6 @@ function Toolbar({
 		);
 	}
 
-	const onDeleteSelection = async () => {
-		for (const uuid of selection) {
-			const item = findChild({root: structure, uuid})!;
-
-			if (
-				!isReferenced({item, root: structure}) &&
-				publishedChildren.has(uuid)
-			) {
-				const confirm = await confirmChildrenDeletion();
-
-				if (confirm) {
-					dispatch({type: 'delete-selection'});
-
-					return;
-				}
-
-				return;
-			}
-		}
-
-		dispatch({type: 'delete-selection'});
-	};
-
 	return (
 		<ManagementToolbar.Container
 			active
@@ -111,7 +86,13 @@ function Toolbar({
 					{type: 'divider'},
 					{
 						label: Liferay.Language.get('delete'),
-						onClick: onDeleteSelection,
+						onClick: () =>
+							deleteSelection({
+								dispatch,
+								publishedChildren,
+								selection,
+								structure,
+							}),
 						symbolLeft: 'trash',
 					},
 				]}

@@ -31,13 +31,15 @@ public class LaunchEntryLocalServiceImpl
 			long classNameId, long classPK, String classVersion)
 		throws PortalException {
 
-		LaunchSet launchSet = _launchSetLocalService.getLaunchSet(launchSetId);
-
 		LaunchEntry launchEntry = launchEntryPersistence.create(
 			counterLocalService.increment());
 
 		launchEntry.setExternalReferenceCode(externalReferenceCode);
+
+		LaunchSet launchSet = _launchSetLocalService.getLaunchSet(launchSetId);
+
 		launchEntry.setCompanyId(launchSet.getCompanyId());
+
 		launchEntry.setUserId(userId);
 		launchEntry.setLaunchSetId(launchSetId);
 		launchEntry.setClassNameId(classNameId);

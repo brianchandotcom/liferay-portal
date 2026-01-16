@@ -33,13 +33,15 @@ public class LaunchSetLocalServiceImpl extends LaunchSetLocalServiceBaseImpl {
 		LaunchSet launchSet = launchSetPersistence.create(
 			counterLocalService.increment());
 
+		launchSet.setExternalReferenceCode(externalReferenceCode);
+
 		User user = _userLocalService.getUser(userId);
 
-		launchSet.setExternalReferenceCode(externalReferenceCode);
 		launchSet.setCompanyId(user.getCompanyId());
+
 		launchSet.setUserId(userId);
-		launchSet.setName(name);
 		launchSet.setDescription(description);
+		launchSet.setName(name);
 
 		return launchSetPersistence.update(launchSet);
 	}

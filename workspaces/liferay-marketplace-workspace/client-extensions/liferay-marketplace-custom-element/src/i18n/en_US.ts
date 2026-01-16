@@ -475,6 +475,7 @@ export default {
 	'payment-method': 'Payment Method',
 	'payment-status': 'Payment Status',
 	'payment-summary': 'Payment Summary',
+	'payments': 'Payments',
 	'paypal-account': 'PayPal Account',
 	'pending': 'Pending',
 	'personal': 'Personal',

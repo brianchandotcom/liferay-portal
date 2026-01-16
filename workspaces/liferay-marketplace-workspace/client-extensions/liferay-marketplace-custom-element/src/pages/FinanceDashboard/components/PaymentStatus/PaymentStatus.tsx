@@ -36,8 +36,9 @@ const PaymentStatus = ({paymentStatus}: {paymentStatus: number}) => (
 			symbol="circle"
 		/>
 
-		<span className="finance-dashboard-secondary-text">
-			{paymentStatusLabel[paymentStatus as PaymentStatusCode]}
+		<span>
+			{paymentStatusLabel[paymentStatus as PaymentStatusCode] ||
+				paymentStatusLabel[PaymentStatusCode.PAID]}
 		</span>
 	</div>
 );

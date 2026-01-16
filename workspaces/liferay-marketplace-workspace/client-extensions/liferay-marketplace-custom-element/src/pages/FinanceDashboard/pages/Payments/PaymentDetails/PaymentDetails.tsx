@@ -82,7 +82,7 @@ const PaymentDetails = () => {
 		>
 			<DetailsHeader
 				backLink="/payments"
-				onClick={async () =>
+				onClick={() =>
 					PublisherSalesSummary.patchPublisherSalesSummary(
 						{
 							paidBy: Liferay.ThemeDisplay.getUserName(),
@@ -150,7 +150,7 @@ const PaymentDetails = () => {
 
 				<DetailedCard
 					cardIconAltText="paste-plaintext"
-					cardTitle={i18n.translate('transaction-details')}
+					cardTitle={i18n.translate('payment-summary')}
 					className="w-100"
 					clayIcon="paste-plaintext"
 				>
@@ -210,6 +210,7 @@ const PaymentDetails = () => {
 								),
 							},
 							{
+								className: 'mt-2',
 								title: i18n.translate('paid-date'),
 								value: textWrapper(
 									formatDate(publisherSalesSummary?.paidDate)
@@ -235,7 +236,7 @@ const PaymentDetails = () => {
 
 			<DetailedCard
 				cardIconAltText="order-form"
-				cardTitle={i18n.translate('order-details')}
+				cardTitle={i18n.translate('apps-sold')}
 				className="mt-5 pb-0 w-100"
 				clayIcon="price-tag"
 			>
@@ -264,15 +265,18 @@ const PaymentDetails = () => {
 												draggable={false}
 												src={placedOrderItem.thumbnail}
 											/>
-											<span>
-												<strong>
-													{placedOrderItem.name}
-												</strong>
 
-												<p className="finance-dashboard-secondary-text mb-0 pb-0 text-capitalize">
-													{skuOption?.skuOptionValueKey ||
-														skuOption?.skuOptionValueName}
-												</p>
+											<span className="d-flex flex-column">
+												<span className="font-weight-bold">
+													{placedOrderItem.name}
+												</span>
+
+												<small className="finance-dashboard-secondary-text mb-0 pb-0 text-capitalize text-muted">
+													{`${placedOrderItem.quantity} ${
+														skuOption?.skuOptionValueKey ||
+														skuOption?.skuOptionValueName
+													} license`}
+												</small>
 											</span>
 										</div>
 									</div>
@@ -287,18 +291,12 @@ const PaymentDetails = () => {
 									<p className="mb-0">
 										{order.orderItem.account.name}
 									</p>
-									<p className="mb-0 text-muted">
+									<p className="finance-dashboard-secondary-text mb-0">
 										{placedOrderItem.author}
 									</p>
 								</div>
 							),
 							title: i18n.translate('account'),
-						},
-						{
-							key: 'placedOrderItem',
-							render: (placedOrderItem) =>
-								placedOrderItem.quantity,
-							title: i18n.translate('quantity'),
 						},
 						{
 							key: 'orderItem',
@@ -334,7 +332,7 @@ const PaymentDetails = () => {
 					rows={completeOrderItems || []}
 				>
 					<ClayTable.Row className="publisher-payout-footer w-100">
-						<ClayTable.Cell colSpan={3}>
+						<ClayTable.Cell colSpan={2}>
 							<b>{i18n.translate('total')}</b>
 						</ClayTable.Cell>
 

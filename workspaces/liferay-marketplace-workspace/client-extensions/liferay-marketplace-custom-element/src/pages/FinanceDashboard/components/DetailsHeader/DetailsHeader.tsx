@@ -31,7 +31,7 @@ const DetailsHeader = ({
 					{i18n.translate('back-to-last-transaction')}
 				</BackLink>
 
-				<h2>{title}</h2>
+				<h2 className="mt-2">{title}</h2>
 
 				<PaymentStatus paymentStatus={paymentStatusCode} />
 			</div>

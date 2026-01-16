@@ -9,6 +9,7 @@ import useSWR from 'swr';
 import SearchBuilder from '../../../core/SearchBuilder';
 import GraphQL from '../../../services/rest/HeadlessGraphQL';
 import {getLastDayOfMonth} from '../../../utils/date';
+import {OrderWorkflowStatusCode} from '../../../enums/Order';
 
 export const METRIC_PARAMETER = {
 	month: 30,
@@ -38,75 +39,104 @@ const useOrderMetrics = (param: FilterType) => {
 		beforeLastPeriod.setHours(0, 0, 0);
 		lastPeriod.setHours(23, 59, 59);
 
-		const {
-			orders,
-			ordersCreateBetweenLastPeriod,
-			ordersCreatedLastPeriod,
-			...metrics
-		} = await GraphQL.metrics(
+		const [
 			{
-				group: 'headlessCommerceAdminOrder_v1_0',
-				name: 'orders',
+				orders,
+				ordersCreateBetweenLastPeriod,
+				ordersCreatedLastPeriod,
+				...metrics
 			},
-			{
-				orders: '',
-				ordersCreateBetweenLastPeriod: new SearchBuilder()
-					.lt('createDate', lastPeriod.toISOString())
-					.and()
-					.gt('createDate', beforeLastPeriod.toISOString())
-					.build(),
-				ordersCreatedLastPeriod: SearchBuilder.gt(
-					'createDate',
-					lastPeriod.toISOString()
-				),
-				ordersThisMonth: new SearchBuilder()
-					.gt(
+			ordersWithTotalAmount,
+		] = await Promise.all([
+			GraphQL.metrics(
+				{
+					group: 'headlessCommerceAdminOrder_v1_0',
+					name: 'orders',
+				},
+				{
+					orders: '',
+					ordersCreateBetweenLastPeriod: new SearchBuilder()
+						.lt('createDate', lastPeriod.toISOString())
+						.and()
+						.gt('createDate', beforeLastPeriod.toISOString())
+						.build(),
+					ordersCreatedLastPeriod: SearchBuilder.gt(
+						'createDate',
+						lastPeriod.toISOString()
+					),
+					ordersThisMonth: new SearchBuilder()
+						.gt(
+							'createDate',
+							new Date(
+								currentTime.getFullYear(),
+								currentTime.getMonth(),
+								1,
+								0,
+								0,
+								0
+							).toISOString()
+						)
+						.and()
+						.lt(
+							'createDate',
+							new Date(
+								currentTime.getFullYear(),
+								currentTime.getMonth(),
+								getLastDayOfMonth(
+									currentTime.getMonth(),
+									currentTime.getFullYear()
+								),
+								23,
+								59,
+								59
+							).toISOString()
+						)
+						.build(),
+					ordersThisYear: SearchBuilder.gt(
 						'createDate',
 						new Date(
 							currentTime.getFullYear(),
-							currentTime.getMonth(),
+							0,
 							1,
 							0,
 							0,
 							0
 						).toISOString()
-					)
-					.and()
-					.lt(
-						'createDate',
-						new Date(
-							currentTime.getFullYear(),
-							currentTime.getMonth(),
-							getLastDayOfMonth(
-								currentTime.getMonth(),
-								currentTime.getFullYear()
-							),
-							23,
-							59,
-							59
-						).toISOString()
-					)
-					.build(),
-				ordersThisYear: SearchBuilder.gt(
-					'createDate',
-					new Date(
-						currentTime.getFullYear(),
-						0,
-						1,
-						0,
-						0,
-						0
-					).toISOString()
-				),
-			}
-		).then(({data: {metrics}}) => ({
-			orders: metrics.orders.totalCount,
-			ordersCreateBetweenLastPeriod:
-				metrics.ordersCreateBetweenLastPeriod.totalCount,
-			ordersCreatedLastPeriod: metrics.ordersCreatedLastPeriod.totalCount,
-			ordersThisMonth: metrics.ordersThisMonth.totalCount,
-			ordersThisYear: metrics.ordersThisYear.totalCount,
-		}));
+					),
+				}
+			).then(({data: {metrics}}) => ({
+				orders: metrics.orders.totalCount,
+				ordersCreateBetweenLastPeriod:
+					metrics.ordersCreateBetweenLastPeriod.totalCount,
+				ordersCreatedLastPeriod:
+					metrics.ordersCreatedLastPeriod.totalCount,
+				ordersThisMonth: metrics.ordersThisMonth.totalCount,
+				ordersThisYear: metrics.ordersThisYear.totalCount,
+			})),
+			GraphQL.metrics(
+				{
+					group: 'headlessCommerceAdminOrder_v1_0',
+					name: 'orders',
+					options: {
+						body: `items {totalAmount}`,
+						pageSize: '-1',
+					},
+				},
+				{
+					totalAmount: new SearchBuilder()
+						.gt('totalAmount', 0)
+						.and()
+						.lambda(
+							'orderStatus',
+							OrderWorkflowStatusCode.COMPLETED,
+							{
+								unquote: true,
+							}
+						)
+						.build(),
+				}
+			),
+		]);
 
 		const newOrders =
 			ordersCreatedLastPeriod - ordersCreateBetweenLastPeriod;
@@ -124,6 +154,13 @@ const useOrderMetrics = (param: FilterType) => {
 			growth,
 			lastPeriod: ordersCreatedLastPeriod,
 			totalCount: orders,
+			totalAmount: (
+				ordersWithTotalAmount.data.metrics.totalAmount.items as Order[]
+			).reduce(
+				(previousItem, currentItem) =>
+					previousItem + (currentItem.totalAmount ?? 0),
+				0
+			),
 			...metrics,
 		};
 	});

@@ -62,7 +62,7 @@ const Payments = () => {
 			pageRendererProps={{
 				className: 'border mb-8 py-2 rounded-lg',
 			}}
-			title={i18n.translate('last-orders')}
+			title={i18n.translate('payments')}
 		>
 			<ListView<PublisherSalesSummaryEntry>
 				emptyStateProps={{title: i18n.translate('no-orders-yet')}}

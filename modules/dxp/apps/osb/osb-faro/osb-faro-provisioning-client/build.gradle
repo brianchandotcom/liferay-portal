@@ -1,5 +1,5 @@
 dependencies {
-	compileInclude group: "com.liferay.osb.koroneiki", name: "com.liferay.osb.koroneiki.client", version: "1.0.0"
+	compileInclude group: "com.liferay.osb.koroneiki", name: "com.liferay.osb.koroneiki.rest.client", version: "latest.release"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "jakarta.servlet", name: "jakarta.servlet-api", version: "6.0.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"

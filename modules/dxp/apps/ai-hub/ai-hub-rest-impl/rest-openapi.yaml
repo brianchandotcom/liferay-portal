@@ -56,6 +56,9 @@ components:
                 scope:
                     readOnly: true
                     type: string
+                userToken:
+                    readOnly: true
+                    type: string
             type: object
 info:
     description:

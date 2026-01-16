@@ -125,12 +125,12 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 		throws Exception {
 
 		if (_infoItemDetails == null) {
-			if (layoutPageTemplateEntry != null) {
-				return _layoutPageTemplateEntryModelResourcePermission.contains(
-					permissionChecker, layoutPageTemplateEntry, actionId);
+			if (layoutPageTemplateEntry == null) {
+				return false;
 			}
 
-			return false;
+			return _layoutPageTemplateEntryModelResourcePermission.contains(
+				permissionChecker, layoutPageTemplateEntry, actionId);
 		}
 
 		InfoItemPermissionProvider infoItemPermissionProvider =

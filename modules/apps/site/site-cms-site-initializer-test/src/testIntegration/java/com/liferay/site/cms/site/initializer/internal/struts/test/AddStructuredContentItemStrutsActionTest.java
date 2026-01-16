@@ -60,7 +60,10 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.io.Serializable;
+
 import java.util.List;
+import java.util.Map;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -122,7 +125,7 @@ public class AddStructuredContentItemStrutsActionTest {
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING,
-					RandomTestUtil.randomString(), "text")),
+					RandomTestUtil.randomString(), "title")),
 			ObjectDefinitionConstants.SCOPE_DEPOT);
 
 		_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
@@ -160,6 +163,26 @@ public class AddStructuredContentItemStrutsActionTest {
 			_layoutPageTemplateEntryLocalService.
 				fetchDefaultLayoutPageTemplateEntry(
 					_group.getGroupId(), classNameId, 0);
+
+		_testExecute(
+			classNameId, 1, layoutPageTemplateEntry, httpServletRequest);
+
+		objectEntries = _objectEntryLocalService.getObjectEntries(
+			_depotEntry.getGroupId(), _objectDefinition.getObjectDefinitionId(),
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
+
+		ObjectEntry objectEntry = objectEntries.get(0);
+
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		values.put("title", RandomTestUtil.randomString());
+
+		_objectEntryLocalService.partialUpdateObjectEntry(
+			objectEntry.getUserId(), objectEntry.getObjectEntryId(),
+			objectEntry.getObjectEntryFolderId(), values,
+			ServiceContextTestUtil.getServiceContext());
 
 		_testExecute(
 			classNameId, 2, layoutPageTemplateEntry, httpServletRequest);

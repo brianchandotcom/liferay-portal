@@ -54,7 +54,7 @@ export class Session {
 		this._initPageTitle = document.title;
 		this._pageTitle = document.title;
 		this._setTimestamp();
-		this._warningLength = config.warningLength * 1000 || this.sessionLength;
+		this._warningLength = config.warningLength * 1000 || 0;
 		this._warningText = Liferay.Util.sub(
 			Liferay.Language.get('due-to-inactivity-your-session-will-expire'),
 			[
@@ -255,6 +255,7 @@ export class Session {
 
 			const shouldExpire = elapsed >= this.sessionLength;
 			const shouldWarn =
+				this._warningLength > 0 &&
 				elapsed >= this.sessionLength - this._warningLength;
 
 			const expiredTimeoutOffset =

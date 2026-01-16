@@ -9,21 +9,20 @@ import com.liferay.ai.hub.rest.dto.v1_0.TaskDefinition;
 import com.liferay.ai.hub.rest.resource.v1_0.TaskDefinitionResource;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
-import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
-import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
+import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -60,39 +59,35 @@ public class TaskDefinitionResourceImpl extends BaseTaskDefinitionResourceImpl {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
 
-				booleanFilter.add(
-					new TermFilter("scope", "ai"), BooleanClauseOccur.MUST);
+				booleanFilter.addRequiredTerm("latest", Boolean.TRUE);
+				booleanFilter.addRequiredTerm("scope", "ai");
 			},
 			filter, KaleoDefinitionVersion.class.getName(), search, pagination,
-			queryConfig -> queryConfig.setSelectedFieldNames(Field.NAME),
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.NAME, Field.VERSION),
 			searchContext -> searchContext.setCompanyId(
 				contextCompany.getCompanyId()),
 			sorts,
 			document -> _toTaskDefinition(
-				_kaleoDefinitionVersionLocalService.
-					getLatestKaleoDefinitionVersion(
-						contextCompany.getCompanyId(),
-						document.get(Field.NAME))));
+				_workflowDefinitionManager.getWorkflowDefinition(
+					contextCompany.getCompanyId(), document.get(Field.NAME),
+					GetterUtil.getInteger(document.get(Field.VERSION)))));
 	}
 
 	private TaskDefinition _toTaskDefinition(
-			KaleoDefinitionVersion kaleoDefinitionVersion)
+			WorkflowDefinition workflowDefinition)
 		throws PortalException {
-
-		KaleoDefinition kaleoDefinition =
-			kaleoDefinitionVersion.getKaleoDefinition();
 
 		return new TaskDefinition() {
 			{
-				setDescription(kaleoDefinition::getDescription);
-				setName(kaleoDefinition::getName);
-				setVersion(kaleoDefinition::getVersion);
+				setDescription(workflowDefinition::getDescription);
+				setName(workflowDefinition::getName);
+				setVersion(workflowDefinition::getVersion);
 			}
 		};
 	}
 
 	@Reference
-	private KaleoDefinitionVersionLocalService
-		_kaleoDefinitionVersionLocalService;
+	private WorkflowDefinitionManager _workflowDefinitionManager;
 
 }

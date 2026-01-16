@@ -9,6 +9,7 @@ clientDir: ../headless-admin-taxonomy-client/src/main/java
 compatibilityVersion: 14
 forcePredictableOperationId: true
 generateActionProviders: true
+generateClientJS: true
 generatePermissions: true
 javaEEPackage: jakarta
 testDir: ../headless-admin-taxonomy-test/src/testIntegration/java

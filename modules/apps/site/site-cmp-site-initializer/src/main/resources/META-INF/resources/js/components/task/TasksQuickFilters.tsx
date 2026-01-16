@@ -10,6 +10,8 @@ import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
 import React, {useState} from 'react';
 
+import './TasksQuickFilters.scss';
+
 function StatisticButton({
 	active,
 	count,
@@ -33,14 +35,18 @@ function StatisticButton({
 }) {
 	return (
 		<ClayButton
-			className={classNames('border c-py-3 h-100 text-left w-100', {
+			className={classNames('quick-filter-button', {
 				active,
 			})}
 			displayType="secondary"
 			onClick={onClick}
 		>
 			<div className="align-items-center d-flex">
-				<ClaySticker displayType={displayType} size="lg">
+				<ClaySticker
+					className="rounded"
+					displayType={displayType}
+					size="lg"
+				>
 					<ClayIcon symbol={icon} />
 				</ClaySticker>
 

@@ -196,12 +196,10 @@ public class SystemFDSSerializer
 		for (int i = 0; i < groupedFDSFiltersJSONArray.length(); i++) {
 			JSONObject jsonObject = groupedFDSFiltersJSONArray.getJSONObject(i);
 
-			String key = StringPool.BLANK;
-
 			Iterator<String> iterator = jsonObject.keys();
 
 			while (iterator.hasNext()) {
-				key = iterator.next();
+				String key = iterator.next();
 
 				if (Validator.isBlank(key)) {
 					continue;

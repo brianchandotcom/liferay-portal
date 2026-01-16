@@ -491,22 +491,11 @@ public class DisplayPageLayoutTypeControllerTest {
 
 		Assert.assertTrue(layout.isPublished());
 
-		_assertIncludeLayoutContent(
-			HttpServletResponse.SC_OK, false, draftLayout.getPlid(),
-			TestPropsValues.getUser());
-		_assertIncludeLayoutContent(
-			HttpServletResponse.SC_OK, false, layout.getPlid(),
-			TestPropsValues.getUser());
-		_assertIncludeLayoutContent(
-			HttpServletResponse.SC_OK, true, draftLayout.getPlid(), _guestUser);
-		_assertIncludeLayoutContent(
-			HttpServletResponse.SC_OK, true, layout.getPlid(), _guestUser);
-
 		User user = UserTestUtil.addGroupUser(
 			_group, RoleConstants.SITE_MEMBER);
 
-		_assertIncludeLayoutContent(
-			HttpServletResponse.SC_OK, false, layout.getPlid(), user);
+		_testDisplayPageTypeControllerWithoutContextInfoItem(
+			HttpServletResponse.SC_OK, draftLayout, user);
 
 		RoleTestUtil.removeResourcePermission(
 			RoleConstants.GUEST, LayoutPageTemplateEntry.class.getName(),
@@ -521,19 +510,8 @@ public class DisplayPageLayoutTypeControllerTest {
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()),
 			ActionKeys.VIEW);
 
-		_assertIncludeLayoutContent(
-			HttpServletResponse.SC_OK, false, draftLayout.getPlid(),
-			TestPropsValues.getUser());
-		_assertIncludeLayoutContent(
-			HttpServletResponse.SC_OK, false, layout.getPlid(),
-			TestPropsValues.getUser());
-		_assertIncludeLayoutContent(
-			HttpServletResponse.SC_OK, true, draftLayout.getPlid(), _guestUser);
-		_assertIncludeLayoutContent(
-			HttpServletResponse.SC_OK, true, layout.getPlid(), _guestUser);
-
-		_assertIncludeLayoutContent(
-			HttpServletResponse.SC_FORBIDDEN, false, layout.getPlid(), user);
+		_testDisplayPageTypeControllerWithoutContextInfoItem(
+			HttpServletResponse.SC_FORBIDDEN, draftLayout, user);
 	}
 
 	private void _addFragmentEntryLink(Layout layout) throws Exception {
@@ -809,6 +787,26 @@ public class DisplayPageLayoutTypeControllerTest {
 			_infoItemPermissionProvider.hasPermission(
 				_permissionCheckerFactory.create(_guestUser), _assetCategory,
 				ActionKeys.VIEW));
+	}
+
+	private void _testDisplayPageTypeControllerWithoutContextInfoItem(
+			int expectedStatus, Layout draftLayout, User user)
+		throws Exception {
+
+		_assertIncludeLayoutContent(
+			HttpServletResponse.SC_OK, false, draftLayout.getPlid(),
+			TestPropsValues.getUser());
+		_assertIncludeLayoutContent(
+			HttpServletResponse.SC_OK, false, draftLayout.getClassPK(),
+			TestPropsValues.getUser());
+		_assertIncludeLayoutContent(
+			HttpServletResponse.SC_OK, true, draftLayout.getPlid(), _guestUser);
+		_assertIncludeLayoutContent(
+			HttpServletResponse.SC_OK, true, draftLayout.getClassPK(),
+			_guestUser);
+
+		_assertIncludeLayoutContent(
+			expectedStatus, false, draftLayout.getClassPK(), user);
 	}
 
 	private static final String _PID =

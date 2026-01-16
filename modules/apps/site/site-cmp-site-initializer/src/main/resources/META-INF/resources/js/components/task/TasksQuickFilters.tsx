@@ -7,12 +7,16 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClaySticker from '@clayui/sticker';
+import {IBaseFilterState, IFDSState} from '@liferay/frontend-data-set-web';
+import {useLiferayState} from '@liferay/frontend-js-state-web/react';
 import classNames from 'classnames';
-import React, {useState} from 'react';
+import React from 'react';
+
+import {cmpTasksFDSAtom} from '../props_transformer/atoms';
 
 import './TasksQuickFilters.scss';
 
-function StatisticButton({
+function QuickFilterButton({
 	active,
 	count,
 	displayType,
@@ -63,10 +67,22 @@ function StatisticButton({
 }
 
 const TASK_QUICK_FILTER_TYPES = {
-	BLOCKED: 'blocked',
-	IN_PROGRESS: 'inProgress',
-	OVERDUE: 'overdue',
-	TOTAL: 'total',
+	BLOCKED: {
+		label: Liferay.Language.get('blocked'),
+		value: 'blocked',
+	},
+	IN_PROGRESS: {
+		label: Liferay.Language.get('in-progress'),
+		value: 'inProgress',
+	},
+	OVERDUE: {
+		label: Liferay.Language.get('overdue'),
+		value: 'overdue',
+	},
+	TOTAL: {
+		label: Liferay.Language.get('total-tasks'),
+		value: 'total',
+	},
 };
 
 export default function TasksQuickFilters({
@@ -80,13 +96,71 @@ export default function TasksQuickFilters({
 	overdueCount: number;
 	totalCount: number;
 }) {
-	const [active, setActive] = useState('');
+	const [tasksFDSState, setTasksFDSState] =
+		useLiferayState<IFDSState>(cmpTasksFDSAtom);
 
-	const handleClick = (value: string) => {
-		setActive(value);
+	const isQuickFilterActive = (quickFilterType: {
+		label: string;
+		value: string;
+	}) => {
+		const stateFilter = tasksFDSState.filters.find(
+			(filter: IBaseFilterState) => filter.id === 'state'
+		);
 
-		// TODO: Apply filter
+		return (
+			stateFilter?.active &&
+			stateFilter.selectedData?.selectedItems?.length === 1 &&
+			stateFilter.selectedData.selectedItems[0].value ===
+				quickFilterType.value
+		);
+	};
 
+	const handleClick = (quickFilterType: {label: string; value: string}) => {
+		if (isQuickFilterActive(quickFilterType)) {
+			setTasksFDSState({
+				...tasksFDSState,
+				filters: tasksFDSState.filters.map(
+					(filter: IBaseFilterState) => {
+						return {
+							...filter,
+							active: false,
+							selectedData: {
+								exclude: false,
+								selectedItems: [],
+							},
+						};
+					}
+				),
+			});
+		}
+		else {
+			setTasksFDSState({
+				...tasksFDSState,
+				filters: tasksFDSState.filters.map(
+					(filter: IBaseFilterState) => {
+						if (filter.id === 'state') {
+							return {
+								...filter,
+								active: true,
+								selectedData: {
+									exclude: false,
+									selectedItems: [quickFilterType],
+								},
+							};
+						}
+
+						return {
+							...filter,
+							active: false,
+							selectedData: {
+								exclude: false,
+								selectedItems: [],
+							},
+						};
+					}
+				),
+			});
+		}
 	};
 
 	return (
@@ -94,8 +168,10 @@ export default function TasksQuickFilters({
 			<ClayLayout.ContainerFluid className="px-0" size={false}>
 				<ClayLayout.Row>
 					<ClayLayout.Col className="px-2" size={3}>
-						<StatisticButton
-							active={active === TASK_QUICK_FILTER_TYPES.TOTAL}
+						<QuickFilterButton
+							active={isQuickFilterActive(
+								TASK_QUICK_FILTER_TYPES.TOTAL
+							)}
 							count={totalCount}
 							displayType="unstyled"
 							icon="task-status"
@@ -107,10 +183,10 @@ export default function TasksQuickFilters({
 					</ClayLayout.Col>
 
 					<ClayLayout.Col className="px-2" size={3}>
-						<StatisticButton
-							active={
-								active === TASK_QUICK_FILTER_TYPES.IN_PROGRESS
-							}
+						<QuickFilterButton
+							active={isQuickFilterActive(
+								TASK_QUICK_FILTER_TYPES.IN_PROGRESS
+							)}
 							count={inProgressCount}
 							displayType="info"
 							icon="analytics"
@@ -122,8 +198,10 @@ export default function TasksQuickFilters({
 					</ClayLayout.Col>
 
 					<ClayLayout.Col className="px-2" size={3}>
-						<StatisticButton
-							active={active === TASK_QUICK_FILTER_TYPES.BLOCKED}
+						<QuickFilterButton
+							active={isQuickFilterActive(
+								TASK_QUICK_FILTER_TYPES.BLOCKED
+							)}
 							count={blockedCount}
 							displayType="danger"
 							icon="block"
@@ -135,8 +213,10 @@ export default function TasksQuickFilters({
 					</ClayLayout.Col>
 
 					<ClayLayout.Col className="px-2" size={3}>
-						<StatisticButton
-							active={active === TASK_QUICK_FILTER_TYPES.OVERDUE}
+						<QuickFilterButton
+							active={isQuickFilterActive(
+								TASK_QUICK_FILTER_TYPES.OVERDUE
+							)}
 							count={overdueCount}
 							displayType="warning"
 							icon="exclamation-full"

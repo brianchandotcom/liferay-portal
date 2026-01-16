@@ -36,6 +36,7 @@
 		"@liferay/frontend-data-set-web": "*",
 		"@liferay/frontend-js-item-selector-web": "*",
 		"@liferay/frontend-js-react-web": "*",
+		"@liferay/frontend-js-state-web": "*",
 		"@liferay/layout-js-components-web": "*",
 		"@liferay/object-dynamic-data-mapping-form-field-type": "*",
 		"@liferay/object-js-components-web": "*",

@@ -17,6 +17,7 @@ import React from 'react';
 import {openCMPModal} from '../../utils/openCMPModal';
 import StateLabel from '../StateLabel';
 import EditAssigneeModalContent from '../modal/EditAssigneeModalContent';
+import {cmpTasksFDSAtom} from './atoms';
 
 type action = {
 	data: {
@@ -74,6 +75,7 @@ export default function TasksFDSPropsTransformer({
 }) {
 	return {
 		...otherProps,
+		atom: cmpTasksFDSAtom,
 		creationMenu: {
 			...creationMenu,
 			primaryItems: addOnClickToCreationMenuItems(

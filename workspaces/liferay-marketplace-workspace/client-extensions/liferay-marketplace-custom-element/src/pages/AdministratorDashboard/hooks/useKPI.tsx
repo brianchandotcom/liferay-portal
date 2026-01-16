@@ -97,7 +97,6 @@ const queries = [
 				'name',
 				'projectsUsingMarketplace'
 			),
-			totalAmount: SearchBuilder.eq('name', 'totalAmount'),
 		}
 	),
 ] as const;
@@ -280,14 +279,7 @@ const useKPI = () => {
 					title: 'Low Code Configurations Published',
 				},
 			],
-			projectsKPI: {
-				...projectsKPI,
-				totalAmount: safeJSONParse(
-					projectsKPI?.data.metrics.totalAmount.items?.[0]
-						?.value as string,
-					{USD: 0}
-				),
-			},
+			projectsKPI,
 		};
 	});
 };

@@ -21,7 +21,7 @@ import AdministratorAppsListView from './Apps/AdministratorAppsListView';
 import {AdministratorOrdersListView} from './Orders';
 
 export default function AdministratorSummary() {
-	const {data: {kpis = [], projectsKPI} = {}} = useKPI();
+	const {data: {kpis = []} = {}} = useKPI();
 	const {data: accounts} = useAccountsMetrics('week');
 	const {data: orderMetrics} = useOrderMetrics('week');
 	const {marketplaceUserAccount} = useMarketplaceContext();
@@ -43,7 +43,7 @@ export default function AdministratorSummary() {
 						&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
 					</span>
 				),
-				value: formatCurrency(projectsKPI?.totalAmount?.USD || 0),
+				value: formatCurrency(orderMetrics?.totalAmount || 0),
 			},
 			{
 				growth: orderMetrics?.growth ?? 0,
@@ -59,8 +59,8 @@ export default function AdministratorSummary() {
 			accounts?.totalCount,
 			orderMetrics?.growth,
 			orderMetrics?.lastPeriod,
+			orderMetrics?.totalAmount,
 			orderMetrics?.totalCount,
-			projectsKPI?.totalAmount?.USD,
 		]
 	);
 

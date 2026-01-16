@@ -8,6 +8,7 @@ import {KeyedMutator} from 'swr';
 
 import ListView from '../../../../components/ListView';
 import Page from '../../../../components/Page';
+import SearchBuilder from '../../../../core/SearchBuilder';
 import {PaymentStatus as PaymentStatusCode} from '../../../../enums/Order';
 import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
@@ -58,7 +59,7 @@ const Orders = () => {
 					searchVisible: true,
 					visible: true,
 				}}
-				resource="o/headless-commerce-admin-order/v1.0/orders?nestedFields=account,orderItems&sort=createDate:desc"
+				resource={`o/headless-commerce-admin-order/v1.0/orders?nestedFields=account,orderItems&sort=createDate:desc&filter=${SearchBuilder.gt('totalAmount', 0)}`}
 				tableProps={{
 					actions: [
 						{
@@ -111,7 +112,14 @@ const Orders = () => {
 						{
 							id: 'account',
 							name: i18n.translate('account'),
-							render: (account) => account?.name,
+							render: (account, {creatorEmailAddress}) => (
+								<div className="d-flex flex-column justify-content-center">
+									<p className="mb-0 pt-1">{account.name}</p>
+									<p className="mb-0 text-muted">
+										{creatorEmailAddress}
+									</p>
+								</div>
+							),
 						},
 						{
 							id: 'orderItems',
@@ -121,10 +129,22 @@ const Orders = () => {
 						{
 							id: 'paymentStatusInfo',
 							name: i18n.translate('payment-status'),
-							render: (paymentStatusInfo) => (
-								<PaymentStatus
-									paymentStatus={paymentStatusInfo.code}
-								/>
+							render: (paymentStatusInfo, {paymentMethod}) => (
+								<div className="d-flex flex-column justify-content-center">
+									<p className="mb-0 pt-1">
+										<PaymentStatus
+											paymentStatus={
+												paymentStatusInfo.code
+											}
+										/>
+									</p>
+
+									<p className="mb-0 text-muted">
+										{paymentMethod === 'paypal-integration'
+											? 'PayPal'
+											: 'Offline Payment'}
+									</p>
+								</div>
 							),
 						},
 						{

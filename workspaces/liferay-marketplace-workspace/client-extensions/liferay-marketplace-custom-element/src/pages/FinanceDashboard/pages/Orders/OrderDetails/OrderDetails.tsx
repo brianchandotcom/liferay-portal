@@ -151,7 +151,7 @@ const OrderDetails = () => {
 									order?.paymentMethod ===
 										'paypal-integration'
 										? 'Paypal Integration'
-										: 'Invoice'
+										: 'Offline Payment'
 								),
 							},
 							{
@@ -184,6 +184,7 @@ const OrderDetails = () => {
 										PaymentStatusCode.FAILED,
 							},
 							{
+								className: 'mt-2',
 								title: i18n.translate('paid-date'),
 								value: textWrapper(
 									formatDate(payments?.items?.[0]?.createDate)
@@ -209,7 +210,7 @@ const OrderDetails = () => {
 					columns={[
 						{
 							key: 'options',
-							render: (options) => {
+							render: (options, {quantity}) => {
 								const [skuOption] = safeJSONParse(options, [
 									{
 										skuOptionValueKey: 'Standard',
@@ -227,15 +228,17 @@ const OrderDetails = () => {
 												src={product?.thumbnail}
 											/>
 
-											<span>
-												<strong>
+											<span className="d-flex flex-column">
+												<span className="font-weight-bold">
 													{product?.name.en_US}
-												</strong>
+												</span>
 
-												<p className="finance-dashboard-secondary-text mb-0 pb-0 text-capitalize">
-													{skuOption?.skuOptionValueKey ||
-														skuOption?.skuOptionValueName}
-												</p>
+												<small className="finance-dashboard-secondary-text mb-0 pb-0 text-capitalize text-muted">
+													{`${quantity} ${
+														skuOption?.skuOptionValueKey ||
+														skuOption?.skuOptionValueName
+													} license`}
+												</small>
 											</span>
 										</div>
 									</div>

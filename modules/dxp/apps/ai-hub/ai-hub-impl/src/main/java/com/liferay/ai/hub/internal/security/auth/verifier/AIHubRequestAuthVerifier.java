@@ -49,8 +49,6 @@ public class AIHubRequestAuthVerifier implements AuthVerifier {
 			AccessControlContext accessControlContext, Properties properties)
 		throws AuthException {
 
-		AuthVerifierResult authVerifierResult = new AuthVerifierResult();
-
 		HttpServletRequest httpServletRequest =
 			accessControlContext.getRequest();
 
@@ -63,25 +61,28 @@ public class AIHubRequestAuthVerifier implements AuthVerifier {
 					AIHubConfiguration.class,
 					_portal.getCompanyId(httpServletRequest));
 
-			if (!requestUrl.startsWith(aiHubConfiguration.serviceURL())) {
-				return authVerifierResult;
-			}
-
 			String token = httpServletRequest.getHeader(
 				"Liferay-AI-Hub-On-Behalf-Of");
 
-			if (Validator.isBlank(token)) {
-				return authVerifierResult;
+			if (!requestUrl.startsWith(aiHubConfiguration.serviceURL()) ||
+				Validator.isBlank(token)) {
+
+				return new AuthVerifierResult();
 			}
 
 			long userId = JWTTokenUtil.getUserId(token);
 
 			if (userId == 0) {
+				AuthVerifierResult authVerifierResult =
+					new AuthVerifierResult();
+
 				authVerifierResult.setState(
 					AuthVerifierResult.State.INVALID_CREDENTIALS);
 
 				return authVerifierResult;
 			}
+
+			AuthVerifierResult authVerifierResult = new AuthVerifierResult();
 
 			Map<String, Object> settings = authVerifierResult.getSettings();
 
@@ -102,7 +103,7 @@ public class AIHubRequestAuthVerifier implements AuthVerifier {
 				_log.debug("Unable to verify AI Hub JWT token", exception);
 			}
 
-			return authVerifierResult;
+			return new AuthVerifierResult();
 		}
 	}
 

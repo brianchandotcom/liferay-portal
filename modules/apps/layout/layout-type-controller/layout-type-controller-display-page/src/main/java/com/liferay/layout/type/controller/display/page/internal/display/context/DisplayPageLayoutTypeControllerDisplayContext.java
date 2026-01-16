@@ -126,7 +126,7 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 
 		if (_infoItemDetails == null) {
 			if (layoutPageTemplateEntry == null) {
-				return false;
+				return true;
 			}
 
 			return _layoutPageTemplateEntryModelResourcePermission.contains(

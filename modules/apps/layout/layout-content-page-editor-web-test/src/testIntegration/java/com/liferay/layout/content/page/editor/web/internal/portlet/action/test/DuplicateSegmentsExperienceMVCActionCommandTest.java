@@ -15,15 +15,13 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -71,7 +69,7 @@ public class DuplicateSegmentsExperienceMVCActionCommandTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		_group = _groupLocalService.getGroup(TestPropsValues.getGroupId());
 
 		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 
@@ -208,13 +206,12 @@ public class DuplicateSegmentsExperienceMVCActionCommandTest {
 	@Inject
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
-	@DeleteAfterTestRun
 	private Group _group;
 
-	private Layout _layout;
-
 	@Inject
-	private LayoutLocalService _layoutLocalService;
+	private GroupLocalService _groupLocalService;
+
+	private Layout _layout;
 
 	@Inject(
 		filter = "mvc.command.name=/layout_content_page_editor/duplicate_segments_experience"

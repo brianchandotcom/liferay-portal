@@ -9,6 +9,7 @@ import com.liferay.jenkins.results.parser.DownstreamBuildReport;
 import com.liferay.jenkins.results.parser.ModulesJUnitDownstreamBuildReport;
 import com.liferay.jenkins.results.parser.StopWatchRecord;
 import com.liferay.jenkins.results.parser.StopWatchRecordsGroup;
+import com.liferay.jenkins.results.parser.TestClassReport;
 import com.liferay.jenkins.results.parser.TestTaskReport;
 import com.liferay.jenkins.results.parser.TestTaskReportFactory;
 
@@ -32,6 +33,31 @@ public class TestrayBatchHistory extends BaseBatchHistory {
 		}
 
 		_downstreamBuildReports.add(downstreamBuildReport);
+
+		for (TestClassReport testClassReport :
+				downstreamBuildReport.getTestClassReports()) {
+
+			String testClassName = testClassReport.getTestClassName();
+
+			TestClassHistory testClassHistory = getTestClassHistory(
+				testClassName);
+
+			if (testClassHistory == null) {
+				testClassHistory = HistoryFactory.newTestClassHistory(
+					this, null, testClassName);
+
+				addTestClassHistory(testClassHistory);
+			}
+
+			if (!(testClassHistory instanceof TestrayTestClassHistory)) {
+				continue;
+			}
+
+			TestrayTestClassHistory testrayTestClassHistory =
+				(TestrayTestClassHistory)testClassHistory;
+
+			testrayTestClassHistory.addTestClassReport(testClassReport);
+		}
 
 		for (TestTaskReport testTaskReport :
 				_getTestTaskReports(downstreamBuildReport)) {
@@ -58,6 +84,7 @@ public class TestrayBatchHistory extends BaseBatchHistory {
 		}
 	}
 
+	@Override
 	public long getAverageDuration() {
 		long count = 0;
 		long totalDuration = 0;

@@ -34,6 +34,8 @@ public class HistoryFactory {
 				batchName, jobHistory, jsonObject);
 		}
 
+		_batchHistories.put(batchName, batchHistory);
+
 		return batchHistory;
 	}
 
@@ -65,9 +67,26 @@ public class HistoryFactory {
 	}
 
 	public static TestClassHistory newTestClassHistory(
-		BatchHistory batchHistory, JSONObject jsonObject) {
+		BatchHistory batchHistory, JSONObject jsonObject,
+		String testClassName) {
 
-		return new DefaultTestClassHistory(batchHistory, jsonObject);
+		TestClassHistory testClassHistory = _testClassHistories.get(
+			testClassName);
+
+		if (testClassHistory != null) {
+			return testClassHistory;
+		}
+
+		if (batchHistory instanceof TestrayBatchHistory) {
+			testClassHistory = new TestrayTestClassHistory(
+				batchHistory, testClassName);
+		}
+		else {
+			testClassHistory = new CachedTestClassHistory(
+				batchHistory, jsonObject, testClassName);
+		}
+
+		return testClassHistory;
 	}
 
 	public static TestTaskHistory newTestTaskHistory(
@@ -88,12 +107,16 @@ public class HistoryFactory {
 				batchHistory, jsonObject, testTaskName);
 		}
 
+		_testTaskHistories.put(testTaskName, testTaskHistory);
+
 		return testTaskHistory;
 	}
 
 	private static final Map<String, BatchHistory> _batchHistories =
 		new HashMap<>();
 	private static final Map<String, JobHistory> _jobHistories =
+		new HashMap<>();
+	private static final Map<String, TestClassHistory> _testClassHistories =
 		new HashMap<>();
 	private static final Map<String, TestTaskHistory> _testTaskHistories =
 		new HashMap<>();

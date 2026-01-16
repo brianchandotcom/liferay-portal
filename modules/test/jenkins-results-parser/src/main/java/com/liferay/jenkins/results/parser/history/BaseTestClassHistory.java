@@ -5,21 +5,12 @@
 
 package com.liferay.jenkins.results.parser.history;
 
-import org.json.JSONObject;
-
 /**
  * @author Michael Hashimoto
  */
 public abstract class BaseTestClassHistory implements TestClassHistory {
 
-	public long getAverageDuration() {
-		return _averageDuration;
-	}
-
-	public long getAverageOverheadDuration() {
-		return _averageOverheadDuration;
-	}
-
+	@Override
 	public BatchHistory getBatchHistory() {
 		return _batchHistory;
 	}
@@ -29,57 +20,24 @@ public abstract class BaseTestClassHistory implements TestClassHistory {
 		return _batchHistory.getBatchName();
 	}
 
-	public int getFailureCount() {
-		return _failureCount;
-	}
-
-	public int getStatusChanges() {
-		return _statusChanges;
-	}
-
+	@Override
 	public String getTestClassName() {
 		return _testClassName;
 	}
 
-	public long getTestCount() {
-		return _testCount;
-	}
-
+	@Override
 	public TestTaskHistory getTestTaskHistory() {
 		return _batchHistory.getTestTaskHistory(getTestTaskName());
 	}
 
-	public String getTestTaskName() {
-		return _testTaskName;
-	}
-
-	@Override
-	public boolean isFlaky() {
-		return false;
-	}
-
 	protected BaseTestClassHistory(
-		BatchHistory batchHistory, JSONObject jsonObject) {
+		BatchHistory batchHistory, String testClassName) {
 
 		_batchHistory = batchHistory;
-
-		_averageDuration = jsonObject.optLong("averageDuration");
-		_averageOverheadDuration = jsonObject.optLong(
-			"averageOverheadDuration");
-		_failureCount = jsonObject.optInt("failureCount");
-		_statusChanges = jsonObject.optInt("statusChanges");
-		_testClassName = jsonObject.getString("testName");
-		_testCount = jsonObject.optInt("testCount");
-		_testTaskName = jsonObject.optString("testTaskName");
+		_testClassName = testClassName;
 	}
 
-	private final long _averageDuration;
-	private final long _averageOverheadDuration;
 	private final BatchHistory _batchHistory;
-	private final int _failureCount;
-	private final int _statusChanges;
 	private final String _testClassName;
-	private final int _testCount;
-	private final String _testTaskName;
 
 }

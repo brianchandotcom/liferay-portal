@@ -5,6 +5,8 @@
 
 package com.liferay.jenkins.results.parser.history;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -29,9 +31,18 @@ public class CachedBatchHistory extends BaseBatchHistory {
 
 		if ((testsJSONArray != null) && !testsJSONArray.isEmpty()) {
 			for (int i = 0; i < testsJSONArray.length(); i++) {
+				JSONObject testJSONObject = testsJSONArray.getJSONObject(i);
+
+				String testClassName = testJSONObject.optString(
+					"testClassName");
+
+				if (JenkinsResultsParserUtil.isNullOrEmpty(testClassName)) {
+					testClassName = testJSONObject.optString("testName");
+				}
+
 				addTestClassHistory(
 					HistoryFactory.newTestClassHistory(
-						this, testsJSONArray.getJSONObject(i)));
+						this, testJSONObject, testClassName));
 			}
 		}
 

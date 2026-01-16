@@ -4,6 +4,7 @@
  */
 
 export {NewExport} from '../revamp/js/pages/export/NewExport';
+export {NewImport} from '../revamp/js/pages/import/NewImport';
 export {ViewImportReportEntryDetail} from '../revamp/js/pages/import/report/ViewImportReportEntryDetail';
 export {default as formatDate} from '../revamp/js/utils/formatDate';
 

@@ -8,11 +8,14 @@ package com.liferay.ai.hub.rest.internal.resource.v1_0;
 import com.liferay.ai.hub.configuration.AIHubConfiguration;
 import com.liferay.ai.hub.rest.dto.v1_0.Token;
 import com.liferay.ai.hub.rest.resource.v1_0.TokenResource;
+import com.liferay.ai.hub.security.JWTTokenUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.Http;
+
+import java.util.concurrent.TimeUnit;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -57,6 +60,11 @@ public class TokenResourceImpl extends BaseTokenResourceImpl {
 			{
 				setAccessToken(() -> jsonObject.getString("access_token"));
 				setScope(() -> jsonObject.getString("scope"));
+				setUserToken(
+					() -> JWTTokenUtil.generateToken(
+						TimeUnit.MINUTES.toMillis(1),
+						contextCompany.getVirtualHostname(),
+						contextUser.getUserId()));
 			}
 		};
 	}

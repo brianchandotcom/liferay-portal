@@ -44,7 +44,7 @@ public class GroupedFDSFiltersRegistryImpl
 		if (groupedFDSFiltersServiceWrapper == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"No frontend data set grouped filters are associated " +
+					"No grouped frontend data set filters are associated " +
 						"with " + fdsName);
 			}
 

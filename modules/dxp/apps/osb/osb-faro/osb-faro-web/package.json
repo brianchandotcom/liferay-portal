@@ -12,7 +12,6 @@
 		"@clayui/autocomplete": "*",
 		"@clayui/badge": "*",
 		"@clayui/button": "*",
-		"@clayui/charts": "*",
 		"@clayui/core": "*",
 		"@clayui/css": "*",
 		"@clayui/data-provider": "*",

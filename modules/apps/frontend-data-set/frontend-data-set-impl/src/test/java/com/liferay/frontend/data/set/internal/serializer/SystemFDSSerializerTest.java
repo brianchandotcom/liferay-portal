@@ -798,7 +798,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 	@Test
 	public void testSerializeGroupedFDSFilters() throws Exception {
 
-		// Different grouped FDS filters
+		// Different grouped filters
 
 		mockLanguage();
 

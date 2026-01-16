@@ -869,7 +869,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		_unregisterServices();
 
-		// No grouped FDS filters
+		// No grouped filters
 
 		_registerServices(_registerSystemFDSEntry(FDS_NAMES[0]));
 
@@ -882,7 +882,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		_unregisterServices();
 
-		// Shared grouped FDS filters
+		// Shared grouped filters
 
 		_registerServices(
 			_registerGroupedFDSFilters(FDS_NAMES[0], groupedFDSFilters),

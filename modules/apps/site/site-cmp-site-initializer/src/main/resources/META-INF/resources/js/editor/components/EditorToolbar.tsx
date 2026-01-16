@@ -13,12 +13,12 @@ import React, {useEffect, useId, useState} from 'react';
 
 export default function EditorToolbar({
 	backURL,
+	formSubmitURL,
 	title,
-	viewProjectURL,
 }: {
 	backURL: string;
+	formSubmitURL?: string;
 	title: string;
-	viewProjectURL?: string;
 }) {
 	const [formId, setFormId] = useState<string | undefined>();
 
@@ -121,7 +121,7 @@ export default function EditorToolbar({
 					form={formId}
 					name="redirect"
 					type="hidden"
-					value={viewProjectURL || backURL}
+					value={formSubmitURL || backURL}
 				/>
 			</Toolbar.Item>
 		</Toolbar>

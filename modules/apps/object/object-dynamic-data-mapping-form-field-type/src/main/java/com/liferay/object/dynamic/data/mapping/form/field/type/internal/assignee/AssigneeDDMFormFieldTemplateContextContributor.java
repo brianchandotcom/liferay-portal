@@ -40,6 +40,8 @@ public class AssigneeDDMFormFieldTemplateContextContributor
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
 		return HashMapBuilder.<String, Object>put(
+			"customClasses", "form-control"
+		).put(
 			"searchURL",
 			() -> {
 				RequestBackedPortletURLFactory requestBackedPortletURLFactory =

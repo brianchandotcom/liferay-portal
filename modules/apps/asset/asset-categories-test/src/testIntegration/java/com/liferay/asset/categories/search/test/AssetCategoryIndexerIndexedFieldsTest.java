@@ -8,6 +8,7 @@ package com.liferay.asset.categories.search.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.petra.string.StringBundler;
@@ -253,6 +254,10 @@ public class AssetCategoryIndexerIndexedFieldsTest {
 	}
 
 	private long[] _getClassNameIds(long vocabularyId) {
+		if (AssetVocabularyConstants.EMPTY_VOCABULARY_ID == vocabularyId) {
+			return null;
+		}
+
 		try {
 			AssetVocabulary assetVocabulary =
 				assetVocabularyService.getVocabulary(vocabularyId);

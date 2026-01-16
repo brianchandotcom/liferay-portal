@@ -3,4 +3,4 @@ Bundle-SymbolicName: com.liferay.ai.hub.api
 Bundle-Version: 1.0.2
 Export-Package:\
 	com.liferay.ai.hub.configuration,\
-	com.liferay.ai.hub.util
+	com.liferay.ai.hub.security

@@ -5,36 +5,14 @@
 
 package com.liferay.jenkins.results.parser.history;
 
-import org.json.JSONObject;
-
 /**
  * @author Michael Hashimoto
  */
 public abstract class BaseTestTaskHistory implements TestTaskHistory {
 
 	@Override
-	public long getAverageDuration() {
-		return _averageDuration;
-	}
-
-	@Override
-	public long getAverageTotalDuration() {
-		return _averageTotalDuration;
-	}
-
-	@Override
 	public BatchHistory getBatchHistory() {
 		return _batchHistory;
-	}
-
-	@Override
-	public long getLongestDuration() {
-		return _longestDuration;
-	}
-
-	@Override
-	public long getTestTaskCount() {
-		return _testTaskCount;
 	}
 
 	@Override
@@ -53,24 +31,14 @@ public abstract class BaseTestTaskHistory implements TestTaskHistory {
 	}
 
 	protected BaseTestTaskHistory(
-		BatchHistory batchHistory, JSONObject jsonObject) {
+		BatchHistory batchHistory, String testTaskName) {
 
 		_batchHistory = batchHistory;
-
-		_averageDuration = jsonObject.optLong("averageDuration");
-		_latestReportMissing = jsonObject.optBoolean("latestReportMissing");
-		_averageTotalDuration = jsonObject.optLong("averageTotalDuration");
-		_longestDuration = jsonObject.optLong("longestDuration");
-		_testTaskCount = jsonObject.optInt("testTaskCount");
-		_testTaskName = jsonObject.optString("testTaskName");
+		_testTaskName = testTaskName;
 	}
 
-	private final long _averageDuration;
-	private final long _averageTotalDuration;
 	private final BatchHistory _batchHistory;
 	private boolean _latestReportMissing;
-	private final long _longestDuration;
-	private final int _testTaskCount;
 	private final String _testTaskName;
 
 }

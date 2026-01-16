@@ -61,7 +61,7 @@ public class HistoryFactory {
 	}
 
 	public static JobHistory newJobHistory(String portalUpstreamBranchName) {
-		return newJobHistory(1, portalUpstreamBranchName, null);
+		return newJobHistory(0, portalUpstreamBranchName, null);
 	}
 
 	public static TestClassHistory newTestClassHistory(
@@ -71,14 +71,31 @@ public class HistoryFactory {
 	}
 
 	public static TestTaskHistory newTestTaskHistory(
-		BatchHistory batchHistory, JSONObject jsonObject) {
+		BatchHistory batchHistory, JSONObject jsonObject, String testTaskName) {
 
-		return new DefaultTestTaskHistory(batchHistory, jsonObject);
+		TestTaskHistory testTaskHistory = _testTaskHistories.get(testTaskName);
+
+		if (testTaskHistory != null) {
+			return testTaskHistory;
+		}
+
+		if (batchHistory instanceof TestrayBatchHistory) {
+			testTaskHistory = new TestrayTestTaskHistory(
+				batchHistory, testTaskName);
+		}
+		else {
+			testTaskHistory = new CachedTestTaskHistory(
+				batchHistory, jsonObject, testTaskName);
+		}
+
+		return testTaskHistory;
 	}
 
 	private static final Map<String, BatchHistory> _batchHistories =
 		new HashMap<>();
 	private static final Map<String, JobHistory> _jobHistories =
+		new HashMap<>();
+	private static final Map<String, TestTaskHistory> _testTaskHistories =
 		new HashMap<>();
 
 }

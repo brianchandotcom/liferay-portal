@@ -39,9 +39,13 @@ public class CachedBatchHistory extends BaseBatchHistory {
 
 		if ((testTasksJSONArray != null) && !testTasksJSONArray.isEmpty()) {
 			for (int i = 0; i < testTasksJSONArray.length(); i++) {
+				JSONObject testTaskJSONObject =
+					testTasksJSONArray.getJSONObject(i);
+
 				addTestTaskHistory(
 					HistoryFactory.newTestTaskHistory(
-						this, testTasksJSONArray.getJSONObject(i)));
+						this, testTaskJSONObject,
+						testTaskJSONObject.getString("testTaskName")));
 			}
 		}
 	}

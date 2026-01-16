@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.util.Validator;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -196,11 +195,7 @@ public class SystemFDSSerializer
 		for (int i = 0; i < groupedFDSFiltersJSONArray.length(); i++) {
 			JSONObject jsonObject = groupedFDSFiltersJSONArray.getJSONObject(i);
 
-			Iterator<String> iterator = jsonObject.keys();
-
-			while (iterator.hasNext()) {
-				String key = iterator.next();
-
+			for (String key : jsonObject.keySet()) {
 				if (Validator.isBlank(key)) {
 					continue;
 				}

@@ -4,21 +4,50 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import React, {useCallback} from 'react';
+import {SidePanel} from '@clayui/core';
+import React, {useCallback, useRef, useState} from 'react';
+
+import DSRCommentsPanel from './DSRCommentsPanel';
 
 function DSRComments({digitalSalesRoomId}: {digitalSalesRoomId: number}) {
+	const [open, setOpen] = useState(false);
+
+	const ref = useRef(null);
+
 	const handleClick = useCallback(() => {
-		console.error(`digitalSalesRoomId: ${digitalSalesRoomId}`);
-	}, [digitalSalesRoomId]);
+		setOpen((prevState) => !prevState);
+	}, []);
 
 	return (
-		<ClayButtonWithIcon
-			aria-label={Liferay.Language.get('comments')}
-			displayType="link"
-			onClick={handleClick}
-			size="xs"
-			symbol="comments"
-		/>
+		<>
+			<ClayButtonWithIcon
+				aria-label={Liferay.Language.get('comments')}
+				displayType="link"
+				onClick={handleClick}
+				size="xs"
+				symbol="comments"
+			/>
+			<SidePanel
+				containerRef={ref}
+				id="sidepanel-example"
+				onOpenChange={setOpen}
+				open={open}
+			>
+				<SidePanel.Header>
+					<SidePanel.Title>
+						{Liferay.Language.get('room-comments')}
+					</SidePanel.Title>
+				</SidePanel.Header>
+
+				<SidePanel.Body>
+					{open && (
+						<DSRCommentsPanel
+							roomId={digitalSalesRoomId}
+						></DSRCommentsPanel>
+					)}
+				</SidePanel.Body>
+			</SidePanel>
+		</>
 	);
 }
 

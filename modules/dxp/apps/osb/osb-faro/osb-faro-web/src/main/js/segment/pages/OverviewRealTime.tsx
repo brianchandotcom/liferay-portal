@@ -272,7 +272,10 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 			</ReferencedObjectsProvider>
 
 			{activationStatus && (
-				<SegmentActivationCard segmentActivation={activationStatus} />
+				<SegmentActivationCard
+					segmentActivation={activationStatus}
+					segmentType={SegmentTypes.RealTime}
+				/>
 			)}
 
 			<MembershipMetrics />

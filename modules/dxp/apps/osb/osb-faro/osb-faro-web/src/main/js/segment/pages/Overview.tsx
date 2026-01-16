@@ -58,6 +58,7 @@ const Overview: React.FC<IOverviewProps> = ({channelId, groupId, segment}) => {
 				{activationStatus && (
 					<SegmentActivationCard
 						segmentActivation={activationStatus}
+						segmentType={SegmentTypes.Batch}
 					/>
 				)}
 

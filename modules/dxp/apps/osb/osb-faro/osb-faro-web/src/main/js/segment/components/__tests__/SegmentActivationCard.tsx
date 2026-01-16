@@ -3,7 +3,8 @@ import {render} from '@testing-library/react';
 import {SegmentActivationCard} from '../SegmentActivationCard';
 import {
 	SegmentActivationFrequencyTypes,
-	SegmentActivationScheduleTypes
+	SegmentActivationScheduleTypes,
+	SegmentTypes
 } from 'shared/util/constants';
 
 jest.unmock('react-dom');
@@ -17,10 +18,11 @@ describe('SegmentActivationCard', () => {
 		const {container} = render(
 			<SegmentActivationCard
 				segmentActivation={{
-					frequencyType: SegmentActivationFrequencyTypes.Batch,
-					scheduleType: SegmentActivationScheduleTypes.Indefinitely,
+					frequencyType: SegmentActivationFrequencyTypes.Indefinitely,
+					scheduleType: SegmentActivationScheduleTypes.Batch,
 					...mockData
 				}}
+				segmentType={SegmentTypes.Batch}
 			/>
 		);
 		expect(container).toMatchSnapshot();
@@ -30,10 +32,11 @@ describe('SegmentActivationCard', () => {
 		const {container} = render(
 			<SegmentActivationCard
 				segmentActivation={{
-					frequencyType: SegmentActivationFrequencyTypes.RealTime,
-					scheduleType: SegmentActivationScheduleTypes.Indefinitely,
+					frequencyType: SegmentActivationFrequencyTypes.Indefinitely,
+					scheduleType: SegmentActivationScheduleTypes.RealTime,
 					...mockData
 				}}
+				segmentType={SegmentTypes.Batch}
 			/>
 		);
 		expect(container).toMatchSnapshot();
@@ -43,12 +46,13 @@ describe('SegmentActivationCard', () => {
 		const {container} = render(
 			<SegmentActivationCard
 				segmentActivation={{
-					frequencyType: SegmentActivationFrequencyTypes.Batch,
+					frequencyType: SegmentActivationFrequencyTypes.Between,
 					scheduleEndDate: '1757818800000',
 					scheduleStartDate: '1756004400000',
-					scheduleType: SegmentActivationScheduleTypes.Between,
+					scheduleType: SegmentActivationScheduleTypes.Batch,
 					...mockData
 				}}
+				segmentType={SegmentTypes.Batch}
 			/>
 		);
 		expect(container).toMatchSnapshot();

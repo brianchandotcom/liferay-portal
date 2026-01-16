@@ -7,19 +7,47 @@ package com.liferay.jenkins.results.parser.history;
 
 import com.liferay.jenkins.results.parser.DownstreamBuildReport;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.TestClassReport;
 import com.liferay.jenkins.results.parser.TopLevelBuildReport;
 import com.liferay.jenkins.results.parser.testray.TestrayBuild;
 import com.liferay.jenkins.results.parser.testray.TestrayRoutine;
 import com.liferay.jenkins.results.parser.testray.TestrayServer;
 
+import java.io.File;
+import java.io.IOException;
+
 import java.net.URL;
 
 import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
 public class TestrayJobHistory extends BaseJobHistory {
+
+	@Override
+	public JSONObject getJSONObject() {
+		JSONObject jsonObject = new JSONObject();
+
+		JSONArray batchesJSONArray = new JSONArray();
+
+		for (BatchHistory batchHistory : getBatchHistories()) {
+			batchesJSONArray.put(batchHistory.getJSONObject());
+		}
+
+		jsonObject.put(
+			"batches", batchesJSONArray
+		).put(
+			"testray_url", String.valueOf(getTestrayURL())
+		).put(
+			"upstream_branch_name", _latestTestrayBuild.getPortalBranch()
+		);
+
+		return jsonObject;
+	}
 
 	@Override
 	public URL getTestrayURL() {
@@ -101,6 +129,105 @@ public class TestrayJobHistory extends BaseJobHistory {
 		_populated = true;
 	}
 
+	public void writeCIHistoryJSONObjectFile(String filePath)
+		throws IOException {
+
+		if (!_populated) {
+			populate();
+		}
+
+		File file = new File(filePath);
+
+		File tempFile = new File(
+			file.getParentFile(),
+			JenkinsResultsParserUtil.getDistinctTimeStamp());
+
+		try {
+			JenkinsResultsParserUtil.write(
+				tempFile, String.valueOf(getJSONObject()));
+
+			JenkinsResultsParserUtil.gzip(tempFile, file);
+		}
+		finally {
+			if (tempFile.exists()) {
+				JenkinsResultsParserUtil.delete(tempFile);
+			}
+		}
+	}
+
+	public void writeFlakyTestDataJavaScriptFile(String filePath)
+		throws IOException {
+
+		if (!_populated) {
+			populate();
+		}
+
+		JSONArray flakyTestDataJSONArray = new JSONArray();
+
+		flakyTestDataJSONArray.put(
+			new String[] {"Name", "Batch Type", "Results", "Status Changes"});
+
+		for (BatchHistory batchHistory : getBatchHistories()) {
+			for (TestClassHistory testClassHistory :
+					batchHistory.getTestClassHistories()) {
+
+				if (!testClassHistory.isFlaky()) {
+					continue;
+				}
+
+				JSONArray jsonArray = new JSONArray();
+
+				jsonArray.put(testClassHistory.getTestClassName());
+
+				jsonArray.put(testClassHistory.getBatchName());
+
+				JSONArray statusesJSONArray = new JSONArray();
+
+				if (testClassHistory instanceof TestrayTestClassHistory) {
+					TestrayTestClassHistory testrayTestClassHistory =
+						(TestrayTestClassHistory)testClassHistory;
+
+					for (TestClassReport testClassReport :
+							testrayTestClassHistory.getTestClassReports()) {
+
+						JSONArray statusJSONArray = new JSONArray();
+
+						statusJSONArray.put(
+							_fixStatus(testClassReport.getStatus()));
+
+						DownstreamBuildReport downstreamBuildReport =
+							testClassReport.getDownstreamBuildReport();
+
+						statusJSONArray.put(
+							downstreamBuildReport.getBuildURL());
+
+						statusesJSONArray.put(statusJSONArray);
+					}
+				}
+
+				jsonArray.put(statusesJSONArray);
+
+				jsonArray.put(testClassHistory.getStatusChanges());
+
+				flakyTestDataJSONArray.put(jsonArray);
+			}
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("var flakyTestData = ");
+		sb.append(flakyTestDataJSONArray);
+		sb.append(";\nvar flakyTestDataGeneratedDate = new Date(");
+		sb.append(JenkinsResultsParserUtil.getCurrentTimeMillis());
+		sb.append(");\nvar testrayRoutineURL = \"");
+		sb.append(_testrayRoutine.getURL());
+		sb.append("\";\nvar testrayRoutineName = \"");
+		sb.append(_testrayRoutine.getName());
+		sb.append("\";");
+
+		JenkinsResultsParserUtil.write(filePath, sb.toString());
+	}
+
 	protected TestrayJobHistory(
 		int maxBuildCount, String portalUpstreamBranchName,
 		TestrayRoutine testrayRoutine) {
@@ -109,6 +236,13 @@ public class TestrayJobHistory extends BaseJobHistory {
 
 		_maxBuildCount = maxBuildCount;
 		_testrayRoutine = testrayRoutine;
+	}
+
+	private String _fixStatus(String status) {
+		status = status.replace("REGRESSION", "FAILED");
+		status = status.replace("FIXED", "PASSED");
+
+		return status;
 	}
 
 	private TestrayBuild _latestTestrayBuild;

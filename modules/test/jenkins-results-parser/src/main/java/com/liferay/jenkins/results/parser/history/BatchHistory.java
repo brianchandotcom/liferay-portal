@@ -7,6 +7,8 @@ package com.liferay.jenkins.results.parser.history;
 
 import java.util.List;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -17,6 +19,8 @@ public interface BatchHistory {
 	public String getBatchName();
 
 	public JobHistory getJobHistory();
+
+	public JSONObject getJSONObject();
 
 	public List<TestClassHistory> getTestClassHistories();
 

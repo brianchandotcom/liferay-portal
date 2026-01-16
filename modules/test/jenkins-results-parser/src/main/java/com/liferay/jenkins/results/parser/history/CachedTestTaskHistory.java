@@ -14,22 +14,27 @@ public class CachedTestTaskHistory extends BaseTestTaskHistory {
 
 	@Override
 	public long getAverageDuration() {
-		return _averageDuration;
+		return _jsonObject.optLong("averageDuration");
 	}
 
 	@Override
 	public long getAverageTotalDuration() {
-		return _averageTotalDuration;
+		return _jsonObject.optLong("averageTotalDuration");
+	}
+
+	@Override
+	public JSONObject getJSONObject() {
+		return _jsonObject;
 	}
 
 	@Override
 	public long getLongestDuration() {
-		return _longestDuration;
+		return _jsonObject.optLong("longestDuration");
 	}
 
 	@Override
 	public long getTestTaskCount() {
-		return _testTaskCount;
+		return _jsonObject.optInt("testTaskCount");
 	}
 
 	protected CachedTestTaskHistory(
@@ -37,17 +42,11 @@ public class CachedTestTaskHistory extends BaseTestTaskHistory {
 
 		super(batchHistory, testTaskName);
 
-		_averageDuration = jsonObject.optLong("averageDuration");
-		_averageTotalDuration = jsonObject.optLong("averageTotalDuration");
-		_longestDuration = jsonObject.optLong("longestDuration");
-		_testTaskCount = jsonObject.optInt("testTaskCount");
+		_jsonObject = jsonObject;
 
 		setLatestReportMissing(jsonObject.optBoolean("latestReportMissing"));
 	}
 
-	private final long _averageDuration;
-	private final long _averageTotalDuration;
-	private final long _longestDuration;
-	private final int _testTaskCount;
+	private final JSONObject _jsonObject;
 
 }

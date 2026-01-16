@@ -5,6 +5,8 @@
 
 package com.liferay.jenkins.results.parser.history;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -15,6 +17,8 @@ public interface TestTaskHistory {
 	public long getAverageTotalDuration();
 
 	public BatchHistory getBatchHistory();
+
+	public JSONObject getJSONObject();
 
 	public long getLongestDuration();
 

@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -107,6 +108,35 @@ public class TestrayBatchHistory extends BaseBatchHistory {
 		}
 
 		return totalDuration / count;
+	}
+
+	@Override
+	public JSONObject getJSONObject() {
+		JSONArray testsJSONArray = new JSONArray();
+
+		for (TestClassHistory testClassHistory : getTestClassHistories()) {
+			testsJSONArray.put(testClassHistory.getJSONObject());
+		}
+
+		JSONArray testTasksJSONArray = new JSONArray();
+
+		for (TestTaskHistory testTaskHistory : getTestTaskHistories()) {
+			testTasksJSONArray.put(testTaskHistory.getJSONObject());
+		}
+
+		JSONObject batchJSONObject = new JSONObject();
+
+		batchJSONObject.put(
+			"averageDuration", getAverageDuration()
+		).put(
+			"batchName", getBatchName()
+		).put(
+			"tests", testsJSONArray
+		).put(
+			"testTasks", testTasksJSONArray
+		);
+
+		return batchJSONObject;
 	}
 
 	protected TestrayBatchHistory(String batchName, JobHistory jobHistory) {

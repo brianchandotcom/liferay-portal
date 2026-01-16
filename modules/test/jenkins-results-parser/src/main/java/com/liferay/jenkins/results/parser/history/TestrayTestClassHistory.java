@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -100,6 +102,29 @@ public class TestrayTestClassHistory extends BaseTestClassHistory {
 		}
 
 		return failureCount;
+	}
+
+	@Override
+	public JSONObject getJSONObject() {
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put(
+			"averageDuration", getAverageDuration()
+		).put(
+			"averageOverheadDuration", getAverageOverheadDuration()
+		).put(
+			"failureCount", getFailureCount()
+		).put(
+			"statusChanges", getStatusChanges()
+		).put(
+			"testCount", getTestCount()
+		).put(
+			"testName", getTestClassName()
+		).put(
+			"testTaskName", getTestTaskName()
+		);
+
+		return jsonObject;
 	}
 
 	@Override

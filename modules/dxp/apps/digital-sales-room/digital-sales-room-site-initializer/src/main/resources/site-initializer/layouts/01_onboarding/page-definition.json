@@ -4,6 +4,26 @@
 			{
 				"definition": {
 					"fragment": {
+						"key": "welcome-block"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+						{
+							"id": "element-text",
+							"value": {
+								"fragmentLink": {
+								}
+							}
+						}
+					],
+					"indexed": true
+				},
+				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"fragment": {
 						"key": "BASIC_COMPONENT-html"
 					},
 					"fragmentConfig": {

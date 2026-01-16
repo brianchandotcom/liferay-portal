@@ -4,6 +4,7 @@
  */
 
 import {IInternalRenderer} from '@liferay/frontend-data-set-web';
+import {AssigneeValue} from '@liferay/object-dynamic-data-mapping-form-field-type';
 import {
 	ACTIONS,
 	AdditionalProps,
@@ -11,8 +12,11 @@ import {
 	addOnClickToCreationMenuItems,
 	deleteItemAction,
 } from '@liferay/site-cms-site-initializer';
+import React from 'react';
 
-import StateLabel from '../../common/components/StateLabel';
+import {openCMPModal} from '../../utils/openCMPModal';
+import StateLabel from '../StateLabel';
+import EditAssigneeModalContent from '../modal/EditAssigneeModalContent';
 
 type action = {
 	data: {
@@ -32,6 +36,7 @@ interface ItemData {
 		update: Action;
 	};
 	embedded: {
+		assignTo: AssigneeValue | null | {};
 		content: string;
 		content_i18n: {[locale: string]: string};
 		creator: {
@@ -118,6 +123,24 @@ export default function TasksFDSPropsTransformer({
 		}) {
 			if (action?.data?.id === 'delete') {
 				await deleteItemAction(itemData, loadData);
+			}
+			else if (action?.data?.id === 'assign-to') {
+				await openCMPModal({
+					center: true,
+					contentComponent: ({
+						closeModal,
+					}: {
+						closeModal: () => void;
+					}) => (
+						<EditAssigneeModalContent
+							closeModal={closeModal}
+							loadData={loadData}
+							taskId={String(itemData.embedded.id)}
+							value={itemData.embedded.assignTo}
+						/>
+					),
+					size: 'md',
+				});
 			}
 		},
 	};

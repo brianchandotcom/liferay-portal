@@ -10,18 +10,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 /**
  * @author Michael Hashimoto
  */
 public abstract class BaseBatchHistory implements BatchHistory {
-
-	@Override
-	public long getAverageDuration() {
-		return _averageDuration;
-	}
 
 	@Override
 	public String getBatchName() {
@@ -53,40 +45,29 @@ public abstract class BaseBatchHistory implements BatchHistory {
 		return _testTaskHistories.get(key);
 	}
 
-	protected BaseBatchHistory(JobHistory jobHistory, JSONObject jsonObject) {
+	protected BaseBatchHistory(String batchName, JobHistory jobHistory) {
+		_batchName = batchName;
 		_jobHistory = jobHistory;
-
-		_averageDuration = jsonObject.optLong("averageDuration");
-		_batchName = jsonObject.getString("batchName");
-
-		JSONArray testsJSONArray = jsonObject.optJSONArray("tests");
-
-		if ((testsJSONArray != null) && !testsJSONArray.isEmpty()) {
-			for (int i = 0; i < testsJSONArray.length(); i++) {
-				TestClassHistory testClassHistory =
-					HistoryFactory.newTestClassHistory(
-						this, testsJSONArray.getJSONObject(i));
-
-				_testClassHistories.put(
-					testClassHistory.getTestClassName(), testClassHistory);
-			}
-		}
-
-		JSONArray testTasksJSONArray = jsonObject.optJSONArray("testTasks");
-
-		if ((testTasksJSONArray != null) && !testTasksJSONArray.isEmpty()) {
-			for (int i = 0; i < testTasksJSONArray.length(); i++) {
-				TestTaskHistory testTaskHistory =
-					HistoryFactory.newTestTaskHistory(
-						this, testTasksJSONArray.getJSONObject(i));
-
-				_testTaskHistories.put(
-					testTaskHistory.getTestTaskName(), testTaskHistory);
-			}
-		}
 	}
 
-	private final long _averageDuration;
+	protected void addTestClassHistory(TestClassHistory testClassHistory) {
+		if (testClassHistory == null) {
+			return;
+		}
+
+		_testClassHistories.put(
+			testClassHistory.getTestClassName(), testClassHistory);
+	}
+
+	protected void addTestTaskHistory(TestTaskHistory testTaskHistory) {
+		if (testTaskHistory == null) {
+			return;
+		}
+
+		_testTaskHistories.put(
+			testTaskHistory.getTestTaskName(), testTaskHistory);
+	}
+
 	private final String _batchName;
 	private final JobHistory _jobHistory;
 	private final Map<String, TestClassHistory> _testClassHistories =

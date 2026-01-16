@@ -5,10 +5,16 @@
 
 package com.liferay.jenkins.results.parser.history;
 
+import com.liferay.jenkins.results.parser.DownstreamBuildReport;
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.TopLevelBuildReport;
+import com.liferay.jenkins.results.parser.testray.TestrayBuild;
 import com.liferay.jenkins.results.parser.testray.TestrayRoutine;
 import com.liferay.jenkins.results.parser.testray.TestrayServer;
 
 import java.net.URL;
+
+import java.util.List;
 
 /**
  * @author Michael Hashimoto
@@ -17,8 +23,8 @@ public class TestrayJobHistory extends BaseJobHistory {
 
 	@Override
 	public URL getTestrayURL() {
-		if (_testrayRoutine == null) {
-			return null;
+		if (_testrayURL != null) {
+			return _testrayURL;
 		}
 
 		TestrayServer testrayServer = _testrayRoutine.getTestrayServer();
@@ -27,17 +33,88 @@ public class TestrayJobHistory extends BaseJobHistory {
 			return null;
 		}
 
-		return testrayServer.getURL();
+		_testrayURL = testrayServer.getURL();
+
+		return _testrayURL;
+	}
+
+	public void populate() {
+		if (_populated) {
+			return;
+		}
+
+		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
+
+		List<TestrayBuild> testrayBuilds = _testrayRoutine.getTestrayBuilds(
+			_maxBuildCount);
+
+		if (testrayBuilds.size() > _maxBuildCount) {
+			testrayBuilds = testrayBuilds.subList(0, _maxBuildCount);
+		}
+
+		for (TestrayBuild testrayBuild : testrayBuilds) {
+			TopLevelBuildReport topLevelBuildReport =
+				testrayBuild.getTopLevelBuildReport();
+
+			if ((topLevelBuildReport == null) ||
+				JenkinsResultsParserUtil.isNullOrEmpty(
+					topLevelBuildReport.getResult())) {
+
+				continue;
+			}
+
+			if (_latestTestrayBuild == null) {
+				_latestTestrayBuild = testrayBuild;
+			}
+
+			for (DownstreamBuildReport downstreamBuildReport :
+					topLevelBuildReport.getDownstreamBuildReports()) {
+
+				String batchName = downstreamBuildReport.getBatchName();
+
+				BatchHistory batchHistory = getBatchHistory(batchName);
+
+				if (batchHistory == null) {
+					batchHistory = HistoryFactory.newBatchHistory(
+						batchName, this, null);
+
+					addBatchHistory(batchHistory);
+				}
+
+				if (!(batchHistory instanceof TestrayBatchHistory)) {
+					continue;
+				}
+
+				TestrayBatchHistory testrayBatchHistory =
+					(TestrayBatchHistory)batchHistory;
+
+				testrayBatchHistory.addBuildReport(downstreamBuildReport);
+			}
+		}
+
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"Test history map populated in ",
+				JenkinsResultsParserUtil.toDurationString(
+					JenkinsResultsParserUtil.getCurrentTimeMillis() - start)));
+
+		_populated = true;
 	}
 
 	protected TestrayJobHistory(
-		String portalUpstreamBranchName, TestrayRoutine testrayRoutine) {
+		int maxBuildCount, String portalUpstreamBranchName,
+		TestrayRoutine testrayRoutine) {
 
 		super(portalUpstreamBranchName);
 
+		_maxBuildCount = maxBuildCount;
 		_testrayRoutine = testrayRoutine;
 	}
 
+	private TestrayBuild _latestTestrayBuild;
+	private final int _maxBuildCount;
+	private boolean _populated;
 	private final TestrayRoutine _testrayRoutine;
+	private URL _testrayURL;
 
 }

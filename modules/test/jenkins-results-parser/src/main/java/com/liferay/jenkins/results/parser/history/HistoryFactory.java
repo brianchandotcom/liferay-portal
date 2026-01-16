@@ -5,14 +5,7 @@
 
 package com.liferay.jenkins.results.parser.history;
 
-import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
-import com.liferay.jenkins.results.parser.Job;
-import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
-import com.liferay.jenkins.results.parser.PortalTestClassJob;
-import com.liferay.jenkins.results.parser.TestSuiteJob;
 import com.liferay.jenkins.results.parser.testray.TestrayRoutine;
-
-import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,17 +18,28 @@ import org.json.JSONObject;
 public class HistoryFactory {
 
 	public static BatchHistory newBatchHistory(
-		JobHistory jobHistory, JSONObject jsonObject) {
+		String batchName, JobHistory jobHistory, JSONObject jsonObject) {
 
-		return new DefaultBatchHistory(jobHistory, jsonObject);
-	}
+		BatchHistory batchHistory = _batchHistories.get(batchName);
 
-	public static JobHistory newJobHistory(String portalUpstreamBranchName) {
-		return newJobHistory(portalUpstreamBranchName, null);
+		if (batchHistory != null) {
+			return batchHistory;
+		}
+
+		if (jobHistory instanceof TestrayJobHistory) {
+			batchHistory = new TestrayBatchHistory(batchName, jobHistory);
+		}
+		else {
+			batchHistory = new CachedBatchHistory(
+				batchName, jobHistory, jsonObject);
+		}
+
+		return batchHistory;
 	}
 
 	public static JobHistory newJobHistory(
-		String portalUpstreamBranchName, TestrayRoutine testrayRoutine) {
+		int maxBuildCount, String portalUpstreamBranchName,
+		TestrayRoutine testrayRoutine) {
 
 		JobHistory jobHistory = _jobHistories.get(portalUpstreamBranchName);
 
@@ -45,7 +49,7 @@ public class HistoryFactory {
 
 		if (testrayRoutine != null) {
 			jobHistory = new TestrayJobHistory(
-				portalUpstreamBranchName, testrayRoutine);
+				maxBuildCount, portalUpstreamBranchName, testrayRoutine);
 		}
 		else {
 			jobHistory = new CachedJobHistory(portalUpstreamBranchName);
@@ -54,6 +58,10 @@ public class HistoryFactory {
 		_jobHistories.put(portalUpstreamBranchName, jobHistory);
 
 		return jobHistory;
+	}
+
+	public static JobHistory newJobHistory(String portalUpstreamBranchName) {
+		return newJobHistory(1, portalUpstreamBranchName, null);
 	}
 
 	public static TestClassHistory newTestClassHistory(
@@ -68,50 +76,8 @@ public class HistoryFactory {
 		return new DefaultTestTaskHistory(batchHistory, jsonObject);
 	}
 
-	private static String _getCIHistoryURL(Job job) {
-		String jobName = job.getJobName();
-
-		String testSuiteName = null;
-
-		if (job instanceof TestSuiteJob) {
-			TestSuiteJob testSuiteJob = (TestSuiteJob)job;
-
-			testSuiteName = testSuiteJob.getTestSuiteName();
-		}
-
-		String upstreamBranchName = null;
-
-		if (job instanceof PortalTestClassJob) {
-			PortalTestClassJob portalTestClassJob = (PortalTestClassJob)job;
-
-			PortalGitWorkingDirectory portalGitWorkingDirectory =
-				portalTestClassJob.getPortalGitWorkingDirectory();
-
-			if (portalGitWorkingDirectory != null) {
-				upstreamBranchName =
-					portalGitWorkingDirectory.getUpstreamBranchName();
-			}
-		}
-
-		try {
-			String ciHistoryJSONURL = JenkinsResultsParserUtil.getProperty(
-				JenkinsResultsParserUtil.getBuildProperties(),
-				"ci.history.json.url", jobName, testSuiteName,
-				upstreamBranchName);
-
-			if (JenkinsResultsParserUtil.isNullOrEmpty(ciHistoryJSONURL)) {
-				return null;
-			}
-
-			return ciHistoryJSONURL;
-		}
-		catch (IOException ioException) {
-			ioException.printStackTrace();
-		}
-
-		return null;
-	}
-
+	private static final Map<String, BatchHistory> _batchHistories =
+		new HashMap<>();
 	private static final Map<String, JobHistory> _jobHistories =
 		new HashMap<>();
 

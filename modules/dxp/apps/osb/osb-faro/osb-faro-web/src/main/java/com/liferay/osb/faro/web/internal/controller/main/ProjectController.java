@@ -993,6 +993,9 @@ public class ProjectController extends BaseFaroController {
 
 		faroProject.setWeDeployKey(weDeployKey);
 
+		_provisioningClient.addProductConsumption(
+			corpProjectUuid, faroProject.getGroupId());
+
 		return _faroProjectLocalService.updateFaroProject(faroProject);
 	}
 

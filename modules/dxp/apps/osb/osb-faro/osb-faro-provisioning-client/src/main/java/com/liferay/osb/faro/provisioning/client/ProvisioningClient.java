@@ -17,6 +17,9 @@ public interface ProvisioningClient {
 	public void addCorpProjectUsers(String corpProjectUuid, String[] userUuids)
 		throws Exception;
 
+	public void addProductConsumption(String corpProjectUuid, long groupId)
+		throws Exception;
+
 	public void addUserCorpProjectRoles(
 			String corpProjectUuid, String[] userUuids, String roleName)
 		throws Exception;

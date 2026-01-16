@@ -7,6 +7,7 @@ package com.liferay.dynamic.data.mapping.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
+import com.liferay.dynamic.data.mapping.exception.FormInstanceSubmissionLimitException;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
@@ -21,10 +22,12 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WorkflowInstanceLink;
+import com.liferay.portal.kernel.security.auth.CompanyInheritableThreadLocalCallable;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -36,6 +39,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -45,6 +50,12 @@ import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
+import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -66,6 +77,38 @@ public class DDMFormInstanceRecordLocalServiceTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testAddFormInstanceRecordWithLimitToOneSubmissionPerUserEnabled()
+		throws Exception {
+
+		User user = TestPropsValues.getUser();
+
+		DDMFormInstance ddmFormInstance = _addDDMFormInstance(true, user);
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				SqlExceptionHelper.class.getName(), LoggerTestUtil.OFF)) {
+
+			_addConcurrentDDMFormInstanceRecords(ddmFormInstance, user);
+		}
+
+		Assert.assertEquals(
+			1,
+			_ddmFormInstanceRecordLocalService.getFormInstanceRecordsCount(
+				ddmFormInstance.getFormInstanceId(), user.getUserId()));
+
+		AssertUtils.assertFailure(
+			FormInstanceSubmissionLimitException.class,
+			StringBundler.concat(
+				"User ", user.getUserId(),
+				" has already submitted an entry in form instance ",
+				ddmFormInstance.getFormInstanceId()),
+			() -> _ddmFormInstanceRecordLocalService.addFormInstanceRecord(
+				user.getUserId(), user.getGroupId(),
+				ddmFormInstance.getFormInstanceId(),
+				new DDMFormValues(ddmFormInstance.getDDMForm()),
+				new ServiceContext()));
+	}
 
 	@Test
 	public void testAddFormInstanceRecordWithWorkflow() throws Exception {
@@ -187,6 +230,88 @@ public class DDMFormInstanceRecordLocalServiceTest
 			"1.1", string3);
 	}
 
+	private void _addConcurrentDDMFormInstanceRecords(
+			DDMFormInstance ddmFormInstance, User user)
+		throws Exception {
+
+		ExecutorService executorService = Executors.newFixedThreadPool(
+			_THREAD_COUNT);
+
+		try {
+			CountDownLatch finishCountDownLatch = new CountDownLatch(
+				_THREAD_COUNT);
+			CountDownLatch readyCountDownLatch = new CountDownLatch(
+				_THREAD_COUNT);
+			CountDownLatch startCountDownLatch = new CountDownLatch(1);
+
+			for (int i = 0; i < _THREAD_COUNT; i++) {
+				executorService.submit(
+					new CompanyInheritableThreadLocalCallable<Runnable>(
+						() -> {
+							try {
+								readyCountDownLatch.countDown();
+
+								Assert.assertTrue(
+									"Timed out waiting to start",
+									startCountDownLatch.await(
+										30, TimeUnit.SECONDS));
+
+								_ddmFormInstanceRecordLocalService.
+									addFormInstanceRecord(
+										user.getUserId(), user.getGroupId(),
+										ddmFormInstance.getFormInstanceId(),
+										new DDMFormValues(
+											ddmFormInstance.getDDMForm()),
+										new ServiceContext());
+							}
+							catch (FormInstanceSubmissionLimitException
+										formInstanceSubmissionLimitException) {
+							}
+							finally {
+								finishCountDownLatch.countDown();
+							}
+
+							return null;
+						}));
+			}
+
+			Assert.assertTrue(
+				"Timed out waiting threads to be ready",
+				readyCountDownLatch.await(30, TimeUnit.SECONDS));
+
+			startCountDownLatch.countDown();
+
+			Assert.assertTrue(
+				"Timed out waiting threads to finish",
+				finishCountDownLatch.await(60, TimeUnit.SECONDS));
+
+			executorService.awaitTermination(30, TimeUnit.SECONDS);
+		}
+		finally {
+			executorService.shutdown();
+		}
+	}
+
+	private DDMFormInstance _addDDMFormInstance(
+			boolean limitToOneSubmissionPerUser, User user)
+		throws Exception {
+
+		DDMFormInstance ddmFormInstance =
+			DDMFormInstanceTestUtil.addDDMFormInstance(
+				user.getGroup(), user.getUserId());
+
+		DDMFormValues ddmFormValues =
+			ddmFormInstance.getSettingsDDMFormValues();
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"limitToOneSubmissionPerUser",
+				String.valueOf(limitToOneSubmissionPerUser)));
+
+		return _ddmFormInstanceLocalService.updateFormInstance(
+			ddmFormInstance.getFormInstanceId(), ddmFormValues);
+	}
+
 	private void _assertDDMFormInstanceRecord(
 			DDMFormInstanceRecord ddmFormInstanceRecord,
 			String expectedFormInstanceVersion, String expectedValue)
@@ -237,6 +362,8 @@ public class DDMFormInstanceRecordLocalServiceTest
 
 		return httpServletRequest;
 	}
+
+	private static final int _THREAD_COUNT = 8;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

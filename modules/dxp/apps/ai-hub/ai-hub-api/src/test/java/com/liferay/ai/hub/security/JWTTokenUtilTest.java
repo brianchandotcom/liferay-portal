@@ -41,9 +41,9 @@ public class JWTTokenUtilTest {
 		JWTClaimsSet jwtClaimsSet = signedJWT.getJWTClaimsSet();
 
 		Assert.assertEquals(_COMPANY_ID, jwtClaimsSet.getClaim("companyId"));
+		Assert.assertEquals(_ISSUER, jwtClaimsSet.getIssuer());
 		Assert.assertEquals(
 			String.valueOf(_USER_ID), jwtClaimsSet.getSubject());
-		Assert.assertEquals(_ISSUER, jwtClaimsSet.getIssuer());
 	}
 
 	@Test

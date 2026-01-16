@@ -29,10 +29,10 @@ public class DownstreamResultsTopLevelBuildReport
 
 		super(topLevelBuild.getBuildURL());
 
-		_topLevelBuild = topLevelBuild;
-
 		_buildJSONObject = JenkinsAPIUtil.getAPIJSONObject(
 			String.valueOf(topLevelBuild.getBuildURL()));
+
+		_topLevelBuild = topLevelBuild;
 
 		initializeBuildReportJSONObject();
 	}
@@ -42,9 +42,9 @@ public class DownstreamResultsTopLevelBuildReport
 			return;
 		}
 
-		JSONObject buildParametersJSONObject = new JSONObject();
-
 		Map<String, String> buildParameters = _topLevelBuild.getParameters();
+
+		JSONObject buildParametersJSONObject = new JSONObject();
 
 		for (Map.Entry<String, String> buildParameter :
 				buildParameters.entrySet()) {

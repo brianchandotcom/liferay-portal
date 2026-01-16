@@ -39,6 +39,30 @@ export type TChannelsDTO = {
 	totalCount: number;
 };
 
+export type TCommentDTO = {
+	category: string;
+	creator: {
+		id: string;
+		image: string;
+		name: string;
+	};
+	dateCreated: string;
+	dateModified: string;
+	externalReferenceCode: string;
+	id: number;
+	numberOfComments: number;
+	parentCommentId: number;
+	text: string;
+};
+
+export type TCommentsDTO = {
+	items: Array<TCommentDTO>;
+	lastPage: number;
+	page: number;
+	pageSize: number;
+	totalCount: number;
+};
+
 export type TDSRDTO = {
 	accountId: number;
 	accountName?: string;
@@ -169,6 +193,21 @@ async function getChannels(channelName = ''): Promise<TChannelsDTO> {
 
 	if (data) {
 		return data as TChannelsDTO;
+	}
+
+	throw new Error(error);
+}
+
+async function getDigitalSalesRoomComments(
+	digitalSalesRoomId: number,
+	page: number = 1
+): Promise<TCommentsDTO> {
+	const {data, error} = await ApiHelper.get(
+		`${PATH}/${digitalSalesRoomId}/comments?page=${page}`
+	);
+
+	if (data) {
+		return data as TCommentsDTO;
 	}
 
 	throw new Error(error);
@@ -431,6 +470,7 @@ export default {
 	deleteDigitalSalesRoomTemplate,
 	getAccounts,
 	getChannels,
+	getComments: getDigitalSalesRoomComments,
 	getDigitalSalesRoom,
 	getDigitalSalesRoomTemplate,
 	getDigitalSalesRoomTemplates,

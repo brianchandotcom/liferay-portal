@@ -338,8 +338,8 @@ test(
 
 test(
 	'Test edit menuitem for digital sales room',
-	{tag: '@LPD-76329'},
-	async ({digitalSalesRoomsPage, editDigitalSalesRoomPage}) => {
+	{tag: ['@LPD-69570', '@LPD-76329']},
+	async ({digitalSalesRoomsPage, editDigitalSalesRoomPage, page}) => {
 		const roomName = `A${getRandomInt()}`;
 
 		await digitalSalesRoomsPage.goto();
@@ -376,6 +376,13 @@ test(
 		await digitalSalesRoomsPage.editMenuItem.click();
 
 		await expect(editDigitalSalesRoomPage.onboardingMenuItem).toBeVisible();
+
+		test.step('verify welcome block', async () => {
+			await expect(
+				page.getByRole('heading', {name: 'WELCOME'})
+			).toBeVisible();
+			await expect(page.getByText('Andry Ford')).toBeVisible();
+		});
 	}
 );
 

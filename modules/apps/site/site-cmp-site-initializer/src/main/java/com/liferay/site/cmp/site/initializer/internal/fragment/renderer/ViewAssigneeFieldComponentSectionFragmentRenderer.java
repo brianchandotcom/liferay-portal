@@ -69,6 +69,8 @@ public class ViewAssigneeFieldComponentSectionFragmentRenderer
 				WebKeys.THEME_DISPLAY);
 
 		return HashMapBuilder.<String, Object>put(
+			"customClasses", "form-control"
+		).put(
 			"label", _language.get(themeDisplay.getLocale(), "assignee")
 		).put(
 			"name", "ObjectField_assignTo"

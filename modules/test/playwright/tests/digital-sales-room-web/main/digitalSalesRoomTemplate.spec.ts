@@ -213,7 +213,7 @@ test(
 );
 
 test(
-	'Test edit menuitem for digital sales room template',
+	'Edit menu item for digital sales room template',
 	{tag: '@LPD-76329'},
 	async ({
 		digitalSalesRoomTemplatesPage,
@@ -271,7 +271,7 @@ test(
 );
 
 test(
-	'Test settings menuitem for digital sales room template',
+	'Settings menu item for digital sales room template',
 	{tag: '@LPD-76329'},
 	async ({
 		digitalSalesRoomTemplateSettingsPage,

@@ -11,6 +11,10 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.FilterableAllTablesOrphanReferencesDataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.TableOrphanReferencesDataCleanupPreupgradeProcess;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Luis Ortiz
@@ -20,23 +24,40 @@ public class LayoutDataCleanupPreupgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgrade(
-			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null,
-				StringBundler.concat(
-					"[$SOURCE_TABLE_ALIAS$].classNameId = (select classNameId ",
-					"from ClassName_ where value = '", Layout.class.getName(),
-					"')"),
-				"classPK", "Layout", "plid", "Layout"));
+		DataCleanupPreupgradeProcess layoutSelfDataCleanupPreupgradeProcess =
+			_getLayoutSelfDataDataCleanupPreupgradeProcess();
 
-		upgrade(
+		Map<DataCleanupPreupgradeProcess, List<DataCleanupPreupgradeProcess>>
+			dataCleanupPreupgradeProcessMap =
+				LinkedHashMapBuilder.
+					<DataCleanupPreupgradeProcess,
+					 List<DataCleanupPreupgradeProcess>>put(
+						_getLayoutRelatedDataDataCleanupPreupgradeProcess(),
+						dependsOn(layoutSelfDataCleanupPreupgradeProcess)
+					).put(
+						layoutSelfDataCleanupPreupgradeProcess, dependsOn()
+					).build();
+
+		List<DataCleanupPreupgradeProcess> dataCleanupPreupgradeProcesses =
+			getSortedDataCleanupPreupgradeProcesses(
+				dataCleanupPreupgradeProcessMap);
+
+		for (DataCleanupPreupgradeProcess dataCleanupPreupgradeProcess :
+				dataCleanupPreupgradeProcesses) {
+
+			dataCleanupPreupgradeProcess.upgrade();
+		}
+	}
+
+	private DataCleanupPreupgradeProcess
+		_getLayoutRelatedDataDataCleanupPreupgradeProcess() {
+
+		return new DataCleanupPreupgradeProcess(
 			new FilterableAllTablesOrphanReferencesDataCleanupPreupgradeProcess(
 				"not exists (select 1 from (select layoutRevisionId from " +
 					"LayoutRevision) AS temp where temp.layoutRevisionId = " +
 						"[$SOURCE_TABLE_ALIAS$].plid)",
-				new String[0], "plid", new String[] {"plid"}, "Layout"));
-
-		upgrade(
+				new String[0], "plid", new String[] {"plid"}, "Layout"),
 			new FilterableAllTablesOrphanReferencesDataCleanupPreupgradeProcess(
 				StringBundler.concat(
 					"[$SOURCE_TABLE_ALIAS$].classNameId in (select ",
@@ -44,9 +65,7 @@ public class LayoutDataCleanupPreupgradeProcess
 					Layout.class.getName(), "' or value like '",
 					Layout.class.getName(), "-%')"),
 				new String[] {"classNameId"}, "classPK", new String[] {"plid"},
-				"Layout"));
-
-		upgrade(
+				"Layout"),
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
 				null,
 				StringBundler.concat(
@@ -55,6 +74,19 @@ public class LayoutDataCleanupPreupgradeProcess
 					"[$SOURCE_TABLE_ALIAS$].name = '", Layout.class.getName(),
 					"'"),
 				"primKeyId", "ResourcePermission", "plid", "Layout"));
+	}
+
+	private DataCleanupPreupgradeProcess
+		_getLayoutSelfDataDataCleanupPreupgradeProcess() {
+
+		return new DataCleanupPreupgradeProcess(
+			new TableOrphanReferencesDataCleanupPreupgradeProcess(
+				null,
+				StringBundler.concat(
+					"[$SOURCE_TABLE_ALIAS$].classNameId = (select classNameId ",
+					"from ClassName_ where value = '", Layout.class.getName(),
+					"')"),
+				"classPK", "Layout", "plid", "Layout"));
 	}
 
 }

@@ -53,6 +53,9 @@ public interface KaleoDefinitionVersion
 
 	public String getContentAsXML();
 
+	public boolean isLatest()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public KaleoDefinition getKaleoDefinition()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

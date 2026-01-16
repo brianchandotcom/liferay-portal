@@ -4,6 +4,10 @@
  */
 
 import Label from '@clayui/label';
+import {
+	Assignee,
+	AssigneeValue,
+} from '@liferay/object-dynamic-data-mapping-form-field-type';
 import React from 'react';
 
 import InfoSummary from '../../../common/components/InfoSummary';
@@ -12,6 +16,7 @@ import {patchTaskById} from '../../../utils/api';
 import {DISPLAY_TYPES} from '../../../utils/constants';
 
 interface TaskInfoSummaryProps {
+	assignTo: AssigneeValue;
 	dueDate: string;
 	initialState: string;
 	states: State[];
@@ -20,6 +25,7 @@ interface TaskInfoSummaryProps {
 }
 
 export default function TaskInfoSummary({
+	assignTo,
 	dueDate,
 	initialState,
 	states,
@@ -42,6 +48,27 @@ export default function TaskInfoSummary({
 								});
 							}}
 							states={states}
+						/>
+					),
+				},
+				{
+					label: 'Assignee',
+					value: (
+						<Assignee
+							name="assignee"
+							onChange={async (value: any) => {
+								await patchTaskById({
+									body: {assignTo: value},
+									taskId,
+								});
+							}}
+							searchURL={
+								Liferay.ThemeDisplay.getPortalURL() +
+								'/o/cmp/assignee-context/'
+							}
+							showLabel={false}
+							value={assignTo}
+							visible={true}
 						/>
 					),
 				},

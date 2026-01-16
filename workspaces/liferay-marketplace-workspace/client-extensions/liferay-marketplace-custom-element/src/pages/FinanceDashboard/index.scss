@@ -4,9 +4,14 @@
 	min-width: 300px;
 	padding: 0;
 
-	.text-muted {
-		color: #6c6c75 !important;
-		font-size: 13px;
+	.export-csv-button {
+		font-size: 14px;
+
+		.lexicon-icon {
+			height: 16px;
+			margin-right: 4px;
+			width: 16px;
+		}
 	}
 
 	.dashboard-navigation-container {
@@ -57,5 +62,10 @@
 				border-top-right-radius: 8px;
 			}
 		}
+	}
+
+	.text-muted {
+		color: #6c6c75 !important;
+		font-size: 13px;
 	}
 }

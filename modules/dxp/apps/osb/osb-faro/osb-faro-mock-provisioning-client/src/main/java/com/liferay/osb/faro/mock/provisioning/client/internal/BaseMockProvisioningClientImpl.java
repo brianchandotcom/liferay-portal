@@ -67,6 +67,11 @@ public abstract class BaseMockProvisioningClientImpl
 	}
 
 	@Override
+	public boolean isProductConsumed(String corpProjectUuid) throws Exception {
+		return provisioningClient.isProductConsumed(corpProjectUuid);
+	}
+
+	@Override
 	public void unsetCorpProjectUsers(
 			String corpProjectUuid, String[] userUuids)
 		throws Exception {

@@ -307,6 +307,31 @@ public class ProvisioningClientImpl implements ProvisioningClient {
 	}
 
 	@Override
+	public boolean isProductConsumed(String corpProjectUuid) throws Exception {
+		Account account = _getCorpProjectAccount(corpProjectUuid);
+
+		ProductPurchase productPurchase = _getProductPurchase(account);
+
+		if (productPurchase == null) {
+			throw new NoSuchProductPurchaseException();
+		}
+
+		List<ProductConsumption> productConsumptions =
+			KoroneikiHttpUtil.getProductConsumptions(account.getKey(), 1, 100);
+
+		for (ProductConsumption productConsumption : productConsumptions) {
+			if (Objects.equals(
+					productConsumption.getProductKey(),
+					productPurchase.getProductKey())) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
 	public void unsetCorpProjectUsers(
 			String corpProjectUuid, String[] userUuids)
 		throws Exception {

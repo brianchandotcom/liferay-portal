@@ -35,6 +35,8 @@ public interface ProvisioningClient {
 	public OSBAccountEntry getOSBAccountEntry(String corpProjectUuid)
 		throws Exception;
 
+	public boolean isProductConsumed(String corpProjectUuid) throws Exception;
+
 	public void unsetCorpProjectUsers(
 			String corpProjectUuid, String[] userUuids)
 		throws Exception;

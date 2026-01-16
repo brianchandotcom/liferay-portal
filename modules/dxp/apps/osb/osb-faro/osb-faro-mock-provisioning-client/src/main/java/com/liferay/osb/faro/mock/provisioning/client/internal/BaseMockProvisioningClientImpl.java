@@ -26,6 +26,13 @@ public abstract class BaseMockProvisioningClientImpl
 	}
 
 	@Override
+	public void addProductConsumption(String corpProjectUuid, long groupId)
+		throws Exception {
+
+		provisioningClient.addProductConsumption(corpProjectUuid, groupId);
+	}
+
+	@Override
 	public void addUserCorpProjectRoles(
 			String corpProjectUuid, String[] userUuids, String roleName)
 		throws Exception {

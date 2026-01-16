@@ -243,7 +243,11 @@ public class ProjectController extends BaseFaroController {
 		}
 
 		for (FaroProject faroProject : faroProjects) {
-			if (Validator.isNull(faroProject.getCorpProjectUuid())) {
+			if (Validator.isNull(faroProject.getCorpProjectUuid()) ||
+				Objects.equals(
+					faroProject.getCorpProjectUuid(),
+					FaroPropsValues.FARO_PROJECT_ID)) {
+
 				continue;
 			}
 
@@ -1044,8 +1048,10 @@ public class ProjectController extends BaseFaroController {
 
 		faroProject.setWeDeployKey(weDeployKey);
 
-		_provisioningClient.addProductConsumption(
-			corpProjectUuid, faroProject.getGroupId());
+		if (!Objects.equals(corpProjectUuid, FaroPropsValues.FARO_PROJECT_ID)) {
+			_provisioningClient.addProductConsumption(
+				corpProjectUuid, faroProject.getGroupId());
+		}
 
 		return _faroProjectLocalService.updateFaroProject(faroProject);
 	}

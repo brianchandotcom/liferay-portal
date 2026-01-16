@@ -92,7 +92,9 @@ public class ExportImportToolbarDisplayContext {
 				else {
 					cmd = Constants.IMPORT;
 					label = "import";
-					mvcPath = "/import/new_import/import_layouts.jsp";
+					mvcPath = FeatureFlagManagerUtil.isEnabled("LPD-57655") ?
+						"/revamp/import/new_import.jsp" :
+							"/import/new_import/import_layouts.jsp";
 				}
 
 				addPrimaryDropdownItem(

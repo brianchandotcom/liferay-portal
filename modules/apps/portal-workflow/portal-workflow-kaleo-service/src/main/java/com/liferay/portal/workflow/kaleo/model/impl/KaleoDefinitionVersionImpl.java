@@ -13,8 +13,10 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.kaleo.definition.util.WorkflowDefinitionContentUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalServiceUtil;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalServiceUtil;
 import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalServiceUtil;
 
 /**
@@ -49,6 +51,21 @@ public class KaleoDefinitionVersionImpl extends KaleoDefinitionVersionBaseImpl {
 	@Override
 	public KaleoNode getKaleoStartNode() throws PortalException {
 		return KaleoNodeLocalServiceUtil.getKaleoNode(getStartKaleoNodeId());
+	}
+
+	@Override
+	public boolean isLatest() throws PortalException {
+		KaleoDefinitionVersion kaleoDefinitionVersion =
+			KaleoDefinitionVersionLocalServiceUtil.
+				getLatestKaleoDefinitionVersion(getCompanyId(), getName());
+
+		if (kaleoDefinitionVersion.getKaleoDefinitionVersionId() ==
+				getKaleoDefinitionVersionId()) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

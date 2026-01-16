@@ -9,6 +9,7 @@ import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ItemScopeUtil;
+import com.liferay.headless.admin.site.internal.util.LogUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -82,7 +83,10 @@ public class PageExperienceDTOConverter
 										getSegmentsEntryGroupId());
 
 						if (segmentsEntry == null) {
-							throw new UnsupportedOperationException();
+							LogUtil.logOptionalReference(
+								SegmentsEntry.class,
+								segmentsExperience.getSegmentsEntryERC(),
+								segmentsExperience.getSegmentsEntryGroupId());
 						}
 
 						return new ItemExternalReference() {

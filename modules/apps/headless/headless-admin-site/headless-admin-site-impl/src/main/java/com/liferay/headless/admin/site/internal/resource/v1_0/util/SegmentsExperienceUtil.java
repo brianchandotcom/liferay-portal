@@ -11,6 +11,7 @@ import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ItemScopeUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
+import com.liferay.headless.admin.site.internal.util.LogUtil;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
@@ -224,7 +225,10 @@ public class SegmentsExperienceUtil {
 					itemGroupId);
 
 		if (segmentsEntry == null) {
-			throw new UnsupportedOperationException();
+			LogUtil.logOptionalReference(
+				SegmentsEntry.class,
+				segmentItemExternalReference.getExternalReferenceCode(),
+				itemGroupId);
 		}
 
 		return segmentsEntry;

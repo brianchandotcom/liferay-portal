@@ -68,6 +68,22 @@ public class KaleoDesignerDisplayContextTest {
 	}
 
 	@Test
+	public void testGetBackURL() {
+		RenderRequest renderRequest = Mockito.mock(RenderRequest.class);
+
+		String redirect = RandomTestUtil.randomString();
+
+		Mockito.when(
+			renderRequest.getParameter("redirect")
+		).thenReturn(
+			redirect
+		);
+
+		Assert.assertEquals(
+			redirect, _kaleoDesignerDisplayContext.getBackURL(renderRequest));
+	}
+
+	@Test
 	public void testGetKaleoDefinitionVersionsJSONArray() throws Exception {
 		Assert.assertEquals(
 			String.valueOf(_getJSONArray(StringPool.BLANK)),

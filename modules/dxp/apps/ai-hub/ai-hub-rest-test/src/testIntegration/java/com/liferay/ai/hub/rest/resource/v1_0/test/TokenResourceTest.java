@@ -89,6 +89,7 @@ public class TokenResourceTest extends BaseTokenResourceTestCase {
 
 		Assert.assertTrue(jsonObject.has("accessToken"));
 		Assert.assertTrue(jsonObject.has("scope"));
+		Assert.assertTrue(jsonObject.has("userToken"));
 
 		Assert.assertNotNull(
 			SseEventSourceTestUtil.open(

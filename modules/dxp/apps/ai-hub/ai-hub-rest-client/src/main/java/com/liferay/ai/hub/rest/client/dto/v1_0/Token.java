@@ -67,6 +67,27 @@ public class Token implements Cloneable, Serializable {
 
 	protected String scope;
 
+	public String getUserToken() {
+		return userToken;
+	}
+
+	public void setUserToken(String userToken) {
+		this.userToken = userToken;
+	}
+
+	public void setUserToken(
+		UnsafeSupplier<String, Exception> userTokenUnsafeSupplier) {
+
+		try {
+			userToken = userTokenUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String userToken;
+
 	@Override
 	public Token clone() throws CloneNotSupportedException {
 		return (Token)super.clone();

@@ -490,7 +490,7 @@ public class UpgradeReport {
 		).put(
 			"tables.initial.final.rows",
 			() -> {
-				Map<String, Integer> finalTableCounts = _getTableCounts();
+				Map<String, Long> finalTableCounts = _getTableCounts();
 
 				if ((finalTableCounts == null) ||
 					(_initialTableCounts == null)) {
@@ -506,13 +506,14 @@ public class UpgradeReport {
 				ListUtil.distinct(
 					tableNames,
 					(tableName1, tableName2) -> {
-						int initialTableCount1 =
-							_initialTableCounts.getOrDefault(tableName1, 0);
-						int initialTableCount2 =
-							_initialTableCounts.getOrDefault(tableName2, 0);
+						long initialTableCount1 =
+							_initialTableCounts.getOrDefault(tableName1, 0L);
+						long initialTableCount2 =
+							_initialTableCounts.getOrDefault(tableName2, 0L);
 
 						if (initialTableCount1 != initialTableCount2) {
-							return initialTableCount2 - initialTableCount1;
+							return Long.compare(
+								initialTableCount2, initialTableCount1);
 						}
 
 						return tableName1.compareTo(tableName2);
@@ -521,10 +522,10 @@ public class UpgradeReport {
 				return TransformUtil.transform(
 					tableNames,
 					tableName -> {
-						int finalTableCount = finalTableCounts.getOrDefault(
-							tableName, -1);
-						int initialTableCount =
-							_initialTableCounts.getOrDefault(tableName, -1);
+						long finalTableCount = finalTableCounts.getOrDefault(
+							tableName, -1L);
+						long initialTableCount =
+							_initialTableCounts.getOrDefault(tableName, -1L);
 
 						if ((finalTableCount <= 0) &&
 							(initialTableCount <= 0)) {
@@ -768,7 +769,7 @@ public class UpgradeReport {
 		return null;
 	}
 
-	private Map<String, Integer> _getTableCounts() {
+	private Map<String, Long> _getTableCounts() {
 		try (Connection connection = DataAccess.getConnection()) {
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
 
@@ -778,7 +779,7 @@ public class UpgradeReport {
 					dbInspector.getCatalog(), dbInspector.getSchema(), null,
 					new String[] {"TABLE"})) {
 
-				Map<String, Integer> tableCounts = new HashMap<>();
+				Map<String, Long> tableCounts = new HashMap<>();
 
 				while (resultSet1.next()) {
 					String tableName = resultSet1.getString("TABLE_NAME");
@@ -790,7 +791,7 @@ public class UpgradeReport {
 							preparedStatement.executeQuery()) {
 
 						if (resultSet2.next()) {
-							tableCounts.put(tableName, resultSet2.getInt(1));
+							tableCounts.put(tableName, resultSet2.getLong(1));
 						}
 					}
 					catch (SQLException sqlException) {
@@ -1010,7 +1011,7 @@ public class UpgradeReport {
 	private String _executionDateString;
 	private String _executionTimeString;
 	private final int _initialBuildNumber;
-	private Map<String, Integer> _initialTableCounts;
+	private Map<String, Long> _initialTableCounts;
 	private String _rootDir;
 
 	private class DLSizeThread extends Thread {

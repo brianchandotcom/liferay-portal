@@ -24,17 +24,22 @@ import org.json.JSONObject;
 public class CachedJobHistory extends BaseJobHistory {
 
 	@Override
+	public JSONObject getJSONObject() {
+		return _jsonObject;
+	}
+
+	@Override
 	public URL getTestrayURL() {
 		if (_testrayURL != null) {
 			return _testrayURL;
 		}
 
-		if (_ciHistoryJSONObject == null) {
+		if (_jsonObject == null) {
 			return null;
 		}
 
 		try {
-			String testrayURLString = _ciHistoryJSONObject.optString(
+			String testrayURLString = _jsonObject.optString(
 				"testray_url", "https://testray.liferay.com");
 
 			if (JenkinsResultsParserUtil.isURL(testrayURLString)) {
@@ -52,10 +57,9 @@ public class CachedJobHistory extends BaseJobHistory {
 	protected CachedJobHistory(String portalUpstreamBranchName) {
 		super(portalUpstreamBranchName);
 
-		_ciHistoryJSONObject = _getCIHistoryJSONObject();
+		_jsonObject = _getJSONObject();
 
-		JSONArray batchesJSONArray = _ciHistoryJSONObject.optJSONArray(
-			"batches");
+		JSONArray batchesJSONArray = _jsonObject.optJSONArray("batches");
 
 		if ((batchesJSONArray == null) || batchesJSONArray.isEmpty()) {
 			return;
@@ -71,7 +75,26 @@ public class CachedJobHistory extends BaseJobHistory {
 		}
 	}
 
-	private JSONObject _getCIHistoryJSONObject() {
+	private String _getCIHistoryURL() {
+		try {
+			String ciHistoryJSONURL = JenkinsResultsParserUtil.getProperty(
+				JenkinsResultsParserUtil.getBuildProperties(),
+				"ci.history.json.url", getPortalUpstreamBranchName());
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(ciHistoryJSONURL)) {
+				return null;
+			}
+
+			return ciHistoryJSONURL;
+		}
+		catch (IOException ioException) {
+			ioException.printStackTrace();
+		}
+
+		return null;
+	}
+
+	private JSONObject _getJSONObject() {
 		String ciHistoryURL = _getCIHistoryURL();
 
 		if (ciHistoryURL == null) {
@@ -117,26 +140,7 @@ public class CachedJobHistory extends BaseJobHistory {
 		}
 	}
 
-	private String _getCIHistoryURL() {
-		try {
-			String ciHistoryJSONURL = JenkinsResultsParserUtil.getProperty(
-				JenkinsResultsParserUtil.getBuildProperties(),
-				"ci.history.json.url", getPortalUpstreamBranchName());
-
-			if (JenkinsResultsParserUtil.isNullOrEmpty(ciHistoryJSONURL)) {
-				return null;
-			}
-
-			return ciHistoryJSONURL;
-		}
-		catch (IOException ioException) {
-			ioException.printStackTrace();
-		}
-
-		return null;
-	}
-
-	private final JSONObject _ciHistoryJSONObject;
+	private final JSONObject _jsonObject;
 	private URL _testrayURL;
 
 }

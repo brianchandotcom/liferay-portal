@@ -17,7 +17,12 @@ public class CachedBatchHistory extends BaseBatchHistory {
 
 	@Override
 	public long getAverageDuration() {
-		return _averageDuration;
+		return _jsonObject.optLong("averageDuration");
+	}
+
+	@Override
+	public JSONObject getJSONObject() {
+		return _jsonObject;
 	}
 
 	protected CachedBatchHistory(
@@ -25,9 +30,9 @@ public class CachedBatchHistory extends BaseBatchHistory {
 
 		super(batchName, jobHistory);
 
-		_averageDuration = jsonObject.optLong("averageDuration");
+		_jsonObject = jsonObject;
 
-		JSONArray testsJSONArray = jsonObject.optJSONArray("tests");
+		JSONArray testsJSONArray = _jsonObject.optJSONArray("tests");
 
 		if ((testsJSONArray != null) && !testsJSONArray.isEmpty()) {
 			for (int i = 0; i < testsJSONArray.length(); i++) {
@@ -46,7 +51,7 @@ public class CachedBatchHistory extends BaseBatchHistory {
 			}
 		}
 
-		JSONArray testTasksJSONArray = jsonObject.optJSONArray("testTasks");
+		JSONArray testTasksJSONArray = _jsonObject.optJSONArray("testTasks");
 
 		if ((testTasksJSONArray != null) && !testTasksJSONArray.isEmpty()) {
 			for (int i = 0; i < testTasksJSONArray.length(); i++) {
@@ -61,6 +66,6 @@ public class CachedBatchHistory extends BaseBatchHistory {
 		}
 	}
 
-	private final long _averageDuration;
+	private final JSONObject _jsonObject;
 
 }

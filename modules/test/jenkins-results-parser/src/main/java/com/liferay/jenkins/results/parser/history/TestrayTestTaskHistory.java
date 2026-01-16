@@ -10,6 +10,8 @@ import com.liferay.jenkins.results.parser.TestTaskReport;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -53,6 +55,27 @@ public class TestrayTestTaskHistory extends BaseTestTaskHistory {
 		}
 
 		return totalDuration / _testTaskReports.size();
+	}
+
+	@Override
+	public JSONObject getJSONObject() {
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put(
+			"averageDuration", getAverageDuration()
+		).put(
+			"averageTotalDuration", getAverageTotalDuration()
+		).put(
+			"latestReportMissing", isLatestReportMissing()
+		).put(
+			"longestDuration", getLongestDuration()
+		).put(
+			"testTaskCount", getTestTaskCount()
+		).put(
+			"testTaskName", getTestTaskName()
+		);
+
+		return jsonObject;
 	}
 
 	@Override

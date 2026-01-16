@@ -9,6 +9,8 @@ import java.net.URL;
 
 import java.util.List;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -17,6 +19,8 @@ public interface JobHistory {
 	public List<BatchHistory> getBatchHistories();
 
 	public BatchHistory getBatchHistory(String batchName);
+
+	public JSONObject getJSONObject();
 
 	public String getPortalUpstreamBranchName();
 

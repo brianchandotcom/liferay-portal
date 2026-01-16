@@ -5,6 +5,8 @@
 
 package com.liferay.jenkins.results.parser.history;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -19,6 +21,8 @@ public interface TestClassHistory {
 	public String getBatchName();
 
 	public int getFailureCount();
+
+	public JSONObject getJSONObject();
 
 	public int getStatusChanges();
 

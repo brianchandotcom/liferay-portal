@@ -14,32 +14,37 @@ public class CachedTestClassHistory extends BaseTestClassHistory {
 
 	@Override
 	public long getAverageDuration() {
-		return _averageDuration;
+		return _jsonObject.optLong("averageDuration");
 	}
 
 	@Override
 	public long getAverageOverheadDuration() {
-		return _averageOverheadDuration;
+		return _jsonObject.optLong("averageOverheadDuration");
 	}
 
 	@Override
 	public int getFailureCount() {
-		return _failureCount;
+		return _jsonObject.optInt("failureCount");
+	}
+
+	@Override
+	public JSONObject getJSONObject() {
+		return _jsonObject;
 	}
 
 	@Override
 	public int getStatusChanges() {
-		return _statusChanges;
+		return _jsonObject.optInt("statusChanges");
 	}
 
 	@Override
 	public long getTestCount() {
-		return _testCount;
+		return _jsonObject.optInt("testCount");
 	}
 
 	@Override
 	public String getTestTaskName() {
-		return _testTaskName;
+		return _jsonObject.optString("testTaskName");
 	}
 
 	@Override
@@ -53,20 +58,9 @@ public class CachedTestClassHistory extends BaseTestClassHistory {
 
 		super(batchHistory, testClassName);
 
-		_averageDuration = jsonObject.optLong("averageDuration");
-		_averageOverheadDuration = jsonObject.optLong(
-			"averageOverheadDuration");
-		_failureCount = jsonObject.optInt("failureCount");
-		_statusChanges = jsonObject.optInt("statusChanges");
-		_testCount = jsonObject.optInt("testCount");
-		_testTaskName = jsonObject.optString("testTaskName");
+		_jsonObject = jsonObject;
 	}
 
-	private final long _averageDuration;
-	private final long _averageOverheadDuration;
-	private final int _failureCount;
-	private final int _statusChanges;
-	private final int _testCount;
-	private final String _testTaskName;
+	private final JSONObject _jsonObject;
 
 }

@@ -72,6 +72,20 @@ public class TokenSerDes {
 			sb.append("\"");
 		}
 
+		if (token.getUserToken() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"userToken\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(token.getUserToken()));
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -104,6 +118,13 @@ public class TokenSerDes {
 			map.put("scope", String.valueOf(token.getScope()));
 		}
 
+		if (token.getUserToken() == null) {
+			map.put("userToken", null);
+		}
+		else {
+			map.put("userToken", String.valueOf(token.getUserToken()));
+		}
+
 		return map;
 	}
 
@@ -127,6 +148,9 @@ public class TokenSerDes {
 			else if (Objects.equals(jsonParserFieldName, "scope")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "userToken")) {
+				return false;
+			}
 
 			return false;
 		}
@@ -144,6 +168,11 @@ public class TokenSerDes {
 			else if (Objects.equals(jsonParserFieldName, "scope")) {
 				if (jsonParserFieldValue != null) {
 					token.setScope((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "userToken")) {
+				if (jsonParserFieldValue != null) {
+					token.setUserToken((String)jsonParserFieldValue);
 				}
 			}
 		}

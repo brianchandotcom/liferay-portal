@@ -5,10 +5,9 @@
 
 package com.liferay.portal.zip.internal.reader.factory;
 
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.DependenciesTestUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.PropsValues;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -18,6 +17,7 @@ import com.liferay.portal.zip.internal.reader.NioZipReaderImpl;
 import com.liferay.portal.zip.internal.reader.ZipReaderImpl;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
@@ -30,14 +30,23 @@ public class ZipReaderFactoryImplTest {
 	public static LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Test
-	public void test() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
 			new FastDateFormatFactoryUtil();
 
 		fastDateFormatFactoryUtil.setFastDateFormatFactory(
 			new FastDateFormatFactoryImpl());
+	}
 
+	@Test
+	public void testNioZipReader() throws Exception {
+		_testNioZipReader(NioZipReaderImpl.class, true);
+		_testNioZipReader(ZipReaderImpl.class, false);
+	}
+
+	@Test
+	public void testZipReader() throws Exception {
 		ZipReaderFactory zipReaderFactory = new ZipReaderFactoryImpl();
 
 		try (ZipReader zipReader = zipReaderFactory.getZipReader(
@@ -53,22 +62,38 @@ public class ZipReaderFactoryImplTest {
 
 			Assert.assertTrue(zipReader instanceof ZipReaderImpl);
 		}
+	}
 
-		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, "ZIP_FILE_READER_NIO_ENABLED", true);
+	private void _testNioZipReader(
+			Class<? extends ZipReader> expectedClass,
+			boolean featureFlagEnabled)
+		throws Exception {
 
-		try (ZipReader zipReader = zipReaderFactory.getZipReader(
-				DependenciesTestUtil.getDependencyAsFile(
-					BaseReaderImplTestCase.class, "file.zip"))) {
+		String featureFlagKey = "feature.flag.LPD-75525";
 
-			Assert.assertTrue(zipReader instanceof NioZipReaderImpl);
+		String originalValue = PropsUtil.get(featureFlagKey);
+
+		try {
+			PropsUtil.set(featureFlagKey, Boolean.toString(featureFlagEnabled));
+
+			ZipReaderFactory zipReaderFactory = new ZipReaderFactoryImpl();
+
+			try (ZipReader zipReader = zipReaderFactory.getZipReader(
+					DependenciesTestUtil.getDependencyAsFile(
+						BaseReaderImplTestCase.class, "file.zip"))) {
+
+				Assert.assertTrue(expectedClass.isInstance(zipReader));
+			}
+
+			try (ZipReader zipReader = zipReaderFactory.getZipReader(
+					DependenciesTestUtil.getDependencyAsInputStream(
+						BaseReaderImplTestCase.class, "file.zip"))) {
+
+				Assert.assertTrue(expectedClass.isInstance(zipReader));
+			}
 		}
-
-		try (ZipReader zipReader = zipReaderFactory.getZipReader(
-				DependenciesTestUtil.getDependencyAsInputStream(
-					BaseReaderImplTestCase.class, "file.zip"))) {
-
-			Assert.assertTrue(zipReader instanceof NioZipReaderImpl);
+		finally {
+			PropsUtil.set(featureFlagKey, originalValue);
 		}
 	}
 

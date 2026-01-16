@@ -48,7 +48,7 @@ public class AIHubRequestAuthVerifier implements AuthVerifier {
 
 		try {
 			String token = httpServletRequest.getHeader(
-				"Liferay-AI-Hub-Authorization");
+				"Liferay-AI-Hub-On-Behalf-Of");
 
 			if (Validator.isBlank(token)) {
 				return authVerifierResult;

@@ -18,8 +18,8 @@ public interface JobHistory {
 
 	public BatchHistory getBatchHistory(String batchName);
 
-	public URL getTestrayURL();
+	public String getPortalUpstreamBranchName();
 
-	public String getUpstreamBranchName();
+	public URL getTestrayURL();
 
 }

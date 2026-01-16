@@ -5,24 +5,12 @@
 
 package com.liferay.jenkins.results.parser.history;
 
-import com.liferay.jenkins.results.parser.CloudBucketUtil;
-import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
-
-import java.io.File;
-import java.io.IOException;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
@@ -50,105 +38,26 @@ public abstract class BaseJobHistory implements JobHistory {
 	}
 
 	@Override
-	public URL getTestrayURL() {
-		return _testrayURL;
+	public String getPortalUpstreamBranchName() {
+		return _portalUpstreamBranchName;
 	}
 
-	@Override
-	public String getUpstreamBranchName() {
-		return _upstreamBranchName;
+	protected BaseJobHistory(String portalUpstreamBranchName) {
+		_portalUpstreamBranchName = portalUpstreamBranchName;
 	}
 
-	protected BaseJobHistory(String ciHistoryURL) {
-		JSONObject ciHistoryJSONObject = _getCIHistoryJSONObject(ciHistoryURL);
-
-		if (ciHistoryJSONObject == null) {
-			_testrayURL = null;
-			_upstreamBranchName = null;
-
+	protected void addBatchHistory(BatchHistory batchHistory) {
+		if (batchHistory == null) {
 			return;
 		}
 
-		JSONArray batchesJSONArray = ciHistoryJSONObject.optJSONArray(
-			"batches");
-
-		if (batchesJSONArray != JSONObject.NULL) {
-			for (int i = 0; i < batchesJSONArray.length(); i++) {
-				BatchHistory batchHistory = HistoryFactory.newBatchHistory(
-					this, batchesJSONArray.getJSONObject(i));
-
-				_batchHistories.put(batchHistory.getBatchName(), batchHistory);
-			}
-		}
-
-		URL testrayURL = null;
-
-		try {
-			String testrayURLString = ciHistoryJSONObject.optString(
-				"testray_url", "https://testray.liferay.com");
-
-			if (JenkinsResultsParserUtil.isURL(testrayURLString)) {
-				testrayURL = new URL(testrayURLString);
-			}
-		}
-		catch (MalformedURLException malformedURLException) {
-		}
-
-		_testrayURL = testrayURL;
-
-		_upstreamBranchName = ciHistoryJSONObject.optString(
-			"upstream_branch_name");
-	}
-
-	private JSONObject _getCIHistoryJSONObject(String ciHistoryURL) {
-		if (ciHistoryURL == null) {
-			return null;
-		}
-
-		File tempGzipFile = new File(
-			System.getenv("WORKSPACE"),
-			JenkinsResultsParserUtil.getDistinctTimeStamp() + ".gz");
-
-		try {
-			if (ciHistoryURL.startsWith(
-					CloudBucketUtil.GCP_BUCKET_PATH_JENKINS_CI_DATA) ||
-				ciHistoryURL.startsWith(
-					CloudBucketUtil.GCP_BUCKET_PATH_PATCHER_SHARED) ||
-				ciHistoryURL.startsWith(
-					CloudBucketUtil.GCP_BUCKET_PATH_TESTRAY_RESULTS)) {
-
-				CloudBucketUtil.copyGCPFile(
-					JenkinsResultsParserUtil.getCanonicalPath(tempGzipFile),
-					ciHistoryURL);
-			}
-			else {
-				JenkinsResultsParserUtil.toFile(
-					new URL(ciHistoryURL), tempGzipFile);
-			}
-
-			String content = JenkinsResultsParserUtil.read(tempGzipFile);
-
-			if (JenkinsResultsParserUtil.isNullOrEmpty(content)) {
-				return null;
-			}
-
-			return new JSONObject(content);
-		}
-		catch (IOException ioException) {
-			return null;
-		}
-		finally {
-			if (tempGzipFile.exists()) {
-				JenkinsResultsParserUtil.delete(tempGzipFile);
-			}
-		}
+		_batchHistories.put(batchHistory.getBatchName(), batchHistory);
 	}
 
 	private static final Pattern _pattern = Pattern.compile(
 		"(?<batchName>.+)_stable");
 
 	private final Map<String, BatchHistory> _batchHistories = new HashMap<>();
-	private final URL _testrayURL;
-	private final String _upstreamBranchName;
+	private final String _portalUpstreamBranchName;
 
 }

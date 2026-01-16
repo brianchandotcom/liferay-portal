@@ -10,6 +10,7 @@ import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import com.liferay.jenkins.results.parser.TestSuiteJob;
+import com.liferay.jenkins.results.parser.testray.TestrayRoutine;
 
 import java.io.IOException;
 
@@ -29,24 +30,30 @@ public class HistoryFactory {
 		return new DefaultBatchHistory(jobHistory, jsonObject);
 	}
 
-	public static JobHistory newJobHistory(Job job) {
-		String ciHistoryURL = _getCIHistoryURL(job);
+	public static JobHistory newJobHistory(String portalUpstreamBranchName) {
+		return newJobHistory(portalUpstreamBranchName, null);
+	}
 
-		if (ciHistoryURL == null) {
-			return null;
-		}
+	public static JobHistory newJobHistory(
+		String portalUpstreamBranchName, TestrayRoutine testrayRoutine) {
 
-		synchronized (_jobHistories) {
-			JobHistory jobHistory = _jobHistories.get(ciHistoryURL);
+		JobHistory jobHistory = _jobHistories.get(portalUpstreamBranchName);
 
-			if (jobHistory == null) {
-				jobHistory = new DefaultJobHistory(ciHistoryURL);
-
-				_jobHistories.put(ciHistoryURL, jobHistory);
-			}
-
+		if (jobHistory != null) {
 			return jobHistory;
 		}
+
+		if (testrayRoutine != null) {
+			jobHistory = new TestrayJobHistory(
+				portalUpstreamBranchName, testrayRoutine);
+		}
+		else {
+			jobHistory = new CachedJobHistory(portalUpstreamBranchName);
+		}
+
+		_jobHistories.put(portalUpstreamBranchName, jobHistory);
+
+		return jobHistory;
 	}
 
 	public static TestClassHistory newTestClassHistory(

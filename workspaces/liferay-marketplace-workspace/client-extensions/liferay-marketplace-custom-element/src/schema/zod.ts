@@ -211,8 +211,8 @@ const zodSchema = {
 		duration: z.coerce
 			.number()
 			.int()
-			.min(1, 'Please enter a valid number (1-60)')
-			.max(60, 'Please enter a valid number (1-60)'),
+			.min(1, 'Please enter a valid number (1-90)')
+			.max(90, 'Please enter a valid number (1-90)'),
 		reason: z.string().min(3),
 	}),
 	generateLicenseKey: z.object({
@@ -315,8 +315,8 @@ const zodSchema = {
 		duration: z.coerce
 			.number()
 			.int()
-			.min(1, 'Please enter a valid number (1-60)')
-			.max(60, 'Please enter a valid number (1-60)'),
+			.min(1, 'Please enter a valid number (1-90)')
+			.max(90, 'Please enter a valid number (1-90)'),
 		emailAddress: z
 			.array(
 				z.object({

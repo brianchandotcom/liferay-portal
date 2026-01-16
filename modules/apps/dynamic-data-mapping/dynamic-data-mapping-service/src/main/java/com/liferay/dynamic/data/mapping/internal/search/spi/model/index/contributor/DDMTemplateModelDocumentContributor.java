@@ -48,7 +48,7 @@ public class DDMTemplateModelDocumentContributor
 			"resourceClassNameId", ddmTemplate.getResourceClassNameId());
 
 		try {
-			Integer status = _getTemplateVersionStatus(ddmTemplate);
+			Integer status = _getStatus(ddmTemplate);
 
 			if (status != null) {
 				document.addKeyword(Field.STATUS, status);
@@ -101,15 +101,12 @@ public class DDMTemplateModelDocumentContributor
 	@Reference
 	protected DDMTemplateVersionLocalService ddmTemplateVersionLocalService;
 
-	private Integer _getTemplateVersionStatus(DDMTemplate ddmTemplate)
-		throws PortalException {
-
-		Map<Long, Integer> templateVersionStatusMap =
+	private Integer _getStatus(DDMTemplate ddmTemplate) throws PortalException {
+		Map<Long, Integer> statuses =
 			ReindexCacheThreadLocal.getGlobalReindexCache(
 				() -> -1, DDMTemplateModelDocumentContributor.class.getName(),
 				count -> {
-					Map<Long, Integer> localTemplateVersionStatusMap =
-						new HashMap<>();
+					Map<Long, Integer> localStatuses = new HashMap<>();
 
 					for (Object[] values :
 							ddmTemplateVersionLocalService.
@@ -135,14 +132,13 @@ public class DDMTemplateModelDocumentContributor
 									),
 									false)) {
 
-						localTemplateVersionStatusMap.put(
-							(Long)values[0], (Integer)values[1]);
+						localStatuses.put((Long)values[0], (Integer)values[1]);
 					}
 
-					return localTemplateVersionStatusMap;
+					return localStatuses;
 				});
 
-		if (templateVersionStatusMap == null) {
+		if (statuses == null) {
 			DDMTemplateVersion templateVersion =
 				ddmTemplateVersionLocalService.getTemplateVersion(
 					ddmTemplate.getTemplateId(), ddmTemplate.getVersion());
@@ -150,7 +146,7 @@ public class DDMTemplateModelDocumentContributor
 			return templateVersion.getStatus();
 		}
 
-		return templateVersionStatusMap.get(ddmTemplate.getTemplateId());
+		return statuses.get(ddmTemplate.getTemplateId());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

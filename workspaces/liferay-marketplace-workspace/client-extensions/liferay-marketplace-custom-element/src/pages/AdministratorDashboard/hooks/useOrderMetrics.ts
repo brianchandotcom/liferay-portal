@@ -7,9 +7,9 @@ import {addDays} from 'date-fns';
 import useSWR from 'swr';
 
 import SearchBuilder from '../../../core/SearchBuilder';
+import {OrderWorkflowStatusCode} from '../../../enums/Order';
 import GraphQL from '../../../services/rest/HeadlessGraphQL';
 import {getLastDayOfMonth} from '../../../utils/date';
-import {OrderWorkflowStatusCode} from '../../../enums/Order';
 
 export const METRIC_PARAMETER = {
 	month: 30,
@@ -153,7 +153,6 @@ const useOrderMetrics = (param: FilterType) => {
 			beforeLastPeriod: ordersCreateBetweenLastPeriod,
 			growth,
 			lastPeriod: ordersCreatedLastPeriod,
-			totalCount: orders,
 			totalAmount: (
 				ordersWithTotalAmount.data.metrics.totalAmount.items as Order[]
 			).reduce(
@@ -161,6 +160,7 @@ const useOrderMetrics = (param: FilterType) => {
 					previousItem + (currentItem.totalAmount ?? 0),
 				0
 			),
+			totalCount: orders,
 			...metrics,
 		};
 	});

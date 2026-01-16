@@ -6,6 +6,7 @@
 import ClayTable from '@clayui/table';
 import {useParams} from 'react-router-dom';
 
+import {PublisherPayoutStatus} from '.';
 import {DetailedCard} from '../../../../components/DetailedCard/DetailedCard';
 import {PageRenderer} from '../../../../components/Page';
 import QATable, {Orientation} from '../../../../components/QATable';
@@ -20,7 +21,6 @@ import DetailsHeader from '../../components/DetailsHeader/DetailsHeader';
 import PaymentStatus from '../../components/PaymentStatus/PaymentStatus';
 import {formatCurrency, getTotalByOrderKey} from '../../util/finance';
 import {formatDate, textWrapper} from '../../util/util';
-import {PublisherPayoutStatus} from '.';
 
 enum Payouts {
 	MP_COMMISSION = 0.2,

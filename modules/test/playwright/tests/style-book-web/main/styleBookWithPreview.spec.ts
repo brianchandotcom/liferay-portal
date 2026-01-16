@@ -9,6 +9,7 @@ import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {masterPagesPagesTest} from '../../../fixtures/masterPagesPagesTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
 import {styleBookPageTest} from '../../../fixtures/styleBookPageTest';
@@ -24,7 +25,8 @@ export const test = mergeTests(
 	}),
 	pageEditorPagesTest,
 	styleBookPageTest,
-	pagesAdminPagesTest
+	pagesAdminPagesTest,
+	masterPagesPagesTest
 );
 
 test(
@@ -234,6 +236,73 @@ test(
 			await styleBooksPage.goto('/global');
 
 			await styleBooksPage.delete(styleBookName);
+		});
+	}
+);
+
+test(
+	'The designer could preview the effects of styles on Master Page.',
+	{tag: '@LPS-137065'},
+	async ({masterPagesPage, page, pageEditorPage, site, styleBooksPage}) => {
+		const styleBookName = getRandomString();
+
+		const masterPageName = getRandomString();
+
+		await test.step('Create new Master Page with a Button fragment', async () => {
+			await masterPagesPage.goto(site.friendlyUrlPath);
+
+			await masterPagesPage.createNewMaster(masterPageName);
+
+			await masterPagesPage.editMaster(masterPageName);
+
+			await pageEditorPage.addFragment('Basic Components', 'Button');
+
+			await pageEditorPage.waitForChangesSaved();
+
+			await pageEditorPage.publishPage();
+		});
+
+		await test.step('Create a style book', async () => {
+			await styleBooksPage.goto(site.friendlyUrlPath);
+
+			await styleBooksPage.create(styleBookName);
+		});
+
+		await test.step('View the Masters is shown in preview type selector', async () => {
+			await expect(
+				page.getByRole('button', {name: 'Masters'})
+			).toBeVisible();
+			await expect(
+				page.getByRole('button', {name: masterPageName})
+			).toBeVisible();
+		});
+
+		await test.step('Define the background color for button primary', async () => {
+			await styleBooksPage.selectTokenCategory('Buttons');
+
+			await styleBooksPage.updateTokenInput(
+				'Background Color',
+				'#00FF00',
+				'Button Primary'
+			);
+
+			await styleBooksPage.waitForAutoSave();
+		});
+
+		await test.step('View the defined background color is applied on button primary fragment', async () => {
+			const firstButton = page
+				.frameLocator('iframe.style-book-editor__page-preview-frame')
+				.getByRole('link', {
+					name: 'Go Somewhere',
+				})
+				.first();
+
+			await firstButton.waitFor();
+
+			await expect(firstButton).toHaveCSS(
+				'background-color',
+				'rgb(0, 255, 0)'
+			);
 		});
 	}
 );

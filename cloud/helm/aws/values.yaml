@@ -40,7 +40,6 @@ liferay-default:
                           - -c
                           - |
                                 set -e
-                                echo "Cleaning-up old OpenSearch modules to prevent conflicts..."
                                 rm \
                                     -r \
                                     -f \
@@ -64,14 +63,12 @@ liferay-default:
                                         --retry-all-errors \
                                         --retry-delay 2 \
                                         "$URL" ; then
-                                            echo "Error: Failed to install OpenSearch modules." >&2
+                                            echo "Unable to download OpenSearch modules for Product Version ${PRODUCT_VERSION}." >&2
                                             exit 1
                                     fi
                                 }
 
-                                echo "Starting to install OpenSearch modules for Product Version ${PRODUCT_VERSION}..."
                                 main "$PRODUCT_VERSION"
-                                echo "OpenSearch modules installed successfully."
                       image: curlimages/curl:latest
                       name: liferay-install-opensearch-modules
                       volumeMounts:

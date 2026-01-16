@@ -13,6 +13,7 @@ components:
                 mapping:
                     DefaultPermissionBulkAction: "#/components/schemas/DefaultPermissionBulkAction"
                     DeleteBulkAction: "#/components/schemas/DeleteBulkAction"
+                    ExpireBulkAction: "#/components/schemas/ExpireBulkAction"
                     KeywordBulkAction: "#/components/schemas/KeywordBulkAction"
                     MoveBulkAction: "#/components/schemas/MoveBulkAction"
                     PermissionBulkAction: "#/components/schemas/PermissionBulkAction"
@@ -31,6 +32,7 @@ components:
                     enum:
                         -   DefaultPermissionBulkAction
                         -   DeleteBulkAction
+                        -   ExpireBulkAction
                         -   KeywordBulkAction
                         -   MoveBulkAction
                         -   PermissionBulkAction
@@ -100,6 +102,9 @@ components:
                     type: array
                 selectionScope:
                     $ref: "#/components/schemas/SelectionScope"
+        ExpireBulkAction:
+            allOf:
+                -   $ref: "#/components/schemas/BulkAction"
         GenericError:
             description:
                 https://www.schema.org/GenericError

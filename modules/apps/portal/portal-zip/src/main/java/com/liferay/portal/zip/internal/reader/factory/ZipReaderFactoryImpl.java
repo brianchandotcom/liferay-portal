@@ -5,7 +5,8 @@
 
 package com.liferay.portal.zip.internal.reader.factory;
 
-import com.liferay.portal.kernel.util.PropsValues;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.portal.zip.internal.reader.NioZipReaderImpl;
@@ -25,7 +26,9 @@ public class ZipReaderFactoryImpl implements ZipReaderFactory {
 
 	@Override
 	public ZipReader getZipReader(File file) {
-		if (PropsValues.ZIP_FILE_READER_NIO_ENABLED) {
+		if (FeatureFlagManagerUtil.isEnabled(
+				CompanyThreadLocal.getCompanyId(), "LPD-75525")) {
+
 			return new NioZipReaderImpl(file);
 		}
 
@@ -34,7 +37,9 @@ public class ZipReaderFactoryImpl implements ZipReaderFactory {
 
 	@Override
 	public ZipReader getZipReader(InputStream inputStream) throws IOException {
-		if (PropsValues.ZIP_FILE_READER_NIO_ENABLED) {
+		if (FeatureFlagManagerUtil.isEnabled(
+				CompanyThreadLocal.getCompanyId(), "LPD-75525")) {
+
 			return new NioZipReaderImpl(inputStream);
 		}
 

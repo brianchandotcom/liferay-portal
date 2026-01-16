@@ -14,6 +14,8 @@ import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.ShippingAddress;
 import com.liferay.marketplace.util.MarketplaceUtil;
 
+import java.time.Instant;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.Date;
@@ -131,6 +133,28 @@ public class SalesforceOpportunity {
 		);
 	}
 
+	private Date _getOrderPurchaseEndDate(
+		String licenseType, String licenseUsageType) {
+
+		ZonedDateTime zonedDateTime = ZonedDateTime.now();
+
+		if (Objects.equals(licenseType, "Subscription")) {
+			Instant instant = zonedDateTime.plusYears(
+				1
+			).toInstant();
+
+			return Date.from(instant);
+		}
+		else if (Objects.equals(licenseUsageType, "trial")) {
+			return Date.from(
+				zonedDateTime.plusMonths(
+					1
+				).toInstant());
+		}
+
+		return null;
+	}
+
 	private JSONObject _getPrimaryContactJSONObject() {
 		return new JSONObject(
 		).put(
@@ -153,7 +177,7 @@ public class SalesforceOpportunity {
 		).put(
 			"productEndDate",
 			_format(
-				MarketplaceUtil.getOrderPurchaseEndDate(
+				_getOrderPurchaseEndDate(
 					_licenseType,
 					MarketplaceUtil.getSkuOptionValue(
 						"license-usage-type", _orderItem.getOptions())))

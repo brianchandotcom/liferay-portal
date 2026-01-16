@@ -1,0 +1,41 @@
+<FragmentEntryLink>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>0</__mvccVersion>
+  <__ctCollectionId>0</__ctCollectionId>
+  <__uuid>ab147571-2842-d0c9-0af5-85b591c7325a</__uuid>
+  <__externalReferenceCode>ab147571-2842-d0c9-0af5-85b591c7325a</__externalReferenceCode>
+  <__fragmentEntryLinkId>34687</__fragmentEntryLinkId>
+  <__groupId>34656</__groupId>
+  <__companyId>52114503868644</__companyId>
+  <__userId>20131</__userId>
+  <__userName>Test Test</__userName>
+  <__createDate class="sql-timestamp">2026-01-16 11:57:39.103</__createDate>
+  <__modifiedDate class="sql-timestamp">2026-01-16 11:57:38.969</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__originalFragmentEntryLinkERC></__originalFragmentEntryLinkERC>
+  <__fragmentEntryERC></__fragmentEntryERC>
+  <__fragmentEntryScopeERC></__fragmentEntryScopeERC>
+  <__segmentsExperienceId>34660</__segmentsExperienceId>
+  <__classNameId>20033</__classNameId>
+  <__classPK>24</__classPK>
+  <__plid>24</__plid>
+  <__css>.component-paragraph img {
+	max-width: 100%;
+}</__css>
+  <__html>&lt;div class=&quot;clearfix component-paragraph text-break&quot; data-lfr-editable-id=&quot;element-text&quot; data-lfr-editable-type=&quot;rich-text&quot;&gt;
+	A paragraph is a self-contained unit of a discourse in writing dealing with
+	a particular point or idea. Paragraphs are usually an expected part of
+	formal writing, used to organize longer prose.
+&lt;/div&gt;</__html>
+  <__js></__js>
+  <__configuration></__configuration>
+  <__deleted>false</__deleted>
+  <__editableValues>{&quot;com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor&quot;:{&quot;element-text&quot;:{&quot;sv_SE&quot;:&quot;Granska den angivna URL-adressen och försök att uppdatera sidan. Problemet kan vara tillfälligt.&quot;,&quot;defaultValue&quot;:&quot;\n\tA paragraph is a self-contained unit of a discourse in writing dealing with\n\ta particular point or idea. Paragraphs are usually an expected part of\n\tformal writing, used to organize longer prose.\n\n&quot;,&quot;pt_BR&quot;:&quot;Revise o endereço de URL digitado e tente atualizar a página. O problema pode ser temporário.&quot;,&quot;ja_JP&quot;:&quot;入力した URL アドレスを確認してからページを更新してみてください。この問題は一時的なものである可能性があります。&quot;,&quot;fr_FR&quot;:&quot;Vérifiez l&apos;URL saisie et essayez d&apos;actualiser la page. Le problème peut être temporaire.&quot;,&quot;hu_HU&quot;:&quot;Ellenőrizze a beírt URL-címet, és próbálja meg frissíteni az oldalt. Lehet, hogy a probléma csak átmeneti.&quot;,&quot;de_DE&quot;:&quot;Überprüfen Sie die eingegebene URL-Adresse und versuchen Sie, die Seite zu aktualisieren. Das Problem kann vorübergehender Natur sein.&quot;,&quot;ca_ES&quot;:&quot;Reviseu l&apos;adreça URL teclejada i intenteu actualitzar la pàgina. El problema pot ser temporal.&quot;,&quot;ar_SA&quot;:&quot;راجع عنوان URL المكتوب وجرب تحديث الصفحة. قد تكون المشكلة مؤقتة.&quot;,&quot;fi_FI&quot;:&quot;Tarkista kirjoitettu URL-osoite ja kokeile päivittää sivu. Ongelma saattaa olla tilapäinen.&quot;,&quot;en_US&quot;:&quot;Review the typed URL address and try to refresh the page. The problem may be temporary.&quot;,&quot;zh_CN&quot;:&quot;检查键入的 URL 地址并尝试刷新页面。问题可能是暂时的。&quot;,&quot;es_ES&quot;:&quot;Revise la dirección URL introducida e pruebe a actualizar la página. Es posible que el problema sea temporal.&quot;,&quot;config&quot;:{&quot;mapperType&quot;:&quot;link&quot;},&quot;nl_NL&quot;:&quot;Controleer de ingevoerde URL en probeer de pagina te vernieuwen. Misschien is het een tijdelijk probleem.&quot;}}}</__editableValues>
+  <__namespace>dwrc</__namespace>
+  <__position>1</__position>
+  <__rendererKey>BASIC_COMPONENT-paragraph</__rendererKey>
+  <__type>1</__type>
+  <__lastPropagationDate class="sql-timestamp">2026-01-16 11:57:39.103</__lastPropagationDate>
+  <__columnBitmask>0</__columnBitmask>
+</FragmentEntryLink>

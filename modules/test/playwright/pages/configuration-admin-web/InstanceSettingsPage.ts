@@ -28,20 +28,19 @@ export class InstanceSettingsPage {
 			.or(page.getByRole('button', {name: 'Update'}));
 	}
 
-	async goto(forceReload = true) {
-		if (await this.applicationsMenuPage.isApplicationsMenuButtonVisible()) {
-			await this.applicationsMenuPage.goToInstanceSettings(forceReload);
-		}
-		else {
-			if (forceReload) {
-				await this.page.reload();
-			}
-
+	async goto({
+		forceReload = true,
+		useProductMenu = false,
+	}: {forceReload?: boolean; useProductMenu?: boolean} = {}) {
+		if (useProductMenu) {
 			await this.productMenuPage.goToPortlet({
 				category: 'Configuration',
 				panel: 'Control Panel',
 				portlet: 'Instance Settings',
 			});
+		}
+		else {
+			await this.applicationsMenuPage.goToInstanceSettings(forceReload);
 		}
 	}
 
@@ -95,9 +94,10 @@ export class InstanceSettingsPage {
 		categoryKey: string,
 		configurationName: string,
 		forceReload = true,
-		sectionName?: string
+		sectionName?: string,
+		useProductMenu?: boolean
 	) {
-		await this.goto(forceReload);
+		await this.goto({forceReload, useProductMenu});
 
 		await this.page
 			.getByRole('link', {

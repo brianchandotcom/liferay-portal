@@ -763,15 +763,4 @@ export class ApplicationsMenuPage {
 		await this.controlPanelButton.click();
 		await this.virtualInstancesItem.click();
 	}
-
-	async isApplicationsMenuButtonVisible() {
-		const pattern = /Applications Menu/;
-
-		return (
-			(await this.page
-				.getByTitle(pattern)
-				.or(this.page.getByLabel(pattern))
-				.count()) > 0
-		);
-	}
 }

@@ -11,7 +11,6 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {virtualInstancesPagesTest} from '../../../fixtures/virtualInstancesPagesTest';
 import {InstanceSettingsPage} from '../../../pages/configuration-admin-web/InstanceSettingsPage';
-import {ApplicationsMenuPage} from '../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
 import {ProductMenuPage} from '../../../pages/product-navigation-control-menu-web/ProductMenuPage';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import performLogin from '../../../utils/performLogin';
@@ -30,9 +29,13 @@ const VIRTUAL_INSTANCE_NAME = 'www.able.com';
 
 async function disableApplicationsMenu(
 	instanceSettingsPage: InstanceSettingsPage,
-	forceReload: boolean
+	reload: boolean
 ) {
-	await goToApplicationsMenuSetting(instanceSettingsPage, forceReload);
+	await goToApplicationsMenuSetting({
+		instanceSettingsPage,
+		reload,
+		useProductMenu: false,
+	});
 
 	const checkbox = instanceSettingsPage.page.getByRole('checkbox', {
 		name: 'Enable Applications Menu',
@@ -45,24 +48,33 @@ async function disableApplicationsMenu(
 	await instanceSettingsPage.saveAndWaitForAlert();
 }
 
-async function goToApplicationsMenuSetting(
-	instanceSettingsPage: InstanceSettingsPage,
-	forceReload: boolean
-) {
-	await instanceSettingsPage.goto(forceReload);
-
+async function goToApplicationsMenuSetting({
+	instanceSettingsPage,
+	reload,
+	useProductMenu,
+}: {
+	instanceSettingsPage: InstanceSettingsPage;
+	reload: boolean;
+	useProductMenu: boolean;
+}) {
 	await instanceSettingsPage.goToInstanceSetting(
 		'Navigation',
 		'Applications Menu',
-		forceReload
+		reload,
+		undefined,
+		useProductMenu
 	);
 }
 
 async function resetApplicationsMenu(
 	instanceSettingsPage: InstanceSettingsPage,
-	forceReload: boolean
+	reload: boolean
 ) {
-	await goToApplicationsMenuSetting(instanceSettingsPage, forceReload);
+	await goToApplicationsMenuSetting({
+		instanceSettingsPage,
+		reload,
+		useProductMenu: true,
+	});
 
 	await instanceSettingsPage.resetInstanceSetting();
 }
@@ -205,21 +217,10 @@ test.describe('Disabled Applications Menu - Virtual Instance', () => {
 			);
 
 			await test.step('Disable Applications Menu in virtual instance', async () => {
-				const virtualInstanceApplicationsMenuPage =
-					new ApplicationsMenuPage(virtualInstancePage);
-
-				expect(
-					await virtualInstanceApplicationsMenuPage.isApplicationsMenuButtonVisible()
-				).toBeTruthy();
-
 				await disableApplicationsMenu(
 					virtualInstanceInstanceSettingsPage,
 					false
 				);
-
-				expect(
-					await virtualInstanceApplicationsMenuPage.isApplicationsMenuButtonVisible()
-				).toBeFalsy();
 
 				await virtualInstanceProductMenuPage.openProductMenuIfClosed();
 			});

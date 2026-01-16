@@ -67,10 +67,10 @@ public class BuildReportFactory {
 			batchName, buildReportJSONObject, topLevelBuildReport);
 	}
 
-	public static DownstreamResultsTopLevelBuildReport
-		newDownstreamResultsTopLevelBuildReport(TopLevelBuild topLevelBuild) {
+	public static TempTopLevelBuildReport newTempTopLevelBuildReport(
+		TopLevelBuild topLevelBuild) {
 
-		return new DownstreamResultsTopLevelBuildReport(topLevelBuild);
+		return new TempTopLevelBuildReport(topLevelBuild);
 	}
 
 	public static TopLevelBuildReport newTopLevelBuildReport(

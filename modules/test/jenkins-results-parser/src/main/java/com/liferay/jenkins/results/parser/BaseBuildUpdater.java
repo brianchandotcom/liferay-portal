@@ -155,16 +155,15 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 
 			BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
 
-			DownstreamResultsTopLevelBuildReport
-				downstreamResultsTopLevelBuildReport =
-					BuildReportFactory.newDownstreamResultsTopLevelBuildReport(
-						downstreamBuild.getTopLevelBuild());
+			TempTopLevelBuildReport tempTopLevelBuildReport =
+				BuildReportFactory.newTempTopLevelBuildReport(
+					downstreamBuild.getTopLevelBuild());
 
-			downstreamResultsTopLevelBuildReport.addDownstreamBuildReport(
+			tempTopLevelBuildReport.addDownstreamBuildReport(
 				BuildReportFactory.newDownstreamBuildReport(downstreamBuild));
 
 			TestrayImporter testrayImporter = new TestrayImporter(
-				buildDatabase, downstreamResultsTopLevelBuildReport);
+				buildDatabase, tempTopLevelBuildReport);
 
 			testrayImporter.recordAxisTestClassGroup(
 				downstreamBuild.getAxisTestClassGroup());

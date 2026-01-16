@@ -9,7 +9,6 @@ import com.liferay.jenkins.results.parser.BuildDatabase;
 import com.liferay.jenkins.results.parser.BuildReport;
 import com.liferay.jenkins.results.parser.ControllerBuildReport;
 import com.liferay.jenkins.results.parser.Dom4JUtil;
-import com.liferay.jenkins.results.parser.DownstreamResultsTopLevelBuildReport;
 import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
@@ -24,6 +23,7 @@ import com.liferay.jenkins.results.parser.PortalWorkspaceGitRepository;
 import com.liferay.jenkins.results.parser.PullRequest;
 import com.liferay.jenkins.results.parser.QAWebsitesGitRepositoryJob;
 import com.liferay.jenkins.results.parser.QAWebsitesWorkspaceGitRepository;
+import com.liferay.jenkins.results.parser.TempTopLevelBuildReport;
 import com.liferay.jenkins.results.parser.TestSuiteJob;
 import com.liferay.jenkins.results.parser.TopLevelBuildReport;
 import com.liferay.jenkins.results.parser.Workspace;
@@ -69,10 +69,9 @@ public class TestrayImporter {
 
 	public TestrayImporter(
 		BuildDatabase buildDatabase,
-		DownstreamResultsTopLevelBuildReport
-			downstreamResultsTopLevelBuildReport) {
+		TempTopLevelBuildReport tempTopLevelBuildReport) {
 
-		_topLevelBuildReport = downstreamResultsTopLevelBuildReport;
+		_topLevelBuildReport = tempTopLevelBuildReport;
 
 		_jobs = buildDatabase.getJobs();
 		_portalFixpackReleases = buildDatabase.getPortalFixpackReleases();

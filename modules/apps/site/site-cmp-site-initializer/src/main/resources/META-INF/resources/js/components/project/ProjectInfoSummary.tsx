@@ -6,10 +6,10 @@
 import Label from '@clayui/label';
 import React from 'react';
 
-import InfoSummary from '../../../common/components/InfoSummary';
-import StateSelector, {State} from '../../../common/components/StateSelector';
-import {patchProjectById} from '../../../utils/api';
-import {DISPLAY_TYPES} from '../../../utils/constants';
+import {patchProjectById} from '../../utils/api';
+import {DISPLAY_TYPES} from '../../utils/constants';
+import InfoSummary from '../InfoSummary';
+import StateSelector, {State} from '../StateSelector';
 import User, {UserProps} from './User';
 
 interface ProjectInfoSummaryProps {

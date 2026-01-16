@@ -179,10 +179,16 @@ public class ObjectDBResourceProvider implements DBResourceProvider {
 		throws PortalException {
 
 		try (Connection connection = DataAccess.getConnection()) {
+			DBInspector dbInspector = new DBInspector(connection);
+
+			boolean hasModifiableColumn = dbInspector.hasColumn(
+				"ObjectDefinition", "modifiable");
+
 			try (PreparedStatement preparedStatement =
 					connection.prepareStatement(
 						StringBundler.concat(
-							"select dbTableName, modifiable, ",
+							"select dbTableName, ",
+							hasModifiableColumn ? "modifiable, " : "system_, ",
 							"objectDefinitionId, pkObjectFieldDBColumnName, ",
 							"system_ from ObjectDefinition where companyId = ",
 							"? and status = ?"))) {
@@ -198,11 +204,18 @@ public class ObjectDBResourceProvider implements DBResourceProvider {
 						ObjectDefinition objectDefinition =
 							new ObjectDefinitionImpl() {
 								{
+									boolean modifiable = !resultSet.getBoolean(
+										"system_");
+
+									if (hasModifiableColumn) {
+										modifiable = resultSet.getBoolean(
+											"modifiable");
+									}
+
 									setCompanyId(companyId);
 									setDBTableName(
 										resultSet.getString("dbTableName"));
-									setModifiable(
-										resultSet.getBoolean("modifiable"));
+									setModifiable(modifiable);
 									setObjectDefinitionId(
 										resultSet.getLong(
 											"objectDefinitionId"));

@@ -1101,7 +1101,8 @@ public class ServicePreAction extends Action {
 		String doAsUserId = ParamUtil.getString(
 			httpServletRequest, "doAsUserId");
 
-		if (!Validator.isHex(doAsUserId) ||
+		if (!PropsValues.PORTAL_IMPERSONATION_ENABLE ||
+			!Validator.isHex(doAsUserId) ||
 			!ChecksumUtil.isValid(StringUtil.hexStringToBytes(doAsUserId))) {
 
 			doAsUserId = StringPool.BLANK;

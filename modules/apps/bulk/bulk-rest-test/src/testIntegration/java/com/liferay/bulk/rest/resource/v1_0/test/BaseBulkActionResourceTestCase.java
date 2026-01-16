@@ -17,6 +17,7 @@ import com.liferay.bulk.rest.client.dto.v1_0.BulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkActionTask;
 import com.liferay.bulk.rest.client.dto.v1_0.DefaultPermissionBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.DeleteBulkAction;
+import com.liferay.bulk.rest.client.dto.v1_0.ExpireBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.KeywordBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.MoveBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.PermissionBulkAction;
@@ -1331,6 +1332,13 @@ public abstract class BaseBulkActionResourceTestCase {
 				DeleteBulkAction bulkAction = new DeleteBulkAction();
 
 				bulkAction.setType(BulkAction.Type.create("DeleteBulkAction"));
+
+				return bulkAction;
+			},
+			() -> {
+				ExpireBulkAction bulkAction = new ExpireBulkAction();
+
+				bulkAction.setType(BulkAction.Type.create("ExpireBulkAction"));
 
 				return bulkAction;
 			},

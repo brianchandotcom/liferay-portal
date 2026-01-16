@@ -306,13 +306,12 @@ public class MarketplaceRestController extends BaseRestController {
 
 		String orderTypeExternalReferenceCode =
 			order.getOrderTypeExternalReferenceCode();
-
 		Map<String, String> productSpecificationsMap =
 			_marketplaceService.getProductSpecificationsMap(
 				_marketplaceService.getOrderProductId(order));
 
 		if (Objects.equals(orderTypeExternalReferenceCode, "ADDONS")) {
-			_setUpAddOns(jwt, productSpecificationsMap, order);
+			_setUpAddOns(jwt, order, productSpecificationsMap);
 
 			_marketplaceService.updateOrder(
 				null, order.getId(),
@@ -814,7 +813,7 @@ public class MarketplaceRestController extends BaseRestController {
 	}
 
 	private void _setUpAddOns(
-			Jwt jwt, Map<String, String> productSpecificationsMap, Order order)
+			Jwt jwt, Order order, Map<String, String> productSpecificationsMap)
 		throws Exception {
 
 		String solutionType = productSpecificationsMap.get("solution-type");

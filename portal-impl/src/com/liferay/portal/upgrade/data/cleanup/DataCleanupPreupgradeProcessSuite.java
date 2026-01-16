@@ -214,13 +214,13 @@ public class DataCleanupPreupgradeProcessSuite {
 			).put(
 				portalPreferencesDataCleanupPreupgradeProcess,
 				DataCleanupPreupgradeProcess.dependsOn(
-					layoutDataCleanupPreupgradeProcess)
-			).put(
-				portletPreferencesDataCleanupPreupgradeProcess,
-				DataCleanupPreupgradeProcess.dependsOn(
 					companyDataCleanupPreupgradeProcess,
 					groupDataCleanupPreupgradeProcess,
 					userDataCleanupPreupgradeProcess)
+			).put(
+				portletPreferencesDataCleanupPreupgradeProcess,
+				DataCleanupPreupgradeProcess.dependsOn(
+					layoutDataCleanupPreupgradeProcess)
 			).put(
 				quartzJobDetailsDataCleanupPreupgradeProcess,
 				DataCleanupPreupgradeProcess.dependsOn(

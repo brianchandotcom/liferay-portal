@@ -8,6 +8,7 @@ package com.liferay.portal.events.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.LifecycleAction;
@@ -326,6 +327,12 @@ public class ServicePreActionTest {
 		Assert.assertEquals(layout.getPlid(), plid);
 	}
 
+	@Test
+	public void testPortalImpersonationEnable() throws Exception {
+		_testPortalImpersonationEnable(true);
+		_testPortalImpersonationEnable(false);
+	}
+
 	private Layout _getLayout(Object layoutComposite) {
 		return ReflectionTestUtil.invoke(
 			layoutComposite, "getLayout", null, null);
@@ -462,6 +469,38 @@ public class ServicePreActionTest {
 			Assert.assertEquals(expectedMessage, throwable.getMessage());
 		}
 	}
+
+	private void _testPortalImpersonationEnable(boolean enabled)
+		throws Exception {
+
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"PORTAL_IMPERSONATION_ENABLE", enabled)) {
+
+			_mockHttpServletRequest.setParameter("doAsUserId", _DO_AS_USER_ID);
+
+			_servicePreAction.servicePre(
+				_mockHttpServletRequest, _mockHttpServletResponse, false);
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_mockHttpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			Assert.assertNotNull(themeDisplay);
+
+			if (enabled) {
+				Assert.assertEquals(
+					_DO_AS_USER_ID, themeDisplay.getDoAsUserId());
+			}
+			else {
+				Assert.assertEquals(
+					StringPool.BLANK, themeDisplay.getDoAsUserId());
+			}
+		}
+	}
+
+	private static final String _DO_AS_USER_ID =
+		"41b432f1b2872de6d1d7488d511e5da2b1";
 
 	private static Company _company;
 	private static SafeCloseable _safeCloseable;

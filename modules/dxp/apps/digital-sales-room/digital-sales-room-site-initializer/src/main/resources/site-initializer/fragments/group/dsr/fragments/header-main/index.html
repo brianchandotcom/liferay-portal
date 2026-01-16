@@ -42,11 +42,9 @@
 								.dsr-primary-logo .dsr-logo {
 									background-image: url(${response.clientLogo.fileURL})
 								}
-							[/@]
-						[#else]
-							[@liferay_aui.style]
-								.dsr-primary-logo .dsr-logo {
-									background-image: url([resources:logo1.png])
+
+								.dsr-primary-logo .dsr-logo-name {
+									display: none;
 								}
 							[/@]
 						[/#if]
@@ -64,7 +62,13 @@
 
 						<div class="dsr-container-logo dsr-primary-logo">
 							<div class="dsr-logo-background"></div>
-							<div class="dsr-logo"></div>
+							<div class="dsr-logo">
+								[#if response?has_content && response.clientName?has_content]
+									<div class="dsr-logo-name">
+										${response.clientName?substring(0,1)}
+									</div>
+								[/#if]
+							</div>
 						</div>
 					</div>
 				</div>

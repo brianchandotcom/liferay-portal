@@ -46,11 +46,13 @@
 }
 
 .dsr-logo {
+	background-color: #4D20EC;
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: 100% auto;
 	border-radius: 50%;
 	height: 80px;
+	position: relative;
 	width: 80px;
 	z-index: 2;
 }
@@ -61,4 +63,18 @@
 	height: 50%;
 	position: absolute;
 	width: 100%;
+}
+
+.dsr-logo-name {
+    bottom: 0;
+    color: var(--white, #FFF);
+    font-size: 3rem;
+    font-weight: bold;
+    left: 0;
+    line-height: 80px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    text-transform: capitalize;
+    top: 0;
 }

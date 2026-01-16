@@ -10,6 +10,7 @@
 				"pageElements": [
 					{
 						"definition": {
+							"customCSS": ".[$FRAGMENT_CLASS$] {\n  background-color:#FFF;\n}\n",
 							"fragment": {
 								"key": "header-user",
 								"siteKey": "[$GROUP_KEY$]"
@@ -48,7 +49,7 @@
 					},
 					{
 						"definition": {
-							"customCSS": ".[$FRAGMENT_CLASS$] {\n .nav-item {\n border-bottom: 0.25rem solid transparent;\n margin-right: 1rem;\n}\n.nav-item.selected.active {\n border-color: var(--primary, #0b5fff);\n}\n}",
+							"customCSS": ".[$FRAGMENT_CLASS$] {\n  background-color:#FFF;\n}\n\n.[$FRAGMENT_CLASS$] {\n .nav-item {\n border-bottom: 0.25rem solid transparent;\n margin-right: 1rem;\n}\n.nav-item.selected.active {\n border-color: var(--primary, #0b5fff);\n}\n}",
 							"fragment": {
 								"key": "com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentRenderer"
 							},

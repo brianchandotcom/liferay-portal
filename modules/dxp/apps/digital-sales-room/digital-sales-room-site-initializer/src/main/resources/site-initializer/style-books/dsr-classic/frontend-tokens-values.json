@@ -1,2 +1,6 @@
 {
+	"bodyBgColor": {
+		"cssVariableMapping": "body-bg",
+		"value": "#F1F2F5"
+	}
 }

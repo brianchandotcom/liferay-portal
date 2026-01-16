@@ -87,10 +87,11 @@ public class KoroneikiHttpUtil {
 		throws Exception {
 
 		HttpInvoker.HttpResponse httpResponse =
-			_contactRoleResource.getContactRoleHttpResponse(
-				HttpComponentsUtil.encodePath(type.toString()),
-				HttpComponentsUtil.encodePath(
-					KoroneikiConstants.translateContactRoleName(name)));
+			_contactRoleResource.
+				getContactRoleByTypeContactRoleTypeByNameContactRoleNameHttpResponse(
+					HttpComponentsUtil.encodePath(type.toString()),
+					HttpComponentsUtil.encodePath(
+						KoroneikiConstants.translateContactRoleName(name)));
 
 		if (httpResponse.getStatusCode() == HttpServletResponse.SC_OK) {
 			return ContactRoleSerDes.toDTO(httpResponse.getContent());

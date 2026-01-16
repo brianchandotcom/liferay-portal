@@ -238,15 +238,14 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 				setCss(fragmentEntryLink::getCss);
 				setCssClasses(
 					() -> {
-						if (SetUtil.isEmpty(
-								fragmentStyledLayoutStructureItem.
-									getCssClasses())) {
+						Set<String> cssClasses =
+							fragmentStyledLayoutStructureItem.getCssClasses();
 
+						if (SetUtil.isEmpty(cssClasses)) {
 							return null;
 						}
 
-						return ArrayUtil.toStringArray(
-							fragmentStyledLayoutStructureItem.getCssClasses());
+						return ArrayUtil.toStringArray(cssClasses);
 					});
 				setDatePropagated(fragmentEntryLink::getLastPropagationDate);
 				setDraftFragmentInstanceExternalReferenceCode(

@@ -65,7 +65,9 @@ const mockState = {
 			hasLockedSegmentsExperiment: false,
 			name: 'Default Experience',
 			priority: -1,
-			segmentsEntryId: 'test-segment-id-00',
+			segmentsEntryERC: 'default-segment-erc',
+			segmentsEntryId: 'test-segment-id-01',
+			segmentsEntryScopeERC: '',
 			segmentsExperienceId: '0',
 			segmentsExperimentStatus: undefined,
 			segmentsExperimentURL: 'https//:default-experience.com',
@@ -75,7 +77,9 @@ const mockState = {
 			languageIds: ['en_US', 'es_ES'],
 			name: 'Experience #1',
 			priority: 3,
-			segmentsEntryId: 'test-segment-id-00',
+			segmentsEntryERC: 'segment-erc-01',
+			segmentsEntryId: 'test-segment-id-01',
+			segmentsEntryScopeERC: '',
 			segmentsExperienceId: 'test-experience-id-01',
 			segmentsExperimentStatus: undefined,
 			segmentsExperimentURL: 'https//:experience-1.com',
@@ -85,7 +89,9 @@ const mockState = {
 			languageIds: ['en_US', 'es_ES', 'ar_SA'],
 			name: 'Experience #2',
 			priority: 1,
-			segmentsEntryId: 'test-segment-id-01',
+			segmentsEntryERC: 'segment-erc-02',
+			segmentsEntryId: 'test-segment-id-02',
+			segmentsEntryScopeERC: 'GLOBAL-SCOPE',
 			segmentsExperienceId: 'test-experience-id-02',
 			segmentsExperimentStatus: undefined,
 			segmentsExperimentURL: 'https//:experience-2.com',
@@ -126,15 +132,26 @@ const mockConfig = {
 	},
 	availableSegmentsEntries: {
 		'test-segment-id-00': {
-			name: 'A segment 0',
+			name: 'Default Segment Name',
+			segmentsEntryERC: 'default-segment-erc',
 			segmentsEntryId: 'test-segment-id-00',
+			segmentsEntryScopeERC: '',
 		},
 		'test-segment-id-01': {
 			name: 'A segment 1',
+			segmentsEntryERC: 'segment-erc-01',
 			segmentsEntryId: 'test-segment-id-01',
+			segmentsEntryScopeERC: '',
+		},
+		'test-segment-id-02': {
+			name: 'A segment 2',
+			segmentsEntryERC: 'segment-erc-02',
+			segmentsEntryId: 'test-segment-id-02',
+			segmentsEntryScopeERC: 'GLOBAL-SCOPE',
 		},
 	},
 	classPK: 'test-classPK',
+	defaultSegmentsEntryId: '0',
 	defaultSegmentsExperienceId: '0',
 	deleteSegmentsExperienceURL: MOCK_DELETE_URL,
 	duplicateSegmentsExperienceURL: MOCK_DUPLICATE_URL,
@@ -296,7 +313,9 @@ describe('ExperienceToolbarSection', () => {
 					hasLockedSegmentsExperiment: true,
 					name: 'Experience #3',
 					priority: 5,
-					segmentsEntryId: 'test-segment-id-00',
+					segmentsEntryERC: 'segment-erc-01',
+					segmentsEntryId: 'test-segment-id-01',
+					segmentsEntryScopeERC: '',
 					segmentsExperienceId: 'test-experience-id-03',
 					segmentsExperimentStatus: {
 						label: 'running',
@@ -552,7 +571,7 @@ describe('ExperienceToolbarSection', () => {
 
 		await userEvent.type(nameInput, 'New Experience #1');
 
-		await userEvent.selectOptions(audienceInput, 'A segment 0');
+		await userEvent.selectOptions(audienceInput, 'A segment 1');
 
 		// Grab parentElement here to work around jsdom v13 issue.
 		// "TypeError: Cannot read property '_defaultView' of undefined"
@@ -571,7 +590,8 @@ describe('ExperienceToolbarSection', () => {
 				expect.objectContaining({
 					body: expect.objectContaining({
 						name: 'New Experience #1',
-						segmentsEntryId: 'test-segment-id-00',
+						segmentsEntryERC: 'segment-erc-01',
+						segmentsEntryScopeERC: '',
 					}),
 				})
 			)
@@ -646,14 +666,14 @@ describe('ExperienceToolbarSection', () => {
 		const segmentSelect = getByLabelText('audience');
 
 		expect(nameInput.value).toBe('Experience #1');
-		expect(segmentSelect.value).toBe('test-segment-id-00');
+		expect(segmentSelect.value).toBe('test-segment-id-01');
 
 		await userEvent.clear(nameInput);
 		await userEvent.type(nameInput, 'New Experience #1');
-		await userEvent.selectOptions(segmentSelect, 'A segment 0');
+		await userEvent.selectOptions(segmentSelect, 'A segment 1');
 
 		expect(nameInput.value).toBe('New Experience #1');
-		expect(segmentSelect.value).toBe('test-segment-id-00');
+		expect(segmentSelect.value).toBe('test-segment-id-01');
 
 		// Grab parentElement here to work around jsdom v13 issue.
 		// "TypeError: Cannot read property '_defaultView' of undefined"
@@ -667,7 +687,8 @@ describe('ExperienceToolbarSection', () => {
 			expect.objectContaining({
 				body: expect.objectContaining({
 					name: 'New Experience #1',
-					segmentsEntryId: 'test-segment-id-00',
+					segmentsEntryERC: 'segment-erc-01',
+					segmentsEntryScopeERC: '',
 					segmentsExperienceId: 'test-experience-id-01',
 				}),
 			})
@@ -932,5 +953,98 @@ describe('ExperienceToolbarSection', () => {
 		await waitForElementToBeRemoved(dropdownElement2, {timeout: 2000});
 
 		expect(dropdownElement2).not.toBeInTheDocument();
+	});
+
+	it('allows the user to rename an orphaned experience (id -1) while preserving original ERCs', async () => {
+		serviceFetch.mockImplementation((url, {body}) =>
+			Promise.resolve({
+				name: body.name,
+				segmentsEntryId: body.segmentsEntryId,
+			})
+		);
+
+		const mockDispatch = jest.fn((a) => {
+			if (typeof a === 'function') {
+				return a(mockDispatch, () => ({
+					loadedSegmentsExperiences: [],
+				}));
+			}
+		});
+
+		const missingSegmentsEntryId = '-1';
+		const orphanSegmentsERC = 'original-erc-123';
+		const orphanSegmentsScopeERC = 'original-scope-456';
+		const experienceName = 'Renamed Orphan Experience';
+		const experienceId = 'orphan-experience-id';
+
+		const mockStateWithOrphan = {
+			...mockState,
+			availableSegmentsExperiences: {
+				...mockState.availableSegmentsExperiences,
+				'orphan-experience-id': {
+					hasLockedSegmentsExperiment: false,
+					name: 'Orphan Experience',
+					priority: 4,
+					segmentsEntryERC: orphanSegmentsERC,
+					segmentsEntryId: missingSegmentsEntryId,
+					segmentsEntryScopeERC: orphanSegmentsScopeERC,
+					segmentsExperienceId: experienceId,
+				},
+			},
+		};
+
+		const {
+			findByLabelText,
+			findByRole,
+			getAllByRole,
+			getByLabelText,
+			getByText,
+		} = renderExperienceToolbarSection(
+			mockStateWithOrphan,
+			mockConfig,
+			mockDispatch
+		);
+
+		const dropDownButton = getByLabelText('experience', {exact: false});
+		await userEvent.click(dropDownButton);
+		await findByRole('list');
+
+		const experienceItems = getAllByRole('listitem');
+		const orphanItem = experienceItems.find((item) =>
+			item.textContent.includes('Orphan Experience')
+		);
+
+		await userEvent.click(within(orphanItem).getByTitle('edit-experience'));
+		await findByLabelText('name');
+
+		const nameInput = getByLabelText('name');
+		const segmentSelect = getByLabelText('audience');
+		const saveButton = getByText('save').parentElement;
+
+		expect(segmentSelect.value).toBe(missingSegmentsEntryId);
+		expect(segmentSelect.options[segmentSelect.selectedIndex].text).toBe(
+			'-- unknown --'
+		);
+
+		expect(saveButton).not.toBeDisabled();
+
+		await userEvent.clear(nameInput);
+		await userEvent.type(nameInput, experienceName);
+
+		await userEvent.click(saveButton);
+
+		await waitFor(() => expect(serviceFetch).toHaveBeenCalledTimes(1));
+
+		expect(serviceFetch).toHaveBeenCalledWith(
+			expect.stringContaining(MOCK_UPDATE_URL),
+			expect.objectContaining({
+				body: expect.objectContaining({
+					name: experienceName,
+					segmentsEntryERC: orphanSegmentsERC,
+					segmentsEntryScopeERC: orphanSegmentsScopeERC,
+					segmentsExperienceId: experienceId,
+				}),
+			})
+		);
 	});
 });

@@ -4,33 +4,34 @@
  */
 
 import Label from '@clayui/label';
+import {
+	Assignee,
+	AssigneeValue,
+} from '@liferay/object-dynamic-data-mapping-form-field-type';
 import React from 'react';
 
-import InfoSummary from '../../../common/components/InfoSummary';
-import StateSelector, {State} from '../../../common/components/StateSelector';
-import {patchProjectById} from '../../../utils/api';
-import {DISPLAY_TYPES} from '../../../utils/constants';
-import User, {UserProps} from './User';
+import {patchTaskById} from '../../utils/api';
+import {DISPLAY_TYPES} from '../../utils/constants';
+import InfoSummary from '../InfoSummary';
+import StateSelector, {State} from '../StateSelector';
 
-interface ProjectInfoSummaryProps {
+interface TaskInfoSummaryProps {
+	assignTo: AssigneeValue;
 	dueDate: string;
 	initialState: string;
-	manager: UserProps;
-	projectId: string;
-	sponsor: UserProps;
 	states: State[];
 	tags: string[];
+	taskId: string;
 }
 
-export default function ProjectInfoSummary({
+export default function TaskInfoSummary({
+	assignTo,
 	dueDate,
 	initialState,
-	manager,
-	projectId,
-	sponsor,
 	states,
 	tags,
-}: ProjectInfoSummaryProps) {
+	taskId,
+}: TaskInfoSummaryProps) {
 	return (
 		<InfoSummary
 			defaultOpen={true}
@@ -41,17 +42,36 @@ export default function ProjectInfoSummary({
 						<StateSelector
 							initialSelectedKey={initialState}
 							onChange={async (key: string) => {
-								await patchProjectById({
+								await patchTaskById({
 									body: {state: key},
-									projectId,
+									taskId,
 								});
 							}}
 							states={states}
 						/>
 					),
 				},
-				{label: 'Manager', value: <User {...manager} />},
-				{label: 'Sponsor', value: <User {...sponsor} />},
+				{
+					label: 'Assignee',
+					value: (
+						<Assignee
+							name="assignee"
+							onChange={async (value: any) => {
+								await patchTaskById({
+									body: {assignTo: value},
+									taskId,
+								});
+							}}
+							searchURL={
+								Liferay.ThemeDisplay.getPortalURL() +
+								'/o/cmp/assignee-context/'
+							}
+							showLabel={false}
+							value={assignTo}
+							visible={true}
+						/>
+					),
+				},
 				{label: 'Due Date', value: dueDate},
 				{
 					label: 'Tags',

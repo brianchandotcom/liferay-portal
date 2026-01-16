@@ -56,14 +56,15 @@ public class AIHubRequestAuthVerifier implements AuthVerifier {
 
 			long userId = JWTTokenUtil.getUserId(token);
 
-			if (userId != 0) {
-				authVerifierResult.setState(AuthVerifierResult.State.SUCCESS);
-				authVerifierResult.setUserId(userId);
-			}
-			else {
+			if (userId == 0) {
 				authVerifierResult.setState(
 					AuthVerifierResult.State.INVALID_CREDENTIALS);
+
+				return authVerifierResult;
 			}
+
+			authVerifierResult.setState(AuthVerifierResult.State.SUCCESS);
+			authVerifierResult.setUserId(userId);
 
 			return authVerifierResult;
 		}

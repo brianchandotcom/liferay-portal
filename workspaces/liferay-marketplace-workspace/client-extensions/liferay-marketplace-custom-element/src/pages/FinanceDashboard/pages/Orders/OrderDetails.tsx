@@ -5,25 +5,25 @@
 
 import {useParams} from 'react-router-dom';
 
-import {DetailedCard} from '../../../../../components/DetailedCard/DetailedCard';
-import {PageRenderer} from '../../../../../components/Page';
-import QATable, {Orientation} from '../../../../../components/QATable';
-import Table from '../../../../../components/Table/Table';
-import {CurrencyAbbreviation} from '../../../../../enums/CurrencyAbbreviation';
+import {DetailedCard} from '../../../../components/DetailedCard/DetailedCard';
+import {PageRenderer} from '../../../../components/Page';
+import QATable, {Orientation} from '../../../../components/QATable';
+import Table from '../../../../components/Table/Table';
+import {CurrencyAbbreviation} from '../../../../enums/CurrencyAbbreviation';
 import {
 	OrderCustomFields,
 	PaymentStatus as PaymentStatusCode,
-} from '../../../../../enums/Order';
-import {ProductSpecificationKey} from '../../../../../enums/Product';
-import useAdminOrderProduct from '../../../../../hooks/useAdminOrderProduct';
-import i18n from '../../../../../i18n';
-import {Liferay} from '../../../../../liferay/liferay';
-import HeadlessCommerceAdminOrder from '../../../../../services/rest/HeadlessCommerceAdminOrder';
-import {safeJSONParse} from '../../../../../utils/util';
-import DetailsHeader from '../../../components/DetailsHeader/DetailsHeader';
-import PaymentStatus from '../../../components/PaymentStatus/PaymentStatus';
-import {formatCurrency} from '../../../util/finance';
-import {formatAddress, formatDate, textWrapper} from '../../../util/util';
+} from '../../../../enums/Order';
+import {ProductSpecificationKey} from '../../../../enums/Product';
+import useAdminOrderProduct from '../../../../hooks/useAdminOrderProduct';
+import i18n from '../../../../i18n';
+import {Liferay} from '../../../../liferay/liferay';
+import HeadlessCommerceAdminOrder from '../../../../services/rest/HeadlessCommerceAdminOrder';
+import {safeJSONParse} from '../../../../utils/util';
+import DetailsHeader from '../../components/DetailsHeader/DetailsHeader';
+import PaymentStatus from '../../components/PaymentStatus/PaymentStatus';
+import {formatCurrency} from '../../util/finance';
+import {formatAddress, formatDate, textWrapper} from '../../util/util';
 
 const OrderDetails = () => {
 	const {orderId} = useParams();
@@ -257,10 +257,6 @@ const OrderDetails = () => {
 									)?.value.en_US || ''
 								),
 							title: i18n.translate('publisher'),
-						},
-						{
-							key: 'quantity',
-							title: i18n.translate('quantity'),
 						},
 						{
 							key: 'finalPrice',

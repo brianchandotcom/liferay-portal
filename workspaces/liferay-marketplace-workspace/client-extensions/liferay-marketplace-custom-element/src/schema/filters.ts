@@ -15,7 +15,7 @@ import {
 } from '../enums/Order';
 import {ProductType, ProductWorkflowStatusCode} from '../enums/Product';
 import i18n from '../i18n';
-import {PublisherPayoutStatus} from '../pages/FinanceDashboard/pages/Payments/Payments';
+import {PublisherPayoutStatus} from '../pages/FinanceDashboard/pages/Payments';
 import {LIFERAY_VERSION_PICKLIST} from '../pages/PublisherDashboard/pages/NewAppFlow/constants';
 
 type AutoCompleteProps = {

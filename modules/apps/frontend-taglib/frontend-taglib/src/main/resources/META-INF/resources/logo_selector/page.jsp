@@ -12,6 +12,7 @@ String defaultLogoURL = (String)request.getAttribute("liferay-frontend:logo-sele
 String description = (String)request.getAttribute("liferay-frontend:logo-selector:description");
 boolean disabled = (boolean)request.getAttribute("liferay-frontend:logo-selector:disabled");
 String label = (String)request.getAttribute("liferay-frontend:logo-selector:label");
+String logoName = (String)request.getAttribute("liferay-frontend:logo-selector:logoName");
 String logoURL = (String)request.getAttribute("liferay-frontend:logo-selector:logoURL");
 String portletNamespace = (String)request.getAttribute("liferay-frontend:logo-selector:portletNamespace");
 String selectLogoURL = (String)request.getAttribute("liferay-frontend:logo-selector:selectLogoURL");
@@ -33,6 +34,8 @@ String selectLogoURL = (String)request.getAttribute("liferay-frontend:logo-selec
 				"disabled", disabled
 			).put(
 				"label", label
+			).put(
+				"logoName", logoName
 			).put(
 				"logoURL", logoURL
 			).put(

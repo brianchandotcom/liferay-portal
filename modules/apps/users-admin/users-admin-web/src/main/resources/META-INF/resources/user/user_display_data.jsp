@@ -87,6 +87,7 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 					currentLogoURL="<%= selUser.getPortraitURL(themeDisplay) %>"
 					defaultLogoURL="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), selUser.isMale(), 0, null) %>"
 					label='<%= LanguageUtil.get(request, "image") %>'
+					logoName='<%= LanguageUtil.get(request, "custom-image") %>'
 					preserveRatio="<%= true %>"
 					type="user_portrait"
 				/>
@@ -102,6 +103,7 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 			currentLogoURL='<%= themeDisplay.getPathImage() + "/user_portrait?img_id=0" %>'
 			defaultLogoURL='<%= themeDisplay.getPathImage() + "/user_portrait?img_id=0" %>'
 			label='<%= LanguageUtil.get(request, "image") %>'
+			logoName='<%= LanguageUtil.get(request, "custom-image") %>'
 			preserveRatio="<%= true %>"
 			type="user_portrait"
 		/>

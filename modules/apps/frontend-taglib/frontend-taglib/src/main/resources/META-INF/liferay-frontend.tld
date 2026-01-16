@@ -627,6 +627,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>logoName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>portletNamespace</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

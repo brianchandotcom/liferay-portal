@@ -67,12 +67,6 @@ public class BuildReportFactory {
 			batchName, buildReportJSONObject, topLevelBuildReport);
 	}
 
-	public static TempTopLevelBuildReport newTempTopLevelBuildReport(
-		TopLevelBuild topLevelBuild) {
-
-		return new TempTopLevelBuildReport(topLevelBuild);
-	}
-
 	public static TopLevelBuildReport newTopLevelBuildReport(
 		JSONObject buildReportJSONObject) {
 

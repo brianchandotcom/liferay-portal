@@ -62,9 +62,12 @@ public class CachedJobHistory extends BaseJobHistory {
 		}
 
 		for (int i = 0; i < batchesJSONArray.length(); i++) {
+			JSONObject batchJSONObject = batchesJSONArray.getJSONObject(i);
+
 			addBatchHistory(
 				HistoryFactory.newBatchHistory(
-					this, batchesJSONArray.getJSONObject(i)));
+					batchJSONObject.getString("batchName"), this,
+					batchesJSONArray.getJSONObject(i)));
 		}
 	}
 

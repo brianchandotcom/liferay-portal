@@ -574,14 +574,6 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		_resourcePermissionLocalService.setResourcePermissions(
-			TestPropsValues.getCompanyId(), _objectDefinition.getClassName(),
-			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
-			new String[] {ActionKeys.VIEW});
-
 		String sseEventSinkKey = SseEventSourceTestUtil.open(
 			List.of(countDownLatch1, countDownLatch2), lines,
 			"tasks/subscribe");
@@ -620,6 +612,15 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 
 				Assert.assertFalse(
 					response, response.contains("brazilian barbecue"));
+
+				Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+				_resourcePermissionLocalService.setResourcePermissions(
+					TestPropsValues.getCompanyId(),
+					_objectDefinition.getClassName(),
+					ResourceConstants.SCOPE_COMPANY,
+					String.valueOf(TestPropsValues.getCompanyId()),
+					role.getRoleId(), new String[] {ActionKeys.VIEW});
 
 				_userLocalService.addRoleUser(role.getRoleId(), userId);
 

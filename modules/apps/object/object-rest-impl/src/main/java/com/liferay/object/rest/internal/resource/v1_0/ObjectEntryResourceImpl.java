@@ -36,6 +36,7 @@ import com.liferay.object.tree.Tree;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.events.ThemeServicePreAction;
 import com.liferay.portal.kernel.exception.NoSuchModelException;

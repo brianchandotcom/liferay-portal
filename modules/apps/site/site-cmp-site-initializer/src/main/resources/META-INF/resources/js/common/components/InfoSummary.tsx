@@ -29,40 +29,44 @@ export default function InfoSummary({
 	const [isOpen, setIsOpen] = useState(defaultOpen);
 
 	return (
-		<div className="lfr-cmp__info-summary">
-			<div className="lfr-cmp__info-summary-header-container">
-				<span className="lfr-cmp__info-summary-header-content">
-					{title}
-				</span>
+		<div className="lfr-cmp__info-summary-container">
+			<div className="lfr-cmp__info-summary">
+				<div className="lfr-cmp__info-summary-header-container">
+					<span className="lfr-cmp__info-summary-header-content">
+						{title}
+					</span>
 
-				<ClayButtonWithIcon
-					displayType="unstyled"
-					onClick={() => setIsOpen((prev) => !prev)}
-					symbol={isOpen ? 'angle-down' : 'angle-right'}
-				/>
-			</div>
+					<ClayButtonWithIcon
+						displayType="unstyled"
+						onClick={() => setIsOpen((prev) => !prev)}
+						symbol={isOpen ? 'angle-down' : 'angle-right'}
+					/>
+				</div>
 
-			<div
-				className={classNames(
-					'lfr-cmp__info-summary-content-container',
-					{
-						'lfr-cmp__info-summary-content-container--hidden':
-							!isOpen,
-					}
-				)}
-			>
-				{items.map((item) => (
-					<div
-						className="lfr-cmp__info-summary-content-item"
-						key={item.label}
-					>
-						<span className="lfr-cmp__info-summary-content-label">
-							{item.label}{' '}
-						</span>
+				<div
+					className={classNames(
+						'lfr-cmp__info-summary-content-container',
+						{
+							'lfr-cmp__info-summary-content-container--hidden':
+								!isOpen,
+						}
+					)}
+				>
+					{items.map((item) => (
+						<div
+							className="lfr-cmp__info-summary-content-item"
+							key={item.label}
+						>
+							<span className="lfr-cmp__info-summary-content-label">
+								{item.label}{' '}
+							</span>
 
-						{item.value}
-					</div>
-				))}
+							<div className="lfr-cmp__info-summary-content-value">
+								{item.value}
+							</div>
+						</div>
+					))}
+				</div>
 			</div>
 		</div>
 	);

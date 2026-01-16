@@ -231,12 +231,20 @@ const ExperienceSelector = ({experiences, segments, selectedExperience}) => {
 
 	const onExperienceCreation = ({
 		name,
+		segmentsEntryERC,
 		segmentsEntryId,
+		segmentsEntryScopeERC,
 		segmentsExperienceId,
 	}) => {
 		if (segmentsExperienceId) {
 			return dispatch(
-				updateExperience({name, segmentsEntryId, segmentsExperienceId})
+				updateExperience({
+					name,
+					segmentsEntryERC,
+					segmentsEntryId,
+					segmentsEntryScopeERC,
+					segmentsExperienceId,
+				})
 			)
 				.then(() => {
 					if (isMounted()) {
@@ -266,7 +274,8 @@ const ExperienceSelector = ({experiences, segments, selectedExperience}) => {
 			return dispatch(
 				createExperience({
 					name,
-					segmentsEntryId,
+					segmentsEntryERC,
+					segmentsEntryScopeERC,
 				})
 			)
 				.then(() => {
@@ -301,14 +310,22 @@ const ExperienceSelector = ({experiences, segments, selectedExperience}) => {
 	};
 
 	const onEditExperience = (experienceData) => {
-		const {name, segmentsEntryId, segmentsExperienceId} = experienceData;
+		const {
+			name,
+			segmentsEntryERC,
+			segmentsEntryId,
+			segmentsEntryScopeERC,
+			segmentsExperienceId,
+		} = experienceData;
 
 		setOpenModal(true);
 		debouncedSetOpen(false);
 
 		setEditingExperience({
 			name,
+			segmentsEntryERC,
 			segmentsEntryId,
+			segmentsEntryScopeERC,
 			segmentsExperienceId,
 		});
 	};
@@ -511,6 +528,10 @@ const ExperienceSelector = ({experiences, segments, selectedExperience}) => {
 					onSubmit={onExperienceCreation}
 					segmentId={editingExperience.segmentsEntryId}
 					segments={segments}
+					segmentsEntryERC={editingExperience.segmentsEntryERC}
+					segmentsEntryScopeERC={
+						editingExperience.segmentsEntryScopeERC
+					}
 				/>
 			)}
 		</>

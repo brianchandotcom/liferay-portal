@@ -6,12 +6,17 @@
 import ExperienceService from '../../../app/services/ExperienceService';
 import createExperienceAction from '../actions/createExperience';
 
-export default function createExperience({name, segmentsEntryId}) {
+export default function createExperience({
+	name,
+	segmentsEntryERC,
+	segmentsEntryScopeERC,
+}) {
 	return (dispatch) => {
 		return ExperienceService.createExperience({
 			body: {
 				name,
-				segmentsEntryId,
+				segmentsEntryERC,
+				segmentsEntryScopeERC,
 			},
 			dispatch,
 		}).then(({fragmentEntryLinks, layoutData, segmentsExperience}) => {

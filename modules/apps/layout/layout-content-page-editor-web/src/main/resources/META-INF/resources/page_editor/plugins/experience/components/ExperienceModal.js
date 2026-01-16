@@ -15,6 +15,14 @@ import React, {useState} from 'react';
 
 import {config} from '../../../app/config/index';
 import Button from '../../../common/components/Button';
+import {SegmentType} from '../types';
+
+const SEGMENT_ENTRY_ID_MISSING = '-1';
+
+const EMPTY_OPTION = {
+	label: `-- ${Liferay.Language.get('unknown')} --`,
+	value: SEGMENT_ENTRY_ID_MISSING,
+};
 
 const ExperienceModal = ({
 	canUpdateSegments,
@@ -28,6 +36,8 @@ const ExperienceModal = ({
 	onSubmit,
 	segmentId,
 	segments = [],
+	segmentsEntryERC = '',
+	segmentsEntryScopeERC = '',
 }) => {
 	const [selectedSegmentId, setSelectedSegmentId] = useState(
 		segmentId !== undefined
@@ -48,20 +58,47 @@ const ExperienceModal = ({
 
 		if (!validName) {
 			setRequiredNameError(true);
-		}
-		else {
-			setLoading(true);
 
-			onSubmit({
-				name,
-				segmentsEntryId: selectedSegmentId,
-				segmentsExperienceId: experienceId,
-			}).finally(() => {
-				if (isMounted()) {
-					setLoading(false);
-				}
-			});
+			return;
 		}
+
+		setLoading(true);
+
+		const selectedSegment = segments.find(
+			(segmentsEntry) =>
+				String(segmentsEntry.segmentsEntryId) ===
+				String(selectedSegmentId)
+		);
+
+		let selectedSegmentsEntryERC = segmentsEntryERC;
+		let selectedSegmentsEntryScopeERC = segmentsEntryScopeERC;
+
+		if (selectedSegment) {
+			selectedSegmentsEntryERC = selectedSegment.segmentsEntryERC;
+
+			if (
+				String(selectedSegment.segmentsEntryGroupId) !==
+				String(themeDisplay.getScopeGroupId())
+			) {
+				selectedSegmentsEntryScopeERC =
+					selectedSegment.segmentsEntryScopeERC || '';
+			}
+			else {
+				selectedSegmentsEntryScopeERC = '';
+			}
+		}
+
+		onSubmit({
+			name,
+			segmentsEntryERC: selectedSegmentsEntryERC,
+			segmentsEntryId: selectedSegmentId,
+			segmentsEntryScopeERC: selectedSegmentsEntryScopeERC,
+			segmentsExperienceId: experienceId,
+		}).finally(() => {
+			if (isMounted()) {
+				setLoading(false);
+			}
+		});
 	};
 	const handleNameChange = (event) => {
 		const {value} = event.target;
@@ -84,7 +121,10 @@ const ExperienceModal = ({
 		onNewSegmentClick({
 			experienceId,
 			experienceName: name,
-			segmentId: selectedSegmentId,
+			segmentId:
+				selectedSegmentId === SEGMENT_ENTRY_ID_MISSING
+					? ''
+					: selectedSegmentId,
 		});
 	};
 
@@ -183,13 +223,24 @@ const ExperienceModal = ({
 								onChange={handleSegmentChange}
 								value={selectedSegmentId}
 							>
+								{selectedSegmentId ===
+									SEGMENT_ENTRY_ID_MISSING && (
+									<ClaySelect.Option
+										key={EMPTY_OPTION.value}
+										label={EMPTY_OPTION.label}
+										value={EMPTY_OPTION.value}
+									/>
+								)}
+
 								{segments.length ? (
 									segments.map((segment) => {
 										return (
 											<ClaySelect.Option
 												key={segment.segmentsEntryId}
 												label={segment.name}
-												value={segment.segmentsEntryId}
+												value={String(
+													segment.segmentsEntryId
+												)}
 											/>
 										);
 									})
@@ -256,7 +307,9 @@ ExperienceModal.propTypes = {
 	onNewSegmentClick: PropTypes.func.isRequired,
 	onSubmit: PropTypes.func.isRequired,
 	segmentId: PropTypes.string,
-	segments: PropTypes.array.isRequired,
+	segments: PropTypes.arrayOf(PropTypes.shape(SegmentType)).isRequired,
+	segmentsEntryERC: PropTypes.string,
+	segmentsEntryScopeERC: PropTypes.string,
 };
 
 function _getValidValue(value) {

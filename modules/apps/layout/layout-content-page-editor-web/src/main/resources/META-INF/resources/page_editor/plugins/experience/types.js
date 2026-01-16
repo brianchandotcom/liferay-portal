@@ -14,8 +14,10 @@ export const ExperienceType = {
 	hasLockedSegmentsExperiment: PropTypes.bool.isRequired,
 	name: PropTypes.string.isRequired,
 	priority: PropTypes.number.isRequired,
-	segmentsEntryId: PropTypes.string.isRequired,
+	segmentsEntryERC: PropTypes.string.isRequired,
+	segmentsEntryGroupId: PropTypes.string.isRequired,
 	segmentsEntryName: PropTypes.string,
+	segmentsEntryScopeERC: PropTypes.string,
 	segmentsExperienceId: PropTypes.string.isRequired,
 	segmentsExperimentStatus: PropTypes.shape(ExperimentStatusType),
 	segmentsExperimentURL: PropTypes.string,
@@ -23,5 +25,8 @@ export const ExperienceType = {
 
 export const SegmentType = {
 	name: PropTypes.string.isRequired,
+	segmentsEntryERC: PropTypes.string.isRequired,
+	segmentsEntryGroupId: PropTypes.string.isRequired,
 	segmentsEntryId: PropTypes.string.isRequired,
+	segmentsEntryScopeERC: PropTypes.string,
 };

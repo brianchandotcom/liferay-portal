@@ -8,7 +8,9 @@ import updateExperienceAction from '../actions/updateExperience';
 
 export default function updateExperience({
 	name,
+	segmentsEntryERC,
 	segmentsEntryId,
+	segmentsEntryScopeERC,
 	segmentsExperienceId,
 }) {
 	return (dispatch) => {
@@ -16,7 +18,8 @@ export default function updateExperience({
 			body: {
 				active: true,
 				name,
-				segmentsEntryId,
+				segmentsEntryERC,
+				segmentsEntryScopeERC,
 				segmentsExperienceId,
 			},
 			dispatch,

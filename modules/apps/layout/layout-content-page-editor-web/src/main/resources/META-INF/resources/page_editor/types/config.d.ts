@@ -33,7 +33,10 @@ export interface Config {
 	availableSegmentsEntries: {
 		[key: string]: {
 			name: string;
+			segmentsEntryERC: string;
+			segmentsEntryGroupId: string;
 			segmentsEntryId: string;
+			segmentsEntryScopeERC: string | null;
 		};
 	};
 

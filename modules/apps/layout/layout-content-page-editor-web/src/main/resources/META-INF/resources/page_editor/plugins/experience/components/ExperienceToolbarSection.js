@@ -25,10 +25,14 @@ function ExperienceToolbarSection() {
 			Object.values(availableSegmentsExperiences)
 				.sort((a, b) => b.priority - a.priority)
 				.map((experience, _, experiences) => {
-					const segmentsEntryName =
+					const segmentsEntry =
 						config.availableSegmentsEntries[
 							experience.segmentsEntryId
-						].name;
+						];
+
+					const segmentsEntryName = segmentsEntry
+						? segmentsEntry.name
+						: '';
 
 					const firstExperience = experiences.find(
 						(exp) =>
@@ -41,8 +45,9 @@ function ExperienceToolbarSection() {
 					return {
 						...experience,
 						active:
+							firstExperience &&
 							firstExperience.segmentsExperienceId ===
-							experience.segmentsExperienceId,
+								experience.segmentsExperienceId,
 						segmentsEntryName,
 					};
 				}),

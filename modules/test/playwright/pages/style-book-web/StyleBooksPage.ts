@@ -57,6 +57,7 @@ export class StyleBooksPage {
 		await this.page
 			.getByRole('button', {name: 'Fragments'})
 			.or(this.page.getByRole('button', {name: 'Pages'}))
+			.or(this.page.getByRole('button', {name: 'Page Templates'}))
 			.click();
 
 		await this.page.getByRole('menuitem', {name: 'Fragments'}).click();

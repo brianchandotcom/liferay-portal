@@ -89,6 +89,7 @@ import com.liferay.portal.upgrade.data.cleanup.DLFileEntryDataCleanupPreupgradeP
 import com.liferay.portal.upgrade.data.cleanup.DataCleanupPreupgradeProcessSuite;
 import com.liferay.portal.upgrade.data.cleanup.GroupDataCleanupPreupgradeProcess;
 import com.liferay.portal.upgrade.data.cleanup.JournalDataCleanupPreupgradeProcess;
+import com.liferay.portal.upgrade.data.cleanup.LayoutDataCleanupPreupgradeProcess;
 import com.liferay.portal.upgrade.data.cleanup.NullUnicodeContentDataCleanupPreupgradeProcess;
 import com.liferay.portal.upgrade.data.cleanup.PortalPreferencesDataCleanupPreupgradeProcess;
 import com.liferay.portal.upgrade.data.cleanup.QuartzJobDetailsDataCleanupPreupgradeProcess;
@@ -554,6 +555,9 @@ public class DataCleanupRegistrator {
 		).put(
 			JournalDataCleanupPreupgradeProcess.class,
 			"remove-journal-orphan-data"
+		).put(
+			LayoutDataCleanupPreupgradeProcess.class,
+			"remove-layout-orphan-data"
 		).put(
 			NullUnicodeContentDataCleanupPreupgradeProcess.class,
 			"remove-null-unicode-content-data"

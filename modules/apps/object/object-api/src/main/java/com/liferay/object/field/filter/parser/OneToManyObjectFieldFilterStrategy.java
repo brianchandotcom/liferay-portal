@@ -134,12 +134,12 @@ public class OneToManyObjectFieldFilterStrategy
 		}
 
 		if (_objectDefinition1.isUnmodifiableSystemObject()) {
-			for (int i = 0; i < jsonArray.length(); i++) {
-				PersistedModelLocalService persistedModelLocalService =
-					PersistedModelLocalServiceRegistryUtil.
-						getPersistedModelLocalService(
-							_objectDefinition1.getClassName());
+			PersistedModelLocalService persistedModelLocalService =
+				PersistedModelLocalServiceRegistryUtil.
+					getPersistedModelLocalService(
+						_objectDefinition1.getClassName());
 
+			for (int i = 0; i < jsonArray.length(); i++) {
 				PersistedModel persistedModel =
 					persistedModelLocalService.fetchPersistedModel(
 						GetterUtil.getLong(jsonArray.get(i)));

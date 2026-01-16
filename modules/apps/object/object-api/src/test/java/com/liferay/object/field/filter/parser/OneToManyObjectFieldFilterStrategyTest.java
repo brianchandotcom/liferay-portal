@@ -17,6 +17,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -142,44 +143,6 @@ public class OneToManyObjectFieldFilterStrategyTest {
 		long primaryKey1 = RandomTestUtil.randomLong();
 		long primaryKey2 = RandomTestUtil.randomLong();
 
-		JSONArray jsonArray = Mockito.mock(JSONArray.class);
-
-		Mockito.when(
-			jsonArray.length()
-		).thenReturn(
-			2
-		);
-
-		Mockito.when(
-			jsonArray.get(0)
-		).thenReturn(
-			primaryKey1
-		);
-
-		Mockito.when(
-			jsonArray.getLong(0)
-		).thenReturn(
-			primaryKey1
-		);
-
-		Mockito.when(
-			jsonArray.get(1)
-		).thenReturn(
-			primaryKey2
-		);
-
-		Mockito.when(
-			jsonArray.getLong(1)
-		).thenReturn(
-			primaryKey2
-		);
-
-		Mockito.when(
-			_objectDefinition.isUnmodifiableSystemObject()
-		).thenReturn(
-			true
-		);
-
 		Mockito.when(
 			_objectDefinition.getClassName()
 		).thenReturn(
@@ -192,18 +155,16 @@ public class OneToManyObjectFieldFilterStrategyTest {
 			objectDefinitionId
 		);
 
-		try (MockedStatic<PersistedModelLocalServiceRegistryUtil> mockedStatic =
-				Mockito.mockStatic(
-					PersistedModelLocalServiceRegistryUtil.class)) {
+		Mockito.when(
+			_objectDefinition.isUnmodifiableSystemObject()
+		).thenReturn(
+			true
+		);
 
-			mockedStatic.when(
-				() ->
-					PersistedModelLocalServiceRegistryUtil.
-						getPersistedModelLocalService(
-							_objectDefinition.getClassName())
-			).thenReturn(
-				_persistedModelLocalService
-			);
+		try (MockedStatic<PersistedModelLocalServiceRegistryUtil>
+				persistedModelLocalServiceRegistryUtilMockedStatic =
+					Mockito.mockStatic(
+						PersistedModelLocalServiceRegistryUtil.class)) {
 
 			Mockito.when(
 				_persistedModelLocalService.fetchPersistedModel(primaryKey1)
@@ -217,6 +178,15 @@ public class OneToManyObjectFieldFilterStrategyTest {
 				null
 			);
 
+			persistedModelLocalServiceRegistryUtilMockedStatic.when(
+				() ->
+					PersistedModelLocalServiceRegistryUtil.
+						getPersistedModelLocalService(
+							_objectDefinition.getClassName())
+			).thenReturn(
+				_persistedModelLocalService
+			);
+
 			String titleValue = RandomTestUtil.randomString();
 
 			Mockito.when(
@@ -225,6 +195,8 @@ public class OneToManyObjectFieldFilterStrategyTest {
 			).thenReturn(
 				titleValue
 			);
+
+			JSONArray jsonArray = JSONUtil.putAll(primaryKey1, primaryKey2);
 
 			OneToManyObjectFieldFilterStrategy
 				oneToManyObjectFieldFilterStrategy = Mockito.spy(

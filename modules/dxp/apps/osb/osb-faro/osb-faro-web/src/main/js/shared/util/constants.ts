@@ -151,11 +151,6 @@ export enum FieldTypes {
 	String = 'Text'
 }
 
-export enum SegmentActivationFrequencyTypes {
-	Batch = 'BATCH',
-	RealTime = 'REAL_TIME'
-}
-
 export enum GDPRRequestStatuses {
 	Completed = 'COMPLETED',
 	Error = 'ERROR',
@@ -246,6 +241,11 @@ export enum RangeKeyTimeRanges {
 }
 
 export enum SegmentActivationScheduleTypes {
+	Batch = 'BATCH',
+	RealTime = 'REAL_TIME'
+}
+
+export enum SegmentActivationFrequencyTypes {
 	Between = 'BETWEEN',
 	Indefinitely = 'INDEFINITELY'
 }

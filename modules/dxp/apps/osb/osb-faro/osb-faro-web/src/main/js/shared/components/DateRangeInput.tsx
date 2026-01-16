@@ -35,6 +35,7 @@ interface IDateInputProps {
 	displayFormat?: string;
 	format?: string;
 	groupId?: string;
+	limitEndDate?: boolean;
 	id?: string;
 	name?: string;
 	onBlur?: (event?: FocusEvent) => void;
@@ -50,6 +51,7 @@ const DateInput: React.FC<IDateInputProps> = ({
 	displayFormat,
 	format = DEFAULT_DATE_FORMAT,
 	groupId,
+	limitEndDate = true,
 	onBlur = noop,
 	onChange = noop,
 	showRetentionPeriod = true,
@@ -155,9 +157,12 @@ const DateInput: React.FC<IDateInputProps> = ({
 						/>
 					) : null
 				}
-				maxDate={formatDateWithTimezone(timeZoneId)
-					.clone()
-					.subtract(1, 'days')}
+				maxDate={
+					limitEndDate &&
+					formatDateWithTimezone(timeZoneId)
+						.clone()
+						.subtract(1, 'days')
+				}
 				maxRange={365}
 				minDate={
 					showRetentionPeriod

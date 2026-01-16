@@ -12,6 +12,8 @@ import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -37,6 +39,7 @@ import com.liferay.portal.search.test.util.IndexedFieldsFixture;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 import com.liferay.users.admin.test.util.search.GroupBlueprint;
 import com.liferay.users.admin.test.util.search.GroupSearchFixture;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
@@ -212,6 +215,9 @@ public class AssetCategoryIndexerIndexedFieldsTest {
 			"assetCategoryTitle_ja_JP",
 			StringUtil.lowerCase(assetCategory.getName())
 		).put(
+			"classNameIds",
+			StringUtil.merge(_getClassNameIds(assetCategory.getVocabularyId()))
+		).put(
 			"externalReferenceCode", assetCategory.getExternalReferenceCode()
 		).put(
 			"groupExternalReferenceCode", _group.getExternalReferenceCode()
@@ -244,6 +250,22 @@ public class AssetCategoryIndexerIndexedFieldsTest {
 		_populateTitles(assetCategory.getName(), map);
 
 		return map;
+	}
+
+	private long[] _getClassNameIds(long vocabularyId) {
+		try {
+			AssetVocabulary assetVocabulary =
+				assetVocabularyService.getVocabulary(vocabularyId);
+
+			AssetVocabularySettingsHelper assetVocabularySettingsHelper =
+				new AssetVocabularySettingsHelper(
+					assetVocabulary.getSettings());
+
+			return assetVocabularySettingsHelper.getClassNameIds();
+		}
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
+		}
 	}
 
 	private void _populateDates(

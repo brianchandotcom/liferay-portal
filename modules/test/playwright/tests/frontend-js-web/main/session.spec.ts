@@ -113,3 +113,11 @@ test(
 		});
 	}
 );
+
+test(
+	'Check session timeout banner is disabled when set to 0',
+	{tag: '@LPD-76518'},
+	async ({page}) => {
+		await expect(page.getByText('Due to inactivity')).toBeHidden();
+	}
+);

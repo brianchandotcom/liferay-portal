@@ -57,7 +57,7 @@ public class SalesforceOpportunity {
 		).put(
 			"billingAddress", _getBillingAddressJSONObject()
 		).put(
-			"closeDate", _formatDateToISOString(_order.getCreateDate())
+			"closeDate", _format(_order.getCreateDate())
 		).put(
 			"marketplaceDealId", _order.getId()
 		).put(
@@ -88,7 +88,7 @@ public class SalesforceOpportunity {
 		return jsonObject.toString();
 	}
 
-	private String _formatDateToISOString(Date date) {
+	private String _format(Date date) {
 		if (date == null) {
 			return null;
 		}
@@ -152,7 +152,7 @@ public class SalesforceOpportunity {
 			"orderType", "New"
 		).put(
 			"productEndDate",
-			_formatDateToISOString(
+			_format(
 				MarketplaceUtil.getOrderPurchaseEndDate(
 					_licenseType,
 					MarketplaceUtil.getSkuOptionValue(
@@ -162,7 +162,7 @@ public class SalesforceOpportunity {
 		).put(
 			"productName", MarketplaceUtil.getDefaultLocale(_product.getName())
 		).put(
-			"productStartDate", _formatDateToISOString(_order.getCreateDate())
+			"productStartDate", _format(_order.getCreateDate())
 		).put(
 			"quantity", _orderItem.getQuantity()
 		);

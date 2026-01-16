@@ -53,6 +53,7 @@ import java.io.Serializable;
 
 import java.math.BigDecimal;
 
+import java.sql.Timestamp;
 import java.sql.Types;
 
 import java.text.Format;
@@ -411,6 +412,27 @@ public class ObjectEntryModelDocumentContributor
 			if (fileEntryId != 0) {
 				_contributeFile(document, fileEntryId);
 			}
+		}
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				objectEntry.getCompanyId(), "LPD-58677")) {
+
+			if (values == null) {
+				values = objectEntry.getIndexedValues();
+			}
+
+			document.addDate("cmpDueDate", (Timestamp)values.get("dueDate"));
+			document.addKeyword(
+				"cmpProjectManagerUserId",
+				MapUtil.getLong(values, "r_userToCMPProjectManager_userId"));
+			document.addKeyword(
+				"cmpProjectSponsorUserId",
+				MapUtil.getLong(values, "r_userToCMPProjectSponsor_userId"));
+			document.addKeyword("cmpState", MapUtil.getString(values, "state"));
+			document.addKeyword(
+				"cmpTaskCMPProjectId",
+				MapUtil.getLong(
+					values, "r_cmpProjectToCMPTasks_c_cmpProjectId"));
 		}
 
 		if (FeatureFlagManagerUtil.isEnabled(

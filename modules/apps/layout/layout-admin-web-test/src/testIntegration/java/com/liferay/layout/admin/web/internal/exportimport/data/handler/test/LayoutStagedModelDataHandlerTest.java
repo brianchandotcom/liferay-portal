@@ -110,6 +110,8 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
@@ -144,6 +146,7 @@ import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.model.SegmentsExperience;
@@ -171,6 +174,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -192,7 +196,22 @@ public class LayoutStagedModelDataHandlerTest
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@After
+	public void tearDown() throws Exception {
+		stagingGroup = _groupLocalService.fetchGroup(stagingGroup.getGroupId());
+
+		if (stagingGroup != null) {
+			_groupLocalService.deleteGroup(stagingGroup.getGroupId());
+		}
+
+		GroupLocalServiceUtil.deleteGroup(liveGroup);
+
+		ServiceContextThreadLocal.popServiceContext();
+	}
 
 	@Test
 	public void testClientExtensionEntries() throws Exception {
@@ -410,7 +429,28 @@ public class LayoutStagedModelDataHandlerTest
 
 		Layout liveDraftLayout = liveLayout.fetchDraftLayout();
 
+		UnicodeProperties typeSettingsUnicodeProperties =
+			liveGroup.getTypeSettingsProperties();
+
+		typeSettingsUnicodeProperties.setProperty(
+			"staged", Boolean.TRUE.toString());
+
+		_groupLocalService.updateGroup(
+			liveGroup.getGroupId(), typeSettingsUnicodeProperties.toString());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				stagingGroup.getGroupId(), TestPropsValues.getUserId());
+
+		_stagingLocalService.disableStaging(liveGroup, serviceContext);
+
 		ContentLayoutTestUtil.publishLayout(liveDraftLayout, liveLayout);
+
+		_stagingLocalService.enableLocalStaging(
+			TestPropsValues.getUserId(), liveGroup, false, false,
+			serviceContext);
+
+		stagingGroup = liveGroup.getStagingGroup();
 
 		initExport();
 
@@ -703,6 +743,15 @@ public class LayoutStagedModelDataHandlerTest
 							StringPool.BLANK)),
 					"\" data-fileentryid=\"",
 					importedFileEntry.getFileEntryId(), "\"")));
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			liveGroup.getTypeSettingsProperties();
+
+		typeSettingsUnicodeProperties.setProperty(
+			"staged", Boolean.TRUE.toString());
+
+		_groupLocalService.updateGroup(
+			liveGroup.getGroupId(), typeSettingsUnicodeProperties.toString());
 
 		_stagingLocalService.disableStaging(liveGroup, serviceContext);
 
@@ -2650,6 +2699,9 @@ public class LayoutStagedModelDataHandlerTest
 
 	@Inject
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private InfoItemServiceRegistry _infoItemServiceRegistry;

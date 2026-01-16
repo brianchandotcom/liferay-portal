@@ -8,6 +8,7 @@ package com.liferay.site.cmp.site.initializer.internal.fragment.renderer.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -64,7 +65,7 @@ public class EditorToolbarComponentSectionFragmentRendererTest
 			PortalUtil.getClassNameId(projectObjectDefinition.getClassName()),
 			StringPool.SLASH, projectObjectEntry.getObjectEntryId());
 
-		Assert.assertEquals(viewProjectUrl, props.get("viewProjectURL"));
+		Assert.assertEquals(viewProjectUrl, props.get("formSubmitURL"));
 
 		ObjectDefinition taskObjectDefinition =
 			objectDefinitionLocalService.
@@ -76,21 +77,29 @@ public class EditorToolbarComponentSectionFragmentRendererTest
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
+		ObjectEntry taskObjectEntry = _objectEntryLocalService.addObjectEntry(
+			projectObjectEntry.getGroupId(), projectObjectEntry.getUserId(),
+			taskObjectDefinition.getObjectDefinitionId(), 0, null,
+			HashMapBuilder.<String, Serializable>put(
+				"r_cmpProjectToCMPTasks_c_cmpProjectId",
+				projectObjectEntry.getObjectEntryId()
+			).build(),
+			serviceContext);
+
 		httpServletRequest = getHttpServletRequest(
-			taskObjectDefinition,
-			_objectEntryLocalService.addObjectEntry(
-				projectObjectEntry.getGroupId(), projectObjectEntry.getUserId(),
-				taskObjectDefinition.getObjectDefinitionId(), 0, null,
-				HashMapBuilder.<String, Serializable>put(
-					"r_cmpProjectToCMPTasks_c_cmpProjectId",
-					projectObjectEntry.getObjectEntryId()
-				).build(),
-				serviceContext));
+			taskObjectDefinition, taskObjectEntry);
 
 		props = getProps();
 
 		Assert.assertEquals("New Task", props.get("title"));
-		Assert.assertEquals(viewProjectUrl, props.get("viewProjectURL"));
+
+		String viewTaskUrl = StringBundler.concat(
+			themeDisplay.getPathFriendlyURLPublic(),
+			GroupConstants.CMS_FRIENDLY_URL, "/e/task/",
+			PortalUtil.getClassNameId(taskObjectDefinition.getClassName()),
+			StringPool.SLASH, taskObjectEntry.getObjectEntryId());
+
+		Assert.assertEquals(viewTaskUrl, props.get("formSubmitURL"));
 	}
 
 	@Override

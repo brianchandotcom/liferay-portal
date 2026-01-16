@@ -11,6 +11,7 @@ import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {masterPagesPagesTest} from '../../../fixtures/masterPagesPagesTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {pageTemplatesPagesTest} from '../../../fixtures/pageTemplatesPagesTest';
 import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
 import {styleBookPageTest} from '../../../fixtures/styleBookPageTest';
 import getRandomString from '../../../utils/getRandomString';
@@ -26,7 +27,8 @@ export const test = mergeTests(
 	pageEditorPagesTest,
 	styleBookPageTest,
 	pagesAdminPagesTest,
-	masterPagesPagesTest
+	masterPagesPagesTest,
+	pageTemplatesPagesTest
 );
 
 test(
@@ -290,6 +292,112 @@ test(
 		});
 
 		await test.step('View the defined background color is applied on button primary fragment', async () => {
+			const firstButton = page
+				.frameLocator('iframe.style-book-editor__page-preview-frame')
+				.getByRole('link', {
+					name: 'Go Somewhere',
+				})
+				.first();
+
+			await firstButton.waitFor();
+
+			await expect(firstButton).toHaveCSS(
+				'background-color',
+				'rgb(0, 255, 0)'
+			);
+		});
+	}
+);
+
+test(
+	'The designer could preview the effects of styles on all page templates.',
+	{tag: '@LPS-137065'},
+	async ({page, pageEditorPage, pageTemplatesPage, site, styleBooksPage}) => {
+		const styleBookName = getRandomString();
+
+		const firstContentPageTemplateName = getRandomString();
+		const secondContentPageTemplateName = getRandomString();
+
+		await test.step('Create new Template Collection and two new Template Page with a Button fragment', async () => {
+			await pageTemplatesPage.goto(site.friendlyUrlPath);
+
+			const pageTemplateCollectionName = getRandomString();
+
+			await pageTemplatesPage.addPageTemplateCollection(
+				pageTemplateCollectionName
+			);
+
+			// Create content pages template with button fragment
+
+			for (const name of [
+				firstContentPageTemplateName,
+				secondContentPageTemplateName,
+			]) {
+				await pageTemplatesPage.addContentPageTemplate(name);
+				await pageEditorPage.addFragment('Basic Components', 'Button');
+				await pageEditorPage.waitForChangesSaved();
+				await pageEditorPage.publishPage();
+			}
+		});
+
+		await test.step('Create a style book', async () => {
+			await styleBooksPage.goto(site.friendlyUrlPath);
+
+			await styleBooksPage.create(styleBookName);
+		});
+
+		await test.step('View the second Content Page Template created is selected in preview type selector', async () => {
+			await expect(
+				page.getByRole('button', {name: 'Page Templates'})
+			).toBeVisible();
+			await expect(
+				page.getByRole('button', {name: secondContentPageTemplateName})
+			).toBeVisible();
+		});
+
+		await test.step('Define the background color for button primary', async () => {
+			await styleBooksPage.selectTokenCategory('Buttons');
+
+			await styleBooksPage.updateTokenInput(
+				'Background Color',
+				'#00FF00',
+				'Button Primary'
+			);
+
+			await styleBooksPage.waitForAutoSave();
+		});
+
+		await test.step('View the defined background color is applied on second Content Page Template', async () => {
+			const firstButton = page
+				.frameLocator('iframe.style-book-editor__page-preview-frame')
+				.getByRole('link', {
+					name: 'Go Somewhere',
+				})
+				.first();
+
+			await firstButton.waitFor();
+
+			await expect(firstButton).toHaveCSS(
+				'background-color',
+				'rgb(0, 255, 0)'
+			);
+		});
+
+		await test.step('Select the first Content Page Template on preview item selector', async () => {
+			await page
+				.getByRole('button', {name: secondContentPageTemplateName})
+				.click();
+
+			await expect(
+				page.getByRole('menuitem', {name: firstContentPageTemplateName})
+			).toBeVisible();
+
+			await page
+				.getByRole('menuitem', {name: firstContentPageTemplateName})
+				.click();
+		});
+
+		await test.step('View the defined background color is applied on first Content Page Template', async () => {
 			const firstButton = page
 				.frameLocator('iframe.style-book-editor__page-preview-frame')
 				.getByRole('link', {

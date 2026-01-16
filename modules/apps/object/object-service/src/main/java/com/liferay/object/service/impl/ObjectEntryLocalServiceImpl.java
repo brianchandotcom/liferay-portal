@@ -5613,7 +5613,8 @@ public class ObjectEntryLocalServiceImpl
 		List<Column<DynamicObjectDefinitionTable, ?>> columns,
 		DSLQuery dslQuery) {
 
-		List<Object> entriesValues = objectEntryPersistence.dslQuery(dslQuery);
+		List<Object> entriesValues = objectEntryPersistence.dslQuery(
+			dslQuery, false);
 
 		List<Map<String, Serializable>> results = new ArrayList<>(
 			entriesValues.size());

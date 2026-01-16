@@ -4,6 +4,11 @@
 	min-width: 300px;
 	padding: 0;
 
+	.text-muted {
+		color: #6c6c75 !important;
+		font-size: 13px;
+	}
+
 	.dashboard-navigation-container {
 		min-width: 280px;
 	}
@@ -24,10 +29,12 @@
 
 	.finance-dashboard-secondary-text {
 		color: #6c6c75;
+		font-size: 13px !important;
 	}
 
 	.order-details-app-icon {
 		height: 36px;
+		object-fit: contain;
 		width: 36px;
 	}
 

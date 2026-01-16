@@ -31,7 +31,7 @@ public class JWTTokenUtilTest {
 	@Test
 	public void testGenerateToken() throws Exception {
 		String token = JWTTokenUtil.generateToken(
-			_COMPANY_ID, TimeUnit.MINUTES.toMillis(1), _ISSUER, _USER_ID);
+			TimeUnit.MINUTES.toMillis(1), _ISSUER, _USER_ID);
 
 		Assert.assertNotNull(token);
 		Assert.assertFalse(token.isEmpty());
@@ -40,7 +40,6 @@ public class JWTTokenUtilTest {
 
 		JWTClaimsSet jwtClaimsSet = signedJWT.getJWTClaimsSet();
 
-		Assert.assertEquals(_COMPANY_ID, jwtClaimsSet.getClaim("companyId"));
 		Assert.assertEquals(_ISSUER, jwtClaimsSet.getIssuer());
 		Assert.assertEquals(
 			String.valueOf(_USER_ID), jwtClaimsSet.getSubject());
@@ -49,7 +48,7 @@ public class JWTTokenUtilTest {
 	@Test
 	public void testGetUserId() {
 		String token = JWTTokenUtil.generateToken(
-			_COMPANY_ID, TimeUnit.MINUTES.toMillis(1), _ISSUER, _USER_ID);
+			TimeUnit.MINUTES.toMillis(1), _ISSUER, _USER_ID);
 
 		Assert.assertEquals(_USER_ID, JWTTokenUtil.getUserId(token));
 	}
@@ -57,7 +56,7 @@ public class JWTTokenUtilTest {
 	@Test
 	public void testGetUserIdWithInvalidToken() throws Exception {
 		String token = JWTTokenUtil.generateToken(
-			_COMPANY_ID, TimeUnit.MINUTES.toMillis(1), _ISSUER, _USER_ID);
+			TimeUnit.MINUTES.toMillis(1), _ISSUER, _USER_ID);
 
 		try (AutoCloseable autoCloseable =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
@@ -71,7 +70,7 @@ public class JWTTokenUtilTest {
 			token.substring(0, token.length() - 5) + "abcde");
 		_testGetUserIdWithInvalidToken(
 			"The JWT token has been expired",
-			JWTTokenUtil.generateToken(_COMPANY_ID, 0, _ISSUER, _USER_ID));
+			JWTTokenUtil.generateToken(0, _ISSUER, _USER_ID));
 		_testGetUserIdWithInvalidToken(
 			"Unable to parse and verify the JWT token",
 			RandomTestUtil.randomString());
@@ -90,8 +89,6 @@ public class JWTTokenUtilTest {
 				expectedExceptionMessage, exception.getMessage());
 		}
 	}
-
-	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
 
 	private static final String _ISSUER = RandomTestUtil.randomString();
 

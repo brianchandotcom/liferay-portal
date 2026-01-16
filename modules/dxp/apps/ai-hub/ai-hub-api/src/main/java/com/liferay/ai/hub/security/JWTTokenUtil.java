@@ -26,15 +26,13 @@ import java.util.Date;
 public class JWTTokenUtil {
 
 	public static String generateToken(
-		long companyId, long expirationTime, String issuer, long userId) {
+		long expirationTime, String issuer, long userId) {
 
 		Date now = new Date();
 
 		SignedJWT signedJWT = new SignedJWT(
 			new JWSHeader(JWSAlgorithm.HS256),
 			new JWTClaimsSet.Builder(
-			).claim(
-				"companyId", companyId
 			).expirationTime(
 				new Date(now.getTime() + expirationTime)
 			).issuer(

@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -557,7 +557,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 
 		user.setEmailAddressVerified(true);
 
-		user = UserLocalServiceUtil.updateUser(user);
+		user = _userLocalService.updateUser(user);
 
 		long userId = user.getUserId();
 
@@ -621,7 +621,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 				Assert.assertFalse(
 					response, response.contains("brazilian barbecue"));
 
-				UserLocalServiceUtil.addRoleUser(role.getRoleId(), userId);
+				_userLocalService.addRoleUser(role.getRoleId(), userId);
 
 				HTTPTestUtil.invokeToJSONObject(
 					JSONUtil.put(
@@ -718,6 +718,9 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 	@Inject
 	private WorkflowInstanceManager _workflowInstanceManager;

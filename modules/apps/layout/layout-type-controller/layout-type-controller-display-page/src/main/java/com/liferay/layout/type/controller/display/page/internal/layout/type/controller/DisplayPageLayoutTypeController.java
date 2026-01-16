@@ -193,9 +193,12 @@ public class DisplayPageLayoutTypeController
 			RequestDispatcher.INCLUDE_SERVLET_PATH);
 
 		try {
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_fetchLayoutPageTemplateEntry(layout);
+
 			boolean hasViewPermission =
 				displayPageLayoutTypeControllerDisplayContext.hasPermission(
-					_fetchLayoutPageTemplateEntry(layout),
+					layoutPageTemplateEntry,
 					themeDisplay.getPermissionChecker(), ActionKeys.VIEW);
 
 			if (!hasViewPermission && themeDisplay.isSignedIn()) {
@@ -222,9 +225,6 @@ public class DisplayPageLayoutTypeController
 				httpServletResponse.sendRedirect(redirect);
 			}
 			else {
-				LayoutPageTemplateEntry layoutPageTemplateEntry =
-					_fetchLayoutPageTemplateEntry(layout);
-
 				if (layoutPageTemplateEntry != null) {
 					httpServletRequest.setAttribute(
 						ContentPageEditorWebKeys.CLASS_NAME,

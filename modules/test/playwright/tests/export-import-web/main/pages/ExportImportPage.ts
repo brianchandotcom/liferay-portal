@@ -303,28 +303,7 @@ export class ExportImportPage {
 		taskStatus?: taskStatus;
 		timeout?: number;
 	}) {
-		await this.newImportButton.click();
-
-		const fileChooserPromise = this.page.waitForEvent('filechooser');
-
-		await this.fileSelector.click();
-
-		const fileChooser = await fileChooserPromise;
-
-		await fileChooser.setFiles(filePath);
-
-		if (expectedUploadErrorMessage) {
-			await expect(
-				this.page.getByText(expectedUploadErrorMessage)
-			).toBeVisible();
-
-			return;
-		}
-
-		await this.continueButton.click();
-
-		await this.page.waitForLoadState('domcontentloaded');
-		await this.page.waitForTimeout(1000);
+		await this.selectImportFile({filePath, expectedUploadErrorMessage});
 
 		if (await this.pagesCheckbox.isVisible()) {
 			await this.pagesCheckbox.click();
@@ -477,7 +456,13 @@ export class ExportImportPage {
 		await this.exportReportEntriesModal.waitFor();
 	}
 
-	async selectImportFile(filePath: string) {
+	async selectImportFile({
+		filePath,
+		expectedUploadErrorMessage,
+	}: {
+		filePath: string;
+		expectedUploadErrorMessage?: string;
+	}): Promise<void> {
 		await this.newImportButton.click();
 
 		const fileChooserPromise = this.page.waitForEvent('filechooser');
@@ -487,8 +472,17 @@ export class ExportImportPage {
 		const fileChooser = await fileChooserPromise;
 		await fileChooser.setFiles(filePath);
 
+		if (expectedUploadErrorMessage) {
+			await expect(
+				this.page.getByText(expectedUploadErrorMessage)
+			).toBeVisible();
+
+			return;
+		}
+
 		await this.continueButton.click();
 
 		await this.page.waitForLoadState('domcontentloaded');
+		await this.page.waitForTimeout(1000);
 	}
 }

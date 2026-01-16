@@ -92,7 +92,7 @@ test('Basic Web Content checkbox is displayed when importing LAR with Basic Web 
 
 	await test.step('Verify Basic Web Content checkbox appears in import UI', async () => {
 		await exportImportPage.goToImport(`/asset-library-${groupId2}`);
-		await exportImportPage.selectImportFile(exportFilePath);
+		await exportImportPage.selectImportFile({filePath: exportFilePath});
 
 		const basicWebContentCheckbox = page.getByText('Basic Web Contents1');
 		await expect(basicWebContentCheckbox).toBeVisible();

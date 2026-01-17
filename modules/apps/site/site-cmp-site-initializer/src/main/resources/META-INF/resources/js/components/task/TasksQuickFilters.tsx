@@ -10,7 +10,7 @@ import ClaySticker from '@clayui/sticker';
 import {IBaseFilterState, IFDSState} from '@liferay/frontend-data-set-web';
 import {useLiferayState} from '@liferay/frontend-js-state-web/react';
 import classNames from 'classnames';
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 
 import {cmpTasksFDSAtom} from '../props_transformer/atoms';
 
@@ -92,6 +92,8 @@ export default function TasksQuickFilters({
 	const [tasksFDSState, setTasksFDSState] =
 		useLiferayState<IFDSState>(cmpTasksFDSAtom);
 
+	const isQuickFilterChangeRef = useRef(false);
+
 	const handleTotalTasksClick = () => {
 		setActiveQuickFilter(TASK_QUICK_FILTER_TYPES.TOTAL);
 
@@ -108,6 +110,8 @@ export default function TasksQuickFilters({
 				};
 			}),
 		});
+
+		isQuickFilterChangeRef.current = true;
 	};
 
 	const handleOverdueClick = () => {
@@ -160,6 +164,8 @@ export default function TasksQuickFilters({
 				};
 			}),
 		});
+
+		isQuickFilterChangeRef.current = true;
 	};
 
 	const handleBlockedClick = () => {
@@ -167,6 +173,7 @@ export default function TasksQuickFilters({
 
 		setTasksFDSState({
 			...tasksFDSState,
+
 			filters: tasksFDSState.filters.map((filter: IBaseFilterState) => {
 				if (filter.id === 'state') {
 					return {
@@ -194,6 +201,8 @@ export default function TasksQuickFilters({
 				};
 			}),
 		});
+
+		isQuickFilterChangeRef.current = true;
 	};
 
 	const handleInProgressClick = () => {
@@ -228,7 +237,24 @@ export default function TasksQuickFilters({
 				};
 			}),
 		});
+
+		isQuickFilterChangeRef.current = true;
 	};
+
+	/**
+	 * Clear the active quick filter if the filters in the FDS changes.
+	 * `isQuickFilterChangeRef` is used to prevent the active quick filter from
+	 * immediately clearing when one of the quick filters are clicked.
+	 */
+	useEffect(() => {
+		if (isQuickFilterChangeRef.current) {
+			isQuickFilterChangeRef.current = false;
+
+			return;
+		}
+
+		setActiveQuickFilter(null);
+	}, [tasksFDSState.filters]);
 
 	/**
 	 * Listens for the `UPDATE_TASKS_QUICK_FILTER_EVENT` to allow external

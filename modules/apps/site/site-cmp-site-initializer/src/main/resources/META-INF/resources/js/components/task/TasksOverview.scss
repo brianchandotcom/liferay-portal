@@ -1,0 +1,17 @@
+@import 'atlas-variables';
+
+.lfr-cmp__tasks-overview-container {
+	.statistic-button {
+		border-color: $secondary-l3;
+		height: 100%;
+		padding-bottom: 1rem;
+		padding-top: 1rem;
+		text-align: left;
+		width: 100%;
+
+		&:hover {
+			background-color: $light-l1;
+			border-color: $secondary-l0;
+		}
+	}
+}

@@ -11,6 +11,7 @@ import ClayProgressBar from '@clayui/progress-bar';
 import classNames from 'classnames';
 import React from 'react';
 
+import './TasksOverview.scss';
 function StatisticButton({
 	count,
 	displayType,
@@ -32,7 +33,7 @@ function StatisticButton({
 }) {
 	return (
 		<ClayButton
-			className="border c-py-3 h-100 text-left w-100"
+			className="statistic-button"
 			displayType="secondary"
 			onClick={onClick}
 		>
@@ -80,7 +81,8 @@ export default function TasksOverview({
 
 			const tasksTab = Array.from(tabButtons).find(
 				(button) =>
-					button.textContent.trim() === Liferay.Language.get('tasks')
+					button?.textContent?.trim() ===
+					Liferay.Language.get('tasks')
 			);
 
 			if (tasksTab instanceof HTMLElement) {

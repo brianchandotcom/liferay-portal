@@ -80,9 +80,10 @@ public class DLFileVersionConstraintResolver
 		DLFileVersion dlFileVersion =
 			constraintResolverContext.getSourceCTModel();
 
-		DLFileVersion latestDLFileVersion = constraintResolverContext.getInTarget(
-			() -> _dlFileVersionLocalService.getLatestFileVersion(
-				dlFileVersion.getFileEntryId(), true));
+		DLFileVersion latestDLFileVersion =
+			constraintResolverContext.getInTarget(
+				() -> _dlFileVersionLocalService.getLatestFileVersion(
+					dlFileVersion.getFileEntryId(), true));
 
 		if (Validator.isNull(latestDLFileVersion.getVersion())) {
 			return;

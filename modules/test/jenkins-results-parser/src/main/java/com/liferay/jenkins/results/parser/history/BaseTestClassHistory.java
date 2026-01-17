@@ -21,6 +21,17 @@ public abstract class BaseTestClassHistory implements TestClassHistory {
 	}
 
 	@Override
+	public String getPortalUpstreamBranchName() {
+		BatchHistory batchHistory = getBatchHistory();
+
+		if (batchHistory == null) {
+			return null;
+		}
+
+		return batchHistory.getPortalUpstreamBranchName();
+	}
+
+	@Override
 	public String getTestClassName() {
 		return _testClassName;
 	}

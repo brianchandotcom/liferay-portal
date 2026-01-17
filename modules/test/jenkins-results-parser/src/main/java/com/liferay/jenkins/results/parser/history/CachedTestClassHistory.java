@@ -49,7 +49,7 @@ public class CachedTestClassHistory extends BaseTestClassHistory {
 
 	@Override
 	public boolean isFlaky() {
-		return false;
+		return _jsonObject.optBoolean("flaky");
 	}
 
 	protected CachedTestClassHistory(

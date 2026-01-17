@@ -91,8 +91,12 @@ public class TestrayJobHistory extends BaseJobHistory {
 				continue;
 			}
 
+			boolean latestBuild = false;
+
 			if (_latestTestrayBuild == null) {
 				_latestTestrayBuild = testrayBuild;
+
+				latestBuild = true;
 			}
 
 			for (DownstreamBuildReport downstreamBuildReport :
@@ -116,7 +120,8 @@ public class TestrayJobHistory extends BaseJobHistory {
 				TestrayBatchHistory testrayBatchHistory =
 					(TestrayBatchHistory)batchHistory;
 
-				testrayBatchHistory.addBuildReport(downstreamBuildReport);
+				testrayBatchHistory.addBuildReport(
+					downstreamBuildReport, latestBuild);
 			}
 		}
 

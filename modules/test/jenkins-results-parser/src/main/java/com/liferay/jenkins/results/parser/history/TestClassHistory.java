@@ -24,6 +24,8 @@ public interface TestClassHistory {
 
 	public JSONObject getJSONObject();
 
+	public String getPortalUpstreamBranchName();
+
 	public int getStatusChanges();
 
 	public String getTestClassName();

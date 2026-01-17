@@ -26,6 +26,13 @@ public abstract class BaseBatchHistory implements BatchHistory {
 	}
 
 	@Override
+	public String getPortalUpstreamBranchName() {
+		JobHistory jobHistory = getJobHistory();
+
+		return jobHistory.getPortalUpstreamBranchName();
+	}
+
+	@Override
 	public List<TestClassHistory> getTestClassHistories() {
 		return new ArrayList<>(_testClassHistories.values());
 	}

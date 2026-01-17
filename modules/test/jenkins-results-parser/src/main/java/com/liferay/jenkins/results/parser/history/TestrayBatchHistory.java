@@ -6,12 +6,15 @@
 package com.liferay.jenkins.results.parser.history;
 
 import com.liferay.jenkins.results.parser.DownstreamBuildReport;
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.ModulesJUnitDownstreamBuildReport;
 import com.liferay.jenkins.results.parser.StopWatchRecord;
 import com.liferay.jenkins.results.parser.StopWatchRecordsGroup;
 import com.liferay.jenkins.results.parser.TestClassReport;
 import com.liferay.jenkins.results.parser.TestTaskReport;
 import com.liferay.jenkins.results.parser.TestTaskReportFactory;
+
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +29,9 @@ import org.json.JSONObject;
  */
 public class TestrayBatchHistory extends BaseBatchHistory {
 
-	public void addBuildReport(DownstreamBuildReport downstreamBuildReport) {
+	public void addBuildReport(
+		DownstreamBuildReport downstreamBuildReport, boolean latestBuild) {
+
 		if ((downstreamBuildReport == null) ||
 			_downstreamBuildReports.contains(downstreamBuildReport)) {
 
@@ -82,12 +87,17 @@ public class TestrayBatchHistory extends BaseBatchHistory {
 				(TestrayTestTaskHistory)testTaskHistory;
 
 			testrayTestTaskHistory.addTestTaskReport(testTaskReport);
+
+			if (latestBuild && testTaskReport.isMissing()) {
+				testrayTestTaskHistory.setLatestReportMissing(true);
+			}
 		}
 	}
 
 	@Override
 	public long getAverageDuration() {
 		long count = 0;
+		long maximumBatchDuration = _getMaximumBatchDuration();
 		long totalDuration = 0;
 
 		for (DownstreamBuildReport downstreamBuildReport :
@@ -95,7 +105,7 @@ public class TestrayBatchHistory extends BaseBatchHistory {
 
 			long duration = downstreamBuildReport.getDuration();
 
-			if (duration > _MAXIMUM_BATCH_DURATION) {
+			if (duration > maximumBatchDuration) {
 				continue;
 			}
 
@@ -141,6 +151,24 @@ public class TestrayBatchHistory extends BaseBatchHistory {
 
 	protected TestrayBatchHistory(String batchName, JobHistory jobHistory) {
 		super(batchName, jobHistory);
+	}
+
+	private long _getMaximumBatchDuration() {
+		try {
+			String maximumBatchDuration =
+				JenkinsResultsParserUtil.getBuildProperty(
+					"test.history.batch.maximum.duration",
+					getPortalUpstreamBranchName());
+
+			if (JenkinsResultsParserUtil.isInteger(maximumBatchDuration)) {
+				return Long.parseLong(maximumBatchDuration);
+			}
+
+			return _MAXIMUM_BATCH_DURATION;
+		}
+		catch (IOException ioException) {
+			return _MAXIMUM_BATCH_DURATION;
+		}
 	}
 
 	private List<TestTaskReport> _getTestTaskReports(

@@ -22,6 +22,8 @@ public interface BatchHistory {
 
 	public JSONObject getJSONObject();
 
+	public String getPortalUpstreamBranchName();
+
 	public List<TestClassHistory> getTestClassHistories();
 
 	public TestClassHistory getTestClassHistory(String key);

@@ -7,6 +7,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
+import ClayLink from '@clayui/link';
 import ClayProgressBar from '@clayui/progress-bar';
 import classNames from 'classnames';
 import React from 'react';
@@ -102,6 +103,17 @@ export default function TasksOverview({
 
 	return (
 		<div className="lfr-cmp__tasks-overview-container">
+			<div className="d-flex justify-content-between mb-2">
+				<h5>{Liferay.Language.get('tasks-overview')}</h5>
+
+				<ClayLink
+					className="text-3 text-decoration-underline text-weight-semi-bold"
+					onClick={() => handleClick(TASK_QUICK_FILTER_TYPES.TOTAL)}
+				>
+					{Liferay.Language.get('view-all-tasks')}
+				</ClayLink>
+			</div>
+
 			<ClayProgressBar
 				className="c-mb-3"
 				value={

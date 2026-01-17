@@ -15,7 +15,6 @@ import com.liferay.document.library.kernel.store.DLStoreRequest;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.document.library.kernel.util.comparator.DLFileVersionVersionComparator;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
@@ -125,12 +124,10 @@ public class DLFileVersionConstraintResolver
 				return;
 			}
 
-			StringBundler sb = new StringBundler(2 * latestVersionParts.length);
-
 			if (previousFileVersion == null) {
-				sb.append(latestVersionParts[0]);
-				sb.append(StringPool.PERIOD);
-				sb.append(latestVersionParts[1] + 1);
+				newFileVersion =
+					latestVersionParts[0] + StringPool.PERIOD +
+						(latestVersionParts[1] + 1);
 			}
 			else {
 				int[] previousVersionParts = StringUtil.split(
@@ -140,17 +137,14 @@ public class DLFileVersionConstraintResolver
 					ctVersionParts[0] - previousVersionParts[0]);
 
 				if (versionIncrease > 0) {
-					sb.append(latestVersionParts[0] + 1);
-					sb.append(".0");
+					newFileVersion = (latestVersionParts[0] + 1) + ".0";
 				}
 				else {
-					sb.append(latestVersionParts[0]);
-					sb.append(StringPool.PERIOD);
-					sb.append(latestVersionParts[1] + 1);
+					newFileVersion =
+						latestVersionParts[0] + StringPool.PERIOD +
+							(latestVersionParts[1] + 1);
 				}
 			}
-
-			newFileVersion = sb.toString();
 
 			previousFileVersion = currentDLFileVersion.getVersion();
 

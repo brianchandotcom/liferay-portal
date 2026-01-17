@@ -263,35 +263,6 @@
 															{
 																"definition": {
 																	"fragment": {
-																		"key": "BASIC_COMPONENT-heading"
-																	},
-																	"fragmentConfig": {
-																		"headingLevel": "h5"
-																	},
-																	"fragmentFields": [
-																		{
-																			"id": "element-text",
-																			"value": {
-																				"fragmentLink": {
-																				},
-																				"text": {
-																					"value_i18n": {
-																						"en_US": "Task Overview"
-																					}
-																				}
-																			}
-																		}
-																	],
-																	"fragmentStyle": {
-																		"marginBottom": "3"
-																	},
-																	"indexed": true
-																},
-																"type": "Fragment"
-															},
-															{
-																"definition": {
-																	"fragment": {
 																		"key": "com.liferay.site.cmp.site.initializer.internal.fragment.renderer.TasksOverviewSectionFragmentRenderer"
 																	},
 																	"fragmentConfig": {

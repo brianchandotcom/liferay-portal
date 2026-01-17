@@ -26,10 +26,10 @@ public class ObjectAssetEntryBulkSelection
 
 	public ObjectAssetEntryBulkSelection(
 		AssetEntryLocalService assetEntryLocalService,
-		BulkSelection<Object> objectEntryBulkSelection) {
+		BulkSelection<Object> objectBulkSelection) {
 
 		_assetEntryLocalService = assetEntryLocalService;
-		_objectBulkSelection = objectEntryBulkSelection;
+		_objectBulkSelection = objectBulkSelection;
 	}
 
 	@Override

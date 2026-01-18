@@ -794,16 +794,16 @@ public class DisplayPageLayoutTypeControllerTest {
 		throws Exception {
 
 		_assertIncludeLayoutContent(
-			HttpServletResponse.SC_OK, false, draftLayout.getPlid(),
-			TestPropsValues.getUser());
-		_assertIncludeLayoutContent(
 			HttpServletResponse.SC_OK, false, draftLayout.getClassPK(),
 			TestPropsValues.getUser());
 		_assertIncludeLayoutContent(
-			HttpServletResponse.SC_OK, true, draftLayout.getPlid(), _guestUser);
+			HttpServletResponse.SC_OK, false, draftLayout.getPlid(),
+			TestPropsValues.getUser());
 		_assertIncludeLayoutContent(
 			HttpServletResponse.SC_OK, true, draftLayout.getClassPK(),
 			_guestUser);
+		_assertIncludeLayoutContent(
+			HttpServletResponse.SC_OK, true, draftLayout.getPlid(), _guestUser);
 		_assertIncludeLayoutContent(
 			expectedStatus, false, draftLayout.getClassPK(), user);
 	}

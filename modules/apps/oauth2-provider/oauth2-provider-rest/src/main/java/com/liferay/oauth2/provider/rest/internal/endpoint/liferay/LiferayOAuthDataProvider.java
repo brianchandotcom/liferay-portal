@@ -386,7 +386,7 @@ public class LiferayOAuthDataProvider
 		}
 		catch (ConfigurationException configurationException) {
 			throw new OAuthServiceException(
-				"Unable to get System Configuration: " +
+				"Unable to get system configuration: " +
 					OAuth2AuthorizationFlowConfiguration.class.getName(),
 				configurationException);
 		}
@@ -650,7 +650,7 @@ public class LiferayOAuthDataProvider
 		}
 		catch (ConfigurationException configurationException) {
 			throw new OAuthServiceException(
-				"Unable to get System Configuration: " +
+				"Unable to get system configuration: " +
 					OAuth2ProviderConfiguration.class.getName(),
 				configurationException);
 		}

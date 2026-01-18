@@ -304,7 +304,7 @@ public class LiferayOAuthDataProvider
 					StringBundler.concat(
 						"Remote client ", _getRemoteIP(),
 						" used unknown OAuth 2 token. Repeating report may be ",
-						"a sign of a brute-force attack."));
+						"a sign of a brute-force attack"));
 			}
 
 			return null;
@@ -386,7 +386,7 @@ public class LiferayOAuthDataProvider
 		}
 		catch (ConfigurationException configurationException) {
 			throw new OAuthServiceException(
-				"Unable to get System Configuration: " +
+				"Unable to get system configuration: " +
 					OAuth2AuthorizationFlowConfiguration.class.getName(),
 				configurationException);
 		}
@@ -467,7 +467,7 @@ public class LiferayOAuthDataProvider
 						StringBundler.concat(
 							"Remote client ", _getRemoteIP(),
 							" used unknown OAuth 2 refresh token. Repeating ",
-							"report may be a sign of a brute force attack."));
+							"report may be a sign of a brute force attack"));
 				}
 
 				return null;
@@ -626,7 +626,7 @@ public class LiferayOAuthDataProvider
 						" used unknown OAuth 2 refresh token for OAuth 2 ",
 						"client ID ", client.getClientId(),
 						". Repeating report may be a sign of a brute force ",
-						"attack."));
+						"attack"));
 			}
 
 			throw new OAuthServiceException(OAuthConstants.ACCESS_DENIED);
@@ -650,7 +650,7 @@ public class LiferayOAuthDataProvider
 		}
 		catch (ConfigurationException configurationException) {
 			throw new OAuthServiceException(
-				"Unable to get System Configuration: " +
+				"Unable to get system configuration: " +
 					OAuth2ProviderConfiguration.class.getName(),
 				configurationException);
 		}
@@ -727,7 +727,7 @@ public class LiferayOAuthDataProvider
 		if (oAuth2Application != null) {
 			OAuth2ErrorUtil.reportInvalidRequestError(
 				"OAuth 2 application with client ID " + client.getClientId() +
-					" already exists.",
+					" already exists",
 				OAuthConstants.INVALID_CLIENT, Response.Status.CONFLICT);
 		}
 
@@ -1145,7 +1145,7 @@ public class LiferayOAuthDataProvider
 
 		if (!StringUtil.startsWith(jwksURI, "https://")) {
 			OAuth2ErrorUtil.reportInvalidRequestError(
-				"The JWKS URI field must use the HTTPS scheme.",
+				"The JWKS URI field must use the HTTPS scheme",
 				OAuthConstants.INVALID_REQUEST, Response.Status.BAD_REQUEST);
 		}
 
@@ -1441,7 +1441,7 @@ public class LiferayOAuthDataProvider
 		}
 		catch (ConfigurationException configurationException) {
 			throw new OAuthServiceException(
-				"Unable to get system configuration from " +
+				"Unable to get system configuration: " +
 					OAuth2ProviderConfiguration.class.getName(),
 				configurationException);
 		}

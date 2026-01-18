@@ -576,7 +576,10 @@ public class ObjectActionLocalServiceImpl
 				NotificationConstants.TYPE_EMAIL) &&
 			(Objects.equals(
 				objectActionTriggerKey,
-				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD) ||
+				DestinationNames.CMP_PROJECT_COMMENT_ADDED) ||
+			 Objects.equals(
+				 objectActionTriggerKey,
+				 ObjectActionTriggerConstants.KEY_ON_AFTER_ADD) ||
 			 Objects.equals(
 				 objectActionTriggerKey,
 				 ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE))) {
@@ -826,6 +829,9 @@ public class ObjectActionLocalServiceImpl
 			}
 
 			if (StringUtil.equals(
+					objectActionTriggerKey,
+					DestinationNames.CMP_PROJECT_COMMENT_ADDED) ||
+				StringUtil.equals(
 					objectActionTriggerKey,
 					DestinationNames.COMMERCE_ORDER_STATUS) ||
 				StringUtil.equals(

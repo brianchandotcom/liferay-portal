@@ -27,42 +27,46 @@ public class KaleoDefinitionVersionUpgradeProcess extends UpgradeProcess {
 					StringBundler.concat(
 						"select ctCollectionId, kaleoDefinitionVersionId, ",
 						"name from KaleoDefinitionVersion where name = ",
-						"'message-boards-user-stats-moderation' or name = '",
-						WorkflowDefinitionConstants.NAME_SINGLE_APPROVER,
-						"'")));
-			PreparedStatement preparedStatement2 =
-				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection,
-					StringBundler.concat(
-						"update KaleoDefinitionVersion set name = ? where ",
-						"ctCollectionId = ? and kaleoDefinitionVersionId = ",
-						"?"));
-			ResultSet resultSet = preparedStatement1.executeQuery()) {
+						"'message-boards-user-stats-moderation' or name = ",
+						"?")))) {
 
-			while (resultSet.next()) {
-				if (StringUtil.equals(
-						resultSet.getString("name"),
-						"message-boards-user-stats-moderation")) {
+			preparedStatement1.setString(
+				1, WorkflowDefinitionConstants.NAME_SINGLE_APPROVER);
 
-					preparedStatement2.setString(
-						1,
-						WorkflowDefinitionConstants.
-							NAME_MESSAGE_BOARDS_USER_STATS_MODERATION);
+			try (PreparedStatement preparedStatement2 =
+					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+						connection,
+						"update KaleoDefinitionVersion set name = ? where " +
+							"ctCollectionId = ? and kaleoDefinitionVersionId " +
+								"= ?");
+				ResultSet resultSet = preparedStatement1.executeQuery()) {
+
+				while (resultSet.next()) {
+					if (StringUtil.equals(
+							resultSet.getString("name"),
+							"message-boards-user-stats-moderation")) {
+
+						preparedStatement2.setString(
+							1,
+							WorkflowDefinitionConstants.
+								NAME_MESSAGE_BOARDS_USER_STATS_MODERATION);
+					}
+					else {
+						preparedStatement2.setString(
+							1,
+							WorkflowDefinitionConstants.NAME_SINGLE_APPROVER);
+					}
+
+					preparedStatement2.setLong(
+						2, resultSet.getLong("ctCollectionId"));
+					preparedStatement2.setLong(
+						3, resultSet.getLong("kaleoDefinitionVersionId"));
+
+					preparedStatement2.addBatch();
 				}
-				else {
-					preparedStatement2.setString(
-						1, WorkflowDefinitionConstants.NAME_SINGLE_APPROVER);
-				}
 
-				preparedStatement2.setLong(
-					2, resultSet.getLong("ctCollectionId"));
-				preparedStatement2.setLong(
-					3, resultSet.getLong("kaleoDefinitionVersionId"));
-
-				preparedStatement2.addBatch();
+				preparedStatement2.executeBatch();
 			}
-
-			preparedStatement2.executeBatch();
 		}
 	}
 

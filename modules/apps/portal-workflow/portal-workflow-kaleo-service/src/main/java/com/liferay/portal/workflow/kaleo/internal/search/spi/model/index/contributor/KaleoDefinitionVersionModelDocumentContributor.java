@@ -43,7 +43,6 @@ public class KaleoDefinitionVersionModelDocumentContributor
 			document.addNumber("active", kaleoDefinition.isActive() ? 1 : 0);
 
 			document.addKeyword("latest", kaleoDefinitionVersion.isLatest());
-
 			document.addKeyword("scope", kaleoDefinition.getScope());
 		}
 		catch (PortalException portalException) {

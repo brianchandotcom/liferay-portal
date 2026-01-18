@@ -93,13 +93,13 @@ public class EditorToolbarComponentSectionFragmentRendererTest
 
 		Assert.assertEquals("New Task", props.get("title"));
 
-		String viewTaskUrl = StringBundler.concat(
+		String viewTaskURL = StringBundler.concat(
 			themeDisplay.getPathFriendlyURLPublic(),
 			GroupConstants.CMS_FRIENDLY_URL, "/e/task/",
 			PortalUtil.getClassNameId(taskObjectDefinition.getClassName()),
 			StringPool.SLASH, taskObjectEntry.getObjectEntryId());
 
-		Assert.assertEquals(viewTaskUrl, props.get("formSubmitURL"));
+		Assert.assertEquals(viewTaskURL, props.get("formSubmitURL"));
 	}
 
 	@Override

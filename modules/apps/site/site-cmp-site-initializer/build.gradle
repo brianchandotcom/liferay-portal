@@ -23,6 +23,7 @@ dependencies {
 	compileOnly project(":apps:layout:layout-display-page-api")
 	compileOnly project(":apps:layout:layout-page-template-api")
 	compileOnly project(":apps:list-type:list-type-api")
+	compileOnly project(":apps:message-boards:message-boards-api")
 	compileOnly project(":apps:object:object-api")
 	compileOnly project(":apps:object:object-rest-api")
 	compileOnly project(":apps:portal-odata:portal-odata-api")

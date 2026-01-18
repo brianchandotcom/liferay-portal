@@ -29,10 +29,11 @@ public class SchemaUpgradeProcess extends UpgradeProcess {
 						"ObjectDefinition on ObjectDefinition.",
 						"objectDefinitionId = ObjectField.objectDefinitionId ",
 						"where ObjectDefinition.status = ? and ObjectField.",
-						"businessType = '",
-						ObjectFieldConstants.BUSINESS_TYPE_PICKLIST, "'")))) {
+						"businessType = ?")))) {
 
 			preparedStatement.setInt(1, WorkflowConstants.STATUS_APPROVED);
+			preparedStatement.setString(
+				2, ObjectFieldConstants.BUSINESS_TYPE_PICKLIST);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {

@@ -25,14 +25,15 @@ public class ObjectDefinitionUpgradeProcess extends UpgradeProcess {
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
-					"update ObjectDefinition set storageType = '" +
-						ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT +
-							"' where objectDefinitionId = ?");
+					"update ObjectDefinition set storageType = ? where " +
+						"objectDefinitionId = ?");
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {
+				preparedStatement2.setString(
+					1, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT);
 				preparedStatement2.setLong(
-					1, resultSet.getLong("objectDefinitionId"));
+					2, resultSet.getLong("objectDefinitionId"));
 
 				preparedStatement2.addBatch();
 			}

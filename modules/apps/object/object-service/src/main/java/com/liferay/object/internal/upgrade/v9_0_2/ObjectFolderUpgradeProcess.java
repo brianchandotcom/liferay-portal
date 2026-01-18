@@ -6,7 +6,6 @@
 package com.liferay.object.internal.upgrade.v9_0_2;
 
 import com.liferay.object.constants.ObjectFolderConstants;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
@@ -27,25 +26,21 @@ public class ObjectFolderUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				SQLTransformer.transform(
-					StringBundler.concat(
-						"select ObjectFolder.objectFolderId, ",
-						"ObjectFolder.companyId from ObjectFolder where ",
-						"ObjectFolder.externalReferenceCode = ",
-						"'uncategorized'")));
+					"select ObjectFolder.objectFolderId, ObjectFolder." +
+						"companyId from ObjectFolder where ObjectFolder." +
+							"externalReferenceCode = 'uncategorized'"));
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
-					StringBundler.concat(
-						"update ObjectFolder set externalReferenceCode = '",
-						ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_DEFAULT,
-						"', label = ?, name = '",
-						ObjectFolderConstants.NAME_DEFAULT,
-						"' where objectFolderId = ?"));
+					"update ObjectFolder set externalReferenceCode = ?, " +
+						"label = ?, name = ? where objectFolderId = ?");
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {
 				preparedStatement2.setString(
-					1,
+					1, ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_DEFAULT);
+				preparedStatement2.setString(
+					2,
 					LocalizationUtil.getXml(
 						new LocalizedValuesMap() {
 							{
@@ -57,8 +52,10 @@ public class ObjectFolderUpgradeProcess extends UpgradeProcess {
 							}
 						},
 						"Label"));
+				preparedStatement2.setString(
+					3, ObjectFolderConstants.NAME_DEFAULT);
 				preparedStatement2.setLong(
-					2, resultSet.getLong("objectFolderId"));
+					4, resultSet.getLong("objectFolderId"));
 
 				preparedStatement2.addBatch();
 			}

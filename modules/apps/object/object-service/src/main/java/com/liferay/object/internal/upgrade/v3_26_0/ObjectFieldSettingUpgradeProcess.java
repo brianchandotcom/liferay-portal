@@ -27,48 +27,55 @@ public class ObjectFieldSettingUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
 					"select ObjectField.objectFieldId, ObjectField.companyId, ",
-					"ObjectField.userId, ObjectField.userName, ",
-					"ObjectField.name from ObjectField where ",
-					"ObjectField.relationshipType = '",
-					ObjectRelationshipConstants.TYPE_ONE_TO_MANY, "'"));
-			PreparedStatement preparedStatement2 =
-				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection,
-					StringBundler.concat(
-						"insert into ObjectFieldSetting (uuid_, ",
-						"objectFieldSettingId, companyId, userId, userName, ",
-						"createDate, modifiedDate, objectFieldId, name, ",
-						"value) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"));
-			ResultSet resultSet = preparedStatement1.executeQuery()) {
+					"ObjectField.userId, ObjectField.userName, ObjectField.",
+					"name from ObjectField where ObjectField.relationshipType ",
+					"= ?"))) {
 
-			while (resultSet.next()) {
-				preparedStatement2.setString(1, PortalUUIDUtil.generate());
-				preparedStatement2.setLong(2, increment());
-				preparedStatement2.setLong(3, resultSet.getLong("companyId"));
-				preparedStatement2.setLong(4, resultSet.getLong("userId"));
-				preparedStatement2.setString(
-					5, resultSet.getString("userName"));
+			preparedStatement1.setString(
+				1, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-				Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+			try (PreparedStatement preparedStatement2 =
+					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+						connection,
+						StringBundler.concat(
+							"insert into ObjectFieldSetting (uuid_, ",
+							"objectFieldSettingId, companyId, userId, ",
+							"userName, createDate, modifiedDate, ",
+							"objectFieldId, name, value) values (?, ?, ?, ?, ",
+							"?, ?, ?, ?, ?, ?)"));
+				ResultSet resultSet = preparedStatement1.executeQuery()) {
 
-				preparedStatement2.setTimestamp(6, timestamp);
-				preparedStatement2.setTimestamp(7, timestamp);
+				while (resultSet.next()) {
+					preparedStatement2.setString(1, PortalUUIDUtil.generate());
+					preparedStatement2.setLong(2, increment());
+					preparedStatement2.setLong(
+						3, resultSet.getLong("companyId"));
+					preparedStatement2.setLong(4, resultSet.getLong("userId"));
+					preparedStatement2.setString(
+						5, resultSet.getString("userName"));
 
-				preparedStatement2.setLong(
-					8, resultSet.getLong("objectFieldId"));
-				preparedStatement2.setString(
-					9,
-					ObjectFieldSettingConstants.
-						NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME);
-				preparedStatement2.setString(
-					10,
-					StringUtil.replaceLast(
-						resultSet.getString("name"), "Id", "ERC"));
+					Timestamp timestamp = new Timestamp(
+						System.currentTimeMillis());
 
-				preparedStatement2.addBatch();
+					preparedStatement2.setTimestamp(6, timestamp);
+					preparedStatement2.setTimestamp(7, timestamp);
+
+					preparedStatement2.setLong(
+						8, resultSet.getLong("objectFieldId"));
+					preparedStatement2.setString(
+						9,
+						ObjectFieldSettingConstants.
+							NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME);
+					preparedStatement2.setString(
+						10,
+						StringUtil.replaceLast(
+							resultSet.getString("name"), "Id", "ERC"));
+
+					preparedStatement2.addBatch();
+				}
+
+				preparedStatement2.executeBatch();
 			}
-
-			preparedStatement2.executeBatch();
 		}
 	}
 

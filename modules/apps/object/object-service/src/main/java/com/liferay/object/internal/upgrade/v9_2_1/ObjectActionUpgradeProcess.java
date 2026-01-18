@@ -10,7 +10,6 @@ import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -38,52 +37,59 @@ public class ObjectActionUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				SQLTransformer.transform(
-					StringBundler.concat(
-						"select objectActionId, parameters from ObjectAction ",
-						"where objectActionExecutorKey = '",
-						ObjectActionExecutorConstants.KEY_NOTIFICATION,
-						"' and objectActionTriggerKey in ('",
-						ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, "', '",
-						ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
-						"')")));
-			PreparedStatement preparedStatement2 =
-				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection,
-					"update ObjectAction set parameters = ? where " +
-						"objectActionId = ?");
-			ResultSet resultSet = preparedStatement1.executeQuery()) {
+					"select objectActionId, parameters from ObjectAction " +
+						"where objectActionExecutorKey = ? and " +
+							"objectActionTriggerKey in (?, ?)"))) {
 
-			while (resultSet.next()) {
-				UnicodeProperties unicodeProperties =
-					UnicodePropertiesBuilder.create(
-						true
-					).load(
-						resultSet.getString("parameters")
-					).put(
-						"usePreferredLanguageForGuests", "false"
-					).build();
+			preparedStatement1.setString(
+				1, ObjectActionExecutorConstants.KEY_NOTIFICATION);
+			preparedStatement1.setString(
+				2, ObjectActionTriggerConstants.KEY_ON_AFTER_ADD);
+			preparedStatement1.setString(
+				3, ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE);
 
-				NotificationTemplate notificationTemplate =
-					_notificationTemplateLocalService.fetchNotificationTemplate(
-						GetterUtil.getLong(
-							unicodeProperties.get("notificationTemplateId")));
+			try (PreparedStatement preparedStatement2 =
+					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+						connection,
+						"update ObjectAction set parameters = ? where " +
+							"objectActionId = ?");
+				ResultSet resultSet = preparedStatement1.executeQuery()) {
 
-				if ((notificationTemplate == null) ||
-					!Objects.equals(
-						notificationTemplate.getType(),
-						NotificationConstants.TYPE_EMAIL)) {
+				while (resultSet.next()) {
+					UnicodeProperties unicodeProperties =
+						UnicodePropertiesBuilder.create(
+							true
+						).load(
+							resultSet.getString("parameters")
+						).put(
+							"usePreferredLanguageForGuests", "false"
+						).build();
 
-					continue;
+					NotificationTemplate notificationTemplate =
+						_notificationTemplateLocalService.
+							fetchNotificationTemplate(
+								GetterUtil.getLong(
+									unicodeProperties.get(
+										"notificationTemplateId")));
+
+					if ((notificationTemplate == null) ||
+						!Objects.equals(
+							notificationTemplate.getType(),
+							NotificationConstants.TYPE_EMAIL)) {
+
+						continue;
+					}
+
+					preparedStatement2.setString(
+						1, unicodeProperties.toString());
+					preparedStatement2.setLong(
+						2, resultSet.getLong("objectActionId"));
+
+					preparedStatement2.addBatch();
 				}
 
-				preparedStatement2.setString(1, unicodeProperties.toString());
-				preparedStatement2.setLong(
-					2, resultSet.getLong("objectActionId"));
-
-				preparedStatement2.addBatch();
+				preparedStatement2.executeBatch();
 			}
-
-			preparedStatement2.executeBatch();
 		}
 	}
 

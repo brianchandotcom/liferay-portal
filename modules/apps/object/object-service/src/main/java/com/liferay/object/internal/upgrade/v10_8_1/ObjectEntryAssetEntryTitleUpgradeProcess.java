@@ -126,29 +126,28 @@ public class ObjectEntryAssetEntryTitleUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement3 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
-					StringBundler.concat(
-						"update AssetEntry set mimeType = '",
-						ContentTypes.TEXT_HTML,
-						"', title = ? where classNameId = ? and classPK = ",
-						"?"))) {
+					"update AssetEntry set mimeType = ?, title = ? where " +
+						"classNameId = ? and classPK = ?")) {
 
 			for (Map.Entry<Long, ObjectEntryInfo> entry :
 					objectEntryInfos.entrySet()) {
 
+				preparedStatement3.setString(1, ContentTypes.TEXT_HTML);
+
 				ObjectEntryInfo objectEntryInfo = entry.getValue();
 
 				preparedStatement3.setString(
-					1,
+					2,
 					_localization.getXml(
 						LocalizedMapUtil.getLanguageIdMap(
 							objectEntryInfo._titleMap),
 						objectEntryInfo._defaultLanguageId, "title"));
 				preparedStatement3.setLong(
-					2,
+					3,
 					_classNameLocalService.getClassNameId(
 						objectEntryInfo._className));
 
-				preparedStatement3.setLong(3, entry.getKey());
+				preparedStatement3.setLong(4, entry.getKey());
 
 				preparedStatement3.addBatch();
 			}

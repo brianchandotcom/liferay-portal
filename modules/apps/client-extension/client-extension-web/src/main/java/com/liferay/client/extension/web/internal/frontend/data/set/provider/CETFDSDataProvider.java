@@ -49,7 +49,7 @@ public class CETFDSDataProvider implements FDSDataProvider<CETFDSEntry> {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		_checkPermission(themeDisplay);
+		_checkPermissions(themeDisplay);
 
 		return TransformUtil.transform(
 			_cetManager.getCETs(
@@ -69,13 +69,13 @@ public class CETFDSDataProvider implements FDSDataProvider<CETFDSEntry> {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		_checkPermission(themeDisplay);
+		_checkPermissions(themeDisplay);
 
 		return _cetManager.getCETsCount(
 			themeDisplay.getCompanyId(), fdsKeywords.getKeywords(), null);
 	}
 
-	private void _checkPermission(ThemeDisplay themeDisplay)
+	private void _checkPermissions(ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		if (!PortletPermissionUtil.hasControlPanelAccessPermission(

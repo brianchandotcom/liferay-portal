@@ -3306,10 +3306,8 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 						}
 
 						File baseDir = getPortalGitWorkingDirectory();
-
 						File projectDir = new File(project.getProperty("project.dir"));
-
-						Map testTasksMap = new HashMap();
+						Map testNamesMap = new HashMap();
 
 						String testTaskGroup = "@{test.task.group}";
 
@@ -3338,13 +3336,13 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 									String testName = getTestName(testClassFilePath);
 
-									List testNames = testTasksMap.getOrDefault(testTaskName, new ArrayList());
+									List testNames = testNamesMap.getOrDefault(testTaskName, new ArrayList());
 
 									if (!testNames.contains(testName)) {
 										testNames.add(testName);
 									}
 
-									testTasksMap.put(testTaskName, testNames);
+									testNamesMap.put(testTaskName, testNames);
 								}
 							}
 						}
@@ -3366,17 +3364,17 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 								String testName = getTestName(testClassFilePath);
 
-								List testNames = testTasksMap.getOrDefault(testTaskName, new ArrayList());
+								List testNames = testNamesMap.getOrDefault(testTaskName, new ArrayList());
 
 								if (!testNames.contains(testName)) {
 									testNames.add(testName);
 								}
 
-								testTasksMap.put(testTaskName, testNames);
+								testNamesMap.put(testTaskName, testNames);
 							}
 						}
 
-						for (Map.Entry testTasksEntry : testTasksMap.entrySet()) {
+						for (Map.Entry entry : testNamesMap.entrySet()) {
 							Map parameters = new HashMap();
 
 							parameters.put("dir", "modules");
@@ -3384,7 +3382,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 							StringBuilder sb = new StringBuilder();
 
-							for (String testName : testTasksEntry.getValue()) {
+							for (String testName : entry.getValue()) {
 								sb.append("--tests ");
 								sb.append(testName);
 								sb.append(" ");
@@ -3392,7 +3390,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 							parameters.put("test.name", sb.toString());
 
-							parameters.put("test.task", testTasksEntry.getKey());
+							parameters.put("test.task", entry.getKey());
 
 							int timeout = Integer.parseInt(project.getProperty("test.class.timeout.minutes"));
 

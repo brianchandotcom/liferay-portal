@@ -1460,3 +1460,14 @@ app.artifacts-2.0.132=\
 app.change.log-2.0.132=LPD-71333
 
 app.git.id-2.0.132=62e25cdd2605f7f6bc5c55898b36d879ed658860
+
+#
+# Liferay App Version 2.0.133
+#
+
+app.artifacts-2.0.133=\
+	
+
+app.change.log-2.0.133=LPD-53142 LPD-70715 LPD-71333 LPD-71334 LPD-72619 LPD-72785 LPD-73092 LPD-73224 LPD-73738
+
+app.git.id-2.0.133=01c5974af8746db45aea3fe7e9742b6eb6e7eb12

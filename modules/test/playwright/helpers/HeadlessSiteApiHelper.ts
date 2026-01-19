@@ -57,6 +57,12 @@ export class HeadlessSiteApiHelper {
 		);
 	}
 
+	async getSite(siteId: string): Promise<Site> {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}`
+		);
+	}
+
 	async getSiteByERC(externalReferenceCode: string): Promise<Site> {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/by-external-reference-code/${externalReferenceCode}`

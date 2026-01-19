@@ -30,6 +30,25 @@ import org.osgi.service.component.annotations.Reference;
 public class PortletDataHandlerStatusMessageSenderImpl
 	implements PortletDataHandlerStatusMessageSender {
 
+	public void sendBatchProgressMessage(int processedItemsCount) {
+		Long backgroundTaskId = BackgroundTaskThreadLocal.getBackgroundTaskId();
+
+		if (backgroundTaskId == null) {
+			return;
+		}
+
+		Message message = new Message();
+
+		message.put(
+			BackgroundTaskConstants.MESSAGE_KEY_BACKGROUND_TASK_ID,
+			backgroundTaskId);
+		message.put("messageType", "batchProgress");
+		message.put("processedItemsCount", processedItemsCount);
+
+		_backgroundTaskStatusMessageSender.sendBackgroundTaskStatusMessage(
+			message);
+	}
+
 	@Override
 	public void sendStatusMessage(
 		String messageType, String portletId, ManifestSummary manifestSummary) {

@@ -447,7 +447,7 @@ public class AssetCategoryLocalServiceImpl
 				new String[0], new ServiceContext()),
 			externalReferenceCode,
 			this::fetchAssetCategoryByExternalReferenceCode,
-			this::getAssetCategoryByExternalReferenceCode, groupId);
+			this::getAssetCategoryByExternalReferenceCode, groupId, "category");
 	}
 
 	@Override

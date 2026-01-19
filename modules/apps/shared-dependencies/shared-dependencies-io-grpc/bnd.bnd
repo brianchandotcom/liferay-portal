@@ -42,3 +42,4 @@ Import-Package:\
 	grpc.*;version='1.75.0',\
 	\
 	io.grpc.*;version='1.75.0'
+-fixupmessages "Classes found in the wrong directory"; restrict:=error; is:=ignore

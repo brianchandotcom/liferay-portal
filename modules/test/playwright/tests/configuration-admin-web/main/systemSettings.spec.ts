@@ -9,6 +9,7 @@ import {accessibilityMenuPagesTest} from '../../../fixtures/accessibilityMenuPag
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {siteSettingsPagesTest} from '../../../fixtures/siteSettingsPagesTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 
 export const test = mergeTests(
@@ -16,6 +17,7 @@ export const test = mergeTests(
 	loginTest(),
 	systemSettingsPageTest,
 	instanceSettingsPagesTest,
+	siteSettingsPagesTest,
 	featureFlagsTest({
 		'LPS-155284': {enabled: true},
 		'LPS-178052': {enabled: true},
@@ -31,6 +33,7 @@ test(
 	async ({
 		accessibilityMenuPage,
 		instanceSettingsPage,
+		siteSettingsPage,
 		systemSettingsPage,
 	}) => {
 		await test.step('Navigate to System Settings and enable Accessibility Menu configuration', async () => {
@@ -44,6 +47,15 @@ test(
 
 		await test.step('Navigate to Instance Settings and disable Accessibility Menu configuration', async () => {
 			await instanceSettingsPage.goToInstanceSetting(
+				SETTING_CATEGORY_KEY,
+				SETTING_CONFIGURATION_NAME
+			);
+
+			await accessibilityMenuPage.disableAccessibilityMenu();
+		});
+
+		await test.step('Navigate to Site Settings and disable Accessibility Menu configuration', async () => {
+			await siteSettingsPage.goToSiteSetting(
 				SETTING_CATEGORY_KEY,
 				SETTING_CONFIGURATION_NAME
 			);

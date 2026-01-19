@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -183,16 +182,11 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 				LayoutServiceContextHelperUtil.getServiceContextAutoCloseable(
 					layout, contextUser)) {
 
-			int priority = segmentsExperience.getPriority();
-
-			if (pageExperience.getPriority() != null) {
-				priority = pageExperience.getPriority();
-			}
-
 			return _toPageExperience(
 				SegmentsExperienceUtil.updateSegmentsExperience(
 					_fragmentEntryProcessorRegistry, _infoItemServiceRegistry,
-					layout, pageExperience, priority, segmentsExperience,
+					layout, pageExperience, pageExperience.getPriority(),
+					segmentsExperience,
 					ServiceContextUtil.createServiceContext(
 						groupId, contextHttpServletRequest,
 						contextUser.getUserId())));
@@ -230,8 +224,7 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 			return _toPageExperience(
 				SegmentsExperienceUtil.addSegmentsExperience(
 					_fragmentEntryProcessorRegistry, _infoItemServiceRegistry,
-					layout, pageExperience,
-					GetterUtil.getInteger(pageExperience.getPriority()),
+					layout, pageExperience, pageExperience.getPriority(),
 					ServiceContextUtil.createServiceContext(
 						groupId, contextHttpServletRequest,
 						contextUser.getUserId(), pageExperience.getUuid())));

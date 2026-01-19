@@ -37,7 +37,7 @@ public class SegmentsExperienceUtil {
 	public static SegmentsExperience addSegmentsExperience(
 			FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry,
 			InfoItemServiceRegistry infoItemServiceRegistry, Layout layout,
-			PageExperience pageExperience, int priority,
+			PageExperience pageExperience, Integer priority,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -49,7 +49,9 @@ public class SegmentsExperienceUtil {
 					pageExperience.getSegmentItemExternalReference()),
 				pageExperience.getKey(), layout.getPlid(),
 				LocalizedMapUtil.getLocalizedMap(pageExperience.getName_i18n()),
-				priority, true,
+				PageExperienceUtil.getPriority(
+					pageExperience.getKey(), layout, priority),
+				true,
 				UnicodePropertiesBuilder.create(
 					true
 				).build(),
@@ -71,7 +73,7 @@ public class SegmentsExperienceUtil {
 	public static SegmentsExperience updateSegmentsExperience(
 			FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry,
 			InfoItemServiceRegistry infoItemServiceRegistry, Layout layout,
-			PageExperience pageExperience, int priority,
+			PageExperience pageExperience, Integer priority,
 			SegmentsExperience segmentsExperience,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -83,10 +85,14 @@ public class SegmentsExperienceUtil {
 				serviceContext),
 			layout, segmentsExperience.getSegmentsExperienceId());
 
-		if (priority != segmentsExperience.getPriority()) {
+		int finalPriority = PageExperienceUtil.getPriority(
+			pageExperience.getKey(), layout, priority);
+
+		if (finalPriority != segmentsExperience.getPriority()) {
 			segmentsExperience =
 				SegmentsExperienceServiceUtil.updateSegmentsExperiencePriority(
-					segmentsExperience.getSegmentsExperienceId(), priority);
+					segmentsExperience.getSegmentsExperienceId(),
+					finalPriority);
 		}
 
 		return SegmentsExperienceServiceUtil.updateSegmentsExperience(

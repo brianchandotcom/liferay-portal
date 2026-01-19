@@ -601,10 +601,9 @@ public class LayoutUtil {
 	}
 
 	public static Layout updateNodeLayout(
-			CETManager cetManager, Layout layout, Map<Locale, String> nameMap,
+			Layout layout, Map<Locale, String> nameMap,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			Map<Locale, String> keywordsMap, Map<Locale, String> robotsMap,
-			Map<Locale, String> friendlyURLMap,
+			Map<Locale, String> keywordsMap, Map<Locale, String> friendlyURLMap,
 			PageSpecification pageSpecification,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
@@ -622,8 +621,8 @@ public class LayoutUtil {
 		}
 
 		return _updateLayout(
-			cetManager, layout, nameMap, titleMap, descriptionMap, keywordsMap,
-			robotsMap, friendlyURLMap, pageSpecification, serviceContext);
+			layout, nameMap, titleMap, descriptionMap, keywordsMap, null, null,
+			null, null, null, friendlyURLMap, serviceContext);
 	}
 
 	public static Layout updatePortletLayout(

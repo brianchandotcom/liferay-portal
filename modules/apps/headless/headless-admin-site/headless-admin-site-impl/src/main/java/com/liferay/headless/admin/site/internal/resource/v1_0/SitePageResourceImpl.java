@@ -931,8 +931,8 @@ public class SitePageResourceImpl
 					sitePage.getType(), SitePage.Type.PAGE_SET_PAGE)) {
 
 			layout = LayoutUtil.updateNodeLayout(
-				_cetManager, layout, nameMap, titleMap, descriptionMap,
-				keywordsMap, robotsMap, friendlyURLMap,
+				layout, nameMap, titleMap, descriptionMap, keywordsMap,
+				friendlyURLMap,
 				PageSpecificationUtil.getPageSpecification(
 					sitePage.getPageSpecifications()),
 				_getTypeSettingsUnicodeProperties(sitePage), serviceContext);

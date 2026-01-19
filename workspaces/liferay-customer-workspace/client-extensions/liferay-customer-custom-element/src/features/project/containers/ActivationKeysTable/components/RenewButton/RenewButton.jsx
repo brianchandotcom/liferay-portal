@@ -21,13 +21,14 @@ const RenewButton = ({
 	isRenewTable,
 	isVisibleModal,
 	keysSelectedCount,
+	productName,
 	project,
 	renewKeysFilterChecked,
 }) => {
 	const navigate = useNavigate();
 	const [isDisable, setIsDisable] = useState('');
 
-	const renewUrl = `/${project?.accountKey}/activation/dxp/new`;
+	const renewUrl = `/${project?.accountKey}/activation/${productName}/new`;
 
 	useEffect(() => {
 		const isDisableRenewButton = () => {

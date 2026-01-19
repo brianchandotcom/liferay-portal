@@ -8,20 +8,21 @@ import {ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
-import i18n from '~/utils/I18n';
 import {Button} from '~/components';
 import {Radio} from '~/components';
 import Layout from '~/components/FormLayout';
 import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
+import {useAppContext} from '~/features/project/context';
 import useProvisioningLicenseKeys from '~/hooks/useProvisioningLicenseKeys';
 import {patchOrderItemByExternalReferenceCode} from '~/services/liferay/graphql/queries';
 import {
 	getNewGenerateKeyFormValues,
 	putSubscriptionInKey,
 } from '~/services/liferay/rest/raysource/LicenseKeys';
+import i18n from '~/utils/I18n';
 import {FORMAT_DATE_TYPES} from '~/utils/constants';
 import getDateCustomFormat from '~/utils/getDateCustomFormat';
-import {useAppContext} from '~/features/project/context';
+
 import {has100YearsDifference} from '../../ActivationKeysTable/utils';
 import GenerateNewKeySkeleton from '../GenerateNewKeySkeleton';
 import {getLicenseKeyEndDatesByLicenseType} from '../utils/licenseKeyEndDate';
@@ -205,7 +206,11 @@ const SelectSubscription = ({
 		),
 	];
 
-	setLicenseEntryTypeName(productNames[0]);
+	useEffect(() => {
+		if (productNames?.length) {
+			setLicenseEntryTypeName(productNames[0]);
+		}
+	}, [productNames]);
 
 	const productName = [...new Set(productNames)].join(', ');
 
@@ -402,7 +407,8 @@ const SelectSubscription = ({
 											name: 'provisionedCount',
 										},
 									],
-									externalReferenceCode: selectedSubscription?.productPurchaseKey,
+									externalReferenceCode:
+										selectedSubscription?.productPurchaseKey,
 								},
 							},
 						});

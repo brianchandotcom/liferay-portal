@@ -2,16 +2,18 @@
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
+
 import {ButtonWithIcon} from '@clayui/core';
 import {useModal} from '@clayui/modal';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import {useLocation, useOutletContext} from 'react-router-dom';
-import i18n from '~/utils/I18n';
-import RoundedGroupButtons from '~/components/RoundedGroupButtons';
 import ActionTable from '~/components/ActionTable';
+import RoundedGroupButtons from '~/components/RoundedGroupButtons';
 import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import {ALERT_DOWNLOAD_TYPE} from '~/features/project/utils/constants/alertDownloadType';
+import i18n from '~/utils/I18n';
+
 import {getLicenseKeyPermanentStatus} from '../GenerateNewKey/utils/licenseKeyPermanentStatus';
 import DownloadAlert from './components/DownloadAlert';
 import ActivationKeysTableHeader from './components/Header';
@@ -184,7 +186,7 @@ const ActivationKeysTable = ({
 				<ButtonWithIcon
 					aria-label={i18n.translate('download-key')}
 					className="text-dark"
-    				displayType="unstyled"
+					displayType="unstyled"
 					onClick={() =>
 						getActivationKeyDownload(
 							oAuthToken,
@@ -231,6 +233,7 @@ const ActivationKeysTable = ({
 					oAuthToken={oAuthToken}
 					observer={observer}
 					onClose={onClose}
+					productName={productName}
 					project={project}
 				/>
 			)}

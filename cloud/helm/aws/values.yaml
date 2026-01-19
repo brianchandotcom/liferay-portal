@@ -45,30 +45,29 @@ liferay-default:
                                     -f \
                                     -v /temp/osgi/modules/*opensearch*
 
-                                DEPLOY_DIR=/temp/liferay/deploy
-                                PRODUCT_VERSION={{.image.tag}}
-
-                                mkdir -p "$DEPLOY_DIR"
-
                                 function main {
-                                    local FILE_NAME_PREFIX="com.liferay.portal.search.opensearch2"
-                                    local URL="https://releases.liferay.com/opensearch2/dxp/${PRODUCT_VERSION}/${FILE_NAME_PREFIX}.{api,impl}.jar"
+                                    local deploy_dir=/temp/liferay/deploy
+                                    local filename_prefix="com.liferay.portal.search.opensearch2"
+                                    local product_version={{.image.tag}}
+                                    local url="https://releases.liferay.com/opensearch2/dxp/${product_version}/${filename_prefix}.{api,impl}.jar"
+
+                                    mkdir -p "$deploy_dir"
 
                                     if ! curl \
                                         --fail \
                                         --location \
-                                        --output-dir "$DEPLOY_DIR" \
+                                        --output-dir "$deploy_dir" \
                                         --remote-name \
                                         --retry 5 \
                                         --retry-all-errors \
                                         --retry-delay 2 \
-                                        "$URL" ; then
+                                        "$url" ; then
                                             echo "Unable to download OpenSearch modules for Product Version ${PRODUCT_VERSION}." >&2
                                             exit 1
                                     fi
                                 }
 
-                                main "$PRODUCT_VERSION"
+                                main
                       image: curlimages/curl:latest
                       name: liferay-install-opensearch-modules
                       volumeMounts:

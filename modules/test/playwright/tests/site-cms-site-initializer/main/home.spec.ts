@@ -17,6 +17,7 @@ const test = mergeTests(
 	cmsPagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
+		'LPD-11235': {enabled: true},
 		'LPD-17564': {enabled: true},
 	}),
 	loginTest(),
@@ -90,55 +91,86 @@ test(
 			await test.step('Verify workflow task assign to me action', async () => {
 				await homePage.workflowTaskFilterButton.click();
 				await homePage.assignedToMyRolesMenuItem.click();
+				await page.waitForLoadState('networkidle');
 
-				await expect(page.getByText(objectEntry1.title)).toBeVisible();
+				const workflowTaskRow1 = page
+					.getByRole('row')
+					.filter({hasText: /sent you/i})
+					.filter({hasText: objectEntry1.title});
+
+				await expect(workflowTaskRow1).toBeVisible();
 				await homePage.assignToMe(objectEntry1.title);
-				await expect(page.getByText(objectEntry1.title)).toBeHidden();
+				await expect(workflowTaskRow1).toBeHidden();
 
 				await homePage.workflowTaskFilterButton.click();
 				await homePage.assignedToMeMenuItem.click();
+				await page.waitForLoadState('networkidle');
 
-				await expect(page.getByText(objectEntry1.title)).toBeVisible();
+				await expect(workflowTaskRow1).toBeVisible();
 			});
 
 			await test.step('Verify workflow task assign to... action', async () => {
 				await homePage.workflowTaskFilterButton.click();
 				await homePage.assignedToMyRolesMenuItem.click();
+				await page.waitForLoadState('networkidle');
 
-				await expect(page.getByText(objectEntry2.title)).toBeVisible();
+				const workflowTaskRow2 = page
+					.getByRole('row')
+					.filter({hasText: /sent you/i})
+					.filter({hasText: objectEntry2.title});
+
+				await expect(workflowTaskRow2).toBeVisible();
 				await homePage.assignTo(objectEntry2.title);
-				await expect(page.getByText(objectEntry2.title)).toBeHidden();
+				await expect(workflowTaskRow2).toBeHidden();
 
 				await homePage.workflowTaskFilterButton.click();
 				await homePage.assignedToMeMenuItem.click();
+				await page.waitForLoadState('networkidle');
 
-				await expect(page.getByText(objectEntry2.title)).toBeVisible();
+				await expect(workflowTaskRow2).toBeVisible();
 			});
 
 			await test.step('Verify workflow task approve action', async () => {
-				await expect(page.getByText(objectEntry1.title)).toBeVisible();
+				const workflowTaskRow1 = page
+					.getByRole('row')
+					.filter({hasText: /sent you/i})
+					.filter({hasText: objectEntry1.title});
+
+				await expect(workflowTaskRow1).toBeVisible();
 				await homePage.approveWorkflowTask(objectEntry1.title);
-				await expect(page.getByText(objectEntry1.title)).toBeHidden();
+				await expect(workflowTaskRow1).toBeHidden();
 			});
 
 			await test.step('Verify workflow task reject action', async () => {
-				await expect(page.getByText(objectEntry2.title)).toBeVisible();
+				const workflowTaskRow2 = page
+					.getByRole('row')
+					.filter({hasText: /sent you/i})
+					.filter({hasText: objectEntry2.title});
+
+				await expect(workflowTaskRow2).toBeVisible();
 				await homePage.rejectWorkflowTask(objectEntry2.title);
-				await expect(page.getByText(objectEntry2.title)).toBeHidden();
+				await expect(workflowTaskRow2).toBeHidden();
 			});
 
 			await test.step('Verify workflow task update due date action', async () => {
 				await homePage.workflowTaskFilterButton.click();
 				await homePage.assignedToMyRolesMenuItem.click();
+				await page.waitForLoadState('networkidle');
 
-				await expect(page.getByText(objectEntry3.title)).toBeVisible();
+				const workflowTaskRow3 = page
+					.getByRole('row')
+					.filter({hasText: /sent you/i})
+					.filter({hasText: objectEntry3.title});
+
+				await expect(workflowTaskRow3).toBeVisible();
 				await homePage.assignToMe(objectEntry3.title);
-				await expect(page.getByText(objectEntry3.title)).toBeHidden();
+				await expect(workflowTaskRow3).toBeHidden();
 
 				await homePage.workflowTaskFilterButton.click();
 				await homePage.assignedToMeMenuItem.click();
+				await page.waitForLoadState('networkidle');
 
-				await expect(page.getByText(objectEntry3.title)).toBeVisible();
+				await expect(workflowTaskRow3).toBeVisible();
 
 				const now = new Date();
 
@@ -148,9 +180,10 @@ test(
 
 				await homePage.updateDueDate(dueDate, objectEntry3.title);
 
-				const workflowTaskRow = page.getByRole('row', {
-					name: objectEntry3.title,
-				});
+				const workflowTaskRow = page
+					.getByRole('row')
+					.filter({hasText: /sent you/i})
+					.filter({hasText: objectEntry3.title});
 				await workflowTaskRow.getByRole('button').click();
 				await page
 					.getByRole('menuitem', {name: 'Update Due Date'})

@@ -55,7 +55,10 @@ export class HomePage {
 	}
 
 	async assignToMe(name: string) {
-		const workflowTaskRow = this.page.getByRole('row', {name});
+		const workflowTaskRow = this.page
+			.getByRole('row')
+			.filter({hasText: /sent you/i})
+			.filter({hasText: name});
 
 		await workflowTaskRow.getByRole('button').click();
 
@@ -70,7 +73,10 @@ export class HomePage {
 	}
 
 	async assignTo(name: string) {
-		const workflowTaskRow = this.page.getByRole('row', {name});
+		const workflowTaskRow = this.page
+			.getByRole('row')
+			.filter({hasText: /sent you/i})
+			.filter({hasText: name});
 
 		await workflowTaskRow.getByRole('button').click();
 
@@ -85,7 +91,10 @@ export class HomePage {
 	}
 
 	async approveWorkflowTask(name: string) {
-		const workflowTaskRow = this.page.getByRole('row', {name});
+		const workflowTaskRow = this.page
+			.getByRole('row')
+			.filter({hasText: /sent you/i})
+			.filter({hasText: name});
 
 		await workflowTaskRow.getByRole('button').click();
 
@@ -100,7 +109,10 @@ export class HomePage {
 	}
 
 	async rejectWorkflowTask(name: string) {
-		const workflowTaskRow = this.page.getByRole('row', {name});
+		const workflowTaskRow = this.page
+			.getByRole('row')
+			.filter({hasText: /sent you/i})
+			.filter({hasText: name});
 
 		await workflowTaskRow.getByRole('button').click();
 
@@ -139,7 +151,10 @@ export class HomePage {
 	}
 
 	async updateDueDate(date: string, name: string) {
-		const workflowTaskRow = this.page.getByRole('row', {name});
+		const workflowTaskRow = this.page
+			.getByRole('row')
+			.filter({hasText: /sent you/i})
+			.filter({hasText: name});
 
 		await workflowTaskRow.getByRole('button').click();
 

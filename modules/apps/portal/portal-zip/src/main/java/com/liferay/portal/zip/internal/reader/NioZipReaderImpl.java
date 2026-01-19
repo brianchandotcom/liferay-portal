@@ -7,10 +7,7 @@ package com.liferay.portal.zip.internal.reader;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.zip.ZipReader;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,17 +33,14 @@ import java.util.List;
 /**
  * @author Sergio Sanchez
  */
-public class NioZipReaderImpl implements ZipReader {
+public class NioZipReaderImpl extends BaseZipReader {
 
 	public NioZipReaderImpl(File file) {
-		_file = file;
-
-		_tempFile = false;
+		super(file);
 	}
 
 	public NioZipReaderImpl(InputStream inputStream) throws IOException {
-		_file = FileUtil.createTempFile(inputStream);
-		_tempFile = true;
+		super(inputStream);
 	}
 
 	@Override
@@ -60,155 +54,91 @@ public class NioZipReaderImpl implements ZipReader {
 			_log.error(exception);
 		}
 		finally {
-			if (_tempFile && (_file != null)) {
-				_deleteFile(_file);
-			}
+			super.close();
 		}
 	}
 
 	@Override
-	public List<String> getEntries() {
+	public List<String> doGetEntries() throws IOException {
 		if (!_initialized) {
 			_initFile();
 		}
 
-		try {
-			List<String> entries = new ArrayList<>();
+		List<String> entries = new ArrayList<>();
 
-			Files.walkFileTree(
-				_rootPath,
-				new SimpleFileVisitor<>() {
+		Files.walkFileTree(
+			_rootPath,
+			new SimpleFileVisitor<>() {
 
-					@Override
-					public FileVisitResult visitFile(
-						Path path, BasicFileAttributes basicFileAttributes) {
+				@Override
+				public FileVisitResult visitFile(
+					Path path, BasicFileAttributes basicFileAttributes) {
 
-						entries.add(_getRelativePath(path));
+					entries.add(_getRelativePath(path));
 
-						return FileVisitResult.CONTINUE;
-					}
+					return FileVisitResult.CONTINUE;
+				}
 
-				});
+			});
 
-			Collections.sort(entries);
-
-			return entries;
-		}
-		catch (IOException ioException) {
-			throw new UncheckedIOException(ioException);
-		}
+		return entries;
 	}
 
 	@Override
-	public byte[] getEntryAsByteArray(String name) {
-		if (Validator.isNull(name)) {
-			return null;
-		}
-
+	public byte[] doGetEntryAsByteArray(String name) throws IOException {
 		if (!_initialized) {
 			_initFile();
 		}
 
-		Path path = _resolvePath(name);
+		Path path = _rootPath.resolve(name);
 
-		try {
-			if (Files.isRegularFile(path)) {
-				return Files.readAllBytes(path);
-			}
-		}
-		catch (IOException ioException) {
-			_log.error(ioException);
+		if (Files.isRegularFile(path)) {
+			return Files.readAllBytes(path);
 		}
 
 		return null;
 	}
 
 	@Override
-	public InputStream getEntryAsInputStream(String name) {
-		if (Validator.isNull(name)) {
-			return null;
-		}
-
+	public InputStream doGetEntryAsInputStream(String name) throws IOException {
 		if (!_initialized) {
 			_initFile();
 		}
 
-		Path path = _resolvePath(name);
+		Path path = _rootPath.resolve(name);
 
-		try {
-			if (Files.isRegularFile(path)) {
-				return Files.newInputStream(path);
-			}
-		}
-		catch (IOException ioException) {
-			throw new UncheckedIOException(ioException);
+		if (Files.isRegularFile(path)) {
+			return Files.newInputStream(path);
 		}
 
 		return null;
 	}
 
 	@Override
-	public String getEntryAsString(String name) {
-		if (Validator.isNull(name)) {
-			return null;
-		}
-
+	public List<String> doGetFolderEntries(String path) throws IOException {
 		if (!_initialized) {
 			_initFile();
 		}
 
-		byte[] bytes = getEntryAsByteArray(name);
-
-		if (bytes != null) {
-			return new String(bytes);
-		}
-
-		return null;
-	}
-
-	@Override
-	public List<String> getFolderEntries(String path) {
-		if (Validator.isNull(path)) {
-			return Collections.emptyList();
-		}
-
-		if (!_initialized) {
-			_initFile();
-		}
-
-		Path folderPath = _resolvePath(path);
+		Path folderPath = _rootPath.resolve(path);
 
 		if (!Files.isDirectory(folderPath)) {
 			return Collections.emptyList();
 		}
 
-		try {
-			List<String> folderEntries = new ArrayList<>();
+		List<String> folderEntries = new ArrayList<>();
 
-			try (DirectoryStream<Path> directoryStream =
-					Files.newDirectoryStream(folderPath)) {
+		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
+				folderPath)) {
 
-				for (Path filePath : directoryStream) {
-					if (Files.isRegularFile(filePath)) {
-						folderEntries.add(_getRelativePath(filePath));
-					}
+			for (Path filePath : directoryStream) {
+				if (Files.isRegularFile(filePath)) {
+					folderEntries.add(_getRelativePath(filePath));
 				}
 			}
-
-			Collections.sort(folderEntries);
-
-			return folderEntries;
 		}
-		catch (IOException ioException) {
-			throw new UncheckedIOException(ioException);
-		}
-	}
 
-	private void _deleteFile(File file) {
-		if (!file.delete() && _log.isWarnEnabled()) {
-			_log.warn(
-				"Failed to delete temporary file " + file.getAbsolutePath());
-		}
+		return folderEntries;
 	}
 
 	private String _getRelativePath(Path path) {
@@ -219,7 +149,7 @@ public class NioZipReaderImpl implements ZipReader {
 
 	private void _initFile() {
 		try {
-			URI uri = URI.create("jar:" + _file.toURI());
+			URI uri = URI.create("jar:" + file.toURI());
 
 			try {
 				_fileSystem = FileSystems.newFileSystem(
@@ -241,31 +171,19 @@ public class NioZipReaderImpl implements ZipReader {
 			_initialized = true;
 		}
 		catch (IOException ioException) {
-			if (_tempFile) {
-				_deleteFile(_file);
-			}
+			super.close();
 
 			throw new UncheckedIOException(
-				"Failed to initialize NioZipReader for " + _file.getPath(),
+				"Failed to initialize NioZipReader for " + file.getPath(),
 				ioException);
 		}
-	}
-
-	private Path _resolvePath(String name) {
-		if (name.startsWith("/")) {
-			name = name.substring(1);
-		}
-
-		return _rootPath.resolve(name);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		NioZipReaderImpl.class);
 
-	private final File _file;
 	private FileSystem _fileSystem;
 	private volatile boolean _initialized;
 	private Path _rootPath;
-	private final boolean _tempFile;
 
 }

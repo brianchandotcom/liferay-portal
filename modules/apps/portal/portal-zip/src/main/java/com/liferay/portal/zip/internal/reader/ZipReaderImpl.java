@@ -9,22 +9,15 @@ import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncFilterInputStream;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.zip.ZipReader;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UncheckedIOException;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.zip.ZipEntry;
@@ -33,30 +26,21 @@ import java.util.zip.ZipFile;
 /**
  * @author Raymond Augé
  */
-public class ZipReaderImpl implements ZipReader {
+public class ZipReaderImpl extends BaseZipReader {
 
 	public ZipReaderImpl(File file) {
-		_file = file;
+		super(file);
 	}
 
 	public ZipReaderImpl(InputStream inputStream) throws IOException {
-		this(FileUtil.createTempFile(inputStream));
-
-		_tempFile = _file;
+		super(inputStream);
 	}
 
 	@Override
-	public void close() {
-		if (_tempFile != null) {
-			_tempFile.delete();
-		}
-	}
-
-	@Override
-	public List<String> getEntries() {
+	public List<String> doGetEntries() throws IOException {
 		List<String> entries = new ArrayList<>();
 
-		try (ZipFile zipFile = new ZipFile(_file)) {
+		try (ZipFile zipFile = new ZipFile(file)) {
 			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
 
 			while (enumeration.hasMoreElements()) {
@@ -68,102 +52,50 @@ public class ZipReaderImpl implements ZipReader {
 
 				entries.add(zipEntry.getName());
 			}
-		}
-		catch (IOException ioException) {
-			throw new UncheckedIOException(ioException);
-		}
 
-		entries.sort(null);
-
-		return entries;
+			return entries;
+		}
 	}
 
 	@Override
-	public byte[] getEntryAsByteArray(String name) {
-		if (Validator.isNull(name)) {
-			return null;
-		}
-
-		try {
-			return StreamUtil.toByteArray(getEntryAsInputStream(name));
-		}
-		catch (IOException ioException) {
-			_log.error(ioException);
-		}
-
-		return null;
+	public byte[] doGetEntryAsByteArray(String name) throws IOException {
+		return StreamUtil.toByteArray(doGetEntryAsInputStream(name));
 	}
 
 	@Override
-	public InputStream getEntryAsInputStream(String name) {
-		if (Validator.isNull(name)) {
-			return null;
-		}
+	public InputStream doGetEntryAsInputStream(String name) throws IOException {
+		final ZipFile zipFile = new ZipFile(file);
 
-		if (name.startsWith(StringPool.SLASH)) {
-			name = name.substring(1);
-		}
+		ZipEntry zipEntry = zipFile.getEntry(name);
 
-		try {
-			final ZipFile zipFile = new ZipFile(_file);
+		if ((zipEntry != null) && !zipEntry.isDirectory()) {
+			InputStream inputStream = zipFile.getInputStream(zipEntry);
 
-			ZipEntry zipEntry = zipFile.getEntry(name);
+			// Null check inputStream to overcome
+			// jdk.util.zip.ensureTrailingSlash issue in between
+			// [JDK 8u141, JDK 8u144)
 
-			if ((zipEntry != null) && !zipEntry.isDirectory()) {
-				InputStream inputStream = zipFile.getInputStream(zipEntry);
+			if (inputStream != null) {
+				return new UnsyncFilterInputStream(inputStream) {
 
-				// Null check inputStream to overcome
-				// jdk.util.zip.ensureTrailingSlash issue in between
-				// [JDK 8u141, JDK 8u144)
+					@Override
+					public void close() throws IOException {
+						super.close();
 
-				if (inputStream != null) {
-					return new UnsyncFilterInputStream(inputStream) {
+						zipFile.close();
+					}
 
-						@Override
-						public void close() throws IOException {
-							super.close();
-
-							zipFile.close();
-						}
-
-					};
-				}
+				};
 			}
-
-			zipFile.close();
-
-			return null;
-		}
-		catch (IOException ioException) {
-			throw new UncheckedIOException(ioException);
-		}
-	}
-
-	@Override
-	public String getEntryAsString(String name) {
-		if (Validator.isNull(name)) {
-			return null;
 		}
 
-		byte[] bytes = getEntryAsByteArray(name);
-
-		if (bytes != null) {
-			return new String(bytes);
-		}
+		zipFile.close();
 
 		return null;
 	}
 
 	@Override
-	public List<String> getFolderEntries(String path) {
-		if (Validator.isNull(path)) {
-			return Collections.emptyList();
-		}
-
-		if (path.startsWith(StringPool.SLASH)) {
-			path = path.substring(1);
-		}
-
+	public List<String> doGetFolderEntries(String path) throws IOException {
 		Path javaPath = Paths.get(path);
 
 		javaPath = javaPath.normalize();
@@ -172,7 +104,7 @@ public class ZipReaderImpl implements ZipReader {
 
 		List<String> entries = new ArrayList<>();
 
-		try (ZipFile zipFile = new ZipFile(_file)) {
+		try (ZipFile zipFile = new ZipFile(file)) {
 			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
 
 			while (enumeration.hasMoreElements()) {
@@ -197,18 +129,8 @@ public class ZipReaderImpl implements ZipReader {
 				}
 			}
 		}
-		catch (IOException ioException) {
-			throw new UncheckedIOException(ioException);
-		}
-
-		entries.sort(null);
 
 		return entries;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(ZipReaderImpl.class);
-
-	private final File _file;
-	private File _tempFile;
 
 }

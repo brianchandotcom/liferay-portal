@@ -280,7 +280,8 @@ public class AccountGroupLocalServiceImpl
 				new ServiceContext()),
 			externalReferenceCode,
 			this::fetchAccountGroupByExternalReferenceCode,
-			this::getAccountGroupByExternalReferenceCode);
+			this::getAccountGroupByExternalReferenceCode,
+			AccountGroup.class.getName());
 	}
 
 	@Override

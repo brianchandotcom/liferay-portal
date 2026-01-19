@@ -146,7 +146,8 @@ public class ListTypeDefinitionLocalServiceImpl
 				system, WorkflowConstants.STATUS_EMPTY),
 			externalReferenceCode,
 			this::fetchListTypeDefinitionByExternalReferenceCode,
-			this::getListTypeDefinitionByExternalReferenceCode);
+			this::getListTypeDefinitionByExternalReferenceCode,
+			ListTypeDefinition.class.getName());
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

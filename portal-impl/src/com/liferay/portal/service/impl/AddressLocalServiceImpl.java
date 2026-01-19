@@ -274,7 +274,8 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 				externalReferenceCode, userId, className, classPK, 0, 0, 0,
 				StringPool.BLANK, StringPool.BLANK, false, null, false,
 				StringPool.BLANK, null, null, null, null, null,
-				new ServiceContext()));
+				new ServiceContext()),
+			Address.class.getName());
 	}
 
 	@Override

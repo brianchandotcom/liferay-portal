@@ -497,7 +497,8 @@ public class AccountEntryLocalServiceImpl
 				WorkflowConstants.STATUS_EMPTY, null),
 			externalReferenceCode,
 			this::fetchAccountEntryByExternalReferenceCode,
-			this::getAccountEntryByExternalReferenceCode);
+			this::getAccountEntryByExternalReferenceCode,
+			AccountEntry.class.getName());
 	}
 
 	@Override

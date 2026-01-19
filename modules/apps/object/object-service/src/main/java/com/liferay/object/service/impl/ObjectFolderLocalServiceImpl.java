@@ -174,7 +174,8 @@ public class ObjectFolderLocalServiceImpl
 				externalReferenceCode),
 			externalReferenceCode,
 			this::fetchObjectFolderByExternalReferenceCode,
-			this::getObjectFolderByExternalReferenceCode);
+			this::getObjectFolderByExternalReferenceCode,
+			ObjectFolder.class.getName());
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

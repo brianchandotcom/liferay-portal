@@ -744,7 +744,8 @@ public class OrganizationLocalServiceImpl
 					externalReferenceCode, userId, 0, organizationName,
 					types[0], 0, 0, listType.getListTypeId(), StringPool.BLANK,
 					false, null);
-			});
+			},
+			Organization.class.getName());
 	}
 
 	/**

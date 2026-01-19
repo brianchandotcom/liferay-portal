@@ -209,7 +209,8 @@ public class ListTypeEntryLocalServiceImpl
 			(externalReferenceCode, companyId) -> fetchListTypeEntry(
 				listTypeDefinitionId, key),
 			(externalReferenceCode, companyId) -> getListTypeEntry(
-				listTypeDefinitionId, key));
+				listTypeDefinitionId, key),
+			ListTypeEntry.class.getName());
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

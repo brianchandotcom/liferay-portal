@@ -2323,7 +2323,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 					serviceContext);
 			},
 			externalReferenceCode, this::fetchLayoutByExternalReferenceCode,
-			this::getLayoutByExternalReferenceCode, groupId);
+			this::getLayoutByExternalReferenceCode, groupId,
+			Layout.class.getName());
 	}
 
 	@Override

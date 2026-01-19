@@ -86,7 +86,7 @@ public class ClientExtensionsOSGiCommands implements OSGiCommands {
 			return;
 		}
 
-		System.out.println(_printConfiguration(configuration));
+		_printConfiguration(configuration);
 	}
 
 	private String _formatProperties(Dictionary<String, Object> properties) {
@@ -197,12 +197,13 @@ public class ClientExtensionsOSGiCommands implements OSGiCommands {
 			StringBundler.concat("(&", deploymentFilterString, sb, ")"));
 	}
 
-	private String _printConfiguration(Configuration configuration) {
-		return StringBundler.concat(
-			"\nPID: ", configuration.getPid(), "\nFactoryPID: ",
-			configuration.getFactoryPid(), "\nBundle location: ",
-			configuration.getBundleLocation(), "\n",
-			_formatProperties(configuration.getProperties()));
+	private void _printConfiguration(Configuration configuration) {
+		System.out.println(
+			StringBundler.concat(
+				"\nPID: ", configuration.getPid(), "\nFactoryPID: ",
+				configuration.getFactoryPid(), "\nBundle location: ",
+				configuration.getBundleLocation(), "\n",
+				_formatProperties(configuration.getProperties())));
 	}
 
 	private void _printConfigurations(Configuration[] configurations) {

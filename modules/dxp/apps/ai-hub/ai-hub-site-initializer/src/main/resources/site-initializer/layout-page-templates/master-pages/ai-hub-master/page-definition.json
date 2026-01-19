@@ -1,6 +1,5 @@
 {
 	"pageElement": {
-		"id": "307eeda7-c54b-70c6-6a79-c20994668d81",
 		"pageElements": [
 			{
 				"definition": {
@@ -12,23 +11,14 @@
 						"sidebarAriaLabel": "AI Hub Product Menu"
 					},
 					"fragmentFields": [
-						{
-							"id": "sidebarTitle",
-							"value": {
-								"fragmentLink": {
-								}
-							}
-						}
 					],
 					"indexed": true
 				},
-				"id": "6a354764-416e-2b1b-1cb0-47e49cb25627",
 				"pageElements": [
 					{
 						"definition": {
 							"fragmentDropZoneId": "topBar"
 						},
-						"id": "5aeb1eb5-f96e-96cb-06b7-61e612a0485b",
 						"pageElements": [
 							{
 								"definition": {
@@ -41,20 +31,6 @@
 										"pagebarAriaLabel": "AI Hub Control Menu"
 									},
 									"fragmentFields": [
-										{
-											"id": "sidebarImage",
-											"value": {
-												"fragmentLink": {
-												}
-											}
-										},
-										{
-											"id": "sidebarTitle",
-											"value": {
-												"fragmentLink": {
-												}
-											}
-										}
 									],
 									"indexed": true,
 									"widgetInstances": [
@@ -65,13 +41,11 @@
 										}
 									]
 								},
-								"id": "32f64cbe-57dd-937b-1d9e-edc1de70b958",
 								"pageElements": [
 									{
 										"definition": {
 											"fragmentDropZoneId": "sidebarTrigger"
 										},
-										"id": "57750634-2ad5-dbdb-bf52-0577eeca1155",
 										"pageElements": [
 											{
 												"definition": {
@@ -85,30 +59,6 @@
 													],
 													"indexed": true
 												},
-												"id": "88b7f132-967b-ca14-4875-04240379f1e0",
-												"type": "Fragment"
-											}
-										],
-										"type": "FragmentDropZone"
-									},
-									{
-										"definition": {
-											"fragmentDropZoneId": "bulkActionsMonitor"
-										},
-										"id": "cd36fbad-a608-817b-96dd-4002fb31f75d",
-										"pageElements": [
-											{
-												"definition": {
-													"fragment": {
-														"key": "com.liferay.site.cms.site.initializer.internal.fragment.renderer.BulkActionsMonitorComponentSectionFragmentRender"
-													},
-													"fragmentConfig": {
-													},
-													"fragmentFields": [
-													],
-													"indexed": true
-												},
-												"id": "0fe4485a-736c-6aeb-5a2c-069ce85ca8ef",
 												"type": "Fragment"
 											}
 										],
@@ -124,7 +74,6 @@
 						"definition": {
 							"fragmentDropZoneId": "sidebarBody"
 						},
-						"id": "212eb06f-da24-4b75-cde8-face21ecf4e5",
 						"pageElements": [
 							{
 								"definition": {
@@ -144,7 +93,6 @@
 									],
 									"indexed": true
 								},
-								"id": "339a84e4-b200-a686-2e8e-724ca1458332",
 								"type": "Fragment"
 							}
 						],
@@ -154,7 +102,6 @@
 						"definition": {
 							"fragmentDropZoneId": "content"
 						},
-						"id": "5400998b-15ff-c784-f346-4c6a2bf62947",
 						"pageElements": [
 							{
 								"definition": {
@@ -163,7 +110,6 @@
 										]
 									}
 								},
-								"id": "5b085050-70dd-18d8-7227-06afb1ebac78",
 								"type": "DropZone"
 							}
 						],
@@ -179,5 +125,5 @@
 		"colorSchemeName": "01",
 		"themeName": "CMS"
 	},
-	"version": 1.1
+	"version": 1.0
 }

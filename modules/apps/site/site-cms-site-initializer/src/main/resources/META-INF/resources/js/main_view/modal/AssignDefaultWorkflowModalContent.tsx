@@ -17,7 +17,7 @@ interface WorkflowOption {
 
 export interface StructureWorkflowItem {
 	id: string;
-	workflow: string;
+	workflow: '' | 'Single Approver';
 }
 
 export default function AssignDefaultWorkflowModalContent({
@@ -27,7 +27,7 @@ export default function AssignDefaultWorkflowModalContent({
 	closeModal: () => void;
 	structureWorkflows: StructureWorkflowItem[];
 }) {
-	const [selectedWorkflow, setSelectedWorkflow] = useState('');
+	const [selectedWorkflow, setSelectedWorkflow] = useState<string>('');
 
 	const [workflows, setWorkflows] = useState<WorkflowOption[]>();
 
@@ -49,13 +49,27 @@ export default function AssignDefaultWorkflowModalContent({
 
 			setWorkflows(options);
 
-			// Select first option by default (No Workflow)
+			if (structureWorkflows.length === 1) {
+				setSelectedWorkflow(structureWorkflows[0].workflow);
+			}
+			else {
+				const workflowValues = structureWorkflows.map(
+					(item) => item.workflow
+				);
+				const sameValue = workflowValues.every(
+					(value) => value === workflowValues[0]
+				);
 
-			setSelectedWorkflow(options[0].value);
+				setSelectedWorkflow(
+					sameValue
+						? workflowValues[0]
+						: Liferay.Language.get('mixed-workflows')
+				);
+			}
 		};
 
 		fetchWorkflows();
-	}, []);
+	}, [structureWorkflows]);
 
 	const selectId = useId();
 

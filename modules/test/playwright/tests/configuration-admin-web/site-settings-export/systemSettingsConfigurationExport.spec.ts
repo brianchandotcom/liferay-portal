@@ -30,7 +30,7 @@ export const test = mergeTests(
 const DEFAULT_VIRTUAL_INSTANCE_NAME = 'www.able.com';
 const GUEST_SITE_NAME = 'Guest';
 
-test('Check that Site OSGi configurations can be used across different systems.', async ({
+test('Check that Site OSGI configurations can be used across different systems.', async ({
 	browser,
 	page,
 	siteSettingsPage,

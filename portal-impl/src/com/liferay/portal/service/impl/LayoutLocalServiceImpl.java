@@ -2604,21 +2604,29 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			return false;
 		}
 
-		int count = layoutPersistence.countByPLPTEERC_PLPTESERC(
-			portletLayoutPageTemplateEntryERC,
-			group.getExternalReferenceCode());
+		int count = dslQueryCount(
+			DSLQueryFactoryUtil.count(
+			).from(
+				LayoutTable.INSTANCE
+			).where(
+				LayoutTable.INSTANCE.portletLayoutPageTemplateEntryERC.eq(
+					portletLayoutPageTemplateEntryERC
+				).and(
+					LayoutTable.INSTANCE.portletLayoutPageTemplateEntryScopeERC.
+						eq(
+							group.getExternalReferenceCode()
+						).or(
+							LayoutTable.INSTANCE.
+								portletLayoutPageTemplateEntryScopeERC.isNull(
+								).and(
+									LayoutTable.INSTANCE.groupId.eq(groupId)
+								)
+						)
+				)
+			));
 
 		if (count > 0) {
 			return true;
-		}
-
-		List<Layout> layouts = layoutPersistence.findByPLPTEERC_PLPTESERC(
-			portletLayoutPageTemplateEntryERC, null);
-
-		for (Layout layout : layouts) {
-			if (groupId == layout.getGroupId()) {
-				return true;
-			}
 		}
 
 		return false;

@@ -465,6 +465,7 @@ definition {
 	@description = "Verify is possible export/import a Portlet."
 	@priority = 4
 	test ExportImportPortlet {
+		property browser.chrome.version = "139.0";
 		property portal.acceptance = "true";
 
 		task ("Given: User adds a new page with an IFrame portlet") {

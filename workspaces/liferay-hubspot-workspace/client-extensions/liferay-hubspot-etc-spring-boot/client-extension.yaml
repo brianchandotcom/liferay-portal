@@ -5,9 +5,9 @@ liferay-hubspot-etc-spring-boot-oahs:
     .serviceScheme: http
     name: Liferay HubSpot Etc Spring Boot OAuth Application Headless Server
     scopes:
-        -   c_h1s4company.everything
-        -   c_h1s4contact.everything
-        -   c_h1s4lead.everything
+        -   c_hs10company.everything
+        -   c_hs10contact.everything
+        -   c_hs10lead.everything
     type: oAuthApplicationHeadlessServer
 liferay-hubspot-etc-spring-boot-oaua:
     .serviceAddress: localhost:58081

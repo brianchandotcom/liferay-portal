@@ -15,35 +15,28 @@
 			"active": true,
 			"enableCategorization": true,
 			"enableComments": false,
-			"enableIndexSearch": true,
-			"enableLocalization": false,
-			"enableObjectEntryDraft": false,
 			"enableObjectEntryHistory": false,
-			"externalReferenceCode": "H1S4_COMPANY",
+			"externalReferenceCode": "HS10_COMPANY",
 			"label": {
-				"en_US": "H1S4 Company"
+				"en_US": "HS10 Company"
 			},
-			"modifiable": true,
-			"name": "H1S4Company",
+			"name": "HS10Company",
 			"objectActions": [
 				{
 					"active": true,
-					"conditionExpression": "",
-					"description": "",
-					"errorMessage": {
-					},
-					"externalReferenceCode": "H1S4_ADD_COMPANY",
+					"externalReferenceCode": "HS10_ADD_COMPANY",
 					"label": {
-						"en_US": "H1S4 Add Company"
+						"en_US": "HS10 Add Company"
 					},
-					"name": "h1s4AddCompany",
+					"name": "HS10AddCompany",
 					"objectActionExecutorKey": "function#liferay-hubspot-etc-spring-boot-object-action-company",
 					"objectActionTriggerKey": "onAfterAdd",
-					"parameters": {
+					"status": {
+						"code": 0,
+						"label": "never-ran",
+						"label_i18n": "Never Ran"
 					}
 				}
-			],
-			"objectDefinitionSettings": [
 			],
 			"objectFields": [
 				{
@@ -56,7 +49,6 @@
 					"label": {
 						"en_US": "Name"
 					},
-					"localized": false,
 					"name": "name",
 					"objectFieldSettings": [
 						{
@@ -64,12 +56,10 @@
 							"value": false
 						}
 					],
-					"readOnly": "false",
 					"required": false,
 					"state": false,
 					"system": false,
-					"type": "String",
-					"unique": false
+					"type": "String"
 				},
 				{
 					"DBType": "Long",
@@ -81,16 +71,13 @@
 					"label": {
 						"en_US": "Number of Employees"
 					},
-					"localized": false,
 					"name": "numberOfEmployees",
 					"objectFieldSettings": [
 					],
-					"readOnly": "false",
 					"required": false,
 					"state": false,
 					"system": false,
-					"type": "Long",
-					"unique": false
+					"type": "Long"
 				},
 				{
 					"DBType": "String",
@@ -102,7 +89,6 @@
 					"label": {
 						"en_US": "Phone"
 					},
-					"localized": false,
 					"name": "phone",
 					"objectFieldSettings": [
 						{
@@ -110,12 +96,10 @@
 							"value": false
 						}
 					],
-					"readOnly": "false",
 					"required": false,
 					"state": false,
 					"system": false,
-					"type": "String",
-					"unique": false
+					"type": "String"
 				},
 				{
 					"DBType": "String",
@@ -127,7 +111,6 @@
 					"label": {
 						"en_US": "Website"
 					},
-					"localized": false,
 					"name": "website",
 					"objectFieldSettings": [
 						{
@@ -135,69 +118,54 @@
 							"value": false
 						}
 					],
-					"readOnly": "false",
 					"required": false,
 					"state": false,
 					"system": false,
-					"type": "String",
-					"unique": false
+					"type": "String"
 				}
 			],
-			"objectFolderExternalReferenceCode": "H1S4_HUBSPOT",
-			"objectRelationships": [
-			],
-			"objectValidationRules": [
-			],
+			"objectFolderExternalReferenceCode": "HS10_HUBSPOT",
 			"panelCategoryKey": "control_panel.object",
 			"parameterRequired": false,
 			"pluralLabel": {
-				"en_US": "H1S4 Companies"
+				"en_US": "HS10 Companies"
 			},
 			"portlet": true,
-			"restContextPath": "/o/c/h1s4companies",
+			"restContextPath": "/o/c/hs10companies",
 			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",
 				"label_i18n": "Approved"
-			},
-			"system": false,
-			"titleObjectFieldName": "name"
+			}
 		},
 		{
 			"accountEntryRestricted": false,
 			"active": true,
 			"enableCategorization": true,
 			"enableComments": false,
-			"enableIndexSearch": true,
-			"enableLocalization": false,
-			"enableObjectEntryDraft": false,
 			"enableObjectEntryHistory": false,
-			"externalReferenceCode": "H1S4_CONTACT",
+			"externalReferenceCode": "HS10_CONTACT",
 			"label": {
-				"en_US": "H1S4 Contact"
+				"en_US": "HS10 Contact"
 			},
-			"modifiable": true,
-			"name": "H1S4Contact",
+			"name": "HS10Contact",
 			"objectActions": [
 				{
 					"active": true,
-					"conditionExpression": "",
-					"description": "",
-					"errorMessage": {
-					},
-					"externalReferenceCode": "H1S4_ADD_CONTACT",
+					"externalReferenceCode": "HS10_ADD_CONTACT",
 					"label": {
-						"en_US": "H1S4 Add Contact"
+						"en_US": "HS10 Add Contact"
 					},
-					"name": "h1s4AddContact",
+					"name": "HS10AddContact",
 					"objectActionExecutorKey": "function#liferay-hubspot-etc-spring-boot-object-action-contact",
 					"objectActionTriggerKey": "onAfterAdd",
-					"parameters": {
+					"status": {
+						"code": 0,
+						"label": "never-ran",
+						"label_i18n": "Never Ran"
 					}
 				}
-			],
-			"objectDefinitionSettings": [
 			],
 			"objectFields": [
 				{
@@ -210,7 +178,6 @@
 					"label": {
 						"en_US": "Email"
 					},
-					"localized": false,
 					"name": "email",
 					"objectFieldSettings": [
 						{
@@ -218,12 +185,10 @@
 							"value": false
 						}
 					],
-					"readOnly": "false",
 					"required": false,
 					"state": false,
 					"system": false,
-					"type": "String",
-					"unique": false
+					"type": "String"
 				},
 				{
 					"DBType": "String",
@@ -235,7 +200,6 @@
 					"label": {
 						"en_US": "First Name"
 					},
-					"localized": false,
 					"name": "firstName",
 					"objectFieldSettings": [
 						{
@@ -243,12 +207,10 @@
 							"value": false
 						}
 					],
-					"readOnly": "false",
 					"required": false,
 					"state": false,
 					"system": false,
-					"type": "String",
-					"unique": false
+					"type": "String"
 				},
 				{
 					"DBType": "String",
@@ -260,7 +222,6 @@
 					"label": {
 						"en_US": "Last Name"
 					},
-					"localized": false,
 					"name": "lastName",
 					"objectFieldSettings": [
 						{
@@ -268,12 +229,10 @@
 							"value": false
 						}
 					],
-					"readOnly": "false",
 					"required": false,
 					"state": false,
 					"system": false,
-					"type": "String",
-					"unique": false
+					"type": "String"
 				},
 				{
 					"DBType": "String",
@@ -285,7 +244,6 @@
 					"label": {
 						"en_US": "Phone"
 					},
-					"localized": false,
 					"name": "phone",
 					"objectFieldSettings": [
 						{
@@ -293,80 +251,67 @@
 							"value": false
 						}
 					],
-					"readOnly": "false",
 					"required": false,
 					"state": false,
 					"system": false,
-					"type": "String",
-					"unique": false
+					"type": "String"
 				}
 			],
-			"objectFolderExternalReferenceCode": "H1S4_HUBSPOT",
+			"objectFolderExternalReferenceCode": "HS10_HUBSPOT",
 			"objectRelationships": [
 				{
 					"deletionType": "disassociate",
-					"externalReferenceCode": "H1S4_CONTACT_TO_H1S4_LEADS",
+					"externalReferenceCode": "HS10_CONTACT_TO_HS10_LEADS",
 					"label": {
-						"en_US": "H1S4 Contact to H1S4 Leads"
+						"en_US": "HS10 Contact to HS10 Leads"
 					},
-					"name": "h1s4ContactToH1S4Leads",
-					"objectDefinitionExternalReferenceCode1": "H1S4_CONTACT",
-					"objectDefinitionExternalReferenceCode2": "H1S4_LEAD",
+					"name": "hs10ContactToHS10Leads",
+					"objectDefinitionExternalReferenceCode1": "HS10_CONTACT",
+					"objectDefinitionExternalReferenceCode2": "HS10_LEAD",
 					"type": "oneToMany"
 				}
-			],
-			"objectValidationRules": [
 			],
 			"panelCategoryKey": "control_panel.object",
 			"parameterRequired": false,
 			"pluralLabel": {
-				"en_US": "H1S4 Contacts"
+				"en_US": "HS10 Contacts"
 			},
 			"portlet": true,
-			"restContextPath": "/o/c/h1s4contacts",
+			"restContextPath": "/o/c/hs10contacts",
 			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",
 				"label_i18n": "Approved"
-			},
-			"system": false,
-			"titleObjectFieldName": "email"
+			}
 		},
 		{
 			"accountEntryRestricted": false,
 			"active": true,
 			"enableCategorization": true,
 			"enableComments": false,
-			"enableIndexSearch": true,
-			"enableLocalization": false,
-			"enableObjectEntryDraft": false,
 			"enableObjectEntryHistory": false,
-			"externalReferenceCode": "H1S4_LEAD",
+			"externalReferenceCode": "HS10_LEAD",
 			"label": {
-				"en_US": "H1S4 Lead"
+				"en_US": "HS10 Lead"
 			},
-			"modifiable": true,
-			"name": "H1S4Lead",
+			"name": "HS10Lead",
 			"objectActions": [
 				{
 					"active": true,
-					"conditionExpression": "",
-					"description": "",
-					"errorMessage": {
-					},
-					"externalReferenceCode": "H1S4_ADD_LEAD",
+					"externalReferenceCode": "HS10_ADD_LEAD",
 					"label": {
-						"en_US": "H1S4 Add Lead"
+						"en_US": "HS10 Add Lead"
 					},
-					"name": "h1s4AddLead",
+					"name": "HS10AddLead",
 					"objectActionExecutorKey": "function#liferay-hubspot-etc-spring-boot-object-action-lead",
 					"objectActionTriggerKey": "onAfterAdd",
-					"parameters": {
+					"status": {
+						"code": 0,
+						"label": "never-ran",
+						"label_i18n": "Never Ran"
 					}
 				}
-			],
-			"objectDefinitionSettings": [
 			],
 			"objectFields": [
 				{
@@ -379,14 +324,14 @@
 					"label": {
 						"en_US": "HS Lead Label"
 					},
-					"listTypeDefinitionExternalReferenceCode": "H1S4_LEAD_LABEL",
-					"localized": false,
+					"listTypeDefinitionExternalReferenceCode": "HS10_LEAD_LABEL",
 					"name": "hsLeadLabel",
-					"readOnly": "false",
+					"objectFieldSettings": [
+					],
 					"required": true,
 					"state": false,
-					"type": "String",
-					"unique": false
+					"system": false,
+					"type": "String"
 				},
 				{
 					"DBType": "String",
@@ -398,7 +343,6 @@
 					"label": {
 						"en_US": "HS Lead Name"
 					},
-					"localized": false,
 					"name": "hsLeadName",
 					"objectFieldSettings": [
 						{
@@ -406,12 +350,10 @@
 							"value": false
 						}
 					],
-					"readOnly": "false",
 					"required": false,
 					"state": false,
 					"system": false,
-					"type": "String",
-					"unique": false
+					"type": "String"
 				},
 				{
 					"DBType": "String",
@@ -423,36 +365,30 @@
 					"label": {
 						"en_US": "HS Lead Type"
 					},
-					"listTypeDefinitionExternalReferenceCode": "H1S4_LEAD_TYPE",
-					"localized": false,
+					"listTypeDefinitionExternalReferenceCode": "HS10_LEAD_TYPE",
 					"name": "hsLeadType",
-					"readOnly": "false",
+					"objectFieldSettings": [
+					],
 					"required": true,
 					"state": false,
-					"type": "String",
-					"unique": false
+					"system": false,
+					"type": "String"
 				}
 			],
-			"objectFolderExternalReferenceCode": "H1S4_HUBSPOT",
-			"objectRelationships": [
-			],
-			"objectValidationRules": [
-			],
+			"objectFolderExternalReferenceCode": "HS10_HUBSPOT",
 			"panelCategoryKey": "control_panel.object",
 			"parameterRequired": false,
 			"pluralLabel": {
-				"en_US": "H1S4 Leads"
+				"en_US": "HS10 Leads"
 			},
 			"portlet": true,
-			"restContextPath": "/o/c/h1s4leads",
+			"restContextPath": "/o/c/hs10leads",
 			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",
 				"label_i18n": "Approved"
-			},
-			"system": false,
-			"titleObjectFieldName": "hsLeadName"
+			}
 		}
 	]
 }

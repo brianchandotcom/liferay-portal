@@ -26,7 +26,7 @@ public class ObjectActionCompanyRestController extends BaseRestController {
 		_liferayService.patchObjectEntry(
 			_hubSpotService.postCompany(
 				_liferayService.getObjectEntryValuesJSONObject(json)),
-			"o/c/h1s4companies/" + _liferayService.getClassPK(json));
+			"o/c/hs10companies/" + _liferayService.getClassPK(json));
 	}
 
 	@Autowired

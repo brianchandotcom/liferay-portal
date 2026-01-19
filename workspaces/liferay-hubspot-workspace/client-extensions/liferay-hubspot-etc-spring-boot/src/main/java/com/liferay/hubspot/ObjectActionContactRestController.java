@@ -26,7 +26,7 @@ public class ObjectActionContactRestController extends BaseRestController {
 		_liferayService.patchObjectEntry(
 			_hubSpotService.postContact(
 				_liferayService.getObjectEntryValuesJSONObject(json)),
-			"o/c/h1s4contacts/" + _liferayService.getClassPK(json));
+			"o/c/hs10contacts/" + _liferayService.getClassPK(json));
 	}
 
 	@Autowired

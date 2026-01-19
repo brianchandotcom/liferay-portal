@@ -412,7 +412,7 @@ test.describe('Manage fields through Form Builder page', () => {
 		await expect(newTabPage.getByText(formattedDate)).toBeVisible();
 	});
 
-	test('Assert that a fields group can be previewed', async ({
+	test('Assert that a fields group can be created and previewed', async ({
 		formBuilderPage,
 		formBuilderSidePanelPage,
 	}) => {

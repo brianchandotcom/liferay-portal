@@ -29,7 +29,14 @@ const reportType = {
 	}
 };
 
-const DownloadReportDropdown = ({className, onClick, segmentId, title}) => {
+const DownloadReportDropdown = ({
+	className,
+	label,
+	onClick,
+	segmentId,
+	subtitle,
+	title
+}) => {
 	const {loadingCount} = useMutationObserver();
 	const dataSourceStates = useDataSource();
 
@@ -61,7 +68,9 @@ const DownloadReportDropdown = ({className, onClick, segmentId, title}) => {
 								(dropdownItem.value === 'pdf' && !!loadingCount)
 							}
 							key={dropdownItem.value}
+							label={label}
 							segmentId={segmentId}
+							subtitle={subtitle}
 							title={title}
 						>
 							<ClayDropdown.Item>

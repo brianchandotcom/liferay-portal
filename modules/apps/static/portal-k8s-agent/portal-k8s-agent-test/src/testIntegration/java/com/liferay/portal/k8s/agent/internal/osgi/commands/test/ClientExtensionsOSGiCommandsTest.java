@@ -233,13 +233,11 @@ public class ClientExtensionsOSGiCommandsTest {
 
 	@Test
 	public void testReload() throws Exception {
-		String basePid = CETConfiguration.class.getName();
+		String pid =
+			CETConfiguration.class.getName() +
+				"~liferay-sample-cx-1/liferay.com";
 
-		_testReload(
-			basePid + "~liferay-sample-cx-1/liferay.com",
-			StringBundler.concat(
-				"Reloaded configuration for PID ", basePid,
-				"~liferay-sample-cx-1/liferay.com"));
+		_testReload(pid, "Reloaded configuration for PID " + pid);
 
 		_testReload(
 			"non-existent-pid",

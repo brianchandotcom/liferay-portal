@@ -14,7 +14,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -80,15 +79,9 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 					String.valueOf(objectDefinition.getObjectDefinitionId()));
 				dropdownItem.putData(
 					"redirect",
-					StringBundler.concat(
-						themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
-						GroupConstants.CMS_FRIENDLY_URL,
-						"/add_task?objectDefinitionId=",
-						objectDefinition.getObjectDefinitionId(), "&plid=",
-						themeDisplay.getPlid(), "&projectGroupId=",
-						_assetEntry.getGroupId(), "&projectId=",
-						_assetEntry.getClassPK(), "&redirect=",
-						themeDisplay.getURLCurrent()));
+					ActionUtil.getAddTaskURL(
+						objectDefinition, _assetEntry.getGroupId(),
+						_assetEntry.getClassPK(), themeDisplay));
 				dropdownItem.putData(
 					"title",
 					objectDefinition.getLabel(themeDisplay.getLocale()));

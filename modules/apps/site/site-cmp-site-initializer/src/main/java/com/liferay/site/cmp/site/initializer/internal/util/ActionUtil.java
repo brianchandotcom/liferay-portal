@@ -27,6 +27,18 @@ public class ActionUtil {
 			themeDisplay.getPlid(), "&redirect=", themeDisplay.getURLCurrent());
 	}
 
+	public static String getAddTaskURL(
+		long groupId, ObjectDefinition objectDefinition, long objectEntryId,
+		ThemeDisplay themeDisplay) {
+
+		return StringBundler.concat(
+			themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+			GroupConstants.CMS_FRIENDLY_URL, "/add_task?objectDefinitionId=",
+			objectDefinition.getObjectDefinitionId(), "&plid=",
+			themeDisplay.getPlid(), "&projectGroupId=", groupId, "&projectId=",
+			objectEntryId, "&redirect=", themeDisplay.getURLCurrent());
+	}
+
 	public static String getBaseEditProjectURL(
 		ObjectDefinition objectDefinition, ThemeDisplay themeDisplay) {
 

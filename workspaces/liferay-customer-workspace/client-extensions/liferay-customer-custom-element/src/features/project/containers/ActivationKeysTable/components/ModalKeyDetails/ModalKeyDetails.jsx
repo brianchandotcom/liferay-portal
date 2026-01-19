@@ -2,29 +2,31 @@
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
+
 import ClayAlert from '@clayui/alert';
 import {ClayToggle} from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
 import {useEffect, useState} from 'react';
-import {useGetMyUserAccount} from '~/services/liferay/graphql/user-accounts';
-import i18n from '~/utils/I18n';
 import Button from '~/components/Button';
 import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
+import {ALERT_DOWNLOAD_TYPE} from '~/features/project/utils/constants/alertDownloadType';
+import {AUTO_CLOSE_ALERT_TIME} from '~/features/project/utils/constants/autoCloseAlertTime';
 import {Liferay} from '~/services/liferay';
+import {useGetMyUserAccount} from '~/services/liferay/graphql/user-accounts';
 import {
 	deleteSubscriptionInKey,
 	getSubscriptionInKey,
 	putSubscriptionInKey,
 } from '~/services/liferay/rest/raysource/LicenseKeys';
-import {ALERT_DOWNLOAD_TYPE} from '~/features/project/utils/constants/alertDownloadType';
-import {AUTO_CLOSE_ALERT_TIME} from '~/features/project/utils/constants/autoCloseAlertTime';
+import i18n from '~/utils/I18n';
+
 import {ALERT_ACTIVATION_AGGREGATED_KEYS_DOWNLOAD_TEXT} from '../../utils/constants/alertAggregateKeysDownloadText';
 import {downloadActivationLicenseKey} from '../../utils/downloadActivationLicenseKey';
+import {hasAdminOrPartnerManager} from '../../utils/hasAdminOrPartnerManager';
 import {hasAdminUserAccount} from '../../utils/hasAdminUserAccount';
 import RenewButton from '../RenewButton';
 import TableKeyDetails from '../TableKeyDetails';
-import {hasAdminOrPartnerManager} from '../../utils/hasAdminOrPartnerManager';
 
 const openToast = (title, message, {type = 'success'} = {}) =>
 	Liferay.Util.openToast({
@@ -41,6 +43,7 @@ const ModalKeyDetails = ({
 	oAuthToken,
 	observer,
 	onClose,
+	productName,
 	project,
 }) => {
 	const {provisioningServerAPI} = useAppPropertiesContext();
@@ -105,12 +108,17 @@ const ModalKeyDetails = ({
 		const fn = status ? deleteSubscriptionInKey : putSubscriptionInKey;
 
 		try {
-			await fn(oAuthToken, provisioningServerAPI, currentActivationKey.id);
+			await fn(
+				oAuthToken,
+				provisioningServerAPI,
+				currentActivationKey.id
+			);
 
 			openToast('success', 'your-request-completed-successfully', {
 				type: 'success',
 			});
-		} catch {
+		}
+		catch {
 			setTimeout(() => {
 				handleToggle();
 				openToast('error', 'subscription-failed', {type: 'danger'});
@@ -193,31 +201,34 @@ const ModalKeyDetails = ({
 						{i18n.translate('close')}
 					</Button>
 
-					{(isAdminOrPartnerManager || isAdminUserAccount) && !keyIsPermanent && (
-						<RenewButton
-							className="ml-2"
-							currentActivationKeyModal={currentActivationKey}
-							identifier="renew"
-							isComplimentaryKey={isComplimentaryKey}
-							isVisibleModal={isVisibleModal}
-							project={project}
-						>
-							{i18n.translate('renew-key')}
-						</RenewButton>
-					)}
+					{(isAdminOrPartnerManager || isAdminUserAccount) &&
+						!keyIsPermanent && (
+							<RenewButton
+								className="ml-2"
+								currentActivationKeyModal={currentActivationKey}
+								identifier="renew"
+								isComplimentaryKey={isComplimentaryKey}
+								isVisibleModal={isVisibleModal}
+								productName={productName}
+								project={project}
+							>
+								{i18n.translate('renew-key')}
+							</RenewButton>
+						)}
 
 					<Button
 						appendIcon="download"
 						className="ml-2"
 						onClick={async () => {
-							const isAbleToDownloadKey = await downloadActivationLicenseKey(
-								currentActivationKey.id,
-								oAuthToken,
-								provisioningServerAPI,
-								currentActivationKey.productName,
-								currentActivationKey.productVersion,
-								project.name
-							);
+							const isAbleToDownloadKey =
+								await downloadActivationLicenseKey(
+									currentActivationKey.id,
+									oAuthToken,
+									provisioningServerAPI,
+									currentActivationKey.productName,
+									currentActivationKey.productVersion,
+									project.name
+								);
 
 							handleAlertStatus(isAbleToDownloadKey);
 						}}

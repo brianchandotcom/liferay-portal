@@ -2,11 +2,13 @@
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
+
 import {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-import i18n from '~/utils/I18n';
 import {Button} from '~/components';
 import RenewButton from '~/features/project/containers/ActivationKeysTable/components/RenewButton';
+import i18n from '~/utils/I18n';
+
 import {hasAdminOrPartnerManager} from '../../utils/hasAdminOrPartnerManager';
 import {isBulkRenewAvailable} from '../../utils/isBulkRenewAvailable';
 import useGetAccountUserAccount from '../Header/hooks/useGetAccountUserAccount';
@@ -85,12 +87,13 @@ const RenewTableFooter = ({
 							isComplimentaryKey={isComplimentaryKey}
 							isRenewTable={isRenewTable}
 							keysSelectedCount={keysSelectedCount}
+							productName={productName}
 							project={project}
 							renewKeysFilterChecked={renewKeysFilterChecked}
 						>
-							{keysSelectedCount === 1 ? i18n.sub('renew-x-key',
-							 [keysSelectedCount]) : i18n.sub('renew-x-keys', 
-							 [keysSelectedCount])}
+							{keysSelectedCount === 1
+								? i18n.sub('renew-x-key', [keysSelectedCount])
+								: i18n.sub('renew-x-keys', [keysSelectedCount])}
 						</RenewButton>
 					)}
 			</div>

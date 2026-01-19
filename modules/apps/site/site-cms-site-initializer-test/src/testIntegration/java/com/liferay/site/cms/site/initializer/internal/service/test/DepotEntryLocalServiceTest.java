@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -40,6 +41,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Jürgen Kappler
+ * @author Roberto Díaz
  */
 @FeatureFlag("LPD-17564")
 @RunWith(Arquillian.class)
@@ -63,11 +65,32 @@ public class DepotEntryLocalServiceTest {
 					LocaleUtil.getDefault(), StringUtil.randomString()
 				).build(),
 				DepotConstants.TYPE_ASSET_LIBRARY,
-				ServiceContextTestUtil.getServiceContext()));
+				ServiceContextTestUtil.getServiceContext()),
+			0);
+
+		_assertObjectEntryFolders(
+			_depotEntryLocalService.addDepotEntry(
+				HashMapBuilder.put(
+					LocaleUtil.getDefault(), StringUtil.randomString()
+				).build(),
+				HashMapBuilder.put(
+					LocaleUtil.getDefault(), StringUtil.randomString()
+				).build(),
+				DepotConstants.TYPE_SPACE,
+				ServiceContextTestUtil.getServiceContext()),
+			2);
 
 		Group group = GroupTestUtil.addGroup();
 
 		group.setType(GroupConstants.TYPE_DEPOT);
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			group.getTypeSettingsProperties();
+
+		typeSettingsUnicodeProperties.put(
+			"depotEntryType", String.valueOf(DepotConstants.TYPE_SPACE));
+
+		group.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 
 		group = _groupLocalService.updateGroup(group);
 
@@ -77,27 +100,31 @@ public class DepotEntryLocalServiceTest {
 		serviceContext.setAttribute("staging", Boolean.TRUE);
 
 		_assertObjectEntryFolders(
-			_depotEntryLocalService.addDepotEntry(group, serviceContext));
+			_depotEntryLocalService.addDepotEntry(group, serviceContext), 2);
 	}
 
-	private void _assertObjectEntryFolders(DepotEntry depotEntry) {
+	private void _assertObjectEntryFolders(
+		DepotEntry depotEntry, int expectedFolderCount) {
+
 		Assert.assertEquals(
-			2,
+			expectedFolderCount,
 			_objectEntryFolderLocalService.getObjectEntryFoldersCount(
 				depotEntry.getGroupId(), depotEntry.getCompanyId(),
 				ObjectEntryFolderConstants.
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT));
 
-		AssertUtils.assertEquals(
-			Arrays.asList("Contents", "Files"),
-			ListUtil.sort(
-				ListUtil.toList(
-					_objectEntryFolderLocalService.getObjectEntryFolders(
-						depotEntry.getGroupId(), depotEntry.getCompanyId(),
-						ObjectEntryFolderConstants.
-							PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-					ObjectEntryFolder::getName)));
+		if (expectedFolderCount > 0) {
+			AssertUtils.assertEquals(
+				Arrays.asList("Contents", "Files"),
+				ListUtil.sort(
+					ListUtil.toList(
+						_objectEntryFolderLocalService.getObjectEntryFolders(
+							depotEntry.getGroupId(), depotEntry.getCompanyId(),
+							ObjectEntryFolderConstants.
+								PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+							QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+						ObjectEntryFolder::getName)));
+		}
 	}
 
 	@Inject

@@ -16,6 +16,8 @@ export class AppManagerPage {
 	readonly appLink: (appName: string) => Locator;
 	readonly appRow: (appName: string) => Locator;
 	readonly appRowOptionsMenu: (appName: string) => Locator;
+	readonly appRowBySymbolicName: (appName: string) => Locator;
+	readonly appRowOptionsMenuBySymbolicName: (appName: string) => Locator;
 	readonly deactivateLink: Locator;
 	readonly filterButton: Locator;
 	readonly installedFilterMenuItem: Locator;
@@ -47,6 +49,22 @@ export class AppManagerPage {
 		this.appRow = (appName) => this.appLink(appName).locator('../../..');
 		this.appRowOptionsMenu = (appName) =>
 			this.appRow(appName).locator('.lfr-icon-menu > a');
+		this.appRowBySymbolicName = (symbolicName: string) =>
+			page
+				.getByTestId('rowItemContent')
+				.filter({
+					has: page.locator('.list-group-text').filter({
+
+						// Exact text
+
+						hasText: new RegExp(`^\\s*${symbolicName}\\s*$`),
+					}),
+				})
+				.locator('..');
+		this.appRowOptionsMenuBySymbolicName = (symbolicName: string) =>
+			this.appRowBySymbolicName(symbolicName).locator(
+				'.lfr-icon-menu > a'
+			);
 		this.deactivateLink = page.getByRole('link', {name: 'Deactivate'});
 		this.filterButton = page.getByLabel('Filter', {exact: true});
 		this.installedFilterMenuItem = page.getByRole('menuitem', {
@@ -78,6 +96,40 @@ export class AppManagerPage {
 	async goto() {
 		await this.applicationsMenuPage.goToAppManager();
 	}
+	async activateApp(appName: string) {
+		await this.goto();
+
+		await this.searchAppAndExpectToBeVisible(appName);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.activateLink,
+			trigger: this.appRowOptionsMenu(appName),
+		});
+
+		await waitForAlert(this.page);
+
+		await this.searchAppAndExpectToBeVisible(appName, 'Active');
+	}
+
+	async activateAppBySymbolicName(symbolicName: string) {
+		await this.goto();
+
+		await this.searchAppBySymbolicNameAndExpectToBeVisible(symbolicName);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.activateLink,
+			trigger: this.appRowOptionsMenuBySymbolicName(symbolicName),
+		});
+
+		await waitForAlert(this.page);
+
+		await this.searchAppBySymbolicNameAndExpectToBeVisible(
+			symbolicName,
+			'Active'
+		);
+	}
 
 	async deactivateApp(appName: string) {
 		await this.goto();
@@ -97,20 +149,25 @@ export class AppManagerPage {
 		await this.searchAppAndExpectToBeVisible(appName, 'Resolved');
 	}
 
-	async activateApp(appName: string) {
+	async deactivateAppBySymbolicName(symbolicName: string) {
 		await this.goto();
 
-		await this.searchAppAndExpectToBeVisible(appName);
+		await this.searchAppBySymbolicNameAndExpectToBeVisible(symbolicName);
+
+		this.page.once('dialog', (dialog) => dialog.accept());
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
-			target: this.activateLink,
-			trigger: this.appRowOptionsMenu(appName),
+			target: this.deactivateLink,
+			trigger: this.appRowOptionsMenuBySymbolicName(symbolicName),
 		});
 
 		await waitForAlert(this.page);
 
-		await this.searchAppAndExpectToBeVisible(appName, 'Active');
+		await this.searchAppBySymbolicNameAndExpectToBeVisible(
+			symbolicName,
+			'Resolved'
+		);
 	}
 
 	async uninstallApp(appName: string) {
@@ -146,6 +203,24 @@ export class AppManagerPage {
 				await expect(this.appRow(appName)).toContainText(
 					expectedStatus
 				);
+			}
+		}).toPass();
+	}
+
+	async searchAppBySymbolicNameAndExpectToBeVisible(
+		symbolicName: string,
+		expectedStatus?: string
+	) {
+		await expect(async () => {
+			await this.searchInput.fill(symbolicName);
+			await this.searchInput.press('Enter');
+
+			const row = this.appRowBySymbolicName(symbolicName);
+
+			await expect(row).toBeVisible({timeout: 2000});
+
+			if (expectedStatus) {
+				await expect(row).toContainText(expectedStatus);
 			}
 		}).toPass();
 	}

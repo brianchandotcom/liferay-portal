@@ -6,6 +6,7 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {appManagerPagesTest} from '../../../fixtures/appManagerPagesTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
@@ -28,7 +29,8 @@ export const test = mergeTests(
 	styleBookPageTest,
 	pagesAdminPagesTest,
 	masterPagesPagesTest,
-	pageTemplatesPagesTest
+	pageTemplatesPagesTest,
+	appManagerPagesTest
 );
 
 test(
@@ -411,6 +413,57 @@ test(
 				'background-color',
 				'rgb(0, 255, 0)'
 			);
+		});
+	}
+);
+
+test(
+	'The user could view the empty state when the site is empty.',
+	{tag: ['@LPS-137065', '@LPS-116078']},
+	async ({appManagerPage, page, site, styleBooksPage}) => {
+		const APP_SYMBOLIC_NAMES = [
+			'com.liferay.fragment.collection.contributor.basic.component',
+			'com.liferay.fragment.collection.contributor.cookie.banner',
+			'com.liferay.fragment.collection.contributor.featured.content',
+			'com.liferay.fragment.collection.contributor.footers',
+			'com.liferay.fragment.collection.contributor.inputs',
+			'com.liferay.fragment.collection.contributor.navigation.bars',
+			'com.liferay.commerce.fragment.collection.contributor.account',
+			'com.liferay.commerce.fragment.collection.contributor.cart',
+		];
+
+		await test.step('Deactivate the Default fragment sets', async () => {
+			for (const name of APP_SYMBOLIC_NAMES) {
+				await appManagerPage.deactivateAppBySymbolicName(name);
+			}
+		});
+
+		await test.step('Create a style book', async () => {
+			await styleBooksPage.goto(site.friendlyUrlPath);
+
+			await styleBooksPage.create(getRandomString());
+		});
+
+		await test.step('View the empty state in style book editor', async () => {
+			await expect(
+				page.getByText(
+					'You cannot preview the style book because your site is empty.'
+				)
+			).toBeVisible();
+
+			await expect(
+				page.locator('.style-book-editor__preview-selector')
+			).not.toBeVisible();
+
+			await expect(
+				page.getByRole('button', {name: 'Publish'})
+			).toBeVisible();
+		});
+
+		await test.step('Activate the Default fragment sets', async () => {
+			for (const name of APP_SYMBOLIC_NAMES) {
+				await appManagerPage.activateAppBySymbolicName(name);
+			}
 		});
 	}
 );

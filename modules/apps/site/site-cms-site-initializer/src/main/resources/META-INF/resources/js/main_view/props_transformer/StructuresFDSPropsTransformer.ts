@@ -107,5 +107,25 @@ export default function StructuresFDSPropsTransformer({
 				defaultWorkflowStructureAction([item]);
 			}
 		},
+		onBulkActionItemClick: ({
+			action,
+			selectedData,
+		}: {
+			action: any;
+			selectedData: any;
+		}) => {
+			if (action?.data?.id === 'assign-default-workflow') {
+				const structureWorflows = selectedData.items.map(
+					(item: any) => {
+						({
+							id: item.structureId,
+							workflow: item.workflow,
+						}) as StructureWorkflowItem;
+					}
+				);
+
+				defaultWorkflowStructureAction(structureWorflows);
+			}
+		},
 	};
 }

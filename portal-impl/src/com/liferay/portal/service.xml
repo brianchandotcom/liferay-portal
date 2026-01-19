@@ -631,7 +631,7 @@
 		<column name="hidden" type="boolean" />
 		<column name="system" type="boolean" />
 		<column name="friendlyURL" type="String" />
-		<column name="iconImageId" type="long" />
+		<column name="iconImageERC" type="String" />
 		<column name="themeId" type="String" />
 		<column name="colorSchemeId" type="String" />
 		<column name="styleBookEntryERC" type="String" />
@@ -669,8 +669,8 @@
 		<finder name="ParentPlid" return-type="Collection" where="system = [$FALSE$]">
 			<finder-column name="parentPlid" />
 		</finder>
-		<finder name="IconImageId" return-type="Collection">
-			<finder-column name="iconImageId" />
+		<finder name="IconImageERC" return-type="Collection">
+			<finder-column name="iconImageERC" />
 		</finder>
 		<finder name="LayoutSetPrototypeLayoutERC" return-type="Collection" where="system = [$FALSE$]">
 			<finder-column name="layoutSetPrototypeLayoutERC" />
@@ -687,9 +687,9 @@
 			<finder-column name="groupId" />
 			<finder-column name="masterLayoutPageTemplateEntryERC" />
 		</finder>
-		<finder name="P_I" return-type="Collection">
+		<finder name="P_IconImageERC" return-type="Collection">
 			<finder-column name="privateLayout" />
-			<finder-column name="iconImageId" />
+			<finder-column name="iconImageERC" />
 		</finder>
 		<finder name="C_C" return-type="Collection">
 			<finder-column name="classNameId" />

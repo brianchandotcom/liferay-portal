@@ -6,6 +6,7 @@ import {isJapaneseLang} from 'shared/util/lang';
 const {pathThemeRoot} = FaroConstants;
 
 export enum Size {
+	ExtraSmall = 'extra-small',
 	Small = 'small',
 	Medium = 'medium',
 	Large = 'large'
@@ -31,6 +32,9 @@ type Text = {
 };
 
 type Data = {
+	options?: {
+		rect?: boolean;
+	};
 	text: Text;
 	x: number;
 	y: number;
@@ -82,6 +86,10 @@ export class JSPDFExtension {
 				lineHeight: number;
 				size: number;
 			};
+			['extra-small']: {
+				lineHeight: number;
+				size: number;
+			};
 		};
 		name: string;
 		paddingX: number;
@@ -99,7 +107,7 @@ export class JSPDFExtension {
 
 	data: any[];
 	doc: JSPDF;
-	textList: Text[];
+	textList: {text: Text; options?: {rect?: boolean}}[];
 	floatTextList: FloatText[];
 
 	constructor({containers, date = new Date(), fontFamily, name}) {
@@ -113,6 +121,7 @@ export class JSPDFExtension {
 			date,
 			fontFamily,
 			fontSize: {
+				['extra-small']: {lineHeight: 1.5, size: 5},
 				large: {lineHeight: 4.5, size: 18},
 				medium: {lineHeight: 3.5, size: 14},
 				small: {lineHeight: 2.5, size: 8}
@@ -144,7 +153,13 @@ export class JSPDFExtension {
 	addText(text: Text) {
 		if (!text.value) return;
 
-		this.textList.push(text);
+		this.textList.push({text});
+	}
+
+	addTextWithRect(text: Text) {
+		if (!text.value) return;
+
+		this.textList.push({options: {rect: true}, text});
 	}
 
 	addFloatText(text: FloatText) {
@@ -197,7 +212,7 @@ export class JSPDFExtension {
 		let prevLineHeight = 0;
 		let posY = 0;
 
-		this.textList.forEach((text, index) => {
+		this.textList.forEach(({options, text}, index) => {
 			this.setFont(text);
 
 			let textValue = text.value;
@@ -221,6 +236,7 @@ export class JSPDFExtension {
 
 				lines.forEach(line => {
 					data.push({
+						options,
 						text: {
 							...text,
 							value: line
@@ -241,6 +257,7 @@ export class JSPDFExtension {
 					lines.length * this.config.spacingBetweenBreakLines;
 			} else {
 				data.push({
+					options,
 					text: {
 						...text,
 						value: textValue
@@ -377,8 +394,32 @@ export class JSPDFExtension {
 		/**
 		 * Render Texts
 		 */
-		data.forEach(({text, x, y}) => {
+		data.forEach(({options, text, x, y}) => {
 			this.setFont(text);
+
+			if (options?.rect) {
+				const padding = 0.8;
+				const textDimensions = this.doc.getTextDimensions(text.value);
+
+				this.doc.setDrawColor(text.color);
+				this.doc.setFillColor(255, 255, 255);
+
+				this.doc.roundedRect(
+					x,
+					y - textDimensions.h + 0.25,
+					textDimensions.w + padding * 2,
+					textDimensions.h + padding * 2,
+					0.4,
+					0.4,
+					'FD'
+				);
+
+				this.doc.textWithLink(text.value, x + padding, y + padding, {
+					url: text.url
+				});
+
+				return;
+			}
 
 			this.doc.textWithLink(text.value, x, y, {
 				url: text.url

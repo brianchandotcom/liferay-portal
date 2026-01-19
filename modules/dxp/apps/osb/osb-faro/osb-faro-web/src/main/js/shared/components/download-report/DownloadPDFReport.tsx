@@ -183,6 +183,7 @@ export interface IDownloadReport {
 	children?: any;
 	dateRangeDescription?: string;
 	disabled: boolean;
+	label?: string;
 	infoMessage?: string;
 	showDateRange?: boolean;
 	subtitle: string;
@@ -239,6 +240,7 @@ const DownloadPDFReport: React.FC<IDownloadReport> = ({
 	children,
 	dateRangeDescription,
 	disabled,
+	label,
 	infoMessage = Liferay.Language.get(
 		'the-dashboard-will-be-downloaded-exactly-as-it-is-displayed-on-your-screen.-please-verify-if-the-desired-tabs-and-filters-are-selected-before-proceeding'
 	),
@@ -305,7 +307,7 @@ const DownloadPDFReport: React.FC<IDownloadReport> = ({
 
 						/**
 						 * It is necessary to have timeout of 1000ms to wait chart
-						 * animation be loaded before generate the report
+						 * animation be loaded before generating a PDF report
 						 */
 
 						setTimeout(async () => {
@@ -335,6 +337,15 @@ const DownloadPDFReport: React.FC<IDownloadReport> = ({
 								value: 'Analytics Cloud',
 								weight: Weight.Normal
 							});
+
+							if (label) {
+								doc.addTextWithRect({
+									color: SECONDARY_COLOR,
+									size: Size.ExtraSmall,
+									value: label?.toUpperCase(),
+									weight: Weight.Normal
+								});
+							}
 
 							doc.addText({
 								color: TITLE_COLOR,

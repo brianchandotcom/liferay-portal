@@ -5,7 +5,6 @@
 
 package com.liferay.ai.hub.security;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
@@ -48,10 +47,10 @@ public class JWTTokenUtil {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
+				_log.debug("Unable to generate a signed token", exception);
 			}
 
-			throw new SystemException("Unable to generate a signed token");
+			return null;
 		}
 
 		return signedJWT.serialize();
@@ -64,28 +63,32 @@ public class JWTTokenUtil {
 			SignedJWT signedJWT = SignedJWT.parse(token);
 
 			if (!signedJWT.verify(new MACVerifier(_SECRET))) {
-				throw new SystemException("Invalid JWT signature");
+				if (_log.isDebugEnabled()) {
+					_log.debug("Invalid JWT signature");
+				}
+
+				return 0;
 			}
 
 			jwtClaimsSet = signedJWT.getJWTClaimsSet();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
+				_log.debug(
+					"Unable to parse and verify the JWT token", exception);
 			}
 
-			if (exception instanceof SystemException systemException) {
-				throw systemException;
-			}
-
-			throw new SystemException(
-				"Unable to parse and verify the JWT token", exception);
+			return 0;
 		}
 
 		Date expirationTime = jwtClaimsSet.getExpirationTime();
 
 		if ((expirationTime == null) || expirationTime.before(new Date())) {
-			throw new SystemException("The JWT token has been expired");
+			if (_log.isDebugEnabled()) {
+				_log.debug("The JWT token has been expired");
+			}
+
+			return 0;
 		}
 
 		return GetterUtil.getLong(jwtClaimsSet.getSubject());

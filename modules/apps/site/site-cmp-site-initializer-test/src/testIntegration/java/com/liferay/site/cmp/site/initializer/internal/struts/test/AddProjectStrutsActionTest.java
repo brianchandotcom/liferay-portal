@@ -13,6 +13,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -73,6 +74,9 @@ public class AddProjectStrutsActionTest {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay() {
 			{
+				setCompany(
+					_companyLocalService.fetchCompany(
+						TestPropsValues.getCompanyId()));
 				setSiteDefaultLocale(LocaleUtil.US);
 				setUser(TestPropsValues.getUser());
 			}
@@ -111,6 +115,9 @@ public class AddProjectStrutsActionTest {
 
 	@Inject(filter = "path=/cms/add_project")
 	private StrutsAction _addProjectStrutsAction;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	private ObjectDefinition _objectDefinition;
 

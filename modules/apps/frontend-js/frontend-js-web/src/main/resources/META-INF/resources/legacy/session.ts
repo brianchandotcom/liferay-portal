@@ -31,7 +31,7 @@ export class Session {
 	private _expiredText: string;
 	private _initPageTitle: string;
 	private _intervalId?: number | NodeJS.Timeout;
-	private _lastKnownTimestamp: number;
+	private _lastStorageEventTimestamp: number;
 	private _pageTitle: string;
 	private _storageEventHandler?: (event: StorageEvent) => void;
 	private _timestampKey: string;
@@ -54,7 +54,7 @@ export class Session {
 			'due-to-inactivity-your-session-has-expired'
 		);
 		this._initPageTitle = document.title;
-		this._lastKnownTimestamp = this._getTimestamp();
+		this._lastStorageEventTimestamp = this._getTimestamp();
 		this._pageTitle = document.title;
 		this._setTimestamp();
 		this._warningLength = config.warningLength * 1000 || this.sessionLength;
@@ -254,12 +254,13 @@ export class Session {
 
 		const newTimestamp = parseInt(event.newValue, 10);
 
-		if (!isNaN(newTimestamp) && newTimestamp > this._lastKnownTimestamp) {
-			const wasWarned = this.sessionState === 'warned';
+		if (
+			!isNaN(newTimestamp) &&
+			newTimestamp > this._lastStorageEventTimestamp
+		) {
+			this._lastStorageEventTimestamp = newTimestamp;
 
-			this._lastKnownTimestamp = newTimestamp;
-
-			if (wasWarned) {
+			if (this.sessionState === 'warned') {
 				this.sessionState = 'active';
 
 				this._removeAlert();
@@ -284,13 +285,11 @@ export class Session {
 			Liferay.Util.LocalStorage.TYPES.NECESSARY
 		);
 
-		this._lastKnownTimestamp = newTimestamp;
+		this._lastStorageEventTimestamp = newTimestamp;
 	}
 
 	private _startStorageListener() {
-		this._storageEventHandler = (event: StorageEvent) => {
-			this._handleStorageEvent(event);
-		};
+		this._storageEventHandler = this._handleStorageEvent.bind(this);
 
 		window.addEventListener('storage', this._storageEventHandler);
 	}

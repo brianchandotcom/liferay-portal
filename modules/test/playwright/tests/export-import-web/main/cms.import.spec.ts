@@ -9,6 +9,7 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import getRandomString from '../../../utils/getRandomString';
+import {ObjectEntryFolderExternalReferenceCode} from '../../../utils/objectEntryFolderConstants';
 import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 
 const test = mergeTests(
@@ -29,33 +30,30 @@ test('Basic Web Content checkbox is displayed when importing LAR with Basic Web 
 	exportImportPage,
 	page,
 }) => {
-	const space1Name = `Space ${getRandomString()}`;
-	const space2Name = `Space ${getRandomString()}`;
-	const contentTitle = `Content ${getRandomString()}`;
-
 	const {assetLibraryId1, assetLibraryId2} =
 		await test.step('Create two CMS spaces', async () => {
 			const assetLibrary1 =
 				await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-					name: space1Name,
+					name: getRandomString(),
 					type: 'Space',
 					settings: {},
 				});
 
 			const assetLibrary2 =
 				await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-					name: space2Name,
+					name: getRandomString(),
 					type: 'Space',
 					settings: {},
 				});
 
 			await apiHelpers.objectEntry.postObjectEntry(
 				{
-					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
-					title: contentTitle,
+					objectEntryFolderExternalReferenceCode:
+						ObjectEntryFolderExternalReferenceCode.CONTENTS,
+					title: getRandomString(),
 				},
 				'cms/basic-web-contents',
-				space1Name
+				assetLibrary1.name
 			);
 
 			return {
@@ -68,7 +66,7 @@ test('Basic Web Content checkbox is displayed when importing LAR with Basic Web 
 		await exportImportPage.goToExport(`/asset-library-${assetLibraryId1}`);
 
 		const exportFilePath = await exportImportPage.export({
-			taskName: `CMS-Export-${getRandomString()}`,
+			taskName: getRandomString(),
 		});
 		expect(exportFilePath).toBeTruthy();
 

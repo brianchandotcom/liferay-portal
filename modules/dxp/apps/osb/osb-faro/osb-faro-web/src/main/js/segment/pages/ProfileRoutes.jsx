@@ -29,6 +29,7 @@ import {formatUTCDate} from 'shared/util/date';
 import {getMatchedRoute, Routes, SEGMENTS, toRoute} from 'shared/util/router';
 import {Segment} from 'shared/util/records';
 import {SegmentStates, SegmentTypes} from 'shared/util/constants';
+import {sub} from 'shared/util/lang';
 import {Switch, useParams} from 'react-router-dom';
 import {useRequest} from 'shared/hooks/useRequest';
 
@@ -161,6 +162,11 @@ export const SegmentProfileRoutes = () => {
 	};
 
 	const isBatch = segmentDetails.segmentType === SegmentTypes.Batch;
+	const lastUpdateMessage = sub(Liferay.Language.get('last-update-x'), [
+		formatUTCDate(segmentDetails.dateModified, 'MMM DD, YYYY hh:mm a')
+			.replace('am', 'a.m.')
+			.replace('pm', 'p.m.')
+	]);
 
 	return (
 		<BasePage
@@ -188,15 +194,7 @@ export const SegmentProfileRoutes = () => {
 				<BasePage.Row>
 					<BasePage.Header.TitleSection
 						className='mb-3'
-						subtitle={
-							!isBatch &&
-							`Last update: ${formatUTCDate(
-								segmentDetails.dateModified,
-								'MMM DD, YYYY hh:mm a'
-							)
-								.replace('am', 'a.m.')
-								.replace('pm', 'p.m.')}`
-						}
+						subtitle={!isBatch && lastUpdateMessage}
 						title={title}
 					>
 						<Label display='secondary' size='lg' uppercase>
@@ -271,7 +269,9 @@ export const SegmentProfileRoutes = () => {
 					<div className='d-flex justify-content-end w-100'>
 						<DownloadReportDropdown
 							className='button-root'
+							label={Liferay.Language.get('real-time-segment')}
 							segmentId={segment.id}
+							subtitle={lastUpdateMessage}
 							title={segmentDetails.name}
 						/>
 

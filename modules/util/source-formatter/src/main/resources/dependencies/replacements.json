@@ -4949,6 +4949,14 @@
 	},
 	{
 		"classNames": [
+			"DLUtil"
+		],
+		"from": "getUniqueFileName(long paramName, long paramName, String paramName)",
+		"issueKey": "LPD-58469",
+		"to": "getUniqueFileName(param#0#, param#1#, param#2#, false)"
+	},
+	{
+		"classNames": [
 			"LayoutPageTemplateStructureLocalService",
 			"LayoutPageTemplateStructureLocalServiceUtil"
 		],

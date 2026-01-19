@@ -28,11 +28,13 @@ export class Session {
 
 	private _alertClosed: any;
 	private _banner: any;
-	private _timestampKey: string;
 	private _expiredText: string;
 	private _initPageTitle: string;
 	private _intervalId?: number | NodeJS.Timeout;
+	private _lastKnownTimestamp: number;
 	private _pageTitle: string;
+	private _storageEventHandler?: (event: StorageEvent) => void;
+	private _timestampKey: string;
 	private _warningLength: number;
 	private _warningText: string;
 	private sessionState: TSessionState;
@@ -52,6 +54,7 @@ export class Session {
 			'due-to-inactivity-your-session-has-expired'
 		);
 		this._initPageTitle = document.title;
+		this._lastKnownTimestamp = this._getTimestamp();
 		this._pageTitle = document.title;
 		this._setTimestamp();
 		this._warningLength = config.warningLength * 1000 || this.sessionLength;
@@ -67,11 +70,15 @@ export class Session {
 
 		if (!config.rememberMe) {
 			this._startTimer();
+
+			this._startStorageListener();
 		}
 	}
 
 	destructor() {
 		clearInterval(this._intervalId);
+
+		this._stopStorageListener();
 
 		this._destroyBanner();
 	}
@@ -240,12 +247,52 @@ export class Session {
 		);
 	}
 
+	private _handleStorageEvent(event: StorageEvent) {
+		if (event.key !== this._timestampKey || !event.newValue) {
+			return;
+		}
+
+		const newTimestamp = parseInt(event.newValue, 10);
+
+		if (!isNaN(newTimestamp) && newTimestamp > this._lastKnownTimestamp) {
+			const wasWarned = this.sessionState === 'warned';
+
+			this._lastKnownTimestamp = newTimestamp;
+
+			if (wasWarned) {
+				this.sessionState = 'active';
+
+				this._removeAlert();
+			}
+		}
+	}
+
+	private _removeAlert() {
+		document.title = this._initPageTitle;
+
+		if (this._banner) {
+			this._destroyBanner();
+		}
+	}
+
 	private _setTimestamp() {
+		const newTimestamp = Date.now();
+
 		Liferay.Util.LocalStorage.setItem(
 			this._timestampKey,
-			Date.now().toString(),
+			newTimestamp.toString(),
 			Liferay.Util.LocalStorage.TYPES.NECESSARY
 		);
+
+		this._lastKnownTimestamp = newTimestamp;
+	}
+
+	private _startStorageListener() {
+		this._storageEventHandler = (event: StorageEvent) => {
+			this._handleStorageEvent(event);
+		};
+
+		window.addEventListener('storage', this._storageEventHandler);
 	}
 
 	private _startTimer() {
@@ -286,11 +333,11 @@ export class Session {
 		}, 1000);
 	}
 
-	private _removeAlert() {
-		document.title = this._initPageTitle;
+	private _stopStorageListener() {
+		if (this._storageEventHandler) {
+			window.removeEventListener('storage', this._storageEventHandler);
 
-		if (this._banner) {
-			this._destroyBanner();
+			this._storageEventHandler = undefined;
 		}
 	}
 

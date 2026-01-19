@@ -117,7 +117,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.PropsValues;
-import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -372,8 +371,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			layout.setPortletLayoutPageTemplateEntryERC(
 				portletLayoutPageTemplateEntryERC);
 			layout.setPortletLayoutPageTemplateEntryScopeERC(
-				ScopeUtil.getItemScopeExternalReferenceCode(
-					portletLayoutPageTemplateEntryScopeERC, groupId));
+				portletLayoutPageTemplateEntryScopeERC);
 			layout.setPortletLayoutPageTemplateEntryLinkEnabled(
 				portletLayoutPageTemplateEntryLinkEnabled);
 		}
@@ -3117,11 +3115,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				serviceContext, "applyLayoutPrototype");
 
 			layout.setPortletLayoutPageTemplateEntryScopeERC(
-				ScopeUtil.getItemScopeExternalReferenceCode(
-					ParamUtil.getString(
-						serviceContext,
-						"portletLayoutPageTemplateEntryScopeERC"),
-					groupId));
+				ParamUtil.getString(
+					serviceContext, "portletLayoutPageTemplateEntryScopeERC"));
 
 			boolean portletLayoutPageTemplateEntryLinkEnabled =
 				ParamUtil.getBoolean(

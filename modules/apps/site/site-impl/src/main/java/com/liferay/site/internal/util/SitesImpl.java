@@ -75,6 +75,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsValues;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -164,17 +165,14 @@ public class SitesImpl implements Sites {
 			serviceContext.setAttribute(
 				"portletLayoutPageTemplateEntryLinkEnabled", linkEnabled);
 
-			if (layoutPageTemplateEntry.getGroupId() !=
-					targetLayout.getGroupId()) {
+			Group layoutPageTemplateEntryGroup = _groupLocalService.getGroup(
+				layoutPageTemplateEntry.getGroupId());
 
-				Group layoutPageTemplateEntryGroup =
-					_groupLocalService.getGroup(
-						layoutPageTemplateEntry.getGroupId());
-
-				serviceContext.setAttribute(
-					"portletLayoutPageTemplateEntryScopeERC",
-					layoutPageTemplateEntryGroup.getExternalReferenceCode());
-			}
+			serviceContext.setAttribute(
+				"portletLayoutPageTemplateEntryScopeERC",
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					layoutPageTemplateEntryGroup.getExternalReferenceCode(),
+					targetLayout.getGroupId()));
 
 			Locale targetSiteDefaultLocale = _portal.getSiteDefaultLocale(
 				targetLayout.getGroupId());

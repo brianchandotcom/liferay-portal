@@ -10,17 +10,22 @@ import React, {useEffect, useId, useState} from 'react';
 
 import {getWorkflowDefinitions} from '../../common/services/WorkflowService';
 
-type WorkflowOption = {
+interface WorkflowOption {
 	label: string;
 	value: string;
-};
+}
+
+export interface StructureWorkflowItem {
+	id: string;
+	workflow: string;
+}
 
 export default function AssignDefaultWorkflowModalContent({
 	closeModal,
-	structureIds,
+	structureWorkflows,
 }: {
 	closeModal: () => void;
-	structureIds: string[];
+	structureWorkflows: StructureWorkflowItem[];
 }) {
 	const [selectedWorkflow, setSelectedWorkflow] = useState('');
 
@@ -59,7 +64,7 @@ export default function AssignDefaultWorkflowModalContent({
 			<ClayModal.Header
 				closeButtonAriaLabel={Liferay.Language.get('close')}
 			>
-				{structureIds.length === 1
+				{structureWorkflows.length === 1
 					? Liferay.Language.get(
 							'assign-default-workflow-to-basic-content'
 						)
@@ -69,7 +74,7 @@ export default function AssignDefaultWorkflowModalContent({
 			<ClayModal.Body>
 				<>
 					<p>
-						{structureIds.length === 1
+						{structureWorkflows.length === 1
 							? Liferay.Language.get(
 									'set-the-default-workflow-for-entries-created-with-this-content-structure'
 								)

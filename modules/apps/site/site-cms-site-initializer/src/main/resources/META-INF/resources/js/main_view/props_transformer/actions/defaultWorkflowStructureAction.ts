@@ -4,14 +4,18 @@
  */
 
 import {openCMSModal} from '../../../common/utils/openCMSModal';
-import AssignDefaultWorkflowModalContent from '../../modal/AssignDefaultWorkflowModalContent';
+import AssignDefaultWorkflowModalContent, {
+	StructureWorkflowItem,
+} from '../../modal/AssignDefaultWorkflowModalContent';
 
-export default function defaultWorkflowStructureAction(structureIds: string[]) {
+export default function defaultWorkflowStructureAction(
+	structureWorkflows: StructureWorkflowItem[]
+) {
 	openCMSModal({
 		contentComponent: ({closeModal}: {closeModal: () => void}) =>
 			AssignDefaultWorkflowModalContent({
 				closeModal,
-				structureIds,
+				structureWorkflows,
 			}),
 		size: 'md',
 	});

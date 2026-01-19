@@ -16,6 +16,11 @@ import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.upgrade.internal.recorder.UpgradeRecorder;
 
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +49,11 @@ public class UpgradeReportTest {
 
 	@Before
 	public void setUp() {
+		_dataAccessMockedStatic = Mockito.mockStatic(DataAccess.class);
+		_dbUpgraderMockedStatic = Mockito.mockStatic(DBUpgrader.class);
+		_portalUpgradeProcessMockedStatic = Mockito.mockStatic(
+			PortalUpgradeProcess.class);
+
 		MockitoAnnotations.initMocks(this);
 	}
 
@@ -56,6 +66,12 @@ public class UpgradeReportTest {
 
 	@Test
 	public void testGetReportDataDiagnostics() {
+		_dataAccessMockedStatic.when(
+			DataAccess::getConnection
+		).thenReturn(
+			Mockito.mock(Connection.class)
+		);
+
 		Mockito.when(
 			_upgradeRecorder.getDataCleanUpMessages()
 		).thenReturn(
@@ -131,13 +147,84 @@ public class UpgradeReportTest {
 			runningUpgradeProcesses.size());
 	}
 
-	private static final MockedStatic<DataAccess> _dataAccessMockedStatic =
-		Mockito.mockStatic(DataAccess.class);
-	private static final MockedStatic<DBUpgrader> _dbUpgraderMockedStatic =
-		Mockito.mockStatic(DBUpgrader.class);
-	private static final MockedStatic<PortalUpgradeProcess>
-		_portalUpgradeProcessMockedStatic = Mockito.mockStatic(
-			PortalUpgradeProcess.class);
+	@Test
+	public void testGetTableCounts() throws Exception {
+		Connection connection = Mockito.mock(Connection.class);
+		ResultSet countResultSet = Mockito.mock(ResultSet.class);
+		DatabaseMetaData databaseMetaData = Mockito.mock(
+			DatabaseMetaData.class);
+		PreparedStatement preparedStatement = Mockito.mock(
+			PreparedStatement.class);
+		ResultSet tablesResultSet = Mockito.mock(ResultSet.class);
+
+		_dataAccessMockedStatic.when(
+			DataAccess::getConnection
+		).thenReturn(
+			connection
+		);
+
+		Mockito.when(
+			connection.getMetaData()
+		).thenReturn(
+			databaseMetaData
+		);
+
+		Mockito.when(
+			connection.prepareStatement(Mockito.anyString())
+		).thenReturn(
+			preparedStatement
+		);
+
+		Mockito.when(
+			countResultSet.getLong(1)
+		).thenReturn(
+			3000000000L
+		);
+
+		Mockito.when(
+			countResultSet.next()
+		).thenReturn(
+			true
+		);
+
+		Mockito.when(
+			databaseMetaData.getTables(
+				Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any())
+		).thenReturn(
+			tablesResultSet
+		);
+
+		Mockito.when(
+			preparedStatement.executeQuery()
+		).thenReturn(
+			countResultSet
+		);
+
+		Mockito.when(
+			tablesResultSet.getString("TABLE_NAME")
+		).thenReturn(
+			"HugeTable"
+		);
+
+		Mockito.when(
+			tablesResultSet.next()
+		).thenReturn(
+			true, false
+		);
+
+		Map<String, Long> tableCounts = ReflectionTestUtil.invoke(
+			new UpgradeReport(), "_getTableCounts", new Class<?>[0]);
+
+		Assert.assertEquals(tableCounts.toString(), 1, tableCounts.size());
+		Assert.assertEquals(
+			tableCounts.toString(), Long.valueOf(3000000000L),
+			tableCounts.get("HugeTable"));
+	}
+
+	private MockedStatic<DataAccess> _dataAccessMockedStatic;
+	private MockedStatic<DBUpgrader> _dbUpgraderMockedStatic;
+	private MockedStatic<PortalUpgradeProcess>
+		_portalUpgradeProcessMockedStatic;
 
 	@Mock
 	private UpgradeRecorder _upgradeRecorder;

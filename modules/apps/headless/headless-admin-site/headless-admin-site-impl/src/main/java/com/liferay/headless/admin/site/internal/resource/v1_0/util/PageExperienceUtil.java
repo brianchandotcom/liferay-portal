@@ -6,10 +6,12 @@
 package com.liferay.headless.admin.site.internal.resource.v1_0.util;
 
 import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -37,6 +39,22 @@ public class PageExperienceUtil {
 		}
 
 		throw new UnsupportedOperationException();
+	}
+
+	public static int getPriority(String key, Layout layout, Integer priority) {
+		if (Objects.equals(key, SegmentsExperienceConstants.KEY_DEFAULT)) {
+			return 0;
+		}
+
+		if (priority != null) {
+			return priority;
+		}
+
+		int lowestPriority =
+			SegmentsExperienceLocalServiceUtil.getLowestPriority(
+				layout.getGroupId(), layout.getPlid());
+
+		return lowestPriority - 1;
 	}
 
 	public static void validatePageExperiences(

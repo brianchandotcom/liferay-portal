@@ -1231,7 +1231,9 @@ public class LayoutUtil {
 
 				SegmentsExperienceServiceUtil.updateSegmentsExperiencePriority(
 					actualSegmentsExperience.getSegmentsExperienceId(),
-					GetterUtil.getInteger(pageExperience.getPriority()));
+					PageExperienceUtil.getPriority(
+						pageExperience.getKey(), layout,
+						pageExperience.getPriority()));
 			}
 		}
 	}

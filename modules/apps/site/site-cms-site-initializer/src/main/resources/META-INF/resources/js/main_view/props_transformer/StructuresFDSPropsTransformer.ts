@@ -7,6 +7,7 @@ import {IInternalRenderer} from '@liferay/frontend-data-set-web';
 
 import {ObjectDefinition} from '../../common/types/ObjectDefinition';
 import getLocalizedValue from '../../common/utils/getLocalizedValue';
+import {StructureWorkflowItem} from '../modal/AssignDefaultWorkflowModalContent';
 import defaultWorkflowStructureAction from './actions/defaultWorkflowStructureAction';
 import deleteStructureAction from './actions/deleteStructureAction';
 import importStructureAction from './actions/importStructureAction';
@@ -52,7 +53,10 @@ export default function StructuresFDSPropsTransformer({
 			itemData,
 			loadData,
 		}: {
-			action: {data: {id: string}; href?: string};
+			action: {
+				data: {id: string; structureId?: string; workflow?: string};
+				href?: string;
+			};
 			event: Event;
 			itemData: {
 				actions: {
@@ -68,6 +72,7 @@ export default function StructuresFDSPropsTransformer({
 		}) {
 			if (action.data.id === 'import') {
 				event.preventDefault();
+
 				const target = event.target as HTMLAnchorElement;
 
 				importStructureAction(
@@ -93,8 +98,13 @@ export default function StructuresFDSPropsTransformer({
 					structureId: itemData.id,
 				});
 			}
-			else if (action.data.id === 'assign-workflow') {
-				defaultWorkflowStructureAction(['structureId1']);
+			else if (action.data.id === 'assign-default-workflow') {
+				const item = {
+					id: action.data.structureId,
+					workflow: action.data.workflow,
+				} as StructureWorkflowItem;
+
+				defaultWorkflowStructureAction([item]);
 			}
 		},
 	};

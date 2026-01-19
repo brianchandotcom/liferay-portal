@@ -16,9 +16,11 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.test.rule.FeatureFlag;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 /**
  * @author Jhosseph Gonzalez
@@ -30,6 +32,9 @@ public class ImportTaskResourceTest
 
 	@Test
 	public void testPostImportTask() throws Exception {
+
+		// With "createStrategy" UPSERT
+
 		String label = RandomTestUtil.randomString();
 		String objectEntryFolderExternalReferenceCode =
 			RandomTestUtil.randomString();
@@ -38,11 +43,15 @@ public class ImportTaskResourceTest
 		ObjectEntryFolder objectEntryFolder = _postImportTask(
 			"UPSERT", objectEntryFolderExternalReferenceCode, label, title);
 
-		Assert.assertEquals(label, objectEntryFolder.getLabel());
-		Assert.assertEquals(
-			objectEntryFolderExternalReferenceCode,
-			objectEntryFolder.getExternalReferenceCode());
-		Assert.assertEquals(title, objectEntryFolder.getTitle());
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"externalReferenceCode", objectEntryFolderExternalReferenceCode
+			).put(
+				"label", label
+			).put(
+				"title", title
+			).toString(),
+			objectEntryFolder.toString(), JSONCompareMode.LENIENT);
 
 		label = RandomTestUtil.randomString();
 		title = RandomTestUtil.randomString();
@@ -50,11 +59,17 @@ public class ImportTaskResourceTest
 		objectEntryFolder = _postImportTask(
 			"UPSERT", objectEntryFolderExternalReferenceCode, label, title);
 
-		Assert.assertEquals(label, objectEntryFolder.getLabel());
-		Assert.assertEquals(
-			objectEntryFolderExternalReferenceCode,
-			objectEntryFolder.getExternalReferenceCode());
-		Assert.assertEquals(title, objectEntryFolder.getTitle());
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"externalReferenceCode", objectEntryFolderExternalReferenceCode
+			).put(
+				"label", label
+			).put(
+				"title", title
+			).toString(),
+			objectEntryFolder.toString(), JSONCompareMode.LENIENT);
+
+		// With "createStrategy" INSERT
 
 		label = RandomTestUtil.randomString();
 		objectEntryFolderExternalReferenceCode = RandomTestUtil.randomString();
@@ -63,11 +78,15 @@ public class ImportTaskResourceTest
 		objectEntryFolder = _postImportTask(
 			"INSERT", objectEntryFolderExternalReferenceCode, label, title);
 
-		Assert.assertEquals(label, objectEntryFolder.getLabel());
-		Assert.assertEquals(
-			objectEntryFolderExternalReferenceCode,
-			objectEntryFolder.getExternalReferenceCode());
-		Assert.assertEquals(title, objectEntryFolder.getTitle());
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"externalReferenceCode", objectEntryFolderExternalReferenceCode
+			).put(
+				"label", label
+			).put(
+				"title", title
+			).toString(),
+			objectEntryFolder.toString(), JSONCompareMode.LENIENT);
 	}
 
 	private ObjectEntryFolder _postImportTask(
@@ -89,8 +108,8 @@ public class ImportTaskResourceTest
 		).build();
 
 		ImportTask importTask = importTaskResource.postImportTask(
-			"com.liferay.headless.object.dto.v1_0.ObjectEntryFolder", null, null, null, createStrategy,
-			null, null, null, null,
+			"com.liferay.headless.object.dto.v1_0.ObjectEntryFolder", null,
+			null, null, createStrategy, null, null, null, null,
 			JSONUtil.putAll(
 				JSONUtil.put(
 					"externalReferenceCode", externalReferenceCode

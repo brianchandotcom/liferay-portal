@@ -39,6 +39,9 @@ public class DefaultExportImportBackgroundTaskStatusMessageTranslator
 		else if (messageType.equals("stagedModel")) {
 			_translateStagedModelMessage(backgroundTaskStatus, message);
 		}
+		else if (messageType.equals("batchProgress")) {
+			_translateBatchProgressMessage(backgroundTaskStatus, message);
+		}
 	}
 
 	protected void clearBackgroundTaskStatus(
@@ -57,6 +60,7 @@ public class DefaultExportImportBackgroundTaskStatusMessageTranslator
 		backgroundTaskStatus.setAttribute(
 			"currentPortletModelAdditionCounters",
 			new HashMap<String, LongWrapper>());
+		backgroundTaskStatus.setAttribute("percentage", 0);
 	}
 
 	protected synchronized void translateLayoutMessage(
@@ -78,6 +82,8 @@ public class DefaultExportImportBackgroundTaskStatusMessageTranslator
 
 		backgroundTaskStatus.setAttribute(
 			"allPortletAdditionCounter", allPortletAdditionCounter);
+
+		_updatePercentage(backgroundTaskStatus);
 	}
 
 	protected synchronized void translatePortletMessage(
@@ -123,6 +129,8 @@ public class DefaultExportImportBackgroundTaskStatusMessageTranslator
 		backgroundTaskStatus.setAttribute("stagedModelName", StringPool.BLANK);
 		backgroundTaskStatus.setAttribute("stagedModelType", StringPool.BLANK);
 		backgroundTaskStatus.setAttribute("uuid", StringPool.BLANK);
+
+		_updatePercentage(backgroundTaskStatus);
 	}
 
 	private long _getTotal(Map<String, LongWrapper> modelCounters) {
@@ -139,6 +147,23 @@ public class DefaultExportImportBackgroundTaskStatusMessageTranslator
 		}
 
 		return total;
+	}
+
+	private synchronized void _translateBatchProgressMessage(
+		BackgroundTaskStatus backgroundTaskStatus, Message message) {
+
+		int processedItemsCount = GetterUtil.getInteger(
+			message.get("processedItemsCount"));
+		long allModelAdditionCountersTotal = GetterUtil.getLong(
+			backgroundTaskStatus.getAttribute("allModelAdditionCountersTotal"));
+
+		long newCurrentCount = Math.min(
+			processedItemsCount, allModelAdditionCountersTotal);
+
+		backgroundTaskStatus.setAttribute(
+			"currentModelAdditionCountersTotal", newCurrentCount);
+
+		_updatePercentage(backgroundTaskStatus);
 	}
 
 	private synchronized void _translateStagedModelMessage(
@@ -193,6 +218,40 @@ public class DefaultExportImportBackgroundTaskStatusMessageTranslator
 		backgroundTaskStatus.setAttribute(
 			"stagedModelType", message.getString("stagedModelType"));
 		backgroundTaskStatus.setAttribute("uuid", message.getString("uuid"));
+
+		_updatePercentage(backgroundTaskStatus);
+	}
+
+	private void _updatePercentage(BackgroundTaskStatus backgroundTaskStatus) {
+		long allModelAdditionCountersTotal = GetterUtil.getLong(
+			backgroundTaskStatus.getAttribute("allModelAdditionCountersTotal"));
+		long allPortletAdditionCounter = GetterUtil.getLong(
+			backgroundTaskStatus.getAttribute("allPortletAdditionCounter"));
+		long currentModelAdditionCountersTotal = GetterUtil.getLong(
+			backgroundTaskStatus.getAttribute(
+				"currentModelAdditionCountersTotal"));
+		long currentPortletAdditionCounter = GetterUtil.getLong(
+			backgroundTaskStatus.getAttribute("currentPortletAdditionCounter"));
+
+		long allProgressBarCountersTotal =
+			allModelAdditionCountersTotal + allPortletAdditionCounter;
+		long currentProgressBarCountersTotal =
+			currentModelAdditionCountersTotal + currentPortletAdditionCounter;
+
+		backgroundTaskStatus.setAttribute(
+			"allProgressBarCountersTotal", allProgressBarCountersTotal);
+		backgroundTaskStatus.setAttribute(
+			"currentProgressBarCountersTotal", currentProgressBarCountersTotal);
+
+		int percentage = 100;
+
+		if (allProgressBarCountersTotal > 0) {
+			percentage = Math.round(
+				(float)currentProgressBarCountersTotal /
+					allProgressBarCountersTotal * 100);
+		}
+
+		backgroundTaskStatus.setAttribute("percentage", percentage);
 	}
 
 }

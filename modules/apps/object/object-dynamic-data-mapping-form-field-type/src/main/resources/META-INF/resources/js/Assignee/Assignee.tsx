@@ -7,10 +7,9 @@ import Autocomplete from '@clayui/autocomplete';
 import {FetchPolicy, useResource} from '@clayui/data-provider';
 import {useConfig} from 'data-engine-js-components-web';
 import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type/api';
-import React, {useMemo, useState} from 'react';
+import React, {Ref, useMemo, useState} from 'react';
 
 import './Assignee.scss';
-import AssigneeTrigger, {AssigneeTriggerProps} from './AssigneeTrigger';
 import Option from './Option';
 
 export interface AssigneeValue {
@@ -20,27 +19,34 @@ export interface AssigneeValue {
 	type: string;
 }
 
+export interface AssigneeTriggerProps
+	extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'ref'> {
+	className?: string;
+	ref: Ref<HTMLInputElement>;
+	selectedItem?: AssigneeValue | null | {};
+}
+
 interface AssigneeProps {
-	customClasses?: string;
 	label?: string;
 	name: string;
-	onChange?: (value: AssigneeValue | {}) => void;
+	onChange?: (event: {target: {value: AssigneeValue | {}}}) => void;
 	readOnly?: boolean;
 	searchURL: string;
 	showLabel?: boolean;
+	triggerClassName?: string;
 	triggerComponent?: React.ComponentType<AssigneeTriggerProps>;
 	value?: AssigneeValue | null | {};
 	visible?: boolean;
 }
 
 export default function Assignee({
-	customClasses,
 	label,
 	name,
 	onChange,
 	readOnly,
 	searchURL,
-	triggerComponent: CustomTrigger,
+	triggerClassName,
+	triggerComponent: AssigneeTrigger,
 	value: initialValue,
 	...otherProps
 }: AssigneeProps) {
@@ -54,7 +60,18 @@ export default function Assignee({
 		initialValue ?? null
 	);
 
-	const {resource}: any = useResource({
+	const {
+		resource,
+	}: {
+		resource: {
+			items: {
+				externalReferenceCode: string;
+				image?: string;
+				name: string;
+				type: string;
+			}[];
+		};
+	} = useResource({
 		fetchOptions: {
 			credentials: 'include',
 			headers: new Headers({'x-csrf-token': Liferay.authToken}),
@@ -68,29 +85,37 @@ export default function Assignee({
 		},
 	});
 
-	const TargetTrigger = CustomTrigger || AssigneeTrigger;
+	const TriggerWrapper = useMemo(() => {
+		if (!AssigneeTrigger) {
+			return undefined;
+		}
 
-	const TriggerWrapper = useMemo(
-		() =>
-			React.forwardRef((props: any, ref) => (
-				<TargetTrigger {...props} ref={ref} selectedItem={value} />
-			)),
-		[value, TargetTrigger]
-	);
+		return React.forwardRef(
+			(props: AssigneeTriggerProps, ref: Ref<HTMLInputElement>) => (
+				<AssigneeTrigger
+					{...props}
+					className={triggerClassName}
+					ref={ref}
+					selectedItem={value}
+				/>
+			)
+		);
+	}, [AssigneeTrigger, triggerClassName, value]);
 
 	return (
 		<FieldBase
 			accessible={false}
 			hideEditedFlag
 			label={label}
+			name={name}
 			readOnly={readOnly}
 			{...otherProps}
 		>
 			<Autocomplete
-				{...otherProps}
+				{...(TriggerWrapper && {
+					as: TriggerWrapper,
+				})}
 				aria-label={label}
-				as={TriggerWrapper}
-				customClasses={customClasses}
 				disabled={readOnly}
 				filterKey="name"
 				items={resource?.items ?? []}
@@ -105,7 +130,7 @@ export default function Assignee({
 						setValue({});
 
 						if (onChange) {
-							onChange({});
+							onChange({target: {value: {}}});
 						}
 					}
 				}}
@@ -117,7 +142,7 @@ export default function Assignee({
 			>
 				{(item: {
 					externalReferenceCode: string;
-					image: string;
+					image?: string;
 					name: string;
 					type: string;
 				}) => {
@@ -126,7 +151,16 @@ export default function Assignee({
 							key={item.name}
 							onClick={() => {
 								if (onChange) {
-									onChange(item);
+									onChange({
+										target: {
+											value: {
+												externalReferenceCode:
+													item.externalReferenceCode,
+												name: item.name,
+												type: item.type,
+											},
+										},
+									});
 								}
 
 								setValue(item);

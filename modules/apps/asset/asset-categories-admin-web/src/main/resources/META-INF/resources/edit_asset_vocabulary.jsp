@@ -70,9 +70,9 @@ renderResponse.setTitle((vocabulary == null) ? LanguageUtil.get(request, "add-vo
 					</span>
 				</label>
 
-				<aui:input checked="<%= assetCategoriesDisplayContext.isVisibilityTypeChecked(AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC) %>" disabled="<%= assetCategoriesDisplayContext.isVisibilityTypeDisabled() %>" id="visibilityTypePublic" label="public" name="visibilityType" type="radio" value="<%= AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC %>" />
+				<aui:input checked="<%= assetCategoriesDisplayContext.isVisibilityTypeChecked(AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC, vocabulary) %>" disabled="<%= assetCategoriesDisplayContext.isVisibilityTypeDisabled(vocabulary) %>" id="visibilityTypePublic" label="public" name="visibilityType" type="radio" value="<%= AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC %>" />
 
-				<aui:input checked="<%= assetCategoriesDisplayContext.isVisibilityTypeChecked(AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL) %>" disabled="<%= assetCategoriesDisplayContext.isVisibilityTypeDisabled() %>" label="internal" name="visibilityType" type="radio" value="<%= AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL %>" />
+				<aui:input checked="<%= assetCategoriesDisplayContext.isVisibilityTypeChecked(AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL, vocabulary) %>" disabled="<%= assetCategoriesDisplayContext.isVisibilityTypeDisabled(vocabulary) %>" label="internal" name="visibilityType" type="radio" value="<%= AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL %>" />
 			</div>
 		</liferay-frontend:fieldset>
 

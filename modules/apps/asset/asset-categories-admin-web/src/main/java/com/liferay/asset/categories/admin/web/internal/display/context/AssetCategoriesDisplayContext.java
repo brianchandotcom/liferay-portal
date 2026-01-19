@@ -980,10 +980,8 @@ public class AssetCategoriesDisplayContext {
 		return _showSelectAssetDisplayPage;
 	}
 
-	public boolean isVisibilityTypeChecked(int visibilityType)
-		throws PortalException {
-
-		AssetVocabulary vocabulary = getVocabulary();
+	public boolean isVisibilityTypeChecked(
+		int visibilityType, AssetVocabulary vocabulary) {
 
 		if ((vocabulary != null) &&
 			(vocabulary.getVisibilityType() == visibilityType)) {
@@ -994,9 +992,7 @@ public class AssetCategoriesDisplayContext {
 		return false;
 	}
 
-	public boolean isVisibilityTypeDisabled() throws PortalException {
-		AssetVocabulary vocabulary = getVocabulary();
-
+	public boolean isVisibilityTypeDisabled(AssetVocabulary vocabulary) {
 		if ((vocabulary == null) ||
 			(vocabulary.getVisibilityType() ==
 				AssetVocabularyConstants.VISIBILITY_TYPE_EMPTY)) {

@@ -13,6 +13,8 @@ import com.liferay.portal.kernel.service.ServiceComponentLocalService;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.search.index.IndexInformation;
+import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.verify.VerifyException;
 import com.liferay.portal.verify.VerifyProcess;
@@ -66,12 +68,20 @@ public class PostUpgradeDataCleanupVerifyProcess extends VerifyProcess {
 				_classNameLocalService, connection),
 			new ResourceActionPostUpgradeDataCleanupProcess(
 				connection, _resourceActionLocalService),
+			new SearchIndexPostUpgradeDataCleanupProcess(
+				_indexInformation, _indexNameBuilder),
 			new ServiceComponentPostUpgradeDataCleanupProcess(
 				connection, _serviceComponentLocalService));
 	}
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private IndexInformation _indexInformation;
+
+	@Reference
+	private IndexNameBuilder _indexNameBuilder;
 
 	@Reference(target = ModuleServiceLifecycle.PORTLETS_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;

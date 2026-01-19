@@ -1272,7 +1272,7 @@ public class StructuredContentResourceImpl
 
 			for (ContentField contentField : entry.getValue()) {
 				Value value = DDMValueUtil.toDDMValue(
-					contentField,
+					contentField.toString(),
 					DDMFormFieldUtil.getDDMFormField(
 						_ddmStructureService, ddmStructure,
 						contentField.getName()),
@@ -1327,7 +1327,7 @@ public class StructuredContentResourceImpl
 			Field field = fields.get(contentField.getName());
 
 			Value value = DDMValueUtil.toDDMValue(
-				contentField,
+				contentField.toString(),
 				DDMFormFieldUtil.getDDMFormField(
 					_ddmStructureService, ddmStructure, contentField.getName()),
 				_dlAppService, journalArticle.getGroupId(),

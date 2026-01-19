@@ -225,8 +225,9 @@ public class DDMFormValuesUtil {
 				dlAppService, groupId, journalArticleService,
 				layoutLocalService, locale,
 				DDMValueUtil.toDDMValue(
-					contentField, ddmFormField, dlAppService, groupId,
-					journalArticleService, layoutLocalService, locale)));
+					contentField.toString(), ddmFormField, dlAppService,
+					groupId, journalArticleService, layoutLocalService,
+					locale)));
 	}
 
 	private static Value _toPredefinedValue(

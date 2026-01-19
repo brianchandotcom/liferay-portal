@@ -5,11 +5,19 @@
 
 package com.liferay.headless.commerce.delivery.catalog.resource.v1_0.test;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
+import com.liferay.commerce.product.model.CPConfigurationEntry;
+import com.liferay.commerce.product.model.CPConfigurationList;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CProduct;
+import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CPConfigurationEntryLocalService;
+import com.liferay.commerce.product.service.CPConfigurationListLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.expando.kernel.model.ExpandoColumn;
@@ -18,6 +26,7 @@ import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0.Product;
+import com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0.ProductConfiguration;
 import com.liferay.headless.commerce.delivery.catalog.client.pagination.Page;
 import com.liferay.headless.commerce.delivery.catalog.client.pagination.Pagination;
 import com.liferay.petra.string.StringBundler;
@@ -33,8 +42,11 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.Inject;
+
+import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,6 +60,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Andrea Sbarra
+ * @author Michele Vigilante
  */
 @RunWith(Arquillian.class)
 public class ProductResourceTest extends BaseProductResourceTestCase {
@@ -58,6 +71,9 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 		super.setUp();
 
 		_user = UserTestUtil.addUser(testCompany);
+
+		_accountEntry = CommerceAccountTestUtil.getPersonAccountEntry(
+			_user.getUserId());
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			testCompany.getCompanyId(), testGroup.getGroupId(),
@@ -73,6 +89,7 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 		super.testGetChannelProductsPage();
 
 		_testGetChannelProductsPageWithCustomFields();
+		_testGetChannelProductsPageWithProductConfiguration();
 	}
 
 	@Override
@@ -328,11 +345,95 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 			Collections.singletonList(product), (List<Product>)page.getItems());
 	}
 
+	private void _testGetChannelProductsPageWithProductConfiguration()
+		throws Exception {
+
+		CommerceCatalog commerceCatalog =
+			CommerceCatalogLocalServiceUtil.addCommerceCatalog(
+				null, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				LocaleUtil.US.getDisplayLanguage(), _serviceContext);
+
+		CPDefinition cpDefinition1 = CPTestUtil.addCPDefinition(
+			commerceCatalog.getGroupId());
+		CPDefinition cpDefinition2 = CPTestUtil.addCPDefinition(
+			commerceCatalog.getGroupId());
+
+		CPConfigurationList cpConfigurationList =
+			_cpConfigurationListLocalService.addCPConfigurationList(
+				RandomTestUtil.randomString(), _user.getUserId(),
+				commerceCatalog.getGroupId(), 0, false,
+				RandomTestUtil.randomString(), 2, 1, 1, 2024, 0, 0, 0, 0, 0, 0,
+				0, true, new ServiceContext());
+
+		CPConfigurationEntry cpConfigurationEntry =
+			_cpConfigurationEntryLocalService.addCPConfigurationEntry(
+				RandomTestUtil.randomString(), _user.getUserId(),
+				cpConfigurationList.getGroupId(),
+				_portal.getClassNameId(CPDefinition.class),
+				cpDefinition1.getCPDefinitionId(),
+				cpConfigurationList.getCPConfigurationListId(), 0, "1,234.00",
+				true, 0, "cpde", 1.0, true, true, true, 1.0, "lowstoc",
+				BigDecimal.TEN, BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ONE,
+				true, true, 1.0, true, true, 1.0, 1.0);
+
+		CPConfigurationList masterCPConfigurationList =
+			_cpConfigurationListLocalService.getMasterCPConfigurationList(
+				commerceCatalog.getGroupId());
+
+		CPConfigurationEntry masterCPConfigurationEntry =
+			_cpConfigurationEntryLocalService.getCPConfigurationEntry(
+				_classNameLocalService.getClassNameId(CPDefinition.class),
+				cpDefinition2.getCPDefinitionId(),
+				masterCPConfigurationList.getCPConfigurationListId());
+
+		Product product1 = productResource.getChannelProduct(
+			_commerceChannel.getCommerceChannelId(),
+			cpDefinition1.getCProductId(), _accountEntry.getAccountEntryId());
+		Product product2 = productResource.getChannelProduct(
+			_commerceChannel.getCommerceChannelId(),
+			cpDefinition2.getCProductId(), _accountEntry.getAccountEntryId());
+
+		ProductConfiguration productConfiguration1 =
+			product1.getProductConfiguration();
+		ProductConfiguration productConfiguration2 =
+			product2.getProductConfiguration();
+
+		Assert.assertEquals(
+			cpConfigurationEntry.getMaxOrderQuantity(),
+			productConfiguration1.getMaxOrderQuantity());
+		Assert.assertEquals(
+			cpConfigurationEntry.getMinOrderQuantity(),
+			productConfiguration1.getMinOrderQuantity());
+		Assert.assertEquals(
+			cpConfigurationEntry.getMultipleOrderQuantity(),
+			productConfiguration1.getMultipleOrderQuantity());
+
+		Assert.assertEquals(
+			masterCPConfigurationEntry.getMaxOrderQuantity(),
+			productConfiguration2.getMaxOrderQuantity());
+		Assert.assertEquals(
+			masterCPConfigurationEntry.getMinOrderQuantity(),
+			productConfiguration2.getMinOrderQuantity());
+		Assert.assertEquals(
+			masterCPConfigurationEntry.getMultipleOrderQuantity(),
+			productConfiguration2.getMultipleOrderQuantity());
+	}
+
+	@DeleteAfterTestRun
+	private AccountEntry _accountEntry;
+
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
 	@DeleteAfterTestRun
 	private CommerceChannel _commerceChannel;
+
+	@Inject
+	private CPConfigurationEntryLocalService _cpConfigurationEntryLocalService;
+
+	@Inject
+	private CPConfigurationListLocalService _cpConfigurationListLocalService;
 
 	@Inject
 	private CPDefinitionLocalService _cpDefinitionLocalService;
@@ -345,6 +446,9 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 
 	@Inject
 	private ExpandoTableLocalService _expandoTableLocalService;
+
+	@Inject
+	private Portal _portal;
 
 	private ServiceContext _serviceContext;
 

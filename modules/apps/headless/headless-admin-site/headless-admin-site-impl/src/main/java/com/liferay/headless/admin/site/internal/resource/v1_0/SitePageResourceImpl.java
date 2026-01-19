@@ -515,15 +515,18 @@ public class SitePageResourceImpl
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 		}
 		else if (Objects.equals(
-					sitePage.getType(), SitePage.Type.PAGE_SET_PAGE)) {
+					sitePage.getType(), SitePage.Type.LINK_TO_URL_PAGE) ||
+				 Objects.equals(
+					 sitePage.getType(), SitePage.Type.PAGE_SET_PAGE)) {
 
-			layout = LayoutUtil.addNodeLayout(
+			layout = LayoutUtil.addLayout(
 				sitePage.getExternalReferenceCode(), groupId,
 				_getParentLayoutId(
 					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, groupId,
 					sitePage.getParentSitePageExternalReferenceCode(),
 					serviceContext),
-				nameMap, typeSettingsUnicodeProperties,
+				nameMap, SitePageTypeUtil.toInternalType(sitePage.getType()),
+				typeSettingsUnicodeProperties,
 				_isHiddenFromNavigation(false, sitePage.getPageSettings()),
 				LocalizedMapUtil.getLocalizedMap(
 					sitePage.getFriendlyUrlPath_i18n()),
@@ -945,9 +948,11 @@ public class SitePageResourceImpl
 				sitePage.getPageSpecifications(), serviceContext);
 		}
 		else if (Objects.equals(
-					sitePage.getType(), SitePage.Type.PAGE_SET_PAGE)) {
+					sitePage.getType(), SitePage.Type.LINK_TO_URL_PAGE) ||
+				 Objects.equals(
+					 sitePage.getType(), SitePage.Type.PAGE_SET_PAGE)) {
 
-			layout = LayoutUtil.updateNodeLayout(
+			layout = LayoutUtil.updateLayout(
 				layout, nameMap, friendlyURLMap,
 				PageSpecificationUtil.getPageSpecification(
 					sitePage.getPageSpecifications()),

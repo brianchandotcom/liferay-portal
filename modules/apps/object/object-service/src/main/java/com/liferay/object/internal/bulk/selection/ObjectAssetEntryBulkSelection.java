@@ -29,6 +29,7 @@ public class ObjectAssetEntryBulkSelection
 		BulkSelection<Object> objectEntryBulkSelection) {
 
 		_assetEntryLocalService = assetEntryLocalService;
+
 		_objectBulkSelection = objectEntryBulkSelection;
 	}
 

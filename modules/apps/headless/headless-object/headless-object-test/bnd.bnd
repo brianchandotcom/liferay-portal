@@ -1,6 +1,11 @@
 Bundle-Name: Liferay Headless Object Test
 Bundle-SymbolicName: com.liferay.headless.object.test
 Bundle-Version: 1.0.0
+Import-Package:\
+	!com.fasterxml.jackson.dataformat.yaml.*,\
+	\
+	*
 -includeresource:\
 	com.liferay.headless.batch.engine.client.jar=com.liferay.headless.batch.engine.client-*.jar;lib:=true,\
-	com.liferay.headless.object.client.jar=com.liferay.headless.object.client-*.jar;lib:=true
+	com.liferay.headless.object.client.jar=com.liferay.headless.object.client-*.jar;lib:=true,\
+	@jsonassert-[0-9.]*.jar

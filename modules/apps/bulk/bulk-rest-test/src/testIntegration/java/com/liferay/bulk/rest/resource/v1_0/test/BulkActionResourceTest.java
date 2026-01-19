@@ -24,6 +24,7 @@ import com.liferay.bulk.rest.client.dto.v1_0.TaxonomyCategoryBulkAction;
 import com.liferay.bulk.rest.client.pagination.Page;
 import com.liferay.bulk.rest.client.pagination.Pagination;
 import com.liferay.bulk.rest.client.problem.Problem;
+import com.liferay.bulk.selection.constants.BulkSelectionActionStatusConstants;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
@@ -1563,10 +1564,16 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 
 			String executionStatus = (String)values.get("executionStatus");
 
-			if (StringUtil.equals(executionStatus, "completed") ||
-				StringUtil.equals(executionStatus, "failed")) {
+			if (StringUtil.equals(
+					executionStatus,
+					BulkSelectionActionStatusConstants.COMPLETED) ||
+				StringUtil.equals(
+					executionStatus,
+					BulkSelectionActionStatusConstants.FAILED)) {
 
-				Assert.assertEquals("completed", executionStatus);
+				Assert.assertEquals(
+					BulkSelectionActionStatusConstants.COMPLETED,
+					executionStatus);
 
 				return;
 			}

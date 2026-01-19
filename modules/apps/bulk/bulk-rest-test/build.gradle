@@ -7,6 +7,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:batch-engine:batch-engine-api")
 	testIntegrationImplementation project(":apps:bulk:bulk-rest-api")
 	testIntegrationImplementation project(":apps:bulk:bulk-rest-client")
+	testIntegrationImplementation project(":apps:bulk:bulk-selection-api")
 	testIntegrationImplementation project(":apps:depot:depot-api")
 	testIntegrationImplementation project(":apps:document-library:document-library-test-util")
 	testIntegrationImplementation project(":apps:headless:headless-batch-engine:headless-batch-engine-client")

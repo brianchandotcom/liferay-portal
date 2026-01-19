@@ -7,6 +7,7 @@ package com.liferay.object.internal.bulk.selection;
 
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionAction;
+import com.liferay.bulk.selection.constants.BulkSelectionActionStatusConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -50,12 +51,13 @@ public abstract class BaseObjectBulkSelectionAction
 
 		values.put("numberOfItems", bulkSelection.getSize());
 
-		String executionStatus = "completed";
+		String executionStatus = BulkSelectionActionStatusConstants.COMPLETED;
 		AtomicInteger numberOfFailedItems = new AtomicInteger(0);
 		AtomicInteger numberOfSuccessfulItems = new AtomicInteger(0);
 
 		try {
-			values.put("executionStatus", "started");
+			values.put(
+				"executionStatus", BulkSelectionActionStatusConstants.STARTED);
 
 			objectEntry = partialUpdateObjectEntry(
 				user.getUserId(), objectEntry, values);
@@ -67,7 +69,8 @@ public abstract class BaseObjectBulkSelectionAction
 
 			bulkSelection.forEach(
 				object -> {
-					String status = "completed";
+					String status =
+						BulkSelectionActionStatusConstants.COMPLETED;
 
 					try {
 						doExecute(user, inputMap, object);
@@ -80,7 +83,7 @@ public abstract class BaseObjectBulkSelectionAction
 						}
 
 						numberOfFailedItems.getAndIncrement();
-						status = "failed";
+						status = BulkSelectionActionStatusConstants.FAILED;
 					}
 					finally {
 						objectEntryLocalService.addObjectEntry(
@@ -108,7 +111,7 @@ public abstract class BaseObjectBulkSelectionAction
 				_log.warn(portalException);
 			}
 
-			executionStatus = "failed";
+			executionStatus = BulkSelectionActionStatusConstants.FAILED;
 		}
 		finally {
 			values.put("completionDate", new Date());

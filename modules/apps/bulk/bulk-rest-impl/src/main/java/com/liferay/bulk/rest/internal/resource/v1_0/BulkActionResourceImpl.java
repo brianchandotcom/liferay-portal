@@ -20,6 +20,7 @@ import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionAction;
 import com.liferay.bulk.selection.BulkSelectionFactoryRegistry;
 import com.liferay.bulk.selection.BulkSelectionRunner;
+import com.liferay.bulk.selection.constants.BulkSelectionActionStatusConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
@@ -241,7 +242,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			HashMapBuilder.<String, Serializable>put(
 				"actionName", typeString
 			).put(
-				"executionStatus", "initial"
+				"executionStatus", BulkSelectionActionStatusConstants.INITIAL
 			).put(
 				"type", typeString
 			).build(),
@@ -252,7 +253,9 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 				setActionName(() -> GetterUtil.getString(typeString));
 				setAuthor(objectEntry::getUserName);
 				setCreatedDate(objectEntry::getCreateDate);
-				setExecuteStatus(() -> GetterUtil.getString("initial"));
+				setExecuteStatus(
+					() -> GetterUtil.getString(
+						BulkSelectionActionStatusConstants.INITIAL));
 				setExternalReferenceCode(objectEntry::getExternalReferenceCode);
 				setId(objectEntry::getObjectEntryId);
 				setType(() -> GetterUtil.getString(typeString));

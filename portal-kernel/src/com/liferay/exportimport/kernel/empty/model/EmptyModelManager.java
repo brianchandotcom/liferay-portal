@@ -25,16 +25,8 @@ public interface EmptyModelManager {
 			String externalReferenceCode,
 			BiFunction<String, Long, T> fetchByExternalReferenceCodeBiFunction,
 			UnsafeBiFunction<String, Long, T, E>
-				getByExternalReferenceCodeUnsafeBiFunction)
-		throws E;
-
-	public <T, E extends PortalException> T getOrAddEmptyModel(
-			Class<T> clazz, UnsafeSupplier<T, E> emptyModelUnsafeSupplier,
-			String externalReferenceCode,
-			BiFunction<String, Long, T> fetchByExternalReferenceCodeBiFunction,
-			UnsafeBiFunction<String, Long, T, E>
 				getByExternalReferenceCodeUnsafeBiFunction,
-			long groupId)
+			String modelNameLanguageKey)
 		throws E;
 
 	public <T, E extends Exception> T getOrAddEmptyModel(
@@ -44,7 +36,7 @@ public interface EmptyModelManager {
 			BiFunction<String, Long, T> fetchByExternalReferenceCodeBiFunction,
 			UnsafeBiFunction<String, Long, T, E>
 				getByExternalReferenceCodeUnsafeBiFunction,
-			long groupId, String modelName)
+			long groupId, String modelNameLanguageKey)
 		throws E;
 
 	public boolean isEmptyModel();

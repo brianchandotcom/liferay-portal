@@ -237,9 +237,8 @@ public class ClientExtensionsOSGiCommands implements OSGiCommands {
 	private Configuration _reloadConfiguration(Configuration configuration)
 		throws Exception {
 
-		Dictionary<String, Object> properties = configuration.getProperties();
-
 		String pid = configuration.getPid();
+		Dictionary<String, Object> properties = configuration.getProperties();
 
 		configuration.delete();
 

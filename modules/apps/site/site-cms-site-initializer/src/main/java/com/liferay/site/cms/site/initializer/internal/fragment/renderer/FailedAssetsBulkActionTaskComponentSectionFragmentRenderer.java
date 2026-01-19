@@ -5,10 +5,10 @@
 
 package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
+import com.liferay.bulk.selection.constants.BulkSelectionActionStatusConstants;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.site.cms.site.initializer.constants.BulkActionExecutionStatusConstants;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -42,9 +42,9 @@ public class FailedAssetsBulkActionTaskComponentSectionFragmentRenderer
 		return HashMapBuilder.<String, Object>put(
 			"assetsCount",
 			getBulkActionTaskItemsCount(
-				BulkActionExecutionStatusConstants.FAILED, httpServletRequest)
+				BulkSelectionActionStatusConstants.FAILED, httpServletRequest)
 		).put(
-			"executionStatus", BulkActionExecutionStatusConstants.FAILED
+			"executionStatus", BulkSelectionActionStatusConstants.FAILED
 		).build();
 	}
 

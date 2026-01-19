@@ -3,5 +3,4 @@ Bundle-SymbolicName: com.liferay.site.cms.site.initializer.api
 Bundle-Version: 3.1.1
 Export-Package:\
 	com.liferay.site.cms.site.initializer.configuration,\
-	com.liferay.site.cms.site.initializer.constants,\
 	com.liferay.site.cms.site.initializer.util

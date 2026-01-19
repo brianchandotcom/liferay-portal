@@ -5,10 +5,10 @@
 
 package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
+import com.liferay.bulk.selection.constants.BulkSelectionActionStatusConstants;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.site.cms.site.initializer.constants.BulkActionExecutionStatusConstants;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -42,10 +42,10 @@ public class SuccessfulAssetsBulkActionTaskComponentSectionFragmentRenderer
 		return HashMapBuilder.<String, Object>put(
 			"assetsCount",
 			getBulkActionTaskItemsCount(
-				BulkActionExecutionStatusConstants.COMPLETED,
+				BulkSelectionActionStatusConstants.COMPLETED,
 				httpServletRequest)
 		).put(
-			"executionStatus", BulkActionExecutionStatusConstants.COMPLETED
+			"executionStatus", BulkSelectionActionStatusConstants.COMPLETED
 		).build();
 	}
 

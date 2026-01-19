@@ -5,10 +5,10 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
+import com.liferay.bulk.selection.constants.BulkSelectionActionStatusConstants;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.site.cms.site.initializer.constants.BulkActionExecutionStatusConstants;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -33,7 +33,7 @@ public class ViewBulkActionTaskReportSuccessfulItemsDisplayContext {
 
 		return StringBundler.concat(
 			"/o/cms/bulk-action-task-items?filter=executionStatus eq '",
-			BulkActionExecutionStatusConstants.COMPLETED,
+			BulkSelectionActionStatusConstants.COMPLETED,
 			"' and r_cmsBATaskToCMSBATaskItems_c_cmsBulkActionTaskId eq '",
 			objectEntry.getObjectEntryId(), "'");
 	}

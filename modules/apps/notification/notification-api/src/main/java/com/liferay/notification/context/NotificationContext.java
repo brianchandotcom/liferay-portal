@@ -74,6 +74,10 @@ public class NotificationContext {
 		return _notificationTemplate;
 	}
 
+	public long getParentClassPK() {
+		return _parentClassPK;
+	}
+
 	public String getPortletId() {
 		return _portletId;
 	}
@@ -160,6 +164,10 @@ public class NotificationContext {
 		_notificationTemplate = notificationTemplate;
 	}
 
+	public void setParentClassPK(long parentClassPK) {
+		_parentClassPK = parentClassPK;
+	}
+
 	public void setPortletId(String portletId) {
 		_portletId = portletId;
 	}
@@ -205,6 +213,7 @@ public class NotificationContext {
 	private NotificationRecipient _notificationRecipient;
 	private List<NotificationRecipientSetting> _notificationRecipientSettings;
 	private NotificationTemplate _notificationTemplate;
+	private long _parentClassPK;
 	private String _portletId;
 	private String _preferredLanguageId;
 	private Locale _siteDefaultLocale;

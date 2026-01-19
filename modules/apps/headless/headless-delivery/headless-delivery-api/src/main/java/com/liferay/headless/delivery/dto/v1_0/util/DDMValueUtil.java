@@ -200,17 +200,13 @@ public class DDMValueUtil {
 		try {
 			List<String> values = new ArrayList<>();
 
-			if (!ddmFormField.isMultiple() &&
-				!Objects.equals(
-					DDMFormFieldType.CHECKBOX_MULTIPLE,
-					ddmFormField.getType())) {
-
-				values.add(optionValues);
-			}
-			else {
+			if (JSONUtil.isJSONArray(optionValues)) {
 				values.addAll(
 					JSONUtil.toStringList(
 						JSONFactoryUtil.createJSONArray(optionValues)));
+			}
+			else {
+				values.add(optionValues);
 			}
 
 			values = _transformValuesToKeys(ddmFormField, locale, values);

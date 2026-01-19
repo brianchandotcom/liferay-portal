@@ -306,112 +306,6 @@ test.describe('Manage fields through Form Preview page', () => {
 });
 
 test.describe('Manage fields through Form Builder page', () => {
-	test('Assert edition of a rich text field predefined value that contains a rule', async ({
-		formBuilderPage,
-		formBuilderSidePanelPage,
-		page,
-		rulesBuilderPage,
-	}) => {
-		let richTextPredefinedValueIframe: FrameLocator;
-
-		await test.step('create a new form with a richText field and set a predefined value for it', async () => {
-			await formBuilderPage.goToNew();
-
-			await formBuilderSidePanelPage.addFieldByDoubleClick('Rich Text');
-
-			await formBuilderPage.openFieldSettings('Rich Text');
-
-			await formBuilderSidePanelPage.advancedTab.click();
-
-			richTextPredefinedValueIframe = page
-				.getByRole('textbox', {name: 'Predefined Value'})
-				.frameLocator('iframe');
-
-			await richTextPredefinedValueIframe.getByRole('paragraph').click();
-
-			await page.keyboard.type('Rich text predefined value');
-		});
-
-		await test.step('create a rule involving richText field', async () => {
-			await rulesBuilderPage.rulesTab.click();
-
-			await rulesBuilderPage.addElementsButton.click();
-
-			await rulesBuilderPage.selectConditionLeftFormField('Rich Text');
-
-			await rulesBuilderPage.selectConditionOperator('Is Empty');
-
-			await rulesBuilderPage.selectAction('Require');
-
-			await page.getByTitle('Choose an Option').click();
-
-			await page.getByRole('option', {name: 'Rich Text'}).click();
-
-			await rulesBuilderPage.saveButton.click();
-		});
-
-		await test.step('edit previous predefined value after adding the rule', async () => {
-			await formBuilderPage.formTab.click();
-
-			await expect(
-				page.getByRole('textbox', {name: 'Rich Text'})
-			).toBeVisible();
-
-			await formBuilderPage.openFieldSettings('Rich Text');
-
-			await formBuilderSidePanelPage.advancedTab.click();
-
-			await richTextPredefinedValueIframe
-				.getByText('Rich text predefined value')
-				.click();
-
-			await page.keyboard.press('Control+A');
-
-			await page.keyboard.press('Backspace');
-
-			await page.keyboard.type(
-				'Typing a new predefined value for the rich text field.'
-			);
-
-			await expect(
-				richTextPredefinedValueIframe.getByText(
-					'Typing a new predefined value for the rich text field.'
-				)
-			).toBeVisible();
-		});
-	});
-
-	test('Assert that a date field can be previewed', async ({
-		formBuilderPage,
-		formBuilderSidePanelPage,
-	}) => {
-		await formBuilderPage.goToNew();
-
-		await formBuilderSidePanelPage.addFieldByDoubleClick('Date');
-
-		const newTabPage = await formBuilderPage.openPreviewForm();
-
-		await expect(
-			newTabPage.getByLabel('Date', {exact: true})
-		).toBeVisible();
-
-		await newTabPage.getByRole('button', {name: 'Select Date'}).click();
-
-		await newTabPage.getByLabel('Select Current Date').click();
-
-		await newTabPage.keyboard.press('Escape');
-
-		const currentDate = new Date();
-
-		const formattedDate = new Intl.DateTimeFormat('en-US', {
-			day: '2-digit',
-			month: '2-digit',
-			year: 'numeric',
-		}).format(currentDate);
-
-		await expect(newTabPage.getByText(formattedDate)).toBeVisible();
-	});
-
 	test('Assert actions on a fields group', async ({
 		formBuilderPage,
 		formBuilderSidePanelPage,
@@ -517,6 +411,112 @@ test.describe('Manage fields through Form Builder page', () => {
 
 			await newTabPage.close();
 		});
+	});
+
+	test('Assert edition of a rich text field predefined value that contains a rule', async ({
+		formBuilderPage,
+		formBuilderSidePanelPage,
+		page,
+		rulesBuilderPage,
+	}) => {
+		let richTextPredefinedValueIframe: FrameLocator;
+
+		await test.step('create a new form with a richText field and set a predefined value for it', async () => {
+			await formBuilderPage.goToNew();
+
+			await formBuilderSidePanelPage.addFieldByDoubleClick('Rich Text');
+
+			await formBuilderPage.openFieldSettings('Rich Text');
+
+			await formBuilderSidePanelPage.advancedTab.click();
+
+			richTextPredefinedValueIframe = page
+				.getByRole('textbox', {name: 'Predefined Value'})
+				.frameLocator('iframe');
+
+			await richTextPredefinedValueIframe.getByRole('paragraph').click();
+
+			await page.keyboard.type('Rich text predefined value');
+		});
+
+		await test.step('create a rule involving richText field', async () => {
+			await rulesBuilderPage.rulesTab.click();
+
+			await rulesBuilderPage.addElementsButton.click();
+
+			await rulesBuilderPage.selectConditionLeftFormField('Rich Text');
+
+			await rulesBuilderPage.selectConditionOperator('Is Empty');
+
+			await rulesBuilderPage.selectAction('Require');
+
+			await page.getByTitle('Choose an Option').click();
+
+			await page.getByRole('option', {name: 'Rich Text'}).click();
+
+			await rulesBuilderPage.saveButton.click();
+		});
+
+		await test.step('edit previous predefined value after adding the rule', async () => {
+			await formBuilderPage.formTab.click();
+
+			await expect(
+				page.getByRole('textbox', {name: 'Rich Text'})
+			).toBeVisible();
+
+			await formBuilderPage.openFieldSettings('Rich Text');
+
+			await formBuilderSidePanelPage.advancedTab.click();
+
+			await richTextPredefinedValueIframe
+				.getByText('Rich text predefined value')
+				.click();
+
+			await page.keyboard.press('Control+A');
+
+			await page.keyboard.press('Backspace');
+
+			await page.keyboard.type(
+				'Typing a new predefined value for the rich text field.'
+			);
+
+			await expect(
+				richTextPredefinedValueIframe.getByText(
+					'Typing a new predefined value for the rich text field.'
+				)
+			).toBeVisible();
+		});
+	});
+
+	test('Assert that a date field can be previewed', async ({
+		formBuilderPage,
+		formBuilderSidePanelPage,
+	}) => {
+		await formBuilderPage.goToNew();
+
+		await formBuilderSidePanelPage.addFieldByDoubleClick('Date');
+
+		const newTabPage = await formBuilderPage.openPreviewForm();
+
+		await expect(
+			newTabPage.getByLabel('Date', {exact: true})
+		).toBeVisible();
+
+		await newTabPage.getByRole('button', {name: 'Select Date'}).click();
+
+		await newTabPage.getByLabel('Select Current Date').click();
+
+		await newTabPage.keyboard.press('Escape');
+
+		const currentDate = new Date();
+
+		const formattedDate = new Intl.DateTimeFormat('en-US', {
+			day: '2-digit',
+			month: '2-digit',
+			year: 'numeric',
+		}).format(currentDate);
+
+		await expect(newTabPage.getByText(formattedDate)).toBeVisible();
 	});
 
 	test('Can move the last field of a child group into the parent group field', async ({

@@ -141,7 +141,8 @@ public class CustomFieldsUtil {
 							_toAttributeType(customField.getAttributeType()));
 
 						return _expandoColumn;
-					});
+					},
+					ExpandoColumn.class.getName());
 			}
 			catch (PortalException portalException) {
 				throw new RuntimeException(portalException);

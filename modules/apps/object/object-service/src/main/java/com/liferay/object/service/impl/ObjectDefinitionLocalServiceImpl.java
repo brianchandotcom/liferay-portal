@@ -1033,7 +1033,8 @@ public class ObjectDefinitionLocalServiceImpl
 				scope, system),
 			externalReferenceCode,
 			this::fetchObjectDefinitionByExternalReferenceCode,
-			this::getObjectDefinitionByExternalReferenceCode);
+			this::getObjectDefinitionByExternalReferenceCode,
+			ObjectDefinition.class.getName());
 	}
 
 	@Override

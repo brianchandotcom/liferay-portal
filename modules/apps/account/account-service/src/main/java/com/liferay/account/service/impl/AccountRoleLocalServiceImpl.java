@@ -244,7 +244,8 @@ public class AccountRoleLocalServiceImpl
 			},
 			externalReferenceCode,
 			this::fetchAccountRoleByExternalReferenceCode,
-			this::getAccountRoleByExternalReferenceCode);
+			this::getAccountRoleByExternalReferenceCode,
+			AccountRole.class.getName());
 	}
 
 	@Override

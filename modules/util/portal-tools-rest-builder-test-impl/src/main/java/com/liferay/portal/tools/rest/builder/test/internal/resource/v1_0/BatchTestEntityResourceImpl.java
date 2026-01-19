@@ -197,7 +197,8 @@ public class BatchTestEntityResourceImpl
 					catch (Exception exception) {
 						throw new PortalException(exception);
 					}
-				});
+				},
+				CompanyTestEntity.class.getName());
 
 			batchTestEntity.setRelatedCompanyTestEntity(companyTestEntity);
 
@@ -273,7 +274,8 @@ public class BatchTestEntityResourceImpl
 					catch (Exception exception) {
 						throw new PortalException(exception);
 					}
-				});
+				},
+				CompanyTestEntity.class.getName());
 
 			_relationships.put(
 				batchTestEntity.getId(), companyTestEntity.getId());

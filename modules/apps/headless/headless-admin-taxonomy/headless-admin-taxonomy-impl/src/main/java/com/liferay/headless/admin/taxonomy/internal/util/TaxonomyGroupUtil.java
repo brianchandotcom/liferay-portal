@@ -24,7 +24,7 @@ public class TaxonomyGroupUtil {
 		AssetLibrary[] assetLibraries, long companyId) {
 
 		if (ArrayUtil.isEmpty(assetLibraries)) {
-			return _GROUP_ID_ALL;
+			return _GROUP_IDS_ALL;
 		}
 
 		List<Long> groupIds = new ArrayList<>();
@@ -45,7 +45,7 @@ public class TaxonomyGroupUtil {
 		}
 
 		if (groupIds.isEmpty()) {
-			return _GROUP_ID_ALL;
+			return _GROUP_IDS_ALL;
 		}
 
 		return ArrayUtil.toLongArray(groupIds);
@@ -58,6 +58,6 @@ public class TaxonomyGroupUtil {
 		return group.getGroupId();
 	}
 
-	private static final long[] _GROUP_ID_ALL = {-1L};
+	private static final long[] _GROUP_IDS_ALL = {-1L};
 
 }

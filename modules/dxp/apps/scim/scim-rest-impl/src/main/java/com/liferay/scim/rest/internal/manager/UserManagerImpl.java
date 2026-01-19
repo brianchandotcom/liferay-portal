@@ -23,6 +23,7 @@ import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.WebsiteURLException;
@@ -214,8 +215,20 @@ public class UserManagerImpl implements UserManager {
 	@Override
 	public void deleteUser(String userId) throws CharonException {
 		try {
-			_getScimUser(
-				CompanyThreadLocal.getCompanyId(), GetterUtil.getLong(userId));
+			if (_isUserDeleted(GetterUtil.getLong(userId))) {
+				throw new NotFoundException(
+					"No user found with user ID " + userId);
+			}
+
+			com.liferay.portal.kernel.model.User portalUser = _fetchPortalUser(
+				ScimUtil.getScimClientOAuth2ApplicationConfiguration(
+					CompanyThreadLocal.getCompanyId(), _configurationAdmin),
+				_getScimUser(
+					CompanyThreadLocal.getCompanyId(),
+					GetterUtil.getLong(userId)));
+
+			_addOrUpdateExpandoValue(
+				"deletedBySCIM", portalUser, false, Boolean.TRUE.toString());
 
 			_userService.updateStatus(
 				GetterUtil.getLong(userId), WorkflowConstants.STATUS_INACTIVE,
@@ -261,6 +274,11 @@ public class UserManagerImpl implements UserManager {
 		String userId, Map<String, Boolean> requiredAttributes) {
 
 		try {
+			if (_isUserDeleted(GetterUtil.getLong(userId))) {
+				throw new NotFoundException(
+					"No user found with user ID " + userId);
+			}
+
 			ScimUser scimUser = _getScimUser(
 				CompanyThreadLocal.getCompanyId(), GetterUtil.getLong(userId));
 
@@ -290,14 +308,31 @@ public class UserManagerImpl implements UserManager {
 				_userLocalService.fetchUser(PrincipalThreadLocal.getUserId()));
 
 		_buildGetResponse(
+			DSLQueryFactoryUtil.count(
+			).from(
+				UserGroupTable.INSTANCE
+			).innerJoinON(
+				ExpandoValueTable.INSTANCE,
+				ExpandoValueTable.INSTANCE.classPK.eq(
+					UserGroupTable.INSTANCE.userGroupId)
+			),
+			null,
+			DSLQueryFactoryUtil.select(
+				UserGroupTable.INSTANCE
+			).from(
+				UserGroupTable.INSTANCE
+			).innerJoinON(
+				ExpandoValueTable.INSTANCE,
+				ExpandoValueTable.INSTANCE.classPK.eq(
+					UserGroupTable.INSTANCE.userGroupId)
+			),
 			UserGroupTable.INSTANCE,
 			(totalGroups, groups) -> {
 				groupsGetResponse.setGroups(groups);
 				groupsGetResponse.setTotalGroups(totalGroups);
 			},
-			UserGroup.class, count, UserGroupTable.INSTANCE.userGroupId,
-			new String[] {"displayName"}, node, _userGroupLocalService,
-			startIndex,
+			UserGroup.class, new String[] {"displayName"}, node, count,
+			_userGroupLocalService, startIndex,
 			userGroup -> {
 				if (!UserGroupPermissionUtil.contains(
 						permissionChecker, userGroup.getUserGroupId(),
@@ -340,15 +375,50 @@ public class UserManagerImpl implements UserManager {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(portalUser);
 
+		ExpandoColumn expandoColumn = _expandoColumnLocalService.getColumn(
+			CompanyThreadLocal.getCompanyId(),
+			com.liferay.portal.kernel.model.User.class.getName(),
+			ExpandoTableConstants.DEFAULT_TABLE_NAME, "deletedBySCIM");
+
+		Predicate predicate = null;
+
+		if (expandoColumn != null) {
+			predicate = UserTable.INSTANCE.userId.notIn(
+				DSLQueryFactoryUtil.select(
+					ExpandoValueTable.INSTANCE.classPK
+				).from(
+					ExpandoValueTable.INSTANCE
+				).where(
+					ExpandoValueTable.INSTANCE.columnId.eq(
+						expandoColumn.getColumnId())
+				));
+		}
+
 		_buildGetResponse(
+			DSLQueryFactoryUtil.count(
+			).from(
+				UserTable.INSTANCE
+			).innerJoinON(
+				ExpandoValueTable.INSTANCE,
+				ExpandoValueTable.INSTANCE.classPK.eq(UserTable.INSTANCE.userId)
+			),
+			predicate,
+			DSLQueryFactoryUtil.select(
+				UserTable.INSTANCE
+			).from(
+				UserTable.INSTANCE
+			).innerJoinON(
+				ExpandoValueTable.INSTANCE,
+				ExpandoValueTable.INSTANCE.classPK.eq(UserTable.INSTANCE.userId)
+			),
 			UserTable.INSTANCE,
 			(totalUsers, users) -> {
 				usersGetResponse.setTotalUsers(totalUsers);
 				usersGetResponse.setUsers(users);
 			},
-			com.liferay.portal.kernel.model.User.class, count,
-			UserTable.INSTANCE.userId, new String[] {"externalId", "userName"},
-			node, _userLocalService, startIndex,
+			com.liferay.portal.kernel.model.User.class,
+			new String[] {"externalId", "userName"}, node, count,
+			_userLocalService, startIndex,
 			user -> {
 				if (!UserPermissionUtil.contains(
 						permissionChecker, user.getUserId(), ActionKeys.VIEW)) {
@@ -478,6 +548,15 @@ public class UserManagerImpl implements UserManager {
 			portalUser = _updatePortalUser(
 				birthdayMonth, birthdayDay, birthdayYear, portalUser, scimUser,
 				scimClientOAuth2ApplicationConfiguration);
+		}
+
+		if (_isUserDeleted(portalUser.getUserId())) {
+			_expandoValueLocalService.deleteValue(
+				company.getCompanyId(),
+				ClassNameLocalServiceUtil.getClassNameId(
+					com.liferay.portal.kernel.model.User.class.getName()),
+				ExpandoTableConstants.DEFAULT_TABLE_NAME, "deletedBySCIM",
+				portalUser.getUserId());
 		}
 
 		_addOrUpdateExpandoValue(
@@ -780,9 +859,10 @@ public class UserManagerImpl implements UserManager {
 
 	private <T extends BaseTable<T>, U, E extends Throwable, R> void
 			_buildGetResponse(
-				BaseTable<T> baseTable, BiConsumer<Integer, List<R>> biConsumer,
-				Class<U> clazz, Integer pageSize, Expression<Long> expression,
-				String[] fieldNames, Node node,
+				JoinStep baseCountQuery, Predicate basePredicate,
+				JoinStep baseSelectQuery, BaseTable<T> baseTable,
+				BiConsumer<Integer, List<R>> biConsumer, Class<U> clazz,
+				String[] fieldNames, Node node, Integer pageSize,
 				PersistedModelLocalService persistedModelLocalService,
 				Integer startIndex, UnsafeFunction<U, R, E> unsafeFunction)
 		throws BadRequestException {
@@ -796,19 +876,11 @@ public class UserManagerImpl implements UserManager {
 		_validate(node, fieldNames);
 
 		Predicate predicate = _buildWherePredicate(
-			baseTable, clazz.getName(), node,
+			basePredicate, baseTable, clazz.getName(), node,
 			ServiceContextThreadLocal.getServiceContext());
 
 		int count = persistedModelLocalService.dslQueryCount(
-			DSLQueryFactoryUtil.count(
-			).from(
-				baseTable
-			).innerJoinON(
-				ExpandoValueTable.INSTANCE,
-				ExpandoValueTable.INSTANCE.classPK.eq(expression)
-			).where(
-				predicate
-			));
+			baseCountQuery.where(predicate));
 
 		if (pageSize == null) {
 			pageSize = count;
@@ -818,14 +890,7 @@ public class UserManagerImpl implements UserManager {
 			count,
 			TransformUtil.transform(
 				(List<U>)persistedModelLocalService.dslQuery(
-					DSLQueryFactoryUtil.select(
-						baseTable
-					).from(
-						baseTable
-					).innerJoinON(
-						ExpandoValueTable.INSTANCE,
-						ExpandoValueTable.INSTANCE.classPK.eq(expression)
-					).where(
+					baseSelectQuery.where(
 						predicate
 					).limit(
 						startIndex, startIndex + pageSize
@@ -834,8 +899,8 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	private <T extends BaseTable<T>> Predicate _buildWherePredicate(
-		BaseTable<T> baseTable, String className, Node node,
-		ServiceContext serviceContext) {
+		Predicate basePredicate, BaseTable<T> baseTable, String className,
+		Node node, ServiceContext serviceContext) {
 
 		ExpandoColumn expandoColumn = null;
 
@@ -860,6 +925,10 @@ public class UserManagerImpl implements UserManager {
 					).oAuth2ApplicationName())
 			)
 		);
+
+		if (basePredicate != null) {
+			predicate = basePredicate.and(predicate);
+		}
 
 		ExpressionNode expressionNode = (ExpressionNode)node;
 
@@ -1138,6 +1207,36 @@ public class UserManagerImpl implements UserManager {
 		}
 
 		return userGroup;
+	}
+
+	private boolean _isUserDeleted(long userId) {
+		ExpandoColumn expandoColumn = _expandoColumnLocalService.getColumn(
+			CompanyThreadLocal.getCompanyId(),
+			com.liferay.portal.kernel.model.User.class.getName(),
+			ExpandoTableConstants.DEFAULT_TABLE_NAME, "deletedBySCIM");
+
+		if (expandoColumn == null) {
+			return false;
+		}
+
+		int countScimDeletionExpandoValue = _userLocalService.dslQueryCount(
+			DSLQueryFactoryUtil.count(
+			).from(
+				ExpandoValueTable.INSTANCE
+			).where(
+				ExpandoValueTable.INSTANCE.classPK.eq(
+					userId
+				).and(
+					ExpandoValueTable.INSTANCE.columnId.eq(
+						expandoColumn.getColumnId())
+				)
+			));
+
+		if (countScimDeletionExpandoValue > 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _saveScimClientId(

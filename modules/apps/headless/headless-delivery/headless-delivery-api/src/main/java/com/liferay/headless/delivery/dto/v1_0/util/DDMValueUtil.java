@@ -59,11 +59,13 @@ import java.util.Objects;
 public class DDMValueUtil {
 
 	public static Value toDDMValue(
-			ContentField contentField, DDMFormField ddmFormField,
+			String contentFieldJSON, DDMFormField ddmFormField,
 			DLAppService dlAppService, long groupId,
 			JournalArticleService journalArticleService,
 			LayoutLocalService layoutLocalService, Locale preferredLocale)
 		throws Exception {
+
+		ContentField contentField = ContentField.toDTO(contentFieldJSON);
 
 		ContentFieldValue contentFieldValue =
 			contentField.getContentFieldValue();

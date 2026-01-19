@@ -26,13 +26,13 @@ import java.util.zip.ZipFile;
 /**
  * @author Raymond Augé
  */
-public class ZipReaderImpl extends BaseZipReader {
+public class IOZipReader extends BaseZipReader {
 
-	public ZipReaderImpl(File file) {
+	public IOZipReader(File file) {
 		super(file);
 	}
 
-	public ZipReaderImpl(InputStream inputStream) throws IOException {
+	public IOZipReader(InputStream inputStream) throws IOException {
 		super(inputStream);
 	}
 

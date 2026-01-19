@@ -9,6 +9,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectView;
+import com.liferay.object.model.bag.ObjectFieldBag;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.search.generic.TermRangeQueryImpl;
 import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.localization.SearchLocalizationHelper;
@@ -110,8 +112,17 @@ public class ObjectEntryKeywordQueryContributor
 		}
 
 		if (objectFields == null) {
-			objectFields = _objectFieldLocalService.getObjectFields(
-				_objectDefinition.getObjectDefinitionId(), false);
+			ObjectFieldBag objectFieldBag =
+				_objectDefinition.getObjectFieldBag();
+
+			if (_objectDefinition.isModifiableAndSystem()) {
+				objectFields = ListUtil.filter(
+					objectFieldBag.getIndexedObjectFields(),
+					objectField -> !objectField.isMetadata());
+			}
+			else {
+				objectFields = objectFieldBag.getNonsystemIndexedObjectFields();
+			}
 		}
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();

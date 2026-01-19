@@ -26,7 +26,7 @@ const SETTING_CATEGORY_KEY = 'Accessibility';
 const SETTING_CONFIGURATION_NAME = 'Accessibility Menu';
 
 test(
-	'Check that system settings scope is corrected',
+	'Assert that a system configuration is unchanged when the same configuration changes on the company and group scopes',
 	{tag: '@LPS-79394'},
 	async ({
 		accessibilityMenuPage,

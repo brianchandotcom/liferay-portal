@@ -4,8 +4,8 @@
  */
 
 export const config = {
-	name: 'configuration-admin-web.system-settings-via-ui',
-	testDir: 'tests/configuration-admin-web/system-settings-via-ui',
+	name: 'configuration-admin-web.system-settings-with-ui',
+	testDir: 'tests/configuration-admin-web/system-settings-with-ui',
 	use: {
 		testIdAttribute: 'data-qa-id',
 	},

@@ -4,6 +4,6 @@
  */
 
 export const config = {
-	name: 'configuration-admin-web.site-config-export',
-	testDir: 'tests/configuration-admin-web/site-config-export',
+	name: 'configuration-admin-web.site-settings-export',
+	testDir: 'tests/configuration-admin-web/site-settings-export',
 };

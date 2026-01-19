@@ -412,31 +412,111 @@ test.describe('Manage fields through Form Builder page', () => {
 		await expect(newTabPage.getByText(formattedDate)).toBeVisible();
 	});
 
-	test('Assert that a fields group can be created and previewed', async ({
+	test('Assert actions on a fields group', async ({
 		formBuilderPage,
 		formBuilderSidePanelPage,
+		page,
 	}) => {
-		await formBuilderPage.goToNew();
+		await test.step('fields group can be created', async () => {
+			await formBuilderPage.goToNew();
 
-		await formBuilderSidePanelPage.addFieldByDoubleClick('Text');
+			await formBuilderSidePanelPage.addFieldByDoubleClick('Text');
 
-		await formBuilderSidePanelPage.backButton.click();
+			await formBuilderSidePanelPage.backButton.click();
 
-		await formBuilderSidePanelPage.addFieldToFieldGroup('Numeric', 0);
+			await formBuilderSidePanelPage.addFieldToFieldGroup('Numeric', 0);
 
-		const newTabPage = await formBuilderPage.openPreviewForm();
+			await expect(
+				page.getByLabel('Fields Group', {exact: true})
+			).toBeVisible();
+		});
 
-		await expect(
-			newTabPage.getByLabel('Fields Group', {exact: true})
-		).toBeVisible();
+		await test.step('fields group can be deleted', async () => {
+			await page.getByLabel('Fields Group').first().click({force: true});
 
-		await expect(
-			newTabPage.getByLabel('Text', {exact: true})
-		).toBeVisible();
+			await page.getByLabel('Actions').nth(0).click();
 
-		await expect(
-			newTabPage.getByLabel('Numeric', {exact: true})
-		).toBeVisible();
+			await page.getByRole('menuitem', {name: 'Delete'}).click();
+
+			await expect(
+				page.getByLabel('Fields Group', {exact: true})
+			).not.toBeVisible();
+		});
+
+		await test.step('recreate fields group', async () => {
+			await formBuilderSidePanelPage.addFieldByDoubleClick('Text');
+
+			await formBuilderSidePanelPage.backButton.click();
+
+			await formBuilderSidePanelPage.addFieldToFieldGroup('Numeric', 0);
+
+			await expect(
+				page.getByLabel('Fields Group', {exact: true})
+			).toBeVisible();
+		});
+
+		await test.step('fields in a fieldGroup can be reordered', async () => {
+			await formBuilderPage.openFieldSettings('Text');
+
+			const textFieldReference =
+				await formBuilderSidePanelPage.getFieldReference();
+
+			const textContainer = page.locator(
+				`.col-ddm:has(> .ddm-field-container[data-field-name="${textFieldReference}"])`
+			);
+
+			await formBuilderSidePanelPage.backButton.click();
+
+			await formBuilderPage.openFieldSettings('Numeric');
+
+			const numericFieldReference =
+				await formBuilderSidePanelPage.getFieldReference();
+
+			const numericContainer = page.locator(
+				`.col-ddm:has(> .ddm-field-container[data-field-name="${numericFieldReference}"])`
+			);
+
+			await expect(numericContainer).toHaveAttribute(
+				'data-ddm-field-row',
+				'1'
+			);
+			await expect(textContainer).toHaveAttribute(
+				'data-ddm-field-row',
+				'0'
+			);
+
+			await page
+				.locator('.ddm-drag')
+				.nth(2)
+				.dragTo(page.locator('.ddm-target').nth(2));
+
+			await expect(numericContainer).toHaveAttribute(
+				'data-ddm-field-row',
+				'0'
+			);
+			await expect(textContainer).toHaveAttribute(
+				'data-ddm-field-row',
+				'1'
+			);
+		});
+
+		await test.step('fieldGroup can be previewed', async () => {
+			const newTabPage = await formBuilderPage.openPreviewForm();
+
+			await expect(
+				newTabPage.getByLabel('Fields Group', {exact: true})
+			).toBeVisible();
+
+			await expect(
+				newTabPage.getByLabel('Text', {exact: true})
+			).toBeVisible();
+
+			await expect(
+				newTabPage.getByLabel('Numeric', {exact: true})
+			).toBeVisible();
+
+			await newTabPage.close();
+		});
 	});
 
 	test('Can move the last field of a child group into the parent group field', async ({

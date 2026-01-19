@@ -522,8 +522,7 @@ public class SitePageResourceImpl
 					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, groupId,
 					sitePage.getParentSitePageExternalReferenceCode(),
 					serviceContext),
-				nameMap, titleMap, descriptionMap, keywordsMap,
-				typeSettingsUnicodeProperties,
+				nameMap, typeSettingsUnicodeProperties,
 				_isHiddenFromNavigation(false, sitePage.getPageSettings()),
 				LocalizedMapUtil.getLocalizedMap(
 					sitePage.getFriendlyUrlPath_i18n()),
@@ -931,8 +930,7 @@ public class SitePageResourceImpl
 					sitePage.getType(), SitePage.Type.PAGE_SET_PAGE)) {
 
 			layout = LayoutUtil.updateNodeLayout(
-				layout, nameMap, titleMap, descriptionMap, keywordsMap,
-				friendlyURLMap,
+				layout, nameMap, friendlyURLMap,
 				PageSpecificationUtil.getPageSpecification(
 					sitePage.getPageSpecifications()),
 				_getTypeSettingsUnicodeProperties(sitePage), serviceContext);

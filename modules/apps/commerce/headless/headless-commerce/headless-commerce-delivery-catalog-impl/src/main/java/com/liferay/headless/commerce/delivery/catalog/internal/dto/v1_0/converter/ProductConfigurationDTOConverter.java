@@ -67,11 +67,19 @@ public class ProductConfigurationDTOConverter
 					});
 				setAllowedOrderQuantities(
 					() -> {
-						if (cpConfigurationEntry == null) {
+						if (cpConfigurationEntry != null) {
+							return cpConfigurationEntry.
+								getAllowedOrderQuantitiesArray();
+						}
+
+						CPConfigurationEntry masterCPConfigurationEntry =
+							cpDefinition.fetchMasterCPConfigurationEntry();
+
+						if (masterCPConfigurationEntry == null) {
 							return null;
 						}
 
-						return cpConfigurationEntry.
+						return masterCPConfigurationEntry.
 							getAllowedOrderQuantitiesArray();
 					});
 				setAvailabilityEstimateId(
@@ -121,30 +129,56 @@ public class ProductConfigurationDTOConverter
 					});
 				setMaxOrderQuantity(
 					() -> {
-						if (cpConfigurationEntry == null) {
+						if (cpConfigurationEntry != null) {
+							return BigDecimalUtil.stripTrailingZeros(
+								cpConfigurationEntry.getMaxOrderQuantity());
+						}
+
+						CPConfigurationEntry masterCPConfigurationEntry =
+							cpDefinition.fetchMasterCPConfigurationEntry();
+
+						if (masterCPConfigurationEntry == null) {
 							return null;
 						}
 
 						return BigDecimalUtil.stripTrailingZeros(
-							cpConfigurationEntry.getMaxOrderQuantity());
+							masterCPConfigurationEntry.getMaxOrderQuantity());
 					});
 				setMinOrderQuantity(
 					() -> {
-						if (cpConfigurationEntry == null) {
+						if (cpConfigurationEntry != null) {
+							return BigDecimalUtil.stripTrailingZeros(
+								cpConfigurationEntry.getMinOrderQuantity());
+						}
+
+						CPConfigurationEntry masterCPConfigurationEntry =
+							cpDefinition.fetchMasterCPConfigurationEntry();
+
+						if (masterCPConfigurationEntry == null) {
 							return null;
 						}
 
 						return BigDecimalUtil.stripTrailingZeros(
-							cpConfigurationEntry.getMinOrderQuantity());
+							masterCPConfigurationEntry.getMinOrderQuantity());
 					});
 				setMultipleOrderQuantity(
 					() -> {
-						if (cpConfigurationEntry == null) {
+						if (cpConfigurationEntry != null) {
+							return BigDecimalUtil.stripTrailingZeros(
+								cpConfigurationEntry.
+									getMultipleOrderQuantity());
+						}
+
+						CPConfigurationEntry masterCPConfigurationEntry =
+							cpDefinition.fetchMasterCPConfigurationEntry();
+
+						if (masterCPConfigurationEntry == null) {
 							return null;
 						}
 
 						return BigDecimalUtil.stripTrailingZeros(
-							cpConfigurationEntry.getMultipleOrderQuantity());
+							masterCPConfigurationEntry.
+								getMultipleOrderQuantity());
 					});
 			}
 		};

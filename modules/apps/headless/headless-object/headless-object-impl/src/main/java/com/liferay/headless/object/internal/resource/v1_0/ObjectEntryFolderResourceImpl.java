@@ -69,10 +69,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/object-entry-folder.properties",
-	property = {
-		"batch.engine.task.item.delegate.name=depot-object-entry-folder",
-		"export.import.vulcan.batch.engine.task.item.delegate=true"
-	},
+	property = "export.import.vulcan.batch.engine.task.item.delegate=true",
 	scope = ServiceScope.PROTOTYPE, service = ObjectEntryFolderResource.class
 )
 public class ObjectEntryFolderResourceImpl

@@ -21,7 +21,7 @@ interface WorkflowOption {
 export interface StructureWorkflowItem {
 	id: string;
 	name: string;
-	workflow: '' | 'Single Approver';
+	workflow: string;
 }
 
 export default function AssignDefaultWorkflowModalContent({
@@ -33,12 +33,12 @@ export default function AssignDefaultWorkflowModalContent({
 }) {
 	const [selectedWorkflow, setSelectedWorkflow] = useState<string>('');
 
-	const [workflows, setWorkflows] = useState<WorkflowOption[]>();
+	const [workflows, setWorkflows] = useState<WorkflowOption[]>([]);
 
 	const onAssignWorkflowButtonClick = async () => {
 		const failedStructures = [];
 
-		Promise.allSettled(
+		await Promise.allSettled(
 			structureWorkflows.map(
 				async (structureWorkflow: StructureWorkflowItem) => {
 					const {error} =
@@ -54,48 +54,44 @@ export default function AssignDefaultWorkflowModalContent({
 					return true;
 				}
 			)
-		).then(() => {
-			if (failedStructures.length) {
-				openToast({
-					message: Liferay.Language.get('an-error-occurred'),
-					title: Liferay.Language.get('error'),
-					type: 'danger',
-				});
+		);
+
+		if (failedStructures.length) {
+			openToast({
+				message: Liferay.Language.get('an-error-occurred'),
+				title: Liferay.Language.get('error'),
+				type: 'danger',
+			});
+		}
+		else {
+			let toastMessage;
+
+			if (structureWorkflows.length === 1) {
+				toastMessage = sub(
+					Liferay.Language.get(
+						'x-workfow-was-successfully-assigned-to-x'
+					),
+					[
+						selectedWorkflow || Liferay.Language.get('no-workflow'),
+						structureWorkflows[0].name,
+					]
+				);
 			}
 			else {
-				let toastMessage;
-
-				if (structureWorkflows.length === 1) {
-					toastMessage = sub(
-						Liferay.Language.get(
-							'x-workfow-was-successfully-assigned-to-x'
-						),
-						[
-							selectedWorkflow ||
-								Liferay.Language.get('no-workflow'),
-							structureWorkflows[0].name,
-						]
-					);
-				}
-				else {
-					toastMessage = sub(
-						Liferay.Language.get(
-							'x-workfow-was-successfully-assigned-to-multiple-content-structure'
-						),
-						[
-							selectedWorkflow ||
-								Liferay.Language.get('no-workflow'),
-						]
-					);
-				}
-
-				openToast({
-					message: toastMessage,
-					title: Liferay.Language.get('success'),
-					type: 'success',
-				});
+				toastMessage = sub(
+					Liferay.Language.get(
+						'x-workfow-was-successfully-assigned-to-multiple-content-structure'
+					),
+					[selectedWorkflow || Liferay.Language.get('no-workflow')]
+				);
 			}
-		});
+
+			openToast({
+				message: toastMessage,
+				title: Liferay.Language.get('success'),
+				type: 'success',
+			});
+		}
 	};
 
 	useEffect(() => {
@@ -173,7 +169,7 @@ export default function AssignDefaultWorkflowModalContent({
 							onChange={(event) =>
 								setSelectedWorkflow(event.target.value)
 							}
-							options={workflows as any[]}
+							options={workflows}
 							value={selectedWorkflow}
 						/>
 					</ClayForm.Group>

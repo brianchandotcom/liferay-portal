@@ -102,7 +102,7 @@ export default function StructuresFDSPropsTransformer({
 			else if (action.data.id === 'assign-default-workflow') {
 				const item = {
 					id: String(itemData.id),
-					name: itemData.label.en_US,
+					name: getLocalizedValue(itemData.label),
 					workflow: itemData.workflowDefinitionLinks?.[0]
 						? itemData.workflowDefinitionLinks[0]
 								.workflowDefinitionName
@@ -116,24 +116,22 @@ export default function StructuresFDSPropsTransformer({
 			action,
 			selectedData,
 		}: {
-			action: any;
-			selectedData: any;
+			action: {data?: {id?: string}};
+			selectedData: {items: Array<ItemData>};
 		}) => {
 			if (action?.data?.id === 'assign-default-workflow') {
-				const structureWorflows = selectedData.items.map(
-					(itemData: any) => {
-						({
-							id: String(itemData.id),
-							name: itemData.label.en_US,
-							workflow: itemData.workflowDefinitionLinks?.[0]
-								? itemData.workflowDefinitionLinks[0]
-										.workflowDefinitionName
-								: '',
-						}) as StructureWorkflowItem;
-					}
+				const structureWorkflows = selectedData.items.map(
+					(itemData: any): StructureWorkflowItem => ({
+						id: String(itemData.id),
+						name: getLocalizedValue(itemData.label),
+						workflow: itemData.workflowDefinitionLinks?.[0]
+							? itemData.workflowDefinitionLinks[0]
+									.workflowDefinitionName
+							: '',
+					})
 				);
 
-				defaultWorkflowStructureAction(structureWorflows);
+				defaultWorkflowStructureAction(structureWorkflows);
 			}
 		},
 	};

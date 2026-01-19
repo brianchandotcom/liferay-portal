@@ -142,8 +142,11 @@ export default function AssignDefaultWorkflowModalContent({
 				closeButtonAriaLabel={Liferay.Language.get('close')}
 			>
 				{structureWorkflows.length === 1
-					? Liferay.Language.get(
-							'assign-default-workflow-to-basic-content'
+					? sub(
+							Liferay.Language.get(
+								'assign-default-workflow-to-x'
+							),
+							structureWorkflows[0].name
 						)
 					: Liferay.Language.get('assign-workflow')}
 			</ClayModal.Header>

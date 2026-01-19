@@ -67,6 +67,7 @@ export default function StructuresFDSPropsTransformer({
 				objectFolderExternalReferenceCode: string;
 				objectRelationships: ObjectDefinition['objectRelationships'];
 				status: {code: number};
+				workflowDefinitionLinks: ObjectDefinition['workflowDefinitionLinks'];
 			};
 			loadData: () => {};
 		}) {
@@ -100,8 +101,12 @@ export default function StructuresFDSPropsTransformer({
 			}
 			else if (action.data.id === 'assign-default-workflow') {
 				const item = {
-					id: action.data.structureId,
-					workflow: action.data.workflow,
+					id: String(itemData.id),
+					name: itemData.label.en_US,
+					workflow: itemData.workflowDefinitionLinks?.[0]
+						? itemData.workflowDefinitionLinks[0]
+								.workflowDefinitionName
+						: '',
 				} as StructureWorkflowItem;
 
 				defaultWorkflowStructureAction([item]);
@@ -116,10 +121,14 @@ export default function StructuresFDSPropsTransformer({
 		}) => {
 			if (action?.data?.id === 'assign-default-workflow') {
 				const structureWorflows = selectedData.items.map(
-					(item: any) => {
+					(itemData: any) => {
 						({
-							id: item.structureId,
-							workflow: item.workflow,
+							id: String(itemData.id),
+							name: itemData.label.en_US,
+							workflow: itemData.workflowDefinitionLinks?.[0]
+								? itemData.workflowDefinitionLinks[0]
+										.workflowDefinitionName
+								: '',
 						}) as StructureWorkflowItem;
 					}
 				);

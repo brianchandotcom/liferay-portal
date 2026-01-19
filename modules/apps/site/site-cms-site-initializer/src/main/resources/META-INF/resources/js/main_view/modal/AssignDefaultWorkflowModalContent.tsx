@@ -6,8 +6,11 @@
 import ClayButton from '@clayui/button';
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import ClayModal from '@clayui/modal';
+import {openToast} from 'frontend-js-components-web';
+import {sub} from 'frontend-js-web';
 import React, {useEffect, useId, useState} from 'react';
 
+import StructureService from '../../common/services/StructureService';
 import {getWorkflowDefinitions} from '../../common/services/WorkflowService';
 
 interface WorkflowOption {
@@ -17,6 +20,7 @@ interface WorkflowOption {
 
 export interface StructureWorkflowItem {
 	id: string;
+	name: string;
 	workflow: '' | 'Single Approver';
 }
 
@@ -31,8 +35,67 @@ export default function AssignDefaultWorkflowModalContent({
 
 	const [workflows, setWorkflows] = useState<WorkflowOption[]>();
 
-	const onAssignWorkflowButtonClick = () => {
-		console.log('selected workflow: ' + selectedWorkflow);
+	const onAssignWorkflowButtonClick = async () => {
+		const failedStructures = [];
+
+		Promise.allSettled(
+			structureWorkflows.map(
+				async (structureWorkflow: StructureWorkflowItem) => {
+					const {error} =
+						await StructureService.updateStructureWorkflow({
+							id: structureWorkflow.id,
+							workflow: selectedWorkflow,
+						});
+
+					if (error) {
+						failedStructures.push(structureWorkflow.id);
+					}
+
+					return true;
+				}
+			)
+		).then(() => {
+			if (failedStructures.length) {
+				openToast({
+					message: Liferay.Language.get('an-error-occurred'),
+					title: Liferay.Language.get('error'),
+					type: 'danger',
+				});
+			}
+			else {
+				let toastMessage;
+
+				if (structureWorkflows.length === 1) {
+					toastMessage = sub(
+						Liferay.Language.get(
+							'x-workfow-was-successfully-assigned-to-x'
+						),
+						[
+							selectedWorkflow ||
+								Liferay.Language.get('no-workflow'),
+							structureWorkflows[0].name,
+						]
+					);
+				}
+				else {
+					toastMessage = sub(
+						Liferay.Language.get(
+							'x-workfow-was-successfully-assigned-to-multiple-content-structure'
+						),
+						[
+							selectedWorkflow ||
+								Liferay.Language.get('no-workflow'),
+						]
+					);
+				}
+
+				openToast({
+					message: toastMessage,
+					title: Liferay.Language.get('success'),
+					type: 'success',
+				});
+			}
+		});
 	};
 
 	useEffect(() => {

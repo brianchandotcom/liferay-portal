@@ -193,8 +193,23 @@ async function deleteStructure({
 	}
 }
 
+async function updateStructureWorkflow({
+	id,
+	workflow,
+}: {
+	id: string;
+	workflow: string;
+}) {
+	return {
+		error: false,
+		id,
+		workflow,
+	};
+}
+
 export default {
 	createStructure,
 	deleteStructure,
 	updateStructure,
+	updateStructureWorkflow,
 };

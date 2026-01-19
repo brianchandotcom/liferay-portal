@@ -3,6 +3,7 @@
 		"@clayui/autocomplete": "*",
 		"@clayui/button": "*",
 		"@clayui/color-picker": "*",
+		"@clayui/core": "*",
 		"@clayui/drop-down": "*",
 		"@clayui/form": "*",
 		"@clayui/icon": "*",

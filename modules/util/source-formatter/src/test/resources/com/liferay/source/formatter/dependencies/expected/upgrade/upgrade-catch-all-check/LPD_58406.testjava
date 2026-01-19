@@ -1,0 +1,30 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Lucas Ferruccio
+ */
+public class LPD_58406 {
+
+	public void method(
+		long userId, String userName, long groupId, String className,
+		long classPK, long threadId, long parentMessageId, String subject,
+		String body, ServiceContext serviceContext) {
+
+		MBMessageLocalServiceUtil.addDiscussionMessage(
+			123, userName, groupId, className, classPK, threadId,
+			parentMessageId, subject, body, serviceContext);
+		MBMessageLocalServiceUtil.addDiscussionMessage(null, userId, userName, groupId, className, classPK, threadId, parentMessageId, subject, body, serviceContext);
+		_mbMessageLocalService.addDiscussionMessage(null, userId, userName, groupId, className, classPK, threadId, parentMessageId, subject, body, serviceContext);
+	}
+
+	@Reference
+	private MBMessageLocalService _mbMessageLocalService;
+
+}

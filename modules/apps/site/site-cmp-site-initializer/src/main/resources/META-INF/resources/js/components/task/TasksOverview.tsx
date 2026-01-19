@@ -4,6 +4,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayEmptyState from '@clayui/empty-state';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
@@ -63,7 +64,13 @@ function StatisticButton({
 	);
 }
 
-export default function TasksOverview({cmpProjectId}: {cmpProjectId: string}) {
+export default function TasksOverview({
+	cmpProjectId,
+	redirect,
+}: {
+	cmpProjectId: string;
+	redirect: string;
+}) {
 	const [blockedCount, setBlockedCount] = useState(0);
 	const [completionRate, setCompletionRate] = useState(0);
 	const [inProgressCount, setInProgressCount] = useState(0);
@@ -133,6 +140,25 @@ export default function TasksOverview({cmpProjectId}: {cmpProjectId: string}) {
 		<div className="lfr-cmp__tasks-overview-container">
 			{loading ? (
 				<ClayLoadingIndicator />
+			) : totalCount === 0 ? (
+				<div className="empty-state">
+					<ClayEmptyState
+						description={Liferay.Language.get(
+							'add-a-tasks-to-start-tracking-work'
+						)}
+						imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/cmp_empty_state_tasks.svg`}
+						title={Liferay.Language.get('no-tasks')}
+					>
+						<ClayButton
+							displayType="secondary"
+							onClick={() => {
+								window.location.href = redirect;
+							}}
+						>
+							{Liferay.Language.get('new-task')}
+						</ClayButton>
+					</ClayEmptyState>
+				</div>
 			) : (
 				<>
 					<div className="align-items-center d-flex justify-content-between mb-2">

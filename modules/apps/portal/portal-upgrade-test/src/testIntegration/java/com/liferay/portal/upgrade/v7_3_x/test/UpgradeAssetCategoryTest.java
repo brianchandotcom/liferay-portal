@@ -8,12 +8,16 @@ package com.liferay.portal.upgrade.v7_3_x.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
+import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -41,7 +45,11 @@ public class UpgradeAssetCategoryTest {
 		new LiferayIntegrationTestRule();
 
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
+		_assetVocabulary = AssetTestUtil.addVocabulary(_group.getGroupId());
+
 		AssetCategory category = _createCategory(
 			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 
@@ -79,6 +87,7 @@ public class UpgradeAssetCategoryTest {
 			_counterLocalService.increment());
 
 		category.setParentCategoryId(parentCategoryId);
+		category.setVocabularyId(_assetVocabulary.getVocabularyId());
 
 		category = _assetCategoryLocalService.updateAssetCategory(category);
 
@@ -95,5 +104,11 @@ public class UpgradeAssetCategoryTest {
 
 	@DeleteAfterTestRun
 	private final List<AssetCategory> _assetCategories = new ArrayList<>();
+
+	@DeleteAfterTestRun
+	private AssetVocabulary _assetVocabulary;
+
+	@DeleteAfterTestRun
+	private Group _group;
 
 }

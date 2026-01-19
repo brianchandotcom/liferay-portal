@@ -11,6 +11,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.test.util.ObjectEntryTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -60,6 +61,13 @@ public class ObjectEntryModelDocumentContributorTest {
 	public void testContribute() throws Exception {
 		String objectFieldName = "a" + RandomTestUtil.randomString();
 
+		ObjectField objectField = ObjectFieldUtil.createObjectField(
+			0, ObjectFieldConstants.BUSINESS_TYPE_TEXT, null,
+			ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+			RandomTestUtil.randomString(), objectFieldName, false, true);
+
+		objectField.setLocalized(true);
+
 		ObjectDefinition modifiableSystemObjectDefinition =
 			ObjectDefinitionTestUtil.addModifiableSystemObjectDefinition(
 				TestPropsValues.getUserId(), null,
@@ -67,12 +75,7 @@ public class ObjectEntryModelDocumentContributorTest {
 				"Test" + ObjectDefinitionTestUtil.getRandomName(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionConstants.SCOPE_SITE, null, 1,
-				Arrays.asList(
-					ObjectFieldUtil.createObjectField(
-						0, ObjectFieldConstants.BUSINESS_TYPE_TEXT, null,
-						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
-						RandomTestUtil.randomString(), objectFieldName, false,
-						true)));
+				Arrays.asList(objectField));
 
 		modifiableSystemObjectDefinition =
 			_objectDefinitionLocalService.publishSystemObjectDefinition(
@@ -89,6 +92,8 @@ public class ObjectEntryModelDocumentContributorTest {
 				objectFieldName + "_i18n",
 				HashMapBuilder.<String, Serializable>put(
 					"en_US", objectFieldValue
+				).put(
+					"pt_BR", objectFieldValue + "pt_BR"
 				).build()
 			).build());
 
@@ -103,9 +108,17 @@ public class ObjectEntryModelDocumentContributorTest {
 
 		Field field = document.getField("objectEntryContent");
 
-		Assert.assertEquals(
-			StringBundler.concat(objectFieldName, ": ", objectFieldValue),
-			field.getValue());
+		String content = field.getValue();
+
+		Assert.assertTrue(
+			content,
+			content.contains(
+				StringBundler.concat(objectFieldName, ": ", objectFieldValue)));
+		Assert.assertTrue(
+			content,
+			content.contains(
+				StringBundler.concat(
+					objectFieldName, ": ", objectFieldValue, "pt_BR")));
 	}
 
 	private ModelDocumentContributor<ObjectEntry>

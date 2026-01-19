@@ -73,6 +73,7 @@ class MockBroadcastChannel {
 		getBCP47LanguageId: () => 'en-US',
 		getDefaultLanguageId: () => 'en_US',
 		getLanguageId: () => 'en_US',
+		getPathThemeImages: () => '/images',
 		getUserId: () => '1',
 	},
 	Util: {

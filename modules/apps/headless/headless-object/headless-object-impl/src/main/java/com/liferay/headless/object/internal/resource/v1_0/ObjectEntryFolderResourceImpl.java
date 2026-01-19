@@ -93,7 +93,7 @@ public class ObjectEntryFolderResourceImpl
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
-		String scopeKey = _getScopeKey(parameters);
+		String scopeKey = GroupUtil.getScopeKey(parameters);
 		UnsafeFunction<ObjectEntryFolder, ObjectEntryFolder, Exception>
 			unsafeFunction = null;
 
@@ -790,22 +790,6 @@ public class ObjectEntryFolderResourceImpl
 		}
 
 		return serviceBuilderObjectEntryFolder.getObjectEntryFolderId();
-	}
-
-	private String _getScopeKey(Map<String, Serializable> parameters) {
-		if (parameters.containsKey("scopeKey")) {
-			return String.valueOf(parameters.get("scopeKey"));
-		}
-
-		if (parameters.containsKey("siteExternalReferenceCode")) {
-			return String.valueOf(parameters.get("siteExternalReferenceCode"));
-		}
-
-		if (parameters.containsKey("siteId")) {
-			return String.valueOf(parameters.get("siteId"));
-		}
-
-		return null;
 	}
 
 	private ObjectEntryFolder _toObjectEntryFolder(

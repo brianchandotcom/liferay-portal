@@ -71,6 +71,7 @@ import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.NestedFieldsContextResource;
+import com.liferay.portal.vulcan.util.GroupUtil;
 import com.liferay.portal.vulcan.util.NestedFieldsContextUtil;
 import com.liferay.translation.manager.Translation;
 import com.liferay.translation.manager.TranslationManager;
@@ -252,7 +253,7 @@ public class ObjectEntryResourceImpl
 									null) {
 
 								deleteScopeScopeKeyByExternalReferenceCode(
-									_getScopeKey(parameters),
+									GroupUtil.getScopeKey(parameters),
 									objectEntry.getExternalReferenceCode());
 
 								return objectEntry;
@@ -261,7 +262,7 @@ public class ObjectEntryResourceImpl
 					}
 					else if (objectEntry.getExternalReferenceCode() != null) {
 						deleteScopeScopeKeyByExternalReferenceCode(
-							_getScopeKey(parameters),
+							GroupUtil.getScopeKey(parameters),
 							objectEntry.getExternalReferenceCode());
 
 						return objectEntry;
@@ -1433,8 +1434,8 @@ public class ObjectEntryResourceImpl
 
 		if (objectScopeProvider.isGroupAware()) {
 			return getScopeScopeKeyPage(
-				_getScopeKey(parameters), search, null, filter, pagination,
-				sorts);
+				GroupUtil.getScopeKey(parameters), search, null, filter,
+				pagination, sorts);
 		}
 
 		return getObjectEntriesPage(search, null, filter, pagination, sorts);
@@ -1500,7 +1501,7 @@ public class ObjectEntryResourceImpl
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
-		String scopeKey = _getScopeKey(parameters);
+		String scopeKey = GroupUtil.getScopeKey(parameters);
 		UnsafeFunction<ObjectEntry, ObjectEntry, Exception> unsafeFunction =
 			null;
 
@@ -1621,22 +1622,6 @@ public class ObjectEntryResourceImpl
 
 		return modelResourceNamePrefix.concat(
 			objectDefinition.getResourceName());
-	}
-
-	private String _getScopeKey(Map<String, Serializable> parameters) {
-		if (parameters.containsKey("scopeKey")) {
-			return String.valueOf(parameters.get("scopeKey"));
-		}
-
-		if (parameters.containsKey("siteExternalReferenceCode")) {
-			return String.valueOf(parameters.get("siteExternalReferenceCode"));
-		}
-
-		if (parameters.containsKey("siteId")) {
-			return String.valueOf(parameters.get("siteId"));
-		}
-
-		return null;
 	}
 
 	private String _getXLIFFMimeType(String accept) {

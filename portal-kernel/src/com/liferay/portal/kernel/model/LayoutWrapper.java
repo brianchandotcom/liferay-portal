@@ -1815,11 +1815,6 @@ public class LayoutWrapper
 	}
 
 	@Override
-	public boolean isLayoutPrototypeLinkEnabled() {
-		return model.isLayoutPrototypeLinkEnabled();
-	}
-
-	@Override
 	public boolean isLayoutSortable() {
 		return model.isLayoutSortable();
 	}

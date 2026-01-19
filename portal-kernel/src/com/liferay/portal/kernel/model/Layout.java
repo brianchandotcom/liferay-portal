@@ -390,8 +390,6 @@ public interface Layout extends LayoutModel, PersistedModel {
 	 */
 	public boolean isLayoutPrototypeLinkActive();
 
-	public boolean isLayoutPrototypeLinkEnabled();
-
 	public boolean isLayoutSortable();
 
 	public boolean isLayoutUpdateable();

@@ -1297,11 +1297,6 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	@Override
-	public boolean isLayoutPrototypeLinkEnabled() {
-		return isPortletLayoutPageTemplateEntryLinkEnabled();
-	}
-
-	@Override
 	public boolean isLayoutSortable() {
 		return isLayoutDeleteable();
 	}

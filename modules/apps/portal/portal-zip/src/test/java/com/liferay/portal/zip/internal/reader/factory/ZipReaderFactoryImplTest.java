@@ -12,9 +12,9 @@ import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
-import com.liferay.portal.zip.internal.reader.BaseReaderImplTestCase;
-import com.liferay.portal.zip.internal.reader.NioZipReaderImpl;
-import com.liferay.portal.zip.internal.reader.ZipReaderImpl;
+import com.liferay.portal.zip.internal.reader.BaseZipReaderTestCase;
+import com.liferay.portal.zip.internal.reader.IOZipReader;
+import com.liferay.portal.zip.internal.reader.NIOZipReader;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -41,8 +41,8 @@ public class ZipReaderFactoryImplTest {
 
 	@Test
 	public void testNioZipReader() throws Exception {
-		_testNioZipReader(NioZipReaderImpl.class, true);
-		_testNioZipReader(ZipReaderImpl.class, false);
+		_testNioZipReader(NIOZipReader.class, true);
+		_testNioZipReader(IOZipReader.class, false);
 	}
 
 	@Test
@@ -51,16 +51,16 @@ public class ZipReaderFactoryImplTest {
 
 		try (ZipReader zipReader = zipReaderFactory.getZipReader(
 				DependenciesTestUtil.getDependencyAsFile(
-					BaseReaderImplTestCase.class, "file.zip"))) {
+					BaseZipReaderTestCase.class, "file.zip"))) {
 
-			Assert.assertTrue(zipReader instanceof ZipReaderImpl);
+			Assert.assertTrue(zipReader instanceof IOZipReader);
 		}
 
 		try (ZipReader zipReader = zipReaderFactory.getZipReader(
 				DependenciesTestUtil.getDependencyAsInputStream(
-					BaseReaderImplTestCase.class, "file.zip"))) {
+					BaseZipReaderTestCase.class, "file.zip"))) {
 
-			Assert.assertTrue(zipReader instanceof ZipReaderImpl);
+			Assert.assertTrue(zipReader instanceof IOZipReader);
 		}
 	}
 
@@ -80,14 +80,14 @@ public class ZipReaderFactoryImplTest {
 
 			try (ZipReader zipReader = zipReaderFactory.getZipReader(
 					DependenciesTestUtil.getDependencyAsFile(
-						BaseReaderImplTestCase.class, "file.zip"))) {
+						BaseZipReaderTestCase.class, "file.zip"))) {
 
 				Assert.assertTrue(expectedClass.isInstance(zipReader));
 			}
 
 			try (ZipReader zipReader = zipReaderFactory.getZipReader(
 					DependenciesTestUtil.getDependencyAsInputStream(
-						BaseReaderImplTestCase.class, "file.zip"))) {
+						BaseZipReaderTestCase.class, "file.zip"))) {
 
 				Assert.assertTrue(expectedClass.isInstance(zipReader));
 			}

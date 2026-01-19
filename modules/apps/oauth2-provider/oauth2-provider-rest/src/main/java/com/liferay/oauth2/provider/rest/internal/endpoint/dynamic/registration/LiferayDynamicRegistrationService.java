@@ -82,37 +82,14 @@ public class LiferayDynamicRegistrationService
 	protected void fromClientRegistrationToClient(
 		ClientRegistration clientRegistration, Client client) {
 
+		_validate(client, clientRegistration);
+
 		client.setApplicationName(clientRegistration.getClientName());
-
-		List<String> allowedGrantTypes = client.getAllowedGrantTypes();
-
-		_validate(allowedGrantTypes, clientRegistration.getResponseTypes());
 
 		List<String> redirectUris = clientRegistration.getRedirectUris();
 
 		if (redirectUris != null) {
-			String applicationType = clientRegistration.getApplicationType();
-
-			if (applicationType == null) {
-				applicationType = "web";
-			}
-
-			for (String redirectUri : redirectUris) {
-				validateRequestUri(
-					redirectUri, applicationType, allowedGrantTypes);
-			}
-
 			client.setRedirectUris(redirectUris);
-		}
-
-		if (ListUtil.isEmpty(client.getRedirectUris()) &&
-			(allowedGrantTypes.contains("authorization_code") ||
-			 allowedGrantTypes.contains("implicit"))) {
-
-			OAuth2ErrorUtil.reportInvalidRequestError(
-				"At least one redirect URI is required for the provided " +
-					"grant types " + allowedGrantTypes,
-				OAuthConstants.INVALID_REQUEST, Response.Status.BAD_REQUEST);
 		}
 
 		Map<String, String> properties = client.getProperties();
@@ -253,30 +230,60 @@ public class LiferayDynamicRegistrationService
 	}
 
 	private void _validate(
-		List<String> grantTypes, List<String> responseTypes) {
+		Client client, ClientRegistration clientRegistration) {
 
-		if (grantTypes == null) {
+		List<String> allowedGrantTypes = client.getAllowedGrantTypes();
+
+		if (allowedGrantTypes == null) {
 			return;
+		}
+
+		List<String> redirectUris = clientRegistration.getRedirectUris();
+
+		if (redirectUris != null) {
+			String applicationType = clientRegistration.getApplicationType();
+
+			if (applicationType == null) {
+				applicationType = "web";
+			}
+
+			for (String redirectUri : redirectUris) {
+				validateRequestUri(
+					redirectUri, applicationType,
+					client.getAllowedGrantTypes());
+			}
+		}
+
+		if (ListUtil.isEmpty(redirectUris) &&
+			(allowedGrantTypes.contains("authorization_code") ||
+			 allowedGrantTypes.contains("implicit"))) {
+
+			OAuth2ErrorUtil.reportInvalidRequestError(
+				"At least one redirect URI is required for the provided " +
+					"grant types " + allowedGrantTypes,
+				OAuthConstants.INVALID_REQUEST, Response.Status.BAD_REQUEST);
 		}
 
 		List<String> allowedResponseTypes = new ArrayList<>();
 
-		for (String grantType : grantTypes) {
+		for (String grantType : allowedGrantTypes) {
 			if (_allowedResponseTypes.containsKey(grantType)) {
 				allowedResponseTypes.add(_allowedResponseTypes.get(grantType));
 			}
 		}
+
+		List<String> responseTypes = clientRegistration.getResponseTypes();
 
 		if (ListUtil.isNotEmpty(allowedResponseTypes) &&
 			ListUtil.isEmpty(responseTypes)) {
 
 			OAuth2ErrorUtil.reportInvalidRequestError(
 				"At least one response type is required for the provided " +
-					"grant types " + grantTypes,
+					"grant types " + allowedGrantTypes,
 				"invalid_client_metadata", Response.Status.BAD_REQUEST);
 		}
 
-		if (ListUtil.isNotEmpty(responseTypes)) {
+		if (responseTypes != null) {
 			for (String responseType : responseTypes) {
 				if (!allowedResponseTypes.contains(responseType)) {
 					OAuth2ErrorUtil.reportInvalidRequestError(

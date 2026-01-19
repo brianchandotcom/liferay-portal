@@ -58,6 +58,12 @@ public class NotificationContextBuilder {
 		return this;
 	}
 
+	public NotificationContextBuilder parentClassPK(long parentClassPK) {
+		_notificationContext.setParentClassPK(parentClassPK);
+
+		return this;
+	}
+
 	public NotificationContextBuilder portletId(String portletId) {
 		_notificationContext.setPortletId(portletId);
 

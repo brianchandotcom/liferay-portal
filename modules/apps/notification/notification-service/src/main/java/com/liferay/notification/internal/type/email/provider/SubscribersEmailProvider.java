@@ -68,6 +68,18 @@ public class SubscribersEmailProvider implements EmailProvider {
 				objectEntry.getCompanyId(), objectEntry.getModelClassName(),
 				objectEntry.getObjectEntryId()));
 
+		ObjectEntry parentObjectEntry =
+			_objectEntryLocalService.fetchObjectEntry(
+				notificationContext.getParentClassPK());
+
+		if (parentObjectEntry != null) {
+			emailAddresses.addAll(
+				_getEmailAddresses(
+					parentObjectEntry.getCompanyId(),
+					parentObjectEntry.getModelClassName(),
+					parentObjectEntry.getObjectEntryId()));
+		}
+
 		ObjectEntryFolder objectEntryFolder =
 			_objectEntryFolderLocalService.fetchObjectEntryFolder(
 				objectEntry.getObjectEntryFolderId());

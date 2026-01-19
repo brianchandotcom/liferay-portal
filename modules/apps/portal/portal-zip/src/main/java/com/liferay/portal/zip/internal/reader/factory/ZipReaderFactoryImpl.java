@@ -9,8 +9,8 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactory;
-import com.liferay.portal.zip.internal.reader.NioZipReaderImpl;
-import com.liferay.portal.zip.internal.reader.ZipReaderImpl;
+import com.liferay.portal.zip.internal.reader.IOZipReader;
+import com.liferay.portal.zip.internal.reader.NIOZipReader;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,10 +29,10 @@ public class ZipReaderFactoryImpl implements ZipReaderFactory {
 		if (FeatureFlagManagerUtil.isEnabled(
 				CompanyThreadLocal.getCompanyId(), "LPD-75525")) {
 
-			return new NioZipReaderImpl(file);
+			return new NIOZipReader(file);
 		}
 
-		return new ZipReaderImpl(file);
+		return new IOZipReader(file);
 	}
 
 	@Override
@@ -40,10 +40,10 @@ public class ZipReaderFactoryImpl implements ZipReaderFactory {
 		if (FeatureFlagManagerUtil.isEnabled(
 				CompanyThreadLocal.getCompanyId(), "LPD-75525")) {
 
-			return new NioZipReaderImpl(inputStream);
+			return new NIOZipReader(inputStream);
 		}
 
-		return new ZipReaderImpl(inputStream);
+		return new IOZipReader(inputStream);
 	}
 
 }

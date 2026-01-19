@@ -33,13 +33,13 @@ import java.util.List;
 /**
  * @author Sergio Sanchez
  */
-public class NioZipReaderImpl extends BaseZipReader {
+public class NIOZipReader extends BaseZipReader {
 
-	public NioZipReaderImpl(File file) {
+	public NIOZipReader(File file) {
 		super(file);
 	}
 
-	public NioZipReaderImpl(InputStream inputStream) throws IOException {
+	public NIOZipReader(InputStream inputStream) throws IOException {
 		super(inputStream);
 	}
 
@@ -179,8 +179,7 @@ public class NioZipReaderImpl extends BaseZipReader {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		NioZipReaderImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(NIOZipReader.class);
 
 	private FileSystem _fileSystem;
 	private volatile boolean _initialized;

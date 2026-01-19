@@ -12,6 +12,7 @@ type TSite = {
 	active?: boolean;
 	externalReferenceCode?: string;
 	id?: number;
+	key?: string;
 	membershipType?: string;
 	name: string;
 	parentSiteKey?: string;

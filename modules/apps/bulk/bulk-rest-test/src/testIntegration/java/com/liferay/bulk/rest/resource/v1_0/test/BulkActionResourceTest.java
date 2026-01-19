@@ -16,6 +16,7 @@ import com.liferay.bulk.rest.client.dto.v1_0.BulkActionItem;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkActionTask;
 import com.liferay.bulk.rest.client.dto.v1_0.DefaultPermissionBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.DeleteBulkAction;
+import com.liferay.bulk.rest.client.dto.v1_0.ExpireBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.KeywordBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.PermissionBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.ResetPermissionBulkAction;
@@ -52,6 +53,7 @@ import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.test.util.ObjectEntryFolderTestUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
@@ -87,6 +89,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -161,6 +164,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		_testPostBulkActionWithTypeDefaultPermission();
 		_testPostBulkActionWithTypeDefaultPermissionSingleRole();
 		_testPostBulkActionWithTypeDelete();
+		_testPostBulkActionWithTypeExpire();
 		_testPostBulkActionWithTypeKeyword();
 		_testPostBulkActionWithTypePermission();
 		_testPostBulkActionWithTypePermissionSingleRole();
@@ -909,6 +913,37 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 				objectEntry.getObjectEntryId()));
 	}
 
+	private void _testPostBulkActionWithTypeExpire() throws Exception {
+		BulkAction bulkAction = new ExpireBulkAction();
+
+		bulkAction.setType(BulkAction.Type.EXPIRE_BULK_ACTION);
+
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			_depotEntry2.getGroupId(), _cmsBasicWebContentObjectDefinition,
+			_getObjectEntryValues());
+
+		ObjectEntryFolder objectEntryFolder =
+			ObjectEntryFolderTestUtil.addObjectEntryFolder();
+
+		bulkAction.setBulkActionItems(
+			_toBulkActionItems(objectEntry, objectEntryFolder));
+
+		_postBulkAction(bulkAction);
+
+		objectEntry = _objectEntryLocalService.fetchObjectEntry(
+			objectEntry.getObjectEntryId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_EXPIRED, objectEntry.getStatus());
+
+		objectEntryFolder =
+			_objectEntryFolderLocalService.fetchObjectEntryFolder(
+				objectEntryFolder.getObjectEntryFolderId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, objectEntryFolder.getStatus());
+	}
+
 	private void _testPostBulkActionWithTypeKeyword() throws Exception {
 		KeywordBulkAction keywordBulkAction = new KeywordBulkAction();
 
@@ -1536,20 +1571,36 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		};
 	}
 
-	private BulkActionItem[] _toBulkActionItems(ObjectEntry... objectEntries)
+	private BulkActionItem[] _toBulkActionItems(Object... objects)
 		throws Exception {
 
 		return TransformUtil.transform(
-			objectEntries,
-			objectEntry -> new BulkActionItem() {
+			objects,
+			object -> new BulkActionItem() {
 				{
-					setClassExternalReferenceCode(
-						objectEntry::getExternalReferenceCode);
-					setClassName(
-						() ->
-							_cmsBasicWebContentObjectDefinition.getClassName());
-					setClassPK(objectEntry::getObjectEntryId);
-					setName(objectEntry::getTitleValue);
+					if (object instanceof ObjectEntry) {
+						ObjectEntry objectEntry = (ObjectEntry)object;
+
+						setClassExternalReferenceCode(
+							objectEntry::getExternalReferenceCode);
+
+						setClassName(
+							() ->
+								_cmsBasicWebContentObjectDefinition.
+									getClassName());
+						setClassPK(objectEntry::getObjectEntryId);
+						setName(objectEntry::getTitleValue);
+					}
+					else if (object instanceof ObjectEntryFolder) {
+						ObjectEntryFolder objectEntryFolder =
+							(ObjectEntryFolder)object;
+
+						setClassExternalReferenceCode(
+							objectEntryFolder::getExternalReferenceCode);
+						setClassName(objectEntryFolder::getModelClassName);
+						setClassPK(objectEntryFolder::getObjectEntryFolderId);
+						setName(objectEntryFolder::getName);
+					}
 				}
 			},
 			BulkActionItem.class);

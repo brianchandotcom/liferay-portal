@@ -73,7 +73,7 @@ public class EmptyModelManagerUtilTest {
 				Mockito.any(), Mockito.anyLong(),
 				Mockito.any(UnsafeSupplier.class), Mockito.anyString(),
 				Mockito.any(BiFunction.class),
-				Mockito.any(UnsafeBiFunction.class))
+				Mockito.any(UnsafeBiFunction.class), Mockito.anyString())
 		).thenReturn(
 			user
 		);
@@ -91,13 +91,13 @@ public class EmptyModelManagerUtilTest {
 			user,
 			EmptyModelManagerUtil.getOrAddEmptyModel(
 				User.class, companyId, externalReferenceCode, biFunction,
-				unsafeBiFunction, unsafeSupplier));
+				unsafeBiFunction, unsafeSupplier, User.class.getName()));
 
 		Mockito.verify(
 			_emptyModelManager
 		).getOrAddEmptyModel(
 			User.class, companyId, unsafeSupplier, externalReferenceCode,
-			biFunction, unsafeBiFunction
+			biFunction, unsafeBiFunction, User.class.getName()
 		);
 	}
 
@@ -109,9 +109,11 @@ public class EmptyModelManagerUtilTest {
 
 		Mockito.when(
 			_emptyModelManager.getOrAddEmptyModel(
-				Mockito.any(), Mockito.any(UnsafeSupplier.class),
-				Mockito.anyString(), Mockito.any(BiFunction.class),
-				Mockito.any(UnsafeBiFunction.class), Mockito.anyLong())
+				Mockito.anyString(), Mockito.any(),
+				Mockito.any(UnsafeSupplier.class), Mockito.anyString(),
+				Mockito.any(BiFunction.class),
+				Mockito.any(UnsafeBiFunction.class), Mockito.anyLong(),
+				Mockito.anyString())
 		).thenReturn(
 			user
 		);
@@ -129,13 +131,13 @@ public class EmptyModelManagerUtilTest {
 			user,
 			EmptyModelManagerUtil.getOrAddEmptyModel(
 				User.class, unsafeSupplier, externalReferenceCode, biFunction,
-				unsafeBiFunction, groupId));
+				unsafeBiFunction, groupId, User.class.getName()));
 
 		Mockito.verify(
 			_emptyModelManager
 		).getOrAddEmptyModel(
-			User.class, unsafeSupplier, externalReferenceCode, biFunction,
-			unsafeBiFunction, groupId
+			User.class.getName(), null, unsafeSupplier, externalReferenceCode,
+			biFunction, unsafeBiFunction, groupId, User.class.getName()
 		);
 	}
 
@@ -146,7 +148,7 @@ public class EmptyModelManagerUtilTest {
 		Assert.assertThrows(
 			NullPointerException.class,
 			() -> EmptyModelManagerUtil.getOrAddEmptyModel(
-				null, 0L, null, null, null, null));
+				null, 0L, null, null, null, null, null));
 	}
 
 	@Test

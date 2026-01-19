@@ -104,7 +104,7 @@ public class EmptyModelManagerImplTest {
 
 							return null;
 						}),
-					_toUnsafeBiFunction(() -> _user)));
+					_toUnsafeBiFunction(() -> _user), User.class.getName()));
 		}
 	}
 
@@ -134,7 +134,8 @@ public class EmptyModelManagerImplTest {
 					_toUnsafeBiFunction(
 						() -> {
 							throw new NoSuchUserException();
-						})));
+						}),
+					User.class.getName()));
 		}
 	}
 
@@ -171,7 +172,8 @@ public class EmptyModelManagerImplTest {
 							Assert.fail();
 
 							return null;
-						})));
+						}),
+					User.class.getName()));
 
 			Mockito.verify(
 				_classNameLocalService
@@ -198,7 +200,7 @@ public class EmptyModelManagerImplTest {
 			Assert.assertSame(
 				_user,
 				_emptyModelManager.getOrAddEmptyModel(
-					User.class,
+					User.class, RandomTestUtil.randomLong(),
 					() -> {
 						Assert.fail();
 
@@ -211,7 +213,7 @@ public class EmptyModelManagerImplTest {
 
 							return null;
 						}),
-					RandomTestUtil.randomLong()));
+					User.class.getName()));
 		}
 	}
 
@@ -225,7 +227,7 @@ public class EmptyModelManagerImplTest {
 			Assert.assertSame(
 				_user,
 				_emptyModelManager.getOrAddEmptyModel(
-					User.class,
+					User.class.getName(), null,
 					() -> {
 						Assert.fail();
 
@@ -239,7 +241,7 @@ public class EmptyModelManagerImplTest {
 							return null;
 						}),
 					_toUnsafeBiFunction(() -> _user),
-					RandomTestUtil.randomLong()));
+					RandomTestUtil.randomLong(), User.class.getName()));
 		}
 	}
 
@@ -253,7 +255,7 @@ public class EmptyModelManagerImplTest {
 			Assert.assertThrows(
 				NoSuchUserException.class,
 				() -> _emptyModelManager.getOrAddEmptyModel(
-					User.class,
+					User.class.getName(), null,
 					() -> {
 						Assert.fail();
 
@@ -270,7 +272,7 @@ public class EmptyModelManagerImplTest {
 						() -> {
 							throw new NoSuchUserException();
 						}),
-					RandomTestUtil.randomLong()));
+					RandomTestUtil.randomLong(), User.class.getName()));
 		}
 	}
 
@@ -344,15 +346,15 @@ public class EmptyModelManagerImplTest {
 			Assert.assertSame(
 				_user,
 				_emptyModelManager.getOrAddEmptyModel(
-					User.class, () -> _user, userExternalReferenceCode,
-					_toBiFunction(() -> null),
+					User.class.getName(), companyId, () -> _user,
+					userExternalReferenceCode, _toBiFunction(() -> null),
 					_toUnsafeBiFunction(
 						() -> {
 							Assert.fail();
 
 							return null;
 						}),
-					groupId));
+					groupId, User.class.getName()));
 
 			Mockito.verify(
 				_classNameLocalService
@@ -405,7 +407,7 @@ public class EmptyModelManagerImplTest {
 			Assert.assertSame(
 				_user,
 				_emptyModelManager.getOrAddEmptyModel(
-					User.class,
+					User.class.getName(), companyId,
 					() -> {
 						Assert.fail();
 
@@ -418,7 +420,7 @@ public class EmptyModelManagerImplTest {
 
 							return null;
 						}),
-					groupId));
+					groupId, User.class.getName()));
 		}
 	}
 
@@ -463,7 +465,8 @@ public class EmptyModelManagerImplTest {
 						Assert.fail();
 
 						return null;
-					}));
+					}),
+				User.class.getName());
 
 			Mockito.verify(
 				_classNameLocalService

@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -143,6 +144,7 @@ public class DepotEntryLocalServiceTest {
 				depotEntry.getDepotEntryId()));
 	}
 
+	@FeatureFlag("LPD-17564")
 	@Test(expected = NoSuchGroupException.class)
 	public void testDeleteDepotEntry() throws Exception {
 		DepotEntry depotEntry = _addDepotEntry("name", "description");

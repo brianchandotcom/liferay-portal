@@ -89,10 +89,12 @@ public class DownloadObjectEntryFolderServletTest {
 		_group = CMSTestUtil.getOrAddGroup(
 			DownloadObjectEntryFolderServletTest.class);
 
+		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+
 		_depotEntry = _depotEntryLocalService.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-			null, DepotConstants.TYPE_ASSET_LIBRARY,
+			null, DepotConstants.TYPE_SPACE,
 			new ServiceContext() {
 				{
 					setCompanyId(_group.getCompanyId());

@@ -11,16 +11,13 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
-import com.liferay.object.entry.folder.util.ObjectEntryFolderThreadLocal;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -79,16 +76,6 @@ public class GroupModelListener extends BaseModelListener<Group> {
 
 		try {
 			_onAfterUpdate(originalGroup, group);
-		}
-		catch (Exception exception) {
-			throw new ModelListenerException(exception);
-		}
-	}
-
-	@Override
-	public void onBeforeRemove(Group group) throws ModelListenerException {
-		try {
-			_onBeforeRemove(group);
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);
@@ -286,30 +273,6 @@ public class GroupModelListener extends BaseModelListener<Group> {
 		}
 	}
 
-	private void _onBeforeRemove(Group group) throws Exception {
-		if ((group.getType() != GroupConstants.TYPE_DEPOT) ||
-			!FeatureFlagManagerUtil.isEnabled(
-				group.getCompanyId(), "LPD-17564")) {
-
-			return;
-		}
-
-		try (SafeCloseable safeCloseable =
-				ObjectEntryFolderThreadLocal.
-					setForceDeleteSystemObjectEntryFolderWithSafeCloseable(
-						true)) {
-
-			_objectEntryFolderLocalService.
-				deleteObjectEntryFolderByExternalReferenceCode(
-					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
-					group.getGroupId(), group.getCompanyId());
-			_objectEntryFolderLocalService.
-				deleteObjectEntryFolderByExternalReferenceCode(
-					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES,
-					group.getGroupId(), group.getCompanyId());
-		}
-	}
-
 	private void _updateRecycleBinLayout(Group group, boolean hidden)
 		throws Exception {
 
@@ -341,9 +304,6 @@ public class GroupModelListener extends BaseModelListener<Group> {
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Reference
-	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

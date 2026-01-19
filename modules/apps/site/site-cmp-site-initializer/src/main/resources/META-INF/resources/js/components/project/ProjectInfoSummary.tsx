@@ -31,6 +31,10 @@ export default function ProjectInfoSummary({
 	states,
 	tags,
 }: ProjectInfoSummaryProps) {
+	const displayTypes = DISPLAY_TYPES.filter(
+		(displayType) => displayType !== 'unstyled'
+	);
+
 	return (
 		<InfoSummary
 			defaultOpen={true}
@@ -59,7 +63,11 @@ export default function ProjectInfoSummary({
 						<div>
 							{tags.map((tag, index) => (
 								<Label
-									displayType={DISPLAY_TYPES[index % 6]}
+									displayType={
+										displayTypes[
+											index % displayTypes.length
+										]
+									}
 									key={tag}
 								>
 									{tag}

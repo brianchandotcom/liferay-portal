@@ -29,7 +29,7 @@ import org.junit.Test;
 /**
  * @author Manuel de la Peña
  */
-public abstract class BaseReaderImplTestCase {
+public abstract class BaseZipReaderTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -41,16 +41,16 @@ public abstract class BaseReaderImplTestCase {
 
 		_expectedContent0 = StringUtil.read(
 			DependenciesTestUtil.getDependencyAsInputStream(
-				BaseReaderImplTestCase.class, _FILE_PATH_0));
+				BaseZipReaderTestCase.class, _FILE_PATH_0));
 		_expectedContent1 = StringUtil.read(
 			DependenciesTestUtil.getDependencyAsInputStream(
-				BaseReaderImplTestCase.class, _FILE_PATH_1));
+				BaseZipReaderTestCase.class, _FILE_PATH_1));
 		_expectedContent2 = StringUtil.read(
 			DependenciesTestUtil.getDependencyAsInputStream(
-				BaseReaderImplTestCase.class, _FILE_PATH_2));
+				BaseZipReaderTestCase.class, _FILE_PATH_2));
 		_expectedContent3 = StringUtil.read(
 			DependenciesTestUtil.getDependencyAsInputStream(
-				BaseReaderImplTestCase.class, _FILE_PATH_3));
+				BaseZipReaderTestCase.class, _FILE_PATH_3));
 	}
 
 	@Before

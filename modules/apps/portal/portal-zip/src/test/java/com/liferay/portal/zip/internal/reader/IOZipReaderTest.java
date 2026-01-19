@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -17,7 +17,7 @@ import org.junit.ClassRule;
 /**
  * @author Alejandro Tardín
  */
-public class NioZipReaderImplTest extends BaseReaderImplTestCase {
+public class IOZipReaderTest extends BaseZipReaderTestCase {
 
 	@ClassRule
 	public static LiferayUnitTestRule liferayUnitTestRule =
@@ -25,14 +25,14 @@ public class NioZipReaderImplTest extends BaseReaderImplTestCase {
 
 	@Override
 	protected ZipReader getZipReader(File file) {
-		return new NioZipReaderImpl(file);
+		return new IOZipReader(file);
 	}
 
 	@Override
 	protected ZipReader getZipReader(InputStream inputStream)
 		throws IOException {
 
-		return new NioZipReaderImpl(inputStream);
+		return new IOZipReader(inputStream);
 	}
 
 }

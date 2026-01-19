@@ -396,7 +396,7 @@ public class ObjectDefinitionNotificationTermEvaluator
 			return StringPool.BLANK;
 		}
 
-		if (parentObjectDefinition.isSystem()) {
+		if (parentObjectDefinition.isUnmodifiableSystemObject()) {
 			return MapUtil.getString(
 				_objectEntryLocalService.getSystemModelAttributes(
 					parentObjectDefinition, primaryKey),

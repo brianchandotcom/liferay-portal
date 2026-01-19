@@ -8,11 +8,15 @@ package com.liferay.ai.hub.security;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
@@ -77,16 +81,23 @@ public class JWTTokenUtilTest {
 	}
 
 	private void _testGetUserIdWithInvalidToken(
-		String expectedExceptionMessage, String token) {
+		String expectedLogMessage, String token) {
 
-		try {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.ai.hub.security.JWTTokenUtil",
+				LoggerTestUtil.DEBUG)) {
+
 			JWTTokenUtil.getUserId(token);
 
-			Assert.fail();
-		}
-		catch (Exception exception) {
-			Assert.assertEquals(
-				expectedExceptionMessage, exception.getMessage());
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertEquals(LoggerTestUtil.DEBUG, logEntry.getPriority());
+
+			Assert.assertEquals(expectedLogMessage, logEntry.getMessage());
 		}
 	}
 

@@ -47,10 +47,10 @@ public class ConvertLayoutMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long[] selPlids = ParamUtil.getLongValues(actionRequest, "rowIds");
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		long[] selPlids = ParamUtil.getLongValues(actionRequest, "rowIds");
 
 		for (long curSelPlid : selPlids) {
 			LayoutPermissionUtil.checkLayoutUpdatePermission(

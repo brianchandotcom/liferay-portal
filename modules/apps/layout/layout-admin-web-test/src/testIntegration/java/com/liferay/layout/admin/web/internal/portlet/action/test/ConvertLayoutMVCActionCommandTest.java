@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
@@ -369,7 +368,7 @@ public class ConvertLayoutMVCActionCommandTest {
 			new MockLiferayPortletActionRequest();
 
 		mockLiferayPortletActionRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+			WebKeys.THEME_DISPLAY, _getThemeDisplay(TestPropsValues.getUser()));
 
 		mockLiferayPortletActionRequest.addParameter(
 			"rowIds", new String[] {String.valueOf(plid)});
@@ -408,17 +407,6 @@ public class ConvertLayoutMVCActionCommandTest {
 		serviceContext.setRequest(httpServletRequest);
 
 		return serviceContext;
-	}
-
-	private ThemeDisplay _getThemeDisplay() throws Exception {
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setCompany(_company);
-		themeDisplay.setPermissionChecker(
-			PermissionThreadLocal.getPermissionChecker());
-		themeDisplay.setUser(TestPropsValues.getUser());
-
-		return themeDisplay;
 	}
 
 	private ThemeDisplay _getThemeDisplay(User user) throws Exception {

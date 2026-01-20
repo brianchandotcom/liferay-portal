@@ -73,6 +73,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 		formData.add(OAuthConstants.CLIENT_ID, oAuth2Application.getClientId());
 		formData.add(
 			OAuthConstants.CLIENT_SECRET, oAuth2Application.getClientSecret());
+
 		formData.add(
 			OAuthConstants.GRANT_TYPE, OAuthConstants.CLIENT_CREDENTIALS_GRANT);
 
@@ -104,6 +105,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 		formData.add(OAuthConstants.CLIENT_ID, oAuth2Application.getClientId());
 		formData.add(
 			OAuthConstants.CLIENT_SECRET, oAuth2Application.getClientSecret());
+
 		formData.add(
 			OAuthConstants.GRANT_TYPE, OAuthConstants.CLIENT_CREDENTIALS_GRANT);
 

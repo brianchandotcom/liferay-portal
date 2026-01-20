@@ -15,9 +15,7 @@ const Step: React.FC<
 > = ({backURL, nextFn, previousFn}) => (
 	<>
 		<BasePage
-			description={Liferay.Language.get(
-				'Configure-your-Export-Settings.'
-			)}
+			description={Liferay.Language.get('configure-your-export-settings')}
 			title={Liferay.Language.get('settings')}
 		>
 			<ClayLayout.Sheet>

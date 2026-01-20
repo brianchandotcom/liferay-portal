@@ -16,7 +16,7 @@ const Step: React.FC<
 	<>
 		<BasePage
 			description={Liferay.Language.get(
-				'Select-and-filter-the-data-you-want-to-include-in-your-export.'
+				'select-and-filter-the-data-you-want-to-include-in-your-export'
 			)}
 			title={Liferay.Language.get('data-selection')}
 		>

@@ -16,7 +16,7 @@ const Step: React.FC<
 	<>
 		<BasePage
 			description={Liferay.Language.get(
-				'Name-your-export-and-make-an-initial-data-selection-to-narrow-down-in-the-next-step.'
+				'name-your-export-and-make-an-initial-data-selection-to-narrow-down-in-the-next-step'
 			)}
 			title={Liferay.Language.get('setup')}
 		>

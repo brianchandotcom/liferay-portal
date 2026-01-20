@@ -373,6 +373,12 @@ public class KaleoTaskInstanceTokenLocalServiceUtil {
 	}
 
 	public static List<KaleoTaskInstanceToken> getKaleoTaskInstanceTokens(
+		String className, long classPK) {
+
+		return getService().getKaleoTaskInstanceTokens(className, classPK);
+	}
+
+	public static List<KaleoTaskInstanceToken> getKaleoTaskInstanceTokens(
 		String assigneeClassName, long assigneeClassPK, Boolean completed,
 		int start, int end,
 		OrderByComparator<KaleoTaskInstanceToken> orderByComparator,

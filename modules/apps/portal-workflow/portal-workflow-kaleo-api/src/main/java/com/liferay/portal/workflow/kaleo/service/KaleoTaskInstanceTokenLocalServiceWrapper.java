@@ -426,6 +426,14 @@ public class KaleoTaskInstanceTokenLocalServiceWrapper
 
 	@Override
 	public java.util.List<KaleoTaskInstanceToken> getKaleoTaskInstanceTokens(
+		String className, long classPK) {
+
+		return _kaleoTaskInstanceTokenLocalService.getKaleoTaskInstanceTokens(
+			className, classPK);
+	}
+
+	@Override
+	public java.util.List<KaleoTaskInstanceToken> getKaleoTaskInstanceTokens(
 		String assigneeClassName, long assigneeClassPK, Boolean completed,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskInstanceToken>

@@ -309,6 +309,10 @@ public interface KaleoTaskInstanceTokenLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KaleoTaskInstanceToken> getKaleoTaskInstanceTokens(
+		String className, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoTaskInstanceToken> getKaleoTaskInstanceTokens(
 		String assigneeClassName, long assigneeClassPK, Boolean completed,
 		int start, int end,
 		OrderByComparator<KaleoTaskInstanceToken> orderByComparator,

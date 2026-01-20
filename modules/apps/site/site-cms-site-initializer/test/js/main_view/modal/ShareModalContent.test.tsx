@@ -11,6 +11,7 @@ import {act, fireEvent, render, waitFor} from '@testing-library/react';
 import React from 'react';
 
 import ApiHelper from '../../../../src/main/resources/META-INF/resources/js/common/services/ApiHelper';
+import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../../../src/main/resources/META-INF/resources/js/common/utils/constants';
 import ShareModalContent from '../../../../src/main/resources/META-INF/resources/js/main_view/modal/share_modal_content/ShareModalContent';
 
 jest.useFakeTimers();
@@ -188,5 +189,44 @@ describe('ShareModalContent', () => {
 		);
 
 		expect(mockCloseModal).toHaveBeenCalledTimes(1);
+	});
+
+	it('shows default permissions when className is not ObjectEntryFolder', () => {
+		const {getByLabelText, getByRole} = renderComponent();
+
+		fireEvent.click(getByLabelText('edit-permissions'));
+
+		expect(
+			getByRole('option', {name: 'view-and-download'})
+		).toBeInTheDocument();
+		expect(
+			getByRole('option', {name: 'view-download-and-comment'})
+		).toBeInTheDocument();
+		expect(
+			getByRole('option', {name: 'view-download-comment-and-update'})
+		).toBeInTheDocument();
+	});
+
+	it('shows objectEntryFolder-specific permissions when className is ObjectEntryFolder', () => {
+		const folderProps = {
+			...DEFAULT_PROPS,
+			className: OBJECT_ENTRY_FOLDER_CLASS_NAME,
+		};
+
+		const {getByLabelText, getByRole, queryByText} =
+			renderComponent(folderProps);
+
+		fireEvent.click(getByLabelText('edit-permissions'));
+
+		expect(
+			getByRole('option', {name: 'view-and-download'})
+		).toBeInTheDocument();
+		expect(
+			getByRole('option', {name: 'view-download-and-update'})
+		).toBeInTheDocument();
+
+		expect(
+			queryByText('view-download-and-comment')
+		).not.toBeInTheDocument();
 	});
 });

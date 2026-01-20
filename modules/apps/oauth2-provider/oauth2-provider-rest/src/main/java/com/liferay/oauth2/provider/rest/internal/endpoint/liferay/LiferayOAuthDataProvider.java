@@ -735,10 +735,10 @@ public class LiferayOAuthDataProvider
 			SecurityContext securityContext =
 				messageContext.getSecurityContext();
 
-			Principal principal = securityContext.getUserPrincipal();
+			Principal userPrincipal = securityContext.getUserPrincipal();
 
 			User user = _userLocalService.getUser(
-				GetterUtil.getLong(principal.getName()));
+				GetterUtil.getLong(userPrincipal.getName()));
 
 			Map<String, String> properties = client.getProperties();
 

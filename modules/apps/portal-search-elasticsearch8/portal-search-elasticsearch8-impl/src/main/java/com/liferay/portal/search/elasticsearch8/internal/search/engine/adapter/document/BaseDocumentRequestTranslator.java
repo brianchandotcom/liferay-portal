@@ -10,7 +10,7 @@ import co.elastic.clients.json.JsonData;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
-import com.liferay.portal.search.elasticsearch8.internal.document.ElasticsearchDocumentFactory;
+import com.liferay.portal.search.elasticsearch8.internal.document.ElasticsearchDocumentFactoryUtil;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 
@@ -24,11 +24,11 @@ public abstract class BaseDocumentRequestTranslator {
 		com.liferay.portal.kernel.search.Document document71) {
 
 		if (document != null) {
-			return _elasticsearchDocumentFactory.getElasticsearchDocument(
+			return ElasticsearchDocumentFactoryUtil.getElasticsearchDocument(
 				document);
 		}
 
-		return _elasticsearchDocumentFactory.getElasticsearchDocument(
+		return ElasticsearchDocumentFactoryUtil.getElasticsearchDocument(
 			document71);
 	}
 
@@ -83,8 +83,5 @@ public abstract class BaseDocumentRequestTranslator {
 
 		return uid;
 	}
-
-	private static final ElasticsearchDocumentFactory
-		_elasticsearchDocumentFactory = new ElasticsearchDocumentFactory();
 
 }

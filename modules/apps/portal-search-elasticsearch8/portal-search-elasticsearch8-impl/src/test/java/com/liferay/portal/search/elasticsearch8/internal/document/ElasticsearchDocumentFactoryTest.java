@@ -44,8 +44,6 @@ public class ElasticsearchDocumentFactoryTest {
 	@Before
 	public void setUp() throws Exception {
 		_documentFixture.setUp();
-
-		_elasticsearchDocumentFactory = new ElasticsearchDocumentFactory();
 	}
 
 	@After
@@ -250,7 +248,8 @@ public class ElasticsearchDocumentFactoryTest {
 
 		Assert.assertEquals(
 			json,
-			_elasticsearchDocumentFactory.getElasticsearchDocument(document));
+			ElasticsearchDocumentFactoryUtil.getElasticsearchDocument(
+				document));
 	}
 
 	protected DocumentBuilder builder() {
@@ -263,7 +262,7 @@ public class ElasticsearchDocumentFactoryTest {
 		Assert.assertEquals(
 			expected,
 			Strings.toString(
-				_elasticsearchDocumentFactory.getElasticsearchDocument(
+				ElasticsearchDocumentFactoryUtil.getElasticsearchDocument(
 					documentBuilder.build())));
 	}
 
@@ -280,7 +279,7 @@ public class ElasticsearchDocumentFactoryTest {
 			expectedXContentBuilderConsumer);
 
 		XContentBuilder actualXContentBuilder =
-			_elasticsearchDocumentFactory.getElasticsearchDocument(
+			ElasticsearchDocumentFactoryUtil.getElasticsearchDocument(
 				_buildDocument(actualDocumentBuilderConsumer));
 
 		Assert.assertEquals(
@@ -323,6 +322,5 @@ public class ElasticsearchDocumentFactoryTest {
 	private static final String _FIELD = "field";
 
 	private final DocumentFixture _documentFixture = new DocumentFixture();
-	private ElasticsearchDocumentFactory _elasticsearchDocumentFactory;
 
 }

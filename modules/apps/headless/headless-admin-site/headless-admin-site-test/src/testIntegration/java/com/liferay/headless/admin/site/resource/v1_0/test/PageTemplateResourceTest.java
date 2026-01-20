@@ -1745,7 +1745,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 	}
 
 	private void _testPostSitePageTemplateWithThumbnail() throws Exception {
-		PageTemplate pageTemplate1 = randomPageTemplate();
+		PageTemplate pageTemplate = randomPageTemplate();
 
 		Repository repository = _portletFileRepository.addPortletRepository(
 			testGroup.getGroupId(), RandomTestUtil.randomString(),
@@ -1754,7 +1754,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
 
-		pageTemplate1.setThumbnailURLReference(
+		pageTemplate.setThumbnailURLReference(
 			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
@@ -1764,13 +1764,13 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		PageTemplate postPageTemplate =
 			pageTemplateResource.postSitePageTemplate(
-				testGroup.getExternalReferenceCode(), pageTemplate1);
+				testGroup.getExternalReferenceCode(), pageTemplate);
 
 		_assertThumbnailFileEntryId(
 			false, postPageTemplate.getExternalReferenceCode(),
 			fileEntry.getExternalReferenceCode());
 
-		PageTemplate pageTemplate2 = randomPageTemplate();
+		pageTemplate = randomPageTemplate();
 
 		ThumbnailURLReference thumbnailURLReference =
 			new ThumbnailURLReference() {
@@ -1783,11 +1783,11 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				}
 			};
 
-		pageTemplate2.setThumbnailURLReference(thumbnailURLReference);
+		pageTemplate.setThumbnailURLReference(thumbnailURLReference);
 
 		try {
 			testPostSitePageTemplateSetPageTemplate_addPageTemplate(
-				pageTemplate2);
+				pageTemplate);
 		}
 		catch (Problem.ProblemException problemException) {
 			Problem problem = problemException.getProblem();
@@ -1991,9 +1991,9 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 	}
 
 	private void _testPutSitePageTemplateWithThumbnail() throws Exception {
-		PageTemplate pageTemplate1 = randomPageTemplate();
+		PageTemplate pageTemplate = randomPageTemplate();
 
-		pageTemplate1.setExternalReferenceCode(RandomTestUtil.randomString());
+		pageTemplate.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		Repository repository = _portletFileRepository.addPortletRepository(
 			testGroup.getGroupId(), RandomTestUtil.randomString(),
@@ -2002,7 +2002,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		FileEntry fileEntry1 = _addPortletFileEntry(repository.getDlFolderId());
 
-		pageTemplate1.setThumbnailURLReference(
+		pageTemplate.setThumbnailURLReference(
 			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
@@ -2012,7 +2012,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		PageTemplate putPageTemplate = pageTemplateResource.putSitePageTemplate(
 			testGroup.getExternalReferenceCode(),
-			pageTemplate1.getExternalReferenceCode(), pageTemplate1);
+			pageTemplate.getExternalReferenceCode(), pageTemplate);
 
 		_assertThumbnailFileEntryId(
 			false, putPageTemplate.getExternalReferenceCode(),
@@ -2045,7 +2045,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		_assertThumbnailFileEntryId(
 			true, putPageTemplate.getExternalReferenceCode(), null);
 
-		PageTemplate pageTemplate2 = randomPageTemplate();
+		pageTemplate = randomPageTemplate();
 
 		ThumbnailURLReference thumbnailURLReference =
 			new ThumbnailURLReference() {
@@ -2058,12 +2058,12 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				}
 			};
 
-		pageTemplate2.setThumbnailURLReference(thumbnailURLReference);
+		pageTemplate.setThumbnailURLReference(thumbnailURLReference);
 
 		try {
 			pageTemplateResource.putSitePageTemplate(
 				testGroup.getExternalReferenceCode(),
-				putPageTemplate.getExternalReferenceCode(), pageTemplate2);
+				putPageTemplate.getExternalReferenceCode(), pageTemplate);
 		}
 		catch (Problem.ProblemException problemException) {
 			Problem problem = problemException.getProblem();

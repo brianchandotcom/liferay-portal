@@ -7,6 +7,7 @@ package com.liferay.configuration.admin.web.internal.util;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -17,11 +18,14 @@ import java.util.Map;
 
 import junit.framework.AssertionFailedError;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.MockSettings;
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 import org.osgi.framework.Constants;
@@ -40,6 +44,20 @@ public class ConfigurationModelRetrieverImplTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@Before
+	public void setUp() {
+		_companyThreadLocalMockedStatic.when(
+			CompanyThreadLocal::getCompanyId
+		).thenReturn(
+			_COMPANY_ID
+		);
+	}
+
+	@After
+	public void tearDown() {
+		_companyThreadLocalMockedStatic.close();
+	}
 
 	@Test
 	public void testGetConfiguration() throws Exception {
@@ -204,13 +222,6 @@ public class ConfigurationModelRetrieverImplTest {
 				"companyId", "any"
 			).build());
 		_test(
-			true, pidFilterString,
-			HashMapBuilder.put(
-				key, pid
-			).put(
-				"groupId", "any"
-			).build());
-		_test(
 			false, pidFilterString,
 			HashMapBuilder.put(
 				key, pid
@@ -220,7 +231,18 @@ public class ConfigurationModelRetrieverImplTest {
 		_test(
 			true, pidFilterString,
 			HashMapBuilder.put(
+				key, pid
+			).put(
+				"companyId", String.valueOf(_COMPANY_ID)
+			).put(
+				"groupId", "any"
+			).build());
+		_test(
+			true, pidFilterString,
+			HashMapBuilder.put(
 				key, pid + ".scoped"
+			).put(
+				"companyId", String.valueOf(_COMPANY_ID)
 			).put(
 				"groupId", "any"
 			).build());
@@ -364,6 +386,11 @@ public class ConfigurationModelRetrieverImplTest {
 		}
 	}
 
+	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
+
+	private final MockedStatic<CompanyThreadLocal>
+		_companyThreadLocalMockedStatic = Mockito.mockStatic(
+			CompanyThreadLocal.class);
 	private final ConfigurationModelRetrieverImpl
 		_configurationModelRetrieverImpl =
 			new ConfigurationModelRetrieverImpl();

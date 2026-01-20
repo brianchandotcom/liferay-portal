@@ -15,6 +15,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 import com.liferay.portal.configuration.metatype.definitions.ExtendedMetaTypeInformation;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedMetaTypeService;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -376,7 +377,7 @@ public class ConfigurationModelRetrieverImpl
 
 		if (scope.equals(ExtendedObjectClassDefinition.Scope.GROUP)) {
 			return ConfigurationFilterStringUtil.getGroupScopedFilterString(
-				null, pid, null);
+				CompanyThreadLocal.getCompanyId(), null, pid, null);
 		}
 
 		return ConfigurationFilterStringUtil.getPortletScopedFilterString(

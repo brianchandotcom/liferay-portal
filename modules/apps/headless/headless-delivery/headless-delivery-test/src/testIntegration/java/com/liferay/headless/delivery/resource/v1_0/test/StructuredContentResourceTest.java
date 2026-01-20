@@ -1252,23 +1252,18 @@ public class StructuredContentResourceTest
 			ContentField contentField1 = contentFields1[i];
 			ContentField contentField2 = contentFields2[i];
 
+			DDMFormField ddmFormField = DDMFormFieldUtil.getDDMFormField(
+				_ddmStructureService, ddmStructure, contentField1.getName());
+
 			for (String languageId : languageIds) {
 				Value value1 = DDMValueUtil.toDDMValue(
-					contentField1.toString(),
-					DDMFormFieldUtil.getDDMFormField(
-						_ddmStructureService, ddmStructure,
-						contentField1.getName()),
-					_dlAppService, testGroup.getGroupId(),
-					_journalArticleService, _layoutLocalService,
-					Locale.forLanguageTag(languageId));
+					contentField1.toString(), ddmFormField, _dlAppService,
+					testGroup.getGroupId(), _journalArticleService,
+					_layoutLocalService, Locale.forLanguageTag(languageId));
 				Value value2 = DDMValueUtil.toDDMValue(
-					contentField2.toString(),
-					DDMFormFieldUtil.getDDMFormField(
-						_ddmStructureService, ddmStructure,
-						contentField2.getName()),
-					_dlAppService, testGroup.getGroupId(),
-					_journalArticleService, _layoutLocalService,
-					Locale.forLanguageTag(languageId));
+					contentField2.toString(), ddmFormField, _dlAppService,
+					testGroup.getGroupId(), _journalArticleService,
+					_layoutLocalService, Locale.forLanguageTag(languageId));
 
 				if (!Objects.equals(value1, value2)) {
 					return false;

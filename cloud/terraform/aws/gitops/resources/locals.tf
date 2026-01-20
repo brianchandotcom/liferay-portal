@@ -2,6 +2,7 @@ locals {
 	account_id=data.aws_caller_identity.current.account_id
 	argocd_ecr_credentials_secret_name="argocd-ecr-credentials"
 	argocd_git_credentials_secret_name="argocd-git-credentials"
+	cluster_name="${var.deployment_name}-eks"
 	common_labels={
 		"app.kubernetes.io/component"="gitops-infrastructure"
 		"app.kubernetes.io/managed-by"=local.terraform_manager_name

@@ -3411,6 +3411,11 @@ public class BatchEnginePortletDataHandlerTest {
 		TestExportImportVulcanBatchEngineTaskItemDelegateBuilder {
 
 		public TestExportImportVulcanBatchEngineTaskItemDelegate build() {
+			if (_portletId == null) {
+				throw new IllegalArgumentException(
+					"portletId must be not null");
+			}
+
 			return new TestExportImportVulcanBatchEngineTaskItemDelegate(
 				_function, _portletId, _rank, _stagingSupported);
 		}

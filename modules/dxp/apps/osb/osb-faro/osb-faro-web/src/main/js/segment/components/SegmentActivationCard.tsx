@@ -63,7 +63,7 @@ const SegmentActivationCard: React.FC<ISegmentActivationCardProps> = ({
 							</List.ItemTitle>
 							<List.ItemText className='mb-2'>
 								{Liferay.Language.get(
-									'this-syncs-individual-profiles-to-liferay-dxp-to-deliver-personalization-via-pages-collections-a-b-tests-and-recommendations='
+									'this-syncs-individual-profiles-to-liferay-dxp-to-deliver-personalization-via-pages-collections-a-b-tests-and-recommendations'
 								)}
 							</List.ItemText>
 							<Label

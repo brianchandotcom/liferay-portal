@@ -12,14 +12,13 @@ const mockData = {
 	segmentActivationId: '1'
 };
 
-describe('SegmentSticker', () => {
+describe('SegmentActivationCard', () => {
 	it('should render when frequency type is batch', () => {
 		const {container} = render(
 			<SegmentActivationCard
 				segmentActivation={{
 					frequencyType: SegmentActivationFrequencyTypes.Batch,
 					scheduleType: SegmentActivationScheduleTypes.Indefinitely,
-
 					...mockData
 				}}
 			/>

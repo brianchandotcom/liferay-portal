@@ -139,6 +139,8 @@ public class KaleoTaskInstanceTokenModelDocumentContributor
 		addAssetEntryAttributes(
 			assetEntry -> {
 				document.addKeyword(
+					Field.ASSET_TAG_NAMES, assetEntry.getTagNames());
+				document.addKeyword(
 					KaleoTaskInstanceTokenField.ASSET_CLASS_NAME_ID,
 					assetEntry.getClassNameId());
 				document.addKeyword(

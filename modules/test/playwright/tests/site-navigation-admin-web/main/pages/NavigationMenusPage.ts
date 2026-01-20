@@ -194,6 +194,28 @@ export class NavigationMenusPage {
 		await this.documentsModal.getByText(imageName).click();
 	}
 
+	async addObjectEntryItem(
+		objectDefinitionName: string,
+		objectEntryId: string
+	) {
+		await this.addMenuItemButton.click();
+
+		await (await this.getMenuItem(objectDefinitionName)).click();
+
+		await this.page.waitForSelector('iframe', {state: 'attached'});
+
+		await this.page
+			.frameLocator(`iframe[title="Select ${objectDefinitionName}"]`)
+			.getByText(objectEntryId)
+			.first()
+			.click();
+
+		await waitForAlert(
+			this.page,
+			`Success:1 ${objectDefinitionName} was added to this menu.`
+		);
+	}
+
 	async addNavigationMenuToGlobalSite(navigationMenuName: string) {
 		await this.gotoGlobalSiteNavigationMenuPortlet();
 

@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch7.internal.document.ElasticsearchDocumentFactory;
+import com.liferay.portal.search.elasticsearch7.internal.document.ElasticsearchDocumentFactoryUtil;
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.search.SearchRequestExecutorFixture;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.OpenPointInTimeRequest;
@@ -471,11 +471,8 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 		indexRequest.id(document.getUID());
 		indexRequest.setRefreshPolicy(WriteRequest.RefreshPolicy.IMMEDIATE);
 
-		ElasticsearchDocumentFactory elasticsearchDocumentFactory =
-			new ElasticsearchDocumentFactory();
-
 		indexRequest.source(
-			elasticsearchDocumentFactory.getElasticsearchDocument(document),
+			ElasticsearchDocumentFactoryUtil.getElasticsearchDocument(document),
 			XContentType.JSON);
 
 		try {

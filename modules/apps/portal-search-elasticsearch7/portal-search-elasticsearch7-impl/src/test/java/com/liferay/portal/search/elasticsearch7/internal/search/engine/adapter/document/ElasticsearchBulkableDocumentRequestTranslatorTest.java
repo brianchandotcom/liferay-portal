@@ -10,7 +10,7 @@ import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch7.internal.document.ElasticsearchDocumentFactory;
+import com.liferay.portal.search.elasticsearch7.internal.document.ElasticsearchDocumentFactoryUtil;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
@@ -209,7 +209,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 			indexRequest.source(), false, XContentType.JSON);
 
 		Assert.assertEquals(
-			_elasticsearchDocumentFactory.getElasticsearchDocument(document),
+			ElasticsearchDocumentFactoryUtil.getElasticsearchDocument(document),
 			source);
 
 		BulkRequest bulkRequest = new BulkRequest();
@@ -251,7 +251,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 			indexRequest.source(), false, XContentType.JSON);
 
 		Assert.assertEquals(
-			_elasticsearchDocumentFactory.getElasticsearchDocument(document),
+			ElasticsearchDocumentFactoryUtil.getElasticsearchDocument(document),
 			source);
 
 		BulkRequest bulkRequest = new BulkRequest();
@@ -272,7 +272,5 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 	private final DocumentFixture _documentFixture = new DocumentFixture();
 	private ElasticsearchBulkableDocumentRequestTranslator
 		_elasticsearchBulkableDocumentRequestTranslator;
-	private final ElasticsearchDocumentFactory _elasticsearchDocumentFactory =
-		new ElasticsearchDocumentFactory();
 
 }

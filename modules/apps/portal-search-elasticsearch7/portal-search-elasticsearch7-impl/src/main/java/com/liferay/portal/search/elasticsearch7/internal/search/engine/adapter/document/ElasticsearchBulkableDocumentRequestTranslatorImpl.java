@@ -8,7 +8,7 @@ package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
-import com.liferay.portal.search.elasticsearch7.internal.document.ElasticsearchDocumentFactory;
+import com.liferay.portal.search.elasticsearch7.internal.document.ElasticsearchDocumentFactoryUtil;
 import com.liferay.portal.search.elasticsearch7.internal.script.ScriptTranslator;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.GetDocumentRequest;
@@ -179,7 +179,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorImpl
 
 		if (updateDocumentRequest.getDocument() != null) {
 			XContentBuilder xContentBuilder =
-				_elasticsearchDocumentFactory.getElasticsearchDocument(
+				ElasticsearchDocumentFactoryUtil.getElasticsearchDocument(
 					updateDocumentRequest.getDocument());
 
 			updateRequest.doc(xContentBuilder);
@@ -187,7 +187,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorImpl
 		else {
 			@SuppressWarnings("deprecation")
 			String elasticsearchDocument =
-				_elasticsearchDocumentFactory.getElasticsearchDocument(
+				ElasticsearchDocumentFactoryUtil.getElasticsearchDocument(
 					updateDocumentRequest.getDocument71());
 
 			updateRequest.doc(elasticsearchDocument, XContentType.JSON);
@@ -220,7 +220,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorImpl
 
 		if (indexDocumentRequest.getDocument() != null) {
 			XContentBuilder xContentBuilder =
-				_elasticsearchDocumentFactory.getElasticsearchDocument(
+				ElasticsearchDocumentFactoryUtil.getElasticsearchDocument(
 					indexDocumentRequest.getDocument());
 
 			indexRequest.source(xContentBuilder);
@@ -228,15 +228,13 @@ public class ElasticsearchBulkableDocumentRequestTranslatorImpl
 		else {
 			@SuppressWarnings("deprecation")
 			String elasticsearchDocument =
-				_elasticsearchDocumentFactory.getElasticsearchDocument(
+				ElasticsearchDocumentFactoryUtil.getElasticsearchDocument(
 					indexDocumentRequest.getDocument71());
 
 			indexRequest.source(elasticsearchDocument, XContentType.JSON);
 		}
 	}
 
-	private final ElasticsearchDocumentFactory _elasticsearchDocumentFactory =
-		new ElasticsearchDocumentFactory();
 	private final ScriptTranslator _scriptTranslator = new ScriptTranslator();
 
 }

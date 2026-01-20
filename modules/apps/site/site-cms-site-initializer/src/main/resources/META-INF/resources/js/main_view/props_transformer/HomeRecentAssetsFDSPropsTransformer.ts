@@ -196,6 +196,7 @@ export default function HomeRecentAssetsFDSPropsTransformer({
 
 				shareAction({
 					autocompleteURL,
+					className: itemData.entryClassName,
 					collaboratorURL: collaboratorURLs[itemData.entryClassName],
 					creator: itemData.embedded.creator,
 					itemId: itemData.embedded.id,

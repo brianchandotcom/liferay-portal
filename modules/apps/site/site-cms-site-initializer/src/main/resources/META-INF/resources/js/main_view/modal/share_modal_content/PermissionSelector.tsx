@@ -7,6 +7,18 @@ import {Option, Picker} from '@clayui/core';
 import React from 'react';
 
 import {SharingPermission} from '../../../common/types/SharingPermission';
+import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../../common/utils/constants';
+
+const FOLDER_PERMISSION_OPTIONS = [
+	{
+		label: Liferay.Language.get('view-and-download'),
+		value: SharingPermission.View,
+	},
+	{
+		label: Liferay.Language.get('view-download-and-update'),
+		value: [SharingPermission.Update, SharingPermission.View].join(','),
+	},
+];
 
 const PERMISSION_OPTIONS = [
 	{
@@ -25,16 +37,22 @@ const PERMISSION_OPTIONS = [
 
 export default function PermissionSelector({
 	actionIds,
+	className,
 	onChange,
 }: {
 	actionIds?: string;
+	className: string;
 	onChange: (value: object) => void;
 }) {
 	return (
 		<Picker
 			aria-label={Liferay.Language.get('edit-permissions')}
 			className="border-0 c-py-0 permissions-picker text-2 text-secondary text-weight-semi-bold"
-			items={PERMISSION_OPTIONS}
+			items={
+				className === OBJECT_ENTRY_FOLDER_CLASS_NAME
+					? FOLDER_PERMISSION_OPTIONS
+					: PERMISSION_OPTIONS
+			}
 			messages={{
 				itemDescribedby: Liferay.Language.get(
 					'you-are-currently-on-a-text-element,-inside-of-a-list-box'

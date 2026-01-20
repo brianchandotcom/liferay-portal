@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SegmentSticker should render when frequency type is batch 1`] = `
+exports[`SegmentActivationCard should render when frequency type is batch 1`] = `
 <div>
   <div
     class="card card-root card-root"
@@ -34,7 +34,7 @@ exports[`SegmentSticker should render when frequency type is batch 1`] = `
             <p
               class="mb-2 list-group-text"
             >
-              Syncs individual profiles to Liferay DXP to deliver personalization via pages, collections, A/B tests, and recommendations.
+              This syncs individual profiles to Liferay DXP to deliver personalization via pages, collections, A/B tests, and recommendations.
             </p>
             <span
               class="label align-self-start label-info"
@@ -42,7 +42,7 @@ exports[`SegmentSticker should render when frequency type is batch 1`] = `
               <span
                 class="label-item label-item-expand"
               >
-                Batch sync will run indefinitely
+                Batch Sync Will Run Indefinitely
               </span>
             </span>
           </div>
@@ -76,7 +76,7 @@ exports[`SegmentSticker should render when frequency type is batch 1`] = `
 </div>
 `;
 
-exports[`SegmentSticker should render when frequency type is real time 1`] = `
+exports[`SegmentActivationCard should render when frequency type is real time 1`] = `
 <div>
   <div
     class="card card-root card-root"
@@ -110,7 +110,7 @@ exports[`SegmentSticker should render when frequency type is real time 1`] = `
             <p
               class="mb-2 list-group-text"
             >
-              Syncs individual profiles to Liferay DXP to deliver personalization via pages, collections, A/B tests, and recommendations.
+              This syncs individual profiles to Liferay DXP to deliver personalization via pages, collections, A/B tests, and recommendations.
             </p>
             <span
               class="label align-self-start label-info"
@@ -118,7 +118,7 @@ exports[`SegmentSticker should render when frequency type is real time 1`] = `
               <span
                 class="label-item label-item-expand"
               >
-                Real-Time sync will run indefinitely
+                Real-Time Sync Will Run Indefinitely
               </span>
             </span>
           </div>
@@ -152,7 +152,7 @@ exports[`SegmentSticker should render when frequency type is real time 1`] = `
 </div>
 `;
 
-exports[`SegmentSticker should render with dates when frequency type is between 1`] = `
+exports[`SegmentActivationCard should render with dates when frequency type is between 1`] = `
 <div>
   <div
     class="card card-root card-root"
@@ -186,7 +186,7 @@ exports[`SegmentSticker should render with dates when frequency type is between 
             <p
               class="mb-2 list-group-text"
             >
-              Syncs individual profiles to Liferay DXP to deliver personalization via pages, collections, A/B tests, and recommendations.
+              This syncs individual profiles to Liferay DXP to deliver personalization via pages, collections, A/B tests, and recommendations.
             </p>
             <span
               class="label align-self-start label-info"
@@ -194,7 +194,7 @@ exports[`SegmentSticker should render with dates when frequency type is between 
               <span
                 class="label-item label-item-expand"
               >
-                Batch sync will run from Aug 24, 2025 to Sep 14, 2025
+                Batch Sync Will Run From Aug 24, 2025 to Sep 14, 2025
               </span>
             </span>
           </div>

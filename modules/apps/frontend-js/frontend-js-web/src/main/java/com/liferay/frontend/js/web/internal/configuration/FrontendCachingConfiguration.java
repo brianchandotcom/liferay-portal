@@ -49,13 +49,6 @@ public interface FrontendCachingConfiguration {
 	public boolean sendNoCacheForCSSStyleSheets();
 
 	@Meta.AD(
-		deflt = "false",
-		description = "send-no-cache-for-tokenized-css-style-sheets-help",
-		name = "send-no-cache-for-tokenized-css-style-sheets", required = false
-	)
-	public boolean sendNoCacheForTokenizedCSSStyleSheets();
-
-	@Meta.AD(
 		deflt = "false", description = "send-no-cache-for-js-files-help",
 		name = "send-no-cache-for-js-files", required = false
 	)
@@ -66,6 +59,13 @@ public interface FrontendCachingConfiguration {
 		name = "send-no-cache-for-labels-modules", required = false
 	)
 	public boolean sendNoCacheForLabelsModules();
+
+	@Meta.AD(
+		deflt = "false",
+		description = "send-no-cache-for-tokenized-css-style-sheets-help",
+		name = "send-no-cache-for-tokenized-css-style-sheets", required = false
+	)
+	public boolean sendNoCacheForTokenizedCSSStyleSheets();
 
 	@Meta.AD(
 		deflt = "false",

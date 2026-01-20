@@ -12,6 +12,7 @@ import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
@@ -21,6 +22,8 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
+
+import java.time.LocalDate;
 
 import java.util.Objects;
 
@@ -110,15 +113,41 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			return;
 		}
 
-		int filteredCount = _getCount(
+		int blockedCount = _getCount(
+			"state eq 'blocked'", objectDefinition, objectEntry);
+		int doneCount = _getCount(
 			"state eq 'done'", objectDefinition, objectEntry);
+		int inProgressCount = _getCount(
+			"state eq 'inProgress'", objectDefinition, objectEntry);
+		int overdueCount = _getCount(
+			StringBundler.concat(
+				"dueDate lt ", LocalDate.now(), " and state ne 'done'"),
+			objectDefinition, objectEntry);
 
-		int completionRate = (filteredCount * 100) / totalCount;
+		int completionRate = (doneCount * 100) / totalCount;
 
 		if (Objects.equals(
 				MapUtil.getInteger(
+					parentObjectEntry.getValues(), "blockedCount"),
+				blockedCount) &&
+			Objects.equals(
+				MapUtil.getInteger(
 					parentObjectEntry.getValues(), "completionRate"),
-				completionRate)) {
+				completionRate) &&
+			Objects.equals(
+				MapUtil.getInteger(parentObjectEntry.getValues(), "doneCount"),
+				doneCount) &&
+			Objects.equals(
+				MapUtil.getInteger(
+					parentObjectEntry.getValues(), "inProgressCount"),
+				inProgressCount) &&
+			Objects.equals(
+				MapUtil.getInteger(
+					parentObjectEntry.getValues(), "overdueCount"),
+				overdueCount) &&
+			Objects.equals(
+				MapUtil.getInteger(parentObjectEntry.getValues(), "totalCount"),
+				totalCount)) {
 
 			return;
 		}
@@ -127,7 +156,17 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			parentObjectEntry.getUserId(), parentObjectEntry.getObjectEntryId(),
 			parentObjectEntry.getObjectEntryFolderId(),
 			HashMapBuilder.<String, Serializable>put(
+				"blockedCount", blockedCount
+			).put(
 				"completionRate", completionRate
+			).put(
+				"doneCount", doneCount
+			).put(
+				"inProgressCount", inProgressCount
+			).put(
+				"overdueCount", overdueCount
+			).put(
+				"totalCount", totalCount
 			).build(),
 			new ServiceContext());
 	}

@@ -9,6 +9,8 @@ import com.liferay.batch.engine.test.util.BatchEngineTestUtil;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalServiceUtil;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
@@ -25,6 +27,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
 import com.liferay.site.initializer.SiteInitializer;
@@ -79,6 +82,31 @@ public class CMPTestUtil {
 			return group;
 		}
 
+		_initialize(true, clazz, group);
+
+		objectDefinition =
+			ObjectDefinitionLocalServiceUtil.
+				fetchObjectDefinitionByExternalReferenceCode(
+					"L_CMP_PROJECT", TestPropsValues.getCompanyId());
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateEntryLocalServiceUtil.
+				fetchDefaultLayoutPageTemplateEntry(
+					group.getGroupId(),
+					PortalUtil.getClassNameId(objectDefinition.getClassName()),
+					0);
+
+		if (layoutPageTemplateEntry == null) {
+			_initialize(false, clazz, group);
+		}
+
+		return group;
+	}
+
+	private static void _initialize(
+			boolean processBatchEngine, Class<?> clazz, Group group)
+		throws Exception {
+
 		try {
 			ServiceContextThreadLocal.pushServiceContext(
 				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
@@ -96,23 +124,25 @@ public class CMPTestUtil {
 
 				siteInitializer.initialize(group.getGroupId());
 
-				BatchEngineTestUtil.processBatchEngineUnits(
-					_BUNDLE_SYMBOLIC_NAME, clazz,
-					new String[] {
-						"." + _BUNDLE_SYMBOLIC_NAME +
-							".internal.batch.00.list.type.definition",
-						"." + _BUNDLE_SYMBOLIC_NAME +
-							".internal.batch.01.object.folder",
-						"." + _BUNDLE_SYMBOLIC_NAME +
-							".internal.batch.02.object.definition"
-					});
+				if (processBatchEngine) {
+					BatchEngineTestUtil.processBatchEngineUnits(
+						_BUNDLE_SYMBOLIC_NAME, clazz,
+						new String[] {
+							"." + _BUNDLE_SYMBOLIC_NAME +
+								".internal.batch.00.list.type.definition",
+							"." + _BUNDLE_SYMBOLIC_NAME +
+								".internal.batch.01.notification.template",
+							"." + _BUNDLE_SYMBOLIC_NAME +
+								".internal.batch.02.object.folder",
+							"." + _BUNDLE_SYMBOLIC_NAME +
+								".internal.batch.03.object.definition"
+						});
+				}
 			}
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
 		}
-
-		return group;
 	}
 
 	private static final String _BUNDLE_SYMBOLIC_NAME =

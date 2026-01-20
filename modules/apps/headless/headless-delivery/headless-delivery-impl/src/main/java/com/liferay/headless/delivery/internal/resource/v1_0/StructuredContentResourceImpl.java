@@ -1270,14 +1270,14 @@ public class StructuredContentResourceImpl
 
 			List<Serializable> fieldValues = new ArrayList<>();
 
+			DDMFormField ddmFormField = DDMFormFieldUtil.getDDMFormField(
+				_ddmStructureService, ddmStructure, entry.getKey());
+
 			for (ContentField contentField : entry.getValue()) {
 				Value value = DDMValueUtil.toDDMValue(
-					contentField.toString(),
-					DDMFormFieldUtil.getDDMFormField(
-						_ddmStructureService, ddmStructure,
-						contentField.getName()),
-					_dlAppService, journalArticle.getGroupId(),
-					_journalArticleService, _layoutLocalService,
+					contentField.toString(), ddmFormField, _dlAppService,
+					journalArticle.getGroupId(), _journalArticleService,
+					_layoutLocalService,
 					contextAcceptLanguage.getPreferredLocale());
 
 				if (value == null) {

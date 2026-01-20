@@ -7,6 +7,7 @@ package com.liferay.marketplace.service;
 
 import com.liferay.headless.admin.user.client.custom.field.CustomField;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
+import com.liferay.marketplace.util.MarketplaceUtil;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Entitlement;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
@@ -27,7 +28,6 @@ import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -137,30 +137,9 @@ public class KoroneikiService {
 		ProductPurchase productPurchase =
 			productPurchaseResource.getProductPurchase(productPurchaseKey);
 
-		ExternalLink[] externalLinks = productPurchase.getExternalLinks();
-
-		for (ExternalLink externalLink : externalLinks) {
-			if (Objects.equals(externalLink.getDomain(), "salesforce") &&
-				Objects.equals(externalLink.getEntityName(), "opportunity")) {
-
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Salesforce opportunity already exists " + opportunity);
-				}
-
-				return;
-			}
-		}
-
-		externalLinks = Arrays.copyOf(externalLinks, externalLinks.length + 1);
-
-		ExternalLink externalLink = new ExternalLink();
-
-		externalLink.setDomain("salesforce");
-		externalLink.setEntityId(opportunity);
-		externalLink.setEntityName("opportunity");
-
-		externalLinks[externalLinks.length - 1] = externalLink;
+		ExternalLink[] externalLinks = MarketplaceUtil.addExternalLink(
+			productPurchase.getExternalLinks(), "salesforce", opportunity,
+			"opportunity");
 
 		productPurchase.setExternalLinks(externalLinks);
 
@@ -197,13 +176,11 @@ public class KoroneikiService {
 			productPurchase.setEndDate(Date.from(instant));
 		}
 
-		ExternalLink externalLink = new ExternalLink();
+		ExternalLink[] externalLink = MarketplaceUtil.addExternalLink(
+			productPurchase.getExternalLinks(), "marketplace",
+			String.valueOf(orderItem.getOrderId()), "opportunity");
 
-		externalLink.setDomain("salesforce");
-		externalLink.setEntityId(String.valueOf(orderItem.getOrderId()));
-		externalLink.setEntityName("opportunity");
-
-		productPurchase.setExternalLinks(new ExternalLink[] {externalLink});
+		productPurchase.setExternalLinks(externalLink);
 
 		productPurchase.setProductKey(orderItem.getSkuExternalReferenceCode());
 		productPurchase.setQuantity(
@@ -270,6 +247,13 @@ public class KoroneikiService {
 				).toInstant()));
 
 		koroneikiAccount.setDescription(account.getDescription());
+
+		ExternalLink[] externalLinks = MarketplaceUtil.addExternalLink(
+			koroneikiAccount.getExternalLinks(), "marketplace",
+			account.getName(), "account");
+
+		koroneikiAccount.setExternalLinks(externalLinks);
+
 		koroneikiAccount.setName(account.getName());
 		koroneikiAccount.setPhoneNumber(customFieldsMap.get("Contact Phone"));
 

@@ -10,6 +10,7 @@ import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.SkuOption;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.headless.commerce.admin.order.client.pagination.Page;
 import com.liferay.marketplace.model.PublisherAssetLink;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -61,6 +62,45 @@ public class MarketplaceUtil {
 		}
 
 		return path.toFile();
+	}
+
+	public static ExternalLink[] addExternalLink(
+		ExternalLink[] externalLinks, String domain, String entityId,
+		String entityName) {
+
+		if (externalLinks == null) {
+			externalLinks = new ExternalLink[0];
+		}
+
+		for (ExternalLink externalLink : externalLinks) {
+			if (Objects.equals(externalLink.getDomain(), domain) &&
+				Objects.equals(externalLink.getEntityName(), entityName)) {
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"ExternalLink already exists for domain=" + domain);
+				}
+
+				return externalLinks;
+			}
+		}
+
+		ExternalLink[] updatedExternalLinks = Arrays.copyOf(
+			externalLinks, externalLinks.length + 1);
+
+		ExternalLink externalLink = new ExternalLink();
+
+		externalLink.setDomain(domain);
+		externalLink.setEntityId(entityId);
+		externalLink.setEntityName(entityName);
+
+		updatedExternalLinks[updatedExternalLinks.length - 1] = externalLink;
+
+		if (_log.isInfoEnabled()) {
+			_log.info("ExternalLink added for domain=" + domain);
+		}
+
+		return updatedExternalLinks;
 	}
 
 	public static JSONArray createCloudProvisioningJSONArray(

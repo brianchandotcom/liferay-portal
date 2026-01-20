@@ -23,6 +23,7 @@ import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -210,8 +211,16 @@ public class InfoCollectionProviderSXPBlueprintModelListener
 	}
 
 	private boolean _isCollectionProvider(SXPBlueprint sxpBlueprint) {
+		if (!JSONUtil.isJSONObject(sxpBlueprint.getConfigurationJSON())) {
+			return false;
+		}
+
 		Configuration configuration = Configuration.unsafeToDTO(
 			sxpBlueprint.getConfigurationJSON());
+
+		if (configuration == null) {
+			return false;
+		}
 
 		GeneralConfiguration generalConfiguration =
 			configuration.getGeneralConfiguration();

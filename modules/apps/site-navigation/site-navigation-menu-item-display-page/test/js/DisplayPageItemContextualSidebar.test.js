@@ -37,6 +37,7 @@ const renderContextualSidebar = ({
 			chooseItemProps={{}}
 			defaultLanguageId={DEFAULT_LANGUAGE_ID}
 			hasDisplayPage={hasDisplayPage}
+			hasModel={true}
 			item={item}
 			itemSubtype={subtype}
 			itemType={type}

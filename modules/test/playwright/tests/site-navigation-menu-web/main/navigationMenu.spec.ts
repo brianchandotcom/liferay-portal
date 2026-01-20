@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
@@ -67,6 +67,281 @@ async function deleteGlobalNavigationMenus(
 		.getByRole('button', {name: 'Delete'})
 		.click();
 }
+
+test.describe('Missing reference warnings for Navigation Menu Items', () => {
+	let navigationMenuName: string;
+
+	test.beforeEach(
+		'Create Navigation Menu',
+		async ({navigationMenusPage, site}) => {
+			await navigationMenusPage.goto(site.friendlyUrlPath);
+
+			navigationMenuName = getRandomString();
+
+			await navigationMenusPage.createNavigationMenu(navigationMenuName);
+		}
+	);
+
+	test(
+		'Missing reference for a Asset Vocabulary type Navigation Menu Item',
+		{
+			tag: '@LPD-71409',
+		},
+		async ({apiHelpers, navigationMenusPage, page, site}) => {
+			const vocabularyName1 = getRandomString();
+			let vocabularyId1: number;
+			const categoryName1 = getRandomString();
+
+			const vocabularyName2 = getRandomString();
+			const categoryName2 = getRandomString();
+
+			await test.step('Create Vocabulary', async () => {
+				({id: vocabularyId1} =
+					await apiHelpers.headlessAdminTaxonomy.postSiteTaxonomyVocabulary(
+						{
+							name: vocabularyName1,
+							siteId: site.id,
+						}
+					));
+
+				await apiHelpers.headlessAdminTaxonomy.postTaxonomyVocabularyTaxonomyCategory(
+					{
+						name: categoryName1,
+						vocabularyId: vocabularyId1,
+					}
+				);
+
+				const {id: vocabularyId2} =
+					await apiHelpers.headlessAdminTaxonomy.postSiteTaxonomyVocabulary(
+						{
+							name: vocabularyName2,
+							siteId: site.id,
+						}
+					);
+
+				await apiHelpers.headlessAdminTaxonomy.postTaxonomyVocabularyTaxonomyCategory(
+					{
+						name: categoryName2,
+						vocabularyId: vocabularyId2,
+					}
+				);
+			});
+
+			await test.step('Add Navigation Menu Items for created Vocabularies', async () => {
+				await navigationMenusPage.goto(site.friendlyUrlPath);
+
+				await page
+					.getByRole('link', {name: navigationMenuName})
+					.click();
+
+				await navigationMenusPage.openAddVocabularyModal();
+
+				await navigationMenusPage.vocabulariesModal
+					.getByLabel(vocabularyName1)
+					.check();
+
+				await navigationMenusPage.vocabulariesModal
+					.getByLabel(vocabularyName2)
+					.check();
+
+				await page.getByRole('button', {name: 'Select'}).click();
+			});
+
+			await test.step('Delete a Vocabulary to simulate a missing reference', async () => {
+				await apiHelpers.headlessAdminTaxonomy.deleteTaxonomyVocabulary(
+					vocabularyId1
+				);
+			});
+
+			await test.step('Verify missing reference warnings in left and right panes', async () => {
+				await assertMissingReferenceWarnings(
+					page,
+					vocabularyName1,
+					navigationMenusPage
+				);
+			});
+
+			await test.step("Verify that Navigation Menu's rendered preview doesn't show Menu Items with missing references", async () => {
+				await navigationMenusPage.previewButton.click();
+
+				await navigationMenusPage.displayTemplate.selectOption(
+					'LIST-MENU-FTL'
+				);
+
+				await expect(
+					await navigationMenusPage.getModalListItem(categoryName1)
+				).not.toBeVisible();
+				await expect(
+					await navigationMenusPage.getModalListItem(categoryName2)
+				).toBeVisible();
+			});
+		}
+	);
+
+	test(
+		'Missing reference for a Display Page type Navigation Menu Item',
+		{
+			tag: '@LPD-71409',
+		},
+		async ({apiHelpers, navigationMenusPage, page, site}) => {
+			const webContentTitle1 = getRandomString();
+			let webContentId1: string;
+
+			const webContentTitle2 = getRandomString();
+
+			await test.step('Create Web Content Articles', async () => {
+				({articleId: webContentId1} =
+					await apiHelpers.jsonWebServicesJournal.addWebContent({
+						ddmStructureId:
+							await getBasicWebContentStructureId(apiHelpers),
+						groupId: site.id,
+						titleMap: {en_US: webContentTitle1},
+					}));
+
+				await apiHelpers.jsonWebServicesJournal.addWebContent({
+					ddmStructureId:
+						await getBasicWebContentStructureId(apiHelpers),
+					groupId: site.id,
+					titleMap: {en_US: webContentTitle2},
+				});
+			});
+
+			await test.step('Add Navigation Menu Items for created Web Content Articles', async () => {
+				await navigationMenusPage.goto(site.friendlyUrlPath);
+
+				await page
+					.getByRole('link', {name: navigationMenuName})
+					.click();
+
+				await navigationMenusPage.addWebContentArticleItem(
+					webContentTitle1
+				);
+				await navigationMenusPage.addWebContentArticleItem(
+					webContentTitle2
+				);
+			});
+
+			await test.step('Delete a Web Content Article to simulate a missing reference', async () => {
+				await apiHelpers.jsonWebServicesJournal.moveArticleToTrash(
+					site.id,
+					webContentId1
+				);
+			});
+
+			await test.step('Verify missing reference warnings in left and right panes', async () => {
+				await assertMissingReferenceWarnings(
+					page,
+					webContentTitle1,
+					navigationMenusPage
+				);
+			});
+
+			await test.step("Verify that Navigation Menu's rendered preview doesn't show Menu Items with missing references", async () => {
+				await navigationMenusPage.previewButton.click();
+
+				await navigationMenusPage.displayTemplate.selectOption(
+					'LIST-MENU-FTL'
+				);
+
+				await expect(
+					await navigationMenusPage.getModalListItem(webContentTitle1)
+				).not.toBeVisible();
+				await expect(
+					await navigationMenusPage.getModalListItem(webContentTitle2)
+				).toBeVisible();
+			});
+		}
+	);
+
+	test(
+		'Missing reference for a Layout type Navigation Menu Item',
+		{
+			tag: '@LPD-71409',
+		},
+		async ({apiHelpers, navigationMenusPage, page, site}) => {
+			const layoutTitle1 = getRandomString();
+			let plid1: string;
+
+			const layoutTitle2 = getRandomString();
+
+			await test.step('Create Layouts', async () => {
+				({plid: plid1} =
+					await apiHelpers.jsonWebServicesLayout.addLayout({
+						groupId: site.id,
+						title: layoutTitle1,
+					}));
+
+				await apiHelpers.jsonWebServicesLayout.addLayout({
+					groupId: site.id,
+					title: layoutTitle2,
+				});
+			});
+
+			await test.step('Add Navigation Menu Items for created Layouts', async () => {
+				await navigationMenusPage.goto(site.friendlyUrlPath);
+
+				await page
+					.getByRole('link', {name: navigationMenuName})
+					.click();
+
+				await navigationMenusPage.addPageItem([
+					layoutTitle1,
+					layoutTitle2,
+				]);
+			});
+
+			await test.step('Delete a Layout to simulate a missing reference', async () => {
+				await apiHelpers.jsonWebServicesLayout.deleteLayout(plid1);
+			});
+
+			await test.step('Verify missing reference warnings in left and right panes', async () => {
+				await page.reload();
+
+				// Layout type Navigation Menu Items are deleted from the Navigation Menu when the Layout is deleted
+
+				await expect(page.getByText(layoutTitle1)).not.toBeVisible();
+			});
+
+			await test.step("Verify that Navigation Menu's rendered preview doesn't show Menu Items with missing references", async () => {
+				await navigationMenusPage.previewButton.click();
+
+				await navigationMenusPage.displayTemplate.selectOption(
+					'LIST-MENU-FTL'
+				);
+
+				await expect(
+					await navigationMenusPage.getModalListItem(layoutTitle1)
+				).not.toBeVisible();
+				await expect(
+					await navigationMenusPage.getModalListItem(layoutTitle2)
+				).toBeVisible();
+			});
+		}
+	);
+
+	async function assertMissingReferenceWarnings(
+		page: Page,
+		menuItemName: string,
+		navigationMenusPage: NavigationMenusPage
+	) {
+		await page.reload();
+
+		await expect(page.getByText(menuItemName)).toBeVisible();
+
+		const menuItemCard1 =
+			await navigationMenusPage.getMenuItemCard(menuItemName);
+
+		await expect(
+			menuItemCard1.locator('.lexicon-icon-warning-full')
+		).toBeVisible();
+
+		await menuItemCard1.click();
+
+		await expect(
+			navigationMenusPage.sidebarBody.getByText('No Reference found')
+		).toBeVisible();
+	}
+});
 
 test(
 	'Add URL type Navigation Menu Item with "open in a new tab" checkbox unchecked',

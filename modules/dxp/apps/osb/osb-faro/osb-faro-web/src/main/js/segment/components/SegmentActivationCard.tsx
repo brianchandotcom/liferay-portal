@@ -5,7 +5,7 @@ import Form from '@clayui/form';
 import Label from '@clayui/label';
 import List from '@clayui/list';
 import Modal, {useModal} from '@clayui/modal';
-import React, {useEffect, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {formatUTCDateFromUnix} from 'shared/util/date';
 import {Option, Picker} from '@clayui/core';
 import {
@@ -15,6 +15,8 @@ import {
 } from 'shared/util/constants';
 import {sub} from 'shared/util/lang';
 import {Text} from '@clayui/core';
+import {updateSegmentActivationStatus} from 'shared/api/individual-segment';
+import {useParams} from 'react-router-dom';
 
 export type SegmentActivationDetails = {
 	frequencyType: SegmentActivationFrequencyTypes;
@@ -24,33 +26,26 @@ export type SegmentActivationDetails = {
 	segmentActivationId: string;
 };
 
-type ModalState = {
-	scheduleType: SegmentActivationScheduleTypes;
+type IActivationFormValues = {
+	scheduleEndDate?: string;
 	frequencyType: SegmentActivationFrequencyTypes;
-	endDate: string;
-	startDate: string;
+	scheduleType: SegmentActivationScheduleTypes;
+	scheduleStartDate?: string;
 };
 
 interface IActivationConfigurationModalProps {
-	observer: any;
+	initialValues: IActivationFormValues;
+	onSave: (values: IActivationFormValues) => Promise<void>;
 	onOpenChange: (open: boolean) => void;
 	open: boolean;
-	segmentActivationDetails: SegmentActivationDetails;
 	showActivationTypePicker?: boolean;
+	observer?: any;
 }
 
 interface ISegmentActivationCardProps {
 	segmentActivation: SegmentActivationDetails;
 	segmentType: SegmentTypes;
 }
-
-const data: SegmentActivationDetails = {
-	frequencyType: SegmentActivationFrequencyTypes.Between,
-	scheduleEndDate: '1711929600000',
-	scheduleStartDate: '1704067200000',
-	scheduleType: SegmentActivationScheduleTypes.Batch,
-	segmentActivationId: '1'
-};
 
 const SCHEDULE_TYPE_LABELS: Record<
 	SegmentActivationScheduleTypes,
@@ -80,51 +75,62 @@ const FREQUENCY_TYPE_LABELS: Record<
 	}
 };
 
-const ActivationConfigurationModal: React.FC<IActivationConfigurationModalProps> = ({
+export const ActivationConfigurationModal: React.FC<IActivationConfigurationModalProps> = ({
+	initialValues,
 	observer,
 	onOpenChange,
+	onSave,
 	open,
-	segmentActivationDetails,
 	showActivationTypePicker
 }) => {
-	const {frequencyType, scheduleEndDate, scheduleStartDate, scheduleType} =
-		segmentActivationDetails || data;
-
-	const [formState, setFormState] = useState<ModalState>({
-		endDate: scheduleEndDate,
-		frequencyType,
-		scheduleType,
-		startDate: scheduleStartDate
+	const [formState, setFormState] = useState<IActivationFormValues>({
+		...initialValues,
+		scheduleEndDate: formatUTCDateFromUnix(
+			initialValues.scheduleEndDate,
+			'yyyy-MM-DD'
+		),
+		scheduleStartDate: formatUTCDateFromUnix(
+			initialValues.scheduleStartDate,
+			'yyyy-MM-DD'
+		)
 	});
+	const [isSaving, setIsSaving] = useState(false);
 
-	useEffect(() => {
-		if (segmentActivationDetails) {
-			setFormState({
-				endDate: segmentActivationDetails.scheduleEndDate,
-				frequencyType: segmentActivationDetails.frequencyType,
-				scheduleType: segmentActivationDetails.scheduleType,
-				startDate: segmentActivationDetails.scheduleStartDate
-			});
+	const isInvalid = useMemo(() => {
+		if (
+			formState.frequencyType === SegmentActivationFrequencyTypes.Between
+		) {
+			return !formState.scheduleStartDate || !formState.scheduleEndDate;
 		}
-	}, [segmentActivationDetails]);
+		return false;
+	}, [formState]);
 
 	const handleFrequencyChange = (value: SegmentActivationFrequencyTypes) => {
-		const newFormState = {
-			...formState,
+		setFormState(prev => ({
+			...prev,
 			frequencyType: value,
 			...(value === SegmentActivationFrequencyTypes.Indefinitely && {
-				endDate: null,
-				startDate: null
+				scheduleEndDate: null,
+				scheduleStartDate: null
 			})
-		};
-
-		setFormState(newFormState);
+		}));
 	};
 
-	const handleSave = () => {
-		// save;
-		onOpenChange(false);
+	const handleInternalSave = async () => {
+		setIsSaving(true);
+
+		try {
+			await onSave(formState);
+			onOpenChange(false);
+		} catch (error) {
+			console.error('Save failed', error);
+		} finally {
+			setIsSaving(false);
+			onOpenChange(false);
+		}
 	};
+
+	if (!open) return null;
 
 	return (
 		<>
@@ -227,14 +233,14 @@ const ActivationConfigurationModal: React.FC<IActivationConfigurationModalProps>
 										onChange={value => {
 											setFormState({
 												...formState,
-												endDate: value.end,
-												startDate: value.start
+												scheduleEndDate: value.end,
+												scheduleStartDate: value.start
 											});
 										}}
 										showRetentionPeriod={false}
 										value={{
-											end: formState.endDate,
-											start: formState.startDate
+											end: formState.scheduleEndDate,
+											start: formState.scheduleStartDate
 										}}
 									/>
 								)}
@@ -251,7 +257,10 @@ const ActivationConfigurationModal: React.FC<IActivationConfigurationModalProps>
 								>
 									{Liferay.Language.get('cancel')}
 								</Button>
-								<Button onClick={handleSave}>
+								<Button
+									disabled={isSaving || isInvalid}
+									onClick={handleInternalSave}
+								>
 									{Liferay.Language.get('save-configuration')}
 								</Button>
 							</Button.Group>
@@ -271,10 +280,24 @@ const SegmentActivationCard: React.FC<ISegmentActivationCardProps> = ({
 		frequencyType,
 		scheduleEndDate,
 		scheduleStartDate,
-		scheduleType
+		scheduleType,
+		segmentActivationId
 	} = segmentActivation;
 
 	const {observer, onOpenChange, open} = useModal();
+
+	const {groupId, id: segmentId} = useParams();
+
+	const handleSave = async (updatedValues: IActivationFormValues) => {
+		await updateSegmentActivationStatus({
+			groupId,
+			segmentActivation: {
+				...updatedValues,
+				segmentActivationId
+			},
+			segmentId
+		});
+	};
 
 	const labelMessage =
 		frequencyType === SegmentActivationFrequencyTypes.Indefinitely
@@ -289,13 +312,24 @@ const SegmentActivationCard: React.FC<ISegmentActivationCardProps> = ({
 
 	return (
 		<Card className='card-root'>
-			<ActivationConfigurationModal
-				observer={observer}
-				onOpenChange={onOpenChange}
-				open={open}
-				segmentActivationDetails={segmentActivation}
-				showActivationTypePicker={segmentType === SegmentTypes.RealTime}
-			/>
+			{open && (
+				<ActivationConfigurationModal
+					initialValues={{
+						frequencyType,
+						scheduleEndDate,
+						scheduleStartDate,
+						scheduleType
+					}}
+					observer={observer}
+					onOpenChange={onOpenChange}
+					onSave={handleSave}
+					open={open}
+					showActivationTypePicker={
+						segmentType === SegmentTypes.RealTime
+					}
+				/>
+			)}
+
 			<Card.Header className='align-items-center d-flex justify-content-between'>
 				<Card.Title>{Liferay.Language.get('activations')}</Card.Title>
 			</Card.Header>

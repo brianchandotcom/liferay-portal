@@ -252,3 +252,32 @@ export function searchUnassigned({
 		path: `contacts/${groupId}/individual_segment/unassigned`
 	});
 }
+
+export function updateSegmentActivationStatus({
+	groupId,
+	segmentActivation,
+	segmentId
+}) {
+	const {
+		frequencyType,
+		scheduleEndDate,
+		scheduleStartDate,
+		scheduleType,
+		segmentActivationId
+	} = segmentActivation;
+
+	const data = {
+		frequencyType,
+		scheduleType,
+		...(scheduleEndDate && {scheduleEndDate: Date.parse(scheduleEndDate)}),
+		...(scheduleStartDate && {
+			scheduleStartDate: Date.parse(scheduleStartDate)
+		})
+	};
+
+	return sendRequest({
+		data,
+		method: 'PUT',
+		path: `contacts/${groupId}/individual_segment/${segmentId}/activation/${segmentActivationId}`
+	});
+}

@@ -709,6 +709,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		_testGetUserAccountsPageWithBirthDateFilter();
 		_testGetUserAccountsPageWithCustomFields();
+		_testGetUserAccountsPageWithSortCustomField();
 		_testGetUserAccountsPageWithSortFullName();
 	}
 
@@ -2209,6 +2210,87 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				"(customFields/", expandoColumn.getName(), " eq '", value,
 				"')"),
 			userAccount);
+	}
+
+	private void _testGetUserAccountsPageWithSortCustomField()
+		throws Exception {
+
+		ExpandoTable expandoTable = _expandoTableLocalService.addTable(
+			testGroup.getCompanyId(),
+			_classNameLocalService.getClassNameId(User.class), "CUSTOM_FIELDS");
+
+		_testGetUserAccountsPageWithSortCustomField(
+			expandoTable, ExpandoColumnConstants.DATE,
+			Arrays.asList(
+				"2000-07-27T00:00:00Z", "2000-07-27T10:00:00Z",
+				"2000-07-28T00:00:00Z"));
+		_testGetUserAccountsPageWithSortCustomField(
+			expandoTable, ExpandoColumnConstants.DOUBLE,
+			Arrays.asList(0.111, 0.222, 0.333));
+		_testGetUserAccountsPageWithSortCustomField(
+			expandoTable, ExpandoColumnConstants.FLOAT,
+			Arrays.asList(0.111F, 0.222F, 0.333F));
+	}
+
+	private void _testGetUserAccountsPageWithSortCustomField(
+			ExpandoTable expandoTable, int expandoType, List<Object> values)
+		throws Exception {
+
+		ExpandoColumn expandoColumn = _expandoColumnLocalService.addColumn(
+			expandoTable.getTableId(), "A" + RandomTestUtil.randomString(),
+			expandoType);
+
+		UnicodeProperties unicodeProperties =
+			expandoColumn.getTypeSettingsProperties();
+
+		unicodeProperties.setProperty(
+			ExpandoColumnConstants.INDEX_TYPE,
+			String.valueOf(ExpandoColumnConstants.INDEX_TYPE_KEYWORD));
+
+		expandoColumn.setTypeSettingsProperties(unicodeProperties);
+
+		_expandoColumnLocalService.updateExpandoColumn(expandoColumn);
+
+		List<UserAccount> userAccounts = new ArrayList<>();
+		String domain = StringUtil.randomString() + ".com";
+
+		for (Object value : values) {
+			userAccounts.add(
+				userAccountResource.postUserAccount(
+					null, null,
+					_randomUserAccount(
+						userAccount -> {
+							userAccount.setCustomFields(
+								() -> new CustomField[] {
+									new CustomField() {
+										{
+											customValue = new CustomValue() {
+												{
+													data = value;
+												}
+											};
+											name = expandoColumn.getName();
+										}
+									}
+								});
+							userAccount.setEmailAddress(
+								RandomTestUtil.randomString() + '@' + domain);
+						})));
+		}
+
+		Page<UserAccount> page = userAccountResource.getUserAccountsPage(
+			domain, null, Pagination.of(1, 10),
+			"customFields/" + expandoColumn.getName() + ":asc");
+
+		assertEquals(userAccounts, (List<UserAccount>)page.getItems());
+
+		page = userAccountResource.getUserAccountsPage(
+			domain, null, Pagination.of(1, 10),
+			"customFields/" + expandoColumn.getName() + ":desc");
+
+		Collections.reverse(userAccounts);
+
+		assertEquals(userAccounts, (List<UserAccount>)page.getItems());
 	}
 
 	private void _testGetUserAccountsPageWithSortFullName() throws Exception {

@@ -4,6 +4,7 @@
  */
 
 export {default as FrontendDataSet} from './FrontendDataSet';
+export {default as DateRenderer} from './cell_renderers/DateRenderer';
 export {default as DateTimeRenderer} from './cell_renderers/DateTimeRenderer';
 
 export {INTERNAL_CELL_RENDERERS as FDS_INTERNAL_CELL_RENDERERS} from './cell_renderers/InternalCellRenderer';

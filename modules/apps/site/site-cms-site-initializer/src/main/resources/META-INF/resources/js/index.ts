@@ -27,11 +27,15 @@ export {default as EditVocabulary} from './main_view/categorization/vocabularies
 export {default as ViewDashboard} from './main_view/dashboard/ViewDashboard';
 export {default as EditFolder} from './main_view/folders/EditFolder';
 
-// Main
-
 export {default as QuickActions} from './main_view/home/QuickActions';
 export {default as SearchBar} from './main_view/home/SearchBar';
 export {default as ViewWorkflowTasks} from './main_view/home/ViewWorkflowTasks';
+
+// Main
+
+export {default as AssignToModalContent} from './main_view/home/modal/AssignToModalContent';
+export {default as TransitionWorkflowStateModalContent} from './main_view/home/modal/TransitionWorkflowStateModalContent';
+export {default as UpdateDueDateModalContent} from './main_view/home/modal/UpdateDueDateModalContent';
 export {default as AssetTypeInfoPanelContent} from './main_view/info_panel/AssetTypeInfoPanelContent';
 export {default as AssetTags} from './main_view/info_panel/components/AssetTags';
 export {default as AllSpacesFDSPropsTransformer} from './main_view/props_transformer/AllSpacesFDSPropsTransformer';

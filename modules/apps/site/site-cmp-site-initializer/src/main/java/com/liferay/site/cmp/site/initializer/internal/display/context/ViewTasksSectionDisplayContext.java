@@ -14,15 +14,21 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.CreateDateFDSFilter;
 import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.DueDateRangeFDSFilter;
 import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.ProjectSelectionFDSFilter;
 import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.StateSelectionFDSFilter;
 import com.liferay.site.cmp.site.initializer.internal.util.ActionUtil;
 import com.liferay.site.cmp.site.initializer.internal.util.TasksSectionUtil;
+
+import jakarta.portlet.ActionRequest;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -99,23 +105,80 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 						objectDefinition, themeDisplay),
 					"{embedded.id}?redirect=", themeDisplay.getURLCurrent()),
 				"pencil", "edit", LanguageUtil.get(httpServletRequest, "edit"),
-				"get", "update", null),
+				"get", "update", null,
+				HashMapBuilder.<String, Object>put(
+					"entryClassName", objectDefinition.getClassName()
+				).build()),
 			new FDSActionDropdownItem(
 				StringBundler.concat(
 					ActionUtil.getBaseViewTaskURL(
 						objectDefinition, themeDisplay),
 					"{embedded.id}?redirect=", themeDisplay.getURLCurrent()),
 				"view", "actionLink",
-				LanguageUtil.get(httpServletRequest, "view"), null, "get",
-				null),
+				LanguageUtil.get(httpServletRequest, "view"), null, "get", null,
+				HashMapBuilder.<String, Object>put(
+					"entryClassName", objectDefinition.getClassName()
+				).build()),
 			new FDSActionDropdownItem(
 				StringPool.BLANK, null, "assign-to",
 				LanguageUtil.get(httpServletRequest, "assign-to-..."), null,
-				"get", null),
+				"get", null,
+				HashMapBuilder.<String, Object>put(
+					"entryClassName", objectDefinition.getClassName()
+				).build()),
 			new FDSActionDropdownItem(
 				null, "trash", "delete",
 				LanguageUtil.get(httpServletRequest, "delete"), null, "delete",
-				null));
+				null,
+				HashMapBuilder.<String, Object>put(
+					"entryClassName", objectDefinition.getClassName()
+				).build()),
+			new FDSActionDropdownItem(
+				PortletURLBuilder.create(
+					PortalUtil.getControlPanelPortletURL(
+						httpServletRequest, PortletKeys.MY_WORKFLOW_TASK,
+						ActionRequest.RENDER_PHASE)
+				).setMVCPath(
+					"/edit_workflow_task.jsp"
+				).setRedirect(
+					themeDisplay.getURLCurrent()
+				).setParameter(
+					"workflowTaskId", "{embedded.id}"
+				).buildString(),
+				"view", "actionLinkWorkflowTask",
+				LanguageUtil.get(httpServletRequest, "view"), null, "get", null,
+				HashMapBuilder.<String, Object>put(
+					"entryClassName", KaleoTaskInstanceToken.class.getName()
+				).build()),
+			new FDSActionDropdownItem(
+				null, null, "assignToMeWorkflowTask",
+				LanguageUtil.get(httpServletRequest, "assign-to-me"), null,
+				"assignToMe", null,
+				HashMapBuilder.<String, Object>put(
+					"embedded.assignedToMe", false
+				).put(
+					"embedded.completed", false
+				).put(
+					"entryClassName", KaleoTaskInstanceToken.class.getName()
+				).build()),
+			new FDSActionDropdownItem(
+				null, null, "assignToWorkflowTask",
+				LanguageUtil.get(httpServletRequest, "assign-to-..."), null,
+				"assignToUser", null,
+				HashMapBuilder.<String, Object>put(
+					"embedded.completed", false
+				).put(
+					"entryClassName", KaleoTaskInstanceToken.class.getName()
+				).build()),
+			new FDSActionDropdownItem(
+				null, "date-time", "updateDueDateWorkflowTask",
+				LanguageUtil.get(httpServletRequest, "update-due-date"), null,
+				"updateDueDate", null,
+				HashMapBuilder.<String, Object>put(
+					"embedded.completed", false
+				).put(
+					"entryClassName", KaleoTaskInstanceToken.class.getName()
+				).build()));
 	}
 
 	public List<FDSFilter> getFDSFilters() {

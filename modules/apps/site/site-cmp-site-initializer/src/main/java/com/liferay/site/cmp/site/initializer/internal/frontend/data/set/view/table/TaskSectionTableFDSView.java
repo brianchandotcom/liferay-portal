@@ -11,7 +11,6 @@ import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
 import com.liferay.site.cmp.site.initializer.internal.constants.CMPSiteInitializerFDSNames;
-import com.liferay.site.cmp.site.initializer.internal.util.FDSViewUtil;
 
 import java.util.Locale;
 
@@ -33,21 +32,26 @@ public class TaskSectionTableFDSView extends BaseTableFDSView {
 			_fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
-			"embedded.title", "title",
+			"title", "title",
 			fdsTableSchemaField -> fdsTableSchemaField.setActionId(
 				"actionLink"
 			).setContentRenderer(
 				"simpleActionLinkTableCellRenderer"
 			)
 		).add(
-			"embedded.assignTo.name", "assign-to"
+			"assignee", "assign-to",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"assigneeTableCellRenderer")
 		).add(
-			"embedded.r_cmpProjectToCMPTasks_c_cmpProject.title", "project"
+			"projectTitle", "project",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"projectTitleTableCellRenderer")
 		).add(
-			FDSViewUtil.getDateFDSTableSchemaField(
-				"embedded.dueDate", "due-date")
+			"dueDate", "due-date",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"dueDateTableCellRenderer")
 		).add(
-			"embedded.state", "state",
+			"state", "state",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"stateTableCellRenderer")
 		).build();

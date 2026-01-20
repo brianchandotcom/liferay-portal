@@ -16,6 +16,7 @@ import java.util.Map;
 
 import junit.framework.AssertionFailedError;
 
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -152,10 +153,24 @@ public class ConfigurationFilterStringUtilTest {
 
 	@Test
 	public void testGetGroupScopedFilterString() throws Exception {
+		long companyId = RandomTestUtil.randomLong();
+
 		String filterString =
 			ConfigurationFilterStringUtil.getGroupScopedFilterString(
-				null, null);
+				companyId, null, null);
 
+		_test(
+			false, filterString,
+			HashMapBuilder.<String, Serializable>put(
+				"groupId", "any"
+			).build());
+		_test(
+			false, filterString,
+			HashMapBuilder.<String, Serializable>put(
+				"companyId", "any"
+			).put(
+				"groupId", "any"
+			).build());
 		_test(
 			false, filterString,
 			HashMapBuilder.<String, Serializable>put(
@@ -164,13 +179,22 @@ public class ConfigurationFilterStringUtilTest {
 				"portletInstanceId", "any"
 			).build());
 		_test(
+			false, filterString,
+			HashMapBuilder.<String, Serializable>put(
+				"siteExternalReferenceCode", "any"
+			).build());
+		_test(
 			true, filterString,
 			HashMapBuilder.<String, Serializable>put(
+				"companyId", companyId
+			).put(
 				"groupId", "any"
 			).build());
 		_test(
 			true, filterString,
 			HashMapBuilder.<String, Serializable>put(
+				"companyId", companyId
+			).put(
 				"siteExternalReferenceCode", "any"
 			).build());
 
@@ -178,7 +202,7 @@ public class ConfigurationFilterStringUtilTest {
 		String siteExternalReferenceCode = RandomTestUtil.randomString();
 
 		filterString = ConfigurationFilterStringUtil.getGroupScopedFilterString(
-			groupId, siteExternalReferenceCode);
+			companyId, groupId, siteExternalReferenceCode);
 
 		_test(
 			false, filterString,
@@ -195,18 +219,22 @@ public class ConfigurationFilterStringUtilTest {
 		_test(
 			true, filterString,
 			HashMapBuilder.<String, Serializable>put(
+				"companyId", companyId
+			).put(
 				"groupId", groupId
 			).build());
 		_test(
 			true, filterString,
 			HashMapBuilder.<String, Serializable>put(
+				"companyId", companyId
+			).put(
 				"siteExternalReferenceCode", siteExternalReferenceCode
 			).build());
 
 		String pid = "foo.scoped~123";
 
 		filterString = ConfigurationFilterStringUtil.getGroupScopedFilterString(
-			null, pid, null);
+			companyId, null, pid, null);
 
 		String rawPid = ConfigurationPidUtil.getRawPid(pid);
 
@@ -214,6 +242,17 @@ public class ConfigurationFilterStringUtilTest {
 			false, filterString,
 			HashMapBuilder.<String, Serializable>put(
 				ConfigurationAdmin.SERVICE_FACTORYPID, rawPid
+			).put(
+				"companyId", companyId
+			).put(
+				"groupId", "any"
+			).build());
+		_test(
+			false, filterString,
+			HashMapBuilder.<String, Serializable>put(
+				ConfigurationAdmin.SERVICE_FACTORYPID, rawPid + ".scoped"
+			).put(
+				"companyId", companyId
 			).put(
 				"groupId", "any"
 			).build());
@@ -224,8 +263,21 @@ public class ConfigurationFilterStringUtilTest {
 			).put(
 				Constants.SERVICE_PID, pid
 			).put(
+				"companyId", companyId
+			).put(
 				"groupId", "any"
 			).build());
+
+		try {
+			ConfigurationFilterStringUtil.getGroupScopedFilterString(
+				null, null, pid, null);
+		}
+		catch (IllegalArgumentException illegalArgumentException) {
+			Assert.assertEquals(
+				"A valid company is expected when building a group scoped " +
+					"configuration filter string",
+				illegalArgumentException.getMessage());
+		}
 	}
 
 	@Test

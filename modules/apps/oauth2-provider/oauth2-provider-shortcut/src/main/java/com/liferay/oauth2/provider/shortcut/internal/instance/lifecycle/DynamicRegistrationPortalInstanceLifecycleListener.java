@@ -43,7 +43,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jorge García Jiménez
  */
 @Component(
-	property = "clientId=DynamicRegistrator",
+	property = {
+		"applicationName=Dynamic Registrator", "clientId=DynamicRegistrator"
+	},
 	service = PortalInstanceLifecycleListener.class
 )
 public class DynamicRegistrationPortalInstanceLifecycleListener
@@ -66,8 +68,7 @@ public class DynamicRegistrationPortalInstanceLifecycleListener
 		Property nameProperty = PropertyFactoryUtil.forName("name");
 
 		dynamicQuery.add(
-			nameProperty.eq(
-				OAuth2ProviderConstants.OAUTH2_PROVIDER_DYNAMIC_REGISTRATOR));
+			nameProperty.eq(OAuth2ProviderConstants.DYNAMIC_REGISTRATOR));
 
 		List<OAuth2Application> oAuth2Applications =
 			_oAuth2ApplicationLocalService.dynamicQuery(dynamicQuery);
@@ -105,8 +106,9 @@ public class DynamicRegistrationPortalInstanceLifecycleListener
 		_lastModifiedTime = ConfigurationPersistenceUtil.update(
 			this, properties);
 
-		_applicationName =
-			OAuth2ProviderConstants.OAUTH2_PROVIDER_DYNAMIC_REGISTRATOR;
+		_applicationName = GetterUtil.getString(
+			properties.get("applicationName"),
+			OAuth2ProviderConstants.DYNAMIC_REGISTRATOR);
 		_clientId = GetterUtil.getString(properties.get("clientId"));
 	}
 
@@ -138,9 +140,10 @@ public class DynamicRegistrationPortalInstanceLifecycleListener
 			String.valueOf(oAuth2Application.getPrimaryKey()), role.getRoleId(),
 			new String[] {
 				ActionKeys.VIEW, ActionKeys.UPDATE, ActionKeys.DELETE,
-				ActionKeys.PERMISSIONS, OAuth2ProviderActionKeys.CREATE_TOKEN,
-				OAuth2ProviderActionKeys.REGISTER_APPLICATION,
-				OAuth2ProviderActionKeys.REVOKE_TOKEN
+				ActionKeys.PERMISSIONS,
+				OAuth2ProviderActionKeys.ACTION_CREATE_TOKEN,
+				OAuth2ProviderActionKeys.ACTION_REGISTER_APPLICATION,
+				OAuth2ProviderActionKeys.ACTION_REVOKE_TOKEN
 			});
 	}
 

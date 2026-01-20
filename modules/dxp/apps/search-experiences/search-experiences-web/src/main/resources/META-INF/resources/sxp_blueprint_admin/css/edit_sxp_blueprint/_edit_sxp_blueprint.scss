@@ -1,5 +1,8 @@
 .edit-sxp-blueprint-root {
 	.layout-section-main {
+		padding-bottom: 40px;
+		padding-top: $pageToolbarHeight + 40px;
+
 		&.unified-query-builder-tab {
 			.layout-section-main-shift {
 				max-width: unset;
@@ -10,9 +13,6 @@
 				margin-top: 24px;
 			}
 		}
-
-		padding-bottom: 40px;
-		padding-top: $pageToolbarHeight + 40px;
 
 		.layout-section-main-shift {
 			max-width: $layoutSectionMainMaxWidth;

@@ -148,10 +148,10 @@ public class LiferayDynamicRegistrationService
 			properties.put("jwks", jwks);
 		}
 
-		String jwksURI = clientRegistration.getStringProperty("jwks_uri");
+		String jwksUri = clientRegistration.getStringProperty("jwks_uri");
 
-		if (Validator.isNotNull(jwksURI)) {
-			properties.put("jwks_uri", jwksURI);
+		if (Validator.isNotNull(jwksUri)) {
+			properties.put("jwks_uri", jwksUri);
 		}
 
 		String softwareId = clientRegistration.getStringProperty("software_id");

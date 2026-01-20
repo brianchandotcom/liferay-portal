@@ -14,18 +14,13 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
-import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.site.navigation.exception.InvalidSiteNavigationMenuItemOrderException;
 import com.liferay.site.navigation.exception.InvalidSiteNavigationMenuItemTypeException;
 import com.liferay.site.navigation.exception.SiteNavigationMenuItemNameException;
-import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.model.SiteNavigationMenuItemTable;
@@ -37,7 +32,6 @@ import com.liferay.site.navigation.util.comparator.SiteNavigationMenuItemOrderCo
 
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -438,10 +432,6 @@ public class SiteNavigationMenuItemLocalServiceImpl
 
 		_validateName(name);
 
-		_validateLayout(
-			siteNavigationMenuItem.getGroupId(),
-			siteNavigationMenuItem.getType(), typeSettings);
-
 		siteNavigationMenuItem.setUserId(userId);
 		siteNavigationMenuItem.setUserName(user.getFullName());
 		siteNavigationMenuItem.setModifiedDate(
@@ -478,31 +468,6 @@ public class SiteNavigationMenuItemLocalServiceImpl
 		}
 	}
 
-	private void _validateLayout(long groupId, String type, String typeSettings)
-		throws PortalException {
-
-		if (!Objects.equals(type, SiteNavigationMenuItemTypeConstants.LAYOUT)) {
-			return;
-		}
-
-		UnicodeProperties typeSettingsUnicodeProperties =
-			UnicodePropertiesBuilder.create(
-				true
-			).fastLoad(
-				typeSettings
-			).build();
-
-		String externalReferenceCode =
-			typeSettingsUnicodeProperties.getProperty("externalReferenceCode");
-
-		if (Validator.isNull(externalReferenceCode)) {
-			return;
-		}
-
-		_layoutService.getLayoutByExternalReferenceCode(
-			externalReferenceCode, groupId);
-	}
-
 	private void _validateName(String name) throws PortalException {
 		if (name == null) {
 			return;
@@ -516,9 +481,6 @@ public class SiteNavigationMenuItemLocalServiceImpl
 				"Maximum length of name exceeded");
 		}
 	}
-
-	@Reference
-	private LayoutService _layoutService;
 
 	@Reference
 	private SiteNavigationMenuItemTypeRegistry

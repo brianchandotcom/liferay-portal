@@ -6,7 +6,6 @@
 package com.liferay.oauth2.provider.rest.internal.endpoint.dynamic.registration.filter;
 
 import com.liferay.oauth2.provider.constants.OAuth2ProviderActionKeys;
-import com.liferay.oauth2.provider.constants.OAuth2ProviderConstants;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -88,8 +87,6 @@ public class DynamicRegistrationServiceContainerRequestFilter
 				Response.status(
 					Response.Status.NOT_FOUND
 				).build());
-
-			return;
 		}
 
 		User user;
@@ -117,8 +114,7 @@ public class DynamicRegistrationServiceContainerRequestFilter
 
 			if ((oAuth2Application == null) ||
 				!StringUtil.equals(
-					OAuth2ProviderConstants.DYNAMIC_REGISTRATOR,
-					oAuth2Application.getName()) ||
+					_APPLICATION_NAME, oAuth2Application.getName()) ||
 				!_containsOAuth2RegisterApplicationPermission(
 					oAuth2Application, user)) {
 
@@ -217,6 +213,8 @@ public class DynamicRegistrationServiceContainerRequestFilter
 			return ReflectionUtil.throwException(portalException);
 		}
 	}
+
+	private static final String _APPLICATION_NAME = "Dynamic Registrator";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DynamicRegistrationServiceContainerRequestFilter.class);

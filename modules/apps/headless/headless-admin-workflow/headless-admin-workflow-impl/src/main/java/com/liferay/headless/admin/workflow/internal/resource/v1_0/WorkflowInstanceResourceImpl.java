@@ -102,6 +102,18 @@ public class WorkflowInstanceResourceImpl
 	}
 
 	@Override
+	public WorkflowInstance patchWorkflowInstance(
+			Long workflowInstanceId, WorkflowInstance workflowInstance)
+		throws Exception {
+
+		return _toWorkflowInstance(
+			_workflowInstanceManager.updateWorkflowContext(
+				contextCompany.getCompanyId(), workflowInstanceId,
+				_getWorkflowContext(
+					workflowInstance.getContext(), workflowInstanceId)));
+	}
+
+	@Override
 	public WorkflowInstance postWorkflowInstanceChangeTransition(
 			Long workflowInstanceId, ChangeTransition changeTransition)
 		throws Exception {
@@ -121,37 +133,66 @@ public class WorkflowInstanceResourceImpl
 		return _toWorkflowInstance(
 			_workflowInstanceManager.startWorkflowInstance(
 				contextCompany.getCompanyId(),
-				workflowInstanceSubmit.getSiteId(), contextUser.getUserId(),
+				GetterUtil.getLong(workflowInstanceSubmit.getSiteId()),
+				contextUser.getUserId(),
 				workflowInstanceSubmit.getWorkflowDefinitionName(),
 				GetterUtil.getInteger(
 					workflowInstanceSubmit.getWorkflowDefinitionVersion()),
 				workflowInstanceSubmit.getTransitionName(),
 				_toWorkflowContext(
-					workflowInstanceSubmit.getContext(),
-					workflowInstanceSubmit.getSiteId())));
+					workflowInstanceSubmit.getContext(), false,
+					GetterUtil.getLong(workflowInstanceSubmit.getSiteId()))));
+	}
+
+	private Map<String, Serializable> _getWorkflowContext(
+			Map<String, ?> context, long workflowInstanceId)
+		throws Exception {
+
+		com.liferay.portal.kernel.workflow.WorkflowInstance workflowInstance =
+			_workflowInstanceManager.getWorkflowInstance(
+				contextCompany.getCompanyId(), workflowInstanceId);
+
+		Map<String, Serializable> actualWorkflowContext =
+			workflowInstance.getWorkflowContext();
+
+		Map<String, Serializable> workflowContext = _toWorkflowContext(
+			context, true, GetterUtil.getLong(workflowInstance.getGroupId()));
+
+		for (Map.Entry<String, Serializable> entry :
+				workflowContext.entrySet()) {
+
+			actualWorkflowContext.putIfAbsent(entry.getKey(), entry.getValue());
+		}
+
+		return actualWorkflowContext;
 	}
 
 	private Map<String, Serializable> _toWorkflowContext(
-			Map<String, ?> context, long siteId)
+			Map<String, ?> context, boolean readOnly, long siteId)
 		throws Exception {
 
 		Map<String, Serializable> workflowContext = new HashMap<>();
 
 		for (Map.Entry<String, ?> entry : context.entrySet()) {
-			Object value = entry.getValue();
-
-			if (value instanceof Serializable) {
-				workflowContext.put(entry.getKey(), (Serializable)value);
+			if (entry.getValue() instanceof Serializable value) {
+				workflowContext.put(entry.getKey(), value);
 			}
 		}
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			contextHttpServletRequest);
+		if (readOnly) {
+			workflowContext.remove(WorkflowConstants.CONTEXT_SERVICE_CONTEXT);
+		}
+		else if (!workflowContext.containsKey(
+					WorkflowConstants.CONTEXT_SERVICE_CONTEXT)) {
 
-		serviceContext.setScopeGroupId(siteId);
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				contextHttpServletRequest);
 
-		workflowContext.put(
-			WorkflowConstants.CONTEXT_SERVICE_CONTEXT, serviceContext);
+			serviceContext.setScopeGroupId(siteId);
+
+			workflowContext.put(
+				WorkflowConstants.CONTEXT_SERVICE_CONTEXT, serviceContext);
+		}
 
 		return workflowContext;
 	}
@@ -180,6 +221,10 @@ public class WorkflowInstanceResourceImpl
 							_kaleoInstanceModelResourcePermission)
 					).build());
 				setCompleted(workflowInstance::isComplete);
+				setContext(
+					() -> _toWorkflowContext(
+						workflowInstance.getWorkflowContext(), true,
+						workflowInstance.getGroupId()));
 				setCurrentNodeNames(
 					() -> transformToArray(
 						workflowInstance.getCurrentWorkflowNodes(),

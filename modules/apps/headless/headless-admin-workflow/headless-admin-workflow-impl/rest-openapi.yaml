@@ -297,7 +297,6 @@ components:
                     type: boolean
                 context:
                     additionalProperties: true
-                    readOnly: true
                     type: object
                 currentNodeNames:
                     # @review
@@ -681,7 +680,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.admin.workflow.client', and version '4.0.43'."
+        'com.liferay.headless.admin.workflow.client', and version '4.0.44'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -1153,6 +1152,32 @@ paths:
                     schema:
                         format: int64
                         type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/WorkflowInstance"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/WorkflowInstance"
+            tags: ["WorkflowInstance"]
+        patch:
+            parameters:
+                -   in: path
+                    name: workflowInstanceId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/WorkflowInstance"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/WorkflowInstance"
             responses:
                 200:
                     content:

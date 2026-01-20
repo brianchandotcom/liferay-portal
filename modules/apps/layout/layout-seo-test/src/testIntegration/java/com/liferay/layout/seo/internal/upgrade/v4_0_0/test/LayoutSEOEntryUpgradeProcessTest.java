@@ -94,21 +94,23 @@ public class LayoutSEOEntryUpgradeProcessTest
 	@Test
 	@TestInfo("LPD-74804")
 	public void testUpgrade() throws Exception {
-		Group globalGroup = _groupLocalService.getCompanyGroup(
-			TestPropsValues.getCompanyId());
-
 		DLFileEntry dlFileEntry1 = _addFileEntry(_group.getGroupId());
-		DLFileEntry dlFileEntry2 = _addFileEntry(globalGroup.getGroupId());
 
 		LayoutSEOEntry layoutSEOEntry1 = _addLayoutSEOEntry(
-			_group.getGroupId());
-		LayoutSEOEntry layoutSEOEntry2 = _addLayoutSEOEntry(
 			_group.getGroupId());
 
 		_updateOpenGraphImageFileEntryId(
 			layoutSEOEntry1.getCtCollectionId(),
 			layoutSEOEntry1.getLayoutSEOEntryId(),
 			dlFileEntry1.getFileEntryId());
+
+		Group companyGroup = _groupLocalService.getCompanyGroup(
+			TestPropsValues.getCompanyId());
+
+		DLFileEntry dlFileEntry2 = _addFileEntry(companyGroup.getGroupId());
+
+		LayoutSEOEntry layoutSEOEntry2 = _addLayoutSEOEntry(
+			_group.getGroupId());
 
 		_updateOpenGraphImageFileEntryId(
 			layoutSEOEntry2.getCtCollectionId(),
@@ -119,8 +121,6 @@ public class LayoutSEOEntryUpgradeProcessTest
 
 		layoutSEOEntry1 = _layoutSEOEntryLocalService.fetchLayoutSEOEntry(
 			layoutSEOEntry1.getLayoutSEOEntryId());
-		layoutSEOEntry2 = _layoutSEOEntryLocalService.fetchLayoutSEOEntry(
-			layoutSEOEntry2.getLayoutSEOEntryId());
 
 		Assert.assertEquals(
 			dlFileEntry1.getExternalReferenceCode(),
@@ -129,11 +129,14 @@ public class LayoutSEOEntryUpgradeProcessTest
 			Validator.isNull(
 				layoutSEOEntry1.getOpenGraphImageFileEntryScopeERC()));
 
+		layoutSEOEntry2 = _layoutSEOEntryLocalService.fetchLayoutSEOEntry(
+			layoutSEOEntry2.getLayoutSEOEntryId());
+
 		Assert.assertEquals(
 			dlFileEntry2.getExternalReferenceCode(),
 			layoutSEOEntry2.getOpenGraphImageFileEntryERC());
 		Assert.assertEquals(
-			globalGroup.getExternalReferenceCode(),
+			companyGroup.getExternalReferenceCode(),
 			layoutSEOEntry2.getOpenGraphImageFileEntryScopeERC());
 
 		Assert.assertTrue(

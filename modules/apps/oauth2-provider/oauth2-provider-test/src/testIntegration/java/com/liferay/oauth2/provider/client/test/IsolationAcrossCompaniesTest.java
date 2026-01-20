@@ -59,9 +59,7 @@ public class IsolationAcrossCompaniesTest extends BaseClientTestCase {
 		builder = builder.header("Host", "host2.xyz");
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.oauth2.provider.rest.internal.endpoint.liferay." +
-					"LiferayOAuthDataProvider",
-				LoggerTestUtil.OFF)) {
+				"LiferayOAuthDataProvider", LoggerTestUtil.WARN)) {
 
 			Response response = builder.get();
 
@@ -87,9 +85,7 @@ public class IsolationAcrossCompaniesTest extends BaseClientTestCase {
 		builder = builder.header("Host", "host2.xyz");
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.oauth2.provider.rest.internal.endpoint.liferay." +
-					"LiferayOAuthDataProvider",
-				LoggerTestUtil.OFF)) {
+				"LiferayOAuthDataProvider", LoggerTestUtil.WARN)) {
 
 			Response response = builder.get();
 

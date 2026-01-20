@@ -54,11 +54,11 @@ public class ExportImportAttachmentManagerImpl
 
 			boolean secure = _isSecure();
 
-			String baseURL = _portal.getPortalURL(
+			String portalURL = _portal.getPortalURL(
 				company.getVirtualHostname(),
 				_portal.getPortalServerPort(secure), secure);
 
-			return baseURL + _dlurlHelper.getThumbnailSrc(fileEntry, null);
+			return portalURL + _dlurlHelper.getThumbnailSrc(fileEntry, null);
 		}
 
 		try (InputStream inputStream = dlFileEntry.getContentStream()) {

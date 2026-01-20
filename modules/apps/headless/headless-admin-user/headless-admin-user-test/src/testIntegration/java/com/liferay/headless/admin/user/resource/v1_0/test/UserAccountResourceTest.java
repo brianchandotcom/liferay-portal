@@ -29,6 +29,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
+import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.admin.user.client.custom.field.CustomField;
@@ -2163,7 +2164,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	private void _testGetUserAccountsPageWithCustomFields() throws Exception {
 		ExpandoTable expandoTable = _expandoTableLocalService.addTable(
 			testGroup.getCompanyId(),
-			_classNameLocalService.getClassNameId(User.class), "CUSTOM_FIELDS");
+			_classNameLocalService.getClassNameId(User.class),
+			ExpandoTableConstants.DEFAULT_TABLE_NAME);
 
 		ExpandoColumn expandoColumn = _expandoColumnLocalService.addColumn(
 			expandoTable.getTableId(), "A" + RandomTestUtil.randomString(),
@@ -2217,7 +2219,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		ExpandoTable expandoTable = _expandoTableLocalService.addTable(
 			testGroup.getCompanyId(),
-			_classNameLocalService.getClassNameId(User.class), "CUSTOM_FIELDS");
+			_classNameLocalService.getClassNameId(User.class),
+			ExpandoTableConstants.DEFAULT_TABLE_NAME);
 
 		_testGetUserAccountsPageWithSortCustomField(
 			expandoTable, ExpandoColumnConstants.DATE,

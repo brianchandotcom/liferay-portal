@@ -258,31 +258,29 @@ export default function ({
 					status={status}
 				/>
 
-				<ClayList>
-					{initialClauseContributorsList.some(
-						({value}) => !value.length
-					) && (
-						<ClayAlert
-							actions={
-								<ClayButton.Group>
-									<ClayButton
-										alert
-										onClick={onFetchContributors}
-									>
-										{Liferay.Language.get('refresh')}
-									</ClayButton>
-								</ClayButton.Group>
-							}
-							displayType="danger"
-							title={Liferay.Language.get('error')}
-							variant="inline"
-						>
-							{Liferay.Language.get(
-								'an-error-has-occurred-and-we-were-unable-to-load-the-results'
-							)}
-						</ClayAlert>
-					)}
+				{initialClauseContributorsList.some(
+					({value}) => !value.length
+				) && (
+					<ClayAlert
+						actions={
+							<ClayButton.Group>
+								<ClayButton alert onClick={onFetchContributors}>
+									{Liferay.Language.get('refresh')}
+								</ClayButton>
+							</ClayButton.Group>
+						}
+						className="c-my-3"
+						displayType="danger"
+						title={Liferay.Language.get('error')}
+						variant="inline"
+					>
+						{Liferay.Language.get(
+							'an-error-has-occurred-and-we-were-unable-to-load-the-results'
+						)}
+					</ClayAlert>
+				)}
 
+				<ClayList>
 					{contributors.map((contributor) => (
 						<React.Fragment key={contributor.label}>
 							<ClayList.Header>

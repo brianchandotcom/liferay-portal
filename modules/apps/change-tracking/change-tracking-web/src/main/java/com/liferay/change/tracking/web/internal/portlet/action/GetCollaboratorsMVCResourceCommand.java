@@ -5,11 +5,13 @@
 
 package com.liferay.change.tracking.web.internal.portlet.action;
 
+import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.constants.PublicationRoleConstants;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
+import com.liferay.change.tracking.web.internal.security.permission.resource.CTCollectionPermission;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -74,20 +76,23 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
 			ctCollectionId);
 
-		if ((ctCollection == null) &&
-			(ctCollectionId != CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
-
-			JSONPortletResponseUtil.writeJSON(
-				resourceRequest, resourceResponse,
-				_jsonFactory.createJSONArray());
-
-			return;
-		}
-
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		if (((ctCollection == null) &&
+			 (ctCollectionId != CTConstants.CT_COLLECTION_ID_PRODUCTION)) ||
+			((ctCollection != null) &&
+			 !CTCollectionPermission.contains(
+				 themeDisplay.getPermissionChecker(), ctCollection,
+				 CTActionKeys.INVITE_USERS))) {
+
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse, jsonArray);
+
+			return;
+		}
 
 		User user = null;
 

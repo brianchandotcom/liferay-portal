@@ -200,6 +200,13 @@ public class ConvertEmptyLayoutMVCActionCommandTest {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
+		mockLiferayPortletActionRequest.setAttribute(
+			JavaConstants.JAKARTA_PORTLET_CONFIG,
+			PortletConfigFactoryUtil.create(
+				PortletLocalServiceUtil.getPortletById(
+					LayoutAdminWebPortletKeys.LAYOUT_ADMIN_WEB_TEST_PORTLET),
+				null));
+
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(
@@ -215,12 +222,6 @@ public class ConvertEmptyLayoutMVCActionCommandTest {
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 		themeDisplay.setUser(user);
 
-		mockLiferayPortletActionRequest.setAttribute(
-			JavaConstants.JAKARTA_PORTLET_CONFIG,
-			PortletConfigFactoryUtil.create(
-				PortletLocalServiceUtil.getPortletById(
-					LayoutAdminWebPortletKeys.LAYOUT_ADMIN_WEB_TEST_PORTLET),
-				null));
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
 

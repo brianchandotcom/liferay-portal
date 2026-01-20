@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.odata.entity.BooleanEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
+import com.liferay.portal.odata.entity.DoubleEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.odata.normalizer.Normalizer;
@@ -61,29 +62,36 @@ public class EntityFieldsUtil {
 			return null;
 		}
 
-		int type = expandoColumn.getType();
-
 		String externalName = Normalizer.normalizeIdentifier(
 			expandoColumn.getName());
-
-		String internalName = ExpandoBridgeUtil.encodeFieldName(expandoColumn);
 
 		Function<Locale, String> function = locale -> {
 			throw new InvalidSortException(
 				"Unable to sort by property: " + externalName);
 		};
 
-		if (type == ExpandoColumnConstants.BOOLEAN) {
+		String internalName = ExpandoBridgeUtil.encodeFieldName(expandoColumn);
+
+		if (expandoColumn.getType() == ExpandoColumnConstants.BOOLEAN) {
 			return new BooleanEntityField(
 				externalName, function, locale -> internalName);
 		}
-		else if (type == ExpandoColumnConstants.DATE) {
+		else if ((expandoColumn.getType() == ExpandoColumnConstants.DOUBLE) ||
+				 (expandoColumn.getType() == ExpandoColumnConstants.FLOAT)) {
+
+			return new DoubleEntityField(
+				externalName,
+				locale -> Field.getSortableFieldName(internalName + "_Number"));
+		}
+		else if (expandoColumn.getType() == ExpandoColumnConstants.DATE) {
 			return new DateTimeEntityField(
 				externalName,
 				locale -> Field.getSortableFieldName(internalName),
 				locale -> internalName);
 		}
-		else if (type == ExpandoColumnConstants.STRING_LOCALIZED) {
+		else if (expandoColumn.getType() ==
+					ExpandoColumnConstants.STRING_LOCALIZED) {
+
 			return new StringEntityField(
 				externalName, function,
 				locale -> Field.getLocalizedName(locale, internalName));
@@ -92,7 +100,8 @@ public class EntityFieldsUtil {
 		return new StringEntityField(
 			externalName, function,
 			locale -> {
-				String numericSuffix = ExpandoBridgeUtil.getNumericSuffix(type);
+				String numericSuffix = ExpandoBridgeUtil.getNumericSuffix(
+					expandoColumn.getType());
 
 				if (!numericSuffix.equals(StringPool.BLANK)) {
 					return internalName.concat(".keyword");

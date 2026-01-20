@@ -52,7 +52,7 @@ liferay-default:
 
                                 http_code=$(\
                                     curl \
-                                        "$url"
+                                        "$url" \
                                         --fail \
                                         --location \
                                         --output-dir "$deploy_dir" \

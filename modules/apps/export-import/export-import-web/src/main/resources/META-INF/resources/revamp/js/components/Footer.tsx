@@ -9,17 +9,14 @@ import ClayLink from '@clayui/link';
 import React from 'react';
 
 import BasePage from '../components/BasePage';
-import {ESteps, IGenericStepProps} from '../components/Wizard';
+import {IGenericStepProps} from '../types';
 
 const Footer: React.FC<
 	{children?: React.ReactNode | undefined} & IGenericStepProps
-> = ({backURL, exportURL, nextStep, onChangeStep, previousStep}) => (
+> = ({backURL, exportURL, nextFn, previousFn}) => (
 	<BasePage.Footer>
-		{previousStep !== undefined && (
-			<ClayButton
-				displayType="unstyled"
-				onClick={() => onChangeStep(previousStep)}
-			>
+		{previousFn !== undefined && (
+			<ClayButton displayType="unstyled" onClick={previousFn}>
 				<span className="inline-item inline-item-before">
 					<ClayIcon symbol="order-arrow-left" />
 
@@ -38,14 +35,14 @@ const Footer: React.FC<
 				{Liferay.Language.get('cancel')}
 			</ClayLink>
 
-			{nextStep && (
-				<ClayButton onClick={() => onChangeStep(nextStep)}>
+			{nextFn && (
+				<ClayButton onClick={nextFn}>
 					{Liferay.Language.get('continue')}
 				</ClayButton>
 			)}
 
 			{exportURL && (
-				<ClayButton onClick={() => onChangeStep(ESteps.Settings)}>
+				<ClayButton onClick={() => {}}>
 					<span className="inline-item inline-item-before">
 						<ClayIcon className="mr-1" symbol="export" />
 

@@ -8,11 +8,11 @@ import React from 'react';
 
 import BasePage from '../../../components/BasePage';
 import Footer from '../../../components/Footer';
-import {ESteps, IGenericStepProps} from '../../../components/Wizard';
+import {IGenericStepProps} from '../../../types';
 
 const Step: React.FC<
 	{children?: React.ReactNode | undefined} & IGenericStepProps
-> = ({backURL, onChangeStep}) => (
+> = ({backURL, nextFn, previousFn}) => (
 	<>
 		<BasePage
 			description={Liferay.Language.get(
@@ -32,8 +32,8 @@ const Step: React.FC<
 		<Footer
 			backURL={backURL}
 			exportURL="URLPlaceholder"
-			onChangeStep={onChangeStep}
-			previousStep={ESteps.DataSelection}
+			nextFn={nextFn}
+			previousFn={previousFn}
 		/>
 	</>
 );

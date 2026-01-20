@@ -18,16 +18,16 @@ import java.util.Map;
 
 import org.apache.solr.common.SolrInputDocument;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  */
-@Component(service = SolrDocumentFactory.class)
-public class DefaultSolrDocumentFactory implements SolrDocumentFactory {
+public class SolrDocumentFactoryUtil {
 
-	@Override
-	public SolrInputDocument getSolrInputDocument(
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
+	public static SolrInputDocument getSolrInputDocument(
 		com.liferay.portal.kernel.search.Document document) {
 
 		SolrInputDocument solrInputDocument = new SolrInputDocument();
@@ -52,7 +52,7 @@ public class DefaultSolrDocumentFactory implements SolrDocumentFactory {
 
 					value = value.trim();
 
-					addField(solrInputDocument, field, value, name);
+					_addField(solrInputDocument, field, value, name);
 				}
 			}
 			else {
@@ -81,7 +81,7 @@ public class DefaultSolrDocumentFactory implements SolrDocumentFactory {
 						solrInputDocument.addField(name, value);
 					}
 
-					addField(
+					_addField(
 						solrInputDocument, field, value,
 						com.liferay.portal.kernel.search.Field.getLocalizedName(
 							locale, name));
@@ -92,26 +92,27 @@ public class DefaultSolrDocumentFactory implements SolrDocumentFactory {
 		return solrInputDocument;
 	}
 
-	@Override
-	public SolrInputDocument getSolrInputDocument(Document document) {
+	public static SolrInputDocument getSolrInputDocument(Document document) {
 		SolrInputDocument solrInputDocument = new SolrInputDocument();
 
 		Map<String, Field> fields = document.getFields();
 
 		for (Field field : fields.values()) {
-			addField(field, solrInputDocument);
+			_addField(field, solrInputDocument);
 		}
 
 		return solrInputDocument;
 	}
 
-	protected void addField(Field field, SolrInputDocument solrInputDocument) {
+	private static void _addField(
+		Field field, SolrInputDocument solrInputDocument) {
+
 		for (Object value : field.getValues()) {
-			solrInputDocument.addField(field.getName(), toSolrValue(value));
+			solrInputDocument.addField(field.getName(), _toSolrValue(value));
 		}
 	}
 
-	protected void addField(
+	private static void _addField(
 		SolrInputDocument solrInputDocument,
 		com.liferay.portal.kernel.search.Field field, String value,
 		String localizedName) {
@@ -134,7 +135,7 @@ public class DefaultSolrDocumentFactory implements SolrDocumentFactory {
 		}
 	}
 
-	protected Object toSolrValue(Object value) {
+	private static Object _toSolrValue(Object value) {
 		if (value instanceof GeoLocationPoint) {
 			GeoLocationPoint geoLocationPoint = (GeoLocationPoint)value;
 

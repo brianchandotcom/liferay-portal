@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.adapter.document.DocumentRequestExecutor;
 import com.liferay.portal.search.internal.document.DocumentBuilderFactoryImpl;
 import com.liferay.portal.search.solr8.internal.connection.SolrClientManager;
-import com.liferay.portal.search.solr8.internal.document.SolrDocumentFactory;
 
 import java.util.Map;
 
@@ -25,28 +24,11 @@ public class DocumentRequestExecutorFixture {
 
 	public void setUp() {
 		_documentRequestExecutor = createDocumentRequestExecutor(
-			_queryTranslator, _solrClientManager, _solrDocumentFactory);
-	}
-
-	protected static SolrBulkableDocumentRequestTranslator
-		createBulkableDocumentRequestTranslator(
-			SolrDocumentFactory solrDocumentFactory) {
-
-		SolrBulkableDocumentRequestTranslator
-			solrBulkableDocumentRequestTranslator =
-				new SolrBulkableDocumentRequestTranslator();
-
-		ReflectionTestUtil.setFieldValue(
-			solrBulkableDocumentRequestTranslator, "_solrDocumentFactory",
-			solrDocumentFactory);
-
-		return solrBulkableDocumentRequestTranslator;
+			_queryTranslator, _solrClientManager);
 	}
 
 	protected static BulkDocumentRequestExecutor
-		createBulkDocumentRequestExecutor(
-			SolrClientManager solrClientManager,
-			SolrDocumentFactory solrDocumentFactory) {
+		createBulkDocumentRequestExecutor(SolrClientManager solrClientManager) {
 
 		BulkDocumentRequestExecutorImpl bulkDocumentRequestExecutorImpl =
 			new BulkDocumentRequestExecutorImpl() {
@@ -58,9 +40,6 @@ public class DocumentRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			bulkDocumentRequestExecutorImpl, "_solrClientManager",
 			solrClientManager);
-		ReflectionTestUtil.setFieldValue(
-			bulkDocumentRequestExecutorImpl, "_solrDocumentFactory",
-			solrDocumentFactory);
 
 		return bulkDocumentRequestExecutorImpl;
 	}
@@ -110,16 +89,14 @@ public class DocumentRequestExecutorFixture {
 
 	protected static DocumentRequestExecutor createDocumentRequestExecutor(
 		QueryTranslator<String> queryTranslator,
-		SolrClientManager solrClientManager,
-		SolrDocumentFactory solrDocumentFactory) {
+		SolrClientManager solrClientManager) {
 
 		SolrDocumentRequestExecutor solrDocumentRequestExecutor =
 			new SolrDocumentRequestExecutor();
 
 		ReflectionTestUtil.setFieldValue(
 			solrDocumentRequestExecutor, "_bulkDocumentRequestExecutor",
-			createBulkDocumentRequestExecutor(
-				solrClientManager, solrDocumentFactory));
+			createBulkDocumentRequestExecutor(solrClientManager));
 		ReflectionTestUtil.setFieldValue(
 			solrDocumentRequestExecutor,
 			"_deleteByQueryDocumentRequestExecutor",
@@ -128,7 +105,7 @@ public class DocumentRequestExecutorFixture {
 
 		SolrBulkableDocumentRequestTranslator
 			solrBulkableDocumentRequestTranslator =
-				createBulkableDocumentRequestTranslator(solrDocumentFactory);
+				new SolrBulkableDocumentRequestTranslator();
 
 		ReflectionTestUtil.setFieldValue(
 			solrDocumentRequestExecutor, "_deleteDocumentRequestExecutor",
@@ -236,17 +213,10 @@ public class DocumentRequestExecutorFixture {
 		_solrClientManager = solrClientManager;
 	}
 
-	protected void setSolrDocumentFactory(
-		SolrDocumentFactory solrDocumentFactory) {
-
-		_solrDocumentFactory = solrDocumentFactory;
-	}
-
 	private static Map<String, Object> _properties;
 
 	private DocumentRequestExecutor _documentRequestExecutor;
 	private QueryTranslator<String> _queryTranslator;
 	private SolrClientManager _solrClientManager;
-	private SolrDocumentFactory _solrDocumentFactory;
 
 }

@@ -19,7 +19,7 @@ import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.search.solr8.configuration.SolrConfiguration;
 import com.liferay.portal.search.solr8.internal.connection.SolrClientManager;
-import com.liferay.portal.search.solr8.internal.document.SolrDocumentFactory;
+import com.liferay.portal.search.solr8.internal.document.SolrDocumentFactoryUtil;
 import com.liferay.portal.search.solr8.internal.document.SolrInputDocumentAtomicUpdateTranslator;
 import com.liferay.portal.search.solr8.internal.util.LogUtil;
 
@@ -159,12 +159,12 @@ public class BulkDocumentRequestExecutorImpl
 
 			if (indexDocumentRequest.getDocument() != null) {
 				updateRequest.add(
-					_solrDocumentFactory.getSolrInputDocument(
+					SolrDocumentFactoryUtil.getSolrInputDocument(
 						indexDocumentRequest.getDocument()));
 			}
 			else {
 				updateRequest.add(
-					_solrDocumentFactory.getSolrInputDocument(
+					SolrDocumentFactoryUtil.getSolrInputDocument(
 						indexDocumentRequest.getDocument71()));
 			}
 		}
@@ -187,13 +187,13 @@ public class BulkDocumentRequestExecutorImpl
 			if (updateDocumentRequest.getDocument() != null) {
 				updateRequest.add(
 					SolrInputDocumentAtomicUpdateTranslator.translate(
-						_solrDocumentFactory.getSolrInputDocument(
+						SolrDocumentFactoryUtil.getSolrInputDocument(
 							updateDocumentRequest.getDocument())));
 			}
 			else {
 				updateRequest.add(
 					SolrInputDocumentAtomicUpdateTranslator.translate(
-						_solrDocumentFactory.getSolrInputDocument(
+						SolrDocumentFactoryUtil.getSolrInputDocument(
 							updateDocumentRequest.getDocument71())));
 			}
 		}
@@ -335,9 +335,6 @@ public class BulkDocumentRequestExecutorImpl
 	private SolrClientManager _solrClientManager;
 
 	private volatile SolrConfiguration _solrConfiguration;
-
-	@Reference
-	private SolrDocumentFactory _solrDocumentFactory;
 
 	private class BulkDocumentRequestClassifier {
 

@@ -6,10 +6,16 @@
 import {test} from '@playwright/test';
 
 import {StyleBooksPage} from '../pages/style-book-web/StyleBooksPage';
+import {StyleBooksHelper} from '../tests/style-book-web/main/helpers/StyleBooksHelper';
 
 const styleBooksPageTest = test.extend<{
+	styleBooksHelper: StyleBooksHelper;
 	styleBooksPage: StyleBooksPage;
 }>({
+	styleBooksHelper: async ({page}, use) => {
+		await use(new StyleBooksHelper(page));
+	},
+
 	styleBooksPage: async ({page}, use) => {
 		await use(new StyleBooksPage(page));
 	},

@@ -48,17 +48,10 @@ public class EntityFieldsUtilTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_expandoTable = _expandoTableLocalService.fetchTable(
+		_expandoTable = _expandoTableLocalService.addTable(
 			TestPropsValues.getCompanyId(),
 			_classNameLocalService.getClassNameId(User.class),
 			ExpandoTableConstants.DEFAULT_TABLE_NAME);
-
-		if (_expandoTable == null) {
-			_expandoTable = _expandoTableLocalService.addTable(
-				TestPropsValues.getCompanyId(),
-				_classNameLocalService.getClassNameId(User.class),
-				ExpandoTableConstants.DEFAULT_TABLE_NAME);
-		}
 
 		_addExpandoColumn(
 			"booleanArrayField", ExpandoColumnConstants.BOOLEAN_ARRAY);

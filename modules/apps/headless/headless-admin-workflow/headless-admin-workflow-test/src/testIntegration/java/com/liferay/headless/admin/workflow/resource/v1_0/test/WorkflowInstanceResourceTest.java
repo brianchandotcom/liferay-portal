@@ -8,10 +8,15 @@ package com.liferay.headless.admin.workflow.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowDefinition;
 import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowInstance;
+import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowInstanceSubmit;
 import com.liferay.headless.admin.workflow.resource.v1_0.test.util.ObjectReviewedTestUtil;
 import com.liferay.headless.admin.workflow.resource.v1_0.test.util.WorkflowDefinitionTestUtil;
 import com.liferay.headless.admin.workflow.resource.v1_0.test.util.WorkflowInstanceTestUtil;
 import com.liferay.portal.kernel.test.rule.DataGuard;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+
+import java.util.Map;
 
 import org.hamcrest.CoreMatchers;
 
@@ -52,6 +57,51 @@ public class WorkflowInstanceResourceTest
 		Assert.assertThat(
 			getWorkflowInstance.getCurrentNodeNames(),
 			CoreMatchers.is(new String[] {"review"}));
+	}
+
+	@Override
+	@Test
+	public void testPatchWorkflowInstance() throws Exception {
+		String contextVariable1Name = RandomTestUtil.randomString();
+		String contextVariable1Value = RandomTestUtil.randomString();
+
+		WorkflowInstance workflowInstance =
+			workflowInstanceResource.postWorkflowInstanceSubmit(
+				new WorkflowInstanceSubmit() {
+					{
+						context = HashMapBuilder.put(
+							contextVariable1Name, contextVariable1Value
+						).build();
+						workflowDefinitionName = _workflowDefinition.getName();
+						workflowDefinitionVersion =
+							_workflowDefinition.getVersion();
+					}
+				});
+
+		String contextVariable2name = RandomTestUtil.randomString();
+		String contextVariable2Value = RandomTestUtil.randomString();
+
+		workflowInstance = workflowInstanceResource.patchWorkflowInstance(
+			workflowInstance.getId(),
+			new WorkflowInstance() {
+				{
+					context = HashMapBuilder.put(
+						contextVariable1Name, RandomTestUtil.randomString()
+					).put(
+						contextVariable2name, contextVariable2Value
+					).build();
+				}
+			});
+
+		Map<String, String> context =
+			(Map<String, String>)workflowInstance.getContext();
+
+		Assert.assertEquals(context.toString(), 2, context.size());
+
+		Assert.assertEquals(
+			contextVariable1Value, context.get(contextVariable1Name));
+		Assert.assertEquals(
+			contextVariable2Value, context.get(contextVariable2name));
 	}
 
 	@Override

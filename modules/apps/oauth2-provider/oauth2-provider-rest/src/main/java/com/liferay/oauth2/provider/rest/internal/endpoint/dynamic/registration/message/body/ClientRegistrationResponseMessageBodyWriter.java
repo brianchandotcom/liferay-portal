@@ -68,7 +68,7 @@ public class ClientRegistrationResponseMessageBodyWriter
 
 	@Override
 	public void writeTo(
-			LiferayClientRegistrationResponse liferayClientRegistrationResponse,
+			LiferayClientRegistrationResponse clientRegistrationResponse,
 			Class<?> clazz, Type type, Annotation[] annotations,
 			MediaType mediaType, MultivaluedMap<String, Object> multivaluedMap,
 			OutputStream outputStream)
@@ -79,14 +79,14 @@ public class ClientRegistrationResponseMessageBodyWriter
 		try {
 			outputStream.write(
 				objectMapper.writeValueAsString(
-					liferayClientRegistrationResponse
+					clientRegistrationResponse
 				).getBytes(
 					StandardCharsets.UTF_8
 				));
 		}
 		catch (IOException ioException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ioException);
+				_log.debug("Error writing response: ", ioException);
 			}
 
 			throw new WebApplicationException(

@@ -65,10 +65,8 @@ public class LiferayDynamicRegistrationService
 	@CORS(allowMethods = "POST")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response register(
-		LiferayClientRegistration liferayClientRegistration) {
-
-		return super.register(liferayClientRegistration);
+	public Response register(LiferayClientRegistration clientRegistration) {
+		return super.register(clientRegistration);
 	}
 
 	@Override
@@ -84,7 +82,8 @@ public class LiferayDynamicRegistrationService
 
 		List<String> allowedGrantTypes = client.getAllowedGrantTypes();
 
-		_validate(allowedGrantTypes, clientRegistration.getResponseTypes());
+		_checkValidGrantResponseTypes(
+			allowedGrantTypes, clientRegistration.getResponseTypes());
 
 		List<String> redirectUris = clientRegistration.getRedirectUris();
 
@@ -243,39 +242,40 @@ public class LiferayDynamicRegistrationService
 	}
 
 	@Override
-	protected String generateClientSecret(
-		ClientRegistration clientRegistration) {
-
+	protected String generateClientSecret(ClientRegistration request) {
 		return OAuth2SecureRandomGenerator.generateClientSecret();
 	}
 
-	private void _validate(
+	private void _checkValidGrantResponseTypes(
 		List<String> grantTypes, List<String> responseTypes) {
 
 		if (grantTypes == null) {
 			return;
 		}
 
-		List<String> allowedResponseTypes = new ArrayList<>();
+		List<String> allowedResponseTypeList = new ArrayList<>();
 
 		for (String grantType : grantTypes) {
-			if (_allowedResponseTypes.containsKey(grantType)) {
-				allowedResponseTypes.add(_allowedResponseTypes.get(grantType));
+			String allowedResponseType = _responseTypeAllowedByGrantType.get(
+				grantType);
+
+			if (Validator.isNotNull(allowedResponseType)) {
+				allowedResponseTypeList.add(allowedResponseType);
 			}
 		}
 
-		if (ListUtil.isNotEmpty(allowedResponseTypes) &&
-			ListUtil.isEmpty(responseTypes)) {
+		if (ListUtil.isEmpty(responseTypes) &&
+			!allowedResponseTypeList.isEmpty()) {
 
 			OAuth2ErrorUtil.reportInvalidRequestError(
-				"A response type '" + allowedResponseTypes.get(0) +
-					"' is needed to match the provided grant types",
+				"A response type '" + allowedResponseTypeList.get(0) +
+					"' is needed to match provided grant types",
 				"invalid_client_metadata", Response.Status.BAD_REQUEST);
 		}
 
 		if (ListUtil.isNotEmpty(responseTypes)) {
 			for (String responseType : responseTypes) {
-				if (!allowedResponseTypes.contains(responseType)) {
+				if (!allowedResponseTypeList.contains(responseType)) {
 					OAuth2ErrorUtil.reportInvalidRequestError(
 						"Invalid response type '" + responseType +
 							"' by provided grant types",
@@ -285,7 +285,7 @@ public class LiferayDynamicRegistrationService
 		}
 	}
 
-	private static final Map<String, String> _allowedResponseTypes =
+	private static final Map<String, String> _responseTypeAllowedByGrantType =
 		HashMapBuilder.put(
 			"authorization_code", "code"
 		).put(

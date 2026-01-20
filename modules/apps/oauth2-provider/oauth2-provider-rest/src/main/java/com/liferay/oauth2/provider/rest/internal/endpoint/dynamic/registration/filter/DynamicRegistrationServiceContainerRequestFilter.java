@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.servlet.ProtectedPrincipal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
 
 import jakarta.annotation.Priority;
 
@@ -39,8 +40,6 @@ import jakarta.ws.rs.core.UriInfo;
 import jakarta.ws.rs.ext.Provider;
 
 import java.security.Principal;
-
-import java.util.concurrent.TimeUnit;
 
 import org.apache.cxf.jaxrs.utils.ExceptionUtils;
 import org.apache.cxf.jaxrs.utils.JAXRSUtils;
@@ -98,8 +97,7 @@ public class DynamicRegistrationServiceContainerRequestFilter
 		try {
 			JwtToken jwtToken = _getJwtToken(httpServletRequest);
 
-			long currentTime = TimeUnit.SECONDS.convert(
-				System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+			long currentTime = System.currentTimeMillis() / Time.SECOND;
 			long expirationTime = GetterUtil.getLong(jwtToken.getClaim("exp"));
 
 			if (currentTime > expirationTime) {
@@ -123,16 +121,23 @@ public class DynamicRegistrationServiceContainerRequestFilter
 				throw ExceptionUtils.toNotAuthorizedException(null, null);
 			}
 		}
+		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("exception processing token: ", jsonException);
+			}
+
+			throw ExceptionUtils.toNotAuthorizedException(null, null);
+		}
 		catch (WebApplicationException webApplicationException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(webApplicationException);
+				_log.debug("webApplicationException ", webApplicationException);
 			}
 
 			throw webApplicationException;
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
+				_log.debug("Exception when retrieving permissions:", exception);
 			}
 
 			throw ExceptionUtils.toNotAuthorizedException(null, null);

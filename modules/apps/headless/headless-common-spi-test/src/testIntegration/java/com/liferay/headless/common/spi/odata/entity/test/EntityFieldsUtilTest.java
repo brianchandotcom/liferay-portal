@@ -25,7 +25,7 @@ import com.liferay.portal.odata.sort.InvalidSortException;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.Objects;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -48,6 +48,18 @@ public class EntityFieldsUtilTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_expandoTable = _expandoTableLocalService.fetchTable(
+			TestPropsValues.getCompanyId(),
+			_classNameLocalService.getClassNameId(User.class),
+			ExpandoTableConstants.DEFAULT_TABLE_NAME);
+
+		if (_expandoTable == null) {
+			_expandoTable = _expandoTableLocalService.addTable(
+				TestPropsValues.getCompanyId(),
+				_classNameLocalService.getClassNameId(User.class),
+				ExpandoTableConstants.DEFAULT_TABLE_NAME);
+		}
+
 		_addExpandoColumn(
 			"booleanArrayField", ExpandoColumnConstants.BOOLEAN_ARRAY);
 		_addExpandoColumn("booleanField", ExpandoColumnConstants.BOOLEAN);
@@ -90,7 +102,10 @@ public class EntityFieldsUtilTest {
 					TestPropsValues.getCompanyId(), _expandoColumnLocalService,
 					_expandoTableLocalService)) {
 
-			if (Objects.equals(entityField.getName(), "dateField")) {
+			ExpandoColumn expandoColumn = _expandoColumnLocalService.getColumn(
+				_expandoTable.getTableId(), entityField.getName());
+
+			if (_sortableExpandoColumnTypes.contains(expandoColumn.getType())) {
 				Assert.assertNotNull(entityField.getSortableName(null));
 			}
 			else {
@@ -102,20 +117,8 @@ public class EntityFieldsUtilTest {
 	}
 
 	private void _addExpandoColumn(String name, int type) throws Exception {
-		ExpandoTable expandoTable = _expandoTableLocalService.fetchTable(
-			TestPropsValues.getCompanyId(),
-			_classNameLocalService.getClassNameId(User.class),
-			ExpandoTableConstants.DEFAULT_TABLE_NAME);
-
-		if (expandoTable == null) {
-			expandoTable = _expandoTableLocalService.addTable(
-				TestPropsValues.getCompanyId(),
-				_classNameLocalService.getClassNameId(User.class),
-				ExpandoTableConstants.DEFAULT_TABLE_NAME);
-		}
-
 		ExpandoColumn expandoColumn = _expandoColumnLocalService.addColumn(
-			expandoTable.getTableId(), name, type);
+			_expandoTable.getTableId(), name, type);
 
 		UnicodeProperties unicodeProperties =
 			expandoColumn.getTypeSettingsProperties();
@@ -129,11 +132,17 @@ public class EntityFieldsUtilTest {
 		_expandoColumnLocalService.updateExpandoColumn(expandoColumn);
 	}
 
+	private static final Set<Integer> _sortableExpandoColumnTypes = Set.of(
+		ExpandoColumnConstants.DATE, ExpandoColumnConstants.DOUBLE,
+		ExpandoColumnConstants.FLOAT);
+
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
 	@Inject
 	private ExpandoColumnLocalService _expandoColumnLocalService;
+
+	private ExpandoTable _expandoTable;
 
 	@Inject
 	private ExpandoTableLocalService _expandoTableLocalService;

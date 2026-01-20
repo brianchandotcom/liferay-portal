@@ -5,6 +5,7 @@
 
 package com.liferay.exportimport.internal.staging.permission;
 
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -59,7 +60,12 @@ public class StagingPermissionImpl implements StagingPermission {
 			Group group, String portletId, String actionId)
 		throws Exception {
 
-		if (!PropsValues.STAGING_LIVE_GROUP_LOCKING_ENABLED) {
+		if (!PropsValues.STAGING_LIVE_GROUP_LOCKING_ENABLED ||
+			ExportImportThreadLocal.isExportInProcess() ||
+			ExportImportThreadLocal.isImportInProcess() ||
+			ExportImportThreadLocal.isInitialLayoutStagingInProcess() ||
+			ExportImportThreadLocal.isStagingInProcess()) {
+
 			return null;
 		}
 
@@ -73,7 +79,6 @@ public class StagingPermissionImpl implements StagingPermission {
 			!actionId.equals(ActionKeys.DELETE) &&
 			!actionId.equals(ActionKeys.DELETE_DISCUSSION) &&
 			!actionId.equals(ActionKeys.DOWNLOAD) &&
-			!actionId.equals(ActionKeys.PERMISSIONS) &&
 			!actionId.equals(ActionKeys.UPDATE_DISCUSSION) &&
 			!actionId.equals(ActionKeys.VIEW) &&
 			group.hasLocalOrRemoteStagingGroup() &&

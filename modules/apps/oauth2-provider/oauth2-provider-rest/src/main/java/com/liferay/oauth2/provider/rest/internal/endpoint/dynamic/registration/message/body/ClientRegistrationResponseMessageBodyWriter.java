@@ -77,10 +77,12 @@ public class ClientRegistrationResponseMessageBodyWriter
 		ObjectMapper objectMapper = ObjectMapperHolder._objectMapper;
 
 		try {
-			String string = objectMapper.writeValueAsString(
-				liferayClientRegistrationResponse);
-
-			outputStream.write(string.getBytes(StandardCharsets.UTF_8));
+			outputStream.write(
+				objectMapper.writeValueAsString(
+					liferayClientRegistrationResponse
+				).getBytes(
+					StandardCharsets.UTF_8
+				));
 		}
 		catch (IOException ioException) {
 			if (_log.isDebugEnabled()) {

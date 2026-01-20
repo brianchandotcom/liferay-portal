@@ -725,7 +725,7 @@ public class LiferayOAuthDataProvider
 
 		if (oAuth2Application != null) {
 			OAuth2ErrorUtil.reportInvalidRequestError(
-				"OAuth 2 Application with client ID " + client.getClientId() +
+				"OAuth 2 Application with client ID: " + client.getClientId() +
 					" already exists.",
 				OAuthConstants.INVALID_CLIENT, Response.Status.CONFLICT);
 		}
@@ -761,7 +761,7 @@ public class LiferayOAuthDataProvider
 		catch (PortalException portalException) {
 			_log.error(
 				"Unable to dynamically register OAuth 2 Application with " +
-					"client ID " + client.getClientId(),
+					"client ID: " + client.getClientId(),
 				portalException);
 
 			throw new WebApplicationException(portalException);
@@ -1161,7 +1161,8 @@ public class LiferayOAuthDataProvider
 
 			if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
 				throw new SystemException(
-					"Unable to retrieve JWKS information from " + jwksURI);
+					"Unable to retrieve JWKS information from " + jwksURI +
+						".");
 			}
 
 			return _jsonFactory.createJSONObject(
@@ -1438,7 +1439,7 @@ public class LiferayOAuthDataProvider
 				else {
 					if (_log.isDebugEnabled()) {
 						_log.debug(
-							"Unknown or disabled grant type " +
+							"Unknown or disabled Grant Type " +
 								allowedGrantType);
 					}
 				}
@@ -1446,7 +1447,7 @@ public class LiferayOAuthDataProvider
 		}
 		catch (ConfigurationException configurationException) {
 			throw new OAuthServiceException(
-				"Unable to get system configuration from " +
+				"Unable to get System Configuration from " +
 					OAuth2ProviderConfiguration.class.getName(),
 				configurationException);
 		}

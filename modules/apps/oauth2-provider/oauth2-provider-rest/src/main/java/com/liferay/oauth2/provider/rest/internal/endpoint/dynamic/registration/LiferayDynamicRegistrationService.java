@@ -108,7 +108,8 @@ public class LiferayDynamicRegistrationService
 			 allowedGrantTypes.contains("implicit"))) {
 
 			OAuth2ErrorUtil.reportInvalidRequestError(
-				"A redirect URI is required.",
+				"A Callback URI is required, please enter a valid value in " +
+					"Redirect URI field.",
 				OAuthConstants.INVALID_REQUEST, Response.Status.BAD_REQUEST);
 		}
 

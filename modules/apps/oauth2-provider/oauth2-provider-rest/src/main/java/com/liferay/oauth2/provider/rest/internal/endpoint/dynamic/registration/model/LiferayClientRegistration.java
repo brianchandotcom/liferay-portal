@@ -120,13 +120,11 @@ public class LiferayClientRegistration extends ClientRegistration {
 
 	public void setJwks(Object jwks) {
 		this.jwks = jwks;
-
 		super.setProperty("jwks", jwks);
 	}
 
 	public void setJwksUri(String jwksUri) {
 		this.jwksUri = jwksUri;
-
 		super.setProperty("jwks_uri", jwksUri);
 	}
 

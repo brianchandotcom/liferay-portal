@@ -753,10 +753,7 @@ public class LiferayOAuthDataProvider
 			}
 			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Error registering dynamically OAuth 2 Application " +
-							"with client ID: " + client.getClientId(),
-						portalException);
+					_log.debug("error creating application", portalException);
 				}
 
 				throw new WebApplicationException(portalException);
@@ -769,27 +766,18 @@ public class LiferayOAuthDataProvider
 			}
 		}
 		else {
-			throwOAuthError(
-				"OAuth 2 Application with client ID: " + client.getClientId() +
-					" already exists.",
-				OAuthConstants.INVALID_CLIENT, Response.Status.CONFLICT);
+			OAuthError oAuthError = new OAuthError(
+				"invalid_client_id", "Client identifier already exists.");
+
+			throw new WebApplicationException(
+				Response.status(
+					Response.Status.CONFLICT
+				).entity(
+					oAuthError
+				).type(
+					MediaType.APPLICATION_JSON_TYPE
+				).build());
 		}
-	}
-
-	public void throwOAuthError(
-			String description, String error, Response.Status status)
-		throws WebApplicationException {
-
-		Response.ResponseBuilder responseBuilder = JAXRSUtils.toResponseBuilder(
-			status.getStatusCode());
-
-		responseBuilder.type(MediaType.APPLICATION_JSON);
-
-		throw ExceptionUtils.toWebApplicationException(
-			(Throwable)null,
-			responseBuilder.entity(
-				new OAuthError(error, description)
-			).build());
 	}
 
 	public void updateRememberDeviceContent(
@@ -1161,11 +1149,19 @@ public class LiferayOAuthDataProvider
 		}
 
 		if (!StringUtil.startsWith(jwksUri, "https://")) {
-			throwOAuthError(
-				"jwks_uri must use the https scheme",
-				OAuthConstants.INVALID_REQUEST, Response.Status.BAD_REQUEST);
+			OAuthError oAuthError = new OAuthError(
+				"invalid_request", "jwks_uri must use the https scheme");
 
-			return null;
+			Response.ResponseBuilder responseBuilder =
+				JAXRSUtils.toResponseBuilder(400);
+
+			responseBuilder.type(MediaType.APPLICATION_JSON);
+
+			throw ExceptionUtils.toBadRequestException(
+				(Throwable)null,
+				responseBuilder.entity(
+					oAuthError
+				).build());
 		}
 
 		Http.Options options = new Http.Options();
@@ -1183,7 +1179,7 @@ public class LiferayOAuthDataProvider
 				}
 
 				throw new SystemException(
-					"Unable to retrieve JWKS information from " + jwksUri);
+					"Unable to retrieve JWKS from " + jwksUri);
 			}
 
 			return _jsonFactory.createJSONObject(
@@ -1195,12 +1191,20 @@ public class LiferayOAuthDataProvider
 				_log.debug(exception);
 			}
 
-			throwOAuthError(
-				"jwks_uri is unreachable", OAuthConstants.INVALID_REQUEST,
-				Response.Status.BAD_REQUEST);
-		}
+			OAuthError oAuthError = new OAuthError(
+				"invalid_request", "Jwks uri is unreachable");
 
-		return null;
+			Response.ResponseBuilder responseBuilder =
+				JAXRSUtils.toResponseBuilder(400);
+
+			responseBuilder.type(MediaType.APPLICATION_JSON);
+
+			throw ExceptionUtils.toBadRequestException(
+				(Throwable)null,
+				responseBuilder.entity(
+					oAuthError
+				).build());
+		}
 	}
 
 	private List<GrantType> _getAllowedGrantTypes(List<String> grantTypes) {
@@ -1446,6 +1450,10 @@ public class LiferayOAuthDataProvider
 						 (allowedGrantType == GrantType.JWT_BEARER)) {
 
 					clientGrantTypes.add(Constants.JWT_BEARER_GRANT);
+					clientGrantTypes.add(
+						HttpUtils.urlEncode(
+							Constants.JWT_BEARER_GRANT,
+							StandardCharsets.UTF_8.name()));
 				}
 				else if (oAuth2ProviderConfiguration.
 							allowResourceOwnerPasswordCredentialsGrant() &&

@@ -58,11 +58,6 @@ public interface FrontendResource {
 	 */
 	public boolean isImmutable();
 
-	/**
-	 * Whether to send private or public directive
-	 *
-	 * @review
-	 */
 	public boolean isPrivate();
 
 	/**

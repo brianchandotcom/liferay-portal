@@ -516,6 +516,7 @@ com.liferay.portal.kernel.util.ClassResolverUtil=com.liferay.petra.lang.ClassRes
 com.liferay.portal.kernel.util.ClassResourceBundleLoader=com.liferay.portal.kernel.resource.bundle.ClassResourceBundleLoader
 com.liferay.portal.kernel.util.Database=com.liferay.portal.tools.db.upgrade.client.Database
 com.liferay.portal.kernel.util.HashUtil=com.liferay.petra.lang.HashUtil
+com.liferay.portal.kernel.util.Html=com.liferay.portal.kernel.util.HtmlUtil
 com.liferay.portal.kernel.util.ResourceBundleLoader=com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader
 com.liferay.portal.kernel.util.StringPool=com.liferay.petra.string.StringPool
 com.liferay.portal.kernel.util.UnsafeConsumer=com.liferay.petra.function.UnsafeConsumer

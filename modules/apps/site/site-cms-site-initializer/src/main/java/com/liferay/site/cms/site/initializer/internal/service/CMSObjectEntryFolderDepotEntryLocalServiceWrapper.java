@@ -38,7 +38,10 @@ public class CMSObjectEntryFolderDepotEntryLocalServiceWrapper
 
 		DepotEntry depotEntry = super.addDepotEntry(group, serviceContext);
 
-		ObjectEntryFolderUtil.addObjectEntryFolders(depotEntry.getGroupId());
+		if (depotEntry.getType() == DepotConstants.TYPE_SPACE) {
+			ObjectEntryFolderUtil.addObjectEntryFolders(
+				depotEntry.getGroupId());
+		}
 
 		return depotEntry;
 	}
@@ -52,7 +55,10 @@ public class CMSObjectEntryFolderDepotEntryLocalServiceWrapper
 		DepotEntry depotEntry = super.addDepotEntry(
 			nameMap, descriptionMap, type, serviceContext);
 
-		ObjectEntryFolderUtil.addObjectEntryFolders(depotEntry.getGroupId());
+		if (depotEntry.getType() == DepotConstants.TYPE_SPACE) {
+			ObjectEntryFolderUtil.addObjectEntryFolders(
+				depotEntry.getGroupId());
+		}
 
 		return depotEntry;
 	}

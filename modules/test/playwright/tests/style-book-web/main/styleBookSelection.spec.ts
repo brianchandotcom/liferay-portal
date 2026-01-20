@@ -10,6 +10,7 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
 import {styleBookPageTest} from '../../../fixtures/styleBookPageTest';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {doAndGoBack} from '../../../utils/doAndGoBack';
 import fillAndClickOutside from '../../../utils/fillAndClickOutside';
 import getRandomString from '../../../utils/getRandomString';
@@ -111,5 +112,70 @@ test(
 				siteFriendlyUrlPath: site.friendlyUrlPath,
 			});
 		});
+	}
+);
+
+test(
+	'A user can select the style book of a page via Look and Feel settings',
+	{tag: '@LPD-66976'},
+	async ({page, pageEditorPage, pagesAdminPage, site}) => {
+		const testCases = [
+			{requiresPagePublish: true, template: 'Blank'},
+			{requiresPagePublish: false, template: 'Widget Page'},
+		];
+
+		for (const {requiresPagePublish, template} of testCases) {
+			const pageName = getRandomString();
+
+			await test.step(`Create a "${template}" page`, async () => {
+				await pagesAdminPage.goto(site.friendlyUrlPath);
+
+				await pagesAdminPage.createNewPage({
+					draft: true,
+					name: pageName,
+					template,
+				});
+			});
+
+			await test.step('Select the created style book via Look and Feel settings', async () => {
+				await pagesAdminPage.goto(site.friendlyUrlPath);
+
+				await pagesAdminPage.goToDesignTabConfiguration(pageName);
+
+				const styleBookTextbox = page.getByRole('textbox', {
+					name: 'Style Book',
+				});
+
+				await clickAndExpectToBeVisible({
+					autoClick: true,
+					target: page
+						.frameLocator('iframe[title="Select Style Book"]')
+						.getByRole('button', {
+							name: `Select ${STYLE_BOOK_NAME}`,
+						}),
+					trigger: styleBookTextbox,
+				});
+
+				await pagesAdminPage.saveConfiguration();
+
+				await expect(styleBookTextbox).toHaveValue(STYLE_BOOK_NAME);
+			});
+
+			await test.step('Assert the style book is applied to the page', async () => {
+				if (requiresPagePublish) {
+					await pagesAdminPage.goto(site.friendlyUrlPath);
+
+					await pagesAdminPage.editPage(pageName);
+
+					await pageEditorPage.publishPage();
+				}
+
+				await expectStyleBookToBeSelected({
+					page,
+					pageFriendlyUrlPath: `/${pageName}`,
+					siteFriendlyUrlPath: site.friendlyUrlPath,
+				});
+			});
+		}
 	}
 );

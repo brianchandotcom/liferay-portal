@@ -101,45 +101,17 @@ public class ExpandoBridgeIndexerImpl implements ExpandoBridgeIndexer {
 		else if (type == ExpandoColumnConstants.DATE) {
 			document.addDate(fieldName, expandoValue.getDate());
 		}
-		else if ((type == ExpandoColumnConstants.DOUBLE) ||
-				 (type == ExpandoColumnConstants.DOUBLE_ARRAY)) {
-
-			Field field = new Field(fieldName, "0.0");
-
-			if (type == ExpandoColumnConstants.DOUBLE) {
-				field = new Field(
-					fieldName, String.valueOf(expandoValue.getDouble()));
-			}
-			else if (hasValue) {
-				field = new Field(
-					fieldName,
-					ArrayUtil.toStringArray(expandoValue.getDoubleArray()));
-			}
-
-			field.setNumeric(true);
-			field.setNumericClass(Double.class);
-
-			document.add(field);
+		else if (type == ExpandoColumnConstants.DOUBLE) {
+			document.addNumberSortable(fieldName, expandoValue.getDouble());
 		}
-		else if ((type == ExpandoColumnConstants.FLOAT) ||
-				 (type == ExpandoColumnConstants.FLOAT_ARRAY)) {
-
-			Field field = new Field(fieldName, "0.0");
-
-			if (type == ExpandoColumnConstants.FLOAT) {
-				field = new Field(
-					fieldName, String.valueOf(expandoValue.getFloat()));
-			}
-			else if (hasValue) {
-				field = new Field(
-					fieldName,
-					ArrayUtil.toStringArray(expandoValue.getFloatArray()));
-			}
-
-			field.setNumeric(true);
-			field.setNumericClass(Float.class);
-
-			document.add(field);
+		else if ((type == ExpandoColumnConstants.DOUBLE_ARRAY) && hasValue) {
+			document.addNumber(fieldName, expandoValue.getDoubleArray());
+		}
+		else if (type == ExpandoColumnConstants.FLOAT) {
+			document.addNumberSortable(fieldName, expandoValue.getFloat());
+		}
+		else if ((type == ExpandoColumnConstants.FLOAT_ARRAY) && hasValue) {
+			document.addNumber(fieldName, expandoValue.getFloatArray());
 		}
 		else if (type == ExpandoColumnConstants.GEOLOCATION) {
 			JSONObject jsonObject = expandoValue.getGeolocationJSONObject();

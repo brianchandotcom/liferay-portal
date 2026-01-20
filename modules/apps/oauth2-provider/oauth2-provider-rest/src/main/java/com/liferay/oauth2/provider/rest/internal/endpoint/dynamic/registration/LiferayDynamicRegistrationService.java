@@ -191,11 +191,11 @@ public class LiferayDynamicRegistrationService
 			client.getApplicationLogoUri());
 		liferayClientRegistrationResponse.setRedirectUris(
 			client.getRedirectUris());
-
-		Map<String, String> properties = client.getProperties();
-
 		liferayClientRegistrationResponse.setRegistrationAccessToken(
-			properties.get("registration_access_token"));
+			client.getProperties(
+			).get(
+				"registration_access_token"
+			));
 
 		UriBuilder uriBuilder = getMessageContext(
 		).getUriInfo(
@@ -212,6 +212,8 @@ public class LiferayDynamicRegistrationService
 			liferayClientRegistrationResponse.setScope(
 				client.getRegisteredScopes());
 		}
+
+		Map<String, String> properties = client.getProperties();
 
 		if (properties.get("jwks") != null) {
 			liferayClientRegistrationResponse.setJwks(properties.get("jwks"));

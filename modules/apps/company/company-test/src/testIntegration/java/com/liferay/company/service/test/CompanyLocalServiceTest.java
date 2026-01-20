@@ -1010,8 +1010,8 @@ public class CompanyLocalServiceTest {
 		catch (UnsupportedOperationException unsupportedOperationException) {
 			Assert.assertEquals(
 				StringBundler.concat(
-					"Trying to iterate over the following company IDs [",
-					invalidCompanyId, "], but company ID ",
+					"Unable to iterate over the following company IDs [",
+					invalidCompanyId, "] because company ID ",
 					PortalInstancePool.getDefaultCompanyId(), " is locked"),
 				unsupportedOperationException.getMessage());
 		}
@@ -1038,8 +1038,8 @@ public class CompanyLocalServiceTest {
 		catch (UnsupportedOperationException unsupportedOperationException) {
 			Assert.assertEquals(
 				StringBundler.concat(
-					"Trying to iterate over the following company IDs [",
-					invalidCompanyId, "], but company ID ",
+					"Unable to iterate over the following company IDs [",
+					invalidCompanyId, "] because company ID ",
 					PortalInstancePool.getDefaultCompanyId(), " is locked"),
 				unsupportedOperationException.getMessage());
 		}

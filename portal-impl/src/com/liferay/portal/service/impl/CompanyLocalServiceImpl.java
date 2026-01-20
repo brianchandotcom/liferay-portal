@@ -875,8 +875,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			throw new UnsupportedOperationException(
 				StringBundler.concat(
-					"Trying to iterate over the following company IDs ",
-					Arrays.toString(companyIds), ", but company ID ",
+					"Unable to iterate over the following company IDs ",
+					Arrays.toString(companyIds), " because company ID ",
 					CompanyThreadLocal.getCompanyId(), " is locked"));
 		}
 
@@ -924,8 +924,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			throw new UnsupportedOperationException(
 				StringBundler.concat(
-					"Trying to iterate over the following company IDs ",
-					Arrays.toString(companyIds), ", but company ID ",
+					"Unable to iterate over the following company IDs ",
+					Arrays.toString(companyIds), " because company ID ",
 					CompanyThreadLocal.getCompanyId(), " is locked"));
 		}
 

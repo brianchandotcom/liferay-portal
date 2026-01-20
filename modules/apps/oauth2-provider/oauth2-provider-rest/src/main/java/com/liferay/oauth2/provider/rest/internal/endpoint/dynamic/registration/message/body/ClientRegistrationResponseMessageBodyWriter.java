@@ -53,10 +53,10 @@ public class ClientRegistrationResponseMessageBodyWriter
 
 	@Override
 	public boolean isWriteable(
-		Class<?> clazz, Type type, Annotation[] annotations,
+		Class<?> aClass, Type type, Annotation[] annotations,
 		MediaType mediaType) {
 
-		if (LiferayClientRegistrationResponse.class.isAssignableFrom(clazz) &&
+		if (LiferayClientRegistrationResponse.class.isAssignableFrom(aClass) &&
 			StringUtil.equalsIgnoreCase(mediaType.getType(), "application") &&
 			StringUtil.equalsIgnoreCase(mediaType.getSubtype(), "json")) {
 
@@ -69,7 +69,7 @@ public class ClientRegistrationResponseMessageBodyWriter
 	@Override
 	public void writeTo(
 			LiferayClientRegistrationResponse clientRegistrationResponse,
-			Class<?> clazz, Type type, Annotation[] annotations,
+			Class<?> aClass, Type type, Annotation[] annotations,
 			MediaType mediaType, MultivaluedMap<String, Object> multivaluedMap,
 			OutputStream outputStream)
 		throws WebApplicationException {

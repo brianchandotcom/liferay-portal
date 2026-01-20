@@ -111,7 +111,13 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 		List<JavaParameter> parameters, String name) {
 
 		for (JavaParameter parameter : parameters) {
-			if (name.equals(parameter.getParameterName())) {
+			String parameterName = parameter.getParameterName();
+
+			if (name.equals(parameterName) ||
+				StringUtil.equals(
+					"is" + StringUtil.upperCaseFirstLetter(name),
+					parameterName)) {
+
 				return true;
 			}
 		}
@@ -126,7 +132,7 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 
 		while (matcher.find()) {
 			String name1 = matcher.group(3);
-			String name2 = matcher.group(5);
+			String name2 = matcher.group(6);
 
 			if (!_containsParameterName(parameters, name1) ||
 				!_containsParameterName(parameters, name2)) {
@@ -146,7 +152,7 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 			}
 
 			String nextStatementsBlock = _getNextStatementsBlock(
-				content, matcher.group(1), matcher.start(6));
+				content, matcher.group(1), matcher.start(8));
 
 			if (Validator.isNull(nextStatementsBlock) ||
 				!nextStatementsBlock.matches(
@@ -154,7 +160,7 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 
 				return StringUtil.replaceFirst(
 					content, StringPool.NEW_LINE, StringPool.BLANK,
-					matcher.start(4));
+					matcher.start(5));
 			}
 		}
 
@@ -357,7 +363,11 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 
 			String parameterName = parameter.getParameterName();
 
-			if (name.equals(parameterName)) {
+			if (name.equals(parameterName) ||
+				StringUtil.equals(
+					"is" + StringUtil.upperCaseFirstLetter(name),
+					parameterName)) {
+
 				if (value.matches("(?s).*\\W" + parameterName + "\\W.*")) {
 					return i;
 				}
@@ -513,7 +523,8 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 	private static final Pattern _methodCallPattern = Pattern.compile(
 		"((\\w+)\\.\\s*)?(\\w+)\\(");
 	private static final Pattern _missingLineBreakPattern1 = Pattern.compile(
-		"\n(\t+)(_)(\\w+) =[ \t\n]+\\3;(?=(\n\n)\\1_(\\w+) =[ \t\n]+\\5(;)\n)");
+		"(?i)\n(\t+)(_)(\\w+) =\\s+(is)?\\3;(?=(\n\n)\\1_(\\w+) =\\s+(is)?\\6" +
+			"(;)\n)");
 	private static final Pattern _missingLineBreakPattern2 = Pattern.compile(
 		"\n(\t+)(this\\.)(\\w+) =[ \t\n]+\\3;(?=(\n\n)\\1this\\.(\\w+) " +
 			"=[ \t\n]+\\5(;)\n)");

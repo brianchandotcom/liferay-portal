@@ -8,13 +8,13 @@ package com.liferay.account.internal.search.spi.model.index.contributor;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryOrganizationRelModel;
+import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.model.AccountGroupRel;
-import com.liferay.account.retriever.AccountUserRetriever;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
+import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -77,9 +77,10 @@ public class AccountEntryModelDocumentContributor
 
 	private long[] _getAccountUserIds(AccountEntry accountEntry) {
 		return ListUtil.toLongArray(
-			_accountUserRetriever.getAccountUsers(
-				accountEntry.getAccountEntryId()),
-			User.USER_ID_ACCESSOR);
+			_accountEntryUserRelLocalService.
+				getAccountEntryUserRelsByAccountEntryId(
+					accountEntry.getAccountEntryId()),
+			AccountEntryUserRel::getAccountUserId);
 	}
 
 	private String[] _getDomains(AccountEntry accountEntry) {
@@ -112,9 +113,9 @@ public class AccountEntryModelDocumentContributor
 		_accountEntryOrganizationRelLocalService;
 
 	@Reference
-	private AccountGroupRelLocalService _accountGroupRelLocalService;
+	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
 	@Reference
-	private AccountUserRetriever _accountUserRetriever;
+	private AccountGroupRelLocalService _accountGroupRelLocalService;
 
 }

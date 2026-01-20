@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -22,8 +21,6 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AccountUserRetriever {
-
-	public List<User> getAccountUsers(long accountEntryId);
 
 	public long getAccountUsersCount(long accountEntryId);
 

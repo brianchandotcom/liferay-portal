@@ -382,20 +382,27 @@ public class AccountEntryUserRelLocalServiceTest {
 		users.add(UserTestUtil.addUser());
 		users.add(UserTestUtil.addUser());
 
+		List<Long> userIds = ListUtil.toList(users, User.USER_ID_ACCESSOR);
+
+		userIds.sort(null);
+
 		_accountEntryUserRelLocalService.addAccountEntryUserRels(
-			_accountEntry.getAccountEntryId(),
-			ListUtil.toLongArray(users, User.USER_ID_ACCESSOR));
+			_accountEntry.getAccountEntryId(), ArrayUtil.toLongArray(userIds));
 
 		Assert.assertEquals(
 			2,
 			_accountUserRetriever.getAccountUsersCount(
 				_accountEntry.getAccountEntryId()));
 
-		List<User> accountUsers = _accountUserRetriever.getAccountUsers(
-			_accountEntry.getAccountEntryId());
+		List<Long> accountUserIds = ListUtil.toList(
+			_accountEntryUserRelLocalService.
+				getAccountEntryUserRelsByAccountEntryId(
+					_accountEntry.getAccountEntryId()),
+			AccountEntryUserRel::getAccountUserId);
 
-		Assert.assertTrue(accountUsers.containsAll(users));
-		Assert.assertTrue(users.containsAll(accountUsers));
+		accountUserIds.sort(null);
+
+		Assert.assertEquals(userIds, accountUserIds);
 	}
 
 	@Test

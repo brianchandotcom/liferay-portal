@@ -11,8 +11,8 @@ import com.liferay.account.exception.AccountEntryDomainsException;
 import com.liferay.account.exception.AccountEntryNameException;
 import com.liferay.account.exception.NoSuchEntryException;
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.model.AccountGroup;
-import com.liferay.account.retriever.AccountUserRetriever;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountGroupLocalService;
@@ -1668,9 +1668,10 @@ public class AccountEntryLocalServiceTest {
 
 	private long[] _getAccountUserIds(AccountEntry accountEntry) {
 		return ListUtil.toLongArray(
-			_accountUserRetriever.getAccountUsers(
-				accountEntry.getAccountEntryId()),
-			User.USER_ID_ACCESSOR);
+			_accountEntryUserRelLocalService.
+				getAccountEntryUserRelsByAccountEntryId(
+					accountEntry.getAccountEntryId()),
+			AccountEntryUserRel::getAccountUserId);
 	}
 
 	private LinkedHashMap<String, Object> _getLinkedHashMap(
@@ -1783,9 +1784,6 @@ public class AccountEntryLocalServiceTest {
 
 	@Inject
 	private AccountGroupLocalService _accountGroupLocalService;
-
-	@Inject
-	private AccountUserRetriever _accountUserRetriever;
 
 	@Inject
 	private AddressLocalService _addressLocalService;

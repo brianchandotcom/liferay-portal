@@ -7,6 +7,7 @@ package com.liferay.account.retriever.test;
 
 import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.retriever.AccountUserRetriever;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
@@ -77,11 +78,11 @@ public class AccountUserRetrieverTest {
 
 		Arrays.sort(expectedUserIds);
 
-		List<User> actualUsers = _accountUserRetriever.getAccountUsers(
-			_accountEntry.getAccountEntryId());
-
 		long[] actualUserIds = ListUtil.toLongArray(
-			actualUsers, User::getUserId);
+			_accountEntryUserRelLocalService.
+				getAccountEntryUserRelsByAccountEntryId(
+					_accountEntry.getAccountEntryId()),
+			AccountEntryUserRel::getAccountUserId);
 
 		Arrays.sort(actualUserIds);
 

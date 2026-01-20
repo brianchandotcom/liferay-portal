@@ -17,8 +17,8 @@ const Footer: React.FC<
 	<BasePage.Footer>
 		{previousFn !== undefined && (
 			<ClayButton displayType="unstyled" onClick={previousFn}>
-				<span className="inline-item inline-item-before">
-					<ClayIcon symbol="order-arrow-left" />
+				<span className="inline-item inline-item-before text-semibold">
+					<ClayIcon className="mr-1" symbol="order-arrow-left" />
 
 					{Liferay.Language.get('previous')}
 				</span>

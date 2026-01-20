@@ -28,7 +28,7 @@ export function Wizard({
 
 	return (
 		<>
-			<ClayMultiStepNav center className="w-60" indicatorLabel="top">
+			<ClayMultiStepNav center className="mx-9" indicatorLabel="top">
 				{(steps as React.ReactElement[]).map((step, index) => {
 					const {title} = step.props;
 

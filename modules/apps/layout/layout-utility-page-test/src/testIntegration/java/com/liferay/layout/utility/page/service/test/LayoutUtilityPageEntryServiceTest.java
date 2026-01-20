@@ -191,6 +191,44 @@ public class LayoutUtilityPageEntryServiceTest {
 			copiedLayoutUtilityPageEntry.getType());
 	}
 
+	@Test(expected = PrincipalException.class)
+	public void testCopyLayoutUtilityPageEntryWithoutPermissions()
+		throws Exception {
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
+				RandomTestUtil.randomString(), _group.getGroupId(), 0, 0, true,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				null, _serviceContext);
+
+		User user = UserTestUtil.addUser();
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_roleLocalService.addUserRole(user.getUserId(), role.getRoleId());
+
+		RoleTestUtil.addResourcePermission(
+			role, Group.class.getName(), ResourceConstants.SCOPE_GROUP,
+			String.valueOf(_group.getGroupId()),
+			LayoutUtilityPageActionKeys.ADD_LAYOUT_UTILITY_PAGE_ENTRY);
+
+		RoleTestUtil.removeResourcePermission(
+			RoleConstants.GUEST, LayoutUtilityPageEntry.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(
+				layoutUtilityPageEntry.getLayoutUtilityPageEntryId()),
+			ActionKeys.VIEW);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user)) {
+
+			_layoutUtilityPageEntryService.copyLayoutUtilityPageEntry(
+				_group.getGroupId(),
+				layoutUtilityPageEntry.getLayoutUtilityPageEntryId(),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		}
+	}
+
 	@Test
 	public void testDeleteLayoutUtilityPageEntry() throws Exception {
 		LayoutUtilityPageEntry layoutUtilityPageEntry =

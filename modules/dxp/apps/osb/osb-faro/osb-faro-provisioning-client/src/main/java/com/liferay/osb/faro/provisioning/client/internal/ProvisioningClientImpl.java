@@ -473,7 +473,9 @@ public class ProvisioningClientImpl implements ProvisioningClient {
 
 		Date baseProductPurchaseStartDate = baseProductPurchase.getStartDate();
 
-		if (baseProductPurchaseStartDate.getTime() > System.currentTimeMillis()) {
+		if (baseProductPurchaseStartDate.getTime() >
+				System.currentTimeMillis()) {
+
 			return false;
 		}
 

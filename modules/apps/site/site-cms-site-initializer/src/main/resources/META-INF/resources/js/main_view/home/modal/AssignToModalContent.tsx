@@ -34,28 +34,6 @@ export default function AssignToModalContent({
 		[]
 	);
 
-	useEffect(() => {
-		if (assignable) {
-			const fetchAssignableUsers = async () => {
-				const res = await getAssignableUsers(workflowTaskId);
-				if (res.length) {
-					setAssignableUsers(res);
-				}
-				else {
-					setAssignableUsers([]);
-				}
-				setHasAssignableUsers(!!res.length);
-			};
-
-			fetchAssignableUsers();
-		}
-
-		return () => {
-			setAssignableUsers([]);
-			setHasAssignableUsers(false);
-		};
-	}, [assignable, workflowTaskId]);
-
 	const assignTo = async (values: any) => {
 		const res = assignable
 			? await assignToUser({
@@ -90,7 +68,7 @@ export default function AssignToModalContent({
 		}
 	};
 
-	const {handleChange, handleSubmit} = useFormik({
+	const {handleChange, handleSubmit, setValues, values} = useFormik({
 		initialValues: {
 			assignable: false,
 			assigneeId: 0,
@@ -102,12 +80,42 @@ export default function AssignToModalContent({
 		},
 	});
 
+	useEffect(() => {
+		if (assignable) {
+			const fetchAssignableUsers = async () => {
+				const res = await getAssignableUsers(workflowTaskId);
+				if (res.length) {
+					setAssignableUsers(res);
+					setValues({
+						assignable,
+						assigneeId: res[0].id,
+						comment: '',
+						workflowTaskId,
+					});
+				}
+				else {
+					setAssignableUsers([]);
+				}
+				setHasAssignableUsers(!!res.length);
+			};
+
+			fetchAssignableUsers();
+		}
+
+		return () => {
+			setAssignableUsers([]);
+			setHasAssignableUsers(false);
+		};
+	}, [assignable, setValues, workflowTaskId]);
+
 	return (
 		<form onSubmit={handleSubmit}>
 			<ClayModal.Header
 				closeButtonAriaLabel={Liferay.Language.get('close')}
 			>
-				{Liferay.Language.get('assign-to-...')}
+				{assignable
+					? Liferay.Language.get('assign-to-...')
+					: Liferay.Language.get('assign-to-me')}
 			</ClayModal.Header>
 
 			<ClayModal.Body>
@@ -125,7 +133,7 @@ export default function AssignToModalContent({
 								onChange={(event) => {
 									handleChange(event);
 								}}
-								value=""
+								value={values.assigneeId}
 							>
 								{assignableUsers?.map((user) => (
 									<ClaySelect.Option

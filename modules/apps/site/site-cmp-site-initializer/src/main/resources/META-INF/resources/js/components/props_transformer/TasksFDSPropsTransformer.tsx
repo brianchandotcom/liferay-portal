@@ -3,12 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {IInternalRenderer} from '@liferay/frontend-data-set-web';
+import {DateRenderer, IInternalRenderer} from '@liferay/frontend-data-set-web';
 import {AssigneeValue} from '@liferay/object-dynamic-data-mapping-form-field-type';
 import {
 	ACTIONS,
-	AdditionalProps,
+	AssignToModalContent,
 	SimpleActionLinkRenderer,
+	UpdateDueDateModalContent,
 	addOnClickToCreationMenuItems,
 	deleteItemAction,
 } from '@liferay/site-cms-site-initializer';
@@ -18,6 +19,9 @@ import {openCMPModal} from '../../utils/openCMPModal';
 import StateLabel from '../StateLabel';
 import EditAssigneeModalContent from '../modal/EditAssigneeModalContent';
 import {cmpTasksFDSAtom} from './atoms';
+
+const _CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN =
+	'com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken';
 
 type action = {
 	data: {
@@ -46,6 +50,7 @@ interface ItemData {
 			image?: string;
 			name: string;
 		};
+		dateDue: string;
 		defaultLanguageId: string;
 		externalReferenceCode: string;
 		file?: any;
@@ -63,13 +68,31 @@ interface ItemData {
 	title: string;
 }
 
+const WORKFLOW_TASK_MODALS: Record<
+	string,
+	(baseProps: {
+		closeModal: () => void;
+		dueDate: string;
+		loadData: () => Promise<void>;
+		workflowTaskId: number;
+	}) => JSX.Element
+> = {
+	assignToMeWorkflowTask: (props) => (
+		<AssignToModalContent {...props} assignable={false} />
+	),
+	assignToWorkflowTask: (props) => (
+		<AssignToModalContent {...props} assignable={true} />
+	),
+	updateDueDateWorkflowTask: (props) => (
+		<UpdateDueDateModalContent {...props} />
+	),
+};
+
 export default function TasksFDSPropsTransformer({
-	additionalProps,
 	creationMenu,
 	itemsActions = [],
 	...otherProps
 }: {
-	additionalProps: AdditionalProps;
 	creationMenu: any;
 	itemsActions?: any[];
 }) {
@@ -86,19 +109,96 @@ export default function TasksFDSPropsTransformer({
 		customRenderers: {
 			tableCell: [
 				{
-					component: ({actions, itemData, options, value}) =>
-						SimpleActionLinkRenderer({
+					component: ({itemData}) => {
+						if (
+							itemData.entryClassName ===
+							_CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN
+						) {
+							if (itemData.embedded?.assigneePerson) {
+								return itemData.embedded.assigneePerson.name;
+							}
+
+							return itemData.embedded?.assigneeRoles
+								?.map(({name}: {name: string}) => name)
+								.join(', ');
+						}
+
+						return itemData.embedded?.assignTo?.name;
+					},
+					name: 'assigneeTableCellRenderer',
+					type: 'internal',
+				} as IInternalRenderer,
+				{
+					component: ({itemData}) => {
+						if (
+							itemData.entryClassName ===
+							_CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN
+						) {
+							return DateRenderer({
+								value: itemData.embedded?.dateDue,
+							});
+						}
+
+						return DateRenderer({
+							value: itemData.embedded?.dueDate,
+						});
+					},
+					name: 'dueDateTableCellRenderer',
+					type: 'internal',
+				} as IInternalRenderer,
+				{
+					component: ({itemData}) => {
+						if (
+							itemData.entryClassName ===
+							_CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN
+						) {
+							return '-';
+						}
+
+						return itemData.embedded
+							?.r_cmpProjectToCMPTasks_c_cmpProject?.title;
+					},
+					name: 'projectTitleTableCellRenderer',
+					type: 'internal',
+				} as IInternalRenderer,
+				{
+					component: ({actions, itemData, options}) => {
+						if (
+							itemData.entryClassName ===
+							_CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN
+						) {
+							return SimpleActionLinkRenderer({
+								actions,
+								itemData,
+								options: {
+									actionId: 'actionLinkWorkflowTask',
+								},
+								value: itemData.embedded?.objectReviewed
+									?.assetTitle,
+							});
+						}
+
+						return SimpleActionLinkRenderer({
 							actions,
-							additionalProps,
 							itemData,
 							options,
-							value,
-						}),
+							value: itemData.embedded?.title,
+						});
+					},
 					name: 'simpleActionLinkTableCellRenderer',
 					type: 'internal',
 				} as IInternalRenderer,
 				{
-					component: ({value}) => StateLabel(value),
+					component: ({itemData}) => {
+						if (
+							itemData.entryClassName ===
+							_CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN
+						) {
+							return '-';
+						}
+
+						return StateLabel(itemData.embedded?.state);
+					},
 					name: 'stateTableCellRenderer',
 					type: 'internal',
 				} as IInternalRenderer,
@@ -121,7 +221,7 @@ export default function TasksFDSPropsTransformer({
 		}: {
 			action: action;
 			itemData: ItemData;
-			loadData: () => {};
+			loadData: () => Promise<void>;
 		}) {
 			if (action?.data?.id === 'delete') {
 				await deleteItemAction(itemData, loadData);
@@ -142,6 +242,27 @@ export default function TasksFDSPropsTransformer({
 							value={itemData.embedded.assignTo}
 						/>
 					),
+					size: 'md',
+				});
+			}
+
+			if (
+				itemData.entryClassName ===
+				_CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN
+			) {
+				await openCMPModal({
+					center: true,
+					contentComponent: ({
+						closeModal,
+					}: {
+						closeModal: () => void;
+					}) =>
+						WORKFLOW_TASK_MODALS[action?.data?.id]({
+							closeModal,
+							dueDate: itemData.embedded?.dateDue,
+							loadData,
+							workflowTaskId: itemData.embedded?.id,
+						}),
 					size: 'md',
 				});
 			}

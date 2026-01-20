@@ -18,7 +18,7 @@ const BasePage: React.FC<
 	return (
 		<>
 			<header className="mb-1 sheet-header">
-				<h1 className="sheet-title">{title}</h1>
+				<h1 className="mb-1 sheet-title">{title}</h1>
 
 				{description && (
 					<p className="sheet-text text-secondary">{description}</p>

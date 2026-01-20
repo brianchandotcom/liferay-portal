@@ -80,37 +80,44 @@ public class FileEntryUtil {
 			}
 
 			file = FileUtil.createTempFile(inputStream);
+
+			String mimeType = MimeTypesUtil.getContentType(file);
+
+			Set<String> extensions = MimeTypesUtil.getExtensions(mimeType);
+
+			String extension = StringPool.BLANK;
+
+			if (!extensions.isEmpty()) {
+				Iterator<String> iterator = extensions.iterator();
+
+				extension = iterator.next();
+			}
+
+			serviceContext.setAddGroupPermissions(true);
+			serviceContext.setAddGuestPermissions(true);
+			serviceContext.setIndexingEnabled(false);
+
+			Repository repository =
+				PortletFileRepositoryUtil.addPortletRepository(
+					groupId, LayoutAdminPortletKeys.GROUP_PAGES,
+					serviceContext);
+
+			String fileName =
+				thumbnailURLReference.getExternalReferenceCode() + "_preview" +
+					extension;
+
+			return DLAppLocalServiceUtil.addFileEntry(
+				thumbnailURLReference.getExternalReferenceCode(), userId,
+				repository.getRepositoryId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				resourceName + "_" + fileName, mimeType, fileName, null, null,
+				null, file, null, null, null, serviceContext);
 		}
-
-		String mimeType = MimeTypesUtil.getContentType(file);
-
-		Set<String> extensions = MimeTypesUtil.getExtensions(mimeType);
-
-		String extension = StringPool.BLANK;
-
-		if (!extensions.isEmpty()) {
-			Iterator<String> iterator = extensions.iterator();
-
-			extension = iterator.next();
+		finally {
+			if (file != null) {
+				FileUtil.delete(file);
+			}
 		}
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setIndexingEnabled(false);
-
-		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
-			groupId, LayoutAdminPortletKeys.GROUP_PAGES, serviceContext);
-
-		String fileName =
-			thumbnailURLReference.getExternalReferenceCode() + "_preview" +
-				extension;
-
-		return DLAppLocalServiceUtil.addFileEntry(
-			thumbnailURLReference.getExternalReferenceCode(), userId,
-			repository.getRepositoryId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			resourceName + "_" + fileName, mimeType, fileName, null, null, null,
-			file, null, null, null, serviceContext);
 	}
 
 }

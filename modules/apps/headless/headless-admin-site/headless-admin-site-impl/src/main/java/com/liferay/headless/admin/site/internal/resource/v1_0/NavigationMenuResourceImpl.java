@@ -10,7 +10,6 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.headless.admin.site.dto.v1_0.NavigationMenu;
 import com.liferay.headless.admin.site.dto.v1_0.NavigationMenuItem;
-import com.liferay.headless.admin.site.internal.constants.DisplayPageTypeSiteNavigationMenuItemTypeConstants;
 import com.liferay.headless.admin.site.internal.odata.entity.v1_0.NavigationMenuEntityModel;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.resource.v1_0.NavigationMenuResource;
@@ -564,60 +563,45 @@ public class NavigationMenuResourceImpl
 			unicodeProperties.putAll(localizedPropertyMap);
 		}
 		else {
-			SiteNavigationMenuItemType siteNavigationMenuItemType =
-				_siteNavigationMenuItemTypeRegistry.
-					getSiteNavigationMenuItemType(type);
+			String className = _getSettingProperty(
+				navigationMenuItemSettings, "className");
 
-			Class<?> clazz = siteNavigationMenuItemType.getClass();
+			if (className != null) {
+				unicodeProperties.put("className", className);
+			}
 
-			if (Objects.equals(
-					clazz.getName(),
-					DisplayPageTypeSiteNavigationMenuItemTypeConstants.
-						CLASS_NAME)) {
+			String externalReferenceCode = _getSettingProperty(
+				navigationMenuItemSettings, "externalReferenceCode");
 
-				String className = _getSettingProperty(
-					navigationMenuItemSettings, "className");
+			if (externalReferenceCode != null) {
+				unicodeProperties.put(
+					"externalReferenceCode", externalReferenceCode);
+			}
 
-				if (className != null) {
-					unicodeProperties.put("className", className);
-				}
+			unicodeProperties.put("localizedNames", localizedNames);
 
-				String externalReferenceCode = _getSettingProperty(
-					navigationMenuItemSettings, "externalReferenceCode");
+			String scopeExternalReferenceCode = _getSettingProperty(
+				navigationMenuItemSettings, "scopeExternalReferenceCode");
 
-				if (externalReferenceCode != null) {
-					unicodeProperties.put(
-						"externalReferenceCode", externalReferenceCode);
-				}
+			if (scopeExternalReferenceCode != null) {
+				unicodeProperties.put(
+					"scopeExternalReferenceCode", scopeExternalReferenceCode);
+			}
 
-				unicodeProperties.put("localizedNames", localizedNames);
+			if (_getSettingProperty(navigationMenuItemSettings, "title") !=
+					null) {
 
-				String scopeExternalReferenceCode = _getSettingProperty(
-					navigationMenuItemSettings, "scopeExternalReferenceCode");
+				unicodeProperties.put(
+					"title",
+					_getSettingProperty(navigationMenuItemSettings, "title"));
+			}
 
-				if (scopeExternalReferenceCode != null) {
-					unicodeProperties.put(
-						"scopeExternalReferenceCode",
-						scopeExternalReferenceCode);
-				}
+			if (_getSettingProperty(navigationMenuItemSettings, "type") !=
+					null) {
 
-				if (_getSettingProperty(navigationMenuItemSettings, "title") !=
-						null) {
-
-					unicodeProperties.put(
-						"title",
-						_getSettingProperty(
-							navigationMenuItemSettings, "title"));
-				}
-
-				if (_getSettingProperty(navigationMenuItemSettings, "type") !=
-						null) {
-
-					unicodeProperties.put(
-						"type",
-						_getSettingProperty(
-							navigationMenuItemSettings, "type"));
-				}
+				unicodeProperties.put(
+					"type",
+					_getSettingProperty(navigationMenuItemSettings, "type"));
 			}
 		}
 

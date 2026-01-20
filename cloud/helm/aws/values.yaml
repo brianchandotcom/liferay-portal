@@ -46,6 +46,8 @@ liferay-default:
                                 product_version={{.image.tag}}
                                 url="https://releases.liferay.com/opensearch2/dxp/${product_version}/${filename_prefix}.{api,impl}.jar"
 
+                                rm --force --verbose /temp/osgi/modules/"${filename_prefix}"*
+
                                 mkdir -p "$deploy_dir"
 
                                 http_code=$(\

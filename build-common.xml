@@ -988,10 +988,10 @@ information.
 						<arg unless:true="${gradle.build.parallel.enabled}" value="--no-parallel" />
 						<arg value="--project-cache-dir=${project.dir}/.gradle" />
 
-						<arg if:true="@{stacktrace}" value="--stacktrace" />
-						<arg if:true="@{refreshdependencies}" value="--refresh-dependencies" />
-						<arg if:true="${gradle.profile.enabled}" value="--profile" />
 						<arg if:set="env.JENKINS_HOME" value="--profile" />
+						<arg if:true="${gradle.profile.enabled}" value="--profile" />
+						<arg if:true="@{refreshdependencies}" value="--refresh-dependencies" />
+						<arg if:true="@{stacktrace}" value="--stacktrace" />
 
 						<arg value="-Dapp.server.parent.dir=${app.server.parent.dir}" />
 						<arg value="-Dforced.cache.enabled=@{forcedcacheenabled}" />
@@ -1136,10 +1136,10 @@ information.
 								<arg unless:true="${gradle.build.parallel.enabled}" value="--no-parallel" />
 								<arg value="--project-cache-dir=${project.dir}/.gradle" />
 
-								<arg if:true="@{stacktrace}" value="--stacktrace" />
-								<arg if:true="@{refreshdependencies}" value="--refresh-dependencies" />
-								<arg if:true="${gradle.profile.enabled}" value="--profile" />
 								<arg if:set="env.JENKINS_HOME" value="--profile" />
+								<arg if:true="${gradle.profile.enabled}" value="--profile" />
+								<arg if:true="@{refreshdependencies}" value="--refresh-dependencies" />
+								<arg if:true="@{stacktrace}" value="--stacktrace" />
 
 								<arg value="-Dapp.server.parent.dir=${app.server.parent.dir}" />
 								<arg value="-Dforced.cache.enabled=@{forcedcacheenabled}" />
@@ -1180,10 +1180,10 @@ information.
 									<arg unless:true="${gradle.build.parallel.enabled}" value="--no-parallel" />
 									<arg value="--project-cache-dir=${project.dir}/.gradle" />
 
-									<arg if:true="@{stacktrace}" value="--stacktrace" />
-									<arg if:true="@{refreshdependencies}" value="--refresh-dependencies" />
-									<arg if:true="${gradle.profile.enabled}" value="--profile" />
 									<arg if:set="env.JENKINS_HOME" value="--profile" />
+									<arg if:true="${gradle.profile.enabled}" value="--profile" />
+									<arg if:true="@{refreshdependencies}" value="--refresh-dependencies" />
+									<arg if:true="@{stacktrace}" value="--stacktrace" />
 
 									<arg value="-Dapp.server.parent.dir=${app.server.parent.dir}" />
 									<arg value="-Dforced.cache.enabled=@{forcedcacheenabled}" />

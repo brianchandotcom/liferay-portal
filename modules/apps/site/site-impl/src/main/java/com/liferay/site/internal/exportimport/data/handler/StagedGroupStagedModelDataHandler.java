@@ -510,17 +510,11 @@ public class StagedGroupStagedModelDataHandler
 				portlet.getPortletDataHandlerInstance();
 
 			if (portletDataHandler.isBatch()) {
-				rankedBatchPortletElements.compute(
-					portletDataHandler.getRank(),
-					(priority, portletElements) -> {
-						if (portletElements == null) {
-							portletElements = new ArrayList<>();
-						}
-
-						portletElements.add(portletElement);
-
-						return portletElements;
-					});
+				rankedBatchPortletElements.computeIfAbsent(
+					portletDataHandler.getRank(), __ -> new ArrayList<>()
+				).add(
+					portletElement
+				);
 			}
 			else {
 				nonbatchPortletElements.add(portletElement);

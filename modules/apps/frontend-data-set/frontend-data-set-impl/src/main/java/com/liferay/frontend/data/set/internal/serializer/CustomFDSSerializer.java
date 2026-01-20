@@ -429,7 +429,7 @@ public class CustomFDSSerializer
 			() -> {
 				String[] listOfItemsPerPage = StringUtil.split(
 					String.valueOf(properties.get("listOfItemsPerPage")),
-					StringPool.COMMA_AND_SPACE);
+					StringPool.COMMA);
 
 				if (ArrayUtil.isNotEmpty(listOfItemsPerPage)) {
 					return JSONUtil.toJSONArray(

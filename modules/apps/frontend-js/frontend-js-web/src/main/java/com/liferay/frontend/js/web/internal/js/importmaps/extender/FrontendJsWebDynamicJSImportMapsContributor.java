@@ -37,15 +37,16 @@ public class FrontendJsWebDynamicJSImportMapsContributor
 			HttpServletRequest httpServletRequest, Writer writer)
 		throws IOException {
 
-		String baseURL = FrontendJsWebUtil.getBaseURL(
-			httpServletRequest, _portal);
-
 		writer.write(StringPool.QUOTE);
 		writer.write(
 			LanguageFrontendResourceRequestHandler.LANGUAGE_MODULE_PREFIX);
 		writer.write("\": \"");
 
+		String baseURL = FrontendJsWebUtil.getBaseURL(
+			httpServletRequest, _portal);
+
 		writer.write(baseURL);
+
 		writer.write(FrontendJsWebUtil.getPortalContextPath(_portal));
 		writer.write(
 			LanguageFrontendResourceRequestHandler.LANGUAGE_URI_PREFIX);

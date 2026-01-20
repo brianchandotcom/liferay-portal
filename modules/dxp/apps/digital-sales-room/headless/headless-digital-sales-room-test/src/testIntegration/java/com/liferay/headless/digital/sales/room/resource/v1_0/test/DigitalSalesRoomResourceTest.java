@@ -717,7 +717,9 @@ public class DigitalSalesRoomResourceTest
 						digitalSalesRoom.getId(),
 						fragmentCollection.getFragmentCollectionId(), 0),
 					FragmentEntryModel::getName, String.class),
-				new String[] {"Header Main", "Header User", "Welcome Block"}));
+				new String[] {
+					"Header Main", "Header User", "Text Block", "Welcome Block"
+				}));
 
 		Assert.assertTrue(
 			ArrayUtil.containsAll(
@@ -794,7 +796,9 @@ public class DigitalSalesRoomResourceTest
 						postDigitalSalesRoom.getId(),
 						fragmentCollection.getFragmentCollectionId(), 0),
 					FragmentEntryModel::getName, String.class),
-				new String[] {"Header Main", "Header User", "Welcome Block"}));
+				new String[] {
+					"Header Main", "Header User", "Text Block", "Welcome Block"
+				}));
 
 		Assert.assertTrue(
 			ArrayUtil.containsAll(

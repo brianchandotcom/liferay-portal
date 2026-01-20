@@ -52,7 +52,9 @@ test(
 			`Success:${newFolderTitle} was updated successfully.`
 		);
 
-		await expect(page.getByLabel(newFolderTitle)).toBeVisible();
+		await expect(
+			page.getByLabel(newFolderTitle, {exact: true})
+		).toBeVisible();
 
 		await apiHelpers.objectFolder.deleteObjectEntryFolder(folderData.id);
 	}

@@ -171,8 +171,6 @@ public class LiferayDynamicRegistrationService
 			new LiferayClientRegistrationResponse();
 
 		liferayClientRegistrationResponse.setClientId(client.getClientId());
-		liferayClientRegistrationResponse.setClientIdIssuedAt(
-			client.getRegisteredAt());
 
 		if (Validator.isNotNull(client.getApplicationName())) {
 			liferayClientRegistrationResponse.setClientName(
@@ -185,6 +183,8 @@ public class LiferayDynamicRegistrationService
 			liferayClientRegistrationResponse.setClientSecretExpiresAt(0L);
 		}
 
+		liferayClientRegistrationResponse.setClientIdIssuedAt(
+			client.getRegisteredAt());
 		liferayClientRegistrationResponse.setGrantTypes(
 			client.getAllowedGrantTypes());
 		liferayClientRegistrationResponse.setLogoUri(

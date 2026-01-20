@@ -19,7 +19,7 @@ resource "aws_iam_role" "ecr_role" {
 			Version="2012-10-17"
 		})
 	count=local.liferay_helm_chart_config.ecr_credentials_sync_required ? 1 : 0
-	name="${var.cluster_name}-gitops-ecr-credentials-sync"
+	name="${local.cluster_name}-gitops-ecr-credentials-sync"
 }
 resource "aws_iam_role_policy_attachment" "ecr_policy" {
 	count=local.liferay_helm_chart_config.ecr_credentials_sync_required ? 1 : 0

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -51,6 +52,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -275,8 +277,6 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 				JSONUtil.put(
 					"externalReferenceCode", _group.getExternalReferenceCode())
 			).put(
-				"sseEventSinkKey", RandomTestUtil.randomString()
-			).put(
 				"type", "AI Decision Node With Tool Workflow Definition"
 			).toString(),
 			"ai-hub/v1.0/tasks", Http.Method.POST);
@@ -357,7 +357,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		String sseEventSinkKey = SseEventSourceTestUtil.open(
 			List.of(countDownLatch), lines, "tasks/subscribe");
 
-		HTTPTestUtil.invokeToJSONObject(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"context", JSONUtil.put("text", "Thi text ix wrong.")
 			).put(
@@ -374,6 +374,25 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		Assert.assertEquals("event: Fix Spelling and Grammar", lines.get(2));
 		Assert.assertEquals(
 			"data: {\"data\":\"This text is wrong.\"}", lines.get(3));
+
+		IdempotentRetryAssert.retryAssert(
+			5, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
+			() -> {
+				WorkflowInstance workflowInstance =
+					_workflowInstanceManager.getWorkflowInstance(
+						TestPropsValues.getCompanyId(),
+						jsonObject.getLong("externalReferenceCode"));
+
+				Map<String, Serializable> workflowContext =
+					workflowInstance.getWorkflowContext();
+
+				String rewrittenText = GetterUtil.getString(
+					workflowContext.get("rewrittenText"));
+
+				Assert.assertEquals("This text is wrong.", rewrittenText);
+
+				return null;
+			});
 
 		SseUtil.closeAll();
 	}

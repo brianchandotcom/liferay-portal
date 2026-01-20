@@ -33,12 +33,6 @@ public class JavaTermOrderCheck extends BaseJavaTermCheck {
 			String fileContent)
 		throws DocumentException, IOException {
 
-		String javaTermContent = javaTerm.getContent();
-
-		if (javaTermContent.contains("@Meta.OCD")) {
-			return javaTermContent;
-		}
-
 		String className = javaTerm.getName();
 
 		String customSQLContent = null;

@@ -211,6 +211,10 @@ public class FunctionActionExecutorImpl
 			String className, long classPK, ExecutionContext executionContext)
 		throws Exception {
 
+		if (className == null) {
+			return null;
+		}
+
 		WorkflowHandler<?> workflowHandler =
 			WorkflowHandlerRegistryUtil.getWorkflowHandler(className);
 

@@ -203,13 +203,17 @@ public class WorkflowHandlerRegistryUtil {
 		String className = (String)workflowContext.get(
 			WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME);
 
-		WorkflowHandler<T> workflowHandler = getWorkflowHandler(className);
-
-		if (workflowHandler != null) {
-			return workflowHandler.updateStatus(status, workflowContext);
+		if (className == null) {
+			return null;
 		}
 
-		return null;
+		WorkflowHandler<T> workflowHandler = getWorkflowHandler(className);
+
+		if (workflowHandler == null) {
+			return null;
+		}
+
+		return workflowHandler.updateStatus(status, workflowContext);
 	}
 
 	private static List<WorkflowHandler<?>> _getWorkflowHandlers(

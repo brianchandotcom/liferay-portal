@@ -1,0 +1,11 @@
+.dsr-text-block-component {
+	padding-bottom: 5rem;
+}
+
+.dsr-text-block-component h2::after {
+	border-bottom: 4px solid var(--primary, #0B5FFF);
+	content: '';
+	display: inline-block;
+	margin: 0 0 0 0.3rem;
+	width: 1.5rem;
+}

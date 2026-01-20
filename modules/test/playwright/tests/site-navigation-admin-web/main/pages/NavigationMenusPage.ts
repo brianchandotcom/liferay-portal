@@ -18,6 +18,7 @@ export class NavigationMenusPage {
 	readonly page: Page;
 
 	readonly getMenuItem: (menuItemName: string) => Promise<Locator>;
+	readonly getMenuItemCard: (menuItemName: string) => Promise<Locator>;
 	readonly getModalListItem: (itemName: string) => Promise<Locator>;
 	readonly getModalMenuItem: (menuItemName: string) => Promise<Locator>;
 	readonly getNavigationMenuActionMenu: (
@@ -42,6 +43,8 @@ export class NavigationMenusPage {
 	readonly saveButton: Locator;
 	readonly selectButton: Locator;
 	readonly submenuModal: FrameLocator;
+	readonly sidebarBody: Locator;
+	readonly sidebarSaveButton: Locator;
 	readonly urlModal: FrameLocator;
 	readonly vocabulariesModal: FrameLocator;
 
@@ -56,6 +59,9 @@ export class NavigationMenusPage {
 				exact: true,
 				name: menuItemName,
 			});
+		};
+		this.getMenuItemCard = async (menuItemName: string) => {
+			return page.locator('.card-body').filter({hasText: menuItemName});
 		};
 		this.getModalListItem = async (itemName: string) => {
 			return page
@@ -124,6 +130,10 @@ export class NavigationMenusPage {
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.selectButton = page.getByRole('button', {name: 'Select'});
 		this.submenuModal = page.frameLocator('iframe[title="Add Submenu"]');
+		this.sidebarBody = page.locator('.sidebar-body');
+		this.sidebarSaveButton = this.sidebarBody.getByRole('button', {
+			name: 'Save',
+		});
 		this.urlModal = page.frameLocator('iframe[title="Add URL"]');
 		this.vocabulariesModal = page.frameLocator(
 			'iframe[title="Select Vocabularies"]'
@@ -460,6 +470,13 @@ export class NavigationMenusPage {
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
 		await this.page.goto(
 			`/group${siteUrl || '/guest'}${PORTLET_URLS.navigationMenus}`
+		);
+
+		await this.page.waitForLoadState();
+
+		await this.page.waitForSelector(
+			'#_com_liferay_site_navigation_admin_web_portlet_SiteNavigationAdminPortlet_fm',
+			{state: 'visible'}
 		);
 	}
 

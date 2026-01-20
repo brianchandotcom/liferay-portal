@@ -116,7 +116,7 @@ public class JavaScriptFrontendResourceRequestHandler
 		}
 
 		return new JavaScriptFrontendResource(
-			resourceBundle != null, eTag, immutable, _language, maxAge,
+			eTag, immutable, _language, maxAge, resourceBundle != null,
 			resourceBundle, sendNoCache, url);
 	}
 

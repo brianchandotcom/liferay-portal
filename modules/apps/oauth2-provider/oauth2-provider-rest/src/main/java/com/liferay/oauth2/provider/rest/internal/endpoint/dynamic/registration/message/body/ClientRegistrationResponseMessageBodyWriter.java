@@ -42,13 +42,13 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.OAuth2.Application)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=LiferayClientRegistrationResponseMessageBodyWriter"
+		"osgi.jaxrs.name=ClientRegistrationResponseMessageBodyWriter"
 	},
 	service = MessageBodyWriter.class
 )
 @Produces("application/json")
 @Provider
-public class LiferayClientRegistrationResponseMessageBodyWriter
+public class ClientRegistrationResponseMessageBodyWriter
 	extends BaseMessageBodyWriter<LiferayClientRegistrationResponse> {
 
 	@Override
@@ -103,7 +103,7 @@ public class LiferayClientRegistrationResponseMessageBodyWriter
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LiferayClientRegistrationResponseMessageBodyWriter.class);
+		ClientRegistrationResponseMessageBodyWriter.class);
 
 	private static class ObjectMapperHolder {
 

@@ -398,6 +398,20 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public WorkflowInstance patchWorkflowInstance(
+			@GraphQLName("workflowInstanceId") Long workflowInstanceId,
+			@GraphQLName("workflowInstance") WorkflowInstance workflowInstance)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_workflowInstanceResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workflowInstanceResource ->
+				workflowInstanceResource.patchWorkflowInstance(
+					workflowInstanceId, workflowInstance));
+	}
+
+	@GraphQLField
 	public WorkflowInstance createWorkflowInstanceChangeTransition(
 			@GraphQLName("workflowInstanceId") Long workflowInstanceId,
 			@GraphQLName("changeTransition") ChangeTransition changeTransition)

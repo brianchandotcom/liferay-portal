@@ -63,6 +63,10 @@ public interface WorkflowInstanceResource {
 			Pagination pagination)
 		throws Exception;
 
+	public WorkflowInstance patchWorkflowInstance(
+			Long workflowInstanceId, WorkflowInstance workflowInstance)
+		throws Exception;
+
 	public WorkflowInstance postWorkflowInstanceChangeTransition(
 			Long workflowInstanceId, ChangeTransition changeTransition)
 		throws Exception;

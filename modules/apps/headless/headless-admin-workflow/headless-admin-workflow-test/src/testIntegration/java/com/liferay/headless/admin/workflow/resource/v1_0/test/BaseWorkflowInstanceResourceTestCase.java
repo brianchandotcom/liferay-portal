@@ -838,6 +838,40 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 	}
 
 	@Test
+	public void testPatchWorkflowInstance() throws Exception {
+		WorkflowInstance postWorkflowInstance =
+			testPatchWorkflowInstance_addWorkflowInstance();
+
+		WorkflowInstance randomPatchWorkflowInstance =
+			randomPatchWorkflowInstance();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		WorkflowInstance patchWorkflowInstance =
+			workflowInstanceResource.patchWorkflowInstance(
+				postWorkflowInstance.getId(), randomPatchWorkflowInstance);
+
+		WorkflowInstance expectedPatchWorkflowInstance =
+			postWorkflowInstance.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchWorkflowInstance, expectedPatchWorkflowInstance);
+
+		WorkflowInstance getWorkflowInstance =
+			workflowInstanceResource.getWorkflowInstance(
+				patchWorkflowInstance.getId());
+
+		assertEquals(expectedPatchWorkflowInstance, getWorkflowInstance);
+		assertValid(getWorkflowInstance);
+	}
+
+	protected WorkflowInstance testPatchWorkflowInstance_addWorkflowInstance()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPostWorkflowInstanceChangeTransition() throws Exception {
 		WorkflowInstance randomWorkflowInstance = randomWorkflowInstance();
 

@@ -206,6 +206,11 @@ public class ServletDataImpl implements ServletData {
 							WorkflowInstanceResourceImpl.class,
 							"deleteWorkflowInstanceBatch"));
 					put(
+						"mutation#patchWorkflowInstance",
+						new ObjectValuePair<>(
+							WorkflowInstanceResourceImpl.class,
+							"patchWorkflowInstance"));
+					put(
 						"mutation#createWorkflowInstanceChangeTransition",
 						new ObjectValuePair<>(
 							WorkflowInstanceResourceImpl.class,

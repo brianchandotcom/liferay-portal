@@ -6,46 +6,38 @@
 package com.liferay.headless.admin.workflow.internal.resource.v1_0;
 
 import com.liferay.headless.admin.workflow.dto.v1_0.ChangeTransition;
-import com.liferay.headless.admin.workflow.dto.v1_0.Role;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTask;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskAssignToMe;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskAssignToRole;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskAssignToUser;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTasksBulkSelection;
-import com.liferay.headless.admin.workflow.internal.dto.v1_0.util.CreatorUtil;
-import com.liferay.headless.admin.workflow.internal.dto.v1_0.util.ObjectReviewedUtil;
-import com.liferay.headless.admin.workflow.internal.dto.v1_0.util.RoleUtil;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowTaskResource;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
-import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
-import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.kernel.workflow.search.WorkflowModelSearchResult;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.comparator.WorkflowComparatorFactory;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -405,8 +397,7 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 		if (GetterUtil.getBoolean(
 				workflowTasksBulkSelection.getSearchByRoles())) {
 
-			assigneeClassName =
-				com.liferay.portal.kernel.model.Role.class.getName();
+			assigneeClassName = Role.class.getName();
 		}
 
 		WorkflowModelSearchResult
@@ -471,32 +462,6 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 		).build();
 	}
 
-	private Role[] _getRoles(List<WorkflowTaskAssignee> workflowTaskAssignees)
-		throws Exception {
-
-		List<Role> roles = new ArrayList<>();
-
-		for (WorkflowTaskAssignee workflowTaskAssignee :
-				workflowTaskAssignees) {
-
-			String assigneeClassName =
-				workflowTaskAssignee.getAssigneeClassName();
-
-			if (!assigneeClassName.equals(
-					com.liferay.portal.kernel.model.Role.class.getName())) {
-
-				continue;
-			}
-
-			roles.add(
-				_toRole(
-					_roleLocalService.getRole(
-						workflowTaskAssignee.getAssigneeClassPK())));
-		}
-
-		return roles.toArray(new Role[0]);
-	}
-
 	private Map<String, Serializable> _getWorkflowContext(long workflowTaskId)
 		throws Exception {
 
@@ -549,99 +514,54 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 			ascending);
 	}
 
-	private Role _toRole(com.liferay.portal.kernel.model.Role role)
-		throws Exception {
-
-		return RoleUtil.toRole(
-			contextAcceptLanguage.isAcceptAllLanguages(),
-			contextAcceptLanguage.getPreferredLocale(), _portal, role,
-			_userLocalService.fetchUser(role.getUserId()));
-	}
-
 	private WorkflowTask _toWorkflowTask(
 			com.liferay.portal.kernel.workflow.WorkflowTask workflowTask)
 		throws Exception {
 
-		return new WorkflowTask() {
-			{
-				setActions(
-					() -> HashMapBuilder.<String, Map<String, String>>put(
-						"assignToMe",
-						addAction(
-							ActionKeys.UPDATE, workflowTask.getWorkflowTaskId(),
-							"postWorkflowTaskAssignToMe",
-							_kaleoTaskInstanceTokenModelResourcePermission)
-					).put(
-						"assignToRole",
-						addAction(
-							ActionKeys.UPDATE, workflowTask.getWorkflowTaskId(),
-							"postWorkflowTaskAssignToRole",
-							_kaleoTaskInstanceTokenModelResourcePermission)
-					).put(
-						"assignToUser",
-						addAction(
-							ActionKeys.UPDATE, workflowTask.getWorkflowTaskId(),
-							"postWorkflowTaskAssignToUser",
-							_kaleoTaskInstanceTokenModelResourcePermission)
-					).put(
-						"changeTransition",
-						addAction(
-							ActionKeys.UPDATE, workflowTask.getWorkflowTaskId(),
-							"postWorkflowTaskChangeTransition",
-							_kaleoTaskInstanceTokenModelResourcePermission)
-					).put(
-						"updateDueDate",
-						addAction(
-							ActionKeys.UPDATE, workflowTask.getWorkflowTaskId(),
-							"patchWorkflowTaskUpdateDueDate",
-							_kaleoTaskInstanceTokenModelResourcePermission)
-					).build());
-				setAssigneePerson(
-					() -> {
-						if (workflowTask.getAssigneeUserId() <= 0) {
-							return null;
-						}
-
-						return CreatorUtil.toCreator(
-							_portal,
-							_userLocalService.fetchUser(
-								workflowTask.getAssigneeUserId()));
-					});
-				setAssigneeRoles(
-					() -> {
-						if (workflowTask.getAssigneeUserId() <= 0) {
-							return null;
-						}
-
-						return _getRoles(
-							workflowTask.getWorkflowTaskAssignees());
-					});
-				setCompleted(workflowTask::isCompleted);
-				setDateCompletion(workflowTask::getCompletionDate);
-				setDateCreated(workflowTask::getCreateDate);
-				setDateDue(workflowTask::getDueDate);
-				setDescription(workflowTask::getDescription);
-				setId(workflowTask::getWorkflowTaskId);
-				setLabel(
-					() -> _language.get(
-						ResourceBundleUtil.getModuleAndPortalResourceBundle(
-							contextAcceptLanguage.getPreferredLocale(),
-							WorkflowTaskResourceImpl.class),
-						workflowTask.getName()));
-				setName(workflowTask::getName);
-				setObjectReviewed(
-					() -> ObjectReviewedUtil.toObjectReviewed(
-						contextAcceptLanguage.getPreferredLocale(),
-						workflowTask.getOptionalAttributes()));
-				setWorkflowDefinitionId(workflowTask::getWorkflowDefinitionId);
-				setWorkflowDefinitionName(
-					workflowTask::getWorkflowDefinitionName);
-				setWorkflowDefinitionVersion(
-					() -> String.valueOf(
-						workflowTask.getWorkflowDefinitionVersion()));
-				setWorkflowInstanceId(workflowTask::getWorkflowInstanceId);
-			}
-		};
+		return _workflowTaskDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(),
+				HashMapBuilder.<String, Map<String, String>>put(
+					"assignToMe",
+					addAction(
+						ActionKeys.UPDATE, workflowTask.getWorkflowTaskId(),
+						"postWorkflowTaskAssignToMe",
+						_kaleoTaskInstanceTokenModelResourcePermission)
+				).put(
+					"assignToRole",
+					addAction(
+						ActionKeys.UPDATE, workflowTask.getWorkflowTaskId(),
+						"postWorkflowTaskAssignToRole",
+						_kaleoTaskInstanceTokenModelResourcePermission)
+				).put(
+					"assignToUser",
+					addAction(
+						ActionKeys.UPDATE, workflowTask.getWorkflowTaskId(),
+						"postWorkflowTaskAssignToUser",
+						_kaleoTaskInstanceTokenModelResourcePermission)
+				).put(
+					"changeTransition",
+					addAction(
+						ActionKeys.UPDATE, workflowTask.getWorkflowTaskId(),
+						"postWorkflowTaskChangeTransition",
+						_kaleoTaskInstanceTokenModelResourcePermission)
+				).put(
+					"get",
+					addAction(
+						ActionKeys.VIEW, workflowTask.getWorkflowTaskId(),
+						"getWorkflowTask",
+						_kaleoTaskInstanceTokenModelResourcePermission)
+				).put(
+					"updateDueDate",
+					addAction(
+						ActionKeys.UPDATE, workflowTask.getWorkflowTaskId(),
+						"patchWorkflowTaskUpdateDueDate",
+						_kaleoTaskInstanceTokenModelResourcePermission)
+				).build(),
+				null, contextHttpServletRequest,
+				workflowTask.getWorkflowTaskId(),
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser));
 	}
 
 	@Reference(
@@ -651,22 +571,16 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 		_kaleoTaskInstanceTokenModelResourcePermission;
 
 	@Reference
-	private Language _language;
-
-	@Reference
-	private Portal _portal;
-
-	@Reference
-	private RoleLocalService _roleLocalService;
-
-	@Reference
-	private UserLocalService _userLocalService;
-
-	@Reference
 	private WorkflowComparatorFactory _workflowComparatorFactory;
 
 	@Reference
 	private WorkflowInstanceManager _workflowInstanceManager;
+
+	@Reference(
+		target = "(component.name=com.liferay.headless.admin.workflow.internal.dto.v1_0.converter.WorkflowTaskDTOConverter)"
+	)
+	private DTOConverter<KaleoTaskInstanceToken, WorkflowTask>
+		_workflowTaskDTOConverter;
 
 	@Reference
 	private WorkflowTaskManager _workflowTaskManager;

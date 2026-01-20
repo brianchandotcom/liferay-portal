@@ -450,6 +450,11 @@ components:
                         type: object
                     readOnly: true
                     type: object
+                assignedToMe:
+                    description:
+                        A flag that indicates whether the task is assigned to the currently logged-in user.
+                    readOnly: true
+                    type: boolean
                 assigneePerson:
                     $ref: "#/components/schemas/Creator"
                 assigneeRoles:

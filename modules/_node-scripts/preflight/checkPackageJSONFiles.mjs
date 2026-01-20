@@ -497,6 +497,7 @@ const ALLOWED_NON_GLOBAL_DEPENDENCIES = [
 	'@ckeditor/ckeditor5-widget',
 	'@ckeditor/ckeditor5-word-count',
 	'@clayui/css',
+	'@jsonurl/jsonurl',
 	'@liferay/amd-loader',
 	'@types/request',
 	'@types/node-fetch',

@@ -6,11 +6,17 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClaySticker from '@clayui/sticker';
-import {IBaseFilterState, IFDSState} from '@liferay/frontend-data-set-web';
+import {
+	FDS_EVENT,
+	IBaseFilterState,
+	IFDSState,
+} from '@liferay/frontend-data-set-web';
 import {useLiferayState} from '@liferay/frontend-js-state-web/react';
 import classNames from 'classnames';
-import React, {useEffect, useRef} from 'react';
+import {fetch} from 'frontend-js-web';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import {cmpTasksFDSAtom} from '../props_transformer/atoms';
 
@@ -76,19 +82,21 @@ function QuickFilterButton({
 }
 
 export default function TasksQuickFilters({
-	blockedCount,
-	inProgressCount,
-	overdueCount,
-	totalCount,
+	cmpProjectId,
 }: {
-	blockedCount: number;
-	inProgressCount: number;
-	overdueCount: number;
-	totalCount: number;
+	cmpProjectId: string;
 }) {
-	const [activeQuickFilter, setActiveQuickFilter] = React.useState<
-		string | null
-	>(null);
+	const [activeQuickFilter, setActiveQuickFilter] = useState<string | null>(
+		null
+	);
+
+	const [blockedCount, setBlockedCount] = useState(0);
+	const [inProgressCount, setInProgressCount] = useState(0);
+	const [overdueCount, setOverdueCount] = useState(0);
+	const [totalCount, setTotalCount] = useState(0);
+
+	const [loading, setLoading] = useState(true);
+
 	const [tasksFDSState, setTasksFDSState] =
 		useLiferayState<IFDSState>(cmpTasksFDSAtom);
 
@@ -241,6 +249,25 @@ export default function TasksQuickFilters({
 		isQuickFilterChangeRef.current = true;
 	};
 
+	const fetchCounts = useCallback(async () => {
+		fetch(`/o/cmp/projects/${cmpProjectId}`, {
+			method: 'GET',
+		}).then(async (response: Response) => {
+			const data = await response.json();
+
+			setBlockedCount(data.blockedCount);
+			setInProgressCount(data.inProgressCount);
+			setOverdueCount(data.overdueCount);
+			setTotalCount(data.totalCount);
+		});
+	}, [cmpProjectId]);
+
+	useEffect(() => {
+		fetchCounts();
+
+		setLoading(false);
+	}, [fetchCounts]);
+
 	/**
 	 * Clear the active quick filter if the filters in the FDS changes.
 	 * `isQuickFilterChangeRef` is used to prevent the active quick filter from
@@ -284,75 +311,83 @@ export default function TasksQuickFilters({
 			handleUpdateTasksQuickFilter
 		);
 
+		Liferay.on(FDS_EVENT.DISPLAY_UPDATED, fetchCounts);
+
 		return () => {
 			Liferay.detach(
 				UPDATE_TASKS_QUICK_FILTER_EVENT,
 				handleUpdateTasksQuickFilter
 			);
+
+			Liferay.detach(FDS_EVENT.DISPLAY_UPDATED, fetchCounts);
 		};
 	}, []);
 
 	return (
 		<div className="lfr-cmp__tasks-quick-filters-container">
-			<ClayLayout.ContainerFluid className="px-0" size={false}>
-				<ClayLayout.Row>
-					<ClayLayout.Col className="px-2" size={3}>
-						<QuickFilterButton
-							active={
-								activeQuickFilter ===
-								TASK_QUICK_FILTER_TYPES.TOTAL
-							}
-							count={totalCount}
-							displayType="unstyled"
-							icon="task-status"
-							label={Liferay.Language.get('total-tasks')}
-							onClick={handleTotalTasksClick}
-						/>
-					</ClayLayout.Col>
+			{loading ? (
+				<ClayLoadingIndicator />
+			) : (
+				<ClayLayout.ContainerFluid className="px-0" size={false}>
+					<ClayLayout.Row>
+						<ClayLayout.Col className="px-2" size={3}>
+							<QuickFilterButton
+								active={
+									activeQuickFilter ===
+									TASK_QUICK_FILTER_TYPES.TOTAL
+								}
+								count={totalCount}
+								displayType="unstyled"
+								icon="task-status"
+								label={Liferay.Language.get('total-tasks')}
+								onClick={handleTotalTasksClick}
+							/>
+						</ClayLayout.Col>
 
-					<ClayLayout.Col className="px-2" size={3}>
-						<QuickFilterButton
-							active={
-								activeQuickFilter ===
-								TASK_QUICK_FILTER_TYPES.IN_PROGRESS
-							}
-							count={inProgressCount}
-							displayType="info"
-							icon="analytics"
-							label={Liferay.Language.get('in-progress')}
-							onClick={handleInProgressClick}
-						/>
-					</ClayLayout.Col>
+						<ClayLayout.Col className="px-2" size={3}>
+							<QuickFilterButton
+								active={
+									activeQuickFilter ===
+									TASK_QUICK_FILTER_TYPES.IN_PROGRESS
+								}
+								count={inProgressCount}
+								displayType="info"
+								icon="analytics"
+								label={Liferay.Language.get('in-progress')}
+								onClick={handleInProgressClick}
+							/>
+						</ClayLayout.Col>
 
-					<ClayLayout.Col className="px-2" size={3}>
-						<QuickFilterButton
-							active={
-								activeQuickFilter ===
-								TASK_QUICK_FILTER_TYPES.BLOCKED
-							}
-							count={blockedCount}
-							displayType="danger"
-							icon="block"
-							label={Liferay.Language.get('blocked')}
-							onClick={handleBlockedClick}
-						/>
-					</ClayLayout.Col>
+						<ClayLayout.Col className="px-2" size={3}>
+							<QuickFilterButton
+								active={
+									activeQuickFilter ===
+									TASK_QUICK_FILTER_TYPES.BLOCKED
+								}
+								count={blockedCount}
+								displayType="danger"
+								icon="block"
+								label={Liferay.Language.get('blocked')}
+								onClick={handleBlockedClick}
+							/>
+						</ClayLayout.Col>
 
-					<ClayLayout.Col className="px-2" size={3}>
-						<QuickFilterButton
-							active={
-								activeQuickFilter ===
-								TASK_QUICK_FILTER_TYPES.OVERDUE
-							}
-							count={overdueCount}
-							displayType="warning"
-							icon="exclamation-full"
-							label={Liferay.Language.get('overdue')}
-							onClick={handleOverdueClick}
-						/>
-					</ClayLayout.Col>
-				</ClayLayout.Row>
-			</ClayLayout.ContainerFluid>
+						<ClayLayout.Col className="px-2" size={3}>
+							<QuickFilterButton
+								active={
+									activeQuickFilter ===
+									TASK_QUICK_FILTER_TYPES.OVERDUE
+								}
+								count={overdueCount}
+								displayType="warning"
+								icon="exclamation-full"
+								label={Liferay.Language.get('overdue')}
+								onClick={handleOverdueClick}
+							/>
+						</ClayLayout.Col>
+					</ClayLayout.Row>
+				</ClayLayout.ContainerFluid>
+			)}
 		</div>
 	);
 }

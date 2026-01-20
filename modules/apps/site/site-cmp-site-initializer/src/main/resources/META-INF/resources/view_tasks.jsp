@@ -14,6 +14,7 @@ ViewTasksSectionDisplayContext viewTasksSectionDisplayContext = (ViewTasksSectio
 <div>
 	<react:component
 		module="{TasksQuickFilters} from site-cmp-site-initializer"
+		props="<%= viewTasksSectionDisplayContext.getTaskQuickFiltersProps() %>"
 	/>
 </div>
 

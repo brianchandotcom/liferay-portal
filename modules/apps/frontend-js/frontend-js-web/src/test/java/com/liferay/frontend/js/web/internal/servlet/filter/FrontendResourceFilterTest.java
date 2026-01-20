@@ -38,8 +38,8 @@ public class FrontendResourceFilterTest {
 
 		frontendResourceFilter.send(
 			_mockFrontendResource(
-				false, FrontendJSWebTestUtil.randomHashedFileHash(),
-				RandomTestUtil.randomLong(), true, true),
+				FrontendJSWebTestUtil.randomHashedFileHash(), true,
+				RandomTestUtil.randomLong(), false, true),
 			new MockHttpServletRequest(), mockHttpServletResponse);
 
 		String contentType = mockHttpServletResponse.getHeader("Content-Type");
@@ -62,7 +62,7 @@ public class FrontendResourceFilterTest {
 
 		frontendResourceFilter.send(
 			_mockFrontendResource(
-				false, eTag, RandomTestUtil.randomLong(), true, true),
+				eTag, true, RandomTestUtil.randomLong(), false, true),
 			new MockHttpServletRequest(), mockHttpServletResponse);
 
 		Assert.assertEquals(eTag, mockHttpServletResponse.getHeader("ETag"));
@@ -77,8 +77,8 @@ public class FrontendResourceFilterTest {
 
 		frontendResourceFilter.send(
 			_mockFrontendResource(
-				false, FrontendJSWebTestUtil.randomHashedFileHash(),
-				RandomTestUtil.randomLong(), true, true),
+				FrontendJSWebTestUtil.randomHashedFileHash(), true,
+				RandomTestUtil.randomLong(), false, true),
 			new MockHttpServletRequest(), mockHttpServletResponse);
 
 		String cacheControl = mockHttpServletResponse.getHeader(
@@ -100,7 +100,7 @@ public class FrontendResourceFilterTest {
 
 		frontendResourceFilter.send(
 			_mockFrontendResource(
-				false, FrontendJSWebTestUtil.randomHashedFileHash(), maxAge,
+				FrontendJSWebTestUtil.randomHashedFileHash(), false, maxAge,
 				false, true),
 			new MockHttpServletRequest(), mockHttpServletResponse);
 
@@ -119,8 +119,8 @@ public class FrontendResourceFilterTest {
 
 		frontendResourceFilter.send(
 			_mockFrontendResource(
-				true, FrontendJSWebTestUtil.randomHashedFileHash(),
-				RandomTestUtil.randomLong(), false, true),
+				FrontendJSWebTestUtil.randomHashedFileHash(), false,
+				RandomTestUtil.randomLong(), true, true),
 			new MockHttpServletRequest(), mockHttpServletResponse);
 
 		String cacheControl = mockHttpServletResponse.getHeader(
@@ -138,7 +138,7 @@ public class FrontendResourceFilterTest {
 
 		frontendResourceFilter.send(
 			_mockFrontendResource(
-				false, FrontendJSWebTestUtil.randomHashedFileHash(),
+				FrontendJSWebTestUtil.randomHashedFileHash(), false,
 				RandomTestUtil.randomLong(), false, false),
 			new MockHttpServletRequest(), mockHttpServletResponse);
 
@@ -151,7 +151,7 @@ public class FrontendResourceFilterTest {
 
 		frontendResourceFilter.send(
 			_mockFrontendResource(
-				false, FrontendJSWebTestUtil.randomHashedFileHash(),
+				FrontendJSWebTestUtil.randomHashedFileHash(), false,
 				RandomTestUtil.randomLong(), false, true),
 			new MockHttpServletRequest(), mockHttpServletResponse);
 
@@ -161,7 +161,7 @@ public class FrontendResourceFilterTest {
 	}
 
 	private FrontendResource _mockFrontendResource(
-		boolean aPrivate, String eTag, long maxAge, boolean immutable,
+		String eTag, boolean immutable, long maxAge, boolean isPrivate,
 		boolean sendNoCache) {
 
 		return new FrontendResource() {
@@ -194,7 +194,7 @@ public class FrontendResourceFilterTest {
 
 			@Override
 			public boolean isPrivate() {
-				return aPrivate;
+				return isPrivate;
 			}
 
 			@Override

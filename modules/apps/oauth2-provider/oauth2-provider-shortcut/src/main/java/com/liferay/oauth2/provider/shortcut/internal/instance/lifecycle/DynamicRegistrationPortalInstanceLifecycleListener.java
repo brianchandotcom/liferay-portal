@@ -43,6 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jorge García Jiménez
  */
 @Component(
+	property = "clientId=DynamicRegistrator",
 	service = PortalInstanceLifecycleListener.class
 )
 public class DynamicRegistrationPortalInstanceLifecycleListener
@@ -77,7 +78,7 @@ public class DynamicRegistrationPortalInstanceLifecycleListener
 
 		OAuth2Application oAuth2Application =
 			_oAuth2ApplicationLocalService.fetchOAuth2Application(
-				company.getCompanyId(), "DynamicRegistrator");
+				company.getCompanyId(), _clientId);
 
 		if (oAuth2Application != null) {
 			return;
@@ -93,7 +94,7 @@ public class DynamicRegistrationPortalInstanceLifecycleListener
 			OAuth2SecureRandomGenerator.generateClientId(),
 			ClientProfile.HEADLESS_SERVER.id(),
 			OAuth2SecureRandomGenerator.generateClientSecret(), null, null,
-			null, 0, null, OAuth2ProviderConstants.OAUTH2_APP_NAME_DYNAMIC_REGISTRATOR, null, Collections.emptyList(),
+			null, 0, null, _applicationName, null, Collections.emptyList(),
 			false, false, null, new ServiceContext());
 
 		_addResourcePermissions(oAuth2Application);
@@ -103,6 +104,10 @@ public class DynamicRegistrationPortalInstanceLifecycleListener
 	protected void activate(Map<String, Object> properties) throws Exception {
 		_lastModifiedTime = ConfigurationPersistenceUtil.update(
 			this, properties);
+
+		_applicationName =
+			OAuth2ProviderConstants.OAUTH2_APP_NAME_DYNAMIC_REGISTRATOR;
+		_clientId = GetterUtil.getString(properties.get("clientId"));
 	}
 
 	private void _addResourcePermissions(OAuth2Application oAuth2Application)
@@ -139,6 +144,8 @@ public class DynamicRegistrationPortalInstanceLifecycleListener
 			});
 	}
 
+	private String _applicationName;
+	private String _clientId = "DynamicRegistrator";
 	private long _lastModifiedTime;
 
 	@Reference

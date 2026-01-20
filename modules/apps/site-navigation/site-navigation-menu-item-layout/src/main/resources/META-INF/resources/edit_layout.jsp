@@ -13,6 +13,20 @@ SiteNavigationMenuItem siteNavigationMenuItem = (SiteNavigationMenuItem)request.
 boolean useCustomName = GetterUtil.getBoolean(request.getAttribute(SiteNavigationMenuItemTypeLayoutWebKeys.USE_CUSTOM_NAME));
 
 String taglibOnChange = "Liferay.Util.toggleDisabled('#" + liferayPortletResponse.getNamespace() + "nameBoundingBox input, [for=" + liferayPortletResponse.getNamespace() + "name]', !event.target.checked)";
+
+String externalReferenceCode = StringPool.BLANK;
+String privateLayout = StringPool.BLANK;
+String title = StringPool.BLANK;
+
+if ((selLayout == null) && (siteNavigationMenuItem != null)) {
+	UnicodeProperties typeSettingsUnicodeProperties = UnicodePropertiesBuilder.fastLoad(
+		siteNavigationMenuItem.getTypeSettings()
+	).build();
+
+	externalReferenceCode = typeSettingsUnicodeProperties.getProperty("externalReferenceCode");
+	privateLayout = typeSettingsUnicodeProperties.getProperty("privateLayout");
+	title = typeSettingsUnicodeProperties.getProperty("title");
+}
 %>
 
 <aui:fieldset>
@@ -21,7 +35,8 @@ String taglibOnChange = "Liferay.Util.toggleDisabled('#" + liferayPortletRespons
 
 <aui:input disabled="<%= !useCustomName %>" label="name" localized="<%= true %>" maxlength='<%= ModelHintsUtil.getMaxLength(SiteNavigationMenuItem.class.getName(), "name") %>' name="name" placeholder="name" required="<%= true %>" type="text" value='<%= SiteNavigationMenuItemUtil.getSiteNavigationMenuItemXML(siteNavigationMenuItem, "name") %>' />
 
-<aui:input id="privateLayout" name="TypeSettingsProperties--privateLayout--" required="<%= true %>" type="hidden" value="<%= (selLayout != null) ? selLayout.isPrivateLayout() : StringPool.BLANK %>" />
+<aui:input id="privateLayout" name="TypeSettingsProperties--privateLayout--" required="<%= true %>" type="hidden" value="<%= (selLayout != null) ? selLayout.isPrivateLayout() : privateLayout %>" />
+<aui:input id="title" name="TypeSettingsProperties--title--" type="hidden" value="<%= (selLayout != null) ? selLayout.getName(locale) : title %>" />
 
 <div class="form-group input-text-wrapper mb-2 text-default">
 	<div class="d-inline-block" id="<portlet:namespace />layoutItemRemove" role="button">
@@ -44,7 +59,7 @@ String taglibOnChange = "Liferay.Util.toggleDisabled('#" + liferayPortletRespons
 		</span>
 	</div>
 
-	<aui:input id="externalReferenceCode" name="TypeSettingsProperties--externalReferenceCode--" required="<%= true %>" type="hidden" value="<%= (selLayout != null) ? selLayout.getExternalReferenceCode() : StringPool.BLANK %>" />
+	<aui:input id="externalReferenceCode" name="TypeSettingsProperties--externalReferenceCode--" required="<%= true %>" type="hidden" value="<%= (selLayout != null) ? selLayout.getExternalReferenceCode() : externalReferenceCode %>" />
 </div>
 
 <%

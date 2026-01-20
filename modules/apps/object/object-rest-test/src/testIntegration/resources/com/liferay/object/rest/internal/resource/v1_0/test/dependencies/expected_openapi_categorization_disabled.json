@@ -513,6 +513,12 @@
 			},
 			"ObjectDefinitionBrief": {
 				"properties": {
+					"classNameId": {
+						"description": "The object definition's class name ID.",
+						"format": "int64",
+						"readOnly": true,
+						"type": "integer"
+					},
 					"externalReferenceCode": {
 						"description": "The object definition's external reference code.",
 						"readOnly": true,

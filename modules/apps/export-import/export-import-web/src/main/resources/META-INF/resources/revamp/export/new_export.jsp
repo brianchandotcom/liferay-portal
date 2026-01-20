@@ -50,5 +50,10 @@ portletDisplay.setURLBack(backURL);
 
 	<react:component
 		module="{NewExport} from exportimport-web"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"backURL", backURL
+			).build()
+		%>'
 	/>
 </clay:container-fluid>

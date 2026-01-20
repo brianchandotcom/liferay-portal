@@ -21,12 +21,6 @@ export type SegmentActivationDetails = {
 	segmentActivationId: string;
 };
 
-const data: SegmentActivationDetails = {
-	frequencyType: SegmentActivationFrequencyTypes.Batch,
-	scheduleType: SegmentActivationScheduleTypes.Indefinitely,
-	segmentActivationId: '1'
-};
-
 const FREQUENCY_TYPE_LABELS: Record<SegmentActivationFrequencyTypes, string> = {
 	[SegmentActivationFrequencyTypes.Batch]: Liferay.Language.get('batch'),
 	[SegmentActivationFrequencyTypes.RealTime]: Liferay.Language.get(
@@ -37,9 +31,12 @@ const FREQUENCY_TYPE_LABELS: Record<SegmentActivationFrequencyTypes, string> = {
 const SegmentActivationCard: React.FC<ISegmentActivationCardProps> = ({
 	segmentActivation
 }) => {
-	// Use mocked data
-	const {frequencyType, scheduleEndDate, scheduleStartDate, scheduleType} =
-		segmentActivation || data;
+	const {
+		frequencyType,
+		scheduleEndDate,
+		scheduleStartDate,
+		scheduleType
+	} = segmentActivation;
 
 	const labelMessage =
 		scheduleType === SegmentActivationScheduleTypes.Indefinitely
@@ -66,7 +63,7 @@ const SegmentActivationCard: React.FC<ISegmentActivationCardProps> = ({
 							</List.ItemTitle>
 							<List.ItemText className='mb-2'>
 								{Liferay.Language.get(
-									'syncs-individual-profiles-to-liferay-dxp-to-deliver-personalization-via-pages-collections-a-b-tests-and-recommendations'
+									'this-syncs-individual-profiles-to-liferay-dxp-to-deliver-personalization-via-pages-collections-a-b-tests-and-recommendations='
 								)}
 							</List.ItemText>
 							<Label

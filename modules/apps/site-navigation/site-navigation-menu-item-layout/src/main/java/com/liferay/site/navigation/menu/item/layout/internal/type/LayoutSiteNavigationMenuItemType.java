@@ -240,7 +240,19 @@ public class LayoutSiteNavigationMenuItemType
 		Layout layout = _fetchLayout(siteNavigationMenuItem);
 
 		if (layout == null) {
-			return StringPool.BLANK;
+			UnicodeProperties typeSettingsUnicodeProperties =
+				UnicodePropertiesBuilder.fastLoad(
+					siteNavigationMenuItem.getTypeSettings()
+				).build();
+
+			String privateLayout = typeSettingsUnicodeProperties.getProperty(
+				"privateLayout");
+
+			if (privateLayout.equals("true")) {
+				return _language.get(locale, "private-page");
+			}
+
+			return _language.get(locale, "page");
 		}
 
 		Group group = layout.getGroup();

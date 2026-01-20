@@ -331,7 +331,7 @@ public class LiferayOAuthDataProvider
 		catch (PortalException portalException) {
 			_log.error(
 				"Unable to populate access token for Liferay OAuth2 " +
-					"Application " +
+					"application " +
 						oAuth2Authorization.getOAuth2ApplicationId(),
 				portalException);
 
@@ -385,7 +385,7 @@ public class LiferayOAuthDataProvider
 		}
 		catch (ConfigurationException configurationException) {
 			throw new OAuthServiceException(
-				"Unable to get System Configuration: " +
+				"Unable to get system configuration: " +
 					OAuth2AuthorizationFlowConfiguration.class.getName(),
 				configurationException);
 		}
@@ -649,7 +649,7 @@ public class LiferayOAuthDataProvider
 		}
 		catch (ConfigurationException configurationException) {
 			throw new OAuthServiceException(
-				"Unable to get System Configuration: " +
+				"Unable to get system configuration: " +
 					OAuth2ProviderConfiguration.class.getName(),
 				configurationException);
 		}
@@ -1144,7 +1144,7 @@ public class LiferayOAuthDataProvider
 
 		if (!StringUtil.startsWith(jwksURI, "https://")) {
 			OAuth2ErrorUtil.reportInvalidRequestError(
-				"The JWKS URI field must use the HTTPS scheme to be valid.",
+				"The jwksURI field must use the https scheme",
 				OAuthConstants.INVALID_REQUEST, Response.Status.BAD_REQUEST);
 
 			return null;
@@ -1161,8 +1161,7 @@ public class LiferayOAuthDataProvider
 
 			if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
 				throw new SystemException(
-					"Unable to retrieve JWKS information from " + jwksURI +
-						".");
+					"Unable to retrieve JWKS information from " + jwksURI);
 			}
 
 			return _jsonFactory.createJSONObject(
@@ -1173,7 +1172,7 @@ public class LiferayOAuthDataProvider
 			_log.error(exception);
 
 			OAuth2ErrorUtil.reportInvalidRequestError(
-				"Unable to retrieve JWKS information from " + jwksURI + ".",
+				"Unable to retrieve JWKS information from " + jwksURI,
 				OAuthConstants.INVALID_REQUEST, Response.Status.BAD_REQUEST);
 		}
 
@@ -1327,7 +1326,7 @@ public class LiferayOAuthDataProvider
 
 		if (oAuth2Application == null) {
 			throw new SystemException(
-				"No OAuth2 Application found for OAuth2 Authorization " +
+				"No OAuth2 application found for OAuth2 authorization " +
 					oAuth2Authorization);
 		}
 
@@ -1439,7 +1438,7 @@ public class LiferayOAuthDataProvider
 				else {
 					if (_log.isDebugEnabled()) {
 						_log.debug(
-							"Unknown or disabled Grant Type " +
+							"Unknown or disabled grant type " +
 								allowedGrantType);
 					}
 				}
@@ -1447,7 +1446,7 @@ public class LiferayOAuthDataProvider
 		}
 		catch (ConfigurationException configurationException) {
 			throw new OAuthServiceException(
-				"Unable to get System Configuration from " +
+				"Unable to get system configuration from " +
 					OAuth2ProviderConfiguration.class.getName(),
 				configurationException);
 		}

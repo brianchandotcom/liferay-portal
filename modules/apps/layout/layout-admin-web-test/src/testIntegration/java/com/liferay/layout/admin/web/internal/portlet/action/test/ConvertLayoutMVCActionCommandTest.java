@@ -382,11 +382,10 @@ public class ConvertLayoutMVCActionCommandTest {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
-		mockLiferayPortletActionRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay(user));
-
 		mockLiferayPortletActionRequest.addParameter(
 			"rowIds", new String[] {String.valueOf(plid)});
+		mockLiferayPortletActionRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay(user));
 
 		return mockLiferayPortletActionRequest;
 	}

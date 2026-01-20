@@ -11,11 +11,9 @@ import com.liferay.headless.admin.site.dto.v1_0.ThumbnailURLReference;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Repository;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -53,12 +51,9 @@ public class FileEntryUtil {
 					thumbnailURLReference.getExternalReferenceCode(), groupId);
 
 		if (fileEntry == null) {
-			User user = UserLocalServiceUtil.getUser(
-				serviceContext.getUserId());
-
 			fileEntry = _getFileEntry(
 				groupId, resourceName, serviceContext, thumbnailURLReference,
-				user);
+				serviceContext.getUserId());
 		}
 
 		return fileEntry.getFileEntryId();
@@ -66,7 +61,7 @@ public class FileEntryUtil {
 
 	private static FileEntry _getFileEntry(
 			long groupId, String resourceName, ServiceContext serviceContext,
-			ThumbnailURLReference thumbnailURLReference, User user)
+			ThumbnailURLReference thumbnailURLReference, long userId)
 		throws Exception {
 
 		Http.Options options = new Http.Options();
@@ -111,7 +106,7 @@ public class FileEntryUtil {
 				extension;
 
 		return DLAppLocalServiceUtil.addFileEntry(
-			thumbnailURLReference.getExternalReferenceCode(), user.getUserId(),
+			thumbnailURLReference.getExternalReferenceCode(), userId,
 			repository.getRepositoryId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			resourceName + "_" + fileName, mimeType, fileName, null, null, null,

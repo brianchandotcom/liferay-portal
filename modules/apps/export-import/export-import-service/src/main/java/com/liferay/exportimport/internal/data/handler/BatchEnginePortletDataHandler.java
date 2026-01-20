@@ -413,7 +413,15 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				}
 			}
 
-			portletDataContext.setValidateExistingDataHandler(true);
+			if (_stagingGroupHelper.isCompanyGroup(
+					portletDataContext.getCompanyId(),
+					portletDataContext.getScopeGroupId())) {
+
+				portletDataContext.setValidateExistingDataHandler(false);
+			}
+			else {
+				portletDataContext.setValidateExistingDataHandler(true);
+			}
 
 			return getExportDataRootElementString(
 				addExportDataRootElement(portletDataContext));

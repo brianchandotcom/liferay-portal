@@ -152,6 +152,16 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 		return fdsFilters;
 	}
 
+	public Map<String, Object> getTaskQuickFiltersProps() {
+		if (_assetEntry == null) {
+			return null;
+		}
+
+		return HashMapBuilder.<String, Object>put(
+			"cmpProjectId", _assetEntry.getClassPK()
+		).build();
+	}
+
 	private final AssetEntry _assetEntry;
 	private final ObjectDefinition _projectObjectDefinition;
 

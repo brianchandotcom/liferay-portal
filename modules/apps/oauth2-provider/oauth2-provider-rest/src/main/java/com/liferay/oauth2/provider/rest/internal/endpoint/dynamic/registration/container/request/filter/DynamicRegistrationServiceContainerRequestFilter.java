@@ -160,6 +160,7 @@ public class DynamicRegistrationServiceContainerRequestFilter
 		}
 		catch (Exception exception) {
 			_log.error("Unable to resolve authenticated user", exception);
+
 			containerRequestContext.abortWith(
 				Response.status(
 					Response.Status.INTERNAL_SERVER_ERROR

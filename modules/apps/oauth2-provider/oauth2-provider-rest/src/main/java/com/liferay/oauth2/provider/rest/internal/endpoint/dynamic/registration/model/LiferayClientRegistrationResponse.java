@@ -5,6 +5,8 @@
 
 package com.liferay.oauth2.provider.rest.internal.endpoint.dynamic.registration.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 import org.apache.cxf.rs.security.oauth2.services.ClientRegistrationResponse;
@@ -96,5 +98,8 @@ public class LiferayClientRegistrationResponse
 	protected List<String> scope;
 	protected String softwareId;
 	protected String tosUri;
+
+	@JsonIgnore
+	protected String updateCount;
 
 }

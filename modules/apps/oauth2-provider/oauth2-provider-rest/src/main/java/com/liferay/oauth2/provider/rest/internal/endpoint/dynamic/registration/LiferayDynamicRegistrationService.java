@@ -24,13 +24,11 @@ import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriBuilder;
-import jakarta.ws.rs.core.UriInfo;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.cxf.jaxrs.ext.MessageContext;
 import org.apache.cxf.rs.security.oauth2.common.Client;
 import org.apache.cxf.rs.security.oauth2.services.ClientRegistration;
 import org.apache.cxf.rs.security.oauth2.services.DynamicRegistrationService;
@@ -208,11 +206,9 @@ public class LiferayDynamicRegistrationService
 		liferayClientRegistrationResponse.setRegistrationAccessToken(
 			properties.get("registration_access_token"));
 
-		MessageContext messageContext = getMessageContext();
-
-		UriInfo uriInfo = messageContext.getUriInfo();
-
-		UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder();
+		UriBuilder uriBuilder = getMessageContext(
+		).getUriInfo(
+		).getAbsolutePathBuilder();
 
 		liferayClientRegistrationResponse.setRegistrationClientUri(
 			uriBuilder.path(

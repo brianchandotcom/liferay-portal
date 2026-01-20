@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -1165,9 +1164,9 @@ public class LiferayOAuthDataProvider
 					"Unable to retrieve JWKS information from " + jwksURI);
 			}
 
-			JSONObject jsonObject = _jsonFactory.createJSONObject(responseJSON);
-
-			return jsonObject.toString();
+			return _jsonFactory.createJSONObject(
+				responseJSON
+			).toString();
 		}
 		catch (IOException | SystemException exception) {
 			_log.error(exception);

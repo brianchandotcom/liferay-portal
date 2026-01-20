@@ -63,13 +63,22 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 
 		Invocation.Builder tokenInvocationBuilder = tokenWebTarget.request();
 
+		MultivaluedMap<String, String> formData = new MultivaluedHashMap<>();
+
+		OAuth2Application oAuth2Application =
+			_oAuth2ApplicationLocalService.fetchOAuth2Application(
+				TestPropsValues.getCompanyId(),
+				"oauthDynamicRegisterTestApplication");
+
+		formData.add(OAuthConstants.CLIENT_ID, oAuth2Application.getClientId());
+		formData.add(
+			OAuthConstants.CLIENT_SECRET, oAuth2Application.getClientSecret());
+
+		formData.add(
+			OAuthConstants.GRANT_TYPE, OAuthConstants.CLIENT_CREDENTIALS_GRANT);
+
 		String tokenString = parseTokenString(
-			tokenInvocationBuilder.post(
-				Entity.form(
-					_getFormData(
-						_oAuth2ApplicationLocalService.getOAuth2Application(
-							TestPropsValues.getCompanyId(),
-							"oauthDynamicRegisterTestApplication")))));
+			tokenInvocationBuilder.post(Entity.form(formData)));
 
 		Assert.assertNotNull(tokenString);
 
@@ -87,14 +96,20 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 
 		Assert.assertEquals(401, response.getStatus());
 
-		OAuth2Application oAuth2Application =
-			_getDynamicRegistratorOAuth2Application();
+		oAuth2Application = _getDynamicRegistratorOAuth2Application();
 
 		Assert.assertNotNull(oAuth2Application);
 
+		formData = new MultivaluedHashMap<>();
+
+		formData.add(OAuthConstants.CLIENT_ID, oAuth2Application.getClientId());
+		formData.add(
+			OAuthConstants.CLIENT_SECRET, oAuth2Application.getClientSecret());
+		formData.add(
+			OAuthConstants.GRANT_TYPE, OAuthConstants.CLIENT_CREDENTIALS_GRANT);
+
 		tokenString = parseTokenString(
-			tokenInvocationBuilder.post(
-				Entity.form(_getFormData(oAuth2Application))));
+			tokenInvocationBuilder.post(Entity.form(formData)));
 
 		Assert.assertNotNull(tokenString);
 
@@ -180,7 +195,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 
 	@Override
 	protected BundleActivator getBundleActivator() {
-		return new DynamicRegistrationServiceTestPreparatorBundleActivator();
+		return new DynamicRegistrationTestPreparatorBundleActivator();
 	}
 
 	private OAuth2Application _getDynamicRegistratorOAuth2Application()
@@ -202,31 +217,17 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 		List<OAuth2Application> oAuth2Applications =
 			_oAuth2ApplicationLocalService.dynamicQuery(dynamicQuery);
 
-		if (oAuth2Applications.isEmpty()) {
-			return null;
+		if (!oAuth2Applications.isEmpty()) {
+			return oAuth2Applications.get(0);
 		}
 
-		return oAuth2Applications.get(0);
-	}
-
-	private MultivaluedMap<String, String> _getFormData(
-		OAuth2Application oAuth2Application) {
-
-		MultivaluedMap<String, String> formData = new MultivaluedHashMap<>();
-
-		formData.add(OAuthConstants.CLIENT_ID, oAuth2Application.getClientId());
-		formData.add(
-			OAuthConstants.CLIENT_SECRET, oAuth2Application.getClientSecret());
-		formData.add(
-			OAuthConstants.GRANT_TYPE, OAuthConstants.CLIENT_CREDENTIALS_GRANT);
-
-		return formData;
+		return null;
 	}
 
 	@Inject
 	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
 
-	private class DynamicRegistrationServiceTestPreparatorBundleActivator
+	private class DynamicRegistrationTestPreparatorBundleActivator
 		extends BaseTestPreparatorBundleActivator {
 
 		@Override

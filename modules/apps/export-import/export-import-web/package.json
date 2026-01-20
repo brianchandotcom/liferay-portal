@@ -2,6 +2,7 @@
 	"dependencies": {
 		"@clayui/button": "*",
 		"@clayui/icon": "*",
+		"@clayui/form": "*",
 		"@clayui/layout": "*",
 		"@clayui/link": "*",
 		"@clayui/loading-indicator": "*",

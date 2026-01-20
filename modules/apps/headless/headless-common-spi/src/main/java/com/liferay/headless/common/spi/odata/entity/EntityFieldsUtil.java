@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.odata.entity.BooleanEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
+import com.liferay.portal.odata.entity.DoubleEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.odata.normalizer.Normalizer;
@@ -61,17 +62,17 @@ public class EntityFieldsUtil {
 			return null;
 		}
 
-		int type = expandoColumn.getType();
-
 		String externalName = Normalizer.normalizeIdentifier(
 			expandoColumn.getName());
-
-		String internalName = ExpandoBridgeUtil.encodeFieldName(expandoColumn);
 
 		Function<Locale, String> function = locale -> {
 			throw new InvalidSortException(
 				"Unable to sort by property: " + externalName);
 		};
+
+		String internalName = ExpandoBridgeUtil.encodeFieldName(expandoColumn);
+
+		int type = expandoColumn.getType();
 
 		if (type == ExpandoColumnConstants.BOOLEAN) {
 			return new BooleanEntityField(
@@ -82,6 +83,13 @@ public class EntityFieldsUtil {
 				externalName,
 				locale -> Field.getSortableFieldName(internalName),
 				locale -> internalName);
+		}
+		else if ((type == ExpandoColumnConstants.DOUBLE) ||
+				 (type == ExpandoColumnConstants.FLOAT)) {
+
+			return new DoubleEntityField(
+				externalName,
+				locale -> Field.getSortableFieldName(internalName + "_Number"));
 		}
 		else if (type == ExpandoColumnConstants.STRING_LOCALIZED) {
 			return new StringEntityField(

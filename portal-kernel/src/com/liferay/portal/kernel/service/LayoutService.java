@@ -268,8 +268,7 @@ public interface LayoutService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
-	public Layout copyLayoutContent(
-			Layout sourceLayout, Layout targetLayout)
+	public Layout copyLayoutContent(Layout sourceLayout, Layout targetLayout)
 		throws Exception;
 
 	public Layout copyLayoutContent(

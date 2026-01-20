@@ -305,8 +305,8 @@ public class LayoutServiceUtil {
 		throws Exception {
 
 		return getService().copyLayoutContent(
-			sourceSegmentsExperienceId, sourceLayout, targetSegmentsExperienceId,
-			targetLayout);
+			sourceSegmentsExperienceId, sourceLayout,
+			targetSegmentsExperienceId, targetLayout);
 	}
 
 	/**

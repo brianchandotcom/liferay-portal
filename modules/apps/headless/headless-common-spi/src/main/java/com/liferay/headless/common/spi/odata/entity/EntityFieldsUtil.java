@@ -81,7 +81,8 @@ public class EntityFieldsUtil {
 
 			return new DoubleEntityField(
 				externalName,
-				locale -> Field.getSortableFieldName(internalName + "_Number"));
+				locale -> Field.getSortableFieldName(
+					internalName + ExpandoBridgeUtil.NUMBER_SUFFIX));
 		}
 		else if (expandoColumn.getType() == ExpandoColumnConstants.DATE) {
 			return new DateTimeEntityField(

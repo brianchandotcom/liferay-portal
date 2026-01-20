@@ -25,19 +25,18 @@ import java.util.ResourceBundle;
 public class JavaScriptFrontendResource implements FrontendResource {
 
 	public JavaScriptFrontendResource(
-		boolean aPrivate, String eTag, boolean immutable, Language language,
-		long maxAge, ResourceBundle resourceBundle, boolean sendNoCache,
+		String eTag, boolean immutable, Language language, long maxAge,
+		boolean isPrivate, ResourceBundle resourceBundle, boolean sendNoCache,
 		URL url) {
 
 		_eTag = eTag;
 		_immutable = immutable;
 		_language = language;
 		_maxAge = maxAge;
+		_private = isPrivate;
 		_resourceBundle = resourceBundle;
 		_sendNoCache = sendNoCache;
 		_url = url;
-
-		_private = aPrivate;
 	}
 
 	@Override

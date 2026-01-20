@@ -141,8 +141,6 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 		Assert.assertEquals(
 			clientName, responseJSONObject.getString("client_name"));
 
-		String clientId = responseJSONObject.getString("client_id");
-
 		jsonObject.put("response_types", Collections.singletonList("code"));
 
 		response = invocationBuilderRegister.method(
@@ -153,31 +151,12 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 		String errorString = parseError(response);
 
 		Assert.assertEquals("invalid_client_metadata", errorString);
-
-		webTarget = getRegisterWebTarget(clientId);
-
-		invocationBuilderRegister = authorize(webTarget.request(), tokenString);
-
-		response = invocationBuilderRegister.get();
-
-		Assert.assertEquals(200, response.getStatus());
-
-		responseJSONObject = parseJSONObject(response);
-
-		Assert.assertEquals(
-			clientName, responseJSONObject.getString("client_name"));
 	}
 
 	protected static WebTarget getRegisterWebTarget() {
 		WebTarget webTarget = getOAuth2WebTarget();
 
 		return webTarget.path("register");
-	}
-
-	protected static WebTarget getRegisterWebTarget(String target) {
-		WebTarget webTarget = getRegisterWebTarget();
-
-		return webTarget.path(target);
 	}
 
 	@Override

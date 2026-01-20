@@ -1,10 +1,12 @@
 {
 	"dependencies": {
 		"@clayui/button": "*",
+		"@clayui/icon": "*",
 		"@clayui/layout": "*",
 		"@clayui/link": "*",
 		"@clayui/loading-indicator": "*",
 		"@clayui/modal": "*",
+		"@clayui/multi-step-nav": "*",
 		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
 		"react": "18.2.0"

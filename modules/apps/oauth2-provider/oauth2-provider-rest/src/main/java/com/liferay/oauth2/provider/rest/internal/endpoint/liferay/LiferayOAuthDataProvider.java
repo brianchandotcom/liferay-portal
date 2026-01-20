@@ -15,7 +15,6 @@ import com.liferay.oauth2.provider.redirect.OAuth2RedirectURIInterpolator;
 import com.liferay.oauth2.provider.rest.internal.configuration.OAuth2AuthorizationServerConfiguration;
 import com.liferay.oauth2.provider.rest.internal.endpoint.authorize.configuration.OAuth2AuthorizationFlowConfiguration;
 import com.liferay.oauth2.provider.rest.internal.endpoint.constants.OAuth2ProviderRESTEndpointConstants;
-import com.liferay.oauth2.provider.rest.internal.endpoint.util.OAuth2ErrorUtil;
 import com.liferay.oauth2.provider.rest.spi.bearer.token.provider.BearerTokenProvider;
 import com.liferay.oauth2.provider.rest.spi.bearer.token.provider.BearerTokenProviderAccessor;
 import com.liferay.oauth2.provider.scope.liferay.LiferayOAuth2Scope;
@@ -59,6 +58,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import jakarta.ws.rs.ServerErrorException;
 import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.SecurityContext;
 
@@ -81,7 +81,9 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.cxf.jaxrs.ext.MessageContext;
+import org.apache.cxf.jaxrs.utils.ExceptionUtils;
 import org.apache.cxf.jaxrs.utils.HttpUtils;
+import org.apache.cxf.jaxrs.utils.JAXRSUtils;
 import org.apache.cxf.rs.security.jose.common.JoseConstants;
 import org.apache.cxf.rs.security.jose.jwk.JwkUtils;
 import org.apache.cxf.rs.security.jose.jws.JwsHeaders;
@@ -90,6 +92,7 @@ import org.apache.cxf.rs.security.jose.jwt.JwtClaims;
 import org.apache.cxf.rs.security.jose.jwt.JwtToken;
 import org.apache.cxf.rs.security.oauth2.common.AccessTokenRegistration;
 import org.apache.cxf.rs.security.oauth2.common.Client;
+import org.apache.cxf.rs.security.oauth2.common.OAuthError;
 import org.apache.cxf.rs.security.oauth2.common.OAuthPermission;
 import org.apache.cxf.rs.security.oauth2.common.ServerAccessToken;
 import org.apache.cxf.rs.security.oauth2.common.UserSubject;
@@ -686,6 +689,22 @@ public class LiferayOAuthDataProvider
 			removeServerAuthorizationCodeGrant(code);
 	}
 
+	public void reportInvalidRequestError(
+			String description, String error, Response.Status status)
+		throws WebApplicationException {
+
+		Response.ResponseBuilder responseBuilder = JAXRSUtils.toResponseBuilder(
+			status.getStatusCode());
+
+		responseBuilder.type(MediaType.APPLICATION_JSON);
+
+		throw ExceptionUtils.toWebApplicationException(
+			(Throwable)null,
+			responseBuilder.entity(
+				new OAuthError(error, description)
+			).build());
+	}
+
 	public OAuth2Application resolveOAuth2Application(Client client) {
 		Map<String, String> properties = client.getProperties();
 
@@ -724,7 +743,7 @@ public class LiferayOAuthDataProvider
 				companyId, client.getClientId());
 
 		if (oAuth2Application != null) {
-			OAuth2ErrorUtil.reportInvalidRequestError(
+			reportInvalidRequestError(
 				"OAuth 2 Application with client ID: " + client.getClientId() +
 					" already exists.",
 				OAuthConstants.INVALID_CLIENT, Response.Status.CONFLICT);
@@ -1143,7 +1162,7 @@ public class LiferayOAuthDataProvider
 		}
 
 		if (!StringUtil.startsWith(jwksURI, "https://")) {
-			OAuth2ErrorUtil.reportInvalidRequestError(
+			reportInvalidRequestError(
 				"jwksURI field must use the https scheme",
 				OAuthConstants.INVALID_REQUEST, Response.Status.BAD_REQUEST);
 
@@ -1177,7 +1196,7 @@ public class LiferayOAuthDataProvider
 				"Unable to retrieve JWKS information from " + jwksURI,
 				exception);
 
-			OAuth2ErrorUtil.reportInvalidRequestError(
+			reportInvalidRequestError(
 				"Unable to retrieve JWKS information from " + jwksURI,
 				OAuthConstants.INVALID_REQUEST, Response.Status.BAD_REQUEST);
 		}

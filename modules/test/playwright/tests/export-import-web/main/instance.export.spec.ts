@@ -45,6 +45,7 @@ const rootModelTest = mergeTests(
 	test,
 	featureFlagsTest({
 		'LPD-34594': {enabled: true},
+		'LPD-35443': {enabled: true},
 		'LPD-35914': {enabled: true},
 	})
 );

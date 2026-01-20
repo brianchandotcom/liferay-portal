@@ -5,15 +5,11 @@
 
 package com.liferay.account.internal.search.spi.model.index.contributor;
 
-import com.liferay.account.model.AccountEntryOrganizationRel;
-import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
@@ -27,17 +23,8 @@ public class OrganizationModelDocumentContributor
 
 	@Override
 	public void contribute(Document document, Organization organization) {
-		document.addKeyword(
-			"accountEntryIds",
-			ListUtil.toLongArray(
-				accountEntryOrganizationRelLocalService.
-					getAccountEntryOrganizationRelsByOrganizationId(
-						organization.getOrganizationId()),
-				AccountEntryOrganizationRel::getAccountEntryId));
+		OrganizationAccountEntryDocumentContributorUtil.contribute(
+			document, organization);
 	}
-
-	@Reference
-	protected AccountEntryOrganizationRelLocalService
-		accountEntryOrganizationRelLocalService;
 
 }

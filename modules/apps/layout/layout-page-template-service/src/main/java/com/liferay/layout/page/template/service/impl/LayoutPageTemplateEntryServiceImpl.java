@@ -136,6 +136,10 @@ public class LayoutPageTemplateEntryServiceImpl
 			getPermissionChecker(), groupId,
 			LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_ENTRY);
 
+		_layoutPageTemplateEntryModelResourcePermission.check(
+			getPermissionChecker(), sourceLayoutPageTemplateEntryId,
+			ActionKeys.VIEW);
+
 		return layoutPageTemplateEntryLocalService.copyLayoutPageTemplateEntry(
 			getUserId(), groupId, layoutPageTemplateCollectionId,
 			sourceLayoutPageTemplateEntryId, copyPermissions, serviceContext);

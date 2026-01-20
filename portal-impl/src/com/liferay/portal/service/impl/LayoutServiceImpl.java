@@ -374,7 +374,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		Layout sourceLayout = layoutLocalService.getLayout(sourcePlid);
+		Layout sourceLayout = getLayout(sourcePlid);
 
 		long parentLayoutId = sourceLayout.getParentLayoutId();
 

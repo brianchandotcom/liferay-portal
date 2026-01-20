@@ -64,6 +64,10 @@ public class LayoutUtilityPageEntryServiceImpl
 			getPermissionChecker(), groupId,
 			LayoutUtilityPageActionKeys.ADD_LAYOUT_UTILITY_PAGE_ENTRY);
 
+		_layoutUtilityPageEntryModelResourcePermission.check(
+			getPermissionChecker(), sourceLayoutUtilityPageEntryId,
+			ActionKeys.VIEW);
+
 		return layoutUtilityPageEntryLocalService.copyLayoutUtilityPageEntry(
 			getUserId(), groupId, sourceLayoutUtilityPageEntryId,
 			serviceContext);

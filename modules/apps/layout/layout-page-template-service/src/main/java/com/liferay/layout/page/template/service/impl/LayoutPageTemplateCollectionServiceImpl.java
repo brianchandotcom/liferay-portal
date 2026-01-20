@@ -69,6 +69,10 @@ public class LayoutPageTemplateCollectionServiceImpl
 			getPermissionChecker(), groupId,
 			LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION);
 
+		_layoutPageTemplateCollectionModelResourcePermission.check(
+			getPermissionChecker(), sourceLayoutPageTemplateCollectionId,
+			ActionKeys.VIEW);
+
 		return layoutPageTemplateCollectionLocalService.
 			copyLayoutPageTemplateCollection(
 				getUserId(), groupId, sourceLayoutPageTemplateCollectionId,

@@ -1062,7 +1062,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 	}
 
 	private void _testPostSiteMasterPageWithThumbnail() throws Exception {
-		MasterPage masterPage1 = randomMasterPage();
+		MasterPage masterPage = randomMasterPage();
 
 		Repository repository = _portletFileRepository.addPortletRepository(
 			testGroup.getGroupId(), RandomTestUtil.randomString(),
@@ -1071,7 +1071,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
 
-		masterPage1.setThumbnailURLReference(
+		masterPage.setThumbnailURLReference(
 			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
@@ -1080,15 +1080,15 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			});
 
 		MasterPage postMasterPage = masterPageResource.postSiteMasterPage(
-			testGroup.getExternalReferenceCode(), masterPage1);
+			testGroup.getExternalReferenceCode(), masterPage);
 
-		Assert.assertEquals(masterPage1.getKey(), postMasterPage.getKey());
+		Assert.assertEquals(masterPage.getKey(), postMasterPage.getKey());
 
 		_assertThumbnailFileEntryId(
 			false, postMasterPage.getExternalReferenceCode(),
 			fileEntry.getExternalReferenceCode());
 
-		MasterPage masterPage2 = randomMasterPage();
+		masterPage = randomMasterPage();
 
 		ThumbnailURLReference thumbnailURLReference =
 			new ThumbnailURLReference() {
@@ -1101,10 +1101,10 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 				}
 			};
 
-		masterPage2.setThumbnailURLReference(thumbnailURLReference);
+		masterPage.setThumbnailURLReference(thumbnailURLReference);
 
 		try {
-			testPostSiteMasterPage_addMasterPage(masterPage2);
+			testPostSiteMasterPage_addMasterPage(masterPage);
 		}
 		catch (Problem.ProblemException problemException) {
 			Problem problem = problemException.getProblem();
@@ -1264,9 +1264,9 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 	}
 
 	private void _testPutSiteMasterPageWithThumbnail() throws Exception {
-		MasterPage masterPage1 = randomMasterPage();
+		MasterPage masterPage = randomMasterPage();
 
-		masterPage1.setExternalReferenceCode(RandomTestUtil.randomString());
+		masterPage.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		Repository repository = _portletFileRepository.addPortletRepository(
 			testGroup.getGroupId(), RandomTestUtil.randomString(),
@@ -1275,7 +1275,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		FileEntry fileEntry1 = _addPortletFileEntry(repository.getDlFolderId());
 
-		masterPage1.setThumbnailURLReference(
+		masterPage.setThumbnailURLReference(
 			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
@@ -1285,7 +1285,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		MasterPage putMasterPage = masterPageResource.putSiteMasterPage(
 			testGroup.getExternalReferenceCode(),
-			masterPage1.getExternalReferenceCode(), masterPage1);
+			masterPage.getExternalReferenceCode(), masterPage);
 
 		_assertThumbnailFileEntryId(
 			false, putMasterPage.getExternalReferenceCode(),
@@ -1318,7 +1318,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		_assertThumbnailFileEntryId(
 			true, putMasterPage.getExternalReferenceCode(), null);
 
-		MasterPage masterPage2 = randomMasterPage();
+		masterPage = randomMasterPage();
 
 		ThumbnailURLReference thumbnailURLReference =
 			new ThumbnailURLReference() {
@@ -1331,12 +1331,12 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 				}
 			};
 
-		masterPage2.setThumbnailURLReference(thumbnailURLReference);
+		masterPage.setThumbnailURLReference(thumbnailURLReference);
 
 		try {
 			masterPageResource.putSiteMasterPage(
 				testGroup.getExternalReferenceCode(),
-				putMasterPage.getExternalReferenceCode(), masterPage2);
+				putMasterPage.getExternalReferenceCode(), masterPage);
 		}
 		catch (Problem.ProblemException problemException) {
 			Problem problem = problemException.getProblem();

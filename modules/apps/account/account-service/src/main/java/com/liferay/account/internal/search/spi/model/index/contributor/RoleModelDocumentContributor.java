@@ -6,9 +6,6 @@
 package com.liferay.account.internal.search.spi.model.index.contributor;
 
 import com.liferay.account.model.AccountRole;
-import com.liferay.account.service.AccountRoleLocalService;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
@@ -16,7 +13,6 @@ import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContri
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Stefano Motta
@@ -33,35 +29,11 @@ public class RoleModelDocumentContributor
 
 	@Override
 	public void contribute(Document document, Role role) {
-		try {
-			if (!Objects.equals(
-					role.getClassName(), AccountRole.class.getName())) {
-
-				return;
-			}
-
-			AccountRole accountRole = _accountRoleLocalService.fetchAccountRole(
-				role.getClassPK());
-
-			if (accountRole == null) {
-				return;
-			}
-
-			document.addKeyword(
-				"accountEntryId", accountRole.getAccountEntryId());
+		if (!Objects.equals(role.getClassName(), AccountRole.class.getName())) {
+			return;
 		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to index role " + role.getRoleId(), exception);
-			}
-		}
+
+		RoleAccountRoleDocumentContributorUtil.contribute(document, role);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		RoleModelDocumentContributor.class);
-
-	@Reference
-	private AccountRoleLocalService _accountRoleLocalService;
 
 }

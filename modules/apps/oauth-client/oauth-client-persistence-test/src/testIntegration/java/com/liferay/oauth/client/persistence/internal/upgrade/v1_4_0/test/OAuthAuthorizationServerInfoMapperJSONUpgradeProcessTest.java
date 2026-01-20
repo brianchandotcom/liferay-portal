@@ -68,8 +68,7 @@ public class OAuthAuthorizationServerInfoMapperJSONUpgradeProcessTest {
 			new URI(RandomTestUtil.randomString()));
 
 		oAuthClientASLocalMetadata2.setMetadataJSON(
-			oidcProviderMetadata.toJSONObject(
-			).toJSONString());
+			String.valueOf(oidcProviderMetadata.toJSONObject()));
 
 		oAuthClientASLocalMetadata2 =
 			_oAuthClientASLocalMetadataLocalService.

@@ -55,11 +55,11 @@ public class ClientRegistrationMessageBodyWriter
 
 	@Override
 	public boolean isWriteable(
-		Class<?> clazz, Type type, Annotation[] annotations,
+		Class<?> aClass, Type type, Annotation[] annotations,
 		MediaType mediaType) {
 
-		if (ClientRegistration.class.isAssignableFrom(clazz) &&
-			!ClientRegistrationResponse.class.isAssignableFrom(clazz) &&
+		if (ClientRegistration.class.isAssignableFrom(aClass) &&
+			!ClientRegistrationResponse.class.isAssignableFrom(aClass) &&
 			StringUtil.equalsIgnoreCase(mediaType.getType(), "application") &&
 			StringUtil.equalsIgnoreCase(mediaType.getSubtype(), "json")) {
 
@@ -71,7 +71,7 @@ public class ClientRegistrationMessageBodyWriter
 
 	@Override
 	public void writeTo(
-			ClientRegistration clientRegistration, Class<?> clazz, Type type,
+			ClientRegistration clientRegistration, Class<?> aClass, Type type,
 			Annotation[] annotations, MediaType mediaType,
 			MultivaluedMap<String, Object> multivaluedMap,
 			OutputStream outputStream)

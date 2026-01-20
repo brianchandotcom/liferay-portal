@@ -16,7 +16,6 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -57,7 +56,7 @@ public class CMSObjectEntryFolderDepotEntryLocalServiceWrapper
 			ObjectEntryFolderUtil.addObjectEntryFolders(
 				depotEntry.getGroupId());
 
-			_onAfterCreate(depotEntry);
+			_addRepository(depotEntry);
 		}
 
 		return depotEntry;
@@ -76,7 +75,7 @@ public class CMSObjectEntryFolderDepotEntryLocalServiceWrapper
 			ObjectEntryFolderUtil.addObjectEntryFolders(
 				depotEntry.getGroupId());
 
-			_onAfterCreate(depotEntry);
+			_addRepository(depotEntry);
 		}
 
 		return depotEntry;
@@ -106,12 +105,9 @@ public class CMSObjectEntryFolderDepotEntryLocalServiceWrapper
 		return super.deleteDepotEntry(depotEntryId);
 	}
 
-	private void _onAfterCreate(DepotEntry depotEntry)
-		throws ModelListenerException {
-
+	private void _addRepository(DepotEntry depotEntry) throws PortalException {
 		if (!FeatureFlagManagerUtil.isEnabled(
-				depotEntry.getCompanyId(), "LPD-17564") ||
-			(depotEntry.getType() != DepotConstants.TYPE_SPACE)) {
+				depotEntry.getCompanyId(), "LPD-17564")) {
 
 			return;
 		}
@@ -125,44 +121,39 @@ public class CMSObjectEntryFolderDepotEntryLocalServiceWrapper
 			return;
 		}
 
-		try {
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
-			if (serviceContext == null) {
-				serviceContext = new ServiceContext();
-			}
-
-			Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
-
-			_attachmentManager.getDLFolder(
-				objectDefinition.getCompanyId(), group.getGroupId(),
-				objectDefinition.getPortletId(), serviceContext,
-				PrincipalThreadLocal.getUserId());
-
-			try (SafeCloseable safeCloseable =
-					DLAppHelperThreadLocal.setEnabledWithSafeCloseable(false)) {
-
-				Repository repository = _repositoryLocalService.fetchRepository(
-					group.getGroupId(), TempFileEntryUtil.class.getName(),
-					TempFileEntryUtil.class.getName());
-
-				if (repository != null) {
-					return;
-				}
-
-				_repositoryLocalService.addRepository(
-					null, PrincipalThreadLocal.getUserId(), group.getGroupId(),
-					_portal.getClassNameId(
-						TemporaryFileEntryRepository.class.getName()),
-					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-					TempFileEntryUtil.class.getName(), StringPool.BLANK,
-					TempFileEntryUtil.class.getName(), new UnicodeProperties(),
-					true, serviceContext);
-			}
+		if (serviceContext == null) {
+			serviceContext = new ServiceContext();
 		}
-		catch (PortalException portalException) {
-			throw new ModelListenerException(portalException);
+
+		Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
+
+		_attachmentManager.getDLFolder(
+			objectDefinition.getCompanyId(), group.getGroupId(),
+			objectDefinition.getPortletId(), serviceContext,
+			PrincipalThreadLocal.getUserId());
+
+		try (SafeCloseable safeCloseable =
+				 DLAppHelperThreadLocal.setEnabledWithSafeCloseable(false)) {
+
+			Repository repository = _repositoryLocalService.fetchRepository(
+				group.getGroupId(), TempFileEntryUtil.class.getName(),
+				TempFileEntryUtil.class.getName());
+
+			if (repository != null) {
+				return;
+			}
+
+			_repositoryLocalService.addRepository(
+				null, PrincipalThreadLocal.getUserId(), group.getGroupId(),
+				_portal.getClassNameId(
+					TemporaryFileEntryRepository.class.getName()),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				TempFileEntryUtil.class.getName(), StringPool.BLANK,
+				TempFileEntryUtil.class.getName(), new UnicodeProperties(),
+				true, serviceContext);
 		}
 	}
 

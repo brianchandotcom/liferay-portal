@@ -6,18 +6,14 @@
 package com.liferay.account.internal.search.spi.model.index.contributor;
 
 import com.liferay.account.model.AccountEntry;
-import com.liferay.account.model.AccountGroupRel;
-import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Drew Brokke
@@ -36,8 +32,9 @@ public class AccountEntryModelDocumentContributor
 		document.addKeyword(Field.STATUS, accountEntry.getStatus());
 
 		document.addKeyword("accountEntryId", accountEntry.getAccountEntryId());
-		document.addKeyword(
-			"accountGroupIds", _getAccountGroupIds(accountEntry));
+
+		AccountGroupAccountEntryDocumentContributorUtil.contribute(
+			document, accountEntry);
 
 		UserAccountEntryDocumentContributorUtil.contribute(
 			document, accountEntry);
@@ -55,19 +52,9 @@ public class AccountEntryModelDocumentContributor
 		document.remove(Field.USER_NAME);
 	}
 
-	private long[] _getAccountGroupIds(AccountEntry accountEntry) {
-		return ListUtil.toLongArray(
-			_accountGroupRelLocalService.getAccountGroupRels(
-				AccountEntry.class.getName(), accountEntry.getAccountEntryId()),
-			AccountGroupRel::getAccountGroupId);
-	}
-
 	private String[] _getDomains(AccountEntry accountEntry) {
 		return ArrayUtil.toStringArray(
 			StringUtil.split(accountEntry.getDomains(), CharPool.COMMA));
 	}
-
-	@Reference
-	private AccountGroupRelLocalService _accountGroupRelLocalService;
 
 }

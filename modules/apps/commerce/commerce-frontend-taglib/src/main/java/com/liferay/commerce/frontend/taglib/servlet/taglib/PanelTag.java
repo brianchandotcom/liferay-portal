@@ -74,6 +74,19 @@ public class PanelTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-commerce:panel:randomNamespace", randomNamespace);
 		httpServletRequest.setAttribute(
+			"liferay-commerce:panel:secondaryActionContext",
+			_secondaryActionContext);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:panel:secondaryActionIcon", _secondaryActionIcon);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:panel:secondaryActionLabel",
+			_secondaryActionLabel);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:panel:secondaryActionTargetId",
+			_secondaryActionTargetId);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:panel:secondaryActionUrl", _secondaryActionUrl);
+		httpServletRequest.setAttribute(
 			"liferay-commerce:panel:showMoreId", _showMoreId);
 		httpServletRequest.setAttribute(
 			"liferay-commerce:panel:showMoreUrl", _showMoreUrl);
@@ -128,6 +141,26 @@ public class PanelTag extends IncludeTag {
 
 	public String getElementClasses() {
 		return _elementClasses;
+	}
+
+	public Map<String, Object> getSecondaryActionContext() {
+		return _secondaryActionContext;
+	}
+
+	public String getSecondaryActionIcon() {
+		return _secondaryActionIcon;
+	}
+
+	public String getSecondaryActionLabel() {
+		return _secondaryActionLabel;
+	}
+
+	public String getSecondaryActionTargetId() {
+		return _secondaryActionTargetId;
+	}
+
+	public String getSecondaryActionUrl() {
+		return _secondaryActionUrl;
 	}
 
 	public String getShowMoreId() {
@@ -197,6 +230,28 @@ public class PanelTag extends IncludeTag {
 		setServletContext(ServletContextUtil.getServletContext());
 	}
 
+	public void setSecondaryActionContext(
+		Map<String, Object> secondaryActionContext) {
+
+		_secondaryActionContext = secondaryActionContext;
+	}
+
+	public void setSecondaryActionIcon(String secondaryActionIcon) {
+		_secondaryActionIcon = secondaryActionIcon;
+	}
+
+	public void setSecondaryActionLabel(String secondaryActionLabel) {
+		_secondaryActionLabel = secondaryActionLabel;
+	}
+
+	public void setSecondaryActionTargetId(String secondaryActionTargetId) {
+		_secondaryActionTargetId = secondaryActionTargetId;
+	}
+
+	public void setSecondaryActionUrl(String secondaryActionUrl) {
+		_secondaryActionUrl = secondaryActionUrl;
+	}
+
 	public void setShowMoreId(String showMoreId) {
 		_showMoreId = showMoreId;
 	}
@@ -228,6 +283,11 @@ public class PanelTag extends IncludeTag {
 		_collapseSwitchName = null;
 		_collapsible = false;
 		_elementClasses = null;
+		_secondaryActionContext = null;
+		_secondaryActionIcon = null;
+		_secondaryActionLabel = null;
+		_secondaryActionTargetId = null;
+		_secondaryActionUrl = null;
 		_showMoreId = null;
 		_showMoreUrl = null;
 		_spritemap = null;
@@ -262,6 +322,11 @@ public class PanelTag extends IncludeTag {
 	private String _collapseSwitchName;
 	private boolean _collapsible;
 	private String _elementClasses;
+	private Map<String, Object> _secondaryActionContext;
+	private String _secondaryActionIcon;
+	private String _secondaryActionLabel;
+	private String _secondaryActionTargetId;
+	private String _secondaryActionUrl;
 	private String _showMoreId;
 	private String _showMoreUrl;
 	private String _spritemap;

@@ -516,6 +516,12 @@ boolean hasPermission = commerceOrderEditDisplayContext.hasModelPermission(comme
 			<portlet:param name="commerceOrderId" value="<%= String.valueOf(commerceOrderEditDisplayContext.getCommerceOrderId()) %>" />
 		</liferay-portlet:renderURL>
 
+		<liferay-portlet:actionURL name="/commerce_order/edit_commerce_order" var="recalculateOrderSummaryURL">
+			<portlet:param name="<%= Constants.CMD %>" value="recalculateOrderSummary" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="commerceOrderId" value="<%= String.valueOf(commerceOrderEditDisplayContext.getCommerceOrderId()) %>" />
+		</liferay-portlet:actionURL>
+
 		<commerce-ui:panel
 			actionContext='<%=
 				HashMapBuilder.<String, Object>put(
@@ -531,6 +537,8 @@ boolean hasPermission = commerceOrderEditDisplayContext.hasModelPermission(comme
 			actionLabel='<%= commerceOrderEditDisplayContext.hasManageCommerceOrderPricesPermission() ? LanguageUtil.get(request, "edit") : null %>'
 			actionTargetId="order-summary-modal"
 			actionUrl="<%= commerceOrderEditDisplayContext.hasManageCommerceOrderPricesPermission() ? editOrderSummaryURL : null %>"
+			secondaryActionLabel='<%= commerceOrderEditDisplayContext.hasManageCommerceOrderPricesPermission() ? LanguageUtil.get(request, "recalculate") : null %>'
+			secondaryActionUrl="<%= commerceOrderEditDisplayContext.hasManageCommerceOrderPricesPermission() ? recalculateOrderSummaryURL : null %>"
 			title='<%= LanguageUtil.get(request, "order-summary") %>'
 		>
 			<div id="summary-root"></div>

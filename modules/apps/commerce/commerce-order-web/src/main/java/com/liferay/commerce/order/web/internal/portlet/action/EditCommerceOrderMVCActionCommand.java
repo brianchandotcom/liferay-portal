@@ -52,6 +52,8 @@ import jakarta.portlet.PortletRequest;
 
 import java.io.IOException;
 
+import java.math.BigDecimal;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -108,6 +110,9 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			}
 			else if (cmd.equals("purchaseOrderNumber")) {
 				_updatePurchaseOrderNumber(actionRequest);
+			}
+			else if (cmd.equals("recalculateOrderSummary")) {
+				_recalculateOrderSummary(actionRequest);
 			}
 			else if (cmd.equals("requestedDeliveryDate")) {
 				_updateRequestedDeliveryDate(actionRequest);
@@ -353,6 +358,59 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 		_commerceOrderService.executeWorkflowTransition(
 			commerceOrderId, workflowTaskId, transitionName, comment);
+	}
+
+	private void _recalculateOrderSummary(ActionRequest actionRequest)
+		throws Exception {
+
+		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
+			ParamUtil.getLong(actionRequest, "commerceOrderId"));
+		BigDecimal subtotal = BigDecimal.ZERO;
+		BigDecimal subtotalDiscountAmount = BigDecimal.ZERO;
+
+		for (CommerceOrderItem commerceOrderItem :
+				commerceOrder.getCommerceOrderItems()) {
+
+			subtotal = subtotal.add(commerceOrderItem.getFinalPrice());
+			subtotalDiscountAmount = subtotalDiscountAmount.add(
+				commerceOrderItem.getDiscountAmount());
+		}
+
+		BigDecimal totalDiscountAmount = commerceOrder.getTotalDiscountAmount(
+		).subtract(
+			commerceOrder.getSubtotalDiscountAmount()
+		).add(
+			subtotalDiscountAmount
+		);
+
+		_commerceOrderService.updateCommerceOrderPrices(
+			commerceOrder.getCommerceOrderId(),
+			commerceOrder.getShippingAmount(),
+			commerceOrder.getShippingDiscountAmount(),
+			commerceOrder.getShippingDiscountPercentageLevel1(),
+			commerceOrder.getShippingDiscountPercentageLevel2(),
+			commerceOrder.getShippingDiscountPercentageLevel3(),
+			commerceOrder.getShippingDiscountPercentageLevel4(), subtotal,
+			subtotalDiscountAmount,
+			commerceOrder.getSubtotalDiscountPercentageLevel1(),
+			commerceOrder.getSubtotalDiscountPercentageLevel2(),
+			commerceOrder.getSubtotalDiscountPercentageLevel3(),
+			commerceOrder.getSubtotalDiscountPercentageLevel4(),
+			commerceOrder.getTaxAmount(),
+			subtotal.subtract(
+				totalDiscountAmount
+			).add(
+				commerceOrder.getTaxAmount()
+			).add(
+				commerceOrder.getShippingAmount()
+			).subtract(
+				commerceOrder.getShippingDiscountAmount()
+			),
+			totalDiscountAmount,
+			commerceOrder.getTotalDiscountPercentageLevel1(),
+			commerceOrder.getTotalDiscountPercentageLevel2(),
+			commerceOrder.getTotalDiscountPercentageLevel3(),
+			commerceOrder.getTotalDiscountPercentageLevel4());
 	}
 
 	private void _redirectToShipments(

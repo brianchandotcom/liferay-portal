@@ -253,6 +253,8 @@ test(
 
 		await systemSettingsPage.goToSystemSetting('Privacy', 'Cookie Panel');
 
+		await page.getByLabel('Title', {exact: true}).waitFor();
+
 		await page.getByLabel('Title', {exact: true}).fill(script);
 		await page.getByLabel('Description', {exact: true}).fill(script);
 		await page.getByLabel('Cookie Policy Link').fill(script);

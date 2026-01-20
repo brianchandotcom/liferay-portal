@@ -412,6 +412,14 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 
 	@Override
 	public List<KaleoTaskInstanceToken> getKaleoTaskInstanceTokens(
+		String className, long classPK) {
+
+		return kaleoTaskInstanceTokenPersistence.findByCN_CPK(
+			className, classPK);
+	}
+
+	@Override
+	public List<KaleoTaskInstanceToken> getKaleoTaskInstanceTokens(
 		String assigneeClassName, long assigneeClassPK, Boolean completed,
 		int start, int end,
 		OrderByComparator<KaleoTaskInstanceToken> orderByComparator,

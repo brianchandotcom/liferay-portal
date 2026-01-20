@@ -30,6 +30,7 @@ const mockCloseModal = jest.fn();
 
 const DEFAULT_PROPS = {
 	autocompleteURL: '/search',
+	className: '11111-className',
 	closeModal: mockCloseModal,
 	collaboratorURL: '/o/cms/basic-documents/{objectEntryId}/collaborators',
 	creator: {

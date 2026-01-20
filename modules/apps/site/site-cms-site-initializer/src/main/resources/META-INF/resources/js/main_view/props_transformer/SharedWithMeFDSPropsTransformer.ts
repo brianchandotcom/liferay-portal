@@ -130,6 +130,7 @@ export default function SharedWithMeFDSPropsTransformer({
 
 				shareAction({
 					autocompleteURL,
+					className: itemData.className,
 					collaboratorURL: collaboratorURLs[itemData.className],
 					creator: itemData.creator,
 					itemId: itemData.classPK,

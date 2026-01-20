@@ -110,8 +110,8 @@ public class LiferayDynamicRegistrationService
 			 allowedGrantTypes.contains("implicit"))) {
 
 			OAuth2ErrorUtil.reportInvalidRequestError(
-				"A redirect URI is required.", OAuthConstants.INVALID_REQUEST,
-				Response.Status.BAD_REQUEST);
+				"A redirect URI is required.",
+				OAuthConstants.INVALID_REQUEST, Response.Status.BAD_REQUEST);
 		}
 
 		Map<String, String> properties = client.getProperties();
@@ -270,7 +270,8 @@ public class LiferayDynamicRegistrationService
 			ListUtil.isEmpty(responseTypes)) {
 
 			OAuth2ErrorUtil.reportInvalidRequestError(
-				"A response type is required for the provided grant types.",
+				"A response type '" + allowedResponseTypes.get(0) +
+					"' is needed to match the provided grant types.",
 				"invalid_client_metadata", Response.Status.BAD_REQUEST);
 		}
 
@@ -278,7 +279,8 @@ public class LiferayDynamicRegistrationService
 			for (String responseType : responseTypes) {
 				if (!allowedResponseTypes.contains(responseType)) {
 					OAuth2ErrorUtil.reportInvalidRequestError(
-						"Invalid response type " + responseType,
+						"Invalid response type '" + responseType +
+							"' by provided grant types.",
 						"invalid_client_metadata", Response.Status.BAD_REQUEST);
 				}
 			}

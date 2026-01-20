@@ -317,8 +317,8 @@ public class LiferayOAuthDataProvider
 				_log.debug(
 					StringBundler.concat(
 						"Remote client ", _getRemoteIP(),
-						" tried to use an expired or revoked OAuth 2 token ",
-						"for Liferay OAuth 2 application ",
+						" tried to use expired or revoked OAuth 2 token for ",
+						"Liferay OAuth 2 application ",
 						oAuth2Authorization.getOAuth2ApplicationId(),
 						" and user ", oAuth2Authorization.getUserId()));
 			}
@@ -331,8 +331,8 @@ public class LiferayOAuthDataProvider
 		}
 		catch (PortalException portalException) {
 			_log.error(
-				"Unable to populate access token for Liferay OAuth 2 " +
-					"application " +
+				"Unable to populate access token for Liferay OAuth2 " +
+					"Application " +
 						oAuth2Authorization.getOAuth2ApplicationId(),
 				portalException);
 
@@ -726,7 +726,7 @@ public class LiferayOAuthDataProvider
 
 		if (oAuth2Application != null) {
 			OAuth2ErrorUtil.reportInvalidRequestError(
-				"OAuth 2 application with client ID " + client.getClientId() +
+				"OAuth 2 Application with client ID " + client.getClientId() +
 					" already exists.",
 				OAuthConstants.INVALID_CLIENT, Response.Status.CONFLICT);
 		}
@@ -761,7 +761,7 @@ public class LiferayOAuthDataProvider
 		}
 		catch (PortalException portalException) {
 			_log.error(
-				"Unable to dynamically register OAuth 2 application with " +
+				"Unable to dynamically register OAuth 2 Application with " +
 					"client ID " + client.getClientId(),
 				portalException);
 
@@ -1145,7 +1145,7 @@ public class LiferayOAuthDataProvider
 
 		if (!StringUtil.startsWith(jwksURI, "https://")) {
 			OAuth2ErrorUtil.reportInvalidRequestError(
-				"The JWKS URI field must use the HTTPS scheme.",
+				"The JWKS URI field must use the HTTPS scheme to be valid.",
 				OAuthConstants.INVALID_REQUEST, Response.Status.BAD_REQUEST);
 
 			return null;
@@ -1173,7 +1173,7 @@ public class LiferayOAuthDataProvider
 			_log.error(exception);
 
 			OAuth2ErrorUtil.reportInvalidRequestError(
-				"Unable to retrieve JWKS information from " + jwksURI,
+				"Unable to retrieve JWKS information from " + jwksURI + ".",
 				OAuthConstants.INVALID_REQUEST, Response.Status.BAD_REQUEST);
 		}
 
@@ -1324,6 +1324,12 @@ public class LiferayOAuthDataProvider
 		OAuth2Application oAuth2Application =
 			_oAuth2ApplicationLocalService.fetchOAuth2Application(
 				oAuth2Authorization.getOAuth2ApplicationId());
+
+		if (oAuth2Application == null) {
+			throw new SystemException(
+				"No OAuth2 Application found for OAuth2 Authorization " +
+					oAuth2Authorization);
+		}
 
 		Client client = getClient(oAuth2Application.getClientId());
 

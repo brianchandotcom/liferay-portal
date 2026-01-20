@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.solr8.internal.connection.SolrClientManager;
-import com.liferay.portal.search.solr8.internal.document.SolrDocumentFactory;
 import com.liferay.portal.search.solr8.internal.facet.FacetProcessor;
 import com.liferay.portal.search.solr8.internal.search.engine.adapter.document.DocumentRequestExecutorFixture;
 import com.liferay.portal.search.solr8.internal.search.engine.adapter.index.IndexRequestExecutorFixture;
@@ -42,14 +41,12 @@ public class SolrSearchEngineAdapterFixture {
 
 	public void setUp() {
 		_searchEngineAdapter = createSearchEngineAdapter(
-			_facetProcessor, _solrClientManager, _solrDocumentFactory,
-			_queryTranslator, _properties);
+			_facetProcessor, _solrClientManager, _queryTranslator, _properties);
 	}
 
 	protected SearchEngineAdapter createSearchEngineAdapter(
 		FacetProcessor<SolrQuery> facetProcessor,
 		SolrClientManager solrClientManager,
-		SolrDocumentFactory solrDocumentFactory,
 		QueryTranslator<String> queryTranslator,
 		Map<String, Object> properties) {
 
@@ -59,7 +56,6 @@ public class SolrSearchEngineAdapterFixture {
 					setProperties(properties);
 					setQueryTranslator(queryTranslator);
 					setSolrClientManager(solrClientManager);
-					setSolrDocumentFactory(solrDocumentFactory);
 				}
 			};
 
@@ -106,18 +102,11 @@ public class SolrSearchEngineAdapterFixture {
 		_facetProcessor = facetProcessor;
 	}
 
-	protected void setSolrDocumentFactory(
-		SolrDocumentFactory solrDocumentFactory) {
-
-		_solrDocumentFactory = solrDocumentFactory;
-	}
-
 	private FacetProcessor<SolrQuery> _facetProcessor;
 	private Map<String, Object> _properties;
 	private QueryTranslator<String> _queryTranslator;
 	private SearchEngineAdapter _searchEngineAdapter;
 	private SearchRequestExecutorFixture _searchRequestExecutorFixture;
 	private SolrClientManager _solrClientManager;
-	private SolrDocumentFactory _solrDocumentFactory;
 
 }

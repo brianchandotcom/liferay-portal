@@ -8,7 +8,6 @@ package com.liferay.oauth2.provider.dynamic.registration.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.oauth2.provider.client.test.BaseClientTestCase;
 import com.liferay.oauth2.provider.client.test.BaseTestPreparatorBundleActivator;
-import com.liferay.oauth2.provider.constants.OAuth2ProviderConstants;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -176,8 +175,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 
 		Property nameProperty = PropertyFactoryUtil.forName("name");
 
-		dynamicQuery.add(
-			nameProperty.eq(OAuth2ProviderConstants.DYNAMIC_REGISTRATOR));
+		dynamicQuery.add(nameProperty.eq("Dynamic Registrator"));
 
 		List<OAuth2Application> oAuth2Applications =
 			_oAuth2ApplicationLocalService.dynamicQuery(dynamicQuery);

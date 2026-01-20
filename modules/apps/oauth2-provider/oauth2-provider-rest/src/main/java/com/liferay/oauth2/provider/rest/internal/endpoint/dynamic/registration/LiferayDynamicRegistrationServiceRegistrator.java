@@ -7,8 +7,6 @@ package com.liferay.oauth2.provider.rest.internal.endpoint.dynamic.registration;
 
 import com.liferay.oauth2.provider.rest.internal.endpoint.liferay.LiferayOAuthDataProvider;
 import com.liferay.petra.concurrent.DCLSingleton;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 
@@ -21,7 +19,6 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -37,14 +34,10 @@ import org.osgi.service.component.annotations.Reference;
 public class LiferayDynamicRegistrationServiceRegistrator {
 
 	@Activate
-	@Modified
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
-		if (!MapUtil.getBoolean(properties, "enabled", true) &&
-			!FeatureFlagManagerUtil.isEnabled(
-				CompanyThreadLocal.getNonsystemCompanyId(), "LPD-63416")) {
-
+		if (!MapUtil.getBoolean(properties, "enabled", true)) {
 			return;
 		}
 

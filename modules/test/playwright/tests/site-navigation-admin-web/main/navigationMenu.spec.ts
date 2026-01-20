@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ObjectDefinitionAPI} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
@@ -13,6 +14,7 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {pageSelectorPagesTest} from '../../../fixtures/pageSelectorPagesTest';
 import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
 import getRandomString from '../../../utils/getRandomString';
+import {normalizeRestPath} from '../../../utils/normalizeRestPath';
 import {pagesPagesTest} from '../../layout-admin-web/main/fixtures/pagesPagesTest';
 import {navigationMenusPagesTest} from './fixtures/navigationMenusPagesTest';
 
@@ -409,6 +411,62 @@ test(
 
 		await expect(
 			page.getByRole('link', {name: navigationMenuName2})
+		).toBeVisible();
+	}
+);
+
+test(
+	'Ensure Navigation Menu renders successfully when Navigation Menu Item Type is missing',
+	{
+		tag: '@LPD-73650',
+	},
+	async ({apiHelpers, navigationMenusPage, page, site}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+			{textField: getRandomString()},
+			`${normalizeRestPath(objectDefinition.restContextPath)}`
+		);
+
+		await navigationMenusPage.goto(site.friendlyUrlPath);
+
+		const navigationMenuName = getRandomString();
+
+		await navigationMenusPage.createNavigationMenu(navigationMenuName);
+
+		await navigationMenusPage.addObjectEntryItem(
+			objectDefinition.name,
+			`${objectEntry.id}`
+		);
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		await objectDefinitionAPIClient.deleteObjectDefinition(
+			objectDefinition.id
+		);
+
+		await navigationMenusPage.goto(site.friendlyUrlPath);
+
+		await page.waitForTimeout(300);
+
+		await page.getByText(navigationMenuName).click();
+
+		await expect(
+			page.getByText(`${navigationMenuName} is temporarily unavailable`)
+		).not.toBeVisible();
+
+		await expect(page.getByText(`${objectEntry.id}`)).toBeVisible();
+
+		await page.getByText(`${objectEntry.id}`).click();
+
+		await expect(
+			page.getByText(
+				'This navigation menu item references the following entity, which is missing or not yet available'
+			)
 		).toBeVisible();
 	}
 );

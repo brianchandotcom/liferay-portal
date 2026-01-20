@@ -35,11 +35,16 @@ String collapseSwitchName = (String)request.getAttribute("liferay-commerce:panel
 boolean collapsible = (boolean)request.getAttribute("liferay-commerce:panel:collapsible");
 String elementClasses = (String)request.getAttribute("liferay-commerce:panel:elementClasses");
 String randomNamespace = (String)request.getAttribute("liferay-commerce:panel:randomNamespace");
+String secondaryActionIcon = (String)request.getAttribute("liferay-commerce:panel:secondaryActionIcon");
+String secondaryActionLabel = (String)request.getAttribute("liferay-commerce:panel:secondaryActionLabel");
+String secondaryActionTargetId = (String)request.getAttribute("liferay-commerce:panel:secondaryActionTargetId");
+String secondaryActionUrl = (String)request.getAttribute("liferay-commerce:panel:secondaryActionUrl");
 String showMoreId = (String)request.getAttribute("liferay-commerce:panel:showMoreId");
 String showMoreUrl = (String)request.getAttribute("liferay-commerce:panel:showMoreUrl");
 String title = (String)request.getAttribute("liferay-commerce:panel:title");
 
 String linkId = Validator.isNotNull(actionTargetId) ? actionTargetId : (randomNamespace + "header-link");
+String secondaryLinkId = Validator.isNotNull(secondaryActionTargetId) ? secondaryActionTargetId : (randomNamespace + "header-link");
 String showMoreButtonId = Validator.isNotNull(showMoreId) ? showMoreId : (randomNamespace + "show-more-button");
 String showMoreButtonWrapperId = randomNamespace + "show-more-button-wrapper";
 %>

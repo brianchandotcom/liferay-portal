@@ -5,9 +5,12 @@
 
 package com.liferay.site.cms.site.initializer.internal.util;
 
+import com.liferay.depot.model.DepotEntry;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
+import com.liferay.object.entry.folder.util.ObjectEntryFolderThreadLocal;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectEntryFolderLocalServiceUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -39,6 +42,25 @@ public class ObjectEntryFolderUtil {
 		_addObjectEntryFolder(
 			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES, group,
 			"Files", "Files");
+	}
+
+	public static void deleteObjectEntryFolders(DepotEntry depotEntry)
+		throws PortalException {
+
+		try (SafeCloseable safeCloseable =
+				ObjectEntryFolderThreadLocal.
+					setForceDeleteSystemObjectEntryFolderWithSafeCloseable(
+						true)) {
+
+			ObjectEntryFolderLocalServiceUtil.
+				deleteObjectEntryFolderByExternalReferenceCode(
+					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
+					depotEntry.getGroupId(), depotEntry.getCompanyId());
+			ObjectEntryFolderLocalServiceUtil.
+				deleteObjectEntryFolderByExternalReferenceCode(
+					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES,
+					depotEntry.getGroupId(), depotEntry.getCompanyId());
+		}
 	}
 
 	private static void _addObjectEntryFolder(

@@ -737,7 +737,7 @@ public class LiferayOAuthDataProvider
 
 			Principal userPrincipal = securityContext.getUserPrincipal();
 
-			User user = _userLocalService.getUser(
+			User user = _userLocalService.fetchUser(
 				GetterUtil.getLong(userPrincipal.getName()));
 
 			Map<String, String> properties = client.getProperties();

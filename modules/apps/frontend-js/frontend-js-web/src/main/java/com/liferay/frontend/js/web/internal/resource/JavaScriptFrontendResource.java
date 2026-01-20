@@ -33,11 +33,10 @@ public class JavaScriptFrontendResource implements FrontendResource {
 		_immutable = immutable;
 		_language = language;
 		_maxAge = maxAge;
+		_private = isPrivate;
 		_resourceBundle = resourceBundle;
 		_sendNoCache = sendNoCache;
 		_url = url;
-
-		_private = isPrivate;
 	}
 
 	@Override

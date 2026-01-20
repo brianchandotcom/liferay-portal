@@ -52,7 +52,7 @@ liferay-default:
 
                                 http_code=$(\
                                     curl \
-                                        "$url"
+                                        "$url" \
                                         --fail \
                                         --location \
                                         --output-dir "$deploy_dir" \
@@ -62,8 +62,8 @@ liferay-default:
                                         --retry-delay 2 \
                                         --write-out "%{http_code}")
 
-                                if ["${http_code}" != "200"] ; then
-                                    echo "Unable to download OpenSearch modules for Product Version ${PRODUCT_VERSION}." >&2
+                                if [ "${http_code}" != "200" ] ; then
+                                    echo "Unable to download OpenSearch modules for Product Version ${product_version}." >&2
                                     exit 1
                                 fi
                       image: {{printf "%s:%s" .image.repository (.image.tag | toString)}}

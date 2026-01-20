@@ -9,8 +9,8 @@ import com.liferay.ai.hub.internal.assistant.handler.AssistantHandlerContext;
 import com.liferay.ai.hub.internal.assistant.handler.AssistantHandlerUtil;
 import com.liferay.ai.hub.internal.mcp.tool.provider.MCPToolProviderUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.ContentRetrieverUtil;
-import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.InputVariablesUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.ToolsUtil;
+import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.VariablesUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -148,7 +148,7 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 			).onError(
 				throwable -> vertexAiGeminiStreamingChatModel.close()
 			).systemMessageProvider(
-				object -> InputVariablesUtil.applyInputVariables(
+				object -> VariablesUtil.applyInputVariables(
 					executionContext, "prompt", kaleoNodeSettingValues)
 			).tools(
 				new Tools()
@@ -160,7 +160,7 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 						_jsonFactory, kaleoNodeSettingValues),
 					_objectEntryManager, serviceContext.getUserId())
 			).userMessage(
-				InputVariablesUtil.applyInputVariables(
+				VariablesUtil.applyInputVariables(
 					executionContext, "userMessage", kaleoNodeSettingValues)
 			).vertexAiGeminiStreamingChatModel(
 				vertexAiGeminiStreamingChatModel

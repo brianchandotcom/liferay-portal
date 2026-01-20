@@ -189,6 +189,22 @@ public class LayoutSiteNavigationMenuItemType
 	}
 
 	@Override
+	public String getName(String typeSettings) {
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.fastLoad(
+				typeSettings
+			).build();
+
+		String name = typeSettingsUnicodeProperties.get("name");
+
+		if (Validator.isNotNull(name)) {
+			return name;
+		}
+
+		return typeSettingsUnicodeProperties.get("title");
+	}
+
+	@Override
 	public String getRegularURL(
 			HttpServletRequest httpServletRequest,
 			SiteNavigationMenuItem siteNavigationMenuItem)
@@ -305,8 +321,14 @@ public class LayoutSiteNavigationMenuItemType
 			defaultTitle = layout.getName(locale);
 		}
 
-		return typeSettingsUnicodeProperties.getProperty(
+		String name = typeSettingsUnicodeProperties.getProperty(
 			"name_" + LocaleUtil.toLanguageId(locale), defaultTitle);
+
+		if ((layout == null) && Validator.isNull(name)) {
+			return typeSettingsUnicodeProperties.getProperty("title");
+		}
+
+		return name;
 	}
 
 	@Override

@@ -118,21 +118,42 @@ public class SiteNavigationMenuItemUtil {
 				SiteNavigationMenuItemTypeConstants.LAYOUT)) {
 
 			Layout layout =
-				LayoutLocalServiceUtil.getLayoutByExternalReferenceCode(
+				LayoutLocalServiceUtil.fetchLayoutByExternalReferenceCode(
 					typeSettingsUnicodeProperties.get("externalReferenceCode"),
 					siteNavigationMenuItem.getGroupId());
 
-			Map<Locale, String> nameMap = layout.getNameMap();
+			if (layout != null) {
+				Map<Locale, String> nameMap = layout.getNameMap();
 
-			for (Map.Entry<Locale, String> nameEntry : nameMap.entrySet()) {
-				String languageId = LocaleUtil.toLanguageId(nameEntry.getKey());
+				for (Map.Entry<Locale, String> nameEntry : nameMap.entrySet()) {
+					String languageId = LocaleUtil.toLanguageId(
+						nameEntry.getKey());
+
+					if (Validator.isNull(
+							typeSettingsUnicodeProperties.getProperty(
+								"name_" + languageId))) {
+
+						typeSettingsUnicodeProperties.setProperty(
+							"name_" + languageId, nameEntry.getValue());
+					}
+				}
+			}
+			else {
+				String defaultLanguageId =
+					typeSettingsUnicodeProperties.getProperty(
+						Field.DEFAULT_LANGUAGE_ID,
+						LocaleUtil.toLanguageId(
+							LocaleUtil.getMostRelevantLocale()));
 
 				if (Validator.isNull(
 						typeSettingsUnicodeProperties.getProperty(
-							"name_" + languageId))) {
+							"name_" + defaultLanguageId))) {
+
+					String defaultTitle =
+						typeSettingsUnicodeProperties.getProperty("title");
 
 					typeSettingsUnicodeProperties.setProperty(
-						"name_" + languageId, nameEntry.getValue());
+						"name_" + defaultLanguageId, defaultTitle);
 				}
 			}
 		}

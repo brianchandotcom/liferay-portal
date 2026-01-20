@@ -5,6 +5,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:batch-engine:batch-engine-test-util")
 	compileOnly project(":apps:depot:depot-api")
+	compileOnly project(":apps:layout:layout-page-template-api")
 	compileOnly project(":apps:object:object-api")
 	compileOnly project(":apps:site:site-api")
 	compileOnly project(":apps:site:site-cms-site-initializer-api")

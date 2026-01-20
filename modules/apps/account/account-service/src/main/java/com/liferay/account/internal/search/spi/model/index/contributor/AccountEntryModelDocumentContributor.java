@@ -5,13 +5,10 @@
 
 package com.liferay.account.internal.search.spi.model.index.contributor;
 
-import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryOrganizationRelModel;
-import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.model.AccountGroupRel;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
-import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
@@ -20,8 +17,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
-
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -42,20 +37,12 @@ public class AccountEntryModelDocumentContributor
 		document.addText(Field.NAME, accountEntry.getName());
 		document.addKeyword(Field.STATUS, accountEntry.getStatus());
 
-		String type = accountEntry.getType();
-
-		document.addKeyword(Field.TYPE, type);
-
 		document.addKeyword("accountEntryId", accountEntry.getAccountEntryId());
 		document.addKeyword(
 			"accountGroupIds", _getAccountGroupIds(accountEntry));
 
-		long[] accountUserIds = _getAccountUserIds(accountEntry);
-
-		document.addKeyword("accountUserIds", accountUserIds);
-		document.addKeyword(
-			"allowNewUserMembership",
-			_isAllowNewUserMembership(accountUserIds, type));
+		UserAccountEntryDocumentContributorUtil.contribute(
+			document, accountEntry);
 
 		document.addKeyword("domains", _getDomains(accountEntry));
 		document.addKeyword(
@@ -75,14 +62,6 @@ public class AccountEntryModelDocumentContributor
 			AccountGroupRel::getAccountGroupId);
 	}
 
-	private long[] _getAccountUserIds(AccountEntry accountEntry) {
-		return ListUtil.toLongArray(
-			_accountEntryUserRelLocalService.
-				getAccountEntryUserRelsByAccountEntryId(
-					accountEntry.getAccountEntryId()),
-			AccountEntryUserRel::getAccountUserId);
-	}
-
 	private String[] _getDomains(AccountEntry accountEntry) {
 		return ArrayUtil.toStringArray(
 			StringUtil.split(accountEntry.getDomains(), CharPool.COMMA));
@@ -96,24 +75,9 @@ public class AccountEntryModelDocumentContributor
 			AccountEntryOrganizationRelModel::getOrganizationId);
 	}
 
-	private boolean _isAllowNewUserMembership(
-		long[] accountUserIds, String type) {
-
-		if (Objects.equals(type, AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON) &&
-			ArrayUtil.isNotEmpty(accountUserIds)) {
-
-			return false;
-		}
-
-		return true;
-	}
-
 	@Reference
 	private AccountEntryOrganizationRelLocalService
 		_accountEntryOrganizationRelLocalService;
-
-	@Reference
-	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
 	@Reference
 	private AccountGroupRelLocalService _accountGroupRelLocalService;

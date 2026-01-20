@@ -220,9 +220,11 @@ function SelectionFilter({
 					const selectionItems = response.items.map((item: any) => {
 						return {
 							label: itemLabel
-								? getValueFromItem(item, itemLabel)
+								? getValueFromItem(item, itemLabel.split('.'))
 								: item.label,
-							value: itemKey ? item[itemKey] : item.value,
+							value: itemKey
+								? getValueFromItem(item, itemKey.split('.'))
+								: item.value,
 						};
 					});
 

@@ -5135,6 +5135,14 @@
 		"to": "fetchCommercePriceEntry(param#0#, param#1#, param#2#, StringPool.BLANK)"
 	},
 	{
+		"classNames": [
+			"FFDocumentLibraryDDMEditorConfigurationUtil"
+		],
+		"from": "useDataEngineEditor()",
+		"hasMessage": true,
+		"issueKey": "LPD-76458"
+	},
+	{
 		"from": "regex:MultiVMPoolUtil\\s*.\\s*getPortalCache\\(\\s*(?<prefixMethodName>[\\s\\S]*?)\\)",
 		"issueKey": "LPS-153962",
 		"newImports": [

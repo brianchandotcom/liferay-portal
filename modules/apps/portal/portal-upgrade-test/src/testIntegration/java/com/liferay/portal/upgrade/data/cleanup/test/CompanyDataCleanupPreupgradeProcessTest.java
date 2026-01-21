@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
+import com.liferay.portal.kernel.instance.lifecycle.PortalInstanceLifecycleManager;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ResourceAction;
@@ -44,6 +45,10 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Luis Ortiz
@@ -120,6 +125,18 @@ public class CompanyDataCleanupPreupgradeProcessTest
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					PortalInstancePool.getDefaultCompanyId())) {
+
+			Bundle bundle = FrameworkUtil.getBundle(
+				CompanyDataCleanupPreupgradeProcessTest.class);
+
+			BundleContext bundleContext = bundle.getBundleContext();
+
+			PortalInstanceLifecycleManager portalInstanceLifecycleManager =
+				bundleContext.getService(
+					bundleContext.getServiceReference(
+						PortalInstanceLifecycleManager.class));
+
+			portalInstanceLifecycleManager.unregisterCompany(company);
 
 			runSQL("delete from Company where companyId = " + companyId);
 		}

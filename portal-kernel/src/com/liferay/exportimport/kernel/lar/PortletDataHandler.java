@@ -179,6 +179,8 @@ public interface PortletDataHandler {
 
 	public int getRank();
 
+	public String getResourceName();
+
 	/**
 	 * Returns the schema version for this data handler, which represents the
 	 * staging and export/import aspect of a component. The schema version is
@@ -231,9 +233,17 @@ public interface PortletDataHandler {
 	 */
 	public String getSchemaVersion();
 
-	public String getResourceName();
-
 	public String getServiceName();
+
+	public default PortletDataHandlerControl[]
+		getStagingPortletDataHandlerControls() {
+
+		return new PortletDataHandlerControl[0];
+	}
+
+	public default String getTag(Locale locale) {
+		return null;
+	}
 
 	/**
 	 * Handles any special processing of the data when the portlet is imported
@@ -254,16 +264,6 @@ public interface PortletDataHandler {
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences, String data)
 		throws PortletDataException;
-
-	public default String getTag(Locale locale) {
-		return null;
-	}
-
-	public default PortletDataHandlerControl[]
-		getStagingPortletDataHandlerControls() {
-
-		return new PortletDataHandlerControl[0];
-	}
 
 	public default boolean isBatch() {
 		return false;
@@ -287,6 +287,16 @@ public interface PortletDataHandler {
 
 	public boolean isDisplayPortlet();
 
+	public boolean isEmptyControlsAllowed();
+
+	public default boolean isEnabled(long companyId) {
+		return true;
+	}
+
+	public default boolean isHidden() {
+		return false;
+	}
+
 	/**
 	 * Returns whether the data exported by this handler should be included by
 	 * default when publishing to live. This should only be <code>true</code>
@@ -299,16 +309,6 @@ public interface PortletDataHandler {
 	 *         otherwise
 	 */
 	public boolean isPublishToLiveByDefault();
-
-	public default boolean isEnabled(long companyId) {
-		return true;
-	}
-
-	public default boolean isHidden() {
-		return false;
-	}
-
-	public boolean isEmptyControlsAllowed();
 
 	/**
 	 * Returns <code>true</code> if the data handler stops operations and rolls

@@ -119,8 +119,203 @@ public class ConfigurationEnvBuilder {
 		return sb.toString();
 	}
 
-	private static String _lang(String key) {
-		return _languageProperties.getProperty(key, key);
+	protected static List<ObjectDef> getObjectDefs(
+			Path basePath, String[] configurationFilePaths)
+		throws IOException {
+
+		List<ObjectDef> objectDefs = new ArrayList<>();
+
+		Path realPath = basePath.toRealPath();
+
+		for (String configurationFilePath : configurationFilePaths) {
+			ObjectDef objectDef = _createObjectDef(
+				realPath, configurationFilePath);
+
+			if (objectDef != null) {
+				objectDefs.add(objectDef);
+			}
+		}
+
+		return _postProcessObjectDefs(objectDefs);
+	}
+
+	protected static class AttributeDef implements Comparable<AttributeDef> {
+
+		@Override
+		public int compareTo(AttributeDef attributeDef) {
+			return name.compareTo(attributeDef.name);
+		}
+
+		@Override
+		public boolean equals(Object object) {
+			if (!Objects.equals(AttributeDef.class, object.getClass())) {
+				return false;
+			}
+
+			AttributeDef attributeDef = (AttributeDef)object;
+
+			return Objects.equals(name, attributeDef.name);
+		}
+
+		@Override
+		public int hashCode() {
+			String string = toJSONObject().toString();
+
+			return string.hashCode();
+		}
+
+		protected boolean isArray() {
+			return Objects.equals(type, "array");
+		}
+
+		protected boolean isBoolean() {
+			return Objects.equals(type, "boolean");
+		}
+
+		protected boolean isNumber() {
+			return Objects.equals(type, "number");
+		}
+
+		protected boolean isObject() {
+			return Objects.equals(type, "object");
+		}
+
+		protected boolean isString() {
+			return Objects.equals(type, "string");
+		}
+
+		protected JSONObject toJSONObject() {
+			JSONObject jsonObject = _toJSONObject(
+				"default", () -> defaultValue
+			).put(
+				"deprecated", () -> deprecated
+			).put(
+				"description", () -> description
+			).put(
+				"title", () -> title
+			).put(
+				"type", () -> type
+			);
+
+			if (isArray()) {
+				jsonObject.put("items", _toJSONObject("type", "string"));
+			}
+
+			if (isObject()) {
+				jsonObject.put("properties", _jsonFactory.createJSONObject());
+			}
+
+			if (isNumber()) {
+				jsonObject.put(
+					"max", () -> max
+				).put(
+					"min", () -> min
+				);
+			}
+
+			if (isString()) {
+				jsonObject.put(
+					"maxLength", () -> max
+				).put(
+					"minLength", () -> min
+				);
+			}
+
+			if (ArrayUtil.isNotEmpty(optionValues)) {
+				JSONArray optionValuesJSONArray = _toJSONArray(optionValues);
+
+				if (isArray()) {
+					jsonObject.getJSONObject(
+						"items"
+					).put(
+						"enum", optionValuesJSONArray
+					);
+				}
+				else {
+					jsonObject.put("enum", optionValuesJSONArray);
+				}
+			}
+
+			return jsonObject;
+		}
+
+		protected Object defaultValue;
+		protected Boolean deprecated;
+		protected String description;
+		protected boolean hasMetaAnnotation;
+		protected Number max;
+		protected Number min;
+		protected String name;
+		protected String[] optionLabels;
+		protected Object[] optionValues;
+		protected boolean required = true;
+		protected boolean requiredInput;
+		protected String title;
+		protected String type;
+
+	}
+
+	protected static class ObjectDef implements Comparable<ObjectDef> {
+
+		@Override
+		public int compareTo(ObjectDef objectDef) {
+			return pid.compareTo(objectDef.pid);
+		}
+
+		protected boolean extendsObjectDef(ObjectDef superObjectDef) {
+			return Objects.equals(
+				extendsInterfaceName, superObjectDef.interfaceName);
+		}
+
+		protected JSONObject toJSONObject() {
+			JSONObject jsonObject = _toJSONObject(
+				"description", () -> description
+			).put(
+				"properties",
+				_toJSONObject(
+					"pid",
+					_toJSONObject(
+						"const", pid
+					).put(
+						"description", () -> description
+					).put(
+						"title", () -> title
+					))
+			).put(
+				"required", _toJSONArray("pid")
+			).put(
+				"title", () -> title
+			);
+
+			for (AttributeDef attributeDef : attributeDefs) {
+				if (attributeDef.required) {
+					jsonObject.getJSONArray(
+						"required"
+					).put(
+						attributeDef.name
+					);
+				}
+
+				jsonObject.getJSONObject(
+					"properties"
+				).put(
+					attributeDef.name, attributeDef.toJSONObject()
+				);
+			}
+
+			return jsonObject;
+		}
+
+		protected List<AttributeDef> attributeDefs = new ArrayList<>();
+		protected String category;
+		protected String description;
+		protected String extendsInterfaceName;
+		protected boolean hasMetaAnnotation;
+		protected String interfaceName;
+		protected String pid;
+		protected String scope = "system";
+		protected String title;
+
 	}
 
 	private static ObjectDef _createObjectDef(
@@ -312,24 +507,8 @@ public class ConfigurationEnvBuilder {
 		return schemaJSONObject.toString();
 	}
 
-	protected static List<ObjectDef> getObjectDefs(
-			Path basePath, String[] configurationFilePaths)
-		throws IOException {
-
-		List<ObjectDef> objectDefs = new ArrayList<>();
-
-		Path realPath = basePath.toRealPath();
-
-		for (String configurationFilePath : configurationFilePaths) {
-			ObjectDef objectDef = _createObjectDef(
-				realPath, configurationFilePath);
-
-			if (objectDef != null) {
-				objectDefs.add(objectDef);
-			}
-		}
-
-		return _postProcessObjectDefs(objectDefs);
+	private static String _lang(String key) {
+		return _languageProperties.getProperty(key, key);
 	}
 
 	private static List<ObjectDef> _postProcessObjectDefs(
@@ -368,6 +547,22 @@ public class ConfigurationEnvBuilder {
 		return newObjectDefs;
 	}
 
+	private static void _setFieldValue(
+		Field field, Object object, Object value) {
+
+		try {
+			field.set(object, value);
+		}
+		catch (IllegalAccessException illegalAccessException) {
+			throw new RuntimeException(illegalAccessException);
+		}
+	}
+
+	private static boolean _toBoolean(Object object) {
+		return Objects.equals(
+			String.valueOf(object), String.valueOf(Boolean.TRUE));
+	}
+
 	private static JSONArray _toJSONArray(Object... items) {
 		return _jsonFactory.createJSONArray(items);
 	}
@@ -389,22 +584,6 @@ public class ConfigurationEnvBuilder {
 
 		return _toJSONObject(
 			jsonObject -> jsonObject.put(key, valueUnsafeSupplier));
-	}
-
-	private static void _setFieldValue(
-		Field field, Object object, Object value) {
-
-		try {
-			field.set(object, value);
-		}
-		catch (IllegalAccessException illegalAccessException) {
-			throw new RuntimeException(illegalAccessException);
-		}
-	}
-
-	private static boolean _toBoolean(Object object) {
-		return Objects.equals(
-			String.valueOf(object), String.valueOf(Boolean.TRUE));
 	}
 
 	private static Number _toNumber(Object object) {
@@ -483,8 +662,13 @@ public class ConfigurationEnvBuilder {
 		}
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		ConfigurationEnvBuilder.class);
+
 	private static final Pattern _attributeDefaultValuePattern =
 		Pattern.compile("\\bdeflt = \"(?<defaultValue>[^\"]*)\"");
+	private static final Pattern _attributeDefMetaAnnotationPattern =
+		Pattern.compile("@Meta.AD\\b");
 	private static final Pattern _attributeDeprecatedPattern = Pattern.compile(
 		"\\b(?<deprecated>@Deprecated)");
 	private static final Pattern _attributeDescriptionPattern = Pattern.compile(
@@ -505,31 +689,26 @@ public class ConfigurationEnvBuilder {
 		"\\bname = \"(?<title>[^\"]*)\"");
 	private static final Pattern _attributeTypeNamePattern = Pattern.compile(
 		"\\s+public(default)? (?<type>\\w+|\\S+) (?<name>\\w+)\\(\\)");
-	private static final Properties _languageProperties = new Properties();
 	private static final JSONFactory _jsonFactory = new JSONFactoryImpl();
-	private static final Log _log = LogFactoryUtil.getLog(
-		ConfigurationEnvBuilder.class);
-
+	private static final Properties _languageProperties = new Properties();
 	private static final Pattern _objectDefCategoryPattern = Pattern.compile(
 		"\\bcategory = \"(?<category>[^\"]*)\"");
 	private static final Pattern _objectDefDescriptionPattern = Pattern.compile(
 		"\\bdescription = \"(?<description>[^\"]*)\"");
-	private static final Pattern _objectDefScopePattern = Pattern.compile(
-		"\\bscope = ExtendedObjectClassDefinition\\.Scope\\." +
-			"(?<scope>SYSTEM|COMPANY|GROUP|PORTLET_INSTANCE)\\b");
-	private static final Pattern _objectDefInterfaceNamePattern =
-		Pattern.compile(" @?interface (?<interfaceName>[A-Z][A-Za-z\\d]+)\\b");
 	private static final Pattern _objectDefExtendsInterfaceNamePattern =
 		Pattern.compile(
 			"\\bextends (?<extendsInterfaceName>[A-Z][A-Za-z\\d]+)\\b");
-	private static final Pattern _objectDefPidPattern = Pattern.compile(
-		"\\bid = \"?(?<pid>[\\w.]+)\"?");
-	private static final Pattern _objectDefTitlePattern = Pattern.compile(
-		"\\bname = \"(?<title>[^\"]*)\"");
+	private static final Pattern _objectDefInterfaceNamePattern =
+		Pattern.compile(" @?interface (?<interfaceName>[A-Z][A-Za-z\\d]+)\\b");
 	private static final Pattern _objectDefMetaAnnotationPattern =
 		Pattern.compile("@Meta.OCD\\b");
-	private static final Pattern _attributeDefMetaAnnotationPattern =
-		Pattern.compile("@Meta.AD\\b");
+	private static final Pattern _objectDefPidPattern = Pattern.compile(
+		"\\bid = \"?(?<pid>[\\w.]+)\"?");
+	private static final Pattern _objectDefScopePattern = Pattern.compile(
+		"\\bscope = ExtendedObjectClassDefinition\\.Scope\\." +
+			"(?<scope>SYSTEM|COMPANY|GROUP|PORTLET_INSTANCE)\\b");
+	private static final Pattern _objectDefTitlePattern = Pattern.compile(
+		"\\bname = \"(?<title>[^\"]*)\"");
 	private static final Map<String, String> _schemaDataTypes =
 		HashMapBuilder.put(
 			"boolean", "boolean"
@@ -546,184 +725,5 @@ public class ConfigurationEnvBuilder {
 		).put(
 			"String[]", "array"
 		).build();
-
-	protected static class AttributeDef implements Comparable<AttributeDef> {
-
-		@Override
-		public int compareTo(AttributeDef attributeDef) {
-			return name.compareTo(attributeDef.name);
-		}
-
-		@Override
-		public boolean equals(Object object) {
-			if (!Objects.equals(AttributeDef.class, object.getClass())) {
-				return false;
-			}
-
-			AttributeDef attributeDef = (AttributeDef)object;
-
-			return Objects.equals(name, attributeDef.name);
-		}
-
-		@Override
-		public int hashCode() {
-			String string = toJSONObject().toString();
-
-			return string.hashCode();
-		}
-
-		protected boolean isArray() {
-			return Objects.equals(type, "array");
-		}
-
-		protected boolean isBoolean() {
-			return Objects.equals(type, "boolean");
-		}
-
-		protected boolean isNumber() {
-			return Objects.equals(type, "number");
-		}
-
-		protected boolean isObject() {
-			return Objects.equals(type, "object");
-		}
-
-		protected boolean isString() {
-			return Objects.equals(type, "string");
-		}
-
-		protected JSONObject toJSONObject() {
-			JSONObject jsonObject = _toJSONObject(
-				"default", () -> defaultValue
-			).put(
-				"deprecated", () -> deprecated
-			).put(
-				"description", () -> description
-			).put(
-				"title", () -> title
-			).put(
-				"type", () -> type
-			);
-
-			if (isArray()) {
-				jsonObject.put("items", _toJSONObject("type", "string"));
-			}
-
-			if (isObject()) {
-				jsonObject.put("properties", _jsonFactory.createJSONObject());
-			}
-
-			if (isNumber()) {
-				jsonObject.put(
-					"max", () -> max
-				).put(
-					"min", () -> min
-				);
-			}
-
-			if (isString()) {
-				jsonObject.put(
-					"maxLength", () -> max
-				).put(
-					"minLength", () -> min
-				);
-			}
-
-			if (ArrayUtil.isNotEmpty(optionValues)) {
-				JSONArray optionValuesJSONArray = _toJSONArray(optionValues);
-
-				if (isArray()) {
-					jsonObject.getJSONObject(
-						"items"
-					).put(
-						"enum", optionValuesJSONArray
-					);
-				}
-				else {
-					jsonObject.put("enum", optionValuesJSONArray);
-				}
-			}
-
-			return jsonObject;
-		}
-
-		protected Object defaultValue;
-		protected Boolean deprecated;
-		protected String description;
-		protected boolean hasMetaAnnotation;
-		protected Number max;
-		protected Number min;
-		protected String name;
-		protected String[] optionLabels;
-		protected Object[] optionValues;
-		protected boolean required = true;
-		protected boolean requiredInput;
-		protected String title;
-		protected String type;
-
-	}
-
-	protected static class ObjectDef implements Comparable<ObjectDef> {
-
-		@Override
-		public int compareTo(ObjectDef objectDef) {
-			return pid.compareTo(objectDef.pid);
-		}
-
-		protected boolean extendsObjectDef(ObjectDef superObjectDef) {
-			return Objects.equals(
-				extendsInterfaceName, superObjectDef.interfaceName);
-		}
-
-		protected JSONObject toJSONObject() {
-			JSONObject jsonObject = _toJSONObject(
-				"description", () -> description
-			).put(
-				"properties",
-				_toJSONObject(
-					"pid",
-					_toJSONObject(
-						"const", pid
-					).put(
-						"description", () -> description
-					).put(
-						"title", () -> title
-					))
-			).put(
-				"required", _toJSONArray("pid")
-			).put(
-				"title", () -> title
-			);
-
-			for (AttributeDef attributeDef : attributeDefs) {
-				if (attributeDef.required) {
-					jsonObject.getJSONArray(
-						"required"
-					).put(
-						attributeDef.name
-					);
-				}
-
-				jsonObject.getJSONObject(
-					"properties"
-				).put(
-					attributeDef.name, attributeDef.toJSONObject()
-				);
-			}
-
-			return jsonObject;
-		}
-
-		protected List<AttributeDef> attributeDefs = new ArrayList<>();
-		protected String category;
-		protected String description;
-		protected String extendsInterfaceName;
-		protected boolean hasMetaAnnotation;
-		protected String interfaceName;
-		protected String pid;
-		protected String scope = "system";
-		protected String title;
-
-	}
 
 }

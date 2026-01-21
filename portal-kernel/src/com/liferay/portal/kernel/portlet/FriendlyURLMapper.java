@@ -72,6 +72,8 @@ public interface FriendlyURLMapper {
 	 */
 	public Router getRouter();
 
+	public void init(Portlet portlet);
+
 	/**
 	 * Returns <code>true</code> if the friendly URLs for this mapper should
 	 * include the friendly URL separator.
@@ -98,7 +100,19 @@ public interface FriendlyURLMapper {
 	 */
 	public boolean isCheckMappingWithPrefix();
 
-	public void init(Portlet portlet);
+	/**
+	 * Returns <code>true</code> if this portlet is instanceable.
+	 *
+	 * <p>
+	 * The value returned from this method has no effect on whether a portlet is
+	 * instanceable, it is a helper method used to determine if the instance ID
+	 * should be included in the URL.
+	 * </p>
+	 *
+	 * @return <code>true</code> if the portlet is instanceable;
+	 *         <code>false</code> otherwise
+	 */
+	public boolean isPortletInstanceable();
 
 	/**
 	 * Populates the parameter map with values parsed from the friendly URL
@@ -121,20 +135,6 @@ public interface FriendlyURLMapper {
 	public void populateParams(
 		String friendlyURLPath, Map<String, String[]> parameterMap,
 		Map<String, Object> requestContext);
-
-	/**
-	 * Returns <code>true</code> if this portlet is instanceable.
-	 *
-	 * <p>
-	 * The value returned from this method has no effect on whether a portlet is
-	 * instanceable, it is a helper method used to determine if the instance ID
-	 * should be included in the URL.
-	 * </p>
-	 *
-	 * @return <code>true</code> if the portlet is instanceable;
-	 *         <code>false</code> otherwise
-	 */
-	public boolean isPortletInstanceable();
 
 	public void setFriendlyURLRoutes(String friendlyURLRoutes);
 

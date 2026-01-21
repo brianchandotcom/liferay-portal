@@ -4932,6 +4932,11 @@
 		"to": "addTemplate(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#, param#8#, param#9#, param#10#, param#11#, param#12#, param#13#, param#14#, param#15#)"
 	},
 	{
+		"from": "new NavItem(HttpServletRequest param, ThemeDisplay param, Layout param, Map<String, Object> param)",
+		"issueKey": "LPD-58259",
+		"to": "new NavItem(param#0#, param#1#, param#2#)"
+	},
+	{
 		"classNames": [
 			"MBMessageLocalService",
 			"MBMessageLocalServiceUtil"

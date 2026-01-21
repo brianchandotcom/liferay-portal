@@ -117,6 +117,7 @@
 		<suppress checks="JavaTaglibMethodCheck" files="util-taglib/src/com/liferay/taglib/ui/SearchFormTag\.java" />
 		<suppress checks="JavaUnsafeCastingCheck" files="portal-impl/src/com/liferay/portal/util/PortalImpl\.java" />
 		<suppress checks="JavaUpgradeClassCheck" files="portal-impl/src/com/liferay/portal/upgrade/data/cleanup/CounterDataCleanupPreupgradeProcess\.java" />
+		<suppress checks="JavaUpgradeClassCheck" files="portal-impl/src/com/liferay/portal/upgrade/data/cleanup/DatabaseTableAndColumnCaseDataCleanupPreupgradeProcess\.java" />
 		<suppress checks="JavaUpgradeCreateTableCheck" files="portal-impl/src/com/liferay/portal/upgrade/v7_0_3/UpgradeMessageBoards\.java" />
 		<suppress checks="JavaUpgradeCreateTableCheck" files="portal-impl/src/com/liferay/portal/upgrade/v7_2_x/UpgradeLayout\.java" />
 		<suppress checks="JavaUpgradeIndexCheck" files="portal-impl/src/com/liferay/portal/upgrade/v6_2_0/UpgradeDocumentLibrary\.java" />

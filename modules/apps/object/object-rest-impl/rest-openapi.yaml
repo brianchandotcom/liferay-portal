@@ -122,7 +122,7 @@ components:
             properties:
                 classNameId:
                     description:
-                        The object definition class name ID.
+                        The object definition's class name ID.
                     format: int64
                     readOnly: true
                     type: integer

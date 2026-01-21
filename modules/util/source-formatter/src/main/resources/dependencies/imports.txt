@@ -266,6 +266,7 @@ com.liferay.journal.model.JournalArticleConstants=com.liferay.journal.constants.
 com.liferay.journal.model.JournalFeedConstants=com.liferay.journal.constants.JournalFeedConstants
 com.liferay.journal.model.JournalFolderConstants=com.liferay.journal.constants.JournalFolderConstants
 com.liferay.journal.model.JournalStructureConstants=com.liferay.journal.constants.JournalStructureConstants
+com.liferay.journal.web.internal.portlet.action.PublishArticleMVCActionCommand=com.liferay.journal.web.internal.portlet.action.PublishArticlesMVCActionCommand
 com.liferay.layout.admin.kernel.util.Sitemap=com.liferay.site.util.Sitemap
 com.liferay.layout.admin.kernel.util.SitemapURLProvider=com.liferay.site.util.SitemapURLProvider
 com.liferay.layout.admin.kernel.util.SitemapUtil=com.liferay.site.manager.SitemapManager

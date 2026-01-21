@@ -4,7 +4,7 @@ apiVersion: pkg.crossplane.io/v1beta1
 kind: DeploymentRuntimeConfig
 metadata:
     annotations:
-        argocd.argoproj.io/sync-wave: -90
+        argocd.argoproj.io/sync-wave: "-90"
     name: kubernetes-config
 spec:
     deploymentTemplate:
@@ -41,7 +41,7 @@ apiVersion: pkg.crossplane.io/v1beta1
 kind: DeploymentRuntimeConfig
 metadata:
     annotations:
-        argocd.argoproj.io/sync-wave: -90
+        argocd.argoproj.io/sync-wave: "-90"
     name: aws-ec2-config
 spec:
     deploymentTemplate:
@@ -78,7 +78,7 @@ apiVersion: pkg.crossplane.io/v1beta1
 kind: DeploymentRuntimeConfig
 metadata:
     annotations:
-        argocd.argoproj.io/sync-wave: -90
+        argocd.argoproj.io/sync-wave: "-90"
     name: aws-iam-config
 spec:
     deploymentTemplate:
@@ -115,7 +115,7 @@ apiVersion: pkg.crossplane.io/v1beta1
 kind: DeploymentRuntimeConfig
 metadata:
     annotations:
-        argocd.argoproj.io/sync-wave: -90
+        argocd.argoproj.io/sync-wave: "-90"
     name: aws-opensearch-config
 spec:
     deploymentTemplate:
@@ -152,7 +152,7 @@ apiVersion: pkg.crossplane.io/v1beta1
 kind: DeploymentRuntimeConfig
 metadata:
     annotations:
-        argocd.argoproj.io/sync-wave: -90
+        argocd.argoproj.io/sync-wave: "-90"
     name: aws-rds-config
 spec:
     deploymentTemplate:
@@ -189,7 +189,7 @@ apiVersion: pkg.crossplane.io/v1beta1
 kind: DeploymentRuntimeConfig
 metadata:
     annotations:
-        argocd.argoproj.io/sync-wave: -90
+        argocd.argoproj.io/sync-wave: "-90"
     name: aws-s3-config
 spec:
     deploymentTemplate:

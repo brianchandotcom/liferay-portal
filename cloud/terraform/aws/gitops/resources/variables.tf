@@ -16,33 +16,100 @@ variable "external_secrets_namespace" {
 	default="external-secrets"
 	type=string
 }
-variable "git_repo_auth_config" {
-	default={}
+variable "infrastructure_git_repo_config" {
+	default={
+		auth={}
+		source_paths={}
+		target={}
+	}
 	type=object(
 		{
-			method=optional(string, "https")
-			secret_store_provider_hcl=optional(any, null)
-			ssh_private_key_vault_secret_property=optional(string, "git_ssh_private_key")
-			token_vault_secret_property=optional(string, "git_access_token")
-			username_vault_secret_property=optional(string, "git_machine_user_id")
-			vault_secret_name=optional(string, "argocd/pat/gitops-source-of-truth")
+			auth=object({
+				internal_secret_name=optional(string, "argocd-infrastructure-git-credentials")
+				method=optional(string, "https")
+				secret_store_provider_hcl=optional(any, null)
+				ssh_private_key_vault_secret_property=optional(string, "git_ssh_private_key")
+				token_vault_secret_property=optional(string, "git_access_token")
+				username_vault_secret_property=optional(string, "git_machine_user_id")
+				vault_secret_name=optional(string, "liferay-cloud-native/gitops-repo-credentials")
+			})
+			revision=optional(string, "HEAD")
+			source_paths=object({
+				base=optional(string, "liferay/projects/{{path[2]}}/base")
+				environments=optional(string, "liferay/projects/*/environments/*")
+				values_filename=optional(string, "infrastructure.yaml")
+			})
+			target=object({
+				name=optional(string, "{{path[2]}}-{{path[4]}}-infra")
+				namespaceSuffix=optional(string, "{{path[2]}}-{{path[4]}}")
+				slugEnvironmentId=optional(string, "{{path[4]}}")
+				slugProjectId=optional(string, "{{path[2]}}")
+			})
+			url=optional(string, null)
 		})
 	validation {
 		condition=(
-			!contains(keys(var.git_repo_auth_config), "method") ||
-			contains(["https", "ssh"], var.git_repo_auth_config.method))
-		error_message="The 'git_repo_auth_config.method' value must be 'https' or 'ssh'."
+			!contains(keys(var.infrastructure_git_repo_config.auth), "method") ||
+			contains(["https", "ssh"], var.infrastructure_git_repo_config.auth.method))
+		error_message="The 'infrastructure_git_repo_auth_config.method' value must be 'https' or 'ssh'."
 	}
 }
-variable "git_repo_paths" {
+variable "infrastructure_helm_chart_config" {
 	default={}
 	type=object(
 		{
-			liferay_application_base_path=optional(string, "applications/liferay/base")
-			liferay_application_environments_pattern=optional(string, "applications/liferay/environments/**/values.yaml")
+			image_name=optional(string, "liferay-aws-infrastructure")
+			image_url=optional(string, "oci://us-central1-docker.pkg.dev/external-assets-prd/liferay-helm-chart/liferay-aws-infrastructure")
+			version=optional(string, "0.1.1")
 		})
 }
-variable "git_repo_url" {
+variable "infrastructure_provider_helm_chart_config" {
+	default={}
+	type=object(
+		{
+			image_name=optional(string, "liferay-aws-infrastructure-provider")
+			image_url=optional(string, "oci://us-central1-docker.pkg.dev/external-assets-prd/liferay-helm-chart/liferay-aws-infrastructure-provider")
+			version=optional(string, "0.1.1")
+		})
+}
+variable "liferay_git_repo_config" {
+	default={
+		auth={}
+		source_paths={}
+		target={}
+	}
+	type=object(
+		{
+			auth=object({
+				internal_secret_name=optional(string, "argocd-liferay-git-credentials")
+				method=optional(string, "https")
+				secret_store_provider_hcl=optional(any, null)
+				ssh_private_key_vault_secret_property=optional(string, "git_ssh_private_key")
+				token_vault_secret_property=optional(string, "git_access_token")
+				username_vault_secret_property=optional(string, "git_machine_user_id")
+				vault_secret_name=optional(string, "liferay-cloud-native/gitops-repo-credentials")
+			})
+			revision=optional(string, "HEAD")
+			source_paths=object({
+				base=optional(string, "liferay/projects/{{path[2]}}/base")
+				environments=optional(string, "liferay/projects/*/environments/*")
+				values_filename=optional(string, "liferay.yaml")
+			})
+			target=object({
+				name=optional(string, "{{path[2]}}-{{path[4]}}-app")
+				namespaceSuffix=optional(string, "{{path[2]}}-{{path[4]}}")
+				slugEnvironmentId=optional(string, "{{path[4]}}")
+				slugProjectId=optional(string, "{{path[2]}}")
+			})
+		})
+	validation {
+		condition=(
+			!contains(keys(var.liferay_git_repo_config.auth), "method") ||
+			contains(["https", "ssh"], var.liferay_git_repo_config.auth.method))
+		error_message="The 'liferay_git_repo_auth_config.method' value must be 'https' or 'ssh'."
+	}
+}
+variable "liferay_git_repo_url" {
 	type=string
 }
 variable "liferay_helm_chart_name" {

@@ -25,9 +25,9 @@ export async function zipFolder(folderPath: string, zipOptions?: ZipOptions) {
 	return tempFilePath;
 }
 
-export async function checkFolderInZip(
+export async function checkInZip(
 	filePath: string,
-	folderName: string
+	path: string
 ): Promise<boolean> {
 	return new Promise((resolve, reject) => {
 		open(filePath, {lazyEntries: true}, (error, zip) => {
@@ -35,25 +35,28 @@ export async function checkFolderInZip(
 				return reject(error);
 			}
 
-			let found = false;
-
 			zip.readEntry();
 
 			zip.on('entry', (entry) => {
-				if (entry.fileName.startsWith(folderName + '/')) {
-					found = true;
+				if (
+					entry.fileName.match(path) ||
+					entry.fileName.startsWith(path + '/')
+				) {
 					zip.close();
-
-					return resolve(true);
+					resolve(true);
 				}
 				zip.readEntry();
 			});
 
 			zip.on('end', () => {
-				resolve(found);
+				zip.close();
+				resolve(false);
 			});
 
-			zip.on('error', reject);
+			zip.on('error', (error) => {
+				zip.close();
+				reject(error);
+			});
 		});
 	});
 }
@@ -61,7 +64,12 @@ export async function checkFolderInZip(
 export async function unzipFile(filePath: string): Promise<string> {
 	return new Promise((resolve, reject) => {
 		open(filePath, {lazyEntries: true}, async (error, zip) => {
+			if (error) {
+				return reject(error);
+			}
+
 			zip.readEntry();
+
 			zip.on('entry', (entry) => {
 				if (/\/$/.test(entry.fileName)) {
 					zip.readEntry();
@@ -69,6 +77,7 @@ export async function unzipFile(filePath: string): Promise<string> {
 				else {
 					zip.openReadStream(entry, async (error, stream) => {
 						if (error) {
+							zip.close();
 							reject(error);
 						}
 						stream.on('end', () => {
@@ -84,19 +93,19 @@ export async function unzipFile(filePath: string): Promise<string> {
 
 export async function readFileFromZip(
 	fileName: string,
-	zipFilePath: string
+	filePath: string
 ): Promise<string> {
 	return new Promise((resolve, reject) => {
-		open(zipFilePath, {lazyEntries: true}, (error, zipfile) => {
+		open(filePath, {lazyEntries: true}, (error, zip) => {
 			if (error) {
 				return reject(error);
 			}
 
-			zipfile.readEntry();
+			zip.readEntry();
 
-			zipfile.on('entry', (entry) => {
+			zip.on('entry', (entry) => {
 				if (entry.fileName.match(fileName)) {
-					zipfile.openReadStream(entry, (error, readStream) => {
+					zip.openReadStream(entry, (error, readStream) => {
 						if (error) {
 							return reject(error);
 						}
@@ -108,12 +117,13 @@ export async function readFileFromZip(
 						});
 
 						readStream.on('end', () => {
+							zip.close();
 							resolve(data);
 						});
 					});
 				}
 				else {
-					zipfile.readEntry();
+					zip.readEntry();
 				}
 			});
 		});

@@ -6,7 +6,7 @@
 import {readdirSync, statSync} from 'fs';
 import path from 'path';
 
-import {checkFolderInZip} from '../../../../utils/zip';
+import {checkInZip} from '../../../../utils/zip';
 
 export async function unzipAndCheckFolder(
 	tempDir: string,
@@ -27,10 +27,7 @@ export async function unzipAndCheckFolder(
 	const mostRecentFilePath = path.join(tempDir, files[0].file);
 
 	try {
-		const hasFolder = await checkFolderInZip(
-			mostRecentFilePath,
-			folderName
-		);
+		const hasFolder = await checkInZip(mostRecentFilePath, folderName);
 
 		return hasFolder;
 	}

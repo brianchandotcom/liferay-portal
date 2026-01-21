@@ -1677,4 +1677,120 @@ test.describe('Object Display page', () => {
 			).toHaveValue('2020-03-02T05:15');
 		}
 	);
+
+	test(
+		'Map display page template link in a button',
+		{
+			tag: '@LPD-76509',
+		},
+		async ({
+			apiHelpers,
+			displayPageTemplatesPage,
+			page,
+			pageEditorPage,
+			pageManagementSite,
+		}) => {
+
+			// Create display page template for Lemon
+
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+			const objectDefinitionResponse =
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
+					getObjectERC('Lemon')
+				);
+
+			const objectDefinitionClassName =
+				objectDefinitionResponse.body.className;
+
+			const jsonWebServicesClassName =
+				apiHelpers.jsonWebServicesClassName;
+
+			const className = await jsonWebServicesClassName.fetchClassName(
+				objectDefinitionClassName
+			);
+
+			const displayPageTemplateName = getRandomString();
+
+			const layoutPageTemplateEntryService =
+				apiHelpers.jsonWebServicesLayoutPageTemplateEntry;
+
+			const displayPageTemplate =
+				await layoutPageTemplateEntryService.addDisplayPageLayoutPageTemplateEntry(
+					{
+						classNameId: className.classNameId,
+						groupId: pageManagementSite.id,
+						name: displayPageTemplateName,
+					}
+				);
+
+			// Create a lemon object entry
+
+			const objectEntryApi = apiHelpers.objectEntry;
+
+			const lemonEntryName = 'lemonSize-' + getRandomString();
+
+			const lemonObjectEntry = await objectEntryApi.postObjectEntry(
+				{
+					lemonHistory: 'one',
+					lemonSize: lemonEntryName,
+					lemonWeight: 5,
+				},
+				'c/lemons',
+				pageManagementSite.key
+			);
+
+			// Edit display page template and map button link
+
+			await displayPageTemplatesPage.goto(
+				pageManagementSite.friendlyUrlPath
+			);
+
+			await displayPageTemplatesPage.editTemplate(
+				displayPageTemplateName
+			);
+
+			await pageEditorPage.addFragment('Basic Components', 'Button');
+
+			await pageEditorPage.mapEditableLink({
+				editableId: 'link',
+				fragmentName: 'Button',
+				linkConfiguration: {
+					mappingConfiguration: {
+						mapping: {
+							field: displayPageTemplateName,
+						},
+						source: 'structure',
+					},
+					type: 'Mapped URL',
+				},
+			});
+
+			await displayPageTemplatesPage.publishTemplate();
+
+			// Go to display page and validate link
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}/e/${displayPageTemplateName}/${className.classNameId}/${lemonObjectEntry.id}`
+			);
+
+			const buttonLink = page.getByRole('link', {name: 'Go somewhere'});
+
+			await expect(buttonLink).toBeVisible();
+
+			const buttonHref = await buttonLink.getAttribute('href');
+
+			expect(buttonHref).toContain(
+				`/e/${displayPageTemplateName}/${className.classNameId}/${lemonObjectEntry.id}`
+			);
+
+			// Delete display page template
+
+			await layoutPageTemplateEntryService.deleteLayoutPageTemplateEntry({
+				layoutPageTemplateEntryId:
+					displayPageTemplate.layoutPageTemplateEntryId,
+			});
+		}
+	);
 });

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -381,6 +382,40 @@ public class DDMFieldLocalServiceTest {
 			ddmForm, _STORAGE_ID);
 
 		Assert.assertEquals(ddmFormValues, deserializedDDMFormValues);
+	}
+
+	@Test
+	public void testUpdateDDMFormValuesWithNullValue() throws Exception {
+		String fieldName = RandomTestUtil.randomString();
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(fieldName);
+
+		DDMStructure ddmStructure = _ddmStructureTestHelper.addStructure(
+			ddmForm, StorageType.DEFAULT.toString());
+
+		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
+
+		ddmFormValues.setDefaultLocale(LocaleUtil.ENGLISH);
+		ddmFormValues.setAvailableLocales(
+			Collections.singleton(LocaleUtil.ENGLISH));
+		ddmFormValues.setDDMFormFieldValues(
+			Arrays.asList(
+				_createDDMFormFieldValue(LocaleUtil.ENGLISH, fieldName, null)));
+
+		_ddmFieldLocalService.updateDDMFormValues(
+			ddmStructure.getStructureId(), _STORAGE_ID, ddmFormValues);
+
+		DDMFormValues deserializedDDMFormValues =
+			_ddmFieldLocalService.getDDMFormValues(ddmForm, _STORAGE_ID);
+
+		DDMFormFieldValue ddmFormFieldValue =
+			deserializedDDMFormValues.getDDMFormFieldValue(fieldName, false);
+
+		LocalizedValue localizedValue =
+			(LocalizedValue)ddmFormFieldValue.getValue();
+
+		Assert.assertEquals(
+			StringPool.BLANK, localizedValue.getString(LocaleUtil.ENGLISH));
 	}
 
 	@Test

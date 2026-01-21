@@ -61,6 +61,8 @@ public class DefaultExportImportBackgroundTaskStatusMessageTranslator
 			"currentPortletModelAdditionCounters",
 			new HashMap<String, LongWrapper>());
 		backgroundTaskStatus.setAttribute("percentage", 0);
+		backgroundTaskStatus.setAttribute(
+			"previousPortletsModelAdditionCountersTotal", 0L);
 	}
 
 	protected synchronized void translateLayoutMessage(
@@ -94,6 +96,26 @@ public class DefaultExportImportBackgroundTaskStatusMessageTranslator
 		HashMap<String, Long> allPortletModelAdditionCounters =
 			(HashMap<String, Long>)backgroundTaskStatus.getAttribute(
 				"allPortletModelAdditionCounters");
+
+		String previousPortletId = (String)backgroundTaskStatus.getAttribute(
+			"portletId");
+
+		if ((previousPortletId != null) &&
+			!previousPortletId.equals(portletId)) {
+
+			long previousPortletTotal = GetterUtil.getLong(
+				allPortletModelAdditionCounters.get(previousPortletId));
+
+			long previousPortletsModelAdditionCountersTotal =
+				GetterUtil.getLong(
+					backgroundTaskStatus.getAttribute(
+						"previousPortletsModelAdditionCountersTotal"));
+
+			backgroundTaskStatus.setAttribute(
+				"previousPortletsModelAdditionCountersTotal",
+				previousPortletsModelAdditionCountersTotal +
+					previousPortletTotal);
+		}
 
 		long portletModelAdditionCountersTotal = GetterUtil.getLong(
 			message.get("portletModelAdditionCountersTotal"));
@@ -157,11 +179,21 @@ public class DefaultExportImportBackgroundTaskStatusMessageTranslator
 		long allModelAdditionCountersTotal = GetterUtil.getLong(
 			backgroundTaskStatus.getAttribute("allModelAdditionCountersTotal"));
 
+		long previousPortletsModelAdditionCountersTotal = GetterUtil.getLong(
+			backgroundTaskStatus.getAttribute(
+				"previousPortletsModelAdditionCountersTotal"));
+
 		long newCurrentCount = Math.min(
-			processedItemsCount, allModelAdditionCountersTotal);
+			processedItemsCount + previousPortletsModelAdditionCountersTotal,
+			allModelAdditionCountersTotal);
+
+		long currentModelAdditionCountersTotal = GetterUtil.getLong(
+			backgroundTaskStatus.getAttribute(
+				"currentModelAdditionCountersTotal"));
 
 		backgroundTaskStatus.setAttribute(
-			"currentModelAdditionCountersTotal", newCurrentCount);
+			"currentModelAdditionCountersTotal",
+			Math.max(currentModelAdditionCountersTotal, newCurrentCount));
 
 		_updatePercentage(backgroundTaskStatus);
 	}
@@ -235,17 +267,14 @@ public class DefaultExportImportBackgroundTaskStatusMessageTranslator
 
 		long allProgressBarCountersTotal =
 			allModelAdditionCountersTotal + allPortletAdditionCounter;
-		long currentProgressBarCountersTotal =
-			currentModelAdditionCountersTotal + currentPortletAdditionCounter;
-
-		backgroundTaskStatus.setAttribute(
-			"allProgressBarCountersTotal", allProgressBarCountersTotal);
-		backgroundTaskStatus.setAttribute(
-			"currentProgressBarCountersTotal", currentProgressBarCountersTotal);
 
 		int percentage = 100;
 
 		if (allProgressBarCountersTotal > 0) {
+			long currentProgressBarCountersTotal =
+				currentModelAdditionCountersTotal +
+					currentPortletAdditionCounter;
+
 			percentage = Math.round(
 				(float)currentProgressBarCountersTotal /
 					allProgressBarCountersTotal * 100);

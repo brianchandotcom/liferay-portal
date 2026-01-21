@@ -19,8 +19,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface AntiSamyConfiguration {
 
-	@Meta.AD(deflt = "true", name = "enabled", required = false)
-	public boolean enabled();
+	@Meta.AD(name = "blacklist", required = false)
+	public String[] blacklist();
 
 	@Meta.AD(
 		deflt = "/META-INF/resources/sanitizer-configuration.xml",
@@ -28,8 +28,8 @@ public interface AntiSamyConfiguration {
 	)
 	public String configurationFileURL();
 
-	@Meta.AD(name = "blacklist", required = false)
-	public String[] blacklist();
+	@Meta.AD(deflt = "true", name = "enabled", required = false)
+	public boolean enabled();
 
 	@Meta.AD(
 		deflt = "com.liferay.journal.model.JournalArticle", name = "whitelist",

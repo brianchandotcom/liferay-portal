@@ -24,16 +24,16 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface VulcanCompanyConfiguration {
 
-	@Meta.AD(deflt = "/api", name = "path")
-	public String path();
+	@Meta.AD(name = "excluded-operation-ids", required = false)
+	public String excludedOperationIds();
 
 	@Meta.AD(deflt = "true", name = "graphql-api", required = false)
 	public boolean graphQLEnabled();
 
+	@Meta.AD(deflt = "/api", name = "path")
+	public String path();
+
 	@Meta.AD(deflt = "true", name = "rest-api", required = false)
 	public boolean restEnabled();
-
-	@Meta.AD(name = "excluded-operation-ids", required = false)
-	public String excludedOperationIds();
 
 }

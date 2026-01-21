@@ -24,8 +24,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface OrganizationTypeConfiguration {
 
-	@Meta.AD(deflt = "organization", name = "name", required = false)
-	public String name();
+	@Meta.AD(deflt = "organization", name = "children-types", required = false)
+	public String[] childrenTypes();
 
 	@Meta.AD(deflt = "true", name = "country-enabled", required = false)
 	public boolean countryEnabled();
@@ -33,10 +33,10 @@ public interface OrganizationTypeConfiguration {
 	@Meta.AD(deflt = "false", name = "country-required", required = false)
 	public boolean countryRequired();
 
+	@Meta.AD(deflt = "organization", name = "name", required = false)
+	public String name();
+
 	@Meta.AD(deflt = "true", name = "rootable", required = false)
 	public boolean rootable();
-
-	@Meta.AD(deflt = "organization", name = "children-types", required = false)
-	public String[] childrenTypes();
 
 }

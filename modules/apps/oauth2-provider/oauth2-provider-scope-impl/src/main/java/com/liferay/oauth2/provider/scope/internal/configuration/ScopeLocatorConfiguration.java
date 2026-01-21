@@ -26,19 +26,19 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface ScopeLocatorConfiguration {
 
 	@Meta.AD(
-		deflt = "Default",
-		description = "if-this-configuration-should-apply-to-a-specific-application,-then-specify-it-here.-otherwise,-leave-blank-or-enter-default",
-		id = OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME,
-		name = "osgi-jaxrs-application-name", required = false
-	)
-	public String osgiJaxRsName();
-
-	@Meta.AD(
 		deflt = "true",
 		description = "include-scopes-implied-before-scope-mapping-description",
 		id = "include.scopes.implied.before.scope.mapping",
 		name = "include-scopes-implied-before-scope-mapping", required = false
 	)
 	public boolean includeScopesImpliedBeforeScopeMapping();
+
+	@Meta.AD(
+		deflt = "Default",
+		description = "if-this-configuration-should-apply-to-a-specific-application,-then-specify-it-here.-otherwise,-leave-blank-or-enter-default",
+		id = OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME,
+		name = "osgi-jaxrs-application-name", required = false
+	)
+	public String osgiJaxRsName();
 
 }

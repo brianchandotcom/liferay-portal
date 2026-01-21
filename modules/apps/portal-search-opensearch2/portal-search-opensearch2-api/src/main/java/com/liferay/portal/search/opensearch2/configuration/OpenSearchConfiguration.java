@@ -24,10 +24,22 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface OpenSearchConfiguration {
 
 	@Meta.AD(
-		description = "remote-cluster-connection-id-help",
-		name = "remote-cluster-connection-id", required = false
+		description = "additional-index-configurations-help",
+		name = "additional-index-configurations", required = false
 	)
-	public String remoteClusterConnectionId();
+	public String additionalIndexConfigurations();
+
+	@Meta.AD(
+		description = "additional-type-mappings-help",
+		name = "additional-type-mappings", required = false
+	)
+	public String additionalTypeMappings();
+
+	@Meta.AD(
+		deflt = "10000", description = "index-max-result-window-help",
+		name = "index-max-result-window", required = false
+	)
+	public int indexMaxResultWindow();
 
 	@Meta.AD(
 		deflt = "liferay-", description = "index-name-prefix-help",
@@ -48,30 +60,6 @@ public interface OpenSearchConfiguration {
 	public String indexNumberOfShards();
 
 	@Meta.AD(
-		deflt = "10000", description = "index-max-result-window-help",
-		name = "index-max-result-window", required = false
-	)
-	public int indexMaxResultWindow();
-
-	@Meta.AD(
-		description = "additional-index-configurations-help",
-		name = "additional-index-configurations", required = false
-	)
-	public String additionalIndexConfigurations();
-
-	@Meta.AD(
-		description = "additional-type-mappings-help",
-		name = "additional-type-mappings", required = false
-	)
-	public String additionalTypeMappings();
-
-	@Meta.AD(
-		description = "override-type-mappings-help",
-		name = "override-type-mappings", required = false
-	)
-	public String overrideTypeMappings();
-
-	@Meta.AD(
 		deflt = "true", description = "log-exceptions-only-help",
 		name = "log-exceptions-only", required = false
 	)
@@ -82,6 +70,18 @@ public interface OpenSearchConfiguration {
 		name = "minimum-required-node-version", required = false
 	)
 	public String minimumRequiredNodeVersion();
+
+	@Meta.AD(
+		description = "override-type-mappings-help",
+		name = "override-type-mappings", required = false
+	)
+	public String overrideTypeMappings();
+
+	@Meta.AD(
+		description = "remote-cluster-connection-id-help",
+		name = "remote-cluster-connection-id", required = false
+	)
+	public String remoteClusterConnectionId();
 
 	@Meta.AD(
 		deflt = "true", description = "track-total-hits-help",

@@ -26,14 +26,6 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface WebContextCORSConfiguration {
 
 	@Meta.AD(
-		deflt = "(&(!(liferay.cors=false))(osgi.jaxrs.name=*))",
-		description = "servlet-context-helper-select-filter-description",
-		id = "servlet.context.helper.select.filter",
-		name = "servlet-context-helper-select-filter-name", required = false
-	)
-	public String servletContextHelperSelectFilter();
-
-	@Meta.AD(
 		deflt = "*",
 		description = "cors-configuration-filter-mapping-url-pattern-description",
 		id = "filter.mapping.url.patterns",
@@ -48,5 +40,13 @@ public interface WebContextCORSConfiguration {
 		required = false
 	)
 	public String[] headers();
+
+	@Meta.AD(
+		deflt = "(&(!(liferay.cors=false))(osgi.jaxrs.name=*))",
+		description = "servlet-context-helper-select-filter-description",
+		id = "servlet.context.helper.select.filter",
+		name = "servlet-context-helper-select-filter-name", required = false
+	)
+	public String servletContextHelperSelectFilter();
 
 }

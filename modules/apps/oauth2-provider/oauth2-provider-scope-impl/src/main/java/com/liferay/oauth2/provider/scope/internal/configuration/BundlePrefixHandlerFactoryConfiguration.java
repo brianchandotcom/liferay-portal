@@ -27,12 +27,16 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface BundlePrefixHandlerFactoryConfiguration {
 
 	@Meta.AD(
-		deflt = "Default",
-		description = "if-this-configuration-should-apply-to-a-specific-application,-then-specify-it-here.-otherwise,-leave-blank-or-enter-default",
-		id = OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME,
-		name = "osgi-jaxrs-application-name", required = false
+		deflt = StringPool.SLASH, description = "separator-description",
+		id = "separator", name = "separator", required = false
 	)
-	public String osgiJaxRsName();
+	public String delimiter();
+
+	@Meta.AD(
+		deflt = "", description = "excluded-scopes-description",
+		id = "excluded.scopes", name = "excluded-scopes", required = false
+	)
+	public String[] excludedScopes();
 
 	@Meta.AD(
 		deflt = "true",
@@ -43,10 +47,12 @@ public interface BundlePrefixHandlerFactoryConfiguration {
 	public boolean includeBundleSymbolicName();
 
 	@Meta.AD(
-		deflt = "", description = "excluded-scopes-description",
-		id = "excluded.scopes", name = "excluded-scopes", required = false
+		deflt = "Default",
+		description = "if-this-configuration-should-apply-to-a-specific-application,-then-specify-it-here.-otherwise,-leave-blank-or-enter-default",
+		id = OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME,
+		name = "osgi-jaxrs-application-name", required = false
 	)
-	public String[] excludedScopes();
+	public String osgiJaxRsName();
 
 	@Meta.AD(
 		deflt = OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME,
@@ -54,11 +60,5 @@ public interface BundlePrefixHandlerFactoryConfiguration {
 		id = "service.properties", name = "service-properties", required = false
 	)
 	public String[] serviceProperties();
-
-	@Meta.AD(
-		deflt = StringPool.SLASH, description = "separator-description",
-		id = "separator", name = "separator", required = false
-	)
-	public String delimiter();
 
 }

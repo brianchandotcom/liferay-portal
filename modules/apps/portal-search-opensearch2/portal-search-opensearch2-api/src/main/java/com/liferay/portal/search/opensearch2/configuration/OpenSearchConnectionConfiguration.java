@@ -34,35 +34,16 @@ public interface OpenSearchConnectionConfiguration {
 	public boolean active();
 
 	@Meta.AD(
-		description = "connection-id-help[opensearch]", name = "connection-id",
-		required = false
-	)
-	public String connectionId();
-
-	@Meta.AD(
-		deflt = "http://localhost:9200",
-		description = "network-host-addresses-help",
-		name = "network-host-addresses", required = false
-	)
-	public String[] networkHostAddresses();
-
-	@Meta.AD(
 		deflt = "false", description = "authentication-enabled-help",
 		name = "authentication-enabled", required = false
 	)
 	public boolean authenticationEnabled();
 
 	@Meta.AD(
-		deflt = "opensearch", description = "username-help", name = "username",
+		description = "connection-id-help[opensearch]", name = "connection-id",
 		required = false
 	)
-	public String username();
-
-	@Meta.AD(
-		description = "password-help", name = "password", required = false,
-		type = Meta.Type.Password
-	)
-	public String password();
+	public String connectionId();
 
 	@Meta.AD(
 		deflt = "false", description = "http-ssl-enabled-help",
@@ -83,28 +64,29 @@ public interface OpenSearchConnectionConfiguration {
 	public int maxConnectionsPerRoute();
 
 	@Meta.AD(
-		deflt = "pkcs12", description = "truststore-type-help",
-		name = "truststore-type", required = false
+		deflt = "http://localhost:9200",
+		description = "network-host-addresses-help",
+		name = "network-host-addresses", required = false
 	)
-	public String truststoreType();
+	public String[] networkHostAddresses();
 
 	@Meta.AD(
-		deflt = "/path/to/localhost.p12", description = "truststore-path-help",
-		name = "truststore-path", required = false
+		description = "password-help", name = "password", required = false,
+		type = Meta.Type.Password
 	)
-	public String truststorePath();
-
-	@Meta.AD(
-		description = "truststore-password-help", name = "truststore-password",
-		required = false, type = Meta.Type.Password
-	)
-	public String truststorePassword();
+	public String password();
 
 	@Meta.AD(
 		description = "set-the-proxy-host-to-be-used-for-the-client-connection",
 		name = "proxy-host", required = false
 	)
 	public String proxyHost();
+
+	@Meta.AD(
+		description = "set-the-password-for-connecting-to-the-proxy",
+		name = "proxy-password", required = false, type = Meta.Type.Password
+	)
+	public String proxyPassword();
 
 	@Meta.AD(
 		deflt = "0",
@@ -120,9 +102,27 @@ public interface OpenSearchConnectionConfiguration {
 	public String proxyUserName();
 
 	@Meta.AD(
-		description = "set-the-password-for-connecting-to-the-proxy",
-		name = "proxy-password", required = false, type = Meta.Type.Password
+		description = "truststore-password-help", name = "truststore-password",
+		required = false, type = Meta.Type.Password
 	)
-	public String proxyPassword();
+	public String truststorePassword();
+
+	@Meta.AD(
+		deflt = "/path/to/localhost.p12", description = "truststore-path-help",
+		name = "truststore-path", required = false
+	)
+	public String truststorePath();
+
+	@Meta.AD(
+		deflt = "pkcs12", description = "truststore-type-help",
+		name = "truststore-type", required = false
+	)
+	public String truststoreType();
+
+	@Meta.AD(
+		deflt = "opensearch", description = "username-help", name = "username",
+		required = false
+	)
+	public String username();
 
 }

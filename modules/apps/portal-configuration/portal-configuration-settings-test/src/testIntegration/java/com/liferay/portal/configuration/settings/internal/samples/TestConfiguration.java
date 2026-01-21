@@ -17,13 +17,13 @@ import com.liferay.portal.configuration.settings.internal.constants.SettingsLoca
 @Meta.OCD(id = SettingsLocatorTestConstants.TEST_CONFIGURATION_PID)
 public interface TestConfiguration {
 
+	@Meta.AD(deflt = "variantKey", required = false)
+	public String factoryAlternateKey();
+
 	@Meta.AD(
 		deflt = SettingsLocatorTestConstants.TEST_DEFAULT_VALUE,
 		required = false
 	)
 	public String settingsLocatorTestKey();
-
-	@Meta.AD(deflt = "variantKey", required = false)
-	public String factoryAlternateKey();
 
 }

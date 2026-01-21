@@ -23,6 +23,12 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface SearchBarPortletInstanceConfiguration {
 
+	@Meta.AD(deflt = "", name = "destination", required = false)
+	public String destination();
+
+	@Meta.AD(name = "display-style", required = false)
+	public String displayStyle();
+
 	@Meta.AD(
 		deflt = "", name = "display-style-group-external-reference-code",
 		required = false
@@ -34,9 +40,6 @@ public interface SearchBarPortletInstanceConfiguration {
 		name = "display-style-group-id", required = false
 	)
 	public long displayStyleGroupId();
-
-	@Meta.AD(name = "display-style", required = false)
-	public String displayStyle();
 
 	@Meta.AD(
 		deflt = "true", description = "enable-suggestions-help",
@@ -56,8 +59,5 @@ public interface SearchBarPortletInstanceConfiguration {
 		required = false
 	)
 	public int suggestionsDisplayThreshold();
-
-	@Meta.AD(deflt = "", name = "destination", required = false)
-	public String destination();
 
 }

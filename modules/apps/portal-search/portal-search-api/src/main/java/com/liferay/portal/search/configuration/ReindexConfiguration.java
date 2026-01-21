@@ -29,13 +29,6 @@ public interface ReindexConfiguration {
 	)
 	public String defaultReindexExecutionMode();
 
-	@Meta.AD(
-		deflt = "com.liferay.document.library.kernel.model.DLFileEntry=500",
-		description = "indexing-batch-sizes-help",
-		name = "indexing-batch-sizes", required = false
-	)
-	public String[] indexingBatchSizes();
-
 	@ExtendedAttributeDefinition(featureFlagKey = "LPS-183672")
 	@Meta.AD(
 		deflt = "false",
@@ -52,5 +45,12 @@ public interface ReindexConfiguration {
 		name = "enable-index-actions-in-a-virtual-instance", required = false
 	)
 	public String[] indexActionsVirtualInstance();
+
+	@Meta.AD(
+		deflt = "com.liferay.document.library.kernel.model.DLFileEntry=500",
+		description = "indexing-batch-sizes-help",
+		name = "indexing-batch-sizes", required = false
+	)
+	public String[] indexingBatchSizes();
 
 }

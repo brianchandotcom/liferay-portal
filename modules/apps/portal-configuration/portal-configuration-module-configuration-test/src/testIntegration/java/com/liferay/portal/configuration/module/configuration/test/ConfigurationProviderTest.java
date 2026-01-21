@@ -47,12 +47,6 @@ public class ConfigurationProviderTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Inject
-	private static ConfigurationAdmin _configurationAdmin;
-
-	@Inject
-	private static ConfigurationProvider _configurationProvider;
-
 	@Before
 	public void setUp() throws Exception {
 		_properties = new Hashtable<>();
@@ -200,17 +194,6 @@ public class ConfigurationProviderTest {
 			portletInstanceId);
 	}
 
-	protected void assertFactoryPropertyValues(
-		Dictionary<String, Object> properties,
-		Dictionary<String, Object> configurationProperties, String expectedKey,
-		Object expectedValue) {
-
-		Assert.assertEquals(
-			expectedValue, configurationProperties.get(expectedKey));
-
-		assertPropertyValues(properties, configurationProperties);
-	}
-
 	@Test
 	public void testSaveSystemConfiguration() throws Exception {
 		_properties.put("key1", "systemValue1");
@@ -224,37 +207,15 @@ public class ConfigurationProviderTest {
 		assertPropertyValues(_properties, _configuration.getProperties());
 	}
 
-	private int _getExistingConfigurationCount(String pid, String propertyName)
-		throws Exception {
+	protected void assertFactoryPropertyValues(
+		Dictionary<String, Object> properties,
+		Dictionary<String, Object> configurationProperties, String expectedKey,
+		Object expectedValue) {
 
-		Configuration[] configurations = _getConfigurations(pid, propertyName);
+		Assert.assertEquals(
+			expectedValue, configurationProperties.get(expectedKey));
 
-		if (configurations == null) {
-			return 0;
-		}
-
-		return configurations.length;
-	}
-
-	private Configuration[] _getConfigurations(String pid, String propertyName)
-		throws Exception {
-
-		String pidFilter = StringBundler.concat(
-			StringPool.OPEN_PARENTHESIS, propertyName, StringPool.EQUAL, pid,
-			StringPool.CLOSE_PARENTHESIS);
-
-		return _configurationAdmin.listConfigurations(pidFilter);
-	}
-
-	private int _getExistingConfigurationCount(String pid) throws Exception {
-		return _getExistingConfigurationCount(pid, Constants.SERVICE_PID);
-	}
-
-	private int _getExistingFactoryConfigurationsCount(String pid)
-		throws Exception {
-
-		return _getExistingConfigurationCount(
-			pid + ".scoped", "service.factoryPid");
+		assertPropertyValues(properties, configurationProperties);
 	}
 
 	protected void assertPropertyValues(
@@ -273,21 +234,12 @@ public class ConfigurationProviderTest {
 		}
 	}
 
-	private Configuration _getConfiguration(String pid) throws Exception {
-		return _configurationAdmin.getConfiguration(pid, StringPool.QUESTION);
-	}
+	private void _createConfiguration(String pid) throws Exception {
+		_properties.put("key1", "value1");
+		_properties.put("key2", "value2");
 
-	private Configuration _getFactoryConfiguration(String factoryPid)
-		throws Exception {
-
-		Configuration[] configurations = _getConfigurations(
-			factoryPid + ".scoped", "service.factoryPid");
-
-		if (configurations != null) {
-			return configurations[0];
-		}
-
-		return null;
+		ConfigurationTestUtil.saveConfiguration(
+			_getConfiguration(pid), _properties);
 	}
 
 	private void _createFactoryConfiguration(
@@ -304,18 +256,66 @@ public class ConfigurationProviderTest {
 		ConfigurationTestUtil.saveConfiguration(configuration, _properties);
 	}
 
-	private void _createConfiguration(String pid) throws Exception {
-		_properties.put("key1", "value1");
-		_properties.put("key2", "value2");
-
-		ConfigurationTestUtil.saveConfiguration(
-			_getConfiguration(pid), _properties);
+	private Configuration _getConfiguration(String pid) throws Exception {
+		return _configurationAdmin.getConfiguration(pid, StringPool.QUESTION);
 	}
+
+	private Configuration[] _getConfigurations(String pid, String propertyName)
+		throws Exception {
+
+		String pidFilter = StringBundler.concat(
+			StringPool.OPEN_PARENTHESIS, propertyName, StringPool.EQUAL, pid,
+			StringPool.CLOSE_PARENTHESIS);
+
+		return _configurationAdmin.listConfigurations(pidFilter);
+	}
+
+	private int _getExistingConfigurationCount(String pid) throws Exception {
+		return _getExistingConfigurationCount(pid, Constants.SERVICE_PID);
+	}
+
+	private int _getExistingConfigurationCount(String pid, String propertyName)
+		throws Exception {
+
+		Configuration[] configurations = _getConfigurations(pid, propertyName);
+
+		if (configurations == null) {
+			return 0;
+		}
+
+		return configurations.length;
+	}
+
+	private int _getExistingFactoryConfigurationsCount(String pid)
+		throws Exception {
+
+		return _getExistingConfigurationCount(
+			pid + ".scoped", "service.factoryPid");
+	}
+
+	private Configuration _getFactoryConfiguration(String factoryPid)
+		throws Exception {
+
+		Configuration[] configurations = _getConfigurations(
+			factoryPid + ".scoped", "service.factoryPid");
+
+		if (configurations != null) {
+			return configurations[0];
+		}
+
+		return null;
+	}
+
+	private static final String _PID = "test.pid";
+
+	@Inject
+	private static ConfigurationAdmin _configurationAdmin;
+
+	@Inject
+	private static ConfigurationProvider _configurationProvider;
 
 	private Configuration _configuration;
 	private Dictionary<String, Object> _properties;
-
-	private static final String _PID = "test.pid";
 
 	@Meta.OCD(id = "test.pid")
 	private interface TestConfiguration {

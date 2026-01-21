@@ -27,18 +27,31 @@ public interface LDAPImportConfiguration extends CompanyScopedConfiguration {
 	@Override
 	public long companyId();
 
+	@Meta.AD(
+		deflt = "false", description = "import-create-role-per-group-help",
+		name = "create-role-per-group", required = false
+	)
+	public boolean importCreateRolePerGroup();
+
 	@Meta.AD(deflt = "false", name = "enable-import", required = false)
 	public boolean importEnabled();
 
 	@Meta.AD(
-		deflt = "false", name = "enable-import-on-startup", required = false
+		deflt = "true", description = "import-group-cache-enabled-help",
+		name = "enable-group-cache", required = false
 	)
-	public boolean importOnStartup();
+	public boolean importGroupCacheEnabled();
 
 	@Meta.AD(
 		deflt = "10", min = "1", name = "import-interval", required = false
 	)
 	public int importInterval();
+
+	@Meta.AD(
+		deflt = "86400000", description = "import-lock-expiration-time-help",
+		name = "lock-expiration-time", required = false
+	)
+	public long importLockExpirationTime();
 
 	@Meta.AD(
 		deflt = "user", description = "import-method-help",
@@ -48,19 +61,9 @@ public interface LDAPImportConfiguration extends CompanyScopedConfiguration {
 	public String importMethod();
 
 	@Meta.AD(
-		deflt = "86400000", description = "import-lock-expiration-time-help",
-		name = "lock-expiration-time", required = false
+		deflt = "false", name = "enable-import-on-startup", required = false
 	)
-	public long importLockExpirationTime();
-
-	@Meta.AD(
-		deflt = "auth-type", name = "import-user-synchronization-strategy",
-		optionValues = {"auth-type", "uuid"}, required = false
-	)
-	public String importUserSyncStrategy();
-
-	@Meta.AD(deflt = "true", name = "enable-user-password", required = false)
-	public boolean importUserPasswordEnabled();
+	public boolean importOnStartup();
 
 	@Meta.AD(
 		deflt = "false", name = "autogenerate-user-password", required = false
@@ -70,16 +73,13 @@ public interface LDAPImportConfiguration extends CompanyScopedConfiguration {
 	@Meta.AD(deflt = "test", name = "default-user-password", required = false)
 	public String importUserPasswordDefault();
 
-	@Meta.AD(
-		deflt = "true", description = "import-group-cache-enabled-help",
-		name = "enable-group-cache", required = false
-	)
-	public boolean importGroupCacheEnabled();
+	@Meta.AD(deflt = "true", name = "enable-user-password", required = false)
+	public boolean importUserPasswordEnabled();
 
 	@Meta.AD(
-		deflt = "false", description = "import-create-role-per-group-help",
-		name = "create-role-per-group", required = false
+		deflt = "auth-type", name = "import-user-synchronization-strategy",
+		optionValues = {"auth-type", "uuid"}, required = false
 	)
-	public boolean importCreateRolePerGroup();
+	public String importUserSyncStrategy();
 
 }

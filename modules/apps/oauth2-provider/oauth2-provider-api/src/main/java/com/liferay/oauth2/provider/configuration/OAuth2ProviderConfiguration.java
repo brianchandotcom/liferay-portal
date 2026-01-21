@@ -41,25 +41,17 @@ public interface OAuth2ProviderConfiguration {
 
 	@Meta.AD(
 		deflt = "true", description = "oauth2-allow-grant-description",
-		id = "oauth2.allow.jwt.bearer.grant",
-		name = "oauth2-allow-jwt-bearer-grant", required = false
-	)
-	public boolean allowJWTBearerGrant();
-
-	@Meta.AD(
-		deflt = "true", description = "oauth2-allow-grant-description",
-		id = "oauth2.allow.resource.owner.password.credentials.grant",
-		name = "oauth2-allow-resource-owner-password-credentials-grant",
-		required = false
-	)
-	public boolean allowResourceOwnerPasswordCredentialsGrant();
-
-	@Meta.AD(
-		deflt = "true", description = "oauth2-allow-grant-description",
 		id = "oauth2.allow.client.credentials.grant",
 		name = "oauth2-allow-client-credentials-grant", required = false
 	)
 	public boolean allowClientCredentialsGrant();
+
+	@Meta.AD(
+		deflt = "true", description = "oauth2-allow-grant-description",
+		id = "oauth2.allow.jwt.bearer.grant",
+		name = "oauth2-allow-jwt-bearer-grant", required = false
+	)
+	public boolean allowJWTBearerGrant();
 
 	@Meta.AD(
 		deflt = "true", description = "oauth2-allow-grant-description",
@@ -69,12 +61,12 @@ public interface OAuth2ProviderConfiguration {
 	public boolean allowRefreshTokenGrant();
 
 	@Meta.AD(
-		deflt = "true",
-		description = "oauth2-recycle-refresh-token-description",
-		id = "oauth2.recycle.refresh.token",
-		name = "oauth2-recycle-refresh-token", required = false
+		deflt = "true", description = "oauth2-allow-grant-description",
+		id = "oauth2.allow.resource.owner.password.credentials.grant",
+		name = "oauth2-allow-resource-owner-password-credentials-grant",
+		required = false
 	)
-	public boolean recycleRefreshToken();
+	public boolean allowResourceOwnerPasswordCredentialsGrant();
 
 	@Meta.AD(
 		deflt = "86400",
@@ -92,5 +84,13 @@ public interface OAuth2ProviderConfiguration {
 		name = "oauth2-expired-authorizations-check-interval", required = false
 	)
 	public int expiredAuthorizationsCheckInterval();
+
+	@Meta.AD(
+		deflt = "true",
+		description = "oauth2-recycle-refresh-token-description",
+		id = "oauth2.recycle.refresh.token",
+		name = "oauth2-recycle-refresh-token", required = false
+	)
+	public boolean recycleRefreshToken();
 
 }

@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=java.lang.Object",
 	service = BulkSelectionFactory.class
 )
-public class ObjectBulkSelectionFactory
+public class DepotObjectEntryBulkSelectionFactory
 	implements BulkSelectionFactory<Object> {
 
 	@Override
@@ -34,7 +34,7 @@ public class ObjectBulkSelectionFactory
 			return new EmptyBulkSelection<>();
 		}
 
-		return new ObjectBulkSelection(
+		return new DepotObjectEntryBulkSelection(
 			_assetEntryLocalService, _depotEntryLocalService,
 			_objectEntryFolderLocalService, _objectEntryLocalService,
 			parameterMap);

@@ -27,11 +27,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Sbarra
  */
 @Component(
-	property = "bulk.selection.action.key=default.permission.object",
+	property = "bulk.selection.action.key=default.permission.depot.object.entry",
 	service = BulkSelectionAction.class
 )
-public class DefaultPermissionObjectBulkSelectionAction
-	extends BaseObjectBulkSelectionAction {
+public class DefaultPermissionDepotObjectEntryBulkSelectionAction
+	extends BaseDepotObjectEntryBulkSelectionAction {
 
 	@Override
 	protected void doExecute(

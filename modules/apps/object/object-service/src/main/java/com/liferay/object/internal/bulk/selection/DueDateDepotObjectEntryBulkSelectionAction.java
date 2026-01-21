@@ -7,49 +7,53 @@ package com.liferay.object.internal.bulk.selection;
 
 import com.liferay.bulk.selection.BulkSelectionAction;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Balázs Sáfrány-Kovalik
+ * @author Danny Situ
  */
 @Component(
-	property = "bulk.selection.action.key=expire.object",
+	property = "bulk.selection.action.key=due.date.depot.object.entry",
 	service = BulkSelectionAction.class
 )
-public class ExpireObjectBulkSelectionAction
-	extends BaseObjectBulkSelectionAction {
+public class DueDateDepotObjectEntryBulkSelectionAction
+	extends BaseDepotObjectEntryBulkSelectionAction {
 
 	@Override
 	protected void doExecute(
 			User user, Map<String, Serializable> inputMap, Object object)
 		throws Exception {
 
-		if (object instanceof ObjectEntry) {
-			ObjectEntry objectObjectEntry = (ObjectEntry)object;
+		if (!(object instanceof ObjectEntry)) {
+			return;
+		}
 
-			_objectEntryService.expireObjectEntry(
-				objectObjectEntry.getObjectEntryId(), new ServiceContext());
-		}
-		else if (object instanceof ObjectEntryFolder) {
-			ObjectEntryFolder objectEntryFolder = (ObjectEntryFolder)object;
+		Date dueDate = (Date)inputMap.get("dueDate");
 
-			throw new IllegalArgumentException(
-				"Object entry folders do not support expiration " +
-					objectEntryFolder);
+		if (dueDate == null) {
+			return;
 		}
-		else {
-			throw new IllegalArgumentException("Unsupported object " + object);
-		}
+
+		ObjectEntry objectEntry = (ObjectEntry)object;
+
+		_objectEntryService.partialUpdateObjectEntry(
+			objectEntry.getObjectEntryId(),
+			objectEntry.getObjectEntryFolderId(),
+			HashMapBuilder.<String, Serializable>put(
+				"dueDate", dueDate
+			).build(),
+			new ServiceContext());
 	}
 
 	@Reference

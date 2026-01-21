@@ -33,11 +33,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Sbarra
  */
 @Component(
-	property = "bulk.selection.action.key=edit.object.categories",
+	property = "bulk.selection.action.key=edit.categories.depot.object.entry",
 	service = BulkSelectionAction.class
 )
-public class EditObjectCategoriesBulkSelectionAction
-	extends BaseObjectBulkSelectionAction {
+public class EditCategoriesDepotObjectEntryBulkSelectionAction
+	extends BaseDepotObjectEntryBulkSelectionAction {
 
 	@Override
 	protected void doExecute(
@@ -119,7 +119,7 @@ public class EditObjectCategoriesBulkSelectionAction
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		EditObjectCategoriesBulkSelectionAction.class);
+		EditCategoriesDepotObjectEntryBulkSelectionAction.class);
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

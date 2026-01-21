@@ -12,16 +12,88 @@ resource "helm_release" "argocd" {
 	values=[
 		yamlencode(
 			{
-				installCRDs=true
-				server={
+				applicationSet={
 					resources={
-						requests={
-							cpu="100m"
-							memory="128Mi"
+						limits={
+							cpu="800m"
+							memory="2Gi"
 						}
+						requests={
+							cpu="500m"
+							memory="1Gi"
+						}
+					}
+				}
+				configs={
+					cm={
+						"application.resourceTrackingMethod"="annotation"
+						"resource.exclusions"=yamlencode(
+							[
+								{
+									apiGroups=["*"]
+									kinds=["ProviderConfigUsage"]
+								},
+								{
+									apiGroups=["apiextensions.crossplane.io"]
+									kinds=["ManagedResourceDefinition"]
+								},
+							])
+					}
+				}
+				controller={
+					resources={
+						limits={
+							cpu="1000m"
+							memory="1.5Gi"
+						}
+						requests={
+							cpu="200m"
+							memory="512Mi"
+						}
+					}
+				}
+				installCRDs=true
+				redis={
+					resources={
 						limits={
 							cpu="200m"
+							memory="512Mi"
+						}
+						requests={
+							cpu="100m"
 							memory="256Mi"
+						}
+					}
+				}
+				repoServer={
+					resources={
+						limits={
+							cpu="500m"
+							memory="768Mi"
+						}
+						requests={
+							cpu="200m"
+							memory="256Mi"
+						}
+					}
+				}
+				server={
+					livenessProbe={
+						initialDelaySeconds=90
+						timeoutSeconds=5
+					}
+					readinessProbe={
+						initialDelaySeconds=60
+						timeoutSeconds=5
+					}
+					resources={
+						limits={
+							cpu="1000m"
+							memory="2Gi"
+						}
+						requests={
+							cpu="500m"
+							memory="1Gi"
 						}
 					}
 					service={

@@ -1,0 +1,77 @@
+{{- $crossplaneNamespace := .Values.crossplaneNamespace | default "crossplane-system" -}}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+    annotations:
+        argocd.argoproj.io/sync-wave: "-40"
+    labels:
+        rbac.crossplane.io/aggregate-to-crossplane: "true"
+    name: crossplane-provider-kubernetes
+rules:
+    -   apiGroups: [""]
+        resources: ["configmaps", "secrets"]
+        verbs: ["create", "delete", "get", "list", "patch", "update", "watch"]
+    -   apiGroups: [""]
+        resources: ["namespaces"]
+        verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+    annotations:
+        argocd.argoproj.io/sync-wave: "-40"
+    name: crossplane-provider-kubernetes-binding
+roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: crossplane-provider-kubernetes
+subjects:
+    -   kind: ServiceAccount
+        name: provider-kubernetes
+        namespace: {{ $crossplaneNamespace }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+    annotations:
+        argocd.argoproj.io/sync-wave: "-40"
+    labels:
+        rbac.crossplane.io/aggregate-to-crossplane: "true"
+    name: crossplane-provider-aws
+rules:
+    -   apiGroups:
+            -   "aws.m.upbound.io"
+            -   "ec2.aws.m.upbound.io"
+            -   "iam.aws.m.upbound.io"
+            -   "opensearch.aws.m.upbound.io"
+            -   "rds.aws.m.upbound.io"
+            -   "s3.aws.m.upbound.io"
+        resources: ["*"]
+        verbs: ["create", "delete", "get", "list", "patch", "update", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+    annotations:
+        argocd.argoproj.io/sync-wave: "-40"
+    name: crossplane-provider-aws-binding
+roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: crossplane-provider-aws
+subjects:
+    -   kind: ServiceAccount
+        name: provider-aws-ec2
+        namespace: crossplane-system
+    -   kind: ServiceAccount
+        name: provider-aws-iam
+        namespace: crossplane-system
+    -   kind: ServiceAccount
+        name: provider-aws-opensearch
+        namespace: crossplane-system
+    -   kind: ServiceAccount
+        name: provider-aws-rds
+        namespace: crossplane-system
+    -   kind: ServiceAccount
+        name: provider-aws-s3
+        namespace: crossplane-system

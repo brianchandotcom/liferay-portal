@@ -1,0 +1,88 @@
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+    annotations:
+        argocd.argoproj.io/sync-options: ServerSideApply=true
+        argocd.argoproj.io/sync-wave: "-80"
+    name: provider-aws-ec2
+spec:
+    package: xpkg.upbound.io/upbound/provider-aws-ec2:v2.3.0
+    runtimeConfigRef:
+        name: aws-ec2-config
+    skipDependencyResolution: true
+---
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+    annotations:
+        argocd.argoproj.io/sync-options: ServerSideApply=true
+        argocd.argoproj.io/sync-wave: "-80"
+    name: provider-aws-iam
+spec:
+    package: xpkg.upbound.io/upbound/provider-aws-iam:v2.3.0
+    runtimeConfigRef:
+        name: aws-iam-config
+    skipDependencyResolution: true
+---
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+    annotations:
+        argocd.argoproj.io/sync-options: ServerSideApply=true
+        argocd.argoproj.io/sync-wave: "-80"
+    name: provider-aws-opensearch
+spec:
+    package: xpkg.upbound.io/upbound/provider-aws-opensearch:v2.3.0
+    runtimeConfigRef:
+        name: aws-opensearch-config
+    skipDependencyResolution: true
+---
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+    annotations:
+        argocd.argoproj.io/sync-options: ServerSideApply=true
+        argocd.argoproj.io/sync-wave: "-80"
+    name: provider-aws-rds
+spec:
+    package: xpkg.upbound.io/upbound/provider-aws-rds:v2.3.0
+    runtimeConfigRef:
+        name: aws-rds-config
+    skipDependencyResolution: true
+---
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+    annotations:
+        argocd.argoproj.io/sync-options: ServerSideApply=true
+        argocd.argoproj.io/sync-wave: "-80"
+    name: provider-aws-s3
+spec:
+    package: xpkg.upbound.io/upbound/provider-aws-s3:v2.3.0
+    runtimeConfigRef:
+        name: aws-s3-config
+    skipDependencyResolution: true
+---
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+    annotations:
+        argocd.argoproj.io/sync-options: ServerSideApply=true
+        argocd.argoproj.io/sync-wave: "-85"
+    name: provider-family-aws
+spec:
+    package: xpkg.upbound.io/upbound/provider-family-aws:v2.3.0
+    skipDependencyResolution: true
+---
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+    annotations:
+        argocd.argoproj.io/sync-options: ServerSideApply=true
+        argocd.argoproj.io/sync-wave: "-80"
+    name: provider-kubernetes
+spec:
+    package: xpkg.upbound.io/upbound/provider-kubernetes:v1.2.0
+    runtimeConfigRef:
+        name: kubernetes-config
+    skipDependencyResolution: true

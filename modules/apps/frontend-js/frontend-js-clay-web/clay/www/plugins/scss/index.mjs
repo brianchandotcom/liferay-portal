@@ -29,7 +29,8 @@ export function buildIcons() {
 			if (!viewBox) {
 				throw `Viewbox attribute not found for icon: ${id}`;
 			}
-		} catch (error) {
+		}
+		catch (error) {
 			console.warn(error);
 		}
 

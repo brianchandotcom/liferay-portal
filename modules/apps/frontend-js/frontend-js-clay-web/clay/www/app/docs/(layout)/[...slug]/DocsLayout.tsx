@@ -46,7 +46,7 @@ export async function DocsLayout({slug}: Props) {
 									id: 'api-reference',
 									depth: 2,
 								},
-						  ]
+							]
 						: []),
 				].map((item) => (
 					<li

@@ -3,7 +3,7 @@ import rehypeMdxCodeProps from 'rehype-mdx-code-props';
 import {remarkPlugins, rehypePlugins} from 'renoun/mdx';
 import webpack from 'webpack';
 import path from 'path';
-import { createRequire } from "node:module";
+import {createRequire} from 'node:module';
 
 import {unwrapMdxBlockElements} from './plugins/remark-unwrap-paragraphs/index.mjs';
 import {buildIcons} from './plugins/scss/index.mjs';
@@ -396,7 +396,7 @@ const nextConfig = {
 				...config.resolve.alias,
 				'react$': reactPath,
 				'react-dom$': reactDomPath,
-			}
+			},
 		};
 		config.module.rules.push({
 			test: [/[\\/]clay-.*[\\/.].*\.(ts|tsx)/],

@@ -14,6 +14,7 @@ const mdxComponents = {
 } as MDXComponents;
 
 interface SourceString {
+
 	/** The file path to the source code. */
 	source: string;
 
@@ -22,11 +23,13 @@ interface SourceString {
 }
 
 interface SourceExport {
+
 	/** The export source from a collection export source to get types from. */
 	source: JavaScriptFile<any> | JavaScriptFileExport<any>;
 }
 
 interface Filter {
+
 	/** A filter to apply to the exported types. */
 	filter: (type: Record<string, any>) => boolean;
 }
@@ -68,7 +71,8 @@ async function APIReferenceAsync({
 			if (URL.canParse(props.workingDirectory)) {
 				const {pathname} = new URL(props.workingDirectory);
 				workingDirectory = pathname.slice(0, pathname.lastIndexOf('/'));
-			} else {
+			}
+			else {
 				workingDirectory = props.workingDirectory;
 			}
 		}
@@ -82,9 +86,9 @@ async function APIReferenceAsync({
 
 	if (source instanceof JavaScriptFile) {
 		const exportedTypes = await Promise.all(
-			(
-				await source.getExports()
-			).map((exportSource) => exportSource.getType())
+			(await source.getExports()).map((exportSource) =>
+				exportSource.getType()
+			)
 		);
 
 		return exportedTypes
@@ -324,7 +328,7 @@ function TypeChildren({
 										? signature.parameter.text
 										: signature.parameter.properties[0]
 												.text)
-						  )!
+							)!
 						: null;
 
 					return (
@@ -670,7 +674,7 @@ function TypeValue({type, css: cssProp}: {type: any; css?: CSSObject}) {
 								/>
 							)
 						)
-				  )
+					)
 				: null}
 		</div>
 	);

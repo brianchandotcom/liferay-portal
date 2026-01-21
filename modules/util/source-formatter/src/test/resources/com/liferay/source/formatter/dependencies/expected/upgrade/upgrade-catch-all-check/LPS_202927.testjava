@@ -17,13 +17,15 @@ public class LPS_202927 {
 		String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 
-		DLAppLocalServiceUtil.addFolder(null, userId, repositoryId, parentFolderId, name, description, serviceContext);
-		DLAppServiceUtil.addFolder(
+		DLAppLocalServiceUtil.addFolder(
 			123, repositoryId, parentFolderId, name, description,
 			serviceContext);
-		DLAppServiceUtil.addFolder(null, userId, repositoryId, parentFolderId, name, description, serviceContext);
+		DLAppLocalServiceUtil.addFolder(null, userId, repositoryId, parentFolderId, name, description, serviceContext);
+		DLAppServiceUtil.addFolder(
+			123, parentFolderId, name, description, serviceContext);
+		DLAppServiceUtil.addFolder(null, repositoryId, parentFolderId, name, description, serviceContext);
 		_dlAppLocalService.addFolder(null, userId, repositoryId, parentFolderId, name, description, serviceContext);
-		_dlAppService.addFolder(null, userId, repositoryId, parentFolderId, name, description, serviceContext);
+		_dlAppService.addFolder(null, repositoryId, parentFolderId, name, description, serviceContext);
 	}
 
 	@Reference

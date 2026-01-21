@@ -5,10 +5,8 @@
 
 import React from 'react';
 
-interface IBasePageProps extends React.HTMLAttributes<HTMLElement> {
-	description?: string | JSX.Element;
-	title: string;
-}
+import {IBasePageProps} from '../components/Wizard';
+import Footer from './Footer';
 
 const BasePage: React.FC<
 	{children?: React.ReactNode | undefined} & IBasePageProps

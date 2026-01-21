@@ -9,7 +9,7 @@ import ClayLink from '@clayui/link';
 import React from 'react';
 
 import BasePage from '../components/BasePage';
-import {IGenericStepProps} from '../types';
+import {IGenericStepProps} from '../components/Wizard';
 
 const Footer: React.FC<
 	{children?: React.ReactNode | undefined} & IGenericStepProps

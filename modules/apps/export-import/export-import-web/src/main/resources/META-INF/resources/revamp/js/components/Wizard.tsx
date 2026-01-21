@@ -6,7 +6,21 @@
 import ClayMultiStepNav from '@clayui/multi-step-nav';
 import React, {useState} from 'react';
 
-import {IWizardStepProps} from '../types';
+export interface IBasePageProps {
+	description?: string;
+	title: string;
+}
+export interface IGenericStepProps {
+	backURL?: string;
+	exportURL?: string;
+	nextFn?: () => void;
+	previousFn?: () => void;
+	title?: string;
+}
+
+export interface IWizardStepProps extends IGenericStepProps {
+	children: React.ReactElement;
+}
 
 export function WizardStep({children, ...rest}: IWizardStepProps) {
 	return React.cloneElement(children, {...rest});

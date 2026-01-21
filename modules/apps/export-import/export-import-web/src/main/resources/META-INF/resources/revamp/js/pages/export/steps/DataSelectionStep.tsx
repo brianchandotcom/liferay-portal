@@ -7,8 +7,7 @@ import ClayLayout from '@clayui/layout';
 import React from 'react';
 
 import BasePage from '../../../components/BasePage';
-import Footer from '../../../components/Footer';
-import {IGenericStepProps} from '../../../types';
+import {IGenericStepProps} from '../../../components/Wizard';
 
 const Step: React.FC<
 	{children?: React.ReactNode | undefined} & IGenericStepProps

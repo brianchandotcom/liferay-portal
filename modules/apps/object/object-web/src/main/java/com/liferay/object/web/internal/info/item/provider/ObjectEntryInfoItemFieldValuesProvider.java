@@ -124,6 +124,8 @@ public class ObjectEntryInfoItemFieldValuesProvider
 			return infoItemFieldValues;
 		}
 
+		ThemeDisplay themeDisplay = _getThemeDisplay();
+
 		try {
 			infoItemFieldValues = InfoItemFieldValues.builder(
 			).infoFieldValues(
@@ -132,7 +134,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 				_displayPageInfoItemFieldSetProvider.getInfoFieldValues(
 					_getInfoItemReference(objectEntry), StringPool.BLANK,
 					ObjectEntry.class.getSimpleName(), objectEntry,
-					_getThemeDisplay())
+					themeDisplay)
 			).infoFieldValues(
 				_infoItemFieldReaderFieldSetProvider.getInfoFieldValues(
 					objectEntry.getModelClassName(), objectEntry)
@@ -147,7 +149,9 @@ public class ObjectEntryInfoItemFieldValuesProvider
 			throw new RuntimeException(exception);
 		}
 
-		threadLocalCache.put(key, infoItemFieldValues);
+		if (themeDisplay != null) {
+			threadLocalCache.put(key, infoItemFieldValues);
+		}
 
 		return infoItemFieldValues;
 	}

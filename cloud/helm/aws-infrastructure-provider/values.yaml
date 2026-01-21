@@ -1,2 +1,2 @@
 aws: {}
-crossplaneNamespace: "crossplane-system"
+crossplaneNamespace: crossplane-system

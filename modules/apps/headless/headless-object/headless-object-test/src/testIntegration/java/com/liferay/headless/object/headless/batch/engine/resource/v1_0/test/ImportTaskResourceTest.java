@@ -172,8 +172,6 @@ public class ImportTaskResourceTest {
 			LocaleUtil.getDefault()
 		).parameter(
 			"siteExternalReferenceCode", _testGroup.getExternalReferenceCode()
-		).parameter(
-			"taskItemDelegateName", "depot-object-entry-folder"
 		);
 
 		if (updateStrategy != null) {

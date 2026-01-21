@@ -71,6 +71,12 @@ test(
 				return {fileName: download.suggestedFilename(), filePath};
 			});
 
+		await test.step('Delete the created style book', async () => {
+			await styleBooksPage.goto();
+
+			await styleBooksPage.delete(styleBookName);
+		});
+
 		await test.step('Import the style book into a new site', async () => {
 			await styleBooksPage.goto(site.friendlyUrlPath);
 

@@ -22,7 +22,7 @@ import performLogin, {
 	userData,
 } from '../../../utils/performLogin';
 import {getTempDir} from '../../../utils/temp';
-import {readFileFromZip} from '../../../utils/zip';
+import {checkInZip, readFileFromZip} from '../../../utils/zip';
 import {companyExportImportPageTest} from './fixtures/companyExportImportPagesTest';
 import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 import {toDateRangeDate, toDateRangeTime} from './utils/dateRangeUtil';
@@ -327,14 +327,9 @@ test('can export custom object entries at instance level with date filter', asyn
 		portletLabels: [`${objectDefinition.name} 1 Items`],
 	});
 
-	const content2 = await readFileFromZip(
-		`C_${objectDefinition.name}.json`,
-		exportFilePath2
-	);
-
-	const json2 = JSON.parse(content2);
-
-	expect(json2.length).toBe(0);
+	await expect(
+		checkInZip(exportFilePath2, `C_${objectDefinition.name}.json`)
+	).resolves.toBe(false);
 
 	await applicationsMenuPage.goToExport();
 

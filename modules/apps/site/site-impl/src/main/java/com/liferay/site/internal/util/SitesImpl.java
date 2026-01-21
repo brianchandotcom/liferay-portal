@@ -165,13 +165,10 @@ public class SitesImpl implements Sites {
 			serviceContext.setAttribute(
 				"portletLayoutPageTemplateEntryLinkEnabled", linkEnabled);
 
-			Group layoutPageTemplateEntryGroup = _groupLocalService.getGroup(
-				layoutPageTemplateEntry.getGroupId());
-
 			serviceContext.setAttribute(
 				"portletLayoutPageTemplateEntryScopeERC",
 				ScopeUtil.getItemScopeExternalReferenceCode(
-					layoutPageTemplateEntryGroup.getExternalReferenceCode(),
+					layoutPageTemplateEntry.getGroupId(),
 					targetLayout.getGroupId()));
 
 			Locale targetSiteDefaultLocale = _portal.getSiteDefaultLocale(

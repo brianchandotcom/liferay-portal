@@ -112,6 +112,20 @@ public class ViewRelatedAssetsSectionDisplayContextTest
 					"keywords/any(k:k in ('",
 					_objectDefinition.getExternalReferenceCode(),
 					_KEYWORD_SUFFIX, "'))")));
+
+		_objectEntry = _objectEntryLocalService.addObjectEntry(
+			0, TestPropsValues.getUserId(),
+			_objectDefinition.getObjectDefinitionId(), 0, null,
+			Collections.emptyMap(), ServiceContextTestUtil.getServiceContext());
+
+		apiURL = ReflectionTestUtil.invoke(
+			_getViewRelatedAssetsSectionDisplayContext(mockHttpServletRequest),
+			"getAPIURL", new Class<?>[0]);
+
+		Assert.assertTrue(
+			apiURL.contains(
+				"(cmsSection eq 'contents' or cmsSection eq 'files') and " +
+					"keywords/any(k:k in (''))"));
 	}
 
 	@Test

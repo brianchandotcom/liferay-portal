@@ -4,7 +4,7 @@ defaults:
 jobs:
     publish-aws:
         env:
-            GAR_REGISTRY: us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart
+            GAR_LAR_REGISTRY: us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart
         if: ${{github.repository == 'liferay/liferay-portal'}}
         needs: publish-default
         runs-on: ubuntu-latest
@@ -16,11 +16,13 @@ jobs:
                 id: verify_version
                 name: Verify Helm chart version
                 run: |
+                    set -e
+
                     CHART_VERSION=$(cat ./Chart.yaml | yq .version)
 
                     echo "Verifying Helm chart version ${CHART_VERSION}."
 
-                    if ! helm show readme "oci://${GAR_REGISTRY}/liferay-aws:${CHART_VERSION}" >/dev/null 2>&1
+                    if ! helm show readme "oci://${GAR_LAR_REGISTRY}/liferay-aws:${CHART_VERSION}" >/dev/null 2>&1
                     then
                         echo "Verified Helm Chart version ${CHART_VERSION}."
 
@@ -35,7 +37,7 @@ jobs:
                 name: Log in to GAR
                 run: |
                     echo "${{secrets.GAR_PASSWORD}}" \
-                        | helm registry login "${GAR_REGISTRY}" \
+                        | helm registry login "${GAR_LAR_REGISTRY}" \
                             --password-stdin \
                             --username _json_key_base64
             -   if: ${{steps.verify_version.outputs.should_publish == 'true'}}
@@ -57,9 +59,127 @@ jobs:
                     do
                         echo "Pushing ${file_name}."
 
-                        helm push "${file_name}" "oci://${GAR_REGISTRY}"
+                        helm push "${file_name}" "oci://${GAR_LAR_REGISTRY}"
                     done
                 working-directory: ./cloud/helm/aws
+    publish-aws-infrastructure:
+        env:
+            GAR_EA_REGISTRY: us-central1-docker.pkg.dev/external-assets-prd/liferay-helm-chart
+        if: ${{github.repository == 'liferay/liferay-portal'}}
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v4
+            -   env:
+                    GITHUB_TOKEN: ${{github.token}}
+                id: verify_version
+                name: Verify Helm chart version
+                run: |
+                    set -e
+
+                    CHART_VERSION=$(cat ./Chart.yaml | yq .version)
+
+                    echo "Verifying Helm chart version ${CHART_VERSION}."
+
+                    if ! helm show readme "oci://${GAR_EA_REGISTRY}/liferay-aws-infrastructure:${CHART_VERSION}" >/dev/null 2>&1
+                    then
+                        echo "Verified Helm Chart version ${CHART_VERSION}."
+
+                        echo "CHART_VERSION=${CHART_VERSION}" >> ${GITHUB_ENV}
+
+                        echo "should_publish=true" >> ${GITHUB_OUTPUT}
+                    else
+                        echo "Chart version ${CHART_VERSION} already exists. Skipping publish."
+                    fi
+                working-directory: ./cloud/helm/aws-infrastructure
+            -   if: ${{steps.verify_version.outputs.should_publish == 'true'}}
+                name: Log in to GAR
+                run: |
+                    echo "${{secrets.GAR_PASSWORD}}" \
+                        | helm registry login "${GAR_EA_REGISTRY}" \
+                            --password-stdin \
+                            --username _json_key_base64
+            -   if: ${{steps.verify_version.outputs.should_publish == 'true'}}
+                name: Package and push Helm chart
+                run: |
+                    DIST_DIR="${{runner.temp}}/aws-infrastructure/dist"
+
+                    rm -fr "${DIST_DIR}"
+
+                    mkdir --parents "${DIST_DIR}"
+
+                    helm dependency update
+
+                    helm package . \
+                        --destination "${DIST_DIR}" \
+                        --version "${CHART_VERSION}"
+
+                    for file_name in "${DIST_DIR}"/*.tgz
+                    do
+                        echo "Pushing ${file_name}."
+
+                        helm push "${file_name}" "oci://${GAR_EA_REGISTRY}"
+                    done
+                working-directory: ./cloud/helm/aws-infrastructure
+    publish-aws-infrastructure-provider:
+        env:
+            GAR_EA_REGISTRY: us-central1-docker.pkg.dev/external-assets-prd/liferay-helm-chart
+        if: ${{github.repository == 'liferay/liferay-portal'}}
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v4
+            -   env:
+                    GITHUB_TOKEN: ${{github.token}}
+                id: verify_version
+                name: Verify Helm chart version
+                run: |
+                    set -e
+
+                    CHART_VERSION=$(cat ./Chart.yaml | yq .version)
+
+                    echo "Verifying Helm chart version ${CHART_VERSION}."
+
+                    if ! helm show readme "oci://${GAR_EA_REGISTRY}/liferay-aws-infrastructure-provider:${CHART_VERSION}" >/dev/null 2>&1
+                    then
+                        echo "Verified Helm Chart version ${CHART_VERSION}."
+
+                        echo "CHART_VERSION=${CHART_VERSION}" >> ${GITHUB_ENV}
+
+                        echo "should_publish=true" >> ${GITHUB_OUTPUT}
+                    else
+                        echo "Chart version ${CHART_VERSION} already exists. Skipping publish."
+                    fi
+                working-directory: ./cloud/helm/aws-infrastructure-provider
+            -   if: ${{steps.verify_version.outputs.should_publish == 'true'}}
+                name: Log in to GAR
+                run: |
+                    echo "${{secrets.GAR_PASSWORD}}" \
+                        | helm registry login "${GAR_EA_REGISTRY}" \
+                            --password-stdin \
+                            --username _json_key_base64
+            -   if: ${{steps.verify_version.outputs.should_publish == 'true'}}
+                name: Package and push Helm chart
+                run: |
+                    DIST_DIR="${{runner.temp}}/aws-infrastructure-provider/dist"
+
+                    rm -fr "${DIST_DIR}"
+
+                    mkdir --parents "${DIST_DIR}"
+
+                    helm dependency update
+
+                    helm package . \
+                        --destination "${DIST_DIR}" \
+                        --version "${CHART_VERSION}"
+
+                    for file_name in "${DIST_DIR}"/*.tgz
+                    do
+                        echo "Pushing ${file_name}."
+
+                        helm push "${file_name}" "oci://${GAR_EA_REGISTRY}"
+                    done
+                working-directory: ./cloud/helm/aws-infrastructure-provider
     publish-aws-marketplace:
         env:
             ECR_REGISTRY: 709825985650.dkr.ecr.us-east-1.amazonaws.com
@@ -86,6 +206,8 @@ jobs:
                 id: verify_version
                 name: Verify Helm chart version
                 run: |
+                    set -e
+
                     CHART_VERSION=$(cat ./Chart.yaml | yq .version)
 
                     echo "Verifying Helm chart version ${CHART_VERSION}."
@@ -125,7 +247,7 @@ jobs:
                 working-directory: ./cloud/helm/aws-marketplace
     publish-default:
         env:
-            GAR_REGISTRY: us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart
+            GAR_LAR_REGISTRY: us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart
         if: ${{github.repository == 'liferay/liferay-portal'}}
         runs-on: ubuntu-latest
         steps:
@@ -136,11 +258,13 @@ jobs:
                 id: verify_version
                 name: Verify Helm chart version
                 run: |
+                    set -e
+
                     CHART_VERSION=$(cat ./Chart.yaml | yq .version)
 
                     echo "Verifying Helm chart version ${CHART_VERSION}."
 
-                    if ! helm show readme "oci://${GAR_REGISTRY}/liferay-default:${CHART_VERSION}" >/dev/null 2>&1
+                    if ! helm show readme "oci://${GAR_LAR_REGISTRY}/liferay-default:${CHART_VERSION}" >/dev/null 2>&1
                     then
                         echo "Verified Helm Chart version ${CHART_VERSION}."
 
@@ -155,7 +279,7 @@ jobs:
                 name: Log in to GAR
                 run: |
                     echo "${{secrets.GAR_PASSWORD}}" \
-                        | helm registry login "${GAR_REGISTRY}" \
+                        | helm registry login "${GAR_LAR_REGISTRY}" \
                             --password-stdin \
                             --username _json_key_base64
             -   if: ${{steps.verify_version.outputs.should_publish == 'true'}}
@@ -177,7 +301,7 @@ jobs:
                     do
                         echo "Pushing ${file_name}."
 
-                        helm push "${file_name}" "oci://${GAR_REGISTRY}"
+                        helm push "${file_name}" "oci://${GAR_LAR_REGISTRY}"
                     done
                 working-directory: ./cloud/helm/default
 on:

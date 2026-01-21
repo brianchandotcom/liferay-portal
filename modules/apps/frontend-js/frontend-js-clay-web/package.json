@@ -5,11 +5,29 @@
 	"main": "js/index.ts",
 	"name": "@liferay/frontend-js-clay-web",
 	"private": true,
+	"devDependencies": {
+		"@storybook/addon-a11y": "^6.5.10",
+		"@storybook/addon-controls": "^6.5.10",
+		"@storybook/addon-essentials": "^6.5.10",
+		"@storybook/addon-storysource": "^6.5.10",
+		"@storybook/builder-webpack5": "^6.5.10",
+		"@storybook/manager-webpack5": "^6.5.10",
+		"@storybook/preset-scss": "^1.0.3",
+		"@storybook/react": "^6.5.10",
+		"storybook": "^8.5.8",
+		"@types/storybook__addon-a11y": "5.1.2",
+		"@types/storybook__addon-knobs": "^5.2.1",
+		"@types/storybook__react": "^5.2.1",
+		"sass-loader": "^7.1.0",
+		"svg4everybody": "^2.1.9"
+	},
 	"scripts": {
 		"build": "node-scripts build:custom && node-scripts build",
 		"checkFormat": "node-scripts format --check",
 		"format": "node-scripts format",
-		"test": "node-scripts test"
+		"test": "node-scripts test",
+		"storybook:build": "NODE_OPTIONS=--max_old_space_size=8192 build-storybook -c ./clay/.storybook -o .storybook-static",
+		"storybook": "start-storybook -p 8888 -c ./clay/.storybook"
 	},
 	"version": "1.0.2"
 }

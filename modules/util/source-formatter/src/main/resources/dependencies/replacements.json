@@ -4958,6 +4958,15 @@
 	},
 	{
 		"classNames": [
+			"OrganizationLocalService",
+			"OrganizationLocalServiceUtil"
+		],
+		"from": "updateOrganization(long paramName, long paramName, long paramName, String paramName, String paramName, long paramName, long paramName, long paramName, String paramName, boolean paramName, byte[] paramName, boolean paramName, ServiceContext serviceContext)",
+		"issueKey": "LPD-58268",
+		"to": "updateOrganization(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#, param#8#, param#9#, param#10#, param#11#, param#12#)"
+	},
+	{
+		"classNames": [
 			"LayoutCopyHelper"
 		],
 		"from": "copyLayout",

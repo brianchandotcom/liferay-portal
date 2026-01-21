@@ -1,0 +1,53 @@
+{
+	"name": "@clayui/www",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"postinstall": "patch-package",
+		"dev": "renoun next dev",
+		"build": "renoun next build",
+		"start": "next start",
+		"lint": "next lint"
+	},
+	"dependencies": {
+		"@clayui/css": "^3.134.0",
+		"@clayui/form": "^3.132.0",
+		"@clayui/icon": "^3.128.0",
+		"@clayui/link": "^3.128.0",
+		"@clayui/navigation-bar": "^3.132.0",
+		"@codesandbox/sandpack-react": "^2.20.0",
+		"@codesandbox/sandpack-themes": "^2.0.21",
+		"@docsearch/react": "^3.5.2",
+		"@mdx-js/loader": "^3.0.1",
+		"@mdx-js/react": "^3.0.1",
+		"@next/mdx": "15.1.2",
+		"@next/third-parties": "^15.1.7",
+		"@types/mdx": "^2.0.11",
+		"classnames": "^2.5.1",
+		"next": "~15.1.11",
+		"node-html-parser": "^7.0.1",
+		"react": "19.0.3",
+		"react-dom": "19.0.3",
+		"rehype-mdx-code-props": "^3.0.1",
+		"remark-gfm": "^4.0.0",
+		"renoun": "^7.9.0",
+		"restyle": "^3.0.0",
+		"sass": "1.64.1",
+		"shiki": "0.14.6",
+		"zod": "^3.24.1"
+	},
+	"devDependencies": {
+		"@netlify/plugin-nextjs": "^5.9.4",
+		"@types/node": "^20",
+		"@types/react": "18.3.12",
+		"@types/react-dom": "18.3.5",
+		"eslint": "^8",
+		"eslint-config-next": "15.1.2",
+		"patch-package": "^8.0.0",
+		"typescript": "^5.7.2"
+	},
+	"resolutions": {
+		"minimatch": "9.0.5"
+	}
+}

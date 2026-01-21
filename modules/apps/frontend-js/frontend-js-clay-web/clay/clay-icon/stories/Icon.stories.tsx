@@ -4,7 +4,7 @@
  */
 
 import {Provider} from '@clayui/core';
-const spritemap = require('@clayui/css/lib/images/icons/icons.svg');
+const spritemap = require('@clayui/css/src/images/icons/icons.svg');
 import ClayIcon from '@clayui/icon';
 import React from 'react';
 

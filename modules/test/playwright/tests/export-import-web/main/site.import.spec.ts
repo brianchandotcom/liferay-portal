@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ObjectDefinitionAPI} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 import * as path from 'path';
 
@@ -24,6 +25,7 @@ import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import {wikiPagesTest} from '../../../fixtures/wikiPagesTest';
 import {HomePage} from '../../../pages/portal-web/HomePage';
+import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import {normalizeRestPath} from '../../../utils/normalizeRestPath';
 import {openFieldset} from '../../../utils/openFieldset';
@@ -63,6 +65,7 @@ export const test = mergeTests(
 export const testWithExportImportAtInstanceLevelFF = mergeTests(
 	applicationsMenuPageTest,
 	companyExportImportPageTest,
+	depotAdminPageTest,
 	exportImportPagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
@@ -336,6 +339,114 @@ test('Can import a lar file selecting some items to import', async ({
 
 	await exportImportPage.import({filePath: exportFilePath});
 });
+
+testWithExportImportAtInstanceLevelFF(
+	'Can only import site level custom object entries when their definitions are already in the system',
+	async ({apiHelpers, exportImportPage}) => {
+		let applicationName;
+		let exportFilePath;
+		const objectDefinitionExternalReferenceCode = `ObjectDefinition${getRandomInt()}`;
+		let objectDefinition;
+		let objectEntry;
+
+		await test.step('Create the object definition', async () => {
+			objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					className: `com.liferay.object.model.ObjectDefinition#${objectDefinitionExternalReferenceCode}`,
+					objectDefinitionExternalReferenceCode,
+					scope: 'site',
+					status: {code: 0},
+				});
+
+			applicationName = `${normalizeRestPath(objectDefinition.restContextPath)}`;
+		});
+
+		await test.step('Create the object entry', async () => {
+			try {
+				objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+					{externalReferenceCode: 'testERC', textField: 'test'},
+					`${applicationName}/scopes/Guest`
+				);
+			}
+			catch {
+
+				// Ensure cleanup if test execution stops before removing the object definition.
+
+				apiHelpers.data.push({
+					id: objectDefinition.id,
+					type: 'objectDefinition',
+				});
+			}
+		});
+
+		await testWithExportImportAtInstanceLevelFF.step('Export', async () => {
+			await exportImportPage.goToExport();
+
+			exportFilePath = await exportImportPage.export({
+				portletLabels: [
+					`${objectDefinitionExternalReferenceCode} 1 Items`,
+				],
+			});
+		});
+
+		await test.step('Delete the object definition', async () => {
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+			await objectDefinitionAPIClient.deleteObjectDefinition(
+				objectDefinition.id
+			);
+		});
+
+		await testWithExportImportAtInstanceLevelFF.step(
+			'Fail importing',
+			async () => {
+				await exportImportPage.goToImport();
+
+				await exportImportPage.import({
+					expectedUploadErrorMessage: `The Data Handler for the "${objectDefinitionExternalReferenceCode}" portlet is missing from the system.`,
+					filePath: exportFilePath,
+				});
+			}
+		);
+
+		await test.step('Recreate the object definition', async () => {
+			const objectDefinition2 =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					className: `com.liferay.object.model.ObjectDefinition#${objectDefinitionExternalReferenceCode}`,
+					objectDefinitionExternalReferenceCode,
+					scope: 'site',
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition2.id,
+				type: 'objectDefinition',
+			});
+		});
+
+		await testWithExportImportAtInstanceLevelFF.step('Import', async () => {
+			await exportImportPage.goToImport();
+
+			await exportImportPage.import({
+				filePath: exportFilePath,
+			});
+		});
+
+		await test.step('Validate the import', async () => {
+			expect(
+				await apiHelpers.get(
+					`${apiHelpers.baseUrl}${applicationName}/scopes/Guest/by-external-reference-code/${objectEntry.externalReferenceCode}`
+				)
+			).toEqual(
+				expect.objectContaining({
+					externalReferenceCode: objectEntry.externalReferenceCode,
+					textField: objectEntry.textField,
+				})
+			);
+		});
+	}
+);
 
 test('Can see corresponding elements at site level', async ({
 	apiHelpers,

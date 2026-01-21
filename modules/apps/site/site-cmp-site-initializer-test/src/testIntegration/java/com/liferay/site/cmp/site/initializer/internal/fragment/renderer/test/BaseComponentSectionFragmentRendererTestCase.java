@@ -80,7 +80,7 @@ public abstract class BaseComponentSectionFragmentRendererTestCase {
 			InfoDisplayWebKeys.INFO_ITEM, objectEntry);
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-			layoutDisplayPageProviderRegistry.
+			_layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(
 					objectDefinition.getClassName());
 
@@ -108,10 +108,6 @@ public abstract class BaseComponentSectionFragmentRendererTestCase {
 	protected HttpServletRequest httpServletRequest;
 
 	@Inject
-	protected LayoutDisplayPageProviderRegistry
-		layoutDisplayPageProviderRegistry;
-
-	@Inject
 	protected ObjectDefinitionLocalService objectDefinitionLocalService;
 
 	protected ObjectDefinition projectObjectDefinition;
@@ -121,5 +117,9 @@ public abstract class BaseComponentSectionFragmentRendererTestCase {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private LayoutDisplayPageProviderRegistry
+		_layoutDisplayPageProviderRegistry;
 
 }

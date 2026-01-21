@@ -715,13 +715,12 @@ public class ObjectEntryDTOConverter
 								return null;
 							}
 
-							ThemeDisplay themeDisplay = new ThemeDisplay() {
-								{
-									setPathImage(_portal.getPathImage());
-								}
-							};
-
-							return user.getPortraitURL(themeDisplay);
+							return user.getPortraitURL(
+								new ThemeDisplay() {
+									{
+										setPathImage(_portal.getPathImage());
+									}
+								});
 						});
 					setType(() -> Type.USER);
 				}

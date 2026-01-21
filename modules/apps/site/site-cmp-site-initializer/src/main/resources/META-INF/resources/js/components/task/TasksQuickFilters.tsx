@@ -82,9 +82,15 @@ function QuickFilterButton({
 }
 
 export default function TasksQuickFilters({
-	cmpProjectId,
+	blockedCountURL,
+	inProgressCountURL,
+	overdueCountURL,
+	totalCountURL,
 }: {
-	cmpProjectId: string;
+	blockedCountURL: string;
+	inProgressCountURL: string;
+	overdueCountURL: string;
+	totalCountURL: string;
 }) {
 	const [activeQuickFilter, setActiveQuickFilter] = useState<string | null>(
 		null
@@ -250,17 +256,26 @@ export default function TasksQuickFilters({
 	};
 
 	const fetchCounts = useCallback(async () => {
-		fetch(`/o/cmp/projects/${cmpProjectId}`, {
-			method: 'GET',
-		}).then(async (response: Response) => {
-			const data = await response.json();
+		const fetchJSON = (url: string) =>
+			fetch(url).then((response) => response.json());
 
-			setBlockedCount(data.blockedCount);
-			setInProgressCount(data.inProgressCount);
-			setOverdueCount(data.overdueCount);
-			setTotalCount(data.totalCount);
-		});
-	}, [cmpProjectId]);
+		const [
+			blockedCountData,
+			inProgressCountData,
+			overdueCountData,
+			totalCountData,
+		] = await Promise.all([
+			fetchJSON(blockedCountURL),
+			fetchJSON(inProgressCountURL),
+			fetchJSON(overdueCountURL),
+			fetchJSON(totalCountURL),
+		]);
+
+		setBlockedCount(blockedCountData.totalCount);
+		setInProgressCount(inProgressCountData.totalCount);
+		setOverdueCount(overdueCountData.totalCount);
+		setTotalCount(totalCountData.totalCount);
+	}, [blockedCountURL, inProgressCountURL, overdueCountURL, totalCountURL]);
 
 	useEffect(() => {
 		fetchCounts();

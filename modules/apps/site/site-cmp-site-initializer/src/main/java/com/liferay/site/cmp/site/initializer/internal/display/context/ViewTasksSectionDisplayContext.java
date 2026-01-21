@@ -26,6 +26,8 @@ import com.liferay.site.cmp.site.initializer.internal.util.ActionUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -153,13 +155,38 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 	}
 
 	public Map<String, Object> getTaskQuickFiltersProps() {
-		if (_assetEntry == null) {
-			return null;
+		return HashMapBuilder.<String, Object>put(
+			"blockedCountURL", _getCountURL("state eq 'blocked'")
+		).put(
+			"inProgressCountURL", _getCountURL("state eq 'inProgress'")
+		).put(
+			"overdueCountURL",
+			_getCountURL(
+				StringBundler.concat(
+					"dueDate lt ", LocalDate.now(), " and state ne 'done'"))
+		).put(
+			"totalCountURL", _getCountURL(null)
+		).build();
+	}
+
+	private String _getCountURL(String filterString) {
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("/o/search/v1.0/search?emptySearch=true&");
+		sb.append("filter=objectDefinitionId eq ");
+		sb.append(objectDefinition.getObjectDefinitionId());
+
+		if (_assetEntry != null) {
+			sb.append(" and scopeGroupId eq ");
+			sb.append(_assetEntry.getGroupId());
 		}
 
-		return HashMapBuilder.<String, Object>put(
-			"cmpProjectId", _assetEntry.getClassPK()
-		).build();
+		if (filterString != null) {
+			sb.append(" and ");
+			sb.append(filterString);
+		}
+
+		return sb.toString();
 	}
 
 	private final AssetEntry _assetEntry;

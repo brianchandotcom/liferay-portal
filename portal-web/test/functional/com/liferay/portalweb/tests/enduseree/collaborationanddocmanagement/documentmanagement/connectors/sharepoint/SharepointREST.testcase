@@ -482,6 +482,8 @@ definition {
 			dmDocumentFile = "Document_4.txt",
 			dmDocumentTitle = "Document_4.txt");
 
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_4.txt");
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		Search.searchCP(searchTerm = "Document_4.txt");
@@ -664,6 +666,8 @@ definition {
 		DMDocument.addCP(
 			dmDocumentFile = "Document_3.odt",
 			dmDocumentTitle = "Document_3.odt");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_3.odt");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

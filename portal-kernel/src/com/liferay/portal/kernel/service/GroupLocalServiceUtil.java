@@ -1325,6 +1325,21 @@ public class GroupLocalServiceUtil {
 			userId, start, end, orderByComparator);
 	}
 
+	public static List<Group> getUserGroups(
+			com.liferay.portal.kernel.model.User user, boolean inherit)
+		throws PortalException {
+
+		return getService().getUserGroups(user, inherit);
+	}
+
+	public static List<Group> getUserGroups(
+			com.liferay.portal.kernel.model.User user, boolean inherit,
+			int start, int end)
+		throws PortalException {
+
+		return getService().getUserGroups(user, inherit, start, end);
+	}
+
 	public static int getUserGroupsCount(long userId) {
 		return getService().getUserGroupsCount(userId);
 	}

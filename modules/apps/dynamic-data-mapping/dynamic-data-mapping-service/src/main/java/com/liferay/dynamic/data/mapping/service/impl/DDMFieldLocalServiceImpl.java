@@ -514,7 +514,11 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 	private List<DDMFieldAttributeInfo> _getDDMFieldAttributeInfos(
 		DDMFieldInfo ddmFieldInfo, String languageId, String valueString) {
 
-		int length = valueString.length();
+		int length = 0;
+
+		if (valueString != null) {
+			length = valueString.length();
+		}
 
 		if ((length > 1) &&
 			(valueString.charAt(0) == CharPool.OPEN_CURLY_BRACE) &&

@@ -105,7 +105,8 @@ public class SuggestSearchRequestExecutorImpl
 
 		SuggestSearchResult.Entry.Option suggesterResultEntryOption =
 			new SuggestSearchResult.Entry.Option(
-				text.string(), suggestionEntryOption.getScore());
+				text.string(), suggestionEntryOption.getScore(),
+				suggestionEntryOption.collateMatch());
 
 		if (suggestionEntryOption.getHighlighted() != null) {
 			Text highlightedText = suggestionEntryOption.getHighlighted();

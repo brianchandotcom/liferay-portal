@@ -8,7 +8,6 @@ package com.liferay.sharing.notifications.internal.notifications;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
@@ -86,8 +85,8 @@ public class SharingUserNotificationHandler
 		AssetRenderer<Object> assetRenderer =
 			assetRendererFactory.getAssetRenderer(sharingEntry.getClassPK());
 
-		String viewInContextURL = assetRenderer.getURLViewInContext(
-			themeDisplay, StringPool.BLANK);
+		String viewInContextURL = assetRenderer.getURLSharingNotification(
+			themeDisplay);
 
 		if (Validator.isBlank(viewInContextURL)) {
 			return super.getLink(userNotificationEvent, serviceContext);

@@ -174,6 +174,35 @@ public class ObjectEntryAssetRenderer
 	}
 
 	@Override
+	public String getURLSharingNotification(ThemeDisplay themeDisplay)
+		throws Exception {
+
+		if (themeDisplay == null) {
+			return null;
+		}
+
+		DepotEntry depotEntry = _depotEntryLocalService.fetchGroupDepotEntry(
+			_objectEntry.getGroupId());
+
+		if ((depotEntry == null) ||
+			(depotEntry.getType() != DepotConstants.TYPE_SPACE)) {
+
+			return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+				new InfoItemReference(
+					getClassName(),
+					new ClassPKInfoItemIdentifier(getClassPK())),
+				themeDisplay);
+		}
+
+		return StringBundler.concat(
+			themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+			GroupConstants.CMS_FRIENDLY_URL,
+			"/edit_content_item?objectEntryId=",
+			_objectEntry.getObjectEntryId(), "&p_l_mode=read&redirect=",
+			HtmlUtil.escapeURL(themeDisplay.getURLCurrent()));
+	}
+
+	@Override
 	public String getURLViewInContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
@@ -200,25 +229,10 @@ public class ObjectEntryAssetRenderer
 			return null;
 		}
 
-		DepotEntry depotEntry = _depotEntryLocalService.fetchGroupDepotEntry(
-			_objectEntry.getGroupId());
-
-		if ((depotEntry == null) ||
-			(depotEntry.getType() != DepotConstants.TYPE_SPACE)) {
-
-			return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				new InfoItemReference(
-					getClassName(),
-					new ClassPKInfoItemIdentifier(getClassPK())),
-				themeDisplay);
-		}
-
-		return StringBundler.concat(
-			themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
-			GroupConstants.CMS_FRIENDLY_URL,
-			"/edit_content_item?objectEntryId=",
-			_objectEntry.getObjectEntryId(), "&p_l_mode=read&redirect=",
-			HtmlUtil.escapeURL(themeDisplay.getURLCurrent()));
+		return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+			new InfoItemReference(
+				getClassName(), new ClassPKInfoItemIdentifier(getClassPK())),
+			themeDisplay);
 	}
 
 	@Override

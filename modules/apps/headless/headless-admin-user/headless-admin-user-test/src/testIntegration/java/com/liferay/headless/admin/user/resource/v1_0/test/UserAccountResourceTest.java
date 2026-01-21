@@ -2229,10 +2229,10 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				"2000-07-28T00:00:00Z"));
 		_testGetUserAccountsPageWithSortCustomField(
 			expandoTable, ExpandoColumnConstants.DOUBLE,
-			Arrays.asList(0.111, 0.222, 0.333));
+			Arrays.asList(1.001, 01.01, 001.1));
 		_testGetUserAccountsPageWithSortCustomField(
 			expandoTable, ExpandoColumnConstants.FLOAT,
-			Arrays.asList(0.111F, 0.222F, 0.333F));
+			Arrays.asList(1.001F, 01.01F, 001.1F));
 	}
 
 	private void _testGetUserAccountsPageWithSortCustomField(

@@ -52,6 +52,15 @@ public class ConfigurationExportImportProcessorImpl
 				continue;
 			}
 
+			Object groupInternalIdentifier = properties.get(
+				ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey());
+
+			if (scope.equals(ExtendedObjectClassDefinition.Scope.COMPANY) &&
+				(groupInternalIdentifier != null)) {
+
+				continue;
+			}
+
 			Serializable portableIdentifier = _getPortableIdentifier(
 				scope, (Serializable)internalIdentifier);
 

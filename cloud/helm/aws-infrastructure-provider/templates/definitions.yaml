@@ -11,8 +11,8 @@ spec:
         kind: LiferayInfrastructure
         plural: liferayinfrastructures
         shortNames:
-            - lfrinfra
-            - lri
+            -   lfrinfra
+            -   lri
         singular: liferayinfrastructure
     versions:
         -   name: v1alpha1
@@ -31,8 +31,8 @@ spec:
                                         activeSlot:
                                             default: blue
                                             enum:
-                                                - blue
-                                                - green
+                                                -   blue
+                                                -   green
                                             type: string
                                         blue:
                                             properties:
@@ -49,7 +49,7 @@ spec:
                                                     default: liferay_database_admin
                                                     type: string
                                             required:
-                                                - region
+                                                -   region
                                             type: object
                                         green:
                                             properties:
@@ -66,10 +66,10 @@ spec:
                                                     default: liferay_database_admin
                                                     type: string
                                             required:
-                                                - region
+                                                -   region
                                             type: object
                                     required:
-                                        - activeSlot
+                                        -   activeSlot
                                     type: object
                                 deletionProtection:
                                     default: false
@@ -96,15 +96,15 @@ spec:
                                             default: liferay_search_admin
                                             type: string
                                     required:
-                                        - region
+                                        -   region
                                     type: object
                                 storage:
                                     properties:
                                         activeSlot:
                                             default: blue
                                             enum:
-                                                - blue
-                                                - green
+                                                -   blue
+                                                -   green
                                             type: string
                                         blue:
                                             properties:
@@ -115,7 +115,7 @@ spec:
                                                     default: "us-west-2"
                                                     type: string
                                             required:
-                                                - region
+                                                -   region
                                             type: object
                                         green:
                                             properties:
@@ -126,18 +126,18 @@ spec:
                                                     default: "us-west-2"
                                                     type: string
                                             required:
-                                                - region
+                                                -   region
                                             type: object
                                     required:
-                                        - activeSlot
+                                        -   activeSlot
                                     type: object
                             required:
-                                - database
-                                - deletionProtection
-                                - environmentId
-                                - projectId
-                                - search
-                                - storage
+                                -   database
+                                -   deletionProtection
+                                -   environmentId
+                                -   projectId
+                                -   search
+                                -   storage
                             type: object
                     type: object
             served: true

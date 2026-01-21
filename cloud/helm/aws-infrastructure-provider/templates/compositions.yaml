@@ -217,7 +217,7 @@ spec:
                                 region: {{ $spec.region }}
                                 rule:
                                     -   abortIncompleteMultipartUpload:
-                                            - daysAfterInitiation: 7
+                                            -   daysAfterInitiation: 7
                                         id: abort-incomplete-multipart-upload
                                         status: Enabled
                             managementPolicies: {{ $managementPolicies }}

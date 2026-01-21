@@ -10,11 +10,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
-import com.liferay.portal.search.opensearch2.internal.document.OpenSearchDocumentFactory;
+import com.liferay.portal.search.opensearch2.internal.document.OpenSearchDocumentFactoryUtil;
 
 import org.opensearch.client.json.JsonData;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Petteri Karttunen
@@ -26,10 +24,11 @@ public abstract class BaseDocumentRequestTranslator {
 		com.liferay.portal.kernel.search.Document document71) {
 
 		if (document != null) {
-			return openSearchDocumentFactory.getOpenSearchDocument(document);
+			return OpenSearchDocumentFactoryUtil.getOpenSearchDocument(
+				document);
 		}
 
-		return openSearchDocumentFactory.getOpenSearchDocument(document71);
+		return OpenSearchDocumentFactoryUtil.getOpenSearchDocument(document71);
 	}
 
 	protected String getUid(IndexDocumentRequest indexDocumentRequest) {
@@ -83,8 +82,5 @@ public abstract class BaseDocumentRequestTranslator {
 
 		return uid;
 	}
-
-	@Reference
-	protected OpenSearchDocumentFactory openSearchDocumentFactory;
 
 }

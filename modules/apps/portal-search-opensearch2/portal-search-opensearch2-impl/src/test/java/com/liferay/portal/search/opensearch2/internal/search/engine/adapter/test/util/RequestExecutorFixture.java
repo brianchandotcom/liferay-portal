@@ -18,7 +18,6 @@ import com.liferay.portal.search.engine.adapter.index.DeleteIndexRequest;
 import com.liferay.portal.search.internal.document.DocumentBuilderFactoryImpl;
 import com.liferay.portal.search.internal.geolocation.GeoBuildersImpl;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
-import com.liferay.portal.search.opensearch2.internal.document.OpenSearchDocumentFactoryImpl;
 import com.liferay.portal.search.opensearch2.internal.script.ScriptTranslator;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.GetDocumentRequestExecutor;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.GetDocumentRequestExecutorImpl;
@@ -162,9 +161,6 @@ public class RequestExecutorFixture {
 			openSearchDocumentRequestTranslator =
 				new OpenSearchDocumentRequestTranslatorImpl();
 
-		ReflectionTestUtil.setFieldValue(
-			openSearchDocumentRequestTranslator, "openSearchDocumentFactory",
-			new OpenSearchDocumentFactoryImpl());
 		ReflectionTestUtil.setFieldValue(
 			openSearchDocumentRequestTranslator, "_scriptTranslator",
 			new ScriptTranslator());

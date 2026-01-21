@@ -38,8 +38,7 @@ import com.liferay.portal.search.internal.sort.SortsImpl;
 import com.liferay.portal.search.opensearch2.internal.BaseOpenSearchTestCase;
 import com.liferay.portal.search.opensearch2.internal.OpenSearchTestRule;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
-import com.liferay.portal.search.opensearch2.internal.document.OpenSearchDocumentFactory;
-import com.liferay.portal.search.opensearch2.internal.document.OpenSearchDocumentFactoryImpl;
+import com.liferay.portal.search.opensearch2.internal.document.OpenSearchDocumentFactoryUtil;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.search.SearchRequestExecutorFixture;
 import com.liferay.portal.search.opensearch2.internal.util.IndexUtil;
 import com.liferay.portal.search.pit.PointInTime;
@@ -508,11 +507,8 @@ public class OpenSearchSearchEngineAdapterSearchRequestTest
 		indexRequestBuilder.index(TEST_INDEX_NAME);
 		indexRequestBuilder.refresh(Refresh.True);
 
-		OpenSearchDocumentFactory openSearchDocumentFactory =
-			new OpenSearchDocumentFactoryImpl();
-
 		indexRequestBuilder.document(
-			openSearchDocumentFactory.getOpenSearchDocument(document));
+			OpenSearchDocumentFactoryUtil.getOpenSearchDocument(document));
 
 		try {
 			_openSearchClient.index(indexRequestBuilder.build());

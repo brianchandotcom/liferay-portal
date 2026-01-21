@@ -11,8 +11,6 @@ import com.liferay.portal.search.internal.document.DocumentBuilderFactoryImpl;
 import com.liferay.portal.search.internal.geolocation.GeoBuildersImpl;
 import com.liferay.portal.search.internal.script.ScriptsImpl;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
-import com.liferay.portal.search.opensearch2.internal.document.OpenSearchDocumentFactory;
-import com.liferay.portal.search.opensearch2.internal.document.OpenSearchDocumentFactoryImpl;
 import com.liferay.portal.search.opensearch2.internal.query.OpenSearchQueryTranslatorFixture;
 import com.liferay.portal.search.opensearch2.internal.script.ScriptTranslator;
 
@@ -27,7 +25,7 @@ public class DocumentRequestExecutorFixture {
 
 	public void setUp() {
 		_documentRequestExecutor = _createDocumentRequestExecutor(
-			_openSearchConnectionManager, _openSearchDocumentFactory);
+			_openSearchConnectionManager);
 	}
 
 	protected void setOpenSearchConnectionManager(
@@ -36,23 +34,13 @@ public class DocumentRequestExecutorFixture {
 		_openSearchConnectionManager = openSearchConnectionManager;
 	}
 
-	protected void setOpenSearchDocumentFactory(
-		OpenSearchDocumentFactory openSearchDocumentFactory) {
-
-		_openSearchDocumentFactory = openSearchDocumentFactory;
-	}
-
 	private OpenSearchBulkableDocumentRequestTranslator
-		_createBulkableDocumentRequestTranslator(
-			OpenSearchDocumentFactory openSearchDocumentFactory) {
+		_createBulkableDocumentRequestTranslator() {
 
 		OpenSearchBulkableDocumentRequestTranslator
 			openSearchBulkableDocumentRequestTranslator =
 				new OpenSearchBulkableDocumentRequestTranslatorImpl();
 
-		ReflectionTestUtil.setFieldValue(
-			openSearchBulkableDocumentRequestTranslator,
-			"openSearchDocumentFactory", openSearchDocumentFactory);
 		ReflectionTestUtil.setFieldValue(
 			openSearchBulkableDocumentRequestTranslator, "_scriptTranslator",
 			new ScriptTranslator());
@@ -132,16 +120,14 @@ public class DocumentRequestExecutorFixture {
 	}
 
 	private DocumentRequestExecutor _createDocumentRequestExecutor(
-		OpenSearchConnectionManager openSearchConnectionManager,
-		OpenSearchDocumentFactory openSearchDocumentFactory) {
+		OpenSearchConnectionManager openSearchConnectionManager) {
 
 		DocumentRequestExecutor documentRequestExecutor =
 			new OpenSearchDocumentRequestExecutor();
 
 		OpenSearchBulkableDocumentRequestTranslator
 			openSearchBulkableDocumentRequestTranslator =
-				_createBulkableDocumentRequestTranslator(
-					openSearchDocumentFactory);
+				_createBulkableDocumentRequestTranslator();
 
 		ReflectionTestUtil.setFieldValue(
 			documentRequestExecutor, "_bulkDocumentRequestExecutor",
@@ -237,9 +223,6 @@ public class DocumentRequestExecutorFixture {
 				new OpenSearchDocumentRequestTranslatorImpl();
 
 		ReflectionTestUtil.setFieldValue(
-			openSearchDocumentRequestTranslator, "openSearchDocumentFactory",
-			new OpenSearchDocumentFactoryImpl());
-		ReflectionTestUtil.setFieldValue(
 			openSearchDocumentRequestTranslator, "_scriptTranslator",
 			new ScriptTranslator());
 
@@ -304,6 +287,5 @@ public class DocumentRequestExecutorFixture {
 
 	private DocumentRequestExecutor _documentRequestExecutor;
 	private OpenSearchConnectionManager _openSearchConnectionManager;
-	private OpenSearchDocumentFactory _openSearchDocumentFactory;
 
 }

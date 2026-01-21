@@ -9,15 +9,13 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.search.opensearch2.internal.BaseOpenSearchTestCase;
 import com.liferay.portal.search.opensearch2.internal.OpenSearchTestRule;
-import com.liferay.portal.search.opensearch2.internal.document.OpenSearchDocumentFactory;
-import com.liferay.portal.search.opensearch2.internal.document.OpenSearchDocumentFactoryImpl;
+import com.liferay.portal.search.opensearch2.internal.document.OpenSearchDocumentFactoryUtil;
 import com.liferay.portal.search.opensearch2.internal.util.JsonpUtil;
 import com.liferay.portal.search.test.util.indexing.DocumentFixture;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -53,18 +51,8 @@ public class OpenSearchBulkableDocumentRequestTranslatorTest
 
 	@Before
 	public void setUp() throws Exception {
-		OpenSearchDocumentFactory openSearchDocumentFactory =
-			_createOpenSearchDocumentFactory();
-
-		OpenSearchBulkableDocumentRequestTranslator
-			openSearchBulkableDocumentRequestTranslator =
-				_createOpenSearchBulkableDocumentRequestTranslator(
-					openSearchDocumentFactory);
-
 		_openSearchBulkableDocumentRequestTranslator =
-			openSearchBulkableDocumentRequestTranslator;
-
-		_openSearchDocumentFactory = openSearchDocumentFactory;
+			new OpenSearchBulkableDocumentRequestTranslatorImpl();
 
 		_documentFixture.setUp();
 	}
@@ -110,25 +98,6 @@ public class OpenSearchBulkableDocumentRequestTranslatorTest
 		}
 
 		return sb.toString();
-	}
-
-	private OpenSearchBulkableDocumentRequestTranslator
-		_createOpenSearchBulkableDocumentRequestTranslator(
-			OpenSearchDocumentFactory openSearchDocumentFactory) {
-
-		OpenSearchBulkableDocumentRequestTranslator
-			openSearchBulkableDocumentRequestTranslator =
-				new OpenSearchBulkableDocumentRequestTranslatorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			openSearchBulkableDocumentRequestTranslator,
-			"openSearchDocumentFactory", openSearchDocumentFactory);
-
-		return openSearchBulkableDocumentRequestTranslator;
-	}
-
-	private OpenSearchDocumentFactory _createOpenSearchDocumentFactory() {
-		return new OpenSearchDocumentFactoryImpl();
 	}
 
 	private void _setUid(Document document, String uid) {
@@ -179,8 +148,8 @@ public class OpenSearchBulkableDocumentRequestTranslatorTest
 		Assert.assertEquals(TEST_INDEX_NAME, indexOperation.index());
 		Assert.assertEquals(id, indexOperation.id());
 
-		JsonData jsonData1 = _openSearchDocumentFactory.getOpenSearchDocument(
-			document);
+		JsonData jsonData1 =
+			OpenSearchDocumentFactoryUtil.getOpenSearchDocument(document);
 		JsonData jsonData2 = (JsonData)indexOperation.document();
 
 		Assert.assertEquals(jsonData1.toString(), jsonData2.toString());
@@ -229,6 +198,5 @@ public class OpenSearchBulkableDocumentRequestTranslatorTest
 	private final DocumentFixture _documentFixture = new DocumentFixture();
 	private OpenSearchBulkableDocumentRequestTranslator
 		_openSearchBulkableDocumentRequestTranslator;
-	private OpenSearchDocumentFactory _openSearchDocumentFactory;
 
 }

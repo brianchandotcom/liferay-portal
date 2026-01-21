@@ -53,8 +53,6 @@ public class OpenSearchDocumentFactoryImplTest {
 	@Before
 	public void setUp() throws Exception {
 		_documentFixture.setUp();
-
-		_openSearchDocumentFactory = new OpenSearchDocumentFactoryImpl();
 	}
 
 	@After
@@ -207,7 +205,7 @@ public class OpenSearchDocumentFactoryImplTest {
 
 		document.addText(_FIELD, new String[] {value});
 
-		JsonData jsonData = _openSearchDocumentFactory.getOpenSearchDocument(
+		JsonData jsonData = OpenSearchDocumentFactoryUtil.getOpenSearchDocument(
 			document);
 
 		Assert.assertEquals(
@@ -224,7 +222,7 @@ public class OpenSearchDocumentFactoryImplTest {
 		Consumer<DocumentBuilder> documentBuilderConsumer) {
 
 		JsonData actualJsonData =
-			_openSearchDocumentFactory.getOpenSearchDocument(
+			OpenSearchDocumentFactoryUtil.getOpenSearchDocument(
 				_buildDocument(documentBuilderConsumer));
 
 		Assert.assertEquals(
@@ -236,7 +234,7 @@ public class OpenSearchDocumentFactoryImplTest {
 		JSONObject expectedJSONObject,
 		Consumer<DocumentBuilder> documentBuilderConsumer) {
 
-		JsonData jsonData = _openSearchDocumentFactory.getOpenSearchDocument(
+		JsonData jsonData = OpenSearchDocumentFactoryUtil.getOpenSearchDocument(
 			_buildDocument(documentBuilderConsumer));
 
 		Assert.assertEquals(
@@ -247,7 +245,7 @@ public class OpenSearchDocumentFactoryImplTest {
 	private void _assertDocument(
 		String expected, DocumentBuilder documentBuilder) {
 
-		JsonData jsonData = _openSearchDocumentFactory.getOpenSearchDocument(
+		JsonData jsonData = OpenSearchDocumentFactoryUtil.getOpenSearchDocument(
 			documentBuilder.build());
 
 		Assert.assertEquals(
@@ -285,6 +283,5 @@ public class OpenSearchDocumentFactoryImplTest {
 	private static final String _FIELD = "field";
 
 	private final DocumentFixture _documentFixture = new DocumentFixture();
-	private OpenSearchDocumentFactory _openSearchDocumentFactory;
 
 }

@@ -21,16 +21,18 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface RedirectConfiguration {
 
 	@Meta.AD(
+		deflt = "24",
+		description = "check-redirect-not-found-entries-interval-help",
+		min = "1", name = "check-redirect-not-found-entries-interval",
+		required = false
+	)
+	public int checkRedirectNotFoundEntriesInterval();
+
+	@Meta.AD(
 		deflt = "false", description = "redirect-not-found-entry-enabled-help",
 		name = "enabled", required = false
 	)
 	public boolean enabled();
-
-	@Meta.AD(
-		deflt = "30", description = "redirect-not-found-entry-max-age-help",
-		name = "redirect-not-found-entry-max-age", required = false
-	)
-	public int redirectNotFoundEntryMaxAge();
 
 	@Meta.AD(
 		deflt = "1000",
@@ -40,11 +42,9 @@ public interface RedirectConfiguration {
 	public int maximumNumberOfRedirectNotFoundEntries();
 
 	@Meta.AD(
-		deflt = "24",
-		description = "check-redirect-not-found-entries-interval-help",
-		min = "1", name = "check-redirect-not-found-entries-interval",
-		required = false
+		deflt = "30", description = "redirect-not-found-entry-max-age-help",
+		name = "redirect-not-found-entry-max-age", required = false
 	)
-	public int checkRedirectNotFoundEntriesInterval();
+	public int redirectNotFoundEntryMaxAge();
 
 }

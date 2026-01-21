@@ -23,19 +23,19 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface AWSTranslatorConfiguration {
 
+	@Meta.AD(deflt = "", name = "access-key", required = false)
+	public String accessKey();
+
 	@Meta.AD(
 		deflt = "false", description = "enabled-description[aws-translation]",
 		name = "enabled", required = false
 	)
 	public boolean enabled();
 
-	@Meta.AD(deflt = "", name = "access-key", required = false)
-	public String accessKey();
+	@Meta.AD(deflt = "us-west-1", name = "region", required = false)
+	public String region();
 
 	@Meta.AD(deflt = "", name = "secret-key", required = false)
 	public String secretKey();
-
-	@Meta.AD(deflt = "us-west-1", name = "region", required = false)
-	public String region();
 
 }

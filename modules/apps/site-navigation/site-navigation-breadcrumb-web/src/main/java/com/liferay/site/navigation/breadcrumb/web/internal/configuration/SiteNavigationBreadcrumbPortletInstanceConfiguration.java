@@ -23,6 +23,13 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface SiteNavigationBreadcrumbPortletInstanceConfiguration {
 
+	/**
+	 * Set a DDM template ID that starts with the prefix "ddmTemplate_" (i.e.
+	 * ddmTemplate_BREADCRUMB-HORIZONTAL-FTL) to use as the display style.
+	 */
+	@Meta.AD(name = "display-style", required = false)
+	public String displayStyle();
+
 	@Meta.AD(
 		deflt = "", name = "display-style-group-external-reference-code",
 		required = false
@@ -40,13 +47,6 @@ public interface SiteNavigationBreadcrumbPortletInstanceConfiguration {
 		name = "display-style-group-key", required = false
 	)
 	public String displayStyleGroupKey();
-
-	/**
-	 * Set a DDM template ID that starts with the prefix "ddmTemplate_" (i.e.
-	 * ddmTemplate_BREADCRUMB-HORIZONTAL-FTL) to use as the display style.
-	 */
-	@Meta.AD(name = "display-style", required = false)
-	public String displayStyle();
 
 	@Meta.AD(deflt = "true", name = "show-current-site", required = false)
 	public boolean showCurrentGroup();

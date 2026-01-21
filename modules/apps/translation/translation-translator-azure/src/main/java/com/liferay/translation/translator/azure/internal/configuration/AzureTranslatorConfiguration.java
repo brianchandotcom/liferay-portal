@@ -29,10 +29,10 @@ public interface AzureTranslatorConfiguration {
 	)
 	public boolean enabled();
 
-	@Meta.AD(deflt = "", name = "subscription-key-name", required = false)
-	public String subscriptionKey();
-
 	@Meta.AD(deflt = "", name = "resource-location-name", required = false)
 	public String resourceLocation();
+
+	@Meta.AD(deflt = "", name = "subscription-key-name", required = false)
+	public String subscriptionKey();
 
 }

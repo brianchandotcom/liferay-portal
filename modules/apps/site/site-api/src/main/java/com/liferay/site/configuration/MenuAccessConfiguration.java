@@ -22,10 +22,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface MenuAccessConfiguration {
 
-	@Meta.AD(deflt = "false", required = false)
-	public boolean showControlMenuByRole();
-
 	@Meta.AD(deflt = "", required = false)
 	public String[] accessToControlMenuRoleIds();
+
+	@Meta.AD(deflt = "false", required = false)
+	public boolean showControlMenuByRole();
 
 }

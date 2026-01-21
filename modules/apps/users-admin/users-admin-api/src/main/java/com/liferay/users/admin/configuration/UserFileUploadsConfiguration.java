@@ -23,24 +23,6 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface UserFileUploadsConfiguration {
 
 	@Meta.AD(
-		deflt = "307200", description = "users-image-maximum-file-size-help",
-		name = "maximum-file-size", required = false
-	)
-	public long imageMaxSize();
-
-	@Meta.AD(
-		deflt = "290", description = "users-image-maximum-height-help",
-		name = "maximum-height", required = false
-	)
-	public int imageMaxHeight();
-
-	@Meta.AD(
-		deflt = "290", description = "users-image-maximum-width-help",
-		name = "maximum-width", required = false
-	)
-	public int imageMaxWidth();
-
-	@Meta.AD(
 		deflt = "true", description = "users-image-check-token-help",
 		name = "check-token", required = false
 	)
@@ -56,5 +38,23 @@ public interface UserFileUploadsConfiguration {
 		name = "use-initials-for-default-user-portrait", required = false
 	)
 	public boolean imageDefaultUseInitials();
+
+	@Meta.AD(
+		deflt = "290", description = "users-image-maximum-height-help",
+		name = "maximum-height", required = false
+	)
+	public int imageMaxHeight();
+
+	@Meta.AD(
+		deflt = "307200", description = "users-image-maximum-file-size-help",
+		name = "maximum-file-size", required = false
+	)
+	public long imageMaxSize();
+
+	@Meta.AD(
+		deflt = "290", description = "users-image-maximum-width-help",
+		name = "maximum-width", required = false
+	)
+	public int imageMaxWidth();
 
 }

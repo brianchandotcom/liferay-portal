@@ -20,6 +20,14 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface SharingSystemConfiguration {
 
 	/**
+	 * Enables sharing.
+	 *
+	 * @review
+	 */
+	@Meta.AD(deflt = "true", name = "enabled", required = false)
+	public boolean enabled();
+
+	/**
 	 * Sets the interval in minutes of how often to check for expired sharing
 	 * entries.
 	 */
@@ -30,13 +38,5 @@ public interface SharingSystemConfiguration {
 		required = false
 	)
 	public int expiredSharingEntriesCheckInterval();
-
-	/**
-	 * Enables sharing.
-	 *
-	 * @review
-	 */
-	@Meta.AD(deflt = "true", name = "enabled", required = false)
-	public boolean enabled();
 
 }

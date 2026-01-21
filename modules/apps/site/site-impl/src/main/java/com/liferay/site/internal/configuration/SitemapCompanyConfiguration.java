@@ -23,6 +23,15 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface SitemapCompanyConfiguration {
 
+	@Meta.AD(deflt = "", name = "company-sitemap-group-ids", required = false)
+	public String[] companySitemapGroupIds();
+
+	@Meta.AD(
+		deflt = "", name = "company-sitemap-object-definition-ids",
+		required = false
+	)
+	public String[] companySitemapObjectDefinitionIds();
+
 	@Meta.AD(
 		deflt = "true", name = "include-category-urls-in-the-xml-sitemap",
 		required = false
@@ -45,14 +54,5 @@ public interface SitemapCompanyConfiguration {
 		deflt = "true", name = "xml-sitemap-index-enabled", required = false
 	)
 	public boolean xmlSitemapIndexEnabled();
-
-	@Meta.AD(deflt = "", name = "company-sitemap-group-ids", required = false)
-	public String[] companySitemapGroupIds();
-
-	@Meta.AD(
-		deflt = "", name = "company-sitemap-object-definition-ids",
-		required = false
-	)
-	public String[] companySitemapObjectDefinitionIds();
 
 }

@@ -21,16 +21,16 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface WikiFileUploadConfiguration {
 
 	@Meta.AD(
+		deflt = "104857600", name = "maximum-wiki-attachment-size",
+		required = false
+	)
+	public long attachmentMaxSize();
+
+	@Meta.AD(
 		deflt = "*",
 		description = "allowed-wiki-attachment-mime-types-description",
 		name = "allowed-wiki-attachment-mime-types", required = false
 	)
 	public String[] attachmentMimeTypes();
-
-	@Meta.AD(
-		deflt = "104857600", name = "maximum-wiki-attachment-size",
-		required = false
-	)
-	public long attachmentMaxSize();
 
 }

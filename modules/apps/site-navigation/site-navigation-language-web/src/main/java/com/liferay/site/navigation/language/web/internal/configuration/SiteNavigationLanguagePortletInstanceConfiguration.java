@@ -23,6 +23,12 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface SiteNavigationLanguagePortletInstanceConfiguration {
 
+	@Meta.AD(deflt = "true", name = "display-current-locale", required = false)
+	public boolean displayCurrentLocale();
+
+	@Meta.AD(name = "display-style", required = false)
+	public String displayStyle();
+
 	@Meta.AD(
 		deflt = "", name = "display-style-group-external-reference-code",
 		required = false
@@ -40,12 +46,6 @@ public interface SiteNavigationLanguagePortletInstanceConfiguration {
 		name = "display-style-group-key", required = false
 	)
 	public String displayStyleGroupKey();
-
-	@Meta.AD(name = "display-style", required = false)
-	public String displayStyle();
-
-	@Meta.AD(deflt = "true", name = "display-current-locale", required = false)
-	public boolean displayCurrentLocale();
 
 	@Meta.AD(name = "language-ids", required = false)
 	public String languageIds();

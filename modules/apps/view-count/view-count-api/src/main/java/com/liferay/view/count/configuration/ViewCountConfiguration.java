@@ -24,15 +24,15 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface ViewCountConfiguration {
 
 	@Meta.AD(
-		deflt = "true", description = "enabled-help[view-count]",
-		name = "enabled", required = false
-	)
-	public boolean enabled();
-
-	@Meta.AD(
 		deflt = "", description = "disabled-class-names-help",
 		name = "disabled-class-names", required = false
 	)
 	public String[] disabledClassNames();
+
+	@Meta.AD(
+		deflt = "true", description = "enabled-help[view-count]",
+		name = "enabled", required = false
+	)
+	public boolean enabled();
 
 }

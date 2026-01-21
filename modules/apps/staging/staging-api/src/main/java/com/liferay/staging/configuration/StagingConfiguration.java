@@ -24,16 +24,16 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface StagingConfiguration {
 
 	@Meta.AD(
-		deflt = "true", description = "publish-parent-layouts-by-default-help",
-		name = "publish-parent-layouts-by-default", required = false
-	)
-	public boolean publishParentLayoutsByDefault();
-
-	@Meta.AD(
 		deflt = "false", description = "publish-displayed-content-help",
 		name = "publish-displayed-content", required = false
 	)
 	public boolean publishDisplayedContent();
+
+	@Meta.AD(
+		deflt = "true", description = "publish-parent-layouts-by-default-help",
+		name = "publish-parent-layouts-by-default", required = false
+	)
+	public boolean publishParentLayoutsByDefault();
 
 	@Meta.AD(
 		deflt = "true", description = "staging-delete-temp-lar-on-failure-help",

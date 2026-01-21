@@ -70,6 +70,14 @@
 		]
 	},
 	{
+		"classNames": [
+			"JavaSourceUtil"
+		],
+		"from": "getParameterList",
+		"issueKey": "LPD-7754",
+		"to": "getParameterNames"
+	},
+	{
 		"from": "regex:serviceLocator[\\n\\s]*\\.[\\n\\s]*findService\\([\\n\\s]*\"com\\.liferay\\.dynamic\\.data\\.mapping\\.storage\\.StorageEngine\"\\)",
 		"issueKey": "LPD-7762",
 		"skipParametersValidation": true,

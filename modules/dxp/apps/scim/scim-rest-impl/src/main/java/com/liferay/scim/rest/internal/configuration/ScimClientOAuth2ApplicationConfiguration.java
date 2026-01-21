@@ -19,10 +19,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface ScimClientOAuth2ApplicationConfiguration {
 
-	@Meta.AD(type = Meta.Type.String)
-	public String oAuth2ApplicationName();
-
 	@Meta.AD(optionValues = {"userName", "email"}, type = Meta.Type.String)
 	public String matcherField();
+
+	@Meta.AD(type = Meta.Type.String)
+	public String oAuth2ApplicationName();
 
 }

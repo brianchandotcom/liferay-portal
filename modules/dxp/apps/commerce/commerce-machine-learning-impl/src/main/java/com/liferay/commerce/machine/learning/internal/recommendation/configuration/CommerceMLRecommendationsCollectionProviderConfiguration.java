@@ -31,18 +31,18 @@ public interface CommerceMLRecommendationsCollectionProviderConfiguration {
 
 	@Meta.AD(
 		deflt = "false",
-		name = "user-personalized-recommendations-collection-provider-enabled",
-		required = false
-	)
-	public boolean userPersonalizedRecommendationsCollectionProviderEnabled();
-
-	@Meta.AD(
-		deflt = "false",
 		name = "content-based-product-recommendations-collection-provider-enabled",
 		required = false
 	)
 	public boolean
 		contentBasedProductRecommendationsCollectionProviderEnabled();
+
+	@Meta.AD(
+		deflt = "false",
+		name = "user-personalized-recommendations-collection-provider-enabled",
+		required = false
+	)
+	public boolean userPersonalizedRecommendationsCollectionProviderEnabled();
 
 	@Meta.AD(
 		deflt = "false",

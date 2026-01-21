@@ -24,27 +24,27 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface MonitoringConfiguration {
 
 	@Meta.AD(
-		deflt = "http://localhost:5601", description = "kibana-url-help",
-		name = "kibana-url", required = false
-	)
-	public String kibanaURL();
-
-	@Meta.AD(
-		description = "proxy-servlet-log-enable-help",
-		name = "proxy-servlet-log-enable", required = false
-	)
-	public boolean proxyServletLogEnable();
-
-	@Meta.AD(
 		description = "kibana-password-help", name = "kibana-password",
 		required = false, type = Meta.Type.Password
 	)
 	public String kibanaPassword();
 
 	@Meta.AD(
+		deflt = "http://localhost:5601", description = "kibana-url-help",
+		name = "kibana-url", required = false
+	)
+	public String kibanaURL();
+
+	@Meta.AD(
 		deflt = "elastic", description = "kibana-username-help",
 		name = "kibana-username", required = false
 	)
 	public String kibanaUserName();
+
+	@Meta.AD(
+		description = "proxy-servlet-log-enable-help",
+		name = "proxy-servlet-log-enable", required = false
+	)
+	public boolean proxyServletLogEnable();
 
 }

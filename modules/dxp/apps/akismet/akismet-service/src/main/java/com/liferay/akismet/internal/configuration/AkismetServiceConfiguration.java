@@ -22,16 +22,16 @@ public interface AkismetServiceConfiguration {
 	@Meta.AD(name = "api-key", required = false)
 	public String akismetApiKey();
 
-	@Meta.AD(name = "enable-for-message-boards", required = false)
-	public boolean messageBoardsEnabled();
+	@Meta.AD(deflt = "50", name = "check-threshold", required = false)
+	public int akismetCheckThreshold();
 
 	@Meta.AD(deflt = "30", name = "reportable-time", required = false)
 	public int akismetReportableTime();
 
-	@Meta.AD(deflt = "50", name = "check-threshold", required = false)
-	public int akismetCheckThreshold();
-
 	@Meta.AD(deflt = "30", name = "retain-spam-time", required = false)
 	public int akismetRetainSpamTime();
+
+	@Meta.AD(name = "enable-for-message-boards", required = false)
+	public boolean messageBoardsEnabled();
 
 }

@@ -21,6 +21,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface HttpClientFactoryConfiguration {
 
 	@Meta.AD(
+		deflt = "60000", name = "connection-manager-timeout", required = false
+	)
+	public int connectionManagerTimeout();
+
+	@Meta.AD(
 		deflt = "20", name = "default-max-connections-per-route",
 		required = false
 	)
@@ -28,11 +33,6 @@ public interface HttpClientFactoryConfiguration {
 
 	@Meta.AD(deflt = "20", name = "max-total-connections", required = false)
 	public int maxTotalConnections();
-
-	@Meta.AD(
-		deflt = "60000", name = "connection-manager-timeout", required = false
-	)
-	public int connectionManagerTimeout();
 
 	@Meta.AD(deflt = "60000", name = "so-timeout", required = false)
 	public int soTimeout();

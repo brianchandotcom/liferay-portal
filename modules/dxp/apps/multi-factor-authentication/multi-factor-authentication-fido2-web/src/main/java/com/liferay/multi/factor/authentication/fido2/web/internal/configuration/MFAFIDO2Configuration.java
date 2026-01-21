@@ -24,24 +24,6 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface MFAFIDO2Configuration {
 
-	@Meta.AD(
-		deflt = "false", description = "mfa-fido2-enabled-description",
-		name = "enabled", required = false
-	)
-	public boolean enabled();
-
-	@Meta.AD(
-		deflt = "200", description = "order-description",
-		id = "service.ranking", name = "order", required = false
-	)
-	public int order();
-
-	@Meta.AD(
-		deflt = "relying Party", description = "relying-party-name-description",
-		name = "relying-party-name", required = false
-	)
-	public String relyingPartyName();
-
 	/**
 	 * Number of allowed credentials(authenticators) per user.
 	 */
@@ -50,32 +32,6 @@ public interface MFAFIDO2Configuration {
 		name = "allowed-credentials-per-user", required = false
 	)
 	public int allowedCredentialsPerUser();
-
-	/**
-	 * The RelyingParty ID must be equal to the origin's effective domain,
-	 * or a registrable domain suffix of the origin's effective domain.
-	 * For example an origin of https://login.example.com:1337
-	 * can only have rpID as one of the following:
-	 * login.example.com or example.com
-	 * This is done in order to match the behavior of pervasively deployed
-	 * ambient credentials (e.g., cookies,  [RFC6265])
-	 */
-	@Meta.AD(
-		deflt = "localhost", description = "relying-party-id-description",
-		name = "relying-party-id", required = false
-	)
-	public String relyingPartyId();
-
-	/**
-	 * The allowed origins that returned authenticator responses will be
-	 * compared against. The default is the set containing only the string
-	 * <code>"https://" + {@link #getIdentity()}.getId()</code>.
-	 */
-	@Meta.AD(
-		deflt = "https://localhost", description = "origins-description",
-		name = "origins", required = false
-	)
-	public String[] origins();
 
 	/**
 	 * If <code>true</code>, the origin matching rule is relaxed to allow any
@@ -97,5 +53,49 @@ public interface MFAFIDO2Configuration {
 		name = "allow-origin-subdomain", required = false
 	)
 	public boolean allowOriginSubdomain();
+
+	@Meta.AD(
+		deflt = "false", description = "mfa-fido2-enabled-description",
+		name = "enabled", required = false
+	)
+	public boolean enabled();
+
+	@Meta.AD(
+		deflt = "200", description = "order-description",
+		id = "service.ranking", name = "order", required = false
+	)
+	public int order();
+
+	/**
+	 * The allowed origins that returned authenticator responses will be
+	 * compared against. The default is the set containing only the string
+	 * <code>"https://" + {@link #getIdentity()}.getId()</code>.
+	 */
+	@Meta.AD(
+		deflt = "https://localhost", description = "origins-description",
+		name = "origins", required = false
+	)
+	public String[] origins();
+
+	/**
+	 * The RelyingParty ID must be equal to the origin's effective domain,
+	 * or a registrable domain suffix of the origin's effective domain.
+	 * For example an origin of https://login.example.com:1337
+	 * can only have rpID as one of the following:
+	 * login.example.com or example.com
+	 * This is done in order to match the behavior of pervasively deployed
+	 * ambient credentials (e.g., cookies,  [RFC6265])
+	 */
+	@Meta.AD(
+		deflt = "localhost", description = "relying-party-id-description",
+		name = "relying-party-id", required = false
+	)
+	public String relyingPartyId();
+
+	@Meta.AD(
+		deflt = "relying Party", description = "relying-party-name-description",
+		name = "relying-party-name", required = false
+	)
+	public String relyingPartyName();
 
 }

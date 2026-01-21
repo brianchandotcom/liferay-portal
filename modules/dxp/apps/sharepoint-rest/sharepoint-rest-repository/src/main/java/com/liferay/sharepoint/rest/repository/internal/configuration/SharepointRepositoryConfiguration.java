@@ -24,14 +24,14 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface SharepointRepositoryConfiguration {
 
-	@Meta.AD(name = "name", required = false)
-	public String name();
-
 	@Meta.AD(name = "client-id", required = false)
 	public String clientId();
 
 	@Meta.AD(name = "client-secret", required = false)
 	public String clientSecret();
+
+	@Meta.AD(name = "name", required = false)
+	public String name();
 
 	@Meta.AD(name = "scope", required = false)
 	public String scope();

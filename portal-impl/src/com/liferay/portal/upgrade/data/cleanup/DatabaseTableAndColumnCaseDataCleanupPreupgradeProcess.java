@@ -12,8 +12,10 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.util.DataCleanupLoggingUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -55,6 +57,20 @@ public class DatabaseTableAndColumnCaseDataCleanupPreupgradeProcess
 			DBResourceUtil.getServiceComponentModuleTableNames(connection));
 		expectedTableNames.addAll(
 			DBResourceUtil.getServiceComponentPortalTableNames(connection));
+
+		CompanyLocalServiceUtil.forEachCompanyId(
+			companyId -> {
+				try {
+					expectedTableNames.addAll(
+						DBResourceUtil.getNonserviceBuilderTableNames(
+							companyId));
+				}
+				catch (PortalException portalException) {
+					_log.error(
+						"Failed to get table names for company " + companyId,
+						portalException);
+				}
+			});
 
 		DBInspector dbInspector = new DBInspector(connection);
 

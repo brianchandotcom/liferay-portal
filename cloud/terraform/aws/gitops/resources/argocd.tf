@@ -1,105 +1,222 @@
-resource "kubernetes_manifest" "git_repo_credentials_external_secret" {
+resource "kubernetes_manifest" "infrastructure_applicationset" {
 	depends_on=[
-		kubernetes_manifest.git_repo_credentials_secret_store,
+		kubernetes_manifest.git_repo_credentials_external_secret,
+		kubernetes_manifest.infrastructure_appproject,
 	]
 	field_manager {
 		force_conflicts=true
 		name=local.terraform_manager_name
 	}
 	manifest={
-		apiVersion="external-secrets.io/v1"
-		kind="ExternalSecret"
+		apiVersion="argoproj.io/v1alpha1"
+		kind="ApplicationSet"
 		metadata={
-			labels=local.common_labels
-			name=local.argocd_git_credentials_secret_name
+			finalizers=["resources-finalizer.argocd.argoproj.io"]
+			labels=merge(
+				local.common_labels,
+				{
+					"app.kubernetes.io/name"="liferay-infrastructure-applicationset"
+				})
+			name="liferay-infrastructure-applicationset"
 			namespace=var.argocd_namespace
 		}
 		spec={
-			data=flatten(
-				[
-					var.git_repo_auth_config.method == "https" ? [
-						{
-							remoteRef={
-								key=var.git_repo_auth_config.vault_secret_name
-								property=var.git_repo_auth_config.username_vault_secret_property
-							}
-							secretKey="username"
-						},
-						{
-							remoteRef={
-								key=var.git_repo_auth_config.vault_secret_name
-								property=var.git_repo_auth_config.token_vault_secret_property
-							}
-							secretKey="password"
-						},
-					] : [],
-					var.git_repo_auth_config.method == "ssh" ? [
-						{
-							remoteRef={
-								key=var.git_repo_auth_config.vault_secret_name
-								property=var.git_repo_auth_config.ssh_private_key_vault_secret_property
-							}
-							secretKey="ssh_private_key"
-						},
-					] : [],
-				])
-			refreshInterval="1h0m0s"
-			secretStoreRef={
-				kind="SecretStore"
-				name=local.secret_store_name
-			}
-			target={
-				creationPolicy="Owner"
-				name=local.argocd_git_credentials_secret_name
-				template={
-					data=merge(
-						{
-							name="liferay-values"
-							project=local.liferay_appproject_name
-							type="git"
-							url=var.git_repo_url
-						},
-						var.git_repo_auth_config.method == "https" ? {
-							password="{{ .password }}"
-							username="{{ .username }}"
-						} : {},
-						var.git_repo_auth_config.method == "ssh" ? {
-							sshPrivateKey="{{ .ssh_private_key }}"
-						} : {})
-					metadata={
-						labels=merge(
-							local.common_labels,
+			generators=[
+				{
+					git={
+						files=[
 							{
-								"app.kubernetes.io/name"=local.argocd_git_credentials_secret_name
-								"argocd.argoproj.io/secret-type"="repository"
-							})
+								path="${var.infrastructure_git_repo_config.source_paths.environments}/${var.infrastructure_git_repo_config.source_paths.values_filename}"
+							},
+						]
+						repoURL=local.infrastructure_git_repo_url
+						revision=var.infrastructure_git_repo_config.revision
 					}
-					type="Opaque"
+				},
+			]
+			template={
+				metadata={
+					annotations={
+						"argocd.argoproj.io/compare-options"="IgnoreExtraneous"
+					}
+					name=var.infrastructure_git_repo_config.target.name
+				}
+				spec={
+					destination={
+						namespace="liferay-${var.infrastructure_git_repo_config.target.namespaceSuffix}"
+						server="https://kubernetes.default.svc"
+					}
+					project=local.infrastructure_appproject_name
+					sources=[
+						{
+							chart=var.infrastructure_helm_chart_config.image_name
+							helm={
+								parameters=[
+									{
+										name="environmentId"
+										value=var.infrastructure_git_repo_config.target.slugEnvironmentId
+									},
+									{
+										name="projectId"
+										value=var.infrastructure_git_repo_config.target.slugProjectId
+									},
+								]
+								valueFiles=[
+									"$values/${var.infrastructure_git_repo_config.source_paths.base}/${var.infrastructure_git_repo_config.source_paths.values_filename}",
+									"$values/{{path}}/${var.infrastructure_git_repo_config.source_paths.values_filename}",
+								]
+							}
+							repoURL=var.infrastructure_helm_chart_config.image_url
+							targetRevision=var.infrastructure_helm_chart_config.version
+						},
+						{
+							ref="values"
+							repoURL=local.infrastructure_git_repo_url
+							targetRevision=var.infrastructure_git_repo_config.revision
+						},
+					]
+					syncPolicy={
+						automated={
+							prune=true
+							selfHeal=true
+						}
+						syncOptions=[
+							"CreateNamespace=true",
+							"SkipDryRunOnMissingResource=true"
+						]
+					}
 				}
 			}
 		}
 	}
 }
-resource "kubernetes_manifest" "git_repo_credentials_secret_store" {
+resource "kubernetes_manifest" "infrastructure_appproject" {
 	field_manager {
 		force_conflicts=true
 		name=local.terraform_manager_name
 	}
 	manifest={
-		apiVersion="external-secrets.io/v1"
-		kind="SecretStore"
+		apiVersion="argoproj.io/v1alpha1"
+		kind="AppProject"
 		metadata={
+			name=local.infrastructure_appproject_name
+			namespace=var.argocd_namespace
 			labels=merge(
 				local.common_labels,
 				{
-					"app.kubernetes.io/name"="secret-store"
+					"app.kubernetes.io/name"="infrastructure-appproject"
 				})
-			name=local.secret_store_name
+		}
+		spec={
+			clusterResourceWhitelist=[
+				{
+					group="*"
+					kind="*"
+				},
+			]
+			description="ArgoCD Project for Liferay Cloud Native infrastructure."
+			destinations=[
+				{
+					namespace="liferay-*"
+					server="https://kubernetes.default.svc"
+				},
+				{
+					namespace=var.crossplane_namespace
+					server="https://kubernetes.default.svc"
+				},
+			]
+			sourceRepos=[
+				"${var.infrastructure_helm_chart_config.image_url}",
+				"${var.infrastructure_helm_chart_config.image_url}/*",
+				"${var.infrastructure_provider_helm_chart_config.image_url}",
+				"${var.infrastructure_provider_helm_chart_config.image_url}/*",
+				local.infrastructure_git_repo_url,
+			]
+		}
+	}
+}
+resource "kubernetes_manifest" "infrastructure_provider_application" {
+	depends_on=[
+		kubernetes_manifest.git_repo_credentials_external_secret,
+		kubernetes_manifest.infrastructure_appproject,
+	]
+	field_manager {
+		force_conflicts=true
+		name=local.terraform_manager_name
+	}
+	manifest={
+		apiVersion="argoproj.io/v1alpha1"
+		kind="Application"
+		metadata={
+			annotations={
+				"argocd.argoproj.io/compare-options"="IgnoreExtraneous"
+			}
+			finalizers=["resources-finalizer.argocd.argoproj.io"]
+			labels=merge(
+				local.common_labels,
+				{
+					"app.kubernetes.io/name"="liferay-infrastructure-provider"
+				})
+			name="liferay-infrastructure-provider"
 			namespace=var.argocd_namespace
 		}
 		spec={
-			provider=yamldecode(
-				jsonencode(local.secret_store_provider))
+			destination={
+				namespace=var.crossplane_namespace
+				server="https://kubernetes.default.svc"
+			}
+			project=local.infrastructure_appproject_name
+			source={
+				chart=var.infrastructure_provider_helm_chart_config.image_name
+				helm={
+					parameters=[
+						{
+							name="aws.accountId"
+							value=local.account_id
+						},
+						{
+							name="aws.clusterName"
+							value=local.cluster_name
+						},
+						{
+							name="aws.nodesSecurityGroupId"
+							value=data.aws_eks_cluster.cluster.vpc_config[0].cluster_security_group_id
+						},
+						{
+							name="aws.privateSubnetIds"
+							value=jsonencode(data.aws_subnets.private.ids)
+						},
+						{
+							name="aws.vpcId"
+							value=data.aws_vpc.current.id
+						},
+						{
+							name="crossplaneNamespace"
+							value=var.crossplane_namespace
+						},
+						{
+							name="deploymentName"
+							value=var.deployment_name
+						},
+						{
+							name="liferayServiceAccountRoleName"
+							value=local.liferay_service_account_role_name
+						},
+					]
+				}
+				repoURL=var.infrastructure_provider_helm_chart_config.image_url
+				targetRevision=var.infrastructure_provider_helm_chart_config.version
+			}
+			syncPolicy={
+				automated={
+					prune=true
+					selfHeal=true
+				}
+				syncOptions=[
+					"CreateNamespace=true",
+					"SkipDryRunOnMissingResource=true",
+				]
+			}
 		}
 	}
 }
@@ -122,7 +239,7 @@ resource "kubernetes_manifest" "liferay_applicationset" {
 				{
 					"app.kubernetes.io/name"="liferay-applicationset"
 				})
-			name="liferay-environments"
+			name="liferay-applicationset"
 			namespace=var.argocd_namespace
 		}
 		spec={
@@ -131,43 +248,60 @@ resource "kubernetes_manifest" "liferay_applicationset" {
 					git={
 						files=[
 							{
-								path=var.git_repo_paths.liferay_application_environments_pattern
+								path="${var.liferay_git_repo_config.source_paths.environments}/${var.liferay_git_repo_config.source_paths.values_filename}"
 							},
 						]
-						repoURL=var.git_repo_url
-						revision="HEAD"
+						repoURL=var.liferay_git_repo_url
+						revision=var.liferay_git_repo_config.revision
 					}
 				},
 			]
 			template={
 				metadata={
-					name: "liferay-{{path.basename}}"
+					annotations={
+						"argocd.argoproj.io/compare-options"="IgnoreExtraneous"
+					}
+					name=var.liferay_git_repo_config.target.name
 				}
 				spec={
+					destination={
+						namespace="liferay-${var.liferay_git_repo_config.target.namespaceSuffix}"
+						server="https://kubernetes.default.svc"
+					}
 					project=local.liferay_appproject_name
 					sources=[
 						{
 							chart=local.liferay_helm_chart_config.source_chart_value
 							helm={
+								parameters=[
+									{
+										name="${local.liferay_helm_chart_config.values_scope_prefix}serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
+										value="arn:aws:iam::${local.account_id}:role/${var.deployment_name}-irsa"
+									},
+									{
+										name="${local.liferay_helm_chart_config.values_scope_prefix}serviceAccount.create"
+										value=true
+									},
+									{
+										name="${local.liferay_helm_chart_config.values_scope_prefix}serviceAccount.name"
+										value="liferay-default"
+									},
+								]
 								valueFiles=[
-									"$values/${var.git_repo_paths.liferay_application_base_path}/values.yaml",
-									"$values/{{path}}/values.yaml",
+									"$values/${var.liferay_git_repo_config.source_paths.base}/${var.liferay_git_repo_config.source_paths.values_filename}",
+									"$values/{{path}}/${var.liferay_git_repo_config.source_paths.values_filename}",
 								]
 							}
-							repoURL=local.liferay_helm_chart_config.source_repourl_value
+							repoURL=local.liferay_helm_chart_config.source_repo_url_value
 							targetRevision=local.liferay_helm_chart_config.version
 						},
 						{
 							ref="values"
-							repoURL=var.git_repo_url
-							targetRevision="HEAD"
+							repoURL=var.liferay_git_repo_url
+							targetRevision=var.liferay_git_repo_config.revision
 						},
 					]
-					destination={
-						namespace="liferay-{{path.basename}}"
-						server="https://kubernetes.default.svc"
-					}
-					ignoreDifferences = [
+					ignoreDifferences=[
 						{
 							group=""
 							jsonPointers=["/data"]
@@ -181,10 +315,8 @@ resource "kubernetes_manifest" "liferay_applicationset" {
 							selfHeal=true
 						}
 						syncOptions=[
-							"ApplyOutOfSyncOnly=true",
 							"CreateNamespace=true",
 							"RespectIgnoreDifferences=true",
-							"SkipDryRunOnMissingResource=true"
 						]
 					}
 				}
@@ -193,6 +325,7 @@ resource "kubernetes_manifest" "liferay_applicationset" {
 	}
 }
 resource "kubernetes_manifest" "liferay_appproject" {
+	depends_on=[kubernetes_manifest.infrastructure_appproject]
 	field_manager {
 		force_conflicts=true
 		name=local.terraform_manager_name
@@ -201,13 +334,16 @@ resource "kubernetes_manifest" "liferay_appproject" {
 		apiVersion="argoproj.io/v1alpha1"
 		kind="AppProject"
 		metadata={
-			name=local.liferay_appproject_name
-			namespace=var.argocd_namespace
+			annotations={
+				"argocd.argoproj.io/compare-options"="IgnoreExtraneous"
+			}
 			labels=merge(
 				local.common_labels,
 				{
 					"app.kubernetes.io/name"="liferay-appproject"
 				})
+			name=local.liferay_appproject_name
+			namespace=var.argocd_namespace
 		}
 		spec={
 			clusterResourceWhitelist=[
@@ -216,7 +352,7 @@ resource "kubernetes_manifest" "liferay_appproject" {
 					kind="*"
 				},
 			]
-			description="ArgoCD Project for Liferay Cloud Native environments."
+			description="ArgoCD Project for Liferay Cloud Native applications."
 			destinations=[
 				{
 					namespace="liferay-*"
@@ -224,53 +360,10 @@ resource "kubernetes_manifest" "liferay_appproject" {
 				},
 			]
 			sourceRepos=[
-				"${local.liferay_helm_chart_config.source_repourl_value}",
-				"${local.liferay_helm_chart_config.source_repourl_value}/*",
-				var.git_repo_url,
+				"${local.liferay_helm_chart_config.source_repo_url_value}",
+				"${local.liferay_helm_chart_config.source_repo_url_value}/*",
+				var.liferay_git_repo_url,
 			]
 		}
-	}
-}
-resource "kubernetes_role" "eso_secret_writer" {
-	metadata {
-		labels=merge(
-			local.common_labels,
-			{
-				"app.kubernetes.io/name"="eso-secret-writer"
-			})
-		name="eso-${local.argocd_git_credentials_secret_name}-writer"
-		namespace=var.argocd_namespace
-	}
-	rule {
-		api_groups=[""]
-		resources=["secrets"]
-		verbs=[
-			"create",
-			"delete",
-			"get",
-			"update",
-			"watch",
-		] 
-	}
-}
-resource "kubernetes_role_binding" "eso_secret_writer_binding" {
-	metadata {
-		labels=merge(
-			local.common_labels,
-			{
-				"app.kubernetes.io/name"="eso-secret-writer-binding"
-			})
-		name="eso-${local.argocd_git_credentials_secret_name}-binding"
-		namespace=var.argocd_namespace
-	}
-	role_ref {
-		api_group="rbac.authorization.k8s.io"
-		kind="Role"
-		name=kubernetes_role.eso_secret_writer.metadata[0].name
-	}
-	subject {
-		kind="ServiceAccount"
-		name="external-secrets"
-		namespace=var.external_secrets_namespace
 	}
 }

@@ -3240,12 +3240,13 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				null, FragmentEditableElementValue.Type.RICH_TEXT, null,
 				HTMLFragmentValue.Type.INLINE, "element-rich-text"),
 			FragmentEditableElementTestUtil.getTextFragmentEditableElement(
-				FragmentEditableElementValueFragmentLink.Prefix.EMAIL,
+				null,
 				_getFragmentLink(
 					JournalArticle.class.getName(),
 					journalArticle.getExternalReferenceCode(),
 					"JournalArticle_title", null),
-				null, null, TextFragmentValue.Type.INLINE));
+				null, FragmentEditableElementValueFragmentLink.Prefix.EMAIL,
+				TextFragmentValue.Type.INLINE));
 
 		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentEditableElements(
 			FragmentEditableElementTestUtil.
@@ -3332,11 +3333,10 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE,
 				HTMLFragmentValue.Type.MAPPED, "element-rich-text"),
 			FragmentEditableElementTestUtil.getTextFragmentEditableElement(
-				null, null,
 				FragmentMappedValueItemContextReference.ContextSource.
 					COLLECTION_ITEM,
-				FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE,
-				TextFragmentValue.Type.MAPPED));
+				null, FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE,
+				null, TextFragmentValue.Type.MAPPED));
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
 
@@ -3381,13 +3381,13 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE,
 				HTMLFragmentValue.Type.MAPPED, "element-rich-text"),
 			FragmentEditableElementTestUtil.getTextFragmentEditableElement(
-				FragmentEditableElementValueFragmentLink.Prefix.PHONE,
+				FragmentMappedValueItemContextReference.ContextSource.
+					DISPLAY_PAGE_ITEM,
 				_getFragmentLink(
 					Layout.class.getName(), layout.getExternalReferenceCode(),
 					null, null),
-				FragmentMappedValueItemContextReference.ContextSource.
-					DISPLAY_PAGE_ITEM,
 				FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE,
+				FragmentEditableElementValueFragmentLink.Prefix.PHONE,
 				TextFragmentValue.Type.MAPPED));
 
 		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentEditableElements(
@@ -3470,10 +3470,9 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 									LocaleUtil.toBCP47LanguageId(LocaleUtil.US),
 									"https://www.liferay.com"
 								).build()),
-							null,
 							FragmentMappedValueItemReference.Type.
 								ITEM_EXTERNAL_REFERENCE,
-							TextFragmentValue.Type.MAPPED)));
+							null, TextFragmentValue.Type.MAPPED)));
 	}
 
 	private void

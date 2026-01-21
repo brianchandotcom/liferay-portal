@@ -219,8 +219,9 @@ public class FragmentEditableElementTestUtil {
 
 		linkFragmentEditableElementValue.setFragmentLinkTextValue(
 			() -> _getFragmentLinkTextValue(
-				prefix, fragmentLink, contextSource,
-				fragmentMappedValueItemReferenceType, textFragmentValueType));
+				contextSource, fragmentLink,
+				fragmentMappedValueItemReferenceType, prefix,
+				textFragmentValueType));
 		linkFragmentEditableElementValue.setType(
 			() -> FragmentEditableElementValue.Type.LINK);
 
@@ -250,7 +251,7 @@ public class FragmentEditableElementTestUtil {
 	}
 
 	public static FragmentImageValue getMappedFragmentImageValue(
-		String fieldKey, String className, String externalReferenceCode,
+		String className, String externalReferenceCode, String fieldKey,
 		String scopeExternalReferenceCode) {
 
 		MappedFragmentImageValue mappedFragmentImageValue =
@@ -266,11 +267,11 @@ public class FragmentEditableElementTestUtil {
 	}
 
 	public static FragmentEditableElement getTextFragmentEditableElement(
-		FragmentEditableElementValueFragmentLink.Prefix prefix,
-		FragmentLink fragmentLink,
 		FragmentMappedValueItemContextReference.ContextSource contextSource,
+		FragmentLink fragmentLink,
 		FragmentMappedValueItemReference.Type
 			fragmentMappedValueItemReferenceType,
+		FragmentEditableElementValueFragmentLink.Prefix prefix,
 		TextFragmentValue.Type textFragmentValueType) {
 
 		FragmentEditableElement fragmentEditableElement =
@@ -281,8 +282,9 @@ public class FragmentEditableElementTestUtil {
 
 		textFragmentEditableElementValue.setFragmentLinkTextValue(
 			() -> _getFragmentLinkTextValue(
-				prefix, fragmentLink, contextSource,
-				fragmentMappedValueItemReferenceType, textFragmentValueType));
+				contextSource, fragmentLink,
+				fragmentMappedValueItemReferenceType, prefix,
+				textFragmentValueType));
 		textFragmentEditableElementValue.setType(
 			() -> FragmentEditableElementValue.Type.TEXT);
 
@@ -296,8 +298,8 @@ public class FragmentEditableElementTestUtil {
 
 	private static FragmentEditableElementValueFragmentLink
 		_getFragmentEditableElementValueFragmentLink(
-			FragmentEditableElementValueFragmentLink.Prefix prefix,
-			FragmentLink fragmentLink) {
+			FragmentLink fragmentLink,
+			FragmentEditableElementValueFragmentLink.Prefix prefix) {
 
 		if (fragmentLink == null) {
 			return null;
@@ -328,18 +330,18 @@ public class FragmentEditableElementTestUtil {
 	}
 
 	private static FragmentLinkTextValue _getFragmentLinkTextValue(
-		FragmentEditableElementValueFragmentLink.Prefix prefix,
-		FragmentLink fragmentLink,
 		FragmentMappedValueItemContextReference.ContextSource contextSource,
+		FragmentLink fragmentLink,
 		FragmentMappedValueItemReference.Type
 			fragmentMappedValueItemReferenceType,
+		FragmentEditableElementValueFragmentLink.Prefix prefix,
 		TextFragmentValue.Type textFragmentValueType) {
 
 		return new FragmentLinkTextValue() {
 			{
 				setFragmentEditableElementValueFragmentLink(
 					() -> _getFragmentEditableElementValueFragmentLink(
-						prefix, fragmentLink));
+						fragmentLink, prefix));
 				setTextFragmentValue(
 					() -> _getTextFragmentValue(
 						contextSource, fragmentMappedValueItemReferenceType,

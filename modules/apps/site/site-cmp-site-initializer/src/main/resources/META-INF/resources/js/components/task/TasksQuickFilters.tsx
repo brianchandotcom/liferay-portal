@@ -373,9 +373,12 @@ export default function TasksQuickFilters({
 			{loading ? (
 				<ClayLoadingIndicator />
 			) : (
-				<ClayLayout.ContainerFluid className="px-0" size={false}>
+				<ClayLayout.ContainerFluid
+					className="c-pb-4 c-pt-2 c-px-4"
+					size={false}
+				>
 					<ClayLayout.Row>
-						<ClayLayout.Col className="px-2" size={3}>
+						<ClayLayout.Col className="c-px-2" size={3}>
 							<QuickFilterButton
 								active={
 									activeQuickFilter ===
@@ -389,7 +392,7 @@ export default function TasksQuickFilters({
 							/>
 						</ClayLayout.Col>
 
-						<ClayLayout.Col className="px-2" size={3}>
+						<ClayLayout.Col className="c-px-2" size={3}>
 							<QuickFilterButton
 								active={
 									activeQuickFilter ===
@@ -403,7 +406,7 @@ export default function TasksQuickFilters({
 							/>
 						</ClayLayout.Col>
 
-						<ClayLayout.Col className="px-2" size={3}>
+						<ClayLayout.Col className="c-px-2" size={3}>
 							<QuickFilterButton
 								active={
 									activeQuickFilter ===
@@ -417,7 +420,7 @@ export default function TasksQuickFilters({
 							/>
 						</ClayLayout.Col>
 
-						<ClayLayout.Col className="px-2" size={3}>
+						<ClayLayout.Col className="c-px-2" size={3}>
 							<QuickFilterButton
 								active={
 									activeQuickFilter ===

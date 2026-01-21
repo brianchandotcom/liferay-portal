@@ -2610,6 +2610,18 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			return false;
 		}
 
+		Predicate predicate = Predicate.withParentheses(
+			LayoutTable.INSTANCE.portletLayoutPageTemplateEntryScopeERC.eq(
+				group.getExternalReferenceCode()
+			).or(
+				Predicate.withParentheses(
+					LayoutTable.INSTANCE.portletLayoutPageTemplateEntryScopeERC.
+						isNull(
+						).and(
+							LayoutTable.INSTANCE.groupId.eq(groupId)
+						))
+			));
+
 		int count = dslQueryCount(
 			DSLQueryFactoryUtil.count(
 			).from(
@@ -2618,20 +2630,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				LayoutTable.INSTANCE.portletLayoutPageTemplateEntryERC.eq(
 					portletLayoutPageTemplateEntryERC
 				).and(
-					Predicate.withParentheses(
-						LayoutTable.INSTANCE.
-							portletLayoutPageTemplateEntryScopeERC.eq(
-								group.getExternalReferenceCode()
-							).or(
-								Predicate.withParentheses(
-									LayoutTable.INSTANCE.
-										portletLayoutPageTemplateEntryScopeERC.
-											isNull(
-											).and(
-												LayoutTable.INSTANCE.groupId.eq(
-													groupId)
-											))
-							))
+					predicate
 				)
 			));
 

@@ -162,6 +162,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -1863,6 +1865,26 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			accountId, userAccount);
 	}
 
+	private ExpandoColumn _addExpandoColumn(
+			ExpandoTable expandoTable, int expandoType)
+		throws Exception {
+
+		ExpandoColumn expandoColumn = _expandoColumnLocalService.addColumn(
+			expandoTable.getTableId(), "A" + RandomTestUtil.randomString(),
+			expandoType);
+
+		UnicodeProperties unicodeProperties =
+			expandoColumn.getTypeSettingsProperties();
+
+		unicodeProperties.setProperty(
+			ExpandoColumnConstants.INDEX_TYPE,
+			String.valueOf(ExpandoColumnConstants.INDEX_TYPE_KEYWORD));
+
+		expandoColumn.setTypeSettingsProperties(unicodeProperties);
+
+		return _expandoColumnLocalService.updateExpandoColumn(expandoColumn);
+	}
+
 	private FileEntry _addImageFileEntry() throws Exception {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
@@ -2167,24 +2189,34 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			_classNameLocalService.getClassNameId(User.class),
 			ExpandoTableConstants.DEFAULT_TABLE_NAME);
 
-		ExpandoColumn expandoColumn = _expandoColumnLocalService.addColumn(
-			expandoTable.getTableId(), "A" + RandomTestUtil.randomString(),
-			ExpandoColumnConstants.STRING);
+		Function<Number, List<String>> function = number -> Arrays.asList(
+			number.toString(), "0" + number, "00" + number, number + "0",
+			number + "00");
 
-		UnicodeProperties unicodeProperties =
-			expandoColumn.getTypeSettingsProperties();
+		_testGetUserAccountsPageWithCustomFields(
+			expandoTable, ExpandoColumnConstants.DOUBLE,
+			RandomTestUtil::randomDouble, function);
+		_testGetUserAccountsPageWithCustomFields(
+			expandoTable, ExpandoColumnConstants.FLOAT,
+			RandomTestUtil::randomFloat, function);
 
-		unicodeProperties.setProperty(
-			ExpandoColumnConstants.INDEX_TYPE,
-			String.valueOf(ExpandoColumnConstants.INDEX_TYPE_KEYWORD));
+		_testGetUserAccountsPageWithCustomFields(
+			expandoTable, ExpandoColumnConstants.STRING,
+			RandomTestUtil::randomString,
+			value -> List.of(StringUtil.quote(value)));
+	}
 
-		expandoColumn.setTypeSettingsProperties(unicodeProperties);
+	private <T> void _testGetUserAccountsPageWithCustomFields(
+			ExpandoTable expandoTable, int expandotype, Supplier<T> supplier,
+			Function<T, List<String>> function)
+		throws Exception {
 
-		_expandoColumnLocalService.updateExpandoColumn(expandoColumn);
+		ExpandoColumn expandoColumn = _addExpandoColumn(
+			expandoTable, expandotype);
+
+		T value = supplier.get();
 
 		UserAccount userAccount = randomUserAccount();
-
-		String value = RandomTestUtil.randomString();
 
 		userAccount.setCustomFields(
 			() -> new CustomField[] {
@@ -2195,7 +2227,6 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 								data = value;
 							}
 						};
-						dataType = "Text";
 						name = expandoColumn.getName();
 					}
 				}
@@ -2203,15 +2234,20 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		userAccount = testGetUserAccountsPage_addUserAccount(userAccount);
 
-		_testGetUserAccountsPage(
-			StringBundler.concat(
-				"(customFields/", expandoColumn.getName(), " eq '",
-				RandomTestUtil.randomString(), "')"));
-		_testGetUserAccountsPage(
-			StringBundler.concat(
-				"(customFields/", expandoColumn.getName(), " eq '", value,
-				"')"),
-			userAccount);
+		for (String filter : function.apply(value)) {
+			_testGetUserAccountsPage(
+				StringBundler.concat(
+					"(customFields/", expandoColumn.getName(), " eq ", filter,
+					")"),
+				userAccount);
+		}
+
+		for (String filter : function.apply(supplier.get())) {
+			_testGetUserAccountsPage(
+				StringBundler.concat(
+					"(customFields/", expandoColumn.getName(), " eq ", filter,
+					")"));
+		}
 	}
 
 	private void _testGetUserAccountsPageWithSortCustomField()
@@ -2239,20 +2275,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			ExpandoTable expandoTable, int expandoType, List<Object> values)
 		throws Exception {
 
-		ExpandoColumn expandoColumn = _expandoColumnLocalService.addColumn(
-			expandoTable.getTableId(), "A" + RandomTestUtil.randomString(),
-			expandoType);
-
-		UnicodeProperties unicodeProperties =
-			expandoColumn.getTypeSettingsProperties();
-
-		unicodeProperties.setProperty(
-			ExpandoColumnConstants.INDEX_TYPE,
-			String.valueOf(ExpandoColumnConstants.INDEX_TYPE_KEYWORD));
-
-		expandoColumn.setTypeSettingsProperties(unicodeProperties);
-
-		_expandoColumnLocalService.updateExpandoColumn(expandoColumn);
+		ExpandoColumn expandoColumn = _addExpandoColumn(
+			expandoTable, expandoType);
 
 		List<UserAccount> userAccounts = new ArrayList<>();
 		String domain = StringUtil.randomString() + ".com";

@@ -1,0 +1,77 @@
+defaults:
+    run:
+        shell: bash
+jobs:
+    publish:
+        env:
+            GITHUB_TOKEN: ${{github.token}}
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v4
+            -   id: verify_version
+                name: Verify Helm chart version
+                run: |
+                    set -e
+
+                    CHART_VERSION=$(cat ./Chart.yaml | yq .version)
+
+                    echo "Verifying Helm chart version ${CHART_VERSION}."
+
+                    if ! helm show readme "oci://${{inputs.registry}}/${{inputs.chart_name}}:${CHART_VERSION}" >/dev/null 2>&1
+                    then
+                        echo "Verified Helm Chart version ${CHART_VERSION}."
+
+                        echo "CHART_VERSION=${CHART_VERSION}" >> ${GITHUB_ENV}
+
+                        echo "should_publish=true" >> ${GITHUB_OUTPUT}
+                    else
+                        echo "Chart version ${CHART_VERSION} already exists. Skipping publish."
+                    fi
+                working-directory: ${{inputs.working_directory}}
+            -   if: ${{steps.verify_version.outputs.should_publish == 'true'}}
+                name: Log in to GAR
+                run: |
+                    echo "${{secrets.GAR_PASSWORD}}" \
+                        | helm registry login "${{inputs.registry}}" \
+                            --password-stdin \
+                            --username _json_key_base64
+            -   if: ${{steps.verify_version.outputs.should_publish == 'true'}}
+                name: Package and push Helm chart
+                run: |
+                    set -e
+
+                    DIST_DIR="${{runner.temp}}/${{inputs.chart_name}}/dist"
+
+                    rm -fr "${DIST_DIR}"
+
+                    mkdir --parents "${DIST_DIR}"
+
+                    helm dependency update
+
+                    helm package . \
+                        --destination "${DIST_DIR}" \
+                        --version "${CHART_VERSION}"
+
+                    for file_name in "${DIST_DIR}"/*.tgz
+                    do
+                        echo "Pushing ${file_name}."
+
+                        helm push "${file_name}" "oci://${{inputs.registry}}"
+                    done
+                working-directory: ${{inputs.working_directory}}
+on:
+    workflow_call:
+        inputs:
+            chart_name:
+                required: true
+                type: string
+            registry:
+                required: true
+                type: string
+            working_directory:
+                required: true
+                type: string
+        secrets:
+            GAR_PASSWORD:
+                required: true

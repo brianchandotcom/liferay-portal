@@ -3,12 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayForm, {ClayInput} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
-import RequiredMark from '../../../components/forms/RequiredMark';
+import FieldText from '../../../components/forms/FieldText';
 
 export default function Step() {
 	return (
@@ -29,15 +28,11 @@ export default function Step() {
 					</div>
 				</div>
 
-				<ClayForm.Group>
-					<label htmlFor="nameInputText">
-						{Liferay.Language.get('name')}
-
-						<RequiredMark />
-					</label>
-
-					<ClayInput id="nameInputText" required type="text" />
-				</ClayForm.Group>
+				<FieldText
+					label={Liferay.Language.get('file-name')}
+					name="filename"
+					required
+				/>
 			</ClayLayout.Sheet>
 
 			<ClayLayout.Sheet>

@@ -6,23 +6,12 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {captchaConfigPageTest} from '../../../fixtures/captchaConfigPageTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {liferayConfig} from '../../../liferay.config';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {performLoginViaApi, performLogout} from '../../../utils/performLogin';
 
-export const test = mergeTests(
-	apiHelpersTest,
-	captchaConfigPageTest,
-	loginTest()
-);
-
-test.afterEach('Reset Captcha configuration', async ({captchaConfigPage}) => {
-	await captchaConfigPage.goTo();
-
-	await captchaConfigPage.resetCaptchaConfiguration();
-});
+export const test = mergeTests(apiHelpersTest, loginTest());
 
 test('LPD-52234: Check if you can change languages in the update password page', async ({
 	apiHelpers,

@@ -155,6 +155,12 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 	}
 
 	public Map<String, Object> getTaskQuickFiltersProps() {
+		if (_assetEntry != null) {
+			return HashMapBuilder.<String, Object>put(
+				"cmpProjectId", _assetEntry.getClassPK()
+			).build();
+		}
+
 		return HashMapBuilder.<String, Object>put(
 			"blockedCountURL", _getCountURL("state eq 'blocked'")
 		).put(

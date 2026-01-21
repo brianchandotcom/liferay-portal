@@ -107,12 +107,6 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			return;
 		}
 
-		int totalCount = _getCount(null, objectDefinition, objectEntry);
-
-		if (totalCount == 0) {
-			return;
-		}
-
 		int blockedCount = _getCount(
 			"state eq 'blocked'", objectDefinition, objectEntry);
 		int doneCount = _getCount(
@@ -123,8 +117,13 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			StringBundler.concat(
 				"dueDate lt ", LocalDate.now(), " and state ne 'done'"),
 			objectDefinition, objectEntry);
+		int totalCount = _getCount(null, objectDefinition, objectEntry);
 
-		int completionRate = (doneCount * 100) / totalCount;
+		int completionRate = 0;
+
+		if (totalCount != 0) {
+			completionRate = (doneCount * 100) / totalCount;
+		}
 
 		if (Objects.equals(
 				MapUtil.getInteger(

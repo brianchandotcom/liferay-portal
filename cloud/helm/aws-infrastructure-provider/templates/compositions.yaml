@@ -69,7 +69,7 @@ spec:
                                         projectId: {{ $projectId }}
                                         slot: {{ $slot }}
                                 engine: postgres
-                                engineVersion: "16.11"
+                                engineVersion: {{ $spec.engineVersion }}
                                 identifier: {{ $baseName }}-database-{{ $slot }}
                                 instanceClass: {{ $spec.instanceClass }}
                                 multiAz: false

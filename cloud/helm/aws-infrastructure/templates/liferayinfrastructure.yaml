@@ -20,15 +20,17 @@ spec:
     database:
         activeSlot: {{ $db.activeSlot | default "blue" | quote }}
         blue:
+            engineVersion: {{ $dbBlue.engineVersion | default "16.11" | quote }}
             instanceClass: {{ $dbBlue.instanceClass | default "db.t3.medium" | quote }}
-            username: {{ $dbBlue.username | default "liferay_database_admin" | quote }}
             region: {{ $dbBlue.region | default "us-west-2" | quote }}
             storageGB: {{ $dbBlue.storageGB | default 20 }}
+            username: {{ $dbBlue.username | default "liferay_database_admin" | quote }}
         green:
+            engineVersion: {{ $dbGreen.engineVersion | default "16.11" | quote }}
             instanceClass: {{ $dbGreen.instanceClass | default "db.t3.medium" | quote }}
-            username: {{ $dbGreen.username | default "liferay_database_admin" | quote }}
             region: {{ $dbGreen.region | default "us-west-2" | quote }}
             storageGB: {{ $dbGreen.storageGB | default 20 }}
+            username: {{ $dbGreen.username | default "liferay_database_admin" | quote }}
     deletionProtection: {{ .Values.deletionProtection | default false }}
     environmentId: {{ .Values.environmentId }}
     projectId: {{ .Values.projectId }}

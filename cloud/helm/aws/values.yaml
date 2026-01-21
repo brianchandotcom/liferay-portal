@@ -44,14 +44,15 @@ liferay-default:
                                 deploy_dir=/temp/liferay/deploy
                                 filename_prefix="com.liferay.portal.search.opensearch2"
                                 product_version={{.image.tag}}
-                                url="https://releases.liferay.com/opensearch2/dxp/${product_version}/${filename_prefix}.{api,impl}.jar"
+                                base_url="https://releases.liferay.com/opensearch2/dxp/${product_version}/${filename_prefix}"
 
                                 rm --force --verbose /temp/osgi/modules/"${filename_prefix}"*
 
                                 mkdir -p "$deploy_dir"
 
-                                http_code=$(\
-                                    curl \
+                                for type in api impl; do
+                                    url="${base_url}.${type}.jar"
+                                    http_code=$(curl \
                                         "$url" \
                                         --fail \
                                         --location \
@@ -61,11 +62,13 @@ liferay-default:
                                         --retry-all-errors \
                                         --retry-delay 2 \
                                         --write-out "%{http_code}")
-
-                                if [ "${http_code}" != "200" ] ; then
-                                    echo "Unable to download OpenSearch modules for Product Version ${product_version}." >&2
-                                    exit 1
-                                fi
+                            
+                                    if [ "${http_code}" != "200" ]
+                                    then
+                                        echo "Unable to download OpenSearch modules for Product Version ${product_version}. Status code: ${http_code}" >&2
+                                        exit 1
+                                    fi
+                                done
                       image: {{printf "%s:%s" .image.repository (.image.tag | toString)}}
                       name: liferay-install-opensearch-modules
                       volumeMounts:

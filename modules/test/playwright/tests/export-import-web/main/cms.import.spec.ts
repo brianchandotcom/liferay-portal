@@ -28,7 +28,6 @@ const test = mergeTests(
 test('Basic Web Content checkbox is displayed when importing LAR with Basic Web Content', async ({
 	apiHelpers,
 	exportImportPage,
-	page,
 }) => {
 	const {assetLibraryId1, assetLibraryId2} =
 		await test.step('Create two CMS spaces', async () => {
@@ -77,7 +76,9 @@ test('Basic Web Content checkbox is displayed when importing LAR with Basic Web 
 		await exportImportPage.goToImport(`/asset-library-${assetLibraryId2}`);
 		await exportImportPage.selectImportFile({filePath: exportFilePath});
 
-		const basicWebContentCheckbox = page.getByText('Basic Web Contents1');
+		const basicWebContentCheckbox = exportImportPage.page.getByText(
+			'Basic Web Contents1'
+		);
 		await expect(basicWebContentCheckbox).toBeVisible();
 	});
 });

@@ -24,11 +24,13 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -147,10 +149,21 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 		).put(
 			"hasDisplayPage",
 			() -> {
+				String scopeExternalReferenceCode =
+					getScopeExternalReferenceCode();
+
+				Group group =
+					GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+						scopeExternalReferenceCode,
+						_siteNavigationMenuItem.getCompanyId());
+
+				if ((scopeExternalReferenceCode != null) && (group == null)) {
+					return false;
+				}
+
 				InfoItemIdentifier infoItemIdentifier =
 					new ERCInfoItemIdentifier(
-						getExternalReferenceCode(),
-						getScopeExternalReferenceCode());
+						getExternalReferenceCode(), scopeExternalReferenceCode);
 
 				return AssetDisplayPageUtil.hasAssetDisplayPage(
 					_themeDisplay.getSiteGroupId(),

@@ -10,9 +10,6 @@ import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cmp.site.initializer.internal.display.context.ViewAssigneeSectionDisplayContext;
@@ -26,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Igor Franca
  */
 @Component(service = FragmentRenderer.class)
-public class ViewAssigneeFieldComponentJSPSectionFragmentRenderer
+public class ViewAssigneeJSPSectionFragmentRenderer
 	extends BaseJSPSectionFragmentRenderer {
 
 	@Override
@@ -46,8 +43,7 @@ public class ViewAssigneeFieldComponentJSPSectionFragmentRenderer
 		}
 
 		return new ViewAssigneeSectionDisplayContext(
-			_classNameLocalService, httpServletRequest, _language,
-			(ObjectEntry)object, _roleLocalService, _userLocalService,
+			_language, (ObjectEntry)object,
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY));
 	}
@@ -63,15 +59,6 @@ public class ViewAssigneeFieldComponentJSPSectionFragmentRenderer
 	}
 
 	@Reference
-	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
 	private Language _language;
-
-	@Reference
-	private RoleLocalService _roleLocalService;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

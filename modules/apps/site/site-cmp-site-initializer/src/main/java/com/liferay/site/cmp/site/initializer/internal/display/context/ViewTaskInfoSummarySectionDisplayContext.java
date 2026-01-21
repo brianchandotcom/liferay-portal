@@ -8,19 +8,9 @@ package com.liferay.site.cmp.site.initializer.internal.display.context;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.model.ClassName;
-import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.StringUtil;
-
-import java.io.Serializable;
+import com.liferay.site.cmp.site.initializer.internal.util.ObjectEntryValuesUtil;
 
 import java.util.Map;
 
@@ -31,77 +21,27 @@ public class ViewTaskInfoSummarySectionDisplayContext
 	extends BaseInfoSummarySectionDisplayContext {
 
 	public ViewTaskInfoSummarySectionDisplayContext(
-		ClassNameLocalService classNameLocalService, Language language,
 		ListTypeEntryLocalService listTypeEntryLocalService,
 		ObjectEntry objectEntry,
 		ObjectFieldLocalService objectFieldLocalService,
-		RoleLocalService roleLocalService, UserLocalService userLocalService,
 		ThemeDisplay themeDisplay) {
 
 		super(
 			listTypeEntryLocalService, objectEntry, objectFieldLocalService,
 			themeDisplay);
-
-		this.classNameLocalService = classNameLocalService;
-		this.language = language;
-		this.roleLocalService = roleLocalService;
-		this.userLocalService = userLocalService;
 	}
 
 	@Override
 	public Map<String, Object> getProperties() throws Exception {
 		return HashMapBuilder.<String, Object>put(
 			"assignTo",
-			() -> {
-				Map<String, Serializable> values = objectEntry.getValues();
-
-				Map<String, Long> assignTo = (Map<String, Long>)values.get(
-					"assignTo");
-
-				ClassName className = classNameLocalService.fetchClassName(
-					GetterUtil.getLong(assignTo.get("classNameId")));
-
-				if (className == null) {
-					return null;
-				}
-
-				if (StringUtil.equals(
-						className.getClassName(), Role.class.getName())) {
-
-					Role role = roleLocalService.fetchRole(
-						assignTo.get("classPK"));
-
-					return HashMapBuilder.<String, Object>put(
-						"externalReferenceCode", role.getExternalReferenceCode()
-					).put(
-						"name", role.getName()
-					).put(
-						"type", "role"
-					).build();
-				}
-
-				User user = userLocalService.fetchUser(assignTo.get("classPK"));
-
-				return HashMapBuilder.<String, Object>put(
-					"externalReferenceCode", user.getExternalReferenceCode()
-				).put(
-					"image", user.getPortraitURL(themeDisplay)
-				).put(
-					"name", user.getFullName()
-				).put(
-					"type", "user"
-				).build();
-			}
+			ObjectEntryValuesUtil.getAssigneeFieldValue(
+				objectEntry, themeDisplay)
 		).put(
 			"taskId", objectEntry.getObjectEntryId()
 		).putAll(
 			super.getProperties()
 		).build();
 	}
-
-	protected final ClassNameLocalService classNameLocalService;
-	protected final Language language;
-	protected final RoleLocalService roleLocalService;
-	protected final UserLocalService userLocalService;
 
 }

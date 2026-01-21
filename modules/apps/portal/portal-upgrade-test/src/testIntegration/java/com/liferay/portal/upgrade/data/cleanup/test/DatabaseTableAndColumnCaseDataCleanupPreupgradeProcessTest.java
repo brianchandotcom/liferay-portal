@@ -6,6 +6,9 @@
 package com.liferay.portal.upgrade.data.cleanup.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -18,6 +21,7 @@ import com.liferay.portal.kernel.service.ServiceComponentLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -72,7 +76,79 @@ public class DatabaseTableAndColumnCaseDataCleanupPreupgradeProcessTest
 	}
 
 	@Test
-	public void testUpgrade() throws Exception {
+	public void testUpgradeWithObjectDefinitionDBTable() throws Exception {
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition();
+
+		String objectDefinitionDBTableName = objectDefinition.getDBTableName();
+
+		String invalidObjectDefinitionDBTableName = StringUtil.toUpperCase(
+			objectDefinitionDBTableName);
+
+		try (Connection connection = DataAccess.getConnection();
+			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				DatabaseTableAndColumnCaseDataCleanupPreupgradeProcess.class.
+					getName(),
+				LoggerTestUtil.INFO)) {
+
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> _db.runSQL(
+					"DROP_TABLE_IF_EXISTS(" + objectDefinitionDBTableName +
+						")"));
+
+			DBType dbType = DBManagerUtil.getDBType();
+
+			if (dbType == DBType.SQLSERVER) {
+				DBPartitionUtil.forEachCompanyId(
+					companyId -> _db.runSQL(
+						StringBundler.concat(
+							"create table [",
+							invalidObjectDefinitionDBTableName,
+							"] ([testColumn] LONG)")));
+			}
+			else {
+				DBPartitionUtil.forEachCompanyId(
+					companyId -> _db.runSQL(
+						StringBundler.concat(
+							"create table `",
+							invalidObjectDefinitionDBTableName,
+							"` (`testColumn` LONG)")));
+			}
+
+			upgrade();
+
+			List<String> messages = logCapture.getMessages();
+
+			Assert.assertEquals(messages.toString(), 1, messages.size());
+
+			Assert.assertTrue(
+				messages.contains(
+					StringBundler.concat(
+						"Table ", objectDefinitionDBTableName,
+						", altered because incorrect table name casing, was ",
+						invalidObjectDefinitionDBTableName)));
+		}
+		finally {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition);
+
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> _db.runSQL(
+					"DROP_TABLE_IF_EXISTS(" +
+						invalidObjectDefinitionDBTableName + ")"));
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> _db.runSQL(
+					"DROP_TABLE_IF_EXISTS(" + objectDefinitionDBTableName +
+						")"));
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> _db.runSQL(
+					"DROP_TABLE_IF_EXISTS(" + objectDefinitionDBTableName +
+						"_temp)"));
+		}
+	}
+
+	@Test
+	public void testUpgradeWithServiceComponentTable() throws Exception {
 		DBInspector dbInspector = new DBInspector(_connection);
 
 		String invalidColumnName = "testCOLUMN";
@@ -172,6 +248,9 @@ public class DatabaseTableAndColumnCaseDataCleanupPreupgradeProcessTest
 
 	private Connection _connection;
 	private DB _db;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Inject
 	private ServiceComponentLocalService _serviceComponentLocalService;

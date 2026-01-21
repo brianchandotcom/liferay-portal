@@ -168,8 +168,11 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 
 			for (ObjectField relatedObjectField :
 					objectFieldLocalService.getObjectFields(
-						parentObjectDefinition.getObjectDefinitionId(),
-						false)) {
+						parentObjectDefinition.getObjectDefinitionId())) {
+
+				if (relatedObjectField.isMetadata()) {
+					continue;
+				}
 
 				String namespace =
 					ObjectEntryInfoItemUtil.getInfoFieldNamespace(

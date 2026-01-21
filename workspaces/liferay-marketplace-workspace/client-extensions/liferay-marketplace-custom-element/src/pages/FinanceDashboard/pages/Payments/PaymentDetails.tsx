@@ -76,10 +76,14 @@ const PaymentDetails = () => {
 			? PaymentStatusCode.PAID
 			: PaymentStatusCode.PENDING;
 
-	async function exportOrdersCSV() {
-		let csv = 'App Name,Account,Quantity,Net Price,VAT,Total\n';
+	const CSV_HEADER = 'App Name,Account,Quantity,Net Price,VAT,Total\n';
 
-		completeOrderItems?.forEach(({orderItem, placedOrderItem}) => {
+	async function exportOrdersCSV() {
+		if (!completeOrderItems?.length) return;
+
+		let csv = CSV_HEADER;
+
+		for (const {orderItem, placedOrderItem} of completeOrderItems) {
 			const finalPrice = orderItem.finalPrice ?? 0;
 			const finalPriceWithTax = orderItem.finalPriceWithTaxAmount ?? 0;
 			const vat = finalPriceWithTax - finalPrice;
@@ -91,7 +95,7 @@ const PaymentDetails = () => {
 				`"${formatCurrency(orderItem.currencyCode, finalPrice)}",` +
 				`"${formatCurrency(orderItem.currencyCode, vat)}",` +
 				`"${formatCurrency(orderItem.currencyCode, finalPriceWithTax)}"\n`;
-		});
+		}
 
 		const blob = new Blob(['\uFEFF', csv], {
 			type: 'text/csv;charset=utf-8;',

@@ -1469,6 +1469,23 @@ public class GroupLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<Group> getUserGroups(
+			com.liferay.portal.kernel.model.User user, boolean inherit)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _groupLocalService.getUserGroups(user, inherit);
+	}
+
+	@Override
+	public java.util.List<Group> getUserGroups(
+			com.liferay.portal.kernel.model.User user, boolean inherit,
+			int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _groupLocalService.getUserGroups(user, inherit, start, end);
+	}
+
+	@Override
 	public int getUserGroupsCount(long userId) {
 		return _groupLocalService.getUserGroupsCount(userId);
 	}

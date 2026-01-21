@@ -194,7 +194,7 @@ exports[`SegmentActivationCard should render with dates when frequency type is b
               <span
                 class="label-item label-item-expand"
               >
-                Batch Sync Will Run From Aug 24, 2025 to Sep 14, 2025
+                Batch Sync Will Run from Aug 24, 2025 to Sep 14, 2025
               </span>
             </span>
           </div>

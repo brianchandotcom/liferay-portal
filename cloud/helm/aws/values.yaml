@@ -62,7 +62,7 @@ liferay-default:
                                         --retry-all-errors \
                                         --retry-delay 2 \
                                         --write-out "%{http_code}")
-                            
+
                                     if [ "${http_code}" != "200" ]
                                     then
                                         echo "Unable to download OpenSearch modules for Product Version ${product_version}. Status code: ${http_code}" >&2

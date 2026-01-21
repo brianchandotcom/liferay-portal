@@ -1,11 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
-import com.liferay.headless.admin.site.client.dto.v1_0.TextFragmentEditableElementValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.LinkFragmentEditableElementValue;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -21,28 +21,28 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class TextFragmentEditableElementValueSerDes {
+public class LinkFragmentEditableElementValueSerDes {
 
-	public static TextFragmentEditableElementValue toDTO(String json) {
-		TextFragmentEditableElementValueJSONParser
-			textFragmentEditableElementValueJSONParser =
-				new TextFragmentEditableElementValueJSONParser();
+	public static LinkFragmentEditableElementValue toDTO(String json) {
+		LinkFragmentEditableElementValueJSONParser
+			linkFragmentEditableElementValueJSONParser =
+				new LinkFragmentEditableElementValueJSONParser();
 
-		return textFragmentEditableElementValueJSONParser.parseToDTO(json);
+		return linkFragmentEditableElementValueJSONParser.parseToDTO(json);
 	}
 
-	public static TextFragmentEditableElementValue[] toDTOs(String json) {
-		TextFragmentEditableElementValueJSONParser
-			textFragmentEditableElementValueJSONParser =
-				new TextFragmentEditableElementValueJSONParser();
+	public static LinkFragmentEditableElementValue[] toDTOs(String json) {
+		LinkFragmentEditableElementValueJSONParser
+			linkFragmentEditableElementValueJSONParser =
+				new LinkFragmentEditableElementValueJSONParser();
 
-		return textFragmentEditableElementValueJSONParser.parseToDTOs(json);
+		return linkFragmentEditableElementValueJSONParser.parseToDTOs(json);
 	}
 
 	public static String toJSON(
-		TextFragmentEditableElementValue textFragmentEditableElementValue) {
+		LinkFragmentEditableElementValue linkFragmentEditableElementValue) {
 
-		if (textFragmentEditableElementValue == null) {
+		if (linkFragmentEditableElementValue == null) {
 			return "null";
 		}
 
@@ -50,7 +50,7 @@ public class TextFragmentEditableElementValueSerDes {
 
 		sb.append("{");
 
-		if (textFragmentEditableElementValue.getFragmentLinkTextValue() !=
+		if (linkFragmentEditableElementValue.getFragmentLinkTextValue() !=
 				null) {
 
 			if (sb.length() > 1) {
@@ -61,11 +61,11 @@ public class TextFragmentEditableElementValueSerDes {
 
 			sb.append(
 				String.valueOf(
-					textFragmentEditableElementValue.
+					linkFragmentEditableElementValue.
 						getFragmentLinkTextValue()));
 		}
 
-		if (textFragmentEditableElementValue.getType() != null) {
+		if (linkFragmentEditableElementValue.getType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -73,7 +73,7 @@ public class TextFragmentEditableElementValueSerDes {
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-			sb.append(textFragmentEditableElementValue.getType());
+			sb.append(linkFragmentEditableElementValue.getType());
 			sb.append("\"");
 		}
 
@@ -83,23 +83,23 @@ public class TextFragmentEditableElementValueSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		TextFragmentEditableElementValueJSONParser
-			textFragmentEditableElementValueJSONParser =
-				new TextFragmentEditableElementValueJSONParser();
+		LinkFragmentEditableElementValueJSONParser
+			linkFragmentEditableElementValueJSONParser =
+				new LinkFragmentEditableElementValueJSONParser();
 
-		return textFragmentEditableElementValueJSONParser.parseToMap(json);
+		return linkFragmentEditableElementValueJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		TextFragmentEditableElementValue textFragmentEditableElementValue) {
+		LinkFragmentEditableElementValue linkFragmentEditableElementValue) {
 
-		if (textFragmentEditableElementValue == null) {
+		if (linkFragmentEditableElementValue == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (textFragmentEditableElementValue.getFragmentLinkTextValue() ==
+		if (linkFragmentEditableElementValue.getFragmentLinkTextValue() ==
 				null) {
 
 			map.put("fragmentLinkTextValue", null);
@@ -108,33 +108,33 @@ public class TextFragmentEditableElementValueSerDes {
 			map.put(
 				"fragmentLinkTextValue",
 				String.valueOf(
-					textFragmentEditableElementValue.
+					linkFragmentEditableElementValue.
 						getFragmentLinkTextValue()));
 		}
 
-		if (textFragmentEditableElementValue.getType() == null) {
+		if (linkFragmentEditableElementValue.getType() == null) {
 			map.put("type", null);
 		}
 		else {
 			map.put(
 				"type",
-				String.valueOf(textFragmentEditableElementValue.getType()));
+				String.valueOf(linkFragmentEditableElementValue.getType()));
 		}
 
 		return map;
 	}
 
-	public static class TextFragmentEditableElementValueJSONParser
-		extends BaseJSONParser<TextFragmentEditableElementValue> {
+	public static class LinkFragmentEditableElementValueJSONParser
+		extends BaseJSONParser<LinkFragmentEditableElementValue> {
 
 		@Override
-		protected TextFragmentEditableElementValue createDTO() {
-			return new TextFragmentEditableElementValue();
+		protected LinkFragmentEditableElementValue createDTO() {
+			return new LinkFragmentEditableElementValue();
 		}
 
 		@Override
-		protected TextFragmentEditableElementValue[] createDTOArray(int size) {
-			return new TextFragmentEditableElementValue[size];
+		protected LinkFragmentEditableElementValue[] createDTOArray(int size) {
+			return new LinkFragmentEditableElementValue[size];
 		}
 
 		@Override
@@ -151,20 +151,20 @@ public class TextFragmentEditableElementValueSerDes {
 
 		@Override
 		protected void setField(
-			TextFragmentEditableElementValue textFragmentEditableElementValue,
+			LinkFragmentEditableElementValue linkFragmentEditableElementValue,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "fragmentLinkTextValue")) {
 				if (jsonParserFieldValue != null) {
-					textFragmentEditableElementValue.setFragmentLinkTextValue(
+					linkFragmentEditableElementValue.setFragmentLinkTextValue(
 						FragmentLinkTextValueSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
-					textFragmentEditableElementValue.setType(
-						TextFragmentEditableElementValue.Type.create(
+					linkFragmentEditableElementValue.setType(
+						LinkFragmentEditableElementValue.Type.create(
 							(String)jsonParserFieldValue));
 				}
 			}

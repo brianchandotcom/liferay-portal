@@ -7,8 +7,6 @@ package com.liferay.users.admin.internal.search.spi.model.index.contributor;
 
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.NoSuchCountryException;
-import com.liferay.portal.kernel.exception.NoSuchRegionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -131,7 +129,7 @@ public class UserModelDocumentContributor
 					_roleLocalService.getRoles(userGroupRoleIds),
 					Role.NAME_ACCESSOR));
 
-			_populateAddresses(document, user.getAddresses(), 0, 0);
+			_populateAddresses(document, user.getAddresses());
 
 			for (Locale locale :
 					_language.getAvailableLocales(user.getGroupId())) {
@@ -261,42 +259,11 @@ public class UserModelDocumentContributor
 	}
 
 	private void _populateAddresses(
-			Document document, List<Address> addresses, long regionId,
-			long countryId)
-		throws PortalException {
+		Document document, List<Address> addresses) {
 
 		List<String> cities = new ArrayList<>();
-
 		List<String> countries = new ArrayList<>();
-
-		if (countryId > 0) {
-			try {
-				countries.addAll(
-					_getLocalizedCountryNames(
-						countryService.getCountry(countryId)));
-			}
-			catch (NoSuchCountryException noSuchCountryException) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(noSuchCountryException);
-				}
-			}
-		}
-
 		List<String> regions = new ArrayList<>();
-
-		if (regionId > 0) {
-			try {
-				Region region = regionService.getRegion(regionId);
-
-				regions.add(StringUtil.toLowerCase(region.getName()));
-			}
-			catch (NoSuchRegionException noSuchRegionException) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(noSuchRegionException);
-				}
-			}
-		}
-
 		List<String> streets = new ArrayList<>();
 		List<String> zips = new ArrayList<>();
 

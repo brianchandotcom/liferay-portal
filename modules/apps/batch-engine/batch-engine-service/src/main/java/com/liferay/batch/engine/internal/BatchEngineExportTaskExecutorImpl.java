@@ -307,7 +307,7 @@ public class BatchEngineExportTaskExecutorImpl
 				int itemsSinceLastReport =
 					currentItemsProcessedCount - lastReportedItemsCount;
 
-				if (itemsSinceLastReport >= _BATCH_PROGRESS_THRESHOLD) {
+				if (itemsSinceLastReport >= exportBatchSize) {
 					_sendBatchProgressMessage(currentItemsProcessedCount);
 
 					lastReportedItemsCount = currentItemsProcessedCount;
@@ -601,8 +601,6 @@ public class BatchEngineExportTaskExecutorImpl
 			batchEngineExportTask.getExecuteStatus(),
 			batchEngineExportTask.getBatchEngineExportTaskId());
 	}
-
-	private static final int _BATCH_PROGRESS_THRESHOLD = 100;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BatchEngineExportTaskExecutorImpl.class);

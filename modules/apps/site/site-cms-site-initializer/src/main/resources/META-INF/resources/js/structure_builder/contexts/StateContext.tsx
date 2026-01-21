@@ -945,6 +945,7 @@ function getDefaultChildren(structureUuid: Uuid) {
 	if (type === 'L_CMS_FILE_TYPES') {
 		const file = getDefaultField({
 			label: Liferay.Language.get('file'),
+			localized: true,
 			locked: true,
 			name: 'file',
 			parent: structureUuid,

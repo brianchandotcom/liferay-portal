@@ -28,7 +28,7 @@ export async function Sandpack({language, children}: Props) {
 			template={language === 'jsx' ? 'react' : undefined}
 			customSetup={{
 				dependencies: {
-					react: '^16.12.0',
+					'react': '^16.12.0',
 					'react-dom': '^16.12.0',
 					'@clayui/core': 'latest',
 					'@clayui/icon': 'latest',

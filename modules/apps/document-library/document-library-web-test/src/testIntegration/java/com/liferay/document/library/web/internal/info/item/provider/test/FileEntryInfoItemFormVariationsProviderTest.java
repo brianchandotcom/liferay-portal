@@ -9,7 +9,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -18,15 +17,13 @@ import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-
-import jakarta.portlet.PortletPreferences;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -90,12 +87,6 @@ public class FileEntryInfoItemFormVariationsProviderTest {
 				infoItemFormVariation.getKey(), label);
 		}
 
-		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
-			company.getCompanyId());
-
-		String originalLocales = portletPreferences.getValue(
-			PropsKeys.LOCALES, StringPool.BLANK);
-
 		_companyLocalService.updatePreferences(
 			company.getCompanyId(),
 			UnicodePropertiesBuilder.put(
@@ -148,7 +139,7 @@ public class FileEntryInfoItemFormVariationsProviderTest {
 			_companyLocalService.updatePreferences(
 				company.getCompanyId(),
 				UnicodePropertiesBuilder.put(
-					PropsKeys.LOCALES, originalLocales
+					PropsKeys.LOCALES, String.join(",", PropsValues.LOCALES)
 				).build());
 		}
 	}

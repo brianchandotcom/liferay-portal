@@ -32,69 +32,39 @@ import org.opensearch.client.json.JsonData;
 import org.opensearch.client.opensearch._types.GeoLocation;
 import org.opensearch.client.opensearch._types.LatLonGeoLocation;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  * @author Milen Dyankov
  * @author Petteri Karttunen
  */
-@Component(service = OpenSearchDocumentFactory.class)
-public class OpenSearchDocumentFactoryImpl
-	implements OpenSearchDocumentFactory {
+public class OpenSearchDocumentFactoryUtil {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x)
 	 */
 	@Deprecated
-	@Override
-	public JsonData getOpenSearchDocument(
+	public static JsonData getOpenSearchDocument(
 		com.liferay.portal.kernel.search.Document legacyDocument) {
 
 		try {
-			return translateLegacyDocument(legacyDocument);
+			return _translateLegacyDocument(legacyDocument);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
 	}
 
-	@Override
-	public JsonData getOpenSearchDocument(Document document) {
+	public static JsonData getOpenSearchDocument(Document document) {
 		try {
-			return translateDocument(document);
+			return _translateDocument(document);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
 	}
 
-	protected JsonData translateDocument(Document document) throws IOException {
-		Map<String, Field> fields = document.getFields();
-
-		Map<String, Object> translatedFields = new HashMap<>();
-
-		for (Field field : fields.values()) {
-			_addField(field, translatedFields);
-		}
-
-		return JsonData.of(translatedFields);
-	}
-
-	protected JsonData translateLegacyDocument(
-			com.liferay.portal.kernel.search.Document document)
-		throws IOException {
-
-		Map<String, com.liferay.portal.kernel.search.Field> fields =
-			document.getFields();
-		Map<String, Object> translatedFields = new HashMap<>();
-
-		_addLegacyFields(fields.values(), translatedFields);
-
-		return JsonData.of(translatedFields);
-	}
-
-	private void _addField(Field field, Map<String, Object> translatedFields)
+	private static void _addField(
+			Field field, Map<String, Object> translatedFields)
 		throws IOException {
 
 		List<Object> values = field.getValues();
@@ -112,21 +82,21 @@ public class OpenSearchDocumentFactoryImpl
 		_addFieldValues(field, translatedFields, values);
 	}
 
-	private void _addFieldValue(
+	private static void _addFieldValue(
 			Field field, Map<String, Object> translatedFields, Object value)
 		throws IOException {
 
 		translatedFields.put(field.getName(), _translateValue(value));
 	}
 
-	private void _addFieldValueless(
+	private static void _addFieldValueless(
 			Field field, Map<String, Object> translatedFields)
 		throws IOException {
 
 		translatedFields.put(field.getName(), null);
 	}
 
-	private void _addFieldValues(
+	private static void _addFieldValues(
 			Field field, Map<String, Object> translatedFields,
 			List<Object> values)
 		throws IOException {
@@ -140,7 +110,7 @@ public class OpenSearchDocumentFactoryImpl
 		translatedFields.put(field.getName(), fieldValues);
 	}
 
-	private void _addLegacyField(
+	private static void _addLegacyField(
 			com.liferay.portal.kernel.search.Field field,
 			Map<String, Object> translatedFields)
 		throws IOException {
@@ -214,7 +184,7 @@ public class OpenSearchDocumentFactoryImpl
 		}
 	}
 
-	private void _addLegacyField(
+	private static void _addLegacyField(
 			com.liferay.portal.kernel.search.Field field, String fieldName,
 			Map<String, Object> translatedFields, String... values)
 		throws IOException {
@@ -244,7 +214,7 @@ public class OpenSearchDocumentFactoryImpl
 		}
 	}
 
-	private void _addLegacyFields(
+	private static void _addLegacyFields(
 			Collection<com.liferay.portal.kernel.search.Field> fields,
 			Map<String, Object> translatedFields)
 		throws IOException {
@@ -259,7 +229,7 @@ public class OpenSearchDocumentFactoryImpl
 		}
 	}
 
-	private void _addLegacyNestedField(
+	private static void _addLegacyNestedField(
 			com.liferay.portal.kernel.search.Field field,
 			Map<String, Object> translatedFields)
 		throws IOException {
@@ -279,12 +249,26 @@ public class OpenSearchDocumentFactoryImpl
 		translatedFields.put(field.getName(), nestedFields);
 	}
 
-	private String _getSortableLegacyFieldName(String localizedName) {
+	private static String _getSortableLegacyFieldName(String localizedName) {
 		return com.liferay.portal.kernel.search.Field.getSortableFieldName(
 			localizedName);
 	}
 
-	private Double[] _translateGeoLocationPoint(Object value) {
+	private static JsonData _translateDocument(Document document)
+		throws IOException {
+
+		Map<String, Field> fields = document.getFields();
+
+		Map<String, Object> translatedFields = new HashMap<>();
+
+		for (Field field : fields.values()) {
+			_addField(field, translatedFields);
+		}
+
+		return JsonData.of(translatedFields);
+	}
+
+	private static Double[] _translateGeoLocationPoint(Object value) {
 		GeoLocation geoLocation;
 
 		if (value instanceof GeoLocationPoint) {
@@ -302,7 +286,7 @@ public class OpenSearchDocumentFactoryImpl
 		return new Double[] {latLonGeoLocation.lon(), latLonGeoLocation.lat()};
 	}
 
-	private List<Object> _translateLegacyDates(
+	private static List<Object> _translateLegacyDates(
 			com.liferay.portal.kernel.search.Field field)
 		throws IOException {
 
@@ -327,7 +311,20 @@ public class OpenSearchDocumentFactoryImpl
 		return values;
 	}
 
-	private Object _translateLegacyValue(
+	private static JsonData _translateLegacyDocument(
+			com.liferay.portal.kernel.search.Document document)
+		throws IOException {
+
+		Map<String, com.liferay.portal.kernel.search.Field> fields =
+			document.getFields();
+		Map<String, Object> translatedFields = new HashMap<>();
+
+		_addLegacyFields(fields.values(), translatedFields);
+
+		return JsonData.of(translatedFields);
+	}
+
+	private static Object _translateLegacyValue(
 		com.liferay.portal.kernel.search.Field field, String value) {
 
 		if (!field.isNumeric()) {
@@ -359,7 +356,7 @@ public class OpenSearchDocumentFactoryImpl
 			"Invalid number class " + clazz.getName());
 	}
 
-	private Object _translateValue(Object value) {
+	private static Object _translateValue(Object value) {
 		if (value instanceof GeoLocationPoint) {
 			return _translateGeoLocationPoint(value);
 		}
@@ -367,6 +364,6 @@ public class OpenSearchDocumentFactoryImpl
 		return value;
 	}
 
-	private final GeoTranslator _geoTranslator = new GeoTranslator();
+	private static final GeoTranslator _geoTranslator = new GeoTranslator();
 
 }

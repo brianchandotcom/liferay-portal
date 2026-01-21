@@ -16,7 +16,6 @@ import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.search.opensearch2.internal.BaseOpenSearchTestCase;
 import com.liferay.portal.search.opensearch2.internal.OpenSearchTestRule;
-import com.liferay.portal.search.opensearch2.internal.document.OpenSearchDocumentFactoryImpl;
 import com.liferay.portal.search.opensearch2.internal.util.JsonpUtil;
 import com.liferay.portal.search.test.util.indexing.DocumentFixture;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -46,21 +45,13 @@ public class BulkDocumentRequestExecutorTest extends BaseOpenSearchTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		OpenSearchBulkableDocumentRequestTranslator
-			openSearchBulkableDocumentRequestTranslator =
-				new OpenSearchBulkableDocumentRequestTranslatorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			openSearchBulkableDocumentRequestTranslator,
-			"openSearchDocumentFactory", new OpenSearchDocumentFactoryImpl());
-
 		_bulkDocumentRequestExecutorImpl =
 			new BulkDocumentRequestExecutorImpl();
 
 		ReflectionTestUtil.setFieldValue(
 			_bulkDocumentRequestExecutorImpl,
 			"_openSearchBulkableDocumentRequestTranslator",
-			openSearchBulkableDocumentRequestTranslator);
+			new OpenSearchBulkableDocumentRequestTranslatorImpl());
 		ReflectionTestUtil.setFieldValue(
 			_bulkDocumentRequestExecutorImpl, "_openSearchConnectionManager",
 			openSearchConnectionManager);

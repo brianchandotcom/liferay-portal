@@ -8,8 +8,6 @@ package com.liferay.portal.search.opensearch2.internal.search.engine.adapter;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
-import com.liferay.portal.search.opensearch2.internal.document.OpenSearchDocumentFactory;
-import com.liferay.portal.search.opensearch2.internal.document.OpenSearchDocumentFactoryImpl;
 import com.liferay.portal.search.opensearch2.internal.facet.FacetProcessor;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.cluster.ClusterRequestExecutorFixture;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.DocumentRequestExecutorFixture;
@@ -30,8 +28,7 @@ public class OpenSearchEngineAdapterFixture {
 
 	public void setUp() {
 		_searchEngineAdapter = createSearchEngineAdapter(
-			_openSearchConnectionManager, _getOpenSearchDocumentFactory(),
-			_facetProcessor);
+			_openSearchConnectionManager, _facetProcessor);
 	}
 
 	public void tearDown() {
@@ -40,7 +37,6 @@ public class OpenSearchEngineAdapterFixture {
 
 	protected static SearchEngineAdapter createSearchEngineAdapter(
 		OpenSearchConnectionManager openSearchConnectionManager,
-		OpenSearchDocumentFactory openSearchDocumentFactory,
 		FacetProcessor<?> facetProcessor) {
 
 		ClusterRequestExecutorFixture clusterRequestExecutorFixture =
@@ -54,7 +50,6 @@ public class OpenSearchEngineAdapterFixture {
 			new DocumentRequestExecutorFixture() {
 				{
 					setOpenSearchConnectionManager(openSearchConnectionManager);
-					setOpenSearchDocumentFactory(openSearchDocumentFactory);
 				}
 			};
 
@@ -123,25 +118,10 @@ public class OpenSearchEngineAdapterFixture {
 		_openSearchConnectionManager = openSearchConnectionManager;
 	}
 
-	protected void setOpenSearchDocumentFactory(
-		OpenSearchDocumentFactory openSearchDocumentFactory) {
-
-		_openSearchDocumentFactory = openSearchDocumentFactory;
-	}
-
-	private OpenSearchDocumentFactory _getOpenSearchDocumentFactory() {
-		if (_openSearchDocumentFactory != null) {
-			return _openSearchDocumentFactory;
-		}
-
-		return new OpenSearchDocumentFactoryImpl();
-	}
-
 	private static SearchRequestExecutorFixture _searchRequestExecutorFixture;
 
 	private FacetProcessor<SearchRequest.Builder> _facetProcessor;
 	private OpenSearchConnectionManager _openSearchConnectionManager;
-	private OpenSearchDocumentFactory _openSearchDocumentFactory;
 	private SearchEngineAdapter _searchEngineAdapter;
 
 }

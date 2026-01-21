@@ -3,7 +3,7 @@ kind: CompositeResourceDefinition
 metadata:
     annotations:
         argocd.argoproj.io/sync-options: ServerSideApply=true
-        argocd.argoproj.io/sync-wave: "-60"
+        argocd.argoproj.io/sync-wave: -60
     name: liferayinfrastructures.aws.liferay.com
 spec:
     group: aws.liferay.com
@@ -43,7 +43,7 @@ spec:
                                                     default: db.t3.medium
                                                     type: string
                                                 region:
-                                                    default: "us-west-2"
+                                                    default: us-west-2
                                                     type: string
                                                 storageGB:
                                                     default: 20
@@ -63,7 +63,7 @@ spec:
                                                     default: db.t3.medium
                                                     type: string
                                                 region:
-                                                    default: "us-west-2"
+                                                    default: us-west-2
                                                     type: string
                                                 storageGB:
                                                     default: 20
@@ -87,7 +87,7 @@ spec:
                                 search:
                                     properties:
                                         engineVersion:
-                                            default: "OpenSearch_2.15"
+                                            default: OpenSearch_2.15
                                             type: string
                                         instanceCount:
                                             default: 2
@@ -96,7 +96,7 @@ spec:
                                             default: t3.small.search
                                             type: string
                                         region:
-                                            default: "us-west-2"
+                                            default: us-west-2
                                             type: string
                                         username:
                                             default: liferay_search_admin
@@ -118,7 +118,7 @@ spec:
                                                     default: true
                                                     type: boolean
                                                 region:
-                                                    default: "us-west-2"
+                                                    default: us-west-2
                                                     type: string
                                             required:
                                                 -   region
@@ -129,7 +129,7 @@ spec:
                                                     default: true
                                                     type: boolean
                                                 region:
-                                                    default: "us-west-2"
+                                                    default: us-west-2
                                                     type: string
                                             required:
                                                 -   region

@@ -53,10 +53,16 @@ public interface SegmentsExperience
 
 	public long getSegmentsEntryGroupId();
 
+	public long getSegmentsEntryId();
+
 	public com.liferay.portal.kernel.util.UnicodeProperties
 		getTypeSettingsUnicodeProperties();
 
+	public boolean hasDefaultSegmentsEntry();
+
 	public boolean hasSegmentsExperiment();
+
+	public boolean isDefault();
 
 	public void setTypeSettingsUnicodeProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties

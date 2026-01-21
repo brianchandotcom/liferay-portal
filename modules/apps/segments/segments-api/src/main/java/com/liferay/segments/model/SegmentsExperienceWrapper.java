@@ -413,6 +413,11 @@ public class SegmentsExperienceWrapper
 		return model.getSegmentsEntryGroupId();
 	}
 
+	@Override
+	public long getSegmentsEntryId() {
+		return model.getSegmentsEntryId();
+	}
+
 	/**
 	 * Returns the segments entry scope erc of this segments experience.
 	 *
@@ -501,6 +506,11 @@ public class SegmentsExperienceWrapper
 	}
 
 	@Override
+	public boolean hasDefaultSegmentsEntry() {
+		return model.hasDefaultSegmentsEntry();
+	}
+
+	@Override
 	public boolean hasSegmentsExperiment() {
 		return model.hasSegmentsExperiment();
 	}
@@ -513,6 +523,11 @@ public class SegmentsExperienceWrapper
 	@Override
 	public boolean isActive() {
 		return model.isActive();
+	}
+
+	@Override
+	public boolean isDefault() {
+		return model.isDefault();
 	}
 
 	@Override

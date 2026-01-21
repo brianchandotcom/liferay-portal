@@ -40,12 +40,12 @@ metadata:
     name: crossplane-provider-aws
 rules:
     -   apiGroups:
-            - "aws.m.upbound.io"
-            - "ec2.aws.m.upbound.io"
-            - "iam.aws.m.upbound.io"
-            - "opensearch.aws.m.upbound.io"
-            - "rds.aws.m.upbound.io"
-            - "s3.aws.m.upbound.io"
+            -   "aws.m.upbound.io"
+            -   "ec2.aws.m.upbound.io"
+            -   "iam.aws.m.upbound.io"
+            -   "opensearch.aws.m.upbound.io"
+            -   "rds.aws.m.upbound.io"
+            -   "s3.aws.m.upbound.io"
         resources: ["*"]
         verbs: ["create", "delete", "get", "list", "patch", "update", "watch"]
 ---

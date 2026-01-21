@@ -7,6 +7,7 @@ import {Page, expect, mergeTests} from '@playwright/test';
 
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {masterPagesPagesTest} from '../../../fixtures/masterPagesPagesTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
 import {styleBookPageTest} from '../../../fixtures/styleBookPageTest';
@@ -41,6 +42,7 @@ async function expectStyleBookToBeSelected({
 const test = mergeTests(
 	isolatedSiteTest,
 	loginTest(),
+	masterPagesPagesTest,
 	pageEditorPagesTest,
 	pagesAdminPagesTest,
 	styleBookPageTest
@@ -177,5 +179,76 @@ test(
 				});
 			});
 		}
+	}
+);
+
+test(
+	'A user can select the style book of a master page based on the current selected theme',
+	{tag: '@LPD-66976'},
+	async ({masterPagesPage, page, pagesAdminPage, site}) => {
+		const masterPageName = getRandomString();
+
+		await test.step('Create a master page and go to design tab', async () => {
+			await masterPagesPage.goto(site.friendlyUrlPath);
+
+			await masterPagesPage.createNewMaster(masterPageName);
+
+			await masterPagesPage.gotoConfiguration(masterPageName);
+
+			await pagesAdminPage.clickOnTab('Design');
+		});
+
+		const frame = page
+			.frameLocator('iframe[title="Select Style Book"]')
+			.getByRole('main');
+
+		const textbox = page.getByRole('textbox', {name: 'Style Book'});
+
+		await test.step('Assert only Dialect style books are available when it is the selected theme', async () => {
+			await pagesAdminPage.changeTheme('Dialect');
+
+			await clickAndExpectToBeVisible({target: frame, trigger: textbox});
+
+			await expect(frame.getByRole('button')).toHaveCount(1);
+			await expect(textbox).toHaveValue('Styles from Dialect Theme');
+
+			await page.getByRole('button', {name: 'Close'}).click();
+		});
+
+		await test.step('Assert only Classic style books are available when it is the selected theme', async () => {
+			await pagesAdminPage.changeTheme('Classic');
+
+			await clickAndExpectToBeVisible({target: frame, trigger: textbox});
+
+			await expect(frame.getByRole('button')).toHaveCount(2);
+			await expect(textbox).toHaveValue('Styles from Classic Theme');
+
+			await frame
+				.getByRole('button', {name: `Select ${STYLE_BOOK_NAME}`})
+				.click();
+
+			await pagesAdminPage.saveConfiguration();
+
+			await masterPagesPage.goto(site.friendlyUrlPath);
+
+			await masterPagesPage.publishMaster(masterPageName);
+		});
+
+		await test.step('Test style book with a content page', async () => {
+			await pagesAdminPage.goto(site.friendlyUrlPath);
+
+			const pageName = getRandomString();
+
+			await pagesAdminPage.createNewPage({
+				name: pageName,
+				template: masterPageName,
+			});
+
+			await expectStyleBookToBeSelected({
+				page,
+				pageFriendlyUrlPath: `/${pageName}`,
+				siteFriendlyUrlPath: site.friendlyUrlPath,
+			});
+		});
 	}
 );

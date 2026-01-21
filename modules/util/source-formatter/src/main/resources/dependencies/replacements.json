@@ -5170,6 +5170,19 @@
 	},
 	{
 		"classNames": [
+			"CPDefinitionLocalServiceWrapper"
+		],
+		"classStructurePattern": true,
+		"issueKey": "LPD-60627",
+		"methodsToFormat": [
+			{
+				"from": "regex:@Override\\s+public\\s+CPAttachmentFileEntry\\s+getDefaultImage\\(",
+				"to": "@Override\n\tpublic CPAttachmentFileEntry\n\t\tgetDefaultImageCPAttachmentFileEntry("
+			}
+		]
+	},
+	{
+		"classNames": [
 			"CPCompareHelperUtil"
 		],
 		"from": "addCompareProduct(long paramName, long paramName, long paramName, HttpSession paramName)",

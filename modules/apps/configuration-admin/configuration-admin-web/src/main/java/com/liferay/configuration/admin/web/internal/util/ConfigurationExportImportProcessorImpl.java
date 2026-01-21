@@ -117,11 +117,38 @@ public class ConfigurationExportImportProcessorImpl
 
 				properties.put(scope.getPropertyKey(), internalIdentifier);
 
+				if (scope.equals(ExtendedObjectClassDefinition.Scope.GROUP)) {
+					Group group = _getGroup((String)portableIdentifier);
+
+					properties.put(
+						ExtendedObjectClassDefinition.Scope.COMPANY.
+							getPropertyKey(),
+						group.getCompanyId());
+				}
+
 				return true;
 			}
 		}
 
 		return false;
+	}
+
+	private Group _getGroup(String portableIdentifier) throws PortalException {
+		String[] parts = StringUtil.split(portableIdentifier, _SEPARATOR);
+
+		String webId = parts[0];
+
+		long companyId = GetterUtil.getLong(
+			_getInternalIdentifier(
+				ExtendedObjectClassDefinition.Scope.COMPANY, webId));
+
+		if (companyId == 0L) {
+			return null;
+		}
+
+		String groupKey = parts[1];
+
+		return _groupLocalService.getGroup(companyId, groupKey);
 	}
 
 	private Serializable _getInternalIdentifier(
@@ -140,22 +167,11 @@ public class ConfigurationExportImportProcessorImpl
 			return null;
 		}
 
-		String[] parts = StringUtil.split(
-			(String)portableIdentifier, _SEPARATOR);
+		Group group = _getGroup((String)portableIdentifier);
 
-		String webId = parts[0];
-
-		long companyId = GetterUtil.getLong(
-			_getInternalIdentifier(
-				ExtendedObjectClassDefinition.Scope.COMPANY, webId));
-
-		if (companyId == 0L) {
+		if (group == null) {
 			return null;
 		}
-
-		String groupKey = parts[1];
-
-		Group group = _groupLocalService.getGroup(companyId, groupKey);
 
 		return group.getGroupId();
 	}

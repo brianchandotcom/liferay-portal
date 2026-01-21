@@ -140,6 +140,12 @@ public interface AssetRenderer<T> extends Renderer {
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception;
 
+	public default String getURLSharingNotification(ThemeDisplay themeDisplay)
+		throws Exception {
+
+		return getURLViewInContext(themeDisplay, StringPool.BLANK);
+	}
+
 	public String getUrlTitle();
 
 	public String getUrlTitle(Locale locale);

@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -62,19 +64,6 @@ public class ImportTaskResourceTest {
 		_testCompanyAdminUser = UserTestUtil.getAdminUser(
 			_testCompany.getCompanyId());
 
-		_importTaskResource = ImportTaskResource.builder(
-		).authentication(
-			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
-		).endpoint(
-			_testCompany.getVirtualHostname(), 8080, "http"
-		).locale(
-			LocaleUtil.getDefault()
-		).parameter(
-			"siteExternalReferenceCode", _testGroup.getExternalReferenceCode()
-		).parameter(
-			"taskItemDelegateName", "depot-object-entry-folder"
-		).build();
-
 		_objectEntryFolderResource = ObjectEntryFolderResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
@@ -93,83 +82,115 @@ public class ImportTaskResourceTest {
 
 	@Test
 	public void testPostImportTask() throws Exception {
-		String objectEntryFolderExternalReferenceCode =
-			RandomTestUtil.randomString();
+		ObjectEntryFolder objectEntryFolder =
+			_objectEntryFolderResource.postScopeScopeKeyObjectEntryFolder(
+				_testGroup.getExternalReferenceCode(),
+				_randomObjectEntryFolder());
 
-		// With "createStrategy" UPSERT
+		// With "createStrategy" UPSERT and "updateStrategy" UPDATE
 
 		JSONObject jsonObject = JSONUtil.put(
-			"externalReferenceCode", objectEntryFolderExternalReferenceCode
+			"externalReferenceCode",
+			objectEntryFolder.getExternalReferenceCode()
 		).put(
 			"label", RandomTestUtil.randomString()
 		).put(
 			"title", RandomTestUtil.randomString()
 		);
 
-		ObjectEntryFolder objectEntryFolder = _postImportTask(
-			"UPSERT", jsonObject);
+		objectEntryFolder = _postImportTask(
+			"UPSERT", "COMPLETED", jsonObject, "UPDATE");
 
+		//Assert.assertNull(objectEntryFolder.getDescription());
 		JSONAssert.assertEquals(
 			jsonObject.toString(), objectEntryFolder.toString(),
 			JSONCompareMode.LENIENT);
 
+		// With "createStrategy" UPSERT and "updateStrategy" PARTIAL_UPDATE
+
+		objectEntryFolder =
+			_objectEntryFolderResource.postScopeScopeKeyObjectEntryFolder(
+				_testGroup.getExternalReferenceCode(),
+				_randomObjectEntryFolder());
+
 		jsonObject = JSONUtil.put(
-			"externalReferenceCode", objectEntryFolderExternalReferenceCode
+			"externalReferenceCode",
+			objectEntryFolder.getExternalReferenceCode()
 		).put(
 			"label", RandomTestUtil.randomString()
 		).put(
 			"title", RandomTestUtil.randomString()
 		);
 
-		objectEntryFolder = _postImportTask("UPSERT", jsonObject);
+		String expectedDescriptionValue = objectEntryFolder.getDescription();
 
+		objectEntryFolder = _postImportTask(
+			"UPSERT", "COMPLETED", jsonObject, "PARTIAL_UPDATE");
+
+		Assert.assertEquals(
+			expectedDescriptionValue, objectEntryFolder.getDescription());
 		JSONAssert.assertEquals(
 			jsonObject.toString(), objectEntryFolder.toString(),
 			JSONCompareMode.LENIENT);
 
 		// With "createStrategy" INSERT
 
-		jsonObject = JSONUtil.put(
-			"externalReferenceCode", RandomTestUtil.randomString()
-		).put(
-			"label", RandomTestUtil.randomString()
-		).put(
-			"title", RandomTestUtil.randomString()
-		);
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.batch.engine.internal." +
+					"BatchEngineImportTaskExecutorImpl",
+				LoggerTestUtil.ERROR)) {
 
-		objectEntryFolder = _postImportTask("INSERT", jsonObject);
+			objectEntryFolder = _postImportTask(
+				"INSERT", "FAILED",
+				JSONUtil.put(
+					"externalReferenceCode",
+					objectEntryFolder.getExternalReferenceCode()
+				).put(
+					"label", RandomTestUtil.randomString()
+				).put(
+					"title", RandomTestUtil.randomString()
+				),
+				null);
 
-		JSONAssert.assertEquals(
-			jsonObject.toString(), objectEntryFolder.toString(),
-			JSONCompareMode.LENIENT);
+			JSONAssert.assertEquals(
+				jsonObject.toString(), objectEntryFolder.toString(),
+				JSONCompareMode.LENIENT);
+		}
 	}
 
 	private ObjectEntryFolder _postImportTask(
-			String createStrategy, JSONObject jsonObject)
+			String createStrategy, String expectedExecuteStatus,
+			JSONObject jsonObject, String updateStrategy)
 		throws Exception {
 
-		ImportTask importTask = _importTaskResource.postImportTask(
+		ImportTaskResource.Builder builder = ImportTaskResource.builder(
+		).authentication(
+			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			_testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).parameter(
+			"siteExternalReferenceCode", _testGroup.getExternalReferenceCode()
+		).parameter(
+			"taskItemDelegateName", "depot-object-entry-folder"
+		);
+
+		if (updateStrategy != null) {
+			builder.parameter("updateStrategy", updateStrategy);
+		}
+
+		ImportTaskResource importTaskResource = builder.build();
+
+		ImportTask importTask = importTaskResource.postImportTask(
 			"com.liferay.headless.object.dto.v1_0.ObjectEntryFolder", null,
-			null, null, createStrategy, null, null, null, null,
+			null, null, createStrategy, null, null, "ON_ERROR_FAIL", null,
 			JSONUtil.putAll(
 				jsonObject
 			).toString());
 
-		_waitForFinish("COMPLETED", JSONUtil.put("id", importTask.getId()));
-
-		return _objectEntryFolderResource.
-			getScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
-				String.valueOf(_testGroup.getGroupId()),
-				jsonObject.getString("externalReferenceCode"));
-	}
-
-	private JSONObject _waitForFinish(
-			String expectedExecuteStatus, JSONObject jsonObject)
-		throws Exception {
-
 		while (true) {
-			ImportTask importTask = _importTaskResource.getImportTask(
-				jsonObject.getLong("id"));
+			importTask = importTaskResource.getImportTask(importTask.getId());
 
 			ImportTask.ExecuteStatus executeStatus =
 				importTask.getExecuteStatus();
@@ -180,12 +201,26 @@ public class ImportTaskResourceTest {
 				Assert.assertEquals(
 					expectedExecuteStatus, executeStatus.getValue());
 
-				return jsonObject;
+				return _objectEntryFolderResource.
+					getScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
+						String.valueOf(_testGroup.getGroupId()),
+						jsonObject.getString("externalReferenceCode"));
 			}
 		}
 	}
 
-	private ImportTaskResource _importTaskResource;
+	private ObjectEntryFolder _randomObjectEntryFolder() throws Exception {
+		return new ObjectEntryFolder() {
+			{
+				description = RandomTestUtil.randomString();
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				label = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				title = StringUtil.toLowerCase(RandomTestUtil.randomString());
+			}
+		};
+	}
+
 	private ObjectEntryFolderResource _objectEntryFolderResource;
 	private Company _testCompany;
 	private User _testCompanyAdminUser;

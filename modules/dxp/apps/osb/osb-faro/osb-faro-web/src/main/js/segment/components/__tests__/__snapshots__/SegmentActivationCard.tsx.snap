@@ -55,6 +55,7 @@ exports[`SegmentActivationCard should render when frequency type is batch 1`] = 
               <button
                 aria-label="Edit"
                 class="component-action quick-action-item"
+                data-testid="edit-activation-button"
                 role="button"
                 title="Edit"
               >
@@ -131,6 +132,7 @@ exports[`SegmentActivationCard should render when frequency type is real time 1`
               <button
                 aria-label="Edit"
                 class="component-action quick-action-item"
+                data-testid="edit-activation-button"
                 role="button"
                 title="Edit"
               >
@@ -207,6 +209,7 @@ exports[`SegmentActivationCard should render with dates when frequency type is b
               <button
                 aria-label="Edit"
                 class="component-action quick-action-item"
+                data-testid="edit-activation-button"
                 role="button"
                 title="Edit"
               >

@@ -152,7 +152,12 @@ export const ActivationConfigurationModal: React.FC<
 	return (
 		<>
 			{open && (
-				<Modal center observer={observer} size='lg'>
+				<Modal
+					center
+					data-testId='segment-activation-modal'
+					observer={observer}
+					size='lg'
+				>
 					<Modal.Header>
 						{Liferay.Language.get('configure-activation')}
 					</Modal.Header>
@@ -377,6 +382,7 @@ const SegmentActivationCard: React.FC<ISegmentActivationCardProps> = ({
 							<List.QuickActionMenu>
 								<List.QuickActionMenu.Item
 									aria-label={Liferay.Language.get('edit')}
+									data-testid='edit-activation-button'
 									onClick={() => onOpenChange(true)}
 									symbol='pencil'
 									title={Liferay.Language.get('edit')}

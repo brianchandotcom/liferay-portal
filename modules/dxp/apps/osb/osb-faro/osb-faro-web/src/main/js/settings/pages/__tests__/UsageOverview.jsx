@@ -126,7 +126,7 @@ describe('UsageOverview', () => {
 		).toBeInTheDocument();
 
 		expect(
-			getByText('1,000 of 105,000 - 1% known individual was used.')
+			getByText('1,000 of 105,000 - 1% known individuals were used.')
 		).toBeInTheDocument();
 	});
 

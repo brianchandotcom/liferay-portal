@@ -394,7 +394,7 @@ public class Sidecar {
 				"logger.deprecation.name=org.elasticsearch.deprecation\n",
 				"logger.deprecation.level=error\n",
 				ResourceUtil.getResourceAsString(
-					Sidecar.class, "/log4j2.properties")));
+					Sidecar.class, "/sidecar-log4j2.properties")));
 		arguments.add("-Dsidecar.settings=" + _getSettings());
 		arguments.add("--enable-native-access=ALL-UNNAMED");
 		arguments.add(

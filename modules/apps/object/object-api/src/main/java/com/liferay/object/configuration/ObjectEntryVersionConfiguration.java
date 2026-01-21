@@ -23,15 +23,15 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface ObjectEntryVersionConfiguration {
 
 	@Meta.AD(
-		deflt = "0", description = "maximum-versions-per-entry-description",
-		name = "maximum-versions-per-entry", required = false
-	)
-	public int maximumVersionsPerEntry();
-
-	@Meta.AD(
 		deflt = "0", description = "maximum-retention-period-description",
 		name = "maximum-retention-period"
 	)
 	public int maximumRetentionPeriod();
+
+	@Meta.AD(
+		deflt = "0", description = "maximum-versions-per-entry-description",
+		name = "maximum-versions-per-entry", required = false
+	)
+	public int maximumVersionsPerEntry();
 
 }

@@ -30,15 +30,6 @@ public interface LDAPAuthConfiguration extends CompanyScopedConfiguration {
 	@Meta.AD(deflt = "false", name = "enabled", required = false)
 	public boolean enabled();
 
-	@Meta.AD(deflt = "false", name = "required", required = false)
-	public boolean required();
-
-	@Meta.AD(
-		deflt = "false", description = "password-policy-enabled-help",
-		name = "password-policy-enabled", required = false
-	)
-	public boolean passwordPolicyEnabled();
-
 	@Meta.AD(
 		deflt = "bind", description = "method-help", name = "method",
 		optionLabels = {"bind", "password-compare"},
@@ -56,5 +47,14 @@ public interface LDAPAuthConfiguration extends CompanyScopedConfiguration {
 		required = false
 	)
 	public String passwordEncryptionAlgorithm();
+
+	@Meta.AD(
+		deflt = "false", description = "password-policy-enabled-help",
+		name = "password-policy-enabled", required = false
+	)
+	public boolean passwordPolicyEnabled();
+
+	@Meta.AD(deflt = "false", name = "required", required = false)
+	public boolean required();
 
 }

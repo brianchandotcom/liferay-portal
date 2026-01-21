@@ -22,6 +22,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface IFrameConfiguration {
 
+	@Meta.AD(name = "blacklist", required = false)
+	public String[] blacklist();
+
 	@Meta.AD(deflt = "true", name = "enabled", required = false)
 	public boolean enabled();
 
@@ -30,9 +33,6 @@ public interface IFrameConfiguration {
 
 	@Meta.AD(deflt = "", name = "sandbox-attribute-values", required = false)
 	public String[] sandboxAttributeValues();
-
-	@Meta.AD(name = "blacklist", required = false)
-	public String[] blacklist();
 
 	@Meta.AD(
 		deflt = "com.liferay.fragment.model.FragmentEntry|com.liferay.journal.model.JournalArticle",

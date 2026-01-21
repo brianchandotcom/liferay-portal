@@ -33,6 +33,18 @@ public interface VelocityEngineConfiguration {
 	public boolean includeNavItemsInTheContext();
 
 	@Meta.AD(
+		deflt = "org.apache.velocity.runtime.log.SimpleLog4JLogSystem",
+		name = "logger", required = false
+	)
+	public String logger();
+
+	@Meta.AD(
+		deflt = "org.apache.velocity", name = "logger-category",
+		required = false
+	)
+	public String loggerCategory();
+
+	@Meta.AD(
 		deflt = "com.liferay.portal.json.jabsorb.serializer.LiferayJSONDeserializationWhitelist|java.lang.Class|java.lang.ClassLoader|java.lang.Compiler|java.lang.Package|java.lang.Process|java.lang.Runtime|java.lang.RuntimePermission|java.lang.SecurityManager|java.lang.System|java.lang.Thread|java.lang.ThreadGroup|java.lang.ThreadLocal",
 		name = "restricted-classes", required = false
 	)
@@ -61,17 +73,5 @@ public interface VelocityEngineConfiguration {
 		name = "velocity-macro-library", required = false
 	)
 	public String[] velocimacroLibrary();
-
-	@Meta.AD(
-		deflt = "org.apache.velocity.runtime.log.SimpleLog4JLogSystem",
-		name = "logger", required = false
-	)
-	public String logger();
-
-	@Meta.AD(
-		deflt = "org.apache.velocity", name = "logger-category",
-		required = false
-	)
-	public String loggerCategory();
 
 }

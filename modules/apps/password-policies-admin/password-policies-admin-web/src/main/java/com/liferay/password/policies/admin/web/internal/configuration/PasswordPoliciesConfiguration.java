@@ -50,16 +50,16 @@ public interface PasswordPoliciesConfiguration {
 
 	@Meta.AD(
 		deflt = "300, 600, 1800, 3600, 7200, 10800, 21600, 43200, 86400, 172800, 259200, 345600, 432000, 518400, 604800",
-		description = "reset-ticket-max-age-durations-description",
-		name = "reset-ticket-max-age-durations", required = false
-	)
-	public long[] resetTicketMaxAgeDurations();
-
-	@Meta.AD(
-		deflt = "300, 600, 1800, 3600, 7200, 10800, 21600, 43200, 86400, 172800, 259200, 345600, 432000, 518400, 604800",
 		description = "reset-failure-durations-description",
 		name = "reset-failure-durations", required = false
 	)
 	public long[] resetFailureDurations();
+
+	@Meta.AD(
+		deflt = "300, 600, 1800, 3600, 7200, 10800, 21600, 43200, 86400, 172800, 259200, 345600, 432000, 518400, 604800",
+		description = "reset-ticket-max-age-durations-description",
+		name = "reset-ticket-max-age-durations", required = false
+	)
+	public long[] resetTicketMaxAgeDurations();
 
 }

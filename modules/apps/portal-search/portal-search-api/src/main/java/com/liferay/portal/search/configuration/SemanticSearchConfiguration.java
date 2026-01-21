@@ -24,9 +24,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface SemanticSearchConfiguration {
 
 	@Meta.AD(
-		deflt = "false", name = "text-embeddings-enabled", required = false
+		deflt = "604800", name = "text-embedding-cache-timeout",
+		required = false
 	)
-	public boolean textEmbeddingsEnabled();
+	public int textEmbeddingCacheTimeout();
 
 	@Meta.AD(
 		deflt = "", name = "text-embedding-provider-configuration-jsons",
@@ -35,9 +36,8 @@ public interface SemanticSearchConfiguration {
 	public String[] textEmbeddingProviderConfigurationJSONs();
 
 	@Meta.AD(
-		deflt = "604800", name = "text-embedding-cache-timeout",
-		required = false
+		deflt = "false", name = "text-embeddings-enabled", required = false
 	)
-	public int textEmbeddingCacheTimeout();
+	public boolean textEmbeddingsEnabled();
 
 }

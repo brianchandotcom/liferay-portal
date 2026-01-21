@@ -33,24 +33,25 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface OpenSSOConfiguration {
 
+	@Meta.AD(deflt = "mail", name = "email-address-attribute", required = false)
+	public String emailAddressAttr();
+
 	@Meta.AD(deflt = "false", name = "enabled", required = false)
 	public boolean enabled();
 
 	@Meta.AD(
-		deflt = OpenSSOConfigurationKeys.VERSION_OPENAM_12, name = "version",
-		optionValues = {
-			OpenSSOConfigurationKeys.VERSION_OPENAM_12,
-			OpenSSOConfigurationKeys.VERSION_OPENAM_13
-		},
-		required = false
+		deflt = "givenName", name = "first-name-attribute", required = false
 	)
-	public String version();
+	public String firstNameAttr();
 
 	@Meta.AD(
 		deflt = "false", description = "import-from-ldap-description",
 		name = "import-from-ldap", required = false
 	)
 	public boolean importFromLDAP();
+
+	@Meta.AD(deflt = "sn", name = "last-name-attribute", required = false)
+	public String lastNameAttr();
 
 	@Meta.AD(
 		deflt = "http://openssohost.example.com:8080/opensso/UI/Login?goto=http://portalhost.example.com:8080/c/portal/login",
@@ -71,24 +72,23 @@ public interface OpenSSOConfiguration {
 	)
 	public String logoutURL();
 
+	@Meta.AD(deflt = "uid", name = "screen-name-attribute", required = false)
+	public String screenNameAttr();
+
 	@Meta.AD(
 		deflt = "http://openssohost.example.com:8080/opensso",
 		name = "service-url", required = false
 	)
 	public String serviceURL();
 
-	@Meta.AD(deflt = "uid", name = "screen-name-attribute", required = false)
-	public String screenNameAttr();
-
-	@Meta.AD(deflt = "mail", name = "email-address-attribute", required = false)
-	public String emailAddressAttr();
-
 	@Meta.AD(
-		deflt = "givenName", name = "first-name-attribute", required = false
+		deflt = OpenSSOConfigurationKeys.VERSION_OPENAM_12, name = "version",
+		optionValues = {
+			OpenSSOConfigurationKeys.VERSION_OPENAM_12,
+			OpenSSOConfigurationKeys.VERSION_OPENAM_13
+		},
+		required = false
 	)
-	public String firstNameAttr();
-
-	@Meta.AD(deflt = "sn", name = "last-name-attribute", required = false)
-	public String lastNameAttr();
+	public String version();
 
 }

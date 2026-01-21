@@ -22,12 +22,12 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AuditConfiguration {
 
-	@Meta.AD(deflt = "true", name = "enabled", required = false)
-	public boolean enabled();
-
 	@Meta.AD(
 		deflt = "200", name = "audit-message-max-queue-size", required = false
 	)
 	public int auditMessageMaxQueueSize();
+
+	@Meta.AD(deflt = "true", name = "enabled", required = false)
+	public boolean enabled();
 
 }

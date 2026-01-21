@@ -28,12 +28,6 @@ public interface PortalCORSConfiguration {
 	public boolean enabled();
 
 	@Meta.AD(
-		description = "portal-cors-name-description", id = "configuration.name",
-		name = "name", required = false
-	)
-	public String name();
-
-	@Meta.AD(
 		deflt = "/api/jsonws/*|/documents/*|/image/*|/o/api/*|/o/graphql",
 		description = "cors-configuration-filter-mapping-url-pattern-description",
 		id = "filter.mapping.url.pattern",
@@ -48,5 +42,11 @@ public interface PortalCORSConfiguration {
 		required = false
 	)
 	public String[] headers();
+
+	@Meta.AD(
+		description = "portal-cors-name-description", id = "configuration.name",
+		name = "name", required = false
+	)
+	public String name();
 
 }

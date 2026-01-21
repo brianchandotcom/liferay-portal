@@ -21,6 +21,13 @@ import com.liferay.portal.security.sso.token.security.auth.TokenLocation;
 )
 public interface TokenConfiguration {
 
+	@Meta.AD(
+		deflt = "SMIDENTITY|SMSESSION",
+		description = "authentication-cookies-help",
+		name = "authentication-cookies", required = false
+	)
+	public String[] authenticationCookies();
+
 	@Meta.AD(deflt = "false", name = "enabled", required = false)
 	public boolean enabled();
 
@@ -30,11 +37,8 @@ public interface TokenConfiguration {
 	)
 	public boolean importFromLDAP();
 
-	@Meta.AD(
-		deflt = "SM_USER", description = "user-token-name-help",
-		name = "user-token-name", required = false
-	)
-	public String userTokenName();
+	@Meta.AD(name = "logout-redirect-url", required = false)
+	public String logoutRedirectURL();
 
 	@Meta.AD(
 		deflt = "REQUEST_HEADER", description = "token-location-help",
@@ -54,13 +58,9 @@ public interface TokenConfiguration {
 	public String tokenLocation();
 
 	@Meta.AD(
-		deflt = "SMIDENTITY|SMSESSION",
-		description = "authentication-cookies-help",
-		name = "authentication-cookies", required = false
+		deflt = "SM_USER", description = "user-token-name-help",
+		name = "user-token-name", required = false
 	)
-	public String[] authenticationCookies();
-
-	@Meta.AD(name = "logout-redirect-url", required = false)
-	public String logoutRedirectURL();
+	public String userTokenName();
 
 }

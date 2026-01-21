@@ -27,8 +27,12 @@ public interface ContentSecurityPolicyConfiguration {
 	@Meta.AD(deflt = "false", name = "enabled", required = false)
 	public boolean enabled();
 
-	@Meta.AD(deflt = "true", name = "report-only", required = false)
-	public boolean reportOnly();
+	@Meta.AD(
+		deflt = "/api/,/combo,/documents/,/image/,/layouttpl/,/o/,/webdav/",
+		description = "content-security-policy-excluded-paths-help",
+		name = "excluded-paths", required = false
+	)
+	public String[] excludedPaths();
 
 	@ExtendedAttributeDefinition(descriptionArguments = "[$NONCE$]")
 	@Meta.AD(
@@ -37,11 +41,7 @@ public interface ContentSecurityPolicyConfiguration {
 	)
 	public String policy();
 
-	@Meta.AD(
-		deflt = "/api/,/combo,/documents/,/image/,/layouttpl/,/o/,/webdav/",
-		description = "content-security-policy-excluded-paths-help",
-		name = "excluded-paths", required = false
-	)
-	public String[] excludedPaths();
+	@Meta.AD(deflt = "true", name = "report-only", required = false)
+	public boolean reportOnly();
 
 }

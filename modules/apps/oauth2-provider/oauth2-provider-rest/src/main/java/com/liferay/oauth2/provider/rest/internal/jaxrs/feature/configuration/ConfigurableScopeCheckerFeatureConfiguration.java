@@ -24,12 +24,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface ConfigurableScopeCheckerFeatureConfiguration {
 
 	@Meta.AD(
-		deflt = "(component.name=)",
-		description = "osgi-jaxrs-application-select-description",
-		id = "osgi.jaxrs.application.select",
-		name = "osgi-jaxrs-application-select"
+		deflt = "false", description = "allow-unmatched-description",
+		id = "allow.unmatched", name = "allow-unmatched", required = false
 	)
-	public String osgiJaxRsSelect();
+	public boolean allowUnmatched();
 
 	@Meta.AD(
 		deflt = "Liferay.OAuth2.HTTP.configurable.request.checker",
@@ -39,15 +37,17 @@ public interface ConfigurableScopeCheckerFeatureConfiguration {
 	public String osgiJaxRsName();
 
 	@Meta.AD(
+		deflt = "(component.name=)",
+		description = "osgi-jaxrs-application-select-description",
+		id = "osgi.jaxrs.application.select",
+		name = "osgi-jaxrs-application-select"
+	)
+	public String osgiJaxRsSelect();
+
+	@Meta.AD(
 		deflt = "", description = "patterns-description", id = "patters",
 		name = "patterns"
 	)
 	public String[] patterns();
-
-	@Meta.AD(
-		deflt = "false", description = "allow-unmatched-description",
-		id = "allow.unmatched", name = "allow-unmatched", required = false
-	)
-	public boolean allowUnmatched();
 
 }

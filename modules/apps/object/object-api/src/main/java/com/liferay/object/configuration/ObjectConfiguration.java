@@ -21,6 +21,15 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface ObjectConfiguration {
 
+	@Meta.AD(deflt = "1", name = "duration", required = false)
+	public long duration();
+
+	@Meta.AD(
+		deflt = "25", description = "maximum-file-size-for-guest-users-help",
+		name = "maximum-file-size-for-guest-users", required = false
+	)
+	public int maximumFileSizeForGuestUsers();
+
 	@Meta.AD(
 		deflt = "100",
 		description = "maximum-number-of-guest-user-object-entries-per-object-definition-help",
@@ -29,20 +38,11 @@ public interface ObjectConfiguration {
 	)
 	public int maximumNumberOfGuestUserObjectEntriesPerObjectDefinition();
 
-	@Meta.AD(deflt = "1", name = "duration", required = false)
-	public long duration();
-
 	@Meta.AD(
 		deflt = "days", description = "time-scale-help", name = "time-scale",
 		optionLabels = {"days", "weeks"}, optionValues = {"days", "weeks"},
 		required = false
 	)
 	public String timeScale();
-
-	@Meta.AD(
-		deflt = "25", description = "maximum-file-size-for-guest-users-help",
-		name = "maximum-file-size-for-guest-users", required = false
-	)
-	public int maximumFileSizeForGuestUsers();
 
 }

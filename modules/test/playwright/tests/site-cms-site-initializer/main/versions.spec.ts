@@ -104,9 +104,7 @@ async function testCanViewVersion(
 		page.getByRole('heading', {name: `"${title}" History`})
 	).toBeVisible();
 
-	expect(page.getByRole('button', {name: title})).toBeVisible();
-
-	page.getByRole('cell', {name: title}).first().locator('a').click();
+	await page.getByRole('button', {exact: true, name: title}).click();
 
 	expect(
 		page.getByRole('heading', {name: `${title} (Version 1)`})

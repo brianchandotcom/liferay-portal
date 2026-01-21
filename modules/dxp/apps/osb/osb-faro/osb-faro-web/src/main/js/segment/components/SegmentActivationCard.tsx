@@ -6,6 +6,9 @@ import Label from '@clayui/label';
 import List from '@clayui/list';
 import Modal, {useModal} from '@clayui/modal';
 import React, {useMemo, useState} from 'react';
+import {addAlert} from 'shared/actions/alerts';
+import {Alert} from 'shared/types';
+import {connect, ConnectedProps} from 'react-redux';
 import {formatUTCDateFromUnix} from 'shared/util/date';
 import {Option, Picker} from '@clayui/core';
 import {
@@ -17,6 +20,12 @@ import {sub} from 'shared/util/lang';
 import {Text} from '@clayui/core';
 import {updateSegmentActivationStatus} from 'shared/api/individual-segment';
 import {useParams} from 'react-router-dom';
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+const connector = connect(null, {
+	addAlert
+});
 
 export type SegmentActivationDetails = {
 	frequencyType: SegmentActivationFrequencyTypes;
@@ -75,7 +84,10 @@ const FREQUENCY_TYPE_LABELS: Record<
 	}
 };
 
-export const ActivationConfigurationModal: React.FC<IActivationConfigurationModalProps> = ({
+export const ActivationConfigurationModal: React.FC<
+	IActivationConfigurationModalProps & PropsFromRedux
+> = ({
+	addAlert,
 	initialValues,
 	observer,
 	onOpenChange,
@@ -123,7 +135,12 @@ export const ActivationConfigurationModal: React.FC<IActivationConfigurationModa
 			await onSave(formState);
 			onOpenChange(false);
 		} catch (error) {
-			console.error('Save failed', error);
+			addAlert({
+				alertType: Alert.Types.Error,
+				message: Liferay.Language.get(
+					'there-was-an-error-processing-your-request.-try-again.-if-the-problem-persists,-please-contact-support'
+				)
+			});
 		} finally {
 			setIsSaving(false);
 			onOpenChange(false);
@@ -272,6 +289,10 @@ export const ActivationConfigurationModal: React.FC<IActivationConfigurationModa
 	);
 };
 
+const ConnectedActivationConfigurationModal = connector(
+	ActivationConfigurationModal
+);
+
 const SegmentActivationCard: React.FC<ISegmentActivationCardProps> = ({
 	segmentActivation,
 	segmentType
@@ -313,7 +334,7 @@ const SegmentActivationCard: React.FC<ISegmentActivationCardProps> = ({
 	return (
 		<Card className='card-root'>
 			{open && (
-				<ActivationConfigurationModal
+				<ConnectedActivationConfigurationModal
 					initialValues={{
 						frequencyType,
 						scheduleEndDate,

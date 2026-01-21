@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterRegistry;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -113,10 +114,16 @@ public abstract class BaseRelatedAssetsSectionDisplayContext
 
 	@Override
 	protected String getCMSSectionFilterString() {
+		String keywordsFilterString = getKeywordsFilterString();
+
+		if (Validator.isNull(keywordsFilterString)) {
+			keywordsFilterString = StringPool.DOUBLE_APOSTROPHE;
+		}
+
 		return appendStatus(
 			StringBundler.concat(
 				"(cmsSection eq 'contents' or cmsSection eq 'files') and ",
-				"keywords/any(k:k in (", getKeywordsFilterString(), "))"));
+				"keywords/any(k:k in (", keywordsFilterString, "))"));
 	}
 
 	protected abstract String[] getKeywords();

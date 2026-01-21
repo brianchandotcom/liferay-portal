@@ -3239,6 +3239,15 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 						"tablet", "auto"
 					).build()),
 				"element-image3"),
+			FragmentEditableElementTestUtil.getLinkFragmentEditableElement(
+				null,
+				_getFragmentLink(
+					JournalArticle.class.getName(),
+					journalArticle.getExternalReferenceCode(),
+					"JournalArticle_title", null),
+				null, "element-link",
+				FragmentEditableElementValueFragmentLink.Prefix.EMAIL,
+				TextFragmentValue.Type.INLINE),
 			FragmentEditableElementTestUtil.getHTMLFragmentEditableElement(
 				null, FragmentEditableElementValue.Type.RICH_TEXT, null,
 				HTMLFragmentValue.Type.INLINE, "element-rich-text"),
@@ -3329,6 +3338,11 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 						"tablet", "auto"
 					).build()),
 				"element-image3"),
+			FragmentEditableElementTestUtil.getLinkFragmentEditableElement(
+				FragmentMappedValueItemContextReference.ContextSource.
+					COLLECTION_ITEM,
+				null, FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE,
+				"element-link", null, TextFragmentValue.Type.MAPPED),
 			FragmentEditableElementTestUtil.getHTMLFragmentEditableElement(
 				FragmentMappedValueItemContextReference.ContextSource.
 					COLLECTION_ITEM,
@@ -3377,6 +3391,16 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 						"tablet", "auto"
 					).build()),
 				"element-image1"),
+			FragmentEditableElementTestUtil.getLinkFragmentEditableElement(
+				FragmentMappedValueItemContextReference.ContextSource.
+					DISPLAY_PAGE_ITEM,
+				_getFragmentLink(
+					Layout.class.getName(), layout.getExternalReferenceCode(),
+					null, null),
+				FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE,
+				"element-link",
+				FragmentEditableElementValueFragmentLink.Prefix.PHONE,
+				TextFragmentValue.Type.MAPPED),
 			FragmentEditableElementTestUtil.getHTMLFragmentEditableElement(
 				FragmentMappedValueItemContextReference.ContextSource.
 					DISPLAY_PAGE_ITEM,
@@ -3397,7 +3421,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			new FragmentEditableElement[0]);
 
 		_testMissingOptionalReference(
-			7,
+			8,
 			() ->
 				_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithFragmentEditableElements(
 					FragmentEditableElementTestUtil.
@@ -3454,6 +3478,23 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 									"desktop", "auto"
 								).build()),
 							"element-image2"),
+					FragmentEditableElementTestUtil.
+						getLinkFragmentEditableElement(
+							null,
+							_getFragmentLink(
+								null, null, null,
+								HashMapBuilder.put(
+									LocaleUtil.toBCP47LanguageId(
+										LocaleUtil.SPAIN),
+									RandomTestUtil.randomString()
+								).put(
+									LocaleUtil.toBCP47LanguageId(LocaleUtil.US),
+									RandomTestUtil.randomString()
+								).build()),
+							FragmentMappedValueItemReference.Type.
+								ITEM_EXTERNAL_REFERENCE,
+							"element-link", null,
+							TextFragmentValue.Type.MAPPED),
 					FragmentEditableElementTestUtil.
 						getHTMLFragmentEditableElement(
 							null, FragmentEditableElementValue.Type.RICH_TEXT,

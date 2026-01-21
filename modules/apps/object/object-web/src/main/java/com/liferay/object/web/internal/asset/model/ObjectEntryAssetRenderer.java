@@ -187,11 +187,7 @@ public class ObjectEntryAssetRenderer
 		if ((depotEntry == null) ||
 			(depotEntry.getType() != DepotConstants.TYPE_SPACE)) {
 
-			return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				new InfoItemReference(
-					getClassName(),
-					new ClassPKInfoItemIdentifier(getClassPK())),
-				themeDisplay);
+			return getURLViewInContext(themeDisplay, StringPool.BLANK);
 		}
 
 		return StringBundler.concat(

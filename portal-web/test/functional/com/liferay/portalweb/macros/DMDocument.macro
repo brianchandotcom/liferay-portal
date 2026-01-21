@@ -4664,8 +4664,8 @@ definition {
 				locator1 = "DocumentsAndMedia#SEARCH_REPOSITORY_TAB",
 				value1 = ${dmRepositoryName});
 
-			if (IsElementNotPresent(locator1 = "DocumentsAndMedia#SEARCH_TITLE")) {
-				Click(locator1 = "Icon#BASIC_SEARCH");
+			while ((IsElementNotPresent(locator1 = "DocumentsAndMedia#SEARCH_TITLE")) && (maxIterations = "5")) {
+				Refresh.pauseRefresh();
 			}
 		}
 

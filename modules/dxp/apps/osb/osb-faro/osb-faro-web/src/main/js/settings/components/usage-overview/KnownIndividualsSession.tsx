@@ -58,13 +58,12 @@ export const KnownIndividualsSession = ({currentPlan}) => {
 					)}
 					limit={limit}
 					percentageText={percentage =>
-						Number(percentage) === 1
-							? Liferay.Language.get(
-									'1-known-individual-was-used'
-							  )
-							: Liferay.Language.get(
-									'x-known-individuals-were-used'
-							  )
+						sub(
+							Liferay.Language.get(
+								'x-known-individuals-were-used'
+							),
+							[Number(percentage)]
+						)
 					}
 				/>
 

@@ -19,6 +19,39 @@ configmap:
 customEnv: {}
 customEnvFrom: {}
 customInitContainers:
+    x-liferay-overlay:
+        -   containerTemplate: |
+                -   command:
+                        -   bash
+                        -   -c
+                        -   |
+                                {{- if and .overlay .overlay.enabled }}
+                                {{- $overlay := .overlay -}}
+                                {{- range $overlay.copy }}
+                                mkdir \
+                                    --parents \
+                                    --verbose \
+                                    /temp/{{ .into }}
+
+                                cp \
+                                    --recursive \
+                                    --verbose \
+                                    /mnt/liferay/overlay/{{ .from }} \
+                                    /temp/{{ .into }}
+                                {{- end }}
+                                {{- else }}
+                                echo "Overlay is not enabled."
+                                {{- end }}
+                    image: {{ printf "%s:%s" .image.repository (.image.tag | toString) }}
+                    imagePullPolicy: {{ .image.pullPolicy }}
+                    name: liferay-overlay
+                    {{- if and .overlay .overlay.enabled }}
+                    volumeMounts:
+                        -   mountPath: /mnt/liferay/overlay
+                            name: {{ .overlay.bucketName }}
+                        -   mountPath: /temp
+                            name: liferay-persistent-volume
+                   {{- end }}
     x-liferay-prepopulate-data:
         -   containerTemplate: |
                 -   command:
@@ -177,9 +210,8 @@ nameOverride: ""
 nodeSelector: {}
 overlay:
     bucketName: ""
-    bucketPath: ""
-    dirs: []
-    enabled: false
+    copy: []
+    enabled: false 
 podAnnotations: {}
 podLabels: {}
 podSecurityContext:

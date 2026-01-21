@@ -423,7 +423,8 @@ public class JavaClassParser {
 		}
 
 		if (detailAST.getType() == TokenTypes.STATIC_INIT) {
-			return new JavaStaticBlock(javaTermContent, detailAST.getLineNo());
+			return new JavaStaticBlock(
+				javaTermContent, _getStartLineNumber(detailAST));
 		}
 
 		String name = _getName(detailAST.findFirstToken(TokenTypes.IDENT));
@@ -431,19 +432,19 @@ public class JavaClassParser {
 		if (detailAST.getType() == TokenTypes.CTOR_DEF) {
 			return new JavaConstructor(
 				accessModifier, javaTermContent, isAbstract, isFinal, isStatic,
-				detailAST.getLineNo(), name);
+				_getStartLineNumber(detailAST), name);
 		}
 
 		if (detailAST.getType() == TokenTypes.METHOD_DEF) {
 			return new JavaMethod(
 				accessModifier, javaTermContent, isAbstract, isFinal, isStatic,
-				detailAST.getLineNo(), name);
+				_getStartLineNumber(detailAST), name);
 		}
 
 		if (detailAST.getType() == TokenTypes.VARIABLE_DEF) {
 			return new JavaVariable(
 				accessModifier, javaTermContent, isAbstract, isFinal, isStatic,
-				detailAST.getLineNo(), name);
+				_getStartLineNumber(detailAST), name);
 		}
 
 		return null;

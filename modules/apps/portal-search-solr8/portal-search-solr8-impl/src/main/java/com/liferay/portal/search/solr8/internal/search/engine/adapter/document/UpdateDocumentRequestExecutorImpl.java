@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.solr8.internal.search.engine.adapter.document;
 
-import com.liferay.portal.search.engine.adapter.document.BulkableDocumentRequestTranslator;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentResponse;
 import com.liferay.portal.search.solr8.internal.connection.SolrClientManager;
@@ -28,8 +27,9 @@ public class UpdateDocumentRequestExecutorImpl
 	public UpdateDocumentResponse execute(
 		UpdateDocumentRequest updateDocumentRequest) {
 
-		UpdateRequest request = _bulkableDocumentRequestTranslator.translate(
-			updateDocumentRequest);
+		UpdateRequest request =
+			_solrBulkableDocumentRequestTranslator.translate(
+				updateDocumentRequest);
 
 		try {
 			UpdateResponse updateResponse = request.process(
@@ -50,8 +50,8 @@ public class UpdateDocumentRequestExecutorImpl
 	}
 
 	@Reference(target = "(search.engine.impl=Solr)")
-	private BulkableDocumentRequestTranslator
-		_bulkableDocumentRequestTranslator;
+	private SolrBulkableDocumentRequestTranslator
+		_solrBulkableDocumentRequestTranslator;
 
 	@Reference
 	private SolrClientManager _solrClientManager;

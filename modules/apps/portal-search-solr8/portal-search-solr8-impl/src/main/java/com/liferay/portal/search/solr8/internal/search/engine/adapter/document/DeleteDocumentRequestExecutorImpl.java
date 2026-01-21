@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.solr8.internal.search.engine.adapter.document;
 
-import com.liferay.portal.search.engine.adapter.document.BulkableDocumentRequestTranslator;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentResponse;
 import com.liferay.portal.search.solr8.internal.connection.SolrClientManager;
@@ -28,8 +27,9 @@ public class DeleteDocumentRequestExecutorImpl
 	public DeleteDocumentResponse execute(
 		DeleteDocumentRequest deleteDocumentRequest) {
 
-		UpdateRequest request = _bulkableDocumentRequestTranslator.translate(
-			deleteDocumentRequest);
+		UpdateRequest request =
+			_solrBulkableDocumentRequestTranslator.translate(
+				deleteDocumentRequest);
 
 		try {
 			UpdateResponse updateResponse = request.process(
@@ -50,8 +50,8 @@ public class DeleteDocumentRequestExecutorImpl
 	}
 
 	@Reference(target = "(search.engine.impl=Solr)")
-	private BulkableDocumentRequestTranslator
-		_bulkableDocumentRequestTranslator;
+	private SolrBulkableDocumentRequestTranslator
+		_solrBulkableDocumentRequestTranslator;
 
 	@Reference
 	private SolrClientManager _solrClientManager;

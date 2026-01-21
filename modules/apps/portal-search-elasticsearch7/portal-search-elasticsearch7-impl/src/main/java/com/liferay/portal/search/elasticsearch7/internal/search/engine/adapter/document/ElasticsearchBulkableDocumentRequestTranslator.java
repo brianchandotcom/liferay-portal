@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.document;
 
-import com.liferay.portal.search.engine.adapter.document.BulkableDocumentRequestTranslator;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.GetDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
@@ -19,8 +18,7 @@ import org.elasticsearch.action.update.UpdateRequest;
 /**
  * @author Adam Brandizzi
  */
-public interface ElasticsearchBulkableDocumentRequestTranslator
-	extends BulkableDocumentRequestTranslator {
+public interface ElasticsearchBulkableDocumentRequestTranslator {
 
 	public DeleteRequest translate(DeleteDocumentRequest deleteDocumentRequest);
 

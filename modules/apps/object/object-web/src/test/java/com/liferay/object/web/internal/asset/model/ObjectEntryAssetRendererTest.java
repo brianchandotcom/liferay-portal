@@ -69,6 +69,18 @@ public class ObjectEntryAssetRendererTest {
 	}
 
 	@Test
+	public void testGetURLSharingNotification() throws Exception {
+		AssetRenderer<ObjectEntry> assetRenderer =
+			_getObjectEntryAssetRenderer();
+
+		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
+
+		Assert.assertEquals(
+			_getCMSFriendlyURL(themeDisplay),
+			assetRenderer.getURLSharingNotification(themeDisplay));
+	}
+
+	@Test
 	public void testGetURLViewInContext() throws Exception {
 		AssetRenderer<ObjectEntry> assetRenderer =
 			_getObjectEntryAssetRenderer();
@@ -79,10 +91,6 @@ public class ObjectEntryAssetRendererTest {
 			LiferayPortletResponse.class);
 
 		Assert.assertNull(
-			assetRenderer.getURLViewInContext(
-				liferayPortletRequest, liferayPortletResponse, null));
-		Assert.assertEquals(
-			_getCMSFriendlyURL(liferayPortletRequest),
 			assetRenderer.getURLViewInContext(
 				liferayPortletRequest, liferayPortletResponse, null));
 		Assert.assertEquals(
@@ -140,19 +148,7 @@ public class ObjectEntryAssetRendererTest {
 		Assert.assertTrue(assetRenderer.hasViewPermission(_permissionChecker));
 	}
 
-	private String _getCMSFriendlyURL(
-		LiferayPortletRequest liferayPortletRequest) {
-
-		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
-
-		Mockito.doReturn(
-			themeDisplay
-		).when(
-			liferayPortletRequest
-		).getAttribute(
-			WebKeys.THEME_DISPLAY
-		);
-
+	private String _getCMSFriendlyURL(ThemeDisplay themeDisplay) {
 		String pathMain = StringPool.SLASH + RandomTestUtil.randomString();
 
 		Mockito.when(

@@ -36,27 +36,12 @@ export default function AssignDefaultWorkflowModalContent({
 	const [workflows, setWorkflows] = useState<WorkflowOption[]>([]);
 
 	const onAssignWorkflowButtonClick = async () => {
-		const failedStructures = [];
+		const {error} = await StructureService.updateStructureWorkflow({
+			structureIds: structureWorkflows.map((item) => item.id),
+			workflow: selectedWorkflow,
+		});
 
-		await Promise.allSettled(
-			structureWorkflows.map(
-				async (structureWorkflow: StructureWorkflowItem) => {
-					const {error} =
-						await StructureService.updateStructureWorkflow({
-							id: structureWorkflow.id,
-							workflow: selectedWorkflow,
-						});
-
-					if (error) {
-						failedStructures.push(structureWorkflow.id);
-					}
-
-					return true;
-				}
-			)
-		);
-
-		if (failedStructures.length) {
+		if (error) {
 			openToast({
 				message: Liferay.Language.get('an-error-occurred'),
 				title: Liferay.Language.get('error'),

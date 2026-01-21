@@ -88,7 +88,7 @@ describe('AssignDefaultWorkflowModalContent', () => {
 		expect(mockCloseModal).toHaveBeenCalledTimes(1);
 	});
 
-	it('calls StructureService.updateStructureWorkflow for each structure on assign workflow click', async () => {
+	it('calls StructureService.updateStructureWorkflow only once on assign workflow click', async () => {
 		(
 			StructureService.updateStructureWorkflow as jest.Mock
 		).mockResolvedValue({error: false});
@@ -106,7 +106,7 @@ describe('AssignDefaultWorkflowModalContent', () => {
 		await waitFor(() => {
 			expect(
 				StructureService.updateStructureWorkflow
-			).toHaveBeenCalledTimes(2);
+			).toHaveBeenCalledTimes(1);
 
 			expect(openToast).toHaveBeenCalledWith(
 				expect.objectContaining({

@@ -194,15 +194,15 @@ async function deleteStructure({
 }
 
 async function updateStructureWorkflow({
-	id,
+	structureIds,
 	workflow,
 }: {
-	id: string;
+	structureIds: string[];
 	workflow: string;
 }) {
 	return {
 		error: false,
-		id,
+		structureIds,
 		workflow,
 	};
 }

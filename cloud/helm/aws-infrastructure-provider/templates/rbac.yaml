@@ -3,7 +3,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
     annotations:
-        argocd.argoproj.io/sync-wave: -40
+        argocd.argoproj.io/sync-wave: "-40"
     labels:
         rbac.crossplane.io/aggregate-to-crossplane: "true"
     name: crossplane-provider-kubernetes
@@ -19,7 +19,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
     annotations:
-        argocd.argoproj.io/sync-wave: -40
+        argocd.argoproj.io/sync-wave: "-40"
     name: crossplane-provider-kubernetes-binding
 roleRef:
     apiGroup: rbac.authorization.k8s.io
@@ -34,7 +34,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
     annotations:
-        argocd.argoproj.io/sync-wave: -40
+        argocd.argoproj.io/sync-wave: "-40"
     labels:
         rbac.crossplane.io/aggregate-to-crossplane: "true"
     name: crossplane-provider-aws
@@ -53,7 +53,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
     annotations:
-        argocd.argoproj.io/sync-wave: -40
+        argocd.argoproj.io/sync-wave: "-40"
     name: crossplane-provider-aws-binding
 roleRef:
     apiGroup: rbac.authorization.k8s.io

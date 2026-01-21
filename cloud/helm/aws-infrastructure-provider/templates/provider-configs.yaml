@@ -2,7 +2,7 @@ apiVersion: aws.m.upbound.io/v1beta1
 kind: ClusterProviderConfig
 metadata:
     annotations:
-        argocd.argoproj.io/sync-wave: -70
+        argocd.argoproj.io/sync-wave: "-70"
     name: default
 spec:
     credentials:
@@ -12,7 +12,7 @@ apiVersion: kubernetes.m.crossplane.io/v1alpha1
 kind: ClusterProviderConfig
 metadata:
     annotations:
-        argocd.argoproj.io/sync-wave: -70
+        argocd.argoproj.io/sync-wave: "-70"
     name: default
 spec:
     credentials:

@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Balázs Sáfrány-Kovalik
  */
-public abstract class BaseObjectBulkSelectionAction
+public abstract class BaseDepotObjectEntryBulkSelectionAction
 	implements BulkSelectionAction<Object> {
 
 	@Override
@@ -154,6 +154,6 @@ public abstract class BaseObjectBulkSelectionAction
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseObjectBulkSelectionAction.class);
+		BaseDepotObjectEntryBulkSelectionAction.class);
 
 }

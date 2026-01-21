@@ -31,11 +31,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Sbarra
  */
 @Component(
-	property = "bulk.selection.action.key=assign.to.object",
+	property = "bulk.selection.action.key=assign.to.depot.object.entry",
 	service = BulkSelectionAction.class
 )
-public class AssignToObjectBulkSelectionAction
-	extends BaseObjectBulkSelectionAction {
+public class AssignToDepotObjectEntryBulkSelectionAction
+	extends BaseDepotObjectEntryBulkSelectionAction {
 
 	@Override
 	protected void doExecute(

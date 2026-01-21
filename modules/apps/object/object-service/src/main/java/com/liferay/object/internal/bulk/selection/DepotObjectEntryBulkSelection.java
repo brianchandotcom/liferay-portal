@@ -27,9 +27,9 @@ import java.util.Map;
 /**
  * @author Andrea Sbarra
  */
-public class ObjectBulkSelection implements BulkSelection<Object> {
+public class DepotObjectEntryBulkSelection implements BulkSelection<Object> {
 
-	public ObjectBulkSelection(
+	public DepotObjectEntryBulkSelection(
 		AssetEntryLocalService assetEntryLocalService,
 		DepotEntryLocalService depotEntryLocalService,
 		ObjectEntryFolderLocalService objectEntryFolderLocalService,
@@ -80,7 +80,7 @@ public class ObjectBulkSelection implements BulkSelection<Object> {
 	public Class<? extends BulkSelectionFactory>
 		getBulkSelectionFactoryClass() {
 
-		return ObjectBulkSelectionFactory.class;
+		return DepotObjectEntryBulkSelectionFactory.class;
 	}
 
 	@Override
@@ -102,7 +102,8 @@ public class ObjectBulkSelection implements BulkSelection<Object> {
 
 	@Override
 	public BulkSelection<AssetEntry> toAssetEntryBulkSelection() {
-		return new ObjectAssetEntryBulkSelection(_assetEntryLocalService, this);
+		return new AssetEntryDepotObjectEntryBulkSelection(
+			_assetEntryLocalService, this);
 	}
 
 	private final AssetEntryLocalService _assetEntryLocalService;

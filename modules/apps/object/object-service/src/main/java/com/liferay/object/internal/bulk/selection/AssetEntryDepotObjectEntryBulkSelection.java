@@ -21,10 +21,10 @@ import java.util.Map;
 /**
  * @author Andrea Sbarra
  */
-public class ObjectAssetEntryBulkSelection
+public class AssetEntryDepotObjectEntryBulkSelection
 	implements BulkSelection<AssetEntry> {
 
-	public ObjectAssetEntryBulkSelection(
+	public AssetEntryDepotObjectEntryBulkSelection(
 		AssetEntryLocalService assetEntryLocalService,
 		BulkSelection<Object> objectBulkSelection) {
 

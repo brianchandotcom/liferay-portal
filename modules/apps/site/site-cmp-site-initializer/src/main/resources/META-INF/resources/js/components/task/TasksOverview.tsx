@@ -7,10 +7,12 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
-import ClayLink from '@clayui/link';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayProgressBar from '@clayui/progress-bar';
+import {FDS_EVENT} from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
-import React from 'react';
+import {fetch} from 'frontend-js-web';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import './TasksOverview.scss';
 import {
@@ -61,19 +63,15 @@ function StatisticButton({
 	);
 }
 
-export default function TasksOverview({
-	blockedCount,
-	doneCount,
-	inProgressCount,
-	overdueCount,
-	totalCount,
-}: {
-	blockedCount: number;
-	doneCount: number;
-	inProgressCount: number;
-	overdueCount: number;
-	totalCount: number;
-}) {
+export default function TasksOverview({cmpProjectId}: {cmpProjectId: string}) {
+	const [blockedCount, setBlockedCount] = useState(0);
+	const [completionRate, setCompletionRate] = useState(0);
+	const [inProgressCount, setInProgressCount] = useState(0);
+	const [overdueCount, setOverdueCount] = useState(0);
+	const [totalCount, setTotalCount] = useState(0);
+
+	const [loading, setLoading] = useState(true);
+
 	const handleClick = (quickFilterType: string) => {
 		const projectNavigationTabsFragment = document.querySelector(
 			'[data-layout-structure-item-id="cmp-project-navigation-tabs"]'
@@ -101,82 +99,122 @@ export default function TasksOverview({
 		}
 	};
 
+	const fetchCounts = useCallback(async () => {
+		fetch(`/o/cmp/projects/${cmpProjectId}`, {
+			method: 'GET',
+		}).then(async (response: Response) => {
+			const data = await response.json();
+
+			setBlockedCount(data.blockedCount);
+			setCompletionRate(data.completionRate);
+			setInProgressCount(data.inProgressCount);
+			setOverdueCount(data.overdueCount);
+			setTotalCount(data.totalCount);
+		});
+	}, [cmpProjectId]);
+
+	useEffect(() => {
+		fetchCounts();
+
+		setLoading(false);
+	}, [fetchCounts]);
+
+	useEffect(() => {
+		Liferay.on(FDS_EVENT.DISPLAY_UPDATED, fetchCounts);
+
+		return () => {
+			Liferay.detach(FDS_EVENT.DISPLAY_UPDATED, fetchCounts);
+		};
+	}, [fetchCounts]);
+
 	return (
 		<div className="lfr-cmp__tasks-overview-container">
-			<div className="align-items-center d-flex justify-content-between mb-2">
-				<h5 className="c-m-0">
-					{Liferay.Language.get('tasks-overview')}
-				</h5>
+			{loading ? (
+				<ClayLoadingIndicator />
+			) : (
+				<>
+					<div className="align-items-center d-flex justify-content-between mb-2">
+						<h5 className="c-m-0">
+							{Liferay.Language.get('tasks-overview')}
+						</h5>
 
-				<ClayButton
-					className="c-p-0 text-3 text-decoration-underline text-weight-semi-bold"
-					displayType="link"
-					onClick={() => handleClick(TASK_QUICK_FILTER_TYPES.TOTAL)}
-				>
-					{Liferay.Language.get('view-all-tasks')}
-				</ClayButton>
-			</div>
-
-			<ClayProgressBar
-				className="c-mb-3"
-				value={
-					totalCount > 0
-						? Math.round((doneCount / totalCount) * 100)
-						: 0
-				}
-			/>
-
-			<ClayLayout.ContainerFluid className="c-px-0" size={false}>
-				<ClayLayout.Row>
-					<ClayLayout.Col className="c-px-2" size={3}>
-						<StatisticButton
-							count={totalCount}
-							displayType="unstyled"
-							icon="task-status"
-							label={Liferay.Language.get('total-tasks')}
+						<ClayButton
+							className="c-p-0 text-3 text-decoration-underline text-weight-semi-bold"
+							displayType="link"
 							onClick={() =>
 								handleClick(TASK_QUICK_FILTER_TYPES.TOTAL)
 							}
-						/>
-					</ClayLayout.Col>
+						>
+							{Liferay.Language.get('view-all-tasks')}
+						</ClayButton>
+					</div>
 
-					<ClayLayout.Col className="c-px-2" size={3}>
-						<StatisticButton
-							count={inProgressCount}
-							displayType="info"
-							icon="analytics"
-							label={Liferay.Language.get('in-progress')}
-							onClick={() =>
-								handleClick(TASK_QUICK_FILTER_TYPES.IN_PROGRESS)
-							}
-						/>
-					</ClayLayout.Col>
+					<ClayProgressBar
+						className="c-mb-3"
+						value={completionRate}
+					/>
 
-					<ClayLayout.Col className="c-px-2" size={3}>
-						<StatisticButton
-							count={blockedCount}
-							displayType="danger"
-							icon="block"
-							label={Liferay.Language.get('blocked')}
-							onClick={() =>
-								handleClick(TASK_QUICK_FILTER_TYPES.BLOCKED)
-							}
-						/>
-					</ClayLayout.Col>
+					<ClayLayout.ContainerFluid className="c-px-0" size={false}>
+						<ClayLayout.Row>
+							<ClayLayout.Col className="c-px-2" size={3}>
+								<StatisticButton
+									count={totalCount}
+									displayType="unstyled"
+									icon="task-status"
+									label={Liferay.Language.get('total-tasks')}
+									onClick={() =>
+										handleClick(
+											TASK_QUICK_FILTER_TYPES.TOTAL
+										)
+									}
+								/>
+							</ClayLayout.Col>
 
-					<ClayLayout.Col className="c-px-2" size={3}>
-						<StatisticButton
-							count={overdueCount}
-							displayType="warning"
-							icon="exclamation-full"
-							label={Liferay.Language.get('overdue')}
-							onClick={() =>
-								handleClick(TASK_QUICK_FILTER_TYPES.OVERDUE)
-							}
-						/>
-					</ClayLayout.Col>
-				</ClayLayout.Row>
-			</ClayLayout.ContainerFluid>
+							<ClayLayout.Col className="c-px-2" size={3}>
+								<StatisticButton
+									count={inProgressCount}
+									displayType="info"
+									icon="analytics"
+									label={Liferay.Language.get('in-progress')}
+									onClick={() =>
+										handleClick(
+											TASK_QUICK_FILTER_TYPES.IN_PROGRESS
+										)
+									}
+								/>
+							</ClayLayout.Col>
+
+							<ClayLayout.Col className="c-px-2" size={3}>
+								<StatisticButton
+									count={blockedCount}
+									displayType="danger"
+									icon="block"
+									label={Liferay.Language.get('blocked')}
+									onClick={() =>
+										handleClick(
+											TASK_QUICK_FILTER_TYPES.BLOCKED
+										)
+									}
+								/>
+							</ClayLayout.Col>
+
+							<ClayLayout.Col className="c-px-2" size={3}>
+								<StatisticButton
+									count={overdueCount}
+									displayType="warning"
+									icon="exclamation-full"
+									label={Liferay.Language.get('overdue')}
+									onClick={() =>
+										handleClick(
+											TASK_QUICK_FILTER_TYPES.OVERDUE
+										)
+									}
+								/>
+							</ClayLayout.Col>
+						</ClayLayout.Row>
+					</ClayLayout.ContainerFluid>
+				</>
+			)}
 		</div>
 	);
 }

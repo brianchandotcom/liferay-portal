@@ -94,54 +94,9 @@ public class TasksOverviewSectionFragmentRenderer
 
 		ObjectEntry objectEntry = (ObjectEntry)object;
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		ObjectDefinition taskObjectDefinition =
-			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					"L_CMP_TASK", themeDisplay.getCompanyId());
-
 		return HashMapBuilder.<String, Object>put(
-			"blockedCount",
-			() -> _getCount(objectEntry, taskObjectDefinition, "blocked")
-		).put(
-			"doneCount",
-			() -> _getCount(objectEntry, taskObjectDefinition, "done")
-		).put(
-			"inProgressCount",
-			() -> _getCount(objectEntry, taskObjectDefinition, "inProgress")
-		).put(
-			"overdueCount",
-			() -> _getCount(objectEntry, taskObjectDefinition, "overdue")
-		).put(
-			"totalCount",
-			() -> _getCount(objectEntry, taskObjectDefinition, null)
+			"cmpProjectId", objectEntry.getObjectEntryId()
 		).build();
-	}
-
-	private int _getCount(
-			ObjectEntry projectObjectEntry,
-			ObjectDefinition taskObjectDefinition, String state)
-		throws Exception {
-
-		StringBundler filterStringBundler = new StringBundler(1);
-
-		if (Objects.equals(state, "overdue")) {
-			filterStringBundler.append(
-				"dueDate lt " + LocalDate.now() + " and state ne 'done'");
-		}
-		else if (state != null) {
-			filterStringBundler.append("state eq '" + state + "'");
-		}
-
-		return _objectEntryLocalService.getValuesListCount(
-			new Long[] {projectObjectEntry.getGroupId()}, 0, 0,
-			taskObjectDefinition.getObjectDefinitionId(),
-			_filterFactory.create(
-				filterStringBundler.toString(), taskObjectDefinition),
-			false, null);
 	}
 
 	@Reference(

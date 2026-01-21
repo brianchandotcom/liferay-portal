@@ -10,6 +10,7 @@ import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
 import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.object.client.dto.v1_0.ObjectEntryFolder;
 import com.liferay.headless.object.resource.v1_0.test.BaseObjectEntryFolderResourceTestCase;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -32,66 +33,59 @@ public class ImportTaskResourceTest
 
 	@Test
 	public void testPostImportTask() throws Exception {
+		String objectEntryFolderExternalReferenceCode =
+			RandomTestUtil.randomString();
 
 		// With "createStrategy" UPSERT
 
-		String label = RandomTestUtil.randomString();
-		String objectEntryFolderExternalReferenceCode =
-			RandomTestUtil.randomString();
-		String title = RandomTestUtil.randomString();
+		JSONObject jsonObject = JSONUtil.put(
+			"externalReferenceCode", objectEntryFolderExternalReferenceCode
+		).put(
+			"label", RandomTestUtil.randomString()
+		).put(
+			"title", RandomTestUtil.randomString()
+		);
 
 		ObjectEntryFolder objectEntryFolder = _postImportTask(
-			"UPSERT", objectEntryFolderExternalReferenceCode, label, title);
+			"UPSERT", jsonObject);
 
 		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"externalReferenceCode", objectEntryFolderExternalReferenceCode
-			).put(
-				"label", label
-			).put(
-				"title", title
-			).toString(),
-			objectEntryFolder.toString(), JSONCompareMode.LENIENT);
+			jsonObject.toString(), objectEntryFolder.toString(),
+			JSONCompareMode.LENIENT);
 
-		label = RandomTestUtil.randomString();
-		title = RandomTestUtil.randomString();
+		jsonObject = JSONUtil.put(
+			"externalReferenceCode", objectEntryFolderExternalReferenceCode
+		).put(
+			"label", RandomTestUtil.randomString()
+		).put(
+			"title", RandomTestUtil.randomString()
+		);
 
-		objectEntryFolder = _postImportTask(
-			"UPSERT", objectEntryFolderExternalReferenceCode, label, title);
+		objectEntryFolder = _postImportTask("UPSERT", jsonObject);
 
 		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"externalReferenceCode", objectEntryFolderExternalReferenceCode
-			).put(
-				"label", label
-			).put(
-				"title", title
-			).toString(),
-			objectEntryFolder.toString(), JSONCompareMode.LENIENT);
+			jsonObject.toString(), objectEntryFolder.toString(),
+			JSONCompareMode.LENIENT);
 
 		// With "createStrategy" INSERT
 
-		label = RandomTestUtil.randomString();
-		objectEntryFolderExternalReferenceCode = RandomTestUtil.randomString();
-		title = RandomTestUtil.randomString();
+		jsonObject = JSONUtil.put(
+			"externalReferenceCode", RandomTestUtil.randomString()
+		).put(
+			"label", RandomTestUtil.randomString()
+		).put(
+			"title", RandomTestUtil.randomString()
+		);
 
-		objectEntryFolder = _postImportTask(
-			"INSERT", objectEntryFolderExternalReferenceCode, label, title);
+		objectEntryFolder = _postImportTask("INSERT", jsonObject);
 
 		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"externalReferenceCode", objectEntryFolderExternalReferenceCode
-			).put(
-				"label", label
-			).put(
-				"title", title
-			).toString(),
-			objectEntryFolder.toString(), JSONCompareMode.LENIENT);
+			jsonObject.toString(), objectEntryFolder.toString(),
+			JSONCompareMode.LENIENT);
 	}
 
 	private ObjectEntryFolder _postImportTask(
-			String createStrategy, String externalReferenceCode, String label,
-			String title)
+			String createStrategy, JSONObject jsonObject)
 		throws Exception {
 
 		ImportTaskResource importTaskResource = ImportTaskResource.builder(
@@ -111,20 +105,15 @@ public class ImportTaskResourceTest
 			"com.liferay.headless.object.dto.v1_0.ObjectEntryFolder", null,
 			null, null, createStrategy, null, null, null, null,
 			JSONUtil.putAll(
-				JSONUtil.put(
-					"externalReferenceCode", externalReferenceCode
-				).put(
-					"label", label
-				).put(
-					"title", title
-				)
+				jsonObject
 			).toString());
 
 		waitForFinish("COMPLETED", JSONUtil.put("id", importTask.getId()));
 
 		return objectEntryFolderResource.
 			getScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
-				String.valueOf(testGroup.getGroupId()), externalReferenceCode);
+				String.valueOf(testGroup.getGroupId()),
+				jsonObject.getString("externalReferenceCode"));
 	}
 
 }

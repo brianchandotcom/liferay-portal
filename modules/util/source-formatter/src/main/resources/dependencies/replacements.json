@@ -5922,12 +5922,19 @@
 	{
 		"classNames": [
 			"DLAppLocalService",
-			"DLAppLocalServiceUtil",
-			"DLAppService",
-			"DLAppServiceUtil"
+			"DLAppLocalServiceUtil"
 		],
 		"from": "addFolder(long paramName, long paramName, long paramName, String paramName, String paramName, ServiceContext paramName)",
 		"issueKey": "LPS-202927",
 		"to": "addFolder(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#)"
+	},
+	{
+		"classNames": [
+			"DLAppService",
+			"DLAppServiceUtil"
+		],
+		"from": "addFolder(long paramName, long paramName, String paramName, String paramName, ServiceContext paramName)",
+		"issueKey": "LPS-202927",
+		"to": "addFolder(null, param#0#, param#1#, param#2#, param#3#, param#4#)"
 	}
 ]

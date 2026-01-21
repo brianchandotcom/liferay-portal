@@ -5267,6 +5267,14 @@
 		"to": "getSitemap(param#0#, param#1#, param#2#)"
 	},
 	{
+		"classNames": [
+			"CPMedia"
+		],
+		"from": "getDownloadUrl",
+		"issueKey": "LPD-60622",
+		"to": "getDownloadURL"
+	},
+	{
 		"from": "CommerceAccountHelper.getCommerceAccountGroupIds(long paramName)",
 		"issueKey": "LPD-60625",
 		"newImports": [

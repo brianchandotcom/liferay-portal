@@ -172,31 +172,9 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 			return null;
 		}
 
-		try {
-			DDMFieldAttribute ddmFieldAttribute =
-				_ddmFieldAttributePersistence.findByS_AN_First(
-					storageId, "availableLanguageIds", null);
-
-			List<String> availableLanguageIds = StringUtil.split(
-				ddmFieldAttribute.getAttributeValue());
-
-			if (!availableLanguageIds.contains(languageId)) {
-				ddmFieldAttribute =
-					_ddmFieldAttributePersistence.findByS_AN_First(
-						storageId, "defaultLanguageId", null);
-
-				languageId = ddmFieldAttribute.getAttributeValue();
-			}
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
-
 		return _getDDMFormValues(
 			_ddmFieldAttributePersistence.findByS_L(
-				storageId, new String[] {languageId, StringPool.BLANK}),
+				storageId, _getLanguages(languageId, storageId)),
 			ddmFields, ddmForm);
 	}
 
@@ -985,6 +963,39 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 
 	private String _getKey(String... parameters) {
 		return StringUtil.merge(parameters, StringPool.POUND);
+	}
+
+	private String[] _getLanguages(String languageId, long storageId) {
+		try {
+			DDMFieldAttribute ddmFieldAttribute =
+				_ddmFieldAttributePersistence.findByS_AN_First(
+					storageId, "availableLanguageIds", null);
+
+			List<String> availableLanguageIds = StringUtil.split(
+				ddmFieldAttribute.getAttributeValue());
+
+			ddmFieldAttribute = _ddmFieldAttributePersistence.findByS_AN_First(
+				storageId, "defaultLanguageId", null);
+
+			String defaultLanguageId = ddmFieldAttribute.getAttributeValue();
+
+			if (!availableLanguageIds.contains(languageId) ||
+				Objects.equals(defaultLanguageId, languageId)) {
+
+				return new String[] {defaultLanguageId, StringPool.BLANK};
+			}
+
+			return new String[] {
+				languageId, defaultLanguageId, StringPool.BLANK
+			};
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return new String[] {languageId, StringPool.BLANK};
 	}
 
 	private String _getValueString(

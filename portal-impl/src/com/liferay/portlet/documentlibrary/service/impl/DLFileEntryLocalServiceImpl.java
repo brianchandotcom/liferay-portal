@@ -3573,6 +3573,9 @@ public class DLFileEntryLocalServiceImpl
 
 		// File version
 
+		lastDLFileVersion = _dlFileVersionLocalService.getDLFileVersion(
+			lastDLFileVersion.getFileVersionId());
+
 		String oldStoreFileName = lastDLFileVersion.getStoreFileName();
 
 		lastDLFileVersion.setUserId(latestDLFileVersion.getUserId());

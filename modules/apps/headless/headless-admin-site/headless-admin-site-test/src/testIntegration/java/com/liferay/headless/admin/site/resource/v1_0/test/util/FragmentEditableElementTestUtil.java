@@ -15,6 +15,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.FragmentImageValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentImageViewport;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentInlineValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLink;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLinkTextValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemContextReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemExternalReference;
@@ -248,14 +249,18 @@ public class FragmentEditableElementTestUtil {
 		TextFragmentEditableElementValue textFragmentEditableElementValue =
 			new TextFragmentEditableElementValue();
 
-		textFragmentEditableElementValue.
-			setFragmentEditableElementValueFragmentLink(
-				() -> _getFragmentEditableElementValueFragmentLink(
-					prefix, fragmentLink));
-		textFragmentEditableElementValue.setTextFragmentValue(
-			() -> _getTextFragmentValue(
-				contextSource, fragmentMappedValueItemReferenceType,
-				textFragmentValueType));
+		textFragmentEditableElementValue.setFragmentLinkTextValue(
+			() -> new FragmentLinkTextValue() {
+				{
+					setFragmentEditableElementValueFragmentLink(
+						() -> _getFragmentEditableElementValueFragmentLink(
+							prefix, fragmentLink));
+					setTextFragmentValue(
+						() -> _getTextFragmentValue(
+							contextSource, fragmentMappedValueItemReferenceType,
+							textFragmentValueType));
+				}
+			});
 		textFragmentEditableElementValue.setType(
 			() -> FragmentEditableElementValue.Type.TEXT);
 

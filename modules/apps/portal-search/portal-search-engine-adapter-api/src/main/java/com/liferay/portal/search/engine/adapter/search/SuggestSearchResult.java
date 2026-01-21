@@ -59,8 +59,13 @@ public class SuggestSearchResult {
 		public static class Option {
 
 			public Option(String text, float score) {
+				this(text, score, null);
+			}
+
+			public Option(String text, float score, Boolean collateMatch) {
 				_text = text;
 				_score = score;
+				_collateMatch = collateMatch;
 			}
 
 			public Integer getFrequency() {
@@ -79,6 +84,10 @@ public class SuggestSearchResult {
 				return _text;
 			}
 
+			public Boolean isCollateMatch() {
+				return _collateMatch;
+			}
+
 			public void setFrequency(Integer frequency) {
 				_frequency = frequency;
 			}
@@ -87,6 +96,7 @@ public class SuggestSearchResult {
 				_highlightedText = highlightedText;
 			}
 
+			private final Boolean _collateMatch;
 			private Integer _frequency;
 			private String _highlightedText;
 			private final float _score;

@@ -7,6 +7,8 @@ package com.liferay.site.cmp.site.initializer.internal.display.context.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
+import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -103,6 +105,25 @@ public class ViewProjectsSectionDisplayContextTest
 			fdsActionDropdownItems.get(4));
 		assertFDSActionDropdownItem(
 			"trash", "delete", "Delete", null, fdsActionDropdownItems.get(5));
+	}
+
+	@Test
+	public void testGetFDSFilters() throws Exception {
+		List<FDSFilter> fdsFilters = getFDSFilters(null);
+
+		Assert.assertEquals(fdsFilters.toString(), 4, fdsFilters.size());
+
+		assertFDSFilter(
+			FDSEntityFieldTypes.DATE_TIME, "cmpDueDate", "due-date",
+			fdsFilters.get(0));
+		assertFDSFilter(
+			FDSEntityFieldTypes.INTEGER, "cmpProjectManagerUserId", "manager",
+			fdsFilters.get(1));
+		assertFDSFilter(
+			FDSEntityFieldTypes.INTEGER, "cmpProjectSponsorUserId", "sponsor",
+			fdsFilters.get(2));
+		assertFDSFilter(
+			FDSEntityFieldTypes.STRING, "cmpState", "state", fdsFilters.get(3));
 	}
 
 	@Override

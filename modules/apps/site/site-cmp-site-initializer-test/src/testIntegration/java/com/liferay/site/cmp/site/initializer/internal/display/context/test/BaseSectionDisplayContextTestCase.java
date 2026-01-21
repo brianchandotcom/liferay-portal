@@ -6,6 +6,7 @@
 package com.liferay.site.cmp.site.initializer.internal.display.context.test;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -72,6 +73,16 @@ public abstract class BaseSectionDisplayContextTestCase {
 		Assert.assertEquals(expectedLabel, fdsActionDropdownItem.get("label"));
 	}
 
+	protected void assertFDSFilter(
+		String expectedEntityFieldType, String expectedId, String expectedLabel,
+		FDSFilter fdsFilter) {
+
+		Assert.assertEquals(
+			expectedEntityFieldType, fdsFilter.getEntityFieldType());
+		Assert.assertEquals(expectedId, fdsFilter.getId());
+		Assert.assertEquals(expectedLabel, fdsFilter.getLabel());
+	}
+
 	protected CreationMenu getCreationMenu(AssetEntry assetEntry)
 		throws Exception {
 
@@ -87,6 +98,14 @@ public abstract class BaseSectionDisplayContextTestCase {
 		return ReflectionTestUtil.invoke(
 			getSectionDisplayContext(_getHttpServletRequest(assetEntry)),
 			"getFDSActionDropdownItems", new Class<?>[0]);
+	}
+
+	protected List<FDSFilter> getFDSFilters(AssetEntry assetEntry)
+		throws Exception {
+
+		return ReflectionTestUtil.invoke(
+			getSectionDisplayContext(_getHttpServletRequest(assetEntry)),
+			"getFDSFilters", new Class<?>[0]);
 	}
 
 	protected abstract String getObjectDefinitionExternalReferenceCode();

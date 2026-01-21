@@ -12,13 +12,20 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.segments.constants.SegmentsEntryConstants;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
+import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
+import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.segments.service.SegmentsExperimentLocalServiceUtil;
 
 import java.io.IOException;
+
+import java.util.Objects;
 
 /**
  * @author Eduardo García
@@ -38,6 +45,24 @@ public class SegmentsExperienceImpl extends SegmentsExperienceBaseImpl {
 	}
 
 	@Override
+	public long getSegmentsEntryId() {
+		if (hasDefaultSegmentsEntry()) {
+			return SegmentsEntryConstants.ID_DEFAULT;
+		}
+
+		SegmentsEntry segmentsEntry =
+			SegmentsEntryLocalServiceUtil.
+				fetchSegmentsEntryByExternalReferenceCode(
+					getSegmentsEntryERC(), getSegmentsEntryGroupId());
+
+		if (segmentsEntry == null) {
+			return SegmentsEntryConstants.ID_MISSING;
+		}
+
+		return segmentsEntry.getSegmentsEntryId();
+	}
+
+	@Override
 	public UnicodeProperties getTypeSettingsUnicodeProperties() {
 		if (_typeSettingsUnicodeProperties == null) {
 			_typeSettingsUnicodeProperties = new UnicodeProperties(true);
@@ -51,6 +76,10 @@ public class SegmentsExperienceImpl extends SegmentsExperienceBaseImpl {
 		}
 
 		return _typeSettingsUnicodeProperties;
+	}
+
+	public boolean hasDefaultSegmentsEntry() {
+		return Validator.isNull(getSegmentsEntryERC());
 	}
 
 	@Override
@@ -73,6 +102,13 @@ public class SegmentsExperienceImpl extends SegmentsExperienceBaseImpl {
 		}
 
 		return true;
+	}
+
+	@Override
+	public boolean isDefault() {
+		return Objects.equals(
+			getSegmentsExperienceKey(),
+			SegmentsExperienceConstants.KEY_DEFAULT);
 	}
 
 	@Override

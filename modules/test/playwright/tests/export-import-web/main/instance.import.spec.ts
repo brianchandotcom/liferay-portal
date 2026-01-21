@@ -950,82 +950,6 @@ test('Can import many to many entries', async ({
 	});
 });
 
-test('Can only import custom object entries when their definitions are already in the system', async ({
-	apiHelpers,
-	applicationsMenuPage,
-	companyExportImportPage,
-	exportImportPage,
-}) => {
-	const objectActionAPIClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
-
-	const objectDefinitionExternalReferenceCode = `ObjectDefinition${getRandomInt()}`;
-
-	const objectDefinition1 =
-		await apiHelpers.objectAdmin.postRandomObjectDefinition({
-			className: `com.liferay.object.model.ObjectDefinition#${objectDefinitionExternalReferenceCode}`,
-			objectDefinitionExternalReferenceCode,
-			status: {code: 0},
-		});
-
-	let objectEntry;
-	let exportFilePath;
-
-	try {
-		objectEntry = await apiHelpers.objectEntry.postObjectEntry(
-			{externalReferenceCode: 'testERC', textField: 'test'},
-			`${normalizeRestPath(objectDefinition1.restContextPath)}`
-		);
-
-		await applicationsMenuPage.goToExport();
-
-		exportFilePath = await exportImportPage.export({
-			portletLabels: [`${objectDefinitionExternalReferenceCode} 1 Items`],
-		});
-	}
-	catch {
-
-		// Ensure cleanup if test execution stops before removing the object definition.
-
-		apiHelpers.data.push({
-			id: objectDefinition1.id,
-			type: 'objectDefinition',
-		});
-	}
-
-	await objectActionAPIClient.deleteObjectDefinition(objectDefinition1.id);
-
-	await companyExportImportPage.import({
-		expectedUploadErrorMessage: `The Data Handler for the "${objectDefinitionExternalReferenceCode}" portlet is missing from the system.`,
-		filePath: exportFilePath,
-		includePermissions: false,
-	});
-
-	const objectDefinition2 =
-		await apiHelpers.objectAdmin.postRandomObjectDefinition({
-			className: `com.liferay.object.model.ObjectDefinition#${objectDefinitionExternalReferenceCode}`,
-			objectDefinitionExternalReferenceCode,
-			status: {code: 0},
-		});
-
-	apiHelpers.data.push({id: objectDefinition2.id, type: 'objectDefinition'});
-
-	await companyExportImportPage.import({
-		filePath: exportFilePath,
-	});
-
-	expect(
-		await apiHelpers.get(
-			`${apiHelpers.baseUrl}${normalizeRestPath(objectDefinition2.restContextPath)}/by-external-reference-code/${objectEntry.externalReferenceCode}`
-		)
-	).toEqual(
-		expect.objectContaining({
-			externalReferenceCode: objectEntry.externalReferenceCode,
-			textField: objectEntry.textField,
-		})
-	);
-});
-
 test('Can see corresponding elements at instance level', async ({
 	apiHelpers,
 	applicationsMenuPage,
@@ -1189,5 +1113,69 @@ test('Cannot import a site scoped lar file', async ({
 			'The LAR file contains one or more entities with a different scope.',
 		filePath: exportFilePath,
 		includePermissions: false,
+	});
+});
+
+test('Can import at instance level when LAR contains custom objects without existing definitions', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	companyExportImportPage,
+	exportImportPage,
+}) => {
+	let applicationName;
+	let exportFilePath;
+	const objectDefinitionExternalReferenceCode = `ObjectDefinition${getRandomInt()}`;
+	let objectDefinition;
+
+	await test.step('Create the object definition', async () => {
+		objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				className: `com.liferay.object.model.ObjectDefinition#${objectDefinitionExternalReferenceCode}`,
+				objectDefinitionExternalReferenceCode,
+				status: {code: 0},
+			});
+
+		applicationName = `${normalizeRestPath(objectDefinition.restContextPath)}`;
+	});
+
+	await test.step('Create the object entry', async () => {
+		try {
+			await apiHelpers.objectEntry.postObjectEntry(
+				{externalReferenceCode: 'testERC', textField: 'test'},
+				applicationName
+			);
+		}
+		catch {
+
+			// Ensure cleanup if test execution stops before removing the object definition.
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+		}
+	});
+
+	await test.step('Export', async () => {
+		await applicationsMenuPage.goToExport();
+
+		exportFilePath = await exportImportPage.export({
+			portletLabels: [`${objectDefinitionExternalReferenceCode} 1 Items`],
+		});
+	});
+
+	await test.step('Delete the object definition', async () => {
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		await objectDefinitionAPIClient.deleteObjectDefinition(
+			objectDefinition.id
+		);
+	});
+
+	await test.step('Import', async () => {
+		await companyExportImportPage.import({
+			filePath: exportFilePath,
+		});
 	});
 });

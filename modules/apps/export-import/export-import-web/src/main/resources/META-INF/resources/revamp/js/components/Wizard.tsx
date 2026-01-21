@@ -45,7 +45,6 @@ export function Wizard({
 
 							<ClayMultiStepNav.Indicator
 								label={1 + index}
-								onClick={() => setStepNumber(index)}
 								subTitle={title}
 							/>
 						</ClayMultiStepNav.Item>

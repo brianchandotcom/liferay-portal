@@ -5,6 +5,7 @@
 
 package com.liferay.layout.page.template.service.impl;
 
+import com.liferay.batch.engine.thread.local.BatchEngineThreadLocal;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
@@ -85,7 +86,9 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 
 		// Layout page template structure rel
 
-		if (!ExportImportThreadLocal.isImportInProcess()) {
+		if (BatchEngineThreadLocal.isBatchImportInProcess() ||
+			!ExportImportThreadLocal.isImportInProcess()) {
+
 			_layoutPageTemplateStructureRelLocalService.
 				addLayoutPageTemplateStructureRel(
 					userId, groupId, layoutPageTemplateStructureId,

@@ -14,6 +14,7 @@ import com.liferay.layout.page.template.kernel.provider.util.LayoutPageTemplateE
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
@@ -2617,16 +2618,20 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				LayoutTable.INSTANCE.portletLayoutPageTemplateEntryERC.eq(
 					portletLayoutPageTemplateEntryERC
 				).and(
-					LayoutTable.INSTANCE.portletLayoutPageTemplateEntryScopeERC.
-						eq(
-							group.getExternalReferenceCode()
-						).or(
-							LayoutTable.INSTANCE.
-								portletLayoutPageTemplateEntryScopeERC.isNull(
-								).and(
-									LayoutTable.INSTANCE.groupId.eq(groupId)
-								)
-						)
+					Predicate.withParentheses(
+						LayoutTable.INSTANCE.
+							portletLayoutPageTemplateEntryScopeERC.eq(
+								group.getExternalReferenceCode()
+							).or(
+								Predicate.withParentheses(
+									LayoutTable.INSTANCE.
+										portletLayoutPageTemplateEntryScopeERC.
+											isNull(
+											).and(
+												LayoutTable.INSTANCE.groupId.eq(
+													groupId)
+											))
+							))
 				)
 			));
 

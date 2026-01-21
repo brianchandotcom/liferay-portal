@@ -387,17 +387,15 @@ baseTest(
 
 		await journalEditArticlePage.defaultTemplateButton.click();
 
-		await page
-			.locator(
-				'[id="_com_liferay_journal_web_portlet_JournalPortlet_previewWithTemplate"]'
-			)
-			.waitFor();
+		const previewButton = page.locator(
+			'[id="_com_liferay_journal_web_portlet_JournalPortlet_previewWithTemplate"]'
+		);
 
-		await page
-			.locator(
-				'[id="_com_liferay_journal_web_portlet_JournalPortlet_previewWithTemplate"]'
-			)
-			.click();
+		await previewButton.waitFor({state: 'attached'});
+
+		await previewButton.scrollIntoViewIfNeeded();
+
+		await previewButton.click({force: true});
 
 		const dialog = page.getByRole('dialog');
 

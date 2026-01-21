@@ -149,7 +149,8 @@ public class CommentsComponentSectionFragmentRenderer
 			themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
 			GroupConstants.CMS_FRIENDLY_URL, actionId, "?classNameId=",
 			_portal.getClassNameId(objectDefinition.getClassName()),
-			"&classPK=", objectEntry.getObjectEntryId());
+			"&classPK=", objectEntry.getObjectEntryId(), "&p_l_id=",
+			themeDisplay.getPlid());
 	}
 
 	@Reference

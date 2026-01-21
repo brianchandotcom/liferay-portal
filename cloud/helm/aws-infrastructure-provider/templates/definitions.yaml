@@ -36,6 +36,9 @@ spec:
                                             type: string
                                         blue:
                                             properties:
+                                                engineVersion:
+                                                    default: "16.11"
+                                                    type: string
                                                 instanceClass:
                                                     default: db.t3.medium
                                                     type: string
@@ -53,6 +56,9 @@ spec:
                                             type: object
                                         green:
                                             properties:
+                                                engineVersion:
+                                                    default: "16.11"
+                                                    type: string
                                                 instanceClass:
                                                     default: db.t3.medium
                                                     type: string

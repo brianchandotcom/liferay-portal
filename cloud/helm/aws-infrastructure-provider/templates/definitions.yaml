@@ -1,0 +1,143 @@
+apiVersion: apiextensions.crossplane.io/v2
+kind: CompositeResourceDefinition
+metadata:
+    annotations:
+        argocd.argoproj.io/sync-options: ServerSideApply=true
+        argocd.argoproj.io/sync-wave: "-60"
+    name: liferayinfrastructures.aws.liferay.com
+spec:
+    group: aws.liferay.com
+    names:
+        kind: LiferayInfrastructure
+        plural: liferayinfrastructures
+        shortNames:
+            - lfrinfra
+            - lri
+        singular: liferayinfrastructure
+    versions:
+        -   name: v1alpha1
+            referenceable: true
+            schema:
+                openAPIV3Schema:
+                    properties:
+                        spec:
+                            properties:
+                                commonTags:
+                                    additionalProperties: true
+                                    default: {}
+                                    type: object
+                                database:
+                                    properties:
+                                        activeSlot:
+                                            default: blue
+                                            enum:
+                                                - blue
+                                                - green
+                                            type: string
+                                        blue:
+                                            properties:
+                                                instanceClass:
+                                                    default: db.t3.medium
+                                                    type: string
+                                                region:
+                                                    default: "us-west-2"
+                                                    type: string
+                                                storageGB:
+                                                    default: 20
+                                                    type: integer
+                                                username:
+                                                    default: liferay_database_admin
+                                                    type: string
+                                            required:
+                                                - region
+                                            type: object
+                                        green:
+                                            properties:
+                                                instanceClass:
+                                                    default: db.t3.medium
+                                                    type: string
+                                                region:
+                                                    default: "us-west-2"
+                                                    type: string
+                                                storageGB:
+                                                    default: 20
+                                                    type: integer
+                                                username:
+                                                    default: liferay_database_admin
+                                                    type: string
+                                            required:
+                                                - region
+                                            type: object
+                                    required:
+                                        - activeSlot
+                                    type: object
+                                deletionProtection:
+                                    default: false
+                                    type: boolean
+                                environmentId:
+                                    type: string
+                                projectId:
+                                    type: string
+                                search:
+                                    properties:
+                                        engineVersion:
+                                            default: "OpenSearch_2.15"
+                                            type: string
+                                        instanceCount:
+                                            default: 2
+                                            type: integer
+                                        instanceType:
+                                            default: t3.small.search
+                                            type: string
+                                        region:
+                                            default: "us-west-2"
+                                            type: string
+                                        username:
+                                            default: liferay_search_admin
+                                            type: string
+                                    required:
+                                        - region
+                                    type: object
+                                storage:
+                                    properties:
+                                        activeSlot:
+                                            default: blue
+                                            enum:
+                                                - blue
+                                                - green
+                                            type: string
+                                        blue:
+                                            properties:
+                                                enableVersioning:
+                                                    default: true
+                                                    type: boolean
+                                                region:
+                                                    default: "us-west-2"
+                                                    type: string
+                                            required:
+                                                - region
+                                            type: object
+                                        green:
+                                            properties:
+                                                enableVersioning:
+                                                    default: true
+                                                    type: boolean
+                                                region:
+                                                    default: "us-west-2"
+                                                    type: string
+                                            required:
+                                                - region
+                                            type: object
+                                    required:
+                                        - activeSlot
+                                    type: object
+                            required:
+                                - database
+                                - deletionProtection
+                                - environmentId
+                                - projectId
+                                - search
+                                - storage
+                            type: object
+                    type: object
+            served: true

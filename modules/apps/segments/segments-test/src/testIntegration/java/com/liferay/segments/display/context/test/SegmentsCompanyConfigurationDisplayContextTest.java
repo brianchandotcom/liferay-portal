@@ -6,7 +6,7 @@
 package com.liferay.segments.display.context.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.configuration.admin.display.ConfigurationScreen;
+import com.liferay.configuration.admin.display.ConfigurationFormRenderer;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -60,7 +60,7 @@ public class SegmentsCompanyConfigurationDisplayContextTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			_getMockHttpServletRequest();
 
-		_configurationScreen.render(
+		_configurationFormRenderer.render(
 			mockHttpServletRequest, new MockHttpServletResponse());
 
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
@@ -114,9 +114,9 @@ public class SegmentsCompanyConfigurationDisplayContextTest {
 	private CompanyLocalService _companyLocalService;
 
 	@Inject(
-		filter = "component.name=com.liferay.segments.web.internal.configuration.admin.display.SegmentsCompanyConfigurationScreen"
+		filter = "component.name=com.liferay.segments.web.internal.configuration.admin.display.SegmentsCompanyConfigurationFormRenderer"
 	)
-	private ConfigurationScreen _configurationScreen;
+	private ConfigurationFormRenderer _configurationFormRenderer;
 
 	@DeleteAfterTestRun
 	private Group _group;

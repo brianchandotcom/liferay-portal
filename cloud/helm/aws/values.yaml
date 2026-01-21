@@ -54,7 +54,6 @@ liferay-default:
                                     url="${base_url}.${type}.jar"
                                     http_code=$(curl \
                                         "$url" \
-                                        --fail \
                                         --location \
                                         --output-dir "$deploy_dir" \
                                         --remote-name \

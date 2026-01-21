@@ -91,9 +91,18 @@ public class AssetTagLocalServiceTest {
 		ServiceContextThreadLocal.popServiceContext();
 	}
 
-	@Test(expected = DuplicateTagException.class)
+	@Test
 	public void testAddDuplicateTags() throws Exception {
-		_addAssetTags(new String[] {"tag", "tag"});
+		try {
+			_addAssetTags(new String[] {"tag", "tag"});
+		}
+		catch (Exception exception) {
+			Assert.assertTrue(exception instanceof RuntimeException);
+
+			Throwable throwable = exception.getCause();
+
+			Assert.assertTrue(throwable instanceof DuplicateTagException);
+		}
 	}
 
 	@Test

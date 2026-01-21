@@ -4957,6 +4957,19 @@
 		"to": "fetchLayoutPageTemplateStructure(param#0#, param#1#)"
 	},
 	{
+		"classNames": [
+			"JournalArticleLocalServiceWrapper"
+		],
+		"classStructurePattern": true,
+		"issueKey": "LPD-59748",
+		"methodsToFormat": [
+			{
+				"from": "regex:@Override\\s+public JournalArticle (?<methodName>add|update)Article\\(\\s+String externalReferenceCode,\\s+long userId,\\s+long groupId,\\s+long folderId,\\s+long classNameId,\\s+long classPK,\\s+String articleId,\\s+boolean autoArticleId,\\s+double version,\\s+Map<Locale,\\s+String> titleMap,\\s+Map<Locale,\\s+String> descriptionMap,\\s+Map<Locale,\\s+String> friendlyURLMap,\\s+String content,\\s+long ddmStructureId,\\s+String ddmTemplateKey,\\s+String layoutUuid,\\s+int displayDateMonth,\\s+int displayDateDay,\\s+int displayDateYear,\\s+int displayDateHour,\\s+int displayDateMinute,\\s+int expirationDateMonth,\\s+int expirationDateDay,\\s+int expirationDateYear,\\s+int expirationDateHour,\\s+int expirationDateMinute,\\s+boolean neverExpire,\\s+int reviewDateMonth,\\s+int reviewDateDay,\\s+int reviewDateYear,\\s+int reviewDateHour,\\s+int reviewDateMinute,\\s+boolean neverReview,\\s+boolean indexable,\\s+boolean smallImage,\\s+String smallImageURL,\\s+File smallImageFile,\\s+Map<String,\\s+byte\\[\\]> images,\\s+String articleURL,\\s+ServiceContext serviceContext\\)",
+				"to": "@Override\n\tpublic JournalArticle ${methodName}Article(\n\t\t\tString externalReferenceCode, long userId, long groupId,\n\t\t\tlong folderId, long classNameId, long classPK, String articleId,\n\t\t\tboolean autoArticleId, double version, Map<Locale, String> titleMap,\n\t\t\tMap<Locale, String> descriptionMap,\n\t\t\tMap<Locale, String> friendlyURLMap, String content,\n\t\t\tlong ddmStructureId, String ddmTemplateKey, String layoutUuid,\n\t\t\tint displayDateMonth, int displayDateDay, int displayDateYear,\n\t\t\tint displayDateHour, int displayDateMinute, int expirationDateMonth,\n\t\t\tint expirationDateDay, int expirationDateYear,\n\t\t\tint expirationDateHour, int expirationDateMinute,\n\t\t\tboolean neverExpire, int reviewDateMonth, int reviewDateDay,\n\t\t\tint reviewDateYear, int reviewDateHour, int reviewDateMinute,\n\t\t\tboolean neverReview, boolean indexable, boolean smallImage,\n\t\t\tlong smallImageId, int smallImageSource, String smallImageURL,\n\t\t\tFile smallImageFile, Map<String, byte[]> images, String articleURL,\n\t\t\tServiceContext serviceContext)"
+			}
+		]
+	},
+	{
 		"from": "PropsValues.XML_SITEMAP_INDEX_ENABLED",
 		"issueKey": "LPD-59753",
 		"newImports": [

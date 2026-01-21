@@ -10,6 +10,8 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.solr8.internal.SolrQuerySuggester;
 import com.liferay.portal.search.solr8.internal.connection.SolrClientManager;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
@@ -35,11 +37,16 @@ public class SolrQuerySuggesterSafeguardsTest {
 	public void testErrorReturnsEmptyResults() throws Exception {
 		SolrQuerySuggester solrQuerySuggester = createSolrQuerySuggester();
 
-		String[] querySuggestions = solrQuerySuggester.suggestKeywordQueries(
-			createSearchContext(), 0);
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				SolrQuerySuggester.class.getName(), LoggerTestUtil.ERROR)) {
 
-		Assert.assertEquals(
-			Arrays.toString(querySuggestions), 0, querySuggestions.length);
+			String[] querySuggestions =
+				solrQuerySuggester.suggestKeywordQueries(
+					createSearchContext(), 0);
+
+			Assert.assertEquals(
+				Arrays.toString(querySuggestions), 0, querySuggestions.length);
+		}
 	}
 
 	protected SearchContext createSearchContext() {

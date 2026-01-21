@@ -14,8 +14,6 @@ import com.liferay.portal.search.elasticsearch8.internal.document.ElasticsearchD
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Petteri Karttunen
  */
@@ -26,11 +24,11 @@ public abstract class BaseDocumentRequestTranslator {
 		com.liferay.portal.kernel.search.Document document71) {
 
 		if (document != null) {
-			return elasticsearchDocumentFactory.getElasticsearchDocument(
+			return _elasticsearchDocumentFactory.getElasticsearchDocument(
 				document);
 		}
 
-		return elasticsearchDocumentFactory.getElasticsearchDocument(
+		return _elasticsearchDocumentFactory.getElasticsearchDocument(
 			document71);
 	}
 
@@ -86,7 +84,7 @@ public abstract class BaseDocumentRequestTranslator {
 		return uid;
 	}
 
-	@Reference
-	protected ElasticsearchDocumentFactory elasticsearchDocumentFactory;
+	private static final ElasticsearchDocumentFactory
+		_elasticsearchDocumentFactory = new ElasticsearchDocumentFactory();
 
 }

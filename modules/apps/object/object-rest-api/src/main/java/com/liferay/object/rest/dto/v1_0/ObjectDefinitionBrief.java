@@ -48,7 +48,7 @@ public class ObjectDefinitionBrief implements Serializable {
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The object definition class name ID."
+		description = "The object definition's class name ID."
 	)
 	public Long getClassNameId() {
 		if (_classNameIdSupplier != null) {
@@ -83,7 +83,7 @@ public class ObjectDefinitionBrief implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The object definition class name ID.")
+	@GraphQLField(description = "The object definition's class name ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long classNameId;
 

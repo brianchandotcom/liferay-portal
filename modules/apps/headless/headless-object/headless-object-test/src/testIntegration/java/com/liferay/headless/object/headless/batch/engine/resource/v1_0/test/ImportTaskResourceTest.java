@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
@@ -82,14 +83,31 @@ public class ImportTaskResourceTest {
 
 	@Test
 	public void testPostImportTask() throws Exception {
-		ObjectEntryFolder objectEntryFolder =
-			_objectEntryFolderResource.postScopeScopeKeyObjectEntryFolder(
-				_testGroup.getExternalReferenceCode(),
-				_randomObjectEntryFolder());
+
+		// With "createStrategy" UPSERT
+
+		JSONObject jsonObject = JSONUtil.put(
+			"externalReferenceCode", RandomTestUtil.randomString()
+		).put(
+			"label", RandomTestUtil.randomString()
+		).put(
+			"title", RandomTestUtil.randomString()
+		);
+
+		ObjectEntryFolder objectEntryFolder = _postImportTask(
+			"UPSERT", "COMPLETED", jsonObject, null);
+
+		Assert.assertTrue(Validator.isNull(objectEntryFolder.getDescription()));
+
+		JSONAssert.assertEquals(
+			jsonObject.toString(), objectEntryFolder.toString(),
+			JSONCompareMode.LENIENT);
 
 		// With "createStrategy" UPSERT and "updateStrategy" UPDATE
 
-		JSONObject jsonObject = JSONUtil.put(
+		jsonObject = JSONUtil.put(
+			"description", RandomTestUtil.randomString()
+		).put(
 			"externalReferenceCode",
 			objectEntryFolder.getExternalReferenceCode()
 		).put(
@@ -101,7 +119,6 @@ public class ImportTaskResourceTest {
 		objectEntryFolder = _postImportTask(
 			"UPSERT", "COMPLETED", jsonObject, "UPDATE");
 
-		//Assert.assertNull(objectEntryFolder.getDescription());
 		JSONAssert.assertEquals(
 			jsonObject.toString(), objectEntryFolder.toString(),
 			JSONCompareMode.LENIENT);

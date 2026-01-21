@@ -40,7 +40,7 @@
 		"packages": [
 			"apps/*/*",
 			"apps/*/*/*",
-			"apps/frontend-js/frontend-js-clay-web/clay/*",
+			"apps/frontend-js/frontend-js-clay-web/clay/clay-*",
 			"dxp/apps/*/*",
 			"dxp/apps/osb/osb-patcher/*",
 			"util/portal-tools-rest-builder-test-client-js",

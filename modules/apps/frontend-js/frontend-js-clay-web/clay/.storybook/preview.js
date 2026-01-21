@@ -15,7 +15,7 @@
 	}
 })();
 
-const spritemap = require('@clayui/css/lib/images/icons/icons.svg');
+const spritemap = require('@clayui/css/src/images/icons/icons.svg');
 import {Provider} from '@clayui/provider';
 import React, {useEffect} from 'react';
 import svg4everybody from 'svg4everybody';

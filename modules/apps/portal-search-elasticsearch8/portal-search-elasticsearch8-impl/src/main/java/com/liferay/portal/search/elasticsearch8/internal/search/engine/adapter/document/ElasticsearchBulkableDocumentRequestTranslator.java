@@ -9,7 +9,6 @@ import co.elastic.clients.elasticsearch.core.bulk.DeleteOperation;
 import co.elastic.clients.elasticsearch.core.bulk.IndexOperation;
 import co.elastic.clients.elasticsearch.core.bulk.UpdateOperation;
 
-import com.liferay.portal.search.engine.adapter.document.BulkableDocumentRequestTranslator;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.GetDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
@@ -18,8 +17,7 @@ import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 /**
  * @author Adam Brandizzi
  */
-public interface ElasticsearchBulkableDocumentRequestTranslator
-	extends BulkableDocumentRequestTranslator {
+public interface ElasticsearchBulkableDocumentRequestTranslator {
 
 	public DeleteOperation translate(
 		DeleteDocumentRequest deleteDocumentRequest);

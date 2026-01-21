@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document;
 
-import com.liferay.portal.search.engine.adapter.document.BulkableDocumentRequestTranslator;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.GetDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
@@ -19,8 +18,7 @@ import org.opensearch.client.opensearch.core.bulk.UpdateOperation;
  * @author Adam Brandizzi
  * @author Petteri Karttunen
  */
-public interface OpenSearchBulkableDocumentRequestTranslator
-	extends BulkableDocumentRequestTranslator {
+public interface OpenSearchBulkableDocumentRequestTranslator {
 
 	public DeleteOperation translate(
 		DeleteDocumentRequest deleteDocumentRequest);

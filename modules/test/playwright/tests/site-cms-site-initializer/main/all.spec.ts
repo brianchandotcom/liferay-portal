@@ -154,7 +154,9 @@ test(
 				page.getByText('Showing 1 to 1 of 1 entries.')
 			).toBeVisible();
 
-			await expect(page.getByLabel('contents')).toBeVisible();
+			await expect(
+				page.getByLabel('contents', {exact: true})
+			).toBeVisible();
 		});
 
 		await test.step('Copy file', async () => {
@@ -172,7 +174,7 @@ test(
 				page.getByText('Showing 1 to 1 of 1 entries.')
 			).toBeVisible();
 
-			await expect(page.getByLabel('files')).toBeVisible();
+			await expect(page.getByLabel('files', {exact: true})).toBeVisible();
 		});
 	}
 );

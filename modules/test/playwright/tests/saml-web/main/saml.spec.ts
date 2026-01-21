@@ -1472,22 +1472,15 @@ test('LPD-32213 AC1 TC1 and TC5: Verify SP initiated SSO from a restricted resou
 
 	await siteSettingsPage.goToSiteSetting('Login', 'Login');
 
-	await waitForLoading(siteSettingsPage.page);
+	const promptEnabled = siteSettingsPage.page.getByLabel('Prompt Enabled');
 
-	await siteSettingsPage.page.getByLabel('Prompt Enabled').setChecked(true);
+	await expect(promptEnabled).toBeVisible();
 
-	if (
-		await siteSettingsPage.page
-			.getByRole('button', {name: 'Save'})
-			.isVisible()
-	) {
-		await siteSettingsPage.page.getByRole('button', {name: 'Save'}).click();
-	}
-	else {
-		await siteSettingsPage.page
-			.getByRole('button', {name: 'Update'})
-			.click();
-	}
+	await promptEnabled.setChecked(true);
+
+	await siteSettingsPage.page
+		.getByRole('button', {name: /save|update/i})
+		.click();
 
 	await waitForAlert(siteSettingsPage.page);
 
@@ -3445,9 +3438,11 @@ test('LPD-37323 AC2/AC4 TC2: User switches between apps. When already logged in 
 
 	await systemSettingsPage.goToSystemSetting('Login', 'Login');
 
-	await waitForLoading(systemSettingsPage.page);
+	const promptEnabled = systemSettingsPage.page.getByLabel('Prompt Enabled');
 
-	await systemSettingsPage.page.getByLabel('Prompt Enabled').setChecked(true);
+	await expect(promptEnabled).toBeVisible();
+
+	await promptEnabled.setChecked(true);
 
 	await systemSettingsPage.page
 		.getByRole('button', {name: /save|update/i})

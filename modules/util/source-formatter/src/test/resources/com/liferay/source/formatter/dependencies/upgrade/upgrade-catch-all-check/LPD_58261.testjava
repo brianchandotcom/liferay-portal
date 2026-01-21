@@ -1,0 +1,44 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Jessyca Ferreira
+ */
+public class LPD_58261 {
+
+	public void method(
+		long userId, long groupId, boolean privateLayout, long parentLayoutId,
+		String name, String title, String description, String type,
+		boolean hidden, boolean system, String friendlyURL,
+		ServiceContext serviceContext) {
+
+		LayoutLocalServiceUtil.addLayout(
+			123, groupId, privateLayout, parentLayoutId, name, title,
+			description, type, hidden, system, friendlyURL, serviceContext);
+		LayoutLocalServiceUtil.addLayout(
+			userId, groupId, privateLayout, parentLayoutId, name, title,
+			description, type, hidden, system, friendlyURL, serviceContext);
+		LayoutServiceUtil.addLayout(
+			userId, groupId, privateLayout, parentLayoutId, name, title,
+			description, type, hidden, system, friendlyURL, serviceContext);
+		_layoutLocalService.addLayout(
+			userId, groupId, privateLayout, parentLayoutId, name, title,
+			description, type, hidden, system, friendlyURL, serviceContext);
+		_layoutService.addLayout(
+			userId, groupId, privateLayout, parentLayoutId, name, title,
+			description, type, hidden, system, friendlyURL, serviceContext);
+	}
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutService _layoutService;
+
+}

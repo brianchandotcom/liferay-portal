@@ -6,7 +6,6 @@
 package com.liferay.site.cmp.site.initializer.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -43,17 +42,12 @@ public class ViewProjectsJSPSectionFragmentRenderer
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		ObjectDefinition objectDefinition =
+		return new ViewProjectsSectionDisplayContext(
+			httpServletRequest,
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
-					"L_CMP_PROJECT", themeDisplay.getCompanyId());
-
-		if (objectDefinition == null) {
-			return null;
-		}
-
-		return new ViewProjectsSectionDisplayContext(
-			httpServletRequest, objectDefinition, _userLocalService);
+					"L_CMP_PROJECT", themeDisplay.getCompanyId()),
+			_userLocalService);
 	}
 
 	@Override

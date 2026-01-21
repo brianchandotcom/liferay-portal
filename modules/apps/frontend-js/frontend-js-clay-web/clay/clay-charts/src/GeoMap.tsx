@@ -1,6 +1,6 @@
 /**
- * SPDX-FileCopyrightText: © 2018 Liferay, Inc. <https://liferay.com>
- * SPDX-License-Identifier: BSD-3-Clause
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import {Grid, PointOptions} from 'billboard.js';
@@ -147,6 +147,7 @@ class GeomapBase {
 		}
 
 		// Highlight the clicked province
+
 		this.mapLayer!.selectAll('path').style('fill', (d: any) =>
 			this._selected && d === this._selected
 				? this._color.selected
@@ -181,6 +182,7 @@ class GeomapBase {
 		const features = mapData.features;
 
 		// Calculate domain based on values received
+
 		const values = features.map(
 			(f: any) => f.properties[this._color.value]
 		);
@@ -224,9 +226,9 @@ export interface IProps {
 	elementProps?: React.HTMLAttributes<HTMLDivElement>;
 	forwardRef: React.MutableRefObject<any>;
 	grid?: Grid;
-	predictionDate?: any;
 	point?: PointOptions;
 	pollingInterval?: number;
+	predictionDate?: any;
 	[key: string]: any;
 }
 

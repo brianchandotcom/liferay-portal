@@ -22,26 +22,6 @@ public interface SamlConfiguration {
 	public static String KEYSTORE_PATH_DEFAULT =
 		"${liferay.home}/data/keystore.jks";
 
-	@Meta.AD(
-		deflt = KEYSTORE_PATH_DEFAULT,
-		description = "saml-key-store-path-description",
-		id = "saml.keystore.path", name = "saml-key-store-path",
-		required = false
-	)
-	public String keyStorePath();
-
-	@Meta.AD(
-		deflt = "liferay", id = "saml.keystore.password",
-		name = "saml-key-store-password", required = false
-	)
-	public String keyStorePassword();
-
-	@Meta.AD(
-		deflt = "jks", id = "saml.keystore.type", name = "saml-key-store-type",
-		required = false
-	)
-	public String keyStoreType();
-
 	/**
 	 * Set the interval in minutes on how often to check for and delete SAML
 	 * IDP SSO sessions that are older than the maximum age set in the property
@@ -126,5 +106,25 @@ public interface SamlConfiguration {
 		name = "saml-idp-role-configuration-enabled", required = false
 	)
 	public boolean idpRoleConfigurationEnabled();
+
+	@Meta.AD(
+		deflt = "liferay", id = "saml.keystore.password",
+		name = "saml-key-store-password", required = false
+	)
+	public String keyStorePassword();
+
+	@Meta.AD(
+		deflt = KEYSTORE_PATH_DEFAULT,
+		description = "saml-key-store-path-description",
+		id = "saml.keystore.path", name = "saml-key-store-path",
+		required = false
+	)
+	public String keyStorePath();
+
+	@Meta.AD(
+		deflt = "jks", id = "saml.keystore.type", name = "saml-key-store-type",
+		required = false
+	)
+	public String keyStoreType();
 
 }

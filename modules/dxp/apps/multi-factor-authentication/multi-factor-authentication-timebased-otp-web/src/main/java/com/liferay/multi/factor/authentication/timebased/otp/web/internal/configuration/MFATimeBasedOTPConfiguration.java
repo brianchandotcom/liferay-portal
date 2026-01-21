@@ -27,16 +27,10 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 public interface MFATimeBasedOTPConfiguration {
 
 	@Meta.AD(
-		deflt = "false", description = "mfa-timebased-otp-enabled-description",
-		name = "enabled", required = false
+		deflt = "20", description = "algorithm-key-size-description",
+		name = "algorithm-key-size", required = false
 	)
-	public boolean enabled();
-
-	@Meta.AD(
-		deflt = "100", description = "order-description",
-		id = "service.ranking", name = "order", required = false
-	)
-	public int order();
+	public int algorithmKeySize();
 
 	@Meta.AD(
 		deflt = "3000", description = "clock-skew-description",
@@ -45,10 +39,10 @@ public interface MFATimeBasedOTPConfiguration {
 	public long clockSkew();
 
 	@Meta.AD(
-		deflt = "20", description = "algorithm-key-size-description",
-		name = "algorithm-key-size", required = false
+		deflt = "${resource:com/liferay/multi/factor/authentication/timebased/otp/configuration/dependencies/email_totp_reuse_attempt_warning_body.tmpl}",
+		name = "email-totp-reuse-attempt-warning-body", required = false
 	)
-	public int algorithmKeySize();
+	public LocalizedValuesMap emailTOTPReuseAttemptWarningBody();
 
 	@Meta.AD(
 		deflt = "${server-property://com.liferay.portal/admin.email.from.address}",
@@ -64,15 +58,21 @@ public interface MFATimeBasedOTPConfiguration {
 	public String emailTOTPReuseAttemptWarningFromName();
 
 	@Meta.AD(
-		deflt = "${resource:com/liferay/multi/factor/authentication/timebased/otp/configuration/dependencies/email_totp_reuse_attempt_warning_body.tmpl}",
-		name = "email-totp-reuse-attempt-warning-body", required = false
-	)
-	public LocalizedValuesMap emailTOTPReuseAttemptWarningBody();
-
-	@Meta.AD(
 		deflt = "${resource:com/liferay/multi/factor/authentication/timebased/otp/configuration/dependencies/email_totp_reuse_attempt_warning_subject.tmpl}",
 		name = "email-totp-reuse-attempt-warning-subject", required = false
 	)
 	public LocalizedValuesMap emailTOTPReuseAttemptWarningSubject();
+
+	@Meta.AD(
+		deflt = "false", description = "mfa-timebased-otp-enabled-description",
+		name = "enabled", required = false
+	)
+	public boolean enabled();
+
+	@Meta.AD(
+		deflt = "100", description = "order-description",
+		id = "service.ranking", name = "order", required = false
+	)
+	public int order();
 
 }

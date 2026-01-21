@@ -24,12 +24,6 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface MFAIPAddressConfiguration {
 
-	@Meta.AD(
-		deflt = "false", description = "mfa-ip-address-enabled-description",
-		name = "enabled", required = false
-	)
-	public boolean enabled();
-
 	/**
 	 * Allowed IPs and its network masks, use add button to add new entry for
 	 * different integration. Can be both IPv4 and IPv6.
@@ -42,5 +36,11 @@ public interface MFAIPAddressConfiguration {
 		name = "allowed-ip-address-and-netmask-name", required = false
 	)
 	public String[] allowedIPAddressAndNetMask();
+
+	@Meta.AD(
+		deflt = "false", description = "mfa-ip-address-enabled-description",
+		name = "enabled", required = false
+	)
+	public boolean enabled();
 
 }

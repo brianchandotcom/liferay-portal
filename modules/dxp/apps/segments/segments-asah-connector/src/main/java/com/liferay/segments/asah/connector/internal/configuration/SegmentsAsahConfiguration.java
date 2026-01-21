@@ -29,16 +29,16 @@ public interface SegmentsAsahConfiguration {
 	public int anonymousUserSegmentsCacheExpirationTime();
 
 	@Meta.AD(
+		deflt = "60", description = "check-interval-description", min = "1",
+		name = "update-interval", required = false
+	)
+	public int checkInterval();
+
+	@Meta.AD(
 		deflt = "86400",
 		description = "interest-terms-cache-expiration-time-description",
 		name = "interest-terms-cache-expiration-time-name", required = false
 	)
 	public int interestTermsCacheExpirationTime();
-
-	@Meta.AD(
-		deflt = "60", description = "check-interval-description", min = "1",
-		name = "update-interval", required = false
-	)
-	public int checkInterval();
 
 }

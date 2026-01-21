@@ -25,24 +25,16 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SamlProviderConfiguration {
 
-	@Meta.AD(deflt = "0", name = "company-id", required = false)
-	public long companyId();
-
+	/**
+	 * If no SAML IdP is matched then show the login portlet
+	 */
 	@Meta.AD(
-		deflt = "liferay",
-		description = "saml-keystore-credential-password-description",
-		id = "saml.keystore.credential.password",
-		name = "saml-keystore-credential-password", required = false
+		deflt = "true",
+		description = "saml-sp-allow-showing-the-login-portlet-description",
+		id = "saml.sp.allow.showing.the.login.portlet",
+		name = "saml-sp-allow-showing-the-login-portlet", required = false
 	)
-	public String keyStoreCredentialPassword();
-
-	@Meta.AD(
-		deflt = "liferay",
-		description = "saml-keystore-encryption-credential-password-description",
-		id = "saml.keystore.encryption.credential.password",
-		name = "saml-keystore-encryption-credential-password", required = false
-	)
-	public String keyStoreEncryptionCredentialPassword();
+	public boolean allowShowingTheLoginPortlet();
 
 	@Meta.AD(
 		description = "saml-sp-assertion-signature-required-description",
@@ -74,6 +66,9 @@ public interface SamlProviderConfiguration {
 	)
 	public long clockSkew();
 
+	@Meta.AD(deflt = "0", name = "company-id", required = false)
+	public long companyId();
+
 	@Meta.AD(
 		deflt = "1800", description = "saml-idp-assertion-lifetime-description",
 		id = "saml.idp.assertion.lifetime",
@@ -89,6 +84,22 @@ public interface SamlProviderConfiguration {
 		name = "saml-entity-id", required = false
 	)
 	public String entityId();
+
+	@Meta.AD(
+		deflt = "liferay",
+		description = "saml-keystore-credential-password-description",
+		id = "saml.keystore.credential.password",
+		name = "saml-keystore-credential-password", required = false
+	)
+	public String keyStoreCredentialPassword();
+
+	@Meta.AD(
+		deflt = "liferay",
+		description = "saml-keystore-encryption-credential-password-description",
+		id = "saml.keystore.encryption.credential.password",
+		name = "saml-keystore-encryption-credential-password", required = false
+	)
+	public String keyStoreEncryptionCredentialPassword();
 
 	@Meta.AD(
 		description = "saml-sp-ldap-import-enabled-description",
@@ -144,16 +155,5 @@ public interface SamlProviderConfiguration {
 		name = "saml-ssl-required", required = false
 	)
 	public boolean sslRequired();
-
-	/**
-	 * If no SAML IdP is matched then show the login portlet
-	 */
-	@Meta.AD(
-		deflt = "true",
-		description = "saml-sp-allow-showing-the-login-portlet-description",
-		id = "saml.sp.allow.showing.the.login.portlet",
-		name = "saml-sp-allow-showing-the-login-portlet", required = false
-	)
-	public boolean allowShowingTheLoginPortlet();
 
 }

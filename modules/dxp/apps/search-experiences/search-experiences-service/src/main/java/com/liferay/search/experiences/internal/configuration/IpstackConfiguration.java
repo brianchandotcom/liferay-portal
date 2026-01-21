@@ -22,9 +22,6 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface IpstackConfiguration {
 
-	@Meta.AD(deflt = "false", name = "enabled", required = false)
-	public boolean enabled();
-
 	@Meta.AD(deflt = "", name = "api-key", required = false)
 	public String apiKey();
 
@@ -35,5 +32,8 @@ public interface IpstackConfiguration {
 
 	@Meta.AD(deflt = "604800", name = "cache-timeout", required = false)
 	public int cacheTimeout();
+
+	@Meta.AD(deflt = "false", name = "enabled", required = false)
+	public boolean enabled();
 
 }

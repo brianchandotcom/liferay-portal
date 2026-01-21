@@ -21,16 +21,16 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface CrossClusterReplicationConfiguration {
 
 	@Meta.AD(
-		deflt = "false", description = "cross-cluster-replication-enabled-help",
-		name = "cross-cluster-replication-enabled", required = false
-	)
-	public boolean ccrEnabled();
-
-	@Meta.AD(
 		deflt = "true", description = "automatic-replication-enabled-help",
 		name = "automatic-replication-enabled", required = false
 	)
 	public boolean automaticReplicationEnabled();
+
+	@Meta.AD(
+		deflt = "false", description = "cross-cluster-replication-enabled-help",
+		name = "cross-cluster-replication-enabled", required = false
+	)
+	public boolean ccrEnabled();
 
 	@Meta.AD(
 		description = "cross-cluster-replication-local-cluster-connection-configurations-help",
@@ -38,6 +38,12 @@ public interface CrossClusterReplicationConfiguration {
 		required = false
 	)
 	public String[] ccrLocalClusterConnectionConfigurations();
+
+	@Meta.AD(
+		description = "excluded-indexes-help", name = "excluded-indexes",
+		required = false
+	)
+	public String[] excludedIndexes();
 
 	@Meta.AD(
 		deflt = "leader", description = "remote-cluster-alias-help",
@@ -51,11 +57,5 @@ public interface CrossClusterReplicationConfiguration {
 		name = "remote-cluster-seed-node-transport-address", required = false
 	)
 	public String remoteClusterSeedNodeTransportAddress();
-
-	@Meta.AD(
-		description = "excluded-indexes-help", name = "excluded-indexes",
-		required = false
-	)
-	public String[] excludedIndexes();
 
 }

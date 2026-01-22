@@ -303,7 +303,10 @@ export class ExportImportPage {
 		taskStatus?: taskStatus;
 		timeout?: number;
 	}) {
-		await this.selectImportFile({filePath, expectedUploadErrorMessage});
+		await this.selectImportFile({
+			expectedUploadErrorMessage,
+			filePath,
+		});
 
 		if (await this.pagesCheckbox.isVisible()) {
 			await this.pagesCheckbox.click();
@@ -457,11 +460,11 @@ export class ExportImportPage {
 	}
 
 	async selectImportFile({
-		filePath,
 		expectedUploadErrorMessage,
+		filePath,
 	}: {
-		filePath: string;
 		expectedUploadErrorMessage?: string;
+		filePath: string;
 	}): Promise<void> {
 		await this.newImportButton.click();
 

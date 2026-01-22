@@ -97,22 +97,22 @@
 					"system": false,
 					"type": "String"
 				},
-                {
-                    "DBType": "Clob",
-                    "businessType": "LongText",
-                    "defaultValue": "null",
-                    "indexed": true,
-                    "indexedAsKeyword": false,
-                    "indexedLanguageId": "en_US",
-                    "label": {
-                      "en_US": "FAQ"
-                    },
-                    "name": "faq",
-                    "required": false,
-                    "state": false,
-                    "system": true,
-                    "type": "String"
-                },
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"defaultValue": "null",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "FAQ"
+					},
+					"name": "faq",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
 				{
 					"DBType": "String",
 					"businessType": "Picklist",

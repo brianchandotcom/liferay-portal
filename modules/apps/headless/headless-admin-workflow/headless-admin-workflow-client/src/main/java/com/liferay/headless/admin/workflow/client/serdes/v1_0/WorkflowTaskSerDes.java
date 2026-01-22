@@ -64,6 +64,16 @@ public class WorkflowTaskSerDes {
 			sb.append(_toJSON(workflowTask.getActions()));
 		}
 
+		if (workflowTask.getAssignedToMe() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"assignedToMe\": ");
+
+			sb.append(workflowTask.getAssignedToMe());
+		}
+
 		if (workflowTask.getAssigneePerson() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -309,6 +319,14 @@ public class WorkflowTaskSerDes {
 			map.put("actions", String.valueOf(workflowTask.getActions()));
 		}
 
+		if (workflowTask.getAssignedToMe() == null) {
+			map.put("assignedToMe", null);
+		}
+		else {
+			map.put(
+				"assignedToMe", String.valueOf(workflowTask.getAssignedToMe()));
+		}
+
 		if (workflowTask.getAssigneePerson() == null) {
 			map.put("assigneePerson", null);
 		}
@@ -465,6 +483,9 @@ public class WorkflowTaskSerDes {
 			if (Objects.equals(jsonParserFieldName, "actions")) {
 				return true;
 			}
+			else if (Objects.equals(jsonParserFieldName, "assignedToMe")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "assigneePerson")) {
 				return false;
 			}
@@ -534,6 +555,11 @@ public class WorkflowTaskSerDes {
 				if (jsonParserFieldValue != null) {
 					workflowTask.setActions(
 						(Map<String, Map<String, String>>)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "assignedToMe")) {
+				if (jsonParserFieldValue != null) {
+					workflowTask.setAssignedToMe((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "assigneePerson")) {

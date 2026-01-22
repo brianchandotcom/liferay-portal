@@ -98,6 +98,51 @@ public class WorkflowTask implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A flag that indicates whether the task is assigned to the currently logged-in user."
+	)
+	public Boolean getAssignedToMe() {
+		if (_assignedToMeSupplier != null) {
+			assignedToMe = _assignedToMeSupplier.get();
+
+			_assignedToMeSupplier = null;
+		}
+
+		return assignedToMe;
+	}
+
+	public void setAssignedToMe(Boolean assignedToMe) {
+		this.assignedToMe = assignedToMe;
+
+		_assignedToMeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setAssignedToMe(
+		UnsafeSupplier<Boolean, Exception> assignedToMeUnsafeSupplier) {
+
+		_assignedToMeSupplier = () -> {
+			try {
+				return assignedToMeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "A flag that indicates whether the task is assigned to the currently logged-in user."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Boolean assignedToMe;
+
+	@JsonIgnore
+	private Supplier<Boolean> _assignedToMeSupplier;
+
 	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Creator getAssigneePerson() {
@@ -818,6 +863,18 @@ public class WorkflowTask implements Serializable {
 			sb.append("\"actions\": ");
 
 			sb.append(_toJSON(actions));
+		}
+
+		Boolean assignedToMe = getAssignedToMe();
+
+		if (assignedToMe != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"assignedToMe\": ");
+
+			sb.append(assignedToMe);
 		}
 
 		Creator assigneePerson = getAssigneePerson();

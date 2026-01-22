@@ -49,6 +49,27 @@ public class WorkflowTask implements Cloneable, Serializable {
 
 	protected Map<String, Map<String, String>> actions;
 
+	public Boolean getAssignedToMe() {
+		return assignedToMe;
+	}
+
+	public void setAssignedToMe(Boolean assignedToMe) {
+		this.assignedToMe = assignedToMe;
+	}
+
+	public void setAssignedToMe(
+		UnsafeSupplier<Boolean, Exception> assignedToMeUnsafeSupplier) {
+
+		try {
+			assignedToMe = assignedToMeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean assignedToMe;
+
 	public Creator getAssigneePerson() {
 		return assigneePerson;
 	}

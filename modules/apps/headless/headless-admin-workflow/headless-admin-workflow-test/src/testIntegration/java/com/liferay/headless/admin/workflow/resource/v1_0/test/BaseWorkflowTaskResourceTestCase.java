@@ -2189,6 +2189,14 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("assignedToMe", additionalAssertFieldName)) {
+				if (workflowTask.getAssignedToMe() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("assigneePerson", additionalAssertFieldName)) {
 				if (workflowTask.getAssigneePerson() == null) {
 					valid = false;
@@ -2434,6 +2442,17 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 				if (!equals(
 						(Map)workflowTask1.getActions(),
 						(Map)workflowTask2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("assignedToMe", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						workflowTask1.getAssignedToMe(),
+						workflowTask2.getAssignedToMe())) {
 
 					return false;
 				}
@@ -2730,6 +2749,11 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		sb.append(" ");
 
 		if (entityFieldName.equals("actions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("assignedToMe")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -3136,6 +3160,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	protected WorkflowTask randomWorkflowTask() throws Exception {
 		return new WorkflowTask() {
 			{
+				assignedToMe = RandomTestUtil.randomBoolean();
 				completed = RandomTestUtil.randomBoolean();
 				dateCompletion = RandomTestUtil.nextDate();
 				dateCreated = RandomTestUtil.nextDate();

@@ -72,15 +72,12 @@ public abstract class BaseTestClassResult implements TestClassResult {
 		TestClassHistory testClassHistory = getTestClassHistory();
 
 		if (testClassHistory != null) {
-			summaryElement.addText(" - ");
-
-			summaryElement.add(
-				Dom4JUtil.getNewElement(
-					JenkinsResultsParserUtil.combine(
-						"Failed ",
-						String.valueOf(testClassHistory.getFailureCount()),
-						" of last ",
-						String.valueOf(testClassHistory.getTestCount()))));
+			summaryElement.addText(
+				JenkinsResultsParserUtil.combine(
+					" - Failed ",
+					String.valueOf(testClassHistory.getFailureCount()),
+					" of last ",
+					String.valueOf(testClassHistory.getTestCount())));
 		}
 
 		List<Element> failureElements = new ArrayList<>();

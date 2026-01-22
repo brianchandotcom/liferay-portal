@@ -77,15 +77,12 @@ public class PoshiJUnitTestResult extends JUnitTestResult {
 		TestClassHistory testClassHistory = getTestClassHistory();
 
 		if (testClassHistory != null) {
-			downstreamBuildListItemElement.addText(" - ");
-
-			downstreamBuildListItemElement.add(
-				Dom4JUtil.getNewElement(
-					JenkinsResultsParserUtil.combine(
-						"Failed ",
-						String.valueOf(testClassHistory.getFailureCount()),
-						" of last ",
-						String.valueOf(testClassHistory.getTestCount()))));
+			downstreamBuildListItemElement.addText(
+				JenkinsResultsParserUtil.combine(
+					" - Failed ",
+					String.valueOf(testClassHistory.getFailureCount()),
+					" of last ",
+					String.valueOf(testClassHistory.getTestCount())));
 		}
 
 		String errorDetails = getErrorDetails();

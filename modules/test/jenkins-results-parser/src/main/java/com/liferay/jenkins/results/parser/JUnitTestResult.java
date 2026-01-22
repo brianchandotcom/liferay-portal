@@ -75,15 +75,12 @@ public class JUnitTestResult extends BaseTestResult {
 		TestClassHistory testClassHistory = getTestClassHistory();
 
 		if (testClassHistory != null) {
-			downstreamBuildListItemElement.addText(" - ");
-
-			downstreamBuildListItemElement.add(
-				Dom4JUtil.getNewElement(
-					JenkinsResultsParserUtil.combine(
-						"Failed ",
-						String.valueOf(testClassHistory.getFailureCount()),
-						" of last ",
-						String.valueOf(testClassHistory.getTestCount()))));
+			downstreamBuildListItemElement.addText(
+				JenkinsResultsParserUtil.combine(
+					" - Failed ",
+					String.valueOf(testClassHistory.getFailureCount()),
+					" of last ",
+					String.valueOf(testClassHistory.getTestCount())));
 		}
 
 		String errorStackTrace = getErrorStackTrace();

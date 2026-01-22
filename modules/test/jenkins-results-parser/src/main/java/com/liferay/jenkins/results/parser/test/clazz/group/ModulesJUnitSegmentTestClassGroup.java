@@ -54,7 +54,16 @@ public class ModulesJUnitSegmentTestClassGroup
 
 				List<String> testClassFileMethodNames = new ArrayList<>();
 
-				for (TestClass testClass : testTask.getTestClasses()) {
+				List<TestClass> testClasses = new ArrayList<>();
+
+				if (!testTask.isSplit()) {
+					testClasses.addAll(testTask.getTestClasses());
+				}
+				else {
+					testClasses.addAll(getTestClasses());
+				}
+
+				for (TestClass testClass : testClasses) {
 					if (!(testClass instanceof JUnitTestClass)) {
 						continue;
 					}

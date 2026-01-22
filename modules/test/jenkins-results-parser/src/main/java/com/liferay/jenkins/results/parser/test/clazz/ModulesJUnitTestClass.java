@@ -23,6 +23,19 @@ public class ModulesJUnitTestClass extends JUnitTestClass {
 		return _testTask;
 	}
 
+	@Override
+	public long getWeight() {
+		long weight = getAverageDuration();
+
+		TestTask testTask = getTestTask();
+
+		List<TestClass> testClasses = testTask.getTestClasses();
+
+		weight += testTask.getWeight() / testClasses.size();
+
+		return weight;
+	}
+
 	public void setTestTask(TestTask testTask) {
 		_testTask = testTask;
 	}

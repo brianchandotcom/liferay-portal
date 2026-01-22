@@ -6,16 +6,16 @@
 import ClayLayout from '@clayui/layout';
 import React from 'react';
 
-import {IGenericStepProps} from '../../../components/Wizard';
+export default function Step() {
+	return (
+		<>
+			<ClayLayout.Sheet>
+				{Liferay.Language.get('Filters')}
+			</ClayLayout.Sheet>
 
-const Step: React.FC<
-	{children?: React.ReactNode | undefined} & IGenericStepProps
-> = () => (
-	<>
-		<ClayLayout.Sheet>{Liferay.Language.get('Filters')}</ClayLayout.Sheet>
-
-		<ClayLayout.Sheet>{Liferay.Language.get('Portlets')}</ClayLayout.Sheet>
-	</>
-);
-
-export default Step;
+			<ClayLayout.Sheet>
+				{Liferay.Language.get('Portlets')}
+			</ClayLayout.Sheet>
+		</>
+	);
+}

@@ -60,14 +60,15 @@ public class BuildHistoryReport {
 		sb.append(_getWeeklyServerDurationJavaScriptVariable());
 
 		sb.append(
-			_getTableDataJSFileContent(
+			_getTableDataJavaScriptVariable(
 				buildHistories, "Job Category", 1, "[Total]"));
 
 		buildHistoryReport.addFile("js/table-data.js", sb.toString());
 
 		buildHistoryReport.addFile(
 			"js/timeline-data.js",
-			_getTimelineDataJSFileContent(buildHistories, duration, startTime));
+			_getTimelineDataJavaScriptVariable(
+				buildHistories, duration, startTime));
 
 		return buildHistoryReport;
 	}
@@ -257,11 +258,9 @@ public class BuildHistoryReport {
 		sb.append(_getWeeklyServerDurationJavaScriptVariable());
 
 		sb.append(
-			_getTableDataJSFileContent(
+			_getTableDataJavaScriptVariable(
 				utilizationBuildHistories, "Category", 7, "All",
 				"categoryTableData", null));
-
-		sb.append("\n");
 
 		Collection<BuildHistory> utilizationTestTypeBuildHistories =
 			BuildHistoryProcessor.newUtilizationTestTypeBuildHistories(
@@ -269,7 +268,7 @@ public class BuildHistoryReport {
 				_getStartTime(startDateString));
 
 		sb.append(
-			_getTableDataJSFileContent(
+			_getTableDataJavaScriptVariable(
 				utilizationTestTypeBuildHistories, "Test Batch Type", 7, "All",
 				"testTypeTableData",
 				Arrays.asList(
@@ -341,16 +340,16 @@ public class BuildHistoryReport {
 			_getLocalDateTime(startDateString));
 	}
 
-	private static String _getTableDataJSFileContent(
+	private static String _getTableDataJavaScriptVariable(
 		Collection<BuildHistory> buildHistories, String groupIdentifierName,
 		int intervalDays, String mergedBuildHistoryName) {
 
-		return _getTableDataJSFileContent(
+		return _getTableDataJavaScriptVariable(
 			buildHistories, groupIdentifierName, intervalDays,
 			mergedBuildHistoryName, "tableData", null);
 	}
 
-	private static String _getTableDataJSFileContent(
+	private static String _getTableDataJavaScriptVariable(
 		Collection<BuildHistory> buildHistories, String groupIdentifierName,
 		int intervalDays, String mergedBuildHistoryName, String tableName,
 		List<String> metricNames) {
@@ -386,10 +385,10 @@ public class BuildHistoryReport {
 			jsonArray.putAll(tableJSONArray);
 		}
 
-		return "var " + tableName + " = " + jsonArray.toString();
+		return "var " + tableName + " = " + jsonArray.toString() + ";\n";
 	}
 
-	private static String _getTimelineDataJSFileContent(
+	private static String _getTimelineDataJavaScriptVariable(
 		Collection<BuildHistory> buildHistories, long duration,
 		long startTime) {
 
@@ -463,7 +462,7 @@ public class BuildHistoryReport {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(
-			_getTableDataJSFileContent(
+			_getTableDataJavaScriptVariable(
 				buildHistories, "Test Suite Name", 1, "[Total]"));
 
 		sb.append("\nvar reportName = \"");

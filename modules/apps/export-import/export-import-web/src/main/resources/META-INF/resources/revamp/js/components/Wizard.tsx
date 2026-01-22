@@ -40,7 +40,7 @@ export function Wizard({
 						return null;
 					}
 
-					const {title} = step.props;
+					const {title: multiStepTitle} = step.props;
 
 					return (
 						<ClayMultiStepNav.Item
@@ -54,7 +54,7 @@ export function Wizard({
 
 							<ClayMultiStepNav.Indicator
 								label={1 + index}
-								subTitle={title}
+								subTitle={multiStepTitle}
 							/>
 						</ClayMultiStepNav.Item>
 					);

@@ -108,17 +108,17 @@
 
 		<!-- Other fields -->
 
-		<column name="commerceShippingMethodId" type="long" />
-		<column name="commerceShippingFixedOptionId" type="long" />
 		<column name="commerceInventoryWarehouseId" type="long" />
+		<column name="commerceShippingFixedOptionId" type="long" />
+		<column name="commerceShippingMethodId" type="long" />
 		<column name="countryId" type="long" />
 		<column name="regionId" type="long" />
-		<column name="zip" type="String" />
+		<column name="fixedPrice" type="BigDecimal" />
+		<column name="ratePercentage" type="double" />
+		<column name="rateUnitWeightPrice" type="BigDecimal" />
 		<column name="weightFrom" type="double" />
 		<column name="weightTo" type="double" />
-		<column name="fixedPrice" type="BigDecimal" />
-		<column name="rateUnitWeightPrice" type="BigDecimal" />
-		<column name="ratePercentage" type="double" />
+		<column name="zip" type="String" />
 
 		<!-- Order -->
 
@@ -128,11 +128,11 @@
 
 		<!-- Finder methods -->
 
-		<finder name="CommerceShippingMethodId" return-type="Collection">
-			<finder-column name="commerceShippingMethodId" />
-		</finder>
 		<finder name="CommerceShippingFixedOptionId" return-type="Collection">
 			<finder-column name="commerceShippingFixedOptionId" />
+		</finder>
+		<finder name="CommerceShippingMethodId" return-type="Collection">
+			<finder-column name="commerceShippingMethodId" />
 		</finder>
 	</entity>
 	<exceptions>

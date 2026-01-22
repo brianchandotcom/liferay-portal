@@ -31,14 +31,35 @@ import org.osgi.service.component.annotations.Reference;
 public class CommerceShippingFixedOptionRelLocalServiceImpl
 	extends CommerceShippingFixedOptionRelLocalServiceBaseImpl {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Override
 	public CommerceShippingFixedOptionRel addCommerceShippingFixedOptionRel(
-			long userId, long groupId, long commerceShippingMethodId,
-			long commerceShippingFixedOptionId,
-			long commerceInventoryWarehouseId, long countryId, long regionId,
-			String zip, double weightFrom, double weightTo,
-			BigDecimal fixedPrice, BigDecimal rateUnitWeightPrice,
-			double ratePercentage)
+			long commerceInventoryWarehouseId,
+			long commerceShippingFixedOptionId, long commerceShippingMethodId,
+			long countryId, long regionId, BigDecimal fixedPrice,
+			double ratePercentage, BigDecimal rateUnitWeightPrice,
+			double weightFrom, double weightTo, String zip,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return commerceShippingFixedOptionRelLocalService.
+			addCommerceShippingFixedOptionRel(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				commerceInventoryWarehouseId, commerceShippingFixedOptionId,
+				commerceShippingMethodId, countryId, regionId, fixedPrice,
+				ratePercentage, rateUnitWeightPrice, weightFrom, weightTo, zip);
+	}
+
+	@Override
+	public CommerceShippingFixedOptionRel addCommerceShippingFixedOptionRel(
+			long userId, long groupId, long commerceInventoryWarehouseId,
+			long commerceShippingFixedOptionId, long commerceShippingMethodId,
+			long countryId, long regionId, BigDecimal fixedPrice,
+			double ratePercentage, BigDecimal rateUnitWeightPrice,
+			double weightFrom, double weightTo, String zip)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -53,46 +74,24 @@ public class CommerceShippingFixedOptionRelLocalServiceImpl
 		commerceShippingFixedOptionRel.setCompanyId(user.getCompanyId());
 		commerceShippingFixedOptionRel.setUserId(user.getUserId());
 		commerceShippingFixedOptionRel.setUserName(user.getFullName());
-		commerceShippingFixedOptionRel.setCommerceShippingMethodId(
-			commerceShippingMethodId);
-		commerceShippingFixedOptionRel.setCommerceShippingFixedOptionId(
-			commerceShippingFixedOptionId);
 		commerceShippingFixedOptionRel.setCommerceInventoryWarehouseId(
 			commerceInventoryWarehouseId);
+		commerceShippingFixedOptionRel.setCommerceShippingFixedOptionId(
+			commerceShippingFixedOptionId);
+		commerceShippingFixedOptionRel.setCommerceShippingMethodId(
+			commerceShippingMethodId);
 		commerceShippingFixedOptionRel.setCountryId(countryId);
 		commerceShippingFixedOptionRel.setRegionId(regionId);
-		commerceShippingFixedOptionRel.setZip(zip);
-		commerceShippingFixedOptionRel.setWeightFrom(weightFrom);
-		commerceShippingFixedOptionRel.setWeightTo(weightTo);
 		commerceShippingFixedOptionRel.setFixedPrice(fixedPrice);
+		commerceShippingFixedOptionRel.setRatePercentage(ratePercentage);
 		commerceShippingFixedOptionRel.setRateUnitWeightPrice(
 			rateUnitWeightPrice);
-		commerceShippingFixedOptionRel.setRatePercentage(ratePercentage);
+		commerceShippingFixedOptionRel.setWeightFrom(weightFrom);
+		commerceShippingFixedOptionRel.setWeightTo(weightTo);
+		commerceShippingFixedOptionRel.setZip(zip);
 
 		return commerceShippingFixedOptionRelPersistence.update(
 			commerceShippingFixedOptionRel);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Override
-	public CommerceShippingFixedOptionRel addCommerceShippingFixedOptionRel(
-			long commerceShippingMethodId, long commerceShippingFixedOptionId,
-			long commerceInventoryWarehouseId, long countryId, long regionId,
-			String zip, double weightFrom, double weightTo,
-			BigDecimal fixedPrice, BigDecimal rateUnitWeightPrice,
-			double ratePercentage, ServiceContext serviceContext)
-		throws PortalException {
-
-		return commerceShippingFixedOptionRelLocalService.
-			addCommerceShippingFixedOptionRel(
-				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-				commerceShippingMethodId, commerceShippingFixedOptionId,
-				commerceInventoryWarehouseId, countryId, regionId, zip,
-				weightFrom, weightTo, fixedPrice, rateUnitWeightPrice,
-				ratePercentage);
 	}
 
 	@Override
@@ -177,9 +176,9 @@ public class CommerceShippingFixedOptionRelLocalServiceImpl
 	public CommerceShippingFixedOptionRel updateCommerceShippingFixedOptionRel(
 			long commerceShippingFixedOptionRelId,
 			long commerceInventoryWarehouseId, long countryId, long regionId,
-			String zip, double weightFrom, double weightTo,
-			BigDecimal fixedPrice, BigDecimal rateUnitWeightPrice,
-			double ratePercentage)
+			BigDecimal fixedPrice, double ratePercentage,
+			BigDecimal rateUnitWeightPrice, double weightFrom, double weightTo,
+			String zip)
 		throws PortalException {
 
 		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel =
@@ -190,13 +189,13 @@ public class CommerceShippingFixedOptionRelLocalServiceImpl
 			commerceInventoryWarehouseId);
 		commerceShippingFixedOptionRel.setCountryId(countryId);
 		commerceShippingFixedOptionRel.setRegionId(regionId);
-		commerceShippingFixedOptionRel.setZip(zip);
-		commerceShippingFixedOptionRel.setWeightFrom(weightFrom);
-		commerceShippingFixedOptionRel.setWeightTo(weightTo);
 		commerceShippingFixedOptionRel.setFixedPrice(fixedPrice);
+		commerceShippingFixedOptionRel.setRatePercentage(ratePercentage);
 		commerceShippingFixedOptionRel.setRateUnitWeightPrice(
 			rateUnitWeightPrice);
-		commerceShippingFixedOptionRel.setRatePercentage(ratePercentage);
+		commerceShippingFixedOptionRel.setWeightFrom(weightFrom);
+		commerceShippingFixedOptionRel.setWeightTo(weightTo);
+		commerceShippingFixedOptionRel.setZip(zip);
 
 		return commerceShippingFixedOptionRelPersistence.update(
 			commerceShippingFixedOptionRel);

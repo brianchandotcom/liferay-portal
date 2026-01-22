@@ -128,8 +128,8 @@ public class EditCommerceShippingFixedOptionRelMVCActionCommand
 			_commerceShippingFixedOptionRelService.
 				updateCommerceShippingFixedOptionRel(
 					commerceShippingFixedOptionRelId, 0L, countryId, regionId,
-					zip, weightFrom, weightTo, fixedPrice, rateUnitWeightPrice,
-					ratePercentage);
+					fixedPrice, ratePercentage, rateUnitWeightPrice, weightFrom,
+					weightTo, zip);
 		}
 		else {
 			long commerceShippingMethodId = ParamUtil.getLong(
@@ -141,12 +141,12 @@ public class EditCommerceShippingFixedOptionRelMVCActionCommand
 
 			_commerceShippingFixedOptionRelService.
 				addCommerceShippingFixedOptionRel(
-					commerceShippingMethod.getGroupId(),
-					commerceShippingMethod.getCommerceShippingMethodId(),
+					commerceShippingMethod.getGroupId(), 0L,
 					ParamUtil.getLong(
 						actionRequest, "commerceShippingFixedOptionId"),
-					0L, countryId, regionId, zip, weightFrom, weightTo,
-					fixedPrice, rateUnitWeightPrice, ratePercentage);
+					commerceShippingMethod.getCommerceShippingMethodId(),
+					countryId, regionId, fixedPrice, ratePercentage,
+					rateUnitWeightPrice, weightFrom, weightTo, zip);
 		}
 	}
 

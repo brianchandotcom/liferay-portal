@@ -186,6 +186,85 @@ public class AssetTagServiceHttp {
 		}
 	}
 
+	public static com.liferay.asset.kernel.model.AssetTag fetchTag(
+			HttpPrincipal httpPrincipal, long groupId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				AssetTagServiceUtil.class, "fetchTag",
+				_fetchTagParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, name);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.asset.kernel.model.AssetTag)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.asset.kernel.model.AssetTag getTag(
+			HttpPrincipal httpPrincipal, long groupId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				AssetTagServiceUtil.class, "getTag", _getTagParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, name);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.asset.kernel.model.AssetTag)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.asset.kernel.model.AssetTag
 			getAssetTagByExternalReferenceCode(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
@@ -195,7 +274,7 @@ public class AssetTagServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AssetTagServiceUtil.class, "getAssetTagByExternalReferenceCode",
-				_getAssetTagByExternalReferenceCodeParameterTypes4);
+				_getAssetTagByExternalReferenceCodeParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, groupId);
@@ -234,7 +313,7 @@ public class AssetTagServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AssetTagServiceUtil.class, "getGroupsTags",
-				_getGroupsTagsParameterTypes5);
+				_getGroupsTagsParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupIds);
@@ -267,7 +346,7 @@ public class AssetTagServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AssetTagServiceUtil.class, "getGroupTags",
-				_getGroupTagsParameterTypes6);
+				_getGroupTagsParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -302,7 +381,7 @@ public class AssetTagServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AssetTagServiceUtil.class, "getGroupTags",
-				_getGroupTagsParameterTypes7);
+				_getGroupTagsParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, start, end, orderByComparator);
@@ -335,7 +414,7 @@ public class AssetTagServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AssetTagServiceUtil.class, "getGroupTagsCount",
-				_getGroupTagsCountParameterTypes8);
+				_getGroupTagsCountParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -368,7 +447,7 @@ public class AssetTagServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AssetTagServiceUtil.class, "getGroupTagsDisplay",
-				_getGroupTagsDisplayParameterTypes9);
+				_getGroupTagsDisplayParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, name, start, end);
@@ -400,7 +479,7 @@ public class AssetTagServiceHttp {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				AssetTagServiceUtil.class, "getTag", _getTagParameterTypes10);
+				AssetTagServiceUtil.class, "getTag", _getTagParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, tagId);
 
@@ -439,7 +518,7 @@ public class AssetTagServiceHttp {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				AssetTagServiceUtil.class, "getTags", _getTagsParameterTypes11);
+				AssetTagServiceUtil.class, "getTags", _getTagsParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, classNameId, name);
@@ -475,7 +554,7 @@ public class AssetTagServiceHttp {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				AssetTagServiceUtil.class, "getTags", _getTagsParameterTypes12);
+				AssetTagServiceUtil.class, "getTags", _getTagsParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, classNameId, name, start, end,
@@ -510,7 +589,7 @@ public class AssetTagServiceHttp {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				AssetTagServiceUtil.class, "getTags", _getTagsParameterTypes13);
+				AssetTagServiceUtil.class, "getTags", _getTagsParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, name, start, end);
@@ -546,7 +625,7 @@ public class AssetTagServiceHttp {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				AssetTagServiceUtil.class, "getTags", _getTagsParameterTypes14);
+				AssetTagServiceUtil.class, "getTags", _getTagsParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, name, start, end, orderByComparator);
@@ -580,7 +659,7 @@ public class AssetTagServiceHttp {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				AssetTagServiceUtil.class, "getTags", _getTagsParameterTypes15);
+				AssetTagServiceUtil.class, "getTags", _getTagsParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupIds, name, start, end);
@@ -616,7 +695,7 @@ public class AssetTagServiceHttp {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				AssetTagServiceUtil.class, "getTags", _getTagsParameterTypes16);
+				AssetTagServiceUtil.class, "getTags", _getTagsParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupIds, name, start, end, orderByComparator);
@@ -648,7 +727,7 @@ public class AssetTagServiceHttp {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				AssetTagServiceUtil.class, "getTags", _getTagsParameterTypes17);
+				AssetTagServiceUtil.class, "getTags", _getTagsParameterTypes19);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, className, classPK);
@@ -681,7 +760,7 @@ public class AssetTagServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AssetTagServiceUtil.class, "getTagsCount",
-				_getTagsCountParameterTypes18);
+				_getTagsCountParameterTypes20);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, name);
@@ -713,7 +792,7 @@ public class AssetTagServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AssetTagServiceUtil.class, "getTagsCount",
-				_getTagsCountParameterTypes19);
+				_getTagsCountParameterTypes21);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupIds, name);
@@ -746,7 +825,7 @@ public class AssetTagServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AssetTagServiceUtil.class, "getVisibleAssetsTagsCount",
-				_getVisibleAssetsTagsCountParameterTypes20);
+				_getVisibleAssetsTagsCountParameterTypes22);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, classNameId, name);
@@ -779,7 +858,7 @@ public class AssetTagServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AssetTagServiceUtil.class, "mergeTags",
-				_mergeTagsParameterTypes21);
+				_mergeTagsParameterTypes23);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fromTagId, toTagId);
@@ -815,7 +894,7 @@ public class AssetTagServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AssetTagServiceUtil.class, "mergeTags",
-				_mergeTagsParameterTypes22);
+				_mergeTagsParameterTypes24);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fromTagIds, toTagId);
@@ -850,7 +929,7 @@ public class AssetTagServiceHttp {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				AssetTagServiceUtil.class, "search", _searchParameterTypes23);
+				AssetTagServiceUtil.class, "search", _searchParameterTypes25);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, name, start, end);
@@ -882,7 +961,7 @@ public class AssetTagServiceHttp {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				AssetTagServiceUtil.class, "search", _searchParameterTypes24);
+				AssetTagServiceUtil.class, "search", _searchParameterTypes26);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupIds, name, start, end);
@@ -915,7 +994,7 @@ public class AssetTagServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AssetTagServiceUtil.class, "subscribeTag",
-				_subscribeTagParameterTypes25);
+				_subscribeTagParameterTypes27);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, groupId, tagId);
@@ -951,7 +1030,7 @@ public class AssetTagServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AssetTagServiceUtil.class, "unsubscribeTag",
-				_unsubscribeTagParameterTypes26);
+				_unsubscribeTagParameterTypes28);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, tagId);
@@ -989,7 +1068,7 @@ public class AssetTagServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AssetTagServiceUtil.class, "updateTag",
-				_updateTagParameterTypes27);
+				_updateTagParameterTypes29);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, tagId, name, serviceContext);
@@ -1038,73 +1117,79 @@ public class AssetTagServiceHttp {
 		_fetchAssetTagByExternalReferenceCodeParameterTypes3 = new Class[] {
 			String.class, long.class
 		};
+	private static final Class<?>[] _fetchTagParameterTypes4 = new Class[] {
+		long.class, String.class
+	};
+	private static final Class<?>[] _getTagParameterTypes5 = new Class[] {
+		long.class, String.class
+	};
 	private static final Class<?>[]
-		_getAssetTagByExternalReferenceCodeParameterTypes4 = new Class[] {
+		_getAssetTagByExternalReferenceCodeParameterTypes6 = new Class[] {
 			String.class, long.class
 		};
-	private static final Class<?>[] _getGroupsTagsParameterTypes5 =
+	private static final Class<?>[] _getGroupsTagsParameterTypes7 =
 		new Class[] {long[].class};
-	private static final Class<?>[] _getGroupTagsParameterTypes6 = new Class[] {
+	private static final Class<?>[] _getGroupTagsParameterTypes8 = new Class[] {
 		long.class
 	};
-	private static final Class<?>[] _getGroupTagsParameterTypes7 = new Class[] {
+	private static final Class<?>[] _getGroupTagsParameterTypes9 = new Class[] {
 		long.class, int.class, int.class,
 		com.liferay.portal.kernel.util.OrderByComparator.class
 	};
-	private static final Class<?>[] _getGroupTagsCountParameterTypes8 =
+	private static final Class<?>[] _getGroupTagsCountParameterTypes10 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getGroupTagsDisplayParameterTypes9 =
+	private static final Class<?>[] _getGroupTagsDisplayParameterTypes11 =
 		new Class[] {long.class, String.class, int.class, int.class};
-	private static final Class<?>[] _getTagParameterTypes10 = new Class[] {
+	private static final Class<?>[] _getTagParameterTypes12 = new Class[] {
 		long.class
 	};
-	private static final Class<?>[] _getTagsParameterTypes11 = new Class[] {
+	private static final Class<?>[] _getTagsParameterTypes13 = new Class[] {
 		long.class, long.class, String.class
 	};
-	private static final Class<?>[] _getTagsParameterTypes12 = new Class[] {
+	private static final Class<?>[] _getTagsParameterTypes14 = new Class[] {
 		long.class, long.class, String.class, int.class, int.class,
 		com.liferay.portal.kernel.util.OrderByComparator.class
 	};
-	private static final Class<?>[] _getTagsParameterTypes13 = new Class[] {
+	private static final Class<?>[] _getTagsParameterTypes15 = new Class[] {
 		long.class, String.class, int.class, int.class
 	};
-	private static final Class<?>[] _getTagsParameterTypes14 = new Class[] {
+	private static final Class<?>[] _getTagsParameterTypes16 = new Class[] {
 		long.class, String.class, int.class, int.class,
 		com.liferay.portal.kernel.util.OrderByComparator.class
 	};
-	private static final Class<?>[] _getTagsParameterTypes15 = new Class[] {
+	private static final Class<?>[] _getTagsParameterTypes17 = new Class[] {
 		long[].class, String.class, int.class, int.class
 	};
-	private static final Class<?>[] _getTagsParameterTypes16 = new Class[] {
+	private static final Class<?>[] _getTagsParameterTypes18 = new Class[] {
 		long[].class, String.class, int.class, int.class,
 		com.liferay.portal.kernel.util.OrderByComparator.class
 	};
-	private static final Class<?>[] _getTagsParameterTypes17 = new Class[] {
+	private static final Class<?>[] _getTagsParameterTypes19 = new Class[] {
 		String.class, long.class
 	};
-	private static final Class<?>[] _getTagsCountParameterTypes18 =
+	private static final Class<?>[] _getTagsCountParameterTypes20 =
 		new Class[] {long.class, String.class};
-	private static final Class<?>[] _getTagsCountParameterTypes19 =
+	private static final Class<?>[] _getTagsCountParameterTypes21 =
 		new Class[] {long[].class, String.class};
-	private static final Class<?>[] _getVisibleAssetsTagsCountParameterTypes20 =
+	private static final Class<?>[] _getVisibleAssetsTagsCountParameterTypes22 =
 		new Class[] {long.class, long.class, String.class};
-	private static final Class<?>[] _mergeTagsParameterTypes21 = new Class[] {
+	private static final Class<?>[] _mergeTagsParameterTypes23 = new Class[] {
 		long.class, long.class
 	};
-	private static final Class<?>[] _mergeTagsParameterTypes22 = new Class[] {
+	private static final Class<?>[] _mergeTagsParameterTypes24 = new Class[] {
 		long[].class, long.class
 	};
-	private static final Class<?>[] _searchParameterTypes23 = new Class[] {
+	private static final Class<?>[] _searchParameterTypes25 = new Class[] {
 		long.class, String.class, int.class, int.class
 	};
-	private static final Class<?>[] _searchParameterTypes24 = new Class[] {
+	private static final Class<?>[] _searchParameterTypes26 = new Class[] {
 		long[].class, String.class, int.class, int.class
 	};
-	private static final Class<?>[] _subscribeTagParameterTypes25 =
+	private static final Class<?>[] _subscribeTagParameterTypes27 =
 		new Class[] {long.class, long.class, long.class};
-	private static final Class<?>[] _unsubscribeTagParameterTypes26 =
+	private static final Class<?>[] _unsubscribeTagParameterTypes28 =
 		new Class[] {long.class, long.class};
-	private static final Class<?>[] _updateTagParameterTypes27 = new Class[] {
+	private static final Class<?>[] _updateTagParameterTypes29 = new Class[] {
 		String.class, long.class, String.class,
 		com.liferay.portal.kernel.service.ServiceContext.class
 	};

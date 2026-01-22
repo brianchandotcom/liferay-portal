@@ -59,6 +59,13 @@ public class AssetTagServiceWrapper
 	}
 
 	@Override
+	public AssetTag fetchTag(long groupId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _assetTagService.fetchTag(groupId, name);
+	}
+
+	@Override
 	public AssetTag getAssetTagByExternalReferenceCode(
 			String externalReferenceCode, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -114,6 +121,13 @@ public class AssetTagServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetTagService.getTag(tagId);
+	}
+
+	@Override
+	public AssetTag getTag(long groupId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _assetTagService.getTag(groupId, name);
 	}
 
 	@Override

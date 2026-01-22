@@ -45,10 +45,6 @@ public class PortletPreferencesDataCleanupPreupgradeProcessTest
 
 	@Test
 	public void testUpgrade() throws Exception {
-		long layoutRevisionId = RandomTestUtil.nextLong();
-		long plid1 = RandomTestUtil.nextLong();
-		String portletId1 = "com.liferay." + RandomTestUtil.randomString();
-		String portletId2 = "com.liferay." + RandomTestUtil.randomString();
 		long portletPreferencesId1 = RandomTestUtil.nextLong();
 		long portletPreferencesId2 = RandomTestUtil.nextLong();
 		long portletPreferenceValueId1 = RandomTestUtil.nextLong();
@@ -56,44 +52,28 @@ public class PortletPreferencesDataCleanupPreupgradeProcessTest
 
 		runSQL(
 			StringBundler.concat(
-				"insert into LayoutRevision (mvccVersion, layoutRevisionId, ",
-				"companyId, plid) values (0, ", layoutRevisionId, ", ",
-				CompanyThreadLocal.getCompanyId(), ", ",
-				RandomTestUtil.nextLong(), ")"));
-
-		runSQL(
-			StringBundler.concat(
 				"insert into PortletPreferences (mvccVersion, ctCollectionId, ",
-				"portletPreferencesId, companyId, plid, portletId) values (0, ",
-				"0, ", portletPreferencesId1, ", ",
-				CompanyThreadLocal.getCompanyId(), ", ", plid1, ", '",
-				portletId1, "')"));
-
-		runSQL(
-			StringBundler.concat(
-				"insert into PortletPreferences (mvccVersion, ctCollectionId, ",
-				"portletPreferencesId, companyId, plid, portletId) values (0, ",
-				"0, ", portletPreferencesId2, ", ",
-				CompanyThreadLocal.getCompanyId(), ", ", layoutRevisionId,
-				", '", portletId2, "')"));
+				"portletPreferencesId, companyId) values (0, 0, ",
+				portletPreferencesId1, ", ", CompanyThreadLocal.getCompanyId(),
+				")"));
 
 		runSQL(
 			StringBundler.concat(
 				"insert into PortletPreferenceValue (mvccVersion, ",
 				"ctCollectionId, portletPreferenceValueId, companyId, ",
-				"portletPreferencesId, name) values (0, 0, ",
+				"portletPreferencesId) values (0, 0, ",
 				portletPreferenceValueId1, ", ",
 				CompanyThreadLocal.getCompanyId(), ", ", portletPreferencesId1,
-				", '", portletId1, "')"));
+				")"));
 
 		runSQL(
 			StringBundler.concat(
 				"insert into PortletPreferenceValue (mvccVersion, ",
 				"ctCollectionId, portletPreferenceValueId, companyId, ",
-				"portletPreferencesId, name) values (0, 0, ",
+				"portletPreferencesId) values (0, 0, ",
 				portletPreferenceValueId2, ", ",
 				CompanyThreadLocal.getCompanyId(), ", ", portletPreferencesId2,
-				", '", portletId2, "')"));
+				")"));
 
 		try (Connection connection = DataAccess.getConnection();
 			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
@@ -104,46 +84,11 @@ public class PortletPreferencesDataCleanupPreupgradeProcessTest
 
 			List<String> messages = logCapture.getMessages();
 
-			Assert.assertEquals(messages.toString(), 2, messages.size());
+			Assert.assertEquals(messages.toString(), 1, messages.size());
 
 			DBInspector dbInspector = new DBInspector(connection);
 
 			Assert.assertFalse(
-				messages.toString(),
-				messages.contains(
-					StringBundler.concat(
-						"Table ",
-						dbInspector.normalizeName("PortletPreferences"),
-						", 1 row deleted because ",
-						dbInspector.normalizeName("plid"), StringPool.SPACE,
-						layoutRevisionId, " was not found in column ",
-						dbInspector.normalizeName("plid"), " from table ",
-						dbInspector.normalizeName("Layout"))));
-			Assert.assertFalse(
-				messages.toString(),
-				messages.contains(
-					StringBundler.concat(
-						"Table ",
-						dbInspector.normalizeName("PortletPreferenceValue"),
-						", 1 row deleted because ",
-						dbInspector.normalizeName("portletPreferencesId"),
-						StringPool.SPACE, portletPreferencesId2,
-						" was not found in column ",
-						dbInspector.normalizeName("portletPreferencesId"),
-						" from table ",
-						dbInspector.normalizeName("PortletPreferences"))));
-			Assert.assertTrue(
-				messages.toString(),
-				messages.contains(
-					StringBundler.concat(
-						"Table ",
-						dbInspector.normalizeName("PortletPreferences"),
-						", 1 row deleted because ",
-						dbInspector.normalizeName("plid"), StringPool.SPACE,
-						plid1, " was not found in column ",
-						dbInspector.normalizeName("plid"), " from table ",
-						dbInspector.normalizeName("Layout"))));
-			Assert.assertTrue(
 				messages.toString(),
 				messages.contains(
 					StringBundler.concat(
@@ -156,11 +101,21 @@ public class PortletPreferencesDataCleanupPreupgradeProcessTest
 						dbInspector.normalizeName("portletPreferencesId"),
 						" from table ",
 						dbInspector.normalizeName("PortletPreferences"))));
+			Assert.assertTrue(
+				messages.toString(),
+				messages.contains(
+					StringBundler.concat(
+						"Table ",
+						dbInspector.normalizeName("PortletPreferenceValue"),
+						", 1 row deleted because ",
+						dbInspector.normalizeName("portletPreferencesId"),
+						StringPool.SPACE, portletPreferencesId2,
+						" was not found in column ",
+						dbInspector.normalizeName("portletPreferencesId"),
+						" from table ",
+						dbInspector.normalizeName("PortletPreferences"))));
 		}
 		finally {
-			runSQL(
-				"delete from LayoutRevision where layoutRevisionId = " +
-					layoutRevisionId);
 			runSQL(
 				"delete from PortletPreferences where portletPreferencesId = " +
 					portletPreferencesId1);

@@ -308,6 +308,10 @@ export class ExportImportPage {
 			filePath,
 		});
 
+		if (expectedUploadErrorMessage) {
+			return;
+		}
+
 		if (await this.pagesCheckbox.isVisible()) {
 			await this.pagesCheckbox.click();
 		}

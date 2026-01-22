@@ -1,3 +1,4 @@
+import * as API from 'shared/api/individual-segment';
 import Button from '@clayui/button';
 import Card from 'shared/components/Card';
 import DateInput from 'shared/components/DateRangeInput';
@@ -18,7 +19,6 @@ import {
 } from 'shared/util/constants';
 import {sub} from 'shared/util/lang';
 import {Text} from '@clayui/core';
-import {updateSegmentActivationStatus} from 'shared/api/individual-segment';
 import {useParams} from 'react-router-dom';
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
@@ -133,7 +133,6 @@ export const ActivationConfigurationModal: React.FC<
 
 		try {
 			await onSave(formState);
-			onOpenChange(false);
 		} catch (error) {
 			addAlert({
 				alertType: Alert.Types.Error,
@@ -176,15 +175,15 @@ export const ActivationConfigurationModal: React.FC<
 						{showActivationTypePicker && (
 							<Form.Group className='mb-4'>
 								<label
-									htmlFor='activation-type-picker'
-									id='activation-type-picker-label'
+									htmlFor='schedule-type-picker'
+									id='schedule-type-picker-label'
 								>
 									{Liferay.Language.get('activation-type')}
 								</label>
 								<Picker
-									aria-labelledby='activation-type-picker-label'
+									aria-labelledby='schedule-type-picker-label'
 									className='border-light font-weight-semi-bold'
-									id='activation-type-picker'
+									id='schedule-type-picker'
 									items={[
 										SCHEDULE_TYPE_LABELS.BATCH,
 										SCHEDULE_TYPE_LABELS.REAL_TIME
@@ -259,6 +258,7 @@ export const ActivationConfigurationModal: React.FC<
 												scheduleStartDate: value.start
 											});
 										}}
+										setMaxRange={false}
 										showRetentionPeriod={false}
 										value={{
 											end: formState.scheduleEndDate,
@@ -314,16 +314,20 @@ const SegmentActivationCard: React.FC<ISegmentActivationCardProps> = ({
 
 	const {groupId, id: segmentId} = useParams();
 
-	const handleSave = async (updatedValues: IActivationFormValues) => {
-		await updateSegmentActivationStatus({
+	const handleSave = async (updatedValues: IActivationFormValues) =>
+		API.updateSegmentActivationStatus({
 			groupId,
 			segmentActivation: {
 				...updatedValues,
 				segmentActivationId
 			},
 			segmentId
+		}).then(() => {
+			addAlert({
+				alertType: Alert.Types.Success,
+				message: Liferay.Language.get('changes-to-segment-saved')
+			});
 		});
-	};
 
 	const labelMessage =
 		frequencyType === SegmentActivationFrequencyTypes.Indefinitely

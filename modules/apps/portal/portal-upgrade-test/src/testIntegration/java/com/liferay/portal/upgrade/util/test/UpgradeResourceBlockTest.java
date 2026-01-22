@@ -257,36 +257,40 @@ public class UpgradeResourceBlockTest extends BaseUpgradeResourceBlock {
 		}
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
-				"select * from ResourcePermission where name = '" +
-					UpgradeResourceBlockTest.class.getName() +
-						"' order by scope");
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+				"select * from ResourcePermission where name = ? order by " +
+					"scope")) {
 
-			_assertResourcePermission(
-				resultSet, ResourceConstants.SCOPE_COMPANY, _COMPANY_ID,
-				_regularRole.getRoleId(), 0, _COMPANY_SCOPE_ACTION_IDS, true);
+			preparedStatement.setString(
+				1, UpgradeResourceBlockTest.class.getName());
 
-			_assertResourcePermission(
-				resultSet, ResourceConstants.SCOPE_GROUP, _GROUP_ID,
-				_siteRole.getRoleId(), 0, _GROUP_SCOPE_ACTION_IDS, false);
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				_assertResourcePermission(
+					resultSet, ResourceConstants.SCOPE_COMPANY, _COMPANY_ID,
+					_regularRole.getRoleId(), 0, _COMPANY_SCOPE_ACTION_IDS,
+					true);
 
-			_assertResourcePermission(
-				resultSet, ResourceConstants.SCOPE_GROUP_TEMPLATE, 0,
-				_siteRole.getRoleId(), 0, _GROUP_TEMPLATE_SCOPE_ACTION_IDS,
-				true);
+				_assertResourcePermission(
+					resultSet, ResourceConstants.SCOPE_GROUP, _GROUP_ID,
+					_siteRole.getRoleId(), 0, _GROUP_SCOPE_ACTION_IDS, false);
 
-			long userId = 0;
+				_assertResourcePermission(
+					resultSet, ResourceConstants.SCOPE_GROUP_TEMPLATE, 0,
+					_siteRole.getRoleId(), 0, _GROUP_TEMPLATE_SCOPE_ACTION_IDS,
+					true);
 
-			if (_hasUserId) {
-				userId = _USER_ID;
+				long userId = 0;
+
+				if (_hasUserId) {
+					userId = _USER_ID;
+				}
+
+				_assertResourcePermission(
+					resultSet, ResourceConstants.SCOPE_INDIVIDUAL,
+					_RESOURCE_PRIMARY_KEY, _regularRole.getRoleId(), userId,
+					_INDIVIDUAL_SCOPE_ACTION_IDS, false);
+
+				Assert.assertFalse(resultSet.next());
 			}
-
-			_assertResourcePermission(
-				resultSet, ResourceConstants.SCOPE_INDIVIDUAL,
-				_RESOURCE_PRIMARY_KEY, _regularRole.getRoleId(), userId,
-				_INDIVIDUAL_SCOPE_ACTION_IDS, false);
-
-			Assert.assertFalse(resultSet.next());
 		}
 
 		DBAssertionUtil.assertColumns(getTableName(), "id_", "userId");

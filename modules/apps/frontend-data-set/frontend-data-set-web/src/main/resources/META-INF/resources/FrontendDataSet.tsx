@@ -663,8 +663,6 @@ const FrontendDataSetContent = ({
 			pagination?.initialPageNumber ||
 			DEFAULT_PAGINATION_PAGE_NUMBER;
 
-		const searchParam = getSearchParam();
-
 		defaultSnapshot.sorts = sortsProp;
 
 		const sorts = updateSortsActivation({
@@ -679,7 +677,6 @@ const FrontendDataSetContent = ({
 			[EConfigInURLKeys.ACTIVE_SORTS]: sorts,
 			[EConfigInURLKeys.DELTA]: paginationDelta,
 			[EConfigInURLKeys.PAGE_NUMBER]: pageNumber,
-			[EConfigInURLKeys.SEARCH_PARAM]: searchParam,
 			[EConfigInURLKeys.VIEW_NAME]: activeView.name,
 			[EConfigInURLKeys.VISIBLE_FIELDS]: initialVisibleFieldNames,
 		});
@@ -710,7 +707,6 @@ const FrontendDataSetContent = ({
 			modifiedFields: {},
 			pageNumber,
 			paginationDelta,
-			searchParam,
 			snapshots: parsedSnapshots,
 			snapshotsEnabled,
 			sorts,

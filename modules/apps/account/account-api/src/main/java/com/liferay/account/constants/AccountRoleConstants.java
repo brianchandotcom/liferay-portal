@@ -46,6 +46,9 @@ public class AccountRoleConstants {
 
 	public static final String ROLE_NAME_ACCOUNT_SUPPLIER = "Account Supplier";
 
+	public static final String ROLE_NAME_ORDER_ADMINISTRATOR =
+		"Order Administrator";
+
 	public static final String ROLE_NAME_RETURNS_MANAGER = "Returns Manager";
 
 	public static final String ROLE_NAME_SUPPLIER = "Supplier";

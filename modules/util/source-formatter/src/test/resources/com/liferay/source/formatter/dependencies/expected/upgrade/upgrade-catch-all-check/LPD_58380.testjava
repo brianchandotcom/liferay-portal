@@ -1,0 +1,28 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Lucas Ferruccio
+ */
+public class LPD_58380 {
+
+	public void method(
+		long ldapServerId, long companyId, String screenName,
+		String emailAddress, boolean checkOriginalEmailAddress) {
+
+		_safePortalLDAP.getUser(
+			123, companyId, screenName, emailAddress,
+			checkOriginalEmailAddress);
+		_safePortalLDAP.getUser(ldapServerId, companyId, screenName, emailAddress, checkOriginalEmailAddress, false);
+	}
+
+	@Reference
+	private SafePortalLDAP _safePortalLDAP;
+
+}

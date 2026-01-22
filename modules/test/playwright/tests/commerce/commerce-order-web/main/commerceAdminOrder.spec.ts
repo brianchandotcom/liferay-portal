@@ -838,7 +838,7 @@ test(
 			);
 		});
 
-		await test.step('Verify note label in an order created via the account selector ', async () => {
+		await test.step('Verify note label in an order created via the account selector', async () => {
 			await page.goto(`/web/${site.name}`);
 
 			await commerceLayoutsPage
@@ -851,7 +851,7 @@ test(
 			).toBeVisible();
 		});
 
-		await test.step('Verify inactive order type is not assigned to an order created via the account selector ', async () => {
+		await test.step('Verify inactive order type is not assigned to an order created via the account selector', async () => {
 			await page.goto(`/web/${site.name}`);
 
 			await commerceLayoutsPage
@@ -862,7 +862,7 @@ test(
 			await expect(pendingOrdersPage.orderType).toBeEmpty();
 		});
 
-		await test.step('Verify inactive order type is not assigned to an order created via the account selector ', async () => {
+		await test.step('Verify inactive order type is not assigned to an order created via the account selector', async () => {
 			await commerceAdminOrderTypesPage.addOrderType(apiHelpers, false);
 
 			await page.goto(`/web/${site.name}`);
@@ -875,7 +875,7 @@ test(
 			await expect(pendingOrdersPage.orderType).toBeEmpty();
 		});
 
-		await test.step('Verify single active order type is automatically assigned to orders created via the account selector. ', async () => {
+		await test.step('Verify single active order type is automatically assigned to orders created via the account selector.', async () => {
 			const {orderTypeName} =
 				await commerceAdminOrderTypesPage.addOrderType(
 					apiHelpers,
@@ -892,7 +892,7 @@ test(
 			await expect(pendingOrdersPage.orderType).toHaveText(orderTypeName);
 		});
 
-		await test.step('Verify user can select order type when creating a new order via the account selector ', async () => {
+		await test.step('Verify user can select order type when creating a new order via the account selector', async () => {
 			const {orderTypeName} =
 				await commerceAdminOrderTypesPage.addOrderType(
 					apiHelpers,
@@ -973,7 +973,7 @@ test(
 			);
 		});
 
-		await test.step('Verify inactive order type is not assigned to an order created via pending orders ', async () => {
+		await test.step('Verify inactive order type is not assigned to an order created via pending orders', async () => {
 			await page.goto(`/web/${site.name}`);
 
 			await page.goto(`/web/${site.name}/pending-orders`);
@@ -983,7 +983,7 @@ test(
 			await expect(pendingOrdersPage.orderType).toBeEmpty();
 		});
 
-		await test.step('Verify inactive order type is not assigned to an order created via pending orders ', async () => {
+		await test.step('Verify inactive order type is not assigned to an order created via pending orders', async () => {
 			await commerceAdminOrderTypesPage.addOrderType(apiHelpers, false);
 			await page.goto(`/web/${site.name}`);
 
@@ -994,7 +994,7 @@ test(
 			await expect(pendingOrdersPage.orderType).toBeEmpty();
 		});
 
-		await test.step('Verify single active order type is automatically assigned to orders created via pending orders ', async () => {
+		await test.step('Verify single active order type is automatically assigned to orders created via pending orders', async () => {
 			const {orderTypeName} =
 				await commerceAdminOrderTypesPage.addOrderType(
 					apiHelpers,
@@ -1009,7 +1009,7 @@ test(
 			await expect(pendingOrdersPage.orderType).toHaveText(orderTypeName);
 		});
 
-		await test.step('Verify user can select order type when creating a new order via pending orders ', async () => {
+		await test.step('Verify user can select order type when creating a new order via pending orders', async () => {
 			const {orderTypeName} =
 				await commerceAdminOrderTypesPage.addOrderType(
 					apiHelpers,
@@ -1052,6 +1052,7 @@ test(
 		pendingOrdersPage,
 	}) => {
 		test.setTimeout(180000);
+
 		const account = await apiHelpers.headlessAdminUser.postAccount({
 			name: getRandomString(),
 			type: 'business',
@@ -1092,7 +1093,7 @@ test(
 			);
 		});
 
-		await test.step('Verify inactive order type is not assigned to an order created via add to cart ', async () => {
+		await test.step('Verify inactive order type is not assigned to an order created via add to cart', async () => {
 			await page.goto(`/web/${site.name}`);
 
 			await commerceThemeMiniumCatalogPage.addToCart('U-Joint');
@@ -1110,7 +1111,7 @@ test(
 			);
 		});
 
-		await test.step('Verify inactive order type is not assigned to an order created via add to cart ', async () => {
+		await test.step('Verify inactive order type is not assigned to an order created via add to cart', async () => {
 			await commerceAdminOrderTypesPage.addOrderType(apiHelpers, false);
 
 			await page.goto(`/web/${site.name}`);
@@ -1130,7 +1131,7 @@ test(
 			);
 		});
 
-		await test.step('Verify when creating a new order with add to cart and there is only 1 order type active for the channel, that order type is set in the order ', async () => {
+		await test.step('Verify when creating a new order with add to cart and there is only 1 order type active for the channel, that order type is set in the order', async () => {
 			const {orderTypeName} =
 				await commerceAdminOrderTypesPage.addOrderType(
 					apiHelpers,
@@ -1153,7 +1154,7 @@ test(
 			);
 		});
 
-		await test.step('Verify user can select order type when creating a new order via add to cart ', async () => {
+		await test.step('Verify user can select order type when creating a new order via add to cart', async () => {
 			const {orderTypeName} =
 				await commerceAdminOrderTypesPage.addOrderType(
 					apiHelpers,
@@ -1185,6 +1186,237 @@ test(
 			await pendingOrdersPage.viewButton.click();
 
 			await expect(pendingOrdersPage.orderType).toHaveText(orderTypeName);
+		});
+	}
+);
+
+test(
+	'Order Manager can only manage its account orders in control panel',
+	{tag: ['@LPD-74672']},
+	async ({apiHelpers, commerceAdminOrdersPage, page, site}) => {
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				name: {en_US: 'Product1'},
+			});
+
+		const productSkus = await apiHelpers.headlessCommerceAdminCatalog
+			.getProduct(product.productId)
+			.then((product) => {
+				return product.skus;
+			});
+
+		const sku = productSkus[0];
+
+		const account1 = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'business',
+		});
+		const account2 = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'business',
+		});
+		const account3 = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'business',
+		});
+
+		const user =
+			await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+				'demo.unprivileged@liferay.com'
+			);
+
+		await test.step('Setup Order Manager user', async () => {
+			await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+				account1.id,
+				['demo.unprivileged@liferay.com']
+			);
+			await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+				account2.id,
+				['demo.unprivileged@liferay.com']
+			);
+			await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+				account3.id,
+				['demo.unprivileged@liferay.com']
+			);
+
+			const rolesResponse =
+				await apiHelpers.headlessAdminUser.getAccountRoles(account1.id);
+
+			const accountRoleOrderManager = rolesResponse?.items?.filter(
+				(role) => {
+					return role.name === 'Order Manager';
+				}
+			);
+
+			await apiHelpers.headlessAdminUser.assignAccountRoles(
+				account1.externalReferenceCode,
+				accountRoleOrderManager[0].id,
+				user.emailAddress
+			);
+			await apiHelpers.headlessAdminUser.assignAccountRoles(
+				account2.externalReferenceCode,
+				accountRoleOrderManager[0].id,
+				user.emailAddress
+			);
+
+			const accountRoleBuyer = rolesResponse?.items?.filter((role) => {
+				return role.name === 'Buyer';
+			});
+
+			await apiHelpers.headlessAdminUser.assignAccountRoles(
+				account3.externalReferenceCode,
+				accountRoleBuyer[0].id,
+				user.emailAddress
+			);
+
+			const orderAdministratorRole =
+				await apiHelpers.headlessAdminUser.getRoleByName(
+					'Order Administrator'
+				);
+
+			await apiHelpers.headlessAdminUser.assignUserToRole(
+				orderAdministratorRole.externalReferenceCode,
+				user.id
+			);
+
+			const siteRole =
+				await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
+
+			await apiHelpers.headlessAdminUser.assignUserToSite(
+				siteRole.id,
+				site.id,
+				user.id
+			);
+		});
+
+		await test.step('Create some orders with different accounts', async () => {
+			const address1 =
+				await apiHelpers.headlessCommerceAdminAccount.postAddress(
+					account1.id,
+					{phoneNumber: '12345', regionISOCode: 'AL'}
+				);
+			const address2 =
+				await apiHelpers.headlessCommerceAdminAccount.postAddress(
+					account2.id,
+					{phoneNumber: '12345', regionISOCode: 'AL'}
+				);
+			const address3 =
+				await apiHelpers.headlessCommerceAdminAccount.postAddress(
+					account3.id,
+					{phoneNumber: '12345', regionISOCode: 'AL'}
+				);
+
+			await apiHelpers.headlessCommerceAdminOrder.postOrder({
+				accountId: account1.id,
+				billingAddressId: address1.id,
+				channelId: channel.id,
+				orderItems: [
+					{
+						decimalQuantity: 10,
+						quantity: 2,
+						skuId: sku.id,
+					},
+				],
+				orderStatus: '0',
+				paymentStatus: '0',
+				shippingAddressId: address1.id,
+			});
+			await apiHelpers.headlessCommerceAdminOrder.postOrder({
+				accountId: account1.id,
+				billingAddressId: address1.id,
+				channelId: channel.id,
+				orderItems: [
+					{
+						decimalQuantity: 5,
+						quantity: 1,
+						skuId: sku.id,
+					},
+				],
+				orderStatus: '0',
+				paymentStatus: '0',
+				shippingAddressId: address1.id,
+			});
+			await apiHelpers.headlessCommerceAdminOrder.postOrder({
+				accountId: account2.id,
+				billingAddressId: address2.id,
+				channelId: channel.id,
+				orderItems: [
+					{
+						decimalQuantity: 10,
+						quantity: 2,
+						skuId: sku.id,
+					},
+				],
+				orderStatus: '0',
+				paymentStatus: '0',
+				shippingAddressId: address2.id,
+			});
+			await apiHelpers.headlessCommerceAdminOrder.postOrder({
+				accountId: account2.id,
+				billingAddressId: address2.id,
+				channelId: channel.id,
+				orderItems: [
+					{
+						decimalQuantity: 5,
+						quantity: 1,
+						skuId: sku.id,
+					},
+				],
+				orderStatus: '0',
+				paymentStatus: '0',
+				shippingAddressId: address2.id,
+			});
+			await apiHelpers.headlessCommerceAdminOrder.postOrder({
+				accountId: account3.id,
+				billingAddressId: address3.id,
+				channelId: channel.id,
+				orderItems: [
+					{
+						decimalQuantity: 10,
+						quantity: 2,
+						skuId: sku.id,
+					},
+				],
+				orderStatus: '0',
+				paymentStatus: '0',
+				shippingAddressId: address3.id,
+			});
+			await apiHelpers.headlessCommerceAdminOrder.postOrder({
+				accountId: account3.id,
+				billingAddressId: address3.id,
+				channelId: channel.id,
+				orderItems: [
+					{
+						decimalQuantity: 5,
+						quantity: 1,
+						skuId: sku.id,
+					},
+				],
+				orderStatus: '0',
+				paymentStatus: '0',
+				shippingAddressId: address3.id,
+			});
+		});
+
+		await test.step('Verify Order Manager can only see account1 and account2 orders', async () => {
+			await performLogout(page);
+
+			await performLoginViaApi({page, screenName: user.alternateName});
+
+			await commerceAdminOrdersPage.goto();
+
+			await expect(page.getByText(account1.name)).toHaveCount(2);
+			await expect(page.getByText(account2.name)).toHaveCount(2);
+			await expect(page.getByText(account3.name)).toHaveCount(0);
 		});
 	}
 );

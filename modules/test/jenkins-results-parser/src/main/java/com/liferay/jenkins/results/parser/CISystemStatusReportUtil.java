@@ -97,13 +97,12 @@ public class CISystemStatusReportUtil {
 	}
 
 	public static void writeConfigJSFile(String filePath) throws IOException {
-		int maxYAxes = 1320;
+		int maxNodeCount = Integer.parseInt(
+			JenkinsResultsParserUtil.getBuildProperty(
+				"report.ci.max.node.count"));
 
-		if (JenkinsResultsParserUtil.isCloudCINode()) {
-			maxYAxes = 1210;
-		}
-
-		String content = String.format("window.MAX_Y_AXES = %d;%n", maxYAxes);
+		String content = String.format(
+			"window.MAX_Y_AXES = %d;%n", maxNodeCount);
 
 		File configFile = new File(filePath, "/js/config.js");
 

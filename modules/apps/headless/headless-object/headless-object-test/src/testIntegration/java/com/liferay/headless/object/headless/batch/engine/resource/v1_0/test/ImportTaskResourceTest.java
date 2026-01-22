@@ -84,9 +84,11 @@ public class ImportTaskResourceTest {
 	@Test
 	public void testPostImportTask() throws Exception {
 
-		// With "createStrategy" UPSERT
+		// Creation through UPSERT with UPDATE
 
 		JSONObject jsonObject = JSONUtil.put(
+			"description", RandomTestUtil.randomString()
+		).put(
 			"externalReferenceCode", RandomTestUtil.randomString()
 		).put(
 			"label", RandomTestUtil.randomString()
@@ -97,17 +99,13 @@ public class ImportTaskResourceTest {
 		ObjectEntryFolder objectEntryFolder = _postImportTask(
 			"UPSERT", "COMPLETED", jsonObject, null);
 
-		Assert.assertTrue(Validator.isNull(objectEntryFolder.getDescription()));
-
 		JSONAssert.assertEquals(
 			jsonObject.toString(), objectEntryFolder.toString(),
 			JSONCompareMode.LENIENT);
 
-		// With "createStrategy" UPSERT and "updateStrategy" UPDATE
+		// Update through UPSERT with UPDATE
 
 		jsonObject = JSONUtil.put(
-			"description", RandomTestUtil.randomString()
-		).put(
 			"externalReferenceCode",
 			objectEntryFolder.getExternalReferenceCode()
 		).put(
@@ -119,16 +117,32 @@ public class ImportTaskResourceTest {
 		objectEntryFolder = _postImportTask(
 			"UPSERT", "COMPLETED", jsonObject, "UPDATE");
 
+		Assert.assertTrue(Validator.isNull(objectEntryFolder.getDescription()));
+
 		JSONAssert.assertEquals(
 			jsonObject.toString(), objectEntryFolder.toString(),
 			JSONCompareMode.LENIENT);
 
-		// With "createStrategy" UPSERT and "updateStrategy" PARTIAL_UPDATE
+		// Creation through UPSERT with PARTIAL_UPDATE
 
-		objectEntryFolder =
-			_objectEntryFolderResource.postScopeScopeKeyObjectEntryFolder(
-				_testGroup.getExternalReferenceCode(),
-				_randomObjectEntryFolder());
+		jsonObject = JSONUtil.put(
+			"description", RandomTestUtil.randomString()
+		).put(
+			"externalReferenceCode", RandomTestUtil.randomString()
+		).put(
+			"label", RandomTestUtil.randomString()
+		).put(
+			"title", RandomTestUtil.randomString()
+		);
+
+		objectEntryFolder = _postImportTask(
+			"UPSERT", "COMPLETED", jsonObject, null);
+
+		JSONAssert.assertEquals(
+			jsonObject.toString(), objectEntryFolder.toString(),
+			JSONCompareMode.LENIENT);
+
+		// Update through UPSERT with PARTIAL_UPDATE
 
 		jsonObject = JSONUtil.put(
 			"externalReferenceCode",
@@ -150,7 +164,24 @@ public class ImportTaskResourceTest {
 			jsonObject.toString(), objectEntryFolder.toString(),
 			JSONCompareMode.LENIENT);
 
-		// With "createStrategy" INSERT
+		// Creation through INSERT
+
+		jsonObject = JSONUtil.put(
+			"externalReferenceCode", RandomTestUtil.randomString()
+		).put(
+			"label", RandomTestUtil.randomString()
+		).put(
+			"title", RandomTestUtil.randomString()
+		);
+
+		objectEntryFolder = _postImportTask(
+			"INSERT", "COMPLETED", jsonObject, null);
+
+		JSONAssert.assertEquals(
+			jsonObject.toString(), objectEntryFolder.toString(),
+			JSONCompareMode.LENIENT);
+
+		// Failing creation through INSERT
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.batch.engine.internal." +
@@ -222,18 +253,6 @@ public class ImportTaskResourceTest {
 						jsonObject.getString("externalReferenceCode"));
 			}
 		}
-	}
-
-	private ObjectEntryFolder _randomObjectEntryFolder() throws Exception {
-		return new ObjectEntryFolder() {
-			{
-				description = RandomTestUtil.randomString();
-				externalReferenceCode = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				label = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				title = StringUtil.toLowerCase(RandomTestUtil.randomString());
-			}
-		};
 	}
 
 	private ObjectEntryFolderResource _objectEntryFolderResource;

@@ -6,7 +6,6 @@
 package com.liferay.portal.search.tuning.synonyms.web.internal.upgrade.v1_0_1.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -92,24 +91,26 @@ public class SynonymsConfigurationUpgradeProcessTest {
 	private void _assertConfiguration() throws Exception {
 		try (Connection connection = DataAccess.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"select dictionary from Configuration_ where ",
-					"configurationId = '", _CONFIGURATION_ID, "'"));
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+				"select dictionary from Configuration_ where configurationId " +
+					"= ?")) {
 
-			if (resultSet.next()) {
-				String dictionaryString = resultSet.getString("dictionary");
+			preparedStatement.setString(1, _CONFIGURATION_ID);
 
-				Dictionary<String, Object> dictionary =
-					ConfigurationHandler.read(
-						new UnsyncByteArrayInputStream(
-							dictionaryString.getBytes(StringPool.UTF8)));
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					String dictionaryString = resultSet.getString("dictionary");
 
-				String[] filterNameValues = (String[])dictionary.get(
-					"filterNames");
+					Dictionary<String, Object> dictionary =
+						ConfigurationHandler.read(
+							new UnsyncByteArrayInputStream(
+								dictionaryString.getBytes(StringPool.UTF8)));
 
-				Assert.assertArrayEquals(
-					_EXPECTED_FILTER_NAMES, filterNameValues);
+					String[] filterNameValues = (String[])dictionary.get(
+						"filterNames");
+
+					Assert.assertArrayEquals(
+						_EXPECTED_FILTER_NAMES, filterNameValues);
+				}
 			}
 		}
 	}

@@ -21,34 +21,44 @@ const test = mergeTests(
 	styleBookPageTest
 );
 
+const STYLEBOOK_CATEGORY = 'Font Family Base';
+const STYLEBOOK_CATEGORY_VALUE = 'times';
+const STYLEBOOK_NAME = getRandomString();
+const STYLEBOOK_SECTION = 'Font Family';
+const STYLEBOOK_TOKEN_CATEGORY = 'Typography';
+
+test.beforeEach(async ({styleBooksPage}) => {
+	await test.step('Create a style book with custom token value', async () => {
+		await styleBooksPage.goto();
+
+		await styleBooksPage.create(STYLEBOOK_NAME);
+
+		await styleBooksPage.selectTokenCategory(STYLEBOOK_TOKEN_CATEGORY);
+
+		await styleBooksPage.updateTokenInput(
+			STYLEBOOK_CATEGORY,
+			STYLEBOOK_CATEGORY_VALUE,
+			STYLEBOOK_SECTION
+		);
+
+		await styleBooksPage.waitForAutoSave();
+
+		await styleBooksPage.publish();
+	});
+});
+
+test.afterEach(async ({styleBooksPage}) => {
+	await test.step('Delete the created style books', async () => {
+		await styleBooksPage.goto();
+
+		await styleBooksPage.delete(STYLEBOOK_NAME);
+	});
+});
+
 test(
 	'Assert that style books can be exported and imported.',
 	{tag: '@LPS-134860'},
 	async ({page, site, styleBooksHelper, styleBooksPage}) => {
-		const styleBookName = getRandomString();
-		const STYLEBOOK_CATEGORY = 'Font Family Base';
-		const STYLEBOOK_CATEGORY_VALUE = 'times';
-		const STYLEBOOK_TOKEN_CATEGORY = 'Typography';
-		const STYLEBOOK_SECTION = 'Font Family';
-
-		await test.step('Create a style book with custom token value', async () => {
-			await styleBooksPage.goto();
-
-			await styleBooksPage.create(styleBookName);
-
-			await styleBooksPage.selectTokenCategory(STYLEBOOK_TOKEN_CATEGORY);
-
-			await styleBooksPage.updateTokenInput(
-				STYLEBOOK_CATEGORY,
-				STYLEBOOK_CATEGORY_VALUE,
-				STYLEBOOK_SECTION
-			);
-
-			await styleBooksPage.waitForAutoSave();
-
-			await styleBooksPage.publish();
-		});
-
 		const {fileName, filePath} =
 			await test.step('Export the style book', async () => {
 				const downloadPromise = page.waitForEvent('download');
@@ -71,19 +81,13 @@ test(
 				return {fileName: download.suggestedFilename(), filePath};
 			});
 
-		await test.step('Delete the created style book', async () => {
-			await styleBooksPage.goto();
-
-			await styleBooksPage.delete(styleBookName);
-		});
-
 		await test.step('Import the style book into a new site', async () => {
 			await styleBooksPage.goto(site.friendlyUrlPath);
 
 			await styleBooksPage.importStyleBookFile(fileName, filePath);
 
 			await expect(
-				page.getByRole('link', {name: styleBookName})
+				page.getByRole('link', {name: STYLEBOOK_NAME})
 			).toBeVisible();
 		});
 

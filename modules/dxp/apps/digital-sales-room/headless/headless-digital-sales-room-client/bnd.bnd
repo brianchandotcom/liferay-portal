@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Headless Digital Sales Room Client
 Bundle-SymbolicName: com.liferay.headless.digital.sales.room.client
-Bundle-Version: 2.1.1
+Bundle-Version: 2.2.0
 Export-Package:\
 	com.liferay.headless.digital.sales.room.client.dto.v1_0,\
 	com.liferay.headless.digital.sales.room.client.http,\

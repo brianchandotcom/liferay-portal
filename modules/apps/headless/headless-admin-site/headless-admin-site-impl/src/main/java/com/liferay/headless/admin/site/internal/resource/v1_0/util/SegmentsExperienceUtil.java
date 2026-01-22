@@ -9,9 +9,7 @@ import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
-import com.liferay.headless.admin.site.internal.dto.v1_0.util.ItemScopeUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
-import com.liferay.headless.admin.site.internal.util.LogUtil;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
@@ -23,11 +21,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.vulcan.scope.Scope;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
-import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
-import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.segments.service.SegmentsExperienceServiceUtil;
 
@@ -49,17 +46,22 @@ public class SegmentsExperienceUtil {
 			throw new UnsupportedOperationException();
 		}
 
+		ItemExternalReference itemExternalReference =
+			pageExperience.getSegmentItemExternalReference();
+
 		String segmentsEntryERC = null;
 		String segmentsEntryScopeERC = null;
 
-		SegmentsEntry segmentsEntry = _getSegmentsEntry(
-			layout.getCompanyId(), layout.getGroupId(),
-			pageExperience.getSegmentItemExternalReference());
+		if (itemExternalReference != null) {
+			segmentsEntryERC = itemExternalReference.getExternalReferenceCode();
 
-		if (segmentsEntry != null) {
-			segmentsEntryERC = segmentsEntry.getExternalReferenceCode();
-			segmentsEntryScopeERC = ScopeUtil.getItemScopeExternalReferenceCode(
-				segmentsEntry.getGroupId(), layout.getGroupId());
+			Scope scope = itemExternalReference.getScope();
+
+			if (scope != null) {
+				segmentsEntryScopeERC =
+					ScopeUtil.getItemScopeExternalReferenceCode(
+						scope.getExternalReferenceCode(), layout.getGroupId());
+			}
 		}
 
 		SegmentsExperience segmentsExperience =
@@ -128,17 +130,22 @@ public class SegmentsExperienceUtil {
 					segmentsExperiencePriority);
 		}
 
+		ItemExternalReference itemExternalReference =
+			pageExperience.getSegmentItemExternalReference();
+
 		String segmentsEntryERC = null;
 		String segmentsEntryScopeERC = null;
 
-		SegmentsEntry segmentsEntry = _getSegmentsEntry(
-			segmentsExperience.getCompanyId(), segmentsExperience.getGroupId(),
-			pageExperience.getSegmentItemExternalReference());
+		if (itemExternalReference != null) {
+			segmentsEntryERC = itemExternalReference.getExternalReferenceCode();
 
-		if (segmentsEntry != null) {
-			segmentsEntryERC = segmentsEntry.getExternalReferenceCode();
-			segmentsEntryScopeERC = ScopeUtil.getItemScopeExternalReferenceCode(
-				segmentsEntry.getGroupId(), layout.getGroupId());
+			Scope scope = itemExternalReference.getScope();
+
+			if (scope != null) {
+				segmentsEntryScopeERC =
+					ScopeUtil.getItemScopeExternalReferenceCode(
+						scope.getExternalReferenceCode(), layout.getGroupId());
+			}
 		}
 
 		return SegmentsExperienceServiceUtil.updateSegmentsExperience(
@@ -199,37 +206,6 @@ public class SegmentsExperienceUtil {
 		}
 
 		return layoutStructure.toString();
-	}
-
-	private static SegmentsEntry _getSegmentsEntry(
-		long companyId, long scopeGroupId,
-		ItemExternalReference segmentItemExternalReference) {
-
-		if (segmentItemExternalReference == null) {
-			return null;
-		}
-
-		Long itemGroupId = ItemScopeUtil.getItemGroupId(
-			companyId, segmentItemExternalReference.getScope(), scopeGroupId);
-
-		if (itemGroupId == null) {
-			throw new UnsupportedOperationException();
-		}
-
-		SegmentsEntry segmentsEntry =
-			SegmentsEntryLocalServiceUtil.
-				fetchSegmentsEntryByExternalReferenceCode(
-					segmentItemExternalReference.getExternalReferenceCode(),
-					itemGroupId);
-
-		if (segmentsEntry == null) {
-			LogUtil.logOptionalReference(
-				SegmentsEntry.class,
-				segmentItemExternalReference.getExternalReferenceCode(),
-				itemGroupId);
-		}
-
-		return segmentsEntry;
 	}
 
 }

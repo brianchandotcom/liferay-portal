@@ -439,10 +439,7 @@ public class BatchEngineImportTaskExecutorImpl
 			Class<?> itemClass = _itemClassRegistry.getItemClass(
 				batchEngineTaskItemDelegate);
 
-			int importBatchSize = 100;
-
 			int processedItemsCount = 0;
-			int lastReportedItemsCount = 0;
 
 			while (true) {
 				if (Thread.interrupted()) {
@@ -477,16 +474,9 @@ public class BatchEngineImportTaskExecutorImpl
 						batchEngineImportTask, batchEngineTaskItemDelegate,
 						items, parameters, processedItemsCount);
 
-					int itemsSinceLastReport =
-						processedItemsCount - lastReportedItemsCount;
-
-					if (itemsSinceLastReport >= importBatchSize) {
-						BatchEngineTaskExecutorUtil.sendBatchProgressMessage(
-							_backgroundTaskStatusMessageSender,
-							processedItemsCount);
-
-						lastReportedItemsCount = processedItemsCount;
-					}
+					BatchEngineTaskExecutorUtil.sendBatchProgressMessage(
+						_backgroundTaskStatusMessageSender,
+						processedItemsCount);
 
 					items.clear();
 
@@ -500,7 +490,7 @@ public class BatchEngineImportTaskExecutorImpl
 					parameters, processedItemsCount);
 			}
 
-			if (processedItemsCount > lastReportedItemsCount) {
+			if (processedItemsCount > 0) {
 				BatchEngineTaskExecutorUtil.sendBatchProgressMessage(
 					_backgroundTaskStatusMessageSender, processedItemsCount);
 			}

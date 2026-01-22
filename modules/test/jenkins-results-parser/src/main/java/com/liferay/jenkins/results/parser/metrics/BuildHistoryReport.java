@@ -63,12 +63,12 @@ public class BuildHistoryReport {
 			_getTableDataJavaScriptVariable(
 				buildHistories, "Job Category", 1, "[Total]"));
 
-		buildHistoryReport.addFile("js/table-data.js", sb.toString());
+		buildHistoryReport.addFile(sb.toString(), "js/table-data.js");
 
 		buildHistoryReport.addFile(
-			"js/timeline-data.js",
 			_getTimelineDataJavaScriptVariable(
-				buildHistories, duration, startTime));
+				buildHistories, duration, startTime),
+			"js/timeline-data.js");
 
 		return buildHistoryReport;
 	}
@@ -208,7 +208,7 @@ public class BuildHistoryReport {
 		sb.append(tableJSONArray);
 		sb.append(";");
 
-		buildHistoryReport.addFile("js/table-data.js", sb.toString());
+		buildHistoryReport.addFile(sb.toString(), "js/table-data.js");
 
 		return buildHistoryReport;
 	}
@@ -281,7 +281,7 @@ public class BuildHistoryReport {
 
 		sb.append("\nvar reportName = \"Utilization Report\";");
 
-		buildHistoryReport.addFile("js/table-data.js", sb.toString());
+		buildHistoryReport.addFile(sb.toString(), "js/table-data.js");
 
 		return buildHistoryReport;
 	}
@@ -290,7 +290,7 @@ public class BuildHistoryReport {
 		_outputDir = outputDir;
 	}
 
-	public void addFile(String fileName, String fileContent) {
+	public void addFile(String fileContent, String fileName) {
 		_fileMap.put(new File(_outputDir, fileName), fileContent);
 	}
 
@@ -300,9 +300,9 @@ public class BuildHistoryReport {
 		for (String fileName : fileNames) {
 			try {
 				addFile(
-					fileName,
 					JenkinsResultsParserUtil.getResourceFileContent(
-						resourceDirPath + fileName));
+						resourceDirPath + fileName),
+					fileName);
 			}
 			catch (IOException ioException) {
 				System.out.println(
@@ -470,7 +470,7 @@ public class BuildHistoryReport {
 
 		sb.append("\";");
 
-		buildHistoryReport.addFile("js/table-data.js", sb.toString());
+		buildHistoryReport.addFile(sb.toString(), "js/table-data.js");
 
 		return buildHistoryReport;
 	}

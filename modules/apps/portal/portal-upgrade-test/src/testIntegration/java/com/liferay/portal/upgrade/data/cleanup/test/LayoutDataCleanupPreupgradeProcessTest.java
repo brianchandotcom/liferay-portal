@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
@@ -16,11 +17,18 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.PortletPreferenceValue;
 import com.liferay.portal.kernel.model.PortletPreferences;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -35,6 +43,7 @@ import com.liferay.portal.upgrade.data.cleanup.LayoutDataCleanupPreupgradeProces
 import java.util.List;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -122,6 +131,18 @@ public class LayoutDataCleanupPreupgradeProcessTest
 						RandomTestUtil.randomString()
 					}));
 
+		long companyId = TestPropsValues.getCompanyId();
+
+		Role role = RoleLocalServiceUtil.getRole(
+			companyId, RoleConstants.GUEST);
+
+		ResourcePermissionLocalServiceUtil.setResourcePermissions(
+			companyId, Layout.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			PortletPermissionUtil.getPrimaryKey(
+				widgetPageLayout.getPlid(), portletPreferences.getPortletId()),
+			role.getRoleId(), new String[] {ActionKeys.VIEW});
+
 		runSQL(
 			"delete from Layout where plid = " + contentPageLayout.getPlid());
 		runSQL("delete from Layout where plid = " + widgetPageLayout.getPlid());
@@ -145,6 +166,33 @@ public class LayoutDataCleanupPreupgradeProcessTest
 			_portletPreferenceValueLocalService.deletePortletPreferenceValue(
 				portletPreferenceValue);
 		}
+
+		CacheRegistryUtil.clear();
+
+		Assert.assertFalse(
+			_resourcePermissionLocalService.hasResourcePermission(
+				companyId, Layout.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				PortletPermissionUtil.getPrimaryKey(
+					widgetPageLayout.getPlid(),
+					portletPreferences.getPortletId()),
+				role.getRoleId(), ActionKeys.VIEW));
+
+		List<ResourcePermission> resourcePermissions =
+			_resourcePermissionLocalService.getResourcePermissions(
+				companyId, Layout.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(contentPageLayout.getPrimaryKey()));
+
+		Assert.assertTrue(resourcePermissions.isEmpty());
+
+		resourcePermissions =
+			_resourcePermissionLocalService.getResourcePermissions(
+				companyId, Layout.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(widgetPageLayout.getPrimaryKey()));
+
+		Assert.assertTrue(resourcePermissions.isEmpty());
 	}
 
 	protected String getPortletPreferencesXML(String name, String[] values) {

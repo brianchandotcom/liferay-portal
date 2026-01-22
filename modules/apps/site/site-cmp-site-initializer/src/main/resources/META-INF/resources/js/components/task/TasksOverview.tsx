@@ -100,6 +100,8 @@ export default function TasksOverview({cmpProjectId}: {cmpProjectId: string}) {
 	};
 
 	const fetchCounts = useCallback(async () => {
+		setLoading(true);
+
 		fetch(`/o/cmp/projects/${cmpProjectId}`, {
 			method: 'GET',
 		}).then(async (response: Response) => {
@@ -110,13 +112,13 @@ export default function TasksOverview({cmpProjectId}: {cmpProjectId: string}) {
 			setInProgressCount(data.inProgressCount);
 			setOverdueCount(data.overdueCount);
 			setTotalCount(data.totalCount);
+
+			setLoading(false);
 		});
 	}, [cmpProjectId]);
 
 	useEffect(() => {
 		fetchCounts();
-
-		setLoading(false);
 	}, [fetchCounts]);
 
 	useEffect(() => {

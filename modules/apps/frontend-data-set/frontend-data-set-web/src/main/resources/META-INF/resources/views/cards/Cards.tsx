@@ -21,6 +21,7 @@ import getRandomId from '../../utils/getRandomId';
 import isLink from '../../utils/isLink';
 import {
 	DisplayType,
+	EItemActionsType,
 	ICardLabelSchema,
 	ICardSchema,
 	IItemsActions,
@@ -128,7 +129,10 @@ const Card = forwardRef<HTMLDivElement, any>(
 			const processedActions: any[] = [];
 
 			actions.forEach((action, index) => {
-				if (action.type === 'group') {
+				if (
+					action.type === EItemActionsType.GROUP ||
+					action.type === EItemActionsType.CONTEXTUAL
+				) {
 					const {items: nestedItems, ...otherProps} = action;
 
 					if (nestedItems?.length) {
@@ -139,6 +143,7 @@ const Card = forwardRef<HTMLDivElement, any>(
 						processedActions.push({
 							...otherProps,
 							items: getDropdownActions(nestedItems),
+							symbolLeft: action.icon,
 						});
 					}
 				}

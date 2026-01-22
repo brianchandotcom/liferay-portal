@@ -152,7 +152,6 @@ import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -526,7 +525,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					}
 				).put(
 					"jakarta.portlet.display-name",
-					objectDefinition.getPluralLabel(LocaleUtil.getSiteDefault())
+					objectDefinition.getPluralLabelCurrentValue()
 				).put(
 					"jakarta.portlet.init-param.view-template",
 					"/object_entries/view_object_entries.jsp"

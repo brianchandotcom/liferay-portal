@@ -1,0 +1,51 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Jessyca Ferreira
+ */
+public class LPD_61495 {
+
+	public void method(
+		long userId, long groupId, boolean privateLayout, long parentLayoutId,
+		long classNameId, long classPK, Map<Locale, String> nameMap,
+		Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+		Map<Locale, String> keywordsMap, Map<Locale, String> robotsMap,
+		String type, String typeSettings, boolean hidden, boolean system,
+		Map<Locale, String> friendlyURLMap, ServiceContext serviceContext) {
+
+		LayoutLocalServiceUtil.addLayout(
+			123, groupId, privateLayout, parentLayoutId, classNameId, classPK,
+			nameMap, titleMap, descriptionMap, keywordsMap, robotsMap, type,
+			typeSettings, hidden, system, friendlyURLMap, serviceContext);
+		LayoutLocalServiceUtil.addLayout(
+			userId, groupId, privateLayout, parentLayoutId, classNameId,
+			classPK, nameMap, titleMap, descriptionMap, keywordsMap, robotsMap,
+			type, typeSettings, hidden, system, friendlyURLMap, serviceContext);
+		LayoutServiceUtil.addLayout(
+			userId, groupId, privateLayout, parentLayoutId, classNameId,
+			classPK, nameMap, titleMap, descriptionMap, keywordsMap, robotsMap,
+			type, typeSettings, hidden, system, friendlyURLMap, serviceContext);
+		_layoutLocalService.addLayout(
+			userId, groupId, privateLayout, parentLayoutId, classNameId,
+			classPK, nameMap, titleMap, descriptionMap, keywordsMap, robotsMap,
+			type, typeSettings, hidden, system, friendlyURLMap, serviceContext);
+		_layoutService.addLayout(
+			userId, groupId, privateLayout, parentLayoutId, classNameId,
+			classPK, nameMap, titleMap, descriptionMap, keywordsMap, robotsMap,
+			type, typeSettings, hidden, system, friendlyURLMap, serviceContext);
+	}
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutService _layoutService;
+
+}

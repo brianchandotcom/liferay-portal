@@ -273,22 +273,25 @@ public class CommerceDiscountRelLocalServiceImpl
 		getCommercePricingClassesByCommerceDiscountId(
 			long commerceDiscountId, String title, int start, int end) {
 
-		return dslQuery(
-			_getGroupByStep(
-				DSLQueryFactoryUtil.selectDistinct(
-					CommerceDiscountRelTable.INSTANCE
-				).from(
-					CommerceDiscountRelTable.INSTANCE
-				).innerJoinON(
-					CommercePricingClassTable.INSTANCE,
-					CommercePricingClassTable.INSTANCE.commercePricingClassId.
-						eq(CommerceDiscountRelTable.INSTANCE.classPK)
-				),
-				CommercePricingClass.class.getName(), commerceDiscountId, title,
-				CommercePricingClassTable.INSTANCE.title
-			).limit(
-				start, end
-			));
+		return TransformUtil.transform(
+			dslQuery(
+				_getGroupByStep(
+					DSLQueryFactoryUtil.selectDistinct(
+						CommerceDiscountRelTable.INSTANCE.commerceDiscountRelId
+					).from(
+						CommerceDiscountRelTable.INSTANCE
+					).innerJoinON(
+						CommercePricingClassTable.INSTANCE,
+						CommercePricingClassTable.INSTANCE.
+							commercePricingClassId.eq(
+								CommerceDiscountRelTable.INSTANCE.classPK)
+					),
+					CommercePricingClass.class.getName(), commerceDiscountId,
+					title, CommercePricingClassTable.INSTANCE.title
+				).limit(
+					start, end
+				)),
+			this::getCommerceDiscountRel);
 	}
 
 	@Override
@@ -315,30 +318,33 @@ public class CommerceDiscountRelLocalServiceImpl
 		long commerceDiscountId, String name, String languageId, int start,
 		int end) {
 
-		return dslQuery(
-			_getGroupByStep(
-				DSLQueryFactoryUtil.selectDistinct(
-					CommerceDiscountRelTable.INSTANCE
-				).from(
-					CommerceDiscountRelTable.INSTANCE
-				).innerJoinON(
-					CPDefinitionTable.INSTANCE,
-					CPDefinitionTable.INSTANCE.CPDefinitionId.eq(
-						CommerceDiscountRelTable.INSTANCE.classPK)
-				).leftJoinOn(
-					CPDefinitionLocalizationTable.INSTANCE,
-					CPDefinitionTable.INSTANCE.CPDefinitionId.eq(
-						CPDefinitionLocalizationTable.INSTANCE.CPDefinitionId
-					).and(
-						CPDefinitionLocalizationTable.INSTANCE.languageId.eq(
-							languageId)
-					)
-				),
-				CPDefinition.class.getName(), commerceDiscountId, name,
-				CPDefinitionLocalizationTable.INSTANCE.name
-			).limit(
-				start, end
-			));
+		return TransformUtil.transform(
+			dslQuery(
+				_getGroupByStep(
+					DSLQueryFactoryUtil.selectDistinct(
+						CommerceDiscountRelTable.INSTANCE.commerceDiscountRelId
+					).from(
+						CommerceDiscountRelTable.INSTANCE
+					).innerJoinON(
+						CPDefinitionTable.INSTANCE,
+						CPDefinitionTable.INSTANCE.CPDefinitionId.eq(
+							CommerceDiscountRelTable.INSTANCE.classPK)
+					).leftJoinOn(
+						CPDefinitionLocalizationTable.INSTANCE,
+						CPDefinitionTable.INSTANCE.CPDefinitionId.eq(
+							CPDefinitionLocalizationTable.INSTANCE.
+								CPDefinitionId
+						).and(
+							CPDefinitionLocalizationTable.INSTANCE.languageId.
+								eq(languageId)
+						)
+					),
+					CPDefinition.class.getName(), commerceDiscountId, name,
+					CPDefinitionLocalizationTable.INSTANCE.name
+				).limit(
+					start, end
+				)),
+			this::getCommerceDiscountRel);
 	}
 
 	@Override

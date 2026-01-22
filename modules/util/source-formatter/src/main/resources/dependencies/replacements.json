@@ -4933,6 +4933,14 @@
 	},
 	{
 		"classNames": [
+			"JournalUtil"
+		],
+		"from": "addRecentArticle(ActionRequest paramName, JournalArticle paramName)",
+		"issueKey": "LPD-58341",
+		"to": ""
+	},
+	{
+		"classNames": [
 			"LayoutCopyHelper"
 		],
 		"from": "copyLayout",

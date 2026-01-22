@@ -7,14 +7,13 @@ package com.liferay.asset.publisher.web.internal.display.context;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import jakarta.portlet.RenderRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -25,16 +24,14 @@ import org.mockito.Mockito;
  */
 public class AssetPublisherViewContentDisplayContextTest {
 
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
+
 	@Before
 	public void setUp() {
 		_renderRequest = Mockito.mock(RenderRequest.class);
-		_themeDisplay = Mockito.mock(ThemeDisplay.class);
-
-		Mockito.when(
-			_renderRequest.getAttribute(WebKeys.THEME_DISPLAY)
-		).thenReturn(
-			_themeDisplay
-		);
 	}
 
 	@Test
@@ -56,15 +53,9 @@ public class AssetPublisherViewContentDisplayContextTest {
 			assetPublisherViewContentDisplayContext, "_assetEntry", assetEntry);
 
 		Assert.assertFalse(
-			"Returns false when the asset entry is not visible",
 			assetPublisherViewContentDisplayContext.isAssetEntryVisible());
 	}
 
-	@Rule
-	public LiferayUnitTestRule liferayUnitTestRule =
-		LiferayUnitTestRule.INSTANCE;
-
 	private RenderRequest _renderRequest;
-	private ThemeDisplay _themeDisplay;
 
 }

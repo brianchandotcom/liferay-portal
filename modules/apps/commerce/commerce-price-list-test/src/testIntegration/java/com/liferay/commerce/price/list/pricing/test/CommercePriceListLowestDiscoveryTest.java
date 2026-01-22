@@ -470,49 +470,32 @@ public class CommercePriceListLowestDiscoveryTest {
 	public void testRetrieveCorrectPromotionListWithPriceModifications()
 		throws Exception {
 
+		CommercePriceList commercePriceList1 =
+			CommercePriceListTestUtil.addCommercePriceList(
+				_commerceCatalog.getGroupId(), false, _TYPE, 1.0);
+
 		CPInstance cpInstance = CPTestUtil.addCPInstanceFromCatalog(
 			_commerceCatalog.getGroupId());
 
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
-		CommercePriceList basePriceList =
-			CommercePriceListTestUtil.addCommercePriceList(
-				_commerceCatalog.getGroupId(), false, _TYPE, 1.0);
-
-		CommercePriceList basePromoPriceList =
-			CommercePriceListTestUtil.addCommercePriceList(
-				_commerceCatalog.getGroupId(), false,
-				CommercePriceListConstants.TYPE_PROMOTION, 1.0);
-
 		CommercePriceEntryTestUtil.addCommercePriceEntry(
 			RandomTestUtil.randomString(), cpDefinition.getCProductId(),
 			cpInstance.getCPInstanceUuid(),
-			basePriceList.getCommercePriceListId(),
+			commercePriceList1.getCommercePriceListId(),
 			BigDecimal.valueOf(RandomTestUtil.randomDouble()));
 
-		CommercePriceEntryTestUtil.addCommercePriceEntry(
-			RandomTestUtil.randomString(), cpDefinition.getCProductId(),
-			cpInstance.getCPInstanceUuid(),
-			basePromoPriceList.getCommercePriceListId(), BigDecimal.ZERO);
-
-		CommercePriceList discoveredCommercePriceList =
-			_commercePriceListDiscovery.getCommercePriceList(
-				_commerceCatalog.getGroupId(),
-				_accountEntry.getAccountEntryId(),
-				_commerceChannel.getCommerceChannelId(), 0,
-				cpInstance.getCPInstanceUuid(), null,
-				CommercePriceListConstants.TYPE_PROMOTION, StringPool.BLANK);
-
-		Assert.assertEquals(
-			basePromoPriceList.getCommercePriceListId(),
-			discoveredCommercePriceList.getCommercePriceListId());
-
-		CommercePriceList promoPriceList =
+		CommercePriceList commercePriceList2 =
 			CommercePriceListTestUtil.addCommercePriceList(
 				_commerceCatalog.getGroupId(), false,
 				CommercePriceListConstants.TYPE_PROMOTION, 1.0);
 
-		discoveredCommercePriceList =
+		CommercePriceEntryTestUtil.addCommercePriceEntry(
+			RandomTestUtil.randomString(), cpDefinition.getCProductId(),
+			cpInstance.getCPInstanceUuid(),
+			commercePriceList2.getCommercePriceListId(), BigDecimal.ZERO);
+
+		CommercePriceList commercePriceList3 =
 			_commercePriceListDiscovery.getCommercePriceList(
 				_commerceCatalog.getGroupId(),
 				_accountEntry.getAccountEntryId(),
@@ -521,8 +504,18 @@ public class CommercePriceListLowestDiscoveryTest {
 				CommercePriceListConstants.TYPE_PROMOTION, StringPool.BLANK);
 
 		Assert.assertEquals(
-			basePromoPriceList.getCommercePriceListId(),
-			discoveredCommercePriceList.getCommercePriceListId());
+			commercePriceList2.getCommercePriceListId(),
+			commercePriceList3.getCommercePriceListId());
+
+		commercePriceList3 = _commercePriceListDiscovery.getCommercePriceList(
+			_commerceCatalog.getGroupId(), _accountEntry.getAccountEntryId(),
+			_commerceChannel.getCommerceChannelId(), 0,
+			cpInstance.getCPInstanceUuid(), null,
+			CommercePriceListConstants.TYPE_PROMOTION, StringPool.BLANK);
+
+		Assert.assertEquals(
+			commercePriceList2.getCommercePriceListId(),
+			commercePriceList3.getCommercePriceListId());
 
 		Calendar calendar = CalendarFactoryUtil.getCalendar(
 			_user.getTimeZone());
@@ -530,7 +523,7 @@ public class CommercePriceListLowestDiscoveryTest {
 		CommercePriceModifier commercePriceModifier =
 			_commercePriceModifierLocalService.addCommercePriceModifier(
 				_commerceCatalog.getGroupId(), RandomTestUtil.randomString(),
-				promoPriceList.getCommercePriceListId(),
+				commercePriceList2.getCommercePriceListId(),
 				CommercePriceModifierConstants.MODIFIER_TYPE_PERCENTAGE,
 				BigDecimal.valueOf(-50.0), 1.0, true,
 				calendar.get(Calendar.MONTH),
@@ -546,17 +539,15 @@ public class CommercePriceListLowestDiscoveryTest {
 			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId(),
 			_serviceContext);
 
-		discoveredCommercePriceList =
-			_commercePriceListDiscovery.getCommercePriceList(
-				_commerceCatalog.getGroupId(),
-				_accountEntry.getAccountEntryId(),
-				_commerceChannel.getCommerceChannelId(), 0,
-				cpInstance.getCPInstanceUuid(), null,
-				CommercePriceListConstants.TYPE_PROMOTION, StringPool.BLANK);
+		commercePriceList3 = _commercePriceListDiscovery.getCommercePriceList(
+			_commerceCatalog.getGroupId(), _accountEntry.getAccountEntryId(),
+			_commerceChannel.getCommerceChannelId(), 0,
+			cpInstance.getCPInstanceUuid(), null,
+			CommercePriceListConstants.TYPE_PROMOTION, StringPool.BLANK);
 
 		Assert.assertEquals(
-			promoPriceList.getCommercePriceListId(),
-			discoveredCommercePriceList.getCommercePriceListId());
+			commercePriceList2.getCommercePriceListId(),
+			commercePriceList3.getCommercePriceListId());
 	}
 
 	@Rule

@@ -85,6 +85,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -652,7 +653,7 @@ public class CommercePriceListLocalServiceImpl
 				0, 1
 			));
 
-		if (results.isEmpty()) {
+		if (results.isEmpty() || (results.get(0)[0] == null)) {
 			return null;
 		}
 
@@ -684,20 +685,19 @@ public class CommercePriceListLocalServiceImpl
 						cpInstanceUuid, unitOfMeasureKey, true);
 			}
 
-			if ((actualPriceList == null) || (commercePriceEntry == null)) {
-				actualPriceList =
+			if (commercePriceEntry == null) {
+				List<CommercePriceList> commercePriceListList =
 					commercePriceListLocalService.
 						getCommercePriceListsByUnqualified(
 							groupId, currencyCode,
-							CommercePriceListConstants.TYPE_PRICE_LIST
-						).get(
-							0
-						);
+							CommercePriceListConstants.TYPE_PRICE_LIST);
 
-				if (actualPriceList == null) {
+				if (commercePriceListList.isEmpty()) {
 					return commercePriceListLocalService.getCommercePriceList(
 						commercePriceListId);
 				}
+
+				actualPriceList = commercePriceListList.get(0);
 
 				commercePriceEntry =
 					_commercePriceEntryLocalService.fetchCommercePriceEntry(
@@ -714,7 +714,7 @@ public class CommercePriceListLocalServiceImpl
 
 			BigDecimal lowestPrice = new BigDecimal(String.valueOf(result[1]));
 
-			if (lowestPrice.compareTo(BigDecimal.ZERO) == 0) {
+			if (BigDecimalUtil.eq(lowestPrice, BigDecimal.ZERO)) {
 				lowestPrice = originalPrice;
 			}
 
@@ -731,14 +731,11 @@ public class CommercePriceListLocalServiceImpl
 					continue;
 				}
 
-				List<CommercePriceModifier> commercePriceModifiers =
-					_commercePriceModifierLocalService.
-						getQualifiedCommercePriceModifiers(
-							commercePriceList.getCommercePriceListId(),
-							cpDefinition.getCPDefinitionId());
-
 				for (CommercePriceModifier commercePriceModifier :
-						commercePriceModifiers) {
+						_commercePriceModifierLocalService.
+							getQualifiedCommercePriceModifiers(
+								commercePriceList.getCommercePriceListId(),
+								cpDefinition.getCPDefinitionId())) {
 
 					CommercePriceModifierType commercePriceModifierType =
 						_commercePriceModifierTypeRegistry.
@@ -748,10 +745,10 @@ public class CommercePriceListLocalServiceImpl
 					BigDecimal actualPrice = commercePriceModifierType.evaluate(
 						originalPrice, commercePriceModifier);
 
-					if (actualPrice.compareTo(lowestPrice) < 0) {
-						lowestPrice = actualPrice;
+					if (BigDecimalUtil.lt(actualPrice, lowestPrice)) {
 						commercePriceListId =
 							commercePriceList.getCommercePriceListId();
+						lowestPrice = actualPrice;
 					}
 				}
 			}

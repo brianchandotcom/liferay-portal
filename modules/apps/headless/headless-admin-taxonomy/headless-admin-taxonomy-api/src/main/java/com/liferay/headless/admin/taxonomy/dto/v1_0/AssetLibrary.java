@@ -83,7 +83,7 @@ public class AssetLibrary implements Serializable {
 	}
 
 	@GraphQLField(description = "The asset library's site ID.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	@JsonIgnore

@@ -836,6 +836,220 @@ export class KeywordAPI {
 		}
 
 		/**
+		 * Updates only the fields received in the request body. Other fields are left untouched.
+				 * @param siteId
+		 		* @param requestBody Request body that can be one of multiple content types
+		 * @param headers Optional custom request headers
+		 */
+		public async patchSiteKeywordWithContentType(
+						siteId: number,
+					requestBody:
+							{
+								parameters: {
+										keyword?: Keyword
+								},
+								type: "application/json"
+							}
+								|
+							{
+								parameters: {
+										keyword?: Keyword
+								},
+								type: "application/xml"
+							}
+								,
+			headers?: {[name: string]: string},
+		): Promise<{
+				body: Keyword;
+			response: Response;
+		}> {
+				let body;
+						if (requestBody.type === "application/json") {
+								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.keyword, "Keyword"));
+						}
+						if (requestBody.type === "application/xml") {
+								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.keyword, "Keyword"));
+						}
+
+			const path = this._basePath + "/headless-admin-taxonomy/v1.0/sites/{siteId}/keywords"
+						.replace("{siteId}",encodeURIComponent(siteId))
+				;
+
+			const queryParameters: any = {};
+
+						if (siteId === null || siteId === undefined) {
+							throw new Error("Required parameter siteId was null or undefined when calling patchSiteKeyword.");
+						}
+
+			const queryString = Object.keys(queryParameters).length ?
+				"?" + new URLSearchParams(queryParameters).toString() :
+					"";
+
+			const response = await fetch(path + queryString, {
+					body: body,
+				headers:
+					Object.assign({}, this._defaultHeaders
+						,{
+								Accept: "application/json"
+						}
+								,{"Content-Type": requestBody.type}
+					,headers || {}
+					),
+				method: "PATCH",
+			});
+
+			if (response.ok) {
+				const contentType = response.headers.get("content-type") || "";
+
+					if (contentType.includes("application/json")) {
+						return {body: ObjectSerializer.deserialize(await response.json(), "Keyword"), response};
+					}
+					else {
+						return {body: await response.text() as any, response};
+					}
+			}
+			else {
+				throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+			}
+		}
+
+					/**
+					 * Updates only the fields received in the request body. Other fields are left untouched. - Default method for JSON body
+							 * @param siteId
+						 * @param keyword
+					 */
+					public async patchSiteKeyword(
+									siteId: number,
+							keyword?: Keyword,
+						headers?: {[name: string]: string}
+					): Promise<{
+							body: Keyword;
+						response: Response;
+					}> {
+						return this.patchSiteKeywordWithContentType(
+										siteId,
+							{
+								parameters: {
+										keyword: keyword
+								},
+								type: "application/json"
+							},
+							headers
+						);
+					}
+		/**
+		 * Updates only the fields received in the request body. Other fields are left untouched.
+				 * @param siteId
+				 * @param externalReferenceCode
+		 		* @param requestBody Request body that can be one of multiple content types
+		 * @param headers Optional custom request headers
+		 */
+		public async patchSiteKeywordByExternalReferenceCodeWithContentType(
+						siteId: number,
+						externalReferenceCode: string,
+					requestBody:
+							{
+								parameters: {
+										keyword?: Keyword
+								},
+								type: "application/json"
+							}
+								|
+							{
+								parameters: {
+										keyword?: Keyword
+								},
+								type: "application/xml"
+							}
+								,
+			headers?: {[name: string]: string},
+		): Promise<{
+				body: Keyword;
+			response: Response;
+		}> {
+				let body;
+						if (requestBody.type === "application/json") {
+								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.keyword, "Keyword"));
+						}
+						if (requestBody.type === "application/xml") {
+								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.keyword, "Keyword"));
+						}
+
+			const path = this._basePath + "/headless-admin-taxonomy/v1.0/sites/{siteId}/keywords/by-external-reference-code/{externalReferenceCode}"
+						.replace("{siteId}",encodeURIComponent(siteId))
+										.replace("{externalReferenceCode}",encodeURIComponent(externalReferenceCode))
+				;
+
+			const queryParameters: any = {};
+
+						if (siteId === null || siteId === undefined) {
+							throw new Error("Required parameter siteId was null or undefined when calling patchSiteKeywordByExternalReferenceCode.");
+						}
+
+						if (externalReferenceCode === null || externalReferenceCode === undefined) {
+							throw new Error("Required parameter externalReferenceCode was null or undefined when calling patchSiteKeywordByExternalReferenceCode.");
+						}
+
+			const queryString = Object.keys(queryParameters).length ?
+				"?" + new URLSearchParams(queryParameters).toString() :
+					"";
+
+			const response = await fetch(path + queryString, {
+					body: body,
+				headers:
+					Object.assign({}, this._defaultHeaders
+						,{
+								Accept: "application/json"
+						}
+								,{"Content-Type": requestBody.type}
+					,headers || {}
+					),
+				method: "PATCH",
+			});
+
+			if (response.ok) {
+				const contentType = response.headers.get("content-type") || "";
+
+					if (contentType.includes("application/json")) {
+						return {body: ObjectSerializer.deserialize(await response.json(), "Keyword"), response};
+					}
+					else {
+						return {body: await response.text() as any, response};
+					}
+			}
+			else {
+				throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+			}
+		}
+
+					/**
+					 * Updates only the fields received in the request body. Other fields are left untouched. - Default method for JSON body
+							 * @param siteId
+							 * @param externalReferenceCode
+						 * @param keyword
+					 */
+					public async patchSiteKeywordByExternalReferenceCode(
+									siteId: number,
+									externalReferenceCode: string,
+							keyword?: Keyword,
+						headers?: {[name: string]: string}
+					): Promise<{
+							body: Keyword;
+						response: Response;
+					}> {
+						return this.patchSiteKeywordByExternalReferenceCodeWithContentType(
+										siteId,
+										externalReferenceCode,
+							{
+								parameters: {
+										keyword: keyword
+								},
+								type: "application/json"
+							},
+							headers
+						);
+					}
+		/**
 		 * 
 				 * @param assetLibraryId
 		 		* @param requestBody Request body that can be one of multiple content types

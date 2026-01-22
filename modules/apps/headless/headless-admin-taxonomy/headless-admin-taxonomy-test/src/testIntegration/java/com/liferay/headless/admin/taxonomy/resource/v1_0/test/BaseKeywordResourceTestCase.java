@@ -2541,6 +2541,44 @@ public abstract class BaseKeywordResourceTestCase {
 	}
 
 	@Test
+	public void testPatchSiteKeyword() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPatchSiteKeywordByExternalReferenceCode() throws Exception {
+		Keyword postKeyword =
+			testPatchSiteKeywordByExternalReferenceCode_addKeyword();
+
+		Keyword randomPatchKeyword = randomPatchKeyword();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Keyword patchKeyword =
+			keywordResource.patchSiteKeywordByExternalReferenceCode(
+				postKeyword.getSiteId(), postKeyword.getExternalReferenceCode(),
+				randomPatchKeyword);
+
+		Keyword expectedPatchKeyword = postKeyword.clone();
+
+		BeanTestUtil.copyProperties(randomPatchKeyword, expectedPatchKeyword);
+
+		Keyword getKeyword =
+			keywordResource.getSiteKeywordByExternalReferenceCode(
+				patchKeyword.getSiteId(),
+				patchKeyword.getExternalReferenceCode());
+
+		assertEquals(expectedPatchKeyword, getKeyword);
+		assertValid(getKeyword);
+	}
+
+	protected Keyword testPatchSiteKeywordByExternalReferenceCode_addKeyword()
+		throws Exception {
+
+		return keywordResource.postSiteKeyword(
+			testGroup.getGroupId(), randomKeyword());
+	}
+
+	@Test
 	public void testPostAssetLibraryKeyword() throws Exception {
 		Keyword randomKeyword = randomKeyword();
 

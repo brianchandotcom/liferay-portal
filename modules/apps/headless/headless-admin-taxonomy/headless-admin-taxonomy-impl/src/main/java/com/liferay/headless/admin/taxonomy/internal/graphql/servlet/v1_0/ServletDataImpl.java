@@ -106,6 +106,15 @@ public class ServletDataImpl implements ServletData {
 							KeywordResourceImpl.class,
 							"deleteSiteKeywordByExternalReferenceCode"));
 					put(
+						"mutation#patchSiteKeyword",
+						new ObjectValuePair<>(
+							KeywordResourceImpl.class, "patchSiteKeyword"));
+					put(
+						"mutation#patchSiteKeywordByExternalReferenceCode",
+						new ObjectValuePair<>(
+							KeywordResourceImpl.class,
+							"patchSiteKeywordByExternalReferenceCode"));
+					put(
 						"mutation#createAssetLibraryKeyword",
 						new ObjectValuePair<>(
 							KeywordResourceImpl.class,

@@ -131,6 +131,38 @@ public class Mutation {
 		return true;
 	}
 
+	@GraphQLField(
+		description = "Updates only the fields received in the request body. Other fields are left untouched."
+	)
+	public Keyword patchSiteKeyword(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("keyword") Keyword keyword)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_keywordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			keywordResource -> keywordResource.patchSiteKeyword(
+				Long.valueOf(siteKey), keyword));
+	}
+
+	@GraphQLField(
+		description = "Updates only the fields received in the request body. Other fields are left untouched."
+	)
+	public Keyword patchSiteKeywordByExternalReferenceCode(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("keyword") Keyword keyword)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_keywordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			keywordResource ->
+				keywordResource.patchSiteKeywordByExternalReferenceCode(
+					Long.valueOf(siteKey), externalReferenceCode, keyword));
+	}
+
 	@GraphQLField
 	public Keyword createAssetLibraryKeyword(
 			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,

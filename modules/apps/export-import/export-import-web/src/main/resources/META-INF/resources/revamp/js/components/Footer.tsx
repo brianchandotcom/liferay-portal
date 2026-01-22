@@ -5,6 +5,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import React from 'react';
 
@@ -20,44 +21,52 @@ function Footer({
 	onPrevious?: () => void | undefined;
 }) {
 	return (
-		<div className="sheet-footer">
-			{onPrevious && (
-				<ClayButton displayType="unstyled" onClick={onPrevious}>
-					<span className="inline-item inline-item-before text-semibold">
-						<ClayIcon className="mr-1" symbol="order-arrow-left" />
+		<ClayLayout.SheetFooter>
+			<ClayLayout.Row className="flex-fill">
+				{onPrevious && (
+					<ClayLayout.Col lg={4}>
+						<ClayButton
+							borderless
+							displayType="secondary"
+							onClick={onPrevious}
+						>
+							<span className="inline-item inline-item-before">
+								<ClayIcon symbol="order-arrow-left" />
+							</span>
 
-						{Liferay.Language.get('previous')}
-					</span>
-				</ClayButton>
-			)}
-
-			<div className="d-flex justify-content-end w-100">
-				<ClayLink
-					button
-					className="mr-2"
-					displayType="secondary"
-					href={backURL}
-				>
-					{Liferay.Language.get('cancel')}
-				</ClayLink>
-
-				{onNext && (
-					<ClayButton onClick={onNext}>
-						{Liferay.Language.get('continue')}
-					</ClayButton>
+							{Liferay.Language.get('previous')}
+						</ClayButton>
+					</ClayLayout.Col>
 				)}
 
-				{exportURL && (
-					<ClayButton onClick={() => {}}>
-						<span className="inline-item inline-item-before">
-							<ClayIcon className="mr-1" symbol="export" />
+				<ClayLayout.Col lg={onPrevious && 8}>
+					<div className="d-flex justify-content-end">
+						<ClayLink button displayType="secondary" href={backURL}>
+							{Liferay.Language.get('cancel')}
+						</ClayLink>
 
-							{Liferay.Language.get('export')}
-						</span>
-					</ClayButton>
-				)}
-			</div>
-		</div>
+						{onNext && (
+							<ClayButton onClick={onNext}>
+								{Liferay.Language.get('continue')}
+							</ClayButton>
+						)}
+
+						{exportURL && (
+							<ClayButton onClick={() => {}}>
+								<span className="inline-item inline-item-before">
+									<ClayIcon
+										className="mr-1"
+										symbol="export"
+									/>
+
+									{Liferay.Language.get('export')}
+								</span>
+							</ClayButton>
+						)}
+					</div>
+				</ClayLayout.Col>
+			</ClayLayout.Row>
+		</ClayLayout.SheetFooter>
 	);
 }
 

@@ -34,11 +34,13 @@ export function Wizard({
 
 	return (
 		<>
-			<ClayMultiStepNav center className="mx-9" indicatorLabel="top">
+			<ClayMultiStepNav center className="c-mx-lg-9" indicatorLabel="top">
 				{React.Children.map(children, (step, index) => {
 					if (!React.isValidElement(step)) {
 						return null;
 					}
+
+					const {title} = step.props;
 
 					return (
 						<ClayMultiStepNav.Item

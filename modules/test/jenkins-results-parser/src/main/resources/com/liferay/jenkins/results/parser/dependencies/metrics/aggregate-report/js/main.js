@@ -20,7 +20,7 @@ function createBuildCountLineChart(timelineData, elementID) {
 
 		        label += ' (';
 
-		        label += Math.round(tooltipItem.yLabel * 10000 / MAX_WEEKLY_SERVER_DURATION_MILLIS) / 100;
+		        label += Math.round(tooltipItem.yLabel * 10000 / (maxWeeklyServerDurationMillis || MAX_WEEKLY_SERVER_DURATION_MILLIS)) / 100;
 
 		        label += '%)'
 

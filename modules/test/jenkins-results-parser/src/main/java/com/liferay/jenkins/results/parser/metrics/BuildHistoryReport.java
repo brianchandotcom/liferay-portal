@@ -55,10 +55,16 @@ public class BuildHistoryReport {
 		Collection<BuildHistory> buildHistories =
 			BuildHistoryProcessor.newAggregateJobHistories(duration, startTime);
 
-		buildHistoryReport.addFile(
-			"js/table-data.js",
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(_getWeeklyServerDurationJavaScriptVariable());
+
+		sb.append(
 			_getTableDataJSFileContent(
 				buildHistories, "Job Category", 1, "[Total]"));
+
+		buildHistoryReport.addFile("js/table-data.js", sb.toString());
+
 		buildHistoryReport.addFile(
 			"js/timeline-data.js",
 			_getTimelineDataJSFileContent(buildHistories, duration, startTime));

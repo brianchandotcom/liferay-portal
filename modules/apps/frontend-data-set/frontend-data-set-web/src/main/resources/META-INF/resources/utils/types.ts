@@ -106,6 +106,13 @@ export interface IBaseActions {
 	itemId: number | string;
 }
 
+interface IBulkActionItem {
+	href: string;
+	icon: string;
+	label: string;
+	method?: string;
+	target: 'modal' | 'sidePanel';
+}
 export interface ICreationActionItem {
 	data?: {
 		disableHeader?: boolean;
@@ -288,7 +295,7 @@ export interface IFrontendDataSetProps {
 	apiURL?: string;
 	appURL?: string;
 	atom?: Atom<IFDSState>;
-	bulkActions?: any[];
+	bulkActions?: Array<IBulkActionItem>;
 	configInURLBehavior?: EConfigInURLBehavior;
 	creationMenu?: {
 		loadData?: Function;
@@ -358,6 +365,30 @@ export interface IFrontendDataSetProps {
 
 export interface IInfoPanelComponent {
 	items?: Array<any>;
+}
+
+export interface IManagementBarProps {
+	bulkActions?: Array<IBulkActionItem>;
+	creationMenu?: {
+		primaryItems: Array<ICreationActionItem>;
+		secondaryItems?: any[];
+	};
+	dataLoading: boolean;
+	deselectItems: (value: any) => void;
+	fluid: boolean;
+	items: Array<any>;
+	onBulkActionsClear: () => void;
+	onSelectAll: (value: boolean) => void;
+	pageSelectedItemsValue?: Array<any>;
+	selectItems: (value: any) => void;
+	selectedItems?: Array<any>;
+	selectedItemsKey: string;
+	selectedItemsValue: Array<any>;
+	selectionType?: 'multiple' | 'single';
+	showNavBarWhenSelected?: boolean;
+	showSearch?: boolean;
+	showSelectAll?: boolean;
+	total?: number;
 }
 
 export interface IModalConfig {

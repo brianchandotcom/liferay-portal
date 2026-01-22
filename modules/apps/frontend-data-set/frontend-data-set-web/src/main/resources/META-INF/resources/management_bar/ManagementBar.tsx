@@ -1,15 +1,21 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import classNames from 'classnames';
 import {getObjectValueFromPath} from 'frontend-js-web';
-import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
 import FrontendDataSetContext from '../FrontendDataSetContext';
+import {IManagementBarProps} from '../utils/types';
+
+// @ts-ignore
+
 import BulkActions from './controls/BulkActions';
+
+// @ts-ignore
+
 import NavBar from './controls/NavBar';
 import ResultsBar from './controls/ResultsBar';
 import SelectionCheckbox from './controls/SelectionCheckbox';
@@ -19,7 +25,7 @@ function ManagementBar({
 	creationMenu,
 	dataLoading,
 	deselectItems,
-	fluid,
+	fluid = false,
 	items,
 	onBulkActionsClear,
 	onSelectAll,
@@ -28,15 +34,15 @@ function ManagementBar({
 	selectedItemsKey,
 	selectedItemsValue,
 	showNavBarWhenSelected = false,
-	showSearch,
+	showSearch = true,
 	showSelectAll,
 	total,
-}) {
+}: IManagementBarProps) {
 	const {selectable, selectionType} = useContext(FrontendDataSetContext);
 
-	const pageSelectedItemsValue = selectedItemsValue.filter((id) =>
+	const pageSelectedItemsValue = selectedItemsValue.filter((id: any) =>
 		items.some(
-			(item) =>
+			(item: any) =>
 				getObjectValueFromPath({
 					object: item,
 					path: selectedItemsKey,
@@ -87,7 +93,7 @@ function ManagementBar({
 				{showBulkActions ? (
 					<BulkActions
 						bulkActions={bulkActions}
-						handleSelectAll={(value) => onSelectAll(value)}
+						handleSelectAll={(value: boolean) => onSelectAll(value)}
 						items={items}
 						onClear={onBulkActionsClear}
 						pageSelectedItemsValue={pageSelectedItemsValue}
@@ -113,41 +119,5 @@ function ManagementBar({
 		</>
 	);
 }
-
-ManagementBar.propTypes = {
-	bulkActions: PropTypes.arrayOf(
-		PropTypes.shape({
-			href: PropTypes.string.isRequired,
-			icon: PropTypes.string.isRequired,
-			label: PropTypes.string.isRequired,
-			method: PropTypes.string,
-			target: PropTypes.oneOf(['sidePanel', 'modal']),
-		})
-	),
-	creationMenu: PropTypes.shape({
-		primaryItems: PropTypes.array,
-		secondaryItems: PropTypes.array,
-	}),
-	deselectItems: PropTypes.func.isRequired,
-	fluid: PropTypes.bool,
-	items: PropTypes.array.isRequired,
-	onBulkActionsClear: PropTypes.func.isRequired,
-	onSelectAll: PropTypes.func.isRequired,
-	pageSelectedItemsValue: PropTypes.array,
-	selectItems: PropTypes.func.isRequired,
-	selectedItems: PropTypes.array,
-	selectedItemsKey: PropTypes.string,
-	selectedItemsValue: PropTypes.array,
-	selectionType: PropTypes.oneOf(['single', 'multiple']),
-	showSearch: PropTypes.bool,
-	showSelectAll: PropTypes.bool,
-	total: PropTypes.number,
-};
-
-ManagementBar.defaultProps = {
-	filters: [],
-	fluid: false,
-	showSearch: true,
-};
 
 export default ManagementBar;

@@ -44,9 +44,6 @@ import useFDSDrop from './dnd/useFDSDrop';
 import useFileUploader from './dnd/useFileUploader';
 import EmptyState from './empty_state/EmptyState';
 import {InfoPanel} from './info_panel/InfoPanel';
-
-// @ts-ignore
-
 import ManagementBar from './management_bar/ManagementBar';
 import {FILTER_IMPLEMENTATIONS} from './management_bar/controls/filters/Filter';
 

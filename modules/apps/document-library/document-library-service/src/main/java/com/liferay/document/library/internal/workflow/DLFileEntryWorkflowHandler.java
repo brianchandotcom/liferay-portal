@@ -88,6 +88,8 @@ public class DLFileEntryWorkflowHandler
 
 		if (Validator.isNotNull(friendlyURL)) {
 			serviceContext.setAttribute("friendlyURL", friendlyURL);
+
+			workflowContext.put(WorkflowConstants.CONTEXT_URL, friendlyURL);
 		}
 	}
 

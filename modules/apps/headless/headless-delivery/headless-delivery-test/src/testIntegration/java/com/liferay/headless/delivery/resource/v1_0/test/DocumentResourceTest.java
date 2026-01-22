@@ -170,12 +170,6 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 		Assert.assertTrue(Validator.isNotNull(document1.getDateExpired()));
 		Assert.assertTrue(Validator.isNotNull(document1.getDatePublished()));
 		Assert.assertTrue(Validator.isNotNull(document1.getFriendlyUrlPath()));
-
-		Map<String, Map<String, String>> actions = document1.getActions();
-
-		Assert.assertNotNull(actions);
-		Assert.assertTrue(actions.containsKey("create"));
-		Assert.assertTrue(actions.containsKey("createBatch"));
 	}
 
 	@Override

@@ -63,7 +63,12 @@ public class WorkflowEngineTest {
 				workflowDefinition.getName(), 1);
 
 		AssertUtils.assertFailure(
-			RequiredWorkflowDefinitionException.class, null,
+			RequiredWorkflowDefinitionException.
+				MustNotDeleteWorkflowDefinitionWithWorkflowDefinitionLinks.class,
+			String.format(
+				"Workflow definition %s cannot be deleted because it is " +
+					"referenced by one or more workflow definition links",
+				workflowDefinition.getWorkflowDefinitionId()),
 			() -> _workflowEngine.deleteWorkflowDefinition(
 				workflowDefinition.getName(), 1,
 				ServiceContextTestUtil.getServiceContext()));

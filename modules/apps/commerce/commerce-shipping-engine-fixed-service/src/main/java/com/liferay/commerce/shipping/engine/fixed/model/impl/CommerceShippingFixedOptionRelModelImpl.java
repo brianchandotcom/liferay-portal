@@ -70,13 +70,13 @@ public class CommerceShippingFixedOptionRelModelImpl
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP},
-		{"commerceShippingMethodId", Types.BIGINT},
-		{"commerceShippingFixedOptionId", Types.BIGINT},
 		{"commerceInventoryWarehouseId", Types.BIGINT},
-		{"countryId", Types.BIGINT}, {"regionId", Types.BIGINT},
-		{"zip", Types.VARCHAR}, {"weightFrom", Types.DOUBLE},
-		{"weightTo", Types.DOUBLE}, {"fixedPrice", Types.DECIMAL},
-		{"rateUnitWeightPrice", Types.DECIMAL}, {"ratePercentage", Types.DOUBLE}
+		{"commerceShippingFixedOptionId", Types.BIGINT},
+		{"commerceShippingMethodId", Types.BIGINT}, {"countryId", Types.BIGINT},
+		{"regionId", Types.BIGINT}, {"fixedPrice", Types.DECIMAL},
+		{"ratePercentage", Types.DOUBLE},
+		{"rateUnitWeightPrice", Types.DECIMAL}, {"weightFrom", Types.DOUBLE},
+		{"weightTo", Types.DOUBLE}, {"zip", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -91,21 +91,21 @@ public class CommerceShippingFixedOptionRelModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("commerceShippingMethodId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("commerceShippingFixedOptionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceInventoryWarehouseId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("commerceShippingFixedOptionId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("commerceShippingMethodId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("countryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("regionId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("zip", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("fixedPrice", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("ratePercentage", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("rateUnitWeightPrice", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("weightFrom", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("weightTo", Types.DOUBLE);
-		TABLE_COLUMNS_MAP.put("fixedPrice", Types.DECIMAL);
-		TABLE_COLUMNS_MAP.put("rateUnitWeightPrice", Types.DECIMAL);
-		TABLE_COLUMNS_MAP.put("ratePercentage", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("zip", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CShippingFixedOptionRel (mvccVersion LONG default 0 not null,CShippingFixedOptionRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceShippingMethodId LONG,commerceShippingFixedOptionId LONG,commerceInventoryWarehouseId LONG,countryId LONG,regionId LONG,zip VARCHAR(75) null,weightFrom DOUBLE,weightTo DOUBLE,fixedPrice BIGDECIMAL null,rateUnitWeightPrice BIGDECIMAL null,ratePercentage DOUBLE)";
+		"create table CShippingFixedOptionRel (mvccVersion LONG default 0 not null,CShippingFixedOptionRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceInventoryWarehouseId LONG,commerceShippingFixedOptionId LONG,commerceShippingMethodId LONG,countryId LONG,regionId LONG,fixedPrice BIGDECIMAL null,ratePercentage DOUBLE,rateUnitWeightPrice BIGDECIMAL null,weightFrom DOUBLE,weightTo DOUBLE,zip VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CShippingFixedOptionRel";
@@ -275,34 +275,34 @@ public class CommerceShippingFixedOptionRelModelImpl
 				"modifiedDate",
 				CommerceShippingFixedOptionRel::getModifiedDate);
 			attributeGetterFunctions.put(
-				"commerceShippingMethodId",
-				CommerceShippingFixedOptionRel::getCommerceShippingMethodId);
+				"commerceInventoryWarehouseId",
+				CommerceShippingFixedOptionRel::
+					getCommerceInventoryWarehouseId);
 			attributeGetterFunctions.put(
 				"commerceShippingFixedOptionId",
 				CommerceShippingFixedOptionRel::
 					getCommerceShippingFixedOptionId);
 			attributeGetterFunctions.put(
-				"commerceInventoryWarehouseId",
-				CommerceShippingFixedOptionRel::
-					getCommerceInventoryWarehouseId);
+				"commerceShippingMethodId",
+				CommerceShippingFixedOptionRel::getCommerceShippingMethodId);
 			attributeGetterFunctions.put(
 				"countryId", CommerceShippingFixedOptionRel::getCountryId);
 			attributeGetterFunctions.put(
 				"regionId", CommerceShippingFixedOptionRel::getRegionId);
 			attributeGetterFunctions.put(
-				"zip", CommerceShippingFixedOptionRel::getZip);
+				"fixedPrice", CommerceShippingFixedOptionRel::getFixedPrice);
+			attributeGetterFunctions.put(
+				"ratePercentage",
+				CommerceShippingFixedOptionRel::getRatePercentage);
+			attributeGetterFunctions.put(
+				"rateUnitWeightPrice",
+				CommerceShippingFixedOptionRel::getRateUnitWeightPrice);
 			attributeGetterFunctions.put(
 				"weightFrom", CommerceShippingFixedOptionRel::getWeightFrom);
 			attributeGetterFunctions.put(
 				"weightTo", CommerceShippingFixedOptionRel::getWeightTo);
 			attributeGetterFunctions.put(
-				"fixedPrice", CommerceShippingFixedOptionRel::getFixedPrice);
-			attributeGetterFunctions.put(
-				"rateUnitWeightPrice",
-				CommerceShippingFixedOptionRel::getRateUnitWeightPrice);
-			attributeGetterFunctions.put(
-				"ratePercentage",
-				CommerceShippingFixedOptionRel::getRatePercentage);
+				"zip", CommerceShippingFixedOptionRel::getZip);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
 				attributeGetterFunctions);
@@ -357,20 +357,20 @@ public class CommerceShippingFixedOptionRelModelImpl
 				(BiConsumer<CommerceShippingFixedOptionRel, Date>)
 					CommerceShippingFixedOptionRel::setModifiedDate);
 			attributeSetterBiConsumers.put(
-				"commerceShippingMethodId",
+				"commerceInventoryWarehouseId",
 				(BiConsumer<CommerceShippingFixedOptionRel, Long>)
 					CommerceShippingFixedOptionRel::
-						setCommerceShippingMethodId);
+						setCommerceInventoryWarehouseId);
 			attributeSetterBiConsumers.put(
 				"commerceShippingFixedOptionId",
 				(BiConsumer<CommerceShippingFixedOptionRel, Long>)
 					CommerceShippingFixedOptionRel::
 						setCommerceShippingFixedOptionId);
 			attributeSetterBiConsumers.put(
-				"commerceInventoryWarehouseId",
+				"commerceShippingMethodId",
 				(BiConsumer<CommerceShippingFixedOptionRel, Long>)
 					CommerceShippingFixedOptionRel::
-						setCommerceInventoryWarehouseId);
+						setCommerceShippingMethodId);
 			attributeSetterBiConsumers.put(
 				"countryId",
 				(BiConsumer<CommerceShippingFixedOptionRel, Long>)
@@ -380,9 +380,17 @@ public class CommerceShippingFixedOptionRelModelImpl
 				(BiConsumer<CommerceShippingFixedOptionRel, Long>)
 					CommerceShippingFixedOptionRel::setRegionId);
 			attributeSetterBiConsumers.put(
-				"zip",
-				(BiConsumer<CommerceShippingFixedOptionRel, String>)
-					CommerceShippingFixedOptionRel::setZip);
+				"fixedPrice",
+				(BiConsumer<CommerceShippingFixedOptionRel, BigDecimal>)
+					CommerceShippingFixedOptionRel::setFixedPrice);
+			attributeSetterBiConsumers.put(
+				"ratePercentage",
+				(BiConsumer<CommerceShippingFixedOptionRel, Double>)
+					CommerceShippingFixedOptionRel::setRatePercentage);
+			attributeSetterBiConsumers.put(
+				"rateUnitWeightPrice",
+				(BiConsumer<CommerceShippingFixedOptionRel, BigDecimal>)
+					CommerceShippingFixedOptionRel::setRateUnitWeightPrice);
 			attributeSetterBiConsumers.put(
 				"weightFrom",
 				(BiConsumer<CommerceShippingFixedOptionRel, Double>)
@@ -392,17 +400,9 @@ public class CommerceShippingFixedOptionRelModelImpl
 				(BiConsumer<CommerceShippingFixedOptionRel, Double>)
 					CommerceShippingFixedOptionRel::setWeightTo);
 			attributeSetterBiConsumers.put(
-				"fixedPrice",
-				(BiConsumer<CommerceShippingFixedOptionRel, BigDecimal>)
-					CommerceShippingFixedOptionRel::setFixedPrice);
-			attributeSetterBiConsumers.put(
-				"rateUnitWeightPrice",
-				(BiConsumer<CommerceShippingFixedOptionRel, BigDecimal>)
-					CommerceShippingFixedOptionRel::setRateUnitWeightPrice);
-			attributeSetterBiConsumers.put(
-				"ratePercentage",
-				(BiConsumer<CommerceShippingFixedOptionRel, Double>)
-					CommerceShippingFixedOptionRel::setRatePercentage);
+				"zip",
+				(BiConsumer<CommerceShippingFixedOptionRel, String>)
+					CommerceShippingFixedOptionRel::setZip);
 
 			_attributeSetterBiConsumers = Collections.unmodifiableMap(
 				(Map)attributeSetterBiConsumers);
@@ -561,27 +561,19 @@ public class CommerceShippingFixedOptionRelModelImpl
 
 	@JSON
 	@Override
-	public long getCommerceShippingMethodId() {
-		return _commerceShippingMethodId;
+	public long getCommerceInventoryWarehouseId() {
+		return _commerceInventoryWarehouseId;
 	}
 
 	@Override
-	public void setCommerceShippingMethodId(long commerceShippingMethodId) {
+	public void setCommerceInventoryWarehouseId(
+		long commerceInventoryWarehouseId) {
+
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_commerceShippingMethodId = commerceShippingMethodId;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public long getOriginalCommerceShippingMethodId() {
-		return GetterUtil.getLong(
-			this.<Long>getColumnOriginalValue("commerceShippingMethodId"));
+		_commerceInventoryWarehouseId = commerceInventoryWarehouseId;
 	}
 
 	@JSON
@@ -613,19 +605,27 @@ public class CommerceShippingFixedOptionRelModelImpl
 
 	@JSON
 	@Override
-	public long getCommerceInventoryWarehouseId() {
-		return _commerceInventoryWarehouseId;
+	public long getCommerceShippingMethodId() {
+		return _commerceShippingMethodId;
 	}
 
 	@Override
-	public void setCommerceInventoryWarehouseId(
-		long commerceInventoryWarehouseId) {
-
+	public void setCommerceShippingMethodId(long commerceShippingMethodId) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_commerceInventoryWarehouseId = commerceInventoryWarehouseId;
+		_commerceShippingMethodId = commerceShippingMethodId;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalCommerceShippingMethodId() {
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("commerceShippingMethodId"));
 	}
 
 	@JSON
@@ -660,22 +660,47 @@ public class CommerceShippingFixedOptionRelModelImpl
 
 	@JSON
 	@Override
-	public String getZip() {
-		if (_zip == null) {
-			return "";
-		}
-		else {
-			return _zip;
-		}
+	public BigDecimal getFixedPrice() {
+		return _fixedPrice;
 	}
 
 	@Override
-	public void setZip(String zip) {
+	public void setFixedPrice(BigDecimal fixedPrice) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_zip = zip;
+		_fixedPrice = fixedPrice;
+	}
+
+	@JSON
+	@Override
+	public double getRatePercentage() {
+		return _ratePercentage;
+	}
+
+	@Override
+	public void setRatePercentage(double ratePercentage) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_ratePercentage = ratePercentage;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getRateUnitWeightPrice() {
+		return _rateUnitWeightPrice;
+	}
+
+	@Override
+	public void setRateUnitWeightPrice(BigDecimal rateUnitWeightPrice) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_rateUnitWeightPrice = rateUnitWeightPrice;
 	}
 
 	@JSON
@@ -710,47 +735,22 @@ public class CommerceShippingFixedOptionRelModelImpl
 
 	@JSON
 	@Override
-	public BigDecimal getFixedPrice() {
-		return _fixedPrice;
+	public String getZip() {
+		if (_zip == null) {
+			return "";
+		}
+		else {
+			return _zip;
+		}
 	}
 
 	@Override
-	public void setFixedPrice(BigDecimal fixedPrice) {
+	public void setZip(String zip) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_fixedPrice = fixedPrice;
-	}
-
-	@JSON
-	@Override
-	public BigDecimal getRateUnitWeightPrice() {
-		return _rateUnitWeightPrice;
-	}
-
-	@Override
-	public void setRateUnitWeightPrice(BigDecimal rateUnitWeightPrice) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_rateUnitWeightPrice = rateUnitWeightPrice;
-	}
-
-	@JSON
-	@Override
-	public double getRatePercentage() {
-		return _ratePercentage;
-	}
-
-	@Override
-	public void setRatePercentage(double ratePercentage) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_ratePercentage = ratePercentage;
+		_zip = zip;
 	}
 
 	public long getColumnBitmask() {
@@ -820,22 +820,22 @@ public class CommerceShippingFixedOptionRelModelImpl
 		commerceShippingFixedOptionRelImpl.setUserName(getUserName());
 		commerceShippingFixedOptionRelImpl.setCreateDate(getCreateDate());
 		commerceShippingFixedOptionRelImpl.setModifiedDate(getModifiedDate());
-		commerceShippingFixedOptionRelImpl.setCommerceShippingMethodId(
-			getCommerceShippingMethodId());
-		commerceShippingFixedOptionRelImpl.setCommerceShippingFixedOptionId(
-			getCommerceShippingFixedOptionId());
 		commerceShippingFixedOptionRelImpl.setCommerceInventoryWarehouseId(
 			getCommerceInventoryWarehouseId());
+		commerceShippingFixedOptionRelImpl.setCommerceShippingFixedOptionId(
+			getCommerceShippingFixedOptionId());
+		commerceShippingFixedOptionRelImpl.setCommerceShippingMethodId(
+			getCommerceShippingMethodId());
 		commerceShippingFixedOptionRelImpl.setCountryId(getCountryId());
 		commerceShippingFixedOptionRelImpl.setRegionId(getRegionId());
-		commerceShippingFixedOptionRelImpl.setZip(getZip());
-		commerceShippingFixedOptionRelImpl.setWeightFrom(getWeightFrom());
-		commerceShippingFixedOptionRelImpl.setWeightTo(getWeightTo());
 		commerceShippingFixedOptionRelImpl.setFixedPrice(getFixedPrice());
-		commerceShippingFixedOptionRelImpl.setRateUnitWeightPrice(
-			getRateUnitWeightPrice());
 		commerceShippingFixedOptionRelImpl.setRatePercentage(
 			getRatePercentage());
+		commerceShippingFixedOptionRelImpl.setRateUnitWeightPrice(
+			getRateUnitWeightPrice());
+		commerceShippingFixedOptionRelImpl.setWeightFrom(getWeightFrom());
+		commerceShippingFixedOptionRelImpl.setWeightTo(getWeightTo());
+		commerceShippingFixedOptionRelImpl.setZip(getZip());
 
 		commerceShippingFixedOptionRelImpl.resetOriginalValues();
 
@@ -863,28 +863,28 @@ public class CommerceShippingFixedOptionRelModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		commerceShippingFixedOptionRelImpl.setModifiedDate(
 			this.<Date>getColumnOriginalValue("modifiedDate"));
-		commerceShippingFixedOptionRelImpl.setCommerceShippingMethodId(
-			this.<Long>getColumnOriginalValue("commerceShippingMethodId"));
-		commerceShippingFixedOptionRelImpl.setCommerceShippingFixedOptionId(
-			this.<Long>getColumnOriginalValue("commerceShippingFixedOptionId"));
 		commerceShippingFixedOptionRelImpl.setCommerceInventoryWarehouseId(
 			this.<Long>getColumnOriginalValue("commerceInventoryWarehouseId"));
+		commerceShippingFixedOptionRelImpl.setCommerceShippingFixedOptionId(
+			this.<Long>getColumnOriginalValue("commerceShippingFixedOptionId"));
+		commerceShippingFixedOptionRelImpl.setCommerceShippingMethodId(
+			this.<Long>getColumnOriginalValue("commerceShippingMethodId"));
 		commerceShippingFixedOptionRelImpl.setCountryId(
 			this.<Long>getColumnOriginalValue("countryId"));
 		commerceShippingFixedOptionRelImpl.setRegionId(
 			this.<Long>getColumnOriginalValue("regionId"));
-		commerceShippingFixedOptionRelImpl.setZip(
-			this.<String>getColumnOriginalValue("zip"));
+		commerceShippingFixedOptionRelImpl.setFixedPrice(
+			this.<BigDecimal>getColumnOriginalValue("fixedPrice"));
+		commerceShippingFixedOptionRelImpl.setRatePercentage(
+			this.<Double>getColumnOriginalValue("ratePercentage"));
+		commerceShippingFixedOptionRelImpl.setRateUnitWeightPrice(
+			this.<BigDecimal>getColumnOriginalValue("rateUnitWeightPrice"));
 		commerceShippingFixedOptionRelImpl.setWeightFrom(
 			this.<Double>getColumnOriginalValue("weightFrom"));
 		commerceShippingFixedOptionRelImpl.setWeightTo(
 			this.<Double>getColumnOriginalValue("weightTo"));
-		commerceShippingFixedOptionRelImpl.setFixedPrice(
-			this.<BigDecimal>getColumnOriginalValue("fixedPrice"));
-		commerceShippingFixedOptionRelImpl.setRateUnitWeightPrice(
-			this.<BigDecimal>getColumnOriginalValue("rateUnitWeightPrice"));
-		commerceShippingFixedOptionRelImpl.setRatePercentage(
-			this.<Double>getColumnOriginalValue("ratePercentage"));
+		commerceShippingFixedOptionRelImpl.setZip(
+			this.<String>getColumnOriginalValue("zip"));
 
 		return commerceShippingFixedOptionRelImpl;
 	}
@@ -1017,18 +1017,30 @@ public class CommerceShippingFixedOptionRelModelImpl
 				Long.MIN_VALUE;
 		}
 
-		commerceShippingFixedOptionRelCacheModel.commerceShippingMethodId =
-			getCommerceShippingMethodId();
+		commerceShippingFixedOptionRelCacheModel.commerceInventoryWarehouseId =
+			getCommerceInventoryWarehouseId();
 
 		commerceShippingFixedOptionRelCacheModel.commerceShippingFixedOptionId =
 			getCommerceShippingFixedOptionId();
 
-		commerceShippingFixedOptionRelCacheModel.commerceInventoryWarehouseId =
-			getCommerceInventoryWarehouseId();
+		commerceShippingFixedOptionRelCacheModel.commerceShippingMethodId =
+			getCommerceShippingMethodId();
 
 		commerceShippingFixedOptionRelCacheModel.countryId = getCountryId();
 
 		commerceShippingFixedOptionRelCacheModel.regionId = getRegionId();
+
+		commerceShippingFixedOptionRelCacheModel.fixedPrice = getFixedPrice();
+
+		commerceShippingFixedOptionRelCacheModel.ratePercentage =
+			getRatePercentage();
+
+		commerceShippingFixedOptionRelCacheModel.rateUnitWeightPrice =
+			getRateUnitWeightPrice();
+
+		commerceShippingFixedOptionRelCacheModel.weightFrom = getWeightFrom();
+
+		commerceShippingFixedOptionRelCacheModel.weightTo = getWeightTo();
 
 		commerceShippingFixedOptionRelCacheModel.zip = getZip();
 
@@ -1037,18 +1049,6 @@ public class CommerceShippingFixedOptionRelModelImpl
 		if ((zip != null) && (zip.length() == 0)) {
 			commerceShippingFixedOptionRelCacheModel.zip = null;
 		}
-
-		commerceShippingFixedOptionRelCacheModel.weightFrom = getWeightFrom();
-
-		commerceShippingFixedOptionRelCacheModel.weightTo = getWeightTo();
-
-		commerceShippingFixedOptionRelCacheModel.fixedPrice = getFixedPrice();
-
-		commerceShippingFixedOptionRelCacheModel.rateUnitWeightPrice =
-			getRateUnitWeightPrice();
-
-		commerceShippingFixedOptionRelCacheModel.ratePercentage =
-			getRatePercentage();
 
 		return commerceShippingFixedOptionRelCacheModel;
 	}
@@ -1123,17 +1123,17 @@ public class CommerceShippingFixedOptionRelModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private long _commerceShippingMethodId;
-	private long _commerceShippingFixedOptionId;
 	private long _commerceInventoryWarehouseId;
+	private long _commerceShippingFixedOptionId;
+	private long _commerceShippingMethodId;
 	private long _countryId;
 	private long _regionId;
-	private String _zip;
+	private BigDecimal _fixedPrice;
+	private double _ratePercentage;
+	private BigDecimal _rateUnitWeightPrice;
 	private double _weightFrom;
 	private double _weightTo;
-	private BigDecimal _fixedPrice;
-	private BigDecimal _rateUnitWeightPrice;
-	private double _ratePercentage;
+	private String _zip;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1175,19 +1175,19 @@ public class CommerceShippingFixedOptionRelModelImpl
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put(
-			"commerceShippingMethodId", _commerceShippingMethodId);
+			"commerceInventoryWarehouseId", _commerceInventoryWarehouseId);
 		_columnOriginalValues.put(
 			"commerceShippingFixedOptionId", _commerceShippingFixedOptionId);
 		_columnOriginalValues.put(
-			"commerceInventoryWarehouseId", _commerceInventoryWarehouseId);
+			"commerceShippingMethodId", _commerceShippingMethodId);
 		_columnOriginalValues.put("countryId", _countryId);
 		_columnOriginalValues.put("regionId", _regionId);
-		_columnOriginalValues.put("zip", _zip);
+		_columnOriginalValues.put("fixedPrice", _fixedPrice);
+		_columnOriginalValues.put("ratePercentage", _ratePercentage);
+		_columnOriginalValues.put("rateUnitWeightPrice", _rateUnitWeightPrice);
 		_columnOriginalValues.put("weightFrom", _weightFrom);
 		_columnOriginalValues.put("weightTo", _weightTo);
-		_columnOriginalValues.put("fixedPrice", _fixedPrice);
-		_columnOriginalValues.put("rateUnitWeightPrice", _rateUnitWeightPrice);
-		_columnOriginalValues.put("ratePercentage", _ratePercentage);
+		_columnOriginalValues.put("zip", _zip);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1228,27 +1228,27 @@ public class CommerceShippingFixedOptionRelModelImpl
 
 		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("commerceShippingMethodId", 256L);
+		columnBitmasks.put("commerceInventoryWarehouseId", 256L);
 
 		columnBitmasks.put("commerceShippingFixedOptionId", 512L);
 
-		columnBitmasks.put("commerceInventoryWarehouseId", 1024L);
+		columnBitmasks.put("commerceShippingMethodId", 1024L);
 
 		columnBitmasks.put("countryId", 2048L);
 
 		columnBitmasks.put("regionId", 4096L);
 
-		columnBitmasks.put("zip", 8192L);
+		columnBitmasks.put("fixedPrice", 8192L);
 
-		columnBitmasks.put("weightFrom", 16384L);
+		columnBitmasks.put("ratePercentage", 16384L);
 
-		columnBitmasks.put("weightTo", 32768L);
+		columnBitmasks.put("rateUnitWeightPrice", 32768L);
 
-		columnBitmasks.put("fixedPrice", 65536L);
+		columnBitmasks.put("weightFrom", 65536L);
 
-		columnBitmasks.put("rateUnitWeightPrice", 131072L);
+		columnBitmasks.put("weightTo", 131072L);
 
-		columnBitmasks.put("ratePercentage", 262144L);
+		columnBitmasks.put("zip", 262144L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

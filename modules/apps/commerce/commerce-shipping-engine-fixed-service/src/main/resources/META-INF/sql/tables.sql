@@ -20,17 +20,17 @@ create table CShippingFixedOptionRel (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	commerceShippingMethodId LONG,
-	commerceShippingFixedOptionId LONG,
 	commerceInventoryWarehouseId LONG,
+	commerceShippingFixedOptionId LONG,
+	commerceShippingMethodId LONG,
 	countryId LONG,
 	regionId LONG,
-	zip VARCHAR(75) null,
+	fixedPrice BIGDECIMAL null,
+	ratePercentage DOUBLE,
+	rateUnitWeightPrice BIGDECIMAL null,
 	weightFrom DOUBLE,
 	weightTo DOUBLE,
-	fixedPrice BIGDECIMAL null,
-	rateUnitWeightPrice BIGDECIMAL null,
-	ratePercentage DOUBLE
+	zip VARCHAR(75) null
 );
 
 create table CommerceShippingFixedOption (

@@ -93,28 +93,28 @@ public class CommerceShippingFixedOptionRelCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", commerceShippingMethodId=");
-		sb.append(commerceShippingMethodId);
-		sb.append(", commerceShippingFixedOptionId=");
-		sb.append(commerceShippingFixedOptionId);
 		sb.append(", commerceInventoryWarehouseId=");
 		sb.append(commerceInventoryWarehouseId);
+		sb.append(", commerceShippingFixedOptionId=");
+		sb.append(commerceShippingFixedOptionId);
+		sb.append(", commerceShippingMethodId=");
+		sb.append(commerceShippingMethodId);
 		sb.append(", countryId=");
 		sb.append(countryId);
 		sb.append(", regionId=");
 		sb.append(regionId);
-		sb.append(", zip=");
-		sb.append(zip);
+		sb.append(", fixedPrice=");
+		sb.append(fixedPrice);
+		sb.append(", ratePercentage=");
+		sb.append(ratePercentage);
+		sb.append(", rateUnitWeightPrice=");
+		sb.append(rateUnitWeightPrice);
 		sb.append(", weightFrom=");
 		sb.append(weightFrom);
 		sb.append(", weightTo=");
 		sb.append(weightTo);
-		sb.append(", fixedPrice=");
-		sb.append(fixedPrice);
-		sb.append(", rateUnitWeightPrice=");
-		sb.append(rateUnitWeightPrice);
-		sb.append(", ratePercentage=");
-		sb.append(ratePercentage);
+		sb.append(", zip=");
+		sb.append(zip);
 		sb.append("}");
 
 		return sb.toString();
@@ -155,14 +155,20 @@ public class CommerceShippingFixedOptionRelCacheModel
 				new Date(modifiedDate));
 		}
 
-		commerceShippingFixedOptionRelImpl.setCommerceShippingMethodId(
-			commerceShippingMethodId);
-		commerceShippingFixedOptionRelImpl.setCommerceShippingFixedOptionId(
-			commerceShippingFixedOptionId);
 		commerceShippingFixedOptionRelImpl.setCommerceInventoryWarehouseId(
 			commerceInventoryWarehouseId);
+		commerceShippingFixedOptionRelImpl.setCommerceShippingFixedOptionId(
+			commerceShippingFixedOptionId);
+		commerceShippingFixedOptionRelImpl.setCommerceShippingMethodId(
+			commerceShippingMethodId);
 		commerceShippingFixedOptionRelImpl.setCountryId(countryId);
 		commerceShippingFixedOptionRelImpl.setRegionId(regionId);
+		commerceShippingFixedOptionRelImpl.setFixedPrice(fixedPrice);
+		commerceShippingFixedOptionRelImpl.setRatePercentage(ratePercentage);
+		commerceShippingFixedOptionRelImpl.setRateUnitWeightPrice(
+			rateUnitWeightPrice);
+		commerceShippingFixedOptionRelImpl.setWeightFrom(weightFrom);
+		commerceShippingFixedOptionRelImpl.setWeightTo(weightTo);
 
 		if (zip == null) {
 			commerceShippingFixedOptionRelImpl.setZip("");
@@ -170,13 +176,6 @@ public class CommerceShippingFixedOptionRelCacheModel
 		else {
 			commerceShippingFixedOptionRelImpl.setZip(zip);
 		}
-
-		commerceShippingFixedOptionRelImpl.setWeightFrom(weightFrom);
-		commerceShippingFixedOptionRelImpl.setWeightTo(weightTo);
-		commerceShippingFixedOptionRelImpl.setFixedPrice(fixedPrice);
-		commerceShippingFixedOptionRelImpl.setRateUnitWeightPrice(
-			rateUnitWeightPrice);
-		commerceShippingFixedOptionRelImpl.setRatePercentage(ratePercentage);
 
 		commerceShippingFixedOptionRelImpl.resetOriginalValues();
 
@@ -200,24 +199,24 @@ public class CommerceShippingFixedOptionRelCacheModel
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
-		commerceShippingMethodId = objectInput.readLong();
+		commerceInventoryWarehouseId = objectInput.readLong();
 
 		commerceShippingFixedOptionId = objectInput.readLong();
 
-		commerceInventoryWarehouseId = objectInput.readLong();
+		commerceShippingMethodId = objectInput.readLong();
 
 		countryId = objectInput.readLong();
 
 		regionId = objectInput.readLong();
-		zip = objectInput.readUTF();
+		fixedPrice = (BigDecimal)objectInput.readObject();
+
+		ratePercentage = objectInput.readDouble();
+		rateUnitWeightPrice = (BigDecimal)objectInput.readObject();
 
 		weightFrom = objectInput.readDouble();
 
 		weightTo = objectInput.readDouble();
-		fixedPrice = (BigDecimal)objectInput.readObject();
-		rateUnitWeightPrice = (BigDecimal)objectInput.readObject();
-
-		ratePercentage = objectInput.readDouble();
+		zip = objectInput.readUTF();
 	}
 
 	@Override
@@ -242,15 +241,23 @@ public class CommerceShippingFixedOptionRelCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		objectOutput.writeLong(commerceShippingMethodId);
+		objectOutput.writeLong(commerceInventoryWarehouseId);
 
 		objectOutput.writeLong(commerceShippingFixedOptionId);
 
-		objectOutput.writeLong(commerceInventoryWarehouseId);
+		objectOutput.writeLong(commerceShippingMethodId);
 
 		objectOutput.writeLong(countryId);
 
 		objectOutput.writeLong(regionId);
+		objectOutput.writeObject(fixedPrice);
+
+		objectOutput.writeDouble(ratePercentage);
+		objectOutput.writeObject(rateUnitWeightPrice);
+
+		objectOutput.writeDouble(weightFrom);
+
+		objectOutput.writeDouble(weightTo);
 
 		if (zip == null) {
 			objectOutput.writeUTF("");
@@ -258,14 +265,6 @@ public class CommerceShippingFixedOptionRelCacheModel
 		else {
 			objectOutput.writeUTF(zip);
 		}
-
-		objectOutput.writeDouble(weightFrom);
-
-		objectOutput.writeDouble(weightTo);
-		objectOutput.writeObject(fixedPrice);
-		objectOutput.writeObject(rateUnitWeightPrice);
-
-		objectOutput.writeDouble(ratePercentage);
 	}
 
 	public long mvccVersion;
@@ -276,16 +275,16 @@ public class CommerceShippingFixedOptionRelCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public long commerceShippingMethodId;
-	public long commerceShippingFixedOptionId;
 	public long commerceInventoryWarehouseId;
+	public long commerceShippingFixedOptionId;
+	public long commerceShippingMethodId;
 	public long countryId;
 	public long regionId;
-	public String zip;
+	public BigDecimal fixedPrice;
+	public double ratePercentage;
+	public BigDecimal rateUnitWeightPrice;
 	public double weightFrom;
 	public double weightTo;
-	public BigDecimal fixedPrice;
-	public BigDecimal rateUnitWeightPrice;
-	public double ratePercentage;
+	public String zip;
 
 }

@@ -88,15 +88,18 @@ public class PortalUpgradeProcessTest {
 
 			try (PreparedStatement preparedStatement =
 					connection.prepareStatement(
-						StringBundler.concat(
-							"select versionDisplayName from Release_ where ",
-							"servletContextName = '",
-							ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME,
-							"' and versionDisplayName = '",
-							ReleaseInfo.getVersionDisplayName(), "'"));
-				ResultSet resultSet = preparedStatement.executeQuery()) {
+						"select versionDisplayName from Release_ where " +
+							"servletContextName = ? and versionDisplayName = " +
+								"?")) {
 
-				Assert.assertTrue(resultSet.next());
+				preparedStatement.setString(
+					1, ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
+				preparedStatement.setString(
+					2, ReleaseInfo.getVersionDisplayName());
+
+				try (ResultSet resultSet = preparedStatement.executeQuery()) {
+					Assert.assertTrue(resultSet.next());
+				}
 			}
 		}
 		finally {

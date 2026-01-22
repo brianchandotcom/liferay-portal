@@ -7,7 +7,6 @@ package com.liferay.portal.configuration.persistence.internal.upgrade.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.file.install.constants.FileInstallConstants;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -123,19 +122,22 @@ public class UpgradeConfigurationPidUpgradeProcessTest {
 			try (Connection connection = DataAccess.getConnection();
 				PreparedStatement preparedStatement =
 					connection.prepareStatement(
-						StringBundler.concat(
-							"select dictionary from Configuration_ where ",
-							"configurationId = '", servicePid, "'"));
-				ResultSet resultSet = preparedStatement.executeQuery()) {
+						"select dictionary from Configuration_ where " +
+							"configurationId = ?")) {
 
-				Assert.assertTrue(resultSet.next());
+				preparedStatement.setString(1, servicePid);
 
-				while (resultSet.next()) {
-					String dictionaryString = resultSet.getString("dictionary");
+				try (ResultSet resultSet = preparedStatement.executeQuery()) {
+					Assert.assertTrue(resultSet.next());
 
-					Assert.assertTrue(
-						dictionaryString + " should be null or empty",
-						Validator.isNull(dictionaryString));
+					while (resultSet.next()) {
+						String dictionaryString = resultSet.getString(
+							"dictionary");
+
+						Assert.assertTrue(
+							dictionaryString + " should be null or empty",
+							Validator.isNull(dictionaryString));
+					}
 				}
 			}
 		}
@@ -212,28 +214,32 @@ public class UpgradeConfigurationPidUpgradeProcessTest {
 
 		try (Connection connection = DataAccess.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"select dictionary from Configuration_ where ",
-					"configurationId = '", servicePid, "'"));
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+				"select dictionary from Configuration_ where configurationId " +
+					"= ?")) {
 
-			while (resultSet.next()) {
-				String dictionaryString = resultSet.getString("dictionary");
+			preparedStatement.setString(1, servicePid);
 
-				Dictionary<String, String> dictionary =
-					ConfigurationHandler.read(
-						new UnsyncByteArrayInputStream(
-							dictionaryString.getBytes(StringPool.UTF8)));
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					String dictionaryString = resultSet.getString("dictionary");
 
-				Assert.assertEquals(
-					serviceFactoryPid, dictionary.get("service.factoryPid"));
+					Dictionary<String, String> dictionary =
+						ConfigurationHandler.read(
+							new UnsyncByteArrayInputStream(
+								dictionaryString.getBytes(StringPool.UTF8)));
 
-				Assert.assertEquals(servicePid, dictionary.get("service.pid"));
+					Assert.assertEquals(
+						serviceFactoryPid,
+						dictionary.get("service.factoryPid"));
 
-				Assert.assertEquals(
-					fileinstallFileName,
-					dictionary.get(
-						FileInstallConstants.FELIX_FILE_INSTALL_FILENAME));
+					Assert.assertEquals(
+						servicePid, dictionary.get("service.pid"));
+
+					Assert.assertEquals(
+						fileinstallFileName,
+						dictionary.get(
+							FileInstallConstants.FELIX_FILE_INSTALL_FILENAME));
+				}
 			}
 		}
 	}

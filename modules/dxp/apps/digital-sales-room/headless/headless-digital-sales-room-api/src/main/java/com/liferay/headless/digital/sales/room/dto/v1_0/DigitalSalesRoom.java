@@ -467,6 +467,49 @@ public class DigitalSalesRoom implements Serializable {
 	private Supplier<String> _descriptionSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public Long getDigitalSalesRoomTemplateId() {
+		if (_digitalSalesRoomTemplateIdSupplier != null) {
+			digitalSalesRoomTemplateId =
+				_digitalSalesRoomTemplateIdSupplier.get();
+
+			_digitalSalesRoomTemplateIdSupplier = null;
+		}
+
+		return digitalSalesRoomTemplateId;
+	}
+
+	public void setDigitalSalesRoomTemplateId(Long digitalSalesRoomTemplateId) {
+		this.digitalSalesRoomTemplateId = digitalSalesRoomTemplateId;
+
+		_digitalSalesRoomTemplateIdSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setDigitalSalesRoomTemplateId(
+		UnsafeSupplier<Long, Exception>
+			digitalSalesRoomTemplateIdUnsafeSupplier) {
+
+		_digitalSalesRoomTemplateIdSupplier = () -> {
+			try {
+				return digitalSalesRoomTemplateIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long digitalSalesRoomTemplateId;
+
+	@JsonIgnore
+	private Supplier<Long> _digitalSalesRoomTemplateIdSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -1042,6 +1085,18 @@ public class DigitalSalesRoom implements Serializable {
 			sb.append(_escape(description));
 
 			sb.append("\"");
+		}
+
+		Long digitalSalesRoomTemplateId = getDigitalSalesRoomTemplateId();
+
+		if (digitalSalesRoomTemplateId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"digitalSalesRoomTemplateId\": ");
+
+			sb.append(digitalSalesRoomTemplateId);
 		}
 
 		String externalReferenceCode = getExternalReferenceCode();

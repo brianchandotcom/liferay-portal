@@ -259,8 +259,8 @@ public class BuildHistoryReport {
 
 		sb.append(
 			_getTableDataJavaScriptVariable(
-				utilizationBuildHistories, "Category", 7, "All",
-				"categoryTableData", null));
+				utilizationBuildHistories, "Category", 7, "All", null,
+				"categoryTableData"));
 
 		Collection<BuildHistory> utilizationTestTypeBuildHistories =
 			BuildHistoryProcessor.newUtilizationTestTypeBuildHistories(
@@ -270,13 +270,12 @@ public class BuildHistoryReport {
 		sb.append(
 			_getTableDataJavaScriptVariable(
 				utilizationTestTypeBuildHistories, "Test Batch Type", 7, "All",
-				"testTypeTableData",
 				Arrays.asList(
 					BuildHistory.TableMetric.AVERAGE_DOWNSTREAM_BUILD_DURATION.
 						toString(),
 					BuildHistory.TableMetric.INVOKED_BUILDS.toString(),
-					BuildHistory.TableMetric.TOTAL_SERVER_DURATION.
-						toString())));
+					BuildHistory.TableMetric.TOTAL_SERVER_DURATION.toString()),
+				"testTypeTableData"));
 
 		sb.append("\n");
 
@@ -346,13 +345,13 @@ public class BuildHistoryReport {
 
 		return _getTableDataJavaScriptVariable(
 			buildHistories, groupIdentifierName, intervalDays,
-			mergedBuildHistoryName, "tableData", null);
+			mergedBuildHistoryName, null, "tableData");
 	}
 
 	private static String _getTableDataJavaScriptVariable(
 		Collection<BuildHistory> buildHistories, String groupIdentifierName,
-		int intervalDays, String mergedBuildHistoryName, String tableName,
-		List<String> metricNames) {
+		int intervalDays, String mergedBuildHistoryName,
+		List<String> metricNames, String tableName) {
 
 		JSONArray jsonArray = new JSONArray();
 

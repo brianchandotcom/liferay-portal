@@ -238,6 +238,29 @@ public class DigitalSalesRoom implements Cloneable, Serializable {
 
 	protected String description;
 
+	public Long getDigitalSalesRoomTemplateId() {
+		return digitalSalesRoomTemplateId;
+	}
+
+	public void setDigitalSalesRoomTemplateId(Long digitalSalesRoomTemplateId) {
+		this.digitalSalesRoomTemplateId = digitalSalesRoomTemplateId;
+	}
+
+	public void setDigitalSalesRoomTemplateId(
+		UnsafeSupplier<Long, Exception>
+			digitalSalesRoomTemplateIdUnsafeSupplier) {
+
+		try {
+			digitalSalesRoomTemplateId =
+				digitalSalesRoomTemplateIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long digitalSalesRoomTemplateId;
+
 	public String getExternalReferenceCode() {
 		return externalReferenceCode;
 	}

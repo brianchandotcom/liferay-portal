@@ -175,6 +175,16 @@ public class DigitalSalesRoomSerDes {
 			sb.append("\"");
 		}
 
+		if (digitalSalesRoom.getDigitalSalesRoomTemplateId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"digitalSalesRoomTemplateId\": ");
+
+			sb.append(digitalSalesRoom.getDigitalSalesRoomTemplateId());
+		}
+
 		if (digitalSalesRoom.getExternalReferenceCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -423,6 +433,16 @@ public class DigitalSalesRoomSerDes {
 				String.valueOf(digitalSalesRoom.getDescription()));
 		}
 
+		if (digitalSalesRoom.getDigitalSalesRoomTemplateId() == null) {
+			map.put("digitalSalesRoomTemplateId", null);
+		}
+		else {
+			map.put(
+				"digitalSalesRoomTemplateId",
+				String.valueOf(
+					digitalSalesRoom.getDigitalSalesRoomTemplateId()));
+		}
+
 		if (digitalSalesRoom.getExternalReferenceCode() == null) {
 			map.put("externalReferenceCode", null);
 		}
@@ -556,6 +576,11 @@ public class DigitalSalesRoomSerDes {
 				return false;
 			}
 			else if (Objects.equals(
+						jsonParserFieldName, "digitalSalesRoomTemplateId")) {
+
+				return false;
+			}
+			else if (Objects.equals(
 						jsonParserFieldName, "externalReferenceCode")) {
 
 				return false;
@@ -654,6 +679,14 @@ public class DigitalSalesRoomSerDes {
 				if (jsonParserFieldValue != null) {
 					digitalSalesRoom.setDescription(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "digitalSalesRoomTemplateId")) {
+
+				if (jsonParserFieldValue != null) {
+					digitalSalesRoom.setDigitalSalesRoomTemplateId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(

@@ -38,10 +38,14 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageSender;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -438,7 +442,10 @@ public class BatchEngineImportTaskExecutorImpl
 			Class<?> itemClass = _itemClassRegistry.getItemClass(
 				batchEngineTaskItemDelegate);
 
+			int importBatchSize = 100;
+
 			int processedItemsCount = 0;
+			int lastReportedItemsCount = 0;
 
 			while (true) {
 				if (Thread.interrupted()) {
@@ -473,6 +480,15 @@ public class BatchEngineImportTaskExecutorImpl
 						batchEngineImportTask, batchEngineTaskItemDelegate,
 						items, parameters, processedItemsCount);
 
+					int itemsSinceLastReport =
+						processedItemsCount - lastReportedItemsCount;
+
+					if (itemsSinceLastReport >= importBatchSize) {
+						_sendBatchProgressMessage(processedItemsCount);
+
+						lastReportedItemsCount = processedItemsCount;
+					}
+
 					items.clear();
 
 					ItemIndexThreadLocal.clear();
@@ -483,6 +499,10 @@ public class BatchEngineImportTaskExecutorImpl
 				_commitItems(
 					batchEngineImportTask, batchEngineTaskItemDelegate, items,
 					parameters, processedItemsCount);
+			}
+
+			if (processedItemsCount > lastReportedItemsCount) {
+				_sendBatchProgressMessage(processedItemsCount);
 			}
 		}
 
@@ -551,6 +571,25 @@ public class BatchEngineImportTaskExecutorImpl
 			_itemReaderPostActions.toList());
 	}
 
+	private void _sendBatchProgressMessage(int processedItemsCount) {
+		Long backgroundTaskId = BackgroundTaskThreadLocal.getBackgroundTaskId();
+
+		if (backgroundTaskId == null) {
+			return;
+		}
+
+		Message message = new Message();
+
+		message.put(
+			BackgroundTaskConstants.MESSAGE_KEY_BACKGROUND_TASK_ID,
+			backgroundTaskId);
+		message.put("messageType", "batchProgress");
+		message.put("processedItemsCount", processedItemsCount);
+
+		_backgroundTaskStatusMessageSender.sendBackgroundTaskStatusMessage(
+			message);
+	}
+
 	private Exception _unwrapBatchEngineImportTaskExecutorException(
 		BatchEngineImportTaskExecutorException
 			batchEngineImportTaskExecutorException) {
@@ -591,6 +630,10 @@ public class BatchEngineImportTaskExecutorImpl
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});
+
+	@Reference
+	private BackgroundTaskStatusMessageSender
+		_backgroundTaskStatusMessageSender;
 
 	@Reference
 	private BatchEngineImportTaskErrorLocalService

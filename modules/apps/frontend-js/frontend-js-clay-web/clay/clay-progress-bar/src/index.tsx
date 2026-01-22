@@ -4,6 +4,7 @@
  */
 
 import Icon from '@clayui/icon';
+import {sub} from '@clayui/shared';
 import classNames from 'classnames';
 import React from 'react';
 import warning from 'warning';
@@ -14,6 +15,15 @@ interface IProps extends React.HTMLAttributes<HTMLDivElement> {
 	 * Flag to indicate if `children` should be wrapped as `feedback`.
 	 */
 	feedback?: boolean;
+
+	/**
+	 * Aria Messages for the Progress Bar.
+	 */
+	messages?: {
+		ariaLabelAttention: string;
+		ariaLabelComplete: string;
+		ariaLabelInProgress: string;
+	};
 
 	/**
 	 * Path to spritemap for icon symbol.
@@ -31,20 +41,34 @@ interface IProps extends React.HTMLAttributes<HTMLDivElement> {
 	warn?: boolean;
 }
 
-function ProgressBar({
+const defaultMessages = {
+	ariaLabelAttention: 'Attention: Value is at {0}%',
+	ariaLabelComplete: 'Complete',
+	ariaLabelInProgress: 'Progress: {0}%',
+};
+
+const ProgressBar = ({
 	children,
 	className,
 	feedback = false,
+	messages: externalMessages,
 	spritemap,
 	value = 0,
 	warn,
 	...otherProps
-}: IProps) {
+}: IProps) => {
 	warning(
 		value >= 0 && value <= 100,
 		`ClayProgressBar requires \`value\` to be in the range of 0 to 100, it received ${value}.`
 	);
+
+	const messages = {
+		...defaultMessages,
+		...(externalMessages ?? {}),
+	};
+
 	value = Math.min(Math.max(value, 0), 100);
+
 	let addon =
 		children ||
 		(value === 100 ? (
@@ -52,15 +76,30 @@ function ProgressBar({
 		) : (
 			`${value}%`
 		));
+
 	if (value === 100 || feedback) {
 		addon = <div className="progress-group-feedback">{addon}</div>;
 	}
+
 	let status;
+
 	if (warn) {
 		status = 'warning';
 	}
 	else if (value === 100) {
 		status = 'success';
+	}
+
+	let ariaLabel: string;
+
+	if (warn) {
+		ariaLabel = sub(messages.ariaLabelAttention, [value]);
+	}
+	else if (value === 100) {
+		ariaLabel = messages.ariaLabelComplete;
+	}
+	else {
+		ariaLabel = sub(messages.ariaLabelInProgress, [value]);
 	}
 
 	return (
@@ -72,6 +111,7 @@ function ProgressBar({
 		>
 			<div className="progress">
 				<div
+					aria-label={otherProps['aria-label'] || ariaLabel}
 					aria-valuemax={100}
 					aria-valuemin={0}
 					aria-valuenow={value}
@@ -84,6 +124,6 @@ function ProgressBar({
 			{addon && <div className="progress-group-addon">{addon}</div>}
 		</div>
 	);
-}
+};
 
 export default ProgressBar;

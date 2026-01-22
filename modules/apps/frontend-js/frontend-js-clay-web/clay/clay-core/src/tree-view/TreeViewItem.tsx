@@ -239,7 +239,7 @@ export const Item = React.forwardRef<HTMLDivElement, ITreeViewItemProps>(
 							group ? expandedKeys.has(item.key) : undefined
 						}
 						aria-labelledby={labelId}
-						aria-owns={ariaOwns}
+						aria-owns={isExpand ? ariaOwns : undefined}
 						className={classNames(
 							'treeview-link',
 							itemStackProps.className,
@@ -740,8 +740,11 @@ export function ItemStack({
 			{expandable && !loading && (
 				<Layout.ContentCol>
 					<Button
-						aria-controls={`${item.key}`}
+						aria-controls={
+							expandable ? String(item.key) : undefined
+						}
 						aria-expanded={expandedKeys.has(item.key)}
+						aria-labelledby={labelId}
 						className={classNames(
 							'component-expander',
 							expanderClassName,

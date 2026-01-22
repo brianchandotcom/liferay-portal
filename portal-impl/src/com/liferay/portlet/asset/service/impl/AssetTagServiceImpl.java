@@ -83,6 +83,11 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 	}
 
 	@Override
+	public AssetTag fetchTag(long groupId, String name) throws PortalException {
+		return sanitize(assetTagLocalService.fetchTag(groupId, name));
+	}
+
+	@Override
 	public AssetTag getAssetTagByExternalReferenceCode(
 			String externalReferenceCode, long groupId)
 		throws PortalException {
@@ -144,6 +149,11 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 	@Override
 	public AssetTag getTag(long tagId) throws PortalException {
 		return sanitize(assetTagLocalService.getTag(tagId));
+	}
+
+	@Override
+	public AssetTag getTag(long groupId, String name) throws PortalException {
+		return sanitize(assetTagLocalService.getTag(groupId, name));
 	}
 
 	@Override

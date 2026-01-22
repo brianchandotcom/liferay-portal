@@ -8,6 +8,7 @@ package com.liferay.portal.workflow.kaleo.runtime.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
@@ -18,7 +19,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.workflow.RequiredWorkflowDefinitionException;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
-import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
@@ -63,7 +63,9 @@ public class WorkflowEngineTest {
 				workflowDefinition.getName(), 1);
 
 		AssertUtils.assertFailure(
-			RequiredWorkflowDefinitionException.class, null,
+			RequiredWorkflowDefinitionException.
+				MustNotDeleteWorkflowDefinitionWithWorkflowDefinitionLinks.class,
+			null,
 			() -> _workflowEngine.deleteWorkflowDefinition(
 				workflowDefinition.getName(), 1,
 				ServiceContextTestUtil.getServiceContext()));
@@ -72,9 +74,12 @@ public class WorkflowEngineTest {
 			workflowDefinitionLink);
 
 		AssertUtils.assertFailure(
-			WorkflowException.class,
-			"Cannot delete active workflow definition " +
-				workflowDefinition.getWorkflowDefinitionId(),
+			RequiredWorkflowDefinitionException.
+				MustNotDeleteActiveWorkflowDefinition.class,
+			StringBundler.concat(
+				"Workflow definition ",
+				workflowDefinition.getWorkflowDefinitionId(), " cannot be ",
+				"deleted because it is active"),
 			() -> _workflowEngine.deleteWorkflowDefinition(
 				workflowDefinition.getName(), 1,
 				ServiceContextTestUtil.getServiceContext()));

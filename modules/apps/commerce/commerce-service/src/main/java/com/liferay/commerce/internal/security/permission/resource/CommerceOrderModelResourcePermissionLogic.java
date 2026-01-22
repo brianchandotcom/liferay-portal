@@ -89,9 +89,13 @@ public class CommerceOrderModelResourcePermissionLogic
 			permissionChecker.isGroupAdmin(commerceOrder.getGroupId()) ||
 			((accountEntry.getAccountEntryId() !=
 				AccountConstants.ACCOUNT_ENTRY_ID_GUEST) &&
-			 _hasAncestorPermission(
+			 (_hasAncestorPermission(
 				 permissionChecker, accountEntry.getAccountEntryGroupId(),
-				 CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS))) {
+				 CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS) ||
+			  _hasAncestorPermission(
+				  permissionChecker, accountEntry.getAccountEntryGroupId(),
+				  CommerceOrderActionKeys.
+					  MANAGE_ACCOUNTS_SCOPED_COMMERCE_ORDERS)))) {
 
 			return true;
 		}

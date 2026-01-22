@@ -1355,6 +1355,35 @@ paths:
                                     $ref: "#/components/schemas/Keyword"
                                 type: array
             tags: ["Keyword"]
+        patch:
+            description:
+                Updates only the fields received in the request body. Other fields are left untouched.
+            operationId: patchSiteKeyword
+            parameters:
+                -   in: path
+                    name: siteId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Keyword"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Keyword"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Keyword"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Keyword"
+            tags: ["Keyword"]
         post:
             description:
                 Inserts a new keyword in a Site.
@@ -1433,6 +1462,41 @@ paths:
                     name: restrictFields
                     schema:
                         type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Keyword"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Keyword"
+            tags: ["Keyword"]
+        patch:
+            # @review
+            description:
+                Updates only the fields received in the request body. Other fields are left untouched.
+            operationId: patchSiteKeywordByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: siteId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Keyword"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Keyword"
             responses:
                 200:
                     content:

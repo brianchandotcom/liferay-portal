@@ -41,6 +41,7 @@ interface IDateInputProps {
 	onBlur?: (event?: FocusEvent) => void;
 	onChange: (range: DateRange) => void;
 	overlayAlignment?: string;
+	setMaxRange?: boolean;
 	showRetentionPeriod?: boolean;
 	usePortal?: boolean;
 	value: DateRange;
@@ -54,6 +55,7 @@ const DateInput: React.FC<IDateInputProps> = ({
 	limitEndDate = true,
 	onBlur = noop,
 	onChange = noop,
+	setMaxRange = true,
 	showRetentionPeriod = true,
 	value
 }) => {
@@ -163,7 +165,7 @@ const DateInput: React.FC<IDateInputProps> = ({
 						.clone()
 						.subtract(1, 'days')
 				}
-				maxRange={365}
+				maxRange={setMaxRange ? 365 : undefined}
 				minDate={
 					showRetentionPeriod
 						? minDate.subtract(retentionPeriod, 'months')

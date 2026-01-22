@@ -20,6 +20,7 @@ exports[`VerticalNav basic rendering render dynamic content 1`] = `
           aria-expanded="false"
           class="nav-link collapse-icon collapsed btn btn-unstyled"
           role="menuitem"
+          tabindex="0"
           type="button"
         >
           Home
@@ -101,6 +102,7 @@ exports[`VerticalNav basic rendering render static content 1`] = `
           aria-current="page"
           class="nav-link active collapsed btn btn-unstyled"
           role="menuitem"
+          tabindex="0"
           type="button"
         >
           Home

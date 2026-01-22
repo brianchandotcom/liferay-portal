@@ -103,12 +103,15 @@ describe('ClayVerticalNav', () => {
 			/>
 		);
 
+		const home = getByText('Home');
+
+		home.focus();
+
+		userEvent.keyboard('[ArrowDown]');
+		userEvent.keyboard('[ArrowDown]');
+		userEvent.keyboard('[ArrowDown]');
+
 		const projects = getByText('Projects');
-
-		userEvent.tab();
-		userEvent.tab();
-
-		expect(document.activeElement).toEqual(projects);
 
 		userEvent.keyboard('[ArrowRight]');
 
@@ -124,12 +127,15 @@ describe('ClayVerticalNav', () => {
 			/>
 		);
 
+		const home = getByText('Home');
+
+		home.focus();
+
+		userEvent.keyboard('[ArrowDown]');
+		userEvent.keyboard('[ArrowDown]');
+		userEvent.keyboard('[ArrowDown]');
+
 		const projects = getByText('Projects');
-
-		userEvent.tab();
-		userEvent.tab();
-
-		expect(document.activeElement).toEqual(projects);
 
 		userEvent.keyboard('[ArrowRight]');
 
@@ -149,10 +155,15 @@ describe('ClayVerticalNav', () => {
 			/>
 		);
 
-		const projects = getByText('Projects');
+		const home = getByText('Home');
 
-		userEvent.tab();
-		userEvent.tab();
+		home.focus();
+
+		userEvent.keyboard('[ArrowDown]');
+		userEvent.keyboard('[ArrowDown]');
+		userEvent.keyboard('[ArrowDown]');
+
+		const projects = getByText('Projects');
 
 		expect(document.activeElement).toEqual(projects);
 
@@ -167,7 +178,7 @@ describe('ClayVerticalNav', () => {
 		expect(first).toEqual(document.activeElement);
 	});
 
-	it('move focus to parent if focus is on child when pressing left arrow key', () => {
+	it('moves focus to parent if focus is on child when pressing left arrow key', () => {
 		const {getByText} = render(
 			<ClayVerticalNav
 				aria-label="vertical navbar"
@@ -176,25 +187,30 @@ describe('ClayVerticalNav', () => {
 			/>
 		);
 
+		const home = getByText('Home');
+
+		home.focus();
+
+		userEvent.keyboard('[ArrowDown]');
+		userEvent.keyboard('[ArrowDown]');
+		userEvent.keyboard('[ArrowDown]');
+
 		const projects = getByText('Projects');
 
-		userEvent.tab();
-		userEvent.tab();
-
-		expect(document.activeElement).toEqual(projects);
+		expect(document.activeElement).toBe(projects);
 
 		userEvent.keyboard('[ArrowRight]');
 
-		expect(projects!.getAttribute('aria-expanded')).toBe('true');
+		expect(projects.getAttribute('aria-expanded')).toBe('true');
 
 		userEvent.keyboard('[ArrowRight]');
 
 		const first = getByText('Five');
 
-		expect(first).toEqual(document.activeElement);
+		expect(document.activeElement).toBe(first);
 
 		userEvent.keyboard('[ArrowLeft]');
 
-		expect(projects).toEqual(document.activeElement);
+		expect(document.activeElement).toBe(projects);
 	});
 });

@@ -8,7 +8,11 @@ package com.liferay.portal.workflow.kaleo.forms.web.internal.application.list;
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
@@ -34,6 +38,19 @@ public class KaleoFormsAdminPanelApp extends BasePanelApp {
 	@Override
 	public String getPortletId() {
 		return KaleoFormsPortletKeys.KALEO_FORMS_ADMIN;
+	}
+
+	@Override
+	public boolean isShow(PermissionChecker permissionChecker, Group group)
+		throws PortalException {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				group.getCompanyId(), "LPD-74739")) {
+
+			return false;
+		}
+
+		return super.isShow(permissionChecker, group);
 	}
 
 	@Reference(

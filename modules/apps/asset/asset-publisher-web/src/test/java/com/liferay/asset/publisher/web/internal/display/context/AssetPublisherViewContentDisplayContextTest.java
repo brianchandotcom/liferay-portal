@@ -38,7 +38,7 @@ public class AssetPublisherViewContentDisplayContextTest {
 	}
 
 	@Test
-	public void testIsAssetEntryVisible_ReturnsFalseWhenEntryNotVisible() {
+	public void testIsAssetEntryVisible() {
 		AssetPublisherViewContentDisplayContext
 			assetPublisherViewContentDisplayContext =
 				new AssetPublisherViewContentDisplayContext(

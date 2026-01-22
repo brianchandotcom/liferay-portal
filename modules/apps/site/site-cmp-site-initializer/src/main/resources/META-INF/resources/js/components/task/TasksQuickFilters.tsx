@@ -110,7 +110,7 @@ export default function TasksQuickFilters({
 
 	const isQuickFilterChangeRef = useRef(false);
 
-	const handleTotalTasksClick = () => {
+	const handleTotalTasksClick = useCallback(() => {
 		setActiveQuickFilter(TASK_QUICK_FILTER_TYPES.TOTAL);
 
 		setTasksFDSState({
@@ -128,9 +128,9 @@ export default function TasksQuickFilters({
 		});
 
 		isQuickFilterChangeRef.current = true;
-	};
+	}, [setTasksFDSState, tasksFDSState]);
 
-	const handleOverdueClick = () => {
+	const handleOverdueClick = useCallback(() => {
 		setActiveQuickFilter(TASK_QUICK_FILTER_TYPES.OVERDUE);
 
 		setTasksFDSState({
@@ -182,9 +182,9 @@ export default function TasksQuickFilters({
 		});
 
 		isQuickFilterChangeRef.current = true;
-	};
+	}, [setTasksFDSState, tasksFDSState]);
 
-	const handleBlockedClick = () => {
+	const handleBlockedClick = useCallback(() => {
 		setActiveQuickFilter(TASK_QUICK_FILTER_TYPES.BLOCKED);
 
 		setTasksFDSState({
@@ -218,9 +218,9 @@ export default function TasksQuickFilters({
 		});
 
 		isQuickFilterChangeRef.current = true;
-	};
+	}, [setTasksFDSState, tasksFDSState]);
 
-	const handleInProgressClick = () => {
+	const handleInProgressClick = useCallback(() => {
 		setActiveQuickFilter(TASK_QUICK_FILTER_TYPES.IN_PROGRESS);
 
 		setTasksFDSState({
@@ -254,7 +254,7 @@ export default function TasksQuickFilters({
 		});
 
 		isQuickFilterChangeRef.current = true;
-	};
+	}, [setTasksFDSState, tasksFDSState]);
 
 	/**
 	 * There are 2 different ways of fetching the counts.
@@ -366,7 +366,13 @@ export default function TasksQuickFilters({
 
 			Liferay.detach(FDS_EVENT.DISPLAY_UPDATED, fetchCounts);
 		};
-	}, []);
+	}, [
+		fetchCounts,
+		handleBlockedClick,
+		handleInProgressClick,
+		handleOverdueClick,
+		handleTotalTasksClick,
+	]);
 
 	return (
 		<div className="lfr-cmp__tasks-quick-filters-container">

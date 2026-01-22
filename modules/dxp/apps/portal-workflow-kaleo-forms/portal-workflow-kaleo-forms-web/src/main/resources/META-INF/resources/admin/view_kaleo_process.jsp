@@ -53,6 +53,8 @@ KaleoProcess kaleoProcess = kaleoFormsViewRecordsDisplayContext.getKaleoProcess(
 	sortingURL="<%= kaleoFormsViewRecordsDisplayContext.getSortingURL() %>"
 />
 
+<%@ include file="/admin/deprecated_warning.jspf" %>
+
 <clay:container-fluid
 	id='<%= liferayPortletResponse.getNamespace() + "formContainer" %>'
 >

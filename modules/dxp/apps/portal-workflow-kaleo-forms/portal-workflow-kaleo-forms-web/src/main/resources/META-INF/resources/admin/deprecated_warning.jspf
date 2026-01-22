@@ -1,0 +1,16 @@
+<%--
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+--%>
+
+<clay:alert
+	displayType="warning"
+>
+	<liferay-ui:message key="kaleo-forms-is-deprecated-and-scheduled-for-removal-migrate-to-form-container-objects-workflow" />
+
+	<a href="https://support.liferay.com/release-notes/2023-q3" rel="noopener noreferrer" target="_blank">
+		<liferay-ui:message key="learn-more" />
+	</a>
+</clay:alert>

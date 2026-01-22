@@ -15,6 +15,8 @@ String displayStyle = kaleoFormsAdminDisplayContext.getDisplayStyle();
 
 <liferay-util:include page="/admin/management_bar.jsp" servletContext="<%= application %>" />
 
+<%@ include file="/admin/deprecated_warning.jspf" %>
+
 <clay:container-fluid
 	id='<%= liferayPortletResponse.getNamespace() + "formContainer" %>'
 >

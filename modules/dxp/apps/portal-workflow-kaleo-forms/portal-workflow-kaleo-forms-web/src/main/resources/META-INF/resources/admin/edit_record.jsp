@@ -7,6 +7,8 @@
 
 <%@ include file="/admin/init.jsp" %>
 
+<%@ include file="/admin/deprecated_warning.jspf" %>
+
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 

@@ -920,6 +920,7 @@ public class LayoutSetPrototypePropagationTest
 			_layoutSetPrototypeGroup.getPrivateLayoutSet();
 
 		prototypePrivateLayoutSet.setThemeId(_THEME_ID);
+		prototypePrivateLayoutSet.setColorSchemeId(_COLOR_SCHEME_ID);
 
 		prototypePrivateLayoutSet = LayoutSetLocalServiceUtil.updateLayoutSet(
 			prototypePrivateLayoutSet);
@@ -927,6 +928,7 @@ public class LayoutSetPrototypePropagationTest
 		LayoutSet prototypePublicLayoutSet =
 			_layoutSetPrototypeGroup.getPublicLayoutSet();
 
+		prototypePrivateLayoutSet.setColorSchemeId(_COLOR_SCHEME_ID);
 		prototypePublicLayoutSet.setThemeId(_THEME_ID);
 
 		LayoutSetLocalServiceUtil.updateLayoutSet(prototypePublicLayoutSet);
@@ -945,6 +947,9 @@ public class LayoutSetPrototypePropagationTest
 
 		LayoutSet propagatedLayoutSet = group.getPrivateLayoutSet();
 
+		Assert.assertEquals(
+			prototypePrivateLayoutSet.getColorSchemeId(),
+			propagatedLayoutSet.getColorSchemeId());
 		Assert.assertEquals(
 			prototypePrivateLayoutSet.getThemeId(),
 			propagatedLayoutSet.getThemeId());
@@ -1596,6 +1601,9 @@ public class LayoutSetPrototypePropagationTest
 		Assert.assertEquals(
 			expectedValue, jxPortletPreferences.getValue(key, null));
 	}
+
+	private static final String _COLOR_SCHEME_ID =
+		RandomTestUtil.randomString();
 
 	private static final String _THEME_ID = "minium_WAR_miniumtheme";
 

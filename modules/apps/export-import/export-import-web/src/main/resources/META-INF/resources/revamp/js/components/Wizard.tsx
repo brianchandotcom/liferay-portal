@@ -8,20 +8,13 @@ import React, {useState} from 'react';
 
 import Footer from './Footer';
 
-export interface IGenericStepProps {
-	backURL?: string;
-	description?: string;
-	exportURL?: string | undefined;
-	nextFn?: () => void | undefined;
-	previousFn?: () => void | undefined;
-	title?: string;
-}
-
-export interface IWizardStepProps extends IGenericStepProps {
-	children: React.ReactElement;
-}
-
-export function WizardStep({children}: IWizardStepProps) {
+export function WizardStep({
+	children,
+}: {
+	children: React.ReactNode;
+	description: string;
+	title: string;
+}) {
 	return children;
 }
 
@@ -46,8 +39,6 @@ export function Wizard({
 					if (!React.isValidElement(step)) {
 						return null;
 					}
-
-					const {title} = step.props;
 
 					return (
 						<ClayMultiStepNav.Item
@@ -83,12 +74,12 @@ export function Wizard({
 				exportURL={
 					stepNumber === totalSteps - 1 ? 'exportURL' : undefined
 				}
-				nextFn={
+				onNext={
 					stepNumber < totalSteps - 1
 						? () => setStepNumber(stepNumber + 1)
 						: undefined
 				}
-				previousFn={
+				onPrevious={
 					stepNumber > 0
 						? () => setStepNumber(stepNumber - 1)
 						: undefined

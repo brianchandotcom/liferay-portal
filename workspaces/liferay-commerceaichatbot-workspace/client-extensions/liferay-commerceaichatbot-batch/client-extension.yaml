@@ -1,0 +1,19 @@
+assemble:
+    -   from: batch
+        into: batch
+liferay-commerceaicchatbot-batch:
+    name: Liferay Commerce AI Chat Bot Batch
+    oAuthApplicationHeadlessServer: liferay-commerceaichatbot-batch-oahs
+    type: batch
+liferay-commerceaicchatbot-batch-oahs:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Liferay Commerce AI Chat Bot Batch Headless Server
+    scopes:
+        -   Liferay.Headless.Admin.List.Type.everything
+        -   Liferay.Headless.Admin.User.everything
+        -   Liferay.Headless.Admin.Workflow.everything
+        -   Liferay.Headless.Batch.Engine.everything
+        -   Liferay.Notification.REST.everything
+        -   Liferay.Object.Admin.REST.everything
+    type: oAuthApplicationHeadlessServer

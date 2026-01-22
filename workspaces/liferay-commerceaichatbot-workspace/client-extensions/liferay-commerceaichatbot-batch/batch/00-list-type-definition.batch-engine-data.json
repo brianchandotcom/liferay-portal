@@ -1,0 +1,61 @@
+{
+	"configuration": {
+		"className": "com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition",
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"onErrorFail": "false",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "DEFAULT"
+	},
+	"items": [
+		{
+			"externalReferenceCode": "L9M7_COMMERCE_AI_CHAT_BOT_MODELS",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "GOOGLE_GEMINI15FLASH001",
+					"key": "gemini15flash001",
+					"name": "gemini-1.5-flash-001"
+				},
+				{
+					"externalReferenceCode": "GOOGLE_20FLASH",
+					"key": "gemini20flash",
+					"name": "gemini-2.0-flash"
+				},
+				{
+					"externalReferenceCode": "GOOGLE_GEMINI15PRO001",
+					"key": "gemini15pro001",
+					"name": "gemini-1.5-pro-001"
+				},
+				{
+					"externalReferenceCode": "OPENAI_GPT41",
+					"key": "gpt41",
+					"name": "gpt-4.1"
+				},
+				{
+					"externalReferenceCode": "OPENAI_GPT5",
+					"key": "gpt5",
+					"name": "gpt-5"
+				}
+			],
+			"name": "L9M7 Commerce AI Chat Bot Models"
+		},
+		{
+			"externalReferenceCode": "L9M7_COMMERCE_AI_CHAT_BOT_PROVIDERS",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "GOOGLE",
+					"key": "google",
+					"name": "Google"
+				},
+				{
+					"externalReferenceCode": "OPENAI",
+					"key": "openai",
+					"name": "OpenAI"
+				}
+			],
+			"name": "L9M7 Commerce AI Chat Bot Providers"
+		}
+	]
+}

@@ -175,14 +175,9 @@ public class CPDefinitionLocalServiceImpl
 	@Override
 	public CPDefinition addCPDefinition(
 			String externalReferenceCode, long userId, long groupId,
-			Map<Locale, String> descriptionMap,
-			Map<Locale, String> metaDescriptionMap,
-			Map<Locale, String> metaKeywordsMap,
-			Map<Locale, String> metaTitleMap, Map<Locale, String> nameMap,
-			Map<Locale, String> shortDescriptionMap, long cpTaxCategoryId,
-			boolean accountGroupFilterEnabled, boolean channelFilterEnabled,
-			boolean ignoreSKUCombinations, String ddmStructureKey,
-			long deliveryMaxSubscriptionCycles,
+			long cpTaxCategoryId, boolean accountGroupFilterEnabled,
+			boolean channelFilterEnabled, boolean ignoreSKUCombinations,
+			String ddmStructureKey, long deliveryMaxSubscriptionCycles,
 			boolean deliverySubscriptionEnabled, int deliverySubscriptionLength,
 			String deliverySubscriptionType,
 			UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties,
@@ -193,12 +188,17 @@ public class CPDefinitionLocalServiceImpl
 			int subscriptionLength, String subscriptionType,
 			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			boolean taxExempt, boolean telcoOrElectronics, double weight,
-			double width, int status, String defaultSku, int displayDateDay,
-			int displayDateHour, int displayDateMinute, int displayDateMonth,
-			int displayDateYear, int expirationDateDay, int expirationDateHour,
-			int expirationDateMinute, int expirationDateMonth,
-			int expirationDateYear, boolean neverExpire,
-			Map<Locale, String> urlTitleMap, ServiceContext serviceContext)
+			double width, int status, Map<Locale, String> descriptionMap,
+			Map<Locale, String> metaDescriptionMap,
+			Map<Locale, String> metaKeywordsMap,
+			Map<Locale, String> metaTitleMap, Map<Locale, String> nameMap,
+			Map<Locale, String> shortDescriptionMap, String defaultSku,
+			int displayDateDay, int displayDateHour, int displayDateMinute,
+			int displayDateMonth, int displayDateYear, int expirationDateDay,
+			int expirationDateHour, int expirationDateMinute,
+			int expirationDateMonth, int expirationDateYear,
+			boolean neverExpire, Map<Locale, String> urlTitleMap,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product definition

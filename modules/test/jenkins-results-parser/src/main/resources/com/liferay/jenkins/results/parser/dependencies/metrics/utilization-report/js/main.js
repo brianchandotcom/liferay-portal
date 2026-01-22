@@ -26,7 +26,7 @@ function addUtilizationRows(tableElement) {
 			else {
 				utilizationCellElement = document.createElement('td');
 
-				let percentage = parseFloat(cellElements[i].getAttribute('data-value')) * 100 / MAX_WEEKLY_SERVER_DURATION_MILLIS;
+				let percentage = parseFloat(cellElements[i].getAttribute('data-value')) * 100 / (maxWeeklyServerDurationMillis || MAX_WEEKLY_SERVER_DURATION_MILLIS);
 
 				percentage = percentage.toFixed(2);
 

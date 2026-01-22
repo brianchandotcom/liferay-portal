@@ -248,6 +248,21 @@ public class BuildHistoryReport {
 
 		StringBuilder sb = new StringBuilder();
 
+		try {
+			long maxNodeCount = Long.parseLong(
+				JenkinsResultsParserUtil.getBuildProperty(
+					"report.ci.max.node.count"));
+
+			if (maxNodeCount != 0) {
+				sb.append("var maxWeeklyServerDurationMillis = ");
+				sb.append(maxNodeCount * 7 * 24 * 60 * 60 * 1000);
+				sb.append(";\n");
+			}
+		}
+		catch (IOException ioException) {
+			System.out.println("Unable to get report.ci.max.node.count");
+		}
+
 		sb.append(
 			_getTableDataJSFileContent(
 				utilizationBuildHistories, "Category", 7, "All",

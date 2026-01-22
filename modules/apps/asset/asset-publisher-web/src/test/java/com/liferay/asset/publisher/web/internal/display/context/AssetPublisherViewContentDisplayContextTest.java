@@ -7,9 +7,10 @@ package com.liferay.asset.publisher.web.internal.display.context;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-
-import jakarta.portlet.RenderRequest;
+import com.liferay.portal.util.PortalImpl;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -31,15 +32,20 @@ public class AssetPublisherViewContentDisplayContextTest {
 
 	@Before
 	public void setUp() {
-		_renderRequest = Mockito.mock(RenderRequest.class);
+		PortalUtil portalUtil = new PortalUtil();
+
+		portalUtil.setPortal(new PortalImpl());
 	}
 
 	@Test
 	public void testIsAssetEntryVisible() {
+		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
+			new MockLiferayPortletRenderRequest();
+
 		AssetPublisherViewContentDisplayContext
 			assetPublisherViewContentDisplayContext =
 				new AssetPublisherViewContentDisplayContext(
-					_renderRequest, false);
+					mockLiferayPortletRenderRequest, false);
 
 		AssetEntry assetEntry = Mockito.mock(AssetEntry.class);
 
@@ -55,7 +61,5 @@ public class AssetPublisherViewContentDisplayContextTest {
 		Assert.assertFalse(
 			assetPublisherViewContentDisplayContext.isAssetEntryVisible());
 	}
-
-	private RenderRequest _renderRequest;
 
 }

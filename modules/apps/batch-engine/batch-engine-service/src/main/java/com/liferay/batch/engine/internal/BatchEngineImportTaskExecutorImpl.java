@@ -39,13 +39,10 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageSender;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
-import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -484,7 +481,9 @@ public class BatchEngineImportTaskExecutorImpl
 						processedItemsCount - lastReportedItemsCount;
 
 					if (itemsSinceLastReport >= importBatchSize) {
-						_sendBatchProgressMessage(processedItemsCount);
+						BatchEngineTaskExecutorUtil.sendBatchProgressMessage(
+							_backgroundTaskStatusMessageSender,
+							processedItemsCount);
 
 						lastReportedItemsCount = processedItemsCount;
 					}
@@ -502,7 +501,8 @@ public class BatchEngineImportTaskExecutorImpl
 			}
 
 			if (processedItemsCount > lastReportedItemsCount) {
-				_sendBatchProgressMessage(processedItemsCount);
+				BatchEngineTaskExecutorUtil.sendBatchProgressMessage(
+					_backgroundTaskStatusMessageSender, processedItemsCount);
 			}
 		}
 
@@ -569,25 +569,6 @@ public class BatchEngineImportTaskExecutorImpl
 			BatchEngineImportTaskItemReaderUtil.mapFieldNames(
 				fieldNameMapping, fieldNameValueMap),
 			_itemReaderPostActions.toList());
-	}
-
-	private void _sendBatchProgressMessage(int processedItemsCount) {
-		Long backgroundTaskId = BackgroundTaskThreadLocal.getBackgroundTaskId();
-
-		if (backgroundTaskId == null) {
-			return;
-		}
-
-		Message message = new Message();
-
-		message.put(
-			BackgroundTaskConstants.MESSAGE_KEY_BACKGROUND_TASK_ID,
-			backgroundTaskId);
-		message.put("messageType", "batchProgress");
-		message.put("processedItemsCount", processedItemsCount);
-
-		_backgroundTaskStatusMessageSender.sendBackgroundTaskStatusMessage(
-			message);
 	}
 
 	private Exception _unwrapBatchEngineImportTaskExecutorException(

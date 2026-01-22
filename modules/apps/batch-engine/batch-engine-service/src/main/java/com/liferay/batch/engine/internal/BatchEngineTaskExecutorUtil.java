@@ -11,7 +11,11 @@ import com.liferay.batch.engine.internal.util.ItemIndexThreadLocal;
 import com.liferay.batch.engine.jaxrs.uri.BatchEngineUriInfo;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.audit.AuditRequestThreadLocal;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageSender;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -63,6 +67,32 @@ public class BatchEngineTaskExecutorUtil {
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 			PrincipalThreadLocal.setName(name);
 		}
+	}
+
+	public static void sendBatchProgressMessage(
+		BackgroundTaskStatusMessageSender backgroundTaskStatusMessageSender,
+		int processedItemsCount) {
+
+		if (backgroundTaskStatusMessageSender == null) {
+			return;
+		}
+
+		Long backgroundTaskId = BackgroundTaskThreadLocal.getBackgroundTaskId();
+
+		if (backgroundTaskId == null) {
+			return;
+		}
+
+		Message message = new Message();
+
+		message.put(
+			BackgroundTaskConstants.MESSAGE_KEY_BACKGROUND_TASK_ID,
+			backgroundTaskId);
+		message.put("messageType", "batchProgress");
+		message.put("processedItemsCount", processedItemsCount);
+
+		backgroundTaskStatusMessageSender.sendBackgroundTaskStatusMessage(
+			message);
 	}
 
 	public static void setContextFields(

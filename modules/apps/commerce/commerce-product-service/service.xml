@@ -547,37 +547,37 @@
 
 		<column name="CProductId" type="long" />
 		<column name="CPTaxCategoryId" type="long" />
-		<column name="productTypeName" type="String" />
+		<column name="accountGroupFilterEnabled" type="boolean" />
 		<column name="availableIndividually" type="boolean" />
-		<column name="ignoreSKUCombinations" type="boolean" />
-		<column name="shippable" type="boolean" />
-		<column name="freeShipping" type="boolean" />
-		<column name="shipSeparately" type="boolean" />
-		<column name="shippingExtraPrice" type="double" />
-		<column name="width" type="double" />
-		<column name="height" type="double" />
-		<column name="depth" type="double" />
-		<column name="weight" type="double" />
-		<column name="taxExempt" type="boolean" />
-		<column name="telcoOrElectronics" type="boolean" />
+		<column name="channelFilterEnabled" type="boolean" />
 		<column name="DDMStructureKey" type="String" />
-		<column name="published" type="boolean" />
-		<column name="displayDate" type="Date" />
-		<column name="expirationDate" type="Date" />
-		<column name="lastPublishDate" type="Date" />
-		<column name="subscriptionEnabled" type="boolean" />
-		<column name="subscriptionLength" type="int" />
-		<column name="subscriptionType" type="String" />
-		<column name="subscriptionTypeSettings" type="String" />
-		<column name="maxSubscriptionCycles" type="long" />
+		<column name="deliveryMaxSubscriptionCycles" type="long" />
 		<column name="deliverySubscriptionEnabled" type="boolean" />
 		<column name="deliverySubscriptionLength" type="int" />
 		<column name="deliverySubscriptionType" type="String" />
 		<column db-name="deliverySubTypeSettings" name="deliverySubscriptionTypeSettings" type="String" />
-		<column name="deliveryMaxSubscriptionCycles" type="long" />
-		<column name="accountGroupFilterEnabled" type="boolean" />
-		<column name="channelFilterEnabled" type="boolean" />
+		<column name="depth" type="double" />
+		<column name="displayDate" type="Date" />
+		<column name="expirationDate" type="Date" />
+		<column name="freeShipping" type="boolean" />
+		<column name="height" type="double" />
+		<column name="ignoreSKUCombinations" type="boolean" />
+		<column name="maxSubscriptionCycles" type="long" />
+		<column name="productTypeName" type="String" />
+		<column name="published" type="boolean" />
+		<column name="shippingExtraPrice" type="double" />
+		<column name="shippable" type="boolean" />
+		<column name="shipSeparately" type="boolean" />
+		<column name="subscriptionEnabled" type="boolean" />
+		<column name="subscriptionLength" type="int" />
+		<column name="subscriptionType" type="String" />
+		<column name="subscriptionTypeSettings" type="String" />
+		<column name="taxExempt" type="boolean" />
+		<column name="telcoOrElectronics" type="boolean" />
 		<column name="version" type="int" />
+		<column name="weight" type="double" />
+		<column name="width" type="double" />
+		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
@@ -587,12 +587,12 @@
 
 		<localized-entity>
 			<column name="CProductId" type="long" />
-			<localized-column name="name" />
-			<localized-column name="shortDescription" />
 			<localized-column name="description" />
-			<localized-column name="metaTitle" />
 			<localized-column name="metaDescription" />
 			<localized-column name="metaKeywords" />
+			<localized-column name="metaTitle" />
+			<localized-column name="name" />
+			<localized-column name="shortDescription" />
 		</localized-entity>
 
 		<!-- Order -->

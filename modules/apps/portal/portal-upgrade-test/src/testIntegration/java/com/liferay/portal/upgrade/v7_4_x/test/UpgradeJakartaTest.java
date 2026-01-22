@@ -195,16 +195,18 @@ public class UpgradeJakartaTest {
 			try (Connection connection = DataAccess.getConnection();
 				PreparedStatement preparedStatement =
 					connection.prepareStatement(
-						StringBundler.concat(
-							"select dictionary from Configuration_ where ",
-							"configurationId = '", _JAKARTA_CLASS_NAME, "'"));
-				ResultSet resultSet = preparedStatement.executeQuery()) {
+						"select dictionary from Configuration_ where " +
+							"configurationId = ?")) {
 
-				Assert.assertTrue(resultSet.next());
+				preparedStatement.setString(1, _JAKARTA_CLASS_NAME);
 
-				Assert.assertEquals(
-					resultSet.getString(1), "key=" + _JAKARTA_CLASS_NAME,
-					resultSet.getString(1));
+				try (ResultSet resultSet = preparedStatement.executeQuery()) {
+					Assert.assertTrue(resultSet.next());
+
+					Assert.assertEquals(
+						resultSet.getString(1), "key=" + _JAKARTA_CLASS_NAME,
+						resultSet.getString(1));
+				}
 			}
 		}
 		finally {

@@ -6,29 +6,15 @@
 import ClayLayout from '@clayui/layout';
 import React from 'react';
 
-import BasePage from '../../../components/BasePage';
 import {IGenericStepProps} from '../../../components/Wizard';
 
 const Step: React.FC<
 	{children?: React.ReactNode | undefined} & IGenericStepProps
-> = ({backURL, nextFn, previousFn}) => (
+> = () => (
 	<>
-		<BasePage
-			description={Liferay.Language.get(
-				'select-and-filter-the-data-you-want-to-include-in-your-export'
-			)}
-			title={Liferay.Language.get('data-selection')}
-		>
-			<ClayLayout.Sheet>
-				{Liferay.Language.get('Filters')}
-			</ClayLayout.Sheet>
+		<ClayLayout.Sheet>{Liferay.Language.get('Filters')}</ClayLayout.Sheet>
 
-			<ClayLayout.Sheet>
-				{Liferay.Language.get('Portlets')}
-			</ClayLayout.Sheet>
-		</BasePage>
-
-		<Footer backURL={backURL} nextFn={nextFn} previousFn={previousFn} />
+		<ClayLayout.Sheet>{Liferay.Language.get('Portlets')}</ClayLayout.Sheet>
 	</>
 );
 

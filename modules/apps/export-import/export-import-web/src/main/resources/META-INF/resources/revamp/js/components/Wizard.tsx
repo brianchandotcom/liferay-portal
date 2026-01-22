@@ -6,15 +6,14 @@
 import ClayMultiStepNav from '@clayui/multi-step-nav';
 import React, {useState} from 'react';
 
-export interface IBasePageProps {
-	description?: string;
-	title: string;
-}
+import Footer from './Footer';
+
 export interface IGenericStepProps {
 	backURL?: string;
-	exportURL?: string;
-	nextFn?: () => void;
-	previousFn?: () => void;
+	description?: string;
+	exportURL?: string | undefined;
+	nextFn?: () => void | undefined;
+	previousFn?: () => void | undefined;
 	title?: string;
 }
 
@@ -22,8 +21,8 @@ export interface IWizardStepProps extends IGenericStepProps {
 	children: React.ReactElement;
 }
 
-export function WizardStep({children, ...rest}: IWizardStepProps) {
-	return React.cloneElement(children, {...rest});
+export function WizardStep({children}: IWizardStepProps) {
+	return children;
 }
 
 export function Wizard({
@@ -35,25 +34,28 @@ export function Wizard({
 }) {
 	const [stepNumber, setStepNumber] = useState(0);
 	const steps = React.Children.toArray(children);
+	const totalSteps = React.Children.count(children);
 
-	const next = () =>
-		setStepNumber(Math.min(stepNumber + 1, steps.length - 1));
-	const previous = () => setStepNumber(Math.max(stepNumber - 1, 0));
+	const currentStep = steps[stepNumber] as React.ReactElement;
+	const {description, title} = currentStep.props;
 
 	return (
 		<>
 			<ClayMultiStepNav center className="mx-9" indicatorLabel="top">
-				{(steps as React.ReactElement[]).map((step, index) => {
+				{React.Children.map(children, (step, index) => {
+					if (!React.isValidElement(step)) {
+						return null;
+					}
+
 					const {title} = step.props;
 
 					return (
 						<ClayMultiStepNav.Item
 							active={index === stepNumber}
-							expand={index + 1 !== steps.length}
 							key={index}
 							state={stepNumber > index ? 'complete' : undefined}
 						>
-							{index < steps.length - 1 && (
+							{index < totalSteps - 1 && (
 								<ClayMultiStepNav.Divider />
 							)}
 
@@ -66,16 +68,32 @@ export function Wizard({
 				})}
 			</ClayMultiStepNav>
 
-			{steps[stepNumber] &&
-				React.cloneElement(
-					steps[stepNumber] as React.ReactElement<any>,
-					{
-						backURL,
-						nextFn:
-							stepNumber < steps.length - 1 ? next : undefined,
-						previousFn: stepNumber > 0 ? previous : undefined,
-					}
+			<header className="mb-1 sheet-header">
+				<div className="mb-1 sheet-title">{title}</div>
+
+				{description && (
+					<p className="sheet-text text-secondary">{description}</p>
 				)}
+			</header>
+
+			{steps[stepNumber]}
+
+			<Footer
+				backURL={backURL}
+				exportURL={
+					stepNumber === totalSteps - 1 ? 'exportURL' : undefined
+				}
+				nextFn={
+					stepNumber < totalSteps - 1
+						? () => setStepNumber(stepNumber + 1)
+						: undefined
+				}
+				previousFn={
+					stepNumber > 0
+						? () => setStepNumber(stepNumber - 1)
+						: undefined
+				}
+			/>
 		</>
 	);
 }

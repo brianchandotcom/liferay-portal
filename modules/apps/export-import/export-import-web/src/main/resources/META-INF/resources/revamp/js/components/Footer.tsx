@@ -8,13 +8,12 @@ import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import React from 'react';
 
-import BasePage from '../components/BasePage';
 import {IGenericStepProps} from '../components/Wizard';
 
 const Footer: React.FC<
 	{children?: React.ReactNode | undefined} & IGenericStepProps
 > = ({backURL, exportURL, nextFn, previousFn}) => (
-	<BasePage.Footer>
+	<div className="sheet-footer">
 		{previousFn !== undefined && (
 			<ClayButton displayType="unstyled" onClick={previousFn}>
 				<span className="inline-item inline-item-before text-semibold">
@@ -51,7 +50,7 @@ const Footer: React.FC<
 				</ClayButton>
 			)}
 		</div>
-	</BasePage.Footer>
+	</div>
 );
 
 export default Footer;

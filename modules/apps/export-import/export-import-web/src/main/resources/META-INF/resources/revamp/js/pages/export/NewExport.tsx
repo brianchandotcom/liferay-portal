@@ -13,15 +13,30 @@ import SetupStep from './steps/SetupStep';
 export function NewExport({backURL}: {backURL: string}) {
 	return (
 		<Wizard backURL={backURL}>
-			<WizardStep title={Liferay.Language.get('setup')}>
+			<WizardStep
+				description={Liferay.Language.get(
+					'name-your-export-and-make-an-initial-data-selection-to-narrow-down-in-the-next-step'
+				)}
+				title={Liferay.Language.get('setup')}
+			>
 				<SetupStep />
 			</WizardStep>
 
-			<WizardStep title={Liferay.Language.get('data-selection')}>
+			<WizardStep
+				description={Liferay.Language.get(
+					'select-and-filter-the-data-you-want-to-include-in-your-export'
+				)}
+				title={Liferay.Language.get('data-selection')}
+			>
 				<DataSelectionStep />
 			</WizardStep>
 
-			<WizardStep title={Liferay.Language.get('settings')}>
+			<WizardStep
+				description={Liferay.Language.get(
+					'configure-your-export-settings'
+				)}
+				title={Liferay.Language.get('settings')}
+			>
 				<SettingsStep />
 			</WizardStep>
 		</Wizard>

@@ -6,30 +6,17 @@
 import ClayLayout from '@clayui/layout';
 import React from 'react';
 
-import BasePage from '../../../components/BasePage';
-import Footer from '../../../components/Footer';
-import {IGenericStepProps} from '../../../types';
+import {IGenericStepProps} from '../../../components/Wizard';
 
 const Step: React.FC<
 	{children?: React.ReactNode | undefined} & IGenericStepProps
-> = ({backURL, nextFn, previousFn}) => (
+> = () => (
 	<>
-		<BasePage
-			description={Liferay.Language.get(
-				'name-your-export-and-make-an-initial-data-selection-to-narrow-down-in-the-next-step'
-			)}
-			title={Liferay.Language.get('setup')}
-		>
-			<ClayLayout.Sheet>
-				{Liferay.Language.get('details')}
-			</ClayLayout.Sheet>
+		<ClayLayout.Sheet>{Liferay.Language.get('details')}</ClayLayout.Sheet>
 
-			<ClayLayout.Sheet>
-				{Liferay.Language.get('what-would-you-like-to-export')}
-			</ClayLayout.Sheet>
-		</BasePage>
-
-		<Footer backURL={backURL} nextFn={nextFn} previousFn={previousFn} />
+		<ClayLayout.Sheet>
+			{Liferay.Language.get('what-would-you-like-to-export')}
+		</ClayLayout.Sheet>
 	</>
 );
 

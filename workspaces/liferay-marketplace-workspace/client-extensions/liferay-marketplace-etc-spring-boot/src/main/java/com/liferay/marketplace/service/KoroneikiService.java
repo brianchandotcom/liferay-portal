@@ -10,7 +10,6 @@ import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.marketplace.util.MarketplaceUtil;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Entitlement;
-import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.PostalAddress;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page;
@@ -137,11 +136,10 @@ public class KoroneikiService {
 		ProductPurchase productPurchase =
 			productPurchaseResource.getProductPurchase(productPurchaseKey);
 
-		ExternalLink[] externalLinks = MarketplaceUtil.addExternalLink(
-			productPurchase.getExternalLinks(), "salesforce", opportunity,
-			"opportunity");
-
-		productPurchase.setExternalLinks(externalLinks);
+		productPurchase.setExternalLinks(
+			MarketplaceUtil.appendExternalLink(
+				productPurchase.getExternalLinks(), "salesforce", opportunity,
+				"opportunity"));
 
 		productPurchaseResource.putProductPurchase(
 			jwt.getClaim("username"), jwt.getClaim("sub"), productPurchaseKey,
@@ -176,11 +174,10 @@ public class KoroneikiService {
 			productPurchase.setEndDate(Date.from(instant));
 		}
 
-		ExternalLink[] externalLink = MarketplaceUtil.addExternalLink(
-			productPurchase.getExternalLinks(), "marketplace",
-			String.valueOf(orderItem.getOrderId()), "opportunity");
-
-		productPurchase.setExternalLinks(externalLink);
+		productPurchase.setExternalLinks(
+			MarketplaceUtil.appendExternalLink(
+				productPurchase.getExternalLinks(), "marketplace",
+				String.valueOf(orderItem.getOrderId()), "opportunity"));
 
 		productPurchase.setProductKey(orderItem.getSkuExternalReferenceCode());
 		productPurchase.setQuantity(
@@ -248,11 +245,10 @@ public class KoroneikiService {
 
 		koroneikiAccount.setDescription(account.getDescription());
 
-		ExternalLink[] externalLinks = MarketplaceUtil.addExternalLink(
-			koroneikiAccount.getExternalLinks(), "marketplace",
-			account.getName(), "account");
-
-		koroneikiAccount.setExternalLinks(externalLinks);
+		koroneikiAccount.setExternalLinks(
+			MarketplaceUtil.appendExternalLink(
+				koroneikiAccount.getExternalLinks(), "marketplace",
+				account.getName(), "account"));
 
 		koroneikiAccount.setName(account.getName());
 		koroneikiAccount.setPhoneNumber(customFieldsMap.get("Contact Phone"));

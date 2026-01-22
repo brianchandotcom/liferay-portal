@@ -279,11 +279,10 @@ public class KoroneikiRestController extends BaseRestController {
 						"type", "marketplace-app"
 					).build());
 
-				ExternalLink[] externalLinks = MarketplaceUtil.addExternalLink(
-					koroneikiProduct.getExternalLinks(), "marketplace",
-					productName, "product");
-
-				koroneikiProduct.setExternalLinks(externalLinks);
+				koroneikiProduct.setExternalLinks(
+					MarketplaceUtil.appendExternalLink(
+						koroneikiProduct.getExternalLinks(), "marketplace",
+						productName, "product"));
 
 				koroneikiProduct = productResource.postProduct(
 					jwt.getClaim("username"), jwt.getClaim("sub"),

@@ -37,11 +37,11 @@ const PERMISSION_OPTIONS = [
 
 export default function PermissionSelector({
 	actionIds,
-	className,
+	entryClassName,
 	onChange,
 }: {
 	actionIds?: string;
-	className: string;
+	entryClassName: string;
 	onChange: (value: object) => void;
 }) {
 	return (
@@ -49,7 +49,7 @@ export default function PermissionSelector({
 			aria-label={Liferay.Language.get('edit-permissions')}
 			className="border-0 c-py-0 permissions-picker text-2 text-secondary text-weight-semi-bold"
 			items={
-				className === OBJECT_ENTRY_FOLDER_CLASS_NAME
+				entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME
 					? FOLDER_PERMISSION_OPTIONS
 					: PERMISSION_OPTIONS
 			}

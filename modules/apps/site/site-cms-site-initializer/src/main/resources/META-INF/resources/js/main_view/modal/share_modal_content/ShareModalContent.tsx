@@ -43,8 +43,8 @@ export interface Collaborator {
 
 function CollaboratorListItem({
 	actionIds,
-	className,
 	dateExpired,
+	entryClassName,
 	error,
 	onChangeUser,
 	onRemoveUser,
@@ -54,8 +54,8 @@ function CollaboratorListItem({
 	user,
 }: {
 	actionIds: string;
-	className: string;
 	dateExpired?: string;
+	entryClassName: string;
 	error?: string;
 	onChangeUser: (user: UserAccount | UserGroup, property: object) => void;
 	onRemoveUser: (user: UserAccount | UserGroup) => void;
@@ -110,7 +110,7 @@ function CollaboratorListItem({
 					<div>
 						<PermissionSelector
 							actionIds={actionIds}
-							className={className}
+							entryClassName={entryClassName}
 							onChange={handleChangeUserProperties}
 						/>
 					</div>
@@ -205,16 +205,15 @@ function CollaboratorListItem({
 
 export default function ShareModalContent({
 	autocompleteURL = '',
-	className = '',
 	closeModal,
 	collaboratorURL = '',
 	creator,
+	entryClassName = '',
 	initialCollaborators = [],
 	itemId,
 	title = '',
 }: {
 	autocompleteURL: string;
-	className?: string;
 	closeModal: () => void;
 	collaboratorURL: string;
 	creator: {
@@ -223,6 +222,7 @@ export default function ShareModalContent({
 		image?: string;
 		name: string;
 	};
+	entryClassName?: string;
 	initialCollaborators: Collaborator[];
 	itemId: number;
 	title: string;
@@ -493,7 +493,7 @@ export default function ShareModalContent({
 							<ul className="c-mb-0 list-group">
 								{collaborators.map((item) => (
 									<CollaboratorListItem
-										className={className}
+										entryClassName={entryClassName}
 										key={`listItem-${item.type}-${item.user.id}`}
 										onChangeUser={handleChangeUser}
 										onRemoveUser={handleRemoveUser}

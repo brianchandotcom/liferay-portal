@@ -371,9 +371,9 @@ export default function AssetsFDSPropsTransformer({
 
 				shareAction({
 					autocompleteURL,
-					className: itemData.entryClassName,
 					collaboratorURL: collaboratorURLs[itemData.entryClassName],
 					creator: itemData.embedded.creator,
+					entryClassName: itemData.entryClassName,
 					itemId: itemData.embedded.id,
 					title: itemData.embedded?.title,
 				});

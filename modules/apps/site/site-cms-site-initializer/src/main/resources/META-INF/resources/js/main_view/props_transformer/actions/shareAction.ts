@@ -13,14 +13,13 @@ import ShareModalContent, {
 
 export default async function shareAction({
 	autocompleteURL,
-	className,
 	collaboratorURL,
 	creator,
+	entryClassName,
 	itemId,
 	title,
 }: {
 	autocompleteURL: string;
-	className: string;
 	collaboratorURL: string;
 	creator: {
 		contentType: string;
@@ -28,6 +27,7 @@ export default async function shareAction({
 		image?: string;
 		name: string;
 	};
+	entryClassName: string;
 	itemId: number;
 	title: string;
 }) {
@@ -57,10 +57,10 @@ export default async function shareAction({
 			contentComponent: ({closeModal}: {closeModal: () => void}) =>
 				ShareModalContent({
 					autocompleteURL,
-					className,
 					closeModal,
 					collaboratorURL,
 					creator: {...creator, id: creator.id.toString()},
+					entryClassName,
 					initialCollaborators,
 					itemId,
 					title,

@@ -31,7 +31,6 @@ const mockCloseModal = jest.fn();
 
 const DEFAULT_PROPS = {
 	autocompleteURL: '/search',
-	className: '11111-className',
 	closeModal: mockCloseModal,
 	collaboratorURL: '/o/cms/basic-documents/{objectEntryId}/collaborators',
 	creator: {
@@ -39,6 +38,7 @@ const DEFAULT_PROPS = {
 		id: '1',
 		name: 'Test1 Test1',
 	},
+	entryClassName: '11111-className',
 	initialCollaborators: [
 		{
 			actionIds: 'VIEW',
@@ -191,7 +191,7 @@ describe('ShareModalContent', () => {
 		expect(mockCloseModal).toHaveBeenCalledTimes(1);
 	});
 
-	it('shows default permissions when className is not ObjectEntryFolder', () => {
+	it('shows default permissions when entryClassName is not ObjectEntryFolder', () => {
 		const {getByLabelText, getByRole} = renderComponent();
 
 		fireEvent.click(getByLabelText('edit-permissions'));
@@ -207,10 +207,10 @@ describe('ShareModalContent', () => {
 		).toBeInTheDocument();
 	});
 
-	it('shows objectEntryFolder-specific permissions when className is ObjectEntryFolder', () => {
+	it('shows objectEntryFolder-specific permissions when entryClassName is ObjectEntryFolder', () => {
 		const folderProps = {
 			...DEFAULT_PROPS,
-			className: OBJECT_ENTRY_FOLDER_CLASS_NAME,
+			entryClassName: OBJECT_ENTRY_FOLDER_CLASS_NAME,
 		};
 
 		const {getByLabelText, getByRole, queryByText} =

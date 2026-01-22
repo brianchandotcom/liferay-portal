@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {mergeTests} from '@playwright/test';
+import {expect, mergeTests} from '@playwright/test';
 import path from 'path';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
@@ -81,6 +81,10 @@ test(
 			await styleBooksPage.goto(site.friendlyUrlPath);
 
 			await styleBooksPage.importStyleBookFile(fileName, filePath);
+
+			await expect(
+				page.getByRole('link', {name: styleBookName})
+			).toBeVisible();
 		});
 
 		await test.step('Check that the new token value is being applied', async () => {

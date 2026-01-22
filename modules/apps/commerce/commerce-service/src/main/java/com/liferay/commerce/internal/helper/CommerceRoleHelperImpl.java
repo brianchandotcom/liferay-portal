@@ -17,6 +17,7 @@ import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.currency.constants.CommerceCurrencyActionKeys;
 import com.liferay.commerce.helper.CommerceRoleHelper;
+import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.notification.constants.CommerceNotificationActionKeys;
 import com.liferay.commerce.payment.constants.CommercePaymentEntryActionKeys;
 import com.liferay.commerce.payment.model.CommercePaymentEntry;
@@ -25,6 +26,7 @@ import com.liferay.commerce.pricing.constants.CommercePricingClassActionKeys;
 import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
 import com.liferay.commerce.product.constants.CPActionKeys;
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
@@ -81,6 +83,9 @@ public class CommerceRoleHelperImpl implements CommerceRoleHelper {
 			serviceContext);
 		_checkAccountRole(
 			AccountRoleConstants.ROLE_NAME_ACCOUNT_SUPPLIER, serviceContext);
+		_checkRole(
+			AccountRoleConstants.ROLE_NAME_ORDER_ADMINISTRATOR,
+			RoleConstants.TYPE_REGULAR, serviceContext);
 
 		if (FeatureFlagManagerUtil.isEnabled(
 				serviceContext.getCompanyId(), "LPD-10562")) {
@@ -353,6 +358,8 @@ public class CommerceRoleHelperImpl implements CommerceRoleHelper {
 					CommerceOrderActionKeys.CHECKOUT_OPEN_COMMERCE_ORDERS,
 					CommerceOrderActionKeys.DELETE_COMMERCE_ORDERS,
 					CommerceOrderActionKeys.
+						MANAGE_ACCOUNTS_SCOPED_COMMERCE_ORDERS,
+					CommerceOrderActionKeys.
 						MANAGE_COMMERCE_ORDER_DELIVERY_TERMS,
 					CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_MULTISHIPPING,
 					CommerceOrderActionKeys.
@@ -372,6 +379,53 @@ public class CommerceRoleHelperImpl implements CommerceRoleHelper {
 			groupResourceActionIds.put(
 				AccountEntry.class.getName(),
 				new String[] {AccountActionKeys.VIEW_ACCOUNT_GROUPS});
+		}
+		else if (name.equals(
+					AccountRoleConstants.ROLE_NAME_ORDER_ADMINISTRATOR)) {
+
+			companyResourceActionIds.put(
+				CommerceCatalog.class.getName(),
+				new String[] {ActionKeys.VIEW});
+			companyResourceActionIds.put(
+				CommerceChannel.class.getName(),
+				new String[] {ActionKeys.VIEW});
+			companyResourceActionIds.put(
+				CommerceInventoryWarehouse.class.getName(),
+				new String[] {ActionKeys.VIEW});
+			companyResourceActionIds.put(
+				CommercePortletKeys.COMMERCE_ORDER,
+				new String[] {ActionKeys.ACCESS_IN_CONTROL_PANEL});
+			companyResourceActionIds.put(
+				CommercePortletKeys.COMMERCE_SHIPMENT,
+				new String[] {ActionKeys.ACCESS_IN_CONTROL_PANEL});
+			companyResourceActionIds.put(
+				PortletKeys.PORTAL,
+				new String[] {ActionKeys.VIEW_CONTROL_PANEL});
+			companyResourceActionIds.put(
+				"com.liferay.commerce.order",
+				new String[] {
+					CommerceOrderActionKeys.
+						MANAGE_COMMERCE_ORDER_DELIVERY_TERMS,
+					CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_NOTES,
+					CommerceOrderActionKeys.
+						MANAGE_COMMERCE_ORDER_PAYMENT_METHODS,
+					CommerceOrderActionKeys.
+						MANAGE_COMMERCE_ORDER_PAYMENT_STATUSES,
+					CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_PAYMENT_TERMS,
+					CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_PRICES,
+					CommerceOrderActionKeys.
+						MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES,
+					CommerceOrderActionKeys.
+						MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS
+				});
+			companyResourceActionIds.put(
+				"com.liferay.commerce.product",
+				new String[] {
+					CPActionKeys.MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS
+				});
+			companyResourceActionIds.put(
+				"com.liferay.commerce.shipment",
+				new String[] {CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS});
 		}
 		else if (name.equals(AccountRoleConstants.ROLE_NAME_SUPPLIER)) {
 			for (String portletId : _SUPPLIER_CONTROL_PANEL_PORTLET_IDS) {

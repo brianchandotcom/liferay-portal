@@ -423,6 +423,27 @@ public class DigitalSalesRoom implements Cloneable, Serializable {
 
 	protected String secondaryColor;
 
+	public Long getTemplateGroupId() {
+		return templateGroupId;
+	}
+
+	public void setTemplateGroupId(Long templateGroupId) {
+		this.templateGroupId = templateGroupId;
+	}
+
+	public void setTemplateGroupId(
+		UnsafeSupplier<Long, Exception> templateGroupIdUnsafeSupplier) {
+
+		try {
+			templateGroupId = templateGroupIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long templateGroupId;
+
 	public UserAccountBrief[] getUserAccountBriefs() {
 		return userAccountBriefs;
 	}

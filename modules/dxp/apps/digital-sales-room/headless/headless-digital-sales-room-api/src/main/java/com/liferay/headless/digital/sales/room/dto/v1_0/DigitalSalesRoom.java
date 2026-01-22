@@ -832,6 +832,47 @@ public class DigitalSalesRoom implements Serializable {
 	private Supplier<String> _secondaryColorSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public Long getTemplateGroupId() {
+		if (_templateGroupIdSupplier != null) {
+			templateGroupId = _templateGroupIdSupplier.get();
+
+			_templateGroupIdSupplier = null;
+		}
+
+		return templateGroupId;
+	}
+
+	public void setTemplateGroupId(Long templateGroupId) {
+		this.templateGroupId = templateGroupId;
+
+		_templateGroupIdSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setTemplateGroupId(
+		UnsafeSupplier<Long, Exception> templateGroupIdUnsafeSupplier) {
+
+		_templateGroupIdSupplier = () -> {
+			try {
+				return templateGroupIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long templateGroupId;
+
+	@JsonIgnore
+	private Supplier<Long> _templateGroupIdSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public UserAccountBrief[] getUserAccountBriefs() {
 		if (_userAccountBriefsSupplier != null) {
@@ -1178,6 +1219,18 @@ public class DigitalSalesRoom implements Serializable {
 			sb.append(_escape(secondaryColor));
 
 			sb.append("\"");
+		}
+
+		Long templateGroupId = getTemplateGroupId();
+
+		if (templateGroupId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"templateGroupId\": ");
+
+			sb.append(templateGroupId);
 		}
 
 		UserAccountBrief[] userAccountBriefs = getUserAccountBriefs();

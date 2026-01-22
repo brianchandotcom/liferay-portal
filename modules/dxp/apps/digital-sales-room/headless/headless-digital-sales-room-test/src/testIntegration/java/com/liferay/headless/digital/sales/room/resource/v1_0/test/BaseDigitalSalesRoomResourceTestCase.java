@@ -1022,6 +1022,14 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("templateGroupId", additionalAssertFieldName)) {
+				if (digitalSalesRoom.getTemplateGroupId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"userAccountBriefs", additionalAssertFieldName)) {
 
@@ -1360,6 +1368,17 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 				if (!Objects.deepEquals(
 						digitalSalesRoom1.getSecondaryColor(),
 						digitalSalesRoom2.getSecondaryColor())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("templateGroupId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						digitalSalesRoom1.getTemplateGroupId(),
+						digitalSalesRoom2.getTemplateGroupId())) {
 
 					return false;
 				}
@@ -2041,6 +2060,11 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("templateGroupId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("userAccountBriefs")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2116,6 +2140,7 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 					RandomTestUtil.randomString());
 				secondaryColor = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				templateGroupId = RandomTestUtil.randomLong();
 			}
 		};
 	}

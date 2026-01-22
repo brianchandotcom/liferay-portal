@@ -218,8 +218,7 @@ public class ClientExtensionsOSGiCommands implements OSGiCommands {
 
 		System.out.printf(formatString, "pid", "name", "type", "webId");
 
-		int totalWidth =
-			idWidth + nameWidth + typeWidth + webIdWidth + (4 * 3) + 2;
+		int totalWidth = idWidth + nameWidth + typeWidth + webIdWidth + 14;
 
 		System.out.println("-".repeat(totalWidth));
 

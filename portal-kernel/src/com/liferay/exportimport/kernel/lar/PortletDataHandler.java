@@ -107,8 +107,6 @@ public interface PortletDataHandler {
 				boolean privateLayout)
 		throws Exception;
 
-	public long getExportModelCount(ManifestSummary manifestSummary);
-
 	/**
 	 * Returns an array of the metadata controls defined for this data handler.
 	 * These controls enable the developer to create fine grained controls over
@@ -121,6 +119,8 @@ public interface PortletDataHandler {
 	public PortletDataHandlerControl[]
 			getExportMetadataPortletDataHandlerControls()
 		throws PortletDataException;
+
+	public long getExportModelCount(ManifestSummary manifestSummary);
 
 	/**
 	 * Returns an array of the controls defined for this data handler. These

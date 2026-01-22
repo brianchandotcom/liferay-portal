@@ -1,3 +1,7 @@
 packageRunBuild {
 	sourceDir = "src"
+
+	// Headless discovery depends on @clayui/css to be build ahead of time
+	// because there the global import-map is not available in the swaggerUI.
+	dependsOn ":apps:frontend-js:frontend-js-clay-web:packageRunBuild"
 }

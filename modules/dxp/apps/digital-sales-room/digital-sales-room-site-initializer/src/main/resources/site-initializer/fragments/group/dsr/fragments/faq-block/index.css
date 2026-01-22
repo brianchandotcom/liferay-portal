@@ -1,0 +1,27 @@
+.dsr-faq-block-component {
+	padding-bottom: 5rem;
+}
+
+.dsr-faq-block-component h2::after {
+	border-bottom: 4px solid var(--primary, #0B5FFF);
+	content: '';
+	display: inline-block;
+	margin: 0 0 0 0.3rem;
+	width: 1.5rem;
+}
+
+.dsr-faq-entry {
+	background: #FFF;
+	border: 1px solid rgba(0, 0, 0, 0.125);
+	border-radius: 1.25rem;
+}
+
+.dsr-faq-entry .custom-icon {
+	cursor: pointer;
+	height: 1.5rem !important;
+	width: 1.5rem !important;
+}
+
+.dsr-faq-entry .faq-answer {
+	color: var(--gray-600, #6B6C7E);
+}

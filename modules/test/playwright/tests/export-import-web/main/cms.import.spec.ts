@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests, Page} from '@playwright/test';
+import {expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
@@ -16,9 +16,9 @@ const test = mergeTests(
 	dataApiHelpersTest,
 	exportImportPagesTest,
 	featureFlagsTest({
-		'LPD-34594': {enabled: true},
 		'LPD-11235': {enabled: true},
 		'LPD-17564': {enabled: true},
+		'LPD-34594': {enabled: true},
 		'LPD-35443': {enabled: true},
 		'LPD-35914': {enabled: true},
 	}),
@@ -34,15 +34,15 @@ test('Basic Web Content checkbox is displayed when importing LAR with Basic Web 
 			const assetLibrary1 =
 				await apiHelpers.headlessAssetLibrary.createAssetLibrary({
 					name: getRandomString(),
-					type: 'Space',
 					settings: {},
+					type: 'Space',
 				});
 
 			const assetLibrary2 =
 				await apiHelpers.headlessAssetLibrary.createAssetLibrary({
 					name: getRandomString(),
-					type: 'Space',
 					settings: {},
+					type: 'Space',
 				});
 
 			await apiHelpers.objectEntry.postObjectEntry(

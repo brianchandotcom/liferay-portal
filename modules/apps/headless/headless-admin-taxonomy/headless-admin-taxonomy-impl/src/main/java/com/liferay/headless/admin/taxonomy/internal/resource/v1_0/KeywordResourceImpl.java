@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -55,6 +56,7 @@ import jakarta.ws.rs.core.MultivaluedMap;
 import java.sql.Timestamp;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -276,6 +278,22 @@ public class KeywordResourceImpl
 	}
 
 	@Override
+	public Keyword patchSiteKeyword(Long siteId, Keyword keyword)
+		throws Exception {
+
+		return _patchSiteKeyword(
+			keyword.getExternalReferenceCode(), keyword, siteId);
+	}
+
+	@Override
+	public Keyword patchSiteKeywordByExternalReferenceCode(
+			Long siteId, String externalReferenceCode, Keyword keyword)
+		throws Exception {
+
+		return _patchSiteKeyword(externalReferenceCode, keyword, siteId);
+	}
+
+	@Override
 	public Keyword postAssetLibraryKeyword(Long assetLibraryId, Keyword keyword)
 		throws Exception {
 
@@ -482,6 +500,44 @@ public class KeywordResourceImpl
 		}
 
 		return _assetTagLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	private Keyword _patchSiteKeyword(
+			String externalReferenceCode, Keyword keyword, Long siteId)
+		throws Exception {
+
+		AssetTag assetTag =
+			_assetTagService.fetchAssetTagByExternalReferenceCode(
+				externalReferenceCode, siteId);
+
+		if (assetTag == null) {
+			assetTag = _assetTagService.getTag(siteId, keyword.getName());
+		}
+
+		assetTag = _assetTagService.updateTag(
+			externalReferenceCode, assetTag.getTagId(), keyword.getName(),
+			new ServiceContext());
+
+		Group group = _groupLocalService.getGroup(siteId);
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				group.getCompanyId(), "LPD-17564") &&
+			group.isCMS()) {
+
+			List<Long> existingGroupIds = transform(
+				_assetTagGroupRelLocalService.getAssetTagGroupRelsByTagId(
+					assetTag.getTagId()),
+				assetTagGroupRel -> assetTagGroupRel.getGroupId());
+
+			_assetTagGroupRelLocalService.setAssetTagGroupRels(
+				assetTag.getTagId(),
+				ArrayUtil.append(
+					ArrayUtil.toLongArray(existingGroupIds),
+					TaxonomyGroupUtil.getAssetLibraryGroupIds(
+						keyword.getAssetLibraries(), group.getCompanyId())));
+		}
+
+		return _toKeyword(assetTag);
 	}
 
 	private Keyword _postSiteKeyword(

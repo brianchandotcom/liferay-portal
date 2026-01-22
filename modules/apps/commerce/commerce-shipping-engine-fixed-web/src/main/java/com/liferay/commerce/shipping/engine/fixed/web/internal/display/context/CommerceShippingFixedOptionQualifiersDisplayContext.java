@@ -10,7 +10,6 @@ import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
-import com.liferay.commerce.shipping.engine.fixed.constants.CommerceShippingEngineFixedWebKeys;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionQualifierService;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService;
@@ -24,7 +23,6 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.util.ParamUtil;
 
 import jakarta.portlet.RenderRequest;
 import jakarta.portlet.RenderResponse;
@@ -54,14 +52,13 @@ public class CommerceShippingFixedOptionQualifiersDisplayContext
 
 		super(
 			commerceChannelLocalService, commerceCurrencyLocalService,
-			commerceShippingMethodService, renderRequest, renderResponse);
+			commerceShippingFixedOptionService, commerceShippingMethodService,
+			renderRequest, renderResponse);
 
 		_commerceChannelModelResourcePermission =
 			commerceChannelModelResourcePermission;
 		_commerceShippingFixedOptionQualifierService =
 			commerceShippingFixedOptionQualifierService;
-		_commerceShippingFixedOptionService =
-			commerceShippingFixedOptionService;
 
 		_commerceShippingFixedOptionRequestHelper =
 			new CommerceShippingFixedOptionRequestHelper(httpServletRequest);
@@ -120,43 +117,6 @@ public class CommerceShippingFixedOptionQualifiersDisplayContext
 				"commerceOrderTypeId", "{orderType.id}"
 			).buildString(),
 			false);
-	}
-
-	public CommerceShippingFixedOption getCommerceShippingFixedOption()
-		throws PortalException {
-
-		CommerceShippingFixedOption commerceShippingFixedOption =
-			(CommerceShippingFixedOption)renderRequest.getAttribute(
-				CommerceShippingEngineFixedWebKeys.
-					COMMERCE_SHIPPING_FIXED_OPTION);
-
-		if (commerceShippingFixedOption != null) {
-			return commerceShippingFixedOption;
-		}
-
-		long commerceShippingFixedOptionId = ParamUtil.getLong(
-			renderRequest, "commerceShippingFixedOptionId");
-
-		commerceShippingFixedOption =
-			_commerceShippingFixedOptionService.
-				fetchCommerceShippingFixedOption(commerceShippingFixedOptionId);
-
-		renderRequest.setAttribute(
-			CommerceShippingEngineFixedWebKeys.COMMERCE_SHIPPING_FIXED_OPTION,
-			commerceShippingFixedOption);
-
-		return commerceShippingFixedOption;
-	}
-
-	public long getCommerceShippingFixedOptionId() throws PortalException {
-		CommerceShippingFixedOption commerceShippingFixedOption =
-			getCommerceShippingFixedOption();
-
-		if (commerceShippingFixedOption == null) {
-			return 0;
-		}
-
-		return commerceShippingFixedOption.getCommerceShippingFixedOptionId();
 	}
 
 	public String getCommerceTermEntriesCommerceShippingFixedOptionsAPIURL()
@@ -239,7 +199,5 @@ public class CommerceShippingFixedOptionQualifiersDisplayContext
 		_commerceShippingFixedOptionQualifierService;
 	private final CommerceShippingFixedOptionRequestHelper
 		_commerceShippingFixedOptionRequestHelper;
-	private final CommerceShippingFixedOptionService
-		_commerceShippingFixedOptionService;
 
 }

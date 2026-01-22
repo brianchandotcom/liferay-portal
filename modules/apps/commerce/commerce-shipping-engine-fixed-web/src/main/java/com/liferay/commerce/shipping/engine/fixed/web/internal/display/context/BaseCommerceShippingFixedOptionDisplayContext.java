@@ -11,6 +11,9 @@ import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
+import com.liferay.commerce.shipping.engine.fixed.constants.CommerceShippingEngineFixedWebKeys;
+import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
+import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -33,11 +36,14 @@ public class BaseCommerceShippingFixedOptionDisplayContext {
 	public BaseCommerceShippingFixedOptionDisplayContext(
 		CommerceChannelLocalService commerceChannelLocalService,
 		CommerceCurrencyLocalService commerceCurrencyLocalService,
+		CommerceShippingFixedOptionService commerceShippingFixedOptionService,
 		CommerceShippingMethodService commerceShippingMethodService,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		this.commerceChannelLocalService = commerceChannelLocalService;
 		this.commerceCurrencyLocalService = commerceCurrencyLocalService;
+		this.commerceShippingFixedOptionService =
+			commerceShippingFixedOptionService;
 		this.commerceShippingMethodService = commerceShippingMethodService;
 		this.renderRequest = renderRequest;
 		this.renderResponse = renderResponse;
@@ -60,6 +66,29 @@ public class BaseCommerceShippingFixedOptionDisplayContext {
 		}
 
 		return commerceChannel.getCommerceCurrencyCode();
+	}
+
+	public CommerceShippingFixedOption getCommerceShippingFixedOption()
+		throws PortalException {
+
+		if (_commerceShippingFixedOption != null) {
+			return _commerceShippingFixedOption;
+		}
+
+		_commerceShippingFixedOption = _getCommerceShippingFixedOption();
+
+		return _commerceShippingFixedOption;
+	}
+
+	public long getCommerceShippingFixedOptionId() throws PortalException {
+		CommerceShippingFixedOption commerceShippingFixedOption =
+			getCommerceShippingFixedOption();
+
+		if (commerceShippingFixedOption == null) {
+			return 0;
+		}
+
+		return commerceShippingFixedOption.getCommerceShippingFixedOptionId();
 	}
 
 	public CommerceShippingMethod getCommerceShippingMethod()
@@ -154,6 +183,8 @@ public class BaseCommerceShippingFixedOptionDisplayContext {
 
 	protected final CommerceChannelLocalService commerceChannelLocalService;
 	protected final CommerceCurrencyLocalService commerceCurrencyLocalService;
+	protected final CommerceShippingFixedOptionService
+		commerceShippingFixedOptionService;
 	protected final CommerceShippingMethodService commerceShippingMethodService;
 	protected final RenderRequest renderRequest;
 	protected final RenderResponse renderResponse;
@@ -173,12 +204,42 @@ public class BaseCommerceShippingFixedOptionDisplayContext {
 			themeDisplay.getCompanyId(), commerceCurrencyCode);
 	}
 
+	private CommerceShippingFixedOption _getCommerceShippingFixedOption()
+		throws PortalException {
+
+		CommerceShippingFixedOption commerceShippingFixedOption =
+			(CommerceShippingFixedOption)renderRequest.getAttribute(
+				CommerceShippingEngineFixedWebKeys.
+					COMMERCE_SHIPPING_FIXED_OPTION);
+
+		if (commerceShippingFixedOption != null) {
+			return commerceShippingFixedOption;
+		}
+
+		long commerceShippingFixedOptionId = ParamUtil.getLong(
+			renderRequest, "commerceShippingFixedOptionId");
+
+		commerceShippingFixedOption =
+			commerceShippingFixedOptionService.fetchCommerceShippingFixedOption(
+				commerceShippingFixedOptionId);
+
+		if (commerceShippingFixedOption != null) {
+			renderRequest.setAttribute(
+				CommerceShippingEngineFixedWebKeys.
+					COMMERCE_SHIPPING_FIXED_OPTION,
+				commerceShippingFixedOption);
+		}
+
+		return commerceShippingFixedOption;
+	}
+
 	private String _getSelectedScreenNavigationCategoryKey() {
 		return ParamUtil.getString(
 			renderRequest, "screenNavigationCategoryKey",
 			getScreenNavigationCategoryKey());
 	}
 
+	private CommerceShippingFixedOption _commerceShippingFixedOption;
 	private CommerceShippingMethod _commerceShippingMethod;
 
 }

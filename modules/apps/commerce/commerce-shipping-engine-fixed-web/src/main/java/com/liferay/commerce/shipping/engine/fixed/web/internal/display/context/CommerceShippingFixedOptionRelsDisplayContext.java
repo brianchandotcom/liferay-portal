@@ -63,13 +63,12 @@ public class CommerceShippingFixedOptionRelsDisplayContext
 
 		super(
 			commerceChannelLocalService, commerceCurrencyLocalService,
-			commerceShippingMethodService, renderRequest, renderResponse);
+			commerceShippingFixedOptionService, commerceShippingMethodService,
+			renderRequest, renderResponse);
 
 		_commerceInventoryWarehouseService = commerceInventoryWarehouseService;
 		_commerceShippingFixedOptionRelService =
 			commerceShippingFixedOptionRelService;
-		_commerceShippingFixedOptionService =
-			commerceShippingFixedOptionService;
 		_countryService = countryService;
 		_cpMeasurementUnitLocalService = cpMeasurementUnitLocalService;
 		_portal = portal;
@@ -102,43 +101,6 @@ public class CommerceShippingFixedOptionRelsDisplayContext
 			getCommerceInventoryWarehouses(
 				commerceShippingMethod.getCompanyId(), 0,
 				commerceShippingMethod.getGroupId(), true);
-	}
-
-	public CommerceShippingFixedOption getCommerceShippingFixedOption()
-		throws PortalException {
-
-		CommerceShippingFixedOption commerceShippingFixedOption =
-			(CommerceShippingFixedOption)renderRequest.getAttribute(
-				CommerceShippingEngineFixedWebKeys.
-					COMMERCE_SHIPPING_FIXED_OPTION);
-
-		if (commerceShippingFixedOption != null) {
-			return commerceShippingFixedOption;
-		}
-
-		long commerceShippingFixedOptionId = ParamUtil.getLong(
-			renderRequest, "commerceShippingFixedOptionId");
-
-		commerceShippingFixedOption =
-			_commerceShippingFixedOptionService.
-				fetchCommerceShippingFixedOption(commerceShippingFixedOptionId);
-
-		renderRequest.setAttribute(
-			CommerceShippingEngineFixedWebKeys.COMMERCE_SHIPPING_FIXED_OPTION,
-			commerceShippingFixedOption);
-
-		return commerceShippingFixedOption;
-	}
-
-	public long getCommerceShippingFixedOptionId() throws PortalException {
-		CommerceShippingFixedOption commerceShippingFixedOption =
-			getCommerceShippingFixedOption();
-
-		if (commerceShippingFixedOption == null) {
-			return 0;
-		}
-
-		return commerceShippingFixedOption.getCommerceShippingFixedOptionId();
 	}
 
 	public CommerceShippingFixedOptionRel getCommerceShippingFixedOptionRel()
@@ -263,8 +225,6 @@ public class CommerceShippingFixedOptionRelsDisplayContext
 		_commerceInventoryWarehouseService;
 	private final CommerceShippingFixedOptionRelService
 		_commerceShippingFixedOptionRelService;
-	private final CommerceShippingFixedOptionService
-		_commerceShippingFixedOptionService;
 	private final CountryService _countryService;
 	private final CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
 	private final Portal _portal;

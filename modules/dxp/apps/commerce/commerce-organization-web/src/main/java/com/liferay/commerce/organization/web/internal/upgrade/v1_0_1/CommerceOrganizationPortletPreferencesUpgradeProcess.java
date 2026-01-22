@@ -38,15 +38,17 @@ public class CommerceOrganizationPortletPreferencesUpgradeProcess
 						"PortletPreferenceValue inner join PortletPreferences ",
 						"on PortletPreferenceValue.portletPreferencesId = ",
 						"PortletPreferences.portletPreferencesId where ",
-						"PortletPreferences.portletId = '",
-						CommerceOrganizationPortletKeys.COMMERCE_ORGANIZATION,
-						"' and (PortletPreferenceValue.name = ",
-						"'rootOrganizationId')"));
+						"PortletPreferences.portletId = ? and (",
+						"PortletPreferenceValue.name = 'rootOrganizationId'",
+						")"));
 			PreparedStatement updatePreparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update PortletPreferenceValue set name = ?, smallValue " +
 						"= ? where name = ? and smallValue = ?")) {
+
+			selectPreparedStatement.setString(
+				1, CommerceOrganizationPortletKeys.COMMERCE_ORGANIZATION);
 
 			try (ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 				while (resultSet.next()) {

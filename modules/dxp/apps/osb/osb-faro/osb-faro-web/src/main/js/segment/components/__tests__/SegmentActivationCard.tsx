@@ -24,6 +24,18 @@ const WrapperComponent: React.FC<{children: React.ReactNode}> = ({
 	</Provider>
 );
 
+jest.mock(
+	'shared/components/DateRangeInput',
+	() =>
+		function MockDateInput({value}) {
+			return (
+				<div data-testid='mock-date-input'>
+					{value.start} {'-'} {value.end}
+				</div>
+			);
+		}
+);
+
 describe('SegmentActivationCard', () => {
 	it('should render when frequency type is batch', () => {
 		const {container} = render(
@@ -100,5 +112,64 @@ describe('SegmentActivationCard', () => {
 
 		const modalHeader = await findByText('Configure Activation');
 		expect(modalHeader).toBeInTheDocument();
+	});
+
+	it('should render the modal with the expected configurations - indefinitely', async () => {
+		const {findByTestId, findByText, getByTestId} = render(
+			<WrapperComponent>
+				<SegmentActivationCard
+					segmentActivation={{
+						frequencyType:
+							SegmentActivationFrequencyTypes.Indefinitely,
+						scheduleType: SegmentActivationScheduleTypes.RealTime,
+						...mockData
+					}}
+					segmentType={SegmentTypes.RealTime}
+				/>
+			</WrapperComponent>
+		);
+
+		const editButton = getByTestId('edit-activation-button');
+		fireEvent.click(editButton);
+
+		const modal = await findByTestId('segment-activation-modal');
+		expect(modal).toBeInTheDocument();
+
+		expect(await findByText('Configure Activation')).toBeInTheDocument();
+
+		expect(await findByText('indefinitely')).toBeInTheDocument();
+
+		expect(await findByText('Real-Time')).toBeInTheDocument();
+	});
+
+	it('should render the modal with the expected configurations - between', async () => {
+		const {findByTestId, findByText, getByTestId} = render(
+			<WrapperComponent>
+				<SegmentActivationCard
+					segmentActivation={{
+						frequencyType: SegmentActivationFrequencyTypes.Between,
+						scheduleEndDate: '1757818800000',
+						scheduleStartDate: '1756004400000',
+						scheduleType: SegmentActivationScheduleTypes.RealTime,
+						...mockData
+					}}
+					segmentType={SegmentTypes.RealTime}
+				/>
+			</WrapperComponent>
+		);
+
+		const editButton = getByTestId('edit-activation-button');
+		fireEvent.click(editButton);
+
+		const modal = await findByTestId('segment-activation-modal');
+		expect(modal).toBeInTheDocument();
+
+		expect(await findByText('Configure Activation')).toBeInTheDocument();
+
+		expect(await findByText('between')).toBeInTheDocument();
+
+		expect(getByTestId('mock-date-input')).toBeInTheDocument();
+
+		expect(await findByText('Real-Time')).toBeInTheDocument();
 	});
 });

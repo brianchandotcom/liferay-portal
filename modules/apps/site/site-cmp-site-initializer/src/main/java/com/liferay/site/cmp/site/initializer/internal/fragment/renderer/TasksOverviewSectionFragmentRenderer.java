@@ -8,32 +8,20 @@ package com.liferay.site.cmp.site.initializer.internal.fragment.renderer;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.info.constants.InfoDisplayWebKeys;
-import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.rest.filter.factory.FilterFactory;
-import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectEntryLocalService;
-import com.liferay.petra.sql.dsl.expression.Predicate;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-import java.time.LocalDate;
-
 import java.util.Map;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Kevin Tan
@@ -85,29 +73,21 @@ public class TasksOverviewSectionFragmentRenderer
 		FragmentRendererContext fragmentRendererContext,
 		HttpServletRequest httpServletRequest) {
 
-		Object object = httpServletRequest.getAttribute(
-			InfoDisplayWebKeys.INFO_ITEM);
-
-		if (!(object instanceof ObjectEntry)) {
-			return null;
-		}
-
-		ObjectEntry objectEntry = (ObjectEntry)object;
-
 		return HashMapBuilder.<String, Object>put(
-			"cmpProjectId", objectEntry.getObjectEntryId()
+			"cmpProjectId",
+			() -> {
+				Object object = httpServletRequest.getAttribute(
+					InfoDisplayWebKeys.INFO_ITEM);
+
+				if (object instanceof ObjectEntry) {
+					ObjectEntry objectEntry = (ObjectEntry)object;
+
+					return objectEntry.getObjectEntryId();
+				}
+
+				return null;
+			}
 		).build();
 	}
-
-	@Reference(
-		target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"
-	)
-	private FilterFactory<Predicate> _filterFactory;
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Reference
-	private ObjectEntryLocalService _objectEntryLocalService;
 
 }

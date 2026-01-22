@@ -24,6 +24,16 @@ import org.json.JSONObject;
  */
 public class ModulesJUnitAxisTestClassGroup extends JUnitAxisTestClassGroup {
 
+	public void addTestTask(TestTask testTask) {
+		String testTaskName = testTask.getName();
+
+		if (_testTasks.containsKey(testTaskName)) {
+			return;
+		}
+
+		_testTasks.put(testTaskName, testTask);
+	}
+
 	@Override
 	public long getAverageDuration() {
 		if (_averageDuration != null) {
@@ -32,7 +42,7 @@ public class ModulesJUnitAxisTestClassGroup extends JUnitAxisTestClassGroup {
 
 		GroupingStrategy groupingStrategy = getGroupingStrategy();
 
-		if (groupingStrategy == GroupingStrategy.DEFAULT) {
+		if ((groupingStrategy == GroupingStrategy.DEFAULT) || _isSplit()) {
 			_averageDuration = super.getAverageDuration();
 
 			return _averageDuration;
@@ -90,7 +100,19 @@ public class ModulesJUnitAxisTestClassGroup extends JUnitAxisTestClassGroup {
 		jsonObject.put("test_tasks", testTasksJSONArray);
 
 		for (TestTask testTask : getTestTasks()) {
-			testTasksJSONArray.put(testTask.getJSONObject());
+			JSONObject testTaskJSONObject = testTask.getJSONObject();
+
+			if (testTask.isSplit()) {
+				JSONArray testClassesJSONArray = new JSONArray();
+
+				for (TestClass testClass : getTestClasses()) {
+					testClassesJSONArray.put(testClass.getJSONObject());
+				}
+
+				testTaskJSONObject.put("test_classes", testClassesJSONArray);
+			}
+
+			testTasksJSONArray.put(testTaskJSONObject);
 		}
 
 		return jsonObject;
@@ -207,6 +229,16 @@ public class ModulesJUnitAxisTestClassGroup extends JUnitAxisTestClassGroup {
 		}
 
 		return modulesJUnitTestClasses;
+	}
+
+	private boolean _isSplit() {
+		for (TestTask testTask : getTestTasks()) {
+			if (testTask.isSplit()) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private Long _averageDuration;

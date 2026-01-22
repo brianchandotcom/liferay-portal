@@ -181,7 +181,7 @@ public abstract class BalancedListSplitter<T extends WeightedItem> {
 			long totalOverheadWeight =
 				_totalOverheadWeight + listItem.getOverheadWeight();
 
-			return totalWeight + ((totalOverheadWeight / size()) + 1);
+			return totalWeight + (totalOverheadWeight / (size() + 1));
 		}
 
 		public List<T> toList() {

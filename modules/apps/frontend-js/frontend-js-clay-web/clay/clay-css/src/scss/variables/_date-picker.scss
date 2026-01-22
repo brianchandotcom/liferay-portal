@@ -241,7 +241,7 @@ $date-picker-calendar-item: map-deep-merge(
 		align-items: center,
 		background-color:
 			setter(map-get($date-picker-calendar-item, bg) transparent),
-		border-width: 0px,
+		border-width: 0,
 		disabled-cursor: $disabled-cursor,
 		display: inline-flex,
 		flex-shrink: 0,

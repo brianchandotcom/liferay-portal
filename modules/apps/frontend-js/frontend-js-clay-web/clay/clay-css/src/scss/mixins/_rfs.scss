@@ -215,7 +215,7 @@ $rfs-breakpoint-unit-cache: unit($rfs-breakpoint);
 					}
 
 					@if $rfs-safari-iframe-resize-bug-fix {
-						min-width: 0vw;
+						min-width: 0;
 					}
 				}
 			} @else {
@@ -230,7 +230,7 @@ $rfs-breakpoint-unit-cache: unit($rfs-breakpoint);
 					}
 
 					@if $rfs-safari-iframe-resize-bug-fix {
-						min-width: 0vw;
+						min-width: 0;
 					}
 				}
 			}

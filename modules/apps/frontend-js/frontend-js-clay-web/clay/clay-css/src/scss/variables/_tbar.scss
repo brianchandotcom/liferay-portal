@@ -48,8 +48,8 @@ $tbar-stacked: map-deep-merge(
 		),
 		tbar-btn-monospaced: (
 			border-color: transparent,
-			border-radius: 0px,
-			border-width: 0px,
+			border-radius: 0,
+			border-width: 0,
 			color: inherit,
 			height: 2.5rem,
 			margin-bottom: 0,
@@ -449,8 +449,8 @@ $subnav-tbar-primary: map-deep-merge(
 			padding-right: 0.25rem,
 		),
 		tbar-link-monospaced: (
-			border-radius: 0px,
-			border-width: 0px,
+			border-radius: 0,
+			border-width: 0,
 			height: 3rem,
 			margin-bottom: -0.625rem,
 			margin-top: -0.625rem,

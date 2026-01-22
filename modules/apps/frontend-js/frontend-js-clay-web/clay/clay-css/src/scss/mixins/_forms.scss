@@ -119,7 +119,8 @@
 			border-color: $color;
 
 			@if $enable-validation-icons {
-				background: $custom-select-background,
+				background:
+					$custom-select-background,
 					escape-svg($icon)
 						$custom-select-bg
 						no-repeat

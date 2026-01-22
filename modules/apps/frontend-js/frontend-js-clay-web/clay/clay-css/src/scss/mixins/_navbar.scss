@@ -50,10 +50,10 @@
 		);
 
 		$height: setter(map-get($map, height), 3.5rem);
-		$border-bottom-width: setter(map-get($map, border-bottom-width), 0px);
-		$border-left-width: setter(map-get($map, border-left-width), 0px);
-		$border-right-width: setter(map-get($map, border-right-width), 0px);
-		$border-top-width: setter(map-get($map, border-top-width), 0px);
+		$border-bottom-width: setter(map-get($map, border-bottom-width), 0);
+		$border-left-width: setter(map-get($map, border-left-width), 0);
+		$border-right-width: setter(map-get($map, border-right-width), 0);
+		$border-top-width: setter(map-get($map, border-top-width), 0);
 		$box-shadow: map-get($map, box-shadow);
 		$font-size: setter(
 			map-get($map, font-size),
@@ -92,7 +92,7 @@
 				)
 			)
 		);
-		$padding-y: if($padding-y == 0 or $padding-y == null, 0px, $padding-y);
+		$padding-y: if($padding-y == 0 or $padding-y == null, 0, $padding-y);
 		$link-height: setter(
 			map-get($map, link-height),
 			'#{$height} - #{$border-bottom-width} - #{$border-top-width} - #{$padding-y} * 2'

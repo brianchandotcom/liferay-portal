@@ -939,7 +939,7 @@ $card-type-template-after-highlight: () !default;
 $card-type-template-aspect-ratio: () !default;
 $card-type-template-aspect-ratio: map-deep-merge(
 	(
-		border-width: 0px,
+		border-width: 0,
 		color: $gray-600,
 		horizontal: 16,
 		text-align: center,

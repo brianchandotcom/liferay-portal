@@ -2,11 +2,11 @@
 /// @group globals
 ////
 
-@import '_polyfills.scss';
+@import '_polyfills';
 
-@import '_color-functions.scss';
-@import '_lx-icons-generated.scss';
-@import '_type-conversion-functions.scss';
+@import '_color-functions';
+@import '_lx-icons-generated';
+@import '_type-conversion-functions';
 
 /// A function that checks if the value contains the key word `c-unset` or `clay-unset`
 /// @param {Any} $value The value to check

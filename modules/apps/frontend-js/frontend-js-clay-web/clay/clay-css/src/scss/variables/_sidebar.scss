@@ -247,11 +247,11 @@ $sidebar-light: map-deep-merge(
 		),
 		sidebar-header: (
 			background-color: inherit,
-			border: 0px solid $gray-300,
+			border: 0 solid $gray-300,
 		),
 		sidebar-footer: (
 			background-color: inherit,
-			border: 0px solid $gray-300,
+			border: 0 solid $gray-300,
 		),
 		sidebar-dd: (
 			href: (

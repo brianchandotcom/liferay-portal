@@ -9,7 +9,6 @@ import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ItemScopeUtil;
-import com.liferay.headless.admin.site.internal.util.LogUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -21,7 +20,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
-import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import org.osgi.service.component.annotations.Component;
@@ -75,28 +73,15 @@ public class PageExperienceDTOConverter
 							return null;
 						}
 
-						SegmentsEntry segmentsEntry =
-							_segmentsEntryLocalService.
-								fetchSegmentsEntryByExternalReferenceCode(
-									segmentsExperience.getSegmentsEntryERC(),
-									segmentsExperience.
-										getSegmentsEntryGroupId());
-
-						if (segmentsEntry == null) {
-							LogUtil.logOptionalReference(
-								SegmentsEntry.class,
-								segmentsExperience.getSegmentsEntryERC(),
-								segmentsExperience.getSegmentsEntryGroupId());
-						}
-
 						return new ItemExternalReference() {
 							{
 								setClassName(SegmentsEntry.class::getName);
 								setExternalReferenceCode(
-									segmentsEntry::getExternalReferenceCode);
+									segmentsExperience::getSegmentsEntryERC);
 								setScope(
 									() -> ItemScopeUtil.getItemScope(
-										segmentsEntry.getGroupId(),
+										segmentsExperience.
+											getSegmentsEntryGroupId(),
 										layout.getGroupId()));
 							}
 						};
@@ -140,9 +125,6 @@ public class PageExperienceDTOConverter
 	)
 	private DTOConverter<LayoutStructureItem, PageElement>
 		_pageElementDTOConverter;
-
-	@Reference
-	private SegmentsEntryLocalService _segmentsEntryLocalService;
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

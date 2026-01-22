@@ -32,4 +32,6 @@ public interface DownstreamBuildReport extends BuildReport {
 
 	public boolean isBuildCached();
 
+	public boolean isBuildTimedOut();
+
 }

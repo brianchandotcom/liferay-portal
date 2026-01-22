@@ -88,7 +88,9 @@ public class TestrayBatchHistory extends BaseBatchHistory {
 
 			testrayTestTaskHistory.addTestTaskReport(testTaskReport);
 
-			if (latestBuild && testTaskReport.isMissing()) {
+			if (downstreamBuildReport.isBuildTimedOut() && latestBuild &&
+				testTaskReport.isMissing()) {
+
 				testrayTestTaskHistory.setLatestReportMissing(true);
 			}
 		}

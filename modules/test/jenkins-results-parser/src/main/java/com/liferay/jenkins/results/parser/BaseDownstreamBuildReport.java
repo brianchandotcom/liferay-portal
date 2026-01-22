@@ -139,6 +139,22 @@ public abstract class BaseDownstreamBuildReport
 		return _buildCached;
 	}
 
+	@Override
+	public boolean isBuildTimedOut() {
+		String result = getResult();
+
+		long jobTimeoutMinutes = JenkinsResultsParserUtil.getJobTimeoutMinutes(
+			getJenkinsMaster(), getJobName());
+
+		if (((result == null) || result.equals("ABORTED")) &&
+			(getDuration() >= ((jobTimeoutMinutes - 20) * 60 * 1000))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	protected BaseDownstreamBuildReport(DownstreamBuild downstreamBuild) {
 		super(downstreamBuild.getBuildURL());
 

@@ -15,7 +15,7 @@ export function WizardStep({
 	description: string;
 	title: string;
 }) {
-	return children;
+	return <>{children}</>;
 }
 
 export function Wizard({

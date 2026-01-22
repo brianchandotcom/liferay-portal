@@ -12,6 +12,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import initializeLock from './initializeLock';
 import PublishModal from './modals/PublishModal';
 import removeAlert from './removeAlert';
+import showAlert from './showAlert';
 
 const ACTION_PUBLISH = 'publish';
 const ACTION_DRAFT = 'draft';
@@ -97,6 +98,23 @@ export default function SaveButtons({
 
 	const onClick = async (action, directSubmit = false) => {
 		if (!(await validateRequiredFields(formId))) {
+			return;
+		}
+
+		const titleInputComponent = Liferay.component(
+			`${portletNamespace}titleMapAsXML`
+		);
+
+		if (!titleInputComponent?.getValue(defaultLanguageId)) {
+			showAlert(
+				sub(
+					Liferay.Language.get(
+						'please-enter-a-valid-title-for-the-default-language-x'
+					),
+					defaultLanguageId.replaceAll('_', '-')
+				)
+			);
+
 			return;
 		}
 

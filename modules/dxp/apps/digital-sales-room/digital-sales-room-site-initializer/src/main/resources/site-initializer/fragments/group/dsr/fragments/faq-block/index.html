@@ -1,0 +1,36 @@
+<div class="clearfix component-paragraph dsr-faq-block-component text-break">
+	<div data-lfr-editable-id="element-text-1" data-lfr-editable-type="rich-text">
+		<h2 class="mb-4">F.A.Q.</h2>
+	</div>
+
+	<ul class="list-unstyled">
+		[@buildFAQ index=1 numberOfItems=configuration.numberOfItems/]
+	</ul>
+</div>
+
+[#macro buildFAQ index numberOfItems]
+	<li class="align-items-center d-flex dsr-faq-entry mb-4 p-3" data-index="${index}">
+		<div class="flex-grow-1">
+			<div class="dsr-faq-question-${index} text-4 text-dark text-weight-semi-bold" data-lfr-editable-id="question-text-${index}" data-lfr-editable-type="rich-text">
+				Question ${index}
+			</div>
+
+			<div class="[#if (index != 1 && layoutMode != 'edit')]collapse[/#if] dsr-faq-answer-${index} faq-answer mt-2 pr-5" data-lfr-editable-id="answer-text-${index}" data-lfr-editable-type="rich-text">
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc id cursus metus aliquam eleifend mi in nulla. Quam adipiscing vitae proin sagittis nisl rhoncus. Suspendisse faucibus interdum posuere lorem. Nullam ac tortor vitae purus faucibus ornare. Ac felis donec et odio pellentesque diam. Nulla at volutpat diam ut. Posuere urna nec tincidunt praesent semper feugiat nibh. Gravida quis blandit turpis cursus. Proin libero nunc consequat interdum varius. Sollicitudin ac orci phasellus egestas tellus rutrum tellus pellentesque. Neque volutpat ac tincidunt vitae semper quis lectus nulla at. Odio euismod lacinia at quis risus sed vulputate odio ut. Augue lacus viverra vitae congue eu consequat ac. Elementum sagittis vitae et leo duis ut diam. Diam quis enim lobortis scelerisque fermentum dui faucibus.
+			</div>
+		</div>
+
+		<div>
+			<div class="custom-icon [#if (index == 1 || layoutMode == 'edit')]d-none[/#if] px-0 plus-icon-${index}">
+				[@clay["icon"] symbol="angle-down"/]
+			</div>
+
+			<div class="custom-icon [#if (index != 1 && layoutMode != 'edit')]d-none[/#if] px-0 minus-icon-${index}">
+				[@clay["icon"] symbol="angle-up"/]
+			</div>
+		</div>
+	</li>
+	[#if (index < numberOfItems)]
+		[@buildFAQ index=index+1 numberOfItems=numberOfItems/]
+	[/#if]
+[/#macro]

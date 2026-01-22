@@ -307,10 +307,10 @@ public class DDMFieldLocalServiceTest {
 
 		ddmFormValues.setDDMFormFieldValues(
 			List.of(
-				_getDDMFormFieldValue(
+				_createDDMFormFieldValue(
 					"field1", LocaleUtil.ENGLISH, LocaleUtil.HUNGARY,
 					LocaleUtil.SPAIN),
-				_getDDMFormFieldValue(
+				_createDDMFormFieldValue(
 					"field2", LocaleUtil.ENGLISH, LocaleUtil.HUNGARY)));
 
 		_ddmFieldLocalService.updateDDMFormValues(
@@ -641,7 +641,7 @@ public class DDMFieldLocalServiceTest {
 		return ddmFormFieldValue;
 	}
 
-	private DDMFormFieldValue _getDDMFormFieldValue(
+	private DDMFormFieldValue _createDDMFormFieldValue(
 		String fieldName, Locale... locales) {
 
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();

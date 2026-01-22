@@ -8,8 +8,17 @@ package com.liferay.portal.workflow.web.internal.application.list;
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
+
+import jakarta.portlet.PortletRequest;
+import jakarta.portlet.PortletURL;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -35,6 +44,25 @@ public class ControlPanelWorkflowPanelApp extends BasePanelApp {
 	public String getPortletId() {
 		return WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW;
 	}
+
+	@Override
+	public PortletURL getPortletURL(HttpServletRequest httpServletRequest) {
+		return _portal.getControlPanelPortletURL(
+			httpServletRequest, getGroup(httpServletRequest), getPortletId(), 0,
+			0, PortletRequest.RENDER_PHASE);
+	}
+
+	@Override
+	protected Group getGroup(HttpServletRequest httpServletRequest) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return themeDisplay.getControlPanelGroup();
+	}
+
+	@Reference
+	private Portal _portal;
 
 	@Reference(
 		target = "(jakarta.portlet.name=" + WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW + ")"

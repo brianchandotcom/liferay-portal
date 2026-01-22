@@ -391,6 +391,38 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 		super.testGraphQLGetKeywordsRankedPage();
 	}
 
+	@FeatureFlag("LPD-17564")
+	@Override
+	@Test
+	public void testPatchSiteKeyword() throws Exception {
+		Group originalTestGroup = testGroup;
+
+		_addCMSGroup();
+
+		Keyword keyword = _postKeywordWithAssetLibraries(_randomAssetLibrary());
+
+		List<AssetTagGroupRel> assetTagGroupRels =
+			_assetTagGroupRelLocalService.getAssetTagGroupRelsByTagId(
+				keyword.getId());
+
+		Assert.assertEquals(
+			assetTagGroupRels.toString(), 1, assetTagGroupRels.size());
+
+		Keyword patchKeyword = _patchKeywordWithAssetLibraries(
+			keyword, _randomAssetLibrary(), _randomAssetLibrary());
+
+		assertEquals(keyword, patchKeyword);
+
+		assetTagGroupRels =
+			_assetTagGroupRelLocalService.getAssetTagGroupRelsByTagId(
+				keyword.getId());
+
+		Assert.assertEquals(
+			assetTagGroupRels.toString(), 3, assetTagGroupRels.size());
+
+		testGroup = originalTestGroup;
+	}
+
 	@Override
 	@Test
 	public void testPutAssetLibraryKeywordByExternalReferenceCode()
@@ -424,7 +456,7 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 
 		super.testPutKeyword();
 
-		Keyword keyword = _addKeywordWithAssetLibraries(_randomAssetLibrary());
+		Keyword keyword = _postKeywordWithAssetLibraries(_randomAssetLibrary());
 
 		Keyword randomKeyword = randomKeyword();
 
@@ -447,15 +479,20 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 
 		_addCMSGroup();
 
-		Keyword keyword1 = _addKeywordWithAssetLibraries(_randomAssetLibrary());
-		Keyword keyword2 = _addKeywordWithAssetLibraries(_randomAssetLibrary());
-		Keyword keyword3 = _addKeywordWithAssetLibraries(_randomAssetLibrary());
+		Keyword keyword1 = _postKeywordWithAssetLibraries(
+			_randomAssetLibrary());
+		Keyword keyword2 = _postKeywordWithAssetLibraries(
+			_randomAssetLibrary());
+		Keyword keyword3 = _postKeywordWithAssetLibraries(
+			_randomAssetLibrary());
 
 		keywordResource.putKeywordMerge(
 			keyword1.getId(), new Long[] {keyword2.getId(), keyword3.getId()});
 
-		Keyword keyword4 = _addKeywordWithAssetLibraries(_randomAssetLibrary());
-		Keyword keyword5 = _addKeywordWithAssetLibraries(_randomAssetLibrary());
+		Keyword keyword4 = _postKeywordWithAssetLibraries(
+			_randomAssetLibrary());
+		Keyword keyword5 = _postKeywordWithAssetLibraries(
+			_randomAssetLibrary());
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
@@ -608,7 +645,17 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 			GroupConstants.DEFAULT_PARENT_GROUP_ID, GroupConstants.CMS);
 	}
 
-	private Keyword _addKeywordWithAssetLibraries(
+	private Keyword _patchKeywordWithAssetLibraries(
+			Keyword keyword, AssetLibrary... assetLibraries)
+		throws Exception {
+
+		keyword.setAssetLibraries(assetLibraries);
+
+		return keywordResource.patchSiteKeyword(
+			testGroup.getGroupId(), keyword);
+	}
+
+	private Keyword _postKeywordWithAssetLibraries(
 			AssetLibrary... assetLibraries)
 		throws Exception {
 

@@ -5,10 +5,14 @@
 
 package com.liferay.headless.commerce.admin.order.internal.resource.v1_0;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryService;
+import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
+import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.exception.NoSuchOrderException;
@@ -46,19 +50,23 @@ import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.ExpandoUtil;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -82,6 +90,7 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -600,6 +609,52 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 
 					searchContext.setGroupIds(commerceChannelGroupIds);
 				}
+
+				PermissionChecker permissionChecker =
+					PermissionThreadLocal.getPermissionChecker();
+
+				if (permissionChecker.isCompanyAdmin() ||
+					!_portletResourcePermission.contains(
+						permissionChecker, contextCompany.getGroupId(),
+						ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
+
+					return;
+				}
+
+				PortletResourcePermission portletResourcePermission =
+					_commerceOrderModelResourcePermission.
+						getPortletResourcePermission();
+
+				List<AccountEntry> accountEntries = transform(
+					_accountEntryLocalService.getUserAccountEntries(
+						contextUser.getUserId(),
+						AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
+						StringPool.BLANK,
+						new String[] {
+							AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS
+						},
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+					accountEntry -> {
+						if (portletResourcePermission.contains(
+								permissionChecker,
+								accountEntry.getAccountEntryGroupId(),
+								CommerceOrderActionKeys.
+									MANAGE_ACCOUNTS_SCOPED_COMMERCE_ORDERS)) {
+
+							return accountEntry;
+						}
+
+						return null;
+					});
+
+				if (ListUtil.isNotEmpty(accountEntries)) {
+					searchContext.setAttribute(
+						"commerceAccountIds",
+						transformToLongArray(
+							accountEntries,
+							accountEntry -> accountEntry.getAccountEntryId()));
+					searchContext.setUserId(0);
+				}
 			},
 			sorts, transformUnsafeFunction);
 	}
@@ -994,6 +1049,9 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 	private static final EntityModel _entityModel = new OrderEntityModel();
 
 	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Reference
 	private AccountEntryService _accountEntryService;
 
 	@Reference
@@ -1048,6 +1106,11 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 		target = "(component.name=com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter.OrderDTOConverter)"
 	)
 	private DTOConverter<CommerceOrder, Order> _orderDTOConverter;
+
+	@Reference(
+		target = "(resource.name=" + CommercePortletKeys.COMMERCE_ORDER + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

@@ -4933,6 +4933,14 @@
 	},
 	{
 		"classNames": [
+			"SafePortalLDAP"
+		],
+		"from": "getUser(long paramName, long paramName, String paramName, String paramName, boolean paramName)",
+		"issueKey": "LPD-58380",
+		"to": "getUser(param#0#, param#1#, param#2#, param#3#, param#4#, false)"
+	},
+	{
+		"classNames": [
 			"LayoutCopyHelper"
 		],
 		"from": "copyLayout",

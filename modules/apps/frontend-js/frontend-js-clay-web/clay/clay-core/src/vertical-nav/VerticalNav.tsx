@@ -17,7 +17,7 @@ import {Collection, useCollection} from '../collection';
 import {Nav} from '../nav';
 import {Item} from './Item';
 import {Trigger} from './Trigger';
-import {VerticalNavContext} from './context';
+import {VerticalNavContextProvider} from './context';
 
 import type {ChildrenFunction} from '../collection';
 
@@ -263,30 +263,30 @@ function VerticalNav<T extends Record<string, any> | string>({
 			ref={containerRef}
 			role="menubar"
 		>
-			<VerticalNavContext.Provider
-				value={{
-					activeKey:
-						active && collection.hasItem(active)
-							? active
-							: hasDepthActive
-								? null
-								: undefined,
-					ariaCurrent: ariaCurrent ? 'page' : null,
-					childrenRoot:
-						childrenRootRef as React.MutableRefObject<ChildrenFunction<
-							Object,
-							null
-						> | null>,
-					close,
-					expandedKeys,
-					firstKey: collection.getFirstItem().key,
-					open,
-					spritemap,
-					toggle,
-				}}
+			<VerticalNavContextProvider
+				activeKey={
+					active && collection.hasItem(active)
+						? active
+						: hasDepthActive
+							? null
+							: undefined
+				}
+				ariaCurrent={ariaCurrent ? 'page' : null}
+				childrenRoot={
+					childrenRootRef as React.MutableRefObject<ChildrenFunction<
+						Object,
+						null
+					> | null>
+				}
+				close={close}
+				expandedKeys={expandedKeys}
+				firstKey={collection.getFirstItem().key}
+				open={open}
+				spritemap={spritemap}
+				toggle={toggle}
 			>
 				<Collection collection={collection} />
-			</VerticalNavContext.Provider>
+			</VerticalNavContextProvider>
 		</Nav>
 	);
 

@@ -236,6 +236,29 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		Assert.assertEquals(
 			"Workflow Definition",
 			workflowInstance.getWorkflowDefinitionName());
+
+		Assert.assertEquals(1, workflowInstance.getWorkflowDefinitionVersion());
+
+		_workflowDefinitionManager.deployWorkflowDefinition(
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			StringUtil.randomId(), "Workflow Definition",
+			_getContentBytes("workflow-definition.json"));
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"context", JSONUtil.put("text", RandomTestUtil.randomString())
+			).put(
+				"sseEventSinkKey", RandomTestUtil.randomString()
+			).put(
+				"type", "Workflow Definition"
+			).toString(),
+			"ai-hub/v1.0/tasks", Http.Method.POST);
+
+		workflowInstance = _workflowInstanceManager.getWorkflowInstance(
+			TestPropsValues.getCompanyId(),
+			jsonObject.getLong("externalReferenceCode"));
+
+		Assert.assertEquals(2, workflowInstance.getWorkflowDefinitionVersion());
 	}
 
 	private void _testPostTaskWithScope() throws Exception {

@@ -165,6 +165,16 @@ public class BaseTestTask implements TestTask {
 		return _latestReportMissing;
 	}
 
+	@Override
+	public boolean isSplit() {
+		return _split;
+	}
+
+	@Override
+	public void setSplit(boolean split) {
+		_split = split;
+	}
+
 	protected BaseTestTask(
 		long averageDuration, long averageTotalDuration,
 		TestClassGroup.GroupingStrategy groupingStrategy,
@@ -184,6 +194,7 @@ public class BaseTestTask implements TestTask {
 	private final boolean _latestReportMissing;
 	private final long _longestDuration;
 	private final String _name;
+	private boolean _split;
 	private final List<TestClass> _testClasses = new ArrayList<>();
 	private Long _weight;
 

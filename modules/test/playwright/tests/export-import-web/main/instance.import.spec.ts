@@ -1131,12 +1131,10 @@ test('Can import at instance level when LAR contains custom objects without exis
 			status: {code: 0},
 		});
 
-	const applicationName = `${normalizeRestPath(objectDefinition.restContextPath)}`;
-
 	try {
 		await apiHelpers.objectEntry.postObjectEntry(
 			{externalReferenceCode: 'testERC', textField: 'test'},
-			applicationName
+			`${normalizeRestPath(objectDefinition.restContextPath)}`
 		);
 	}
 	catch {

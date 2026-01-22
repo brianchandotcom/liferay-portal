@@ -242,6 +242,7 @@ public class PublishLayoutMVCActionCommand
 
 			layout.setType(draftLayout.getType());
 			layout.setPortletLayoutPageTemplateEntryERC(null);
+			layout.setPortletLayoutPageTemplateEntryScopeERC(null);
 			layout.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 			layout = _layoutLocalService.updateLayout(layout);

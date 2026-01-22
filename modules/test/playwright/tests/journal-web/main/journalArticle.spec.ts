@@ -680,7 +680,7 @@ baseTest(
 
 		await expect(page.getByText(`${title}`)).toBeVisible();
 
-		await page.getByLabel(`${title}`).check();
+		await page.getByRole('checkbox', {name: title}).check();
 
 		await journalPage.moveToFolder(folder.name);
 

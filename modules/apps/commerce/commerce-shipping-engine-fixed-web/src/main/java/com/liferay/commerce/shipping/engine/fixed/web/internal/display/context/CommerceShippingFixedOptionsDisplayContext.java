@@ -10,7 +10,6 @@ import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
-import com.liferay.commerce.shipping.engine.fixed.constants.CommerceShippingEngineFixedWebKeys;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService;
 import com.liferay.commerce.shipping.engine.fixed.web.internal.FixedCommerceShippingEngine;
@@ -25,7 +24,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -51,10 +49,9 @@ public class CommerceShippingFixedOptionsDisplayContext
 
 		super(
 			commerceChannelLocalService, commerceCurrencyLocalService,
-			commerceShippingMethodService, renderRequest, renderResponse);
+			commerceShippingFixedOptionService, commerceShippingMethodService,
+			renderRequest, renderResponse);
 
-		_commerceShippingFixedOptionService =
-			commerceShippingFixedOptionService;
 		_portal = portal;
 	}
 
@@ -70,32 +67,6 @@ public class CommerceShippingFixedOptionsDisplayContext
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).buildString();
-	}
-
-	public CommerceShippingFixedOption getCommerceShippingFixedOption()
-		throws PortalException {
-
-		CommerceShippingFixedOption commerceShippingFixedOption =
-			(CommerceShippingFixedOption)renderRequest.getAttribute(
-				CommerceShippingEngineFixedWebKeys.
-					COMMERCE_SHIPPING_FIXED_OPTION);
-
-		if (commerceShippingFixedOption != null) {
-			return commerceShippingFixedOption;
-		}
-
-		long commerceShippingFixedOptionId = ParamUtil.getLong(
-			renderRequest, "commerceShippingFixedOptionId");
-
-		commerceShippingFixedOption =
-			_commerceShippingFixedOptionService.
-				fetchCommerceShippingFixedOption(commerceShippingFixedOptionId);
-
-		renderRequest.setAttribute(
-			CommerceShippingEngineFixedWebKeys.COMMERCE_SHIPPING_FIXED_OPTION,
-			commerceShippingFixedOption);
-
-		return commerceShippingFixedOption;
 	}
 
 	public String getCommerceShippingFixedOptionName(
@@ -151,6 +122,10 @@ public class CommerceShippingFixedOptionsDisplayContext
 			CommerceShippingFixedOption commerceShippingFixedOption =
 				getCommerceShippingFixedOption();
 
+			if (commerceShippingFixedOption == null) {
+				return false;
+			}
+
 			commerceShippingMethod =
 				commerceShippingMethodService.getCommerceShippingMethod(
 					commerceShippingFixedOption.getCommerceShippingMethodId());
@@ -161,8 +136,6 @@ public class CommerceShippingFixedOptionsDisplayContext
 		return engineKey.equals(FixedCommerceShippingEngine.KEY);
 	}
 
-	private final CommerceShippingFixedOptionService
-		_commerceShippingFixedOptionService;
 	private final Portal _portal;
 
 }

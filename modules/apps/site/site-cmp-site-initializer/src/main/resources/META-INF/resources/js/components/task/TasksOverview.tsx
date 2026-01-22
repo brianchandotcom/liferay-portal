@@ -12,7 +12,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayProgressBar from '@clayui/progress-bar';
 import {FDS_EVENT} from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
-import {fetch} from 'frontend-js-web';
+import {fetch, navigate} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import './TasksOverview.scss';
@@ -152,7 +152,7 @@ export default function TasksOverview({
 						<ClayButton
 							displayType="secondary"
 							onClick={() => {
-								window.location.href = redirect;
+								navigate(redirect);
 							}}
 						>
 							{Liferay.Language.get('new-task')}

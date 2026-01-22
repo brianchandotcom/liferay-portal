@@ -66,19 +66,6 @@ async function goToApplicationsMenuSetting({
 	);
 }
 
-async function resetApplicationsMenu(
-	instanceSettingsPage: InstanceSettingsPage,
-	reload: boolean
-) {
-	await goToApplicationsMenuSetting({
-		instanceSettingsPage,
-		reload,
-		useProductMenu: true,
-	});
-
-	await instanceSettingsPage.resetInstanceSetting();
-}
-
 const test = mergeTests(
 	instanceSettingsPagesTest,
 	isolatedSiteTest,
@@ -95,7 +82,13 @@ test.describe('Disabled Applications Menu - Default Instance', () => {
 	});
 
 	test.afterEach(async ({instanceSettingsPage}) => {
-		await resetApplicationsMenu(instanceSettingsPage, true);
+		await goToApplicationsMenuSetting({
+			instanceSettingsPage,
+			reload: true,
+			useProductMenu: true,
+		});
+
+		await instanceSettingsPage.resetInstanceSetting();
 	});
 
 	test(
@@ -200,8 +193,7 @@ test.describe('Disabled Applications Menu - Virtual Instance', () => {
 	);
 
 	test.afterEach(async ({instanceSettingsPage, virtualInstancesPage}) => {
-		await resetApplicationsMenu(virtualInstanceInstanceSettingsPage, false);
-		await resetApplicationsMenu(instanceSettingsPage, true);
+		await instanceSettingsPage.resetInstanceSetting();
 
 		await virtualInstancePage?.close();
 

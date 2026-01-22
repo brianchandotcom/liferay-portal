@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -39,6 +41,8 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
+import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
 import com.liferay.site.cms.site.initializer.util.CMSDefaultPermissionUtil;
 
 import java.util.Arrays;
@@ -59,7 +63,9 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		throws ModelListenerException {
 
 		try {
-			_onAfterCreate(objectEntry);
+			if (_isCMSObjectEntry(objectEntry)) {
+				_setResourcePermissions(objectEntry);
+			}
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);
@@ -72,10 +78,27 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		throws ModelListenerException {
 
 		try {
+			if (!_isCMSObjectEntry(objectEntry)) {
+				return;
+			}
+
 			if (originalObjectEntry.getObjectEntryFolderId() !=
 					objectEntry.getObjectEntryFolderId()) {
 
 				_setResourcePermissions(objectEntry);
+			}
+
+			Indexer<KaleoTaskInstanceToken> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(
+					KaleoTaskInstanceToken.class);
+
+			for (KaleoTaskInstanceToken kaleoTaskInstanceToken :
+					_kaleoTaskInstanceTokenLocalService.
+						getKaleoTaskInstanceTokens(
+							objectEntry.getModelClassName(),
+							objectEntry.getObjectEntryId())) {
+
+				indexer.reindex(kaleoTaskInstanceToken);
 			}
 		}
 		catch (Exception exception) {
@@ -152,32 +175,36 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			GetterUtil.getLong(parts[1]));
 	}
 
-	private void _onAfterCreate(ObjectEntry objectEntry) throws Exception {
+	private boolean _isCMSObjectEntry(ObjectEntry objectEntry)
+		throws Exception {
+
 		if (!FeatureFlagManagerUtil.isEnabled(
 				objectEntry.getCompanyId(), "LPD-17564") ||
 			(objectEntry.getGroupId() == 0)) {
 
-			return;
+			return false;
 		}
-
-		_setResourcePermissions(objectEntry);
-	}
-
-	private void _setResourcePermissions(ObjectEntry objectEntry)
-		throws Exception {
 
 		Group group = _groupLocalService.fetchGroup(objectEntry.getGroupId());
 
 		if ((group == null) || !group.isDepot()) {
-			return;
+			return false;
 		}
 
-		DepotEntry depotEntry = _depotEntryLocalService.getDepotEntry(
+		DepotEntry depotEntry = _depotEntryLocalService.fetchDepotEntry(
 			group.getClassPK());
 
-		if (depotEntry.getType() != DepotConstants.TYPE_SPACE) {
-			return;
+		if ((depotEntry == null) ||
+			(depotEntry.getType() != DepotConstants.TYPE_SPACE)) {
+
+			return false;
 		}
+
+		return true;
+	}
+
+	private void _setResourcePermissions(ObjectEntry objectEntry)
+		throws Exception {
 
 		JSONObject defaultPermissionsJSONObject =
 			_getCMSDefaultPermissionJSONObject(objectEntry);
@@ -247,6 +274,10 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private KaleoTaskInstanceTokenLocalService
+		_kaleoTaskInstanceTokenLocalService;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

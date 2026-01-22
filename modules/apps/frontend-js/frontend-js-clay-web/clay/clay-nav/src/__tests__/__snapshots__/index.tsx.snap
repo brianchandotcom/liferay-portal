@@ -20,6 +20,7 @@ exports[`ClayVerticalNav renders 1`] = `
           aria-expanded="true"
           class="nav-link collapse-icon btn btn-unstyled"
           role="menuitem"
+          tabindex="0"
           type="button"
         >
           Home

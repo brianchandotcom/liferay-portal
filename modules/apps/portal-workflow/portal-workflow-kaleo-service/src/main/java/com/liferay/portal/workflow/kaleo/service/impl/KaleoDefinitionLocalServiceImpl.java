@@ -178,6 +178,12 @@ public class KaleoDefinitionLocalServiceImpl
 			kaleoDefinitionPersistence.findByC_N_V(
 				serviceContext.getCompanyId(), name, version);
 
+		if (kaleoDefinition.isSystem()) {
+			throw new WorkflowException(
+				"Cannot deactivate system workflow definition " +
+					kaleoDefinition.getKaleoDefinitionId());
+		}
+
 		kaleoDefinition.setModifiedDate(new Date());
 		kaleoDefinition.setActive(false);
 		kaleoDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
@@ -226,6 +232,12 @@ public class KaleoDefinitionLocalServiceImpl
 
 		KaleoDefinition kaleoDefinition = getKaleoDefinition(
 			name, serviceContext);
+
+		if (kaleoDefinition.isSystem()) {
+			throw new WorkflowException(
+				"Cannot delete system workflow definition " +
+					kaleoDefinition.getKaleoDefinitionId());
+		}
 
 		if (kaleoDefinition.isActive()) {
 			throw new WorkflowException(
@@ -362,12 +374,18 @@ public class KaleoDefinitionLocalServiceImpl
 
 		// Kaleo definition
 
+		KaleoDefinition kaleoDefinition =
+			kaleoDefinitionPersistence.findByPrimaryKey(kaleoDefinitionId);
+
+		if (kaleoDefinition.isSystem()) {
+			throw new WorkflowException(
+				"Cannot update system workflow definition " +
+					kaleoDefinition.getKaleoDefinitionId());
+		}
+
 		User user = _userLocalService.getUser(
 			serviceContext.getGuestOrUserId());
 		Date date = new Date();
-
-		KaleoDefinition kaleoDefinition =
-			kaleoDefinitionPersistence.findByPrimaryKey(kaleoDefinitionId);
 
 		kaleoDefinition.setExternalReferenceCode(externalReferenceCode);
 		kaleoDefinition.setGroupId(

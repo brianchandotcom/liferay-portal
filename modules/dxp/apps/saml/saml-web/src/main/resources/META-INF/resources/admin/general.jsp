@@ -61,10 +61,7 @@ if (samlRoleIdpOptionDisabled) {
 		</c:if>
 
 		<aui:select disabled="<%= samlRoleIdpOptionDisabled %>" helpMessage="<%= samlRoleHelpMessage %>" label="saml-role" name='<%= "settings--" + PortletPropsKeys.SAML_ROLE + "--" %>' required="<%= !samlRoleIdpOptionDisabled %>">
-			<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-29737") %>'>
-				<aui:option label="identity-broker" selected="<%= samlRole.equals(SamlProviderConfigurationKeys.SAML_ROLE_IB) %>" value="<%= SamlProviderConfigurationKeys.SAML_ROLE_IB %>" />
-			</c:if>
-
+			<aui:option label="identity-broker" selected="<%= samlRole.equals(SamlProviderConfigurationKeys.SAML_ROLE_IB) %>" value="<%= SamlProviderConfigurationKeys.SAML_ROLE_IB %>" />
 			<aui:option label="identity-provider" selected="<%= samlRole.equals(SamlProviderConfigurationKeys.SAML_ROLE_IDP) %>" value="<%= SamlProviderConfigurationKeys.SAML_ROLE_IDP %>" />
 			<aui:option label="service-provider" selected="<%= samlRole.equals(SamlProviderConfigurationKeys.SAML_ROLE_SP) %>" value="<%= SamlProviderConfigurationKeys.SAML_ROLE_SP %>" />
 		</aui:select>

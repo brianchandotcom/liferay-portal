@@ -112,7 +112,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
@@ -209,7 +208,11 @@ public class LayoutStagedModelDataHandlerTest
 			_groupLocalService.deleteGroup(stagingGroup.getGroupId());
 		}
 
-		GroupLocalServiceUtil.deleteGroup(liveGroup);
+		liveGroup = _groupLocalService.fetchGroup(liveGroup.getGroupId());
+
+		if (liveGroup != null) {
+			_groupLocalService.deleteGroup(liveGroup.getGroupId());
+		}
 
 		ServiceContextThreadLocal.popServiceContext();
 	}
@@ -453,6 +456,12 @@ public class LayoutStagedModelDataHandlerTest
 			TestPropsValues.getUserId(), liveGroup, false, false,
 			serviceContext);
 
+		String friendlyURL = StringPool.SLASH + RandomTestUtil.randomString();
+
+		liveLayout = _layoutLocalService.updateFriendlyURL(
+			TestPropsValues.getUserId(), liveLayout.getPlid(), friendlyURL,
+			liveLayout.getDefaultLanguageId());
+
 		stagingGroup = liveGroup.getStagingGroup();
 
 		initExport();
@@ -471,8 +480,8 @@ public class LayoutStagedModelDataHandlerTest
 		ContentLayoutTestUtil.publishLayout(stagingDraftLayout, stagingLayout);
 
 		stagingLayout = _layoutLocalService.updateFriendlyURL(
-			TestPropsValues.getUserId(), stagingLayout.getPlid(),
-			liveLayout.getFriendlyURL(), stagingLayout.getDefaultLanguageId());
+			TestPropsValues.getUserId(), stagingLayout.getPlid(), friendlyURL,
+			stagingLayout.getDefaultLanguageId());
 
 		Assert.assertEquals(
 			stagingLayout.getFriendlyURL(), liveLayout.getFriendlyURL());

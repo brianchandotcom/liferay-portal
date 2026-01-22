@@ -248,20 +248,7 @@ public class BuildHistoryReport {
 
 		StringBuilder sb = new StringBuilder();
 
-		try {
-			long maxNodeCount = Long.parseLong(
-				JenkinsResultsParserUtil.getBuildProperty(
-					"report.ci.max.node.count"));
-
-			if (maxNodeCount != 0) {
-				sb.append("var maxWeeklyServerDurationMillis = ");
-				sb.append(maxNodeCount * 7 * 24 * 60 * 60 * 1000);
-				sb.append(";\n");
-			}
-		}
-		catch (IOException ioException) {
-			System.out.println("Unable to get report.ci.max.node.count");
-		}
+		sb.append(_getWeeklyServerDurationJavaScriptVariable());
 
 		sb.append(
 			_getTableDataJSFileContent(
@@ -428,6 +415,27 @@ public class BuildHistoryReport {
 		catch (MalformedURLException malformedURLException) {
 			return null;
 		}
+	}
+
+	private static String _getWeeklyServerDurationJavaScriptVariable() {
+		StringBuilder sb = new StringBuilder();
+
+		try {
+			long maxNodeCount = Long.parseLong(
+				JenkinsResultsParserUtil.getBuildProperty(
+					"report.ci.max.node.count"));
+
+			if (maxNodeCount != 0) {
+				sb.append("var maxWeeklyServerDurationMillis = ");
+				sb.append(maxNodeCount * 7 * 24 * 60 * 60 * 1000);
+				sb.append(";\n");
+			}
+		}
+		catch (IOException ioException) {
+			System.out.println("Unable to get report.ci.max.node.count");
+		}
+
+		return sb.toString();
 	}
 
 	private static BuildHistoryReport _newTestSuiteReport(

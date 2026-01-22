@@ -54,6 +54,11 @@ public abstract class BaseTestTaskReport implements TestTaskReport {
 	}
 
 	@Override
+	public TopLevelBuildReport getTopLevelBuildReport() {
+		return _downstreamBuildReport.getTopLevelBuildReport();
+	}
+
+	@Override
 	public boolean isMissing() {
 		if (getDuration() <= 0) {
 			return true;

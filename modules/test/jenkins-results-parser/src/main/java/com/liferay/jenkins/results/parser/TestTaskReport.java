@@ -18,6 +18,8 @@ public interface TestTaskReport {
 
 	public long getOverheadDuration();
 
+	public TopLevelBuildReport getTopLevelBuildReport();
+
 	public boolean isMissing();
 
 }

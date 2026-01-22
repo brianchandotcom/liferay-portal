@@ -355,7 +355,7 @@ testWithExportImportAtInstanceLevelFF(
 
 		const applicationName = `${normalizeRestPath(objectDefinition.restContextPath)}`;
 		
-		let objectEntry;
+		let objectEntry: ObjectEntry;
 
 		try {
 			objectEntry = await apiHelpers.objectEntry.postObjectEntry(

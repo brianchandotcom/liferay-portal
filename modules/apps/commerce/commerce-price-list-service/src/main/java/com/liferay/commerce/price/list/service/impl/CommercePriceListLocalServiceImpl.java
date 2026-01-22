@@ -712,10 +712,19 @@ public class CommercePriceListLocalServiceImpl
 
 			BigDecimal originalPrice = commercePriceEntry.getPrice();
 
-			BigDecimal lowestPrice = new BigDecimal(String.valueOf(result[1]));
+			BigDecimal lowestPrice = originalPrice;
 
-			if (BigDecimalUtil.eq(lowestPrice, BigDecimal.ZERO)) {
-				lowestPrice = originalPrice;
+			if (result[1] != null) {
+				BigDecimal priceFromQuery = new BigDecimal(
+					String.valueOf(result[1]));
+
+				if (!BigDecimalUtil.eq(BigDecimal.ZERO, priceFromQuery)) {
+					lowestPrice = priceFromQuery;
+				}
+			}
+
+			if (result[3] == null) {
+				return null;
 			}
 
 			long cProductId = (Long)result[3];

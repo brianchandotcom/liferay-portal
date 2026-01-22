@@ -957,6 +957,16 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"digitalSalesRoomTemplateId", additionalAssertFieldName)) {
+
+				if (digitalSalesRoom.getDigitalSalesRoomTemplateId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"externalReferenceCode", additionalAssertFieldName)) {
 
 				if (digitalSalesRoom.getExternalReferenceCode() == null) {
@@ -1260,6 +1270,19 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 				if (!Objects.deepEquals(
 						digitalSalesRoom1.getDescription(),
 						digitalSalesRoom2.getDescription())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"digitalSalesRoomTemplateId", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						digitalSalesRoom1.getDigitalSalesRoomTemplateId(),
+						digitalSalesRoom2.getDigitalSalesRoomTemplateId())) {
 
 					return false;
 				}
@@ -1726,6 +1749,11 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("digitalSalesRoomTemplateId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("externalReferenceCode")) {
 			Object object = digitalSalesRoom.getExternalReferenceCode();
 
@@ -2102,6 +2130,7 @@ public abstract class BaseDigitalSalesRoomResourceTestCase {
 				createDate = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				digitalSalesRoomTemplateId = RandomTestUtil.randomLong();
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				friendlyUrlPath = StringUtil.toLowerCase(

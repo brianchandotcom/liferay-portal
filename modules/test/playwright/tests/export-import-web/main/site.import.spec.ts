@@ -343,72 +343,57 @@ test('Can import a lar file selecting some items to import', async ({
 testWithExportImportAtInstanceLevelFF(
 	'Can only import site level custom object entries when their definitions are already in the system',
 	async ({apiHelpers, exportImportPage}) => {
-		let applicationName;
-		let exportFilePath;
 		const objectDefinitionExternalReferenceCode = `ObjectDefinition${getRandomInt()}`;
-		let objectDefinition;
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				className: `com.liferay.object.model.ObjectDefinition#${objectDefinitionExternalReferenceCode}`,
+				objectDefinitionExternalReferenceCode,
+				scope: 'site',
+				status: {code: 0},
+			});
+
+		const applicationName = `${normalizeRestPath(objectDefinition.restContextPath)}`;
+		
 		let objectEntry;
 
-		await test.step('Create the object definition', async () => {
-			objectDefinition =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					className: `com.liferay.object.model.ObjectDefinition#${objectDefinitionExternalReferenceCode}`,
-					objectDefinitionExternalReferenceCode,
-					scope: 'site',
-					status: {code: 0},
-				});
-
-			applicationName = `${normalizeRestPath(objectDefinition.restContextPath)}`;
-		});
-
-		await test.step('Create the object entry', async () => {
-			try {
-				objectEntry = await apiHelpers.objectEntry.postObjectEntry(
-					{externalReferenceCode: 'testERC', textField: 'test'},
-					`${applicationName}/scopes/Guest`
-				);
-			}
-			catch {
-
-				// Ensure cleanup if test execution stops before removing the object definition.
-
-				apiHelpers.data.push({
-					id: objectDefinition.id,
-					type: 'objectDefinition',
-				});
-			}
-		});
-
-		await testWithExportImportAtInstanceLevelFF.step('Export', async () => {
-			await exportImportPage.goToExport();
-
-			exportFilePath = await exportImportPage.export({
-				portletLabels: [
-					`${objectDefinitionExternalReferenceCode} 1 Items`,
-				],
-			});
-		});
-
-		await test.step('Delete the object definition', async () => {
-			const objectDefinitionAPIClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
-
-			await objectDefinitionAPIClient.deleteObjectDefinition(
-				objectDefinition.id
+		try {
+			objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+				{externalReferenceCode: 'testERC', textField: 'test'},
+				`${applicationName}/scopes/Guest`
 			);
+		}
+		catch {
+
+			// Ensure cleanup if test execution stops before removing the object definition.
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+		}
+
+		await exportImportPage.goToExport();
+
+		const exportFilePath = await exportImportPage.export({
+			portletLabels: [
+				`${objectDefinitionExternalReferenceCode} 1 Items`,
+			],
 		});
 
-		await testWithExportImportAtInstanceLevelFF.step(
-			'Fail importing',
-			async () => {
-				await exportImportPage.goToImport();
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
-				await exportImportPage.import({
-					expectedUploadErrorMessage: `The Data Handler for the "${objectDefinitionExternalReferenceCode}" portlet is missing from the system.`,
-					filePath: exportFilePath,
-				});
-			}
+		await objectDefinitionAPIClient.deleteObjectDefinition(
+			objectDefinition.id
 		);
+
+		await exportImportPage.goToImport();
+
+		await exportImportPage.import({
+			expectedUploadErrorMessage: `The Data Handler for the "${objectDefinitionExternalReferenceCode}" portlet is missing from the system.`,
+			filePath: exportFilePath,
+		});
 
 		await test.step('Recreate the object definition', async () => {
 			const objectDefinition2 =
@@ -425,26 +410,22 @@ testWithExportImportAtInstanceLevelFF(
 			});
 		});
 
-		await testWithExportImportAtInstanceLevelFF.step('Import', async () => {
-			await exportImportPage.goToImport();
+		await exportImportPage.goToImport();
 
-			await exportImportPage.import({
-				filePath: exportFilePath,
-			});
+		await exportImportPage.import({
+			filePath: exportFilePath,
 		});
 
-		await test.step('Validate the import', async () => {
-			expect(
-				await apiHelpers.get(
-					`${apiHelpers.baseUrl}${applicationName}/scopes/Guest/by-external-reference-code/${objectEntry.externalReferenceCode}`
-				)
-			).toEqual(
-				expect.objectContaining({
-					externalReferenceCode: objectEntry.externalReferenceCode,
-					textField: objectEntry.textField,
-				})
-			);
-		});
+		expect(
+			await apiHelpers.get(
+				`${apiHelpers.baseUrl}${applicationName}/scopes/Guest/by-external-reference-code/${objectEntry.externalReferenceCode}`
+			)
+		).toEqual(
+			expect.objectContaining({
+				externalReferenceCode: objectEntry.externalReferenceCode,
+				textField: objectEntry.textField,
+			})
+		);
 	}
 );
 

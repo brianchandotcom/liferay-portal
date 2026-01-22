@@ -1122,60 +1122,47 @@ test('Can import at instance level when LAR contains custom objects without exis
 	companyExportImportPage,
 	exportImportPage,
 }) => {
-	let applicationName;
-	let exportFilePath;
 	const objectDefinitionExternalReferenceCode = `ObjectDefinition${getRandomInt()}`;
-	let objectDefinition;
 
-	await test.step('Create the object definition', async () => {
-		objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				className: `com.liferay.object.model.ObjectDefinition#${objectDefinitionExternalReferenceCode}`,
-				objectDefinitionExternalReferenceCode,
-				status: {code: 0},
-			});
-
-		applicationName = `${normalizeRestPath(objectDefinition.restContextPath)}`;
-	});
-
-	await test.step('Create the object entry', async () => {
-		try {
-			await apiHelpers.objectEntry.postObjectEntry(
-				{externalReferenceCode: 'testERC', textField: 'test'},
-				applicationName
-			);
-		}
-		catch {
-
-			// Ensure cleanup if test execution stops before removing the object definition.
-
-			apiHelpers.data.push({
-				id: objectDefinition.id,
-				type: 'objectDefinition',
-			});
-		}
-	});
-
-	await test.step('Export', async () => {
-		await applicationsMenuPage.goToExport();
-
-		exportFilePath = await exportImportPage.export({
-			portletLabels: [`${objectDefinitionExternalReferenceCode} 1 Items`],
+	const objectDefinition =
+		await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			className: `com.liferay.object.model.ObjectDefinition#${objectDefinitionExternalReferenceCode}`,
+			objectDefinitionExternalReferenceCode,
+			status: {code: 0},
 		});
-	});
 
-	await test.step('Delete the object definition', async () => {
-		const objectDefinitionAPIClient =
-			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+	const applicationName = `${normalizeRestPath(objectDefinition.restContextPath)}`;
 
-		await objectDefinitionAPIClient.deleteObjectDefinition(
-			objectDefinition.id
+	try {
+		await apiHelpers.objectEntry.postObjectEntry(
+			{externalReferenceCode: 'testERC', textField: 'test'},
+			applicationName
 		);
+	}
+	catch {
+
+		// Ensure cleanup if test execution stops before removing the object definition.
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+	}
+
+	await applicationsMenuPage.goToExport();
+
+	const exportFilePath = await exportImportPage.export({
+		portletLabels: [`${objectDefinitionExternalReferenceCode} 1 Items`],
 	});
 
-	await test.step('Import', async () => {
-		await companyExportImportPage.import({
-			filePath: exportFilePath,
-		});
+	const objectDefinitionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+	await objectDefinitionAPIClient.deleteObjectDefinition(
+		objectDefinition.id
+	);
+
+	await companyExportImportPage.import({
+		filePath: exportFilePath,
 	});
 });

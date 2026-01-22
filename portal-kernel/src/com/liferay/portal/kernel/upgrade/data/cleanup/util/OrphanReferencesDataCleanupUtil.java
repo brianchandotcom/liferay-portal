@@ -292,10 +292,17 @@ public class OrphanReferencesDataCleanupUtil {
 			sb.append(StringPool.SPACE);
 			sb.append(aliasTableName);
 			sb.append(" on ");
-			sb.append(aliasTableName);
-			sb.append(StringPool.PERIOD);
-			sb.append(targetColumnName);
-			sb.append(" = ");
+
+			if ((customJoinClauses == null) ||
+				(customJoinClauses[index] == null) ||
+				!customJoinClauses[index].startsWith(
+					"[$TARGET_TABLE_ALIAS$]")) {
+
+				sb.append(aliasTableName);
+				sb.append(StringPool.PERIOD);
+				sb.append(targetColumnName);
+				sb.append(" = ");
+			}
 
 			if ((customJoinClauses != null) &&
 				(customJoinClauses[index] != null)) {
@@ -356,10 +363,16 @@ public class OrphanReferencesDataCleanupUtil {
 		sb.append(" where (");
 
 		for (int i = 0; i < targetColumnNames.length; i++) {
-			sb.append(targetTableName);
-			sb.append(StringPool.PERIOD);
-			sb.append(targetColumnNames[i]);
-			sb.append(" = ");
+			if ((customJoinClauses == null) || (customJoinClauses[i] == null) ||
+				(!customJoinClauses[i].startsWith("CAST") &&
+				 !customJoinClauses[i].startsWith("CONVERT") &&
+				 !customJoinClauses[i].startsWith("[$TARGET_TABLE_ALIAS$]"))) {
+
+				sb.append(targetTableName);
+				sb.append(StringPool.PERIOD);
+				sb.append(targetColumnNames[i]);
+				sb.append(" = ");
+			}
 
 			if ((customJoinClauses != null) && (customJoinClauses[i] != null)) {
 				sb.append(

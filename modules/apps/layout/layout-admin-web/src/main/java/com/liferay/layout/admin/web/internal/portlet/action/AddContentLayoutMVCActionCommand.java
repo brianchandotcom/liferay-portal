@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -124,8 +125,15 @@ public class AddContentLayoutMVCActionCommand
 				String masterLayoutPageTemplateEntryERC = null;
 
 				if (layoutPageTemplateEntry != null) {
-					masterLayoutPageTemplateEntryERC =
-						layoutPageTemplateEntry.getExternalReferenceCode();
+					Layout layoutPageTemplateEntryLayout =
+						_layoutLocalService.fetchLayout(
+							layoutPageTemplateEntry.getPlid());
+
+					if (layoutPageTemplateEntryLayout != null) {
+						masterLayoutPageTemplateEntryERC =
+							layoutPageTemplateEntryLayout.
+								getMasterLayoutPageTemplateEntryERC();
+					}
 				}
 
 				layout = _layoutService.addLayout(
@@ -178,6 +186,9 @@ public class AddContentLayoutMVCActionCommand
 				actionRequest, actionResponse, exception);
 		}
 	}
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private LayoutPageTemplateEntryLocalService

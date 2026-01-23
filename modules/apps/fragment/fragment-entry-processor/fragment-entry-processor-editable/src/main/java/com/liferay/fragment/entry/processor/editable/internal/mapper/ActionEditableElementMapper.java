@@ -78,7 +78,6 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 				_getClassPK(
 					infoItemFieldMapped,
 					fragmentEntryProcessorContext.getScopeGroupId())));
-
 		element.attr("data-lfr-field-id", infoItemFieldMapped.getFieldName());
 
 		_addDataAtributes(

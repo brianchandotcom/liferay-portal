@@ -38,6 +38,9 @@ import java.util.Map;
  */
 public class LiferayWebSearchEngine implements WebSearchEngine {
 
+	public LiferayWebSearchEngine() {
+	}
+
 	public LiferayWebSearchEngine(String blueprintExternalReferenceCode) {
 		_blueprintExternalReferenceCode = blueprintExternalReferenceCode;
 	}
@@ -116,12 +119,18 @@ public class LiferayWebSearchEngine implements WebSearchEngine {
 				url = searchResult.getItemURL();
 			}
 
+			float score = searchResult.getScore();
+
+			if (score < 5) {
+				continue;
+			}
+
 			webSearchOrganicResults.add(
 				WebSearchOrganicResult.from(
 					searchResult.getTitle(),
 					URI.create(URLEncoder.encode(url, "UTF-8")), null,
 					searchResult.getDescription(),
-					Map.of("score", String.valueOf(searchResult.getScore()))));
+					Map.of("score", String.valueOf(score))));
 		}
 
 		return WebSearchResults.from(
@@ -132,6 +141,6 @@ public class LiferayWebSearchEngine implements WebSearchEngine {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayWebSearchEngine.class);
 
-	private final String _blueprintExternalReferenceCode;
+	private String _blueprintExternalReferenceCode;
 
 }

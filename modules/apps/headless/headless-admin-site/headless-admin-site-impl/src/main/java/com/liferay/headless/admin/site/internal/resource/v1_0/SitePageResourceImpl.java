@@ -616,11 +616,9 @@ public class SitePageResourceImpl
 		serviceContext.setAttribute(
 			"portletLayoutPageTemplateEntryERC",
 			itemExternalReference.getExternalReferenceCode());
-
 		serviceContext.setAttribute(
 			"portletLayoutPageTemplateEntryLinkEnabled",
 			widgetPageSettings.getInheritChanges());
-
 		serviceContext.setAttribute(
 			"portletLayoutPageTemplateEntryScopeERC",
 			ItemScopeUtil.getItemScopeExternalReferenceCode(

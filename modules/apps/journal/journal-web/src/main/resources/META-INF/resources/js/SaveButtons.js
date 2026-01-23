@@ -96,11 +96,7 @@ export default function SaveButtons({
 		);
 	}, [portletNamespace]);
 
-	const onClick = async (action, directSubmit = false) => {
-		if (!(await validateRequiredFields(formId))) {
-			return;
-		}
-
+	const validateDefaultLanguageTitle = () => {
 		const titleInputComponent = Liferay.component(
 			`${portletNamespace}titleMapAsXML`
 		);
@@ -115,6 +111,18 @@ export default function SaveButtons({
 				)
 			);
 
+			return false;
+		}
+
+		return true;
+	};
+
+	const onClick = async (action, directSubmit = false) => {
+		if (!(await validateRequiredFields(formId))) {
+			return;
+		}
+
+		if (!validateDefaultLanguageTitle()) {
 			return;
 		}
 
@@ -128,6 +136,19 @@ export default function SaveButtons({
 			publishModalAction: action,
 			publishModalVisible: true,
 		});
+	};
+
+	const onScheduleButtonClick = async () => {
+		if (await validateRequiredFields(formId)) {
+			if (!validateDefaultLanguageTitle()) {
+				return;
+			}
+
+			setPublishModalState({
+				publishModalAction: ACTION_SCHEDULE,
+				publishModalVisible: true,
+			});
+		}
 	};
 
 	const handleButtonClick = (action) => {
@@ -306,15 +327,9 @@ export default function SaveButtons({
 					)}
 
 					<ClayDropDown.Item
-						onClick={async () => {
-							if (await validateRequiredFields(formId)) {
-								setPublishModalState({
-									publishModalAction: ACTION_SCHEDULE,
-									publishModalVisible: true,
-								});
-							}
-						}}
+						onClick={onScheduleButtonClick}
 						symbolLeft="date-time"
+						type="button"
 					>
 						{workflowEnabled
 							? Liferay.Language.get(

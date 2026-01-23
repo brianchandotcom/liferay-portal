@@ -232,7 +232,7 @@ export default withRouter(
 													</ClayButton>
 													<Modal
 														body={Liferay.Language.get(
-															'do-you-want-to-delete–this-answer'
+															'do-you-want-to-delete-this-answer'
 														)}
 														callback={() => {
 															deleteMessage({

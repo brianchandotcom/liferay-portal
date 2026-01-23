@@ -24,7 +24,7 @@ export default withRouter(
 				{question.actions && question.actions.delete && (
 					<Modal
 						body={Liferay.Language.get(
-							'do-you-want-to-delete–this-question'
+							'do-you-want-to-delete-this-question'
 						)}
 						callback={() => {
 							deleteThread({

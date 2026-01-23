@@ -67,7 +67,7 @@ public class DatabaseTableAndColumnCaseDataCleanupPreupgradeProcess
 				}
 				catch (PortalException portalException) {
 					_log.error(
-						"Failed to get table names for company " + companyId,
+						"Unable to get table names for company " + companyId,
 						portalException);
 				}
 			});

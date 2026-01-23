@@ -29,14 +29,23 @@ public class ActionUtil {
 
 	public static String getAddTaskURL(
 		long groupId, ObjectDefinition objectDefinition, long objectEntryId,
-		ThemeDisplay themeDisplay) {
+		String redirect, ThemeDisplay themeDisplay) {
 
 		return StringBundler.concat(
 			themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
 			GroupConstants.CMS_FRIENDLY_URL, "/add_task?objectDefinitionId=",
 			objectDefinition.getObjectDefinitionId(), "&plid=",
 			themeDisplay.getPlid(), "&projectGroupId=", groupId, "&projectId=",
-			objectEntryId, "&redirect=", themeDisplay.getURLCurrent());
+			objectEntryId, "&redirect=", redirect);
+	}
+
+	public static String getAddTaskURL(
+		long groupId, ObjectDefinition objectDefinition, long objectEntryId,
+		ThemeDisplay themeDisplay) {
+
+		return getAddTaskURL(
+			groupId, objectDefinition, objectEntryId,
+			themeDisplay.getURLCurrent(), themeDisplay);
 	}
 
 	public static String getBaseEditProjectURL(

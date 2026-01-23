@@ -9,3 +9,7 @@ dependencies {
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
 }
+
+packageRunBuild {
+	inputs.dir "clay"
+}

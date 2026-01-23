@@ -41,37 +41,41 @@ liferay-default:
                           - |
                                 set -e
 
-                                local deploy_dir="/temp/liferay/deploy"
-                                local filename_prefix="com.liferay.portal.search.opensearch2"
-                                local product_version={{.image.tag}}
+                                function main {
+                                    local deploy_dir="/temp/liferay/deploy"
+                                    local filename_prefix="com.liferay.portal.search.opensearch2"
+                                    local product_version="{{.image.tag}}"
 
-                                local base_url="https://releases.liferay.com/opensearch2/dxp/${product_version}/${filename_prefix}"
-
-                                if ! ls "/temp/osgi/modules/${filename_prefix}"* 1> /dev/null 2>&1
-                                then
-                                    rm --verbose "/temp/osgi/modules/${filename_prefix}"*
-                                fi
-
-                                mkdir -p "$deploy_dir"
-
-                                for type in api impl; do
-                                    local http_code=$(\
-                                        curl \
-                                            "${base_url}.${type}.jar" \
-                                            --location \
-                                            --output-dir "$deploy_dir" \
-                                            --remote-name \
-                                            --retry 5 \
-                                            --retry-all-errors \
-                                            --retry-delay 2 \
-                                            --write-out "%{http_code}")
-
-                                    if [ "${http_code}" != "200" ]
+                                    if ls "/temp/osgi/modules/${filename_prefix}"* 1> /dev/null 2>&1
                                     then
-                                        echo "Unable to download OpenSearch modules for Product Version ${product_version}. Status code: ${http_code}" >&2
-                                        exit 1
+                                        rm --verbose "/temp/osgi/modules/${filename_prefix}"*
                                     fi
-                                done
+
+                                    mkdir -p "$deploy_dir"
+
+                                    local base_url="https://releases.liferay.com/opensearch2/dxp/${product_version}/${filename_prefix}"
+
+                                    for type in api impl; do
+                                        local http_code=$(\
+                                            curl \
+                                                "${base_url}.${type}.jar" \
+                                                --location \
+                                                --output-dir "$deploy_dir" \
+                                                --remote-name \
+                                                --retry 5 \
+                                                --retry-all-errors \
+                                                --retry-delay 2 \
+                                                --write-out "%{http_code}")
+
+                                        if [ "${http_code}" != "200" ]
+                                        then
+                                            echo "Unable to download OpenSearch modules for Product Version ${product_version}. Status code: ${http_code}" >&2
+                                            exit 1
+                                        fi
+                                    done
+                                }
+
+                                main
                       image: {{printf "%s:%s" .image.repository (.image.tag | toString)}}
                       name: liferay-install-opensearch-modules
                       volumeMounts:

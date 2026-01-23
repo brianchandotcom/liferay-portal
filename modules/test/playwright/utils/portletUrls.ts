@@ -28,6 +28,7 @@ export const PORTLET_URLS = {
 	cmsNewVocabulary: 'web/cms/categorization/new-vocabulary',
 	cmsPicklistBuilder: 'web/cms/picklist-builder',
 	cmsRecycleBin: 'web/cms/recycle-bin',
+	cmsSharedWithMe: 'web/cms/shared-with-me',
 	cmsStructureBuilder: 'web/cms/structure-builder',
 	cmsStructures: 'web/cms/structures',
 	cmsTags: 'web/cms/categorization/view-tags',

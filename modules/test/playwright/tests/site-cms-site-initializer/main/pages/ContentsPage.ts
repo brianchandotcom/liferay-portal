@@ -271,6 +271,25 @@ export class ContentsPage {
 		});
 	}
 
+	async shareContent(title: string) {
+		const card = this.page
+			.locator('tr', {hasText: title})
+			.or(this.page.locator('.card-row', {hasText: title}));
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {
+				exact: true,
+				name: 'Share',
+			}),
+			trigger: card.locator('button'),
+		});
+
+		await expect(
+			this.page.getByRole('dialog', {name: title})
+		).toBeVisible();
+	}
+
 	async translateContent(title: string) {
 		const card = this.page
 			.locator('tr', {hasText: title})

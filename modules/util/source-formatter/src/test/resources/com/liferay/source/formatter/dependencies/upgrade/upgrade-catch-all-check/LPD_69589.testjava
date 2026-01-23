@@ -1,0 +1,72 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Rubens Soares
+ */
+public class LPD_69589 {
+
+	public void method(
+		long userId, long groupId, long parentStructureId, long classNameId,
+		String structureKey, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, DDMForm ddmForm,
+		DDMFormLayout ddmFormLayout, String storageType, int type,
+		ServiceContext serviceContext) {
+
+		DDMStructureLocalServiceUtil.addStructure(
+			userId, groupId, parentStructureId, classNameId, structureKey,
+			nameMap, descriptionMap, ddmForm, ddmFormLayout, storageType, type,
+			serviceContext);
+		_ddmStructureLocalService.addStructure(
+			123, groupId, parentStructureId, classNameId, structureKey, nameMap,
+			descriptionMap, ddmForm, ddmFormLayout, storageType, type,
+			serviceContext);
+		_ddmStructureLocalService.addStructure(
+			userId, groupId, parentStructureId, classNameId, structureKey,
+			nameMap, descriptionMap, ddmForm, ddmFormLayout, storageType, type,
+			serviceContext);
+	}
+
+	public void method(
+		long userId, long groupId, long parentStructureId, long classNameId,
+		String structureKey, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, String definition,
+		String storageType, ServiceContext serviceContext) {
+
+		DDMStructureLocalServiceUtil.addStructure(
+			userId, groupId, parentStructureId, classNameId, structureKey,
+			nameMap, descriptionMap, definition, storageType, serviceContext);
+		_ddmStructureLocalService.addStructure(
+			123, groupId, parentStructureId, classNameId, structureKey, nameMap,
+			descriptionMap, definition, storageType, serviceContext);
+		_ddmStructureLocalService.addStructure(
+			userId, groupId, parentStructureId, classNameId, structureKey,
+			nameMap, descriptionMap, definition, storageType, serviceContext);
+	}
+
+	public void method(
+		long userId, long structureId, long parentStructureId,
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		String definition, ServiceContext serviceContext) {
+
+		DDMStructureLocalServiceUtil.updateStructure(
+			userId, structureId, parentStructureId, nameMap, descriptionMap,
+			definition, serviceContext);
+		_ddmStructureLocalService.updateStructure(
+			123, structureId, parentStructureId, nameMap, descriptionMap,
+			definition, serviceContext);
+		_ddmStructureLocalService.updateStructure(
+			userId, structureId, parentStructureId, nameMap, descriptionMap,
+			definition, serviceContext);
+	}
+
+	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
+
+}

@@ -139,7 +139,8 @@ public class SuggestSearchRequestExecutorImpl
 			entry.addOption(
 				new SuggestSearchResult.Entry.Option(
 					completionSuggestOption.text(),
-					ConversionUtil.toFloat(completionSuggestOption.score())));
+					ConversionUtil.toFloat(completionSuggestOption.score()),
+					completionSuggestOption.collateMatch()));
 		}
 
 		return entry;
@@ -157,7 +158,8 @@ public class SuggestSearchRequestExecutorImpl
 			SuggestSearchResult.Entry.Option option =
 				new SuggestSearchResult.Entry.Option(
 					phraseSuggestOption.text(),
-					ConversionUtil.toFloat(phraseSuggestOption.score()));
+					ConversionUtil.toFloat(phraseSuggestOption.score()),
+					phraseSuggestOption.collateMatch());
 
 			SetterUtil.setNotBlankString(
 				option::setHighlightedText, phraseSuggestOption.highlighted());

@@ -120,14 +120,41 @@ const SelectSubscription = ({
 		};
 	}, [handleProduct]);
 
-	const productVersions = useMemo(() => {
-		if (generateFormValues?.versions) {
-			return generateFormValues.versions.sort((a, b) =>
-				a.label >= b.label ? 1 : -1
-			);
+	const parseVersion = (label = '') => {
+		const quarterly = label.match(/^(\d{4})\.Q(\d)$/);
+
+		if (quarterly) {
+			return {
+				isQuarterly: true,
+				value: Number(quarterly[1]) * 10 + Number(quarterly[2]),
+			};
 		}
 
-		return [];
+		const version = label.match(/^(\d+(\.\d+)?)/);
+
+		return {isQuarterly: false, value: version ? Number(version[1]) : -1};
+	};
+
+	const productVersions = useMemo(() => {
+		const versions = generateFormValues?.versions;
+		if (!versions) {
+			return [];
+		}
+
+		return [...versions]
+			.filter((value) =>
+				/^\d{4}\.Q\d$|^\d+(\.\d+)?(\s|[A-Z]|$)/.test(value.label || '')
+			)
+			.sort((a, b) => {
+				const sortQuarterlyA = parseVersion(a.label);
+				const sortQuarterlyB = parseVersion(b.label);
+
+				if (sortQuarterlyA.isQuarterly !== sortQuarterlyB.isQuarterly) {
+					return sortQuarterlyA.isQuarterly ? -1 : 1;
+				}
+
+				return sortQuarterlyB.value - sortQuarterlyA.value;
+			});
 	}, [generateFormValues?.versions]);
 
 	useEffect(() => {

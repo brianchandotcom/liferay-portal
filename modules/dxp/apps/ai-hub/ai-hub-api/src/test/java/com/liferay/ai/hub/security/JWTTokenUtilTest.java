@@ -50,37 +50,31 @@ public class JWTTokenUtilTest {
 	}
 
 	@Test
-	public void testGetUserId() {
+	public void testGetUserId() throws Exception {
 		String token = JWTTokenUtil.generateToken(
 			TimeUnit.MINUTES.toMillis(1), _ISSUER, _USER_ID);
 
 		Assert.assertEquals(_USER_ID, JWTTokenUtil.getUserId(token));
-	}
-
-	@Test
-	public void testGetUserIdWithInvalidToken() throws Exception {
-		String token = JWTTokenUtil.generateToken(
-			TimeUnit.MINUTES.toMillis(1), _ISSUER, _USER_ID);
 
 		try (AutoCloseable autoCloseable =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
 					JWTTokenUtil.class, "_SECRET", _SECRET)) {
 
-			_testGetUserIdWithInvalidToken("Invalid JWT signature", token);
+			_testGetUserId("Invalid JWT signature", token);
 		}
 
-		_testGetUserIdWithInvalidToken(
+		_testGetUserId(
 			"Invalid JWT signature",
 			token.substring(0, token.length() - 5) + "abcde");
-		_testGetUserIdWithInvalidToken(
-			"The JWT token has been expired",
+		_testGetUserId(
+			"The JWT token is expired",
 			JWTTokenUtil.generateToken(0, _ISSUER, _USER_ID));
-		_testGetUserIdWithInvalidToken(
+		_testGetUserId(
 			"Unable to parse and verify the JWT token",
 			RandomTestUtil.randomString());
 	}
 
-	private void _testGetUserIdWithInvalidToken(
+	private void _testGetUserId(
 		String expectedLogMessage, String token) {
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(

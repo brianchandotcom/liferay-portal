@@ -194,6 +194,7 @@ definition {
 	@description = "Verify offline payment methods display in the orders page for orders placed with a new offline payment method. Verify this payment method can be changed to another offline payment method."
 	@priority = 5
 	test AssertAndEditNewPaymentMethodInOrdersPage {
+		property browser.chrome.version = "139.0";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
 
 import jakarta.portlet.PortletMode;
@@ -90,7 +91,8 @@ public class TaskDefinitionDisplayContext {
 			"/designer/edit_workflow_definition.jsp", namespace + "redirect",
 			_portal.getPortalURL(_httpServletRequest) +
 				_portal.getCurrentURL(_httpServletRequest),
-			namespace + "clearSessionMessage", true, namespace + "scope", "ai");
+			namespace + "clearSessionMessage", true, namespace + "scope",
+			WorkflowDefinitionConstants.SCOPE_AI);
 	}
 
 	private final HttpServletRequest _httpServletRequest;

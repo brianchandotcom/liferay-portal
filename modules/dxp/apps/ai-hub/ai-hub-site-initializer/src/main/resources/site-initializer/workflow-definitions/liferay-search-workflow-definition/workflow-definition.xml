@@ -5,11 +5,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
-	<name>Chat Message Pipeline</name>
+	<name>Liferay Search</name>
 	<description>This agent provides targeted support by searching the Liferay DXP instance for the most relevant data, ensuring every response is grounded in your specific environment.</description>
 	<version>1</version>
 	<llm>
-		<name>chatMessageHandler</name>
+		<name>liferaySearch</name>
 		<metadata>
 			<![CDATA[
 				{
@@ -22,14 +22,14 @@
 		</metadata>
 		<labels>
 			<label language-id="en_US">
-				Chat Message Pipeline
+				Liferay Search
 			</label>
 		</labels>
 		<input-variables>
 			<![CDATA[
 [
 	{
-		"name": "userMessage",
+		"name": "request",
 		"type": "string"
 	}
 ]
@@ -39,7 +39,7 @@
 			<![CDATA[
 [
 	{
-		"name": "assistantResponse",
+		"name": "response",
 		"type": "string"
 	}
 ]
@@ -73,7 +73,7 @@
 			</transition>
 		</transitions>
 		<user-message>
-			<![CDATA[{{userMessage}}]]>
+			<![CDATA[{{request}}]]>
 		</user-message>
 	</llm>
 	<state>
@@ -98,11 +98,11 @@
 			<transition>
 				<labels>
 					<label language-id="en_US">
-						Chat Message Pipeline
+						Liferay Search
 					</label>
 				</labels>
-				<name>chatMessageHandler</name>
-				<target>chatMessageHandler</target>
+				<name>liferaySearch</name>
+				<target>liferaySearch</target>
 				<default>true</default>
 			</transition>
 		</transitions>

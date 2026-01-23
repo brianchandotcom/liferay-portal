@@ -140,8 +140,7 @@ public class KaleoDesignerDisplayContextTest {
 	@Test
 	public void testIsReadOnly() {
 		_isReadOnly(WorkflowDefinitionConstants.NAME_CHANGE_TONE, true);
-		_isReadOnly(
-			WorkflowDefinitionConstants.NAME_CHAT_MESSAGE_PIPELINE, true);
+		_isReadOnly(WorkflowDefinitionConstants.NAME_LIFERAY_SEARCH, true);
 		_isReadOnly(
 			WorkflowDefinitionConstants.NAME_FIX_SPELLING_AND_GRAMMAR, true);
 		_isReadOnly(WorkflowDefinitionConstants.NAME_IMPROVE_WRITING, true);

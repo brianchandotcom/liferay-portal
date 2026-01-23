@@ -70,9 +70,8 @@ public class AIHubSiteInitializerTest {
 			WorkflowDefinitionConstants.EXTERNAL_REFERENCE_CODE_CHANGE_TONE,
 			WorkflowDefinitionConstants.NAME_CHANGE_TONE);
 		_assertWorkflowDefinitionExists(
-			WorkflowDefinitionConstants.
-				EXTERNAL_REFERENCE_CODE_CHAT_MESSAGE_PIPELINE,
-			WorkflowDefinitionConstants.NAME_CHAT_MESSAGE_PIPELINE);
+			WorkflowDefinitionConstants.EXTERNAL_REFERENCE_CODE_LIFERAY_SEARCH,
+			WorkflowDefinitionConstants.NAME_LIFERAY_SEARCH);
 		_assertWorkflowDefinitionExists(
 			WorkflowDefinitionConstants.
 				EXTERNAL_REFERENCE_CODE_FIX_SPELLING_AND_GRAMMAR,

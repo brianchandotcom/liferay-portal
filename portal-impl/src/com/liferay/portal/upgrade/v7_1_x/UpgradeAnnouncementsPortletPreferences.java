@@ -5,7 +5,6 @@
 
 package com.liferay.portal.upgrade.v7_1_x;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -24,21 +23,20 @@ public class UpgradeAnnouncementsPortletPreferences extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement preparedStatement1 = connection.prepareStatement(
-				StringBundler.concat(
-					"select companyId, preferences from PortletPreferences ",
-					"where portletId = '", _PORTLET_ID, "' AND ownerType = ?"));
+				"select companyId, preferences from PortletPreferences where " +
+					"portletId = ? and ownerType = ?");
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
-				StringBundler.concat(
-					"select portletPreferencesId, preferences from ",
-					"PortletPreferences where companyId = ? AND portletId = ? ",
-					"AND ownerType = ?"));
+				"select portletPreferencesId, preferences from " +
+					"PortletPreferences where companyId = ? and portletId = " +
+						"? and ownerType = ?");
 			PreparedStatement preparedStatement3 =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,
 					"update PortletPreferences set preferences = ? where " +
 						"portletPreferencesId = ?")) {
 
-			preparedStatement1.setInt(1, PortletKeys.PREFS_OWNER_TYPE_COMPANY);
+			preparedStatement1.setString(1, _PORTLET_ID);
+			preparedStatement1.setInt(2, PortletKeys.PREFS_OWNER_TYPE_COMPANY);
 
 			try (ResultSet resultSet1 = preparedStatement1.executeQuery()) {
 				while (resultSet1.next()) {

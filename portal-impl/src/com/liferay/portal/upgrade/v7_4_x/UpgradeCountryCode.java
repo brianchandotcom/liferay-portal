@@ -109,39 +109,45 @@ public class UpgradeCountryCode extends UpgradeProcess {
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				SQLTransformer.transform(
 					StringBundler.concat(
-						"select Country.countryId as countryId, ",
-						"User_.companyId as companyId, User_.languageId as ",
+						"select Country.countryId as countryId, User_.",
+						"companyId as companyId, User_.languageId as ",
 						"languageId, User_.userId as userId from User_ join ",
 						"Country on User_.companyId = Country.companyId where ",
-						"User_.defaultUser = [$TRUE$] and Country.a2 = '",
-						countryA2, "' and Country.countryId not in (select ",
-						"Country.countryId from Country join Region on ",
-						"Country.countryId = Region.countryId where ",
-						"Country.a2 = '", countryA2, "' and Region.regionCode ",
-						"= '", regionCode, "')")));
-			ResultSet resultSet = preparedStatement2.executeQuery()) {
+						"User_.defaultUser = [$TRUE$] and Country.a2 = ? and ",
+						"Country.countryId not in (select Country.countryId ",
+						"from Country join Region on Country.countryId = ",
+						"Region.countryId where Country.a2 = ? and Region.",
+						"regionCode = ?)")))) {
 
-			if (resultSet.next()) {
-				Timestamp now = new Timestamp(System.currentTimeMillis());
+			preparedStatement2.setString(1, countryA2);
+			preparedStatement2.setString(2, countryA2);
+			preparedStatement2.setString(3, regionCode);
 
-				preparedStatement1.setString(1, PortalUUIDUtil.generate());
-				preparedStatement1.setString(
-					2, resultSet.getString("languageId"));
-				preparedStatement1.setLong(3, increment());
-				preparedStatement1.setLong(4, resultSet.getLong("companyId"));
-				preparedStatement1.setLong(5, resultSet.getLong("userId"));
-				preparedStatement1.setTimestamp(6, now);
-				preparedStatement1.setTimestamp(7, now);
-				preparedStatement1.setLong(8, resultSet.getLong("countryId"));
-				preparedStatement1.setBoolean(9, true);
-				preparedStatement1.setString(10, regionName);
-				preparedStatement1.setDouble(11, 0.0);
-				preparedStatement1.setString(12, regionCode);
+			try (ResultSet resultSet = preparedStatement2.executeQuery()) {
+				if (resultSet.next()) {
+					Timestamp now = new Timestamp(System.currentTimeMillis());
 
-				preparedStatement1.addBatch();
+					preparedStatement1.setString(1, PortalUUIDUtil.generate());
+					preparedStatement1.setString(
+						2, resultSet.getString("languageId"));
+					preparedStatement1.setLong(3, increment());
+					preparedStatement1.setLong(
+						4, resultSet.getLong("companyId"));
+					preparedStatement1.setLong(5, resultSet.getLong("userId"));
+					preparedStatement1.setTimestamp(6, now);
+					preparedStatement1.setTimestamp(7, now);
+					preparedStatement1.setLong(
+						8, resultSet.getLong("countryId"));
+					preparedStatement1.setBoolean(9, true);
+					preparedStatement1.setString(10, regionName);
+					preparedStatement1.setDouble(11, 0.0);
+					preparedStatement1.setString(12, regionCode);
+
+					preparedStatement1.addBatch();
+				}
+
+				preparedStatement1.executeBatch();
 			}
-
-			preparedStatement1.executeBatch();
 		}
 	}
 

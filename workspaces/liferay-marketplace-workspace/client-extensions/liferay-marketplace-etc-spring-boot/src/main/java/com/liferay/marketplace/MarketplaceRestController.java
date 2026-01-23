@@ -51,8 +51,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
@@ -395,14 +393,7 @@ public class MarketplaceRestController extends BaseRestController {
 						modelCPDefinitionJSONObject.getLong("CProductId"))
 				).toString()
 			).put(
-				"[%CPDEFINITION_CREATEDATE%]",
-				ZonedDateTime.ofInstant(
-					product.getCreateDate(
-					).toInstant(),
-					ZoneOffset.UTC
-				).format(
-					DateTimeFormatter.ofPattern("MMMM d, yyyy")
-				)
+				"[%CPDEFINITION_CREATEDATE%]", _format(product.getCreateDate())
 			).put(
 				"[%CPDEFINITION_ID%]",
 				String.valueOf(
@@ -535,13 +526,17 @@ public class MarketplaceRestController extends BaseRestController {
 	}
 
 	private String _format(Date date) {
+		return _format(date, "Not Applicable");
+	}
+
+	private String _format(Date date, String defaultValue) {
 		if (date == null) {
-			return "Not Applicable";
+			return defaultValue;
 		}
 
 		return date.toInstant(
 		).atZone(
-			ZoneId.of("GMT")
+			ZoneId.of("UTC")
 		).format(
 			DateTimeFormatter.ofPattern("MMMM d, yyyy")
 		);
@@ -755,14 +750,7 @@ public class MarketplaceRestController extends BaseRestController {
 			).put(
 				"[%NET_PRICE_FORMATTED%]", order.getSubtotalFormatted()
 			).put(
-				"[%ORDER_DATE%]",
-				ZonedDateTime.ofInstant(
-					order.getCreateDate(
-					).toInstant(),
-					ZoneOffset.UTC
-				).format(
-					DateTimeFormatter.ofPattern("MMMM d, yyyy")
-				)
+				"[%ORDER_DATE%]", _format(order.getCreateDate())
 			).put(
 				"[%ORDER_ID%]", String.valueOf(order.getId())
 			).put(
@@ -788,14 +776,7 @@ public class MarketplaceRestController extends BaseRestController {
 				"[%SUBSCRIPTION_TYPE%]",
 				productSpecificationsMap.get("license-type")
 			).put(
-				"[%SUBSCRIPTION_STARTING_DATE%]",
-				ZonedDateTime.ofInstant(
-					order.getCreateDate(
-					).toInstant(),
-					ZoneOffset.UTC
-				).format(
-					DateTimeFormatter.ofPattern("MMMM d, yyyy")
-				)
+				"[%SUBSCRIPTION_STARTING_DATE%]", _format(order.getCreateDate())
 			).put(
 				"[%SUBSCRIPTION_EXPIRATION_DATE%]",
 				_format(

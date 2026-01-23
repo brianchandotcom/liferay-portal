@@ -38,11 +38,9 @@ public class DLFileEntryDataCleanupPreupgradeProcess
 	protected void doUpgrade() throws Exception {
 		DataCleanupPreupgradeProcess dlFileEntryDataCleanupPreupgradeProcess =
 			_getDLFileEntryDataCleanupPreupgradeProcess();
-
 		DataCleanupPreupgradeProcess
 			dlFileEntryEmptyNameDataCleanupPreupgradeProcess =
 				_getDLFileEntryEmptyNameDataCleanupPreupgradeProcess();
-
 		DataCleanupPreupgradeProcess
 			dlFileEntryPointingDLFileVersionDataCleanupPreupgradeProcess =
 				_getDLFileEntryPointingDLFileVersionDataCleanupPreupgradeProcess();

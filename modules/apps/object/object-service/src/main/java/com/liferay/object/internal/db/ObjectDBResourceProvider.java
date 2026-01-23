@@ -160,24 +160,13 @@ public class ObjectDBResourceProvider implements DBResourceProvider {
 		}
 
 		try (Connection connection = DataAccess.getConnection()) {
-			DBInspector dbInspector = new DBInspector(connection);
-
-			boolean hasModifiableColumn = dbInspector.hasColumn(
-				"ObjectDefinition", "modifiable");
-
-			StringBundler sb = new StringBundler(4);
-
-			sb.append("select dbTableName, objectDefinitionId, ");
-
-			if (hasModifiableColumn) {
-				sb.append("modifiable, ");
-			}
-
-			sb.append("pkObjectFieldDBColumnName, system_ from ");
-			sb.append("ObjectDefinition where companyId = ? and status = ?");
-
 			try (PreparedStatement preparedStatement =
-					connection.prepareStatement(sb.toString())) {
+					connection.prepareStatement(
+						StringBundler.concat(
+							"select dbTableName, modifiable, ",
+							"objectDefinitionId, pkObjectFieldDBColumnName, ",
+							"system_ from ObjectDefinition where companyId = ",
+							"? and status = ?"))) {
 
 				preparedStatement.setLong(1, companyId);
 				preparedStatement.setInt(2, WorkflowConstants.STATUS_APPROVED);
@@ -190,18 +179,11 @@ public class ObjectDBResourceProvider implements DBResourceProvider {
 						ObjectDefinition objectDefinition =
 							new ObjectDefinitionImpl() {
 								{
-									boolean modifiable = !resultSet.getBoolean(
-										"system_");
-
-									if (hasModifiableColumn) {
-										modifiable = resultSet.getBoolean(
-											"modifiable");
-									}
-
 									setCompanyId(companyId);
 									setDBTableName(
 										resultSet.getString("dbTableName"));
-									setModifiable(modifiable);
+									setModifiable(
+										resultSet.getBoolean("modifiable"));
 									setObjectDefinitionId(
 										resultSet.getLong(
 											"objectDefinitionId"));

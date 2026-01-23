@@ -956,7 +956,7 @@ public abstract class BaseBuild implements Build {
 		}
 
 		String jobURL = JenkinsResultsParserUtil.combine(
-			"https://", jenkinsMaster.getName(), ".liferay.com/job/", _jobName);
+			jenkinsMaster.getRemoteURL(), "job/", _jobName);
 
 		try {
 			return JenkinsResultsParserUtil.encode(jobURL);

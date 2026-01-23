@@ -391,10 +391,10 @@ const FrontendDataSetContent = ({
 		id,
 	});
 
-	const atomStable = useMemo(() => getAtom({atom, id}), [atom, id]);
+	const memoizedAtom = useMemo(() => getAtom({atom, id}), [atom, id]);
 
 	const [globalFDSState, setGlobalFDSState] =
-		useLiferayState<IFDSState>(atomStable);
+		useLiferayState<IFDSState>(memoizedAtom);
 
 	const [globalFDSStateInitialized, setGlobalFDSStateInitialized] =
 		useState(false);

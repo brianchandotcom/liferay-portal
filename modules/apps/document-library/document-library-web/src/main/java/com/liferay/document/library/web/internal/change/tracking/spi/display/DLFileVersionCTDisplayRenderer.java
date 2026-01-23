@@ -267,7 +267,7 @@ public class DLFileVersionCTDisplayRenderer
 
 		return store.getFileAsStream(
 			dlFileVersion.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-			dlFileEntry.getName(), parts[0]);
+			dlFileEntry.getName(), dlFileVersion.getStoreFileName());
 	}
 
 	@Override

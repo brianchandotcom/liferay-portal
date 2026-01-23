@@ -70,17 +70,16 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
+		_commerceChannel = CommerceTestUtil.addCommerceChannel(
+			testGroup.getGroupId(), RandomTestUtil.randomString());
+
 		_user = UserTestUtil.addUser(testCompany);
 
 		_accountEntry = CommerceAccountTestUtil.getPersonAccountEntry(
 			_user.getUserId());
-
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			testCompany.getCompanyId(), testGroup.getGroupId(),
 			_user.getUserId());
-
-		_commerceChannel = CommerceTestUtil.addCommerceChannel(
-			testGroup.getGroupId(), RandomTestUtil.randomString());
 	}
 
 	@Override

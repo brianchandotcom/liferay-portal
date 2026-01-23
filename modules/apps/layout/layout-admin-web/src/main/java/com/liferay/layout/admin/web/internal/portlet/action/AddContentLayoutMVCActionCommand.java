@@ -94,7 +94,6 @@ public class AddContentLayoutMVCActionCommand
 				serviceContext.setAttribute(
 					"portletLayoutPageTemplateEntryERC",
 					layoutPageTemplateEntry.getExternalReferenceCode());
-
 				serviceContext.setAttribute(
 					"portletLayoutPageTemplateEntryScopeERC",
 					ScopeUtil.getItemScopeExternalReferenceCode(

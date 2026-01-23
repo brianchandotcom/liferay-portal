@@ -56,9 +56,15 @@ public class JWTTokenUtilTest {
 
 		Assert.assertEquals(_USER_ID, JWTTokenUtil.getUserId(token));
 
+		byte[] secret = new byte[64];
+
+		for (int i = 0; i < secret.length; i++) {
+			secret[i] = SecureRandomUtil.nextByte();
+		}
+
 		try (AutoCloseable autoCloseable =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					JWTTokenUtil.class, "_SECRET", _SECRET)) {
+					JWTTokenUtil.class, "_SECRET", secret)) {
 
 			_testGetUserId("Invalid JWT signature", token);
 		}
@@ -97,20 +103,6 @@ public class JWTTokenUtilTest {
 
 	private static final String _ISSUER = RandomTestUtil.randomString();
 
-	private static final byte[] _SECRET;
-
 	private static final long _USER_ID = RandomTestUtil.randomLong();
-
-	static {
-		int sha256BlockSize = 64;
-
-		byte[] secret = new byte[sha256BlockSize];
-
-		for (int i = 0; i < secret.length; i++) {
-			secret[i] = SecureRandomUtil.nextByte();
-		}
-
-		_SECRET = secret;
-	}
 
 }

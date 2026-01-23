@@ -5,10 +5,14 @@
 
 package com.liferay.jenkins.results.parser.history;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.TestTaskReport;
+import com.liferay.jenkins.results.parser.TopLevelBuildReport;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONObject;
 
@@ -17,44 +21,57 @@ import org.json.JSONObject;
  */
 public class TestrayTestTaskHistory extends BaseTestTaskHistory {
 
-	public void addTestTaskReport(TestTaskReport testTaskReport) {
-		if ((testTaskReport == null) ||
-			_testTaskReports.contains(testTaskReport)) {
+	public void addTestTaskReport(
+		boolean latestBuild, TestTaskReport testTaskReport) {
 
-			return;
-		}
+		TopLevelBuildReport topLevelBuildReport =
+			testTaskReport.getTopLevelBuildReport();
 
-		_testTaskReports.add(testTaskReport);
+		String key = JenkinsResultsParserUtil.combine(
+			String.valueOf(topLevelBuildReport.getBuildURL()), "__",
+			testTaskReport.getName());
+
+		TestrayTestTaskEntry testrayTestTaskEntry =
+			_testrayTestTaskEntries.getOrDefault(
+				key, new TestrayTestTaskEntry(latestBuild, this));
+
+		testrayTestTaskEntry.addTestTaskReport(testTaskReport);
+
+		_testrayTestTaskEntries.put(key, testrayTestTaskEntry);
 	}
 
 	@Override
 	public long getAverageDuration() {
-		if (_testTaskReports.isEmpty()) {
+		if (_testrayTestTaskEntries.isEmpty()) {
 			return 0;
 		}
 
 		long totalDuration = 0;
 
-		for (TestTaskReport testTaskReport : _testTaskReports) {
-			totalDuration += testTaskReport.getOverheadDuration();
+		for (TestrayTestTaskEntry testrayTestTaskEntry :
+				_testrayTestTaskEntries.values()) {
+
+			totalDuration += testrayTestTaskEntry.getOverheadDuration();
 		}
 
-		return totalDuration / _testTaskReports.size();
+		return totalDuration / _testrayTestTaskEntries.size();
 	}
 
 	@Override
 	public long getAverageTotalDuration() {
-		if (_testTaskReports.isEmpty()) {
+		if (_testrayTestTaskEntries.isEmpty()) {
 			return 0;
 		}
 
-		long totalDuration = 0;
+		long totalAverageDuration = 0;
 
-		for (TestTaskReport testTaskReport : _testTaskReports) {
-			totalDuration += testTaskReport.getDuration();
+		for (TestrayTestTaskEntry testrayTestTaskEntry :
+				_testrayTestTaskEntries.values()) {
+
+			totalAverageDuration += testrayTestTaskEntry.getDuration();
 		}
 
-		return totalDuration / _testTaskReports.size();
+		return totalAverageDuration / _testrayTestTaskEntries.size();
 	}
 
 	@Override
@@ -82,9 +99,11 @@ public class TestrayTestTaskHistory extends BaseTestTaskHistory {
 	public long getLongestDuration() {
 		long longestDuration = 0L;
 
-		for (TestTaskReport testTaskReport : _testTaskReports) {
-			if (longestDuration <= testTaskReport.getDuration()) {
-				longestDuration = testTaskReport.getDuration();
+		for (TestrayTestTaskEntry testrayTestTaskEntry :
+				_testrayTestTaskEntries.values()) {
+
+			if (longestDuration <= testrayTestTaskEntry.getDuration()) {
+				longestDuration = testrayTestTaskEntry.getDuration();
 			}
 		}
 
@@ -93,7 +112,71 @@ public class TestrayTestTaskHistory extends BaseTestTaskHistory {
 
 	@Override
 	public long getTestTaskCount() {
-		return _testTaskReports.size();
+		return _testrayTestTaskEntries.size();
+	}
+
+	public static class TestrayTestTaskEntry {
+
+		public TestrayTestTaskEntry(
+			boolean latestBuild,
+			TestrayTestTaskHistory testrayTestTaskHistory) {
+
+			_latestBuild = latestBuild;
+			_testrayTestTaskHistory = testrayTestTaskHistory;
+		}
+
+		public void addTestTaskReport(TestTaskReport testTaskReport) {
+			if ((testTaskReport == null) ||
+				_testTaskReports.contains(testTaskReport)) {
+
+				return;
+			}
+
+			_testTaskReports.add(testTaskReport);
+
+			if (_latestBuild && testTaskReport.isMissing()) {
+				_testrayTestTaskHistory.setLatestReportMissing(true);
+			}
+		}
+
+		public long getDuration() {
+			if (_testTaskReports.isEmpty()) {
+				return 0;
+			}
+
+			long totalDuration = 0;
+
+			for (TestTaskReport testTaskReport : _testTaskReports) {
+				totalDuration += testTaskReport.getDuration();
+			}
+
+			return totalDuration;
+		}
+
+		public long getOverheadDuration() {
+			long totalOverheadDuration = 0;
+
+			for (TestTaskReport testTaskReport : _testTaskReports) {
+				totalOverheadDuration += testTaskReport.getOverheadDuration();
+			}
+
+			return totalOverheadDuration;
+		}
+
+		public boolean isMissing() {
+			for (TestTaskReport testTaskReport : _testTaskReports) {
+				if (testTaskReport.isMissing()) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		private final boolean _latestBuild;
+		private final TestrayTestTaskHistory _testrayTestTaskHistory;
+		private final List<TestTaskReport> _testTaskReports = new ArrayList<>();
+
 	}
 
 	protected TestrayTestTaskHistory(
@@ -102,6 +185,7 @@ public class TestrayTestTaskHistory extends BaseTestTaskHistory {
 		super(batchHistory, testTaskName);
 	}
 
-	private final List<TestTaskReport> _testTaskReports = new ArrayList<>();
+	private final Map<String, TestrayTestTaskEntry> _testrayTestTaskEntries =
+		new HashMap<>();
 
 }

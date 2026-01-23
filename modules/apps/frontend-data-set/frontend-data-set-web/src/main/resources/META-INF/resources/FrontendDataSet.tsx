@@ -148,6 +148,7 @@ const FrontendDataSetContent = ({
 	infoPanelComponent,
 	inlineAddingSettings,
 	inlineEditingSettings,
+	inlineInformationContent,
 	items: itemsProp,
 	itemsActions,
 	namespace,
@@ -164,6 +165,7 @@ const FrontendDataSetContent = ({
 	selectionType,
 	showBulkActionsManagementBar = true,
 	showBulkActionsManagementBarActions = true,
+	showInlineInformation,
 	showManagementBar = true,
 	showNavBarWhenSelected = false,
 	showPagination = true,
@@ -1527,6 +1529,18 @@ const FrontendDataSetContent = ({
 		</div>
 	) : null;
 
+	const inlineInformationSlot =
+		showInlineInformation && inlineInformationContent ? (
+			<div
+				className={classNames(
+					'container-fluid align-items-center inline-information-bar',
+					style === 'fluid' && 'px-0'
+				)}
+			>
+				{inlineInformationContent}
+			</div>
+		) : null;
+
 	const view =
 		!dataLoading && !componentLoading ? (
 			<div className="data-set-content-wrapper">
@@ -2091,6 +2105,8 @@ const FrontendDataSetContent = ({
 								<div className="data-set data-set-inline">
 									{managementBar}
 
+									{inlineInformationSlot}
+
 									{view}
 
 									{paginationComponent}
@@ -2101,6 +2117,8 @@ const FrontendDataSetContent = ({
 								<div className="data-set data-set-stacked">
 									{managementBar}
 
+									{inlineInformationSlot}
+
 									{view}
 
 									{paginationComponent}
@@ -2110,6 +2128,8 @@ const FrontendDataSetContent = ({
 							{style === 'fluid' && (
 								<div className="data-set data-set-fluid">
 									{managementBar}
+
+									{inlineInformationSlot}
 
 									<div className="container-fluid mt-3">
 										{view}

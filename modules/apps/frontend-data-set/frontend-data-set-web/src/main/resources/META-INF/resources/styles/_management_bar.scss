@@ -2,6 +2,10 @@
 	border-bottom: 1px solid $border-color;
 	margin-bottom: 1rem;
 
+	+ .inline-information-bar {
+		margin-top: -1rem;
+	}
+
 	& > .management-bar {
 		&:first-child {
 			.dropdown-toggle {

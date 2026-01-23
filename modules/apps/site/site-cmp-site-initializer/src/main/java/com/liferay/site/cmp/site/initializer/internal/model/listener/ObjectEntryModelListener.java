@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
@@ -77,6 +78,15 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			String filterString, ObjectDefinition objectDefinition,
 			ObjectEntry objectEntry)
 		throws Exception {
+
+		if (filterString != null) {
+			filterString = StringBundler.concat("status ne ",
+				WorkflowConstants.STATUS_DRAFT, " and ", filterString);
+		}
+		else {
+			filterString = StringBundler.concat("status ne ",
+				WorkflowConstants.STATUS_DRAFT);
+		}
 
 		return _objectEntryLocalService.getValuesListCount(
 			new Long[] {objectEntry.getGroupId()}, 0, 0,

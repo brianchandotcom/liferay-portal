@@ -7,32 +7,28 @@ package com.liferay.consent.management.platform.integration.internal.servlet.tag
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.consent.management.platform.integration.configuration.ConsentManagementPlatformConfiguration;
-import com.liferay.layout.test.util.LayoutTestUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
+import java.net.URL;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Christian Moura
@@ -61,40 +57,23 @@ public class ConsentManagementPlatformTopHeadDynamicIncludeTest {
 				"scriptTag", _SCRIPT_TAG
 			).build());
 
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
+		Matcher matcher = _pattern.matcher(
+			URLUtil.toString(new URL("http://localhost:8080")));
 
-		ThemeDisplay themeDisplay = new ThemeDisplay();
+		Assert.assertTrue(matcher.find());
 
-		themeDisplay.setCompany(
-			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
+		String group = matcher.group(0);
 
-		Layout layout = LayoutTestUtil.addTypeContentLayout(
-			GroupTestUtil.addGroup());
-
-		themeDisplay.setLayout(layout);
-		themeDisplay.setScopeGroupId(layout.getGroupId());
-
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
-
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
-		_dynamicInclude.include(
-			mockHttpServletRequest, mockHttpServletResponse,
-			RandomTestUtil.randomString());
-
-		Assert.assertTrue(
-			StringUtil.contains(
-				mockHttpServletResponse.getContentAsString(), _SCRIPT_TAG,
-				StringPool.NEW_LINE));
+		Assert.assertTrue(group.contains(_SCRIPT_TAG));
 	}
 
 	private static final String _SCRIPT_TAG =
 		"<script data-cbid=\"000000\" id=\"Cookiebot\" " +
 			"src=\"https://consent.cookiebot.com/uc.js\" " +
 				"type=\"text/javascript\"></script>";
+
+	private static final Pattern _pattern = Pattern.compile(
+		"<script\\b[^>]*>(.*?)</script>", Pattern.DOTALL);
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

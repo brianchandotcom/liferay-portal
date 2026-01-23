@@ -5,6 +5,7 @@
 
 package com.liferay.segments.model.impl;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -58,6 +59,14 @@ public class SegmentsExperienceImpl extends SegmentsExperienceBaseImpl {
 					getSegmentsEntryERC(), getSegmentsEntryGroupId());
 
 		if (segmentsEntry == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Unable to get segments entry with external reference ",
+						"code ", getSegmentsEntryERC(), " and group ID ",
+						getSegmentsEntryGroupId()));
+			}
+
 			return SegmentsEntryConstants.ID_MISSING;
 		}
 
@@ -76,6 +85,14 @@ public class SegmentsExperienceImpl extends SegmentsExperienceBaseImpl {
 					getSegmentsEntryERC(), getSegmentsEntryGroupId());
 
 		if (segmentsEntry == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Unable to get segments entry with external reference ",
+						"code ", getSegmentsEntryERC(), " and group ID ",
+						getSegmentsEntryGroupId()));
+			}
+
 			return StringPool.BLANK;
 		}
 

@@ -7,7 +7,6 @@ package com.liferay.ai.hub.rest.internal.resource.v1_0.util;
 
 import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -15,12 +14,10 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import jakarta.servlet.http.HttpServletRequest;
 
 import jakarta.ws.rs.sse.Sse;
-import jakarta.ws.rs.sse.SseEventSink;
 
 import java.io.Serializable;
 
 import java.util.Map;
-import java.util.function.BiConsumer;
 
 /**
  * @author Feliphe Marinho
@@ -32,31 +29,14 @@ public class WorkflowContextUtil {
 			Sse sse, String sseEventSinkKey)
 		throws PortalException {
 
+		SseUtil.setSse(sse);
+
 		Map<String, Serializable> workflowContext =
 			HashMapBuilder.<String, Serializable>put(
 				WorkflowConstants.CONTEXT_SERVICE_CONTEXT,
 				ServiceContextFactory.getInstance(httpServletRequest)
 			).put(
-				"sendOutBoundEvent",
-				(BiConsumer<String, String> & Serializable)(data, name) -> {
-					if (sseEventSinkKey == null) {
-						return;
-					}
-
-					SseEventSink sseEventSink = SseUtil.getSSEEventSink(
-						sseEventSinkKey);
-
-					sseEventSink.send(
-						sse.newEventBuilder(
-						).data(
-							String.class,
-							JSONUtil.put(
-								"data", data
-							).toString()
-						).name(
-							name
-						).build());
-				}
+				"sseEventSinkKey", sseEventSinkKey
 			).build();
 
 		if (context == null) {

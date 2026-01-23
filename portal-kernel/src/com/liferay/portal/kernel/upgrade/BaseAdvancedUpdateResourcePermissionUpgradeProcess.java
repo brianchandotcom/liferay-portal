@@ -6,7 +6,6 @@
 package com.liferay.portal.kernel.upgrade;
 
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceAction;
@@ -36,41 +35,44 @@ public abstract class BaseAdvancedUpdateResourcePermissionUpgradeProcess
 				resourcePermissionName);
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				StringBundler.concat(
-					"select ctCollectionId, resourcePermissionId, actionIds ",
-					"from ResourcePermission where name = '",
-					resourcePermissionName, "'"));
-			PreparedStatement preparedStatement2 =
-				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection,
-					"update ResourcePermission set actionIds = ? where " +
-						"ctCollectionId = ? and resourcePermissionId = ?");
-			ResultSet resultSet = preparedStatement1.executeQuery()) {
+				"select ctCollectionId, resourcePermissionId, actionIds from " +
+					"ResourcePermission where name = ?")) {
 
-			while (resultSet.next()) {
-				List<String> actionIds = _getResourceActionIds(
-					resultSet.getLong("actionIds"), resourceActions);
+			preparedStatement1.setString(1, resourcePermissionName);
 
-				if (ListUtil.isEmpty(actionIds) ||
-					actionIds.contains(ActionKeys.ADVANCED_UPDATE) ||
-					!actionIds.contains(ActionKeys.UPDATE)) {
+			try (PreparedStatement preparedStatement2 =
+					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+						connection,
+						"update ResourcePermission set actionIds = ? where " +
+							"ctCollectionId = ? and resourcePermissionId = ?");
+				ResultSet resultSet = preparedStatement1.executeQuery()) {
 
-					continue;
+				while (resultSet.next()) {
+					List<String> actionIds = _getResourceActionIds(
+						resultSet.getLong("actionIds"), resourceActions);
+
+					if (ListUtil.isEmpty(actionIds) ||
+						actionIds.contains(ActionKeys.ADVANCED_UPDATE) ||
+						!actionIds.contains(ActionKeys.UPDATE)) {
+
+						continue;
+					}
+
+					actionIds.add(ActionKeys.ADVANCED_UPDATE);
+
+					preparedStatement2.setLong(
+						1,
+						_getActionIdsLong(actionIds, resourcePermissionName));
+					preparedStatement2.setLong(
+						2, resultSet.getLong("ctCollectionId"));
+					preparedStatement2.setLong(
+						3, resultSet.getLong("resourcePermissionId"));
+
+					preparedStatement2.addBatch();
 				}
 
-				actionIds.add(ActionKeys.ADVANCED_UPDATE);
-
-				preparedStatement2.setLong(
-					1, _getActionIdsLong(actionIds, resourcePermissionName));
-				preparedStatement2.setLong(
-					2, resultSet.getLong("ctCollectionId"));
-				preparedStatement2.setLong(
-					3, resultSet.getLong("resourcePermissionId"));
-
-				preparedStatement2.addBatch();
+				preparedStatement2.executeBatch();
 			}
-
-			preparedStatement2.executeBatch();
 		}
 	}
 

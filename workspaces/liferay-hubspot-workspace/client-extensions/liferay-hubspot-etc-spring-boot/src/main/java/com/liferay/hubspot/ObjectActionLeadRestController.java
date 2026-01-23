@@ -34,7 +34,7 @@ public class ObjectActionLeadRestController extends BaseRestController {
 			json);
 
 		String externalReferenceCode = jsonObject.optString(
-			"r_h1s4ContactToH1S4Leads_c_h1s4ContactERC");
+			"r_hs10ContactToHS10Leads_c_hs10ContactERC");
 
 		if (externalReferenceCode.startsWith(
 				HubSpotConstants.PREFIX_HUBSPOT_ID)) {
@@ -43,15 +43,15 @@ public class ObjectActionLeadRestController extends BaseRestController {
 				HubSpotConstants.PREFIX_HUBSPOT_ID.length());
 		}
 		else {
-			long h1s4ContactId = jsonObject.optLong(
-				"r_h1s4ContactToH1S4Leads_c_h1s4ContactId");
+			long hs10ContactId = jsonObject.optLong(
+				"r_hs10ContactToHS10Leads_c_hs10ContactId");
 
 			JSONObject contactJSONObject = new JSONObject(
 				get(
 					_liferayOAuth2AccessTokenManager.getAuthorization(
 						"liferay-hubspot-etc-spring-boot-oahs"),
 					UriComponentsBuilder.fromPath(
-						"o/c/h1s4contacts/" + h1s4ContactId
+						"o/c/hs10contacts/" + hs10ContactId
 					).build(
 					).toUri()));
 
@@ -71,7 +71,7 @@ public class ObjectActionLeadRestController extends BaseRestController {
 
 		_liferayService.patchObjectEntry(
 			_hubSpotService.postLead(contactId, jsonObject),
-			"o/c/h1s4leads/" + _liferayService.getClassPK(json));
+			"o/c/hs10leads/" + _liferayService.getClassPK(json));
 	}
 
 	@Autowired

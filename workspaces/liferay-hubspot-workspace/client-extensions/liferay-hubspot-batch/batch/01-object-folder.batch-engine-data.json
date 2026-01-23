@@ -11,11 +11,11 @@
 	},
 	"items": [
 		{
-			"externalReferenceCode": "H1S4_HUBSPOT",
+			"externalReferenceCode": "HS10_HUBSPOT",
 			"label": {
-				"en_US": "H1S4 HubSpot"
+				"en_US": "HS10 HubSpot"
 			},
-			"name": "H1S4HubSpot"
+			"name": "HS10HubSpot"
 		}
 	]
 }

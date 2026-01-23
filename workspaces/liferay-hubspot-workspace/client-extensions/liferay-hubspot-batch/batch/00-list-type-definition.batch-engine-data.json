@@ -11,7 +11,7 @@
 	},
 	"items": [
 		{
-			"externalReferenceCode": "H1S4_LEAD_LABEL",
+			"externalReferenceCode": "HS10_LEAD_LABEL",
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "COLD",
@@ -29,10 +29,10 @@
 					"name": "Warm"
 				}
 			],
-			"name": "H1S4 Lead Label"
+			"name": "HS10 Lead Label"
 		},
 		{
-			"externalReferenceCode": "H1S4_LEAD_TYPE",
+			"externalReferenceCode": "HS10_LEAD_TYPE",
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "NEW_BUSINESS",
@@ -50,7 +50,7 @@
 					"name": "Upsell"
 				}
 			],
-			"name": "H1S4 Lead Type"
+			"name": "HS10 Lead Type"
 		}
 	]
 }

@@ -478,21 +478,17 @@ public class SitePageResourceImpl
 		Map<Locale, String> keywordsMap = new HashMap<>();
 		Map<Locale, String> robotsMap = new HashMap<>();
 
-		if (sitePage.getPageSettings() != null) {
-			PageSettings pageSettings = sitePage.getPageSettings();
+		SEOSettings seoSettings = _getSEOSettings(sitePage.getPageSettings());
 
-			if (pageSettings.getSeoSettings() != null) {
-				SEOSettings seoSettings = pageSettings.getSeoSettings();
-
-				titleMap = LocalizedMapUtil.getLocalizedMap(
-					seoSettings.getHtmlTitle_i18n());
-				descriptionMap = LocalizedMapUtil.getLocalizedMap(
-					seoSettings.getDescription_i18n());
-				keywordsMap = LocalizedMapUtil.getLocalizedMap(
-					seoSettings.getSeoKeywords_i18n());
-				robotsMap = LocalizedMapUtil.getLocalizedMap(
-					seoSettings.getRobots_i18n());
-			}
+		if (seoSettings != null) {
+			titleMap = LocalizedMapUtil.getLocalizedMap(
+				seoSettings.getHtmlTitle_i18n());
+			descriptionMap = LocalizedMapUtil.getLocalizedMap(
+				seoSettings.getDescription_i18n());
+			keywordsMap = LocalizedMapUtil.getLocalizedMap(
+				seoSettings.getSeoKeywords_i18n());
+			robotsMap = LocalizedMapUtil.getLocalizedMap(
+				seoSettings.getRobots_i18n());
 		}
 
 		UnicodeProperties typeSettingsUnicodeProperties =
@@ -567,6 +563,50 @@ public class SitePageResourceImpl
 		return layout;
 	}
 
+	private CustomMetaTag[] _getCustomMetaTags(PageSettings pageSettings) {
+		if (pageSettings == null) {
+			return new CustomMetaTag[0];
+		}
+
+		if (pageSettings instanceof ContentPageSettings) {
+			ContentPageSettings contentPageSettings =
+				(ContentPageSettings)pageSettings;
+
+			return contentPageSettings.getCustomMetaTags();
+		}
+
+		if (pageSettings instanceof WidgetPageSettings) {
+			WidgetPageSettings widgetPageSettings =
+				(WidgetPageSettings)pageSettings;
+
+			return widgetPageSettings.getCustomMetaTags();
+		}
+
+		return new CustomMetaTag[0];
+	}
+
+	private OpenGraphSettings _getOpenGraphSettings(PageSettings pageSettings) {
+		if (pageSettings == null) {
+			return null;
+		}
+
+		if (pageSettings instanceof ContentPageSettings) {
+			ContentPageSettings contentPageSettings =
+				(ContentPageSettings)pageSettings;
+
+			return contentPageSettings.getOpenGraphSettings();
+		}
+
+		if (pageSettings instanceof WidgetPageSettings) {
+			WidgetPageSettings widgetPageSettings =
+				(WidgetPageSettings)pageSettings;
+
+			return widgetPageSettings.getOpenGraphSettings();
+		}
+
+		return null;
+	}
+
 	private long _getParentLayoutId(
 			long defaultParentLayoutId, long groupId,
 			String parentSitePageExternalReferenceCode,
@@ -585,6 +625,28 @@ public class SitePageResourceImpl
 			parentSitePageExternalReferenceCode, groupId, serviceContext);
 
 		return layout.getLayoutId();
+	}
+
+	private SEOSettings _getSEOSettings(PageSettings pageSettings) {
+		if (pageSettings == null) {
+			return null;
+		}
+
+		if (pageSettings instanceof ContentPageSettings) {
+			ContentPageSettings contentPageSettings =
+				(ContentPageSettings)pageSettings;
+
+			return contentPageSettings.getSeoSettings();
+		}
+
+		if (pageSettings instanceof WidgetPageSettings) {
+			WidgetPageSettings widgetPageSettings =
+				(WidgetPageSettings)pageSettings;
+
+			return widgetPageSettings.getSeoSettings();
+		}
+
+		return null;
 	}
 
 	private ServiceContext _getServiceContext(long groupId, SitePage sitePage)
@@ -697,7 +759,7 @@ public class SitePageResourceImpl
 		String sitemapInclude = StringPool.BLANK;
 		String sitemapIncludeChildLayouts = StringPool.BLANK;
 		String sitemapPagePriority = StringPool.BLANK;
-		SEOSettings seoSettings = pageSettings.getSeoSettings();
+		SEOSettings seoSettings = _getSEOSettings(sitePage.getPageSettings());
 
 		if (seoSettings != null) {
 			SitemapSettings sitemapSettings = seoSettings.getSitemapSettings();
@@ -823,21 +885,17 @@ public class SitePageResourceImpl
 		Map<Locale, String> keywordsMap = new HashMap<>();
 		Map<Locale, String> robotsMap = new HashMap<>();
 
-		if (sitePage.getPageSettings() != null) {
-			PageSettings pageSettings = sitePage.getPageSettings();
+		SEOSettings seoSettings = _getSEOSettings(sitePage.getPageSettings());
 
-			if (pageSettings.getSeoSettings() != null) {
-				SEOSettings seoSettings = pageSettings.getSeoSettings();
-
-				titleMap = LocalizedMapUtil.getLocalizedMap(
-					seoSettings.getHtmlTitle_i18n());
-				descriptionMap = LocalizedMapUtil.getLocalizedMap(
-					seoSettings.getDescription_i18n());
-				keywordsMap = LocalizedMapUtil.getLocalizedMap(
-					seoSettings.getSeoKeywords_i18n());
-				robotsMap = LocalizedMapUtil.getLocalizedMap(
-					seoSettings.getRobots_i18n());
-			}
+		if (seoSettings != null) {
+			titleMap = LocalizedMapUtil.getLocalizedMap(
+				seoSettings.getHtmlTitle_i18n());
+			descriptionMap = LocalizedMapUtil.getLocalizedMap(
+				seoSettings.getDescription_i18n());
+			keywordsMap = LocalizedMapUtil.getLocalizedMap(
+				seoSettings.getSeoKeywords_i18n());
+			robotsMap = LocalizedMapUtil.getLocalizedMap(
+				seoSettings.getRobots_i18n());
 		}
 
 		Map<Locale, String> friendlyURLMap = layout.getFriendlyURLMap();
@@ -916,9 +974,9 @@ public class SitePageResourceImpl
 
 		Map<Locale, String> canonicalURLMap = new HashMap<>();
 
-		if ((pageSettings != null) && (pageSettings.getSeoSettings() != null)) {
-			SEOSettings seoSettings = pageSettings.getSeoSettings();
+		SEOSettings seoSettings = _getSEOSettings(pageSettings);
 
+		if (seoSettings != null) {
 			canonicalURLMap = LocalizedMapUtil.getLocalizedMap(
 				seoSettings.getCustomCanonicalURL_i18n());
 
@@ -935,12 +993,10 @@ public class SitePageResourceImpl
 		boolean openGraphTitleEnabled = false;
 		Map<Locale, String> openGraphTitleMap = new HashMap<>();
 
-		if ((pageSettings != null) &&
-			(pageSettings.getOpenGraphSettings() != null)) {
+		OpenGraphSettings openGraphSettings = _getOpenGraphSettings(
+			pageSettings);
 
-			OpenGraphSettings openGraphSettings =
-				pageSettings.getOpenGraphSettings();
-
+		if (openGraphSettings != null) {
 			openGraphDescriptionMap = LocalizedMapUtil.getLocalizedMap(
 				openGraphSettings.getDescription_i18n());
 
@@ -984,16 +1040,10 @@ public class SitePageResourceImpl
 			openGraphImageFileEntryScopeERC, openGraphTitleEnabled,
 			openGraphTitleMap, serviceContext);
 
-		CustomMetaTag[] customMetaTags = new CustomMetaTag[0];
-
-		if (pageSettings != null) {
-			customMetaTags = pageSettings.getCustomMetaTags();
-		}
-
 		_layoutSEOEntryService.updateCustomMetaTags(
 			groupId, false, layoutId,
 			transformToList(
-				customMetaTags,
+				_getCustomMetaTags(pageSettings),
 				customMetaTag -> new LayoutSEOEntryCustomMetaTagProperty(
 					LocalizedMapUtil.getLocalizedMap(
 						customMetaTag.getValue_i18n()),

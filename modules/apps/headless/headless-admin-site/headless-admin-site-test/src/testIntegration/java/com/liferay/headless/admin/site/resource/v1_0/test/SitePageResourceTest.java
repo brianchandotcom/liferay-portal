@@ -961,6 +961,33 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		return objectFieldSetting;
 	}
 
+	private CustomMetaTag[] _getCustomMetaTags() {
+		return new CustomMetaTag[] {
+			new CustomMetaTag() {
+				{
+					setKey(RandomTestUtil::randomString);
+					setValue_i18n(
+						() -> HashMapBuilder.put(
+							"en-US", RandomTestUtil.randomString()
+						).put(
+							"es-ES", RandomTestUtil.randomString()
+						).build());
+				}
+			},
+			new CustomMetaTag() {
+				{
+					setKey(RandomTestUtil::randomString);
+					setValue_i18n(
+						() -> HashMapBuilder.put(
+							"en-US", RandomTestUtil.randomString()
+						).put(
+							"es-ES", RandomTestUtil.randomString()
+						).build());
+				}
+			}
+		};
+	}
+
 	private int _getExpectedPriority(
 			String defaultParentSitePageExternalReferenceCode,
 			String parentSitePageExternalReferenceCode, Integer priority)
@@ -1127,6 +1154,61 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				RandomTestUtil.randomString(), "text"));
 	}
 
+	private OpenGraphSettings _getOpenGraphSettings() {
+		return new OpenGraphSettings() {
+			{
+				setDescription_i18n(
+					() -> HashMapBuilder.put(
+						"en-US", RandomTestUtil.randomString()
+					).put(
+						"es-ES", RandomTestUtil.randomString()
+					).build());
+				setImage(
+					() -> new ItemExternalReference() {
+						{
+							setClassName(FileEntry.class::getName);
+							setExternalReferenceCode(
+								() -> {
+									Company company =
+										CompanyLocalServiceUtil.getCompany(
+											TestPropsValues.getCompanyId());
+
+									DLFolder dlFolder = DLTestUtil.addDLFolder(
+										company.getGroupId());
+
+									DLFileEntry dlFileEntry =
+										DLTestUtil.addDLFileEntry(
+											dlFolder.getFolderId());
+
+									return dlFileEntry.
+										getExternalReferenceCode();
+								});
+							setScope(
+								() -> new Scope() {
+									{
+										setExternalReferenceCode(
+											() -> "L_GLOBAL");
+										setType(() -> Type.SITE);
+									}
+								});
+						}
+					});
+				setImageAlt_i18n(
+					() -> HashMapBuilder.put(
+						"en-US", RandomTestUtil.randomString()
+					).put(
+						"es-ES", RandomTestUtil.randomString()
+					).build());
+				setTitle_i18n(
+					() -> HashMapBuilder.put(
+						"en-US", RandomTestUtil.randomString()
+					).put(
+						"es-ES", RandomTestUtil.randomString()
+					).build());
+			}
+		};
+	}
+
 	private PageSettings _getPageSettings(
 			String parentSitePageExternalReferenceCode, SitePage.Type type)
 		throws Exception {
@@ -1136,6 +1218,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		if (type == SitePage.Type.CONTENT_PAGE) {
 			pageSettings = new ContentPageSettings() {
 				{
+					setCustomMetaTags(() -> _getCustomMetaTags());
+					setOpenGraphSettings(() -> _getOpenGraphSettings());
+					setSeoSettings(() -> _getSeoSettings());
 					setType(Type.CONTENT_PAGE_SETTINGS);
 				}
 			};
@@ -1152,37 +1237,15 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				{
 					setCustomizable(false);
 					setCustomizableSectionIds(new String[0]);
+					setCustomMetaTags(() -> _getCustomMetaTags());
 					setLayoutTemplateId("1_column");
+					setOpenGraphSettings(() -> _getOpenGraphSettings());
+					setSeoSettings(() -> _getSeoSettings());
 					setType(Type.WIDGET_PAGE_SETTINGS);
 				}
 			};
 		}
 
-		pageSettings.setCustomMetaTags(
-			() -> new CustomMetaTag[] {
-				new CustomMetaTag() {
-					{
-						setKey(RandomTestUtil::randomString);
-						setValue_i18n(
-							() -> HashMapBuilder.put(
-								"en-US", RandomTestUtil.randomString()
-							).put(
-								"es-ES", RandomTestUtil.randomString()
-							).build());
-					}
-				},
-				new CustomMetaTag() {
-					{
-						setKey(RandomTestUtil::randomString);
-						setValue_i18n(
-							() -> HashMapBuilder.put(
-								"en-US", RandomTestUtil.randomString()
-							).put(
-								"es-ES", RandomTestUtil.randomString()
-							).build());
-					}
-				}
-			});
 		pageSettings.setHiddenFromNavigation(RandomTestUtil::randomBoolean);
 		pageSettings.setNavigationSettings(
 			() -> new SitePageNavigationSettings() {
@@ -1194,111 +1257,11 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 							SitePageNavigationSettings.TargetType.class));
 				}
 			});
-		pageSettings.setOpenGraphSettings(
-			() -> new OpenGraphSettings() {
-				{
-					setDescription_i18n(
-						() -> HashMapBuilder.put(
-							"en-US", RandomTestUtil.randomString()
-						).put(
-							"es-ES", RandomTestUtil.randomString()
-						).build());
-					setImage(
-						() -> new ItemExternalReference() {
-							{
-								setClassName(FileEntry.class::getName);
-								setExternalReferenceCode(
-									() -> {
-										Company company =
-											CompanyLocalServiceUtil.getCompany(
-												TestPropsValues.getCompanyId());
 
-										DLFolder dlFolder =
-											DLTestUtil.addDLFolder(
-												company.getGroupId());
-
-										DLFileEntry dlFileEntry =
-											DLTestUtil.addDLFileEntry(
-												dlFolder.getFolderId());
-
-										return dlFileEntry.
-											getExternalReferenceCode();
-									});
-								setScope(
-									() -> new Scope() {
-										{
-											setExternalReferenceCode(
-												() -> "L_GLOBAL");
-											setType(() -> Type.SITE);
-										}
-									});
-							}
-						});
-					setImageAlt_i18n(
-						() -> HashMapBuilder.put(
-							"en-US", RandomTestUtil.randomString()
-						).put(
-							"es-ES", RandomTestUtil.randomString()
-						).build());
-					setTitle_i18n(
-						() -> HashMapBuilder.put(
-							"en-US", RandomTestUtil.randomString()
-						).put(
-							"es-ES", RandomTestUtil.randomString()
-						).build());
-				}
-			});
 		pageSettings.setPriority(
 			_priorities.merge(
 				parentSitePageExternalReferenceCode, 0,
 				(oldPriority, defaultPriority) -> oldPriority + 1));
-		pageSettings.setSeoSettings(
-			() -> new SEOSettings() {
-				{
-					setCustomCanonicalURL_i18n(
-						() -> HashMapBuilder.put(
-							"en-US", RandomTestUtil.randomString()
-						).put(
-							"es-ES", RandomTestUtil.randomString()
-						).build());
-					setDescription_i18n(
-						() -> HashMapBuilder.put(
-							"en-US", RandomTestUtil.randomString()
-						).put(
-							"es-ES", RandomTestUtil.randomString()
-						).build());
-					setHtmlTitle_i18n(
-						() -> HashMapBuilder.put(
-							"en-US", RandomTestUtil.randomString()
-						).put(
-							"es-ES", RandomTestUtil.randomString()
-						).build());
-					setRobots_i18n(
-						() -> HashMapBuilder.put(
-							"en-US", RandomTestUtil.randomString()
-						).put(
-							"es-ES", RandomTestUtil.randomString()
-						).build());
-					setSeoKeywords_i18n(
-						() -> HashMapBuilder.put(
-							"en-US", RandomTestUtil.randomString()
-						).put(
-							"es-ES", RandomTestUtil.randomString()
-						).build());
-					setSitemapSettings(
-						() -> new SitemapSettings() {
-							{
-								setChangeFrequency(
-									() -> RandomTestUtil.randomEnum(
-										SitemapSettings.ChangeFrequency.class));
-								setInclude(RandomTestUtil::randomBoolean);
-								setIncludeChildSitePages(
-									RandomTestUtil::randomBoolean);
-								setPagePriority(RandomTestUtil::randomDouble);
-							}
-						});
-				}
-			});
 
 		return pageSettings;
 	}
@@ -1419,6 +1382,55 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 	private SitePage.Type _getRandomType(List<SitePage.Type> types) {
 		return types.get(RandomTestUtil.randomInt(0, types.size() - 1));
+	}
+
+	private SEOSettings _getSeoSettings() {
+		return new SEOSettings() {
+			{
+				setCustomCanonicalURL_i18n(
+					() -> HashMapBuilder.put(
+						"en-US", RandomTestUtil.randomString()
+					).put(
+						"es-ES", RandomTestUtil.randomString()
+					).build());
+				setDescription_i18n(
+					() -> HashMapBuilder.put(
+						"en-US", RandomTestUtil.randomString()
+					).put(
+						"es-ES", RandomTestUtil.randomString()
+					).build());
+				setHtmlTitle_i18n(
+					() -> HashMapBuilder.put(
+						"en-US", RandomTestUtil.randomString()
+					).put(
+						"es-ES", RandomTestUtil.randomString()
+					).build());
+				setRobots_i18n(
+					() -> HashMapBuilder.put(
+						"en-US", RandomTestUtil.randomString()
+					).put(
+						"es-ES", RandomTestUtil.randomString()
+					).build());
+				setSeoKeywords_i18n(
+					() -> HashMapBuilder.put(
+						"en-US", RandomTestUtil.randomString()
+					).put(
+						"es-ES", RandomTestUtil.randomString()
+					).build());
+				setSitemapSettings(
+					() -> new SitemapSettings() {
+						{
+							setChangeFrequency(
+								() -> RandomTestUtil.randomEnum(
+									ChangeFrequency.class));
+							setInclude(RandomTestUtil::randomBoolean);
+							setIncludeChildSitePages(
+								RandomTestUtil::randomBoolean);
+							setPagePriority(RandomTestUtil::randomDouble);
+						}
+					});
+			}
+		};
 	}
 
 	private SitePageResource _getSitePageResource(String nestedFields)

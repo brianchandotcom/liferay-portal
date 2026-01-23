@@ -188,11 +188,7 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 		SitePage.Type type = SitePageTypeUtil.toExternalType(layout.getType());
 
 		if (type == SitePage.Type.CONTENT_PAGE) {
-			return new ContentPageSettings() {
-				{
-					setType(() -> Type.CONTENT_PAGE_SETTINGS);
-				}
-			};
+			return _toContentPageSettings(layout);
 		}
 		else if (type == SitePage.Type.PAGE_SET_PAGE) {
 			return new PageSetPageSettings() {
@@ -205,27 +201,36 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 		return _toWidgetPageSettings(layout);
 	}
 
-	private PageSettings _toPageSettings(Layout layout) {
-		PageSettings pageSettings = _getPageSettings(layout);
+	private ContentPageSettings _toContentPageSettings(Layout layout) {
+		ContentPageSettings contentPageSettings = new ContentPageSettings();
 
 		LayoutSEOEntry layoutSEOEntry =
 			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
 				layout.getGroupId(), layout.isPrivateLayout(),
 				layout.getLayoutId());
 
-		pageSettings.setCustomMetaTags(
+		contentPageSettings.setCustomMetaTags(
 			() -> _getCustomMetaTags(layoutSEOEntry));
+		contentPageSettings.setOpenGraphSettings(
+			() -> OpenGraphSettingsUtil.getOpenGraphSettings(
+				_dlAppService, layoutSEOEntry));
+		contentPageSettings.setSeoSettings(
+			() -> SEOSettingsUtil.getSeoSettings(layout, layoutSEOEntry));
+
+		contentPageSettings.setType(
+			() -> PageSettings.Type.CONTENT_PAGE_SETTINGS);
+
+		return contentPageSettings;
+	}
+
+	private PageSettings _toPageSettings(Layout layout) {
+		PageSettings pageSettings = _getPageSettings(layout);
 
 		pageSettings.setHiddenFromNavigation(layout::isHidden);
 		pageSettings.setNavigationSettings(
 			() -> NavigationSettingsUtil.toSitePageNavigationSettings(
 				layout.getTypeSettingsProperties()));
-		pageSettings.setOpenGraphSettings(
-			() -> OpenGraphSettingsUtil.getOpenGraphSettings(
-				_dlAppService, layoutSEOEntry));
 		pageSettings.setPriority(layout::getPriority);
-		pageSettings.setSeoSettings(
-			() -> SEOSettingsUtil.getSeoSettings(layout, layoutSEOEntry));
 
 		return pageSettings;
 	}
@@ -258,6 +263,15 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 
 				return sortedCustomizableSectionIds.toArray(new String[0]);
 			});
+
+		LayoutSEOEntry layoutSEOEntry =
+			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId());
+
+		widgetPageSettings.setCustomMetaTags(
+			() -> _getCustomMetaTags(layoutSEOEntry));
+
 		widgetPageSettings.setInheritChanges(
 			() -> {
 				if (Validator.isNull(
@@ -271,6 +285,11 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 		widgetPageSettings.setLayoutTemplateId(
 			() -> layout.getTypeSettingsProperty(
 				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID));
+		widgetPageSettings.setOpenGraphSettings(
+			() -> OpenGraphSettingsUtil.getOpenGraphSettings(
+				_dlAppService, layoutSEOEntry));
+		widgetPageSettings.setSeoSettings(
+			() -> SEOSettingsUtil.getSeoSettings(layout, layoutSEOEntry));
 		widgetPageSettings.setType(
 			() -> PageSettings.Type.WIDGET_PAGE_SETTINGS);
 		widgetPageSettings.setWidgetPageTemplateReference(

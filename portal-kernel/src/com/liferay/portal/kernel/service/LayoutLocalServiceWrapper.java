@@ -376,6 +376,20 @@ public class LayoutLocalServiceWrapper
 	}
 
 	@Override
+	public Layout convertEmptyLayout(
+			long userId, long plid,
+			java.util.Map<java.util.Locale, String> nameMap, String type,
+			long classNameId, long classPK,
+			String masterLayoutPageTemplateEntryERC,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return _layoutLocalService.convertEmptyLayout(
+			userId, plid, nameMap, type, classNameId, classPK,
+			masterLayoutPageTemplateEntryERC, serviceContext);
+	}
+
+	@Override
 	public Layout copyLayout(
 			long userId, long groupId, boolean privateLayout,
 			java.util.Map<java.util.Locale, String> nameMap, boolean hidden,

@@ -372,6 +372,13 @@ public interface LayoutLocalService
 			String friendlyURL, ServiceContext serviceContext)
 		throws PortalException;
 
+	public Layout convertEmptyLayout(
+			long userId, long plid, Map<Locale, String> nameMap, String type,
+			long classNameId, long classPK,
+			String masterLayoutPageTemplateEntryERC,
+			ServiceContext serviceContext)
+		throws Exception;
+
 	public Layout copyLayout(
 			long userId, long groupId, boolean privateLayout,
 			Map<Locale, String> nameMap, boolean hidden, boolean system,

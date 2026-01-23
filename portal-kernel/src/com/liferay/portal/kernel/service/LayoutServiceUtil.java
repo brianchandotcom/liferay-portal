@@ -280,6 +280,18 @@ public class LayoutServiceUtil {
 			groupId, folderName, fileName, inputStream, mimeType);
 	}
 
+	public static Layout convertEmptyLayout(
+			long plid, Map<java.util.Locale, String> nameMap, String type,
+			long classNameId, long classPK,
+			String masterLayoutPageTemplateEntryERC,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return getService().convertEmptyLayout(
+			plid, nameMap, type, classNameId, classPK,
+			masterLayoutPageTemplateEntryERC, serviceContext);
+	}
+
 	public static Layout copyLayout(
 			long groupId, boolean privateLayout,
 			Map<java.util.Locale, String> localeNamesMap, boolean hidden,

@@ -261,6 +261,13 @@ public interface LayoutService extends BaseService {
 			InputStream inputStream, String mimeType)
 		throws PortalException;
 
+	public Layout convertEmptyLayout(
+			long plid, Map<Locale, String> nameMap, String type,
+			long classNameId, long classPK,
+			String masterLayoutPageTemplateEntryERC,
+			ServiceContext serviceContext)
+		throws Exception;
+
 	public Layout copyLayout(
 			long groupId, boolean privateLayout,
 			Map<Locale, String> localeNamesMap, boolean hidden, boolean system,

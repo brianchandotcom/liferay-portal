@@ -59,18 +59,27 @@ test(
 
 		await test.step('Filter by recent', async () => {
 			await journalPage.setFilterBy(FilterBy.RECENT);
+
+			await expect(
+				page.getByText('Results Found With Filters')
+			).toBeVisible();
 		});
 
 		await test.step('Select one article in page 1', async () => {
 			await journalPage.selectItem(0);
+
+			await expect(page.getByText('1 of 6 Items Selected')).toBeVisible();
 		});
 
 		await test.step('Select another article in page 2', async () => {
 			await journalPage.selectPage(1);
 
-			await page.getByText('Showing 5 to 6 of 6 entries.').waitFor();
-
+			await expect(
+				page.getByText('Showing 5 to 6 of 6 entries.')
+			).toBeVisible();
 			await journalPage.selectItem(0);
+
+			await expect(page.getByText('2 of 6 Items Selected')).toBeVisible();
 		});
 
 		await test.step('Clear the filters', async () => {

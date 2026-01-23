@@ -8,6 +8,7 @@ package com.liferay.ai.hub.rest.resource.v1_0.test;
 import com.liferay.ai.hub.rest.resource.v1_0.test.util.SseEventSourceTestUtil;
 import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -84,44 +85,36 @@ public class MessageResourceTest extends BaseMessageResourceTestCase {
 	@Override
 	@Test
 	public void testPostChatByExternalReferenceCodeMessage() throws Exception {
-		CountDownLatch countDownLatch1 = new CountDownLatch(4);
-		CountDownLatch countDownLatch2 = new CountDownLatch(6);
+		CountDownLatch countDownLatch = new CountDownLatch(4);
 
 		List<String> lines = new ArrayList<>();
 
 		String sseEventSinkKey = SseEventSourceTestUtil.open(
-			List.of(countDownLatch1, countDownLatch2), lines,
-			"chats/subscribe");
+			List.of(countDownLatch), lines, "chats/subscribe");
 
-		HTTPTestUtil.invokeToJSONObject(
+		String text = "this is a short text.";
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
-				"text", "Hello"
+				"text", "Expand the following text: " + text
 			).toString(),
 			"ai-hub/v1.0/chats/by-external-reference-code/" + sseEventSinkKey +
 				"/messages",
 			Http.Method.POST);
 
-		Assert.assertTrue(countDownLatch1.await(10, TimeUnit.SECONDS));
+		Assert.assertEquals(
+			"Expand the following text: " + text, jsonObject.getString("text"));
+
+		Assert.assertEquals(lines.toString(), 2, lines.size());
+
+		Assert.assertTrue(countDownLatch.await(10, TimeUnit.SECONDS));
 
 		Assert.assertEquals(lines.toString(), 4, lines.size());
 		Assert.assertEquals("event: Chat Message Sent", lines.get(2));
 
-		HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"text", "What was the first message sent in this chat?"
-			).toString(),
-			"ai-hub/v1.0/chats/by-external-reference-code/" + sseEventSinkKey +
-				"/messages",
-			Http.Method.POST);
+		String expandedText = lines.get(3);
 
-		Assert.assertTrue(countDownLatch2.await(10, TimeUnit.SECONDS));
-
-		Assert.assertEquals(lines.toString(), 6, lines.size());
-		Assert.assertEquals("event: Chat Message Sent", lines.get(4));
-
-		String line = lines.get(5);
-
-		Assert.assertTrue(line.contains("Hello"));
+		Assert.assertTrue(expandedText.length() > text.length());
 	}
 
 	private static String _originalName;

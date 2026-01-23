@@ -530,7 +530,8 @@ public class TaxonomyVocabularyResourceImpl
 			else {
 				_assetVocabularyGroupRelLocalService.
 					setAssetVocabularyGroupRels(
-						assetVocabulary.getVocabularyId(), new long[] {-1});
+						assetVocabulary.getVocabularyId(),
+						new long[] {_GROUP_ID_ALL});
 			}
 		}
 
@@ -1063,7 +1064,8 @@ public class TaxonomyVocabularyResourceImpl
 			else {
 				_assetVocabularyGroupRelLocalService.
 					setAssetVocabularyGroupRels(
-						assetVocabulary.getVocabularyId(), new long[] {-1});
+						assetVocabulary.getVocabularyId(),
+						new long[] {_GROUP_ID_ALL});
 			}
 		}
 
@@ -1080,6 +1082,8 @@ public class TaxonomyVocabularyResourceImpl
 				taxonomyVocabulary.getViewableByAsString()
 			).build());
 	}
+
+	private static final long _GROUP_ID_ALL = -1L;
 
 	private static final Map<String, String> _assetTypeTypeToClassNames =
 		new HashMap<>();

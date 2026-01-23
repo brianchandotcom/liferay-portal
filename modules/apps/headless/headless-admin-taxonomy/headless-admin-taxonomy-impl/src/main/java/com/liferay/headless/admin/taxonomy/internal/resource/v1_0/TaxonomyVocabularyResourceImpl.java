@@ -517,7 +517,7 @@ public class TaxonomyVocabularyResourceImpl
 		Group group = _groupLocalService.getGroup(siteId);
 
 		if (FeatureFlagManagerUtil.isEnabled(
-			group.getCompanyId(), "LPD-17564") &&
+				group.getCompanyId(), "LPD-17564") &&
 			group.isCMS()) {
 
 			if (ArrayUtil.isNotEmpty(taxonomyVocabulary.getAssetLibraries())) {
@@ -1053,7 +1053,6 @@ public class TaxonomyVocabularyResourceImpl
 			new HashSet<>(descriptionMap.keySet()));
 
 		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-17564")) {
-
 			if (ArrayUtil.isNotEmpty(taxonomyVocabulary.getAssetLibraries())) {
 				_assetVocabularyGroupRelLocalService.
 					setAssetVocabularyGroupRels(

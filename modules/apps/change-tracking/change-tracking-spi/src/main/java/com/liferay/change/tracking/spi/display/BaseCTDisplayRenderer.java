@@ -262,6 +262,7 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 		LinkTag linkTag = new LinkTag();
 
 		linkTag.setDisplayType("primary");
+		linkTag.setDynamicAttribute(StringPool.BLANK, "data-senna-off", "true");
 		linkTag.setHref(displayContext.getDownloadURL(version, size, fileName));
 		linkTag.setIcon("download");
 		linkTag.setLabel("download");

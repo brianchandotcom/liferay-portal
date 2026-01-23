@@ -43,7 +43,7 @@ export class CompanyExportImportPage {
 		includePermissions?: boolean;
 		taskStatus?: taskStatus;
 		useCurrentUser?: boolean;
-	}): Promise<void> {
+	}): Promise<{fileName: string}> {
 		await this.applicationsMenuPage.goToImport();
 
 		await this.exportImportPage.newImportButton.click();
@@ -77,5 +77,7 @@ export class CompanyExportImportPage {
 		await this.exportImportPage
 			.taskStatusLabel(fileName, taskStatus)
 			.waitFor();
+
+		return {fileName};
 	}
 }

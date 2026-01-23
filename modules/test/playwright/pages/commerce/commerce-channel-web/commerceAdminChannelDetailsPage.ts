@@ -149,9 +149,9 @@ export class CommerceAdminChannelDetailsPage {
 		this.byAddressTaxCategoryChoiceBox =
 			this.addTaxRateSettingsFrame.getByText('Tax Category');
 		this.byAddressCountryChoiceBox =
-			this.addTaxRateSettingsFrame.getByText('Country');
+			this.addTaxRateSettingsFrame.getByLabel('Country');
 		this.byAddressRegionChoiceBox =
-			this.addTaxRateSettingsFrame.getByText('Region');
+			this.addTaxRateSettingsFrame.getByLabel('Region');
 		this.categoryDisplayPageTab = page.getByRole('link', {
 			name: 'Category Display Pages',
 		});
@@ -598,20 +598,35 @@ export class CommerceAdminChannelDetailsPage {
 		await (await this.activeToggle(tableName)).check();
 		await (await this.frameSaveButton(false, tableName)).click();
 
+		await waitForAlert(this.sidePanelFrameLocator);
+
 		await (await this.taxRateSettingsTab(tableName)).click();
 		await (await this.addTaxRateSettingButton(tableName)).click();
 
 		await expect(this.byAddressTaxCategoryChoiceBox).toBeVisible();
 
 		await this.byAddressTaxCategoryChoiceBox.selectOption(name);
-		await this.addTaxRateSettingsFrame.getByLabel('Amount').fill(amount);
-		await this.byAddressCountryChoiceBox.selectOption(country);
-		await this.byAddressRegionChoiceBox.selectOption(region);
-		await this.addTaxRateSettingsFrame.getByLabel('Zip').fill(zip);
+		const amountField = this.addTaxRateSettingsFrame.getByLabel('Amount');
+
+		await amountField.fill(amount);
+
+		await this.byAddressCountryChoiceBox.focus();
+
+		await expect(this.byAddressCountryChoiceBox).toBeFocused();
+
+		await this.byAddressCountryChoiceBox.selectOption({label: country});
+
+		await this.byAddressRegionChoiceBox.focus();
+
+		await expect(this.byAddressRegionChoiceBox).toBeFocused();
+
+		await this.byAddressRegionChoiceBox.selectOption({label: region});
+
+		const zipField = this.addTaxRateSettingsFrame.getByLabel('Zip');
+
+		await zipField.fill(zip);
 
 		await this.taxRateFrameSettingsSubmitButton.click();
-
-		await this.page.reload();
 
 		await expect(
 			await this.generalCommerceAdminChannelTableLink('By Address')

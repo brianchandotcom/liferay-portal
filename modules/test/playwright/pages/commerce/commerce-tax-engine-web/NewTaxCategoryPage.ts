@@ -7,7 +7,6 @@ import {Locator, Page} from '@playwright/test';
 
 export class NewTaxCategoryPage {
 	readonly descriptionInput: Locator;
-	readonly errorMessage: (text: string) => Promise<Locator>;
 	readonly externalReferenceCodeInput: Locator;
 	readonly nameInput: Locator;
 	readonly page: Page;
@@ -15,9 +14,6 @@ export class NewTaxCategoryPage {
 
 	constructor(page: Page) {
 		this.descriptionInput = page.getByLabel('Description', {exact: true});
-		this.errorMessage = async (text: string) => {
-			return page.getByText(text);
-		};
 		this.externalReferenceCodeInput = page.getByLabel(
 			'External Reference Code',
 			{exact: true}

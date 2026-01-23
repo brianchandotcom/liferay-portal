@@ -7,18 +7,26 @@ package com.liferay.captcha.simplecaptcha;
 
 import com.liferay.captcha.configuration.CaptchaConfiguration;
 import com.liferay.captcha.provider.CaptchaProvider;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import nl.captcha.noise.NoiseProducer;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Mockito;
+
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.mock.web.MockHttpSession;
+import org.springframework.mock.web.MockServletContext;
 
 /**
  * @author Pedro Victor Silvestre
@@ -30,39 +38,167 @@ public class SimpleCaptchaImplTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@Before
+	public void setUp() {
+		ReflectionTestUtil.setFieldValue(
+			_simpleCaptchaImpl, "captchaProvider", _mockCaptchaProvider());
+		ReflectionTestUtil.setFieldValue(_simpleCaptchaImpl, "portal", _portal);
+	}
+
 	@Test
 	public void testGetNoiseProducer() {
-		SimpleCaptchaImpl simpleCaptchaImpl = new SimpleCaptchaImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			simpleCaptchaImpl, "captchaProvider",
-			_mockCaptchaProvider(
-				new String[] {
-					"nl.captcha.noise.CurvedLineNoiseProducer",
-					"nl.captcha.noise.StraightLineNoiseProducer"
-				}));
-
-		NoiseProducer noiseProducer = simpleCaptchaImpl.getNoiseProducer(
+		NoiseProducer noiseProducer = _simpleCaptchaImpl.getNoiseProducer(
 			_captchaConfiguration);
 
-		ReflectionTestUtil.setFieldValue(
-			simpleCaptchaImpl, "captchaProvider",
-			_mockCaptchaProvider(new String[] {StringPool.BLANK}));
+		Mockito.when(
+			_captchaConfiguration.simpleCaptchaNoiseProducers()
+		).thenReturn(
+			new String[] {"nl.captcha.noise.StraightLineNoiseProducer"}
+		);
 
 		Assert.assertNotEquals(
 			noiseProducer,
-			simpleCaptchaImpl.getNoiseProducer(_captchaConfiguration));
+			_simpleCaptchaImpl.getNoiseProducer(_captchaConfiguration));
 	}
 
-	private CaptchaProvider _mockCaptchaProvider(String[] expectedClassNames) {
+	@Test
+	public void testServeImage() throws Exception {
+		MockHttpSession mockHttpSession = new MockHttpSession(
+			new MockServletContext(), RandomTestUtil.randomString());
+
+		String captchaId1 = RandomTestUtil.randomString();
+
+		MockHttpServletRequest mockHttpServletRequest1 =
+			_getMockHttpServletRequest(mockHttpSession, captchaId1);
+
+		Mockito.when(
+			_portal.getOriginalServletRequest(Mockito.any())
+		).thenReturn(
+			mockHttpServletRequest1
+		);
+
+		_simpleCaptchaImpl.serveImage(
+			mockHttpServletRequest1, new MockHttpServletResponse());
+
+		String captchaId2 = RandomTestUtil.randomString();
+
+		MockHttpServletRequest mockHttpServletRequest2 =
+			_getMockHttpServletRequest(mockHttpSession, captchaId2);
+
+		Mockito.when(
+			_portal.getOriginalServletRequest(Mockito.any())
+		).thenReturn(
+			mockHttpServletRequest2
+		);
+
+		_simpleCaptchaImpl.serveImage(
+			mockHttpServletRequest2, new MockHttpServletResponse());
+
+		Assert.assertNotNull(
+			mockHttpSession.getAttribute(captchaId1 + WebKeys.CAPTCHA_TEXT));
+
+		Assert.assertNotNull(
+			mockHttpSession.getAttribute(captchaId2 + WebKeys.CAPTCHA_TEXT));
+	}
+
+	@Test
+	public void testValidateChallenge() throws Exception {
+		MockHttpSession mockHttpSession = new MockHttpSession(
+			new MockServletContext(), RandomTestUtil.randomString());
+
+		String captchaId1 = RandomTestUtil.randomString();
+
+		String captchaText = RandomTestUtil.randomString();
+
+		mockHttpSession.setAttribute(
+			captchaId1 + WebKeys.CAPTCHA_TEXT, captchaText);
+
+		String captchaId2 = RandomTestUtil.randomString();
+
+		mockHttpSession.setAttribute(
+			captchaId2 + WebKeys.CAPTCHA_TEXT, RandomTestUtil.randomString());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest(mockHttpSession, captchaId1);
+
+		mockHttpServletRequest.setParameter("captchaText", captchaText);
+
+		Mockito.when(
+			_portal.getOriginalServletRequest(Mockito.any())
+		).thenReturn(
+			mockHttpServletRequest
+		);
+
+		Assert.assertTrue(
+			_simpleCaptchaImpl.validateChallenge(mockHttpServletRequest));
+
+		Assert.assertNull(
+			mockHttpSession.getAttribute(captchaId1 + WebKeys.CAPTCHA_TEXT));
+		Assert.assertNotNull(
+			mockHttpSession.getAttribute(captchaId2 + WebKeys.CAPTCHA_TEXT));
+	}
+
+	private MockHttpServletRequest _getMockHttpServletRequest(
+		MockHttpSession mockHttpSession, String captchaId) {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setParameter("captchaId", captchaId);
+		mockHttpServletRequest.setSession(mockHttpSession);
+
+		return mockHttpServletRequest;
+	}
+
+	private CaptchaProvider _mockCaptchaProvider() {
 		CaptchaProvider captchaProvider = Mockito.mock(CaptchaProvider.class);
 
 		_captchaConfiguration = Mockito.mock(CaptchaConfiguration.class);
 
 		Mockito.when(
+			_captchaConfiguration.simpleCaptchaBackgroundProducers()
+		).thenReturn(
+			new String[] {"nl.captcha.backgrounds.FlatColorBackgroundProducer"}
+		);
+
+		Mockito.when(
+			_captchaConfiguration.simpleCaptchaGimpyRenderers()
+		).thenReturn(
+			new String[] {
+				"com.liferay.captcha.simplecaptcha.gimpy.BlockGimpyRenderer"
+			}
+		);
+
+		Mockito.when(
+			_captchaConfiguration.simpleCaptchaHeight()
+		).thenReturn(
+			50
+		);
+
+		Mockito.when(
 			_captchaConfiguration.simpleCaptchaNoiseProducers()
 		).thenReturn(
-			expectedClassNames
+			new String[] {"nl.captcha.noise.CurvedLineNoiseProducer"}
+		);
+
+		Mockito.when(
+			_captchaConfiguration.simpleCaptchaTextProducers()
+		).thenReturn(
+			new String[] {
+				"com.liferay.captcha.simplecaptcha.PinNumberTextProducer"
+			}
+		);
+
+		Mockito.when(
+			_captchaConfiguration.simpleCaptchaWidth()
+		).thenReturn(
+			150
+		);
+
+		Mockito.when(
+			_captchaConfiguration.simpleCaptchaWordRenderers()
+		).thenReturn(
+			new String[] {"nl.captcha.text.renderer.DefaultWordRenderer"}
 		);
 
 		Mockito.when(
@@ -75,5 +211,8 @@ public class SimpleCaptchaImplTest {
 	}
 
 	private CaptchaConfiguration _captchaConfiguration;
+	private final Portal _portal = Mockito.mock(Portal.class);
+	private final SimpleCaptchaImpl _simpleCaptchaImpl =
+		new SimpleCaptchaImpl();
 
 }

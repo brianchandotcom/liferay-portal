@@ -1,0 +1,48 @@
+.lfr__kaban-view-column {
+	padding: 0.25rem;
+	width: 25%;
+
+	&-header {
+		align-items: center;
+		background-color: #f7f8f9;
+		border-radius: 12px;
+		color: #6b6c7e;
+		display: flex;
+		gap: 0.5rem;
+		height: 48px;
+		margin-bottom: 10px;
+		padding-left: 1rem;
+
+		.label {
+			margin: 0;
+		}
+	}
+
+	&-task {
+		background-color: #f7f8f9;
+		border-radius: 12px;
+		display: flex;
+		flex-direction: column;
+		padding: 0.5rem;
+
+		&-add-button {
+			align-items: center;
+			color: #6b6c7e;
+			display: flex;
+			font-size: 12px;
+			gap: 0.5rem;
+			padding-left: 0.5rem;
+		}
+
+		&-list {
+			max-height: 67vh;
+			overflow: auto;
+
+			.card {
+				border: 1px solid #e7e7ed;
+				box-shadow: unset;
+				margin-bottom: 0.5rem;
+			}
+		}
+	}
+}

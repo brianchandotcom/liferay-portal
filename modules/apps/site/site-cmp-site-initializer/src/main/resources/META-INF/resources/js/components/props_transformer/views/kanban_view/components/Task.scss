@@ -1,0 +1,31 @@
+.lfr__kaban-task-card {
+	&-assignee {
+		padding-right: 0.25rem;
+	}
+	&-body {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+
+		&.card-body {
+			padding: 0.75rem 1rem;
+		}
+
+		.card-subtitle {
+			font-size: 0.75rem;
+		}
+	}
+	&-row {
+		align-items: center;
+		display: flex;
+		font-size: 14px;
+		justify-content: space-between;
+		width: 100%;
+
+		&-text-content {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+	}
+}

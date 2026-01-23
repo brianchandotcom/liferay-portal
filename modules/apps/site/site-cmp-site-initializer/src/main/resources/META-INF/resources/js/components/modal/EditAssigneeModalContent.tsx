@@ -6,6 +6,7 @@
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
 import {AssigneeValue} from '@liferay/object-dynamic-data-mapping-form-field-type';
+import {displayErrorToast} from '@liferay/site-cms-site-initializer';
 import React, {useState} from 'react';
 
 import {patchTaskById} from '../../utils/api';
@@ -34,17 +35,20 @@ export default function EditAssigneeModalContent({
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		const response = await patchTaskById({
+		const {error} = await patchTaskById({
 			body: {assignTo: value},
 			taskId,
 		});
 
-		if (response.ok) {
+		if (!error) {
 			closeModal();
 
 			loadData();
 
 			displayAssignSuccessToast(taskTitle, (value as AssigneeValue).name);
+		}
+		else {
+			displayErrorToast(error);
 		}
 	};
 

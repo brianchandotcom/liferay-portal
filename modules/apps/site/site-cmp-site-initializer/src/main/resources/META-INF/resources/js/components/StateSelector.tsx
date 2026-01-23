@@ -11,57 +11,57 @@ import './StateSelector.scss';
 
 import Label from '@clayui/label';
 
+import {mapStateKeyToDisplayType, mapStateKeyToLabel} from '../utils/constants';
+
 export interface State {
 	key: string;
 	name: string;
 	nextStates: string[];
 }
 
-declare type LabelDisplayType =
-	| 'secondary'
-	| 'info'
-	| 'warning'
-	| 'danger'
-	| 'success'
-	| 'unstyled';
-
-const mapLabelToLabelDisplayType: {[key: string]: LabelDisplayType} = {
-	'Blocked': 'danger',
-	'Done': 'success',
-	'In Progress': 'info',
-	'Not Started': 'secondary',
-	'Overdue': 'warning',
-};
-
 const Trigger = React.forwardRef(
 	(
 		{
 			children,
 			className,
+			small,
 			...otherProps
-		}: {children: string; className?: string; otherProps: unknown},
+		}: {
+			children: string;
+			className?: string;
+			otherProps: unknown;
+			small: boolean;
+		},
 		ref: LegacyRef<HTMLDivElement>
 	) => (
 		<div
 			{...otherProps}
-			className={classNames('lfr-cmp__state-selector', className)}
+			className={classNames('lfr-cmp__state-selector', className, {
+				'lfr-cmp__state-selector--small': small,
+			})}
 			ref={ref}
 			tabIndex={0}
 		>
-			<Label displayType={mapLabelToLabelDisplayType[children]}>
-				{children}
+			<Label displayType={mapStateKeyToDisplayType[children]}>
+				{mapStateKeyToLabel[children]}
 			</Label>
 		</div>
 	)
 );
 
 export default function StateSelector({
+	id,
 	initialSelectedKey,
+	name,
 	onChange,
+	small,
 	states,
 }: {
+	id?: string;
 	initialSelectedKey: string;
+	name?: string;
 	onChange: (key: string) => Promise<void>;
+	small?: boolean;
 	states: State[];
 }) {
 	const [selectedKey, setSelectedKey] = useState(initialSelectedKey);
@@ -82,6 +82,7 @@ export default function StateSelector({
 				as={Trigger}
 				defaultSelectedKey={initialSelectedKey}
 				disabled={false}
+				id={id}
 				items={getNextStates()}
 				messages={{
 					itemDescribedby: Liferay.Language.get(
@@ -92,19 +93,19 @@ export default function StateSelector({
 						Liferay.Language.get('scroll-to-bottom'),
 					scrollToTopAriaLabel: Liferay.Language.get('scroll-to-top'),
 				}}
+				name={name}
 				onSelectionChange={async (item) => {
 					setSelectedKey(item as string);
 
 					await onChange(item as string);
 				}}
 				selectedKey={selectedKey}
+				small={small}
 				width={125}
 			>
 				{(item) => (
-					<Option key={item.key} textValue={item.name}>
-						<Label
-							displayType={mapLabelToLabelDisplayType[item.name]}
-						>
+					<Option key={item.key} textValue={item.key}>
+						<Label displayType={mapStateKeyToDisplayType[item.key]}>
 							{item.name}
 						</Label>
 					</Option>

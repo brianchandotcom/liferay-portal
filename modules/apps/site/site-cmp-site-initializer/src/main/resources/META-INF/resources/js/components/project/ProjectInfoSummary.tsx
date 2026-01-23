@@ -5,6 +5,7 @@
 
 import Label from '@clayui/label';
 import {DateRenderer} from '@liferay/frontend-data-set-web';
+import {displayErrorToast} from '@liferay/site-cms-site-initializer';
 import React from 'react';
 
 import {patchProjectById} from '../../utils/api';
@@ -42,15 +43,19 @@ export default function ProjectInfoSummary({
 						<StateSelector
 							initialSelectedKey={initialState}
 							onChange={async (key: string) => {
-								const response = await patchProjectById({
+								const {error} = await patchProjectById({
 									body: {state: key},
 									projectId,
 								});
 
-								if (response.ok) {
+								if (!error) {
 									displayStateSuccessToast();
 								}
+								else {
+									displayErrorToast(error);
+								}
 							}}
+							small
 							states={states}
 						/>
 					),

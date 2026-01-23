@@ -19,6 +19,16 @@ const displayAssignSuccessToast = (title: string, value: string) => {
 	});
 };
 
+const displayDeleteSuccessToast = (title: string) => {
+	openToast({
+		message: sub(
+			Liferay.Language.get('x-was-successfully-deleted'),
+			getFormattedLabel(title)
+		),
+		type: 'success',
+	});
+};
+
 const displayStateSuccessToast = () => {
 	openToast({
 		message: Liferay.Language.get('state-was-successfully-updated'),
@@ -26,4 +36,8 @@ const displayStateSuccessToast = () => {
 	});
 };
 
-export {displayAssignSuccessToast, displayStateSuccessToast};
+export {
+	displayDeleteSuccessToast,
+	displayAssignSuccessToast,
+	displayStateSuccessToast,
+};

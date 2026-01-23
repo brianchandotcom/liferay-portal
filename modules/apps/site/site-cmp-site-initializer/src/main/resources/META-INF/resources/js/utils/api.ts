@@ -3,13 +3,33 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {fetch} from 'frontend-js-web';
+import {ApiHelper} from '@liferay/site-cms-site-initializer';
 
-const headers = new Headers({
-	'Accept': 'application/json',
-	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
-	'Content-Type': 'application/json',
-});
+export async function deleteTaskById({taskId}: {taskId: string}) {
+	return await ApiHelper.delete(`/o/cmp/tasks/${taskId}`);
+}
+
+export async function getAllProjects() {
+	return await ApiHelper.get(
+		`/o/search/v1.0/search?emptySearch=true&filter=objectDefinitionExternalReferenceCode eq 'L_CMP_PROJECT'&nestedFields=embedded`
+	);
+}
+
+export async function getAllStates() {
+	return await ApiHelper.get(
+		'/o/headless-admin-list-type/v1.0/list-type-definitions/by-external-reference-code/L_CMP_STATES/list-type-entries'
+	);
+}
+
+export async function getUserAccount(id: string) {
+	return ApiHelper.get(`/o/headless-admin-user/v1.0/user-accounts/${id}`)
+		.then((response) => {
+			return response.data;
+		})
+		.catch(() => {
+			throw new Error('Failed to fetch user data.');
+		});
+}
 
 export async function patchProjectById({
 	body,
@@ -17,12 +37,8 @@ export async function patchProjectById({
 }: {
 	body: {[key: string]: any};
 	projectId: string;
-}): Promise<Response> {
-	return await fetch(`/o/cmp/projects/${projectId}`, {
-		body: JSON.stringify(body),
-		headers,
-		method: 'PATCH',
-	});
+}) {
+	return await ApiHelper.patch(body, `/o/cmp/projects/${projectId}`);
 }
 
 export async function patchTaskById({
@@ -31,10 +47,16 @@ export async function patchTaskById({
 }: {
 	body: {[key: string]: any};
 	taskId: string;
-}): Promise<Response> {
-	return await fetch(`/o/cmp/tasks/${taskId}`, {
-		body: JSON.stringify(body),
-		headers,
-		method: 'PATCH',
-	});
+}) {
+	return await ApiHelper.patch(body, `/o/cmp/tasks/${taskId}`);
+}
+
+export async function postTaskByScope({
+	body,
+	scopeKey,
+}: {
+	body: {[key: string]: any};
+	scopeKey: string;
+}) {
+	return await ApiHelper.post(`/o/cmp/tasks/scopes/${scopeKey}`, body);
 }

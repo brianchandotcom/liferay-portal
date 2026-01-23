@@ -5052,6 +5052,15 @@
 		"to": "getSitemap(param#0#, param#1#, param#2#)"
 	},
 	{
+		"from": "CommerceAccountHelper.getCommerceAccountGroupIds(long paramName)",
+		"issueKey": "LPD-60625",
+		"newImports": [
+			"com.liferay.account.service.AccountGroupLocalService"
+		],
+		"newReference": "AccountGroupLocalService _accountGroupLocalService",
+		"to": "_accountGroupLocalService.getAccountGroupIds(param#0#)"
+	},
+	{
 		"classNames": [
 			"UserLocalService",
 			"UserLocalServiceUtil"

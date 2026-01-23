@@ -13,15 +13,15 @@ public class WorkflowDefinitionConstants {
 	public static final String EXTERNAL_REFERENCE_CODE_CHANGE_TONE =
 		"L_CHANGE_TONE";
 
-	public static final String EXTERNAL_REFERENCE_CODE_CHAT_MESSAGE_PIPELINE =
-		"L_CHAT_MESSAGE_PIPELINE";
-
 	public static final String
 		EXTERNAL_REFERENCE_CODE_FIX_SPELLING_AND_GRAMMAR =
 			"L_FIX_SPELLING_AND_GRAMMAR";
 
 	public static final String EXTERNAL_REFERENCE_CODE_IMPROVE_WRITING =
 		"L_IMPROVE_WRITING";
+
+	public static final String EXTERNAL_REFERENCE_CODE_LIFERAY_SEARCH =
+		"L_LIFERAY_SEARCH";
 
 	public static final String EXTERNAL_REFERENCE_CODE_MAKE_LONGER =
 		"L_MAKE_LONGER";
@@ -38,13 +38,12 @@ public class WorkflowDefinitionConstants {
 
 	public static final String NAME_CHANGE_TONE = "Change Tone";
 
-	public static final String NAME_CHAT_MESSAGE_PIPELINE =
-		"Chat Message Pipeline";
-
 	public static final String NAME_FIX_SPELLING_AND_GRAMMAR =
 		"Fix Spelling and Grammar";
 
 	public static final String NAME_IMPROVE_WRITING = "Improve Writing";
+
+	public static final String NAME_LIFERAY_SEARCH = "Liferay Search";
 
 	public static final String NAME_MAKE_LONGER = "Make Longer";
 
@@ -55,12 +54,13 @@ public class WorkflowDefinitionConstants {
 
 	public static final String NAME_SINGLE_APPROVER = "Single Approver";
 
+	public static final String SCOPE_AI = "ai";
+
 	public static final String SCOPE_ALL = "all";
 
 	public static final String[] SYSTEM_WORKFLOW_DEFINITION_NAMES = {
-		NAME_CHANGE_TONE, NAME_CHAT_MESSAGE_PIPELINE,
-		NAME_FIX_SPELLING_AND_GRAMMAR, NAME_IMPROVE_WRITING, NAME_MAKE_LONGER,
-		NAME_MAKE_SHORTER
+		NAME_CHANGE_TONE, NAME_FIX_SPELLING_AND_GRAMMAR, NAME_IMPROVE_WRITING,
+		NAME_LIFERAY_SEARCH, NAME_MAKE_LONGER, NAME_MAKE_SHORTER
 	};
 
 }

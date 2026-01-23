@@ -145,7 +145,7 @@ public class TaskDefinitionResourceTest
 		new TaskDefinition() {
 			{
 				active = true;
-				name = WorkflowDefinitionConstants.NAME_CHAT_MESSAGE_PIPELINE;
+				name = WorkflowDefinitionConstants.NAME_LIFERAY_SEARCH;
 				version = 1;
 			}
 		},

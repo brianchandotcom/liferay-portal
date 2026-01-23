@@ -1,11 +1,11 @@
 {
 	"active": true,
 	"description": "This agent provides targeted support by searching the Liferay DXP instance for the most relevant data, ensuring every response is grounded in your specific environment.",
-	"externalReferenceCode": "L_CHAT_MESSAGE_PIPELINE",
-	"name": "Chat Message Pipeline",
+	"externalReferenceCode": "L_LIFERAY_SEARCH",
+	"name": "Liferay Search",
 	"scope": "ai",
-	"title": "Chat Message Pipeline",
+	"title": "Liferay Search",
 	"title_i18n": {
-		"en_US": "Chat Message Pipeline"
+		"en_US": "Liferay Search"
 	}
 }

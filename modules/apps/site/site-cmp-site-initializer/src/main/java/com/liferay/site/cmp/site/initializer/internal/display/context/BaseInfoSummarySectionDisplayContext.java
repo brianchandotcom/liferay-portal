@@ -93,6 +93,8 @@ public abstract class BaseInfoSummarySectionDisplayContext {
 					objectEntry.getModelClassName(),
 					objectEntry.getObjectEntryId()),
 				AssetTag.NAME_ACCESSOR)
+		).put(
+			"title", getFieldValue("title")
 		).build();
 	}
 

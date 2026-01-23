@@ -24,16 +24,14 @@ public class AccountGroupModelDocumentContributor
 
 	@Override
 	public void contribute(Document document, AccountGroup accountGroup) {
-		document.addText(Field.DESCRIPTION, accountGroup.getDescription());
-		document.addText(Field.NAME, accountGroup.getName());
-		document.addKeyword(Field.TYPE, accountGroup.getType());
-
 		AccountGroupAccountEntryDocumentContributorUtil.contribute(
 			document, accountGroup);
 
+		document.addText(Field.DESCRIPTION, accountGroup.getDescription());
+		document.addText(Field.NAME, accountGroup.getName());
+		document.addKeyword(Field.TYPE, accountGroup.getType());
 		document.addKeyword(
 			"defaultAccountGroup", accountGroup.isDefaultAccountGroup());
-
 		document.remove(Field.USER_NAME);
 	}
 

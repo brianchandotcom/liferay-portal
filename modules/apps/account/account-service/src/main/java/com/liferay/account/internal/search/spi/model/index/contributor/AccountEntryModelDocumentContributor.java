@@ -27,25 +27,20 @@ public class AccountEntryModelDocumentContributor
 
 	@Override
 	public void contribute(Document document, AccountEntry accountEntry) {
-		document.addText(Field.DESCRIPTION, accountEntry.getDescription());
-		document.addText(Field.NAME, accountEntry.getName());
-		document.addKeyword(Field.STATUS, accountEntry.getStatus());
-
-		document.addKeyword("accountEntryId", accountEntry.getAccountEntryId());
-
 		AccountGroupAccountEntryDocumentContributorUtil.contribute(
 			document, accountEntry);
-
+		OrganizationAccountEntryDocumentContributorUtil.contribute(
+			document, accountEntry);
 		UserAccountEntryDocumentContributorUtil.contribute(
 			document, accountEntry);
 
+		document.addText(Field.DESCRIPTION, accountEntry.getDescription());
+		document.addText(Field.NAME, accountEntry.getName());
+		document.addKeyword(Field.STATUS, accountEntry.getStatus());
+		document.addKeyword("accountEntryId", accountEntry.getAccountEntryId());
 		document.addKeyword("domains", _getDomains(accountEntry));
 		document.addKeyword(
 			"externalReferenceCode", accountEntry.getExternalReferenceCode());
-
-		OrganizationAccountEntryDocumentContributorUtil.contribute(
-			document, accountEntry);
-
 		document.addKeyword(
 			"parentAccountEntryId", accountEntry.getParentAccountEntryId());
 		document.addText("taxIdNumber", accountEntry.getTaxIdNumber());

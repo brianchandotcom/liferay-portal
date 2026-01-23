@@ -5,6 +5,7 @@
 
 package com.liferay.jenkins.results.parser.test.task;
 
+import com.liferay.jenkins.results.parser.history.TestTaskHistory;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroup;
 
@@ -44,7 +45,13 @@ public class BaseTestTask implements TestTask {
 
 	@Override
 	public long getAverageDuration() {
-		return _averageDuration;
+		TestTaskHistory testTaskHistory = getTestTaskHistory();
+
+		if (testTaskHistory == null) {
+			return 0L;
+		}
+
+		return testTaskHistory.getAverageDuration();
 	}
 
 	@Override
@@ -60,7 +67,13 @@ public class BaseTestTask implements TestTask {
 
 	@Override
 	public long getAverageTotalDuration() {
-		return _averageTotalDuration;
+		TestTaskHistory testTaskHistory = getTestTaskHistory();
+
+		if (testTaskHistory == null) {
+			return 0L;
+		}
+
+		return testTaskHistory.getAverageTotalDuration();
 	}
 
 	@Override
@@ -96,7 +109,13 @@ public class BaseTestTask implements TestTask {
 
 	@Override
 	public long getLongestDuration() {
-		return _longestDuration;
+		TestTaskHistory testTaskHistory = getTestTaskHistory();
+
+		if (testTaskHistory == null) {
+			return 0L;
+		}
+
+		return testTaskHistory.getLongestDuration();
 	}
 
 	@Override
@@ -112,6 +131,11 @@ public class BaseTestTask implements TestTask {
 	@Override
 	public List<TestClass> getTestClasses() {
 		return _testClasses;
+	}
+
+	@Override
+	public TestTaskHistory getTestTaskHistory() {
+		return _testTaskHistory;
 	}
 
 	@Override
@@ -162,7 +186,13 @@ public class BaseTestTask implements TestTask {
 	}
 
 	public boolean isLatestReportMissing() {
-		return _latestReportMissing;
+		TestTaskHistory testTaskHistory = getTestTaskHistory();
+
+		if (testTaskHistory == null) {
+			return true;
+		}
+
+		return testTaskHistory.isLatestReportMissing();
 	}
 
 	@Override
@@ -176,26 +206,19 @@ public class BaseTestTask implements TestTask {
 	}
 
 	protected BaseTestTask(
-		long averageDuration, long averageTotalDuration,
-		TestClassGroup.GroupingStrategy groupingStrategy,
-		boolean latestReportMissing, long longestDuration, String name) {
+		TestClassGroup.GroupingStrategy groupingStrategy, String name,
+		TestTaskHistory testTaskHistory) {
 
-		_averageDuration = averageDuration;
-		_averageTotalDuration = averageTotalDuration;
 		_groupingStrategy = groupingStrategy;
-		_latestReportMissing = latestReportMissing;
-		_longestDuration = longestDuration;
 		_name = name;
+		_testTaskHistory = testTaskHistory;
 	}
 
-	private final long _averageDuration;
-	private final long _averageTotalDuration;
 	private final TestClassGroup.GroupingStrategy _groupingStrategy;
-	private final boolean _latestReportMissing;
-	private final long _longestDuration;
 	private final String _name;
 	private boolean _split;
 	private final List<TestClass> _testClasses = new ArrayList<>();
+	private final TestTaskHistory _testTaskHistory;
 	private Long _weight;
 
 }

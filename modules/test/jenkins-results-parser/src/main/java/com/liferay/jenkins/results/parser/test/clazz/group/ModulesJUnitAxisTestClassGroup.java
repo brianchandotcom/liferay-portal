@@ -134,13 +134,12 @@ public class ModulesJUnitAxisTestClassGroup extends JUnitAxisTestClassGroup {
 			TestTask testTask = _testTasks.get(testTaskName);
 
 			if (testTask == null) {
+				BatchTestClassGroup batchTestClassGroup =
+					getBatchTestClassGroup();
+
 				testTask = TestTaskFactory.newTestTask(
-					modulesJUnitTestClass.getAverageTestTaskDuration(),
-					modulesJUnitTestClass.getAverageTotalTestTaskDuration(),
-					groupingStrategy,
-					modulesJUnitTestClass.isLatestReportMissing(),
-					modulesJUnitTestClass.getLongestTestTaskDuration(),
-					testTaskName);
+					groupingStrategy, testTaskName,
+					batchTestClassGroup.getTestTaskHistory(testTaskName));
 
 				_testTasks.put(testTaskName, testTask);
 			}
@@ -179,12 +178,11 @@ public class ModulesJUnitAxisTestClassGroup extends JUnitAxisTestClassGroup {
 
 			String testTaskName = testTaskJSONObject.getString("name");
 
+			BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
+
 			TestTask testTask = TestTaskFactory.newTestTask(
-				testTaskJSONObject.getLong("average_duration"),
-				testTaskJSONObject.getLong("average_total_duration"),
-				groupingStrategy,
-				testTaskJSONObject.getBoolean("latest_report_missing"),
-				testTaskJSONObject.getLong("longest_duration"), testTaskName);
+				groupingStrategy, testTaskName,
+				batchTestClassGroup.getTestTaskHistory(testTaskName));
 
 			for (int j = 0; j < testClassesJSONArray.length(); j++) {
 				JSONObject testClassJSONObject =

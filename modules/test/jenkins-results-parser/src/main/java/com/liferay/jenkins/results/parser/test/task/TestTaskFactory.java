@@ -5,6 +5,7 @@
 
 package com.liferay.jenkins.results.parser.test.task;
 
+import com.liferay.jenkins.results.parser.history.TestTaskHistory;
 import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroup;
 
 /**
@@ -13,13 +14,10 @@ import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroup;
 public class TestTaskFactory {
 
 	public static TestTask newTestTask(
-		long averageDuration, long averageTotalDuration,
-		TestClassGroup.GroupingStrategy groupingStrategy,
-		boolean latestReportMissing, long longestDuration, String name) {
+		TestClassGroup.GroupingStrategy groupingStrategy, String name,
+		TestTaskHistory testTaskHistory) {
 
-		return new DefaultTestTask(
-			averageDuration, averageTotalDuration, groupingStrategy,
-			latestReportMissing, longestDuration, name);
+		return new DefaultTestTask(groupingStrategy, name, testTaskHistory);
 	}
 
 }

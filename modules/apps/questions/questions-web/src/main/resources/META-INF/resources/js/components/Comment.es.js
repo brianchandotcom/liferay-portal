@@ -138,7 +138,7 @@ export default withRouter(
 
 							<Modal
 								body={Liferay.Language.get(
-									'do-you-want-to-delete–this-comment'
+									'do-you-want-to-delete-this-comment'
 								)}
 								callback={() => {
 									deleteMessage({

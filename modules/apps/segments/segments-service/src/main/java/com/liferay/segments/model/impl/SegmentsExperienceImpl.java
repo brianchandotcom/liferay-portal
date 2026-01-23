@@ -5,6 +5,7 @@
 
 package com.liferay.segments.model.impl;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -25,6 +26,7 @@ import com.liferay.segments.service.SegmentsExperimentLocalServiceUtil;
 
 import java.io.IOException;
 
+import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -60,6 +62,24 @@ public class SegmentsExperienceImpl extends SegmentsExperienceBaseImpl {
 		}
 
 		return segmentsEntry.getSegmentsEntryId();
+	}
+
+	@Override
+	public String getSegmentsEntryName(Locale locale) {
+		if (hasDefaultSegmentsEntry()) {
+			return SegmentsEntryConstants.getDefaultSegmentsEntryName(locale);
+		}
+
+		SegmentsEntry segmentsEntry =
+			SegmentsEntryLocalServiceUtil.
+				fetchSegmentsEntryByExternalReferenceCode(
+					getSegmentsEntryERC(), getSegmentsEntryGroupId());
+
+		if (segmentsEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		return segmentsEntry.getName(locale);
 	}
 
 	@Override

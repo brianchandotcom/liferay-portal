@@ -89,7 +89,7 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 				}
 				catch (PortalException portalException) {
 					_log.error(
-						"Unable to get table names for company " + companyId,
+						"Failed to get table names for company " + companyId,
 						portalException);
 				}
 			},

@@ -512,7 +512,7 @@ public class TaxonomyVocabularyResourceImpl
 			true, LocaleUtil.getSiteDefault(), "Taxonomy vocabulary", titleMap,
 			new HashSet<>(descriptionMap.keySet()));
 
-		return _assetVocabularyService.addVocabulary(
+		AssetVocabulary assetVocabulary = _assetVocabularyService.addVocabulary(
 			externalReferenceCode, siteId,
 			titleMap.get(LocaleUtil.getSiteDefault()), null, titleMap,
 			descriptionMap,
@@ -525,6 +525,28 @@ public class TaxonomyVocabularyResourceImpl
 				siteId, contextHttpServletRequest,
 				taxonomyVocabulary.getViewableByAsString()
 			).build());
+
+		Group group = _groupLocalService.getGroup(siteId);
+
+		if (FeatureFlagManagerUtil.isEnabled(
+			group.getCompanyId(), "LPD-17564") &&
+			group.isCMS()) {
+
+			if (ArrayUtil.isNotEmpty(taxonomyVocabulary.getAssetLibraries())) {
+				_assetVocabularyGroupRelLocalService.
+					setAssetVocabularyGroupRels(
+						assetVocabulary.getVocabularyId(),
+						_getAssetLibraryGroupIds(
+							group.getCompanyId(), taxonomyVocabulary));
+			}
+			else {
+				_assetVocabularyGroupRelLocalService.
+					setAssetVocabularyGroupRels(
+						assetVocabulary.getVocabularyId(), new long[] {-1});
+			}
+		}
+
+		return assetVocabulary;
 	}
 
 	private AssetLibrary[] _getAssetLibraries(AssetVocabulary assetVocabulary) {
@@ -1043,9 +1065,19 @@ public class TaxonomyVocabularyResourceImpl
 			new HashSet<>(descriptionMap.keySet()));
 
 		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-17564")) {
-			_assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
-				assetVocabulary.getVocabularyId(),
-				_getAssetLibraryGroupIds(companyId, taxonomyVocabulary));
+
+			if (ArrayUtil.isNotEmpty(taxonomyVocabulary.getAssetLibraries())) {
+				_assetVocabularyGroupRelLocalService.
+					setAssetVocabularyGroupRels(
+						assetVocabulary.getVocabularyId(),
+						_getAssetLibraryGroupIds(
+							companyId, taxonomyVocabulary));
+			}
+			else {
+				_assetVocabularyGroupRelLocalService.
+					setAssetVocabularyGroupRels(
+						assetVocabulary.getVocabularyId(), new long[] {-1});
+			}
 		}
 
 		return _assetVocabularyService.updateVocabulary(

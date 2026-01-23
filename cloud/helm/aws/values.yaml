@@ -32,6 +32,43 @@ liferay-default:
         x-liferay-aws:
             -   secretRef:
                     name: managed-service-details
+    customInitContainers:
+        x-liferay-install-opensearch-modules:
+            -   containerTemplate: |
+                    - command:
+                          - bash
+                          - -c
+                          - |
+                                set -e
+
+                                deploy_dir=/temp/liferay/deploy
+                                filename_prefix="com.liferay.portal.search.opensearch2"
+                                product_version={{.image.tag}}
+                                url="https://releases.liferay.com/opensearch2/dxp/${product_version}/${filename_prefix}.{api,impl}.jar"
+
+                                mkdir -p "$deploy_dir"
+
+                                http_code=$(\
+                                    curl \
+                                        "$url"
+                                        --fail \
+                                        --location \
+                                        --output-dir "$deploy_dir" \
+                                        --remote-name \
+                                        --retry 5 \
+                                        --retry-all-errors \
+                                        --retry-delay 2 \
+                                        --write-out "%{http_code}")
+
+                                if ["${http_code}" != "200"] ; then
+                                    echo "Unable to download OpenSearch modules for Product Version ${PRODUCT_VERSION}." >&2
+                                    exit 1
+                                fi
+                      image: {{printf "%s:%s" .image.repository (.image.tag | toString)}}
+                      name: liferay-install-opensearch-modules
+                      volumeMounts:
+                          - mountPath: /temp
+                            name: liferay-persistent-volume
     customLabels:
         origin: liferay-aws
     customVolumeMounts:

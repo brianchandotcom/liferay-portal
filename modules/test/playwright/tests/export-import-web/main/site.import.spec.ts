@@ -354,7 +354,7 @@ testWithExportImportAtInstanceLevelFF(
 			});
 
 		const applicationName = `${normalizeRestPath(objectDefinition.restContextPath)}`;
-		
+
 		let objectEntry: ObjectEntry;
 
 		try {
@@ -376,9 +376,7 @@ testWithExportImportAtInstanceLevelFF(
 		await exportImportPage.goToExport();
 
 		const exportFilePath = await exportImportPage.export({
-			portletLabels: [
-				`${objectDefinitionExternalReferenceCode} 1 Items`,
-			],
+			portletLabels: [`${objectDefinitionExternalReferenceCode} 1 Items`],
 		});
 
 		const objectDefinitionAPIClient =

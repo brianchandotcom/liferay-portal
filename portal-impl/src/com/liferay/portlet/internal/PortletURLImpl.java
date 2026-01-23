@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.PortletURLListener;
 import com.liferay.portal.kernel.model.PublicRenderParameter;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletModeFactory;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -86,6 +88,7 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.BiConsumer;
 
@@ -849,6 +852,10 @@ public class PortletURLImpl
 
 	@Override
 	public String toString() {
+		if (_isSearchMode()) {
+			return StringPool.BLANK;
+		}
+
 		if (_portletSpecMajorVersion < 3) {
 			if (_toString != null) {
 				return _toString;
@@ -1691,6 +1698,23 @@ public class PortletURLImpl
 		}
 
 		return false;
+	}
+
+	private boolean _isSearchMode() {
+		HttpServletRequest httpServletRequest = null;
+
+		if (_portletRequest instanceof
+				LiferayPortletRequest liferayPortletRequest) {
+
+			httpServletRequest =
+				liferayPortletRequest.getOriginalHttpServletRequest();
+		}
+		else {
+			httpServletRequest = _httpServletRequest;
+		}
+
+		return Objects.equals(
+			Constants.SEARCH, httpServletRequest.getParameter("p_l_mode"));
 	}
 
 	private Map<String, String[]> _mergeWithRenderParametersV2(

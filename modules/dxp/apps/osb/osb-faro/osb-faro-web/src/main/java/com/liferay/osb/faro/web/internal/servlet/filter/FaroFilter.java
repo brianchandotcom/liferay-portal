@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.BaseFilter;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -101,9 +102,12 @@ public class FaroFilter extends BaseFilter {
 		String uri = httpServletRequest.getRequestURI();
 
 		if (uri.startsWith("/web/guest")) {
+			String redirect = GetterUtil.getString(
+				httpServletRequest.getParameter("redirect"));
+
 			httpServletResponse.sendRedirect(
 				_portal.getPortalURL(httpServletRequest) +
-					"/c/portal/login?redirect=/");
+					"/c/portal/login?redirect=" + redirect);
 		}
 		else {
 			String encodeURL = URLCodec.encodeURL(

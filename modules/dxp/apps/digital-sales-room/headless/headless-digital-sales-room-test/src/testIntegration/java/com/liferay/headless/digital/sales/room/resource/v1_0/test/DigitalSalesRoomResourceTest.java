@@ -718,7 +718,8 @@ public class DigitalSalesRoomResourceTest
 						fragmentCollection.getFragmentCollectionId(), 0),
 					FragmentEntryModel::getName, String.class),
 				new String[] {
-					"Header Main", "Header User", "Text Block", "Welcome Block"
+					"Header Main", "Header User", "Question and Answer Block",
+					"Text Block", "Welcome Block"
 				}));
 
 		Assert.assertTrue(
@@ -797,7 +798,8 @@ public class DigitalSalesRoomResourceTest
 						fragmentCollection.getFragmentCollectionId(), 0),
 					FragmentEntryModel::getName, String.class),
 				new String[] {
-					"Header Main", "Header User", "Text Block", "Welcome Block"
+					"Header Main", "Header User", "Question and Answer Block",
+					"Text Block", "Welcome Block"
 				}));
 
 		Assert.assertTrue(

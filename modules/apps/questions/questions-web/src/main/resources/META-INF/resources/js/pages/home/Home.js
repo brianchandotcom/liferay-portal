@@ -9,6 +9,7 @@ import ClayEmptyState from '@clayui/empty-state';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
+import {sub} from 'frontend-js-web';
 import {useManualQuery} from 'graphql-hooks';
 import React, {useContext, useEffect, useState} from 'react';
 import {Helmet} from 'react-helmet';
@@ -189,6 +190,14 @@ export default withRouter(({isHomePath, navigate}) => {
 												<ClayCard.Description
 													className="c-mt-4 justify-content-end small"
 													displayType="text"
+													title={sub(
+														Liferay.Language.get(
+															'x-questions'
+														),
+														[
+															section.numberOfMessageBoardThreads,
+														]
+													)}
 													truncate={false}
 												>
 													<span className="x-questions">

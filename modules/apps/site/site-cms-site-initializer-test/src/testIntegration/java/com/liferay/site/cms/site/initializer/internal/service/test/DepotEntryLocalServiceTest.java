@@ -104,16 +104,16 @@ public class DepotEntryLocalServiceTest {
 	}
 
 	private void _assertObjectEntryFolders(
-		DepotEntry depotEntry, int expectedFolderCount) {
+		DepotEntry depotEntry, int expectedObjectEntryFoldersCount) {
 
 		Assert.assertEquals(
-			expectedFolderCount,
+			expectedObjectEntryFoldersCount,
 			_objectEntryFolderLocalService.getObjectEntryFoldersCount(
 				depotEntry.getGroupId(), depotEntry.getCompanyId(),
 				ObjectEntryFolderConstants.
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT));
 
-		if (expectedFolderCount > 0) {
+		if (expectedObjectEntryFoldersCount > 0) {
 			AssertUtils.assertEquals(
 				Arrays.asList("Contents", "Files"),
 				ListUtil.sort(

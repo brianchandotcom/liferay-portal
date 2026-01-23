@@ -69,7 +69,7 @@ public class ViewTasksSectionDisplayContextTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		ObjectDefinition objectDefinition =
+		_projectObjectDefinition =
 			objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
 					"L_CMP_PROJECT", TestPropsValues.getCompanyId());
@@ -82,7 +82,8 @@ public class ViewTasksSectionDisplayContextTest
 			ServiceContextTestUtil.getServiceContext());
 
 		_assetEntry = _assetEntryLocalService.getEntry(
-			objectDefinition.getClassName(), objectEntry.getObjectEntryId());
+			_projectObjectDefinition.getClassName(),
+			objectEntry.getObjectEntryId());
 	}
 
 	@Test
@@ -121,7 +122,6 @@ public class ViewTasksSectionDisplayContextTest
 		DropdownItem dropdownItem = dropdownItems.get(0);
 
 		Assert.assertEquals("createTask", getValue(dropdownItem, "action"));
-		Assert.assertEquals("New Task", dropdownItem.get("label"));
 		Assert.assertEquals(
 			String.valueOf(objectDefinition.getObjectDefinitionId()),
 			getValue(dropdownItem, "objectDefinitionId"));
@@ -137,6 +137,33 @@ public class ViewTasksSectionDisplayContextTest
 				themeDisplay.getURLCurrent()),
 			getValue(dropdownItem, "redirect"));
 		Assert.assertEquals("Task", getValue(dropdownItem, "title"));
+		Assert.assertEquals("New Task", dropdownItem.get("label"));
+
+		creationMenu = getCreationMenu(null);
+
+		dropdownItems = (List<DropdownItem>)creationMenu.get("primaryItems");
+
+		dropdownItem = dropdownItems.get(0);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+				GroupConstants.CMS_FRIENDLY_URL,
+				"/add_project?objectDefinitionId=",
+				_projectObjectDefinition.getObjectDefinitionId(), "&plid=",
+				themeDisplay.getPlid(), "&redirect=",
+				themeDisplay.getURLCurrent()),
+			getValue(dropdownItem, "addProjectURL"));
+		Assert.assertEquals(
+			StringBundler.concat(
+				themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+				GroupConstants.CMS_FRIENDLY_URL,
+				"/add_task?objectDefinitionId=",
+				objectDefinition.getObjectDefinitionId(), "&plid=",
+				themeDisplay.getPlid(), "&projectGroupId=", 0, "&projectId=", 0,
+				"&redirect=", themeDisplay.getURLCurrent()),
+			getValue(dropdownItem, "addTaskURL"));
+		Assert.assertEquals("New", dropdownItem.get("label"));
 	}
 
 	@Test
@@ -266,5 +293,7 @@ public class ViewTasksSectionDisplayContextTest
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	private ObjectDefinition _projectObjectDefinition;
 
 }

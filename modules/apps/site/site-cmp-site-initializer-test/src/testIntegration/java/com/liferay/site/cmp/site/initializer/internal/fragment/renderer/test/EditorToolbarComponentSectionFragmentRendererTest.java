@@ -55,17 +55,24 @@ public class EditorToolbarComponentSectionFragmentRendererTest
 
 	@Test
 	public void testGetProps() throws Exception {
+		String redirect = "/redirect-url";
+
+		mockHttpServletRequest.setParameter("redirect", redirect);
+
 		Map<String, Object> props = getProps();
 
+		Assert.assertEquals("/redirect-url", props.get("backURL"));
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				themeDisplay.getPathFriendlyURLPublic(),
+				GroupConstants.CMS_FRIENDLY_URL, "/e/project/",
+				PortalUtil.getClassNameId(
+					projectObjectDefinition.getClassName()),
+				StringPool.SLASH, projectObjectEntry.getObjectEntryId()),
+			props.get("formSubmitURL"));
+
 		Assert.assertEquals("New Project", props.get("title"));
-
-		String viewProjectUrl = StringBundler.concat(
-			themeDisplay.getPathFriendlyURLPublic(),
-			GroupConstants.CMS_FRIENDLY_URL, "/e/project/",
-			PortalUtil.getClassNameId(projectObjectDefinition.getClassName()),
-			StringPool.SLASH, projectObjectEntry.getObjectEntryId());
-
-		Assert.assertEquals(viewProjectUrl, props.get("formSubmitURL"));
 
 		ObjectDefinition taskObjectDefinition =
 			objectDefinitionLocalService.
@@ -86,20 +93,66 @@ public class EditorToolbarComponentSectionFragmentRendererTest
 			).build(),
 			serviceContext);
 
-		httpServletRequest = getHttpServletRequest(
+		mockHttpServletRequest = getMockHttpServletRequest(
 			taskObjectDefinition, taskObjectEntry);
+
+		mockHttpServletRequest.setParameter("redirect", redirect);
 
 		props = getProps();
 
+		Assert.assertEquals("/redirect-url", props.get("backURL"));
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				themeDisplay.getPathFriendlyURLPublic(),
+				GroupConstants.CMS_FRIENDLY_URL, "/e/task/",
+				PortalUtil.getClassNameId(taskObjectDefinition.getClassName()),
+				StringPool.SLASH, taskObjectEntry.getObjectEntryId()),
+			props.get("formSubmitURL"));
+
 		Assert.assertEquals("New Task", props.get("title"));
 
-		String viewTaskURL = StringBundler.concat(
-			themeDisplay.getPathFriendlyURLPublic(),
-			GroupConstants.CMS_FRIENDLY_URL, "/e/task/",
-			PortalUtil.getClassNameId(taskObjectDefinition.getClassName()),
-			StringPool.SLASH, taskObjectEntry.getObjectEntryId());
+		mockHttpServletRequest = getMockHttpServletRequest(
+			taskObjectDefinition, taskObjectEntry);
 
-		Assert.assertEquals(viewTaskURL, props.get("formSubmitURL"));
+		mockHttpServletRequest.setParameter(
+			"isCreateTaskGlobalTaskListPage", "true");
+
+		mockHttpServletRequest.setParameter("redirect", redirect);
+
+		props = getProps();
+
+		Assert.assertEquals("/redirect-url", props.get("backURL"));
+
+		Assert.assertEquals(redirect, props.get("formSubmitURL"));
+
+		Assert.assertEquals("New Task", props.get("title"));
+
+		mockHttpServletRequest = getMockHttpServletRequest(
+			taskObjectDefinition, taskObjectEntry);
+
+		mockHttpServletRequest.setParameter(
+			"isCreateProjectGlobalTaskListPage", "true");
+
+		mockHttpServletRequest.setParameter("redirect", redirect);
+
+		props = getProps();
+
+		Assert.assertEquals("/redirect-url", props.get("backURL"));
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+				GroupConstants.CMS_FRIENDLY_URL,
+				"/add_task?objectDefinitionId=",
+				taskObjectDefinition.getObjectDefinitionId(), "&plid=",
+				themeDisplay.getPlid(), "&projectGroupId=",
+				taskObjectEntry.getGroupId(), "&projectId=",
+				taskObjectEntry.getObjectEntryId(), "&redirect=", redirect,
+				"&isCreateTaskGlobalTaskListPage=true"),
+			props.get("formSubmitURL"));
+
+		Assert.assertEquals("New Task", props.get("title"));
 	}
 
 	@Override

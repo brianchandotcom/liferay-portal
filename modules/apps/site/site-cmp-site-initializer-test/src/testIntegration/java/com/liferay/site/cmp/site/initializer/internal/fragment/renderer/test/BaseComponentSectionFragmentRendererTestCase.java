@@ -65,19 +65,20 @@ public abstract class BaseComponentSectionFragmentRendererTestCase {
 			}
 		};
 
-		httpServletRequest = getHttpServletRequest(
+		mockHttpServletRequest = getMockHttpServletRequest(
 			projectObjectDefinition, projectObjectEntry);
 	}
 
 	protected abstract FragmentRenderer getFragmentRenderer();
 
-	protected HttpServletRequest getHttpServletRequest(
+	protected MockHttpServletRequest getMockHttpServletRequest(
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
 
-		httpServletRequest.setAttribute(
+		mockHttpServletRequest.setAttribute(
 			InfoDisplayWebKeys.INFO_ITEM, objectEntry);
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
@@ -85,16 +86,17 @@ public abstract class BaseComponentSectionFragmentRendererTestCase {
 				getLayoutDisplayPageProviderByClassName(
 					objectDefinition.getClassName());
 
-		httpServletRequest.setAttribute(
+		mockHttpServletRequest.setAttribute(
 			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
 			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
 				new InfoItemReference(
 					layoutDisplayPageProvider.getClassName(),
 					objectEntry.getObjectEntryId())));
 
-		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
 
-		return httpServletRequest;
+		return mockHttpServletRequest;
 	}
 
 	protected Map<String, Object> getProps() {
@@ -103,10 +105,10 @@ public abstract class BaseComponentSectionFragmentRendererTestCase {
 			new Class<?>[] {
 				FragmentRendererContext.class, HttpServletRequest.class
 			},
-			null, httpServletRequest);
+			null, mockHttpServletRequest);
 	}
 
-	protected HttpServletRequest httpServletRequest;
+	protected MockHttpServletRequest mockHttpServletRequest;
 
 	@Inject
 	protected ObjectDefinitionLocalService objectDefinitionLocalService;

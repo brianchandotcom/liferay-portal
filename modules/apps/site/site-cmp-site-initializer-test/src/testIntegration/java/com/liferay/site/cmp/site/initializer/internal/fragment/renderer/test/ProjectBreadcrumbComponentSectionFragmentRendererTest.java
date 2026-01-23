@@ -114,12 +114,12 @@ public class ProjectBreadcrumbComponentSectionFragmentRendererTest
 			JSONUtil.put(
 				"confirmationMessage",
 				_language.format(
-					httpServletRequest, "delete-asset-confirmation-body",
+					mockHttpServletRequest, "delete-asset-confirmation-body",
 					projectTitle)
 			).put(
 				"confirmationTitle",
 				_language.format(
-					httpServletRequest, "delete-asset-confirmation-title",
+					mockHttpServletRequest, "delete-asset-confirmation-title",
 					projectTitle)
 			).put(
 				"href",
@@ -136,7 +136,7 @@ public class ProjectBreadcrumbComponentSectionFragmentRendererTest
 			).put(
 				"successMessage",
 				_language.format(
-					httpServletRequest, "x-was-successfully-deleted",
+					mockHttpServletRequest, "x-was-successfully-deleted",
 					StringBundler.concat("<strong>", projectTitle, "</strong>"))
 			).put(
 				"symbolLeft", "trash"
@@ -158,7 +158,7 @@ public class ProjectBreadcrumbComponentSectionFragmentRendererTest
 					themeDisplay.getPathFriendlyURLPublic(),
 					GroupConstants.CMS_FRIENDLY_URL, "/projects")
 			).put(
-				"label", LanguageUtil.get(httpServletRequest, "projects")
+				"label", LanguageUtil.get(mockHttpServletRequest, "projects")
 			).toString(),
 			jsonObject.toString(), true);
 

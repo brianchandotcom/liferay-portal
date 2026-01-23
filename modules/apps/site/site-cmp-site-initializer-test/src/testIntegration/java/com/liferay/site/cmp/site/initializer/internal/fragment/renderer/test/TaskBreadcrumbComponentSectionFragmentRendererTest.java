@@ -89,7 +89,7 @@ public class TaskBreadcrumbComponentSectionFragmentRendererTest
 
 		_taskTitle = MapUtil.getString(_taskObjectEntry.getValues(), "title");
 
-		httpServletRequest = getHttpServletRequest(
+		mockHttpServletRequest = getMockHttpServletRequest(
 			_taskObjectDefinition, _taskObjectEntry);
 	}
 
@@ -124,12 +124,12 @@ public class TaskBreadcrumbComponentSectionFragmentRendererTest
 			JSONUtil.put(
 				"confirmationMessage",
 				_language.format(
-					httpServletRequest, "delete-asset-confirmation-body",
+					mockHttpServletRequest, "delete-asset-confirmation-body",
 					_taskTitle)
 			).put(
 				"confirmationTitle",
 				_language.format(
-					httpServletRequest, "delete-asset-confirmation-title",
+					mockHttpServletRequest, "delete-asset-confirmation-title",
 					_taskTitle)
 			).put(
 				"href",
@@ -146,7 +146,7 @@ public class TaskBreadcrumbComponentSectionFragmentRendererTest
 			).put(
 				"successMessage",
 				_language.format(
-					httpServletRequest, "x-was-successfully-deleted",
+					mockHttpServletRequest, "x-was-successfully-deleted",
 					StringBundler.concat("<strong>", _taskTitle, "</strong>"))
 			).put(
 				"symbolLeft", "trash"
@@ -168,7 +168,7 @@ public class TaskBreadcrumbComponentSectionFragmentRendererTest
 					themeDisplay.getPathFriendlyURLPublic(),
 					GroupConstants.CMS_FRIENDLY_URL, "/projects")
 			).put(
-				"label", LanguageUtil.get(httpServletRequest, "projects")
+				"label", LanguageUtil.get(mockHttpServletRequest, "projects")
 			).toString(),
 			jsonObject.toString(), true);
 

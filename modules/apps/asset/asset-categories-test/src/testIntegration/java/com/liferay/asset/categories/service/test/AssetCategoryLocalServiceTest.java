@@ -780,6 +780,10 @@ public class AssetCategoryLocalServiceTest {
 					_group.getGroupId(), parentCategoryExternalReferenceCode,
 					vocabularyExternalReferenceCode);
 
+			Assert.assertEquals(
+				AssetVocabularyConstants.EMPTY_VOCABULARY_ID,
+				assetCategory.getVocabularyId());
+
 			AssetCategory parentAssetCategory =
 				_assetCategoryLocalService.
 					getAssetCategoryByExternalReferenceCode(

@@ -9,6 +9,10 @@ import React from 'react';
 
 import {patchTaskById} from '../../utils/api';
 import {DISPLAY_TYPES} from '../../utils/constants';
+import {
+	displayAssignSuccessToast,
+	displayStateSuccessToast,
+} from '../../utils/toastUtil';
 import CustomAssignee from '../CustomAssignee';
 import InfoSummary from '../InfoSummary';
 import StateSelector, {State} from '../StateSelector';
@@ -22,6 +26,7 @@ interface TaskInfoSummaryProps {
 	states: State[];
 	tags: string[];
 	taskId: string;
+	title: string;
 }
 
 export default function TaskInfoSummary({
@@ -31,6 +36,7 @@ export default function TaskInfoSummary({
 	states,
 	tags,
 	taskId,
+	title,
 }: TaskInfoSummaryProps) {
 	const displayTypes = DISPLAY_TYPES.filter(
 		(displayType) => displayType !== 'unstyled'
@@ -46,10 +52,14 @@ export default function TaskInfoSummary({
 						<StateSelector
 							initialSelectedKey={initialState}
 							onChange={async (key: string) => {
-								await patchTaskById({
+								const response = await patchTaskById({
 									body: {state: key},
 									taskId,
 								});
+
+								if (response.ok) {
+									displayStateSuccessToast();
+								}
 							}}
 							states={states}
 						/>
@@ -60,10 +70,17 @@ export default function TaskInfoSummary({
 					value: (
 						<CustomAssignee
 							onChange={async (value: AssigneeValue | {}) => {
-								await patchTaskById({
+								const response = await patchTaskById({
 									body: {assignTo: value},
 									taskId,
 								});
+
+								if (response.ok) {
+									displayAssignSuccessToast(
+										title,
+										(value as AssigneeValue).name
+									);
+								}
 							}}
 							showLabel={false}
 							value={assignTo}

@@ -105,6 +105,20 @@ definition {
 		AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "check-upgrade-client-sh-disconnect");
 	}
 
+	@description = "LPD-76264: Upgrade client generates upgrade report on failed upgrade"
+	@priority = 4
+	test CheckUpgradeClientUpgradeReportFailedUpgrade {
+		property custom.mysql.sql.statement = "ALTER TABLE JournalArticle DROP resourcePrimKey;";
+		property custom.properties = "upgrade.report.enabled=true";
+		property skip.get.testcase.database.properties = "true";
+		property skip.upgrade-legacy-database = "true";
+		property timeout.explicit.wait = "600";
+
+		AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "run-upgrade-client");
+
+		WaitForConsoleTextPresent(value1 = "Upgrade report generated in");
+	}
+
 	@description = "LPS-158522: Upgrade client contains necessary files"
 	@priority = 3
 	test CheckUpgradeClientZipContents {

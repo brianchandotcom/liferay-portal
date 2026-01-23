@@ -119,9 +119,6 @@ public class TranslationManagerTest {
 		List<Map<String, String>> failureMessages, List<String> successMessages,
 		boolean container) {
 
-		Assert.assertEquals(
-			failureMessages.toString(), 1, failureMessages.size());
-
 		for (Map<String, String> failureMessage : failureMessages) {
 			if (container) {
 				Assert.assertEquals(
@@ -139,6 +136,8 @@ public class TranslationManagerTest {
 				failureMessage.get("errorMessage"));
 		}
 
+		Assert.assertEquals(
+			failureMessages.toString(), 1, failureMessages.size());
 		Assert.assertTrue(successMessages.isEmpty());
 	}
 
@@ -147,9 +146,9 @@ public class TranslationManagerTest {
 		List<String> successMessages) {
 
 		Assert.assertTrue(failureMessages.isEmpty());
+		Assert.assertEquals(_getXLIFFFileName(), successMessages.get(0));
 		Assert.assertEquals(
 			successMessages.toString(), 1, successMessages.size());
-		Assert.assertEquals(_getXLIFFFileName(), successMessages.get(0));
 	}
 
 	private void _assertXLIFFFile(String expected, InputStream inputStream)

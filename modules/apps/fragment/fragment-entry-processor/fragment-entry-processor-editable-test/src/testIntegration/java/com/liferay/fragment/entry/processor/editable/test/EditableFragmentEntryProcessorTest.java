@@ -2096,26 +2096,26 @@ public class EditableFragmentEntryProcessorTest {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	private void _assertElementAttr(
-		String attrName, long attrValue, Element element) {
+	private void _assertElementAttribute(
+		String attributeName, long attributeValue, Element element) {
 
-		if (attrValue > 0) {
+		if (attributeValue > 0) {
 			Assert.assertEquals(
-				String.valueOf(attrValue), element.attr(attrName));
+				String.valueOf(attributeValue), element.attr(attributeName));
 		}
 		else {
-			Assert.assertFalse(element.hasAttr(attrName));
+			Assert.assertFalse(element.hasAttr(attributeName));
 		}
 	}
 
-	private void _assertElementAttr(
-		String attrName, String attrValue, Element element) {
+	private void _assertElementAttribute(
+		String attributeName, String attributeValue, Element element) {
 
-		if (Validator.isNotNull(attrValue)) {
-			Assert.assertEquals(attrValue, element.attr(attrName));
+		if (Validator.isNotNull(attributeValue)) {
+			Assert.assertEquals(attributeValue, element.attr(attributeName));
 		}
 		else {
-			Assert.assertFalse(element.hasAttr(attrName));
+			Assert.assertFalse(element.hasAttr(attributeName));
 		}
 	}
 
@@ -2347,12 +2347,12 @@ public class EditableFragmentEntryProcessorTest {
 			"action/fragment_entry_action.html", LocaleUtil.getSiteDefault(),
 			FragmentEntryLinkConstants.VIEW);
 
-		_assertElementAttr("data-lfr-class-name-id", classNameId, element);
-		_assertElementAttr("data-lfr-class-pk", classPK, element);
-		_assertElementAttr("data-lfr-field-id", fieldId, element);
-		_assertElementAttr(
+		_assertElementAttribute("data-lfr-class-name-id", classNameId, element);
+		_assertElementAttribute("data-lfr-class-pk", classPK, element);
+		_assertElementAttribute("data-lfr-field-id", fieldId, element);
+		_assertElementAttribute(
 			"data-lfr-on-success-interaction", interaction, element);
-		_assertElementAttr(
+		_assertElementAttribute(
 			"data-lfr-on-success-page-url", displayPageURL, element);
 	}
 

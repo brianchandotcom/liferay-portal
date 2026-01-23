@@ -190,14 +190,9 @@ public class ServiceContextUtil {
 				}
 
 				AssetCategory assetCategory =
-					AssetCategoryServiceUtil.
-						fetchCategoryByExternalReferenceCode(
-							itemExternalReference.getExternalReferenceCode(),
-							scopeGroupId);
-
-				if (assetCategory == null) {
-					throw new UnsupportedOperationException();
-				}
+					AssetCategoryServiceUtil.getOrAddEmptyCategory(
+						itemExternalReference.getExternalReferenceCode(),
+						scopeGroupId);
 
 				return assetCategory.getCategoryId();
 			});

@@ -97,8 +97,6 @@ PortletURL portletURL = exportLayoutsProcessesDisplayContext.getPortletURL();
 
 							<c:if test="<%= backgroundTaskStatus != null %>">
 								<clay:progressbar
-									maxValue="<%= 100 %>"
-									minValue="<%= 0 %>"
 									value='<%= GetterUtil.getInteger(backgroundTaskStatus.getAttribute("percentage")) %>'
 								/>
 

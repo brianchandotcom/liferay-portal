@@ -55,6 +55,8 @@ public interface SegmentsExperience
 
 	public long getSegmentsEntryId();
 
+	public String getSegmentsEntryName(java.util.Locale locale);
+
 	public com.liferay.portal.kernel.util.UnicodeProperties
 		getTypeSettingsUnicodeProperties();
 

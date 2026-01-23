@@ -418,6 +418,11 @@ public class SegmentsExperienceWrapper
 		return model.getSegmentsEntryId();
 	}
 
+	@Override
+	public String getSegmentsEntryName(java.util.Locale locale) {
+		return model.getSegmentsEntryName(locale);
+	}
+
 	/**
 	 * Returns the segments entry scope erc of this segments experience.
 	 *

@@ -1678,10 +1678,11 @@ public class BatchEnginePortletDataHandlerTest {
 	@Test
 	@TestInfo("LPD-75687")
 	public void testImportOrderByRank() throws Exception {
-		Group group = _stagingGroupHelper.fetchCompanyGroup(
-			TestPropsValues.getCompanyId());
 
 		// First: list type definition
+
+		Group group = _stagingGroupHelper.fetchCompanyGroup(
+			TestPropsValues.getCompanyId());
 
 		ListTypeDefinition listTypeDefinition = _addListTypeDefinition();
 
@@ -3412,8 +3413,7 @@ public class BatchEnginePortletDataHandlerTest {
 
 		public TestExportImportVulcanBatchEngineTaskItemDelegate build() {
 			if (_portletId == null) {
-				throw new IllegalArgumentException(
-					"portletId must not be null");
+				throw new IllegalArgumentException("Portlet ID is null");
 			}
 
 			return new TestExportImportVulcanBatchEngineTaskItemDelegate(

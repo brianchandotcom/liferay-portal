@@ -197,7 +197,9 @@ public class OrphanReferencesDataCleanupUtil {
 
 		String whereClause = null;
 
-		if (db.getDBType() == DBType.MYSQL) {
+		if ((db.getDBType() == DBType.MARIADB) ||
+			(db.getDBType() == DBType.MYSQL)) {
+
 			whereClause = _getMySQLWhereClause(
 				customJoinClauses, dbInspector, sourceColumnName,
 				sourceTableName, targetColumnNames, targetTableName);

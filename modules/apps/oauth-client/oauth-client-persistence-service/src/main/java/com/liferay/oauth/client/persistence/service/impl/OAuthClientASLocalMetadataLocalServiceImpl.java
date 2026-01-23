@@ -280,11 +280,6 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 				String.valueOf(oAuthClientASLocalMetadata.getIssuer())) ||
 			currentLocalWellKnownURIOIC.contains("openid-configuration")) {
 
-			String metadataJSONOIC = _buildOpenIdConfigurationJSON(
-				authorizationEndpoint, issuer, jwksUri, supportedGrantTypes,
-				supportedScopes, supportedSubjectTypes, tokenEndpointString,
-				userinfoEndpoint);
-
 			String metadataJSONOAS = _buildAuthorizationServerJSON(
 				authorizationEndpoint, issuer, jwksUri, supportedScopes,
 				supportedGrantTypes, tokenEndpointString);
@@ -294,7 +289,11 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 			oAuthClientASLocalMetadata.setLocalWellKnownURI(
 				_generateLocalWellKnownURI(
 					issuer, tokenEndpointString, "openid-configuration"));
-			oAuthClientASLocalMetadata.setMetadataJSON(metadataJSONOIC);
+			oAuthClientASLocalMetadata.setMetadataJSON(
+				_buildOpenIdConfigurationJSON(
+					authorizationEndpoint, issuer, jwksUri, supportedGrantTypes,
+					supportedScopes, supportedSubjectTypes, tokenEndpointString,
+				userinfoEndpoint));
 			oAuthClientASLocalMetadata.setOAuthASLocalWellKnownURI(
 				_generateLocalWellKnownURI(
 					issuer, null, "oauth-authorization-server"));

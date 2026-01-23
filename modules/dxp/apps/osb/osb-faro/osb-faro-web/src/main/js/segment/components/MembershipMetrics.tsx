@@ -19,7 +19,7 @@ import {
 } from 'segment/types';
 import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
 import {sub} from 'shared/util/lang';
-import {toThousands} from 'shared/util/numbers';
+import {toRounded, toThousands} from 'shared/util/numbers';
 import {useParams} from 'react-router-dom';
 import {useRequest} from 'shared/hooks/useRequest';
 
@@ -33,15 +33,16 @@ interface ICardSectionProps {
 	description: string;
 	loading: boolean;
 	title: string;
-	totalIndividuals?: number;
+	totalComparisonValue?: number;
 	trendComparison?: number;
 }
+
 export const CardSection: React.FC<ICardSectionProps> = ({
 	data,
 	description,
 	loading,
 	title,
-	totalIndividuals,
+	totalComparisonValue,
 	trendComparison
 }) => {
 	const isAverageSegmentMetric =
@@ -53,6 +54,7 @@ export const CardSection: React.FC<ICardSectionProps> = ({
 
 	if (isAverageSegmentMetric) {
 		const days = convertMillisecondsToDays(rawValue);
+
 		const languageKey = sub(
 			days === 1
 				? Liferay.Language.get('x-day').toLowerCase()
@@ -69,6 +71,7 @@ export const CardSection: React.FC<ICardSectionProps> = ({
 			[toThousands(rawValue)]
 		) as string;
 	}
+
 	const previousDurationDays = convertMillisecondsToDays(
 		data?.previousValue ?? 0
 	);
@@ -79,11 +82,13 @@ export const CardSection: React.FC<ICardSectionProps> = ({
 	return (
 		<Card.Body className='card-section my-2 py-2 type-trend-root'>
 			{loading && <Loading />}
+
 			{!loading && (
 				<>
 					<div className='align-items-center d-flex justify-content-between'>
 						<div className='align-items-center d-flex'>
 							<Card.Title>{title}</Card.Title>
+
 							<ClayPopover
 								alignPosition='top'
 								closeOnClickOutside
@@ -126,9 +131,12 @@ export const CardSection: React.FC<ICardSectionProps> = ({
 														'x-percent-of-all-members'
 												  ),
 											[
-												getPercentage(
-													data?.value,
-													totalIndividuals
+												toRounded(
+													getPercentage(
+														data?.value,
+														totalComparisonValue
+													),
+													2
 												)
 											]
 										)}
@@ -235,11 +243,12 @@ export const CardSection: React.FC<ICardSectionProps> = ({
 																TrendClassification.Neutral
 														}}
 													>
-														{`${
+														{`${toRounded(
 															data?.trend
 																?.percentage ??
-															0
-														}%`}
+																0,
+															2
+														)}%`}
 													</span>,
 													30
 												],
@@ -307,7 +316,7 @@ const MembershipMetrics: React.FC<PropsFromRedux> = ({addAlert}) => {
 					description={METRICS_TEXT.totalMembersMetric}
 					loading={loading}
 					title={METRICS_TITLES.totalMembersMetric}
-					totalIndividuals={
+					totalComparisonValue={
 						data?.totalMembersMetric?.totalIndividuals
 					}
 				/>
@@ -317,9 +326,7 @@ const MembershipMetrics: React.FC<PropsFromRedux> = ({addAlert}) => {
 					description={METRICS_TEXT.entryRateMetric}
 					loading={loading}
 					title={METRICS_TITLES.entryRateMetric}
-					totalIndividuals={
-						data?.totalMembersMetric?.totalIndividuals
-					}
+					totalComparisonValue={data?.totalMembersMetric?.value}
 				/>
 
 				<CardSection
@@ -327,12 +334,11 @@ const MembershipMetrics: React.FC<PropsFromRedux> = ({addAlert}) => {
 					description={METRICS_TEXT.exitRate}
 					loading={loading}
 					title={METRICS_TITLES.exitRate}
-					totalIndividuals={
-						data?.totalMembersMetric?.totalIndividuals
-					}
+					totalComparisonValue={data?.totalMembersMetric?.value}
 				/>
 			</Card>
 		</div>
 	);
 };
+
 export default connector(MembershipMetrics);

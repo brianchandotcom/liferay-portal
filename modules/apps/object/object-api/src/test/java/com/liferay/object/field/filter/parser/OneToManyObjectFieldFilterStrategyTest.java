@@ -139,15 +139,13 @@ public class OneToManyObjectFieldFilterStrategyTest {
 
 	@Test
 	public void testGetSelectionFDSFilterItems() throws Exception {
-		long objectDefinitionId = RandomTestUtil.randomLong();
-		long primaryKey1 = RandomTestUtil.randomLong();
-		long primaryKey2 = RandomTestUtil.randomLong();
-
 		Mockito.when(
 			_objectDefinition.getClassName()
 		).thenReturn(
 			"com.liferay.portal.kernel.model.User"
 		);
+
+		long objectDefinitionId = RandomTestUtil.randomLong();
 
 		Mockito.when(
 			_objectDefinition.getObjectDefinitionId()
@@ -160,6 +158,9 @@ public class OneToManyObjectFieldFilterStrategyTest {
 		).thenReturn(
 			true
 		);
+
+		long primaryKey1 = RandomTestUtil.randomLong();
+		long primaryKey2 = RandomTestUtil.randomLong();
 
 		try (MockedStatic<PersistedModelLocalServiceRegistryUtil>
 				persistedModelLocalServiceRegistryUtilMockedStatic =

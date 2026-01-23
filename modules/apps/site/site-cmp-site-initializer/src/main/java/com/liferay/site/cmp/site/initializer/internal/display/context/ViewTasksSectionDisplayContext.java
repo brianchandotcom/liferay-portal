@@ -60,27 +60,45 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 	}
 
 	public CreationMenu getCreationMenu() {
-		if (_assetEntry == null) {
-			return null;
-		}
-
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
 				dropdownItem.putData("action", "createTask");
+
+				if (_assetEntry == null) {
+					dropdownItem.putData(
+						"addProjectURL",
+						ActionUtil.getAddProjectURL(
+							_projectObjectDefinition, themeDisplay));
+					dropdownItem.putData(
+						"addTaskURL",
+						ActionUtil.getAddTaskURL(
+							0, objectDefinition, 0, themeDisplay));
+				}
+
 				dropdownItem.putData(
 					"objectDefinitionId",
 					String.valueOf(objectDefinition.getObjectDefinitionId()));
 				dropdownItem.putData(
-					"redirect",
-					ActionUtil.getAddTaskURL(
-						_assetEntry.getGroupId(), objectDefinition,
-						_assetEntry.getClassPK(), themeDisplay));
+					"projectObjectDefinitionId",
+					String.valueOf(
+						_projectObjectDefinition.getObjectDefinitionId()));
+
+				if (_assetEntry != null) {
+					dropdownItem.putData(
+						"redirect",
+						ActionUtil.getAddTaskURL(
+							_assetEntry.getGroupId(), objectDefinition,
+							_assetEntry.getClassPK(), themeDisplay));
+				}
+
 				dropdownItem.putData(
 					"title",
 					objectDefinition.getLabel(themeDisplay.getLocale()));
 				dropdownItem.setIcon("forms");
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "new-task"));
+					LanguageUtil.get(
+						httpServletRequest,
+						(_assetEntry == null) ? "new" : "new-task"));
 			}
 		).build();
 	}

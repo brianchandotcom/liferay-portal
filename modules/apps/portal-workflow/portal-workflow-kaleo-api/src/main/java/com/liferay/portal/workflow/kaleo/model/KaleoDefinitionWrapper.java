@@ -491,6 +491,11 @@ public class KaleoDefinitionWrapper
 	}
 
 	@Override
+	public boolean isSystem() {
+		return model.isSystem();
+	}
+
+	@Override
 	public void persist() {
 		model.persist();
 	}

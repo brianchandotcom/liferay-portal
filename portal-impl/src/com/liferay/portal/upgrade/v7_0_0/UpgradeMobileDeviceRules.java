@@ -118,41 +118,45 @@ public class UpgradeMobileDeviceRules extends UpgradeProcess {
 					"(MDRRuleGroupInstance.companyId = ResourcePermission.",
 					"companyId) and (MDRRuleGroupInstance.ruleGroupInstanceId ",
 					"= ResourcePermission.primKeyId) and ",
-					"(MDRRuleGroupInstance.userId = ",
-					"ResourcePermission.ownerId) and (ResourcePermission.name ",
-					"= '", _CLASS_NAME, "'))"));
-			PreparedStatement preparedStatement2 =
-				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection,
-					StringBundler.concat(
-						"insert into ResourcePermission ",
-						"(resourcePermissionId, companyId, name, scope, ",
-						"primKey, primKeyId, roleId, ownerId, actionIds, ",
-						"viewActionId) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"));
-			ResultSet resultSet = preparedStatement1.executeQuery()) {
+					"(MDRRuleGroupInstance.userId = ResourcePermission.ownerId",
+					") and (ResourcePermission.name = ?))"))) {
 
-			while (resultSet.next()) {
-				long companyId = resultSet.getLong(1);
-				long ruleGroupInstanceId = resultSet.getLong(2);
-				long userId = resultSet.getLong(3);
+			preparedStatement1.setString(1, _CLASS_NAME);
 
-				preparedStatement2.setLong(
-					1, increment(ResourcePermission.class.getName()));
-				preparedStatement2.setLong(2, companyId);
-				preparedStatement2.setString(3, _CLASS_NAME);
-				preparedStatement2.setInt(4, 4);
-				preparedStatement2.setString(
-					5, String.valueOf(ruleGroupInstanceId));
-				preparedStatement2.setLong(6, ruleGroupInstanceId);
-				preparedStatement2.setLong(7, ownerRoleIds.get(companyId));
-				preparedStatement2.setLong(8, userId);
-				preparedStatement2.setLong(9, actionIds);
-				preparedStatement2.setBoolean(10, true);
+			try (PreparedStatement preparedStatement2 =
+					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+						connection,
+						StringBundler.concat(
+							"insert into ResourcePermission (",
+							"resourcePermissionId, companyId, name, scope, ",
+							"primKey, primKeyId, roleId, ownerId, actionIds, ",
+							"viewActionId) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ",
+							"?)"));
+				ResultSet resultSet = preparedStatement1.executeQuery()) {
 
-				preparedStatement2.addBatch();
+				while (resultSet.next()) {
+					long companyId = resultSet.getLong(1);
+					long ruleGroupInstanceId = resultSet.getLong(2);
+					long userId = resultSet.getLong(3);
+
+					preparedStatement2.setLong(
+						1, increment(ResourcePermission.class.getName()));
+					preparedStatement2.setLong(2, companyId);
+					preparedStatement2.setString(3, _CLASS_NAME);
+					preparedStatement2.setInt(4, 4);
+					preparedStatement2.setString(
+						5, String.valueOf(ruleGroupInstanceId));
+					preparedStatement2.setLong(6, ruleGroupInstanceId);
+					preparedStatement2.setLong(7, ownerRoleIds.get(companyId));
+					preparedStatement2.setLong(8, userId);
+					preparedStatement2.setLong(9, actionIds);
+					preparedStatement2.setBoolean(10, true);
+
+					preparedStatement2.addBatch();
+				}
+
+				preparedStatement2.executeBatch();
 			}
-
-			preparedStatement2.executeBatch();
 		}
 	}
 

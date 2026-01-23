@@ -5,7 +5,6 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
@@ -22,21 +21,23 @@ public class UpgradeDocumentLibraryPortletId
 
 	protected void deleteDuplicateResourceActions() throws SQLException {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select actionId from ResourceAction where name = '" +
-					_PORTLET_ID_DOCUMENT_LIBRARY + "'");
-			ResultSet resultSet = preparedStatement1.executeQuery()) {
+				"select actionId from ResourceAction where name = ?")) {
 
-			while (resultSet.next()) {
-				try (PreparedStatement preparedStatement2 =
-						connection.prepareStatement(
-							"delete from ResourceAction where name = ? and " +
-								"actionId = ?")) {
+			preparedStatement1.setString(1, _PORTLET_ID_DOCUMENT_LIBRARY);
 
-					preparedStatement2.setString(1, _PORTLET_ID_DL_DISPLAY);
-					preparedStatement2.setString(
-						2, resultSet.getString("actionId"));
+			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
+				while (resultSet.next()) {
+					try (PreparedStatement preparedStatement2 =
+							connection.prepareStatement(
+								"delete from ResourceAction where name = ? " +
+									"and actionId = ?")) {
 
-					preparedStatement2.execute();
+						preparedStatement2.setString(1, _PORTLET_ID_DL_DISPLAY);
+						preparedStatement2.setString(
+							2, resultSet.getString("actionId"));
+
+						preparedStatement2.execute();
+					}
 				}
 			}
 		}
@@ -44,27 +45,28 @@ public class UpgradeDocumentLibraryPortletId
 
 	protected void deleteDuplicateResourcePermissions() throws SQLException {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				StringBundler.concat(
-					"select companyId, scope, primKey from ResourcePermission ",
-					"where name = '", _PORTLET_ID_DOCUMENT_LIBRARY, "'"));
-			ResultSet resultSet = preparedStatement1.executeQuery()) {
+				"select companyId, scope, primKey from ResourcePermission " +
+					"where name = ?")) {
 
-			while (resultSet.next()) {
-				try (PreparedStatement preparedStatement2 =
-						connection.prepareStatement(
-							StringBundler.concat(
-								"delete from ResourcePermission where ",
-								"companyId = ? and name = ? and scope = ? and ",
-								"primKey = ?"))) {
+			preparedStatement1.setString(1, _PORTLET_ID_DOCUMENT_LIBRARY);
 
-					preparedStatement2.setLong(
-						1, resultSet.getLong("companyId"));
-					preparedStatement2.setString(2, _PORTLET_ID_DL_DISPLAY);
-					preparedStatement2.setInt(3, resultSet.getInt("scope"));
-					preparedStatement2.setString(
-						4, resultSet.getString("primKey"));
+			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
+				while (resultSet.next()) {
+					try (PreparedStatement preparedStatement2 =
+							connection.prepareStatement(
+								"delete from ResourcePermission where " +
+									"companyId = ? and name = ? and scope = " +
+										"? and primKey = ?")) {
 
-					preparedStatement2.execute();
+						preparedStatement2.setLong(
+							1, resultSet.getLong("companyId"));
+						preparedStatement2.setString(2, _PORTLET_ID_DL_DISPLAY);
+						preparedStatement2.setInt(3, resultSet.getInt("scope"));
+						preparedStatement2.setString(
+							4, resultSet.getString("primKey"));
+
+						preparedStatement2.execute();
+					}
 				}
 			}
 		}

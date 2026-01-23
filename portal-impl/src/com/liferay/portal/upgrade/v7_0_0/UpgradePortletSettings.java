@@ -48,9 +48,10 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 						"Layout.groupId from PortletPreferences left join ",
 						"Layout on Layout.plid = PortletPreferences.plid ",
 						"where PortletPreferences.ownerType = ? and ",
-						"PortletPreferences.portletId = '", portletId, "'"))) {
+						"PortletPreferences.portletId = ?"))) {
 
 			selectPreparedStatement.setInt(1, ownerType);
+			selectPreparedStatement.setString(2, portletId);
 
 			try (ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 				while (resultSet.next()) {

@@ -135,12 +135,13 @@ public abstract class BaseTemplateUpgradeProcess extends UpgradeProcess {
 	private void _upgradeFragmentEntries() throws Exception {
 		try (PreparedStatement selectPreparedStatement =
 				connection.prepareStatement(
-					"select fragmentEntryId, html from FragmentEntry");
+					"select ctCollectionId, fragmentEntryId, html from " +
+						"FragmentEntry");
 			PreparedStatement updatePreparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
-					"update FragmentEntry set html = ? where fragmentEntryId " +
-						"= ?")) {
+					"update FragmentEntry set html = ? where ctCollectionId " +
+						"= ? and fragmentEntryId = ?")) {
 
 			try (ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 				while (resultSet.next()) {
@@ -150,8 +151,9 @@ public abstract class BaseTemplateUpgradeProcess extends UpgradeProcess {
 							Pattern.compile("\\[\\#assign\\s*\\/?\\]"),
 							resultSet.getString("html")));
 					updatePreparedStatement.setLong(
-						2, resultSet.getLong("fragmentEntryId"));
-
+						2, resultSet.getLong("ctCollectionId"));
+					updatePreparedStatement.setLong(
+						3, resultSet.getLong("fragmentEntryId"));
 					updatePreparedStatement.addBatch();
 				}
 

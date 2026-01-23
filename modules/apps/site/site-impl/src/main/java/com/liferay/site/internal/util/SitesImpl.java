@@ -164,7 +164,6 @@ public class SitesImpl implements Sites {
 
 			serviceContext.setAttribute(
 				"portletLayoutPageTemplateEntryLinkEnabled", linkEnabled);
-
 			serviceContext.setAttribute(
 				"portletLayoutPageTemplateEntryScopeERC",
 				ScopeUtil.getItemScopeExternalReferenceCode(

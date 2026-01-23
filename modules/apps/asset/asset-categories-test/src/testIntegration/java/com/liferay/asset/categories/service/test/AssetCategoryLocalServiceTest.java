@@ -694,15 +694,13 @@ public class AssetCategoryLocalServiceTest {
 					_group.getGroupId());
 
 			Assert.assertEquals(
-				WorkflowConstants.STATUS_EMPTY, assetCategory.getStatus());
-
-			Assert.assertEquals(
 				AssetCategoryConstants.EMPTY_PARENT_CATEGORY_ID,
 				assetCategory.getParentCategoryId());
-
 			Assert.assertEquals(
 				AssetVocabularyConstants.EMPTY_VOCABULARY_ID,
 				assetCategory.getVocabularyId());
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_EMPTY, assetCategory.getStatus());
 		}
 	}
 

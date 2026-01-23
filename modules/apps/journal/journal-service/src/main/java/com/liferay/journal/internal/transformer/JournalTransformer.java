@@ -465,8 +465,8 @@ public class JournalTransformer {
 
 		String data = StringPool.BLANK;
 
-		Element dynamicContentElement = dynamicElementElement.element(
-			"dynamic-content");
+		Element dynamicContentElement = _getDynamicContentElement(
+			dynamicElementElement, LocaleUtil.toLanguageId(locale));
 
 		if (dynamicContentElement != null) {
 			data = dynamicContentElement.getText();
@@ -570,6 +570,28 @@ public class JournalTransformer {
 		}
 
 		return UnknownDevice.getInstance();
+	}
+
+	private Element _getDynamicContentElement(
+		Element dynamicElementElement, String languageId) {
+
+		List<Element> dynamicContentElements = dynamicElementElement.elements(
+			"dynamic-content");
+
+		if (dynamicContentElements.isEmpty()) {
+			return null;
+		}
+
+		for (Element dynamicContentElement : dynamicContentElements) {
+			if (Objects.equals(
+					dynamicContentElement.attributeValue("language-id"),
+					languageId)) {
+
+				return dynamicContentElement;
+			}
+		}
+
+		return dynamicContentElements.get(0);
 	}
 
 	private TemplateResource _getErrorTemplateResource() {

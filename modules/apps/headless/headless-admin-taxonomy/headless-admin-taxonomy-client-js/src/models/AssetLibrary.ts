@@ -13,6 +13,7 @@
 			"id"?: number;
 			"name"?: string;
 			"name_i18n"?: {[key: string]: string;};
+			"scopeKey"?: string;
 
 		static "discriminator": string | undefined = undefined;
 
@@ -35,6 +36,11 @@
 			baseName: "name_i18n",
 			name: "name_i18n",
 			type: "{[key: string]: string;}",
+		},
+		{
+			baseName: "scopeKey",
+			name: "scopeKey",
+			type: "string",
 		},
 		];
 

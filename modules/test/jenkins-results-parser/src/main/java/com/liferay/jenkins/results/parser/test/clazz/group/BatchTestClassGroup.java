@@ -509,6 +509,16 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return sb.toString();
 	}
 
+	public TestTaskHistory getTestTaskHistory(String testTaskName) {
+		BatchHistory batchHistory = getBatchHistory();
+
+		if (batchHistory == null) {
+			return null;
+		}
+
+		return _batchHistory.getTestTaskHistory(testTaskName);
+	}
+
 	public String getTestTaskName(String testName) {
 		TestTaskHistory testTaskHistory = _getTestTaskHistory(testName);
 

@@ -754,11 +754,10 @@ public class AssetCategoryLocalServiceTest {
 					vocabularyExternalReferenceCode);
 
 			Assert.assertEquals(
-				WorkflowConstants.STATUS_EMPTY, assetCategory.getStatus());
-
-			Assert.assertEquals(
 				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 				assetCategory.getParentCategoryId());
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_EMPTY, assetCategory.getStatus());
 
 			AssetVocabulary assetVocabulary =
 				_assetVocabularyLocalService.
@@ -788,16 +787,14 @@ public class AssetCategoryLocalServiceTest {
 						_group.getGroupId());
 
 			Assert.assertEquals(
-				WorkflowConstants.STATUS_EMPTY,
-				parentAssetCategory.getStatus());
-
-			Assert.assertEquals(
 				parentAssetCategory.getCategoryId(),
 				assetCategory.getParentCategoryId());
-
 			Assert.assertEquals(
 				AssetVocabularyConstants.EMPTY_VOCABULARY_ID,
 				assetCategory.getVocabularyId());
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_EMPTY,
+				parentAssetCategory.getStatus());
 
 			parentCategoryExternalReferenceCode = RandomTestUtil.randomString();
 			vocabularyExternalReferenceCode = RandomTestUtil.randomString();

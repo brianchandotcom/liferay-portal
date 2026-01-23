@@ -205,6 +205,10 @@ public class DBUpgrader {
 			_log.error(exception);
 
 			result = "Failed";
+
+			StartupHelperUtil.setUpgrading(false);
+
+			stopUpgradeLogAppender();
 		}
 		finally {
 			System.out.println(

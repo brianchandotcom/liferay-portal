@@ -104,6 +104,11 @@ public class AddTaskStrutsAction implements StrutsAction {
 				editTaskURL, "redirect", backURL);
 		}
 
+		editTaskURL = HttpComponentsUtil.addParameter(
+			editTaskURL, "isCreateTaskGlobalTaskListPage",
+			ParamUtil.getBoolean(
+				httpServletRequest, "isCreateTaskGlobalTaskListPage"));
+
 		httpServletResponse.sendRedirect(editTaskURL);
 
 		return null;

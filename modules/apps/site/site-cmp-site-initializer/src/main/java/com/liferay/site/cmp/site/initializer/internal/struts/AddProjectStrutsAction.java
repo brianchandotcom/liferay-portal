@@ -140,6 +140,11 @@ public class AddProjectStrutsAction implements StrutsAction {
 				editProjectURL, "redirect", backURL);
 		}
 
+		editProjectURL = HttpComponentsUtil.addParameter(
+			editProjectURL, "isCreateProjectGlobalTaskListPage",
+			ParamUtil.getBoolean(
+				httpServletRequest, "isCreateProjectGlobalTaskListPage"));
+
 		httpServletResponse.sendRedirect(editProjectURL);
 
 		return null;

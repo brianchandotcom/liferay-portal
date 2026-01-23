@@ -79,8 +79,30 @@ public class EditorToolbarComponentSectionFragmentRenderer
 		).put(
 			"formSubmitURL",
 			() -> {
+				if (ParamUtil.getBoolean(
+						httpServletRequest, "isCreateTaskGlobalTaskListPage")) {
+
+					return ParamUtil.getString(httpServletRequest, "redirect");
+				}
+
 				if (!objectEntry.isDraft()) {
 					return null;
+				}
+
+				if (ParamUtil.getBoolean(
+						httpServletRequest,
+						"isCreateProjectGlobalTaskListPage")) {
+
+					String addTaskURL = ActionUtil.getAddTaskURL(
+						objectEntry.getGroupId(),
+						_objectDefinitionLocalService.
+							getObjectDefinitionByExternalReferenceCode(
+								"L_CMP_TASK", themeDisplay.getCompanyId()),
+						objectEntry.getObjectEntryId(),
+						ParamUtil.getString(httpServletRequest, "redirect"),
+						themeDisplay);
+
+					return addTaskURL + "&isCreateTaskGlobalTaskListPage=true";
 				}
 
 				if (Objects.equals(

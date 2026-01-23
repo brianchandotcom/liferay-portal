@@ -52,11 +52,7 @@ BackgroundTask backgroundTask = (BackgroundTask)row.getObject();
 		%>
 
 		<c:if test="<%= (allProgressBarCountersTotal > 0) && (!Objects.equals(cmd, Constants.PUBLISH_TO_REMOTE) || (percentage < 100)) %>">
-			<clay:progressbar
-				maxValue="<%= 100 %>"
-				minValue="<%= 0 %>"
-				value="<%= percentage %>"
-			/>
+			<clay:progressbar value="<%= percentage %>" />
 		</c:if>
 
 		<%

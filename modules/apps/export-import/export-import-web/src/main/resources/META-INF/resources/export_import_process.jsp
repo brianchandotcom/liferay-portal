@@ -109,11 +109,7 @@ if (Validator.isNotNull(backURL)) {
 					}
 					%>
 
-					<clay:progressbar
-						maxValue="<%= 100 %>"
-						minValue="<%= 0 %>"
-						value="<%= percentage %>"
-					/>
+					<clay:progressbar value="<%= percentage %>" />
 
 					<%
 					String stagedModelName = (String)backgroundTaskStatus.getAttribute("stagedModelName");

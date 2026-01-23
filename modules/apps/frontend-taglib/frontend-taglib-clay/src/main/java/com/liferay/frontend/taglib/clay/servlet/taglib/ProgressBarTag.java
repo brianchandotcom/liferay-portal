@@ -6,9 +6,12 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib;
 
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.BaseContainerTag;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.taglib.util.TagResourceBundleUtil;
 
 import jakarta.servlet.jsp.JspException;
 import jakarta.servlet.jsp.JspWriter;
+
 
 import java.util.Set;
 
@@ -17,117 +20,103 @@ import java.util.Set;
  */
 public class ProgressBarTag extends BaseContainerTag {
 
-	@Override
-	public int doStartTag() throws JspException {
-		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
+    @Override
+    public int doStartTag() throws JspException {
+        setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
 
-		if (_value == _maxValue) {
-			setStatus("success");
-		}
+        _value = Math.min(Math.max(_value, 0), 100);
 
-		if (_status.equals("complete")) {
-			setStatus("success");
-			setValue(_maxValue);
-		}
+        return super.doStartTag();
+    }
 
-		return super.doStartTag();
-	}
+    public int getValue() {
+        return _value;
+    }
 
-	public int getMaxValue() {
-		return _maxValue;
-	}
+    public void setValue(int value) {
+        _value = value;
+    }
 
-	public int getMinValue() {
-		return _minValue;
-	}
+    public boolean isWarn() {
+        return _warn;
+    }
 
-	public String getStatus() {
-		return _status;
-	}
+    public void setWarn(boolean warn) {
+        _warn = warn;
+    }
 
-	public int getValue() {
-		return _value;
-	}
+    @Override
+    protected void cleanUp() {
+        super.cleanUp();
 
-	public void setMaxValue(int maxValue) {
-		_maxValue = maxValue;
-	}
+        _value = 0;
+        _warn = false;
+    }
 
-	public void setMinValue(int minValue) {
-		_minValue = minValue;
-	}
+    @Override
+    protected String processCssClasses(Set<String> cssClasses) {
+        cssClasses.add("progress-group");
 
-	public void setStatus(String status) {
-		_status = status;
-	}
+        if (_warn) {
+            cssClasses.add("progress-warning");
+        }
+        else if (_value == 100) {
+            cssClasses.add("progress-success");
+        }
 
-	public void setValue(int value) {
-		_value = value;
-	}
+        return super.processCssClasses(cssClasses);
+    }
 
-	@Override
-	protected void cleanUp() {
-		super.cleanUp();
+    @Override
+    protected int processStartTag() throws Exception {
+        super.processStartTag();
 
-		_maxValue = 100;
-		_minValue = 0;
-		_status = "info";
-		_value = 0;
-	}
+        JspWriter jspWriter = pageContext.getOut();
 
-	@Override
-	protected String processCssClasses(Set<String> cssClasses) {
-		cssClasses.add("progress-group");
-		cssClasses.add("progress-" + _status);
+        String ariaLabel = "";
 
-		return super.processCssClasses(cssClasses);
-	}
+        if (_warn) {
+            ariaLabel = LanguageUtil.format(TagResourceBundleUtil.getResourceBundle(pageContext), "attention-value-is-at-x", _value);
+        }
+        else if (_value == 100) {
+            ariaLabel = LanguageUtil.get(TagResourceBundleUtil.getResourceBundle(pageContext), "complete");
+        }
+        else {
+            ariaLabel = LanguageUtil.format(TagResourceBundleUtil.getResourceBundle(pageContext), "progress-x", _value);
+        }
 
-	@Override
-	protected int processStartTag() throws Exception {
-		super.processStartTag();
+        jspWriter.write("<div class=\"progress\"><div aria-label=\"");
+        jspWriter.write(ariaLabel);
+        jspWriter.write("\" aria-valuemax=\"100\" aria-valuemin=\"0\" aria-valuenow=\"");
+        jspWriter.write(String.valueOf(_value));
+        jspWriter.write("\" class=\"progress-bar\" role=\"progressbar\" style=\"width: ");
+        jspWriter.write(String.valueOf(_value));
+        jspWriter.write("%\"></div></div>");
 
-		JspWriter jspWriter = pageContext.getOut();
+        jspWriter.write("<div class=\"progress-group-addon\">");
 
-		jspWriter.write("<div class=\"progress\"><div aria-valuemax=\"");
-		jspWriter.write(String.valueOf(_maxValue));
-		jspWriter.write("\" aria-valuemin=\"");
-		jspWriter.write(String.valueOf(_minValue));
-		jspWriter.write("\" aria-valuenow=\"");
-		jspWriter.write(String.valueOf(_value));
-		jspWriter.write("\" class=\"progress-bar\" role=\"progressbar\" ");
-		jspWriter.write("style=\"width: ");
-		jspWriter.write(String.valueOf(_value));
-		jspWriter.write("%\"></div></div>");
+        if (_value == 100) {
+            jspWriter.write("<div class=\"progress-group-feedback\">");
 
-		jspWriter.write("<div class=\"progress-group-addon\">");
+            IconTag iconTag = new IconTag();
+            iconTag.setSymbol("check-circle");
+            iconTag.doTag(pageContext);
 
-		if (_status.equals("success")) {
-			jspWriter.write("<div class=\"progress-group-feedback\">");
+            jspWriter.write("</div>");
+        }
+        else {
+            jspWriter.write(String.valueOf(_value));
+            jspWriter.write("%");
+        }
 
-			IconTag iconTag = new IconTag();
+        jspWriter.write("</div>");
 
-			iconTag.setSymbol("check-circle");
+        return SKIP_BODY;
+    }
 
-			iconTag.doTag(pageContext);
+    private static final String _ATTRIBUTE_NAMESPACE = "clay:progressbar:";
 
-			jspWriter.write("</div>");
-		}
-		else {
-			jspWriter.write(String.valueOf(_value));
-			jspWriter.write("%");
-		}
-
-		jspWriter.write("</div>");
-
-		return SKIP_BODY;
-	}
-
-	private static final String _ATTRIBUTE_NAMESPACE = "clay:progressbar:";
-
-	private int _maxValue = 100;
-	private int _minValue;
-	private String _status = "info";
-	private int _value;
+    private int _value = 0;
+    private boolean _warn = false;
 
 }

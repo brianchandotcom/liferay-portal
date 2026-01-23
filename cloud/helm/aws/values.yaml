@@ -44,7 +44,7 @@ liferay-default:
                                 function main {
                                     local deploy_dir="/temp/liferay/deploy"
                                     local filename_prefix="com.liferay.portal.search.opensearch2"
-                                    local product_version="{{.image.tag}}"
+                                    local product_version="{{ .image.tag }}"
 
                                     if ls "/temp/osgi/modules/${filename_prefix}"* 1> /dev/null 2>&1
                                     then
@@ -76,7 +76,8 @@ liferay-default:
                                 }
 
                                 main
-                      image: {{printf "%s:%s" .image.repository (.image.tag | toString)}}
+                      image: {{ printf "%s:%s" .image.repository (.image.tag | toString) }}
+                      imagePullPolicy: {{ .image.pullPolicy }}
                       name: liferay-install-opensearch-modules
                       volumeMounts:
                           - mountPath: /temp

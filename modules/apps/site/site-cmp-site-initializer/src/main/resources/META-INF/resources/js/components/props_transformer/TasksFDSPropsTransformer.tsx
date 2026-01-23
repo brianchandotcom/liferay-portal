@@ -136,6 +136,7 @@ export default function TasksFDSPropsTransformer({
 							closeModal={closeModal}
 							loadData={loadData}
 							taskId={String(itemData.embedded.id)}
+							taskTitle={itemData.embedded.title}
 							value={itemData.embedded.assignTo}
 						/>
 					),

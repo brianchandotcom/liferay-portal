@@ -1156,11 +1156,16 @@ test('Can import at instance level when LAR contains custom objects without exis
 	const objectDefinitionAPIClient =
 		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
-	await objectDefinitionAPIClient.deleteObjectDefinition(
-		objectDefinition.id
-	);
+	await objectDefinitionAPIClient.deleteObjectDefinition(objectDefinition.id);
 
 	await companyExportImportPage.import({
 		filePath: exportFilePath,
 	});
+
+	await expect(
+		companyExportImportPage.page
+			.locator('.list-group-item div')
+			.getByTestId('processResult')
+			.getByText('Successful')
+	).toBeVisible();
 });

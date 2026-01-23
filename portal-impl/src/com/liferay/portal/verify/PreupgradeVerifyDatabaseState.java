@@ -92,8 +92,7 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 						"Unable to get table names for company " + companyId,
 						portalException);
 				}
-			},
-			PortalInstancePool.getCompanyIds());
+			});
 
 		if (tableNames.isEmpty()) {
 			return;

@@ -41,26 +41,25 @@ liferay-default:
                           - |
                                 set -e
 
-                                deploy_dir=/temp/liferay/deploy
-                                filename_prefix="com.liferay.portal.search.opensearch2"
-                                product_version={{.image.tag}}
-                                base_url="https://releases.liferay.com/opensearch2/dxp/${product_version}/${filename_prefix}"
+                                local deploy_dir="/temp/liferay/deploy"
+                                local filename_prefix="com.liferay.portal.search.opensearch2"
+                                local product_version={{.image.tag}}
 
                                 rm --force --verbose /temp/osgi/modules/"${filename_prefix}"*
 
                                 mkdir -p "$deploy_dir"
 
                                 for type in api impl; do
-                                    url="${base_url}.${type}.jar"
-                                    http_code=$(curl \
-                                        "$url" \
-                                        --location \
-                                        --output-dir "$deploy_dir" \
-                                        --remote-name \
-                                        --retry 5 \
-                                        --retry-all-errors \
-                                        --retry-delay 2 \
-                                        --write-out "%{http_code}")
+                                    local http_code=$(\
+                                        curl \
+                                            "${base_url}.${type}.jar" \
+                                            --location \
+                                            --output-dir "$deploy_dir" \
+                                            --remote-name \
+                                            --retry 5 \
+                                            --retry-all-errors \
+                                            --retry-delay 2 \
+                                            --write-out "%{http_code}")
 
                                     if [ "${http_code}" != "200" ]
                                     then

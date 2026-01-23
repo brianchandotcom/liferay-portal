@@ -894,6 +894,14 @@ public class EditAssetListDisplayContext {
 		SegmentsEntry segmentsEntry =
 			SegmentsEntryLocalServiceUtil.fetchSegmentsEntry(segmentsEntryId);
 
+		if (segmentsEntry == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to get segments entry " + segmentsEntryId);
+			}
+
+			return StringPool.BLANK;
+		}
+
 		return segmentsEntry.getName(locale);
 	}
 

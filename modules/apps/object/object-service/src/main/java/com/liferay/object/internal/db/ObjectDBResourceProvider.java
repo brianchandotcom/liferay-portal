@@ -190,18 +190,9 @@ public class ObjectDBResourceProvider implements DBResourceProvider {
 						ObjectDefinition objectDefinition =
 							new ObjectDefinitionImpl() {
 								{
-									boolean modifiable = !resultSet.getBoolean(
-										"system_");
-
-									if (hasModifiableColumn) {
-										modifiable = resultSet.getBoolean(
-											"modifiable");
-									}
-
 									setCompanyId(companyId);
 									setDBTableName(
 										resultSet.getString("dbTableName"));
-									setModifiable(modifiable);
 									setObjectDefinitionId(
 										resultSet.getLong(
 											"objectDefinitionId"));
@@ -211,6 +202,14 @@ public class ObjectDBResourceProvider implements DBResourceProvider {
 									setSystem(resultSet.getBoolean("system_"));
 								}
 							};
+
+						boolean modifiable = !resultSet.getBoolean("system_");
+
+						if (hasModifiableColumn) {
+							modifiable = resultSet.getBoolean("modifiable");
+						}
+
+						objectDefinition.setModifiable(modifiable);
 
 						objectDefinitions.put(
 							objectDefinition.getObjectDefinitionId(),

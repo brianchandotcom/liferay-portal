@@ -32,7 +32,12 @@ public class RelatedAssetsSectionTableFDSView extends BaseTableFDSView {
 			_fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
-			"embedded.title", "title"
+			"embedded.title", "title",
+			fdsTableSchemaField -> fdsTableSchemaField.setActionId(
+				"actionLink"
+			).setContentRenderer(
+				"simpleActionLinkTableCellRenderer"
+			)
 		).add(
 			"embedded.creator.name", "author",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(

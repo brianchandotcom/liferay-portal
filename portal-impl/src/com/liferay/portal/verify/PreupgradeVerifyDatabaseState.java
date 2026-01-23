@@ -10,13 +10,11 @@ import com.liferay.portal.db.DBResourceUtil;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.dao.db.DBInspector;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
@@ -75,27 +73,12 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 		Set<String> serviceComponentPortalTableNames =
 			DBResourceUtil.getServiceComponentPortalTableNames(connection);
 
-		Set<String> tableNames =
+		Set<String> serviceComponentTableNames =
 			DBResourceUtil.getServiceComponentModuleTableNames(connection);
 
-		tableNames.addAll(serviceComponentPortalTableNames);
+		serviceComponentTableNames.addAll(serviceComponentPortalTableNames);
 
-		CompanyLocalServiceUtil.forEachCompanyId(
-			companyId -> {
-				try {
-					tableNames.addAll(
-						DBResourceUtil.getNonserviceBuilderTableNames(
-							companyId));
-				}
-				catch (PortalException portalException) {
-					_log.error(
-						"Failed to get table names for company " + companyId,
-						portalException);
-				}
-			},
-			PortalInstancePool.getCompanyIds());
-
-		if (tableNames.isEmpty()) {
+		if (serviceComponentTableNames.isEmpty()) {
 			return;
 		}
 
@@ -106,11 +89,11 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 
 		databaseTableNames.addAll(dbInspector.getTableNames(null));
 
-		if (!databaseTableNames.containsAll(tableNames)) {
+		if (!databaseTableNames.containsAll(serviceComponentTableNames)) {
 			Set<String> missingTableNames = new TreeSet<>(
 				String.CASE_INSENSITIVE_ORDER);
 
-			missingTableNames.addAll(tableNames);
+			missingTableNames.addAll(serviceComponentTableNames);
 
 			missingTableNames.removeAll(databaseTableNames);
 			missingTableNames.removeAll(
@@ -156,7 +139,7 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 		targetVersionNewTableNames.addAll(
 			DBResourceUtil.getPortalTableNames(connection));
 
-		targetVersionNewTableNames.removeAll(tableNames);
+		targetVersionNewTableNames.removeAll(serviceComponentTableNames);
 
 		Set<String> previousUpgradeStaleTableNames = new HashSet<>(
 			databaseTableNames);

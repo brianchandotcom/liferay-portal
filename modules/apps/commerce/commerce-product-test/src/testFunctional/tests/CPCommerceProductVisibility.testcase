@@ -57,6 +57,7 @@ definition {
 	@description = "This is a test for COMMERCE-10610. Regular users can assert the empty product channels visibility with the view permissions for products and catalogs of the admin panel"
 	@priority = 3
 	test CanAssertEmptyProductChannelsVisibilityWithProductsAndCatalogsViewPermissions {
+		property browser.chrome.version = "139.0";
 		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 

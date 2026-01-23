@@ -73,6 +73,7 @@ definition {
 	@description = "COMMERCE-8165. The existing replacement product can be edited"
 	@priority = 5
 	test CanEditReplacementProduct {
+		property browser.chrome.version = "139.0";
 		property portal.acceptance = "true";
 
 		task ("Given a site created using Minium") {

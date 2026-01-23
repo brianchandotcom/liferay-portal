@@ -24,22 +24,20 @@
 			"objectActions": [
 				{
 					"active": true,
-					"conditionExpression": "",
-					"description": "",
-					"errorMessage": {
-					},
-					"externalReferenceCode": "H1S4_ADD_COMPANY",
 					"label": {
-						"en_US": "H1S4 Add Company"
+						"en_US": "Liferay HubSpot Etc Spring Boot Object Action Company"
 					},
-					"name": "h1s4AddCompany",
+					"name": "SpringBootObjectActionCompany",
 					"objectActionExecutorKey": "function#liferay-hubspot-etc-spring-boot-object-action-company",
 					"objectActionTriggerKey": "onAfterAdd",
 					"parameters": {
+					},
+					"status": {
+						"code": 0,
+						"label": "never-ran",
+						"label_i18n": "Never Ran"
 					}
 				}
-			],
-			"objectDefinitionSettings": [
 			],
 			"objectFields": [
 				{
@@ -156,22 +154,20 @@
 			"objectActions": [
 				{
 					"active": true,
-					"conditionExpression": "",
-					"description": "",
-					"errorMessage": {
-					},
-					"externalReferenceCode": "H1S4_ADD_CONTACT",
 					"label": {
-						"en_US": "H1S4 Add Contact"
+						"en_US": "Liferay HubSpot Etc Spring Boot Object Action Contact"
 					},
-					"name": "h1s4AddContact",
+					"name": "SpringBootObjectActionContact",
 					"objectActionExecutorKey": "function#liferay-hubspot-etc-spring-boot-object-action-contact",
 					"objectActionTriggerKey": "onAfterAdd",
 					"parameters": {
+					},
+					"status": {
+						"code": 0,
+						"label": "never-ran",
+						"label_i18n": "Never Ran"
 					}
 				}
-			],
-			"objectDefinitionSettings": [
 			],
 			"objectFields": [
 				{
@@ -305,22 +301,20 @@
 			"objectActions": [
 				{
 					"active": true,
-					"conditionExpression": "",
-					"description": "",
-					"errorMessage": {
-					},
-					"externalReferenceCode": "H1S4_ADD_LEAD",
 					"label": {
-						"en_US": "H1S4 Add Lead"
+						"en_US": "Liferay HubSpot Etc Spring Boot Object Action Lead"
 					},
-					"name": "h1s4AddLead",
+					"name": "SpringBootObjectActionLead",
 					"objectActionExecutorKey": "function#liferay-hubspot-etc-spring-boot-object-action-lead",
 					"objectActionTriggerKey": "onAfterAdd",
 					"parameters": {
+					},
+					"status": {
+						"code": 0,
+						"label": "never-ran",
+						"label_i18n": "Never Ran"
 					}
 				}
-			],
-			"objectDefinitionSettings": [
 			],
 			"objectFields": [
 				{

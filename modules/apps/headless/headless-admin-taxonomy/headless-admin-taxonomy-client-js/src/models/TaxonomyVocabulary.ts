@@ -37,7 +37,7 @@
 			"siteExternalReferenceCode"?: string;
 			"siteId"?: number;
 			"viewableBy"?: 'Anyone' | 'Members' | 'Owner';
-			"visibilityType"?: 'PUBLIC' | 'INTERNAL';
+			"visibilityType"?: 'EMPTY' | 'INTERNAL' | 'PUBLIC';
 
 		static "discriminator": string | undefined = undefined;
 
@@ -149,7 +149,7 @@
 		{
 			baseName: "visibilityType",
 			name: "visibilityType",
-			type: "'PUBLIC' | 'INTERNAL'",
+			type: "'EMPTY' | 'INTERNAL' | 'PUBLIC'",
 		},
 		];
 

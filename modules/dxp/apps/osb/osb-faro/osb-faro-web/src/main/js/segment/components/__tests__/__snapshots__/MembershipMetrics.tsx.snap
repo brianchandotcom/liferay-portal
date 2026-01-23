@@ -200,7 +200,7 @@ exports[`MembershipMetrics should render 1`] = `
             class="mr-1 text-secondary"
           >
             <span>
-              121% of All Members
+              355.88% of All Members
             </span>
           </span>
           <span
@@ -286,7 +286,7 @@ exports[`MembershipMetrics should render 1`] = `
             class="mr-1 text-secondary"
           >
             <span>
-              10% of All Members
+              29.41% of All Members
             </span>
           </span>
           <span

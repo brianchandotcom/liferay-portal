@@ -47,6 +47,10 @@ public interface FragmentEntryConfigurationParser {
 		JSONObject configurationJSONObject, JSONObject editableValuesJSONObject,
 		Locale locale, String name);
 
+	public Object getFieldValue(
+		JSONObject configurationJSONObject, JSONObject editableValuesJSONObject,
+		String name);
+
 	public List<FragmentConfigurationField> getFragmentConfigurationFields(
 		JSONObject configurationJSONObject);
 

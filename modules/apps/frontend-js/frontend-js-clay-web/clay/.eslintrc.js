@@ -10,7 +10,7 @@ const config = require(path.join(__dirname, '../../../../', '.eslintrc.js'));
 config.ignorePatterns = [
 	...config.ignorePatterns,
 	'stories/static/map.js',
-	'clay-css/src/js/svg4everybody.js',
+	'clay-css/src/js/svg4everybody.js'
 ];
 
 config.rules = {

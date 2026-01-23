@@ -92,3 +92,8 @@
     # Ignore the copyright template file.
     #
     **/copyright.js
+
+    #
+    # Ignore the Clay Docs Site for Now
+    #
+    apps/frontend-js/frontend-js-clay-web/clay/www/**

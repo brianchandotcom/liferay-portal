@@ -118,16 +118,14 @@ public class PrimaryKeyUpdaterUtilTest {
 
 		try (AutoCloseable autoCloseable1 =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					_dbResourceProvider,
-					"_objectDefinitionLocalServiceSnapshot", null);
+					_dbResourceProvider, "_objectDefinitionLocalService", null);
 			AutoCloseable autoCloseable2 =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					_dbResourceProvider, "_objectFieldLocalServiceSnapshot",
-					null);
+					_dbResourceProvider, "_objectFieldLocalService", null);
 			AutoCloseable autoCloseable3 =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					_dbResourceProvider,
-					"_objectRelationshipLocalServiceSnapshot", null)) {
+					_dbResourceProvider, "_objectRelationshipLocalService",
+					null)) {
 
 			_testUpdateAllPrimaryKeys();
 		}

@@ -51,11 +51,11 @@ const SelectionCheckbox = ({
 						? Liferay.Language.get('clear-selection')
 						: Liferay.Language.get('select-items')
 				}
-			/>
-
-			<span className="sr-only" id="itemsSelectorLabel">
-				{label}
-			</span>
+			>
+				<span className="sr-only" id="itemsSelectorLabel">
+					{label}
+				</span>
+			</ClayCheckbox>
 		</>
 	);
 };

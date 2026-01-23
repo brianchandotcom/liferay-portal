@@ -4,11 +4,13 @@
  */
 
 import ClayAlert from '@clayui/alert';
+import ClayBreadCrumb from '@clayui/breadcrumb';
 import ClayButton from '@clayui/button';
 import {
 	DisplayType,
 	FrontendDataSet,
 	IFrontendDataSetProps,
+	InlineNotification,
 } from '@liferay/frontend-data-set-web';
 import React from 'react';
 
@@ -64,9 +66,13 @@ const ReactFrontendDataSet = (props: IFrontendDataSetProps) => {
 	props.views.push(listView);
 
 	const [fdsProps, setFdsProps] = React.useState(props);
+	const [component, setComponent] = React.useState<string>('alert');
 	const [selectedItems, setSelectedItems] = React.useState<any[]>([]);
 	const [showInlineInformation, setShowInlineInformation] =
 		React.useState(false);
+	const [showInlineNotification, setShowInlineNotification] =
+		React.useState(false);
+
 	const onAlertActionClick = () =>
 		setFdsProps({
 			...props,
@@ -105,6 +111,43 @@ const ReactFrontendDataSet = (props: IFrontendDataSetProps) => {
 		</ClayAlert>
 	);
 
+	let notification = undefined;
+
+	if (component === 'alert') {
+		notification = (
+			<InlineNotification as={ClayAlert} displayType="info">
+				This is a notification message
+			</InlineNotification>
+		);
+	}
+	else if (component === 'breadcrumb') {
+		notification = (
+			<InlineNotification
+				as={ClayBreadCrumb}
+				items={[
+					{
+						href: '#1',
+						label: 'Home',
+					},
+					{
+						href: '#2',
+						label: 'About',
+					},
+					{
+						href: '#3',
+						label: 'Contact',
+					},
+				]}
+			/>
+		);
+	}
+	else {
+		notification = (
+			<InlineNotification as="span">
+				This is a notification message
+			</InlineNotification>
+		);
+	}
 
 	return (
 		<>
@@ -123,15 +166,46 @@ const ReactFrontendDataSet = (props: IFrontendDataSetProps) => {
 					Show info message
 				</ClayButton>
 
+				<ClayButton
+					displayType="warning"
+					onClick={() => {
+						setComponent('alert');
+						setShowInlineNotification(true);
+					}}
+				>
+					Show warning alert
+				</ClayButton>
+
+				<ClayButton
+					displayType="secondary"
+					onClick={() => {
+						setComponent('breadcrumb');
+						setShowInlineNotification(true);
+					}}
+				>
+					Show breadcrumb
+				</ClayButton>
+
+				<ClayButton
+					displayType="secondary"
+					onClick={() => {
+						setComponent('span');
+						setShowInlineNotification(true);
+					}}
+				>
+					Show text
+				</ClayButton>
 			</ClayButton.Group>
+
 			<FrontendDataSet
-				{...props}
 				{...fdsProps}
 				inlineInformationContent={alert}
+				inlineNotificationContent={notification}
 				onSelectedItemsChange={setSelectedItems}
 				selectedItems={selectedItems}
 				selectionType="multiple"
 				showInlineInformation={showInlineInformation}
+				showInlineNotification={showInlineNotification}
 			/>
 		</>
 	);

@@ -1,7 +1,9 @@
 {
 	"dependencies": {
+		"@clayui/alert": "*",
 		"@clayui/autocomplete": "*",
 		"@clayui/badge": "*",
+		"@clayui/breadcrumb": "*",
 		"@clayui/button": "*",
 		"@clayui/card": "*",
 		"@clayui/core": "*",

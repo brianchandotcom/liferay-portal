@@ -1,6 +1,7 @@
 {
 	"dependencies": {
 		"@clayui/alert": "*",
+		"@clayui/breadcrumb": "*",
 		"@clayui/button": "*",
 		"@clayui/core": "*",
 		"@clayui/form": "*",

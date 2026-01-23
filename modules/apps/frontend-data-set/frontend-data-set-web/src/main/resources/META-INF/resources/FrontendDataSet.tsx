@@ -149,6 +149,7 @@ const FrontendDataSetContent = ({
 	inlineAddingSettings,
 	inlineEditingSettings,
 	inlineInformationContent,
+	inlineNotificationContent,
 	items: itemsProp,
 	itemsActions,
 	namespace,
@@ -166,6 +167,7 @@ const FrontendDataSetContent = ({
 	showBulkActionsManagementBar = true,
 	showBulkActionsManagementBarActions = true,
 	showInlineInformation,
+	showInlineNotification,
 	showManagementBar = true,
 	showNavBarWhenSelected = false,
 	showPagination = true,
@@ -1541,6 +1543,18 @@ const FrontendDataSetContent = ({
 			</div>
 		) : null;
 
+	const inlineNotificationSlot =
+		showInlineNotification && inlineNotificationContent ? (
+			<div
+				className={classNames(
+					'container-fluid align-items-center inline-information-bar',
+					style === 'fluid' && 'px-0'
+				)}
+			>
+				{inlineNotificationContent}
+			</div>
+		) : null;
+
 	const view =
 		!dataLoading && !componentLoading ? (
 			<div className="data-set-content-wrapper">
@@ -2107,6 +2121,8 @@ const FrontendDataSetContent = ({
 
 									{inlineInformationSlot}
 
+									{inlineNotificationSlot}
+
 									{view}
 
 									{paginationComponent}
@@ -2119,6 +2135,8 @@ const FrontendDataSetContent = ({
 
 									{inlineInformationSlot}
 
+									{inlineNotificationSlot}
+
 									{view}
 
 									{paginationComponent}
@@ -2130,6 +2148,8 @@ const FrontendDataSetContent = ({
 									{managementBar}
 
 									{inlineInformationSlot}
+
+									{inlineNotificationSlot}
 
 									<div className="container-fluid mt-3">
 										{view}

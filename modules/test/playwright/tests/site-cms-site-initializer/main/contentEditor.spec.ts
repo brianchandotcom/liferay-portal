@@ -17,6 +17,10 @@ import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisibl
 import fillAndClickOutside from '../../../utils/fillAndClickOutside';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
+import performLogin, {
+	performLogout,
+	userData,
+} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {structureBuilderPagesTest} from '../structure-builder/fixtures/structureBuilderPagesTest';
 import {categorizationPagesTest} from './fixtures/categorizationPagesTest';
@@ -519,6 +523,87 @@ test.describe('Comments Panel', () => {
 			type: 'danger',
 		});
 	});
+
+	test(
+		'View comments in the shared with me view comments panel',
+		{tag: '@LPD-74579'},
+		async ({
+			apiHelpers,
+			contentsPage,
+			page,
+			sharedWithMePage,
+			spaceSummaryPage,
+		}) => {
+			const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+			userData[user.alternateName] = {
+				name: user.givenName,
+				password: 'test',
+				surname: user.familyName,
+			};
+
+			const spaceName = 'Default';
+
+			await spaceSummaryPage.goto(spaceName);
+
+			await expect(
+				page.getByLabel('Control Menu', {exact: true})
+			).not.toBeVisible();
+
+			await spaceSummaryPage.addUserOrUserGroup(user.name, 'users');
+
+			await contentsPage.goto();
+
+			await contentsPage.createContent('Blog');
+
+			const title = getRandomString();
+
+			await page.getByPlaceholder('New Blog').fill(title);
+
+			await contentsPage.openSidePanel('Comments');
+
+			const parentCommentContent = 'New Comment';
+
+			await addComment({
+				content: parentCommentContent,
+				page,
+			});
+
+			await contentsPage.saveContent();
+
+			await contentsPage.goto();
+
+			await contentsPage.shareContent(title);
+
+			const addPeopleToCollaborateButton = page.getByRole('combobox', {
+				name: 'Add People to Collaborate',
+			});
+
+			await addPeopleToCollaborateButton.click();
+			await addPeopleToCollaborateButton.fill(user.emailAddress);
+
+			await page.getByRole('option', {name: user.name}).click();
+
+			await page
+				.getByRole('combobox', {name: 'Edit Permissions'})
+				.click();
+			await page
+				.getByRole('option', {name: 'View, Download, Comment, and'})
+				.click();
+			await page.getByRole('button', {name: 'Save'}).click();
+
+			await performLogout(page);
+
+			await performLogin(page, user.alternateName);
+
+			await sharedWithMePage.goto();
+
+			await page.getByRole('button', {name: 'Actions'}).click();
+			await page.getByRole('menuitem', {name: 'View'}).click();
+			await page.getByRole('button', {name: 'Show Comments'}).click();
+			await expect(page.getByText(parentCommentContent)).toBeVisible();
+		}
+	);
 });
 
 test.describe('Schedule Panel', () => {

@@ -18,6 +18,7 @@ import usePublisherSalesSummaryObject from '../../../../hooks/usePublisherSalesS
 import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
 import PublisherSalesSummary from '../../../../services/rest/PublisherSalesSummary';
+import {exportToCSV} from '../../../../utils/csv';
 import {safeJSONParse} from '../../../../utils/util';
 import DetailsHeader from '../../components/DetailsHeader/DetailsHeader';
 import PaymentStatus from '../../components/PaymentStatus/PaymentStatus';
@@ -76,39 +77,48 @@ const PaymentDetails = () => {
 			? PaymentStatusCode.PAID
 			: PaymentStatusCode.PENDING;
 
-	const CSV_HEADER = 'App Name,Account,Quantity,Net Price,VAT,Total\n';
+	function exportOrdersCSV() {
+		if (!completeOrderItems?.length) {
+			return;
+		}
 
-	async function exportOrdersCSV() {
-		if (!completeOrderItems?.length) return;
+		const _formatCurrency = (
+			currencyCode: string,
+			price: number
+		): string => {
+			try {
+				return formatCurrency(currencyCode, price);
+			}
+			catch {
+				return String(price);
+			}
+		};
 
-		let csv = CSV_HEADER;
+		const headers = [
+			i18n.translate('app-name'),
+			i18n.translate('account'),
+			i18n.translate('quantity'),
+			i18n.translate('net-price'),
+			i18n.translate('vat'),
+			i18n.translate('total'),
+		];
 
-		for (const {orderItem, placedOrderItem} of completeOrderItems) {
+		const rows = completeOrderItems.map(({orderItem, placedOrderItem}) => {
 			const finalPrice = orderItem.finalPrice ?? 0;
 			const finalPriceWithTax = orderItem.finalPriceWithTaxAmount ?? 0;
 			const vat = finalPriceWithTax - finalPrice;
 
-			csv +=
-				`"${placedOrderItem.name}",` +
-				`"${orderItem.account.name}",` +
-				`${placedOrderItem.quantity},` +
-				`"${formatCurrency(orderItem.currencyCode, finalPrice)}",` +
-				`"${formatCurrency(orderItem.currencyCode, vat)}",` +
-				`"${formatCurrency(orderItem.currencyCode, finalPriceWithTax)}"\n`;
-		}
-
-		const blob = new Blob(['\uFEFF', csv], {
-			type: 'text/csv;charset=utf-8;',
+			return [
+				placedOrderItem.name || '',
+				orderItem.account?.name || '',
+				placedOrderItem.quantity,
+				_formatCurrency(orderItem.currencyCode, finalPrice),
+				_formatCurrency(orderItem.currencyCode, vat),
+				_formatCurrency(orderItem.currencyCode, finalPriceWithTax),
+			];
 		});
 
-		const url = URL.createObjectURL(blob);
-
-		const downloadLink = document.createElement('a');
-		downloadLink.href = url;
-		downloadLink.download = 'orders.csv';
-		downloadLink.click();
-
-		URL.revokeObjectURL(url);
+		exportToCSV(`orders.${Date.now()}.csv`, headers, rows);
 	}
 
 	return (
@@ -279,6 +289,7 @@ const PaymentDetails = () => {
 				headerActions={
 					<ClayButton
 						className="export-csv-button"
+						disabled={!completeOrderItems?.length}
 						displayType="unstyled"
 						onClick={exportOrdersCSV}
 					>
@@ -289,7 +300,7 @@ const PaymentDetails = () => {
 						/>
 
 						<span className="font-weight-semi-bold">
-							Export CSV
+							{i18n.translate('export-csv')}
 						</span>
 					</ClayButton>
 				}

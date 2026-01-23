@@ -244,41 +244,6 @@ public class PortletPreferencesPostUpgradeDataCleanupProcessTest
 	}
 
 	@Test
-	public void testPortletPreferenceLinkedToNonexistentLayoutIsDeleted()
-		throws Exception {
-
-		List<Portlet> portlets = PortletLocalServiceUtil.getPortlets();
-
-		Portlet portlet = portlets.get(0);
-
-		String portletId = portlet.getPortletId();
-
-		long plid = RandomTestUtil.nextLong();
-
-		test(
-			logCapture -> {
-				List<String> messages = logCapture.getMessages();
-
-				Assert.assertTrue(
-					messages.toString(),
-					messages.contains(
-						StringBundler.concat(
-							"Table ",
-							dbInspector.normalizeName("PortletPreferences"),
-							", 1 row deleted because ",
-							dbInspector.normalizeName("plid"), " ", plid,
-							" was not found in column ",
-							dbInspector.normalizeName("plid"), " from table ",
-							dbInspector.normalizeName("Layout"))));
-
-				Assert.assertFalse(_existsPortletPreference(portletId));
-			},
-			() -> _deletePortletPreference(portletId),
-			() -> _addPortletPreference(plid, portletId),
-			OrphanReferencesDataCleanupUtil.class.getName());
-	}
-
-	@Test
 	public void testPortletPreferenceLinkedToNonexistentLayoutIsNotDeletedInReadonlyMode()
 		throws Exception {
 

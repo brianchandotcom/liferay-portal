@@ -60,8 +60,10 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -84,12 +86,29 @@ public class DownloadObjectEntryFolderServletTest {
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
+
+		_originalName = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+		PrincipalThreadLocal.setName(_originalName);
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		_group = CMSTestUtil.getOrAddGroup(
 			DownloadObjectEntryFolderServletTest.class);
-
-		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
 
 		_depotEntry = _depotEntryLocalService.addDepotEntry(
 			Collections.singletonMap(
@@ -111,14 +130,6 @@ public class DownloadObjectEntryFolderServletTest {
 
 	@Test
 	public void testDownloadFolder() throws Exception {
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-		String originalName = PrincipalThreadLocal.getName();
-
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
-		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
-
 		ObjectEntryFolder objectEntryFolder = _addObjectEntryFolder(
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
 
@@ -137,9 +148,6 @@ public class DownloadObjectEntryFolderServletTest {
 			mockHttpServletResponse.getContentType());
 		Assert.assertEquals(
 			HttpServletResponse.SC_OK, mockHttpServletResponse.getStatus());
-
-		PermissionThreadLocal.setPermissionChecker(originalPermissionChecker);
-		PrincipalThreadLocal.setName(originalName);
 	}
 
 	private long _addFileEntry() throws Exception {
@@ -238,14 +246,6 @@ public class DownloadObjectEntryFolderServletTest {
 	}
 
 	private void _testDownloadBulkActionWithBulkActionItems() throws Exception {
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-		String originalName = PrincipalThreadLocal.getName();
-
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
-		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
-
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
@@ -299,20 +299,9 @@ public class DownloadObjectEntryFolderServletTest {
 			mockHttpServletResponse.getContentType());
 		Assert.assertEquals(
 			HttpServletResponse.SC_OK, mockHttpServletResponse.getStatus());
-
-		PermissionThreadLocal.setPermissionChecker(originalPermissionChecker);
-		PrincipalThreadLocal.setName(originalName);
 	}
 
 	private void _testDownloadBulkActionWithSelectAll() throws Exception {
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-		String originalName = PrincipalThreadLocal.getName();
-
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
-		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
-
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
@@ -373,10 +362,10 @@ public class DownloadObjectEntryFolderServletTest {
 			mockHttpServletResponse.getContentType());
 		Assert.assertEquals(
 			HttpServletResponse.SC_OK, mockHttpServletResponse.getStatus());
-
-		PermissionThreadLocal.setPermissionChecker(originalPermissionChecker);
-		PrincipalThreadLocal.setName(originalName);
 	}
+
+	private static String _originalName;
+	private static PermissionChecker _originalPermissionChecker;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

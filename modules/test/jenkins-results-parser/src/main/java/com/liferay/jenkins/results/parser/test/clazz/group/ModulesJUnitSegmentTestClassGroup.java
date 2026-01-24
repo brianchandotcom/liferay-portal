@@ -60,7 +60,8 @@ public class ModulesJUnitSegmentTestClassGroup
 					testClasses.addAll(testTask.getTestClasses());
 				}
 				else {
-					testClasses.addAll(getTestClasses());
+					testClasses.addAll(
+						modulesJUnitAxisTestClassGroup.getTestClasses());
 				}
 
 				for (TestClass testClass : testClasses) {

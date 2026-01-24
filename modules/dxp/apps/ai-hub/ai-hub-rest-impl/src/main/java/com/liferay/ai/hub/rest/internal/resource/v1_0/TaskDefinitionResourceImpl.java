@@ -7,24 +7,20 @@ package com.liferay.ai.hub.rest.internal.resource.v1_0;
 
 import com.liferay.ai.hub.rest.dto.v1_0.TaskDefinition;
 import com.liferay.ai.hub.rest.internal.odata.entity.v1_0.TaskDefinitionEntityModel;
+import com.liferay.ai.hub.rest.manager.v1_0.TaskDefinitionManager;
 import com.liferay.ai.hub.rest.resource.v1_0.TaskDefinitionResource;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.util.SearchUtil;
-import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
-import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 
 import jakarta.ws.rs.core.MultivaluedMap;
 
@@ -57,50 +53,35 @@ public class TaskDefinitionResourceImpl extends BaseTaskDefinitionResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		return SearchUtil.search(
-			HashMapBuilder.put(
-				"get",
-				addAction(
-					ActionKeys.VIEW, "getTaskDefinitionsPage",
-					WorkflowConstants.RESOURCE_NAME, null)
-			).build(),
-			booleanQuery -> {
-				BooleanFilter booleanFilter =
-					booleanQuery.getPreBooleanFilter();
-
-				booleanFilter.addRequiredTerm("latest", Boolean.TRUE);
-				booleanFilter.addRequiredTerm("scope", "ai");
-			},
-			filter, KaleoDefinitionVersion.class.getName(), search, pagination,
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.NAME, Field.VERSION),
-			searchContext -> searchContext.setCompanyId(
-				contextCompany.getCompanyId()),
-			sorts,
-			document -> _toTaskDefinition(
-				_workflowDefinitionManager.getWorkflowDefinition(
-					contextCompany.getCompanyId(), document.get(Field.NAME),
-					GetterUtil.getInteger(document.get(Field.VERSION)))));
-	}
-
-	private TaskDefinition _toTaskDefinition(
-			WorkflowDefinition workflowDefinition)
-		throws PortalException {
-
-		return new TaskDefinition() {
-			{
-				setActive(workflowDefinition::isActive);
-				setDescription(workflowDefinition::getDescription);
-				setName(workflowDefinition::getName);
-				setVersion(workflowDefinition::getVersion);
-			}
-		};
+		return _taskDefinitionManager.getTaskDefinitions(
+			contextCompany.getCompanyId(),
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(),
+				HashMapBuilder.put(
+					"get",
+					addAction(
+						ActionKeys.VIEW, null, "getTaskDefinitionsPage",
+						_kaleoDefinitionModelResourcePermission)
+				).build(),
+				_dtoConverterRegistry, contextHttpServletRequest, null,
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser),
+			search, filter, pagination, sorts);
 	}
 
 	private static final EntityModel _entityModel =
 		new TaskDefinitionEntityModel();
 
 	@Reference
-	private WorkflowDefinitionManager _workflowDefinitionManager;
+	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.workflow.kaleo.model.KaleoDefinition)"
+	)
+	private ModelResourcePermission<KaleoDefinition>
+		_kaleoDefinitionModelResourcePermission;
+
+	@Reference
+	private TaskDefinitionManager _taskDefinitionManager;
 
 }

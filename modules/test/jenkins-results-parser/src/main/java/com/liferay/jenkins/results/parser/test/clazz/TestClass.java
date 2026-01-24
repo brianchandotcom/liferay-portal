@@ -6,7 +6,9 @@
 package com.liferay.jenkins.results.parser.test.clazz;
 
 import com.liferay.jenkins.results.parser.WeightedItem;
+import com.liferay.jenkins.results.parser.history.BatchHistory;
 import com.liferay.jenkins.results.parser.history.TestClassHistory;
+import com.liferay.jenkins.results.parser.history.TestTaskHistory;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.SegmentTestClassGroup;
@@ -28,17 +30,13 @@ public interface TestClass extends Comparable<TestClass>, WeightedItem {
 
 	public long getAverageOverheadDuration();
 
-	public long getAverageTestTaskDuration();
-
-	public long getAverageTotalTestTaskDuration();
-
 	public AxisTestClassGroup getAxisTestClassGroup();
+
+	public BatchHistory getBatchHistory();
 
 	public BatchTestClassGroup getBatchTestClassGroup();
 
 	public JSONObject getJSONObject();
-
-	public long getLongestTestTaskDuration();
 
 	public String getName();
 
@@ -51,6 +49,8 @@ public interface TestClass extends Comparable<TestClass>, WeightedItem {
 	public List<TestClassMethod> getTestClassMethods();
 
 	public String getTestClassName();
+
+	public TestTaskHistory getTestTaskHistory();
 
 	public String getTestTaskName();
 

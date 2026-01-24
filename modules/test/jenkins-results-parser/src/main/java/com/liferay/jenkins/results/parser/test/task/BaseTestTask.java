@@ -5,8 +5,10 @@
 
 package com.liferay.jenkins.results.parser.test.task;
 
+import com.liferay.jenkins.results.parser.history.BatchHistory;
 import com.liferay.jenkins.results.parser.history.TestTaskHistory;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
+import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroup;
 
 import java.util.ArrayList;
@@ -48,7 +50,7 @@ public class BaseTestTask implements TestTask {
 		TestTaskHistory testTaskHistory = getTestTaskHistory();
 
 		if (testTaskHistory == null) {
-			return 0L;
+			return _batchTestClassGroup.getDefaultTestTaskDuration();
 		}
 
 		return testTaskHistory.getAverageDuration();
@@ -57,7 +59,7 @@ public class BaseTestTask implements TestTask {
 	@Override
 	public long getAverageOverheadDuration() {
 		if (_testClasses.isEmpty()) {
-			throw new RuntimeException("Missing associated test classes");
+			return _batchTestClassGroup.getDefaultTestOverheadDuration();
 		}
 
 		TestClass testClass = _testClasses.get(0);
@@ -70,10 +72,15 @@ public class BaseTestTask implements TestTask {
 		TestTaskHistory testTaskHistory = getTestTaskHistory();
 
 		if (testTaskHistory == null) {
-			return 0L;
+			return _batchTestClassGroup.getDefaultTestTaskDuration();
 		}
 
 		return testTaskHistory.getAverageTotalDuration();
+	}
+
+	@Override
+	public BatchHistory getBatchHistory() {
+		return _batchTestClassGroup.getBatchHistory();
 	}
 
 	@Override
@@ -112,7 +119,7 @@ public class BaseTestTask implements TestTask {
 		TestTaskHistory testTaskHistory = getTestTaskHistory();
 
 		if (testTaskHistory == null) {
-			return 0L;
+			return _batchTestClassGroup.getDefaultTestTaskDuration();
 		}
 
 		return testTaskHistory.getLongestDuration();
@@ -135,6 +142,18 @@ public class BaseTestTask implements TestTask {
 
 	@Override
 	public TestTaskHistory getTestTaskHistory() {
+		if (_testTaskHistory != null) {
+			return _testTaskHistory;
+		}
+
+		BatchHistory batchHistory = getBatchHistory();
+
+		if (batchHistory == null) {
+			return null;
+		}
+
+		_testTaskHistory = batchHistory.getTestTaskHistory(getName());
+
 		return _testTaskHistory;
 	}
 
@@ -206,19 +225,20 @@ public class BaseTestTask implements TestTask {
 	}
 
 	protected BaseTestTask(
-		TestClassGroup.GroupingStrategy groupingStrategy, String name,
-		TestTaskHistory testTaskHistory) {
+		BatchTestClassGroup batchTestClassGroup,
+		TestClassGroup.GroupingStrategy groupingStrategy, String name) {
 
+		_batchTestClassGroup = batchTestClassGroup;
 		_groupingStrategy = groupingStrategy;
 		_name = name;
-		_testTaskHistory = testTaskHistory;
 	}
 
+	private final BatchTestClassGroup _batchTestClassGroup;
 	private final TestClassGroup.GroupingStrategy _groupingStrategy;
 	private final String _name;
 	private boolean _split;
 	private final List<TestClass> _testClasses = new ArrayList<>();
-	private final TestTaskHistory _testTaskHistory;
+	private TestTaskHistory _testTaskHistory;
 	private Long _weight;
 
 }

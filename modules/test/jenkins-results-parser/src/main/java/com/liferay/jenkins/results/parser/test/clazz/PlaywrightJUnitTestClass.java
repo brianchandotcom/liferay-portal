@@ -6,10 +6,14 @@
 package com.liferay.jenkins.results.parser.test.clazz;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.history.BatchHistory;
+import com.liferay.jenkins.results.parser.history.TestClassHistory;
 import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 
 import java.io.File;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,25 +31,65 @@ public class PlaywrightJUnitTestClass extends JUnitTestClass {
 			return _averageDuration;
 		}
 
-		for (TestClassMethod testClassMethod : getTestClassMethods()) {
-			PlaywrightTestClassMethod playwrightTestClassMethod =
-				(PlaywrightTestClassMethod)testClassMethod;
+		long totalAverageDuration = 0L;
 
-			BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
+		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
 
-			long averageDuration = batchTestClassGroup.getAverageTestDuration(
-				JenkinsResultsParserUtil.combine(
-					getName(), ".", playwrightTestClassMethod.getTestName()));
+		long defaultTestDuration = batchTestClassGroup.getDefaultTestDuration();
 
-			if (_averageDuration == null) {
-				_averageDuration = averageDuration;
+		Map<String, TestClassHistory> testClassHistoriesMap =
+			_getTestClassHistoriesMap();
+
+		for (TestClassHistory testClassHistory :
+				testClassHistoriesMap.values()) {
+
+			long averageDuration = defaultTestDuration;
+
+			if (testClassHistory != null) {
+				averageDuration = testClassHistory.getAverageDuration();
 			}
-			else {
-				_averageDuration += averageDuration;
-			}
+
+			totalAverageDuration += averageDuration;
 		}
 
+		_averageDuration = totalAverageDuration;
+
 		return _averageDuration;
+	}
+
+	@Override
+	public long getAverageOverheadDuration() {
+		if (_averageOverheadDuration != null) {
+			return _averageOverheadDuration;
+		}
+
+		long totalAverageOverheadDuration = 0L;
+
+		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
+
+		long defaultTestOverheadDuration =
+			batchTestClassGroup.getDefaultTestOverheadDuration();
+
+		Map<String, TestClassHistory> testClassHistoriesMap =
+			_getTestClassHistoriesMap();
+
+		for (TestClassHistory testClassHistory :
+				testClassHistoriesMap.values()) {
+
+			long averageTestOverheadDuration = defaultTestOverheadDuration;
+
+			if (testClassHistory != null) {
+				averageTestOverheadDuration =
+					testClassHistory.getAverageOverheadDuration();
+			}
+
+			totalAverageOverheadDuration += averageTestOverheadDuration;
+		}
+
+		_averageOverheadDuration =
+			totalAverageOverheadDuration / testClassHistoriesMap.size();
+
+		return totalAverageOverheadDuration;
 	}
 
 	@Override
@@ -147,6 +191,33 @@ public class PlaywrightJUnitTestClass extends JUnitTestClass {
 		_slaveLabel = jsonObject.optString("slave_label");
 	}
 
+	private Map<String, TestClassHistory> _getTestClassHistoriesMap() {
+		if (_testClassHistoriesMap != null) {
+			return _testClassHistoriesMap;
+		}
+
+		_testClassHistoriesMap = new HashMap<>();
+
+		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
+
+		BatchHistory batchHistory = batchTestClassGroup.getBatchHistory();
+
+		for (TestClassMethod testClassMethod : getTestClassMethods()) {
+			PlaywrightTestClassMethod playwrightTestClassMethod =
+				(PlaywrightTestClassMethod)testClassMethod;
+
+			String key = JenkinsResultsParserUtil.combine(
+				getName(), ".", playwrightTestClassMethod.getTestName());
+
+			TestClassHistory testClassHistory =
+				batchHistory.getTestClassHistory(key);
+
+			_testClassHistoriesMap.put(key, testClassHistory);
+		}
+
+		return _testClassHistoriesMap;
+	}
+
 	private static final String _MINIMUM_SLAVE_RAM_DEFAULT = "12";
 
 	private static final Pattern _testFilePathPattern = Pattern.compile(
@@ -154,7 +225,9 @@ public class PlaywrightJUnitTestClass extends JUnitTestClass {
 
 	private boolean _analyticsCloudEnabled;
 	private Long _averageDuration;
+	private Long _averageOverheadDuration;
 	private final Integer _minimumSlaveRAM;
 	private final String _slaveLabel;
+	private Map<String, TestClassHistory> _testClassHistoriesMap;
 
 }

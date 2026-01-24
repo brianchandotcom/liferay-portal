@@ -5,7 +5,7 @@
 
 package com.liferay.jenkins.results.parser.test.task;
 
-import com.liferay.jenkins.results.parser.history.TestTaskHistory;
+import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroup;
 
 /**
@@ -14,10 +14,10 @@ import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroup;
 public class DefaultTestTask extends BaseTestTask {
 
 	protected DefaultTestTask(
-		TestClassGroup.GroupingStrategy groupingStrategy, String name,
-		TestTaskHistory testTaskHistory) {
+		BatchTestClassGroup batchTestClassGroup,
+		TestClassGroup.GroupingStrategy groupingStrategy, String name) {
 
-		super(groupingStrategy, name, testTaskHistory);
+		super(batchTestClassGroup, groupingStrategy, name);
 	}
 
 }

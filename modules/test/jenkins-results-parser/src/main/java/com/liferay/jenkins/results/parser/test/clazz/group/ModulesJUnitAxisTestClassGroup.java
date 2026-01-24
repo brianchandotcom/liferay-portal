@@ -123,6 +123,7 @@ public class ModulesJUnitAxisTestClassGroup extends JUnitAxisTestClassGroup {
 			return new ArrayList<>(_testTasks.values());
 		}
 
+		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
 		TestClassGroup.GroupingStrategy groupingStrategy =
 			getGroupingStrategy();
 
@@ -134,12 +135,8 @@ public class ModulesJUnitAxisTestClassGroup extends JUnitAxisTestClassGroup {
 			TestTask testTask = _testTasks.get(testTaskName);
 
 			if (testTask == null) {
-				BatchTestClassGroup batchTestClassGroup =
-					getBatchTestClassGroup();
-
 				testTask = TestTaskFactory.newTestTask(
-					groupingStrategy, testTaskName,
-					batchTestClassGroup.getTestTaskHistory(testTaskName));
+					batchTestClassGroup, groupingStrategy, testTaskName);
 
 				_testTasks.put(testTaskName, testTask);
 			}
@@ -163,6 +160,7 @@ public class ModulesJUnitAxisTestClassGroup extends JUnitAxisTestClassGroup {
 			return;
 		}
 
+		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
 		TestClassGroup.GroupingStrategy groupingStrategy =
 			getGroupingStrategy();
 
@@ -178,11 +176,8 @@ public class ModulesJUnitAxisTestClassGroup extends JUnitAxisTestClassGroup {
 
 			String testTaskName = testTaskJSONObject.getString("name");
 
-			BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
-
 			TestTask testTask = TestTaskFactory.newTestTask(
-				groupingStrategy, testTaskName,
-				batchTestClassGroup.getTestTaskHistory(testTaskName));
+				getBatchTestClassGroup(), groupingStrategy, testTaskName);
 
 			for (int j = 0; j < testClassesJSONArray.length(); j++) {
 				JSONObject testClassJSONObject =
@@ -193,7 +188,7 @@ public class ModulesJUnitAxisTestClassGroup extends JUnitAxisTestClassGroup {
 				}
 
 				TestClass testClass = TestClassFactory.newTestClass(
-					getBatchTestClassGroup(), testClassJSONObject);
+					batchTestClassGroup, testClassJSONObject);
 
 				addTestClass(testClass);
 

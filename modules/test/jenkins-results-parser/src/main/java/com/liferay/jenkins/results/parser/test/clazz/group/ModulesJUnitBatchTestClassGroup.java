@@ -56,8 +56,7 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 
 			if (testTask == null) {
 				testTask = TestTaskFactory.newTestTask(
-					groupingStrategy, testTaskName,
-					getTestTaskHistory(testTaskName));
+					this, groupingStrategy, testTaskName);
 
 				_testTasks.put(testTaskName, testTask);
 			}

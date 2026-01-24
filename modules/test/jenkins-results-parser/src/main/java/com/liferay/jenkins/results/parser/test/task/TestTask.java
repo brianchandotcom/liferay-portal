@@ -6,6 +6,7 @@
 package com.liferay.jenkins.results.parser.test.task;
 
 import com.liferay.jenkins.results.parser.WeightedItem;
+import com.liferay.jenkins.results.parser.history.BatchHistory;
 import com.liferay.jenkins.results.parser.history.TestTaskHistory;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 
@@ -25,6 +26,8 @@ public interface TestTask extends WeightedItem {
 	public long getAverageOverheadDuration();
 
 	public long getAverageTotalDuration();
+
+	public BatchHistory getBatchHistory();
 
 	public JSONObject getJSONObject();
 

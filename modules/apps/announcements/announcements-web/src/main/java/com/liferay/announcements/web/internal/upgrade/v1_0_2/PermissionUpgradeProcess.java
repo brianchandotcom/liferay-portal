@@ -110,10 +110,8 @@ public class PermissionUpgradeProcess extends UpgradeProcess {
 		long resourceActionId = increment(ResourceAction.class.getName());
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"insert into ResourceAction (mvccVersion, ",
-					"resourceActionId, name, actionId, bitwiseValue) values ",
-					"(?, ?, ?, ?, ?)"))) {
+				"insert into ResourceAction (mvccVersion, resourceActionId, " +
+					"name, actionId, bitwiseValue) values (?, ?, ?, ?, ?)")) {
 
 			preparedStatement.setLong(1, 0);
 			preparedStatement.setLong(2, resourceActionId);

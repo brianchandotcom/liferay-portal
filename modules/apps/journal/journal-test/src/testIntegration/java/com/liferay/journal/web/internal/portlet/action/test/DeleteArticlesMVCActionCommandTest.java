@@ -28,12 +28,16 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Jürgen Kappler
@@ -65,7 +69,14 @@ public class DeleteArticlesMVCActionCommandTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			new MockLiferayPortletActionRequest();
+			new MockLiferayPortletActionRequest() {
+
+				@Override
+				public HttpServletRequest getOriginalHttpServletRequest() {
+					return new MockHttpServletRequest();
+				}
+
+			};
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 

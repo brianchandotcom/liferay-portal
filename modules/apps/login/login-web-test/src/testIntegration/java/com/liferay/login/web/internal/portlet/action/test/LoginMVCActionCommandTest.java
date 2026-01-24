@@ -41,6 +41,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -184,6 +185,11 @@ public class LoginMVCActionCommandTest {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest() {
+
+				@Override
+				public HttpServletRequest getOriginalHttpServletRequest() {
+					return new MockHttpServletRequest();
+				}
 
 				@Override
 				public Portlet getPortlet() {

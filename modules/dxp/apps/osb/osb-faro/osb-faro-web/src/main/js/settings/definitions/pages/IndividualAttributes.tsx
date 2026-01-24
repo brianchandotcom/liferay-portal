@@ -84,7 +84,7 @@ const IndividualAttributes: React.FC<IIndividualAttributesProps> = ({
 			]}
 			className='individual-attributes-root'
 			pageDescription={Liferay.Language.get(
-				'this-is-the-data-model-of-an-individual.-analytics-cloud-will-take-and-store-the–newest-data-from-all-your-sources'
+				'this-is-the-data-model-of-an-individual.-analytics-cloud-will-take-and-store-the-newest-data-from-all-your-sources'
 			)}
 			pageTitle={Liferay.Language.get('individual-attributes')}
 		>

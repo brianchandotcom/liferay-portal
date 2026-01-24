@@ -88,11 +88,11 @@ export default function TasksQuickFilters({
 	overdueCountURL,
 	totalCountURL,
 }: {
-	blockedCountURL: string;
-	cmpProjectId: string;
-	inProgressCountURL: string;
-	overdueCountURL: string;
-	totalCountURL: string;
+	blockedCountURL?: string;
+	cmpProjectId?: string;
+	inProgressCountURL?: string;
+	overdueCountURL?: string;
+	totalCountURL?: string;
 }) {
 	const [activeQuickFilter, setActiveQuickFilter] = useState<string | null>(
 		null

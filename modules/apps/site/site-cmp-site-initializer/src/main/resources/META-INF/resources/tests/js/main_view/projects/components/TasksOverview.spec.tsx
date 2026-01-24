@@ -4,23 +4,57 @@
  */
 
 import '@testing-library/jest-dom';
-import {render, screen} from '@testing-library/react';
+import {act, cleanup, render, screen} from '@testing-library/react';
+import {fetch} from 'frontend-js-web';
 import React from 'react';
 
 import TasksOverview from '../../../../../js/main_view/projects/components/TasksOverview';
 
 describe('TasksOverview', () => {
+	afterEach(cleanup);
+
+	it('renders the appropriate counts', async () => {
+		(fetch as jest.Mock).mockResolvedValue({
+			json: () =>
+				Promise.resolve({
+					blockedCount: 1,
+					completionRate: 50,
+					inProgressCount: 2,
+					overdueCount: 3,
+					totalCount: 4,
+				}),
+			ok: true,
+		});
+
+		await act(async () => {
+			render(
+				<TasksOverview cmpProjectId="123" redirect="/redirect-url" />
+			);
+		});
+
+		expect(screen.getByText('1')).toBeInTheDocument();
+		expect(screen.getByText('2')).toBeInTheDocument();
+		expect(screen.getByText('3')).toBeInTheDocument();
+		expect(screen.getByText('4')).toBeInTheDocument();
+		expect(screen.getByText('50%')).toBeInTheDocument();
+	});
+
 	it('renders empty state when totalCount is 0', async () => {
-		render(
-			<TasksOverview
-				blockedCount={0}
-				doneCount={0}
-				inProgressCount={0}
-				overdueCount={0}
-				redirect="/redirect-url"
-				totalCount={0}
-			/>
-		);
+		(fetch as jest.Mock).mockResolvedValue({
+			json: () => ({
+				blockedCount: 0,
+				completionRate: 0,
+				inProgressCount: 0,
+				overdueCount: 0,
+				totalCount: 0,
+			}),
+		});
+
+		await act(async () => {
+			render(
+				<TasksOverview cmpProjectId="123" redirect="/redirect-url" />
+			);
+		});
 
 		expect(screen.getByText('no-tasks')).toBeInTheDocument();
 

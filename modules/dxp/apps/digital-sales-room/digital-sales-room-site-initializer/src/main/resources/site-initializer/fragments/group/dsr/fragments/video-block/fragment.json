@@ -1,0 +1,9 @@
+{
+	"configurationPath": "configuration.json",
+	"cssPath": "index.css",
+	"htmlPath": "index.html",
+	"icon": "video",
+	"jsPath": "index.js",
+	"name": "Video Block",
+	"type": "component"
+}

@@ -1,0 +1,13 @@
+<div class="clearfix component-paragraph dsr-video-block-component text-break">
+	<div data-lfr-editable-id="element-text" data-lfr-editable-type="rich-text">
+		<h2 class="mb-4">VIDEO</h2>
+	</div>
+
+	<div class="d-flex justify-content-center">
+		[#if configuration.url?has_content]
+			<div class="video-container"></div>
+		[#else]
+			<img alt="" class="video-container" src="[resources:poster.jpg]" />
+		[/#if]
+	</div>
+</div>

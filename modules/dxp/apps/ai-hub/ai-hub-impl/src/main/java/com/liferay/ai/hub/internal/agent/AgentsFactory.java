@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.workflow.instance.WorkflowInstanceActionExecutor;
 
 import java.util.List;
 
@@ -25,12 +24,10 @@ public class AgentsFactory {
 
 	public AgentsFactory(
 		AgentContext agentContext, TaskDefinitionManager taskDefinitionManager,
-		WorkflowInstanceActionExecutor workflowInstanceActionExecutor,
 		WorkflowInstanceManager workflowInstanceManager) {
 
 		_agentContext = agentContext;
 		_taskDefinitionManager = taskDefinitionManager;
-		_workflowInstanceActionExecutor = workflowInstanceActionExecutor;
 		_workflowInstanceManager = workflowInstanceManager;
 	}
 
@@ -53,7 +50,7 @@ public class AgentsFactory {
 				agents[i] = new WorkflowAgent(
 					_agentContext, taskDefinition.getDescription(),
 					taskDefinition.getName(), taskDefinition.getVersion(),
-					_workflowInstanceActionExecutor, _workflowInstanceManager);
+					_workflowInstanceManager);
 			}
 
 			return agents;
@@ -71,8 +68,6 @@ public class AgentsFactory {
 
 	private final AgentContext _agentContext;
 	private final TaskDefinitionManager _taskDefinitionManager;
-	private final WorkflowInstanceActionExecutor
-		_workflowInstanceActionExecutor;
 	private final WorkflowInstanceManager _workflowInstanceManager;
 
 }

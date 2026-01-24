@@ -6,6 +6,8 @@
 package com.liferay.portal.workflow.kaleo.runtime.internal.node;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.constants.KaleoInstanceTokenConstants;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
@@ -13,6 +15,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
+import com.liferay.portal.workflow.kaleo.runtime.constants.WorkflowInstanceDestinationNames;
 import com.liferay.portal.workflow.kaleo.runtime.graph.PathElement;
 import com.liferay.portal.workflow.kaleo.runtime.node.BaseNodeExecutor;
 import com.liferay.portal.workflow.kaleo.runtime.node.NodeExecutor;
@@ -64,6 +67,16 @@ public class StateNodeExecutor extends BaseNodeExecutor {
 					kaleoInstanceToken.getKaleoInstanceId());
 			}
 
+			Message message = new Message();
+
+			message.put(
+				"workflowContext", executionContext.getWorkflowContext());
+			message.put(
+				"workflowInstanceId", kaleoInstanceToken.getKaleoInstanceId());
+
+			_messageBus.sendMessage(
+				WorkflowInstanceDestinationNames.WORKFLOW_INSTANCE, message);
+
 			return;
 		}
 
@@ -101,5 +114,8 @@ public class StateNodeExecutor extends BaseNodeExecutor {
 
 	@Reference
 	private KaleoInstanceTokenLocalService _kaleoInstanceTokenLocalService;
+
+	@Reference
+	private MessageBus _messageBus;
 
 }

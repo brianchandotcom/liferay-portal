@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
-import com.liferay.portal.workflow.instance.WorkflowInstanceActionExecutor;
 
 import dev.langchain4j.agentic.AgenticServices;
 import dev.langchain4j.agentic.supervisor.SupervisorResponseStrategy;
@@ -39,8 +38,7 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 				SupervisorAgentImpl.class.getName());
 
 		AgentsFactory agentsFactory = new AgentsFactory(
-			agentContext, _taskDefinitionManager,
-			_workflowInstanceActionExecutor, _workflowInstanceManager);
+			agentContext, _taskDefinitionManager, _workflowInstanceManager);
 
 		Object[] agents = agentsFactory.create();
 
@@ -92,9 +90,6 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 
 	@Reference
 	private TaskDefinitionManager _taskDefinitionManager;
-
-	@Reference
-	private WorkflowInstanceActionExecutor _workflowInstanceActionExecutor;
 
 	@Reference
 	private WorkflowInstanceManager _workflowInstanceManager;

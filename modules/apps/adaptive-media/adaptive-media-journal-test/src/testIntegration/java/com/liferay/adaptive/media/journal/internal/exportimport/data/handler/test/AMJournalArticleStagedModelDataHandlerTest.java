@@ -28,7 +28,6 @@ import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeSupplier;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
@@ -57,6 +56,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -328,10 +328,13 @@ public class AMJournalArticleStagedModelDataHandlerTest
 			boolean sanitize, FileEntry... fileEntries)
 		throws Exception {
 
-		List<FileEntry> importedFileEntries = TransformUtil.transformToList(
-			fileEntries,
-			fileEntry -> _dlAppLocalService.getFileEntryByUuidAndGroupId(
-				fileEntry.getUuid(), liveGroup.getGroupId()));
+		List<FileEntry> importedFileEntries = new ArrayList<>();
+
+		for (FileEntry fileEntry : fileEntries) {
+			importedFileEntries.add(
+				_dlAppLocalService.getFileEntryByUuidAndGroupId(
+					fileEntry.getUuid(), liveGroup.getGroupId()));
+		}
 
 		return _getDynamicContent(
 			sanitize, importedFileEntries.toArray(new FileEntry[0]));

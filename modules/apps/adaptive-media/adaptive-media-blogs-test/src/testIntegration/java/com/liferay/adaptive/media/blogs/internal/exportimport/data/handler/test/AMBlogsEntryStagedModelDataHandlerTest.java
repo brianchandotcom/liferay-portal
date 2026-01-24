@@ -15,7 +15,6 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.test.util.lar.BaseWorkflowedStagedModelDataHandlerTestCase;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -34,6 +33,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -223,10 +223,13 @@ public class AMBlogsEntryStagedModelDataHandlerTest
 	private String _getExpectedDynamicContent(FileEntry... fileEntries)
 		throws Exception {
 
-		List<FileEntry> importedFileEntries = TransformUtil.transformToList(
-			fileEntries,
-			fileEntry -> _dlAppLocalService.getFileEntryByUuidAndGroupId(
-				fileEntry.getUuid(), liveGroup.getGroupId()));
+		List<FileEntry> importedFileEntries = new ArrayList<>();
+
+		for (FileEntry fileEntry : fileEntries) {
+			importedFileEntries.add(
+				_dlAppLocalService.getFileEntryByUuidAndGroupId(
+					fileEntry.getUuid(), liveGroup.getGroupId()));
+		}
 
 		return _getDynamicContent(
 			importedFileEntries.toArray(new FileEntry[0]));

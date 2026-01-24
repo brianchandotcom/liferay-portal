@@ -1,0 +1,20 @@
+.dsr-video-block-component {
+	padding-bottom: 5rem;
+}
+
+.dsr-video-block-component h2::after {
+	border-bottom: 4px solid var(--primary, #0B5FFF);
+	content: '';
+	display: inline-block;
+	margin: 0 0 0 0.3rem;
+	width: 1.5rem;
+}
+
+.dsr-video-block-component .video-container {
+	background: #FFF;
+	border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 1.25rem;
+    max-width: 100%;
+    min-height: 12rem;
+    min-width: 12rem;
+}

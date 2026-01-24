@@ -1,0 +1,33 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": "",
+					"label": "url",
+					"name": "url",
+					"type": "text"
+				},
+				{
+					"defaultValue": false,
+					"label": "autoplay",
+					"name": "autoPlay",
+					"type": "checkbox"
+				},
+				{
+					"defaultValue": "",
+					"label": "width",
+					"name": "videoWidth",
+					"type": "text"
+				},
+				{
+					"defaultValue": "",
+					"label": "height",
+					"name": "videoHeight",
+					"type": "text"
+				}
+			],
+			"label": "video-options"
+		}
+	]
+}

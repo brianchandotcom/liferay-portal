@@ -1,0 +1,78 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.ai.hub.internal.agent;
+
+import com.liferay.ai.hub.agent.AgentContext;
+import com.liferay.ai.hub.rest.dto.v1_0.TaskDefinition;
+import com.liferay.ai.hub.rest.manager.v1_0.TaskDefinitionManager;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.workflow.instance.WorkflowInstanceActionExecutor;
+
+import java.util.List;
+
+/**
+ * @author Feliphe Marinho
+ * @author João Victor Alves
+ */
+public class AgentsFactory {
+
+	public AgentsFactory(
+		AgentContext agentContext, TaskDefinitionManager taskDefinitionManager,
+		WorkflowInstanceActionExecutor workflowInstanceActionExecutor,
+		WorkflowInstanceManager workflowInstanceManager) {
+
+		_agentContext = agentContext;
+		_taskDefinitionManager = taskDefinitionManager;
+		_workflowInstanceActionExecutor = workflowInstanceActionExecutor;
+		_workflowInstanceManager = workflowInstanceManager;
+	}
+
+	public Object[] create() {
+		try {
+			Page<TaskDefinition> page =
+				_taskDefinitionManager.getTaskDefinitions(
+					_agentContext.getCompanyId(),
+					_agentContext.getDTOConverterContext(), null, null,
+					Pagination.of(1, 20), null);
+
+			List<TaskDefinition> taskDefinitions =
+				(List<TaskDefinition>)page.getItems();
+
+			Object[] agents = new Object[taskDefinitions.size()];
+
+			for (int i = 0; i < taskDefinitions.size(); i++) {
+				TaskDefinition taskDefinition = taskDefinitions.get(i);
+
+				agents[i] = new WorkflowAgent(
+					_agentContext, taskDefinition.getDescription(),
+					taskDefinition.getName(), taskDefinition.getVersion(),
+					_workflowInstanceActionExecutor, _workflowInstanceManager);
+			}
+
+			return agents;
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return new WorkflowAgent[0];
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(AgentsFactory.class);
+
+	private final AgentContext _agentContext;
+	private final TaskDefinitionManager _taskDefinitionManager;
+	private final WorkflowInstanceActionExecutor
+		_workflowInstanceActionExecutor;
+	private final WorkflowInstanceManager _workflowInstanceManager;
+
+}

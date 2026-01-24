@@ -23,7 +23,6 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.service.MailService;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -384,13 +383,20 @@ public class DDMFormEmailNotificationSender {
 			DDMFormInstanceRecord ddmFormInstanceRecord, Locale locale)
 		throws Exception {
 
+		List<Object> pages = new ArrayList<>();
+
 		DDMFormLayout ddmFormLayout = _getDDMFormLayout(ddmFormInstance);
 
-		return TransformUtil.transform(
-			ddmFormLayout.getDDMFormLayoutPages(),
-			ddmFormLayoutPage -> _getPage(
-				ddmFormLayoutPage,
-				getDDMFormFieldValuesMap(ddmFormInstanceRecord), locale));
+		for (DDMFormLayoutPage ddmFormLayoutPage :
+				ddmFormLayout.getDDMFormLayoutPages()) {
+
+			pages.add(
+				_getPage(
+					ddmFormLayoutPage,
+					getDDMFormFieldValuesMap(ddmFormInstanceRecord), locale));
+		}
+
+		return pages;
 	}
 
 	private String _getParagraphText(DDMFormField ddmFormField, Locale locale) {

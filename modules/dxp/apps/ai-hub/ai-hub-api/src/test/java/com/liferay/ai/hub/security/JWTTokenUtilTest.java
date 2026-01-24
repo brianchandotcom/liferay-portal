@@ -80,9 +80,7 @@ public class JWTTokenUtilTest {
 			RandomTestUtil.randomString());
 	}
 
-	private void _testGetUserId(
-		String expectedLogMessage, String token) {
-
+	private void _testGetUserId(String expectedLogMessage, String token) {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.ai.hub.security.JWTTokenUtil",
 				LoggerTestUtil.DEBUG)) {

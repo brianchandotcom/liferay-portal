@@ -51,7 +51,10 @@ public class PropertiesLanguageKeysOrderCheck extends BaseFileCheck {
 				}
 
 				for (Map.Entry<String, String> entry : messagesMap.entrySet()) {
-					sb.append(entry.getKey());
+					sb.append(
+						StringUtil.replace(
+							entry.getKey(), new String[] {"–", "—"},
+							new String[] {"-", "-"}));
 					sb.append(StringPool.EQUAL);
 					sb.append(entry.getValue());
 					sb.append("\n");
@@ -66,7 +69,10 @@ public class PropertiesLanguageKeysOrderCheck extends BaseFileCheck {
 			}
 
 			for (Map.Entry<String, String> entry : messagesMap.entrySet()) {
-				sb.append(entry.getKey());
+				sb.append(
+					StringUtil.replace(
+						entry.getKey(), new String[] {"–", "—"},
+						new String[] {"-", "-"}));
 				sb.append(StringPool.EQUAL);
 				sb.append(entry.getValue());
 				sb.append("\n");

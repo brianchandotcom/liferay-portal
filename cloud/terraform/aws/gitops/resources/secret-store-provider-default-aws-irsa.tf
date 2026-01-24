@@ -11,7 +11,7 @@ resource "aws_iam_policy" "argocd_git_repo_auth_policy" {
 					]
 					Effect="Allow"
 					Resource=[
-						for c in local.git_repo_auth_configs : "arn:aws:secretsmanager:${var.region}:${local.account_id}:secret:${c.vault_secret_name}*"
+						for git_repo_auth_config in local.git_repo_auth_configs : "arn:aws:secretsmanager:${var.region}:${local.account_id}:secret:${git_repo_auth_config.vault_secret_name}*"
 					]
 				},
 			]

@@ -28,16 +28,17 @@ public class RoleUpgradeProcess extends UpgradeProcess {
 				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER, "'"));
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select distinct Role_.roleId from Role_ where name = ?");
-			PreparedStatement preparedStatement2 =
-				AutoBatchPreparedStatementUtil.autoBatch(
-					connection,
-					"delete from ResourcePermission where roleId = ?")) {
+				"select distinct Role_.roleId from Role_ where name = ?")) {
 
 			preparedStatement1.setString(
 				1, AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER);
 
-			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
+			try (PreparedStatement preparedStatement2 =
+					AutoBatchPreparedStatementUtil.autoBatch(
+						connection,
+						"delete from ResourcePermission where roleId = ?");
+				ResultSet resultSet = preparedStatement1.executeQuery()) {
+
 				while (resultSet.next()) {
 					long roleId = resultSet.getLong("roleId");
 

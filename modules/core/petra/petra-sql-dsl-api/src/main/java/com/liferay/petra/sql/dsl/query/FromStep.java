@@ -12,10 +12,10 @@ import com.liferay.petra.sql.dsl.Table;
  */
 public interface FromStep extends DSLQuery {
 
+	public JoinStep from(Table<?> table);
+
 	public default FromStep hints(String hints) {
 		return this;
 	}
-
-	public JoinStep from(Table<?> table);
 
 }

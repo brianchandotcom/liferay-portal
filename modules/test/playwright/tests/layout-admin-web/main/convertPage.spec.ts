@@ -116,12 +116,12 @@ test(
 
 		await widgetPagePage.addPortlet('Web Content Display');
 
-		await widgetPagePage.dragPortlet(
-			'Web Content Display',
-			page
+		await widgetPagePage.dragPortlet({
+			portletName: 'Web Content Display',
+			target: page
 				.locator('.portlet-nested-portlets .portlet-dropzone.empty')
-				.first()
-		);
+				.first(),
+		});
 
 		// Go to page administration
 

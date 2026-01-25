@@ -168,12 +168,12 @@ test(
 
 		// Add web content display widget inside nested portlet
 
-		await widgetPagePage.dragPortlet(
-			'Web Content Display',
-			page
+		await widgetPagePage.dragPortlet({
+			portletName: 'Web Content Display',
+			target: page
 				.locator('.portlet-nested-portlets .portlet-dropzone.empty')
-				.first()
-		);
+				.first(),
+		});
 
 		await page.reload();
 

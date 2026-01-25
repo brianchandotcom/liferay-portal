@@ -58,6 +58,10 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 				}
 				catch (Exception exception) {
 					_log.error(exception);
+
+					SseUtil.send(
+						"I cannot fulfill this request.", "Chat Message Sent",
+						agentContext.getSseEventSinkKey());
 				}
 			});
 	}

@@ -518,12 +518,14 @@ public abstract class BasePortletIdUpgradeProcess extends UpgradeProcess {
 		List<String> actionIds = new ArrayList<>();
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select actionId from ResourceAction where name = '" + newName +
-					"'");
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+				"select actionId from ResourceAction where name = ?")) {
 
-			while (resultSet.next()) {
-				actionIds.add(resultSet.getString("actionId"));
+			preparedStatement.setString(1, newName);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					actionIds.add(resultSet.getString("actionId"));
+				}
 			}
 		}
 

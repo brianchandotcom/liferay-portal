@@ -580,15 +580,16 @@ public class CPDefinitionLocalServiceTest {
 		CPDefinition cpDefinition2 = _cpDefinitionLocalService.copyCPDefinition(
 			cpDefinition1.getCPDefinitionId());
 
-		CPDefinitionSpecificationOptionValue
-			cpDefinitionSpecificationOptionValue2 =
+		List<CPDefinitionSpecificationOptionValue>
+			cpDefinitionSpecificationOptionValues =
 				_cpDefinitionSpecificationOptionValueLocalService.
 					getCPDefinitionSpecificationOptionValues(
 						cpDefinition2.getCPDefinitionId(), null,
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null
-					).get(
-						0
-					);
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		CPDefinitionSpecificationOptionValue
+			cpDefinitionSpecificationOptionValue2 =
+				cpDefinitionSpecificationOptionValues.get(0);
 
 		Assert.assertNotEquals(
 			cpDefinitionSpecificationOptionValue1.getExternalReferenceCode(),

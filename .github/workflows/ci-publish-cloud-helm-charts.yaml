@@ -6,30 +6,30 @@ jobs:
         if: ${{github.repository == 'liferay/liferay-portal'}}
         needs: publish-default
         secrets:
-          GAR_PASSWORD: ${{secrets.GAR_PASSWORD}}
+            GAR_PASSWORD: ${{secrets.GAR_PASSWORD}}
         uses: ./.github/workflows/ci-reusable-publish-helm-chart-to-gar.yaml
         with:
-          chart_name: liferay-aws
-          registry: us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart
-          working_directory: ./cloud/helm/aws
+            chart_name: liferay-aws
+            registry: us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart
+            working_directory: ./cloud/helm/aws
     publish-aws-infrastructure:
         if: ${{github.repository == 'liferay/liferay-portal'}}
         secrets:
-          GAR_PASSWORD: ${{secrets.GAR_PASSWORD}}
+            GAR_PASSWORD: ${{secrets.GAR_PASSWORD}}
         uses: ./.github/workflows/ci-reusable-publish-helm-chart-to-gar.yaml
         with:
-          chart_name: liferay-aws-infrastructure
-          registry: us-central1-docker.pkg.dev/external-assets-prd/liferay-helm-chart
-          working_directory: ./cloud/helm/aws-infrastructure
+            chart_name: liferay-aws-infrastructure
+            registry: us-central1-docker.pkg.dev/external-assets-prd/liferay-helm-chart
+            working_directory: ./cloud/helm/aws-infrastructure
     publish-aws-infrastructure-provider:
         if: ${{github.repository == 'liferay/liferay-portal'}}
         secrets:
-          GAR_PASSWORD: ${{secrets.GAR_PASSWORD}}
+            GAR_PASSWORD: ${{secrets.GAR_PASSWORD}}
         uses: ./.github/workflows/ci-reusable-publish-helm-chart-to-gar.yaml
         with:
-          chart_name: liferay-aws-infrastructure-provider
-          registry: us-central1-docker.pkg.dev/external-assets-prd/liferay-helm-chart
-          working_directory: ./cloud/helm/aws-infrastructure-provider
+            chart_name: liferay-aws-infrastructure-provider
+            registry: us-central1-docker.pkg.dev/external-assets-prd/liferay-helm-chart
+            working_directory: ./cloud/helm/aws-infrastructure-provider
     publish-aws-marketplace:
         env:
             ECR_REGISTRY: 709825985650.dkr.ecr.us-east-1.amazonaws.com
@@ -100,12 +100,12 @@ jobs:
     publish-default:
         if: ${{github.repository == 'liferay/liferay-portal'}}
         secrets:
-          GAR_PASSWORD: ${{secrets.GAR_PASSWORD}}
+            GAR_PASSWORD: ${{secrets.GAR_PASSWORD}}
         uses: ./.github/workflows/ci-reusable-publish-helm-chart-to-gar.yaml
         with:
-          chart_name: liferay-default
-          registry: us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart
-          working_directory: ./cloud/helm/default
+            chart_name: liferay-default
+            registry: us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart
+            working_directory: ./cloud/helm/default
 on:
     push:
         branches:

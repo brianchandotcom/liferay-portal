@@ -7,6 +7,7 @@ package com.liferay.portal.workflow.kaleo.runtime.constants;
 
 /**
  * @author Feliphe Marinho
+ * @author João Victor Alves
  */
 public class WorkflowInstanceDestinationNames {
 

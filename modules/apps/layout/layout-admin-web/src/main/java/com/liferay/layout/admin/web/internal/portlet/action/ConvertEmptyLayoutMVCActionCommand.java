@@ -14,12 +14,10 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.LayoutPrototypeService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -32,6 +30,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.ActionRequest;
@@ -73,16 +72,30 @@ public class ConvertEmptyLayoutMVCActionCommand
 				return;
 			}
 
+			long masterLayoutPlid = ParamUtil.getLong(
+				actionRequest, "masterLayoutPlid");
+			String masterLayoutPageTemplateEntryERC = null;
+
+			if (masterLayoutPlid > 0) {
+				LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
+					_layoutPageTemplateEntryService.
+						fetchLayoutPageTemplateEntryByPlid(masterLayoutPlid);
+
+				if (masterLayoutPageTemplateEntry != null) {
+					masterLayoutPageTemplateEntryERC =
+						masterLayoutPageTemplateEntry.
+							getExternalReferenceCode();
+				}
+			}
+
 			long selPlid = ParamUtil.getLong(actionRequest, "selPlid");
 
 			Layout layout = _layoutService.getLayout(selPlid);
 
 			long layoutPageTemplateEntryId = ParamUtil.getLong(
 				actionRequest, "layoutPageTemplateEntryId");
-
 			long classNameId = 0;
 			long classPK = 0;
-			String masterLayoutPageTemplateEntryERC = null;
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				Layout.class.getName(), actionRequest);
 
@@ -91,6 +104,12 @@ public class ConvertEmptyLayoutMVCActionCommand
 					_layoutPageTemplateEntryService.
 						fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
 
+				if (layoutPageTemplateEntry == null) {
+					SessionErrors.add(actionRequest, PortalException.class);
+
+					return;
+				}
+
 				if (layoutPageTemplateEntry.getLayoutPrototypeId() == 0) {
 					classNameId = _portal.getClassNameId(
 						LayoutPageTemplateEntry.class);
@@ -98,16 +117,14 @@ public class ConvertEmptyLayoutMVCActionCommand
 					type = LayoutConstants.TYPE_CONTENT;
 				}
 				else {
-					LayoutPrototype layoutPrototype =
-						_layoutPrototypeService.getLayoutPrototype(
-							layoutPageTemplateEntry.getLayoutPrototypeId());
-
 					serviceContext.setAttribute(
-						"applyLayoutPrototype", Boolean.TRUE);
+						"portletLayoutPageTemplateEntryERC",
+						layoutPageTemplateEntry.getExternalReferenceCode());
 					serviceContext.setAttribute(
-						"layoutPrototypeLinkEnabled", Boolean.TRUE);
-					serviceContext.setAttribute(
-						"layoutPrototypeUuid", layoutPrototype.getUuid());
+						"portletLayoutPageTemplateEntryScopeERC",
+						ScopeUtil.getItemScopeExternalReferenceCode(
+							layoutPageTemplateEntry.getGroupId(),
+							layout.getGroupId()));
 					type = LayoutConstants.TYPE_PORTLET;
 				}
 
@@ -190,9 +207,6 @@ public class ConvertEmptyLayoutMVCActionCommand
 
 	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
-
-	@Reference
-	private LayoutPrototypeService _layoutPrototypeService;
 
 	@Reference
 	private LayoutService _layoutService;

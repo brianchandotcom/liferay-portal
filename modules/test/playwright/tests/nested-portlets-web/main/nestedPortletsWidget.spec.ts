@@ -57,10 +57,12 @@ test('User can nest a widget inside nested portlets widget', async ({
 
 	await widgetPagePage.addPortlet('Web Content Display');
 
-	await widgetPagePage.dragPortlet(
-		'Web Content Display',
-		page.locator('.portlet-nested-portlets .portlet-dropzone.empty').first()
-	);
+	await widgetPagePage.dragPortlet({
+		portletName: 'Web Content Display',
+		target: page
+			.locator('.portlet-nested-portlets .portlet-dropzone.empty')
+			.first(),
+	});
 
 	// Check if the web content display widget is added to the nested portlets widget
 

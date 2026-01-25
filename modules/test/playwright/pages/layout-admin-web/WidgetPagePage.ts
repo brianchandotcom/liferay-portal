@@ -143,11 +143,18 @@ export class WidgetPagePage {
 		});
 	}
 
-	async dragPortlet(portletName: string, target: Locator) {
-		const topper = this.page.locator(
-			'.portlet-journal-content .portlet-topper',
-			{hasText: portletName}
-		);
+	async dragPortlet({
+		portletName,
+		target,
+		topperSelector = '.portlet-journal-content .portlet-topper',
+	}: {
+		portletName: string;
+		target: Locator;
+		topperSelector?: string;
+	}) {
+		const topper = this.page.locator(topperSelector, {
+			hasText: portletName,
+		});
 
 		const targetRect = await target.evaluate((element) =>
 			element.getBoundingClientRect()

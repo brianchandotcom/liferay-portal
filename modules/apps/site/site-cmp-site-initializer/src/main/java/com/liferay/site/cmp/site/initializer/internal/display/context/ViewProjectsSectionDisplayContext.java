@@ -120,6 +120,22 @@ public class ViewProjectsSectionDisplayContext
 				LanguageUtil.get(httpServletRequest, "view"), null, "get",
 				null),
 			new FDSActionDropdownItem(
+				StringBundler.concat(
+					"/o", objectDefinition.getRESTContextPath(),
+					"/scopes/{embedded.scopeId}/by-external-reference-code",
+					"/{embedded.externalReferenceCode}/subscribe"),
+				"bell-on", "subscribe",
+				LanguageUtil.get(httpServletRequest, "watch-project"), "post",
+				"subscribe", "async"),
+			new FDSActionDropdownItem(
+				StringBundler.concat(
+					"/o", objectDefinition.getRESTContextPath(),
+					"/scopes/{embedded.scopeId}/by-external-reference-code",
+					"/{embedded.externalReferenceCode}/unsubscribe"),
+				"bell-off", "unsubscribe",
+				LanguageUtil.get(httpServletRequest, "stop-watching-project"),
+				"post", "unsubscribe", "async"),
+			new FDSActionDropdownItem(
 				null, "users", "view-members",
 				LanguageUtil.get(httpServletRequest, "view-members"), null,
 				"get", null),

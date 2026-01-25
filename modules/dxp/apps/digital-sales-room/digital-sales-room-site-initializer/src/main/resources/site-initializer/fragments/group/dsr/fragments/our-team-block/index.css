@@ -1,0 +1,31 @@
+.dsr-our-team-block-component {
+	padding-bottom: 5rem;
+}
+
+.dsr-our-team-block-component h2::after {
+	border-bottom: 4px solid var(--primary, #0B5FFF);
+	content: '';
+	display: inline-block;
+	margin: 0 0 0 0.3rem;
+	width: 1.5rem;
+}
+
+.dsr-our-team-entry {
+	background-color: #FFF;
+	border: 1px solid rgba(0, 0, 0, 0.125);
+	border-radius: 1rem;
+	margin: 1rem;
+	overflow: hidden;
+	width: 20rem;
+}
+
+.dsr-our-team-entry img {
+	height: 15rem;
+	object-fit: cover;
+	object-position: top;
+	width: 100%;
+}
+
+.dsr-our-team-entry .text-secondary {
+	color: var(--gray-600, #6B6C7E) !important;
+}

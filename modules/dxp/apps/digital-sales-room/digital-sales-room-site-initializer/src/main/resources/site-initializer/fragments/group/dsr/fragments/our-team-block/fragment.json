@@ -1,0 +1,9 @@
+{
+	"configurationPath": "configuration.json",
+	"cssPath": "index.css",
+	"htmlPath": "index.html",
+	"icon": "table",
+	"jsPath": "index.js",
+	"name": "Our Team Block",
+	"type": "component"
+}

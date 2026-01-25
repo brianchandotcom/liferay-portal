@@ -8,6 +8,7 @@ package com.liferay.commerce.product.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.product.exception.NoSuchCPSpecificationOptionException;
 import com.liferay.commerce.product.model.CPSpecificationOption;
+import com.liferay.commerce.product.model.CPSpecificationOptionListTypeDefinitionRel;
 import com.liferay.commerce.product.service.CPSpecificationOptionListTypeDefinitionRelLocalService;
 import com.liferay.commerce.product.service.CPSpecificationOptionLocalService;
 import com.liferay.list.type.model.ListTypeDefinition;
@@ -164,22 +165,27 @@ public class CPSpecificationOptionLocalServiceTest {
 				RandomTestUtil.randomBoolean(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomDouble(), true, _serviceContext);
 
+		List<CPSpecificationOptionListTypeDefinitionRel>
+			cpSpecificationOptionListTypeDefinitionRels =
+				_cpSpecificationOptionListTypeDefinitionRelLocalService.
+					getCPSpecificationOptionListTypeDefinitionRels(
+						cpSpecificationOption.getCPSpecificationOptionId());
+
 		Assert.assertEquals(
 			listTypeDefinition.toString(), 1,
-			_cpSpecificationOptionListTypeDefinitionRelLocalService.
-				getCPSpecificationOptionListTypeDefinitionRels(
-					cpSpecificationOption.getCPSpecificationOptionId()
-				).size());
+			cpSpecificationOptionListTypeDefinitionRels.size());
 
 		_cpSpecificationOptionLocalService.deleteCPSpecificationOption(
 			cpSpecificationOption);
 
-		Assert.assertEquals(
-			listTypeDefinition.toString(), 0,
+		cpSpecificationOptionListTypeDefinitionRels =
 			_cpSpecificationOptionListTypeDefinitionRelLocalService.
 				getCPSpecificationOptionListTypeDefinitionRels(
-					cpSpecificationOption.getCPSpecificationOptionId()
-				).size());
+					cpSpecificationOption.getCPSpecificationOptionId());
+
+		Assert.assertEquals(
+			listTypeDefinition.toString(), 0,
+			cpSpecificationOptionListTypeDefinitionRels.size());
 	}
 
 	@Test(expected = NoSuchCPSpecificationOptionException.class)

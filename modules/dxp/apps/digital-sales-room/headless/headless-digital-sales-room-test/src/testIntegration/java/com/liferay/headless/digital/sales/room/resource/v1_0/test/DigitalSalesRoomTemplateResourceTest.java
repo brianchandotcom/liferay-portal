@@ -250,7 +250,8 @@ public class DigitalSalesRoomTemplateResourceTest
 					FragmentEntryModel::getName, String.class),
 				new String[] {
 					"Header Main", "Header User", "Question and Answer Block",
-					"Text Block", "Video Block", "Welcome Block"
+					"Text Block", "Timeline Block", "Video Block",
+					"Welcome Block"
 				}));
 
 		Assert.assertTrue(
@@ -323,7 +324,8 @@ public class DigitalSalesRoomTemplateResourceTest
 					FragmentEntryModel::getName, String.class),
 				new String[] {
 					"Header Main", "Header User", "Question and Answer Block",
-					"Text Block", "Video Block", "Welcome Block"
+					"Text Block", "Timeline Block", "Video Block",
+					"Welcome Block"
 				}));
 
 		Assert.assertTrue(

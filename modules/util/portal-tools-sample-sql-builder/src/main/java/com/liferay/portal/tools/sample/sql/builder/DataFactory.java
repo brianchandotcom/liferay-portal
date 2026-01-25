@@ -8897,6 +8897,15 @@ public class DataFactory {
 				else if (name.equals("PkObjectFieldName")) {
 					name = "PKObjectFieldName";
 				}
+				else if (name.equals("PortletLPTEERC")) {
+					name = "PortletLayoutPageTemplateEntryERC";
+				}
+				else if (name.equals("PortletLPTELE")) {
+					name = "PortletLayoutPageTemplateEntryLinkEnabled";
+				}
+				else if (name.equals("PortletLPTESERC")) {
+					name = "PortletLayoutPageTemplateEntryScopeERC";
+				}
 				else if (name.equals("ShippingDiscountPctLev1WithTax")) {
 					name = "ShippingDiscountPercentageLevel1WithTaxAmount";
 				}

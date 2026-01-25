@@ -14,6 +14,8 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLoca
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -82,13 +84,32 @@ public class LayoutPageTemplateTestUtil {
 					getLayoutPageTemplateCollectionId();
 		}
 
-		return LayoutPageTemplateEntryLocalServiceUtil.
-			addLayoutPageTemplateEntry(
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateEntryLocalServiceUtil.addLayoutPageTemplateEntry(
 				null, TestPropsValues.getUserId(), groupId,
 				layoutPageTemplateCollectionId, null,
 				RandomTestUtil.randomString(), type, masterLayoutPlid, status,
 				ServiceContextTestUtil.getServiceContext(
 					groupId, TestPropsValues.getUserId()));
+
+		if ((masterLayoutPlid > 0) &&
+			Objects.equals(
+				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE, type)) {
+
+			Layout layout = LayoutLocalServiceUtil.getLayout(
+				layoutPageTemplateEntry.getPlid());
+
+			LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
+				LayoutPageTemplateEntryLocalServiceUtil.
+					fetchLayoutPageTemplateEntryByPlid(masterLayoutPlid);
+
+			layout.setMasterLayoutPageTemplateEntryERC(
+				masterLayoutPageTemplateEntry.getExternalReferenceCode());
+
+			LayoutLocalServiceUtil.updateLayout(layout);
+		}
+
+		return layoutPageTemplateEntry;
 	}
 
 	public static LayoutPageTemplateEntry addLayoutPageTemplateEntry(

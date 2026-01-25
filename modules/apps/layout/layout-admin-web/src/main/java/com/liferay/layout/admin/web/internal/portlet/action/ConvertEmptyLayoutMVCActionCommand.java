@@ -8,7 +8,7 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.handler.LayoutExceptionRequestHandlerUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -82,7 +82,7 @@ public class ConvertEmptyLayoutMVCActionCommand
 
 			if (layoutPageTemplateEntryId > 0) {
 				LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
-					_layoutPageTemplateEntryLocalService.
+					_layoutPageTemplateEntryService.
 						fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
 
 				if (masterLayoutPageTemplateEntry.getLayoutPrototypeId() == 0) {
@@ -170,8 +170,7 @@ public class ConvertEmptyLayoutMVCActionCommand
 	private Language _language;
 
 	@Reference
-	private LayoutPageTemplateEntryLocalService
-		_layoutPageTemplateEntryLocalService;
+	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
 
 	@Reference
 	private LayoutService _layoutService;

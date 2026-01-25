@@ -61,6 +61,7 @@ public abstract class BaseComponentSectionFragmentRendererTestCase {
 				setLocale(LocaleUtil.US);
 				setScopeGroupId(TestPropsValues.getGroupId());
 				setSiteGroupId(TestPropsValues.getGroupId());
+				setUser(TestPropsValues.getUser());
 			}
 		};
 

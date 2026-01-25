@@ -6,6 +6,7 @@
 package com.liferay.ai.hub.agent;
 
 /**
+ * @author Feliphe Marinho
  * @author João Victor Alves
  */
 public interface SupervisorAgent {

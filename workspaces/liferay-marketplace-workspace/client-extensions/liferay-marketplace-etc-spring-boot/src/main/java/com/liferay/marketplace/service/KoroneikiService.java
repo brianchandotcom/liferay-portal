@@ -178,7 +178,6 @@ public class KoroneikiService {
 			MarketplaceUtil.appendExternalLink(
 				productPurchase.getExternalLinks(), "marketplace",
 				String.valueOf(orderItem.getOrderId()), "opportunity"));
-
 		productPurchase.setProductKey(orderItem.getSkuExternalReferenceCode());
 		productPurchase.setQuantity(
 			orderItem.getQuantity(

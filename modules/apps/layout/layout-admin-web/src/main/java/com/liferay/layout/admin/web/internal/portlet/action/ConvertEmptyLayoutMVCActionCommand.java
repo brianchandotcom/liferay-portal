@@ -7,12 +7,8 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.handler.LayoutExceptionRequestHandlerUtil;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.layout.util.structure.LayoutStructure;
-import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -24,11 +20,9 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -36,8 +30,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.model.SegmentsExperience;
-import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
@@ -45,7 +37,6 @@ import jakarta.portlet.PortletRequest;
 
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -147,30 +138,6 @@ public class ConvertEmptyLayoutMVCActionCommand
 				).buildString();
 			}
 			else {
-				if (masterLayoutPlid > 0) {
-					layoutLocalService.copyLayoutContent(
-						layoutLocalService.getLayout(masterLayoutPlid), layout);
-				}
-				else {
-					String externalReferenceCode = GetterUtil.getString(
-						serviceContext.getAttribute(
-							"defaultSegmentsExperienceExternalReferenceCode"),
-						null);
-
-					SegmentsExperience segmentsExperience =
-						_segmentsExperienceLocalService.
-							addDefaultSegmentsExperience(
-								externalReferenceCode, layout.getUserId(),
-								layout.getPlid(), serviceContext);
-
-					_layoutPageTemplateStructureLocalService.
-						addLayoutPageTemplateStructure(
-							layout.getUserId(), layout.getGroupId(),
-							layout.getPlid(),
-							segmentsExperience.getSegmentsExperienceId(),
-							_generateContentLayoutStructure(), serviceContext);
-				}
-				
 				Layout draftLayout = layout.fetchDraftLayout();
 
 				redirect = HttpComponentsUtil.addParameters(
@@ -191,32 +158,6 @@ public class ConvertEmptyLayoutMVCActionCommand
 		}
 	}
 
-	private String _generateContentLayoutStructure() {
-		LayoutStructure layoutStructure = new LayoutStructure();
-
-		LayoutStructureItem rootLayoutStructureItem =
-			layoutStructure.addRootLayoutStructureItem();
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		int layoutPageTemplateEntryType = GetterUtil.getInteger(
-			serviceContext.getAttribute("layout.page.template.entry.type"),
-			LayoutPageTemplateEntryTypeConstants.BASIC);
-
-		if (!Objects.equals(
-				layoutPageTemplateEntryType,
-				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT)) {
-
-			return layoutStructure.toString();
-		}
-
-		layoutStructure.addDropZoneLayoutStructureItem(
-			rootLayoutStructureItem.getItemId(), 0);
-
-		return layoutStructure.toString();
-	}
-
 	private String _getBackURL(ActionRequest actionRequest) {
 		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
@@ -233,16 +174,9 @@ public class ConvertEmptyLayoutMVCActionCommand
 		_layoutPageTemplateEntryLocalService;
 
 	@Reference
-	private LayoutPageTemplateStructureLocalService
-		_layoutPageTemplateStructureLocalService;
-
-	@Reference
 	private LayoutService _layoutService;
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

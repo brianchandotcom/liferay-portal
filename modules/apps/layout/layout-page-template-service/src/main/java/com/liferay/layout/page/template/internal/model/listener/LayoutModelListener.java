@@ -59,37 +59,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			_reindexLayout(layout);
 		}
 
-		if (!BatchEngineThreadLocal.isBatchImportInProcess() &&
-			(ExportImportThreadLocal.isImportInProcess() ||
-			 ExportImportThreadLocal.isStagingInProcess())) {
-
-			return;
-		}
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		try {
-			SegmentsExperience segmentsExperience =
-				_addDefaultSegmentsExperience(layout, serviceContext);
-
-			_layoutPageTemplateStructureLocalService.
-				addLayoutPageTemplateStructure(
-					layout.getUserId(), layout.getGroupId(), layout.getPlid(),
-					segmentsExperience.getSegmentsExperienceId(),
-					_generateContentLayoutStructure(), serviceContext);
-		}
-		catch (PortalException portalException) {
-			throw new ModelListenerException(portalException);
-		}
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_getLayoutPageTemplateEntry(layout);
-
-		if (layoutPageTemplateEntry != null) {
-			TransactionCommitCallbackUtil.registerCallback(
-				() -> _copyStructure(layoutPageTemplateEntry, layout));
-		}
+		_initializeLayoutPageTemplateStructure(layout);
 	}
 
 	@Override
@@ -124,6 +94,10 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 		throws ModelListenerException {
 
 		if (layout.isTypeContent() && !layout.isTypeUtility()) {
+			if (originalLayout.isTypeEmpty()) {
+				_initializeLayoutPageTemplateStructure(layout);
+			}
+
 			_reindexLayout(layout);
 		}
 	}
@@ -292,6 +266,40 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 		return _layoutPageTemplateEntryLocalService.
 			fetchLayoutPageTemplateEntry(layout.getClassPK());
+	}
+
+	private void _initializeLayoutPageTemplateStructure(Layout layout) {
+		if (!BatchEngineThreadLocal.isBatchImportInProcess() &&
+			(ExportImportThreadLocal.isImportInProcess() ||
+			 ExportImportThreadLocal.isStagingInProcess())) {
+
+			return;
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		try {
+			SegmentsExperience segmentsExperience =
+				_addDefaultSegmentsExperience(layout, serviceContext);
+
+			_layoutPageTemplateStructureLocalService.
+				addLayoutPageTemplateStructure(
+					layout.getUserId(), layout.getGroupId(), layout.getPlid(),
+					segmentsExperience.getSegmentsExperienceId(),
+					_generateContentLayoutStructure(), serviceContext);
+		}
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_getLayoutPageTemplateEntry(layout);
+
+		if (layoutPageTemplateEntry != null) {
+			TransactionCommitCallbackUtil.registerCallback(
+				() -> _copyStructure(layoutPageTemplateEntry, layout));
+		}
 	}
 
 	private void _reindexLayout(Layout layout) {

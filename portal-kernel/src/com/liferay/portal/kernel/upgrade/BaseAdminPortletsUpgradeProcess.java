@@ -75,15 +75,17 @@ public abstract class BaseAdminPortletsUpgradeProcess extends UpgradeProcess {
 
 	protected long getControlPanelGroupId() throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select groupId from Group_ where name = '" +
-					GroupConstants.CONTROL_PANEL + "'");
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+				"select groupId from Group_ where name = ?")) {
 
-			if (resultSet.next()) {
-				return resultSet.getLong("groupId");
+			preparedStatement.setString(1, GroupConstants.CONTROL_PANEL);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					return resultSet.getLong("groupId");
+				}
+
+				return 0;
 			}
-
-			return 0;
 		}
 	}
 

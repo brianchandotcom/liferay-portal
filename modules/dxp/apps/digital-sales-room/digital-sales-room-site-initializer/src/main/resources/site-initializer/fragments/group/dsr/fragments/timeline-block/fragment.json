@@ -1,0 +1,9 @@
+{
+	"configurationPath": "configuration.json",
+	"cssPath": "index.css",
+	"htmlPath": "index.html",
+	"icon": "list-ol",
+	"jsPath": "index.js",
+	"name": "Timeline Block",
+	"type": "component"
+}

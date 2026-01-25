@@ -14,9 +14,12 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutPrototypeService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -77,24 +80,46 @@ public class ConvertEmptyLayoutMVCActionCommand
 			long layoutPageTemplateEntryId = ParamUtil.getLong(
 				actionRequest, "layoutPageTemplateEntryId");
 
+			long classNameId = 0;
+			long classPK = 0;
 			String masterLayoutPageTemplateEntryERC = null;
-			long masterLayoutPlid = 0;
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				Layout.class.getName(), actionRequest);
 
 			if (layoutPageTemplateEntryId > 0) {
-				LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
+				LayoutPageTemplateEntry layoutPageTemplateEntry =
 					_layoutPageTemplateEntryService.
 						fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
 
-				if (masterLayoutPageTemplateEntry.getLayoutPrototypeId() == 0) {
+				if (layoutPageTemplateEntry.getLayoutPrototypeId() == 0) {
+					classNameId = _portal.getClassNameId(
+						LayoutPageTemplateEntry.class);
+					classPK = layoutPageTemplateEntryId;
 					type = LayoutConstants.TYPE_CONTENT;
 				}
 				else {
+					LayoutPrototype layoutPrototype =
+						_layoutPrototypeService.getLayoutPrototype(
+							layoutPageTemplateEntry.getLayoutPrototypeId());
+
+					serviceContext.setAttribute(
+						"applyLayoutPrototype", Boolean.TRUE);
+					serviceContext.setAttribute(
+						"layoutPrototypeLinkEnabled", Boolean.TRUE);
+					serviceContext.setAttribute(
+						"layoutPrototypeUuid", layoutPrototype.getUuid());
 					type = LayoutConstants.TYPE_PORTLET;
 				}
 
-				masterLayoutPageTemplateEntryERC =
-					masterLayoutPageTemplateEntry.getExternalReferenceCode();
-				masterLayoutPlid = masterLayoutPageTemplateEntry.getPlid();
+				Layout layoutPageTemplateEntryLayout =
+					_layoutLocalService.fetchLayout(
+						layoutPageTemplateEntry.getPlid());
+
+				if (layoutPageTemplateEntryLayout != null) {
+					masterLayoutPageTemplateEntryERC =
+						layoutPageTemplateEntryLayout.
+							getMasterLayoutPageTemplateEntryERC();
+				}
 			}
 
 			Map<Locale, String> nameMap = HashMapBuilder.put(
@@ -104,23 +129,14 @@ public class ConvertEmptyLayoutMVCActionCommand
 
 			String redirect = null;
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				Layout.class.getName(), actionRequest);
-
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			layout = _layoutService.convertEmptyLayout(
-				layout.getPlid(), nameMap, type, layout.getClassNameId(),
-				layout.getClassPK(), masterLayoutPageTemplateEntryERC,
-				serviceContext);
+				layout.getPlid(), nameMap, type, classNameId, classPK,
+				masterLayoutPageTemplateEntryERC, serviceContext);
 
 			if (!layout.isTypeContent()) {
-				if (masterLayoutPlid > 0) {
-					layoutLocalService.copyLayoutContent(
-						layoutLocalService.getLayout(masterLayoutPlid), layout);
-				}
-
 				redirect = PortletURLBuilder.createRenderURL(
 					_portal.getLiferayPortletResponse(actionResponse)
 				).setMVCRenderCommandName(
@@ -170,7 +186,13 @@ public class ConvertEmptyLayoutMVCActionCommand
 	private Language _language;
 
 	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
+
+	@Reference
+	private LayoutPrototypeService _layoutPrototypeService;
 
 	@Reference
 	private LayoutService _layoutService;

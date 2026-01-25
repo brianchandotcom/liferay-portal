@@ -1,0 +1,47 @@
+.dsr-timeline-block-component {
+	padding-bottom: 5rem;
+}
+
+.dsr-timeline-block-component h2::after {
+	border-bottom: 4px solid var(--primary, #0B5FFF);
+	content: '';
+	display: inline-block;
+	margin: 0 0 0 0.3rem;
+	width: 1.5rem;
+}
+
+.dsr-timeline-block-component > ul {
+  	background: #FFF;
+	border: 1px solid rgba(0, 0, 0, 0.125);
+	border-radius: 1.25rem;
+}
+
+.dsr-timeline-entry {
+	border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.dsr-timeline-entry:nth-child(1) {
+ 	border-top: 0;
+}
+
+.dsr-timeline-entry .custom-icon {
+  	color: var(--gray-300, #E7E7ED);
+	height: 24px;
+	width: 24px;
+}
+
+.dsr-timeline-entry.current-step .custom-icon {
+	color: var(--body-color, #1C1C24);
+}
+
+.dsr-timeline-entry li {
+	list-style-type: disc;
+}
+
+.dsr-timeline-entry li::marker {
+	color: var(--primary, #0B5FFF);
+}
+
+.dsr-timeline-entry .text-secondary {
+	color: var(--gray-600, #6B6C7E) !important;
+}

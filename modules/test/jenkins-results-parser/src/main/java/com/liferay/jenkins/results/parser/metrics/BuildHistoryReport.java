@@ -48,16 +48,15 @@ public class BuildHistoryReport {
 		buildHistoryReport.addFilesFromResource(
 			"dependencies/metrics/aggregate-report", "/index.html");
 
-		long startTime = _getStartTime(startDateString);
-
-		long duration = TimeUnit.DAYS.toMillis(durationDays);
-
-		Collection<BuildHistory> buildHistories =
-			BuildHistoryProcessor.newAggregateJobHistories(duration, startTime);
-
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(_getWeeklyServerDurationJavaScriptVariable());
+
+		long duration = TimeUnit.DAYS.toMillis(durationDays);
+		long startTime = _getStartTime(startDateString);
+
+		Collection<BuildHistory> buildHistories =
+			BuildHistoryProcessor.newAggregateJobHistories(duration, startTime);
 
 		sb.append(
 			_getTableDataJavaScriptVariable(
@@ -436,7 +435,8 @@ public class BuildHistoryReport {
 			}
 		}
 		catch (IOException ioException) {
-			System.out.println("Unable to get report.ci.max.node.count");
+			System.out.println(
+				"Unable to get build property \"report.ci.max.node.count\"");
 		}
 
 		return sb.toString();

@@ -85,7 +85,7 @@ public class ViewProjectsSectionDisplayContextTest
 			getFDSActionDropdownItems(null);
 
 		Assert.assertEquals(
-			fdsActionDropdownItems.toString(), 4,
+			fdsActionDropdownItems.toString(), 6,
 			fdsActionDropdownItems.size());
 
 		assertFDSActionDropdownItem(
@@ -93,10 +93,16 @@ public class ViewProjectsSectionDisplayContextTest
 		assertFDSActionDropdownItem(
 			"view", "actionLink", "View", null, fdsActionDropdownItems.get(1));
 		assertFDSActionDropdownItem(
-			"users", "view-members", "View Members", null,
+			"bell-on", "subscribe", "Watch Project", "post",
 			fdsActionDropdownItems.get(2));
 		assertFDSActionDropdownItem(
-			"trash", "delete", "Delete", null, fdsActionDropdownItems.get(3));
+			"bell-off", "unsubscribe", "Stop Watching Project", "post",
+			fdsActionDropdownItems.get(3));
+		assertFDSActionDropdownItem(
+			"users", "view-members", "View Members", null,
+			fdsActionDropdownItems.get(4));
+		assertFDSActionDropdownItem(
+			"trash", "delete", "Delete", null, fdsActionDropdownItems.get(5));
 	}
 
 	@Override

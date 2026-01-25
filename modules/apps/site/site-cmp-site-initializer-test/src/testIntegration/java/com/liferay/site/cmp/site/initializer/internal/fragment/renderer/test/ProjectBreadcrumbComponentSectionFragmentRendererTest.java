@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -76,6 +77,38 @@ public class ProjectBreadcrumbComponentSectionFragmentRendererTest
 			jsonObject.toString(), true);
 
 		jsonObject = jsonArray.getJSONObject(1);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"href",
+				StringBundler.concat(
+					"/o", projectObjectDefinition.getRESTContextPath(),
+					"/scopes/", projectObjectEntry.getGroupId(),
+					"/by-external-reference-code/",
+					projectObjectEntry.getExternalReferenceCode(), "/subscribe")
+			).put(
+				"label", "Watch Project"
+			).put(
+				"redirect",
+				StringBundler.concat(
+					themeDisplay.getPathFriendlyURLPublic(),
+					GroupConstants.CMS_FRIENDLY_URL, "/e/project/",
+					PortalUtil.getClassNameId(
+						projectObjectDefinition.getClassName()),
+					StringPool.SLASH, projectObjectEntry.getObjectEntryId())
+			).put(
+				"successMessage",
+				_language.format(
+					httpServletRequest, "you-are-successfully-watching-x",
+					StringBundler.concat("<strong>", projectTitle, "</strong>"))
+			).put(
+				"symbolLeft", "bell-on"
+			).put(
+				"target", "asyncPost"
+			).toString(),
+			jsonObject.toString(), true);
+
+		jsonObject = jsonArray.getJSONObject(2);
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(

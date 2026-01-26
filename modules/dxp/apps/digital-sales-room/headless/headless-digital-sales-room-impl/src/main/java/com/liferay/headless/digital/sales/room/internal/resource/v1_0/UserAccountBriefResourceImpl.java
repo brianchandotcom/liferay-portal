@@ -58,6 +58,8 @@ import jakarta.validation.ValidationException;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import javax.management.relation.RoleNotFoundException;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -121,6 +123,50 @@ public class UserAccountBriefResourceImpl
 	}
 
 	@Override
+	public UserAccountBrief patchDigitalSalesRoomUserAccountBrief(
+			Long digitalSalesRoomId, Long userAccountBriefId,
+			UserAccountBrief userAccountBrief)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-66359")) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		User user = _userLocalService.getUser(userAccountBriefId);
+		Group group = _groupService.getGroup(digitalSalesRoomId);
+
+		_userGroupRoleLocalService.deleteUserGroupRoles(
+			new long[] {user.getUserId()}, group.getGroupId());
+
+		if (Validator.isNotNull(userAccountBrief.getRoleKey())) {
+			Role role = _roleLocalService.fetchRole(
+				group.getCompanyId(), userAccountBrief.getRoleKey());
+
+			if (role == null) {
+				throw new RoleNotFoundException(
+					"Role not found: " + userAccountBrief.getRoleKey());
+			}
+
+			if (role.getType() != RoleConstants.TYPE_SITE) {
+				throw new RoleAssignmentException(
+					StringBundler.concat(
+						"Role type ",
+						RoleConstants.getTypeLabel(role.getType()),
+						" is not role type ",
+						RoleConstants.getTypeLabel(RoleConstants.TYPE_SITE)));
+			}
+
+			_userGroupRoleLocalService.addUserGroupRoles(
+				user.getUserId(), group.getGroupId(),
+				new long[] {role.getRoleId()});
+		}
+
+		return _toUserAccountBrief(group.getGroupId(), user);
+	}
+
+	@Override
 	public UserAccountBrief postDigitalSalesRoomUserAccountBrief(
 			Long digitalSalesRoomId, UserAccountBrief userAccountBrief)
 		throws Exception {
@@ -158,6 +204,11 @@ public class UserAccountBriefResourceImpl
 		if (Validator.isNotNull(userAccountBrief.getRoleKey())) {
 			Role role = _roleLocalService.fetchRole(
 				group.getCompanyId(), userAccountBrief.getRoleKey());
+
+			if (role == null) {
+				throw new RoleNotFoundException(
+					"Role not found: " + userAccountBrief.getRoleKey());
+			}
 
 			if (role.getType() != RoleConstants.TYPE_SITE) {
 				throw new RoleAssignmentException(

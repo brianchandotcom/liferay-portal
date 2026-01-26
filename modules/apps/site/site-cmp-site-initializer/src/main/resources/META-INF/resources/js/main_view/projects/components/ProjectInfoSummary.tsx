@@ -4,34 +4,33 @@
  */
 
 import Label from '@clayui/label';
-import {
-	Assignee,
-	AssigneeValue,
-} from '@liferay/object-dynamic-data-mapping-form-field-type';
 import React from 'react';
 
-import {patchTaskById} from '../../utils/api';
-import {DISPLAY_TYPES} from '../../utils/constants';
-import InfoSummary from '../InfoSummary';
-import StateSelector, {State} from '../StateSelector';
+import InfoSummary from '../../../common/components/InfoSummary';
+import StateSelector, {State} from '../../../common/components/StateSelector';
+import {patchProjectById} from '../../../utils/api';
+import {DISPLAY_TYPES} from '../../../utils/constants';
+import User, {UserProps} from './User';
 
-interface TaskInfoSummaryProps {
-	assignTo: AssigneeValue;
+interface ProjectInfoSummaryProps {
 	dueDate: string;
 	initialState: string;
+	manager: UserProps;
+	projectId: string;
+	sponsor: UserProps;
 	states: State[];
 	tags: string[];
-	taskId: string;
 }
 
-export default function TaskInfoSummary({
-	assignTo,
+export default function ProjectInfoSummary({
 	dueDate,
 	initialState,
+	manager,
+	projectId,
+	sponsor,
 	states,
 	tags,
-	taskId,
-}: TaskInfoSummaryProps) {
+}: ProjectInfoSummaryProps) {
 	return (
 		<InfoSummary
 			defaultOpen={true}
@@ -42,36 +41,17 @@ export default function TaskInfoSummary({
 						<StateSelector
 							initialSelectedKey={initialState}
 							onChange={async (key: string) => {
-								await patchTaskById({
+								await patchProjectById({
 									body: {state: key},
-									taskId,
+									projectId,
 								});
 							}}
 							states={states}
 						/>
 					),
 				},
-				{
-					label: 'Assignee',
-					value: (
-						<Assignee
-							name="assignee"
-							onChange={async (value: any) => {
-								await patchTaskById({
-									body: {assignTo: value},
-									taskId,
-								});
-							}}
-							searchURL={
-								Liferay.ThemeDisplay.getPortalURL() +
-								'/o/cmp/assignee-context/'
-							}
-							showLabel={false}
-							value={assignTo}
-							visible={true}
-						/>
-					),
-				},
+				{label: 'Manager', value: <User {...manager} />},
+				{label: 'Sponsor', value: <User {...sponsor} />},
 				{label: 'Due Date', value: dueDate},
 				{
 					label: 'Tags',

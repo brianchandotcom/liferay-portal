@@ -15,7 +15,7 @@ import {
 } from '@liferay/site-cms-site-initializer';
 import {fetch} from 'frontend-js-web';
 
-import StateLabel from '../StateLabel';
+import StateLabel from '../../common/components/StateLabel';
 import UserRelationshipRenderer from './cell_renderers/UserRelationshipRenderer';
 
 type Action = {

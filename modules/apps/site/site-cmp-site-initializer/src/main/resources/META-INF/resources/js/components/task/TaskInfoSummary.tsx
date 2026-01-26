@@ -32,10 +32,6 @@ export default function TaskInfoSummary({
 	tags,
 	taskId,
 }: TaskInfoSummaryProps) {
-	const displayTypes = DISPLAY_TYPES.filter(
-		(displayType) => displayType !== 'unstyled'
-	);
-
 	return (
 		<InfoSummary
 			defaultOpen={true}
@@ -83,11 +79,7 @@ export default function TaskInfoSummary({
 						<div>
 							{tags.map((tag, index) => (
 								<Label
-									displayType={
-										displayTypes[
-											index % displayTypes.length
-										]
-									}
+									displayType={DISPLAY_TYPES[index % 6]}
 									key={tag}
 								>
 									{tag}

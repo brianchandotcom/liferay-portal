@@ -1,5 +1,5 @@
 {
-	"@generated": "69db97542055d4f8528e1c8688104da9f81ccd49",
+	"@generated": "4d6a3d9d6fdbbc8bc535ce4e74aab3a89a4df8e7",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -25,9 +25,6 @@
 			],
 			"@liferay/layout-js-components-web": [
 				"../../../../../../../layout/layout-js-components-web/src/main/resources/META-INF/resources/js/index.ts"
-			],
-			"@liferay/object-dynamic-data-mapping-form-field-type": [
-				"../../../../../../../object/object-dynamic-data-mapping-form-field-type/src/main/resources/META-INF/resources/js/index.ts"
 			],
 			"@liferay/object-js-components-web": [
 				"../../../../../../../object/object-js-components-web/src/main/resources/META-INF/resources/index.ts"
@@ -90,9 +87,6 @@
 		},
 		{
 			"path": "../../../../../../../layout/layout-js-components-web/src/main/resources/META-INF/resources/tsconfig.json"
-		},
-		{
-			"path": "../../../../../../../object/object-dynamic-data-mapping-form-field-type/src/main/resources/META-INF/resources/tsconfig.json"
 		},
 		{
 			"path": "../../../../../../../object/object-js-components-web/src/main/resources/META-INF/resources/tsconfig.json"

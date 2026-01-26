@@ -1,0 +1,21 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "int",
+					"defaultValue": "3",
+					"label": "number-of-items",
+					"name": "numberOfItems",
+					"type": "text",
+					"typeOptions": {
+						"validation": {
+							"min": 1,
+							"type": "number"
+						}
+					}
+				}
+			]
+		}
+	]
+}

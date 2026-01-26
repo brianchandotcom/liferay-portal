@@ -11,6 +11,8 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.test.util.DLTestUtil;
+import com.liferay.exportimport.test.rule.LazyReferencing;
+import com.liferay.exportimport.test.rule.LazyReferencingTestRule;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
@@ -159,7 +161,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(),
+			LazyReferencingTestRule.INSTANCE, new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Ignore
@@ -399,7 +401,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testPutSiteSitePageWithExportedSitePage();
 		_testPutSiteSitePageWithExportedSitePageWithLayoutIdFriendlyURL();
 		_testPutSiteSitePageWithFormFragmentPageElements();
-		_testPutSiteSitePageWithMissingTaxonomyCategories();
 		_testPutSiteSitePageWithPageElements();
 		_testPutSiteSitePageWithPageExperiences();
 		_testPutSiteSitePageWithPageSpecifications();
@@ -420,6 +421,70 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				getMasterLayoutPageTemplateEntryLayout(serviceContext),
 			LayoutUtilityPageEntryTestUtil.getLayoutUtilityPageEntryLayout(
 				serviceContext));
+	}
+
+	@LazyReferencing
+	@Test
+	@TestInfo("LPD-77124")
+	public void testPutSiteSitePageWithMissingTaxonomyCategories()
+		throws Exception {
+
+		ItemExternalReference[] taxonomyCategoryItemExternalReferences = {
+			new ItemExternalReference() {
+				{
+					setClassName(AssetCategory.class::getName);
+					setExternalReferenceCode(RandomTestUtil::randomString);
+
+					Group group = _groupLocalService.getGroup(
+						testCompany.getGroupId());
+
+					setScope(
+						() -> new Scope() {
+							{
+								setExternalReferenceCode(
+									group::getExternalReferenceCode);
+								setType(() -> Type.SITE);
+							}
+						});
+				}
+			},
+			new ItemExternalReference() {
+				{
+					setClassName(AssetCategory.class::getName);
+					setExternalReferenceCode(RandomTestUtil::randomString);
+				}
+			}
+		};
+
+		SitePage randomSitePage = _getRandomSitePage(
+			RandomTestUtil.randomString(), null,
+			ServiceContextTestUtil.getServiceContext(
+				testGroup, TestPropsValues.getUserId()),
+			taxonomyCategoryItemExternalReferences, SitePage.Type.WIDGET_PAGE,
+			RandomTestUtil.randomString());
+
+		SitePage putSitePage = sitePageResource.putSiteSitePage(
+			testGroup.getExternalReferenceCode(),
+			randomSitePage.getExternalReferenceCode(), randomSitePage);
+
+		Assert.assertTrue(
+			Objects.deepEquals(
+				randomSitePage.getTaxonomyCategoryItemExternalReferences(),
+				putSitePage.getTaxonomyCategoryItemExternalReferences()));
+
+		Assert.assertNotNull(
+			_assetCategoryLocalService.
+				fetchAssetCategoryByExternalReferenceCode(
+					taxonomyCategoryItemExternalReferences[0].
+						getExternalReferenceCode(),
+					testCompany.getGroupId()));
+
+		Assert.assertNotNull(
+			_assetCategoryLocalService.
+				fetchAssetCategoryByExternalReferenceCode(
+					taxonomyCategoryItemExternalReferences[1].
+						getExternalReferenceCode(),
+					testGroup.getGroupId()));
 	}
 
 	@Override
@@ -2702,67 +2767,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			fragmentEntryLinks, infoForm, expectedInfoForm,
 			_layoutLocalService.getLayoutByExternalReferenceCode(
 				layout.getExternalReferenceCode(), testGroup.getGroupId()));
-	}
-
-	private void _testPutSiteSitePageWithMissingTaxonomyCategories()
-		throws Exception {
-
-		ItemExternalReference[] taxonomyCategoryItemExternalReferences = {
-			new ItemExternalReference() {
-				{
-					setClassName(AssetCategory.class::getName);
-					setExternalReferenceCode(RandomTestUtil::randomString);
-
-					Group group = _groupLocalService.getGroup(
-						testCompany.getGroupId());
-
-					setScope(
-						() -> new Scope() {
-							{
-								setExternalReferenceCode(
-									group::getExternalReferenceCode);
-								setType(() -> Type.SITE);
-							}
-						});
-				}
-			},
-			new ItemExternalReference() {
-				{
-					setClassName(AssetCategory.class::getName);
-					setExternalReferenceCode(RandomTestUtil::randomString);
-				}
-			}
-		};
-
-		SitePage randomSitePage = _getRandomSitePage(
-			RandomTestUtil.randomString(), null,
-			ServiceContextTestUtil.getServiceContext(
-				testGroup, TestPropsValues.getUserId()),
-			taxonomyCategoryItemExternalReferences, SitePage.Type.WIDGET_PAGE,
-			RandomTestUtil.randomString());
-
-		SitePage putSitePage = sitePageResource.putSiteSitePage(
-			testGroup.getExternalReferenceCode(),
-			randomSitePage.getExternalReferenceCode(), randomSitePage);
-
-		Assert.assertTrue(
-			Objects.deepEquals(
-				randomSitePage.getTaxonomyCategoryItemExternalReferences(),
-				putSitePage.getTaxonomyCategoryItemExternalReferences()));
-
-		Assert.assertNotNull(
-			_assetCategoryLocalService.
-				fetchAssetCategoryByExternalReferenceCode(
-					taxonomyCategoryItemExternalReferences[0].
-						getExternalReferenceCode(),
-					testCompany.getGroupId()));
-
-		Assert.assertNotNull(
-			_assetCategoryLocalService.
-				fetchAssetCategoryByExternalReferenceCode(
-					taxonomyCategoryItemExternalReferences[1].
-						getExternalReferenceCode(),
-					testGroup.getGroupId()));
 	}
 
 	private void _testPutSiteSitePageWithPageElements() throws Exception {

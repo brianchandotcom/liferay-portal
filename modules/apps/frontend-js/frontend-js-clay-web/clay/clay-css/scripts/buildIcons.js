@@ -47,11 +47,8 @@ async function buildIconsSvg(filesPath) {
 			iconsContent.push(
 				data
 					.replace(HEADER_REGEXP, '')
-					.replace(/<svg/gm, '<symbol')
-					.replace(
-						/xmlns="http:\/\/www\.w3\.org\/2000\/svg"/gm,
-						`id="${fileName}"`
-					)
+					.replace(/<svg/gm, `<symbol id="${fileName}"`)
+					.replace(/\sxmlns(.+?)"(.+?)"/gm, '')
 					.replace(/<\/svg/gm, '</symbol')
 					.replace(/\n/gm, '')
 					.replace(/\t/gm, '')

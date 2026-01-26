@@ -20,7 +20,7 @@ const renderWizard = (backURL = '/back') => {
 	const user = userEvent.setup();
 
 	render(
-		<Wizard backURL={backURL}>
+		<Wizard backURL={backURL} onSubmit={() => {}} onSubmitLabel="Export">
 			<WizardStep description="This is step 1" title="Step 1">
 				<Step>
 					<h1>Step 1 Content</h1>

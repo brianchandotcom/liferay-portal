@@ -56,9 +56,8 @@ public class FrontendJsWebUtil {
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					StringBundler.concat(
-						"Unable to get frontend caching configuration for ",
-						"company ", companyId, ", using defaults instead"),
+					"Unable to get frontend caching configuration for " +
+						"company " + companyId,
 					exception);
 			}
 

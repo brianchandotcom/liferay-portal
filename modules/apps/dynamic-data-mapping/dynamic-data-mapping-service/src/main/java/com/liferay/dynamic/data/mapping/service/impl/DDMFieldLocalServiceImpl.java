@@ -174,7 +174,7 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 
 		return _getDDMFormValues(
 			_ddmFieldAttributePersistence.findByS_L(
-				storageId, _getLanguages(languageId, storageId)),
+				storageId, _getLanguageIds(languageId, storageId)),
 			ddmFields, ddmForm);
 	}
 
@@ -969,7 +969,7 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 		return StringUtil.merge(parameters, StringPool.POUND);
 	}
 
-	private String[] _getLanguages(String languageId, long storageId) {
+	private String[] _getLanguageIds(String languageId, long storageId) {
 		try {
 			DDMFieldAttribute ddmFieldAttribute =
 				_ddmFieldAttributePersistence.findByS_AN_First(

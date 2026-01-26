@@ -32,7 +32,7 @@ public class UpdateDocumentRequestExecutorImpl
 		UpdateDocumentRequest updateDocumentRequest) {
 
 		UpdateRequest updateRequest =
-			_elasticsearchBulkableDocumentRequestTranslator.translate(
+			ElasticsearchBulkableDocumentRequestTranslatorUtil.translate(
 				updateDocumentRequest);
 
 		UpdateResponse updateResponse = _getUpdateResponse(
@@ -60,10 +60,6 @@ public class UpdateDocumentRequestExecutorImpl
 			throw new RuntimeException(ioException);
 		}
 	}
-
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
-	private ElasticsearchBulkableDocumentRequestTranslator
-		_elasticsearchBulkableDocumentRequestTranslator;
 
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;

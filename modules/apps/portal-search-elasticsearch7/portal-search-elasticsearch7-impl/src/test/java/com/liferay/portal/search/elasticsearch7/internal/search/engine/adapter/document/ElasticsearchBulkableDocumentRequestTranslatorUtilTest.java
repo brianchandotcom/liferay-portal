@@ -36,7 +36,7 @@ import org.junit.Test;
 /**
  * @author Michael C. Han
  */
-public class ElasticsearchBulkableDocumentRequestTranslatorTest {
+public class ElasticsearchBulkableDocumentRequestTranslatorUtilTest {
 
 	@ClassRule
 	public static LiferayUnitTestRule liferayUnitTestRule =
@@ -45,7 +45,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_elasticsearchFixture = new ElasticsearchFixture(
-			ElasticsearchBulkableDocumentRequestTranslatorTest.class);
+			ElasticsearchBulkableDocumentRequestTranslatorUtilTest.class);
 
 		_elasticsearchFixture.setUp();
 	}
@@ -57,9 +57,6 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_elasticsearchBulkableDocumentRequestTranslator =
-			new ElasticsearchBulkableDocumentRequestTranslatorImpl();
-
 		_documentFixture.setUp();
 	}
 
@@ -163,7 +160,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 		deleteDocumentRequest.setType(_MAPPING_NAME);
 
 		DeleteRequest deleteRequest =
-			_elasticsearchBulkableDocumentRequestTranslator.translate(
+			ElasticsearchBulkableDocumentRequestTranslatorUtil.translate(
 				deleteDocumentRequest);
 
 		Assert.assertEquals(
@@ -175,7 +172,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 		BulkRequest bulkRequest = new BulkRequest();
 
 		bulkRequest.add(
-			_elasticsearchBulkableDocumentRequestTranslator.translate(
+			ElasticsearchBulkableDocumentRequestTranslatorUtil.translate(
 				deleteDocumentRequest));
 
 		Assert.assertEquals(1, bulkRequest.numberOfActions());
@@ -197,7 +194,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 		indexDocumentRequest.setType(_MAPPING_NAME);
 
 		IndexRequest indexRequest =
-			_elasticsearchBulkableDocumentRequestTranslator.translate(
+			ElasticsearchBulkableDocumentRequestTranslatorUtil.translate(
 				indexDocumentRequest);
 
 		Assert.assertEquals(
@@ -215,7 +212,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 		BulkRequest bulkRequest = new BulkRequest();
 
 		bulkRequest.add(
-			_elasticsearchBulkableDocumentRequestTranslator.translate(
+			ElasticsearchBulkableDocumentRequestTranslatorUtil.translate(
 				indexDocumentRequest));
 
 		Assert.assertEquals(1, bulkRequest.numberOfActions());
@@ -237,7 +234,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 		updateDocumentRequest.setType(_MAPPING_NAME);
 
 		UpdateRequest updateRequest =
-			_elasticsearchBulkableDocumentRequestTranslator.translate(
+			ElasticsearchBulkableDocumentRequestTranslatorUtil.translate(
 				updateDocumentRequest);
 
 		Assert.assertEquals(
@@ -257,7 +254,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 		BulkRequest bulkRequest = new BulkRequest();
 
 		bulkRequest.add(
-			_elasticsearchBulkableDocumentRequestTranslator.translate(
+			ElasticsearchBulkableDocumentRequestTranslatorUtil.translate(
 				updateDocumentRequest));
 
 		Assert.assertEquals(1, bulkRequest.numberOfActions());
@@ -270,7 +267,5 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 	private static ElasticsearchFixture _elasticsearchFixture;
 
 	private final DocumentFixture _documentFixture = new DocumentFixture();
-	private ElasticsearchBulkableDocumentRequestTranslator
-		_elasticsearchBulkableDocumentRequestTranslator;
 
 }

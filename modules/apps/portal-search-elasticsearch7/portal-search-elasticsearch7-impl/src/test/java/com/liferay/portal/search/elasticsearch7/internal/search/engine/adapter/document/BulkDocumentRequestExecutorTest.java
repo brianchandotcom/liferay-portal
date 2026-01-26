@@ -43,10 +43,6 @@ public class BulkDocumentRequestExecutorTest {
 			new BulkDocumentRequestExecutorImpl();
 
 		ReflectionTestUtil.setFieldValue(
-			_bulkDocumentRequestExecutorImpl,
-			"_elasticsearchBulkableDocumentRequestTranslator",
-			new ElasticsearchBulkableDocumentRequestTranslatorImpl());
-		ReflectionTestUtil.setFieldValue(
 			_bulkDocumentRequestExecutorImpl, "_elasticsearchClientResolver",
 			elasticsearchFixture);
 

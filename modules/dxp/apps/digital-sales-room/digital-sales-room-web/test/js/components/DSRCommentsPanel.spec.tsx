@@ -12,6 +12,7 @@ import React from 'react';
 
 import DigitalSalesRoomService from '../../../src/main/resources/META-INF/resources/js/commons/DigitalSalesRoomService';
 import DSRCommentsPanel from '../../../src/main/resources/META-INF/resources/js/components/DSRCommentsPanel';
+import {setFieldValue} from '../utils';
 
 const renderComponent = (roomId: number) => {
 	return render(<DSRCommentsPanel roomId={roomId}></DSRCommentsPanel>);
@@ -103,5 +104,54 @@ describe('DSRCommentsPanel', () => {
 
 		expect(spyOnGetComments).toBeCalledWith(100, 2);
 		expect(screen.queryByTestId('loadMoreButton')).not.toBeInTheDocument();
+	});
+
+	it('Can post a comment', async () => {
+		const spyOnPostComment = jest.spyOn(
+			DigitalSalesRoomService,
+			'postDigitalSalesRoomComment'
+		);
+
+		renderComponent(100);
+		expect(screen.getByTestId('commentTextarea')).toBeInTheDocument();
+
+		expect(screen.getByRole('button', {name: 'save'})).toBeDisabled();
+
+		await setFieldValue(
+			screen.getByTestId('commentTextarea'),
+			'testComment'
+		);
+
+		await waitFor(() => {
+			screen.getByRole('button', {name: 'save'}).click();
+		});
+
+		expect(spyOnPostComment).toBeCalledWith(100, 'testComment');
+	});
+
+	it('Can cancel adding comment', async () => {
+		const spyOnPostComment = jest.spyOn(
+			DigitalSalesRoomService,
+			'postDigitalSalesRoomComment'
+		);
+
+		renderComponent(100);
+		expect(screen.getByTestId('commentTextarea')).toBeInTheDocument();
+
+		expect(screen.getByRole('button', {name: 'save'})).toBeDisabled();
+
+		await setFieldValue(
+			screen.getByTestId('commentTextarea'),
+			'testComment'
+		);
+
+		await waitFor(() => {
+			screen.getByRole('button', {name: 'cancel'}).click();
+		});
+
+		expect(spyOnPostComment).not.toHaveBeenCalled();
+		await waitFor(() => {
+			expect(screen.getByTestId('commentTextarea')).toHaveValue('');
+		});
 	});
 });

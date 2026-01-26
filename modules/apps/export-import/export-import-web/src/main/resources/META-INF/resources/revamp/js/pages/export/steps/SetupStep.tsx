@@ -9,7 +9,7 @@ import React from 'react';
 
 import FieldText from '../../../components/forms/FieldText';
 
-export default function Step() {
+export default function SetupStep() {
 	return (
 		<>
 			<ClayLayout.Sheet>

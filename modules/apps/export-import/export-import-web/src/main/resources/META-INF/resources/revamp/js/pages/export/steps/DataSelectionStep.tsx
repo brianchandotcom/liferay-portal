@@ -6,7 +6,7 @@
 import ClayLayout from '@clayui/layout';
 import React from 'react';
 
-export default function Step() {
+export default function DataSelectionStep() {
 	return (
 		<>
 			<ClayLayout.Sheet>

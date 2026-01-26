@@ -44,6 +44,7 @@ import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.object.comment.ObjectEntryComment;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
@@ -74,6 +75,8 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -120,6 +123,7 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -817,6 +821,23 @@ public class BatchEnginePortletDataHandlerTest {
 		).executeImport();
 
 		_assertObjectDefinition(objectDefinition, 1, objectFields[2]);
+	}
+
+	@FeatureFlag("LPD-43996")
+	@Test
+	public void testExportImportObjectEntriesWithComments() throws Exception {
+
+		// Company scope
+
+		_testExportImportObjectEntriesWithComments(
+			_stagingGroupHelper.fetchCompanyGroup(
+				TestPropsValues.getCompanyId()),
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		// Site scope
+
+		_testExportImportObjectEntriesWithComments(
+			GroupTestUtil.addGroup(), ObjectDefinitionConstants.SCOPE_SITE);
 	}
 
 	@Test
@@ -2048,6 +2069,26 @@ public class BatchEnginePortletDataHandlerTest {
 
 	private ObjectEntry _addObjectEntry(
 			long groupId, ObjectDefinition objectDefinition,
+			ObjectEntryComment[] objectEntryComments,
+			Map<String, Serializable> values)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setAttribute(
+			"objectEntryComments",
+			(Serializable)ListUtil.fromArray(objectEntryComments));
+
+		return _objectEntryLocalService.addObjectEntry(
+			groupId, TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null, values, serviceContext);
+	}
+
+	private ObjectEntry _addObjectEntry(
+			long groupId, ObjectDefinition objectDefinition,
 			Serializable objectFieldValue)
 		throws Exception {
 
@@ -2115,6 +2156,50 @@ public class BatchEnginePortletDataHandlerTest {
 			TempFileEntryUtil.getTempFileName(tempFileName + ".txt"),
 			FileUtil.createTempFile(tempFileName.getBytes()),
 			ContentTypes.TEXT_PLAIN);
+	}
+
+	private void _assertComments(
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+			ObjectEntryComment... objectEntryComments)
+		throws Exception {
+
+		ObjectEntry importedObjectEntry =
+			_objectEntryLocalService.getObjectEntry(
+				objectEntry.getExternalReferenceCode(),
+				objectEntry.getGroupId(),
+				objectDefinition.getObjectDefinitionId());
+
+		long groupId = importedObjectEntry.getGroupId();
+
+		if (groupId == 0) {
+			groupId = objectEntry.getNonzeroGroupId();
+		}
+
+		for (ObjectEntryComment objectEntryComment : objectEntryComments) {
+			Comment importedComment = _commentManager.getComment(
+				groupId, objectEntryComment.getExternalReferenceCode());
+
+			Assert.assertEquals(
+				objectEntryComment.getExternalReferenceCode(),
+				importedComment.getExternalReferenceCode());
+			Assert.assertEquals(
+				objectEntryComment.getText(), importedComment.getBody());
+
+			if (Validator.isNull(
+					objectEntryComment.
+						getParentCommentExternalReferenceCode())) {
+
+				continue;
+			}
+
+			Comment importedParentComment = _commentManager.getComment(
+				groupId,
+				objectEntryComment.getParentCommentExternalReferenceCode());
+
+			Assert.assertEquals(
+				importedParentComment.getCommentId(),
+				importedComment.getParentCommentId());
+		}
 	}
 
 	private void _assertExportImportReportEntry(
@@ -2402,6 +2487,12 @@ public class BatchEnginePortletDataHandlerTest {
 		).build();
 
 		for (ObjectDefinition objectDefinition : objectDefinitions) {
+			if (objectDefinition.isEnableComments()) {
+				parameterMap.put(
+					PortletDataHandlerKeys.COMMENTS,
+					new String[] {Boolean.TRUE.toString()});
+			}
+
 			parameterMap.put(
 				PortletDataHandlerKeys.PORTLET_DATA + "_" +
 					objectDefinition.getPortletId(),
@@ -2653,6 +2744,97 @@ public class BatchEnginePortletDataHandlerTest {
 
 		_assertObjectEntries(
 			false, objectDefinition.getObjectDefinitionId(), objectEntries);
+	}
+
+	private void _testExportImportObjectEntriesWithComments(
+			Group group, String scope)
+		throws Exception {
+
+		ObjectDefinition objectDefinition = _addObjectDefinition(scope);
+
+		objectDefinition.setEnableComments(true);
+
+		objectDefinition = _objectDefinitionLocalService.updateObjectDefinition(
+			objectDefinition);
+
+		String objectEntryCommentExternalReferenceCode =
+			RandomTestUtil.randomString();
+
+		ObjectEntryComment objectEntryComment1 = new ObjectEntryComment(
+			objectEntryCommentExternalReferenceCode, null,
+			RandomTestUtil.randomString());
+
+		ObjectEntryComment objectEntryComment2 = new ObjectEntryComment(
+			RandomTestUtil.randomString(),
+			objectEntryCommentExternalReferenceCode,
+			RandomTestUtil.randomString());
+
+		ObjectEntryComment objectEntryComment3 = new ObjectEntryComment(
+			RandomTestUtil.randomString(), null, RandomTestUtil.randomString());
+
+		ObjectEntryComment[] objectEntryComments = {
+			objectEntryComment1, objectEntryComment2, objectEntryComment3
+		};
+
+		String objectEntryExternalReferenceCode = RandomTestUtil.randomString();
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			_getObjectEntryGroupId(
+				group.getGroupId(), objectDefinition.getScope()),
+			objectDefinition, objectEntryComments,
+			(Map)HashMapBuilder.<String, Serializable>put(
+				"externalReferenceCode", objectEntryExternalReferenceCode
+			).build());
+
+		File larFile1 = new ExportImportExecutor(
+		).withGroupId(
+			group.getGroupId()
+		).withObjectDefinition(
+			objectDefinition
+		).executeExport();
+
+		_objectEntryLocalService.deleteObjectEntry(
+			objectEntry.getObjectEntryId());
+
+		objectEntry = _addObjectEntry(
+			_getObjectEntryGroupId(
+				group.getGroupId(), objectDefinition.getScope()),
+			objectDefinition, new ObjectEntryComment[] {objectEntryComment3},
+			(Map)HashMapBuilder.<String, Serializable>put(
+				"externalReferenceCode", objectEntryExternalReferenceCode
+			).build());
+
+		File larFile2 = new ExportImportExecutor(
+		).withGroupId(
+			group.getGroupId()
+		).withObjectDefinition(
+			objectDefinition
+		).executeExport();
+
+		_objectEntryLocalService.deleteObjectEntry(
+			objectEntry.getObjectEntryId());
+
+		new ExportImportExecutor(
+		).withGroupId(
+			group.getGroupId()
+		).withLARFile(
+			larFile1
+		).withObjectDefinition(
+			objectDefinition
+		).executeImport();
+
+		_assertComments(objectDefinition, objectEntry, objectEntryComments);
+
+		new ExportImportExecutor(
+		).withGroupId(
+			group.getGroupId()
+		).withLARFile(
+			larFile2
+		).withObjectDefinition(
+			objectDefinition
+		).executeImport();
+
+		_assertComments(objectDefinition, objectEntry, objectEntryComments[2]);
 	}
 
 	private void _testExportImportObjectEntriesWithErrorReport(
@@ -3167,6 +3349,9 @@ public class BatchEnginePortletDataHandlerTest {
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
+	private CommentManager _commentManager;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

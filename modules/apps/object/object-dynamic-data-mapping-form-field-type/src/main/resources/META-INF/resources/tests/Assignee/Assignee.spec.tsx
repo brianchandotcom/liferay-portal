@@ -120,9 +120,7 @@ describe('Assignee object field', () => {
 
 		fireEvent.change(input, {target: {value: ''}});
 
-		fireEvent.blur(input);
-
-		expect(onChange).toHaveBeenLastCalledWith({target: {value: {}}});
+		expect(onChange).toHaveBeenLastCalledWith({target: {value: null}});
 	});
 
 	it('calls onChange with the correct value when an item is selected', async () => {

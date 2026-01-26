@@ -42,10 +42,10 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 
 		super(httpServletRequest, taskObjectDefinition);
 
-		_projectObjectDefinition = projectObjectDefinition;
-
 		_assetEntry = (AssetEntry)httpServletRequest.getAttribute(
 			WebKeys.LAYOUT_ASSET_ENTRY);
+
+		_projectObjectDefinition = projectObjectDefinition;
 	}
 
 	public String getAPIURL() {

@@ -13,6 +13,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -73,6 +74,23 @@ public abstract class BaseSectionDisplayContextTestCase {
 		Assert.assertEquals(expectedLabel, fdsActionDropdownItem.get("label"));
 	}
 
+	protected void assertFDSActionDropdownItem(
+		String expectedIcon, String expectedId, String expectedLabel,
+		String expectedMethod, Map<String, Object> expectedVisibilityFilters,
+		FDSActionDropdownItem fdsActionDropdownItem) {
+
+		assertFDSActionDropdownItem(
+			expectedIcon, expectedId, expectedLabel, expectedMethod,
+			fdsActionDropdownItem);
+
+		Map<String, Object> data =
+			(Map<String, Object>)fdsActionDropdownItem.get("data");
+
+		AssertUtils.assertEquals(
+			expectedVisibilityFilters,
+			(Map<String, Object>)data.get("visibilityFilters"));
+	}
+
 	protected void assertFDSFilter(
 		String expectedEntityFieldType, String expectedId, String expectedLabel,
 		FDSFilter fdsFilter) {
@@ -81,6 +99,12 @@ public abstract class BaseSectionDisplayContextTestCase {
 			expectedEntityFieldType, fdsFilter.getEntityFieldType());
 		Assert.assertEquals(expectedId, fdsFilter.getId());
 		Assert.assertEquals(expectedLabel, fdsFilter.getLabel());
+	}
+
+	protected String getAPIURL(AssetEntry assetEntry) throws Exception {
+		return ReflectionTestUtil.invoke(
+			getSectionDisplayContext(_getHttpServletRequest(assetEntry)),
+			"getAPIURL", new Class<?>[0]);
 	}
 
 	protected CreationMenu getCreationMenu(AssetEntry assetEntry)

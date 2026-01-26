@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -32,6 +35,7 @@ import com.liferay.site.cmp.site.initializer.test.util.CMPTestUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
@@ -82,6 +86,30 @@ public class ViewTasksSectionDisplayContextTest
 	}
 
 	@Test
+	public void testGetAPIURL() throws Exception {
+		Assert.assertTrue(
+			StringUtil.equals(
+				getAPIURL(null),
+				StringBundler.concat(
+					"/o/search/v1.0/search?emptySearch=true&entryClassNames=",
+					HtmlUtil.escapeURL(objectDefinition.getClassName()), ",",
+					_CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN,
+					"&filter=(objectDefinitionId eq ",
+					objectDefinition.getObjectDefinitionId(),
+					" or keywords/any(k:startswith(k, 'L_CMP_TASK')))",
+					"&nestedFields=cmpProjectToCMPTasks,embedded")));
+		Assert.assertTrue(
+			StringUtil.equals(
+				getAPIURL(_assetEntry),
+				StringBundler.concat(
+					"/o/search/v1.0/search?emptySearch=true&filter=",
+					"(objectDefinitionId eq ",
+					objectDefinition.getObjectDefinitionId(),
+					" and scopeGroupId eq ", _assetEntry.getGroupId(),
+					")&nestedFields=cmpProjectToCMPTasks,embedded")));
+	}
+
+	@Test
 	public void testGetCreationMenu() throws Exception {
 		CreationMenu creationMenu = getCreationMenu(_assetEntry);
 
@@ -117,18 +145,60 @@ public class ViewTasksSectionDisplayContextTest
 			getFDSActionDropdownItems(_assetEntry);
 
 		Assert.assertEquals(
-			fdsActionDropdownItems.toString(), 4,
+			fdsActionDropdownItems.toString(), 8,
 			fdsActionDropdownItems.size());
 
 		assertFDSActionDropdownItem(
-			"pencil", "edit", "Edit", "get", fdsActionDropdownItems.get(0));
+			"pencil", "edit", "Edit", "get",
+			Collections.singletonMap(
+				"entryClassName", objectDefinition.getClassName()),
+			fdsActionDropdownItems.get(0));
 		assertFDSActionDropdownItem(
-			"view", "actionLink", "View", null, fdsActionDropdownItems.get(1));
+			"view", "actionLink", "View", null,
+			Collections.singletonMap(
+				"entryClassName", objectDefinition.getClassName()),
+			fdsActionDropdownItems.get(1));
 		assertFDSActionDropdownItem(
 			null, "assign-to", "Assign to...", null,
+			Collections.singletonMap(
+				"entryClassName", objectDefinition.getClassName()),
 			fdsActionDropdownItems.get(2));
 		assertFDSActionDropdownItem(
-			"trash", "delete", "Delete", null, fdsActionDropdownItems.get(3));
+			"trash", "delete", "Delete", null,
+			Collections.singletonMap(
+				"entryClassName", objectDefinition.getClassName()),
+			fdsActionDropdownItems.get(3));
+		assertFDSActionDropdownItem(
+			"view", "actionLinkWorkflowTask", "View", null,
+			Collections.singletonMap(
+				"entryClassName", _CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN),
+			fdsActionDropdownItems.get(4));
+		assertFDSActionDropdownItem(
+			null, "assignToMeWorkflowTask", "Assign to Me", null,
+			HashMapBuilder.<String, Object>put(
+				"embedded.assignedToMe", false
+			).put(
+				"embedded.completed", false
+			).put(
+				"entryClassName", _CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN
+			).build(),
+			fdsActionDropdownItems.get(5));
+		assertFDSActionDropdownItem(
+			null, "assignToWorkflowTask", "Assign to...", null,
+			HashMapBuilder.<String, Object>put(
+				"embedded.completed", false
+			).put(
+				"entryClassName", _CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN
+			).build(),
+			fdsActionDropdownItems.get(6));
+		assertFDSActionDropdownItem(
+			"date-time", "updateDueDateWorkflowTask", "Update Due Date", null,
+			HashMapBuilder.<String, Object>put(
+				"embedded.completed", false
+			).put(
+				"entryClassName", _CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN
+			).build(),
+			fdsActionDropdownItems.get(7));
 	}
 
 	@Test
@@ -180,6 +250,9 @@ public class ViewTasksSectionDisplayContextTest
 			"com.liferay.site.cmp.site.initializer.internal.display.context." +
 				"ViewTasksSectionDisplayContext");
 	}
+
+	private static final String _CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN =
+		"com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken";
 
 	private AssetEntry _assetEntry;
 

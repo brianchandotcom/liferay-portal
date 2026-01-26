@@ -45,6 +45,18 @@ public class TasksSectionUtilTest {
 		);
 
 		Mockito.when(
+			_objectDefinition.getClassName()
+		).thenReturn(
+			_CLASS_NAME
+		);
+
+		Mockito.when(
+			_objectDefinition.getExternalReferenceCode()
+		).thenReturn(
+			_EXTERNAL_REFERENCE_CODE
+		);
+
+		Mockito.when(
 			_objectDefinition.getObjectDefinitionId()
 		).thenReturn(
 			_OBJECT_DEFINITION_ID
@@ -54,7 +66,12 @@ public class TasksSectionUtilTest {
 	@Test
 	public void testGetSearchURL() {
 		Assert.assertEquals(
-			_getBaseSearchURL(),
+			StringBundler.concat(
+				_getBaseSearchURL(), "&entryClassNames=", _CLASS_NAME,
+				",com.liferay.portal.workflow.kaleo.model.",
+				"KaleoTaskInstanceToken&filter=(objectDefinitionId eq ",
+				_OBJECT_DEFINITION_ID, " or keywords/any(k:startswith(k, '",
+				_EXTERNAL_REFERENCE_CODE, "')))"),
 			TasksSectionUtil.getSearchURL(null, _objectDefinition));
 		Assert.assertEquals(
 			_getSearchURL(),
@@ -89,9 +106,7 @@ public class TasksSectionUtilTest {
 	}
 
 	private String _getBaseSearchURL() {
-		return StringBundler.concat(
-			"/o/search/v1.0/search?emptySearch=true&filter=objectDefinitionId ",
-			"eq ", _OBJECT_DEFINITION_ID);
+		return "/o/search/v1.0/search?emptySearch=true";
 	}
 
 	private String _getSearchURL() {
@@ -100,9 +115,15 @@ public class TasksSectionUtilTest {
 
 	private String _getSearchURL(String filterString) {
 		return StringBundler.concat(
-			_getBaseSearchURL(), " and scopeGroupId eq ", _GROUP_ID,
+			_getBaseSearchURL(), "&filter=(objectDefinitionId eq ",
+			_OBJECT_DEFINITION_ID, " and scopeGroupId eq ", _GROUP_ID, ")",
 			filterString);
 	}
+
+	private static final String _CLASS_NAME = RandomTestUtil.randomString();
+
+	private static final String _EXTERNAL_REFERENCE_CODE =
+		RandomTestUtil.randomString();
 
 	private static final long _GROUP_ID = RandomTestUtil.randomLong();
 

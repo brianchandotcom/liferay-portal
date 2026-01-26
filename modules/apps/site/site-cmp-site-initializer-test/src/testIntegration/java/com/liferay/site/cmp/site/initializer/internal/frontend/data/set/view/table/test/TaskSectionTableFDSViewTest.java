@@ -37,16 +37,16 @@ public class TaskSectionTableFDSViewTest
 	@Test
 	public void testGetFDSTableSchema() throws Exception {
 		assertFDSTableSchemaField(
-			null, null, "assign-to", "embedded.assignTo.name");
-		assertFDSTableSchemaField(null, "date", "due-date", "embedded.dueDate");
+			null, "assigneeTableCellRenderer", "assign-to", "assignee");
 		assertFDSTableSchemaField(
-			null, null, "project",
-			"embedded.r_cmpProjectToCMPTasks_c_cmpProject.title");
+			null, "dueDateTableCellRenderer", "due-date", "dueDate");
 		assertFDSTableSchemaField(
-			null, "stateTableCellRenderer", "state", "embedded.state");
+			null, "projectTitleTableCellRenderer", "project", "projectTitle");
+		assertFDSTableSchemaField(
+			null, "stateTableCellRenderer", "state", "state");
 		assertFDSTableSchemaField(
 			"actionLink", "simpleActionLinkTableCellRenderer", "title",
-			"embedded.title");
+			"title");
 	}
 
 	@Override

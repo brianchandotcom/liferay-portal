@@ -64,6 +64,7 @@ public class TaskDefinitionManagerImpl implements TaskDefinitionManager {
 
 		return new TaskDefinition() {
 			{
+				setActive(workflowDefinition::isActive);
 				setDescription(workflowDefinition::getDescription);
 				setName(workflowDefinition::getName);
 				setVersion(workflowDefinition::getVersion);

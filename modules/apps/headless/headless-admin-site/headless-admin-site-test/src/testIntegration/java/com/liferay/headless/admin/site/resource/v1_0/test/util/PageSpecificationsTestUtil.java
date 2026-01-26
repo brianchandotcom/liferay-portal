@@ -16,6 +16,7 @@ import com.liferay.headless.admin.site.client.custom.field.CustomValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.BasicWidgetPageWidgetInstance;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.GeneralConfig;
+import com.liferay.headless.admin.site.client.dto.v1_0.LinkToURLPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.NestedApplicationsWidgetPageWidgetInstance;
 import com.liferay.headless.admin.site.client.dto.v1_0.NestedWidgetSection;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
@@ -36,6 +37,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
@@ -433,11 +435,25 @@ public class PageSpecificationsTestUtil {
 		return new ExpandoTableAutocloseable();
 	}
 
-	public static PageSpecification[] getPageSetPageSpecifications(
-		String externalReferenceCode) {
+	public static PageSpecification[] getLinkToURLPageSpecifications(
+			String externalReferenceCode)
+		throws Exception {
 
 		return new PageSpecification[] {
-			_getPageSetPageSpecification(externalReferenceCode)
+			_getPageSpecification(
+				externalReferenceCode, LinkToURLPageSpecification::new,
+				PageSpecification.Type.LINK_TO_URL_PAGE_SPECIFICATION)
+		};
+	}
+
+	public static PageSpecification[] getPageSetPageSpecifications(
+			String externalReferenceCode)
+		throws Exception {
+
+		return new PageSpecification[] {
+			_getPageSpecification(
+				externalReferenceCode, PageSetPageSpecification::new,
+				PageSpecification.Type.PAGE_SET_PAGE_SPECIFICATION)
 		};
 	}
 
@@ -1025,22 +1041,22 @@ public class PageSpecificationsTestUtil {
 			NestedWidgetSection.class);
 	}
 
-	private static PageSetPageSpecification _getPageSetPageSpecification(
-		String externalReferenceCode) {
+	private static PageSpecification _getPageSpecification(
+			String externalReferenceCode,
+			UnsafeSupplier<PageSpecification, Exception>
+				pageSpecificationUnsafeSupplier,
+			PageSpecification.Type type)
+		throws Exception {
 
-		PageSetPageSpecification pageSetPageSpecification =
-			new PageSetPageSpecification() {
-				{
-					setType(() -> Type.PAGE_SET_PAGE_SPECIFICATION);
-				}
-			};
+		PageSpecification pageSpecification =
+			pageSpecificationUnsafeSupplier.get();
 
-		pageSetPageSpecification.setCustomFields(new CustomField[0]);
-		pageSetPageSpecification.setExternalReferenceCode(
-			externalReferenceCode);
-		pageSetPageSpecification.setStatus(PageSpecification.Status.APPROVED);
+		pageSpecification.setCustomFields(new CustomField[0]);
+		pageSpecification.setExternalReferenceCode(externalReferenceCode);
+		pageSpecification.setStatus(PageSpecification.Status.APPROVED);
+		pageSpecification.setType(type);
 
-		return pageSetPageSpecification;
+		return pageSpecification;
 	}
 
 	private static GeneralConfig.ApplicationDecorator

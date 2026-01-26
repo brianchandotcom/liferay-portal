@@ -26,20 +26,12 @@ import org.elasticsearch.search.fetch.subphase.FetchSourceContext;
 import org.elasticsearch.xcontent.XContentBuilder;
 import org.elasticsearch.xcontent.XContentType;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  */
-@Component(
-	property = "search.engine.impl=Elasticsearch",
-	service = ElasticsearchBulkableDocumentRequestTranslator.class
-)
-public class ElasticsearchBulkableDocumentRequestTranslatorImpl
-	implements ElasticsearchBulkableDocumentRequestTranslator {
+public class ElasticsearchBulkableDocumentRequestTranslatorUtil {
 
-	@Override
-	public DeleteRequest translate(
+	public static DeleteRequest translate(
 		DeleteDocumentRequest deleteDocumentRequest) {
 
 		DeleteRequest deleteRequest = new DeleteRequest();
@@ -53,8 +45,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorImpl
 		return deleteRequest;
 	}
 
-	@Override
-	public GetRequest translate(GetDocumentRequest getDocumentRequest) {
+	public static GetRequest translate(GetDocumentRequest getDocumentRequest) {
 		GetRequest getRequest = new GetRequest();
 
 		FetchSourceContext fetchSourceContext = new FetchSourceContext(
@@ -73,8 +64,9 @@ public class ElasticsearchBulkableDocumentRequestTranslatorImpl
 		return getRequest;
 	}
 
-	@Override
-	public IndexRequest translate(IndexDocumentRequest indexDocumentRequest) {
+	public static IndexRequest translate(
+		IndexDocumentRequest indexDocumentRequest) {
+
 		IndexRequest indexRequest = new IndexRequest();
 
 		_setRefreshPolicy(indexRequest, indexDocumentRequest.isRefresh());
@@ -87,8 +79,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorImpl
 		return indexRequest;
 	}
 
-	@Override
-	public UpdateRequest translate(
+	public static UpdateRequest translate(
 		UpdateDocumentRequest updateDocumentRequest) {
 
 		UpdateRequest updateRequest = new UpdateRequest();
@@ -113,7 +104,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorImpl
 		return updateRequest;
 	}
 
-	private String _getType(String type) {
+	private static String _getType(String type) {
 		if (type != null) {
 			return type;
 		}
@@ -121,7 +112,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorImpl
 		return "_doc";
 	}
 
-	private String _getUid(IndexDocumentRequest indexDocumentRequest) {
+	private static String _getUid(IndexDocumentRequest indexDocumentRequest) {
 		String uid = indexDocumentRequest.getUid();
 
 		if (!Validator.isBlank(uid)) {
@@ -147,7 +138,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorImpl
 		return uid;
 	}
 
-	private String _getUid(UpdateDocumentRequest updateDocumentRequest) {
+	private static String _getUid(UpdateDocumentRequest updateDocumentRequest) {
 		String uid = updateDocumentRequest.getUid();
 
 		if (!Validator.isBlank(uid)) {
@@ -173,7 +164,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorImpl
 		return uid;
 	}
 
-	private void _setDoc(
+	private static void _setDoc(
 		UpdateRequest updateRequest,
 		UpdateDocumentRequest updateDocumentRequest) {
 
@@ -194,19 +185,23 @@ public class ElasticsearchBulkableDocumentRequestTranslatorImpl
 		}
 	}
 
-	private void _setDocAsUpsert(UpdateRequest updateRequest, boolean upsert) {
+	private static void _setDocAsUpsert(
+		UpdateRequest updateRequest, boolean upsert) {
+
 		if (upsert) {
 			updateRequest.docAsUpsert(true);
 		}
 	}
 
-	private void _setRefreshPolicy(WriteRequest writeRequest, boolean refresh) {
+	private static void _setRefreshPolicy(
+		WriteRequest writeRequest, boolean refresh) {
+
 		if (refresh) {
 			writeRequest.setRefreshPolicy(WriteRequest.RefreshPolicy.IMMEDIATE);
 		}
 	}
 
-	private void _setScriptedUpsert(
+	private static void _setScriptedUpsert(
 		UpdateRequest updateRequest, boolean scriptedUpsert) {
 
 		if (scriptedUpsert) {
@@ -215,7 +210,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorImpl
 		}
 	}
 
-	private void _setSource(
+	private static void _setSource(
 		IndexRequest indexRequest, IndexDocumentRequest indexDocumentRequest) {
 
 		if (indexDocumentRequest.getDocument() != null) {
@@ -235,6 +230,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorImpl
 		}
 	}
 
-	private final ScriptTranslator _scriptTranslator = new ScriptTranslator();
+	private static final ScriptTranslator _scriptTranslator =
+		new ScriptTranslator();
 
 }

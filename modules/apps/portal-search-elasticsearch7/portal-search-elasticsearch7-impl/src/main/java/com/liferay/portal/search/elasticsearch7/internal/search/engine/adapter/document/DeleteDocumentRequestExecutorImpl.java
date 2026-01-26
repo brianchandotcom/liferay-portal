@@ -32,7 +32,7 @@ public class DeleteDocumentRequestExecutorImpl
 		DeleteDocumentRequest deleteDocumentRequest) {
 
 		DeleteRequest deleteRequest =
-			_elasticsearchBulkableDocumentRequestTranslator.translate(
+			ElasticsearchBulkableDocumentRequestTranslatorUtil.translate(
 				deleteDocumentRequest);
 
 		DeleteResponse deleteResponse = _getDeleteResponse(
@@ -60,10 +60,6 @@ public class DeleteDocumentRequestExecutorImpl
 			throw new RuntimeException(ioException);
 		}
 	}
-
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
-	private ElasticsearchBulkableDocumentRequestTranslator
-		_elasticsearchBulkableDocumentRequestTranslator;
 
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;

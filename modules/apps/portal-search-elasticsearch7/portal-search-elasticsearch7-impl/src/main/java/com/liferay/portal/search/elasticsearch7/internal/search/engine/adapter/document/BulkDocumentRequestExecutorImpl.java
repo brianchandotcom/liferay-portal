@@ -134,7 +134,7 @@ public class BulkDocumentRequestExecutorImpl
 						deleteDocumentRequest.setRefresh(false);
 
 						DeleteRequest deleteRequest =
-							_elasticsearchBulkableDocumentRequestTranslator.
+							ElasticsearchBulkableDocumentRequestTranslatorUtil.
 								translate(deleteDocumentRequest);
 
 						bulkRequest.add(deleteRequest);
@@ -146,7 +146,7 @@ public class BulkDocumentRequestExecutorImpl
 						indexDocumentRequest.setRefresh(false);
 
 						IndexRequest indexRequest =
-							_elasticsearchBulkableDocumentRequestTranslator.
+							ElasticsearchBulkableDocumentRequestTranslatorUtil.
 								translate(indexDocumentRequest);
 
 						bulkRequest.add(indexRequest);
@@ -158,7 +158,7 @@ public class BulkDocumentRequestExecutorImpl
 						updateDocumentRequest.setRefresh(false);
 
 						UpdateRequest updateRequest =
-							_elasticsearchBulkableDocumentRequestTranslator.
+							ElasticsearchBulkableDocumentRequestTranslatorUtil.
 								translate(updateDocumentRequest);
 
 						bulkRequest.add(updateRequest);
@@ -225,10 +225,6 @@ public class BulkDocumentRequestExecutorImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BulkDocumentRequestExecutorImpl.class);
-
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
-	private ElasticsearchBulkableDocumentRequestTranslator
-		_elasticsearchBulkableDocumentRequestTranslator;
 
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;

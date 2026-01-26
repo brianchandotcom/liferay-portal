@@ -32,7 +32,7 @@ public class IndexDocumentRequestExecutorImpl
 		IndexDocumentRequest indexDocumentRequest) {
 
 		IndexRequest indexRequest =
-			_elasticsearchBulkableDocumentRequestTranslator.translate(
+			ElasticsearchBulkableDocumentRequestTranslatorUtil.translate(
 				indexDocumentRequest);
 
 		IndexResponse indexResponse = _getIndexResponse(
@@ -60,10 +60,6 @@ public class IndexDocumentRequestExecutorImpl
 			throw new RuntimeException(ioException);
 		}
 	}
-
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
-	private ElasticsearchBulkableDocumentRequestTranslator
-		_elasticsearchBulkableDocumentRequestTranslator;
 
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;

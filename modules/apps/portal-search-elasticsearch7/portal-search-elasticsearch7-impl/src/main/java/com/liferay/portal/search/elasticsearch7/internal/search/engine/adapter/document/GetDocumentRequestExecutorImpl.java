@@ -33,7 +33,7 @@ public class GetDocumentRequestExecutorImpl
 	@Override
 	public GetDocumentResponse execute(GetDocumentRequest getDocumentRequest) {
 		GetRequest getRequest =
-			_elasticsearchBulkableDocumentRequestTranslator.translate(
+			ElasticsearchBulkableDocumentRequestTranslatorUtil.translate(
 				getDocumentRequest);
 
 		GetResponse getResponse = _getGetResponse(
@@ -80,10 +80,6 @@ public class GetDocumentRequestExecutorImpl
 
 	@Reference
 	private DocumentBuilderFactory _documentBuilderFactory;
-
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
-	private ElasticsearchBulkableDocumentRequestTranslator
-		_elasticsearchBulkableDocumentRequestTranslator;
 
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;

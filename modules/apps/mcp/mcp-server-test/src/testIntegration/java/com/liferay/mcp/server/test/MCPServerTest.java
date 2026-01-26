@@ -56,6 +56,11 @@ public class MCPServerTest {
 			).customizeRequest(
 				builder -> builder.header("Authorization", _getAuthorization())
 			).build()
+		).capabilities(
+			McpSchema.ClientCapabilities.builder(
+			).elicitation(
+				true, true
+			).build()
 		).build();
 
 		mcpSyncClient.initialize();

@@ -12,7 +12,11 @@ import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectState;
+import com.liferay.object.model.ObjectStateFlow;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectStateFlowLocalService;
+import com.liferay.object.service.ObjectStateLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -36,11 +40,18 @@ public abstract class BaseInfoSummarySectionDisplayContext {
 		ListTypeEntryLocalService listTypeEntryLocalService,
 		ObjectEntry objectEntry,
 		ObjectFieldLocalService objectFieldLocalService,
+		ObjectStateFlowLocalService objectStateFlowLocalService,
+		ObjectStateLocalService objectStateLocalService,
 		ThemeDisplay themeDisplay) {
 
-		this.listTypeEntryLocalService = listTypeEntryLocalService;
+		_listTypeEntryLocalService = listTypeEntryLocalService;
+
 		this.objectEntry = objectEntry;
-		this.objectFieldLocalService = objectFieldLocalService;
+
+		_objectFieldLocalService = objectFieldLocalService;
+		_objectStateFlowLocalService = objectStateFlowLocalService;
+		_objectStateLocalService = objectStateLocalService;
+
 		this.themeDisplay = themeDisplay;
 	}
 
@@ -68,11 +79,11 @@ public abstract class BaseInfoSummarySectionDisplayContext {
 				JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 				ObjectField objectField =
-					objectFieldLocalService.fetchObjectField(
+					_objectFieldLocalService.fetchObjectField(
 						objectEntry.getObjectDefinitionId(), "state");
 
 				for (ListTypeEntry listTypeEntry :
-						listTypeEntryLocalService.getListTypeEntries(
+						_listTypeEntryLocalService.getListTypeEntries(
 							objectField.getListTypeDefinitionId())) {
 
 					jsonArray.put(
@@ -81,6 +92,9 @@ public abstract class BaseInfoSummarySectionDisplayContext {
 						).put(
 							"name",
 							listTypeEntry.getName(themeDisplay.getLocale())
+						).put(
+							"nextStates",
+							_getNextStatesJSONArray(listTypeEntry, objectField)
 						));
 				}
 
@@ -104,9 +118,40 @@ public abstract class BaseInfoSummarySectionDisplayContext {
 		return values.get(fieldName);
 	}
 
-	protected final ListTypeEntryLocalService listTypeEntryLocalService;
 	protected final ObjectEntry objectEntry;
-	protected final ObjectFieldLocalService objectFieldLocalService;
 	protected final ThemeDisplay themeDisplay;
+
+	private JSONArray _getNextStatesJSONArray(
+		ListTypeEntry currentListTypeEntry, ObjectField objectField) {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		ObjectStateFlow objectStateFlow =
+			_objectStateFlowLocalService.fetchObjectFieldObjectStateFlow(
+				objectField.getObjectFieldId());
+
+		ObjectState objectState =
+			_objectStateLocalService.fetchObjectStateFlowObjectState(
+				currentListTypeEntry.getListTypeEntryId(),
+				objectStateFlow.getObjectStateFlowId());
+
+		for (ObjectState nextObjectState :
+				_objectStateLocalService.getNextObjectStates(
+					objectState.getObjectStateId())) {
+
+			ListTypeEntry nextListTypeEntry =
+				_listTypeEntryLocalService.fetchListTypeEntry(
+					nextObjectState.getListTypeEntryId());
+
+			jsonArray.put(nextListTypeEntry.getKey());
+		}
+
+		return jsonArray;
+	}
+
+	private final ListTypeEntryLocalService _listTypeEntryLocalService;
+	private final ObjectFieldLocalService _objectFieldLocalService;
+	private final ObjectStateFlowLocalService _objectStateFlowLocalService;
+	private final ObjectStateLocalService _objectStateLocalService;
 
 }

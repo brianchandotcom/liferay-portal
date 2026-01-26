@@ -74,6 +74,8 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 			AgenticServices.supervisorBuilder(
 			).chatModel(
 				vertexAiGeminiChatModel
+			).maxAgentsInvocations(
+				5
 			).subAgents(
 				agents
 			).responseStrategy(

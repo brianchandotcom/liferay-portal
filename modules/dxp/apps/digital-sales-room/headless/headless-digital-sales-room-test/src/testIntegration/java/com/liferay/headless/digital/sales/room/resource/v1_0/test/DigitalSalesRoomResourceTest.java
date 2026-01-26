@@ -719,8 +719,9 @@ public class DigitalSalesRoomResourceTest
 					FragmentEntryModel::getName, String.class),
 				new String[] {
 					"Gallery Block", "Header Main", "Header User",
-					"Our Team Block", "Question and Answer Block", "Text Block",
-					"Timeline Block", "Video Block", "Welcome Block"
+					"Our Team Block", "PDF Preview Block",
+					"Question and Answer Block", "Text Block", "Timeline Block",
+					"Video Block", "Welcome Block"
 				}));
 
 		Assert.assertTrue(
@@ -800,8 +801,9 @@ public class DigitalSalesRoomResourceTest
 					FragmentEntryModel::getName, String.class),
 				new String[] {
 					"Gallery Block", "Header Main", "Header User",
-					"Our Team Block", "Question and Answer Block", "Text Block",
-					"Timeline Block", "Video Block", "Welcome Block"
+					"Our Team Block", "PDF Preview Block",
+					"Question and Answer Block", "Text Block", "Timeline Block",
+					"Video Block", "Welcome Block"
 				}));
 
 		Assert.assertTrue(

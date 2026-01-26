@@ -171,7 +171,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -186,7 +185,6 @@ import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -18783,10 +18781,6 @@ public class ObjectEntryResourceTest {
 
 		User user = UserTestUtil.addUser();
 
-		user.setPortraitId(RandomTestUtil.nextLong());
-
-		user = _userLocalService.updateUser(user);
-
 		JSONObject jsonObject = _postCustomObjectEntryWithAssigneeObjectField(
 			objectDefinition, user);
 
@@ -18795,14 +18789,6 @@ public class ObjectEntryResourceTest {
 				"externalReferenceCode", user.getExternalReferenceCode()
 			).put(
 				"name", user.getFullName()
-			).put(
-				"portrait",
-				user.getPortraitURL(
-					new ThemeDisplay() {
-						{
-							setPathImage(_portal.getPathImage());
-						}
-					})
 			).put(
 				"type", "User"
 			).toString(),
@@ -21218,9 +21204,6 @@ public class ObjectEntryResourceTest {
 
 	@Inject
 	private OrganizationLocalService _organizationLocalService;
-
-	@Inject
-	private Portal _portal;
 
 	@Inject
 	private PortletFileRepository _portletFileRepository;

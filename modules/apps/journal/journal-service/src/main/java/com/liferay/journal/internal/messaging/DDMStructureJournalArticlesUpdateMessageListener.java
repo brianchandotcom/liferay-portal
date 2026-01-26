@@ -9,7 +9,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.journal.internal.constants.DDMDestinationNames;
-import com.liferay.journal.internal.util.JournalDDMStructureHelper;
+import com.liferay.journal.internal.dynamic.data.mapping.util.JournalDDMStructureHelper;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;

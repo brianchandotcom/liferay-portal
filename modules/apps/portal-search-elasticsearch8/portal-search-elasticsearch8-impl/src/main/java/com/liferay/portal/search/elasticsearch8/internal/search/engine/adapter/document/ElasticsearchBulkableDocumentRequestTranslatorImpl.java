@@ -31,7 +31,6 @@ import org.osgi.service.component.annotations.Component;
 	service = ElasticsearchBulkableDocumentRequestTranslator.class
 )
 public class ElasticsearchBulkableDocumentRequestTranslatorImpl
-	extends BaseDocumentRequestTranslator
 	implements ElasticsearchBulkableDocumentRequestTranslator {
 
 	@Override
@@ -57,10 +56,10 @@ public class ElasticsearchBulkableDocumentRequestTranslatorImpl
 			new IndexOperation.Builder<JsonData>();
 
 		builder.document(
-			getDocument(
+			DocumentRequestTranslatorUtil.getDocument(
 				indexDocumentRequest.getDocument(),
 				indexDocumentRequest.getDocument71()));
-		builder.id(getUid(indexDocumentRequest));
+		builder.id(DocumentRequestTranslatorUtil.getUid(indexDocumentRequest));
 		builder.index(indexDocumentRequest.getIndexName());
 
 		return builder.build();
@@ -84,7 +83,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorImpl
 		}
 		else {
 			updateActionBuilder.doc(
-				getDocument(
+				DocumentRequestTranslatorUtil.getDocument(
 					updateDocumentRequest.getDocument(),
 					updateDocumentRequest.getDocument71()));
 		}
@@ -94,7 +93,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorImpl
 		}
 
 		builder.action(updateActionBuilder.build());
-		builder.id(getUid(updateDocumentRequest));
+		builder.id(DocumentRequestTranslatorUtil.getUid(updateDocumentRequest));
 		builder.index(updateDocumentRequest.getIndexName());
 
 		return builder.build();

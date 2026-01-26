@@ -17,9 +17,9 @@ import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 /**
  * @author Petteri Karttunen
  */
-public abstract class BaseDocumentRequestTranslator {
+public class DocumentRequestTranslatorUtil {
 
-	protected JsonData getDocument(
+	protected static JsonData getDocument(
 		Document document,
 		com.liferay.portal.kernel.search.Document document71) {
 
@@ -32,7 +32,7 @@ public abstract class BaseDocumentRequestTranslator {
 			document71);
 	}
 
-	protected String getUid(IndexDocumentRequest indexDocumentRequest) {
+	protected static String getUid(IndexDocumentRequest indexDocumentRequest) {
 		String uid = indexDocumentRequest.getUid();
 
 		if (!Validator.isBlank(uid)) {
@@ -58,7 +58,9 @@ public abstract class BaseDocumentRequestTranslator {
 		return uid;
 	}
 
-	protected String getUid(UpdateDocumentRequest updateDocumentRequest) {
+	protected static String getUid(
+		UpdateDocumentRequest updateDocumentRequest) {
+
 		String uid = updateDocumentRequest.getUid();
 
 		if (!Validator.isBlank(uid)) {

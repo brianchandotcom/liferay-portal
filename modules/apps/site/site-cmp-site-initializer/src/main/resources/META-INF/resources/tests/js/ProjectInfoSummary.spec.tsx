@@ -10,8 +10,8 @@ import React from 'react';
 import ProjectInfoSummary from '../../js/components/project/ProjectInfoSummary';
 
 const mockStates = [
-	{key: 'notStarted', name: 'Not Started'},
-	{key: 'inProgress', name: 'In Progress'},
+	{key: 'notStarted', name: 'Not Started', nextStates: ['inProgress']},
+	{key: 'inProgress', name: 'In Progress', nextStates: ['notStarted']},
 ];
 
 const mockManager = {image: '', name: 'Manager Name'};

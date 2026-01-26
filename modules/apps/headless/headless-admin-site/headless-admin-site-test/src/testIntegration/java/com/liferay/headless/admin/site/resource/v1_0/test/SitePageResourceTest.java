@@ -1257,7 +1257,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 							SitePageNavigationSettings.TargetType.class));
 				}
 			});
-
 		pageSettings.setPriority(
 			_priorities.merge(
 				parentSitePageExternalReferenceCode, 0,

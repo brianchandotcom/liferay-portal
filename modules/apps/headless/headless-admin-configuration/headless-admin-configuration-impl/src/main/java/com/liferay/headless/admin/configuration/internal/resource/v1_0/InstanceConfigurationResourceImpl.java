@@ -182,7 +182,7 @@ public class InstanceConfigurationResourceImpl
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			ConfigurationFilterStringUtil.getCompanyScopedFilterString(
-				String.valueOf(contextCompany.getCompanyId()),
+				contextCompany.getCompanyId(),
 				contextCompany.getDefaultWebId()));
 
 		if (ArrayUtil.isEmpty(configurations)) {
@@ -253,7 +253,7 @@ public class InstanceConfigurationResourceImpl
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			ConfigurationFilterStringUtil.getCompanyScopedFilterString(
-				String.valueOf(contextCompany.getCompanyId()),
+				contextCompany.getCompanyId(),
 				instanceConfigurationExternalReferenceCode,
 				contextCompany.getDefaultWebId()));
 
@@ -316,8 +316,7 @@ public class InstanceConfigurationResourceImpl
 
 		String filterString =
 			ConfigurationFilterStringUtil.getCompanyScopedFilterString(
-				String.valueOf(companyId),
-				instanceConfiguration.getExternalReferenceCode(),
+				companyId, instanceConfiguration.getExternalReferenceCode(),
 				contextCompany.getDefaultWebId());
 
 		try {

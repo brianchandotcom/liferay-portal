@@ -43,11 +43,13 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
+import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.rest.dto.v1_0.SearchRequestBody;
 import com.liferay.portal.search.rest.util.FilterUtil;
@@ -63,6 +65,8 @@ import jakarta.validation.ValidationException;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -372,15 +376,24 @@ public class BulkActionBulkSelectionFactory {
 			Predicate predicate = _filterFactory.create(
 				filterString, objectDefinition);
 
-			return TransformUtil.transformToArray(
-				_objectEntryLocalService.getPrimaryKeys(
-					new Long[0], _company.getCompanyId(), _user.getUserId(),
-					objectDefinition.getObjectDefinitionId(), predicate, false,
-					null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
-				primaryKey ->
+			List<Long> primaryKeys = _objectEntryLocalService.getPrimaryKeys(
+				new Long[0], _company.getCompanyId(), _user.getUserId(),
+				objectDefinition.getObjectDefinitionId(), predicate, false,
+				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			if (ListUtil.isEmpty(primaryKeys)) {
+				return new String[0];
+			}
+
+			List<String> rowIds = new ArrayList<>(primaryKeys.size());
+
+			for (long primaryKey : primaryKeys) {
+				rowIds.add(
 					objectDefinition.getClassName() + StringPool.SPACE +
-						primaryKey,
-				String.class);
+						primaryKey);
+			}
+
+			return rowIds.toArray(new String[0]);
 		}
 
 		SearchRequestBody searchRequestBody = new SearchRequestBody();
@@ -441,15 +454,19 @@ public class BulkActionBulkSelectionFactory {
 
 		SearchHits searchHits = searchResponse.getSearchHits();
 
-		return TransformUtil.transformToArray(
-			searchHits.getSearchHits(),
-			searchHit -> {
-				Document document = searchHit.getDocument();
+		List<SearchHit> searchHitsList = searchHits.getSearchHits();
 
-				return _getEntryClassName(document) + StringPool.SPACE +
-					_getEntryClassPK(document);
-			},
-			String.class);
+		List<String> searchResults = new ArrayList<>(searchHitsList.size());
+
+		for (SearchHit searchHit : searchHitsList) {
+			Document document = searchHit.getDocument();
+
+			searchResults.add(
+				_getEntryClassName(document) + StringPool.SPACE +
+					_getEntryClassPK(document));
+		}
+
+		return searchResults.toArray(new String[0]);
 	}
 
 	private String[] _getSelectedItemsRowIds() throws PortalException {
@@ -459,47 +476,54 @@ public class BulkActionBulkSelectionFactory {
 			return new String[0];
 		}
 
-		if (!BulkAction.Type.DEFAULT_PERMISSION_BULK_ACTION.equals(
+		List<String> rowIds = new ArrayList<>(bulkActionItems.length);
+
+		if (BulkAction.Type.DEFAULT_PERMISSION_BULK_ACTION.equals(
 				_bulkAction.getType())) {
 
-			return TransformUtil.transform(
-				bulkActionItems,
-				bulkActionItem -> StringBundler.concat(
-					bulkActionItem.getClassName(), StringPool.SPACE,
-					bulkActionItem.getClassPK()),
-				String.class);
-		}
+			BulkActionItem bulkActionItem = bulkActionItems[0];
 
-		BulkActionItem bulkActionItem = bulkActionItems[0];
+			String filterString = StringBundler.concat(
+				"(className eq '", bulkActionItem.getClassName(), "') and (",
+				StringUtil.merge(
+					TransformUtil.transform(
+						bulkActionItems,
+						item ->
+							"(classExternalReferenceCode eq '" +
+								item.getClassExternalReferenceCode() + "')",
+						String.class),
+					" or "),
+				")");
 
-		String filterString = StringBundler.concat(
-			"(className eq '", bulkActionItem.getClassName(), "') and (",
-			StringUtil.merge(
-				TransformUtil.transform(
-					bulkActionItems,
-					item ->
-						"(classExternalReferenceCode eq '" +
-							item.getClassExternalReferenceCode() + "')",
-					String.class),
-				" or "),
-			")");
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.
+					getObjectDefinitionByExternalReferenceCode(
+						"L_CMS_DEFAULT_PERMISSION", _company.getCompanyId());
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					"L_CMS_DEFAULT_PERMISSION", _company.getCompanyId());
+			Predicate predicate = _filterFactory.create(
+				filterString, objectDefinition);
 
-		Predicate predicate = _filterFactory.create(
-			filterString, objectDefinition);
-
-		return TransformUtil.transformToArray(
-			_objectEntryLocalService.getPrimaryKeys(
+			List<Long> primaryKeys = _objectEntryLocalService.getPrimaryKeys(
 				new Long[0], _company.getCompanyId(), _user.getUserId(),
 				objectDefinition.getObjectDefinitionId(), predicate, false,
-				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
-			primaryKey ->
-				objectDefinition.getClassName() + StringPool.SPACE + primaryKey,
-			String.class);
+				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			for (long primaryKey : primaryKeys) {
+				rowIds.add(
+					objectDefinition.getClassName() + StringPool.SPACE +
+						primaryKey);
+			}
+		}
+		else {
+			for (BulkActionItem bulkActionItem : bulkActionItems) {
+				rowIds.add(
+					StringBundler.concat(
+						bulkActionItem.getClassName(), StringPool.SPACE,
+						bulkActionItem.getClassPK()));
+			}
+		}
+
+		return rowIds.toArray(new String[0]);
 	}
 
 	private boolean _isAllowedSearchContextAttribute(String key) {
@@ -569,26 +593,31 @@ public class BulkActionBulkSelectionFactory {
 	}
 
 	private long[] _toGroupIds(long companyId, String scope) {
-		return TransformUtil.transformToLongArray(
-			_toArray(scope),
-			part -> {
-				Group group =
-					_groupLocalService.fetchGroupByExternalReferenceCode(
-						part, companyId);
+		List<Long> groupIds = new ArrayList<>();
 
-				if (group != null) {
-					return group.getGroupId();
-				}
+		String[] parts = _toArray(scope);
 
-				try {
-					return Long.parseLong(part);
-				}
-				catch (NumberFormatException numberFormatException) {
-					throw new SystemException(
-						"Invalid external reference code or group ID: " + part,
-						numberFormatException);
-				}
-			});
+		for (String part : parts) {
+			Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
+				part, companyId);
+
+			if (group != null) {
+				groupIds.add(group.getGroupId());
+
+				continue;
+			}
+
+			try {
+				groupIds.add(Long.parseLong(part));
+			}
+			catch (NumberFormatException numberFormatException) {
+				throw new SystemException(
+					"Invalid external reference code or group ID: " + part,
+					numberFormatException);
+			}
+		}
+
+		return ArrayUtil.toLongArray(groupIds);
 	}
 
 	private void _validate() {

@@ -5,7 +5,6 @@
 
 package com.liferay.calendar.internal.upgrade.v1_0_6;
 
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -22,6 +21,7 @@ import com.liferay.portal.security.permission.ResourceActionsImpl;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,22 +48,22 @@ public class ResourcePermissionUpgradeProcess extends UpgradeProcess {
 	private List<String> _getCalendarResourceUnsupportedActionIds()
 		throws Exception {
 
+		List<String> actionIds = new ArrayList<>();
+
 		List<String> guestUnsupportedActions =
 			_getModelResourceGuestUnsupportedActions();
 
-		return TransformUtil.transformToList(
-			_NEW_UNSUPPORTED_ACTION_IDS,
-			newUnsupportedActionId -> {
-				if (!guestUnsupportedActions.contains(newUnsupportedActionId)) {
-					return null;
-				}
-
+		for (String resourceActionId : _NEW_UNSUPPORTED_ACTION_IDS) {
+			if (guestUnsupportedActions.contains(resourceActionId)) {
 				ResourceAction resourceAction =
 					_resourceActionLocalService.getResourceAction(
-						_CALENDAR_RESOURCE_NAME, newUnsupportedActionId);
+						_CALENDAR_RESOURCE_NAME, resourceActionId);
 
-				return resourceAction.getActionId();
-			});
+				actionIds.add(resourceAction.getActionId());
+			}
+		}
+
+		return actionIds;
 	}
 
 	private List<String> _getModelResourceGuestUnsupportedActions()

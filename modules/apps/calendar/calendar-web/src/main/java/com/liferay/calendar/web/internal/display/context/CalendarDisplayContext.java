@@ -30,7 +30,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -72,6 +71,7 @@ import jakarta.portlet.RenderResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -383,74 +383,73 @@ public class CalendarDisplayContext {
 	public List<Calendar> getOtherCalendars(User user, long[] calendarIds)
 		throws PortalException {
 
-		return TransformUtil.transformToList(
-			calendarIds,
-			calendarId -> {
-				Calendar calendar = null;
+		List<Calendar> otherCalendars = new ArrayList<>();
 
-				try {
-					calendar = _calendarService.fetchCalendar(calendarId);
-				}
-				catch (PrincipalException principalException) {
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							StringBundler.concat(
-								"No ", ActionKeys.VIEW, " permission for user ",
-								user.getUserId()),
-							principalException);
-					}
+		for (long calendarId : calendarIds) {
+			Calendar calendar = null;
 
-					return null;
+			try {
+				calendar = _calendarService.fetchCalendar(calendarId);
+			}
+			catch (PrincipalException principalException) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						StringBundler.concat(
+							"No ", ActionKeys.VIEW, " permission for user ",
+							user.getUserId()),
+						principalException);
 				}
 
-				if (calendar == null) {
-					return null;
-				}
+				continue;
+			}
 
-				CalendarResource calendarResource =
-					calendar.getCalendarResource();
+			if (calendar == null) {
+				continue;
+			}
 
-				if (!calendarResource.isActive()) {
-					return null;
-				}
+			CalendarResource calendarResource = calendar.getCalendarResource();
 
-				Group scopeGroup = _themeDisplay.getScopeGroup();
+			if (!calendarResource.isActive()) {
+				continue;
+			}
 
-				Group calendarGroup = _groupLocalService.getGroup(
-					calendar.getGroupId());
+			Group scopeGroup = _themeDisplay.getScopeGroup();
 
-				if (scopeGroup.isStagingGroup()) {
-					long calendarGroupId = calendarGroup.getGroupId();
+			Group calendarGroup = _groupLocalService.getGroup(
+				calendar.getGroupId());
 
-					if (calendarGroup.isStagingGroup()) {
-						if (scopeGroup.getGroupId() != calendarGroupId) {
-							calendar =
-								_calendarLocalService.
-									fetchCalendarByUuidAndGroupId(
-										calendar.getUuid(),
-										calendarGroup.getLiveGroupId());
-						}
-					}
-					else if (scopeGroup.getLiveGroupId() == calendarGroupId) {
-						Group stagingGroup = calendarGroup.getStagingGroup();
+			if (scopeGroup.isStagingGroup()) {
+				long calendarGroupId = calendarGroup.getGroupId();
 
+				if (calendarGroup.isStagingGroup()) {
+					if (scopeGroup.getGroupId() != calendarGroupId) {
 						calendar =
 							_calendarLocalService.fetchCalendarByUuidAndGroupId(
-								calendar.getUuid(), stagingGroup.getGroupId());
+								calendar.getUuid(),
+								calendarGroup.getLiveGroupId());
 					}
 				}
-				else if (calendarGroup.isStagingGroup()) {
+				else if (scopeGroup.getLiveGroupId() == calendarGroupId) {
+					Group stagingGroup = calendarGroup.getStagingGroup();
+
 					calendar =
 						_calendarLocalService.fetchCalendarByUuidAndGroupId(
-							calendar.getUuid(), calendarGroup.getLiveGroupId());
+							calendar.getUuid(), stagingGroup.getGroupId());
 				}
+			}
+			else if (calendarGroup.isStagingGroup()) {
+				calendar = _calendarLocalService.fetchCalendarByUuidAndGroupId(
+					calendar.getUuid(), calendarGroup.getLiveGroupId());
+			}
 
-				if (calendar == null) {
-					return null;
-				}
+			if (calendar == null) {
+				continue;
+			}
 
-				return calendar;
-			});
+			otherCalendars.add(calendar);
+		}
+
+		return otherCalendars;
 	}
 
 	public PortletURL getPortletURL() {

@@ -13,10 +13,15 @@ export class EditDigitalSalesRoomPage {
 	readonly cancelButton: Locator;
 	readonly clientLogoButton: Locator;
 	readonly clientNameInput: Locator;
+	readonly commentSaveButton: Locator;
+	readonly commentsButton: Locator;
+	readonly commentTextarea: Locator;
+	readonly commentTextAreaPlaceholder: Locator;
 	readonly nextButton: Locator;
 	readonly onboardingMenuItem: Locator;
 	readonly page: Page;
 	readonly primaryColorInput: Locator;
+	readonly roomCommentsText: Locator;
 	readonly roomNameInput: Locator;
 	readonly saveButton: Locator;
 	readonly secondaryColorInput: Locator;
@@ -35,12 +40,21 @@ export class EditDigitalSalesRoomPage {
 		});
 		this.clientLogoButton = page.getByTestId('clientLogoButton');
 		this.clientNameInput = page.getByLabel('Client Name');
+		this.commentSaveButton = page
+			.locator('#dsr-comments-sidepanel')
+			.getByRole('button', {name: 'Save'});
+		this.commentsButton = page.getByLabel('Comments', {exact: true});
+		this.commentTextarea = page.getByTestId('commentTextarea');
+		this.commentTextAreaPlaceholder = page.getByPlaceholder(
+			'Type your comment here.'
+		);
 		this.nextButton = page.getByRole('button', {name: 'Next'});
 		this.onboardingMenuItem = page.getByRole('menuitem', {
 			name: 'Onboarding',
 		});
 		this.page = page;
 		this.primaryColorInput = page.getByTestId('primaryColorInput');
+		this.roomCommentsText = page.getByText('Room Comments');
 		this.roomNameInput = page.getByLabel('Room Name');
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.secondaryColorInput = page.getByTestId('secondaryColorInput');

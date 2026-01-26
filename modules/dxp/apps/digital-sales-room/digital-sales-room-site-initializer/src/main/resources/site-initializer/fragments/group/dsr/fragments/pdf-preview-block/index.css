@@ -1,0 +1,42 @@
+.dsr-pdf-preview-block-component {
+	padding-bottom: 5rem;
+}
+
+.dsr-pdf-preview-block-component h2::after {
+	border-bottom: 4px solid var(--primary, #0B5FFF);
+	content: '';
+	display: inline-block;
+	margin: 0 0 0 0.3rem;
+	width: 1.5rem;
+}
+
+.dsr-pdf-preview-block-component .dsr-pdf-display {
+  	height: 600px;
+}
+
+.dsr-pdf-preview-block-component .dsr-pdf-embed {
+    border: none;
+    display: block;
+}
+
+.dsr-pdf-preview-block-component .dsr-pdf-file {
+	background-color: #DCDEE6;
+	background-image: url([resources:placeholder.png]);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	border: 1px solid rgba(0, 0, 0, 0.125);
+	cursor: pointer !important;
+	display: block;
+	height: 5rem;
+}
+
+.dsr-pdf-preview-block-component .dsr-pdf-preview-loader,
+.dsr-pdf-preview-block-component .dsr-pdf-preview-wrapper {
+  	background: #FFF;
+  	border: 1px solid rgba(0, 0, 0, 0.125);
+	border-radius: 1rem;
+    height: 600px;
+	overflow: hidden;
+	width: 100%;
+}

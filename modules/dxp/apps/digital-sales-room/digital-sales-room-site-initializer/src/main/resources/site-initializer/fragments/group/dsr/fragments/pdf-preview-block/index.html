@@ -1,0 +1,17 @@
+<div class="clearfix component-paragraph dsr-pdf-preview-block-component text-break">
+	<div data-lfr-editable-id="element-text" data-lfr-editable-type="rich-text">
+		<h2 class="mb-4">PDF PREVIEW</h2>
+	</div>
+
+	<div class="dsr-pdf-container text-center">
+		<a class="[#if layoutMode != 'edit']d-none[/#if] dsr-pdf-file mb-3" data-lfr-editable-id="element-link" data-lfr-editable-type="link" href="#" id="dsr-pdf-file">&nbsp;</a>
+
+		<div class="d-none dsr-pdf-preview-loader" id="dsr-pdf-loader">
+			<template id="dsr-pdf-template">
+				<embed class="dsr-pdf-embed" height="600px" src="" type="application/pdf" width="100%" />
+			</template>
+
+			<div class="dsr-pdf-display" id="dsr-pdf-display"></div>
+		</div>
+	</div>
+</div>

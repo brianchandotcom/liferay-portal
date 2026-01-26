@@ -1,0 +1,9 @@
+{
+	"configurationPath": "configuration.json",
+	"cssPath": "index.css",
+	"htmlPath": "index.html",
+	"icon": "document-pdf",
+	"jsPath": "index.js",
+	"name": "PDF Preview Block",
+	"type": "component"
+}

@@ -8,7 +8,6 @@ import React from 'react';
 
 import {patchProjectById} from '../../utils/api';
 import {DISPLAY_TYPES} from '../../utils/constants';
-import {displayStateSuccessToast} from '../../utils/toastUtil';
 import InfoSummary from '../InfoSummary';
 import StateSelector, {State} from '../StateSelector';
 import User, {UserProps} from './User';
@@ -46,14 +45,10 @@ export default function ProjectInfoSummary({
 						<StateSelector
 							initialSelectedKey={initialState}
 							onChange={async (key: string) => {
-								const response = await patchProjectById({
+								await patchProjectById({
 									body: {state: key},
 									projectId,
 								});
-
-								if (response.ok) {
-									displayStateSuccessToast();
-								}
 							}}
 							states={states}
 						/>

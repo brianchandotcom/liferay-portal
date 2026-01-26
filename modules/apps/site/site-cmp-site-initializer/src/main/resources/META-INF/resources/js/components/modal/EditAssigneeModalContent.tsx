@@ -9,16 +9,14 @@ import {AssigneeValue} from '@liferay/object-dynamic-data-mapping-form-field-typ
 import React, {useState} from 'react';
 
 import {patchTaskById} from '../../utils/api';
-import {displayAssignSuccessToast} from '../../utils/toastUtil';
-import CustomAssignee from '../CustomAssignee';
 
 import './../AssigneeTrigger.scss';
+import CustomAssignee from '../CustomAssignee';
 
 type Props = {
 	closeModal: () => void;
 	loadData: () => void;
 	taskId: string;
-	taskTitle: string;
 	value: AssigneeValue | {} | null;
 };
 
@@ -26,7 +24,6 @@ export default function EditAssigneeModalContent({
 	closeModal,
 	loadData,
 	taskId,
-	taskTitle,
 	value: initialValue,
 }: Props) {
 	const [value, setValue] = useState<AssigneeValue | null | {}>(initialValue);
@@ -43,8 +40,9 @@ export default function EditAssigneeModalContent({
 			closeModal();
 
 			loadData();
-
-			displayAssignSuccessToast(taskTitle, (value as AssigneeValue).name);
+		}
+		else {
+			throw new Error('Unable to update assignee');
 		}
 	};
 

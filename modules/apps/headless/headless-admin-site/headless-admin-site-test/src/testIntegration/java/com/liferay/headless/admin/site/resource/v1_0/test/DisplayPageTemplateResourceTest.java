@@ -1273,14 +1273,12 @@ public class DisplayPageTemplateResourceTest
 
 		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
 
-		String thumbnailURL = RandomTestUtil.randomString();
-
 		displayPageTemplate1.setThumbnailURLReference(
 			() -> new ThumbnailURLReference() {
 				{
 					setExternalReferenceCode(
 						fileEntry.getExternalReferenceCode());
-					setUrl(thumbnailURL);
+					setUrl(RandomTestUtil.randomString());
 				}
 			});
 

@@ -82,6 +82,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.upgrade.data.cleanup.AnalyticsMessageDataCleanupPreupgradeProcess;
 import com.liferay.portal.upgrade.data.cleanup.CompanyDataCleanupPreupgradeProcess;
 import com.liferay.portal.upgrade.data.cleanup.ConfigurationDataCleanupPreupgradeProcess;
+import com.liferay.portal.upgrade.data.cleanup.ContactDataCleanupPreupgradeProcess;
 import com.liferay.portal.upgrade.data.cleanup.CounterDataCleanupPreupgradeProcess;
 import com.liferay.portal.upgrade.data.cleanup.DDMDataCleanupPreupgradeProcess;
 import com.liferay.portal.upgrade.data.cleanup.DDMStorageLinkDataCleanupPreupgradeProcess;
@@ -539,6 +540,9 @@ public class DataCleanupRegistrator {
 		).put(
 			ConfigurationDataCleanupPreupgradeProcess.class,
 			"remove-configuration-orphan-data"
+		).put(
+			ContactDataCleanupPreupgradeProcess.class,
+			"remove-contact-orphan-data"
 		).put(
 			CounterDataCleanupPreupgradeProcess.class, "fix-counter-values"
 		).put(

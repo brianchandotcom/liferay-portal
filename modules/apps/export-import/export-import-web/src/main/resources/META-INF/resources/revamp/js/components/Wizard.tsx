@@ -4,17 +4,17 @@
  */
 
 import ClayMultiStepNav from '@clayui/multi-step-nav';
-import React, {useState} from 'react';
+import React, {ReactElement, useState} from 'react';
 
 import Footer from './Footer';
 
-export function WizardStep({
-	children,
-}: {
+interface WizardStep {
 	children: React.ReactNode;
 	description: string;
 	title: string;
-}) {
+}
+
+export function WizardStep({children}: WizardStep) {
 	return <>{children}</>;
 }
 
@@ -23,23 +23,23 @@ export function Wizard({
 	children,
 }: {
 	backURL: string;
-	children: React.ReactNode;
+	children: React.ReactElement<WizardStep> | React.ReactElement<WizardStep>[];
 }) {
 	const [stepNumber, setStepNumber] = useState(0);
-	const steps = React.Children.toArray(children);
-	const totalSteps = React.Children.count(children);
 
-	const currentStep = steps[stepNumber] as React.ReactElement;
+	const steps = React.Children.toArray(
+		children
+	) as ReactElement<WizardStep>[];
+
+	const totalSteps = steps.length;
+
+	const currentStep = steps[stepNumber] as React.ReactElement<WizardStep>;
 	const {description, title} = currentStep.props;
 
 	return (
 		<>
 			<ClayMultiStepNav center className="c-mx-lg-9" indicatorLabel="top">
-				{React.Children.map(children, (step, index) => {
-					if (!React.isValidElement(step)) {
-						return null;
-					}
-
+				{steps.map((step, index) => {
 					const {title: multiStepTitle} = step.props;
 
 					return (

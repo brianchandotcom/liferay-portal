@@ -82,7 +82,9 @@ public class CommentUtil {
 							parentComment = commentManager.fetchComment(
 								comment.getParentCommentId());
 
-						if (parentComment != null) {
+						if ((parentComment != null) &&
+							!parentComment.isRoot()) {
+
 							return parentComment.getExternalReferenceCode();
 						}
 

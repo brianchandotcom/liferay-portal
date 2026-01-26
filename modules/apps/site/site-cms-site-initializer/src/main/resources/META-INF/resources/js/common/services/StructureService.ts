@@ -155,38 +155,33 @@ async function updateStructure({
 	);
 }
 
-async function deleteStructure({
-	id,
-	repeatableGroupIds,
-}: {
-	id: Structure['id'];
-	repeatableGroupIds?: number[];
-}) {
-	let promise;
+	const response = await ApiHelper.postFormData(
+		formData,
+		`${pathMain}/cms/update-structure`
+	);
 
-	// If the structure does not have repeatable groups, just delete it
-
-	if (!repeatableGroupIds?.length) {
-		promise = ApiHelper.delete(
-			`/o/object-admin/v1.0/object-definitions/${id}`
-		);
+	if (response?.error) {
+		return {
+			error: Liferay.Language.get(
+				'an-unexpected-error-occurred-while-saving-or-publishing-the-content-structure'
+			),
+		};
 	}
 
-	// Otherwise perform a batch request to remove also the groups
+	return response;
+}
 
-	else {
-		const data = [...repeatableGroupIds, id].map((id) => ({
-			id,
-		}));
+async function deleteStructure({id}: {id: Structure['id']}) {
+	const pathMain = Liferay.ThemeDisplay.getPathMain();
 
-		promise = ApiHelper.batch({
-			data,
-			method: 'DELETE',
-			url: '/o/object-admin/v1.0/object-definitions/batch',
-		});
-	}
+	const formData = new FormData();
 
-	const response = await promise;
+	formData.append('objectDefinitionId', String(id));
+
+	const response = await ApiHelper.postFormData(
+		formData,
+		`${pathMain}/cms/delete-structure`
+	);
 
 	if (response?.error) {
 		return {error: response.error};

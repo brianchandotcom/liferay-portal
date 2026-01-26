@@ -232,7 +232,7 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "com.liferay.site.cmp.site.initializer.internal.fragment.renderer.ViewAssigneeJSPSectionFragmentRenderer"
+																"key": "com.liferay.site.cmp.site.initializer.internal.fragment.renderer.ViewAssigneeFieldComponentJSPSectionFragmentRenderer"
 															},
 															"fragmentFields": [
 															],

@@ -39,28 +39,23 @@ liferay-default:
                           - bash
                           - -c
                           - |
-                                set -e
-
                                 function main {
+                                    set -e
+
                                     local deploy_dir="/temp/liferay/deploy"
                                     local filename_prefix="com.liferay.portal.search.opensearch2"
                                     local product_version="{{ .image.tag }}"
 
-                                    if ls "/temp/osgi/modules/${filename_prefix}"* 1> /dev/null 2>&1
-                                    then
-                                        rm --verbose "/temp/osgi/modules/${filename_prefix}"*
-                                    fi
+                                    rm --force --verbose "/temp/osgi/modules/${filename_prefix}"*
 
-                                    mkdir --parents "$deploy_dir"
-
-                                    local base_url="https://releases.liferay.com/opensearch2/dxp/${product_version}/${filename_prefix}"
+                                    mkdir --parents "${deploy_dir}"
 
                                     for type in api impl; do
                                         local http_code=$(\
                                             curl \
-                                                "${base_url}.${type}.jar" \
+                                                "https://releases.liferay.com/opensearch2/dxp/${product_version}/${filename_prefix}.${type}.jar" \
                                                 --location \
-                                                --output-dir "$deploy_dir" \
+                                                --output-dir "${deploy_dir}" \
                                                 --remote-name \
                                                 --retry 5 \
                                                 --retry-all-errors \
@@ -70,6 +65,7 @@ liferay-default:
                                         if [ "${http_code}" != "200" ]
                                         then
                                             echo "Unable to download OpenSearch modules for product version ${product_version}. Status code: ${http_code}" >&2
+
                                             exit 1
                                         fi
                                     done

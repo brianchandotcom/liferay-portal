@@ -47,31 +47,25 @@ public class ViewTagsDisplayContext {
 	public Map<String, Object> getReactData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
 			"actionItems",
-			_putAll(
-				unsafeConsumer -> {
-					unsafeConsumer.accept(
-						JSONUtil.put(
-							"href",
-							_getControlPanelPortletURL(
-								AssetCategoriesAdminPortletKeys.
-									ASSET_CATEGORIES_ADMIN)
-						).put(
-							"label",
-							LanguageUtil.get(
-								_httpServletRequest,
-								"export-import-vocabularies")
-						));
-					unsafeConsumer.accept(
-						JSONUtil.put(
-							"href",
-							_getControlPanelPortletURL(
-								AssetTagsAdminPortletKeys.ASSET_TAGS_ADMIN)
-						).put(
-							"label",
-							LanguageUtil.get(
-								_httpServletRequest, "export-import-tags")
-						));
-				})
+			JSONUtil.put(JSONUtil.put(
+				"href",
+				_getControlPanelPortletURL(
+					AssetCategoriesAdminPortletKeys.
+						ASSET_CATEGORIES_ADMIN)
+			).put(
+				"label",
+				LanguageUtil.get(
+					_httpServletRequest,
+					"export-import-vocabularies")
+			)).put(JSONUtil.put(
+				"href",
+				_getControlPanelPortletURL(
+					AssetTagsAdminPortletKeys.ASSET_TAGS_ADMIN)
+			).put(
+				"label",
+				LanguageUtil.get(
+					_httpServletRequest, "export-import-tags")
+			))
 		).put(
 			"cmsGroupId", _themeDisplay.getScopeGroupId()
 		).put(
@@ -123,22 +117,6 @@ public class ViewTagsDisplayContext {
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).buildString();
-	}
-
-	private JSONArray _putAll(
-			UnsafeConsumer<UnsafeConsumer<JSONObject, Exception>, Exception>
-				unsafeConsumer)
-		throws Exception {
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		unsafeConsumer.accept(jsonArray::put);
-
-		if (jsonArray.length() == 0) {
-			return null;
-		}
-
-		return jsonArray;
 	}
 
 	private final GroupService _groupService;

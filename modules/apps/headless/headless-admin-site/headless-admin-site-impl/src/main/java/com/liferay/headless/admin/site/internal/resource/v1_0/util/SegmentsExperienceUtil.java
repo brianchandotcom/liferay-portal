@@ -85,14 +85,14 @@ public class SegmentsExperienceUtil {
 				serviceContext),
 			layout, segmentsExperience.getSegmentsExperienceId());
 
-		int finalPriority = PageExperienceUtil.getPriority(
+		int segmentsExperiencePriority = PageExperienceUtil.getPriority(
 			pageExperience.getKey(), layout, priority);
 
-		if (finalPriority != segmentsExperience.getPriority()) {
+		if (segmentsExperiencePriority != segmentsExperience.getPriority()) {
 			segmentsExperience =
 				SegmentsExperienceServiceUtil.updateSegmentsExperiencePriority(
 					segmentsExperience.getSegmentsExperienceId(),
-					finalPriority);
+					segmentsExperiencePriority);
 		}
 
 		return SegmentsExperienceServiceUtil.updateSegmentsExperience(

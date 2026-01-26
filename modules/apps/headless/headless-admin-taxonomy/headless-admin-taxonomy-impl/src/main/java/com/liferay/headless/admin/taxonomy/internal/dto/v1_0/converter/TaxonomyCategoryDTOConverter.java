@@ -19,6 +19,9 @@ import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategoryProperty;
 import com.liferay.headless.admin.taxonomy.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -193,6 +196,20 @@ public class TaxonomyCategoryDTOConverter
 							}
 						};
 					});
+				setPath(
+					() -> {
+						try {
+							return assetCategory.getPath(
+								dtoConverterContext.getLocale(), true);
+						}
+						catch (PortalException portalException) {
+							if (_log.isWarnEnabled()) {
+								_log.warn(portalException);
+							}
+
+							return null;
+						}
+					});
 				setSiteId(assetCategory::getGroupId);
 				setTaxonomyCategoryProperties(
 					() -> TransformUtil.transformToArray(
@@ -251,6 +268,9 @@ public class TaxonomyCategoryDTOConverter
 			}
 		};
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		TaxonomyCategoryDTOConverter.class);
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;

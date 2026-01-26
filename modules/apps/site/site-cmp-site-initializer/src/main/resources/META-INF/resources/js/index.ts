@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export {default as CustomAssignee} from './components/CustomAssignee';
 export {default as EditorToolbar} from './components/EditorToolbar';
 export {default as ProjectInfoSummary} from './components/project/ProjectInfoSummary';
 export {default as ProjectsFDSPropsTransformer} from './components/props_transformer/ProjectsFDSPropsTransformer';

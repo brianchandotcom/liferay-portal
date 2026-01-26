@@ -3,18 +3,20 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {
-	AssigneeAvatar,
-	AssigneeTriggerProps,
-	AssigneeValue,
-} from '@liferay/object-dynamic-data-mapping-form-field-type';
 import classNames from 'classnames';
 import React, {Ref, forwardRef} from 'react';
 
-import './AssigneeTrigger.scss';
+import {AssigneeValue} from './Assignee';
+import Avatar from './Avatar';
+
+export interface AssigneeTriggerProps
+	extends React.InputHTMLAttributes<HTMLInputElement> {
+	customClasses?: string;
+	selectedItem?: AssigneeValue | null | {};
+}
 
 function AssigneeTrigger(
-	{className, selectedItem, value, ...props}: AssigneeTriggerProps,
+	{customClasses, selectedItem, value, ...props}: AssigneeTriggerProps,
 	ref: Ref<HTMLInputElement>
 ) {
 	const hasItem = selectedItem && 'name' in selectedItem;
@@ -22,12 +24,12 @@ function AssigneeTrigger(
 	return (
 		<div
 			className={classNames(
-				'site-cmp-site-initializer__assignee-trigger',
-				className
+				'object-field__assignee-trigger',
+				customClasses
 			)}
 		>
 			{hasItem && (
-				<AssigneeAvatar
+				<Avatar
 					image={(selectedItem as AssigneeValue).image}
 					name={(selectedItem as AssigneeValue).name || ''}
 				/>
@@ -35,7 +37,7 @@ function AssigneeTrigger(
 
 			<input
 				{...props}
-				className="site-cmp-site-initializer__assignee-input"
+				className="object-field__assignee-input"
 				placeholder={Liferay.Language.get('unassigned')}
 				ref={ref}
 				value={value}

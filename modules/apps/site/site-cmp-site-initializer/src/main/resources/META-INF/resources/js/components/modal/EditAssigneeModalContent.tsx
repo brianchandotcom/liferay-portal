@@ -5,13 +5,13 @@
 
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
-import {AssigneeValue} from '@liferay/object-dynamic-data-mapping-form-field-type';
+import {
+	Assignee,
+	AssigneeValue,
+} from '@liferay/object-dynamic-data-mapping-form-field-type';
 import React, {useState} from 'react';
 
 import {patchTaskById} from '../../utils/api';
-
-import './../AssigneeTrigger.scss';
-import CustomAssignee from '../CustomAssignee';
 
 type Props = {
 	closeModal: () => void;
@@ -26,7 +26,7 @@ export default function EditAssigneeModalContent({
 	taskId,
 	value: initialValue,
 }: Props) {
-	const [value, setValue] = useState<AssigneeValue | null | {}>(initialValue);
+	const [value, setValue] = useState(initialValue);
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -53,12 +53,19 @@ export default function EditAssigneeModalContent({
 			</ClayModal.Header>
 
 			<ClayModal.Body>
-				<CustomAssignee
+				<Assignee
+					customClasses="form-control"
+					name="assignee"
 					onChange={(value: AssigneeValue | {}) => {
 						setValue(value);
 					}}
-					triggerClassName="form-control"
+					searchURL={
+						Liferay.ThemeDisplay.getPortalURL() +
+						'/o/cmp/assignee-context/'
+					}
+					showLabel={false}
 					value={value}
+					visible={true}
 				/>
 			</ClayModal.Body>
 

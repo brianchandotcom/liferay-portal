@@ -420,6 +420,11 @@ public abstract class BaseUserAccountBriefResourceTestCase {
 	}
 
 	@Test
+	public void testPatchDigitalSalesRoomUserAccountBrief() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testPostDigitalSalesRoomUserAccountBrief() throws Exception {
 		UserAccountBrief randomUserAccountBrief = randomUserAccountBrief();
 

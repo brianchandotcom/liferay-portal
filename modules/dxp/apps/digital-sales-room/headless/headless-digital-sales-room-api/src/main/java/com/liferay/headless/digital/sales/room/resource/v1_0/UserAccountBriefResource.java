@@ -51,6 +51,11 @@ public interface UserAccountBriefResource {
 			Long digitalSalesRoomId, Pagination pagination)
 		throws Exception;
 
+	public UserAccountBrief patchDigitalSalesRoomUserAccountBrief(
+			Long digitalSalesRoomId, Long userAccountBriefId,
+			UserAccountBrief userAccountBrief)
+		throws Exception;
+
 	public UserAccountBrief postDigitalSalesRoomUserAccountBrief(
 			Long digitalSalesRoomId, UserAccountBrief userAccountBrief)
 		throws Exception;

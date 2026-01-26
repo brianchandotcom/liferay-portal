@@ -1007,6 +1007,15 @@ public class SitePageResourceImpl
 				serviceContext);
 		}
 		else {
+			if (layout.isTypeEmpty()) {
+				layout = _layoutService.convertEmptyLayout(
+					layout.getPlid(), nameMap,
+					SitePageTypeUtil.toInternalType(sitePage.getType()),
+					layout.getClassNameId(), layout.getClassPK(),
+					layout.getMasterLayoutPageTemplateEntryERC(),
+					serviceContext);
+			}
+
 			layout = LayoutUtil.updatePortletLayout(
 				_cetManager, layout, nameMap, titleMap, descriptionMap,
 				keywordsMap, robotsMap, friendlyURLMap,

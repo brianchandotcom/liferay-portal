@@ -8,23 +8,14 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 import com.liferay.asset.categories.admin.web.constants.AssetCategoriesAdminPortletKeys;
 import com.liferay.asset.tags.constants.AssetTagsAdminPortletKeys;
 import com.liferay.asset.util.AssetHelper;
-import com.liferay.exportimport.constants.ExportImportPortletKeys;
-import com.liferay.petra.function.UnsafeConsumer;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
-
-import jakarta.portlet.PortletRequest;
+import com.liferay.site.cms.site.initializer.internal.util.ExportImportUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -47,25 +38,14 @@ public class ViewTagsDisplayContext {
 	public Map<String, Object> getReactData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
 			"actionItems",
-			JSONUtil.put(JSONUtil.put(
-				"href",
-				_getControlPanelPortletURL(
-					AssetCategoriesAdminPortletKeys.
-						ASSET_CATEGORIES_ADMIN)
-			).put(
-				"label",
-				LanguageUtil.get(
-					_httpServletRequest,
-					"export-import-vocabularies")
-			)).put(JSONUtil.put(
-				"href",
-				_getControlPanelPortletURL(
-					AssetTagsAdminPortletKeys.ASSET_TAGS_ADMIN)
-			).put(
-				"label",
-				LanguageUtil.get(
-					_httpServletRequest, "export-import-tags")
-			))
+			JSONUtil.putAll(
+				ExportImportUtil.getActionItemJSONObject(
+					_httpServletRequest, "export-import-vocabularies",
+					AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN,
+					_themeDisplay),
+				ExportImportUtil.getActionItemJSONObject(
+					_httpServletRequest, "export-import-tags",
+					AssetTagsAdminPortletKeys.ASSET_TAGS_ADMIN, _themeDisplay))
 		).put(
 			"cmsGroupId", _themeDisplay.getScopeGroupId()
 		).put(
@@ -95,28 +75,6 @@ public class ViewTagsDisplayContext {
 					"/categorization/view-vocabularies"),
 				_themeDisplay)
 		).build();
-	}
-
-	private String _getControlPanelPortletURL(String portletId)
-		throws Exception {
-
-		return PortletURLBuilder.create(
-			PortalUtil.getControlPanelPortletURL(
-				_httpServletRequest,
-				_groupService.getGroup(_themeDisplay.getScopeGroupId()),
-				ExportImportPortletKeys.EXPORT_IMPORT, 0, 0,
-				PortletRequest.RENDER_PHASE)
-		).setMVCRenderCommandName(
-			"/export_import/export_import"
-		).setRedirect(
-			PortalUtil.getCurrentURL(_httpServletRequest)
-		).setPortletResource(
-			portletId
-		).setParameter(
-			"returnToFullPageURL", PortalUtil.getCurrentURL(_httpServletRequest)
-		).setWindowState(
-			LiferayWindowState.POP_UP
-		).buildString();
 	}
 
 	private final GroupService _groupService;

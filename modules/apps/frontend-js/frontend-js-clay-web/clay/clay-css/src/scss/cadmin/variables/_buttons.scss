@@ -991,20 +991,19 @@ $cadmin-btn-outline-primary: map-deep-merge(
 		border-color: $cadmin-primary,
 		color: $cadmin-primary,
 		hover: (
-			background-color: $cadmin-primary-l3,
+			background-color: rgba($cadmin-primary, 0.06),
 			border-color: $cadmin-primary,
-			color: $cadmin-primary,
+			color: $cadmin-primary-d1,
 		),
 		focus: (
-			background-color: $cadmin-primary-l3,
+			background-color: rgba($cadmin-primary, 0.06),
 			box-shadow: map-get($cadmin-btn-primary, focus-box-shadow),
-			color: $cadmin-primary,
+			color: $cadmin-primary-d1,
 		),
 		active: (
-			background-color:
-				clay-lighten(clay-desaturate($cadmin-primary, 42.05), 41.76),
+			background-color: rgba($cadmin-primary, 0.12),
 			border-color: $cadmin-primary,
-			color: $cadmin-primary,
+			color: $cadmin-primary-d1,
 		),
 		disabled: (
 			background-color: transparent,
@@ -1021,19 +1020,19 @@ $cadmin-btn-outline-secondary: map-deep-merge(
 		border-color: $cadmin-secondary-l2,
 		color: $cadmin-secondary,
 		hover: (
-			background-color: rgba($cadmin-gray-900, 0.03),
+			background-color: rgba($cadmin-gray-900, 0.06),
 			border-color: transparent,
 			color: map-get(map-get($cadmin-btn-secondary, hover), color),
 		),
 		focus: (
-			background-color: rgba($cadmin-gray-900, 0.03),
+			background-color: rgba($cadmin-gray-900, 0.06),
 			border-color: transparent,
 			box-shadow:
 				map-get(map-get($cadmin-btn-secondary, focus), box-shadow),
 			color: map-get(map-get($cadmin-btn-secondary, focus), color),
 		),
 		active: (
-			background-color: rgba($cadmin-gray-900, 0.06),
+			background-color: rgba($cadmin-gray-900, 0.12),
 			border-color: transparent,
 			color: map-get(map-get($cadmin-btn-secondary, active), color),
 		),
@@ -1288,6 +1287,52 @@ $cadmin-btn-outline-palette: map-deep-merge(
 		danger: $cadmin-btn-outline-danger,
 		light: $cadmin-btn-outline-light,
 		dark: $cadmin-btn-outline-dark,
+		'%clay-dark-btn-outline-primary': (
+			background-color: transparent,
+			color: $cadmin-primary-l1,
+			hover: (
+				background-color: rgba($cadmin-primary-l1, 0.06),
+				color: $cadmin-primary-l2,
+			),
+			focus: (
+				background-color: rgba($cadmin-primary-l1, 0.06),
+				color: $cadmin-primary-l2,
+			),
+			active: (
+				background-color: rgba($cadmin-primary-l1, 0.12),
+				color: $cadmin-primary-l2,
+			),
+			disabled: (
+				background-color: transparent,
+				color: $cadmin-primary-l1,
+			),
+		),
+		'.clay-dark .btn-outline-primary, .clay-dark.btn-outline-primary': (
+			extend: '%clay-dark-btn-outline-primary',
+		),
+		'%clay-dark-btn-outline-secondary': (
+			background-color: transparent,
+			color: $cadmin-secondary-l1,
+			hover: (
+				background-color: rgba($cadmin-white, 0.06),
+				color: $cadmin-white,
+			),
+			focus: (
+				background-color: rgba($cadmin-white, 0.06),
+				color: $cadmin-white,
+			),
+			active: (
+				background-color: rgba($cadmin-white, 0.12),
+				color: $cadmin-white,
+			),
+			disabled: (
+				background-color: transparent,
+				color: $cadmin-secondary-l1,
+			),
+		),
+		'.clay-dark .btn-outline-secondary, .clay-dark.btn-outline-secondary': (
+			extend: '%clay-dark-btn-outline-secondary',
+		),
 	),
 	$cadmin-btn-outline-palette
 );

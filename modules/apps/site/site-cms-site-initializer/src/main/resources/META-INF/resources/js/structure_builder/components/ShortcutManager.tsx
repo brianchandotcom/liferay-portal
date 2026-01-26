@@ -1,0 +1,259 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {isCtrlOrMeta} from '@liferay/layout-js-components-web';
+import {useEffect, useMemo} from 'react';
+
+import {useCache, useStaleCache} from '../contexts/CacheContext';
+import {useSelector, useStateDispatch} from '../contexts/StateContext';
+import selectState from '../selectors/selectState';
+import {deleteSelection} from '../utils/deleteSelection';
+import findChild from '../utils/findChild';
+import isReferenced from '../utils/isReferenced';
+import isRenamable from '../utils/isRenamable';
+import openReferencedStructureModal from '../utils/openReferencedStructureModal';
+import {publishStructure} from '../utils/publishStructure';
+import {saveStructure} from '../utils/saveStructure';
+import {useValidate} from '../utils/validation';
+
+type Combo = string;
+
+type Shortcut = {
+	enabled: () => boolean;
+	handler: () => void;
+};
+
+export default function ShortcutManager() {
+	const state = useSelector(selectState);
+
+	const {publishedChildren, selection, structure} = state;
+
+	const staleCache = useStaleCache();
+	const dispatch = useStateDispatch();
+	const validate = useValidate();
+
+	const {data: objectDefinitions, status: objectDefinitionsStatus} =
+		useCache('object-definitions');
+
+	const shortcuts = useMemo(() => {
+		const map: Map<Combo, Shortcut> = new Map();
+
+		// Duplicate child
+
+		map.set('Ctrl+D', {
+			enabled: () => {
+				if (selection.length > 1) {
+					return false;
+				}
+
+				const [uuid] = selection;
+
+				const item = findChild({root: structure, uuid})!;
+
+				if (
+					isReferenced({item, root: structure}) ||
+					('locked' in item && item.locked)
+				) {
+					return false;
+				}
+
+				return true;
+			},
+			handler: () =>
+				dispatch({type: 'duplicate-child', uuid: selection[0]}),
+		});
+
+		// Rename item
+
+		map.set('Ctrl+Alt+R', {
+			enabled: () => {
+				if (selection.length > 1) {
+					return false;
+				}
+
+				const [uuid] = selection;
+
+				if (!isRenamable({structure, uuid})) {
+					return false;
+				}
+
+				return true;
+			},
+			handler: () =>
+				dispatch({type: 'set-renaming-item-uuid', uuid: selection[0]}),
+		});
+
+		// Delete item
+
+		const deleteShortcut: Shortcut = {
+			enabled: () => Boolean(selection.length),
+			handler: () =>
+				deleteSelection({
+					dispatch,
+					publishedChildren,
+					selection,
+					structure,
+				}),
+		};
+
+		map.set('Backspace', deleteShortcut);
+		map.set('Delete', deleteShortcut);
+
+		// Open referenced structures modal
+
+		map.set('Shift+Enter', {
+			enabled: () => true,
+			handler: () =>
+				openReferencedStructureModal({
+					dispatch,
+					objectDefinitions,
+					status: objectDefinitionsStatus,
+					structure,
+				}),
+		});
+
+		// Create repeatable group
+
+		map.set('Ctrl+G', {
+			enabled: () => Boolean(selection.length),
+			handler: () => dispatch({type: 'add-repeatable-group'}),
+		});
+
+		// Ungroup repeatable group
+
+		map.set('Ctrl+Shift+G', {
+			enabled: () => {
+				if (selection.length > 1) {
+					return false;
+				}
+
+				const [uuid] = selection;
+
+				const item = findChild({root: structure, uuid})!;
+
+				if (
+					isReferenced({item, root: structure}) ||
+					item.type !== 'repeatable-group'
+				) {
+					return false;
+				}
+
+				return true;
+			},
+			handler: () => dispatch({type: 'ungroup', uuid: selection[0]}),
+		});
+
+		// Save structure
+
+		map.set('Ctrl+S', {
+			enabled: () => structure.status !== 'published',
+			handler: () =>
+				saveStructure({
+					dispatch,
+					objectDefinitions,
+					state,
+					validate,
+				}),
+		});
+
+		// Publish structure
+
+		map.set('Ctrl+P', {
+			enabled: () => true,
+			handler: () =>
+				publishStructure({
+					dispatch,
+					objectDefinitions,
+					showExperienceLink: true,
+					staleCache,
+					state,
+					validate,
+				}),
+		});
+
+		return map;
+	}, [
+		dispatch,
+		objectDefinitions,
+		objectDefinitionsStatus,
+		publishedChildren,
+		selection,
+		staleCache,
+		state,
+		structure,
+		validate,
+	]);
+
+	useEffect(() => {
+		const onKeyDown = (event: KeyboardEvent) => {
+			if (isInteractiveElement(event)) {
+				return;
+			}
+
+			const combo = getCombo(event);
+
+			const shortcut = shortcuts.get(combo);
+
+			if (shortcut?.enabled()) {
+				event.stopPropagation();
+				event.preventDefault();
+
+				shortcut.handler();
+			}
+		};
+
+		window.addEventListener('keydown', onKeyDown);
+
+		return () => {
+			window.removeEventListener('keydown', onKeyDown);
+		};
+	}, [shortcuts]);
+
+	return null;
+}
+
+function getCombo(event: KeyboardEvent): Combo {
+	const keys = [];
+
+	if (isCtrlOrMeta(event)) {
+		keys.push('Ctrl');
+	}
+	if (event.altKey) {
+		keys.push('Alt');
+	}
+	if (event.shiftKey) {
+		keys.push('Shift');
+	}
+
+	keys.push(event.code.replace('Key', ''));
+
+	return keys.join('+');
+}
+
+function isInteractiveElement(event: KeyboardEvent): boolean {
+	const target = event.target as HTMLElement | null;
+
+	if (!target) {
+		return false;
+	}
+
+	if (
+		target instanceof HTMLInputElement ||
+		target instanceof HTMLTextAreaElement ||
+		target instanceof HTMLSelectElement
+	) {
+		return true;
+	}
+
+	if (target.isContentEditable) {
+		return true;
+	}
+
+	if (target.closest('[contenteditable="true"]')) {
+		return true;
+	}
+
+	return false;
+}

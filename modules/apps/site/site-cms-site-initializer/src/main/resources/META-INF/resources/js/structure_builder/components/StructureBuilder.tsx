@@ -17,6 +17,7 @@ import StateContextProvider, {useSelector} from '../contexts/StateContext';
 import selectStructureId from '../selectors/selectStructureId';
 import selectStructureStatus from '../selectors/selectStructureStatus';
 import buildState from '../utils/buildState';
+import ShortcutManager from './ShortcutManager';
 import Sidebar from './Sidebar';
 import StructureBuilderToolbar from './StructureBuilderToolbar';
 import Settings from './settings/Settings';
@@ -42,6 +43,8 @@ export default function StructureBuilder({
 			>
 				<div className="d-flex flex-column structure-builder__wrapper">
 					<HistoryManager />
+
+					<ShortcutManager />
 
 					<StructureBuilderToolbar />
 

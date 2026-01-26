@@ -272,7 +272,7 @@ public interface SegmentsExperimentLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SegmentsExperiment> getSegmentsEntrySegmentsExperiments(
-		long segmentsEntryId);
+		String segmentsEntryERC, long segmentsEntryGroupId);
 
 	/**
 	 * Returns the segments experiment with the primary key.

@@ -49,6 +49,10 @@ public class ExportImportUtil {
 					portletResource)
 			).put(
 				"label", LanguageUtil.get(httpServletRequest, languageKey)
+			).put(
+				"redirect", themeDisplay.getURLCurrent()
+			).put(
+				"target", "modal"
 			);
 		}
 		catch (Exception exception) {

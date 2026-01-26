@@ -83,3 +83,9 @@ class MockBroadcastChannel {
 	},
 	authToken: 'mocked-auth-token',
 };
+
+(globalThis as any).ResizeObserver = jest.fn().mockImplementation(() => ({
+	disconnect: jest.fn(),
+	observe: jest.fn(),
+	unobserve: jest.fn(),
+}));

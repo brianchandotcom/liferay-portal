@@ -766,6 +766,12 @@ public class TaxonomyCategoryResourceImpl
 			taxonomyCategory.getParentTaxonomyCategory();
 
 		if (parentTaxonomyCategory == null) {
+			if (AssetCategoryConstants.EMPTY_PARENT_CATEGORY_ID ==
+					assetCategory.getParentCategoryId()) {
+
+				return AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;
+			}
+
 			return assetCategory.getParentCategoryId();
 		}
 

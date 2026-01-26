@@ -8,6 +8,8 @@ import {fetch} from 'frontend-js-web';
 
 import {EActionType} from './types';
 
+const AI_HUB_ENDPOINT = '/o/ai-hub/v1.0';
+
 export async function createEventSource() {
 	const tokens = await postToken();
 
@@ -15,7 +17,7 @@ export async function createEventSource() {
 		return;
 	}
 
-	return new EventSource('/o/ai-hub/v1.0/tasks/subscribe', {
+	return new EventSource(`${AI_HUB_ENDPOINT}/tasks/subscribe`, {
 		fetch: (input, init) =>
 			fetch(input as RequestInfo, {
 				...init,
@@ -31,7 +33,9 @@ export async function createEventSource() {
 
 async function postToken() {
 	try {
-		const response = await fetch('/o/ai-hub/v1.0/tokens', {method: 'POST'});
+		const response = await fetch(`${AI_HUB_ENDPOINT}/tokens`, {
+			method: 'POST',
+		});
 
 		if (!response.ok) {
 			throw new Error(`Unable to generate token: ${response.statusText}`);
@@ -45,9 +49,9 @@ async function postToken() {
 
 		if (!data?.userToken) {
 			throw new Error('Unable to generate user token.');
-        }
+		}
 
-        return data;
+		return data;
 	}
 	catch (error) {
 		console.warn((error as Error).message);
@@ -65,7 +69,7 @@ export async function postTask(
 		return;
 	}
 
-	await fetch(`/o/ai-hub/v1.0/tasks`, {
+	await fetch(`${AI_HUB_ENDPOINT}/tasks`, {
 		body: JSON.stringify({
 			context: {
 				text: content,

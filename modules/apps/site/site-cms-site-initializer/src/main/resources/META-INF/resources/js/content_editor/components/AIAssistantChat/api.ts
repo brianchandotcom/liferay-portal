@@ -6,6 +6,8 @@
 import {EventSource} from 'eventsource';
 import {fetch} from 'frontend-js-web';
 
+const AI_HUB_ENDPOINT = '/o/ai-hub/v1.0';
+
 export async function createEventSource() {
 	const tokens = await postToken();
 
@@ -13,14 +15,14 @@ export async function createEventSource() {
 		return null;
 	}
 
-	return new EventSource('/o/ai-hub/v1.0/chats/subscribe', {
+	return new EventSource(`${AI_HUB_ENDPOINT}/tasks/subscribe`, {
 		fetch: (input, init) =>
 			fetch(input as RequestInfo, {
 				...init,
 				headers: new Headers({
 					'Accept': 'text/event-stream',
 					'Authorization': `Bearer ${tokens.accessToken}`,
-					'Liferay-AI-Hub-On-Behalf-Of': `Bearer ${token.userToken}`,
+					'Liferay-AI-Hub-On-Behalf-Of': `Bearer ${tokens.userToken}`,
 				}),
 			}),
 		withCredentials: true,
@@ -29,7 +31,9 @@ export async function createEventSource() {
 
 async function postToken() {
 	try {
-		const response = await fetch('/o/ai-hub/v1.0/tokens', {method: 'POST'});
+		const response = await fetch(`${AI_HUB_ENDPOINT}/tokens`, {
+			method: 'POST',
+		});
 
 		if (!response.ok) {
 			throw new Error(`Unable to generate token: ${response.statusText}`);
@@ -65,7 +69,7 @@ export async function postChatByExternalReferenceCodeMessage(
 	}
 
 	return await fetch(
-		`/o/ai-hub/v1.0/chats/by-external-reference-code/${eventSourceReference}/messages`,
+		`${AI_HUB_ENDPOINT}/chats/by-external-reference-code/${eventSourceReference}/messages`,
 		{
 			body: JSON.stringify({
 				context: {
@@ -76,9 +80,9 @@ export async function postChatByExternalReferenceCodeMessage(
 			}),
 			headers: new Headers({
 				'Accept': 'application/json',
-				'Authorization': `Bearer ${token.accessToken}`,
+				'Authorization': `Bearer ${tokens.accessToken}`,
 				'Content-Type': 'application/json',
-				'Liferay-AI-Hub-On-Behalf-Of': `Bearer ${token.userToken}`,
+				'Liferay-AI-Hub-On-Behalf-Of': `Bearer ${tokens.userToken}`,
 			}),
 			method: 'POST',
 		}

@@ -66,7 +66,7 @@ public class ExportImportUtil {
 
 	private static String _getControlPanelPortletURL(
 			Group group, HttpServletRequest httpServletRequest,
-			String portletId)
+			String portletResource)
 		throws Exception {
 
 		return PortletURLBuilder.create(
@@ -79,7 +79,7 @@ public class ExportImportUtil {
 		).setRedirect(
 			PortalUtil.getCurrentURL(httpServletRequest)
 		).setPortletResource(
-			portletId
+			portletResource
 		).setParameter(
 			"returnToFullPageURL", PortalUtil.getCurrentURL(httpServletRequest)
 		).setWindowState(

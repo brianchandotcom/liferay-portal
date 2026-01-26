@@ -9,7 +9,7 @@ import '@testing-library/jest-dom';
 import {fireEvent, render, screen} from '@testing-library/react';
 import {openModal} from 'frontend-js-components-web';
 
-import {ViewImportReportEntryDetail} from '../../../src/main/resources/META-INF/resources/revamp/js/pages/import/report/ViewImportReportEntryDetail';
+import {ViewImportReportEntryDetail} from '../../../../../src/main/resources/META-INF/resources/revamp/js/pages/import/report/ViewImportReportEntryDetail';
 
 const renderComponent = (props) => {
 	return <ViewImportReportEntryDetail {...props} />;

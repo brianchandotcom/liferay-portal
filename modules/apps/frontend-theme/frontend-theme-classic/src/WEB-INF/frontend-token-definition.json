@@ -1416,7 +1416,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#f0f5ff",
+							"defaultValue": "#0b5fff0f",
 							"editorType": "ColorPicker",
 							"label": "hover-background-color",
 							"mappings": [
@@ -1442,7 +1442,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#0b5fff",
+							"defaultValue": "#0053f0",
 							"editorType": "ColorPicker",
 							"label": "hover-color",
 							"mappings": [
@@ -1571,7 +1571,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "rgba(39, 40, 51, 0.03)",
+							"defaultValue": "#2728330f",
 							"editorType": "ColorPicker",
 							"label": "hover-background-color",
 							"mappings": [

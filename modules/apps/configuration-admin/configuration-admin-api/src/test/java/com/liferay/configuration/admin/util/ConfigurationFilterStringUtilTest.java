@@ -9,6 +9,8 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.io.Serializable;
+
 import java.util.Collections;
 import java.util.Map;
 
@@ -41,37 +43,37 @@ public class ConfigurationFilterStringUtilTest {
 
 		_test(
 			false, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				"companyId", "any"
 			).put(
 				"groupId", "any"
 			).build());
 		_test(
 			false, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				"companyId", "any"
 			).put(
 				"portletInstanceId", "any"
 			).build());
 		_test(
 			false, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				"companyId", "any"
 			).put(
 				"siteExternalReferenceCode", "any"
 			).build());
 		_test(
 			true, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				"companyId", "any"
 			).build());
 		_test(
 			true, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				"dxp.lxc.liferay.com.virtualInstanceId", "any"
 			).build());
 
-		String companyId = String.valueOf(RandomTestUtil.randomLong());
+		Long companyId = RandomTestUtil.randomLong();
 		String virtualInstanceId = RandomTestUtil.randomString();
 
 		filterString =
@@ -80,45 +82,45 @@ public class ConfigurationFilterStringUtilTest {
 
 		_test(
 			false, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				"companyId", "any"
 			).build());
 		_test(
 			false, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				"companyId", companyId
 			).put(
 				"groupId", "any"
 			).build());
 		_test(
 			false, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				"companyId", companyId
 			).put(
 				"portletInstanceId", "any"
 			).build());
 		_test(
 			false, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				"companyId", companyId
 			).put(
 				"siteExternalReferenceCode", "any"
 			).build());
 		_test(
 			true, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				"companyId", companyId
 			).build());
 		_test(
 			true, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				"companyId", companyId
 			).put(
 				"dxp.lxc.liferay.com.virtualInstanceId", virtualInstanceId
 			).build());
 		_test(
 			true, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				"dxp.lxc.liferay.com.virtualInstanceId", virtualInstanceId
 			).build());
 
@@ -132,14 +134,14 @@ public class ConfigurationFilterStringUtilTest {
 
 		_test(
 			false, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				ConfigurationAdmin.SERVICE_FACTORYPID, rawPid
 			).put(
 				"companyId", "any"
 			).build());
 		_test(
 			true, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				ConfigurationAdmin.SERVICE_FACTORYPID, rawPid
 			).put(
 				Constants.SERVICE_PID, pid
@@ -156,23 +158,23 @@ public class ConfigurationFilterStringUtilTest {
 
 		_test(
 			false, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				"groupId", "any"
 			).put(
 				"portletInstanceId", "any"
 			).build());
 		_test(
 			true, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				"groupId", "any"
 			).build());
 		_test(
 			true, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				"siteExternalReferenceCode", "any"
 			).build());
 
-		String groupId = String.valueOf(RandomTestUtil.randomLong());
+		Long groupId = RandomTestUtil.randomLong();
 		String siteExternalReferenceCode = RandomTestUtil.randomString();
 
 		filterString = ConfigurationFilterStringUtil.getGroupScopedFilterString(
@@ -180,24 +182,24 @@ public class ConfigurationFilterStringUtilTest {
 
 		_test(
 			false, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				"groupId", "any"
 			).build());
 		_test(
 			false, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				"groupId", groupId
 			).put(
 				"portletInstanceId", "any"
 			).build());
 		_test(
 			true, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				"groupId", groupId
 			).build());
 		_test(
 			true, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				"siteExternalReferenceCode", siteExternalReferenceCode
 			).build());
 
@@ -210,14 +212,14 @@ public class ConfigurationFilterStringUtilTest {
 
 		_test(
 			false, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				ConfigurationAdmin.SERVICE_FACTORYPID, rawPid
 			).put(
 				"groupId", "any"
 			).build());
 		_test(
 			true, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				ConfigurationAdmin.SERVICE_FACTORYPID, rawPid
 			).put(
 				Constants.SERVICE_PID, pid
@@ -234,30 +236,30 @@ public class ConfigurationFilterStringUtilTest {
 
 		_test(
 			false, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				"groupId", "any"
 			).build());
 		_test(
 			false, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				"siteExternalReferenceCode", "any"
 			).build());
 		_test(
 			true, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				"groupId", "any"
 			).put(
 				"portletInstanceId", "any"
 			).build());
 		_test(
 			true, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				"portletInstanceId", "any"
 			).put(
 				"siteExternalReferenceCode", "any"
 			).build());
 
-		String groupId = String.valueOf(RandomTestUtil.randomLong());
+		Long groupId = RandomTestUtil.randomLong();
 		String portletInstanceId = RandomTestUtil.randomString();
 		String siteExternalReferenceCode = RandomTestUtil.randomString();
 
@@ -267,33 +269,33 @@ public class ConfigurationFilterStringUtilTest {
 
 		_test(
 			false, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				"groupId", "any"
 			).put(
 				"portletInstanceId", portletInstanceId
 			).build());
 		_test(
 			false, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				"groupId", groupId
 			).put(
 				"portletInstanceId", "any"
 			).build());
 		_test(
 			false, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				"portletInstanceId", portletInstanceId
 			).build());
 		_test(
 			true, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				"groupId", groupId
 			).put(
 				"portletInstanceId", portletInstanceId
 			).build());
 		_test(
 			true, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				"portletInstanceId", portletInstanceId
 			).put(
 				"siteExternalReferenceCode", siteExternalReferenceCode
@@ -309,7 +311,7 @@ public class ConfigurationFilterStringUtilTest {
 
 		_test(
 			false, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				ConfigurationAdmin.SERVICE_FACTORYPID, rawPid
 			).put(
 				"groupId", "any"
@@ -318,7 +320,7 @@ public class ConfigurationFilterStringUtilTest {
 			).build());
 		_test(
 			true, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				ConfigurationAdmin.SERVICE_FACTORYPID, rawPid
 			).put(
 				Constants.SERVICE_PID, pid
@@ -336,33 +338,33 @@ public class ConfigurationFilterStringUtilTest {
 
 		_test(
 			false, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				"companyId", "any"
 			).build());
 		_test(
 			false, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				"dxp.lxc.liferay.com.virtualInstanceId", "any"
 			).build());
 		_test(
 			false, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				"groupId", "any"
 			).build());
 		_test(
 			false, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				"portletInstanceId", "any"
 			).build());
 		_test(
 			false, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				"siteExternalReferenceCode", "any"
 			).build());
 		_test(true, filterString, Collections.emptyMap());
 		_test(
 			true, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				"companyId", "0"
 			).build());
 
@@ -373,7 +375,7 @@ public class ConfigurationFilterStringUtilTest {
 
 		_test(
 			false, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				ConfigurationAdmin.SERVICE_FACTORYPID, pid
 			).put(
 				Constants.SERVICE_PID, pid
@@ -382,17 +384,17 @@ public class ConfigurationFilterStringUtilTest {
 			).build());
 		_test(
 			true, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				ConfigurationAdmin.SERVICE_FACTORYPID, pid
 			).build());
 		_test(
 			true, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				Constants.SERVICE_PID, pid
 			).build());
 		_test(
 			true, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				ConfigurationAdmin.SERVICE_FACTORYPID, pid
 			).put(
 				Constants.SERVICE_PID, pid
@@ -409,12 +411,12 @@ public class ConfigurationFilterStringUtilTest {
 
 		_test(
 			false, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				ConfigurationAdmin.SERVICE_FACTORYPID, rawPid
 			).build());
 		_test(
 			false, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				ConfigurationAdmin.SERVICE_FACTORYPID, rawPid
 			).put(
 				Constants.SERVICE_PID, pid
@@ -423,14 +425,14 @@ public class ConfigurationFilterStringUtilTest {
 			).build());
 		_test(
 			true, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				ConfigurationAdmin.SERVICE_FACTORYPID, rawPid
 			).put(
 				Constants.SERVICE_PID, pid
 			).build());
 		_test(
 			true, filterString,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
 				ConfigurationAdmin.SERVICE_FACTORYPID, rawPid
 			).put(
 				Constants.SERVICE_PID, pid
@@ -441,7 +443,7 @@ public class ConfigurationFilterStringUtilTest {
 
 	private void _test(
 			boolean matches, String pidFilterString,
-			Map<String, String> payload)
+			Map<String, Serializable> payload)
 		throws Exception {
 
 		Filter filter = FrameworkUtil.createFilter(pidFilterString);

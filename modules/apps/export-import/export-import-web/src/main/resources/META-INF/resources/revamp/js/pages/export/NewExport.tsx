@@ -12,7 +12,11 @@ import SetupStep from './steps/SetupStep';
 
 export function NewExport({backURL}: {backURL: string}) {
 	return (
-		<Wizard backURL={backURL}>
+		<Wizard
+			backURL={backURL}
+			onSubmit={() => {}}
+			onSubmitLabel={Liferay.Language.get('export')}
+		>
 			<WizardStep
 				description={Liferay.Language.get(
 					'name-your-export-and-make-an-initial-data-selection-to-narrow-down-in-the-next-step'

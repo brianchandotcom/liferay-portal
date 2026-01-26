@@ -5,15 +5,12 @@
 
 package com.liferay.ai.hub.rest.internal.resource.v1_0.util;
 
-import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import jakarta.servlet.http.HttpServletRequest;
-
-import jakarta.ws.rs.sse.Sse;
 
 import java.io.Serializable;
 
@@ -26,10 +23,8 @@ public class WorkflowContextUtil {
 
 	public static Map<String, Serializable> toWorkflowContext(
 			Map<String, ?> context, HttpServletRequest httpServletRequest,
-			Sse sse, String sseEventSinkKey)
+			String sseEventSinkKey)
 		throws PortalException {
-
-		SseUtil.setSse(sse);
 
 		Map<String, Serializable> workflowContext =
 			HashMapBuilder.<String, Serializable>put(

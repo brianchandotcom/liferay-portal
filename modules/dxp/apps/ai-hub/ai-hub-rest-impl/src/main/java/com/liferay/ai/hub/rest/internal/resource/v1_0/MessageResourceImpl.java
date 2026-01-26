@@ -10,15 +10,11 @@ import com.liferay.ai.hub.agent.SupervisorAgent;
 import com.liferay.ai.hub.rest.dto.v1_0.Message;
 import com.liferay.ai.hub.rest.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.ai.hub.rest.resource.v1_0.MessageResource;
-import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
-
-import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.sse.Sse;
 
 import java.util.Map;
 
@@ -45,8 +41,6 @@ public class MessageResourceImpl extends BaseMessageResourceImpl {
 
 			throw new UnsupportedOperationException();
 		}
-
-		SseUtil.setSse(_sse);
 
 		_supervisorAgent.invoke(
 			AgentContext.builder(
@@ -80,9 +74,6 @@ public class MessageResourceImpl extends BaseMessageResourceImpl {
 
 	@Reference
 	private GroupService _groupService;
-
-	@Context
-	private Sse _sse;
 
 	@Reference
 	private SupervisorAgent _supervisorAgent;

@@ -63,7 +63,7 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 
 		Map<String, Serializable> workflowContext =
 			WorkflowContextUtil.toWorkflowContext(
-				task.getContext(), contextHttpServletRequest, _sse,
+				task.getContext(), contextHttpServletRequest,
 				task.getSseEventSinkKey());
 
 		workflowContext.put("outBoundEventName", task.getType());

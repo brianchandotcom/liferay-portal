@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marko Cikos
  */
 @Component(service = FragmentRenderer.class)
-public class FiltersFDSFragmentRenderer implements FragmentRenderer {
+public class AdvancedFiltersFDSFragmentRenderer implements FragmentRenderer {
 
 	@Override
 	public String getCollectionKey() {
@@ -40,12 +40,12 @@ public class FiltersFDSFragmentRenderer implements FragmentRenderer {
 
 	@Override
 	public String getKey() {
-		return "filters-fds-sample";
+		return "advanced-filters-fds-sample";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return "Filters FDS Sample";
+		return "Advanced FDS Filters";
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class FiltersFDSFragmentRenderer implements FragmentRenderer {
 
 		_reactRenderer.renderReact(
 			new ComponentDescriptor(
-				"{Filters} from frontend-data-set-sample-web"),
+				"{AdvancedFilters} from frontend-data-set-sample-web"),
 			new HashMap<>(), httpServletRequest, printWriter);
 	}
 

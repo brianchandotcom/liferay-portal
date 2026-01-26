@@ -12,19 +12,21 @@ import EmptyPropsTransformer from './EmptyPropsTransformer';
 import GreenCheckColorTableCell from './GreenCheckColorTableCell';
 import ReactFrontendDataSet from './ReactFrontendDataSet';
 import SingleSelectionPropsTransformer from './SingleSelectionPropsTransformer';
-import Filters from './fragments/Filters';
-import Search from './fragments/Search';
+import AdvancedFilters from './fragments/AdvancedFilters';
+import AdvancedSearch from './fragments/AdvancedSearch';
+import ClassicSearch from './fragments/ClassicSearch';
 
 export {
+	AdvancedFilters,
 	AdvancedPropsTransformer,
+	AdvancedSearch,
+	ClassicSearch,
 	ContentRenderersFrontendDataSet,
 	ControlledFrontendDataSet,
 	CustomAuthorTableCell,
 	CustomInternalViewPropsTransformer,
 	EmptyPropsTransformer,
-	Filters,
 	GreenCheckColorTableCell,
 	ReactFrontendDataSet,
 	SingleSelectionPropsTransformer,
-	Search,
 };

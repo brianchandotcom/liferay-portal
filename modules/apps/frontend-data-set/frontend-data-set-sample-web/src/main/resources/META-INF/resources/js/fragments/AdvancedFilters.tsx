@@ -15,7 +15,13 @@ import React from 'react';
 
 import {advancedFDSAtom} from '../utils/atoms';
 
-const Filters = () => {
+/**
+ * This fragment highlights sync with FDS, where contexts are joined through
+ * the atom object. Atom is imported here, and passed to FDS as a prop.
+ *
+ * This is the recommended method of wiring, as it ensures type safety.
+ */
+const AdvancedFilters = () => {
 	const [advancedFDSState, setAdvancedFDSState] =
 		useLiferayState<IFDSState>(advancedFDSAtom);
 
@@ -91,4 +97,4 @@ const Filters = () => {
 	);
 };
 
-export default Filters;
+export default AdvancedFilters;

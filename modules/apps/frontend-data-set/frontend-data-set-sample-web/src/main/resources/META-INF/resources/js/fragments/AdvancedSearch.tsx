@@ -8,13 +8,28 @@ import {ClayInput} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import {IFDSState} from '@liferay/frontend-data-set-web';
 import {useLiferayState} from '@liferay/frontend-js-state-web/react';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
-import {advancedFDSAtom} from '../utils/atoms';
+import {getAtom} from '../utils/getAtom';
 
-const Search = () => {
+const ADVANCED_FDS_ATOM_KEY = 'advancedFDSAtom';
+
+/**
+ * This fragment highlights sync with FDS from isolated context, if there is
+ * already existing recommended sync method on the page. The key used
+ * is the key of the shared atom.
+ *
+ * This is not the recommended sync method. For the recommended method, see
+ * "AdvancedFilters" fragment.
+ */
+const AdvancedSearch = () => {
+	const memoizedAtom = useMemo(
+		() => getAtom({key: ADVANCED_FDS_ATOM_KEY}),
+		[]
+	);
+
 	const [advancedFDSState, setAdvancedFDSState] =
-		useLiferayState<IFDSState>(advancedFDSAtom);
+		useLiferayState<IFDSState>(memoizedAtom);
 
 	const [query, setQuery] = useState(advancedFDSState.search.query ?? '');
 
@@ -37,7 +52,7 @@ const Search = () => {
 
 				<ClayInput.GroupItem>
 					<ClayButton
-						data-qa-id="searchFDSSampleButton"
+						data-qa-id="advancedSearchFDSSampleButton"
 						onClick={() => {
 							setAdvancedFDSState({
 								...(advancedFDSState as IFDSState),
@@ -53,4 +68,4 @@ const Search = () => {
 	);
 };
 
-export default Search;
+export default AdvancedSearch;

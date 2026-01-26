@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marko Cikos
  */
 @Component(service = FragmentRenderer.class)
-public class SearchFDSFragmentRenderer implements FragmentRenderer {
+public class ClassicSearchFDSFragmentRenderer implements FragmentRenderer {
 
 	@Override
 	public String getCollectionKey() {
@@ -40,12 +40,12 @@ public class SearchFDSFragmentRenderer implements FragmentRenderer {
 
 	@Override
 	public String getKey() {
-		return "search-fds-sample";
+		return "classic-search-fds-sample";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return "Search FDS Sample";
+		return "Classic FDS Search";
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class SearchFDSFragmentRenderer implements FragmentRenderer {
 
 		_reactRenderer.renderReact(
 			new ComponentDescriptor(
-				"{Search} from frontend-data-set-sample-web"),
+				"{ClassicSearch} from frontend-data-set-sample-web"),
 			new HashMap<>(), httpServletRequest, printWriter);
 	}
 

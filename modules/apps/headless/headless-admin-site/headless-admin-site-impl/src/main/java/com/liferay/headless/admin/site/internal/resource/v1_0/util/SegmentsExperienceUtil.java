@@ -22,9 +22,11 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
+import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.segments.service.SegmentsExperienceServiceUtil;
 
 import java.util.Objects;
@@ -49,9 +51,7 @@ public class SegmentsExperienceUtil {
 					pageExperience.getSegmentItemExternalReference()),
 				pageExperience.getKey(), layout.getPlid(),
 				LocalizedMapUtil.getLocalizedMap(pageExperience.getName_i18n()),
-				PageExperienceUtil.getPriority(
-					pageExperience.getKey(), layout, priority),
-				true,
+				getPriority(pageExperience.getKey(), layout, priority), true,
 				UnicodePropertiesBuilder.create(
 					true
 				).build(),
@@ -70,6 +70,22 @@ public class SegmentsExperienceUtil {
 		return segmentsExperience;
 	}
 
+	public static int getPriority(String key, Layout layout, Integer priority) {
+		if (Objects.equals(key, SegmentsExperienceConstants.KEY_DEFAULT)) {
+			return 0;
+		}
+
+		if (priority != null) {
+			return priority;
+		}
+
+		int lowestPriority =
+			SegmentsExperienceLocalServiceUtil.getLowestPriority(
+				layout.getGroupId(), layout.getPlid());
+
+		return lowestPriority - 1;
+	}
+
 	public static SegmentsExperience updateSegmentsExperience(
 			FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry,
 			InfoItemServiceRegistry infoItemServiceRegistry, Layout layout,
@@ -85,7 +101,7 @@ public class SegmentsExperienceUtil {
 				serviceContext),
 			layout, segmentsExperience.getSegmentsExperienceId());
 
-		int segmentsExperiencePriority = PageExperienceUtil.getPriority(
+		int segmentsExperiencePriority = getPriority(
 			pageExperience.getKey(), layout, priority);
 
 		if (segmentsExperiencePriority != segmentsExperience.getPriority()) {

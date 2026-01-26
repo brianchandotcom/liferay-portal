@@ -1231,7 +1231,7 @@ public class LayoutUtil {
 
 				SegmentsExperienceServiceUtil.updateSegmentsExperiencePriority(
 					actualSegmentsExperience.getSegmentsExperienceId(),
-					PageExperienceUtil.getPriority(
+					SegmentsExperienceUtil.getPriority(
 						pageExperience.getKey(), layout,
 						pageExperience.getPriority()));
 			}

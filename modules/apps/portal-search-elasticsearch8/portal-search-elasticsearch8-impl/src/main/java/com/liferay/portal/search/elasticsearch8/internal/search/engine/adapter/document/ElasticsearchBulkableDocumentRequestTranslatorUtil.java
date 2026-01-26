@@ -21,20 +21,12 @@ import java.util.Collections;
 
 import org.elasticsearch.action.get.GetRequest;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  */
-@Component(
-	property = "search.engine.impl=Elasticsearch",
-	service = ElasticsearchBulkableDocumentRequestTranslator.class
-)
-public class ElasticsearchBulkableDocumentRequestTranslatorImpl
-	implements ElasticsearchBulkableDocumentRequestTranslator {
+public class ElasticsearchBulkableDocumentRequestTranslatorUtil {
 
-	@Override
-	public DeleteOperation translate(
+	public static DeleteOperation translate(
 		DeleteDocumentRequest deleteDocumentRequest) {
 
 		DeleteOperation.Builder builder = new DeleteOperation.Builder();
@@ -45,15 +37,15 @@ public class ElasticsearchBulkableDocumentRequestTranslatorImpl
 		return builder.build();
 	}
 
-	@Override
-	public GetRequest translate(GetDocumentRequest getDocumentRequest) {
+	public static GetRequest translate(GetDocumentRequest getDocumentRequest) {
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
-	public IndexOperation translate(IndexDocumentRequest indexDocumentRequest) {
+	public static IndexOperation<JsonData> translate(
+		IndexDocumentRequest indexDocumentRequest) {
+
 		IndexOperation.Builder<JsonData> builder =
-			new IndexOperation.Builder<JsonData>();
+			new IndexOperation.Builder<>();
 
 		builder.document(
 			DocumentRequestTranslatorUtil.getDocument(
@@ -65,8 +57,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorImpl
 		return builder.build();
 	}
 
-	@Override
-	public UpdateOperation translate(
+	public static UpdateOperation translate(
 		UpdateDocumentRequest updateDocumentRequest) {
 
 		UpdateOperation.Builder builder = new UpdateOperation.Builder();
@@ -99,6 +90,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorImpl
 		return builder.build();
 	}
 
-	private final ScriptTranslator _scriptTranslator = new ScriptTranslator();
+	private static final ScriptTranslator _scriptTranslator =
+		new ScriptTranslator();
 
 }

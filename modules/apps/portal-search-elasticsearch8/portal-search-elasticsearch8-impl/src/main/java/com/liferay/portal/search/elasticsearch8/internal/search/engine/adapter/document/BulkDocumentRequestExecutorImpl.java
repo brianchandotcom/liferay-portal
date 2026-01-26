@@ -134,21 +134,21 @@ public class BulkDocumentRequestExecutorImpl
 				request -> {
 					if (request instanceof DeleteDocumentRequest) {
 						DeleteOperation deleteOperation =
-							_elasticsearchBulkableDocumentRequestTranslator.
+							ElasticsearchBulkableDocumentRequestTranslatorUtil.
 								translate((DeleteDocumentRequest)request);
 
 						builder.operations(new BulkOperation(deleteOperation));
 					}
 					else if (request instanceof IndexDocumentRequest) {
 						IndexOperation<JsonData> indexOperation =
-							_elasticsearchBulkableDocumentRequestTranslator.
+							ElasticsearchBulkableDocumentRequestTranslatorUtil.
 								translate((IndexDocumentRequest)request);
 
 						builder.operations(new BulkOperation(indexOperation));
 					}
 					else if (request instanceof UpdateDocumentRequest) {
 						UpdateOperation<JsonData, JsonData> updateOperation =
-							_elasticsearchBulkableDocumentRequestTranslator.
+							ElasticsearchBulkableDocumentRequestTranslatorUtil.
 								translate((UpdateDocumentRequest)request);
 
 						builder.operations(new BulkOperation(updateOperation));
@@ -218,10 +218,6 @@ public class BulkDocumentRequestExecutorImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BulkDocumentRequestExecutorImpl.class);
-
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
-	private ElasticsearchBulkableDocumentRequestTranslator
-		_elasticsearchBulkableDocumentRequestTranslator;
 
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;

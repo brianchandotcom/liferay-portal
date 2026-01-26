@@ -51,9 +51,6 @@ public class OpenSearchBulkableDocumentRequestTranslatorTest
 
 	@Before
 	public void setUp() throws Exception {
-		_openSearchBulkableDocumentRequestTranslator =
-			new OpenSearchBulkableDocumentRequestTranslatorImpl();
-
 		_documentFixture.setUp();
 	}
 
@@ -113,7 +110,7 @@ public class OpenSearchBulkableDocumentRequestTranslatorTest
 			TEST_INDEX_NAME, id);
 
 		DeleteOperation deleteOperation =
-			_openSearchBulkableDocumentRequestTranslator.translate(
+			OpenSearchBulkableDocumentRequestTranslatorUtil.translate(
 				deleteDocumentRequest);
 
 		Assert.assertEquals(TEST_INDEX_NAME, deleteOperation.index());
@@ -122,7 +119,7 @@ public class OpenSearchBulkableDocumentRequestTranslatorTest
 		BulkRequest bulkRequest = BulkRequest.of(
 			openSearchBulkRequest -> openSearchBulkRequest.operations(
 				new BulkOperation(
-					_openSearchBulkableDocumentRequestTranslator.translate(
+					OpenSearchBulkableDocumentRequestTranslatorUtil.translate(
 						deleteDocumentRequest))));
 
 		List<BulkOperation> bulkOperations = bulkRequest.operations();
@@ -142,7 +139,7 @@ public class OpenSearchBulkableDocumentRequestTranslatorTest
 			TEST_INDEX_NAME, document);
 
 		IndexOperation indexOperation =
-			_openSearchBulkableDocumentRequestTranslator.translate(
+			OpenSearchBulkableDocumentRequestTranslatorUtil.translate(
 				indexDocumentRequest);
 
 		Assert.assertEquals(TEST_INDEX_NAME, indexOperation.index());
@@ -157,7 +154,7 @@ public class OpenSearchBulkableDocumentRequestTranslatorTest
 		BulkRequest bulkRequest = BulkRequest.of(
 			openSearchBulkRequest -> openSearchBulkRequest.operations(
 				new BulkOperation(
-					_openSearchBulkableDocumentRequestTranslator.translate(
+					OpenSearchBulkableDocumentRequestTranslatorUtil.translate(
 						indexDocumentRequest))));
 
 		List<BulkOperation> bulkOperations = bulkRequest.operations();
@@ -177,7 +174,7 @@ public class OpenSearchBulkableDocumentRequestTranslatorTest
 			TEST_INDEX_NAME, id, document);
 
 		UpdateOperation updateOperation =
-			_openSearchBulkableDocumentRequestTranslator.translate(
+			OpenSearchBulkableDocumentRequestTranslatorUtil.translate(
 				updateDocumentRequest);
 
 		Assert.assertEquals(TEST_INDEX_NAME, updateOperation.index());
@@ -186,7 +183,7 @@ public class OpenSearchBulkableDocumentRequestTranslatorTest
 		BulkRequest bulkRequest = BulkRequest.of(
 			openSearchBulkRequest -> openSearchBulkRequest.operations(
 				new BulkOperation(
-					_openSearchBulkableDocumentRequestTranslator.translate(
+					OpenSearchBulkableDocumentRequestTranslatorUtil.translate(
 						updateDocumentRequest))));
 
 		List<BulkOperation> bulkOperations = bulkRequest.operations();
@@ -196,7 +193,5 @@ public class OpenSearchBulkableDocumentRequestTranslatorTest
 	}
 
 	private final DocumentFixture _documentFixture = new DocumentFixture();
-	private OpenSearchBulkableDocumentRequestTranslator
-		_openSearchBulkableDocumentRequestTranslator;
 
 }

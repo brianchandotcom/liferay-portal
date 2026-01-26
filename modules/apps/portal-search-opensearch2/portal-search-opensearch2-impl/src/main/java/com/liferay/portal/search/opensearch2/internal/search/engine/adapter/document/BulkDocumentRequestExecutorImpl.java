@@ -132,21 +132,21 @@ public class BulkDocumentRequestExecutorImpl
 				request -> {
 					if (request instanceof DeleteDocumentRequest) {
 						DeleteOperation deleteOperation =
-							_openSearchBulkableDocumentRequestTranslator.
+							OpenSearchBulkableDocumentRequestTranslatorUtil.
 								translate((DeleteDocumentRequest)request);
 
 						builder.operations(new BulkOperation(deleteOperation));
 					}
 					else if (request instanceof IndexDocumentRequest) {
 						IndexOperation<JsonData> indexOperation =
-							_openSearchBulkableDocumentRequestTranslator.
+							OpenSearchBulkableDocumentRequestTranslatorUtil.
 								translate((IndexDocumentRequest)request);
 
 						builder.operations(new BulkOperation(indexOperation));
 					}
 					else if (request instanceof UpdateDocumentRequest) {
 						UpdateOperation<JsonData> updateOperation =
-							_openSearchBulkableDocumentRequestTranslator.
+							OpenSearchBulkableDocumentRequestTranslatorUtil.
 								translate((UpdateDocumentRequest)request);
 
 						builder.operations(new BulkOperation(updateOperation));
@@ -214,10 +214,6 @@ public class BulkDocumentRequestExecutorImpl
 		BulkDocumentRequestExecutorImpl.class);
 
 	private volatile int _numberOfTries;
-
-	@Reference(target = "(search.engine.impl=OpenSearch)")
-	private OpenSearchBulkableDocumentRequestTranslator
-		_openSearchBulkableDocumentRequestTranslator;
 
 	@Reference
 	private OpenSearchConnectionManager _openSearchConnectionManager;

@@ -18,21 +18,13 @@ import org.opensearch.client.opensearch.core.bulk.DeleteOperation;
 import org.opensearch.client.opensearch.core.bulk.IndexOperation;
 import org.opensearch.client.opensearch.core.bulk.UpdateOperation;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  * @author Petteri Karttunen
  */
-@Component(
-	property = "search.engine.impl=OpenSearch",
-	service = OpenSearchBulkableDocumentRequestTranslator.class
-)
-public class OpenSearchBulkableDocumentRequestTranslatorImpl
-	implements OpenSearchBulkableDocumentRequestTranslator {
+public class OpenSearchBulkableDocumentRequestTranslatorUtil {
 
-	@Override
-	public DeleteOperation translate(
+	public static DeleteOperation translate(
 		DeleteDocumentRequest deleteDocumentRequest) {
 
 		DeleteOperation.Builder builder = new DeleteOperation.Builder();
@@ -43,13 +35,13 @@ public class OpenSearchBulkableDocumentRequestTranslatorImpl
 		return builder.build();
 	}
 
-	@Override
-	public Object translate(GetDocumentRequest getDocumentRequest) {
+	public static Object translate(GetDocumentRequest getDocumentRequest) {
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
-	public IndexOperation translate(IndexDocumentRequest indexDocumentRequest) {
+	public static IndexOperation translate(
+		IndexDocumentRequest indexDocumentRequest) {
+
 		IndexOperation.Builder<JsonData> builder =
 			new IndexOperation.Builder<JsonData>();
 
@@ -63,8 +55,7 @@ public class OpenSearchBulkableDocumentRequestTranslatorImpl
 		return builder.build();
 	}
 
-	@Override
-	public UpdateOperation translate(
+	public static UpdateOperation translate(
 		UpdateDocumentRequest updateDocumentRequest) {
 
 		UpdateOperation.Builder builder = new UpdateOperation.Builder();
@@ -95,6 +86,7 @@ public class OpenSearchBulkableDocumentRequestTranslatorImpl
 		return builder.build();
 	}
 
-	private final ScriptTranslator _scriptTranslator = new ScriptTranslator();
+	private static final ScriptTranslator _scriptTranslator =
+		new ScriptTranslator();
 
 }

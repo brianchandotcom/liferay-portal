@@ -12,7 +12,6 @@ import com.liferay.portal.search.internal.geolocation.GeoBuildersImpl;
 import com.liferay.portal.search.internal.script.ScriptsImpl;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
 import com.liferay.portal.search.opensearch2.internal.query.OpenSearchQueryTranslatorFixture;
-import com.liferay.portal.search.opensearch2.internal.script.ScriptTranslator;
 
 /**
  * @author Dylan Rebelak
@@ -34,32 +33,12 @@ public class DocumentRequestExecutorFixture {
 		_openSearchConnectionManager = openSearchConnectionManager;
 	}
 
-	private OpenSearchBulkableDocumentRequestTranslator
-		_createBulkableDocumentRequestTranslator() {
-
-		OpenSearchBulkableDocumentRequestTranslator
-			openSearchBulkableDocumentRequestTranslator =
-				new OpenSearchBulkableDocumentRequestTranslatorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			openSearchBulkableDocumentRequestTranslator, "_scriptTranslator",
-			new ScriptTranslator());
-
-		return openSearchBulkableDocumentRequestTranslator;
-	}
-
 	private BulkDocumentRequestExecutor _createBulkDocumentRequestExecutor(
-		OpenSearchBulkableDocumentRequestTranslator
-			openSearchBulkableDocumentRequestTranslator,
 		OpenSearchConnectionManager openSearchConnectionManager) {
 
 		BulkDocumentRequestExecutor bulkDocumentRequestExecutor =
 			new BulkDocumentRequestExecutorImpl();
 
-		ReflectionTestUtil.setFieldValue(
-			bulkDocumentRequestExecutor,
-			"_openSearchBulkableDocumentRequestTranslator",
-			openSearchBulkableDocumentRequestTranslator);
 		ReflectionTestUtil.setFieldValue(
 			bulkDocumentRequestExecutor, "_openSearchConnectionManager",
 			openSearchConnectionManager);
@@ -125,15 +104,9 @@ public class DocumentRequestExecutorFixture {
 		DocumentRequestExecutor documentRequestExecutor =
 			new OpenSearchDocumentRequestExecutor();
 
-		OpenSearchBulkableDocumentRequestTranslator
-			openSearchBulkableDocumentRequestTranslator =
-				_createBulkableDocumentRequestTranslator();
-
 		ReflectionTestUtil.setFieldValue(
 			documentRequestExecutor, "_bulkDocumentRequestExecutor",
-			_createBulkDocumentRequestExecutor(
-				openSearchBulkableDocumentRequestTranslator,
-				openSearchConnectionManager));
+			_createBulkDocumentRequestExecutor(openSearchConnectionManager));
 
 		ReflectionTestUtil.setFieldValue(
 			documentRequestExecutor, "_deleteByQueryDocumentRequestExecutor",

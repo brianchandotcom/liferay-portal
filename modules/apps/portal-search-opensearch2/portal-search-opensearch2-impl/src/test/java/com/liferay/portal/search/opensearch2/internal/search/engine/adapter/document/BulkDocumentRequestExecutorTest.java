@@ -49,10 +49,6 @@ public class BulkDocumentRequestExecutorTest extends BaseOpenSearchTestCase {
 			new BulkDocumentRequestExecutorImpl();
 
 		ReflectionTestUtil.setFieldValue(
-			_bulkDocumentRequestExecutorImpl,
-			"_openSearchBulkableDocumentRequestTranslator",
-			new OpenSearchBulkableDocumentRequestTranslatorImpl());
-		ReflectionTestUtil.setFieldValue(
 			_bulkDocumentRequestExecutorImpl, "_openSearchConnectionManager",
 			openSearchConnectionManager);
 

@@ -1,9 +1,8 @@
 .lfr-cmp__state-selector {
 	display: inline-flex;
-	max-width: 12.5rem;
+	max-width: 145px;
 	min-height: unset !important;
 	transition: opacity 0.2s;
-	width: 11vw;
 
 	&:hover {
 		opacity: 0.8;

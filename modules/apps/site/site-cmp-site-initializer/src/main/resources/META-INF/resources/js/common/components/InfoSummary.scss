@@ -1,11 +1,4 @@
 .lfr-cmp__info-summary {
-	&-container {
-		border: 1px solid #e7e7ed;
-		border-radius: 10px;
-		margin-bottom: 1.5rem;
-		width: 100%;
-	}
-
 	&-header {
 		&-container {
 			align-items: center;
@@ -15,8 +8,10 @@
 		}
 
 		&-content {
-			font-size: 1rem;
+			font-size: 0.875rem;
 			font-weight: 600;
+			letter-spacing: 0.05rem;
+			text-transform: uppercase;
 		}
 	}
 
@@ -37,23 +32,11 @@
 			display: grid;
 			font-size: 0.875rem;
 			grid-template-columns: 100px 1fr;
-			padding: 0.5rem 1.5rem;
-
-			.form-group {
-				height: 32px;
-				margin-bottom: 0;
-				max-width: 12.5rem;
-				width: 11vw;
-			}
+			padding: 0.75rem 1.5rem;
 		}
 
 		&-label {
 			font-weight: 600;
-		}
-
-		&-value {
-			max-width: 12.5rem;
-			width: 11vw;
 		}
 	}
 }

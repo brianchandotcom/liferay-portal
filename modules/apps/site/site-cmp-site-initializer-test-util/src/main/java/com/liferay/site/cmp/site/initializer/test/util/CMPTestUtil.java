@@ -70,6 +70,35 @@ public class CMPTestUtil {
 			serviceContext);
 	}
 
+	public static ObjectEntry addTaskObjectEntry() throws PortalException {
+		return addTaskObjectEntry(addProjectObjectEntry());
+	}
+
+	public static ObjectEntry addTaskObjectEntry(ObjectEntry projectObjectEntry)
+		throws PortalException {
+
+		ObjectDefinition taskObjectDefinition =
+			ObjectDefinitionLocalServiceUtil.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_CMP_TASK", TestPropsValues.getCompanyId());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		return ObjectEntryLocalServiceUtil.addObjectEntry(
+			projectObjectEntry.getGroupId(), projectObjectEntry.getUserId(),
+			taskObjectDefinition.getObjectDefinitionId(), 0, null,
+			HashMapBuilder.<String, Serializable>put(
+				"r_cmpProjectToCMPTasks_c_cmpProjectId",
+				projectObjectEntry.getObjectEntryId()
+			).put(
+				"title", RandomTestUtil.randomString()
+			).build(),
+			serviceContext);
+	}
+
 	public static Group getOrAddGroup(Class<?> clazz) throws Exception {
 		Group group = CMSTestUtil.getOrAddGroup(clazz);
 

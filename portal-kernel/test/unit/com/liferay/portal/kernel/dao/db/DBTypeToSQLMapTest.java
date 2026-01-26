@@ -17,11 +17,6 @@ import org.junit.Test;
  */
 public class DBTypeToSQLMapTest {
 
-	@ClassRule
-	@Rule
-	public static final LiferayUnitTestRule liferayUnitTestRule =
-		LiferayUnitTestRule.INSTANCE;
-
 	@Test
 	public void testGetReturnsActual() {
 		DBTypeToSQLMap dbTypeToSQLMap = new DBTypeToSQLMap(_SQL_DEFAULT);

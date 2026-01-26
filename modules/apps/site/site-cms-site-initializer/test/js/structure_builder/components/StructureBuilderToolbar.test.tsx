@@ -53,7 +53,7 @@ const renderComponent = (state: MockState) => {
 		<MockCacheProvider objectDefinitions={{}}>
 			<MockStateProvider state={{...state, structure}}>
 				<StructureBuilderToolbar />
-			</MockStateProvider>{' '}
+			</MockStateProvider>
 		</MockCacheProvider>
 	);
 };

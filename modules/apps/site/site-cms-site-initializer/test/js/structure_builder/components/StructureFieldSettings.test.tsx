@@ -49,6 +49,7 @@ const DEFAULT_STATE: State = {
 	},
 	invalids: new Map(),
 	publishedChildren: new Set(),
+	renamingItemUuid: null,
 	selection: [],
 	structure: {
 		children: new Map([[TEXT_FIELD_UUID, FIELD]]),

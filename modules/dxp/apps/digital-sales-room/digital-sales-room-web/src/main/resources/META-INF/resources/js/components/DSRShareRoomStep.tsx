@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import Button from '@clayui/button';
 import DropDown from '@clayui/drop-down';
 import ClayForm from '@clayui/form';
 import MultiSelect from '@clayui/multi-select';
@@ -11,25 +12,12 @@ import {sub} from 'frontend-js-web';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 
 import '../../css/main.scss';
-
-import Button from '@clayui/button';
-
 import {DSRContext} from './DSRInitializer';
+import {DSR_SITE_ROLES} from './DSRRoomUsersStep';
 import {TDSRContext, TDSRRoomDetailsStepProps} from './DSRTypes';
 import FieldErrorMessage from './FieldErrorMessage';
 
-const DSR_SITE_ROLES = [
-	{
-		key: '',
-		label: Liferay.Language.get('view'),
-	},
-	{
-		key: 'Site Administrator',
-		label: Liferay.Language.get('edit'),
-	},
-];
-
-function isEmailAddressValid(email: string) {
+export function isEmailAddressValid(email: string) {
 	const emailRegex = /.+@.+\..+/i;
 
 	return emailRegex.test(email);
@@ -46,12 +34,13 @@ function DSRShareRoomStep({
 	const [emailAddresses, setEmailAddresses] = useState<
 		Array<{label: string; value: string}>
 	>(
-		(dataContext.share?.emailAddresses || []).map((item) => {
-			return {label: item, value: item};
-		})
+		(dataContext.share?.emailAddresses || []).map((email) => ({
+			label: email,
+			value: email,
+		}))
 	);
 	const [roleKey, setRoleKey] = useState<string>(
-		dataContext.share?.roleKey || ''
+		dataContext.share?.roleKey || 'Site Member'
 	);
 
 	const handleEmailsFieldChange = useCallback(
@@ -116,7 +105,7 @@ function DSRShareRoomStep({
 			</div>
 			<div className="mt-4 row">
 				<ClayForm.Group
-					className={classNames('col-12 dsr-site-role-input', {
+					className={classNames('col-12', {
 						'has-error': !!dataContext.errors.share,
 					})}
 				>
@@ -127,54 +116,54 @@ function DSRShareRoomStep({
 						{Liferay.Language.get('emails')}
 					</label>
 
-					<MultiSelect
-						allowDuplicateValues={false}
-						autoFocus={true}
-						data-qa-id="emailAddressesInput"
-						disabled={loading}
-						inputName="dsr-users-email-addresses"
-						items={emailAddresses}
-						onItemsChange={(emails: Array<any>) => {
-							handleEmailsFieldChange({emails});
-						}}
-						placeholder={Liferay.Language.get(
-							'type-a-comma-or-press-enter-to-input-email-addresses'
-						)}
-					/>
-
-					<DropDown
-						closeOnClick={true}
-						trigger={
-							<Button
-								className="dsr-site-role-trigger-button"
-								data-qa-id="roleKeyButton"
-								disabled={loading}
-								displayType="secondary"
-								size="xs"
-							>
-								{
-									DSR_SITE_ROLES.find(
-										(item) => item.key === roleKey
-									)?.label
-								}
-							</Button>
-						}
-						triggerIcon="caret-bottom"
-					>
-						<DropDown.ItemList items={DSR_SITE_ROLES}>
-							{(item: any) => (
-								<DropDown.Item
-									data-qa-id={`roleKeyItem_${item.label}`}
-									key={item.key}
-									onClick={() => {
-										handleRoleKeyChange(item.key);
-									}}
-								>
-									{item.label}
-								</DropDown.Item>
+					<div className="dsr-site-role-input position-relative">
+						<MultiSelect
+							allowDuplicateValues={false}
+							autoFocus={true}
+							data-qa-id="emailAddressesInput"
+							disabled={loading}
+							inputName="dsr-users-email-addresses"
+							items={emailAddresses}
+							onItemsChange={(emails: Array<any>) => {
+								handleEmailsFieldChange({emails});
+							}}
+							placeholder={Liferay.Language.get(
+								'type-a-comma-or-press-enter-to-input-email-addresses'
 							)}
-						</DropDown.ItemList>
-					</DropDown>
+						/>
+
+						<DropDown
+							closeOnClick={true}
+							trigger={
+								<Button
+									className="dsr-site-role-trigger-button"
+									data-qa-id="roleKeyButton"
+									disabled={loading}
+									displayType="secondary"
+									size="xs"
+								>
+									{DSR_SITE_ROLES.find(
+										(item) => item.key === roleKey
+									)?.label || Liferay.Language.get('viewer')}
+								</Button>
+							}
+							triggerIcon="caret-bottom"
+						>
+							<DropDown.ItemList items={DSR_SITE_ROLES}>
+								{(item: any) => (
+									<DropDown.Item
+										data-qa-id={`roleKeyItem_${item.label}`}
+										key={item.key}
+										onClick={() => {
+											handleRoleKeyChange(item.key);
+										}}
+									>
+										{item.label}
+									</DropDown.Item>
+								)}
+							</DropDown.ItemList>
+						</DropDown>
+					</div>
 
 					<FieldErrorMessage
 						error={dataContext.errors.share}

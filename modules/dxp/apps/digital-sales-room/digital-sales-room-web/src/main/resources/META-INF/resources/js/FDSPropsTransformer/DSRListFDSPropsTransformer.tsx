@@ -10,6 +10,7 @@ import {openModal} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 
 import DSRRoomSaveAsTemplate from '../components/DSRRoomSaveAsTemplate';
+import DSRRoomUsersStep from '../components/DSRRoomUsersStep';
 import {DSRInitializer, DSRRoomNameRenderer} from '../index';
 import deleteDSRAction from './actions/deleteDSRAction';
 
@@ -129,6 +130,29 @@ export default function propsTransformer({
 							digitalSalesRoomId: itemData.id,
 						}),
 					size: 'md',
+				});
+			}
+			else if (action?.data?.id === 'share') {
+				event?.preventDefault();
+
+				return openModal({
+					containerProps: {
+						className: '',
+					},
+					contentComponent: ({
+						closeModal,
+					}: {
+						closeModal: () => void;
+					}) =>
+						DSRRoomUsersStep({
+							closeModal,
+							digitalSalesRoomId: itemData.id,
+							numberOfSteps: 1,
+							setHandleStepSubmit: () => {},
+							showHeader: false,
+							step: 1,
+						}),
+					size: 'lg',
 				});
 			}
 		},

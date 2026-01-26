@@ -12,7 +12,7 @@ import userEvent from '@testing-library/user-event';
 import {
 	Wizard,
 	WizardStep,
-} from '../../../src/main/resources/META-INF/resources/revamp/js/components/Wizard';
+} from '../../../../src/main/resources/META-INF/resources/revamp/js/components/Wizard';
 
 const Step = ({children}: {children: React.ReactNode}) => <div>{children}</div>;
 

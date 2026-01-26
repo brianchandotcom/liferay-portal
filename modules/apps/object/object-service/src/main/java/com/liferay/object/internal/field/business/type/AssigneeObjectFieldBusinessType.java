@@ -170,7 +170,7 @@ public class AssigneeObjectFieldBusinessType
 			String type)
 		throws Exception {
 
-		if (StringUtil.equals(type, Assignee.Type.ROLE.toString())) {
+		if (StringUtil.equalsIgnoreCase(type, Assignee.Type.ROLE.toString())) {
 			return HashMapBuilder.put(
 				"classNameId", _portal.getClassNameId(Role.class.getName())
 			).put(
@@ -199,7 +199,9 @@ public class AssigneeObjectFieldBusinessType
 				}
 			).build();
 		}
-		else if (StringUtil.equals(type, Assignee.Type.USER.toString())) {
+		else if (StringUtil.equalsIgnoreCase(
+					type, Assignee.Type.USER.toString())) {
+
 			return HashMapBuilder.put(
 				"classNameId", _portal.getClassNameId(User.class.getName())
 			).put(

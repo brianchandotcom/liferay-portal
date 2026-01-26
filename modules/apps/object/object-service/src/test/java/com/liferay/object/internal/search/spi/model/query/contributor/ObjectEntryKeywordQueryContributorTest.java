@@ -45,7 +45,7 @@ public class ObjectEntryKeywordQueryContributorTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testContributeWithCustomObject() throws Exception {
+	public void testContributeWithCustomObjectDefinition() throws Exception {
 		ObjectDefinition objectDefinition = _mockObjectDefinition(false);
 
 		ObjectFieldBag objectFieldBag = objectDefinition.getObjectFieldBag();
@@ -61,19 +61,19 @@ public class ObjectEntryKeywordQueryContributorTest {
 			RandomTestUtil.randomString(), booleanQuery,
 			_mockKeywordQueryContributorHelper());
 
-		// Custom objects should query only non-system fields
+		Mockito.verify(
+			objectFieldBag, Mockito.never()
+		).getIndexedObjectFields();
 
 		Mockito.verify(
 			objectFieldBag
 		).getNonsystemIndexedObjectFields();
-
-		Mockito.verify(
-			objectFieldBag, Mockito.never()
-		).getIndexedObjectFields();
 	}
 
 	@Test
-	public void testContributeWithModifiableSystemObject() throws Exception {
+	public void testContributeWithModifiableSystemObjectDefinition()
+		throws Exception {
+
 		ObjectDefinition objectDefinition = _mockObjectDefinition(true);
 
 		ObjectFieldBag objectFieldBag = objectDefinition.getObjectFieldBag();
@@ -91,9 +91,6 @@ public class ObjectEntryKeywordQueryContributorTest {
 		contributor.contribute(
 			RandomTestUtil.randomString(), booleanQuery,
 			_mockKeywordQueryContributorHelper());
-
-		// Modifiable system objects query all indexed fields,
-		// filtering out metadata fields.
 
 		Mockito.verify(
 			objectFieldBag
@@ -206,25 +203,25 @@ public class ObjectEntryKeywordQueryContributorTest {
 	}
 
 	private void _mockObjectFields(ObjectFieldBag objectFieldBag) {
-		ObjectField metadataField = _mockTextField(
+		ObjectField metadataObjectField = _mockTextObjectField(
 			RandomTestUtil.randomString(), true);
-		ObjectField normalField = _mockTextField(
+		ObjectField objectField = _mockTextObjectField(
 			RandomTestUtil.randomString(), false);
 
 		Mockito.when(
 			objectFieldBag.getIndexedObjectFields()
 		).thenReturn(
-			Arrays.asList(metadataField, normalField)
+			Arrays.asList(metadataObjectField, objectField)
 		);
 
 		Mockito.when(
 			objectFieldBag.getNonsystemIndexedObjectFields()
 		).thenReturn(
-			Arrays.asList(normalField)
+			Arrays.asList(objectField)
 		);
 	}
 
-	private ObjectField _mockTextField(String name, boolean metadata) {
+	private ObjectField _mockTextObjectField(String name, boolean metadata) {
 		ObjectField objectField = Mockito.mock(ObjectField.class);
 
 		Mockito.when(

@@ -108,15 +108,15 @@ public class ObjectEntryModelDocumentContributorTest {
 
 		Field field = document.getField("objectEntryContent");
 
-		String content = field.getValue();
+		String value = field.getValue();
 
 		Assert.assertTrue(
-			content,
-			content.contains(
+			value,
+			value.contains(
 				StringBundler.concat(objectFieldName, ": ", objectFieldValue)));
 		Assert.assertTrue(
-			content,
-			content.contains(
+			value,
+			value.contains(
 				StringBundler.concat(
 					objectFieldName, ": ", objectFieldValue, "pt_BR")));
 	}

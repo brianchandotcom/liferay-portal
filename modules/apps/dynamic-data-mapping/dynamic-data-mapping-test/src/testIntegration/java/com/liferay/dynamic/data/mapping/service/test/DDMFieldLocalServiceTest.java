@@ -325,7 +325,6 @@ public class DDMFieldLocalServiceTest {
 			deserializedDDMFormValues.getDDMFormFieldValue("field1", false),
 			List.of(LocaleUtil.ENGLISH),
 			List.of(LocaleUtil.HUNGARY, LocaleUtil.SPAIN));
-
 		_assertDDMFormFieldValue(
 			deserializedDDMFormValues.getDDMFormFieldValue("field2", false),
 			List.of(LocaleUtil.ENGLISH),
@@ -338,7 +337,6 @@ public class DDMFieldLocalServiceTest {
 			deserializedDDMFormValues.getDDMFormFieldValue("field1", false),
 			List.of(LocaleUtil.ENGLISH),
 			List.of(LocaleUtil.FRANCE, LocaleUtil.HUNGARY, LocaleUtil.SPAIN));
-
 		_assertDDMFormFieldValue(
 			deserializedDDMFormValues.getDDMFormFieldValue("field2", false),
 			List.of(LocaleUtil.ENGLISH),
@@ -351,7 +349,6 @@ public class DDMFieldLocalServiceTest {
 			deserializedDDMFormValues.getDDMFormFieldValue("field1", false),
 			List.of(LocaleUtil.ENGLISH, LocaleUtil.HUNGARY),
 			List.of(LocaleUtil.SPAIN));
-
 		_assertDDMFormFieldValue(
 			deserializedDDMFormValues.getDDMFormFieldValue("field2", false),
 			List.of(LocaleUtil.ENGLISH, LocaleUtil.HUNGARY),
@@ -364,7 +361,6 @@ public class DDMFieldLocalServiceTest {
 			deserializedDDMFormValues.getDDMFormFieldValue("field1", false),
 			List.of(LocaleUtil.ENGLISH, LocaleUtil.SPAIN),
 			List.of(LocaleUtil.HUNGARY));
-
 		_assertDDMFormFieldValue(
 			deserializedDDMFormValues.getDDMFormFieldValue("field2", false),
 			List.of(LocaleUtil.ENGLISH),

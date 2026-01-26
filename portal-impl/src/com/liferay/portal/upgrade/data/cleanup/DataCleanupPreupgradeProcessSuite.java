@@ -86,6 +86,8 @@ public class DataCleanupPreupgradeProcessSuite {
 			new CompanyDataCleanupPreupgradeProcess();
 		DataCleanupPreupgradeProcess configurationDataCleanupPreupgradeProcess =
 			new ConfigurationDataCleanupPreupgradeProcess();
+		DataCleanupPreupgradeProcess contactDataCleanupPreupgradeProcess =
+			new ContactDataCleanupPreupgradeProcess();
 		DataCleanupPreupgradeProcess
 			databaseTableAndColumnCaseDataCleanupPreupgradeProcess =
 				new DatabaseTableAndColumnCaseDataCleanupPreupgradeProcess();
@@ -143,11 +145,16 @@ public class DataCleanupPreupgradeProcessSuite {
 					databaseTableAndColumnCaseDataCleanupPreupgradeProcess,
 					userDataCleanupPreupgradeProcess)
 			).put(
+				contactDataCleanupPreupgradeProcess,
+				DataCleanupPreupgradeProcess.dependsOn(
+					userDataCleanupPreupgradeProcess)
+			).put(
 				new CounterDataCleanupPreupgradeProcess(),
 				DataCleanupPreupgradeProcess.dependsOn(
 					analyticsMessageDataCleanupPreupgradeProcess,
 					companyDataCleanupPreupgradeProcess,
 					configurationDataCleanupPreupgradeProcess,
+					contactDataCleanupPreupgradeProcess,
 					databaseTableAndColumnCaseDataCleanupPreupgradeProcess,
 					ddmDataCleanupPreupgradeProcess,
 					ddmStorageLinkDataCleanupPreupgradeProcess,

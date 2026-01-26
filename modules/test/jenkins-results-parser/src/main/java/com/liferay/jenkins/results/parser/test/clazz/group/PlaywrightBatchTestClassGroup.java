@@ -50,10 +50,6 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 	public void addDefaultProjectJobProperty(String batchName) {
 		if (isRootCauseAnalysis()) {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("tests/");
-
 			String portalBatchTestSelector = System.getenv(
 				"PORTAL_BATCH_TEST_SELECTOR");
 
@@ -64,9 +60,8 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 					"PORTAL_BATCH_TEST_SELECTOR");
 			}
 
-			sb.append(portalBatchTestSelector);
-
-			Matcher matcher = _playwrightFileNamePattern.matcher(sb.toString());
+			Matcher matcher = _playwrightFileNamePattern.matcher(
+				portalBatchTestSelector);
 
 			if (matcher.matches()) {
 				String projectName = matcher.group("projectName");
@@ -74,7 +69,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 				_addProjectNames(projectName.replaceAll("/", "."));
 			}
 			else {
-				_addProjectNames(sb.toString());
+				_addProjectNames(portalBatchTestSelector);
 			}
 
 			return;
@@ -702,10 +697,6 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		List<TestClass> testClasses = new ArrayList<>();
 
 		if (isRootCauseAnalysis()) {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("tests/");
-
 			String portalBatchTestSelector = System.getenv(
 				"PORTAL_BATCH_TEST_SELECTOR");
 
@@ -716,9 +707,8 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 					"PORTAL_BATCH_TEST_SELECTOR");
 			}
 
-			sb.append(portalBatchTestSelector);
-
-			Matcher matcher = _playwrightFileNamePattern.matcher(sb.toString());
+			Matcher matcher = _playwrightFileNamePattern.matcher(
+				portalBatchTestSelector);
 
 			if (matcher.matches()) {
 				File specFile = new File(rootDir, matcher.group("filePath"));

@@ -63,9 +63,6 @@
 		"setupFiles": [
 			"<rootDir>/jest-setup.config.ts"
 		],
-		"testMatch": [
-			"<rootDir>/src/main/resources/META-INF/resources/tests/js/**/*.spec.*"
-		],
 		"testPathIgnorePatterns": [
 			"<rootDir>/.*/mocks",
 			"<rootDir>/.*/__mocks__"

@@ -244,8 +244,11 @@ public class TestrayJobHistory extends BaseJobHistory {
 			for (TestrayRoutine testrayRoutine : _testrayRoutines) {
 				JSONObject testrayRoutineJSONObject = new JSONObject();
 
-				testrayRoutineJSONObject.put("name", testrayRoutine.getName());
-				testrayRoutineJSONObject.put("url", testrayRoutine.getURL());
+				testrayRoutineJSONObject.put(
+					"name", testrayRoutine.getName()
+				).put(
+					"url", testrayRoutine.getURL()
+				);
 
 				testrayRoutinesJSONArray.put(testrayRoutineJSONObject);
 			}

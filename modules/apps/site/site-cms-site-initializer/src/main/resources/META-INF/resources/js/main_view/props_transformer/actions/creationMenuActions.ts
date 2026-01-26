@@ -5,8 +5,6 @@
 
 import createAssetAction from './createAssetAction';
 import createFolderAction from './createFolderAction';
-import createProjectAction from './createProjectAction';
-import createTaskAction from './createTaskAction';
 import importTranslationAction from './importTranslationAction';
 import multipleFilesUploadAction from './multipleFilesUploadAction';
 import selectAssetsAction from './selectAssetsAction';
@@ -14,8 +12,6 @@ import selectAssetsAction from './selectAssetsAction';
 const ACTIONS = {
 	createAsset: createAssetAction,
 	createFolder: createFolderAction,
-	createProject: createProjectAction,
-	createTask: createTaskAction,
 	importTranslation: importTranslationAction,
 	selectAssets: selectAssetsAction,
 	uploadMultipleFiles: multipleFilesUploadAction,

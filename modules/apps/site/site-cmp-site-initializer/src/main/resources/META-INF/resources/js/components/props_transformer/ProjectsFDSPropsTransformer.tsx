@@ -6,7 +6,6 @@
 import ClayProgressBar from '@clayui/progress-bar';
 import {IInternalRenderer} from '@liferay/frontend-data-set-web';
 import {
-	ACTIONS,
 	AdditionalProps,
 	SimpleActionLinkRenderer,
 	addOnClickToCreationMenuItems,
@@ -16,6 +15,7 @@ import {
 import {fetch} from 'frontend-js-web';
 
 import StateLabel from '../StateLabel';
+import ACTIONS from './actions/creationMenuActions';
 import UserRelationshipRenderer from './cell_renderers/UserRelationshipRenderer';
 
 type Action = {

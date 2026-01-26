@@ -6,7 +6,6 @@
 import {DateRenderer, IInternalRenderer} from '@liferay/frontend-data-set-web';
 import {AssigneeValue} from '@liferay/object-dynamic-data-mapping-form-field-type';
 import {
-	ACTIONS,
 	AssignToModalContent,
 	SimpleActionLinkRenderer,
 	UpdateDueDateModalContent,
@@ -18,6 +17,7 @@ import React from 'react';
 import {openCMPModal} from '../../utils/openCMPModal';
 import StateLabel from '../StateLabel';
 import EditAssigneeModalContent from '../modal/EditAssigneeModalContent';
+import ACTIONS from './actions/creationMenuActions';
 import {cmpTasksFDSAtom} from './atoms';
 
 const _CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN =

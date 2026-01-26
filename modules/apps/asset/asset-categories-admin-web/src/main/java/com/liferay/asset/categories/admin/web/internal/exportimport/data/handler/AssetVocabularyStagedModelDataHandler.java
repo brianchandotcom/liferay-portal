@@ -428,6 +428,8 @@ public class AssetVocabularyStagedModelDataHandler
 			long importedVocabularyId)
 		throws Exception {
 
+		List<Long> groupIds = new ArrayList<>();
+
 		String xml = portletDataContext.getZipEntryAsString(
 			ExportImportPathUtil.getModelPath(
 				vocabulary, AssetVocabularyGroupRel.class.getSimpleName()));
@@ -435,8 +437,6 @@ public class AssetVocabularyStagedModelDataHandler
 		Document document = SAXReaderUtil.read(xml);
 
 		Element rootElement = document.getRootElement();
-
-		List<Long> groupIds = new ArrayList<>();
 
 		for (Element groupElement : rootElement.elements("group")) {
 			Group group = _groupLocalService.fetchGroupByExternalReferenceCode(

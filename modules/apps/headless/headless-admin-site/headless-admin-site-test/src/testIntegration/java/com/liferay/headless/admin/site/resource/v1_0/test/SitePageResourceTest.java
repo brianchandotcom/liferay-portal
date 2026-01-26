@@ -712,7 +712,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	private void _assertLinkToURLSitePage(SitePage sitePage) {
 		Assert.assertTrue(
 			sitePage.getPageSettings() instanceof LinkToURLPageSettings);
-
 		Assert.assertEquals(SitePage.Type.LINK_TO_URL_PAGE, sitePage.getType());
 	}
 

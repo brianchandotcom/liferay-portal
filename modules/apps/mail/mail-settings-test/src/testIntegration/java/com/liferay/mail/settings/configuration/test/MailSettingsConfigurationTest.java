@@ -34,20 +34,16 @@ public class MailSettingsConfigurationTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testGetSessionWithConfigurationUpdates() throws Exception {
+	public void testGetSession() throws Exception {
 		long companyId = RandomTestUtil.randomLong();
 
-		_testGetSessionWithConfigurationUpdates(companyId, 1111);
-
-		_testGetSessionWithConfigurationUpdates(companyId, 2222);
+		_testGetSession(companyId, 1111);
+		_testGetSession(companyId, 2222);
 
 		_mailService.clearSession();
 	}
 
-	private void _testGetSessionWithConfigurationUpdates(
-			long companyId, int port)
-		throws Exception {
-
+	private void _testGetSession(long companyId, int port) throws Exception {
 		ConfigurationTestUtil.saveConfiguration(
 			"com.liferay.mail.settings.configuration." +
 				"MailSettingCompanyConfiguration",

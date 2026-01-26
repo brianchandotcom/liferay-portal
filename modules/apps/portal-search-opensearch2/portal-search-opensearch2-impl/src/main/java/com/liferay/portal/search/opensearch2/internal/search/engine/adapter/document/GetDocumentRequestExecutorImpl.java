@@ -35,7 +35,8 @@ public class GetDocumentRequestExecutorImpl
 	public GetDocumentResponse execute(GetDocumentRequest getDocumentRequest) {
 		GetResponse<JsonData> getResponse = _getGetResponse(
 			getDocumentRequest,
-			_openSearchDocumentRequestTranslator.translate(getDocumentRequest));
+			OpenSearchDocumentRequestTranslatorUtil.translate(
+				getDocumentRequest));
 
 		GetDocumentResponse getDocumentResponse = new GetDocumentResponse(
 			getResponse.found());
@@ -83,9 +84,5 @@ public class GetDocumentRequestExecutorImpl
 
 	@Reference
 	private OpenSearchConnectionManager _openSearchConnectionManager;
-
-	@Reference
-	private OpenSearchDocumentRequestTranslator
-		_openSearchDocumentRequestTranslator;
 
 }

@@ -35,7 +35,7 @@ public class IndexDocumentRequestExecutorImpl
 
 		IndexResponse indexResponse = _getIndexResponse(
 			indexDocumentRequest,
-			_openSearchDocumentRequestTranslator.translate(
+			OpenSearchDocumentRequestTranslatorUtil.translate(
 				indexDocumentRequest));
 
 		Result result = indexResponse.result();
@@ -64,9 +64,5 @@ public class IndexDocumentRequestExecutorImpl
 
 	@Reference
 	private OpenSearchConnectionManager _openSearchConnectionManager;
-
-	@Reference
-	private OpenSearchDocumentRequestTranslator
-		_openSearchDocumentRequestTranslator;
 
 }

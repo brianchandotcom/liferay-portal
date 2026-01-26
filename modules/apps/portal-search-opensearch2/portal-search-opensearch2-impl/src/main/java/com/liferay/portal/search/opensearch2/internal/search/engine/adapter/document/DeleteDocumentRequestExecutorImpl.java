@@ -34,7 +34,7 @@ public class DeleteDocumentRequestExecutorImpl
 
 		DeleteResponse deleteResponse = _getDeleteResponse(
 			deleteDocumentRequest,
-			_openSearchDocumentRequestTranslator.translate(
+			OpenSearchDocumentRequestTranslatorUtil.translate(
 				deleteDocumentRequest));
 
 		Result result = deleteResponse.result();
@@ -62,9 +62,5 @@ public class DeleteDocumentRequestExecutorImpl
 
 	@Reference
 	private OpenSearchConnectionManager _openSearchConnectionManager;
-
-	@Reference
-	private OpenSearchDocumentRequestTranslator
-		_openSearchDocumentRequestTranslator;
 
 }

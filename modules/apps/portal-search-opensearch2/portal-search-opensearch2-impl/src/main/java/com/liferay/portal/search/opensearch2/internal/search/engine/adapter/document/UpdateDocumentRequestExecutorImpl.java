@@ -35,7 +35,7 @@ public class UpdateDocumentRequestExecutorImpl
 
 		UpdateResponse<JsonData> updateResponse = _getUpdateResponse(
 			updateDocumentRequest,
-			_openSearchDocumentRequestTranslator.translate(
+			OpenSearchDocumentRequestTranslatorUtil.translate(
 				updateDocumentRequest));
 
 		Result result = updateResponse.result();
@@ -63,9 +63,5 @@ public class UpdateDocumentRequestExecutorImpl
 
 	@Reference
 	private OpenSearchConnectionManager _openSearchConnectionManager;
-
-	@Reference
-	private OpenSearchDocumentRequestTranslator
-		_openSearchDocumentRequestTranslator;
 
 }

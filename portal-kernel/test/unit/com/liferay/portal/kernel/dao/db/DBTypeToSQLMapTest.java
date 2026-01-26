@@ -15,7 +15,7 @@ import org.junit.Test;
 /**
  * @author Mariano Álvaro Sáiz
  */
-public class DBTypeSQLMapTest {
+public class DBTypeToSQLMapTest {
 
 	@ClassRule
 	@Rule

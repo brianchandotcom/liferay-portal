@@ -162,9 +162,7 @@ public class StyleSheetFrontendResourceRequestHandler
 
 		if (themeId == null) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to get themeId parameter when serving resource " +
-						url);
+				_log.warn("Unable to get theme ID when serving " + url);
 			}
 
 			return null;
@@ -221,8 +219,7 @@ public class StyleSheetFrontendResourceRequestHandler
 				}
 			}
 			catch (IOException ioException) {
-				_log.error(
-					"Unable to read tokenizable resource " + url, ioException);
+				_log.error("Unable to read tokenizable " + url, ioException);
 
 				_tokenizable.putIfAbsent(key, false);
 			}

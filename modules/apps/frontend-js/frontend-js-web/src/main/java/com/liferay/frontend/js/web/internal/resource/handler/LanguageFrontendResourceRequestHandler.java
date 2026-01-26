@@ -98,7 +98,7 @@ public class LanguageFrontendResourceRequestHandler
 		if (url == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Missing 'language.json' file for request " + requestURI);
+					"Missing \"language.json\" for request " + requestURI);
 			}
 
 			return null;

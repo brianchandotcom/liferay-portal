@@ -57,11 +57,11 @@ public class LanguageFrontendResource implements FrontendResource {
 
 	@Override
 	public InputStream getInputStream() throws IOException {
-		JSONArray languageKeysJSONArray = _getLanguageKeysJSONArray();
-
 		StringBuilder sb = new StringBuilder();
 
 		Locale locale = LocaleUtil.fromLanguageId(_languageId);
+
+		JSONArray languageKeysJSONArray = _getLanguageKeysJSONArray();
 
 		for (int i = 0; i < languageKeysJSONArray.length(); i++) {
 			String key = languageKeysJSONArray.getString(i);

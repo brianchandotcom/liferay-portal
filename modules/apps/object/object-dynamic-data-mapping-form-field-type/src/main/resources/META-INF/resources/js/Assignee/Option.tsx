@@ -12,9 +12,7 @@ export default function Option({image, name}: {image?: string; name: string}) {
 		<div className="object-field__assignee-option">
 			<Avatar image={image} name={name} />
 
-			<div className="object-field__assignee-option-name">
-				<span>{name}</span>
-			</div>
+			<span>{name}</span>
 		</div>
 	);
 }

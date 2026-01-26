@@ -22,8 +22,6 @@ function getInitials(name: string): string {
 }
 
 export default function Avatar({image, name}: {image?: string; name: string}) {
-	const initials = getInitials(name);
-
 	return (
 		<>
 			{image ? (
@@ -33,11 +31,9 @@ export default function Avatar({image, name}: {image?: string; name: string}) {
 					src={image}
 				/>
 			) : (
-				initials && (
-					<span className="object-field__assignee-initials">
-						{initials}
-					</span>
-				)
+				<span className="object-field__assignee-initials">
+					{getInitials(name)}
+				</span>
 			)}
 		</>
 	);

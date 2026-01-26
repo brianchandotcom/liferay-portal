@@ -10,7 +10,6 @@
 		"@clayui/shared": "*",
 		"@liferay/frontend-data-set-web": "*",
 		"@liferay/object-js-components-web": "*",
-		"classnames": "2.3.1",
 		"data-engine-js-components-web": "*",
 		"dynamic-data-mapping-form-field-type": "*",
 		"frontend-js-components-web": "*",

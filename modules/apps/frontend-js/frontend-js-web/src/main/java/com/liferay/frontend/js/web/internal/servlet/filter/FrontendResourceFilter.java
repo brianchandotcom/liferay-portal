@@ -92,13 +92,13 @@ public class FrontendResourceFilter extends BasePortalFilter {
 				_configurationProvider, _hashedFilesRegistry, _language,
 				_portal, PortletConfigFactoryUtil.getPortletConfigFactory()));
 		frontendResourceRequestHandlers.add(
-			new StyleSheetFrontendResourceRequestHandler(
-				_configurationProvider, _hashedFilesRegistry, _portal,
-				_themeLocalService));
-		frontendResourceRequestHandlers.add(
 			new LanguageFrontendResourceRequestHandler(
 				_configurationProvider, _hashedFilesRegistry, _jsonFactory,
 				_language, _portal));
+		frontendResourceRequestHandlers.add(
+			new StyleSheetFrontendResourceRequestHandler(
+				_configurationProvider, _hashedFilesRegistry, _portal,
+				_themeLocalService));
 
 		_frontendResourceRequestHandlers.set(frontendResourceRequestHandlers);
 	}

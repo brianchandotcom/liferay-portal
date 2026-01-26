@@ -107,8 +107,7 @@ public class UtilityPageResourceImpl
 
 			@Override
 			public List<String> getNestedFields() {
-				return List.of(
-					"friendlyUrlHistory", "pageSpecifications", "thumbnail");
+				return List.of("pageSpecifications", "thumbnail");
 			}
 
 			@Override

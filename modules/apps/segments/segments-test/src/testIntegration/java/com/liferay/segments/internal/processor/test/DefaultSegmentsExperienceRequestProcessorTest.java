@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.processor.SegmentsExperienceRequestProcessor;
@@ -111,8 +112,8 @@ public class DefaultSegmentsExperienceRequestProcessorTest {
 		long[] segmentsExperienceIds =
 			_segmentsExperienceRequestProcessor.getSegmentsExperienceIds(
 				new MockHttpServletRequest(), new MockHttpServletResponse(),
-				_group.getGroupId(), layout.getPlid(), new long[] {0},
-				new long[0]);
+				_group.getGroupId(), layout.getPlid(),
+				new long[] {SegmentsEntryConstants.ID_DEFAULT}, new long[0]);
 
 		Assert.assertEquals(
 			Arrays.toString(segmentsExperienceIds), 1,
@@ -142,7 +143,10 @@ public class DefaultSegmentsExperienceRequestProcessorTest {
 			_segmentsExperienceRequestProcessor.getSegmentsExperienceIds(
 				new MockHttpServletRequest(), new MockHttpServletResponse(),
 				_group.getGroupId(), layout.getPlid(),
-				new long[] {0, segmentsEntry.getSegmentsEntryId()},
+				new long[] {
+					SegmentsEntryConstants.ID_DEFAULT,
+					segmentsEntry.getSegmentsEntryId()
+				},
 				new long[0]);
 
 		Assert.assertEquals(

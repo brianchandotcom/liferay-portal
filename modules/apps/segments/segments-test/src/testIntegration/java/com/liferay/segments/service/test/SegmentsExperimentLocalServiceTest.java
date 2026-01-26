@@ -383,11 +383,17 @@ public class SegmentsExperimentLocalServiceTest {
 	public void testFetchSegmentsExperiment() throws Exception {
 		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment();
 
-		SegmentsEntry segmentsEntry =
-			_segmentsEntryLocalService.getSegmentsEntry(
-				segmentsExperiment.getSegmentsEntryId());
-
 		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				segmentsExperiment.getSegmentsExperienceId());
+
+		SegmentsEntry segmentsEntry =
+			_segmentsEntryLocalService.
+				fetchSegmentsEntryByExternalReferenceCode(
+					segmentsExperience.getSegmentsEntryERC(),
+					segmentsExperience.getSegmentsEntryGroupId());
+
+		segmentsExperience =
 			_segmentsExperienceLocalService.addSegmentsExperience(
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				segmentsEntry.getExternalReferenceCode(),
@@ -499,11 +505,17 @@ public class SegmentsExperimentLocalServiceTest {
 	public void testHasSegmentsExperiment() throws Exception {
 		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment();
 
-		SegmentsEntry segmentsEntry =
-			_segmentsEntryLocalService.getSegmentsEntry(
-				segmentsExperiment.getSegmentsEntryId());
-
 		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				segmentsExperiment.getSegmentsExperienceId());
+
+		SegmentsEntry segmentsEntry =
+			_segmentsEntryLocalService.
+				fetchSegmentsEntryByExternalReferenceCode(
+					segmentsExperience.getSegmentsEntryERC(),
+					segmentsExperience.getSegmentsEntryGroupId());
+
+		segmentsExperience =
 			_segmentsExperienceLocalService.addSegmentsExperience(
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				segmentsEntry.getExternalReferenceCode(),

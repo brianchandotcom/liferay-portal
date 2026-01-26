@@ -163,6 +163,11 @@ public class SegmentsExperienceUtilTest {
 			).put(
 				"segmentsEntryERC", segmentsExperience.getSegmentsEntryERC()
 			).put(
+				"segmentsEntryGroupId",
+				segmentsExperience.getSegmentsEntryGroupId()
+			).put(
+				"segmentsEntryId", segmentsExperience.getSegmentsEntryId()
+			).put(
 				"segmentsEntryScopeERC",
 				segmentsExperience.getSegmentsEntryScopeERC()
 			).put(

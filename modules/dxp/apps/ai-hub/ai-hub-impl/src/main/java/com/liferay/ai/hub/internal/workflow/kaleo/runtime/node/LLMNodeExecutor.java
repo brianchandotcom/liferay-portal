@@ -14,10 +14,13 @@ import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.VariablesUti
 import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -102,6 +105,9 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 		Map<String, Serializable> workflowContext =
 			executionContext.getWorkflowContext();
 
+		long companyId = CompanyThreadLocal.getCompanyId();
+		long ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
+
 		AssistantHandlerUtil.handle(
 			AssistantHandlerContext.builder(
 			).contentRetriever(
@@ -117,8 +123,9 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 				GetterUtil.getString(workflowContext.get("memoryId"))
 			).onCompleteResponse(
 				response -> _completeResponse(
-					response, executionContext, currentKaleoNode,
-					kaleoNodeSettingValues, vertexAiGeminiStreamingChatModel)
+					response, companyId, ctCollectionId, executionContext,
+					currentKaleoNode, kaleoNodeSettingValues,
+					vertexAiGeminiStreamingChatModel)
 			).onError(
 				throwable -> vertexAiGeminiStreamingChatModel.close()
 			).systemMessageProvider(
@@ -167,11 +174,15 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 	}
 
 	private void _completeResponse(
-		ChatResponse chatResponse, ExecutionContext executionContext,
-		KaleoNode kaleoNode, Map<String, String> kaleoNodeSettingValues,
+		ChatResponse chatResponse, long companyId, long ctCollectionId,
+		ExecutionContext executionContext, KaleoNode kaleoNode,
+		Map<String, String> kaleoNodeSettingValues,
 		VertexAiGeminiStreamingChatModel vertexAiGeminiStreamingChatModel) {
 
-		try {
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					companyId, ctCollectionId)) {
+
 			Map<String, Serializable> workflowContext =
 				executionContext.getWorkflowContext();
 

@@ -14,6 +14,7 @@ import Label from '@clayui/label';
 export interface State {
 	key: string;
 	name: string;
+	nextStates: string[];
 }
 
 declare type LabelDisplayType =
@@ -65,13 +66,23 @@ export default function StateSelector({
 }) {
 	const [selectedKey, setSelectedKey] = useState(initialSelectedKey);
 
+	function getNextStates() {
+		const {nextStates} = states.find(
+			({key}) => key === selectedKey
+		) as State;
+
+		return states.filter(({key}) => {
+			return nextStates.includes(key) || key === selectedKey;
+		});
+	}
+
 	return (
 		<div>
 			<Picker<State>
 				as={Trigger}
 				defaultSelectedKey={initialSelectedKey}
 				disabled={false}
-				items={states}
+				items={getNextStates()}
 				messages={{
 					itemDescribedby: Liferay.Language.get(
 						'you-are-currently-on-a-text-element,-inside-of-a-list-box'

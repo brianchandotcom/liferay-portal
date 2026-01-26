@@ -8,6 +8,8 @@ package com.liferay.site.cmp.site.initializer.internal.display.context;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectStateFlowLocalService;
+import com.liferay.object.service.ObjectStateLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.site.cmp.site.initializer.internal.util.ObjectEntryValuesUtil;
@@ -24,11 +26,13 @@ public class ViewTaskInfoSummarySectionDisplayContext
 		ListTypeEntryLocalService listTypeEntryLocalService,
 		ObjectEntry objectEntry,
 		ObjectFieldLocalService objectFieldLocalService,
+		ObjectStateFlowLocalService objectStateFlowLocalService,
+		ObjectStateLocalService objectStateLocalService,
 		ThemeDisplay themeDisplay) {
 
 		super(
 			listTypeEntryLocalService, objectEntry, objectFieldLocalService,
-			themeDisplay);
+			objectStateFlowLocalService, objectStateLocalService, themeDisplay);
 	}
 
 	@Override

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay AI Hub REST API
 Bundle-SymbolicName: com.liferay.ai.hub.rest.api
-Bundle-Version: 3.1.0
+Bundle-Version: 4.0.0
 Export-Package:\
 	com.liferay.ai.hub.rest.dto.v1_0,\
 	com.liferay.ai.hub.rest.manager.v1_0,\

@@ -1,0 +1,15 @@
+.dropdown-menu-select.dropdown-menu
+	.dropdown-item:has(.lfr-cmp__no-projects-created-container) {
+	background-color: transparent;
+	padding: 0.5rem 1rem;
+}
+
+.lfr-cmp__no-projects-created-container {
+	.new-project-btn {
+		align-items: center;
+		display: flex;
+		gap: 0.5rem;
+		justify-content: center;
+		width: 100%;
+	}
+}

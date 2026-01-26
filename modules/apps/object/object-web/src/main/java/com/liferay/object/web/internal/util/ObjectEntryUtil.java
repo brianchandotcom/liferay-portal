@@ -7,6 +7,7 @@ package com.liferay.object.web.internal.util;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
+import com.liferay.headless.delivery.dto.v1_0.Creator;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.RelatedInfoFieldValue;
@@ -162,6 +163,17 @@ public class ObjectEntryUtil {
 			GetterUtil.getLong(objectEntry.getId()));
 		serviceBuilderObjectEntry.setGroupId(
 			GetterUtil.getLong(objectEntry.getScopeId()));
+
+		Creator creator = objectEntry.getCreator();
+
+		if (creator != null) {
+			serviceBuilderObjectEntry.setUserId(creator.getId());
+			serviceBuilderObjectEntry.setUserName(creator.getName());
+		}
+
+		serviceBuilderObjectEntry.setCreateDate(objectEntry.getDateCreated());
+		serviceBuilderObjectEntry.setModifiedDate(
+			objectEntry.getDateModified());
 		serviceBuilderObjectEntry.setObjectDefinitionId(
 			objectDefinition.getObjectDefinitionId());
 		serviceBuilderObjectEntry.setDefaultLanguageId(

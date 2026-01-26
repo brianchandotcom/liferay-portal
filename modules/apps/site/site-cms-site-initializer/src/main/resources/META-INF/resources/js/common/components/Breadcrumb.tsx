@@ -58,14 +58,7 @@ function ActionDropdownItem({
 	...props
 }: {label: string} & ActionDropdownItemProps) {
 	const handleTargetAction = async () => {
-		if (target === 'modal') {
-			openCMSModal({
-				size,
-				title: label,
-				url: href,
-			});
-		}
-		else if (target === 'asyncDelete') {
+		if (target === 'asyncDelete') {
 			const {error} = await ApiHelper.delete(href);
 
 			if (!error) {
@@ -97,6 +90,13 @@ function ActionDropdownItem({
 						closeModal,
 					}),
 				size: 'full-screen',
+			});
+		}
+		else if (target === 'modal') {
+			openCMSModal({
+				size,
+				title: label,
+				url: href,
 			});
 		}
 		else {

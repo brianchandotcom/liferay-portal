@@ -94,7 +94,6 @@ import com.liferay.portal.kernel.service.PermissionService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.File;
@@ -709,20 +708,6 @@ public class ObjectEntryDTOConverter
 				{
 					setExternalReferenceCode(user::getExternalReferenceCode);
 					setName(user::getFullName);
-					setPortrait(
-						() -> {
-							if (user.getPortraitId() == 0) {
-								return null;
-							}
-
-							ThemeDisplay themeDisplay = new ThemeDisplay() {
-								{
-									setPathImage(_portal.getPathImage());
-								}
-							};
-
-							return user.getPortraitURL(themeDisplay);
-						});
 					setType(() -> Type.USER);
 				}
 			};

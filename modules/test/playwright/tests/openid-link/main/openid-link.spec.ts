@@ -6,7 +6,6 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {customFieldsPagesTest} from '../../../fixtures/customFieldsPagesTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {TCustomField} from '../../../helpers/CustomFieldTypesHelper';
@@ -25,9 +24,6 @@ let resetLoginPrompt: boolean;
 
 const test = mergeTests(
 	openIdSettingsPagesTest,
-	featureFlagsTest({
-		'LPD-57332': {enabled: true},
-	}),
 	isolatedSiteTest,
 	loginTest(),
 	utilityPagesPage,

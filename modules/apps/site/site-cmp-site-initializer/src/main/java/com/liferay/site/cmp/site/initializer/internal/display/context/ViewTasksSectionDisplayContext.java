@@ -11,7 +11,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -117,10 +116,6 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 				"view", "actionLink",
 				LanguageUtil.get(httpServletRequest, "view"), null, "get",
 				null),
-			new FDSActionDropdownItem(
-				StringPool.BLANK, null, "assign-to",
-				LanguageUtil.get(httpServletRequest, "assign-to-..."), null,
-				"get", null),
 			new FDSActionDropdownItem(
 				null, "trash", "delete",
 				LanguageUtil.get(httpServletRequest, "delete"), null, "delete",

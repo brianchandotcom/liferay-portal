@@ -203,7 +203,7 @@ async function getDigitalSalesRoomComments(
 	page: number = 1
 ): Promise<TCommentsDTO> {
 	const {data, error} = await ApiHelper.get(
-		`${PATH}/${digitalSalesRoomId}/comments?page=${page}`
+		`${PATH}/${digitalSalesRoomId}/comments?page=${page}&sort=dateCreated:desc`
 	);
 
 	if (data) {
@@ -322,6 +322,24 @@ async function patchDigitalSalesRoomTemplate(
 
 	if (data) {
 		return data as TDSRTemplateDTO;
+	}
+
+	throw new Error(error);
+}
+
+async function postDigitalSalesRoomComment(
+	digitalSalesRoomId: number,
+	text: string
+): Promise<TCommentDTO> {
+	const {data, error} = await ApiHelper.post(
+		`${PATH}/${digitalSalesRoomId}/comments`,
+		{
+			text,
+		}
+	);
+
+	if (data) {
+		return data as TCommentDTO;
 	}
 
 	throw new Error(error);
@@ -477,6 +495,7 @@ export default {
 	patchDigitalSalesRoom,
 	patchDigitalSalesRoomTemplate,
 	postDigitalSalesRoom,
+	postDigitalSalesRoomComment,
 	postDigitalSalesRoomDigitalSalesRoomTemplate,
 	postDigitalSalesRoomTemplate,
 	postDigitalSalesRoomTemplateDigitalSalesRoom,

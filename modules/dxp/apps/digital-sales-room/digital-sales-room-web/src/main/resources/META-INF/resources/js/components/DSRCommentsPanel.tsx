@@ -4,11 +4,11 @@
  */
 
 import ClayButton from '@clayui/button';
+import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import Sticker from '@clayui/sticker';
 import classNames from 'classnames';
 import {openToast} from 'frontend-js-components-web';
-import {escapeHTML} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import DigitalSalesRoomService, {
@@ -38,9 +38,21 @@ function DSRCommentsPanel({roomId}: {roomId: number}) {
 	useEffect(() => {
 		DigitalSalesRoomService.getComments(roomId, page)
 			.then((data) => {
-				setComments((prevState) =>
-					page === 1 ? data.items : prevState.concat(data.items)
-				);
+				setComments((prevState) => {
+					if (page === 1) {
+						return data.items;
+					}
+
+					const existingIds = new Set(
+						prevState.map((comment) => comment.id)
+					);
+
+					return prevState.concat(
+						data.items.filter(
+							(comment) => !existingIds.has(comment.id)
+						)
+					);
+				});
 				setShowLoadMore(page < data.lastPage);
 			})
 			.catch((error) => {
@@ -50,6 +62,31 @@ function DSRCommentsPanel({roomId}: {roomId: number}) {
 				});
 			});
 	}, [page, roomId]);
+
+	const handleSaveComment = async (comment: string, roomId: number) => {
+		try {
+			const data =
+				await DigitalSalesRoomService.postDigitalSalesRoomComment(
+					roomId,
+					comment
+				);
+
+			setComments((prevState) => [data, ...prevState]);
+
+			openToast({
+				message: Liferay.Language.get(
+					'your-request-completed-successfully'
+				),
+				type: 'success',
+			});
+		}
+		catch (error) {
+			openToast({
+				message: (error as Error).message,
+				type: 'danger',
+			});
+		}
+	};
 
 	return (
 		<>
@@ -74,6 +111,11 @@ function DSRCommentsPanel({roomId}: {roomId: number}) {
 					{Liferay.Language.get('load-more')}
 				</ClayButton>
 			)}
+			<DSRCommentEditor
+				onSave={(comment) => {
+					return handleSaveComment(comment, roomId);
+				}}
+			></DSRCommentEditor>
 		</>
 	);
 }
@@ -111,14 +153,66 @@ function DSRCommentNode({comment}: {comment: TCommentDTO}) {
 						</header>
 					</div>
 
-					<div
-						className="my-3 text-3"
-						dangerouslySetInnerHTML={{
-							__html: escapeHTML(comment.text),
-						}}
-					/>
+					<div className="my-3 text-3">{comment.text}</div>
 				</article>
 			</li>
+		</>
+	);
+}
+
+function DSRCommentEditor({
+	onSave,
+}: {
+	onSave: (comment: string) => Promise<void>;
+}) {
+	const [comment, setComment] = useState('');
+	const [disabled, setDisabled] = useState<boolean>(false);
+
+	return (
+		<>
+			<div className="py-2">
+				<strong>{Liferay.Language.get('add-comment')}</strong>
+			</div>
+			<ClayInput
+				className="form-control form-control-sm"
+				component="textarea"
+				data-qa-id="commentTextarea"
+				onChange={(event) => {
+					setComment(event.target.value);
+				}}
+				placeholder={Liferay.Language.get('type-your-comment-here')}
+				value={comment}
+			></ClayInput>
+			<div className="my-3">
+				<ClayButton
+					disabled={disabled || !comment.trim()}
+					onClick={async () => {
+						setDisabled(true);
+						try {
+							await onSave(comment.trim());
+							setComment('');
+						}
+						finally {
+							setDisabled(false);
+						}
+					}}
+					size="sm"
+				>
+					{Liferay.Language.get('save')}
+				</ClayButton>
+
+				<ClayButton
+					borderless
+					className="ml-1"
+					displayType="secondary"
+					onClick={() => {
+						setComment('');
+					}}
+					size="sm"
+				>
+					{Liferay.Language.get('cancel')}
+				</ClayButton>
+			</div>
 		</>
 	);
 }

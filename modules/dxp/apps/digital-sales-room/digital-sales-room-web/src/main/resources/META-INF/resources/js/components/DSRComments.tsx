@@ -29,7 +29,7 @@ function DSRComments({digitalSalesRoomId}: {digitalSalesRoomId: number}) {
 			/>
 			<SidePanel
 				containerRef={ref}
-				id="sidepanel-example"
+				id="dsr-comments-sidepanel"
 				onOpenChange={setOpen}
 				open={open}
 			>

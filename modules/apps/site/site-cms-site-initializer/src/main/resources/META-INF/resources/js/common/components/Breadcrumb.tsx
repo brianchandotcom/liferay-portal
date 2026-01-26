@@ -94,6 +94,11 @@ function ActionDropdownItem({
 		}
 		else if (target === 'modal') {
 			openCMSModal({
+				onClose: () => {
+					if (redirect) {
+						navigate(redirect);
+					}
+				},
 				size,
 				title: label,
 				url: href,

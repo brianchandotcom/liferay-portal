@@ -118,6 +118,15 @@ public class ViewDigitalSalesRoomRoomListDisplayContext {
 			).build(
 				"saveAsTemplate"
 			),
+			FDSActionDropdownItemBuilder.setIcon(
+				"envelope-open"
+			).setLabel(
+				LanguageUtil.get(_httpServletRequest, "share")
+			).setMethod(
+				"post"
+			).build(
+				"share"
+			),
 			FDSActionDropdownItemBuilder.setHref(
 				() -> PortletURLBuilder.create(
 					_portal.getControlPanelPortletURL(

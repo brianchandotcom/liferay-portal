@@ -14,6 +14,7 @@ import {DSRContext, getColor, getFriendlyURL} from './DSRInitializer';
 import DSRRoomDetailsStep from './DSRRoomDetailsStep';
 import {getImageURL} from './DSRRoomSelectTemplateStep';
 import DSRRoomSettingsStep from './DSRRoomSettingsStep';
+import DSRRoomUsersStep from './DSRRoomUsersStep';
 import {TDSRDataContext} from './DSRTypes';
 
 const DEFAULT_DATA_CONTEXT: TDSRDataContext = {
@@ -40,6 +41,11 @@ const STEPS_DEFINITION = [
 		step: DSRRoomSettingsStep,
 		title: Liferay.Language.get('settings'),
 		type: 'settings',
+	},
+	{
+		step: DSRRoomUsersStep,
+		title: Liferay.Language.get('users'),
+		type: 'users',
 	},
 ];
 
@@ -189,6 +195,7 @@ function DSRRoomSettingsInitializer({
 					},
 					clientName: room.clientName || '',
 					description: room.description || '',
+					digitalSalesRoomId: room.id || digitalSalesRoomId,
 					errors: {},
 					friendlyURL: (room.friendlyUrlPath || '').replace(
 						/^\//,
@@ -223,24 +230,26 @@ function DSRRoomSettingsInitializer({
 					/>
 				</div>
 
-				<div className="d-flex justify-content-end">
-					<ClayButton
-						className="btn-secondary mr-3"
-						data-testid="button-cancel"
-						disabled={loading}
-						onClick={handleCancel}
-					>
-						{Liferay.Language.get('cancel')}
-					</ClayButton>
+				{step !== 'users' && (
+					<div className="d-flex justify-content-end">
+						<ClayButton
+							className="btn-secondary mr-3"
+							data-testid="button-cancel"
+							disabled={loading}
+							onClick={handleCancel}
+						>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
 
-					<ClayButton
-						data-testid="button-save"
-						disabled={loading}
-						onClick={handleSave}
-					>
-						{Liferay.Language.get('save')}
-					</ClayButton>
-				</div>
+						<ClayButton
+							data-testid="button-save"
+							disabled={loading}
+							onClick={handleSave}
+						>
+							{Liferay.Language.get('save')}
+						</ClayButton>
+					</div>
+				)}
 			</div>
 		</DSRContext.Provider>
 	);

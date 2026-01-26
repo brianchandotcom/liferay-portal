@@ -166,6 +166,24 @@ export type TDSRTemplatePayload = {
 	secondaryColor?: string;
 };
 
+export type TUserAccountBrief = {
+	alternateName?: string;
+	emailAddress: string;
+	externalReferenceCode?: string;
+	id: number;
+	image?: string;
+	name: string;
+	roleKey?: string;
+};
+
+export type TUserAccountBriefsDTO = {
+	items: Array<TUserAccountBrief>;
+	lastPage: number;
+	page: number;
+	pageSize: number;
+	totalCount: number;
+};
+
 async function deleteDigitalSalesRoom(groupId: number) {
 	return await ApiHelper.delete(`${PATH}/${groupId}`);
 }
@@ -483,15 +501,78 @@ async function postDigitalSalesRoomTemplateDigitalSalesRoomTemplate(
 	throw new Error(error);
 }
 
+async function getDigitalSalesRoomUserAccountBriefs(
+	digitalSalesRoomId: number
+): Promise<TUserAccountBrief[]> {
+	const {data, error} = await ApiHelper.get(
+		`${PATH}/${digitalSalesRoomId}/user-account-briefs`
+	);
+
+	if (data) {
+		return (data as TUserAccountBriefsDTO).items || [];
+	}
+
+	throw new Error(error);
+}
+
+async function addDigitalSalesRoomUserAccountBrief(
+	digitalSalesRoomId: number,
+	userAccountBrief: {emailAddress: string; roleKey?: string}
+): Promise<TUserAccountBrief> {
+	const {data, error} = await ApiHelper.post(
+		`${PATH}/${digitalSalesRoomId}/user-account-briefs`,
+		userAccountBrief
+	);
+
+	if (data) {
+		return data as TUserAccountBrief;
+	}
+
+	throw new Error(error);
+}
+
+async function updateDigitalSalesRoomUserAccountBrief(
+	digitalSalesRoomId: number,
+	userId: number,
+	userAccountBrief: {roleKey?: string}
+): Promise<TUserAccountBrief> {
+	const {data, error} = await ApiHelper.patch(
+		`${PATH}/${digitalSalesRoomId}/user-account-briefs/${userId}`,
+		userAccountBrief
+	);
+
+	if (data) {
+		return data as TUserAccountBrief;
+	}
+
+	throw new Error(error);
+}
+
+async function deleteDigitalSalesRoomUserAccountBrief(
+	digitalSalesRoomId: number,
+	userId: number
+): Promise<void> {
+	const {error} = await ApiHelper.delete(
+		`${PATH}/${digitalSalesRoomId}/user-account-briefs/${userId}`
+	);
+
+	if (error) {
+		throw new Error(error);
+	}
+}
+
 export default {
+	addDigitalSalesRoomUserAccountBrief,
 	deleteDigitalSalesRoom,
 	deleteDigitalSalesRoomTemplate,
+	deleteDigitalSalesRoomUserAccountBrief,
 	getAccounts,
 	getChannels,
 	getComments: getDigitalSalesRoomComments,
 	getDigitalSalesRoom,
 	getDigitalSalesRoomTemplate,
 	getDigitalSalesRoomTemplates,
+	getDigitalSalesRoomUserAccountBriefs,
 	patchDigitalSalesRoom,
 	patchDigitalSalesRoomTemplate,
 	postDigitalSalesRoom,
@@ -500,4 +581,5 @@ export default {
 	postDigitalSalesRoomTemplate,
 	postDigitalSalesRoomTemplateDigitalSalesRoom,
 	postDigitalSalesRoomTemplateDigitalSalesRoomTemplate,
+	updateDigitalSalesRoomUserAccountBrief,
 };

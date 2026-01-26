@@ -5,6 +5,8 @@
 
 import React, {SetStateAction} from 'react';
 
+import type {TUserAccountBrief} from '../commons/DigitalSalesRoomService';
+
 export type TDSRDataContext = {
 	accountId?: number;
 	accountName?: string;
@@ -20,6 +22,7 @@ export type TDSRDataContext = {
 	};
 	clientName: string;
 	description?: string;
+	digitalSalesRoomId?: number;
 	errors: {
 		accountId?: null | string;
 		banner?: null | string;
@@ -43,6 +46,7 @@ export type TDSRDataContext = {
 		roleKey?: string;
 	};
 	templateId?: number;
+	userAccountBriefs?: Array<TUserAccountBrief>;
 };
 
 export type TDSRContext = {

@@ -68,35 +68,14 @@ public class SimpleCaptchaImplTest {
 
 		String captchaId1 = RandomTestUtil.randomString();
 
-		MockHttpServletRequest mockHttpServletRequest1 =
-			_getMockHttpServletRequest(mockHttpSession, captchaId1);
-
-		Mockito.when(
-			_portal.getOriginalServletRequest(Mockito.any())
-		).thenReturn(
-			mockHttpServletRequest1
-		);
-
-		_simpleCaptchaImpl.serveImage(
-			mockHttpServletRequest1, new MockHttpServletResponse());
+		_serveImage(captchaId1, mockHttpSession);
 
 		String captchaId2 = RandomTestUtil.randomString();
 
-		MockHttpServletRequest mockHttpServletRequest2 =
-			_getMockHttpServletRequest(mockHttpSession, captchaId2);
-
-		Mockito.when(
-			_portal.getOriginalServletRequest(Mockito.any())
-		).thenReturn(
-			mockHttpServletRequest2
-		);
-
-		_simpleCaptchaImpl.serveImage(
-			mockHttpServletRequest2, new MockHttpServletResponse());
+		_serveImage(captchaId2, mockHttpSession);
 
 		Assert.assertNotNull(
 			mockHttpSession.getAttribute(captchaId1 + WebKeys.CAPTCHA_TEXT));
-
 		Assert.assertNotNull(
 			mockHttpSession.getAttribute(captchaId2 + WebKeys.CAPTCHA_TEXT));
 	}
@@ -107,7 +86,6 @@ public class SimpleCaptchaImplTest {
 			new MockServletContext(), RandomTestUtil.randomString());
 
 		String captchaId1 = RandomTestUtil.randomString();
-
 		String captchaText = RandomTestUtil.randomString();
 
 		mockHttpSession.setAttribute(
@@ -119,7 +97,7 @@ public class SimpleCaptchaImplTest {
 			captchaId2 + WebKeys.CAPTCHA_TEXT, RandomTestUtil.randomString());
 
 		MockHttpServletRequest mockHttpServletRequest =
-			_getMockHttpServletRequest(mockHttpSession, captchaId1);
+			_getMockHttpServletRequest(captchaId1, mockHttpSession);
 
 		mockHttpServletRequest.setParameter("captchaText", captchaText);
 
@@ -139,7 +117,7 @@ public class SimpleCaptchaImplTest {
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest(
-		MockHttpSession mockHttpSession, String captchaId) {
+		String captchaId, MockHttpSession mockHttpSession) {
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -208,6 +186,22 @@ public class SimpleCaptchaImplTest {
 		);
 
 		return captchaProvider;
+	}
+
+	private void _serveImage(String captchaId, MockHttpSession mockHttpSession)
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest(captchaId, mockHttpSession);
+
+		Mockito.when(
+			_portal.getOriginalServletRequest(Mockito.any())
+		).thenReturn(
+			mockHttpServletRequest
+		);
+
+		_simpleCaptchaImpl.serveImage(
+			mockHttpServletRequest, new MockHttpServletResponse());
 	}
 
 	private CaptchaConfiguration _captchaConfiguration;

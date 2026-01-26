@@ -51,7 +51,7 @@ liferay-default:
                                         rm --verbose "/temp/osgi/modules/${filename_prefix}"*
                                     fi
 
-                                    mkdir -p "$deploy_dir"
+                                    mkdir --parents "$deploy_dir"
 
                                     local base_url="https://releases.liferay.com/opensearch2/dxp/${product_version}/${filename_prefix}"
 
@@ -69,7 +69,7 @@ liferay-default:
 
                                         if [ "${http_code}" != "200" ]
                                         then
-                                            echo "Unable to download OpenSearch modules for Product Version ${product_version}. Status code: ${http_code}" >&2
+                                            echo "Unable to download OpenSearch modules for product version ${product_version}. Status code: ${http_code}" >&2
                                             exit 1
                                         fi
                                     done

@@ -127,9 +127,6 @@ const CurrencyModal = ({observer, onClose}: ReturnType<typeof useModal>) => {
 							'you-are-currently-on-a-text-element,-inside-of-a-list-box'
 						),
 						itemSelected: i18n.translate('x-selected'),
-						scrollToBottomAriaLabel:
-							i18n.translate('scroll-to-bottom'),
-						scrollToTopAriaLabel: i18n.translate('scroll-to-top'),
 					}}
 					onSelectionChange={(key: any) =>
 						setSelectedNewCurrency(key)

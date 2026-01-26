@@ -30,10 +30,7 @@ public class SseUtil {
 		_sseEventSinks.forEach((__, sseEventSink) -> sseEventSink.close());
 
 		_sseEventSinks = new ConcurrentHashMap<>();
-	}
-
-	public static SseEventSink getSSEEventSink(String sseEventSinkKey) {
-		return _sseEventSinks.get(sseEventSinkKey);
+		_sses = new ConcurrentHashMap<>();
 	}
 
 	public static Set<String> getSSEEventSinksKeys() {
@@ -48,6 +45,7 @@ public class SseUtil {
 		String sseEventSinkKey = PortalUUIDUtil.generate();
 
 		_sseEventSinks.put(sseEventSinkKey, sseEventSink);
+		_sses.put(sseEventSinkKey, sse);
 
 		sseEventSink.send(
 			sse.newEventBuilder(
@@ -63,10 +61,11 @@ public class SseUtil {
 			return;
 		}
 
-		SseEventSink sseEventSink = getSSEEventSink(sseEventSinkKey);
+		Sse sse = _sses.get(sseEventSinkKey);
+		SseEventSink sseEventSink = _sseEventSinks.get(sseEventSinkKey);
 
 		sseEventSink.send(
-			_sse.newEventBuilder(
+			sse.newEventBuilder(
 			).data(
 				String.class,
 				JSONUtil.put(
@@ -75,16 +74,10 @@ public class SseUtil {
 			).name(
 				name
 			).build());
-
-		_sse = null;
 	}
 
-	public static void setSse(Sse sse) {
-		_sse = sse;
-	}
-
-	private static Sse _sse;
 	private static Map<String, SseEventSink> _sseEventSinks =
 		new ConcurrentHashMap<>();
+	private static Map<String, Sse> _sses = new ConcurrentHashMap<>();
 
 }

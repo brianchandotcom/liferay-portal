@@ -615,6 +615,53 @@ public class DisplayPageTypeSiteNavigationMenuItemTypeTest {
 	}
 
 	@Test
+	public void testSiteNavigationMenuItemWithDeletedSite() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		Locale locale = _portal.getSiteDefaultLocale(group.getGroupId());
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			group.getGroupId(), JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			_serviceContext);
+
+		String journalArticleTitle = journalArticle.getTitle();
+
+		SiteNavigationMenu siteNavigationMenu =
+			_siteNavigationMenuLocalService.addSiteNavigationMenu(
+				null, TestPropsValues.getUserId(), group.getGroupId(),
+				RandomTestUtil.randomString(),
+				SiteNavigationConstants.TYPE_DEFAULT, true, _serviceContext);
+
+		SiteNavigationMenuItem siteNavigationMenuItem =
+			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
+				null, TestPropsValues.getUserId(), group.getGroupId(),
+				siteNavigationMenu.getSiteNavigationMenuId(), 0,
+				JournalArticle.class.getName(),
+				UnicodePropertiesBuilder.put(
+					"scopeExternalReferenceCode",
+					group.getExternalReferenceCode()
+				).put(
+					"title", journalArticleTitle
+				).buildString(),
+				_serviceContext);
+
+		_groupLocalService.deleteGroup(group);
+
+		SiteNavigationMenuItemType siteNavigationMenuItemType =
+			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
+				siteNavigationMenuItem.getType());
+
+		Assert.assertNull(
+			_journalArticleLocalService.fetchJournalArticle(
+				journalArticle.getId()));
+
+		Assert.assertEquals(
+			journalArticleTitle,
+			siteNavigationMenuItemType.getTitle(
+				siteNavigationMenuItem, locale));
+	}
+
+	@Test
 	public void testSiteNavigationMenuItemWithNoDisplayPage() throws Exception {
 		SiteNavigationMenu siteNavigationMenu =
 			_siteNavigationMenuLocalService.addSiteNavigationMenu(

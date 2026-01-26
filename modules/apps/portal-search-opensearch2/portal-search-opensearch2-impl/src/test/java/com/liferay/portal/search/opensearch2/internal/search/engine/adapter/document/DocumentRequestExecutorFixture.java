@@ -80,9 +80,7 @@ public class DocumentRequestExecutorFixture {
 	}
 
 	private DeleteDocumentRequestExecutor _createDeleteDocumentRequestExecutor(
-		OpenSearchConnectionManager openSearchConnectionManager,
-		OpenSearchDocumentRequestTranslator
-			openSearchDocumentRequestTranslator) {
+		OpenSearchConnectionManager openSearchConnectionManager) {
 
 		DeleteDocumentRequestExecutor deleteDocumentRequestExecutor =
 			new DeleteDocumentRequestExecutorImpl();
@@ -90,10 +88,6 @@ public class DocumentRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			deleteDocumentRequestExecutor, "_openSearchConnectionManager",
 			openSearchConnectionManager);
-		ReflectionTestUtil.setFieldValue(
-			deleteDocumentRequestExecutor,
-			"_openSearchDocumentRequestTranslator",
-			openSearchDocumentRequestTranslator);
 
 		return deleteDocumentRequestExecutor;
 	}
@@ -113,25 +107,15 @@ public class DocumentRequestExecutorFixture {
 			_createDeleteByQueryDocumentRequestExecutor(
 				openSearchConnectionManager));
 
-		OpenSearchDocumentRequestTranslator
-			openSearchDocumentRequestTranslator =
-				_createOpenSearchDocumentRequestTranslator();
-
 		ReflectionTestUtil.setFieldValue(
 			documentRequestExecutor, "_deleteDocumentRequestExecutor",
-			_createDeleteDocumentRequestExecutor(
-				openSearchConnectionManager,
-				openSearchDocumentRequestTranslator));
+			_createDeleteDocumentRequestExecutor(openSearchConnectionManager));
 		ReflectionTestUtil.setFieldValue(
 			documentRequestExecutor, "_getDocumentRequestExecutor",
-			_createGetDocumentRequestExecutor(
-				openSearchConnectionManager,
-				openSearchDocumentRequestTranslator));
+			_createGetDocumentRequestExecutor(openSearchConnectionManager));
 		ReflectionTestUtil.setFieldValue(
 			documentRequestExecutor, "_indexDocumentRequestExecutor",
-			_createIndexDocumentRequestExecutor(
-				openSearchConnectionManager,
-				openSearchDocumentRequestTranslator));
+			_createIndexDocumentRequestExecutor(openSearchConnectionManager));
 
 		ReflectionTestUtil.setFieldValue(
 			documentRequestExecutor, "_updateByQueryDocumentRequestExecutor",
@@ -139,17 +123,13 @@ public class DocumentRequestExecutorFixture {
 				openSearchConnectionManager));
 		ReflectionTestUtil.setFieldValue(
 			documentRequestExecutor, "_updateDocumentRequestExecutor",
-			_createUpdateDocumentRequestExecutor(
-				openSearchConnectionManager,
-				openSearchDocumentRequestTranslator));
+			_createUpdateDocumentRequestExecutor(openSearchConnectionManager));
 
 		return documentRequestExecutor;
 	}
 
 	private GetDocumentRequestExecutor _createGetDocumentRequestExecutor(
-		OpenSearchConnectionManager openSearchConnectionManager,
-		OpenSearchDocumentRequestTranslator
-			openSearchDocumentRequestTranslator) {
+		OpenSearchConnectionManager openSearchConnectionManager) {
 
 		GetDocumentRequestExecutor getDocumentRequestExecutor =
 			new GetDocumentRequestExecutorImpl();
@@ -162,17 +142,12 @@ public class DocumentRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			getDocumentRequestExecutor, "_openSearchConnectionManager",
 			openSearchConnectionManager);
-		ReflectionTestUtil.setFieldValue(
-			getDocumentRequestExecutor, "_openSearchDocumentRequestTranslator",
-			openSearchDocumentRequestTranslator);
 
 		return getDocumentRequestExecutor;
 	}
 
 	private IndexDocumentRequestExecutor _createIndexDocumentRequestExecutor(
-		OpenSearchConnectionManager openSearchConnectionManager,
-		OpenSearchDocumentRequestTranslator
-			openSearchDocumentRequestTranslator) {
+		OpenSearchConnectionManager openSearchConnectionManager) {
 
 		IndexDocumentRequestExecutor indexDocumentRequestExecutor =
 			new IndexDocumentRequestExecutorImpl();
@@ -180,26 +155,8 @@ public class DocumentRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			indexDocumentRequestExecutor, "_openSearchConnectionManager",
 			openSearchConnectionManager);
-		ReflectionTestUtil.setFieldValue(
-			indexDocumentRequestExecutor,
-			"_openSearchDocumentRequestTranslator",
-			openSearchDocumentRequestTranslator);
 
 		return indexDocumentRequestExecutor;
-	}
-
-	private OpenSearchDocumentRequestTranslator
-		_createOpenSearchDocumentRequestTranslator() {
-
-		OpenSearchDocumentRequestTranslator
-			openSearchDocumentRequestTranslator =
-				new OpenSearchDocumentRequestTranslatorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			openSearchDocumentRequestTranslator, "_scriptTranslator",
-			new ScriptTranslator());
-
-		return openSearchDocumentRequestTranslator;
 	}
 
 	private UpdateByQueryDocumentRequestExecutor
@@ -240,9 +197,7 @@ public class DocumentRequestExecutorFixture {
 	}
 
 	private UpdateDocumentRequestExecutor _createUpdateDocumentRequestExecutor(
-		OpenSearchConnectionManager openSearchConnectionManager,
-		OpenSearchDocumentRequestTranslator
-			openSearchDocumentRequestTranslator) {
+		OpenSearchConnectionManager openSearchConnectionManager) {
 
 		UpdateDocumentRequestExecutor updateDocumentRequestExecutor =
 			new UpdateDocumentRequestExecutorImpl();
@@ -250,10 +205,6 @@ public class DocumentRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			updateDocumentRequestExecutor, "_openSearchConnectionManager",
 			openSearchConnectionManager);
-		ReflectionTestUtil.setFieldValue(
-			updateDocumentRequestExecutor,
-			"_openSearchDocumentRequestTranslator",
-			openSearchDocumentRequestTranslator);
 
 		return updateDocumentRequestExecutor;
 	}

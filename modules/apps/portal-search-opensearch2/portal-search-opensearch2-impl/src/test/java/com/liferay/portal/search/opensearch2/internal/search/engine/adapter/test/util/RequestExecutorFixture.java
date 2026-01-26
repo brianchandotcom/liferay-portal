@@ -18,13 +18,10 @@ import com.liferay.portal.search.engine.adapter.index.DeleteIndexRequest;
 import com.liferay.portal.search.internal.document.DocumentBuilderFactoryImpl;
 import com.liferay.portal.search.internal.geolocation.GeoBuildersImpl;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
-import com.liferay.portal.search.opensearch2.internal.script.ScriptTranslator;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.GetDocumentRequestExecutor;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.GetDocumentRequestExecutorImpl;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.IndexDocumentRequestExecutor;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.IndexDocumentRequestExecutorImpl;
-import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.OpenSearchDocumentRequestTranslator;
-import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.OpenSearchDocumentRequestTranslatorImpl;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.UpdateDocumentRequestExecutor;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.UpdateDocumentRequestExecutorImpl;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.index.CreateIndexRequestExecutor;
@@ -98,26 +95,16 @@ public class RequestExecutorFixture {
 	}
 
 	public void setUp() {
-		OpenSearchDocumentRequestTranslator
-			openSearchDocumentRequestTranslator =
-				_createOpenSearchDocumentRequestTranslator();
-
 		_createIndexRequestExecutor = new CreateIndexRequestExecutor(
 			new JSONFactoryImpl(), _openSearchConnectionManager);
 		_deleteIndexRequestExecutor = new DeleteIndexRequestExecutor(
 			_openSearchConnectionManager);
-		_getDocumentRequestExecutor = _createGetDocumentRequestExecutor(
-			openSearchDocumentRequestTranslator);
-		_indexDocumentRequestExecutor = _createIndexDocumentRequestExecutor(
-			openSearchDocumentRequestTranslator);
-		_updateDocumentRequestExecutor = _createUpdateDocumentRequestExecutor(
-			openSearchDocumentRequestTranslator);
+		_getDocumentRequestExecutor = _createGetDocumentRequestExecutor();
+		_indexDocumentRequestExecutor = _createIndexDocumentRequestExecutor();
+		_updateDocumentRequestExecutor = _createUpdateDocumentRequestExecutor();
 	}
 
-	private GetDocumentRequestExecutor _createGetDocumentRequestExecutor(
-		OpenSearchDocumentRequestTranslator
-			openSearchDocumentRequestTranslator) {
-
+	private GetDocumentRequestExecutor _createGetDocumentRequestExecutor() {
 		GetDocumentRequestExecutor getDocumentRequestExecutor =
 			new GetDocumentRequestExecutorImpl();
 
@@ -129,48 +116,23 @@ public class RequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			getDocumentRequestExecutor, "_openSearchConnectionManager",
 			_openSearchConnectionManager);
-		ReflectionTestUtil.setFieldValue(
-			getDocumentRequestExecutor, "_openSearchDocumentRequestTranslator",
-			openSearchDocumentRequestTranslator);
 
 		return getDocumentRequestExecutor;
 	}
 
-	private IndexDocumentRequestExecutor _createIndexDocumentRequestExecutor(
-		OpenSearchDocumentRequestTranslator
-			openSearchDocumentRequestTranslator) {
-
+	private IndexDocumentRequestExecutor _createIndexDocumentRequestExecutor() {
 		IndexDocumentRequestExecutor indexDocumentRequestExecutor =
 			new IndexDocumentRequestExecutorImpl();
 
 		ReflectionTestUtil.setFieldValue(
 			indexDocumentRequestExecutor, "_openSearchConnectionManager",
 			_openSearchConnectionManager);
-		ReflectionTestUtil.setFieldValue(
-			indexDocumentRequestExecutor,
-			"_openSearchDocumentRequestTranslator",
-			openSearchDocumentRequestTranslator);
 
 		return indexDocumentRequestExecutor;
 	}
 
-	private OpenSearchDocumentRequestTranslator
-		_createOpenSearchDocumentRequestTranslator() {
-
-		OpenSearchDocumentRequestTranslator
-			openSearchDocumentRequestTranslator =
-				new OpenSearchDocumentRequestTranslatorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			openSearchDocumentRequestTranslator, "_scriptTranslator",
-			new ScriptTranslator());
-
-		return openSearchDocumentRequestTranslator;
-	}
-
-	private UpdateDocumentRequestExecutor _createUpdateDocumentRequestExecutor(
-		OpenSearchDocumentRequestTranslator
-			openSearchDocumentRequestTranslator) {
+	private UpdateDocumentRequestExecutor
+		_createUpdateDocumentRequestExecutor() {
 
 		UpdateDocumentRequestExecutor updateDocumentRequestExecutor =
 			new UpdateDocumentRequestExecutorImpl();
@@ -178,10 +140,6 @@ public class RequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			updateDocumentRequestExecutor, "_openSearchConnectionManager",
 			_openSearchConnectionManager);
-		ReflectionTestUtil.setFieldValue(
-			updateDocumentRequestExecutor,
-			"_openSearchDocumentRequestTranslator",
-			openSearchDocumentRequestTranslator);
 
 		return updateDocumentRequestExecutor;
 	}

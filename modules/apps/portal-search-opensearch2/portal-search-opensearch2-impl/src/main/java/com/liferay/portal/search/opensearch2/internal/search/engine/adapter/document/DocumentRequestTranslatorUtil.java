@@ -17,9 +17,9 @@ import org.opensearch.client.json.JsonData;
 /**
  * @author Petteri Karttunen
  */
-public abstract class BaseDocumentRequestTranslator {
+public class DocumentRequestTranslatorUtil {
 
-	protected JsonData getDocument(
+	public static JsonData getDocument(
 		Document document,
 		com.liferay.portal.kernel.search.Document document71) {
 
@@ -31,7 +31,7 @@ public abstract class BaseDocumentRequestTranslator {
 		return OpenSearchDocumentFactoryUtil.getOpenSearchDocument(document71);
 	}
 
-	protected String getUid(IndexDocumentRequest indexDocumentRequest) {
+	public static String getUid(IndexDocumentRequest indexDocumentRequest) {
 		String uid = indexDocumentRequest.getUid();
 
 		if (!Validator.isBlank(uid)) {
@@ -57,7 +57,7 @@ public abstract class BaseDocumentRequestTranslator {
 		return uid;
 	}
 
-	protected String getUid(UpdateDocumentRequest updateDocumentRequest) {
+	public static String getUid(UpdateDocumentRequest updateDocumentRequest) {
 		String uid = updateDocumentRequest.getUid();
 
 		if (!Validator.isBlank(uid)) {

@@ -29,7 +29,6 @@ import org.osgi.service.component.annotations.Component;
 	service = OpenSearchBulkableDocumentRequestTranslator.class
 )
 public class OpenSearchBulkableDocumentRequestTranslatorImpl
-	extends BaseDocumentRequestTranslator
 	implements OpenSearchBulkableDocumentRequestTranslator {
 
 	@Override
@@ -55,10 +54,10 @@ public class OpenSearchBulkableDocumentRequestTranslatorImpl
 			new IndexOperation.Builder<JsonData>();
 
 		builder.document(
-			getDocument(
+			DocumentRequestTranslatorUtil.getDocument(
 				indexDocumentRequest.getDocument(),
 				indexDocumentRequest.getDocument71()));
-		builder.id(getUid(indexDocumentRequest));
+		builder.id(DocumentRequestTranslatorUtil.getUid(indexDocumentRequest));
 		builder.index(indexDocumentRequest.getIndexName());
 
 		return builder.build();
@@ -70,7 +69,7 @@ public class OpenSearchBulkableDocumentRequestTranslatorImpl
 
 		UpdateOperation.Builder builder = new UpdateOperation.Builder();
 
-		builder.id(getUid(updateDocumentRequest));
+		builder.id(DocumentRequestTranslatorUtil.getUid(updateDocumentRequest));
 
 		if (updateDocumentRequest.isUpsert()) {
 			builder.docAsUpsert(true);
@@ -84,7 +83,7 @@ public class OpenSearchBulkableDocumentRequestTranslatorImpl
 		}
 		else {
 			builder.document(
-				getDocument(
+				DocumentRequestTranslatorUtil.getDocument(
 					updateDocumentRequest.getDocument(),
 					updateDocumentRequest.getDocument71()));
 		}

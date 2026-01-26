@@ -31,7 +31,6 @@ import org.osgi.service.component.annotations.Component;
 	service = OpenSearchDocumentRequestTranslator.class
 )
 public class OpenSearchDocumentRequestTranslatorImpl
-	extends BaseDocumentRequestTranslator
 	implements OpenSearchDocumentRequestTranslator {
 
 	@Override
@@ -76,10 +75,10 @@ public class OpenSearchDocumentRequestTranslatorImpl
 		IndexRequest.Builder<JsonData> builder = new IndexRequest.Builder<>();
 
 		builder.document(
-			getDocument(
+			DocumentRequestTranslatorUtil.getDocument(
 				indexDocumentRequest.getDocument(),
 				indexDocumentRequest.getDocument71()));
-		builder.id(getUid(indexDocumentRequest));
+		builder.id(DocumentRequestTranslatorUtil.getUid(indexDocumentRequest));
 		builder.index(indexDocumentRequest.getIndexName());
 
 		if (indexDocumentRequest.isRefresh()) {
@@ -100,7 +99,7 @@ public class OpenSearchDocumentRequestTranslatorImpl
 			builder.docAsUpsert(true);
 		}
 
-		builder.id(getUid(updateDocumentRequest));
+		builder.id(DocumentRequestTranslatorUtil.getUid(updateDocumentRequest));
 		builder.index(updateDocumentRequest.getIndexName());
 
 		if (updateDocumentRequest.isRefresh()) {
@@ -113,7 +112,7 @@ public class OpenSearchDocumentRequestTranslatorImpl
 		}
 		else {
 			builder.doc(
-				getDocument(
+				DocumentRequestTranslatorUtil.getDocument(
 					updateDocumentRequest.getDocument(),
 					updateDocumentRequest.getDocument71()));
 		}

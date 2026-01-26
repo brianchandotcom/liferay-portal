@@ -1,0 +1,79 @@
+.dsr-gallery-block-component {
+	padding-bottom: 5rem;
+}
+
+.dsr-gallery-block-component h2::after {
+	border-bottom: 4px solid var(--primary, #0B5FFF);
+	content: '';
+	display: inline-block;
+	margin: 0 0 0 0.3rem;
+	width: 1.5rem;
+}
+
+.dsr-gallery-block-component .dsr-gallery.edit-mode .dsr-gallery-entry {
+	border: 1px solid rgba(0, 0, 0, 0.125);
+	border-radius: 1.25rem;
+	height: 6.25rem;
+	margin: 1rem;
+	overflow: hidden;
+	width: 6.25rem;
+}
+
+.dsr-gallery-block-component .dsr-gallery.edit-mode .dsr-gallery-entry img {
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+	width: 100%;
+}
+
+.dsr-gallery-block-component .dsr-gallery.view-mode {
+	border: 1px solid rgba(0, 0, 0, 0.125);
+	border-radius: 1.25rem;
+	height: 35rem;
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+}
+
+.dsr-gallery-block-component .dsr-gallery.view-mode .dsr-gallery-entry {
+	bottom: 0;
+	height: 35rem;
+	left: 100%;
+	margin: 0;
+	overflow: hidden;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 100%;
+}
+
+.dsr-gallery-block-component .dsr-gallery.view-mode .dsr-gallery-entry.active {
+	z-index: 2;
+}
+
+.dsr-gallery-block-component .dsr-gallery.view-mode .dsr-gallery-entry.current {
+	left: 0;
+	transition: 1s;
+}
+
+.dsr-gallery-block-component .dsr-gallery.view-mode .dsr-gallery-entry img {
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+	width: 100%;
+}
+
+.dsr-gallery-block-component .dsr-gallery-navigation-entry {
+	background-color: var(--body-color, #1C1C24);
+	border: 2px solid var(--body-color, #1C1C24);
+	border-radius: 4px;
+	height: 0.5rem;
+	margin: 0.25rem;
+	width: 0.5rem;
+}
+
+.dsr-gallery-block-component .dsr-gallery-navigation-entry.current {
+	background-color: var(--primary, #0B5FFF);
+	border: 2px solid var(--primary, #0B5FFF);
+	width: 1.5rem;
+}

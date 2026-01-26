@@ -1,0 +1,33 @@
+<div class="clearfix component-paragraph dsr-gallery-block-component text-break">
+	<div data-lfr-editable-id="element-text-1" data-lfr-editable-type="rich-text">
+		<h2 class="mb-4">GALLERY</h2>
+	</div>
+
+	<div class="align-items-center d-flex flex-column">
+		<ul class="align-content-top dsr-gallery [#if layoutMode == 'edit']edit-mode[#else]view-mode[/#if] d-flex flex-wrap justify-content-center list-unstyled">
+			[@buildGallery index=1 numberOfItems=configuration.numberOfItems/]
+		</ul>
+
+		<ul class="align-content-top [#if layoutMode == 'edit']edit-mode[#else]view-mode[/#if] d-flex flex-wrap justify-content-center list-unstyled">
+			[@buildGalleryNavigation index=1 numberOfItems=configuration.numberOfItems/]
+		</ul>
+	</div>
+</div>
+
+[#macro buildGallery index numberOfItems]
+	<li class="[#if index == 1]current[/#if] dsr-gallery-entry dsr-gallery-entry-${index}" data-index="${index}">
+		<img alt="" data-lfr-editable-id="entry-image-${index}" data-lfr-editable-type="image" src="[resources:placeholder.png]" />
+	</li>
+
+	[#if (index < numberOfItems)]
+		[@buildGallery index=index+1 numberOfItems=numberOfItems/]
+	[/#if]
+[/#macro]
+
+[#macro buildGalleryNavigation index numberOfItems]
+	<li class="[#if index == 1]current[/#if] dsr-gallery-navigation-entry dsr-gallery-navigation-entry-${index}" data-index="${index}"></li>
+
+	[#if (index < numberOfItems)]
+		[@buildGalleryNavigation index=index+1 numberOfItems=numberOfItems/]
+	[/#if]
+[/#macro]

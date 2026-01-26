@@ -103,6 +103,7 @@ describe('toRounded', () => {
 		expect(toRounded(1.123, 2)).toEqual('1.12');
 		expect(toRounded(1.543, 2)).toEqual('1.54');
 		expect(toRounded(0.300001, 2)).toEqual('0.30');
+		expect(toRounded(30.0, 2)).toEqual('30');
 	});
 });
 

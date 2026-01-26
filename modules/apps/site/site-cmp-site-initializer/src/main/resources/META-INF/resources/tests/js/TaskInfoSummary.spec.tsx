@@ -11,8 +11,8 @@ import TaskInfoSummary from '../../js/components/task/TaskInfoSummary';
 import createMockFetchAssigneeContext from '../js/__mocks__/createMockFetchAssigneeContext';
 
 const mockStates = [
-	{key: 'notStarted', name: 'Not Started'},
-	{key: 'inProgress', name: 'In Progress'},
+	{key: 'notStarted', name: 'Not Started', nextStates: ['inProgress']},
+	{key: 'inProgress', name: 'In Progress', nextStates: ['notStarted']},
 ];
 
 const mockAssignTo = {

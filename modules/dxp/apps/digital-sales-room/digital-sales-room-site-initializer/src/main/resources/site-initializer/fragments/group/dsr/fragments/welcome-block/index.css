@@ -10,6 +10,11 @@
 	width: 1.5rem;
 }
 
+.dsr-welcome-block-component .sticker-user-icon {
+	object-fit: cover;
+	object-position: center;
+}
+
 .dsr-welcome-block-component ul.list-unstyled {
 	list-style-type: none;
 }

@@ -125,47 +125,6 @@ public class ConvertEmptyLayoutMVCActionCommandTest {
 	}
 
 	@Test
-	public void testConvertEmptyLayoutToContentLayout() throws Exception {
-		Layout emptyLayout = _layoutLocalService.addLayout(
-			null, TestPropsValues.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			LayoutConstants.TYPE_EMPTY, true, StringPool.BLANK,
-			_serviceContext);
-
-		_mvcActionCommand.processAction(
-			_getMockLiferayPortletActionRequest(
-				emptyLayout, LayoutConstants.TYPE_CONTENT,
-				TestPropsValues.getUser()),
-			new MockLiferayPortletActionResponse());
-
-		Layout layout = _layoutLocalService.getLayout(emptyLayout.getPlid());
-
-		Assert.assertFalse(layout.isPublished());
-		Assert.assertTrue(layout.isTypeContent());
-	}
-
-	@Test
-	public void testConvertEmptyLayoutToPortletLayout() throws Exception {
-		Layout emptyLayout = _layoutLocalService.addLayout(
-			null, TestPropsValues.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			LayoutConstants.TYPE_EMPTY, true, StringPool.BLANK,
-			_serviceContext);
-
-		_mvcActionCommand.processAction(
-			_getMockLiferayPortletActionRequest(
-				emptyLayout, LayoutConstants.TYPE_PORTLET,
-				TestPropsValues.getUser()),
-			new MockLiferayPortletActionResponse());
-
-		Layout layout = _layoutLocalService.getLayout(emptyLayout.getPlid());
-
-		Assert.assertTrue(layout.isTypePortlet());
-	}
-
-	@Test
 	public void testConvertEmptyLayoutToPortletLayoutWithoutPermissions()
 		throws Exception {
 

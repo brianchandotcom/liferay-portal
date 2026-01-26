@@ -286,6 +286,64 @@ public class LayoutLocalServiceTest {
 	}
 
 	@Test
+	@TestInfo({"LPD-64609", "LPD-72013"})
+	public void testConvertEmptyLayoutToContentLayout() throws Exception {
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			Layout emptyLayout = _layoutLocalService.getOrAddEmptyLayout(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(), _serviceContext);
+
+			_serviceContext.setAttribute(
+				"layout.instanceable.allowed", Boolean.TRUE);
+
+			try {
+				_layoutLocalService.convertEmptyLayout(
+					TestPropsValues.getUserId(), emptyLayout.getPlid(),
+					HashMapBuilder.put(
+						LocaleUtil.getSiteDefault(),
+						RandomTestUtil.randomString()
+					).build(),
+					LayoutConstants.TYPE_CONTENT, 0, 0, null, _serviceContext);
+			}
+			finally {
+				_serviceContext.removeAttribute("layout.instanceable.allowed");
+			}
+
+			Layout layout = _layoutLocalService.getLayout(
+				emptyLayout.getPlid());
+
+			Assert.assertFalse(layout.isPublished());
+			Assert.assertTrue(layout.isTypeContent());
+		}
+	}
+
+	@Test
+	@TestInfo({"LPD-64609", "LPD-72013"})
+	public void testConvertEmptyLayoutToPortletLayout() throws Exception {
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			Layout emptyLayout = _layoutLocalService.getOrAddEmptyLayout(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(), _serviceContext);
+
+			_layoutLocalService.convertEmptyLayout(
+				TestPropsValues.getUserId(), emptyLayout.getPlid(),
+				HashMapBuilder.put(
+					LocaleUtil.getSiteDefault(), RandomTestUtil.randomString()
+				).build(),
+				LayoutConstants.TYPE_PORTLET, 0, 0, null, _serviceContext);
+
+			Layout layout = _layoutLocalService.getLayout(
+				emptyLayout.getPlid());
+
+			Assert.assertTrue(layout.isTypePortlet());
+		}
+	}
+
+	@Test
 	@TestInfo("LPD-67157")
 	public void testDeleteLayoutByExternalReferenceCode() throws Exception {
 		Layout layout = _layoutLocalService.addLayout(

@@ -34,7 +34,7 @@ public class GetDocumentRequestExecutorImpl
 	public GetDocumentResponse execute(GetDocumentRequest getDocumentRequest) {
 		GetResponse<JsonData> getResponse = _getGetResponse(
 			getDocumentRequest,
-			_elasticsearchDocumentRequestTranslator.translate(
+			ElasticsearchDocumentRequestTranslatorUtil.translate(
 				getDocumentRequest));
 
 		GetDocumentResponse getDocumentResponse = new GetDocumentResponse(
@@ -80,10 +80,6 @@ public class GetDocumentRequestExecutorImpl
 
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
-
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
-	private ElasticsearchDocumentRequestTranslator
-		_elasticsearchDocumentRequestTranslator;
 
 	@Reference
 	private GeoBuilders _geoBuilders;

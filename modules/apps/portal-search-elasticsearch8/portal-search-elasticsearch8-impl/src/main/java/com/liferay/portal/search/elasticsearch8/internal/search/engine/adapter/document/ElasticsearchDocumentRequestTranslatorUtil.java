@@ -21,20 +21,12 @@ import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 
 import java.util.Collections;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Petteri Karttunen
  */
-@Component(
-	property = "search.engine.impl=Elasticsearch",
-	service = ElasticsearchDocumentRequestTranslator.class
-)
-public class ElasticsearchDocumentRequestTranslatorImpl
-	implements ElasticsearchDocumentRequestTranslator {
+public class ElasticsearchDocumentRequestTranslatorUtil {
 
-	@Override
-	public DeleteRequest translate(
+	public static DeleteRequest translate(
 		DeleteDocumentRequest deleteDocumentRequest) {
 
 		DeleteRequest.Builder builder = new DeleteRequest.Builder();
@@ -49,8 +41,7 @@ public class ElasticsearchDocumentRequestTranslatorImpl
 		return builder.build();
 	}
 
-	@Override
-	public GetRequest translate(GetDocumentRequest getDocumentRequest) {
+	public static GetRequest translate(GetDocumentRequest getDocumentRequest) {
 		GetRequest.Builder builder = new GetRequest.Builder();
 
 		builder.id(getDocumentRequest.getId());
@@ -68,8 +59,7 @@ public class ElasticsearchDocumentRequestTranslatorImpl
 		return builder.build();
 	}
 
-	@Override
-	public IndexRequest<JsonData> translate(
+	public static IndexRequest<JsonData> translate(
 		IndexDocumentRequest indexDocumentRequest) {
 
 		IndexRequest.Builder<JsonData> builder = new IndexRequest.Builder<>();
@@ -88,8 +78,7 @@ public class ElasticsearchDocumentRequestTranslatorImpl
 		return builder.build();
 	}
 
-	@Override
-	public UpdateRequest<JsonData, JsonData> translate(
+	public static UpdateRequest<JsonData, JsonData> translate(
 		UpdateDocumentRequest updateDocumentRequest) {
 
 		UpdateRequest.Builder<JsonData, JsonData> builder =
@@ -125,6 +114,7 @@ public class ElasticsearchDocumentRequestTranslatorImpl
 		return builder.build();
 	}
 
-	private final ScriptTranslator _scriptTranslator = new ScriptTranslator();
+	private static final ScriptTranslator _scriptTranslator =
+		new ScriptTranslator();
 
 }

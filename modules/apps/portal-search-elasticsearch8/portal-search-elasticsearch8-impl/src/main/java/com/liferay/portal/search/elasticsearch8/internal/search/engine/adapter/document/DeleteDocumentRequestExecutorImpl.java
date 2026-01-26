@@ -33,7 +33,7 @@ public class DeleteDocumentRequestExecutorImpl
 
 		DeleteResponse deleteResponse = _getDeleteResponse(
 			deleteDocumentRequest,
-			_elasticsearchDocumentRequestTranslator.translate(
+			ElasticsearchDocumentRequestTranslatorUtil.translate(
 				deleteDocumentRequest));
 
 		Result result = deleteResponse.result();
@@ -61,9 +61,5 @@ public class DeleteDocumentRequestExecutorImpl
 
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
-
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
-	private ElasticsearchDocumentRequestTranslator
-		_elasticsearchDocumentRequestTranslator;
 
 }

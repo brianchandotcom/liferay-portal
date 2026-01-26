@@ -34,7 +34,7 @@ public class IndexDocumentRequestExecutorImpl
 
 		IndexResponse indexResponse = _getIndexResponse(
 			indexDocumentRequest,
-			_elasticsearchDocumentRequestTranslator.translate(
+			ElasticsearchDocumentRequestTranslatorUtil.translate(
 				indexDocumentRequest));
 
 		Result result = indexResponse.result();
@@ -63,9 +63,5 @@ public class IndexDocumentRequestExecutorImpl
 
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
-
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
-	private ElasticsearchDocumentRequestTranslator
-		_elasticsearchDocumentRequestTranslator;
 
 }

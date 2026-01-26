@@ -34,7 +34,7 @@ public class UpdateDocumentRequestExecutorImpl
 
 		UpdateResponse<JsonData> updateResponse = _getUpdateResponse(
 			updateDocumentRequest,
-			_elasticsearchDocumentRequestTranslator.translate(
+			ElasticsearchDocumentRequestTranslatorUtil.translate(
 				updateDocumentRequest));
 
 		Result result = updateResponse.result();
@@ -62,9 +62,5 @@ public class UpdateDocumentRequestExecutorImpl
 
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
-
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
-	private ElasticsearchDocumentRequestTranslator
-		_elasticsearchDocumentRequestTranslator;
 
 }

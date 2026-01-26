@@ -758,3 +758,36 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["UserAccountBrief"]
+        patch:
+            operationId: patchDigitalSalesRoomUserAccountBrief
+            parameters:
+                -   in: path
+                    name: digitalSalesRoomId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: userAccountBriefId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/UserAccountBrief"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/UserAccountBrief"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/UserAccountBrief"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/UserAccountBrief"
+            tags: ["UserAccountBrief"]

@@ -10,7 +10,7 @@ import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
 import getRandomString from '../../../../../utils/getRandomString';
-import {EFDSVisualizationMode, waitForFDS} from '../../../../../utils/waitFor';
+import {waitForFDS} from '../../../../../utils/waitFor';
 import {fdsSamplePageTest} from '../../fixtures/fdsSamplePageTest';
 
 const test = mergeTests(
@@ -26,13 +26,13 @@ const test = mergeTests(
 
 test.beforeEach(async ({fdsSamplePage, page, site}) => {
 	await fdsSamplePage.setupFDSSampleWidget({
-		fragmentKeys: ['search-fds-sample'],
+		fragmentKeys: ['advanced-search-fds-sample'],
 		site,
 	});
 
 	await fdsSamplePage.selectTab('Advanced');
 
-	await waitForFDS({page, visualizationMode: EFDSVisualizationMode.TABLE});
+	await waitForFDS({page});
 });
 
 test(
@@ -103,7 +103,6 @@ test(
 
 				await waitForFDS({
 					page,
-					visualizationMode: EFDSVisualizationMode.TABLE,
 				});
 			});
 
@@ -157,11 +156,13 @@ test(
 			});
 		});
 
-		await test.step('Global state integration, with "Search FDS Fragment"', async () => {
+		await test.step('Global FDS state integration', async () => {
 			const fragmentInput = page.getByPlaceholder(
 				'Search in Advanced tab of'
 			);
-			const fragmentButton = page.getByTestId('searchFDSSampleButton');
+			const fragmentButton = page.getByTestId(
+				'advancedSearchFDSSampleButton'
+			);
 
 			await test.step('Search in fragment results with search in FDS', async () => {
 				const sampleSearchText = getRandomString();

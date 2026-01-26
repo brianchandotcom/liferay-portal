@@ -25,7 +25,7 @@ const test = mergeTests(
 
 test.beforeEach(async ({fdsSamplePage, page, site}) => {
 	await fdsSamplePage.setupFDSSampleWidget({
-		fragmentKeys: ['filters-fds-sample'],
+		fragmentKeys: ['advanced-filters-fds-sample'],
 		site,
 	});
 
@@ -401,7 +401,7 @@ test(
 			});
 		});
 
-		await test.step('Global state integration, with "Filters FDS Fragment"', async () => {
+		await test.step('Global FDS state integration', async () => {
 			await test.step('Refresh the page', async () => {
 				await fdsSamplePage.selectTab('Advanced');
 

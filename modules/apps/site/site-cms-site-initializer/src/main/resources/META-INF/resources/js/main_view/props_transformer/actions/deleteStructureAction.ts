@@ -30,14 +30,9 @@ export default async function deleteStructureAction({
 	status: number;
 	structureId: number;
 }) {
-	const deleteStructure = async ({
-		repeatableGroupIds,
-	}: {
-		repeatableGroupIds?: number[];
-	} = {}) => {
+	const deleteStructure = async () => {
 		const response = await StructureService.deleteStructure({
 			id: structureId,
-			repeatableGroupIds,
 		});
 
 		if (response?.error) {
@@ -115,7 +110,7 @@ export default async function deleteStructureAction({
 			DeleteStructureModalContent({
 				closeModal,
 				name,
-				onDelete: () => deleteStructure({repeatableGroupIds}),
+				onDelete: () => deleteStructure(),
 				usesCount: objectEntriesCount,
 			}),
 		size: 'md',

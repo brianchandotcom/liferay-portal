@@ -814,12 +814,9 @@ const FrontendDataSetContent = ({
 			return;
 		}
 
-		const unfrozenGlobalFDSState = deepClone(globalFDSState);
-
 		updateConfigInURL({
-			[EConfigInURLKeys.ACTIVE_FILTERS]: unfrozenGlobalFDSState.filters,
-			[EConfigInURLKeys.SEARCH_PARAM]:
-				unfrozenGlobalFDSState.search.query,
+			[EConfigInURLKeys.ACTIVE_FILTERS]: globalFDSState.filters,
+			[EConfigInURLKeys.SEARCH_PARAM]: globalFDSState.search.query,
 		});
 
 		if (skipSnapshotsUpdatedChangeRef.current) {

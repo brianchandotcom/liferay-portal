@@ -28,7 +28,7 @@ public class IndexDocumentRequestExecutorImpl
 		IndexDocumentRequest indexDocumentRequest) {
 
 		UpdateRequest request =
-			_solrBulkableDocumentRequestTranslator.translate(
+			SolrBulkableDocumentRequestTranslatorUtil.translate(
 				indexDocumentRequest);
 
 		try {
@@ -49,10 +49,6 @@ public class IndexDocumentRequestExecutorImpl
 			throw new RuntimeException(exception);
 		}
 	}
-
-	@Reference(target = "(search.engine.impl=Solr)")
-	private SolrBulkableDocumentRequestTranslator
-		_solrBulkableDocumentRequestTranslator;
 
 	@Reference
 	private SolrClientManager _solrClientManager;

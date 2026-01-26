@@ -69,17 +69,11 @@ public class DocumentRequestExecutorFixture {
 
 	protected static DeleteDocumentRequestExecutor
 		createDeleteDocumentRequestExecutor(
-			SolrBulkableDocumentRequestTranslator
-				solrBulkableDocumentRequestTranslator,
 			SolrClientManager solrClientManager) {
 
 		DeleteDocumentRequestExecutorImpl deleteDocumentRequestExecutorImpl =
 			new DeleteDocumentRequestExecutorImpl();
 
-		ReflectionTestUtil.setFieldValue(
-			deleteDocumentRequestExecutorImpl,
-			"_solrBulkableDocumentRequestTranslator",
-			solrBulkableDocumentRequestTranslator);
 		ReflectionTestUtil.setFieldValue(
 			deleteDocumentRequestExecutorImpl, "_solrClientManager",
 			solrClientManager);
@@ -103,22 +97,15 @@ public class DocumentRequestExecutorFixture {
 			createDeleteByQueryDocumentRequestExecutor(
 				queryTranslator, solrClientManager));
 
-		SolrBulkableDocumentRequestTranslator
-			solrBulkableDocumentRequestTranslator =
-				new SolrBulkableDocumentRequestTranslator();
-
 		ReflectionTestUtil.setFieldValue(
 			solrDocumentRequestExecutor, "_deleteDocumentRequestExecutor",
-			createDeleteDocumentRequestExecutor(
-				solrBulkableDocumentRequestTranslator, solrClientManager));
+			createDeleteDocumentRequestExecutor(solrClientManager));
 		ReflectionTestUtil.setFieldValue(
 			solrDocumentRequestExecutor, "_getDocumentRequestExecutor",
-			createGetDocumentRequestExecutor(
-				solrBulkableDocumentRequestTranslator, solrClientManager));
+			createGetDocumentRequestExecutor(solrClientManager));
 		ReflectionTestUtil.setFieldValue(
 			solrDocumentRequestExecutor, "_indexDocumentRequestExecutor",
-			createIndexDocumentRequestExecutor(
-				solrBulkableDocumentRequestTranslator, solrClientManager));
+			createIndexDocumentRequestExecutor(solrClientManager));
 
 		ReflectionTestUtil.setFieldValue(
 			solrDocumentRequestExecutor,
@@ -126,25 +113,17 @@ public class DocumentRequestExecutorFixture {
 			createUpdateByQueryDocumentRequestExecutor());
 		ReflectionTestUtil.setFieldValue(
 			solrDocumentRequestExecutor, "_updateDocumentRequestExecutor",
-			createUpdateDocumentRequestExecutor(
-				solrBulkableDocumentRequestTranslator, solrClientManager));
+			createUpdateDocumentRequestExecutor(solrClientManager));
 
 		return solrDocumentRequestExecutor;
 	}
 
 	protected static GetDocumentRequestExecutor
-		createGetDocumentRequestExecutor(
-			SolrBulkableDocumentRequestTranslator
-				solrBulkableDocumentRequestTranslator,
-			SolrClientManager solrClientManager) {
+		createGetDocumentRequestExecutor(SolrClientManager solrClientManager) {
 
 		GetDocumentRequestExecutorImpl getDocumentRequestExecutorImpl =
 			new GetDocumentRequestExecutorImpl();
 
-		ReflectionTestUtil.setFieldValue(
-			getDocumentRequestExecutorImpl,
-			"_solrBulkableDocumentRequestTranslator",
-			solrBulkableDocumentRequestTranslator);
 		ReflectionTestUtil.setFieldValue(
 			getDocumentRequestExecutorImpl, "_documentBuilderFactory",
 			new DocumentBuilderFactoryImpl());
@@ -157,17 +136,11 @@ public class DocumentRequestExecutorFixture {
 
 	protected static IndexDocumentRequestExecutor
 		createIndexDocumentRequestExecutor(
-			SolrBulkableDocumentRequestTranslator
-				solrBulkableDocumentRequestTranslator,
 			SolrClientManager solrClientManager) {
 
 		IndexDocumentRequestExecutorImpl indexDocumentRequestExecutorImpl =
 			new IndexDocumentRequestExecutorImpl();
 
-		ReflectionTestUtil.setFieldValue(
-			indexDocumentRequestExecutorImpl,
-			"_solrBulkableDocumentRequestTranslator",
-			solrBulkableDocumentRequestTranslator);
 		ReflectionTestUtil.setFieldValue(
 			indexDocumentRequestExecutorImpl, "_solrClientManager",
 			solrClientManager);
@@ -183,17 +156,11 @@ public class DocumentRequestExecutorFixture {
 
 	protected static UpdateDocumentRequestExecutor
 		createUpdateDocumentRequestExecutor(
-			SolrBulkableDocumentRequestTranslator
-				solrBulkableDocumentRequestTranslator,
 			SolrClientManager solrClientManager) {
 
 		UpdateDocumentRequestExecutorImpl updateDocumentRequestExecutorImpl =
 			new UpdateDocumentRequestExecutorImpl();
 
-		ReflectionTestUtil.setFieldValue(
-			updateDocumentRequestExecutorImpl,
-			"_solrBulkableDocumentRequestTranslator",
-			solrBulkableDocumentRequestTranslator);
 		ReflectionTestUtil.setFieldValue(
 			updateDocumentRequestExecutorImpl, "_solrClientManager",
 			solrClientManager);

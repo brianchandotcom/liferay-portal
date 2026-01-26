@@ -28,7 +28,7 @@ public class DeleteDocumentRequestExecutorImpl
 		DeleteDocumentRequest deleteDocumentRequest) {
 
 		UpdateRequest request =
-			_solrBulkableDocumentRequestTranslator.translate(
+			SolrBulkableDocumentRequestTranslatorUtil.translate(
 				deleteDocumentRequest);
 
 		try {
@@ -48,10 +48,6 @@ public class DeleteDocumentRequestExecutorImpl
 			throw new RuntimeException(exception);
 		}
 	}
-
-	@Reference(target = "(search.engine.impl=Solr)")
-	private SolrBulkableDocumentRequestTranslator
-		_solrBulkableDocumentRequestTranslator;
 
 	@Reference
 	private SolrClientManager _solrClientManager;

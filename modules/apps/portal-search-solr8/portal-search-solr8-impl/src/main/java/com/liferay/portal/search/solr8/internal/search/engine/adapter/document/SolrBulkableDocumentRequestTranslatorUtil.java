@@ -17,18 +17,12 @@ import org.apache.solr.client.solrj.request.UpdateRequest;
 import org.apache.solr.common.params.CommonParams;
 import org.apache.solr.common.params.ModifiableSolrParams;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Bryan Engler
  */
-@Component(
-	property = "search.engine.impl=Solr",
-	service = SolrBulkableDocumentRequestTranslator.class
-)
-public class SolrBulkableDocumentRequestTranslator {
+public class SolrBulkableDocumentRequestTranslatorUtil {
 
-	public UpdateRequest translate(
+	public static UpdateRequest translate(
 		DeleteDocumentRequest deleteDocumentRequest) {
 
 		String uid = deleteDocumentRequest.getUid();
@@ -44,7 +38,9 @@ public class SolrBulkableDocumentRequestTranslator {
 		return updateRequest;
 	}
 
-	public QueryRequest translate(GetDocumentRequest getDocumentRequest) {
+	public static QueryRequest translate(
+		GetDocumentRequest getDocumentRequest) {
+
 		ModifiableSolrParams modifiableSolrParams = new ModifiableSolrParams();
 
 		modifiableSolrParams.set(CommonParams.QT, "/get");
@@ -54,7 +50,9 @@ public class SolrBulkableDocumentRequestTranslator {
 		return new QueryRequest(modifiableSolrParams);
 	}
 
-	public UpdateRequest translate(IndexDocumentRequest indexDocumentRequest) {
+	public static UpdateRequest translate(
+		IndexDocumentRequest indexDocumentRequest) {
+
 		UpdateRequest updateRequest = new UpdateRequest();
 
 		if (indexDocumentRequest.getDocument() != null) {
@@ -75,7 +73,7 @@ public class SolrBulkableDocumentRequestTranslator {
 		return updateRequest;
 	}
 
-	public UpdateRequest translate(
+	public static UpdateRequest translate(
 		UpdateDocumentRequest updateDocumentRequest) {
 
 		UpdateRequest updateRequest = new UpdateRequest();

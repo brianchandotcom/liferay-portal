@@ -32,7 +32,7 @@ public class GetDocumentRequestExecutorImpl
 	@Override
 	public GetDocumentResponse execute(GetDocumentRequest getDocumentRequest) {
 		QueryRequest queryRequest =
-			_solrBulkableDocumentRequestTranslator.translate(
+			SolrBulkableDocumentRequestTranslatorUtil.translate(
 				getDocumentRequest);
 
 		try {
@@ -80,10 +80,6 @@ public class GetDocumentRequestExecutorImpl
 
 	@Reference
 	private DocumentBuilderFactory _documentBuilderFactory;
-
-	@Reference(target = "(search.engine.impl=Solr)")
-	private SolrBulkableDocumentRequestTranslator
-		_solrBulkableDocumentRequestTranslator;
 
 	@Reference
 	private SolrClientManager _solrClientManager;

@@ -8,6 +8,7 @@ package com.liferay.jenkins.results.parser.history;
 import com.liferay.jenkins.results.parser.testray.TestrayRoutine;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -41,7 +42,7 @@ public class HistoryFactory {
 
 	public static JobHistory newJobHistory(
 		int maxBuildCount, String portalUpstreamBranchName,
-		TestrayRoutine testrayRoutine) {
+		List<TestrayRoutine> testrayRoutines) {
 
 		JobHistory jobHistory = _jobHistories.get(portalUpstreamBranchName);
 
@@ -49,9 +50,9 @@ public class HistoryFactory {
 			return jobHistory;
 		}
 
-		if (testrayRoutine != null) {
+		if ((testrayRoutines != null) && !testrayRoutines.isEmpty()) {
 			jobHistory = new TestrayJobHistory(
-				maxBuildCount, portalUpstreamBranchName, testrayRoutine);
+				maxBuildCount, portalUpstreamBranchName, testrayRoutines);
 		}
 		else {
 			jobHistory = new CachedJobHistory(portalUpstreamBranchName);

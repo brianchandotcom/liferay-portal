@@ -55,7 +55,13 @@ public class TestrayJobHistory extends BaseJobHistory {
 			return _testrayURL;
 		}
 
-		TestrayServer testrayServer = _testrayRoutine.getTestrayServer();
+		if (_testrayRoutines.isEmpty()) {
+			return null;
+		}
+
+		TestrayRoutine testrayRoutine = _testrayRoutines.get(0);
+
+		TestrayServer testrayServer = testrayRoutine.getTestrayServer();
 
 		if (testrayServer == null) {
 			return null;
@@ -73,55 +79,57 @@ public class TestrayJobHistory extends BaseJobHistory {
 
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
-		List<TestrayBuild> testrayBuilds = _testrayRoutine.getTestrayBuilds(
-			_maxBuildCount);
+		for (TestrayRoutine testrayRoutine : _testrayRoutines) {
+			List<TestrayBuild> testrayBuilds = testrayRoutine.getTestrayBuilds(
+				_maxBuildCount);
 
-		if (testrayBuilds.size() > _maxBuildCount) {
-			testrayBuilds = testrayBuilds.subList(0, _maxBuildCount);
-		}
-
-		for (TestrayBuild testrayBuild : testrayBuilds) {
-			TopLevelBuildReport topLevelBuildReport =
-				testrayBuild.getTopLevelBuildReport();
-
-			if ((topLevelBuildReport == null) ||
-				JenkinsResultsParserUtil.isNullOrEmpty(
-					topLevelBuildReport.getResult())) {
-
-				continue;
+			if (testrayBuilds.size() > _maxBuildCount) {
+				testrayBuilds = testrayBuilds.subList(0, _maxBuildCount);
 			}
 
-			boolean latestBuild = false;
+			for (TestrayBuild testrayBuild : testrayBuilds) {
+				TopLevelBuildReport topLevelBuildReport =
+					testrayBuild.getTopLevelBuildReport();
 
-			if (_latestTestrayBuild == null) {
-				_latestTestrayBuild = testrayBuild;
+				if ((topLevelBuildReport == null) ||
+					JenkinsResultsParserUtil.isNullOrEmpty(
+						topLevelBuildReport.getResult())) {
 
-				latestBuild = true;
-			}
-
-			for (DownstreamBuildReport downstreamBuildReport :
-					topLevelBuildReport.getDownstreamBuildReports()) {
-
-				String batchName = downstreamBuildReport.getBatchName();
-
-				BatchHistory batchHistory = getBatchHistory(batchName);
-
-				if (batchHistory == null) {
-					batchHistory = HistoryFactory.newBatchHistory(
-						batchName, this, null);
-
-					addBatchHistory(batchHistory);
-				}
-
-				if (!(batchHistory instanceof TestrayBatchHistory)) {
 					continue;
 				}
 
-				TestrayBatchHistory testrayBatchHistory =
-					(TestrayBatchHistory)batchHistory;
+				boolean latestBuild = false;
 
-				testrayBatchHistory.addBuildReport(
-					downstreamBuildReport, latestBuild);
+				if (_latestTestrayBuild == null) {
+					_latestTestrayBuild = testrayBuild;
+
+					latestBuild = true;
+				}
+
+				for (DownstreamBuildReport downstreamBuildReport :
+						topLevelBuildReport.getDownstreamBuildReports()) {
+
+					String batchName = downstreamBuildReport.getBatchName();
+
+					BatchHistory batchHistory = getBatchHistory(batchName);
+
+					if (batchHistory == null) {
+						batchHistory = HistoryFactory.newBatchHistory(
+							batchName, this, null);
+
+						addBatchHistory(batchHistory);
+					}
+
+					if (!(batchHistory instanceof TestrayBatchHistory)) {
+						continue;
+					}
+
+					TestrayBatchHistory testrayBatchHistory =
+						(TestrayBatchHistory)batchHistory;
+
+					testrayBatchHistory.addBuildReport(
+						downstreamBuildReport, latestBuild);
+				}
 			}
 		}
 
@@ -224,10 +232,17 @@ public class TestrayJobHistory extends BaseJobHistory {
 		sb.append(flakyTestDataJSONArray);
 		sb.append(";\nvar flakyTestDataGeneratedDate = new Date(");
 		sb.append(JenkinsResultsParserUtil.getCurrentTimeMillis());
+
+		if (_testrayRoutines.isEmpty()) {
+			return;
+		}
+
+		TestrayRoutine testrayRoutine = _testrayRoutines.get(0);
+
 		sb.append(");\nvar testrayRoutineURL = \"");
-		sb.append(_testrayRoutine.getURL());
+		sb.append(testrayRoutine.getURL());
 		sb.append("\";\nvar testrayRoutineName = \"");
-		sb.append(_testrayRoutine.getName());
+		sb.append(testrayRoutine.getName());
 		sb.append("\";");
 
 		JenkinsResultsParserUtil.write(filePath, sb.toString());
@@ -235,12 +250,12 @@ public class TestrayJobHistory extends BaseJobHistory {
 
 	protected TestrayJobHistory(
 		int maxBuildCount, String portalUpstreamBranchName,
-		TestrayRoutine testrayRoutine) {
+		List<TestrayRoutine> testrayRoutines) {
 
 		super(portalUpstreamBranchName);
 
 		_maxBuildCount = maxBuildCount;
-		_testrayRoutine = testrayRoutine;
+		_testrayRoutines = testrayRoutines;
 	}
 
 	private String _fixStatus(String status) {
@@ -253,7 +268,7 @@ public class TestrayJobHistory extends BaseJobHistory {
 	private TestrayBuild _latestTestrayBuild;
 	private final int _maxBuildCount;
 	private boolean _populated;
-	private final TestrayRoutine _testrayRoutine;
+	private final List<TestrayRoutine> _testrayRoutines;
 	private URL _testrayURL;
 
 }

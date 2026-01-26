@@ -80,7 +80,7 @@ const DXPCloud = () => {
 						'to-activate-a-local-instance-of-liferay-dxp-download-a-developer-key-for-your-liferay-dxp-version'
 					)}
 					dxpVersion={project.dxpVersion}
-					listType={LIST_TYPES.developerKeyDXPVersion}
+					listType={LIST_TYPES.dxpMajorVersion}
 					oAuthToken={oAuthToken}
 					productName="DXP"
 					projectName={project.name}

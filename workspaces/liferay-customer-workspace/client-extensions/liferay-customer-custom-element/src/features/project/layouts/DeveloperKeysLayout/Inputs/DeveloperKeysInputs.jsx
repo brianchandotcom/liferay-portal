@@ -60,13 +60,26 @@ const DeveloperKeysInputs = ({
 
 			const items = data?.listTypeDefinitions?.items[0]?.listTypeEntries;
 
-			if (items?.length) {
-				const sortedItems = sortLiferayVersions([...items]);
-				setDxpVersions(sortedItems);
+			const sortedItems = sortLiferayVersions([...items]);
+
+			if (sortedItems?.length) {
+				const versionedItems = sortedItems.map((sortedItem) => {
+					var name = sortedItem.name.replace('DXP ', '');
+
+					const quarterlyVersion = sortedItem.name.match(/\d{4}\.Q\d/);
+
+					if (quarterlyVersion?.length) {
+						name = quarterlyVersion[0];
+					}
+
+					return {...sortedItem, name};
+				});
+
+				setDxpVersions(versionedItems);
 
 				setSelectedVersion(
-					sortedItems.find((item) => item.name === dxpVersion)
-						?.name || sortedItems[0].name
+					versionedItems.find((item) => item.name === dxpVersion)
+						?.name || versionedItems[0].name
 				);
 			}
 		};

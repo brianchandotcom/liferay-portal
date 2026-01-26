@@ -55,7 +55,7 @@ public class TestrayJobHistory extends BaseJobHistory {
 			return _testrayURL;
 		}
 
-		if (_testrayRoutines.isEmpty()) {
+		if ((_testrayRoutines == null) || _testrayRoutines.isEmpty()) {
 			return null;
 		}
 
@@ -78,6 +78,10 @@ public class TestrayJobHistory extends BaseJobHistory {
 		}
 
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
+
+		if ((_testrayRoutines == null) || _testrayRoutines.isEmpty()) {
+			return;
+		}
 
 		for (TestrayRoutine testrayRoutine : _testrayRoutines) {
 			List<TestrayBuild> testrayBuilds = testrayRoutine.getTestrayBuilds(
@@ -232,18 +236,24 @@ public class TestrayJobHistory extends BaseJobHistory {
 		sb.append(flakyTestDataJSONArray);
 		sb.append(";\nvar flakyTestDataGeneratedDate = new Date(");
 		sb.append(JenkinsResultsParserUtil.getCurrentTimeMillis());
+		sb.append(");\n");
 
-		if (_testrayRoutines.isEmpty()) {
-			return;
+		JSONArray testrayRoutinesJSONArray = new JSONArray();
+
+		if ((_testrayRoutines != null) && !_testrayRoutines.isEmpty()) {
+			for (TestrayRoutine testrayRoutine : _testrayRoutines) {
+				JSONObject testrayRoutineJSONObject = new JSONObject();
+
+				testrayRoutineJSONObject.put("name", testrayRoutine.getName());
+				testrayRoutineJSONObject.put("url", testrayRoutine.getURL());
+
+				testrayRoutinesJSONArray.put(testrayRoutineJSONObject);
+			}
 		}
 
-		TestrayRoutine testrayRoutine = _testrayRoutines.get(0);
-
-		sb.append(");\nvar testrayRoutineURL = \"");
-		sb.append(testrayRoutine.getURL());
-		sb.append("\";\nvar testrayRoutineName = \"");
-		sb.append(testrayRoutine.getName());
-		sb.append("\";");
+		sb.append("var testrayRoutines = ");
+		sb.append(testrayRoutinesJSONArray);
+		sb.append(";");
 
 		JenkinsResultsParserUtil.write(filePath, sb.toString());
 	}

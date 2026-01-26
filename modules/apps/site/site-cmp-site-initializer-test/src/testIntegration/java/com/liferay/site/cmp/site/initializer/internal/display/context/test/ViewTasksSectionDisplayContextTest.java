@@ -115,7 +115,7 @@ public class ViewTasksSectionDisplayContextTest
 			getFDSActionDropdownItems(_assetEntry);
 
 		Assert.assertEquals(
-			fdsActionDropdownItems.toString(), 4,
+			fdsActionDropdownItems.toString(), 3,
 			fdsActionDropdownItems.size());
 
 		assertFDSActionDropdownItem(
@@ -123,10 +123,7 @@ public class ViewTasksSectionDisplayContextTest
 		assertFDSActionDropdownItem(
 			"view", "actionLink", "View", null, fdsActionDropdownItems.get(1));
 		assertFDSActionDropdownItem(
-			null, "assign-to", "Assign to...", null,
-			fdsActionDropdownItems.get(2));
-		assertFDSActionDropdownItem(
-			"trash", "delete", "Delete", null, fdsActionDropdownItems.get(3));
+			"trash", "delete", "Delete", null, fdsActionDropdownItems.get(2));
 	}
 
 	@Override

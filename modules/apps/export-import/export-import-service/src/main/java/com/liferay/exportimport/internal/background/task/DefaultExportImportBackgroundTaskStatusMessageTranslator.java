@@ -30,7 +30,10 @@ public class DefaultExportImportBackgroundTaskStatusMessageTranslator
 
 		String messageType = message.getString("messageType");
 
-		if (messageType.equals("layout")) {
+		if (messageType.equals("batchProgress")) {
+			_translateBatchProgressMessage(backgroundTaskStatus, message);
+		}
+		else if (messageType.equals("layout")) {
 			translateLayoutMessage(backgroundTaskStatus, message);
 		}
 		else if (messageType.equals("portlet")) {
@@ -38,9 +41,6 @@ public class DefaultExportImportBackgroundTaskStatusMessageTranslator
 		}
 		else if (messageType.equals("stagedModel")) {
 			_translateStagedModelMessage(backgroundTaskStatus, message);
-		}
-		else if (messageType.equals("batchProgress")) {
-			_translateBatchProgressMessage(backgroundTaskStatus, message);
 		}
 	}
 

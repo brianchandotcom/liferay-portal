@@ -353,8 +353,8 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 
 			Scope scope = new Scope();
 
-			for (String s : supportedScopes) {
-				scope.add(s);
+			for (String scopre : supportedScopes) {
+				scope.add(scopre);
 			}
 
 			metadata.setScopes(scope);
@@ -403,8 +403,8 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 
 			Scope scope = new Scope();
 
-			for (String s : supportedScopes) {
-				scope.add(s);
+			for (String scopre : supportedScopes) {
+				scope.add(scopre);
 			}
 
 			metadata.setScopes(scope);

@@ -517,6 +517,38 @@ public class LayoutUtil {
 				(ContentPageSpecification)pageSpecifications[1];
 		}
 
+		if (layout.isTypeEmpty()) {
+			PageExperience defaultPageExperience =
+				PageExperienceUtil.getDefaultPageExperience(
+					publishedContentPageSpecification.getPageExperiences());
+
+			serviceContext.setAttribute(
+				"defaultSegmentsExperienceExternalReferenceCode",
+				defaultPageExperience.getExternalReferenceCode());
+			serviceContext.setAttribute(
+				"defaultSegmentsExperienceUuid",
+				defaultPageExperience.getUuid());
+
+			defaultPageExperience = PageExperienceUtil.getDefaultPageExperience(
+				draftContentPageSpecification.getPageExperiences());
+
+			serviceContext.setAttribute(
+				"draftLayoutDefaultSegmentsExperienceExternalReferenceCode",
+				defaultPageExperience.getExternalReferenceCode());
+			serviceContext.setAttribute(
+				"draftLayoutDefaultSegmentsExperienceUuid",
+				defaultPageExperience.getUuid());
+
+			serviceContext.setAttribute(
+				"draftLayoutExternalReferenceCode",
+				draftContentPageSpecification.getExternalReferenceCode());
+
+			layout = LayoutServiceUtil.convertEmptyLayout(
+				layout.getPlid(), nameMap, LayoutConstants.TYPE_CONTENT,
+				layout.getClassNameId(), layout.getClassPK(),
+				layout.getMasterLayoutPageTemplateEntryERC(), serviceContext);
+		}
+
 		Layout draftLayout = layout.fetchDraftLayout();
 
 		if (!Objects.equals(

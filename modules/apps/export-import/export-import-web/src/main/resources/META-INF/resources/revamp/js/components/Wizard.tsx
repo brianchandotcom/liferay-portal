@@ -21,9 +21,13 @@ export function WizardStep({children}: WizardStep) {
 export function Wizard({
 	backURL,
 	children,
+	onSubmit,
+	onSubmitLabel,
 }: {
 	backURL: string;
 	children: React.ReactElement<WizardStep> | React.ReactElement<WizardStep>[];
+	onSubmit: () => void;
+	onSubmitLabel: string;
 }) {
 	const [stepNumber, setStepNumber] = useState(0);
 
@@ -73,9 +77,6 @@ export function Wizard({
 
 			<Footer
 				backURL={backURL}
-				exportURL={
-					stepNumber === totalSteps - 1 ? 'exportURL' : undefined
-				}
 				onNext={
 					stepNumber < totalSteps - 1
 						? () => setStepNumber(stepNumber + 1)
@@ -86,6 +87,8 @@ export function Wizard({
 						? () => setStepNumber(stepNumber - 1)
 						: undefined
 				}
+				onSubmit={stepNumber === totalSteps - 1 ? onSubmit : undefined}
+				onSubmitLabel={onSubmitLabel}
 			/>
 		</>
 	);

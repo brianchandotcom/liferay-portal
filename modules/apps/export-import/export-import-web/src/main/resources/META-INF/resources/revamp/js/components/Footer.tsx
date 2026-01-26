@@ -11,14 +11,16 @@ import React from 'react';
 
 function Footer({
 	backURL,
-	exportURL,
 	onNext,
 	onPrevious,
+	onSubmit,
+	onSubmitLabel,
 }: {
 	backURL: string;
-	exportURL?: string | undefined;
 	onNext?: () => void | undefined;
 	onPrevious?: () => void | undefined;
+	onSubmit?: () => void | undefined;
+	onSubmitLabel: string;
 }) {
 	return (
 		<ClayLayout.SheetFooter>
@@ -51,15 +53,15 @@ function Footer({
 							</ClayButton>
 						)}
 
-						{exportURL && (
-							<ClayButton onClick={() => {}}>
+						{onSubmit && (
+							<ClayButton onClick={onSubmit}>
 								<span className="inline-item inline-item-before">
 									<ClayIcon
 										className="mr-1"
 										symbol="export"
 									/>
 
-									{Liferay.Language.get('export')}
+									{onSubmitLabel}
 								</span>
 							</ClayButton>
 						)}

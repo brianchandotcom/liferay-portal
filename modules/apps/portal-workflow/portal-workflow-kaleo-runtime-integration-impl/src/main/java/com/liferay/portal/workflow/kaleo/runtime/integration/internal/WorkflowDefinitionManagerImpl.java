@@ -403,8 +403,9 @@ public class WorkflowDefinitionManagerImpl
 						getWorkflowDefinitionLinks(companyId, name, version);
 
 				if (!workflowDefinitionLinks.isEmpty()) {
-					throw new RequiredWorkflowDefinitionException(
-						workflowDefinitionLinks);
+					throw new RequiredWorkflowDefinitionException.
+						MustNotDeactivateWorkflowDefinitionWithWorkflowDefinitionLinks(
+							workflowDefinitionLinks);
 				}
 
 				_kaleoDefinitionLocalService.deactivateKaleoDefinition(

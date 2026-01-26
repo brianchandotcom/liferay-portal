@@ -15,8 +15,8 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.workflow.RequiredWorkflowDefinitionException;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.kaleo.definition.util.WorkflowDefinitionContentUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
@@ -178,6 +178,12 @@ public class KaleoDefinitionLocalServiceImpl
 			kaleoDefinitionPersistence.findByC_N_V(
 				serviceContext.getCompanyId(), name, version);
 
+		if (kaleoDefinition.isSystem()) {
+			throw new RequiredWorkflowDefinitionException.
+				MustNotDeactivateSystemWorkflowDefinition(
+					kaleoDefinition.getKaleoDefinitionId());
+		}
+
 		kaleoDefinition.setModifiedDate(new Date());
 		kaleoDefinition.setActive(false);
 		kaleoDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
@@ -227,9 +233,14 @@ public class KaleoDefinitionLocalServiceImpl
 		KaleoDefinition kaleoDefinition = getKaleoDefinition(
 			name, serviceContext);
 
-		if (kaleoDefinition.isActive()) {
-			throw new WorkflowException(
-				"Cannot delete active workflow definition " +
+		if (kaleoDefinition.isSystem()) {
+			throw new RequiredWorkflowDefinitionException.
+				MustNotDeleteSystemWorkflowDefinition(
+					kaleoDefinition.getKaleoDefinitionId());
+		}
+		else if (kaleoDefinition.isActive()) {
+			throw new RequiredWorkflowDefinitionException.
+				MustNotDeleteActiveWorkflowDefinition(
 					kaleoDefinition.getKaleoDefinitionId());
 		}
 
@@ -362,12 +373,18 @@ public class KaleoDefinitionLocalServiceImpl
 
 		// Kaleo definition
 
+		KaleoDefinition kaleoDefinition =
+			kaleoDefinitionPersistence.findByPrimaryKey(kaleoDefinitionId);
+
+		if (kaleoDefinition.isSystem()) {
+			throw new RequiredWorkflowDefinitionException.
+				MustNotUpdateSystemWorkflowDefinition(
+					kaleoDefinition.getKaleoDefinitionId());
+		}
+
 		User user = _userLocalService.getUser(
 			serviceContext.getGuestOrUserId());
 		Date date = new Date();
-
-		KaleoDefinition kaleoDefinition =
-			kaleoDefinitionPersistence.findByPrimaryKey(kaleoDefinitionId);
 
 		kaleoDefinition.setExternalReferenceCode(externalReferenceCode);
 		kaleoDefinition.setGroupId(

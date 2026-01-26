@@ -112,8 +112,9 @@ public class DefaultWorkflowEngineImpl
 							kaleoDefinition.getVersion());
 
 				if (ListUtil.isNotEmpty(workflowDefinitionLinks)) {
-					throw new RequiredWorkflowDefinitionException(
-						workflowDefinitionLinks);
+					throw new RequiredWorkflowDefinitionException.
+						MustNotDeleteWorkflowDefinitionWithWorkflowDefinitionLinks(
+							workflowDefinitionLinks);
 				}
 
 				kaleoDefinitionLocalService.deleteKaleoDefinition(

@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.workflow;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 
 import java.util.List;
@@ -14,31 +15,108 @@ import java.util.List;
  */
 public class RequiredWorkflowDefinitionException extends WorkflowException {
 
-	public RequiredWorkflowDefinitionException() {
+	public List<WorkflowDefinitionLink> getWorkflowDefinitionLinks() {
+		return _workflowDefinitionLinks;
 	}
 
-	public RequiredWorkflowDefinitionException(
+	public static class MustNotDeactivateSystemWorkflowDefinition
+		extends RequiredWorkflowDefinitionException {
+
+		public MustNotDeactivateSystemWorkflowDefinition(
+			long kaleoDefinitionId) {
+
+			super(
+				StringBundler.concat(
+					"Workflow definition ", kaleoDefinitionId, " cannot be ",
+					"deactivated because it is system"));
+
+			this.kaleoDefinitionId = kaleoDefinitionId;
+		}
+
+		public long kaleoDefinitionId;
+
+	}
+
+	public static class
+		MustNotDeactivateWorkflowDefinitionWithWorkflowDefinitionLinks
+			extends RequiredWorkflowDefinitionException {
+
+		public MustNotDeactivateWorkflowDefinitionWithWorkflowDefinitionLinks(
+			List<WorkflowDefinitionLink> workflowDefinitionLinks) {
+
+			super(workflowDefinitionLinks);
+		}
+
+	}
+
+	public static class MustNotDeleteActiveWorkflowDefinition
+		extends RequiredWorkflowDefinitionException {
+
+		public MustNotDeleteActiveWorkflowDefinition(long kaleoDefinitionId) {
+			super(
+				StringBundler.concat(
+					"Workflow definition ", kaleoDefinitionId, " cannot be ",
+					"deleted because it is active"));
+
+			this.kaleoDefinitionId = kaleoDefinitionId;
+		}
+
+		public long kaleoDefinitionId;
+
+	}
+
+	public static class MustNotDeleteSystemWorkflowDefinition
+		extends RequiredWorkflowDefinitionException {
+
+		public MustNotDeleteSystemWorkflowDefinition(long kaleoDefinitionId) {
+			super(
+				StringBundler.concat(
+					"Workflow definition ", kaleoDefinitionId, " cannot be ",
+					"deleted because it is system"));
+
+			this.kaleoDefinitionId = kaleoDefinitionId;
+		}
+
+		public long kaleoDefinitionId;
+
+	}
+
+	public static class
+		MustNotDeleteWorkflowDefinitionWithWorkflowDefinitionLinks
+			extends RequiredWorkflowDefinitionException {
+
+		public MustNotDeleteWorkflowDefinitionWithWorkflowDefinitionLinks(
+			List<WorkflowDefinitionLink> workflowDefinitionLinks) {
+
+			super(workflowDefinitionLinks);
+		}
+
+	}
+
+	public static class MustNotUpdateSystemWorkflowDefinition
+		extends RequiredWorkflowDefinitionException {
+
+		public MustNotUpdateSystemWorkflowDefinition(long kaleoDefinitionId) {
+			super(
+				StringBundler.concat(
+					"Workflow definition ", kaleoDefinitionId, " cannot be ",
+					"updated because it is system"));
+
+			this.kaleoDefinitionId = kaleoDefinitionId;
+		}
+
+		public long kaleoDefinitionId;
+
+	}
+
+	private RequiredWorkflowDefinitionException(
 		List<WorkflowDefinitionLink> workflowDefinitionLinks) {
 
 		_workflowDefinitionLinks = workflowDefinitionLinks;
 	}
 
-	public RequiredWorkflowDefinitionException(String msg) {
+	private RequiredWorkflowDefinitionException(String msg) {
 		super(msg);
-	}
-
-	public RequiredWorkflowDefinitionException(
-		String msg, Throwable throwable) {
-
-		super(msg, throwable);
-	}
-
-	public RequiredWorkflowDefinitionException(Throwable throwable) {
-		super(throwable);
-	}
-
-	public List<WorkflowDefinitionLink> getWorkflowDefinitionLinks() {
-		return _workflowDefinitionLinks;
 	}
 
 	private List<WorkflowDefinitionLink> _workflowDefinitionLinks;

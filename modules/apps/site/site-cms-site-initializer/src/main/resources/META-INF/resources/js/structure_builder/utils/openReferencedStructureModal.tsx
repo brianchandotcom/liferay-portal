@@ -6,54 +6,82 @@
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import ClayModal, {useModal} from '@clayui/modal';
+import ClayModal from '@clayui/modal';
 import ClayMultiSelect from '@clayui/multi-select';
 import classNames from 'classnames';
-import {FieldFeedback, useId} from 'frontend-js-components-web';
-import React, {useState} from 'react';
+import {FieldFeedback, openModal, useId} from 'frontend-js-components-web';
+import React, {Dispatch, useState} from 'react';
 
 import {
 	ObjectDefinition,
 	ObjectDefinitions,
 } from '../../common/types/ObjectDefinition';
 import getLocalizedValue from '../../common/utils/getLocalizedValue';
-import {useCache} from '../contexts/CacheContext';
-import {useSelector} from '../contexts/StateContext';
-import selectStructureERC from '../selectors/selectStructureERC';
-import selectStructureUuid from '../selectors/selectStructureUuid';
+import {CacheStatus} from '../contexts/CacheContext';
+import {Action} from '../contexts/StateContext';
 import {ReferencedStructure, Structure} from '../types/Structure';
 import {Uuid} from '../types/Uuid';
-import {buildReferencedStructure} from '../utils/buildStructure';
-import getRandomName from '../utils/getRandomName';
+import {buildReferencedStructure} from './buildStructure';
+import getRandomName from './getRandomName';
 
 type Item = {
 	label: string;
 	value: string;
 };
 
-export default function ReferencedStructureModal({
-	onAdd,
-	onCloseModal,
+export default function openReferencedStructureModal({
+	dispatch,
+	objectDefinitions,
+	status,
+	structure,
 }: {
-	onAdd: (referencedStructures: ReferencedStructure[]) => void;
-	onCloseModal: () => void;
+	dispatch: Dispatch<Action>;
+	objectDefinitions: ObjectDefinitions;
+	status: CacheStatus;
+	structure: Structure;
 }) {
-	const {observer, onClose} = useModal({
-		onClose: () => onCloseModal(),
+	const addReferencedStructures = (
+		referencedStructures: ReferencedStructure[]
+	) =>
+		dispatch({
+			referencedStructures,
+			type: 'add-referenced-structures',
+		});
+
+	openModal({
+		center: true,
+		contentComponent: ({closeModal}: {closeModal: () => void}) => (
+			<ReferencedStructureModal
+				closeModal={closeModal}
+				objectDefinitions={objectDefinitions}
+				onAdd={addReferencedStructures}
+				status={status}
+				structure={structure}
+			/>
+		),
 	});
+}
 
-	const structureUuid = useSelector(selectStructureUuid);
-	const structureERC = useSelector(selectStructureERC);
-
-	const {data: objectDefinitions, status} = useCache('object-definitions');
-
+function ReferencedStructureModal({
+	closeModal,
+	objectDefinitions,
+	onAdd,
+	status,
+	structure,
+}: {
+	closeModal: () => void;
+	objectDefinitions: ObjectDefinitions;
+	onAdd: (referencedStructures: ReferencedStructure[]) => void;
+	status: CacheStatus;
+	structure: Structure;
+}) {
 	const [selection, setSelection] = useState<Item[]>([]);
 	const [hasError, setHasError] = useState(false);
 
 	const id = useId();
 
 	return (
-		<ClayModal observer={observer}>
+		<>
 			<ClayModal.Header
 				closeButtonAriaLabel={Liferay.Language.get('close')}
 			>
@@ -88,7 +116,7 @@ export default function ReferencedStructureModal({
 
 							setHasError(!selection.length);
 						}}
-						sourceItems={getItems(objectDefinitions, structureERC)}
+						sourceItems={getItems(objectDefinitions, structure.erc)}
 					/>
 
 					{hasError ? (
@@ -106,7 +134,7 @@ export default function ReferencedStructureModal({
 					<ClayButton.Group spaced>
 						<ClayButton
 							displayType="secondary"
-							onClick={onClose}
+							onClick={closeModal}
 							type="button"
 						>
 							{Liferay.Language.get('cancel')}
@@ -124,13 +152,13 @@ export default function ReferencedStructureModal({
 								const structures = buildStructures(
 									selection,
 									objectDefinitions,
-									structureUuid,
-									structureERC
+									structure.uuid,
+									structure.erc
 								);
 
 								onAdd(structures);
 
-								onCloseModal();
+								closeModal();
 							}}
 						>
 							{Liferay.Language.get('add')}
@@ -138,7 +166,7 @@ export default function ReferencedStructureModal({
 					</ClayButton.Group>
 				}
 			/>
-		</ClayModal>
+		</>
 	);
 }
 

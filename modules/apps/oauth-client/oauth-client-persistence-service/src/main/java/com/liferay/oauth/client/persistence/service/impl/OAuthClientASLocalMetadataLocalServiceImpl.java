@@ -91,7 +91,7 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 		oAuthClientASLocalMetadata.setLocalWellKnownEnabled(enabled);
 		oAuthClientASLocalMetadata.setLocalWellKnownURI(localWellKnownURI);
 		oAuthClientASLocalMetadata.setMetadataJSON(
-			_buildOpenIdConfigurationJSON(
+			_generateOpenIdConfigurationJSON(
 				authorizationEndpoint, issuer, jwksUri, supportedGrantTypes,
 				supportedScopes, supportedSubjectTypes, tokenEndpointString,
 				userinfoEndpoint));
@@ -99,7 +99,7 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 			_generateLocalWellKnownURI(
 				issuer, null, "oauth-authorization-server"));
 		oAuthClientASLocalMetadata.setOAuthASMetadataJSON(
-			_buildAuthorizationServerJSON(
+			_generateAuthorizationServerJSON(
 				authorizationEndpoint, issuer, jwksUri, supportedScopes,
 				supportedGrantTypes, tokenEndpointString));
 
@@ -280,7 +280,7 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 				String.valueOf(oAuthClientASLocalMetadata.getIssuer())) ||
 			currentLocalWellKnownURIOIC.contains("openid-configuration")) {
 
-			String oAuthASMetadataJSON = _buildAuthorizationServerJSON(
+			String oAuthASMetadataJSON = _generateAuthorizationServerJSON(
 				authorizationEndpoint, issuer, jwksUri, supportedScopes,
 				supportedGrantTypes, tokenEndpointString);
 
@@ -290,7 +290,7 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 				_generateLocalWellKnownURI(
 					issuer, tokenEndpointString, "openid-configuration"));
 			oAuthClientASLocalMetadata.setMetadataJSON(
-				_buildOpenIdConfigurationJSON(
+				_generateOpenIdConfigurationJSON(
 					authorizationEndpoint, issuer, jwksUri, supportedGrantTypes,
 					supportedScopes, supportedSubjectTypes, tokenEndpointString,
 					userinfoEndpoint));
@@ -335,7 +335,7 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 				authorizationServerMetadata.getUserInfoEndpointURI()));
 	}
 
-	private String _buildAuthorizationServerJSON(
+	private String _generateAuthorizationServerJSON(
 			String authorizationEndpoint, String issuerStr, String jwksUri,
 			String[] supportedScopes, String[] supportedGrantTypes,
 			String tokenEndpoint)
@@ -377,7 +377,36 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 		}
 	}
 
-	private String _buildOpenIdConfigurationJSON(
+	private String _generateLocalWellKnownURI(
+			String issuer, String tokenEndpoint, String wellKnownURISuffix)
+		throws PortalException {
+
+		try {
+			URI issuerURI = URI.create(issuer);
+
+			if (wellKnownURISuffix.equals("openid-configuration")) {
+				MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+
+				return StringBundler.concat(
+					issuerURI.getScheme(), "://", issuerURI.getAuthority(),
+					"/.well-known/", wellKnownURISuffix, issuerURI.getPath(),
+					'/',
+					Base64.encodeToURL(
+						messageDigest.digest(tokenEndpoint.getBytes())),
+					"/local");
+			}
+
+			return StringBundler.concat(
+				issuerURI.getScheme(), "://", issuerURI.getAuthority(),
+				"/o/.well-known/", wellKnownURISuffix);
+		}
+		catch (Exception exception) {
+			throw new OAuthClientASLocalMetadataLocalWellKnownURIException(
+				exception);
+		}
+	}
+
+	private String _generateOpenIdConfigurationJSON(
 			String authorizationEndpoint, String issuerStr, String jwksUri,
 			String[] supportedGrantTypes, String[] supportedScopes,
 			String[] supportedSubjectTypes, String tokenEndpoint,
@@ -426,35 +455,6 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 		catch (Exception exception) {
 			throw new OAuthClientASLocalMetadataMetadataJSONException(
 				exception.getMessage(), exception);
-		}
-	}
-
-	private String _generateLocalWellKnownURI(
-			String issuer, String tokenEndpoint, String wellKnownURISuffix)
-		throws PortalException {
-
-		try {
-			URI issuerURI = URI.create(issuer);
-
-			if (wellKnownURISuffix.equals("openid-configuration")) {
-				MessageDigest messageDigest = MessageDigest.getInstance("MD5");
-
-				return StringBundler.concat(
-					issuerURI.getScheme(), "://", issuerURI.getAuthority(),
-					"/.well-known/", wellKnownURISuffix, issuerURI.getPath(),
-					'/',
-					Base64.encodeToURL(
-						messageDigest.digest(tokenEndpoint.getBytes())),
-					"/local");
-			}
-
-			return StringBundler.concat(
-				issuerURI.getScheme(), "://", issuerURI.getAuthority(),
-				"/o/.well-known/", wellKnownURISuffix);
-		}
-		catch (Exception exception) {
-			throw new OAuthClientASLocalMetadataLocalWellKnownURIException(
-				exception);
 		}
 	}
 

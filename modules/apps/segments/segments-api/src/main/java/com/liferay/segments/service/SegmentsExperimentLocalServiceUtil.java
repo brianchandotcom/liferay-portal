@@ -306,10 +306,10 @@ public class SegmentsExperimentLocalServiceUtil {
 	}
 
 	public static List<SegmentsExperiment> getSegmentsEntrySegmentsExperiments(
-		long segmentsEntryId) {
+		String segmentsEntryERC, long segmentsEntryGroupId) {
 
 		return getService().getSegmentsEntrySegmentsExperiments(
-			segmentsEntryId);
+			segmentsEntryERC, segmentsEntryGroupId);
 	}
 
 	/**

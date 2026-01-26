@@ -64,7 +64,7 @@ liferay-default:
 
                                         if [ "${http_code}" != "200" ]
                                         then
-                                            echo "Unable to download OpenSearch modules for product version ${product_version}. Status code: ${http_code}" >&2
+                                            echo "Unable to download OpenSearch modules for product version ${product_version}." >&2
 
                                             exit 1
                                         fi

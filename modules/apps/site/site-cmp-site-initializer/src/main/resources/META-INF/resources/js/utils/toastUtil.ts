@@ -21,7 +21,7 @@ const displayAssignSuccessToast = (title: string, value: string) => {
 
 const displayStateSuccessToast = () => {
 	openToast({
-		message: Liferay.Language.get('state-successfully-updated'),
+		message: Liferay.Language.get('state-was-successfully-updated'),
 		type: 'success',
 	});
 };

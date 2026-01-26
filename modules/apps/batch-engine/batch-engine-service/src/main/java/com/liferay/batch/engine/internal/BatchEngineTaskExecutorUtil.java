@@ -77,17 +77,11 @@ public class BatchEngineTaskExecutorUtil {
 			return;
 		}
 
-		Long backgroundTaskId = BackgroundTaskThreadLocal.getBackgroundTaskId();
-
-		if (backgroundTaskId == null) {
-			return;
-		}
-
 		Message message = new Message();
 
 		message.put(
 			BackgroundTaskConstants.MESSAGE_KEY_BACKGROUND_TASK_ID,
-			backgroundTaskId);
+			BackgroundTaskThreadLocal.getBackgroundTaskId());
 		message.put("messageType", "batchProgress");
 		message.put("processedItemsCount", processedItemsCount);
 

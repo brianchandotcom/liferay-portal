@@ -56,7 +56,8 @@ public class SegmentsEntryModelListener
 			List<SegmentsExperiment> segmentsExperiments =
 				_segmentsExperimentLocalService.
 					getSegmentsEntrySegmentsExperiments(
-						segmentsEntry.getSegmentsEntryId());
+						segmentsEntry.getExternalReferenceCode(),
+						segmentsEntry.getGroupId());
 
 			for (SegmentsExperiment segmentsExperiment : segmentsExperiments) {
 				_asahSegmentsExperimentProcessor.

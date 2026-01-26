@@ -426,7 +426,8 @@ public class SegmentsExperimentLocalServiceTest {
 
 		List<SegmentsExperiment> segmentsExperiments =
 			_segmentsExperimentLocalService.getSegmentsEntrySegmentsExperiments(
-				segmentsEntry.getSegmentsEntryId());
+				segmentsEntry.getExternalReferenceCode(),
+				segmentsEntry.getGroupId());
 
 		Assert.assertEquals(
 			segmentsExperiments.toString(), 2, segmentsExperiments.size());

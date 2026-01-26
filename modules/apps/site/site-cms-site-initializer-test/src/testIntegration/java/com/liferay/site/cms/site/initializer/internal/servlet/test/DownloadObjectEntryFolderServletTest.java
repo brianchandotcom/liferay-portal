@@ -22,7 +22,6 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -152,17 +151,15 @@ public class DownloadObjectEntryFolderServletTest {
 
 	private long _addFileEntry() throws Exception {
 		DLFolder dlFolder = DLTestUtil.addDLFolder(_depotEntry.getGroupId());
-		byte[] bytes = TestDataConstants.TEST_BYTE_ARRAY;
 
 		DLFileEntry dlFileEntry = _dlFileEntryLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), dlFolder.getGroupId(),
 			dlFolder.getRepositoryId(), dlFolder.getFolderId(),
-			RandomTestUtil.randomString() + ".pdf",
-			ContentTypes.APPLICATION_PDF, RandomTestUtil.randomString(),
-			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), null, null,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,
-			null, new ByteArrayInputStream(bytes), bytes.length, null, null,
-			null,
+			null, new ByteArrayInputStream(TestDataConstants.TEST_BYTE_ARRAY),
+			TestDataConstants.TEST_BYTE_ARRAY.length, null, null, null,
 			ServiceContextTestUtil.getServiceContext(dlFolder.getGroupId()));
 
 		return dlFileEntry.getFileEntryId();

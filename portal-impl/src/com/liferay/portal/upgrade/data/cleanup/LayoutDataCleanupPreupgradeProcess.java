@@ -57,7 +57,7 @@ public class LayoutDataCleanupPreupgradeProcess
 		return new DataCleanupPreupgradeProcess(
 			new FilterableAllTablesOrphanReferencesDataCleanupPreupgradeProcess(
 				"not exists (select 1 from (select layoutRevisionId from " +
-					"LayoutRevision) AS temp where temp.layoutRevisionId = " +
+					"LayoutRevision) temp where temp.layoutRevisionId = " +
 						"[$SOURCE_TABLE_ALIAS$].plid)",
 				new String[0], "plid", new String[] {"plid"}, "Layout"),
 			new FilterableAllTablesOrphanReferencesDataCleanupPreupgradeProcess(

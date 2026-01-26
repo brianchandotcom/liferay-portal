@@ -10,8 +10,8 @@ import React from 'react';
 import StateSelector from '../../js/components/StateSelector';
 
 const mockStates = [
-	{key: 'notStarted', name: 'Not Started'},
-	{key: 'inProgress', name: 'In Progress'},
+	{key: 'notStarted', name: 'Not Started', nextStates: ['inProgress']},
+	{key: 'inProgress', name: 'In Progress', nextStates: ['notStarted']},
 ];
 
 const mockOnChange = jest.fn();

@@ -53,8 +53,7 @@ export function AdvancedTab({
 		values.required ||
 		values.system;
 	const hasDefaultValue =
-		(Liferay.FeatureFlags['LPD-46451'] &&
-			values.businessType &&
+		(values.businessType &&
 			DEFAULT_VALUE_SUPPORTED_BUSINESS_TYPES.includes(
 				values.businessType
 			)) ||

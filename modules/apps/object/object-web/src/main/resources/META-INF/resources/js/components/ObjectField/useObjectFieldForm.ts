@@ -84,8 +84,7 @@ export function useObjectFieldForm({
 		};
 
 		const hasDefaultValue =
-			(Liferay.FeatureFlags['LPD-46451'] &&
-				field.businessType &&
+			(field.businessType &&
 				DEFAULT_VALUE_SUPPORTED_BUSINESS_TYPES.includes(
 					field.businessType
 				)) ||

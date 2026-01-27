@@ -68,19 +68,17 @@ type InputAsValueFieldComponents = {
 };
 
 const InputAsValueFieldComponents: Partial<InputAsValueFieldComponents> = {
-	...(Liferay.FeatureFlags['LPD-46451'] && {
-		Boolean: BooleanDefaultValueSelect,
-		Date: DateDefaultValueInput,
-		DateTime: DateDefaultValueInput,
-		Decimal: NumericDefaultValueInput,
-		Integer: NumericDefaultValueInput,
-		LongInteger: NumericDefaultValueInput,
-		LongText: TextDefaultValueInput,
-		PrecisionDecimal: NumericDefaultValueInput,
-		RichText: RichTextDefaultValue,
-		Text: TextDefaultValueInput,
-	}),
+	Boolean: BooleanDefaultValueSelect,
+	Date: DateDefaultValueInput,
+	DateTime: DateDefaultValueInput,
+	Decimal: NumericDefaultValueInput,
+	Integer: NumericDefaultValueInput,
+	LongInteger: NumericDefaultValueInput,
+	LongText: TextDefaultValueInput,
 	Picklist: ListTypeDefaultValueSelect,
+	PrecisionDecimal: NumericDefaultValueInput,
+	RichText: RichTextDefaultValue,
+	Text: TextDefaultValueInput,
 };
 
 export function DefaultValueContainer({

@@ -1,0 +1,34 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+/**
+ * @author Mateus Xavier
+ */
+public class LPD_61133 {
+
+	public void method(
+		long groupId, long commerceAccountId, HttpSession httpSession) {
+
+		CPCompareHelperUtil.getCPDefinitionIds(
+			groupId, commerceAccountId, httpSession);
+		CPCompareHelperUtil.getCPDefinitionIds(null, null, null);
+	}
+
+	public void method(
+		long groupId, long commerceAccountId, long cpDefinitionId,
+		HttpSession httpSession) {
+
+		CPCompareHelperUtil.addCompareProduct(
+			groupId, commerceAccountId, cpDefinitionId, httpSession);
+		CPCompareHelperUtil.addCompareProduct(null, null, null, null);
+
+		CPCompareHelperUtil.removeCompareProduct(
+			groupId, commerceAccountId, cpDefinitionId, httpSession);
+		CPCompareHelperUtil.removeCompareProduct(null, null, null, null);
+	}
+
+}

@@ -672,6 +672,27 @@ public class SitePageResourceImpl
 			sitePage.getDateModified(), contextUser.getUserId(),
 			sitePage.getUuid());
 
+		if (Objects.equals(sitePage.getType(), SitePage.Type.CONTENT_PAGE)) {
+			if (sitePage.getPageSpecifications() == null) {
+				return serviceContext;
+			}
+
+			PageSpecification[] sortedContentPageSpecifications =
+				PageSpecificationUtil.getSortedContentPageSpecifications(
+					sitePage.getPageSpecifications());
+
+			ContentPageSpecification draftContentPageSpecification =
+				(ContentPageSpecification)sortedContentPageSpecifications[0];
+			ContentPageSpecification publishedContentPageSpecification =
+				(ContentPageSpecification)sortedContentPageSpecifications[1];
+
+			ServiceContextUtil.setContentPageSpecificationsAttributes(
+				draftContentPageSpecification, groupId,
+				publishedContentPageSpecification, serviceContext);
+
+			return serviceContext;
+		}
+
 		if (!(sitePage.getPageSettings() instanceof WidgetPageSettings)) {
 			return serviceContext;
 		}

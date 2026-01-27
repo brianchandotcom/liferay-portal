@@ -70,7 +70,7 @@ export default function getURL(
 			const baseModuleName = moduleName.replace(/\.css$/, '');
 
 			return hash
-				? `${prefix}${webContextPath}/__liferay__/css/${getFlatName(baseModuleName)}.(${hash}).css`
+				? `${prefix}${webContextPath}/__liferay__/css/${getFlatName(baseModuleName, `(${hash}).css`)}`
 				: `${prefix}${webContextPath}/__liferay__/css/${getFlatName(baseModuleName, 'css')}`;
 		}
 

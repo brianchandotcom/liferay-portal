@@ -11,6 +11,6 @@ import {BUILD_NPM_EXPORTS_PATH} from '../../../util/locations.mjs';
 export default function getCSSExportLoaderModulePath(moduleName, hash) {
 	return path.join(
 		BUILD_NPM_EXPORTS_PATH,
-		`${getFlatName(moduleName)}.(${hash}).js`
+		getFlatName(moduleName, `(${hash}).js`)
 	);
 }

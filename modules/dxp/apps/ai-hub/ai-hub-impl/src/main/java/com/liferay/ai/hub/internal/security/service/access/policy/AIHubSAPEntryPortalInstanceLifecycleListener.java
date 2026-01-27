@@ -39,7 +39,21 @@ public class AIHubSAPEntryPortalInstanceLifecycleListener
 		}
 
 		try {
-			_addSAPEntry(company.getCompanyId());
+			SAPEntry sapEntry = _sapEntryLocalService.fetchSAPEntry(
+				company.getCompanyId(), _SAP_ENTRY_NAME);
+
+			if (sapEntry != null) {
+				return;
+			}
+
+			_sapEntryLocalService.addSAPEntry(
+				_userLocalService.getGuestUserId(company.getCompanyId()),
+				"com.liferay.portal.search.rest.internal.resource.v1_0." +
+					"SearchResultResourceImpl#getSearchPage",
+				false, true, _SAP_ENTRY_NAME,
+				Collections.singletonMap(
+					LocaleUtil.getDefault(), _SAP_ENTRY_NAME),
+				new ServiceContext());
 		}
 		catch (PortalException portalException) {
 			_log.error(
@@ -48,25 +62,6 @@ public class AIHubSAPEntryPortalInstanceLifecycleListener
 				portalException);
 		}
 	}
-
-	private void _addSAPEntry(long companyId) throws Exception {
-		SAPEntry sapEntry = _sapEntryLocalService.fetchSAPEntry(
-			companyId, _SAP_ENTRY_NAME);
-
-		if (sapEntry != null) {
-			return;
-		}
-
-		_sapEntryLocalService.addSAPEntry(
-			_userLocalService.getGuestUserId(companyId),
-			_ALLOWED_SERVICE_SIGNATURE, false, true, _SAP_ENTRY_NAME,
-			Collections.singletonMap(LocaleUtil.getDefault(), _SAP_ENTRY_NAME),
-			new ServiceContext());
-	}
-
-	private static final String _ALLOWED_SERVICE_SIGNATURE =
-		"com.liferay.portal.search.rest.internal.resource.v1_0." +
-			"SearchResultResourceImpl#getSearchPage";
 
 	private static final String _SAP_ENTRY_NAME = "AI_HUB_TOKEN";
 

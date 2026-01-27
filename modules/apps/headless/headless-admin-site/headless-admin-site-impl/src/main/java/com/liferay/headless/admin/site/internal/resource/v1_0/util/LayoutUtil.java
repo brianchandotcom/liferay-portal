@@ -128,37 +128,12 @@ public class LayoutUtil {
 				serviceContext);
 		}
 
-		if (pageSpecifications.length != 2) {
-			throw new UnsupportedOperationException();
-		}
+		PageSpecification[] sortedContentPageSpecifications =
+			PageSpecificationUtil.getSortedContentPageSpecifications(
+				pageSpecifications);
 
-		ContentPageSpecification draftContentPageSpecification;
 		ContentPageSpecification publishedContentPageSpecification =
-			(ContentPageSpecification)pageSpecifications[0];
-
-		if (Validator.isNull(
-				publishedContentPageSpecification.
-					getDraftContentPageSpecificationExternalReferenceCode())) {
-
-			draftContentPageSpecification = publishedContentPageSpecification;
-			publishedContentPageSpecification =
-				(ContentPageSpecification)pageSpecifications[1];
-		}
-		else {
-			draftContentPageSpecification =
-				(ContentPageSpecification)pageSpecifications[1];
-		}
-
-		if (Validator.isNull(
-				publishedContentPageSpecification.
-					getDraftContentPageSpecificationExternalReferenceCode()) ||
-			!Objects.equals(
-				draftContentPageSpecification.getExternalReferenceCode(),
-				publishedContentPageSpecification.
-					getDraftContentPageSpecificationExternalReferenceCode())) {
-
-			throw new UnsupportedOperationException();
-		}
+			(ContentPageSpecification)sortedContentPageSpecifications[1];
 
 		Settings settings = publishedContentPageSpecification.getSettings();
 
@@ -235,6 +210,9 @@ public class LayoutUtil {
 			defaultPageExperience.getExternalReferenceCode());
 		serviceContext.setAttribute(
 			"defaultSegmentsExperienceUuid", defaultPageExperience.getUuid());
+
+		ContentPageSpecification draftContentPageSpecification =
+			(ContentPageSpecification)sortedContentPageSpecifications[0];
 
 		defaultPageExperience = PageExperienceUtil.getDefaultPageExperience(
 			draftContentPageSpecification.getPageExperiences());

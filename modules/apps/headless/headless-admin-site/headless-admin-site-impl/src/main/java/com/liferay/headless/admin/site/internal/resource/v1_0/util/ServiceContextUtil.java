@@ -9,6 +9,7 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
+import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.internal.util.LogUtil;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
@@ -85,6 +86,58 @@ public class ServiceContextUtil {
 		serviceContext.setUuid(uuid);
 
 		return serviceContext;
+	}
+
+	public static void setContentPageSpecificationsAttributes(
+			ContentPageSpecification draftContentPageSpecification,
+			long groupId,
+			ContentPageSpecification publishedContentPageSpecification,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		PageExperience defaultPageExperience =
+			PageExperienceUtil.getDefaultPageExperience(
+				publishedContentPageSpecification.getPageExperiences());
+
+		serviceContext.setAttribute(
+			"defaultSegmentsExperienceExternalReferenceCode",
+			defaultPageExperience.getExternalReferenceCode());
+		serviceContext.setAttribute(
+			"defaultSegmentsExperienceUuid", defaultPageExperience.getUuid());
+
+		defaultPageExperience = PageExperienceUtil.getDefaultPageExperience(
+			draftContentPageSpecification.getPageExperiences());
+
+		serviceContext.setAttribute(
+			"draftLayoutDefaultSegmentsExperienceExternalReferenceCode",
+			defaultPageExperience.getExternalReferenceCode());
+		serviceContext.setAttribute(
+			"draftLayoutDefaultSegmentsExperienceUuid",
+			defaultPageExperience.getUuid());
+
+		serviceContext.setAttribute(
+			"draftLayoutExternalReferenceCode",
+			draftContentPageSpecification.getExternalReferenceCode());
+
+		setLayoutSetPrototypeLayoutERC(
+			groupId, publishedContentPageSpecification, serviceContext,
+			publishedContentPageSpecification.
+				getSiteTemplatePageSpecificationExternalReferenceCode());
+
+		setLayoutSetPrototypeLayoutERC(
+			groupId, draftContentPageSpecification, serviceContext,
+			draftContentPageSpecification.
+				getSiteTemplatePageSpecificationExternalReferenceCode());
+
+		if (Objects.equals(
+				publishedContentPageSpecification.getStatus(),
+				PageSpecification.Status.APPROVED)) {
+
+			serviceContext.setAttribute("published", Boolean.TRUE.toString());
+		}
+		else {
+			serviceContext.setAttribute("published", Boolean.FALSE.toString());
+		}
 	}
 
 	public static void setLayoutSetPrototypeLayoutERC(

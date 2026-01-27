@@ -79,13 +79,12 @@ public class TextEmbeddingContentHelper<T extends BaseModel<T>> {
 		}
 
 		if (!_defaultLanguageId.equals(languageId)) {
-			StringBundler defaultLocalizedContentSB =
-				_localizedContentSBs.get(_defaultLanguageId);
+			localizedContentSB = _localizedContentSBs.get(_defaultLanguageId);
 
-			if ((defaultLocalizedContentSB != null) &&
-				(defaultLocalizedContentSB.length() != 0)) {
+			if ((localizedContentSB != null) &&
+				(localizedContentSB.length() != 0)) {
 
-				return defaultLocalizedContentSB.toString();
+				return localizedContentSB.toString();
 			}
 		}
 

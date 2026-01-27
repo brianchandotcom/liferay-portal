@@ -52,7 +52,7 @@ public class ClientExtensionOSGiCommands implements OSGiCommands {
 
 		if (ArrayUtil.isEmpty(configurations)) {
 			System.out.println(
-				"Could not find configuration for filters " +
+				"Unable to find configuration for filters " +
 					Arrays.toString(filterStrings));
 
 			return;
@@ -65,7 +65,7 @@ public class ClientExtensionOSGiCommands implements OSGiCommands {
 		Configuration configuration = _getConfiguration(pid);
 
 		if (configuration == null) {
-			System.out.println("Could not find configuration for PID " + pid);
+			System.out.println("Unable to find configuration for PID " + pid);
 
 			return;
 		}
@@ -81,7 +81,7 @@ public class ClientExtensionOSGiCommands implements OSGiCommands {
 		Configuration configuration = _getConfiguration(pid);
 
 		if (configuration == null) {
-			System.out.println("Could not find configuration for PID " + pid);
+			System.out.println("Unable to find configuration for PID " + pid);
 
 			return;
 		}

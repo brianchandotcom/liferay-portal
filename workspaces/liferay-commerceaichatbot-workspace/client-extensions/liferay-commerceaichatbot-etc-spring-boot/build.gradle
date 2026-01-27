@@ -1,0 +1,52 @@
+buildscript {
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.defaults", version: "latest.release"
+		classpath group: "org.springframework.boot", name: "spring-boot-gradle-plugin", version: "2.7.18"
+	}
+
+	repositories {
+		maven {
+			url new File(rootProject.projectDir, "../../.m2-tmp")
+		}
+
+		maven {
+			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+apply plugin: "com.liferay.source.formatter"
+apply plugin: "java-library"
+apply plugin: "org.springframework.boot"
+
+configurations {
+	all {
+		exclude group: "ch.qos.logback", module: "logback-classic"
+	}
+}
+
+dependencies {
+	implementation group: "com.github.ben-manes.caffeine", name: "caffeine", version: "3.2.0"
+	implementation group: "com.google.adk", name: "google-adk", version: "0.3.0"
+	implementation group: "com.google.adk", name: "google-adk-dev", version: "0.3.0"
+	implementation group: "com.liferay", name: "com.liferay.client.extension.util.spring.boot3", version: "latest.release"
+	implementation group: "com.liferay", name: "org.apache.commons.logging", version: "1.2.LIFERAY-PATCHED-2"
+	implementation group: "org.apache.commons", name: "commons-lang3", version: "3.18.0"
+	implementation group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
+	implementation group: "org.json", name: "json", version: "20231013"
+	implementation group: "org.slf4j", name: "slf4j-api", version: "1.7.26"
+	implementation group: "org.slf4j", name: "slf4j-log4j12", version: "2.0.16"
+	implementation group: "org.springframework.boot", name: "spring-boot-starter-oauth2-resource-server", version: "2.7.18"
+	implementation group: "org.springframework.boot", name: "spring-boot-starter-web", version: "2.7.18"
+	implementation group: "org.springframework.boot", name: "spring-boot-starter-webflux", version: "2.7.18"
+}
+
+repositories {
+	maven {
+		url new File(rootProject.projectDir, "../../.m2-tmp")
+	}
+
+	maven {
+		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+	}
+}

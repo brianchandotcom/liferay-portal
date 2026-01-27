@@ -1,0 +1,20 @@
+assemble:
+    -   fromTask: bootJar
+liferay-commerceaichatbot-etc-spring-boot-oaua:
+    .serviceAddress: localhost:58081
+    .serviceScheme: http
+    name: Liferay Commerce AI Chatbot Etc Spring Boot OAuth Application User Agent
+    scopes:
+        -   c_l9m7commerceaichatbotsetting.everything
+        -   Liferay.Bulk.REST.everything
+        -   Liferay.Headless.Admin.Content.everything
+        -   Liferay.Headless.Admin.Taxonomy.everything
+        -   Liferay.Headless.Admin.User.everything
+        -   Liferay.Headless.Batch.Engine.everything
+        -   Liferay.Headless.Commerce.Admin.Account.everything
+        -   Liferay.Headless.Commerce.Admin.Catalog.everything
+        -   Liferay.Headless.Commerce.Admin.Inventory.everything
+        -   Liferay.Headless.Delivery.everything
+        -   Liferay.Headless.Site.everything
+        -   Liferay.Object.Admin.REST.everything
+    type: oAuthApplicationUserAgent

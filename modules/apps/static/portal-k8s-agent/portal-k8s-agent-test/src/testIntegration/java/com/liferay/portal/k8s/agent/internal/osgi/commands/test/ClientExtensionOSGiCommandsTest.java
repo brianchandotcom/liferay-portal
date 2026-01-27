@@ -265,7 +265,7 @@ public class ClientExtensionOSGiCommandsTest {
 				ConfigurationListener.class, configurationListener, null);
 
 		try {
-			_reloadConfiguration(_getConfiguration(pid));
+			_reload(_getConfiguration(pid));
 
 			Assert.assertTrue(countDownLatch.await(5, TimeUnit.SECONDS));
 
@@ -339,9 +339,9 @@ public class ClientExtensionOSGiCommandsTest {
 		method.invoke(_osgiCommands, pid);
 	}
 
-	private void _reloadConfiguration(Configuration configuration) {
+	private void _reload(Configuration configuration) {
 		ReflectionTestUtil.invoke(
-			_osgiCommands, "_reloadConfiguration",
+			_osgiCommands, "_reload",
 			new Class<?>[] {Configuration.class}, configuration);
 	}
 

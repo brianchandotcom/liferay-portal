@@ -93,7 +93,7 @@ async function writeExportBridge(
 		getPathToRoot(projectExport, modulePath) +
 		projectWebContextPath +
 		'/__liferay__/exports/' +
-		`${getFlatName(projectExport)}.js`;
+		getFlatName(projectExport, 'js');
 
 	const hashedImportPath = hashPathForVariable(importPath);
 

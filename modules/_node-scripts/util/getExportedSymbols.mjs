@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {parse} from 'acorn';
+import {Parser} from 'acorn';
+import tsPlugin from 'acorn-typescript';
 import estraverse from 'estraverse';
 import fs from 'fs/promises';
 import resolve from 'resolve';
@@ -54,7 +55,10 @@ async function loadSymbols(moduleName) {
 		module = projectScopeRequire(moduleName);
 	}
 	catch (error) {
-		if (error.code === 'ERR_REQUIRE_ESM') {
+		if (
+			error.code === 'ERR_REQUIRE_ESM' ||
+			error.toString().includes('SyntaxError:')
+		) {
 			module = await parseESMExports(moduleName);
 		}
 	}
@@ -77,10 +81,13 @@ async function loadSymbols(moduleName) {
 async function parseESMExports(moduleName, projectDir = '.') {
 	const modulePath = resolve.sync(moduleName, {basedir: projectDir});
 
-	const ast = parse(await fs.readFile(modulePath, 'utf-8'), {
-		ecmaVersion: 2022,
-		sourceType: 'module',
-	});
+	const ast = Parser.extend(tsPlugin()).parse(
+		await fs.readFile(modulePath, 'utf-8'),
+		{
+			ecmaVersion: 2022,
+			sourceType: 'module',
+		}
+	);
 
 	const symbols = {};
 
@@ -95,8 +102,10 @@ async function parseESMExports(moduleName, projectDir = '.') {
 					break;
 
 				case 'ExportNamedDeclaration':
-					for (const specifier of node.specifiers) {
-						symbols[specifier.exported.name] = true;
+					if (node.exportKind !== 'type') {
+						for (const specifier of node.specifiers) {
+							symbols[specifier.exported.name] = true;
+						}
 					}
 					break;
 

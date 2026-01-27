@@ -15,11 +15,11 @@ import projectScopeRequire from '../util/projectScopeRequire.mjs';
  * {
  *   'dom-align': {
  *      external: true,
- *		webContextPath: 'frontend-js-dependencies-web'
+ *		webContextPath: '/frontend-js-dependencies-web'
  *	 },
  *   '@liferay/frontend-js-dependencies-web': {
  *      external: false,
- *		webContextPath: 'frontend-js-dependencies-web',
+ *		webContextPath: '/frontend-js-dependencies-web',
  *	  }
  * }
  */
@@ -48,7 +48,7 @@ export default async function getGlobalImports() {
 			}
 
 			externalImports[packageName] = {
-				external: true,
+				external: !submodule,
 				submodule,
 				webContextPath: getWebContextPath(providerName),
 			};
@@ -75,8 +75,8 @@ function getWebContextPath(packageName) {
 	//
 
 	if (packageName.startsWith('@liferay')) {
-		return packageName.replace('@liferay/', '');
+		packageName = packageName.replace('@liferay/', '');
 	}
 
-	return packageName;
+	return `/${packageName}`;
 }

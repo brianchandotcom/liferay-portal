@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import fs from 'fs/promises';
 import path from 'path';
 import Sonda from 'sonda/esbuild';
 
@@ -11,13 +12,11 @@ import {
 	BUNDLE_REPORTS_PATH,
 } from '../../util/constants.mjs';
 import getFlatName from '../../util/getFlatName.mjs';
-import getEntryPoint from './getEntryPoint.mjs';
-import getExactAliasPlugin from './plugins/getExactAliasPlugin.mjs';
-import getExternalsPlugin from './plugins/getExternalsPlugin.mjs';
-import getImportBridgesPlugin from './plugins/getImportBridgesPlugin.mjs';
-import relocateSourcemap from './relocateSourcemap.mjs';
-import runEsbuild from './runEsbuild.mjs';
-import writeExportBridge from './writeExportBridge.mjs';
+import getLinkerPlugin from './plugins/getLinkerPlugin.mjs';
+import getExportBridgeJavaScript from './util/getExportBridgeJavaScript.mjs';
+import getExportBridgePath from './util/getExportBridgePath.mjs';
+import relocateSourcemap from './util/relocateSourcemap.mjs';
+import runEsbuild from './util/runEsbuild.mjs';
 
 export default async function bundleJavaScriptExports(
 	globalImports,
@@ -52,7 +51,24 @@ async function bundle(
 	projectWebContextPath,
 	moduleName
 ) {
-	const entryPoint = getEntryPoint(moduleName);
+
+	// Write export bridge
+
+	const exportBridgePath = getExportBridgePath(moduleName);
+
+	await fs.mkdir(path.dirname(exportBridgePath), {recursive: true});
+	await fs.writeFile(
+		exportBridgePath,
+		await getExportBridgeJavaScript(overridenPackageSymbols, moduleName),
+		'utf-8'
+	);
+
+	// Run esbuild
+
+	const entryPoint = {
+		in: getExportBridgePath(moduleName),
+		out: `exports/${getFlatName(moduleName)}`,
+	};
 
 	const esbuildConfig = {
 		alias: projectAlias,
@@ -62,9 +78,12 @@ async function bundle(
 		format: 'esm',
 		outdir: BUILD_MAIN_EXPORTS_PATH,
 		plugins: [
-			getExactAliasPlugin(globalImports, 'exports', [moduleName]),
-			getExternalsPlugin(),
-			getImportBridgesPlugin(globalImports, overridenPackageSymbols),
+			getLinkerPlugin(
+				globalImports,
+				overridenPackageSymbols,
+				projectWebContextPath,
+				moduleName
+			),
 		],
 		sourcemap: true,
 		target: ['es2022'],
@@ -100,11 +119,7 @@ async function bundle(
 		);
 	}
 
-	await writeExportBridge(overridenPackageSymbols, moduleName);
-
-	const flatModuleName = getFlatName(moduleName);
-
-	const {metafile} = await runEsbuild(esbuildConfig, flatModuleName);
+	const {metafile} = await runEsbuild(esbuildConfig, getFlatName(moduleName));
 	const {outputs} = metafile;
 
 	await Promise.all([

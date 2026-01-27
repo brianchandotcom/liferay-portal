@@ -7,7 +7,7 @@ import fs from 'fs/promises';
 import os from 'os';
 import path from 'path';
 
-import {getBuildPropertiesPath, getRootDir} from '../../util/constants.mjs';
+import {getBuildPropertiesPath, getRootDir} from '../../../util/constants.mjs';
 
 const SASS_BINARY = {
 	darwin: {

@@ -16,7 +16,7 @@ import {
 } from '../../util/constants.mjs';
 import projectScopeRequire from '../../util/projectScopeRequire.mjs';
 import calculateFileHash from '../util/calculateFileHash.mjs';
-import runSass from './runSass.mjs';
+import runSass from './util/runSass.mjs';
 
 const CSS_IMPORT_REGEX = /@import\s+url\s*\(\s*['"]?(.+?\.css)/g;
 const SASS_EXCLUDE = [

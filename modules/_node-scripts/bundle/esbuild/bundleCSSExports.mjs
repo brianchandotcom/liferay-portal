@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import fs from 'fs/promises';
 import path from 'path';
 import Sonda from 'sonda/esbuild';
 
@@ -11,23 +12,27 @@ import {
 	BUNDLE_REPORTS_PATH,
 } from '../../util/constants.mjs';
 import getFlatName from '../../util/getFlatName.mjs';
-import getEntryPoint from './getEntryPoint.mjs';
-import runEsbuild from './runEsbuild.mjs';
+import calculateFileHash from '../util/calculateFileHash.mjs';
+import getCSSExportLoaderModuleJavaScript from './util/getCSSExportLoaderModuleJavaScript.mjs';
+import getCSSExportLoaderModulePath from './util/getCSSExportLoaderModulePath.mjs';
+import runEsbuild from './util/runEsbuild.mjs';
 
-export default async function bundleCSSExports(projectExports) {
-	if (!projectExports.length) {
-		return;
-	}
-
+export default async function bundleCSSExports(
+	projectExports,
+	projectWebContextPath
+) {
 	await Promise.all(
 		projectExports
 			.filter((moduleName) => moduleName.endsWith('.css'))
-			.map((moduleName) => bundle(moduleName))
+			.map((moduleName) => bundle(projectWebContextPath, moduleName))
 	);
 }
 
-async function bundle(moduleName) {
-	const entryPoint = getEntryPoint(moduleName);
+async function bundle(webContextPath, moduleName) {
+	const entryPoint = {
+		in: moduleName,
+		out: `css/${getFlatName(moduleName).replace(/\.css$/, '')}`,
+	};
 
 	const esbuildConfig = {
 		entryNames: '[dir]/[name].([hash])',
@@ -70,5 +75,23 @@ async function bundle(moduleName) {
 		);
 	}
 
-	return runEsbuild(esbuildConfig, getFlatName(moduleName));
+	await runEsbuild(esbuildConfig, getFlatName(moduleName));
+
+	await writeCSSExportLoaderModule(webContextPath, moduleName);
+}
+
+async function writeCSSExportLoaderModule(webContextPath, moduleName) {
+	const source = await getCSSExportLoaderModuleJavaScript(
+		'../../..',
+		webContextPath,
+		moduleName
+	);
+
+	const cssLoaderPath = getCSSExportLoaderModulePath(
+		moduleName,
+		await calculateFileHash(source)
+	);
+
+	await fs.mkdir(path.dirname(cssLoaderPath), {recursive: true});
+	await fs.writeFile(cssLoaderPath, source);
 }

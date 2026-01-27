@@ -11,7 +11,7 @@ import * as tar from 'tar';
 import unzipper from 'unzipper';
 import url from 'url';
 
-import fileExists from '../../util/fileExists.mjs';
+import fileExists from '../../../util/fileExists.mjs';
 import getSassBinaryArchMap from './getSassBinaryArchMap.mjs';
 
 export default async function installSassBinary() {

@@ -65,11 +65,19 @@ function StatisticButton({
 }
 
 export default function TasksOverview({
+	blockedCountURL,
 	cmpProjectId,
+	inProgressCountURL,
+	overdueCountURL,
 	redirect,
+	totalCountURL,
 }: {
+	blockedCountURL: string;
 	cmpProjectId: string;
+	inProgressCountURL: string;
+	overdueCountURL: string;
 	redirect: string;
+	totalCountURL: string;
 }) {
 	const [blockedCount, setBlockedCount] = useState(0);
 	const [completionRate, setCompletionRate] = useState(0);
@@ -109,20 +117,37 @@ export default function TasksOverview({
 	const fetchCounts = useCallback(async () => {
 		setLoading(true);
 
-		fetch(`/o/cmp/projects/${cmpProjectId}`, {
-			method: 'GET',
-		}).then(async (response: Response) => {
-			const data = await response.json();
+		const fetchJSON = (url: string) =>
+			fetch(url).then((response) => response.json());
 
-			setBlockedCount(data.blockedCount);
-			setCompletionRate(data.completionRate);
-			setInProgressCount(data.inProgressCount);
-			setOverdueCount(data.overdueCount);
-			setTotalCount(data.totalCount);
+		const [
+			blockedCountData,
+			inProgressCountData,
+			overdueCountData,
+			projectData,
+			totalCountData,
+		] = await Promise.all([
+			fetchJSON(blockedCountURL),
+			fetchJSON(inProgressCountURL),
+			fetchJSON(overdueCountURL),
+			fetchJSON(`/o/cmp/projects/${cmpProjectId}`),
+			fetchJSON(totalCountURL),
+		]);
 
-			setLoading(false);
-		});
-	}, [cmpProjectId]);
+		setBlockedCount(blockedCountData.totalCount);
+		setCompletionRate(projectData.completionRate);
+		setInProgressCount(inProgressCountData.totalCount);
+		setOverdueCount(overdueCountData.totalCount);
+		setTotalCount(totalCountData.totalCount);
+
+		setLoading(false);
+	}, [
+		blockedCountURL,
+		cmpProjectId,
+		inProgressCountURL,
+		overdueCountURL,
+		totalCountURL,
+	]);
 
 	useEffect(() => {
 		fetchCounts();

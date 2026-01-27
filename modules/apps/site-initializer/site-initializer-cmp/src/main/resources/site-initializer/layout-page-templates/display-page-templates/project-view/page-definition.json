@@ -70,6 +70,7 @@
 					},
 					"indexed": true
 				},
+				"id": "cmp-project-navigation-tabs",
 				"pageElements": [
 					{
 						"definition": {

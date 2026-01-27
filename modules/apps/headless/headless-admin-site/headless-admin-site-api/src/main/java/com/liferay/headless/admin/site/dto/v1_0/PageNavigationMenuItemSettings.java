@@ -139,6 +139,51 @@ public class PageNavigationMenuItemSettings implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _privatePageSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The title or name of the entity that this navigation menu item is set to."
+	)
+	public String getTitle() {
+		if (_titleSupplier != null) {
+			title = _titleSupplier.get();
+
+			_titleSupplier = null;
+		}
+
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+
+		_titleSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setTitle(
+		UnsafeSupplier<String, Exception> titleUnsafeSupplier) {
+
+		_titleSupplier = () -> {
+			try {
+				return titleUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "The title or name of the entity that this navigation menu item is set to."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String title;
+
+	@JsonIgnore
+	private Supplier<String> _titleSupplier;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -194,6 +239,22 @@ public class PageNavigationMenuItemSettings implements Serializable {
 			sb.append("\"privatePage\": ");
 
 			sb.append(privatePage);
+		}
+
+		String title = getTitle();
+
+		if (title != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"title\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(title));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");

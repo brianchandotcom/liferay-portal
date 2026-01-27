@@ -14,7 +14,7 @@ export default function Step() {
 			</ClayLayout.Sheet>
 
 			<ClayLayout.Sheet>
-				{Liferay.Language.get('Portlets')}
+				{Liferay.Language.get('portlets')}
 			</ClayLayout.Sheet>
 		</>
 	);

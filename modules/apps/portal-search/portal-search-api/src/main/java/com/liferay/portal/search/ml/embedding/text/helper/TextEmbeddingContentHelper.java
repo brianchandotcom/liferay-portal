@@ -60,11 +60,7 @@ public class TextEmbeddingContentHelper<T extends BaseModel<T>> {
 			String localizedContent = getLocalizedContent(languageId);
 
 			if (localizedContent == null) {
-				localizedContent = getLocalizedContent(_defaultLanguageId);
-
-				if (localizedContent == null) {
-					continue;
-				}
+				continue;
 			}
 
 			_textEmbeddingDocumentContributor.contribute(
@@ -98,10 +94,6 @@ public class TextEmbeddingContentHelper<T extends BaseModel<T>> {
 
 	public Map<String, String> getLocalizedContentMap() {
 		Map<String, String> localizedContentMap = new TreeMap<>();
-
-		if (_localizedContentSBMap.isEmpty()) {
-			return localizedContentMap;
-		}
 
 		for (Map.Entry<String, StringBundler> entry :
 				_localizedContentSBMap.entrySet()) {

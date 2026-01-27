@@ -41,4 +41,8 @@ public interface EmptyModelManager {
 
 	public boolean isEmptyModel();
 
+	public void solveEmptyModel(
+		String className, long groupId, long companyId,
+		String classExternalReferenceCode);
+
 }

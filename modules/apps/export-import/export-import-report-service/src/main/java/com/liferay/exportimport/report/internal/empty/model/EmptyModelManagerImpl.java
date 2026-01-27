@@ -7,6 +7,7 @@ package com.liferay.exportimport.report.internal.empty.model;
 
 import com.liferay.exportimport.kernel.empty.model.EmptyModelManager;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.petra.function.UnsafeBiFunction;
 import com.liferay.petra.function.UnsafeSupplier;
@@ -116,6 +117,36 @@ public class EmptyModelManagerImpl implements EmptyModelManager {
 	@Override
 	public boolean isEmptyModel() {
 		return EmptyModelThreadLocal.isEmptyModel();
+	}
+
+	@Override
+	public void solveEmptyModel(
+		String className, long groupId, long companyId,
+		String classExternalReferenceCode) {
+
+		ExportImportReportEntry exportImportReportEntry =
+			_exportImportReportEntryLocalService.
+				fetchEmptyExportImportReportEntryByG_C_C_C(
+					groupId, companyId, classExternalReferenceCode,
+					_classNameLocalService.getClassNameId(className));
+
+		if (exportImportReportEntry == null) {
+			return;
+		}
+
+		if (ExportImportThreadLocal.isImportInProcess() &&
+			(ExportImportThreadLocal.getExportImportConfigurationId() ==
+				exportImportReportEntry.getExportImportConfigurationId())) {
+
+			_exportImportReportEntryLocalService.deleteExportImportReportEntry(
+				exportImportReportEntry);
+		}
+		else {
+			exportImportReportEntry.setStatus(1);
+
+			_exportImportReportEntryLocalService.updateExportImportReportEntry(
+				exportImportReportEntry);
+		}
 	}
 
 	@Reference

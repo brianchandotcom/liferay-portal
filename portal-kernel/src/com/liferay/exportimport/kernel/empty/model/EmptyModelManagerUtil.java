@@ -62,6 +62,16 @@ public class EmptyModelManagerUtil {
 		return emptyModelManager.isEmptyModel();
 	}
 
+	public static void solveEmptyModel(
+		String className, long groupId, long companyId,
+		String classExternalReferenceCode) {
+
+		EmptyModelManager emptyModelManager = _emptyModelManagerSnapshot.get();
+
+		emptyModelManager.solveEmptyModel(
+			className, groupId, companyId, classExternalReferenceCode);
+	}
+
 	private static final Snapshot<EmptyModelManager>
 		_emptyModelManagerSnapshot = new Snapshot<>(
 			EmptyModelManagerUtil.class, EmptyModelManager.class);

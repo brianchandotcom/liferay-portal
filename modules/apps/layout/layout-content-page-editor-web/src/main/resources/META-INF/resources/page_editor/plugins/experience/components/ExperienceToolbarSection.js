@@ -32,22 +32,46 @@ function ExperienceToolbarSection() {
 
 					const segmentsEntryName = segmentsEntry
 						? segmentsEntry.name
-						: '';
+						: experience.segmentsEntryName;
 
-					const firstExperience = experiences.find(
-						(exp) =>
-							exp.segmentsEntryId ===
-								experience.segmentsEntryId ||
-							exp.segmentsEntryId ===
-								config.defaultSegmentsEntryId
+					const currentSegmentsEntryId = String(
+						experience.segmentsEntryId
 					);
+					const defaultSegmentsEntryId = String(
+						config.defaultSegmentsEntryId
+					);
+
+					const isSegmentValid =
+						!!segmentsEntry ||
+						currentSegmentsEntryId === defaultSegmentsEntryId;
+
+					let active = false;
+
+					if (isSegmentValid) {
+						const firstExperience = experiences.find(
+							(findExperience) => {
+								const findSegmentsEntryId = String(
+									findExperience.segmentsEntryId
+								);
+
+								return (
+									findSegmentsEntryId ===
+										currentSegmentsEntryId ||
+									findSegmentsEntryId ===
+										defaultSegmentsEntryId
+								);
+							}
+						);
+
+						active =
+							firstExperience &&
+							firstExperience.segmentsExperienceId ===
+								experience.segmentsExperienceId;
+					}
 
 					return {
 						...experience,
-						active:
-							firstExperience &&
-							firstExperience.segmentsExperienceId ===
-								experience.segmentsExperienceId,
+						active,
 						segmentsEntryName,
 					};
 				}),

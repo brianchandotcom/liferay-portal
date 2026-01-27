@@ -108,4 +108,16 @@ public class MarketplaceConstants {
 		return null;
 	}
 
+	public static final String KORONEIKI_ACCOUNT_UPDATE="koroneiki.account.update";
+
+	public static final String KORONEIKI_ACCOUNT_CREATE="koroneiki.account.create";
+
+	public static final String KORONEIKI_ENTITLEMENT_CREATE="koroneiki.entitlement.update";
+
+	public static final String[] PUBSUB_TOPICS = {
+			KORONEIKI_ACCOUNT_UPDATE,
+			KORONEIKI_ACCOUNT_CREATE,
+			KORONEIKI_ENTITLEMENT_CREATE
+	};
+
 }

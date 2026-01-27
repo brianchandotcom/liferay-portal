@@ -526,6 +526,35 @@ export class DataApiHelpers extends ApiHelpers {
 			else if (item.type === 'objectDefinition') {
 				const objectDefinitionAPIClient =
 					await this.buildRestClient(ObjectDefinitionAPI);
+
+				const {body: objectDefinition} =
+					await objectDefinitionAPIClient.getObjectDefinition(
+						item.id
+					);
+
+				const objectRelationshipRESTClient = await this.buildRestClient(
+					ObjectRelationshipAPI
+				);
+
+				// Check if there are edge relationship and update them before removing the definition
+
+				const {body: objectRelationships} =
+					await objectRelationshipRESTClient.getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage(
+						objectDefinition.externalReferenceCode
+					);
+
+				for (const objectRelationship of objectRelationships.items) {
+					if (objectRelationship.edge) {
+						await objectRelationshipRESTClient.putObjectRelationship(
+							objectRelationship.id,
+							{
+								...objectRelationship,
+								edge: false,
+							}
+						);
+					}
+				}
+
 				await objectDefinitionAPIClient.deleteObjectDefinition(item.id);
 			}
 			else if (item.type === 'objectFolder') {

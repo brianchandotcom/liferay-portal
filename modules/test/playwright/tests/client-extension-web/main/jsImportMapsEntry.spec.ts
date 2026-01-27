@@ -51,7 +51,7 @@ testSample.describe('Samples', () => {
 
 				expect(response.status()).toBe(200);
 				expect(await response.headerValue('Content-Type')).toContain(
-					'text/javascript'
+					'application/javascript'
 				);
 			}
 		);

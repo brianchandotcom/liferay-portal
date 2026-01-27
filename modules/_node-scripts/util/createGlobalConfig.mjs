@@ -5,7 +5,7 @@
 
 import crypto from 'crypto';
 
-import {getProjectDirs} from './constants.mjs';
+import getProjectDirs from '../util/getProjectDirs.mjs';
 import objectSF from './objectSF.mjs';
 import projectScopeRequire from './projectScopeRequire.mjs';
 

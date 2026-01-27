@@ -8,14 +8,14 @@ import fg from 'fast-glob';
 import fs from 'fs/promises';
 import path from 'path';
 
-import {NODE_SCRIPTS_PATH} from './constants.mjs';
+import {NODE_SCRIPTS_DIR} from './locations.mjs';
 
 export default async function digestNodeScripts() {
 	const sha256 = crypto.createHash('sha256');
 
 	let files = await fg(['**/*.mjs', '**/*.js'], {
 		absolute: true,
-		cwd: NODE_SCRIPTS_PATH,
+		cwd: NODE_SCRIPTS_DIR,
 		ignore: ['bundle/sass/binary/**', 'node_modules/**'],
 	});
 

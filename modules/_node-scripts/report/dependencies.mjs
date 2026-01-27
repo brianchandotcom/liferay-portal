@@ -7,8 +7,8 @@ import fg from 'fast-glob';
 import fs from 'fs/promises';
 import path from 'path';
 
-import {BUNDLE_REPORTS_PATH} from '../util/constants.mjs';
 import getYarnWorkspaceProjects from '../util/getYarnWorkspaceProjects.mjs';
+import {BUNDLE_REPORTS_PATH} from '../util/locations.mjs';
 
 export default async function main() {
 	const projectDirectories = await getYarnWorkspaceProjects();

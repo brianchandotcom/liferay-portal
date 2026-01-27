@@ -7,13 +7,12 @@ import fs from 'fs/promises';
 import path from 'path';
 
 import visitOutdatedTsconfigFiles from '../tsconfig/visitOutdatedTsconfigFiles.mjs';
-import {getRootDir} from '../util/constants.mjs';
+import {MODULES_DIR} from '../util/locations.mjs';
 
 export default async function main() {
-	const rootDir = await getRootDir();
 	const cwd = path.resolve('.');
 
-	if (cwd !== rootDir) {
+	if (cwd !== MODULES_DIR) {
 		console.error(
 			`❌ Command generate:tsconfig can only be run from 'modules' directory.`
 		);
@@ -25,6 +24,6 @@ export default async function main() {
 	await visitOutdatedTsconfigFiles(async (filePath, json) => {
 		await fs.writeFile(filePath, json, 'utf-8');
 
-		console.log(`✅ Regenerated ${path.relative(rootDir, filePath)}`);
+		console.log(`✅ Regenerated ${path.relative(MODULES_DIR, filePath)}`);
 	});
 }

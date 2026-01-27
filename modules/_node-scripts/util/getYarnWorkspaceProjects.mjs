@@ -7,7 +7,7 @@ import fg from 'fast-glob';
 import fs from 'fs';
 import path from 'path';
 
-import {getRootDir} from './constants.mjs';
+import {MODULES_DIR} from './locations.mjs';
 
 /**
  * Returns a list of workspaces.
@@ -17,42 +17,38 @@ import {getRootDir} from './constants.mjs';
  * "modules/package.json".
  */
 export default async function getYarnWorkspaceProjects() {
-	const root = await getRootDir();
+	const cwd = process.cwd();
 
-	if (root) {
-		const cwd = process.cwd();
+	try {
+		process.chdir(MODULES_DIR);
 
-		try {
-			process.chdir(root);
+		const {workspaces} = JSON.parse(
+			fs.readFileSync('package.json', 'utf8')
+		);
 
-			const {workspaces} = JSON.parse(
-				fs.readFileSync('package.json', 'utf8')
-			);
+		const projects = await fg(
+			workspaces.packages.map((item) => `${item}/package.json`),
+			{
+				ignore: [
+					'**/node_modules/**',
+					'**/.releng/**',
+					'**/build',
+					'**/classes',
+					'**/src',
+					'**/test',
+				],
+			}
+		);
 
-			const projects = await fg(
-				workspaces.packages.map((item) => `${item}/package.json`),
-				{
-					ignore: [
-						'**/node_modules/**',
-						'**/.releng/**',
-						'**/build',
-						'**/classes',
-						'**/src',
-						'**/test',
-					],
-				}
-			);
-
-			return projects.map((project) =>
-				path.join(root, path.dirname(project))
-			);
-		}
-		catch (error) {
-			console.log(`getYarnWorkspaceProjects(): error \`${error}\``);
-		}
-		finally {
-			process.chdir(cwd);
-		}
+		return projects.map((project) =>
+			path.join(MODULES_DIR, path.dirname(project))
+		);
+	}
+	catch (error) {
+		console.log(`getYarnWorkspaceProjects(): error \`${error}\``);
+	}
+	finally {
+		process.chdir(cwd);
 	}
 
 	return [];

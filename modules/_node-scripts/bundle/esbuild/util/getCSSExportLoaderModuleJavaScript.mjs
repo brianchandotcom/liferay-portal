@@ -6,8 +6,8 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-import {BUILD_CSS_EXPORTS_PATH} from '../../../util/constants.mjs';
 import getFlatName from '../../../util/getFlatName.mjs';
+import {BUILD_CSS_EXPORTS_PATH} from '../../../util/locations.mjs';
 import extractFileHash from '../../util/extractFileHash.mjs';
 import getCSSLoadJavaScript from './getCSSLoadJavaScript.mjs';
 import getURL, {URLType} from './getURL.mjs';

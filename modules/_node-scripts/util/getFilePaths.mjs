@@ -15,13 +15,13 @@ const GIT_IGNORE_FILE = '.gitignore';
 
 const EXTENSIONS = ['graphql', 'js', 'jsp', 'jspf', 'mjs', 'scss', 'ts', 'tsx'];
 
-export default async function getFilePaths(rootDir, filesToFormat) {
-	const workspacesDir = path.join(rootDir, '..', 'workspaces');
-	const playwrightDir = path.join(rootDir, 'test', 'playwright');
+export default async function getFilePaths(modulesDir, filesToFormat) {
+	const workspacesDir = path.join(modulesDir, '..', 'workspaces');
+	const playwrightDir = path.join(modulesDir, 'test', 'playwright');
 
 	const [rootIgnored, workspacesIgnored, playwrightIgnored] =
 		await Promise.all([
-			getIgnoredFiles(rootDir),
+			getIgnoredFiles(modulesDir),
 			getIgnoredFiles(
 				path.join(workspacesDir, 'liferay-sample-workspace')
 			),
@@ -33,7 +33,7 @@ export default async function getFilePaths(rootDir, filesToFormat) {
 	if (!filesToFormat) {
 		filepaths = (
 			await Promise.all([
-				getFilesToCheck(rootDir, rootIgnored),
+				getFilesToCheck(modulesDir, rootIgnored),
 				getFilesToCheck(workspacesDir, workspacesIgnored),
 				getFilesToCheck(playwrightDir, playwrightIgnored),
 			])
@@ -76,17 +76,17 @@ export default async function getFilePaths(rootDir, filesToFormat) {
 
 			// make sure the path is absolute
 
-			(filepath) => path.join(rootDir, '..', filepath)
+			(filepath) => path.join(modulesDir, '..', filepath)
 		);
 	}
 
 	return filepaths;
 }
 
-async function getIgnoredFiles(rootDir) {
-	const eslintIgnoreFilePath = path.join(rootDir, ESLINT_IGNORE_FILE);
-	const prettierIgnoreFilePath = path.join(rootDir, PRETTIER_IGNORE_FILE);
-	const gitIgnoreFilePath = path.join(rootDir, GIT_IGNORE_FILE);
+async function getIgnoredFiles(baseDir) {
+	const eslintIgnoreFilePath = path.join(baseDir, ESLINT_IGNORE_FILE);
+	const prettierIgnoreFilePath = path.join(baseDir, PRETTIER_IGNORE_FILE);
+	const gitIgnoreFilePath = path.join(baseDir, GIT_IGNORE_FILE);
 
 	const [eslintIgnores, prettierIgnores, gitIgnores] = await Promise.all([
 		readIgnoreFile(eslintIgnoreFilePath),
@@ -117,7 +117,7 @@ async function getIgnoredFiles(rootDir) {
 	});
 }
 
-async function getFilesToCheck(rootDir, ignore = []) {
+async function getFilesToCheck(baseDir, ignore = []) {
 	const files = await fg(
 		[
 			'**/*.',
@@ -126,11 +126,11 @@ async function getFilesToCheck(rootDir, ignore = []) {
 			'**/src/**/*.{jsp,jspf}',
 		],
 		{
-			cwd: rootDir,
+			cwd: baseDir,
 			dot: true,
 			ignore,
 		}
 	);
 
-	return files.map((filepath) => path.join(rootDir, filepath));
+	return files.map((filepath) => path.join(baseDir, filepath));
 }

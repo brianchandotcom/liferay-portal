@@ -11,7 +11,7 @@ import {
 	BUILD_LANGUAGE_JSON_PATH,
 	BUILD_MAIN_EXPORTS_PATH,
 	BUNDLE_REPORTS_PATH,
-} from '../../util/constants.mjs';
+} from '../../util/locations.mjs';
 import objectSF from '../../util/objectSF.mjs';
 import getLiferayLanguageGetPlugin from './plugins/getLiferayLanguageGetPlugin.mjs';
 import getLinkerPlugin from './plugins/getLinkerPlugin.mjs';

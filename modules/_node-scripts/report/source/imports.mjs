@@ -10,14 +10,11 @@ import fg from 'fast-glob';
 import fs from 'fs/promises';
 import path from 'path';
 
-import {SRC_PATH, getRootDir} from '../../util/constants.mjs';
 import getYarnWorkspaceProjects from '../../util/getYarnWorkspaceProjects.mjs';
+import {MODULES_DIR, SRC_PATH} from '../../util/locations.mjs';
 
 export default async function main() {
-	const [projectDirectories, rootDir] = await Promise.all([
-		getYarnWorkspaceProjects(),
-		getRootDir(),
-	]);
+	const projectDirectories = await getYarnWorkspaceProjects();
 
 	const results = await Promise.all(
 		projectDirectories.map(async (projectDir) => {
@@ -143,7 +140,7 @@ export default async function main() {
 
 	Object.entries(projectImportsSymbols).forEach(
 		([projectDir, importsSymbols]) => {
-			const projectRelDir = path.relative(rootDir, projectDir);
+			const projectRelDir = path.relative(MODULES_DIR, projectDir);
 
 			Object.entries(importsSymbols).forEach(([importPath, symbols]) => {
 				lines.push(

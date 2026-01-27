@@ -8,9 +8,10 @@ import path from 'path';
 import checkProject from '../tsc/checkProject.mjs';
 import checkProjects from '../tsc/checkProjects.mjs';
 import extractProjectDirs from '../tsc/extractProjectDirs.mjs';
-import {getProjectDirs, getRootDir} from '../util/constants.mjs';
 import getNamedArguments from '../util/getNamedArguments.mjs';
+import getProjectDirs from '../util/getProjectDirs.mjs';
 import gitUtil from '../util/gitUtil.mjs';
+import {MODULES_DIR} from '../util/locations.mjs';
 
 export default async function main() {
 	const {all, currentBranch, localChanges} = getNamedArguments({
@@ -21,7 +22,7 @@ export default async function main() {
 
 	const cwd = path.resolve('.');
 
-	if (cwd === (await getRootDir())) {
+	if (cwd === MODULES_DIR) {
 		let projectDirs;
 
 		if (currentBranch) {

@@ -10,14 +10,13 @@ import runPreflight from '../preflight/runPreflight.mjs';
 import checkProjects from '../tsc/checkProjects.mjs';
 import extractProjectDirs from '../tsc/extractProjectDirs.mjs';
 import visitOutdatedTsconfigFiles from '../tsconfig/visitOutdatedTsconfigFiles.mjs';
-import {getRootDir} from '../util/constants.mjs';
 import gitUtil from '../util/gitUtil.mjs';
+import {MODULES_DIR} from '../util/locations.mjs';
 
 export default async function main() {
-	const rootDir = await getRootDir();
 	const cwd = path.resolve('.');
 
-	if (cwd !== rootDir) {
+	if (cwd !== MODULES_DIR) {
 		console.error(
 			`❌ Command check:ci can only be run from 'modules' directory.`
 		);
@@ -45,7 +44,9 @@ export default async function main() {
 	console.log('\n⚙️ Checking outdated tsconfig.json files ...');
 
 	await visitOutdatedTsconfigFiles((filePath) => {
-		console.error(`   · ${path.relative(rootDir, filePath)} is outdated`);
+		console.error(
+			`   · ${path.relative(MODULES_DIR, filePath)} is outdated`
+		);
 
 		checksPassed = false;
 	});

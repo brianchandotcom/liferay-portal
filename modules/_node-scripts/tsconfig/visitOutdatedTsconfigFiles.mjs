@@ -8,18 +8,17 @@ import path from 'path';
 import getProjectDependencies from '../configuration/getProjectDependencies.mjs';
 import getProjectDescription from '../configuration/getProjectDescription.mjs';
 import getProjectEntryPoints from '../configuration/getProjectEntryPoints.mjs';
-import {SRC_PATH, getProjectDirs, getRootDir} from '../util/constants.mjs';
 import fileExists from '../util/fileExists.mjs';
+import getProjectDirs from '../util/getProjectDirs.mjs';
+import {MODULES_DIR, SRC_PATH} from '../util/locations.mjs';
 import visitProjectTsconfig from './visitProjectTsconfig.mjs';
 
 export default async function visitOutdatedTsconfigFiles(visitorFunction) {
-	const rootDir = await getRootDir();
-
-	const [projectDirs] = await Promise.all([getProjectDirs()]);
+	const projectDirs = await getProjectDirs();
 
 	const projectsEntryPoints = await getProjectsEntryPoints(
 		projectDirs,
-		rootDir
+		MODULES_DIR
 	);
 
 	await Promise.all([
@@ -44,13 +43,13 @@ export default async function visitOutdatedTsconfigFiles(visitorFunction) {
  *	 ...
  * }
  */
-async function getProjectsEntryPoints(projectDirs, rootDir) {
+async function getProjectsEntryPoints(projectDirs, modulesDir) {
 	return projectDirs.reduce((projectsEntryPoints, projectDir) => {
 		const {name} = getProjectDescription(projectDir);
 		const {typescript} = getProjectEntryPoints(projectDir);
 
 		projectsEntryPoints[name] = {
-			dir: path.relative(rootDir, projectDir),
+			dir: path.relative(modulesDir, projectDir),
 			path: typescript,
 		};
 

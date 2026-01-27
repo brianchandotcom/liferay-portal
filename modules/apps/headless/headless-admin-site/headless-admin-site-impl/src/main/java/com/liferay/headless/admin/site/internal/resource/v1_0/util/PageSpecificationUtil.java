@@ -79,6 +79,50 @@ public class PageSpecificationUtil {
 		return WorkflowConstants.STATUS_DRAFT;
 	}
 
+	public static PageSpecification[] getSortedContentPageSpecifications(
+		PageSpecification[] pageSpecifications) {
+
+		if (pageSpecifications == null) {
+			return null;
+		}
+
+		if (pageSpecifications.length != 2) {
+			throw new UnsupportedOperationException();
+		}
+
+		ContentPageSpecification draftContentPageSpecification;
+		ContentPageSpecification publishedContentPageSpecification =
+			(ContentPageSpecification)pageSpecifications[0];
+
+		if (Validator.isNull(
+				publishedContentPageSpecification.
+					getDraftContentPageSpecificationExternalReferenceCode())) {
+
+			draftContentPageSpecification = publishedContentPageSpecification;
+			publishedContentPageSpecification =
+				(ContentPageSpecification)pageSpecifications[1];
+		}
+		else {
+			draftContentPageSpecification =
+				(ContentPageSpecification)pageSpecifications[1];
+		}
+
+		if (Validator.isNull(
+				publishedContentPageSpecification.
+					getDraftContentPageSpecificationExternalReferenceCode()) ||
+			!Objects.equals(
+				draftContentPageSpecification.getExternalReferenceCode(),
+				publishedContentPageSpecification.
+					getDraftContentPageSpecificationExternalReferenceCode())) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		return new PageSpecification[] {
+			draftContentPageSpecification, publishedContentPageSpecification
+		};
+	}
+
 	public static WidgetPageSpecification getWidgetPageSpecification(
 		PageSpecification[] pageSpecifications) {
 

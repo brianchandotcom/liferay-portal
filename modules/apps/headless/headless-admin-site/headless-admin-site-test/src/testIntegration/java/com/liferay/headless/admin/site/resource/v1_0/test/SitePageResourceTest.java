@@ -1630,9 +1630,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		SitePage sitePage = _getRandomSitePage(SitePage.Type.CONTENT_PAGE);
 
-		String draftContentPageSpecificationExternalReferenceCode =
-			RandomTestUtil.randomString();
-
 		ContentPageSpecification draftContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
 				null, testGroup.getGroupId(),
@@ -1641,7 +1638,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		draftContentPageSpecification.setPageExperiences(
 			PageExperiencesTestUtil.getDefaultPageExperiences(
 				pageElements,
-				draftContentPageSpecificationExternalReferenceCode));
+				draftContentPageSpecification.getExternalReferenceCode()));
 
 		ContentPageSpecification publishedContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(

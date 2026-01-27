@@ -8,7 +8,13 @@
 	"deprecated-features": {
 		"en_US": {
 			"message": "Learn more about deprecated features.",
-			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/upgrading-liferay/reference/maintenance-mode-and-deprecations-in-7-4"
+			"url": "https://learn.liferay.com/w/dxp/self-hosted-installation-and-upgrades/upgrading-liferay/deprecations-and-breaking-changes-reference/7-4-deprecations-and-breaking-changes/maintenance-mode-and-deprecations-in-7-4"
+		}
+	},
+	"maintenance-mode": {
+		"en_US": {
+			"message": "Learn more about maintenance features.",
+			"url": "https://learn.liferay.com/w/dxp/self-hosted-installation-and-upgrades/upgrading-liferay/deprecations-and-breaking-changes-reference/7-4-deprecations-and-breaking-changes/maintenance-mode-and-deprecations-in-7-4"
 		}
 	}
 }

@@ -87,18 +87,11 @@ const FIELD = {
 } as Field;
 
 const REPEATABLE_GROUP_UUID = getUuid();
-const REPEATABLE_GROUP: RepeatableGroup = {
+const REPEATABLE_GROUP = {
 	children: new Map(),
-	erc: 'repeatable-group-erc',
-	label: {
-		[Liferay.ThemeDisplay.getDefaultLanguageId()]: 'Repeatable Group',
-	} as Liferay.Language.LocalizedValue<string>,
-	name: 'RepeatableGroup',
-	parent: REPEATABLE_GROUP_UUID,
-	relationshipName: 'repeatableGroup',
 	type: 'repeatable-group',
 	uuid: REPEATABLE_GROUP_UUID,
-};
+} as RepeatableGroup;
 
 const STRUCTURE: Partial<Structure> = {
 	children: new Map<Uuid, StructureChild>([

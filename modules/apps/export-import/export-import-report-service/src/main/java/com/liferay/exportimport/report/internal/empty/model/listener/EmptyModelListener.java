@@ -11,6 +11,8 @@ import com.liferay.exportimport.report.service.ExportImportReportEntryLocalServi
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.BaseModelListener;
 
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Alberto Javier Moreno Lage
  */
@@ -22,7 +24,7 @@ public abstract class EmptyModelListener<T extends BaseModel<T>>
 		long classNameId) {
 
 		ExportImportReportEntry exportImportReportEntry =
-			_exportImportReportEntryLocalService.
+			exportImportReportEntryLocalService.
 				fetchEmptyExportImportReportEntryByG_C_C_C(
 					groupId, companyId, classExternalReferenceCode,
 					classNameId);
@@ -35,26 +37,19 @@ public abstract class EmptyModelListener<T extends BaseModel<T>>
 			(ExportImportThreadLocal.getExportImportConfigurationId() ==
 				exportImportReportEntry.getExportImportConfigurationId())) {
 
-			_exportImportReportEntryLocalService.deleteExportImportReportEntry(
+			exportImportReportEntryLocalService.deleteExportImportReportEntry(
 				exportImportReportEntry);
 		}
 		else {
 			exportImportReportEntry.setStatus(1);
 
-			_exportImportReportEntryLocalService.updateExportImportReportEntry(
+			exportImportReportEntryLocalService.updateExportImportReportEntry(
 				exportImportReportEntry);
 		}
 	}
 
-	protected EmptyModelListener(
-		ExportImportReportEntryLocalService
-			exportImportReportEntryLocalService) {
-
-		_exportImportReportEntryLocalService =
-			exportImportReportEntryLocalService;
-	}
-
-	private final ExportImportReportEntryLocalService
-		_exportImportReportEntryLocalService;
+	@Reference
+	protected ExportImportReportEntryLocalService
+		exportImportReportEntryLocalService;
 
 }

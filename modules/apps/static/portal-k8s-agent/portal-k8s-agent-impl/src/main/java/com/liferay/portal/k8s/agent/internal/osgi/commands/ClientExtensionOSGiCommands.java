@@ -64,7 +64,7 @@ public class ClientExtensionOSGiCommands implements OSGiCommands {
 			return;
 		}
 
-		configuration = _reloadConfiguration(configuration);
+		configuration = _reload(configuration);
 
 		System.out.println(
 			"Reloaded configuration for PID " + configuration.getPid());
@@ -224,7 +224,7 @@ public class ClientExtensionOSGiCommands implements OSGiCommands {
 		}
 	}
 
-	private Configuration _reloadConfiguration(Configuration configuration)
+	private Configuration _reload(Configuration configuration)
 		throws Exception {
 
 		String pid = configuration.getPid();

@@ -13,7 +13,7 @@ export default function SetupStep() {
 	return (
 		<>
 			<ClayLayout.Sheet>
-				<div className="mb-4 sheet-header">
+				<ClayLayout.SheetHeader>
 					<div className="mb-2 sheet-title">
 						{sub(
 							Liferay.Language.get('x-details'),
@@ -26,7 +26,7 @@ export default function SetupStep() {
 							'provide-a-descriptive-name-for-your-export'
 						)}
 					</div>
-				</div>
+				</ClayLayout.SheetHeader>
 
 				<FieldText
 					label={Liferay.Language.get('file-name')}

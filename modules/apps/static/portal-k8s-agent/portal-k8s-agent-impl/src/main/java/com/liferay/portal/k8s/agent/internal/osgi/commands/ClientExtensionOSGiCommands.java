@@ -135,21 +135,19 @@ public class ClientExtensionOSGiCommands implements OSGiCommands {
 	private Configuration[] _getConfigurations(String... filterStrings)
 		throws Exception {
 
-		String deploymentFilterString =
-			"(|(.cx.config.key=*)(.k8s.config.key=*))";
+		String filterString = "(|(.cx.config.key=*)(.k8s.config.key=*))";
 
 		if (filterStrings.length == 0) {
-			return _configurationAdmin.listConfigurations(
-				deploymentFilterString);
+			return _configurationAdmin.listConfigurations(filterString);
 		}
 
 		StringBundler sb = new StringBundler();
 
-		for (String filterString : filterStrings) {
-			String[] parts = filterString.split("=", 2);
+		for (String curFilterString : filterStrings) {
+			String[] parts = curFilterString.split("=", 2);
 
 			if (parts.length != 2) {
-				System.out.println("Invalid filter: " + filterString);
+				System.out.println("Invalid filter: " + curFilterString);
 
 				return null;
 			}
@@ -159,11 +157,11 @@ public class ClientExtensionOSGiCommands implements OSGiCommands {
 
 			if (key.equals("deploymentType")) {
 				if (value.equals("agent")) {
-					deploymentFilterString = "(.k8s.config.key=*)";
+					filterString = "(.k8s.config.key=*)";
 				}
 
 				if (value.equals("bundle")) {
-					deploymentFilterString = "(.cx.config.key=*)";
+					filterString = "(.cx.config.key=*)";
 				}
 
 				continue;
@@ -185,7 +183,7 @@ public class ClientExtensionOSGiCommands implements OSGiCommands {
 		}
 
 		return _configurationAdmin.listConfigurations(
-			StringBundler.concat("(&", deploymentFilterString, sb, ")"));
+			StringBundler.concat("(&", filterString, sb, ")"));
 	}
 
 	private void _print(Configuration configuration) {

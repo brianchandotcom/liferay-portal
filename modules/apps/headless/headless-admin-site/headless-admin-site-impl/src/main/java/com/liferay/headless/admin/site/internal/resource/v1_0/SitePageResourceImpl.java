@@ -1100,18 +1100,11 @@ public class SitePageResourceImpl
 		if (Objects.equals(sitePage.getType(), SitePage.Type.CONTENT_PAGE) &&
 			(pageSpecifications.length == 2)) {
 
-			ContentPageSpecification publishedContentPageSpecification =
-				(ContentPageSpecification)pageSpecifications[0];
+			PageSpecification[] sortedContentPageSpecifications =
+				PageSpecificationUtil.getSortedContentPageSpecifications(
+					pageSpecifications);
 
-			if (Validator.isNull(
-					publishedContentPageSpecification.
-						getDraftContentPageSpecificationExternalReferenceCode())) {
-
-				publishedContentPageSpecification =
-					(ContentPageSpecification)pageSpecifications[1];
-			}
-
-			publishedPageSpecification = publishedContentPageSpecification;
+			publishedPageSpecification = sortedContentPageSpecifications[1];
 		}
 		else if ((Objects.equals(
 					sitePage.getType(), SitePage.Type.LINK_TO_URL_PAGE) ||

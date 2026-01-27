@@ -58,16 +58,11 @@ public class PageSpecificationUtil {
 			throw new UnsupportedOperationException();
 		}
 
+		PageSpecification[] sortedContentPageSpecifications =
+			getSortedContentPageSpecifications(pageSpecifications);
+
 		ContentPageSpecification publishedContentPageSpecification =
-			(ContentPageSpecification)pageSpecifications[0];
-
-		if (Validator.isNull(
-				publishedContentPageSpecification.
-					getDraftContentPageSpecificationExternalReferenceCode())) {
-
-			publishedContentPageSpecification =
-				(ContentPageSpecification)pageSpecifications[1];
-		}
+			(ContentPageSpecification)sortedContentPageSpecifications[1];
 
 		if (Objects.equals(
 				publishedContentPageSpecification.getStatus(),

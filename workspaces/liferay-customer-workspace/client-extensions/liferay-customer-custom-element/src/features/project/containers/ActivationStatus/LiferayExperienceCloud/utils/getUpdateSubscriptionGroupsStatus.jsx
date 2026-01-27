@@ -18,14 +18,13 @@ export default function getUpdateSubscriptionGroupsStatus(
 ) {
 	updateAccountSubscriptionGroup({
 		variables: {
-			AccountSubscriptionGroup: {
+			accountSubscriptionGroup: {
 				accountKey: project?.accountKey,
 				activationStatus: STATUS_TAG_TYPE_NAMES.active,
 				r_accountEntryToAccountSubscriptionGroup_accountEntryId:
 					project?.id,
 			},
-			accountSubscriptionGroupId:
-				subscriptionGroupLxcEnvironment?.accountSubscriptionGroupId,
+			id: subscriptionGroupLxcEnvironment?.accountSubscriptionGroupId,
 		},
 	});
 

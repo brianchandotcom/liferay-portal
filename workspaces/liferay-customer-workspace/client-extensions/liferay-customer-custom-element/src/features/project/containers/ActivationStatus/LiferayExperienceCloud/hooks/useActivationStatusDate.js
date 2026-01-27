@@ -21,7 +21,7 @@ export default function useActivationStatusDate(project) {
 				variables: {
 					filter: SearchBuilder.eq(
 						'customFields/accountSubscriptionGroupERC',
-						`${project.accountKey}_liferay-saas`
+						`${project.accountKey}_liferay-cloud`
 					),
 				},
 			});

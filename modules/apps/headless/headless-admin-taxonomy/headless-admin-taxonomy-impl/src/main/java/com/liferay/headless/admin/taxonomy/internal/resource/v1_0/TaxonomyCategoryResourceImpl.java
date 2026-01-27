@@ -13,6 +13,7 @@ import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetCategoryService;
+import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
@@ -34,6 +35,8 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionList;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Type;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -43,6 +46,7 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -894,6 +898,19 @@ public class TaxonomyCategoryResourceImpl
 			_assetVocabularyService.getOrAddEmptyVocabulary(
 				taxonomyVocabularyExternalReferenceCode, groupId);
 
+		if (FeatureFlagManagerUtil.isEnabled(
+				assetVocabulary.getCompanyId(), "LPD-17564")) {
+
+			Group group = _groupLocalService.getGroup(groupId);
+
+			if (group.isCMS()) {
+				_assetVocabularyGroupRelLocalService.
+					setAssetVocabularyGroupRels(
+						assetVocabulary.getVocabularyId(),
+						new long[] {_GROUP_ID_ALL});
+			}
+		}
+
 		return assetVocabulary.getVocabularyId();
 	}
 
@@ -1103,6 +1120,8 @@ public class TaxonomyCategoryResourceImpl
 			).build());
 	}
 
+	private static final long _GROUP_ID_ALL = -1L;
+
 	private static final EntityModel _entityModel = new CategoryEntityModel();
 
 	@Reference
@@ -1116,6 +1135,10 @@ public class TaxonomyCategoryResourceImpl
 	private AssetCategoryService _assetCategoryService;
 
 	@Reference
+	private AssetVocabularyGroupRelLocalService
+		_assetVocabularyGroupRelLocalService;
+
+	@Reference
 	private AssetVocabularyService _assetVocabularyService;
 
 	@Reference
@@ -1123,6 +1146,9 @@ public class TaxonomyCategoryResourceImpl
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.admin.taxonomy.internal.dto.v1_0.converter.TaxonomyCategoryDTOConverter)"

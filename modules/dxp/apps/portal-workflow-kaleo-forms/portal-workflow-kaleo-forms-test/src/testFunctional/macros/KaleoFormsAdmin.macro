@@ -485,6 +485,28 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro enableKaleoFormsConfiguration(toggleValue = null) {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Feature Flags",
+			configurationName = "Deprecation",
+			configurationScope = "Virtual Instance Scope");
+
+		if (IsElementPresent(locator1 = "FeatureFlag#TOGGLE_ROW", title_row = "Kaleo Forms", toggle_state = ${toggleValue})) {
+			Check.checkToggleSwitch(
+				locator1 = "FeatureFlag#TOGGLE_ROW",
+				title_row = "Kaleo Forms",
+				toggle_state = ${toggleValue});
+		}
+
+		Navigator.openURL();
+	}
+
+	@summary = "Default summary"
 	macro exportRecords(fileExtension = null,approvedOnly = null,kfProcessName = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Export",

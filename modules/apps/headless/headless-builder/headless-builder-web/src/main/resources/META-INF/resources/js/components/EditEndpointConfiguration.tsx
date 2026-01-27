@@ -161,7 +161,7 @@ export default function EditEndpointConfiguration({
 						size={3}
 					>
 						{Liferay.Language.get(
-							'request-body-can-only-contain-properies-from-the-main-object'
+							'request-body-can-only-contain-properties-from-the-main-object'
 						)}
 					</Text>
 				</ClayForm.Group>

@@ -1,1 +1,2 @@
 create index IX_C9F916CB on ExportImportReportEntry (companyId, exportImportConfigurationId);
+create unique index IX_5C2FCA7D on ExportImportReportEntry (companyId, groupId, classExternalReferenceCode[$COLUMN_LENGTH:75$], classNameId, type_);

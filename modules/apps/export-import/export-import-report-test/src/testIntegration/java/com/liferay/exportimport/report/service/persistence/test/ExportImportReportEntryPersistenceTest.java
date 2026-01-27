@@ -17,6 +17,8 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -220,6 +222,17 @@ public class ExportImportReportEntryPersistenceTest {
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByC_E(0L, 0L);
+	}
+
+	@Test
+	public void testCountByG_C_C_C_T() throws Exception {
+		_persistence.countByG_C_C_C_T(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "",
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+
+		_persistence.countByG_C_C_C_T(0L, 0L, "null", 0L, 0);
+
+		_persistence.countByG_C_C_C_T(0L, 0L, (String)null, 0L, 0);
 	}
 
 	@Test
@@ -494,6 +507,90 @@ public class ExportImportReportEntryPersistenceTest {
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
+	}
+
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		ExportImportReportEntry newExportImportReportEntry =
+			addExportImportReportEntry();
+
+		_persistence.clearCache();
+
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(
+				newExportImportReportEntry.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		ExportImportReportEntry newExportImportReportEntry =
+			addExportImportReportEntry();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			ExportImportReportEntry.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"exportImportReportEntryId",
+				newExportImportReportEntry.getExportImportReportEntryId()));
+
+		List<ExportImportReportEntry> result =
+			_persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		ExportImportReportEntry exportImportReportEntry) {
+
+		Assert.assertEquals(
+			Long.valueOf(exportImportReportEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				exportImportReportEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
+		Assert.assertEquals(
+			Long.valueOf(exportImportReportEntry.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				exportImportReportEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
+		Assert.assertEquals(
+			exportImportReportEntry.getClassExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				exportImportReportEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classExternalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(exportImportReportEntry.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(
+				exportImportReportEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classNameId"));
+		Assert.assertEquals(
+			Integer.valueOf(exportImportReportEntry.getType()),
+			ReflectionTestUtil.<Integer>invoke(
+				exportImportReportEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "type_"));
 	}
 
 	protected ExportImportReportEntry addExportImportReportEntry()

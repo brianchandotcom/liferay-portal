@@ -316,6 +316,103 @@ public class ExportImportReportEntryUtil {
 	}
 
 	/**
+	 * Returns the export import report entry where groupId = &#63; and companyId = &#63; and classExternalReferenceCode = &#63; and classNameId = &#63; and type = &#63; or throws a <code>NoSuchExportImportReportEntryException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classExternalReferenceCode the class external reference code
+	 * @param classNameId the class name ID
+	 * @param type the type
+	 * @return the matching export import report entry
+	 * @throws NoSuchExportImportReportEntryException if a matching export import report entry could not be found
+	 */
+	public static ExportImportReportEntry findByG_C_C_C_T(
+			long groupId, long companyId, String classExternalReferenceCode,
+			long classNameId, int type)
+		throws com.liferay.exportimport.report.exception.
+			NoSuchExportImportReportEntryException {
+
+		return getPersistence().findByG_C_C_C_T(
+			groupId, companyId, classExternalReferenceCode, classNameId, type);
+	}
+
+	/**
+	 * Returns the export import report entry where groupId = &#63; and companyId = &#63; and classExternalReferenceCode = &#63; and classNameId = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classExternalReferenceCode the class external reference code
+	 * @param classNameId the class name ID
+	 * @param type the type
+	 * @return the matching export import report entry, or <code>null</code> if a matching export import report entry could not be found
+	 */
+	public static ExportImportReportEntry fetchByG_C_C_C_T(
+		long groupId, long companyId, String classExternalReferenceCode,
+		long classNameId, int type) {
+
+		return getPersistence().fetchByG_C_C_C_T(
+			groupId, companyId, classExternalReferenceCode, classNameId, type);
+	}
+
+	/**
+	 * Returns the export import report entry where groupId = &#63; and companyId = &#63; and classExternalReferenceCode = &#63; and classNameId = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classExternalReferenceCode the class external reference code
+	 * @param classNameId the class name ID
+	 * @param type the type
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching export import report entry, or <code>null</code> if a matching export import report entry could not be found
+	 */
+	public static ExportImportReportEntry fetchByG_C_C_C_T(
+		long groupId, long companyId, String classExternalReferenceCode,
+		long classNameId, int type, boolean useFinderCache) {
+
+		return getPersistence().fetchByG_C_C_C_T(
+			groupId, companyId, classExternalReferenceCode, classNameId, type,
+			useFinderCache);
+	}
+
+	/**
+	 * Removes the export import report entry where groupId = &#63; and companyId = &#63; and classExternalReferenceCode = &#63; and classNameId = &#63; and type = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classExternalReferenceCode the class external reference code
+	 * @param classNameId the class name ID
+	 * @param type the type
+	 * @return the export import report entry that was removed
+	 */
+	public static ExportImportReportEntry removeByG_C_C_C_T(
+			long groupId, long companyId, String classExternalReferenceCode,
+			long classNameId, int type)
+		throws com.liferay.exportimport.report.exception.
+			NoSuchExportImportReportEntryException {
+
+		return getPersistence().removeByG_C_C_C_T(
+			groupId, companyId, classExternalReferenceCode, classNameId, type);
+	}
+
+	/**
+	 * Returns the number of export import report entries where groupId = &#63; and companyId = &#63; and classExternalReferenceCode = &#63; and classNameId = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classExternalReferenceCode the class external reference code
+	 * @param classNameId the class name ID
+	 * @param type the type
+	 * @return the number of matching export import report entries
+	 */
+	public static int countByG_C_C_C_T(
+		long groupId, long companyId, String classExternalReferenceCode,
+		long classNameId, int type) {
+
+		return getPersistence().countByG_C_C_C_T(
+			groupId, companyId, classExternalReferenceCode, classNameId, type);
+	}
+
+	/**
 	 * Caches the export import report entry in the entity cache if it is enabled.
 	 *
 	 * @param exportImportReportEntry the export import report entry

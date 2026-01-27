@@ -145,13 +145,6 @@ public class TaskDefinitionResourceTest
 		new TaskDefinition() {
 			{
 				active = true;
-				name = WorkflowDefinitionConstants.NAME_LIFERAY_SEARCH;
-				version = 1;
-			}
-		},
-		new TaskDefinition() {
-			{
-				active = true;
 				name =
 					WorkflowDefinitionConstants.NAME_FIX_SPELLING_AND_GRAMMAR;
 				version = 1;
@@ -161,6 +154,13 @@ public class TaskDefinitionResourceTest
 			{
 				active = true;
 				name = WorkflowDefinitionConstants.NAME_IMPROVE_WRITING;
+				version = 1;
+			}
+		},
+		new TaskDefinition() {
+			{
+				active = true;
+				name = WorkflowDefinitionConstants.NAME_LIFERAY_SEARCH;
 				version = 1;
 			}
 		},

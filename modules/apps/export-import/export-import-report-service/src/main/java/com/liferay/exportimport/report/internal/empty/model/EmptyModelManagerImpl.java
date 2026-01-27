@@ -10,7 +10,6 @@ import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.petra.function.UnsafeBiFunction;
-import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -122,16 +121,14 @@ public class EmptyModelManagerImpl implements EmptyModelManager {
 	}
 
 	@Override
-	public <E extends Exception> void solveEmptyModel(
-			UnsafeSupplier<Integer, E> getModelStatusUnsafeSupplier,
-			long groupId, long companyId, String classExternalReferenceCode,
-			String className, UnsafeRunnable<E> updateModelStatusUnsafeRunnable)
+	public <E extends Exception> int solveEmptyModel(
+			int status, long groupId, long companyId,
+			String classExternalReferenceCode, String className,
+			UnsafeSupplier<Integer, E> updatedModelStatusUnsafeSupplier)
 		throws Exception {
 
-		if (getModelStatusUnsafeSupplier.get() !=
-				WorkflowConstants.STATUS_EMPTY) {
-
-			return;
+		if (status == WorkflowConstants.STATUS_EMPTY) {
+			return status;
 		}
 
 		ExportImportReportEntry exportImportReportEntry =
@@ -154,7 +151,7 @@ public class EmptyModelManagerImpl implements EmptyModelManager {
 				exportImportReportEntry);
 		}
 
-		updateModelStatusUnsafeRunnable.run();
+		return updatedModelStatusUnsafeSupplier.get();
 	}
 
 	@Reference

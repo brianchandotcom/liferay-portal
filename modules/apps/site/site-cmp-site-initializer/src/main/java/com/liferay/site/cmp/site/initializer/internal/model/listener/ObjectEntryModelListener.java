@@ -80,12 +80,13 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		throws Exception {
 
 		if (filterString != null) {
-			filterString = StringBundler.concat("status ne ",
-				WorkflowConstants.STATUS_DRAFT, " and ", filterString);
+			filterString = StringBundler.concat(
+				"status ne ", WorkflowConstants.STATUS_DRAFT, " and ",
+				filterString);
 		}
 		else {
-			filterString = StringBundler.concat("status ne ",
-				WorkflowConstants.STATUS_DRAFT);
+			filterString = StringBundler.concat(
+				"status ne ", WorkflowConstants.STATUS_DRAFT);
 		}
 
 		return _objectEntryLocalService.getValuesListCount(

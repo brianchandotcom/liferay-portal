@@ -19,11 +19,11 @@ import java.util.function.Supplier;
 public class LazyReferencingTestUtil {
 
 	public static void executeWithLazyReferencingSafeCloseable(
-			boolean lazyReferencing, UnsafeRunnable<Exception> unsafeRunnable)
+			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
 		try (SafeCloseable safeCloseable = setLazyReferencingWithSafeCloseable(
-				lazyReferencing)) {
+				true)) {
 
 			unsafeRunnable.run();
 		}

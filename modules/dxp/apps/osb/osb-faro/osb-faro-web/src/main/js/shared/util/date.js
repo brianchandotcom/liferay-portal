@@ -74,6 +74,10 @@ export function convertMillisecondsToDays(milliseconds) {
 	return Math.round(milliseconds / 1000 / 60 / 60 / 24);
 }
 
+export function convertMillisecondsToHours(milliseconds) {
+	return Math.round(milliseconds / 1000 / 60 / 60);
+}
+
 export function convertMillisecondsToMonths(milliseconds) {
 	return Math.round(milliseconds / 1000 / 60 / 60 / 24 / 30);
 }

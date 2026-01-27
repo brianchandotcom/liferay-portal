@@ -191,7 +191,7 @@ public class ClientExtensionOSGiCommands implements OSGiCommands {
 	private void _print(Configuration configuration) {
 		System.out.println(
 			StringBundler.concat(
-				"\nPID: ", configuration.getPid(), "\nFactoryPID: ",
+				"\nPID: ", configuration.getPid(), "\nFactory PID: ",
 				configuration.getFactoryPid(), "\nBundle location: ",
 				configuration.getBundleLocation(), "\n",
 				_format(configuration.getProperties())));

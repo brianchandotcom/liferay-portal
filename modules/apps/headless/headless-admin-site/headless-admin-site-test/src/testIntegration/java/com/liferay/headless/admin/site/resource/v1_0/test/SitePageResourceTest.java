@@ -11,8 +11,8 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.test.util.DLTestUtil;
-import com.liferay.exportimport.test.rule.LazyReferencing;
 import com.liferay.exportimport.test.rule.LazyReferencingTestRule;
+import com.liferay.exportimport.test.util.LazyReferencingTestUtil;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
@@ -401,6 +401,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testPutSiteSitePageWithExportedSitePage();
 		_testPutSiteSitePageWithExportedSitePageWithLayoutIdFriendlyURL();
 		_testPutSiteSitePageWithFormFragmentPageElements();
+		LazyReferencingTestUtil.executeWithLazyReferencingSafeCloseable(
+			this::_testPutSiteSitePageWithMissingTaxonomyCategories);
 		_assertProblemException(
 			"NOT_FOUND", null,
 			this::_testPutSiteSitePageWithMissingTaxonomyCategories);
@@ -424,15 +426,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				getMasterLayoutPageTemplateEntryLayout(serviceContext),
 			LayoutUtilityPageEntryTestUtil.getLayoutUtilityPageEntryLayout(
 				serviceContext));
-	}
-
-	@LazyReferencing
-	@Test
-	@TestInfo("LPD-77124")
-	public void testPutSiteSitePageWithMissingTaxonomyCategories()
-		throws Exception {
-
-		_testPutSiteSitePageWithMissingTaxonomyCategories();
 	}
 
 	@Override

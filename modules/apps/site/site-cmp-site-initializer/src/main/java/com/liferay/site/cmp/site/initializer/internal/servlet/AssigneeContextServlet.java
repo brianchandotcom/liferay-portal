@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -82,8 +83,13 @@ public class AssigneeContextServlet extends HttpServlet {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		SearchResponse searchResponse = _searcher.search(
-			_searchRequestBuilderFactory.builder(
+		Searcher searcher = _searcherSnapshot.get();
+
+		SearchRequestBuilderFactory searchRequestBuilderFactory =
+			_searchRequestBuilderFactorySnapshot.get();
+
+		SearchResponse searchResponse = searcher.search(
+			searchRequestBuilderFactory.builder(
 			).companyId(
 				themeDisplay.getCompanyId()
 			).emptySearchEnabled(
@@ -200,6 +206,12 @@ public class AssigneeContextServlet extends HttpServlet {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssigneeContextServlet.class);
 
+	private static final Snapshot<Searcher> _searcherSnapshot = new Snapshot<>(
+		AssigneeContextServlet.class, Searcher.class);
+	private static final Snapshot<SearchRequestBuilderFactory>
+		_searchRequestBuilderFactorySnapshot = new Snapshot<>(
+			AssigneeContextServlet.class, SearchRequestBuilderFactory.class);
+
 	@Reference
 	private JSONFactory _jsonFactory;
 
@@ -208,12 +220,6 @@ public class AssigneeContextServlet extends HttpServlet {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
-
-	@Reference
-	private Searcher _searcher;
-
-	@Reference
-	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

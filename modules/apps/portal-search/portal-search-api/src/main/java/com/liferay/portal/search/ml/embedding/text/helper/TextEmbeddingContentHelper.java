@@ -46,7 +46,7 @@ public class TextEmbeddingContentHelper<T extends BaseModel<T>> {
 	}
 
 	public void append(String languageId, String value) {
-		_append(_getLocalizedContentStringBundler(languageId), value);
+		_append(_getLocalizedContentSB(languageId), value);
 	}
 
 	public void contribute(Document document) {
@@ -126,7 +126,7 @@ public class TextEmbeddingContentHelper<T extends BaseModel<T>> {
 		sb.append(value);
 	}
 
-	private StringBundler _getLocalizedContentStringBundler(String languageId) {
+	private StringBundler _getLocalizedContentSB(String languageId) {
 		return _localizedContentSBs.computeIfAbsent(
 			languageId,
 			key -> {

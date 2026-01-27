@@ -79,7 +79,6 @@ export const {
 	zIndex,
 } = Liferay.__INTERNALS;
 
-export {default as deepClone} from '../liferay/util/deepClone';
 export {
 	ALIGN_POSITIONS,
 	align,
@@ -89,6 +88,7 @@ export {
 } from './align';
 export {default as AOP} from './aop/AOP.es';
 export {default as buildFragment} from './util/build_fragment';
+export {default as deepClone} from './util/deepClone';
 export {default as printPage} from './util/print_page';
 export {default as dateUtils} from './utils/date_time/index';
 export {getObjectValueFromPath} from './utils/object/getObjectValueFromPath';

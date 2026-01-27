@@ -228,6 +228,15 @@ public class ExportImportReportEntryLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static ExportImportReportEntry
+		fetchEmptyExportImportReportEntryByG_C_C_C(
+			long groupId, long companyId, String classExternalReferenceCode,
+			long classNameId) {
+
+		return getService().fetchEmptyExportImportReportEntryByG_C_C_C(
+			groupId, companyId, classExternalReferenceCode, classNameId);
+	}
+
 	public static ExportImportReportEntry fetchExportImportReportEntry(
 		long exportImportReportEntryId) {
 

@@ -28,8 +28,8 @@ function AssigneeTrigger(
 		>
 			{hasItem && (
 				<AssigneeAvatar
-					image={(selectedItem as AssigneeValue).image}
 					name={(selectedItem as AssigneeValue).name || ''}
+					portrait={(selectedItem as AssigneeValue).portrait}
 				/>
 			)}
 

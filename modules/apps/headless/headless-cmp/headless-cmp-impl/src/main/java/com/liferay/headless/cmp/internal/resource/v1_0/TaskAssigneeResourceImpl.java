@@ -117,7 +117,8 @@ public class TaskAssigneeResourceImpl extends BaseTaskAssigneeResourceImpl {
 			{
 				setExternalReferenceCode(
 					() -> document.getString("externalReferenceCode"));
-				setImage(
+				setName(() -> assigneeName);
+				setPortrait(
 					() -> {
 						if (!StringUtil.equals(assigneeType, "User")) {
 							return null;
@@ -137,7 +138,6 @@ public class TaskAssigneeResourceImpl extends BaseTaskAssigneeResourceImpl {
 								}
 							});
 					});
-				setName(() -> assigneeName);
 				setType(() -> assigneeType);
 			}
 		};

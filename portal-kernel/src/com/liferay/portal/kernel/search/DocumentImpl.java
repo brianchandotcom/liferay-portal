@@ -71,11 +71,20 @@ public class DocumentImpl implements Document {
 		Long[] datesTime = new Long[values.length];
 
 		for (int i = 0; i < values.length; i++) {
-			Format dateFormat = _getDateFormat();
+			Date date = values[i];
 
-			datesString[i] = dateFormat.format(values[i]);
+			long time = date.getTime();
 
-			datesTime[i] = values[i].getTime();
+			if (time == Long.MAX_VALUE) {
+				datesString[i] = "99950812133000";
+			}
+			else {
+				Format dateFormat = _getDateFormat();
+
+				datesString[i] = dateFormat.format(date);
+			}
+
+			datesTime[i] = time;
 		}
 
 		createSortableNumericField(name, false, datesTime);

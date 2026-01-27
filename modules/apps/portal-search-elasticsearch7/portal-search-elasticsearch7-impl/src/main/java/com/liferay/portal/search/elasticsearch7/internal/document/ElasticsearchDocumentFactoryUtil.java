@@ -6,7 +6,6 @@
 package com.liferay.portal.search.elasticsearch7.internal.document;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
@@ -16,11 +15,8 @@ import com.liferay.portal.search.geolocation.GeoLocationPoint;
 
 import java.io.IOException;
 
-import java.text.Format;
-
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -56,28 +52,6 @@ public class ElasticsearchDocumentFactoryUtil {
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
-		}
-	}
-
-	private static void _addDates(
-			XContentBuilder xContentBuilder,
-			com.liferay.portal.kernel.search.Field field)
-		throws IOException {
-
-		for (Date date : field.getDates()) {
-			String value;
-
-			if (date.getTime() == Long.MAX_VALUE) {
-				value = "99950812133000";
-			}
-			else {
-				Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
-					"yyyyMMddHHmmss", null, null);
-
-				value = format.format(date);
-			}
-
-			xContentBuilder.value(value);
 		}
 	}
 
@@ -203,7 +177,9 @@ public class ElasticsearchDocumentFactoryUtil {
 			xContentBuilder.value(geoPoint);
 		}
 		else if (field.isDate()) {
-			_addDates(xContentBuilder, field);
+			for (String value : field.getValues()) {
+				xContentBuilder.value(value);
+			}
 		}
 		else {
 			for (String value : values) {

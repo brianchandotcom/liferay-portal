@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -31,76 +32,8 @@ public class TextEmbeddingContentHelperTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Test
-	public void testAppend() {
-		TextEmbeddingContentHelper<TestBaseModel> textEmbeddingContentHelper =
-			_createTextEmbeddingContentHelper();
-
-		textEmbeddingContentHelper.append("all");
-
-		textEmbeddingContentHelper.append("en_US", "localized_en_US");
-
-		textEmbeddingContentHelper.append("pt_BR", "localized_pt_BR");
-
-		Assert.assertEquals(
-			StringBundler.concat("all", _DELIMITER, "localized_en_US"),
-			textEmbeddingContentHelper.getLocalizedContent("en_US"));
-		Assert.assertEquals(
-			StringBundler.concat("all", _DELIMITER, "localized_pt_BR"),
-			textEmbeddingContentHelper.getLocalizedContent("pt_BR"));
-
-		Map<String, String> localizedContentMap =
-			textEmbeddingContentHelper.getLocalizedContentMap();
-
-		Assert.assertEquals(
-			StringBundler.concat("all", _DELIMITER, "localized_en_US"),
-			localizedContentMap.get("en_US"));
-		Assert.assertEquals(
-			StringBundler.concat("all", _DELIMITER, "localized_pt_BR"),
-			localizedContentMap.get("pt_BR"));
-
-		Assert.assertEquals(
-			"all", textEmbeddingContentHelper.getNonlocalizedContent());
-	}
-
-	@Test
-	public void testAppendDelimiter() {
-		TextEmbeddingContentHelper<TestBaseModel> textEmbeddingContentHelper =
-			_createTextEmbeddingContentHelper();
-
-		textEmbeddingContentHelper.append("en_US", "alpha");
-
-		Map<String, String> localizedContentMap =
-			textEmbeddingContentHelper.getLocalizedContentMap();
-
-		Assert.assertEquals("alpha", localizedContentMap.get("en_US"));
-
-		textEmbeddingContentHelper.append("en_US", "beta");
-
-		localizedContentMap =
-			textEmbeddingContentHelper.getLocalizedContentMap();
-
-		Assert.assertEquals(
-			StringBundler.concat("alpha", _DELIMITER, "beta"),
-			localizedContentMap.get("en_US"));
-	}
-
-	@Test
-	public void testDefaultLocaleFallback() {
-		TextEmbeddingContentHelper<TestBaseModel> textEmbeddingContentHelper =
-			_createTextEmbeddingContentHelper();
-
-		textEmbeddingContentHelper.append("all");
-		textEmbeddingContentHelper.append("en_US", "localized_en_US");
-
-		Assert.assertEquals(
-			textEmbeddingContentHelper.getLocalizedContent("en_US"),
-			textEmbeddingContentHelper.getLocalizedContent("pt_BR"));
-	}
-
-	private TextEmbeddingContentHelper<TestBaseModel>
-		_createTextEmbeddingContentHelper() {
-
+	@Before
+	public void setUp() throws Exception {
 		TextEmbeddingDocumentContributor textEmbeddingDocumentContributor =
 			Mockito.mock(TextEmbeddingDocumentContributor.class);
 
@@ -112,12 +45,73 @@ public class TextEmbeddingContentHelperTest {
 			Mockito.any()
 		);
 
-		return new TextEmbeddingContentHelper<>(
+		_textEmbeddingContentHelper = new TextEmbeddingContentHelper<>(
 			1L, "en_US", _DELIMITER, Mockito.mock(TestBaseModel.class), 10,
 			textEmbeddingDocumentContributor);
 	}
 
+	@Test
+	public void testAppend() {
+		_textEmbeddingContentHelper.append("all");
+
+		_textEmbeddingContentHelper.append("en_US", "localized_en_US");
+
+		_textEmbeddingContentHelper.append("pt_BR", "localized_pt_BR");
+
+		Assert.assertEquals(
+			StringBundler.concat("all", _DELIMITER, "localized_en_US"),
+			_textEmbeddingContentHelper.getLocalizedContent("en_US"));
+		Assert.assertEquals(
+			StringBundler.concat("all", _DELIMITER, "localized_pt_BR"),
+			_textEmbeddingContentHelper.getLocalizedContent("pt_BR"));
+
+		Map<String, String> localizedContentMap =
+			_textEmbeddingContentHelper.getLocalizedContentMap();
+
+		Assert.assertEquals(
+			StringBundler.concat("all", _DELIMITER, "localized_en_US"),
+			localizedContentMap.get("en_US"));
+		Assert.assertEquals(
+			StringBundler.concat("all", _DELIMITER, "localized_pt_BR"),
+			localizedContentMap.get("pt_BR"));
+
+		Assert.assertEquals(
+			"all", _textEmbeddingContentHelper.getNonlocalizedContent());
+	}
+
+	@Test
+	public void testAppendDelimiter() {
+		_textEmbeddingContentHelper.append("en_US", "alpha");
+
+		Map<String, String> localizedContentMap =
+			_textEmbeddingContentHelper.getLocalizedContentMap();
+
+		Assert.assertEquals("alpha", localizedContentMap.get("en_US"));
+
+		_textEmbeddingContentHelper.append("en_US", "beta");
+
+		localizedContentMap =
+			_textEmbeddingContentHelper.getLocalizedContentMap();
+
+		Assert.assertEquals(
+			StringBundler.concat("alpha", _DELIMITER, "beta"),
+			localizedContentMap.get("en_US"));
+	}
+
+	@Test
+	public void testDefaultLocaleFallback() {
+		_textEmbeddingContentHelper.append("all");
+		_textEmbeddingContentHelper.append("en_US", "localized_en_US");
+
+		Assert.assertEquals(
+			_textEmbeddingContentHelper.getLocalizedContent("en_US"),
+			_textEmbeddingContentHelper.getLocalizedContent("pt_BR"));
+	}
+
 	private static final String _DELIMITER = StringPool.COMMA_AND_SPACE;
+
+	private TextEmbeddingContentHelper<TestBaseModel>
+		_textEmbeddingContentHelper;
 
 	private interface TestBaseModel extends BaseModel<TestBaseModel> {
 	}

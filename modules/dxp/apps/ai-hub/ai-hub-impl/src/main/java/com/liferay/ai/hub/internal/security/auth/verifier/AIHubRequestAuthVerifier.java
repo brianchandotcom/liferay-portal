@@ -49,17 +49,16 @@ public class AIHubRequestAuthVerifier implements AuthVerifier {
 			AccessControlContext accessControlContext, Properties properties)
 		throws AuthException {
 
-		HttpServletRequest httpServletRequest =
-			accessControlContext.getRequest();
-
 		try {
-			String requestURL = String.valueOf(
-				httpServletRequest.getRequestURL());
+			HttpServletRequest httpServletRequest =
+				accessControlContext.getRequest();
 
 			AIHubConfiguration aiHubConfiguration =
 				_configurationProvider.getCompanyConfiguration(
 					AIHubConfiguration.class,
 					_portal.getCompanyId(httpServletRequest));
+			String requestURL = String.valueOf(
+				httpServletRequest.getRequestURL());
 
 			String token = httpServletRequest.getHeader(
 				"Liferay-AI-Hub-On-Behalf-Of");

@@ -12,7 +12,9 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
+import com.liferay.asset.kernel.model.AssetVocabularyGroupRel;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.depot.service.DepotEntryLocalService;
@@ -33,9 +35,15 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -464,7 +472,10 @@ public class TaxonomyCategoryResourceTest
 	}
 
 	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-35443"), @FeatureFlag("LPD-35914")}
+		featureFlags = {
+			@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-35443"),
+			@FeatureFlag("LPD-35914")
+		}
 	)
 	@LazyReferencing
 	@Override
@@ -474,6 +485,7 @@ public class TaxonomyCategoryResourceTest
 
 		_testPostSiteTaxonomyCategoryBatch("INSERT");
 		_testPostSiteTaxonomyCategoryBatch("UPSERT");
+		_testPostSiteTaxonomyCategoryWithNonexistingTaxonomyVocabulary();
 	}
 
 	@Override
@@ -855,6 +867,32 @@ public class TaxonomyCategoryResourceTest
 			UserLocalServiceUtil.getGuestUserId(testGroup.getCompanyId()),
 			testGroup.getGroupId(), RandomTestUtil.randomString(),
 			new ServiceContext());
+	}
+
+	private void _addCMSGroup() throws Exception {
+
+		// These tests require the instance to be created with the feature
+		// flag LPD-17564 enabled. On CI, feature flags are enabled on
+		// demand for each test, but not during instance initialization.
+		// Until the feature flag LPD-17564 is removed, we need an explicit CMS
+		// group creation.
+
+		Role role = _roleLocalService.fetchRole(
+			testDepotEntryGroup.getCompanyId(), RoleConstants.SITE_MEMBER);
+
+		if (role == null) {
+			_roleLocalService.addRole(
+				null, TestPropsValues.getUserId(), null, 0,
+				RoleConstants.SITE_MEMBER, null, null,
+				RoleConstants.TYPE_REGULAR, null, null);
+		}
+
+		irrelevantGroup = GroupTestUtil.addGroup(
+			testDepotEntryGroup.getCompanyId(), TestPropsValues.getUserId(),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID, GroupConstants.CMS);
+		testGroup = GroupTestUtil.addGroup(
+			testDepotEntryGroup.getCompanyId(), TestPropsValues.getUserId(),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID, GroupConstants.CMS);
 	}
 
 	private TaxonomyCategory _addTaxonomyCategoryWithParentAssetVocabulary(
@@ -1392,6 +1430,60 @@ public class TaxonomyCategoryResourceTest
 			testGroup.getGroupId());
 	}
 
+	private void _testPostSiteTaxonomyCategoryWithNonexistingTaxonomyVocabulary()
+		throws Exception {
+
+		Group originalIrrelevantGroup = irrelevantGroup;
+		Group originalTestGroup = testGroup;
+
+		_addCMSGroup();
+
+		ParentTaxonomyVocabulary parentTaxonomyVocabulary =
+			new ParentTaxonomyVocabulary() {
+				{
+					externalReferenceCode = RandomTestUtil.randomString();
+				}
+			};
+
+		TaxonomyCategory randomTaxonomyCategory = randomTaxonomyCategory();
+
+		randomTaxonomyCategory.setParentTaxonomyVocabulary(
+			parentTaxonomyVocabulary);
+		randomTaxonomyCategory.setTaxonomyVocabularyId(() -> null);
+
+		try {
+			TaxonomyCategory postTaxonomyCategory =
+				testPostSiteTaxonomyCategory_addTaxonomyCategory(
+					randomTaxonomyCategory);
+
+			AssetVocabulary assetVocabulary =
+				_assetVocabularyLocalService.getAssetVocabulary(
+					postTaxonomyCategory.getTaxonomyVocabularyId());
+
+			Assert.assertEquals(
+				AssetVocabularyConstants.VISIBILITY_TYPE_EMPTY,
+				assetVocabulary.getVisibilityType());
+
+			List<AssetVocabularyGroupRel> assetVocabularyGroupRels =
+				_assetVocabularyGroupRelLocalService.
+					getAssetVocabularyGroupRelsByVocabularyId(
+						assetVocabulary.getVocabularyId());
+
+			Assert.assertEquals(
+				assetVocabularyGroupRels.toString(), 1,
+				assetVocabularyGroupRels.size());
+
+			AssetVocabularyGroupRel assetVocabularyGroupRel =
+				assetVocabularyGroupRels.get(0);
+
+			Assert.assertEquals(-1L, assetVocabularyGroupRel.getGroupId());
+		}
+		finally {
+			irrelevantGroup = originalIrrelevantGroup;
+			testGroup = originalTestGroup;
+		}
+	}
+
 	private void _testPostTaxonomyCategoryBatch(
 			String createStrategy, String parameter, long parameterValue,
 			ParentTaxonomyCategory parentTaxonomyCategory,
@@ -1666,6 +1758,10 @@ public class TaxonomyCategoryResourceTest
 	private AssetVocabulary _assetVocabulary;
 
 	@Inject
+	private AssetVocabularyGroupRelLocalService
+		_assetVocabularyGroupRelLocalService;
+
+	@Inject
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	private AssetVocabulary _depotAssetVocabulary;
@@ -1681,6 +1777,9 @@ public class TaxonomyCategoryResourceTest
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 	private Scope.Type _scopeType = Scope.Type.SITE;
 

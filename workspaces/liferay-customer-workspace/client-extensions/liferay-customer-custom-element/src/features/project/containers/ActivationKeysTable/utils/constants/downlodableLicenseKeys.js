@@ -7,11 +7,29 @@ const MINIMUM_LICENSE_VERSION = 4;
 const PRODUCTION_VERSION = 7.1;
 const PRODUCTION_ENVIRONMENT = 'production';
 
+const isQuarterlyVersion = (version) => /^\d{4}\.Q[1-4]$/.test(version ?? '');
+
+const getVersionNumber = (version) => {
+	if (isQuarterlyVersion(version)) {
+		return NaN;
+	}
+
+	const match = String(version ?? '').match(/^(\d+(\.\d+)?)/);
+
+	return match ? Number(match[1]) : NaN;
+};
+
+const isQuarterlyOrAbove71DXPVersion = (version) =>
+	isQuarterlyVersion(version) ||
+	getVersionNumber(version) >= PRODUCTION_VERSION;
+
 export const DOWNLOADABLE_LICENSE_KEYS = {
 	above71DXPVersion: (firstSelectedKey, selectedKey) =>
-		+firstSelectedKey?.productVersion >= PRODUCTION_VERSION &&
-		+selectedKey?.productVersion >= PRODUCTION_VERSION,
+		isQuarterlyOrAbove71DXPVersion(firstSelectedKey?.productVersion) &&
+		isQuarterlyOrAbove71DXPVersion(selectedKey?.productVersion),
 	below71DXPVersion: (firstSelectedKey, selectedKey) =>
+		getVersionNumber(firstSelectedKey?.productVersion) <
+			PRODUCTION_VERSION &&
 		firstSelectedKey?.expirationDate === selectedKey?.expirationDate &&
 		firstSelectedKey?.licenseEntryType === PRODUCTION_ENVIRONMENT &&
 		firstSelectedKey?.licenseVersion >= MINIMUM_LICENSE_VERSION &&

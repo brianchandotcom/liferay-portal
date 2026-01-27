@@ -61,22 +61,22 @@
 					"label": {
 						"en_US": "Option1"
 					},
-					"reference": "",
-					"value": "Option1"
+					"reference": "SelectFromList43392010Option1",
+					"value": "SelectFromList43392010Option1"
 				},
 				{
 					"label": {
 						"en_US": "Option2"
 					},
-					"reference": "",
-					"value": "Option2"
+					"reference": "SelectFromList43392010Option2",
+					"value": "SelectFromList43392010Option2"
 				},
 				{
 					"label": {
 						"en_US": "Option3"
 					},
-					"reference": "",
-					"value": "Option3"
+					"reference": "SelectFromList43392010Option3",
+					"value": "SelectFromList43392010Option3"
 				}
 			],
 			"predefinedValue": {
@@ -109,22 +109,22 @@
 					"label": {
 						"en_US": "Option1"
 					},
-					"reference": "",
-					"value": "Option1"
+					"reference": "SingleSelection90775749Option1",
+					"value": "SingleSelection90775749Option1"
 				},
 				{
 					"label": {
 						"en_US": "Option2"
 					},
-					"reference": "",
-					"value": "Option2"
+					"reference": "SingleSelection90775749Option2",
+					"value": "SingleSelection90775749Option2"
 				},
 				{
 					"label": {
 						"en_US": "Option3"
 					},
-					"reference": "",
-					"value": "Option3"
+					"reference": "SingleSelection90775749Option3",
+					"value": "SingleSelection90775749Option3"
 				}
 			],
 			"predefinedValue": {
@@ -157,22 +157,22 @@
 					"label": {
 						"en_US": "Option1"
 					},
-					"reference": "",
-					"value": "Option1"
+					"reference": "MultipleSelection91429516Option1",
+					"value": "MultipleSelection91429516Option1"
 				},
 				{
 					"label": {
 						"en_US": "Option2"
 					},
-					"reference": "",
-					"value": "Option2"
+					"reference": "MultipleSelection91429516Option2",
+					"value": "MultipleSelection91429516Option2"
 				},
 				{
 					"label": {
 						"en_US": "Option3"
 					},
-					"reference": "",
-					"value": "Option3"
+					"reference": "MultipleSelection91429516Option3",
+					"value": "MultipleSelection91429516Option3"
 				}
 			],
 			"predefinedValue": {

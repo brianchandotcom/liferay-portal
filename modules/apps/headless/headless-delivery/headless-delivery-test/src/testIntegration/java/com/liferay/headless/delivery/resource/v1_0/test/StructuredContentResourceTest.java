@@ -1376,8 +1376,7 @@ public class StructuredContentResourceTest
 										return null;
 									}
 
-									return _COMPLEX_STRUCTURED_CONTENT_OPTIONS
-										[RandomTestUtil.randomInt(0, 2)];
+									return "SelectFromList43392010" + data;
 								});
 						}
 					};
@@ -1398,8 +1397,7 @@ public class StructuredContentResourceTest
 										return null;
 									}
 
-									return _COMPLEX_STRUCTURED_CONTENT_OPTIONS
-										[RandomTestUtil.randomInt(0, 2)];
+									return "SingleSelection90775749" + data;
 								});
 						}
 					};
@@ -1420,8 +1418,7 @@ public class StructuredContentResourceTest
 										return null;
 									}
 
-									return _COMPLEX_STRUCTURED_CONTENT_OPTIONS
-										[RandomTestUtil.randomInt(0, 2)];
+									return "MultipleSelection91429516" + data;
 								});
 						}
 					};
@@ -1582,14 +1579,20 @@ public class StructuredContentResourceTest
 	}
 
 	private String _randomGrid() {
-		return StringBundler.concat(
-			"{\n\t\"", _COMPLEX_STRUCTURED_CONTENT_OPTIONS[0], "\": \"",
-			_COMPLEX_STRUCTURED_CONTENT_OPTIONS[RandomTestUtil.randomInt(0, 2)],
-			"\",\n\t\"", _COMPLEX_STRUCTURED_CONTENT_OPTIONS[1], "\": \"",
-			_COMPLEX_STRUCTURED_CONTENT_OPTIONS[RandomTestUtil.randomInt(0, 2)],
-			"\",\n\t\"", _COMPLEX_STRUCTURED_CONTENT_OPTIONS[2], "\": \"",
-			_COMPLEX_STRUCTURED_CONTENT_OPTIONS[RandomTestUtil.randomInt(0, 2)],
-			"\"\n}");
+		return JSONUtil.toString(
+			JSONUtil.put(
+				_COMPLEX_STRUCTURED_CONTENT_OPTIONS[0],
+				_COMPLEX_STRUCTURED_CONTENT_OPTIONS
+					[RandomTestUtil.randomInt(0, 2)]
+			).put(
+				_COMPLEX_STRUCTURED_CONTENT_OPTIONS[1],
+				_COMPLEX_STRUCTURED_CONTENT_OPTIONS
+					[RandomTestUtil.randomInt(0, 2)]
+			).put(
+				_COMPLEX_STRUCTURED_CONTENT_OPTIONS[2],
+				_COMPLEX_STRUCTURED_CONTENT_OPTIONS
+					[RandomTestUtil.randomInt(0, 2)]
+			));
 	}
 
 	private StructuredContent _randomStructuredContent(

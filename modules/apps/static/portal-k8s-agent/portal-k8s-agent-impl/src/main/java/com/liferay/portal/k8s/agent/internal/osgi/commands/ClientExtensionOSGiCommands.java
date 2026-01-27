@@ -12,12 +12,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.persistence.InMemoryOnlyConfigurationThreadLocal;
 import com.liferay.portal.k8s.agent.internal.util.ConfigurationUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsValues;
-
-import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,7 +24,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
@@ -45,9 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class ClientExtensionOSGiCommands implements OSGiCommands {
 
-	public void list(String... filterStrings)
-		throws InvalidSyntaxException, IOException, PortalException {
-
+	public void list(String... filterStrings) throws Exception {
 		Configuration[] configurations = _getConfigurations(filterStrings);
 
 		if (ArrayUtil.isEmpty(configurations)) {
@@ -76,7 +70,7 @@ public class ClientExtensionOSGiCommands implements OSGiCommands {
 			"Reloaded configuration for PID " + configuration.getPid());
 	}
 
-	public void show(String pid) throws InvalidSyntaxException, IOException {
+	public void show(String pid) throws Exception {
 		Configuration configuration = _getConfiguration(pid);
 
 		if (configuration == null) {
@@ -127,9 +121,7 @@ public class ClientExtensionOSGiCommands implements OSGiCommands {
 		return StringUtil.merge(lines, StringPool.NEW_LINE);
 	}
 
-	private Configuration _getConfiguration(String pid)
-		throws InvalidSyntaxException, IOException {
-
+	private Configuration _getConfiguration(String pid) throws Exception {
 		Configuration[] configurations = _getConfigurations(
 			"service.pid=" + pid);
 
@@ -141,7 +133,7 @@ public class ClientExtensionOSGiCommands implements OSGiCommands {
 	}
 
 	private Configuration[] _getConfigurations(String... filterStrings)
-		throws InvalidSyntaxException, IOException {
+		throws Exception {
 
 		String deploymentFilterString =
 			"(|(.cx.config.key=*)(.k8s.config.key=*))";

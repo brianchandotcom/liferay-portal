@@ -6,8 +6,6 @@
 package com.liferay.portal.upgrade.data.cleanup.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -65,10 +63,6 @@ public class LayoutDataCleanupPreupgradeProcessTest
 
 	@Before
 	public void setUp() throws Exception {
-		_layoutPageTemplateStructureRels =
-			_layoutPageTemplateStructureRelLocalService.
-				getLayoutPageTemplateStructureRels(
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 		_resourcePermissions =
 			_resourcePermissionLocalService.getResourcePermissions(
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -76,21 +70,6 @@ public class LayoutDataCleanupPreupgradeProcessTest
 
 	@After
 	public void tearDown() throws Exception {
-		List<LayoutPageTemplateStructureRel> layoutPageTemplateStructureRels =
-			ListUtil.remove(
-				_layoutPageTemplateStructureRelLocalService.
-					getLayoutPageTemplateStructureRels(
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-				_layoutPageTemplateStructureRels);
-
-		for (LayoutPageTemplateStructureRel layoutPageTemplateStructureRel :
-				layoutPageTemplateStructureRels) {
-
-			_layoutPageTemplateStructureRelLocalService.
-				deleteLayoutPageTemplateStructureRel(
-					layoutPageTemplateStructureRel);
-		}
-
 		List<ResourcePermission> resourcePermissions = ListUtil.remove(
 			_resourcePermissionLocalService.getResourcePermissions(
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
@@ -225,16 +204,10 @@ public class LayoutDataCleanupPreupgradeProcessTest
 		return sb.toString();
 	}
 
-	private static List<LayoutPageTemplateStructureRel>
-		_layoutPageTemplateStructureRels;
 	private static List<ResourcePermission> _resourcePermissions;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
-
-	@Inject
-	private LayoutPageTemplateStructureRelLocalService
-		_layoutPageTemplateStructureRelLocalService;
 
 	@Inject
 	private PortletPreferencesLocalService _portletPreferencesLocalService;

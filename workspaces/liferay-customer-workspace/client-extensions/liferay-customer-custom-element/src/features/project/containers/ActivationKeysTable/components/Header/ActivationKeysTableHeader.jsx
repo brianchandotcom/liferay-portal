@@ -12,7 +12,7 @@ import {ROLE_TYPES} from '~/utils/constants';
 import {ALERT_DOWNLOAD_TYPE} from '~/features/project/utils/constants/alertDownloadType';
 import {ALERT_ACTIVATION_AGGREGATED_KEYS_DOWNLOAD_TEXT} from '../../utils/constants/alertAggregateKeysDownloadText';
 import {ALERT_ACTIVATION_MULTIPLE_KEYS_DOWNLOAD_TEXT} from '../../utils/constants/alertMultipleKeysDownloadText';
-import {DOWNLOADABLE_LICENSE_KEYS} from '../../utils/constants/downlodableLicenseKeys';
+import {DOWNLOADABLE_LICENSE_KEYS} from '../../utils/constants/downloadableLicenseKeys';
 import {hasAdminUserAccount} from '../../utils/hasAdminUserAccount';
 import {isBulkRenewAvailable} from '../../utils/isBulkRenewAvailable';
 import ActionButton from '../ActionButton';

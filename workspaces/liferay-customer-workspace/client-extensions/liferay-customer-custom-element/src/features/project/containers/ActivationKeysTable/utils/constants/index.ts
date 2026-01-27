@@ -7,7 +7,7 @@ export * from './activationKeysLicenseFilterTypes';
 export * from './activationStatus';
 export * from './columns';
 export * from './alertActivationKeysDownloadText';
-export * from './downlodableLicenseKeys';
+export * from './downloadableLicenseKeys';
 export * from './tooltipContentRendererTypes';
 export * from './tooltipClassnamesTypes';
 export * from './alertUpdateDXPCloudStatus';

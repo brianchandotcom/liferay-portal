@@ -338,6 +338,10 @@ public class LayoutLocalServiceWrapper
 			ctCollectionId = targetLayout.getCtCollectionId();
 		}
 
+		if (ctCollectionId == 0) {
+			ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
+		}
+
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					ctCollectionId)) {

@@ -263,17 +263,6 @@ public class ExportImportReportEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.exportimport.report.model.ExportImportReportEntry
-		fetchEmptyExportImportReportEntryByG_C_C_C(
-			long groupId, long companyId, String classExternalReferenceCode,
-			long classNameId) {
-
-		return _exportImportReportEntryLocalService.
-			fetchEmptyExportImportReportEntryByG_C_C_C(
-				groupId, companyId, classExternalReferenceCode, classNameId);
-	}
-
-	@Override
-	public com.liferay.exportimport.report.model.ExportImportReportEntry
 		fetchExportImportReportEntry(long exportImportReportEntryId) {
 
 		return _exportImportReportEntryLocalService.
@@ -285,6 +274,18 @@ public class ExportImportReportEntryLocalServiceWrapper
 		getActionableDynamicQuery() {
 
 		return _exportImportReportEntryLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.exportimport.report.model.ExportImportReportEntry
+			getEmptyExportImportReportEntryByG_C_C_C(
+				long groupId, long companyId, String classExternalReferenceCode,
+				long classNameId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _exportImportReportEntryLocalService.
+			getEmptyExportImportReportEntryByG_C_C_C(
+				groupId, companyId, classExternalReferenceCode, classNameId);
 	}
 
 	/**

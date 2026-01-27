@@ -205,18 +205,19 @@ public interface ExportImportReportEntryLocalService
 	public long dynamicQueryCount(
 		DynamicQuery dynamicQuery, Projection projection);
 
-	@Indexable(type = IndexableType.REINDEX)
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportImportReportEntry fetchEmptyExportImportReportEntryByG_C_C_C(
-		long groupId, long companyId, String classExternalReferenceCode,
-		long classNameId);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportImportReportEntry fetchExportImportReportEntry(
 		long exportImportReportEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportImportReportEntry getEmptyExportImportReportEntryByG_C_C_C(
+			long groupId, long companyId, String classExternalReferenceCode,
+			long classNameId)
+		throws PortalException;
 
 	/**
 	 * Returns a range of all the export import report entries.

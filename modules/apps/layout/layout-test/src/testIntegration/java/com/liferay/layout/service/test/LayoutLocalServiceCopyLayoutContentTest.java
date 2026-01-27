@@ -578,6 +578,75 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 	}
 
 	@Test
+	public void testCopyLayoutContentPublishDraftWithinPublication()
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						CTSettingsConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"enabled", true
+						).build())) {
+
+			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+			Layout draftLayout = layout.fetchDraftLayout();
+
+			Assert.assertNotNull(draftLayout);
+
+			Locale locale = _portal.getSiteDefaultLocale(_group);
+
+			String content = _getLayoutContent(layout, locale);
+
+			draftLayout = _addFragmentEntryLinkAndGetLayout(
+				RandomTestUtil.randomString(), draftLayout);
+
+			String contentUpdated = _getLayoutContent(draftLayout, locale);
+
+			Assert.assertNotEquals(content, contentUpdated);
+
+			CTCollection ctCollection =
+				_ctCollectionLocalService.addCTCollection(
+					null, TestPropsValues.getCompanyId(),
+					TestPropsValues.getUserId(), 0,
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString());
+
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+						ctCollection.getCtCollectionId())) {
+
+				_layoutLocalService.copyLayoutContent(draftLayout, layout);
+
+				draftLayout = _layoutLocalService.fetchLayout(
+					draftLayout.getPlid());
+				layout = _layoutLocalService.fetchLayout(layout.getPlid());
+
+				Assert.assertEquals(
+					_getLayoutContent(draftLayout, locale),
+					_getLayoutContent(layout, locale));
+				Assert.assertEquals(
+					contentUpdated, _getLayoutContent(layout, locale));
+			}
+			finally {
+				layout = _layoutLocalService.fetchLayout(layout.getPlid());
+
+				Assert.assertEquals(content, _getLayoutContent(layout, locale));
+
+				draftLayout = _layoutLocalService.fetchLayout(
+					draftLayout.getPlid());
+
+				Assert.assertEquals(
+					contentUpdated, _getLayoutContent(draftLayout, locale));
+
+				_ctCollectionLocalService.deleteCTCollection(ctCollection);
+			}
+		}
+	}
+
+	@Test
 	public void testCopyLayoutContentUpdateAndPublishDraftWithinPublication()
 		throws Exception {
 

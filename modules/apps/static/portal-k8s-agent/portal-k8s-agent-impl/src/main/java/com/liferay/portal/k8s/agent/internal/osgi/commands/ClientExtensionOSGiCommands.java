@@ -70,11 +70,10 @@ public class ClientExtensionOSGiCommands implements OSGiCommands {
 			return;
 		}
 
-		Configuration reloadedConfiguration = _reloadConfiguration(
-			configuration);
+		configuration = _reloadConfiguration(configuration);
 
 		System.out.println(
-			"Reloaded configuration for PID " + reloadedConfiguration.getPid());
+			"Reloaded configuration for PID " + configuration.getPid());
 	}
 
 	public void show(String pid) throws InvalidSyntaxException, IOException {

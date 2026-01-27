@@ -152,26 +152,16 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			return segmentsExperience;
 		}
 
-		String uuid = serviceContext.getUuid();
-
 		serviceContext.setUuid(
 			GetterUtil.getString(
 				serviceContext.getAttribute("defaultSegmentsExperienceUuid")));
 
-		try {
-			return _segmentsExperienceLocalService.addDefaultSegmentsExperience(
-				GetterUtil.getString(
-					serviceContext.getAttribute(
-						"defaultSegmentsExperienceExternalReferenceCode"),
-					layout.getExternalReferenceCode() + "-default"),
-				layout.getUserId(), layout.getPlid(), serviceContext);
-		}
-		catch (PortalException portalException) {
-			throw new ModelListenerException(portalException);
-		}
-		finally {
-			serviceContext.setUuid(uuid);
-		}
+		return _segmentsExperienceLocalService.addDefaultSegmentsExperience(
+			GetterUtil.getString(
+				serviceContext.getAttribute(
+					"defaultSegmentsExperienceExternalReferenceCode"),
+				layout.getExternalReferenceCode() + "-default"),
+			layout.getUserId(), layout.getPlid(), serviceContext);
 	}
 
 	private void _copySiteNavigationMenuId(
@@ -285,9 +275,13 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
+		String uuid = serviceContext.getUuid();
+
 		try {
 			SegmentsExperience segmentsExperience =
 				_addDefaultSegmentsExperience(layout, serviceContext);
+
+			serviceContext.setUuid(null);
 
 			_layoutPageTemplateStructureLocalService.
 				addLayoutPageTemplateStructure(
@@ -297,6 +291,9 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);
+		}
+		finally {
+			serviceContext.setUuid(uuid);
 		}
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =

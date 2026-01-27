@@ -35,6 +35,8 @@ export type ObjectField = {
 
 export type ObjectRelationship = {
 	deletionType: string;
+	edge?: boolean;
+	externalReferenceCode: string;
 	label: Liferay.Language.LocalizedValue<string>;
 	name: string;
 	objectDefinitionExternalReferenceCode1: string;

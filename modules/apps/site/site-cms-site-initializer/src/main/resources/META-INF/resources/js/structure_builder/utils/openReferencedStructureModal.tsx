@@ -21,8 +21,9 @@ import {CacheStatus} from '../contexts/CacheContext';
 import {Action} from '../contexts/StateContext';
 import {ReferencedStructure, Structure} from '../types/Structure';
 import {Uuid} from '../types/Uuid';
-import {buildReferencedStructure} from './buildStructure';
-import getRandomName from './getRandomName';
+import {buildReferencedStructure} from '../utils/buildStructure';
+import getRandomId from '../utils/getRandomId';
+import getRandomName from '../utils/getRandomName';
 
 type Item = {
 	label: string;
@@ -249,6 +250,7 @@ function buildStructures(
 			ancestors: [mainStructureERC],
 			erc,
 			objectDefinitions,
+			objectRelationshipERC: getRandomId(),
 			parent: mainStructureUuid,
 			relationshipName: getRandomName(),
 		});

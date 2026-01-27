@@ -7,7 +7,6 @@ import {openToast} from 'frontend-js-components-web';
 import {Dispatch} from 'react';
 
 import StructureService from '../../common/services/StructureService';
-import {ObjectDefinitions} from '../../common/types/ObjectDefinition';
 import {Action, State} from '../contexts/StateContext';
 import selectHistory from '../selectors/selectHistory';
 import selectStructureChildren from '../selectors/selectStructureChildren';
@@ -23,17 +22,11 @@ import selectStructureWorkflows from '../selectors/selectStructureWorkflows';
 
 type Props = {
 	dispatch: Dispatch<Action>;
-	objectDefinitions: ObjectDefinitions;
 	state: State;
 	validate: () => boolean;
 };
 
-export async function saveStructure({
-	dispatch,
-	objectDefinitions,
-	state,
-	validate,
-}: Props) {
+export async function saveStructure({dispatch, state, validate}: Props) {
 	const valid = validate();
 
 	if (!valid) {
@@ -93,7 +86,6 @@ export async function saveStructure({
 			id,
 			label,
 			name,
-			objectDefinitions,
 			spaces,
 			status: 'draft',
 			workflows,

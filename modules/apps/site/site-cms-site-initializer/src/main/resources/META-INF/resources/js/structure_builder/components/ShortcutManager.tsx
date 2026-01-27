@@ -152,7 +152,6 @@ export default function ShortcutManager() {
 			handler: () =>
 				saveStructure({
 					dispatch,
-					objectDefinitions,
 					state,
 					validate,
 				}),
@@ -165,7 +164,6 @@ export default function ShortcutManager() {
 			handler: () =>
 				publishStructure({
 					dispatch,
-					objectDefinitions,
 					showExperienceLink: true,
 					staleCache,
 					state,

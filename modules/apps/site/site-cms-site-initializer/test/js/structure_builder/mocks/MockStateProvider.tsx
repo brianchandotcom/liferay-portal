@@ -31,6 +31,7 @@ const DEFAULT_STATE: State = {
 	history: {
 		deletedChildren: false,
 		deletedGroupERCs: [],
+		deletedRelationshipERCs: [],
 		modifiedNames: new Set(),
 	},
 	invalids: new Map(),

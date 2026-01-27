@@ -47,13 +47,18 @@ public class MarketplacePubsubSubscriber {
 				subscriber.stopAsync(
 				).awaitTerminated();
 
-				System.out.println("Subscriber shut down cleanly.");
+				if (_log.isInfoEnabled()) {
+				 _log.info("Subscriber shut down cleanly.");
+				}
 			}
 		}
 
 		if (_subscriptionAdminClient != null) {
 			_subscriptionAdminClient.close();
-			System.out.println("Subscription admin client closed.");
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Subscription admin client closed.");
+			}
 		}
 	}
 
@@ -102,7 +107,10 @@ public class MarketplacePubsubSubscriber {
 					}
 				}
 				catch (NotFoundException notFoundException) {
-					System.out.println("Creating a new subscription. \n");
+
+					if (_log.isInfoEnabled()) {
+						_log.info("Creating a new subscription.");	
+					}
 
 					TopicName topicName = TopicName.ofProjectTopicName(
 						_projectId, topic);

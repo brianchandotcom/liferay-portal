@@ -10,17 +10,13 @@ import ClayLink from '@clayui/link';
 import React from 'react';
 
 function Footer({
+	actionButton,
 	backURL,
-	onNext,
 	onPrevious,
-	onSubmit,
-	onSubmitLabel,
 }: {
+	actionButton?: React.ReactElement;
 	backURL: string;
-	onNext?: () => void | undefined;
-	onPrevious?: () => void | undefined;
-	onSubmit?: () => void | undefined;
-	onSubmitLabel: string;
+	onPrevious?: () => void;
 }) {
 	return (
 		<ClayLayout.SheetFooter>
@@ -47,22 +43,11 @@ function Footer({
 							{Liferay.Language.get('cancel')}
 						</ClayLink>
 
-						{onNext && (
-							<ClayButton onClick={onNext}>
+						{actionButton ? (
+							actionButton
+						) : (
+							<ClayButton type="submit">
 								{Liferay.Language.get('continue')}
-							</ClayButton>
-						)}
-
-						{onSubmit && (
-							<ClayButton onClick={onSubmit}>
-								<span className="inline-item inline-item-before">
-									<ClayIcon
-										className="mr-1"
-										symbol="export"
-									/>
-
-									{onSubmitLabel}
-								</span>
 							</ClayButton>
 						)}
 					</div>

@@ -9,8 +9,10 @@ import React, {ReactElement, useState} from 'react';
 import Footer from './Footer';
 
 interface WizardStep {
+	actionButton?: React.ReactElement;
 	children: React.ReactNode;
 	description: string;
+	onSubmit?: () => void;
 	title: string;
 }
 
@@ -21,13 +23,9 @@ export function WizardStep({children}: WizardStep) {
 export function Wizard({
 	backURL,
 	children,
-	onSubmit,
-	onSubmitLabel,
 }: {
 	backURL: string;
 	children: React.ReactElement<WizardStep> | React.ReactElement<WizardStep>[];
-	onSubmit: () => void;
-	onSubmitLabel: string;
 }) {
 	const [stepNumber, setStepNumber] = useState(0);
 
@@ -37,11 +35,23 @@ export function Wizard({
 
 	const totalSteps = steps.length;
 
-	const currentStep = steps[stepNumber] as React.ReactElement<WizardStep>;
-	const {description, title} = currentStep.props;
+	const step = steps[stepNumber] as React.ReactElement<WizardStep>;
+	const {actionButton, description, onSubmit, title} = step.props;
+
+	const next = () => {
+		if (stepNumber < totalSteps - 1) {
+			setStepNumber((stepNumber) => stepNumber + 1);
+		}
+	};
+
+	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+		onSubmit?.();
+		next();
+	};
 
 	return (
-		<>
+		<form onSubmit={handleSubmit}>
 			<ClayMultiStepNav center className="c-mx-lg-9" indicatorLabel="top">
 				{steps.map((step, index) => {
 					const {title: multiStepTitle} = step.props;
@@ -76,20 +86,14 @@ export function Wizard({
 			{steps[stepNumber]}
 
 			<Footer
+				actionButton={actionButton}
 				backURL={backURL}
-				onNext={
-					stepNumber < totalSteps - 1
-						? () => setStepNumber(stepNumber + 1)
-						: undefined
-				}
 				onPrevious={
 					stepNumber > 0
 						? () => setStepNumber(stepNumber - 1)
 						: undefined
 				}
-				onSubmit={stepNumber === totalSteps - 1 ? onSubmit : undefined}
-				onSubmitLabel={onSubmitLabel}
 			/>
-		</>
+		</form>
 	);
 }

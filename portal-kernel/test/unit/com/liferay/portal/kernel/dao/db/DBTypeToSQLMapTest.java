@@ -5,11 +5,7 @@
 
 package com.liferay.portal.kernel.dao.db;
 
-import com.liferay.portal.test.rule.LiferayUnitTestRule;
-
 import org.junit.Assert;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 
 /**

@@ -12,7 +12,6 @@ import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.sql.dsl.expression.Predicate;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
@@ -20,11 +19,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
-
-import java.time.LocalDate;
 
 import java.util.Objects;
 
@@ -79,16 +75,6 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			ObjectEntry objectEntry)
 		throws Exception {
 
-		if (filterString != null) {
-			filterString = StringBundler.concat(
-				"status ne ", WorkflowConstants.STATUS_DRAFT, " and ",
-				filterString);
-		}
-		else {
-			filterString = StringBundler.concat(
-				"status ne ", WorkflowConstants.STATUS_DRAFT);
-		}
-
 		return _objectEntryLocalService.getValuesListCount(
 			new Long[] {objectEntry.getGroupId()}, 0, 0,
 			objectEntry.getObjectDefinitionId(),
@@ -118,46 +104,21 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			return;
 		}
 
-		int blockedCount = _getCount(
-			"state eq 'blocked'", objectDefinition, objectEntry);
-		int doneCount = _getCount(
-			"state eq 'done'", objectDefinition, objectEntry);
-		int inProgressCount = _getCount(
-			"state eq 'inProgress'", objectDefinition, objectEntry);
-		int overdueCount = _getCount(
-			StringBundler.concat(
-				"dueDate lt ", LocalDate.now(), " and state ne 'done'"),
-			objectDefinition, objectEntry);
 		int totalCount = _getCount(null, objectDefinition, objectEntry);
 
 		int completionRate = 0;
 
 		if (totalCount != 0) {
-			completionRate = (doneCount * 100) / totalCount;
+			int filteredCount = _getCount(
+				"state eq 'done'", objectDefinition, objectEntry);
+
+			completionRate = (filteredCount * 100) / totalCount;
 		}
 
 		if (Objects.equals(
 				MapUtil.getInteger(
-					parentObjectEntry.getValues(), "blockedCount"),
-				blockedCount) &&
-			Objects.equals(
-				MapUtil.getInteger(
 					parentObjectEntry.getValues(), "completionRate"),
-				completionRate) &&
-			Objects.equals(
-				MapUtil.getInteger(parentObjectEntry.getValues(), "doneCount"),
-				doneCount) &&
-			Objects.equals(
-				MapUtil.getInteger(
-					parentObjectEntry.getValues(), "inProgressCount"),
-				inProgressCount) &&
-			Objects.equals(
-				MapUtil.getInteger(
-					parentObjectEntry.getValues(), "overdueCount"),
-				overdueCount) &&
-			Objects.equals(
-				MapUtil.getInteger(parentObjectEntry.getValues(), "totalCount"),
-				totalCount)) {
+				completionRate)) {
 
 			return;
 		}
@@ -166,17 +127,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			parentObjectEntry.getUserId(), parentObjectEntry.getObjectEntryId(),
 			parentObjectEntry.getObjectEntryFolderId(),
 			HashMapBuilder.<String, Serializable>put(
-				"blockedCount", blockedCount
-			).put(
 				"completionRate", completionRate
-			).put(
-				"doneCount", doneCount
-			).put(
-				"inProgressCount", inProgressCount
-			).put(
-				"overdueCount", overdueCount
-			).put(
-				"totalCount", totalCount
 			).build(),
 			new ServiceContext());
 	}

@@ -6,8 +6,8 @@
 import os from 'os';
 import path from 'path';
 
-import {SRC_TSCONFIG_PATH, getRootDir} from '../util/constants.mjs';
 import fileExists from '../util/fileExists.mjs';
+import {MODULES_DIR, SRC_TSCONFIG_PATH} from '../util/locations.mjs';
 import runConcurrentTasks from '../util/runConcurrentTasks.mjs';
 import checkProject from './checkProject.mjs';
 
@@ -24,8 +24,6 @@ export default async function checkProjects(projectDirs, captureOutput) {
 	console.log(
 		`ℹ️ A total of ${cpuCount} CPUs were detected: launching tsc using ${cpuCount} workers`
 	);
-
-	const rootDir = await getRootDir();
 
 	const outputs = {};
 	let allChecksPassed = true;
@@ -55,7 +53,7 @@ export default async function checkProjects(projectDirs, captureOutput) {
 			}
 			else {
 				console.log(
-					`${icon} Checked ${path.relative(rootDir, projectDir)}${output}`
+					`${icon} Checked ${path.relative(MODULES_DIR, projectDir)}${output}`
 				);
 			}
 		})

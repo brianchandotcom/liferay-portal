@@ -7,11 +7,11 @@ import fs from 'fs/promises';
 import path from 'path';
 import Sonda from 'sonda/esbuild';
 
+import getFlatName from '../../util/getFlatName.mjs';
 import {
 	BUILD_MAIN_EXPORTS_PATH,
 	BUNDLE_REPORTS_PATH,
-} from '../../util/constants.mjs';
-import getFlatName from '../../util/getFlatName.mjs';
+} from '../../util/locations.mjs';
 import getLinkerPlugin from './plugins/getLinkerPlugin.mjs';
 import getExportBridgeJavaScript from './util/getExportBridgeJavaScript.mjs';
 import getExportBridgePath from './util/getExportBridgePath.mjs';

@@ -4,8 +4,9 @@
  */
 
 import {cosmiconfig} from 'cosmiconfig';
+import path from 'path';
 
-import {getRootDir} from '../util/constants.mjs';
+import {MODULES_DIR} from './locations.mjs';
 
 /**
  * Helper to get configuration via `cosmiconfig`
@@ -16,7 +17,8 @@ export default async function (
 	moduleName,
 	{cwd = process.cwd(), upwards} = {}
 ) {
-	const stopDir = (upwards && getRootDir()) || cwd;
+	const stopDir =
+		(upwards && path.resolve(cwd).startsWith(MODULES_DIR)) || cwd;
 
 	const explorer = await cosmiconfig(moduleName, {
 		stopDir,

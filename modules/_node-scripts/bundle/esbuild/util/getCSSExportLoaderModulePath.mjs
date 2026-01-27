@@ -5,8 +5,8 @@
 
 import path from 'path';
 
-import {BUILD_NPM_EXPORTS_PATH} from '../../../util/constants.mjs';
 import getFlatName from '../../../util/getFlatName.mjs';
+import {BUILD_NPM_EXPORTS_PATH} from '../../../util/locations.mjs';
 
 export default function getCSSExportLoaderModulePath(moduleName, hash) {
 	return path.join(

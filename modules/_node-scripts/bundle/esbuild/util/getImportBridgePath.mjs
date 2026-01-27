@@ -5,8 +5,8 @@
 
 import path from 'path';
 
-import {WORK_IMPORT_PATH} from '../../../util/constants.mjs';
 import getFlatName from '../../../util/getFlatName.mjs';
+import {WORK_IMPORT_PATH} from '../../../util/locations.mjs';
 
 export default function getImportBridgePath(moduleName) {
 	return path.resolve(WORK_IMPORT_PATH, getFlatName(moduleName, 'js'));

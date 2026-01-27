@@ -6,12 +6,12 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-import {NODE_SCRIPTS_PATH} from '../util/constants.mjs';
 import digestNodeScripts from '../util/digestNodeScripts.mjs';
+import {NODE_SCRIPTS_DIR} from '../util/locations.mjs';
 
 export async function checkNodeScriptsHash() {
 	const packageJSON = JSON.parse(
-		await fs.readFile(path.join(NODE_SCRIPTS_PATH, 'package.json'), 'utf-8')
+		await fs.readFile(path.join(NODE_SCRIPTS_DIR, 'package.json'), 'utf-8')
 	);
 
 	const expectedHash = await digestNodeScripts();

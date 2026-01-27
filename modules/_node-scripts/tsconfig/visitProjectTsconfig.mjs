@@ -8,8 +8,16 @@ import fg from 'fast-glob';
 import fs from 'fs/promises';
 import path from 'path';
 
-import {SRC_PATH, SRC_TSCONFIG_PATH, getRootDir} from '../util/constants.mjs';
 import fileExists from '../util/fileExists.mjs';
+import {
+	GLOBAL_D_TS_FILE,
+	GLOBAL_NODE_MODULES_TYPES_DIR,
+	MODULES_DIR,
+	SRC_PATH,
+	SRC_TSCONFIG_PATH,
+	TSC_BUILDINFO_DIR,
+	TSC_TYPES_DIR,
+} from '../util/locations.mjs';
 import objectSF from '../util/objectSF.mjs';
 import baseTsconfig from './baseTsconfig.mjs';
 
@@ -23,8 +31,6 @@ export default async function visitProjectTsconfig(
 	projectDir = '.',
 	testConfig = false
 ) {
-	const rootDir = await getRootDir();
-
 	const srcPath = testConfig
 		? path.join(projectDir, 'test')
 		: path.join(projectDir, SRC_PATH);
@@ -41,32 +47,30 @@ export default async function visitProjectTsconfig(
 
 	const globalDTsFileProjectRelativePath = path.posix.relative(
 		srcPath,
-		path.join(rootDir, 'global.d.ts')
+		GLOBAL_D_TS_FILE
 	);
 
-	const rootDirProjectRelativePath = path.posix.relative(
+	const modulesDirProjectRelativePath = path.posix.relative(
 		srcPath,
-		path.join(rootDir)
+		MODULES_DIR
 	);
 
 	const tsBuildInfoFile = path.posix.relative(
 		srcPath,
 		path.join(
-			rootDir,
-			'.tsc',
-			'buildinfo',
+			TSC_BUILDINFO_DIR,
 			`${projectDescription.name}${testConfig ? '-test' : ''}.tsbuildinfo`
 		)
 	);
 
 	const tscTypesDirProjectRelativePath = path.posix.relative(
 		srcPath,
-		path.join(rootDir, '.tsc', 'types')
+		TSC_TYPES_DIR
 	);
 
 	const typesDirProjectRelativePath = path.posix.relative(
 		srcPath,
-		path.join(rootDir, 'node_modules', '@types')
+		GLOBAL_NODE_MODULES_TYPES_DIR
 	);
 
 	const paths = {};
@@ -96,7 +100,7 @@ export default async function visitProjectTsconfig(
 		}
 
 		const projectMainEntryPointPath = path.join(
-			rootDir,
+			MODULES_DIR,
 			...`${projectEntryPoint.dir}/${projectEntryPoint.path.main}`.split(
 				'/'
 			)
@@ -106,7 +110,7 @@ export default async function visitProjectTsconfig(
 			projectEntryPoint.path.submodules ?? {}
 		).reduce((map, [entryPointName, entryPointPath]) => {
 			map[entryPointName] = path.join(
-				rootDir,
+				MODULES_DIR,
 				...`${projectEntryPoint.dir}/${entryPointPath}`.split('/')
 			);
 
@@ -127,7 +131,7 @@ export default async function visitProjectTsconfig(
 
 		const projectPath = path.posix.relative(
 			srcPath,
-			path.join(rootDir, projectEntryPoint.dir)
+			path.join(MODULES_DIR, projectEntryPoint.dir)
 		);
 
 		references.push({path: `${projectPath}/${SRC_TSCONFIG_PATH}`});
@@ -145,7 +149,7 @@ export default async function visitProjectTsconfig(
 			...baseTsconfig.compilerOptions,
 			declarationDir: tscTypesDirProjectRelativePath,
 			paths,
-			rootDir: rootDirProjectRelativePath,
+			rootDir: modulesDirProjectRelativePath,
 			tsBuildInfoFile,
 			typeRoots: [typesDirProjectRelativePath],
 		},

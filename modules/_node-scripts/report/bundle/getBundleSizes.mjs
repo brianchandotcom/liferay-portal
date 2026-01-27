@@ -7,7 +7,7 @@ import fg from 'fast-glob';
 import fs from 'fs/promises';
 import path from 'path';
 
-import {BUNDLE_REPORTS_PATH} from '../../util/constants.mjs';
+import {BUNDLE_REPORTS_PATH} from '../../util/locations.mjs';
 
 export default async function getBundleSizes(projectDirectories) {
 	const bundleSizes = await Promise.all(

@@ -5,9 +5,8 @@
 
 import fs from 'fs/promises';
 import os from 'os';
-import path from 'path';
 
-import {getBuildPropertiesPath, getRootDir} from '../../../util/constants.mjs';
+import {BUILD_PROPERTIES_FILE, PORTAL_DIR} from '../../../util/locations.mjs';
 
 const SASS_BINARY = {
 	darwin: {
@@ -57,7 +56,7 @@ export default async function getSassBinaryArchMap() {
 
 	// Fill in URL and hash
 
-	const props = await fs.readFile(await getBuildPropertiesPath(), 'utf-8');
+	const props = await fs.readFile(BUILD_PROPERTIES_FILE, 'utf-8');
 
 	const lines = props
 		.split('\n')
@@ -74,10 +73,8 @@ export default async function getSassBinaryArchMap() {
 
 	// Interpolate ${project.dir} variable first
 
-	const projectDir = path.resolve(await getRootDir(), '..');
-
 	for (const key of Object.keys(map)) {
-		map[key] = map[key].replace('${project.dir}', projectDir);
+		map[key] = map[key].replace('${project.dir}', PORTAL_DIR);
 	}
 
 	// Then interpolate self referenced variables (beware: order of interpolation matters!)

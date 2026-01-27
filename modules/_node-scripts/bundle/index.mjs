@@ -11,11 +11,11 @@ import getProjectDescription from '../configuration/getProjectDescription.mjs';
 import getProjectEntryPoints from '../configuration/getProjectEntryPoints.mjs';
 import getProjectExports from '../configuration/getProjectExports.mjs';
 import getProjectWebContextPath from '../configuration/getProjectWebContextPath.mjs';
+import emptyDir from '../util/emptyDir.mjs';
 import {
 	BUILD_MAIN_EXPORTS_PATH,
 	BUILD_SASS_CACHE_PATH,
-} from '../util/constants.mjs';
-import emptyDir from '../util/emptyDir.mjs';
+} from '../util/locations.mjs';
 import writeExportBridges from './amd/writeExportBridges.mjs';
 import writeMainBridge from './amd/writeMainBridge.mjs';
 import writeManifestJson from './amd/writeManifestJson.mjs';

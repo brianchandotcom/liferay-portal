@@ -5,8 +5,8 @@
 
 import path from 'path';
 
-import {SRC_PATH} from '../../../util/constants.mjs';
 import fileExists from '../../../util/fileExists.mjs';
+import {SRC_PATH} from '../../../util/locations.mjs';
 
 export default class CrossSubmoduleImportsChecker {
 	static SOURCE_EXTENSIONS = ['.js', '.jsx', '.ts', '.tsx'];

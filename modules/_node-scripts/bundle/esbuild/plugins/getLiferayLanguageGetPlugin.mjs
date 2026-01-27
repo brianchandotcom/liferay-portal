@@ -6,7 +6,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-import {SRC_PATH} from '../../../util/constants.mjs';
+import {SRC_PATH} from '../../../util/locations.mjs';
 
 const REGEXP = /Liferay\.Language\.get\(([^)]+)\)/g;
 

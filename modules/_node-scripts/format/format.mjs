@@ -9,9 +9,9 @@ import path from 'path';
 import prettier from 'prettier';
 import stylelint from 'stylelint';
 
-import {getRootDir} from '../util/constants.mjs';
 import fileExists from '../util/fileExists.mjs';
 import getFilePaths from '../util/getFilePaths.mjs';
+import {MODULES_DIR} from '../util/locations.mjs';
 import {ID_END, ID_START} from './jsp/getPaddedReplacement.mjs';
 import processJSP from './jsp/processJSP.mjs';
 import {SCRIPTLET_CONTENT} from './jsp/substituteTags.mjs';
@@ -41,9 +41,7 @@ export default async function format(
 		'utf-8'
 	);
 
-	const rootDir = await getRootDir();
-
-	const filepaths = await getFilePaths(rootDir, filesToFormat);
+	const filepaths = await getFilePaths(MODULES_DIR, filesToFormat);
 
 	if (!filepaths.length) {
 		return undefined;
@@ -55,16 +53,16 @@ export default async function format(
 	// Configure tools
 
 	const [eslintConfig, prettierConfig, stylelintConfig] = await Promise.all([
-		getEslintConfig(rootDir),
-		getPrettierConfig(rootDir),
-		getStylelintConfig(rootDir),
+		getEslintConfig(MODULES_DIR),
+		getPrettierConfig(MODULES_DIR),
+		getStylelintConfig(MODULES_DIR),
 	]);
 
 	const eslintCLI = new ESLint({
 		baseConfig: eslintConfig,
 		fix: true,
-		ignorePath: path.join(rootDir, ESLINT_IGNORE_FILE),
-		resolvePluginsRelativeTo: rootDir,
+		ignorePath: path.join(MODULES_DIR, ESLINT_IGNORE_FILE),
+		resolvePluginsRelativeTo: MODULES_DIR,
 	});
 
 	// Define tool helpers
@@ -78,7 +76,7 @@ export default async function format(
 	}
 
 	async function formatWithEslint(input, filepath) {
-		const relativePath = path.relative(rootDir, filepath);
+		const relativePath = path.relative(MODULES_DIR, filepath);
 		const [lintResult = {}] = await eslintCLI.lintText(input, {
 			filePath: filepath,
 		});
@@ -249,16 +247,16 @@ export default async function format(
 	return summary;
 }
 
-async function getEslintConfig(rootDir) {
-	const eslintConfigPath = path.join(rootDir, '.eslintrc.js');
+async function getEslintConfig(modulesDir) {
+	const eslintConfigPath = path.join(modulesDir, '.eslintrc.js');
 
 	const {default: eslintConfig} = await import('file://' + eslintConfigPath);
 
 	return eslintConfig;
 }
 
-async function getPrettierConfig(rootDir) {
-	const prettierConfigPath = path.join(rootDir, '.prettierrc.js');
+async function getPrettierConfig(modulesDir) {
+	const prettierConfigPath = path.join(modulesDir, '.prettierrc.js');
 
 	const {default: prettierConfig} = await import(
 		'file://' + prettierConfigPath
@@ -267,8 +265,8 @@ async function getPrettierConfig(rootDir) {
 	return prettierConfig;
 }
 
-async function getStylelintConfig(rootDir) {
-	const stylelintConfigPath = path.join(rootDir, '.stylelintrc.js');
+async function getStylelintConfig(modulesDir) {
+	const stylelintConfigPath = path.join(modulesDir, '.stylelintrc.js');
 
 	const {default: stylelintConfig} = await import(
 		'file://' + stylelintConfigPath

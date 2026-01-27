@@ -6,7 +6,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-import {BUILD_RESOURCES_PATH} from '../../util/constants.mjs';
+import {BUILD_RESOURCES_PATH} from '../../util/locations.mjs';
 import hashPathForVariable from './util/hashPathForVariable.mjs';
 
 export default async function writeMainBridge(

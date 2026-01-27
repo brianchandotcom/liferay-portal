@@ -5,8 +5,8 @@
 
 import fs from 'fs/promises';
 
-import {SRC_LANGUAGE_JSON_PATH} from '../util/constants.mjs';
 import fileExists from '../util/fileExists.mjs';
+import {SRC_LANGUAGE_JSON_PATH} from '../util/locations.mjs';
 
 export default async function getLanguageJSON() {
 	if (!(await fileExists(SRC_LANGUAGE_JSON_PATH))) {

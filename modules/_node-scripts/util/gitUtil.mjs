@@ -6,7 +6,7 @@
 import {$} from 'execa';
 import path from 'path';
 
-import {getRootDir} from '../util/constants.mjs';
+import {PORTAL_DIR} from './locations.mjs';
 
 /**
  * Invokes com.liferay.portal.tools.GitUtil.main() with the given git.type and returns a parsed list
@@ -20,11 +20,10 @@ export default async function gitUtil(gitType) {
 		throw new Error(`Invalid git.type: ${gitType}`);
 	}
 
-	const rootDir = await getRootDir();
-	const portalDir = path.resolve(rootDir, '..', 'portal-impl');
+	const portalImplDir = path.resolve(PORTAL_DIR, 'portal-impl');
 
 	const {stdout} = await $({
-		cwd: portalDir,
+		cwd: portalImplDir,
 		env: {
 			ANT_ARGS: '',
 		},

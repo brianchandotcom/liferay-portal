@@ -6,7 +6,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-import {BUILD_RESOURCES_PATH} from '../../util/constants.mjs';
+import {BUILD_RESOURCES_PATH} from '../../util/locations.mjs';
 import projectScopeRequire from '../../util/projectScopeRequire.mjs';
 import getNamespacedPackageName from './util/getNamespacedPackageName.mjs';
 import splitProjectExport from './util/splitProjectExport.mjs';

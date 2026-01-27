@@ -8,7 +8,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import rtlcss from 'rtlcss';
 
-import {BUILD_RESOURCES_PATH, SRC_PATH} from '../../util/constants.mjs';
+import {BUILD_RESOURCES_PATH, SRC_PATH} from '../../util/locations.mjs';
 import calculateFileHash from '../util/calculateFileHash.mjs';
 
 export default async function processCSSFiles() {

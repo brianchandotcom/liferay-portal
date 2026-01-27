@@ -6,9 +6,9 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-import {NODE_SCRIPTS_PATH} from '../util/constants.mjs';
 import digestNodeScripts from '../util/digestNodeScripts.mjs';
 import getNamedArguments from '../util/getNamedArguments.mjs';
+import {NODE_SCRIPTS_DIR} from '../util/locations.mjs';
 import objectSF from '../util/objectSF.mjs';
 import mainBase from './index.mjs';
 
@@ -29,7 +29,7 @@ export default async function main() {
 
 	const expectedHash = await digestNodeScripts();
 
-	const packageJSONPath = path.join(NODE_SCRIPTS_PATH, 'package.json');
+	const packageJSONPath = path.join(NODE_SCRIPTS_DIR, 'package.json');
 
 	const packageJSON = JSON.parse(await fs.readFile(packageJSONPath, 'utf-8'));
 

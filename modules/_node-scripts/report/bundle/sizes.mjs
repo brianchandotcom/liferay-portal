@@ -6,13 +6,13 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-import {
-	BUILD_RESOURCES_PATH,
-	SRC_PATH,
-	getRootDir,
-} from '../../util/constants.mjs';
 import getNamedArguments from '../../util/getNamedArguments.mjs';
 import getYarnWorkspaceProjects from '../../util/getYarnWorkspaceProjects.mjs';
+import {
+	BUILD_RESOURCES_PATH,
+	MODULES_DIR,
+	SRC_PATH,
+} from '../../util/locations.mjs';
 import getBundleSizes from './getBundleSizes.mjs';
 
 export default async function main() {
@@ -20,10 +20,7 @@ export default async function main() {
 		withInternals: '--with-internals',
 	});
 
-	const [projectDirectories, rootDir] = await Promise.all([
-		getYarnWorkspaceProjects(),
-		getRootDir(),
-	]);
+	const projectDirectories = await getYarnWorkspaceProjects();
 
 	const bundleSizes = await getBundleSizes(projectDirectories);
 
@@ -40,7 +37,7 @@ export default async function main() {
 			.sort(([a], [b]) => a.localeCompare(b))
 			.forEach(([bundle, {gzip, uncompressed}]) => {
 				const bundlePath = path
-					.relative(rootDir, bundle)
+					.relative(MODULES_DIR, bundle)
 					.replace(`${path.sep}${BUILD_RESOURCES_PATH}`, '')
 					.replace(SRC_PATH, '');
 
@@ -57,7 +54,7 @@ export default async function main() {
 			.sort(([a], [b]) => a.localeCompare(b))
 			.forEach(([bundle, {gzip, uncompressed}]) => {
 				const bundlePath = path
-					.relative(rootDir, bundle)
+					.relative(MODULES_DIR, bundle)
 					.replace(`${path.sep}${BUILD_RESOURCES_PATH}`, '');
 
 				lines.push(`${bundlePath};${gzip};${uncompressed}`);

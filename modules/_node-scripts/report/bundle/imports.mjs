@@ -9,15 +9,12 @@ import estraverse from 'estraverse';
 import fs from 'fs/promises';
 import path from 'path';
 
-import {BUILD_RESOURCES_PATH, getRootDir} from '../../util/constants.mjs';
 import getYarnWorkspaceProjects from '../../util/getYarnWorkspaceProjects.mjs';
+import {BUILD_RESOURCES_PATH, MODULES_DIR} from '../../util/locations.mjs';
 import getBundleSizes from './getBundleSizes.mjs';
 
 export default async function main() {
-	const [projectDirectories, rootDir] = await Promise.all([
-		getYarnWorkspaceProjects(),
-		getRootDir(),
-	]);
+	const projectDirectories = await getYarnWorkspaceProjects();
 
 	const bundleSizes = await getBundleSizes(projectDirectories);
 
@@ -30,7 +27,7 @@ export default async function main() {
 		.sort(([a], [b]) => a.localeCompare(b))
 		.forEach(([bundle, imports]) => {
 			const bundlePath = path
-				.relative(rootDir, bundle)
+				.relative(MODULES_DIR, bundle)
 				.replace(`${BUILD_RESOURCES_PATH}${path.sep}`, '');
 
 			imports.sort().forEach((importPath) => {

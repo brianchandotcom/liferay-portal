@@ -1185,25 +1185,6 @@ public class ObjectFieldLocalServiceImpl
 					newObjectFieldSetting.getName());
 
 			if (oldObjectFieldSetting == null) {
-				if (!FeatureFlagManagerUtil.isEnabled(
-						newObjectField.getCompanyId(), "LPD-46451") &&
-					!(Objects.equals(
-						newObjectField.getBusinessType(),
-						ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN) ||
-					  Objects.equals(
-						  newObjectField.getBusinessType(),
-						  ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) &&
-					(StringUtil.equals(
-						newObjectFieldSetting.getName(),
-						ObjectFieldSettingConstants.NAME_DEFAULT_VALUE) ||
-					 StringUtil.equals(
-						 newObjectFieldSetting.getName(),
-						 ObjectFieldSettingConstants.
-							 NAME_DEFAULT_VALUE_TYPE))) {
-
-					continue;
-				}
-
 				objectFieldSettingContributor.addObjectFieldSetting(
 					newObjectField.getUserId(),
 					newObjectField.getObjectFieldId(), newObjectFieldSetting);

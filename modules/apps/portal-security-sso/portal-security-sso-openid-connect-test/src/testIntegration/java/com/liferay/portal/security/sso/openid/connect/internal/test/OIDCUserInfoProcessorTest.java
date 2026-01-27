@@ -10,10 +10,8 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
@@ -35,13 +33,11 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -219,10 +215,37 @@ public class OIDCUserInfoProcessorTest {
 			_userGroupLocalService.addUserUserGroups(
 				user.getUserId(), new long[] {userGroup.getUserGroupId()});
 
+			AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+				TestPropsValues.getGroupId(),
+				_portal.getClassNameId(User.class),
+				AssetCategoryConstants.ALL_CLASS_TYPE_PK, true);
+
+			AssetCategory assetCategory = AssetTestUtil.addCategory(
+				TestPropsValues.getGroupId(),
+				assetVocabulary.getVocabularyId());
+
+			AssetEntry assetEntry = _assetEntryLocalService.updateEntry(
+				user.getUserId(), TestPropsValues.getGroupId(),
+				user.getCreateDate(), user.getModifiedDate(),
+				User.class.getName(), user.getUserId(), user.getUuid(), 0,
+				new long[] {assetCategory.getCategoryId()},
+				new String[] {"tag"}, true, false, null, null, null, null, null,
+				user.getFullName(), null, null, null, null, 0, 0, null);
+
 			_testProcessUserInfo(
 				new String[] {"group1", "group2", "group3"}, "email",
 				new String[] {"group1", "group3"},
 				OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
+
+			assetEntry = _assetEntryLocalService.fetchEntry(
+				assetEntry.getEntryId());
+
+			Assert.assertArrayEquals(
+				_serviceContext.getAssetCategoryIds(),
+				assetEntry.getCategoryIds());
+			Assert.assertNotNull(
+				_assetTagLocalService.fetchTag(assetEntry.getGroupId(), "tag"));
+
 			_testProcessUserInfo(
 				new String[] {"group1", "group2"}, "email",
 				new String[] {"group1"},
@@ -387,26 +410,6 @@ public class OIDCUserInfoProcessorTest {
 
 		User existingUser = _fetchUser(matcherField);
 
-		if (existingUser != null) {
-			_assetVocabulary = AssetTestUtil.addVocabulary(
-				TestPropsValues.getGroupId(),
-				_portal.getClassNameId(User.class),
-				AssetCategoryConstants.ALL_CLASS_TYPE_PK, true);
-
-			_assetCategory = AssetTestUtil.addCategory(
-				TestPropsValues.getGroupId(),
-				_assetVocabulary.getVocabularyId());
-
-			_assetEntryLocalService.updateEntry(
-				existingUser.getUserId(), TestPropsValues.getGroupId(),
-				existingUser.getCreateDate(), existingUser.getModifiedDate(),
-				User.class.getName(), existingUser.getUserId(),
-				existingUser.getUuid(), 0,
-				new long[] {_assetCategory.getCategoryId()},
-				new String[] {"tag"}, true, false, null, null, null, null, null,
-				existingUser.getFullName(), null, null, null, null, 0, 0, null);
-		}
-
 		JSONObject userInfoJSONObject = JSONUtil.put(
 			"birthdate", String.valueOf(RandomTestUtil.nextDate())
 		).put(
@@ -466,34 +469,6 @@ public class OIDCUserInfoProcessorTest {
 
 		if (existingUser == null) {
 			_assertExpandoValue(user, oAuthClientEntry.getOAuthClientEntryId());
-		}
-		else {
-			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-				User.class.getName(), existingUser.getUserId());
-
-			Assert.assertArrayEquals(
-				_serviceContext.getAssetCategoryIds(),
-				assetEntry.getCategoryIds());
-
-			Assert.assertNotNull(
-				_assetTagLocalService.fetchTag(assetEntry.getGroupId(), "tag"));
-
-			_assetEntryLocalService.deleteAssetEntry(assetEntry);
-
-			_assetCategoryLocalService.deleteAssetCategory(_assetCategory);
-
-			_assetVocabularyLocalService.deleteAssetVocabulary(
-				_assetVocabulary);
-
-			_resourcePermissionLocalService.deleteResourcePermissions(
-				TestPropsValues.getCompanyId(), AssetCategory.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				_assetCategory.getCategoryId());
-
-			_resourcePermissionLocalService.deleteResourcePermissions(
-				TestPropsValues.getCompanyId(), AssetVocabulary.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				_assetVocabulary.getVocabularyId());
 		}
 
 		List<UserGroup> userUserGroups =
@@ -599,21 +574,11 @@ public class OIDCUserInfoProcessorTest {
 
 	private static String _customOIDCUserInfoMapperJSON;
 
-	private AssetCategory _assetCategory;
-
-	@Inject
-	private AssetCategoryLocalService _assetCategoryLocalService;
-
 	@Inject
 	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Inject
 	private AssetTagLocalService _assetTagLocalService;
-
-	private AssetVocabulary _assetVocabulary;
-
-	@Inject
-	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
@@ -651,9 +616,6 @@ public class OIDCUserInfoProcessorTest {
 
 	@Inject
 	private Portal _portal;
-
-	@Inject
-	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	private String _screenName;
 	private ServiceContext _serviceContext;

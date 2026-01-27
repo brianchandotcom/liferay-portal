@@ -93,6 +93,16 @@ public class ExportImportReportEntryLocalServiceImpl
 			exportImportReportEntry);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
+	public ExportImportReportEntry fetchEmptyExportImportReportEntryByG_C_C_C(
+		long groupId, long companyId, String classExternalReferenceCode,
+		long classNameId) {
+
+		return exportImportReportEntryPersistence.fetchByG_C_C_C_T(
+			groupId, companyId, classExternalReferenceCode, classNameId,
+			ExportImportReportEntryConstants.TYPE_EMPTY);
+	}
+
 	@Override
 	public List<ExportImportReportEntry> getExportImportReportEntries(
 		long companyId, long exportImportConfigurationId) {

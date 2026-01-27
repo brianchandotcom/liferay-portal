@@ -238,7 +238,7 @@ async function patch<T>(data: any, url: string) {
 	);
 }
 
-export default {
+const ApiHelper = {
 	batch,
 	delete: deleteRequest,
 	get,
@@ -248,3 +248,5 @@ export default {
 	postFormData,
 	put,
 };
+
+export default ApiHelper;

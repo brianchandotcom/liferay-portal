@@ -793,6 +793,16 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			throw new UnsupportedOperationException();
 		}
 
+		String uuid = serviceContext.getUuid();
+
+		if (Validator.isNotNull(uuid) &&
+			!Objects.equals(layout.getUuid(), uuid)) {
+
+			layout.setUuid(uuid);
+
+			layout = updateLayout(layout);
+		}
+
 		if (Objects.equals(type, LayoutConstants.TYPE_CONTENT)) {
 			layout = layoutLocalService.updateLayout(
 				layout.getGroupId(), layout.isPrivateLayout(),

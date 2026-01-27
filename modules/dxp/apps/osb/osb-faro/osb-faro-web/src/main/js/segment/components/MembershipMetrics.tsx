@@ -7,7 +7,10 @@ import {addAlert} from 'shared/actions/alerts';
 import {Alert} from 'shared/types';
 import {ClayButtonWithIcon} from '@clayui/button';
 import {connect, ConnectedProps} from 'react-redux';
-import {convertMillisecondsToDays} from 'shared/util/date';
+import {
+	convertMillisecondsToDays,
+	convertMillisecondsToHours
+} from 'shared/util/date';
 import {fetchMembershipMetrics} from 'shared/api/individual-segment';
 import {getIcon, getStatsColor, getTrendSign} from 'shared/util/metrics';
 import {getPercentage} from 'shared/util/util';
@@ -55,14 +58,26 @@ export const CardSection: React.FC<ICardSectionProps> = ({
 	if (isAverageSegmentMetric) {
 		const days = convertMillisecondsToDays(rawValue);
 
-		const languageKey = sub(
+		const hours = convertMillisecondsToHours(rawValue);
+
+		const daysLanguageKey = sub(
 			days === 1
 				? Liferay.Language.get('x-day').toLowerCase()
 				: Liferay.Language.get('x-days').toLowerCase(),
 			[days]
 		);
 
-		displayValue = languageKey as string;
+		const hoursLanguageKey = sub(
+			hours === 1
+				? Liferay.Language.get('x-hour').toLowerCase()
+				: Liferay.Language.get('x-hours').toLowerCase(),
+			[hours]
+		);
+
+		displayValue =
+			days >= 1 || rawValue === 0
+				? (daysLanguageKey as string)
+				: (hoursLanguageKey as string);
 	} else {
 		displayValue = sub(
 			rawValue === 1

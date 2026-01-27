@@ -125,7 +125,6 @@ public class ProjectBreadcrumbComponentSectionFragmentRenderer
 						objectEntry.getGroupId(),
 						"/by-external-reference-code/",
 						objectEntry.getExternalReferenceCode());
-
 					String viewProjectURL = ActionUtil.getBaseViewProjectURL(
 						objectDefinition, themeDisplay);
 

@@ -147,10 +147,10 @@ public class CommentsComponentSectionFragmentRenderer
 
 		return StringBundler.concat(
 			themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
-			GroupConstants.CMS_FRIENDLY_URL, actionId, "?classNameId=",
+			GroupConstants.CMS_FRIENDLY_URL, actionId, "?p_l_id=",
+			themeDisplay.getPlid(), "&classNameId=",
 			_portal.getClassNameId(objectDefinition.getClassName()),
-			"&classPK=", objectEntry.getObjectEntryId(), "&p_l_id=",
-			themeDisplay.getPlid());
+			"&classPK=", objectEntry.getObjectEntryId());
 	}
 
 	@Reference

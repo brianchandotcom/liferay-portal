@@ -92,7 +92,8 @@ public class LayoutDataCleanupPreupgradeProcess
 					ResourceConstants.SCOPE_INDIVIDUAL, " and ",
 					"[$SOURCE_TABLE_ALIAS$].name = '", Layout.class.getName(),
 					"' and [$SOURCE_TABLE_ALIAS$].primKey like '%",
-					PortletConstants.LAYOUT_SEPARATOR, "%'"),
+					PortletConstants.LAYOUT_SEPARATOR, "%' and ",
+					"[$SOURCE_TABLE_ALIAS$].primKeyId = 0"),
 				"primKey", "ResourcePermission", "plid", "Layout"));
 	}
 

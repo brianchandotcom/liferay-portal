@@ -26,6 +26,9 @@ public class LayoutDataCleanupPreupgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		DataCleanupPreupgradeProcess layoutRelatedDataCleanupPreupgradeProcess =
+			_getLayoutRelatedDataDataCleanupPreupgradeProcess();
+
 		DataCleanupPreupgradeProcess layoutSelfDataCleanupPreupgradeProcess =
 			_getLayoutSelfDataDataCleanupPreupgradeProcess();
 
@@ -34,7 +37,10 @@ public class LayoutDataCleanupPreupgradeProcess
 				LinkedHashMapBuilder.
 					<DataCleanupPreupgradeProcess,
 					 List<DataCleanupPreupgradeProcess>>put(
-						_getLayoutRelatedDataDataCleanupPreupgradeProcess(),
+						_getLayoutLayoutPageTemplateStructureDataCleanupPreupgradeProcess(),
+						dependsOn(layoutRelatedDataCleanupPreupgradeProcess)
+					).put(
+						layoutRelatedDataCleanupPreupgradeProcess,
 						dependsOn(layoutSelfDataCleanupPreupgradeProcess)
 					).put(
 						layoutSelfDataCleanupPreupgradeProcess, dependsOn()
@@ -49,6 +55,17 @@ public class LayoutDataCleanupPreupgradeProcess
 
 			dataCleanupPreupgradeProcess.upgrade();
 		}
+	}
+
+	private DataCleanupPreupgradeProcess
+		_getLayoutLayoutPageTemplateStructureDataCleanupPreupgradeProcess() {
+
+		return new DataCleanupPreupgradeProcess(
+			new TableOrphanReferencesDataCleanupPreupgradeProcess(
+				null, null, "layoutPageTemplateStructureId",
+				"LayoutPageTemplateStructureRel",
+				"layoutPageTemplateStructureId",
+				"LayoutPageTemplateStructure"));
 	}
 
 	private DataCleanupPreupgradeProcess

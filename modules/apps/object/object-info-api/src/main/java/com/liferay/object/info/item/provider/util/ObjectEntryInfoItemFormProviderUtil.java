@@ -312,12 +312,6 @@ public class ObjectEntryInfoItemFormProviderUtil {
 		return InfoFieldSet.builder(
 		).infoFieldSetEntry(
 			unsafeConsumer -> {
-				if (objectDefinition.isRootDescendantNode() &&
-					(parentObjectDefinition != null)) {
-
-					return;
-				}
-
 				for (ObjectField objectField :
 						objectFieldLocalService.getObjectFields(
 							objectDefinition.getObjectDefinitionId())) {

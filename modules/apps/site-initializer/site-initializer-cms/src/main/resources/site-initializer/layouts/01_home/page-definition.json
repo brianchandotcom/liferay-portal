@@ -19,6 +19,30 @@
 							"layout": {
 							}
 						},
+						"id": "2c14a5f5-e235-2951-a146-34999055341d",
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "com.liferay.site.cms.site.initializer.internal.fragment.renderer.ViewHomeSearchBarJSPSectionFragmentRenderer"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"indexed": true,
+							"layout": {
+							}
+						},
 						"id": "5d512a72-a41d-405d-334f-b7b73ed33053",
 						"pageElements": [
 							{

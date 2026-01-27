@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
@@ -153,19 +152,26 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			return segmentsExperience;
 		}
 
-		String defaultSegmentsExperienceUuid = GetterUtil.getString(
-			serviceContext.getAttribute("defaultSegmentsExperienceUuid"));
+		String uuid = serviceContext.getUuid();
 
-		if (Validator.isNotNull(defaultSegmentsExperienceUuid)) {
-			serviceContext.setUuid(defaultSegmentsExperienceUuid);
-		}
-
-		return _segmentsExperienceLocalService.addDefaultSegmentsExperience(
+		serviceContext.setUuid(
 			GetterUtil.getString(
-				serviceContext.getAttribute(
-					"defaultSegmentsExperienceExternalReferenceCode"),
-				layout.getExternalReferenceCode() + "-default"),
-			layout.getUserId(), layout.getPlid(), serviceContext);
+				serviceContext.getAttribute("defaultSegmentsExperienceUuid")));
+
+		try {
+			return _segmentsExperienceLocalService.addDefaultSegmentsExperience(
+				GetterUtil.getString(
+					serviceContext.getAttribute(
+						"defaultSegmentsExperienceExternalReferenceCode"),
+					layout.getExternalReferenceCode() + "-default"),
+				layout.getUserId(), layout.getPlid(), serviceContext);
+		}
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
+		}
+		finally {
+			serviceContext.setUuid(uuid);
+		}
 	}
 
 	private void _copySiteNavigationMenuId(

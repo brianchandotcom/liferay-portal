@@ -10,6 +10,7 @@ import com.liferay.exportimport.report.internal.util.ExportImportReportEntryUtil
 import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.base.ExportImportReportEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -94,11 +95,12 @@ public class ExportImportReportEntryLocalServiceImpl
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
-	public ExportImportReportEntry fetchEmptyExportImportReportEntryByG_C_C_C(
-		long groupId, long companyId, String classExternalReferenceCode,
-		long classNameId) {
+	public ExportImportReportEntry getEmptyExportImportReportEntryByG_C_C_C(
+			long groupId, long companyId, String classExternalReferenceCode,
+			long classNameId)
+		throws PortalException {
 
-		return exportImportReportEntryPersistence.fetchByG_C_C_C_T(
+		return exportImportReportEntryPersistence.findByG_C_C_C_T(
 			groupId, companyId, classExternalReferenceCode, classNameId,
 			ExportImportReportEntryConstants.TYPE_EMPTY);
 	}

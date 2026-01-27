@@ -159,8 +159,7 @@ public class ClientExtensionOSGiCommands implements OSGiCommands {
 				if (value.equals("agent")) {
 					filterString = "(.k8s.config.key=*)";
 				}
-
-				if (value.equals("bundle")) {
+				else if (value.equals("bundle")) {
 					filterString = "(.cx.config.key=*)";
 				}
 

@@ -44,6 +44,7 @@ describe('refreshReferencedStructures', () => {
 				en_US: 'Referenced Structure',
 			},
 			name: 'referenced-structure-name',
+			objectRelationshipERC: 'relationship-erc',
 			parent: structureUuid,
 			relationshipName: 'relationship',
 			spaces: [],

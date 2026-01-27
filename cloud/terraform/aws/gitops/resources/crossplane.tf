@@ -35,14 +35,33 @@ resource "aws_iam_policy" "provider_aws_iam_policy" {
 			{
 				Action=[
 					"iam:AttachRolePolicy",
+					"iam:AttachUserPolicy",
+					"iam:CreateAccessKey",
 					"iam:CreatePolicy",
+					"iam:CreateUser",
+					"iam:DeleteAccessKey",
 					"iam:DeletePolicy",
+					"iam:DeleteUser",
+					"iam:DeleteUserPolicy",
 					"iam:DetachRolePolicy",
+					"iam:DetachUserPolicy",
+					"iam:GetAccessKeyLastUsed",
 					"iam:GetPolicy",
 					"iam:GetPolicyVersion",
+					"iam:GetUser",
+					"iam:GetUserPolicy",
+					"iam:ListAccessKeys",
 					"iam:ListAttachedRolePolicies",
+					"iam:ListAttachedUserPolicies",
+					"iam:ListGroupsForUser",
 					"iam:ListPolicyVersions",
+					"iam:ListUserPolicies",
+					"iam:PutUserPolicy",
 					"iam:TagPolicy",
+					"iam:TagUser",
+					"iam:UntagUser",
+					"iam:UpdateAccessKey",
+					"iam:UpdateUser",
 				]
 				Effect="Allow"
 				Resource="*"

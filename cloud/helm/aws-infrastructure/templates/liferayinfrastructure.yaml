@@ -2,6 +2,7 @@
 {{- $db := .Values.database | default dict -}}
 {{- $dbBlue := $db.blue | default dict -}}
 {{- $dbGreen := $db.green | default dict -}}
+{{- $overlay := .Values.overlay | default dict -}}
 {{- $search := .Values.search | default dict -}}
 {{- $storage := .Values.storage | default dict -}}
 {{- $storageBlue := $storage.blue | default dict -}}
@@ -34,6 +35,8 @@ spec:
     deletionProtection: {{ .Values.deletionProtection | default false }}
     environmentId: {{ .Values.environmentId }}
     projectId: {{ .Values.projectId }}
+    overlay:
+        region: {{ $overlay.region | default "us-west-2" | quote }}
     search:
         engineVersion: {{ $search.engineVersion | default "OpenSearch_2.15" | quote }}
         instanceCount: {{ $search.instanceCount | default 2 }}

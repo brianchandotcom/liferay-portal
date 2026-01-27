@@ -84,6 +84,14 @@ spec:
                                     type: string
                                 projectId:
                                     type: string
+                                overlay:
+                                    properties:
+                                        region:
+                                            default: us-west-2
+                                            type: string
+                                    required:
+                                        -   region
+                                    type: object
                                 search:
                                     properties:
                                         engineVersion:

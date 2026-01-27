@@ -126,7 +126,7 @@ public class EmptyModelManagerImpl implements EmptyModelManager {
 			UnsafeSupplier<Integer, E> getModelStatusUnsafeSupplier,
 			long groupId, long companyId, String classExternalReferenceCode,
 			String className, UnsafeRunnable<E> updateModelStatusUnsafeRunnable)
-		throws E {
+		throws Exception {
 
 		if (getModelStatusUnsafeSupplier.get() !=
 				WorkflowConstants.STATUS_EMPTY) {
@@ -134,11 +134,9 @@ public class EmptyModelManagerImpl implements EmptyModelManager {
 			return;
 		}
 
-		// TODO Change fetch for get
-
 		ExportImportReportEntry exportImportReportEntry =
 			_exportImportReportEntryLocalService.
-				fetchEmptyExportImportReportEntryByG_C_C_C(
+				getEmptyExportImportReportEntryByG_C_C_C(
 					groupId, companyId, classExternalReferenceCode,
 					_classNameLocalService.getClassNameId(className));
 

@@ -67,7 +67,7 @@ public class EmptyModelManagerUtil {
 			UnsafeSupplier<Integer, E> getModelStatusUnsafeSupplier,
 			long groupId, long companyId, String classExternalReferenceCode,
 			String className, UnsafeRunnable<E> updateModelStatusUnsafeRunnable)
-		throws E {
+		throws Exception {
 
 		EmptyModelManager emptyModelManager = _emptyModelManagerSnapshot.get();
 

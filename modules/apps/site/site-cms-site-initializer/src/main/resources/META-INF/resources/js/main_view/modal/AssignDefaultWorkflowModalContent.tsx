@@ -54,7 +54,7 @@ export default function AssignDefaultWorkflowModalContent({
 			if (structureWorkflows.length === 1) {
 				toastMessage = sub(
 					Liferay.Language.get(
-						'x-workfow-was-successfully-assigned-to-x'
+						'x-workflow-was-successfully-assigned-to-x'
 					),
 					[
 						selectedWorkflow || Liferay.Language.get('no-workflow'),
@@ -65,7 +65,7 @@ export default function AssignDefaultWorkflowModalContent({
 			else {
 				toastMessage = sub(
 					Liferay.Language.get(
-						'x-workfow-was-successfully-assigned-to-multiple-content-structure'
+						'x-workflow-was-successfully-assigned-to-multiple-content-structure'
 					),
 					[selectedWorkflow || Liferay.Language.get('no-workflow')]
 				);

@@ -183,6 +183,7 @@ function getItems(
 
 	for (const objectDefinition of Object.values(objectDefinitions)) {
 		if (
+			objectDefinition.system ||
 			objectDefinition.externalReferenceCode === mainStructureERC ||
 			objectDefinition.objectFolderExternalReferenceCode ===
 				'L_CMS_STRUCTURE_REPEATABLE_GROUPS' ||

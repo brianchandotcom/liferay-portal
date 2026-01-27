@@ -8,13 +8,12 @@ package com.liferay.ai.hub.internal.agent;
 import com.liferay.ai.hub.agent.AgentContext;
 import com.liferay.ai.hub.rest.dto.v1_0.TaskDefinition;
 import com.liferay.ai.hub.rest.manager.v1_0.TaskDefinitionManager;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-
-import java.util.List;
 
 /**
  * @author Feliphe Marinho
@@ -39,21 +38,13 @@ public class AgentsFactory {
 					_agentContext.getDTOConverterContext(), null, null,
 					Pagination.of(1, 20), null);
 
-			List<TaskDefinition> taskDefinitions =
-				(List<TaskDefinition>)page.getItems();
-
-			Object[] agents = new Object[taskDefinitions.size()];
-
-			for (int i = 0; i < taskDefinitions.size(); i++) {
-				TaskDefinition taskDefinition = taskDefinitions.get(i);
-
-				agents[i] = new WorkflowAgent(
+			return TransformUtil.transformToArray(
+				page.getItems(),
+				taskDefinition -> new WorkflowAgent(
 					_agentContext, taskDefinition.getDescription(),
 					taskDefinition.getName(), taskDefinition.getVersion(),
-					_workflowInstanceManager);
-			}
-
-			return agents;
+					_workflowInstanceManager),
+				Object.class);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

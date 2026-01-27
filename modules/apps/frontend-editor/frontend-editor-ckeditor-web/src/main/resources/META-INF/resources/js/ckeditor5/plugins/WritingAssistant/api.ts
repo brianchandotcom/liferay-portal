@@ -11,9 +11,9 @@ import {EActionType} from './types';
 const AI_HUB_ENDPOINT = '/o/ai-hub/v1.0';
 
 export async function createEventSource() {
-	const tokens = await postToken();
+	const token = await postToken();
 
-	if (!tokens) {
+	if (!token) {
 		return;
 	}
 
@@ -23,8 +23,8 @@ export async function createEventSource() {
 				...init,
 				headers: new Headers({
 					'Accept': 'text/event-stream',
-					'Authorization': `Bearer ${tokens.accessToken}`,
-					'Liferay-AI-Hub-On-Behalf-Of': `Bearer ${tokens.userToken}`,
+					'Authorization': `Bearer ${token.accessToken}`,
+					'Liferay-AI-Hub-On-Behalf-Of': `Bearer ${token.userToken}`,
 				}),
 			}),
 		withCredentials: true,
@@ -63,9 +63,9 @@ export async function postTask(
 	eventSourceReference: string,
 	type: EActionType
 ) {
-	const tokens = await postToken();
+	const token = await postToken();
 
-	if (!tokens) {
+	if (!token) {
 		return;
 	}
 
@@ -82,9 +82,9 @@ export async function postTask(
 		}),
 		headers: new Headers({
 			'Accept': 'application/json',
-			'Authorization': `Bearer ${tokens.accessToken}`,
+			'Authorization': `Bearer ${token.accessToken}`,
 			'Content-Type': 'application/json',
-			'Liferay-AI-Hub-On-Behalf-Of': `Bearer ${tokens.userToken}`,
+			'Liferay-AI-Hub-On-Behalf-Of': `Bearer ${token.userToken}`,
 		}),
 		method: 'POST',
 	});

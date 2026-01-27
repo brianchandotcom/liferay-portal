@@ -15,7 +15,6 @@ import {Locator, Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
@@ -30,13 +29,6 @@ const test = mergeTests(
 	dataApiHelpersTest,
 	loginTest(),
 	objectPagesTest
-);
-
-const defaultValueTest = mergeTests(
-	test,
-	featureFlagsTest({
-		'LPD-46451': {enabled: true},
-	})
 );
 
 test.describe('Manage object fields through Model Builder', () => {
@@ -1495,10 +1487,10 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 	});
 });
 
-defaultValueTest.describe(
+test.describe(
 	'Manage object fields default value properties',
 	() => {
-		defaultValueTest(
+		test(
 			'can create, update, and delete default value for boolean field through Model Builder',
 			{tag: ['@LPD-70980']},
 			async ({
@@ -1641,7 +1633,7 @@ defaultValueTest.describe(
 			}
 		);
 
-		defaultValueTest(
+		test(
 			'can create, update, and delete default value for boolean field through Object Admin',
 			{tag: ['@LPD-49587']},
 			async ({
@@ -1745,7 +1737,7 @@ defaultValueTest.describe(
 			}
 		);
 
-		defaultValueTest(
+		test(
 			'can create, read, update and delete the default value of date and dateTime fields',
 			{tag: ['@LPD-48612']},
 			async ({
@@ -1854,7 +1846,7 @@ defaultValueTest.describe(
 			}
 		);
 
-		defaultValueTest(
+		test(
 			'can create, read, update and delete the default value of decimal, integer, longInteger, and precisionDecimal fields',
 			{tag: ['@LPD-49589']},
 			async ({
@@ -1974,7 +1966,7 @@ defaultValueTest.describe(
 			}
 		);
 
-		defaultValueTest(
+		test(
 			'can create, read, update and delete the default value of long text and text fields',
 			{tag: ['@LPD-48612']},
 			async ({
@@ -2080,7 +2072,7 @@ defaultValueTest.describe(
 			}
 		);
 
-		defaultValueTest(
+		test(
 			'can create, read, update and delete the default value of a richText field',
 			{tag: ['@LPD-48612']},
 			async ({
@@ -2165,7 +2157,7 @@ defaultValueTest.describe(
 			}
 		);
 
-		defaultValueTest(
+		test(
 			'can edit a default value input through Model Builder without throwing errors',
 			{tag: ['@LPD-70980']},
 			async ({
@@ -2218,7 +2210,7 @@ defaultValueTest.describe(
 			}
 		);
 
-		defaultValueTest(
+		test(
 			'default value fields are required',
 			{tag: ['@LPD-48612']},
 			async ({apiHelpers, objectFieldsPage, page}) => {
@@ -2272,7 +2264,7 @@ defaultValueTest.describe(
 			}
 		);
 
-		defaultValueTest(
+		test(
 			'model builder rightSidebar width only increases if configuration is enabled',
 			{tag: ['@LPD-70980']},
 			async ({

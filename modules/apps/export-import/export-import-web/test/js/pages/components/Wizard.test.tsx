@@ -16,11 +16,11 @@ import {
 
 const Step = ({children}: {children: React.ReactNode}) => <div>{children}</div>;
 
-const renderWizard = (backURL = '/back') => {
+const renderWizard = (backURL = '/back', onSubmit = () => {}) => {
 	const user = userEvent.setup();
 
 	render(
-		<Wizard backURL={backURL} onSubmit={() => {}} onSubmitLabel="Export">
+		<Wizard backURL={backURL} onSubmit={onSubmit} onSubmitLabel="Export">
 			<WizardStep description="This is step 1" title="Step 1">
 				<Step>
 					<h1>Step 1 Content</h1>
@@ -39,6 +39,22 @@ const renderWizard = (backURL = '/back') => {
 };
 
 describe('Wizard', () => {
+	it('calls onSubmit on the last step', async () => {
+		const handleSubmit = jest.fn();
+		const {user} = renderWizard('/back', handleSubmit);
+
+		await user.click(screen.getByRole('button', {name: 'continue'}));
+
+		expect(screen.getByText('Step 2 Content')).toBeInTheDocument();
+
+		const submitButton = screen.getByRole('button', {name: 'Export'});
+		expect(submitButton).toBeInTheDocument();
+
+		await user.click(submitButton);
+
+		expect(handleSubmit).toHaveBeenCalledTimes(1);
+	});
+
 	it('checks that the "Cancel" button has the correct link', () => {
 		const backURL = '/initial-page';
 

@@ -105,6 +105,9 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 		Map<String, Serializable> workflowContext =
 			executionContext.getWorkflowContext();
 
+		long companyId = CompanyThreadLocal.getCompanyId();
+		long ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
+
 		AssistantHandlerUtil.handle(
 			AssistantHandlerContext.builder(
 			).contentRetriever(
@@ -120,9 +123,8 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 				GetterUtil.getString(workflowContext.get("memoryId"))
 			).onCompleteResponse(
 				response -> _completeResponse(
-					response, CompanyThreadLocal.getCompanyId(),
-					CTCollectionThreadLocal.getCTCollectionId(),
-					executionContext, currentKaleoNode, kaleoNodeSettingValues,
+					response, companyId, ctCollectionId, executionContext,
+					currentKaleoNode, kaleoNodeSettingValues,
 					vertexAiGeminiStreamingChatModel)
 			).onError(
 				throwable -> vertexAiGeminiStreamingChatModel.close()

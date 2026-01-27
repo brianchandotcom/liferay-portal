@@ -404,15 +404,25 @@ public class SitePageResourceImpl
 
 		_validateSitePageLayout(layout);
 
-		if (!layout.isTypeEmpty() && (sitePage.getType() != null) &&
-			!Objects.equals(
-				layout.getType(),
-				SitePageTypeUtil.toInternalType(sitePage.getType()))) {
+		ServiceContext serviceContext = _getServiceContext(
+			layout.getGroupId(), sitePage);
+
+		if (layout.isTypeEmpty()) {
+			layout = _layoutService.convertEmptyLayout(
+				layout.getPlid(), layout.getNameMap(),
+				SitePageTypeUtil.toInternalType(sitePage.getType()),
+				layout.getClassNameId(), layout.getClassPK(),
+				layout.getMasterLayoutPageTemplateEntryERC(), serviceContext);
+		}
+		else if ((sitePage.getType() != null) &&
+				 !Objects.equals(
+					 layout.getType(),
+					 SitePageTypeUtil.toInternalType(sitePage.getType()))) {
 
 			throw new UnsupportedOperationException();
 		}
 
-		return _toSitePage(_updateLayout(layout, sitePage));
+		return _toSitePage(_updateLayout(layout, serviceContext, sitePage));
 	}
 
 	@Override
@@ -891,7 +901,8 @@ public class SitePageResourceImpl
 			layout);
 	}
 
-	private Layout _updateLayout(Layout layout, SitePage sitePage)
+	private Layout _updateLayout(
+			Layout layout, ServiceContext serviceContext, SitePage sitePage)
 		throws Exception {
 
 		Map<Locale, String> nameMap = layout.getNameMap();
@@ -925,9 +936,6 @@ public class SitePageResourceImpl
 				sitePage.getFriendlyUrlPath_i18n());
 		}
 
-		ServiceContext serviceContext = _getServiceContext(
-			layout.getGroupId(), sitePage);
-
 		serviceContext.setAttribute(
 			"hidden",
 			_isHiddenFromNavigation(
@@ -959,15 +967,6 @@ public class SitePageResourceImpl
 				_getTypeSettingsUnicodeProperties(sitePage), serviceContext);
 		}
 		else {
-			if (layout.isTypeEmpty()) {
-				layout = _layoutService.convertEmptyLayout(
-					layout.getPlid(), nameMap,
-					SitePageTypeUtil.toInternalType(sitePage.getType()),
-					layout.getClassNameId(), layout.getClassPK(),
-					layout.getMasterLayoutPageTemplateEntryERC(),
-					serviceContext);
-			}
-
 			layout = LayoutUtil.updatePortletLayout(
 				_cetManager, layout, nameMap, titleMap, descriptionMap,
 				keywordsMap, robotsMap, friendlyURLMap,

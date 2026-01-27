@@ -445,17 +445,6 @@ public class LayoutUtil {
 		ContentPageSpecification publishedContentPageSpecification =
 			(ContentPageSpecification)sortedContentPageSpecifications[1];
 
-		if (layout.isTypeEmpty()) {
-			ServiceContextUtil.setContentPageSpecificationsAttributes(
-				draftContentPageSpecification, layout.getGroupId(),
-				publishedContentPageSpecification, serviceContext);
-
-			layout = LayoutServiceUtil.convertEmptyLayout(
-				layout.getPlid(), nameMap, LayoutConstants.TYPE_CONTENT,
-				layout.getClassNameId(), layout.getClassPK(),
-				layout.getMasterLayoutPageTemplateEntryERC(), serviceContext);
-		}
-
 		Layout draftLayout = layout.fetchDraftLayout();
 
 		if (!Objects.equals(

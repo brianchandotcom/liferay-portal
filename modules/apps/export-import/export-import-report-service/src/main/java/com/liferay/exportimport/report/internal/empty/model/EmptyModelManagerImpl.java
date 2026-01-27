@@ -10,6 +10,7 @@ import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.petra.function.UnsafeBiFunction;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -18,6 +19,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.function.BiFunction;
 
@@ -120,19 +122,25 @@ public class EmptyModelManagerImpl implements EmptyModelManager {
 	}
 
 	@Override
-	public void solveEmptyModel(
-		String className, long groupId, long companyId,
-		String classExternalReferenceCode) {
+	public <E extends Exception> void solveEmptyModel(
+			UnsafeSupplier<Integer, E> getModelStatusUnsafeSupplier,
+			long groupId, long companyId, String classExternalReferenceCode,
+			String className, UnsafeRunnable<E> updateModelStatusUnsafeRunnable)
+		throws E {
+
+		if (getModelStatusUnsafeSupplier.get() !=
+				WorkflowConstants.STATUS_EMPTY) {
+
+			return;
+		}
+
+		// TODO Change fetch for get
 
 		ExportImportReportEntry exportImportReportEntry =
 			_exportImportReportEntryLocalService.
 				fetchEmptyExportImportReportEntryByG_C_C_C(
 					groupId, companyId, classExternalReferenceCode,
 					_classNameLocalService.getClassNameId(className));
-
-		if (exportImportReportEntry == null) {
-			return;
-		}
 
 		if (ExportImportThreadLocal.isImportInProcess() &&
 			(ExportImportThreadLocal.getExportImportConfigurationId() ==
@@ -147,6 +155,8 @@ public class EmptyModelManagerImpl implements EmptyModelManager {
 			_exportImportReportEntryLocalService.updateExportImportReportEntry(
 				exportImportReportEntry);
 		}
+
+		updateModelStatusUnsafeRunnable.run();
 	}
 
 	@Reference

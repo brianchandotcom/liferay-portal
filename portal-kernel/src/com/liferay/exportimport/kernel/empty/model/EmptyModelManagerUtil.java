@@ -6,6 +6,7 @@
 package com.liferay.exportimport.kernel.empty.model;
 
 import com.liferay.petra.function.UnsafeBiFunction;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.service.Snapshot;
@@ -62,14 +63,18 @@ public class EmptyModelManagerUtil {
 		return emptyModelManager.isEmptyModel();
 	}
 
-	public static void solveEmptyModel(
-		String className, long groupId, long companyId,
-		String classExternalReferenceCode) {
+	public static <E extends Exception> void solveEmptyModel(
+			UnsafeSupplier<Integer, E> getModelStatusUnsafeSupplier,
+			long groupId, long companyId, String classExternalReferenceCode,
+			String className, UnsafeRunnable<E> updateModelStatusUnsafeRunnable)
+		throws E {
 
 		EmptyModelManager emptyModelManager = _emptyModelManagerSnapshot.get();
 
 		emptyModelManager.solveEmptyModel(
-			className, groupId, companyId, classExternalReferenceCode);
+			getModelStatusUnsafeSupplier, groupId, companyId,
+			classExternalReferenceCode, className,
+			updateModelStatusUnsafeRunnable);
 	}
 
 	private static final Snapshot<EmptyModelManager>

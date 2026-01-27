@@ -88,7 +88,7 @@ public class ClientExtensionOSGiCommands implements OSGiCommands {
 		_printConfiguration(configuration);
 	}
 
-	private String _formatProperties(Dictionary<String, Object> properties) {
+	private String _format(Dictionary<String, Object> properties) {
 		if (properties.isEmpty()) {
 			return StringPool.BLANK;
 		}
@@ -202,7 +202,7 @@ public class ClientExtensionOSGiCommands implements OSGiCommands {
 				"\nPID: ", configuration.getPid(), "\nFactoryPID: ",
 				configuration.getFactoryPid(), "\nBundle location: ",
 				configuration.getBundleLocation(), "\n",
-				_formatProperties(configuration.getProperties())));
+				_format(configuration.getProperties())));
 	}
 
 	private void _printConfigurations(Configuration[] configurations) {

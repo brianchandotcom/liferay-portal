@@ -261,24 +261,13 @@ function getTypeParam(param) {
 }
 
 async function main() {
-	const categoryParam = getFirstParam('category');
-	const queryParamData = getFirstParam('q', 'n', 'keyword');
-	const query = queryParamData?.value || '';
-
 	renderRecentSearches();
 
-	selectCategory(categoryParam?.value || 'All Categories');
+	window.addEventListener('popstate', () => {
+		syncContextParams();
+	});
 
-	searchInput.value = query;
-
-	if (query && queryParamData.key !== 'keyword') {
-		const data = await getProducts(state.categorySelected, query);
-		showFeedbackAlert(
-			data.items.length
-				? `<strong class="mx-1">${data.totalCount}</strong> results for <strong class="mx-1">${query}</strong>`
-				: `No results for <strong class="mx-1">${query}</strong>. Feel free to browse the catalog.`
-		);
-	}
+	syncContextParams();
 
 	categoriesListItems.forEach((item) => {
 		const typeParam = getTypeParam('type');
@@ -642,7 +631,38 @@ function renderRecentSearches() {
 	recentSearchesContainer.appendChild(list);
 }
 
-function selectCategory(category) {
+async function syncContextParams() {
+	const categoryParam = getFirstParam('category', 'type');
+	const keywordParam = getFirstParam('q', 'n', 'keyword');
+	const keywordValue = keywordParam?.value || '';
+
+	selectCategory(
+		categoryParam?.value ? categoryParam.value : 'All Categories',
+		false
+	);
+
+	searchInput.value = keywordValue;
+
+	if (keywordValue && keywordParam.key !== 'keyword') {
+		try {
+			const data = await getProducts(
+				state.categorySelected,
+				keywordValue
+			);
+
+			showFeedbackAlert(
+				data.items.length
+					? `<strong class="mx-1">${data.totalCount}</strong> results for <strong class="mx-1">${keywordValue}</strong>`
+					: `No results for <strong class="mx-1">${keywordValue}</strong>. Feel free to browse the catalog.`
+			);
+		}
+		catch (error) {
+			console.error('Error fetching products', error);
+		}
+	}
+}
+
+function selectCategory(category, updateHistory = true) {
 	const currentUrl = window.location.href;
 	const url = new URL(currentUrl);
 
@@ -657,9 +677,14 @@ function selectCategory(category) {
 	});
 
 	if (category === 'All Categories') {
-		url.searchParams.delete('type');
 		categoriesTrigger.textContent = 'All Categories';
-		window.history.replaceState({}, '', url.toString());
+		url.searchParams.delete('category');
+		url.searchParams.delete('type');
+
+		if (updateHistory) {
+			window.history.pushState({}, '', url);
+		}
+
 		state.categorySelected = category;
 
 		return;
@@ -667,9 +692,11 @@ function selectCategory(category) {
 
 	if (category && category !== 'All Categories') {
 		categoriesTrigger.textContent = category;
+		url.searchParams.set('category', category);
 		url.searchParams.set('type', category);
 	}
 	else {
+		url.searchParams.delete('category');
 		url.searchParams.delete('type');
 	}
 
@@ -682,7 +709,10 @@ function selectCategory(category) {
 		state.isResultsExpanded = true;
 	}
 
-	window.history.replaceState({}, '', url.toString());
+	if (updateHistory) {
+		window.history.pushState({}, '', url);
+	}
+
 	state.categorySelected = category;
 }
 

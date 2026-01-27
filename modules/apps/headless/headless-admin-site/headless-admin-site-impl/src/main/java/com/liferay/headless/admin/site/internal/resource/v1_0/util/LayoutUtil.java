@@ -474,26 +474,14 @@ public class LayoutUtil {
 				serviceContext);
 		}
 
-		if (pageSpecifications.length != 2) {
-			throw new UnsupportedOperationException();
-		}
+		PageSpecification[] sortedContentPageSpecifications =
+			PageSpecificationUtil.getSortedContentPageSpecifications(
+				pageSpecifications);
 
-		ContentPageSpecification draftContentPageSpecification;
+		ContentPageSpecification draftContentPageSpecification =
+			(ContentPageSpecification)sortedContentPageSpecifications[0];
 		ContentPageSpecification publishedContentPageSpecification =
-			(ContentPageSpecification)pageSpecifications[0];
-
-		if (Objects.equals(
-				layout.getExternalReferenceCode(),
-				publishedContentPageSpecification.getExternalReferenceCode())) {
-
-			draftContentPageSpecification =
-				(ContentPageSpecification)pageSpecifications[1];
-		}
-		else {
-			draftContentPageSpecification = publishedContentPageSpecification;
-			publishedContentPageSpecification =
-				(ContentPageSpecification)pageSpecifications[1];
-		}
+			(ContentPageSpecification)sortedContentPageSpecifications[1];
 
 		if (layout.isTypeEmpty()) {
 			PageExperience defaultPageExperience =
@@ -534,11 +522,7 @@ public class LayoutUtil {
 				draftContentPageSpecification.getExternalReferenceCode()) ||
 			!Objects.equals(
 				layout.getExternalReferenceCode(),
-				publishedContentPageSpecification.getExternalReferenceCode()) ||
-			!Objects.equals(
-				publishedContentPageSpecification.
-					getDraftContentPageSpecificationExternalReferenceCode(),
-				draftContentPageSpecification.getExternalReferenceCode())) {
+				publishedContentPageSpecification.getExternalReferenceCode())) {
 
 			throw new UnsupportedOperationException();
 		}

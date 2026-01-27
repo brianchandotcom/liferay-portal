@@ -191,7 +191,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		};
 
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
-			nameMap, null, DepotConstants.TYPE_ASSET_LIBRARY, serviceContext);
+			nameMap, null, DepotConstants.TYPE_SPACE, serviceContext);
 
 		return _depotEntryLocalService.updateDepotEntry(
 			depotEntry.getDepotEntryId(), nameMap, null, Collections.emptyMap(),

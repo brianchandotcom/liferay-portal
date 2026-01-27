@@ -39,7 +39,7 @@ public class TextEmbeddingContentHelper<T extends BaseModel<T>> {
 		_append(_nonlocalizedContentSB, value);
 
 		for (StringBundler localizedContentSB :
-				_localizedContentSBMap.values()) {
+				_localizedContentSBs.values()) {
 
 			_append(localizedContentSB, value);
 		}
@@ -69,7 +69,7 @@ public class TextEmbeddingContentHelper<T extends BaseModel<T>> {
 	}
 
 	public String getLocalizedContent(String languageId) {
-		StringBundler localizedContentSB = _localizedContentSBMap.get(
+		StringBundler localizedContentSB = _localizedContentSBs.get(
 			languageId);
 
 		if ((localizedContentSB != null) &&
@@ -80,7 +80,7 @@ public class TextEmbeddingContentHelper<T extends BaseModel<T>> {
 
 		if (!_defaultLanguageId.equals(languageId)) {
 			StringBundler defaultLocalizedContentSB =
-				_localizedContentSBMap.get(_defaultLanguageId);
+				_localizedContentSBs.get(_defaultLanguageId);
 
 			if ((defaultLocalizedContentSB != null) &&
 				(defaultLocalizedContentSB.length() != 0)) {
@@ -96,7 +96,7 @@ public class TextEmbeddingContentHelper<T extends BaseModel<T>> {
 		Map<String, String> localizedContentMap = new TreeMap<>();
 
 		for (Map.Entry<String, StringBundler> entry :
-				_localizedContentSBMap.entrySet()) {
+				_localizedContentSBs.entrySet()) {
 
 			StringBundler localizedContentSB = entry.getValue();
 
@@ -128,7 +128,7 @@ public class TextEmbeddingContentHelper<T extends BaseModel<T>> {
 	}
 
 	private StringBundler _getLocalizedContentStringBundler(String languageId) {
-		return _localizedContentSBMap.computeIfAbsent(
+		return _localizedContentSBs.computeIfAbsent(
 			languageId,
 			key -> {
 				StringBundler sb = new StringBundler(_size);
@@ -144,7 +144,7 @@ public class TextEmbeddingContentHelper<T extends BaseModel<T>> {
 	private final long _companyId;
 	private final String _defaultLanguageId;
 	private final String _delimiter;
-	private final Map<String, StringBundler> _localizedContentSBMap =
+	private final Map<String, StringBundler> _localizedContentSBs =
 		new TreeMap<>();
 	private final T _model;
 	private final StringBundler _nonlocalizedContentSB;

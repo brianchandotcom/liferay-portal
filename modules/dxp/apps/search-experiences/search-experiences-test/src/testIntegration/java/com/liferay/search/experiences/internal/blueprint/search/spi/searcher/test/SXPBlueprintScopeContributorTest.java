@@ -33,7 +33,6 @@ import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.spi.searcher.SearchRequestContributor;
 import com.liferay.portal.search.test.util.DocumentsAssert;
-import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -55,7 +54,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Joshua Cords
  */
-@FeatureFlag("LPD-37320")
 @RunWith(Arquillian.class)
 public class SXPBlueprintScopeContributorTest {
 

@@ -20,12 +20,10 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -63,9 +61,6 @@ public class JournalDataCleanupPreupgradeProcessTest
 	public void setUp() throws Exception {
 		_classNames = _classNameLocalService.getClassNames(
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-		_resourcePermissions =
-			_resourcePermissionLocalService.getResourcePermissions(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	@After
@@ -77,16 +72,6 @@ public class JournalDataCleanupPreupgradeProcessTest
 
 		for (ClassName className : classNames) {
 			_classNameLocalService.deleteClassName(className);
-		}
-
-		List<ResourcePermission> resourcePermissions = ListUtil.remove(
-			_resourcePermissionLocalService.getResourcePermissions(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-			_resourcePermissions);
-
-		for (ResourcePermission resourcePermission : resourcePermissions) {
-			_resourcePermissionLocalService.deleteResourcePermission(
-				resourcePermission);
 		}
 	}
 
@@ -144,7 +129,6 @@ public class JournalDataCleanupPreupgradeProcessTest
 	}
 
 	private static List<ClassName> _classNames;
-	private static List<ResourcePermission> _resourcePermissions;
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
@@ -163,8 +147,5 @@ public class JournalDataCleanupPreupgradeProcessTest
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
-
-	@Inject
-	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 }

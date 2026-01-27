@@ -5,8 +5,6 @@
 
 package com.liferay.search.experiences.internal.blueprint.search.request.body.contributor;
 
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -145,10 +143,7 @@ public class GeneralSXPSearchRequestBodyContributor
 					"assetSubtypeIdentifiersMap", assetSubtypeIdentifiersMap));
 		}
 
-		if (ArrayUtil.isNotEmpty(generalConfiguration.getScope()) &&
-			FeatureFlagManagerUtil.isEnabled(
-				CompanyThreadLocal.getCompanyId(), "LPD-37320")) {
-
+		if (ArrayUtil.isNotEmpty(generalConfiguration.getScope())) {
 			TermsQuery termsQuery = _queries.terms(
 				"scopeGroupExternalReferenceCode");
 

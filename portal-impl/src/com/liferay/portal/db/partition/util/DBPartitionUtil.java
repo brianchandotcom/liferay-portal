@@ -379,12 +379,15 @@ public class DBPartitionUtil {
 		if (PropsValues.DATABASE_PARTITION_ENABLED) {
 			try (PreparedStatement preparedStatement =
 					connection.prepareStatement(
-						"select companyId from Company where webId = '" +
-							PropsValues.COMPANY_DEFAULT_WEB_ID + "'");
-				ResultSet resultSet = preparedStatement.executeQuery()) {
+						"select companyId from Company where webId = ?")) {
 
-				if (resultSet.next()) {
-					_defaultCompanyId = resultSet.getLong(1);
+				preparedStatement.setString(
+					1, PropsValues.COMPANY_DEFAULT_WEB_ID);
+
+				try (ResultSet resultSet = preparedStatement.executeQuery()) {
+					if (resultSet.next()) {
+						_defaultCompanyId = resultSet.getLong(1);
+					}
 				}
 			}
 		}

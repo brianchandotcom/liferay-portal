@@ -236,12 +236,12 @@ public class ClientExtensionOSGiCommands implements OSGiCommands {
 				InMemoryOnlyConfigurationThreadLocal.
 					setInMemoryOnlyWithSafeCloseable(true)) {
 
-			Configuration reloadedConfiguration =
-				ConfigurationUtil.getConfiguration(_configurationAdmin, pid);
+			configuration = ConfigurationUtil.getConfiguration(
+				_configurationAdmin, pid);
 
-			reloadedConfiguration.update(properties);
+			configuration.update(properties);
 
-			return reloadedConfiguration;
+			return configuration;
 		}
 	}
 

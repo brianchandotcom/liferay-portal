@@ -76,6 +76,20 @@ public class PageNavigationMenuItemSettingsSerDes {
 			sb.append(pageNavigationMenuItemSettings.getPrivatePage());
 		}
 
+		if (pageNavigationMenuItemSettings.getTitle() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"title\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(pageNavigationMenuItemSettings.getTitle()));
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -118,6 +132,15 @@ public class PageNavigationMenuItemSettingsSerDes {
 					pageNavigationMenuItemSettings.getPrivatePage()));
 		}
 
+		if (pageNavigationMenuItemSettings.getTitle() == null) {
+			map.put("title", null);
+		}
+		else {
+			map.put(
+				"title",
+				String.valueOf(pageNavigationMenuItemSettings.getTitle()));
+		}
+
 		return map;
 	}
 
@@ -142,6 +165,9 @@ public class PageNavigationMenuItemSettingsSerDes {
 			else if (Objects.equals(jsonParserFieldName, "privatePage")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "title")) {
+				return false;
+			}
 
 			return false;
 		}
@@ -161,6 +187,12 @@ public class PageNavigationMenuItemSettingsSerDes {
 				if (jsonParserFieldValue != null) {
 					pageNavigationMenuItemSettings.setPrivatePage(
 						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "title")) {
+				if (jsonParserFieldValue != null) {
+					pageNavigationMenuItemSettings.setTitle(
+						(String)jsonParserFieldValue);
 				}
 			}
 		}

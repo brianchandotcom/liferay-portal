@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowDefinitionSystemException;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.kaleo.definition.util.WorkflowDefinitionContentUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
@@ -178,6 +179,11 @@ public class KaleoDefinitionLocalServiceImpl
 			kaleoDefinitionPersistence.findByC_N_V(
 				serviceContext.getCompanyId(), name, version);
 
+		if (kaleoDefinition.isSystem()) {
+			throw new WorkflowDefinitionSystemException(
+				"System workflow definition cannot be deactivated");
+		}
+
 		kaleoDefinition.setModifiedDate(new Date());
 		kaleoDefinition.setActive(false);
 		kaleoDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
@@ -226,6 +232,11 @@ public class KaleoDefinitionLocalServiceImpl
 
 		KaleoDefinition kaleoDefinition = getKaleoDefinition(
 			name, serviceContext);
+
+		if (kaleoDefinition.isSystem()) {
+			throw new WorkflowDefinitionSystemException(
+				"System workflow definition cannot be deleted");
+		}
 
 		if (kaleoDefinition.isActive()) {
 			throw new WorkflowException(
@@ -362,12 +373,17 @@ public class KaleoDefinitionLocalServiceImpl
 
 		// Kaleo definition
 
+		KaleoDefinition kaleoDefinition =
+			kaleoDefinitionPersistence.findByPrimaryKey(kaleoDefinitionId);
+
+		if (kaleoDefinition.isSystem()) {
+			throw new WorkflowDefinitionSystemException(
+				"System workflow definition cannot be updated");
+		}
+
 		User user = _userLocalService.getUser(
 			serviceContext.getGuestOrUserId());
 		Date date = new Date();
-
-		KaleoDefinition kaleoDefinition =
-			kaleoDefinitionPersistence.findByPrimaryKey(kaleoDefinitionId);
 
 		kaleoDefinition.setExternalReferenceCode(externalReferenceCode);
 		kaleoDefinition.setGroupId(

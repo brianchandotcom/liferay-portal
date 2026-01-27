@@ -4938,15 +4938,6 @@
 	},
 	{
 		"classNames": [
-			"MBMessageLocalService",
-			"MBMessageLocalServiceUtil"
-		],
-		"from": "addDiscussionMessage(long param, String param, long param, String param, long param, long param, long param, String param, String param, ServiceContext param)",
-		"issueKey": "LPD-58406",
-		"to": "addDiscussionMessage(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#, param#8#, param#9#)"
-	},
-	{
-		"classNames": [
 			"LayoutLocalService",
 			"LayoutLocalServiceUtil",
 			"LayoutService",
@@ -4955,6 +4946,15 @@
 		"from": "addLayout(long paramName, long paramName, boolean paramName, long paramName, String paramName, String paramName, String paramName, String paramName, boolean paramName, boolean paramName, String paramName, ServiceContext paramName)",
 		"issueKey": "LPD-58261",
 		"to": "addLayout(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#, param#8#, param#9#, param#10#, param#11#)"
+	},
+	{
+		"classNames": [
+			"MBMessageLocalService",
+			"MBMessageLocalServiceUtil"
+		],
+		"from": "addDiscussionMessage(long param, String param, long param, String param, long param, long param, long param, String param, String param, ServiceContext param)",
+		"issueKey": "LPD-58406",
+		"to": "addDiscussionMessage(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#, param#8#, param#9#)"
 	},
 	{
 		"classNames": [

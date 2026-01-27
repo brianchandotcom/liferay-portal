@@ -5,12 +5,9 @@
 
 package com.liferay.exportimport.test.rule;
 
-import com.liferay.petra.lang.CentralizedThreadLocal;
-import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.exportimport.test.util.LazyReferencingTestUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.test.rule.AbstractTestRule;
-
-import java.util.function.Supplier;
 
 import org.junit.runner.Description;
 
@@ -51,12 +48,8 @@ public class LazyReferencingTestRule extends AbstractTestRule<Void, Void> {
 	}
 
 	private void _restoreLazyReferencingThreadLocal() {
-		if (_originalCentralizedThreadLocal != null) {
-			_originalCentralizedThreadLocal.set(_originalValue);
-
-			ReflectionTestUtil.setFieldValue(
-				_originalCentralizedThreadLocal, "_supplier",
-				_originalSupplier);
+		if (_safeCloseable != null) {
+			_safeCloseable.close();
 		}
 	}
 
@@ -65,21 +58,12 @@ public class LazyReferencingTestRule extends AbstractTestRule<Void, Void> {
 			LazyReferencing.class);
 
 		if (lazyReferencing != null) {
-			_originalCentralizedThreadLocal = ReflectionTestUtil.getFieldValue(
-				LazyReferencingThreadLocal.class, "_enabled");
-
-			_originalValue = _originalCentralizedThreadLocal.get();
-
-			_originalCentralizedThreadLocal.set(lazyReferencing.enabled());
-
-			_originalSupplier = ReflectionTestUtil.getAndSetFieldValue(
-				_originalCentralizedThreadLocal, "_supplier",
-				lazyReferencing::enabled);
+			_safeCloseable =
+				LazyReferencingTestUtil.setLazyReferencingWithSafeCloseable(
+					lazyReferencing.enabled());
 		}
 	}
 
-	private CentralizedThreadLocal<Boolean> _originalCentralizedThreadLocal;
-	private Supplier<Boolean> _originalSupplier;
-	private Boolean _originalValue;
+	private SafeCloseable _safeCloseable;
 
 }

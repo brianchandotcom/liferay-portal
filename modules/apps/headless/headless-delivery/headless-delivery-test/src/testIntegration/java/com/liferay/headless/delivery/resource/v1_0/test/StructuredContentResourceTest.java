@@ -1367,8 +1367,9 @@ public class StructuredContentResourceTest
 				{
 					contentFieldValue = new ContentFieldValue() {
 						{
-							data = _COMPLEX_STRUCTURED_CONTENT_OPTIONS
-								[RandomTestUtil.randomInt(0, 2)];
+							int index = RandomTestUtil.randomInt(0, 2);
+
+							data = _COMPLEX_STRUCTURED_CONTENT_OPTIONS[index];
 
 							setValue(
 								() -> {
@@ -1376,8 +1377,9 @@ public class StructuredContentResourceTest
 										return null;
 									}
 
-									return _COMPLEX_STRUCTURED_CONTENT_OPTIONS
-										[RandomTestUtil.randomInt(0, 2)];
+									return "SelectFromList43392010" +
+										_COMPLEX_STRUCTURED_CONTENT_OPTIONS
+											[index];
 								});
 						}
 					};
@@ -1389,8 +1391,9 @@ public class StructuredContentResourceTest
 				{
 					contentFieldValue = new ContentFieldValue() {
 						{
-							data = _COMPLEX_STRUCTURED_CONTENT_OPTIONS
-								[RandomTestUtil.randomInt(0, 2)];
+							int index = RandomTestUtil.randomInt(0, 2);
+
+							data = _COMPLEX_STRUCTURED_CONTENT_OPTIONS[index];
 
 							setValue(
 								() -> {
@@ -1398,8 +1401,9 @@ public class StructuredContentResourceTest
 										return null;
 									}
 
-									return _COMPLEX_STRUCTURED_CONTENT_OPTIONS
-										[RandomTestUtil.randomInt(0, 2)];
+									return "SingleSelection90775749" +
+										_COMPLEX_STRUCTURED_CONTENT_OPTIONS
+											[index];
 								});
 						}
 					};
@@ -1411,8 +1415,9 @@ public class StructuredContentResourceTest
 				{
 					contentFieldValue = new ContentFieldValue() {
 						{
-							data = _COMPLEX_STRUCTURED_CONTENT_OPTIONS
-								[RandomTestUtil.randomInt(0, 2)];
+							int index = RandomTestUtil.randomInt(0, 2);
+
+							data = _COMPLEX_STRUCTURED_CONTENT_OPTIONS[index];
 
 							setValue(
 								() -> {
@@ -1420,8 +1425,9 @@ public class StructuredContentResourceTest
 										return null;
 									}
 
-									return _COMPLEX_STRUCTURED_CONTENT_OPTIONS
-										[RandomTestUtil.randomInt(0, 2)];
+									return "MultipleSelection91429516" +
+										_COMPLEX_STRUCTURED_CONTENT_OPTIONS
+											[index];
 								});
 						}
 					};

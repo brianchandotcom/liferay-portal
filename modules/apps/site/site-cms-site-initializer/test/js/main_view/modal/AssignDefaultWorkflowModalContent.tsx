@@ -111,7 +111,7 @@ describe('AssignDefaultWorkflowModalContent', () => {
 			expect(openToast).toHaveBeenCalledWith(
 				expect.objectContaining({
 					message:
-						'x-workfow-was-successfully-assigned-to-multiple-content-structure',
+						'x-workflow-was-successfully-assigned-to-multiple-content-structure',
 					type: 'success',
 				})
 			);

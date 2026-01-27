@@ -15,7 +15,7 @@ import LearnMessage, {
 	LearnResourcesContext,
 } from '../learn_message/LearnMessage';
 
-export type Type = 'beta' | 'deprecated';
+export type Type = 'beta' | 'deprecated' | 'maintenance';
 
 type DisplayType = 'info' | 'warning';
 
@@ -65,6 +65,18 @@ export default function FeatureIndicator({
 		popoverTitle = Liferay.Language.get('deprecated-feature');
 		symbol = 'warning-full';
 		tooltipTitle = Liferay.Language.get('open-deprecated-definition');
+	}
+
+	if (type === 'maintenance') {
+		displayType = 'info';
+		label = Liferay.Language.get('maintenance');
+		learnMessageResourceKey = 'maintenance-mode';
+		popoverText = Liferay.Language.get(
+			'this-feature-is-in-maintenance-mode'
+		);
+		popoverTitle = Liferay.Language.get('maintenance-mode');
+		symbol = 'info-circle-open';
+		tooltipTitle = Liferay.Language.get('open-maintenance-mode-definition');
 	}
 
 	return (

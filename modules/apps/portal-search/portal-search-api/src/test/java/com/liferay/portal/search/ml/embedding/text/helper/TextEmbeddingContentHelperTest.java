@@ -51,11 +51,9 @@ public class TextEmbeddingContentHelperTest {
 	}
 
 	@Test
-	public void testAppend() {
+	public void testAppend1() {
 		_textEmbeddingContentHelper.append("all");
-
 		_textEmbeddingContentHelper.append("en_US", "localized_en_US");
-
 		_textEmbeddingContentHelper.append("pt_BR", "localized_pt_BR");
 
 		Assert.assertEquals(
@@ -80,7 +78,7 @@ public class TextEmbeddingContentHelperTest {
 	}
 
 	@Test
-	public void testAppendDelimiter() {
+	public void testAppend2() {
 		_textEmbeddingContentHelper.append("en_US", "alpha");
 
 		Map<String, String> localizedContentMap =
@@ -99,7 +97,7 @@ public class TextEmbeddingContentHelperTest {
 	}
 
 	@Test
-	public void testDefaultLocaleFallback() {
+	public void testAppend3() {
 		_textEmbeddingContentHelper.append("all");
 		_textEmbeddingContentHelper.append("en_US", "localized_en_US");
 

@@ -6,6 +6,8 @@
 import React from 'react';
 
 import '@testing-library/jest-dom';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
@@ -16,18 +18,34 @@ import {
 
 const Step = ({children}: {children: React.ReactNode}) => <div>{children}</div>;
 
-const renderWizard = (backURL = '/back', onSubmit = () => {}) => {
+const renderWizard = (backURL = '/back', onSubmit: () => void = () => {}) => {
 	const user = userEvent.setup();
 
 	render(
-		<Wizard backURL={backURL} onSubmit={onSubmit} onSubmitLabel="Export">
-			<WizardStep description="This is step 1" title="Step 1">
+		<Wizard backURL={backURL}>
+			<WizardStep
+				description="This is step 1"
+				onSubmit={onSubmit}
+				title="Step 1"
+			>
 				<Step>
 					<h1>Step 1 Content</h1>
 				</Step>
 			</WizardStep>
 
-			<WizardStep description="This is step 2" title="Step 2">
+			<WizardStep
+				actionButton={
+					<ClayButton type="submit">
+						<span className="inline-item inline-item-before">
+							<ClayIcon className="mr-1" symbol="export" />
+						</span>
+
+						{Liferay.Language.get('export')}
+					</ClayButton>
+				}
+				description="This is step 2"
+				title="Step 2"
+			>
 				<Step>
 					<h1>Step 2 Content</h1>
 				</Step>
@@ -47,9 +65,9 @@ describe('Wizard', () => {
 
 		expect(screen.getByText('Step 2 Content')).toBeInTheDocument();
 
-		const submitButton = screen.getByRole('button', {name: 'Export'});
+		const submitButton = screen.getByRole('button', {name: /export/i});
 		expect(submitButton).toBeInTheDocument();
-
+		expect(submitButton).toHaveAttribute('type', 'submit');
 		await user.click(submitButton);
 
 		expect(handleSubmit).toHaveBeenCalledTimes(1);

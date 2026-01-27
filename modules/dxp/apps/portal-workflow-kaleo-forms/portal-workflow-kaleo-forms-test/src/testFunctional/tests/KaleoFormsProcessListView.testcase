@@ -14,6 +14,8 @@ definition {
 
 		User.firstLoginPG();
 
+		KaleoFormsAdmin.enableKaleoFormsConfiguration(toggleValue = "Disabled");
+
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Kaleo Forms Admin");
@@ -37,6 +39,8 @@ definition {
 			Workflow.tearDownWorkflowDefinitions();
 
 			PagesAdmin.tearDownCP();
+
+			KaleoFormsAdmin.enableKaleoFormsConfiguration(toggleValue = "Enabled");
 		}
 	}
 

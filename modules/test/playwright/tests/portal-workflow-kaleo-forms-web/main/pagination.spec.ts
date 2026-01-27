@@ -5,12 +5,17 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {kaleoFormsPagesTest} from '../../../fixtures/kaleoFormsPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import {waitForAlert} from '../../../utils/waitForAlert';
 
-export const test = mergeTests(loginTest(), kaleoFormsPagesTest);
+export const test = mergeTests(
+	featureFlagsTest({'LPD-74739': {enabled: true}}),
+	loginTest(),
+	kaleoFormsPagesTest
+);
 
 test.afterEach(async ({kaleoFormsAdminPage, page}) => {
 	await kaleoFormsAdminPage.goto();

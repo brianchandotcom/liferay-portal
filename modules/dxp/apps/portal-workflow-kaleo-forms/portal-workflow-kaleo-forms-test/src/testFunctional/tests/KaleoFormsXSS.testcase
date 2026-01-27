@@ -11,6 +11,8 @@ definition {
 
 		User.firstLoginPG();
 
+		KaleoFormsAdmin.enableKaleoFormsConfiguration(toggleValue = "Disabled");
+
 		Workflow.openWorkflowListView();
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = '''<script>alert(123);</script>''');
@@ -46,6 +48,8 @@ definition {
 			PagesAdmin.tearDownCP();
 
 			Workflow.tearDownWorkflowDefinitions();
+
+			KaleoFormsAdmin.enableKaleoFormsConfiguration(toggleValue = "Enabled");
 		}
 	}
 

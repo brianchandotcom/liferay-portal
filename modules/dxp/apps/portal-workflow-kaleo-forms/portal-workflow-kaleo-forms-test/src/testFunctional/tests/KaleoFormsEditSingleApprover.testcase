@@ -14,6 +14,8 @@ definition {
 
 		User.firstLoginPG();
 
+		KaleoFormsAdmin.enableKaleoFormsConfiguration(toggleValue = "Disabled");
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -94,6 +96,8 @@ definition {
 			JSONUser.tearDownNonAdminUsers();
 
 			Role.tearDownCP();
+
+			KaleoFormsAdmin.enableKaleoFormsConfiguration(toggleValue = "Enabled");
 		}
 	}
 

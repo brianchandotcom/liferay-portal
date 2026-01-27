@@ -13,6 +13,8 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		KaleoFormsAdmin.enableKaleoFormsConfiguration(toggleValue = "Disabled");
 	}
 
 	tearDown {
@@ -35,6 +37,8 @@ definition {
 			Workflow.tearDownWorkflowDefinitions();
 
 			PagesAdmin.tearDownCP();
+
+			KaleoFormsAdmin.enableKaleoFormsConfiguration(toggleValue = "Enabled");
 		}
 	}
 

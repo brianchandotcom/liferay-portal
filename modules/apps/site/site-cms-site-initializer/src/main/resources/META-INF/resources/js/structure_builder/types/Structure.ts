@@ -20,6 +20,7 @@ export type ReferencedStructure = {
 	erc: string;
 	label: Liferay.Language.LocalizedValue<string>;
 	name: string;
+	objectRelationshipERC: string;
 	parent: Uuid;
 	relationshipName: string;
 	spaces: Spaces;
@@ -33,6 +34,7 @@ export type RepeatableGroup = {
 	erc: string;
 	label: Liferay.Language.LocalizedValue<string>;
 	name: string;
+	objectRelationshipERC: string;
 	parent: Uuid;
 	relationshipName: string;
 	type: 'repeatable-group';

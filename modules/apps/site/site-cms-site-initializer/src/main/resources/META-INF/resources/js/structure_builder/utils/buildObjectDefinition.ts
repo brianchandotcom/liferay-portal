@@ -180,6 +180,7 @@ function buildRelationships({
 		relationships.push({
 			deletionType: 'cascade',
 			edge: true,
+			externalReferenceCode: referencedStructure.objectRelationshipERC,
 			label: {
 				en_US: referencedStructure.name,
 			},
@@ -194,6 +195,7 @@ function buildRelationships({
 		relationships.push({
 			deletionType: 'cascade',
 			edge: true,
+			externalReferenceCode: repeatableGroup.objectRelationshipERC,
 			label: repeatableGroup.label,
 			name: repeatableGroup.relationshipName,
 			objectDefinitionExternalReferenceCode1: structureERC,

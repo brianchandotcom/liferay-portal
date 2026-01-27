@@ -11,7 +11,6 @@ import {addParams, navigate} from 'frontend-js-web';
 import React, {Dispatch} from 'react';
 
 import StructureService from '../../common/services/StructureService';
-import {ObjectDefinitions} from '../../common/types/ObjectDefinition';
 import {config} from '../config';
 import {CacheKey} from '../contexts/CacheContext';
 import {Action, State} from '../contexts/StateContext';
@@ -30,7 +29,6 @@ import DisplayPageService from '../services/DisplayPageService';
 
 type Props = {
 	dispatch: Dispatch<Action>;
-	objectDefinitions: ObjectDefinitions;
 	showExperienceLink: boolean;
 	showWarnings?: boolean;
 	staleCache: (key: CacheKey) => void;
@@ -40,7 +38,6 @@ type Props = {
 
 export async function publishStructure({
 	dispatch,
-	objectDefinitions,
 	showExperienceLink,
 	showWarnings = true,
 	staleCache,
@@ -217,7 +214,6 @@ export async function publishStructure({
 			id,
 			label,
 			name,
-			objectDefinitions,
 			spaces,
 			status: 'published',
 			workflows,
@@ -240,7 +236,6 @@ export async function publishStructure({
 			id,
 			label,
 			name,
-			objectDefinitions,
 			spaces,
 			status: 'published',
 			workflows,

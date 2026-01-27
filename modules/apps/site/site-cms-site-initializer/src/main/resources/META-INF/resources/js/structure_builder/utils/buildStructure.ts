@@ -91,6 +91,7 @@ export function buildChildren({
 				],
 				erc: objectRelationship.objectDefinitionExternalReferenceCode2,
 				objectDefinitions,
+				objectRelationshipERC: objectRelationship.externalReferenceCode,
 				parent,
 				relationshipName: objectRelationship.name,
 			});
@@ -105,6 +106,7 @@ export function buildChildren({
 				],
 				erc: objectRelationship.objectDefinitionExternalReferenceCode2,
 				objectDefinitions,
+				objectRelationshipERC: objectRelationship.externalReferenceCode,
 				parent,
 				relationshipName: objectRelationship.name,
 			});
@@ -167,12 +169,14 @@ export function buildReferencedStructure({
 	ancestors,
 	erc,
 	objectDefinitions,
+	objectRelationshipERC,
 	parent,
 	relationshipName,
 }: {
 	ancestors: Array<ObjectDefinition['externalReferenceCode']>;
 	erc: ReferencedStructure['erc'];
 	objectDefinitions: ObjectDefinitions;
+	objectRelationshipERC: string;
 	parent: Uuid;
 	relationshipName: ObjectRelationship['name'];
 }): ReferencedStructure {
@@ -199,6 +203,7 @@ export function buildReferencedStructure({
 		erc,
 		label: objectDefinition.label,
 		name: objectDefinition.name!,
+		objectRelationshipERC,
 		parent,
 		relationshipName,
 		spaces: getSpaces(objectDefinition),
@@ -212,12 +217,14 @@ export function buildRepeatableGroup({
 	ancestors,
 	erc,
 	objectDefinitions,
+	objectRelationshipERC,
 	parent,
 	relationshipName,
 }: {
 	ancestors: Array<ObjectDefinition['externalReferenceCode']>;
 	erc: RepeatableGroup['erc'];
 	objectDefinitions: ObjectDefinitions;
+	objectRelationshipERC: string;
 	parent: Uuid;
 	relationshipName: ObjectRelationship['name'];
 }): RepeatableGroup {
@@ -235,6 +242,7 @@ export function buildRepeatableGroup({
 		erc,
 		label: objectDefinition.label,
 		name: objectDefinition.name!,
+		objectRelationshipERC,
 		parent,
 		relationshipName,
 		type: 'repeatable-group',

@@ -60,6 +60,7 @@ type UndeletableReason = 'is-locked' | 'is-referenced' | 'causes-invalid-group';
 type History = {
 	deletedChildren: boolean;
 	deletedGroupERCs: Array<RepeatableGroup['erc']>;
+	deletedRelationshipERCs: Array<string>;
 	modifiedNames: Set<Uuid>;
 };
 
@@ -77,6 +78,7 @@ const INITIAL_STATE: State = {
 	history: {
 		deletedChildren: false,
 		deletedGroupERCs: [],
+		deletedRelationshipERCs: [],
 		modifiedNames: new Set(),
 	},
 	invalids: new Map(),
@@ -497,6 +499,22 @@ function reducer(state: State, action: Action): State {
 					history: {...nextState.history, deletedChildren: true},
 				};
 
+				if (
+					child.type === 'repeatable-group' ||
+					child.type === 'referenced-structure'
+				) {
+					nextState = {
+						...nextState,
+						history: {
+							...nextState.history,
+							deletedRelationshipERCs: [
+								...nextState.history.deletedRelationshipERCs,
+								child.objectRelationshipERC,
+							],
+						},
+					};
+				}
+
 				if (child.type === 'repeatable-group') {
 					nextState = {
 						...nextState,
@@ -560,6 +578,23 @@ function reducer(state: State, action: Action): State {
 						history: {...nextState.history, deletedChildren: true},
 					};
 
+					if (
+						child.type === 'repeatable-group' ||
+						child.type === 'referenced-structure'
+					) {
+						nextState = {
+							...nextState,
+							history: {
+								...nextState.history,
+								deletedRelationshipERCs: [
+									...nextState.history
+										.deletedRelationshipERCs,
+									child.objectRelationshipERC,
+								],
+							},
+						};
+					}
+
 					if (child.type === 'repeatable-group') {
 						nextState = {
 							...nextState,
@@ -605,6 +640,7 @@ function reducer(state: State, action: Action): State {
 			else if (copy.type === 'repeatable-group') {
 				copy.erc = getRandomId();
 				copy.name = getRandomName({capitalize: true});
+				copy.objectRelationshipERC = getRandomId();
 				copy.relationshipName = getRandomName();
 			}
 			else {

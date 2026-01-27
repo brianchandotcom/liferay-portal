@@ -28,6 +28,7 @@ export default function buildState({
 		history: {
 			deletedChildren: false,
 			deletedGroupERCs: [],
+			deletedRelationshipERCs: [],
 			modifiedNames: new Set(),
 		},
 		invalids: new Map(),

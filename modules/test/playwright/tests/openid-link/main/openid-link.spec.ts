@@ -113,7 +113,7 @@ test.describe('OpenID connect link', () => {
 		await expect(page.getByText(openIdConfig.openIdLink)).toBeVisible();
 	});
 
-	test('when openId connection is enabled on an utility page, then openId connect link is hidden on sign in page', async ({
+	test('when openId connection is enabled on an utility page, then openId connect link is shown on sign in page', async ({
 		loginInstanceSettingsPage,
 		openIDInstanceSettingsPage,
 		page,
@@ -133,7 +133,7 @@ test.describe('OpenID connect link', () => {
 
 		await page.getByRole('button', {name: 'Sign In'}).last().click();
 
-		await expect(page.getByText(openIdConfig.openIdLink)).toBeHidden();
+		await expect(page.getByText(openIdConfig.openIdLink)).toBeVisible();
 	});
 });
 

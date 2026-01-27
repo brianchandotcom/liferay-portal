@@ -7,10 +7,16 @@ import React from 'react';
 
 import Avatar from './Avatar';
 
-export default function Option({image, name}: {image?: string; name: string}) {
+export default function Option({
+	name,
+	portrait,
+}: {
+	name: string;
+	portrait?: string;
+}) {
 	return (
 		<div className="object-field__assignee-option">
-			<Avatar image={image} name={name} />
+			<Avatar name={name} portrait={portrait} />
 
 			<div className="object-field__assignee-option-name">
 				<span>{name}</span>

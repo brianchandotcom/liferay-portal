@@ -20,8 +20,8 @@ const mockResourceWithImage = {
 	items: [
 		{
 			externalReferenceCode: '456',
-			image: '/image.jpg',
 			name: 'Test Test',
+			portrait: '/image.jpg',
 			type: 'User',
 		},
 	],

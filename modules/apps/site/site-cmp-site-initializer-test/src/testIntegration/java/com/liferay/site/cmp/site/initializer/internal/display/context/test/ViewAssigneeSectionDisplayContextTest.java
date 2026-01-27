@@ -140,21 +140,21 @@ public class ViewAssigneeSectionDisplayContextTest {
 
 		_assertAssigneeFieldValue(
 			className.getClassNameId(), role.getRoleId(),
-			role.getExternalReferenceCode(), null, role.getName(), "role");
+			role.getExternalReferenceCode(), role.getName(), null, "role");
 
 		className = _classNameLocalService.getClassName(User.class.getName());
 		User user = _userLocalService.getUser(_taskObjectEntry.getUserId());
 
 		_assertAssigneeFieldValue(
 			className.getClassNameId(), user.getUserId(),
-			user.getExternalReferenceCode(), user.getPortraitURL(_themeDisplay),
-			user.getFullName(), "user");
+			user.getExternalReferenceCode(), user.getFullName(),
+			user.getPortraitURL(_themeDisplay), "user");
 	}
 
 	private void _assertAssigneeFieldValue(
 			long classNameId, long classPK,
-			String expectedExternalReferenceCode, String expectedImage,
-			String expectedName, String expectedType)
+			String expectedExternalReferenceCode, String expectedName,
+			String expectedPortrait, String expectedType)
 		throws Exception {
 
 		_taskObjectEntry = _objectEntryLocalService.partialUpdateObjectEntry(
@@ -179,9 +179,9 @@ public class ViewAssigneeSectionDisplayContextTest {
 			JSONUtil.put(
 				"externalReferenceCode", expectedExternalReferenceCode
 			).put(
-				"image", expectedImage
-			).put(
 				"name", expectedName
+			).put(
+				"portrait", expectedPortrait
 			).put(
 				"type", expectedType
 			).toString(),

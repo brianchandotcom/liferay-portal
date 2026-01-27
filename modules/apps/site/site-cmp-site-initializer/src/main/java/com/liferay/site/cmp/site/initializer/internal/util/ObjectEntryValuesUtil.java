@@ -64,9 +64,9 @@ public class ObjectEntryValuesUtil {
 		return HashMapBuilder.put(
 			"externalReferenceCode", user.getExternalReferenceCode()
 		).put(
-			"image", user.getPortraitURL(themeDisplay)
-		).put(
 			"name", user.getFullName()
+		).put(
+			"portrait", user.getPortraitURL(themeDisplay)
 		).put(
 			"type", "user"
 		).build();

@@ -6,6 +6,8 @@
 package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.test.util.DLTestUtil;
@@ -77,6 +79,7 @@ import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -84,6 +87,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CustomizedPages;
 import com.liferay.portal.kernel.model.Group;
@@ -120,6 +124,7 @@ import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -138,6 +143,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -159,6 +165,33 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_sitePageResource.setContextAcceptLanguage(
+			new AcceptLanguage() {
+
+				@Override
+				public List<Locale> getLocales() {
+					return Arrays.asList(LocaleUtil.getDefault());
+				}
+
+				@Override
+				public String getPreferredLanguageId() {
+					return LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+				}
+
+				@Override
+				public Locale getPreferredLocale() {
+					return LocaleUtil.getDefault();
+				}
+
+			});
+
+		_sitePageResource.setContextUser(TestPropsValues.getUser());
+	}
 
 	@Ignore
 	@Override
@@ -384,7 +417,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 	@Override
 	@Test
-	@TestInfo({"LPD-74331", "LPD-75450"})
+	@TestInfo({"LPD-74331", "LPD-75450", "LPD-77124"})
 	public void testPutSiteSitePage() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -397,6 +430,13 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testPutSiteSitePageWithExportedSitePage();
 		_testPutSiteSitePageWithExportedSitePageWithLayoutIdFriendlyURL();
 		_testPutSiteSitePageWithFormFragmentPageElements();
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			_testPutSiteSitePageWithMissingTaxonomyCategories();
+		}
+
 		_testPutSiteSitePageWithPageElements();
 		_testPutSiteSitePageWithPageExperiences();
 		_testPutSiteSitePageWithPageSpecifications();
@@ -1293,7 +1333,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	private SitePage _getRandomSitePage(
 			String externalReferenceCode,
 			String parentSitePageExternalReferenceCode,
-			ServiceContext serviceContext, SitePage.Type type, String uuid)
+			ServiceContext serviceContext,
+			ItemExternalReference[] taxonomyCategoryItemExternalReferences,
+			SitePage.Type type, String uuid)
 		throws Exception {
 
 		SitePage sitePage = new SitePage();
@@ -1324,12 +1366,25 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		sitePage.setParentSitePageExternalReferenceCode(
 			parentSitePageExternalReferenceCode);
 		sitePage.setTaxonomyCategoryItemExternalReferences(
-			AssetTestUtil.randomTaxonomyCategoryItemExternalReferences(
-				testCompany.getGroupId(), serviceContext));
+			taxonomyCategoryItemExternalReferences);
 		sitePage.setType(type);
 		sitePage.setUuid(uuid);
 
 		return sitePage;
+	}
+
+	private SitePage _getRandomSitePage(
+			String externalReferenceCode,
+			String parentSitePageExternalReferenceCode,
+			ServiceContext serviceContext, SitePage.Type type, String uuid)
+		throws Exception {
+
+		return _getRandomSitePage(
+			externalReferenceCode, parentSitePageExternalReferenceCode,
+			serviceContext,
+			AssetTestUtil.randomTaxonomyCategoryItemExternalReferences(
+				testCompany.getGroupId(), serviceContext),
+			type, uuid);
 	}
 
 	private SitePage _getRandomSitePageWithWidgetPageTemplate(
@@ -2686,6 +2741,70 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				layout.getExternalReferenceCode(), testGroup.getGroupId()));
 	}
 
+	private void _testPutSiteSitePageWithMissingTaxonomyCategories()
+		throws Exception {
+
+		ItemExternalReference[] taxonomyCategoryItemExternalReferences = {
+			new ItemExternalReference() {
+				{
+					setClassName(AssetCategory.class::getName);
+					setExternalReferenceCode(RandomTestUtil::randomString);
+
+					Group group = _groupLocalService.getGroup(
+						testCompany.getGroupId());
+
+					setScope(
+						() -> new Scope() {
+							{
+								setExternalReferenceCode(
+									group::getExternalReferenceCode);
+								setType(() -> Type.SITE);
+							}
+						});
+				}
+			},
+			new ItemExternalReference() {
+				{
+					setClassName(AssetCategory.class::getName);
+					setExternalReferenceCode(RandomTestUtil::randomString);
+				}
+			}
+		};
+
+		com.liferay.headless.admin.site.dto.v1_0.SitePage randomSitePage =
+			_toSitePage(
+				_getRandomSitePage(
+					RandomTestUtil.randomString(), null,
+					ServiceContextTestUtil.getServiceContext(
+						testGroup, TestPropsValues.getUserId()),
+					taxonomyCategoryItemExternalReferences,
+					SitePage.Type.WIDGET_PAGE, RandomTestUtil.randomString()));
+
+		com.liferay.headless.admin.site.dto.v1_0.SitePage putSitePage =
+			_sitePageResource.putSiteSitePage(
+				testGroup.getExternalReferenceCode(),
+				randomSitePage.getExternalReferenceCode(), randomSitePage);
+
+		Assert.assertTrue(
+			Objects.deepEquals(
+				randomSitePage.getTaxonomyCategoryItemExternalReferences(),
+				putSitePage.getTaxonomyCategoryItemExternalReferences()));
+
+		Assert.assertNotNull(
+			_assetCategoryLocalService.
+				fetchAssetCategoryByExternalReferenceCode(
+					taxonomyCategoryItemExternalReferences[0].
+						getExternalReferenceCode(),
+					testCompany.getGroupId()));
+
+		Assert.assertNotNull(
+			_assetCategoryLocalService.
+				fetchAssetCategoryByExternalReferenceCode(
+					taxonomyCategoryItemExternalReferences[1].
+						getExternalReferenceCode(),
+					testGroup.getGroupId()));
+	}
+
 	private void _testPutSiteSitePageWithPageElements() throws Exception {
 		PageElement[] pageElements = PageElementsTestUtil.getPageElements(
 			testGroup.getGroupId());
@@ -3202,6 +3321,17 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			sitePage1.getExternalReferenceCode(), 2, sitePage4);
 	}
 
+	private com.liferay.headless.admin.site.dto.v1_0.SitePage _toSitePage(
+		SitePage sitePage) {
+
+		if (sitePage == null) {
+			return null;
+		}
+
+		return com.liferay.headless.admin.site.dto.v1_0.SitePage.toDTO(
+			sitePage.toString());
+	}
+
 	private Layout _updateFriendlyURL(
 			Map<Locale, String> friendlyURLMap, Layout layout)
 		throws Exception {
@@ -3218,6 +3348,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 	private static final List<SitePage.Type> _types = Arrays.asList(
 		SitePage.Type.CONTENT_PAGE, SitePage.Type.WIDGET_PAGE);
+
+	@Inject
+	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Inject
 	private DefaultInputFragmentEntryConfigurationProvider
@@ -3265,5 +3398,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	@Inject
+	private com.liferay.headless.admin.site.resource.v1_0.SitePageResource
+		_sitePageResource;
 
 }

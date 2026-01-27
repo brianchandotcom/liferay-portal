@@ -52,7 +52,7 @@ public class ClientExtensionOSGiCommands implements OSGiCommands {
 			return;
 		}
 
-		_printConfigurations(configurations);
+		_print(configurations);
 	}
 
 	public void reload(String pid) throws Exception {
@@ -79,7 +79,7 @@ public class ClientExtensionOSGiCommands implements OSGiCommands {
 			return;
 		}
 
-		_printConfiguration(configuration);
+		_print(configuration);
 	}
 
 	private String _format(Dictionary<String, Object> properties) {
@@ -188,7 +188,7 @@ public class ClientExtensionOSGiCommands implements OSGiCommands {
 			StringBundler.concat("(&", deploymentFilterString, sb, ")"));
 	}
 
-	private void _printConfiguration(Configuration configuration) {
+	private void _print(Configuration configuration) {
 		System.out.println(
 			StringBundler.concat(
 				"\nPID: ", configuration.getPid(), "\nFactoryPID: ",
@@ -197,7 +197,7 @@ public class ClientExtensionOSGiCommands implements OSGiCommands {
 				_format(configuration.getProperties())));
 	}
 
-	private void _printConfigurations(Configuration[] configurations) {
+	private void _print(Configuration[] configurations) {
 		int idWidth = 150;
 		int nameWidth = 40;
 		int typeWidth = 20;

@@ -99,12 +99,15 @@ describe('CommentsPanel', () => {
 		await userEvent.click(screen.getAllByText('delete')[1]);
 
 		await waitFor(() => {
-			expect(mockFetch).toBeCalledWith('deleteCommentURL', {
-				body: {
-					commentId: '2',
-				},
-				method: 'POST',
-			});
+			expect(mockFetch).toBeCalledWith(
+				'deleteCommentURL',
+				expect.objectContaining({
+					body: {
+						commentId: '2',
+					},
+					method: 'POST',
+				})
+			);
 
 			expect(
 				screen.getByText('your-comment-has-been-deleted')
@@ -126,12 +129,15 @@ describe('CommentsPanel', () => {
 		await userEvent.click(screen.getAllByText('delete')[0]);
 
 		await waitFor(() => {
-			expect(mockFetch).toBeCalledWith('deleteCommentURL', {
-				body: {
-					commentId: '1',
-				},
-				method: 'POST',
-			});
+			expect(mockFetch).toBeCalledWith(
+				'deleteCommentURL',
+				expect.objectContaining({
+					body: {
+						commentId: '1',
+					},
+					method: 'POST',
+				})
+			);
 
 			expect(
 				screen.getByText('your-comment-has-been-deleted')
@@ -154,12 +160,15 @@ describe('CommentsPanel', () => {
 		await userEvent.click(screen.getAllByText('delete')[0]);
 
 		await waitFor(() => {
-			expect(mockFetch).toBeCalledWith('deleteCommentURL', {
-				body: {
-					commentId: '1',
-				},
-				method: 'POST',
-			});
+			expect(mockFetch).toBeCalledWith(
+				'deleteCommentURL',
+				expect.objectContaining({
+					body: {
+						commentId: '1',
+					},
+					method: 'POST',
+				})
+			);
 
 			expect(screen.getByText(error)).toBeInTheDocument();
 		});

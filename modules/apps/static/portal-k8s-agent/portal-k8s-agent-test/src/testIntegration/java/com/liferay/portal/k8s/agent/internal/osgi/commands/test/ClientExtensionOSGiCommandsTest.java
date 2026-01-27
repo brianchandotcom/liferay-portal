@@ -55,7 +55,7 @@ import org.osgi.service.cm.ConfigurationListener;
  * @author Anna Zombori-Suszter
  */
 @RunWith(Arquillian.class)
-public class ClientExtensionsOSGiCommandsTest {
+public class ClientExtensionOSGiCommandsTest {
 
 	@ClassRule
 	@Rule
@@ -65,7 +65,7 @@ public class ClientExtensionsOSGiCommandsTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		Bundle bundle = FrameworkUtil.getBundle(
-			ClientExtensionsOSGiCommandsTest.class);
+			ClientExtensionOSGiCommandsTest.class);
 
 		_bundleContext = bundle.getBundleContext();
 
@@ -395,7 +395,7 @@ public class ClientExtensionsOSGiCommandsTest {
 	private static String _companyWebId;
 	private static List<String> _configurationPids;
 
-	@Inject(filter = "osgi.command.scope=clientextensions")
+	@Inject(filter = "osgi.command.scope=clientextension")
 	private OSGiCommands _osgiCommands;
 
 }

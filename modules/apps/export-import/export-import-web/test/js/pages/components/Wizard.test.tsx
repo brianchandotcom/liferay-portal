@@ -39,11 +39,15 @@ const renderWizard = (backURL = '/back') => {
 };
 
 describe('Wizard', () => {
-	it('renders the first step of the Wizard', () => {
-		renderWizard();
+	it('checks that the "Cancel" button has the correct link', () => {
+		const backURL = '/initial-page';
 
-		expect(screen.getByText('Step 1 Content')).toBeInTheDocument();
-		expect(screen.queryByText('Step 2 Content')).not.toBeInTheDocument();
+		renderWizard(backURL);
+
+		const cancelButton = screen.getByRole('link', {name: 'cancel'});
+
+		expect(cancelButton).toBeInTheDocument();
+		expect(cancelButton).toHaveAttribute('href', backURL);
 	});
 
 	it('navigates through the steps with "Continue" and "Previous" buttons', async () => {
@@ -62,14 +66,10 @@ describe('Wizard', () => {
 		expect(screen.queryByText('Step 2 Content')).not.toBeInTheDocument();
 	});
 
-	it('checks that the "Cancel" button has the correct link', () => {
-		const backURL = '/initial-page';
+	it('renders the first step of the Wizard', () => {
+		renderWizard();
 
-		renderWizard(backURL);
-
-		const cancelButton = screen.getByRole('link', {name: 'cancel'});
-
-		expect(cancelButton).toBeInTheDocument();
-		expect(cancelButton).toHaveAttribute('href', backURL);
+		expect(screen.getByText('Step 1 Content')).toBeInTheDocument();
+		expect(screen.queryByText('Step 2 Content')).not.toBeInTheDocument();
 	});
 });

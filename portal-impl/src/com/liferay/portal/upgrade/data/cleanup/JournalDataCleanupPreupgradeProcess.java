@@ -42,6 +42,19 @@ public class JournalDataCleanupPreupgradeProcess
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
 				null, null, "resourcePrimKey", "JournalArticleResource",
 				"resourcePrimKey", "JournalArticle"));
+		upgrade(
+			new TableOrphanReferencesDataCleanupPreupgradeProcess(
+				null,
+				"[$SOURCE_TABLE_ALIAS$].name = 'com.liferay.journal.model." +
+					"JournalArticle'",
+				"primKeyId", "ResourcePermission", "resourcePrimKey",
+				"JournalArticle"));
+		upgrade(
+			new TableOrphanReferencesDataCleanupPreupgradeProcess(
+				null,
+				"[$SOURCE_TABLE_ALIAS$].name = 'com.liferay.journal.model." +
+					"JournalFeed'",
+				"primKeyId", "ResourcePermission", "id_", "JournalFeed"));
 	}
 
 }

@@ -35,7 +35,7 @@ public class TextEmbeddingContentHelper<T extends BaseModel<T>> {
 		_nonlocalizedContentSB = new StringBundler((size * 2) - 1);
 	}
 
-	public void appendToAll(String value) {
+	public void append(String value) {
 		_append(_nonlocalizedContentSB, value);
 
 		for (StringBundler localizedContentSB :
@@ -45,7 +45,7 @@ public class TextEmbeddingContentHelper<T extends BaseModel<T>> {
 		}
 	}
 
-	public void appendToLocale(String languageId, String value) {
+	public void append(String languageId, String value) {
 		_append(_getLocalizedContentStringBundler(languageId), value);
 	}
 

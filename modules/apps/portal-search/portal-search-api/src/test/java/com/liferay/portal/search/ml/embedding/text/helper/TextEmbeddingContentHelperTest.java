@@ -36,11 +36,11 @@ public class TextEmbeddingContentHelperTest {
 		TextEmbeddingContentHelper<TestBaseModel> textEmbeddingContentHelper =
 			_createTextEmbeddingContentHelper();
 
-		textEmbeddingContentHelper.appendToAll("all");
+		textEmbeddingContentHelper.append("all");
 
-		textEmbeddingContentHelper.appendToLocale("en_US", "localized_en_US");
+		textEmbeddingContentHelper.append("en_US", "localized_en_US");
 
-		textEmbeddingContentHelper.appendToLocale("pt_BR", "localized_pt_BR");
+		textEmbeddingContentHelper.append("pt_BR", "localized_pt_BR");
 
 		Assert.assertEquals(
 			StringBundler.concat("all", _DELIMITER, "localized_en_US"),
@@ -68,14 +68,14 @@ public class TextEmbeddingContentHelperTest {
 		TextEmbeddingContentHelper<TestBaseModel> textEmbeddingContentHelper =
 			_createTextEmbeddingContentHelper();
 
-		textEmbeddingContentHelper.appendToLocale("en_US", "alpha");
+		textEmbeddingContentHelper.append("en_US", "alpha");
 
 		Map<String, String> localizedContentMap =
 			textEmbeddingContentHelper.getLocalizedContentMap();
 
 		Assert.assertEquals("alpha", localizedContentMap.get("en_US"));
 
-		textEmbeddingContentHelper.appendToLocale("en_US", "beta");
+		textEmbeddingContentHelper.append("en_US", "beta");
 
 		localizedContentMap =
 			textEmbeddingContentHelper.getLocalizedContentMap();
@@ -90,8 +90,8 @@ public class TextEmbeddingContentHelperTest {
 		TextEmbeddingContentHelper<TestBaseModel> textEmbeddingContentHelper =
 			_createTextEmbeddingContentHelper();
 
-		textEmbeddingContentHelper.appendToAll("all");
-		textEmbeddingContentHelper.appendToLocale("en_US", "localized_en_US");
+		textEmbeddingContentHelper.append("all");
+		textEmbeddingContentHelper.append("en_US", "localized_en_US");
 
 		Assert.assertEquals(
 			textEmbeddingContentHelper.getLocalizedContent("en_US"),

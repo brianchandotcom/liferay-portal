@@ -693,6 +693,7 @@ test(
 	async ({
 		apiHelpers,
 		displayPageTemplatesPage,
+		localizationSelectPage,
 		page,
 		pageEditorPage,
 		site,
@@ -843,9 +844,13 @@ test(
 
 		// Go to the object display page
 
-		await page.goto(
-			`/web${site.friendlyUrlPath}/e/${displayPageTemplateName}/${className.classNameId}/${objectEntry.id}`
-		);
+		await expect(async () => {
+			await page.goto(
+				`/web${site.friendlyUrlPath}/e/${displayPageTemplateName}/${className.classNameId}/${objectEntry.id}`
+			);
+
+			await localizationSelectPage.trigger.waitFor({timeout: 1000});
+		}).toPass();
 
 		// Assert that translation is displayed correctly
 
@@ -891,11 +896,7 @@ test(
 
 		// Assert spanish translation is correct
 
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('option').filter({hasText: 'es-ES'}),
-			trigger: page.getByLabel('Select a language, current language:'),
-		});
+		await localizationSelectPage.switchLanguage('es-ES');
 
 		await expect(checkboxField).not.toBeChecked();
 

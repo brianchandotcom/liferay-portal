@@ -13,7 +13,8 @@ export class LocalizationSelectPage {
 	readonly page: Page;
 
 	readonly actionsDropdownTrigger: Locator;
-	readonly trigger: Locator;
+
+	trigger: Locator;
 
 	constructor(page: Page, localizationSelectIndex: number = 0) {
 		this.page = page;

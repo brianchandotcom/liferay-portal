@@ -53,7 +53,7 @@ public class AIHubRequestAuthVerifier implements AuthVerifier {
 			accessControlContext.getRequest();
 
 		try {
-			String requestUrl = String.valueOf(
+			String requestURL = String.valueOf(
 				httpServletRequest.getRequestURL());
 
 			AIHubConfiguration aiHubConfiguration =
@@ -64,7 +64,7 @@ public class AIHubRequestAuthVerifier implements AuthVerifier {
 			String token = httpServletRequest.getHeader(
 				"Liferay-AI-Hub-On-Behalf-Of");
 
-			if (!requestUrl.startsWith(aiHubConfiguration.serviceURL()) ||
+			if (!requestURL.startsWith(aiHubConfiguration.serviceURL()) ||
 				Validator.isBlank(token)) {
 
 				return new AuthVerifierResult();

@@ -5,7 +5,7 @@
 
 package com.liferay.ai.hub.internal.messaging;
 
-import com.liferay.ai.hub.internal.agent.util.WorkflowAgentUtil;
+import com.liferay.ai.hub.internal.agent.util.AgentUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
@@ -56,7 +56,7 @@ public class WorkflowInstanceMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		WorkflowAgentUtil.complete(
+		AgentUtil.complete(
 			(Map<String, Serializable>)message.get("workflowContext"),
 			message.getLong("workflowInstanceId"));
 	}

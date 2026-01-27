@@ -40,7 +40,7 @@ public class AgentsFactory {
 
 			return TransformUtil.transformToArray(
 				page.getItems(),
-				taskDefinition -> new WorkflowAgent(
+				taskDefinition -> new AgentSpecsProviderImpl(
 					_agentContext, taskDefinition.getDescription(),
 					taskDefinition.getName(), taskDefinition.getVersion(),
 					_workflowInstanceManager),
@@ -52,7 +52,7 @@ public class AgentsFactory {
 			}
 		}
 
-		return new WorkflowAgent[0];
+		return new AgentSpecsProviderImpl[0];
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(AgentsFactory.class);

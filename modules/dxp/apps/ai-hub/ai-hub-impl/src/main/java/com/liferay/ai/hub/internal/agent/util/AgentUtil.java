@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
  * @author Feliphe Marinho
  * @author João Victor Alves
  */
-public class WorkflowAgentUtil {
+public class AgentUtil {
 
 	public static void complete(
 		Map<String, Serializable> workflowContext, long workflowInstanceId) {

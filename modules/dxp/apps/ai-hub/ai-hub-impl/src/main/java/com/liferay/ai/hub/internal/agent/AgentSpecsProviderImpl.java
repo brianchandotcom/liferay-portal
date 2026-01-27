@@ -6,7 +6,7 @@
 package com.liferay.ai.hub.internal.agent;
 
 import com.liferay.ai.hub.agent.AgentContext;
-import com.liferay.ai.hub.internal.agent.util.WorkflowAgentUtil;
+import com.liferay.ai.hub.internal.agent.util.AgentUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -26,9 +26,9 @@ import java.util.Map;
  * @author Feliphe Marinho
  * @author João Victor Alves
  */
-public class WorkflowAgent implements AgentSpecsProvider {
+public class AgentSpecsProviderImpl implements AgentSpecsProvider {
 
-	public WorkflowAgent(
+	public AgentSpecsProviderImpl(
 		AgentContext agentContext, String description, String name, int version,
 		WorkflowInstanceManager workflowInstanceManager) {
 
@@ -68,7 +68,7 @@ public class WorkflowAgent implements AgentSpecsProvider {
 					entry.getKey(), GetterUtil.getString(entry.getValue()));
 			}
 
-			return WorkflowAgentUtil.getOutput(
+			return AgentUtil.getOutput(
 				_workflowInstanceManager.startWorkflowInstance(
 					_agentContext.getCompanyId(), _agentContext.getGroupId(),
 					_agentContext.getUserId(), _name, _version, null,

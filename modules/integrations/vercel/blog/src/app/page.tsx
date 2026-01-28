@@ -9,6 +9,7 @@ import {PropsWithChildren} from 'react';
 import {liferay} from '../app/liferay/server';
 import {Button} from './components/button';
 import {Pagination} from './components/pagination';
+import {SearchBar} from './components/search-bar';
 import {getCMSBlogPostings} from './data';
 
 const PageTemplate = ({children}: PropsWithChildren) => {
@@ -18,10 +19,11 @@ const PageTemplate = ({children}: PropsWithChildren) => {
 export default async function Home({
 	searchParams,
 }: {
-	searchParams: Promise<{page: string | undefined}>;
+	searchParams: Promise<{page: string | undefined; q: string | undefined}>;
 }) {
 	const params = await searchParams;
 	const page = Number(params.page || 1);
+	const searchQuery = params.q || '';
 
 	const {data, error} = await getCMSBlogPostings({liferay, page});
 
@@ -39,77 +41,119 @@ export default async function Home({
 		);
 	}
 
+	// Filter blog posts based on search query
+	const filteredItems = searchQuery
+		? data.items.filter((blog) => {
+				const query = searchQuery.toLowerCase();
+				return (
+					blog.title.toLowerCase().includes(query) ||
+					blog.contentRawText.toLowerCase().includes(query) ||
+					blog.creator.name.toLowerCase().includes(query)
+				);
+		  })
+		: data.items;
+
 	return (
 		<PageTemplate>
-			<ol className="gap-4 grid grid-cols-1 mb-4 sm:grid-cols-2 text-left text-sm/6">
-				{data.items.map((blog, index) => {
-					const src = liferay.getDocument(
-						blog.coverImage?.link.href ?? ''
-					);
+			<SearchBar />
 
-					return (
-						<li
-							className="first:sm:col-span-2 tracking-[-.01em]"
-							key={blog.id}
-						>
-							<article className="card">
-								{src && blog.coverImage && (
-									<div className="border-b-1 border-blue-200">
-										<Image
-											alt={blog.coverImage.link.label}
-											className="object-cover w-full"
-											draggable="false"
-											height={90}
-											priority={index < 5}
-											src={src}
-											unoptimized={true}
-											width={160}
-										/>
-									</div>
-								)}
+			{searchQuery && (
+				<div className="mb-4 text-sm text-gray-600">
+					Found {filteredItems.length} result
+					{filteredItems.length !== 1 ? 's' : ''}.
+				</div>
+			)}
 
-								<div className="flex flex-col gap-4 p-5">
-									<h2 className="font-bold text-xl">
-										{blog.title}
-									</h2>
+			{filteredItems.length === 0 ? (
+				<div className="text-center py-12">
+					<p className="text-xl text-gray-600 mb-2">
+						No blog posts found
+					</p>
+					<p className="text-gray-500">
+						Try adjusting your search terms
+					</p>
+				</div>
+			) : (
+				<>
+					<ol className="gap-4 grid grid-cols-1 mb-4 sm:grid-cols-2 text-left text-sm/6">
+						{filteredItems.map((blog, index) => {
+							const src = liferay.getDocument(
+								blog.coverImage?.link.href ?? ''
+							);
 
-									<p>
-										{blog.contentRawText
-											.split(' ')
-											.slice(0, 30)
-											.join(' ')}
-										...
-									</p>
+							return (
+								<li
+									className="first:sm:col-span-2 tracking-[-.01em]"
+									key={blog.id}
+								>
+									<article className="card">
+										{src && blog.coverImage && (
+											<div className="border-b-1 border-blue-200">
+												<Image
+													alt={
+														blog.coverImage.link
+															.label
+													}
+													className="object-cover w-full"
+													draggable="false"
+													height={90}
+													priority={index < 5}
+													src={src}
+													unoptimized={true}
+													width={160}
+												/>
+											</div>
+										)}
 
-									<div className="flex gap-2">
-										<span>
-											By &nbsp;
-											<strong>{blog.creator.name}</strong>
-										</span>
+										<div className="flex flex-col gap-4 p-5">
+											<h2 className="font-bold text-xl">
+												{blog.title}
+											</h2>
 
-										<span>-</span>
+											<p>
+												{blog.contentRawText
+													.split(' ')
+													.slice(0, 30)
+													.join(' ')}
+												...
+											</p>
 
-										<span>
-											{new Date(
-												blog.dateCreated
-											).toLocaleDateString()}
-										</span>
-									</div>
+											<div className="flex gap-2">
+												<span>
+													By &nbsp;
+													<strong>
+														{blog.creator.name}
+													</strong>
+												</span>
 
-									<Button
-										href={`/blog/${blog.id}/${blog.friendlyUrlPath}`}
-									>
-										Read More
-									</Button>
-								</div>
-							</article>
-						</li>
-					);
-				})}
-			</ol>
+												<span>-</span>
 
-			{data.lastPage > 1 && (
-				<Pagination currentPage={page} lastPage={data.lastPage} />
+												<span>
+													{new Date(
+														blog.dateCreated
+													).toLocaleDateString()}
+												</span>
+											</div>
+
+											<Button
+												href={`/blog/${blog.id}/${blog.friendlyUrlPath}`}
+											>
+												Read More
+											</Button>
+										</div>
+									</article>
+								</li>
+							);
+						})}
+					</ol>
+
+					{!searchQuery && data.lastPage > 1 && (
+						<Pagination
+							currentPage={page}
+							lastPage={data.lastPage}
+						/>
+					)}
+				</>
 			)}
 		</PageTemplate>
 	);

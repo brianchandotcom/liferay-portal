@@ -6,15 +6,152 @@
 package com.liferay.headless.cmp.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.headless.cmp.client.dto.v1_0.TaskStatistics;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.site.cmp.site.initializer.test.util.CMPTestUtil;
 
-import org.junit.Ignore;
+import java.io.Serializable;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Carolina Barbosa
  */
-@Ignore
+@FeatureFlags(
+	featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-58677")}
+)
 @RunWith(Arquillian.class)
 public class TaskStatisticsResourceTest
 	extends BaseTaskStatisticsResourceTestCase {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+
+		CMPTestUtil.getOrAddGroup(TaskStatisticsResourceTest.class);
+
+		_projectObjectEntry1 = CMPTestUtil.addProjectObjectEntry();
+
+		_partialUpdateObjectEntry(
+			null, CMPTestUtil.addTaskObjectEntry(_projectObjectEntry1),
+			"blocked");
+		_partialUpdateObjectEntry(
+			"3000-01-31", CMPTestUtil.addTaskObjectEntry(_projectObjectEntry1),
+			"inProgress");
+
+		_projectObjectEntry2 = CMPTestUtil.addProjectObjectEntry();
+
+		_partialUpdateObjectEntry(
+			"2025-01-31", CMPTestUtil.addTaskObjectEntry(_projectObjectEntry2),
+			"inProgress");
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		super.tearDown();
+
+		_objectEntryLocalService.deleteObjectEntry(_projectObjectEntry1);
+		_objectEntryLocalService.deleteObjectEntry(_projectObjectEntry2);
+	}
+
+	@Override
+	@Test
+	public void testGetProjectTaskStatistics() throws Exception {
+		TaskStatistics taskStatistics1 =
+			taskStatisticsResource.getProjectTaskStatistics(
+				_projectObjectEntry1.getObjectEntryId(), null);
+
+		Assert.assertEquals(
+			1, GetterUtil.getLong(taskStatistics1.getBlockedCount()));
+		Assert.assertEquals(
+			1, GetterUtil.getLong(taskStatistics1.getInProgressCount()));
+		Assert.assertEquals(
+			0, GetterUtil.getLong(taskStatistics1.getOverdueCount()));
+		Assert.assertEquals(
+			2, GetterUtil.getLong(taskStatistics1.getTotalCount()));
+
+		TaskStatistics taskStatistics2 =
+			taskStatisticsResource.getProjectTaskStatistics(
+				_projectObjectEntry2.getObjectEntryId(), null);
+
+		Assert.assertEquals(
+			0, GetterUtil.getLong(taskStatistics2.getBlockedCount()));
+		Assert.assertEquals(
+			1, GetterUtil.getLong(taskStatistics2.getInProgressCount()));
+		Assert.assertEquals(
+			1, GetterUtil.getLong(taskStatistics2.getOverdueCount()));
+		Assert.assertEquals(
+			1, GetterUtil.getLong(taskStatistics2.getTotalCount()));
+	}
+
+	@Override
+	@Test
+	public void testGetTaskStatistics() throws Exception {
+		TaskStatistics taskStatistics =
+			taskStatisticsResource.getTaskStatistics(null);
+
+		Assert.assertEquals(
+			1, GetterUtil.getLong(taskStatistics.getBlockedCount()));
+		Assert.assertEquals(
+			2, GetterUtil.getLong(taskStatistics.getInProgressCount()));
+		Assert.assertEquals(
+			1, GetterUtil.getLong(taskStatistics.getOverdueCount()));
+		Assert.assertEquals(
+			3, GetterUtil.getLong(taskStatistics.getTotalCount()));
+	}
+
+	@Override
+	@Test
+	public void testGraphQLGetProjectTaskStatistics() throws Exception {
+	}
+
+	@Override
+	@Test
+	public void testGraphQLGetTaskStatistics() throws Exception {
+	}
+
+	private ObjectEntry _partialUpdateObjectEntry(
+			String dueDate, ObjectEntry objectEntry, String state)
+		throws Exception {
+
+		return _objectEntryLocalService.partialUpdateObjectEntry(
+			objectEntry.getUserId(), objectEntry.getObjectEntryId(),
+			objectEntry.getObjectEntryFolderId(),
+			HashMapBuilder.<String, Serializable>put(
+				"dueDate", dueDate
+			).put(
+				"state", state
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+	}
+
+	@Inject
+	private ObjectEntryLocalService _objectEntryLocalService;
+
+	private ObjectEntry _projectObjectEntry1;
+	private ObjectEntry _projectObjectEntry2;
+
 }

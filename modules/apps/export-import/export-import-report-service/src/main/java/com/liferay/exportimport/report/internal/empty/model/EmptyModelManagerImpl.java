@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.function.BiFunction;
+import java.util.function.Supplier;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -121,13 +122,13 @@ public class EmptyModelManagerImpl implements EmptyModelManager {
 	}
 
 	@Override
-	public <E extends Exception> int solveEmptyModel(
+	public int solveEmptyModel(
 			int status, long groupId, long companyId,
 			String classExternalReferenceCode, String className,
-			UnsafeSupplier<Integer, E> updatedModelStatusUnsafeSupplier)
-		throws Exception {
+			Supplier<Integer> updatedModelStatusSupplier)
+		throws PortalException {
 
-		if (status == WorkflowConstants.STATUS_EMPTY) {
+		if (status != WorkflowConstants.STATUS_EMPTY) {
 			return status;
 		}
 
@@ -151,7 +152,7 @@ public class EmptyModelManagerImpl implements EmptyModelManager {
 				exportImportReportEntry);
 		}
 
-		return updatedModelStatusUnsafeSupplier.get();
+		return updatedModelStatusSupplier.get();
 	}
 
 	@Reference

@@ -41,9 +41,6 @@ export default function ProductGridView({product}: ProductGridViewProps) {
 				</div>
 
 				<div className="p-4 space-y-3">
-					<div className="text-sm">
-						{product.externalReferenceCode}
-					</div>
 
 					<h3 className="font-medium group-hover:text-primary text-foreground transition-colors truncate">
 						{product.name}

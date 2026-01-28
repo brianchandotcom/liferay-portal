@@ -10,6 +10,7 @@ import {Product} from '../../types/product';
 import {getSkuDetails, handleImageError} from '../../utils/product';
 import {Badge} from '../ui/badge';
 import {Card} from '../ui/card';
+import PreviewHTML from '../../components/preview-html';
 
 type ProductListViewProps = {
 	product: Product;
@@ -58,8 +59,7 @@ export default function ProductListView({product}: ProductListViewProps) {
 								<h3 className="font-medium group-hover:text-primary text-foreground transition-colors">
 									{product.name}
 								</h3>
-
-								<p className="text-sm">{product.description}</p>
+								<PreviewHTML className="text-sm" content={product.description ?? ''} />
 							</div>
 
 							<div className="text-right">

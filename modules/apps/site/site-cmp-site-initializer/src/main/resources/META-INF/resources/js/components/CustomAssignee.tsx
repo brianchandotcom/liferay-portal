@@ -39,7 +39,8 @@ export default function CustomAssignee({
 				onChange?.(event.target.value);
 			}}
 			searchURL={
-				Liferay.ThemeDisplay.getPortalURL() + '/o/cmp/assignee-context/'
+				Liferay.ThemeDisplay.getPortalURL() +
+				'/o/headless-cmp/v1.0/task-assignees/'
 			}
 			showLabel={showLabel}
 			triggerClassName={triggerClassName}

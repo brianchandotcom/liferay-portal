@@ -28,12 +28,17 @@ import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.change.tracking.store.CTStoreFactory;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -85,6 +90,9 @@ public class CTStoreTest {
 		for (int i = 0; i < 4; i++) {
 			_ctCollections[i] = _createCTCollection();
 		}
+
+		_fileSystemStore.deleteDirectory(
+			_companyId, _REPOSITORY_ID, StringPool.BLANK);
 	}
 
 	@After
@@ -836,6 +844,44 @@ public class CTStoreTest {
 			this::_assertFile, _GET_FILE_AS_STREAM_METHOD);
 	}
 
+	@Test
+	public void testVerifyCompanyStores() throws Exception {
+		Company company = _companyLocalService.getCompany(_companyId);
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_STORE_TYPE, LoggerTestUtil.WARN)) {
+
+			_addFiles("testDir1/testFile1:v1");
+
+			_verifyCompanyStores();
+
+			_assertMethods(_VERIFY_COMPANY_STORES_METHOD);
+
+			List<String> messages = logCapture.getMessages();
+
+			Assert.assertTrue(messages.toString(), messages.isEmpty());
+
+			PortalInstancePool.remove(_companyId);
+
+			_verifyCompanyStores();
+
+			_assertMethods(_VERIFY_COMPANY_STORES_METHOD);
+
+			messages = logCapture.getMessages();
+
+			Assert.assertTrue(
+				messages.toString(),
+				messages.contains(
+					StringBundler.concat(
+						"Manually remove unused store ", _companyId,
+						" that belongs to company ", _companyId,
+						" if it is no longer used anywhere else")));
+		}
+		finally {
+			PortalInstancePool.add(company);
+		}
+	}
+
 	private void _addCTFile(String fileName, byte[] data)
 		throws PortalException {
 
@@ -1291,6 +1337,10 @@ public class CTStoreTest {
 		return version;
 	}
 
+	private void _verifyCompanyStores() throws Exception {
+		_ctStore.verifyCompanyStores();
+	}
+
 	private static final Method _ADD_FILE_METHOD;
 
 	private static final byte[] _DATA_1 = "Data1 a".getBytes();
@@ -1321,6 +1371,8 @@ public class CTStoreTest {
 
 	private static final String _STORE_TYPE =
 		"com.liferay.portal.store.file.system.FileSystemStore";
+
+	private static final Method _VERIFY_COMPANY_STORES_METHOD;
 
 	private static final String _VERSION_1 = Store.VERSION_DEFAULT;
 
@@ -1380,11 +1432,17 @@ public class CTStoreTest {
 
 			_HAS_FILE_METHOD = Store.class.getMethod(
 				"hasFile", long.class, long.class, String.class, String.class);
+
+			_VERIFY_COMPANY_STORES_METHOD = Store.class.getMethod(
+				"verifyCompanyStores");
 		}
 		catch (NoSuchMethodException noSuchMethodException) {
 			throw new ExceptionInInitializerError(noSuchMethodException);
 		}
 	}
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@DeleteAfterTestRun
 	private final CTCollection[] _ctCollections = new CTCollection[4];

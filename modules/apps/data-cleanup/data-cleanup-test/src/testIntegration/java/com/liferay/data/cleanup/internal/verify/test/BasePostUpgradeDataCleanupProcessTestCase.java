@@ -99,7 +99,9 @@ public abstract class BasePostUpgradeDataCleanupProcessTestCase {
 
 			_runPostUpgradeDataCleanUpVerifyProcess();
 
-			assertUnsafeConsumer.accept(logCapture);
+			if (assertUnsafeConsumer != null) {
+				assertUnsafeConsumer.accept(logCapture);
+			}
 		}
 		finally {
 			cleanUpDataUnsafeRunnable.run();

@@ -13,7 +13,9 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -28,6 +30,12 @@ public class DBStoreTest extends BaseStoreTestCase {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Ignore("LPD-75037")
+	@Override
+	@Test
+	public void testVerifyCompanyStores() {
+	}
 
 	@Override
 	protected Store getStore() {

@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -73,7 +74,6 @@ public class ConvertEmptyLayoutMVCActionCommand
 			Layout layout = _layoutService.getLayout(
 				ParamUtil.getLong(actionRequest, "selPlid"));
 
-
 			long classNameId = 0;
 			long classPK = 0;
 			long layoutPageTemplateEntryId = ParamUtil.getLong(
@@ -101,8 +101,13 @@ public class ConvertEmptyLayoutMVCActionCommand
 						LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE) {
 
 					serviceContext.setAttribute(
+						"applyLayoutPrototype", Boolean.TRUE);
+					serviceContext.setAttribute(
 						"portletLayoutPageTemplateEntryERC",
 						layoutPageTemplateEntry.getExternalReferenceCode());
+					serviceContext.setAttribute(
+						"portletLayoutPageTemplateEntryLinkEnabled",
+						PropsValues.LAYOUT_PROTOTYPE_LINK_ENABLED_DEFAULT);
 					serviceContext.setAttribute(
 						"portletLayoutPageTemplateEntryScopeERC",
 						ScopeUtil.getItemScopeExternalReferenceCode(

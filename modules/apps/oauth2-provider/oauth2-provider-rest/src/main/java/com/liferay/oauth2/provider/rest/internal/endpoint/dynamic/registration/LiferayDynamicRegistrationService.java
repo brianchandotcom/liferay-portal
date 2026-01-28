@@ -125,6 +125,9 @@ public class LiferayDynamicRegistrationService
 
 		client.setApplicationName(clientRegistration.getClientName());
 
+		clientRegistration.setApplicationType(
+			_getApplicationType(clientRegistration));
+
 		List<String> redirectUris = clientRegistration.getRedirectUris();
 
 		if (redirectUris != null) {
@@ -271,6 +274,16 @@ public class LiferayDynamicRegistrationService
 		return OAuth2SecureRandomGenerator.generateClientSecret();
 	}
 
+	private String _getApplicationType(ClientRegistration clientRegistration) {
+		String applicationType = clientRegistration.getApplicationType();
+
+		if (applicationType == null) {
+			applicationType = "web";
+		}
+
+		return applicationType;
+	}
+
 	private void _validate(
 		Client client, ClientRegistration clientRegistration) {
 
@@ -283,13 +296,7 @@ public class LiferayDynamicRegistrationService
 		List<String> redirectUris = clientRegistration.getRedirectUris();
 
 		if (redirectUris != null) {
-			String applicationType = clientRegistration.getApplicationType();
-
-			if (applicationType == null) {
-				applicationType = "web";
-
-				clientRegistration.setApplicationType(applicationType);
-			}
+			String applicationType = _getApplicationType(clientRegistration);
 
 			for (String redirectUri : redirectUris) {
 				validateRequestUri(

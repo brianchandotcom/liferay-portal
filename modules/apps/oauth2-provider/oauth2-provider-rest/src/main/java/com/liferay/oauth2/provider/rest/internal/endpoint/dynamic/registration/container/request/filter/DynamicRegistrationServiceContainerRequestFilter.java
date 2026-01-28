@@ -133,8 +133,7 @@ public class DynamicRegistrationServiceContainerRequestFilter
 			PermissionChecker permissionChecker =
 				_permissionCheckerFactory.create(user);
 
-			String requestedOAuth2ApplicationId = _extractIdFromRequest(
-				httpServletRequest);
+			String clientId = _getClientId(httpServletRequest);
 
 			if ((oAuth2Application == null) ||
 				(StringUtil.equalsIgnoreCase(
@@ -155,10 +154,9 @@ public class DynamicRegistrationServiceContainerRequestFilter
 				 !_oAuth2ApplicationModelResourcePermission.contains(
 					 permissionChecker, oAuth2Application,
 					 ActionKeys.UPDATE)) ||
-				(Validator.isNotNull(requestedOAuth2ApplicationId) &&
+				(Validator.isNotNull(clientId) &&
 				 !StringUtil.equalsIgnoreCase(
-					 requestedOAuth2ApplicationId,
-					 oAuth2Application.getClientId()) &&
+					 clientId, oAuth2Application.getClientId()) &&
 				 !StringUtil.equalsIgnoreCase(
 					 OAuth2ApplicationConstants.NAME_DYNAMIC_REGISTRATOR,
 					 oAuth2Application.getName()))) {
@@ -212,16 +210,14 @@ public class DynamicRegistrationServiceContainerRequestFilter
 		}
 	}
 
-	private String _extractIdFromRequest(
-		HttpServletRequest httpServletRequest) {
-
+	private String _getClientId(HttpServletRequest httpServletRequest) {
 		String requestURI = httpServletRequest.getRequestURI();
 
-		String extractedId = requestURI.substring(
+		String clientId = requestURI.substring(
 			requestURI.lastIndexOf(StringPool.SLASH) + 1);
 
-		if (extractedId.startsWith("id-")) {
-			return extractedId;
+		if (clientId.startsWith("id-")) {
+			return clientId;
 		}
 
 		return null;

@@ -162,11 +162,11 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 			_oAuth2ApplicationLocalService.fetchOAuth2Application(
 				TestPropsValues.getCompanyId(), "oauthDeleteMeApplication");
 
-		WebTarget webTarget = getRegisterWebTarget(
+		WebTarget registerWebTarget = getRegisterWebTarget(
 			oAuth2Application2.getClientId());
 
 		Invocation.Builder invocationBuilder = authorize(
-			webTarget.request(), _getToken(oAuth2Application1));
+			registerWebTarget.request(), _getToken(oAuth2Application1));
 
 		Response response = invocationBuilder.delete();
 
@@ -177,7 +177,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 		Assert.assertNotNull(oAuth2Application1);
 
 		invocationBuilder = authorize(
-			webTarget.request(), _getToken(oAuth2Application1));
+			registerWebTarget.request(), _getToken(oAuth2Application1));
 
 		response = invocationBuilder.delete();
 
@@ -195,11 +195,11 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 			_oAuth2ApplicationLocalService.fetchOAuth2Application(
 				TestPropsValues.getCompanyId(), "oauthDeleteMeApplication");
 
-		WebTarget webTarget = getRegisterWebTarget(
+		WebTarget registerWebTarget = getRegisterWebTarget(
 			oAuth2Application.getClientId());
 
 		Invocation.Builder invocationBuilder = authorize(
-			webTarget.request(),
+			registerWebTarget.request(),
 			_getToken(_getDynamicRegistratorOAuth2Application()));
 
 		String clientName = RandomTestUtil.randomString();
@@ -226,10 +226,9 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 
 		Assert.assertEquals(200, response.getStatus());
 
-		JSONObject responseJSONObject = parseJSONObject(response);
+		JSONObject jsonObject = parseJSONObject(response);
 
-		Assert.assertEquals(
-			clientName, responseJSONObject.getString("client_name"));
+		Assert.assertEquals(clientName, jsonObject.getString("client_name"));
 	}
 
 	protected static WebTarget getRegisterWebTarget() {

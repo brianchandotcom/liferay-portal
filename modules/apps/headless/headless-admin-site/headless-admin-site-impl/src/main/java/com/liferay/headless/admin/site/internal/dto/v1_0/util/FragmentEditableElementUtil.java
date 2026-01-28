@@ -565,8 +565,14 @@ public class FragmentEditableElementUtil {
 	}
 
 	private static ImageValue _getImageValue(
-			long companyId, JSONObject jsonObject, long scopeGroupId)
+			long companyId, Object value, long scopeGroupId)
 		throws Exception {
+
+		if (!(value instanceof JSONObject)) {
+			return _getUrlImageValue(GetterUtil.getString(value));
+		}
+
+		JSONObject jsonObject = (JSONObject)value;
 
 		if (JSONUtil.isEmpty(jsonObject)) {
 			return null;
@@ -590,18 +596,7 @@ public class FragmentEditableElementUtil {
 			return itemImageValue;
 		}
 
-		String url = jsonObject.getString("url");
-
-		if (url == null) {
-			return null;
-		}
-
-		URLImageValue urlImageValue = new URLImageValue();
-
-		urlImageValue.setType(URLImageValue.Type.URL);
-		urlImageValue.setUrl(() -> url);
-
-		return urlImageValue;
+		return _getUrlImageValue(jsonObject.getString("url"));
 	}
 
 	private static JSONObject _getImageValueJSONObject(
@@ -654,6 +649,19 @@ public class FragmentEditableElementUtil {
 		}
 
 		return jsonObject;
+	}
+
+	private static URLImageValue _getUrlImageValue(String url) {
+		if (Validator.isNull(url)) {
+			return null;
+		}
+
+		URLImageValue urlImageValue = new URLImageValue();
+
+		urlImageValue.setType(URLImageValue.Type.URL);
+		urlImageValue.setUrl(() -> url);
+
+		return urlImageValue;
 	}
 
 	private static FragmentEditableElementValue
@@ -889,7 +897,7 @@ public class FragmentEditableElementUtil {
 			LocalizedValueUtil.toLocalizedValues(
 				jsonObject,
 				key -> _getImageValue(
-					companyId, jsonObject.getJSONObject(key), scopeGroupId));
+					companyId, jsonObject.get(key), scopeGroupId));
 
 		if (MapUtil.isEmpty(imageValueMap)) {
 			return null;

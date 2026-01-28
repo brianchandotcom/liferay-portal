@@ -6,7 +6,6 @@
 package com.liferay.ai.hub.rest.internal.resource.v1_0;
 
 import com.liferay.ai.hub.rest.dto.v1_0.TaskDefinition;
-import com.liferay.ai.hub.rest.internal.odata.entity.v1_0.TaskDefinitionEntityModel;
 import com.liferay.ai.hub.rest.manager.v1_0.TaskDefinitionManager;
 import com.liferay.ai.hub.rest.resource.v1_0.TaskDefinitionResource;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -69,11 +68,11 @@ public class TaskDefinitionResourceImpl extends BaseTaskDefinitionResourceImpl {
 			search, filter, pagination, sorts);
 	}
 
-	private static final EntityModel _entityModel =
-		new TaskDefinitionEntityModel();
-
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference(target = "(entity.model.name=TaskDefinition)")
+	private EntityModel _entityModel;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.workflow.kaleo.model.KaleoDefinition)"

@@ -11,21 +11,36 @@ import com.liferay.portal.odata.entity.IntegerEntityField;
 
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Davyson Melo
  */
+@Component(
+	property = "entity.model.name=" + TaskDefinitionEntityModel.NAME,
+	service = EntityModel.class
+)
 public class TaskDefinitionEntityModel implements EntityModel {
 
-	public TaskDefinitionEntityModel() {
-		_entityFieldMap = EntityModel.toEntityFieldsMap(
-			new IntegerEntityField("active", locale -> "active"));
-	}
+	public static final String NAME = "TaskDefinition";
 
 	@Override
 	public Map<String, EntityField> getEntityFieldsMap() {
 		return _entityFieldMap;
 	}
 
-	private final Map<String, EntityField> _entityFieldMap;
+	@Override
+	public String getName() {
+		return NAME;
+	}
+
+	@Activate
+	protected void activate() {
+		_entityFieldMap = EntityModel.toEntityFieldsMap(
+			new IntegerEntityField("active", locale -> "active"));
+	}
+
+	private Map<String, EntityField> _entityFieldMap;
 
 }

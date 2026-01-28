@@ -126,6 +126,11 @@ public class DefaultWorkflowDefinition
 		return _active;
 	}
 
+	@Override
+	public boolean isSystem() {
+		return _system;
+	}
+
 	public void setActive(boolean active) {
 		_active = active;
 	}
@@ -174,6 +179,10 @@ public class DefaultWorkflowDefinition
 		_scope = scope;
 	}
 
+	public void setSystem(boolean system) {
+		_system = system;
+	}
+
 	public void setTitle(String title) {
 		_title = title;
 	}
@@ -212,6 +221,7 @@ public class DefaultWorkflowDefinition
 	private String _name;
 	private Map<String, Object> _optionalAttributes;
 	private String _scope;
+	private boolean _system;
 	private String _title;
 	private long _userId;
 	private int _version;

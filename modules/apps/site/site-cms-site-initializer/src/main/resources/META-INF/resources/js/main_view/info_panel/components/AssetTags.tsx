@@ -97,14 +97,19 @@ const AssetTags = ({
 		async (keyword: string) => {
 			const {keywords = []} = objectEntry;
 
-			const newKeywords = keywords.filter((value) => value !== keyword);
+			const index = keywords.indexOf(keyword);
 
-			if (newKeywords.length < keywords.length) {
-				await updateObjectEntry({
-					keywords: newKeywords,
-					keywordsToRemove: [keyword],
-				} as EntryCategorizationDTO);
-			}
+			const keywordsToRemove = [];
+
+			keywordsToRemove.push(keywords[index]);
+
+			keywords.splice(index, 1);
+
+			await updateObjectEntry({
+				keywords,
+				keywordsToAdd: keywords,
+				keywordsToRemove,
+			} as EntryCategorizationDTO);
 		},
 		[objectEntry, updateObjectEntry]
 	);

@@ -164,7 +164,6 @@ export default function EditAssetCategoriesModalContent({
 				({
 					taxonomyCategoryBriefs,
 					taxonomyCategoryIds: currentTaxonomyCategoryIds,
-					taxonomyCategoryIdsToAdd: currentToAdd = [],
 					taxonomyCategoryIdsToRemove: currentToRemove = [],
 					...dto
 				}) => {
@@ -185,12 +184,7 @@ export default function EditAssetCategoriesModalContent({
 						taxonomyCategoryBriefs,
 						taxonomyCategoryIds:
 							taxonomyCategoryIds || currentTaxonomyCategoryIds!,
-						taxonomyCategoryIdsToAdd: [
-							...new Set([
-								...currentToAdd,
-								...taxonomyCategoryIdsToAdd,
-							]),
-						],
+						taxonomyCategoryIdsToAdd: [...taxonomyCategoryIdsToAdd],
 						taxonomyCategoryIdsToRemove: [
 							...new Set([
 								...currentToRemove,

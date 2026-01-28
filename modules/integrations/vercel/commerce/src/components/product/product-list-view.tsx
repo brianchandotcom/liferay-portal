@@ -46,19 +46,20 @@ export default function ProductListView({product}: ProductListViewProps) {
 
 									{product.productConfiguration
 										?.availabilityEstimateName && (
-										<p>
-											Incoming Date: &nbsp;
-											{
-												product.productConfiguration
-													?.availabilityEstimateName
-											}
-										</p>
-									)}
+											<p>
+												Incoming Date: &nbsp;
+												{
+													product.productConfiguration
+														?.availabilityEstimateName
+												}
+											</p>
+										)}
 								</div>
 
 								<h3 className="font-medium group-hover:text-primary text-foreground transition-colors">
 									{product.name}
 								</h3>
+
 								<PreviewHTML className="text-sm" content={product.description ?? ''} />
 							</div>
 

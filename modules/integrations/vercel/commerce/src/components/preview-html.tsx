@@ -5,6 +5,7 @@
 
 'use client';
 
+import clsx from 'clsx';
 import DOMPurify from 'isomorphic-dompurify';
 
 export default function PreviewHTML({
@@ -16,7 +17,7 @@ export default function PreviewHTML({
 }) {
 	return (
 		<div
-			className={`flex flex-col gap-4 text-justify ${className}`}
+			className={clsx('flex flex-col gap-4 text-justify', className)}
 			dangerouslySetInnerHTML={{
 				__html: DOMPurify.sanitize(content),
 			}}

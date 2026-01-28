@@ -19,13 +19,13 @@ const PageTemplate = ({children}: PropsWithChildren) => {
 export default async function Home({
 	searchParams,
 }: {
-	searchParams: Promise<{page: string | undefined; q: string | undefined}>;
+	searchParams: Promise<{ page?: string; q?: string }>;
 }) {
 	const params = await searchParams;
 	const page = Number(params.page || 1);
 	const searchQuery = params.q || '';
 
-	const {data, error} = await getCMSBlogPostings({liferay, page});
+	const {data, error} = await getCMSBlogPostings({liferay, search: params.q, page});
 
 	if (error || !data) {
 		return (
@@ -41,17 +41,7 @@ export default async function Home({
 		);
 	}
 
-	// Filter blog posts based on search query
-	const filteredItems = searchQuery
-		? data.items.filter((blog) => {
-				const query = searchQuery.toLowerCase();
-				return (
-					blog.title.toLowerCase().includes(query) ||
-					blog.contentRawText.toLowerCase().includes(query) ||
-					blog.creator.name.toLowerCase().includes(query)
-				);
-		  })
-		: data.items;
+	const items = data.items
 
 	return (
 		<PageTemplate>
@@ -59,12 +49,12 @@ export default async function Home({
 
 			{searchQuery && (
 				<div className="mb-4 text-sm text-gray-600">
-					Found {filteredItems.length} result
-					{filteredItems.length !== 1 ? 's' : ''}.
+					Found {items.length} result
+					{items.length !== 1 ? 's' : ''}.
 				</div>
 			)}
 
-			{filteredItems.length === 0 ? (
+			{items.length === 0 ? (
 				<div className="text-center py-12">
 					<p className="text-xl text-gray-600 mb-2">
 						No blog posts found
@@ -76,7 +66,7 @@ export default async function Home({
 			) : (
 				<>
 					<ol className="gap-4 grid grid-cols-1 mb-4 sm:grid-cols-2 text-left text-sm/6">
-						{filteredItems.map((blog, index) => {
+						{items.map((blog, index) => {
 							const src = liferay.getDocument(
 								blog.coverImage?.link.href ?? ''
 							);

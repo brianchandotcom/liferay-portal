@@ -328,7 +328,6 @@ export interface IFrontendDataSetProps {
 		method?: string;
 	};
 	inlineEditingSettings?: IInlineEditingSettings;
-	inlineInformationContent?: React.JSX.Element;
 	inlineNotificationContent?: React.JSX.Element;
 	items?: any[];
 	itemsActions?: IItemsActions[];
@@ -350,7 +349,6 @@ export interface IFrontendDataSetProps {
 	selectionType?: 'single' | 'multiple';
 	showBulkActionsManagementBar?: boolean;
 	showBulkActionsManagementBarActions?: boolean;
-	showInlineInformation?: boolean;
 	showInlineNotification?: boolean;
 	showManagementBar?: boolean;
 	showNavBarWhenSelected?: boolean;

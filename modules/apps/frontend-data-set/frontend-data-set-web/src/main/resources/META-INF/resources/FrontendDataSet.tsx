@@ -148,7 +148,6 @@ const FrontendDataSetContent = ({
 	infoPanelComponent,
 	inlineAddingSettings,
 	inlineEditingSettings,
-	inlineInformationContent,
 	inlineNotificationContent,
 	items: itemsProp,
 	itemsActions,
@@ -166,7 +165,6 @@ const FrontendDataSetContent = ({
 	selectionType,
 	showBulkActionsManagementBar = true,
 	showBulkActionsManagementBarActions = true,
-	showInlineInformation,
 	showInlineNotification,
 	showManagementBar = true,
 	showNavBarWhenSelected = false,
@@ -1531,18 +1529,6 @@ const FrontendDataSetContent = ({
 		</div>
 	) : null;
 
-	const inlineInformationSlot =
-		showInlineInformation && inlineInformationContent ? (
-			<div
-				className={classNames(
-					'container-fluid align-items-center inline-information-bar',
-					style === 'fluid' && 'px-0'
-				)}
-			>
-				{inlineInformationContent}
-			</div>
-		) : null;
-
 	const inlineNotificationSlot =
 		showInlineNotification && inlineNotificationContent ? (
 			<div
@@ -2119,8 +2105,6 @@ const FrontendDataSetContent = ({
 								<div className="data-set data-set-inline">
 									{managementBar}
 
-									{inlineInformationSlot}
-
 									{inlineNotificationSlot}
 
 									{view}
@@ -2133,8 +2117,6 @@ const FrontendDataSetContent = ({
 								<div className="data-set data-set-stacked">
 									{managementBar}
 
-									{inlineInformationSlot}
-
 									{inlineNotificationSlot}
 
 									{view}
@@ -2146,8 +2128,6 @@ const FrontendDataSetContent = ({
 							{style === 'fluid' && (
 								<div className="data-set data-set-fluid">
 									{managementBar}
-
-									{inlineInformationSlot}
 
 									{inlineNotificationSlot}
 

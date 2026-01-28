@@ -68,8 +68,6 @@ const ReactFrontendDataSet = (props: IFrontendDataSetProps) => {
 	const [fdsProps, setFdsProps] = React.useState(props);
 	const [component, setComponent] = React.useState<string>('alert');
 	const [selectedItems, setSelectedItems] = React.useState<any[]>([]);
-	const [showInlineInformation, setShowInlineInformation] =
-		React.useState(false);
 	const [showInlineNotification, setShowInlineNotification] =
 		React.useState(false);
 
@@ -81,19 +79,15 @@ const ReactFrontendDataSet = (props: IFrontendDataSetProps) => {
 			sorts: [],
 		});
 
-	const alert = (
-		<ClayAlert
-			displayType="info"
-			onClose={() => setShowInlineInformation(false)}
-			variant="stripe"
-		>
+	const alertContent = (
+		<>
 			This is the info message
 			<ClayButton.Group className="pl-3" spaced>
 				<ClayButton
 					displayType="info"
 					onClick={() => {
 						onAlertActionClick();
-						setShowInlineInformation(false);
+						setShowInlineNotification(false);
 					}}
 					size="sm"
 				>
@@ -102,21 +96,26 @@ const ReactFrontendDataSet = (props: IFrontendDataSetProps) => {
 
 				<ClayButton
 					alert
-					onClick={() => setShowInlineInformation(false)}
+					onClick={() => setShowInlineNotification(false)}
 					size="sm"
 				>
 					{Liferay.Language.get('dismiss')}
 				</ClayButton>
 			</ClayButton.Group>
-		</ClayAlert>
+		</>
 	);
 
 	let notification = undefined;
 
 	if (component === 'alert') {
 		notification = (
-			<InlineNotification as={ClayAlert} displayType="info">
-				This is a notification message
+			<InlineNotification
+				as={ClayAlert}
+				displayType="info"
+				onClose={() => setShowInlineNotification(false)}
+				variant="stripe"
+			>
+				{alertContent}
 			</InlineNotification>
 		);
 	}
@@ -160,13 +159,6 @@ const ReactFrontendDataSet = (props: IFrontendDataSetProps) => {
 				</ClayButton>
 
 				<ClayButton
-					displayType="secondary"
-					onClick={() => setShowInlineInformation(true)}
-				>
-					Show info message
-				</ClayButton>
-
-				<ClayButton
 					displayType="warning"
 					onClick={() => {
 						setComponent('alert');
@@ -199,12 +191,10 @@ const ReactFrontendDataSet = (props: IFrontendDataSetProps) => {
 
 			<FrontendDataSet
 				{...fdsProps}
-				inlineInformationContent={alert}
 				inlineNotificationContent={notification}
 				onSelectedItemsChange={setSelectedItems}
 				selectedItems={selectedItems}
 				selectionType="multiple"
-				showInlineInformation={showInlineInformation}
 				showInlineNotification={showInlineNotification}
 			/>
 		</>

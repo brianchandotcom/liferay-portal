@@ -222,7 +222,7 @@ gradle.beforeProject {
 
 		afterEvaluate {
 			tasks.withType(com.liferay.gradle.plugins.node.task.YarnInstallTask) {
-				networkTimeout = Long.parseLong(GradleUtil.getProperty(project, "gradle.yarn.network.timeout", "120000"))
+				networkTimeout = Long.parseLong(GradleUtil.getProperty(project, "gradle.yarn.install.network.timeout", "120000"))
 			}
 
 			String forcedUpdateFilesVersion = GradleUtil.getProperty(project, "forced.update.files.version", (String)null)

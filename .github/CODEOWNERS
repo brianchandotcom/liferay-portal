@@ -512,12 +512,16 @@ modules/util/portal-tools-service-builder-test-uad/    @liferay-core-infra
 modules/util/release-util/    @liferay-devtools
 modules/util/source-formatter/    @liferay-devtools
 portal-impl/src/com/liferay/portal/dao/db/    @liferay-database-infra
+portal-impl/src/com/liferay/portal/dao/sql/    @liferay-database-infra
 portal-impl/src/com/liferay/portal/db/    @liferay-database-infra
+portal-impl/src/com/liferay/portal/internal/dao/sql/    @liferay-database-infra
 portal-impl/src/com/liferay/portal/tools/DBUpgrader.java    @liferay-database-infra
 portal-impl/src/com/liferay/portal/upgrade/    @liferay-database-infra
 portal-impl/src/com/liferay/portal/verify/    @liferay-database-infra
 portal-impl/test/unit/com/liferay/portal/dao/db/    @liferay-database-infra
+portal-impl/test/unit/com/liferay/portal/dao/sql/    @liferay-database-infra
 portal-impl/test/unit/com/liferay/portal/db/    @liferay-database-infra
+portal-impl/test/unit/com/liferay/portal/internal/dao/sql/    @liferay-database-infra
 portal-impl/test/unit/com/liferay/portal/upgrade/    @liferay-database-infra
 portal-impl/test/unit/com/liferay/portal/verify/    @liferay-database-infra
 portal-kernel/src/com/liferay/portal/kernel/dao/db/    @liferay-database-infra

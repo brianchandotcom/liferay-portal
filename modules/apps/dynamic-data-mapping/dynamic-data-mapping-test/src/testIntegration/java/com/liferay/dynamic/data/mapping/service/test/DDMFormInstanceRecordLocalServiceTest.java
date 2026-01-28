@@ -230,6 +230,26 @@ public class DDMFormInstanceRecordLocalServiceTest
 			"1.1", string3);
 	}
 
+	private DDMFormInstance _addDDMFormInstance(
+			boolean limitToOneSubmissionPerUser, User user)
+		throws Exception {
+
+		DDMFormInstance ddmFormInstance =
+			DDMFormInstanceTestUtil.addDDMFormInstance(
+				user.getGroup(), user.getUserId());
+
+		DDMFormValues ddmFormValues =
+			ddmFormInstance.getSettingsDDMFormValues();
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"limitToOneSubmissionPerUser",
+				String.valueOf(limitToOneSubmissionPerUser)));
+
+		return _ddmFormInstanceLocalService.updateFormInstance(
+			ddmFormInstance.getFormInstanceId(), ddmFormValues);
+	}
+
 	private void _addFormInstanceRecords(
 			DDMFormInstance ddmFormInstance, User user)
 		throws Exception {
@@ -274,39 +294,17 @@ public class DDMFormInstanceRecordLocalServiceTest
 						}));
 			}
 
-			Assert.assertTrue(
-				readyCountDownLatch.await(30, TimeUnit.SECONDS));
+			Assert.assertTrue(readyCountDownLatch.await(30, TimeUnit.SECONDS));
 
 			startCountDownLatch.countDown();
 
-			Assert.assertTrue(
-				finishCountDownLatch.await(60, TimeUnit.SECONDS));
+			Assert.assertTrue(finishCountDownLatch.await(60, TimeUnit.SECONDS));
 
 			executorService.awaitTermination(30, TimeUnit.SECONDS);
 		}
 		finally {
 			executorService.shutdown();
 		}
-	}
-
-	private DDMFormInstance _addDDMFormInstance(
-			boolean limitToOneSubmissionPerUser, User user)
-		throws Exception {
-
-		DDMFormInstance ddmFormInstance =
-			DDMFormInstanceTestUtil.addDDMFormInstance(
-				user.getGroup(), user.getUserId());
-
-		DDMFormValues ddmFormValues =
-			ddmFormInstance.getSettingsDDMFormValues();
-
-		ddmFormValues.addDDMFormFieldValue(
-			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"limitToOneSubmissionPerUser",
-				String.valueOf(limitToOneSubmissionPerUser)));
-
-		return _ddmFormInstanceLocalService.updateFormInstance(
-			ddmFormInstance.getFormInstanceId(), ddmFormValues);
 	}
 
 	private void _assertDDMFormInstanceRecord(

@@ -14,6 +14,7 @@ import {Attachment, Product} from '../../types/product';
 import {getSkuDetails, handleImageError} from '../../utils/product';
 import {Badge} from '../ui/badge';
 import {Card} from '../ui/card';
+import PreviewHTML from '../../components/preview-html';
 import ProductQuickActions from './product-quick-actions';
 import ProductSpecifications from './product-specifications';
 import ProductUOM from './product-uom';
@@ -149,11 +150,9 @@ const ProductDetail = ({product}: {product: Product}) => {
 						)}
 					</div>
 
-					<div
-						dangerouslySetInnerHTML={{
-							__html: product.description ?? '',
-						}}
-					/>
+					<div>
+						<PreviewHTML content={product.description ?? ''} />
+					</div>
 
 					{!!skuDetails.skuUnitOfMeasures?.length && (
 						<ProductUOM uom={skuDetails?.skuUnitOfMeasures} />

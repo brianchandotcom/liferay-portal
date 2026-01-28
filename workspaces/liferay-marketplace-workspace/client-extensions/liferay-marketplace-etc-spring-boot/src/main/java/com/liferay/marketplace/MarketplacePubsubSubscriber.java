@@ -9,7 +9,7 @@ import com.google.api.core.ApiService;
 import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.api.gax.rpc.NotFoundException;
-import com.google.auth.Credentials;
+import com.google.auth.oauth2.GoogleCredentials;
 import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.pubsub.v1.Subscriber;
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
@@ -20,8 +20,10 @@ import com.google.pubsub.v1.TopicName;
 
 import com.liferay.marketplace.constants.MarketplaceConstants;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -164,11 +166,11 @@ public class MarketplacePubsubSubscriber {
 	}
 
 	protected CredentialsProvider getCredentialsProvider() throws IOException {
-		Credentials credentials = ServiceAccountCredentials.fromPkcs8(
-			_clientId, _clientEmailAddress, _privateKey, _privateKeyId,
-			Collections.singletonList(_SCOPE));
+		GoogleCredentials googleCredentials = ServiceAccountCredentials.fromStream(
+				new ByteArrayInputStream(_gcpServiceAccountKey.getBytes(StandardCharsets.UTF_8))
+		).createScoped(Collections.singletonList(_SCOPE));
 
-		return FixedCredentialsProvider.create(credentials);
+		return FixedCredentialsProvider.create(googleCredentials);
 	}
 
 	private static final String _SCOPE =
@@ -177,20 +179,11 @@ public class MarketplacePubsubSubscriber {
 	private static final Log _log = LogFactory.getLog(
 		MarketplacePubsubSubscriber.class);
 
-	@Value("${liferay.marketplace.gcp.client.email}")
-	private String _clientEmailAddress;
-
-	@Value("${liferay.marketplace.gcp.client.id}")
-	private String _clientId;
-
-	@Value("${liferay.marketplace.gcp.private.key}")
-	private String _privateKey;
-
-	@Value("${liferay.marketplace.gcp.private.key.id}")
-	private String _privateKeyId;
-
-	@Value("${liferay.marketplace.gcp.project.id}")
+	@Value("${liferay.marketplace.pubsub.gcp.project.id}")
 	private String _projectId;
+
+	@Value("${liferay.marketplace.pubsub.gcp.service.account.key}")
+	private String _gcpServiceAccountKey;
 
 	private final List<Subscriber> _subscribers = new ArrayList<>();
 	private SubscriptionAdminClient _subscriptionAdminClient;

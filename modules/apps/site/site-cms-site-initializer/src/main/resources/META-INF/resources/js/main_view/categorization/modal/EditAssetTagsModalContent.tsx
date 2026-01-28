@@ -148,16 +148,13 @@ export default function EditAssetTagsModalContent({
 			setCategorizationDTO(
 				({
 					keywords: currentKeywords,
-					keywordsToAdd: currentToAdd = [],
 					keywordsToRemove: currentToRemove = [],
 					...dto
 				}) => {
 					return {
 						...dto,
 						keywords: keywords || currentKeywords!,
-						keywordsToAdd: [
-							...new Set([...currentToAdd, ...keywordsToAdd]),
-						],
+						keywordsToAdd: [...keywordsToAdd],
 						keywordsToRemove: [
 							...new Set([
 								...currentToRemove,

@@ -41,7 +41,7 @@ interface IDateInputProps {
 	onBlur?: (event?: FocusEvent) => void;
 	onChange: (range: DateRange) => void;
 	overlayAlignment?: string;
-	setMaxRange?: boolean;
+	maxRange?: number;
 	showRetentionPeriod?: boolean;
 	usePortal?: boolean;
 	value: DateRange;
@@ -55,7 +55,7 @@ const DateInput: React.FC<IDateInputProps> = ({
 	limitEndDate = true,
 	onBlur = noop,
 	onChange = noop,
-	setMaxRange = true,
+	maxRange = 365,
 	showRetentionPeriod = true,
 	value
 }) => {
@@ -91,6 +91,10 @@ const DateInput: React.FC<IDateInputProps> = ({
 	};
 
 	const minDate = formatDateWithTimezone(timeZoneId).clone();
+
+	if (maxRange === -1) {
+		maxRange = Number.MAX_SAFE_INTEGER;
+	}
 
 	return (
 		<ClayDropDown
@@ -165,7 +169,7 @@ const DateInput: React.FC<IDateInputProps> = ({
 						.clone()
 						.subtract(1, 'days')
 				}
-				maxRange={setMaxRange ? 365 : undefined}
+				maxRange={maxRange}
 				minDate={
 					showRetentionPeriod
 						? minDate.subtract(retentionPeriod, 'months')

@@ -8,6 +8,7 @@ package com.liferay.customer.service;
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
 import com.liferay.client.extension.util.spring.boot3.service.BaseService;
 import com.liferay.customer.constants.NotificationSubscriptionConstants;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import org.json.JSONArray;
@@ -23,7 +24,7 @@ public abstract class BaseNotificationService extends BaseService {
 
 	protected String escapeFilterValue(String value) {
 		if (value == null) {
-			return "";
+			return StringPool.BLANK;
 		}
 
 		return StringUtil.replace(value, '\'', "''");
@@ -39,9 +40,9 @@ public abstract class BaseNotificationService extends BaseService {
 			JSONObject templatePayloadJSONObject)
 		throws Exception {
 
-		for (int j = 0; j < subscriptionsJSONArray.length(); j++) {
+		for (int i = 0; i < subscriptionsJSONArray.length(); i++) {
 			JSONObject subscriptionJSONObject =
-				subscriptionsJSONArray.getJSONObject(j);
+				subscriptionsJSONArray.getJSONObject(i);
 
 			if (!subscriptionJSONObject.getBoolean("active")) {
 				continue;

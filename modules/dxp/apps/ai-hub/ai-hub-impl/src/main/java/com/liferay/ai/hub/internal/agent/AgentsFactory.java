@@ -34,8 +34,7 @@ public class AgentsFactory {
 		try {
 			Page<TaskDefinition> page =
 				_taskDefinitionManager.getTaskDefinitions(
-					_agentContext.getCompanyId(),
-					_agentContext.getDTOConverterContext(), null, null,
+					_agentContext.getCompanyId(), null, null, null,
 					Pagination.of(1, 20), null);
 
 			return TransformUtil.transformToArray(

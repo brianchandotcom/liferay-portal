@@ -197,20 +197,20 @@ public class ServiceContextUtil {
 				taxonomyCategoryBrief);
 
 			try {
+				String parentTaxonomyCategoryExternalReferenceCode = null;
+
 				ParentTaxonomyCategory parentTaxonomyCategory =
 					taxonomyCategoryBrief.getParentTaxonomyCategory();
-
-				String parentTaxonomyCategoryExternalReferenceCode = null;
 
 				if (parentTaxonomyCategory != null) {
 					parentTaxonomyCategoryExternalReferenceCode =
 						parentTaxonomyCategory.getExternalReferenceCode();
 				}
 
+				String parentTaxonomyVocabularyExternalReferenceCode = null;
+
 				ParentTaxonomyVocabulary parentTaxonomyVocabulary =
 					taxonomyCategoryBrief.getParentTaxonomyVocabulary();
-
-				String parentTaxonomyVocabularyExternalReferenceCode = null;
 
 				if (parentTaxonomyVocabulary != null) {
 					parentTaxonomyVocabularyExternalReferenceCode =

@@ -73,4 +73,6 @@ public interface WorkflowDefinition extends WorkflowModel {
 
 	public boolean isActive();
 
+	public boolean isSystem();
+
 }

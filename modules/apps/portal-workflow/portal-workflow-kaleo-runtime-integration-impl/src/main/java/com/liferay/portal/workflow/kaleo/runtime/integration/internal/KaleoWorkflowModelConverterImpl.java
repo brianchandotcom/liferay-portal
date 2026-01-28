@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.DefaultWorkflowDefinition;
@@ -138,6 +139,10 @@ public class KaleoWorkflowModelConverterImpl
 			kaleoDefinition.getModifiedDate());
 		defaultWorkflowDefinition.setName(kaleoDefinition.getName());
 		defaultWorkflowDefinition.setScope(kaleoDefinition.getScope());
+		defaultWorkflowDefinition.setSystem(
+			ArrayUtil.contains(
+				WorkflowDefinitionConstants.SYSTEM_WORKFLOW_DEFINITION_NAMES,
+				kaleoDefinition.getName()));
 		defaultWorkflowDefinition.setTitle(kaleoDefinition.getTitle());
 		defaultWorkflowDefinition.setUserId(kaleoDefinition.getUserId());
 		defaultWorkflowDefinition.setVersion(kaleoDefinition.getVersion());
@@ -179,6 +184,11 @@ public class KaleoWorkflowModelConverterImpl
 
 			defaultWorkflowDefinition.setActive(kaleoDefinition.isActive());
 			defaultWorkflowDefinition.setScope(kaleoDefinition.getScope());
+			defaultWorkflowDefinition.setSystem(
+				ArrayUtil.contains(
+					WorkflowDefinitionConstants.
+						SYSTEM_WORKFLOW_DEFINITION_NAMES,
+					kaleoDefinition.getName()));
 			defaultWorkflowDefinition.setWorkflowDefinitionId(
 				kaleoDefinition.getKaleoDefinitionId());
 		}

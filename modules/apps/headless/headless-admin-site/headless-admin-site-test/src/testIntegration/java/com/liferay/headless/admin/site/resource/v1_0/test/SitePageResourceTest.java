@@ -2791,7 +2791,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 					taxonomyCategoryItemExternalReferences[0].
 						getExternalReferenceCode(),
 					testCompany.getGroupId()));
-
 		Assert.assertNotNull(
 			_assetCategoryLocalService.
 				fetchAssetCategoryByExternalReferenceCode(

@@ -16,44 +16,28 @@ describe('TasksOverview', () => {
 	it('renders the appropriate counts', async () => {
 		(fetch as jest.Mock)
 			.mockResolvedValueOnce({
-				json: () => Promise.resolve({totalCount: 1}),
-				ok: true,
-			})
-			.mockResolvedValueOnce({
-				json: () => Promise.resolve({totalCount: 2}),
-				ok: true,
-			})
-			.mockResolvedValueOnce({
-				json: () => Promise.resolve({totalCount: 3}),
-				ok: true,
-			})
-			.mockResolvedValueOnce({
 				json: () => Promise.resolve({completionRate: 50}),
 				ok: true,
 			})
 			.mockResolvedValueOnce({
-				json: () => Promise.resolve({totalCount: 4}),
+				json: () =>
+					Promise.resolve({
+						blockedCount: 1,
+						inProgressCount: 2,
+						overdueCount: 3,
+						totalCount: 4,
+					}),
 				ok: true,
 			});
 
 		await act(async () => {
-			render(
-				<TasksOverview
-					blockedCountURL="/blocked"
-					inProgressCountURL="/in-progress"
-					overdueCountURL="/overdue"
-					projectId="123"
-					redirect="/redirect-url"
-					totalCountURL="/total"
-				/>
-			);
+			render(<TasksOverview projectId="123" redirect="/redirect-url" />);
 		});
 
-		expect(fetch).toHaveBeenCalledWith('/blocked');
-		expect(fetch).toHaveBeenCalledWith('/in-progress');
-		expect(fetch).toHaveBeenCalledWith('/overdue');
 		expect(fetch).toHaveBeenCalledWith('/o/cmp/projects/123');
-		expect(fetch).toHaveBeenCalledWith('/total');
+		expect(fetch).toHaveBeenCalledWith(
+			'/o/headless-cmp/v1.0/projects/123/task-statistics/'
+		);
 
 		expect(screen.getByText('1')).toBeInTheDocument();
 		expect(screen.getByText('2')).toBeInTheDocument();
@@ -65,44 +49,28 @@ describe('TasksOverview', () => {
 	it('renders empty state when totalCount is 0', async () => {
 		(fetch as jest.Mock)
 			.mockResolvedValueOnce({
-				json: () => Promise.resolve({totalCount: 0}),
-				ok: true,
-			})
-			.mockResolvedValueOnce({
-				json: () => Promise.resolve({totalCount: 0}),
-				ok: true,
-			})
-			.mockResolvedValueOnce({
-				json: () => Promise.resolve({totalCount: 0}),
-				ok: true,
-			})
-			.mockResolvedValueOnce({
 				json: () => Promise.resolve({completionRate: 0}),
 				ok: true,
 			})
 			.mockResolvedValueOnce({
-				json: () => Promise.resolve({totalCount: 0}),
+				json: () =>
+					Promise.resolve({
+						blockedCount: 0,
+						inProgressCount: 0,
+						overdueCount: 0,
+						totalCount: 0,
+					}),
 				ok: true,
 			});
 
 		await act(async () => {
-			render(
-				<TasksOverview
-					blockedCountURL="/blocked"
-					inProgressCountURL="/in-progress"
-					overdueCountURL="/overdue"
-					projectId="123"
-					redirect="/redirect-url"
-					totalCountURL="/total"
-				/>
-			);
+			render(<TasksOverview projectId="123" redirect="/redirect-url" />);
 		});
 
-		expect(fetch).toHaveBeenCalledWith('/blocked');
-		expect(fetch).toHaveBeenCalledWith('/in-progress');
-		expect(fetch).toHaveBeenCalledWith('/overdue');
 		expect(fetch).toHaveBeenCalledWith('/o/cmp/projects/123');
-		expect(fetch).toHaveBeenCalledWith('/total');
+		expect(fetch).toHaveBeenCalledWith(
+			'/o/headless-cmp/v1.0/projects/123/task-statistics/'
+		);
 
 		expect(screen.getByText('no-tasks')).toBeInTheDocument();
 

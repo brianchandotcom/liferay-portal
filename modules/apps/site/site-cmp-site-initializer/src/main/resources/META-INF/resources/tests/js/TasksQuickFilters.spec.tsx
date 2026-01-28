@@ -16,40 +16,63 @@ describe('TasksQuickFilters', () => {
 		(fetch as jest.Mock).mockClear();
 	});
 
-	it('renders the appropriate counts from multiple API calls', async () => {
-		(fetch as jest.Mock)
-			.mockResolvedValueOnce({
-				json: () => Promise.resolve({totalCount: 1}),
-				ok: true,
-			})
-			.mockResolvedValueOnce({
-				json: () => Promise.resolve({totalCount: 2}),
-				ok: true,
-			})
-			.mockResolvedValueOnce({
-				json: () => Promise.resolve({totalCount: 3}),
-				ok: true,
-			})
-			.mockResolvedValueOnce({
-				json: () => Promise.resolve({totalCount: 4}),
-				ok: true,
-			});
-
-		await act(async () => {
-			render(
-				<TasksQuickFilters
-					blockedCountURL="/blocked"
-					inProgressCountURL="/in-progress"
-					overdueCountURL="/overdue"
-					totalCountURL="/total"
-				/>
-			);
+	it('renders the appropriate counts when a projectId is provided', async () => {
+		(fetch as jest.Mock).mockResolvedValue({
+			json: () =>
+				Promise.resolve({
+					blockedCount: 1,
+					inProgressCount: 2,
+					overdueCount: 3,
+					totalCount: 4,
+				}),
+			ok: true,
 		});
 
-		expect(fetch).toHaveBeenCalledWith('/blocked');
-		expect(fetch).toHaveBeenCalledWith('/in-progress');
-		expect(fetch).toHaveBeenCalledWith('/overdue');
-		expect(fetch).toHaveBeenCalledWith('/total');
+		await act(async () => {
+			render(<TasksQuickFilters projectId="123" />);
+		});
+
+		expect(fetch).toHaveBeenCalledWith(
+			'/o/headless-cmp/v1.0/projects/123/task-statistics/',
+			{
+				method: 'GET',
+			}
+		);
+
+		expect(screen.getByText('blocked').previousSibling).toHaveTextContent(
+			'1'
+		);
+		expect(
+			screen.getByText('in-progress').previousSibling
+		).toHaveTextContent('2');
+		expect(screen.getByText('overdue').previousSibling).toHaveTextContent(
+			'3'
+		);
+		expect(
+			screen.getByText('total-tasks').previousSibling
+		).toHaveTextContent('4');
+	});
+
+	it('renders the appropriate counts from multiple API calls', async () => {
+		(fetch as jest.Mock).mockResolvedValueOnce({
+			json: () =>
+				Promise.resolve({
+					blockedCount: 1,
+					inProgressCount: 2,
+					overdueCount: 3,
+					totalCount: 4,
+				}),
+			ok: true,
+		});
+
+		await act(async () => {
+			render(<TasksQuickFilters />);
+		});
+
+		expect(fetch).toHaveBeenCalledWith(
+			'/o/headless-cmp/v1.0/task-statistics/',
+			{method: 'GET'}
+		);
 
 		expect(screen.getByText('blocked').previousSibling).toHaveTextContent(
 			'1'

@@ -6,6 +6,8 @@
 package com.liferay.customer.service;
 
 import com.liferay.customer.constants.NotificationSubscriptionConstants;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
@@ -36,13 +38,9 @@ public class BusinessEventNotificationService extends BaseNotificationService {
 	)
 	public void sendNotifications() {
 		try {
-			sendNotifications(
-				_lastSuccessfulRun.get(
-					_BUSINESS_EVENT_NOTIFICATIONS_LAST_SUCCESSFUL_RUN_KEY));
+			sendNotifications(_lastSuccessfulRunZonedDateTime);
 
-			_lastSuccessfulRun.put(
-				_BUSINESS_EVENT_NOTIFICATIONS_LAST_SUCCESSFUL_RUN_KEY,
-				ZonedDateTime.now());
+			_lastSuccessfulRunZonedDateTime = ZonedDateTime.now();
 		}
 		catch (Exception exception) {
 			_log.error("Error sending business event notifications", exception);
@@ -70,209 +68,192 @@ public class BusinessEventNotificationService extends BaseNotificationService {
 				"Checking for business event notifications since " + fromDate);
 		}
 
-		try {
-			JSONObject jsonObject = new JSONObject(
-				get(
-					getAuthorization(),
-					UriComponentsBuilder.fromPath(
-						"/o/c/businessevents"
-					).queryParam(
-						"filter", "dateModified ge " + fromDate
-					).queryParam(
-						"nestedFields",
-						NotificationSubscriptionConstants.
-							FIELD_ACCOUNT_ENTRY_TO_BUSINESS_EVENT
-					).build(
-					).toUri()));
+		JSONObject jsonObject = new JSONObject(
+			get(
+				getAuthorization(),
+				UriComponentsBuilder.fromPath(
+					"/o/c/businessevents"
+				).queryParam(
+					"filter", "dateModified ge " + fromDate
+				).queryParam(
+					"nestedFields",
+					NotificationSubscriptionConstants.
+						FIELD_ACCOUNT_ENTRY_TO_BUSINESS_EVENT
+				).build(
+				).toUri()));
 
-			JSONArray businessEventsJSONArray = jsonObject.getJSONArray(
-				"items");
+		JSONArray businessEventsJSONArray = jsonObject.getJSONArray("items");
 
-			if (businessEventsJSONArray.length() == 0) {
-				if (_log.isInfoEnabled()) {
-					_log.info("No new business events to notify");
-				}
-
-				return;
-			}
-
+		if (businessEventsJSONArray.length() == 0) {
 			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Found " + businessEventsJSONArray.length() +
-						" business events to notify");
+				_log.info("No new business events to notify");
 			}
 
-			for (int i = 0; i < businessEventsJSONArray.length(); i++) {
-				JSONObject businessEventJSONObject =
-					businessEventsJSONArray.getJSONObject(i);
-
-				JSONObject accountEntryJSONObject =
-					businessEventJSONObject.optJSONObject(
-						NotificationSubscriptionConstants.
-							FIELD_ACCOUNT_ENTRY_TO_BUSINESS_EVENT);
-
-				String externalReferenceCode = accountEntryJSONObject.getString(
-					"externalReferenceCode");
-
-				if ((externalReferenceCode == null) ||
-					externalReferenceCode.isEmpty()) {
-
-					continue;
-				}
-
-				String subscriptionFilter =
-					"type eq 'businessEvent' and contains(filter, '" +
-						escapeFilterValue(externalReferenceCode) + "')";
-
-				JSONArray subscriptionsJSONArray =
-					_notificationSubscriptionService.
-						getNotificationSubscriptionsJSONArray(
-							subscriptionFilter);
-
-				if (subscriptionsJSONArray.length() == 0) {
-					continue;
-				}
-
-				String id = String.valueOf(
-					businessEventJSONObject.getInt("id"));
-
-				String businessEventVersions = "";
-
-				try {
-					String filter = String.format(
-						NotificationSubscriptionConstants.
-							FIELD_BUSINESS_EVENT_TO_BUSINESS_EVENT_VERSION +
-								" eq '%s' and dateModified ge %s",
-						id, fromDate);
-
-					JSONObject versionsJSONObject = new JSONObject(
-						get(
-							getAuthorization(),
-							UriComponentsBuilder.fromPath(
-								"/o/c/businesseventversions"
-							).queryParam(
-								"filter", filter
-							).queryParam(
-								"sort", "dateModified:desc"
-							).build(
-							).toUri()));
-
-					JSONArray businessEventVersionsJSONArray =
-						versionsJSONObject.getJSONArray("items");
-
-					if (businessEventVersionsJSONArray.length() > 0) {
-						StringBuilder versionsHTML = new StringBuilder();
-
-						versionsHTML.append("<h4>Recent Updates:</h4>");
-						versionsHTML.append("<ul>");
-
-						for (int j = 0;
-							 j < businessEventVersionsJSONArray.length(); j++) {
-
-							JSONObject versionJSONObject =
-								businessEventVersionsJSONArray.getJSONObject(j);
-
-							ZonedDateTime versionDate = ZonedDateTime.parse(
-								versionJSONObject.getString("dateModified"));
-
-							if (versionDate.isBefore(zonedDateTime)) {
-								continue;
-							}
-
-							versionsHTML.append("<li><strong>");
-							versionsHTML.append(
-								versionJSONObject.optString("name", "Update"));
-							versionsHTML.append("</strong>");
-
-							String dateModifiedString =
-								versionJSONObject.optString("dateModified");
-
-							if (!dateModifiedString.isEmpty()) {
-								ZonedDateTime modifiedDateTime =
-									ZonedDateTime.parse(dateModifiedString);
-
-								String formattedDate = modifiedDateTime.format(
-									_DATE_TIME_FORMATTER);
-
-								versionsHTML.append(" (");
-								versionsHTML.append(formattedDate);
-								versionsHTML.append(")");
-							}
-
-							versionsHTML.append("<br/>");
-							versionsHTML.append(
-								versionJSONObject.optString("comment", ""));
-							versionsHTML.append("</li>");
-						}
-
-						versionsHTML.append("</ul>");
-
-						businessEventVersions = versionsHTML.toString();
-					}
-				}
-				catch (Exception exception) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							String.format(
-								"Unable to fetch business event versions for " +
-									"business event %s",
-								id),
-							exception);
-					}
-				}
-
-				String activityHistoryURL = String.format(
-					"%s/project/%s/business-events/%s/activity-history",
-					portalUrl, externalReferenceCode, id);
-
-				JSONObject templatePayloadJSONObject = new JSONObject();
-
-				templatePayloadJSONObject.put(
-					"BUSINESSEVENT_ACTIVITY_HISTORY_PAGE_LINK",
-					activityHistoryURL
-				).put(
-					"BUSINESSEVENT_EVENTTYPE",
-					businessEventJSONObject.optJSONObject(
-						"eventType"
-					).optString(
-						"key", ""
-					)
-				).put(
-					"BUSINESSEVENT_LASTCOMMENT",
-					businessEventJSONObject.optString("lastComment", "")
-				).put(
-					"BUSINESSEVENT_NAME",
-					businessEventJSONObject.optString("name", "")
-				).put(
-					"BUSINESSEVENT_TARGETGOLIVEDATETIME",
-					businessEventJSONObject.optString(
-						"targetGoLiveDateTime", "")
-				).put(
-					"BUSINESSEVENT_VERSIONS", businessEventVersions
-				).put(
-					"PROJECT_NAME", accountEntryJSONObject.optString("name", "")
-				);
-
-				sendNotifications(
-					subscriptionsJSONArray, "UPDATED-BUSINESS-EVENTS",
-					templatePayloadJSONObject);
-			}
-
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Sent " + businessEventsJSONArray.length() +
-						" business event notifications");
-			}
+			return;
 		}
-		catch (Exception exception) {
-			_log.error(
-				"Unable to process business event notifications", exception);
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Found " + businessEventsJSONArray.length() +
+					" business events to notify");
+		}
+
+		for (int i = 0; i < businessEventsJSONArray.length(); i++) {
+			JSONObject businessEventJSONObject =
+				businessEventsJSONArray.getJSONObject(i);
+
+			JSONObject accountEntryJSONObject =
+				businessEventJSONObject.getJSONObject(
+					NotificationSubscriptionConstants.
+						FIELD_ACCOUNT_ENTRY_TO_BUSINESS_EVENT);
+
+			String externalReferenceCode = accountEntryJSONObject.getString(
+				"externalReferenceCode");
+
+			if (Validator.isNull(externalReferenceCode)) {
+				continue;
+			}
+
+			String subscriptionFilter =
+				"type eq 'businessEvent' and contains(filter, '" +
+					escapeFilterValue(externalReferenceCode) + "')";
+
+			JSONArray subscriptionsJSONArray =
+				_notificationSubscriptionService.
+					getNotificationSubscriptionsJSONArray(subscriptionFilter);
+
+			if (subscriptionsJSONArray.length() == 0) {
+				continue;
+			}
+
+			long businessEventId = businessEventJSONObject.getLong("id");
+
+			String businessEventVersions = StringPool.BLANK;
+
+			try {
+				businessEventVersions = _getBusinessEventVersions(
+					zonedDateTime, fromDate, businessEventId);
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to fetch business event versions for " +
+							"business event " + businessEventId,
+						exception);
+				}
+			}
+
+			JSONObject templatePayloadJSONObject = new JSONObject();
+
+			templatePayloadJSONObject.put(
+				"BUSINESSEVENT_ACTIVITY_HISTORY_PAGE_LINK",
+				String.format(
+					"%s/project/%s/business-events/%s/activity-history",
+					portalUrl, externalReferenceCode, businessEventId)
+			).put(
+				"BUSINESSEVENT_EVENTTYPE",
+				businessEventJSONObject.getJSONObject(
+					"eventType"
+				).optString(
+					"key"
+				)
+			).put(
+				"BUSINESSEVENT_LASTCOMMENT",
+				businessEventJSONObject.optString("lastComment")
+			).put(
+				"BUSINESSEVENT_NAME", businessEventJSONObject.optString("name")
+			).put(
+				"BUSINESSEVENT_TARGETGOLIVEDATETIME",
+				businessEventJSONObject.optString("targetGoLiveDateTime")
+			).put(
+				"BUSINESSEVENT_VERSIONS", businessEventVersions
+			).put(
+				"PROJECT_NAME", accountEntryJSONObject.optString("name")
+			);
+
+			sendNotifications(
+				subscriptionsJSONArray, "UPDATED-BUSINESS-EVENTS",
+				templatePayloadJSONObject);
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Sent " + businessEventsJSONArray.length() +
+					" business event notifications");
 		}
 	}
 
-	private static final String
-		_BUSINESS_EVENT_NOTIFICATIONS_LAST_SUCCESSFUL_RUN_KEY =
-			"businessEventNotifications";
+	private String _getBusinessEventVersions(
+			ZonedDateTime zonedDateTime, String fromDate, long businessEventId)
+		throws Exception {
+
+		String filter = String.format(
+			NotificationSubscriptionConstants.
+				FIELD_BUSINESS_EVENT_TO_BUSINESS_EVENT_VERSION +
+					" eq '%s' and dateModified ge %s",
+			businessEventId, fromDate);
+
+		JSONObject jsonObject = new JSONObject(
+			get(
+				getAuthorization(),
+				UriComponentsBuilder.fromPath(
+					"/o/c/businesseventversions"
+				).queryParam(
+					"filter", filter
+				).queryParam(
+					"sort", "dateModified:desc"
+				).build(
+				).toUri()));
+
+		JSONArray businessEventVersionsJSONArray = jsonObject.getJSONArray(
+			"items");
+
+		if (businessEventVersionsJSONArray.length() == 0) {
+			return StringPool.BLANK;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("<h4>Recent Updates:</h4>");
+		sb.append("<ul>");
+
+		for (int i = 0; i < businessEventVersionsJSONArray.length(); i++) {
+			JSONObject businessEventVersionJSONObject =
+				businessEventVersionsJSONArray.getJSONObject(i);
+
+			ZonedDateTime curZonedDateTime = ZonedDateTime.parse(
+				businessEventVersionJSONObject.getString("dateModified"));
+
+			if (curZonedDateTime.isBefore(zonedDateTime)) {
+				continue;
+			}
+
+			sb.append("<li><strong>");
+			sb.append(
+				businessEventVersionJSONObject.optString("name", "Update"));
+			sb.append("</strong>");
+
+			String dateModified = businessEventVersionJSONObject.optString(
+				"dateModified");
+
+			if (Validator.isNotNull(dateModified)) {
+				ZonedDateTime modifiedZonedDateTime = ZonedDateTime.parse(
+					dateModified);
+
+				sb.append(" (");
+				sb.append(modifiedZonedDateTime.format(_DATE_TIME_FORMATTER));
+				sb.append(")");
+			}
+
+			sb.append("<br/>");
+			sb.append(businessEventVersionJSONObject.optString("comment"));
+			sb.append("</li>");
+		}
+
+		sb.append("</ul>");
+
+		return sb.toString();
+	}
 
 	private static final DateTimeFormatter _DATE_TIME_FORMATTER =
 		DateTimeFormatter.ofPattern("MMMM d, yyyy HH:mm:ss");
@@ -280,8 +261,7 @@ public class BusinessEventNotificationService extends BaseNotificationService {
 	private static final Log _log = LogFactory.getLog(
 		BusinessEventNotificationService.class);
 
-	private final Map<String, ZonedDateTime> _lastSuccessfulRun =
-		new ConcurrentHashMap<>();
+	private final ZonedDateTime _lastSuccessfulRunZonedDateTime;
 
 	@Autowired
 	private NotificationSubscriptionService _notificationSubscriptionService;

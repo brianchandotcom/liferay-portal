@@ -16,7 +16,6 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
@@ -35,7 +34,7 @@ public class NotificationTemplateService extends BaseService {
 
 		NotificationTemplateResource notificationTemplateResource =
 			builder.endpoint(
-				_lxcDXPMainDomain, _lxcDXPServerProtocol
+				lxcDXPMainDomain, lxcDXPServerProtocol
 			).header(
 				HttpHeaders.AUTHORIZATION, _getAuthorization()
 			).build();
@@ -82,11 +81,5 @@ public class NotificationTemplateService extends BaseService {
 
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
-
-	@Value("${com.liferay.lxc.dxp.mainDomain}")
-	private String _lxcDXPMainDomain;
-
-	@Value("${com.liferay.lxc.dxp.server.protocol}")
-	private String _lxcDXPServerProtocol;
 
 }

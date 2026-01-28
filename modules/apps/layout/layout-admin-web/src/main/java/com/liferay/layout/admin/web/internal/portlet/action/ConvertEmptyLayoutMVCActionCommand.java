@@ -73,26 +73,14 @@ public class ConvertEmptyLayoutMVCActionCommand
 			Layout layout = _layoutService.getLayout(
 				ParamUtil.getLong(actionRequest, "selPlid"));
 
-			long masterLayoutPlid = ParamUtil.getLong(
-				actionRequest, "masterLayoutPlid");
-			String masterLayoutPageTemplateEntryERC = null;
-
-			if (masterLayoutPlid > 0) {
-				LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
-					_layoutPageTemplateEntryService.
-						fetchLayoutPageTemplateEntryByPlid(masterLayoutPlid);
-
-				if (masterLayoutPageTemplateEntry != null) {
-					masterLayoutPageTemplateEntryERC =
-						masterLayoutPageTemplateEntry.
-							getExternalReferenceCode();
-				}
-			}
 
 			long classNameId = 0;
 			long classPK = 0;
 			long layoutPageTemplateEntryId = ParamUtil.getLong(
 				actionRequest, "layoutPageTemplateEntryId");
+			String masterLayoutPageTemplateEntryERC = null;
+			long masterLayoutPlid = ParamUtil.getLong(
+				actionRequest, "masterLayoutPlid");
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				Layout.class.getName(), actionRequest);
 
@@ -129,6 +117,17 @@ public class ConvertEmptyLayoutMVCActionCommand
 					serviceContext.setAttribute(
 						"published", Boolean.FALSE.toString());
 					type = LayoutConstants.TYPE_CONTENT;
+				}
+			}
+			else if (masterLayoutPlid > 0) {
+				LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
+					_layoutPageTemplateEntryService.
+						fetchLayoutPageTemplateEntryByPlid(masterLayoutPlid);
+
+				if (masterLayoutPageTemplateEntry != null) {
+					masterLayoutPageTemplateEntryERC =
+						masterLayoutPageTemplateEntry.
+							getExternalReferenceCode();
 				}
 			}
 

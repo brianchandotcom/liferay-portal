@@ -251,6 +251,7 @@ export const ActivationConfigurationModal: React.FC<
 									<DateInput
 										className='flex-fill'
 										limitEndDate={false}
+										maxRange={-1}
 										onChange={value => {
 											setFormState({
 												...formState,
@@ -258,7 +259,6 @@ export const ActivationConfigurationModal: React.FC<
 												scheduleStartDate: value.start
 											});
 										}}
-										setMaxRange={false}
 										showRetentionPeriod={false}
 										value={{
 											end: formState.scheduleEndDate,

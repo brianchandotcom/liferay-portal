@@ -129,7 +129,8 @@ public class ViewAssigneeSectionDisplayContextTest {
 		Assert.assertEquals("Assignee", properties.get("label"));
 		Assert.assertEquals("ObjectField_assignTo", properties.get("name"));
 		Assert.assertEquals(
-			"/o/cmp/assignee-context/", properties.get("searchURL"));
+			"/o/headless-cmp/v1.0/task-assignees/",
+			properties.get("searchURL"));
 		Assert.assertTrue((Boolean)properties.get("visible"));
 
 		ClassName className = _classNameLocalService.getClassName(

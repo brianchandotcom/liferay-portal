@@ -1204,7 +1204,7 @@ $cadmin-btn-outline-light: map-deep-merge(
 					clay-enable-shadows(
 						[ $cadmin-btn-active-box-shadow#{','} 0 0 0 $cadmin-btn-focus-width
 							rgba($cadmin-light, 0.5),
-						0 0 0 $cadmin-btn-focus-width rgba($cadmin-light, 0.5) ]
+						0 0 0 $cadmin-btn-focus-width rgba($cadmin-light, 0.5)]
 					),
 			),
 		),

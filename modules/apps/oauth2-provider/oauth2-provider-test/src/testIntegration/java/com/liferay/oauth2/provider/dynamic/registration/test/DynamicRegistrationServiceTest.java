@@ -188,6 +188,50 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 		Assert.assertEquals(401, response.getStatus());
 	}
 
+	@FeatureFlag("LPD-63416")
+	@Test
+	public void testPut() throws Exception {
+		OAuth2Application oAuth2Application =
+			_oAuth2ApplicationLocalService.fetchOAuth2Application(
+				TestPropsValues.getCompanyId(), "oauthDeleteMeApplication");
+
+		WebTarget webTarget = getRegisterWebTarget(
+			oAuth2Application.getClientId());
+
+		Invocation.Builder invocationBuilder = authorize(
+			webTarget.request(),
+			_getToken(_getDynamicRegistratorOAuth2Application()));
+
+		String clientName = RandomTestUtil.randomString();
+
+		Response response = invocationBuilder.method(
+			"put",
+			Entity.json(
+				JSONUtil.put(
+					"client_name", clientName
+				).put(
+					"grant_types",
+					new String[] {OAuthConstants.CLIENT_CREDENTIALS_GRANT}
+				).put(
+					"logo_uri", RandomTestUtil.randomString()
+				).put(
+					"redirect_uris",
+					new String[] {
+						"https://client.example.org/callback",
+						"https://client.example.org/callback2"
+					}
+				).put(
+					"scope", "Liferay.Headless.Admin.Site.everything"
+				).toString()));
+
+		Assert.assertEquals(200, response.getStatus());
+
+		JSONObject responseJSONObject = parseJSONObject(response);
+
+		Assert.assertEquals(
+			clientName, responseJSONObject.getString("client_name"));
+	}
+
 	protected static WebTarget getRegisterWebTarget() {
 		WebTarget webTarget = getOAuth2WebTarget();
 

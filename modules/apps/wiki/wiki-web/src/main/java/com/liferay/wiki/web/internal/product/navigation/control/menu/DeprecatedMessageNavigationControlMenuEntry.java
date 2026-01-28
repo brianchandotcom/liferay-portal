@@ -19,6 +19,8 @@ import com.liferay.product.navigation.control.menu.constants.ProductNavigationCo
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Objects;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -55,13 +57,18 @@ public class DeprecatedMessageNavigationControlMenuEntry
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		if (themeDisplay == null) {
+			return false;
+		}
+
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		if (portletDisplay == null) {
 			return false;
 		}
 
-		return PortletKeys.WIKI_ADMIN.equals(portletDisplay.getPortletName());
+		return Objects.equals(
+			PortletKeys.WIKI_ADMIN, portletDisplay.getPortletName());
 	}
 
 	@Override

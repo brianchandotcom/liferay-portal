@@ -251,8 +251,8 @@ function buildStructures(
 			ancestors: [mainStructureERC],
 			erc,
 			objectDefinitions,
-			objectRelationshipERC: getRandomId(),
 			parent: mainStructureUuid,
+			relationshipERC: getRandomId(),
 			relationshipName: getRandomName(),
 		});
 

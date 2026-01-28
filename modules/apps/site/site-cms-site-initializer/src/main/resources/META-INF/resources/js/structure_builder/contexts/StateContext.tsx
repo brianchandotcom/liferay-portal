@@ -509,7 +509,7 @@ function reducer(state: State, action: Action): State {
 							...nextState.history,
 							deletedRelationshipERCs: [
 								...nextState.history.deletedRelationshipERCs,
-								child.objectRelationshipERC,
+								child.relationshipERC,
 							],
 						},
 					};
@@ -589,7 +589,7 @@ function reducer(state: State, action: Action): State {
 								deletedRelationshipERCs: [
 									...nextState.history
 										.deletedRelationshipERCs,
-									child.objectRelationshipERC,
+									child.relationshipERC,
 								],
 							},
 						};
@@ -640,7 +640,7 @@ function reducer(state: State, action: Action): State {
 			else if (copy.type === 'repeatable-group') {
 				copy.erc = getRandomId();
 				copy.name = getRandomName({capitalize: true});
-				copy.objectRelationshipERC = getRandomId();
+				copy.relationshipERC = getRandomId();
 				copy.relationshipName = getRandomName();
 			}
 			else {

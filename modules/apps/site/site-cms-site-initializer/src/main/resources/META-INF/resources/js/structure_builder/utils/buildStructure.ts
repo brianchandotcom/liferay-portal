@@ -91,8 +91,8 @@ export function buildChildren({
 				],
 				erc: objectRelationship.objectDefinitionExternalReferenceCode2,
 				objectDefinitions,
-				objectRelationshipERC: objectRelationship.externalReferenceCode,
 				parent,
+				relationshipERC: objectRelationship.externalReferenceCode,
 				relationshipName: objectRelationship.name,
 			});
 
@@ -106,8 +106,8 @@ export function buildChildren({
 				],
 				erc: objectRelationship.objectDefinitionExternalReferenceCode2,
 				objectDefinitions,
-				objectRelationshipERC: objectRelationship.externalReferenceCode,
 				parent,
+				relationshipERC: objectRelationship.externalReferenceCode,
 				relationshipName: objectRelationship.name,
 			});
 
@@ -169,15 +169,15 @@ export function buildReferencedStructure({
 	ancestors,
 	erc,
 	objectDefinitions,
-	objectRelationshipERC,
 	parent,
+	relationshipERC,
 	relationshipName,
 }: {
 	ancestors: Array<ObjectDefinition['externalReferenceCode']>;
 	erc: ReferencedStructure['erc'];
 	objectDefinitions: ObjectDefinitions;
-	objectRelationshipERC: string;
 	parent: Uuid;
+	relationshipERC: string;
 	relationshipName: ObjectRelationship['name'];
 }): ReferencedStructure {
 	const uuid = getUuid();
@@ -203,8 +203,8 @@ export function buildReferencedStructure({
 		erc,
 		label: objectDefinition.label,
 		name: objectDefinition.name!,
-		objectRelationshipERC,
 		parent,
+		relationshipERC,
 		relationshipName,
 		spaces: getSpaces(objectDefinition),
 		type: 'referenced-structure',
@@ -217,15 +217,15 @@ export function buildRepeatableGroup({
 	ancestors,
 	erc,
 	objectDefinitions,
-	objectRelationshipERC,
 	parent,
+	relationshipERC,
 	relationshipName,
 }: {
 	ancestors: Array<ObjectDefinition['externalReferenceCode']>;
 	erc: RepeatableGroup['erc'];
 	objectDefinitions: ObjectDefinitions;
-	objectRelationshipERC: string;
 	parent: Uuid;
+	relationshipERC: string;
 	relationshipName: ObjectRelationship['name'];
 }): RepeatableGroup {
 	const uuid = getUuid();
@@ -242,8 +242,8 @@ export function buildRepeatableGroup({
 		erc,
 		label: objectDefinition.label,
 		name: objectDefinition.name!,
-		objectRelationshipERC,
 		parent,
+		relationshipERC,
 		relationshipName,
 		type: 'repeatable-group',
 		uuid,

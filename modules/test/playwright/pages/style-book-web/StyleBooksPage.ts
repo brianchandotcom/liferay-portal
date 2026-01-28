@@ -33,28 +33,6 @@ export class StyleBooksPage {
 		);
 	}
 
-	async assertTokenInputValue(
-		label: string,
-		value: string,
-		section?: string
-	) {
-		const parentElement = section
-			? this.page.locator('.panel').filter({hasText: section})
-			: this.page;
-
-		const input = parentElement
-			.locator('.form-group')
-			.filter({hasText: label})
-			.locator('input');
-
-		if (section && (await input.isHidden())) {
-			await this.page.getByRole('button', {name: section}).click();
-		}
-
-		await this.page.waitForTimeout(2000);
-		await expect(input).toHaveValue(value);
-	}
-
 	async changePreviewPage(currentPage: string, nextPage: string) {
 		await this.page.getByRole('button', {name: currentPage}).click();
 
@@ -151,20 +129,34 @@ export class StyleBooksPage {
 			.click();
 	}
 
-	async publish(action: 'Publish' | 'Continue' | 'Cancel' = 'Publish') {
+	async clickOnPublishAction(action: string) {
 		await this.page.getByRole('button', {name: 'Publish'}).click();
 
-		const publishModalButton = (name: string) =>
-			this.page.getByRole('dialog').getByRole('button', {name});
+		await this.page
+			.getByRole('dialog')
+			.getByRole('button', {name: action})
+			.click();
+	}
 
-		await publishModalButton(action).click();
+	async publish() {
+		await this.clickOnPublishAction('Publish');
 
-		if (action === 'Continue') {
-			await publishModalButton('Publish').click();
-		}
-		else if (action === 'Publish') {
-			await waitForAlert(this.page);
-		}
+		await waitForAlert(this.page);
+	}
+
+	async cancelPublish() {
+		await this.clickOnPublishAction('Cancel');
+	}
+
+	async continuePublish() {
+		await this.clickOnPublishAction('Continue');
+
+		this.page
+			.getByRole('dialog')
+			.getByRole('button', {name: 'Publish'})
+			.click();
+
+		await waitForAlert(this.page);
 	}
 
 	async search(styleBookName: string) {

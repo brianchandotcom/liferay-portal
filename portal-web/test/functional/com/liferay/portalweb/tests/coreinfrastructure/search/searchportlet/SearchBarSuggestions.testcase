@@ -755,8 +755,6 @@ definition {
 
 		Blueprints.createBlueprint(title = "Test Blueprint");
 
-		Navigator.gotoNavNested(navNested = "Query Settings");
-
 		Check.checkNotVisible(
 			locator1 = "Radio#ANY",
 			radioLabel = "Selected Types");

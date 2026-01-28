@@ -659,19 +659,19 @@ public class CommercePriceListLocalServiceImpl
 
 		Object[] result = results.get(0);
 
-		if ((result[0] == null) || (result[3] == null)) {
+		if (result[0] == null) {
 			return null;
 		}
 
 		long commercePriceListId = (Long)result[0];
 
 		if (type.equals(CommercePriceListConstants.TYPE_PROMOTION)) {
-			List<CommercePriceList> commercePriceLists =
+			List<CommercePriceList> commercePromoPriceLists =
 				commercePriceListLocalService.
 					getCommercePriceListsByUnqualified(
 						groupId, currencyCode, type);
 
-			if (commercePriceLists.size() <= 1) {
+			if (commercePromoPriceLists.size() <= 1) {
 				return commercePriceListLocalService.getCommercePriceList(
 					commercePriceListId);
 			}
@@ -690,18 +690,18 @@ public class CommercePriceListLocalServiceImpl
 			}
 
 			if (commercePriceEntry == null) {
-				List<CommercePriceList> commercePriceListList =
+				List<CommercePriceList> commercePriceLists =
 					commercePriceListLocalService.
 						getCommercePriceListsByUnqualified(
 							groupId, currencyCode,
 							CommercePriceListConstants.TYPE_PRICE_LIST);
 
-				if (commercePriceListList.isEmpty()) {
+				if (commercePriceLists.isEmpty()) {
 					return commercePriceListLocalService.getCommercePriceList(
 						commercePriceListId);
 				}
 
-				actualCommercePriceList = commercePriceListList.get(0);
+				actualCommercePriceList = commercePriceLists.get(0);
 
 				commercePriceEntry =
 					_commercePriceEntryLocalService.fetchCommercePriceEntry(
@@ -714,16 +714,19 @@ public class CommercePriceListLocalServiceImpl
 					commercePriceListId);
 			}
 
+			if (result[3] == null) {
+				return null;
+			}
+
 			BigDecimal originalPrice = commercePriceEntry.getPrice();
 
 			BigDecimal lowestPrice = originalPrice;
 
 			if (result[1] != null) {
-				BigDecimal priceFromQuery = new BigDecimal(
-					String.valueOf(result[1]));
+				BigDecimal price = new BigDecimal(String.valueOf(result[1]));
 
-				if (!BigDecimalUtil.eq(BigDecimal.ZERO, priceFromQuery)) {
-					lowestPrice = priceFromQuery;
+				if (!BigDecimalUtil.eq(BigDecimal.ZERO, price)) {
+					lowestPrice = price;
 				}
 			}
 
@@ -731,7 +734,9 @@ public class CommercePriceListLocalServiceImpl
 				_cpDefinitionLocalService.getCPDefinitionByCProductId(
 					(Long)result[3]);
 
-			for (CommercePriceList commercePriceList : commercePriceLists) {
+			for (CommercePriceList commercePriceList :
+					commercePromoPriceLists) {
+
 				if (commercePriceList.getCommercePriceListId() ==
 						commercePriceListId) {
 

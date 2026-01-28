@@ -117,8 +117,8 @@ public class UpgradeMobileDeviceRules extends UpgradeProcess {
 					"where not exists (select 1 from ResourcePermission where ",
 					"(MDRRuleGroupInstance.companyId = ResourcePermission.",
 					"companyId) and (MDRRuleGroupInstance.ruleGroupInstanceId ",
-					"= ResourcePermission.primKeyId) and ",
-					"(MDRRuleGroupInstance.userId = ResourcePermission.ownerId",
+					"= ResourcePermission.primKeyId) and (",
+					"MDRRuleGroupInstance.userId = ResourcePermission.ownerId",
 					") and (ResourcePermission.name = ?))"))) {
 
 			preparedStatement1.setString(1, _CLASS_NAME);

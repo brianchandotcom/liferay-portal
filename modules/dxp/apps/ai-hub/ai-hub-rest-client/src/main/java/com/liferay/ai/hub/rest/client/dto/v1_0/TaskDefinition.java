@@ -12,6 +12,7 @@ import jakarta.annotation.Generated;
 
 import java.io.Serializable;
 
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -24,6 +25,28 @@ public class TaskDefinition implements Cloneable, Serializable {
 	public static TaskDefinition toDTO(String json) {
 		return TaskDefinitionSerDes.toDTO(json);
 	}
+
+	public Map<String, Map<String, String>> getActions() {
+		return actions;
+	}
+
+	public void setActions(Map<String, Map<String, String>> actions) {
+		this.actions = actions;
+	}
+
+	public void setActions(
+		UnsafeSupplier<Map<String, Map<String, String>>, Exception>
+			actionsUnsafeSupplier) {
+
+		try {
+			actions = actionsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, Map<String, String>> actions;
 
 	public Boolean getActive() {
 		return active;
@@ -67,6 +90,46 @@ public class TaskDefinition implements Cloneable, Serializable {
 
 	protected String description;
 
+	public String getExternalReferenceCode() {
+		return externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		this.externalReferenceCode = externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(
+		UnsafeSupplier<String, Exception> externalReferenceCodeUnsafeSupplier) {
+
+		try {
+			externalReferenceCode = externalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String externalReferenceCode;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long id;
+
 	public String getName() {
 		return name;
 	}
@@ -85,6 +148,27 @@ public class TaskDefinition implements Cloneable, Serializable {
 	}
 
 	protected String name;
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public void setTitle(
+		UnsafeSupplier<String, Exception> titleUnsafeSupplier) {
+
+		try {
+			title = titleUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String title;
 
 	public Integer getVersion() {
 		return version;

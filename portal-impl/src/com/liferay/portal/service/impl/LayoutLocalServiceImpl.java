@@ -819,41 +819,37 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			layout.getFaviconFileEntryScopeERC(),
 			masterLayoutPageTemplateEntryERC, serviceContext);
 
-		if (Objects.equals(type, LayoutConstants.TYPE_CONTENT)) {
-			layout = layoutLocalService.updateStatus(
-				userId, layout.getPlid(), WorkflowConstants.STATUS_DRAFT,
+		if (Objects.equals(type, LayoutConstants.TYPE_CONTENT) &&
+			(layout.fetchDraftLayout() == null)) {
+
+			serviceContext.setAttribute(
+				"defaultSegmentsExperienceExternalReferenceCode",
+				serviceContext.getAttribute(
+					"draftLayoutDefaultSegmentsExperienceExternal" +
+						"ReferenceCode"));
+			serviceContext.setAttribute(
+				"defaultSegmentsExperienceUuid",
+				serviceContext.getAttribute(
+					"draftLayoutDefaultSegmentsExperienceUuid"));
+			serviceContext.setAttribute(
+				"layoutSetPrototypeLayoutERC",
+				serviceContext.getAttribute(
+					"draftLayoutLayoutSetPrototypeLayoutERC"));
+			serviceContext.setModifiedDate(new Date());
+
+			layoutLocalService.addLayout(
+				GetterUtil.getString(
+					serviceContext.getAttribute(
+						"draftLayoutExternalReferenceCode"),
+					layout.getExternalReferenceCode() + "-draft"),
+				userId, layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getParentLayoutId(),
+				_classNameLocalService.getClassNameId(Layout.class),
+				layout.getPlid(), nameMap, layout.getTitleMap(),
+				layout.getDescriptionMap(), layout.getKeywordsMap(),
+				layout.getRobotsMap(), type, layout.getTypeSettings(), true,
+				true, Collections.emptyMap(), masterLayoutPageTemplateEntryERC,
 				serviceContext);
-
-			if (layout.fetchDraftLayout() == null) {
-				serviceContext.setAttribute(
-					"defaultSegmentsExperienceExternalReferenceCode",
-					serviceContext.getAttribute(
-						"draftLayoutDefaultSegmentsExperienceExternal" +
-							"ReferenceCode"));
-				serviceContext.setAttribute(
-					"defaultSegmentsExperienceUuid",
-					serviceContext.getAttribute(
-						"draftLayoutDefaultSegmentsExperienceUuid"));
-				serviceContext.setAttribute(
-					"layoutSetPrototypeLayoutERC",
-					serviceContext.getAttribute(
-						"draftLayoutLayoutSetPrototypeLayoutERC"));
-				serviceContext.setModifiedDate(new Date());
-
-				layoutLocalService.addLayout(
-					GetterUtil.getString(
-						serviceContext.getAttribute(
-							"draftLayoutExternalReferenceCode"),
-						layout.getExternalReferenceCode() + "-draft"),
-					userId, layout.getGroupId(), layout.isPrivateLayout(),
-					layout.getParentLayoutId(),
-					_classNameLocalService.getClassNameId(Layout.class),
-					layout.getPlid(), nameMap, layout.getTitleMap(),
-					layout.getDescriptionMap(), layout.getKeywordsMap(),
-					layout.getRobotsMap(), type, layout.getTypeSettings(), true,
-					true, Collections.emptyMap(),
-					masterLayoutPageTemplateEntryERC, serviceContext);
-			}
 		}
 
 		return layout;
@@ -3244,10 +3240,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setExpandoBridgeAttributes(serviceContext);
 
 		if (layout.getStatus() == WorkflowConstants.STATUS_EMPTY) {
-			layout.setStatus(
-				Objects.equals(type, LayoutConstants.TYPE_CONTENT) ?
-					WorkflowConstants.STATUS_DRAFT :
-						WorkflowConstants.STATUS_APPROVED);
+			layout.setStatus(WorkflowConstants.STATUS_APPROVED);
 		}
 
 		layout = layoutLocalService.updateLayout(layout);

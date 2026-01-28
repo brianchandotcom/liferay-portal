@@ -5,7 +5,9 @@
 
 package com.liferay.headless.cmp.internal.graphql.query.v1_0;
 
+import com.liferay.headless.cmp.dto.v1_0.TaskAssignee;
 import com.liferay.headless.cmp.dto.v1_0.TaskStatistics;
+import com.liferay.headless.cmp.resource.v1_0.TaskAssigneeResource;
 import com.liferay.headless.cmp.resource.v1_0.TaskStatisticsResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -37,12 +39,36 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Query {
 
+	public static void setTaskAssigneeResourceComponentServiceObjects(
+		ComponentServiceObjects<TaskAssigneeResource>
+			taskAssigneeResourceComponentServiceObjects) {
+
+		_taskAssigneeResourceComponentServiceObjects =
+			taskAssigneeResourceComponentServiceObjects;
+	}
+
 	public static void setTaskStatisticsResourceComponentServiceObjects(
 		ComponentServiceObjects<TaskStatisticsResource>
 			taskStatisticsResourceComponentServiceObjects) {
 
 		_taskStatisticsResourceComponentServiceObjects =
 			taskStatisticsResourceComponentServiceObjects;
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {taskAssignees(search: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public TaskAssigneePage taskAssignees(@GraphQLName("search") String search)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taskAssigneeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taskAssigneeResource -> new TaskAssigneePage(
+				taskAssigneeResource.getTaskAssigneesPage(search)));
 	}
 
 	/**
@@ -81,6 +107,39 @@ public class Query {
 			this::_populateResourceContext,
 			taskStatisticsResource -> taskStatisticsResource.getTaskStatistics(
 				_filterBiFunction.apply(taskStatisticsResource, filterString)));
+	}
+
+	@GraphQLName("TaskAssigneePage")
+	public class TaskAssigneePage {
+
+		public TaskAssigneePage(Page taskAssigneePage) {
+			actions = taskAssigneePage.getActions();
+
+			items = taskAssigneePage.getItems();
+			lastPage = taskAssigneePage.getLastPage();
+			page = taskAssigneePage.getPage();
+			pageSize = taskAssigneePage.getPageSize();
+			totalCount = taskAssigneePage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected java.util.Collection<TaskAssignee> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
 	}
 
 	@GraphQLName("TaskStatisticsPage")
@@ -136,6 +195,25 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			TaskAssigneeResource taskAssigneeResource)
+		throws Exception {
+
+		taskAssigneeResource.setContextAcceptLanguage(_acceptLanguage);
+		taskAssigneeResource.setContextCompany(_company);
+		taskAssigneeResource.setContextHttpServletRequest(_httpServletRequest);
+		taskAssigneeResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		taskAssigneeResource.setContextUriInfo(_uriInfo);
+		taskAssigneeResource.setContextUser(_user);
+		taskAssigneeResource.setGroupLocalService(_groupLocalService);
+		taskAssigneeResource.setResourceActionLocalService(
+			_resourceActionLocalService);
+		taskAssigneeResource.setResourcePermissionLocalService(
+			_resourcePermissionLocalService);
+		taskAssigneeResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private void _populateResourceContext(
 			TaskStatisticsResource taskStatisticsResource)
 		throws Exception {
 
@@ -155,6 +233,8 @@ public class Query {
 		taskStatisticsResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private static ComponentServiceObjects<TaskAssigneeResource>
+		_taskAssigneeResourceComponentServiceObjects;
 	private static ComponentServiceObjects<TaskStatisticsResource>
 		_taskStatisticsResourceComponentServiceObjects;
 

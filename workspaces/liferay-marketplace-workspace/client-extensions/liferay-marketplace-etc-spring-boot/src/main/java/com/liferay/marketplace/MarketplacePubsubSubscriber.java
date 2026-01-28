@@ -165,7 +165,7 @@ public class MarketplacePubsubSubscriber {
 
 	protected CredentialsProvider getCredentialsProvider() throws IOException {
 		Credentials credentials = ServiceAccountCredentials.fromPkcs8(
-			_clientId, _clientEmailAddress, _privateKeyPkcs8, _privateKeyId,
+			_clientId, _clientEmailAddress, _privateKey, _privateKeyId,
 			Collections.singletonList(_SCOPE));
 
 		return FixedCredentialsProvider.create(credentials);
@@ -177,19 +177,19 @@ public class MarketplacePubsubSubscriber {
 	private static final Log _log = LogFactory.getLog(
 		MarketplacePubsubSubscriber.class);
 
-	@Value("${gcp.client.email}")
+	@Value("${liferay.marketplace.gcp.client.email}")
 	private String _clientEmailAddress;
 
-	@Value("${gcp.client.id}")
+	@Value("${liferay.marketplace.gcp.client.id}")
 	private String _clientId;
 
-	@Value("${gcp.private.key.id}")
+	@Value("${liferay.marketplace.gcp.private.key}")
+	private String _privateKey;
+
+	@Value("${liferay.marketplace.gcp.private.key.id}")
 	private String _privateKeyId;
 
-	@Value("${gcp.private.key}")
-	private String _privateKeyPkcs8;
-
-	@Value("${gcp.project.id}")
+	@Value("${liferay.marketplace.gcp.project.id}")
 	private String _projectId;
 
 	private final List<Subscriber> _subscribers = new ArrayList<>();

@@ -7,6 +7,7 @@ import {liferayConfig} from '../../liferay.config';
 import {ApiHelpers} from '../ApiHelpers';
 
 type Group = {
+	externalReferenceCode: string;
 	friendlyURL: string;
 	groupId: string;
 };

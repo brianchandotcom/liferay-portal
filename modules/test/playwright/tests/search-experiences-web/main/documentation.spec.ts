@@ -58,9 +58,7 @@ test.describe('Documentation Links', () => {
 			);
 		});
 
-		await test.step('Check query settings - indexer clauses', async () => {
-			await editSXPBlueprintPage.goToQuerySettingsMenuItem();
-
+		await test.step('Check source - indexer clauses', async () => {
 			await page
 				.getByRole('button', {name: 'Search Framework Indexer'})
 				.locator('.lexicon-icon-question-circle')
@@ -80,7 +78,7 @@ test.describe('Documentation Links', () => {
 			);
 		});
 
-		await test.step('Check query settings - query contributors', async () => {
+		await test.step('Check source - query contributors', async () => {
 			await page
 				.getByRole('button', {
 					name: 'Search Framework Query Contributors',

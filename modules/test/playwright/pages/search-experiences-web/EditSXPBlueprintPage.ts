@@ -20,13 +20,11 @@ export class EditSXPBlueprintPage {
 	readonly pageToolbar: Locator;
 	readonly queryBuilderTab: Locator;
 	readonly querySXPElements: Locator;
-	readonly querySXPElementsMenuItem: Locator;
-	readonly querySettings: Locator;
-	readonly querySettingsMenuItem: Locator;
 	readonly previewSidebar: Locator;
 	readonly previewSidebarButton: Locator;
-	readonly querySettingsRadioProperty: (label: string) => Promise<Locator>;
 	readonly saveButton: Locator;
+	readonly source: Locator;
+	readonly sourceRadioProperty: (label: string) => Promise<Locator>;
 	readonly sxpBlueprintId: Locator;
 
 	constructor(page: Page) {
@@ -41,13 +39,6 @@ export class EditSXPBlueprintPage {
 			name: 'Configuration',
 		});
 
-		this.querySXPElementsMenuItem = page.getByRole('menuitem', {
-			name: 'Query Elements',
-		});
-		this.querySettingsMenuItem = page.getByRole('menuitem', {
-			name: 'Query Settings',
-		});
-
 		// Main Components
 
 		this.addSXPElementSidebar = page.locator('.add-sxp-element-sidebar');
@@ -58,7 +49,7 @@ export class EditSXPBlueprintPage {
 		this.pageToolbar = page.getByLabel('Page Toolbar');
 		this.previewSidebar = page.getByTestId('previewSidebar');
 		this.querySXPElements = page.locator('.query-sxp-elements');
-		this.querySettings = page.locator('.query-settings');
+		this.source = page.locator('.source');
 
 		// Page Toolbar
 
@@ -72,10 +63,10 @@ export class EditSXPBlueprintPage {
 		this.saveButton = this.pageToolbar.getByRole('button', {name: 'Save'});
 		this.sxpBlueprintId = page.getByTestId('entityId');
 
-		// Query Settings
+		// Source
 
-		this.querySettingsRadioProperty = async (label: string) => {
-			return this.querySettings.getByRole('radio', {
+		this.sourceRadioProperty = async (label: string) => {
+			return this.source.getByRole('radio', {
 				name: label,
 			});
 		};
@@ -95,12 +86,18 @@ export class EditSXPBlueprintPage {
 		await this.configurationTab.click();
 	}
 
-	async goToQueryElementsMenuItem() {
-		await this.querySXPElementsMenuItem.click();
-	}
+	async expandPanel(title: string) {
+		const panelButtonLocator = this.page.getByRole('button', {name: title});
 
-	async goToQuerySettingsMenuItem() {
-		await this.querySettingsMenuItem.click();
+		if (
+			await panelButtonLocator.evaluate((elem) =>
+				elem.classList.contains('collapsed')
+			)
+		) {
+			await panelButtonLocator.click();
+
+			await expect(panelButtonLocator).not.toHaveClass(/collapsed/);
+		}
 	}
 
 	async saveBlueprint() {
@@ -219,7 +216,7 @@ export class EditSXPBlueprintPage {
 		).toBeVisible();
 	}
 
-	// Query Settings - Clause Contributor Functions
+	// Source - Clause Contributor Functions
 
 	async assertClauseContributorSelection(option: {
 		labels: string[];
@@ -253,11 +250,11 @@ export class EditSXPBlueprintPage {
 		}
 	}
 
-	async assertQuerySettingsRadioPropertySelection(
+	async assertSourceRadioPropertySelection(
 		label: string,
 		value: boolean = true
 	) {
-		const selectElement = await this.querySettingsRadioProperty(label);
+		const selectElement = await this.sourceRadioProperty(label);
 
 		if (value) {
 			await expect(selectElement).toBeChecked();
@@ -268,21 +265,21 @@ export class EditSXPBlueprintPage {
 	}
 
 	async openClauseContributorsSidebar() {
-		await this.querySettings
+		await this.source
 			.getByRole('button', {name: 'Customize Contributors'})
 			.click();
 	}
 
-	async selectQuerySettingsRadioProperty(label: string) {
-		const selectElement = await this.querySettingsRadioProperty(label);
+	async selectSourceRadioProperty(label: string) {
+		const selectElement = await this.sourceRadioProperty(label);
 
 		await selectElement.check();
 	}
 
 	async selectAssetTypes(types: string[]) {
-		await this.selectQuerySettingsRadioProperty('Selected Types');
+		await this.assertSourceRadioPropertySelection('Selected Types');
 
-		await this.querySettings
+		await this.source
 			.getByRole('button', {name: 'Select Asset Types'})
 			.click();
 
@@ -306,15 +303,13 @@ export class EditSXPBlueprintPage {
 
 		for (const type of types) {
 			await expect(
-				this.querySettings.locator('li').getByText(type, {exact: true})
+				this.source.locator('li').getByText(type, {exact: true})
 			).toBeVisible();
 		}
 	}
 
 	async selectAssetSubtypes(subtypes: string[], type: string) {
-		const assetListItem = this.querySettings
-			.locator('li')
-			.filter({hasText: type});
+		const assetListItem = this.source.locator('li').filter({hasText: type});
 
 		await assetListItem.getByLabel('Select Subtypes').click();
 

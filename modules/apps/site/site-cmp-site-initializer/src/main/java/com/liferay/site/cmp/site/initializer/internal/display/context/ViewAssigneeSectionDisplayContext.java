@@ -33,7 +33,8 @@ public class ViewAssigneeSectionDisplayContext {
 			"name", "ObjectField_assignTo"
 		).put(
 			"searchURL",
-			_themeDisplay.getPortalURL() + "/o/cmp/assignee-context/"
+			_themeDisplay.getPortalURL() +
+				"/o/headless-cmp/v1.0/task-assignees/"
 		).put(
 			"triggerClassName", "form-control"
 		).put(

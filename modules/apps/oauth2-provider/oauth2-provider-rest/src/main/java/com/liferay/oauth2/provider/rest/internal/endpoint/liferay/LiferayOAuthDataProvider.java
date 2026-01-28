@@ -349,7 +349,7 @@ public class LiferayOAuthDataProvider
 
 	@Override
 	public List<ServerAccessToken> getAccessTokens(
-			Client client, UserSubject subject)
+			Client client, UserSubject userSubject)
 		throws OAuthServiceException {
 
 		OAuth2Application oAuth2Application = resolveOAuth2Application(client);

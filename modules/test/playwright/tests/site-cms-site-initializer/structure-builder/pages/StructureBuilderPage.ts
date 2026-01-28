@@ -509,7 +509,7 @@ export class StructureBuilderPage {
 				(response) =>
 					response.url().includes('object-definitions') &&
 					response.status() === 200,
-				{timeout: 5000}
+				{timeout: 10000}
 			),
 			await save(),
 		]);

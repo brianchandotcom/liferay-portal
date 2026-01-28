@@ -404,7 +404,7 @@ describe('DSRInitializer', () => {
 				'test@liferay.com, test1@liferay.com,'
 			);
 			screen.getByTestId('roleKeyButton').click();
-			screen.getByTestId('roleKeyItem_edit').click();
+			screen.getByTestId('roleKeyItem_contributor').click();
 		});
 
 		await waitFor(() => {
@@ -585,7 +585,7 @@ describe('DSRInitializer', () => {
 				'test@liferay.com, test1@liferay.com,'
 			);
 			screen.getByTestId('roleKeyButton').click();
-			screen.getByTestId('roleKeyItem_edit').click();
+			screen.getByTestId('roleKeyItem_contributor').click();
 		});
 
 		await waitFor(() => {

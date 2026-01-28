@@ -2869,11 +2869,10 @@ public class DefaultObjectEntryManagerImplTest
 						_group.getGroupId());
 
 			Assert.assertEquals(
-				WorkflowConstants.STATUS_EMPTY, assetVocabulary.getStatus());
-
+				assetCategory2.getVocabularyId(),
+				assetVocabulary.getVocabularyId());
 			Assert.assertEquals(
-				assetVocabulary.getVocabularyId(),
-				assetCategory2.getVocabularyId());
+				WorkflowConstants.STATUS_EMPTY, assetVocabulary.getStatus());
 
 			AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 				_objectDefinition1.getClassName(), objectEntry.getId());

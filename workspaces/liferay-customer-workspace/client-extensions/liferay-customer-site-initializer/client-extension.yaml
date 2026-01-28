@@ -21,6 +21,7 @@ liferay-customer-site-initializer-oahs:
         -   c_incidentreportcontactanalyticscloud.everything
         -   c_koroneikiaccount.everything
         -   c_liferayexperiencecloudenvironment.everything
+        -   Liferay.Headless.Admin.List.Type.everything
         -   Liferay.Headless.Admin.Taxonomy.everything
         -   Liferay.Headless.Admin.User.everything
         -   Liferay.Headless.Commerce.Admin.Catalog.everything

@@ -38,9 +38,6 @@ import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
 import jakarta.portlet.PortletRequest;
 
-import java.util.Locale;
-import java.util.Map;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -73,6 +70,9 @@ public class ConvertEmptyLayoutMVCActionCommand
 				return;
 			}
 
+			Layout layout = _layoutService.getLayout(
+				ParamUtil.getLong(actionRequest, "selPlid"));
+
 			long masterLayoutPlid = ParamUtil.getLong(
 				actionRequest, "masterLayoutPlid");
 			String masterLayoutPageTemplateEntryERC = null;
@@ -89,33 +89,29 @@ public class ConvertEmptyLayoutMVCActionCommand
 				}
 			}
 
-			long selPlid = ParamUtil.getLong(actionRequest, "selPlid");
-
-			Layout layout = _layoutService.getLayout(selPlid);
-
-			long layoutPageTemplateEntryId = ParamUtil.getLong(
-				actionRequest, "layoutPageTemplateEntryId");
 			long classNameId = 0;
 			long classPK = 0;
+			long layoutPageTemplateEntryId = ParamUtil.getLong(
+				actionRequest, "layoutPageTemplateEntryId");
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				Layout.class.getName(), actionRequest);
 
 			if (layoutPageTemplateEntryId > 0) {
 				LayoutPageTemplateEntry layoutPageTemplateEntry =
-					_layoutPageTemplateEntryService.
-						getLayoutPageTemplateEntry(layoutPageTemplateEntryId);
+					_layoutPageTemplateEntryService.getLayoutPageTemplateEntry(
+						layoutPageTemplateEntryId);
 
-				if (layoutPageTemplateEntry.getType() !=
-					LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE) {
+				Layout layoutPageTemplateEntryLayout =
+					_layoutLocalService.getLayout(
+						layoutPageTemplateEntry.getPlid());
 
-					classNameId = _portal.getClassNameId(
-						LayoutPageTemplateEntry.class);
-					classPK = layoutPageTemplateEntryId;
-					serviceContext.setAttribute(
-						"published", Boolean.FALSE.toString());
-					type = LayoutConstants.TYPE_CONTENT;
-				}
-				else {
+				masterLayoutPageTemplateEntryERC =
+					layoutPageTemplateEntryLayout.
+						getMasterLayoutPageTemplateEntryERC();
+
+				if (layoutPageTemplateEntry.getType() ==
+						LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE) {
+
 					serviceContext.setAttribute(
 						"portletLayoutPageTemplateEntryERC",
 						layoutPageTemplateEntry.getExternalReferenceCode());
@@ -126,29 +122,29 @@ public class ConvertEmptyLayoutMVCActionCommand
 							layout.getGroupId()));
 					type = LayoutConstants.TYPE_PORTLET;
 				}
-
-				Layout layoutPageTemplateEntryLayout =
-					_layoutLocalService.getLayout(
-						layoutPageTemplateEntry.getPlid());
-
-				masterLayoutPageTemplateEntryERC =
-						layoutPageTemplateEntryLayout.
-							getMasterLayoutPageTemplateEntryERC();
+				else {
+					classNameId = _portal.getClassNameId(
+						LayoutPageTemplateEntry.class);
+					classPK = layoutPageTemplateEntryId;
+					serviceContext.setAttribute(
+						"published", Boolean.FALSE.toString());
+					type = LayoutConstants.TYPE_CONTENT;
+				}
 			}
 
-			Map<Locale, String> nameMap = HashMapBuilder.put(
-				LocaleUtil.getSiteDefault(),
-				ParamUtil.getString(actionRequest, "name")
-			).build();
+			layout = _layoutService.convertEmptyLayout(
+				layout.getPlid(),
+				HashMapBuilder.put(
+					LocaleUtil.getSiteDefault(),
+					ParamUtil.getString(actionRequest, "name")
+				).build(),
+				type, classNameId, classPK, masterLayoutPageTemplateEntryERC,
+				serviceContext);
 
 			String redirect = null;
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			layout = _layoutService.convertEmptyLayout(
-				layout.getPlid(), nameMap, type, classNameId, classPK,
-				masterLayoutPageTemplateEntryERC, serviceContext);
 
 			if (!layout.isTypeContent()) {
 				redirect = PortletURLBuilder.createRenderURL(
@@ -164,7 +160,7 @@ public class ConvertEmptyLayoutMVCActionCommand
 				).setParameter(
 					"privateLayout", layout.isPrivateLayout()
 				).setParameter(
-					"selPlid", selPlid
+					"selPlid", layout.getPlid()
 				).buildString();
 			}
 			else {

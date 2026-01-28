@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.function.BiFunction;
+import java.util.function.Supplier;
 
 /**
  * @author Carlos Correa
@@ -62,17 +63,17 @@ public class EmptyModelManagerUtil {
 		return emptyModelManager.isEmptyModel();
 	}
 
-	public static <E extends Exception> int solveEmptyModel(
+	public static int solveEmptyModel(
 			int status, long groupId, long companyId,
 			String classExternalReferenceCode, String className,
-			UnsafeSupplier<Integer, E> updatedModelStatusUnsafeSupplier)
-		throws Exception {
+			Supplier<Integer> updatedModelStatusSupplier)
+		throws PortalException {
 
 		EmptyModelManager emptyModelManager = _emptyModelManagerSnapshot.get();
 
 		return emptyModelManager.solveEmptyModel(
 			status, groupId, companyId, classExternalReferenceCode, className,
-			updatedModelStatusUnsafeSupplier);
+			updatedModelStatusSupplier);
 	}
 
 	private static final Snapshot<EmptyModelManager>

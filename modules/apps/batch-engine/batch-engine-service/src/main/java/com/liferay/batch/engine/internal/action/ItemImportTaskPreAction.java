@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -61,7 +60,8 @@ public class ItemImportTaskPreAction implements ImportTaskPreAction {
 			return;
 		}
 
-		User user = _getCreatorUser(jsonObject);
+		User user = _getCreatorUser(
+			batchEngineImportTask.getCompanyId(), jsonObject);
 
 		if (user == null) {
 			return;
@@ -80,7 +80,7 @@ public class ItemImportTaskPreAction implements ImportTaskPreAction {
 		importTaskContext.setOriginalUser(_userLocalService.getUser(userId));
 	}
 
-	private User _getCreatorUser(JSONObject jsonObject) {
+	private User _getCreatorUser(long companyId, JSONObject jsonObject) {
 		JSONObject creatorJSONObject = jsonObject.getJSONObject("creator");
 
 		if (creatorJSONObject == null) {
@@ -94,7 +94,7 @@ public class ItemImportTaskPreAction implements ImportTaskPreAction {
 
 		if (!Validator.isBlank(externalReferenceCode)) {
 			user = _userLocalService.fetchUserByExternalReferenceCode(
-				externalReferenceCode, CompanyThreadLocal.getCompanyId());
+				externalReferenceCode, companyId);
 		}
 
 		if (user == null) {
@@ -103,6 +103,10 @@ public class ItemImportTaskPreAction implements ImportTaskPreAction {
 			if (userId > 0) {
 				user = _userLocalService.fetchUser(userId);
 			}
+		}
+
+		if ((user != null) && (companyId != user.getCompanyId())) {
+			user = null;
 		}
 
 		return user;

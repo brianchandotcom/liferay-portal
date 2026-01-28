@@ -12,7 +12,6 @@ import com.liferay.batch.engine.context.ImportTaskContext;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.Creator;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -46,7 +45,8 @@ public abstract class BaseImportTaskPreAction<T>
 			return;
 		}
 
-		User user = _getCreatorUser(getCreator(item));
+		User user = _getCreatorUser(
+			batchEngineImportTask.getCompanyId(), getCreator(item));
 
 		if (user == null) {
 			return;
@@ -72,7 +72,7 @@ public abstract class BaseImportTaskPreAction<T>
 	@Reference
 	protected UserLocalService userLocalService;
 
-	private User _getCreatorUser(Creator creator) {
+	private User _getCreatorUser(long companyId, Creator creator) {
 		if (creator == null) {
 			return null;
 		}
@@ -81,12 +81,15 @@ public abstract class BaseImportTaskPreAction<T>
 
 		if (Validator.isNotNull(creator.getExternalReferenceCode())) {
 			user = userLocalService.fetchUserByExternalReferenceCode(
-				creator.getExternalReferenceCode(),
-				CompanyThreadLocal.getCompanyId());
+				creator.getExternalReferenceCode(), companyId);
 		}
 
 		if ((user == null) && Validator.isNotNull(creator.getId())) {
 			user = userLocalService.fetchUser(creator.getId());
+		}
+
+		if ((user != null) && (companyId != user.getCompanyId())) {
+			user = null;
 		}
 
 		return user;

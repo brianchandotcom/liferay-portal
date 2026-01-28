@@ -70,7 +70,7 @@ spec:
                                         projectId: {{ $projectId }}
                                         slot: {{ $slot }}
                                 engine: postgres
-                                engineVersion: {{ $spec.engineVersion }}
+                                engineVersion: {{ $spec.engineVersion | quote }}
                                 identifier: {{ $baseName }}-database-{{ $slot }}
                                 instanceClass: {{ $spec.instanceClass }}
                                 multiAz: false
@@ -286,42 +286,42 @@ spec:
                             forProvider:
                                 policy: |
                                     {
-                                        "Statement": [
+                                        Statement: [
                                             {
-                                                "Action": [
+                                                Action: [
                                                     "s3:ListBucket",
                                                     "s3:PutObject"
                                                 ],
-                                                "Effect": "Allow",
-                                                "Resource": [
+                                                Effect: "Allow",
+                                                Resource: [
                                                     "arn:aws:s3:::{{ $overlayBucketName }}"
                                                 ],
-                                                "Sid": "AllowListBucket"
+                                                Sid: AllowListBucket
                                             },
                                             {
-                                                "Action": [
+                                                Action: [
                                                     "s3:PutObject"
                                                 ],
-                                                "Effect": "Allow",
-                                                "Resource": [
+                                                Effect: "Allow",
+                                                Resource: [
                                                     "arn:aws:s3:::{{ $overlayBucketName }}/*"
                                                 ],
-                                                "Sid": "AllowPutBucket"
+                                                Sid: AllowPutBucket
                                             },
                                             {
-                                                "Action": [
+                                                Action: [
                                                     "s3:DeleteObject",
                                                     "s3:DeleteObjectVersion"
                                                 ],
-                                                "Effect": "Deny",
-                                                "Resource": [
+                                                Effect: "Deny",
+                                                Resource: [
                                                     "arn:aws:s3:::{{ $overlayBucketName }}",
                                                     "arn:aws:s3:::{{ $overlayBucketName }}/*"
                                                 ],
-                                                "Sid": "DenyDeleteBucket"
+                                                Sid: DenyDeleteBucket
                                             }
                                         ],
-                                       "Version": "2012-10-17"
+                                       Version: 2012-10-17
                                     }
                             managementPolicies: {{ $managementPolicies }}
                         ---
@@ -589,7 +589,7 @@ spec:
                                     volumeType: gp3
                                 encryptAtRest:
                                     enabled: true
-                                engineVersion: {{ $searchSpec.engineVersion }}
+                                engineVersion: {{ $searchSpec.engineVersion | quote }}
                                 nodeToNodeEncryption:
                                     enabled: true
                                 region: {{ $searchSpec.region }}

@@ -27,7 +27,7 @@ public class TaskDefinitionListFDSView extends BaseListFDSView {
 
 	@Override
 	public String getTitle() {
-		return "name";
+		return "title";
 	}
 
 }

@@ -84,11 +84,9 @@ public class ImportTaskResourceTest {
 	@Test
 	public void testPostImportTask() throws Exception {
 
-		// Creation through UPSERT with UPDATE
+		// createStrategy=INSERT; executeStatus=COMPLETED; updateStrategy=NULL
 
 		JSONObject jsonObject = JSONUtil.put(
-			"description", RandomTestUtil.randomString()
-		).put(
 			"externalReferenceCode", RandomTestUtil.randomString()
 		).put(
 			"label", RandomTestUtil.randomString()
@@ -97,91 +95,13 @@ public class ImportTaskResourceTest {
 		);
 
 		ObjectEntryFolder objectEntryFolder = _postImportTask(
-			"UPSERT", "COMPLETED", jsonObject, null);
-
-		JSONAssert.assertEquals(
-			jsonObject.toString(), objectEntryFolder.toString(),
-			JSONCompareMode.LENIENT);
-
-		// Update through UPSERT with UPDATE
-
-		jsonObject = JSONUtil.put(
-			"externalReferenceCode",
-			objectEntryFolder.getExternalReferenceCode()
-		).put(
-			"label", RandomTestUtil.randomString()
-		).put(
-			"title", RandomTestUtil.randomString()
-		);
-
-		objectEntryFolder = _postImportTask(
-			"UPSERT", "COMPLETED", jsonObject, "UPDATE");
-
-		Assert.assertTrue(Validator.isNull(objectEntryFolder.getDescription()));
-
-		JSONAssert.assertEquals(
-			jsonObject.toString(), objectEntryFolder.toString(),
-			JSONCompareMode.LENIENT);
-
-		// Creation through UPSERT with PARTIAL_UPDATE
-
-		jsonObject = JSONUtil.put(
-			"description", RandomTestUtil.randomString()
-		).put(
-			"externalReferenceCode", RandomTestUtil.randomString()
-		).put(
-			"label", RandomTestUtil.randomString()
-		).put(
-			"title", RandomTestUtil.randomString()
-		);
-
-		objectEntryFolder = _postImportTask(
-			"UPSERT", "COMPLETED", jsonObject, null);
-
-		JSONAssert.assertEquals(
-			jsonObject.toString(), objectEntryFolder.toString(),
-			JSONCompareMode.LENIENT);
-
-		// Update through UPSERT with PARTIAL_UPDATE
-
-		jsonObject = JSONUtil.put(
-			"externalReferenceCode",
-			objectEntryFolder.getExternalReferenceCode()
-		).put(
-			"label", RandomTestUtil.randomString()
-		).put(
-			"title", RandomTestUtil.randomString()
-		);
-
-		String expectedDescriptionValue = objectEntryFolder.getDescription();
-
-		objectEntryFolder = _postImportTask(
-			"UPSERT", "COMPLETED", jsonObject, "PARTIAL_UPDATE");
-
-		Assert.assertEquals(
-			expectedDescriptionValue, objectEntryFolder.getDescription());
-		JSONAssert.assertEquals(
-			jsonObject.toString(), objectEntryFolder.toString(),
-			JSONCompareMode.LENIENT);
-
-		// Creation through INSERT
-
-		jsonObject = JSONUtil.put(
-			"externalReferenceCode", RandomTestUtil.randomString()
-		).put(
-			"label", RandomTestUtil.randomString()
-		).put(
-			"title", RandomTestUtil.randomString()
-		);
-
-		objectEntryFolder = _postImportTask(
 			"INSERT", "COMPLETED", jsonObject, null);
 
 		JSONAssert.assertEquals(
 			jsonObject.toString(), objectEntryFolder.toString(),
 			JSONCompareMode.LENIENT);
 
-		// Failing creation through INSERT
+		// createStrategy=INSERT; executeStatus=FAILED; updateStrategy=NULL
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.batch.engine.internal." +
@@ -204,6 +124,88 @@ public class ImportTaskResourceTest {
 				jsonObject.toString(), objectEntryFolder.toString(),
 				JSONCompareMode.LENIENT);
 		}
+
+		// createStrategy=UPSERT; executeStatus=COMPLETED; updateStrategy=NULL
+
+		jsonObject = JSONUtil.put(
+			"description", RandomTestUtil.randomString()
+		).put(
+			"externalReferenceCode", RandomTestUtil.randomString()
+		).put(
+			"label", RandomTestUtil.randomString()
+		).put(
+			"title", RandomTestUtil.randomString()
+		);
+
+		objectEntryFolder = _postImportTask(
+			"UPSERT", "COMPLETED", jsonObject, null);
+
+		JSONAssert.assertEquals(
+			jsonObject.toString(), objectEntryFolder.toString(),
+			JSONCompareMode.LENIENT);
+
+		// createStrategy=UPSERT; executeStatus=COMPLETED; updateStrategy=UPDATE
+
+		jsonObject = JSONUtil.put(
+			"externalReferenceCode",
+			objectEntryFolder.getExternalReferenceCode()
+		).put(
+			"label", RandomTestUtil.randomString()
+		).put(
+			"title", RandomTestUtil.randomString()
+		);
+
+		objectEntryFolder = _postImportTask(
+			"UPSERT", "COMPLETED", jsonObject, "UPDATE");
+
+		Assert.assertTrue(Validator.isNull(objectEntryFolder.getDescription()));
+
+		JSONAssert.assertEquals(
+			jsonObject.toString(), objectEntryFolder.toString(),
+			JSONCompareMode.LENIENT);
+
+		// createStrategy=UPSERT; executeStatus=COMPLETED; updateStrategy=NULL
+
+		jsonObject = JSONUtil.put(
+			"description", RandomTestUtil.randomString()
+		).put(
+			"externalReferenceCode", RandomTestUtil.randomString()
+		).put(
+			"label", RandomTestUtil.randomString()
+		).put(
+			"title", RandomTestUtil.randomString()
+		);
+
+		objectEntryFolder = _postImportTask(
+			"UPSERT", "COMPLETED", jsonObject, null);
+
+		JSONAssert.assertEquals(
+			jsonObject.toString(), objectEntryFolder.toString(),
+			JSONCompareMode.LENIENT);
+
+		// createStrategy=UPSERT; executeStatus=COMPLETED;
+		// updateStrategy=PARTIAL_UPDATE
+
+		jsonObject = JSONUtil.put(
+			"externalReferenceCode",
+			objectEntryFolder.getExternalReferenceCode()
+		).put(
+			"label", RandomTestUtil.randomString()
+		).put(
+			"title", RandomTestUtil.randomString()
+		);
+
+		String expectedDescriptionValue = objectEntryFolder.getDescription();
+
+		objectEntryFolder = _postImportTask(
+			"UPSERT", "COMPLETED", jsonObject, "PARTIAL_UPDATE");
+
+		Assert.assertEquals(
+			expectedDescriptionValue, objectEntryFolder.getDescription());
+
+		JSONAssert.assertEquals(
+			jsonObject.toString(), objectEntryFolder.toString(),
+			JSONCompareMode.LENIENT);
 	}
 
 	private ObjectEntryFolder _postImportTask(

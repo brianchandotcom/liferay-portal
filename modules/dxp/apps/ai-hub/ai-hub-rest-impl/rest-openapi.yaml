@@ -41,13 +41,30 @@ components:
             type: object
         TaskDefinition:
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 active:
                     type: boolean
                 description:
                     type: string
+                externalReferenceCode:
+                    readOnly: true
+                    type: string
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
                 name:
                     type: string
+                title:
+                    type: string
                 version:
+                    readOnly: true
                     type: integer
             type: object
         Token:
@@ -153,6 +170,67 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/TaskDefinition"
                                 type: array
+            tags: ["TaskDefinition"]
+    "/task-definitions/{taskDefinitionId}":
+        delete:
+            operationId: deleteTaskDefinition
+            parameters:
+                -   in: path
+                    name: taskDefinitionId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["TaskDefinition"]
+    "/task-definitions/{taskDefinitionId}/copy":
+        post:
+            operationId: postTaskDefinitionCopy
+            parameters:
+                -   in: path
+                    name: taskDefinitionId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/TaskDefinition"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/TaskDefinition"
+            tags: ["TaskDefinition"]
+    "/task-definitions/{taskDefinitionId}/update-active":
+        patch:
+            operationId: patchTaskDefinitionUpdateActive
+            parameters:
+                -   in: path
+                    name: taskDefinitionId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: active
+                    required: true
+                    schema:
+                        type: boolean
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/TaskDefinition"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/TaskDefinition"
             tags: ["TaskDefinition"]
     "/tasks":
         post:

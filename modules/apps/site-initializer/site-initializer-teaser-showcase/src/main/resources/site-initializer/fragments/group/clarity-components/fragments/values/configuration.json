@@ -4,7 +4,7 @@
 			"fields": [
 				{
 					"dataType": "string",
-					"defaultValue": false,
+					"defaultValue": "sm",
 					"description": "Specifies the size of the watermark circle that is controlled using Bootstrap utility classes (e.g. sm and lg).",
 					"label": "Size",
 					"name": "circleSize",

@@ -11,9 +11,11 @@ import com.liferay.segments.asah.rest.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.segments.asah.rest.internal.graphql.query.v1_0.Query;
 import com.liferay.segments.asah.rest.internal.resource.v1_0.ExperimentResourceImpl;
 import com.liferay.segments.asah.rest.internal.resource.v1_0.ExperimentRunResourceImpl;
+import com.liferay.segments.asah.rest.internal.resource.v1_0.SegmentResourceImpl;
 import com.liferay.segments.asah.rest.internal.resource.v1_0.StatusResourceImpl;
 import com.liferay.segments.asah.rest.resource.v1_0.ExperimentResource;
 import com.liferay.segments.asah.rest.resource.v1_0.ExperimentRunResource;
+import com.liferay.segments.asah.rest.resource.v1_0.SegmentResource;
 import com.liferay.segments.asah.rest.resource.v1_0.StatusResource;
 
 import jakarta.annotation.Generated;
@@ -42,6 +44,8 @@ public class ServletDataImpl implements ServletData {
 			_experimentResourceComponentServiceObjects);
 		Mutation.setExperimentRunResourceComponentServiceObjects(
 			_experimentRunResourceComponentServiceObjects);
+		Mutation.setSegmentResourceComponentServiceObjects(
+			_segmentResourceComponentServiceObjects);
 		Mutation.setStatusResourceComponentServiceObjects(
 			_statusResourceComponentServiceObjects);
 
@@ -98,6 +102,14 @@ public class ServletDataImpl implements ServletData {
 							ExperimentRunResourceImpl.class,
 							"postExperimentRun"));
 					put(
+						"mutation#createSegment",
+						new ObjectValuePair<>(
+							SegmentResourceImpl.class, "postSegment"));
+					put(
+						"mutation#createSegmentBatch",
+						new ObjectValuePair<>(
+							SegmentResourceImpl.class, "postSegmentBatch"));
+					put(
 						"mutation#createExperimentStatus",
 						new ObjectValuePair<>(
 							StatusResourceImpl.class, "postExperimentStatus"));
@@ -121,6 +133,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ExperimentRunResource>
 		_experimentRunResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<SegmentResource>
+		_segmentResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<StatusResource>

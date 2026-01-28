@@ -66,6 +66,7 @@ paths:
             tags: ["TaskStatistics"]
     "/task-assignees":
         get:
+            operationId: getTaskAssigneesPage
             parameters:
                 -   in: query
                     name: search

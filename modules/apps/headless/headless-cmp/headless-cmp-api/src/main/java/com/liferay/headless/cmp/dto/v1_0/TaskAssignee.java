@@ -33,43 +33,43 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("TaskStatistics")
+@GraphQLName("TaskAssignee")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "TaskStatistics")
-public class TaskStatistics implements Serializable {
+@XmlRootElement(name = "TaskAssignee")
+public class TaskAssignee implements Serializable {
 
-	public static TaskStatistics toDTO(String json) {
-		return ObjectMapperUtil.readValue(TaskStatistics.class, json);
+	public static TaskAssignee toDTO(String json) {
+		return ObjectMapperUtil.readValue(TaskAssignee.class, json);
 	}
 
-	public static TaskStatistics unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(TaskStatistics.class, json);
+	public static TaskAssignee unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(TaskAssignee.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema
-	public Long getBlockedCount() {
-		if (_blockedCountSupplier != null) {
-			blockedCount = _blockedCountSupplier.get();
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCodeSupplier != null) {
+			externalReferenceCode = _externalReferenceCodeSupplier.get();
 
-			_blockedCountSupplier = null;
+			_externalReferenceCodeSupplier = null;
 		}
 
-		return blockedCount;
+		return externalReferenceCode;
 	}
 
-	public void setBlockedCount(Long blockedCount) {
-		this.blockedCount = blockedCount;
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		this.externalReferenceCode = externalReferenceCode;
 
-		_blockedCountSupplier = null;
+		_externalReferenceCodeSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setBlockedCount(
-		UnsafeSupplier<Long, Exception> blockedCountUnsafeSupplier) {
+	public void setExternalReferenceCode(
+		UnsafeSupplier<String, Exception> externalReferenceCodeUnsafeSupplier) {
 
-		_blockedCountSupplier = () -> {
+		_externalReferenceCodeSupplier = () -> {
 			try {
-				return blockedCountUnsafeSupplier.get();
+				return externalReferenceCodeUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -82,35 +82,35 @@ public class TaskStatistics implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long blockedCount;
+	protected String externalReferenceCode;
 
 	@JsonIgnore
-	private Supplier<Long> _blockedCountSupplier;
+	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
-	public Long getInProgressCount() {
-		if (_inProgressCountSupplier != null) {
-			inProgressCount = _inProgressCountSupplier.get();
+	public String getImage() {
+		if (_imageSupplier != null) {
+			image = _imageSupplier.get();
 
-			_inProgressCountSupplier = null;
+			_imageSupplier = null;
 		}
 
-		return inProgressCount;
+		return image;
 	}
 
-	public void setInProgressCount(Long inProgressCount) {
-		this.inProgressCount = inProgressCount;
+	public void setImage(String image) {
+		this.image = image;
 
-		_inProgressCountSupplier = null;
+		_imageSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setInProgressCount(
-		UnsafeSupplier<Long, Exception> inProgressCountUnsafeSupplier) {
+	public void setImage(
+		UnsafeSupplier<String, Exception> imageUnsafeSupplier) {
 
-		_inProgressCountSupplier = () -> {
+		_imageSupplier = () -> {
 			try {
-				return inProgressCountUnsafeSupplier.get();
+				return imageUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -123,35 +123,33 @@ public class TaskStatistics implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long inProgressCount;
+	protected String image;
 
 	@JsonIgnore
-	private Supplier<Long> _inProgressCountSupplier;
+	private Supplier<String> _imageSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
-	public Long getOverdueCount() {
-		if (_overdueCountSupplier != null) {
-			overdueCount = _overdueCountSupplier.get();
+	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
 
-			_overdueCountSupplier = null;
+			_nameSupplier = null;
 		}
 
-		return overdueCount;
+		return name;
 	}
 
-	public void setOverdueCount(Long overdueCount) {
-		this.overdueCount = overdueCount;
+	public void setName(String name) {
+		this.name = name;
 
-		_overdueCountSupplier = null;
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setOverdueCount(
-		UnsafeSupplier<Long, Exception> overdueCountUnsafeSupplier) {
-
-		_overdueCountSupplier = () -> {
+	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+		_nameSupplier = () -> {
 			try {
-				return overdueCountUnsafeSupplier.get();
+				return nameUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -164,35 +162,33 @@ public class TaskStatistics implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long overdueCount;
+	protected String name;
 
 	@JsonIgnore
-	private Supplier<Long> _overdueCountSupplier;
+	private Supplier<String> _nameSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
-	public Long getTotalCount() {
-		if (_totalCountSupplier != null) {
-			totalCount = _totalCountSupplier.get();
+	public String getType() {
+		if (_typeSupplier != null) {
+			type = _typeSupplier.get();
 
-			_totalCountSupplier = null;
+			_typeSupplier = null;
 		}
 
-		return totalCount;
+		return type;
 	}
 
-	public void setTotalCount(Long totalCount) {
-		this.totalCount = totalCount;
+	public void setType(String type) {
+		this.type = type;
 
-		_totalCountSupplier = null;
+		_typeSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setTotalCount(
-		UnsafeSupplier<Long, Exception> totalCountUnsafeSupplier) {
-
-		_totalCountSupplier = () -> {
+	public void setType(UnsafeSupplier<String, Exception> typeUnsafeSupplier) {
+		_typeSupplier = () -> {
 			try {
-				return totalCountUnsafeSupplier.get();
+				return typeUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -205,10 +201,10 @@ public class TaskStatistics implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long totalCount;
+	protected String type;
 
 	@JsonIgnore
-	private Supplier<Long> _totalCountSupplier;
+	private Supplier<String> _typeSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -216,13 +212,13 @@ public class TaskStatistics implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof TaskStatistics)) {
+		if (!(object instanceof TaskAssignee)) {
 			return false;
 		}
 
-		TaskStatistics taskStatistics = (TaskStatistics)object;
+		TaskAssignee taskAssignee = (TaskAssignee)object;
 
-		return Objects.equals(toString(), taskStatistics.toString());
+		return Objects.equals(toString(), taskAssignee.toString());
 	}
 
 	@Override
@@ -237,52 +233,68 @@ public class TaskStatistics implements Serializable {
 
 		sb.append("{");
 
-		Long blockedCount = getBlockedCount();
+		String externalReferenceCode = getExternalReferenceCode();
 
-		if (blockedCount != null) {
+		if (externalReferenceCode != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"blockedCount\": ");
+			sb.append("\"externalReferenceCode\": ");
 
-			sb.append(blockedCount);
+			sb.append("\"");
+
+			sb.append(_escape(externalReferenceCode));
+
+			sb.append("\"");
 		}
 
-		Long inProgressCount = getInProgressCount();
+		String image = getImage();
 
-		if (inProgressCount != null) {
+		if (image != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"inProgressCount\": ");
+			sb.append("\"image\": ");
 
-			sb.append(inProgressCount);
+			sb.append("\"");
+
+			sb.append(_escape(image));
+
+			sb.append("\"");
 		}
 
-		Long overdueCount = getOverdueCount();
+		String name = getName();
 
-		if (overdueCount != null) {
+		if (name != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"overdueCount\": ");
+			sb.append("\"name\": ");
 
-			sb.append(overdueCount);
+			sb.append("\"");
+
+			sb.append(_escape(name));
+
+			sb.append("\"");
 		}
 
-		Long totalCount = getTotalCount();
+		String type = getType();
 
-		if (totalCount != null) {
+		if (type != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"totalCount\": ");
+			sb.append("\"type\": ");
 
-			sb.append(totalCount);
+			sb.append("\"");
+
+			sb.append(_escape(type));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -292,7 +304,7 @@ public class TaskStatistics implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.cmp.dto.v1_0.TaskStatistics",
+		defaultValue = "com.liferay.headless.cmp.dto.v1_0.TaskAssignee",
 		name = "x-class-name"
 	)
 	public String xClassName;

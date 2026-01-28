@@ -50,7 +50,11 @@ public class VerticalNavItem extends NavigationItem {
 	}
 
 	public void setItems(List<VerticalNavItem> verticalNavItems) {
-		put("items", verticalNavItems);
+		VerticalNavItemList verticalNavItemList = new VerticalNavItemList();
+
+		verticalNavItemList.addAll(verticalNavItems);
+
+		put("items", verticalNavItemList);
 	}
 
 	public void setLabelItems(List<LabelItem> labelItems) {

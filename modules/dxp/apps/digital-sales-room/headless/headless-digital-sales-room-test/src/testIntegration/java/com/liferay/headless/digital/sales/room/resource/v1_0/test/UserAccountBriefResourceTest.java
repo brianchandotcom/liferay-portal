@@ -88,6 +88,28 @@ public class UserAccountBriefResourceTest
 
 	@Override
 	@Test
+	public void testPatchDigitalSalesRoomUserAccountBrief() throws Exception {
+		UserAccountBrief postUserAccountBrief =
+			testPostDigitalSalesRoomUserAccountBrief_addUserAccountBrief(
+				randomUserAccountBrief());
+
+		UserAccountBrief patchUserAccountBrief =
+			userAccountBriefResource.patchDigitalSalesRoomUserAccountBrief(
+				_digitalSalesRoom.getId(), postUserAccountBrief.getId(),
+				new UserAccountBrief() {
+					{
+						roleKey = "Site Administrator";
+					}
+				});
+
+		Assert.assertEquals(
+			postUserAccountBrief.getId(), patchUserAccountBrief.getId());
+		Assert.assertEquals(
+			"Site Administrator", patchUserAccountBrief.getRoleKey());
+	}
+
+	@Override
+	@Test
 	public void testPostDigitalSalesRoomUserAccountBrief() throws Exception {
 		super.testPostDigitalSalesRoomUserAccountBrief();
 

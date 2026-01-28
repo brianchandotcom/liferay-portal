@@ -114,6 +114,8 @@ public class ConvertEmptyLayoutMVCActionCommand
 					classNameId = _portal.getClassNameId(
 						LayoutPageTemplateEntry.class);
 					classPK = layoutPageTemplateEntryId;
+					serviceContext.setAttribute(
+						"published", Boolean.FALSE.toString());
 					type = LayoutConstants.TYPE_CONTENT;
 				}
 				else {

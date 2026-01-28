@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -428,11 +429,15 @@ public class AssetVocabularyStagedModelDataHandler
 			long importedVocabularyId)
 		throws Exception {
 
-		List<Long> groupIds = new ArrayList<>();
-
 		String xml = portletDataContext.getZipEntryAsString(
 			ExportImportPathUtil.getModelPath(
 				vocabulary, AssetVocabularyGroupRel.class.getSimpleName()));
+
+		if (Validator.isNull(xml)) {
+			return;
+		}
+
+		List<Long> groupIds = new ArrayList<>();
 
 		Document document = SAXReaderUtil.read(xml);
 

@@ -93,87 +93,76 @@ export class AppManagerPage {
 		this.uploadMenuItem = page.getByRole('menuitem', {name: 'Upload'});
 	}
 
+	private _getAppRowLocator(
+		identifier: string,
+		isSymbolicName: boolean = false
+	): Locator {
+		return isSymbolicName
+			? this.appRowBySymbolicName(identifier)
+			: this.appRow(identifier);
+	}
+
+	private _getMenuLocator(
+		identifier: string,
+		isSymbolicName: boolean = false
+	): Locator {
+		return isSymbolicName
+			? this.appRowOptionsMenuBySymbolicName(identifier)
+			: this.appRowOptionsMenu(identifier);
+	}
+
 	async goto() {
 		await this.applicationsMenuPage.goToAppManager();
 	}
-	async activateApp(appName: string) {
+
+	async activateApp(identifier: string, useSymbolicName: boolean = false) {
 		await this.goto();
 
-		await this.searchAppAndExpectToBeVisible(appName);
+		await this.searchAppAndExpectToBeVisible({
+			identifier,
+			useSymbolicName,
+		});
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: this.activateLink,
-			trigger: this.appRowOptionsMenu(appName),
+			trigger: this._getMenuLocator(identifier, useSymbolicName),
 		});
 
 		await waitForAlert(this.page);
-
-		await this.searchAppAndExpectToBeVisible(appName, 'Active');
-	}
-
-	async activateAppBySymbolicName(symbolicName: string) {
-		await this.goto();
-
-		await this.searchAppBySymbolicNameAndExpectToBeVisible(symbolicName);
-
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: this.activateLink,
-			trigger: this.appRowOptionsMenuBySymbolicName(symbolicName),
+		await this.searchAppAndExpectToBeVisible({
+			expectedStatus: 'Active',
+			identifier,
+			useSymbolicName,
 		});
-
-		await waitForAlert(this.page);
-
-		await this.searchAppBySymbolicNameAndExpectToBeVisible(
-			symbolicName,
-			'Active'
-		);
 	}
 
-	async deactivateApp(appName: string) {
+	async deactivateApp(identifier: string, useSymbolicName: boolean = false) {
 		await this.goto();
 
-		await this.searchAppAndExpectToBeVisible(appName);
+		await this.searchAppAndExpectToBeVisible({identifier, useSymbolicName});
 
 		this.page.once('dialog', (dialog) => dialog.accept());
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: this.deactivateLink,
-			trigger: this.appRowOptionsMenu(appName),
+			trigger: this._getMenuLocator(identifier, useSymbolicName),
 		});
 
 		await waitForAlert(this.page);
 
-		await this.searchAppAndExpectToBeVisible(appName, 'Resolved');
-	}
-
-	async deactivateAppBySymbolicName(symbolicName: string) {
-		await this.goto();
-
-		await this.searchAppBySymbolicNameAndExpectToBeVisible(symbolicName);
-
-		this.page.once('dialog', (dialog) => dialog.accept());
-
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: this.deactivateLink,
-			trigger: this.appRowOptionsMenuBySymbolicName(symbolicName),
+		await this.searchAppAndExpectToBeVisible({
+			expectedStatus: 'Resolved',
+			identifier,
+			useSymbolicName,
 		});
-
-		await waitForAlert(this.page);
-
-		await this.searchAppBySymbolicNameAndExpectToBeVisible(
-			symbolicName,
-			'Resolved'
-		);
 	}
 
 	async uninstallApp(appName: string) {
 		await this.goto();
 
-		await this.searchAppAndExpectToBeVisible(appName);
+		await this.searchAppAndExpectToBeVisible({identifier: appName});
 
 		this.page.once('dialog', (dialog) => dialog.accept());
 
@@ -186,38 +175,26 @@ export class AppManagerPage {
 		await waitForAlert(this.page);
 	}
 
-	async searchAppAndExpectToBeVisible(
-		appName: string,
-		expectedStatus?: string
-	) {
+	async searchAppAndExpectToBeVisible({
+		expectedStatus,
+		identifier,
+		useSymbolicName = false,
+	}: {
+		expectedStatus?: string;
+		identifier: string;
+		useSymbolicName?: boolean;
+	}) {
 		await expect(async () => {
-			await this.searchInput.fill(appName);
-
+			await this.searchInput.fill(identifier);
 			await this.searchInput.press('Enter');
 
-			await expect(this.appLink(appName)).toBeVisible({
-				timeout: 2000,
-			});
+			const row = this._getAppRowLocator(identifier, useSymbolicName);
 
-			if (expectedStatus) {
-				await expect(this.appRow(appName)).toContainText(
-					expectedStatus
-				);
-			}
-		}).toPass();
-	}
+			const visibilityCheck = useSymbolicName
+				? row
+				: this.appLink(identifier);
 
-	async searchAppBySymbolicNameAndExpectToBeVisible(
-		symbolicName: string,
-		expectedStatus?: string
-	) {
-		await expect(async () => {
-			await this.searchInput.fill(symbolicName);
-			await this.searchInput.press('Enter');
-
-			const row = this.appRowBySymbolicName(symbolicName);
-
-			await expect(row).toBeVisible({timeout: 2000});
+			await expect(visibilityCheck).toBeVisible({timeout: 2000});
 
 			if (expectedStatus) {
 				await expect(row).toContainText(expectedStatus);

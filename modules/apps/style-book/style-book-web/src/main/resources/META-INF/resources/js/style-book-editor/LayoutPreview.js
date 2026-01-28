@@ -127,6 +127,8 @@ function loadOverlay(iframeRef, previewLayoutType) {
 		if (iframeRef.current) {
 			const overlay = document.createElement('div');
 
+			overlay.setAttribute('data-qa-id', 'styleBookPreviewOverlay');
+
 			Object.keys(style).forEach((key) => {
 				overlay.style[key] = style[key];
 			});

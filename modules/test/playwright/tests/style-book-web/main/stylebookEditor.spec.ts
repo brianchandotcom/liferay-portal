@@ -78,7 +78,7 @@ test('Checks the correct label for restricted pages in the preview selector', as
 });
 
 test(
-	'Preview StyleBook when edit StyleBook and block interactions',
+	'Verify that the style book preview renders correctly and prevents user interaction while in edit mode',
 	{tag: '@LPD-35561'},
 	async ({
 		page,
@@ -332,10 +332,11 @@ test(
 		});
 
 		await test.step('Assert that interaction with the preview page is not allowed', async () => {
-			const overlay = previewIframe.locator(
-				'div[style*="z-index: 100000"]'
+			const overlay = previewIframe.getByTestId(
+				'styleBookPreviewOverlay'
 			);
 			await expect(overlay).toHaveCSS('cursor', 'not-allowed');
+			await expect(overlay).toHaveCSS('z-index', '100000');
 		});
 	}
 );

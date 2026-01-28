@@ -14,12 +14,16 @@ export class StyleBooksPage {
 	readonly page: Page;
 	readonly searchButton: Locator;
 	readonly searchInput: Locator;
+	readonly framePreview: FrameLocator;
 	readonly importFrame: FrameLocator;
 
 	constructor(page: Page) {
 		this.page = page;
 		this.searchButton = this.page.getByTitle('Search for', {exact: true});
 		this.searchInput = page.getByPlaceholder('Search for');
+		this.framePreview = page.frameLocator(
+			'iframe.style-book-editor__page-preview-frame'
+		);
 		this.importFrame = page.frameLocator('iframe[title*="Import"]');
 	}
 

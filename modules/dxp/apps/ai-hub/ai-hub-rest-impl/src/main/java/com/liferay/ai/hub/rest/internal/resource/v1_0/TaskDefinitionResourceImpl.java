@@ -11,15 +11,11 @@ import com.liferay.ai.hub.rest.resource.v1_0.TaskDefinitionResource;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 
 import jakarta.ws.rs.core.MultivaluedMap;
 
@@ -35,6 +31,13 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = TaskDefinitionResource.class
 )
 public class TaskDefinitionResourceImpl extends BaseTaskDefinitionResourceImpl {
+
+	@Override
+	public void deleteTaskDefinition(Long taskDefinitionId) throws Exception {
+		_taskDefinitionManager.deleteTaskDefinition(
+			taskDefinitionId,
+			_createDefaultDTOConverterContext(taskDefinitionId));
+	}
 
 	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
@@ -54,18 +57,37 @@ public class TaskDefinitionResourceImpl extends BaseTaskDefinitionResourceImpl {
 
 		return _taskDefinitionManager.getTaskDefinitions(
 			contextCompany.getCompanyId(),
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(),
-				HashMapBuilder.put(
-					"get",
-					addAction(
-						ActionKeys.VIEW, null, "getTaskDefinitionsPage",
-						_kaleoDefinitionModelResourcePermission)
-				).build(),
-				_dtoConverterRegistry, contextHttpServletRequest, null,
-				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
-				contextUser),
-			search, filter, pagination, sorts);
+			_createDefaultDTOConverterContext(null), search, filter, pagination,
+			sorts);
+	}
+
+	@Override
+	public TaskDefinition patchTaskDefinitionUpdateActive(
+			Long taskDefinitionId, Boolean active)
+		throws Exception {
+
+		return _taskDefinitionManager.patchTaskDefinitionUpdateActive(
+			taskDefinitionId, active,
+			_createDefaultDTOConverterContext(taskDefinitionId));
+	}
+
+	@Override
+	public TaskDefinition postTaskDefinitionCopy(Long taskDefinitionId)
+		throws Exception {
+
+		return _taskDefinitionManager.postTaskDefinitionCopy(
+			taskDefinitionId,
+			_createDefaultDTOConverterContext(taskDefinitionId));
+	}
+
+	private DefaultDTOConverterContext _createDefaultDTOConverterContext(
+		Long taskDefinitionId) {
+
+		return new DefaultDTOConverterContext(
+			contextAcceptLanguage.isAcceptAllLanguages(), null,
+			_dtoConverterRegistry, contextHttpServletRequest, taskDefinitionId,
+			contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+			contextUser);
 	}
 
 	@Reference

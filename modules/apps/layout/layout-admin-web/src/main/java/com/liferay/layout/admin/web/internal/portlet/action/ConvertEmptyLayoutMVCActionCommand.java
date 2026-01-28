@@ -7,6 +7,7 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.handler.LayoutExceptionRequestHandlerUtil;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -110,7 +111,9 @@ public class ConvertEmptyLayoutMVCActionCommand
 					return;
 				}
 
-				if (layoutPageTemplateEntry.getLayoutPrototypeId() == 0) {
+				if (layoutPageTemplateEntry.getType() !=
+					LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE) {
+
 					classNameId = _portal.getClassNameId(
 						LayoutPageTemplateEntry.class);
 					classPK = layoutPageTemplateEntryId;

@@ -77,6 +77,14 @@ public class RatingsEntryLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
+	@Test(expected = EntryScoreException.class)
+	public void testRatingScoreNaNIsInvalidScore() throws Exception {
+		RatingsEntryLocalServiceUtil.updateEntry(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomLong(), Double.NaN,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+	}
+
 	@DeleteAfterTestRun
 	private Group _group;
 

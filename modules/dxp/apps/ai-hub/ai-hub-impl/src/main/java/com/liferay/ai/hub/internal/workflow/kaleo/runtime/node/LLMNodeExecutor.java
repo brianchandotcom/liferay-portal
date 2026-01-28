@@ -15,7 +15,6 @@ import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -77,7 +76,6 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 		throws PortalException {
 
 		long companyId = CompanyThreadLocal.getCompanyId();
-		long ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
 		KaleoInstanceToken kaleoInstanceToken =
 			executionContext.getKaleoInstanceToken();
 
@@ -122,9 +120,8 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 				GetterUtil.getString(workflowContext.get("memoryId"))
 			).onCompleteResponse(
 				response -> _completeResponse(
-					response, companyId, ctCollectionId, executionContext,
-					currentKaleoNode, kaleoNodeSettingValues,
-					vertexAiGeminiStreamingChatModel)
+					response, companyId, executionContext, currentKaleoNode,
+					kaleoNodeSettingValues, vertexAiGeminiStreamingChatModel)
 			).onError(
 				throwable -> vertexAiGeminiStreamingChatModel.close()
 			).systemMessageProvider(
@@ -173,14 +170,13 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 	}
 
 	private void _completeResponse(
-		ChatResponse chatResponse, long companyId, long ctCollectionId,
+		ChatResponse chatResponse, long companyId,
 		ExecutionContext executionContext, KaleoNode kaleoNode,
 		Map<String, String> kaleoNodeSettingValues,
 		VertexAiGeminiStreamingChatModel vertexAiGeminiStreamingChatModel) {
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-					companyId, ctCollectionId)) {
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
 
 			Map<String, Serializable> workflowContext =
 				executionContext.getWorkflowContext();

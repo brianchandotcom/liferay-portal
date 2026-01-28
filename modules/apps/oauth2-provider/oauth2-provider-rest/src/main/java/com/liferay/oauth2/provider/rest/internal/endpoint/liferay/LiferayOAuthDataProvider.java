@@ -367,10 +367,11 @@ public class LiferayOAuthDataProvider
 					_populateAccessToken(oAuth2Authorization));
 			}
 			catch (PortalException portalException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Error when retrieving accessToken", portalException);
-				}
+				_log.error(
+					"Unable to populate access token for Liferay OAuth 2 " +
+					"application " +
+					oAuth2Authorization.getOAuth2ApplicationId(),
+					portalException);
 
 				throw new OAuthServiceException(portalException);
 			}

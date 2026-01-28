@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.json.JSONObject;
  */
 public interface ListObjectReferenceFactory<T extends ItemSelectorReturnType> {
 
-	public ListObjectReference getListObjectReference(JSONObject jsonObject);
+	public ListObjectReference getListObjectReference(
+		long companyId, long groupId, JSONObject jsonObject);
 
 }

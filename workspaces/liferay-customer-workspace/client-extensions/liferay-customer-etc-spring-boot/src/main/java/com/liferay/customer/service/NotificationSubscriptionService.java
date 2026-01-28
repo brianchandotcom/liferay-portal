@@ -6,6 +6,7 @@
 package com.liferay.customer.service;
 
 import com.liferay.customer.constants.NotificationSubscriptionConstants;
+import com.liferay.portal.kernel.util.Validator;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -37,22 +38,22 @@ public class NotificationSubscriptionService extends BaseNotificationService {
 			uriComponentsBuilder.queryParam("filter", filter);
 		}
 
-		String json = get(
+		String response = get(
 			getAuthorization(),
 			uriComponentsBuilder.build(
 			).toUri());
 
-		if ((json == null) || json.isEmpty()) {
+		if (Validator.isNotNull(response)) {
 			return new JSONArray();
 		}
 
 		try {
-			JSONObject jsonObject = new JSONObject(json);
+			JSONObject jsonObject = new JSONObject(response);
 
 			return jsonObject.getJSONArray("items");
 		}
 		catch (Exception exception) {
-			_log.error("Unable to parse JSON: " + json, exception);
+			_log.error("Unable to parse JSON: " + response, exception);
 
 			return new JSONArray();
 		}

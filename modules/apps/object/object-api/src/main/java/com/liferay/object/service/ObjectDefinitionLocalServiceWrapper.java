@@ -113,6 +113,18 @@ public class ObjectDefinitionLocalServiceWrapper
 	}
 
 	@Override
+	public void addOrUpdateWorkflowDefinitionLinks(
+			com.liferay.object.model.ObjectDefinition objectDefinition,
+			java.util.List
+				<com.liferay.portal.kernel.model.WorkflowDefinitionLink>
+					workflowDefinitionLinks)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_objectDefinitionLocalService.addOrUpdateWorkflowDefinitionLinks(
+			objectDefinition, workflowDefinitionLinks);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectDefinition addSystemObjectDefinition(
 			String externalReferenceCode, long userId, long objectFolderId,
 			String className, String dbTableName, boolean enableComments,

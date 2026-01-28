@@ -111,6 +111,16 @@ public class ObjectDefinitionLocalServiceUtil {
 			companyId, objectFolderId, systemObjectDefinitionManager);
 	}
 
+	public static void addOrUpdateWorkflowDefinitionLinks(
+			ObjectDefinition objectDefinition,
+			List<com.liferay.portal.kernel.model.WorkflowDefinitionLink>
+				workflowDefinitionLinks)
+		throws PortalException {
+
+		getService().addOrUpdateWorkflowDefinitionLinks(
+			objectDefinition, workflowDefinitionLinks);
+	}
+
 	public static ObjectDefinition addSystemObjectDefinition(
 			String externalReferenceCode, long userId, long objectFolderId,
 			String className, String dbTableName, boolean enableComments,

@@ -112,6 +112,11 @@ public interface ObjectDefinitionLocalService
 			SystemObjectDefinitionManager systemObjectDefinitionManager)
 		throws PortalException;
 
+	public void addOrUpdateWorkflowDefinitionLinks(
+			ObjectDefinition objectDefinition,
+			List<WorkflowDefinitionLink> workflowDefinitionLinks)
+		throws PortalException;
+
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectDefinition addSystemObjectDefinition(
 			String externalReferenceCode, long userId, long objectFolderId,

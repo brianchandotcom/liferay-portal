@@ -57,6 +57,31 @@ components:
                     minimum: 1
                     type: number
             type: object
+        Membership:
+            properties:
+                individualPK:
+                    type: string
+                individualSegmentIds:
+                    items:
+                        type: string
+                    type: array
+                removed:
+                    type: boolean
+                userId:
+                    format: int64
+                    type: integer
+        Segment:
+            properties:
+                active:
+                    type: boolean
+                id:
+                    type: string
+                memberships:
+                    items:
+                        $ref: "#/components/schemas/Membership"
+                    type: array
+                name:
+                    type: string
         Status:
             properties:
                 status:
@@ -166,3 +191,30 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Experiment"
             tags: ["Status"]
+    "/segments/{segmentsEntryKey}":
+        post:
+            operationId: postSegment
+            parameters:
+                -   in: path
+                    name: segmentsEntryKey
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Segment"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Segment"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Segment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Segment"
+            tags: ["Segment"]

@@ -2844,8 +2844,8 @@ public class DefaultObjectEntryManagerImplTest
 						_group.getGroupId());
 
 			Assert.assertEquals(
-				parentAssetCategory.getCategoryId(),
-				assetCategory1.getParentCategoryId());
+				assetCategory1.getParentCategoryId(),
+				parentAssetCategory.getCategoryId());
 			Assert.assertEquals(
 				WorkflowConstants.STATUS_EMPTY,
 				parentAssetCategory.getStatus());

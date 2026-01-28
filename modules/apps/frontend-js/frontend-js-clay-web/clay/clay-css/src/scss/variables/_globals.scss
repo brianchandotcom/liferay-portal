@@ -107,7 +107,7 @@ $indigo-l3: #b2baff !default;
 $indigo-l4: #ccd1ff !default;
 $indigo-l5: #e5e8ff !default;
 
-$purple-d4: #70c !default;
+$purple-d4: #7700cc !default;
 $purple-d3: #8600e6 !default;
 $purple-d2: #9500ff !default;
 $purple-d1: #9f1aff !default;
@@ -130,14 +130,14 @@ $pink-l4: #ffb3de !default;
 $pink-l5: #ffe5f4 !default;
 
 $red-d4: #800000 !default;
-$red-d3: #900 !default;
+$red-d3: #990000 !default;
 $red-d2: #b30000 !default;
-$red-d1: #c00 !default;
+$red-d1: #cc0000 !default;
 $red: #dc3545 !default;
 $red-l1: #ff4d4d !default;
-$red-l2: #f66 !default;
+$red-l2: #ff6666 !default;
 $red-l3: #ff8080 !default;
-$red-l4: #f99 !default;
+$red-l4: #ff9999 !default;
 $red-l5: #ffe5e5 !default;
 
 $orange-d4: #662700 !default;
@@ -185,14 +185,14 @@ $teal-l4: #96e9db !default;
 $teal-l5: #eafbf8 !default;
 
 $cyan-d4: #00334d !default;
-$cyan-d3: #046 !default;
+$cyan-d3: #004466 !default;
 $cyan-d2: #005580 !default;
-$cyan-d1: #069 !default;
+$cyan-d1: #006699 !default;
 $cyan: #17a2b8 !default;
 $cyan-l1: #0099e6 !default;
-$cyan-l2: #3bf !default;
-$cyan-l3: #6cf !default;
-$cyan-l4: #9df !default;
+$cyan-l2: #33bbff !default;
+$cyan-l3: #66ccff !default;
+$cyan-l4: #99ddff !default;
 $cyan-l5: #e5f6ff !default;
 
 $colors: () !default;
@@ -345,7 +345,7 @@ $border-radius-sm: 0.2rem !default;
 
 $rounded-border-radius: $border-radius !default;
 $rounded-circle-border-radius: 5000px !default;
-$rounded-0-border-radius: 0 !default;
+$rounded-0-border-radius: 0px !default;
 $rounded-pill: 50rem !default;
 
 $box-shadow-sm: 0 0.125rem 0.25rem rgba($black, 0.075) !default;
@@ -374,10 +374,8 @@ $embed-responsive-aspect-ratios: join(
 	$embed-responsive-aspect-ratios
 );
 
-$component-transition:
-	color 0.15s ease-in-out,
-	background-color 0.15s ease-in-out,
-	border-color 0.15s ease-in-out,
+$component-transition: color 0.15s ease-in-out,
+	background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
 	box-shadow 0.15s ease-in-out !default;
 
 $component-focus-box-shadow: 0 0 0 0.2rem rgba($primary, 0.25) !default;
@@ -477,11 +475,11 @@ $webkit-font-smoothing: null !default;
 
 $font-import-url: null !default;
 
-$font-family-sans-serif: -apple-system, blinkmacsystemfont, 'Segoe UI', roboto,
-	'Helvetica Neue', arial, 'Noto Sans', sans-serif, 'Apple Color Emoji',
+$font-family-sans-serif: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+	'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji',
 	'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji' !default;
-$font-family-serif: georgia, 'Times New Roman', times, serif !default;
-$font-family-monospace: sfmono-regular, menlo, monaco, consolas,
+$font-family-serif: Georgia, 'Times New Roman', Times, serif !default;
+$font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
 	'Liberation Mono', 'Courier New', monospace !default;
 
 $font-family-base: $font-family-sans-serif !default;

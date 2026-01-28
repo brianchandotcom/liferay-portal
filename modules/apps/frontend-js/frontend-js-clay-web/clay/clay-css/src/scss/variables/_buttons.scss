@@ -1,7 +1,6 @@
 $btn-border-width: $input-btn-border-width !default;
 $btn-border-radius: $border-radius !default;
-$btn-box-shadow:
-	#{inset 0 1px 0 rgba($white, 0.15),
+$btn-box-shadow: #{inset 0 1px 0 rgba($white, 0.15),
 	0 1px 1px rgba($black, 0.075)} !default;
 $btn-cursor: $link-cursor !default;
 $btn-font-family: $input-btn-font-family !default;

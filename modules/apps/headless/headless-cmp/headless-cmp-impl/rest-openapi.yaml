@@ -1,18 +1,36 @@
 components:
     schemas:
+        TaskAssignee:
+            properties:
+                externalReferenceCode:
+                    readOnly: true
+                    type: string
+                image:
+                    readOnly: true
+                    type: string
+                name:
+                    readOnly: true
+                    type: string
+                type:
+                    readOnly: true
+                    type: string
         TaskStatistics:
             properties:
                 blockedCount:
                     format: int64
+                    readOnly: true
                     type: integer
                 inProgressCount:
                     format: int64
+                    readOnly: true
                     type: integer
                 overdueCount:
                     format: int64
+                    readOnly: true
                     type: integer
                 totalCount:
                     format: int64
+                    readOnly: true
                     type: integer
 info:
     license:
@@ -46,6 +64,27 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/TaskStatistics"
             tags: ["TaskStatistics"]
+    "/task-assignees":
+        get:
+            parameters:
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TaskAssignee"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TaskAssignee"
+                                type: array
+            tags: ["TaskAssignee"]
     "/task-statistics":
         get:
             operationId: getTaskStatistics

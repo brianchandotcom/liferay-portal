@@ -39,7 +39,7 @@
 		},
 		{
 			"DBType": "Boolean",
-			"defaultValue": "false",
+			"defaultValue": "true",
 			"externalReferenceCode": "C_NOTIFICATION_SUBSCRIPTION_unsubscribable",
 			"indexed": true,
 			"indexedAsKeyword": false,
@@ -51,7 +51,7 @@
 		},
 		{
 			"DBType": "Boolean",
-			"defaultValue": "false",
+			"defaultValue": "true",
 			"externalReferenceCode": "C_NOTIFICATION_SUBSCRIPTION_active",
 			"indexed": true,
 			"indexedAsKeyword": false,

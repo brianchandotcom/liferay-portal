@@ -369,8 +369,8 @@ public class LiferayOAuthDataProvider
 			catch (PortalException portalException) {
 				_log.error(
 					"Unable to populate access token for Liferay OAuth 2 " +
-					"application " +
-					oAuth2Authorization.getOAuth2ApplicationId(),
+						"application " +
+							oAuth2Authorization.getOAuth2ApplicationId(),
 					portalException);
 
 				throw new OAuthServiceException(portalException);
@@ -778,21 +778,23 @@ public class LiferayOAuthDataProvider
 		long companyId = _portal.getCompanyId(
 			messageContext.getHttpServletRequest());
 
-		OAuth2Application oAuth2Application1 =
+		OAuth2Application oAuth2Application =
 			_oAuth2ApplicationLocalService.fetchOAuth2Application(
 				companyId, client.getClientId());
 
 		Map<String, String> properties = client.getProperties();
 
-		OAuth2Application oAuth2Application2 =
+		OAuth2Application existingOAuth2Application =
 			_oAuth2ApplicationLocalService.
 				fetchOAuth2ApplicationByExternalReferenceCode(
 					properties.get("software_id"), companyId);
 
-		if ((oAuth2Application1 == null) && (oAuth2Application2 != null)) {
+		if ((oAuth2Application == null) &&
+			(existingOAuth2Application != null)) {
+
 			OAuth2ErrorUtil.reportInvalidRequestError(
 				"OAuth 2 application with client ID " + client.getClientId() +
-					" already exists, use put method to modify the application",
+					" already exists",
 				OAuthConstants.INVALID_CLIENT, Response.Status.CONFLICT);
 		}
 
@@ -800,11 +802,11 @@ public class LiferayOAuthDataProvider
 		String clientSecret;
 		String externalReferenceCode;
 
-		if (oAuth2Application1 != null) {
-			clientId = oAuth2Application1.getClientId();
-			clientSecret = oAuth2Application1.getClientSecret();
+		if (oAuth2Application != null) {
+			clientId = oAuth2Application.getClientId();
+			clientSecret = oAuth2Application.getClientSecret();
 			externalReferenceCode =
-				oAuth2Application1.getExternalReferenceCode();
+				oAuth2Application.getExternalReferenceCode();
 		}
 		else {
 			clientId = client.getClientId();
@@ -827,7 +829,7 @@ public class LiferayOAuthDataProvider
 				jwks = _extractJwksFromJwksUri(properties.get("jwks_uri"));
 			}
 
-			oAuth2Application1 =
+			oAuth2Application =
 				_oAuth2ApplicationLocalService.addOrUpdateOAuth2Application(
 					externalReferenceCode, user.getUserId(),
 					user.getScreenName() + "_dynamic_registered",
@@ -856,10 +858,10 @@ public class LiferayOAuthDataProvider
 							PROPERTY_KEY_CLIENT_REMOTE_HOST);
 
 					_oAuth2AuthorizationLocalService.addOAuth2Authorization(
-						oAuth2Application1.getCompanyId(), user.getUserId(),
+						oAuth2Application.getCompanyId(), user.getUserId(),
 						user.getScreenName(),
-						oAuth2Application1.getOAuth2ApplicationId(),
-						oAuth2Application1.getOAuth2ApplicationScopeAliasesId(),
+						oAuth2Application.getOAuth2ApplicationId(),
+						oAuth2Application.getOAuth2ApplicationScopeAliasesId(),
 						tokenKey, DateUtil.newDate(),
 						DateUtil.newDate(
 							System.currentTimeMillis() + Time.YEAR),
@@ -870,7 +872,7 @@ public class LiferayOAuthDataProvider
 			if (Validator.isBlank(properties.get("software_id"))) {
 				properties.put(
 					"software_id",
-					oAuth2Application1.getExternalReferenceCode());
+					oAuth2Application.getExternalReferenceCode());
 			}
 		}
 		catch (PortalException portalException) {

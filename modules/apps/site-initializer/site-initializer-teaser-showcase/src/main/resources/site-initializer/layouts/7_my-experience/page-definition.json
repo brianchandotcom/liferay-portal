@@ -601,7 +601,7 @@
 											"fragmentConfig": {
 												"buttonSize": "nm",
 												"buttonType": "primary",
-												"submittedEntryStatus": "approved",
+												"submittedEntryStatus": "0",
 												"type": "submit"
 											},
 											"fragmentFields": [

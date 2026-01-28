@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -11,16 +11,14 @@ import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.api.gax.rpc.NotFoundException;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.ServiceAccountCredentials;
-
 import com.google.cloud.pubsub.v1.Subscriber;
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.cloud.pubsub.v1.SubscriptionAdminSettings;
 import com.google.pubsub.v1.ProjectSubscriptionName;
 import com.google.pubsub.v1.Subscription;
 import com.google.pubsub.v1.TopicName;
+
 import com.liferay.marketplace.constants.MarketplaceConstants;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import java.io.IOException;
 
@@ -30,6 +28,9 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -48,7 +49,7 @@ public class MarketplacePubsubSubscriber {
 				).awaitTerminated();
 
 				if (_log.isInfoEnabled()) {
-				 _log.info("Subscriber shut down cleanly.");
+					_log.info("Subscriber shut down cleanly");
 				}
 			}
 		}
@@ -57,7 +58,7 @@ public class MarketplacePubsubSubscriber {
 			_subscriptionAdminClient.close();
 
 			if (_log.isInfoEnabled()) {
-				_log.info("Subscription admin client closed.");
+				_log.info("Subscription admin client closed");
 			}
 		}
 	}
@@ -87,7 +88,6 @@ public class MarketplacePubsubSubscriber {
 			throw exception;
 		}
 
-
 		for (String topic : MarketplaceConstants.PUBSUB_TOPICS) {
 			try {
 				String subscriptionName =
@@ -107,9 +107,10 @@ public class MarketplacePubsubSubscriber {
 					}
 				}
 				catch (NotFoundException notFoundException) {
-
 					if (_log.isInfoEnabled()) {
-						_log.info("Creating a new subscription.");	
+						_log.info(
+							"Creating a new subscription \n" +
+								notFoundException.getMessage());
 					}
 
 					TopicName topicName = TopicName.ofProjectTopicName(
@@ -134,8 +135,7 @@ public class MarketplacePubsubSubscriber {
 
 				Subscriber subscriber = Subscriber.newBuilder(
 					projectSubscriptionName,
-					new MarketplaceMessageReceiver(
-						topic)
+					new MarketplaceMessageReceiver(topic)
 				).setCredentialsProvider(
 					credentialsProvider
 				).build();
@@ -154,8 +154,9 @@ public class MarketplacePubsubSubscriber {
 			}
 			catch (Exception exception) {
 				_log.error(
-					"Failed to initialize PubSub subscription for topic: " + topic + "\n" +
-						exception.getMessage());
+					"Failed to initialize PubSub subscription for topic: " +
+						topic,
+					exception);
 
 				throw exception;
 			}
@@ -181,8 +182,10 @@ public class MarketplacePubsubSubscriber {
 
 	@Value("${gcp.client.id}")
 	private String _clientId;
+
 	@Value("${gcp.private.key.id}")
 	private String _privateKeyId;
+
 	@Value("${gcp.private.key}")
 	private String _privateKeyPkcs8;
 

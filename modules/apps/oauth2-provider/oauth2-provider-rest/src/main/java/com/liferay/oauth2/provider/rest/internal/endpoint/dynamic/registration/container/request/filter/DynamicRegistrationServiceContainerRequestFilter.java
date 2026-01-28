@@ -216,9 +216,9 @@ public class DynamicRegistrationServiceContainerRequestFilter
 		if (oAuth2Authorization != null) {
 			JwtClaims jwtClaims = new JwtClaims();
 
-			jwtClaims.setClaim("sub", oAuth2Authorization.getUserId());
 			jwtClaims.setClaim(
 				"application_id", oAuth2Authorization.getOAuth2ApplicationId());
+			jwtClaims.setClaim("sub", oAuth2Authorization.getUserId());
 
 			Date accessTokenExpirationDate =
 				oAuth2Authorization.getAccessTokenExpirationDate();

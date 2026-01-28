@@ -74,6 +74,40 @@ test(
 );
 
 test(
+	'Added "Rich Text" field is focused when required and is empty on form submission',
+	{
+		tag: ['@LPD-76497'],
+	},
+	async ({formBuilderPage, formBuilderSidePanelPage, page}) => {
+		await formBuilderPage.goToNew();
+
+		await expect(formBuilderPage.newFormHeading).toBeVisible();
+
+		await formBuilderSidePanelPage.addFieldByDoubleClick('Rich Text');
+
+		await formBuilderSidePanelPage.requiredFieldToggleSwitch.click();
+
+		await page.waitForTimeout(1000);
+
+		await formBuilderPage.clickPublishFormButton();
+
+		const formSubmissionURL = await formBuilderPage.getFormSubmissionURL();
+
+		await page.goto(formSubmissionURL);
+
+		await page.getByRole('button', {name: 'Submit'}).click();
+
+		const richTextEditor = page.getByRole('textbox', {
+			name: 'Rich Text Editor. Editing area: main',
+		});
+
+		await expect(richTextEditor).toBeFocused();
+
+		await expect(page.getByText('This field is required.')).toBeVisible();
+	}
+);
+
+test(
 	'"Rich Text" field does not replace focused field when changing language',
 	{
 		tag: ['@LPD-68018'],

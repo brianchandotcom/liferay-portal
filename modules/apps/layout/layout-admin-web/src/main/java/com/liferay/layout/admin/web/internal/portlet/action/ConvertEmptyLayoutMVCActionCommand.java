@@ -103,13 +103,7 @@ public class ConvertEmptyLayoutMVCActionCommand
 			if (layoutPageTemplateEntryId > 0) {
 				LayoutPageTemplateEntry layoutPageTemplateEntry =
 					_layoutPageTemplateEntryService.
-						fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
-
-				if (layoutPageTemplateEntry == null) {
-					SessionErrors.add(actionRequest, PortalException.class);
-
-					return;
-				}
+						getLayoutPageTemplateEntry(layoutPageTemplateEntryId);
 
 				if (layoutPageTemplateEntry.getType() !=
 					LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE) {
@@ -134,14 +128,12 @@ public class ConvertEmptyLayoutMVCActionCommand
 				}
 
 				Layout layoutPageTemplateEntryLayout =
-					_layoutLocalService.fetchLayout(
+					_layoutLocalService.getLayout(
 						layoutPageTemplateEntry.getPlid());
 
-				if (layoutPageTemplateEntryLayout != null) {
-					masterLayoutPageTemplateEntryERC =
+				masterLayoutPageTemplateEntryERC =
 						layoutPageTemplateEntryLayout.
 							getMasterLayoutPageTemplateEntryERC();
-				}
 			}
 
 			Map<Locale, String> nameMap = HashMapBuilder.put(

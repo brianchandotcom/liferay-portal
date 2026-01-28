@@ -50,10 +50,10 @@
 		);
 
 		$height: setter(map-get($map, height), 3.5rem);
-		$border-bottom-width: setter(map-get($map, border-bottom-width), 0);
-		$border-left-width: setter(map-get($map, border-left-width), 0);
-		$border-right-width: setter(map-get($map, border-right-width), 0);
-		$border-top-width: setter(map-get($map, border-top-width), 0);
+		$border-bottom-width: setter(map-get($map, border-bottom-width), 0px);
+		$border-left-width: setter(map-get($map, border-left-width), 0px);
+		$border-right-width: setter(map-get($map, border-right-width), 0px);
+		$border-top-width: setter(map-get($map, border-top-width), 0px);
 		$box-shadow: map-get($map, box-shadow);
 		$font-size: setter(
 			map-get($map, font-size),
@@ -92,7 +92,7 @@
 				)
 			)
 		);
-		$padding-y: if($padding-y == 0 or $padding-y == null, 0, $padding-y);
+		$padding-y: if($padding-y == 0 or $padding-y == null, 0px, $padding-y);
 		$link-height: setter(
 			map-get($map, link-height),
 			'#{$height} - #{$border-bottom-width} - #{$border-top-width} - #{$padding-y} * 2'
@@ -568,11 +568,11 @@
 					margin-left: $btn-margin-x-mobile;
 					margin-right: $btn-margin-x-mobile;
 					margin-top: $btn-margin-y-mobile;
-					min-width: $btn-monospaced-size-mobile;
 					padding-bottom: $btn-padding-y-mobile;
 					padding-left: $btn-padding-x-mobile;
 					padding-right: $btn-padding-x-mobile;
 					padding-top: $btn-padding-y-mobile;
+					min-width: $btn-monospaced-size-mobile;
 
 					@if ($enable-c-inner) {
 						.c-inner {
@@ -782,11 +782,11 @@
 											margin-left: $btn-margin-x;
 											margin-right: $btn-margin-x;
 											margin-top: $btn-margin-y;
-											min-width: $btn-monospaced-size;
 											padding-bottom: $btn-padding-y;
 											padding-left: $btn-padding-x;
 											padding-right: $btn-padding-x;
 											padding-top: $btn-padding-y;
+											min-width: $btn-monospaced-size;
 
 											@if ($enable-c-inner) {
 												.c-inner {

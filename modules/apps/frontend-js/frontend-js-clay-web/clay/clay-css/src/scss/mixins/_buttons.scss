@@ -1297,8 +1297,7 @@
 		color: color-yiq($hover-background);
 
 		@if $enable-shadows {
-			box-shadow:
-				$btn-box-shadow,
+			box-shadow: $btn-box-shadow,
 				0
 					0
 					0
@@ -1328,8 +1327,8 @@
 	&:not(:disabled):not(.disabled).active,
 	.show > &.dropdown-toggle {
 		background-color: $active-background;
-		border-color: $active-border;
 		color: color-yiq($active-background);
+		border-color: $active-border;
 
 		@if $enable-gradients {
 			background-image: none;
@@ -1337,8 +1336,7 @@
 
 		&:focus {
 			@if $enable-shadows and $btn-active-box-shadow != none {
-				box-shadow:
-					$btn-active-box-shadow,
+				box-shadow: $btn-active-box-shadow,
 					0
 						0
 						0
@@ -1400,8 +1398,7 @@
 
 		&:focus {
 			@if $enable-shadows and $btn-active-box-shadow != none {
-				box-shadow:
-					$btn-active-box-shadow,
+				box-shadow: $btn-active-box-shadow,
 					0 0 0 $btn-focus-width rgba($color, 0.5);
 			} @else {
 				box-shadow: 0 0 0 $btn-focus-width rgba($color, 0.5);

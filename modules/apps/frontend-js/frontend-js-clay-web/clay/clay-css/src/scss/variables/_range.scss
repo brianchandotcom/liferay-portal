@@ -21,7 +21,7 @@ $clay-range-input-group-text: map-merge(
 	(
 		background-color:
 			setter(map-get($clay-range-input-group-text, bg), transparent),
-		border-width: 0,
+		border-width: 0px,
 		color: $body-color,
 		font-size: 0.875rem,
 		font-weight: $font-weight-semi-bold,
@@ -59,7 +59,7 @@ $clay-range-input: map-deep-merge(
 		clay-range-thumb: (
 			background-color: $white,
 			border-radius: 100px,
-			border-width: 0,
+			border-width: 0px,
 			box-shadow: 0 1px 5px -1px rgba(0, 0, 0, 0.3),
 			height: 1.5rem,
 			margin-top: -0.75rem,

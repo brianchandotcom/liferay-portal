@@ -373,7 +373,8 @@ $cadmin-menubar-vertical-decorated-md-nav-link-after-active: map-deep-merge(
 		left:
 			math-sign(
 				map-get($cadmin-menubar-vertical-decorated-md-nav, padding-left)
-			) - map-get(
+			) -
+			map-get(
 				$cadmin-menubar-vertical-decorated-md-nav,
 				border-left-width
 			),

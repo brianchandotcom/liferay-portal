@@ -29,10 +29,27 @@ async function createTag({
 		};
 	}
 
-	return await ApiHelper.post<Tag>(
-		`/o/headless-admin-taxonomy/v1.0/sites/${cmsGroupId}/keywords`,
-		requestBody
+	const url = `/o/headless-admin-taxonomy/v1.0/sites/${cmsGroupId}/keywords`;
+
+	const {data, error} = await ApiHelper.get<{items: Tag[]}>(
+		`${url}?filter=name eq '${name}'`
 	);
+
+	if (error) {
+		throw new Error(error);
+	}
+
+	const tag = data?.items[0];
+
+	if (tag) {
+		if (assetLibraryId) {
+			return ApiHelper.patch<Tag>(requestBody, url);
+		}
+
+		return {data: tag, error: null, status: null};
+	}
+
+	return ApiHelper.post<Tag>(url, requestBody);
 }
 
 async function getCommonTags(selectedData: IBulkActionFDSData) {

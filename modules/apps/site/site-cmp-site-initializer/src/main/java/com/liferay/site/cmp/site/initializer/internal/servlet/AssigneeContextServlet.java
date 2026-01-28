@@ -79,14 +79,12 @@ public class AssigneeContextServlet extends HttpServlet {
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
+		Searcher searcher = _searcherSnapshot.get();
+		SearchRequestBuilderFactory searchRequestBuilderFactory =
+			_searchRequestBuilderFactorySnapshot.get();
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
-
-		Searcher searcher = _searcherSnapshot.get();
-
-		SearchRequestBuilderFactory searchRequestBuilderFactory =
-			_searchRequestBuilderFactorySnapshot.get();
 
 		SearchResponse searchResponse = searcher.search(
 			searchRequestBuilderFactory.builder(

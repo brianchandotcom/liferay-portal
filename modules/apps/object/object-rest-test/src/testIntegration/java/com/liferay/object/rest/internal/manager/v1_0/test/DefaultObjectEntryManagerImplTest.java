@@ -2832,11 +2832,10 @@ public class DefaultObjectEntryManagerImplTest
 						_group.getGroupId());
 
 			Assert.assertEquals(
-				WorkflowConstants.STATUS_EMPTY, assetCategory1.getStatus());
-
-			Assert.assertEquals(
 				AssetVocabularyConstants.EMPTY_VOCABULARY_ID,
 				assetCategory1.getVocabularyId());
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_EMPTY, assetCategory1.getStatus());
 
 			AssetCategory parentAssetCategory =
 				_assetCategoryLocalService.

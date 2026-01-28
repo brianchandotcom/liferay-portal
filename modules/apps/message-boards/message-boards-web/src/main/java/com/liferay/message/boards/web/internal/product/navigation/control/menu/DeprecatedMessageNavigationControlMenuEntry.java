@@ -5,7 +5,6 @@
 
 package com.liferay.message.boards.web.internal.product.navigation.control.menu;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -41,24 +40,23 @@ public class DeprecatedMessageNavigationControlMenuEntry
 	}
 
 	@Override
-	public boolean isShow(HttpServletRequest httpServletRequest)
-		throws PortalException {
-
+	public boolean isShow(HttpServletRequest httpServletRequest) {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		if ((portletDisplay != null) &&
-			Objects.equals(
-				portletDisplay.getPortletName(),
-				PortletKeys.MESSAGE_BOARDS_ADMIN)) {
-
-			return true;
+		if (themeDisplay == null) {
+			return false;
 		}
 
-		return false;
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		if (portletDisplay == null) {
+			return false;
+		}
+
+		return Objects.equals(
+			PortletKeys.MESSAGE_BOARDS_ADMIN, portletDisplay.getPortletName());
 	}
 
 	@Override

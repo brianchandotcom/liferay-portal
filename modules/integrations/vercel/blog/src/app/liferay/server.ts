@@ -16,15 +16,17 @@ export const liferay = {
 		blogPosts: ({
 			page = 1,
 			pageSize,
+			search = '',
 			sort,
 			spaceId,
 		}: {
 			page: number;
 			pageSize: number;
+			search?: string;
 			sort: string;
 			spaceId: number;
 		}) => {
-			return `/cms/blogs/scopes/${spaceId}?page=${page}&pageSize=${pageSize}&sort=${sort}`;
+			return `/cms/blogs/scopes/${spaceId}?page=${page}&pageSize=${pageSize}&search=${search}&sort=${sort}`;
 		},
 	},
 

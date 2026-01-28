@@ -150,9 +150,7 @@ const ProductDetail = ({product}: {product: Product}) => {
 						)}
 					</div>
 
-					<div>
-						<PreviewHTML content={product.description ?? ''} />
-					</div>
+					<PreviewHTML content={product.description ?? ''} />
 
 					{!!skuDetails.skuUnitOfMeasures?.length && (
 						<ProductUOM uom={skuDetails?.skuUnitOfMeasures} />

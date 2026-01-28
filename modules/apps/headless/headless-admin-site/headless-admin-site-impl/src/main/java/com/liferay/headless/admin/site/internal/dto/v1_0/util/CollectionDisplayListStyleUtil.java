@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.site.internal.dto.v1_0.util;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Map;
@@ -22,7 +23,7 @@ public class CollectionDisplayListStyleUtil {
 		).put(
 			"FlexRow", "flex-row"
 		).put(
-			"Grid", "grid"
+			"Grid", StringPool.BLANK
 		).build();
 
 	public static String toExternalValue(String value) {

@@ -25,6 +25,7 @@ import com.liferay.layout.converter.VerticalAlignmentConverter;
 import com.liferay.layout.util.CollectionPaginationUtil;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.collection.EmptyCollectionOptions;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -404,7 +405,8 @@ public class CollectionDisplayPageElementDefinitionDTOConverter
 			() -> _toListStyleDefinition(collectionStyledLayoutStructureItem));
 		listStyle.setListStyleType(
 			() -> {
-				String collectionStyledLayoutStructureItemListStyle = "grid";
+				String collectionStyledLayoutStructureItemListStyle =
+					StringPool.BLANK;
 
 				if (Validator.isNotNull(
 						collectionStyledLayoutStructureItem.getListStyle())) {

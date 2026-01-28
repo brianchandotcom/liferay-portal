@@ -18,9 +18,22 @@ import com.liferay.portal.vulcan.pagination.Pagination;
  */
 public interface TaskDefinitionManager {
 
+	public void deleteTaskDefinition(
+			long taskDefinitionId, DTOConverterContext dtoConverterContext)
+		throws Exception;
+
 	public Page<TaskDefinition> getTaskDefinitions(
 			long companyId, DTOConverterContext dtoConverterContext,
 			String search, Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public TaskDefinition patchTaskDefinitionUpdateActive(
+			long taskDefinitionId, boolean active,
+			DTOConverterContext dtoConverterContext)
+		throws Exception;
+
+	public TaskDefinition postTaskDefinitionCopy(
+			long taskDefinitionId, DTOConverterContext dtoConverterContext)
 		throws Exception;
 
 }

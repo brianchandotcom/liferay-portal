@@ -16,6 +16,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -26,7 +27,6 @@ import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.D
 import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.ProjectSelectionFDSFilter;
 import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.StateSelectionFDSFilter;
 import com.liferay.site.cmp.site.initializer.internal.util.ActionUtil;
-import com.liferay.site.cmp.site.initializer.internal.util.TasksSectionUtil;
 
 import jakarta.portlet.ActionRequest;
 
@@ -55,8 +55,33 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 	}
 
 	public String getAPIURL() {
-		return TasksSectionUtil.getSearchURL(_assetEntry, objectDefinition) +
-			"&nestedFields=cmpProjectToCMPTasks,embedded";
+		StringBundler sb = new StringBundler(11);
+
+		sb.append("/o/search/v1.0/search?emptySearch=true");
+
+		if (_assetEntry == null) {
+			sb.append("&entryClassNames=");
+			sb.append(HtmlUtil.escapeURL(objectDefinition.getClassName()));
+			sb.append(StringPool.COMMA);
+			sb.append(KaleoTaskInstanceToken.class.getName());
+		}
+
+		sb.append("&filter=(objectDefinitionId eq ");
+		sb.append(objectDefinition.getObjectDefinitionId());
+
+		if (_assetEntry != null) {
+			sb.append(" and scopeGroupId eq ");
+			sb.append(_assetEntry.getGroupId());
+		}
+		else {
+			sb.append(" or keywords/any(k:startswith(k, '");
+			sb.append(objectDefinition.getExternalReferenceCode());
+			sb.append("'))");
+		}
+
+		sb.append(")&nestedFields=cmpProjectToCMPTasks,embedded");
+
+		return sb.toString();
 	}
 
 	public CreationMenu getCreationMenu() {
@@ -197,9 +222,17 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 		return fdsFilters;
 	}
 
-	public Map<String, Object> getSearchURLProperties() {
-		return TasksSectionUtil.getSearchURLProperties(
-			_assetEntry, objectDefinition);
+	public Map<String, Object> getTasksQuickFiltersProperties() {
+		return HashMapBuilder.<String, Object>put(
+			"projectId",
+			() -> {
+				if (_assetEntry == null) {
+					return null;
+				}
+
+				return _assetEntry.getClassPK();
+			}
+		).build();
 	}
 
 	private final AssetEntry _assetEntry;

@@ -759,7 +759,10 @@ definition {
 		}
 
 		task ("Assert that the global category is present when opening the select modal frame") {
-			Click(locator1 = "Button#SELECT");
+			Click(
+				key_elementName = "Hide Contents in a Category",
+				key_fieldLabel = "Asset Category External Reference Codes",
+				locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD_SELECT_BUTTON");
 
 			SelectFrameTop();
 
@@ -1049,8 +1052,6 @@ definition {
 
 		Blueprints.createBlueprint(title = "Boost Custom Object Blueprint");
 
-		Navigator.gotoNavNested(navNested = "Query Settings");
-
 		Check.checkNotVisible(
 			locator1 = "Radio#ANY",
 			radioLabel = "Selected Types");
@@ -1062,8 +1063,6 @@ definition {
 			locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_CHECKBOX");
 
 		Click(locator1 = "Modal#CLOSE_BUTTON");
-
-		Navigator.gotoNavNested(navNested = "Query Elements");
 
 		Blueprints.addElement(element = "Boost Asset Type");
 
@@ -1158,8 +1157,6 @@ definition {
 
 		Blueprints.addElement(element = "Boost Proximity");
 
-		Navigator.gotoNavNested(navNested = "Query Settings");
-
 		Check.checkNotVisible(
 			locator1 = "Radio#ANY",
 			radioLabel = "Selected Types");
@@ -1171,6 +1168,8 @@ definition {
 			locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_CHECKBOX");
 
 		Button.clickDone();
+
+		Button.click(button = "Search Framework Indexer Clauses");
 
 		Uncheck.uncheckToggleSwitch(locator1 = "Blueprints#BLUEPRINTS_SEARCH_FRAMEWORK_INDEXER_CLAUSES_ON_OFF_TOGGLE");
 
@@ -1191,13 +1190,13 @@ definition {
 
 		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
-		AssertElementPresent(locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENTS_EMPTY");
-
-		Navigator.gotoNavNested(navNested = "Query Settings");
+		WaitForElementPresent(locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENTS_EMPTY");
 
 		AssertNotChecked.assertNotCheckedNotVisible(
 			locator1 = "Radio#ANY",
 			radioLabel = "Selected Types");
+
+		Button.click(button = "Search Framework Indexer Clauses");
 
 		AssertChecked.assertCheckedNotVisible(locator1 = "Blueprints#BLUEPRINTS_SEARCH_FRAMEWORK_INDEXER_CLAUSES_ON_OFF_TOGGLE");
 
@@ -1226,7 +1225,7 @@ definition {
 
 		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
-		AssertElementPresent(locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENTS_EMPTY");
+		WaitForElementPresent(locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENTS_EMPTY");
 	}
 
 	@priority = 3
@@ -1769,8 +1768,6 @@ definition {
 
 		Blueprints.addElement(element = "Boost Tags Match");
 
-		Navigator.gotoNavNested(navNested = "Query Settings");
-
 		Check.checkNotVisible(
 			locator1 = "Radio#ANY",
 			radioLabel = "Selected Types");
@@ -1783,7 +1780,11 @@ definition {
 
 		Button.clickDone();
 
+		Button.click(button = "Search Framework Indexer Clauses");
+
 		Uncheck.uncheckToggleSwitch(locator1 = "Blueprints#BLUEPRINTS_SEARCH_FRAMEWORK_INDEXER_CLAUSES_ON_OFF_TOGGLE");
+
+		Button.click(button = "Search Framework Query Contributors");
 
 		Check.checkNotVisible(
 			locator1 = "Radio#ANY",
@@ -1834,13 +1835,15 @@ definition {
 			key_element = "Boost Tags Match",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT");
 
-		Navigator.gotoNavNested(navNested = "Query Settings");
-
 		AssertElementPresent(
 			key_assetType = "Blogs Entry",
 			locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_SELECTED");
 
+		Button.click(button = "Search Framework Indexer Clauses");
+
 		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Blueprints#BLUEPRINTS_SEARCH_FRAMEWORK_INDEXER_CLAUSES_ON_OFF_TOGGLE");
+
+		Button.click(button = "Search Framework Query Contributors");
 
 		Button.click(button = "Customize Contributors");
 
@@ -1977,21 +1980,9 @@ definition {
 
 		AssertNotVisible(locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_HEADER");
 
-		Navigator.gotoNavNested(navNested = "Query Settings");
-
-		Navigator.gotoNavNested(navNested = "Query Elements");
-
-		AssertNotVisible(locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_HEADER");
-
 		Click(
 			ariaLabel = "Add Query Element",
 			locator1 = "Button#ANY_WITH_ARIA_LABEL");
-
-		AssertVisible(locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_HEADER");
-
-		Navigator.gotoNavNested(navNested = "Query Settings");
-
-		Navigator.gotoNavNested(navNested = "Query Elements");
 
 		AssertVisible(locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_HEADER");
 	}
@@ -2102,7 +2093,7 @@ definition {
 
 		Blueprints.createBlueprint(title = "Test Blueprint");
 
-		Navigator.gotoNavNested(navNested = "Query Settings");
+		Button.click(button = "Search Framework Indexer Clauses");
 
 		AssertChecked.assertCheckedNotVisible(locator1 = "Blueprints#BLUEPRINTS_SEARCH_FRAMEWORK_INDEXER_CLAUSES_ON_OFF_TOGGLE");
 
@@ -2112,7 +2103,7 @@ definition {
 
 		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
-		Navigator.gotoNavNested(navNested = "Query Settings");
+		Button.click(button = "Search Framework Indexer Clauses");
 
 		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Blueprints#BLUEPRINTS_SEARCH_FRAMEWORK_INDEXER_CLAUSES_ON_OFF_TOGGLE");
 
@@ -2122,7 +2113,7 @@ definition {
 
 		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
-		Navigator.gotoNavNested(navNested = "Query Settings");
+		Button.click(button = "Search Framework Indexer Clauses");
 
 		AssertChecked.assertCheckedNotVisible(locator1 = "Blueprints#BLUEPRINTS_SEARCH_FRAMEWORK_INDEXER_CLAUSES_ON_OFF_TOGGLE");
 	}
@@ -2704,8 +2695,6 @@ definition {
 
 		Blueprints.createBlueprint(title = "Test Blueprint");
 
-		Navigator.gotoNavNested(navNested = "Query Settings");
-
 		Check.checkNotVisible(
 			locator1 = "Radio#ANY",
 			radioLabel = "Selected Types");
@@ -2721,8 +2710,6 @@ definition {
 		PortletEntry.save();
 
 		Blueprints.gotoBlueprint(title = "Test Blueprint");
-
-		Navigator.gotoNavNested(navNested = "Query Settings");
 
 		AssertElementPresent(
 			key_assetType = "Web Content Article",
@@ -3512,7 +3499,9 @@ definition {
 
 		Blueprints.createBlueprint(title = "Test Blueprint");
 
-		Navigator.gotoNavNested(navNested = "Query Settings");
+		Alert.closeMessage(messageType = "SUCCESS");
+
+		Button.click(button = "Search Framework Query Contributors");
 
 		Check.checkNotVisible(
 			locator1 = "Radio#ANY",
@@ -3713,7 +3702,9 @@ definition {
 
 		Blueprints.createBlueprint(title = "Test Blueprint");
 
-		Navigator.gotoNavNested(navNested = "Query Settings");
+		Alert.closeMessage(messageType = "SUCCESS");
+
+		Button.click(button = "Search Framework Query Contributors");
 
 		AssertElementNotPresent(
 			key_text = "Customize Contributors",
@@ -3739,7 +3730,7 @@ definition {
 
 		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
-		Navigator.gotoNavNested(navNested = "Query Settings");
+		Button.click(button = "Search Framework Query Contributors");
 
 		AssertChecked.assertCheckedNotVisible(
 			locator1 = "Radio#ANY",
@@ -3759,7 +3750,7 @@ definition {
 
 		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
-		Navigator.gotoNavNested(navNested = "Query Settings");
+		Button.click(button = "Search Framework Query Contributors");
 
 		Check.checkNotVisible(
 			locator1 = "Radio#ANY",
@@ -3777,7 +3768,7 @@ definition {
 
 		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
-		Navigator.gotoNavNested(navNested = "Query Settings");
+		Button.click(button = "Search Framework Query Contributors");
 
 		Button.click(button = "Customize Contributors");
 
@@ -3859,8 +3850,6 @@ definition {
 
 		Blueprints.addElement(element = "Boost Tags Match");
 
-		Navigator.gotoNavNested(navNested = "Query Settings");
-
 		Check.checkNotVisible(
 			locator1 = "Radio#ANY",
 			radioLabel = "Selected Types");
@@ -3873,7 +3862,11 @@ definition {
 
 		Button.clickDone();
 
+		Button.click(button = "Search Framework Indexer Clauses");
+
 		Uncheck.uncheckToggleSwitch(locator1 = "Blueprints#BLUEPRINTS_SEARCH_FRAMEWORK_INDEXER_CLAUSES_ON_OFF_TOGGLE");
+
+		Button.click(button = "Search Framework Query Contributors");
 
 		Check.checkNotVisible(
 			locator1 = "Radio#ANY",
@@ -3906,13 +3899,15 @@ definition {
 			key_element = "Boost Tags Match",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT");
 
-		Navigator.gotoNavNested(navNested = "Query Settings");
-
 		AssertElementPresent(
 			key_assetType = "Document",
 			locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_SELECTED");
 
+		Button.click(button = "Search Framework Indexer Clauses");
+
 		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Blueprints#BLUEPRINTS_SEARCH_FRAMEWORK_INDEXER_CLAUSES_ON_OFF_TOGGLE");
+
+		Button.click(button = "Search Framework Query Contributors");
 
 		Button.click(button = "Customize Contributors");
 
@@ -5226,12 +5221,10 @@ definition {
 	test ViewSelectedAssetTypesUI {
 		property custom.properties = "feature.flag.LPD-35013=true";
 
-		task ("Create a test blueprint and navigate to the 'Query Settings' tab") {
+		task ("Create a test blueprint") {
 			Blueprints.openBlueprintsAdmin();
 
 			Blueprints.createBlueprint(title = "Test Blueprint");
-
-			Navigator.gotoNavNested(navNested = "Query Settings");
 		}
 
 		task ("Open the 'Select Types' modal") {
@@ -5302,12 +5295,10 @@ definition {
 			Click(locator1 = "Modal#CLOSE_BUTTON");
 		}
 
-		task ("Save the blueprint, open it again, and navigate back to the 'Query Settings' tab") {
+		task ("Save the blueprint and open it again") {
 			PortletEntry.save();
 
 			Blueprints.gotoBlueprint(title = "Test Blueprint");
-
-			Navigator.gotoNavNested(navNested = "Query Settings");
 		}
 
 		task ("Assert that at least one asset type is selected on the main page") {
@@ -5365,7 +5356,7 @@ definition {
 
 		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
-		AssertElementPresent(locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENTS_EMPTY");
+		WaitForElementPresent(locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENTS_EMPTY");
 
 		Blueprints.addElement(element = "Boost Tags Match");
 
@@ -5391,7 +5382,7 @@ definition {
 
 		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
-		AssertElementPresent(locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENTS_EMPTY");
+		WaitForElementPresent(locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENTS_EMPTY");
 	}
 
 	@priority = 3

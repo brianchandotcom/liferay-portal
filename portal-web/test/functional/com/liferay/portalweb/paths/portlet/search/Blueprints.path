@@ -111,6 +111,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD_SELECT_BUTTON</td>
+	<td>//div[contains(@id,'querySXPElement')][./ul[contains(.,'${key_elementName}')]]//li[contains(@class,'list-group-item')][.//label[contains(.,'${key_fieldLabel}')]]//button[contains(.,"Select")]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BLUEPRINTS_ADDED_ELEMENT_NTH_ELEMENT</td>
 	<td>xpath=(//div[contains(@id,'querySXPElement')])[${key_index}]</td>
 	<td></td>

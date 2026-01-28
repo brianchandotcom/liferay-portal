@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.category.property.service.AssetCategoryPropertyLocalService;
 import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalService;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
@@ -30,11 +31,13 @@ import com.liferay.headless.admin.taxonomy.client.pagination.Page;
 import com.liferay.headless.admin.taxonomy.client.pagination.Pagination;
 import com.liferay.headless.admin.taxonomy.client.problem.Problem;
 import com.liferay.headless.admin.taxonomy.client.resource.v1_0.TaxonomyCategoryResource;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -522,6 +525,16 @@ public class TaxonomyCategoryResourceTest
 		_scopeType = Scope.Type.ASSET_LIBRARY;
 
 		super.testPutAssetLibraryTaxonomyCategoryByExternalReferenceCode();
+	}
+
+	@Override
+	@Test
+	public void testPutSiteTaxonomyCategoryByExternalReferenceCode()
+		throws Exception {
+
+		super.testPutSiteTaxonomyCategoryByExternalReferenceCode();
+
+		_testPutSiteTaxonomyCategoryByExternalReferenceCodeUpdatesParentToDefault();
 	}
 
 	@Override
@@ -1717,6 +1730,45 @@ public class TaxonomyCategoryResourceTest
 		_testPostTaxonomyCategoryBatch(
 			createStrategy, parameter, parameterValue, parentTaxonomyCategory,
 			parentTaxonomyVocabulary, taxonomyCategory);
+	}
+
+	private void _testPutSiteTaxonomyCategoryByExternalReferenceCodeUpdatesParentToDefault()
+		throws Exception {
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			AssetCategory assetCategory =
+				_assetCategoryLocalService.getOrAddEmptyCategory(
+					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+					testGroup.getGroupId());
+
+			Assert.assertEquals(
+				AssetCategoryConstants.EMPTY_PARENT_CATEGORY_ID,
+				assetCategory.getParentCategoryId());
+
+			TaxonomyCategory getTaxonomyCategory =
+				taxonomyCategoryResource.getTaxonomyCategory(
+					String.valueOf(assetCategory.getCategoryId()));
+
+			Assert.assertNull(getTaxonomyCategory.getParentTaxonomyCategory());
+
+			TaxonomyCategory putTaxonomyCategory =
+				taxonomyCategoryResource.
+					putSiteTaxonomyCategoryByExternalReferenceCode(
+						testGroup.getGroupId(),
+						assetCategory.getExternalReferenceCode(),
+						getTaxonomyCategory);
+
+			Assert.assertNull(putTaxonomyCategory.getParentTaxonomyCategory());
+
+			assetCategory = _assetCategoryLocalService.getAssetCategory(
+				assetCategory.getCategoryId());
+
+			Assert.assertEquals(
+				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+				assetCategory.getParentCategoryId());
+		}
 	}
 
 	private void _waitForFinish(JSONObject jsonObject) throws Exception {

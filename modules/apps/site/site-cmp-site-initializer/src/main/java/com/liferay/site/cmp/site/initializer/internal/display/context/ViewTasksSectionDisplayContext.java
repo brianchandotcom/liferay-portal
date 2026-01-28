@@ -134,7 +134,7 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 		return fdsFilters;
 	}
 
-	public Map<String, Object> getTaskQuickFiltersProps() {
+	public Map<String, Object> getSearchURLProperties() {
 		return TasksSectionUtil.getSearchURLProperties(
 			_assetEntry, objectDefinition);
 	}

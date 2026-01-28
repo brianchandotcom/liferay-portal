@@ -52,16 +52,27 @@ public class TasksSectionUtilTest {
 	}
 
 	@Test
-	public void testGetProps() {
-		Map<String, Object> props = TasksSectionUtil.getProps(
-			_groupedModel, _objectDefinition);
+	public void testGetSearchURL() {
+		Assert.assertEquals(
+			_getBaseSearchURL(),
+			TasksSectionUtil.getSearchURL(null, _objectDefinition));
+		Assert.assertEquals(
+			_getSearchURL(),
+			TasksSectionUtil.getSearchURL(_groupedModel, _objectDefinition));
+	}
+
+	@Test
+	public void testGetSearchURLProperties() {
+		Map<String, Object> properties =
+			TasksSectionUtil.getSearchURLProperties(
+				_groupedModel, _objectDefinition);
 
 		Assert.assertEquals(
 			_getSearchURL(" and cmpState eq 'blocked'"),
-			GetterUtil.getString(props.get("blockedCountURL")));
+			GetterUtil.getString(properties.get("blockedCountURL")));
 		Assert.assertEquals(
 			_getSearchURL(" and cmpState eq 'inProgress'"),
-			GetterUtil.getString(props.get("inProgressCountURL")));
+			GetterUtil.getString(properties.get("inProgressCountURL")));
 		Assert.assertEquals(
 			_getSearchURL(
 				StringBundler.concat(
@@ -71,19 +82,10 @@ public class TasksSectionUtilTest {
 						ZoneId.systemDefault()
 					).toInstant(),
 					" and cmpState ne 'done'")),
-			GetterUtil.getString(props.get("overdueCountURL")));
-		Assert.assertEquals(
-			_getSearchURL(), GetterUtil.getString(props.get("totalCountURL")));
-	}
-
-	@Test
-	public void testGetSearchURL() {
-		Assert.assertEquals(
-			_getBaseSearchURL(),
-			TasksSectionUtil.getSearchURL(null, _objectDefinition));
+			GetterUtil.getString(properties.get("overdueCountURL")));
 		Assert.assertEquals(
 			_getSearchURL(),
-			TasksSectionUtil.getSearchURL(_groupedModel, _objectDefinition));
+			GetterUtil.getString(properties.get("totalCountURL")));
 	}
 
 	private String _getBaseSearchURL() {

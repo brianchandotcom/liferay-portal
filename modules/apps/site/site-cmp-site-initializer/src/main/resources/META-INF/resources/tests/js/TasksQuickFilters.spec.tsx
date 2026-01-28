@@ -8,7 +8,7 @@ import {act, cleanup, render, screen} from '@testing-library/react';
 import {fetch} from 'frontend-js-web';
 import React from 'react';
 
-import TasksQuickFilters from '../../../../../js/main_view/projects/components/TasksQuickFilters';
+import TasksQuickFilters from '../../js/components/task/TasksQuickFilters';
 
 describe('TasksQuickFilters', () => {
 	afterEach(() => {

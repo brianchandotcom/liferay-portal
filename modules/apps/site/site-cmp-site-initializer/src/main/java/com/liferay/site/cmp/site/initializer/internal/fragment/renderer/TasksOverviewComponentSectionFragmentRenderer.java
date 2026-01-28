@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Kevin Tan
  */
 @Component(service = FragmentRenderer.class)
-public class TasksOverviewSectionFragmentRenderer
+public class TasksOverviewComponentSectionFragmentRenderer
 	extends BaseComponentSectionFragmentRenderer {
 
 	@Override

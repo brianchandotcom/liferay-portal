@@ -8,7 +8,7 @@ import {act, cleanup, render, screen} from '@testing-library/react';
 import {fetch} from 'frontend-js-web';
 import React from 'react';
 
-import TasksOverview from '../../../../../js/main_view/projects/components/TasksOverview';
+import TasksOverview from '../../js/components/task/TasksOverview';
 
 describe('TasksOverview', () => {
 	afterEach(cleanup);
@@ -40,9 +40,9 @@ describe('TasksOverview', () => {
 			render(
 				<TasksOverview
 					blockedCountURL="/blocked"
-					cmpProjectId="123"
 					inProgressCountURL="/in-progress"
 					overdueCountURL="/overdue"
+					projectId="123"
 					redirect="/redirect-url"
 					totalCountURL="/total"
 				/>
@@ -89,9 +89,9 @@ describe('TasksOverview', () => {
 			render(
 				<TasksOverview
 					blockedCountURL="/blocked"
-					cmpProjectId="123"
 					inProgressCountURL="/in-progress"
 					overdueCountURL="/overdue"
+					projectId="123"
 					redirect="/redirect-url"
 					totalCountURL="/total"
 				/>

@@ -264,7 +264,7 @@
 															{
 																"definition": {
 																	"fragment": {
-																		"key": "com.liferay.site.cmp.site.initializer.internal.fragment.renderer.TasksOverviewSectionFragmentRenderer"
+																		"key": "com.liferay.site.cmp.site.initializer.internal.fragment.renderer.TasksOverviewComponentSectionFragmentRenderer"
 																	},
 																	"fragmentConfig": {
 																	},
@@ -272,7 +272,6 @@
 																	],
 																	"indexed": true
 																},
-																"id": "23e9b671-b5cd-942e-d158-78450d03f0a4",
 																"type": "Fragment"
 															}
 														],

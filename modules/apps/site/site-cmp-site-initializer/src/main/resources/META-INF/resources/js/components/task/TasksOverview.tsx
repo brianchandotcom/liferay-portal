@@ -66,16 +66,16 @@ function StatisticButton({
 
 export default function TasksOverview({
 	blockedCountURL,
-	cmpProjectId,
 	inProgressCountURL,
 	overdueCountURL,
+	projectId,
 	redirect,
 	totalCountURL,
 }: {
 	blockedCountURL: string;
-	cmpProjectId: string;
 	inProgressCountURL: string;
 	overdueCountURL: string;
+	projectId: string;
 	redirect: string;
 	totalCountURL: string;
 }) {
@@ -130,7 +130,7 @@ export default function TasksOverview({
 			fetchJSON(blockedCountURL),
 			fetchJSON(inProgressCountURL),
 			fetchJSON(overdueCountURL),
-			fetchJSON(`/o/cmp/projects/${cmpProjectId}`),
+			fetchJSON(`/o/cmp/projects/${projectId}`),
 			fetchJSON(totalCountURL),
 		]);
 
@@ -143,9 +143,9 @@ export default function TasksOverview({
 		setLoading(false);
 	}, [
 		blockedCountURL,
-		cmpProjectId,
 		inProgressCountURL,
 		overdueCountURL,
+		projectId,
 		totalCountURL,
 	]);
 

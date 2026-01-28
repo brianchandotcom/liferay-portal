@@ -287,7 +287,9 @@ public class CounterDataCleanupPreupgradeProcess
 
 	private void _deleteCounter(String counterName) throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"delete from Counter where name = '" + counterName + "'")) {
+				"delete from Counter where name = ?")) {
+
+			preparedStatement.setString(1, counterName);
 
 			preparedStatement.executeUpdate();
 

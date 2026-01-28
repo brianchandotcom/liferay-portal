@@ -251,6 +251,44 @@ public class LayoutSEOLinkManagerTest {
 		}
 	}
 
+	@Test
+	@TestInfo("LPD-77705")
+	public void testGetLocalizedLayoutSEOLinksWithEmptyCanonicalURLMap()
+		throws Exception {
+
+		_setUpForTestingLayoutLocalizedLayoutSEOLinks();
+
+		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
+			TestPropsValues.getUserId(), _layout.getGroupId(), false,
+			_layout.getLayoutId(), true, Collections.emptyMap(),
+			ServiceContextTestUtil.getServiceContext(
+				_layout.getGroupId(), TestPropsValues.getUserId()));
+
+		Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
+
+		String languageTag = siteDefaultLocale.toLanguageTag();
+
+		for (LayoutSEOLink layoutSEOLink :
+				_layoutSEOLinkManager.getLocalizedLayoutSEOLinks(
+					_layout, siteDefaultLocale, _canonicalURL,
+					_expectedFriendlyURLs.keySet())) {
+
+			String hrefLang = layoutSEOLink.getHrefLang();
+
+			if (Validator.isNull(hrefLang) || hrefLang.equals(languageTag) ||
+				hrefLang.equals("x-default")) {
+
+				Assert.assertEquals(_canonicalURL, layoutSEOLink.getHref());
+			}
+			else {
+				Assert.assertEquals(
+					_getExpectedAlternateURL(
+						LocaleUtil.fromLanguageId(hrefLang), StringPool.SLASH),
+					layoutSEOLink.getHref());
+			}
+		}
+	}
+
 	private void _assertAlternateLayoutSEOLink(
 		Locale locale, List<LayoutSEOLink> layoutSEOLinks, String urlPrefix) {
 

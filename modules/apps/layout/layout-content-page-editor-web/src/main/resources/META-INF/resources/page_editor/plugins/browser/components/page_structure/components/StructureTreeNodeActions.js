@@ -49,6 +49,7 @@ import isCuttable from '../../../../../app/utils/isCuttable';
 import isInputFragment from '../../../../../app/utils/isInputFragment';
 import {isMovementValid} from '../../../../../app/utils/isMovementValid';
 import isStepper from '../../../../../app/utils/isStepper';
+import openSwapFragmentModal from '../../../../../app/utils/openSwapFragmentModal';
 import removeFormStep from '../../../../../app/utils/removeFormStep';
 import toMovementItem from '../../../../../app/utils/toMovementItem';
 import updateItemStyle from '../../../../../app/utils/updateItemStyle';
@@ -238,6 +239,19 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 				label: isHidden
 					? Liferay.Language.get('show-fragment')
 					: Liferay.Language.get('hide-fragment'),
+			});
+		}
+
+		if (isInputFragment(item, fragmentEntryLinks)) {
+			items.push({
+				action: () =>
+					openSwapFragmentModal({
+						dispatch,
+						fragmentEntryLinks,
+						item,
+					}),
+				icon: 'change',
+				label: Liferay.Language.get('swap-fragment'),
 			});
 		}
 

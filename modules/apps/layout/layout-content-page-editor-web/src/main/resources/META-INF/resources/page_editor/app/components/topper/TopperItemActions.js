@@ -42,6 +42,7 @@ import isCuttable from '../../utils/isCuttable';
 import isInputFragment from '../../utils/isInputFragment';
 import {isMovementValid} from '../../utils/isMovementValid';
 import isStepper from '../../utils/isStepper';
+import openSwapFragmentModal from '../../utils/openSwapFragmentModal';
 import toMovementItem from '../../utils/toMovementItem';
 import useHasRequiredChild from '../../utils/useHasRequiredChild';
 import SaveFragmentCompositionModal from '../SaveFragmentCompositionModal';
@@ -138,6 +139,20 @@ export default function TopperItemActions({disabled, item}) {
 				group: 0,
 				icon: 'hidden',
 				label: Liferay.Language.get('hide-fragment'),
+			});
+		}
+
+		if (isInputFragment(item, fragmentEntryLinks)) {
+			items.push({
+				action: () =>
+					openSwapFragmentModal({
+						dispatch,
+						fragmentEntryLinks,
+						item,
+					}),
+				group: 0,
+				icon: 'change',
+				label: Liferay.Language.get('swap-fragment'),
 			});
 		}
 

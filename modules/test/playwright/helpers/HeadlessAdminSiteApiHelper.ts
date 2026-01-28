@@ -23,4 +23,13 @@ export class HeadlessAdminSiteApiHelper {
 			{data: page, failOnStatusCode: true}
 		);
 	}
+
+	async getPage(
+		siteExternalReferenceCode: string,
+		pageExternalReferenceCode: string
+	): Promise<any> {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteExternalReferenceCode}/site-pages/${pageExternalReferenceCode}`
+		);
+	}
 }

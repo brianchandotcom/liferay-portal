@@ -694,3 +694,60 @@ test('Staging publish template with smoke', async ({
 	expect(page.getByText(webContent.title, {exact: true})).toBeVisible();
 	expect(page.getByText(webContentContent, {exact: true})).toBeVisible();
 });
+
+test('A page created in staging is published to live', async ({
+	apiHelpers,
+	page,
+	stagingPage,
+}) => {
+	const site = await apiHelpers.headlessSite.createSite({
+		name: 'site-' + getRandomString(),
+	});
+
+	apiHelpers.data.push({id: site.id, type: 'site'});
+
+	await stagingPage.goto(site.name);
+	await stagingPage.enableLocalStaging();
+
+	const company =
+		await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+			'liferay.com'
+		);
+
+	const stagingGroup = await apiHelpers.jsonWebServicesGroup.getGroupByKey(
+		company.companyId,
+		`${site.name}-staging`
+	);
+
+	const layout = await apiHelpers.headlessAdminSite.createPage(
+		stagingGroup.externalReferenceCode,
+		{
+			name_i18n: {en_US: 'My Simple Page'},
+			type: 'WidgetPage',
+		}
+	);
+
+	await page.goto('/web' + stagingGroup.friendlyURL);
+	await page.getByText('Publish to Live').click();
+	await page
+		.frameLocator(`iframe[title="Publish to Live"]`)
+		.getByText('Publish to Live')
+		.click();
+
+	await expect(
+		page
+			.frameLocator(`iframe[title="Publish to Live"]`)
+			.getByText('Successful')
+	).toBeVisible();
+
+	await page.goto('/group' + site.friendlyUrlPath);
+
+	expect(
+		(
+			await apiHelpers.headlessAdminSite.getPage(
+				site.externalReferenceCode,
+				layout.externalReferenceCode
+			)
+		).externalReferenceCode
+	).toBe(layout.externalReferenceCode);
+});

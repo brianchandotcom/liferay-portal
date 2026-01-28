@@ -12,6 +12,8 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../../fixtures/pageManagementSiteTest';
+import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import getFormContainerDefinition from '../main/utils/getFormContainerDefinition';
 import getFragmentDefinition from '../main/utils/getFragmentDefinition';
@@ -90,6 +92,28 @@ test(
 		).toBeVisible();
 
 		await expect(page.getByLabel('Swap Fragment')).not.toBeVisible();
+
+		// Check swap fragment option is visible in topper
+
+		await pageEditorPage.selectFragment(inputId);
+
+		await clickAndExpectToBeVisible({
+			target: page
+				.locator('.dropdown-menu.show')
+				.getByText('Swap Fragment', {exact: true}),
+			trigger: page
+				.locator('.page-editor__topper__item')
+				.getByRole('button', {name: 'Options'}),
+		});
+
+		await clickAndExpectToBeHidden({
+			target: page
+				.locator('.dropdown-menu.show')
+				.getByText('Swap Fragment', {exact: true}),
+			trigger: page
+				.locator('.page-editor__topper__item')
+				.getByRole('button', {name: 'Options'}),
+		});
 
 		// Swap the text input fragment
 

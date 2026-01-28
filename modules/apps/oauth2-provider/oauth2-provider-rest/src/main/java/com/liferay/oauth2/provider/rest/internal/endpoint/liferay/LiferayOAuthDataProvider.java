@@ -361,23 +361,18 @@ public class LiferayOAuthDataProvider
 
 		List<ServerAccessToken> serverAccessTokens = new ArrayList<>();
 
-		if (ListUtil.isNotEmpty(oAuth2Authorizations)) {
-			for (OAuth2Authorization oAuth2Authorization :
-					oAuth2Authorizations) {
-
-				try {
-					serverAccessTokens.add(
-						_populateAccessToken(oAuth2Authorization));
+		for (OAuth2Authorization oAuth2Authorization : oAuth2Authorizations) {
+			try {
+				serverAccessTokens.add(
+					_populateAccessToken(oAuth2Authorization));
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Error when retrieving accessToken", portalException);
 				}
-				catch (PortalException portalException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"Error when retrieving accessToken",
-							portalException);
-					}
 
-					throw new OAuthServiceException(portalException);
-				}
+				throw new OAuthServiceException(portalException);
 			}
 		}
 

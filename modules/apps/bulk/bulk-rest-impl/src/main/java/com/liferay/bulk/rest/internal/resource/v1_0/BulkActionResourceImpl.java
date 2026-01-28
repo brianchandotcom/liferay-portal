@@ -122,8 +122,15 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			Pagination pagination, Sort[] sorts, BulkAction bulkAction)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-17564")) {
+		if (BulkAction.Type.DELETE_OBJECT_ENTRY_BULK_ACTION.equals(
+				bulkAction.getType()) &&
+			!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-69713")) {
+
+			throw new UnsupportedOperationException();
+		}
+		else if (!FeatureFlagManagerUtil.isEnabled(
+					contextCompany.getCompanyId(), "LPD-17564")) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -875,7 +882,9 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 
 	private static final EntityModel _entityModel = new BulkActionEntityModel();
 
-	@Reference(target = "(bulk.selection.action.key=assign.to.depot.object.entry)")
+	@Reference(
+		target = "(bulk.selection.action.key=assign.to.depot.object.entry)"
+	)
 	private BulkSelectionAction<Object>
 		_assignToDepotObjectEntryBulkSelectionAction;
 
@@ -885,7 +894,9 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 	@Reference
 	private BulkSelectionRunner _bulkSelectionRunner;
 
-	@Reference(target = "(bulk.selection.action.key=default.permission.depot.object.entry)")
+	@Reference(
+		target = "(bulk.selection.action.key=default.permission.depot.object.entry)"
+	)
 	private BulkSelectionAction<Object>
 		_defaultPermissionDepotObjectEntryBulkSelectionAction;
 
@@ -899,15 +910,21 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 	@Reference
 	private DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
 
-	@Reference(target = "(bulk.selection.action.key=due.date.depot.object.entry)")
+	@Reference(
+		target = "(bulk.selection.action.key=due.date.depot.object.entry)"
+	)
 	private BulkSelectionAction<Object>
 		_dueDateDepotObjectEntryBulkSelectionAction;
 
-	@Reference(target = "(bulk.selection.action.key=edit.categories.depot.object.entry)")
+	@Reference(
+		target = "(bulk.selection.action.key=edit.categories.depot.object.entry)"
+	)
 	private BulkSelectionAction<Object>
 		_editCategoriesDepotObjectEntryBulkSelectionAction;
 
-	@Reference(target = "(bulk.selection.action.key=edit.tags.depot.object.entry)")
+	@Reference(
+		target = "(bulk.selection.action.key=edit.tags.depot.object.entry)"
+	)
 	private BulkSelectionAction<Object>
 		_editTagsDepotObjectEntryBulkSelectionAction;
 
@@ -952,14 +969,18 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
-	@Reference(target = "(bulk.selection.action.key=permission.depot.object.entry)")
+	@Reference(
+		target = "(bulk.selection.action.key=permission.depot.object.entry)"
+	)
 	private BulkSelectionAction<Object>
 		_permissionDepotObjectEntryBulkSelectionAction;
 
 	@Reference
 	private Portal _portal;
 
-	@Reference(target = "(bulk.selection.action.key=reset.permission.depot.object.entry)")
+	@Reference(
+		target = "(bulk.selection.action.key=reset.permission.depot.object.entry)"
+	)
 	private BulkSelectionAction<Object>
 		_resetPermissionDepotObjectEntryBulkSelectionAction;
 

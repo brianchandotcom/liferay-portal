@@ -48,10 +48,14 @@ type NotificationTemplateType = 'email' | 'userNotification';
 
 type RecipientType = 'role' | 'term' | 'user';
 
+interface UserGroupProps {
+	userGroupName: string;
+}
+
 type Recipient = {
-	bcc: string;
+	bcc: string | UserGroupProps[];
 	bccType: string;
-	cc: string;
+	cc: string | UserGroupProps[];
 	ccType: string;
 	from: string;
 	fromName: LocalizedValue<string>;

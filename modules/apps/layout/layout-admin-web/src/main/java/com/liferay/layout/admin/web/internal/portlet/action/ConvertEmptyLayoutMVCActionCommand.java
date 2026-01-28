@@ -140,42 +140,11 @@ public class ConvertEmptyLayoutMVCActionCommand
 				type, classNameId, classPK, masterLayoutPageTemplateEntryERC,
 				serviceContext);
 
-			String redirect = null;
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			if (!layout.isTypeContent()) {
-				redirect = PortletURLBuilder.createRenderURL(
-					_portal.getLiferayPortletResponse(actionResponse)
-				).setMVCRenderCommandName(
-					"/layout_admin/edit_layout"
-				).setBackURL(
-					_getBackURL(actionRequest)
-				).setParameter(
-					"backURLTitle", layout.getName()
-				).setParameter(
-					"groupId", themeDisplay.getScopeGroupId()
-				).setParameter(
-					"privateLayout", layout.isPrivateLayout()
-				).setParameter(
-					"selPlid", layout.getPlid()
-				).buildString();
-			}
-			else {
-				Layout draftLayout = layout.fetchDraftLayout();
-
-				redirect = HttpComponentsUtil.addParameters(
-					PortalUtil.getLayoutFullURL(draftLayout, themeDisplay),
-					"p_l_back_url", _getBackURL(actionRequest),
-					"p_l_back_url_title",
-					_language.get(themeDisplay.getLocale(), "pages"),
-					"p_l_mode", Constants.EDIT);
-			}
-
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse,
-				JSONUtil.put("redirectURL", redirect));
+				JSONUtil.put(
+					"redirectURL",
+					_getRedirect(actionRequest, actionResponse, layout)));
 		}
 		catch (Exception exception) {
 			LayoutExceptionRequestHandlerUtil.handleException(
@@ -188,6 +157,41 @@ public class ConvertEmptyLayoutMVCActionCommand
 			_portal.getControlPanelPortletURL(
 				actionRequest, LayoutAdminPortletKeys.GROUP_PAGES,
 				PortletRequest.RENDER_PHASE)
+		).buildString();
+	}
+
+	private String _getRedirect(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			Layout layout)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (layout.isTypeContent()) {
+			return HttpComponentsUtil.addParameters(
+				PortalUtil.getLayoutFullURL(
+					layout.fetchDraftLayout(), themeDisplay),
+				"p_l_back_url", _getBackURL(actionRequest),
+				"p_l_back_url_title",
+				_language.get(themeDisplay.getLocale(), "pages"), "p_l_mode",
+				Constants.EDIT);
+		}
+
+		return PortletURLBuilder.createRenderURL(
+			_portal.getLiferayPortletResponse(actionResponse)
+		).setMVCRenderCommandName(
+			"/layout_admin/edit_layout"
+		).setBackURL(
+			_getBackURL(actionRequest)
+		).setParameter(
+			"backURLTitle", layout.getName()
+		).setParameter(
+			"groupId", themeDisplay.getScopeGroupId()
+		).setParameter(
+			"privateLayout", layout.isPrivateLayout()
+		).setParameter(
+			"selPlid", layout.getPlid()
 		).buildString();
 	}
 

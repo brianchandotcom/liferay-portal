@@ -43,6 +43,7 @@ import jakarta.ws.rs.ext.Provider;
 
 import java.security.Principal;
 
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.cxf.jaxrs.utils.ExceptionUtils;
@@ -247,16 +248,19 @@ public class DynamicRegistrationServiceContainerRequestFilter
 			jwtClaims.setClaim("sub", oAuth2Authorization.getUserId());
 			jwtClaims.setClaim(
 				"application_id", oAuth2Authorization.getOAuth2ApplicationId());
-			jwtClaims.setExpiryTime(
-				oAuth2Authorization.getAccessTokenExpirationDate(
-				).getTime());
+
+			Date accessTokenExpirationDate =
+				oAuth2Authorization.getAccessTokenExpirationDate();
+
+			jwtClaims.setExpiryTime(accessTokenExpirationDate.getTime());
 
 			return new JwtToken(jwtClaims);
 		}
 
-		return new JwsJwtCompactConsumer(
-			accessTokenContent
-		).getJwtToken();
+		JwsJwtCompactConsumer jwsJwtCompactConsumer = new JwsJwtCompactConsumer(
+			accessTokenContent);
+
+		return jwsJwtCompactConsumer.getJwtToken();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

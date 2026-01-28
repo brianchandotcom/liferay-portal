@@ -7,6 +7,7 @@ package com.liferay.portal.upgrade.data.cleanup;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -69,7 +70,10 @@ public class LayoutDataCleanupPreupgradeProcess
 	}
 
 	private DataCleanupPreupgradeProcess
-		_getLayoutRelatedDataDataCleanupPreupgradeProcess() {
+			_getLayoutRelatedDataDataCleanupPreupgradeProcess()
+		throws Exception {
+
+		DBInspector dbInspector = new DBInspector(connection);
 
 		return new DataCleanupPreupgradeProcess(
 			new FilterableAllTablesOrphanReferencesDataCleanupPreupgradeProcess(
@@ -109,8 +113,9 @@ public class LayoutDataCleanupPreupgradeProcess
 					ResourceConstants.SCOPE_INDIVIDUAL, " and ",
 					"[$SOURCE_TABLE_ALIAS$].name = '", Layout.class.getName(),
 					"' and [$SOURCE_TABLE_ALIAS$].primKey like '%",
-					PortletConstants.LAYOUT_SEPARATOR, "%' and ",
-					"[$SOURCE_TABLE_ALIAS$].primKeyId = 0"),
+					PortletConstants.LAYOUT_SEPARATOR, "%'",
+					dbInspector.hasColumn("ResourcePermission", "primKeyId") ?
+						" and [$SOURCE_TABLE_ALIAS$].primKeyId = 0" : ""),
 				"primKey", "ResourcePermission", "plid", "Layout"));
 	}
 

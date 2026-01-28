@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -24,8 +24,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class MarketplaceMessageReceiver implements MessageReceiver {
 
-	public MarketplaceMessageReceiver(
-		String topic) {
+	public MarketplaceMessageReceiver(String topic) {
 		_topic = topic;
 	}
 
@@ -37,8 +36,8 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 
 		String messageBody = byteString.toStringUtf8();
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Received message: " + messageBody);
+		if (_log.isInfoEnabled()) {
+			_log.info("Received message: " + messageBody);
 		}
 
 		try {
@@ -49,13 +48,25 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 				new HashMap<String, Object>(pubsubMessage.getAttributesMap()));
 			message.setDestinationName(_topic);
 
+			if (Objects.equals(
+					_topic, MarketplaceConstants.KORONEIKI_ACCOUNT_CREATE)) {
 
-			if (Objects.equals(_topic, MarketplaceConstants.KORONEIKI_ACCOUNT_CREATE)) {
 				// PLACEHOLDER
-			} else if (Objects.equals(_topic, MarketplaceConstants.KORONEIKI_ACCOUNT_UPDATE)) {
+
+			}
+			else if (Objects.equals(
+						_topic,
+						MarketplaceConstants.KORONEIKI_ACCOUNT_UPDATE)) {
+
 				// PLACEHOLDER
-			} else if (Objects.equals(_topic, MarketplaceConstants.KORONEIKI_ENTITLEMENT_CREATE)) {
+
+			}
+			else if (Objects.equals(
+						_topic,
+						MarketplaceConstants.KORONEIKI_ENTITLEMENT_CREATE)) {
+
 				// PLACEHOLDER
+
 			}
 
 			ackReplyConsumer.ack();
@@ -65,8 +76,10 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 			ackReplyConsumer.nack();
 		}
 	}
+
 	private static final Log _log = LogFactory.getLog(
 		MarketplaceMessageReceiver.class);
+
 	private final String _topic;
 
 }

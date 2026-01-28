@@ -16,9 +16,18 @@ public class MarketplaceConstants {
 		"Liferay Analytics Cloud"
 	};
 
+	public static final String KORONEIKI_ACCOUNT_CREATE =
+		"koroneiki.account.create";
+
+	public static final String KORONEIKI_ACCOUNT_UPDATE =
+		"koroneiki.account.update";
+
 	public static final String[] KORONEIKI_DXP_ENTITLEMENTS = {
 		"DXP", "Liferay SaaS", "Liferay Self-Hosted", "Liferay PaaS"
 	};
+
+	public static final String KORONEIKI_ENTITLEMENT_CREATE =
+		"koroneiki.entitlement.update";
 
 	public static final String ORDER_PAYMENT_METHOD_MONEY_ORDER = "money-order";
 
@@ -64,6 +73,11 @@ public class MarketplaceConstants {
 
 	public static final String ORDER_STATUS_PROCESSING_LABEL = "Processing";
 
+	public static final String[] PUBSUB_TOPICS = {
+		KORONEIKI_ACCOUNT_UPDATE, KORONEIKI_ACCOUNT_CREATE,
+		KORONEIKI_ENTITLEMENT_CREATE
+	};
+
 	public static String getOrderPaymentMethodLabel(String paymentMethod) {
 		if (Objects.equals(paymentMethod, ORDER_PAYMENT_METHOD_MONEY_ORDER)) {
 			return ORDER_PAYMENT_METHOD_MONEY_ORDER_LABEL;
@@ -107,17 +121,5 @@ public class MarketplaceConstants {
 
 		return null;
 	}
-
-	public static final String KORONEIKI_ACCOUNT_UPDATE="koroneiki.account.update";
-
-	public static final String KORONEIKI_ACCOUNT_CREATE="koroneiki.account.create";
-
-	public static final String KORONEIKI_ENTITLEMENT_CREATE="koroneiki.entitlement.update";
-
-	public static final String[] PUBSUB_TOPICS = {
-			KORONEIKI_ACCOUNT_UPDATE,
-			KORONEIKI_ACCOUNT_CREATE,
-			KORONEIKI_ENTITLEMENT_CREATE
-	};
 
 }

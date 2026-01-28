@@ -653,11 +653,15 @@ public class CommercePriceListLocalServiceImpl
 				0, 1
 			));
 
-		if (results.isEmpty() || (results.get(0)[0] == null)) {
+		if (results.isEmpty()) {
 			return null;
 		}
 
 		Object[] result = results.get(0);
+
+		if ((result[0] == null) || (result[3] == null)) {
+			return null;
+		}
 
 		long commercePriceListId = (Long)result[0];
 
@@ -672,16 +676,16 @@ public class CommercePriceListLocalServiceImpl
 					commercePriceListId);
 			}
 
-			CommercePriceList actualPriceList =
+			CommercePriceList actualCommercePriceList =
 				commercePriceListLocalService.getCatalogBaseCommercePriceList(
 					groupId);
 
 			CommercePriceEntry commercePriceEntry = null;
 
-			if (actualPriceList != null) {
+			if (actualCommercePriceList != null) {
 				commercePriceEntry =
 					_commercePriceEntryLocalService.fetchCommercePriceEntry(
-						actualPriceList.getCommercePriceListId(),
+						actualCommercePriceList.getCommercePriceListId(),
 						cpInstanceUuid, unitOfMeasureKey, true);
 			}
 
@@ -697,11 +701,11 @@ public class CommercePriceListLocalServiceImpl
 						commercePriceListId);
 				}
 
-				actualPriceList = commercePriceListList.get(0);
+				actualCommercePriceList = commercePriceListList.get(0);
 
 				commercePriceEntry =
 					_commercePriceEntryLocalService.fetchCommercePriceEntry(
-						actualPriceList.getCommercePriceListId(),
+						actualCommercePriceList.getCommercePriceListId(),
 						cpInstanceUuid, unitOfMeasureKey, true);
 			}
 
@@ -723,15 +727,9 @@ public class CommercePriceListLocalServiceImpl
 				}
 			}
 
-			if (result[3] == null) {
-				return null;
-			}
-
-			long cProductId = (Long)result[3];
-
 			CPDefinition cpDefinition =
 				_cpDefinitionLocalService.getCPDefinitionByCProductId(
-					cProductId);
+					(Long)result[3]);
 
 			for (CommercePriceList commercePriceList : commercePriceLists) {
 				if (commercePriceList.getCommercePriceListId() ==

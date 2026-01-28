@@ -24,6 +24,44 @@ export class ObjectDetailsPage {
 		this.viewObjectDefinitionsPage = new ViewObjectDefinitionsPage(page);
 	}
 
+	async changeLanguageLabels(
+		language: string,
+		labelValue: string,
+		pluralLabelValue: string
+	) {
+		const languageRegex = new RegExp(language);
+
+		const labelContainer = this.page.locator('.form-group', {
+			has: this.page.getByLabel('RótuloObrigatório', {exact: true}),
+		});
+
+		const pluralLabelContainer = this.page.locator('.form-group', {
+			has: this.page.getByLabel('Rótulo Plural'),
+		});
+
+		await labelContainer.getByRole('combobox').click();
+
+		await this.page
+			.getByRole('listbox')
+			.getByRole('option', {name: languageRegex})
+			.click();
+
+		await labelContainer
+			.getByPlaceholder('Text to translate...')
+			.fill(labelValue);
+
+		await pluralLabelContainer.getByRole('combobox').click();
+
+		await this.page
+			.getByRole('listbox')
+			.getByRole('option', {name: languageRegex})
+			.click();
+
+		await pluralLabelContainer
+			.getByPlaceholder('Text to translate...')
+			.fill(pluralLabelValue);
+	}
+
 	async goto(objectDefinitionLabel: string) {
 		await this.viewObjectDefinitionsPage.goto();
 

@@ -6,12 +6,16 @@ liferay-customer-etc-spring-boot-oahs:
     name: Liferay Customer Etc Spring Boot OAuth Application Headless Server
     scopes:
         -   Liferay.Headless.Admin.List.Type.everything
+        -   Liferay.Headless.Admin.Taxonomy.everything
         -   Liferay.Headless.Admin.User.everything.read
+        -   Liferay.Headless.Delivery.everything
         -   Liferay.Notification.REST.everything
         -   c_accountsubscription.everything.read
         -   c_businessevent.everything
         -   c_businesseventversion.everything
         -   c_koroneikiaccount.everything.read
+        -   c_notificationsubscription.everything
+        -   c_notificationtarget.everything
         -   c_ticketattachment.everything
     type: oAuthApplicationHeadlessServer
 liferay-customer-etc-spring-boot-oaua:

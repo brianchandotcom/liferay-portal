@@ -130,7 +130,7 @@
 			"label": {
 				"en_US": "Event Status"
 			},
-			"listTypeDefinitionExternalReferenceCode": "C_BUSINESS_EVENT_STATUSES",
+			"listTypeDefinitionExternalReferenceCode": "LT_BUSINESS_EVENT_STATUSES",
 			"localized": false,
 			"name": "eventStatus",
 			"objectFieldSettings": [
@@ -157,7 +157,7 @@
 			"label": {
 				"en_US": "Event Type"
 			},
-			"listTypeDefinitionExternalReferenceCode": "C_BUSINESS_EVENT_TYPES",
+			"listTypeDefinitionExternalReferenceCode": "LT_BUSINESS_EVENT_TYPES",
 			"localized": false,
 			"name": "eventType",
 			"readOnly": "false",

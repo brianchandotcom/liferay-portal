@@ -65,19 +65,11 @@ function StatisticButton({
 }
 
 export default function TasksOverview({
-	blockedCountURL,
-	inProgressCountURL,
-	overdueCountURL,
 	projectId,
 	redirect,
-	totalCountURL,
 }: {
-	blockedCountURL: string;
-	inProgressCountURL: string;
-	overdueCountURL: string;
 	projectId: string;
 	redirect: string;
-	totalCountURL: string;
 }) {
 	const [blockedCount, setBlockedCount] = useState(0);
 	const [completionRate, setCompletionRate] = useState(0);
@@ -120,34 +112,21 @@ export default function TasksOverview({
 		const fetchJSON = (url: string) =>
 			fetch(url).then((response) => response.json());
 
-		const [
-			blockedCountData,
-			inProgressCountData,
-			overdueCountData,
-			projectData,
-			totalCountData,
-		] = await Promise.all([
-			fetchJSON(blockedCountURL),
-			fetchJSON(inProgressCountURL),
-			fetchJSON(overdueCountURL),
+		const [projectData, taskStatisticsData] = await Promise.all([
 			fetchJSON(`/o/cmp/projects/${projectId}`),
-			fetchJSON(totalCountURL),
+			fetchJSON(
+				`/o/headless-cmp/v1.0/projects/${projectId}/task-statistics/`
+			),
 		]);
 
-		setBlockedCount(blockedCountData.totalCount);
+		setBlockedCount(taskStatisticsData.blockedCount);
 		setCompletionRate(projectData.completionRate);
-		setInProgressCount(inProgressCountData.totalCount);
-		setOverdueCount(overdueCountData.totalCount);
-		setTotalCount(totalCountData.totalCount);
+		setInProgressCount(taskStatisticsData.inProgressCount);
+		setOverdueCount(taskStatisticsData.overdueCount);
+		setTotalCount(taskStatisticsData.totalCount);
 
 		setLoading(false);
-	}, [
-		blockedCountURL,
-		inProgressCountURL,
-		overdueCountURL,
-		projectId,
-		totalCountURL,
-	]);
+	}, [projectId]);
 
 	useEffect(() => {
 		fetchCounts();

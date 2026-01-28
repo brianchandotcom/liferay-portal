@@ -600,7 +600,9 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 			for (int j = 0; j < specsJSONArray.length(); j++) {
 				JSONObject specJSONObject = specsJSONArray.getJSONObject(j);
 
-				if (!title.equals(file)) {
+				if (!title.equals(file) &&
+					!JenkinsResultsParserUtil.isNullOrEmpty(title)) {
+
 					specJSONObject.put("subSuite", title);
 				}
 

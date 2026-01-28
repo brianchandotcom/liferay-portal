@@ -7,7 +7,7 @@ export default function createMockFetchAssigneeContext() {
 	const mockFetch = jest.fn();
 
 	mockFetch.mockImplementation((url: string, options?: RequestInit) => {
-		if (url.includes('/o/cmp/assignee-context/')) {
+		if (url.includes('/o/headless-cmp/v1.0/task-assignees/')) {
 			return Promise.resolve({
 				json: () =>
 					Promise.resolve([

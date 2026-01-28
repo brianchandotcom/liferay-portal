@@ -1,0 +1,34 @@
+<%--
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2024-06
+ */
+--%>
+
+<%
+
+address.getListType(null);
+address.setListType(null);
+address.getListTypeId(null);
+address.setListTypeId(null);
+
+emailAddress.getListType(null);
+emailAddress.setListType(null);
+emailAddress.getListTypeId(null);
+emailAddress.setListTypeId(null);
+
+orgLabor.getListType(null);
+orgLabor.setListType(null);
+orgLabor.getListTypeId(null);
+orgLabor.setListTypeId(null);
+
+phone.getListType(null);
+phone.setListType(null);
+phone.getListTypeId(null);
+phone.setListTypeId(null);
+
+website.getListType(null);
+website.setListType(null);
+website.getListTypeId(null);
+website.setListTypeId(null);
+%>

@@ -240,17 +240,19 @@ test(
 		await newStructureBuilderPage.addField('Long Text');
 
 		await expect(async () => {
-			await newStructureBuilderPage.publishButton.click({
-				timeout: 500,
+			const modalPublishButton = newPage.getByRole('button', {
+				name: 'Publish and Propagate',
 			});
 
-			await expect(
-				newPage.locator('.modal-title', {hasText: 'Publish'})
-			).toBeVisible({timeout: 3000});
+			if (!(await modalPublishButton.isVisible({timeout: 1000}))) {
+				await newStructureBuilderPage.publishButton.click({
+					timeout: 500,
+				});
+			}
 
-			await newPage
-				.getByText('Publish and Propagate')
-				.click({timeout: 500});
+			await modalPublishButton.waitFor({timeout: 3000});
+
+			await modalPublishButton.click({timeout: 500});
 
 			await waitForAlert(newPage, 'published', {timeout: 2000});
 		}).toPass();

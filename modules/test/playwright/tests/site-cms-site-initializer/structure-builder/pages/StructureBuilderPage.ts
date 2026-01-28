@@ -92,16 +92,19 @@ export class StructureBuilderPage {
 		}).toPass();
 	}
 
+	getTreeItem(field: Field) {
+		return this.page
+			.locator('.treeview-link', {hasText: field.label})
+			.nth(field.nth || 0);
+	}
+
 	async addField(type: FieldType, parent?: Field) {
 		let trigger: Locator;
 
 		if (parent) {
 			await this.selectFields([parent]);
 
-			const treeItem = this.page
-				.locator('.treeview-item')
-				.getByLabel(parent.label, {exact: true})
-				.nth(parent.nth || 0);
+			const treeItem = this.getTreeItem(parent);
 
 			trigger = treeItem.getByTitle('Add Field');
 		}
@@ -390,11 +393,7 @@ export class StructureBuilderPage {
 		if (fields.length === 1) {
 			const [field] = fields;
 
-			const treeItems = this.page.getByRole('treeitem', {
-				name: field.label,
-			});
-
-			const treeItem = treeItems.nth(field.nth || 0);
+			const treeItem = this.getTreeItem(field);
 
 			await treeItem.waitFor({state: 'visible'});
 
@@ -459,10 +458,7 @@ export class StructureBuilderPage {
 	}
 
 	async expandField(field: Field) {
-		const treeItem = this.page
-			.locator('.treeview-item')
-			.getByLabel(field.label, {exact: true})
-			.nth(field.nth || 0);
+		const treeItem = this.getTreeItem(field);
 
 		await expect(async () => {
 			await treeItem.locator('.component-expander').click({timeout: 500});
@@ -534,11 +530,7 @@ export class StructureBuilderPage {
 
 	async selectFields(fields: Field[]) {
 		for (const [i, field] of fields.entries()) {
-			const treeItem = this.page
-				.getByRole('treeitem', {
-					name: field.label,
-				})
-				.nth(field.nth || 0);
+			const treeItem = this.getTreeItem(field);
 
 			await expect(async () => {
 				await treeItem.click({
@@ -581,7 +573,7 @@ export class StructureBuilderPage {
 	}
 
 	async selectStructure() {
-		const treeItem = this.page.getByRole('treeitem').first();
+		const treeItem = this.page.locator('.treeview-link').first();
 
 		await expect(async () => {
 			await treeItem.click({

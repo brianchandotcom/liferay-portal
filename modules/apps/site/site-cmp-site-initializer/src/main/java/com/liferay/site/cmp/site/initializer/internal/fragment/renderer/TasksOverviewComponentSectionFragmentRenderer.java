@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cmp.site.initializer.internal.util.ActionUtil;
-import com.liferay.site.cmp.site.initializer.internal.util.TasksSectionUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -65,25 +64,24 @@ public class TasksOverviewComponentSectionFragmentRenderer
 
 		ObjectEntry projectObjectEntry = (ObjectEntry)object;
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		ObjectDefinition taskObjectDefinition =
-			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					"L_CMP_TASK", themeDisplay.getCompanyId());
-
 		return HashMapBuilder.<String, Object>put(
 			"projectId", projectObjectEntry.getObjectEntryId()
 		).put(
 			"redirect",
-			ActionUtil.getAddTaskURL(
-				projectObjectEntry.getGroupId(), taskObjectDefinition,
-				projectObjectEntry.getObjectEntryId(), themeDisplay)
-		).putAll(
-			TasksSectionUtil.getSearchURLProperties(
-				projectObjectEntry, taskObjectDefinition)
+			() -> {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				ObjectDefinition taskObjectDefinition =
+					_objectDefinitionLocalService.
+						fetchObjectDefinitionByExternalReferenceCode(
+							"L_CMP_TASK", themeDisplay.getCompanyId());
+
+				return ActionUtil.getAddTaskURL(
+					projectObjectEntry.getGroupId(), taskObjectDefinition,
+					projectObjectEntry.getObjectEntryId(), themeDisplay);
+			}
 		).build();
 	}
 

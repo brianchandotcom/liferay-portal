@@ -1,0 +1,15 @@
+apiDir: ../headless-cmp-api/src/main/java
+apiPackagePath: com.liferay.headless.cmp
+application:
+    baseURI: /headless-cmp
+    className: HeadlessCMPApplication
+    name: Liferay.Headless.CMP
+author: Carolina Barbosa
+changeTrackingEnabled: true
+clientDir: ../headless-cmp-client/src/main/java
+compatibilityVersion: 14
+forcePredictableOperationId: true
+generateBatch: false
+generatePermissions: true
+javaEEPackage: jakarta
+testDir: ../headless-cmp-test/src/testIntegration/java

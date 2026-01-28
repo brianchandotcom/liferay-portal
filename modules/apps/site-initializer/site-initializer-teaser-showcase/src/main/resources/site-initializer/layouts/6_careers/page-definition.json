@@ -522,7 +522,7 @@
 															"fragmentConfig": {
 																"bottomLeft": false,
 																"bottomRight": false,
-																"circleSize": "",
+																"circleSize": "sm",
 																"topLeft": false,
 																"topRight": false
 															},
@@ -652,7 +652,7 @@
 															"fragmentConfig": {
 																"bottomLeft": false,
 																"bottomRight": false,
-																"circleSize": "",
+																"circleSize": "sm",
 																"topLeft": false,
 																"topRight": false
 															},
@@ -782,7 +782,7 @@
 															"fragmentConfig": {
 																"bottomLeft": false,
 																"bottomRight": false,
-																"circleSize": "",
+																"circleSize": "sm",
 																"topLeft": false,
 																"topRight": false
 															},

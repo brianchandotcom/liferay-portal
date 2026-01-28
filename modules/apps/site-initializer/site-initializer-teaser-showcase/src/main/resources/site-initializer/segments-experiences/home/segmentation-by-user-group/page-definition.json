@@ -782,7 +782,7 @@
 																	"fragmentConfig": {
 																		"bottomLeft": true,
 																		"bottomRight": true,
-																		"circleSize": "false",
+																		"circleSize": "sm",
 																		"topLeft": true,
 																		"topRight": true
 																	},
@@ -900,7 +900,7 @@
 																	"fragmentConfig": {
 																		"bottomLeft": true,
 																		"bottomRight": true,
-																		"circleSize": "false",
+																		"circleSize": "sm",
 																		"topLeft": true,
 																		"topRight": true
 																	},
@@ -1018,7 +1018,7 @@
 																	"fragmentConfig": {
 																		"bottomLeft": true,
 																		"bottomRight": true,
-																		"circleSize": "false",
+																		"circleSize": "sm",
 																		"topLeft": true,
 																		"topRight": true
 																	},
@@ -1136,7 +1136,7 @@
 																	"fragmentConfig": {
 																		"bottomLeft": true,
 																		"bottomRight": true,
-																		"circleSize": "false",
+																		"circleSize": "sm",
 																		"topLeft": true,
 																		"topRight": true
 																	},

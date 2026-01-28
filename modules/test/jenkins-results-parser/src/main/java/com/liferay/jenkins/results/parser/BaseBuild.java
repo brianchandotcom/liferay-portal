@@ -1555,21 +1555,6 @@ public abstract class BaseBuild implements Build {
 		return _isDifferent(_status, _previousStatus);
 	}
 
-	public boolean isBuildURLCached() {
-		BuildDatabase buildDatabase = getBuildDatabase();
-
-		Properties properties = buildDatabase.getProperties(
-			CACHED_BUILD_URLS_PROPERTIES_KEY);
-
-		Set<String> cachedBuildURLs = properties.stringPropertyNames();
-
-		if (!cachedBuildURLs.isEmpty()) {
-			return cachedBuildURLs.contains(getBuildURL());
-		}
-
-		return false;
-	}
-
 	@Override
 	public boolean isCompareToUpstream() {
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
@@ -1739,8 +1724,17 @@ public abstract class BaseBuild implements Build {
 		_statusDurations.put(
 			_previousStatus, _statusModifiedTime - previousStatusModifiedTime);
 
-		if (isBuildURLCached()) {
-			return;
+		BuildDatabase buildDatabase = getBuildDatabase();
+
+		Properties properties = buildDatabase.getProperties(
+			CACHED_BUILD_URLS_PROPERTIES_KEY);
+
+		Set<String> cachedBuildURLs = properties.stringPropertyNames();
+
+		if (!cachedBuildURLs.isEmpty()) {
+			if (cachedBuildURLs.contains(getBuildURL())) {
+				return;
+			}
 		}
 
 		if (different && isParentBuildRoot()) {

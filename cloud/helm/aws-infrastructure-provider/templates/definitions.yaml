@@ -82,8 +82,6 @@ spec:
                                     type: boolean
                                 environmentId:
                                     type: string
-                                projectId:
-                                    type: string
                                 overlay:
                                     properties:
                                         region:
@@ -92,6 +90,8 @@ spec:
                                     required:
                                         -   region
                                     type: object
+                                projectId:
+                                    type: string
                                 search:
                                     properties:
                                         engineVersion:

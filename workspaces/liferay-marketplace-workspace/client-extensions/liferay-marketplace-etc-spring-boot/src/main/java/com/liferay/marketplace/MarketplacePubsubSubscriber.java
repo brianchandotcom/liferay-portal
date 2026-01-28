@@ -24,6 +24,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import java.nio.charset.StandardCharsets;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -84,8 +85,7 @@ public class MarketplacePubsubSubscriber {
 				subscriptionAdminSettings);
 		}
 		catch (Exception exception) {
-			_log.error(
-				"Failed to create Admin Client: " + exception.getMessage());
+			_log.error("Failed to create Admin Client", exception);
 
 			throw exception;
 		}
@@ -111,8 +111,8 @@ public class MarketplacePubsubSubscriber {
 				catch (NotFoundException notFoundException) {
 					if (_log.isInfoEnabled()) {
 						_log.info(
-							"Creating a new subscription \n" +
-								notFoundException.getMessage());
+							"Creating a new subscription \n",
+							notFoundException);
 					}
 
 					TopicName topicName = TopicName.ofProjectTopicName(
@@ -166,9 +166,13 @@ public class MarketplacePubsubSubscriber {
 	}
 
 	protected CredentialsProvider getCredentialsProvider() throws IOException {
-		GoogleCredentials googleCredentials = ServiceAccountCredentials.fromStream(
-				new ByteArrayInputStream(_gcpServiceAccountKey.getBytes(StandardCharsets.UTF_8))
-		).createScoped(Collections.singletonList(_SCOPE));
+		GoogleCredentials googleCredentials =
+			ServiceAccountCredentials.fromStream(
+				new ByteArrayInputStream(
+					_gcpServiceAccountKey.getBytes(StandardCharsets.UTF_8))
+			).createScoped(
+				Collections.singletonList(_SCOPE)
+			);
 
 		return FixedCredentialsProvider.create(googleCredentials);
 	}
@@ -179,11 +183,11 @@ public class MarketplacePubsubSubscriber {
 	private static final Log _log = LogFactory.getLog(
 		MarketplacePubsubSubscriber.class);
 
-	@Value("${liferay.marketplace.pubsub.gcp.project.id}")
-	private String _projectId;
-
 	@Value("${liferay.marketplace.pubsub.gcp.service.account.key}")
 	private String _gcpServiceAccountKey;
+
+	@Value("${liferay.marketplace.pubsub.gcp.project.id}")
+	private String _projectId;
 
 	private final List<Subscriber> _subscribers = new ArrayList<>();
 	private SubscriptionAdminClient _subscriptionAdminClient;

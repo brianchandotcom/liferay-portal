@@ -4,26 +4,20 @@
 	</div>
 
 	<ul class="align-content-top d-flex flex-wrap justify-content-center list-unstyled">
-		[@buildOurTeam index=1 numberOfItems=configuration.numberOfItems/]
+		[#list 1..configuration.numberOfItems as index]
+			<li class="dsr-our-team-entry" data-index="${index}">
+				<img alt="" data-lfr-editable-id="entry-image-${index}" data-lfr-editable-type="image" src="[resources:placeholder.png]" />
+
+				<div class="p-3">
+					<div class="text-weight-semi-bold" data-lfr-editable-id="entry-primary-text-${index}" data-lfr-editable-type="rich-text">
+						Name ${index}
+					</div>
+
+					<div class="text-secondary" data-lfr-editable-id="entry-secondary-text-${index}" data-lfr-editable-type="rich-text">
+						Role ${index}
+					</div>
+				</div>
+			</li>
+		[/#list]
 	</ul>
 </div>
-
-[#macro buildOurTeam index numberOfItems]
-	<li class="dsr-our-team-entry" data-index="${index}">
-		<img alt="" data-lfr-editable-id="entry-image-${index}" data-lfr-editable-type="image" src="[resources:placeholder.png]" />
-
-		<div class="p-3">
-			<div class="text-weight-semi-bold" data-lfr-editable-id="entry-primary-text-${index}" data-lfr-editable-type="rich-text">
-				Name ${index}
-			</div>
-
-			<div class="text-secondary" data-lfr-editable-id="entry-secondary-text-${index}" data-lfr-editable-type="rich-text">
-				Role ${index}
-			</div>
-		</div>
-	</li>
-
-	[#if (index < numberOfItems)]
-		[@buildOurTeam index=index+1 numberOfItems=numberOfItems/]
-	[/#if]
-[/#macro]

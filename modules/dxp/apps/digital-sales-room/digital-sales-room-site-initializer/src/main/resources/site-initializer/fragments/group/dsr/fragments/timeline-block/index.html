@@ -8,43 +8,37 @@
 	</div>
 
 	<ul class="list-unstyled mt-4">
-		[@buildTimeline currentStep=configuration.currentStep index=1 numberOfSteps=configuration.numberOfSteps/]
+		[#list 1..configuration.numberOfSteps as index]
+			<li class="align-items-top [#if index <= configuration.currentStep]current-step[/#if] d-flex dsr-timeline-entry p-4" data-index="${index}">
+				<div class="mr-3">
+					[#if index < configuration.currentStep]
+						[@clay["icon"] className="custom-icon mt-1" symbol="check-circle-full"/]
+					[#else]
+						[@clay["icon"] className="custom-icon mt-1" symbol="live"/]
+					[/#if]
+				</div>
+
+				<div class="mr-4">
+					<div class="text-5 text-nowrap text-weight-semi-bold" data-lfr-editable-id="entry-text-${index}" data-lfr-editable-type="rich-text">
+						${index}. Lorem ipsum dolor sit amet
+					</div>
+
+					<div class="text-3 text-nowrap text-secondary" data-lfr-editable-id="entry-secondary-text-${index}" data-lfr-editable-type="rich-text">
+						Estimated time: 1 week
+					</div>
+				</div>
+
+				<div class="dsr-timeline-entry-body flex-grow-1 ml-auto" data-lfr-editable-id="entry-body-text-${index}" data-lfr-editable-type="rich-text">
+					<ul>
+						<li>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc id cursus metus aliquam eleifend mi in nulla. Quam adipiscing vitae proin sagittis nisl rhoncus.
+						</li>
+						<li>
+							Suspendisse faucibus interdum posuere lorem. Nullam ac tortor vitae purus faucibus ornare. Ac felis donec et odio pellentesque diam. Nulla at volutpat diam ut. Posuere urna nec tincidunt praesent semper feugiat nibh.
+						</li>
+					</ul>
+				</div>
+			</li>
+		[/#list]
 	</ul>
 </div>
-
-[#macro buildTimeline currentStep index numberOfSteps]
-	<li class="align-items-top [#if index <= currentStep]current-step[/#if] d-flex dsr-timeline-entry p-4" data-index="${index}">
-		<div class="mr-3">
-			[#if index < currentStep]
-				[@clay["icon"] className="custom-icon mt-1" symbol="check-circle-full"/]
-			[#else]
-				[@clay["icon"] className="custom-icon mt-1" symbol="live"/]
-			[/#if]
-		</div>
-
-		<div class="mr-4">
-			<div class="text-5 text-nowrap text-weight-semi-bold" data-lfr-editable-id="entry-text-${index}" data-lfr-editable-type="rich-text">
-				${index}. Lorem ipsum dolor sit amet
-			</div>
-
-			<div class="text-3 text-nowrap text-secondary" data-lfr-editable-id="entry-secondary-text-${index}" data-lfr-editable-type="rich-text">
-				Estimated time: 1 week
-			</div>
-		</div>
-
-		<div class="flex-grow-1" data-lfr-editable-id="entry-body-text-${index}" data-lfr-editable-type="rich-text">
-			<ul>
-				<li>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc id cursus metus aliquam eleifend mi in nulla. Quam adipiscing vitae proin sagittis nisl rhoncus.
-				</li>
-				<li>
-					Suspendisse faucibus interdum posuere lorem. Nullam ac tortor vitae purus faucibus ornare. Ac felis donec et odio pellentesque diam. Nulla at volutpat diam ut. Posuere urna nec tincidunt praesent semper feugiat nibh.
-				</li>
-			</ul>
-		</div>
-	</li>
-
-	[#if (index < numberOfSteps)]
-		[@buildTimeline currentStep=currentStep index=index+1 numberOfSteps=numberOfSteps/]
-	[/#if]
-[/#macro]

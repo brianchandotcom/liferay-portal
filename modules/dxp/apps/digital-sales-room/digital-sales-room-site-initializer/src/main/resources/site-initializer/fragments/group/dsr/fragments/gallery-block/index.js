@@ -5,7 +5,11 @@
 
 /* eslint-disable no-undef */
 
-if (layoutMode !== 'edit' && !fragmentElement.dataset.dsrGalleryInitialized) {
+if (
+	configuration.numberOfItems > 1 &&
+	!fragmentElement.dataset.dsrGalleryInitialized &&
+	layoutMode !== 'edit'
+) {
 	fragmentElement.dataset.dsrGalleryInitialized = true;
 
 	let dsrGalleryTimeout = null;

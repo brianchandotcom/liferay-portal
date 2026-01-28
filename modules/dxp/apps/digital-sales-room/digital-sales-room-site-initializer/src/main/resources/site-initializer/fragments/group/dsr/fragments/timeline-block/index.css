@@ -34,6 +34,10 @@
 	color: var(--body-color, #1C1C24);
 }
 
+.dsr-timeline-entry .dsr-timeline-entry-body {
+	max-width: 75%;
+}
+
 .dsr-timeline-entry li {
 	list-style-type: disc;
 }

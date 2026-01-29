@@ -17,18 +17,20 @@ export async function createEventSource() {
 		return;
 	}
 
-	return new EventSource(`${AI_HUB_ENDPOINT}/tasks/subscribe`, {
-		fetch: (input, init) =>
-			fetch(input as RequestInfo, {
-				...init,
-				headers: new Headers({
-					'Accept': 'text/event-stream',
-					'Authorization': `Bearer ${token.accessToken}`,
-					'Liferay-AI-Hub-On-Behalf-Of': `Bearer ${token.userToken}`,
+	return new EventSource(
+		`${token.serviceURL}${AI_HUB_ENDPOINT}/tasks/subscribe`,
+		{
+			fetch: (input, init) =>
+				fetch(input as RequestInfo, {
+					...init,
+					headers: new Headers({
+						Accept: 'text/event-stream',
+						Authorization: `Bearer ${token.accessToken}`,
+					}),
 				}),
-			}),
-		withCredentials: true,
-	});
+			withCredentials: true,
+		}
+	);
 }
 
 async function postToken() {
@@ -51,6 +53,10 @@ async function postToken() {
 			throw new Error('Unable to generate user token.');
 		}
 
+		if (!data?.serviceURL) {
+			throw new Error('Unable to find service URL.');
+		}
+
 		return data;
 	}
 	catch (error) {
@@ -69,7 +75,7 @@ export async function postTask(
 		return;
 	}
 
-	await fetch(`${AI_HUB_ENDPOINT}/tasks`, {
+	await fetch(`${token.serviceURL}${AI_HUB_ENDPOINT}/tasks`, {
 		body: JSON.stringify({
 			context: {
 				text: content,

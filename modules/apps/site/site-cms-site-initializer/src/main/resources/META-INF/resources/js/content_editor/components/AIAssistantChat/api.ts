@@ -15,18 +15,20 @@ export async function createEventSource() {
 		return null;
 	}
 
-	return new EventSource(`${AI_HUB_ENDPOINT}/tasks/subscribe`, {
-		fetch: (input, init) =>
-			fetch(input as RequestInfo, {
-				...init,
-				headers: new Headers({
-					'Accept': 'text/event-stream',
-					'Authorization': `Bearer ${token.accessToken}`,
-					'Liferay-AI-Hub-On-Behalf-Of': `Bearer ${token.userToken}`,
+	return new EventSource(
+		`${token.serviceURL}${AI_HUB_ENDPOINT}/chats/subscribe`,
+		{
+			fetch: (input, init) =>
+				fetch(input as RequestInfo, {
+					...init,
+					headers: new Headers({
+						Accept: 'text/event-stream',
+						Authorization: `Bearer ${token.accessToken}`,
+					}),
 				}),
-			}),
-		withCredentials: true,
-	});
+			withCredentials: true,
+		}
+	);
 }
 
 async function postToken() {
@@ -49,6 +51,10 @@ async function postToken() {
 			throw new Error('Unable to generate user token.');
 		}
 
+		if (!data?.serviceURL) {
+			throw new Error('Unable to find service URL.');
+		}
+
 		return data;
 	}
 	catch (error) {
@@ -69,7 +75,7 @@ export async function postChatByExternalReferenceCodeMessage(
 	}
 
 	return await fetch(
-		`${AI_HUB_ENDPOINT}/chats/by-external-reference-code/${eventSourceReference}/messages`,
+		`${token.serviceURL}${AI_HUB_ENDPOINT}/chats/by-external-reference-code/${eventSourceReference}/messages`,
 		{
 			body: JSON.stringify({
 				context: {

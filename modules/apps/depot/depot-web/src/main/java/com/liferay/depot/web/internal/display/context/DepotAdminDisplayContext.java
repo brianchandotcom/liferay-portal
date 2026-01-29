@@ -10,12 +10,14 @@ import com.liferay.depot.constants.DepotPortletKeys;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.search.DepotEntrySearch;
 import com.liferay.depot.service.DepotEntryGroupRelServiceUtil;
+import com.liferay.depot.service.DepotEntryServiceUtil;
 import com.liferay.depot.web.internal.frontend.taglib.clay.servlet.taglib.DepotEntryVerticalCard;
 import com.liferay.depot.web.internal.servlet.taglib.util.DepotActionDropdownItemsProvider;
 import com.liferay.depot.web.internal.util.DepotEntryAdminSearchProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
@@ -23,6 +25,8 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.staging.StagingGroupHelper;
+import com.liferay.staging.StagingGroupHelperUtil;
 
 import jakarta.portlet.PortletRequest;
 import jakarta.portlet.PortletResponse;
@@ -62,6 +66,38 @@ public class DepotAdminDisplayContext {
 
 	public String getDefaultDisplayStyle() {
 		return "icon";
+	}
+
+	public DepotEntry getDepotEntry(DepotEntry depotEntry)
+		throws PortalException {
+
+		Group group = depotEntry.getGroup();
+
+		StagingGroupHelper stagingGroupHelper =
+			StagingGroupHelperUtil.getStagingGroupHelper();
+
+		if (stagingGroupHelper.isLocalStagingGroup(group) ||
+			stagingGroupHelper.isRemoteStagingGroup(group)) {
+
+			return depotEntry;
+		}
+
+		Group localStagingGroup = stagingGroupHelper.fetchLocalStagingGroup(
+			group);
+
+		if (localStagingGroup == null) {
+			return depotEntry;
+		}
+
+		DepotEntry stagingGroupDepotEntry =
+			DepotEntryServiceUtil.fetchGroupDepotEntry(
+				localStagingGroup.getGroupId());
+
+		if (stagingGroupDepotEntry == null) {
+			return depotEntry;
+		}
+
+		return stagingGroupDepotEntry;
 	}
 
 	public int getDepotEntryConnectedGroupsCount(DepotEntry depotEntry)

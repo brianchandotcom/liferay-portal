@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import {
 	KANBAN_COLUMN_ORDER,
@@ -12,6 +12,7 @@ import {
 	mapStateKeyToLabel,
 } from '../../../../utils/constants';
 import {IColumn, IItemsActions, ITask} from '../../../../utils/types';
+import {UPDATE_TASKS_QUICK_FILTER_VISIBILITY} from '../../../task/TasksQuickFilters';
 import Board from './components/Board';
 import {KanbanViewContext} from './context';
 
@@ -51,6 +52,14 @@ function KanbanView(props: KanbanViewProps) {
 	const [boardData] = useState(mapByStateCode(props.items));
 
 	const changeTaskStatus = useCallback(() => {}, []);
+
+	useEffect(() => {
+		Liferay.fire(UPDATE_TASKS_QUICK_FILTER_VISIBILITY, {visible: false});
+
+		return () => {
+			Liferay.fire(UPDATE_TASKS_QUICK_FILTER_VISIBILITY, {visible: true});
+		};
+	}, []);
 
 	return (
 		<KanbanViewContext.Provider

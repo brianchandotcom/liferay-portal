@@ -592,7 +592,8 @@ public class TaxonomyVocabularyResourceImpl
 	}
 
 	private long[] _getAssetLibraryGroupIds(
-		long companyId, TaxonomyVocabulary taxonomyVocabulary) {
+			long companyId, TaxonomyVocabulary taxonomyVocabulary)
+		throws Exception {
 
 		return TaxonomyGroupUtil.getAssetLibraryGroupIds(
 			taxonomyVocabulary.getAssetLibraries(), companyId);

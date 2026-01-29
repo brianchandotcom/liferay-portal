@@ -1,12 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.site.cms.site.initializer.internal.service;
+package com.liferay.site.cmp.site.initializer.internal.service;
 
+import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.object.constants.ObjectActionKeys;
-import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalServiceWrapper;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -27,10 +26,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Jürgen Kappler
+ * @author Pedro Leite
  */
 @Component(service = ServiceWrapper.class)
-public class CMSPermissionsObjectDefinitionLocalServiceWrapper
+public class CMPPermissionsObjectDefinitionLocalServiceWrapper
 	extends ObjectDefinitionLocalServiceWrapper {
 
 	@Override
@@ -41,16 +40,9 @@ public class CMSPermissionsObjectDefinitionLocalServiceWrapper
 		ObjectDefinition objectDefinition = super.publishSystemObjectDefinition(
 			userId, objectDefinitionId);
 
-		String objectFolderExternalReferenceCode =
-			objectDefinition.getObjectFolderExternalReferenceCode();
-
 		if (!Objects.equals(
-				objectFolderExternalReferenceCode,
-				ObjectFolderConstants.
-					EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES) &&
-			!Objects.equals(
-				objectFolderExternalReferenceCode,
-				ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES)) {
+				objectDefinition.getObjectFolderExternalReferenceCode(),
+				"L_CMP_PROJECT_MANAGEMENT_DEFINITIONS")) {
 
 			return objectDefinition;
 		}
@@ -59,12 +51,10 @@ public class CMSPermissionsObjectDefinitionLocalServiceWrapper
 			Role role = PermissionUtil.getOrAddCMSAdministratorRole(
 				objectDefinition.getCompanyId(), objectDefinition.getUserId());
 
-			_resourcePermissionLocalService.addResourcePermission(
-				objectDefinition.getCompanyId(),
-				objectDefinition.getResourceName(),
-				ResourceConstants.SCOPE_COMPANY,
-				String.valueOf(objectDefinition.getCompanyId()),
-				role.getRoleId(), ObjectActionKeys.ADD_OBJECT_ENTRY);
+			_addResourcePermission(
+				objectDefinition,
+				String.valueOf(objectDefinition.getCompanyId()), role.getName(),
+				ResourceConstants.SCOPE_COMPANY);
 
 			_resourcePermissionLocalService.setResourcePermissions(
 				objectDefinition.getCompanyId(),
@@ -77,8 +67,19 @@ public class CMSPermissionsObjectDefinitionLocalServiceWrapper
 					ActionKeys.UPDATE, ActionKeys.VIEW
 				});
 
-			_setResourcePermissions(objectDefinition, RoleConstants.GUEST);
-			_setResourcePermissions(objectDefinition, RoleConstants.USER);
+			if (Objects.equals(
+					objectDefinition.getExternalReferenceCode(),
+					"L_CMP_TASK")) {
+
+				_addResourcePermission(
+					objectDefinition, "0",
+					DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR,
+					ResourceConstants.SCOPE_GROUP_TEMPLATE);
+				_addResourcePermission(
+					objectDefinition, "0",
+					DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER,
+					ResourceConstants.SCOPE_GROUP_TEMPLATE);
+			}
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -87,22 +88,26 @@ public class CMSPermissionsObjectDefinitionLocalServiceWrapper
 		return objectDefinition;
 	}
 
-	private void _setResourcePermissions(
-			ObjectDefinition objectDefinition, String roleName)
+	private void _addResourcePermission(
+			ObjectDefinition objectDefinition, String primKey, String roleName,
+			int scope)
 		throws PortalException {
 
-		Role role = _roleLocalService.getRole(
+		Role role = _roleLocalService.fetchRole(
 			objectDefinition.getCompanyId(), roleName);
 
-		_resourcePermissionLocalService.setResourcePermissions(
-			objectDefinition.getCompanyId(), ObjectDefinition.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(objectDefinition.getObjectDefinitionId()),
-			role.getRoleId(), new String[] {ActionKeys.VIEW});
+		if (role == null) {
+			return;
+		}
+
+		_resourcePermissionLocalService.addResourcePermission(
+			objectDefinition.getCompanyId(), objectDefinition.getResourceName(),
+			scope, primKey, role.getRoleId(),
+			ObjectActionKeys.ADD_OBJECT_ENTRY);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CMSPermissionsObjectDefinitionLocalServiceWrapper.class);
+		CMPPermissionsObjectDefinitionLocalServiceWrapper.class);
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

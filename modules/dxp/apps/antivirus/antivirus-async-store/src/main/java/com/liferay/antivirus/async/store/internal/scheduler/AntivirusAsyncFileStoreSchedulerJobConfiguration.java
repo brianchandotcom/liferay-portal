@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
@@ -114,6 +115,8 @@ public class AntivirusAsyncFileStoreSchedulerJobConfiguration
 					DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
 					_scheduleAntivirusScan(
+						dlFileEntry.getModelClassName(),
+						dlFileEntry.getFileEntryId(),
 						dlFileEntry.getCompanyId(), dlFileEntry.getExtension(),
 						dlFileEntry.getName(),
 						AntivirusAsyncUtil.getJobName(
@@ -183,27 +186,6 @@ public class AntivirusAsyncFileStoreSchedulerJobConfiguration
 				}
 
 			});
-	}
-
-	private void _scheduleAntivirusScan(
-		long companyId, String fileExtension, String fileName, String jobName,
-		long repositoryId, long size, String versionLabel) {
-
-		Message message = new Message();
-
-		message.put("companyId", companyId);
-		message.put("fileExtension", fileExtension);
-		message.put("fileName", fileName);
-		message.put("jobName", jobName);
-		message.put("repositoryId", repositoryId);
-		message.put("size", size);
-		message.put("userId", 0L);
-		message.put("versionLabel", versionLabel);
-
-		_antivirusAsyncEventListenerManager.onPrepare(message);
-
-		_messageBus.sendMessage(
-			AntivirusAsyncDestinationNames.ANTIVIRUS, message);
 	}
 
 	private void _scheduleAntivirusScan(Path rootPath, Path filePath) {
@@ -303,10 +285,40 @@ public class AntivirusAsyncFileStoreSchedulerJobConfiguration
 		}
 
 		_scheduleAntivirusScan(
-			companyId, fileExtension, fileName,
+			StringPool.BLANK, 0, companyId, fileExtension, fileName,
 			AntivirusAsyncUtil.getJobName(
 				companyId, repositoryId, fileName, versionLabel),
 			repositoryId, size, versionLabel);
+	}
+
+	private void _scheduleAntivirusScan(
+		String className, long classPK, long companyId, String fileExtension,
+		String fileName, String jobName, long repositoryId, long size,
+		String versionLabel) {
+
+		Message message = new Message();
+
+		if (Validator.isNotNull(className)) {
+			message.put("className", className);
+		}
+
+		if (classPK > 0) {
+			message.put("classPK", classPK);
+		}
+
+		message.put("companyId", companyId);
+		message.put("fileExtension", fileExtension);
+		message.put("fileName", fileName);
+		message.put("jobName", jobName);
+		message.put("repositoryId", repositoryId);
+		message.put("size", size);
+		message.put("userId", 0L);
+		message.put("versionLabel", versionLabel);
+
+		_antivirusAsyncEventListenerManager.onPrepare(message);
+
+		_messageBus.sendMessage(
+			AntivirusAsyncDestinationNames.ANTIVIRUS, message);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

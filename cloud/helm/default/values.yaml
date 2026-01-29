@@ -68,22 +68,14 @@ customInitContainers:
                                 then
                                     mkdir --parents /temp/liferay/data
 
-                                    cp \
-                                        --force \
-                                        --recursive \
-                                        --verbose \
-                                        /opt/liferay/data/* /temp/liferay/data
+                                    cp --force --recursive --verbose /opt/liferay/data/* /temp/liferay/data
                                 fi
 
                                 if [ ! -d /temp/liferay/glowroot ] || [ -z "$(ls --all /temp/liferay/glowroot)" ]
                                 then
                                     mkdir --parents /temp/liferay/glowroot
 
-                                    cp \
-                                        --force \
-                                        --recursive \
-                                        --verbose \
-                                        /opt/liferay/glowroot/* /temp/liferay/glowroot
+                                    cp --force --recursive --verbose /opt/liferay/glowroot/* /temp/liferay/glowroot
                                 fi
 
                                 if [ ! -f /temp/tomcat/conf/server.xml ]
@@ -123,10 +115,7 @@ customInitContainers:
                                     then
                                         mkdir --parents /temp/liferay/deploy
 
-                                        cp \
-                                            --force \
-                                            --verbose \
-                                            /opt/liferay/deploy/* /temp/liferay/deploy
+                                        cp --force --verbose /opt/liferay/deploy/* /temp/liferay/deploy
                                     fi
                                 fi
                     image: {{ printf "%s:%s" .image.repository (.image.tag | toString) }}

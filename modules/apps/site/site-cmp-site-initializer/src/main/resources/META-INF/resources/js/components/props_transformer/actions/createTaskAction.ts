@@ -15,16 +15,21 @@ export type Data = {
 	redirect?: string;
 };
 
-export default function createTaskAction(data: Data) {
-	if (!data.addProjectURL && !data.addTaskURL && data.redirect) {
-		const url = new URL(data.redirect);
+export default function createTaskAction({
+	addProjectURL,
+	addTaskURL,
+	projectObjectDefinitionId,
+	redirect,
+}: Data) {
+	if (redirect) {
+		const url = new URL(redirect);
 
 		navigate(url.pathname + url.search);
 
 		return;
 	}
 
-	if (!data.addProjectURL || !data.addTaskURL) {
+	if (!addProjectURL || !addTaskURL) {
 		throw new Error(
 			'Both addProjectURL and addTaskURL are required to open the modal'
 		);
@@ -34,11 +39,10 @@ export default function createTaskAction(data: Data) {
 		center: true,
 		contentComponent: ({closeModal}: {closeModal: () => void}) =>
 			SelectProjectModalContent({
-				...data,
-				addProjectURL: data.addProjectURL!,
-				addTaskURL: data.addTaskURL!,
+				addProjectURL,
+				addTaskURL,
 				closeModal,
-				projectObjectDefinitionId: data.projectObjectDefinitionId,
+				projectObjectDefinitionId,
 			}),
 		size: 'md',
 	});

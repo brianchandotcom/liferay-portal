@@ -32,6 +32,7 @@ import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -143,6 +144,23 @@ public class TaskDefinitionManagerImpl implements TaskDefinitionManager {
 		return _toTaskDefinition(dtoConverterContext, workflowDefinition);
 	}
 
+	private Map<String, String> _addAction(
+		DTOConverterContext dtoConverterContext, String methodName,
+		WorkflowDefinition workflowDefinition) {
+
+		if (!Objects.equals(methodName, "postTaskDefinitionCopy") &&
+			workflowDefinition.isSystem()) {
+
+			return null;
+		}
+
+		return ActionUtil.addAction(
+			ActionKeys.ADD_DEFINITION, TaskDefinitionResourceImpl.class,
+			workflowDefinition.getWorkflowDefinitionId(), methodName,
+			_kaleoDefinitionModelResourcePermission, (Long)null,
+			dtoConverterContext.getUriInfo());
+	}
+
 	private TaskDefinition _toTaskDefinition(
 			DTOConverterContext dtoConverterContext,
 			WorkflowDefinition workflowDefinition)
@@ -153,51 +171,39 @@ public class TaskDefinitionManagerImpl implements TaskDefinitionManager {
 				if (dtoConverterContext != null) {
 					setActions(
 						() -> HashMapBuilder.put(
+							"activate",
+							() -> {
+								if (workflowDefinition.isActive()) {
+									return null;
+								}
+
+								return _addAction(
+									dtoConverterContext,
+									"patchTaskDefinitionUpdateActive",
+									workflowDefinition);
+							}
+						).put(
 							"copy",
-							ActionUtil.addAction(
-								ActionKeys.ADD_DEFINITION,
-								TaskDefinitionResourceImpl.class,
-								workflowDefinition.getWorkflowDefinitionId(),
-								"postTaskDefinitionCopy",
-								_kaleoDefinitionModelResourcePermission,
-								(Long)null, dtoConverterContext.getUriInfo())
+							_addAction(
+								dtoConverterContext, "postTaskDefinitionCopy",
+								workflowDefinition)
+						).put(
+							"deactivate",
+							() -> {
+								if (!workflowDefinition.isActive()) {
+									return null;
+								}
+
+								return _addAction(
+									dtoConverterContext,
+									"patchTaskDefinitionUpdateActive",
+									workflowDefinition);
+							}
 						).put(
 							"delete",
-							() -> {
-								if (workflowDefinition.isSystem()) {
-									return null;
-								}
-
-								return ActionUtil.addAction(
-									ActionKeys.DELETE,
-									TaskDefinitionResourceImpl.class,
-									workflowDefinition.
-										getWorkflowDefinitionId(),
-									"deleteTaskDefinition",
-									_kaleoDefinitionModelResourcePermission,
-									(Long)null,
-									dtoConverterContext.getUriInfo());
-							}
-						).put(
-							workflowDefinition.isActive() ? "disable" :
-								"enable",
-							() -> {
-								if (workflowDefinition.isSystem()) {
-									return null;
-								}
-
-								return ActionUtil.addAction(
-									workflowDefinition.isActive() ?
-										ActionKeys.DEACTIVATE :
-											ActionKeys.ACTIVATE,
-									TaskDefinitionResourceImpl.class,
-									workflowDefinition.
-										getWorkflowDefinitionId(),
-									"patchTaskDefinitionUpdateActive",
-									_kaleoDefinitionModelResourcePermission,
-									(Long)null,
-									dtoConverterContext.getUriInfo());
-							}
+							() -> _addAction(
+								dtoConverterContext, "deleteTaskDefinition",
+								workflowDefinition)
 						).build());
 				}
 

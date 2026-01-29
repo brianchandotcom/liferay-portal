@@ -18,20 +18,14 @@ import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactory
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
 
 import java.util.Collections;
 import java.util.Map;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,24 +40,6 @@ public class CommentsComponentSectionFragmentRenderer
 	@Override
 	public String getCollectionKey() {
 		return "comments";
-	}
-
-	@Override
-	public void render(
-			FragmentRendererContext fragmentRendererContext,
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
-
-		String layoutMode = ParamUtil.getString(
-			httpServletRequest, "p_l_mode", Constants.VIEW);
-
-		if (Objects.equals(layoutMode, Constants.READ)) {
-			return;
-		}
-
-		super.render(
-			fragmentRendererContext, httpServletRequest, httpServletResponse);
 	}
 
 	@Override

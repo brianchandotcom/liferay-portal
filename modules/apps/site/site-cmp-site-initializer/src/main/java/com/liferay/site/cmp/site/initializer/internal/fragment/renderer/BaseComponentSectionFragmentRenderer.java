@@ -10,6 +10,8 @@ import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.frontend.taglib.react.servlet.taglib.ComponentTag;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
 
 import jakarta.servlet.ServletContext;
@@ -21,6 +23,7 @@ import java.io.PrintWriter;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Reference;
 
@@ -46,6 +49,13 @@ public abstract class BaseComponentSectionFragmentRenderer
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws IOException {
+
+		String layoutMode = ParamUtil.getString(
+			httpServletRequest, "p_l_mode", Constants.VIEW);
+
+		if (Objects.equals(layoutMode, Constants.READ)) {
+			return;
+		}
 
 		try {
 			PrintWriter printWriter = httpServletResponse.getWriter();

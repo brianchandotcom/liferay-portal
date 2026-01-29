@@ -12,20 +12,14 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cmp.site.initializer.internal.util.ActionUtil;
 import com.liferay.site.cmp.site.initializer.internal.util.TasksSectionUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
 
 import java.util.Map;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,24 +34,6 @@ public class TasksOverviewComponentSectionFragmentRenderer
 	@Override
 	public String getCollectionKey() {
 		return "sections";
-	}
-
-	@Override
-	public void render(
-			FragmentRendererContext fragmentRendererContext,
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
-
-		String layoutMode = ParamUtil.getString(
-			httpServletRequest, "p_l_mode", Constants.VIEW);
-
-		if (Objects.equals(layoutMode, Constants.READ)) {
-			return;
-		}
-
-		super.render(
-			fragmentRendererContext, httpServletRequest, httpServletResponse);
 	}
 
 	@Override

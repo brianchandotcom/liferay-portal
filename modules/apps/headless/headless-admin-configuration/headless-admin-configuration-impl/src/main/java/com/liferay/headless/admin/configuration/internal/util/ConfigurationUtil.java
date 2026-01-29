@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.validation.ValidationException;
 
@@ -31,6 +32,7 @@ import java.util.Collections;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.framework.Constants;
 import org.osgi.service.cm.Configuration;
@@ -165,11 +167,17 @@ public class ConfigurationUtil {
 		for (Method method : configurationBeanClass.getMethods()) {
 			Meta.AD ad = method.getAnnotation(Meta.AD.class);
 
-			Object value = propertiesMap.get(method.getName());
+			String key = method.getName();
+
+			if (!_isNull(ad.id())) {
+				key = ad.id();
+			}
+
+			Object value = propertiesMap.get(key);
 
 			if (ad.required() && (value == null)) {
 				throw new ValidationException(
-					"The property \"" + method.getName() + "\" is required");
+					"The property \"" + key + "\" is required");
 			}
 			else if (value == null) {
 				continue;
@@ -183,8 +191,8 @@ public class ConfigurationUtil {
 
 				throw new ValidationException(
 					StringBundler.concat(
-						"The attribute \"", method.getName(), "\" expects \"",
-						returnType, " and \" not \"", clazz, "\""));
+						"The attribute \"", key, "\" expects \"", returnType,
+						" and \" not \"", clazz, "\""));
 			}
 
 			if (value instanceof List<?>) {
@@ -195,7 +203,7 @@ public class ConfigurationUtil {
 						returnType.getComponentType(), 0));
 			}
 
-			properties.put(method.getName(), value);
+			properties.put(key, value);
 		}
 
 		return properties;
@@ -302,6 +310,14 @@ public class ConfigurationUtil {
 
 		return _createSystemConfiguration(
 			configurationAdmin, externalReferenceCode);
+	}
+
+	private static boolean _isNull(String value) {
+		if (Objects.equals(Meta.NULL, value) || Validator.isNull(value)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static boolean _isSameOrParentScope(

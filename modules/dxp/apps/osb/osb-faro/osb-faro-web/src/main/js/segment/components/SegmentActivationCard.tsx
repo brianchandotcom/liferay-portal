@@ -12,6 +12,7 @@ import {Alert} from 'shared/types';
 import {connect, ConnectedProps} from 'react-redux';
 import {formatUTCDateFromUnix} from 'shared/util/date';
 import {Option, Picker} from '@clayui/core';
+import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
 import {
 	SegmentActivationFrequencyTypes,
 	SegmentActivationScheduleTypes,
@@ -340,7 +341,10 @@ const SegmentActivationCard: React.FC<ISegmentActivationCardProps> = ({
 			  ]);
 
 	return (
-		<Card className='card-root'>
+		<Card
+			className='card-root'
+			reportContainer={ReportContainer.SegmentActivationCard}
+		>
 			{open && (
 				<ConnectedActivationConfigurationModal
 					initialValues={{

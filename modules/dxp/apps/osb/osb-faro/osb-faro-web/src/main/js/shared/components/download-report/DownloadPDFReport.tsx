@@ -34,6 +34,7 @@ export enum ReportContainer {
 	InterestsCard = 'container.report.interestsCard',
 	MembershipMetricsCard = 'container.report.membershipMetricsCard',
 	SearchTermsCard = 'container.report.searchTermsCard',
+	SegmentActivationCard = 'container.report.segmentActivationCard',
 	SegmentCompositionCard = 'container.report.segmentCompositionCard',
 	SegmentCriteriaCard = 'container.report.segmentCriteriaCard',
 	SegmentMembershipCard = 'container.report.segmentMembershipCard',
@@ -112,6 +113,10 @@ export const CONTAINERS: {[key in ReportContainer]: TReportContainer} = {
 	[ReportContainer.SearchTermsCard]: {
 		label: Liferay.Language.get('search-terms'),
 		layout: 3
+	},
+	[ReportContainer.SegmentActivationCard]: {
+		label: Liferay.Language.get('activation'),
+		layout: 1
 	},
 	[ReportContainer.SegmentCompositionCard]: {
 		label: Liferay.Language.get('segment-composition'),

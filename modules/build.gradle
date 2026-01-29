@@ -211,7 +211,7 @@ portalYarnInstall {
 gradle.allprojects {
 	Project project ->
 
-	String gradleYarnInstallNetworkTimeout = GradleUtil.getProperty(project, "gradle.yarn.install.network.timeout")
+	String gradleYarnInstallNetworkTimeout = GradleUtil.getProperty(project, "gradle.yarn.install.network.timeout", (String)null)
 
 	if (gradleYarnInstallNetworkTimeout != null) {
 		tasks.withType(com.liferay.gradle.plugins.node.task.YarnInstallTask) {

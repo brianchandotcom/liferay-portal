@@ -45,7 +45,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "review-changes"));
 			apiURL="<%= viewChangesDisplayContext.getAPIURL() %>"
 			bulkActionDropdownItems="<%= viewChangesDisplayContext.getBulkActionDropdownItems() %>"
 			fdsActionDropdownItems="<%= viewChangesDisplayContext.getFDSActionDropdownItems() %>"
-			fdsFilters="<%= viewChangesDisplayContext.getFDSFilters() %>"
 			fdsSortItemList="<%= viewChangesDisplayContext.getFDSSortItemList() %>"
 			formName="fm"
 			id="<%= PublicationsFDSNames.PUBLICATIONS_CHANGES %>"

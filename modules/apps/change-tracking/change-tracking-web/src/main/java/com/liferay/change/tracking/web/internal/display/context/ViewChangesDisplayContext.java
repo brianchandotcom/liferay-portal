@@ -23,14 +23,9 @@ import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.web.internal.display.BasePersistenceRegistry;
 import com.liferay.change.tracking.web.internal.display.CTClosureUtil;
 import com.liferay.change.tracking.web.internal.display.CTModelDisplayRendererAdapter;
-import com.liferay.change.tracking.web.internal.frontend.data.set.filter.ChangeTypeSelectionFDSFilter;
-import com.liferay.change.tracking.web.internal.frontend.data.set.filter.SiteSelectionFDSFilter;
-import com.liferay.change.tracking.web.internal.frontend.data.set.filter.TypeNameSelectionFDSFilter;
-import com.liferay.change.tracking.web.internal.frontend.data.set.filter.UserSelectionFDSFilter;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTCollectionPermission;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTPermission;
 import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
-import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.model.FDSSortItemBuilder;
 import com.liferay.frontend.data.set.model.FDSSortItemList;
@@ -48,7 +43,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.dao.orm.ORMException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -345,32 +339,6 @@ public class ViewChangesDisplayContext {
 		}
 
 		return fdsActionDropdownItems;
-	}
-
-	public List<FDSFilter> getFDSFilters() throws PortalException {
-		long groupId = ParamUtil.getLong(_renderRequest, "groupId");
-		long modelClassNameId = ParamUtil.getLong(
-			_renderRequest, "modelClassNameId");
-
-		boolean showHideable = ParamUtil.getBoolean(
-			_renderRequest, "showHideable");
-
-		Map<Long, String> siteNames = DisplayContextUtil.getSiteNames(
-			_ctCollection.getCtCollectionId(), showHideable, _themeDisplay);
-		Map<Long, String> typeNames = DisplayContextUtil.getTypeNames(
-			_ctCollection.getCtCollectionId(), showHideable, _themeDisplay);
-
-		JSONObject usersJSONObject = DisplayContextUtil.getUserInfoJSONObject(
-			CTEntryTable.INSTANCE.userId.eq(UserTable.INSTANCE.userId),
-			CTEntryTable.INSTANCE, _themeDisplay, _userLocalService,
-			CTEntryTable.INSTANCE.ctCollectionId.eq(
-				_ctCollection.getCtCollectionId()));
-
-		return ListUtil.fromArray(
-			new ChangeTypeSelectionFDSFilter(),
-			new SiteSelectionFDSFilter(groupId, siteNames),
-			new TypeNameSelectionFDSFilter(modelClassNameId, typeNames),
-			new UserSelectionFDSFilter(usersJSONObject.toMap()));
 	}
 
 	public FDSSortItemList getFDSSortItemList() {

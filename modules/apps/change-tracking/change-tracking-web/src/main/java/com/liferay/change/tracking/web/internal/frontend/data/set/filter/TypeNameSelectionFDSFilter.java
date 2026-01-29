@@ -5,11 +5,19 @@
 
 package com.liferay.change.tracking.web.internal.frontend.data.set.filter;
 
+import com.liferay.change.tracking.web.internal.constants.PublicationsFDSNames;
+import com.liferay.change.tracking.web.internal.display.context.DisplayContextUtil;
 import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 import java.util.Locale;
@@ -20,15 +28,11 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Noor Najjar
  */
-@Component(service = FDSFilter.class)
+@Component(
+	property = "frontend.data.set.name=" + PublicationsFDSNames.PUBLICATIONS_CHANGES,
+	service = FDSFilter.class
+)
 public class TypeNameSelectionFDSFilter extends BaseSelectionFDSFilter {
-
-	public TypeNameSelectionFDSFilter(
-		long selectedTypeName, Map<Long, String> typeNamesMap) {
-
-		_selectedTypeName = selectedTypeName;
-		_typeNamesMap = typeNamesMap;
-	}
 
 	@Override
 	public String getId() {
@@ -42,16 +46,27 @@ public class TypeNameSelectionFDSFilter extends BaseSelectionFDSFilter {
 
 	@Override
 	public Map<String, Object> getPreloadedData() {
-		if (_selectedTypeName == 0) {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		LiferayPortletRequest liferayPortletRequest =
+			serviceContext.getLiferayPortletRequest();
+
+		long modelClassNameId = ParamUtil.getLong(
+			liferayPortletRequest, "modelClassNameId");
+
+		if (modelClassNameId == 0) {
 			return null;
 		}
 
 		return HashMapBuilder.<String, Object>put(
 			"selectedItems",
 			TransformUtil.transform(
-				_typeNamesMap.entrySet(),
+				_getTypeNamesMap(
+					liferayPortletRequest
+				).entrySet(),
 				entry -> {
-					if (entry.getKey() == _selectedTypeName) {
+					if (entry.getKey() == modelClassNameId) {
 						return new SelectionFDSFilterItem(
 							entry.getValue(), String.valueOf(entry.getKey()));
 					}
@@ -65,13 +80,28 @@ public class TypeNameSelectionFDSFilter extends BaseSelectionFDSFilter {
 	public List<SelectionFDSFilterItem> getSelectionFDSFilterItems(
 		Locale locale) {
 
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
 		return TransformUtil.transform(
-			_typeNamesMap.entrySet(),
+			_getTypeNamesMap(
+				serviceContext.getLiferayPortletRequest()
+			).entrySet(),
 			entry -> new SelectionFDSFilterItem(
 				entry.getValue(), String.valueOf(entry.getKey())));
 	}
 
-	private final long _selectedTypeName;
-	private final Map<Long, String> _typeNamesMap;
+	private Map<Long, String> _getTypeNamesMap(
+		LiferayPortletRequest liferayPortletRequest) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return DisplayContextUtil.getTypeNames(
+			ParamUtil.getLong(liferayPortletRequest, "ctCollectionId"),
+			ParamUtil.getBoolean(liferayPortletRequest, "showHideable"),
+			themeDisplay);
+	}
 
 }

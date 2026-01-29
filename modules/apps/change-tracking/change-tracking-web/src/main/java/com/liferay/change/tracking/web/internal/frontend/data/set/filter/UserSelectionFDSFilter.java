@@ -5,26 +5,38 @@
 
 package com.liferay.change.tracking.web.internal.frontend.data.set.filter;
 
+import com.liferay.change.tracking.model.CTEntryTable;
+import com.liferay.change.tracking.web.internal.constants.PublicationsFDSNames;
+import com.liferay.change.tracking.web.internal.display.context.DisplayContextUtil;
 import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.UserTable;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Noor Najjar
  */
-@Component(service = FDSFilter.class)
+@Component(
+	property = "frontend.data.set.name=" + PublicationsFDSNames.PUBLICATIONS_CHANGES,
+	service = FDSFilter.class
+)
 public class UserSelectionFDSFilter extends BaseSelectionFDSFilter {
-
-	public UserSelectionFDSFilter(Map<String, Object> usersMap) {
-		_usersMap = usersMap;
-	}
 
 	@Override
 	public String getId() {
@@ -40,8 +52,28 @@ public class UserSelectionFDSFilter extends BaseSelectionFDSFilter {
 	public List<SelectionFDSFilterItem> getSelectionFDSFilterItems(
 		Locale locale) {
 
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		LiferayPortletRequest liferayPortletRequest =
+			serviceContext.getLiferayPortletRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		long ctCollectionId = ParamUtil.getLong(
+			liferayPortletRequest, "ctCollectionId");
+
+		JSONObject jsonObject = DisplayContextUtil.getUserInfoJSONObject(
+			CTEntryTable.INSTANCE.userId.eq(UserTable.INSTANCE.userId),
+			CTEntryTable.INSTANCE, themeDisplay, _userLocalService,
+			CTEntryTable.INSTANCE.ctCollectionId.eq(ctCollectionId));
+
+		Map<String, Object> map = jsonObject.toMap();
+
 		return TransformUtil.transform(
-			_usersMap.entrySet(),
+			map.entrySet(),
 			entry -> {
 				Map<String, String> user =
 					(Map<String, String>)entry.getValue();
@@ -51,6 +83,7 @@ public class UserSelectionFDSFilter extends BaseSelectionFDSFilter {
 			});
 	}
 
-	private final Map<String, Object> _usersMap;
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

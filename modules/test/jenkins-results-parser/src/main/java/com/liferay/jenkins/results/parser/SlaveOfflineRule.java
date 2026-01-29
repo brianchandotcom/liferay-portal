@@ -158,8 +158,76 @@ public class SlaveOfflineRule {
 			(notificationRecipients != null) &&
 			!notificationRecipients.isEmpty()) {
 
-			NotificationUtil.sendEmail(
-				message, "jenkins", "Slave offline", notificationRecipients);
+			String[] notificationRecipientsArray = null;
+
+			if (notificationRecipients.contains(",")) {
+				notificationRecipientsArray = notificationRecipients.split(",");
+			}
+
+			if (notificationRecipientsArray != null) {
+				boolean matchFound = false;
+
+				for (String notificationRecipient :
+						notificationRecipientsArray) {
+
+					notificationRecipient = notificationRecipient.trim();
+
+					Matcher matcher = _notificationRecipentsPattern.matcher(
+						notificationRecipient);
+
+					if (matcher.find()) {
+						matchFound = true;
+
+						String slack = matcher.group("slack");
+
+						if (!JenkinsResultsParserUtil.isNullOrEmpty(slack)) {
+							NotificationUtil.sendSlackNotification(
+								message, slack, "Slave offline");
+
+							continue;
+						}
+
+						String email = matcher.group("slack");
+
+						if (!JenkinsResultsParserUtil.isNullOrEmpty(email)) {
+							NotificationUtil.sendEmail(
+								message, "jenkins", "Slave offline", email);
+						}
+					}
+				}
+
+				if (!matchFound) {
+					throw new RuntimeException(
+						"Invalid notification recipients: " +
+							notificationRecipients);
+				}
+			}
+			else {
+				Matcher matcher = _notificationRecipentsPattern.matcher(
+					notificationRecipients);
+
+				if (!matcher.find()) {
+					throw new RuntimeException(
+						"Invalid notification recipients: " +
+							notificationRecipients);
+				}
+
+				String slack = matcher.group("slack");
+
+				if (!JenkinsResultsParserUtil.isNullOrEmpty(slack)) {
+					NotificationUtil.sendSlackNotification(
+						message, slack, "Slave offline");
+
+					return;
+				}
+
+				String email = matcher.group("slack");
+
+				if (!JenkinsResultsParserUtil.isNullOrEmpty(email)) {
+					NotificationUtil.sendEmail(
+						message, "jenkins", "Slave offline", email);
+				}
+			}
 		}
 	}
 
@@ -265,6 +333,9 @@ public class SlaveOfflineRule {
 
 	private static final Pattern _configurationsPattern = Pattern.compile(
 		"([^=]+)=(.*)");
+	private static final Pattern _notificationRecipentsPattern =
+		Pattern.compile(
+			"slack:(?:<@)?(?<slack>[\\w-]+)>?|(?<email>[\\w-]+@[\\w.-]+)");
 	private static List<SlaveOfflineRule> _slaveOfflineRules;
 
 }

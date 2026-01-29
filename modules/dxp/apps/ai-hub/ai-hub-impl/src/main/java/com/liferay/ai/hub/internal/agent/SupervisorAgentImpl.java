@@ -6,18 +6,13 @@
 package com.liferay.ai.hub.internal.agent;
 
 import com.liferay.ai.hub.agent.AgentContext;
+import com.liferay.ai.hub.agent.AgentsFactory;
 import com.liferay.ai.hub.agent.SupervisorAgent;
-import com.liferay.ai.hub.rest.manager.v1_0.TaskDefinitionManager;
 import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
-import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.odata.filter.ExpressionConvert;
-import com.liferay.portal.odata.filter.FilterParserProvider;
 
 import dev.langchain4j.agentic.AgenticServices;
 import dev.langchain4j.agentic.supervisor.SupervisorResponseStrategy;
@@ -41,12 +36,7 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 			_portalExecutorManager.getPortalExecutor(
 				SupervisorAgentImpl.class.getName());
 
-		AgentsFactory agentsFactory = new AgentsFactory(
-			agentContext, _entityModel, _expressionConvert,
-			_filterParserProvider, _taskDefinitionManager,
-			_workflowInstanceManager);
-
-		Object[] agents = agentsFactory.create();
+		Object[] agents = _agentsFactory.create(agentContext);
 
 		executorService.submit(
 			() -> {
@@ -97,24 +87,10 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SupervisorAgentImpl.class);
 
-	@Reference(target = "(entity.model.name=TaskDefinition)")
-	private EntityModel _entityModel;
-
-	@Reference(
-		target = "(result.class.name=com.liferay.portal.kernel.search.filter.Filter)"
-	)
-	private ExpressionConvert<Filter> _expressionConvert;
-
 	@Reference
-	private FilterParserProvider _filterParserProvider;
+	private AgentsFactory _agentsFactory;
 
 	@Reference
 	private PortalExecutorManager _portalExecutorManager;
-
-	@Reference
-	private TaskDefinitionManager _taskDefinitionManager;
-
-	@Reference
-	private WorkflowInstanceManager _workflowInstanceManager;
 
 }

@@ -160,7 +160,7 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 	}
 
 	@Test
-	public void testShouldUpdatePreviousPendingVersionWithWorkflow()
+	public void testShouldUpdateFileEntryWithWorkflowWithVersionIncrement()
 		throws Exception {
 
 		int workflowInstanceLinksCount =

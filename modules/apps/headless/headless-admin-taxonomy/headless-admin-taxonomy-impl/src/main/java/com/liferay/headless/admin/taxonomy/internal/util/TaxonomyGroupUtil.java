@@ -5,6 +5,8 @@
 
 package com.liferay.headless.admin.taxonomy.internal.util;
 
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.AssetLibrary;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -21,7 +23,8 @@ import java.util.List;
 public class TaxonomyGroupUtil {
 
 	public static long[] getAssetLibraryGroupIds(
-		AssetLibrary[] assetLibraries, long companyId) {
+			AssetLibrary[] assetLibraries, long companyId)
+		throws PortalException {
 
 		if (ArrayUtil.isEmpty(assetLibraries)) {
 			return _GROUP_IDS_ALL;
@@ -31,13 +34,38 @@ public class TaxonomyGroupUtil {
 
 		for (AssetLibrary assetLibrary : assetLibraries) {
 			if ((assetLibrary == null) ||
-				(assetLibrary.getScopeKey() == null)) {
+				((assetLibrary.getId() == null) &&
+				 (assetLibrary.getScopeKey() == null))) {
 
 				continue;
 			}
 
-			Group group = GroupLocalServiceUtil.fetchGroup(
-				companyId, assetLibrary.getScopeKey());
+			Group group = null;
+
+			if (assetLibrary.getScopeKey() != null) {
+				group = GroupLocalServiceUtil.fetchGroup(
+					companyId, assetLibrary.getScopeKey());
+
+				if (group != null) {
+					groupIds.add(group.getGroupId());
+
+					continue;
+				}
+			}
+
+			if (assetLibrary.getId() == GroupConstants.ANY_PARENT_GROUP_ID) {
+				continue;
+			}
+
+			group = GroupLocalServiceUtil.fetchGroup(assetLibrary.getId());
+
+			if (group == null) {
+				DepotEntry depotEntry =
+					DepotEntryLocalServiceUtil.getDepotEntry(
+						assetLibrary.getId());
+
+				group = depotEntry.getGroup();
+			}
 
 			if (group != null) {
 				groupIds.add(group.getGroupId());

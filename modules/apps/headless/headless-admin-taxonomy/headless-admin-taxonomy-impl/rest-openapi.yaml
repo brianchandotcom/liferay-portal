@@ -6,7 +6,6 @@ components:
                     description:
                         The asset library's site ID.
                     format: int64
-                    readOnly: true
                     type: integer
                 name:
                     description:

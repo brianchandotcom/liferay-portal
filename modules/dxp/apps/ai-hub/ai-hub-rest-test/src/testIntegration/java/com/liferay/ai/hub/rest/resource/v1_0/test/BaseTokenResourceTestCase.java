@@ -167,6 +167,7 @@ public abstract class BaseTokenResourceTestCase {
 
 		token.setAccessToken(regex);
 		token.setScope(regex);
+		token.setServiceURL(regex);
 		token.setUserToken(regex);
 
 		String json = TokenSerDes.toJSON(token);
@@ -177,6 +178,7 @@ public abstract class BaseTokenResourceTestCase {
 
 		Assert.assertEquals(regex, token.getAccessToken());
 		Assert.assertEquals(regex, token.getScope());
+		Assert.assertEquals(regex, token.getServiceURL());
 		Assert.assertEquals(regex, token.getUserToken());
 	}
 
@@ -275,6 +277,14 @@ public abstract class BaseTokenResourceTestCase {
 
 			if (Objects.equals("scope", additionalAssertFieldName)) {
 				if (token.getScope() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("serviceURL", additionalAssertFieldName)) {
+				if (token.getServiceURL() == null) {
 					valid = false;
 				}
 
@@ -416,6 +426,16 @@ public abstract class BaseTokenResourceTestCase {
 
 			if (Objects.equals("scope", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(token1.getScope(), token2.getScope())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("serviceURL", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						token1.getServiceURL(), token2.getServiceURL())) {
+
 					return false;
 				}
 
@@ -631,6 +651,52 @@ public abstract class BaseTokenResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("serviceURL")) {
+			Object object = token.getServiceURL();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("userToken")) {
 			Object object = token.getUserToken();
 
@@ -725,6 +791,8 @@ public abstract class BaseTokenResourceTestCase {
 				accessToken = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				scope = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				serviceURL = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				userToken = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 			}

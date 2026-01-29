@@ -67,6 +67,27 @@ public class Token implements Cloneable, Serializable {
 
 	protected String scope;
 
+	public String getServiceURL() {
+		return serviceURL;
+	}
+
+	public void setServiceURL(String serviceURL) {
+		this.serviceURL = serviceURL;
+	}
+
+	public void setServiceURL(
+		UnsafeSupplier<String, Exception> serviceURLUnsafeSupplier) {
+
+		try {
+			serviceURL = serviceURLUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String serviceURL;
+
 	public String getUserToken() {
 		return userToken;
 	}

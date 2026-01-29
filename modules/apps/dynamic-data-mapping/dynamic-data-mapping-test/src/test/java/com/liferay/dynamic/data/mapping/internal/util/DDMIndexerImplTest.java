@@ -309,30 +309,26 @@ public class DDMIndexerImplTest {
 		_testFormWithRepeatableField("keyword");
 		_testFormWithRepeatableField("text");
 		_testFormWithRepeatableRichTextField();
+		_testFormWithRepeatableSelectField();
 	}
 
 	@Test
 	public void testFormWithSelectField() throws JSONException {
 		Document document = _createDocument();
 
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
-			SetUtil.fromArray(LocaleUtil.US), LocaleUtil.US);
+		Locale[] availableLocales = {LocaleUtil.US};
 
-		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
-			_FIELD_NAME, RandomTestUtil.randomString(), DDMFormFieldType.SELECT,
-			"string", true, false, false);
+		DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm(
+			_FIELD_NAME, "string", "keyword", false,
+			DDMFormFieldTypeConstants.SELECT, availableLocales, LocaleUtil.US);
 
-		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
-
-		ddmFormFieldOptions.addOptionLabel("apple", LocaleUtil.US, "Apple");
-		ddmFormFieldOptions.addOptionLabel(
-			"pineapple", LocaleUtil.US, "Pineapple");
-
-		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
-
-		ddmFormField.setIndexType("keyword");
-
-		ddmForm.addDDMFormField(ddmFormField);
+		_setDDMFormFieldOptions(
+			ddmForm, availableLocales, LocaleUtil.US,
+			HashMapBuilder.put(
+				"apple", "Apple"
+			).put(
+				"pineapple", "Pineapple"
+			).build());
 
 		_ddmIndexer.addAttributes(
 			document, _createDDMStructure(ddmForm),
@@ -535,6 +531,32 @@ public class DDMIndexerImplTest {
 		return simpleDateFormat.format(new Date());
 	}
 
+	private void _setDDMFormFieldOptions(
+		DDMForm ddmForm, Locale[] availableLocales, Locale defaultLocale,
+		Map<String, String> fieldValues) {
+
+		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
+
+		for (Map.Entry<String, String> entry : fieldValues.entrySet()) {
+			ddmFormFieldOptions.addOptionLabel(
+				entry.getKey(), defaultLocale, entry.getValue());
+
+			for (Locale locale : availableLocales) {
+				if (locale.equals(defaultLocale)) {
+					continue;
+				}
+
+				ddmFormFieldOptions.addOptionLabel(
+					entry.getKey(), locale,
+					entry.getValue() + LocaleUtil.toLanguageId(locale));
+			}
+		}
+
+		DDMFormField ddmFormField = ddmForm.getDDMFormField(_FIELD_NAME, false);
+
+		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+	}
+
 	private void _setUpJSONFactoryUtil() {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
@@ -708,6 +730,90 @@ public class DDMIndexerImplTest {
 				StringBundler.concat(
 					"ddm__text__", ddmStructure.getStructureId(), "__",
 					_FIELD_NAME, "_en_US_String_sortable")));
+	}
+
+	private void _testFormWithRepeatableSelectField() {
+		Document document = _createDocument();
+
+		Locale[] availableLocales = {LocaleUtil.BRAZIL, LocaleUtil.US};
+
+		String indexType = "keyword";
+
+		DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm(
+			_FIELD_NAME, "string", indexType, true,
+			DDMFormFieldTypeConstants.SELECT, availableLocales, LocaleUtil.US);
+
+		String optionLabel = RandomTestUtil.randomString();
+		String optionValue = RandomTestUtil.randomString();
+
+		_setDDMFormFieldOptions(
+			ddmForm, availableLocales, LocaleUtil.US,
+			HashMapBuilder.put(
+				optionValue, optionLabel
+			).put(
+				optionValue + "_2", optionLabel + "_2"
+			).build());
+
+		_ddmIndexer.addAttributes(
+			document, _createDDMStructure(ddmForm),
+			_createDDMFormValues(
+				ddmForm,
+				DDMFormValuesTestUtil.createDDMFormFieldValue(
+					_FIELD_NAME,
+					DDMFormValuesTestUtil.createLocalizedValue(
+						StringBundler.concat("[\"", optionValue, "\"]"),
+						StringBundler.concat("[\"", optionValue, "\"]"),
+						LocaleUtil.US)),
+				DDMFormValuesTestUtil.createDDMFormFieldValue(
+					_FIELD_NAME,
+					DDMFormValuesTestUtil.createLocalizedValue(
+						StringBundler.concat("[\"", optionValue, "\"]"),
+						StringBundler.concat("[\"", optionValue, "\"]"),
+						LocaleUtil.US))));
+
+		String prefix =
+			"ddmFieldArray.ddmFieldValue" +
+				StringUtil.upperCaseFirstLetter(indexType);
+
+		FieldValuesAssert.assertFieldValues(
+			HashMapBuilder.put(
+				prefix + "_en_US",
+				StringBundler.concat(
+					"[[\"", optionValue, "\"], [\"", optionValue, "\"]]")
+			).put(
+				prefix + "_en_US_String",
+				StringBundler.concat(
+					"[[\"", optionLabel, "\"], [\"", optionLabel, "\"]]")
+			).put(
+				prefix + "_en_US_String_sortable",
+				StringBundler.concat(
+					"[[\"", StringUtil.toLowerCase(optionLabel), "\"], [\"",
+					StringUtil.toLowerCase(optionLabel), "\"]]")
+			).put(
+				prefix + "_pt_BR",
+				StringBundler.concat(
+					"[[\"", optionValue, "\"], [\"", optionValue, "\"]]")
+			).put(
+				prefix + "_pt_BR_String",
+				StringBundler.concat(
+					"[[\"", optionLabel,
+					LocaleUtil.toLanguageId(LocaleUtil.BRAZIL), "\"], [\"",
+					optionLabel, LocaleUtil.toLanguageId(LocaleUtil.BRAZIL),
+					"\"]]")
+			).put(
+				prefix + "_pt_BR_String_sortable",
+				StringBundler.concat(
+					"[[\"",
+					StringUtil.toLowerCase(
+						optionLabel +
+							LocaleUtil.toLanguageId(LocaleUtil.BRAZIL)),
+					"\"], [\"",
+					StringUtil.toLowerCase(
+						optionLabel +
+							LocaleUtil.toLanguageId(LocaleUtil.BRAZIL)),
+					"\"]]")
+			).build(),
+			prefix, document, StringPool.BLANK);
 	}
 
 	private static final String _FIELD_NAME = RandomTestUtil.randomString();

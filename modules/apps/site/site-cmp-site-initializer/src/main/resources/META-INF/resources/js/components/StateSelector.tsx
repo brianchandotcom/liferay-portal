@@ -67,13 +67,16 @@ export default function StateSelector({
 	const [selectedKey, setSelectedKey] = useState(initialSelectedKey);
 
 	function getNextStates() {
-		const {nextStates} = states.find(
-			({key}) => key === selectedKey
-		) as State;
+		const state = states.find(({key}) => key === selectedKey);
 
-		return states.filter(({key}) => {
-			return nextStates.includes(key) || key === selectedKey;
-		});
+		if (state?.nextStates) {
+			return states.filter(({key}) => {
+				return state.nextStates.includes(key) || key === selectedKey;
+			});
+		}
+		else {
+			return states;
+		}
 	}
 
 	return (

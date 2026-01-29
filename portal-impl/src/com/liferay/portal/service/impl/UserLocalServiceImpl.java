@@ -59,6 +59,7 @@ import com.liferay.portal.kernel.exception.UserReminderQueryException;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.exception.UserSmsException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -201,6 +202,7 @@ import com.liferay.portal.security.pwd.PwdAuthenticator;
 import com.liferay.portal.security.pwd.PwdToolkitUtil;
 import com.liferay.portal.security.pwd.RegExpToolkit;
 import com.liferay.portal.service.base.UserLocalServiceBaseImpl;
+import com.liferay.portal.util.PortalInstances;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 import com.liferay.social.kernel.model.SocialRelation;
@@ -7577,6 +7579,15 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 				_companyLocalService.forEachCompanyId(
 					companyId -> {
+						if (PortalInstances.
+								isCurrentCompanyInDeletionProcess() ||
+							!ArrayUtil.contains(
+								PortalInstancePool.getCompanyIds(),
+								companyId)) {
+
+							return;
+						}
+
 						Session session = null;
 
 						try {

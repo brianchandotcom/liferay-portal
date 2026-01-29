@@ -327,6 +327,9 @@ public class ObjectEntryModelDocumentContributor
 		ObjectDefinition objectDefinition = objectEntry.getObjectDefinition();
 
 		document.addKeyword(
+			"objectDefinitionExternalReferenceCode",
+			objectDefinition.getExternalReferenceCode());
+		document.addKeyword(
 			"objectDefinitionName", objectDefinition.getShortName());
 
 		ObjectFieldBag objectFieldBag = objectDefinition.getObjectFieldBag();

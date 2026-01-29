@@ -10,7 +10,6 @@ import {
 	DisplayType,
 	FrontendDataSet,
 	IFrontendDataSetProps,
-	InlineNotification,
 } from '@liferay/frontend-data-set-web';
 import React from 'react';
 
@@ -71,58 +70,53 @@ const ReactFrontendDataSet = (props: IFrontendDataSetProps) => {
 	const [showInlineNotification, setShowInlineNotification] =
 		React.useState(false);
 
-	const onAlertActionClick = () =>
+	const onAlertActionClick = function () {
 		setFdsProps({
 			...props,
 			additionalAPIURLParameters: `sort=dateCreated:desc&t=${Date.now()}`,
 			filters: [],
 			sorts: [],
 		});
-
-	const alertContent = (
-		<>
-			This is the info message
-			<ClayButton.Group className="pl-3" spaced>
-				<ClayButton
-					displayType="info"
-					onClick={() => {
-						onAlertActionClick();
-						setShowInlineNotification(false);
-					}}
-					size="sm"
-				>
-					{Liferay.Language.get('reload')}
-				</ClayButton>
-
-				<ClayButton
-					alert
-					onClick={() => setShowInlineNotification(false)}
-					size="sm"
-				>
-					{Liferay.Language.get('dismiss')}
-				</ClayButton>
-			</ClayButton.Group>
-		</>
-	);
+	};
 
 	let notification = undefined;
 
 	if (component === 'alert') {
-		notification = (
-			<InlineNotification
-				as={ClayAlert}
+		notification = ({context}: {context: any}) => (
+			<ClayAlert
 				displayType="info"
 				onClose={() => setShowInlineNotification(false)}
 				variant="stripe"
 			>
-				{alertContent}
-			</InlineNotification>
+				{(context.selectedItems.length > 0)
+					? `${selectedItems.length} items selected`
+					: 'No items selected'}
+				<ClayButton.Group className="pl-3" spaced>
+					<ClayButton
+						displayType="info"
+						onClick={() => {
+							onAlertActionClick();
+							setShowInlineNotification(false);
+						}}
+						size="sm"
+					>
+						{Liferay.Language.get('reload')}
+					</ClayButton>
+
+					<ClayButton
+						alert
+						onClick={() => setShowInlineNotification(false)}
+						size="sm"
+					>
+						{Liferay.Language.get('dismiss')}
+					</ClayButton>
+				</ClayButton.Group>
+			</ClayAlert>
 		);
 	}
 	else if (component === 'breadcrumb') {
-		notification = (
-			<InlineNotification
-				as={ClayBreadCrumb}
+		notification = () => (
+			<ClayBreadCrumb
 				items={[
 					{
 						href: '#1',
@@ -141,10 +135,8 @@ const ReactFrontendDataSet = (props: IFrontendDataSetProps) => {
 		);
 	}
 	else {
-		notification = (
-			<InlineNotification as="span">
-				This is a notification message
-			</InlineNotification>
+		notification = () => (
+			<span>This is a notification message</span>
 		);
 	}
 
@@ -159,13 +151,13 @@ const ReactFrontendDataSet = (props: IFrontendDataSetProps) => {
 				</ClayButton>
 
 				<ClayButton
-					displayType="warning"
+					displayType="info"
 					onClick={() => {
 						setComponent('alert');
 						setShowInlineNotification(true);
 					}}
 				>
-					Show warning alert
+					Show info message
 				</ClayButton>
 
 				<ClayButton

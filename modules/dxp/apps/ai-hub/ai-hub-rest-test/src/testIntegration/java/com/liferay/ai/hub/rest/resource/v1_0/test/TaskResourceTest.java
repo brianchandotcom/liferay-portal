@@ -17,7 +17,6 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -192,7 +191,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 	}
 
 	@AfterClass
-	public static void tearDownClass() throws PortalException {
+	public static void tearDownClass() throws Exception {
 		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
@@ -202,13 +201,8 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 
 		PrincipalThreadLocal.setName(_originalName);
 
-		try {
-			ConfigurationTestUtil.deleteConfiguration(
-				AIHubConfiguration.class.getName());
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
+		ConfigurationTestUtil.deleteConfiguration(
+			AIHubConfiguration.class.getName());
 	}
 
 	@After

@@ -12,6 +12,7 @@ import {accountSettingsPagesTest} from '../../../fixtures/accountSettingsPagesTe
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {documentLibraryPagesTest} from '../../../fixtures/documentLibraryPages.fixtures';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
@@ -30,6 +31,7 @@ export const test = mergeTests(
 	apiHelpersTest,
 	changeTrackingPagesTest,
 	dataApiHelpersTest,
+	documentLibraryPagesTest,
 	isolatedSiteTest,
 	journalPagesTest,
 	pagesAdminPagesTest,
@@ -842,4 +844,46 @@ test.describe('Publications with incomplete status tests', () => {
 			ctCollection2.body.id
 		);
 	});
+});
+
+test('LPD-62940 Assert download button is visible and functional in the data tab', async ({
+	changeTrackingPage,
+	ctCollection,
+	documentLibraryEditFilePage,
+	documentLibraryPage,
+	page,
+}) => {
+	await changeTrackingPage.workOnPublication(ctCollection);
+
+	await documentLibraryPage.goto();
+
+	await page.getByTitle('Provided by Liferay').click();
+
+	await documentLibraryPage.goToFileEntryAction('Edit', 'astronaut.png');
+
+	await page
+		.locator(
+			'#_com_liferay_document_library_web_portlet_DLAdminPortlet_title'
+		)
+		.fill('astronaut2');
+
+	await documentLibraryEditFilePage.publishButton.click();
+
+	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
+	await changeTrackingPage.reviewChange('astronaut2');
+	await changeTrackingPage.selectTab('Data');
+
+	const downloadPromise = page.waitForEvent('download');
+
+	const downloadButton = page
+		.locator('.btn-primary', {
+			hasText: 'Download',
+		})
+		.first();
+
+	await downloadButton.scrollIntoViewIfNeeded();
+	await downloadButton.click();
+
+	const download = await downloadPromise;
+	expect(download.suggestedFilename()).toEqual('astronaut.png');
 });

@@ -185,6 +185,8 @@ export class ProductMenuPage {
 	}
 
 	async goToSegments() {
+		await this.openProductMenuIfClosed();
+
 		await this.peopleButton.click();
 		await this.segmentsButton.click();
 	}

@@ -690,6 +690,79 @@ public class BatchEnginePortletDataHandlerTest {
 			objectDefinition, sourceDepotEntry.getGroup());
 	}
 
+	@Test
+	@TestInfo("LPD-77099")
+	public void testExportImportIndividualDeletionsSiteScope()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		ObjectDefinition objectDefinition = _addObjectDefinition(
+			ObjectDefinitionConstants.SCOPE_SITE);
+
+		ObjectEntry[] objectEntries = _addObjectEntries(
+			3, group.getGroupId(), objectDefinition);
+
+		File larFile1 = new ExportImportExecutor(
+		).withGroupId(
+			group.getGroupId()
+		).withObjectDefinition(
+			objectDefinition
+		).executeExport();
+
+		_deleteObjectEntries(objectEntries[0], objectEntries[1]);
+
+		File larFile2 = new ExportImportExecutor(
+		).withDeletions(
+		).withGroupId(
+			group.getGroupId()
+		).withObjectDefinition(
+			objectDefinition
+		).executeExport();
+
+		_deleteObjectEntries(objectEntries[2]);
+
+		new ExportImportExecutor(
+		).withGroupId(
+			group.getGroupId()
+		).withLARFile(
+			larFile1
+		).withObjectDefinition(
+			objectDefinition
+		).executeImport();
+
+		_assertObjectEntries(
+			false, objectDefinition.getObjectDefinitionId(), objectEntries);
+
+		new ExportImportExecutor(
+		).withGroupId(
+			group.getGroupId()
+		).withLARFile(
+			larFile2
+		).withObjectDefinition(
+			objectDefinition
+		).executeImport();
+
+		_assertObjectEntries(
+			false, objectDefinition.getObjectDefinitionId(), objectEntries);
+
+		new ExportImportExecutor(
+		).withDeletions(
+		).withGroupId(
+			group.getGroupId()
+		).withLARFile(
+			larFile2
+		).withObjectDefinition(
+			objectDefinition
+		).executeImport();
+
+		_assertObjectEntries(
+			false, objectDefinition.getObjectDefinitionId(), objectEntries[2]);
+		_assertNull(
+			objectDefinition.getObjectDefinitionId(), objectEntries[0],
+			objectEntries[1]);
+	}
+
 	@FeatureFlag("LPD-35443")
 	@Test
 	@TestInfo("LPD-64365")

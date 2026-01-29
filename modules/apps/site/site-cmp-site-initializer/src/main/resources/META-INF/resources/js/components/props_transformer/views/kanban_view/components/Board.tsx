@@ -14,7 +14,7 @@ export default function Board() {
 	const {boardData} = useContext(KanbanViewContext);
 
 	return (
-		<ContainerFluid>
+		<ContainerFluid size="xxxl">
 			<div className="d-flex">
 				{KANBAN_COLUMN_ORDER.map((state) => {
 					const column = boardData[state];

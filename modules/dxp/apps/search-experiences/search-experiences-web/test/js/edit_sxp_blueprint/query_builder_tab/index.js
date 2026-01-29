@@ -35,6 +35,7 @@ function renderBuilder(props) {
 			}))}
 			onDeleteSXPElement={jest.fn()}
 			onFrameworkConfigChange={jest.fn()}
+			scope={[]}
 			setFieldValue={jest.fn()}
 			{...props}
 		/>

@@ -5,6 +5,7 @@
 
 package com.liferay.jenkins.results.parser.history;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.testray.TestrayRoutine;
 
 import java.util.HashMap;
@@ -43,6 +44,10 @@ public class HistoryFactory {
 	public static JobHistory newJobHistory(
 		int maxBuildCount, String portalUpstreamBranchName,
 		List<TestrayRoutine> testrayRoutines) {
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(portalUpstreamBranchName)) {
+			return null;
+		}
 
 		JobHistory jobHistory = _jobHistories.get(portalUpstreamBranchName);
 

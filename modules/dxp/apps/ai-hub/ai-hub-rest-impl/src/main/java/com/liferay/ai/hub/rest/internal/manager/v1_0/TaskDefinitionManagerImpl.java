@@ -45,7 +45,7 @@ public class TaskDefinitionManagerImpl implements TaskDefinitionManager {
 
 	@Override
 	public void deleteTaskDefinition(
-			long taskDefinitionId, DTOConverterContext dtoConverterContext)
+			DTOConverterContext dtoConverterContext, long taskDefinitionId)
 		throws Exception {
 
 		WorkflowDefinition workflowDefinition =
@@ -64,7 +64,7 @@ public class TaskDefinitionManagerImpl implements TaskDefinitionManager {
 	@Override
 	public Page<TaskDefinition> getTaskDefinitions(
 			long companyId, DTOConverterContext dtoConverterContext,
-			String search, Filter filter, Pagination pagination, Sort[] sorts)
+			Filter filter, Pagination pagination, String search, Sort[] sorts)
 		throws Exception {
 
 		Map<String, Map<String, String>> actions = null;
@@ -95,16 +95,16 @@ public class TaskDefinitionManagerImpl implements TaskDefinitionManager {
 				Field.NAME, Field.VERSION),
 			searchContext -> searchContext.setCompanyId(companyId), sorts,
 			document -> _toTaskDefinition(
+				dtoConverterContext,
 				_workflowDefinitionManager.getWorkflowDefinition(
 					companyId, document.get(Field.NAME),
-					GetterUtil.getInteger(document.get(Field.VERSION))),
-				dtoConverterContext));
+					GetterUtil.getInteger(document.get(Field.VERSION)))));
 	}
 
 	@Override
 	public TaskDefinition patchTaskDefinitionUpdateActive(
-			long taskDefinitionId, boolean active,
-			DTOConverterContext dtoConverterContext)
+			boolean active, DTOConverterContext dtoConverterContext,
+			long taskDefinitionId)
 		throws Exception {
 
 		WorkflowDefinition workflowDefinition =
@@ -115,12 +115,12 @@ public class TaskDefinitionManagerImpl implements TaskDefinitionManager {
 			workflowDefinition.getName(), workflowDefinition.getVersion(),
 			active);
 
-		return _toTaskDefinition(workflowDefinition, dtoConverterContext);
+		return _toTaskDefinition(dtoConverterContext, workflowDefinition);
 	}
 
 	@Override
 	public TaskDefinition postTaskDefinitionCopy(
-			long taskDefinitionId, DTOConverterContext dtoConverterContext)
+			DTOConverterContext dtoConverterContext, long taskDefinitionId)
 		throws Exception {
 
 		WorkflowDefinition workflowDefinition =
@@ -140,12 +140,12 @@ public class TaskDefinitionManagerImpl implements TaskDefinitionManager {
 				StringUtil.randomString(), WorkflowDefinitionConstants.SCOPE_AI,
 				content.getBytes());
 
-		return _toTaskDefinition(workflowDefinition, dtoConverterContext);
+		return _toTaskDefinition(dtoConverterContext, workflowDefinition);
 	}
 
 	private TaskDefinition _toTaskDefinition(
-			WorkflowDefinition workflowDefinition,
-			DTOConverterContext dtoConverterContext)
+			DTOConverterContext dtoConverterContext,
+			WorkflowDefinition workflowDefinition)
 		throws PortalException {
 
 		return new TaskDefinition() {

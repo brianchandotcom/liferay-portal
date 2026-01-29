@@ -202,6 +202,10 @@ public class PlaywrightJUnitTestClass extends JUnitTestClass {
 
 		BatchHistory batchHistory = batchTestClassGroup.getBatchHistory();
 
+		if (batchHistory == null) {
+			return _testClassHistoriesMap;
+		}
+
 		for (TestClassMethod testClassMethod : getTestClassMethods()) {
 			PlaywrightTestClassMethod playwrightTestClassMethod =
 				(PlaywrightTestClassMethod)testClassMethod;

@@ -23,6 +23,8 @@ import {cmpTasksFDSAtom} from '../props_transformer/atoms';
 import './TasksQuickFilters.scss';
 
 export const UPDATE_TASKS_QUICK_FILTER_EVENT = 'cmp-update-tasks-quick-filter';
+export const UPDATE_TASKS_QUICK_FILTER_VISIBILITY =
+	'cmp-update-tasks-quick-filter-visibility';
 
 export const TASK_QUICK_FILTER_TYPES = {
 	BLOCKED: 'blocked',
@@ -95,6 +97,8 @@ export default function TasksQuickFilters({projectId}: {projectId?: string}) {
 
 	const [tasksFDSState, setTasksFDSState] =
 		useLiferayState<IFDSState>(cmpTasksFDSAtom);
+
+	const [visible, setVisible] = useState(true);
 
 	const isQuickFilterChangeRef = useRef(false);
 
@@ -306,9 +310,20 @@ export default function TasksQuickFilters({projectId}: {projectId?: string}) {
 			}
 		};
 
+		const handleUpdateTasksQuickVisibility = (event: {
+			visible: boolean;
+		}) => {
+			setVisible(event.visible);
+		};
+
 		Liferay.on(
 			UPDATE_TASKS_QUICK_FILTER_EVENT,
 			handleUpdateTasksQuickFilter
+		);
+
+		Liferay.on(
+			UPDATE_TASKS_QUICK_FILTER_VISIBILITY,
+			handleUpdateTasksQuickVisibility
 		);
 
 		Liferay.on(FDS_EVENT.DISPLAY_UPDATED, fetchCounts);
@@ -329,7 +344,7 @@ export default function TasksQuickFilters({projectId}: {projectId?: string}) {
 		handleTotalTasksClick,
 	]);
 
-	return (
+	return visible ? (
 		<div className="lfr-cmp__tasks-quick-filters-container">
 			{loading ? (
 				<ClayLoadingIndicator />
@@ -398,5 +413,5 @@ export default function TasksQuickFilters({projectId}: {projectId?: string}) {
 				</ClayLayout.ContainerFluid>
 			)}
 		</div>
-	);
+	) : null;
 }

@@ -7,12 +7,30 @@
 
 <%@ include file="/init.jsp" %>
 
+<%@ page import="com.liferay.portal.kernel.util.HashMapBuilder" %>
+<%@ page import="java.util.Map" %>
+
+<%
+Map<String, String> customMessages = HashMapBuilder.<String, String>put(
+    "ariaLabelAttention", "Warning! Value is at {0}"
+).put(
+    "ariaLabelComplete", "Finished"
+).put(
+    "ariaLabelInProgress", "Processing {0}"
+).build();
+%>
+
 <blockquote>
 	<p>
 		Progress bar is a progress indicator used to show the completion
 		percentage of a task.
 	</p>
 </blockquote>
+
+<clay:progressbar
+    messages="<%= customMessages %>"
+    value="<%= 50 %>"
+/>
 
 <clay:progressbar
 	value="<%= 30 %>"

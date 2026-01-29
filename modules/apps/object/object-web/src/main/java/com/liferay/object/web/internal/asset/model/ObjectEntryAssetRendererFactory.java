@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import jakarta.servlet.ServletContext;
 
+import java.util.Locale;
+
 /**
  * @author Feliphe Marinho
  */
@@ -81,6 +83,17 @@ public class ObjectEntryAssetRendererFactory
 	@Override
 	public String getType() {
 		return _objectDefinition.getClassName();
+	}
+
+	@Override
+	public String getTypeName(Locale locale) {
+		String typeName = super.getTypeName(locale);
+
+		if (_objectDefinition.isCMS()) {
+			typeName = StringUtil.appendParentheticalSuffix(typeName, "CMS");
+		}
+
+		return typeName;
 	}
 
 	@Override

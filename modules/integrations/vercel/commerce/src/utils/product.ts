@@ -13,7 +13,7 @@ function calculateDiscountPercent(finalPrice: number, originalPrice: number) {
 	const discount = originalPrice - finalPrice;
 	const discountPercent = (discount / originalPrice) * 100;
 
-	return discountPercent;
+	return discountPercent.toFixed(2);
 }
 
 type SkuDetails = {

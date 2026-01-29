@@ -19,13 +19,17 @@ const PageTemplate = ({children}: PropsWithChildren) => {
 export default async function Home({
 	searchParams,
 }: {
-	searchParams: Promise<{ page?: string; q?: string }>;
+	searchParams: Promise<{page?: string; q?: string}>;
 }) {
 	const params = await searchParams;
 	const page = Number(params.page || 1);
 	const searchQuery = params.q || '';
 
-	const {data, error} = await getCMSBlogPostings({liferay, search: params.q, page});
+	const {data, error} = await getCMSBlogPostings({
+		liferay,
+		page,
+		search: params.q,
+	});
 
 	if (error || !data) {
 		return (
@@ -41,24 +45,24 @@ export default async function Home({
 		);
 	}
 
-	const items = data.items
+	const items = data.items;
 
 	return (
 		<PageTemplate>
 			<SearchBar />
 
 			{searchQuery && (
-				<div className="mb-4 text-sm text-gray-600">
-					Found {items.length} result
-					{items.length !== 1 ? 's' : ''}.
+				<div className="mb-4 text-gray-600 text-sm">
+					{`Found ${items.length} result ${items.length > 1 ? 's' : ''}.`}
 				</div>
 			)}
 
-			{items.length === 0 ? (
-				<div className="text-center py-12">
-					<p className="text-xl text-gray-600 mb-2">
+			{!items.length ? (
+				<div className="py-12 text-center">
+					<p className="mb-2 text-gray-600 text-xl">
 						No blog posts found
 					</p>
+
 					<p className="text-gray-500">
 						Try adjusting your search terms
 					</p>

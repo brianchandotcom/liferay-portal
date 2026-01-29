@@ -281,12 +281,8 @@
 																	"defaultFragmentInlineValue": {
 																		"value": "<p>Founded in 2010, Clarity is one of the largest online eyewear stores around the world. After so many years of development, we have our own professional team, our own complete industrial chain from design, material selection and production of glasses. We always uphold the principle of \"high quality, rich styles, reasonable price\", commited to providing customers with the best products.</p>"
 																	},
-																	"mapping": {
-																		"fieldKey": "DDMStructure_content",
-																		"itemReference": {
-																			"className": "com.liferay.journal.model.JournalArticle",
-																			"classPK": 59224
-																		}
+																	"value_i18n": {
+																		"en_US": "<p>Founded in 2010, Clarity is one of the largest online eyewear stores around the world. After so many years of development, we have our own professional team, our own complete industrial chain from design, material selection and production of glasses. We always uphold the principle of \"high quality, rich styles, reasonable price\", commited to providing customers with the best products.</p>"
 																	}
 																}
 															}
@@ -379,12 +375,8 @@
 																	"defaultFragmentInlineValue": {
 																		"value": "<p>In such a colorful world, vision plays avital role in every stage of our lives. More often that not, we rely on our eyes to see how the world is changing. Babies rely on their eyes to make sense of the world; students rely on their eyes to read and write; adults rely on their eyes to work; elders rely on their eyes to keep independent. The bauty of this world is diverse, but it also lacks an eye to find it.</p>"
 																	},
-																	"mapping": {
-																		"fieldKey": "DDMStructure_content",
-																		"itemReference": {
-																			"className": "com.liferay.journal.model.JournalArticle",
-																			"classPK": 59234
-																		}
+																	"value_i18n": {
+																		"en_US": "<p>In such a colorful world, vision plays avital role in every stage of our lives. More often that not, we rely on our eyes to see how the world is changing. Babies rely on their eyes to make sense of the world; students rely on their eyes to read and write; adults rely on their eyes to work; elders rely on their eyes to keep independent. The bauty of this world is diverse, but it also lacks an eye to find it.</p>"
 																	}
 																}
 															}

@@ -68,14 +68,10 @@ public class ContactDataCleanupPreupgradeProcessTest
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 		_systemEvents = _systemEventLocalService.getSystemEvents(
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		_user = UserTestUtil.addUser();
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		_userLocalService.deleteUser(_user);
-
 		List<ClassName> classNames = ListUtil.remove(
 			_classNameLocalService.getClassNames(
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
@@ -100,46 +96,55 @@ public class ContactDataCleanupPreupgradeProcessTest
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
+		User user = UserTestUtil.addUser();
+
+		long contactId = user.getContactId();
+		long userId = user.getUserId();
+
 		_addressLocalService.addAddress(
-			null, _user.getUserId(), Contact.class.getName(),
-			_user.getContactId(), 0,
+			null, userId, Contact.class.getName(), contactId, 0,
 			_getListTypeId(ListTypeConstants.CONTACT_ADDRESS), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
 			RandomTestUtil.randomString(), false, RandomTestUtil.randomString(),
 			null, null, null, null, null, serviceContext);
 
 		_emailAddressLocalService.addEmailAddress(
-			null, _user.getUserId(), Contact.class.getName(),
-			_user.getContactId(),
+			null, userId, Contact.class.getName(), contactId,
 			RandomTestUtil.randomString() + "@liferay.com",
 			_getListTypeId(ListTypeConstants.CONTACT_EMAIL_ADDRESS), false,
 			serviceContext);
 
 		_phoneLocalService.addPhone(
-			null, _user.getUserId(), Contact.class.getName(),
-			_user.getContactId(), RandomTestUtil.randomString(),
+			null, userId, Contact.class.getName(), contactId,
+			RandomTestUtil.randomString(),
 			String.valueOf(RandomTestUtil.randomInt()),
 			_getListTypeId(ListTypeConstants.CONTACT_PHONE), false,
 			serviceContext);
 
 		_websiteLocalService.addWebsite(
-			null, _user.getUserId(), Contact.class.getName(),
-			_user.getContactId(), "http://www.example.com",
+			null, userId, Contact.class.getName(), contactId,
+			"http://www.example.com",
 			_getListTypeId(ListTypeConstants.CONTACT_WEBSITE), false,
 			serviceContext);
 
-		runSQL(
-			"delete from Contact_ where contactId = " + _user.getContactId());
+		runSQL("delete from Contact_ where contactId = " + contactId);
 
-		upgrade();
+		try {
+			upgrade();
 
-		_assetContactData("Address");
-		_assetContactData("EmailAddress");
-		_assetContactData("Phone");
-		_assetContactData("Website");
+			_assetContactData(contactId, "Address");
+			_assetContactData(contactId, "EmailAddress");
+			_assetContactData(contactId, "Phone");
+			_assetContactData(contactId, "Website");
+		}
+		finally {
+			_userLocalService.deleteUser(user);
+		}
 	}
 
-	private void _assetContactData(String tableName) throws Exception {
+	private void _assetContactData(long classPK, String tableName)
+		throws Exception {
+
 		try (Connection connection = DataAccess.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
@@ -148,7 +153,7 @@ public class ContactDataCleanupPreupgradeProcessTest
 
 			preparedStatement.setLong(
 				1, _classNameLocalService.getClassNameId(Contact.class));
-			preparedStatement.setLong(2, _user.getContactId());
+			preparedStatement.setLong(2, classPK);
 
 			ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -174,7 +179,6 @@ public class ContactDataCleanupPreupgradeProcessTest
 	private static ListTypeLocalService _listTypeLocalService;
 
 	private static List<SystemEvent> _systemEvents;
-	private static User _user;
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;

@@ -40,6 +40,30 @@ import java.util.Map;
  */
 public class BatchEnginePortletDataHandlerUtil {
 
+	public static Map<String, Serializable> buildDeleteParameters(
+		ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
+			exportImportDescriptor,
+		GroupLocalService groupLocalService,
+		PortletDataContext portletDataContext,
+		StagingGroupHelper stagingGroupHelper) {
+
+		HashMap<String, Serializable> importParameters =
+			HashMapBuilder.<String, Serializable>putAll(
+				exportImportDescriptor.getParameters(portletDataContext)
+			).build();
+
+		Group group = groupLocalService.fetchGroup(
+			portletDataContext.getScopeGroupId());
+
+		if (!_isCompanyScoped(group, stagingGroupHelper)) {
+			importParameters.put(
+				"siteExternalReferenceCode", group.getExternalReferenceCode());
+			importParameters.put("siteId", group.getGroupId());
+		}
+
+		return importParameters;
+	}
+
 	public static Map<String, Serializable> buildExportParameters(
 		ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
 			exportImportDescriptor,

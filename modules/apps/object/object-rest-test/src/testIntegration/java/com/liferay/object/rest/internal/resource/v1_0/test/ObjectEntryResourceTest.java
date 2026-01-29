@@ -6242,7 +6242,13 @@ public class ObjectEntryResourceTest {
 			_objectDefinition2, TestPropsValues.getUser());
 
 		AssertUtils.assertFailure(
-			NoSuchObjectEntryException.class, null,
+			NoSuchObjectEntryException.class,
+			StringBundler.concat(
+				"No ObjectEntry exists with the key {externalReferenceCode=",
+				objectEntry.getExternalReferenceCode(), ", groupId=",
+				objectEntry.getGroupId(), ", companyId=",
+				objectEntry.getCompanyId(), ", objectDefinitionId=",
+				_objectDefinition2.getObjectDefinitionId(), "}"),
 			() -> objectEntryResource2.getByExternalReferenceCodeVersionsPage(
 				objectEntry.getExternalReferenceCode(),
 				Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS), null));

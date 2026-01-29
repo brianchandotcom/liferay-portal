@@ -50,7 +50,7 @@ export default function RootLayout({
 						</Link>
 
 						<a
-							href="https://github.com/liferay/liferay-portal/tree/master/modules/integrations/vercel/templates/commerce/"
+							href="https://github.com/liferay/liferay-portal/tree/master/modules/integrations/vercel/commerce/"
 							rel="noopener noreferrer"
 							target="_blank"
 							title="See code on GitHub"

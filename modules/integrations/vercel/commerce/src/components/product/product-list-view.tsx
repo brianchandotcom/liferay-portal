@@ -6,6 +6,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import PreviewHTML from '../../components/preview-html';
 import {Product} from '../../types/product';
 import {getSkuDetails, handleImageError} from '../../utils/product';
 import {Badge} from '../ui/badge';
@@ -39,7 +40,7 @@ export default function ProductListView({product}: ProductListViewProps) {
 						<div className="flex items-start justify-between">
 							<div className="space-y-1">
 								<div className="flex gap-2 items-center text-sm">
-									<Badge className="bg-slate-500 bg-success text-white">
+									<Badge className="bg-slate-500 text-white">
 										AVAILABLE
 									</Badge>
 
@@ -59,7 +60,10 @@ export default function ProductListView({product}: ProductListViewProps) {
 									{product.name}
 								</h3>
 
-								<p className="text-sm">{product.description}</p>
+								<PreviewHTML
+									className="text-sm"
+									content={product.description ?? ''}
+								/>
 							</div>
 
 							<div className="text-right">

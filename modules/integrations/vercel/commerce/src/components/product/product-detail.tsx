@@ -10,6 +10,7 @@ import {ChevronLeft, ChevronRight} from 'lucide-react';
 import Image from 'next/image';
 import {useState} from 'react';
 
+import PreviewHTML from '../../components/preview-html';
 import {Attachment, Product} from '../../types/product';
 import {getSkuDetails, handleImageError} from '../../utils/product';
 import {Badge} from '../ui/badge';
@@ -118,7 +119,7 @@ const ProductDetail = ({product}: {product: Product}) => {
 
 							<span className="text-sm">
 								Only {skuDetails.availability?.stockQuantity}
-								&nbsp; left in stock
+								&nbsp;left in stock
 							</span>
 						</div>
 					)}
@@ -149,11 +150,7 @@ const ProductDetail = ({product}: {product: Product}) => {
 						)}
 					</div>
 
-					<div
-						dangerouslySetInnerHTML={{
-							__html: product.description ?? '',
-						}}
-					/>
+					<PreviewHTML content={product.description ?? ''} />
 
 					{!!skuDetails.skuUnitOfMeasures?.length && (
 						<ProductUOM uom={skuDetails?.skuUnitOfMeasures} />

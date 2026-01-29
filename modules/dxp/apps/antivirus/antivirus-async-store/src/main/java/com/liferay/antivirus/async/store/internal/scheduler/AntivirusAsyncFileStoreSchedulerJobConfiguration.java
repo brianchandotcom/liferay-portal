@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 
@@ -73,11 +74,9 @@ public class AntivirusAsyncFileStoreSchedulerJobConfiguration
 
 	@Override
 	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
-		if (PropsUtil.get(
-				PropsKeys.DL_STORE_IMPL
-			).startsWith(
-				"com.liferay.portal.store.file.system"
-			)) {
+		if (StringUtil.startsWith(
+				PropsUtil.get(PropsKeys.DL_STORE_IMPL),
+				"com.liferay.portal.store.file.system")) {
 
 			java.io.File file =
 				(java.io.File)_storeServiceReference.getProperty("rootDir");

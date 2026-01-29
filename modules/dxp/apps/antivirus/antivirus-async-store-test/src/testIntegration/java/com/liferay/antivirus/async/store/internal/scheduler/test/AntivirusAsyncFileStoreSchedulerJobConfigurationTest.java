@@ -163,8 +163,6 @@ public class AntivirusAsyncFileStoreSchedulerJobConfigurationTest {
 	private <T> T _getService(String className, String componentName)
 		throws Exception {
 
-		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
-
 		String filterString = "(component.name=" + componentName + ")";
 
 		ServiceReference<T>[] serviceReferences = null;
@@ -173,7 +171,7 @@ public class AntivirusAsyncFileStoreSchedulerJobConfigurationTest {
 
 		while (ArrayUtil.isEmpty(serviceReferences)) {
 			serviceReferences =
-				(ServiceReference<T>[])bundleContext.getServiceReferences(
+				(ServiceReference<T>[])_bundleContext.getServiceReferences(
 					className, filterString);
 
 			if (waitTime >= TestPropsValues.CI_TEST_TIMEOUT_TIME) {
@@ -190,7 +188,7 @@ public class AntivirusAsyncFileStoreSchedulerJobConfigurationTest {
 			}
 		}
 
-		return (T)bundleContext.getService(serviceReferences[0]);
+		return _bundleContext.getService(serviceReferences[0]);
 	}
 
 	private void _testScan() throws Exception {

@@ -336,7 +336,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					BatchEngineImportTaskConstants.
 						IMPORT_STRATEGY_ON_ERROR_CONTINUE,
 					BatchEngineTaskOperation.DELETE.name(),
-					BatchEnginePortletDataHandlerUtil.buildImportParameters(
+					BatchEnginePortletDataHandlerUtil.buildDeleteParameters(
 						registration.getExportImportDescriptor(),
 						_groupLocalService, portletDataContext,
 						_stagingGroupHelper),

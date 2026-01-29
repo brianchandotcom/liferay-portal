@@ -60,6 +60,7 @@ public class TokenResourceImpl extends BaseTokenResourceImpl {
 			{
 				setAccessToken(() -> jsonObject.getString("access_token"));
 				setScope(() -> jsonObject.getString("scope"));
+				setServiceURL(aiHubConfiguration::serviceURL);
 				setUserToken(
 					() -> JWTTokenUtil.generateToken(
 						TimeUnit.MINUTES.toMillis(1),

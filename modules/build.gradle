@@ -213,7 +213,7 @@ gradle.allprojects {
 
 	String gradleYarnInstallNetworkTimeout = GradleUtil.getProperty(project, "gradle.yarn.install.network.timeout")
 
-	if ((gradleYarnInstallNetworkTimeout != null) && gradleYarnInstallNetworkTimeout.matches("\\d+")) {
+	if (gradleYarnInstallNetworkTimeout != null) {
 		tasks.withType(com.liferay.gradle.plugins.node.task.YarnInstallTask) {
 			networkTimeout = Long.parseLong(gradleYarnInstallNetworkTimeout)
 		}

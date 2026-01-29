@@ -7,12 +7,19 @@ import {ClayInput} from '@clayui/form';
 import {FieldBase} from 'frontend-js-components-web';
 import React from 'react';
 
-type ClayInputProps = {
-	component?: 'input' | 'textarea' | React.ForwardRefExoticComponent<any>;
-	insetAfter?: boolean;
-	insetBefore?: boolean;
-	sizing?: 'lg' | 'regular' | 'sm';
-} & React.InputHTMLAttributes<HTMLInputElement>;
+type FieldTextProps = {
+	component?: 'textarea' | 'input';
+	disabled?: boolean;
+	errorMessage?: string;
+	formGroupProps?: {className: string};
+	helpMessage?: string;
+	id?: string;
+	label: string;
+	name: string;
+	required?: boolean;
+	type?: 'text' | 'number';
+	value?: string;
+} & React.ComponentProps<typeof ClayInput>;
 
 const FieldText = ({
 	component = 'input',
@@ -27,19 +34,7 @@ const FieldText = ({
 	type = 'text',
 	value = '',
 	...restProps
-}: {
-	component?: 'textarea' | 'input';
-	disabled?: boolean;
-	errorMessage?: string;
-	formGroupProps?: {className: string};
-	helpMessage?: string;
-	id?: string;
-	label: string;
-	name: string;
-	required?: boolean;
-	type?: 'text' | 'number';
-	value?: string;
-} & ClayInputProps) => {
+}: FieldTextProps) => {
 	const fieldId = id ?? name;
 
 	return (

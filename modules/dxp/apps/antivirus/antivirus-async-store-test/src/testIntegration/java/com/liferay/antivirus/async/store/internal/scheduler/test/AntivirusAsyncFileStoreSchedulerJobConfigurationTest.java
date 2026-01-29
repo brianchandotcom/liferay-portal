@@ -46,6 +46,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.io.ByteArrayInputStream;
 
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -123,7 +124,7 @@ public class AntivirusAsyncFileStoreSchedulerJobConfigurationTest {
 	@Test(expected = Test.None.class)
 	public void testNonrootFolderFileScanned() throws Exception {
 		try (SafeCloseable safeCloseable =
-				 _updateDLStoreImplWithSafeCloseable()) {
+				_updateDLStoreImplWithSafeCloseable()) {
 
 			DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
@@ -195,7 +196,7 @@ public class AntivirusAsyncFileStoreSchedulerJobConfigurationTest {
 		try {
 			jobExecutorUnsafeRunnable.run();
 
-			countDownLatch.await();
+			countDownLatch.await(10, TimeUnit.SECONDS);
 
 			Assert.assertTrue(testMessageListener._fileScanned);
 		}

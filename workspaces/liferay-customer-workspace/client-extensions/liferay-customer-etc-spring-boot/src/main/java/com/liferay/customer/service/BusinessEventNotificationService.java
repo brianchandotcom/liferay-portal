@@ -7,6 +7,7 @@ package com.liferay.customer.service;
 
 import com.liferay.customer.constants.NotificationSubscriptionConstants;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.time.ZoneOffset;
@@ -156,7 +157,8 @@ public class BusinessEventNotificationService extends BaseNotificationService {
 				)
 			).put(
 				"BUSINESSEVENT_LASTCOMMENT",
-				businessEventJSONObject.optString("lastComment")
+				HtmlUtil.escape(
+					businessEventJSONObject.optString("lastComment"))
 			).put(
 				"BUSINESSEVENT_NAME", businessEventJSONObject.optString("name")
 			).put(
@@ -243,7 +245,9 @@ public class BusinessEventNotificationService extends BaseNotificationService {
 			}
 
 			sb.append("<br/>");
-			sb.append(businessEventVersionJSONObject.optString("comment"));
+			sb.append(
+				HtmlUtil.escape(
+					businessEventVersionJSONObject.optString("comment")));
 			sb.append("</li>");
 		}
 

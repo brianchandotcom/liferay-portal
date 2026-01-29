@@ -25,7 +25,12 @@ export default function SearchBar({
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		window.location.href = searchResultsURL + '?q=' + term;
+		const encodedState = encodeURIComponent(JSON.stringify({q: term}));
+
+		window.location.href =
+			searchResultsURL +
+			'?com.liferay.site.cms.site.initializer-allSection_fdsConfig=' +
+			encodedState;
 	};
 
 	return (

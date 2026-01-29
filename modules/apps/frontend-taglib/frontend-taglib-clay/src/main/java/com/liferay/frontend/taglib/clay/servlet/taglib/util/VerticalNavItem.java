@@ -61,4 +61,8 @@ public class VerticalNavItem extends NavigationItem {
 		put("labelItems", labelItems);
 	}
 
+	public void setLeadingIcon(IconItem iconItem) {
+		put("leadingIcon", iconItem);
+	}
+
 }

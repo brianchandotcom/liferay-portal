@@ -78,13 +78,12 @@ public class UpdateStructureStrutsAction implements StrutsAction {
 		catch (Exception exception) {
 			jsonObject = _jsonFactory.createJSONObject();
 
-			String errorMessage = StringBundler.concat(
-				"an-unexpected-error-occurred-while-saving-or-publishing-",
-				"the-content-structure");
-
 			jsonObject.put(
 				"error",
-				_language.get(httpServletRequest.getLocale(), errorMessage));
+				_language.get(
+					httpServletRequest.getLocale(),
+					"an-unexpected-error-occurred-while-saving-or-publishing-",
+						"the-content-structure"));
 
 			if (_log.isWarnEnabled()) {
 				_log.warn(exception);

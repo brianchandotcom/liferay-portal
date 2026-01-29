@@ -198,6 +198,10 @@ public class TestrayBatchHistory extends BaseBatchHistory {
 		StopWatchRecordsGroup stopWatchRecordsGroup =
 			downstreamBuildReport.getStopWatchRecordsGroup();
 
+		if (stopWatchRecordsGroup == null) {
+			return testTaskReports;
+		}
+
 		for (StopWatchRecord stopWatchRecord :
 				stopWatchRecordsGroup.getAllStopWatchRecords()) {
 

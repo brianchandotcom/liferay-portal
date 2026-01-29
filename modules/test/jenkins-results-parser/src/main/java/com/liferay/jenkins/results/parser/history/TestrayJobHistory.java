@@ -43,7 +43,7 @@ public class TestrayJobHistory extends BaseJobHistory {
 		).put(
 			"testray_url", String.valueOf(getTestrayURL())
 		).put(
-			"upstream_branch_name", _latestTestrayBuild.getPortalBranch()
+			"upstream_branch_name", getPortalUpstreamBranchName()
 		);
 
 		return jsonObject;

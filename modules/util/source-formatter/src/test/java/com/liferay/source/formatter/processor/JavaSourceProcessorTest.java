@@ -729,13 +729,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"MissingParameterizedSQLStatement.testjava"
 			).addExpectedMessage(
-				"Use \"PreparedStatement.set*\" to parameterize \"" +
-					"dlFileEntryClassNameId\"",
-				24
+				"Use \"PreparedStatement.set*\" to parameterize \"ownerType\"",
+				23
 			).addExpectedMessage(
-				"Use \"PreparedStatement.set*\" to parameterize \"" +
-					"fileEntryClassNameId\"",
-				24
+				"Use \"PreparedStatement.set*\" to parameterize \"portletId\"",
+				23
 			));
 	}
 

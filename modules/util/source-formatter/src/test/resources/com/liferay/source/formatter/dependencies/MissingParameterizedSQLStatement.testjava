@@ -14,25 +14,23 @@ import java.sql.ResultSet;
 /**
  * @author Alan Huang
  */
-public class SQLBooleanValues {
+public class MissingParameterizedSQLStatement {
 
 	protected ResultSet method(
-			Connection connection, long dlFileEntryClassNameId,
-			long fileEntryClassNameId)
+			Connection connection, String portletId, int ownerType)
 		throws Exception {
 
-		PreparedStatement preparedStatement = connection.prepareStatement(
-			StringBundler.concat(
-				"select assetDisplayPageEntry1.assetDisplayPageEntryId from ",
-				"AssetDisplayPageEntry assetDisplayPageEntry1 inner join ",
-				"AssetDisplayPageEntry assetDisplayPageEntry2 on ",
-				"assetDisplayPageEntry1.groupId = assetDisplayPageEntry2.and ",
-				"assetDisplayPageEntry2.classNameId = ", fileEntryClassNameId,
-				" and assetDisplayPageEntry1.classPK = assetDisplayPageEntry2.",
-				"classPK where assetDisplayPageEntry1.classNameId = ",
-				dlFileEntryClassNameId));
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select companyId, preferences from PortletPreferences ",
+					"where portletId = '", portletId, "' AND ownerType = ",
+					ownerType))) {
 
-		return preparedStatement.executeQuery();
+			preparedStatement.setString(1, portletId);
+			preparedStatement.setInt(2, ownerType);
+
+			return preparedStatement.executeQuery();
+		}
 	}
 
 }

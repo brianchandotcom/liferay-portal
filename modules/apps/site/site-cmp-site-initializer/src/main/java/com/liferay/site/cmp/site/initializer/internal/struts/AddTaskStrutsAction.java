@@ -15,14 +15,13 @@ import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.site.cmp.site.initializer.internal.util.ActionUtil;
+import com.liferay.site.cmp.site.initializer.internal.util.CMPHttpComponentsUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -97,17 +96,10 @@ public class AddTaskStrutsAction implements StrutsAction {
 			ActionUtil.getBaseEditTaskURL(objectDefinition, themeDisplay) +
 				objectEntry.getId();
 
-		String backURL = ParamUtil.getString(httpServletRequest, "redirect");
-
-		if (Validator.isNotNull(backURL)) {
-			editTaskURL = HttpComponentsUtil.addParameter(
-				editTaskURL, "redirect", backURL);
-		}
-
-		editTaskURL = HttpComponentsUtil.addParameter(
-			editTaskURL, "isCreateTaskGlobalTaskListPage",
-			ParamUtil.getBoolean(
-				httpServletRequest, "isCreateTaskGlobalTaskListPage"));
+		editTaskURL = CMPHttpComponentsUtil.addParameter(
+			httpServletRequest, "action", editTaskURL);
+		editTaskURL = CMPHttpComponentsUtil.addParameter(
+			httpServletRequest, "redirect", editTaskURL);
 
 		httpServletResponse.sendRedirect(editTaskURL);
 

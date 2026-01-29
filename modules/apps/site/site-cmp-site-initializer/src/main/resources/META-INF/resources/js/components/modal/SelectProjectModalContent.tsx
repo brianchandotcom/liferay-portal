@@ -65,26 +65,26 @@ export default function SelectProjectModalContent({
 				},
 			];
 
+	const handleCreateProject = () => {
+		const url = new URL(addProjectURL);
+
+		url.searchParams.set('redirect', window.location.href);
+
+		navigate(url);
+	};
+
 	const handleSave = () => {
 		if (!selectedProject) {
 			return;
 		}
 
 		const url = new URL(addTaskURL);
-		url.searchParams.set('isCreateTaskGlobalTaskListPage', 'true');
+
 		url.searchParams.set(
 			'projectGroupId',
 			String(selectedProject.embedded.scopeId)
 		);
 		url.searchParams.set('projectId', String(selectedProject.embedded.id));
-		url.searchParams.set('redirect', window.location.href);
-
-		navigate(url);
-	};
-
-	const handleCreateProject = () => {
-		const url = new URL(addProjectURL);
-		url.searchParams.set('isCreateProjectGlobalTaskListPage', 'true');
 		url.searchParams.set('redirect', window.location.href);
 
 		navigate(url);

@@ -1423,7 +1423,7 @@ public class RenderLayoutStructureTagTest {
 	}
 
 	@Test
-	@TestInfo("LPD-64102")
+	@TestInfo({"LPD-64102", "LPD-77454"})
 	public void testRenderCollectionStyledLayoutStructureItemWithAssetListEntryReferencedByExternalReferenceCode()
 		throws Exception {
 
@@ -1473,8 +1473,6 @@ public class RenderLayoutStructureTagTest {
 			).put(
 				"externalReferenceCode",
 				assetListEntry.getExternalReferenceCode()
-			).put(
-				"itemType", JournalArticle.class.getName()
 			).put(
 				"scopeExternalReferenceCode",
 				companyGroup.getExternalReferenceCode()

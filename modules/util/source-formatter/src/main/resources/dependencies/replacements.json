@@ -5007,6 +5007,24 @@
 	},
 	{
 		"classNames": [
+			"LayoutClassedModelUsageLocalService",
+			"LayoutClassedModelUsageLocalServiceUtil"
+		],
+		"from": "addLayoutClassedModelUsage(long paramName, long paramName, long paramName, String paramName, long paramName, long paramName, ServiceContext paramName)",
+		"issueKey": "LPD-58438",
+		"to": "addLayoutClassedModelUsage(param#0#, null, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#)"
+	},
+	{
+		"classNames": [
+			"LayoutClassedModelUsageLocalService",
+			"LayoutClassedModelUsageLocalServiceUtil"
+		],
+		"from": "fetchLayoutClassedModelUsage(long paramName, long paramName, String paramName, long paramName, long paramName)",
+		"issueKey": "LPD-58438",
+		"to": "fetchLayoutClassedModelUsage(null, null, param#0#, param#1#, param#2#, param#3#, param#4#)"
+	},
+	{
+		"classNames": [
 			"DLUtil"
 		],
 		"from": "getUniqueFileName(long paramName, long paramName, String paramName)",

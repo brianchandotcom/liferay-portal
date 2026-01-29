@@ -35,9 +35,15 @@ public class TaskDefinitionResourceImpl extends BaseTaskDefinitionResourceImpl {
 
 	@Override
 	public void deleteTaskDefinition(Long taskDefinitionId) throws Exception {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-62272")) {
+
+			throw new UnsupportedOperationException();
+		}
+
 		_taskDefinitionManager.deleteTaskDefinition(
-			taskDefinitionId,
-			_createDefaultDTOConverterContext(taskDefinitionId));
+			_createDefaultDTOConverterContext(taskDefinitionId),
+			taskDefinitionId);
 	}
 
 	@Override
@@ -58,7 +64,7 @@ public class TaskDefinitionResourceImpl extends BaseTaskDefinitionResourceImpl {
 
 		return _taskDefinitionManager.getTaskDefinitions(
 			contextCompany.getCompanyId(),
-			_createDefaultDTOConverterContext(null), search, filter, pagination,
+			_createDefaultDTOConverterContext(null), filter, pagination, search,
 			sorts);
 	}
 
@@ -67,18 +73,30 @@ public class TaskDefinitionResourceImpl extends BaseTaskDefinitionResourceImpl {
 			Long taskDefinitionId, Boolean active)
 		throws Exception {
 
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-62272")) {
+
+			throw new UnsupportedOperationException();
+		}
+
 		return _taskDefinitionManager.patchTaskDefinitionUpdateActive(
-			taskDefinitionId, active,
-			_createDefaultDTOConverterContext(taskDefinitionId));
+			active, _createDefaultDTOConverterContext(taskDefinitionId),
+			taskDefinitionId);
 	}
 
 	@Override
 	public TaskDefinition postTaskDefinitionCopy(Long taskDefinitionId)
 		throws Exception {
 
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-62272")) {
+
+			throw new UnsupportedOperationException();
+		}
+
 		return _taskDefinitionManager.postTaskDefinitionCopy(
-			taskDefinitionId,
-			_createDefaultDTOConverterContext(taskDefinitionId));
+			_createDefaultDTOConverterContext(taskDefinitionId),
+			taskDefinitionId);
 	}
 
 	private DefaultDTOConverterContext _createDefaultDTOConverterContext(

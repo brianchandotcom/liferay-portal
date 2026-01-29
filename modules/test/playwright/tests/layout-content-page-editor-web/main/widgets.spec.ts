@@ -458,15 +458,17 @@ test(
 
 		await performLogout(page);
 
-		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+		await expect(async () => {
+			await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-		await expect(
-			page
-				.getByText(
-					'You do not have the roles required to access this portlet.'
-				)
-				.first()
-		).toBeVisible();
+			await expect(
+				page
+					.getByText(
+						'You do not have the roles required to access this portlet.'
+					)
+					.first()
+			).toBeVisible({timeout: 3000});
+		}).toPass();
 	}
 );
 

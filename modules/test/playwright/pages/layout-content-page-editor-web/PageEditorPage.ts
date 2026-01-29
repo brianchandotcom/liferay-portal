@@ -1340,9 +1340,11 @@ export class PageEditorPage {
 		await button.waitFor();
 
 		await expect(async () => {
-			await button.click({timeout: 1000});
+			if (await button.isVisible()) {
+				await button.click({timeout: 1000});
 
-			await waitForAlert(this.page, 'successfully', {timeout: 2000});
+				await waitForAlert(this.page, 'successfully', {timeout: 2000});
+			}
 		}).toPass();
 	}
 

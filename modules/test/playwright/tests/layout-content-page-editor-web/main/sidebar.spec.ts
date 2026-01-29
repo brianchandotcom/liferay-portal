@@ -1249,23 +1249,27 @@ test.describe('Page Contents Panel', () => {
 
 			await page.getByLabel('Select a language').waitFor();
 
-			const newTitle = getRandomString();
+			await Promise.all(
+				(await page.getByLabel('Rich Text Editor').all()).map(
+					(editor) => editor.waitFor()
+				)
+			);
+
+			await page.locator('.journal-article-button-row').waitFor();
 
 			await journalPage.articleTitleInput.waitFor();
 
-			await journalPage.articleTitleInput.fill(newTitle);
+			const newTitle = getRandomString();
 
 			await expect(async () => {
-				if (
-					await page
-						.locator('.journal-article-button-row')
-						.isVisible()
-				) {
-					await page
-						.locator('.journal-article-button-row')
-						.getByRole('button', {exact: true, name: 'Publish'})
-						.click({timeout: 500});
-				}
+				await journalPage.articleTitleInput.fill(newTitle, {
+					timeout: 1000,
+				});
+
+				await page
+					.locator('.journal-article-button-row')
+					.getByRole('button', {exact: true, name: 'Publish'})
+					.click({timeout: 500});
 
 				await expect(page.locator('.page-editor')).toBeVisible({
 					timeout: 2000,

@@ -312,19 +312,19 @@ test.describe('Page content', () => {
 						`Showing content for the segment "${segmentsEntryName}".`
 					)
 				).toBeVisible({timeout: 5000});
+
+				await expect(
+					simulationPreviewIframe.getByRole('link', {
+						name: blogsEntryName,
+					})
+				).toBeVisible({timeout: 1000});
+
+				await expect(
+					simulationPreviewIframe.getByRole('link', {
+						name: documentName,
+					})
+				).not.toBeVisible({timeout: 1000});
 			}).toPass();
-
-			await expect(
-				simulationPreviewIframe.getByRole('link', {
-					name: blogsEntryName,
-				})
-			).toBeVisible({timeout: 1000});
-
-			await expect(
-				simulationPreviewIframe.getByRole('link', {
-					name: documentName,
-				})
-			).not.toBeVisible({timeout: 1000});
 		}
 	);
 

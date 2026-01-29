@@ -132,9 +132,17 @@ export async function performLoginViaApi({
 export async function performLogout(page: Page) {
 	await page.goto('/');
 
-	await page.getByTitle('User Profile Menu').click();
+	await expect(async () => {
+		await page.getByTitle('User Profile Menu').click({timeout: 1000});
 
-	await page.getByRole('menuitem', {name: 'Sign Out'}).click();
+		await page
+			.getByRole('menuitem', {name: 'Sign Out'})
+			.click({timeout: 1000});
+
+		await expect(page.getByRole('button', {name: 'Sign In'})).toBeVisible({
+			timeout: 3000,
+		});
+	}).toPass();
 }
 
 export async function performUserSwitch(

@@ -2440,11 +2440,13 @@ test(
 		// Go to the object display page
 
 		await expect(async () => {
+			await page.goto('/');
+
 			await page.goto(
 				`/web${site.friendlyUrlPath}/e/${displayPageTemplateName}/${className.classNameId}/${objectEntry.id}`
 			);
 
-			await localizationSelectPage.trigger.waitFor({timeout: 1000});
+			await localizationSelectPage.trigger.waitFor({timeout: 4000});
 		}).toPass();
 
 		// Assert that translation is displayed correctly

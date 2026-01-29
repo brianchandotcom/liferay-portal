@@ -245,6 +245,74 @@ export const membershipChangesColumns = {
 	}
 };
 
+export const IndividualsListCDPColumns = {
+	accountNames: {
+		accessor: 'accountName',
+		cellRenderer: ({className, data: {accountName}}) => (
+			<td className={getCN('name-cell-root', className)}>
+				<div className='text-truncate'>{accountName || null}</div>
+			</td>
+		),
+		label: Liferay.Language.get('account-name'),
+		sortable: true
+	},
+	country: {
+		accessor: 'countries',
+		cellRenderer: ({className, data: {properties}}) => (
+			<td className={getCN('name-cell-root', className)}>
+				<div className='text-truncate'>
+					{properties.country || null}
+				</div>
+			</td>
+		),
+		label: Liferay.Language.get('country'),
+		sortable: true
+	},
+	firstSeen: {
+		accessor: 'firstSeenTime',
+		cellRenderer: ({className, data: {firstSeenTime}}) => (
+			<td className={getCN('name-cell-root', className)}>
+				<div className='text-truncate'>
+					{formatUTCDate(firstSeenTime) || '-'}
+				</div>
+			</td>
+		),
+		label: Liferay.Language.get('first-seen'),
+		sortable: true
+	},
+	getNameEmail: ({channelId, groupId}) => ({
+		accessor: 'name',
+		cellRenderer: MemberCell,
+		cellRendererProps: {
+			routeFn: ({data: {id}}) =>
+				toRoute(Routes.CONTACTS_INDIVIDUAL, {channelId, groupId, id})
+		},
+		className: 'table-cell-expand',
+		label: `${Liferay.Language.get('member-name')} | ${Liferay.Language.get(
+			'email'
+		)}`,
+		sortable: true
+	}),
+	lastActive: {
+		accessor: 'lastActivityTime',
+		cellRenderer: ({className, data: {lastActivityTime}}) => (
+			<td className={getCN('name-cell-root', className)}>
+				<div className='text-truncate'>
+					{formatUTCDate(lastActivityTime) || '-'}
+				</div>
+			</td>
+		),
+		label: Liferay.Language.get('last-active'),
+		sortable: true
+	},
+	profileType: {
+		accessor: 'profileType',
+		cellRenderer: ProfileType,
+		label: Liferay.Language.get('profile-type'),
+		sortable: true
+	}
+};
+
 /**
  * Changes List Columns
  */

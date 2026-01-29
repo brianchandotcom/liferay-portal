@@ -601,7 +601,7 @@ passwords.encryption.algorithm=NONE</echo>
 								mysqldump \
 									--compact \
 									--databases ${database.schema.name} \
-									--default-character-set=utf8 \
+									--default-character-set=utf8mb4 \
 									${ignore_table_argument} \
 									--no-data \
 									--order-by-primary \

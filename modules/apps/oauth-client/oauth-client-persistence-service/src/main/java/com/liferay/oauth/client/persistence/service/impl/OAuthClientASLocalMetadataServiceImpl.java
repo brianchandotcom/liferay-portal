@@ -36,7 +36,7 @@ public class OAuthClientASLocalMetadataServiceImpl
 
 	@Override
 	public OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
-			String authorizationEndpoint, boolean enabled, String issuerString,
+			String authorizationEndpoint, boolean enabled, String issuer,
 			String jwksUri, String[] supportedGrantTypes,
 			String[] supportedScopes, String[] supportedSubjectTypes,
 			String tokenEndpointString, String userinfoEndpoint)
@@ -52,7 +52,7 @@ public class OAuthClientASLocalMetadataServiceImpl
 
 		return oAuthClientASLocalMetadataLocalService.
 			addOAuthClientASLocalMetadata(
-				userId, authorizationEndpoint, enabled, issuerString, jwksUri,
+				userId, authorizationEndpoint, enabled, issuer, jwksUri,
 				supportedGrantTypes, supportedScopes, supportedSubjectTypes,
 				tokenEndpointString, userinfoEndpoint);
 	}

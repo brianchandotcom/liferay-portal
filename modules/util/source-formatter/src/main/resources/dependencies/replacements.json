@@ -4958,6 +4958,22 @@
 	},
 	{
 		"classNames": [
+			"ProxyModeThreadLocal"
+		],
+		"from": "setForceSync(boolean paramName)",
+		"hasMessage": true,
+		"issueKey": "LPD-58370"
+	},
+	{
+		"classNames": [
+			"ProxyModeThreadLocal"
+		],
+		"from": "setWithSafeClosable(boolean paramName)",
+		"hasMessage": true,
+		"issueKey": "LPD-58370"
+	},
+	{
+		"classNames": [
 			"SafePortalLDAP"
 		],
 		"from": "getUser(long paramName, long paramName, String paramName, String paramName, boolean paramName)",
@@ -4972,22 +4988,6 @@
 		"from": "addDiscussionMessage(long param, String param, long param, String param, long param, long param, long param, String param, String param, ServiceContext param)",
 		"issueKey": "LPD-58406",
 		"to": "addDiscussionMessage(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#, param#8#, param#9#)"
-	},
-	{
-		"classNames": [
-			"ProxyModeThreadLocal"
-		],
-		"from": "setForceSync(boolean paramName)",
-		"hasMessage": true,
-		"issueKey": "LPD-58370"
-	},
-	{
-		"classNames": [
-			"ProxyModeThreadLocal"
-		],
-		"from": "setWithSafeClosable(boolean paramName)",
-		"hasMessage": true,
-		"issueKey": "LPD-58370"
 	},
 	{
 		"classNames": [

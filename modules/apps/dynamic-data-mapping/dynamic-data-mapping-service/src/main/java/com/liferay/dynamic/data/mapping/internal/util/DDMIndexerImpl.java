@@ -771,8 +771,21 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 			String[] truncatedValuesString = valuesString;
 
-			if (type.equals(DDMFormFieldTypeConstants.DATE) ||
-				type.equals(DDMFormFieldTypeConstants.DATE_TIME)) {
+			if (type.equals(DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE) ||
+				type.equals(DDMFormFieldTypeConstants.SELECT)) {
+
+				String[] sortableValuesString = _toStringArray(sortableValue);
+
+				document.addKeyword(_getFieldName(name), sortableValuesString);
+
+				document.addKeyword(name, valuesString);
+
+				truncatedValuesString = TransformUtil.transform(
+					sortableValuesString, StringUtil::toLowerCase,
+					String.class);
+			}
+			else if (type.equals(DDMFormFieldTypeConstants.DATE) ||
+					 type.equals(DDMFormFieldTypeConstants.DATE_TIME)) {
 
 				Date[] dateValues = _getDateValues(type, valuesString);
 

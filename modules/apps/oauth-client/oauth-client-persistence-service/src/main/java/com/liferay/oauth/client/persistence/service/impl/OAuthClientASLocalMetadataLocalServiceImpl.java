@@ -336,16 +336,14 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 	}
 
 	private String _generateAuthorizationServerJSON(
-			String authorizationEndpoint, String issuerStr, String jwksUri,
+			String authorizationEndpoint, String issuer, String jwksUri,
 			String[] supportedScopes, String[] supportedGrantTypes,
 			String tokenEndpoint)
 		throws PortalException {
 
 		try {
-			Issuer issuer = new Issuer(issuerStr);
-
 			AuthorizationServerMetadata metadata =
-				new AuthorizationServerMetadata(issuer);
+				new AuthorizationServerMetadata(new Issuer(issuer));
 
 			metadata.setAuthorizationEndpointURI(
 				new URI(authorizationEndpoint));
@@ -354,8 +352,8 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 
 			Scope scope = new Scope();
 
-			for (String scopre : supportedScopes) {
-				scope.add(scopre);
+			for (String supportedScope : supportedScopes) {
+				scope.add(supportedScope);
 			}
 
 			metadata.setScopes(scope);
@@ -407,15 +405,13 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 	}
 
 	private String _generateOpenIdConfigurationJSON(
-			String authorizationEndpoint, String issuerStr, String jwksUri,
+			String authorizationEndpoint, String issuer, String jwksUri,
 			String[] supportedGrantTypes, String[] supportedScopes,
 			String[] supportedSubjectTypes, String tokenEndpoint,
 			String userinfoEndpoint)
 		throws PortalException {
 
 		try {
-			Issuer issuer = new Issuer(issuerStr);
-
 			List<SubjectType> subjectTypes = new ArrayList<>();
 
 			if (supportedSubjectTypes != null) {
@@ -425,7 +421,7 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 			}
 
 			OIDCProviderMetadata metadata = new OIDCProviderMetadata(
-				issuer, subjectTypes, new URI(jwksUri));
+				new Issuer(issuer), subjectTypes, new URI(jwksUri));
 
 			metadata.setAuthorizationEndpointURI(
 				new URI(authorizationEndpoint));

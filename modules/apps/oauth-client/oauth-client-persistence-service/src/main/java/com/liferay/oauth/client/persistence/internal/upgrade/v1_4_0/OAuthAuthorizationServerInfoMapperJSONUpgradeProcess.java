@@ -39,7 +39,7 @@ public class OAuthAuthorizationServerInfoMapperJSONUpgradeProcess
 				if (Validator.isNull(metadataJSON)) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
-							"Unable to update issuer for OAuth client " +
+							"Unable to update issuer for OAuth 2 client " +
 								"authorization server local metadata ID " +
 									oAuthClientASLocalMetadataId);
 					}

@@ -6,6 +6,7 @@
 package com.liferay.change.tracking.web.internal.frontend.data.set.filter;
 
 import com.liferay.change.tracking.constants.CTConstants;
+import com.liferay.change.tracking.web.internal.constants.PublicationsFDSNames;
 import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
@@ -19,7 +20,10 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Noor Najjar
  */
-@Component(service = FDSFilter.class)
+@Component(
+	property = "frontend.data.set.name=" + PublicationsFDSNames.PUBLICATIONS_CHANGES,
+	service = FDSFilter.class
+)
 public class ChangeTypeSelectionFDSFilter extends BaseSelectionFDSFilter {
 
 	@Override

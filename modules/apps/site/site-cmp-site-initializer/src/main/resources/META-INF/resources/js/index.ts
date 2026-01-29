@@ -5,6 +5,7 @@
 
 export {default as CustomAssignee} from './components/CustomAssignee';
 export {default as EditorToolbar} from './components/EditorToolbar';
+export {default as Tags} from './components/Tags';
 export {default as ProjectInfoSummary} from './components/project/ProjectInfoSummary';
 export {default as ProjectsFDSPropsTransformer} from './components/props_transformer/ProjectsFDSPropsTransformer';
 export {default as TasksFDSPropsTransformer} from './components/props_transformer/TasksFDSPropsTransformer';

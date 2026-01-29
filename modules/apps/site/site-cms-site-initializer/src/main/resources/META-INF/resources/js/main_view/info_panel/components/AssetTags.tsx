@@ -6,6 +6,7 @@
 import Label from '@clayui/label';
 import ClayPanel from '@clayui/panel';
 import {ItemSelector} from '@liferay/frontend-js-item-selector-web';
+import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
 import React, {useCallback, useMemo, useState} from 'react';
 
@@ -25,6 +26,7 @@ const AssetTags = ({
 	hasUpdatePermission,
 	inputSize,
 	objectEntry,
+	titleClassName,
 	updateObjectEntry,
 }: {
 	assetLibraryId?: number | string | null | undefined;
@@ -33,6 +35,7 @@ const AssetTags = ({
 	hasUpdatePermission?: boolean;
 	inputSize?: CategorizationInputSize;
 	objectEntry: IAssetObjectEntry | EntryCategorizationDTO;
+	titleClassName?: string;
 	updateObjectEntry: (object: EntryCategorizationDTO) => void | Promise<void>;
 }) => {
 	const [value, setValue] = useState('');
@@ -111,7 +114,12 @@ const AssetTags = ({
 			collapsable={collapsable}
 			defaultExpanded={true}
 			displayTitle={
-				<ClayPanel.Title className="panel-title text-secondary">
+				<ClayPanel.Title
+					className={classNames(
+						'panel-title',
+						titleClassName ? titleClassName : 'text-secondary'
+					)}
+				>
 					{Liferay.Language.get('tags')}
 				</ClayPanel.Title>
 			}

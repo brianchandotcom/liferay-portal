@@ -54,13 +54,22 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(categoryDisplayName);
 %>
 
+<liferay-ui:error exception="<%= ConfigurationValidationException.class %>">
+
+	<%
+	ConfigurationValidationException configurationValidationException = (ConfigurationValidationException)errorException;
+	%>
+
+	<liferay-ui:message arguments="<%= configurationValidationException.getMessageArguments() %>" key="<%= configurationValidationException.getMessageKey() %>" translateArguments="<%= false %>" />
+</liferay-ui:error>
+
 <liferay-ui:error exception="<%= ConfigurationModelListenerException.class %>">
 
 	<%
-	ConfigurationModelListenerException cmle = (ConfigurationModelListenerException)errorException;
+	ConfigurationModelListenerException configurationModelListenerException = (ConfigurationModelListenerException)errorException;
 	%>
 
-	<liferay-ui:message key="<%= HtmlUtil.escape(cmle.causeMessage) %>" localizeKey="<%= false %>" />
+	<liferay-ui:message key="<%= HtmlUtil.escape(configurationModelListenerException.causeMessage) %>" localizeKey="<%= false %>" />
 </liferay-ui:error>
 
 <portlet:actionURL name="/configuration_admin/bind_configuration" var="bindConfigurationActionURL" />

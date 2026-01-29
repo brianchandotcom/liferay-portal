@@ -39,9 +39,7 @@ export function Wizard({
 	const {actionButton, description, onSubmit, title} = step.props;
 
 	const next = () => {
-		if (stepNumber < totalSteps - 1) {
-			setStepNumber((stepNumber) => stepNumber + 1);
-		}
+		setStepNumber((stepNumber) => Math.min(stepNumber + 1, totalSteps - 1));
 	};
 
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {

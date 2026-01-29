@@ -13,9 +13,6 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -261,7 +258,7 @@ public class BusinessEventNotificationService extends BaseNotificationService {
 	private static final Log _log = LogFactory.getLog(
 		BusinessEventNotificationService.class);
 
-	private final ZonedDateTime _lastSuccessfulRunZonedDateTime;
+	private ZonedDateTime _lastSuccessfulRunZonedDateTime;
 
 	@Autowired
 	private NotificationSubscriptionService _notificationSubscriptionService;

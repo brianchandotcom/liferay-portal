@@ -38,7 +38,7 @@ const BULK_ACTION_MESSAGES: BulkActionMessage = {
 				'categories-update-action-started-for-x-assets'
 			),
 			singular: Liferay.Language.get(
-				'categories-update-action-started-for-x-asset'
+				'categories-update-action-started-for-one-asset'
 			),
 		},
 	},

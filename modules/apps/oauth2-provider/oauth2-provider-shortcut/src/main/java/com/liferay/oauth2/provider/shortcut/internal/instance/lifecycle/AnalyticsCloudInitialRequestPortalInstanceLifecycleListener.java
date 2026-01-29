@@ -22,13 +22,11 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instance.lifecycle.InitialRequestPortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -134,40 +132,32 @@ public class AnalyticsCloudInitialRequestPortalInstanceLifecycleListener
 	private OAuth2Application _addOAuth2Application(long companyId)
 		throws Exception {
 
-		DynamicQuery dynamicQuery =
-			_oAuth2ApplicationLocalService.dynamicQuery();
+		OAuth2Application oAuth2Application =
+			_oAuth2ApplicationLocalService.
+				fetchOAuth2ApplicationByExternalReferenceCode(
+					"ANALYTICS-CLOUD", companyId);
 
-		Property companyIdProperty = PropertyFactoryUtil.forName("companyId");
-
-		dynamicQuery.add(companyIdProperty.eq(companyId));
-
-		Property nameProperty = PropertyFactoryUtil.forName("name");
-
-		dynamicQuery.add(nameProperty.eq(_APPLICATION_NAME));
-
-		List<OAuth2Application> oAuth2Applications =
-			_oAuth2ApplicationLocalService.dynamicQuery(dynamicQuery);
-
-		if (!oAuth2Applications.isEmpty()) {
-			return oAuth2Applications.get(0);
+		if (oAuth2Application != null) {
+			return oAuth2Application;
 		}
 
-		User user = _userLocalService.getGuestUser(companyId);
+		User user = _userLocalService.getUserByScreenName(
+			companyId, UserConstants.SCREEN_NAME_DEFAULT_SERVICE_ACCOUNT);
 
 		_addSAPEntries(companyId, user.getUserId());
 
-		OAuth2Application oAuth2Application =
-			_oAuth2ApplicationLocalService.addOAuth2Application(
-				companyId, user.getUserId(), user.getScreenName(),
+		oAuth2Application =
+			_oAuth2ApplicationLocalService.addOrUpdateOAuth2Application(
+				"ANALYTICS-CLOUD", user.getUserId(), user.getScreenName(),
 				new ArrayList<GrantType>() {
 					{
-						add(GrantType.AUTHORIZATION_CODE);
-						add(GrantType.REFRESH_TOKEN);
+						add(GrantType.CLIENT_CREDENTIALS);
+						add(GrantType.JWT_BEARER);
 					}
 				},
 				"client_secret_post", user.getUserId(),
 				OAuth2SecureRandomGenerator.generateClientId(),
-				ClientProfile.WEB_APPLICATION.id(),
+				ClientProfile.HEADLESS_SERVER.id(),
 				OAuth2SecureRandomGenerator.generateClientSecret(), null, null,
 				"https://analytics.liferay.com", 0, null, _APPLICATION_NAME,
 				null,

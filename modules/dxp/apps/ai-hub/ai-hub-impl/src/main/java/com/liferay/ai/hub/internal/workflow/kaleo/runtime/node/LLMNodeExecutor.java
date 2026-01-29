@@ -199,6 +199,7 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 			SseUtil.send(
 				aiMessage.text(),
 				GetterUtil.getString(workflowContext.get("outBoundEventName")),
+				kaleoNode.getName(),
 				GetterUtil.getString(workflowContext.get("sseEventSinkKey")));
 
 			KaleoInstanceToken kaleoInstanceToken =

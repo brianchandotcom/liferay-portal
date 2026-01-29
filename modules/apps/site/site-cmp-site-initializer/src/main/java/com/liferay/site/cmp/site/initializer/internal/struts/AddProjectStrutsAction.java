@@ -21,15 +21,14 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.site.cmp.site.initializer.internal.util.ActionUtil;
+import com.liferay.site.cmp.site.initializer.internal.util.CMPHttpComponentsUtil;
 import com.liferay.site.cmp.site.initializer.internal.util.SiteInitializerUtil;
 import com.liferay.site.initializer.SiteInitializer;
 
@@ -133,17 +132,10 @@ public class AddProjectStrutsAction implements StrutsAction {
 			ActionUtil.getBaseEditProjectURL(objectDefinition, themeDisplay) +
 				objectEntry.getId();
 
-		String backURL = ParamUtil.getString(httpServletRequest, "redirect");
-
-		if (Validator.isNotNull(backURL)) {
-			editProjectURL = HttpComponentsUtil.addParameter(
-				editProjectURL, "redirect", backURL);
-		}
-
-		editProjectURL = HttpComponentsUtil.addParameter(
-			editProjectURL, "isCreateProjectGlobalTaskListPage",
-			ParamUtil.getBoolean(
-				httpServletRequest, "isCreateProjectGlobalTaskListPage"));
+		editProjectURL = CMPHttpComponentsUtil.addParameter(
+			httpServletRequest, "action", editProjectURL);
+		editProjectURL = CMPHttpComponentsUtil.addParameter(
+			httpServletRequest, "redirect", editProjectURL);
 
 		httpServletResponse.sendRedirect(editProjectURL);
 

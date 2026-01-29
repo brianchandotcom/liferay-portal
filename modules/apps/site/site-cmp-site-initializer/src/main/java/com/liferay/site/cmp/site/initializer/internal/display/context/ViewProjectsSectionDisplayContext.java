@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.site.cmp.site.initializer.internal.constants.CMPActionConstants;
 import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.DueDateRangeFDSFilter;
 import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.ProjectManagerSelectionFDSFilter;
 import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.ProjectSponsorSelectionFDSFilter;
@@ -81,7 +82,8 @@ public class ViewProjectsSectionDisplayContext
 	public CreationMenu getCreationMenu() {
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
-				dropdownItem.putData("action", "createProject");
+				dropdownItem.putData(
+					"action", CMPActionConstants.CREATE_PROJECT);
 				dropdownItem.putData(
 					"objectDefinitionId",
 					String.valueOf(objectDefinition.getObjectDefinitionId()));

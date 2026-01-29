@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
+import com.liferay.site.cmp.site.initializer.internal.constants.CMPActionConstants;
 import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.CreateDateFDSFilter;
 import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.DueDateRangeFDSFilter;
 import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.ProjectSelectionFDSFilter;
@@ -62,17 +63,22 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 	public CreationMenu getCreationMenu() {
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
-				dropdownItem.putData("action", "createTask");
+				dropdownItem.putData("action", CMPActionConstants.CREATE_TASK);
 
 				if (_assetEntry == null) {
 					dropdownItem.putData(
 						"addProjectURL",
-						ActionUtil.getAddProjectURL(
-							_projectObjectDefinition, themeDisplay));
+						StringBundler.concat(
+							ActionUtil.getAddProjectURL(
+								_projectObjectDefinition, themeDisplay),
+							"&action=",
+							CMPActionConstants.CREATE_PROJECT_GLOBAL_TASK));
 					dropdownItem.putData(
 						"addTaskURL",
-						ActionUtil.getAddTaskURL(
-							0, objectDefinition, 0, themeDisplay));
+						StringBundler.concat(
+							ActionUtil.getAddTaskURL(
+								0, objectDefinition, 0, themeDisplay),
+							"&action=", CMPActionConstants.CREATE_GLOBAL_TASK));
 				}
 
 				dropdownItem.putData(

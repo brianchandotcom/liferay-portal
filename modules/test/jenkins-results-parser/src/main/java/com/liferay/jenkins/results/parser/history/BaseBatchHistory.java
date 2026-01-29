@@ -29,6 +29,10 @@ public abstract class BaseBatchHistory implements BatchHistory {
 	public String getPortalUpstreamBranchName() {
 		JobHistory jobHistory = getJobHistory();
 
+		if (jobHistory == null) {
+			return null;
+		}
+
 		return jobHistory.getPortalUpstreamBranchName();
 	}
 

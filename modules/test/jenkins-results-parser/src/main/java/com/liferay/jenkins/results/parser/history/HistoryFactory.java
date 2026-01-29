@@ -22,6 +22,10 @@ public class HistoryFactory {
 	public static BatchHistory newBatchHistory(
 		String batchName, JobHistory jobHistory, JSONObject jsonObject) {
 
+		if (jobHistory == null) {
+			throw new RuntimeException("Job History is null");
+		}
+
 		BatchHistory batchHistory = _batchHistories.get(batchName);
 
 		if (batchHistory != null) {
@@ -76,6 +80,10 @@ public class HistoryFactory {
 		BatchHistory batchHistory, JSONObject jsonObject,
 		String testClassName) {
 
+		if (batchHistory == null) {
+			throw new RuntimeException("Batch History is null");
+		}
+
 		TestClassHistory testClassHistory = _testClassHistories.get(
 			testClassName);
 
@@ -97,6 +105,10 @@ public class HistoryFactory {
 
 	public static TestTaskHistory newTestTaskHistory(
 		BatchHistory batchHistory, JSONObject jsonObject, String testTaskName) {
+
+		if (batchHistory == null) {
+			throw new RuntimeException("Batch History is null");
+		}
 
 		TestTaskHistory testTaskHistory = _testTaskHistories.get(testTaskName);
 

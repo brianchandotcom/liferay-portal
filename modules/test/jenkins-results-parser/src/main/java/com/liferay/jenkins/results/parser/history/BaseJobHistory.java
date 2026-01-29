@@ -24,14 +24,14 @@ public abstract class BaseJobHistory implements JobHistory {
 
 	@Override
 	public BatchHistory getBatchHistory(String batchName) {
+		if (batchName == null) {
+			return null;
+		}
+
 		Matcher matcher = _pattern.matcher(batchName);
 
 		if (matcher.find()) {
 			batchName = matcher.group("batchName");
-		}
-
-		if (batchName == null) {
-			return null;
 		}
 
 		return _batchHistories.get(batchName);

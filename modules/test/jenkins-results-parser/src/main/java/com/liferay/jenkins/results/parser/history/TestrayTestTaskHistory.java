@@ -24,8 +24,16 @@ public class TestrayTestTaskHistory extends BaseTestTaskHistory {
 	public void addTestTaskReport(
 		boolean latestBuild, TestTaskReport testTaskReport) {
 
+		if (testTaskReport == null) {
+			return;
+		}
+
 		TopLevelBuildReport topLevelBuildReport =
 			testTaskReport.getTopLevelBuildReport();
+
+		if (topLevelBuildReport == null) {
+			return;
+		}
 
 		String key = JenkinsResultsParserUtil.combine(
 			String.valueOf(topLevelBuildReport.getBuildURL()), "__",

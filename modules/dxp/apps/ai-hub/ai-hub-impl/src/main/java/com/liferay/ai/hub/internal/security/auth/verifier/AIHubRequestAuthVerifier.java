@@ -59,7 +59,6 @@ public class AIHubRequestAuthVerifier implements AuthVerifier {
 					_portal.getCompanyId(httpServletRequest));
 			String requestURL = String.valueOf(
 				httpServletRequest.getRequestURL());
-
 			String token = httpServletRequest.getHeader(
 				"Liferay-AI-Hub-On-Behalf-Of");
 

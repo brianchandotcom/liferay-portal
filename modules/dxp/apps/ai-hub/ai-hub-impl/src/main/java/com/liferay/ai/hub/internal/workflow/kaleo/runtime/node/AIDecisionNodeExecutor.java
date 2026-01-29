@@ -122,7 +122,6 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 		}
 
 		ServiceContext serviceContext = executionContext.getServiceContext();
-
 		VertexAiGeminiStreamingChatModel vertexAiGeminiStreamingChatModel =
 			VertexAiGeminiStreamingChatModel.builder(
 			).project(
@@ -132,7 +131,6 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 			).modelName(
 				"gemini-2.5-flash-lite"
 			).build();
-
 		Map<String, Serializable> workflowContext =
 			executionContext.getWorkflowContext();
 

@@ -20,7 +20,9 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -32,6 +34,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PortalInstances;
 
 import java.io.InputStream;
 
@@ -108,6 +111,35 @@ public class ExportImportTaskResourceCreatorInfoTest {
 		Assert.assertEquals(
 			TestPropsValues.getUserId(), _objectDefinition1.getUserId());
 		Assert.assertEquals(_user.getUserId(), _objectDefinition2.getUserId());
+	}
+
+	@Test
+	public void testImportWithInsertAndKeepCreatorInDifferentCompany()
+		throws Exception {
+
+		Company company = CompanyLocalServiceUtil.addCompany(
+			null, _VIRTUAL_HOST_NAME, _VIRTUAL_HOST_NAME, _VIRTUAL_HOST_NAME, 0,
+			true, true, null, null, null, null, null, null);
+
+		PortalInstances.initCompany(company);
+
+		_executeImportTask("INSERT", _VIRTUAL_HOST_NAME, "KEEP_CREATOR");
+
+		_objectDefinition1 =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					_objectDefinition1.getExternalReferenceCode(),
+					company.getCompanyId());
+		_objectDefinition2 =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					_objectDefinition2.getExternalReferenceCode(),
+					company.getCompanyId());
+
+		User user = UserTestUtil.getAdminUser(company.getCompanyId());
+
+		Assert.assertEquals(user.getUserId(), _objectDefinition1.getUserId());
+		Assert.assertEquals(user.getUserId(), _objectDefinition2.getUserId());
 	}
 
 	@Test
@@ -343,6 +375,7 @@ public class ExportImportTaskResourceCreatorInfoTest {
 		while (true) {
 			exportTask = ExportTaskSerDes.toDTO(
 				_invoke(
+					"localhost",
 					"http://localhost:8080/o/headless-batch-engine/v1.0" +
 						"/export-task/by-external-reference-code/" +
 							externalReferenceCode));
@@ -408,8 +441,15 @@ public class ExportImportTaskResourceCreatorInfoTest {
 				"ObjectDefinition?createStrategy=", createStrategy,
 				"&importCreatorStrategy=", importCreatorStrategy));
 
-		httpInvoker.userNameAndPassword(
-			"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD);
+		if (StringUtil.equals(host, "localhost")) {
+			httpInvoker.userNameAndPassword(
+				"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD);
+		}
+		else {
+			httpInvoker.userNameAndPassword(
+				StringBundler.concat(
+					"test@", host, ":", PropsValues.DEFAULT_ADMIN_PASSWORD));
+		}
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 
@@ -421,6 +461,7 @@ public class ExportImportTaskResourceCreatorInfoTest {
 		while (true) {
 			importTask = ImportTaskSerDes.toDTO(
 				_invoke(
+					host,
 					StringBundler.concat(
 						"http://", host, ":8080/o/headless-batch-engine/v1.0",
 						"/import-task/by-external-reference-code/",
@@ -439,13 +480,21 @@ public class ExportImportTaskResourceCreatorInfoTest {
 		}
 	}
 
-	private String _invoke(String url) throws Exception {
+	private String _invoke(String host, String url) throws Exception {
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 		httpInvoker.path(url);
-		httpInvoker.userNameAndPassword(
-			"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD);
+
+		if (StringUtil.equals(host, "localhost")) {
+			httpInvoker.userNameAndPassword(
+				"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD);
+		}
+		else {
+			httpInvoker.userNameAndPassword(
+				StringBundler.concat(
+					"test@", host, ":", PropsValues.DEFAULT_ADMIN_PASSWORD));
+		}
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 
@@ -455,6 +504,8 @@ public class ExportImportTaskResourceCreatorInfoTest {
 	}
 
 	private static final String _OBJECT_FIELD_NAME_TEXT = "testFieldName";
+
+	private static final String _VIRTUAL_HOST_NAME = "www.able.com";
 
 	private String _json;
 	private ObjectDefinition _objectDefinition1;

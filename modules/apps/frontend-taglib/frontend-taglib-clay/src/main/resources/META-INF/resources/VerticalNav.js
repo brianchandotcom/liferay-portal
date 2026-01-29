@@ -45,6 +45,15 @@ export default function VerticalNav({
 					key={item.id}
 					textValue={item.label}
 				>
+					{item.leadingIcon?.symbol && (
+						<ClayIcon
+							className="c-ml-2 c-mr-2"
+							key={item.leadingIcon.symbol}
+							symbol={item.leadingIcon.symbol}
+							title={item.leadingIcon.title}
+						/>
+					)}
+
 					{item.label}
 
 					{item.icons?.map((icon) => {

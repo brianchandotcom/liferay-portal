@@ -210,6 +210,27 @@ public class VerticalNavTag extends BaseContainerTag {
 		return null;
 	}
 
+	private void _renderIcons(List<IconItem> iconItems, String cssClass)
+		throws Exception {
+
+		if (ListUtil.isNotEmpty(iconItems)) {
+			for (IconItem iconItem : iconItems) {
+				String symbol = (String)iconItem.get("symbol");
+
+				if (Validator.isNull(symbol)) {
+					continue;
+				}
+
+				IconTag iconTag = new IconTag();
+
+				iconTag.setCssClass(cssClass);
+				iconTag.setSymbol(symbol);
+
+				iconTag.doTag(pageContext);
+			}
+		}
+	}
+
 	private void _renderVerticalNavItems(
 			JspWriter jspWriter, List<VerticalNavItem> verticalNavItems,
 			int depth)
@@ -296,28 +317,19 @@ public class VerticalNavTag extends BaseContainerTag {
 				jspWriter.write("\" role=\"menuitem\" tabindex=\"-1\">");
 			}
 
+			IconItem leadingIconItem = (IconItem)verticalNavItem.get(
+				"leadingIcon");
+
+			if (leadingIconItem != null) {
+				_renderIcons(List.of(leadingIconItem), "c-ml-2 c-mr-2");
+			}
+
 			jspWriter.write(
 				HtmlUtil.escape((String)verticalNavItem.get("label")));
 
-			List<IconItem> iconItems = (List<IconItem>)verticalNavItem.get(
-				"icons");
-
-			if (ListUtil.isNotEmpty(iconItems)) {
-				for (IconItem iconItem : iconItems) {
-					String symbol = (String)iconItem.get("symbol");
-
-					if (Validator.isNull(symbol)) {
-						continue;
-					}
-
-					IconTag iconTag = new IconTag();
-
-					iconTag.setCssClass("c-ml-2 c-mr-2 text-muted");
-					iconTag.setSymbol(symbol);
-
-					iconTag.doTag(pageContext);
-				}
-			}
+			_renderIcons(
+				(List<IconItem>)verticalNavItem.get("icons"),
+				"c-ml-2 c-mr-2 text-muted");
 
 			List<LabelItem> labelItems = (List<LabelItem>)verticalNavItem.get(
 				"labelItems");

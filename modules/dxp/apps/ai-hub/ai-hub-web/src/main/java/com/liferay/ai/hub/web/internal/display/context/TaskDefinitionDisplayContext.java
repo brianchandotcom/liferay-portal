@@ -85,11 +85,11 @@ public class TaskDefinitionDisplayContext {
 			new FDSActionDropdownItem(
 				getAPIURL() + "/{id}/update-active?active=false", "no-bot",
 				"disable", LanguageUtil.get(_httpServletRequest, "disable"),
-				"patch", "disable", "async"),
+				"patch", "deactivate", "async"),
 			new FDSActionDropdownItem(
 				getAPIURL() + "/{id}/update-active?active=true", "plug",
 				"enable", LanguageUtil.get(_httpServletRequest, "enable"),
-				"patch", "enable", "async"));
+				"patch", "activate", "async"));
 	}
 
 	private String _getBaseURL(Company company, String namespace)

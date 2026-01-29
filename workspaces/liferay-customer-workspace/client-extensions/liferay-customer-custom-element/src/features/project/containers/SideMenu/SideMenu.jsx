@@ -75,10 +75,9 @@ const SideMenu = () => {
         () =>
             subscriptionGroups?.some(
                 (subscription) =>
-                    subscription.externalReferenceCode ===
-                    `${project?.externalReferenceCode}_liferay-saas`
+                    subscription.activationProductName?.includes(PRODUCT_TYPES.liferayExperienceCloud)
             ),
-        [subscriptionGroups, project?.externalReferenceCode]
+        [subscriptionGroups]
     );
 
 	const hasSLASubscription = useMemo(

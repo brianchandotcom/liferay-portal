@@ -31,14 +31,13 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -89,17 +88,9 @@ public class AntivirusAsyncFileStoreSchedulerJobConfigurationTest {
 			).build());
 
 		_schedulerJobConfiguration = _getService(
-			"(component.name=com.liferay.antivirus.async.store.internal." +
-				"scheduler.AntivirusAsyncFileStoreSchedulerJobConfiguration)",
-			SchedulerJobConfiguration.class.getName());
-
-		_dlStore = _getService(
-			"(component.name=com.liferay.antivirus.async.store.internal." +
-				"AntivirusAsyncDLStore)",
-			DLStore.class.getName());
-
-		_defaultStore = ReflectionTestUtil.getAndSetFieldValue(
-			_dlStore, "_store", _dbStore);
+			SchedulerJobConfiguration.class.getName(),
+			"com.liferay.antivirus.async.store.internal.scheduler." +
+				"AntivirusAsyncFileStoreSchedulerJobConfiguration");
 
 		_antivirusScannerServiceRegistration = _bundleContext.registerService(
 			AntivirusScanner.class,
@@ -114,57 +105,9 @@ public class AntivirusAsyncFileStoreSchedulerJobConfigurationTest {
 
 	@After
 	public void tearDown() throws Exception {
-		ReflectionTestUtil.setFieldValue(_dlStore, "_store", _defaultStore);
-
 		_configuration.delete();
 
 		_antivirusScannerServiceRegistration.unregister();
-	}
-
-	@Test(expected = Test.None.class)
-	public void testNonrootFolderFileScanned() throws Exception {
-		try (SafeCloseable safeCloseable =
-				_updateDLStoreImplWithSafeCloseable()) {
-
-			DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
-
-			DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				dlFolder.getRepositoryId(), dlFolder.getFolderId(),
-				RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
-				RandomTestUtil.randomString(), StringPool.BLANK,
-				StringPool.BLANK, StringPool.BLANK,
-				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-				null, null,
-				new ByteArrayInputStream(TestDataConstants.TEST_BYTE_ARRAY),
-				TestDataConstants.TEST_BYTE_ARRAY.length, null, null, null,
-				ServiceContextTestUtil.getServiceContext(
-					_group.getGroupId(), TestPropsValues.getUserId()));
-
-			_assertFileScanned(dlFileEntry.getName());
-		}
-	}
-
-	@Test(expected = Test.None.class)
-	public void testRootFolderFileScanned() throws Exception {
-		try (SafeCloseable safeCloseable =
-				_updateDLStoreImplWithSafeCloseable()) {
-
-			DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
-				RandomTestUtil.randomString(), StringPool.BLANK,
-				StringPool.BLANK, StringPool.BLANK,
-				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-				null, null,
-				new ByteArrayInputStream(TestDataConstants.TEST_BYTE_ARRAY),
-				TestDataConstants.TEST_BYTE_ARRAY.length, null, null, null,
-				ServiceContextTestUtil.getServiceContext(
-					_group.getGroupId(), TestPropsValues.getUserId()));
-
-			_assertFileScanned(dlFileEntry.getName());
-		}
 	}
 
 	@Test(expected = Test.None.class)
@@ -173,6 +116,20 @@ public class AntivirusAsyncFileStoreSchedulerJobConfigurationTest {
 			_schedulerJobConfiguration.getJobExecutorUnsafeRunnable();
 
 		jobExecutorUnsafeRunnable.run();
+	}
+
+	@Test
+	public void testScan() throws Exception {
+		_testScan();
+
+		try (SafeCloseable safeCloseable1 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"DL_STORE_IMPL", _CLASS_NAME_DB_STORE);
+			SafeCloseable safeCloseable2 =
+				_updateAntivirusAsyncDLStoreWithSafeCloseable()) {
+
+			_testScan();
+		}
 	}
 
 	private void _assertFileScanned(String fileName) throws Exception {
@@ -205,10 +162,12 @@ public class AntivirusAsyncFileStoreSchedulerJobConfigurationTest {
 		}
 	}
 
-	private <T> T _getService(String filterString, String className)
+	private <T> T _getService(String className, String componentName)
 		throws Exception {
 
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		String filterString = "(component.name=" + componentName + ")";
 
 		ServiceReference<T>[] serviceReferences = null;
 
@@ -236,13 +195,49 @@ public class AntivirusAsyncFileStoreSchedulerJobConfigurationTest {
 		return (T)bundleContext.getService(serviceReferences[0]);
 	}
 
-	private SafeCloseable _updateDLStoreImplWithSafeCloseable() {
-		String originalDLStoreImpl = PropsUtil.get(PropsKeys.DL_STORE_IMPL);
+	private void _testScan() throws Exception {
+		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
-		PropsUtil.set(PropsKeys.DL_STORE_IMPL, _CLASS_NAME_DB_STORE);
+		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			dlFolder.getRepositoryId(), dlFolder.getFolderId(),
+			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,
+			null, new ByteArrayInputStream(TestDataConstants.TEST_BYTE_ARRAY),
+			TestDataConstants.TEST_BYTE_ARRAY.length, null, null, null,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 
-		return () -> PropsUtil.set(
-			PropsKeys.DL_STORE_IMPL, originalDLStoreImpl);
+		_assertFileScanned(dlFileEntry.getName());
+
+		dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,
+			null, new ByteArrayInputStream(TestDataConstants.TEST_BYTE_ARRAY),
+			TestDataConstants.TEST_BYTE_ARRAY.length, null, null, null,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
+
+		_assertFileScanned(dlFileEntry.getName());
+	}
+
+	private SafeCloseable _updateAntivirusAsyncDLStoreWithSafeCloseable()
+		throws Exception {
+
+		DLStore dlStore = _getService(
+			DLStore.class.getName(),
+			"com.liferay.antivirus.async.store.internal.AntivirusAsyncDLStore");
+
+		Store store = ReflectionTestUtil.getAndSetFieldValue(
+			dlStore, "_store", _dbStore);
+
+		return () -> ReflectionTestUtil.setFieldValue(dlStore, "_store", store);
 	}
 
 	private static final String _CLASS_NAME_DB_STORE =
@@ -263,9 +258,6 @@ public class AntivirusAsyncFileStoreSchedulerJobConfigurationTest {
 	@Inject(filter = "store.type=" + _CLASS_NAME_DB_STORE)
 	private Store _dbStore;
 
-	private Store _defaultStore;
-	private DLStore _dlStore;
-
 	@DeleteAfterTestRun
 	private Group _group;
 
@@ -285,8 +277,8 @@ public class AntivirusAsyncFileStoreSchedulerJobConfigurationTest {
 			String fileName = (String)message.get("fileName");
 
 			if (fileName.equals(_fileName)) {
-				_countDownLatch.countDown();
 				_fileScanned = true;
+				_countDownLatch.countDown();
 			}
 		}
 

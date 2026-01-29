@@ -85,7 +85,7 @@ public class AntivirusAsyncFileStoreSchedulerJobConfiguration
 			return () -> scan((String)file.getAbsolutePath());
 		}
 
-		return () -> scanDLFileEntries();
+		return this::scanDLFileEntries;
 	}
 
 	@Override
@@ -111,8 +111,20 @@ public class AntivirusAsyncFileStoreSchedulerJobConfiguration
 				CompanyThreadLocal.getCompanyId());
 
 			actionableDynamicQuery.setPerformActionMethod(
-				(DLFileEntry dlFileEntry) -> _scheduleAntivirusScan(
-					dlFileEntry));
+				(DLFileEntry dlFileEntry) -> {
+					DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
+					_scheduleAntivirusScan(
+						dlFileEntry.getCompanyId(), dlFileEntry.getExtension(),
+						dlFileEntry.getName(),
+						AntivirusAsyncUtil.getJobName(
+							dlFileEntry.getCompanyId(),
+							dlFileEntry.getRepositoryId(),
+							dlFileEntry.getFileName(),
+							dlFileVersion.getStoreFileName()),
+						dlFileEntry.getRepositoryId(), dlFileEntry.getSize(),
+						dlFileVersion.getStoreFileName());
+				});
 
 			actionableDynamicQuery.performActions();
 		}
@@ -174,27 +186,20 @@ public class AntivirusAsyncFileStoreSchedulerJobConfiguration
 			});
 	}
 
-	private void _scheduleAntivirusScan(DLFileEntry dlFileEntry)
-		throws PortalException {
+	private void _scheduleAntivirusScan(
+		long companyId, String fileExtension, String fileName, String jobName,
+		long repositoryId, long size, String versionLabel) {
 
 		Message message = new Message();
 
-		message.put("companyId", dlFileEntry.getCompanyId());
-		message.put("fileExtension", dlFileEntry.getExtension());
-		message.put("fileName", dlFileEntry.getName());
-
-		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
-
-		message.put(
-			"jobName",
-			AntivirusAsyncUtil.getJobName(
-				dlFileEntry.getCompanyId(), dlFileEntry.getRepositoryId(),
-				dlFileEntry.getFileName(), dlFileVersion.getStoreFileName()));
-
-		message.put("repositoryId", dlFileEntry.getRepositoryId());
-		message.put("size", dlFileEntry.getSize());
+		message.put("companyId", companyId);
+		message.put("fileExtension", fileExtension);
+		message.put("fileName", fileName);
+		message.put("jobName", jobName);
+		message.put("repositoryId", repositoryId);
+		message.put("size", size);
 		message.put("userId", 0L);
-		message.put("versionLabel", dlFileVersion.getStoreFileName());
+		message.put("versionLabel", versionLabel);
 
 		_antivirusAsyncEventListenerManager.onPrepare(message);
 
@@ -287,37 +292,22 @@ public class AntivirusAsyncFileStoreSchedulerJobConfiguration
 			}
 		}
 
-		Message message = new Message();
-
-		message.put("companyId", companyId);
-		message.put("fileExtension", fileExtension);
-		message.put("fileName", fileName);
-		message.put(
-			"jobName",
-			AntivirusAsyncUtil.getJobName(
-				companyId, repositoryId, fileName, versionLabel));
-		message.put("repositoryId", repositoryId);
+		long size = -1;
 
 		try {
-			long size = -1;
-
 			if (Files.exists(filePath)) {
 				size = Files.size(filePath);
 			}
-
-			message.put("size", size);
 		}
 		catch (IOException ioException) {
 			_log.error(ioException);
 		}
 
-		message.put("userId", 0L);
-		message.put("versionLabel", versionLabel);
-
-		_antivirusAsyncEventListenerManager.onPrepare(message);
-
-		_messageBus.sendMessage(
-			AntivirusAsyncDestinationNames.ANTIVIRUS, message);
+		_scheduleAntivirusScan(
+			companyId, fileExtension, fileName,
+			AntivirusAsyncUtil.getJobName(
+				companyId, repositoryId, fileName, versionLabel),
+			repositoryId, size, versionLabel);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

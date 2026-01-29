@@ -75,6 +75,14 @@ public class AntivirusAsyncFileStoreSchedulerJobConfigurationTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_antivirusScannerServiceRegistration = _bundleContext.registerService(
+			AntivirusScanner.class,
+			(AntivirusScanner)ProxyUtil.newProxyInstance(
+				AntivirusScanner.class.getClassLoader(),
+				new Class<?>[] {AntivirusScanner.class},
+				(proxy, method, args) -> method.getDefaultValue()),
+			null);
+
 		_configuration = _configurationAdmin.getConfiguration(
 			AntivirusAsyncConfiguration.class.getName(), "?");
 
@@ -87,27 +95,17 @@ public class AntivirusAsyncFileStoreSchedulerJobConfigurationTest {
 				"retryCronExpression", "0 0/5 * * * ?"
 			).build());
 
+		_group = GroupTestUtil.addGroup();
 		_schedulerJobConfiguration = _getService(
 			SchedulerJobConfiguration.class.getName(),
 			"com.liferay.antivirus.async.store.internal.scheduler." +
 				"AntivirusAsyncFileStoreSchedulerJobConfiguration");
-
-		_antivirusScannerServiceRegistration = _bundleContext.registerService(
-			AntivirusScanner.class,
-			(AntivirusScanner)ProxyUtil.newProxyInstance(
-				AntivirusScanner.class.getClassLoader(),
-				new Class<?>[] {AntivirusScanner.class},
-				(proxy, method, args) -> method.getDefaultValue()),
-			null);
-
-		_group = GroupTestUtil.addGroup();
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		_configuration.delete();
-
 		_antivirusScannerServiceRegistration.unregister();
+		_configuration.delete();
 	}
 
 	@Test(expected = Test.None.class)

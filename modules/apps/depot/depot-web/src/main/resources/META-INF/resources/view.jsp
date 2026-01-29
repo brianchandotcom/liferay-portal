@@ -42,7 +42,7 @@ DepotAdminManagementToolbarDisplayContext depotAdminManagementToolbarDisplayCont
 				>
 
 					<%
-					DepotEntry depotEntry = (DepotEntry)row.getObject();
+					DepotEntry depotEntry = depotAdminDisplayContext.getDepotEntry((DepotEntry)row.getObject());
 
 					Group depotEntryGroup = depotEntry.getGroup();
 

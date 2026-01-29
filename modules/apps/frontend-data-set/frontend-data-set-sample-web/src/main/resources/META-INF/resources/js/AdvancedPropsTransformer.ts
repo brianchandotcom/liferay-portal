@@ -132,7 +132,7 @@ export default function propsTransformer({
 	const filtersGroups = [
 		{filters: ['date', 'color'], label: 'Group 1'},
 		{filters: ['clientExtension', 'invalid', 'size'], label: 'Group 2'},
-		{filters: ['status', 'title'], label: 'Group 3'},
+		{filters: ['status', 'title', 'creator.name'], label: 'Group 3'},
 	];
 
 	return {

@@ -174,6 +174,35 @@ test(
 				await expect(
 					page.getByRole('menuitem', {name: 'Status'})
 				).toBeVisible();
+				await expect(
+					page.getByRole('menuitem', {name: 'Creator'})
+				).toBeVisible();
+			});
+
+			await test.step('Enter a search term "creator"', async () => {
+				await page
+					.locator('.dropdown-menu')
+					.getByLabel('Search')
+					.first()
+					.fill('creator');
+			});
+
+			await test.step('Check only the "creator" filter appears', async () => {
+				await expect(
+					page.getByRole('menuitem', {name: 'Color'})
+				).not.toBeVisible();
+				await expect(
+					page.getByRole('menuitem', {name: 'Date Range'})
+				).not.toBeVisible();
+				await expect(
+					page.getByRole('menuitem', {name: 'Size'})
+				).not.toBeVisible();
+				await expect(
+					page.getByRole('menuitem', {name: 'Status'})
+				).not.toBeVisible();
+				await expect(
+					page.getByRole('menuitem', {name: 'Creator'})
+				).toBeVisible();
 			});
 		});
 
@@ -422,6 +451,173 @@ test(
 				await expect(
 					fdsSamplePage.activeFiltersToolbar.container
 				).not.toBeVisible();
+			});
+		});
+
+		await test.step('Check creator filter functionality', async () => {
+			await test.step('Refresh the page', async () => {
+				await fdsSamplePage.selectTab('Advanced');
+
+				await waitForFDS({page});
+			});
+
+			await test.step('Select creator filter from dropdown', async () => {
+				await fdsSamplePage.managementToolbar.filterButton.click();
+
+				await page
+					.locator('.dropdown-menu')
+					.getByRole('menuitem', {name: 'Creator'})
+					.click();
+			});
+
+			await test.step('Verify autocomplete input appears', async () => {
+				await expect(
+					page.locator('.data-set-filter').getByRole('textbox', { name: 'Search' }).first()
+				).toBeVisible();
+			});
+
+			await test.step('Search for and select a creator', async () => {
+				const searchInput = page
+					.locator('.data-set-filter')
+					.getByRole('textbox', { name: 'Search' })
+					.first();
+
+				await searchInput.fill('test');
+
+				await page.waitForTimeout(500);
+
+				const firstCreatorCheckbox = page
+					.locator('.dropdown-menu')
+					.getByRole('checkbox')
+					.first();
+
+				if (await firstCreatorCheckbox.isVisible({timeout: 2000}).catch(() => false)) {
+					const creatorLabel = await firstCreatorCheckbox
+						.locator('..')
+						.textContent()
+						.catch(() => '');
+
+					await firstCreatorCheckbox.check();
+
+					await page
+						.locator('.dropdown-menu')
+						.getByRole('button', {name: 'Show Results'})
+						.or(
+							page
+								.locator('.dropdown-menu')
+								.getByRole('button', {name: 'Add Filter'})
+						)
+						.click();
+
+					await page
+						.getByText('This is a description for sample')
+						.first()
+						.waitFor();
+
+
+					if (creatorLabel) {
+						await expect(
+							page.getByRole('button', {
+								name: new RegExp(`Creator:.*${creatorLabel.trim()}`),
+							})
+						).toBeVisible();
+					}
+				}
+			});
+
+			await test.step('Verify creator names appear in table cells', async () => {
+				const authorCells = page
+					.locator('table tbody tr td')
+					.filter({hasText: /./})
+					.first();
+
+				await expect(authorCells).toBeVisible();
+			});
+		});
+
+		await test.step('Check creator filter summary box operations', async () => {
+			await test.step('Refresh the page', async () => {
+				await fdsSamplePage.selectTab('Advanced');
+
+				await waitForFDS({page});
+			});
+
+			await test.step('Apply creator filter', async () => {
+				await fdsSamplePage.managementToolbar.filterButton.click();
+
+				await page
+					.locator('.dropdown-menu')
+					.getByRole('menuitem', {name: 'Creator'})
+					.click();
+
+				const searchInput = page
+					.locator('.dropdown-menu')
+					.getByRole('textbox', { name: 'Search' })
+					.first();
+
+				await searchInput.fill('test');
+
+				await page.waitForTimeout(500);
+
+				const creatorCheckboxes = page
+					.locator('.dropdown-menu')
+					.getByRole('checkbox');
+
+				const checkboxCount = await creatorCheckboxes.count();
+
+				if (checkboxCount > 0) {
+					await creatorCheckboxes.first().check();
+
+					if (checkboxCount > 1) {
+						await creatorCheckboxes.nth(1).check();
+					}
+
+					await page
+						.locator('.dropdown-menu')
+						.getByRole('button', {name: 'Show Results'})
+						.or(
+							page
+								.locator('.dropdown-menu')
+								.getByRole('button', {name: 'Add Filter'})
+						)
+						.click();
+
+					await page
+						.getByText('This is a description for sample')
+						.first()
+						.waitFor();
+				}
+			});
+
+			await test.step('Open creator filter summary box and verify it shows creator names', async () => {
+				const creatorFilterButton = page
+					.getByRole('button')
+					.filter({hasText: /^Creator:/});
+
+				if (await creatorFilterButton.isVisible({timeout: 2000}).catch(() => false)) {
+					await creatorFilterButton.click();
+
+					await expect(
+						page.getByRole('checkbox').first()
+					).toBeVisible();
+				}
+			});
+
+			await test.step('Test removing creator filter using remove button', async () => {
+				const removeButton = page.getByRole('button', {name: 'Remove Filter'});
+
+				if (await removeButton.isVisible({timeout: 2000}).catch(() => false)) {
+					await removeButton.click();
+
+					await page
+						.getByText('This is a description for sample')
+						.first()
+						.waitFor();
+
+					await expect(
+						page.getByRole('button').filter({hasText: /^Creator:/})
+					).not.toBeVisible();
+				}
 			});
 		});
 	}

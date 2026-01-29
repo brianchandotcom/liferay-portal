@@ -60,7 +60,9 @@ const FieldText = ({
 		>
 			<ClayInput
 				{...restProps}
-				aria-describedby={(errorMessage || helpMessage) ?? feedbackId}
+				aria-describedby={
+					errorMessage || helpMessage ? feedbackId : undefined
+				}
 				component={component}
 				disabled={disabled}
 				id={fieldId}

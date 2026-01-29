@@ -50,7 +50,9 @@ const FieldSelect = ({
 		>
 			<ClaySelect
 				{...restProps}
-				aria-describedby={(errorMessage || helpMessage) ?? feedbackId}
+				aria-describedby={
+					errorMessage || helpMessage ? feedbackId : undefined
+				}
 				aria-label={placeholder}
 				disabled={disabled}
 				id={fieldId}

@@ -45,7 +45,9 @@ const FieldPicker = ({
 		>
 			<Picker
 				{...restProps}
-				aria-describedby={(errorMessage || helpMessage) ?? feedbackId}
+				aria-describedby={
+					errorMessage || helpMessage ? feedbackId : undefined
+				}
 				disabled={disabled}
 				id={fieldId}
 				items={items}

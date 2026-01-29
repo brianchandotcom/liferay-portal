@@ -38,6 +38,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import net.minidev.json.JSONObject;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -366,8 +368,9 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 
 			metadata.setGrantTypes(Arrays.asList(grantTypes));
 
-			return metadata.toJSONObject(
-			).toJSONString();
+			JSONObject metadataJSONObject = metadata.toJSONObject();
+
+			return metadataJSONObject.toString();
 		}
 		catch (Exception exception) {
 			throw new OAuthClientASLocalMetadataMetadataJSONException(
@@ -445,8 +448,9 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 
 			metadata.setGrantTypes(Arrays.asList(grantTypes));
 
-			return metadata.toJSONObject(
-			).toJSONString();
+			JSONObject metadataJSONObject = metadata.toJSONObject();
+
+			return metadataJSONObject.toString();
 		}
 		catch (Exception exception) {
 			throw new OAuthClientASLocalMetadataMetadataJSONException(

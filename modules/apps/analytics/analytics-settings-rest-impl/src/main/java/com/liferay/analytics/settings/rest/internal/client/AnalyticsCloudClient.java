@@ -18,6 +18,8 @@ import com.liferay.analytics.settings.rest.internal.client.model.AnalyticsChanne
 import com.liferay.analytics.settings.rest.internal.client.model.AnalyticsDataSource;
 import com.liferay.analytics.settings.rest.internal.client.pagination.Page;
 import com.liferay.analytics.settings.rest.internal.client.pagination.Pagination;
+import com.liferay.oauth2.provider.model.OAuth2Application;
+import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -62,6 +64,14 @@ public class AnalyticsCloudClient {
 
 	public AnalyticsCloudClient(Http http) {
 		_http = http;
+	}
+
+	public AnalyticsCloudClient(
+		Http http,
+		OAuth2ApplicationLocalService oAuth2ApplicationLocalService) {
+
+		_http = http;
+		_oAuth2ApplicationLocalService = oAuth2ApplicationLocalService;
 	}
 
 	public AnalyticsChannel addAnalyticsChannel(
@@ -110,6 +120,21 @@ public class AnalyticsCloudClient {
 			Company company, String connectionToken)
 		throws Exception {
 
+		if (_oAuth2ApplicationLocalService == null) {
+			throw new DataSourceConnectionException(
+				"Unable to connect with Analytics Cloud");
+		}
+
+		OAuth2Application oAuth2Application =
+			_oAuth2ApplicationLocalService.
+				fetchOAuth2ApplicationByExternalReferenceCode(
+					"ANALYTICS-CLOUD", company.getCompanyId());
+
+		if (oAuth2Application == null) {
+			throw new DataSourceConnectionException(
+				"No OAuth2Application found for ANALYTICS-CLOUD");
+		}
+
 		JSONObject connectionTokenJSONObject = _decodeToken(connectionToken);
 
 		_validateConnectionTokenURL(connectionTokenJSONObject.getString("url"));
@@ -117,6 +142,9 @@ public class AnalyticsCloudClient {
 		Http.Options options = new Http.Options();
 
 		options.addPart("name", company.getName());
+		options.addPart("oAuthClientId", oAuth2Application.getClientId());
+		options.addPart(
+			"oAuthClientSecret", oAuth2Application.getClientSecret());
 		options.addPart("portalURL", company.getPortalURL(0));
 		options.addPart("token", connectionTokenJSONObject.getString("token"));
 		options.setLocation(connectionTokenJSONObject.getString("url"));
@@ -558,6 +586,7 @@ public class AnalyticsCloudClient {
 		new ConcurrentHashMap<>();
 
 	private final Http _http;
+	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
 
 	private static class ObjectMapperHolder {
 

@@ -11,6 +11,7 @@ import com.liferay.analytics.settings.rest.dto.v1_0.DataSourceToken;
 import com.liferay.analytics.settings.rest.internal.client.AnalyticsCloudClient;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.analytics.settings.rest.resource.v1_0.DataSourceResource;
+import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -78,7 +79,8 @@ public class DataSourceResourceImpl extends BaseDataSourceResourceImpl {
 
 	@Activate
 	protected void activate() {
-		_analyticsCloudClient = new AnalyticsCloudClient(_http);
+		_analyticsCloudClient = new AnalyticsCloudClient(
+			_http, _oAuth2ApplicationLocalService);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -97,5 +99,8 @@ public class DataSourceResourceImpl extends BaseDataSourceResourceImpl {
 
 	@Reference
 	private Http _http;
+
+	@Reference
+	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
 
 }

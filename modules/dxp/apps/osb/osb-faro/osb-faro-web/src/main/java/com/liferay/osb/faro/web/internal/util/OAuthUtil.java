@@ -24,6 +24,7 @@ import com.liferay.osb.faro.engine.client.model.provider.LiferayProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 
@@ -104,32 +105,24 @@ public class OAuthUtil {
 	}
 
 	public static Credentials getOAuth20Credentials(
-			String baseURL, String providerType, String oAuthClientId,
-			String oAuthClientSecret, String code, String oAuthCallbackURL)
+			String authorizationType, String baseURL, String providerType,
+			String oAuthClientId, String oAuthClientSecret, String code,
+			String oAuthCallbackURL)
 		throws Exception {
 
 		OAuth2Credentials oAuth2Credentials = new OAuth2Credentials();
 
-		ServiceBuilder serviceBuilder = new ServiceBuilder(oAuthClientId);
-
-		serviceBuilder.apiSecret(oAuthClientSecret);
-		serviceBuilder.callback(oAuthCallbackURL);
-		serviceBuilder.userAgent("LiferayAnalyticsCloud");
-
-		OAuth20Service oAuth20Service = null;
-
-		if (providerType.equals(LiferayProvider.TYPE)) {
-			oAuth20Service = serviceBuilder.build(new LiferayApi20(baseURL));
-		}
-		else {
-			oAuth20Service = serviceBuilder.build(new SalesforceApi(baseURL));
-		}
-
-		OAuth2AccessToken oAuth2AccessToken = oAuth20Service.getAccessToken(
-			code);
-
 		oAuth2Credentials.setOAuthClientId(oAuthClientId);
 		oAuth2Credentials.setOAuthClientSecret(oAuthClientSecret);
+
+		if (!StringUtil.equals(authorizationType, "REFRESH_TOKEN")) {
+			return oAuth2Credentials;
+		}
+
+		OAuth2AccessToken oAuth2AccessToken = _getOAuth2AccessToken(
+			baseURL, code, oAuthCallbackURL, oAuthClientId, oAuthClientSecret,
+			providerType);
+
 		oAuth2Credentials.setOAuthRefreshToken(
 			oAuth2AccessToken.getRefreshToken());
 
@@ -166,6 +159,29 @@ public class OAuthUtil {
 		oAuth2Credentials.setOAuthClientSecret(oAuthConsumerSecret);
 
 		return oAuth2Credentials;
+	}
+
+	private static OAuth2AccessToken _getOAuth2AccessToken(
+			String baseURL, String code, String oAuthCallbackURL,
+			String oAuthClientId, String oAuthClientSecret, String providerType)
+		throws Exception {
+
+		ServiceBuilder serviceBuilder = new ServiceBuilder(oAuthClientId);
+
+		serviceBuilder.apiSecret(oAuthClientSecret);
+		serviceBuilder.callback(oAuthCallbackURL);
+		serviceBuilder.userAgent("LiferayAnalyticsCloud");
+
+		OAuth20Service oAuth20Service = null;
+
+		if (providerType.equals(LiferayProvider.TYPE)) {
+			oAuth20Service = serviceBuilder.build(new LiferayApi20(baseURL));
+		}
+		else {
+			oAuth20Service = serviceBuilder.build(new SalesforceApi(baseURL));
+		}
+
+		return oAuth20Service.getAccessToken(code);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(OAuthUtil.class);

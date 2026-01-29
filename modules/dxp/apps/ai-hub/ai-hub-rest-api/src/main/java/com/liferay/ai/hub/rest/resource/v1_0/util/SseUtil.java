@@ -56,7 +56,9 @@ public class SseUtil {
 			).build());
 	}
 
-	public static void send(String data, String name, String sseEventSinkKey) {
+	public static void send(
+		String data, String name, String nodeName, String sseEventSinkKey) {
+
 		if (Validator.isBlank(sseEventSinkKey)) {
 			return;
 		}
@@ -70,6 +72,8 @@ public class SseUtil {
 				String.class,
 				JSONUtil.put(
 					"data", data
+				).put(
+					"nodeName", nodeName
 				).toString()
 			).name(
 				name

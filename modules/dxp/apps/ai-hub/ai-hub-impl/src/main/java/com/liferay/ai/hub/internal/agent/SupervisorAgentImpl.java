@@ -57,7 +57,7 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 
 					SseUtil.send(
 						"I cannot fulfill this request.", "Chat Message Sent",
-						agentContext.getSseEventSinkKey());
+						null, agentContext.getSseEventSinkKey());
 				}
 			});
 	}
@@ -81,7 +81,7 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 		SseUtil.send(
 			supervisorAgent.invoke(
 				MapUtil.getString(agentContext.getInput(), "message")),
-			"Chat Message Sent", agentContext.getSseEventSinkKey());
+			"Chat Message Sent", null, agentContext.getSseEventSinkKey());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

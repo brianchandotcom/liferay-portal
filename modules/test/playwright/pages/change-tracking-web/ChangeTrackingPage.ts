@@ -437,7 +437,10 @@ export class ChangeTrackingPage {
 	}
 
 	async reviewChange(title: string) {
-		await this.page.getByRole('link', {name: title}).first().click();
+		const changeTitle = this.page.getByRole('link', {name: title}).first();
+
+		await changeTitle.waitFor();
+		await changeTitle.click();
 
 		await this.page.locator('h2').filter({hasText: title}).waitFor();
 	}

@@ -276,14 +276,16 @@ export class Session {
 				this.warn();
 			}
 
-			if (!shouldWarn) {
-				this._removeAlert();
-			}
-			else if (!shouldExpire) {
-				this._uiSetRemainingTime(
-					this.sessionLength - elapsed,
-					document.querySelector(`#${TOAST_ID} .countdown-timer`)
-				);
+			if (this._banner) {
+				if (!shouldWarn) {
+					this._removeAlert();
+				}
+				else if (!shouldExpire) {
+					this._uiSetRemainingTime(
+						this.sessionLength - elapsed,
+						document.querySelector(`#${TOAST_ID} .countdown-timer`)
+					);
+				}
 			}
 		}, 1000);
 	}
@@ -294,6 +296,8 @@ export class Session {
 		if (this._banner) {
 			this._destroyBanner();
 		}
+
+		this.sessionState = 'active';
 	}
 
 	private _uiSetExpired() {

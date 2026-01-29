@@ -15,6 +15,7 @@ import {
 import {
 	buildField,
 	buildReferencedStructure,
+	buildRepeatableGroup,
 	getSpaces,
 } from './buildStructure';
 import isCustomObjectField from './isCustomObjectField';
@@ -157,7 +158,7 @@ export default function refreshReferencedStructures({
 			children.set(field.uuid, field);
 		}
 
-		// Insert new referenced structures
+		// Insert new referenced structures and repeatable groups
 
 		const newObjectRelationships = Array.from(
 			objectDefinition.objectRelationships || []
@@ -167,16 +168,38 @@ export default function refreshReferencedStructures({
 		);
 
 		for (const objectRelationship of newObjectRelationships) {
-			const referencedStructure = buildReferencedStructure({
-				ancestors,
-				erc: objectRelationship.objectDefinitionExternalReferenceCode2,
-				objectDefinitions,
-				parent: root.uuid,
-				relationshipERC: objectRelationship.externalReferenceCode,
-				relationshipName: objectRelationship.name,
-			});
+			const relatedObjectDefinition =
+				objectDefinitions[
+					objectRelationship.objectDefinitionExternalReferenceCode2
+				];
 
-			children.set(referencedStructure.uuid, referencedStructure);
+			if (
+				relatedObjectDefinition?.objectFolderExternalReferenceCode ===
+				'L_CMS_STRUCTURE_REPEATABLE_GROUPS'
+			) {
+				const repeatableGroup = buildRepeatableGroup({
+					ancestors,
+					erc: objectRelationship.objectDefinitionExternalReferenceCode2,
+					objectDefinitions,
+					parent: root.uuid,
+					relationshipERC: objectRelationship.externalReferenceCode,
+					relationshipName: objectRelationship.name,
+				});
+
+				children.set(repeatableGroup.uuid, repeatableGroup);
+			}
+			else {
+				const referencedStructure = buildReferencedStructure({
+					ancestors,
+					erc: objectRelationship.objectDefinitionExternalReferenceCode2,
+					objectDefinitions,
+					parent: root.uuid,
+					relationshipERC: objectRelationship.externalReferenceCode,
+					relationshipName: objectRelationship.name,
+				});
+
+				children.set(referencedStructure.uuid, referencedStructure);
+			}
 		}
 	}
 

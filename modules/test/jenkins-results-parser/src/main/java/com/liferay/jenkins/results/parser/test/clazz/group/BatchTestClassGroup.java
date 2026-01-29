@@ -1041,6 +1041,10 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 		int axisCount = getAxisCount();
 
+		if (axisCount == 0) {
+			return;
+		}
+
 		int axisSize = (int)Math.ceil((double)getTestClassCount() / axisCount);
 
 		List<TestClass> testClasses = getTestClasses();

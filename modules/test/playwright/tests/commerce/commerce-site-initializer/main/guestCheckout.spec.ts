@@ -62,6 +62,10 @@ test('LPD-35678 Guest can directly checkout a new order in B2B channel site', as
 
 		await page.waitForLoadState('networkidle');
 
+		await expect(commerceMiniCartPage.miniCartButton).toHaveClass(
+			'has-badge mini-cart-opener'
+		);
+
 		await commerceMiniCartPage.miniCartButton.click();
 
 		await commerceMiniCartPage.proceedAsGuest.click();
@@ -128,6 +132,10 @@ test(
 				.click();
 
 			await page.waitForLoadState('networkidle');
+
+			await expect(commerceMiniCartPage.miniCartButton).toHaveClass(
+				'has-badge mini-cart-opener'
+			);
 
 			await commerceMiniCartPage.miniCartButton.click();
 
@@ -228,6 +236,10 @@ test('LPD-35678 Guest can checkout a new order on sign-in with multiple accounts
 			.click();
 
 		await page.waitForLoadState('networkidle');
+
+		await expect(commerceMiniCartPage.miniCartButton).toHaveClass(
+			'has-badge mini-cart-opener'
+		);
 
 		await commerceMiniCartPage.miniCartButton.click();
 
@@ -346,6 +358,10 @@ test('LPD-35678 Guest can checkout a new order on sign-up in B2B channel site', 
 			.click();
 
 		await page.waitForLoadState('networkidle');
+
+		await expect(commerceMiniCartPage.miniCartButton).toHaveClass(
+			'has-badge mini-cart-opener'
+		);
 
 		await commerceMiniCartPage.miniCartButton.click();
 

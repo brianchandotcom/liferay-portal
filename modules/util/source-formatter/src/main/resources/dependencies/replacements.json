@@ -5118,6 +5118,15 @@
 		"to": "fetchCommercePriceEntry(param#1#, null, StringPool.BLANK)"
 	},
 	{
+		"from": "PropsValues.FEATURE_FLAGS_JSON",
+		"issueKey": "LPD-66289",
+		"newImports": [
+			"com.liferay.portal.kernel.json.JSONFactoryUtil",
+			"com.liferay.portal.kernel.util.PropsUtil"
+		],
+		"to": "String.valueOf(JSONFactoryUtil.createJSONObject(PropsUtil.getProperties(\"feature.flag.\", true)))"
+	},
+	{
 		"from": "PropsFiles.CAPTCHA",
 		"issueKey": "LPD-66321",
 		"to": "\"captcha\""

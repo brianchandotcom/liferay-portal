@@ -15339,7 +15339,7 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 			<then>
 				<loadresource property="found.utf8mb3.line">
 					<concat>
-						<file file="${liferay.home}/mysql.sql" />
+						<file file="${liferay.home}/${database.type}.sql" />
 						<filterchain>
 							<linecontainsregexp casesensitive="false">
 								<regexp pattern="DEFAULT CHARSET=utf8(mb3)?(?![mb4])" />

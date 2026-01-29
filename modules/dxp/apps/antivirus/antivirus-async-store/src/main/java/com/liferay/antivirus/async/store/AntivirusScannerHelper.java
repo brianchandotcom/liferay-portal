@@ -140,6 +140,34 @@ public class AntivirusScannerHelper {
 
 						_store.deleteFile(
 							companyId, repositoryId, fileName, versionLabel);
+
+						User user = _userLocalService.getUser(userId);
+
+						JSONObject additionalInfoJSONObject =
+							_jsonFactory.createJSONObject();
+
+						additionalInfoJSONObject.put(
+							"fileEntryId", classPK
+						).put(
+							"fileName", sourceFileName
+						).put(
+							"userEmailAddress", user.getEmailAddress()
+						).put(
+							"userId", userId
+						).put(
+							"userName", user.getFullName()
+						).put(
+							"Virus detected",
+							antivirusVirusFoundException.getVirusName()
+						);
+
+						AuditMessage auditMessage = new AuditMessage(
+							EventTypes.DELETE, companyId, 0, StringPool.BLANK,
+							DLFileEntry.class.getName(),
+							String.valueOf(classPK), "Virus detected",
+							additionalInfoJSONObject);
+
+						_auditRouter.route(auditMessage);
 						
 					}
 

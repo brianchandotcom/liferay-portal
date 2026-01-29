@@ -116,6 +116,7 @@ export function Wizard({
 					<Footer
 						actionButton={actionButton}
 						backURL={backURL}
+						continueDisabled={formik.isSubmitting}
 						onPrevious={
 							stepNumber > 0
 								? () => setStepNumber(stepNumber - 1)

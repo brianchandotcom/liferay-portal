@@ -20996,6 +20996,14 @@ react-router@5.0.1:
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
 
+react-router@7.13.0:
+  version "7.13.0"
+  resolved "https://registry.yarnpkg.com/react-router/-/react-router-7.13.0.tgz#de9484aee764f4f65b93275836ff5944d7f5bd3b"
+  integrity sha512-PZgus8ETambRT17BUm/LL8lX3Of+oiLaPuVTRH3l1eLvSPpKO3AvhAEb5N7ihAFZQrYDqkvvWfFh9p0z9VsjLw==
+  dependencies:
+    cookie "^1.0.1"
+    set-cookie-parser "^2.6.0"
+
 react-router@7.9.6:
   version "7.9.6"
   resolved "https://registry.yarnpkg.com/react-router/-/react-router-7.9.6.tgz#003c8de335fdd7390286a478dcfd9579c1826137"

@@ -7,25 +7,28 @@ package com.liferay.headless.admin.site.internal.resource.v1_0.util;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.exportimport.attachment.ExportImportAttachmentManagerUtil;
 import com.liferay.headless.admin.site.dto.v1_0.ThumbnailURLReference;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.petra.io.StreamUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
-import java.io.InputStream;
 
 import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
 
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -64,23 +67,32 @@ public class FileEntryUtil {
 			ThumbnailURLReference thumbnailURLReference, long userId)
 		throws Exception {
 
-		Http.Options options = new Http.Options();
+		URL url = ExportImportAttachmentManagerUtil.getURL(
+			thumbnailURLReference.getUrl());
 
-		options.setLocation(thumbnailURLReference.getUrl());
+		if (Objects.equals(url.getProtocol(), "file")) {
+			throw new UnsupportedOperationException(
+				StringBundler.concat(
+					"Unable to download file from ",
+					thumbnailURLReference.getUrl(), ", unsupported protocol: ",
+					url.getProtocol()));
+		}
 
-		File file = null;
+		URLConnection urlConnection = url.openConnection();
 
-		try (InputStream inputStream = HttpUtil.URLtoInputStream(options)) {
-			Http.Response response = options.getResponse();
+		if ((urlConnection instanceof HttpURLConnection httpURLConnection) &&
+			(httpURLConnection.getResponseCode() !=
+				HttpURLConnection.HTTP_OK)) {
 
-			if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
-				throw new IllegalArgumentException(
-					"Unable to download file from " +
-						thumbnailURLReference.getUrl());
-			}
+			throw new IllegalArgumentException(
+				"Unable to download file from " +
+					thumbnailURLReference.getUrl());
+		}
 
-			file = FileUtil.createTempFile(inputStream);
+		File file = FileUtil.createTempFile(
+			StreamUtil.toByteArray(urlConnection.getInputStream()));
 
+		try {
 			String mimeType = MimeTypesUtil.getContentType(file);
 
 			Set<String> extensions = MimeTypesUtil.getExtensions(mimeType);

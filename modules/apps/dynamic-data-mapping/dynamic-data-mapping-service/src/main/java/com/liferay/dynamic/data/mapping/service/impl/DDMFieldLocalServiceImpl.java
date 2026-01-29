@@ -18,7 +18,9 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.model.impl.DDMFieldAttributeImpl;
+import com.liferay.dynamic.data.mapping.model.impl.DDMFieldAttributeModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMFieldImpl;
+import com.liferay.dynamic.data.mapping.model.impl.DDMFieldModelImpl;
 import com.liferay.dynamic.data.mapping.service.base.DDMFieldLocalServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFieldAttributePersistence;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructurePersistence;
@@ -26,6 +28,8 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormFieldUtil;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
@@ -37,7 +41,14 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery.PerformActionMethod;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -45,12 +56,16 @@ import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.ReindexCacheThreadLocal;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+
+import java.sql.PreparedStatement;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -63,6 +78,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -75,6 +92,16 @@ import org.osgi.service.component.annotations.Reference;
 	service = AopService.class
 )
 public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
+
+	@Override
+	public DDMField deleteDDMField(DDMField ddmField) {
+		if (_ddmFieldRemoveFunction.get() == null) {
+			return super.deleteDDMField(ddmField);
+		}
+
+		return ddmFieldPersistence.removeByFunction(
+			ddmField, _ddmFieldRemoveFunction.get());
+	}
 
 	@Override
 	public void deleteDDMFields(long structureId) {
@@ -123,9 +150,22 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 
 	@Override
 	public void deleteDDMFormValues(long storageId) {
-		ddmFieldPersistence.removeByStorageId(storageId);
+		_removeByStorageId(
+			ddmFieldPersistence, DDMField.class,
+			ddmField -> ddmFieldLocalService.deleteDDMField((DDMField)ddmField),
+			"fieldId",
+			() -> _ddmFieldRemoveFunction.setWithSafeCloseable(
+				Function.identity()),
+			storageId, DDMFieldModelImpl.TABLE_NAME);
 
-		_ddmFieldAttributePersistence.removeByStorageId(storageId);
+		_removeByStorageId(
+			_ddmFieldAttributePersistence, DDMFieldAttribute.class,
+			ddmFieldAttribute -> _ddmFieldAttributePersistence.removeByFunction(
+				(DDMFieldAttribute)ddmFieldAttribute, Function.identity()),
+			"fieldAttributeId",
+			() -> () -> {
+			},
+			storageId, DDMFieldAttributeModelImpl.TABLE_NAME);
 	}
 
 	@Override
@@ -1073,8 +1113,95 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 		return true;
 	}
 
+	private <T extends BaseModel<T>> void _removeByStorageId(
+		BasePersistence<T> basePersistence, Class<T> modelClass,
+		PerformActionMethod<T> performActionMethod,
+		String primaryKeyPropertyName,
+		Supplier<SafeCloseable> safeCloseableSupplier, long storageId,
+		String tableName) {
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			new DefaultActionableDynamicQuery() {
+
+				@Override
+				protected void actionsCompleted() throws PortalException {
+					Session session = basePersistence.openSession();
+
+					session.flush();
+
+					session.clear();
+				}
+
+				@Override
+				protected void intervalCompleted(
+						long startPrimaryKey, long endPrimaryKey)
+					throws PortalException {
+
+					Session session = basePersistence.openSession();
+
+					session.flush();
+
+					session.clear();
+				}
+
+			};
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property storageIdProperty = PropertyFactoryUtil.forName(
+					"storageId");
+
+				dynamicQuery.add(storageIdProperty.eq(storageId));
+			});
+
+		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setClassLoader(getClassLoader());
+		actionableDynamicQuery.setModelClass(modelClass);
+		actionableDynamicQuery.setPrimaryKeyPropertyName(
+			primaryKeyPropertyName);
+		actionableDynamicQuery.setPerformActionMethod(
+			object -> performActionMethod.performAction((T)object));
+
+		try (SafeCloseable safeCloseable = safeCloseableSupplier.get()) {
+			actionableDynamicQuery.performActions();
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
+		}
+
+		Session session = basePersistence.openSession();
+
+		try {
+			String sql = "delete from " + tableName + " where storageId = ?";
+
+			session.apply(
+				connection -> {
+					try (PreparedStatement preparedStatement =
+							connection.prepareStatement(sql)) {
+
+						preparedStatement.setLong(1, storageId);
+
+						if (preparedStatement.executeUpdate() > 0) {
+							basePersistence.clearCache();
+						}
+					}
+				});
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
+		}
+		finally {
+			basePersistence.closeSession(session);
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFieldLocalServiceImpl.class);
+
+	private static final CentralizedThreadLocal<Function<DDMField, DDMField>>
+		_ddmFieldRemoveFunction = new CentralizedThreadLocal<>(
+			DDMFieldLocalServiceImpl.class.getName() +
+				"._ddmFieldRemoveFunction");
 
 	@Reference
 	private DDMFieldAttributePersistence _ddmFieldAttributePersistence;

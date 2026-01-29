@@ -456,9 +456,6 @@ public class DDMIndexerImplTest {
 					() -> enableLegacyDDMIndexFields;
 
 				ReflectionTestUtil.setFieldValue(
-					this, "_ddmFormValuesToFieldsConverter",
-					new DDMFormValuesToFieldsConverterImpl());
-				ReflectionTestUtil.setFieldValue(
 					this, "_ddmIndexerConfiguration", ddmIndexerConfiguration);
 
 				searchEngineInformation = new SearchEngineInformation() {

@@ -1,0 +1,8 @@
+dependencies {
+	testIntegrationImplementation group: "com.liferay", name: "jakarta.ws.rs", version: "3.1.0.LIFERAY-PATCHED-1"
+	testIntegrationImplementation project(":apps:portal-odata:portal-odata-api")
+	testIntegrationImplementation project(":apps:portal-vulcan:portal-vulcan-api")
+	testIntegrationImplementation project(":apps:portal-workflow:portal-workflow-api")
+	testIntegrationImplementation project(":dxp:apps:ai-hub:ai-hub-api")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
+}

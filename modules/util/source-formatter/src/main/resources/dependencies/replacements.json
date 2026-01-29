@@ -5170,6 +5170,30 @@
 	},
 	{
 		"classNames": [
+			"CPCompareHelperUtil"
+		],
+		"from": "addCompareProduct(long paramName, long paramName, long paramName, HttpSession paramName)",
+		"hasMessage": true,
+		"issueKey": "LPD-61133"
+	},
+	{
+		"classNames": [
+			"CPCompareHelperUtil"
+		],
+		"from": "getCPDefinitionIds(long paramName, long paramName, HttpSession paramName)",
+		"hasMessage": true,
+		"issueKey": "LPD-61133"
+	},
+	{
+		"classNames": [
+			"CPCompareHelperUtil"
+		],
+		"from": "removeCompareProduct(long paramName, long paramName, long paramName, HttpSession paramName)",
+		"hasMessage": true,
+		"issueKey": "LPD-61133"
+	},
+	{
+		"classNames": [
 			"UserLocalService",
 			"UserLocalServiceUtil"
 		],

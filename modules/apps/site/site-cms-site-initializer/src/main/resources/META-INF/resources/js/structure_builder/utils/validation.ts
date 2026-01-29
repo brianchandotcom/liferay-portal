@@ -44,6 +44,7 @@ export function validateField({
 	children,
 	currentErrors,
 	data,
+	deletedChildren,
 	uuid,
 }: {
 	children?: Structure['children'];
@@ -57,6 +58,7 @@ export function validateField({
 			| MultiselectField['picklistId'];
 		settings?: Field['settings'];
 	};
+	deletedChildren: State['history']['deletedChildren'];
 	uuid?: Field['uuid'];
 }): ErrorMap {
 	const {erc, label, name, picklistId, settings} = data;
@@ -79,7 +81,7 @@ export function validateField({
 	}
 
 	if (!isNullOrUndefined(name)) {
-		const names = getSiblingFieldNames(uuid, children);
+		const names = getSiblingFieldNames(uuid, children, deletedChildren);
 
 		if (!name) {
 			errors.set('name', 'empty');
@@ -306,13 +308,23 @@ export function getErrorMessage(
 
 function getSiblingFieldNames(
 	uuid?: Field['uuid'],
-	children?: Structure['children']
+	children?: Structure['children'],
+	deletedChildren?: State['history']['deletedChildren']
 ) {
 	if (!uuid || !children) {
 		return [];
 	}
 
-	return Array.from(children.values())
+	const deletedFields =
+		deletedChildren?.filter(
+			(child) =>
+				child.type !== 'referenced-structure' &&
+				child.type !== 'repeatable-group'
+		) || [];
+
+	const fields = [...deletedFields, ...children.values()];
+
+	return fields
 		.filter(
 			(child) =>
 				child.type !== 'referenced-structure' &&
@@ -340,7 +352,11 @@ export function useValidate() {
 	const {structure} = state;
 
 	const validateChild = useCallback(
-		(child: StructureChild, invalids: State['invalids']) => {
+		(
+			child: StructureChild,
+			invalids: State['invalids'],
+			deletedChildren: State['history']['deletedChildren']
+		) => {
 			let errors: ErrorMap = new Map();
 
 			if (child.type === 'repeatable-group') {
@@ -355,11 +371,14 @@ export function useValidate() {
 						continue;
 					}
 
-					validateChild(grandChild, invalids);
+					validateChild(grandChild, invalids, deletedChildren);
 				}
 			}
 			else if (child.type !== 'referenced-structure') {
-				errors = validateField({data: child as Field});
+				errors = validateField({
+					data: child as Field,
+					deletedChildren,
+				});
 
 				if (errors.size) {
 					invalids.set(child.uuid, errors);
@@ -386,7 +405,7 @@ export function useValidate() {
 		// Validate children
 
 		for (const child of children.values()) {
-			validateChild(child, invalids);
+			validateChild(child, invalids, state.history.deletedChildren);
 		}
 
 		// If there's some invalid, dispatch validate action
@@ -405,5 +424,12 @@ export function useValidate() {
 		// It's valid
 
 		return true;
-	}, [children, dispatch, state.invalids, structure, validateChild]);
+	}, [
+		children,
+		dispatch,
+		state.history.deletedChildren,
+		state.invalids,
+		structure,
+		validateChild,
+	]);
 }

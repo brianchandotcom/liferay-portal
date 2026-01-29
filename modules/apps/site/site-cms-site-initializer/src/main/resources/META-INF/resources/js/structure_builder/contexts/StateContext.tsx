@@ -253,7 +253,11 @@ function reducer(state: State, action: Action): State {
 
 			const nextField = {
 				...field,
-				name: findAvailableFieldName(parent.children, field.name),
+				name: findAvailableFieldName(
+					parent.children,
+					state.history.deletedChildren,
+					field.name
+				),
 			};
 
 			const children = insertChild({
@@ -657,7 +661,11 @@ function reducer(state: State, action: Action): State {
 			}
 			else {
 				copy.erc = getRandomId();
-				copy.name = findAvailableFieldName(parent.children, child.name);
+				copy.name = findAvailableFieldName(
+					parent.children,
+					state.history.deletedChildren,
+					child.name
+				);
 			}
 
 			// Insert the copy
@@ -888,6 +896,7 @@ function reducer(state: State, action: Action): State {
 					...data,
 					name: nextName,
 				},
+				deletedChildren: state.history.deletedChildren,
 				uuid: nextField.uuid,
 			});
 

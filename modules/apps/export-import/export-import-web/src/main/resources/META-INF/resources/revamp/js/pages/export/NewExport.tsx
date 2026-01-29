@@ -46,7 +46,7 @@ export function NewExport({backURL}: {backURL: string}) {
 				description={Liferay.Language.get(
 					'configure-your-export-settings'
 				)}
-				onSubmit={() => {
+				onSubmit={async () => {
 					alert('Export started!');
 				}}
 				title={Liferay.Language.get('settings')}

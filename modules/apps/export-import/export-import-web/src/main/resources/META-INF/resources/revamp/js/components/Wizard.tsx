@@ -4,19 +4,24 @@
  */
 
 import ClayMultiStepNav from '@clayui/multi-step-nav';
+import {Form, Formik, FormikHelpers} from 'formik';
 import React, {ReactElement, useState} from 'react';
 
 import Footer from './Footer';
 
-interface WizardStep {
+type FormValues = {
+	[key: string]: any;
+};
+
+interface WizardStepProps {
 	actionButton?: React.ReactElement;
 	children: React.ReactNode;
 	description: string;
-	onSubmit?: () => void;
+	onSubmit?: (values: FormValues) => Promise<void>;
 	title: string;
 }
 
-export function WizardStep({children}: WizardStep) {
+export function WizardStep({children}: WizardStepProps) {
 	return <>{children}</>;
 }
 
@@ -25,73 +30,96 @@ export function Wizard({
 	children,
 }: {
 	backURL: string;
-	children: React.ReactElement<WizardStep> | React.ReactElement<WizardStep>[];
+	children:
+		| React.ReactElement<WizardStepProps>
+		| React.ReactElement<WizardStepProps>[];
 }) {
 	const [stepNumber, setStepNumber] = useState(0);
+	const [formState, setFormState] = useState({});
 
 	const steps = React.Children.toArray(
 		children
-	) as ReactElement<WizardStep>[];
+	) as ReactElement<WizardStepProps>[];
 
 	const totalSteps = steps.length;
 
-	const step = steps[stepNumber] as React.ReactElement<WizardStep>;
+	const step = steps[stepNumber] as React.ReactElement<WizardStepProps>;
 	const {actionButton, description, onSubmit, title} = step.props;
 
 	const next = () => {
 		setStepNumber((stepNumber) => Math.min(stepNumber + 1, totalSteps - 1));
 	};
 
-	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-		onSubmit?.();
+	const handleSubmit = async (
+		values: FormValues,
+		formikHelpers: FormikHelpers<FormValues>
+	) => {
+		await onSubmit?.(values);
+		setFormState((prevState) => ({
+			...prevState,
+			...values,
+		}));
 		next();
 	};
 
 	return (
-		<form onSubmit={handleSubmit}>
-			<ClayMultiStepNav center className="c-mx-lg-9" indicatorLabel="top">
-				{steps.map((step, index) => {
-					const {title: multiStepTitle} = step.props;
+		<Formik initialValues={formState} onSubmit={handleSubmit}>
+			{(formik) => (
+				<Form>
+					<ClayMultiStepNav
+						center
+						className="c-mx-lg-9"
+						indicatorLabel="top"
+					>
+						{steps.map((step, index) => {
+							const {title: multiStepTitle} = step.props;
 
-					return (
-						<ClayMultiStepNav.Item
-							active={index === stepNumber}
-							key={index}
-							state={stepNumber > index ? 'complete' : undefined}
-						>
-							{index < totalSteps - 1 && (
-								<ClayMultiStepNav.Divider />
-							)}
+							return (
+								<ClayMultiStepNav.Item
+									active={index === stepNumber}
+									key={index}
+									state={
+										stepNumber > index
+											? 'complete'
+											: undefined
+									}
+								>
+									{index < totalSteps - 1 && (
+										<ClayMultiStepNav.Divider />
+									)}
 
-							<ClayMultiStepNav.Indicator
-								label={1 + index}
-								subTitle={multiStepTitle}
-							/>
-						</ClayMultiStepNav.Item>
-					);
-				})}
-			</ClayMultiStepNav>
+									<ClayMultiStepNav.Indicator
+										label={1 + index}
+										subTitle={multiStepTitle}
+									/>
+								</ClayMultiStepNav.Item>
+							);
+						})}
+					</ClayMultiStepNav>
 
-			<header className="mb-1 sheet-header">
-				<div className="mb-1 sheet-title">{title}</div>
+					<header className="mb-1 sheet-header">
+						<div className="mb-1 sheet-title">{title}</div>
 
-				{description && (
-					<p className="sheet-text text-secondary">{description}</p>
-				)}
-			</header>
+						{description && (
+							<p className="sheet-text text-secondary">
+								{description}
+							</p>
+						)}
+					</header>
 
-			{steps[stepNumber]}
+					{step}
 
-			<Footer
-				actionButton={actionButton}
-				backURL={backURL}
-				onPrevious={
-					stepNumber > 0
-						? () => setStepNumber(stepNumber - 1)
-						: undefined
-				}
-			/>
-		</form>
+					<Footer
+						actionButton={actionButton}
+						backURL={backURL}
+						onPrevious={
+							stepNumber > 0
+								? () => setStepNumber(stepNumber - 1)
+								: undefined
+						}
+					/>
+				</Form>
+			)}
+		</Formik>
 	);
 }

@@ -7,7 +7,7 @@ import ClayLayout from '@clayui/layout';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
-import FieldText from '../../../components/forms/FieldText';
+import {FormikFieldText} from '../../../components/forms/FormikFields';
 
 export default function SetupStep() {
 	return (
@@ -28,7 +28,7 @@ export default function SetupStep() {
 					</div>
 				</ClayLayout.SheetHeader>
 
-				<FieldText
+				<FormikFieldText
 					label={Liferay.Language.get('file-name')}
 					name="filename"
 					required

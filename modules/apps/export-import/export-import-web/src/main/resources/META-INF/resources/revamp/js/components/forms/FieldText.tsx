@@ -7,7 +7,7 @@ import {ClayInput} from '@clayui/form';
 import {FieldBase} from 'frontend-js-components-web';
 import React from 'react';
 
-type FieldTextProps = {
+export type FieldTextProps = {
 	component?: 'textarea' | 'input';
 	disabled?: boolean;
 	errorMessage?: string;

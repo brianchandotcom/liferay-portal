@@ -3,29 +3,22 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayAlert from '@clayui/alert';
-import ClayBreadCrumb from '@clayui/breadcrumb';
-import React from 'react';
+import React, {useContext} from 'react';
 
-type AllowedComponents =
-	| 'div'
-	| 'span'
-	| typeof ClayAlert
-	| typeof ClayBreadCrumb;
+import FrontendDataSetContext, {
+	IFrontendDataSetContext,
+} from '../FrontendDataSetContext';
 
-type InlineNotificationProps<C extends AllowedComponents> = {
-	as?: C;
-	children?: React.ReactNode;
-} & (C extends 'div' | 'span'
-	? React.ComponentPropsWithoutRef<C>
-	: C extends React.ComponentType<infer P>
-		? P
-		: never);
+export interface IInlineNotificationComponent {
+	context: IFrontendDataSetContext;
+}
 
-export const InlineNotification = function <
-	C extends AllowedComponents = 'span',
->({as, children, ...restProps}: InlineNotificationProps<C>) {
-	const Component = (as || 'span') as React.ElementType;
+export function InlineNotification({
+	component: InlineNotificationContent,
+}: {
+	component: React.ComponentType<IInlineNotificationComponent>;
+}) {
+	const context = useContext(FrontendDataSetContext);
 
-	return <Component {...restProps}>{children}</Component>;
-};
+	return <InlineNotificationContent context={context} />;
+}

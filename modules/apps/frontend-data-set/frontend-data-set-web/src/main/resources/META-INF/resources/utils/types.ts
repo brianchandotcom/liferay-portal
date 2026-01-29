@@ -7,6 +7,7 @@ import {Atom} from '@liferay/frontend-js-state-web';
 import {ModalStatus} from 'frontend-js-components-web';
 import React from 'react';
 
+import {IInlineNotificationComponent} from '../inline_notification/InlineNotification';
 import {EEntityFieldType} from '../management_bar/controls/filters/utils/types';
 import {ISnapshot} from '../views/ViewsContext';
 
@@ -328,7 +329,7 @@ export interface IFrontendDataSetProps {
 		method?: string;
 	};
 	inlineEditingSettings?: IInlineEditingSettings;
-	inlineNotificationContent?: React.JSX.Element;
+	inlineNotificationContent?: React.ComponentType<IInlineNotificationComponent>;
 	items?: any[];
 	itemsActions?: IItemsActions[];
 	namespace?: string;

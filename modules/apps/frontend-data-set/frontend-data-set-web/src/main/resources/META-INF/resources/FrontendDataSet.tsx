@@ -44,6 +44,7 @@ import useFDSDrop from './dnd/useFDSDrop';
 import useFileUploader from './dnd/useFileUploader';
 import EmptyState from './empty_state/EmptyState';
 import {InfoPanel} from './info_panel/InfoPanel';
+import {InlineNotification} from './inline_notification/InlineNotification';
 import ManagementBar from './management_bar/ManagementBar';
 import {FILTER_IMPLEMENTATIONS} from './management_bar/controls/filters/Filter';
 
@@ -1533,11 +1534,13 @@ const FrontendDataSetContent = ({
 		showInlineNotification && inlineNotificationContent ? (
 			<div
 				className={classNames(
-					'container-fluid align-items-center inline-information-bar',
+					'container-fluid align-items-center inline-notification-bar',
 					style === 'fluid' && 'px-0'
 				)}
 			>
-				{inlineNotificationContent}
+				<InlineNotification
+					component={inlineNotificationContent}
+				></InlineNotification>
 			</div>
 		) : null;
 

@@ -22,6 +22,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys" %><%@
 page import="com.liferay.configuration.admin.display.ConfigurationFormRenderer" %><%@
 page import="com.liferay.configuration.admin.display.ConfigurationScreen" %><%@
+page import="com.liferay.configuration.admin.exception.ConfigurationValidationException" %><%@
 page import="com.liferay.configuration.admin.web.internal.constants.ConfigurationAdminWebKeys" %><%@
 page import="com.liferay.configuration.admin.web.internal.display.ConfigurationCategoryDisplay" %><%@
 page import="com.liferay.configuration.admin.web.internal.display.ConfigurationCategoryMenuDisplay" %><%@

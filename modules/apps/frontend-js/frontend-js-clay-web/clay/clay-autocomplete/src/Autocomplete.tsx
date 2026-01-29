@@ -116,7 +116,7 @@ export interface IProps<T>
 	direction?: 'bottom' | 'top';
 
 	/**
-	 * Estimate size for virtualize.
+	 * The estimated height of an item that is used by the virtualizer.
 	 */
 	estimateSize?: number;
 

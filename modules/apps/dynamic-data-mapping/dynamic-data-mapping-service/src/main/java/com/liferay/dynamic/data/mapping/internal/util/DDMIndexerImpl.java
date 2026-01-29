@@ -431,10 +431,18 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 		String valueFieldName = getValueFieldName(indexType, locale);
 
-		_addToDocument(
-			document, indexType, valueFieldName,
-			_getSortableValue(ddmFormField, locale, value),
-			ddmFormField.getType(), value);
+		if (value instanceof Object[]) {
+			_addToDocument(
+				document, indexType, valueFieldName,
+				_getSortableValue(ddmFormField, locale, (Serializable[])value),
+				ddmFormField.getType(), value);
+		}
+		else {
+			_addToDocument(
+				document, indexType, valueFieldName,
+				_getSortableValue(ddmFormField, locale, value),
+				ddmFormField.getType(), value);
+		}
 
 		Map<String, com.liferay.portal.kernel.search.Field> documentFields =
 			document.getFields();
@@ -1161,6 +1169,18 @@ public class DDMIndexerImpl implements DDMIndexer {
 		}
 
 		return sortableValue;
+	}
+
+	private String _getSortableValue(
+		DDMFormField ddmFormField, Locale locale, Serializable[] values) {
+
+		List<String> sortableValues = new ArrayList<>();
+
+		for (Serializable value : values) {
+			sortableValues.add(_getSortableValue(ddmFormField, locale, value));
+		}
+
+		return sortableValues.toString();
 	}
 
 	private Serializable _getValue(

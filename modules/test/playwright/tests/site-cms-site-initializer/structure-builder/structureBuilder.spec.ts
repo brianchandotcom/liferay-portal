@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ObjectDefinitionAPI} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
@@ -182,7 +183,7 @@ test(
 test(
 	'Can configure a text field',
 	{tag: '@LPD-49168'},
-	async ({page, structureBuilderPage}) => {
+	async ({apiHelpers, page, structureBuilderPage}) => {
 
 		// Create structure
 
@@ -230,7 +231,15 @@ test(
 
 		// Publish the structure
 
-		const {objectFields} = await structureBuilderPage.publishStructure();
+		const structureId = await structureBuilderPage.publishStructure();
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		const {body: objectDefinition} =
+			await objectDefinitionAPIClient.getObjectDefinition(structureId);
+
+		const {objectFields} = objectDefinition;
 
 		// Check the text field is created with the correct settings
 
@@ -243,18 +252,27 @@ test(
 		expect(textObjectField.label).toStrictEqual({en_US: 'Text Edited'});
 		expect(textObjectField.localized).toBe(true);
 		expect(textObjectField.name).toBe('textEdited');
-		expect(textObjectField.objectFieldSettings[0]).toStrictEqual({
-			name: 'uniqueValues',
-			value: true,
-		});
-		expect(textObjectField.objectFieldSettings[1]).toStrictEqual({
-			name: 'maxLength',
-			value: 10,
-		});
-		expect(textObjectField.objectFieldSettings[2]).toStrictEqual({
-			name: 'showCounter',
-			value: true,
-		});
+
+		expect(textObjectField.objectFieldSettings[0]).toEqual(
+			expect.objectContaining({
+				name: 'uniqueValues',
+				value: true,
+			})
+		);
+
+		expect(textObjectField.objectFieldSettings[1]).toEqual(
+			expect.objectContaining({
+				name: 'maxLength',
+				value: 10,
+			})
+		);
+
+		expect(textObjectField.objectFieldSettings[2]).toEqual(
+			expect.objectContaining({
+				name: 'showCounter',
+				value: true,
+			})
+		);
 	}
 );
 

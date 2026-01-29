@@ -80,6 +80,9 @@ public class SearchResultEntityModel implements EntityModel {
 			new StringEntityField("cmsSection", locale -> "cms_section"),
 			new StringEntityField("extension", locale -> "extension"),
 			new StringEntityField(
+				"objectDefinitionExternalReferenceCode",
+				locale -> "objectDefinitionExternalReferenceCode"),
+			new StringEntityField(
 				"title",
 				locale -> Field.getSortableFieldName(
 					"localized_title_".concat(LocaleUtil.toLanguageId(locale))),

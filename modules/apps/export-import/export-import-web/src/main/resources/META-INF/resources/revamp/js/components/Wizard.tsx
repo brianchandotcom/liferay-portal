@@ -55,17 +55,21 @@ export function Wizard({
 		formikHelpers: FormikHelpers<FormValues>
 	) => {
 		await onSubmit?.(values);
+
 		setFormState((prevState) => ({
 			...prevState,
 			...values,
 		}));
+
+		formikHelpers.setTouched({});
+
 		next();
 	};
 
 	return (
 		<Formik initialValues={formState} onSubmit={handleSubmit}>
 			{(formik) => (
-				<Form>
+				<Form noValidate>
 					<ClayMultiStepNav
 						center
 						className="c-mx-lg-9"

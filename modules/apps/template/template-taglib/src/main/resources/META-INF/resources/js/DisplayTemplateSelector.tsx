@@ -7,7 +7,7 @@ import {Option, Picker} from '@clayui/core';
 import DropDown from '@clayui/drop-down';
 import Form, {ClayInput} from '@clayui/form';
 import {InternalDispatch} from '@clayui/shared';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 type Props = {
 	namespace: string;
@@ -61,11 +61,13 @@ export default function DisplayTemplateSelector({namespace, props}: Props) {
 			groupKey,
 			name: value,
 		});
-
-		Liferay.fire('templateSelector:changedTemplate', {
-			value,
-		});
 	};
+
+	useEffect(() => {
+		Liferay.fire('templateSelector:changedTemplate', {
+			value: selectedDisplayStyle.name,
+		});
+	}, [selectedDisplayStyle.name]);
 
 	return (
 		<>

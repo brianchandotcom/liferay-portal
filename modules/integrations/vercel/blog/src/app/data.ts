@@ -20,13 +20,15 @@ export interface CMSBlogPosting {
 export async function getCMSBlogPostings({
 	liferay,
 	page,
-}: WithLiferay<{page: number}>) {
+	search,
+}: WithLiferay<{page: number; search?: string}>) {
 	try {
 		const liferaySpace = liferay.getSpace();
 		const response = await liferay.fetch(
 			liferay.cmsEndpoints.blogPosts({
 				page,
 				pageSize: 20,
+				search,
 				sort: 'dateCreated:desc',
 				spaceId: liferaySpace.id,
 			})

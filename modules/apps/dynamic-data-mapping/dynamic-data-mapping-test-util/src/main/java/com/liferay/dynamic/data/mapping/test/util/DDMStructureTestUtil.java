@@ -8,6 +8,7 @@ package com.liferay.dynamic.data.mapping.test.util;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
@@ -173,12 +174,22 @@ public class DDMStructureTestUtil {
 
 		return getSampleDDMForm(
 			name, "string", "text", true, "text", availableLocales,
-			defaultLocale);
+			defaultLocale, null);
 	}
 
 	public static DDMForm getSampleDDMForm(
 		String name, String dataType, String indexType, boolean repeatable,
 		String type, Locale[] availableLocalesArray, Locale defaultLocale) {
+
+		return getSampleDDMForm(
+			name, dataType, indexType, repeatable, type, availableLocalesArray,
+			defaultLocale, null);
+	}
+
+	public static DDMForm getSampleDDMForm(
+		String name, String dataType, String indexType, boolean repeatable,
+		String type, Locale[] availableLocalesArray, Locale defaultLocale,
+		Map<String, String> fieldValues) {
 
 		DDMForm ddmForm = new DDMForm();
 
@@ -205,6 +216,24 @@ public class DDMStructureTestUtil {
 		}
 
 		ddmFormField.setLabel(label);
+
+		if (fieldValues != null) {
+			DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
+
+			for (Map.Entry<String, String> option : fieldValues.entrySet()) {
+				ddmFormFieldOptions.addOptionLabel(
+					option.getKey(), defaultLocale, option.getValue());
+
+				for (Locale locale : availableLocales) {
+					ddmFormFieldOptions.addOptionLabel(
+						option.getKey() + LocaleUtil.toLanguageId(locale),
+						locale,
+						option.getValue() + LocaleUtil.toLanguageId(locale));
+				}
+			}
+
+			ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+		}
 
 		ddmForm.addDDMFormField(ddmFormField);
 

@@ -31,14 +31,18 @@ public class PlaywrightJUnitTestClass extends JUnitTestClass {
 			return _averageDuration;
 		}
 
+		Map<String, TestClassHistory> testClassHistoriesMap =
+			_getTestClassHistoriesMap();
+
+		if (testClassHistoriesMap.isEmpty()) {
+			return 0L;
+		}
+
 		long totalAverageDuration = 0L;
 
 		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
 
 		long defaultTestDuration = batchTestClassGroup.getDefaultTestDuration();
-
-		Map<String, TestClassHistory> testClassHistoriesMap =
-			_getTestClassHistoriesMap();
 
 		for (TestClassHistory testClassHistory :
 				testClassHistoriesMap.values()) {
@@ -63,15 +67,19 @@ public class PlaywrightJUnitTestClass extends JUnitTestClass {
 			return _averageOverheadDuration;
 		}
 
+		Map<String, TestClassHistory> testClassHistoriesMap =
+			_getTestClassHistoriesMap();
+
+		if (testClassHistoriesMap.isEmpty()) {
+			return 0L;
+		}
+
 		long totalAverageOverheadDuration = 0L;
 
 		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
 
 		long defaultTestOverheadDuration =
 			batchTestClassGroup.getDefaultTestOverheadDuration();
-
-		Map<String, TestClassHistory> testClassHistoriesMap =
-			_getTestClassHistoriesMap();
 
 		for (TestClassHistory testClassHistory :
 				testClassHistoriesMap.values()) {

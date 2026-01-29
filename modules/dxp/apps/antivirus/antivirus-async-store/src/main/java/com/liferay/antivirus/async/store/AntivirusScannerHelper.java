@@ -6,20 +6,21 @@
 package com.liferay.antivirus.async.store;
 
 import com.liferay.antivirus.async.store.constants.AntivirusAsyncConstants;
+import com.liferay.antivirus.async.store.constants.AntivirusAsyncPortletKeys;
 import com.liferay.antivirus.async.store.internal.event.AntivirusAsyncEventListenerManager;
 import com.liferay.antivirus.async.store.util.AntivirusAsyncUtil;
 import com.liferay.document.library.kernel.antivirus.AntivirusScanner;
 import com.liferay.document.library.kernel.antivirus.AntivirusScannerException;
 import com.liferay.document.library.kernel.antivirus.AntivirusVirusFoundException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
@@ -48,15 +49,15 @@ public class AntivirusScannerHelper {
 
 	public void processMessage(Message message) {
 		try {
+			long classPK = message.getLong("classPK");
 			long companyId = message.getLong("companyId");
 			long repositoryId = message.getLong("repositoryId");
 			String fileName = message.getString("fileName");
 			String versionLabel = message.getString("versionLabel");
-			long classPK = message.getLong("classPK");
 
 			if (classPK > 0) {
-				repositoryId = _getRepositoryFile(
-					companyId, repositoryId, fileName, versionLabel);
+				repositoryId = _getRepositoryId(
+					companyId, fileName, repositoryId, versionLabel);
 			}
 
 			boolean fileExists = _store.hasFile(
@@ -96,21 +97,16 @@ public class AntivirusScannerHelper {
 				if (antivirusScannerException instanceof
 						AntivirusVirusFoundException) {
 
-					if (_log.isDebugEnabled()) {
-						_log.debug("Virus found");
-					}
-
 					AntivirusVirusFoundException antivirusVirusFoundException =
 						(AntivirusVirusFoundException)antivirusScannerException;
-
-					String sourceFileName = message.getString("sourceFileName");
-					long userId = message.getLong("userId");
 
 					if (classPK <= 0) {
 						if (_log.isDebugEnabled()) {
 							_log.debug(
-								"File with the name " + fileName +
-									"from store message");
+								StringBundler.concat(
+									"Antivirus scanner detected a virus in ",
+									"the file ", fileName),
+								antivirusScannerException);
 						}
 
 						// Quarantine original file
@@ -129,46 +125,82 @@ public class AntivirusScannerHelper {
 							companyId, repositoryId, fileName, versionLabel);
 					}
 					else {
+						String sourceFileName = message.getString(
+							"sourceFileName");
+
 						if (_log.isDebugEnabled()) {
 							_log.debug(
-								"File with the fileName " + sourceFileName +
-									" from upload message");
+								StringBundler.concat(
+									"Antivirus scanner detected a virus in ",
+									"the file ", fileName),
+								antivirusScannerException);
 						}
 
 						DLFileEntry dlFileEntry =
-							_dlFileEntryLocalService.deleteDLFileEntry(classPK);
+							_dlFileEntryLocalService.getDLFileEntry(classPK);
+
+						_dlAppService.deleteFileEntry(classPK);
 
 						_store.deleteFile(
 							companyId, repositoryId, fileName, versionLabel);
 
-						User user = _userLocalService.getUser(userId);
+						long userId = message.getLong("userId");
+						String userEmailAddress = StringPool.BLANK;
+						String userName = StringPool.BLANK;
 
-						JSONObject additionalInfoJSONObject =
-							_jsonFactory.createJSONObject();
+						if (userId != 0) {
+							User user = _userLocalService.getUser(userId);
 
-						additionalInfoJSONObject.put(
-							"fileEntryId", classPK
-						).put(
-							"fileName", sourceFileName
-						).put(
-							"userEmailAddress", user.getEmailAddress()
-						).put(
-							"userId", userId
-						).put(
-							"userName", user.getFullName()
-						).put(
-							"Virus detected",
-							antivirusVirusFoundException.getVirusName()
-						);
+							userEmailAddress = user.getEmailAddress();
+							userName = user.getFullName();
+						}
 
-						AuditMessage auditMessage = new AuditMessage(
-							EventTypes.DELETE, companyId, 0, StringPool.BLANK,
-							DLFileEntry.class.getName(),
-							String.valueOf(classPK), "Virus detected",
-							additionalInfoJSONObject);
+						_auditRouter.route(
+							new AuditMessage(
+								EventTypes.DELETE, companyId, 0,
+								StringPool.BLANK, DLFileEntry.class.getName(),
+								String.valueOf(classPK), null,
+								JSONUtil.put(
+									"fileEntryId", classPK
+								).put(
+									"fileName", sourceFileName
+								).put(
+									"userEmailAddress", userEmailAddress
+								).put(
+									"userId", userId
+								).put(
+									"userName", userName
+								).put(
+									"virusName",
+									antivirusVirusFoundException.getVirusName()
+								)));
 
-						_auditRouter.route(auditMessage);
-						
+						ServiceContext serviceContext = new ServiceContext();
+
+						serviceContext.setCompanyId(companyId);
+						serviceContext.setUuid(dlFileEntry.getUuid());
+
+						_userNotificationEventLocalService.
+							addUserNotificationEvent(
+								userId,
+								AntivirusAsyncPortletKeys.
+									ANTIVIRUS_ASYNC_NOTIFICATION,
+								System.currentTimeMillis(),
+								UserNotificationDeliveryConstants.TYPE_WEBSITE,
+								0,
+								JSONUtil.put(
+									"companyId", companyId
+								).put(
+									"fileName", sourceFileName
+								).put(
+									"repositoryId", repositoryId
+								).put(
+									"versionLabel", versionLabel
+								).put(
+									"virusName",
+									antivirusVirusFoundException.getVirusName()
+								).toString(),
+								false, serviceContext);
 					}
 
 					_antivirusAsyncEventListenerManager.onVirusFound(
@@ -192,8 +224,8 @@ public class AntivirusScannerHelper {
 		}
 	}
 
-	private long _getRepositoryFile(
-		long companyId, long repositoryId, String fileName,
+	private long _getRepositoryId(
+		long companyId, String fileName, long repositoryId,
 		String versionLabel) {
 
 		if (_store.hasFile(companyId, repositoryId, fileName, versionLabel)) {
@@ -224,10 +256,10 @@ public class AntivirusScannerHelper {
 	private AuditRouter _auditRouter;
 
 	@Reference
-	private DLFileEntryLocalService _dlFileEntryLocalService;
+	private DLAppService _dlAppService;
 
 	@Reference
-	private JSONFactory _jsonFactory;
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Reference(target = "(default=true)")
 	private Store _store;

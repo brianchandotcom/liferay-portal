@@ -103,7 +103,7 @@ describe('buildState', () => {
 
 		const initialState: State = {
 			history: {
-				deletedChildren: false,
+				deletedChildren: [],
 				deletedGroupERCs: [],
 				deletedRelationshipERCs: [],
 				modifiedNames: new Set(),
@@ -159,7 +159,7 @@ describe('buildState', () => {
 
 		const initialState: State = {
 			history: {
-				deletedChildren: false,
+				deletedChildren: [],
 				deletedGroupERCs: [],
 				deletedRelationshipERCs: [],
 				modifiedNames: new Set(),
@@ -226,7 +226,7 @@ describe('buildState', () => {
 
 		const initialState: State = {
 			history: {
-				deletedChildren: false,
+				deletedChildren: [],
 				deletedGroupERCs: [],
 				deletedRelationshipERCs: [],
 				modifiedNames: new Set(),

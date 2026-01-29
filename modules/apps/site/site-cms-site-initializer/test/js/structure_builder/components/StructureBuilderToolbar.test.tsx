@@ -154,7 +154,7 @@ describe('StructureBuilderToolbar', () => {
 	it('Shows warning modal when a published field has been deleted', async () => {
 		renderComponent({
 			history: {
-				deletedChildren: true,
+				deletedChildren: [{} as Field],
 				deletedGroupERCs: [],
 				deletedRelationshipERCs: [],
 				modifiedNames: new Set(),
@@ -232,7 +232,7 @@ describe('StructureBuilderToolbar', () => {
 	it('Shows modal to publish when trying to customize editor and the structure is published and some fields have been deleted', async () => {
 		renderComponent({
 			history: {
-				deletedChildren: true,
+				deletedChildren: [{} as Field],
 				deletedGroupERCs: [],
 				deletedRelationshipERCs: [],
 				modifiedNames: new Set(),

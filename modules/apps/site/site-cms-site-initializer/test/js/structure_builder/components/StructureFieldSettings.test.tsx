@@ -43,7 +43,7 @@ const FIELD: Field = {
 
 const DEFAULT_STATE: State = {
 	history: {
-		deletedChildren: false,
+		deletedChildren: [],
 		deletedGroupERCs: [],
 		deletedRelationshipERCs: [],
 		modifiedNames: new Set(),

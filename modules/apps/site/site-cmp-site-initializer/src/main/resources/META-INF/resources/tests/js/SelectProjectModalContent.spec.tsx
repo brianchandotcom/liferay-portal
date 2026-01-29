@@ -145,10 +145,6 @@ describe('SelectProjectModalContent', () => {
 
 			expect(navigateArg.pathname).toBe('/add-task');
 
-			expect(
-				navigateArg.searchParams.get('isCreateTaskGlobalTaskListPage')
-			).toBe('true');
-
 			expect(navigateArg.searchParams.get('projectGroupId')).toBe('123');
 
 			expect(navigateArg.searchParams.get('projectId')).toBe('123');
@@ -199,12 +195,6 @@ describe('SelectProjectModalContent', () => {
 			expect(navigateArg).toBeInstanceOf(URL);
 
 			expect(navigateArg.pathname).toBe('/add-project');
-
-			expect(
-				navigateArg.searchParams.get(
-					'isCreateProjectGlobalTaskListPage'
-				)
-			).toBe('true');
 
 			expect(navigateArg.searchParams.get('redirect')).toBe(
 				'http://localhost/redirect-url'

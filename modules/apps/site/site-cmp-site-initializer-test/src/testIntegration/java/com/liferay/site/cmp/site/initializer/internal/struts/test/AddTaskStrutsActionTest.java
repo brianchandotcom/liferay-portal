@@ -99,21 +99,13 @@ public class AddTaskStrutsActionTest {
 		_addTaskStrutsAction.execute(
 			mockHttpServletRequest, mockHttpServletResponse);
 
-		Assert.assertTrue(
-			StringUtil.endsWith(
-				mockHttpServletResponse.getRedirectedUrl(),
-				"isCreateTaskGlobalTaskListPage=false"));
-
-		String objectEntryId = StringUtil.extractFirst(
-			StringUtil.removeFirst(
-				mockHttpServletResponse.getRedirectedUrl(),
-				StringBundler.concat(
-					themeDisplay.getPathFriendlyURLPublic(),
-					GroupConstants.CMS_FRIENDLY_URL, "/e/edit-task/",
-					_portal.getClassNameId(
-						_taskObjectDefinition.getClassName()),
-					StringPool.SLASH)),
-			StringPool.QUESTION);
+		String objectEntryId = StringUtil.removeFirst(
+			mockHttpServletResponse.getRedirectedUrl(),
+			StringBundler.concat(
+				themeDisplay.getPathFriendlyURLPublic(),
+				GroupConstants.CMS_FRIENDLY_URL, "/e/edit-task/",
+				_portal.getClassNameId(_taskObjectDefinition.getClassName()),
+				StringPool.SLASH));
 
 		ObjectEntry taskObjectEntry = _objectEntryLocalService.fetchObjectEntry(
 			GetterUtil.getLong(objectEntryId));

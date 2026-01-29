@@ -431,9 +431,24 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 		String valueFieldName = getValueFieldName(indexType, locale);
 
+		Serializable sortableValue = null;
+
+		if (value instanceof Serializable[] serializables) {
+			List<String> sortableValues = new ArrayList<>();
+
+			for (Serializable serializable : serializables) {
+				sortableValues.add(
+					_getSortableValue(ddmFormField, locale, serializable));
+			}
+
+			sortableValue = sortableValues.toString();
+		}
+		else {
+			sortableValue = _getSortableValue(ddmFormField, locale, value);
+		}
+
 		_addToDocument(
-			document, indexType, valueFieldName,
-			_getSortableValue(ddmFormField, locale, value),
+			document, indexType, valueFieldName, sortableValue,
 			ddmFormField.getType(), value);
 
 		Map<String, com.liferay.portal.kernel.search.Field> documentFields =

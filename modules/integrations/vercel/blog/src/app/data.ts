@@ -21,7 +21,7 @@ export async function getCMSBlogPostings({
 	liferay,
 	page,
 	search,
-}: WithLiferay<{search?: string; page: number}>) {
+}: WithLiferay<{page: number; search?: string}>) {
 	try {
 		const liferaySpace = liferay.getSpace();
 		const response = await liferay.fetch(

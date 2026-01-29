@@ -34,14 +34,13 @@ export default function ProductGridView({product}: ProductGridViewProps) {
 					/>
 
 					{skuDetails.available && (
-						<Badge className="absolute bg-slate-500 bg-success left-3 text-white top-3">
+						<Badge className="absolute bg-slate-500 left-3 text-white top-3">
 							AVAILABLE
 						</Badge>
 					)}
 				</div>
 
 				<div className="p-4 space-y-3">
-
 					<h3 className="font-medium group-hover:text-primary text-foreground transition-colors truncate">
 						{product.name}
 					</h3>

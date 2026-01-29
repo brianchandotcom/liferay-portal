@@ -10,11 +10,11 @@ import {ChevronLeft, ChevronRight} from 'lucide-react';
 import Image from 'next/image';
 import {useState} from 'react';
 
+import PreviewHTML from '../../components/preview-html';
 import {Attachment, Product} from '../../types/product';
 import {getSkuDetails, handleImageError} from '../../utils/product';
 import {Badge} from '../ui/badge';
 import {Card} from '../ui/card';
-import PreviewHTML from '../../components/preview-html';
 import ProductQuickActions from './product-quick-actions';
 import ProductSpecifications from './product-specifications';
 import ProductUOM from './product-uom';
@@ -119,7 +119,7 @@ const ProductDetail = ({product}: {product: Product}) => {
 
 							<span className="text-sm">
 								Only {skuDetails.availability?.stockQuantity}
-								&nbsp; left in stock
+								&nbsp;left in stock
 							</span>
 						</div>
 					)}

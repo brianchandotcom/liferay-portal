@@ -6,11 +6,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import PreviewHTML from '../../components/preview-html';
 import {Product} from '../../types/product';
 import {getSkuDetails, handleImageError} from '../../utils/product';
 import {Badge} from '../ui/badge';
 import {Card} from '../ui/card';
-import PreviewHTML from '../../components/preview-html';
 
 type ProductListViewProps = {
 	product: Product;
@@ -40,27 +40,30 @@ export default function ProductListView({product}: ProductListViewProps) {
 						<div className="flex items-start justify-between">
 							<div className="space-y-1">
 								<div className="flex gap-2 items-center text-sm">
-									<Badge className="bg-slate-500 bg-success text-white">
+									<Badge className="bg-slate-500 text-white">
 										AVAILABLE
 									</Badge>
 
 									{product.productConfiguration
 										?.availabilityEstimateName && (
-											<p>
-												Incoming Date: &nbsp;
-												{
-													product.productConfiguration
-														?.availabilityEstimateName
-												}
-											</p>
-										)}
+										<p>
+											Incoming Date: &nbsp;
+											{
+												product.productConfiguration
+													?.availabilityEstimateName
+											}
+										</p>
+									)}
 								</div>
 
 								<h3 className="font-medium group-hover:text-primary text-foreground transition-colors">
 									{product.name}
 								</h3>
 
-								<PreviewHTML className="text-sm" content={product.description ?? ''} />
+								<PreviewHTML
+									className="text-sm"
+									content={product.description ?? ''}
+								/>
 							</div>
 
 							<div className="text-right">

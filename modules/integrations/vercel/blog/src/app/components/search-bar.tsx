@@ -17,11 +17,13 @@ export function SearchBar() {
 	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		router.push(query.trim() ? `/?q=${encodeURIComponent(query.trim())}` : "/");
+		router.push(
+			query.trim() ? `/?q=${encodeURIComponent(query.trim())}` : '/'
+		);
 	};
 
 	return (
-		<div className="w-full mb-8">
+		<div className="mb-8 w-full">
 			<form className="relative" onSubmit={handleSubmit}>
 				<div className="relative">
 					<input
@@ -34,7 +36,7 @@ export function SearchBar() {
 					/>
 
 					<svg
-						className="-translate-y-1/2 absolute h-5 left-4 transform text-gray-400 top-1/2 w-5"
+						className="-translate-y-1/2 absolute h-5 left-4 text-gray-400 top-1/2 transform w-5"
 						fill="none"
 						stroke="currentColor"
 						viewBox="0 0 24 24"
@@ -51,7 +53,7 @@ export function SearchBar() {
 			</form>
 
 			{searchQuery && (
-				<div className="mt-3 text-sm text-gray-600">
+				<div className="mt-3 text-gray-600 text-sm">
 					Found results for: <strong>{searchQuery}</strong>
 				</div>
 			)}

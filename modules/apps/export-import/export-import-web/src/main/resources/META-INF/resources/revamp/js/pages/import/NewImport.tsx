@@ -46,7 +46,7 @@ export function NewImport({backURL}: {backURL: string}) {
 				description={Liferay.Language.get(
 					'set-up-your-import-configuration'
 				)}
-				onSubmit={() => {
+				onSubmit={async () => {
 					alert('Import started!');
 				}}
 				title={Liferay.Language.get('settings')}

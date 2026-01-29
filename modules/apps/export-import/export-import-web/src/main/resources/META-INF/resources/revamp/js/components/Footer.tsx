@@ -12,10 +12,12 @@ import React from 'react';
 function Footer({
 	actionButton,
 	backURL,
+	continueDisabled,
 	onPrevious,
 }: {
 	actionButton?: React.ReactElement;
 	backURL: string;
+	continueDisabled?: boolean;
 	onPrevious?: () => void;
 }) {
 	return (
@@ -46,7 +48,10 @@ function Footer({
 						{actionButton ? (
 							actionButton
 						) : (
-							<ClayButton type="submit">
+							<ClayButton
+								disabled={continueDisabled}
+								type="submit"
+							>
 								{Liferay.Language.get('continue')}
 							</ClayButton>
 						)}

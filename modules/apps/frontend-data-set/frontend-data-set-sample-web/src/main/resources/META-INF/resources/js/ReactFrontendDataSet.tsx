@@ -88,9 +88,10 @@ const ReactFrontendDataSet = (props: IFrontendDataSetProps) => {
 				onClose={() => setShowInlineNotification(false)}
 				variant="stripe"
 			>
-				{(context.selectedItems.length > 0)
+				{context.selectedItems.length
 					? `${selectedItems.length} items selected`
 					: 'No items selected'}
+
 				<ClayButton.Group className="pl-3" spaced>
 					<ClayButton
 						displayType="info"
@@ -135,9 +136,7 @@ const ReactFrontendDataSet = (props: IFrontendDataSetProps) => {
 		);
 	}
 	else {
-		notification = () => (
-			<span>This is a notification message</span>
-		);
+		notification = () => <span>This is a notification message</span>;
 	}
 
 	return (

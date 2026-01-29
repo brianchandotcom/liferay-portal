@@ -23,11 +23,17 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.headless.admin.site.client.custom.field.CustomField;
+import com.liferay.headless.admin.site.client.dto.v1_0.BasicFragmentInstancePageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.CustomMetaTag;
 import com.liferay.headless.admin.site.client.dto.v1_0.FavIcon;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentEditableElement;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentImage;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentImageValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentInstance;
 import com.liferay.headless.admin.site.client.dto.v1_0.FriendlyUrlHistory;
+import com.liferay.headless.admin.site.client.dto.v1_0.ImageFragmentEditableElementValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.LinkToURLPageSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.OpenGraphSettings;
@@ -48,6 +54,7 @@ import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.client.resource.v1_0.SitePageResource;
 import com.liferay.headless.admin.site.client.scope.Scope;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.AssetTestUtil;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.FragmentEditableElementTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutPageTemplateEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutUtilityPageEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageElementsTestUtil;
@@ -390,7 +397,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 	@Override
 	@Test
-	@TestInfo({"LPD-74331", "LPD-75450", "LPD-77124"})
+	@TestInfo({"LPD-74331", "LPD-75450", "LPD-77124", "LPD-77852"})
 	public void testPutSiteSitePage() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -579,6 +586,41 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 	}
 
+	private void _addFragmentEntryLinksAndPublishLayout(
+			String fragmentEntryKey, Layout layout,
+			JSONObject... editableFragmentEntryProcessorJSONObjects)
+		throws Exception {
+
+		FragmentEntry fragmentEntry =
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
+				fragmentEntryKey);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		long segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid());
+
+		for (JSONObject editableFragmentEntryProcessorJSONObject :
+				editableFragmentEntryProcessorJSONObjects) {
+
+			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+					editableFragmentEntryProcessorJSONObject
+				).toString(),
+				fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+				fragmentEntry.getExternalReferenceCode(),
+				fragmentEntry.getScopeERC(), fragmentEntry.getHtml(),
+				fragmentEntry.getJs(), draftLayout,
+				fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
+				null, 0, segmentsExperienceId);
+		}
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+	}
+
 	private Layout _addLayout(
 			String type, String typeSettings, ServiceContext serviceContext)
 		throws Exception {
@@ -608,6 +650,63 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				() -> sitePageResource.deleteSiteSitePage(
 					testGroup.getExternalReferenceCode(),
 					layout.getExternalReferenceCode()));
+		}
+	}
+
+	private void _assertFragmentImageValue(
+		BasicFragmentInstancePageElementDefinition
+			basicFragmentInstancePageElementDefinition,
+		FragmentImageValue fragmentImageValue) {
+
+		FragmentInstance fragmentInstance =
+			basicFragmentInstancePageElementDefinition.getFragmentInstance();
+
+		FragmentEditableElement[] fragmentEditableElements =
+			fragmentInstance.getFragmentEditableElements();
+
+		Assert.assertEquals(
+			fragmentEditableElements.toString(), 1,
+			fragmentEditableElements.length);
+
+		FragmentEditableElement fragmentEditableElement =
+			fragmentEditableElements[0];
+
+		ImageFragmentEditableElementValue imageFragmentEditableElementValue =
+			(ImageFragmentEditableElementValue)
+				fragmentEditableElement.getFragmentEditableElementValue();
+
+		FragmentImage fragmentImage =
+			imageFragmentEditableElementValue.getFragmentImage();
+
+		Assert.assertEquals(
+			fragmentImageValue, fragmentImage.getFragmentImageValue());
+	}
+
+	private void _assertFragmentImageValues(
+		int count, FragmentImageValue fragmentImageValue, SitePage sitePage) {
+
+		for (PageSpecification pageSpecification :
+				sitePage.getPageSpecifications()) {
+
+			ContentPageSpecification contentPageSpecification =
+				(ContentPageSpecification)pageSpecification;
+
+			PageExperience defaultPageExperience =
+				PageExperiencesTestUtil.getDefaultPageExperience(
+					contentPageSpecification.getPageExperiences());
+
+			PageElement[] pageElements =
+				defaultPageExperience.getPageElements();
+
+			Assert.assertEquals(
+				pageElements.toString(), count, pageElements.length);
+
+			for (PageElement pageElement : pageElements) {
+				_assertFragmentImageValue(
+					(BasicFragmentInstancePageElementDefinition)
+						pageElement.getPageElementDefinition(),
+					fragmentImageValue);
+			}
 		}
 	}
 
@@ -2554,20 +2653,62 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	private void _testPutSiteSitePageWithExportedSitePage() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(irrelevantGroup);
 
-		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+		String languageId = LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+
+		String url = RandomTestUtil.randomString();
+
+		_addFragmentEntryLinksAndPublishLayout(
+			"BASIC_COMPONENT-image", layout,
+			JSONUtil.put("image-square", JSONUtil.put(languageId, url)),
+			JSONUtil.put(
+				"image-square",
+				JSONUtil.put(languageId, JSONUtil.put("url", url))));
+
+		SitePageResource sitePageResource = _getSitePageResource(
+			"pageSpecifications");
 
 		SitePage sitePage = sitePageResource.getSiteSitePage(
 			irrelevantGroup.getExternalReferenceCode(),
 			layout.getExternalReferenceCode());
 
 		_assertSitePage(layout, sitePage);
+
+		FragmentImageValue fragmentImageValue =
+			FragmentEditableElementTestUtil.getDirectFragmentImageValue(
+				null, url);
+
+		_assertFragmentImageValues(
+			2, fragmentImageValue,
+			sitePageResource.getSiteSitePage(
+				irrelevantGroup.getExternalReferenceCode(),
+				layout.getExternalReferenceCode()));
+
 		_testPutSiteSitePage(sitePage, testGroup, sitePage);
+
+		_assertFragmentImageValues(
+			2, fragmentImageValue,
+			sitePageResource.getSiteSitePage(
+				testGroup.getExternalReferenceCode(),
+				layout.getExternalReferenceCode()));
 
 		sitePage.setPageSettings(
 			_getPageSettings(null, SitePage.Type.CONTENT_PAGE));
 
 		_testPutSiteSitePage(sitePage, irrelevantGroup, sitePage);
+
+		_assertFragmentImageValues(
+			2, fragmentImageValue,
+			sitePageResource.getSiteSitePage(
+				irrelevantGroup.getExternalReferenceCode(),
+				layout.getExternalReferenceCode()));
+
 		_testPutSiteSitePage(sitePage, testGroup, sitePage);
+
+		_assertFragmentImageValues(
+			2, fragmentImageValue,
+			sitePageResource.getSiteSitePage(
+				testGroup.getExternalReferenceCode(),
+				layout.getExternalReferenceCode()));
 	}
 
 	private void _testPutSiteSitePageWithExportedSitePageWithLayoutIdFriendlyURL()

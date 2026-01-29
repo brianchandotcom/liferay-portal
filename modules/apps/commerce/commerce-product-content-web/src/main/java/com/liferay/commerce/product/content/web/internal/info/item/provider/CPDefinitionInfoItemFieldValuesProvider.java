@@ -108,13 +108,17 @@ public class CPDefinitionInfoItemFieldValuesProvider
 	private long _getAccountEntryId() throws PortalException {
 		CommerceContext commerceContext = CommerceContextThreadLocal.get();
 
-		if (commerceContext != null) {
-			AccountEntry accountEntry = commerceContext.getAccountEntry();
-
-			return accountEntry.getAccountEntryId();
+		if (commerceContext == null) {
+			return 0;
 		}
 
-		return 0;
+		AccountEntry accountEntry = commerceContext.getAccountEntry();
+
+		if (accountEntry == null) {
+			return 0;
+		}
+
+		return accountEntry.getAccountEntryId();
 	}
 
 	private String _getAvailabilityStatus(

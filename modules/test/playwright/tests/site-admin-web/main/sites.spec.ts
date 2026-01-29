@@ -8,10 +8,13 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPagesTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {virtualInstancesPagesTest} from '../../../fixtures/virtualInstancesPagesTest';
 import getRandomString from '../../../utils/getRandomString';
+import {openProductMenu} from '../../../utils/productMenu';
 import {pageViewModePagesTest} from './../../../fixtures/pageViewModePagesTest';
 import {siteSettingsPagesTest} from './../../../fixtures/siteSettingsPagesTest';
 import {systemSettingsPageTest} from './../../../fixtures/systemSettingsPageTest';
@@ -23,8 +26,10 @@ const test = mergeTests(
 	dataApiHelpersTest,
 	instanceSettingsPagesTest,
 	loginTest(),
+	isolatedSiteTest,
 	pageEditorPagesTest,
 	pageViewModePagesTest,
+	productMenuPageTest,
 	sitesAdminPagesTest,
 	siteSettingsPagesTest,
 	systemSettingsPageTest,
@@ -448,6 +453,68 @@ test('Can not choose its own site as parent site', async ({
 		await apiHelpers.headlessSite.deleteSite(site.id);
 	}
 });
+
+test(
+	'Sites that only have hidden layouts appear correctly in the Recent Sites list',
+	{
+		tag: '@LPD-76663',
+	},
+	async ({apiHelpers, page, site}) => {
+		const blankSite = await apiHelpers.headlessSite.createSite({
+			name: 'blank' + getRandomString(),
+		});
+
+		try {
+			await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				title: getRandomString(),
+			});
+
+			await page.goto(`/web${site.friendlyUrlPath}`);
+
+			await openProductMenu(page);
+
+			const switchSiteButton = page.getByRole('button', {
+				name: 'Go to Other Site',
+			});
+
+			await switchSiteButton.click();
+
+			const frame = page.frameLocator('iframe[title="Select Site"]');
+			const recentSitesTab = frame.getByRole('link', {
+				name: 'Recent',
+			});
+
+			await recentSitesTab.click();
+
+			await expect(frame.locator('.card-title').first()).toHaveText(
+				site.name
+			);
+
+			await frame
+				.getByRole('link', {
+					name: 'All Sites',
+				})
+				.click();
+
+			await frame
+				.locator('.card-title', {hasText: blankSite.name})
+				.click();
+
+			await openProductMenu(page);
+
+			await switchSiteButton.click();
+			await recentSitesTab.click();
+
+			await expect(frame.locator('.card-title').first()).toHaveText(
+				blankSite.name
+			);
+		}
+		finally {
+			await apiHelpers.headlessSite.deleteSite(blankSite.id);
+		}
+	}
+);
 
 test('Deleting friendly URL makes it not able to access page via old friendly URL', async ({
 	apiHelpers,

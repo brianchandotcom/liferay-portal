@@ -211,11 +211,6 @@
 										{
 											"definition": {
 												"collectionConfig": {
-													"collectionReference": {
-														"className": "com.liferay.journal.model.JournalArticle",
-														"classPK": 38447
-													},
-													"collectionType": "Collection"
 												},
 												"collectionViewports": [
 													{
@@ -337,11 +332,6 @@
 										{
 											"definition": {
 												"collectionConfig": {
-													"collectionReference": {
-														"className": "com.liferay.journal.model.JournalArticle",
-														"classPK": 38449
-													},
-													"collectionType": "Collection"
 												},
 												"collectionViewports": [
 													{
@@ -463,11 +453,6 @@
 										{
 											"definition": {
 												"collectionConfig": {
-													"collectionReference": {
-														"className": "com.liferay.journal.model.JournalArticle",
-														"classPK": 38443
-													},
-													"collectionType": "Collection"
 												},
 												"collectionViewports": [
 													{
@@ -589,11 +574,6 @@
 										{
 											"definition": {
 												"collectionConfig": {
-													"collectionReference": {
-														"className": "com.liferay.journal.model.JournalArticle",
-														"classPK": 38445
-													},
-													"collectionType": "Collection"
 												},
 												"collectionViewports": [
 													{

@@ -820,11 +820,6 @@
 				{
 					"definition": {
 						"collectionConfig": {
-							"collectionReference": {
-								"className": "com.liferay.asset.list.model.AssetListEntry",
-								"classPK": 43024
-							},
-							"collectionType": "Collection"
 						},
 						"collectionViewports": [
 							{

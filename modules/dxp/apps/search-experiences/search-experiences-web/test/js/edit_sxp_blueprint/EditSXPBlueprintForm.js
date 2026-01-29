@@ -7,7 +7,7 @@ import {configure} from '@testing-library/dom';
 import {fireEvent, render, within} from '@testing-library/react';
 import React from 'react';
 
-import EditSXPBlueprintForm from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/edit_sxp_blueprint/EditSXPBlueprintForm';
+import EditSXPBlueprintForm from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/edit_sxp_blueprint/UQBEditSXPBlueprintForm';
 import fetchPreviewSearch from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/fetch/fetch_preview_search';
 import getUIConfigurationValues from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/sxp_element/get_ui_configuration_values';
 const Toasts = require('../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/toasts');
@@ -102,7 +102,7 @@ describe('EditSXPBlueprintForm', () => {
 			),
 		});
 
-		await findByText('query-settings');
+		await findByText('source');
 
 		const {getByText} = within(
 			container.querySelector('.layout-section-main')
@@ -117,7 +117,7 @@ describe('EditSXPBlueprintForm', () => {
 		const {container, findByText, queryAllByLabelText} =
 			renderEditSXPBlueprintForm();
 
-		await findByText('query-settings');
+		await findByText('source');
 
 		const sxpElementCountBefore =
 			container.querySelectorAll('.sxp-element').length;
@@ -151,7 +151,7 @@ describe('EditSXPBlueprintForm', () => {
 				),
 			});
 
-		await findByText('query-settings');
+		await findByText('source');
 
 		const sxpElementCountBefore =
 			container.querySelectorAll('.sxp-element').length;

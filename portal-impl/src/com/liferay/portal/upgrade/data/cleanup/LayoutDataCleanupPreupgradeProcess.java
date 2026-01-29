@@ -100,14 +100,10 @@ public class LayoutDataCleanupPreupgradeProcess
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
 				SQLTransformer.transform(
 					StringBundler.concat(
-						"CAST_TEXT([$TARGET_TABLE_ALIAS$].plid) = CASE WHEN ",
-						"INSTR([$SOURCE_TABLE_ALIAS$].primKey, '",
-						PortletConstants.LAYOUT_SEPARATOR,
-						"') > 0 THEN SUBSTR(",
+						"CAST_TEXT([$TARGET_TABLE_ALIAS$].plid) = SUBSTR(",
 						"[$SOURCE_TABLE_ALIAS$].primKey, 1, INSTR(",
 						"[$SOURCE_TABLE_ALIAS$].primKey, '",
-						PortletConstants.LAYOUT_SEPARATOR, "') - 1) ELSE ",
-						"[$SOURCE_TABLE_ALIAS$].primKey END ")),
+						PortletConstants.LAYOUT_SEPARATOR, "') - 1)")),
 				StringBundler.concat(
 					"[$SOURCE_TABLE_ALIAS$].scope = ",
 					ResourceConstants.SCOPE_INDIVIDUAL, " and ",

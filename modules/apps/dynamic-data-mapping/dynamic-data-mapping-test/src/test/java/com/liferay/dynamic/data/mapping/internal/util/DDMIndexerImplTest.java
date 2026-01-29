@@ -315,24 +315,15 @@ public class DDMIndexerImplTest {
 	public void testFormWithSelectField() throws JSONException {
 		Document document = _createDocument();
 
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
-			SetUtil.fromArray(LocaleUtil.US), LocaleUtil.US);
-
-		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
-			_FIELD_NAME, RandomTestUtil.randomString(), DDMFormFieldType.SELECT,
-			"string", true, false, false);
-
-		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
-
-		ddmFormFieldOptions.addOptionLabel("apple", LocaleUtil.US, "Apple");
-		ddmFormFieldOptions.addOptionLabel(
-			"pineapple", LocaleUtil.US, "Pineapple");
-
-		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
-
-		ddmFormField.setIndexType("keyword");
-
-		ddmForm.addDDMFormField(ddmFormField);
+		DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm(
+			_FIELD_NAME, "string", "keyword", false,
+			DDMFormFieldTypeConstants.SELECT, new Locale[] {LocaleUtil.US},
+			LocaleUtil.US,
+			HashMapBuilder.put(
+				"apple", "Apple"
+			).put(
+				"pineapple", "Pineapple"
+			).build());
 
 		_ddmIndexer.addAttributes(
 			document, _createDDMStructure(ddmForm),

@@ -163,7 +163,7 @@ public class ClientExtensionOSGiCommandsTest {
 	}
 
 	@Test
-	public void testGetConfigurations() throws Exception {
+	public void testGetConfigurations() {
 		_testGetConfigurations(
 			List.of(),
 			List.of(

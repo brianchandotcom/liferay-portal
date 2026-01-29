@@ -89,7 +89,7 @@ public class DepotEntryAdminSearchProviderTest {
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 
 		_assertDepotEntries(
-			4,
+			5,
 			ReflectionTestUtil.invoke(
 				_depotEntryAdminSearchProvider, "getDepotEntrySearch",
 				new Class<?>[] {
@@ -138,9 +138,14 @@ public class DepotEntryAdminSearchProviderTest {
 		}
 
 		_addDepotEntry(RandomTestUtil.randomString());
+
+		DepotEntry stagedDepotEntry = _addDepotEntry(
+			RandomTestUtil.randomString());
+
+		GroupTestUtil.enableLocalStaging(stagedDepotEntry.getGroup());
 	}
 
-	private void _addDepotEntry(String depotEntryName) throws Exception {
+	private DepotEntry _addDepotEntry(String depotEntryName) throws Exception {
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			Collections.singletonMap(LocaleUtil.getDefault(), depotEntryName),
 			Collections.singletonMap(
@@ -152,6 +157,8 @@ public class DepotEntryAdminSearchProviderTest {
 
 		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
 			depotEntry.getDepotEntryId(), _group.getGroupId());
+
+		return depotEntry;
 	}
 
 	private void _assertDepotEntries(

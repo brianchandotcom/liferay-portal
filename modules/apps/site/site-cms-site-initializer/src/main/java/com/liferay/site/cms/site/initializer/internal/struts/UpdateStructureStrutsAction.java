@@ -78,10 +78,8 @@ public class UpdateStructureStrutsAction implements StrutsAction {
 		catch (Exception exception) {
 			jsonObject = _jsonFactory.createJSONObject();
 
-			String savingOrPublishing = "saving-or-publishing-";
-
 			String errorMessage = StringBundler.concat(
-				"an-unexpected-error-occurred-while-", savingOrPublishing,
+				"an-unexpected-error-occurred-while-saving-or-publishing-",
 				"the-content-structure");
 
 			jsonObject.put(

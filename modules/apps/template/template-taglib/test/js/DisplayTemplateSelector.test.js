@@ -87,6 +87,15 @@ describe('DisplayTemplateSelector', () => {
 			{value: 'ddmTemplate_LANGUAGE-LONG-TEXT-FTL'}
 		);
 	});
+
+	it('calls Liferay.fire with correct value on first render', async () => {
+		renderComponent();
+
+		expect(Liferay.fire).toBeCalledWith(
+			'templateSelector:changedTemplate',
+			{value: 'IconValue'}
+		);
+	});
 });
 
 describe('getOptionData', () => {

@@ -4,6 +4,7 @@ import Card from 'shared/components/Card';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import IndividualMetricsQuery from 'shared/queries/IndividualMetricsQuery';
+import IndividualsList from './IndividualsList';
 import Loading from 'shared/components/Loading';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
@@ -291,6 +292,7 @@ const IndividualsOverviewCDP = () => {
 						/>
 					</Card>
 				</div>
+				<IndividualsList />
 			</BasePage.Body>
 		</>
 	);

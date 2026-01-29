@@ -147,7 +147,6 @@ public class TaskDefinitionResourceTest
 		Assert.assertEquals(
 			workflowDefinition1.getDescription(),
 			workflowDefinition2.getDescription());
-
 		Assert.assertEquals(
 			workflowDefinition1.getContentAsXML(),
 			workflowDefinition2.getContentAsXML());
@@ -155,10 +154,8 @@ public class TaskDefinitionResourceTest
 		Assert.assertNotEquals(
 			workflowDefinition1.getWorkflowDefinitionId(),
 			workflowDefinition2.getWorkflowDefinitionId());
-
 		Assert.assertNotEquals(
 			workflowDefinition1.getName(), workflowDefinition2.getName());
-
 		Assert.assertNotEquals(
 			workflowDefinition1.getExternalReferenceCode(),
 			workflowDefinition2.getExternalReferenceCode());
@@ -167,6 +164,19 @@ public class TaskDefinitionResourceTest
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"active", "name", "version"};
+	}
+
+	@Override
+	protected TaskDefinition testDeleteTaskDefinition_addTaskDefinition()
+		throws Exception {
+
+		WorkflowDefinition workflowDefinition = _deployWorkflowDefinition();
+
+		return new TaskDefinition() {
+			{
+				setId(workflowDefinition::getWorkflowDefinitionId);
+			}
+		};
 	}
 
 	@Override

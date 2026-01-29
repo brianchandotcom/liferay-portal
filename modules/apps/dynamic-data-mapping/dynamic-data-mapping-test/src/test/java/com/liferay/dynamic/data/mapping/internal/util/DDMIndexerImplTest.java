@@ -309,6 +309,7 @@ public class DDMIndexerImplTest {
 		_testFormWithRepeatableField("keyword");
 		_testFormWithRepeatableField("text");
 		_testFormWithRepeatableRichTextField();
+		_testFormWithRepeatableSelectField();
 	}
 
 	@Test
@@ -699,6 +700,70 @@ public class DDMIndexerImplTest {
 				StringBundler.concat(
 					"ddm__text__", ddmStructure.getStructureId(), "__",
 					_FIELD_NAME, "_en_US_String_sortable")));
+	}
+
+	private void _testFormWithRepeatableSelectField() {
+		Document document = _createDocument();
+
+		String indexType = "keyword";
+
+		DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm(
+			_FIELD_NAME, "string", indexType, true,
+			DDMFormFieldTypeConstants.SELECT,
+			new Locale[] {LocaleUtil.BRAZIL, LocaleUtil.US}, LocaleUtil.US,
+			HashMapBuilder.put(
+				"refNo", "No"
+			).put(
+				"refYes", "Yes"
+			).build());
+
+		_ddmIndexer.addAttributes(
+			document, _createDDMStructure(ddmForm),
+			_createDDMFormValues(
+				ddmForm,
+				DDMFormValuesTestUtil.createDDMFormFieldValue(
+					_FIELD_NAME,
+					DDMFormValuesTestUtil.createLocalizedValue(
+						"[\"refNo\"]",
+						"[\"refNo" +
+							LocaleUtil.toLanguageId(LocaleUtil.BRAZIL) + "\"]",
+						LocaleUtil.US)),
+				DDMFormValuesTestUtil.createDDMFormFieldValue(
+					_FIELD_NAME,
+					DDMFormValuesTestUtil.createLocalizedValue(
+						"[\"refNo\"]",
+						"[\"refNo" +
+							LocaleUtil.toLanguageId(LocaleUtil.BRAZIL) + "\"]",
+						LocaleUtil.US))));
+
+		String indexTypeSuffix = StringUtil.upperCaseFirstLetter(indexType);
+
+		FieldValuesAssert.assertFieldValues(
+			HashMapBuilder.put(
+				"ddmFieldArray.ddmFieldValue" + indexTypeSuffix +
+					"_en_US_String",
+				"[[\"No\"], [\"No\"]]"
+			).put(
+				"ddmFieldArray.ddmFieldValue" + indexTypeSuffix +
+					"_en_US_String_sortable",
+				"[[\"no\"], [\"no\"]]"
+			).put(
+				"ddmFieldArray.ddmFieldValue" + indexTypeSuffix +
+					"_pt_BR_String",
+				"[[\"Nopt_BR\"], [\"Nopt_BR\"]]"
+			).put(
+				"ddmFieldArray.ddmFieldValue" + indexTypeSuffix +
+					"_pt_BR_String_sortable",
+				"[[\"nopt_br\"], [\"nopt_br\"]]"
+			).put(
+				"ddmFieldArray.ddmFieldValue" + indexTypeSuffix + "_en_US",
+				"[[\"refNo\"], [\"refNo\"]]"
+			).put(
+				"ddmFieldArray.ddmFieldValue" + indexTypeSuffix + "_pt_BR",
+				"[[\"refNopt_BR\"], [\"refNopt_BR\"]]"
+			).build(),
+			"ddmFieldArray.ddmFieldValue" + indexTypeSuffix, document,
+			StringPool.BLANK);
 	}
 
 	private static final String _FIELD_NAME = RandomTestUtil.randomString();

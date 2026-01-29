@@ -95,20 +95,13 @@ public class AddProjectStrutsActionTest {
 		_addProjectStrutsAction.execute(
 			mockHttpServletRequest, mockHttpServletResponse);
 
-		Assert.assertTrue(
-			StringUtil.endsWith(
-				mockHttpServletResponse.getRedirectedUrl(),
-				"isCreateProjectGlobalTaskListPage=false"));
-
-		String objectEntryId = StringUtil.extractFirst(
-			StringUtil.removeFirst(
-				mockHttpServletResponse.getRedirectedUrl(),
-				StringBundler.concat(
-					themeDisplay.getPathFriendlyURLPublic(),
-					GroupConstants.CMS_FRIENDLY_URL, "/e/edit-project/",
-					_portal.getClassNameId(_objectDefinition.getClassName()),
-					StringPool.SLASH)),
-			StringPool.QUESTION);
+		String objectEntryId = StringUtil.removeFirst(
+			mockHttpServletResponse.getRedirectedUrl(),
+			StringBundler.concat(
+				themeDisplay.getPathFriendlyURLPublic(),
+				GroupConstants.CMS_FRIENDLY_URL, "/e/edit-project/",
+				_portal.getClassNameId(_objectDefinition.getClassName()),
+				StringPool.SLASH));
 
 		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
 			GetterUtil.getLong(objectEntryId));

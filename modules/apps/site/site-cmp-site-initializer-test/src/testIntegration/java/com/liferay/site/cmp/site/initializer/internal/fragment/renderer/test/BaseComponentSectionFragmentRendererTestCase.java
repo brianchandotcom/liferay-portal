@@ -53,6 +53,13 @@ public abstract class BaseComponentSectionFragmentRendererTestCase {
 		projectTitle = MapUtil.getString(
 			projectObjectEntry.getValues(), "title");
 
+		taskObjectDefinition =
+			objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_CMP_TASK", TestPropsValues.getCompanyId());
+
+		taskObjectEntry = CMPTestUtil.addTaskObjectEntry(projectObjectEntry);
+
 		themeDisplay = new ThemeDisplay() {
 			{
 				setCompany(
@@ -96,6 +103,8 @@ public abstract class BaseComponentSectionFragmentRendererTestCase {
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
+		mockHttpServletRequest.setParameter("redirect", "/redirect-url");
+
 		return mockHttpServletRequest;
 	}
 
@@ -116,6 +125,8 @@ public abstract class BaseComponentSectionFragmentRendererTestCase {
 	protected ObjectDefinition projectObjectDefinition;
 	protected ObjectEntry projectObjectEntry;
 	protected String projectTitle;
+	protected ObjectDefinition taskObjectDefinition;
+	protected ObjectEntry taskObjectEntry;
 	protected ThemeDisplay themeDisplay;
 
 	@Inject

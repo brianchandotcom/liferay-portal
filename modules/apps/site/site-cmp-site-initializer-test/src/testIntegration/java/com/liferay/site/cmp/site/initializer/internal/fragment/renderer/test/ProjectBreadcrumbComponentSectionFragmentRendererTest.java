@@ -99,7 +99,7 @@ public class ProjectBreadcrumbComponentSectionFragmentRendererTest
 			).put(
 				"successMessage",
 				_language.format(
-					httpServletRequest, "you-are-successfully-watching-x",
+					mockHttpServletRequest, "you-are-successfully-watching-x",
 					StringBundler.concat("<strong>", projectTitle, "</strong>"))
 			).put(
 				"symbolLeft", "bell-on"

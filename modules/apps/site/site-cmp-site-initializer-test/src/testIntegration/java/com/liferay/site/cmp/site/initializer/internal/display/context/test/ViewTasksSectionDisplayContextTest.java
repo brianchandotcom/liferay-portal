@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -74,16 +75,17 @@ public class ViewTasksSectionDisplayContextTest
 				getObjectDefinitionByExternalReferenceCode(
 					"L_CMP_PROJECT", TestPropsValues.getCompanyId());
 
-		ObjectEntry objectEntry = CMPTestUtil.addProjectObjectEntry();
+		ObjectEntry projectObjectEntry = CMPTestUtil.addProjectObjectEntry();
 
-		objectEntry = _objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
-			objectEntry.getObjectEntryFolderId(), objectEntry.getValues(),
+		projectObjectEntry = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), projectObjectEntry.getObjectEntryId(),
+			projectObjectEntry.getObjectEntryFolderId(),
+			projectObjectEntry.getValues(),
 			ServiceContextTestUtil.getServiceContext());
 
 		_assetEntry = _assetEntryLocalService.getEntry(
 			_projectObjectDefinition.getClassName(),
-			objectEntry.getObjectEntryId());
+			projectObjectEntry.getObjectEntryId());
 	}
 
 	@Test
@@ -112,16 +114,15 @@ public class ViewTasksSectionDisplayContextTest
 
 	@Test
 	public void testGetCreationMenu() throws Exception {
-		CreationMenu creationMenu = getCreationMenu(_assetEntry);
-
-		List<DropdownItem> dropdownItems = (List<DropdownItem>)creationMenu.get(
-			"primaryItems");
-
-		Assert.assertEquals(dropdownItems.toString(), 1, dropdownItems.size());
-
-		DropdownItem dropdownItem = dropdownItems.get(0);
+		DropdownItem dropdownItem = _getDropdownItem(
+			getCreationMenu(_assetEntry));
 
 		Assert.assertEquals("createTask", getValue(dropdownItem, "action"));
+		Assert.assertTrue(
+			Validator.isNull(getValue(dropdownItem, "addProjectURL")));
+		Assert.assertTrue(
+			Validator.isNull(getValue(dropdownItem, "addTaskURL")));
+		Assert.assertEquals("New Task", dropdownItem.get("label"));
 		Assert.assertEquals(
 			String.valueOf(objectDefinition.getObjectDefinitionId()),
 			getValue(dropdownItem, "objectDefinitionId"));
@@ -137,13 +138,8 @@ public class ViewTasksSectionDisplayContextTest
 				themeDisplay.getURLCurrent()),
 			getValue(dropdownItem, "redirect"));
 		Assert.assertEquals("Task", getValue(dropdownItem, "title"));
-		Assert.assertEquals("New Task", dropdownItem.get("label"));
 
-		creationMenu = getCreationMenu(null);
-
-		dropdownItems = (List<DropdownItem>)creationMenu.get("primaryItems");
-
-		dropdownItem = dropdownItems.get(0);
+		dropdownItem = _getDropdownItem(getCreationMenu(null));
 
 		Assert.assertEquals(
 			StringBundler.concat(
@@ -152,7 +148,8 @@ public class ViewTasksSectionDisplayContextTest
 				"/add_project?objectDefinitionId=",
 				_projectObjectDefinition.getObjectDefinitionId(), "&plid=",
 				themeDisplay.getPlid(), "&redirect=",
-				themeDisplay.getURLCurrent()),
+				themeDisplay.getURLCurrent(),
+				"&action=createProjectGlobalTask"),
 			getValue(dropdownItem, "addProjectURL"));
 		Assert.assertEquals(
 			StringBundler.concat(
@@ -160,10 +157,12 @@ public class ViewTasksSectionDisplayContextTest
 				GroupConstants.CMS_FRIENDLY_URL,
 				"/add_task?objectDefinitionId=",
 				objectDefinition.getObjectDefinitionId(), "&plid=",
-				themeDisplay.getPlid(), "&projectGroupId=", 0, "&projectId=", 0,
-				"&redirect=", themeDisplay.getURLCurrent()),
+				themeDisplay.getPlid(), "&projectGroupId=0&projectId=0",
+				"&redirect=", themeDisplay.getURLCurrent(),
+				"&action=createGlobalTask"),
 			getValue(dropdownItem, "addTaskURL"));
 		Assert.assertEquals("New", dropdownItem.get("label"));
+		Assert.assertTrue(Validator.isNull(getValue(dropdownItem, "redirect")));
 	}
 
 	@Test
@@ -276,6 +275,15 @@ public class ViewTasksSectionDisplayContextTest
 		return httpServletRequest.getAttribute(
 			"com.liferay.site.cmp.site.initializer.internal.display.context." +
 				"ViewTasksSectionDisplayContext");
+	}
+
+	private DropdownItem _getDropdownItem(CreationMenu creationMenu) {
+		List<DropdownItem> dropdownItems = (List<DropdownItem>)creationMenu.get(
+			"primaryItems");
+
+		Assert.assertEquals(dropdownItems.toString(), 1, dropdownItems.size());
+
+		return dropdownItems.get(0);
 	}
 
 	private static final String _CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN =

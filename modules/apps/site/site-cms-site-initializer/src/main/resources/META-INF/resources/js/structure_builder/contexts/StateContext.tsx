@@ -58,7 +58,7 @@ import {
 type UndeletableReason = 'is-locked' | 'is-referenced' | 'causes-invalid-group';
 
 type History = {
-	deletedChildren: boolean;
+	deletedChildren: Array<StructureChild>;
 	deletedGroupERCs: Array<RepeatableGroup['erc']>;
 	deletedRelationshipERCs: Array<string>;
 	modifiedNames: Set<Uuid>;
@@ -76,7 +76,7 @@ export type State = {
 
 const INITIAL_STATE: State = {
 	history: {
-		deletedChildren: false,
+		deletedChildren: [],
 		deletedGroupERCs: [],
 		deletedRelationshipERCs: [],
 		modifiedNames: new Set(),
@@ -496,7 +496,13 @@ function reducer(state: State, action: Action): State {
 			if (state.publishedChildren.has(uuid)) {
 				nextState = {
 					...nextState,
-					history: {...nextState.history, deletedChildren: true},
+					history: {
+						...nextState.history,
+						deletedChildren: [
+							...nextState.history.deletedChildren,
+							child,
+						],
+					},
 				};
 
 				if (
@@ -575,7 +581,13 @@ function reducer(state: State, action: Action): State {
 				if (state.publishedChildren.has(uuid)) {
 					nextState = {
 						...nextState,
-						history: {...nextState.history, deletedChildren: true},
+						history: {
+							...nextState.history,
+							deletedChildren: [
+								...nextState.history.deletedChildren,
+								child,
+							],
+						},
 					};
 
 					if (

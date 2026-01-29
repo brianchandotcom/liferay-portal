@@ -55,7 +55,7 @@ export async function publishStructure({
 	if (showWarnings) {
 		if (
 			config.isReferenced &&
-			!history.deletedChildren &&
+			!history.deletedChildren.length &&
 			!(await openConfirmModal({
 				buttonLabel: Liferay.Language.get('publish-and-propagate'),
 				center: true,
@@ -73,7 +73,7 @@ export async function publishStructure({
 
 		if (
 			!config.isReferenced &&
-			history.deletedChildren &&
+			history.deletedChildren.length &&
 			!(await openConfirmModal({
 				buttonLabel: Liferay.Language.get('publish'),
 				center: true,
@@ -91,7 +91,7 @@ export async function publishStructure({
 
 		if (
 			config.isReferenced &&
-			history.deletedChildren &&
+			history.deletedChildren.length &&
 			!(await openConfirmModal({
 				buttonLabel: Liferay.Language.get('publish-and-propagate'),
 				center: true,

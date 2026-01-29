@@ -98,7 +98,10 @@ function CustomizeEditorButton() {
 			className="font-weight-semi-bold mr-2"
 			displayType="primary"
 			onClick={() => {
-				if (status === 'published' && history.deletedChildren) {
+				if (
+					status === 'published' &&
+					!!history.deletedChildren.length
+				) {
 					openConfirmModal({
 						buttonLabel: Liferay.Language.get('publish'),
 						center: true,

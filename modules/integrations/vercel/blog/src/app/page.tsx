@@ -9,6 +9,7 @@ import {PropsWithChildren} from 'react';
 import {liferay} from '../app/liferay/server';
 import {Button} from './components/button';
 import {Pagination} from './components/pagination';
+import {SearchBar} from './components/search-bar';
 import {getCMSBlogPostings} from './data';
 
 const PageTemplate = ({children}: PropsWithChildren) => {
@@ -18,12 +19,17 @@ const PageTemplate = ({children}: PropsWithChildren) => {
 export default async function Home({
 	searchParams,
 }: {
-	searchParams: Promise<{page: string | undefined}>;
+	searchParams: Promise<{page?: string; q?: string}>;
 }) {
 	const params = await searchParams;
 	const page = Number(params.page || 1);
+	const searchQuery = params.q || '';
 
-	const {data, error} = await getCMSBlogPostings({liferay, page});
+	const {data, error} = await getCMSBlogPostings({
+		liferay,
+		page,
+		search: searchQuery,
+	});
 
 	if (error || !data) {
 		return (
@@ -39,77 +45,111 @@ export default async function Home({
 		);
 	}
 
+	const items = data.items;
+
 	return (
 		<PageTemplate>
-			<ol className="gap-4 grid grid-cols-1 mb-4 sm:grid-cols-2 text-left text-sm/6">
-				{data.items.map((blog, index) => {
-					const src = liferay.getDocument(
-						blog.coverImage?.link.href ?? ''
-					);
+			<SearchBar />
 
-					return (
-						<li
-							className="first:sm:col-span-2 tracking-[-.01em]"
-							key={blog.id}
-						>
-							<article className="card">
-								{src && blog.coverImage && (
-									<div className="border-b-1 border-blue-200">
-										<Image
-											alt={blog.coverImage.link.label}
-											className="object-cover w-full"
-											draggable="false"
-											height={90}
-											priority={index < 5}
-											src={src}
-											unoptimized={true}
-											width={160}
-										/>
-									</div>
-								)}
+			{searchQuery && (
+				<div className="mb-4 text-gray-600 text-sm">
+					{`Found ${items.length} result${items.length > 1 ? 's' : ''}`}{' '}
 
-								<div className="flex flex-col gap-4 p-5">
-									<h2 className="font-bold text-xl">
-										{blog.title}
-									</h2>
+					for <b>&quot;{searchQuery}&quot;</b>
+				</div>
+			)}
 
-									<p>
-										{blog.contentRawText
-											.split(' ')
-											.slice(0, 30)
-											.join(' ')}
-										...
-									</p>
+			{!items.length ? (
+				<div className="py-12 text-center">
+					<p className="mb-2 text-gray-600 text-xl">
+						No blog posts found
+					</p>
 
-									<div className="flex gap-2">
-										<span>
-											By &nbsp;
-											<strong>{blog.creator.name}</strong>
-										</span>
+					<p className="text-gray-500">
+						Try adjusting your search terms
+					</p>
+				</div>
+			) : (
+				<>
+					<ol className="gap-4 grid grid-cols-1 mb-4 sm:grid-cols-2 text-left text-sm/6">
+						{items.map((blog, index) => {
+							const src = liferay.getDocument(
+								blog.coverImage?.link.href ?? ''
+							);
 
-										<span>-</span>
+							return (
+								<li
+									className="first:sm:col-span-2 tracking-[-.01em]"
+									key={blog.id}
+								>
+									<article className="card">
+										{src && blog.coverImage && (
+											<div className="border-b-1 border-blue-200">
+												<Image
+													alt={
+														blog.coverImage.link
+															.label
+													}
+													className="object-cover w-full"
+													draggable="false"
+													height={90}
+													priority={index < 5}
+													src={src}
+													unoptimized={true}
+													width={160}
+												/>
+											</div>
+										)}
 
-										<span>
-											{new Date(
-												blog.dateCreated
-											).toLocaleDateString()}
-										</span>
-									</div>
+										<div className="flex flex-col gap-4 p-5">
+											<h2 className="font-bold text-xl">
+												{blog.title}
+											</h2>
 
-									<Button
-										href={`/blog/${blog.id}/${blog.friendlyUrlPath}`}
-									>
-										Read More
-									</Button>
-								</div>
-							</article>
-						</li>
-					);
-				})}
-			</ol>
+											<p>
+												{blog.contentRawText
+													.split(' ')
+													.slice(0, 30)
+													.join(' ')}
+												...
+											</p>
 
-			{data.lastPage > 1 && (
-				<Pagination currentPage={page} lastPage={data.lastPage} />
+											<div className="flex gap-2">
+												<span>
+													By &nbsp;
+													<strong>
+														{blog.creator.name}
+													</strong>
+												</span>
+
+												<span>-</span>
+
+												<span>
+													{new Date(
+														blog.dateCreated
+													).toLocaleDateString()}
+												</span>
+											</div>
+
+											<Button
+												href={`/blog/${blog.id}/${blog.friendlyUrlPath}`}
+											>
+												Read More
+											</Button>
+										</div>
+									</article>
+								</li>
+							);
+						})}
+					</ol>
+
+					{data.lastPage > 1 && (
+						<Pagination
+							currentPage={page}
+							lastPage={data.lastPage}
+						/>
+					)}
+				</>
 			)}
 		</PageTemplate>
 	);

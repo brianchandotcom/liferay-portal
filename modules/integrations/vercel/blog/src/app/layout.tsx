@@ -47,7 +47,7 @@ export default async function RootLayout({children}: PropsWithChildren) {
 						</Link>
 
 						<a
-							href="https://github.com/liferay/liferay-portal/tree/master/modules/integrations/vercel/templates/blog/"
+							href="https://github.com/liferay/liferay-portal/tree/master/modules/integrations/vercel/blog/"
 							rel="noopener noreferrer"
 							target="_blank"
 							title="See code on GitHub"

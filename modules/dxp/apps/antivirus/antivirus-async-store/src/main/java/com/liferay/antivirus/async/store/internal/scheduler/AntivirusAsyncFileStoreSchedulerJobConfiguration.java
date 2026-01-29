@@ -10,6 +10,9 @@ import com.liferay.antivirus.async.store.constants.AntivirusAsyncConstants;
 import com.liferay.antivirus.async.store.constants.AntivirusAsyncDestinationNames;
 import com.liferay.antivirus.async.store.internal.event.AntivirusAsyncEventListenerManager;
 import com.liferay.antivirus.async.store.util.AntivirusAsyncUtil;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileVersion;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -17,6 +20,8 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
@@ -24,8 +29,11 @@ import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.io.IOException;
 
@@ -47,6 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Raymond Augé
+ * @author Christopher Kian
  */
 @Component(
 	configurationPid = "com.liferay.antivirus.async.store.configuration.AntivirusAsyncConfiguration",
@@ -64,10 +73,19 @@ public class AntivirusAsyncFileStoreSchedulerJobConfiguration
 
 	@Override
 	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
-		java.io.File file = (java.io.File)_storeServiceReference.getProperty(
-			"rootDir");
+		if (PropsUtil.get(
+				PropsKeys.DL_STORE_IMPL
+			).startsWith(
+				"com.liferay.portal.store.file.system"
+			)) {
 
-		return () -> scan((String)file.getAbsolutePath());
+			java.io.File file =
+				(java.io.File)_storeServiceReference.getProperty("rootDir");
+
+			return () -> scan((String)file.getAbsolutePath());
+		}
+
+		return () -> scanDLFileEntries();
 	}
 
 	@Override
@@ -81,6 +99,25 @@ public class AntivirusAsyncFileStoreSchedulerJobConfiguration
 		}
 		catch (IOException ioException) {
 			ReflectionUtil.throwException(ioException);
+		}
+	}
+
+	public void scanDLFileEntries() {
+		try {
+			ActionableDynamicQuery actionableDynamicQuery =
+				_dlFileEntryLocalService.getActionableDynamicQuery();
+
+			actionableDynamicQuery.setCompanyId(
+				CompanyThreadLocal.getCompanyId());
+
+			actionableDynamicQuery.setPerformActionMethod(
+				(DLFileEntry dlFileEntry) -> _scheduleAntivirusScan(
+					dlFileEntry));
+
+			actionableDynamicQuery.performActions();
+		}
+		catch (PortalException portalException) {
+			ReflectionUtil.throwException(portalException);
 		}
 	}
 
@@ -135,6 +172,34 @@ public class AntivirusAsyncFileStoreSchedulerJobConfiguration
 				}
 
 			});
+	}
+
+	private void _scheduleAntivirusScan(DLFileEntry dlFileEntry)
+		throws PortalException {
+
+		Message message = new Message();
+
+		message.put("companyId", dlFileEntry.getCompanyId());
+		message.put("fileExtension", dlFileEntry.getExtension());
+		message.put("fileName", dlFileEntry.getName());
+
+		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
+		message.put(
+			"jobName",
+			AntivirusAsyncUtil.getJobName(
+				dlFileEntry.getCompanyId(), dlFileEntry.getRepositoryId(),
+				dlFileEntry.getFileName(), dlFileVersion.getStoreFileName()));
+
+		message.put("repositoryId", dlFileEntry.getRepositoryId());
+		message.put("size", dlFileEntry.getSize());
+		message.put("userId", 0L);
+		message.put("versionLabel", dlFileVersion.getStoreFileName());
+
+		_antivirusAsyncEventListenerManager.onPrepare(message);
+
+		_messageBus.sendMessage(
+			AntivirusAsyncDestinationNames.ANTIVIRUS, message);
 	}
 
 	private void _scheduleAntivirusScan(Path rootPath, Path filePath) {
@@ -261,6 +326,9 @@ public class AntivirusAsyncFileStoreSchedulerJobConfiguration
 	@Reference
 	private AntivirusAsyncEventListenerManager
 		_antivirusAsyncEventListenerManager;
+
+	@Reference
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Reference
 	private File _file;

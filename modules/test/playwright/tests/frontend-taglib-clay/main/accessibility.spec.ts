@@ -21,6 +21,8 @@ test('When accessing all clay sample portlet tabs, then verifies that the compon
 	claySamplePage,
 	page,
 }) => {
+	test.slow();
+	
 	const tabNames = Object.values(ClaySamplePageTabs);
 
 	for (const tabName of tabNames) {

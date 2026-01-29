@@ -176,6 +176,7 @@ export class ClaySamplePage extends POM {
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target,
+			timeout: 2000,
 			trigger: tabHeading,
 		});
 	}

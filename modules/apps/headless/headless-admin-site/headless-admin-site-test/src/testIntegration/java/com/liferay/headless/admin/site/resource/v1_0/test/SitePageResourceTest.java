@@ -5,6 +5,9 @@
 
 package com.liferay.headless.admin.site.resource.v1_0.test;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
@@ -53,6 +56,7 @@ import com.liferay.headless.admin.site.client.pagination.Pagination;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.client.resource.v1_0.SitePageResource;
 import com.liferay.headless.admin.site.client.scope.Scope;
+import com.liferay.headless.admin.site.client.serdes.v1_0.FragmentImageValueSerDes;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.AssetTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.FragmentEditableElementTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutPageTemplateEntryTestUtil;
@@ -1114,6 +1118,20 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				}
 			}
 		};
+	}
+
+	private FragmentImageValue _getDirectFragmentImageValue(String url) {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		try {
+			return FragmentImageValueSerDes.toDTO(
+				objectMapper.writeValueAsString(
+					FragmentEditableElementTestUtil.getDirectFragmentImageValue(
+						null, url)));
+		}
+		catch (JsonProcessingException jsonProcessingException) {
+			throw new RuntimeException(jsonProcessingException);
+		}
 	}
 
 	private int _getExpectedPriority(
@@ -2673,9 +2691,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		_assertSitePage(layout, sitePage);
 
-		FragmentImageValue fragmentImageValue =
-			FragmentEditableElementTestUtil.getDirectFragmentImageValue(
-				null, url);
+		FragmentImageValue fragmentImageValue = _getDirectFragmentImageValue(
+			url);
 
 		_assertFragmentImageValues(
 			2, fragmentImageValue,

@@ -17,6 +17,7 @@ export default function VerticalNav({
 	cssClass,
 	decorated,
 	defaultExpandedKeys,
+	displayType,
 	items,
 	large,
 	locale: _locale,
@@ -32,6 +33,7 @@ export default function VerticalNav({
 			className={cssClass}
 			decorated={decorated}
 			defaultExpandedKeys={new Set(defaultExpandedKeys)}
+			displayType={displayType}
 			items={items}
 			large={large}
 			triggerLabel={triggerLabel}

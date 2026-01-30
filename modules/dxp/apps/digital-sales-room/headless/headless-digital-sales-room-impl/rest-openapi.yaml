@@ -156,6 +156,18 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+        InvitedMemberBrief:
+            properties:
+                emailAddress:
+                    readOnly: true
+                    type: string
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                roleKey:
+                    readOnly: true
+                    type: string
         UserAccountBrief:
             properties:
                 alternateName:
@@ -619,6 +631,52 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/DigitalSalesRoomTemplate"
             tags: ["DigitalSalesRoomTemplate"]
+    "/digital-sales-rooms/{digitalSalesRoomId}/invited-member-briefs":
+        get:
+            operationId: getDigitalSalesRoomInvitedMemberBriefsPage
+            parameters:
+                -   in: path
+                    name: digitalSalesRoomId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/InvitedMemberBrief"
+                                    type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/InvitedMemberBrief"
+                                    type: array
+            tags: ["InvitedMemberBrief"]
+    "/digital-sales-rooms/{digitalSalesRoomId}/invited-member-briefs/{invitedMemberBriefId}":
+        delete:
+            operationId: deleteDigitalSalesRoomInvitedMemberBrief
+            parameters:
+                -   in: path
+                    name: digitalSalesRoomId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: invitedMemberBriefId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["InvitedMemberBrief"]
     "/digital-sales-rooms/{digitalSalesRoomId}/user-account-briefs":
         get:
             operationId: getDigitalSalesRoomUserAccountBriefsPage

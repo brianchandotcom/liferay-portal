@@ -80,6 +80,27 @@
 	},
 	{
 		"classNames": [
+			"BaseModelListener"
+		],
+		"classStructurePattern": true,
+		"issueKey": "LPD-7865",
+		"methodsToFormat": [
+			{
+				"from": "regex:\\((?<paramType>[\\S]*?)\\s*(?<paramName>[\\S]*?)\\)(?<methodContent>\\s*\\{[\\s\\S]*?)(?<methodCall>super.onAfterUpdate|onBeforeUpdate)\\([\\S]*?\\);",
+				"to": "(${paramType} ${paramName})${methodContent}${methodCall}((${paramType})${paramName}.clone(), ${paramName});"
+			},
+			{
+				"from": "regex:(?<methodDeclaration>public\\s*void\\s*(onAfterUpdate|onBeforeUpdate))\\((?<paramType>[\\S]*)\\s*(?<paramName>[\\S]*)\\)",
+				"to": "${methodDeclaration}(${paramType} original${paramName}, ${paramType} ${paramName})"
+			},
+			{
+				"from": "regex:(?<methodDeclaration>public\\s*void\\s*(onAfterUpdate|onBeforeUpdate)\\(\\w\\s*(?<paramOriginalModel>\\S*),\\s*\\w\\s*(?<paramModel>\\S*)\\)\\s*)(?<methodContent>\\{(?:(?!public|private|protected|@|\\}\\s*$)[\\s\\S])*?)(?<methodCall>super.onAfterUpdate|onBeforeUpdate)\\(\\(\\w\\)[\\s\\S]*?\\);",
+				"to": "${methodDeclaration}${methodContent}${methodCall}(${paramOriginalModel}, ${paramModel});"
+			}
+		]
+	},
+	{
+		"classNames": [
 			"BasePanelApp"
 		],
 		"classStructurePattern": true,

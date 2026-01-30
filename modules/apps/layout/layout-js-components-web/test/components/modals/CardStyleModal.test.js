@@ -17,13 +17,22 @@ globalThis.Liferay = {
 
 const mockProps = {
 	body: 'This is the body of the new feature.',
-	heading: 'New Feature Alert!',
+	buttons: [
+		{
+			displayType: 'primary',
+			icon: 'check',
+			label: 'Got it!',
+			onClick: jest.fn(),
+		},
+		{
+			displayType: 'secondary',
+			label: 'Dismiss',
+			onClick: jest.fn(),
+		},
+	],
 	imageSrc: '/path/to/image.png',
 	onCloseModal: jest.fn(),
-	onPrimaryButtonClick: jest.fn(),
-	primaryButtonIcon: 'check',
-	primaryButtonLabel: 'Got it!',
-	secondaryButtonLabel: 'Dismiss',
+	title: 'New Feature Alert!',
 };
 
 const renderComponent = (props = mockProps) =>
@@ -97,13 +106,18 @@ describe('ClayStyleModal', () => {
 		);
 		await userEvent.click(primaryButton);
 		await waitFor(() => {
-			expect(mockProps.onPrimaryButtonClick).toHaveBeenCalledTimes(1);
+			expect(mockProps.buttons[0].onClick).toHaveBeenCalledTimes(1);
 			expect(mockProps.onCloseModal).toHaveBeenCalledTimes(1);
 		});
 	});
 
 	it('does not render primary button if not provided', async () => {
-		renderComponent({...mockProps, primaryButtonLabel: undefined});
+		renderComponent({
+			...mockProps,
+			buttons: mockProps.buttons.filter(
+				(button) => button.displayType === 'secondary'
+			),
+		});
 		await waitFor(() => {
 			expect(
 				screen.queryByRole('button', {name: 'Got it!'})
@@ -112,16 +126,30 @@ describe('ClayStyleModal', () => {
 	});
 
 	it('does not render secondary button if not provided', async () => {
-		renderComponent({...mockProps, secondaryButtonLabel: undefined});
+		renderComponent({
+			...mockProps,
+			buttons: mockProps.buttons.filter(
+				(button) => button.displayType === 'primary'
+			),
+		});
 		await waitFor(() => {
 			expect(
-				screen.queryByRole('button', {name: 'Dismiss!'})
+				screen.queryByRole('button', {name: 'Dismiss'})
 			).not.toBeInTheDocument();
 		});
 	});
 
 	it('renders primary button without icon if not provided', async () => {
-		renderComponent({...mockProps, primaryButtonIcon: undefined});
+		renderComponent({
+			...mockProps,
+			buttons: [
+				{
+					...mockProps.buttons[0],
+					icon: undefined,
+				},
+				mockProps.buttons[1],
+			],
+		});
 		await waitFor(() => {
 			const primaryButton = screen.getByRole('button', {name: 'Got it!'});
 			expect(

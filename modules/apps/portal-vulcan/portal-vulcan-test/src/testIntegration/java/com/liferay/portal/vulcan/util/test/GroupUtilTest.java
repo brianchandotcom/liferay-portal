@@ -9,11 +9,14 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -133,6 +136,51 @@ public class GroupUtilTest {
 	}
 
 	@Test
+	public void testGetGroupIdWithLayoutSetPrototypeGroup() throws Exception {
+		LayoutSetPrototype layoutSetPrototype =
+			_layoutSetPrototypeLocalService.addLayoutSetPrototype(
+				TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+				HashMapBuilder.put(
+					LocaleUtil.getDefault(), RandomTestUtil.randomString()
+				).build(),
+				null, true, true, false,
+				ServiceContextTestUtil.getServiceContext());
+
+		Group group = layoutSetPrototype.getGroup();
+
+		Assert.assertNull(
+			GroupUtil.getGroupId(
+				TestPropsValues.getCompanyId(),
+				String.valueOf(group.getGroupId()), _groupLocalService));
+
+		try {
+			ExportImportThreadLocal.setPortletExportInProcess(true);
+
+			Assert.assertEquals(
+				Long.valueOf(group.getGroupId()),
+				GroupUtil.getGroupId(
+					TestPropsValues.getCompanyId(),
+					String.valueOf(group.getGroupId()), _groupLocalService));
+		}
+		finally {
+			ExportImportThreadLocal.setPortletExportInProcess(false);
+		}
+
+		try {
+			ExportImportThreadLocal.setPortletImportInProcess(true);
+
+			Assert.assertEquals(
+				Long.valueOf(group.getGroupId()),
+				GroupUtil.getGroupId(
+					TestPropsValues.getCompanyId(),
+					String.valueOf(group.getGroupId()), _groupLocalService));
+		}
+		finally {
+			ExportImportThreadLocal.setPortletImportInProcess(false);
+		}
+	}
+
+	@Test
 	public void testGetSiteExternalReferenceCode() throws Exception {
 		Assert.assertNull(
 			GroupUtil.getSiteExternalReferenceCode(_depotEntry.getGroup()));
@@ -178,6 +226,9 @@ public class GroupUtilTest {
 
 	@Inject
 	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
 
 	@Inject
 	private UserGroupLocalService _userGroupLocalService;

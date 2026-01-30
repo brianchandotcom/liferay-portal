@@ -7,12 +7,17 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
 import getRandomString from '../../../utils/getRandomString';
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
+	featureFlagsTest({
+		'LPD-34594': {enabled: true},
+		'LPS-164563': {enabled: true},
+	}),
 	journalPagesTest,
 	changeTrackingPagesTest,
 	workflowPagesTest
@@ -157,4 +162,17 @@ test('LPD-71138 Add status filter for ongoing publications', async ({
 	await apiHelpers.headlessChangeTracking.deleteCTCollection(
 		inProgressCTCollection.body.id
 	);
+});
+
+test('LPD-76512 User custom view is enabled for publications', async ({
+	changeTrackingPage,
+	page,
+}) => {
+	await changeTrackingPage.goto();
+
+	const viewsSelectorButton = page.getByLabel('Views');
+
+	await expect(viewsSelectorButton).toBeVisible();
+
+	await expect(viewsSelectorButton).toHaveText('Default View');
 });

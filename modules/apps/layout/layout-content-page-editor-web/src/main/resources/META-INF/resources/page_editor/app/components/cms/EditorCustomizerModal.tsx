@@ -48,11 +48,15 @@ export default function EditorCustomizerModal() {
 			body={Liferay.Language.get(
 				'you-can-now-tailor-the-content-editor-to-fit-your-unique-requirements'
 			)}
+			buttons={[
+				{
+					displayType: 'primary',
+					label: Liferay.Language.get('got-it'),
+				},
+			]}
 			heading={Liferay.Language.get('introducing-editor-customizer')}
 			imageSrc={`${config.imagesPath}/editor_customizer.svg`}
 			onCloseModal={handleClose}
-			onPrimaryButtonClick={handleClose}
-			primaryButtonLabel={Liferay.Language.get('got-it')}
 		/>
 	);
 }

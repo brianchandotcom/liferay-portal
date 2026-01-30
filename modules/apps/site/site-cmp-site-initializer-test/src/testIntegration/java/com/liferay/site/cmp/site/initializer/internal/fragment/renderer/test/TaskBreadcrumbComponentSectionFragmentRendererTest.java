@@ -124,7 +124,7 @@ public class TaskBreadcrumbComponentSectionFragmentRendererTest
 			JSONUtil.put(
 				"confirmationMessage",
 				_language.format(
-					mockHttpServletRequest, "delete-asset-confirmation-body",
+					mockHttpServletRequest, "delete-task-confirmation-body",
 					_taskTitle)
 			).put(
 				"confirmationTitle",

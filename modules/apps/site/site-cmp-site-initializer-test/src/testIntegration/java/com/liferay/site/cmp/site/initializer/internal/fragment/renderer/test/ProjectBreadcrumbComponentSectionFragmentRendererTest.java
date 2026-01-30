@@ -114,7 +114,7 @@ public class ProjectBreadcrumbComponentSectionFragmentRendererTest
 			JSONUtil.put(
 				"confirmationMessage",
 				_language.format(
-					mockHttpServletRequest, "delete-asset-confirmation-body",
+					mockHttpServletRequest, "delete-project-confirmation-body",
 					projectTitle)
 			).put(
 				"confirmationTitle",

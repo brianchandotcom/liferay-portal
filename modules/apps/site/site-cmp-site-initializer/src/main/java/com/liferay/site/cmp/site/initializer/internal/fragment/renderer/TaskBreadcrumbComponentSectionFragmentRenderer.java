@@ -126,7 +126,7 @@ public class TaskBreadcrumbComponentSectionFragmentRenderer
 							"confirmationMessage",
 							LanguageUtil.format(
 								httpServletRequest,
-								"delete-asset-confirmation-body", title)
+								"delete-task-confirmation-body", title)
 						).put(
 							"confirmationTitle",
 							LanguageUtil.format(

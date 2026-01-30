@@ -7,8 +7,10 @@ package com.liferay.ai.creator.openai.internal.upgrade.v1_1_0;
 
 import com.liferay.ai.creator.openai.configuration.AICreatorOpenAICompanyConfiguration;
 import com.liferay.ai.creator.openai.configuration.AICreatorOpenAIGroupConfiguration;
+import com.liferay.configuration.admin.util.ConfigurationFilterStringUtil;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -53,13 +55,13 @@ public class AICreatorOpenAIConfigurationUpgradeProcess extends UpgradeProcess {
 		).build();
 	}
 
-	private Configuration[] _getScopedConfigurations(String className)
+	private Configuration[] _getScopedConfigurations(
+			String className, ExtendedObjectClassDefinition.Scope scope)
 		throws Exception {
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			String.format(
-				"(%s=%s.scoped)", ConfigurationAdmin.SERVICE_FACTORYPID,
-				className));
+			ConfigurationFilterStringUtil.getScopedFilterString(
+				CompanyThreadLocal.getCompanyId(), className, scope, null));
 
 		if (configurations == null) {
 			return new Configuration[0];
@@ -71,7 +73,8 @@ public class AICreatorOpenAIConfigurationUpgradeProcess extends UpgradeProcess {
 	private void _updateCompanyConfigurations() throws Exception {
 		Configuration[] aiCreatorOpenAICompanyConfigurations =
 			_getScopedConfigurations(
-				AICreatorOpenAICompanyConfiguration.class.getName());
+				AICreatorOpenAICompanyConfiguration.class.getName(),
+				ExtendedObjectClassDefinition.Scope.COMPANY);
 
 		for (Configuration aiCreatorOpenAICompanyConfiguration :
 				aiCreatorOpenAICompanyConfigurations) {
@@ -96,7 +99,8 @@ public class AICreatorOpenAIConfigurationUpgradeProcess extends UpgradeProcess {
 	private void _updateGroupConfigurations() throws Exception {
 		Configuration[] aiCreatorOpenAIGroupConfigurations =
 			_getScopedConfigurations(
-				AICreatorOpenAIGroupConfiguration.class.getName());
+				AICreatorOpenAIGroupConfiguration.class.getName(),
+				ExtendedObjectClassDefinition.Scope.GROUP);
 
 		for (Configuration aiCreatorOpenAIGroupConfiguration :
 				aiCreatorOpenAIGroupConfigurations) {
@@ -110,6 +114,7 @@ public class AICreatorOpenAIConfigurationUpgradeProcess extends UpgradeProcess {
 
 			_configurationProvider.saveGroupConfiguration(
 				AICreatorOpenAIGroupConfiguration.class,
+				CompanyThreadLocal.getCompanyId(),
 				GetterUtil.getLong(
 					properties.get(
 						ExtendedObjectClassDefinition.Scope.GROUP.

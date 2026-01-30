@@ -58,7 +58,7 @@ public class ClayTooltipBottomDynamicInclude implements DynamicInclude {
 				JSTooltipSupportConfiguration jsTooltipSupportConfiguration =
 					_configurationProvider.getGroupConfiguration(
 						JSTooltipSupportConfiguration.class,
-						group.getGroupId());
+						group.getCompanyId(), group.getGroupId());
 
 				if (jsTooltipSupportConfiguration.enableNativeTooltip()) {
 					return;

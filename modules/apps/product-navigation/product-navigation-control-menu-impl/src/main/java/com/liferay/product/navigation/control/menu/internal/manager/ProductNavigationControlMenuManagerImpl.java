@@ -73,7 +73,8 @@ public class ProductNavigationControlMenuManagerImpl
 		try {
 			MenuAccessConfiguration menuAccessConfiguration =
 				_configurationProvider.getGroupConfiguration(
-					MenuAccessConfiguration.class, group.getGroupId());
+					MenuAccessConfiguration.class, group.getCompanyId(),
+					group.getGroupId());
 
 			if ((menuAccessConfiguration != null) &&
 				menuAccessConfiguration.showControlMenuByRole()) {

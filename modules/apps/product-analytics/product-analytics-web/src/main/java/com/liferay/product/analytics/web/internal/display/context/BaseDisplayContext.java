@@ -172,7 +172,8 @@ public abstract class BaseDisplayContext {
 				Group group = layoutSet.getGroup();
 
 				return ConfigurationProviderUtil.getGroupConfiguration(
-					ProductAnalyticsConfiguration.class, group.getGroupId());
+					ProductAnalyticsConfiguration.class, group.getCompanyId(),
+					group.getGroupId());
 			}
 
 			return ConfigurationProviderUtil.getCompanyConfiguration(

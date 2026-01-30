@@ -130,9 +130,10 @@ public class CommerceOrderIndexerTest {
 	public void tearDown() throws Exception {
 		_configurationProvider.deleteGroupConfiguration(
 			CommerceAccountGroupServiceConfiguration.class,
-			_commerceChannel.getGroupId());
+			_commerceChannel.getCompanyId(), _commerceChannel.getGroupId());
 		_configurationProvider.deleteGroupConfiguration(
-			CommerceOrderConfiguration.class, _commerceChannel.getGroupId());
+			CommerceOrderConfiguration.class, _commerceChannel.getCompanyId(),
+			_commerceChannel.getGroupId());
 	}
 
 	@Test

@@ -524,7 +524,7 @@ public class SalesforceObjectEntryManagerImpl
 					}
 
 					return _configurationProvider.getGroupConfiguration(
-						SalesforceConfiguration.class, groupId);
+						SalesforceConfiguration.class, companyId, groupId);
 				}
 				catch (ConfigurationException configurationException) {
 					return ReflectionUtil.throwException(

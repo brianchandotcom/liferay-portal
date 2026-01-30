@@ -13,6 +13,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.file.install.constants.FileInstallConstants;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -97,6 +98,13 @@ public class ConfigurationUtil {
 
 		if (propertyKey != null) {
 			properties.put(propertyKey, classPK);
+
+			if (scope.equals(ExtendedObjectClassDefinition.Scope.GROUP)) {
+				properties.put(
+					ExtendedObjectClassDefinition.Scope.COMPANY.
+						getPropertyKey(),
+					CompanyThreadLocal.getCompanyId());
+			}
 		}
 
 		configuration.update(properties);

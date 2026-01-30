@@ -10,7 +10,9 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.login.AuthLoginGroupSettings;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.service.GroupLocalService;
 
 import java.util.Collections;
 
@@ -33,8 +35,10 @@ public class AuthLoginGroupSettingsImpl implements AuthLoginGroupSettings {
 
 	private AuthLoginConfiguration _getAuthLoginConfiguration(long groupId) {
 		try {
+			Group group = _groupLocalService.fetchGroup(groupId);
+
 			return _configurationProvider.getGroupConfiguration(
-				AuthLoginConfiguration.class, groupId);
+				AuthLoginConfiguration.class, group.getCompanyId(), groupId);
 		}
 		catch (ConfigurationException configurationException) {
 			if (_log.isWarnEnabled()) {
@@ -51,5 +55,8 @@ public class AuthLoginGroupSettingsImpl implements AuthLoginGroupSettings {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

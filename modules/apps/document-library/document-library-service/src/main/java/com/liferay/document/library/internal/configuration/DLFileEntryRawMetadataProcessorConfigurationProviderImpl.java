@@ -61,7 +61,7 @@ public class DLFileEntryRawMetadataProcessorConfigurationProviderImpl
 			dlFileEntryRawMetadataProcessorConfiguration =
 				_configurationProvider.getGroupConfiguration(
 					DLFileEntryRawMetadataProcessorConfiguration.class,
-					group.getGroupId());
+					group.getCompanyId(), group.getGroupId());
 
 		String[] excludedMimeTypes =
 			dlFileEntryRawMetadataProcessorConfiguration.excludedMimeTypes();

@@ -5,7 +5,7 @@
 
 package com.liferay.portal.configuration.upgrade.internal;
 
-import com.liferay.petra.string.StringBundler;
+import com.liferay.configuration.admin.util.ConfigurationFilterStringUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -27,7 +27,6 @@ import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.Objects;
 
-import org.osgi.framework.Constants;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
@@ -59,15 +58,14 @@ public class PrefsPropsToConfigurationUpgradeHelperImpl
 		String filterString = null;
 
 		if (companyId == PortletKeys.PREFS_OWNER_ID_DEFAULT) {
-			filterString = StringBundler.concat(
-				"(", Constants.SERVICE_PID, "=", configurationClass.getName(),
-				")");
+			filterString =
+				ConfigurationFilterStringUtil.getSystemScopedFilterString(
+					configurationClass.getName());
 		}
 		else {
-			filterString = StringBundler.concat(
-				"(&(", ConfigurationAdmin.SERVICE_FACTORYPID, StringPool.EQUAL,
-				configurationClass.getName(), ".scoped)(companyId=", companyId,
-				"))");
+			filterString =
+				ConfigurationFilterStringUtil.getCompanyScopedFilterString(
+					companyId, configurationClass.getName(), null);
 		}
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(

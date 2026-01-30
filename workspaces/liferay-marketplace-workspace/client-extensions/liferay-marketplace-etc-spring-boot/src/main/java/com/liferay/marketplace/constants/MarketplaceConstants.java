@@ -27,7 +27,12 @@ public class MarketplaceConstants {
 	};
 
 	public static final String KORONEIKI_ENTITLEMENT_CREATE =
-		"koroneiki.entitlement.update";
+		"koroneiki.entitlement.create";
+
+	public static final String[] KORONEIKI_PUBSUB_TOPICS = {
+		KORONEIKI_ACCOUNT_CREATE, KORONEIKI_ACCOUNT_UPDATE,
+		KORONEIKI_ENTITLEMENT_CREATE
+	};
 
 	public static final String ORDER_PAYMENT_METHOD_MONEY_ORDER = "money-order";
 
@@ -72,11 +77,6 @@ public class MarketplaceConstants {
 	public static final int ORDER_STATUS_PROCESSING = 10;
 
 	public static final String ORDER_STATUS_PROCESSING_LABEL = "Processing";
-
-	public static final String[] PUBSUB_TOPICS = {
-		KORONEIKI_ACCOUNT_UPDATE, KORONEIKI_ACCOUNT_CREATE,
-		KORONEIKI_ENTITLEMENT_CREATE
-	};
 
 	public static String getOrderPaymentMethodLabel(String paymentMethod) {
 		if (Objects.equals(paymentMethod, ORDER_PAYMENT_METHOD_MONEY_ORDER)) {

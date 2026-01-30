@@ -10,7 +10,7 @@ import extractFileHash from '../../extractFileHash.mjs';
 import getFlatName from '../../getFlatName.mjs';
 import {BUILD_CSS_EXPORTS_PATH} from '../../locations.mjs';
 import getCSSLoadJavaScript from './getCSSLoadJavaScript.mjs';
-import getURL, {URLType} from './getURL.mjs';
+import {URLType} from './getURL.mjs';
 
 export default async function getCSSExportLoaderModuleJavaScript(
 	urlPrefix,
@@ -37,13 +37,11 @@ export default async function getCSSExportLoaderModuleJavaScript(
 
 	const cssFileHash = extractFileHash(cssFile);
 
-	const cssPath = getURL(
+	return getCSSLoadJavaScript(
 		URLType.CSS_EXPORT,
 		urlPrefix,
 		webContextPath,
 		moduleName,
 		cssFileHash
 	);
-
-	return getCSSLoadJavaScript(cssPath);
 }

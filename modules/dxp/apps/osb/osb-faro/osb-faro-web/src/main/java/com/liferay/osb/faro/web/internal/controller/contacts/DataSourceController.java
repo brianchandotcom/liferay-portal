@@ -1157,6 +1157,37 @@ public class DataSourceController extends BaseFaroController {
 			SalesforceProvider.TYPE, 0, null, status, null, true);
 	}
 
+	@Path("/{id}")
+	@POST
+	@Unauthenticated
+	public DataSource postDataSourceCredentials(
+			@PathParam("groupId") long groupId, @PathParam("id") String id,
+			@FormParam("oAuthClientId") String oAuthClientId,
+			@FormParam("oAuthClientSecret") String oAuthClientSecret)
+		throws Exception {
+
+		FaroProject faroProject =
+			faroProjectLocalService.getFaroProjectByGroupId(groupId);
+
+		DataSource dataSource = contactsEngineClient.getDataSource(
+			faroProject, id);
+
+		if (Objects.equals(
+				dataSource.getState(), DataSource.State.DISCONNECTED.name()) &&
+			Objects.equals(
+				dataSource.getStatus(), DataSource.Status.INACTIVE.name())) {
+
+			return dataSource;
+		}
+
+		return contactsEngineClient.patchDataSource(
+			faroProject, id,
+			OAuthUtil.getOAuth20Credentials(
+				"CLIENT_CREDENTIALS", "", "", "", oAuthClientId,
+				oAuthClientSecret, "LIFERAY"),
+			0, null, null, null, null, DataSource.Status.ACTIVE.toString());
+	}
+
 	@Override
 	public FaroResultsDisplay search(
 			long groupId, FaroSearchContext faroSearchContext)

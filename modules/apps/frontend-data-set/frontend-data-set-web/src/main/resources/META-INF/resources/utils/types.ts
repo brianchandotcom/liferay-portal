@@ -272,6 +272,7 @@ export interface IView {
 	contentRenderer?: string;
 	contentRendererClientExtension?: boolean;
 	contentRendererModuleURL?: string;
+	dataSetId?: string;
 	default?: boolean;
 	label?: string;
 	name?: string;

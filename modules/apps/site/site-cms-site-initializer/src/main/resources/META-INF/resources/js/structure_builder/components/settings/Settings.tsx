@@ -9,6 +9,7 @@ import React from 'react';
 import {getImage} from '../../../common/utils/getImage';
 import useSelectedItem from '../../hooks/useSelectedItem';
 import ReferencedStructureSettings from './ReferencedStructureSettings';
+import RelatedContentSettings from './RelatedContentSettings';
 import RepeatableGroupSettings from './RepeatableGroupSettings';
 import StructureFieldSettings from './StructureFieldSettings';
 import StructureSettings from './StructureSettings';
@@ -25,6 +26,16 @@ export default function Settings() {
 			<ReferencedStructureSettings
 				key={item.referencedStructure.uuid}
 				referencedStructure={item.referencedStructure}
+			/>
+		);
+	}
+
+	if (item.type === 'related-content') {
+		return (
+			<RelatedContentSettings
+				disabled={item.referenced}
+				key={item.relatedContent.uuid}
+				relatedContent={item.relatedContent}
 			/>
 		);
 	}

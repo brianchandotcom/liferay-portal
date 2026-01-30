@@ -285,14 +285,11 @@ public class DDMFormFieldDeserializerUtil {
 
 		String settingName = ddmFormFieldTypeSetting.getName();
 
-		if (!jsonObject.has(settingName)) {
-			return;
-		}
+		String settingValue = jsonObject.getString(settingName, null);
 
-		String settingValue = jsonObject.getString(settingName);
-
-		if (Objects.equals(settingName, "fieldReference") &&
-			Validator.isNull(settingValue)) {
+		if ((settingValue == null) ||
+			(Objects.equals(settingName, "fieldReference") &&
+			 Validator.isNull(settingValue))) {
 
 			return;
 		}

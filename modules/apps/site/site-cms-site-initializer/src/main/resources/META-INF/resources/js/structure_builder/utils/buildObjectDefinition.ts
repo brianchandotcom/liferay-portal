@@ -22,6 +22,7 @@ import {
 	FIELD_TYPE_TO_DB_TYPE,
 	Field,
 } from './field';
+import isField from './isField';
 import {isFieldTextSearchable} from './isFieldTextSearchable';
 
 export default function buildObjectDefinition({
@@ -106,11 +107,8 @@ export default function buildObjectDefinition({
 }
 
 function getFields(children: Structure['children']): Field[] {
-	return Array.from(children.values()).filter(
-		(child) =>
-			child.type !== 'referenced-structure' &&
-			child.type !== 'related-content' &&
-			child.type !== 'repeatable-group'
+	return Array.from(children.values()).filter((child) =>
+		isField(child)
 	) as Field[];
 }
 

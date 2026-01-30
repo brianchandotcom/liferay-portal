@@ -40,6 +40,7 @@ import getRandomId from '../utils/getRandomId';
 import getRandomName from '../utils/getRandomName';
 import getUuid from '../utils/getUuid';
 import insertChild from '../utils/insertChild';
+import isField from '../utils/isField';
 import isLocked from '../utils/isLocked';
 import isReferenced from '../utils/isReferenced';
 import normalizeString from '../utils/normalizeString';
@@ -1298,18 +1299,10 @@ function getUndeletableItems(
 
 		if (parent?.type === 'repeatable-group') {
 			const groupFields = Array.from(parent.children.values()).filter(
-				(child) =>
-					child.type !== 'referenced-structure' &&
-					child.type !== 'related-content' &&
-					child.type !== 'repeatable-group'
+				(child) => isField(child)
 			);
 
-			const fields = items.filter(
-				(item) =>
-					item.type !== 'referenced-structure' &&
-					item.type !== 'related-content' &&
-					item.type !== 'repeatable-group'
-			);
+			const fields = items.filter((item) => isField(item));
 
 			if (
 				groupFields.every(({uuid}) =>

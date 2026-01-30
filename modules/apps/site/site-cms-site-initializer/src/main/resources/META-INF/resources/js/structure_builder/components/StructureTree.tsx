@@ -38,6 +38,7 @@ import {
 import {Uuid} from '../types/Uuid';
 import confirmChildrenDeletion from '../utils/confirmChildrenDeletion';
 import {FIELD_TYPE_ICON, FieldType} from '../utils/field';
+import isField from '../utils/isField';
 import isLocked from '../utils/isLocked';
 import isReferenced from '../utils/isReferenced';
 import isRenamable from '../utils/isRenamable';
@@ -228,10 +229,7 @@ export default function StructureTree({search}: {search: string}) {
 						<ClayIcon
 							className={classNames({
 								'structure-builder__tree-node--field-icon':
-									item.type &&
-									item.type !== 'referenced-structure' &&
-									item.type !== 'related-content' &&
-									item.type !== 'repeatable-group',
+									isField(item),
 								'structure-builder__tree-node--group-icon':
 									item.type === 'repeatable-group',
 								'structure-builder__tree-node--structure-icon':
@@ -630,12 +628,7 @@ function getItemActions({
 		});
 	}
 
-	if (
-		!isReferenced({item, root: structure}) &&
-		item.type !== 'referenced-structure' &&
-		item.type !== 'related-content' &&
-		item.type !== 'repeatable-group'
-	) {
+	if (!isReferenced({item, root: structure}) && isField(item)) {
 		actions.push({
 			label: Liferay.Language.get('create-repeatable-group'),
 			onClick: () =>

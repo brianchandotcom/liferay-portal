@@ -4,12 +4,8 @@
  */
 
 import {StructureChild} from '../types/Structure';
+import isField from './isField';
 
 export default function isLocked(child: StructureChild) {
-	return (
-		child.type !== 'referenced-structure' &&
-		child.type !== 'related-content' &&
-		child.type !== 'repeatable-group' &&
-		child.locked
-	);
+	return isField(child) && child.locked;
 }

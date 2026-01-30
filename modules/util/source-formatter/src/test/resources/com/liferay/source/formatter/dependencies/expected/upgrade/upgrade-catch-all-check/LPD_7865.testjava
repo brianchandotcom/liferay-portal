@@ -1,0 +1,45 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+/**
+ * @author Lucas Ferruccio
+ */
+public class LPD_7865 extends BaseModelListener<t> {
+
+	@Override
+	public void onAfterCreate(t model) {
+		super.onAfterCreate(model);
+
+		super.onAfterUpdate((t)model.clone(), model);
+
+		super.onAfterUpdate((t)model.clone(), model);
+	}
+
+	@Override
+	public void onAfterRemove(t model) {
+		super.onAfterRemove(model);
+
+		super.onBeforeUpdate((t)model.clone(), model);
+	}
+
+	@Override
+	public void onAfterUpdate(t originalmodel, t model) {
+		super.onAfterCreate(model);
+
+		super.onAfterUpdate(originalmodel, model);
+
+		super.onAfterUpdate(originalmodel, model);
+	}
+
+	@Override
+	public void onBeforeUpdate(t originalmodel, t model) {
+		super.onAfterRemove(model);
+
+		super.onBeforeUpdate(originalmodel, model);
+	}
+
+}

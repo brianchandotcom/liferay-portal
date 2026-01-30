@@ -12,6 +12,7 @@ import multipleFilesUploadAction, {
 export default function fileDropAction(
 	additionalProps: MultipleFileUploaderData & {
 		baseFolderViewURL: string;
+		loadData?: () => void;
 		redirect: string;
 	},
 	droppedFiles: any,
@@ -26,6 +27,7 @@ export default function fileDropAction(
 		baseAssetLibraryViewURL,
 		baseFolderViewURL,
 		keywords,
+		loadData,
 		parentObjectEntryFolderExternalReferenceCode,
 		redirect,
 	} = additionalProps;
@@ -47,11 +49,16 @@ export default function fileDropAction(
 				: parentObjectEntryFolderExternalReferenceCode,
 		},
 		() => {
-			navigate(
-				dropTarget
-					? baseFolderViewURL + dropTarget.embedded?.id
-					: redirect
-			);
+			if (loadData) {
+				loadData();
+			}
+			else {
+				navigate(
+					dropTarget
+						? baseFolderViewURL + dropTarget.embedded?.id
+						: redirect
+				);
+			}
 		}
 	);
 }

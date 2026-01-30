@@ -5,7 +5,7 @@
 
 package com.liferay.digital.sales.room.web.internal.portlet.action;
 
-import com.liferay.digital.sales.room.web.internal.constants.DigitalSalesRoomPortletKeys;
+import com.liferay.digital.sales.room.constants.DigitalSalesRoomPortletKeys;
 import com.liferay.digital.sales.room.web.internal.display.context.EditDigitalSalesRoomRoomSettingsDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;

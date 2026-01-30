@@ -7,8 +7,8 @@ package com.liferay.digital.sales.room.web.internal.application.list;
 
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
+import com.liferay.digital.sales.room.constants.DigitalSalesRoomPortletKeys;
 import com.liferay.digital.sales.room.web.internal.constants.DigitalSalesRoomPanelCategoryKeys;
-import com.liferay.digital.sales.room.web.internal.constants.DigitalSalesRoomPortletKeys;
 import com.liferay.portal.kernel.model.Portlet;
 
 import org.osgi.service.component.annotations.Component;

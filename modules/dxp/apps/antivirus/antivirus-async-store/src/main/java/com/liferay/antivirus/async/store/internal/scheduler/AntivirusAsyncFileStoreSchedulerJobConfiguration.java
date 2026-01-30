@@ -125,6 +125,7 @@ public class AntivirusAsyncFileStoreSchedulerJobConfiguration
 							dlFileEntry.getFileName(),
 							dlFileVersion.getStoreFileName()),
 						dlFileEntry.getRepositoryId(), dlFileEntry.getSize(),
+						dlFileEntry.getFileName(), dlFileEntry.getUserId(),
 						dlFileVersion.getStoreFileName());
 				});
 
@@ -288,13 +289,13 @@ public class AntivirusAsyncFileStoreSchedulerJobConfiguration
 			StringPool.BLANK, 0, companyId, fileExtension, fileName,
 			AntivirusAsyncUtil.getJobName(
 				companyId, repositoryId, fileName, versionLabel),
-			repositoryId, size, versionLabel);
+			repositoryId, size, null, 0L, versionLabel);
 	}
 
 	private void _scheduleAntivirusScan(
 		String className, long classPK, long companyId, String fileExtension,
 		String fileName, String jobName, long repositoryId, long size,
-		String versionLabel) {
+		String sourceFileName, long userId, String versionLabel) {
 
 		Message message = new Message();
 
@@ -312,7 +313,8 @@ public class AntivirusAsyncFileStoreSchedulerJobConfiguration
 		message.put("jobName", jobName);
 		message.put("repositoryId", repositoryId);
 		message.put("size", size);
-		message.put("userId", 0L);
+		message.put("sourceFileName", sourceFileName);
+		message.put("userId", userId);
 		message.put("versionLabel", versionLabel);
 
 		_antivirusAsyncEventListenerManager.onPrepare(message);

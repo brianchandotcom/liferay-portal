@@ -20,6 +20,9 @@ public class KaleoLogUtil {
 		else if (type == WorkflowLog.NODE_ENTRY) {
 			return LogType.NODE_ENTRY.name();
 		}
+		else if (type == WorkflowLog.NODE_USAGE_METADATA) {
+			return LogType.NODE_USAGE_METADATA.name();
+		}
 		else if (type == WorkflowLog.TASK_ASSIGN) {
 			return LogType.TASK_ASSIGNMENT.name();
 		}
@@ -47,6 +50,9 @@ public class KaleoLogUtil {
 		}
 		else if (logType.equals(LogType.NODE_EXIT)) {
 			return WorkflowLog.TRANSITION;
+		}
+		else if (logType.equals(LogType.NODE_USAGE_METADATA)) {
+			return WorkflowLog.NODE_USAGE_METADATA;
 		}
 		else if (logType.equals(LogType.TASK_ASSIGNMENT)) {
 			return WorkflowLog.TASK_ASSIGN;

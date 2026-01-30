@@ -18,6 +18,9 @@ import {
 	Field,
 	getDefaultField,
 } from '../utils/field';
+import getRandomId from '../utils/getRandomId';
+import getRandomName from '../utils/getRandomName';
+import getUuid from '../utils/getUuid';
 import openReferencedStructureModal from '../utils/openReferencedStructureModal';
 
 type Item = {
@@ -48,6 +51,24 @@ export default function AddChildDropdown({
 			type: 'add-field',
 		});
 
+	const addRelatedContent = () =>
+		dispatch({
+			relatedContent: {
+				erc: getRandomId(),
+				label: {
+					[Liferay.ThemeDisplay.getDefaultLanguageId()]:
+						Liferay.Language.get('select-related-content'),
+				},
+				multiselection: false,
+				name: getRandomName(),
+				parent: parentUuid ?? structure.uuid,
+				relatedStructureERC: '',
+				type: 'related-content',
+				uuid: getUuid(),
+			},
+			type: 'add-related-content',
+		});
+
 	return (
 		<>
 			<ClayDropDownWithItems
@@ -60,6 +81,12 @@ export default function AddChildDropdown({
 						})
 					),
 					{type: 'divider'},
+					{
+						className: 'dropdown-item-cms-warning',
+						label: Liferay.Language.get('select-related-content'),
+						onClick: () => addRelatedContent(),
+						symbolLeft: 'select-from-list',
+					},
 					{
 						className: 'dropdown-item-cms-warning',
 						label: Liferay.Language.get(

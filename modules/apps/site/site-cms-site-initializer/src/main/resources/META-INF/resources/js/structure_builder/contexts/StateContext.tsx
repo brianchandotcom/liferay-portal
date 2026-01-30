@@ -18,6 +18,7 @@ import {Workflow} from '../../common/types/Workflow';
 import getLocalizedValue from '../../common/utils/getLocalizedValue';
 import {
 	ReferencedStructure,
+	RelatedContent,
 	RepeatableGroup,
 	Structure,
 	StructureChild,
@@ -51,6 +52,7 @@ import {
 	ValidationError,
 	ValidationProperty,
 	validateField,
+	validateRelatedContent,
 	validateRepeatableGroup,
 	validateStructure,
 } from '../utils/validation';
@@ -104,6 +106,11 @@ type AddFieldAction = {field: Field; parentUuid?: Uuid; type: 'add-field'};
 type AddReferencedStructuresAction = {
 	referencedStructures: ReferencedStructure[];
 	type: 'add-referenced-structures';
+};
+
+type AddRelatedContentAction = {
+	relatedContent: RelatedContent;
+	type: 'add-related-content';
 };
 
 type AddRepeatableGroupAction = {
@@ -187,6 +194,15 @@ type UpdateFieldAction = {
 	uuid: Uuid;
 };
 
+type UpdateRelatedContentAction = {
+	erc?: string;
+	label?: Liferay.Language.LocalizedValue<string>;
+	multiselection?: boolean;
+	relatedStructureERC?: string;
+	type: 'update-related-content';
+	uuid: Uuid;
+};
+
 type UpdateRepeatableGroupAction = {
 	label: Liferay.Language.LocalizedValue<string>;
 	type: 'update-repeatable-group';
@@ -210,6 +226,7 @@ type ValidateAction = {
 export type Action =
 	| AddFieldAction
 	| AddReferencedStructuresAction
+	| AddRelatedContentAction
 	| AddRepeatableGroupAction
 	| AddErrorAction
 	| ClearErrorsAction
@@ -226,6 +243,7 @@ export type Action =
 	| SetWorkflowAction
 	| UngroupAction
 	| UpdateFieldAction
+	| UpdateRelatedContentAction
 	| UpdateRepeatableGroupAction
 	| UpdateStructureAction
 	| ValidateAction;
@@ -308,6 +326,23 @@ function reducer(state: State, action: Action): State {
 				...state,
 				publishedChildren: nextPublishedChildren,
 				selection,
+				structure: {...structure, children: sortedChildren},
+			};
+		}
+		case 'add-related-content': {
+			const {relatedContent} = action;
+
+			const {structure} = state;
+
+			const children = new Map(structure.children);
+
+			children.set(relatedContent.uuid, relatedContent);
+
+			const sortedChildren = sortChildren(children);
+
+			return {
+				...state,
+				selection: [relatedContent.uuid],
 				structure: {...structure, children: sortedChildren},
 			};
 		}
@@ -923,6 +958,69 @@ function reducer(state: State, action: Action): State {
 				},
 			};
 		}
+		case 'update-related-content': {
+			const {erc, label, multiselection, relatedStructureERC, uuid} =
+				action;
+
+			const {structure} = state;
+
+			const relatedContent = findChild({
+				root: structure,
+				uuid,
+			}) as RelatedContent;
+
+			if (!relatedContent) {
+				return state;
+			}
+
+			// Prepare updated field
+
+			const nextRelatedContent: RelatedContent = {
+				...relatedContent,
+				erc: erc ?? relatedContent.erc,
+				label: label ?? relatedContent.label,
+				multiselection: multiselection ?? relatedContent.multiselection,
+				relatedStructureERC:
+					relatedStructureERC ?? relatedContent.relatedStructureERC,
+			};
+
+			const nextChildren = updateChild({
+				child: nextRelatedContent,
+				root: structure,
+			});
+
+			// Validate the data sent in the action
+
+			const invalids = new Map(state.invalids);
+
+			const errors = validateRelatedContent({
+				currentErrors: invalids.get(nextRelatedContent.uuid),
+				data: {
+					erc,
+					label,
+					relatedStructureERC,
+				},
+			});
+
+			if (errors.size) {
+				invalids.set(nextRelatedContent.uuid, errors);
+			}
+			else {
+				invalids.delete(nextRelatedContent.uuid);
+			}
+
+			// Return new state
+
+			return {
+				...state,
+				invalids,
+				selection: [nextRelatedContent.uuid],
+				structure: {
+					...structure,
+					children: nextChildren,
+				},
+			};
+		}
 		case 'update-repeatable-group': {
 			const {label, uuid} = action;
 
@@ -1202,12 +1300,14 @@ function getUndeletableItems(
 			const groupFields = Array.from(parent.children.values()).filter(
 				(child) =>
 					child.type !== 'referenced-structure' &&
+					child.type !== 'related-content' &&
 					child.type !== 'repeatable-group'
 			);
 
 			const fields = items.filter(
 				(item) =>
 					item.type !== 'referenced-structure' &&
+					item.type !== 'related-content' &&
 					item.type !== 'repeatable-group'
 			);
 

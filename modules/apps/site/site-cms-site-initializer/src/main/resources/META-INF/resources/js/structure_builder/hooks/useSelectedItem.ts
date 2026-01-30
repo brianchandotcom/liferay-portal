@@ -8,6 +8,7 @@ import selectSelection from '../selectors/selectSelection';
 import selectStructureChildren from '../selectors/selectStructureChildren';
 import {
 	ReferencedStructure,
+	RelatedContent,
 	RepeatableGroup,
 	Structure,
 } from '../types/Structure';
@@ -17,6 +18,11 @@ import {Field} from '../utils/field';
 type SelectedChild =
 	| {field: Field; referenced: boolean; type: 'field'}
 	| {referencedStructure: ReferencedStructure; type: 'referenced-structure'}
+	| {
+			referenced: boolean;
+			relatedContent: RelatedContent;
+			type: 'related-content';
+	  }
 	| {group: RepeatableGroup; referenced: boolean; type: 'repeatable-group'};
 
 type SelectedItem =
@@ -58,6 +64,13 @@ function findSelectedChild(
 				return {
 					referencedStructure: child,
 					type: 'referenced-structure',
+				};
+			}
+			else if (child.type === 'related-content') {
+				return {
+					referenced: isReferenced,
+					relatedContent: child,
+					type: 'related-content',
 				};
 			}
 			else if (child.type === 'repeatable-group') {

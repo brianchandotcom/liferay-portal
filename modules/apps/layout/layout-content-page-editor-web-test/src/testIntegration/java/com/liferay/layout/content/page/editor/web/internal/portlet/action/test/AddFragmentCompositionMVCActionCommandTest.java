@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -53,9 +54,7 @@ import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -103,7 +102,7 @@ public class AddFragmentCompositionMVCActionCommandTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		_group = _groupLocalService.getGroup(TestPropsValues.getGroupId());
 
 		_company = _companyLocalService.getCompany(_group.getCompanyId());
 
@@ -228,6 +227,78 @@ public class AddFragmentCompositionMVCActionCommandTest {
 		Assert.assertEquals(
 			newFragmentCollection.getFragmentCollectionKey(),
 			fragmentCollection.getFragmentCollectionKey());
+	}
+
+	@Test
+	public void testAddFragmentCompositionInvalid() throws Exception {
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionLocalService.addFragmentCollection(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), StringPool.BLANK,
+				_serviceContext);
+
+		Layout draftLayout = _layout.fetchDraftLayout();
+
+		long segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid());
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), null,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				segmentsExperienceId, draftLayout.getPlid(), StringPool.BLANK,
+				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, StringPool.BLANK, 0, null,
+				FragmentConstants.TYPE_COMPONENT, _serviceContext);
+
+		JSONObject addItemJSONObject = ContentLayoutTestUtil.addItemToLayout(
+			"{}", LayoutDataItemTypeConstants.TYPE_CONTAINER, draftLayout,
+			_layoutStructureProvider, segmentsExperienceId);
+
+		String containerItemId = addItemJSONObject.getString("addedItemId");
+
+		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			fragmentEntryLink, draftLayout, containerItemId, 0,
+			segmentsExperienceId);
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			ContentLayoutTestUtil.getMockLiferayPortletActionRequest(
+				_company, _group, draftLayout);
+
+		mockLiferayPortletActionRequest.addParameter(
+			"fragmentCollectionId",
+			String.valueOf(fragmentCollection.getFragmentCollectionId()));
+		mockLiferayPortletActionRequest.addParameter(
+			"name", RandomTestUtil.randomString());
+		mockLiferayPortletActionRequest.addParameter("itemId", containerItemId);
+
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
+			_mvcActionCommand, "doTransactionalCommand",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
+
+		Assert.assertNotNull(jsonObject);
+
+		JSONObject fragmentCompositionJSONObject = jsonObject.getJSONObject(
+			"fragmentComposition");
+
+		Assert.assertNotNull(fragmentCompositionJSONObject);
+
+		int invalidCount = fragmentCompositionJSONObject.getInt(
+			"invalidFragmentsCount");
+
+		Assert.assertTrue(invalidCount > 0);
+
+		Assert.assertFalse(
+			fragmentCompositionJSONObject.has("fragmentEntryKey"));
+
+		int compositionCount =
+			_fragmentCompositionLocalService.getFragmentCompositionsCount(
+				fragmentCollection.getFragmentCollectionId());
+
+		Assert.assertEquals(0, compositionCount);
 	}
 
 	@Test
@@ -797,8 +868,10 @@ public class AddFragmentCompositionMVCActionCommandTest {
 	@Inject
 	private FragmentEntryLocalService _fragmentEntryLocalService;
 
-	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private JSONFactory _jsonFactory;

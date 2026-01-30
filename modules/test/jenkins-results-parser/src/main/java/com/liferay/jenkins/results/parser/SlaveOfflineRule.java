@@ -158,75 +158,42 @@ public class SlaveOfflineRule {
 			(notificationRecipients != null) &&
 			!notificationRecipients.isEmpty()) {
 
-			String[] notificationRecipientsArray = null;
+			String[] notificationRecipientsArray = notificationRecipients.split(
+				",");
 
-			if (notificationRecipients.contains(",")) {
-				notificationRecipientsArray = notificationRecipients.split(",");
-			}
+			boolean matchFound = false;
 
-			if (notificationRecipientsArray != null) {
-				boolean matchFound = false;
+			for (String notificationRecipient : notificationRecipientsArray) {
+				notificationRecipient = notificationRecipient.trim();
 
-				for (String notificationRecipient :
-						notificationRecipientsArray) {
+				Matcher matcher = _notificationRecipentsPattern.matcher(
+					notificationRecipient);
 
-					notificationRecipient = notificationRecipient.trim();
+				if (matcher.find()) {
+					matchFound = true;
 
-					Matcher matcher = _notificationRecipentsPattern.matcher(
-						notificationRecipient);
+					String slack = matcher.group("slack");
 
-					if (matcher.find()) {
-						matchFound = true;
+					if (!JenkinsResultsParserUtil.isNullOrEmpty(slack)) {
+						NotificationUtil.sendSlackNotification(
+							message, slack, "Slave offline");
 
-						String slack = matcher.group("slack");
+						continue;
+					}
 
-						if (!JenkinsResultsParserUtil.isNullOrEmpty(slack)) {
-							NotificationUtil.sendSlackNotification(
-								message, slack, "Slave offline");
+					String email = matcher.group("slack");
 
-							continue;
-						}
-
-						String email = matcher.group("slack");
-
-						if (!JenkinsResultsParserUtil.isNullOrEmpty(email)) {
-							NotificationUtil.sendEmail(
-								message, "jenkins", "Slave offline", email);
-						}
+					if (!JenkinsResultsParserUtil.isNullOrEmpty(email)) {
+						NotificationUtil.sendEmail(
+							message, "jenkins", "Slave offline", email);
 					}
 				}
-
-				if (!matchFound) {
-					throw new RuntimeException(
-						"Invalid notification recipients: " +
-							notificationRecipients);
-				}
 			}
-			else {
-				Matcher matcher = _notificationRecipentsPattern.matcher(
-					notificationRecipients);
 
-				if (!matcher.find()) {
-					throw new RuntimeException(
-						"Invalid notification recipients: " +
-							notificationRecipients);
-				}
-
-				String slack = matcher.group("slack");
-
-				if (!JenkinsResultsParserUtil.isNullOrEmpty(slack)) {
-					NotificationUtil.sendSlackNotification(
-						message, slack, "Slave offline");
-
-					return;
-				}
-
-				String email = matcher.group("slack");
-
-				if (!JenkinsResultsParserUtil.isNullOrEmpty(email)) {
-					NotificationUtil.sendEmail(
-						message, "jenkins", "Slave offline", email);
-				}
+			if (!matchFound) {
+				throw new RuntimeException(
+					"Invalid notification recipients: " +
+						notificationRecipients);
 			}
 		}
 	}

@@ -12,7 +12,7 @@ import {Button} from '../../../../components/button';
 import {LocationDetails} from '../../../../components/location-details';
 import {LocalizedField} from '../../../../liferay/index';
 import {liferay} from '../../../../liferay/server';
-import {getEventCalendar} from '../../../../utils';
+import {getGoogleCalendarEvent} from '../../../../utils';
 import {getEventData} from './data';
 
 const getLocalizedFieldValue = ({
@@ -178,7 +178,7 @@ export default async function ArticlePage({
 
 								<a
 									className="border-2 border-gray-900 font-bold gap-2 hover:bg-gray-900 hover:text-white inline-flex items-center px-6 py-3 rounded-md text-gray-900 transition-all"
-									href={getEventCalendar(article)}
+									href={getGoogleCalendarEvent(article)}
 									target="_blank"
 								>
 									📅 Save to Calendar

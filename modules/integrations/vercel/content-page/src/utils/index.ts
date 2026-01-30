@@ -5,22 +5,36 @@
 
 import {ContentData} from './types';
 
-export function getEventCalendar(event: ContentData) {
+export function getGoogleCalendarEvent(event: ContentData) {
 	const formatDate = (date: Date) => {
 		return date.toISOString().replace(/[:.-]/g, '');
 	};
 
-	const today = new Date();
-	const laterToday = new Date();
-	laterToday.setHours(today.getHours() + 1);
+	const eventDate = new Date(event.date || event.dateCreated);
+	const eventEndDate = new Date(eventDate.getTime() + 60 * 60 * 1000);
 
 	const searchParams = new URLSearchParams({
 		action: 'TEMPLATE',
-		dates: `${formatDate(today)}/${formatDate(laterToday)}`,
+		dates: `${formatDate(eventDate)}/${formatDate(eventEndDate)}`,
 		details: event.summary,
 		location: event.locationName,
 		text: event.title,
 	});
 
 	return `https://calendar.google.com/calendar/render?${searchParams.toString()}`;
+}
+
+export function getReadingTime(text: string): string {
+	if (!text) {
+		return '1 min read';
+	}
+
+	const wordsPerMinute = 200;
+	const words = text
+		.trim()
+		.split(/\s+/)
+		.filter((word) => !!word.length).length;
+	const minutes = Math.max(1, Math.ceil(words / wordsPerMinute));
+
+	return `${minutes} min read`;
 }

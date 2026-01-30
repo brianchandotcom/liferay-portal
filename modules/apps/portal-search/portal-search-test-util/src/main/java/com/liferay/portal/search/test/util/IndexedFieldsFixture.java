@@ -85,11 +85,10 @@ public class IndexedFieldsFixture {
 	}
 
 	public void populateExpirationDateWithForever(Map<String, String> map) {
-		populateDate(Field.EXPIRATION_DATE, new Date(Long.MAX_VALUE), map);
-
-		if (_isSearchEngineElasticsearch() || _isSearchEngineOpenSearch()) {
-			map.put(Field.EXPIRATION_DATE, "99950812133000");
-		}
+		populateDate(
+			Field.EXPIRATION_DATE,
+			new Date(com.liferay.portal.kernel.search.Document.MAX_DATE_TIME),
+			map);
 	}
 
 	public void populatePriority(String priority, Map<String, String> map) {
@@ -260,10 +259,6 @@ public class IndexedFieldsFixture {
 
 	private boolean _isSearchEngineElasticsearch() {
 		return _isSearchEngine("Elasticsearch");
-	}
-
-	private boolean _isSearchEngineOpenSearch() {
-		return _isSearchEngine("OpenSearch");
 	}
 
 	private boolean _isSearchEngineSolr() {

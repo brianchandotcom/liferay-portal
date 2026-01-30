@@ -76,7 +76,7 @@ public class DocumentImpl implements Document {
 			long time = date.getTime();
 
 			if (time == Long.MAX_VALUE) {
-				datesString[i] = "99950812133000";
+				datesString[i] = _MAX_DATE_TIME_STRING;
 			}
 			else {
 				Format dateFormat = _getDateFormat();
@@ -1150,6 +1150,9 @@ public class DocumentImpl implements Document {
 
 	private static final String _INDEX_DATE_FORMAT_PATTERN = PropsUtil.get(
 		PropsKeys.INDEX_DATE_FORMAT_PATTERN);
+
+	private static final String _MAX_DATE_TIME_STRING = String.valueOf(
+		MAX_DATE_TIME);
 
 	private static final int _SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH =
 		GetterUtil.getInteger(

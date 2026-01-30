@@ -100,7 +100,8 @@ public class AssetEntryDocumentContributor
 				Field.EXPIRATION_DATE, assetEntry.getExpirationDate());
 		}
 		else {
-			document.addDate(Field.EXPIRATION_DATE, new Date(Long.MAX_VALUE));
+			document.addDate(
+				Field.EXPIRATION_DATE, new Date(Document.MAX_DATE_TIME));
 		}
 
 		if (!document.hasField(Field.MODIFIED_DATE)) {

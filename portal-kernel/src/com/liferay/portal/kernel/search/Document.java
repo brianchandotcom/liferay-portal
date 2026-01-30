@@ -27,6 +27,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface Document extends Cloneable, Serializable {
 
+	public static final long MAX_DATE_TIME = 99950812133000L;
+
 	public void add(Field field);
 
 	public void addDate(String name, Date value);

@@ -23,64 +23,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addCustomElement(entryName = null, entryURL = null, entryHtmlName = null) {
-		ClientExtensionGeneral.addType(type = "Custom Element");
-
-		ClientExtensionEntry.addCustomElement(
-			entryHtmlName = ${entryHtmlName},
-			entryName = ${entryName},
-			entryURL = ${entryURL});
-
-		PortletEntry.publish();
-	}
-
-	@summary = "Default summary"
-	macro addCustomElementAllFields(entryProperties = null, entryName = null, entryURL = null, entryHtmlName = null, entryCssurl = null) {
-		ClientExtensionGeneral.addType(type = "Custom Element");
-
-		ClientExtensionEntry.addCustomElementAllFields(
-			entryCssurl = ${entryCssurl},
-			entryHtmlName = ${entryHtmlName},
-			entryName = ${entryName},
-			entryProperties = ${entryProperties},
-			entryURL = ${entryURL});
-
-		Click(locator1 = "ClientExtensionEntry#USE_ES_MODULES");
-
-		Click(locator1 = "ClientExtensionEntry#REMOTE_APPS_INSTANCEABLE");
-
-		PortletEntry.publish();
-	}
-
-	@summary = "Default summary"
-	macro addCustomElementMultipleURLs() {
-		ClientExtensionGeneral.addType(type = "Custom Element");
-
-		ClientExtensionEntry.addCustomElementMultipleURLs(
-			entryCssurl1 = "https://liferay.github.io/liferay-frontend-projects/index1.css",
-			entryCssurl2 = "https://liferay.github.io/liferay-frontend-projects/index2.css",
-			entryHtmlName = "vanilla-counter",
-			entryName = "Vanilla Counter",
-			entryUrl1 = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index1.js",
-			entryUrl2 = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index2.js");
-
-		PortletEntry.publish();
-	}
-
-	@summary = "Default summary"
-	macro addEntryWithPortletCategory() {
-		ClientExtensionGeneral.addType(type = "IFrame");
-
-		ClientExtensionEntry.addEntry(
-			entryName = "Test Remote App",
-			entryURL = "http://www.liferay.com");
-
-		ClientExtensionEntry.addPortletCategory(categoryName = "Collaboration");
-
-		PortletEntry.publish();
-	}
-
-	@summary = "Default summary"
 	macro addFrontendDataSetFilter(javaScriptURL = null, name = null, description = null) {
 		LexiconEntry.gotoAdd();
 
@@ -103,43 +45,6 @@ definition {
 			value1 = ${javaScriptURL});
 
 		PortletEntry.publish();
-	}
-
-	@summary = "Default summary"
-	macro addThemeSvgSpritemap(entryName = null, entryURL = null) {
-		ClientExtensionGeneral.addType(type = "Add Theme SVG Spritemap");
-
-		ClientExtensionGeneral.addThemeSvgSpritemapElement(
-			entryName = ${entryName},
-			entryURL = ${entryURL});
-
-		if (${entryName} == "external_url_theme") {
-			Check.checkToggleSwitch(locator1 = "ClientExtension#ENABLE_SVG_CROSS_DOMAIN_SUPPORT");
-		}
-
-		PortletEntry.publish();
-	}
-
-	@summary = "Default summary"
-	macro addThemeSvgSpritemapElement(entryName = null, entryURL = null) {
-		Type(
-			key_text = "Name",
-			locator1 = "TextInput#ANY",
-			value1 = ${entryName});
-
-		Type(
-			key_id = "ClientExtensionAdminPortlet_url",
-			locator1 = "ClientExtensionEntry#URL",
-			value1 = ${entryURL});
-	}
-
-	@summary = "Default summary"
-	macro addType(type = null) {
-		LexiconEntry.gotoAdd();
-
-		Click(
-			key_itemName = ${type},
-			locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
 	}
 
 	@summary = "Default summary"

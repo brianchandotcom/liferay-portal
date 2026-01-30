@@ -10,29 +10,26 @@ import React from 'react';
 
 interface CardStyleModalProps {
 	body: string;
+	buttons: Array<{
+		displayType: 'primary' | 'secondary';
+		icon?: string;
+		label: string;
+		onClick?: () => void;
+	}>;
 	heading: string;
 	imageSrc: string;
 	onCloseModal?: () => void;
-	onPrimaryButtonClick?: () => void;
-	primaryButtonIcon?: string;
-	primaryButtonLabel?: string;
-	secondaryButtonLabel?: string;
 }
 
 const CardStyleModal: React.FC<CardStyleModalProps> = ({
 	body,
+	buttons,
 	heading,
 	imageSrc,
-	onCloseModal,
-	onPrimaryButtonClick,
-	primaryButtonIcon,
-	primaryButtonLabel,
-	secondaryButtonLabel,
+	onCloseModal = () => {},
 }) => {
 	const {observer, onClose} = useModal({
-		onClose: () => {
-			onCloseModal?.();
-		},
+		onClose: onCloseModal,
 	});
 
 	return (
@@ -61,33 +58,28 @@ const CardStyleModal: React.FC<CardStyleModalProps> = ({
 			<ClayModal.Footer
 				last={
 					<ClayButton.Group spaced>
-						{secondaryButtonLabel ? (
+						{buttons.map((button, index) => (
 							<ClayButton
-								displayType="secondary"
-								onClick={onClose}
-							>
-								{secondaryButtonLabel}
-							</ClayButton>
-						) : null}
-
-						{primaryButtonLabel ? (
-							<ClayButton
-								displayType="primary"
+								displayType={button.displayType}
+								key={index}
 								onClick={() => {
-									onPrimaryButtonClick?.();
+									if (button.onClick) {
+										button.onClick();
+									}
+
 									onClose();
 								}}
 							>
-								{primaryButtonIcon ? (
+								{button.icon ? (
 									<ClayIcon
 										className="inline-item inline-item-before"
-										symbol={primaryButtonIcon}
+										symbol={button.icon}
 									/>
 								) : null}
 
-								{primaryButtonLabel}
+								{button.label}
 							</ClayButton>
-						) : null}
+						))}
 					</ClayButton.Group>
 				}
 			/>

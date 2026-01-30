@@ -41,10 +41,9 @@ public class AgentsFactoryImpl implements AgentsFactory {
 
 			Page<TaskDefinition> page =
 				_taskDefinitionManager.getTaskDefinitions(
-					agentContext.getCompanyId(),
-					agentContext.getDTOConverterContext(), null,
+					agentContext.getCompanyId(), null,
 					_toFilter(serviceContext.getLocale()), Pagination.of(1, 20),
-					null);
+					null, null);
 
 			return TransformUtil.transformToArray(
 				page.getItems(),

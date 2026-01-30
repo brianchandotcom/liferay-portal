@@ -112,12 +112,6 @@ public class TaskDefinitionResourceImpl extends BaseTaskDefinitionResourceImpl {
 	@Reference(target = "(entity.model.name=TaskDefinition)")
 	private EntityModel _entityModel;
 
-	@Reference(
-		target = "(model.class.name=com.liferay.portal.workflow.kaleo.model.KaleoDefinition)"
-	)
-	private ModelResourcePermission<KaleoDefinition>
-		_kaleoDefinitionModelResourcePermission;
-
 	@Reference
 	private TaskDefinitionManager _taskDefinitionManager;
 

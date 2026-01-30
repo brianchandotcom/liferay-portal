@@ -10,10 +10,13 @@ import com.liferay.exportimport.data.handler.BatchEnginePortletDataHandlerRegist
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Vendel Toreki
  * @author Petteri Karttunen
  */
+@Component(service = BatchEnginePortletDataHandlerRegistry.class)
 public class BatchEnginePortletDataHandlerRegistryImpl
 	implements BatchEnginePortletDataHandlerRegistry {
 

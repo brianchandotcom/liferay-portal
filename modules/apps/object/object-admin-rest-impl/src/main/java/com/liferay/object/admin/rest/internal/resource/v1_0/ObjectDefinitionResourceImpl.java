@@ -928,6 +928,12 @@ public class ObjectDefinitionResourceImpl
 			return _toObjectDefinition(serviceBuilderObjectDefinition);
 		}
 
+		if (GetterUtil.getBoolean(serviceBuilderObjectDefinition.isSystem())) {
+			return _toObjectDefinition(
+				_objectDefinitionService.publishSystemObjectDefinition(
+					objectDefinitionId));
+		}
+
 		return _toObjectDefinition(
 			_objectDefinitionService.publishCustomObjectDefinition(
 				serviceBuilderObjectDefinition.getObjectDefinitionId()));

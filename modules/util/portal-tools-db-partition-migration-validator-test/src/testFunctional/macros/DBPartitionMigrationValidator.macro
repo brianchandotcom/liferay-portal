@@ -33,7 +33,7 @@ definition {
 
 		if (${databaseType} == "mysql") {
 			var autoCommit = "false";
-			var sqlStatement = "CREATE DATABASE lportal_target character set utf8;";
+			var sqlStatement = "CREATE DATABASE lportal_target character set utf8mb4;";
 		}
 		else if (${databaseType} == "postgresql") {
 			var autoCommit = "true";

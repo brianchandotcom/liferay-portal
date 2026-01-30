@@ -6,5 +6,6 @@ dependencies {
 	testIntegrationImplementation project(":apps:login:login-web-api")
 	testIntegrationImplementation project(":apps:object:object-api")
 	testIntegrationImplementation project(":dxp:apps:digital-sales-room:digital-sales-room-api")
+	testIntegrationImplementation project(":dxp:apps:digital-sales-room:digital-sales-room-test-util")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

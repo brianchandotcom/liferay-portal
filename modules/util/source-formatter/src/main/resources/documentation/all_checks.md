@@ -336,7 +336,7 @@ JavaUniqueUpgradeProcessCheck | [Bug Prevention](bug_prevention_checks.md#bug-pr
 JavaUpgradeAlterColumnCallsOrderCheck | [Styling](styling_checks.md#styling-checks) | .java | Sorts method calls for altering table columns. |
 [JavaUpgradeClassCheck](check/java_upgrade_class_check.md#javaupgradeclasscheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Performs several checks on Upgrade classes. |
 JavaUpgradeCompanyThreadLocalCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Checks that we do not use `CompanyThreadLocal.setCompanyId*` in upgrade classes. |
-JavaUpgradeConnectionCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Finds cases where `DataAccess.getConnection` is used (instead of using the available global variable `connection`). |
+JavaUpgradeConnectionCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Performs several checks on connection in Upgrade classes. |
 JavaUpgradeCreateTableCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Checks that we do not use `create table` statement in upgrade classes. |
 [JavaUpgradeDropTableCheck](check/java_upgrade_drop_table_check.md#javaupgradedroptablecheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Finds cases where `DROP_TABLE_IF_EXISTS` should be used (instead of `drop table if exists`). |
 JavaUpgradeEmptyLinesCheck | [Styling](styling_checks.md#styling-checks) | .java | Finds missing and unnecessary empty lines in upgrade classes. |

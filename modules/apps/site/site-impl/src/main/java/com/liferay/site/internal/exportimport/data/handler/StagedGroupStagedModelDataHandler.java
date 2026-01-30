@@ -565,7 +565,11 @@ public class StagedGroupStagedModelDataHandler
 
 			String portletDataHandlerKey = portletElement.attributeValue(
 				"portlet-data-handler-key");
-			String portletId = portletElement.attributeValue("portlet-id");
+
+			String sourcePortletId = portletElement.attributeValue(
+				"portlet-id");
+
+			String targetPortletId = sourcePortletId;
 
 			if (portletDataHandlerKey != null) {
 				PortletDataHandler portletDataHandler =
@@ -573,14 +577,14 @@ public class StagedGroupStagedModelDataHandler
 						portletDataContext.getCompanyId(),
 						portletDataHandlerKey);
 
-				portletId = portletDataHandler.getPortletId();
+				targetPortletId = portletDataHandler.getPortletId();
 			}
 
-			portletDataContext.setPortletId(portletId);
+			portletDataContext.setPortletId(targetPortletId);
 
 			if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
 				_portletDataHandlerStatusMessageSender.sendStatusMessage(
-					"portlet", portletId,
+					"portlet", sourcePortletId,
 					portletDataContext.getManifestSummary());
 			}
 
@@ -605,8 +609,9 @@ public class StagedGroupStagedModelDataHandler
 
 			Map<String, Boolean> importPortletControlsMap =
 				_exportImportHelper.getImportPortletControlsMap(
-					portletDataContext.getCompanyId(), portletId,
-					portletDataContext.getParameterMap(), portletDataElement,
+					portletDataContext.getCompanyId(), sourcePortletId,
+					targetPortletId, portletDataContext.getParameterMap(),
+					portletDataElement,
 					portletDataContext.getManifestSummary());
 
 			if (layout != null) {
@@ -674,7 +679,7 @@ public class StagedGroupStagedModelDataHandler
 				_permissionImporter.importPortletPermissions(
 					portletDataContext.getCompanyId(),
 					portletDataContext.getGroupId(), serviceContext.getUserId(),
-					layout, portletElement, portletId);
+					layout, portletElement, targetPortletId);
 			}
 
 			// Archived setups

@@ -13,6 +13,7 @@ export const BULK_ACTION_CATEGORIES = 'TaxonomyCategoryBulkAction';
 export const BULK_ACTION_DEFAULT_PERMISSIONS = 'DefaultPermissionBulkAction';
 export const BULK_ACTION_DELETE = 'DeleteBulkAction';
 export const BULK_ACTION_DOWNLOAD = 'DownloadBulkAction';
+export const BULK_ACTION_EXPIRE = 'ExpireBulkAction';
 export const BULK_ACTION_MOVE = 'MoveBulkAction';
 export const BULK_ACTION_PERMISSIONS = 'PermissionBulkAction';
 export const BULK_ACTION_RESET_PERMISSIONS = 'ResetPermissionBulkAction';
@@ -28,6 +29,7 @@ export const LABELS_BULK_ACTIONS: {[key in keyof IBulkActionTaskType]: string} =
 		),
 		[BULK_ACTION_DELETE]: Liferay.Language.get('assets-deletion'),
 		[BULK_ACTION_DOWNLOAD]: Liferay.Language.get('assets-download'),
+		[BULK_ACTION_EXPIRE]: Liferay.Language.get('expire'),
 		[BULK_ACTION_MOVE]: Liferay.Language.get('assets-movement'),
 		[BULK_ACTION_PERMISSIONS]: Liferay.Language.get(
 			'assets-default-permissioning'

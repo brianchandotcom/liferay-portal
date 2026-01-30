@@ -99,8 +99,10 @@ public class KeywordImportTaskPreActionTest {
 		String json = ExportImportTaskResourceTestUtil.executeExportTask(
 			_ITEM_CLASS_NAME, _localGroup.getGroupId());
 
+		String virtualHostname = "www.able.com";
+
 		Company company = CompanyLocalServiceUtil.addCompany(
-			null, _VIRTUAL_HOST_NAME, _VIRTUAL_HOST_NAME, _VIRTUAL_HOST_NAME, 0,
+			null, virtualHostname, virtualHostname, virtualHostname, 0,
 			true, true, null, null, null, null, null, null);
 
 		PortalInstances.initCompany(company);
@@ -108,7 +110,7 @@ public class KeywordImportTaskPreActionTest {
 		Group group = GroupTestUtil.addGroupToCompany(company.getCompanyId());
 
 		ExportImportTaskResourceTestUtil.executeImportTask(
-			_ITEM_CLASS_NAME, "INSERT", group.getGroupId(), _VIRTUAL_HOST_NAME,
+			_ITEM_CLASS_NAME, "INSERT", group.getGroupId(), virtualHostname,
 			"KEEP_CREATOR", json, null);
 
 		_assertAssetTag(
@@ -189,8 +191,6 @@ public class KeywordImportTaskPreActionTest {
 	}
 
 	private static final String _ITEM_CLASS_NAME = Keyword.class.getName();
-
-	private static final String _VIRTUAL_HOST_NAME = "www.able.com";
 
 	@Inject
 	private AssetTagLocalService _assetTagLocalService;

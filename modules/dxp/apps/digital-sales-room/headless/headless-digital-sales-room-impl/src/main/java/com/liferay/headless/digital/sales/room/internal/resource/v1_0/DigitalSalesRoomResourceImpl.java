@@ -821,6 +821,8 @@ public class DigitalSalesRoomResourceImpl
 		_userAccountBriefResource.setContextAcceptLanguage(
 			contextAcceptLanguage);
 		_userAccountBriefResource.setContextCompany(contextCompany);
+		_userAccountBriefResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
 		_userAccountBriefResource.setContextUser(contextUser);
 		_userAccountBriefResource.setContextUriInfo(contextUriInfo);
 

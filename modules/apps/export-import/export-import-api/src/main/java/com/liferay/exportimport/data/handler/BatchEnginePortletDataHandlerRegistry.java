@@ -7,9 +7,12 @@ package com.liferay.exportimport.data.handler;
 
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Daniel Raposo
  */
+@ProviderType
 public interface BatchEnginePortletDataHandlerRegistry {
 
 	public PortletDataHandler getByKey(long companyId, String key);

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Headless Digital Sales Room API
 Bundle-SymbolicName: com.liferay.headless.digital.sales.room.api
-Bundle-Version: 2.1.1
+Bundle-Version: 2.2.0
 Export-Package:\
 	com.liferay.headless.digital.sales.room.dto.v1_0,\
 	com.liferay.headless.digital.sales.room.resource.v1_0

@@ -2178,9 +2178,12 @@ public class OrganizationLocalServiceImpl
 			userFileUploadsSettings.getImageMaxHeight(),
 			userFileUploadsSettings.getImageMaxWidth());
 
-		if (organization.getStatus() == WorkflowConstants.STATUS_EMPTY) {
-			organization.setStatus(WorkflowConstants.STATUS_APPROVED);
-		}
+		organization.setStatus(
+			EmptyModelManagerUtil.solveEmptyModel(
+				organization.getStatus(), organization.getGroupId(),
+				organization.getCompanyId(), externalReferenceCode,
+				organization.getModelClassName(),
+				() -> WorkflowConstants.STATUS_APPROVED));
 
 		organization.setExpandoBridgeAttributes(serviceContext);
 

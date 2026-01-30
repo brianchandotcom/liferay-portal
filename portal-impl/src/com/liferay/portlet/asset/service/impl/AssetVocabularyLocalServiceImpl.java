@@ -528,9 +528,12 @@ public class AssetVocabularyLocalServiceImpl
 		vocabulary.setSettings(settings);
 		vocabulary.setVisibilityType(visibilityType);
 
-		if (vocabulary.getStatus() == WorkflowConstants.STATUS_EMPTY) {
-			vocabulary.setStatus(WorkflowConstants.STATUS_APPROVED);
-		}
+		vocabulary.setStatus(
+			EmptyModelManagerUtil.solveEmptyModel(
+				vocabulary.getStatus(), vocabulary.getGroupId(),
+				vocabulary.getCompanyId(), externalReferenceCode,
+				vocabulary.getModelClassName(),
+				() -> WorkflowConstants.STATUS_APPROVED));
 
 		return assetVocabularyPersistence.update(vocabulary);
 	}
@@ -562,9 +565,12 @@ public class AssetVocabularyLocalServiceImpl
 		vocabulary.setSettings(settings);
 		vocabulary.setVisibilityType(visibilityType);
 
-		if (vocabulary.getStatus() == WorkflowConstants.STATUS_EMPTY) {
-			vocabulary.setStatus(WorkflowConstants.STATUS_APPROVED);
-		}
+		vocabulary.setStatus(
+			EmptyModelManagerUtil.solveEmptyModel(
+				vocabulary.getStatus(), vocabulary.getGroupId(),
+				vocabulary.getCompanyId(), externalReferenceCode,
+				vocabulary.getModelClassName(),
+				() -> WorkflowConstants.STATUS_APPROVED));
 
 		vocabulary = assetVocabularyPersistence.update(vocabulary);
 

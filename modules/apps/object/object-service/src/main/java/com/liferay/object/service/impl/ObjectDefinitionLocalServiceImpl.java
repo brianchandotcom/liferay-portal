@@ -11,6 +11,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.exportimport.kernel.empty.model.EmptyModelManager;
+import com.liferay.exportimport.kernel.empty.model.EmptyModelManagerUtil;
 import com.liferay.fragment.cache.FragmentEntryLinkCache;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.friendly.url.separator.util.FriendlyURLSeparatorUtil;
@@ -2880,11 +2881,18 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setPKObjectFieldName(pkObjectFieldName);
 		objectDefinition.setScope(scope);
 
-		if ((objectDefinition.getStatus() == WorkflowConstants.STATUS_EMPTY) &&
-			(status == WorkflowConstants.STATUS_DRAFT)) {
+		objectDefinition.setStatus(
+			EmptyModelManagerUtil.solveEmptyModel(
+				objectDefinition.getStatus(), 0,
+				objectDefinition.getCompanyId(), externalReferenceCode,
+				objectDefinition.getModelClassName(),
+				() -> {
+					if (status == WorkflowConstants.STATUS_DRAFT) {
+						return status;
+					}
 
-			objectDefinition.setStatus(status);
-		}
+					return WorkflowConstants.STATUS_EMPTY;
+				}));
 
 		objectDefinition = _update(objectDefinition);
 

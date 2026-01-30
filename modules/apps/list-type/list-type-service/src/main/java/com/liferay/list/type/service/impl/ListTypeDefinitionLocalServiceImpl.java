@@ -6,6 +6,7 @@
 package com.liferay.list.type.service.impl;
 
 import com.liferay.exportimport.kernel.empty.model.EmptyModelManager;
+import com.liferay.exportimport.kernel.empty.model.EmptyModelManagerUtil;
 import com.liferay.list.type.exception.ListTypeDefinitionNameException;
 import com.liferay.list.type.exception.RequiredListTypeDefinitionException;
 import com.liferay.list.type.internal.definition.util.ListTypeDefinitionUtil;
@@ -172,9 +173,12 @@ public class ListTypeDefinitionLocalServiceImpl
 
 		listTypeDefinition.setNameMap(nameMap);
 
-		if (listTypeDefinition.getStatus() == WorkflowConstants.STATUS_EMPTY) {
-			listTypeDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
-		}
+		listTypeDefinition.setStatus(
+			EmptyModelManagerUtil.solveEmptyModel(
+				listTypeDefinition.getStatus(), 0,
+				listTypeDefinition.getCompanyId(), externalReferenceCode,
+				listTypeDefinition.getModelClassName(),
+				() -> WorkflowConstants.STATUS_APPROVED));
 
 		listTypeDefinition = listTypeDefinitionPersistence.update(
 			listTypeDefinition);

@@ -2001,9 +2001,11 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		role.setDescriptionMap(descriptionMap);
 		role.setSubtype(subtype);
 
-		if (role.getStatus() == WorkflowConstants.STATUS_EMPTY) {
-			role.setStatus(WorkflowConstants.STATUS_APPROVED);
-		}
+		role.setStatus(
+			EmptyModelManagerUtil.solveEmptyModel(
+				role.getStatus(), 0, role.getCompanyId(), externalReferenceCode,
+				role.getModelClassName(),
+				() -> WorkflowConstants.STATUS_APPROVED));
 
 		role.setExpandoBridgeAttributes(serviceContext);
 

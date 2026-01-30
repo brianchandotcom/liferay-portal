@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -41,8 +42,7 @@ public class TaskDefinitionResourceImpl extends BaseTaskDefinitionResourceImpl {
 		}
 
 		_taskDefinitionManager.deleteTaskDefinition(
-			_createDefaultDTOConverterContext(taskDefinitionId),
-			taskDefinitionId);
+			_createDTOConverterContext(taskDefinitionId), taskDefinitionId);
 	}
 
 	@Override
@@ -62,9 +62,8 @@ public class TaskDefinitionResourceImpl extends BaseTaskDefinitionResourceImpl {
 		}
 
 		return _taskDefinitionManager.getTaskDefinitions(
-			contextCompany.getCompanyId(),
-			_createDefaultDTOConverterContext(null), filter, pagination, search,
-			sorts);
+			contextCompany.getCompanyId(), _createDTOConverterContext(null),
+			filter, pagination, search, sorts);
 	}
 
 	@Override
@@ -79,7 +78,7 @@ public class TaskDefinitionResourceImpl extends BaseTaskDefinitionResourceImpl {
 		}
 
 		return _taskDefinitionManager.patchTaskDefinitionUpdateActive(
-			active, _createDefaultDTOConverterContext(taskDefinitionId),
+			active, _createDTOConverterContext(taskDefinitionId),
 			taskDefinitionId);
 	}
 
@@ -94,11 +93,10 @@ public class TaskDefinitionResourceImpl extends BaseTaskDefinitionResourceImpl {
 		}
 
 		return _taskDefinitionManager.postTaskDefinitionCopy(
-			_createDefaultDTOConverterContext(taskDefinitionId),
-			taskDefinitionId);
+			_createDTOConverterContext(taskDefinitionId), taskDefinitionId);
 	}
 
-	private DefaultDTOConverterContext _createDefaultDTOConverterContext(
+	private DTOConverterContext _createDTOConverterContext(
 		Long taskDefinitionId) {
 
 		return new DefaultDTOConverterContext(

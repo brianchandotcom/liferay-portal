@@ -10,7 +10,7 @@ import FrontendDataSetContext, {
 } from '../FrontendDataSetContext';
 
 export interface IInlineNotificationComponent {
-	context: IFrontendDataSetContext;
+	context: Pick<IFrontendDataSetContext, 'loadData' | 'selectedItems'>;
 }
 
 export function InlineNotification({
@@ -18,7 +18,12 @@ export function InlineNotification({
 }: {
 	component: React.ComponentType<IInlineNotificationComponent>;
 }) {
-	const context = useContext(FrontendDataSetContext);
+	const FDSContext = useContext(FrontendDataSetContext);
 
-	return <InlineNotificationContent context={context} />;
+	const InlineNotificationContext = (({loadData, selectedItems}) => ({
+		loadData,
+		selectedItems,
+	}))(FDSContext);
+
+	return <InlineNotificationContent context={InlineNotificationContext} />;
 }

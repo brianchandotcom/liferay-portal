@@ -33,16 +33,18 @@ public class DDMStructureModelDocumentContributor
 	@Override
 	public void contribute(Document document, DDMStructure ddmStructure) {
 		document.addKeyword(Field.CLASS_NAME_ID, ddmStructure.getClassNameId());
+
+		String defaultLanguageId = ddmStructure.getDefaultLanguageId();
+
 		document.addLocalizedText(
 			Field.DESCRIPTION,
 			_localization.populateLocalizationMap(
-				ddmStructure.getDescriptionMap(),
-				ddmStructure.getDefaultLanguageId(),
+				ddmStructure.getDescriptionMap(), defaultLanguageId,
 				ddmStructure.getGroupId()));
 		document.addLocalizedText(
 			Field.NAME,
 			_localization.populateLocalizationMap(
-				ddmStructure.getNameMap(), ddmStructure.getDefaultLanguageId(),
+				ddmStructure.getNameMap(), defaultLanguageId,
 				ddmStructure.getGroupId()));
 
 		try {
@@ -62,7 +64,7 @@ public class DDMStructureModelDocumentContributor
 		document.addLocalizedKeyword(
 			"localized_name",
 			_localization.populateLocalizationMap(
-				ddmStructure.getNameMap(), ddmStructure.getDefaultLanguageId(),
+				ddmStructure.getNameMap(), defaultLanguageId,
 				ddmStructure.getGroupId()),
 			true, true);
 		document.addKeyword(

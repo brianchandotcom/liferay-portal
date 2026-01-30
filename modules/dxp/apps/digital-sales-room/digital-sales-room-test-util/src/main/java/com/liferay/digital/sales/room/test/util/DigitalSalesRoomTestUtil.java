@@ -33,7 +33,9 @@ public class DigitalSalesRoomTestUtil {
 				"." + _BUNDLE_SYMBOLIC_NAME +
 					".internal.batch.01.object.folder",
 				"." + _BUNDLE_SYMBOLIC_NAME +
-					".internal.batch.02.object.definition"
+					".internal.batch.02.object.definition",
+				"." + _BUNDLE_SYMBOLIC_NAME +
+					".internal.batch.03.notification.template"
 			});
 
 		return ObjectDefinitionLocalServiceUtil.

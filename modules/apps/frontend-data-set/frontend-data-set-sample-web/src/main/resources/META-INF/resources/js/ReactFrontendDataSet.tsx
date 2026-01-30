@@ -10,6 +10,7 @@ import {
 	DisplayType,
 	FrontendDataSet,
 	IFrontendDataSetProps,
+	IInlineNotificationComponent,
 } from '@liferay/frontend-data-set-web';
 import React from 'react';
 
@@ -79,16 +80,20 @@ const ReactFrontendDataSet = (props: IFrontendDataSetProps) => {
 		});
 	};
 
-	let notification = undefined;
+	let notification;
 
 	if (component === 'alert') {
-		notification = ({context}: {context: any}) => (
+		notification = ({
+			context,
+		}: {
+			context: IInlineNotificationComponent['context'];
+		}) => (
 			<ClayAlert
 				displayType="info"
 				onClose={() => setShowInlineNotification(false)}
 				variant="stripe"
 			>
-				{context.selectedItems.length
+				{context.selectedItems?.length
 					? `${selectedItems.length} items selected`
 					: 'No items selected'}
 
@@ -102,6 +107,17 @@ const ReactFrontendDataSet = (props: IFrontendDataSetProps) => {
 						size="sm"
 					>
 						{Liferay.Language.get('reload')}
+					</ClayButton>
+					
+					<ClayButton
+						displayType="danger"
+						onClick={() => {
+							context.loadData();
+							setShowInlineNotification(false);
+						}}
+						size="sm"
+					>
+						{Liferay.Language.get('refresh')}
 					</ClayButton>
 
 					<ClayButton

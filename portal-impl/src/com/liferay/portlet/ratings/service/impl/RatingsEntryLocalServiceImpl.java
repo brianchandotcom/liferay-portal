@@ -252,7 +252,7 @@ public class RatingsEntryLocalServiceImpl
 	}
 
 	protected void validate(double score) throws PortalException {
-		if ((score > 1) || (score < 0)) {
+		if ((score > 1) || (score < 0) || Double.isNaN(score)) {
 			throw new EntryScoreException(
 				"Score " + score + " is not a value between 0 and 1");
 		}

@@ -4,7 +4,9 @@
  */
 
 import {IView} from '@liferay/frontend-data-set-web';
+import {openToast} from 'frontend-js-components-web';
 
+import ApiHelper from '../../common/services/ApiHelper';
 import AssetsFDSPropsTransformer, {
 	AdditionalProps,
 } from './AssetsFDSPropsTransformer';
@@ -41,5 +43,52 @@ export default function RelatedAssetsFDSPropsTransformer({
 				fileDropAction(additionalProps, droppedFiles, dropTarget),
 		},
 		infoPanelComponent: null,
+		async onActionDropdownItemClick({
+			action,
+			event,
+			itemData,
+			items,
+			loadData,
+		}: {
+			action: any;
+			event: Event;
+			itemData: ItemData;
+			items: any;
+			loadData: () => {};
+		}) {
+			if (action.data.id === 'unlink-asset') {
+				const {actions, embedded} = itemData;
+
+				await ApiHelper.patch(
+					{
+						keywords: embedded.keywords?.filter(
+							(keyword) =>
+								!additionalProps.keywords
+									?.split(',')
+									.includes(keyword)
+						),
+					},
+					actions.update.href
+				);
+
+				openToast({
+					message: Liferay.Language.get(
+						'your-request-completed-successfully'
+					),
+					type: 'success',
+				});
+
+				loadData();
+			}
+			else {
+				assetsData.onActionDropdownItemClick({
+					action,
+					event,
+					itemData,
+					items,
+					loadData,
+				});
+			}
+		},
 	};
 }

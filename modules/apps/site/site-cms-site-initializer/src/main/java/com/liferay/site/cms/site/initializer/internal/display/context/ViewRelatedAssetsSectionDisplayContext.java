@@ -20,7 +20,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -146,13 +145,7 @@ public class ViewRelatedAssetsSectionDisplayContext
 
 		fdsActionDropdownItems.add(
 			new FDSActionDropdownItem(
-				StringBundler.concat(
-					themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
-					GroupConstants.CMS_FRIENDLY_URL, "/unlink_asset?keywords=",
-					StringUtil.merge(_keywords),
-					"&objectEntryId={embedded.id}&redirect=",
-					themeDisplay.getURLCurrent()),
-				"chain-broken", "unlink-asset",
+				null, "chain-broken", "unlink-asset",
 				LanguageUtil.format(
 					httpServletRequest, "remove-from-x",
 					objectDefinition.getLabel(themeDisplay.getLocale())),

@@ -30,6 +30,7 @@ interface ItemData {
 		externalReferenceCode: string;
 		file?: any;
 		id: number;
+		keywords?: string[];
 		objectEntryFolderExternalReferenceCode?: string;
 		objectEntryFolderId: number;
 		parentObjectEntryFolderExternalReferenceCode?: string;

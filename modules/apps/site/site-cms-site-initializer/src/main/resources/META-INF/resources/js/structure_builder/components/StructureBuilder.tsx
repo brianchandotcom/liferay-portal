@@ -10,6 +10,7 @@ import React, {useEffect} from 'react';
 import {
 	ObjectDefinition,
 	ObjectDefinitions,
+	ObjectRelationship,
 } from '../../common/types/ObjectDefinition';
 import {Config, initializeConfig} from '../config';
 import CacheContextProvider from '../contexts/CacheContext';
@@ -30,6 +31,7 @@ export default function StructureBuilder({
 	state: {
 		mainObjectDefinition: ObjectDefinition;
 		objectDefinitions: ObjectDefinitions;
+		relatedContentObjectRelationships: ObjectRelationship[];
 	};
 }) {
 	initializeConfig(config);

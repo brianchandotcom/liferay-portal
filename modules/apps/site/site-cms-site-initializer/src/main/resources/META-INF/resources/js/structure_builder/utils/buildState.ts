@@ -6,6 +6,7 @@
 import {
 	ObjectDefinition,
 	ObjectDefinitions,
+	ObjectRelationship,
 } from '../../common/types/ObjectDefinition';
 import {State} from '../contexts/StateContext';
 import buildStructure from './buildStructure';
@@ -14,15 +15,21 @@ import {getChildrenUuids} from './getChildrenUuids';
 export default function buildState({
 	mainObjectDefinition,
 	objectDefinitions,
+	relatedContentObjectRelationships,
 }: {
 	mainObjectDefinition: ObjectDefinition;
 	objectDefinitions: ObjectDefinitions;
+	relatedContentObjectRelationships: ObjectRelationship[];
 }): State | null {
 	if (!mainObjectDefinition) {
 		return null;
 	}
 
-	const structure = buildStructure({mainObjectDefinition, objectDefinitions});
+	const structure = buildStructure({
+		mainObjectDefinition,
+		objectDefinitions,
+		relatedContentObjectRelationships,
+	});
 
 	return {
 		history: {

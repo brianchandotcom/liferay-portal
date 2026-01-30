@@ -1,0 +1,24 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"customCSS": "#banner, #footer {\n  display: none;\n}\n\n#p_p_id_com_liferay_login_web_portlet_LoginPortlet_ {\n  background: #FFF;\n  left: 50%;\n  padding: 1.5rem;\n  position: fixed;\n  top: 50%;\n  transform: translate(-50%, -50%);\n  width: 25rem;\n}\n\n#p_p_id_com_liferay_login_web_portlet_LoginPortlet_ .button-holder .btn {\n  width: 100%;\n}\n\n#p_p_id_com_liferay_login_web_portlet_LoginPortlet_ .navigation li {\n  float: none;\n  margin: 0;\n  padding: 0.25rem 0;\n}\n\n#p_p_id_com_liferay_login_web_portlet_LoginPortlet_ .navigation li a {\n  color: var(--gray-800);\n  font-size: 0.9rem;\n}\n\n#p_p_id_com_liferay_login_web_portlet_LoginPortlet_ .panel-body {\n  padding: 0.75rem 0;\n}\n\n#p_p_id_com_liferay_login_web_portlet_LoginPortlet_ .portlet .portlet-title-text {\n  color: var(--black, #000);\n  font-size: 1.125rem;\n  margin-bottom: 1rem;\n}",
+					"widgetInstance": {
+						"widgetConfig": {
+							"portletSetupPortletDecoratorId": "borderless"
+						},
+						"widgetName": "com_liferay_login_web_portlet_LoginPortlet"
+					}
+				},
+				"type": "Widget"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"themeName": "Classic"
+	},
+	"version": 1.1
+}

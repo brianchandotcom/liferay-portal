@@ -1,0 +1,21 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import com.liferay.dynamic.data.mapping.util.DDMUtil;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+
+/**
+ * @author Jessyca Ferreira
+ */
+public class LPD_65038 {
+
+	public void method(long classPK) {
+		StorageEngineUtil.getFields(123);
+		DDMUtil.getFields(classPK, ServiceContextThreadLocal.getServiceContext());
+	}
+
+}

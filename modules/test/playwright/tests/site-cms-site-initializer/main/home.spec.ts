@@ -438,7 +438,7 @@ test(
 	}
 );
 
-test.skip(
+test(
 	'Can use Search Bar to search for content',
 	{tag: '@LPD-61220'},
 	async ({apiHelpers, assetsPage, homePage, page}) => {
@@ -479,6 +479,12 @@ test.skip(
 			const row = assetsPage.table.bodyRows.filter({hasText: file1Title});
 
 			await expect(row.getByText(file1Title)).toBeVisible();
+
+			await test.step('Verify search input contains the search value', async () => {
+				const searchInput = page.getByPlaceholder('Search');
+
+				await expect(searchInput).toHaveValue('title');
+			});
 		}
 		finally {
 			await apiHelpers.objectEntry.deleteObjectEntry(

@@ -6,8 +6,8 @@
 package com.liferay.portal.security.content.security.policy.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.configuration.admin.util.ConfigurationFilterStringUtil;
 import com.liferay.osgi.util.osgi.commands.OSGiCommands;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
@@ -52,24 +52,28 @@ public class CSPOSGiCommandsTest {
 		Company company = CompanyTestUtil.addCompany(false);
 
 		_testResetContentSecurityPolicyConfiguration(
-			company.getCompanyId(),
+			null,
 			HashMapDictionaryBuilder.<String, Object>put(
 				"companyId", company.getCompanyId()
 			).build(),
-			ExtendedObjectClassDefinition.Scope.COMPANY);
+			ExtendedObjectClassDefinition.Scope.COMPANY,
+			company.getCompanyId());
 
 		Group group = GroupTestUtil.addGroup();
 
 		_testResetContentSecurityPolicyConfiguration(
-			group.getGroupId(),
+			group.getCompanyId(),
 			HashMapDictionaryBuilder.<String, Object>put(
+				"companyId", group.getCompanyId()
+			).put(
 				"groupId", group.getGroupId()
 			).build(),
-			ExtendedObjectClassDefinition.Scope.GROUP);
+			ExtendedObjectClassDefinition.Scope.GROUP, group.getGroupId());
 
 		_testResetContentSecurityPolicyConfiguration(
-			CompanyConstants.SYSTEM, new HashMapDictionary<>(),
-			ExtendedObjectClassDefinition.Scope.SYSTEM);
+			null, new HashMapDictionary<>(),
+			ExtendedObjectClassDefinition.Scope.SYSTEM,
+			CompanyConstants.SYSTEM);
 	}
 
 	private void _createConfiguration(
@@ -101,7 +105,7 @@ public class CSPOSGiCommandsTest {
 	}
 
 	private void _resetConfiguration(
-			long id, ExtendedObjectClassDefinition.Scope scope)
+			ExtendedObjectClassDefinition.Scope scope, long scopePK)
 		throws Exception {
 
 		Class<?> clazz = _osgiCommands.getClass();
@@ -114,34 +118,25 @@ public class CSPOSGiCommandsTest {
 		}
 		else {
 			method = clazz.getMethod(_functionNames.get(scope), long.class);
-			arguments = new Object[] {id};
+			arguments = new Object[] {scopePK};
 		}
 
 		method.invoke(_osgiCommands, arguments);
 	}
 
 	private void _testResetContentSecurityPolicyConfiguration(
-			long id, Dictionary<String, Object> properties,
-			ExtendedObjectClassDefinition.Scope scope)
+			Long companyId, Dictionary<String, Object> properties,
+			ExtendedObjectClassDefinition.Scope scope, long scopePK)
 		throws Exception {
 
 		_createConfiguration(properties, scope);
 
-		_resetConfiguration(id, scope);
+		_resetConfiguration(scope, scopePK);
 
-		String filterString = null;
-
-		if (scope.equals(ExtendedObjectClassDefinition.Scope.SYSTEM)) {
-			filterString = StringBundler.concat(
-				"(&(service.pid=", _CLASS_NAME, "))");
-		}
-		else {
-			filterString = StringBundler.concat(
-				"(&(service.factoryPid=", _CLASS_NAME, ".scoped)(",
-				scope.getPropertyKey(), "=", id, "))");
-		}
-
-		Assert.assertNull(_configurationAdmin.listConfigurations(filterString));
+		Assert.assertNull(
+			_configurationAdmin.listConfigurations(
+				ConfigurationFilterStringUtil.getScopedFilterString(
+					companyId, _CLASS_NAME, scope, scopePK)));
 	}
 
 	private static final String _CLASS_NAME =

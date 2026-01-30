@@ -58,7 +58,8 @@ public class SaveSiteConfigurationMVCActionCommand
 		}
 
 		_configurationProvider.saveGroupConfiguration(
-			ClickToChatConfiguration.class, themeDisplay.getSiteGroupId(),
+			ClickToChatConfiguration.class, themeDisplay.getCompanyId(),
+			themeDisplay.getSiteGroupId(),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"chatProviderAccountId",
 				ParamUtil.getString(actionRequest, "chatProviderAccountId")

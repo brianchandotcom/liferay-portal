@@ -10,7 +10,9 @@ import com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.service.GroupLocalService;
 
 import java.io.Serializable;
 
@@ -45,10 +47,12 @@ public class CookiesConfigurationVisibilityController
 						(Long)scopePK);
 			}
 			else if (ExtendedObjectClassDefinition.Scope.GROUP.equals(scope)) {
+				Group group = _groupLocalService.fetchGroup((long)scopePK);
+
 				cookiesPreferenceHandlingConfiguration =
 					_configurationProvider.getGroupConfiguration(
 						CookiesPreferenceHandlingConfiguration.class,
-						(Long)scopePK);
+						group.getCompanyId(), group.getGroupId());
 			}
 			else if (ExtendedObjectClassDefinition.Scope.SYSTEM.equals(scope)) {
 				cookiesPreferenceHandlingConfiguration =
@@ -69,5 +73,8 @@ public class CookiesConfigurationVisibilityController
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

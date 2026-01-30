@@ -35,7 +35,7 @@ public class ClickToChatConfigurationUtil {
 
 			ClickToChatConfiguration groupClickToChatConfiguration =
 				ConfigurationProviderUtil.getGroupConfiguration(
-					ClickToChatConfiguration.class, groupId);
+					ClickToChatConfiguration.class, companyId, groupId);
 
 			if (Objects.equals(
 					companyClickToChatConfiguration.siteSettingsStrategy(),

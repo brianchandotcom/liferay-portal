@@ -5,9 +5,7 @@
 
 package com.liferay.configuration.admin.web.internal.model.listener;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.configuration.admin.util.ConfigurationFilterStringUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -40,11 +38,8 @@ public class GroupModelListener extends BaseModelListener<Group> {
 
 	private void _onAfterRemove(Group group) throws Exception {
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			StringBundler.concat(
-				StringPool.OPEN_PARENTHESIS,
-				ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
-				StringPool.EQUAL, group.getGroupId(),
-				StringPool.CLOSE_PARENTHESIS));
+			ConfigurationFilterStringUtil.getGroupScopedFilterString(
+				group.getCompanyId(), group.getGroupId(), null));
 
 		if (configurations == null) {
 			return;

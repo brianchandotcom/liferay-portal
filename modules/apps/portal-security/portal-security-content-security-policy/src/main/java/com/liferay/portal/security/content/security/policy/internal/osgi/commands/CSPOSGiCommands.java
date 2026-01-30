@@ -7,7 +7,9 @@ package com.liferay.portal.security.content.security.policy.internal.osgi.comman
 
 import com.liferay.osgi.util.osgi.commands.OSGiCommands;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.security.content.security.policy.internal.configuration.ContentSecurityPolicyConfiguration;
 
 import org.osgi.service.component.annotations.Component;
@@ -49,9 +51,12 @@ public class CSPOSGiCommands implements OSGiCommands {
 	public void resetGroupConfiguration(long groupId)
 		throws ConfigurationException {
 
+		Group group = _groupLocalService.fetchGroup(groupId);
+
 		ContentSecurityPolicyConfiguration contentSecurityPolicyConfiguration =
 			_configurationProvider.getGroupConfiguration(
-				ContentSecurityPolicyConfiguration.class, groupId);
+				ContentSecurityPolicyConfiguration.class, group.getCompanyId(),
+				groupId);
 
 		if (contentSecurityPolicyConfiguration == null) {
 			System.out.println(
@@ -62,7 +67,8 @@ public class CSPOSGiCommands implements OSGiCommands {
 		}
 
 		_configurationProvider.deleteGroupConfiguration(
-			ContentSecurityPolicyConfiguration.class, groupId);
+			ContentSecurityPolicyConfiguration.class, group.getCompanyId(),
+			groupId);
 	}
 
 	public void resetSystemConfiguration() throws ConfigurationException {
@@ -84,5 +90,8 @@ public class CSPOSGiCommands implements OSGiCommands {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

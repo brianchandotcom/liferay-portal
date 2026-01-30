@@ -199,20 +199,21 @@ public class DLConfigurationUpgradeHelper {
 				ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey(),
 				0L);
 
-			if (companyId != 0) {
+			long groupId = _getAttributeValue(
+				configuration,
+				ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(), 0L);
+
+			if ((companyId != 0) && (groupId == 0)) {
 				_configurationProvider.saveCompanyConfiguration(
 					DLFileEntryConfiguration.class, companyId, dictionary);
 
 				continue;
 			}
 
-			long groupId = _getAttributeValue(
-				configuration,
-				ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(), 0L);
-
 			if (groupId != 0) {
 				_configurationProvider.saveGroupConfiguration(
-					DLFileEntryConfiguration.class, groupId, dictionary);
+					DLFileEntryConfiguration.class, companyId, groupId,
+					dictionary);
 			}
 		}
 	}

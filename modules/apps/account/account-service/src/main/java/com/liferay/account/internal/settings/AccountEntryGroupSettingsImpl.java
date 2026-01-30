@@ -13,7 +13,9 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
 import org.osgi.service.component.annotations.Component;
@@ -29,9 +31,12 @@ public class AccountEntryGroupSettingsImpl
 	@Override
 	public String[] getAllowedTypes(long groupId) {
 		try {
+			Group group = _groupLocalService.fetchGroup(groupId);
+
 			AccountEntryGroupConfiguration accountEntryGroupConfiguration =
 				_configurationProvider.getGroupConfiguration(
-					AccountEntryGroupConfiguration.class, groupId);
+					AccountEntryGroupConfiguration.class, group.getCompanyId(),
+					groupId);
 
 			return accountEntryGroupConfiguration.allowedTypes();
 		}
@@ -47,15 +52,19 @@ public class AccountEntryGroupSettingsImpl
 		throws AccountEntryTypeException {
 
 		try {
+			Group group = _groupLocalService.fetchGroup(groupId);
+
 			if (allowedTypes == null) {
 				_configurationProvider.deleteGroupConfiguration(
-					AccountEntryGroupConfiguration.class, groupId);
+					AccountEntryGroupConfiguration.class, group.getCompanyId(),
+					groupId);
 
 				return;
 			}
 
 			_configurationProvider.saveGroupConfiguration(
-				AccountEntryGroupConfiguration.class, groupId,
+				AccountEntryGroupConfiguration.class, group.getCompanyId(),
+				groupId,
 				HashMapDictionaryBuilder.<String, Object>put(
 					"allowedTypes", allowedTypes
 				).build());
@@ -71,5 +80,8 @@ public class AccountEntryGroupSettingsImpl
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

@@ -6,8 +6,8 @@
 package com.liferay.redirect.internal.upgrade.v3_0_3.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.configuration.admin.util.ConfigurationFilterStringUtil;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -28,7 +28,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.osgi.framework.Constants;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
@@ -66,17 +65,11 @@ public class RedirectPatternConfigurationUpgradeProcessTest {
 
 	@Test
 	public void testUpgrade() throws Exception {
-		Configuration configuration =
-			_configurationAdmin.createFactoryConfiguration(
-				"com.liferay.redirect.internal.configuration." +
-					"RedirectPatternConfiguration.scoped",
-				StringPool.QUESTION);
-
-		configuration.update(
+		_configurationProvider.saveGroupConfiguration(
+			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
+			"com.liferay.redirect.internal.configuration." +
+				"RedirectPatternConfiguration",
 			HashMapDictionaryBuilder.<String, Object>put(
-				ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
-				TestPropsValues.getGroupId()
-			).put(
 				"patternStrings", new String[] {"test*test liferay.com"}
 			).build());
 
@@ -87,7 +80,7 @@ public class RedirectPatternConfigurationUpgradeProcessTest {
 		Assert.assertEquals(
 			Arrays.toString(configurations), 1, configurations.length);
 
-		configuration = configurations[0];
+		Configuration configuration = configurations[0];
 
 		Dictionary<String, Object> properties = configuration.getProperties();
 
@@ -103,16 +96,20 @@ public class RedirectPatternConfigurationUpgradeProcessTest {
 
 	private Configuration[] _getConfigurations() throws Exception {
 		return _configurationAdmin.listConfigurations(
-			String.format(
-				"(%s=%s*)", Constants.SERVICE_PID,
+			ConfigurationFilterStringUtil.getGroupScopedFilterString(
+				TestPropsValues.getCompanyId(), null,
 				"com.liferay.redirect.internal.configuration." +
-					"RedirectPatternConfiguration"));
+					"RedirectPatternConfiguration",
+				null));
 	}
 
 	private static UpgradeProcess _upgradeProcess;
 
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;
+
+	@Inject
+	private ConfigurationProvider _configurationProvider;
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.redirect.internal.upgrade.registry.RedirectServiceUpgradeStepRegistrator))"

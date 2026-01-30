@@ -265,7 +265,8 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 
 		LayoutSEOGeneralGroupConfiguration layoutSEOGeneralGroupConfiguration =
 			_configurationProvider.getGroupConfiguration(
-				LayoutSEOGeneralGroupConfiguration.class, layout.getGroupId());
+				LayoutSEOGeneralGroupConfiguration.class, layout.getCompanyId(),
+				layout.getGroupId());
 
 		if (!layoutSEOGeneralGroupConfiguration.includeInstanceName() &&
 			!layoutSEOGeneralGroupConfiguration.includeSiteName()) {

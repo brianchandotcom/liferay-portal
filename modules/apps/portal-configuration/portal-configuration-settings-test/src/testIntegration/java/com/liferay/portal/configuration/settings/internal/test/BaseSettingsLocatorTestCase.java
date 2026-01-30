@@ -145,6 +145,17 @@ public abstract class BaseSettingsLocatorTestCase {
 			HashMapDictionaryBuilder.<String, Object>put(
 				scope.getPropertyKey(), scopePK
 			).put(
+				ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey(),
+				() -> {
+					if (scope.equals(
+							ExtendedObjectClassDefinition.Scope.GROUP)) {
+
+						return companyId;
+					}
+
+					return null;
+				}
+			).put(
 				key, value
 			).put(
 				propertyKey,

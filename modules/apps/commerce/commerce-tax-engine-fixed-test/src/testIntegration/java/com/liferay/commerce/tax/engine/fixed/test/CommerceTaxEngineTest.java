@@ -171,7 +171,7 @@ public class CommerceTaxEngineTest {
 	public void tearDown() throws Exception {
 		_configurationProvider.deleteGroupConfiguration(
 			CommerceTaxByAddressTypeConfiguration.class,
-			_commerceChannel.getGroupId());
+			_commerceChannel.getCompanyId(), _commerceChannel.getGroupId());
 
 		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
 		PrincipalThreadLocal.setName(_originalName);

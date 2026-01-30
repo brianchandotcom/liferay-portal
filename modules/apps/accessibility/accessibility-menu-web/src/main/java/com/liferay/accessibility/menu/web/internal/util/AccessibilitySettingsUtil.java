@@ -91,6 +91,7 @@ public class AccessibilitySettingsUtil {
 			AccessibilityMenuConfiguration accessibilityMenuConfiguration =
 				configurationProvider.getGroupConfiguration(
 					AccessibilityMenuConfiguration.class,
+					themeDisplay.getCompanyId(),
 					themeDisplay.getScopeGroupId());
 
 			return accessibilityMenuConfiguration.enableAccessibilityMenu();

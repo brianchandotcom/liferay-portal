@@ -49,6 +49,7 @@ public class ConsentManagementPlatformTopHeadDynamicInclude
 			consentManagementPlatformConfiguration =
 				ConfigurationProviderUtil.getGroupConfiguration(
 					ConsentManagementPlatformConfiguration.class,
+					themeDisplay.getCompanyId(),
 					themeDisplay.getScopeGroupId());
 		}
 		catch (ConfigurationException configurationException) {

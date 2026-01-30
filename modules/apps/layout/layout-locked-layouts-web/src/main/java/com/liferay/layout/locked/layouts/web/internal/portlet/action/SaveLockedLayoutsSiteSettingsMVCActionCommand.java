@@ -59,7 +59,7 @@ public class SaveLockedLayoutsSiteSettingsMVCActionCommand
 		}
 
 		_configurationProvider.saveGroupConfiguration(
-			LockedLayoutsGroupConfiguration.class,
+			LockedLayoutsGroupConfiguration.class, themeDisplay.getCompanyId(),
 			themeDisplay.getScopeGroupId(),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"allowAutomaticUnlockingProcess",

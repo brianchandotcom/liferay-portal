@@ -6,8 +6,7 @@
 package com.liferay.site.admin.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.configuration.admin.util.ConfigurationFilterStringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
@@ -151,14 +150,10 @@ public class EditMenuAccessConfigurationMVCActionCommandTest {
 	private void _assertConfiguration(String[] expectedRolesCanSeeControlMenu)
 		throws Exception {
 
-		String filterString = StringBundler.concat(
-			"(&(service.factoryPid=", MenuAccessConfiguration.class.getName(),
-			".scoped)(",
-			ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(), "=",
-			_group.getGroupId(), "))");
-
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			filterString);
+			ConfigurationFilterStringUtil.getGroupScopedFilterString(
+				_group.getCompanyId(), _group.getGroupId(),
+				MenuAccessConfiguration.class.getName(), null));
 
 		Assert.assertNotNull(configurations);
 		Assert.assertEquals(

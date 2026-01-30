@@ -14,6 +14,8 @@ import com.liferay.portal.defaultpermissions.configuration.PortalDefaultPermissi
 import com.liferay.portal.kernel.defaultpermissions.configuration.manager.PortalDefaultPermissionsConfigurationManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -42,7 +44,7 @@ public class GroupPortalDefaultPermissionsConfigurationManagerImpl
 				portalDefaultPermissionsGroupConfiguration =
 					_configurationProvider.getGroupConfiguration(
 						PortalDefaultPermissionsGroupConfiguration.class,
-						groupId);
+						companyId, groupId);
 
 			String defaultPermissions =
 				portalDefaultPermissionsGroupConfiguration.defaultPermissions();
@@ -88,8 +90,11 @@ public class GroupPortalDefaultPermissionsConfigurationManagerImpl
 		Map<String, Map<String, String[]>> defaultPermissions) {
 
 		try {
+			Group group = _groupLocalService.fetchGroup(primaryKey);
+
 			_configurationProvider.saveGroupConfiguration(
-				PortalDefaultPermissionsGroupConfiguration.class, primaryKey,
+				PortalDefaultPermissionsGroupConfiguration.class,
+				group.getCompanyId(), primaryKey,
 				HashMapDictionaryBuilder.<String, Object>put(
 					"defaultPermissions",
 					_objectMapper.writeValueAsString(defaultPermissions)
@@ -109,6 +114,9 @@ public class GroupPortalDefaultPermissionsConfigurationManagerImpl
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	private final ObjectMapper _objectMapper = new ObjectMapper();
 	private final TypeReference<Map<String, Map<String, String[]>>>

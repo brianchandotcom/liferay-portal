@@ -5,7 +5,7 @@
 
 package com.liferay.site.internal.configuration.manager;
 
-import com.liferay.petra.string.StringBundler;
+import com.liferay.configuration.admin.util.ConfigurationFilterStringUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
@@ -35,12 +35,10 @@ public class MenuAccessConfigurationManagerImpl
 
 	@Override
 	public void deleteRoleAccessToControlMenu(Role role) throws Exception {
-		String filterString = StringBundler.concat(
-			"(service.factoryPid=", MenuAccessConfiguration.class.getName(),
-			".scoped)");
-
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			filterString);
+			ConfigurationFilterStringUtil.getGroupScopedFilterString(
+				role.getCompanyId(), null,
+				MenuAccessConfiguration.class.getName(), null));
 
 		if (configurations == null) {
 			return;
@@ -71,18 +69,22 @@ public class MenuAccessConfigurationManagerImpl
 	public String[] getAccessToControlMenuRoleIds(long groupId)
 		throws Exception {
 
+		Group group = _groupLocalService.getGroup(groupId);
+
 		MenuAccessConfiguration menuAccessConfiguration =
 			_configurationProvider.getGroupConfiguration(
-				MenuAccessConfiguration.class, groupId);
+				MenuAccessConfiguration.class, group.getCompanyId(), groupId);
 
 		return menuAccessConfiguration.accessToControlMenuRoleIds();
 	}
 
 	@Override
 	public boolean isShowControlMenuByRole(long groupId) throws Exception {
+		Group group = _groupLocalService.getGroup(groupId);
+
 		MenuAccessConfiguration menuAccessConfiguration =
 			_configurationProvider.getGroupConfiguration(
-				MenuAccessConfiguration.class, groupId);
+				MenuAccessConfiguration.class, group.getCompanyId(), groupId);
 
 		return menuAccessConfiguration.showControlMenuByRole();
 	}
@@ -93,10 +95,10 @@ public class MenuAccessConfigurationManagerImpl
 			boolean showControlMenuByRole)
 		throws Exception {
 
+		Group group = _groupLocalService.getGroup(groupId);
+
 		if (accessToControlMenuRoleIds == null) {
 			List<String> accessToControlMenuRoleIdsList = new ArrayList<>();
-
-			Group group = _groupLocalService.getGroup(groupId);
 
 			Role administratorRole = _roleLocalService.getRole(
 				group.getCompanyId(), RoleConstants.ADMINISTRATOR);
@@ -115,7 +117,7 @@ public class MenuAccessConfigurationManagerImpl
 		}
 
 		_configurationProvider.saveGroupConfiguration(
-			MenuAccessConfiguration.class, groupId,
+			MenuAccessConfiguration.class, group.getCompanyId(), groupId,
 			HashMapDictionaryBuilder.<String, Object>put(
 				"accessToControlMenuRoleIds", accessToControlMenuRoleIds
 			).put(

@@ -6,7 +6,7 @@
 package com.liferay.site.sitemap.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.configuration.admin.util.ConfigurationFilterStringUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -149,11 +149,9 @@ public class SaveGroupConfigurationMVCActionCommandTest {
 		throws Exception {
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			String.format(
-				"(&(%s=%s)(%s=%d))", ConfigurationAdmin.SERVICE_FACTORYPID,
-				_PID_SITEMAP_GROUP_CONFIGURATION + ".scoped",
-				ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
-				_group.getGroupId()));
+			ConfigurationFilterStringUtil.getGroupScopedFilterString(
+				_group.getCompanyId(), _group.getGroupId(),
+				_PID_SITEMAP_GROUP_CONFIGURATION, null));
 
 		Assert.assertTrue(ArrayUtil.isNotEmpty(configurations));
 

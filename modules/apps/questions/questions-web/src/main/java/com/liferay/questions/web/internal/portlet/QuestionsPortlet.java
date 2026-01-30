@@ -208,6 +208,7 @@ public class QuestionsPortlet extends MVCPortlet {
 			MBModerationGroupConfiguration mbModerationGroupConfiguration =
 				_configurationProvider.getGroupConfiguration(
 					MBModerationGroupConfiguration.class,
+					themeDisplay.getCompanyId(),
 					themeDisplay.getScopeGroupId());
 
 			if (!mbModerationGroupConfiguration.

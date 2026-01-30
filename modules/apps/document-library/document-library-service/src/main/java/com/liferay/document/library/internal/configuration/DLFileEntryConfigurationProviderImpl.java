@@ -308,7 +308,7 @@ public class DLFileEntryConfigurationProviderImpl
 			getCompanyPreviewableProcessorMaxSize(group.getCompanyId()));
 
 		_configurationProvider.saveGroupConfiguration(
-			DLFileEntryConfiguration.class, groupId,
+			DLFileEntryConfiguration.class, group.getCompanyId(), groupId,
 			_createDictionary(maxNumberOfPages, previewableProcessorMaxSize));
 	}
 

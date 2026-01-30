@@ -390,7 +390,7 @@ public class SugarCRMObjectEntryManagerImpl
 					}
 
 					return _configurationProvider.getGroupConfiguration(
-						SugarCRMConfiguration.class, groupId);
+						SugarCRMConfiguration.class, companyId, groupId);
 				}
 				catch (ConfigurationException configurationException) {
 					return ReflectionUtil.throwException(

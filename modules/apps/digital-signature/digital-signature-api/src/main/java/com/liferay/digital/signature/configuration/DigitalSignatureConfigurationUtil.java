@@ -35,7 +35,7 @@ public class DigitalSignatureConfigurationUtil {
 
 			DigitalSignatureConfiguration groupDigitalSignatureConfiguration =
 				ConfigurationProviderUtil.getGroupConfiguration(
-					DigitalSignatureConfiguration.class, groupId);
+					DigitalSignatureConfiguration.class, companyId, groupId);
 
 			if (Objects.equals(
 					companyDigitalSignatureConfiguration.siteSettingsStrategy(),

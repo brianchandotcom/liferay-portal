@@ -23,6 +23,7 @@ dependencies {
 	compileOnly project(":apps:change-tracking:change-tracking-store-api")
 	compileOnly project(":apps:changeset:changeset-api")
 	compileOnly project(":apps:comment:comment-api")
+	compileOnly project(":apps:configuration-admin:configuration-admin-api")
 	compileOnly project(":apps:data-engine:data-engine-api")
 	compileOnly project(":apps:depot:depot-api")
 	compileOnly project(":apps:document-library:document-library-api")

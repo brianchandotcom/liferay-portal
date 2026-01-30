@@ -135,7 +135,8 @@ public class MBDiscussionPermissionImpl extends BaseDiscussionPermission {
 
 		CommentGroupServiceConfiguration commentGroupServiceConfiguration =
 			_configurationProvider.getGroupConfiguration(
-				CommentGroupServiceConfiguration.class, message.getGroupId());
+				CommentGroupServiceConfiguration.class, message.getCompanyId(),
+				message.getGroupId());
 
 		if (commentGroupServiceConfiguration.alwaysEditableByOwner() &&
 			(permissionChecker.getUserId() == message.getUserId())) {

@@ -174,26 +174,25 @@ public class DefaultExportImportBackgroundTaskStatusMessageTranslator
 	private synchronized void _translateBatchProgressMessage(
 		BackgroundTaskStatus backgroundTaskStatus, Message message) {
 
-		long currentModelAdditionCountersTotal = GetterUtil.getLong(
-			backgroundTaskStatus.getAttribute(
-				"currentModelAdditionCountersTotal"));
-
 		long allModelAdditionCountersTotal = GetterUtil.getLong(
 			backgroundTaskStatus.getAttribute("allModelAdditionCountersTotal"));
 		int batchEngineProcessedItemsCount = GetterUtil.getInteger(
 			message.get("batchEngineProcessedItemsCount"));
+		long currentModelAdditionCountersTotal = GetterUtil.getLong(
+			backgroundTaskStatus.getAttribute(
+				"currentModelAdditionCountersTotal"));
 		long previousPortletsModelAdditionCountersTotal = GetterUtil.getLong(
 			backgroundTaskStatus.getAttribute(
 				"previousPortletsModelAdditionCountersTotal"));
 
-		long newCurrentCount = Math.min(
-			batchEngineProcessedItemsCount +
-				previousPortletsModelAdditionCountersTotal,
-			allModelAdditionCountersTotal);
-
 		backgroundTaskStatus.setAttribute(
 			"currentModelAdditionCountersTotal",
-			Math.max(currentModelAdditionCountersTotal, newCurrentCount));
+			Math.max(
+				currentModelAdditionCountersTotal,
+				Math.min(
+					batchEngineProcessedItemsCount +
+						previousPortletsModelAdditionCountersTotal,
+					allModelAdditionCountersTotal)));
 
 		_updatePercentage(backgroundTaskStatus);
 	}

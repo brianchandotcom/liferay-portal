@@ -30,7 +30,7 @@ const UserChatItem: React.FC<{message: string}> = ({message}) => {
 
 	return (
 		<div className="align-items-center d-flex justify-content-end mb-2">
-			<span className="ml-2">{message}</span>
+			<span className="col-10 ml-2 p-0">{message}</span>
 
 			<Avatar image={userAccount?.image} name={userAccount?.name} />
 		</div>

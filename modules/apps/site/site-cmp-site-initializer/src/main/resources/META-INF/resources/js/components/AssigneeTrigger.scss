@@ -1,3 +1,5 @@
+@import 'atlas-variables';
+
 .site-cmp-site-initializer__assignee {
 	&-trigger {
 		align-items: center;
@@ -16,7 +18,7 @@
 	}
 
 	&-trigger:not(.form-control) {
-		border: 1px solid #9b92a5;
+		border: 1px solid $secondary-l3;
 		border-radius: 6px;
 	}
 

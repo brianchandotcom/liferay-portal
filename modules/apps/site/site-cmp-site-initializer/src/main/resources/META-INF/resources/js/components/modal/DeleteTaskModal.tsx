@@ -31,7 +31,7 @@ export default function DeleteTaskModal({
 			<ClayModal.Body>
 				<p>
 					{sub(
-						Liferay.Language.get('delete-asset-confirmation-body'),
+						Liferay.Language.get('delete-task-confirmation-body'),
 						title
 					)}
 				</p>

@@ -184,7 +184,7 @@ public class ProjectBreadcrumbComponentSectionFragmentRenderer
 							"confirmationMessage",
 							LanguageUtil.format(
 								httpServletRequest,
-								"delete-asset-confirmation-body", title)
+								"delete-project-confirmation-body", title)
 						).put(
 							"confirmationTitle",
 							LanguageUtil.format(

@@ -7,8 +7,8 @@ package com.liferay.site.internal.exportimport.data.handler;
 
 import com.liferay.exportimport.controller.PortletExportController;
 import com.liferay.exportimport.controller.PortletImportController;
+import com.liferay.exportimport.data.handler.BatchEnginePortletDataHandlerRegistry;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
-import com.liferay.exportimport.internal.data.handler.BatchEnginePortletDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
@@ -569,7 +569,7 @@ public class StagedGroupStagedModelDataHandler
 
 			if (portletDataHandlerKey != null) {
 				PortletDataHandler portletDataHandler =
-					BatchEnginePortletDataHandlerRegistryUtil.getByKey(
+					_batchEnginePortletDataHandlerRegistry.getByKey(
 						portletDataContext.getCompanyId(),
 						portletDataHandlerKey);
 
@@ -713,6 +713,10 @@ public class StagedGroupStagedModelDataHandler
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		StagedGroupStagedModelDataHandler.class);
+
+	@Reference
+	private BatchEnginePortletDataHandlerRegistry
+		_batchEnginePortletDataHandlerRegistry;
 
 	@Reference
 	private ExportImportHelper _exportImportHelper;

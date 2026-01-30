@@ -32,6 +32,7 @@ import deleteAssetEntriesBulkAction, {
 } from './actions/deleteAssetEntriesBulkAction';
 import deleteItemAction from './actions/deleteItemAction';
 import executeResetPermissionBulkAction from './actions/executeResetPermissionBulkAction';
+import expireEntriesBulkAction from './actions/expireEntriesBulkAction';
 import openFolderItemSelectorAction from './actions/openFolderItemSelectorAction';
 import shareAction from './actions/shareAction';
 import {triggerAssetDownloadBulkAction} from './actions/triggerAssetDownloadBulkAction';
@@ -529,6 +530,13 @@ export default function AssetsFDSPropsTransformer({
 						additionalProps.parentObjectEntryFolderExternalReferenceCode,
 					selectedData,
 					singleRoleMode: true,
+				});
+			}
+			else if (action?.data.id === 'expire') {
+				expireEntriesBulkAction({
+					apiURL: otherProps.apiURL,
+					dataSetId: otherProps.id,
+					selectedData,
 				});
 			}
 			else if (action?.data?.id === 'permissions') {

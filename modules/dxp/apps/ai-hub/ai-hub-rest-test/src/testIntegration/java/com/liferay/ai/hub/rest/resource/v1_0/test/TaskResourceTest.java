@@ -16,7 +16,10 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -49,13 +52,19 @@ import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
+import com.liferay.portal.kernel.workflow.WorkflowLog;
 import com.liferay.portal.kernel.workflow.WorkflowNode;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.workflow.comparator.WorkflowComparatorFactory;
 import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
+import com.liferay.portal.workflow.kaleo.KaleoWorkflowModelConverter;
+import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
+import com.liferay.portal.workflow.kaleo.service.KaleoLogLocalService;
 import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
+import com.liferay.portal.workflow.manager.WorkflowLogManager;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
 
@@ -246,6 +255,41 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		return content.getBytes();
 	}
 
+	private void _assertWorkflowLogs(long workflowInstanceId) throws Exception {
+		List<WorkflowLog> workflowLogs =
+			_workflowLogManager.getWorkflowLogsByWorkflowInstance(
+				TestPropsValues.getCompanyId(), workflowInstanceId,
+				List.of(WorkflowLog.NODE_USAGE_METADATA), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(workflowLogs.toString(), 1, workflowLogs.size());
+
+		WorkflowLog workflowLog = workflowLogs.get(0);
+
+		Map<String, Serializable> workflowContext = WorkflowContextUtil.convert(
+			workflowLog.getWorkflowContext());
+
+		Assert.assertEquals("88", workflowContext.get("inputTokensCount"));
+		Assert.assertEquals(
+			"This text is wrong.", workflowContext.get("output"));
+		Assert.assertEquals("5", workflowContext.get("outputTokensCount"));
+		Assert.assertEquals(
+			StringBundler.concat(
+				"You are an expert linguistic editor. Your sole task is to ",
+				"correct all grammatical, spelling, and punctuation errors in ",
+				"the provided text while preserving its meaning, tone, and ",
+				"style. Do not alter structure or wording beyond what is ",
+				"necessary for grammatical precision and natural fluency. ",
+				"Output only the corrected text, with no explanations or ",
+				"commentary. If the text is already correct, return it ",
+				"unchanged."),
+			workflowContext.get("promptInput"));
+		Assert.assertEquals("93", workflowContext.get("totalTokenCount"));
+		Assert.assertEquals(
+			"This is the text to be fixed: Thi text ix wrong.",
+			workflowContext.get("userMessageInput"));
+	}
+
 	private String _generateToken(long userId) throws Exception {
 		return JWTTokenUtil.generateToken(
 			TimeUnit.MINUTES.toMillis(1), RandomTestUtil.randomString(),
@@ -424,7 +468,12 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 				"type",
 				WorkflowDefinitionConstants.NAME_FIX_SPELLING_AND_GRAMMAR
 			).toString(),
-			"ai-hub/v1.0/tasks", Http.Method.POST);
+			"ai-hub/v1.0/tasks",
+			HashMapBuilder.put(
+				"Liferay-AI-Hub-On-Behalf-Of",
+				_generateToken(TestPropsValues.getUserId())
+			).build(),
+			Http.Method.POST);
 
 		Assert.assertTrue(countDownLatch.await(10, TimeUnit.SECONDS));
 
@@ -454,6 +503,8 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 					workflowContext.get("rewrittenText"));
 
 				Assert.assertEquals("This text is wrong.", rewrittenText);
+
+				_assertWorkflowLogs(workflowInstance.getWorkflowInstanceId());
 
 				return null;
 			});
@@ -728,12 +779,27 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 	private static WorkflowDefinitionManager _workflowDefinitionManager;
 
 	@Inject
+	private JSONFactory _jsonFactory;
+
+	@Inject
+	private KaleoLogLocalService _kaleoLogLocalService;
+
+	@Inject
+	private KaleoWorkflowModelConverter _kaleoWorkflowModelConverter;
+
+	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;
 
 	@Inject
+	private WorkflowComparatorFactory _workflowComparatorFactory;
+
+	@Inject
 	private WorkflowInstanceManager _workflowInstanceManager;
+
+	@Inject
+	private WorkflowLogManager _workflowLogManager;
 
 }

@@ -10,8 +10,6 @@ import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaTerm;
 
-import java.io.IOException;
-
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,9 +26,8 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, JavaTerm javaTerm,
-			String fileContent)
-		throws IOException {
+		String fileName, String absolutePath, JavaTerm javaTerm,
+		String fileContent) {
 
 		if (absolutePath.contains("/test/") ||
 			absolutePath.contains("/testIntegration/") ||

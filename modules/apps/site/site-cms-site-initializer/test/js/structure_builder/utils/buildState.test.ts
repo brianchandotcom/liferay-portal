@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ObjectRelationship} from '../../../../src/main/resources/META-INF/resources/js/common/types/ObjectDefinition';
 import {State} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/contexts/StateContext';
 import buildObjectDefinition from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/buildObjectDefinition';
 import buildState from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/buildState';
@@ -76,6 +77,16 @@ const TITLE_FIELD: Field = {
 	uuid: TITLE_FIELD_UUID,
 };
 
+const RELATED_CONTENT_RELATIONSHIP: ObjectRelationship = {
+	deletionType: 'disassociate',
+	externalReferenceCode: 'related-content-relationship-erc',
+	label: {en_US: 'Related Content'},
+	name: 'relatedContent',
+	objectDefinitionExternalReferenceCode1: 'related-structure-erc',
+	objectDefinitionExternalReferenceCode2: 'structureERC',
+	type: 'oneToMany',
+};
+
 function getChildren(fields: Field[]) {
 	const children = new Map();
 
@@ -127,6 +138,7 @@ describe('buildState', () => {
 		const result = buildState({
 			mainObjectDefinition: objectDefinition,
 			objectDefinitions: {},
+			relatedContentObjectRelationships: [],
 		});
 
 		const {children, uuid} = result!.structure;
@@ -188,6 +200,7 @@ describe('buildState', () => {
 				},
 			},
 			objectDefinitions: {},
+			relatedContentObjectRelationships: [],
 		});
 
 		const {children, uuid} = result!.structure;
@@ -256,6 +269,7 @@ describe('buildState', () => {
 				},
 			},
 			objectDefinitions: {},
+			relatedContentObjectRelationships: [],
 		});
 
 		const {children, uuid} = result!.structure;
@@ -314,10 +328,42 @@ describe('buildState', () => {
 		const state = buildState({
 			mainObjectDefinition: objectDefinition,
 			objectDefinitions: {},
+			relatedContentObjectRelationships: [],
 		});
 
 		const [, field] = [...state!.structure.children][0];
 
 		expect(field).toEqual(expect.objectContaining({type: 'decimal'}));
+	});
+
+	it('Includes related content relationships', () => {
+		const objectDefinition = buildObjectDefinition({
+			children: getChildren([TEXT_FIELD]),
+			erc: 'structureERC',
+			label: {en_US: 'Structure'},
+			name: 'myStructure',
+			spaces: [],
+			status: 'draft',
+		});
+
+		const state = buildState({
+			mainObjectDefinition: objectDefinition,
+			objectDefinitions: {},
+			relatedContentObjectRelationships: [RELATED_CONTENT_RELATIONSHIP],
+		});
+
+		const children = Array.from(state!.structure.children.values());
+		const relatedContent = children.find(
+			(child) => child.type === 'related-content'
+		);
+
+		expect(relatedContent).toEqual(
+			expect.objectContaining({
+				erc: 'related-content-relationship-erc',
+				multiselection: false,
+				relatedStructureERC: 'related-structure-erc',
+				type: 'related-content',
+			})
+		);
 	});
 });

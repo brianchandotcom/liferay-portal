@@ -3,6 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {
+	RelatedContent,
+	StructureChild,
+} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/types/Structure';
+import {Uuid} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/types/Uuid';
 import buildObjectDefinition from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/buildObjectDefinition';
 import {Field} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/field';
 import getUuid from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/getUuid';
@@ -58,6 +63,28 @@ const TITLE_FIELD: Field = {
 	required: true,
 	settings: {},
 	type: 'text',
+	uuid: getUuid(),
+};
+
+const RELATED_CONTENT: RelatedContent = {
+	erc: 'related-content-erc',
+	label: {en_US: 'Related Content'},
+	multiselection: true,
+	name: 'relatedContent',
+	parent: getUuid(),
+	relatedStructureERC: 'related-structure-erc',
+	type: 'related-content',
+	uuid: getUuid(),
+};
+
+const RELATED_CONTENT_SINGLE: RelatedContent = {
+	erc: 'related-content-single-erc',
+	label: {en_US: 'Related Content Single'},
+	multiselection: false,
+	name: 'relatedContentSingle',
+	parent: getUuid(),
+	relatedStructureERC: 'related-structure-single-erc',
+	type: 'related-content',
 	uuid: getUuid(),
 };
 
@@ -245,5 +272,37 @@ describe('buildObjectDefinition', () => {
 				},
 			],
 		});
+	});
+
+	it('builds objectDefinition with related content relationships', () => {
+		const children: Map<Uuid, StructureChild> = new Map<
+			Uuid,
+			StructureChild
+		>([
+			[RELATED_CONTENT.uuid, RELATED_CONTENT],
+			[RELATED_CONTENT_SINGLE.uuid, RELATED_CONTENT_SINGLE],
+			[TEXT_FIELD.uuid, TEXT_FIELD],
+		]);
+
+		const result = buildObjectDefinition({
+			children,
+			erc: 'structureERC',
+			label: {en_US: 'Structure'},
+			name: 'myStructure',
+			spaces: [],
+			status: 'draft',
+		});
+
+		expect(result.objectRelationships).toEqual([
+			{
+				deletionType: 'disassociate',
+				externalReferenceCode: 'related-content-erc',
+				label: {en_US: 'Related Content'},
+				name: 'relatedContent',
+				objectDefinitionExternalReferenceCode1: 'structureERC',
+				objectDefinitionExternalReferenceCode2: 'related-structure-erc',
+				type: 'manyToMany',
+			},
+		]);
 	});
 });

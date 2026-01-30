@@ -15,6 +15,16 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
  */
 public class GroupServiceSettingsLocator implements SettingsLocator {
 
+	public GroupServiceSettingsLocator(
+		long companyId, long groupId, String settingsId,
+		String configurationPid) {
+
+		_companyId = companyId;
+		_groupId = groupId;
+		_settingsId = settingsId;
+		_configurationPid = configurationPid;
+	}
+
 	public GroupServiceSettingsLocator(long groupId, String settingsId) {
 		this(groupId, settingsId, settingsId);
 	}
@@ -22,9 +32,7 @@ public class GroupServiceSettingsLocator implements SettingsLocator {
 	public GroupServiceSettingsLocator(
 		long groupId, String settingsId, String configurationPid) {
 
-		_groupId = groupId;
-		_settingsId = settingsId;
-		_configurationPid = configurationPid;
+		this(0L, groupId, settingsId, configurationPid);
 	}
 
 	@Override
@@ -48,16 +56,23 @@ public class GroupServiceSettingsLocator implements SettingsLocator {
 	}
 
 	protected long getCompanyId(long groupId) throws SettingsException {
+		if (_companyId != 0) {
+			return _companyId;
+		}
+
 		try {
 			Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-			return group.getCompanyId();
+			_companyId = group.getCompanyId();
+
+			return _companyId;
 		}
 		catch (PortalException portalException) {
 			throw new SettingsException(portalException);
 		}
 	}
 
+	private long _companyId;
 	private final String _configurationPid;
 	private final long _groupId;
 	private final String _settingsId;

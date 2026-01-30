@@ -213,7 +213,6 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 
 		Assert.assertEquals(
 			2, fileEntry.getFileVersionsCount(WorkflowConstants.STATUS_ANY));
-
 		Assert.assertEquals(
 			workflowInstanceLinksCount + 1,
 			WorkflowInstanceLinkLocalServiceUtil.

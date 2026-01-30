@@ -71,6 +71,14 @@ public class VerticalNavTag extends BaseContainerTag {
 		return _verticalNavItems;
 	}
 
+	public boolean isDisplayTypePrimary() {
+		if (Validator.isNotNull(_displayType)) {
+			return _displayType.equals("primary");
+		}
+
+		return false;
+	}
+
 	public void setActive(String active) {
 		_active = active;
 	}
@@ -81,6 +89,10 @@ public class VerticalNavTag extends BaseContainerTag {
 
 	public void setDefaultExpandedKeys(List<String> defaultExpandedKeys) {
 		_defaultExpandedKeys = defaultExpandedKeys;
+	}
+
+	public void setDisplayType(String displayType) {
+		_displayType = displayType;
 	}
 
 	public void setLarge(boolean large) {
@@ -98,6 +110,7 @@ public class VerticalNavTag extends BaseContainerTag {
 		_active = null;
 		_decorated = false;
 		_defaultExpandedKeys = null;
+		_displayType = null;
 		_large = false;
 		_verticalNavItems = null;
 	}
@@ -117,6 +130,7 @@ public class VerticalNavTag extends BaseContainerTag {
 
 		props.put("decorated", _decorated);
 		props.put("defaultExpandedKeys", getDefaultExpandedKeys());
+		props.put("displayType", _displayType);
 		props.put("large", _large);
 		props.put("items", _verticalNavItems);
 
@@ -131,9 +145,16 @@ public class VerticalNavTag extends BaseContainerTag {
 			cssClasses.add("menubar-decorated");
 		}
 
-		cssClasses.add(
-			_large ? "menubar-vertical-expand-lg" :
-				"menubar-vertical-expand-md");
+		if (isDisplayTypePrimary()) {
+			cssClasses.add("menubar-primary");
+		}
+
+		if (_large) {
+			cssClasses.add("menubar-vertical-expand-lg");
+		}
+		else if (!isDisplayTypePrimary()) {
+			cssClasses.add("menubar-vertical-expand-md");
+		}
 
 		return super.processCssClasses(cssClasses);
 	}
@@ -144,11 +165,15 @@ public class VerticalNavTag extends BaseContainerTag {
 
 		JspWriter jspWriter = pageContext.getOut();
 
-		jspWriter.write("<div class=\"collapse menubar-collapse\">");
+		if (!isDisplayTypePrimary()) {
+			jspWriter.write("<div class=\"collapse menubar-collapse\">");
+		}
 
 		_renderVerticalNavItems(jspWriter, _verticalNavItems, 0);
 
-		jspWriter.write("</div>");
+		if (!isDisplayTypePrimary()) {
+			jspWriter.write("</div>");
+		}
 
 		return EVAL_BODY_INCLUDE;
 	}
@@ -403,6 +428,7 @@ public class VerticalNavTag extends BaseContainerTag {
 	private String _active;
 	private boolean _decorated;
 	private List<String> _defaultExpandedKeys;
+	private String _displayType;
 	private boolean _large;
 	private List<VerticalNavItem> _verticalNavItems;
 

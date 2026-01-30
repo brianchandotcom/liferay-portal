@@ -10,6 +10,7 @@ import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.site.cms.site.initializer.internal.display.context.StructureBuilderDisplayContext;
 import com.liferay.taglib.ui.SuccessTag;
 
@@ -74,11 +75,14 @@ public class StructureBuilderComponentSectionFragmentRenderer
 
 		StructureBuilderDisplayContext structureBuilderDisplayContext =
 			new StructureBuilderDisplayContext(
-				httpServletRequest, _jsonFactory,
+				_dtoConverterRegistry, httpServletRequest, _jsonFactory,
 				_objectDefinitionResourceFactory);
 
 		return structureBuilderDisplayContext.getProps();
 	}
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

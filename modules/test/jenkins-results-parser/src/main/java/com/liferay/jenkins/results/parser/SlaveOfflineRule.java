@@ -161,7 +161,7 @@ public class SlaveOfflineRule {
 			String[] notificationRecipientsArray = notificationRecipients.split(
 				",");
 
-			boolean matchFound = false;
+			List<String> invalidNotificationRecipients = new ArrayList<>();
 
 			for (String notificationRecipient : notificationRecipientsArray) {
 				notificationRecipient = notificationRecipient.trim();
@@ -170,8 +170,6 @@ public class SlaveOfflineRule {
 					notificationRecipient);
 
 				if (matcher.find()) {
-					matchFound = true;
-
 					String slack = matcher.group("slack");
 
 					if (!JenkinsResultsParserUtil.isNullOrEmpty(slack)) {
@@ -188,12 +186,19 @@ public class SlaveOfflineRule {
 							message, "jenkins", "Slave offline", email);
 					}
 				}
+				else {
+					invalidNotificationRecipients.add(notificationRecipient);
+				}
 			}
 
-			if (!matchFound) {
-				throw new RuntimeException(
-					"Invalid notification recipients: " +
-						notificationRecipients);
+			if (!invalidNotificationRecipients.isEmpty()) {
+				String invalidNotificationRecipientsString =
+					JenkinsResultsParserUtil.join(
+						",", invalidNotificationRecipients);
+
+				System.out.println(
+					"WARNING: Invalid notification recipients found.\n" +
+						invalidNotificationRecipientsString);
 			}
 		}
 	}

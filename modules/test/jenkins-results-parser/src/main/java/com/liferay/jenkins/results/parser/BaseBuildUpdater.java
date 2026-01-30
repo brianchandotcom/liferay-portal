@@ -304,7 +304,7 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 				String[] notificationRecipientsArray =
 					notificationRecipients.split(",");
 
-				boolean matchFound = false;
+				List<String> invalidNotificationRecipients = new ArrayList<>();
 
 				for (String notificationRecipient :
 						notificationRecipientsArray) {
@@ -315,8 +315,6 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 						notificationRecipient);
 
 					if (matcher.find()) {
-						matchFound = true;
-
 						String slack = matcher.group("slack");
 
 						if (!JenkinsResultsParserUtil.isNullOrEmpty(slack)) {
@@ -333,12 +331,20 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 								message, "jenkins", "Build Reinvoked", email);
 						}
 					}
+					else {
+						invalidNotificationRecipients.add(
+							notificationRecipient);
+					}
 				}
 
-				if (!matchFound) {
-					throw new RuntimeException(
-						"Invalid notification recipients: " +
-							notificationRecipients);
+				if (!invalidNotificationRecipients.isEmpty()) {
+					String invalidNotificationRecipientsString =
+						JenkinsResultsParserUtil.join(
+							",", invalidNotificationRecipients);
+
+					System.out.println(
+						"WARNING: Invalid notification recipients found.\n" +
+							invalidNotificationRecipientsString);
 				}
 			}
 

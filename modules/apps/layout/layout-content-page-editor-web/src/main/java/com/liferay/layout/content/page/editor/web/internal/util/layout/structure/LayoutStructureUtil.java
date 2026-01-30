@@ -11,18 +11,38 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureServiceUtil;
+import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.DeletedLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Víctor Galán
  */
 public class LayoutStructureUtil {
+
+	public static int countInvalidFragments(String layoutStructureItemJSON)
+		throws JSONException {
+
+		if (Validator.isNull(layoutStructureItemJSON)) {
+			return 0;
+		}
+
+		JSONObject layoutStructureItemJSONObject =
+			JSONFactoryUtil.createJSONObject(layoutStructureItemJSON);
+
+		return _countMissingFragments(layoutStructureItemJSONObject);
+	}
 
 	public static void deleteMarkedForDeletionItems(
 			long groupId, long plid, long userId)
@@ -107,6 +127,47 @@ public class LayoutStructureUtil {
 				groupId, plid, segmentsExperienceId, dataJSONObject.toString());
 
 		return dataJSONObject;
+	}
+
+	private static int _countMissingFragments(
+		JSONObject layoutStructureItemJSONObject) {
+
+		int count = 0;
+
+		String type = layoutStructureItemJSONObject.getString("type");
+
+		if (Objects.equals(
+				LayoutDataItemTypeConstants.TYPE_FRAGMENT,
+				StringUtil.toLowerCase(type))) {
+
+			JSONObject definitionJSONObject =
+				layoutStructureItemJSONObject.getJSONObject("definition");
+
+			if (definitionJSONObject != null) {
+				JSONObject fragmentJSONObject =
+					definitionJSONObject.getJSONObject("fragment");
+
+				if (fragmentJSONObject != null) {
+					String key = fragmentJSONObject.getString("key");
+
+					if (Validator.isNull(key)) {
+						count++;
+					}
+				}
+			}
+		}
+
+		JSONArray pageElementsJSONArray =
+			layoutStructureItemJSONObject.getJSONArray("pageElements");
+
+		if (pageElementsJSONArray != null) {
+			for (int i = 0; i < pageElementsJSONArray.length(); i++) {
+				count += _countMissingFragments(
+					pageElementsJSONArray.getJSONObject(i));
+			}
+		}
+
+		return count;
 	}
 
 }

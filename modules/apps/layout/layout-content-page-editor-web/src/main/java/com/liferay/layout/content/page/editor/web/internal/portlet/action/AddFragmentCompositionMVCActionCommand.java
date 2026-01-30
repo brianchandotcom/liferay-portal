@@ -13,6 +13,7 @@ import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.service.FragmentCompositionService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorConstants;
+import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.page.template.serializer.LayoutStructureItemJSONSerializer;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -81,9 +82,6 @@ public class AddFragmentCompositionMVCActionCommand
 					serviceContext);
 		}
 
-		String name = ParamUtil.getString(actionRequest, "name");
-		String description = ParamUtil.getString(actionRequest, "description");
-
 		String itemId = ParamUtil.getString(actionRequest, "itemId");
 		boolean saveInlineContent = ParamUtil.getBoolean(
 			actionRequest, "saveInlineContent");
@@ -97,6 +95,22 @@ public class AddFragmentCompositionMVCActionCommand
 				_layoutLocalService.getLayout(themeDisplay.getPlid()), itemId,
 				saveInlineContent, saveMappingConfiguration,
 				segmentsExperienceId);
+
+		int invalidFragmentsCount = LayoutStructureUtil.countInvalidFragments(
+			layoutStructureItemJSON);
+
+		if (invalidFragmentsCount > 0) {
+			return JSONUtil.put(
+				"fragmentComposition",
+				JSONUtil.put(
+					"invalidFragmentsCount", invalidFragmentsCount
+				).put(
+					"type", ContentPageEditorConstants.TYPE_COMPOSITION
+				));
+		}
+
+		String name = ParamUtil.getString(actionRequest, "name");
+		String description = ParamUtil.getString(actionRequest, "description");
 
 		FragmentComposition fragmentComposition =
 			_fragmentCompositionService.addFragmentComposition(
@@ -137,6 +151,8 @@ public class AddFragmentCompositionMVCActionCommand
 			).put(
 				"imagePreviewURL",
 				fragmentComposition.getImagePreviewURL(themeDisplay)
+			).put(
+				"invalidFragmentsCount", invalidFragmentsCount
 			).put(
 				"name", fragmentComposition.getName()
 			).put(

@@ -792,6 +792,10 @@ public class ContentPageEditorDisplayContext {
 				_getResourceURL(
 					"/layout_content_page_editor/validate_expression")
 			).put(
+				"validateFragmentCompositionURL",
+				getFragmentEntryActionURL(
+					"/layout_content_page_editor/validate_fragment_composition")
+			).put(
 				"videoItemSelectorURL", _getVideoItemSelectorURL()
 			).put(
 				"workflowEnabled", isWorkflowEnabled()

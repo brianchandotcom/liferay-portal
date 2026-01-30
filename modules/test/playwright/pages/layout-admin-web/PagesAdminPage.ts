@@ -199,6 +199,38 @@ export class PagesAdminPage {
 		await this.configurationSaveButton.click();
 	}
 
+	private async addThemeSpritemapClientExtension(
+		clientExtensionName: string
+	) {
+		await this.page
+			.getByRole('link', {
+				name: 'Design',
+			})
+			.click();
+
+		const panel = this.page.locator(
+			'[id$="theme-spritemap-client-extension"]'
+		);
+
+		await panel.getByRole('button', {name: 'Select'}).click();
+
+		const iframe = this.page.frameLocator(
+			'#selectThemeSpritemapCET_iframe_'
+		);
+
+		const clientExtensionItem = iframe.getByText(clientExtensionName);
+
+		await expect(clientExtensionItem).toBeVisible();
+
+		await clientExtensionItem.click();
+
+		await expect(this.page.getByPlaceholder('Name')).toHaveValue(
+			clientExtensionName
+		);
+
+		await this.configurationSaveButton.click();
+	}
+
 	async addWidgetPage({name}: {name: string}) {
 		await this.createNewPage({
 			draft: true,
@@ -508,7 +540,7 @@ export class PagesAdminPage {
 		layoutTitle?: string;
 		openConfiguration?: boolean;
 		siteUrl?: Site['friendlyUrlPath'];
-		type?: 'globalCSS' | 'globalJS' | 'themeFavicon';
+		type?: 'globalCSS' | 'globalJS' | 'themeFavicon' | 'themeSpritemap';
 	}) {
 		if (openConfiguration) {
 			if (!layoutTitle) {
@@ -526,6 +558,9 @@ export class PagesAdminPage {
 		}
 		else if (type && type === 'globalJS') {
 			await this.addJavaScriptClientExtension(clientExtensionName);
+		}
+		else if (type === 'themeSpritemap') {
+			await this.addThemeSpritemapClientExtension(clientExtensionName);
 		}
 		else {
 			await this.addThemeFaviconClientExtension(clientExtensionName);

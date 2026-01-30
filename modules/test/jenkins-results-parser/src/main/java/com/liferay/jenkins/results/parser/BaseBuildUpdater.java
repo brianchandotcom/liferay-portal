@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Michael Hashimoto
@@ -299,9 +301,82 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 			if ((notificationRecipients != null) &&
 				!notificationRecipients.isEmpty()) {
 
-				NotificationUtil.sendEmail(
-					message, "jenkins", "Build reinvoked",
-					reinvokeRule.notificationRecipients);
+				String[] notificationRecipientsArray = null;
+
+				if (notificationRecipients.contains(",")) {
+					notificationRecipientsArray = notificationRecipients.split(
+						",");
+				}
+
+				if (notificationRecipientsArray != null) {
+					boolean matchFound = false;
+
+					for (String notificationRecipient :
+							notificationRecipientsArray) {
+
+						notificationRecipient = notificationRecipient.trim();
+
+						Matcher matcher = _notificationRecipentsPattern.matcher(
+							notificationRecipient);
+
+						if (matcher.find()) {
+							matchFound = true;
+
+							String slack = matcher.group("slack");
+
+							if (!JenkinsResultsParserUtil.isNullOrEmpty(
+									slack)) {
+
+								NotificationUtil.sendSlackNotification(
+									message, slack, "Build Reinvoked");
+
+								continue;
+							}
+
+							String email = matcher.group("slack");
+
+							if (!JenkinsResultsParserUtil.isNullOrEmpty(
+									email)) {
+
+								NotificationUtil.sendEmail(
+									message, "jenkins", "Build Reinvoked",
+									email);
+							}
+						}
+					}
+
+					if (!matchFound) {
+						throw new RuntimeException(
+							"Invalid notification recipients: " +
+								notificationRecipients);
+					}
+				}
+				else {
+					Matcher matcher = _notificationRecipentsPattern.matcher(
+						notificationRecipients);
+
+					if (!matcher.find()) {
+						throw new RuntimeException(
+							"Invalid notification recipients: " +
+								notificationRecipients);
+					}
+
+					String slack = matcher.group("slack");
+
+					if (!JenkinsResultsParserUtil.isNullOrEmpty(slack)) {
+						NotificationUtil.sendSlackNotification(
+							message, slack, "Build Reinvoked");
+
+						return;
+					}
+
+					String email = matcher.group("slack");
+
+					if (!JenkinsResultsParserUtil.isNullOrEmpty(email)) {
+						NotificationUtil.sendEmail(
+							message, "jenkins", "Build Reinvoked", email);
+					}
+				}
 			}
 
 			String reinvokeBuildPriority =
@@ -365,6 +440,10 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 
 		slaveOfflineRule.takeSlaveOffline(build);
 	}
+
+	private static final Pattern _notificationRecipentsPattern =
+		Pattern.compile(
+			"slack:(?:<@)?(?<slack>[\\w-]+)>?|(?<email>[\\w-]+@[\\w.-]+)");
 
 	private final Build _build;
 	private final Map<Build.Invocation, ReinvokeRule> _reinvokeRulesMap =

@@ -91,6 +91,8 @@ public class OpenAPIResourceImpl {
 
 			add(DigitalSalesRoomTemplateResourceImpl.class);
 
+			add(InvitedMemberBriefResourceImpl.class);
+
 			add(UserAccountBriefResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);

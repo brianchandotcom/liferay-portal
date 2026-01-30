@@ -105,9 +105,9 @@ public class OAuthUtil {
 	}
 
 	public static Credentials getOAuth20Credentials(
-			String authorizationType, String baseURL, String providerType,
-			String oAuthClientId, String oAuthClientSecret, String code,
-			String oAuthCallbackURL)
+			String authorizationType, String baseURL, String code,
+			String oAuthCallbackURL, String oAuthClientId,
+			String oAuthClientSecret, String providerType)
 		throws Exception {
 
 		OAuth2Credentials oAuth2Credentials = new OAuth2Credentials();

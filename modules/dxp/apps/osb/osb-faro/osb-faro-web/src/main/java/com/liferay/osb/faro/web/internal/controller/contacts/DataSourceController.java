@@ -160,9 +160,9 @@ public class DataSourceController extends BaseFaroController {
 			dataSource = contactsEngineClient.addDataSource(
 				faroProject,
 				OAuthUtil.getOAuth20Credentials(
-					"CLIENT_CREDENTIALS", portalURL, "LIFERAY", oAuthClientId,
-					oAuthClientSecret, "",
-					"https://analytics.liferay.com/oauth/receive"),
+					"CLIENT_CREDENTIALS", portalURL, "",
+					"https://analytics.liferay.com/oauth/receive",
+					oAuthClientId, oAuthClientSecret, "LIFERAY"),
 				getUserId(), dataSourceName, portalURL, new LiferayProvider(),
 				null, DataSource.Status.ACTIVE.toString());
 
@@ -172,9 +172,9 @@ public class DataSourceController extends BaseFaroController {
 			dataSource = contactsEngineClient.patchDataSource(
 				faroProject, dataSourceId,
 				OAuthUtil.getOAuth20Credentials(
-					"CLIENT_CREDENTIALS", portalURL, "LIFERAY", oAuthClientId,
-					oAuthClientSecret, "",
-					"https://analytics.liferay.com/oauth/receive"),
+					"CLIENT_CREDENTIALS", portalURL, "",
+					"https://analytics.liferay.com/oauth/receive",
+					oAuthClientId, oAuthClientSecret, "LIFERAY"),
 				getUserId(), null, portalURL, new LiferayProvider(), null,
 				DataSource.Status.ACTIVE.toString());
 
@@ -1483,11 +1483,10 @@ public class DataSourceController extends BaseFaroController {
 				(OAuth2Credentials)credentials;
 
 			return OAuthUtil.getOAuth20Credentials(
-				"REFRESH_TOKEN", url, providerType,
+				"REFRESH_TOKEN", url, oAuth2Credentials.getOAuthCode(),
+				oAuth2Credentials.getOAuthCallbackURL(),
 				oAuth2Credentials.getOAuthClientId(),
-				oAuth2Credentials.getOAuthClientSecret(),
-				oAuth2Credentials.getOAuthCode(),
-				oAuth2Credentials.getOAuthCallbackURL());
+				oAuth2Credentials.getOAuthClientSecret(), providerType);
 		}
 
 		return credentials;

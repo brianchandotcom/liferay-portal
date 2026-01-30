@@ -101,10 +101,10 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SupervisorAgentImpl.class);
 
-	private NoticeableExecutorService _noticeableExecutorService;
-
 	@Reference
 	private AgentsFactory _agentsFactory;
+
+	private NoticeableExecutorService _noticeableExecutorService;
 
 	@Reference
 	private PortalExecutorManager _portalExecutorManager;

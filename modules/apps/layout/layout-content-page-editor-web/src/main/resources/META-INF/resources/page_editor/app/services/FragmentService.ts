@@ -471,4 +471,33 @@ export default {
 			onNetworkStatus
 		);
 	},
+
+	validateFragmentComposition({
+		itemId,
+		onNetworkStatus,
+		saveInlineContent,
+		saveMappingConfiguration,
+		segmentsExperienceId,
+	}: {
+		itemId: string;
+		onNetworkStatus: OnNetworkStatus;
+		saveInlineContent: boolean;
+		saveMappingConfiguration: boolean;
+		segmentsExperienceId: string;
+	}) {
+		return draftServiceFetch<{
+			invalidFragmentsCount: number;
+		}>(
+			config.validateFragmentCompositionURL,
+			{
+				body: {
+					itemId,
+					saveInlineContent,
+					saveMappingConfiguration,
+					segmentsExperienceId,
+				},
+			},
+			onNetworkStatus
+		);
+	},
 };

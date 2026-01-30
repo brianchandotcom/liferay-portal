@@ -9,6 +9,7 @@ import type {SidebarPanel} from './SidebarPanel';
 export interface Config {
 	actionableInfoItemSelectorURL: string;
 	addFragmentCompositionURL: string;
+	validateFragmentCompositionURL: string;
 	addFragmentEntryLinkCommentURL: string;
 	addFragmentEntryLinkURL: string;
 	addFragmentEntryLinksURL: string;

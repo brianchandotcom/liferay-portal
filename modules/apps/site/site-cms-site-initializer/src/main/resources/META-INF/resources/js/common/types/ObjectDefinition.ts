@@ -42,7 +42,8 @@ export type ObjectRelationship = {
 	objectDefinitionExternalReferenceCode1: string;
 	objectDefinitionExternalReferenceCode2: string;
 	objectDefinitionName2?: string;
-	type: string;
+	reverse?: boolean;
+	type: 'manyToMany' | 'oneToMany' | 'oneToOne';
 };
 
 export type ObjectDefinition = {

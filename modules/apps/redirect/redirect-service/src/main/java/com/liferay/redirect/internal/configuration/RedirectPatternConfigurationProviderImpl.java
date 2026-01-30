@@ -7,8 +7,10 @@ package com.liferay.redirect.internal.configuration;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.redirect.configuration.RedirectPatternConfigurationProvider;
 import com.liferay.redirect.model.RedirectPatternEntry;
@@ -17,8 +19,6 @@ import com.liferay.redirect.provider.RedirectProvider;
 import java.util.Dictionary;
 import java.util.List;
 
-import org.osgi.service.cm.Configuration;
-import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -39,34 +39,7 @@ public class RedirectPatternConfigurationProviderImpl
 			long groupId, List<RedirectPatternEntry> redirectPatternEntries)
 		throws Exception {
 
-		Dictionary<String, Object> properties = null;
-
-		Configuration configuration = null;
-
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			String.format(
-				"(&(service.factoryPid=%s)(%s=%d))",
-				RedirectPatternConfiguration.class.getName() + ".scoped",
-				ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
-				groupId));
-
-		if (configurations != null) {
-			configuration = configurations[0];
-		}
-
-		if (configuration == null) {
-			configuration = _configurationAdmin.createFactoryConfiguration(
-				RedirectPatternConfiguration.class.getName() + ".scoped",
-				StringPool.QUESTION);
-
-			properties = HashMapDictionaryBuilder.<String, Object>put(
-				ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
-				groupId
-			).build();
-		}
-		else {
-			properties = configuration.getProperties();
-		}
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		if (ListUtil.isEmpty(redirectPatternEntries)) {
 			properties.put("patternStrings", new String[0]);
@@ -91,11 +64,18 @@ public class RedirectPatternConfigurationProviderImpl
 			properties.put("patternStrings", patternStringsArray);
 		}
 
-		configuration.update(properties);
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		_configurationProvider.saveGroupConfiguration(
+			group.getCompanyId(), groupId,
+			RedirectPatternConfiguration.class.getName(), properties);
 	}
 
 	@Reference
-	private ConfigurationAdmin _configurationAdmin;
+	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private RedirectProvider _redirectProvider;

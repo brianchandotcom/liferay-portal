@@ -59,7 +59,8 @@ public class OpenGraphConfigurationImpl implements OpenGraphConfiguration {
 
 		LayoutSEOGroupConfiguration layoutSEOGroupConfiguration =
 			_configurationProvider.getGroupConfiguration(
-				LayoutSEOGroupConfiguration.class, group.getGroupId());
+				LayoutSEOGroupConfiguration.class, group.getCompanyId(),
+				group.getGroupId());
 
 		return layoutSEOGroupConfiguration.enableLayoutTranslatedLanguages();
 	}

@@ -148,6 +148,8 @@ public class UnlockLayoutsSchedulerJobConfigurationTest {
 					).put(
 						"autosaveMinutes", autosaveMinutesGroupConfiguration
 					).put(
+						"companyId", _group.getCompanyId()
+					).put(
 						"groupId", _group.getGroupId()
 					).build())) {
 

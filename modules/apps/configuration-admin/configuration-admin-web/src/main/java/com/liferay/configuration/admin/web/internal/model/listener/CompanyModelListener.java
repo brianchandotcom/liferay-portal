@@ -5,9 +5,7 @@
 
 package com.liferay.configuration.admin.web.internal.model.listener;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.configuration.admin.util.ConfigurationFilterStringUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -39,14 +37,9 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 	}
 
 	private void _clean(Company company) throws Exception {
-		String filterString = StringBundler.concat(
-			StringPool.OPEN_PARENTHESIS,
-			ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey(),
-			StringPool.EQUAL, company.getCompanyId(),
-			StringPool.CLOSE_PARENTHESIS);
-
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			filterString);
+			ConfigurationFilterStringUtil.getCompanyScopedFilterString(
+				company.getCompanyId(), null));
 
 		if (configurations == null) {
 			return;

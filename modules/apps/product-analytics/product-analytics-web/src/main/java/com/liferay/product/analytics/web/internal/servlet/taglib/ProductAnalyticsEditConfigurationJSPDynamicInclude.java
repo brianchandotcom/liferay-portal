@@ -94,7 +94,8 @@ public class ProductAnalyticsEditConfigurationJSPDynamicInclude
 			Group group = layoutSet.getGroup();
 
 			return _configurationProvider.getGroupConfiguration(
-				ProductAnalyticsConfiguration.class, group.getGroupId());
+				ProductAnalyticsConfiguration.class, group.getCompanyId(),
+				group.getGroupId());
 		}
 
 		return _configurationProvider.getCompanyConfiguration(

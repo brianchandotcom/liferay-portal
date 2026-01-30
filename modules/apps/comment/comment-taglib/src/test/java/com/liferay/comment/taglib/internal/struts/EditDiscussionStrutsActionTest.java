@@ -79,7 +79,7 @@ public class EditDiscussionStrutsActionTest {
 		Mockito.when(
 			_configurationProvider.getGroupConfiguration(
 				Mockito.eq(CommentGroupServiceConfiguration.class),
-				Mockito.anyLong())
+				Mockito.anyLong(), Mockito.anyLong())
 		).thenReturn(
 			Mockito.mock(CommentGroupServiceConfiguration.class)
 		);

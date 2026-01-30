@@ -66,7 +66,8 @@ public class SharingConfigurationFactoryImpl
 			if (group != null) {
 				sharingGroupConfiguration =
 					_configurationProvider.getGroupConfiguration(
-						SharingGroupConfiguration.class, group.getGroupId());
+						SharingGroupConfiguration.class, group.getCompanyId(),
+						group.getGroupId());
 			}
 
 			SharingCompanyConfiguration sharingCompanyConfiguration =

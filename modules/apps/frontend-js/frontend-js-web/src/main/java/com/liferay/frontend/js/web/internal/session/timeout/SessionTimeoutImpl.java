@@ -54,7 +54,7 @@ public class SessionTimeoutImpl implements SessionTimeout {
 
 		try {
 			return _configurationProvider.getGroupConfiguration(
-				SessionTimeoutConfiguration.class,
+				SessionTimeoutConfiguration.class, themeDisplay.getCompanyId(),
 				themeDisplay.getSiteGroupId());
 		}
 		catch (ConfigurationException configurationException) {

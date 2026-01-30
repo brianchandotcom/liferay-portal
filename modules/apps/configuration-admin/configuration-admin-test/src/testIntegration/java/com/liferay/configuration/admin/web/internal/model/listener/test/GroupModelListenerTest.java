@@ -6,6 +6,7 @@
 package com.liferay.configuration.admin.web.internal.model.listener.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.configuration.admin.util.ConfigurationFilterStringUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -22,7 +23,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.osgi.framework.Constants;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
@@ -42,21 +42,22 @@ public class GroupModelListenerTest {
 		Group group = GroupTestUtil.addGroup();
 
 		_configurationProvider.saveGroupConfiguration(
-			group.getGroupId(), _PID,
+			group.getCompanyId(), group.getGroupId(), _PID,
 			HashMapDictionaryBuilder.<String, Object>put(
 				RandomTestUtil.randomString(), RandomTestUtil.randomString()
 			).build());
 
-		Assert.assertNotNull(_getConfiguration());
+		Assert.assertNotNull(_getConfiguration(group));
 
 		_groupLocalService.deleteGroup(group);
 
-		Assert.assertNull(_getConfiguration());
+		Assert.assertNull(_getConfiguration(group));
 	}
 
-	private Configuration _getConfiguration() throws Exception {
+	private Configuration _getConfiguration(Group group) throws Exception {
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			String.format("(%s=%s*)", Constants.SERVICE_PID, _PID));
+			ConfigurationFilterStringUtil.getGroupScopedFilterString(
+				group.getCompanyId(), group.getGroupId(), _PID, null));
 
 		if (configurations != null) {
 			return configurations[0];

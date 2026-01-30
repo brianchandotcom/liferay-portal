@@ -231,6 +231,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 
 		_listObjectReference =
 			listObjectReferenceFactory.getListObjectReference(
+				_themeDisplay.getCompanyId(), _themeDisplay.getScopeGroupId(),
 				collectionJSONObject);
 
 		return _listObjectReference;

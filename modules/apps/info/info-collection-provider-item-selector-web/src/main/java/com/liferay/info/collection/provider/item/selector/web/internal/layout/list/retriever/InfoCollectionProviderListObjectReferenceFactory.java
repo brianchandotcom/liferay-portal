@@ -27,7 +27,9 @@ public class InfoCollectionProviderListObjectReferenceFactory
 		<InfoListProviderItemSelectorReturnType> {
 
 	@Override
-	public ListObjectReference getListObjectReference(JSONObject jsonObject) {
+	public ListObjectReference getListObjectReference(
+		long companyId, long groupId, JSONObject jsonObject) {
+
 		String key = jsonObject.getString("key");
 
 		return new KeyListObjectReference(

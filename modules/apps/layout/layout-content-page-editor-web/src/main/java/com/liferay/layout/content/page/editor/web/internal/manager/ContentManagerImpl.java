@@ -288,6 +288,7 @@ public class ContentManagerImpl implements ContentManager {
 
 			ListObjectReference listObjectReference =
 				listObjectReferenceFactory.getListObjectReference(
+					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
 					collectionJSONObject);
 
 			Class<? extends ListObjectReference> listObjectReferenceClass =

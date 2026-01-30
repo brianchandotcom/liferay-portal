@@ -341,8 +341,6 @@ public class DLFileEntryModelDocumentContributor
 					);
 
 					Map<Long, DDMStructure> ddmStructureMap = new HashMap<>();
-					Map<DDMStructure, DDMFormValues> ddmFormValuesMap =
-						new HashMap<>();
 
 					for (Object[] values :
 							_dlFileEntryMetadataLocalService.
@@ -363,18 +361,10 @@ public class DLFileEntryModelDocumentContributor
 									ddmStructureId, ddmStructure);
 							}
 
-							DDMFormValues ddmFormValues = ddmFormValuesMap.get(
-								ddmStructure);
-
-							if (ddmFormValues == null) {
-								ddmFormValues =
-									_ddmStorageEngineManager.getDDMFormValues(
-										(Long)values[1],
-										ddmStructure.getDDMForm(false));
-
-								ddmFormValuesMap.put(
-									ddmStructure, ddmFormValues);
-							}
+							DDMFormValues ddmFormValues =
+								_ddmStorageEngineManager.getDDMFormValues(
+									(Long)values[1],
+									ddmStructure.getDDMForm(false));
 
 							Map<DDMStructure, DDMFormValues>
 								localDDMFormValues =

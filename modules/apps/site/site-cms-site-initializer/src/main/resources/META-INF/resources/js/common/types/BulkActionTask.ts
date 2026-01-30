@@ -99,6 +99,7 @@ export interface IBulkActionTaskType {
 	};
 	DeleteBulkAction: {};
 	DownloadBulkAction: {};
+	ExpireBulkAction: {};
 	KeywordBulkAction: {
 		append?: boolean;
 		keywordsToAdd?: string[];

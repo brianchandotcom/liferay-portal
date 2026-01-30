@@ -15,8 +15,12 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-react")
+	compileOnly project(":apps:login:login-web-api")
 	compileOnly project(":apps:object:object-api")
+	compileOnly project(":apps:user:user-taglib")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")
+	compileOnly project(":core:petra:petra-reflect")
 	compileOnly project(":core:petra:petra-string")
+	compileOnly project(":dxp:apps:digital-sales-room:digital-sales-room-api")
 }

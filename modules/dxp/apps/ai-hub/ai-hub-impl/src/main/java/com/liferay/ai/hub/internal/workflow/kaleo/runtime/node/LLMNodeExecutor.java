@@ -9,6 +9,7 @@ import com.liferay.ai.hub.internal.assistant.handler.AssistantHandlerContext;
 import com.liferay.ai.hub.internal.assistant.handler.AssistantHandlerUtil;
 import com.liferay.ai.hub.internal.mcp.tool.provider.MCPToolProviderUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.ContentRetrieverUtil;
+import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.KaleoLogUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.ToolsUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.VariablesUtil;
 import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
@@ -92,6 +93,12 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 
 		ServiceContext serviceContext = executionContext.getServiceContext();
 
+		String prompt = VariablesUtil.applyInputVariables(
+			executionContext, "prompt", kaleoNodeSettingValues);
+
+		String userMessage = VariablesUtil.applyInputVariables(
+			executionContext, "userMessage", kaleoNodeSettingValues);
+
 		VertexAiGeminiStreamingChatModel vertexAiGeminiStreamingChatModel =
 			VertexAiGeminiStreamingChatModel.builder(
 			).project(
@@ -123,12 +130,12 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 			).onCompleteResponseConsumer(
 				response -> _completeResponse(
 					response, companyId, executionContext, currentKaleoNode,
-					kaleoNodeSettingValues, vertexAiGeminiStreamingChatModel)
+					kaleoNodeSettingValues, prompt, userMessage,
+					vertexAiGeminiStreamingChatModel)
 			).onErrorConsumer(
 				throwable -> vertexAiGeminiStreamingChatModel.close()
 			).systemMessageProviderFunction(
-				memoryId -> VariablesUtil.applyInputVariables(
-					executionContext, "prompt", kaleoNodeSettingValues)
+				memoryId -> prompt
 			).toolProvider(
 				MCPToolProviderUtil.create(
 					kaleoInstanceToken.getCompanyId(), _dtoConverterRegistry,
@@ -137,8 +144,7 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 						_jsonFactory, kaleoNodeSettingValues),
 					_objectEntryManager, serviceContext.getUserId())
 			).userMessage(
-				VariablesUtil.applyInputVariables(
-					executionContext, "userMessage", kaleoNodeSettingValues)
+				userMessage
 			).vertexAiGeminiStreamingChatModel(
 				vertexAiGeminiStreamingChatModel
 			).build());
@@ -172,7 +178,8 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 	private void _completeResponse(
 		ChatResponse chatResponse, long companyId,
 		ExecutionContext executionContext, KaleoNode kaleoNode,
-		Map<String, String> kaleoNodeSettingValues,
+		Map<String, String> kaleoNodeSettingValues, String prompt,
+		String userMessage,
 		VertexAiGeminiStreamingChatModel vertexAiGeminiStreamingChatModel) {
 
 		try (SafeCloseable safeCloseable =
@@ -203,6 +210,10 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 
 			KaleoInstanceToken kaleoInstanceToken =
 				executionContext.getKaleoInstanceToken();
+
+			KaleoLogUtil.addNodeUsageKaleoLog(
+				chatResponse, kaleoInstanceToken, aiMessage.text(), prompt,
+				executionContext.getServiceContext(), userMessage);
 
 			List<KaleoTransition> kaleoTransitions =
 				kaleoNode.getKaleoTransitions();

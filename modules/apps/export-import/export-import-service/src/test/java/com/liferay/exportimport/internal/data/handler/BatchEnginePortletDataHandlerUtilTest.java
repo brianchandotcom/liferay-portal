@@ -134,13 +134,16 @@ public class BatchEnginePortletDataHandlerUtilTest {
 			_mockPortletDataContext(
 				null,
 				HashMapBuilder.put(
+					PortletDataHandlerKeys.COMMENTS, new String[] {"true"}
+				).put(
 					PortletDataHandlerKeys.PERMISSIONS, new String[] {"true"}
 				).build(),
 				null),
 			_getStagingGroupHelper(false));
 
 		Assert.assertEquals(
-			"customFields.attributeType,permissions,nestedField1,nestedField2",
+			"customFields.attributeType,comments,permissions,nestedField1," +
+				"nestedField2",
 			parameters.get("batchNestedFields"));
 	}
 

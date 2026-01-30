@@ -52,9 +52,9 @@ export default function MarketplacePresentationModal({
 					onClick: () => setOpenMarketplace(true),
 				},
 			]}
-			heading={heading}
 			imageSrc={`${Liferay.ThemeDisplay.getPortalURL()}${Liferay.ThemeDisplay.getPathContext()}/o/layout-js-components-web/images/marketplace.svg`}
 			onCloseModal={onCloseModal}
+			title={heading}
 		/>
 	);
 }

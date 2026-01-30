@@ -9,12 +9,13 @@ import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -37,7 +38,11 @@ public abstract class BaseSectionDisplayContext {
 	public abstract String getAPIURL();
 
 	public List<DropdownItem> getBulkActionDropdownItems() {
-		return Collections.emptyList();
+		return ListUtil.fromArray(
+			new FDSActionDropdownItem(
+				"#", "trash", "delete",
+				LanguageUtil.get(httpServletRequest, "delete"), null, null,
+				null));
 	}
 
 	public abstract CreationMenu getCreationMenu();

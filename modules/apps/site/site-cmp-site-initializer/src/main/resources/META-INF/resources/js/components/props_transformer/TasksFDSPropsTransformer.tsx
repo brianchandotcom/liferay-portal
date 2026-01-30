@@ -11,6 +11,7 @@ import {
 	SimpleActionLinkRenderer,
 	UpdateDueDateModalContent,
 	addOnClickToCreationMenuItems,
+	deleteAssetEntriesBulkAction,
 	deleteItemAction,
 } from '@liferay/site-cms-site-initializer';
 import React from 'react';
@@ -93,8 +94,10 @@ export default function TasksFDSPropsTransformer({
 	itemsActions = [],
 	...otherProps
 }: {
+	apiURL?: string;
 	creationMenu: any;
 	itemsActions?: any[];
+	otherProps: any;
 }) {
 	return {
 		...otherProps,
@@ -264,6 +267,20 @@ export default function TasksFDSPropsTransformer({
 							workflowTaskId: itemData.embedded?.id,
 						}),
 					size: 'md',
+				});
+			}
+		},
+		onBulkActionItemClick: async ({
+			action,
+			selectedData,
+		}: {
+			action: any;
+			selectedData: any;
+		}) => {
+			if (action?.data?.id === 'delete') {
+				deleteAssetEntriesBulkAction({
+					apiURL: otherProps.apiURL,
+					selectedData,
 				});
 			}
 		},

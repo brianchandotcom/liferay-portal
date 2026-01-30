@@ -60,6 +60,7 @@ export {default as TagUsagesFDSPropsTransformer} from './main_view/props_transfo
 export {default as ViewVersionHistoryFDSPropsTransformer} from './main_view/props_transformer/ViewVersionHistoryFDSPropsTransformer';
 export {default as VocabularyFDSPropsTransformer} from './main_view/props_transformer/VocabularyFDSPropsTransformer';
 export {default as ACTIONS} from './main_view/props_transformer/actions/creationMenuActions';
+export {default as deleteAssetEntriesBulkAction} from './main_view/props_transformer/actions/deleteAssetEntriesBulkAction';
 export {default as deleteItemAction} from './main_view/props_transformer/actions/deleteItemAction';
 export {default as manageMembersAction} from './main_view/props_transformer/actions/manageMembersAction';
 export {default as SimpleActionLinkRenderer} from './main_view/props_transformer/cell_renderers/SimpleActionLinkRenderer';

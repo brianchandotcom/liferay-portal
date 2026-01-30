@@ -31,5 +31,6 @@ ViewTasksSectionDisplayContext viewTasksSectionDisplayContext = (ViewTasksSectio
 		itemsPerPage="<%= 20 %>"
 		propsTransformer="{TasksFDSPropsTransformer} from site-cmp-site-initializer"
 		selectedItemsKey="embedded.id"
+		selectionType="multiple"
 	/>
 </div>

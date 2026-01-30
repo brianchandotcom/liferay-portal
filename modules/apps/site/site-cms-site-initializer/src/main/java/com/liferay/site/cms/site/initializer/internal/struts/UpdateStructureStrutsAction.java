@@ -11,7 +11,6 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -83,7 +82,7 @@ public class UpdateStructureStrutsAction implements StrutsAction {
 				_language.get(
 					httpServletRequest.getLocale(),
 					"an-unexpected-error-occurred-while-saving-or-publishing-",
-						"the-content-structure"));
+					"the-content-structure"));
 
 			if (_log.isWarnEnabled()) {
 				_log.warn(exception);

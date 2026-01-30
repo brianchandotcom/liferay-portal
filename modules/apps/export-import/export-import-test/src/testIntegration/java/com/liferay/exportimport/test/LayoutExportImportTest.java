@@ -132,7 +132,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 		layoutIds = new long[] {layout1.getLayoutId()};
 
-		exportImportLayouts(layoutIds, getImportParameterMap());
+		exportImportLayouts(layoutIds, parameterMap);
 
 		Assert.assertEquals(
 			_layoutLocalService.getLayoutsCount(group, false),

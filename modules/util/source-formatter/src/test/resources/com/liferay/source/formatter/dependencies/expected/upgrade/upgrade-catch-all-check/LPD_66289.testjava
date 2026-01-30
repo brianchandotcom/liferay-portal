@@ -1,0 +1,20 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
+
+/**
+ * @author Jessyca Ferreira
+ */
+public class LPD_66289 {
+
+	public void method() {
+		String.valueOf(JSONFactoryUtil.createJSONObject(PropsUtil.getProperties("feature.flag.", true)));
+	}
+
+}

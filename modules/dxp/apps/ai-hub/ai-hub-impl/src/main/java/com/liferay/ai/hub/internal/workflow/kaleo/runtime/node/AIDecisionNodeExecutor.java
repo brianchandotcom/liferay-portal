@@ -9,6 +9,7 @@ import com.liferay.ai.hub.internal.assistant.handler.AssistantHandlerContext;
 import com.liferay.ai.hub.internal.assistant.handler.AssistantHandlerUtil;
 import com.liferay.ai.hub.internal.mcp.tool.provider.MCPToolProviderUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.ContentRetrieverUtil;
+import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.KaleoLogUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.ToolsUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.VariablesUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
@@ -122,6 +123,13 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 		}
 
 		ServiceContext serviceContext = executionContext.getServiceContext();
+
+		String prompt = VariablesUtil.applyInputVariables(
+			executionContext, "prompt", kaleoNodeSettingValues);
+
+		String userMessage = VariablesUtil.applyInputVariables(
+			executionContext, "userMessage", kaleoNodeSettingValues);
+
 		VertexAiGeminiStreamingChatModel vertexAiGeminiStreamingChatModel =
 			VertexAiGeminiStreamingChatModel.builder(
 			).project(
@@ -147,12 +155,19 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 						"permissionChecker",
 						PermissionThreadLocal.getPermissionChecker()))
 			).onCompleteResponse(
-				response -> vertexAiGeminiStreamingChatModel.close()
+				response -> {
+					vertexAiGeminiStreamingChatModel.close();
+
+					KaleoLogUtil.addNodeUsageKaleoLog(
+						response, kaleoInstanceToken,
+						GetterUtil.getString(workflowContext.get("reason")),
+						prompt, executionContext.getServiceContext(),
+						userMessage);
+				}
 			).onError(
 				throwable -> vertexAiGeminiStreamingChatModel.close()
 			).systemMessageProvider(
-				object -> VariablesUtil.applyInputVariables(
-					executionContext, "prompt", kaleoNodeSettingValues)
+				object -> prompt
 			).tools(
 				new Tools()
 			).toolProvider(
@@ -163,8 +178,7 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 						_jsonFactory, kaleoNodeSettingValues),
 					_objectEntryManager, serviceContext.getUserId())
 			).userMessage(
-				VariablesUtil.applyInputVariables(
-					executionContext, "userMessage", kaleoNodeSettingValues)
+				userMessage
 			).vertexAiGeminiStreamingChatModel(
 				vertexAiGeminiStreamingChatModel
 			).build(),

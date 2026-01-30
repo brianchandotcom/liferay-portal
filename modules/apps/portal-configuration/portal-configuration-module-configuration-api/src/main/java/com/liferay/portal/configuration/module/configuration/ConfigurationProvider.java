@@ -23,7 +23,16 @@ public interface ConfigurationProvider {
 	public <T> void deleteCompanyConfiguration(Class<T> clazz, long companyId)
 		throws ConfigurationException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #deleteGroupConfiguration(Class, long, long)}
+	 */
+	@Deprecated
 	public <T> void deleteGroupConfiguration(Class<T> clazz, long groupId)
+		throws ConfigurationException;
+
+	public <T> void deleteGroupConfiguration(
+			Class<T> clazz, long companyId, long groupId)
 		throws ConfigurationException;
 
 	public <T> void deletePortletInstanceConfiguration(
@@ -40,7 +49,16 @@ public interface ConfigurationProvider {
 			Class<T> clazz, SettingsLocator settingsLocator)
 		throws ConfigurationException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #getGroupConfiguration(Class, long, long)}
+	 */
+	@Deprecated
 	public <T> T getGroupConfiguration(Class<T> clazz, long groupId)
+		throws ConfigurationException;
+
+	public <T> T getGroupConfiguration(
+			Class<T> clazz, long companyId, long groupId)
 		throws ConfigurationException;
 
 	public <T> T getPortletInstanceConfiguration(
@@ -63,10 +81,30 @@ public interface ConfigurationProvider {
 			long companyId, String pid, Dictionary<String, Object> properties)
 		throws ConfigurationException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #saveGroupConfiguration(Class, long, long, Dictionary)}
+	 */
+	@Deprecated
 	public <T> void saveGroupConfiguration(
 			Class<T> clazz, long groupId, Dictionary<String, Object> properties)
 		throws ConfigurationException;
 
+	public <T> void saveGroupConfiguration(
+			Class<T> clazz, long companyId, long groupId,
+			Dictionary<String, Object> properties)
+		throws ConfigurationException;
+
+	public <T> void saveGroupConfiguration(
+			long companyId, long groupId, String pid,
+			Dictionary<String, Object> properties)
+		throws ConfigurationException;
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #saveGroupConfiguration(long, long, String, Dictionary)}
+	 */
+	@Deprecated
 	public <T> void saveGroupConfiguration(
 			long groupId, String pid, Dictionary<String, Object> properties)
 		throws ConfigurationException;

@@ -53,10 +53,11 @@ public class ScopedConfigurationManagedServiceFactory
 	}
 
 	public Object getConfiguration(
-		ExtendedObjectClassDefinition.Scope scope, Serializable scopePK) {
+		long companyId, ExtendedObjectClassDefinition.Scope scope,
+		Serializable scopePK) {
 
 		Map<String, Object> scopeConfigurationBeans = _configurationBeans.get(
-			new ScopeKey(scopePK, scope));
+			_getScopeKey(companyId, scope, scopePK));
 
 		if (MapUtil.isEmpty(scopeConfigurationBeans)) {
 			return null;
@@ -86,16 +87,18 @@ public class ScopedConfigurationManagedServiceFactory
 				ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey()),
 			CompanyConstants.SYSTEM);
 
-		if (companyId != CompanyConstants.SYSTEM) {
-			_updateEntries(
-				pid, companyId, ExtendedObjectClassDefinition.Scope.COMPANY,
-				properties);
-		}
-
 		long groupId = GetterUtil.getLong(
 			properties.get(
 				ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey()),
 			GroupConstants.ANY_PARENT_GROUP_ID);
+
+		if ((companyId != CompanyConstants.SYSTEM) &&
+			(groupId == GroupConstants.ANY_PARENT_GROUP_ID)) {
+
+			_updateEntries(
+				pid, companyId, ExtendedObjectClassDefinition.Scope.COMPANY,
+				properties);
+		}
 
 		if (groupId != GroupConstants.ANY_PARENT_GROUP_ID) {
 			_updateEntries(
@@ -114,6 +117,19 @@ public class ScopedConfigurationManagedServiceFactory
 				ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE,
 				properties);
 		}
+	}
+
+	private ScopeKey _getScopeKey(
+		long companyId, ExtendedObjectClassDefinition.Scope scope,
+		Serializable scopePK) {
+
+		ScopeKey scopeKey = new ScopeKey(scopePK, scope);
+
+		if (scope.equals(ExtendedObjectClassDefinition.Scope.GROUP)) {
+			scopeKey = new ScopeKey(companyId + _SEPARATOR + scopePK, scope);
+		}
+
+		return scopeKey;
 	}
 
 	private void _removePidConfigurations(String pid) {
@@ -147,7 +163,12 @@ public class ScopedConfigurationManagedServiceFactory
 		ExtendedObjectClassDefinition.Scope scope,
 		Dictionary<String, ?> properties) {
 
-		ScopeKey scopeKey = new ScopeKey(scopePK, scope);
+		ScopeKey scopeKey = _getScopeKey(
+			GetterUtil.getLong(
+				properties.get(
+					ExtendedObjectClassDefinition.Scope.COMPANY.
+						getPropertyKey())),
+			scope, scopePK);
 
 		_pidScopeKeys.compute(
 			pid,
@@ -178,6 +199,8 @@ public class ScopedConfigurationManagedServiceFactory
 				return scopeConfigurations;
 			});
 	}
+
+	private static final String _SEPARATOR = "--";
 
 	private final Class<?> _configurationBeanClass;
 	private final Map<ScopeKey, Map<String, Object>> _configurationBeans =

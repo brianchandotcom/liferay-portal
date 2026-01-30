@@ -91,8 +91,9 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 		long companyId, String configurationPid, Settings parentSettings) {
 
 		return _getScopedConfigurationBeanSettings(
+			companyId, configurationPid,
 			ExtendedObjectClassDefinition.Scope.COMPANY, companyId,
-			configurationPid, parentSettings);
+			parentSettings);
 	}
 
 	@Override
@@ -133,9 +134,17 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 	public Settings getGroupConfigurationBeanSettings(
 		long groupId, String configurationPid, Settings parentSettings) {
 
-		return _getScopedConfigurationBeanSettings(
-			ExtendedObjectClassDefinition.Scope.GROUP, groupId,
-			configurationPid, parentSettings);
+		try {
+			Group group = _groupLocalService.getGroup(groupId);
+
+			return _getScopedConfigurationBeanSettings(
+				group.getCompanyId(), configurationPid,
+				ExtendedObjectClassDefinition.Scope.GROUP, groupId,
+				parentSettings);
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
 	}
 
 	@Override
@@ -169,8 +178,9 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 		String portletId, String configurationPid, Settings parentSettings) {
 
 		return _getScopedConfigurationBeanSettings(
+			0L, configurationPid,
 			ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE, portletId,
-			configurationPid, parentSettings);
+			parentSettings);
 	}
 
 	@Override
@@ -272,8 +282,9 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 	}
 
 	private Settings _getScopedConfigurationBeanSettings(
+		long companyId, String configurationPid,
 		ExtendedObjectClassDefinition.Scope scope, Serializable scopePK,
-		String configurationPid, Settings parentSettings) {
+		Settings parentSettings) {
 
 		_bundleTrackerDCLSingleton.getSingleton(this::_createBundleTracker);
 
@@ -288,7 +299,7 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 
 		Object configurationBean =
 			scopedConfigurationManagedServiceFactory.getConfiguration(
-				scope, scopePK);
+				companyId, scope, scopePK);
 
 		if (configurationBean == null) {
 			return parentSettings;

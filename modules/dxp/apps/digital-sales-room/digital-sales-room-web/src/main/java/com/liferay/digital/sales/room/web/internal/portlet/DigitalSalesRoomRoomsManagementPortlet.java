@@ -5,7 +5,7 @@
 
 package com.liferay.digital.sales.room.web.internal.portlet;
 
-import com.liferay.digital.sales.room.web.internal.constants.DigitalSalesRoomPortletKeys;
+import com.liferay.digital.sales.room.constants.DigitalSalesRoomPortletKeys;
 import com.liferay.digital.sales.room.web.internal.display.context.ViewDigitalSalesRoomRoomListDisplayContext;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;

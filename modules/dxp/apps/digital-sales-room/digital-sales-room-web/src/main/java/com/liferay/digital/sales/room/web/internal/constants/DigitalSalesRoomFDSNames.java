@@ -5,6 +5,8 @@
 
 package com.liferay.digital.sales.room.web.internal.constants;
 
+import com.liferay.digital.sales.room.constants.DigitalSalesRoomPortletKeys;
+
 /**
  * @author Stefano Motta
  */

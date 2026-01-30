@@ -105,7 +105,6 @@ public class DefaultExportImportBackgroundTaskStatusMessageTranslator
 
 			long previousPortletTotal = GetterUtil.getLong(
 				allPortletModelAdditionCounters.get(previousPortletId));
-
 			long previousPortletsModelAdditionCountersTotal =
 				GetterUtil.getLong(
 					backgroundTaskStatus.getAttribute(

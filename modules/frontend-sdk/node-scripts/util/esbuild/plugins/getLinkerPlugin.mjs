@@ -290,20 +290,11 @@ export default function getLinkerPlugin(
 
 					return {
 						contents: getCSSLoadJavaScript(
-							getURL(
-								URLType.SASS_CSS_FILE,
-								urlPrefix,
-								projectWebContextPath,
-								`${basePath}.css`,
-								hash
-							),
-							getURL(
-								URLType.SASS_CSS_FILE,
-								urlPrefix,
-								projectWebContextPath,
-								`${basePath}_rtl.css`,
-								hash
-							)
+							URLType.SASS_CSS_FILE,
+							urlPrefix,
+							projectWebContextPath,
+							`${basePath}.css`,
+							hash
 						),
 						loader: 'js',
 					};

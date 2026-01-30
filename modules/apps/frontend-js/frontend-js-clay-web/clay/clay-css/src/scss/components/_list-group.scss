@@ -441,8 +441,8 @@
 	.quick-action-menu {
 		align-items: $list-group-item-flex-align-items;
 		background-color: $list-group-bg;
-		margin-bottom: -$list-group-item-padding-y;
-		margin-top: -$list-group-item-padding-y;
+		margin-bottom: calc(#{$list-group-item-padding-y} * -1);
+		margin-top: calc(#{$list-group-item-padding-y} * -1);
 		padding-bottom: $list-group-item-padding-y;
 		padding-top: $list-group-item-padding-y;
 	}
@@ -498,15 +498,22 @@
 	}
 
 	.quick-action-menu {
-		margin-bottom: -$list-group-item-padding-y +
-			$list-group-notification-item-border-bottom-width;
-		margin-top: -$list-group-item-padding-y +
-			$list-group-notification-item-border-top-width;
+		margin-bottom: calc(
+			(
+					#{$list-group-item-padding-y} + #{$list-group-notification-item-border-bottom-width}
+				) * -1
+		);
+		margin-top: calc(
+			(
+					#{$list-group-item-padding-y} + #{$list-group-notification-item-border-top-width}
+				) * -1
+		);
 	}
 
 	.autofit-col .quick-action-item {
-		margin-top: $list-group-notification-item-border-top-width -
-			$list-group-item-flex-offset-top;
+		margin-top: calc(
+			#{$list-group-notification-item-border-top-width} - #{$list-group-item-flex-offset-top}
+		);
 	}
 }
 

@@ -101,13 +101,13 @@
 	.card-header-tabs {
 		border-bottom: 0;
 		margin-bottom: math-sign($card-spacer-y);
-		margin-left: calc(#{math-sign($card-spacer-x)} / 2);
-		margin-right: calc(#{math-sign($card-spacer-x)} / 2);
+		margin-left: calc(#{$card-spacer-x} / -2);
+		margin-right: calc(#{$card-spacer-x} / -2);
 	}
 
 	.card-header-pills {
-		margin-left: calc(#{math-sign($card-spacer-x)} / 2);
-		margin-right: calc(#{math-sign($card-spacer-x)} / 2);
+		margin-left: calc(#{$card-spacer-x} / -2);
+		margin-right: calc(#{$card-spacer-x} / -2);
 	}
 }
 
@@ -558,8 +558,8 @@
 }
 
 .card-page-item-header {
-	padding-left: $grid-gutter-width * 0.5;
-	padding-right: $grid-gutter-width * 0.5;
+	padding-left: calc(#{$grid-gutter-width} * 0.5);
+	padding-right: calc(#{$grid-gutter-width} * 0.5);
 	width: 100%;
 }
 

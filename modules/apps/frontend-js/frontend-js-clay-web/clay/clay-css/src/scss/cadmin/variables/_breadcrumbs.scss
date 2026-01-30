@@ -102,10 +102,12 @@ $cadmin-breadcrumb-item: map-deep-merge(
 // Breadcrumb Text Truncate
 
 $cadmin-breadcrumb-text-truncate-icon-spacer-x: 14px !default;
-$cadmin-breadcrumb-text-truncate-max-width: 300px -
-	$cadmin-breadcrumb-text-truncate-icon-spacer-x !default;
-$cadmin-breadcrumb-text-truncate-max-width-mobile: 150px -
-	$cadmin-breadcrumb-text-truncate-icon-spacer-x !default;
+$cadmin-breadcrumb-text-truncate-max-width: calc(
+	300px - #{$cadmin-breadcrumb-text-truncate-icon-spacer-x}
+) !default;
+$cadmin-breadcrumb-text-truncate-max-width-mobile: calc(
+	150px - #{$cadmin-breadcrumb-text-truncate-icon-spacer-x}
+) !default;
 
 $cadmin-breadcrumb-text-truncate: () !default;
 $cadmin-breadcrumb-text-truncate: map-merge(

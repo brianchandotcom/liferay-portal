@@ -10,8 +10,9 @@
 
 .multi-step-indicator-label-bottom {
 	.multi-step-item {
-		padding-bottom: $cadmin-multi-step-indicator-label-font-size *
-			$cadmin-line-height-base;
+		padding-bottom: calc(
+			#{$cadmin-multi-step-indicator-label-font-size} * #{$cadmin-line-height-base}
+		);
 	}
 
 	.multi-step-indicator-label {
@@ -21,12 +22,15 @@
 
 .multi-step-indicator-label-top {
 	.multi-step-item {
-		padding-top: $cadmin-multi-step-indicator-label-font-size *
-			$cadmin-line-height-base;
+		padding-top: calc(
+			#{$cadmin-multi-step-indicator-label-font-size} * #{$cadmin-line-height-base}
+		);
 	}
 
 	.multi-step-indicator-label {
-		bottom: $cadmin-multi-step-icon-size + $cadmin-multi-step-divider-height;
+		bottom: calc(
+			#{$cadmin-multi-step-icon-size} + #{$cadmin-multi-step-divider-height}
+		);
 	}
 }
 
@@ -433,9 +437,10 @@
 		.multi-step-item {
 			margin-bottom: 0;
 			min-width: $cadmin-multi-step-icon-size;
-			padding-top: $cadmin-multi-step-title-font-size +
-				$cadmin-multi-step-title-margin-bottom +
-				($cadmin-multi-step-divider-height * 0.5);
+			padding-top: calc(
+				#{$cadmin-multi-step-title-font-size} + #{$cadmin-multi-step-title-margin-bottom} +
+					#{$cadmin-multi-step-divider-height} * 0.5
+			);
 		}
 
 		.multi-step-title {

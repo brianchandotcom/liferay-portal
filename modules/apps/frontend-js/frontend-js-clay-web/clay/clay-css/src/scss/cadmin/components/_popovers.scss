@@ -26,15 +26,17 @@
 
 		&::before {
 			border-bottom-color: $cadmin-popover-arrow-outer-color;
-			border-width: 0 ($cadmin-popover-arrow-width * 0.5)
-				$cadmin-popover-arrow-height ($cadmin-popover-arrow-width * 0.5);
+			border-width: 0 calc(#{$cadmin-popover-arrow-width} * 0.5)
+				$cadmin-popover-arrow-height
+				calc(#{$cadmin-popover-arrow-width} * 0.5);
 			top: 0;
 		}
 
 		&::after {
 			border-bottom-color: $cadmin-popover-bottom-arrow-color;
-			border-width: 0 ($cadmin-popover-arrow-width * 0.5)
-				$cadmin-popover-arrow-height ($cadmin-popover-arrow-width * 0.5);
+			border-width: 0 calc(#{$cadmin-popover-arrow-width} * 0.5)
+				$cadmin-popover-arrow-height
+				calc(#{$cadmin-popover-arrow-width} * 0.5);
 			top: $cadmin-popover-border-width;
 		}
 	}
@@ -67,15 +69,17 @@
 
 		&::before {
 			border-left-color: $cadmin-popover-arrow-outer-color;
-			border-width: ($cadmin-popover-arrow-width * 0.5) 0
-				($cadmin-popover-arrow-width * 0.5) $cadmin-popover-arrow-height;
+			border-width: calc(#{$cadmin-popover-arrow-width} * 0.5) 0
+				calc(#{$cadmin-popover-arrow-width} * 0.5)
+				$cadmin-popover-arrow-height;
 			right: 0;
 		}
 
 		&::after {
 			border-left-color: $cadmin-popover-left-arrow-color;
-			border-width: ($cadmin-popover-arrow-width * 0.5) 0
-				($cadmin-popover-arrow-width * 0.5) $cadmin-popover-arrow-height;
+			border-width: calc(#{$cadmin-popover-arrow-width} * 0.5) 0
+				calc(#{$cadmin-popover-arrow-width} * 0.5)
+				$cadmin-popover-arrow-height;
 			right: $cadmin-popover-border-width;
 		}
 	}
@@ -94,17 +98,17 @@
 
 		&::before {
 			border-right-color: $cadmin-popover-arrow-outer-color;
-			border-width: ($cadmin-popover-arrow-width * 0.5)
-				$cadmin-popover-arrow-height ($cadmin-popover-arrow-width * 0.5)
-				0;
+			border-width: calc(#{$cadmin-popover-arrow-width} * 0.5)
+				$cadmin-popover-arrow-height
+				calc(#{$cadmin-popover-arrow-width} * 0.5) 0;
 			left: 0;
 		}
 
 		&::after {
 			border-right-color: $cadmin-popover-right-arrow-color;
-			border-width: ($cadmin-popover-arrow-width * 0.5)
-				$cadmin-popover-arrow-height ($cadmin-popover-arrow-width * 0.5)
-				0;
+			border-width: calc(#{$cadmin-popover-arrow-width} * 0.5)
+				$cadmin-popover-arrow-height
+				calc(#{$cadmin-popover-arrow-width} * 0.5) 0;
 			left: $cadmin-popover-border-width;
 		}
 	}
@@ -121,14 +125,14 @@
 		&::before {
 			border-top-color: $cadmin-popover-arrow-outer-color;
 			border-width: $cadmin-popover-arrow-height
-				($cadmin-popover-arrow-width * 0.5) 0;
+				calc(#{$cadmin-popover-arrow-width} * 0.5) 0;
 			bottom: 0;
 		}
 
 		&::after {
 			border-top-color: $cadmin-popover-top-arrow-color;
 			border-width: $cadmin-popover-arrow-height
-				($cadmin-popover-arrow-width * 0.5) 0;
+				calc(#{$cadmin-popover-arrow-width} * 0.5) 0;
 			bottom: $cadmin-popover-border-width;
 		}
 	}

@@ -400,8 +400,9 @@
 	}
 
 	.autofit-col .quick-action-item {
-		margin-top: $cadmin-list-group-notification-item-border-top-width -
-			$cadmin-list-group-item-flex-offset-top;
+		margin-top: calc(
+			#{$cadmin-list-group-notification-item-border-top-width} - #{$cadmin-list-group-item-flex-offset-top}
+		);
 	}
 }
 

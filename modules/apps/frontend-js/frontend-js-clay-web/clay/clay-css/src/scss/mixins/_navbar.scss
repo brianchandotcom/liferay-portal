@@ -95,7 +95,13 @@
 		$padding-y: if($padding-y == 0 or $padding-y == null, 0px, $padding-y);
 		$link-height: setter(
 			map-get($map, link-height),
-			'#{$height} - #{$border-bottom-width} - #{$border-top-width} - #{$padding-y} * 2'
+			calc(
+				#{$height} -
+					#{$border-bottom-width} -
+					#{$border-top-width} -
+					#{$padding-y} *
+					2
+			)
 		);
 
 		$link-margin-x: map-get($map, link-margin-x);
@@ -203,7 +209,8 @@
 								#{$border-top-width} -
 								#{$padding-y} *
 								2 -
-								(#{$brand-font-size} * #{$_line-height-base})
+								#{$brand-font-size} *
+								#{$_line-height-base}
 						) *
 						0.5
 				)
@@ -223,7 +230,13 @@
 		$min-height-mobile: map-get($map, min-height-mobile);
 		$link-height-mobile: setter(
 			map-get($map, link-height-mobile),
-			'#{$height-mobile} - #{$border-bottom-width} - #{$border-top-width} - #{$padding-y} * 2'
+			calc(
+				#{$height-mobile} -
+					#{$border-bottom-width} -
+					#{$border-top-width} -
+					#{$padding-y} *
+					2
+			)
 		);
 		$link-margin-x-mobile: setter(
 			map-get($map, link-margin-x-mobile),
@@ -252,7 +265,8 @@
 			calc(
 				(
 						#{$link-height-mobile} -
-							(#{$font-size-mobile} * #{$_line-height-base})
+							#{$font-size-mobile} *
+							#{$_line-height-base}
 					) *
 					0.5
 			)

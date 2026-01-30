@@ -1372,7 +1372,7 @@ $input-select-bg-size: 8px 10px !default;
 $input-select-cursor: $link-cursor !default;
 $input-select-padding-bottom: null !default;
 $input-select-padding-left: null !default;
-$input-select-padding-right: 1rem + $input-btn-padding-x !default;
+$input-select-padding-right: calc(1rem + #{$input-btn-padding-x}) !default;
 $input-select-padding-top: null !default;
 
 $input-select-icon-color: $input-color !default;

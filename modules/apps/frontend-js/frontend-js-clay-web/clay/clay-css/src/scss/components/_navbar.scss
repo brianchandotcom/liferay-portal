@@ -275,8 +275,10 @@
 
 							.container,
 							.container-fluid {
-								padding-left: $grid-gutter-width * 0.5;
-								padding-right: $grid-gutter-width * 0.5;
+								padding-left: calc(#{$grid-gutter-width} * 0.5);
+								padding-right: calc(
+									#{$grid-gutter-width} * 0.5
+								);
 							}
 
 							.navbar-nav,
@@ -384,8 +386,10 @@
 						width: auto;
 
 						.dropdown-toggle .navbar-text-truncate {
-							max-width: $navbar-text-truncate-max-width -
-								$navbar-text-truncate-spacer-right;
+							max-width: calc(
+								#{$navbar-text-truncate-max-width} -
+									#{$navbar-text-truncate-spacer-right}
+							);
 						}
 					}
 

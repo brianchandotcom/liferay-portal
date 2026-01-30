@@ -209,7 +209,7 @@ $sticker-sizes: map-deep-merge(
 
 // Sticker Positions
 
-$sticker-inside-offset: $grid-gutter-width * 0.5 !default;
+$sticker-inside-offset: calc(#{$grid-gutter-width} * 0.5) !default;
 
 // .sticker-bottom-left
 

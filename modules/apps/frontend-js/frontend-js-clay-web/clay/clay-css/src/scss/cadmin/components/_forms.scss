@@ -643,7 +643,7 @@ textarea.form-control-sm,
 	> .form-group-item:not(:last-child) {
 		@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {
 			margin-bottom: 0;
-			margin-right: $cadmin-grid-gutter-width * 0.5;
+			margin-right: calc(#{$cadmin-grid-gutter-width} * 0.5);
 		}
 	}
 

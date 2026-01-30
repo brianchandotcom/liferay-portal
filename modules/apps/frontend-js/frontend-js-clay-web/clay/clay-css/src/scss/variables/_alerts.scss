@@ -381,8 +381,12 @@ $alert-notifications-fixed-right: null !default;
 $alert-notifications-fixed-top: null !default;
 
 $alert-notifications-fixed-bottom-mobile: 1rem !default;
-$alert-notifications-fixed-left-mobile: $grid-gutter-width * 0.5 !default;
-$alert-notifications-fixed-right-mobile: $grid-gutter-width * 0.5 !default;
+$alert-notifications-fixed-left-mobile: calc(
+	#{$grid-gutter-width} * 0.5
+) !default;
+$alert-notifications-fixed-right-mobile: calc(
+	#{$grid-gutter-width} * 0.5
+) !default;
 $alert-notifications-fixed-top-mobile: null !default;
 
 $alert-notifications-fixed: () !default;

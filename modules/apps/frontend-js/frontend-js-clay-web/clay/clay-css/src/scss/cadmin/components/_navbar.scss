@@ -280,8 +280,12 @@
 
 							.container,
 							.container-fluid {
-								padding-left: $cadmin-grid-gutter-width * 0.5;
-								padding-right: $cadmin-grid-gutter-width * 0.5;
+								padding-left: calc(
+									#{$cadmin-grid-gutter-width} * 0.5
+								);
+								padding-right: calc(
+									#{$cadmin-grid-gutter-width} * 0.5
+								);
 							}
 
 							.navbar-nav,
@@ -393,8 +397,10 @@
 						width: auto;
 
 						.dropdown-toggle .navbar-text-truncate {
-							max-width: $cadmin-navbar-text-truncate-max-width -
-								$cadmin-navbar-text-truncate-spacer-right;
+							max-width: calc(
+								#{$cadmin-navbar-text-truncate-max-width} -
+									#{$cadmin-navbar-text-truncate-spacer-right}
+							);
 						}
 					}
 

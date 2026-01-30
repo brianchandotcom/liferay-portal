@@ -194,6 +194,7 @@ export default async function Home({
 
 									<p className="flex gap-2 items-center mb-4 text-gray-600 text-sm">
 										<span>🌐</span>{' '}
+
 										{upcomingEvent.locationName}
 									</p>
 
@@ -271,6 +272,7 @@ export default async function Home({
 									<div className="flex gap-3 items-center mb-3 text-gray-500 text-xs">
 										<span>
 											📅{' '}
+
 											{new Date(
 												event.dateCreated
 											).toLocaleDateString(lang)}

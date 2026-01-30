@@ -6,13 +6,12 @@
 package com.liferay.cookies.internal.configuration.provider;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
+import com.liferay.configuration.admin.util.ConfigurationFilterStringUtil;
 import com.liferay.cookies.configuration.CookiesConfigurationProvider;
 import com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration;
 import com.liferay.cookies.configuration.banner.CookiesBannerConfiguration;
 import com.liferay.cookies.configuration.consent.CookiesConsentConfiguration;
 import com.liferay.cookies.internal.configuration.admin.service.CookiesPreferenceHandlingManagedServiceFactory;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -22,8 +21,10 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -161,7 +162,7 @@ public class CookiesConfigurationProviderImpl
 
 		Configuration configuration =
 			_getCookiesPreferenceHandlingGroupConfiguration(
-				themeDisplay.getScopeGroupId());
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId());
 
 		if (configuration != null) {
 			pid = configuration.getPid();
@@ -271,8 +272,11 @@ public class CookiesConfigurationProviderImpl
 				CookiesPreferenceHandlingConfiguration.class, scopePK);
 		}
 		else if (scope == ExtendedObjectClassDefinition.Scope.GROUP) {
+			Group group = _groupLocalService.fetchGroup(scopePK);
+
 			_configurationProvider.deleteGroupConfiguration(
-				CookiesPreferenceHandlingConfiguration.class, scopePK);
+				CookiesPreferenceHandlingConfiguration.class,
+				group.getCompanyId(), scopePK);
 		}
 		else if (scope == ExtendedObjectClassDefinition.Scope.SYSTEM) {
 			_configurationProvider.deleteSystemConfiguration(
@@ -296,9 +300,11 @@ public class CookiesConfigurationProviderImpl
 				dictionary);
 		}
 		else if (scope == ExtendedObjectClassDefinition.Scope.GROUP) {
+			Group group = _groupLocalService.fetchGroup(scopePK);
+
 			_configurationProvider.saveGroupConfiguration(
-				CookiesPreferenceHandlingConfiguration.class, scopePK,
-				dictionary);
+				CookiesPreferenceHandlingConfiguration.class,
+				group.getCompanyId(), scopePK, dictionary);
 		}
 		else if (scope == ExtendedObjectClassDefinition.Scope.SYSTEM) {
 			_configurationProvider.saveSystemConfiguration(
@@ -350,7 +356,7 @@ public class CookiesConfigurationProviderImpl
 			Group group = layoutSet.getGroup();
 
 			return _configurationProvider.getGroupConfiguration(
-				clazz, group.getGroupId());
+				clazz, group.getCompanyId(), group.getGroupId());
 		}
 
 		return _configurationProvider.getCompanyConfiguration(
@@ -362,13 +368,12 @@ public class CookiesConfigurationProviderImpl
 		throws ConfigurationException {
 
 		try {
-			String filterString = StringBundler.concat(
-				"(&(", ConfigurationAdmin.SERVICE_FACTORYPID, StringPool.EQUAL,
-				CookiesPreferenceHandlingConfiguration.class.getName(),
-				".scoped)(companyId=", companyId, "))");
-
 			Configuration[] configuration =
-				_configurationAdmin.listConfigurations(filterString);
+				_configurationAdmin.listConfigurations(
+					ConfigurationFilterStringUtil.getCompanyScopedFilterString(
+						companyId,
+						CookiesPreferenceHandlingConfiguration.class.getName(),
+						null));
 
 			if (configuration != null) {
 				return configuration[0];
@@ -382,17 +387,16 @@ public class CookiesConfigurationProviderImpl
 	}
 
 	private Configuration _getCookiesPreferenceHandlingGroupConfiguration(
-			long groupId)
+			long companyId, long groupId)
 		throws ConfigurationException {
 
 		try {
-			String filterString = StringBundler.concat(
-				"(&(", ConfigurationAdmin.SERVICE_FACTORYPID, StringPool.EQUAL,
-				CookiesPreferenceHandlingConfiguration.class.getName(),
-				".scoped)(groupId=", groupId, "))");
-
 			Configuration[] configuration =
-				_configurationAdmin.listConfigurations(filterString);
+				_configurationAdmin.listConfigurations(
+					ConfigurationFilterStringUtil.getGroupScopedFilterString(
+						companyId, groupId,
+						CookiesPreferenceHandlingConfiguration.class.getName(),
+						null));
 
 			if (configuration != null) {
 				return configuration[0];
@@ -441,11 +445,10 @@ public class CookiesConfigurationProviderImpl
 		throws Exception {
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			String.format(
-				"(&(service.factoryPid=%s)(%s=%d))",
-				CookiesPreferenceHandlingConfiguration.class.getName() +
-					".scoped",
-				scope.getPropertyKey(), scopePK));
+			ConfigurationFilterStringUtil.getScopedFilterString(
+				CompanyThreadLocal.getCompanyId(),
+				CookiesPreferenceHandlingConfiguration.class.getName(), scope,
+				scopePK));
 
 		if (configurations == null) {
 			return null;
@@ -546,6 +549,9 @@ public class CookiesConfigurationProviderImpl
 
 	private CookiesPreferenceHandlingManagedServiceFactory
 		_cookiesPreferenceHandlingManagedServiceFactory;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;

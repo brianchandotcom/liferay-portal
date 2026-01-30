@@ -553,7 +553,8 @@ public class CookiesManagerImpl implements CookiesManager {
 
 				if (groupId > 0) {
 					return _configurationProvider.getGroupConfiguration(
-						CookiesPreferenceHandlingConfiguration.class, groupId);
+						CookiesPreferenceHandlingConfiguration.class,
+						_portal.getCompanyId(httpServletRequest), groupId);
 				}
 
 				return _configurationProvider.getCompanyConfiguration(

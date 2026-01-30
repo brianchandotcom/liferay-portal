@@ -58,7 +58,8 @@ public class SaveSiteConfigurationMVCActionCommand
 		}
 
 		_configurationProvider.saveGroupConfiguration(
-			DigitalSignatureConfiguration.class, themeDisplay.getSiteGroupId(),
+			DigitalSignatureConfiguration.class, themeDisplay.getCompanyId(),
+			themeDisplay.getSiteGroupId(),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"accountBaseURI",
 				ParamUtil.getString(actionRequest, "accountBaseURI")

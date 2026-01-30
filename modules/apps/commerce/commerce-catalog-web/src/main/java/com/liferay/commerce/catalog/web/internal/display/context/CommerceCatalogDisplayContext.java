@@ -37,6 +37,7 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -48,6 +49,7 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -416,11 +418,13 @@ public class CommerceCatalogDisplayContext {
 			long commerceCatalogGroupId, String key)
 		throws ConfigurationException {
 
+		Group group = GroupLocalServiceUtil.fetchGroup(commerceCatalogGroupId);
+
 		CommerceInventoryGroupConfiguration
 			commerceInventoryGroupConfiguration =
 				_configurationProvider.getGroupConfiguration(
 					CommerceInventoryGroupConfiguration.class,
-					commerceCatalogGroupId);
+					group.getCompanyId(), commerceCatalogGroupId);
 
 		return key.equals(
 			commerceInventoryGroupConfiguration.inventoryMethodKey());

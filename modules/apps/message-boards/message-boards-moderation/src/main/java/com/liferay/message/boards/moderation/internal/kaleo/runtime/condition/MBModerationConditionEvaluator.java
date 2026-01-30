@@ -47,7 +47,8 @@ public class MBModerationConditionEvaluator implements ConditionEvaluator {
 
 		MBModerationGroupConfiguration mbModerationGroupConfiguration =
 			_configurationProvider.getGroupConfiguration(
-				MBModerationGroupConfiguration.class, groupId);
+				MBModerationGroupConfiguration.class,
+				kaleoCondition.getCompanyId(), groupId);
 
 		long userId = GetterUtil.getLong(
 			workflowContext.get(WorkflowConstants.CONTEXT_USER_ID));

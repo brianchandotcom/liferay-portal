@@ -52,7 +52,7 @@ public class CustomDialogsBottomJSPDynamicInclude implements DynamicInclude {
 				customDialogsSettingsConfiguration =
 					_configurationProvider.getGroupConfiguration(
 						CustomDialogsSettingsConfiguration.class,
-						group.getGroupId());
+						group.getCompanyId(), group.getGroupId());
 
 			ScriptData scriptData = new ScriptData();
 

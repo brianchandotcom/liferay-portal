@@ -217,7 +217,7 @@ public class AssetAutoTaggerConfigurationFactoryImpl
 					assetAutoTaggerGroupConfiguration =
 						_configurationProvider.getGroupConfiguration(
 							AssetAutoTaggerGroupConfiguration.class,
-							_group.getGroupId());
+							_group.getCompanyId(), _group.getGroupId());
 
 				return assetAutoTaggerGroupConfiguration.enabled();
 			}

@@ -258,7 +258,7 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 		CommentGroupServiceConfiguration commentGroupServiceConfiguration =
 			_configurationProvider.getGroupConfiguration(
 				CommentGroupServiceConfiguration.class,
-				themeDisplay.getScopeGroupId());
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId());
 
 		if (commentGroupServiceConfiguration.subscribe()) {
 			_commentManager.subscribeDiscussion(

@@ -29,23 +29,37 @@ export default function addFragmentComposition({
 			saveInlineContent,
 			saveMappingConfiguration,
 			segmentsExperienceId: getState().segmentsExperienceId,
-		}).then(({fragmentComposition, url}) => {
-			dispatch(
-				addFragmentCompositionAction({
-					fragmentCollectionId,
-					fragmentComposition,
-				})
-			);
-
-			openToast({
-				message: sub(
-					Liferay.Language.get(
-						'the-fragment-was-created-successfully.-you-can-view-it-in-x'
+		}).then(({fragmentComposition, invalidFragmentsCount, url}) => {
+			if (invalidFragmentsCount > 0) {
+				openToast({
+					message: Liferay.Language.get(
+						'the-composition-cannot-be-created-because-some-fragment-references-are-missing-reimport-the-fragments-and-try-again'
 					),
-					`<a href="${url}">${Liferay.Language.get('fragments')}</a>`
-				),
-				type: 'success',
-			});
+					title: Liferay.Language.get('error'),
+					type: 'error',
+				});
+
+				throw new Error('Invalid fragment composition');
+			}
+			else {
+				dispatch(
+					addFragmentCompositionAction({
+						fragmentCollectionId,
+						fragmentComposition,
+						invalidFragmentsCount,
+					})
+				);
+
+				openToast({
+					message: sub(
+						Liferay.Language.get(
+							'the-fragment-was-created-successfully.-you-can-view-it-in-x'
+						),
+						`<a href="${url}">${Liferay.Language.get('fragments')}</a>`
+					),
+					type: 'success',
+				});
+			}
 		});
 	};
 }

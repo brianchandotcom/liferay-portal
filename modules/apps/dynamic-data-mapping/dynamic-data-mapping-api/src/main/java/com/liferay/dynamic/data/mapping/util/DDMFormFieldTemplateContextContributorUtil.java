@@ -78,16 +78,16 @@ public class DDMFormFieldTemplateContextContributorUtil {
 					"label",
 					GetterUtil.getString(
 						localizedValue.getString(
-							localizedValue.getDefaultLocale()))
+							LocaleUtil.getMostRelevantLocale()))
 				).put(
 					"labelMap",
 					() -> {
-						Map<Locale, String> labeMap = _getListTypeEntryNameMap(
+						Map<Locale, String> labelMap = _getListTypeEntryNameMap(
 							optionValue, listTypeDefinitionId,
 							listTypeEntryLocalService);
 
-						if (labeMap != null) {
-							return labeMap;
+						if (labelMap != null) {
+							return labelMap;
 						}
 
 						return localizedValue.getValues();

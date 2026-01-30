@@ -9,6 +9,7 @@ import com.liferay.batch.engine.BatchEngineExportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
 import com.liferay.batch.engine.service.BatchEngineExportTaskLocalService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskService;
+import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomizer;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -180,7 +182,13 @@ public class BatchEnginePortletDataHandlerRegistrar {
 	private final Set<Long> _enabledCompanyIds = new CopyOnWriteArraySet<>();
 
 	@Reference
+	private ExportImportHelper _exportImportHelper;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	private ServiceRegistration<PortalInstanceLifecycleListener>
 		_portalInstanceLifecycleListenerServiceRegistration;
@@ -238,7 +246,9 @@ public class BatchEnginePortletDataHandlerRegistrar {
 						_batchEngineExportTaskExecutor,
 						_batchEngineExportTaskLocalService,
 						_batchEngineImportTaskExecutor,
-						_batchEngineImportTaskService, _groupLocalService,
+						_batchEngineImportTaskService,
+						_exportImportHelper, _groupLocalService,
+						_layoutLocalService,
 						_stagingGroupHelper);
 
 				batchEnginePortletDataHandler.setPortletId(

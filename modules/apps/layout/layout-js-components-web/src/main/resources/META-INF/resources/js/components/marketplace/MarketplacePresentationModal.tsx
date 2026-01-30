@@ -40,13 +40,21 @@ export default function MarketplacePresentationModal({
 	) : (
 		<CardStyleModal
 			body={body}
+			buttons={[
+				{
+					displayType: 'secondary',
+					label: Liferay.Language.get('cancel'),
+				},
+				{
+					displayType: 'primary',
+					icon: 'marketplace',
+					label: Liferay.Language.get('explore-marketplace'),
+					onClick: () => setOpenMarketplace(true),
+				},
+			]}
 			heading={heading}
 			imageSrc={`${Liferay.ThemeDisplay.getPortalURL()}${Liferay.ThemeDisplay.getPathContext()}/o/layout-js-components-web/images/marketplace.svg`}
 			onCloseModal={onCloseModal}
-			onPrimaryButtonClick={() => setOpenMarketplace(true)}
-			primaryButtonIcon="marketplace"
-			primaryButtonLabel={Liferay.Language.get('explore-marketplace')}
-			secondaryButtonLabel={Liferay.Language.get('cancel')}
 		/>
 	);
 }

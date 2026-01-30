@@ -11,9 +11,7 @@ import com.google.protobuf.ByteString;
 import com.google.pubsub.v1.PubsubMessage;
 
 import com.liferay.marketplace.constants.MarketplaceConstants;
-import com.liferay.portal.kernel.messaging.Message;
 
-import java.util.HashMap;
 import java.util.Objects;
 
 import org.apache.commons.logging.Log;
@@ -32,22 +30,15 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 	public void receiveMessage(
 		PubsubMessage pubsubMessage, AckReplyConsumer ackReplyConsumer) {
 
-		ByteString byteString = pubsubMessage.getData();
-
-		String messageBody = byteString.toStringUtf8();
-
 		if (_log.isInfoEnabled()) {
-			_log.info("Received message: " + messageBody);
+			ByteString byteString = pubsubMessage.getData();
+
+			String messageBody = byteString.toStringUtf8();
+
+			_log.info("Found message: " + messageBody);
 		}
 
 		try {
-			Message message = new Message();
-
-			message.setPayload(messageBody);
-			message.setValues(
-				new HashMap<String, Object>(pubsubMessage.getAttributesMap()));
-			message.setDestinationName(_topic);
-
 			if (Objects.equals(
 					_topic, MarketplaceConstants.KORONEIKI_ACCOUNT_CREATE)) {
 
@@ -73,6 +64,7 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 		}
 		catch (Exception exception) {
 			_log.error("Error processing message", exception);
+
 			ackReplyConsumer.nack();
 		}
 	}

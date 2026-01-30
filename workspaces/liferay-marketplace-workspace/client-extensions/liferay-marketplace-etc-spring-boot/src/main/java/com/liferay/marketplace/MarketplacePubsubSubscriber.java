@@ -14,11 +14,11 @@ import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.pubsub.v1.Subscriber;
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.cloud.pubsub.v1.SubscriptionAdminSettings;
-import com.google.pubsub.v1.ProjectSubscriptionName;
 import com.google.pubsub.v1.Subscription;
 import com.google.pubsub.v1.TopicName;
 
 import com.liferay.marketplace.constants.MarketplaceConstants;
+import com.liferay.petra.string.StringBundler;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -85,59 +85,43 @@ public class MarketplacePubsubSubscriber {
 				subscriptionAdminSettings);
 		}
 		catch (Exception exception) {
-			_log.error("Failed to create Admin Client", exception);
+			_log.error("Failed to create subscription admin client", exception);
 
 			throw exception;
 		}
 
-		for (String topic : MarketplaceConstants.PUBSUB_TOPICS) {
+		for (String topic : MarketplaceConstants.KORONEIKI_PUBSUB_TOPICS) {
+			String subscriptionName = StringBundler.concat(
+				"projects/", _projectId, "/subscriptions/marketplace_", topic,
+				"-subscription");
+
 			try {
-				String subscriptionName =
-					"marketplace_" + topic + "-subscription";
-
-				ProjectSubscriptionName projectSubscriptionName =
-					ProjectSubscriptionName.of(_projectId, subscriptionName);
-
 				try {
-					_subscriptionAdminClient.getSubscription(
-						projectSubscriptionName);
-
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"Found subscription " +
-								projectSubscriptionName.toString());
-					}
+					_subscriptionAdminClient.getSubscription(subscriptionName);
 				}
 				catch (NotFoundException notFoundException) {
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							"Creating a new subscription \n",
-							notFoundException);
-					}
+					_log.error("Subscription not found", notFoundException);
 
 					TopicName topicName = TopicName.ofProjectTopicName(
 						_projectId, topic);
 
-					Subscription subscription = Subscription.newBuilder(
-					).setAckDeadlineSeconds(
-						30
-					).setName(
-						projectSubscriptionName.toString()
-					).setTopic(
-						topicName.toString()
-					).build();
+					_subscriptionAdminClient.createSubscription(
+						Subscription.newBuilder(
+						).setAckDeadlineSeconds(
+							30
+						).setName(
+							subscriptionName
+						).setTopic(
+							topicName.toString()
+						).build());
 
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"Creating subscription " + subscription.toString());
+					if (_log.isInfoEnabled()) {
+						_log.info("Subscription created " + subscriptionName);
 					}
-
-					_subscriptionAdminClient.createSubscription(subscription);
 				}
 
 				Subscriber subscriber = Subscriber.newBuilder(
-					projectSubscriptionName,
-					new MarketplaceMessageReceiver(topic)
+					subscriptionName, new MarketplaceMessageReceiver(topic)
 				).setCredentialsProvider(
 					credentialsProvider
 				).build();
@@ -156,7 +140,7 @@ public class MarketplacePubsubSubscriber {
 			}
 			catch (Exception exception) {
 				_log.error(
-					"Failed to initialize PubSub subscription for topic: " +
+					"Failed to initialize Pubsub subscription for topic: " +
 						topic,
 					exception);
 
@@ -166,28 +150,35 @@ public class MarketplacePubsubSubscriber {
 	}
 
 	protected CredentialsProvider getCredentialsProvider() throws IOException {
-		GoogleCredentials googleCredentials =
-			ServiceAccountCredentials.fromStream(
-				new ByteArrayInputStream(
-					_gcpServiceAccountKey.getBytes(StandardCharsets.UTF_8))
-			).createScoped(
-				Collections.singletonList(_SCOPE)
-			);
+		try {
+			GoogleCredentials googleCredentials =
+				ServiceAccountCredentials.fromStream(
+					new ByteArrayInputStream(
+						_serviceAccountKey.getBytes(StandardCharsets.UTF_8))
+				).createScoped(
+					Collections.singletonList(
+						"https://www.googleapis.com/auth/cloud-platform")
+				);
 
-		return FixedCredentialsProvider.create(googleCredentials);
+			return FixedCredentialsProvider.create(googleCredentials);
+		}
+		catch (Exception exception) {
+			_log.error(
+				"Unable to retrieve credentials provider: " +
+					exception.getMessage());
+
+			return null;
+		}
 	}
-
-	private static final String _SCOPE =
-		"https://www.googleapis.com/auth/cloud-platform";
 
 	private static final Log _log = LogFactory.getLog(
 		MarketplacePubsubSubscriber.class);
 
-	@Value("${liferay.marketplace.pubsub.gcp.service.account.key}")
-	private String _gcpServiceAccountKey;
-
 	@Value("${liferay.marketplace.pubsub.gcp.project.id}")
 	private String _projectId;
+
+	@Value("${liferay.marketplace.pubsub.gcp.service.account.key}")
+	private String _serviceAccountKey;
 
 	private final List<Subscriber> _subscribers = new ArrayList<>();
 	private SubscriptionAdminClient _subscriptionAdminClient;

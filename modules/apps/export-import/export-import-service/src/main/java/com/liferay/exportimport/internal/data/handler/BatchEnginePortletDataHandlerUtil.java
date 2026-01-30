@@ -154,14 +154,28 @@ public class BatchEnginePortletDataHandlerUtil {
 			HashMapBuilder.<String, Serializable>put(
 				"batchRestrictFields",
 				() -> {
+					List<String> batchRestrictFields = new ArrayList<>();
+
+					if (!MapUtil.getBoolean(
+							portletDataContext.getParameterMap(),
+							PortletDataHandlerKeys.COMMENTS)) {
+
+						batchRestrictFields.add("comments");
+					}
+
 					if (!MapUtil.getBoolean(
 							portletDataContext.getParameterMap(),
 							PortletDataHandlerKeys.PERMISSIONS)) {
 
-						return "permissions";
+						batchRestrictFields.add("permissions");
 					}
 
-					return null;
+					if (batchRestrictFields.isEmpty()) {
+						return null;
+					}
+
+					return StringUtil.merge(
+						batchRestrictFields, StringPool.COMMA);
 				}
 			).put(
 				"createStrategy", CreateStrategy.UPSERT.getDBOperation()

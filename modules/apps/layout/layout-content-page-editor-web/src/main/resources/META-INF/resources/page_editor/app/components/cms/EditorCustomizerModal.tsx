@@ -55,9 +55,9 @@ export default function EditorCustomizerModal() {
 					onClick: handleClose,
 				},
 			]}
-			heading={Liferay.Language.get('introducing-editor-customizer')}
 			imageSrc={`${config.imagesPath}/editor_customizer.svg`}
 			onCloseModal={handleClose}
+			title={Liferay.Language.get('introducing-editor-customizer')}
 		/>
 	);
 }

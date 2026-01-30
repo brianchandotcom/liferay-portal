@@ -18,18 +18,18 @@ interface CardStyleModalProps {
 		label: string;
 		onClick?: () => void;
 	}>;
-	heading: string;
 	imageSrc: string;
 	onCloseModal?: () => void;
+	title: string;
 }
 
 const CardStyleModal: React.FC<CardStyleModalProps> = ({
 	badgeText,
 	body,
 	buttons,
-	heading,
 	imageSrc,
 	onCloseModal,
+	title,
 }) => {
 	const {observer, onClose} = useModal({
 		onClose: () => {
@@ -64,7 +64,7 @@ const CardStyleModal: React.FC<CardStyleModalProps> = ({
 					/>
 				) : null}
 
-				<ClayModal.Title className="c-mx-4">{heading}</ClayModal.Title>
+				<ClayModal.Title className="c-mx-4">{title}</ClayModal.Title>
 
 				<p className="c-m-4">{body}</p>
 			</ClayModal.Body>

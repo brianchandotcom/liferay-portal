@@ -274,9 +274,9 @@ public class BatchEngineExportTaskExecutorImpl
 			batchEngineExportTask.setTotalItemsCount(
 				Math.toIntExact(page.getTotalCount()));
 
-			Collection<?> items = page.getItems();
-
 			int lastReportedItemsCount = 0;
+
+			Collection<?> items = page.getItems();
 
 			while (!items.isEmpty()) {
 				BatchEngineExportTask finalBatchEngineExportTask =
@@ -338,13 +338,12 @@ public class BatchEngineExportTaskExecutorImpl
 				items = page.getItems();
 			}
 
-			int finalProcessedItemsCount =
-				batchEngineExportTask.getProcessedItemsCount();
+			if (batchEngineExportTask.getProcessedItemsCount() >
+					lastReportedItemsCount) {
 
-			if (finalProcessedItemsCount > lastReportedItemsCount) {
 				BatchEngineTaskExecutorUtil.sendBatchProgressMessage(
 					_backgroundTaskStatusMessageSender,
-					finalProcessedItemsCount);
+					batchEngineExportTask.getProcessedItemsCount());
 			}
 		}
 		finally {

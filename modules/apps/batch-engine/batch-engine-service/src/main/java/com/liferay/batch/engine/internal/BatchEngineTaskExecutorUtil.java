@@ -82,8 +82,8 @@ public class BatchEngineTaskExecutorUtil {
 		message.put(
 			BackgroundTaskConstants.MESSAGE_KEY_BACKGROUND_TASK_ID,
 			BackgroundTaskThreadLocal.getBackgroundTaskId());
-		message.put("messageType", "batchProgress");
 		message.put("batchEngineProcessedItemsCount", processedItemsCount);
+		message.put("messageType", "batchProgress");
 
 		backgroundTaskStatusMessageSender.sendBackgroundTaskStatusMessage(
 			message);

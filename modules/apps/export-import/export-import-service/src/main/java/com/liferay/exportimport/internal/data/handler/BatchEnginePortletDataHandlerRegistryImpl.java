@@ -5,6 +5,8 @@
 
 package com.liferay.exportimport.internal.data.handler;
 
+import com.liferay.exportimport.data.handler.BatchEnginePortletDataHandlerRegistry;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -12,26 +14,13 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Vendel Toreki
  * @author Petteri Karttunen
  */
-public class BatchEnginePortletDataHandlerRegistryUtil {
+public class BatchEnginePortletDataHandlerRegistryImpl
+	implements BatchEnginePortletDataHandlerRegistry {
 
 	public static BatchEnginePortletDataHandler getByClassName(
 		long companyId, String className) {
 
 		return getByPortletId(companyId, _getPortletId(companyId, className));
-	}
-
-	public static BatchEnginePortletDataHandler getByKey(
-		long companyId, String key) {
-
-		Map<String, BatchEnginePortletDataHandler>
-			batchEnginePortletDataHandlers =
-				_keyBatchEnginePortletDataHandlersMap.get(companyId);
-
-		if (batchEnginePortletDataHandlers == null) {
-			return null;
-		}
-
-		return batchEnginePortletDataHandlers.get(key);
 	}
 
 	public static BatchEnginePortletDataHandler getByPortletId(
@@ -56,6 +45,19 @@ public class BatchEnginePortletDataHandlerRegistryUtil {
 		}
 
 		return portletIds.containsKey(className);
+	}
+
+	@Override
+	public BatchEnginePortletDataHandler getByKey(long companyId, String key) {
+		Map<String, BatchEnginePortletDataHandler>
+			batchEnginePortletDataHandlers =
+				_keyBatchEnginePortletDataHandlersMap.get(companyId);
+
+		if (batchEnginePortletDataHandlers == null) {
+			return null;
+		}
+
+		return batchEnginePortletDataHandlers.get(key);
 	}
 
 	protected static void put(

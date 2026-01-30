@@ -104,6 +104,9 @@ public class WorkflowLogResourceImpl extends BaseWorkflowLogResourceImpl {
 		else if (type == WorkflowLog.Type.NODE_ENTRY) {
 			return LogType.NODE_ENTRY.name();
 		}
+		else if (type == WorkflowLog.Type.NODE_USAGE_METADATA) {
+			return LogType.NODE_USAGE_METADATA.name();
+		}
 		else if (type == WorkflowLog.Type.TASK_ASSIGN) {
 			return LogType.TASK_ASSIGNMENT.name();
 		}

@@ -20,6 +20,8 @@ public interface WorkflowLog extends WorkflowModel {
 
 	public static final int NODE_ENTRY = 4;
 
+	public static final int NODE_USAGE_METADATA = 6;
+
 	public static final int TASK_ASSIGN = 1;
 
 	public static final int TASK_COMPLETION = 3;

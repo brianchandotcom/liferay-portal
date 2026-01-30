@@ -20,11 +20,14 @@ export default function isRenamable({
 
 	const child = findChild({root: structure, uuid})!;
 
-	if (child.type === 'repeatable-group') {
-		return true;
-	}
-	else if (child.type === 'referenced-structure') {
+	if (child.type === 'referenced-structure') {
 		return false;
+	}
+	else if (child.type === 'related-content') {
+		return false;
+	}
+	else if (child.type === 'repeatable-group') {
+		return true;
 	}
 	else if (child.locked) {
 		return false;

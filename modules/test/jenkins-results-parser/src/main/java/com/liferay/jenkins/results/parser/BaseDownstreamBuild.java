@@ -176,8 +176,14 @@ public class BaseDownstreamBuild extends BaseBuild implements DownstreamBuild {
 
 	@Override
 	public String getAxisName() {
-		return JenkinsResultsParserUtil.combine(
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(_axisName)) {
+			return _axisName;
+		}
+
+		_axisName = JenkinsResultsParserUtil.combine(
 			getJobVariant(), "/", getAxisVariable());
+
+		return _axisName;
 	}
 
 	@Override
@@ -260,13 +266,7 @@ public class BaseDownstreamBuild extends BaseBuild implements DownstreamBuild {
 
 	@Override
 	public String getDisplayName() {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(getJobVariant());
-		sb.append("/");
-		sb.append(getAxisVariable());
-
-		return sb.toString();
+		return getAxisName();
 	}
 
 	@Override
@@ -691,6 +691,10 @@ public class BaseDownstreamBuild extends BaseBuild implements DownstreamBuild {
 		TopLevelBuild topLevelBuild) {
 
 		super(buildURL, cachedDownstreamBuildReport, topLevelBuild);
+
+		if (cachedDownstreamBuildReport != null) {
+			_axisName = cachedDownstreamBuildReport.getAxisName();
+		}
 	}
 
 	@Override
@@ -1256,6 +1260,7 @@ public class BaseDownstreamBuild extends BaseBuild implements DownstreamBuild {
 		new GenericFailureMessageGenerator()
 	};
 
+	private String _axisName;
 	private DownstreamBuildReport _downstreamBuildReport;
 	private Element _gitHubMessageElement;
 

@@ -77,6 +77,7 @@ public class TaskDefinitionResourceTest
 		ServiceContextThreadLocal.popServiceContext();
 	}
 
+	@Override
 	@Test
 	public void testDeleteTaskDefinition() throws Exception {
 		WorkflowDefinition workflowDefinition = _deployWorkflowDefinition();
@@ -95,6 +96,7 @@ public class TaskDefinitionResourceTest
 				workflowDefinitionId));
 	}
 
+	@Override
 	@Test
 	public void testGetTaskDefinitionsPage() throws Exception {
 		_testGetTaskDefinitionsPage();
@@ -113,6 +115,7 @@ public class TaskDefinitionResourceTest
 	public void testGetTaskDefinitionsPageWithSortInteger() throws Exception {
 	}
 
+	@Override
 	@Test
 	public void testPatchTaskDefinitionUpdateActive() throws Exception {
 		WorkflowDefinition workflowDefinition = _deployWorkflowDefinition();
@@ -129,6 +132,7 @@ public class TaskDefinitionResourceTest
 		Assert.assertTrue(taskDefinition.getActive());
 	}
 
+	@Override
 	@Test
 	public void testPostTaskDefinitionCopy() throws Exception {
 		WorkflowDefinition workflowDefinition1 =

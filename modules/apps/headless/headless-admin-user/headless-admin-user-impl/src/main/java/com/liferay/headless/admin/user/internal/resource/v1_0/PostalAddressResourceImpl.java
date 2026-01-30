@@ -437,29 +437,24 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 			throw new BadRequestException("Region not found");
 		}
 
-		Iterator<Region> regionIterator = regions.iterator();
+		Region region = _regionService.fetchRegion(
+			country.getCountryId(), postalAddress.getAddressRegion());
 
-		Region region = null;
-		String title = null;
+		if (region != null) {
+			return region.getRegionId();
+		}
 
-		Boolean found = false;
+		for (Region curRegion : regions) {
+			if (Objects.equals(
+					curRegion.getTitle(
+						contextAcceptLanguage.getPreferredLanguageId()),
+					postalAddress.getAddressRegion())) {
 
-		while (regionIterator.hasNext() && !found) {
-			region = regionIterator.next();
-
-			title = region.getTitle(
-				contextAcceptLanguage.getPreferredLanguageId());
-
-			if (title.equals(postalAddress.getAddressRegion())) {
-				found = true;
+				return curRegion.getRegionId();
 			}
 		}
 
-		if (!found) {
-			throw new BadRequestException("Region not found");
-		}
-
-		return region.getRegionId();
+		throw new BadRequestException("Region not found");
 	}
 
 	private PostalAddress _toPostalAddress(Address address) throws Exception {

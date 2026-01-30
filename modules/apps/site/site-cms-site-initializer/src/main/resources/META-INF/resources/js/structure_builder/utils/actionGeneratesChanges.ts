@@ -9,6 +9,7 @@ export default function actionGeneratesChanges(actionType: Action['type']) {
 	switch (actionType) {
 		case 'add-field':
 		case 'add-referenced-structures':
+		case 'add-related-content':
 		case 'add-repeatable-group':
 		case 'delete-child':
 		case 'duplicate-child':
@@ -17,6 +18,7 @@ export default function actionGeneratesChanges(actionType: Action['type']) {
 		case 'ungroup':
 		case 'update-field':
 		case 'update-repeatable-group':
+		case 'update-related-content':
 		case 'update-structure':
 			return true;
 		case 'add-error':

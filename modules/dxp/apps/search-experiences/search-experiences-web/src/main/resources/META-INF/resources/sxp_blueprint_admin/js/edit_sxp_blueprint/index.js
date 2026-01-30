@@ -13,7 +13,7 @@ import fetchData from '../utils/fetch/fetch_data';
 import renameKeys from '../utils/language/rename_keys';
 import transformLocale from '../utils/language/transform_locale';
 import {openInitialSuccessToast} from '../utils/toasts';
-import UQBEditSXPBlueprintForm from './UQBEditSXPBlueprintForm';
+import EditSXPBlueprintForm from './EditSXPBlueprintForm';
 
 export default function ({
 	defaultLocale,
@@ -64,7 +64,7 @@ export default function ({
 		>
 			<div className="edit-sxp-blueprint-root">
 				<ErrorBoundary>
-					<UQBEditSXPBlueprintForm
+					<EditSXPBlueprintForm
 						entityJSON={resource.entityJSON}
 						initialConfiguration={resource.configuration}
 						initialDescription={resource.description}

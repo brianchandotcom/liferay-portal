@@ -7,7 +7,7 @@ import {configure} from '@testing-library/dom';
 import {fireEvent, render, within} from '@testing-library/react';
 import React from 'react';
 
-import EditSXPBlueprintForm from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/edit_sxp_blueprint/UQBEditSXPBlueprintForm';
+import EditSXPBlueprintForm from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/edit_sxp_blueprint/EditSXPBlueprintForm';
 import fetchPreviewSearch from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/fetch/fetch_preview_search';
 import getUIConfigurationValues from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/sxp_element/get_ui_configuration_values';
 const Toasts = require('../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/toasts');

@@ -25,10 +25,12 @@ import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.AddressLocalServiceUtil;
 import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.ListTypeServiceUtil;
+import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
@@ -127,6 +129,7 @@ public class PostalAddressResourceTest
 		super.testPatchPostalAddress();
 
 		_testPatchPostalAddressNotPrimary();
+		_testPatchPostalAddressWithAddressRegion();
 		_testPatchPostalAddressWithoutListType();
 		_testPatchPostalAddressWithSubtype();
 	}
@@ -456,6 +459,49 @@ public class PostalAddressResourceTest
 						postalAddress.getId(), patchPostalAddress.getId())));
 	}
 
+	private void _testPatchPostalAddressWithAddressRegion() throws Exception {
+		Country country = _countryLocalService.addCountry(
+			"X" + RandomTestUtil.randomString(1),
+			"X" + RandomTestUtil.randomString(2), true, true,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.nextLong(), true,
+			false, false, ServiceContextTestUtil.getServiceContext());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		Region region1 = _regionLocalService.addRegion(
+			country.getCountryId(), true, RandomTestUtil.randomString(),
+			RandomTestUtil.nextDouble(), RandomTestUtil.randomString(),
+			serviceContext);
+
+		PostalAddress postalAddress = randomPostalAddress();
+
+		postalAddress.setAddressCountry(country.getTitle());
+		postalAddress.setAddressRegion(region1.getTitle());
+
+		postalAddress = testPostAccountPostalAddress_addPostalAddress(
+			postalAddress);
+
+		Assert.assertEquals(
+			region1.getTitle(), postalAddress.getAddressRegion());
+
+		Region region2 = _regionLocalService.addRegion(
+			country.getCountryId(), true, RandomTestUtil.randomString(),
+			RandomTestUtil.nextDouble(), RandomTestUtil.randomString(),
+			serviceContext);
+
+		postalAddress.setAddressRegion(region2.getRegionCode());
+
+		PostalAddress patchPostalAddress =
+			postalAddressResource.patchPostalAddress(
+				postalAddress.getId(), postalAddress);
+
+		Assert.assertEquals(postalAddress.getId(), patchPostalAddress.getId());
+		Assert.assertEquals(
+			region2.getTitle(), patchPostalAddress.getAddressRegion());
+	}
+
 	private void _testPatchPostalAddressWithoutListType() throws Exception {
 		PostalAddress randomPostalAddress = randomPostalAddress();
 
@@ -593,6 +639,9 @@ public class PostalAddressResourceTest
 
 	@DeleteAfterTestRun
 	private Organization _organization;
+
+	@Inject
+	private RegionLocalService _regionLocalService;
 
 	@DeleteAfterTestRun
 	private User _user;

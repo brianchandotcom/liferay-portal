@@ -3,12 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayBadge from '@clayui/badge';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
 import React from 'react';
 
 interface CardStyleModalProps {
+	badgeText?: string;
 	body: string;
 	buttons: Array<{
 		displayType: 'primary' | 'secondary';
@@ -22,6 +24,7 @@ interface CardStyleModalProps {
 }
 
 const CardStyleModal: React.FC<CardStyleModalProps> = ({
+	badgeText,
 	body,
 	buttons,
 	heading,
@@ -49,6 +52,15 @@ const CardStyleModal: React.FC<CardStyleModalProps> = ({
 						<img alt="" src={imageSrc} />
 					</div>
 				</div>
+
+				{badgeText ? (
+					<ClayBadge
+						className="c-mt-4 c-mx-4 text-uppercase"
+						displayType="primary"
+						label={badgeText}
+						translucent
+					/>
+				) : null}
 
 				<ClayModal.Title className="c-mx-4">{heading}</ClayModal.Title>
 

@@ -1,6 +1,7 @@
 {
 	"dependencies": {
 		"@clayui/alert": "*",
+		"@clayui/badge": "*",
 		"@clayui/button": "*",
 		"@clayui/color-picker": "*",
 		"@clayui/core": "*",

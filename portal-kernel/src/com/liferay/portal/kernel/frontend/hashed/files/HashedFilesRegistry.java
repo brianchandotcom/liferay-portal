@@ -16,7 +16,23 @@ import java.util.function.BiConsumer;
  */
 public interface HashedFilesRegistry {
 
-	public void forEach(BiConsumer<String, String> biConsumer);
+	/**
+	 * Iterates registered hashed file URIs passing the unhashed and hashed file
+	 * URI as arguments to the consumer in each iteration.
+	 *
+	 * @review
+	 */
+	public void forEachHashedFileURI(BiConsumer<String, String> biConsumer);
+
+	/**
+	 * Iterates registered servlet contexts passing the servlet context name
+	 * (eg: "frontend-js-web") and the associated hash to the consumer in each
+	 * iteration.
+	 *
+	 * @review
+	 */
+	public void forEachServletContextHash(
+		BiConsumer<String, String> biConsumer);
 
 	public CachingStrategy getCachingStrategy(
 		HttpServletRequest httpServletRequest);
@@ -46,5 +62,12 @@ public interface HashedFilesRegistry {
 	 * @review
 	 */
 	public URL getResource(String path);
+
+	/**
+	 * Get the hash of hashes of all hashed files associated to a servlet
+	 * context.
+	 * @review
+	 */
+	public String getServletContextHash(String servletContextName);
 
 }

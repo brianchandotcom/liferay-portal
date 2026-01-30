@@ -54,9 +54,9 @@ export default function EditorCustomizerModal() {
 					label: Liferay.Language.get('got-it'),
 				},
 			]}
-			heading={Liferay.Language.get('introducing-editor-customizer')}
 			imageSrc={`${config.imagesPath}/editor_customizer.svg`}
 			onCloseModal={handleClose}
+			title={Liferay.Language.get('introducing-editor-customizer')}
 		/>
 	);
 }

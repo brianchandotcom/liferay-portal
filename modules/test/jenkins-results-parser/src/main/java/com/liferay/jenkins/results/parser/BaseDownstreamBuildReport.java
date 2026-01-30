@@ -155,6 +155,14 @@ public abstract class BaseDownstreamBuildReport
 		return false;
 	}
 
+	public void setAxisName(String axisName) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(axisName)) {
+			return;
+		}
+
+		_buildReportJSONObject.put("axisName", axisName);
+	}
+
 	protected BaseDownstreamBuildReport(DownstreamBuild downstreamBuild) {
 		super(downstreamBuild.getBuildURL());
 

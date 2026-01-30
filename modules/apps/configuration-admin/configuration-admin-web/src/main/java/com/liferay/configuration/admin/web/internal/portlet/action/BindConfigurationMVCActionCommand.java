@@ -170,7 +170,7 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 
 		try {
 			configurationModel = _bindConfiguration(
-				configurationModel, properties,
+				themeDisplay.getCompanyId(), configurationModel, properties,
 				configurationScopeDisplayContext.getScope(),
 				configurationScopeDisplayContext.getScopePK());
 
@@ -213,7 +213,7 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 	}
 
 	private ConfigurationModel _bindConfiguration(
-			ConfigurationModel configurationModel,
+			long companyId, ConfigurationModel configurationModel,
 			Dictionary<String, Object> properties,
 			ExtendedObjectClassDefinition.Scope scope, Serializable scopePK)
 		throws ConfigurationModelListenerException, PortletException {
@@ -285,6 +285,13 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 
 			if (scoped) {
 				configuredProperties.put(scope.getPropertyKey(), scopePK);
+
+				if (scope.equals(ExtendedObjectClassDefinition.Scope.GROUP)) {
+					configuredProperties.put(
+						ExtendedObjectClassDefinition.Scope.COMPANY.
+							getPropertyKey(),
+						companyId);
+				}
 			}
 
 			// LPS-69521

@@ -8,6 +8,7 @@ package com.liferay.configuration.admin.util;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -48,25 +49,38 @@ public class ConfigurationFilterStringUtil {
 	}
 
 	public static String getGroupScopedFilterString(
-		Serializable groupId, String siteExternalReferenceCode) {
+		Serializable companyId, Serializable groupId,
+		String siteExternalReferenceCode) {
+
+		if ((companyId == null) ||
+			(GetterUtil.getLong(companyId) == CompanyConstants.SYSTEM)) {
+
+			throw new IllegalArgumentException(
+				"A valid company is expected when building a group scoped " +
+					"configuration filter string");
+		}
 
 		return StringBundler.concat(
 			"(&(|(", ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
 			StringPool.EQUAL, _toString(groupId),
 			")(siteExternalReferenceCode=",
-			GetterUtil.get(siteExternalReferenceCode, "*"), "))(!(",
+			GetterUtil.get(siteExternalReferenceCode, "*"), "))(",
+			ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey(),
+			StringPool.EQUAL, companyId, ")(!(",
 			ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE.
 				getPropertyKey(),
 			"=*)))");
 	}
 
 	public static String getGroupScopedFilterString(
-		Serializable groupId, String pid, String siteExternalReferenceCode) {
+		Serializable companyId, Serializable groupId, String pid,
+		String siteExternalReferenceCode) {
 
 		return StringBundler.concat(
 			StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND,
 			_getScopedFilterString(pid),
-			getGroupScopedFilterString(groupId, siteExternalReferenceCode),
+			getGroupScopedFilterString(
+				companyId, groupId, siteExternalReferenceCode),
 			StringPool.CLOSE_PARENTHESIS);
 	}
 

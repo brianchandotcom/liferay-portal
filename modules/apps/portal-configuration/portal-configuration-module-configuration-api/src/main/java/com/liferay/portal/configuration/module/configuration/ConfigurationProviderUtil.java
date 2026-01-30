@@ -28,6 +28,11 @@ public class ConfigurationProviderUtil {
 		configurationProvider.deleteCompanyConfiguration(clazz, companyId);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #deleteGroupConfiguration(Class, long, long)}
+	 */
+	@Deprecated
 	public static <T> void deleteGroupConfiguration(
 			Class<T> clazz, long groupId)
 		throws ConfigurationException {
@@ -36,6 +41,17 @@ public class ConfigurationProviderUtil {
 			_configurationProviderSnapshot.get();
 
 		configurationProvider.deleteGroupConfiguration(clazz, groupId);
+	}
+
+	public static <T> void deleteGroupConfiguration(
+			Class<T> clazz, long companyId, long groupId)
+		throws ConfigurationException {
+
+		ConfigurationProvider configurationProvider =
+			_configurationProviderSnapshot.get();
+
+		configurationProvider.deleteGroupConfiguration(
+			clazz, companyId, groupId);
 	}
 
 	public static <T> void deletePortletInstanceConfiguration(
@@ -81,6 +97,11 @@ public class ConfigurationProviderUtil {
 		return _configurationProviderSnapshot.get();
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #getGroupConfiguration(Class, long, long)}
+	 */
+	@Deprecated
 	public static <T> T getGroupConfiguration(Class<T> clazz, long groupId)
 		throws ConfigurationException {
 
@@ -88,6 +109,17 @@ public class ConfigurationProviderUtil {
 			_configurationProviderSnapshot.get();
 
 		return configurationProvider.getGroupConfiguration(clazz, groupId);
+	}
+
+	public static <T> T getGroupConfiguration(
+			Class<T> clazz, long companyId, long groupId)
+		throws ConfigurationException {
+
+		ConfigurationProvider configurationProvider =
+			_configurationProviderSnapshot.get();
+
+		return configurationProvider.getGroupConfiguration(
+			clazz, companyId, groupId);
 	}
 
 	public static <T> T getPortletInstanceConfiguration(
@@ -133,6 +165,11 @@ public class ConfigurationProviderUtil {
 			clazz, companyId, properties);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #saveGroupConfiguration(Class, long, long, Dictionary)}
+	 */
+	@Deprecated
 	public static <T> void saveGroupConfiguration(
 			Class<T> clazz, long groupId, Dictionary<String, Object> properties)
 		throws ConfigurationException {
@@ -142,6 +179,18 @@ public class ConfigurationProviderUtil {
 
 		configurationProvider.saveGroupConfiguration(
 			clazz, groupId, properties);
+	}
+
+	public static <T> void saveGroupConfiguration(
+			Class<T> clazz, long companyId, long groupId,
+			Dictionary<String, Object> properties)
+		throws ConfigurationException {
+
+		ConfigurationProvider configurationProvider =
+			_configurationProviderSnapshot.get();
+
+		configurationProvider.saveGroupConfiguration(
+			clazz, companyId, groupId, properties);
 	}
 
 	public static <T> void savePortletInstanceConfiguration(

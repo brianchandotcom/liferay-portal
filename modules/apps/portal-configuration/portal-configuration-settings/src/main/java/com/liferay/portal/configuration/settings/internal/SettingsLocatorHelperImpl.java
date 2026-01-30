@@ -91,7 +91,7 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 		long companyId, String configurationPid, Settings parentSettings) {
 
 		return _getScopedConfigurationBeanSettings(
-			ExtendedObjectClassDefinition.Scope.COMPANY, companyId,
+			companyId, ExtendedObjectClassDefinition.Scope.COMPANY, companyId,
 			configurationPid, parentSettings);
 	}
 
@@ -133,9 +133,16 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 	public Settings getGroupConfigurationBeanSettings(
 		long groupId, String configurationPid, Settings parentSettings) {
 
-		return _getScopedConfigurationBeanSettings(
-			ExtendedObjectClassDefinition.Scope.GROUP, groupId,
-			configurationPid, parentSettings);
+		try {
+			Group group = _groupLocalService.getGroup(groupId);
+
+			return _getScopedConfigurationBeanSettings(
+				group.getCompanyId(), ExtendedObjectClassDefinition.Scope.GROUP,
+				groupId, configurationPid, parentSettings);
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
 	}
 
 	@Override
@@ -169,7 +176,7 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 		String portletId, String configurationPid, Settings parentSettings) {
 
 		return _getScopedConfigurationBeanSettings(
-			ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE, portletId,
+			0L, ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE, portletId,
 			configurationPid, parentSettings);
 	}
 
@@ -272,8 +279,9 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 	}
 
 	private Settings _getScopedConfigurationBeanSettings(
-		ExtendedObjectClassDefinition.Scope scope, Serializable scopePK,
-		String configurationPid, Settings parentSettings) {
+		long companyId, ExtendedObjectClassDefinition.Scope scope,
+		Serializable scopePK, String configurationPid,
+		Settings parentSettings) {
 
 		_bundleTrackerDCLSingleton.getSingleton(this::_createBundleTracker);
 
@@ -288,7 +296,7 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 
 		Object configurationBean =
 			scopedConfigurationManagedServiceFactory.getConfiguration(
-				scope, scopePK);
+				companyId, scope, scopePK);
 
 		if (configurationBean == null) {
 			return parentSettings;

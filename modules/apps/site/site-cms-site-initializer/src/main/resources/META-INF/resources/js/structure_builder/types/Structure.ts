@@ -29,6 +29,17 @@ export type ReferencedStructure = {
 	workflows: Workflows;
 };
 
+export type RelatedContent = {
+	erc: string;
+	label: Liferay.Language.LocalizedValue<string>;
+	multiselection: boolean;
+	name: string;
+	parent: Uuid;
+	relatedStructureERC: string;
+	type: 'related-content';
+	uuid: Uuid;
+};
+
 export type RepeatableGroup = {
 	children: Map<Uuid, StructureChild>;
 	erc: string;
@@ -41,7 +52,11 @@ export type RepeatableGroup = {
 	uuid: Uuid;
 };
 
-export type StructureChild = Field | ReferencedStructure | RepeatableGroup;
+export type StructureChild =
+	| Field
+	| ReferencedStructure
+	| RelatedContent
+	| RepeatableGroup;
 
 export type Structure = {
 	children: Map<Uuid, StructureChild>;

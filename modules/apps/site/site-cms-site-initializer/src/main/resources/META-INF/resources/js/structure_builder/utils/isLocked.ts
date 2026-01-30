@@ -8,6 +8,7 @@ import {StructureChild} from '../types/Structure';
 export default function isLocked(child: StructureChild) {
 	return (
 		child.type !== 'referenced-structure' &&
+		child.type !== 'related-content' &&
 		child.type !== 'repeatable-group' &&
 		child.locked
 	);

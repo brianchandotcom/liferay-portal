@@ -7,6 +7,7 @@ import {State} from '../../structure_builder/contexts/StateContext';
 import {Structure} from '../../structure_builder/types/Structure';
 import buildGroupObjectDefinitions from '../../structure_builder/utils/buildGroupObjectDefinitions';
 import buildObjectDefinition from '../../structure_builder/utils/buildObjectDefinition';
+import buildObjectRelationships from '../../structure_builder/utils/buildObjectRelationships';
 import getRandomId from '../../structure_builder/utils/getRandomId';
 import ApiHelper from './ApiHelper';
 
@@ -60,10 +61,45 @@ async function createStructure({
 		workflows,
 	});
 
-	return await ApiHelper.post<{id: number}>(
+	const {data, error} = await ApiHelper.post<{id: number}>(
 		'/o/object-admin/v1.0/object-definitions',
 		mainObjectDefinition
 	);
+
+	if (error) {
+		return {
+			data: null,
+			error: Liferay.Language.get(
+				'an-unexpected-error-occurred-while-saving-or-publishing-the-content-structure'
+			),
+		};
+	}
+
+	const objectRelationships = buildObjectRelationships({
+		children,
+		structureERC: erc,
+	});
+
+	for (const objectRelationship of objectRelationships) {
+		const {error} = await ApiHelper.post(
+			`/o/object-admin/v1.0/object-definitions/by-external-reference-code/${objectRelationship.objectDefinitionExternalReferenceCode1}/object-relationships`,
+			objectRelationship
+		);
+
+		if (error) {
+			return {
+				data: null,
+				error: Liferay.Language.get(
+					'an-unexpected-error-occurred-while-saving-or-publishing-the-content-structure'
+				),
+			};
+		}
+	}
+
+	return {
+		data,
+		error: null,
+	};
 }
 
 async function updateStructure({

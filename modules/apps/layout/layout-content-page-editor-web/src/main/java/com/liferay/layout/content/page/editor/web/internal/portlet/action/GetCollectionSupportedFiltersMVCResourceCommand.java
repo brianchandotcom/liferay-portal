@@ -19,7 +19,9 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.ResourceRequest;
 import jakarta.portlet.ResourceResponse;
@@ -48,14 +50,17 @@ public class GetCollectionSupportedFiltersMVCResourceCommand
 		String collections = ParamUtil.getString(
 			resourceRequest, "collections");
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
 			_getSupportedFiltersJSONObject(
-				_jsonFactory.createJSONArray(collections)));
+				_jsonFactory.createJSONArray(collections), themeDisplay));
 	}
 
 	private JSONObject _getSupportedFiltersJSONObject(
-			JSONArray collectionsJSONArray)
+			JSONArray collectionsJSONArray, ThemeDisplay themeDisplay)
 		throws Exception {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
@@ -90,6 +95,8 @@ public class GetCollectionSupportedFiltersMVCResourceCommand
 				JSONUtil.toJSONArray(
 					layoutListRetriever.getSupportedInfoFilters(
 						listObjectReferenceFactory.getListObjectReference(
+							themeDisplay.getCompanyId(),
+							themeDisplay.getScopeGroupId(),
 							layoutObjectReferenceJSONObject)),
 					InfoFilter::getFilterTypeName));
 		}

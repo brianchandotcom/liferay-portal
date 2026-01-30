@@ -247,7 +247,7 @@ public class GetCollectionFieldMVCResourceCommand
 
 		ListObjectReference listObjectReference =
 			listObjectReferenceFactory.getListObjectReference(
-				layoutObjectReferenceJSONObject);
+				companyId, scopeGroupId, layoutObjectReferenceJSONObject);
 
 		String originalItemType = null;
 

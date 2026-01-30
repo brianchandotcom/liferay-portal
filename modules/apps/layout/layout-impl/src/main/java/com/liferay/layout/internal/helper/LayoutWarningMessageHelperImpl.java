@@ -387,6 +387,7 @@ public class LayoutWarningMessageHelperImpl
 
 		InfoPage<?> infoPage = layoutListRetriever.getInfoPage(
 			listObjectReferenceFactory.getListObjectReference(
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
 				layoutObjectReferenceJSONObject),
 			defaultLayoutListRetrieverContext);
 

@@ -211,7 +211,8 @@ public class FragmentEntryConfigurationParserImpl
 				}
 
 				Object contextListObject = _getInfoListObjectEntry(
-					themeDisplay.getScopeGroupId(), segmentsEntryIds,
+					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+					segmentsEntryIds,
 					fragmentConfigurationField.getTypeOptionsJSONObject(),
 					configurationValuesJSONObject.getString(name));
 
@@ -693,7 +694,7 @@ public class FragmentEntryConfigurationParserImpl
 	}
 
 	private Object _getInfoListObjectEntry(
-		long scopeGroupId, long[] segmentsEntryIds,
+		long companyId, long scopeGroupId, long[] segmentsEntryIds,
 		JSONObject typeOptionsJSONObject, String value) {
 
 		if (Validator.isNull(value)) {
@@ -744,7 +745,8 @@ public class FragmentEntryConfigurationParserImpl
 				segmentsEntryIds);
 
 			InfoPage<?> infoPage = layoutListRetriever.getInfoPage(
-				listObjectReferenceFactory.getListObjectReference(jsonObject),
+				listObjectReferenceFactory.getListObjectReference(
+					companyId, scopeGroupId, jsonObject),
 				defaultLayoutListRetrieverContext);
 
 			return infoPage.getPageItems();

@@ -12,6 +12,7 @@ import {accountSettingsPagesTest} from '../../../fixtures/accountSettingsPagesTe
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
@@ -30,6 +31,10 @@ export const test = mergeTests(
 	apiHelpersTest,
 	changeTrackingPagesTest,
 	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPD-34594': {enabled: true},
+		'LPS-164563': {enabled: true},
+	}),
 	isolatedSiteTest,
 	journalPagesTest,
 	pagesAdminPagesTest,
@@ -842,4 +847,18 @@ test.describe('Publications with incomplete status tests', () => {
 			ctCollection2.body.id
 		);
 	});
+});
+
+test('LPD-76512 User custom view is enabled for review changes', async ({
+	changeTrackingPage,
+	ctCollection,
+	page,
+}) => {
+	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
+
+	const viewsSelectorButton = page.getByLabel('Views');
+
+	await expect(viewsSelectorButton).toBeVisible();
+
+	await expect(viewsSelectorButton).toHaveText('Default View');
 });

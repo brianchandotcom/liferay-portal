@@ -12,7 +12,12 @@ import focusInvalidElement from '../../common/utils/focusInvalidElement';
 import {State, useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectState from '../selectors/selectState';
 import selectStructureChildren from '../selectors/selectStructureChildren';
-import {RepeatableGroup, Structure, StructureChild} from '../types/Structure';
+import {
+	RelatedContent,
+	RepeatableGroup,
+	Structure,
+	StructureChild,
+} from '../types/Structure';
 import {Field, MultiselectField, SingleSelectField} from './field';
 
 const NAME_MAX_LENGTH = 41;
@@ -25,6 +30,7 @@ export type ValidationProperty =
 	| 'label'
 	| 'max-length'
 	| 'picklist'
+	| 'related-content'
 	| 'spaces';
 
 export type ValidationError =
@@ -123,6 +129,47 @@ export function validateField({
 		settings.maxLength
 			? errors.delete('max-length')
 			: errors.set('max-length', 'empty');
+	}
+
+	return errors;
+}
+
+export function validateRelatedContent({
+	currentErrors,
+	data,
+}: {
+	currentErrors?: ErrorMap;
+	data: Partial<RelatedContent>;
+}): ErrorMap {
+	const {erc, label, relatedStructureERC} = data;
+
+	const errors = new Map(currentErrors);
+
+	if (!isNullOrUndefined(erc)) {
+		if (!erc) {
+			errors.set('erc', 'empty');
+		}
+		else if (erc.length > ERC_MAX_LENGTH) {
+			errors.set('erc', 'max-length');
+		}
+		else if (erc.startsWith('L_')) {
+			errors.set('erc', 'prefix-reserved');
+		}
+		else {
+			errors.delete('erc');
+		}
+	}
+
+	if (!isNullOrUndefined(label)) {
+		Object.values(label ?? {}).every(Boolean)
+			? errors.delete('label')
+			: errors.set('label', 'empty');
+	}
+
+	if (!isNullOrUndefined(relatedStructureERC)) {
+		relatedStructureERC
+			? errors.delete('related-content')
+			: errors.set('related-content', 'empty');
 	}
 
 	return errors;
@@ -359,7 +406,14 @@ export function useValidate() {
 		) => {
 			let errors: ErrorMap = new Map();
 
-			if (child.type === 'repeatable-group') {
+			if (child.type === 'related-content') {
+				errors = validateRelatedContent({data: child});
+
+				if (errors.size) {
+					invalids.set(child.uuid, errors);
+				}
+			}
+			else if (child.type === 'repeatable-group') {
 				errors = validateRepeatableGroup({data: child});
 
 				if (errors.size) {

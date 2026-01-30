@@ -61,6 +61,10 @@ public interface ExportImportHelper {
 	public String getExportableRootPortletId(long companyId, String portletId)
 		throws Exception;
 
+	public String getExportableRootPortletId(
+			long companyId, String sourcePortletId, String targetPortletId)
+		throws Exception;
+
 	public Map<String, Boolean> getExportPortletControlsMap(
 			long companyId, String portletId,
 			Map<String, String[]> parameterMap)
@@ -73,6 +77,12 @@ public interface ExportImportHelper {
 
 	public Map<String, Boolean> getImportPortletControlsMap(
 			long companyId, String portletId,
+			Map<String, String[]> parameterMap, Element portletDataElement,
+			ManifestSummary manifestSummary)
+		throws Exception;
+
+	public Map<String, Boolean> getImportPortletControlsMap(
+			long companyId, String sourcePortletId, String targetPortletId,
 			Map<String, String[]> parameterMap, Element portletDataElement,
 			ManifestSummary manifestSummary)
 		throws Exception;

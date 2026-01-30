@@ -366,8 +366,6 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 					if (!JenkinsResultsParserUtil.isNullOrEmpty(slack)) {
 						NotificationUtil.sendSlackNotification(
 							message, slack, "Build Reinvoked");
-
-						return;
 					}
 
 					String email = matcher.group("slack");

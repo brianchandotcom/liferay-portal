@@ -4,14 +4,12 @@
 		"source": "https://github.com/liferay/clay"
 	},
 	"languages": [
-		"jsx",
-		"typescript",
 		"tsx",
-		"javascript",
-		"js",
-		"shell",
+		"typescript",
+		"jsx",
 		"html",
-		"scss"
+		"scss",
+		"shell"
 	],
 	"siteUrl": "https://clayui.com",
 	"theme": "github-light"

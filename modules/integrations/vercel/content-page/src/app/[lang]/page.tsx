@@ -11,6 +11,7 @@ import {CTA} from '../../components/cta';
 import {LocationDetails} from '../../components/location-details';
 import {LocalizedField} from '../../liferay/index';
 import {liferay} from '../../liferay/server';
+import {getReadingTime} from '../../utils';
 import {getEventsData} from './data';
 
 const getLocalizedFieldValue = ({
@@ -160,9 +161,21 @@ export default async function Home({
 						{upcomingEvents.map((upcomingEvent, index) => (
 							<div className="event-card group" key={index}>
 								<div className="event-date-badge">
-									<div className="font-bold text-3xl">15</div>
+									<div className="font-bold text-3xl">
+										{new Date(
+											upcomingEvent.date ||
+												upcomingEvent.dateCreated
+										).getDate()}
+									</div>
 
-									<div className="text-xs uppercase">Mar</div>
+									<div className="text-xs uppercase">
+										{new Date(
+											upcomingEvent.date ||
+												upcomingEvent.dateCreated
+										).toLocaleString(lang, {
+											month: 'short',
+										})}
+									</div>
 								</div>
 
 								<div className="event-image-container">
@@ -280,7 +293,9 @@ export default async function Home({
 
 										<span>•</span>
 
-										<span>5 min read</span>
+										<span>
+											{getReadingTime(event.summary)}
+										</span>
 									</div>
 
 									<h3 className="font-bold group-hover:text-blue-600 mb-3 text-xl transition-colors">

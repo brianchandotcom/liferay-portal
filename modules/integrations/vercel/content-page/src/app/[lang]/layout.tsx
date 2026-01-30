@@ -7,8 +7,9 @@ import {Geist, Geist_Mono} from 'next/font/google';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import './globals.css';
 import {liferay} from '../../liferay/server';
+
+import './globals.css';
 
 import type {Metadata} from 'next';
 
@@ -55,7 +56,7 @@ export default async function RootLayout({
 						</Link>
 
 						<a
-							href="https://github.com/liferay/liferay-portal/tree/master/modules/integrations/vercel/templates/content-page/"
+							href="https://github.com/liferay/liferay-portal/tree/master/modules/integrations/vercel/content-page/"
 							rel="noopener noreferrer"
 							target="_blank"
 							title="See code on GitHub"
@@ -75,21 +76,26 @@ export default async function RootLayout({
 
 				<footer className="layout-footer">
 					<div className="layout-footer__container">
-						<p>
+						<p className="text-gray-600 text-sm">
 							&copy; {new Date().getFullYear()} Liferay Inc. All
 							Rights Reserved
 						</p>
 
-						<nav className="flex gap-4">
+						<nav className="flex gap-6">
 							{liferay.getSupportedLanguages().map((lang) => (
-								<Link href={`/${lang}`} key={lang}>
-									{lang}
+								<Link
+									className="hover:text-gray-900 text-gray-600 text-sm transition-colors"
+									href={`/${lang}`}
+									key={lang}
+								>
+									{lang.toUpperCase()}
 								</Link>
 							))}
 						</nav>
 
-						<p>
+						<p className="text-sm">
 							<a
+								className="hover:text-gray-900 text-gray-600 transition-colors"
 								href="https://liferay.com"
 								rel="noopener noreferrer"
 								target="_blank"

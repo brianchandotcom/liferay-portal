@@ -4,6 +4,7 @@ exports[`SegmentActivationCard should render when frequency type is batch 1`] = 
 <div>
   <div
     class="card card-root card-root"
+    id="container.report.segmentActivationCard"
   >
     <div
       class="card-header align-items-center d-flex justify-content-between"
@@ -81,6 +82,7 @@ exports[`SegmentActivationCard should render when frequency type is real time 1`
 <div>
   <div
     class="card card-root card-root"
+    id="container.report.segmentActivationCard"
   >
     <div
       class="card-header align-items-center d-flex justify-content-between"
@@ -158,6 +160,7 @@ exports[`SegmentActivationCard should render with dates when frequency type is b
 <div>
   <div
     class="card card-root card-root"
+    id="container.report.segmentActivationCard"
   >
     <div
       class="card-header align-items-center d-flex justify-content-between"

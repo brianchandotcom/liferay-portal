@@ -265,7 +265,8 @@ public class StagedGroupStagedModelDataHandler
 			_log.debug("Importing portlets");
 		}
 
-		_importSitePortlets(portletDataContext, sitePortletElements);
+		_importSitePortlets(
+			portletDataContext, sitePortletElements, stagedGroup);
 
 		// Import services
 
@@ -484,7 +485,7 @@ public class StagedGroupStagedModelDataHandler
 
 	private void _importSitePortlets(
 			PortletDataContext portletDataContext,
-			List<Element> sitePortletElements)
+			List<Element> sitePortletElements, StagedGroup stagedGroup)
 		throws Exception {
 
 		Map<Long, Layout> layouts =
@@ -580,12 +581,17 @@ public class StagedGroupStagedModelDataHandler
 						portletDataHandlerKey);
 
 				if (portletDataHandler == null) {
-					throw new PortletDataException(
-						_language.format(
-							LocaleUtil.US,
-							"the-data-handler-for-the-x-portlet-is-missing-" +
-								"from-the-system",
-							portletElement.attributeValue("display-name")));
+					StagedModelDataHandlerUtil.handleException(
+						portletDataContext,
+						new PortletDataException(
+							_language.format(
+								LocaleUtil.US,
+								"the-data-handler-for-the-x-portlet-is-" +
+									"missing-from-the-system",
+								portletElement.attributeValue("display-name"))),
+						stagedGroup);
+
+					continue;
 				}
 
 				targetPortletId = portletDataHandler.getPortletId();

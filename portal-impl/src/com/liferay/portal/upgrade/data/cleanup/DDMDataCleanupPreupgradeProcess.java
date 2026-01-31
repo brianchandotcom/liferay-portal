@@ -31,7 +31,7 @@ public class DDMDataCleanupPreupgradeProcess
 			_getDDMTemplateDataCleanupPreupgradeProcess();
 
 		Map<DataCleanupPreupgradeProcess, List<DataCleanupPreupgradeProcess>>
-			dataCleanupPreupgradeProcessMap =
+			dataCleanupPreupgradeProcessesMap =
 				LinkedHashMapBuilder.
 					<DataCleanupPreupgradeProcess,
 					 List<DataCleanupPreupgradeProcess>>put(
@@ -62,7 +62,7 @@ public class DDMDataCleanupPreupgradeProcess
 
 		List<DataCleanupPreupgradeProcess> dataCleanupPreupgradeProcesses =
 			getSortedDataCleanupPreupgradeProcesses(
-				dataCleanupPreupgradeProcessMap);
+				dataCleanupPreupgradeProcessesMap);
 
 		for (DataCleanupPreupgradeProcess dataCleanupPreupgradeProcess :
 				dataCleanupPreupgradeProcesses) {

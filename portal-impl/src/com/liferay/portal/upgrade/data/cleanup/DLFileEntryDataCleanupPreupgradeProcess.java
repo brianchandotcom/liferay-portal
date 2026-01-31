@@ -46,7 +46,7 @@ public class DLFileEntryDataCleanupPreupgradeProcess
 				_getDLFileEntryPointingDLFileVersionDataCleanupPreupgradeProcess();
 
 		Map<DataCleanupPreupgradeProcess, List<DataCleanupPreupgradeProcess>>
-			dataCleanupPreupgradeProcessMap =
+			dataCleanupPreupgradeProcessesMap =
 				LinkedHashMapBuilder.
 					<DataCleanupPreupgradeProcess,
 					 List<DataCleanupPreupgradeProcess>>put(
@@ -74,7 +74,7 @@ public class DLFileEntryDataCleanupPreupgradeProcess
 
 		List<DataCleanupPreupgradeProcess> dataCleanupPreupgradeProcesses =
 			getSortedDataCleanupPreupgradeProcesses(
-				dataCleanupPreupgradeProcessMap);
+				dataCleanupPreupgradeProcessesMap);
 
 		for (DataCleanupPreupgradeProcess dataCleanupPreupgradeProcess :
 				dataCleanupPreupgradeProcesses) {

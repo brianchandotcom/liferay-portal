@@ -34,7 +34,7 @@ public class LayoutDataCleanupPreupgradeProcess
 			_getLayoutSelfDataDataCleanupPreupgradeProcess();
 
 		Map<DataCleanupPreupgradeProcess, List<DataCleanupPreupgradeProcess>>
-			dataCleanupPreupgradeProcessMap =
+			dataCleanupPreupgradeProcessesMap =
 				LinkedHashMapBuilder.
 					<DataCleanupPreupgradeProcess,
 					 List<DataCleanupPreupgradeProcess>>put(
@@ -49,7 +49,7 @@ public class LayoutDataCleanupPreupgradeProcess
 
 		List<DataCleanupPreupgradeProcess> dataCleanupPreupgradeProcesses =
 			getSortedDataCleanupPreupgradeProcesses(
-				dataCleanupPreupgradeProcessMap);
+				dataCleanupPreupgradeProcessesMap);
 
 		for (DataCleanupPreupgradeProcess dataCleanupPreupgradeProcess :
 				dataCleanupPreupgradeProcesses) {

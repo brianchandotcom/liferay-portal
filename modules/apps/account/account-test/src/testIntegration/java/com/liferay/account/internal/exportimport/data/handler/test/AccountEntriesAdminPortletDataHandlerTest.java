@@ -352,15 +352,15 @@ public class AccountEntriesAdminPortletDataHandlerTest {
 				TestPropsValues.getCompanyId(),
 				AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN);
 
+		Assert.assertThat(
+			ClassUtil.getClassName(portletDataHandler),
+			CoreMatchers.containsString("BatchEnginePortletDataHandler"));
 		Assert.assertEquals(
 			AccountEntry.class.getName(),
 			portletDataHandler.getClassNames()[0]);
 		Assert.assertEquals(
 			AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
-			portletDataHandler.getName());
-		Assert.assertThat(
-			ClassUtil.getClassName(portletDataHandler),
-			CoreMatchers.containsString("BatchEnginePortletDataHandler"));
+			portletDataHandler.getPortletId());
 	}
 
 	@Inject

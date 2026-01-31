@@ -165,7 +165,7 @@ public interface PortletDataHandler {
 	public PortletDataHandlerControl[] getImportPortletDataHandlerControls()
 		throws PortletDataException;
 
-	public default String getName() {
+	public default String getName(Locale locale) {
 		Class<? extends PortletDataHandler> clazz = getClass();
 
 		return clazz.getName();

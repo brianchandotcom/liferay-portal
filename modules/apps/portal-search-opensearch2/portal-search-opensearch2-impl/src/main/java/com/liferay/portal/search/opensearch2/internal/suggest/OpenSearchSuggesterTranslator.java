@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.search.suggest.TermSuggester;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.opensearch2.internal.legacy.query.OpenSearchQueryTranslator;
 import com.liferay.portal.search.opensearch2.internal.util.ConversionUtil;
 import com.liferay.portal.search.opensearch2.internal.util.JsonpUtil;
@@ -43,10 +42,6 @@ import org.opensearch.client.opensearch.core.search.SuggestSort;
 public class OpenSearchSuggesterTranslator
 	implements SuggesterTranslator<FieldSuggester>,
 			   SuggesterVisitor<FieldSuggester> {
-
-	public OpenSearchSuggesterTranslator(IndexNameBuilder indexNameBuilder) {
-		_queryTranslator = new OpenSearchQueryTranslator(indexNameBuilder);
-	}
 
 	@Override
 	public FieldSuggester translate(
@@ -297,6 +292,7 @@ public class OpenSearchSuggesterTranslator
 		return SuggestMode.Missing;
 	}
 
-	private final QueryTranslator<QueryVariant> _queryTranslator;
+	private final QueryTranslator<QueryVariant> _queryTranslator =
+		new OpenSearchQueryTranslator();
 
 }

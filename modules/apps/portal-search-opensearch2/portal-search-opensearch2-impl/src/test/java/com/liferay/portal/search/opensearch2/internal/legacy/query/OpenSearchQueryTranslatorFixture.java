@@ -8,9 +8,7 @@ package com.liferay.portal.search.opensearch2.internal.legacy.query;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.filter.FilterTranslator;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.opensearch2.internal.filter.OpenSearchFilterTranslatorFixture;
-import com.liferay.portal.search.opensearch2.internal.index.CompanyIdIndexNameBuilder;
 
 import org.opensearch.client.opensearch._types.query_dsl.QueryVariant;
 
@@ -21,7 +19,7 @@ public class OpenSearchQueryTranslatorFixture {
 
 	public OpenSearchQueryTranslatorFixture() {
 		OpenSearchQueryTranslator openSearchQueryTranslator =
-			new OpenSearchQueryTranslator(null);
+			new OpenSearchQueryTranslator();
 
 		OpenSearchFilterTranslatorFixture openSearchFilterTranslatorFixture =
 			new OpenSearchFilterTranslatorFixture(openSearchQueryTranslator);
@@ -38,15 +36,6 @@ public class OpenSearchQueryTranslatorFixture {
 			});
 
 		_openSearchQueryTranslator = openSearchQueryTranslator;
-
-		IndexNameBuilder indexNameBuilder = new CompanyIdIndexNameBuilder() {
-			{
-				setIndexNamePrefix(null);
-			}
-		};
-
-		ReflectionTestUtil.setFieldValue(
-			_openSearchQueryTranslator, "_indexNameBuilder", indexNameBuilder);
 	}
 
 	public OpenSearchQueryTranslator getOpenSearchQueryTranslator() {

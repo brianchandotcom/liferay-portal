@@ -8,7 +8,6 @@ package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.doc
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentResponse;
-import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
 import com.liferay.portal.search.opensearch2.internal.legacy.query.OpenSearchQueryTranslator;
 import com.liferay.portal.search.opensearch2.internal.script.ScriptTranslator;
@@ -29,7 +28,6 @@ import org.opensearch.client.opensearch._types.query_dsl.QueryVariant;
 import org.opensearch.client.opensearch.core.UpdateByQueryRequest;
 import org.opensearch.client.opensearch.core.UpdateByQueryResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -51,12 +49,6 @@ public class UpdateByQueryDocumentRequestExecutorImpl
 
 		return new UpdateByQueryDocumentResponse(
 			updateByQueryResponse.total(), updateByQueryResponse.took());
-	}
-
-	@Activate
-	protected void activate() {
-		_legacyQueryTranslator = new OpenSearchQueryTranslator(
-			_indexNameBuilder);
 	}
 
 	protected UpdateByQueryRequest createUpdateByQueryRequest(
@@ -152,11 +144,8 @@ public class UpdateByQueryDocumentRequestExecutorImpl
 		}
 	}
 
-	@Reference
-	private IndexNameBuilder _indexNameBuilder;
-
-	private com.liferay.portal.kernel.search.query.QueryTranslator<QueryVariant>
-		_legacyQueryTranslator;
+	private final com.liferay.portal.kernel.search.query.QueryTranslator
+		<QueryVariant> _legacyQueryTranslator = new OpenSearchQueryTranslator();
 
 	@Reference
 	private OpenSearchConnectionManager _openSearchConnectionManager;

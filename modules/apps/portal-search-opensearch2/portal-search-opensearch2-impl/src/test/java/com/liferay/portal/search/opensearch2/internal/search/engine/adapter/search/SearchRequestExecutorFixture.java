@@ -488,7 +488,7 @@ public class SearchRequestExecutorFixture {
 
 		ReflectionTestUtil.setFieldValue(
 			suggestSearchRequestExecutor, "_suggesterTranslator",
-			new OpenSearchSuggesterTranslator(null));
+			new OpenSearchSuggesterTranslator());
 
 		return suggestSearchRequestExecutor;
 	}

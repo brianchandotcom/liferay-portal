@@ -16,7 +16,7 @@ PanelAppRegistry panelAppRegistry = (PanelAppRegistry)request.getAttribute(Appli
 PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegistry);
 %>
 
-<ul aria-orientation="vertical" class="m-1 p-0" id="<portlet:namespace /><%= panelCategory.getKey() %>_panel" role="menubar">
+<ul aria-orientation="vertical" class="p-0" id="<portlet:namespace /><%= panelCategory.getKey() %>_panel" role="menubar">
 	<li class="list-group" role="none">
 
 		<%

@@ -11,7 +11,7 @@ import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConne
 import com.liferay.portal.search.opensearch2.internal.facet.FacetProcessor;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.cluster.ClusterRequestExecutorTestUtil;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.DocumentRequestExecutorFixture;
-import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.index.IndexRequestExecutorFixture;
+import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.index.IndexRequestExecutorTestUtil;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.search.SearchRequestExecutorFixture;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.snapshot.SnapshotRequestExecutorTestUtil;
 
@@ -46,13 +46,6 @@ public class OpenSearchEngineAdapterFixture {
 				}
 			};
 
-		IndexRequestExecutorFixture indexRequestExecutorFixture =
-			new IndexRequestExecutorFixture() {
-				{
-					setOpenSearchConnectionManager(openSearchConnectionManager);
-				}
-			};
-
 		_searchRequestExecutorFixture = new SearchRequestExecutorFixture() {
 			{
 				setFacetProcessor(facetProcessor);
@@ -61,7 +54,6 @@ public class OpenSearchEngineAdapterFixture {
 		};
 
 		documentRequestExecutorFixture.setUp();
-		indexRequestExecutorFixture.setUp();
 		_searchRequestExecutorFixture.setUp();
 
 		SearchEngineAdapter searchEngineAdapter =
@@ -80,7 +72,8 @@ public class OpenSearchEngineAdapterFixture {
 			documentRequestExecutorFixture.getDocumentRequestExecutor());
 		ReflectionTestUtil.setFieldValue(
 			searchEngineAdapter, "_indexRequestExecutor",
-			indexRequestExecutorFixture.getIndexRequestExecutor());
+			IndexRequestExecutorTestUtil.createIndexRequestExecutor(
+				openSearchConnectionManager));
 		ReflectionTestUtil.setFieldValue(
 			searchEngineAdapter, "_searchRequestExecutor",
 			_searchRequestExecutorFixture.getSearchRequestExecutor());

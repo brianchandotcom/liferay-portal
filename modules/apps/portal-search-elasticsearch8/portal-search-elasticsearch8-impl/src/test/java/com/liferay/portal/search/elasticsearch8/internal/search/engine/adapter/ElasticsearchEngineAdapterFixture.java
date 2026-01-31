@@ -12,7 +12,7 @@ import com.liferay.portal.search.elasticsearch8.internal.connection.Elasticsearc
 import com.liferay.portal.search.elasticsearch8.internal.facet.FacetProcessor;
 import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.cluster.ClusterRequestExecutorTestUtil;
 import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.document.DocumentRequestExecutorFixture;
-import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.index.IndexRequestExecutorFixture;
+import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.index.IndexRequestExecutorTestUtil;
 import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.search.SearchRequestExecutorFixture;
 import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.snapshot.SnapshotRequestExecutorTestUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
@@ -46,13 +46,6 @@ public class ElasticsearchEngineAdapterFixture {
 				}
 			};
 
-		IndexRequestExecutorFixture indexRequestExecutorFixture =
-			new IndexRequestExecutorFixture() {
-				{
-					setElasticsearchClientResolver(elasticsearchClientResolver);
-				}
-			};
-
 		_searchRequestExecutorFixture = new SearchRequestExecutorFixture() {
 			{
 				setElasticsearchClientResolver(elasticsearchClientResolver);
@@ -61,7 +54,6 @@ public class ElasticsearchEngineAdapterFixture {
 		};
 
 		documentRequestExecutorFixture.setUp();
-		indexRequestExecutorFixture.setUp();
 		_searchRequestExecutorFixture.setUp();
 
 		SearchEngineAdapter searchEngineAdapter =
@@ -80,7 +72,8 @@ public class ElasticsearchEngineAdapterFixture {
 			documentRequestExecutorFixture.getDocumentRequestExecutor());
 		ReflectionTestUtil.setFieldValue(
 			searchEngineAdapter, "_indexRequestExecutor",
-			indexRequestExecutorFixture.getIndexRequestExecutor());
+			IndexRequestExecutorTestUtil.createIndexRequestExecutor(
+				elasticsearchClientResolver));
 		ReflectionTestUtil.setFieldValue(
 			searchEngineAdapter, "_searchRequestExecutor",
 			_searchRequestExecutorFixture.getSearchRequestExecutor());

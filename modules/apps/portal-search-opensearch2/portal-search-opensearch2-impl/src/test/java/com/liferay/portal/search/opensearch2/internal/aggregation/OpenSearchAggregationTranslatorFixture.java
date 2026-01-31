@@ -11,7 +11,6 @@ import com.liferay.portal.search.opensearch2.internal.geolocation.GeoTranslator;
 import com.liferay.portal.search.opensearch2.internal.highlight.HighlightTranslator;
 import com.liferay.portal.search.opensearch2.internal.query.OpenSearchQueryTranslatorFixture;
 import com.liferay.portal.search.opensearch2.internal.script.ScriptTranslator;
-import com.liferay.portal.search.opensearch2.internal.sort.OpenSearchSortFieldTranslatorFixture;
 
 import org.opensearch.client.opensearch._types.aggregations.Aggregation;
 
@@ -23,12 +22,6 @@ public class OpenSearchAggregationTranslatorFixture {
 	public OpenSearchAggregationTranslatorFixture() {
 		OpenSearchQueryTranslatorFixture openSearchQueryTranslatorFixture =
 			new OpenSearchQueryTranslatorFixture();
-
-		OpenSearchSortFieldTranslatorFixture
-			openSearchSortFieldTranslatorFixture =
-				new OpenSearchSortFieldTranslatorFixture(
-					openSearchQueryTranslatorFixture.
-						getOpenSearchQueryTranslator());
 
 		PipelineAggregationTranslator<Aggregation>
 			pipelineAggregationTranslator =
@@ -52,10 +45,6 @@ public class OpenSearchAggregationTranslatorFixture {
 		ReflectionTestUtil.setFieldValue(
 			openSearchAggregationTranslator, "scriptTranslator",
 			new ScriptTranslator());
-		ReflectionTestUtil.setFieldValue(
-			openSearchAggregationTranslator, "_sortFieldTranslator",
-			openSearchSortFieldTranslatorFixture.
-				getOpenSearchSortFieldTranslator());
 
 		_openSearchAggregationTranslator = openSearchAggregationTranslator;
 	}

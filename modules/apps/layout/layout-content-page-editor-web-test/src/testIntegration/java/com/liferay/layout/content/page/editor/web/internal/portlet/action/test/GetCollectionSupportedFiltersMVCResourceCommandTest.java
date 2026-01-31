@@ -19,12 +19,12 @@ import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderIt
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
@@ -105,7 +106,7 @@ public class GetCollectionSupportedFiltersMVCResourceCommandTest {
 	}
 
 	@Test
-	public void testAssetListSupportedFilters() throws PortalException {
+	public void testAssetListSupportedFilters() throws Exception {
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.addDynamicAssetListEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
@@ -115,7 +116,7 @@ public class GetCollectionSupportedFiltersMVCResourceCommandTest {
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getSupportedFiltersJSONObject",
-			new Class<?>[] {JSONArray.class},
+			new Class<?>[] {JSONArray.class, ThemeDisplay.class},
 			JSONUtil.put(
 				JSONUtil.put(
 					"collectionId", collectionId
@@ -134,7 +135,8 @@ public class GetCollectionSupportedFiltersMVCResourceCommandTest {
 					).put(
 						"type", InfoListItemSelectorReturnType.class.getName()
 					)
-				)));
+				)),
+			_getThemeDisplay());
 
 		JSONArray supportedFiltersJSONArray = jsonObject.getJSONArray(
 			collectionId);
@@ -151,12 +153,14 @@ public class GetCollectionSupportedFiltersMVCResourceCommandTest {
 	}
 
 	@Test
-	public void testFilteredInfoCollectionProviderSupportedFilters() {
+	public void testFilteredInfoCollectionProviderSupportedFilters()
+		throws Exception {
+
 		String collectionId = RandomTestUtil.randomString();
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getSupportedFiltersJSONObject",
-			new Class<?>[] {JSONArray.class},
+			new Class<?>[] {JSONArray.class, ThemeDisplay.class},
 			JSONUtil.put(
 				JSONUtil.put(
 					"collectionId", collectionId
@@ -172,7 +176,8 @@ public class GetCollectionSupportedFiltersMVCResourceCommandTest {
 						"type",
 						InfoListProviderItemSelectorReturnType.class.getName()
 					)
-				)));
+				)),
+			_getThemeDisplay());
 
 		JSONArray supportedFiltersJSONArray = jsonObject.getJSONArray(
 			collectionId);
@@ -181,6 +186,16 @@ public class GetCollectionSupportedFiltersMVCResourceCommandTest {
 		Assert.assertEquals(
 			CategoriesInfoFilter.FILTER_TYPE_NAME,
 			supportedFiltersJSONArray.get(0));
+	}
+
+	private ThemeDisplay _getThemeDisplay() throws Exception {
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
+		themeDisplay.setScopeGroupId(_group.getGroupId());
+
+		return themeDisplay;
 	}
 
 	private String _getTypeSettings() {
@@ -206,6 +221,9 @@ public class GetCollectionSupportedFiltersMVCResourceCommandTest {
 
 	@Inject
 	private AssetListEntryLocalService _assetListEntryLocalService;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

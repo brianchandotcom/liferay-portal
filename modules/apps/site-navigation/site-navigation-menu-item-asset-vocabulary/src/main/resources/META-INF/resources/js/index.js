@@ -53,11 +53,42 @@ function AssetVocabularyContextualSidebar({
 	} = chooseAssetVocabularyProps;
 
 	useEffect(() => {
+		if (!customNameEnabled) {
+			return;
+		}
+
+		if (
+			translations[selectedLocaleId] === undefined &&
+			selectedLocaleId !== defaultLanguageId
+		) {
+			setCustomName('');
+		}
+		else {
+			setCustomName(
+				translations[selectedLocaleId] ?? assetVocabulary.title
+			);
+		}
+	}, [
+		assetVocabulary.title,
+		customNameEnabled,
+		defaultLanguageId,
+		selectedLocaleId,
+		translations,
+	]);
+
+	useEffect(() => {
 		const onFormSubmit = (event) => {
 			if (!customName) {
 				event.preventDefault();
 
 				setCustomNameInvalid(true);
+			}
+
+			if (customName && translations[defaultLanguageId] === '') {
+				setTranslations({
+					...translations,
+					[defaultLanguageId]: assetVocabulary.title,
+				});
 			}
 		};
 
@@ -68,7 +99,7 @@ function AssetVocabularyContextualSidebar({
 		return () => {
 			submitButton?.removeEventListener('click', onFormSubmit);
 		};
-	}, [customName]);
+	}, [assetVocabulary.title, customName, defaultLanguageId, translations]);
 
 	const openChooseItemModal = () =>
 		openSelectionModal({

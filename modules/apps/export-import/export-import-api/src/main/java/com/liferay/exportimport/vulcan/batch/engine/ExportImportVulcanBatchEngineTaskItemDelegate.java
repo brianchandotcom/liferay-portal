@@ -29,7 +29,7 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 		}
 
 		public default String getKey() {
-			return null;
+			return getResourceClassName();
 		}
 
 		public String getLabelLanguageKey();

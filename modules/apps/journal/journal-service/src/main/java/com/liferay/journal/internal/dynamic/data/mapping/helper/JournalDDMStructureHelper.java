@@ -61,6 +61,7 @@ public class JournalDDMStructureHelper {
 			});
 		actionableDynamicQuery.setCompanyId(
 			originalDDMStructure.getCompanyId());
+		actionableDynamicQuery.setParallel(true);
 
 		ActionableDynamicQuery.PerformActionMethod<?> performActionMethod =
 			null;
@@ -106,7 +107,6 @@ public class JournalDDMStructureHelper {
 			};
 		}
 
-		actionableDynamicQuery.setParallel(true);
 		actionableDynamicQuery.setPerformActionMethod(performActionMethod);
 
 		try {

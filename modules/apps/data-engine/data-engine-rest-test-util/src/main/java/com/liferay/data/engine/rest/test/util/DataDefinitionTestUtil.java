@@ -20,8 +20,6 @@ public class DataDefinitionTestUtil {
 			long groupId, String json, User user)
 		throws Exception {
 
-		DataDefinition dataDefinition = DataDefinition.toDTO(json);
-
 		DataDefinitionResource.Builder dataDefinitionResourcedBuilder =
 			dataDefinitionResourceFactory.create();
 
@@ -31,7 +29,7 @@ public class DataDefinitionTestUtil {
 			).build();
 
 		return dataDefinitionResource.postSiteDataDefinitionByContentType(
-			groupId, contentType, dataDefinition);
+			groupId, contentType, DataDefinition.toDTO(json));
 	}
 
 	public static DataDefinition updateDataDefinition(
@@ -39,8 +37,6 @@ public class DataDefinitionTestUtil {
 			DataDefinitionResource.Factory dataDefinitionResourceFactory,
 			String json, User user)
 		throws Exception {
-
-		DataDefinition dataDefinition = DataDefinition.toDTO(json);
 
 		DataDefinitionResource.Builder dataDefinitionResourceBuilder =
 			dataDefinitionResourceFactory.create();
@@ -51,7 +47,7 @@ public class DataDefinitionTestUtil {
 			).build();
 
 		return dataDefinitionResource.putDataDefinition(
-			dataDefinitionId, dataDefinition);
+			dataDefinitionId, DataDefinition.toDTO(json));
 	}
 
 }

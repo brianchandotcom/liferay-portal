@@ -9,7 +9,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
 import com.liferay.portal.search.opensearch2.internal.facet.FacetProcessor;
-import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.cluster.ClusterRequestExecutorFixture;
+import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.cluster.ClusterRequestExecutorTestUtil;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.DocumentRequestExecutorFixture;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.index.IndexRequestExecutorFixture;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.search.SearchRequestExecutorFixture;
@@ -39,13 +39,6 @@ public class OpenSearchEngineAdapterFixture {
 		OpenSearchConnectionManager openSearchConnectionManager,
 		FacetProcessor<?> facetProcessor) {
 
-		ClusterRequestExecutorFixture clusterRequestExecutorFixture =
-			new ClusterRequestExecutorFixture() {
-				{
-					setOpenSearchConnectionManager(openSearchConnectionManager);
-				}
-			};
-
 		DocumentRequestExecutorFixture documentRequestExecutorFixture =
 			new DocumentRequestExecutorFixture() {
 				{
@@ -74,7 +67,6 @@ public class OpenSearchEngineAdapterFixture {
 				}
 			};
 
-		clusterRequestExecutorFixture.setUp();
 		documentRequestExecutorFixture.setUp();
 		indexRequestExecutorFixture.setUp();
 		_searchRequestExecutorFixture.setUp();
@@ -89,7 +81,8 @@ public class OpenSearchEngineAdapterFixture {
 
 		ReflectionTestUtil.setFieldValue(
 			searchEngineAdapter, "_clusterRequestExecutor",
-			clusterRequestExecutorFixture.getClusterRequestExecutor());
+			ClusterRequestExecutorTestUtil.createClusterRequestExecutor(
+				openSearchConnectionManager));
 		ReflectionTestUtil.setFieldValue(
 			searchEngineAdapter, "_documentRequestExecutor",
 			documentRequestExecutorFixture.getDocumentRequestExecutor());

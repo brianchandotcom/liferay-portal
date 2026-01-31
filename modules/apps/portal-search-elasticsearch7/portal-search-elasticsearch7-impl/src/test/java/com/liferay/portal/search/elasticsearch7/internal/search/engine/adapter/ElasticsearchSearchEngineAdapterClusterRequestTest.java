@@ -11,10 +11,9 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionFixture;
-import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.cluster.ClusterRequestExecutorFixture;
+import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.cluster.ClusterRequestExecutorTestUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.cluster.ClusterHealthStatus;
-import com.liferay.portal.search.engine.adapter.cluster.ClusterRequestExecutor;
 import com.liferay.portal.search.engine.adapter.cluster.HealthClusterRequest;
 import com.liferay.portal.search.engine.adapter.cluster.HealthClusterResponse;
 import com.liferay.portal.search.engine.adapter.cluster.StateClusterRequest;
@@ -133,7 +132,8 @@ public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 
 		ReflectionTestUtil.setFieldValue(
 			searchEngineAdapter, "_clusterRequestExecutor",
-			_createClusterRequestExecutor(elasticsearchClientResolver));
+			ClusterRequestExecutorTestUtil.createClusterRequestExecutor(
+				elasticsearchClientResolver));
 
 		return searchEngineAdapter;
 	}
@@ -145,21 +145,6 @@ public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 		catch (JSONException jsonException) {
 			throw new RuntimeException(jsonException);
 		}
-	}
-
-	private static ClusterRequestExecutor _createClusterRequestExecutor(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		ClusterRequestExecutorFixture clusterRequestExecutorFixture =
-			new ClusterRequestExecutorFixture() {
-				{
-					setElasticsearchClientResolver(elasticsearchClientResolver);
-				}
-			};
-
-		clusterRequestExecutorFixture.setUp();
-
-		return clusterRequestExecutorFixture.getClusterRequestExecutor();
 	}
 
 	private void _assertClusterName(JSONObject jsonObject) {

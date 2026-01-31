@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.cluster.ClusterHealthStatus;
-import com.liferay.portal.search.engine.adapter.cluster.ClusterRequestExecutor;
 import com.liferay.portal.search.engine.adapter.cluster.HealthClusterRequest;
 import com.liferay.portal.search.engine.adapter.cluster.HealthClusterResponse;
 import com.liferay.portal.search.engine.adapter.cluster.StateClusterRequest;
@@ -21,7 +20,7 @@ import com.liferay.portal.search.engine.adapter.cluster.StatsClusterResponse;
 import com.liferay.portal.search.opensearch2.internal.BaseOpenSearchTestCase;
 import com.liferay.portal.search.opensearch2.internal.OpenSearchTestRule;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
-import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.cluster.ClusterRequestExecutorFixture;
+import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.cluster.ClusterRequestExecutorTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.IOException;
@@ -115,7 +114,8 @@ public class OpenSearchSearchEngineAdapterClusterRequestTest
 
 		ReflectionTestUtil.setFieldValue(
 			searchEngineAdapter, "_clusterRequestExecutor",
-			_createClusterRequestExecutor(openSearchConnectionManager));
+			ClusterRequestExecutorTestUtil.createClusterRequestExecutor(
+				openSearchConnectionManager));
 
 		return searchEngineAdapter;
 	}
@@ -127,21 +127,6 @@ public class OpenSearchSearchEngineAdapterClusterRequestTest
 		catch (JSONException jsonException) {
 			throw new RuntimeException(jsonException);
 		}
-	}
-
-	private static ClusterRequestExecutor _createClusterRequestExecutor(
-		OpenSearchConnectionManager openSearchConnectionManager) {
-
-		ClusterRequestExecutorFixture clusterRequestExecutorFixture =
-			new ClusterRequestExecutorFixture() {
-				{
-					setOpenSearchConnectionManager(openSearchConnectionManager);
-				}
-			};
-
-		clusterRequestExecutorFixture.setUp();
-
-		return clusterRequestExecutorFixture.getClusterRequestExecutor();
 	}
 
 	private void _assertClusterName(JSONObject jsonObject) {

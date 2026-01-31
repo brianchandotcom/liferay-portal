@@ -237,9 +237,7 @@ public class ElasticsearchQueryTranslator
 			for (String documentUID : moreLikeThisQuery.getDocumentUIDs()) {
 				MoreLikeThisQueryBuilder.Item moreLikeThisQueryBuilderItem =
 					new MoreLikeThisQueryBuilder.Item(
-						_indexNameBuilder.getIndexName(
-							moreLikeThisQuery.getCompanyId()),
-						type, documentUID);
+						moreLikeThisQuery.getIndexName(), type, documentUID);
 
 				likeItems.add(moreLikeThisQueryBuilderItem);
 			}

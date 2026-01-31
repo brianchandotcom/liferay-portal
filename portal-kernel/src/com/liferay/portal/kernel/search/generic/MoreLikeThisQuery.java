@@ -21,8 +21,8 @@ import java.util.Set;
  */
 public class MoreLikeThisQuery extends BaseQueryImpl {
 
-	public MoreLikeThisQuery(long companyId) {
-		_companyId = companyId;
+	public MoreLikeThisQuery(String indexName) {
+		_indexName = indexName;
 	}
 
 	@Override
@@ -70,16 +70,16 @@ public class MoreLikeThisQuery extends BaseQueryImpl {
 		return _analyzer;
 	}
 
-	public long getCompanyId() {
-		return _companyId;
-	}
-
 	public Set<String> getDocumentUIDs() {
 		return Collections.unmodifiableSet(_documentUIDs);
 	}
 
 	public List<String> getFields() {
 		return Collections.unmodifiableList(_fields);
+	}
+
+	public String getIndexName() {
+		return _indexName;
 	}
 
 	public String getLikeText() {
@@ -206,14 +206,14 @@ public class MoreLikeThisQuery extends BaseQueryImpl {
 
 		sb.append(clazz.getSimpleName());
 
-		sb.append(", companyId=");
-		sb.append(_companyId);
 		sb.append(", documentUIDs=");
 		sb.append(_documentUIDs);
 		sb.append(", fields=");
 		sb.append(_fields);
 		sb.append(", includeInput=");
 		sb.append(_includeInput);
+		sb.append(", indexName=");
+		sb.append(_indexName);
 		sb.append(", likeText=");
 		sb.append(_likeText);
 		sb.append(", maxDocFrequency=");
@@ -242,10 +242,10 @@ public class MoreLikeThisQuery extends BaseQueryImpl {
 	}
 
 	private String _analyzer;
-	private final long _companyId;
 	private final Set<String> _documentUIDs = new HashSet<>();
 	private final List<String> _fields = new ArrayList<>();
 	private Boolean _includeInput;
+	private final String _indexName;
 	private String _likeText;
 	private Integer _maxDocFrequency;
 	private Integer _maxQueryTerms;

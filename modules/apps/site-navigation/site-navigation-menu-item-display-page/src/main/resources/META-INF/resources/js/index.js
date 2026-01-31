@@ -15,7 +15,7 @@ import {
 } from 'frontend-js-components-web';
 import {fetch, objectToFormData} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import '../css/main.scss';
 
@@ -47,6 +47,7 @@ function DisplayPageItemContextualSidebar({
 		translations[selectedLocaleId] || item.title
 	);
 	const [customNameInvalid, setCustomNameInvalid] = useState(false);
+	const nameRef = useRef(null);
 
 	const {eventName, getItemDetailsURL, itemSelectorURL, modalTitle} =
 		chooseItemProps;
@@ -65,6 +66,8 @@ function DisplayPageItemContextualSidebar({
 		else {
 			setCustomName(translations[selectedLocaleId] ?? item.title);
 		}
+
+		nameRef.current?.focus();
 	}, [
 		customNameEnabled,
 		defaultLanguageId,
@@ -191,6 +194,7 @@ function DisplayPageItemContextualSidebar({
 
 								setCustomName(event.target.value);
 							}}
+							ref={nameRef}
 							type="text"
 							value={customName}
 						/>

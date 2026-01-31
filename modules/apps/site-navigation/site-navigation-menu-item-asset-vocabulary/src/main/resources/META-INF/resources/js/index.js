@@ -15,7 +15,7 @@ import {
 } from 'frontend-js-components-web';
 import {fetch, objectToFormData} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 function AssetVocabularyContextualSidebar({
 	assetVocabulary,
@@ -45,6 +45,7 @@ function AssetVocabularyContextualSidebar({
 		translations[selectedLocaleId] || assetVocabulary.title
 	);
 	const [customNameInvalid, setCustomNameInvalid] = useState(false);
+	const nameRef = useRef(null);
 
 	const {
 		assetVocabularySelectorURL,
@@ -68,6 +69,8 @@ function AssetVocabularyContextualSidebar({
 				translations[selectedLocaleId] ?? assetVocabulary.title
 			);
 		}
+
+		nameRef.current?.focus();
 	}, [
 		assetVocabulary.title,
 		customNameEnabled,
@@ -217,6 +220,7 @@ function AssetVocabularyContextualSidebar({
 								setCustomName(event.target.value);
 								setCustomNameInvalid(false);
 							}}
+							ref={nameRef}
 							type="text"
 							value={customName}
 						/>

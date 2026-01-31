@@ -13,6 +13,8 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletWrapper;
 
+import java.util.Locale;
+
 /**
  * @author Daniel Raposo
  */
@@ -41,7 +43,7 @@ public class MissingPortlet extends PortletWrapper {
 		}
 
 		@Override
-		public String getName() {
+		public String getName(Locale locale) {
 			return _name;
 		}
 

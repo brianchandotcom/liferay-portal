@@ -190,7 +190,7 @@ public class AccountGroupsAdminPortletDataHandlerTest {
 			portletDataHandler.getClassNames()[0]);
 		Assert.assertEquals(
 			AccountPortletKeys.ACCOUNT_GROUPS_ADMIN,
-			portletDataHandler.getName());
+			portletDataHandler.getPortletId());
 	}
 
 	@Inject

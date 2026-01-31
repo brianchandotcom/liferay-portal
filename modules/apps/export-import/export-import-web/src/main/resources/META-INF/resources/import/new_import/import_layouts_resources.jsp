@@ -222,7 +222,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 													continue;
 												}
 
-												String portletDataHandlerName = portletDataHandler.getName();
+												String portletDataHandlerName = portletDataHandler.getName(locale);
 
 												if (!portletDataHandlerNames.contains(portletDataHandlerName)) {
 													portletDataHandlerNames.add(portletDataHandlerName);
@@ -233,8 +233,8 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 												String portletTitle = PortalUtil.getPortletTitle(portlet, application, locale);
 
-												if (StringUtil.equals(ObjectPortletKeys.OBJECT_DEFINITIONS, portlet.getPortletId())) {
-													portletTitle = LanguageUtil.get(request, "model.resource.com.liferay.object");
+												if (portletDataHandler.isBatch()) {
+													portletTitle = portletDataHandlerName;
 												}
 
 												long importModelCount = portletDataHandler.getExportModelCount(manifestSummary);

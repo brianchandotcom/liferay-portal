@@ -20,12 +20,26 @@ public class BatchEnginePortletDataHandlerRegistryUtil {
 		return getByPortletId(companyId, _getPortletId(companyId, className));
 	}
 
+	public static BatchEnginePortletDataHandler getByKey(
+		long companyId, String key) {
+
+		Map<String, BatchEnginePortletDataHandler>
+			batchEnginePortletDataHandlers =
+				_keyBatchEnginePortletDataHandlersMap.get(companyId);
+
+		if (batchEnginePortletDataHandlers == null) {
+			return null;
+		}
+
+		return batchEnginePortletDataHandlers.get(key);
+	}
+
 	public static BatchEnginePortletDataHandler getByPortletId(
 		long companyId, String portletId) {
 
 		Map<String, BatchEnginePortletDataHandler>
 			batchEnginePortletDataHandlers =
-				_batchEnginePortletDataHandlersMap.get(companyId);
+				_portletIdBatchEnginePortletDataHandlersMap.get(companyId);
 
 		if (batchEnginePortletDataHandlers == null) {
 			return null;
@@ -46,28 +60,44 @@ public class BatchEnginePortletDataHandlerRegistryUtil {
 
 	protected static void put(
 		BatchEnginePortletDataHandler batchEnginePortletDataHandler,
-		long companyId, String portletId) {
+		long companyId, String key, String portletId) {
 
 		Map<String, BatchEnginePortletDataHandler>
-			batchEnginePortletDataHandlers =
-				_batchEnginePortletDataHandlersMap.computeIfAbsent(
-					companyId, key -> new ConcurrentHashMap<>());
+			keyBatchEnginePortletDataHandlers =
+				_keyBatchEnginePortletDataHandlersMap.computeIfAbsent(
+					companyId, k -> new ConcurrentHashMap<>());
 
-		batchEnginePortletDataHandlers.put(
+		keyBatchEnginePortletDataHandlers.put(
+			key, batchEnginePortletDataHandler);
+
+		Map<String, BatchEnginePortletDataHandler>
+			portletIdBatchEnginePortletDataHandlers =
+				_portletIdBatchEnginePortletDataHandlersMap.computeIfAbsent(
+					companyId, k -> new ConcurrentHashMap<>());
+
+		portletIdBatchEnginePortletDataHandlers.put(
 			portletId, batchEnginePortletDataHandler);
 
 		Map<String, String> portletIds = _portletIdsMap.computeIfAbsent(
-			companyId, key -> new ConcurrentHashMap<>());
+			companyId, k -> new ConcurrentHashMap<>());
 
 		for (String className : batchEnginePortletDataHandler.getClassNames()) {
 			portletIds.put(className, portletId);
 		}
 	}
 
-	protected static void remove(long companyId, String portletId) {
-		_batchEnginePortletDataHandlersMap.computeIfPresent(
+	protected static void remove(long companyId, String key, String portletId) {
+		_keyBatchEnginePortletDataHandlersMap.computeIfPresent(
 			companyId,
-			(key, batchEnginePortletDataHandlers) -> {
+			(k, batchEnginePortletDataHandlers) -> {
+				batchEnginePortletDataHandlers.remove(key);
+
+				return batchEnginePortletDataHandlers.isEmpty() ? null :
+					batchEnginePortletDataHandlers;
+			});
+		_portletIdBatchEnginePortletDataHandlersMap.computeIfPresent(
+			companyId,
+			(k, batchEnginePortletDataHandlers) -> {
 				BatchEnginePortletDataHandler batchEnginePortletDataHandler =
 					batchEnginePortletDataHandlers.remove(portletId);
 
@@ -109,7 +139,9 @@ public class BatchEnginePortletDataHandlerRegistryUtil {
 	}
 
 	private static final Map<Long, Map<String, BatchEnginePortletDataHandler>>
-		_batchEnginePortletDataHandlersMap = new ConcurrentHashMap<>();
+		_keyBatchEnginePortletDataHandlersMap = new ConcurrentHashMap<>();
+	private static final Map<Long, Map<String, BatchEnginePortletDataHandler>>
+		_portletIdBatchEnginePortletDataHandlersMap = new ConcurrentHashMap<>();
 	private static final Map<Long, Map<String, String>> _portletIdsMap =
 		new ConcurrentHashMap<>();
 

@@ -243,6 +243,14 @@ function AssetVocabularyContextualSidebar({
 					</ClayInput.GroupItem>
 				</ClayInput.Group>
 
+				{customNameEnabled &&
+					selectedLocaleId !== defaultLanguageId && (
+						<div className="form-text">
+							{translations[defaultLanguageId] ??
+								assetVocabulary.title}
+						</div>
+					)}
+
 				{customNameInvalid && (
 					<ClayForm.FeedbackItem>
 						{Liferay.Language.get('this-field-is-required')}

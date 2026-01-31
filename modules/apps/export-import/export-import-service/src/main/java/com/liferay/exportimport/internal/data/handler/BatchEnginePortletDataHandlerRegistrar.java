@@ -259,7 +259,8 @@ public class BatchEnginePortletDataHandlerRegistrar {
 						"batch.engine.task.item.delegate.name"));
 
 			BatchEnginePortletDataHandlerRegistryUtil.put(
-				batchEnginePortletDataHandler, _companyId, portletId);
+				batchEnginePortletDataHandler, _companyId,
+				exportImportDescriptor.getKey(), portletId);
 
 			if (previousBatchEnginePortletDataHandler != null) {
 				return _serviceRegistrations.get(portletId);
@@ -329,7 +330,7 @@ public class BatchEnginePortletDataHandlerRegistrar {
 				serviceRegistration.unregister();
 
 				BatchEnginePortletDataHandlerRegistryUtil.remove(
-					_companyId, portletId);
+					_companyId, exportImportDescriptor.getKey(), portletId);
 
 				_serviceRegistrations.remove(portletId);
 			}

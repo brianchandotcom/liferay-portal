@@ -13,7 +13,6 @@ import com.liferay.portal.search.elasticsearch7.internal.suggest.ElasticsearchSu
 import com.liferay.portal.search.engine.adapter.search.SuggestSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SuggestSearchResponse;
 import com.liferay.portal.search.engine.adapter.search.SuggestSearchResult;
-import com.liferay.portal.search.index.IndexNameBuilder;
 
 import java.io.IOException;
 
@@ -31,7 +30,6 @@ import org.elasticsearch.search.suggest.SuggestBuilder;
 import org.elasticsearch.search.suggest.SuggestionBuilder;
 import org.elasticsearch.search.suggest.term.TermSuggestion;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -72,12 +70,6 @@ public class SuggestSearchRequestExecutorImpl
 		}
 
 		return suggestSearchResponse;
-	}
-
-	@Activate
-	protected void activate() {
-		_suggesterTranslator = new ElasticsearchSuggesterTranslator(
-			_indexNameBuilder);
 	}
 
 	protected SearchResponse getSearchResponse(
@@ -206,9 +198,7 @@ public class SuggestSearchRequestExecutorImpl
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
 
-	@Reference
-	private IndexNameBuilder _indexNameBuilder;
-
-	private SuggesterTranslator<SuggestionBuilder> _suggesterTranslator;
+	private final SuggesterTranslator<SuggestionBuilder> _suggesterTranslator =
+		new ElasticsearchSuggesterTranslator();
 
 }

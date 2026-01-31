@@ -11,7 +11,6 @@ import com.liferay.portal.search.elasticsearch7.internal.legacy.query.Elasticsea
 import com.liferay.portal.search.elasticsearch7.internal.script.ScriptTranslator;
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentResponse;
-import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.QueryTranslator;
 import com.liferay.portal.search.script.ScriptBuilder;
 import com.liferay.portal.search.script.ScriptType;
@@ -28,7 +27,6 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.reindex.BulkByScrollResponse;
 import org.elasticsearch.index.reindex.UpdateByQueryRequest;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -53,12 +51,6 @@ public class UpdateByQueryDocumentRequestExecutorImpl
 
 		return new UpdateByQueryDocumentResponse(
 			bulkByScrollResponse.getUpdated(), timeValue.getMillis());
-	}
-
-	@Activate
-	protected void activate() {
-		_legacyQueryTranslator = new ElasticsearchQueryTranslator(
-			_indexNameBuilder);
 	}
 
 	protected UpdateByQueryRequest createUpdateByQueryRequest(
@@ -148,11 +140,9 @@ public class UpdateByQueryDocumentRequestExecutorImpl
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
 
-	@Reference
-	private IndexNameBuilder _indexNameBuilder;
-
-	private com.liferay.portal.kernel.search.query.QueryTranslator<QueryBuilder>
-		_legacyQueryTranslator;
+	private final com.liferay.portal.kernel.search.query.QueryTranslator
+		<QueryBuilder> _legacyQueryTranslator =
+			new ElasticsearchQueryTranslator();
 	private final QueryTranslator<QueryBuilder> _queryTranslator =
 		new com.liferay.portal.search.elasticsearch7.internal.query.
 			ElasticsearchQueryTranslator();

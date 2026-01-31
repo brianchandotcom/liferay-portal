@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.search.suggest.SuggesterVisitor;
 import com.liferay.portal.kernel.search.suggest.TermSuggester;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch7.internal.legacy.query.ElasticsearchQueryTranslator;
-import com.liferay.portal.search.index.IndexNameBuilder;
 
 import java.util.Set;
 
@@ -34,10 +33,6 @@ import org.elasticsearch.search.suggest.term.TermSuggestionBuilder;
 public class ElasticsearchSuggesterTranslator
 	implements SuggesterTranslator<SuggestionBuilder>,
 			   SuggesterVisitor<SuggestionBuilder> {
-
-	public ElasticsearchSuggesterTranslator(IndexNameBuilder indexNameBuilder) {
-		_queryTranslator = new ElasticsearchQueryTranslator(indexNameBuilder);
-	}
 
 	@Override
 	public SuggestionBuilder translate(
@@ -380,6 +375,7 @@ public class ElasticsearchSuggesterTranslator
 		return SortBy.SCORE;
 	}
 
-	private final QueryTranslator<QueryBuilder> _queryTranslator;
+	private final QueryTranslator<QueryBuilder> _queryTranslator =
+		new ElasticsearchQueryTranslator();
 
 }

@@ -142,17 +142,21 @@ public class SegmentsExperienceUtil {
 		}
 
 		if (Validator.isNotNull(segmentsEntryERC)) {
-			SegmentsEntry segmentsEntry =
-				SegmentsEntryLocalServiceUtil.
-					fetchSegmentsEntryByExternalReferenceCode(
-						segmentsExperience.getSegmentsEntryERC(),
-						segmentsExperience.getSegmentsEntryGroupId());
+			SegmentsEntry segmentsEntry = null;
+			Long groupId = ItemScopeUtil.getItemGroupId(
+				layout.getCompanyId(), itemExternalReference.getScope(),
+				layout.getGroupId());
+
+			if (groupId != null) {
+				segmentsEntry =
+					SegmentsEntryLocalServiceUtil.
+						fetchSegmentsEntryByExternalReferenceCode(
+							segmentsEntryERC, groupId);
+			}
 
 			if (segmentsEntry == null) {
 				LogUtil.logOptionalReference(
-					SegmentsEntry.class,
-					segmentsExperience.getSegmentsEntryERC(),
-					segmentsExperience.getSegmentsEntryGroupId());
+					itemExternalReference, layout.getGroupId());
 			}
 		}
 

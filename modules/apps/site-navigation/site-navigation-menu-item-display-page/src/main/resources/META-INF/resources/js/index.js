@@ -52,11 +52,40 @@ function DisplayPageItemContextualSidebar({
 		chooseItemProps;
 
 	useEffect(() => {
+		if (!customNameEnabled) {
+			return;
+		}
+
+		if (
+			translations[selectedLocaleId] === undefined &&
+			selectedLocaleId !== defaultLanguageId
+		) {
+			setCustomName('');
+		}
+		else {
+			setCustomName(translations[selectedLocaleId] ?? item.title);
+		}
+	}, [
+		customNameEnabled,
+		defaultLanguageId,
+		item.title,
+		selectedLocaleId,
+		translations,
+	]);
+
+	useEffect(() => {
 		const onFormSubmit = (event) => {
 			if (!customName) {
 				event.preventDefault();
 
 				setCustomNameInvalid(true);
+			}
+
+			if (customName && translations[defaultLanguageId] === '') {
+				setTranslations({
+					...translations,
+					[defaultLanguageId]: item.title,
+				});
 			}
 		};
 
@@ -67,7 +96,7 @@ function DisplayPageItemContextualSidebar({
 		return () => {
 			submitButton?.removeEventListener('click', onFormSubmit);
 		};
-	}, [customName]);
+	}, [customName, item.title, defaultLanguageId, translations]);
 
 	const openChooseItemModal = () =>
 		openSelectionModal({

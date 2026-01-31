@@ -41,7 +41,7 @@ public abstract class BaseMoreLikeThisQueryTestCase
 		com.liferay.portal.kernel.search.generic.MoreLikeThisQuery
 			moreLikeThisQuery =
 				new com.liferay.portal.kernel.search.generic.MoreLikeThisQuery(
-					getCompanyId());
+					getIndexName());
 
 		moreLikeThisQuery.addField(_FIELD_TITLE);
 		moreLikeThisQuery.setLikeText("java");

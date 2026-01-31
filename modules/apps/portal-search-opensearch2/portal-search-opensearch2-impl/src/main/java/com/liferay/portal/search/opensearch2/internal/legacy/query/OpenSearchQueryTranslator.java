@@ -459,9 +459,6 @@ public class OpenSearchQueryTranslator
 			return likes;
 		}
 
-		String indexName = _indexNameBuilder.getIndexName(
-			moreLikeThisQuery.getCompanyId());
-
 		for (String documentUID : moreLikeThisQuery.getDocumentUIDs()) {
 			likes.add(
 				Like.of(
@@ -470,7 +467,7 @@ public class OpenSearchQueryTranslator
 							likeDocument -> likeDocument.id(
 								documentUID
 							).index(
-								indexName
+								moreLikeThisQuery.getIndexName()
 							)))));
 		}
 

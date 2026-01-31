@@ -128,41 +128,16 @@ public class SegmentsExperienceUtil {
 					segmentsExperiencePriority);
 		}
 
-		ItemExternalReference itemExternalReference =
-			pageExperience.getSegmentItemExternalReference();
-
-		String segmentsEntryERC = null;
-		String segmentsEntryScopeERC = null;
-
-		if (itemExternalReference != null) {
-			segmentsEntryERC = itemExternalReference.getExternalReferenceCode();
-			segmentsEntryScopeERC =
-				ItemScopeUtil.getItemScopeExternalReferenceCode(
-					itemExternalReference.getScope(), layout.getGroupId());
-		}
-
-		if (Validator.isNotNull(segmentsEntryERC)) {
-			SegmentsEntry segmentsEntry = null;
-			Long groupId = ItemScopeUtil.getItemGroupId(
-				layout.getCompanyId(), itemExternalReference.getScope(),
+		SegmentsEntryReference segmentsEntryReference =
+			_getSegmentsEntryReference(
+				layout.getCompanyId(),
+				pageExperience.getSegmentItemExternalReference(),
 				layout.getGroupId());
 
-			if (groupId != null) {
-				segmentsEntry =
-					SegmentsEntryLocalServiceUtil.
-						fetchSegmentsEntryByExternalReferenceCode(
-							segmentsEntryERC, groupId);
-			}
-
-			if (segmentsEntry == null) {
-				LogUtil.logOptionalReference(
-					itemExternalReference, layout.getGroupId());
-			}
-		}
-
 		return SegmentsExperienceServiceUtil.updateSegmentsExperience(
-			segmentsExperience.getSegmentsExperienceId(), segmentsEntryERC,
-			segmentsEntryScopeERC,
+			segmentsExperience.getSegmentsExperienceId(),
+			segmentsEntryReference.getExternalReferenceCode(),
+			segmentsEntryReference.getScopeExternalReferenceCode(),
 			LocalizedMapUtil.getLocalizedMap(pageExperience.getName_i18n()),
 			true,
 			UnicodePropertiesBuilder.create(
@@ -218,6 +193,65 @@ public class SegmentsExperienceUtil {
 		}
 
 		return layoutStructure.toString();
+	}
+
+	private static SegmentsEntryReference _getSegmentsEntryReference(
+			long companyId, ItemExternalReference itemExternalReference,
+			long scopeGroupId)
+		throws Exception {
+
+		if ((itemExternalReference == null) ||
+			Validator.isNull(
+				itemExternalReference.getExternalReferenceCode())) {
+
+			return new SegmentsEntryReference(null, null);
+		}
+
+		SegmentsEntryReference segmentsEntryReference =
+			new SegmentsEntryReference(
+				itemExternalReference.getExternalReferenceCode(),
+				ItemScopeUtil.getItemScopeExternalReferenceCode(
+					itemExternalReference.getScope(), scopeGroupId));
+
+		SegmentsEntry segmentsEntry = null;
+		Long groupId = ItemScopeUtil.getItemGroupId(
+			companyId, itemExternalReference.getScope(), scopeGroupId);
+
+		if (groupId != null) {
+			segmentsEntry =
+				SegmentsEntryLocalServiceUtil.
+					fetchSegmentsEntryByExternalReferenceCode(
+						segmentsEntryReference.getExternalReferenceCode(),
+						groupId);
+		}
+
+		if (segmentsEntry == null) {
+			LogUtil.logOptionalReference(itemExternalReference, scopeGroupId);
+		}
+
+		return segmentsEntryReference;
+	}
+
+	private static class SegmentsEntryReference {
+
+		protected String getExternalReferenceCode() {
+			return _externalReferenceCode;
+		}
+
+		protected String getScopeExternalReferenceCode() {
+			return _scopeExternalReferenceCode;
+		}
+
+		private SegmentsEntryReference(
+			String externalReferenceCode, String scopeExternalReferenceCode) {
+
+			_externalReferenceCode = externalReferenceCode;
+			_scopeExternalReferenceCode = scopeExternalReferenceCode;
+		}
+
+		private final String _externalReferenceCode;
+		private final String _scopeExternalReferenceCode;
+
 	}
 
 }

@@ -17,8 +17,6 @@ import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.exception.ModelListenerException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 
@@ -45,7 +43,7 @@ public class JournalDDMStructureHelper {
 
 	public void updateDDMStructureJournalArticles(
 			DDMStructure originalDDMStructure, DDMStructure ddmStructure)
-		throws ModelListenerException {
+		throws Exception {
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			_journalArticleLocalService.getActionableDynamicQuery();
@@ -73,14 +71,9 @@ public class JournalDDMStructureHelper {
 			Indexer<JournalArticle> indexer =
 				_indexerRegistry.nullSafeGetIndexer(JournalArticle.class);
 
-			performActionMethod = (JournalArticle journalArticle) -> {
-				try {
-					indexer.reindex(journalArticle);
-				}
-				catch (Exception exception) {
-					throw new PortalException(exception);
-				}
-			};
+			performActionMethod =
+				(JournalArticle journalArticle) -> indexer.reindex(
+					journalArticle);
 		}
 		else {
 			performActionMethod = (JournalArticle journalArticle) -> {
@@ -109,12 +102,7 @@ public class JournalDDMStructureHelper {
 
 		actionableDynamicQuery.setPerformActionMethod(performActionMethod);
 
-		try {
-			actionableDynamicQuery.performActions();
-		}
-		catch (PortalException portalException) {
-			throw new ModelListenerException(portalException);
-		}
+		actionableDynamicQuery.performActions();
 	}
 
 	private final DDMFieldLocalService _ddmFieldLocalService;

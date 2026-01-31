@@ -62,7 +62,6 @@ page import="com.liferay.exportimport.web.internal.display.context.ExportTemplat
 page import="com.liferay.exportimport.web.internal.display.context.ImportReportEntriesDisplayContext" %><%@
 page import="com.liferay.exportimport.web.internal.portlet.action.ExportImportMVCActionCommand" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPNavigationItemList" %><%@
-page import="com.liferay.object.constants.ObjectPortletKeys" %><%@
 page import="com.liferay.petra.string.StringBundler" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.background.task.util.comparator.BackgroundTaskComparatorFactoryUtil" %><%@

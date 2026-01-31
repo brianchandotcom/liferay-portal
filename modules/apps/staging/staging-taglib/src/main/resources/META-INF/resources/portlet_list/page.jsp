@@ -33,7 +33,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 			continue;
 		}
 
-		String portletDataHandlerName = portletDataHandler.getName();
+		String portletDataHandlerName = portletDataHandler.getName(locale);
 
 		if (portletDataHandlerNames.contains(portletDataHandlerName)) {
 			continue;
@@ -43,8 +43,8 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 
 		String portletTitle = PortalUtil.getPortletTitle(portlet, application, locale);
 
-		if (StringUtil.equals(ObjectPortletKeys.OBJECT_DEFINITIONS, portlet.getPortletId())) {
-			portletTitle = LanguageUtil.get(request, "model.resource.com.liferay.object");
+		if (portletDataHandler.isBatch()) {
+			portletTitle = portletDataHandlerName;
 		}
 
 		PortletDataHandlerControl[] exportMetadataPortletDataHandlerControls = portletDataHandler.getExportMetadataPortletDataHandlerControls();

@@ -137,7 +137,7 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)settingsMap.get("par
 												continue;
 											}
 
-											String portletDataHandlerName = portletDataHandler.getName();
+											String portletDataHandlerName = portletDataHandler.getName(locale);
 
 											if (portletDataHandlerNames.contains(portletDataHandlerName)) {
 												continue;

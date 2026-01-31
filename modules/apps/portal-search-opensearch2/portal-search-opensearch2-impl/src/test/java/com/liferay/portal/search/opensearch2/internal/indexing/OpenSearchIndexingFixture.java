@@ -65,6 +65,11 @@ public class OpenSearchIndexingFixture implements IndexingFixture {
 	}
 
 	@Override
+	public String getIndexName() {
+		return _indexName;
+	}
+
+	@Override
 	public IndexSearcher getIndexSearcher() {
 		return _indexSearcher;
 	}
@@ -108,6 +113,8 @@ public class OpenSearchIndexingFixture implements IndexingFixture {
 		Localization localization = new LocalizationImpl();
 
 		_indexNameBuilder = _createIndexNameBuilder();
+
+		_indexName = _indexNameBuilder.getIndexName(_companyId);
 
 		_indexSearcher = _createIndexSearcher(
 			_indexNameBuilder, localization, _testOpenSearchConnectionManager,
@@ -355,6 +362,7 @@ public class OpenSearchIndexingFixture implements IndexingFixture {
 	private final long _companyId;
 	private FacetProcessor<SearchRequest.Builder> _facetProcessor;
 	private IndexCreationHelper _indexCreationHelper;
+	private String _indexName;
 	private IndexNameBuilder _indexNameBuilder;
 	private IndexSearcher _indexSearcher;
 	private IndexWriter _indexWriter;

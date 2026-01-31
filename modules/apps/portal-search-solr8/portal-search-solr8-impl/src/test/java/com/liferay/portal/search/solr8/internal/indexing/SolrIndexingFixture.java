@@ -64,6 +64,11 @@ public class SolrIndexingFixture implements IndexingFixture {
 	}
 
 	@Override
+	public String getIndexName() {
+		return "liferay";
+	}
+
+	@Override
 	public IndexSearcher getIndexSearcher() {
 		return _indexSearcher;
 	}

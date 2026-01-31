@@ -61,6 +61,11 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 	}
 
 	@Override
+	public String getIndexName() {
+		return _indexName;
+	}
+
+	@Override
 	public IndexSearcher getIndexSearcher() {
 		return _indexSearcher;
 	}
@@ -100,6 +105,8 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 			elasticsearchEngineAdapterFixture.getSearchEngineAdapter();
 
 		IndexNameBuilder indexNameBuilder = _createIndexNameBuilder();
+
+		_indexName = indexNameBuilder.getIndexName(_companyId);
 
 		Localization localization = new LocalizationImpl();
 
@@ -322,6 +329,7 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 	private ElasticsearchFixture _elasticsearchFixture;
 	private FacetProcessor<SearchRequestBuilder> _facetProcessor;
 	private IndexCreationHelper _indexCreationHelper;
+	private String _indexName;
 	private IndexSearcher _indexSearcher;
 	private IndexWriter _indexWriter;
 	private boolean _liferayMappingsAddedToIndex;

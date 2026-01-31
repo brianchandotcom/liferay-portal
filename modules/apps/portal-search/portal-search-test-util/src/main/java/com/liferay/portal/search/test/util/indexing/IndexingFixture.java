@@ -17,6 +17,8 @@ public interface IndexingFixture {
 
 	public long getCompanyId();
 
+	public String getIndexName();
+
 	public IndexSearcher getIndexSearcher();
 
 	public IndexWriter getIndexWriter();

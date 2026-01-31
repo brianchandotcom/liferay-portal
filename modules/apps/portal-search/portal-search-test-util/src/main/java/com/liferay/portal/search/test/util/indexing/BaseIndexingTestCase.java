@@ -251,6 +251,10 @@ public abstract class BaseIndexingTestCase {
 		return _GROUP_ID;
 	}
 
+	protected String getIndexName() {
+		return _indexingFixture.getIndexName();
+	}
+
 	protected IndexSearcher getIndexSearcher() {
 		return _indexSearcher;
 	}

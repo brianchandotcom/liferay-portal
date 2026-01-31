@@ -198,7 +198,7 @@ public class ObjectEntryFolderResourceImpl
 
 			@Override
 			public String getLabelLanguageKey() {
-				return "objectEntryFolders";
+				return "model.resource.com.liferay.object.entry.folder";
 			}
 
 			@Override

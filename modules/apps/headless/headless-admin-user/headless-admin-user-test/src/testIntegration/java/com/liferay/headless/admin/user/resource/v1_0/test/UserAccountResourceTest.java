@@ -2214,9 +2214,9 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		ExpandoColumn expandoColumn = _addExpandoColumn(
 			expandoColumnType, expandoTable);
 
-		T value = supplier.get();
-
 		UserAccount userAccount = randomUserAccount();
+
+		T value = supplier.get();
 
 		userAccount.setCustomFields(
 			() -> new CustomField[] {
@@ -2276,35 +2276,42 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			List<Object> values)
 		throws Exception {
 
+		String domain = StringUtil.randomString() + ".com";
+
 		ExpandoColumn expandoColumn = _addExpandoColumn(
 			expandoColumnType, expandoTable);
 
 		List<UserAccount> userAccounts = new ArrayList<>();
-		String domain = StringUtil.randomString() + ".com";
 
-		for (Object value : values) {
-			userAccounts.add(
-				userAccountResource.postUserAccount(
-					null, null,
-					_randomUserAccount(
-						userAccount -> {
-							userAccount.setCustomFields(
-								() -> new CustomField[] {
-									new CustomField() {
-										{
-											customValue = new CustomValue() {
-												{
-													data = value;
-												}
-											};
-											name = expandoColumn.getName();
+		TransformUtil.transform(
+			values,
+			value -> {
+				userAccounts.add(
+					userAccountResource.postUserAccount(
+						null, null,
+						_randomUserAccount(
+							userAccount -> {
+								userAccount.setCustomFields(
+									() -> new CustomField[] {
+										new CustomField() {
+											{
+												customValue =
+													new CustomValue() {
+														{
+															data = value;
+														}
+													};
+												name = expandoColumn.getName();
+											}
 										}
-									}
-								});
-							userAccount.setEmailAddress(
-								RandomTestUtil.randomString() + '@' + domain);
-						})));
-		}
+									});
+								userAccount.setEmailAddress(
+									RandomTestUtil.randomString() + '@' +
+										domain);
+							})));
+
+				return null;
+			});
 
 		Page<UserAccount> page = userAccountResource.getUserAccountsPage(
 			domain, null, Pagination.of(1, 10),

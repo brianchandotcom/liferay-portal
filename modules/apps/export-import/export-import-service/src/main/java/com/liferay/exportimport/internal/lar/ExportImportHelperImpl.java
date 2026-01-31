@@ -7,6 +7,7 @@ package com.liferay.exportimport.internal.lar;
 
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.exportimport.constants.ExportImportBackgroundTaskContextMapConstants;
+import com.liferay.exportimport.internal.data.handler.MissingPortlet;
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.DefaultConfigurationPortletDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
@@ -27,6 +28,7 @@ import com.liferay.exportimport.portlet.data.handler.provider.PortletDataHandler
 import com.liferay.exportimport.portlet.data.handler.util.ExportImportGroupedModelUtil;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessorRegistryUtil;
+import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -1667,15 +1669,22 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 					return;
 				}
 
+				String[] configurationPortletOptions = StringUtil.split(
+					element.attributeValue("portlet-configuration"));
+
 				PortletDataHandler portletDataHandler =
 					_portletDataHandlerProvider.provide(portlet);
 
 				if (portletDataHandler == null) {
+					MissingPortlet missingPortlet = new MissingPortlet(
+						ObjectDefinitionUtil.getClassName(portletId),
+						element.attributeValue("display-name"), portlet);
+
+					_manifestSummary.addDataPortlet(
+						missingPortlet, configurationPortletOptions);
+
 					return;
 				}
-
-				String[] configurationPortletOptions = StringUtil.split(
-					element.attributeValue("portlet-configuration"));
 
 				if (!(portletDataHandler instanceof
 						DefaultConfigurationPortletDataHandler) &&

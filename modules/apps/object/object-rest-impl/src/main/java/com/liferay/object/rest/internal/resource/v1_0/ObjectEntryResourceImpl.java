@@ -528,6 +528,11 @@ public class ObjectEntryResourceImpl
 			}
 
 			@Override
+			public String getKey() {
+				return _objectDefinition.getExternalReferenceCode();
+			}
+
+			@Override
 			public String getLabelLanguageKey() {
 				return _getLabelLanguageKey(_objectDefinition);
 			}

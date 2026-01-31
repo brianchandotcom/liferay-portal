@@ -562,6 +562,8 @@ public class PortletExportControllerImpl implements PortletExportController {
 			"portlet-data",
 			String.valueOf(exportPortletData || portletDataHandler.isHidden()));
 		element.addAttribute(
+			"portlet-data-handler-key", portletDataHandler.getKey());
+		element.addAttribute(
 			"schema-version", portletDataHandler.getSchemaVersion());
 
 		if (portletDataContext.isValidateExistingDataHandler()) {

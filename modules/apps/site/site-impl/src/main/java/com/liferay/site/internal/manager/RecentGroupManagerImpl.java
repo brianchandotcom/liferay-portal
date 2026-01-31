@@ -202,8 +202,7 @@ public class RecentGroupManagerImpl implements RecentGroupManager {
 		for (long groupId : groupIds) {
 			Group group = _groupLocalService.fetchGroup(groupId);
 
-			if ((group == null) ||
-				group.isCompany() ||
+			if ((group == null) || group.isCompany() ||
 				!GroupPermissionUtil.contains(
 					permissionChecker, group.getGroupId(), ActionKeys.VIEW) ||
 				!_groupLocalService.isLiveGroupActive(group)) {

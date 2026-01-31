@@ -34,7 +34,6 @@ import com.liferay.portal.search.filter.DateRangeFilter;
 import com.liferay.portal.search.filter.FilterVisitor;
 import com.liferay.portal.search.filter.RangeFilter;
 import com.liferay.portal.search.filter.TermsSetFilter;
-import com.liferay.portal.search.index.IndexNameBuilder;
 
 import java.text.Format;
 import java.text.ParseException;
@@ -53,9 +52,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.elasticsearch.index.query.TermsSetQueryBuilder;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -332,20 +329,13 @@ public class ElasticsearchFilterTranslator
 		return termsSetQueryBuilder;
 	}
 
-	@Activate
-	protected void activate() {
-		_queryTranslator = new ElasticsearchQueryTranslator(indexNameBuilder);
-	}
-
 	protected QueryBuilder translate(BooleanClause<Filter> booleanClause) {
 		Filter filter = booleanClause.getClause();
 
 		return filter.accept(this);
 	}
 
-	@Reference
-	protected IndexNameBuilder indexNameBuilder;
-
-	private QueryTranslator<QueryBuilder> _queryTranslator;
+	private final QueryTranslator<QueryBuilder> _queryTranslator =
+		new ElasticsearchQueryTranslator();
 
 }

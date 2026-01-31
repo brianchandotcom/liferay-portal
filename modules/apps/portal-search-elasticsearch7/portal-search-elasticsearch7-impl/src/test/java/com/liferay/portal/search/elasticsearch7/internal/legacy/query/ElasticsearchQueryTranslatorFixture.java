@@ -8,7 +8,7 @@ package com.liferay.portal.search.elasticsearch7.internal.legacy.query;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.filter.FilterTranslator;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.search.elasticsearch7.internal.filter.ElasticsearchFilterTranslatorFixture;
+import com.liferay.portal.search.elasticsearch7.internal.filter.ElasticsearchFilterTranslator;
 
 import org.elasticsearch.index.query.QueryBuilder;
 
@@ -18,18 +18,12 @@ import org.elasticsearch.index.query.QueryBuilder;
 public class ElasticsearchQueryTranslatorFixture {
 
 	public ElasticsearchQueryTranslatorFixture() {
-		ElasticsearchFilterTranslatorFixture
-			elasticsearchFilterTranslatorFixture =
-				new ElasticsearchFilterTranslatorFixture(
-					_elasticsearchQueryTranslator);
-
 		ReflectionTestUtil.setFieldValue(
 			_elasticsearchQueryTranslator, "_filterTranslatorSnapshot",
 			new Snapshot<FilterTranslator<QueryBuilder>>(null, null) {
 
 				public FilterTranslator<QueryBuilder> get() {
-					return elasticsearchFilterTranslatorFixture.
-						getElasticsearchFilterTranslator();
+					return new ElasticsearchFilterTranslator();
 				}
 
 			});
@@ -40,6 +34,6 @@ public class ElasticsearchQueryTranslatorFixture {
 	}
 
 	private final ElasticsearchQueryTranslator _elasticsearchQueryTranslator =
-		new ElasticsearchQueryTranslator(null);
+		new ElasticsearchQueryTranslator();
 
 }

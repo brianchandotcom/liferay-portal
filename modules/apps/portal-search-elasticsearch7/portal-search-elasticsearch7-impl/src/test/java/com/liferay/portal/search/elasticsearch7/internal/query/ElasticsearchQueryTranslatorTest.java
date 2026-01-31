@@ -8,8 +8,6 @@ package com.liferay.portal.search.elasticsearch7.internal.query;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch7.internal.filter.ElasticsearchFilterTranslator;
-import com.liferay.portal.search.elasticsearch7.internal.filter.ElasticsearchFilterTranslatorFixture;
-import com.liferay.portal.search.elasticsearch7.internal.legacy.query.ElasticsearchQueryTranslatorFixture;
 import com.liferay.portal.search.elasticsearch7.internal.util.QueryUtil;
 import com.liferay.portal.search.internal.query.BooleanQueryImpl;
 import com.liferay.portal.search.internal.query.CommonTermsQueryImpl;
@@ -48,16 +46,7 @@ public class ElasticsearchQueryTranslatorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		ElasticsearchFilterTranslatorFixture
-			elasticsearchFilterTranslatorFixture =
-				new ElasticsearchFilterTranslatorFixture(
-					new ElasticsearchQueryTranslatorFixture(
-					).getElasticsearchQueryTranslator());
-
-		_elasticsearchFilterTranslator =
-			elasticsearchFilterTranslatorFixture.
-				getElasticsearchFilterTranslator();
-
+		_elasticsearchFilterTranslator = new ElasticsearchFilterTranslator();
 		_elasticsearchQueryTranslator = new ElasticsearchQueryTranslator();
 	}
 

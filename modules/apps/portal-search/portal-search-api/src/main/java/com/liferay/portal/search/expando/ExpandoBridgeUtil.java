@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
  */
 public class ExpandoBridgeUtil {
 
-	public static final String NUMBER_SUFFIX = "_Number";
-
 	public static String encodeFieldName(ExpandoColumn expandoColumn) {
 		StringBundler sb = new StringBundler(7);
 

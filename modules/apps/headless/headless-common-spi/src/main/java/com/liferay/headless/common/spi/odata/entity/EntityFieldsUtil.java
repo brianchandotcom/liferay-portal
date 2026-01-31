@@ -89,8 +89,7 @@ public class EntityFieldsUtil {
 
 			return new DoubleEntityField(
 				externalName,
-				locale -> Field.getSortableFieldName(
-					internalName + ExpandoBridgeUtil.NUMBER_SUFFIX));
+				locale -> Field.getSortableFieldName(internalName + "_Number"));
 		}
 		else if (type == ExpandoColumnConstants.STRING_LOCALIZED) {
 			return new StringEntityField(

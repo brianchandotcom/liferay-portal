@@ -199,6 +199,18 @@ public class StagedModelDataHandlerUtil {
 			portletDataContext, stagedModel);
 	}
 
+	public static <T extends StagedModel> void handleException(
+		PortletDataContext portletDataContext,
+		PortletDataException portletDataException, T stagedModel) {
+
+		for (ImportStagedModelExceptionHandler
+				importStagedModelExceptionHandler : _serviceTrackerList) {
+
+			importStagedModelExceptionHandler.handle(
+				portletDataContext, portletDataException, stagedModel);
+		}
+	}
+
 	/**
 	 * Imports the staged model that is referenced by a portlet. To import a
 	 * staged model referenced by another staged model, use {@link
@@ -386,12 +398,8 @@ public class StagedModelDataHandlerUtil {
 				portletDataContext, stagedModel);
 		}
 		catch (PortletDataException portletDataException) {
-			for (ImportStagedModelExceptionHandler
-					importStagedModelExceptionHandler : _serviceTrackerList) {
-
-				importStagedModelExceptionHandler.handle(
-					portletDataContext, portletDataException, stagedModel);
-			}
+			handleException(
+				portletDataContext, portletDataException, stagedModel);
 
 			throw portletDataException;
 		}

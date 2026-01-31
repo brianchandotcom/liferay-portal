@@ -9,6 +9,7 @@ import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.ItemScopeUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.headless.admin.site.internal.util.LogUtil;
 import com.liferay.info.item.InfoItemServiceRegistry;
@@ -20,10 +21,8 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.vulcan.scope.Scope;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsEntry;
@@ -58,14 +57,9 @@ public class SegmentsExperienceUtil {
 
 		if (itemExternalReference != null) {
 			segmentsEntryERC = itemExternalReference.getExternalReferenceCode();
-
-			Scope scope = itemExternalReference.getScope();
-
-			if (scope != null) {
-				segmentsEntryScopeERC =
-					ScopeUtil.getItemScopeExternalReferenceCode(
-						scope.getExternalReferenceCode(), layout.getGroupId());
-			}
+			segmentsEntryScopeERC =
+				ItemScopeUtil.getItemScopeExternalReferenceCode(
+					itemExternalReference.getScope(), layout.getGroupId());
 		}
 
 		SegmentsExperience segmentsExperience =
@@ -142,14 +136,9 @@ public class SegmentsExperienceUtil {
 
 		if (itemExternalReference != null) {
 			segmentsEntryERC = itemExternalReference.getExternalReferenceCode();
-
-			Scope scope = itemExternalReference.getScope();
-
-			if (scope != null) {
-				segmentsEntryScopeERC =
-					ScopeUtil.getItemScopeExternalReferenceCode(
-						scope.getExternalReferenceCode(), layout.getGroupId());
-			}
+			segmentsEntryScopeERC =
+				ItemScopeUtil.getItemScopeExternalReferenceCode(
+					itemExternalReference.getScope(), layout.getGroupId());
 		}
 
 		if (Validator.isNotNull(segmentsEntryERC)) {

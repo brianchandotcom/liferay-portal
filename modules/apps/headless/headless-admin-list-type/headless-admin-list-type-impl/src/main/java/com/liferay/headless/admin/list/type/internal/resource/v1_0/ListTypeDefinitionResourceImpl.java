@@ -90,7 +90,7 @@ public class ListTypeDefinitionResourceImpl
 
 			@Override
 			public String getLabelLanguageKey() {
-				return "list-type-definitions";
+				return "model.resource.com.liferay.list.type";
 			}
 
 			@Override

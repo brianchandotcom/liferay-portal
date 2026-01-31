@@ -298,6 +298,8 @@ public class BNDSourceUtil {
 		_FILE_SYSTEM.getPathMatcher("glob:**/bin/**"),
 		_FILE_SYSTEM.getPathMatcher("glob:**/build/**"),
 		_FILE_SYSTEM.getPathMatcher("glob:**/classes/**"),
+		_FILE_SYSTEM.getPathMatcher("glob:**/node_modules/**"),
+		_FILE_SYSTEM.getPathMatcher("glob:**/node_modules_cache/**"),
 		_FILE_SYSTEM.getPathMatcher("glob:**/sql/**"),
 		_FILE_SYSTEM.getPathMatcher("glob:**/src/**"),
 		_FILE_SYSTEM.getPathMatcher("glob:**/test-classes/**"),

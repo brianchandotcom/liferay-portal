@@ -3,3 +3,58 @@ $border-color: #f1f2f5;
 
 $lead-font-weight: 400;
 $small-font-size: 0.875rem;
+
+@import 'clay/atlas/variables/_globals';
+
+$border-radius: 0.5rem;
+$border-radius-lg: 0.5rem;
+$border-radius-sm: 0.5rem;
+
+$btn-xs-border-radius: 0.25rem;
+
+$custom-checkbox-indicator-border-radius: 0.25rem;
+
+$label-border-radius: 0.25rem;
+
+$nav-divider-color: $secondary-l1;
+
+$sticker-sm-border-radius: 0.25rem;
+
+$label-font-size: 0.75rem;
+$label-text-transform: capitalize;
+
+$btn-sizes: () !default;
+$btn-sizes: map-deep-merge(
+	(
+		btn-xs: (
+			border-radius: $btn-xs-border-radius,
+		),
+	),
+	$btn-sizes
+);
+
+$label-lg: () !default;
+$label-lg: map-deep-merge(
+	(
+		border-radius: $border-radius-lg,
+	),
+	$label-lg
+);
+
+$sticker-sizes: () !default;
+$sticker-sizes: map-deep-merge(
+	(
+		sticker-xs: (
+			border-radius: $sticker-sm-border-radius,
+		),
+	),
+	$sticker-sizes
+);
+
+$sticker-sm: () !default;
+$sticker-sm: map-deep-merge(
+	(
+		border-radius: $sticker-sm-border-radius,
+	),
+	$sticker-sm
+);

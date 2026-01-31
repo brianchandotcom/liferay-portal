@@ -30,7 +30,6 @@ import com.liferay.portal.search.engine.adapter.index.GetIndexIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.GetIndexIndexResponse;
 import com.liferay.portal.search.engine.adapter.index.GetMappingIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.GetMappingIndexResponse;
-import com.liferay.portal.search.engine.adapter.index.IndexRequestExecutor;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse;
 import com.liferay.portal.search.engine.adapter.index.IndicesOptions;
@@ -45,7 +44,7 @@ import com.liferay.portal.search.engine.adapter.index.UpdateIndexSettingsIndexRe
 import com.liferay.portal.search.opensearch2.internal.BaseOpenSearchTestCase;
 import com.liferay.portal.search.opensearch2.internal.OpenSearchTestRule;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
-import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.index.IndexRequestExecutorFixture;
+import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.index.IndexRequestExecutorTestUtil;
 import com.liferay.portal.search.opensearch2.internal.util.IndexUtil;
 import com.liferay.portal.search.opensearch2.internal.util.JsonpUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -577,24 +576,10 @@ public class OpenSearchSearchEngineAdapterIndexRequestTest
 
 		ReflectionTestUtil.setFieldValue(
 			searchEngineAdapter, "_indexRequestExecutor",
-			_createIndexRequestExecutor(openSearchConnectionManager));
+			IndexRequestExecutorTestUtil.createIndexRequestExecutor(
+				openSearchConnectionManager));
 
 		return searchEngineAdapter;
-	}
-
-	private static IndexRequestExecutor _createIndexRequestExecutor(
-		OpenSearchConnectionManager openSearchConnectionManager) {
-
-		IndexRequestExecutorFixture indexRequestExecutorFixture =
-			new IndexRequestExecutorFixture() {
-				{
-					setOpenSearchConnectionManager(openSearchConnectionManager);
-				}
-			};
-
-		indexRequestExecutorFixture.setUp();
-
-		return indexRequestExecutorFixture.getIndexRequestExecutor();
 	}
 
 	private void _assertAnalysisIndexResponseTokens(

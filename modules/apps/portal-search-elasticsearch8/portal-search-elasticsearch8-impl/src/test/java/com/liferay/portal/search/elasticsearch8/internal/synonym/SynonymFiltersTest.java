@@ -17,14 +17,13 @@ import com.liferay.portal.search.elasticsearch8.internal.query.QueryFactories;
 import com.liferay.portal.search.elasticsearch8.internal.query.SearchAssert;
 import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.ElasticsearchSearchEngineAdapterImpl;
 import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.ElasticsearchSearchEngineAdapterIndexRequestTest;
-import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.index.IndexRequestExecutorFixture;
+import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.index.IndexRequestExecutorTestUtil;
 import com.liferay.portal.search.elasticsearch8.internal.util.ResourceUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.CreateIndexResponse;
 import com.liferay.portal.search.engine.adapter.index.DeleteIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.DeleteIndexResponse;
-import com.liferay.portal.search.engine.adapter.index.IndexRequestExecutor;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.After;
@@ -186,21 +185,6 @@ public class SynonymFiltersTest {
 		_assertMatchPhraseQuerySearch("stable", "git hash", "stable");
 	}
 
-	private static IndexRequestExecutor _createIndexRequestExecutor(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		IndexRequestExecutorFixture indexRequestExecutorFixture =
-			new IndexRequestExecutorFixture() {
-				{
-					setElasticsearchClientResolver(elasticsearchClientResolver);
-				}
-			};
-
-		indexRequestExecutorFixture.setUp();
-
-		return indexRequestExecutorFixture.getIndexRequestExecutor();
-	}
-
 	private static SearchEngineAdapter _createSearchEngineAdapter(
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
@@ -209,7 +193,8 @@ public class SynonymFiltersTest {
 
 		ReflectionTestUtil.setFieldValue(
 			searchEngineAdapter, "_indexRequestExecutor",
-			_createIndexRequestExecutor(elasticsearchClientResolver));
+			IndexRequestExecutorTestUtil.createIndexRequestExecutor(
+				elasticsearchClientResolver));
 
 		return searchEngineAdapter;
 	}

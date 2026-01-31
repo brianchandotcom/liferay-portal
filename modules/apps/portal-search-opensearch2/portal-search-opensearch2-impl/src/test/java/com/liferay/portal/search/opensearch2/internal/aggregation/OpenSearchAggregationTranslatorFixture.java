@@ -21,10 +21,6 @@ import org.opensearch.client.opensearch._types.aggregations.Aggregation;
 public class OpenSearchAggregationTranslatorFixture {
 
 	public OpenSearchAggregationTranslatorFixture() {
-		OpenSearchPipelineAggregationTranslatorFixture
-			pipelineAggregationTranslatorFixture =
-				new OpenSearchPipelineAggregationTranslatorFixture();
-
 		OpenSearchQueryTranslatorFixture openSearchQueryTranslatorFixture =
 			new OpenSearchQueryTranslatorFixture();
 
@@ -36,8 +32,7 @@ public class OpenSearchAggregationTranslatorFixture {
 
 		PipelineAggregationTranslator<Aggregation>
 			pipelineAggregationTranslator =
-				pipelineAggregationTranslatorFixture.
-					getOpenSearchPipelineAggregationTranslator();
+				new OpenSearchPipelineAggregationTranslator();
 
 		OpenSearchAggregationTranslator openSearchAggregationTranslator =
 			new OpenSearchAggregationTranslator();

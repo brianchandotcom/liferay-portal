@@ -100,6 +100,7 @@ public class BatchEnginePortletDataHandlerRegistryImpl
 				return batchEnginePortletDataHandlers.isEmpty() ? null :
 					batchEnginePortletDataHandlers;
 			});
+
 		_portletIdBatchEnginePortletDataHandlersMap.computeIfPresent(
 			companyId,
 			(k, batchEnginePortletDataHandlers) -> {

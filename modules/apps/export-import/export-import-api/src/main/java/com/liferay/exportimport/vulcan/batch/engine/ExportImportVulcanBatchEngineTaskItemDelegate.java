@@ -28,6 +28,10 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 			return null;
 		}
 
+		public default String getKey() {
+			return null;
+		}
+
 		public String getLabelLanguageKey();
 
 		public String getModelClassName();

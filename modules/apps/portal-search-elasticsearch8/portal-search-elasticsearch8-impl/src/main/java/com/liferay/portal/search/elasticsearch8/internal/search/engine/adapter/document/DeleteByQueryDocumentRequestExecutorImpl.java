@@ -16,12 +16,10 @@ import com.liferay.portal.search.elasticsearch8.internal.connection.Elasticsearc
 import com.liferay.portal.search.elasticsearch8.internal.legacy.query.ElasticsearchQueryTranslator;
 import com.liferay.portal.search.engine.adapter.document.DeleteByQueryDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.DeleteByQueryDocumentResponse;
-import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.QueryTranslator;
 
 import java.io.IOException;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -42,12 +40,6 @@ public class DeleteByQueryDocumentRequestExecutorImpl
 
 		return new DeleteByQueryDocumentResponse(
 			deleteByQueryResponse.total(), deleteByQueryResponse.took());
-	}
-
-	@Activate
-	protected void activate() {
-		_legacyQueryTranslator = new ElasticsearchQueryTranslator(
-			_indexNameBuilder);
 	}
 
 	protected DeleteByQueryRequest createDeleteByQueryRequest(
@@ -97,11 +89,9 @@ public class DeleteByQueryDocumentRequestExecutorImpl
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
 
-	@Reference
-	private IndexNameBuilder _indexNameBuilder;
-
-	private com.liferay.portal.kernel.search.query.QueryTranslator<QueryVariant>
-		_legacyQueryTranslator;
+	private final com.liferay.portal.kernel.search.query.QueryTranslator
+		<QueryVariant> _legacyQueryTranslator =
+			new ElasticsearchQueryTranslator();
 	private final QueryTranslator<QueryVariant> _queryTranslator =
 		new com.liferay.portal.search.elasticsearch8.internal.query.
 			ElasticsearchQueryTranslator();

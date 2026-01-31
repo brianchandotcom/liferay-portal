@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch8.internal.util.QueryUtil;
 import com.liferay.portal.search.elasticsearch8.internal.util.SetterUtil;
-import com.liferay.portal.search.index.IndexNameBuilder;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -62,10 +61,6 @@ import java.util.List;
  */
 public class ElasticsearchQueryTranslator
 	implements QueryTranslator<QueryVariant>, QueryVisitor<QueryVariant> {
-
-	public ElasticsearchQueryTranslator(IndexNameBuilder indexNameBuilder) {
-		_indexNameBuilder = indexNameBuilder;
-	}
 
 	@Override
 	public QueryVariant translate(
@@ -675,7 +670,5 @@ public class ElasticsearchQueryTranslator
 			ElasticsearchQueryTranslator.class,
 			Snapshot.cast(FilterTranslator.class),
 			"(search.engine.impl=Elasticsearch)", true);
-
-	private final IndexNameBuilder _indexNameBuilder;
 
 }

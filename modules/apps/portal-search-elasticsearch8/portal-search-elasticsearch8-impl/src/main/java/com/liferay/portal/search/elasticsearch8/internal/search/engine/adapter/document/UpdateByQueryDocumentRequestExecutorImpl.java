@@ -17,7 +17,6 @@ import com.liferay.portal.search.elasticsearch8.internal.legacy.query.Elasticsea
 import com.liferay.portal.search.elasticsearch8.internal.script.ScriptTranslator;
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentResponse;
-import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.QueryTranslator;
 import com.liferay.portal.search.script.Script;
 import com.liferay.portal.search.script.ScriptBuilder;
@@ -29,7 +28,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -50,12 +48,6 @@ public class UpdateByQueryDocumentRequestExecutorImpl
 
 		return new UpdateByQueryDocumentResponse(
 			updateByQueryResponse.total(), updateByQueryResponse.took());
-	}
-
-	@Activate
-	protected void activate() {
-		_legacyQueryTranslator = new ElasticsearchQueryTranslator(
-			_indexNameBuilder);
 	}
 
 	protected UpdateByQueryRequest createUpdateByQueryRequest(
@@ -154,11 +146,9 @@ public class UpdateByQueryDocumentRequestExecutorImpl
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
 
-	@Reference
-	private IndexNameBuilder _indexNameBuilder;
-
-	private com.liferay.portal.kernel.search.query.QueryTranslator<QueryVariant>
-		_legacyQueryTranslator;
+	private final com.liferay.portal.kernel.search.query.QueryTranslator
+		<QueryVariant> _legacyQueryTranslator =
+			new ElasticsearchQueryTranslator();
 	private final QueryTranslator<QueryVariant> _queryTranslator =
 		new com.liferay.portal.search.elasticsearch8.internal.query.
 			ElasticsearchQueryTranslator();

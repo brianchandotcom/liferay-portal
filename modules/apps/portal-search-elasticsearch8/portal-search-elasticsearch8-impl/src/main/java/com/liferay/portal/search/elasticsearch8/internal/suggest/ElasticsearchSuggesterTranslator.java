@@ -32,7 +32,6 @@ import com.liferay.portal.search.elasticsearch8.internal.legacy.query.Elasticsea
 import com.liferay.portal.search.elasticsearch8.internal.util.ConversionUtil;
 import com.liferay.portal.search.elasticsearch8.internal.util.JsonpUtil;
 import com.liferay.portal.search.elasticsearch8.internal.util.SetterUtil;
-import com.liferay.portal.search.index.IndexNameBuilder;
 
 import java.util.Set;
 
@@ -42,10 +41,6 @@ import java.util.Set;
 public class ElasticsearchSuggesterTranslator
 	implements SuggesterTranslator<FieldSuggester>,
 			   SuggesterVisitor<FieldSuggester> {
-
-	public ElasticsearchSuggesterTranslator(IndexNameBuilder indexNameBuilder) {
-		_queryTranslator = new ElasticsearchQueryTranslator(indexNameBuilder);
-	}
 
 	@Override
 	public FieldSuggester translate(
@@ -296,6 +291,7 @@ public class ElasticsearchSuggesterTranslator
 		return SuggestMode.Missing;
 	}
 
-	private final QueryTranslator<QueryVariant> _queryTranslator;
+	private final QueryTranslator<QueryVariant> _queryTranslator =
+		new ElasticsearchQueryTranslator();
 
 }

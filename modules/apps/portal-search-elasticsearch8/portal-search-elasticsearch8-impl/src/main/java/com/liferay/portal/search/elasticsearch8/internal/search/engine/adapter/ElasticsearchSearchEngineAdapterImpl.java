@@ -36,11 +36,9 @@ import com.liferay.portal.search.engine.adapter.search.SearchResponse;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotRequest;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotRequestExecutor;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotResponse;
-import com.liferay.portal.search.index.IndexNameBuilder;
 
 import java.util.List;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -212,11 +210,6 @@ public class ElasticsearchSearchEngineAdapterImpl
 		}
 	}
 
-	@Activate
-	protected void activate() {
-		_queryTranslator = new ElasticsearchQueryTranslator(_indexNameBuilder);
-	}
-
 	protected void setThrowOriginalExceptions(boolean throwOriginalExceptions) {
 		_throwOriginalExceptions = throwOriginalExceptions;
 	}
@@ -265,13 +258,11 @@ public class ElasticsearchSearchEngineAdapterImpl
 	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private DocumentRequestExecutor _documentRequestExecutor;
 
-	@Reference
-	private IndexNameBuilder _indexNameBuilder;
-
 	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private IndexRequestExecutor _indexRequestExecutor;
 
-	private QueryTranslator<QueryVariant> _queryTranslator;
+	private final QueryTranslator<QueryVariant> _queryTranslator =
+		new ElasticsearchQueryTranslator();
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private SearchRequestExecutor _searchRequestExecutor;

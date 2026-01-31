@@ -31,7 +31,6 @@ import com.liferay.portal.search.elasticsearch8.internal.util.SetterUtil;
 import com.liferay.portal.search.engine.adapter.search.BaseSearchRequest;
 import com.liferay.portal.search.filter.ComplexQueryBuilderFactory;
 import com.liferay.portal.search.filter.ComplexQueryPart;
-import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.pit.PointInTime;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Query;
@@ -45,7 +44,6 @@ import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -76,12 +74,6 @@ public class CommonSearchRequestBuilderAssemblerImpl
 		_setStatsRequests(baseSearchRequest, searchRequestBuilder);
 		_setTimeout(baseSearchRequest, searchRequestBuilder);
 		_setTrackTotalHits(baseSearchRequest, searchRequestBuilder);
-	}
-
-	@Activate
-	protected void activate() {
-		_legacyQueryTranslator = new ElasticsearchQueryTranslator(
-			_indexNameBuilder);
 	}
 
 	protected void setQuery(
@@ -627,11 +619,9 @@ public class CommonSearchRequestBuilderAssemblerImpl
 	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private FilterTranslator<QueryVariant> _filterTranslator;
 
-	@Reference
-	private IndexNameBuilder _indexNameBuilder;
-
-	private com.liferay.portal.kernel.search.query.QueryTranslator<QueryVariant>
-		_legacyQueryTranslator;
+	private final com.liferay.portal.kernel.search.query.QueryTranslator
+		<QueryVariant> _legacyQueryTranslator =
+			new ElasticsearchQueryTranslator();
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private PipelineAggregationTranslator<Aggregation>

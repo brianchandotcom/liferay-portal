@@ -55,14 +55,11 @@ import com.liferay.portal.search.filter.DateRangeFilter;
 import com.liferay.portal.search.filter.FilterVisitor;
 import com.liferay.portal.search.filter.RangeFilter;
 import com.liferay.portal.search.filter.TermsSetFilter;
-import com.liferay.portal.search.index.IndexNameBuilder;
 
 import java.text.Format;
 import java.text.ParseException;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -341,11 +338,6 @@ public class ElasticsearchFilterTranslator
 		return builder.build();
 	}
 
-	@Activate
-	protected void activate() {
-		_queryTranslator = new ElasticsearchQueryTranslator(indexNameBuilder);
-	}
-
 	protected QueryVariant translate(
 		BooleanClause<Filter> booleanClause,
 		FilterVisitor<QueryVariant> filterVisitor) {
@@ -355,10 +347,8 @@ public class ElasticsearchFilterTranslator
 		return filter.accept(filterVisitor);
 	}
 
-	@Reference
-	protected IndexNameBuilder indexNameBuilder;
-
 	private final GeoTranslator _geoTranslator = new GeoTranslator();
-	private QueryTranslator<QueryVariant> _queryTranslator;
+	private final QueryTranslator<QueryVariant> _queryTranslator =
+		new ElasticsearchQueryTranslator();
 
 }

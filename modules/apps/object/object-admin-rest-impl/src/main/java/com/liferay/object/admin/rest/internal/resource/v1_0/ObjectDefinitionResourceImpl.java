@@ -180,7 +180,7 @@ public class ObjectDefinitionResourceImpl
 
 			@Override
 			public String getLabelLanguageKey() {
-				return "object-definitions";
+				return "model.resource.com.liferay.object";
 			}
 
 			@Override

@@ -467,7 +467,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					portletDataContext.getCompanyId(),
 					portletDataContext.getScopeGroupId())) {
 
-				portletDataContext.setValidateExistingDataHandler(false);
+				portletDataContext.setValidateExistingDataHandler(
+					!isMissingPortletSupported() || (getKey() == null));
 			}
 			else {
 				portletDataContext.setValidateExistingDataHandler(true);

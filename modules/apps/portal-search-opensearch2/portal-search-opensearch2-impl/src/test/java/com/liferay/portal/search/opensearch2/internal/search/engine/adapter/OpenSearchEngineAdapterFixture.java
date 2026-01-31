@@ -13,7 +13,7 @@ import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.clus
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.DocumentRequestExecutorFixture;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.index.IndexRequestExecutorFixture;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.search.SearchRequestExecutorFixture;
-import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.snapshot.SnapshotRequestExecutorFixture;
+import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.snapshot.SnapshotRequestExecutorTestUtil;
 
 import org.opensearch.client.opensearch.core.SearchRequest;
 
@@ -60,17 +60,9 @@ public class OpenSearchEngineAdapterFixture {
 			}
 		};
 
-		SnapshotRequestExecutorFixture snapshotRequestExecutorFixture =
-			new SnapshotRequestExecutorFixture() {
-				{
-					setOpenSearchConnectionManager(openSearchConnectionManager);
-				}
-			};
-
 		documentRequestExecutorFixture.setUp();
 		indexRequestExecutorFixture.setUp();
 		_searchRequestExecutorFixture.setUp();
-		snapshotRequestExecutorFixture.setUp();
 
 		SearchEngineAdapter searchEngineAdapter =
 			new OpenSearchSearchEngineAdapterImpl() {
@@ -94,7 +86,8 @@ public class OpenSearchEngineAdapterFixture {
 			_searchRequestExecutorFixture.getSearchRequestExecutor());
 		ReflectionTestUtil.setFieldValue(
 			searchEngineAdapter, "_snapshotRequestExecutor",
-			snapshotRequestExecutorFixture.getSnapshotRequestExecutor());
+			SnapshotRequestExecutorTestUtil.createSnapshotRequestExecutor(
+				openSearchConnectionManager));
 
 		return searchEngineAdapter;
 	}

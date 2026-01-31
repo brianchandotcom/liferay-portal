@@ -8,7 +8,7 @@ package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.snapshot.SnapshotRequestExecutorFixture;
+import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.snapshot.SnapshotRequestExecutorTestUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.snapshot.CreateSnapshotRepositoryRequest;
 import com.liferay.portal.search.engine.adapter.snapshot.CreateSnapshotRepositoryResponse;
@@ -22,7 +22,6 @@ import com.liferay.portal.search.engine.adapter.snapshot.GetSnapshotsRequest;
 import com.liferay.portal.search.engine.adapter.snapshot.RestoreSnapshotRequest;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotDetails;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotRepositoryDetails;
-import com.liferay.portal.search.engine.adapter.snapshot.SnapshotRequestExecutor;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotState;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -288,24 +287,10 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 
 		ReflectionTestUtil.setFieldValue(
 			searchEngineAdapter, "_snapshotRequestExecutor",
-			_createSnapshotRequestExecutor(elasticsearchClientResolver));
+			SnapshotRequestExecutorTestUtil.createSnapshotRequestExecutor(
+				elasticsearchClientResolver));
 
 		return searchEngineAdapter;
-	}
-
-	private static SnapshotRequestExecutor _createSnapshotRequestExecutor(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		SnapshotRequestExecutorFixture snapshotRequestExecutorFixture =
-			new SnapshotRequestExecutorFixture() {
-				{
-					setElasticsearchClientResolver(elasticsearchClientResolver);
-				}
-			};
-
-		snapshotRequestExecutorFixture.setUp();
-
-		return snapshotRequestExecutorFixture.getSnapshotRequestExecutor();
 	}
 
 	private void _createIndex() {

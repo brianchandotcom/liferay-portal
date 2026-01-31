@@ -301,13 +301,10 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 			if ((notificationRecipients != null) &&
 				!notificationRecipients.isEmpty()) {
 
-				String[] notificationRecipientsArray =
-					notificationRecipients.split(",");
-
 				List<String> invalidNotificationRecipients = new ArrayList<>();
 
 				for (String notificationRecipient :
-						notificationRecipientsArray) {
+						notificationRecipients.split(",")) {
 
 					notificationRecipient = notificationRecipient.trim();
 
@@ -343,7 +340,7 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 							",", invalidNotificationRecipients);
 
 					System.out.println(
-						"WARNING: Invalid notification recipients found.\n" +
+						"WARNING: Invalid notification recipients found: " +
 							invalidNotificationRecipientsString);
 				}
 			}

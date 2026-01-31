@@ -194,15 +194,62 @@ $line-height-base: 1.5 !default;
 $border-color: $gray-200 !default;
 $border-width: 0.0625rem !default;
 
-$border-radius: 0.25rem !default;
+$border-radius: 0.5rem !default;
 
-$border-radius-lg: var(--border-radius-lg, 0.375rem) !default;
-$border-radius-sm: var(--border-radius-sm, 0.1875rem) !default;
+$border-radius-lg: var(--border-radius-lg, 0.5rem) !default;
+$border-radius-sm: var(--border-radius-sm, 0.5rem) !default;
 
 $rounded-0-border-radius: 0 !default;
 $rounded-border-radius: var(--border-radius, $border-radius) !default;
 $rounded-circle-border-radius: var(--border-radius-circle, 5000px) !default;
 $rounded-pill: var(--rounded-pill, 50rem) !default;
+
+$custom-checkbox-indicator-border-radius: 0.25rem;
+
+$label-border-radius: 0.25rem;
+
+$nav-divider-color: $secondary-l1;
+
+$sticker-sm-border-radius: 0.25rem;
+
+$label-font-size: 0.75rem;
+$label-text-transform: capitalize;
+
+$btn-sizes: () !default;
+$btn-sizes: map-deep-merge(
+	(
+		btn-xs: (
+			border-radius: 0.25rem,
+		),
+	),
+	$btn-sizes
+);
+
+$label-lg: () !default;
+$label-lg: map-deep-merge(
+	(
+		border-radius: $border-radius-lg,
+	),
+	$label-lg
+);
+
+$sticker-sizes: () !default;
+$sticker-sizes: map-deep-merge(
+	(
+		sticker-xs: (
+			border-radius: $sticker-sm-border-radius,
+		),
+	),
+	$sticker-sizes
+);
+
+$sticker-sm: () !default;
+$sticker-sm: map-deep-merge(
+	(
+		border-radius: $sticker-sm-border-radius,
+	),
+	$sticker-sm
+);
 
 $box-shadow: var(--box-shadow, 0 0.5rem 1rem rgba($black, 0.15)) !default;
 

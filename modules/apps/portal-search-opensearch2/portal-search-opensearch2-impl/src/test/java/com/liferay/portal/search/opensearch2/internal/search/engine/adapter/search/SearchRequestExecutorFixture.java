@@ -28,7 +28,7 @@ import com.liferay.portal.search.internal.query.QueriesImpl;
 import com.liferay.portal.search.internal.stats.StatsResponseBuilderFactoryImpl;
 import com.liferay.portal.search.legacy.stats.StatsRequestBuilderFactory;
 import com.liferay.portal.search.opensearch2.internal.aggregation.OpenSearchAggregationTranslatorFixture;
-import com.liferay.portal.search.opensearch2.internal.aggregation.OpenSearchPipelineAggregationTranslatorFixture;
+import com.liferay.portal.search.opensearch2.internal.aggregation.OpenSearchPipelineAggregationTranslator;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
 import com.liferay.portal.search.opensearch2.internal.facet.FacetProcessor;
 import com.liferay.portal.search.opensearch2.internal.facet.FacetTranslator;
@@ -154,15 +154,10 @@ public class SearchRequestExecutorFixture {
 			commonSearchRequestBuilderAssembler, "_legacyQueryTranslator",
 			legacyOpenSearchQueryTranslator);
 
-		OpenSearchPipelineAggregationTranslatorFixture
-			openSearchPipelineAggregationTranslatorFixture =
-				new OpenSearchPipelineAggregationTranslatorFixture();
-
 		ReflectionTestUtil.setFieldValue(
 			commonSearchRequestBuilderAssembler,
 			"_pipelineAggregationTranslator",
-			openSearchPipelineAggregationTranslatorFixture.
-				getOpenSearchPipelineAggregationTranslator());
+			new OpenSearchPipelineAggregationTranslator());
 
 		ReflectionTestUtil.setFieldValue(
 			commonSearchRequestBuilderAssembler, "_queryTranslator",

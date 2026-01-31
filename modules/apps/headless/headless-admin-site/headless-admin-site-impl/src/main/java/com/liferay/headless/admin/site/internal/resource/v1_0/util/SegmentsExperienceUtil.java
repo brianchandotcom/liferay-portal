@@ -50,23 +50,17 @@ public class SegmentsExperienceUtil {
 			throw new UnsupportedOperationException();
 		}
 
-		ItemExternalReference itemExternalReference =
-			pageExperience.getSegmentItemExternalReference();
-
-		String segmentsEntryERC = null;
-		String segmentsEntryScopeERC = null;
-
-		if (itemExternalReference != null) {
-			segmentsEntryERC = itemExternalReference.getExternalReferenceCode();
-			segmentsEntryScopeERC =
-				ItemScopeUtil.getItemScopeExternalReferenceCode(
-					itemExternalReference.getScope(), layout.getGroupId());
-		}
+		SegmentsEntryReference segmentsEntryReference =
+			_getSegmentsEntryReference(
+				layout.getCompanyId(),
+				pageExperience.getSegmentItemExternalReference(),
+				layout.getGroupId());
 
 		SegmentsExperience segmentsExperience =
 			SegmentsExperienceServiceUtil.addSegmentsExperience(
 				pageExperience.getExternalReferenceCode(), layout.getGroupId(),
-				segmentsEntryERC, segmentsEntryScopeERC,
+				segmentsEntryReference.getExternalReferenceCode(),
+				segmentsEntryReference.getScopeExternalReferenceCode(),
 				pageExperience.getKey(), layout.getPlid(),
 				LocalizedMapUtil.getLocalizedMap(pageExperience.getName_i18n()),
 				getPriority(pageExperience.getKey(), layout, priority), true,

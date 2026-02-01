@@ -20,6 +20,7 @@ components:
                     ResetPermissionBulkAction: "#/components/schemas/ResetPermissionBulkAction"
                     StatusBulkAction: "#/components/schemas/StatusBulkAction"
                     TaxonomyCategoryBulkAction: "#/components/schemas/TaxonomyCategoryBulkAction"
+                    UpdateTaskStateBulkAction: "#/components/schemas/UpdateTaskStateBulkAction"
                 propertyName: type
             properties:
                 bulkActionItems:
@@ -39,6 +40,7 @@ components:
                         -   ResetPermissionBulkAction
                         -   StatusBulkAction
                         -   TaxonomyCategoryBulkAction
+                        -   UpdateTaskStateBulkAction
                     type: string
         BulkActionItem:
             properties:
@@ -248,6 +250,12 @@ components:
                 taxonomyVocabularyId:
                     format: int64
                     type: integer
+        UpdateTaskStateBulkAction:
+            allOf:
+                -   $ref: "#/components/schemas/BulkAction"
+                -   properties:
+                        state:
+                            type: string
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID

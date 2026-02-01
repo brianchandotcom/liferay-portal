@@ -12,7 +12,6 @@ final String navigation = ParamUtil.getString(request, "navigation", "entries");
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems='<%=
 		new JSPNavigationItemList(pageContext) {
 			{

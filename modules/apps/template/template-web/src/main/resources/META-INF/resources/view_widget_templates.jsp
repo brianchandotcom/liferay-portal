@@ -14,7 +14,6 @@ WidgetTemplatesManagementToolbarDisplayContext widgetTemplatesManagementToolbarD
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems="<%= widgetTemplatesTemplateDisplayContext.getNavigationItems() %>"
 />
 

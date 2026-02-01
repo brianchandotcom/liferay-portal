@@ -24,7 +24,6 @@ KaleoProcess kaleoProcess = kaleoFormsViewRecordsDisplayContext.getKaleoProcess(
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems="<%= kaleoFormsViewRecordsDisplayContext.getNavigationItems() %>"
 />
 

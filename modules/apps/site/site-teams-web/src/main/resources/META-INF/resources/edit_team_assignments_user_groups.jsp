@@ -12,7 +12,6 @@ EditSiteTeamAssignmentsUserGroupsDisplayContext editSiteTeamAssignmentsUserGroup
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getNavigationItems() %>"
 />
 

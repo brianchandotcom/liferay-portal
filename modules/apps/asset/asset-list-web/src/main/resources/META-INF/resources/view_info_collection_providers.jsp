@@ -12,7 +12,6 @@ InfoCollectionProviderDisplayContext infoCollectionProviderDisplayContext = (Inf
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems='<%= assetListDisplayContext.getNavigationItems("collection-providers") %>'
 />
 

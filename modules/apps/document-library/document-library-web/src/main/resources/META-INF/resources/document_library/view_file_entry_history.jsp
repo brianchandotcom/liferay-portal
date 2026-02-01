@@ -19,7 +19,6 @@ renderResponse.setTitle(fileEntry.getTitle());
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems="<%= dlViewEntryHistoryDisplayContext.getNavigationItems() %>"
 />
 

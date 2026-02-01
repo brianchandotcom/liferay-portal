@@ -196,9 +196,10 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 		portletDataContext.setCompanyId(companyId);
 
-		return !_getActiveRegistrations(
-			portletDataContext, true
-		).isEmpty();
+		List<Registration> activeRegistrations = _getActiveRegistrations(
+			portletDataContext, true);
+
+		return !activeRegistrations.isEmpty();
 	}
 
 	@Override

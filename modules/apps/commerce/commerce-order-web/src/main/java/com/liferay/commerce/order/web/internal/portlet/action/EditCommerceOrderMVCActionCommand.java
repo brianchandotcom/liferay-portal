@@ -376,8 +376,9 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 				commerceOrderItem.getDiscountAmount());
 		}
 
-		BigDecimal totalDiscountAmount = commerceOrder.getTotalDiscountAmount(
-		).subtract(
+		BigDecimal totalDiscountAmount = commerceOrder.getTotalDiscountAmount();
+
+		BigDecimal newTotalDiscountAmount = totalDiscountAmount.subtract(
 			commerceOrder.getSubtotalDiscountAmount()
 		).add(
 			subtotalDiscountAmount
@@ -398,7 +399,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			commerceOrder.getSubtotalDiscountPercentageLevel4(),
 			commerceOrder.getTaxAmount(),
 			subtotal.subtract(
-				totalDiscountAmount
+				newTotalDiscountAmount
 			).add(
 				commerceOrder.getTaxAmount()
 			).add(
@@ -406,7 +407,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			).subtract(
 				commerceOrder.getShippingDiscountAmount()
 			),
-			totalDiscountAmount,
+			newTotalDiscountAmount,
 			commerceOrder.getTotalDiscountPercentageLevel1(),
 			commerceOrder.getTotalDiscountPercentageLevel2(),
 			commerceOrder.getTotalDiscountPercentageLevel3(),

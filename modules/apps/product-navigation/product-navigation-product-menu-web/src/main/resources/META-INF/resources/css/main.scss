@@ -12,20 +12,7 @@ html#{$cadmin-selector} {
 	.cadmin {
 		.pages-tree {
 			.layout-finder {
-				border-bottom: 1px solid $cadmin-dark;
 				padding: 24px 16px 0;
-
-				input {
-					background-color: $cadmin-gray-800;
-
-					&::placeholder {
-						color: $cadmin-secondary-l1;
-					}
-				}
-
-				.back-to-menu {
-					color: $cadmin-secondary-l3;
-				}
 
 				.breadcrumb {
 					flex-wrap: nowrap;
@@ -59,7 +46,6 @@ html#{$cadmin-selector} {
 				}
 
 				.layout-finder-icon {
-					color: white;
 					position: absolute;
 					right: 1.8rem;
 					top: 4.55rem;
@@ -68,8 +54,7 @@ html#{$cadmin-selector} {
 
 			.pages-administration-link {
 				align-items: center;
-				background-color: $cadmin-dark;
-				border-top: 1px solid $cadmin-gray-800;
+				border-top: 1px solid $cadmin-gray-300;
 				bottom: 0;
 				display: flex;
 				font-size: 14px;
@@ -77,37 +62,10 @@ html#{$cadmin-selector} {
 				padding: 16px 0 24px 16px;
 				position: fixed;
 				width: $product-menu-item-fixed-width;
-
-				a {
-					color: $cadmin-secondary-l1;
-				}
 			}
 
 			.page-type-selector {
-				border-top: 1px solid $cadmin-gray-800;
 				margin-top: 20px;
-
-				.add-page-button,
-				.configure-link {
-					color: $cadmin-secondary-l3;
-				}
-
-				.form-control {
-					background-color: $cadmin-dark;
-					border-color: $cadmin-gray-800;
-					color: $cadmin-gray-500;
-				}
-
-				.dropdown-toggle.form-control-select {
-					&,
-					&:hover,
-					&:active,
-					&:focus {
-						background-color: $cadmin-dark;
-						border-color: $cadmin-gray-800;
-						color: $cadmin-secondary-l3;
-					}
-				}
 			}
 		}
 

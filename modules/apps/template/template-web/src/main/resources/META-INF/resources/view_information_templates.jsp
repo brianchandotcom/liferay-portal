@@ -14,7 +14,6 @@ InformationTemplatesManagementToolbarDisplayContext informationTemplatesManageme
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems="<%= informationTemplatesTemplateDisplayContext.getNavigationItems() %>"
 />
 

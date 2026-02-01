@@ -8,7 +8,6 @@
 <%@ include file="/browser/init.jsp" %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems="<%= ddmFormBrowserDisplayContext.getNavigationItems() %>"
 />
 

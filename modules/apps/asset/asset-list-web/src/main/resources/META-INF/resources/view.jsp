@@ -14,7 +14,6 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 <liferay-ui:error exception="<%= RequiredAssetListEntryException.class %>" message="you-cannot-delete-collections-that-are-used-by-one-or-more-items.-please-view-the-usages-and-try-to-unassign-them" />
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems='<%= assetListDisplayContext.getNavigationItems("collections") %>'
 />
 

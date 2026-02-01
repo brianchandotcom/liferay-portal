@@ -18,7 +18,6 @@ if (displayPageDisplayContext == null) {
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems="<%= layoutPageTemplatesAdminDisplayContext.getNavigationItems() %>"
 />
 

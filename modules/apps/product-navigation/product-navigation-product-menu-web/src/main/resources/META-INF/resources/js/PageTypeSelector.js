@@ -150,12 +150,11 @@ function PageTypeSelector({
 				{configureLayoutSetURL && (
 					<ClayLink
 						aria-label={Liferay.Language.get('configure-pages')}
-						borderless
-						className="configure-link"
+						button
 						displayType="unstyled"
 						href={configureLayoutSetURL}
 						monospaced
-						outline
+						small
 						title={Liferay.Language.get('configure-pages')}
 					>
 						<ClayIcon symbol="cog" />

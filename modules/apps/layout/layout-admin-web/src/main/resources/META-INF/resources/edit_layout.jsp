@@ -110,7 +110,6 @@ renderResponse.setTitle(layoutsAdminDisplayContext.getConfigurationTitle(selLayo
 			containerCssClass="col-lg-8"
 			containerWrapperCssClass="container-fluid container-fluid-max-xl container-form-lg"
 			context="<%= selLayout %>"
-			inverted="<%= true %>"
 			key="<%= LayoutScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_LAYOUT %>"
 			menubarCssClass="menubar menubar-transparent menubar-vertical-expand-lg"
 			navCssClass="col-lg-3"

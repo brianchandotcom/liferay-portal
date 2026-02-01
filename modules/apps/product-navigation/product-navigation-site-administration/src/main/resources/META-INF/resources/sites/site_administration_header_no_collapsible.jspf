@@ -70,7 +70,7 @@
 			<clay:button
 				aria-label='<%= LanguageUtil.get(request, "close") %>'
 				borderless="<%= true %>"
-				cssClass="lfr-portal-tooltip sidenav-close text-white"
+				cssClass="lfr-portal-tooltip sidenav-close"
 				displayType="secondary"
 				icon="times"
 				monospaced="<%= true %>"

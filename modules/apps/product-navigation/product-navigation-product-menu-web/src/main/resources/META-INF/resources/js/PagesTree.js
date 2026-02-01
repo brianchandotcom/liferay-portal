@@ -146,7 +146,6 @@ export default function PagesTree({
 		<div className="mx-3 pages-tree">
 			<ClayTreeView
 				defaultItems={items}
-				displayType="dark"
 				dragAndDrop={!config.stagingEnabled}
 				expandedKeys={new Set(expandedKeys)}
 				onExpandedChange={(keys) => {

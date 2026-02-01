@@ -12,7 +12,6 @@ RedirectDisplayContext redirectDisplayContext = (RedirectDisplayContext)request.
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems="<%= redirectDisplayContext.getNavigationItems() %>"
 />
 

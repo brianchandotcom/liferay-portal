@@ -38,7 +38,6 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 	<div class="forms-navigation-bar">
 		<clay:navigation-bar
 			cssClass="container-fluid-max-xxxl"
-			inverted="<%= true %>"
 			navigationItems="<%= ddmFormAdminDisplayContext.getElementSetBuilderNavigationItems() %>"
 		/>
 	</div>

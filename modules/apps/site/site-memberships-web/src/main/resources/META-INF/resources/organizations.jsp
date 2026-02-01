@@ -12,7 +12,6 @@ OrganizationsDisplayContext organizationsDisplayContext = new OrganizationsDispl
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems="<%= siteMembershipsDisplayContext.getViewNavigationItems() %>"
 />
 

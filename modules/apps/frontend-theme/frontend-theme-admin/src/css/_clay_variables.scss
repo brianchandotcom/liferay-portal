@@ -1,10 +1,10 @@
-$body-bg: #f1f2f5;
-$border-color: #f1f2f5;
+@import 'clay/atlas/variables/_globals';
+
+$body-bg: $white;
+$border-color: $gray-200;
 
 $lead-font-weight: 400;
 $small-font-size: 0.875rem;
-
-@import 'clay/atlas/variables/_globals';
 
 $border-radius: 0.5rem;
 $border-radius-lg: 0.5rem;

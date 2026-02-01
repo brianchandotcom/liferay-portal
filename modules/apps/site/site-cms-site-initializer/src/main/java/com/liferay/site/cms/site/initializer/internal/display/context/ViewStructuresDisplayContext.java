@@ -165,16 +165,10 @@ public class ViewStructuresDisplayContext {
 				LanguageUtil.get(_httpServletRequest, "permissions"), "get",
 				"permissions", "modal-permissions"),
 			new FDSActionDropdownItem(
-				ResourceURLBuilder.createResourceURL(
-					PortletURLFactoryUtil.create(
-						_httpServletRequest,
-						ObjectPortletKeys.OBJECT_DEFINITIONS,
-						PortletRequest.RESOURCE_PHASE)
-				).setParameter(
-					"objectDefinitionId", "{id}"
-				).setResourceID(
-					"/object_definitions/get_object_definition_delete_info"
-				).buildString(),
+				StringBundler.concat(
+					_themeDisplay.getPortalURL(), _themeDisplay.getPathMain(),
+					"/cms/get_object_definition_deletion_info?",
+					"objectDefinitionId={id}"),
 				"trash", "delete",
 				LanguageUtil.get(_httpServletRequest, "delete"), "delete",
 				"delete", null, Map.of("system", false)));

@@ -90,7 +90,7 @@ export async function postTask(
 			'Accept': 'application/json',
 			'Authorization': `Bearer ${token.accessToken}`,
 			'Content-Type': 'application/json',
-			'Liferay-AI-Hub-On-Behalf-Of': `Bearer ${token.userToken}`,
+			'Liferay-AI-Hub-On-Behalf-Of': token.userToken,
 		}),
 		method: 'POST',
 	});

@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import jakarta.portlet.ActionRequest;
+import jakarta.portlet.ActionResponse;
 import jakarta.portlet.Portlet;
 import jakarta.portlet.PortletException;
 import jakarta.portlet.RenderRequest;
@@ -55,6 +57,11 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class CPContentPortlet extends MVCPortlet {
+
+	@Override
+	public void processAction(
+		ActionRequest actionRequest, ActionResponse actionResponse) {
+	}
 
 	@Override
 	public void render(

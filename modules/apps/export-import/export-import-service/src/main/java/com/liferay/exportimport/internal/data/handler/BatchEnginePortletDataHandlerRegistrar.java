@@ -246,9 +246,8 @@ public class BatchEnginePortletDataHandlerRegistrar {
 						_batchEngineExportTaskExecutor,
 						_batchEngineExportTaskLocalService,
 						_batchEngineImportTaskExecutor,
-						_batchEngineImportTaskService,
-						_exportImportHelper, _groupLocalService,
-						_layoutLocalService,
+						_batchEngineImportTaskService, _exportImportHelper,
+						_groupLocalService, _layoutLocalService,
 						_stagingGroupHelper);
 
 				batchEnginePortletDataHandler.setPortletId(

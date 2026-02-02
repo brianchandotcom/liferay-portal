@@ -206,6 +206,16 @@ public class FragmentEditableElementTestUtil {
 		return fragmentImage;
 	}
 
+	public static FragmentMappedValue getFragmentMappedValue(
+		String className, String externalReferenceCode, String fieldKey,
+		String scopeExternalReferenceCode) {
+
+		return _getFragmentMappedValue(
+			fieldKey,
+			_getFragmentMappedValueItemExternalReference(
+				className, externalReferenceCode, scopeExternalReferenceCode));
+	}
+
 	public static FragmentEditableElement getHTMLFragmentEditableElement(
 		FragmentMappedValueItemContextReference.ContextSource contextSource,
 		FragmentEditableElementValue.Type fragmentEditableElementValueType,
@@ -386,6 +396,15 @@ public class FragmentEditableElementTestUtil {
 		return fragmentEditableElement;
 	}
 
+	public static TextFragmentInlineValue getTextFragmentInlineValue() {
+		return new TextFragmentInlineValue() {
+			{
+				setFragmentInlineValue(() -> _getFragmentInlineValue());
+				setType(Type.INLINE);
+			}
+		};
+	}
+
 	public static URLActionInteraction getURLActionInteraction() {
 		URLActionInteraction urlActionInteraction = new URLActionInteraction();
 
@@ -473,16 +492,6 @@ public class FragmentEditableElementTestUtil {
 		fragmentMappedValue.setMapping(() -> mapping);
 
 		return fragmentMappedValue;
-	}
-
-	public static FragmentMappedValue getFragmentMappedValue(
-		String className, String externalReferenceCode, String fieldKey,
-		String scopeExternalReferenceCode) {
-
-		return _getFragmentMappedValue(
-			fieldKey,
-			_getFragmentMappedValueItemExternalReference(
-				className, externalReferenceCode, scopeExternalReferenceCode));
 	}
 
 	private static FragmentMappedValueItemContextReference
@@ -595,15 +604,6 @@ public class FragmentEditableElementTestUtil {
 		}
 
 		return null;
-	}
-
-	public static TextFragmentInlineValue getTextFragmentInlineValue() {
-		return new TextFragmentInlineValue() {
-			{
-				setFragmentInlineValue(() -> _getFragmentInlineValue());
-				setType(Type.INLINE);
-			}
-		};
 	}
 
 	private static TextFragmentMappedValue _getTextFragmentMappedValue(

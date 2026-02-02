@@ -5373,6 +5373,17 @@
 	},
 	{
 		"classNames": [
+			"CPDefinitionLocalService",
+			"CPDefinitionLocalServiceUtil",
+			"CPDefinitionService",
+			"CPDefinitionServiceUtil"
+		],
+		"from": "getLayoutUuid(long paramName)",
+		"hasMessage": true,
+		"issueKey": "LPD-61140"
+	},
+	{
+		"classNames": [
 			"UserLocalService",
 			"UserLocalServiceUtil"
 		],

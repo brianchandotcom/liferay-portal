@@ -2226,6 +2226,26 @@ components:
             description:
                 A page specification of a link to URL page.
             type: object
+        LinkToURLPageSettings:
+            allOf:
+                -   $ref: "#/components/schemas/PageSettings"
+                -   properties:
+                        pageURL:
+                            # @review
+                            description:
+                                The URL of the page to redirect to.
+                            type: string
+            # @review
+            description:
+                The settings of a link to URL page.
+            type: object
+        LinkToURLPageSpecification:
+            allOf:
+                -   $ref: "#/components/schemas/PageSpecification"
+            # @review
+            description:
+                A page specification of a link to URL page.
+            type: object
         ListStyle:
             # @review
             allOf:

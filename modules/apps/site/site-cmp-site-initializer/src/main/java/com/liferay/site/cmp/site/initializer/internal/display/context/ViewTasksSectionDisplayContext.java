@@ -236,6 +236,22 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 					"entryClassName", objectDefinition.getClassName()
 				).build()),
 			new FDSActionDropdownItem(
+				StringBundler.concat(
+					"/o", objectDefinition.getRESTContextPath(),
+					"/scopes/{embedded.scopeId}/by-external-reference-code",
+					"/{embedded.externalReferenceCode}/subscribe"),
+				"bell-on", "subscribe",
+				LanguageUtil.get(httpServletRequest, "watch-task"), "post",
+				"subscribe", "async"),
+			new FDSActionDropdownItem(
+				StringBundler.concat(
+					"/o", objectDefinition.getRESTContextPath(),
+					"/scopes/{embedded.scopeId}/by-external-reference-code",
+					"/{embedded.externalReferenceCode}/unsubscribe"),
+				"bell-off", "unsubscribe",
+				LanguageUtil.get(httpServletRequest, "stop-watching-task"),
+				"post", "unsubscribe", "async"),
+			new FDSActionDropdownItem(
 				StringPool.BLANK, null, "assign-to",
 				LanguageUtil.get(httpServletRequest, "assign-to-..."), "get",
 				"update", null,

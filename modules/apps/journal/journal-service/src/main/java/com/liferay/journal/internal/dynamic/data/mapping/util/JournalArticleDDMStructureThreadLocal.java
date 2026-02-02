@@ -15,22 +15,21 @@ import com.liferay.petra.lang.SafeCloseable;
 public class JournalArticleDDMStructureThreadLocal {
 
 	public static DDMStructure get() {
-		return _journalArticleDDMStructure.get();
+		return _ddmStructure.get();
 	}
 
 	public static void set(DDMStructure ddmStructure) {
-		_journalArticleDDMStructure.set(ddmStructure);
+		_ddmStructure.set(ddmStructure);
 	}
 
-	public static SafeCloseable setJournalArticleDDMStructureWithSafeCloseable(
+	public static SafeCloseable setDDMStructureWithSafeCloseable(
 		DDMStructure ddmStructure) {
 
-		return _journalArticleDDMStructure.setWithSafeCloseable(ddmStructure);
+		return _ddmStructure.setWithSafeCloseable(ddmStructure);
 	}
 
-	private static final CentralizedThreadLocal<DDMStructure>
-		_journalArticleDDMStructure = new CentralizedThreadLocal<>(
-			JournalArticleDDMStructureThreadLocal.class +
-				"._journalArticleDDMStructure");
+	private static final CentralizedThreadLocal<DDMStructure> _ddmStructure =
+		new CentralizedThreadLocal<>(
+			JournalArticleDDMStructureThreadLocal.class + "._ddmStructure");
 
 }

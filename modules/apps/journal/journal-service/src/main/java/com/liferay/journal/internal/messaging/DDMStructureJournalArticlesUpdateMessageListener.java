@@ -112,7 +112,7 @@ public class DDMStructureJournalArticlesUpdateMessageListener
 								ddmStructure.getCtCollectionId());
 					SafeCloseable journalArticleDDMStructureSafeCloseable =
 						JournalArticleDDMStructureThreadLocal.
-							setJournalArticleDDMStructureWithSafeCloseable(
+							setDDMStructureWithSafeCloseable(
 								originalDDMStructure)) {
 
 					_ddmFieldLocalService.updateDDMFormValues(

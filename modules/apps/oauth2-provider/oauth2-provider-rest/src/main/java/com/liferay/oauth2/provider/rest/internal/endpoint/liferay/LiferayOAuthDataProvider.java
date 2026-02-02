@@ -56,7 +56,6 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
@@ -717,17 +716,59 @@ public class LiferayOAuthDataProvider
 			throw ExceptionUtils.toNotAuthorizedException(null, null);
 		}
 
-		if (!_isAllowedToDelete(oAuth2Application)) {
+		if (StringUtil.equals(
+				oAuth2Application.getName(),
+				OAuth2ApplicationConstants.NAME_DYNAMIC_REGISTRATOR)) {
+
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Unable to delete client with OAuth 2 client ID  " +
-						client.getClientId() + "operation is not allowed");
+						client.getClientId());
+			}
+
+			throw ExceptionUtils.toForbiddenException(null, null);
+		}
+
+		String[] authorizationParts = AuthorizationUtils.getAuthorizationParts(
+			getMessageContext(), Collections.singleton("Bearer"));
+
+		OAuth2Authorization oAuth2Authorization =
+			_oAuth2AuthorizationLocalService.
+				fetchOAuth2AuthorizationByAccessTokenContent(
+					authorizationParts[1]);
+
+		if (oAuth2Authorization == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to delete client with OAuth 2 client ID  " +
+						client.getClientId());
+			}
+
+			throw ExceptionUtils.toForbiddenException(null, null);
+		}
+
+		OAuth2Application dynamicRegistrationOAuth2Application =
+			_oAuth2ApplicationLocalService.fetchOAuth2Application(
+				oAuth2Authorization.getOAuth2ApplicationId());
+
+		if (!StringUtil.equals(
+				dynamicRegistrationOAuth2Application.getClientId(),
+				oAuth2Application.getClientId()) &&
+			!StringUtil.equals(
+				dynamicRegistrationOAuth2Application.getName(),
+				OAuth2ApplicationConstants.NAME_DYNAMIC_REGISTRATOR)) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to delete client with OAuth 2 client ID  " +
+						client.getClientId());
 			}
 
 			throw ExceptionUtils.toForbiddenException(null, null);
 		}
 
 		removeClientTokens(client);
+
 		doRemoveClient(client);
 
 		return client;
@@ -1447,35 +1488,6 @@ public class LiferayOAuthDataProvider
 			});
 	}
 
-	private boolean _isAllowedToDelete(OAuth2Application oAuth2Application) {
-		OAuth2Authorization oAuth2Authorization =
-			_oAuth2AuthorizationLocalService.
-				fetchOAuth2AuthorizationByAccessTokenContent(
-					AuthorizationUtils.getAuthorizationParts(
-						getMessageContext(), Collections.singleton("Bearer"))
-						[1]);
-
-		if (oAuth2Authorization != null) {
-			OAuth2Application accessTokenOAuth2Application =
-				_oAuth2ApplicationLocalService.fetchOAuth2Application(
-					oAuth2Authorization.getOAuth2ApplicationId());
-
-			if (!_nondeletableOAuth2ApplicationNames.contains(
-					oAuth2Application.getName()) &&
-				(StringUtil.equals(
-					accessTokenOAuth2Application.getClientId(),
-					oAuth2Application.getClientId()) ||
-				 StringUtil.equals(
-					 accessTokenOAuth2Application.getName(),
-					 OAuth2ApplicationConstants.NAME_DYNAMIC_REGISTRATOR))) {
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private ServerAccessToken _populateAccessToken(
 			OAuth2Authorization oAuth2Authorization)
 		throws PortalException {
@@ -1777,11 +1789,6 @@ public class LiferayOAuthDataProvider
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayOAuthDataProvider.class);
 
-	private static final Set<String> _nondeletableOAuth2ApplicationNames =
-		SetUtil.fromArray(
-			new String[] {
-				"Dynamic Registrator", "Fragment Renderer", "Analytics Cloud"
-			});
 	private static final Set<String> _refreshTokenIncompatibleGrants =
 		new HashSet<>();
 

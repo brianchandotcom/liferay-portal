@@ -12,7 +12,6 @@ import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -115,7 +114,7 @@ public class DynamicRegistrationServiceContainerRequestFilter
 			user = _userLocalService.getUser(
 				GetterUtil.getLong(jwtToken.getClaim("sub")));
 
-			OAuth2Application oAuth2Application;
+			OAuth2Application oAuth2Application = null;
 
 			if (!Validator.isBlank(
 					GetterUtil.getString(jwtToken.getClaim("client_id")))) {
@@ -132,9 +131,51 @@ public class DynamicRegistrationServiceContainerRequestFilter
 							jwtToken.getClaim("application_id")));
 			}
 
-			_validate(
-				_getClientId(httpServletRequest), httpServletRequest,
-				oAuth2Application, _permissionCheckerFactory.create(user));
+			PermissionChecker permissionChecker =
+				_permissionCheckerFactory.create(user);
+
+			if ((oAuth2Application == null) ||
+				!_oAuth2ApplicationModelResourcePermission.contains(
+					permissionChecker, oAuth2Application,
+					OAuth2ProviderActionKeys.REGISTER_APPLICATION)) {
+
+				throw ExceptionUtils.toNotAuthorizedException(null, null);
+			}
+
+			String method = httpServletRequest.getMethod();
+
+			if (StringUtil.equalsIgnoreCase(method, "DELETE") &&
+				!_oAuth2ApplicationModelResourcePermission.contains(
+					permissionChecker, oAuth2Application, ActionKeys.DELETE)) {
+
+				throw ExceptionUtils.toNotAuthorizedException(null, null);
+			}
+
+			if (StringUtil.equalsIgnoreCase(method, "PUT") &&
+				!_oAuth2ApplicationModelResourcePermission.contains(
+					permissionChecker, oAuth2Application, ActionKeys.UPDATE)) {
+
+				throw ExceptionUtils.toNotAuthorizedException(null, null);
+			}
+
+			boolean dynamicRegistrator = StringUtil.equalsIgnoreCase(
+				OAuth2ApplicationConstants.NAME_DYNAMIC_REGISTRATOR,
+				oAuth2Application.getName());
+
+			if (StringUtil.equalsIgnoreCase(method, "POST") &&
+				!dynamicRegistrator) {
+
+				throw ExceptionUtils.toNotAuthorizedException(null, null);
+			}
+
+			String clientId = _getClientId(httpServletRequest);
+
+			if (Validator.isNotNull(clientId) && !dynamicRegistrator &&
+				!StringUtil.equalsIgnoreCase(
+					clientId, oAuth2Application.getClientId())) {
+
+				throw ExceptionUtils.toNotAuthorizedException(null, null);
+			}
 		}
 		catch (WebApplicationException webApplicationException) {
 			if (_log.isDebugEnabled()) {
@@ -232,54 +273,6 @@ public class DynamicRegistrationServiceContainerRequestFilter
 			accessTokenContent);
 
 		return jwsJwtCompactConsumer.getJwtToken();
-	}
-
-	private void _validate(
-			String clientId, HttpServletRequest httpServletRequest,
-			OAuth2Application oAuth2Application,
-			PermissionChecker permissionChecker)
-		throws PortalException {
-
-		if ((oAuth2Application == null) ||
-			!_oAuth2ApplicationModelResourcePermission.contains(
-				permissionChecker, oAuth2Application,
-				OAuth2ProviderActionKeys.REGISTER_APPLICATION)) {
-
-			throw ExceptionUtils.toNotAuthorizedException(null, null);
-		}
-
-		String method = httpServletRequest.getMethod();
-
-		if (StringUtil.equalsIgnoreCase(method, "DELETE") &&
-			!_oAuth2ApplicationModelResourcePermission.contains(
-				permissionChecker, oAuth2Application, ActionKeys.DELETE)) {
-
-			throw ExceptionUtils.toNotAuthorizedException(null, null);
-		}
-
-		if (StringUtil.equalsIgnoreCase(method, "PUT") &&
-			!_oAuth2ApplicationModelResourcePermission.contains(
-				permissionChecker, oAuth2Application, ActionKeys.UPDATE)) {
-
-			throw ExceptionUtils.toNotAuthorizedException(null, null);
-		}
-
-		boolean dynamicRegistrator = StringUtil.equalsIgnoreCase(
-			OAuth2ApplicationConstants.NAME_DYNAMIC_REGISTRATOR,
-			oAuth2Application.getName());
-
-		if (StringUtil.equalsIgnoreCase(method, "POST") &&
-			!dynamicRegistrator) {
-
-			throw ExceptionUtils.toNotAuthorizedException(null, null);
-		}
-
-		if (Validator.isNotNull(clientId) && !dynamicRegistrator &&
-			!StringUtil.equalsIgnoreCase(
-				clientId, oAuth2Application.getClientId())) {
-
-			throw ExceptionUtils.toNotAuthorizedException(null, null);
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -61,16 +60,6 @@ public class ConvertEmptyLayoutMVCActionCommand
 		throws Exception {
 
 		try {
-			String type = ParamUtil.getString(actionRequest, "type");
-
-			if (type.equals(LayoutConstants.TYPE_EMBEDDED) ||
-				type.equals(LayoutConstants.TYPE_LINK_TO_LAYOUT)) {
-
-				SessionErrors.add(actionRequest, PortalException.class);
-
-				return;
-			}
-
 			Layout layout = _layoutService.getLayout(
 				ParamUtil.getLong(actionRequest, "selPlid"));
 
@@ -83,6 +72,7 @@ public class ConvertEmptyLayoutMVCActionCommand
 				actionRequest, "masterLayoutPlid");
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				Layout.class.getName(), actionRequest);
+			String type = ParamUtil.getString(actionRequest, "type");
 
 			if (layoutPageTemplateEntryId > 0) {
 				LayoutPageTemplateEntry layoutPageTemplateEntry =

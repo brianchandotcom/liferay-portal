@@ -787,6 +787,13 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			throw new IllegalArgumentException("type is null");
 		}
 
+		if (type.equals(LayoutConstants.TYPE_EMBEDDED) ||
+			type.equals(LayoutConstants.TYPE_LINK_TO_LAYOUT)) {
+
+			throw new LayoutTypeException(
+				type, LayoutTypeException.TYPE_NOT_ALLOWED);
+		}
+
 		Layout layout = layoutLocalService.getLayout(plid);
 
 		if (!layout.isTypeEmpty()) {

@@ -119,6 +119,9 @@ public class DataCleanupPreupgradeProcessSuite {
 		DataCleanupPreupgradeProcess roleDataCleanupPreupgradeProcess =
 			new RoleDataCleanupPreupgradeProcess();
 		DataCleanupPreupgradeProcess
+			resourcePermissionDataCleanupPreupgradeProcess =
+				new ResourcePermissionDataCleanupPreupgradeProcess();
+		DataCleanupPreupgradeProcess
 			updateAllPrimaryKeysDataCleanupPreupgradeProcess =
 				new DataCleanupPreupgradeProcess() {
 
@@ -170,6 +173,7 @@ public class DataCleanupPreupgradeProcessSuite {
 					portalPreferencesDataCleanupPreupgradeProcess,
 					portletPreferencesDataCleanupPreupgradeProcess,
 					quartzJobDetailsDataCleanupPreupgradeProcess,
+					resourcePermissionDataCleanupPreupgradeProcess,
 					roleDataCleanupPreupgradeProcess,
 					updateAllPrimaryKeysDataCleanupPreupgradeProcess,
 					userDataCleanupPreupgradeProcess)
@@ -228,6 +232,27 @@ public class DataCleanupPreupgradeProcessSuite {
 				quartzJobDetailsDataCleanupPreupgradeProcess,
 				DataCleanupPreupgradeProcess.dependsOn(
 					databaseTableAndColumnCaseDataCleanupPreupgradeProcess)
+			).put(
+				resourcePermissionDataCleanupPreupgradeProcess,
+				DataCleanupPreupgradeProcess.dependsOn(
+					analyticsMessageDataCleanupPreupgradeProcess,
+					companyDataCleanupPreupgradeProcess,
+					configurationDataCleanupPreupgradeProcess,
+					contactDataCleanupPreupgradeProcess,
+					databaseTableAndColumnCaseDataCleanupPreupgradeProcess,
+					ddmDataCleanupPreupgradeProcess,
+					ddmStorageLinkDataCleanupPreupgradeProcess,
+					dlFileEntryDataCleanupPreupgradeProcess,
+					groupDataCleanupPreupgradeProcess,
+					journalDataCleanupPreupgradeProcess,
+					layoutDataCleanupPreupgradeProcess,
+					nullUnicodeContentDataCleanupPreupgradeProcess,
+					portalPreferencesDataCleanupPreupgradeProcess,
+					portletPreferencesDataCleanupPreupgradeProcess,
+					quartzJobDetailsDataCleanupPreupgradeProcess,
+					roleDataCleanupPreupgradeProcess,
+					updateAllPrimaryKeysDataCleanupPreupgradeProcess,
+					userDataCleanupPreupgradeProcess)
 			).put(
 				roleDataCleanupPreupgradeProcess,
 				DataCleanupPreupgradeProcess.dependsOn(

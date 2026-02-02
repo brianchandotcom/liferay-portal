@@ -417,40 +417,15 @@ public class FragmentEditableElementUtil {
 			long scopeGroupId)
 		throws Exception {
 
-		JSONObject jsonObject = _toConfigJSONObject(
-			companyId,
-			fragmentLinkTextValue.getFragmentEditableElementValueFragmentLink(),
-			infoItemServiceRegistry, mapperType, scopeGroupId);
-
-		TextFragmentValue textFragmentValue =
-			fragmentLinkTextValue.getTextFragmentValue();
-
-		if (textFragmentValue == null) {
-			return jsonObject;
-		}
-
-		if (textFragmentValue instanceof TextFragmentInlineValue) {
-			TextFragmentInlineValue textFragmentInlineValue =
-				(TextFragmentInlineValue)textFragmentValue;
-
-			return JSONUtil.merge(
-				_getFragmentInlineValueJSONObject(
-					textFragmentInlineValue.getFragmentInlineValue()),
-				jsonObject);
-		}
-
-		if (!(textFragmentValue instanceof TextFragmentMappedValue)) {
-			return jsonObject;
-		}
-
-		TextFragmentMappedValue textFragmentMappedValue =
-			(TextFragmentMappedValue)textFragmentValue;
-
 		return JSONUtil.merge(
-			_getFragmentMappedValueJSONObject(
-				companyId, textFragmentMappedValue.getFragmentMappedValue(),
-				infoItemServiceRegistry, scopeGroupId),
-			jsonObject);
+			_toConfigJSONObject(
+				companyId,
+				fragmentLinkTextValue.
+					getFragmentEditableElementValueFragmentLink(),
+				infoItemServiceRegistry, mapperType, scopeGroupId),
+			_getTextFragmentValueJSONObject(
+				companyId, infoItemServiceRegistry, scopeGroupId,
+				fragmentLinkTextValue.getTextFragmentValue()));
 	}
 
 	private static JSONObject _getFragmentMappedValueJSONObject(
@@ -661,6 +636,35 @@ public class FragmentEditableElementUtil {
 		}
 
 		return jsonObject;
+	}
+
+	private static JSONObject _getTextFragmentValueJSONObject(
+			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
+			long scopeGroupId, TextFragmentValue textFragmentValue)
+		throws Exception {
+
+		if (textFragmentValue == null) {
+			return null;
+		}
+
+		if (textFragmentValue instanceof TextFragmentInlineValue) {
+			TextFragmentInlineValue textFragmentInlineValue =
+				(TextFragmentInlineValue)textFragmentValue;
+
+			return _getFragmentInlineValueJSONObject(
+				textFragmentInlineValue.getFragmentInlineValue());
+		}
+
+		if (!(textFragmentValue instanceof TextFragmentMappedValue)) {
+			return null;
+		}
+
+		TextFragmentMappedValue textFragmentMappedValue =
+			(TextFragmentMappedValue)textFragmentValue;
+
+		return _getFragmentMappedValueJSONObject(
+			companyId, textFragmentMappedValue.getFragmentMappedValue(),
+			infoItemServiceRegistry, scopeGroupId);
 	}
 
 	private static URLImageValue _getURLImageValue(String url) {

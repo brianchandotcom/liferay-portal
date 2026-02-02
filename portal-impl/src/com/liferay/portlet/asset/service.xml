@@ -365,6 +365,7 @@
 		<exception>DuplicateVocabulary</exception>
 		<exception>DuplicateVocabularyExternalReferenceCode</exception>
 		<exception>InvalidAssetCategory</exception>
+		<exception>VocabularyMismatch</exception>
 		<exception>VocabularyName</exception>
 		<exception>VocabularyVisibilityType</exception>
 	</exceptions>

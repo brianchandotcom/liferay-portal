@@ -177,7 +177,7 @@ public class SystemFDSSerializer
 	}
 
 	@Override
-	public JSONArray serializeGroupedFDSFilters(
+	public JSONArray serializeGroupedFilters(
 		String fdsName, HttpServletRequest httpServletRequest) {
 
 		JSONArray jsonArray = JSONUtil.putAll();

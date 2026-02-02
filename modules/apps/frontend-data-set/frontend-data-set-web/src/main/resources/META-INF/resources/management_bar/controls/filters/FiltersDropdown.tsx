@@ -20,7 +20,7 @@ import Filter, {IFilter} from './Filter';
 const FiltersDropdown = () => {
 	const {globalFDSState} = useContext(FrontendDataSetContext);
 
-	const [{groupedFDSFilters}]: [
+	const [{groupedFilters}]: [
 		IViewsContext,
 		TViewsContextDispatch,
 	] = useContext(ViewsContext);
@@ -43,8 +43,8 @@ const FiltersDropdown = () => {
 		[globalFDSState.filters]
 	);
 
-	const renderableGroupedFDSFilters = useMemo(() => {
-		return groupedFDSFilters
+	const renderableGroupedFilters = useMemo(() => {
+		return groupedFilters
 			?.map((group) => {
 				const children = group.filters
 					.map((filterId: string) =>
@@ -60,11 +60,11 @@ const FiltersDropdown = () => {
 				}
 			})
 			.filter(Boolean);
-	}, [groupedFDSFilters, validFilters]);
+	}, [groupedFilters, validFilters]);
 
 	const filtersList =
-		Liferay.FeatureFlags['LPD-68829'] && groupedFDSFilters
-			? renderableGroupedFDSFilters
+		Liferay.FeatureFlags['LPD-68829'] && groupedFilters
+			? renderableGroupedFilters
 			: validFilters;
 
 	return (
@@ -128,7 +128,7 @@ const FiltersDropdown = () => {
 					{filtersList?.length ? (
 						<ClayDropDown.ItemList items={filtersList}>
 							{Liferay.FeatureFlags['LPD-68829'] &&
-							groupedFDSFilters
+							groupedFilters
 								? (group: any) => (
 										<ClayDropDown.Group
 											header={group.label}

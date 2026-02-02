@@ -198,13 +198,13 @@ public class FDSRendererImpl implements FDSRenderer {
 						return filtersJSONArray;
 					}
 				).put(
-					"groupedFDSFilters",
+					"groupedFilters",
 					() -> {
-						JSONArray groupedFDSFiltersJSONArray =
-							fdsSerializer.serializeGroupedFDSFilters(
+						JSONArray groupedFiltersJSONArray =
+							fdsSerializer.serializeGroupedFilters(
 								fdsName, httpServletRequest);
 
-						if (JSONUtil.isEmpty(groupedFDSFiltersJSONArray) ||
+						if (JSONUtil.isEmpty(groupedFiltersJSONArray) ||
 							!FeatureFlagManagerUtil.isEnabled(
 								PortalUtil.getCompanyId(httpServletRequest),
 								"LPD-68829")) {
@@ -212,7 +212,7 @@ public class FDSRendererImpl implements FDSRenderer {
 							return null;
 						}
 
-						return groupedFDSFiltersJSONArray;
+						return groupedFiltersJSONArray;
 					}
 				).put(
 					"hideManagementBarInEmptyState",

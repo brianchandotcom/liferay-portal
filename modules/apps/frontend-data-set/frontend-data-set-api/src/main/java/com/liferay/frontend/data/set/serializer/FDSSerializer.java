@@ -66,7 +66,7 @@ public interface FDSSerializer {
 	public JSONArray serializeFilters(
 		String fdsName, HttpServletRequest httpServletRequest);
 
-	public JSONArray serializeGroupedFDSFilters(
+	public JSONArray serializeGroupedFilters(
 		String fdsName, HttpServletRequest httpServletRequest);
 
 	public boolean serializeHideManagementBarInEmptyState(

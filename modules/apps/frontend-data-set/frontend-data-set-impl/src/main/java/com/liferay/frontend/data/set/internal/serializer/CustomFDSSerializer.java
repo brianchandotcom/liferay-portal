@@ -320,12 +320,12 @@ public class CustomFDSSerializer
 	}
 
 	@Override
-	public JSONArray serializeGroupedFDSFilters(
+	public JSONArray serializeGroupedFilters(
 		String fdsName, HttpServletRequest httpServletRequest) {
 
 		// TODO LPD-70111
 
-		return _systemFDSSerializer.serializeGroupedFDSFilters(
+		return _systemFDSSerializer.serializeGroupedFilters(
 			fdsName, httpServletRequest);
 	}
 

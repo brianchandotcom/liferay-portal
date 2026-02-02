@@ -143,13 +143,13 @@ test(
 			await test.step('Check grouped FDS filters order', async () => {
 				const filtersDropdownMenu = page.getByLabel('Filters');
 
-				const groupedFDSFilters = filtersDropdownMenu.getByRole('menu');
+				const groupedFilters = filtersDropdownMenu.getByRole('menu');
 
 				await expect(
-					groupedFDSFilters.locator('li.dropdown-subheader')
+					groupedFilters.locator('li.dropdown-subheader')
 				).toHaveText(['Group 1', 'Group 2', 'Group 3']);
 
-				const group1 = groupedFDSFilters.getByRole('group', {
+				const group1 = groupedFilters.getByRole('group', {
 					name: 'Group 1',
 				});
 
@@ -158,7 +158,7 @@ test(
 					'Color',
 				]);
 
-				const group2 = groupedFDSFilters.getByRole('group', {
+				const group2 = groupedFilters.getByRole('group', {
 					name: 'Group 2',
 				});
 
@@ -167,7 +167,7 @@ test(
 					'Size',
 				]);
 
-				const group3 = groupedFDSFilters.getByRole('group', {
+				const group3 = groupedFilters.getByRole('group', {
 					name: 'Group 3',
 				});
 

@@ -108,6 +108,19 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 
 			String parameter = parameterList.get(0);
 
+			if (parameter.matches("\\w+")) {
+				variableTypeName = getVariableTypeName(
+					content, null, content, fileName, parameter, true, false);
+
+				if ((variableTypeName != null) &&
+					(variableTypeName.equals("String") ||
+					 variableTypeName.equals("String[]"))) {
+
+					return StringUtil.insert(
+						content, "connection, ", matcher.end());
+				}
+			}
+
 			if (!parameter.matches("(?i)(\\w+\\.)?\\w+SQL\\(.*\\)") &&
 				!parameter.startsWith("\"") &&
 				!parameter.startsWith("StringBundler.concat(") &&

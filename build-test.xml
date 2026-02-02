@@ -17681,6 +17681,22 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 			</else>
 		</if>
 
+		<get-testcase-property property.name="database.upgrade.client.jvm.opts" />
+
+		<var name="database.upgrade.client.arg.line" value="" />
+
+		<if>
+			<and>
+				<isset property="database.upgrade.client.jvm.opts" />
+				<not>
+					<equals arg1="${database.upgrade.client.jvm.opts}" arg2="" trim="true" />
+				</not>
+			</and>
+			<then>
+				<var name="database.upgrade.client.arg.line" value="-jvm-opts=&quot;${database.upgrade.client.jvm.opts}&quot;" />
+			</then>
+		</if>
+
 		<trycatch property="upgrade.error">
 			<try>
 				<java
@@ -17692,6 +17708,8 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 					timeout="${upgrade.client.timeout}"
 				>
 					<env key="JAVA_HOME" value="${java.jdk.home}" />
+
+					<arg line="${database.upgrade.client.arg.line}" />
 				</java>
 			</try>
 			<catch>

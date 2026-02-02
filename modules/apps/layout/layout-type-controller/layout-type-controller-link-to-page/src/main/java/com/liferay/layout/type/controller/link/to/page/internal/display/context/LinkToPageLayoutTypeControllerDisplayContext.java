@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.PortletURL;
@@ -103,6 +104,18 @@ public class LinkToPageLayoutTypeControllerDisplayContext {
 			WebKeys.SEL_LAYOUT);
 
 		if (layout != null) {
+			String linkToLayoutExternalReferenceCode =
+				layout.getTypeSettingsProperty(
+					"linkToLayoutExternalReferenceCode");
+
+			if (Validator.isNotNull(linkToLayoutExternalReferenceCode)) {
+				_selectedLayout =
+					LayoutLocalServiceUtil.fetchLayoutByExternalReferenceCode(
+						linkToLayoutExternalReferenceCode, layout.getGroupId());
+
+				return;
+			}
+
 			long linkToLayoutId = GetterUtil.getLong(
 				layout.getTypeSettingsProperty("linkToLayoutId"));
 

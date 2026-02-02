@@ -23,6 +23,7 @@ import com.liferay.headless.admin.site.dto.v1_0.SuccessNotificationMessage;
 import com.liferay.headless.admin.site.dto.v1_0.URLFormContainerSubmissionResult;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentViewportUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ItemScopeUtil;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.LayoutUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.LocalizedValueUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutStructureUtil;
@@ -39,13 +40,10 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Arrays;
@@ -363,65 +361,6 @@ public class FormContainerLayoutStructureItemImporter
 			fragmentInlineValue.getValue_i18n());
 	}
 
-	private JSONObject _toMappedLayoutJSONObject(
-			long companyId, ItemExternalReference itemExternalReference,
-			long scopeGroupId)
-		throws PortalException {
-
-		String scopeExternalReferenceCode =
-			ItemScopeUtil.getItemScopeExternalReferenceCode(
-				itemExternalReference.getScope(), scopeGroupId);
-
-		JSONObject jsonObject = JSONUtil.put(
-			"externalReferenceCode",
-			itemExternalReference.getExternalReferenceCode()
-		).put(
-			"scopeExternalReferenceCode", scopeExternalReferenceCode
-		);
-
-		Long groupId = ItemScopeUtil.getItemGroupId(
-			companyId, itemExternalReference.getScope(), scopeGroupId);
-
-		if (groupId == null) {
-			LogUtil.logOptionalReference(
-				itemExternalReference.getClassName(),
-				itemExternalReference.getExternalReferenceCode(),
-				itemExternalReference.getScope(), scopeGroupId);
-
-			return jsonObject;
-		}
-
-		com.liferay.portal.kernel.model.Layout layout =
-			LayoutLocalServiceUtil.fetchLayoutByExternalReferenceCode(
-				itemExternalReference.getExternalReferenceCode(), groupId);
-
-		if (layout == null) {
-			LogUtil.logOptionalReference(
-				itemExternalReference.getClassName(),
-				itemExternalReference.getExternalReferenceCode(),
-				itemExternalReference.getScope(), scopeGroupId);
-
-			return jsonObject;
-		}
-
-		return JSONUtil.put(
-			"externalReferenceCode",
-			itemExternalReference.getExternalReferenceCode()
-		).put(
-			"groupId", String.valueOf(layout.getGroupId())
-		).put(
-			"layoutId", String.valueOf(layout.getLayoutId())
-		).put(
-			"layoutUuid", layout.getUuid()
-		).put(
-			"privateLayout", layout.isPrivateLayout()
-		).put(
-			"scopeExternalReferenceCode", scopeExternalReferenceCode
-		).put(
-			"title", layout.getName(LocaleUtil.getMostRelevantLocale())
-		);
-	}
-
 	private JSONObject _toMappedLayoutPageTemplateEntryJSONObject(
 			long companyId, ItemExternalReference itemExternalReference,
 			long scopeGroupId)
@@ -496,9 +435,10 @@ public class FormContainerLayoutStructureItemImporter
 				getSuccessNotificationMessage()
 		).put(
 			"layout",
-			() -> _toMappedLayoutJSONObject(
+			() -> LayoutUtil.getMappedLayoutJSONObject(
 				layoutStructureItemImporterContext.getCompanyId(),
-				itemExternalReference,
+				itemExternalReference.getExternalReferenceCode(),
+				itemExternalReference.getScope(),
 				layoutStructureItemImporterContext.getGroupId())
 		).put(
 			"type", "page"

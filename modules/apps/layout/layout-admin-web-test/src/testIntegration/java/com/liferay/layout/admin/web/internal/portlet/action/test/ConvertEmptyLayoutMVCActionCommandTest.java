@@ -14,6 +14,8 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.test.util.LayoutPageTemplateTestUtil;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -94,47 +96,9 @@ public class ConvertEmptyLayoutMVCActionCommandTest {
 	}
 
 	@Test
-	public void testCannotConvertEmptyLayoutToEmbeddedLayout()
-		throws Exception {
-
-		Layout emptyLayout = _layoutLocalService.addLayout(
-			null, TestPropsValues.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			LayoutConstants.TYPE_EMPTY, true, StringPool.BLANK,
-			_serviceContext);
-
-		_mvcActionCommand.processAction(
-			_getMockLiferayPortletActionRequest(
-				emptyLayout, LayoutConstants.TYPE_EMBEDDED,
-				TestPropsValues.getUser()),
-			new MockLiferayPortletActionResponse());
-
-		Layout layout = _layoutLocalService.getLayout(emptyLayout.getPlid());
-
-		Assert.assertTrue(layout.isTypeEmpty());
-	}
-
-	@Test
-	public void testCannotConvertEmptyLayoutToTypeLinkToLayoutLayout()
-		throws Exception {
-
-		Layout emptyLayout = _layoutLocalService.addLayout(
-			null, TestPropsValues.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			LayoutConstants.TYPE_EMPTY, true, StringPool.BLANK,
-			_serviceContext);
-
-		_mvcActionCommand.processAction(
-			_getMockLiferayPortletActionRequest(
-				emptyLayout, LayoutConstants.TYPE_LINK_TO_LAYOUT,
-				TestPropsValues.getUser()),
-			new MockLiferayPortletActionResponse());
-
-		Layout layout = _layoutLocalService.getLayout(emptyLayout.getPlid());
-
-		Assert.assertTrue(layout.isTypeEmpty());
+	public void testCannotConvertEmptyLayout() throws Exception {
+		_testCannotConvertEmptyLayout(LayoutConstants.TYPE_EMBEDDED);
+		_testCannotConvertEmptyLayout(LayoutConstants.TYPE_LINK_TO_LAYOUT);
 	}
 
 	@Test
@@ -377,6 +341,24 @@ public class ConvertEmptyLayoutMVCActionCommandTest {
 		return mockLiferayPortletActionRequest;
 	}
 
+	private void _testCannotConvertEmptyLayout(String type) throws Exception {
+		Layout emptyLayout = _layoutLocalService.addLayout(
+			null, TestPropsValues.getUserId(), _group.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			LayoutConstants.TYPE_EMPTY, true, StringPool.BLANK,
+			_serviceContext);
+
+		_mvcActionCommand.processAction(
+			_getMockLiferayPortletActionRequest(
+				emptyLayout, type, TestPropsValues.getUser()),
+			new MockLiferayPortletActionResponse());
+
+		Layout layout = _layoutLocalService.getLayout(emptyLayout.getPlid());
+
+		Assert.assertTrue(layout.isTypeEmpty());
+	}
+
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
@@ -384,6 +366,12 @@ public class ConvertEmptyLayoutMVCActionCommandTest {
 
 	@Inject
 	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private JSONFactory _jsonFactory;
+
+	@Inject
+	private Language _language;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

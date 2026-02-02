@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.Inject;
@@ -159,7 +160,7 @@ public class ClientExtensionOSGiCommandsTest {
 
 	@Test
 	public void testGetConfigurationNonexistentPid() {
-		Assert.assertNull(_getConfiguration("non-existent-pid"));
+		Assert.assertNull(_getConfiguration(RandomTestUtil.randomString()));
 	}
 
 	@Test
@@ -196,13 +197,23 @@ public class ClientExtensionOSGiCommandsTest {
 				"type=instanceSettings"),
 			List.of("Liferay Sample CX 3"));
 
-		_testGetConfigurations(List.of("name=Non Existent Name"), List.of());
 		_testGetConfigurations(
-			List.of("deploymentType=prod", "name=Non Existent Name"),
+			List.of("name=" + RandomTestUtil.randomString()), List.of());
+		_testGetConfigurations(
+			List.of(
+				"deploymentType=prod", "name=" + RandomTestUtil.randomString()),
 			List.of());
-		_testGetConfigurations(List.of("nonExistentFilter=foo"), List.of());
-		_testGetConfigurations(List.of("foo"), List.of());
-		_testGetConfigurations(List.of("foo", "bar"), List.of());
+		_testGetConfigurations(
+			List.of(
+				RandomTestUtil.randomString() + "=" +
+					RandomTestUtil.randomString()),
+			List.of());
+		_testGetConfigurations(
+			List.of(RandomTestUtil.randomString()), List.of());
+		_testGetConfigurations(
+			List.of(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString()),
+			List.of());
 	}
 
 	@Test
@@ -239,9 +250,9 @@ public class ClientExtensionOSGiCommandsTest {
 
 		_testReload(pid, "Reloaded configuration for PID " + pid);
 
-		_testReload(
-			"non-existent-pid",
-			"Could not find configuration for PID non-existent-pid");
+		pid = RandomTestUtil.randomString();
+
+		_testReload(pid, "Unable to find configuration for PID " + pid);
 	}
 
 	@Test
@@ -286,9 +297,10 @@ public class ClientExtensionOSGiCommandsTest {
 			CETConfiguration.class.getName() +
 				"~liferay-sample-cx-1/liferay.com",
 			"projectName: liferay-sample-cx-1");
-		_testShow(
-			"non-existent-pid",
-			"Could not find configuration for PID non-existent-pid");
+
+		String pid = RandomTestUtil.randomString();
+
+		_testShow(pid, "Unable to find configuration for PID " + pid);
 	}
 
 	private String _captureStout(UnsafeRunnable<Exception> unsafeRunnable)

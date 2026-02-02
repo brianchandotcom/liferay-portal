@@ -10,6 +10,7 @@ import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {collapseSection} from '../../utils/collapseSection';
 import {expandSection} from '../../utils/expandSection';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
+import getRandomString from '../../utils/getRandomString';
 import {hoverAndExpectToBeVisible} from '../../utils/hoverAndExpectToBeVisible';
 import {selectElement} from '../../utils/selectElement';
 import {waitForAlert} from '../../utils/waitForAlert';
@@ -600,7 +601,9 @@ export class PageEditorPage {
 
 		await expect(nameInput).toHaveAttribute('required');
 
-		await fillAndClickOutside(this.page, nameInput, name);
+		await nameInput.click();
+
+		await nameInput.fill(name || getRandomString());
 
 		await this.page.locator('.modal-footer').getByText('Save').click();
 

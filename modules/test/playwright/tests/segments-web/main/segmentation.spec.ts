@@ -1664,6 +1664,10 @@ test(
 
 			await expect(page.getByText('User1 and User2')).toBeVisible();
 		});
+
+		await test.step('Switch to test user', async () => {
+			await performUserSwitch(page, 'test');
+		});
 	}
 );
 

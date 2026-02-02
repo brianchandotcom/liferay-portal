@@ -13,7 +13,11 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.ServletContext;
@@ -37,6 +41,46 @@ public class LinkToPageLayoutTypeController
 	@Override
 	public String getType() {
 		return LayoutConstants.TYPE_LINK_TO_LAYOUT;
+	}
+
+	@Override
+	public UnicodeProperties getTypeSettingsProperties(Layout layout) {
+		UnicodeProperties typeSettingsUnicodeProperties =
+			layout.getTypeSettingsProperties();
+
+		if (!StringUtil.equals(
+				layout.getType(), LayoutConstants.TYPE_LINK_TO_LAYOUT)) {
+
+			return typeSettingsUnicodeProperties;
+		}
+
+		String linkToLayoutId = typeSettingsUnicodeProperties.get(
+			"linkToLayoutId");
+
+		if (Validator.isNotNull(linkToLayoutId)) {
+			return typeSettingsUnicodeProperties;
+		}
+
+		String linkToLayoutExternalReferenceCode =
+			typeSettingsUnicodeProperties.get(
+				"linkToLayoutExternalReferenceCode");
+
+		if (Validator.isNull(linkToLayoutExternalReferenceCode)) {
+			return typeSettingsUnicodeProperties;
+		}
+
+		Layout linkToLayout =
+			_layoutLocalService.fetchLayoutByExternalReferenceCode(
+				linkToLayoutExternalReferenceCode, layout.getGroupId());
+
+		if (linkToLayout == null) {
+			return typeSettingsUnicodeProperties;
+		}
+
+		typeSettingsUnicodeProperties.put(
+			"linkToLayoutId", String.valueOf(linkToLayout.getLayoutId()));
+
+		return typeSettingsUnicodeProperties;
 	}
 
 	@Override
@@ -116,6 +160,9 @@ public class LinkToPageLayoutTypeController
 
 	@Reference
 	private ItemSelector _itemSelector;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.link.to.page)"

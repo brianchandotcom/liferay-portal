@@ -225,6 +225,24 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro _prepareImportFile(larFileName = null) {
+		var downloadsDir = PropsUtil.get("output.dir.name");
+
+		var files = FileUtil.listFiles(${downloadsDir});
+
+		echo("files: ${files}");
+
+		var fileExists = FileUtil.exists("${downloadsDir}/${larFileName}.crdownload");
+
+		if (${fileExists} == "true") {
+			var sourceFilePath = "${downloadsDir}/${larFileName}.crdownload";
+			var destFilePath = "${downloadsDir}/${larFileName}";
+
+			FileUtil.move(${sourceFilePath}, ${destFilePath});
+		}
+	}
+
+	@summary = "Default summary"
 	macro _selectImportFile(importValidationMissingItem = null, cannotImport = null, mirrorWithOverwriting = null, uploadFrom = null, importDeletions = null, importPermissions = null, larFileName = null, copyAsNew = null) {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
@@ -236,6 +254,8 @@ definition {
 			UploadDependencyFile.uploadArchiveFile(fileName = ${larFileName});
 		}
 		else {
+			LAR._prepareImportFile(larFileName = ${larFileName});
+
 			UploadTempFile.uploadTempFileHiddenNoMouseOver(
 				locator1 = "TextInput#FILE",
 				value1 = ${larFileName});
@@ -346,6 +366,8 @@ definition {
 			UploadDependencyFile.uploadArchiveFile(fileName = ${larFileName});
 		}
 		else {
+			LAR._prepareImportFile(larFileName = ${larFileName});
+
 			UploadTempFile.uploadTempFileHiddenNoMouseOver(
 				locator1 = "TextInput#FILE",
 				value1 = ${larFileName});
@@ -406,6 +428,8 @@ definition {
 			UploadDependencyFile.uploadArchiveFile(fileName = ${larFileName});
 		}
 		else {
+			LAR._prepareImportFile(larFileName = ${larFileName});
+
 			UploadTempFile.uploadTempFileHiddenNoMouseOver(
 				locator1 = "TextInput#FILE",
 				value1 = ${larFileName});

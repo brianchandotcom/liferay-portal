@@ -895,6 +895,17 @@ definition {
 	macro assertFileNameFromTempFolder(fileName = null) {
 		var tempDir = PropsUtil.get("output.dir.name");
 
+		var downloadedFileCrdownload = FileUtil.exists("${tempDir}/${fileName}.crdownload");
+
+		if (${downloadedFileCrdownload} == "true") {
+			FileUtil.move("${tempDir}/${fileName}.crdownload", "${tempDir}/${fileName}");
+		}
+		else {
+			var files = FileUtil.listFiles(${tempDir});
+
+			echo("files: ${files}");
+		}
+
 		var downloadedFile = FileUtil.exists("${tempDir}/${fileName}");
 
 		if (${downloadedFile} == "true") {

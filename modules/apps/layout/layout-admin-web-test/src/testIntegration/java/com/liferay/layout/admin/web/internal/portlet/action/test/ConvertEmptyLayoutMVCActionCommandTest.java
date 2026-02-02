@@ -151,18 +151,19 @@ public class ConvertEmptyLayoutMVCActionCommandTest {
 				masterLayoutPageTemplateEntry.getPlid(),
 				WorkflowConstants.STATUS_APPROVED);
 
-		Layout pageTemplateLayout = _layoutLocalService.getLayout(
+		Layout layoutPageTemplateEntryLayout = _layoutLocalService.getLayout(
 			layoutPageTemplateEntry.getPlid());
 
-		Layout pageTemplateDraftLayout = pageTemplateLayout.fetchDraftLayout();
+		Layout layoutPageTemplateEntryDraftLayout =
+			layoutPageTemplateEntryLayout.fetchDraftLayout();
 
 		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-			StringPool.BLANK, pageTemplateDraftLayout,
+			StringPool.BLANK, layoutPageTemplateEntryDraftLayout,
 			SegmentsExperienceLocalServiceUtil.fetchDefaultSegmentsExperienceId(
-				pageTemplateDraftLayout.getPlid()));
+				layoutPageTemplateEntryDraftLayout.getPlid()));
 
 		ContentLayoutTestUtil.publishLayout(
-			pageTemplateDraftLayout, pageTemplateLayout);
+			layoutPageTemplateEntryDraftLayout, layoutPageTemplateEntryLayout);
 
 		_mvcActionCommand.processAction(
 			_getMockLiferayPortletActionRequest(

@@ -3910,13 +3910,13 @@ components:
         TextFragmentInlineValue:
             # @review
             allOf:
+                -   $ref: "#/components/schemas/TextFragmentValue"
                 -   properties:
                         fragmentInlineValue:
                             $ref: "#/components/schemas/FragmentInlineValue"
                             # @review
                             description:
                                 The fragment inline value.
-                -   $ref: "#/components/schemas/TextFragmentValue"
             # @review
             description:
                 An inline value of a fragment text element.
@@ -3924,13 +3924,13 @@ components:
         TextFragmentMappedValue:
             # @review
             allOf:
+                -   $ref: "#/components/schemas/TextFragmentValue"
                 -   properties:
                         fragmentMappedValue:
                             $ref: "#/components/schemas/FragmentMappedValue"
                             # @review
                             description:
                                 The fragment mapped value.
-                -   $ref: "#/components/schemas/TextFragmentValue"
             # @review
             description:
                 A mapped value of a fragment text element.

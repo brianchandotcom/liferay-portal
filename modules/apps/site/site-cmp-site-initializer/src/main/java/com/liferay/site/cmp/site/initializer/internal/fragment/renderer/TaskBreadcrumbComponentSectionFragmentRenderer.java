@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cmp.site.initializer.internal.util.ActionUtil;
+import com.liferay.subscription.service.SubscriptionLocalService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -116,6 +117,65 @@ public class TaskBreadcrumbComponentSectionFragmentRenderer
 						).put(
 							"symbolLeft", "pencil"
 						));
+				}
+
+				if (_objectEntryService.hasModelResourcePermission(
+						objectEntry, ActionKeys.SUBSCRIBE)) {
+
+					String restContextPath = StringBundler.concat(
+						"/o", objectDefinition.getRESTContextPath(), "/scopes/",
+						objectEntry.getGroupId(),
+						"/by-external-reference-code/",
+						objectEntry.getExternalReferenceCode());
+					String viewTaskURL = ActionUtil.getBaseViewTaskURL(
+						objectDefinition, themeDisplay);
+
+					if (!_subscriptionLocalService.isSubscribed(
+							objectEntry.getCompanyId(),
+							themeDisplay.getUserId(),
+							objectEntry.getModelClassName(),
+							objectEntry.getObjectEntryId())) {
+
+						jsonArray.put(
+							JSONUtil.put(
+								"href", restContextPath + "/subscribe"
+							).put(
+								"label",
+								LanguageUtil.get(
+									httpServletRequest, "watch-task")
+							).put(
+								"redirect",
+								viewTaskURL + objectEntry.getObjectEntryId()
+							).put(
+								"successMessage",
+								LanguageUtil.format(
+									httpServletRequest,
+									"you-are-successfully-watching-x",
+									StringBundler.concat(
+										"<strong>", title, "</strong>"))
+							).put(
+								"symbolLeft", "bell-on"
+							).put(
+								"target", "asyncPost"
+							));
+					}
+					else {
+						jsonArray.put(
+							JSONUtil.put(
+								"href", restContextPath + "/unsubscribe"
+							).put(
+								"label",
+								LanguageUtil.get(
+									httpServletRequest, "stop-watching-task")
+							).put(
+								"redirect",
+								viewTaskURL + objectEntry.getObjectEntryId()
+							).put(
+								"symbolLeft", "bell-off"
+							).put(
+								"target", "asyncPost"
+							));
+					}
 				}
 
 				if (_objectEntryService.hasModelResourcePermission(
@@ -223,5 +283,8 @@ public class TaskBreadcrumbComponentSectionFragmentRenderer
 
 	@Reference
 	private ObjectEntryService _objectEntryService;
+
+	@Reference
+	private SubscriptionLocalService _subscriptionLocalService;
 
 }

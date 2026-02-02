@@ -4,20 +4,16 @@
  */
 
 import ClayMultiStepNav from '@clayui/multi-step-nav';
-import {Form, Formik, FormikHelpers} from 'formik';
+import {Form, Formik, FormikConfig, FormikHelpers, FormikValues} from 'formik';
 import React, {ReactElement, useState} from 'react';
 
 import Footer from './Footer';
-
-type FormValues = {
-	[key: string]: any;
-};
 
 interface WizardStepProps {
 	actionButton?: React.ReactElement;
 	children: React.ReactNode;
 	description: string;
-	onSubmit?: (values: FormValues) => Promise<void>;
+	onSubmit?: FormikConfig<FormikValues>['onSubmit'];
 	title: string;
 }
 
@@ -51,10 +47,10 @@ export function Wizard({
 	};
 
 	const handleSubmit = async (
-		values: FormValues,
-		formikHelpers: FormikHelpers<FormValues>
+		values: FormikValues,
+		formikHelpers: FormikHelpers<FormikValues>
 	) => {
-		await onSubmit?.(values);
+		await onSubmit?.(values, formikHelpers);
 
 		setFormState((prevState) => ({
 			...prevState,

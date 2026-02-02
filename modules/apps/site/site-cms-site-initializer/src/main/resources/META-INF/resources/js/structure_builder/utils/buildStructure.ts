@@ -51,7 +51,7 @@ export default function buildStructure({
 		status: isPublished ? 'published' : 'draft',
 		system: mainObjectDefinition.system ?? false,
 		type: mainObjectDefinition.objectFolderExternalReferenceCode as Structure['type'],
-		uuid: getUuid(),
+		uuid,
 		workflows: getWorkflows(mainObjectDefinition),
 	};
 }

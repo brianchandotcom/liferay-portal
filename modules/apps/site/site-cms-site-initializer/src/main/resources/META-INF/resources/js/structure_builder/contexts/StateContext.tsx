@@ -63,7 +63,10 @@ type UndeletableReason = 'is-locked' | 'is-referenced' | 'causes-invalid-group';
 type History = {
 	deletedChildren: Array<StructureChild>;
 	deletedGroupERCs: Array<RepeatableGroup['erc']>;
-	deletedRelationshipERCs: Array<string>;
+	deletedRelationships: Array<{
+		relationshipERC: string;
+		structureERC: string;
+	}>;
 	modifiedNames: Set<Uuid>;
 };
 
@@ -81,7 +84,7 @@ const INITIAL_STATE: State = {
 	history: {
 		deletedChildren: [],
 		deletedGroupERCs: [],
-		deletedRelationshipERCs: [],
+		deletedRelationships: [],
 		modifiedNames: new Set(),
 	},
 	invalids: new Map(),
@@ -547,15 +550,35 @@ function reducer(state: State, action: Action): State {
 
 				if (
 					child.type === 'repeatable-group' ||
+					child.type === 'related-content' ||
 					child.type === 'referenced-structure'
 				) {
+					let parentERC =
+						child.parent === state.structure.uuid
+							? state.structure.erc
+							: findChild({root: structure, uuid: child.parent})
+									?.erc || '';
+
+					if (
+						child.type === 'related-content' &&
+						!child.multiselection
+					) {
+						parentERC = child.relatedStructureERC;
+					}
+
 					nextState = {
 						...nextState,
 						history: {
 							...nextState.history,
-							deletedRelationshipERCs: [
-								...nextState.history.deletedRelationshipERCs,
-								child.relationshipERC,
+							deletedRelationships: [
+								...nextState.history.deletedRelationships,
+								{
+									relationshipERC:
+										child.type === 'related-content'
+											? child.erc
+											: child.relationshipERC,
+									structureERC: parentERC,
+								},
 							],
 						},
 					};
@@ -632,16 +655,37 @@ function reducer(state: State, action: Action): State {
 
 					if (
 						child.type === 'repeatable-group' ||
+						child.type === 'related-content' ||
 						child.type === 'referenced-structure'
 					) {
+						let parentERC =
+							child.parent === state.structure.uuid
+								? state.structure.erc
+								: findChild({
+										root: structure,
+										uuid: child.parent,
+									})?.erc || '';
+
+						if (
+							child.type === 'related-content' &&
+							!child.multiselection
+						) {
+							parentERC = child.relatedStructureERC;
+						}
+
 						nextState = {
 							...nextState,
 							history: {
 								...nextState.history,
-								deletedRelationshipERCs: [
-									...nextState.history
-										.deletedRelationshipERCs,
-									child.relationshipERC,
+								deletedRelationships: [
+									...nextState.history.deletedRelationships,
+									{
+										relationshipERC:
+											child.type === 'related-content'
+												? child.erc
+												: child.relationshipERC,
+										structureERC: parentERC,
+									},
 								],
 							},
 						};

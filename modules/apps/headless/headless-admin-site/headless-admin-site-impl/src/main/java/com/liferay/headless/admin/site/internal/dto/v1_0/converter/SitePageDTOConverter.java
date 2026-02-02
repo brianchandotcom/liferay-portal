@@ -9,6 +9,7 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.CustomMetaTag;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
+import com.liferay.headless.admin.site.dto.v1_0.LinkToPagePageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.LinkToURLPageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.PageSetPageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.PageSettings;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -190,6 +192,47 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 
 		if (type == SitePage.Type.CONTENT_PAGE) {
 			return _toContentPageSettings(layout);
+		}
+		else if (type == SitePage.Type.LINK_TO_PAGE_PAGE) {
+			return new LinkToPagePageSettings() {
+				{
+					setLinkToPageExternalReferenceCode(
+						() -> {
+							UnicodeProperties typeSettingsUnicodeProperties =
+								layout.getTypeSettingsProperties();
+
+							String linkToLayoutExternalReferenceCode =
+								typeSettingsUnicodeProperties.get(
+									"linkToLayoutExternalReferenceCode");
+
+							if (Validator.isNotNull(
+									linkToLayoutExternalReferenceCode)) {
+
+								return linkToLayoutExternalReferenceCode;
+							}
+
+							long linkToLayoutId = GetterUtil.getLong(
+								typeSettingsUnicodeProperties.get(
+									"linkToLayoutId"));
+
+							if (linkToLayoutId == 0) {
+								return null;
+							}
+
+							Layout linkToLayout =
+								_layoutLocalService.fetchLayout(
+									layout.getGroupId(),
+									layout.isPrivateLayout(), linkToLayoutId);
+
+							if (linkToLayout == null) {
+								return null;
+							}
+
+							return linkToLayout.getExternalReferenceCode();
+						});
+					setType(() -> Type.LINK_TO_PAGE_PAGE_SETTINGS);
+				}
+			};
 		}
 		else if (type == SitePage.Type.LINK_TO_URL_PAGE) {
 			return new LinkToURLPageSettings() {

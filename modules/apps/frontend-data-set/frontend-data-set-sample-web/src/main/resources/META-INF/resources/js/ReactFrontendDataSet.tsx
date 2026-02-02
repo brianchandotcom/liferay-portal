@@ -14,7 +14,7 @@ import {
 } from '@liferay/frontend-data-set-web';
 import React from 'react';
 
-const ReactFrontendDataSet = (props: IFrontendDataSetProps) => {
+const ReactFrontendDataSet = (initialProps: IFrontendDataSetProps) => {
 	const cardsView = {
 		_key: 'cards',
 		contentRenderer: 'cards',
@@ -46,6 +46,17 @@ const ReactFrontendDataSet = (props: IFrontendDataSetProps) => {
 		thumbnail: 'cards2',
 	};
 
+	const props = {...initialProps};
+
+	props.sorts = [];
+
+	props.sorts.push({
+		active: true,
+		direction: 'asc',
+		key: 'title',
+		label: 'By Title',
+	});
+
 	props.views.push(cardsView);
 
 	const listView = {
@@ -65,20 +76,10 @@ const ReactFrontendDataSet = (props: IFrontendDataSetProps) => {
 
 	props.views.push(listView);
 
-	const [fdsProps, setFdsProps] = React.useState(props);
 	const [component, setComponent] = React.useState<string>('alert');
 	const [selectedItems, setSelectedItems] = React.useState<any[]>([]);
 	const [showInlineNotification, setShowInlineNotification] =
 		React.useState(false);
-
-	const onAlertActionClick = function () {
-		setFdsProps({
-			...props,
-			additionalAPIURLParameters: `sort=dateCreated:desc&t=${Date.now()}`,
-			filters: [],
-			sorts: [],
-		});
-	};
 
 	let notification;
 
@@ -101,18 +102,43 @@ const ReactFrontendDataSet = (props: IFrontendDataSetProps) => {
 					<ClayButton
 						displayType="info"
 						onClick={() => {
-							onAlertActionClick();
+							const newSort = {
+								active: true,
+								direction: 'desc' as const,
+								key: 'dateCreated',
+								label: 'By Date',
+							};
+
+							let updatedSorts: Array<any> = [];
+
+							updatedSorts = updatedSorts
+								.concat(
+									context.sorts?.map((sort) => {
+										sort.active = false;
+
+										return sort;
+									})
+								)
+								.filter((sort) => sort.key !== 'dateCreated');
+
+							updatedSorts.push(newSort);
+
+							context.forceSortsUpdate(updatedSorts);
+
 							setShowInlineNotification(false);
 						}}
 						size="sm"
 					>
 						{Liferay.Language.get('reload')}
 					</ClayButton>
-					
+
 					<ClayButton
 						displayType="danger"
 						onClick={() => {
-							context.loadData();
+							context.updateAdditionalAPIURLParameters(
+								`sort=dateCreated:desc&t=${Date.now()}`
+							);
+
 							setShowInlineNotification(false);
 						}}
 						size="sm"
@@ -197,7 +223,7 @@ const ReactFrontendDataSet = (props: IFrontendDataSetProps) => {
 			</ClayButton.Group>
 
 			<FrontendDataSet
-				{...fdsProps}
+				{...props}
 				inlineNotificationContent={notification}
 				onSelectedItemsChange={setSelectedItems}
 				selectedItems={selectedItems}

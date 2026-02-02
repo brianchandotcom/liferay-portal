@@ -4,18 +4,18 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/FragmentEditableElementValue"
                 -   properties:
-                        action:
+                        fragmentMappedValue:
                             # @review
                             description:
                                 The fragment editable element's action. Must be mapped to an external value.
                             oneOf:
                                 -   $ref: "#/components/schemas/FragmentMappedValue"
-                        onError:
+                        errorActionInteraction:
                             $ref: "#/components/schemas/ActionInteraction"
                             # @review
                             description:
                                 The action interaction in case the action fails.
-                        onSuccess:
+                        successActionInteraction:
                             $ref: "#/components/schemas/ActionInteraction"
                             # @review
                             description:
@@ -2662,7 +2662,7 @@ components:
                             description:
                                 Whether to reload the page after the action is executed.
                             type: boolean
-                        text:
+                        fragmentInlineValue:
                             $ref: "#/components/schemas/FragmentInlineValue"
                             # @review
                             description:
@@ -2707,11 +2707,11 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/ActionInteraction"
                 -   properties:
-                        itemReference:
+                        itemExternalReference:
                             $ref: "#/components/schemas/ItemExternalReference"
                             # @review
                             description:
-                                The reference to a page.
+                                The item external reference to a page.
             # @review
             description:
                 The definition of an action interaction of type page.
@@ -3967,11 +3967,11 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/ActionInteraction"
                 -   properties:
-                        url:
+                        fragmentInlineValue:
                             $ref: "#/components/schemas/FragmentInlineValue"
                             # @review
                             description:
-                                The localized action interaction of type URL.
+                                The localized URL value.
             # @review
             description:
                 The definition of an action interaction of type URL.

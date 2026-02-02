@@ -20,6 +20,8 @@ public class LayoutTypeException extends PortalException {
 
 	public static final int NOT_PARENTABLE = 1;
 
+	public static final int TYPE_NOT_ALLOWED = 6;
+
 	public LayoutTypeException(int type) {
 		_type = type;
 	}

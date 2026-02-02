@@ -30,6 +30,7 @@ ViewStructuresDisplayContext viewStructuresDisplayContext = (ViewStructuresDispl
 			itemsPerPage="<%= 20 %>"
 			propsTransformer="{StructuresFDSPropsTransformer} from site-cms-site-initializer"
 			selectedItemsKey="id"
+			selectionType="multiple"
 		/>
 	</div>
 </div>

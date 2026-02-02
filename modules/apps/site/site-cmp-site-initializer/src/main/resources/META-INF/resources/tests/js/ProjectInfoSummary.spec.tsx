@@ -32,9 +32,9 @@ describe('ProjectInfoSummary', () => {
 		);
 
 		expect(getByText('Dec 31, 2023')).toBeInTheDocument();
-		expect(getByText('Not Started')).toBeInTheDocument();
 		expect(getByText('Manager Name')).toBeInTheDocument();
 		expect(getByText('Sponsor Name')).toBeInTheDocument();
+		expect(getByText('not-started')).toBeInTheDocument();
 		expect(getByText('tag1')).toBeInTheDocument();
 		expect(getByText('tag2')).toBeInTheDocument();
 	});
